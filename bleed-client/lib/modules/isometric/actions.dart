@@ -33,15 +33,19 @@ class IsometricActions {
   void applyDynamicShadeToTileSrc() {
     final tileSize = modules.isometric.constants.tileSize;
     final atlasY = atlas.tiles.y;
-    final dynamicShading = state.dynamicShade;
+    final dynamic = state.dynamic;
     final tilesSrc = state.tilesSrc;
     final maxRow = state.maxRow;
     final maxColumn =  state.maxRow;
     final totalColumnsInt = state.totalColumnsInt;
-    for (int row = state.minRow; row < maxRow; row++) {
-      for (int column = state.minColumn; column < maxColumn; column++) {
-        final shade = dynamicShading[row][column];
-        final i = row * totalColumnsInt * 4 + (column * 4);
+    final minRow = state.minRow;
+    final minColumn = state.minColumn;
+    
+    for (var rowIndex = minRow; rowIndex < maxRow; rowIndex++) {
+      final row = dynamic[rowIndex];
+      for (var columnIndex = minColumn; columnIndex < maxColumn; columnIndex++) {
+        final shade = row[columnIndex];
+        final i = rowIndex * totalColumnsInt * 4 + (columnIndex * 4);
         tilesSrc[i + 1] = atlasY + shade * tileSize; // top
         tilesSrc[i + 3] = tilesSrc[i + 1] + tileSize; // bottom
       }
@@ -50,8 +54,8 @@ class IsometricActions {
 
   /// Expensive method
   void resetLighting(){
+    print("isometric.actions.resetLighting()");
     resetBakeMap();
-    applyEnvironmentObjectsToBakeMapping();
     resetDynamicMap();
     resetDynamicShadesToBakeMap();
     applyDynamicShadeToTileSrc();
@@ -59,11 +63,13 @@ class IsometricActions {
 
   void resetBakeMap(){
     print("isometric.actions.resetBakeMap()");
-    state.bakeMap.clear();
-    for (int row = 0; row < state.totalRows.value; row++) {
+    state.bake.clear();
+    final rows = state.totalRows.value;
+    final columns = state.totalColumns.value;
+    for (var row = 0; row < rows; row++) {
       final List<int> _baked = [];
-      state.bakeMap.add(_baked);
-      for (int column = 0; column < state.totalColumns.value; column++) {
+      state.bake.add(_baked);
+      for (var column = 0; column < columns; column++) {
         _baked.add(state.ambient.value);
       }
     }
@@ -72,12 +78,13 @@ class IsometricActions {
 
   void resetDynamicMap(){
     print("isometric.actions.resetDynamicMap()");
-    state.dynamicShade.clear();
-    for (int row = 0; row < state.totalRows.value; row++) {
-      final List<int> _dynamic = [];
-      state.dynamicShade.add(_dynamic);
-      for (int column = 0; column < state.totalColumns.value; column++) {
-        _dynamic.add(state.ambient.value);
+    final dynamic = state.dynamic;
+    dynamic.clear();
+    for (var row = 0; row < state.totalRows.value; row++) {
+      final List<int> dynamicRow = [];
+      dynamic.add(dynamicRow);
+      for (var column = 0; column < state.totalColumns.value; column++) {
+        dynamicRow.add(state.ambient.value);
       }
     }
   }
@@ -91,11 +98,11 @@ class IsometricActions {
         continue;
       }
       if (type == ObjectType.House01){
-        emitLightMedium(state.bakeMap, env.x, env.y);
+        emitLightMedium(state.bake, env.x, env.y);
         continue;
       }
       if (type == ObjectType.House02){
-        emitLightMedium(state.bakeMap, env.x, env.y);
+        emitLightMedium(state.bake, env.x, env.y);
         continue;
       }
     }
@@ -106,8 +113,8 @@ class IsometricActions {
     final maxRow = state.maxRow;
     final minColumn = state.minColumn;
     final maxColumn = state.maxColumn;
-    final dynamicShading = state.dynamicShade;
-    final bakeMap = state.bakeMap;
+    final dynamicShading = state.dynamic;
+    final bakeMap = state.bake;
     for (var row = minRow; row < maxRow; row++) {
       for (var column = minColumn; column < maxColumn; column++) {
         dynamicShading[row][column] = bakeMap[row][column];
@@ -296,11 +303,11 @@ class IsometricActions {
   }
 
   void shadeDynamic(int row, int column, int value) {
-    applyShade(state.dynamicShade, row, column, value);
+    applyShade(state.dynamic, row, column, value);
   }
 
   void shadeBake(int row, int column, int value) {
-    applyShade(state.bakeMap, row, column, value);
+    applyShade(state.bake, row, column, value);
   }
 
   void applyShade(List<List<int>> shader, int row, int column, int value) {
@@ -438,7 +445,7 @@ class IsometricActions {
   }
 
   void applyEmissionFromCharactersBright(List<Character> characters) {
-    final shading = state.dynamicShade;
+    final shading = state.dynamic;
     final playerTeam = modules.game.state.player.team;
     for(final character in characters) {
       if (character.team != playerTeam) continue;
@@ -447,7 +454,7 @@ class IsometricActions {
   }
 
   void applyEmissionFromCharactersMedium(List<Character> characters) {
-    final dynamicShading = state.dynamicShade;
+    final dynamicShading = state.dynamic;
     for (final character in characters) {
       emitLightMedium(dynamicShading, character.x, character.y);
     }
@@ -465,7 +472,7 @@ class IsometricActions {
   }
 
   void applyEmissionFromEffects() {
-    final dynamicShading = state.dynamicShade;
+    final dynamicShading = state.dynamic;
     for (final effect in game.effects) {
       if (!effect.enabled) continue;
       final percentage = effect.percentage;
@@ -491,7 +498,7 @@ class IsometricActions {
     for (int i = 0; i < game.totalProjectiles; i++) {
       final projectile = game.projectiles[i];
       if (projectile.type == ProjectileType.Fireball) {
-        emitLightBrightSmall(state.dynamicShade, projectile.x, projectile.y);
+        emitLightBrightSmall(state.dynamic, projectile.x, projectile.y);
       }
     }
   }

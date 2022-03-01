@@ -26,8 +26,8 @@ class IsometricState {
   Float32List tilesSrc = Float32List(0);
   List<Particle> particles = [];
   final List<EnvironmentObject> environmentObjects = [];
-  final List<List<int>> dynamicShade = [];
-  final List<List<int>> bakeMap = [];
+  final List<List<int>> dynamic = [];
+  final List<List<int>> bake = [];
   final List<Item> items = [];
   final Watch<int> totalColumns = Watch(0);
   final Watch<int> totalRows = Watch(0);
@@ -54,7 +54,7 @@ class IsometricState {
     if (column >= totalColumnsInt){
       return Shade.Pitch_Black;
     }
-    return dynamicShade[row][column];
+    return dynamic[row][column];
   }
 
   int getShadeAtPosition(double x, double y){

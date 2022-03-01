@@ -87,7 +87,7 @@ class IsometricRender {
     final minColumn = state.minColumn;
     final maxColumn = state.maxColumn;
     final atlasY = atlas.tiles.y;
-    final dynamicShade = state.dynamicShade;
+    final dynamicShade = state.dynamic;
     final totalColumnsInt = state.totalColumnsInt;
     final tilesSrc = state.tilesSrc;
     final tilesDst = state.tilesDst;
