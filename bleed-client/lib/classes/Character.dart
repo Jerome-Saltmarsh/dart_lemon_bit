@@ -11,7 +11,6 @@ class Character extends Vector2 {
   CharacterState state;
   int direction;
   int frame;
-  WeaponType weapon;
   SlotType equippedWeapon = SlotType.Empty;
   SlotType equippedArmour = SlotType.Empty;
   SlotType equippedHead = SlotType.Empty;
@@ -35,7 +34,6 @@ class Character extends Vector2 {
     double x = 0,
     double y = 0,
     this.frame = 0,
-    this.weapon = WeaponType.Unarmed,
     this.team = 0,
     this.name = "",
     this.text = "",

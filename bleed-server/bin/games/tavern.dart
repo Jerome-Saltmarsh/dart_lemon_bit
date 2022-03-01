@@ -3,6 +3,7 @@ import '../classes/Game.dart';
 import '../classes/InteractableNpc.dart';
 import '../classes/Player.dart';
 import '../classes/Weapon.dart';
+import '../common/SlotType.dart';
 import '../common/WeaponType.dart';
 import '../enums/npc_mode.dart';
 import '../instances/scenes.dart';
@@ -18,8 +19,7 @@ class Tavern extends Game {
         x: 0,
         y: 100,
         health: 100,
-        ai: AI(mode: NpcMode.Ignore),
-        weapon: Weapon(type: WeaponType.Unarmed, damage: 0, capacity: 0)
+        weapon: SlotType.Empty,
     );
     npcs.add(oscar);
   }

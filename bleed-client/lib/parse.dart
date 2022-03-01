@@ -735,7 +735,6 @@ void _consumeHuman(Character character) {
   character.text = textBuffer.toString().trim();
   character.health = _consumePercentage();
   character.magic = _consumePercentage();
-  character.weapon = _consumeWeaponType();
   character.equippedWeapon = consumeSlotType();
   character.equippedArmour = consumeSlotType();
   character.equippedHead = consumeSlotType();

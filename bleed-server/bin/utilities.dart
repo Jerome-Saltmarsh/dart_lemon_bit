@@ -7,6 +7,7 @@ import 'classes/Character.dart';
 import 'classes/GameObject.dart';
 import 'classes/Player.dart';
 import 'classes/Projectile.dart';
+import 'common/SlotType.dart';
 import 'common/WeaponType.dart';
 import 'functions/withinRadius.dart';
 import 'maths.dart';
@@ -97,15 +98,8 @@ void applyFriction(GameObject gameObject, double value) {
   gameObject.yv *= value;
 }
 
-bool targetWithinStrikingRange(GameObject source, GameObject target) {
-  return withinRadius(source, target, settings.range.zombieStrike);
-}
-
-bool targetWithinFiringRange(Character character, GameObject target){
-  double range = getWeaponRange(character.weapon.type);
-  if (diffOver(character.x, target.x, range)) return false;
-  if (diffOver(character.y, target.y, range)) return false;
-  return true;
+bool targetWithinAttackRange(Character character, GameObject target){
+  return withinRadius(character, target, character.weapon.range);
 }
 
 Vector2 getTilePosition(int row, int column) {
@@ -156,12 +150,12 @@ void sortVertically(List<Vector2> items) {
   }
 }
 
-/// returns -1 if the player does not have the weapon
-int getIndexOfWeaponType(Player player, WeaponType type){
-  for(int i = 0; i < player.weapons.length; i++){
-      if (player.weapons[i].type == type){
-        return i;
-      }
-  }
-  return -1;
-}
+// / returns -1 if the player does not have the weapon
+// int getIndexOfWeaponType(Player player, WeaponType type){
+//   for(int i = 0; i < player.weapons.length; i++){
+//       if (player.weapons[i].type == type){
+//         return i;
+//       }
+//   }
+//   return -1;
+// }

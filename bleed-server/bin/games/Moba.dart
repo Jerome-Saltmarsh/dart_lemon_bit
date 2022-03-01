@@ -8,6 +8,7 @@ import '../common/CharacterType.dart';
 import '../common/GameEventType.dart';
 import '../common/GameStatus.dart';
 import '../common/GameType.dart';
+import '../common/SlotType.dart';
 import '../instances/scenes.dart';
 import '../language.dart';
 import '../utilities.dart';
@@ -127,6 +128,7 @@ class GameMoba extends Game {
       y: 600,
       game: this,
       team: getJoinTeam(),
+      weapon: SlotType.Empty,
     );
     if (players.length == totalPlayersRequired){
       status = GameStatus.In_Progress;

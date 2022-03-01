@@ -7,6 +7,7 @@ import '../classes/Crate.dart';
 import '../classes/Game.dart';
 import '../classes/Item.dart';
 import '../classes/Player.dart';
+import '../classes/Vector2.dart';
 import '../classes/Weapon.dart';
 import '../common/CharacterType.dart';
 import '../common/GameEventType.dart';
@@ -15,6 +16,7 @@ import '../common/GameType.dart';
 import '../common/ItemType.dart';
 import '../common/OrbType.dart';
 import '../common/PlayerEvent.dart';
+import '../common/SlotType.dart';
 import '../common/WeaponType.dart';
 import '../functions/withinRadius.dart';
 import '../instances/scenes.dart';
@@ -58,39 +60,39 @@ class GameRoyal extends Game {
 
   @override
   bool onPlayerItemCollision(Player player, Item item){
-
-    final itemWeaponType = item.type.weaponType;
-    if (itemWeaponType != null){
-      dispatch(GameEventType.Item_Acquired, item.x, item.y);
-      final weaponIndex = getIndexOfWeaponType(player, itemWeaponType);
-      if (weaponIndex == -1){
-        player.weapons.add(_buildWeapon(itemWeaponType));
-        player.equippedIndex = getIndexOfWeaponType(player, itemWeaponType);
-        final weaponType = item.type.weaponType;
-        if (weaponType != null) {
-          player.equip(weaponType);
-        }
-      } else {
-        final weapon = player.weapons[weaponIndex];
-        weapon.rounds += _getWeaponTypeRounds(itemWeaponType);
-      }
-      return true;
-    }
-
-    if (item.type == ItemType.Orb_Emerald){
-      player.orbs.emerald++;
-    }
-    if (item.type == ItemType.Orb_Topaz){
-      player.orbs.topaz++;
-    }
-    if (item.type == ItemType.Orb_Ruby){
-      player.orbs.ruby++;
-    }
-    if (item.type == ItemType.Health){
-      player.health += 10;
-    }
-
-    return true;
+    return false;
+    // final itemWeaponType = item.type.weaponType;
+    // if (itemWeaponType != null){
+    //   dispatch(GameEventType.Item_Acquired, item.x, item.y);
+    //   final weaponIndex = getIndexOfWeaponType(player, itemWeaponType);
+    //   if (weaponIndex == -1){
+    //     // player.weapons.add(_buildWeapon(itemWeaponType));
+    //     player.equippedIndex = getIndexOfWeaponType(player, itemWeaponType);
+    //     final weaponType = item.type.weaponType;
+    //     if (weaponType != null) {
+    //       // player.equip(weaponType);
+    //     }
+    //   } else {
+    //     // final weapon = player.weapons[weaponIndex];
+    //     // weapon.rounds += _getWeaponTypeRounds(itemWeaponType);
+    //   }
+    //   return true;
+    // }
+    //
+    // if (item.type == ItemType.Orb_Emerald){
+    //   player.orbs.emerald++;
+    // }
+    // if (item.type == ItemType.Orb_Topaz){
+    //   player.orbs.topaz++;
+    // }
+    // if (item.type == ItemType.Orb_Ruby){
+    //   player.orbs.ruby++;
+    // }
+    // if (item.type == ItemType.Health){
+    //   player.health += 10;
+    // }
+    //
+    // return true;
   }
 
   Weapon _buildWeapon(WeaponType type){
@@ -157,6 +159,7 @@ class GameRoyal extends Game {
       x: spawnPoint.x,
       y: spawnPoint.y,
       team: -1,
+      weapon: SlotType.Empty,
     );
     if (players.length >= playersRequired) {
       status = GameStatus.Counting_Down;
@@ -191,23 +194,23 @@ class GameRoyal extends Game {
     boundaryRadius -= boundaryRadiusShrinkRate;
     _killPlayersOutsideBoundary();
 
-    for (Player player in players) {
-      for (int i = 0; i < crates.length; i++) {
-        final crate = crates[i];
-        if (!withinRadius(player, crate, 30)) continue;
-        final index = getIndexOfWeaponType(player, WeaponType.HandGun);
-        if (index >= 0) continue;
-        player.weapons.add(Weapon(
-          type: WeaponType.HandGun,
-          damage: 5,
-          capacity: 12,
-        ));
-        player.weaponsDirty = true;
-        crates.removeAt(i);
-        cratesDirty = true;
-        i--;
-      }
-    }
+    // for (final player in players) {
+    //   for (int i = 0; i < crates.length; i++) {
+    //     final crate = crates[i];
+    //     if (!withinRadius(player, crate, 30)) continue;
+    //     final index = getIndexOfWeaponType(player, WeaponType.HandGun);
+    //     if (index >= 0) continue;
+    //     // player.weapons.add(Weapon(
+    //     //   type: WeaponType.HandGun,
+    //     //   damage: 5,
+    //     //   capacity: 12,
+    //     // ));
+    //     // player.weaponsDirty = true;
+    //     crates.removeAt(i);
+    //     cratesDirty = true;
+    //     i--;
+    //   }
+    // }
 
     return;
   }

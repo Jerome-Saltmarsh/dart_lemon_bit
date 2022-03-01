@@ -74,6 +74,7 @@ Player spawnPlayerInTown() {
       y: 1750,
       team: teams.west,
       health: 10,
+      weapon: SlotType.Empty,
   );
 }
 
@@ -146,8 +147,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       player.name = playerName;
       compileWholeGame(royal);
       compilePlayerJoined(_buffer, player);
-      compilePlayerWeaponValues(_buffer, player);
-      compilePlayerWeapons(_buffer, player);
+      // compilePlayerWeaponValues(_buffer, player);
+      // compilePlayerWeapons(_buffer, player);
       compileGameStatus(_buffer, royal.status);
       compileGameMeta(_buffer, royal);
       compileCrates(_buffer, royal.crates);
@@ -867,21 +868,21 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          WeaponType type = weaponTypes[int.parse(arguments[2])];
+          final type = weaponTypes[int.parse(arguments[2])];
 
           switch (type) {
             case WeaponType.Shotgun:
-              player.weapons.add(
-                  Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 5));
-              player.weaponsDirty = true;
-              player.abilityPoints--;
+              // player.weapons.add(
+              //     Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 5));
+              // player.weaponsDirty = true;
+              // player.abilityPoints--;
               break;
 
             case WeaponType.HandGun:
-              player.weapons.add(
-                  Weapon(type: WeaponType.HandGun, damage: 1, capacity: 5));
-              player.weaponsDirty = true;
-              player.abilityPoints--;
+              // player.weapons.add(
+              //     Weapon(type: WeaponType.HandGun, damage: 1, capacity: 5));
+              // player.weaponsDirty = true;
+              // player.abilityPoints--;
               break;
           }
           break;
@@ -906,19 +907,19 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          Player? player =engine.findPlayerByUuid(arguments[1]);
+          final player =engine.findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
           }
 
-          int? weaponIndex = int.tryParse(arguments[2]);
+          final weaponIndex = int.tryParse(arguments[2]);
           if (weaponIndex == null) {
             error(GameError.InvalidArguments,
                 message: "arg4, weapon-index: $weaponIndex integer expected");
             return;
           }
-          changeWeapon(player, weaponIndex);
+          // changeWeapon(player, weaponIndex);
           return;
 
         case ClientRequest.Purchase:

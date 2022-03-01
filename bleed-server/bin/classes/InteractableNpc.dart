@@ -1,7 +1,8 @@
 import '../common/CharacterType.dart';
+import '../common/SlotType.dart';
+import '../enums/npc_mode.dart';
 import 'Character.dart';
 import 'Player.dart';
-import 'Weapon.dart';
 
 class InteractableNpc extends Character {
   final String name;
@@ -14,15 +15,15 @@ class InteractableNpc extends Character {
       required double x,
       required double y,
       required int health,
-      required AI ai,
-      CharacterType type = CharacterType.Human,
-      required Weapon weapon})
+      required SlotType weapon,
+      NpcMode npcMode = NpcMode.Stand_Ground,
+  })
       : super(
-            type: type,
+            type: CharacterType.Human,
             x: x,
             y: y,
-            ai: ai,
+            ai: AI(mode: npcMode),
             health: health,
-            weapons: [weapon]
+            weapon: weapon,
   );
 }

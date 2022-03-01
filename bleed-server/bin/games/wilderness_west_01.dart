@@ -4,6 +4,7 @@ import '../classes/Player.dart';
 import '../classes/Weapon.dart';
 import '../common/CharacterType.dart';
 import '../common/Quests.dart';
+import '../common/SlotType.dart';
 import '../common/WeaponType.dart';
 import '../engine.dart';
 import '../instances/scenes.dart';
@@ -19,8 +20,11 @@ class WildernessWest01 extends Game {
   WildernessWest01() : super(scenes.wildernessWest01){
     boss = Character(
         type: CharacterType.Zombie,
-        x: 0, y: 300, health: 100, weapons: [Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0)]);
-    // zombies.add(boss);
+        x: 0,
+        y: 300,
+        health: 100,
+        weapon: SlotType.Empty,
+    );
   }
 
   @override

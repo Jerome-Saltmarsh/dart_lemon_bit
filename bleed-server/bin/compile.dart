@@ -194,10 +194,10 @@ String compileTiles(List<List<Tile>> tiles) {
 
 void compilePlayerWeapons(StringBuffer buffer, Player player) {
   _write(buffer, ServerResponse.Weapons.index);
-  _write(buffer, player.weapons.length);
-  for (final weapon in player.weapons) {
-    compileWeapon(buffer, weapon);
-  }
+  // _write(buffer, player.weapons.length);
+  // for (final weapon in player.weapons) {
+  //   compileWeapon(buffer, weapon);
+  // }
 }
 
 void compileWeapon(StringBuffer buffer, Weapon weapon) {
@@ -303,9 +303,9 @@ void _compilePlayerAbility(StringBuffer buffer, Player player){
 
 void compilePlayerWeaponValues(StringBuffer buffer, Player player){
   _write(buffer, ServerResponse.Player_Weapon.index);
-  _write(buffer, player.weapon.type.index);
-  _write(buffer, player.weapon.rounds);
-  _write(buffer, player.weapon.capacity);
+  // _write(buffer, player.weapon.type.index);
+  // _write(buffer, player.weapon.rounds);
+  // _write(buffer, player.weapon.capacity);
 }
 
 void _compilePlayerEvents(StringBuffer buffer, Player player) {
@@ -430,7 +430,6 @@ void _compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, _comma);
   _writeInt(buffer, (player.health / player.maxHealth) * 100);
   _writeInt(buffer, (player.magic / player.maxMagic) * 100);
-  _write(buffer, player.isHuman ? player.weapon.type.index : WeaponType.Unarmed.index);
   _write(buffer, player.slots.weapon.index);
   _write(buffer, player.slots.armour.index);
   _write(buffer, player.slots.helm.index);

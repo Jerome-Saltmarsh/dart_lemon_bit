@@ -4,6 +4,7 @@ import 'package:lemon_math/Vector2.dart';
 
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
+import '../common/SlotType.dart';
 import '../common/WeaponType.dart';
 import '../constants.dart';
 import '../constants/no_squad.dart';
@@ -87,9 +88,9 @@ class Character extends GameObject implements HasSquad {
   double speedModifier = 0;
   bool invincible = false;
   int team;
-  List<Weapon> weapons = [];
-  bool weaponsDirty = false;
   Vector2 abilityTarget = Vector2(0, 0);
+
+  SlotType weapon;
 
 
   // properties
@@ -104,8 +105,6 @@ class Character extends GameObject implements HasSquad {
   }
 
   int get health => _health;
-
-  Weapon get weapon => weapons[equippedIndex];
 
   set health(int value) {
     _health = clampInt(value, 0, maxHealth);
@@ -128,38 +127,19 @@ class Character extends GameObject implements HasSquad {
     required double x,
     required double y,
     required int health,
+    required this.weapon,
     double speed = _defaultCharacterSpeed,
     this.team = noSquad,
     this.ai,
-    List<Weapon>? weapons,
   }) : super(x, y, radius: settings.radius.character) {
     maxHealth = health;
     _health = health;
     _speed = speed;
-    this.weapons = weapons ?? [
-      Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0)
-    ];
     ai?.character = this;
   }
 
   @override
   int getSquad() {
     return team;
-  }
-
-  void equip(WeaponType type){
-    final weaponIndex = getIndexOfWeaponType(type);
-    if (weaponIndex == _notFound) return;
-    equippedIndex = weaponIndex;
-  }
-
-  /// returns -1 if the player does not have the weapon
-  int getIndexOfWeaponType(WeaponType type){
-    for(int i = 0; i < weapons.length; i++){
-      if (weapons[i].type == type){
-        return i;
-      }
-    }
-    return _notFound;
   }
 }

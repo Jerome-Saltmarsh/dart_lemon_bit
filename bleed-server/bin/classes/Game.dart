@@ -220,9 +220,8 @@ abstract class Game {
             y: character.y,
             health: 100,
             ai: AI(mode: NpcMode.Aggressive),
-            weapons: [
-              Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0)
-            ]));
+            weapon: SlotType.Empty,
+            ));
       } else {
         npcs.add(InteractableNpc(
             name: "Bob",
@@ -230,13 +229,8 @@ abstract class Game {
             x: character.x,
             y: character.y,
             health: 100,
-            ai: AI(),
-            weapon: Weapon(
-              type: WeaponType.HandGun,
-              rounds: 10,
-              capacity: 10,
-              damage: 5,
-            )));
+            weapon: SlotType.Empty,
+        ));
       }
     }
 
@@ -462,7 +456,7 @@ extension GameFunctions on Game {
   }
 
   void _characterStrike(Character character, Character target){
-    if (!targetWithinStrikingRange(character, target)) return;
+    if (!targetWithinAttackRange(character, target)) return;
     characterFaceV2(character, target);
     // todo set performing to strike action
     setCharacterStatePerforming(character);
@@ -483,29 +477,27 @@ extension GameFunctions on Game {
 
     final target = ai.target;
     if (target != null) {
-      switch (character.weapon.type) {
-        case WeaponType.Unarmed:
-          if (targetWithinStrikingRange(character, target)){
-            _characterStrike(character, target);
-            return;
-          }
-          final dis = cheapDistance(character, target);
-          if (dis < 100) {
-            _characterRunAt(character, target);
-            return;
-          }
-          break;
-        default:
-          if (!targetWithinFiringRange(character, target)) break;
-          if (!isVisibleBetween(character, target)) break;
-
-          characterAimAt(character, target.x, target.y);
-          setCharacterState(character, CharacterState.Performing);
+      if (character.type.isZombie) {
+        if (targetWithinAttackRange(character, target)){
+          _characterStrike(character, target);
           return;
+        }
+        if (cheapDistance(character, target) < 100) {
+          _characterRunAt(character, target);
+          return;
+        }
+      } else { // not zombie
+
+        if (!targetWithinAttackRange(character, target)) return;
+        if (!isVisibleBetween(character, target)) return;
+        characterAimAt(character, target.x, target.y);
+        setCharacterState(character, CharacterState.Performing);
       }
+
 
       // @on npc update find
       if (ai.mode == NpcMode.Aggressive) {
+        // TODO REFACTOR
         if (engine.frame % 30 == 0) {
           npcSetPathTo(ai, target.x, target.y);
         }
@@ -586,57 +578,6 @@ extension GameFunctions on Game {
     sortVertically(npcs);
     sortVertically(items);
     sortVertically(projectiles);
-  }
-
-  void _fireWeapon(Character character) {
-    if (character.dead) return;
-    if (character.busy) return;
-    faceAimDirection(character);
-
-    if (character is Player) {
-      if (character.weapon.type != WeaponType.Unarmed &&
-          character.weapon.rounds <= 0) {
-        character.stateDurationRemaining = settings.coolDown.clipEmpty;
-        dispatch(GameEventType.Clip_Empty, character.x, character.y);
-        return;
-      }
-    }
-
-    double d = 15;
-    double x = character.x + adj(character.aimAngle, d);
-    double y = character.y + opp(character.aimAngle, d) - 5;
-    character.state = CharacterState.Performing;
-    character.weapon.rounds--;
-
-    switch (character.weapon.type) {
-      case WeaponType.HandGun:
-        Projectile bullet = spawnBullet(character);
-        character.stateDurationRemaining = coolDown.handgun;
-        dispatch(GameEventType.Handgun_Fired, x, y);
-        break;
-      case WeaponType.Shotgun:
-        character.xv += velX(character.aimAngle + pi, 1);
-        character.yv += velY(character.aimAngle + pi, 1);
-        for (int i = 0; i < settings.shotgunBulletsPerShot; i++) {
-          spawnBullet(character);
-        }
-        Projectile bullet = projectiles.last;
-        character.stateDurationRemaining = coolDown.shotgun;
-        dispatch(GameEventType.Shotgun_Fired, x, y);
-        break;
-      case WeaponType.SniperRifle:
-        Projectile bullet = spawnBullet(character);
-        character.stateDurationRemaining = coolDown.sniperRifle;
-        dispatch(GameEventType.SniperRifle_Fired, x, y);
-        break;
-      case WeaponType.AssaultRifle:
-        Projectile bullet = spawnBullet(character);
-        character.stateDurationRemaining = coolDown.assaultRifle;
-        dispatch(GameEventType.MachineGun_Fired, x, y);
-        break;
-      default:
-        break;
-    }
   }
 
   void setCharacterStateRunning(Character character) {
@@ -1113,16 +1054,6 @@ extension GameFunctions on Game {
     }
   }
 
-  Projectile spawnBullet(Character character) {
-    return spawnProjectile(
-        character: character,
-        accuracy: getWeaponAccuracy(character.weapon.type),
-        speed: getBulletSpeed(character.weapon.type),
-        range: getWeaponRange(character.weapon.type),
-        damage: character.weapon.damage,
-        type: ProjectileType.Bullet);
-  }
-
   Projectile spawnFireball(Character character) {
     return spawnProjectile(
         character: character,
@@ -1250,11 +1181,8 @@ extension GameFunctions on Game {
           mode: NpcMode.Aggressive,
         ),
         health: settings.health.zombie,
-        weapons: [Weapon(
-          type: WeaponType.Unarmed,
-          damage: 0,
-          capacity: 0,
-        )]);
+        weapon: SlotType.Empty,
+        );
     zombies.add(zombie);
     return zombie;
   }
@@ -1393,19 +1321,18 @@ extension GameFunctions on Game {
   void updateInteractableNpcTarget(AI ai, int j) {
     if (ai.mode == NpcMode.Ignore) return;
 
-    Character closest = zombies[j];
-    num closestDistance = cheapDistance(closest, ai.character);
-    for (int i = j + 1; i < zombies.length; i++) {
+    var closest = zombies[j];
+    var closestDistance = cheapDistance(closest, ai.character);
+    for (var i = j + 1; i < zombies.length; i++) {
       if (!zombies[i].alive) continue;
-      num distance2 = cheapDistance(zombies[i], ai.character);
+      var distance2 = cheapDistance(zombies[i], ai.character);
       if (distance2 > closestDistance) continue;
       closest = zombies[i];
       closestDistance = distance2;
     }
 
-    double range = getWeaponRange(ai.character.weapon.type);
-    double actualDistance = distanceBetween(ai.character.x, ai.character.y, closest.x, closest.y);
-    if (actualDistance > range) {
+    final actualDistance = distanceBetween(ai.character.x, ai.character.y, closest.x, closest.y);
+    if (actualDistance > ai.character.weapon.range) {
       ai.clearTarget();
       ai.character.state = CharacterState.Idle;
     } else {
@@ -1669,15 +1596,6 @@ void playerInteract(Player player) {
   }
 }
 
-void changeWeapon(Player player, int index) {
-  if (player.deadOrBusy) return;
-  if (index < 0) return;
-  if (index == player.equippedIndex) return;
-  if (index >= player.weapons.length) return;
-  player.equippedIndex = index;
-  player.game.setCharacterState(player, CharacterState.Changing);
-}
-
 void playerSetAbilityTarget(Player player, double x, double y) {
   final ability = player.ability;
   if (ability == null) return;
@@ -1707,21 +1625,6 @@ void selectCharacterType(Player player, CharacterType value) {
   player.abilitiesDirty = true;
   player.level = 1;
   player.abilityPoints = 1;
-
-  switch (value) {
-    case CharacterType.Human:
-      player.weapons = [
-        Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0),
-        Weapon(type: WeaponType.HandGun, damage: 1, capacity: 21),
-        Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 12),
-        Weapon(type: WeaponType.SniperRifle, damage: 1, capacity: 8),
-        Weapon(type: WeaponType.AssaultRifle, damage: 1, capacity: 100),
-      ];
-      break;
-    case CharacterType.Zombie:
-      break;
-  }
-
   player.magic = player.maxMagic;
   player.health = player.maxHealth;
 }
@@ -1783,7 +1686,7 @@ class CustomGame extends Game {
   }
 
   Player playerJoin() {
-    return Player(game: this, y: 500);
+    return Player(game: this, y: 500, weapon: SlotType.Empty);
   }
 }
 

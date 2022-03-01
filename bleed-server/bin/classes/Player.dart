@@ -109,6 +109,7 @@ class Player extends Character with Entity {
 
   Player({
     required this.game,
+    required SlotType weapon,
     double x = 0,
     double y = 0,
     int team = noSquad,
@@ -123,6 +124,7 @@ class Player extends Character with Entity {
             speed: settings.playerSpeed,
             team: team,
             ai: ai,
+            weapon: weapon,
   ){
     maxMagic = magic;
     _magic = maxMagic;
@@ -417,13 +419,7 @@ extension PlayerProperties on Player {
 
   bool get isHuman => type == CharacterType.Human;
 
-  bool get unarmed {
-    for(Weapon weapon in weapons){
-      if (weapon.type == WeaponType.Unarmed) continue;
-      return false;
-    }
-    return true;
-  }
+  bool get unarmed => weapon.isEmpty;
 
   Ability getAbilityByIndex(int index){
     switch(index){

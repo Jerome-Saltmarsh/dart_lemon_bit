@@ -7,6 +7,7 @@ import '../classes/Player.dart';
 import '../classes/Weapon.dart';
 import '../common/ItemType.dart';
 import '../common/Quests.dart';
+import '../common/SlotType.dart';
 import '../common/WeaponType.dart';
 import '../engine.dart';
 import '../enums/npc_mode.dart';
@@ -30,8 +31,7 @@ class Town extends Game {
         x: -100,
         y: 1650,
         health: 100,
-        ai: AI(mode: NpcMode.Ignore),
-        weapon: Weapon(type: WeaponType.Unarmed, damage: 0, capacity: 0));
+        weapon: SlotType.Empty);
     npcs.add(npcDavis);
 
     events.onKilled.add(handlers.onKilledEarnOrb);
@@ -42,8 +42,7 @@ class Town extends Game {
         x: -300,
         y: 1950,
         health: 100,
-        ai: AI(mode: NpcMode.Ignore),
-        weapon: Weapon(type: WeaponType.Unarmed, damage: 0, capacity: 0));
+        weapon: SlotType.Empty);
     npcs.add(npcSmith);
 
     guard1 = InteractableNpc(
@@ -52,8 +51,8 @@ class Town extends Game {
         x: 180,
         y: 2000,
         health: 100,
-        ai: AI(mode: NpcMode.Stand_Ground),
-        weapon: Weapon(type: WeaponType.AssaultRifle, damage: 1, capacity: 0));
+        weapon: SlotType.Bow_Wooden
+    );
     npcs.add(guard1);
 
     guard2 = InteractableNpc(
@@ -61,8 +60,9 @@ class Town extends Game {
         onInteractedWith: _onGuardInteractedWith,
         x: 215,
         y: 1970,
-        ai: AI(mode: NpcMode.Stand_Ground),
-        health: 100,weapon: Weapon(type: WeaponType.SniperRifle, damage: 5, capacity: 0));
+        health: 100,
+        weapon: SlotType.Bow_Wooden
+    );
     npcs.add(guard2);
   }
 
@@ -85,10 +85,6 @@ class Town extends Game {
 
   void _onNpcInteractedWithMain(Player player) {
     player.health = 100;
-
-    for (Weapon weapon in player.weapons){
-      weapon.rounds = weapon.capacity;
-    }
 
     switch (player.questMain) {
       case MainQuest.Introduction:

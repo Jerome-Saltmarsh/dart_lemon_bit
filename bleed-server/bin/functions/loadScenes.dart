@@ -10,6 +10,7 @@ import '../classes/EnvironmentObject.dart';
 import '../classes/Scene.dart';
 import '../common/CharacterType.dart';
 import '../common/SceneJson.dart';
+import '../common/SlotType.dart';
 import '../common/Tile.dart';
 import '../common/enums/ObjectType.dart';
 import '../instances/scenes.dart';
@@ -113,7 +114,7 @@ Scene parseJsonToScene(Json json, String name) {
       final type = parseCharacterType(characterJson['type']);
       final x = characterJson.getDouble('x');
       final y = characterJson.getDouble('y');
-      characters.add(Character(type: type, x: x, y: y, health: 100, speed: 1));
+      characters.add(Character(type: type, x: x, y: y, health: 100, speed: 1, weapon: SlotType.Empty));
     }
   }
 
