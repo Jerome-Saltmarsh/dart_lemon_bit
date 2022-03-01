@@ -4,9 +4,7 @@ import 'package:bleed_client/classes/Ability.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
-import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
-import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Weapon.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterState.dart';
@@ -18,7 +16,6 @@ import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/PlayerEvent.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
 import 'package:bleed_client/common/SlotType.dart';
-import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/modules/modules.dart';
@@ -322,7 +319,7 @@ void parseCrates() {
 }
 
 void _parseEnvironmentObjects() {
-  print("parseEnvironmentObjects()");
+  print("parse.environmentObjects()");
   modules.isometric.state.environmentObjects.clear();
   game.torches.clear();
 
@@ -365,7 +362,7 @@ void _parseEnvironmentObjects() {
 
   // * on environmentObjects changed
   sortReversed(modules.isometric.state.environmentObjects, environmentObjectY);
-  modules.isometric.actions.applyEnvironmentObjectsToBakeMapping();
+  modules.isometric.actions.resetLighting();
 }
 
 void addParticleEmitter(ParticleEmitter value) {
@@ -692,15 +689,18 @@ ProjectileType _consumeProjectileType() {
 
 void _parseZombies() {
   game.totalZombies.value = consumeInt();
+  final zombies = game.zombies;
   for (int i = 0; i < game.totalZombies.value; i++) {
-    _consumeZombie(game.zombies[i]);
+    _consumeZombie(zombies[i]);
   }
 }
+
+final _npcs = game.interactableNpcs;
 
 void _parseNpcs() {
   game.totalNpcs = 0;
   while (!_simiColonConsumed()) {
-    _consumeInteractableNpc(game.interactableNpcs[game.totalNpcs]);
+    _consumeInteractableNpc(_npcs[game.totalNpcs]);
     game.totalNpcs++;
   }
 }
