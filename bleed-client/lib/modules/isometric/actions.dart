@@ -83,17 +83,19 @@ class IsometricActions {
   }
 
   void applyEnvironmentObjectsToBakeMapping(){
+    print("isometric.actions.applyEnvironmentObjectsToBakeMapping()");
     for (final env in state.environmentObjects){
-      if (env.type == ObjectType.Torch){
+      final type = env.type;
+      if (type == ObjectType.Torch){
         emitLightBakeHigh(env.x, env.y);
         continue;
       }
-      if (env.type == ObjectType.House01){
-        emitLightLow(state.bakeMap, env.x, env.y);
+      if (type == ObjectType.House01){
+        emitLightMedium(state.bakeMap, env.x, env.y);
         continue;
       }
-      if (env.type == ObjectType.House02){
-        emitLightLow(state.bakeMap, env.x, env.y);
+      if (type == ObjectType.House02){
+        emitLightMedium(state.bakeMap, env.x, env.y);
         continue;
       }
     }

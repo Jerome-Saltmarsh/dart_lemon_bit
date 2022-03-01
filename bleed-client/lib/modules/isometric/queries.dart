@@ -33,7 +33,7 @@ class IsometricQueries {
 
   Tile getTileAt(double x, double y){
     return getTile(
-        projectedToWorldY(x, y) ~/ tileSize,
+        projectedToWorldX(x, y) ~/ tileSize,
         projectedToWorldY(x, y) ~/ tileSize,
     );
   }
