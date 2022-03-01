@@ -217,12 +217,12 @@ class IsometricActions {
     final tilesDst = Float32List(total);
     final tilesSrc = Float32List(total);
 
-    for (int i = 0; i < tileLeft.length; ++i) {
-      final int index0 = i * 4;
-      final int index1 = index0 + 1;
-      final int index2 = index0 + 2;
-      final int index3 = index0 + 3;
-      final RSTransform rstTransform = tileTransforms[i];
+    for (var i = 0; i < tileLeft.length; ++i) {
+      final index0 = i * 4;
+      final index1 = index0 + 1;
+      final index2 = index0 + 2;
+      final index3 = index0 + 3;
+      final rstTransform = tileTransforms[i];
       tilesDst[index0] = rstTransform.scos;
       tilesDst[index1] = rstTransform.ssin;
       tilesDst[index2] = rstTransform.tx;
@@ -235,7 +235,6 @@ class IsometricActions {
     state.tilesDst = tilesDst;
     state.tilesSrc = tilesSrc;
   }
-
 
   void addRow(){
     final List<Tile> row = [];
