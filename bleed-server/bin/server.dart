@@ -6,10 +6,8 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'classes/Ability.dart';
 import 'classes/Game.dart';
 import 'classes/Player.dart';
-import 'classes/Weapon.dart';
 import 'common/AbilityMode.dart';
 import 'common/CharacterAction.dart';
 import 'common/CharacterState.dart';
@@ -18,13 +16,11 @@ import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
 import 'common/GameType.dart';
 import 'common/Modify_Game.dart';
-import 'common/PlayerEvent.dart';
 import 'common/RoyalCost.dart';
 import 'common/ServerResponse.dart';
 import 'common/SlotType.dart';
 import 'common/SlotTypeCategory.dart';
 import 'common/WeaponType.dart';
-import 'common/enums/Direction.dart';
 import 'common/version.dart';
 import 'compile.dart';
 import 'engine.dart';
@@ -32,18 +28,16 @@ import 'functions/generateName.dart';
 import 'functions/loadScenes.dart';
 import 'functions/withinRadius.dart';
 import 'games/Moba.dart';
-import 'games/Royal.dart';
 import 'games/world.dart';
 import 'settings.dart';
 import 'utilities.dart';
 import 'values/world.dart';
 
-const String _space = " ";
-final int errorIndex = ServerResponse.Error.index;
-final StringBuffer _buffer = StringBuffer();
-
-const List<ClientRequest> clientRequests = ClientRequest.values;
-final int clientRequestsLength = clientRequests.length;
+const _space = " ";
+final errorIndex = ServerResponse.Error.index;
+final _buffer = StringBuffer();
+const clientRequests = ClientRequest.values;
+final clientRequestsLength = clientRequests.length;
 
 void write(dynamic value) {
   _buffer.write(value);
