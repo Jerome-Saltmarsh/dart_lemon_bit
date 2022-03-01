@@ -37,14 +37,15 @@ import 'common/WeaponType.dart';
 import 'common/constants.dart';
 import 'common/enums/ObjectType.dart';
 
-// state
-String event = "";
-int _index = 0;
+// variables
+var event = "";
+var _index = 0;
 // constants
 const _space = " ";
 const _semiColon = ";";
 const _comma = ",";
 const _onePercent = 0.01;
+// finals
 final _consumer = StringBuffer();
 final _stringBuffer = StringBuffer();
 
@@ -52,14 +53,13 @@ String get _currentCharacter {
   return event[_index];
 }
 
-late ServerResponse _currentServerResponse;
-
 // functions
 void parseState() {
   _index = 0;
   modules.game.state.smoothed = 10;
-  while (_index < event.length) {
-    _currentServerResponse = _consumeServerResponse();
+  final eventLength = event.length;
+  while (_index < eventLength) {
+    final _currentServerResponse = _consumeServerResponse();
     switch (_currentServerResponse) {
       case ServerResponse.Tiles:
         _parseTiles();
