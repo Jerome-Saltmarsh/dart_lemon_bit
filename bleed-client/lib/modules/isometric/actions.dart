@@ -152,58 +152,44 @@ class IsometricActions {
   /// Expensive
   void resetTilesSrcDst() {
     print("isometric.actions.resetTilesSrcDst()");
-
     final tiles = state.tiles;
     final tileSize = constants.tileSize;
     final tileSizeHalf = tileSize / 2;
-    final List<RSTransform> tileTransforms = [];
-
-    for (int x = 0; x < tiles.length; x++) {
-      for (int y = 0; y < tiles[0].length; y++) {
-        tileTransforms.add(
-            RSTransform.fromComponents(
-            rotation: 0.0,
-            scale: 1.0,
-            anchorX: tileSizeHalf,
-            anchorY: 0,
-            translateX: getTileWorldX(x, y),
-            translateY: getTileWorldY(x, y))
-        );
-      }
-    }
+    final rows = tiles.length;
+    final columns = tiles[0].length;
 
     final List<double> tileLeft = [];
-    for (int row = 0; row < tiles.length; row++) {
-      for (int column = 0; column < tiles[0].length; column++) {
-        final tile = tiles[row][column];
+    for (var rowIndex = 0; rowIndex < rows; rowIndex++) {
+      final row = tiles[rowIndex];
+      for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
+        final tile = row[columnIndex];
+        final tileAboveLeft = rowIndex > 0 && tiles[rowIndex - 1][columnIndex] != Tile.Water;
+        final tileAboveRight = columnIndex > 0 && row[columnIndex - 1] != Tile.Water;
+        final tileAbove = rowIndex > 0 &&
+            columnIndex > 0 &&
+            tiles[rowIndex - 1][columnIndex - 1] != Tile.Water;
 
-        final tileAboveLeft = row > 0 && tiles[row - 1][column] != Tile.Water;
-        final tileAboveRight = column > 0 && tiles[row][column - 1] != Tile.Water;
-        final tileAbove = row > 0 &&
-            column > 0 &&
-            tiles[row - 1][column - 1] != Tile.Water;
-
-        if (tile == Tile.Water){
-          if (!tileAboveLeft && !tileAboveRight){
-            if (tileAbove){
+        if (tile == Tile.Water) {
+          if (!tileAboveLeft && !tileAboveRight) {
+            if (tileAbove) {
               tileLeft.add(waterCorner4);
-            }else{
+            } else {
               tileLeft.add(mapTileToSrcLeft(tile));
             }
-          }else if (tileAboveLeft){
-            if (tileAboveRight){
+          } else if (tileAboveLeft) {
+            if (tileAboveRight) {
               tileLeft.add(waterCorner3);
-            }else{
-              if (tileAbove){
+            } else {
+              if (tileAbove) {
                   tileLeft.add(waterHor);
-              }else{
+              } else {
                 tileLeft.add(waterCorner1);
               }
             }
-          }else{
-            if (tileAbove){
+          } else {
+            if (tileAbove) {
               tileLeft.add(waterVer);
-            }else{
+            } else {
               tileLeft.add(waterCorner2);
             }
           }
@@ -213,20 +199,22 @@ class IsometricActions {
       }
     }
 
-    final total = tileLeft.length * 4;
+    final tileLeftLength = tileLeft.length;
+    final total = tileLeftLength * 4;
     final tilesDst = Float32List(total);
     final tilesSrc = Float32List(total);
 
-    for (var i = 0; i < tileLeft.length; ++i) {
+    for (var i = 0; i < tileLeftLength; ++i) {
       final index0 = i * 4;
       final index1 = index0 + 1;
       final index2 = index0 + 2;
       final index3 = index0 + 3;
-      final rstTransform = tileTransforms[i];
-      tilesDst[index0] = rstTransform.scos;
-      tilesDst[index1] = rstTransform.ssin;
-      tilesDst[index2] = rstTransform.tx;
-      tilesDst[index3] = rstTransform.ty;
+      final row = i ~/ columns;
+      final column = i % columns;
+      tilesDst[index0] = 1;
+      tilesDst[index1] = 0;
+      tilesDst[index2] = getTileWorldX(row, column) - tileSizeHalf;
+      tilesDst[index3] = getTileWorldY(row, column);
       tilesSrc[index0] = atlas.tiles.x + tileLeft[i];
       tilesSrc[index1] = atlas.tiles.y;
       tilesSrc[index2] = tilesSrc[index0] + tileSize;
