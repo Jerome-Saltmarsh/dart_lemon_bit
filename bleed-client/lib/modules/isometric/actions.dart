@@ -44,8 +44,9 @@ class IsometricActions {
 
     for (var rowIndex = minRow; rowIndex < maxRow; rowIndex++) {
       final row = dynamic[rowIndex];
+      final rowIndex4 = totalColumnInt4 * 4;
       for (var columnIndex = minColumn; columnIndex < maxColumn; columnIndex++) {
-        final i = rowIndex * totalColumnInt4 + (columnIndex * 4);
+        final i = rowIndex4 + (columnIndex * 4);
         final top = atlasY + row[columnIndex] * tileSize;
         tilesSrc[i + 1] = top; // top
         tilesSrc[i + 3] = top + tileSize; // bottom
