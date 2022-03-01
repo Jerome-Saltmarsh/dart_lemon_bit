@@ -1031,8 +1031,9 @@ extension GameFunctions on Game {
 
   void _updateCharacterStateRunning(Character character) {
     final speed = character.speed;
-    character.x += adj(character.angle, speed);
-    character.y += opp(character.angle, speed);
+    final angle = character.angle;
+    character.x += adj(angle, speed);
+    character.y += opp(angle, speed);
   }
 
   void updateCharacterTileCollision(Character character) {
