@@ -415,11 +415,6 @@ class IsometricActions {
     final column = getColumn(x, y);
     final row = getRow(x, y);
     if (queries.outOfBounds(row, column)) return;
-    // if (row < 0) return;
-    // if (column < 0) return;
-    // if (row >= shader.length) return;
-    // if (column >= shader[0].length) return;
-
     applyShade(shader, row, column, Shade.Bright);
     applyShadeRing(shader, row, column, 1, Shade.Medium);
     applyShadeRing(shader, row, column, 2, Shade.Dark);
