@@ -47,6 +47,7 @@ class IsometricSpawn {
     final value = state.next;
     if (value != null){
       state.next = value.next;
+      value.next = null;
       return value;
     }
 
