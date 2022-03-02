@@ -163,6 +163,7 @@ const Map<SlotType, int> _slotTypeMagic = {
 };
 
 const Map<SlotType, int> _slotTypeDuration = {
+  SlotType.Empty: 20,
   SlotType.Sword_Wooden: 20,
   SlotType.Sword_Short: 25,
   SlotType.Sword_Long: 30,
