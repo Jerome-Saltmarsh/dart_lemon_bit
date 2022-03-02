@@ -75,7 +75,7 @@ class GameEvents {
   }
 
   void onEmeraldsChanged(int current, int previous){
-    print('onEmeraldsChanged(current: $current, previous: $previous)');
+    // print('onEmeraldsChanged(current: $current, previous: $previous)');
     if (current > previous) {
       state.framesSinceOrbAcquired = 0;
       state.lastOrbAcquired = OrbType.Emerald;
@@ -84,7 +84,7 @@ class GameEvents {
   }
 
   void onRubiesChanged(int current, int previous){
-    print('onRubiesChanged(current: $current)');
+    // print('onRubiesChanged(current: $current)');
     if (current > previous) {
       state.framesSinceOrbAcquired = 0;
       state.lastOrbAcquired = OrbType.Ruby;
@@ -93,7 +93,7 @@ class GameEvents {
   }
 
   void onTopazChanged(int current, int previous){
-    print('onTopazChanged(current: $current)');
+    // print('onTopazChanged(current: $current)');
     if (current > previous) {
       state.framesSinceOrbAcquired = 0;
       state.lastOrbAcquired = OrbType.Topaz;
@@ -221,6 +221,7 @@ class GameEvents {
         }
         break;
       case GameEventType.Zombie_Killed:
+        print("GameEventType.Zombie_Killed");
         isometric.spawn.headZombie(x: x, y: y, z: 0.5, angle: angle, speed: 4.0);
         isometric.spawn.arm(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
         isometric.spawn.arm(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));

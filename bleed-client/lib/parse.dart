@@ -64,8 +64,8 @@ void parseState() {
         break;
 
       case ServerResponse.Gem_Spawns:
-        final totalGems = consumeInt();
-        for (var i = 0; i < totalGems; i++) {
+        final total = consumeInt();
+        for (var i = 0; i < total; i++) {
           final type = consumeOrbType();
           final x = consumeDouble();
           final y = consumeDouble();

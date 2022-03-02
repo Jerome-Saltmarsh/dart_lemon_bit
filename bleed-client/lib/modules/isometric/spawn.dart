@@ -401,12 +401,12 @@ class IsometricSpawn {
         z: 1,
         angle: 0,
         speed: 0,
-        zv: 0.1,
+        zv: 0.05,
         weight: 0.0,
         duration: 50,
         rotation: 0,
         rotationV: 0,
-        scale: 1.0);
+        scale: 0.5);
   }
 
   void explosion(double x, double y) {
