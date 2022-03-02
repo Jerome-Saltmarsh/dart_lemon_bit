@@ -157,6 +157,14 @@ class IsometricActions {
     state.maxRow = min(rows, getRow(screen.right, screen.bottom));
     state.minColumn = max(0, getColumn(screen.right, screen.top));
     state.maxColumn = min(columns, getColumn(screen.left, screen.bottom));
+    if (state.minRow > state.maxRow){
+       state.minRow = state.maxRow;
+    }
+    if (state.minColumn > state.maxColumn){
+      state.minColumn = state.maxColumn;
+    }
+    // assert(state.minRow <= state.maxRow);
+    // assert(state.minColumn <= state.maxColumn);
   }
 
   void resetTilesSrcDst() {
