@@ -13,6 +13,9 @@ import 'package:lemon_engine/engine.dart';
 
 const pi2 = pi + pi;
 
+final _particles = isometric.state.particles;
+final _spawn = isometric.spawn;
+
 class IsometricUpdate {
 
   final IsometricState state;
@@ -35,22 +38,20 @@ class IsometricUpdate {
   }
 
   void _updateParticles() {
-    final particles = isometric.state.particles;
-
     insertionSort(
-        particles,
+        _particles,
         compare: compareParticles,
         start: 0,
-        end: particles.length);
+        end: _particles.length);
 
-    for (final particle in particles) {
+    for (final particle in _particles) {
       if (!particle.active) break;
       updateParticle(particle);
     }
 
 
     if (engine.frame % 4 == 0) {
-      for (final particle in particles) {
+      for (final particle in _particles) {
         if (!particle.active) continue;
         if (particle.type != ParticleType.Zombie_Head) continue;
         if (particle.xv + particle.yv < 0.005) continue;
@@ -123,7 +124,7 @@ class IsometricUpdate {
     for (final emitter in state.particleEmitters) {
       if (emitter.next-- > 0) continue;
       emitter.next = emitter.rate;
-      final particle = isometric.spawn.getAvailableParticle();
+      final particle = _spawn.getAvailableParticle();
       particle.active = true;
       particle.x = emitter.x;
       particle.y = emitter.y;
