@@ -36,15 +36,18 @@ class IsometricUpdate {
 
   void _updateParticles() {
     final particles = isometric.state.particles;
-    for (final particle in particles) {
-      if (!particle.active) continue;
-      updateParticle(particle);
-    }
+
     insertionSort(
         particles,
         compare: compareParticles,
         start: 0,
         end: particles.length);
+
+    for (final particle in particles) {
+      if (!particle.active) break;
+      updateParticle(particle);
+    }
+
 
     if (engine.frame % 4 == 0) {
       for (final particle in particles) {
