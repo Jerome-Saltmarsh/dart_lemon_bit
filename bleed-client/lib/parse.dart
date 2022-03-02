@@ -191,9 +191,8 @@ void parseState() {
         Future.delayed(Duration(milliseconds: 150), () {
           engine.cameraCenter(x, y);
         });
-        for (final particle in isometric.state.particles) {
-          particle.active = false;
-        }
+        isometric.state.particles.clear();
+        isometric.state.next = null;
         break;
 
       case ServerResponse.EnvironmentObjects:

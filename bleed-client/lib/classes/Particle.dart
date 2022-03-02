@@ -3,7 +3,6 @@ import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/opposite.dart';
 
 class Particle {
-  bool active = true;
   double x = 0;
   double y = 0;
   double z = 0;
@@ -25,6 +24,8 @@ class Particle {
   double size = 0;
 
   Particle? next;
+
+  bool get active => duration > 0;
 
   void setAngle({required double value, required double speed}){
     xv = adjacent(value, speed);

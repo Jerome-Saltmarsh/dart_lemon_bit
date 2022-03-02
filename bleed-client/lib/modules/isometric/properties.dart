@@ -43,7 +43,7 @@ class IsometricProperties {
     var totalParticles = 0;
     final particles = isometric.state.particles;
     final length = particles.length;
-    for (int i = 0; i < length; i++) {
+    for (var i = 0; i < length; i++) {
       if (!particles[i].active) continue;
       totalParticles++;
     }

@@ -41,7 +41,6 @@ class GameFactories {
     final particle = isometric.spawn.getAvailableParticle();
     particle.x = x;
     particle.y = y;
-    particle.active = true;
     particle.type = ParticleType.Pixel;
     particle.duration = randomInt(_minDuration, _maxDuration);
     particle.z = 0.5;
@@ -60,7 +59,6 @@ class GameFactories {
 
 
   void emitMyst(Particle particle) {
-    particle.active = true;
     particle.type = ParticleType.Myst;
     particle.duration = mystDuration;
     particle.x += giveOrTake(mystPositionRange);

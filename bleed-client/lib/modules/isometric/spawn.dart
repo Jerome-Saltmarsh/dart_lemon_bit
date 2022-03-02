@@ -74,6 +74,7 @@ class IsometricSpawn {
     double airFriction = 0.98,
     bool hasShadow = false,
   }) {
+    assert(duration > 0);
     final particle = getAvailableParticle();
     particle.size = _particleTypeSize[type] ?? 0;
     particle.type = type;
@@ -98,7 +99,6 @@ class IsometricSpawn {
     particle.rotation = rotation;
     particle.rotationV = rotationV;
     particle.bounciness = bounciness;
-    particle.active = true;
     particle.airFriction = airFriction;
   }
 

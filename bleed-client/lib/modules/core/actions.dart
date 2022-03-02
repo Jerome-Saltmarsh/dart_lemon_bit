@@ -193,15 +193,8 @@ class CoreActions {
     game.grenades.clear();
     game.collectables.clear();
     game.bulletHoleIndex = 0;
-
-    for (final bullet in game.bulletHoles) {
-      bullet.x = 0;
-      bullet.y = 0;
-    }
-
-    for (final particle in isometric.state.particles) {
-      particle.active = false;
-    }
+    isometric.state.particles.clear();
+    isometric.state.next = null;
 
     for (final bullet in game.bulletHoles) {
       bullet.x = 0;

@@ -52,7 +52,7 @@ class IsometricUpdate {
 
     if (engine.frame % 4 == 0) {
       for (final particle in _particles) {
-        if (!particle.active) continue;
+        if (!particle.active) break;
         if (particle.type != ParticleType.Zombie_Head) continue;
         if (particle.xv + particle.yv < 0.005) continue;
         spawn.blood(x: particle.x, y: particle.y, z: particle.z, zv: 0, angle: 0, speed: 0);
@@ -79,7 +79,7 @@ class IsometricUpdate {
     if (bounce) {
 
       if (!queries.tileIsWalkable(particle.x, particle.y)){
-        particle.active = false;
+        deactivateParticle(particle);
         return;
       }
 
@@ -98,7 +98,7 @@ class IsometricUpdate {
       particle.rotationV *= rotationFriction;
 
       if (!queries.tileIsWalkable(particle.x, particle.y)){
-        particle.active = false;
+        deactivateParticle(particle);
         return;
       }
     }
@@ -109,15 +109,19 @@ class IsometricUpdate {
       particle.z = 0;
     }
     if (particle.duration-- < 0) {
-      particle.active = false;
-      final next = state.next;
-      if (next != null){
-        state.next = particle;
-        particle.next = next;
-      }else {
-        state.next = particle;
-      }
+      deactivateParticle(particle);
     }
+  }
+
+  void deactivateParticle(Particle particle) {
+    particle.duration = 0;
+    final next = state.next;
+    if (next != null) {
+      state.next = particle;
+      particle.next = next;
+      return;
+    }
+    state.next = particle;
   }
 
   void _updateParticleEmitters() {
@@ -125,7 +129,6 @@ class IsometricUpdate {
       if (emitter.next-- > 0) continue;
       emitter.next = emitter.rate;
       final particle = _spawn.getAvailableParticle();
-      particle.active = true;
       particle.x = emitter.x;
       particle.y = emitter.y;
       emitter.emit(particle);

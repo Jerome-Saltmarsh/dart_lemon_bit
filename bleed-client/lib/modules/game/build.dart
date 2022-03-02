@@ -863,6 +863,19 @@ class GameBuild {
     });
   }
 
+  Widget get buildTotalParticles {
+    return Refresh((){
+      return text("Particles: ${isometric.state.particles.length}");
+    });
+  }
+
+
+  Widget get buildActiveParticles {
+    return Refresh((){
+      return text("Active Particles: ${isometric.properties.totalActiveParticles}");
+    });
+  }
+
   Widget version(){
     return text("v-0.1.0");
   }
@@ -898,6 +911,8 @@ class GameBuild {
           buildTotalZombies(),
           mouseRowColumn(),
           version(),
+          buildTotalParticles,
+          buildActiveParticles,
       ],
     );
   }
