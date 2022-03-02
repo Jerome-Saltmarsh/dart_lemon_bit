@@ -113,11 +113,13 @@ class IsometricActions {
     final maxRow = state.maxRow;
     final minColumn = state.minColumn;
     final maxColumn = state.maxColumn;
-    final dynamicShading = state.dynamic;
-    final bakeMap = state.bake;
+    final dynamic = state.dynamic;
+    final bake = state.bake;
     for (var row = minRow; row < maxRow; row++) {
+      final dynamicRow = dynamic[row];
+      final bakeRow = bake[row];
       for (var column = minColumn; column < maxColumn; column++) {
-        dynamicShading[row][column] = bakeMap[row][column];
+        dynamicRow[column] = bakeRow[column];
       }
     }
   }

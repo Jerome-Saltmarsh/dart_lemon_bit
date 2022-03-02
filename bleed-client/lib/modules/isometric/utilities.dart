@@ -36,17 +36,19 @@ Vector2 getTilePosition({required int row, required int column}){
   );
 }
 
-double get mouseUnprojectPositionX =>    projectedToWorldX(mouseWorldX, mouseWorldY);
+double get mouseUnprojectPositionX => projectedToWorldX(mouseWorldX, mouseWorldY);
 
 double get mouseUnprojectPositionY =>
     projectedToWorldY(mouseWorldX, mouseWorldY);
 
+final _tileSize =  isometric.constants.tileSize;
+
 int get mouseColumn {
-  return mouseUnprojectPositionX ~/ isometric.constants.tileSize;
+  return mouseUnprojectPositionX ~/ _tileSize;
 }
 
 int get mouseRow {
-  return mouseUnprojectPositionY ~/ isometric.constants.tileSize;
+  return mouseUnprojectPositionY ~/ _tileSize;
 }
 
 double shiftHeight(double z) {
