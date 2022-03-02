@@ -11,10 +11,11 @@ import 'package:bleed_client/modules/isometric/utilities.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 
-const pi2 = pi + pi;
+const _pi2 = pi + pi;
 
 final _particles = isometric.state.particles;
 final _spawn = isometric.spawn;
+final _screen = engine.screen;
 
 class IsometricUpdate {
 
@@ -30,11 +31,10 @@ class IsometricUpdate {
   }
 
   void updateVisibleTiles() {
-    final screen = engine.screen;
-    state.minRow = max(0, getRow(screen.left, screen.top));
-    state.maxRow = min(state.totalRowsInt, getRow(screen.right, screen.bottom));
-    state.minColumn = max(0, getColumn(screen.right, screen.top));
-    state.maxColumn = min(state.totalColumnsInt, getColumn(screen.left, screen.bottom));
+    state.minRow = max(0, getRow(_screen.left, _screen.top));
+    state.maxRow = min(state.totalRowsInt, getRow(_screen.right, _screen.bottom));
+    state.minColumn = max(0, getColumn(_screen.right, _screen.top));
+    state.maxColumn = min(state.totalColumnsInt, getColumn(_screen.left, _screen.bottom));
   }
 
   void _updateParticles() {
@@ -72,7 +72,7 @@ class IsometricUpdate {
     particle.x += particle.xv;
     particle.y += particle.yv;
     if (particle.rotationV != 0){
-      particle.rotation = (particle.rotation + particle.rotationV) % pi2;
+      particle.rotation = (particle.rotation + particle.rotationV) % _pi2;
     }
     particle.scale += particle.scaleV;
 
