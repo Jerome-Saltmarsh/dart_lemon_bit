@@ -53,6 +53,7 @@ class IsometricActions {
   /// Expensive method
   void resetLighting(){
     print("isometric.actions.resetLighting()");
+    refreshTileSize();
     resetBakeMap();
     resetDynamicMap();
     resetDynamicShadesToBakeMap();
@@ -146,10 +147,16 @@ class IsometricActions {
   }
 
   void refreshTileSize(){
-      state.totalRows.value = state.tiles.length;
-      state.totalColumns.value = state.tiles.isEmpty
-        ? 0
-        : state.tiles[0].length;
+    final screen = engine.screen;
+    final tiles = state.tiles;
+    final rows = tiles.length;
+    final columns = tiles.length > 0 ? tiles[0].length : 0;
+    state.totalRows.value = rows;
+    state.totalColumns.value = columns;
+    state.minRow = max(0, getRow(screen.left, screen.top));
+    state.maxRow = min(rows, getRow(screen.right, screen.bottom));
+    state.minColumn = max(0, getColumn(screen.right, screen.top));
+    state.maxColumn = min(columns, getColumn(screen.left, screen.bottom));
   }
 
   void resetTilesSrcDst() {
