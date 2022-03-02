@@ -293,8 +293,9 @@ class IsometricActions {
   }
 
   void applyShade(List<List<int>> shader, int row, int column, int value) {
-    if (shader[row][column] <= value) return;
-    shader[row][column] = value;
+    final shadeRow = shader[row];
+    if (shadeRow[column] <= value) return;
+    shadeRow[column] = value;
   }
 
   void emitLightLow(List<List<int>> shader, double x, double y) {
@@ -403,7 +404,6 @@ class IsometricActions {
     final column = getColumn(x, y);
     final row = getRow(x, y);
     if (queries.outOfBounds(row, column)) return;
-
     shadeBake(row, column, Shade.Bright);
     bakeShadeRing(row, column, 1, Shade.Bright);
     bakeShadeRing(row, column, 2, Shade.Medium);

@@ -7,7 +7,6 @@ import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/RoyalCost.dart';
 import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
-import 'package:bleed_client/common/version.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/modules/game/actions.dart';
