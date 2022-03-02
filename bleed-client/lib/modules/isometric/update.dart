@@ -106,6 +106,13 @@ class IsometricUpdate {
     }
     if (particle.duration-- < 0) {
       particle.active = false;
+      final next = state.next;
+      if (next != null){
+        state.next = particle;
+        particle.next = next;
+      }else {
+        state.next = particle;
+      }
     }
   }
 

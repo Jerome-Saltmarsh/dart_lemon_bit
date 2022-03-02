@@ -24,6 +24,8 @@ class Particle {
   bool hasShadow = false;
   double size = 0;
 
+  Particle? next;
+
   void setAngle({required double value, required double speed}){
     xv = adjacent(value, speed);
     yv = opposite(value, speed);

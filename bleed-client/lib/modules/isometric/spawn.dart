@@ -45,10 +45,16 @@ class IsometricSpawn {
 
   Particle getAvailableParticle() {
     // TODO Optimize
-    for (final particle in particles) {
-      if (particle.active) continue;
-      return particle;
+    // for (final particle in particles) {
+    //   if (particle.active) continue;
+    //   return particle;
+    // }
+    final value = state.next;
+    if (value != null){
+      state.next = value.next;
+      return value;
     }
+
     final instance = Particle();
     particles.add(instance);
     return instance;

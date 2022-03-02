@@ -46,6 +46,8 @@ class IsometricState {
   int minColumn = 0;
   int maxColumn = 0;
 
+  Particle? next;
+
   // properties
   int getShade(int row, int column){
     if (row < 0) return Shade.Pitch_Black;
