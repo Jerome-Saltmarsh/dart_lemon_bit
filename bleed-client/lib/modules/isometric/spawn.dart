@@ -399,7 +399,7 @@ class IsometricSpawn {
         type: ParticleType.Orb_Ruby,
         x: x,
         y: y,
-        z: 1,
+        z: 0.5,
         angle: 0,
         speed: 0,
         zv: 0.05,
@@ -407,7 +407,9 @@ class IsometricSpawn {
         duration: 50,
         rotation: 0,
         rotationV: 0,
-        scale: 0.5);
+        scale: 0.3,
+        // scaleV: -0.01,
+    );
   }
 
   void explosion(double x, double y) {
