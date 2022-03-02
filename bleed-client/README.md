@@ -72,10 +72,6 @@
 [ ] Defense Tower
 [ ] Fix bug starting new game should reset light maps
 [ ] Fix Game Time
-[DEATHMATCH]
-[ ]  
-[BUGS]
-[ ] Objects culled at bottom of screen  
 [WEBSITE]
 [ ] Sign in with email password
 [ ] Sign up with email password  
@@ -95,7 +91,7 @@
 [ ] Base Building Module
 [x] Load Royal Map from cloud
 [ENGINE]
-[ ] Atlas Buffer 64
+[x] Atlas Buffer 64
 [ ] Auto cull render calls
 [ROYAL]
 [ ] Implement game over dialog

@@ -31,6 +31,7 @@ class GameState {
   final Watch<StoreTab> storeTab = Watch(storeTabs[0]);
   final Watch<bool> textMode = Watch(false);
   final Watch<SlotType> highLightSlotType = Watch(SlotType.Empty);
+  final highlightPanelPosition = Vector2(0, 0);
   final Watch<bool> frameSmoothing = Watch(true);
   final playerTextStyle = TextStyle(color: Colors.white);
   var panningCamera = false;

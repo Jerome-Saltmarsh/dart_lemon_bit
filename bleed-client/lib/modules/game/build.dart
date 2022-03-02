@@ -277,8 +277,10 @@ class GameBuild {
             ],
           )
         ),
-        right: (engine.screen.width - engine.mousePosition.x) + 50,
-        top: engine.mousePosition.y,
+        // right: (engine.screen.width - engine.mousePosition.x) + 50,
+        // top: engine.mousePosition.y,
+        right: 220,
+        top: state.highlightPanelPosition.y,
       );
     });
   }
@@ -804,6 +806,17 @@ class GameBuild {
         state.highLightSlotType.value = SlotType.Empty;
       }
     }, builder: (context, isOver) {
+
+      if (isOver){
+        final renderObject = context.findRenderObject();
+        if (renderObject != null){
+          final translation = renderObject.getTransformTo(null).getTranslation();
+          state.highlightPanelPosition.x = translation.x;
+          state.highlightPanelPosition.y = translation.y;
+        }
+      }
+
+
       return onPressed(
         callback: (){
           actions.purchaseSlotType(slotType);
