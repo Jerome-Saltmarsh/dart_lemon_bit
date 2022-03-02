@@ -202,8 +202,15 @@ class IsometricActions {
 
     final tileLeftLength = tileLeft.length;
     final total = tileLeftLength * 4;
-    final tilesDst = Float32List(total);
-    final tilesSrc = Float32List(total);
+    late Float32List tilesDst;
+    late Float32List tilesSrc;
+    if (state.tilesDst.length != total) {
+      tilesDst = Float32List(total);
+      tilesSrc = Float32List(total);
+    } else {
+      tilesDst = state.tilesDst;
+      tilesSrc = state.tilesSrc;
+    }
 
     for (var i = 0; i < tileLeftLength; ++i) {
       final index0 = i * 4;
