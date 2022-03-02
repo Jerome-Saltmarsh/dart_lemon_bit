@@ -6,14 +6,14 @@ import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 
-const  mystDuration = 700;
+const mystDuration = 700;
 
-final int _a = mystDuration - 25;
-final int _b = mystDuration - 50;
-final int _c = mystDuration - 75;
-final int _d = mystDuration - 100;
-final int _e = mystDuration - 150;
-final int _f = mystDuration - 200;
+const _a = mystDuration - 25;
+const _b = mystDuration - 50;
+const _c = mystDuration - 75;
+const _d = mystDuration - 100;
+const _e = mystDuration - 150;
+const _f = mystDuration - 200;
 
 const _mystIndex02 = 0;
 const _mystIndex05 = 1;
@@ -26,15 +26,33 @@ const _particleSize = 64.0;
 const pixelSize = 6.0;
 
 const _size8 = 8.0;
+const _size24 = 24.0;
 const _size32 = 64.0;
 const _size64 = 64.0;
 
 final _particles = atlas.particles;
+final _isometricState = isometric.state;
+
+const _orbRubyX = 2306.0;
+const _orbRubyY = 0.0;
+
+final _bloodX = atlas.blood.x;
+final _bloodY = atlas.blood.y;
 
 void mapParticleToSrc(Particle particle){
-  final shade = isometric.state.getShadeAtPosition(particle.x, particle.y);
+  final shade = _isometricState.getShadeAtPosition(particle.x, particle.y);
 
   switch(particle.type) {
+
+    case ParticleType.Blood:
+      final y = _bloodY - (shade * _size8);
+      engine.mapSrc(x: _bloodX, y: y, width: _size8, height: _size8);
+      return;
+
+    case ParticleType.Orb_Ruby:
+      engine.mapSrc(x: _orbRubyX, y: _orbRubyY, width: _size24, height: _size24);
+      return;
+
     case ParticleType.Pixel:
       final x = atlas.shades.x + (particle.hue * 8);
       final y = atlas.shades.y + (3 * 8);
@@ -73,12 +91,6 @@ void mapParticleToSrc(Particle particle){
       engine.mapSrc(x: x, y: y, width: _size32, height: _size32);
       return;
 
-    case ParticleType.Blood:
-      final x = atlas.blood.x;
-      final y = atlas.blood.y - (shade * _size8);
-      engine.mapSrc(x: x, y: y, width: _size8, height: _size8);
-      return;
-
     case ParticleType.Human_Head:
       final direction = convertAngleToDirectionInt(particle.rotation);
       final x = atlas.particles.shell.x + (direction * _size64);
@@ -94,6 +106,7 @@ void mapParticleToSrc(Particle particle){
       return;
 
     case ParticleType.Myst:
+      // TODO Optimize
       final index = _mapMystDurationToIndex(particle.duration);
       final x = atlas.myst.x;
       final y = atlas.myst.y + (index * _particleSize);

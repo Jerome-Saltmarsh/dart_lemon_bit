@@ -4,6 +4,7 @@ import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Explosion.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/common/OrbType.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_math/adjacent.dart';
@@ -36,15 +37,19 @@ const Map<ParticleType, double> _particleTypeSize = {
 class IsometricSpawn {
 
   final IsometricState state;
-  IsometricSpawn(this.state);
+  late final particles;
+  IsometricSpawn(this.state){
+    particles = state.particles;
+  }
 
   Particle getAvailableParticle() {
-    for (final particle in state.particles) {
+    // TODO Optimize
+    for (final particle in particles) {
       if (particle.active) continue;
       return particle;
     }
     final instance = Particle();
-    state.particles.add(instance);
+    particles.add(instance);
     return instance;
   }
 
@@ -388,14 +393,31 @@ class IsometricSpawn {
     effect.enabled = true;
   }
 
+  void orb(OrbType type, double x, double y) {
+    _particle(
+        type: ParticleType.Orb_Ruby,
+        x: x,
+        y: y,
+        z: 1,
+        angle: 0,
+        speed: 0,
+        zv: 0.1,
+        weight: 0.0,
+        duration: 50,
+        rotation: 0,
+        rotationV: 0,
+        scale: 1.0);
+  }
+
   void explosion(double x, double y) {
     spawnEffect(x: x, y: y, type: EffectType.Explosion, duration: 30);
     audio.explosion(x, y);
     modules.game.actions.spawnBulletHole(x, y);
-    for (int i = 0; i < randomInt(4, 10); i++) {
+    final shrapnelCount = randomInt(4, 10);
+    for (var i = 0; i < shrapnelCount; i++) {
       shrapnel(x: x, y: y, z: 0.3, zv: 1, angle: 1, speed: 1);
     }
-    for (int i = 0; i < randomInt(4, 10); i++) {
+    for (var i = 0; i < shrapnelCount; i++) {
       // fireYellow(x, y);
     }
   }

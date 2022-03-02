@@ -18,7 +18,9 @@ import '../common/CharacterType.dart';
 import '../common/GameEventType.dart';
 import '../common/GameStatus.dart';
 import '../common/GameType.dart';
+import '../common/GemSpawn.dart';
 import '../common/ItemType.dart';
+import '../common/OrbType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/SlotType.dart';
 import '../common/Tile.dart';
@@ -417,7 +419,11 @@ extension GameFunctions on Game {
       setCharacterState(target, CharacterState.Hurt);
       return;
     }
-    // @on target killed
+
+    if (src is Player) {
+      src.gemSpawns.add(GemSpawn(x: target.x, y: target.y, type: OrbType.Ruby));
+    }
+
     final targetAI = target.ai;
     if (targetAI != null) {
       target.active = false;

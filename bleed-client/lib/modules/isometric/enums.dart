@@ -22,5 +22,6 @@ enum ParticleType {
   Shrapnel,
   FireYellow,
   Myst,
-  Pixel
+  Pixel,
+  Orb_Ruby,
 }

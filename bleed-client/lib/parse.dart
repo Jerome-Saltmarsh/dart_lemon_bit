@@ -13,6 +13,7 @@ import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/ItemType.dart';
+import 'package:bleed_client/common/OrbType.dart';
 import 'package:bleed_client/common/PlayerEvent.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
 import 'package:bleed_client/common/SlotType.dart';
@@ -60,6 +61,16 @@ void parseState() {
     switch (_currentServerResponse) {
       case ServerResponse.Tiles:
         _parseTiles();
+        break;
+
+      case ServerResponse.Gem_Spawns:
+        final totalGems = consumeInt();
+        for (var i = 0; i < totalGems; i++) {
+          final type = consumeOrbType();
+          final x = consumeDouble();
+          final y = consumeDouble();
+          isometric.spawn.orb(type, x, y);
+        }
         break;
 
       case ServerResponse.Paths:
@@ -605,6 +616,10 @@ String _consumeSingleCharacter() {
   var char = _currentCharacter;
   _index += 2;
   return char;
+}
+
+OrbType consumeOrbType(){
+  return orbTypes[consumeInt()];
 }
 
 double consumeDouble() {

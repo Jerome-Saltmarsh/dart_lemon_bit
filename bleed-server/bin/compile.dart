@@ -251,6 +251,17 @@ void compilePlayer(StringBuffer buffer, Player player) {
   compilePlayerSlotTypes(buffer, player);
   _compilePlayerAbility(buffer, player);
   _compilePlayerEvents(buffer, player);
+
+  if (player.gemSpawns.isNotEmpty) {
+     _write(buffer, ServerResponse.Gem_Spawns.index);
+     _write(buffer, player.gemSpawns.length);
+     for(final gemSpawn in player.gemSpawns){
+       _write(buffer, gemSpawn.type.index);
+       _write(buffer, gemSpawn.x.toInt());
+       _write(buffer, gemSpawn.y.toInt());
+     }
+     player.gemSpawns.clear();
+  }
 }
 
 void compilePlayerOrbs(StringBuffer buffer, Player player) {

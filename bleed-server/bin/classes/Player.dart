@@ -4,12 +4,12 @@ import '../common/AbilityMode.dart';
 import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
+import '../common/GemSpawn.dart';
 import '../common/OrbType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/Quests.dart';
 import '../common/SlotType.dart';
 import '../common/SlotTypeCategory.dart';
-import '../common/WeaponType.dart';
 import '../constants/no_squad.dart';
 import '../engine.dart';
 import '../functions/generateName.dart';
@@ -19,7 +19,6 @@ import 'Ability.dart';
 import 'Character.dart';
 import 'Entity.dart';
 import 'Game.dart';
-import 'Weapon.dart';
 
 const _defaultMaxMagic = 10;
 
@@ -47,6 +46,8 @@ class Player extends Character with Entity {
   double mouseY = 0;
 
   final List<PlayerEvent> events = [];
+  final List<GemSpawn> gemSpawns = [];
+
   CharacterState characterState = CharacterState.Idle;
 
   final slots = _PlayerSlots();

@@ -7,6 +7,7 @@ import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
+import 'package:bleed_client/common/GemSpawn.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class IsometricState {
   Float32List tilesDst = Float32List(0);
   Float32List tilesSrc = Float32List(0);
   List<Particle> particles = [];
+  final List<GemSpawn> gemSpawns = [];
   final List<EnvironmentObject> environmentObjects = [];
   final List<List<int>> dynamic = [];
   final List<List<int>> bake = [];
