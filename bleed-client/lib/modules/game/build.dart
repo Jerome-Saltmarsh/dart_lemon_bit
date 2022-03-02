@@ -871,7 +871,10 @@ class GameBuild {
 
   Widget toggleAudioEnabled(){
     return WatchBuilder(audio.enabled, (bool enabled){
-      return button("Audio: $enabled", audio.toggle);
+      return button(text("Audio", decoration: enabled
+          ? TextDecoration.none
+          : TextDecoration.lineThrough
+      ), audio.toggle);
     });
   }
 

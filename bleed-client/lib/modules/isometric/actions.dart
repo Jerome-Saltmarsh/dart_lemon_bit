@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/common/ObjectType.dart';
@@ -149,7 +148,6 @@ class IsometricActions {
         : state.tiles[0].length;
   }
 
-  /// Expensive
   void resetTilesSrcDst() {
     print("isometric.actions.resetTilesSrcDst()");
     final tiles = state.tiles;
@@ -157,7 +155,6 @@ class IsometricActions {
     final tileSizeHalf = tileSize / 2;
     final rows = tiles.length;
     final columns = tiles[0].length;
-
     final List<double> tileLeft = [];
     for (var rowIndex = 0; rowIndex < rows; rowIndex++) {
       final row = tiles[rowIndex];
