@@ -295,8 +295,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          // if game in progress
-
           if (player.sceneChanged) {
             player.sceneChanged = false;
             _buffer.clear();

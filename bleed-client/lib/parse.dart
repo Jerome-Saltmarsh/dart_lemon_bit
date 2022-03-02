@@ -64,6 +64,7 @@ void parseState() {
         break;
 
       case ServerResponse.Gem_Spawns:
+        print("ServerResponse.Gem_Spawns");
         final total = consumeInt();
         for (var i = 0; i < total; i++) {
           final type = consumeOrbType();

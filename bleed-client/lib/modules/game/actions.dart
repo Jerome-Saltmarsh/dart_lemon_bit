@@ -25,12 +25,10 @@ class GameActions {
   }
 
   void playerPerform() {
-    print("game.actions.playerPerform()");
     setCharacterAction(CharacterAction.Perform);
   }
 
   void playerRun() {
-    print("game.actions.playerRun()");
     setCharacterAction(CharacterAction.Run);
   }
 
@@ -208,7 +206,6 @@ class GameActions {
   }
 
   modifyGame(ModifyGame request){
-    print("sendRequest.modifyGame($request)");
     sendClientRequest(ClientRequest.Modify_Game, request.index);
   }
 

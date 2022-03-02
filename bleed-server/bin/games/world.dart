@@ -7,7 +7,8 @@ import 'wilderness_east.dart';
 import 'wilderness_north_01.dart';
 import 'wilderness_west_01.dart';
 
-int worldTime = 0;
+/// in seconds
+int worldTime = secondsPerHour * 12;
 
 class World {
   late Game town;

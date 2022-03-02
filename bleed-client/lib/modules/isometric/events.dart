@@ -12,7 +12,7 @@ class IsometricEvents {
 
   void register(){
     if (state.eventsRegistered) return;
-    print("isometric.events.register()");
+    // print("isometric.events.register()");
     state.eventsRegistered = true;
     isometric.subscriptions.onAmbientChanged = state.ambient.onChanged(onAmbientChanged);
     state.time.onChanged(onTimeChanged);
@@ -23,7 +23,7 @@ class IsometricEvents {
   }
 
   void onMaxAmbientBrightnessChanged(int maxShade){
-    print("onShadeMaxChanged($maxShade)");
+    // print("onShadeMaxChanged($maxShade)");
     final ambient = state.ambient.value;
     if (maxShade == ambient) return;
 
@@ -35,12 +35,12 @@ class IsometricEvents {
   }
 
   void onTotalColumnsChanged(int value){
-    print("isometric.events.onTotalColumnsChanged($value)");
+    // print("isometric.events.onTotalColumnsChanged($value)");
     state.totalColumnsInt = value;
   }
 
   void onTotalRowsChanged(int value){
-    print("isometric.events.onTotalRowsChanged($value)");
+    // print("isometric.events.onTotalRowsChanged($value)");
     state.totalRowsInt = value;
   }
 
@@ -51,7 +51,7 @@ class IsometricEvents {
   }
 
   void onHourChanged(int hour){
-    print("isometric.events.onHourChanged($hour)");
+    // print("isometric.events.onHourChanged($hour)");
     final phase = modules.isometric.map.hourToPhase(hour);
     final phaseBrightness = modules.isometric.map.phaseToShade(phase);
     final maxAmbientBrightness = state.maxAmbientBrightness.value;
@@ -60,7 +60,7 @@ class IsometricEvents {
   }
 
   void onAmbientChanged(int value){
-    print("isometric.events.onAmbientChanged($value)");
+    // print("isometric.events.onAmbientChanged($value)");
     actions.resetLighting();
   }
 }

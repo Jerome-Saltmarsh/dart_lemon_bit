@@ -56,7 +56,6 @@ class GameEvents {
   }
 
   void onPlayerWeaponChanged(SlotType value){
-    print("game.events.onPlayerArmourChanged($value)");
     if (value.isSword && value.isMetal) {
       audio.drawSword(screenCenterWorldX, screenCenterWorldY);
     } else {
@@ -65,12 +64,10 @@ class GameEvents {
   }
 
   void onPlayerArmourChanged(SlotType armour){
-    print("game.events.onPlayerArmourChanged($armour)");
     audio.changeCloths(screenCenterWorldX, screenCenterWorldY);
   }
 
   void onPlayerHelmChanged(SlotType value){
-    print("game.events.onPlayerHelmChanged($value)");
     audio.changeCloths(screenCenterWorldX, screenCenterWorldY);
   }
 
