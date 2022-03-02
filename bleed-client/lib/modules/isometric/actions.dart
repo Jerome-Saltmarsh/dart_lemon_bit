@@ -61,14 +61,16 @@ class IsometricActions {
 
   void resetBakeMap(){
     print("isometric.actions.resetBakeMap()");
-    state.bake.clear();
+    final bake = state.bake;
+    final ambient = state.ambient.value;
     final rows = state.totalRows.value;
     final columns = state.totalColumns.value;
+    bake.clear();
     for (var row = 0; row < rows; row++) {
       final List<int> _baked = [];
-      state.bake.add(_baked);
+      bake.add(_baked);
       for (var column = 0; column < columns; column++) {
-        _baked.add(state.ambient.value);
+        _baked.add(ambient);
       }
     }
     applyEnvironmentObjectsToBakeMapping();
@@ -472,7 +474,7 @@ class IsometricActions {
   }
 
   void applyEmissionFromProjectiles() {
-    for (int i = 0; i < game.totalProjectiles; i++) {
+    for (var i = 0; i < game.totalProjectiles; i++) {
       final projectile = game.projectiles[i];
       if (projectile.type == ProjectileType.Fireball) {
         emitLightBrightSmall(state.dynamic, projectile.x, projectile.y);
