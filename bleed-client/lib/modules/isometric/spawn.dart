@@ -32,6 +32,7 @@ const Map<ParticleType, double> _particleTypeSize = {
   ParticleType.Arm: 64,
   ParticleType.Leg: 64,
   ParticleType.Pixel: 8,
+  ParticleType.Orb_Ruby: 24.0,
 };
 
 class IsometricSpawn {

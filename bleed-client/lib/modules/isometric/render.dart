@@ -183,14 +183,14 @@ class IsometricRender {
         final particle = particles[indexParticle];
 
         if (particle.type == ParticleType.Blood) {
-          _renderParticle(particle);
+          renderParticle(particle);
           indexParticle++;
           continue;
         }
 
         if (!zombiesRemaining || particle.y < zombies[indexZombie].y) {
           if (!npcsRemaining || particle.y < interactableNpcs[indexNpc].y) {
-            _renderParticle(particle);
+            renderParticle(particle);
             indexParticle++;
             continue;
           }
@@ -210,7 +210,7 @@ class IsometricRender {
     }
   }
 
-  void _renderParticle(Particle value){
+  void renderParticle(Particle value){
     if (!onScreen(value.x, value.y)) return;
     final shade = state.getShadeAtPosition(value.x, value.y);
     if (shade >= Shade.Very_Dark) return;
