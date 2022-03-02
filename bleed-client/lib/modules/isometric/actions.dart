@@ -448,7 +448,7 @@ class IsometricActions {
     // applyEmissionFromCharactersMedium(game.zombies);
     applyEmissionFromCharactersMedium(game.interactableNpcs);
     applyEmissionFromProjectiles();
-    applyEmissionFromItems();
+    // applyEmissionFromItems();
     applyEmissionFromEffects();
   }
 
@@ -476,11 +476,11 @@ class IsometricActions {
   }
 
   void applyEmissionFromProjectiles() {
-    for (var i = 0; i < game.totalProjectiles; i++) {
+    final total = game.totalProjectiles;
+    for (var i = 0; i < total; i++) {
       final projectile = game.projectiles[i];
-      if (projectile.type == ProjectileType.Fireball) {
-        emitLightBrightSmall(state.dynamic, projectile.x, projectile.y);
-      }
+      if (projectile.type != ProjectileType.Fireball) continue;
+      emitLightBrightSmall(state.dynamic, projectile.x, projectile.y);
     }
   }
 }
