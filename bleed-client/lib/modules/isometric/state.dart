@@ -50,13 +50,13 @@ class IsometricState {
 
   // properties
   int getShade(int row, int column){
-    if (row < 0) return Shade.Pitch_Black;
-    if (column < 0) return Shade.Pitch_Black;
+    if (row < 0) return Pitch_Black;
+    if (column < 0) return Pitch_Black;
     if (row >= totalRowsInt){
-      return Shade.Pitch_Black;
+      return Pitch_Black;
     }
     if (column >= totalColumnsInt){
-      return Shade.Pitch_Black;
+      return Pitch_Black;
     }
     return dynamic[row][column];
   }

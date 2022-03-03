@@ -6,6 +6,8 @@ class Shade {
   static const Pitch_Black = 4;
 }
 
+const Pitch_Black = Shade.Pitch_Black;
+
 String shadeName(int shade){
   switch(shade){
     case Shade.Bright:
