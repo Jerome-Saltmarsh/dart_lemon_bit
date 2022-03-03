@@ -58,7 +58,7 @@ class GameRender {
     drawBulletHoles(game.bulletHoles);
 
     drawAbility();
-    attackTargetCircle();
+    // attackTargetCircle();
 
     if (state.compilePaths.value) {
       drawPaths();

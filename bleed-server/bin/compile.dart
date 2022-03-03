@@ -255,7 +255,6 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _compilePlayerEvents(buffer, player);
 
   if (player.gemSpawns.isNotEmpty) {
-    print("compiling gems");
      _write(buffer, ServerResponse.Gem_Spawns.index);
      _write(buffer, player.gemSpawns.length);
      for(final gemSpawn in player.gemSpawns){

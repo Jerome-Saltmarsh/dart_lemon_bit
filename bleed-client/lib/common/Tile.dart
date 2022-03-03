@@ -26,7 +26,7 @@ extension TileExtension on Tile {
   bool get isBoundary => this == Tile.Boundary;
 }
 
-const List<Tile> tiles = Tile.values;
+const tiles = Tile.values;
 
 String parseTileToString(Tile tile){
   return tile.toString().replaceAll("Tile.", "");

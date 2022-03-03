@@ -506,13 +506,14 @@ void _parseGrenades() {
 }
 
 void _parseGameJoined() {
-  modules.game.state.player.id = consumeInt();
-  modules.game.state.player.uuid.value = _consumeString();
-  modules.game.state.player.x = consumeDouble();
-  modules.game.state.player.y = consumeDouble();
+  final player = modules.game.state.player;
+  player.id = consumeInt();
+  player.uuid.value = _consumeString();
+  player.x = consumeDouble();
+  player.y = consumeDouble();
   game.id = consumeInt();
-  modules.game.state.player.team = consumeInt();
-  print("ServerResponse.Game_Joined: playerId: ${modules.game.state.player.id} gameId: ${game.id}");
+  player.team = consumeInt();
+  print("ServerResponse.Game_Joined: playerId: ${player.id} gameId: ${game.id}");
 }
 
 ObjectType _consumeEnvironmentObjectType() {
@@ -659,8 +660,9 @@ bool _commaConsumed() {
 
 void _parsePlayers() {
   game.totalHumans = consumeInt();
-  for (int i = 0; i < game.totalHumans; i++) {
-    _consumeHuman(game.humans[i]);
+  final humans = game.humans;
+  for (var i = 0; i < game.totalHumans; i++) {
+    _consumeHuman(humans[i]);
   }
 }
 
@@ -709,9 +711,10 @@ ProjectileType _consumeProjectileType() {
 }
 
 void _parseZombies() {
-  game.totalZombies.value = consumeInt();
+  final total = consumeInt();
+  game.totalZombies.value = total;
   final zombies = game.zombies;
-  for (int i = 0; i < game.totalZombies.value; i++) {
+  for (var i = 0; i < total; i++) {
     _consumeZombie(zombies[i]);
   }
 }
