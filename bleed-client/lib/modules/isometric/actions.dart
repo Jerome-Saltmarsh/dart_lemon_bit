@@ -353,14 +353,17 @@ class IsometricActions {
     final cEnd = min(column + size, state.maxColumn);
     if (cEnd < state.minColumn) return;
 
+    final rowStart = shader[rStart];
+    final rowEnd = shader[rEnd];
+
     for (var r = rStart; r <= rEnd; r++) {
       final shadeRow = shader[r];
       applyShadeAtRow(shadeRow, cStart, shade);
       applyShadeAtRow(shadeRow, cEnd, shade);
     }
     for (var c = cStart + 1; c < cEnd; c++) {
-      applyShade(shader, rStart, c, shade);
-      applyShade(shader, rEnd, c, shade);
+      applyShadeAtRow(rowStart, c, shade);
+      applyShadeAtRow(rowEnd, c, shade);
     }
   }
 
