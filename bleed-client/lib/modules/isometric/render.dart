@@ -53,6 +53,7 @@ const _animationRunning2 = [16, 17, 18, 19];
 enum SpriteLayer {
   Shadow,
   Legs_Blue,
+  Legs_Swat,
   Staff_Wooden,
   Sword_Wooden,
   Sword_Steel,
@@ -61,10 +62,12 @@ enum SpriteLayer {
   Bow_Wooden,
   Body_Cyan,
   Body_Blue,
+  Body_Swat,
   Head_Plain,
   Head_Steel,
   Head_Rogue,
   Head_Magic,
+  Head_Swat,
 }
 
 class IsometricRender {
@@ -329,7 +332,7 @@ class IsometricRender {
             _framesPerDirectionZombie
         );
       case CharacterState.Running:
-        return loop(
+        return loop4(
             animation: animations.zombie.running,
             character: character,
             framesPerDirection: _framesPerDirectionZombie
@@ -354,10 +357,23 @@ class IsometricRender {
     required int framesPerDirection,
     double size = _size64
   }){
+    // TODO Optimize length call
     final animationFrame = character.frame % animation.length;
     final frame = animation[animationFrame] - 1;
     return (character.direction * framesPerDirection * size) + (frame * size);
   }
+
+  double loop4({
+    required List<int> animation,
+    required Character character,
+    required int framesPerDirection,
+    double size = _size64
+  }){
+    final animationFrame = character.frame % 4;
+    final frame = animation[animationFrame] - 1;
+    return (character.direction * framesPerDirection * size) + (frame * size);
+  }
+
 
   double animate({
         required List<int> animation,
@@ -375,6 +391,13 @@ class IsometricRender {
     _renderCharacterPartLegs(character);
     _renderCharacterPartBody(character);
     _renderCharacterPartHead(character);
+  }
+
+  void _renderCharacterSwat(Character character){
+    _renderCharacterShadow(character);
+    _renderCharacterPart(character, SpriteLayer.Legs_Swat);
+    _renderCharacterPart(character, SpriteLayer.Body_Swat);
+    _renderCharacterPart(character, SpriteLayer.Head_Swat);
   }
 
   void _renderCharacterShadow(Character character){
@@ -489,7 +512,7 @@ class IsometricRender {
         );
 
       case CharacterState.Running:
-        return loop(
+        return loop4(
             animation: variation ? _animationRunning2 : _animationRunning,
             character: character,
             framesPerDirection: _framesPerDirectionHuman
