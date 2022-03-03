@@ -50,6 +50,8 @@ const _healthBarMargin = 50;
 const _animationRunning = [12, 13, 14, 15];
 const _animationRunning2 = [16, 17, 18, 19];
 
+final _screen = engine.screen;
+
 enum SpriteLayer {
   Shadow,
   Legs_Blue,
@@ -214,7 +216,7 @@ class IsometricRender {
   }
 
   void renderParticle(Particle value){
-    if (!onScreen(value.x, value.y)) return;
+    if (!engine.screen.contains(value.x, value.y)) return;
     final shade = state.getShadeAtPosition(value.x, value.y);
     if (shade >= Shade.Very_Dark) return;
 
@@ -276,7 +278,7 @@ class IsometricRender {
 
     if (character.dead) return;
 
-    if (!onScreen(character.x, character.y)) return;
+    if (!_screen.contains(character.x, character.y)) return;
     final shade = state.getShadeAtPosition(character.x, character.y);
     if (shade > Shade.Dark) return;
     renderCharacterHealthBar(character);
@@ -558,7 +560,7 @@ class IsometricRender {
   }
 
   void drawCharacterHealthBar(Character character){
-    if (!onScreen(character.x, character.y)) return;
+    if (!engine.screen.contains(character.x, character.y)) return;
     final shade = state.getShadeAtPosition(character.x, character.y);
     if (shade >= Shade.Dark) return;
     // engine.render(dstX: character.x , dstY: character.y, srcX: atlas.shades.red1.x, srcY: atlas.shades.red1.y, anchorX: _widthHalf);

@@ -204,7 +204,7 @@ class GameRender {
   void drawBulletHoles(List<Vector2> bulletHoles) {
     for (final bulletHole in bulletHoles) {
       if (bulletHole.x == 0) return;
-      if (!onScreen(bulletHole.x, bulletHole.y)) continue;
+      if (!engine.screen.contains(bulletHole.x, bulletHole.y)) continue;
       if (isometric.state.inDarkness(bulletHole.x, bulletHole.y)) continue;
       engine.render(
           dstX: bulletHole.x,
