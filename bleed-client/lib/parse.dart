@@ -120,11 +120,10 @@ void parseState() {
         break;
 
       case ServerResponse.Player_Attack_Target:
-        modules.game.state.player.attackTarget.x = consumeDouble();
-        modules.game.state.player.attackTarget.y = consumeDouble();
-
-        if (modules.game.state.player.attackTarget.x != 0 &&
-            modules.game.state.player.attackTarget.y != 0) {
+        final attackTarget = modules.game.state.player.attackTarget;
+        attackTarget.x = consumeDouble();
+        attackTarget.y = consumeDouble();
+        if (attackTarget.x != 0 && attackTarget.y != 0) {
           engine.cursorType.value = CursorType.Click;
         } else {
           engine.cursorType.value = CursorType.Basic;

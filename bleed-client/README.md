@@ -126,6 +126,7 @@
 [ ] Gem flies out of killed enemy then the particles come to you
 [ ] Destructible Items to collect gems
 [ ] Rain Particles
+[ ] FIX Aim circle remains after target killed
 [x] FIX Change scene
 [x] Character State - Hurt
 [x] Fix editor
