@@ -12,6 +12,10 @@ void mapParticleToDst(Particle particle){
   final renderScale = (one + (particle.z * zToScaleRatio)) * particle.scale;
   final sizeHalf = particle.size * half;
 
+  if (renderScale <= 0){
+    throw Exception();
+  }
+
   return engine.mapDst(
     scale: renderScale,
     rotation: zero,

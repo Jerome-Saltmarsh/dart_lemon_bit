@@ -43,6 +43,8 @@ class IsometricSpawn {
     particles = state.particles;
   }
 
+  int get bodyPartDuration => randomInt(120, 200);
+
   Particle getAvailableParticle() {
     final value = state.next;
     if (value != null){
@@ -118,7 +120,7 @@ class IsometricSpawn {
         speed: speed,
         zv: randomBetween(0.04, 0.06),
         weight: 0.25,
-        duration: randomInt(120, 200),
+        duration: bodyPartDuration,
         rotation: giveOrTake(pi),
         rotationV: giveOrTake(0.25),
         scale: 0.75,
@@ -144,7 +146,7 @@ class IsometricSpawn {
         angle: angle,
         speed: speed,
         weight: 0.135,
-        duration: 200 + giveOrTake(50).toInt(),
+        duration: bodyPartDuration,
         rotation: 0,
         rotationV: 0,
         scale: 0.6,
@@ -193,7 +195,7 @@ class IsometricSpawn {
       speed: speed,
       zv: randomBetween(0, 0.03),
       weight: 0.25,
-      duration: randomInt(120, 200),
+      duration: bodyPartDuration,
       rotation: giveOrTake(pi),
       rotationV: giveOrTake(10),
       scale: 1,
@@ -218,7 +220,7 @@ class IsometricSpawn {
         speed: speed,
         zv: randomBetween(0.04, 0.06),
         weight: 0.25,
-        duration: randomInt(90, 150),
+        duration: bodyPartDuration,
         rotation: giveOrTake(pi),
         rotationV: giveOrTake(0.25),
         scale: 1,
@@ -340,7 +342,7 @@ class IsometricSpawn {
       speed: speed,
       zv: 0.06,
       weight: 0.15,
-      duration: 350,
+      duration: bodyPartDuration,
       rotation: 0,
       rotationV: 0.05,
       scale: 0.75,
@@ -365,7 +367,7 @@ class IsometricSpawn {
         speed: speed,
         zv: randomBetween(0, 0.03),
         weight: 0.25,
-        duration: randomInt(90, 150),
+        duration: bodyPartDuration,
         rotation: giveOrTake(pi),
         rotationV: giveOrTake(0.25),
         scale: 0.75);
