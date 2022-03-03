@@ -68,10 +68,10 @@ class IsometricActions {
     final columns = state.totalColumns.value;
     bake.clear();
     for (var row = 0; row < rows; row++) {
-      final List<int> _baked = [];
+      final _baked = Int32List(columns);
       bake.add(_baked);
       for (var column = 0; column < columns; column++) {
-        _baked.add(ambient);
+        _baked[column] = ambient;
       }
     }
     applyEnvironmentObjectsToBakeMapping();
@@ -80,12 +80,15 @@ class IsometricActions {
   void resetDynamicMap(){
     print("isometric.actions.resetDynamicMap()");
     final dynamic = state.dynamic;
+    final rows = state.totalRows.value;
+    final columns = state.totalColumns.value;
+    final ambient = state.ambient.value;
     dynamic.clear();
-    for (var row = 0; row < state.totalRows.value; row++) {
-      final List<int> dynamicRow = [];
+    for (var row = 0; row < rows; row++) {
+      final dynamicRow = Int32List(columns);
       dynamic.add(dynamicRow);
-      for (var column = 0; column < state.totalColumns.value; column++) {
-        dynamicRow.add(state.ambient.value);
+      for (var column = 0; column < columns; column++) {
+        dynamicRow[column] = ambient;
       }
     }
   }
