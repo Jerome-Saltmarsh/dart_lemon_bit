@@ -68,7 +68,7 @@ class IsometricActions {
     final columns = state.totalColumns.value;
     bake.clear();
     for (var row = 0; row < rows; row++) {
-      final _baked = Int32List(columns);
+      final _baked = Int8List(columns);
       bake.add(_baked);
       for (var column = 0; column < columns; column++) {
         _baked[column] = ambient;
@@ -85,7 +85,7 @@ class IsometricActions {
     final ambient = state.ambient.value;
     dynamic.clear();
     for (var row = 0; row < rows; row++) {
-      final dynamicRow = Int32List(columns);
+      final dynamicRow = Int8List(columns);
       dynamic.add(dynamicRow);
       for (var column = 0; column < columns; column++) {
         dynamicRow[column] = ambient;

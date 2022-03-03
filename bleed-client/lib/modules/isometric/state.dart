@@ -28,8 +28,8 @@ class IsometricState {
   List<Particle> particles = [];
   final List<GemSpawn> gemSpawns = [];
   final List<EnvironmentObject> environmentObjects = [];
-  final List<Int32List> dynamic = [];
-  final List<Int32List> bake = [];
+  final List<Int8List> dynamic = [];
+  final List<Int8List> bake = [];
   final List<Item> items = [];
   final Watch<int> totalColumns = Watch(0);
   final Watch<int> totalRows = Watch(0);
