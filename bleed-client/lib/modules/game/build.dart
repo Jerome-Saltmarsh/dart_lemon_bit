@@ -876,6 +876,12 @@ class GameBuild {
     });
   }
 
+  Widget get tileAtMouse {
+    return Refresh((){
+      return text("Tile: ${isometric.queries.tileAtMouse.name}");
+    });
+  }
+
   Widget version(){
     return text("v-0.1.0");
   }
@@ -913,6 +919,7 @@ class GameBuild {
           version(),
           buildTotalParticles,
           buildActiveParticles,
+          tileAtMouse,
       ],
     );
   }

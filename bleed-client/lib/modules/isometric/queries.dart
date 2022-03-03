@@ -32,10 +32,7 @@ class IsometricQueries {
   }
 
   Tile getTileAt(double x, double y){
-    return getTile(
-        projectedToWorldX(x, y) ~/ tileSize,
-        projectedToWorldY(x, y) ~/ tileSize,
-    );
+    return getTile(getRow(x, y), getColumn(x, y));
   }
 
   bool tileIsWalkable(double x, double y){
