@@ -59,7 +59,6 @@
 [ ] GOLDEN EYE / PERFECT DARK
 [ ] BATTLEFIELD (Capture flags)
 [MMO]
-[ ] Save / Load Character
 [ ] Attributes (Intelligence, Strength, Agility)
 [ ] Items
 [ ] Cooldown widget
@@ -125,6 +124,7 @@
 [ ] FIX BUG Initial lighting incorrect
 [ ] Destructible Items to collect gems
 [ ] Rain Particles
+[ ] (MMO) Save / Load Character
 [x] FIX Aim circle remains after target killed
 [x] FIX Change scene
 [x] Character State - Hurt

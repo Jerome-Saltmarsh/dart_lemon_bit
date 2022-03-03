@@ -9,7 +9,6 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/webSocket.dart';
-import 'package:flutter/services.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'state.dart';
@@ -78,13 +77,13 @@ class GameUpdate {
 
     if (hud.textBoxFocused) return;
 
-    if (keyPressed(LogicalKeyboardKey.keyE) && !state.panningCamera) {
-      state.panningCamera = true;
-    }
+    // if (keysPressed.contains(LogicalKeyboardKey.keyE) && !state.panningCamera) {
+    //   state.panningCamera = true;
+    // }
 
-    if (state.panningCamera && !keyPressed(LogicalKeyboardKey.keyE)) {
-      state.panningCamera = false;
-    }
+    // if (state.panningCamera && !keyPressed(LogicalKeyboardKey.keyE)) {
+    //   state.panningCamera = false;
+    // }
 
     if (state.panningCamera) {
       // Offset mouseWorldDiff = _mouseWorldStart - mouseWorld;
@@ -104,25 +103,28 @@ class GameUpdate {
   }
 
   Direction? getKeyDirection() {
-    if (keyPressed(state.keyMap.runUp)) {
-      if (keyPressed(state.keyMap.runRight)) {
+    final keysPressed = keyboardInstance.keysPressed;
+    final keyMap = state.keyMap;
+
+    if (keysPressed.contains(keyMap.runUp)) {
+      if (keysPressed.contains(keyMap.runRight)) {
         return Direction.UpRight;
-      } else if (keyPressed(state.keyMap.runLeft)) {
+      } else if (keysPressed.contains(keyMap.runLeft)) {
         return Direction.UpLeft;
       } else {
         return Direction.Up;
       }
-    } else if (keyPressed(state.keyMap.runDown)) {
-      if (keyPressed(state.keyMap.runRight)) {
+    } else if (keysPressed.contains(keyMap.runDown)) {
+      if (keysPressed.contains(keyMap.runRight)) {
         return Direction.DownRight;
-      } else if (keyPressed(state.keyMap.runLeft)) {
+      } else if (keysPressed.contains(keyMap.runLeft)) {
         return Direction.DownLeft;
       } else {
         return Direction.Down;
       }
-    } else if (keyPressed(state.keyMap.runLeft)) {
+    } else if (keysPressed.contains(keyMap.runLeft)) {
       return Direction.Left;
-    } else if (keyPressed(state.keyMap.runRight)) {
+    } else if (keysPressed.contains(keyMap.runRight)) {
       return Direction.Right;
     }
     return null;
