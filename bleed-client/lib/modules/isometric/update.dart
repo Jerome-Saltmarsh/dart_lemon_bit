@@ -108,13 +108,14 @@ class IsometricUpdate {
     if (particle.z <= 0) {
       particle.z = 0;
     }
-    if (particle.duration-- < 0) {
+    particle.duration--;
+    if (particle.duration <= 0) {
       deactivateParticle(particle);
     }
   }
 
   void deactivateParticle(Particle particle) {
-    particle.duration = 0;
+    particle.duration = -1;
     final next = state.next;
     if (next != null) {
       state.next = particle;
