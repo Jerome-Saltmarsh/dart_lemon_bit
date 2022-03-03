@@ -51,20 +51,20 @@ const Map<SlotType, _SlotTypeCost> slotTypeCosts = {
     topaz: 4,
   ),
   SlotType.Silver_Pendant: _SlotTypeCost(
-    rubies: 15,
-    emeralds: 15,
+    rubies: 3,
+    emeralds: 1,
   ),
   SlotType.Armour_Padded: _SlotTypeCost(
     rubies: 5,
     emeralds: 5,
   ),
   SlotType.Steel_Helmet: _SlotTypeCost(
-    rubies: 15,
-    emeralds: 15,
+    rubies: 4,
+    emeralds: 6,
   ),
   SlotType.Body_Blue: _SlotTypeCost(
-    rubies: 15,
-    emeralds: 15,
+    rubies: 2,
+    emeralds: 2,
   ),
   SlotType.Potion_Red: _SlotTypeCost(
     rubies: 1,
