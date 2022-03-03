@@ -131,6 +131,7 @@ class _Audio {
   }
 
   void handgunShot(double x, double y) {
+    print("handgunShot");
     _playRandom(_pistolShot, x, y);
   }
 

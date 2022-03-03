@@ -319,10 +319,14 @@ class IsometricActions {
   }
 
   void applyShade(List<List<int>> shader, int row, int column, int value) {
-    final shadeRow = shader[row];
+    applyShadeAtRow(shader[row], column, value);
+  }
+
+  void applyShadeAtRow(List<int> shadeRow, int column, int value) {
     if (shadeRow[column] <= value) return;
     shadeRow[column] = value;
   }
+
 
   void emitLightLow(List<List<int>> shader, double x, double y) {
     final column = getColumn(x, y);
@@ -349,11 +353,12 @@ class IsometricActions {
     final cEnd = min(column + size, state.maxColumn);
     if (cEnd < state.minColumn) return;
 
-    for (int r = rStart; r <= rEnd; r++) {
-      applyShade(shader, r, cStart, shade);
-      applyShade(shader, r, cEnd, shade);
+    for (var r = rStart; r <= rEnd; r++) {
+      final shadeRow = shader[r];
+      applyShadeAtRow(shadeRow, cStart, shade);
+      applyShadeAtRow(shadeRow, cEnd, shade);
     }
-    for (int c = cStart + 1; c < cEnd; c++) {
+    for (var c = cStart + 1; c < cEnd; c++) {
       applyShade(shader, rStart, c, shade);
       applyShade(shader, rEnd, c, shade);
     }
@@ -363,10 +368,10 @@ class IsometricActions {
 
     if (shade >= state.ambient.value) return;
 
-    int rStart = row - size;
-    int rEnd = row + size;
-    int cStart = column - size;
-    int cEnd = column + size;
+    var rStart = row - size;
+    var rEnd = row + size;
+    var cStart = column - size;
+    var cEnd = column + size;
 
     if (rStart < 0) {
       rStart = 0;
@@ -392,11 +397,11 @@ class IsometricActions {
       return;
     }
 
-    for (int r = rStart; r <= rEnd; r++) {
+    for (var r = rStart; r <= rEnd; r++) {
       shadeBake(r, cStart, shade);
       shadeBake(r, cEnd, shade);
     }
-    for (int c = cStart + 1; c < cEnd; c++) {
+    for (var c = cStart + 1; c < cEnd; c++) {
       shadeBake(rStart, c, shade);
       shadeBake(rEnd, c, shade);
     }
