@@ -85,7 +85,7 @@ class _Projectiles {
 
 class _Particles {
   final Vector2 zombieHead = Vector2(770, 3218);
-  final Vector2 shell  = Vector2(2072, 1623);
+  final Vector2 shell  = Vector2(1008, 1);
   final Vector2 zombieLeg  = Vector2(2491, 1);
   final Vector2 zombieArm  = Vector2(3004, 1);
   final Vector2 zombieTorso  = Vector2(3517 , 1);

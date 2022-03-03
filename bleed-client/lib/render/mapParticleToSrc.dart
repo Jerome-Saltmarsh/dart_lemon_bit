@@ -27,7 +27,7 @@ const pixelSize = 6.0;
 
 const _size8 = 8.0;
 const _size24 = 24.0;
-const _size32 = 64.0;
+const _size32 = 32.0;
 const _size64 = 64.0;
 
 final _particles = atlas.particles;
