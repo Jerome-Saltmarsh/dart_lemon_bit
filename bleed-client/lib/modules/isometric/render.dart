@@ -60,11 +60,11 @@ enum SpriteLayer {
   Bow_Wooden,
   Body_Cyan,
   Head_Plain,
+  Head_Steel,
   Staff_Wooden,
   Body_Blue,
   Head_Magic,
   Head_Rogue,
-  Head_Steel,
 }
 
 class IsometricRender {
