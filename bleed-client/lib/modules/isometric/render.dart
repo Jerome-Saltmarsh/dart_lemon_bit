@@ -53,18 +53,18 @@ const _animationRunning2 = [16, 17, 18, 19];
 enum SpriteLayer {
   Shadow,
   Legs_Blue,
+  Staff_Wooden,
   Sword_Wooden,
   Sword_Steel,
   Weapon_Shotgun,
   Weapon_Handgun,
   Bow_Wooden,
   Body_Cyan,
+  Body_Blue,
   Head_Plain,
   Head_Steel,
-  Staff_Wooden,
-  Body_Blue,
-  Head_Magic,
   Head_Rogue,
+  Head_Magic,
 }
 
 class IsometricRender {
