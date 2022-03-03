@@ -97,10 +97,10 @@ class IsometricUpdate {
       particle.yv *= floorFriction;
       particle.rotationV *= rotationFriction;
 
-      if (!queries.tileIsWalkable(particle.x, particle.y)){
-        deactivateParticle(particle);
-        return;
-      }
+      // if (!queries.tileIsWalkable(particle.x, particle.y)){
+      //   deactivateParticle(particle);
+      //   return;
+      // }
     }
     if (particle.scale < 0) {
       particle.scale = 0;

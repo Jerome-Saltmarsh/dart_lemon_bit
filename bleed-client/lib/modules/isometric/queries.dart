@@ -40,7 +40,7 @@ class IsometricQueries {
 
   bool tileIsWalkable(double x, double y){
     final tile = getTileAt(x, y);
-    if (tile == Tile.Boundary) return false;
+    if (tile.isBoundary) return false;
     if (tile.isWater) return false;
     return true;
   }

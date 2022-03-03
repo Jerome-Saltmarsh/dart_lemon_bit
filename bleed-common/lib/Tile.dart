@@ -23,6 +23,7 @@ enum Tile {
 
 extension TileExtension on Tile {
   bool get isWater => this == Tile.Water;
+  bool get isBoundary => this == Tile.Boundary;
 }
 
 const List<Tile> tiles = Tile.values;
