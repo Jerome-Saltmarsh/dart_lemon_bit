@@ -109,22 +109,27 @@ class GameUpdate {
     if (keysPressed.contains(keyMap.runUp)) {
       if (keysPressed.contains(keyMap.runRight)) {
         return Direction.UpRight;
-      } else if (keysPressed.contains(keyMap.runLeft)) {
-        return Direction.UpLeft;
-      } else {
-        return Direction.Up;
       }
-    } else if (keysPressed.contains(keyMap.runDown)) {
+      if (keysPressed.contains(keyMap.runLeft)) {
+        return Direction.UpLeft;
+      }
+      return Direction.Up;
+    }
+
+    if (keysPressed.contains(keyMap.runDown)) {
       if (keysPressed.contains(keyMap.runRight)) {
         return Direction.DownRight;
-      } else if (keysPressed.contains(keyMap.runLeft)) {
-        return Direction.DownLeft;
-      } else {
-        return Direction.Down;
       }
-    } else if (keysPressed.contains(keyMap.runLeft)) {
+      if (keysPressed.contains(keyMap.runLeft)) {
+        return Direction.DownLeft;
+      }
+      return Direction.Down;
+    }
+
+    if (keysPressed.contains(keyMap.runLeft)) {
       return Direction.Left;
-    } else if (keysPressed.contains(keyMap.runRight)) {
+    }
+    if (keysPressed.contains(keyMap.runRight)) {
       return Direction.Right;
     }
     return null;
