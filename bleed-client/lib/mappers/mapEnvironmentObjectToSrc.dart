@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
@@ -87,11 +89,20 @@ final Map<ObjectType, Vector2> objectTypeSrcPosition = {
   ObjectType.Rock_Wall: atlas.rockWall,
 };
 
+final _ambient = modules.isometric.state.ambient;
+final _isoState = isometric.state;
+
 void mapEnvironmentObjectToSrc(EnvironmentObject env){
-  final shade = isometric.state.getShade(env.row, env.column);
+  // TODO Optimize
+  var shade = _isoState.getShade(env.row, env.column);
   final type = env.type;
+
+  if (type == ObjectType.House01 || type == ObjectType.House02){
+    shade = _ambient.value == Shade.Bright ? 0 : 1;
+  }
+
   var top = shade * env.height + 1;
-  if (type == ObjectType.Torch && modules.isometric.state.ambient.value > Shade.Bright){
+  if (type == ObjectType.Torch && _ambient.value > Shade.Bright){
     top = _translations.torches.y + ((core.state.timeline.frame % 4) * _torchHeight) + _torchHeight;
   }
   engine.mapSrc(x: env.srcX, y: top, width: env.width, height: env.height);

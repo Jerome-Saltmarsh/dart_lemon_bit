@@ -33,7 +33,7 @@ class EditorRender with EditorScope {
   }
 
   void _environmentObjects() {
-    state.environmentObjects.forEach(isometric.render.environmentObject);
+    state.environmentObjects.forEach(isometric.render.renderEnvironmentObject);
   }
 
   void renderTilePreview() {

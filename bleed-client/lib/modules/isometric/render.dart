@@ -171,7 +171,7 @@ class IsometricRender {
           if (!zombiesRemaining || env.y < zombies[indexZombie].y) {
             if (!npcsRemaining || env.y < interactableNpcs[indexNpc].y) {
               if (env.top > screenBottom) return;
-              environmentObject(env);
+              renderEnvironmentObject(env);
               indexEnv++;
               continue;
             }
@@ -252,19 +252,19 @@ class IsometricRender {
     engine.renderAtlas();
   }
 
-  void environmentObject(EnvironmentObject value) {
+  void renderEnvironmentObject(EnvironmentObject value) {
     if (!queries.environmentObjectOnScreenScreen(value)) return;
     final shade = state.getShade(value.row, value.column);
     if (shade == Shade.Pitch_Black) return;
 
     mapEnvironmentObjectToSrc(value);
-      engine.mapDst(
-          x: value.x,
-          y: value.y,
-          anchorX: value.anchorX,
-          anchorY: value.anchorY
-      );
-      engine.renderAtlas();
+    engine.mapDst(
+      x: value.x,
+      y: value.y,
+      anchorX: value.anchorX,
+      anchorY: value.anchorY
+    );
+    engine.renderAtlas();
   }
 
   void renderCharacter(Character character) {

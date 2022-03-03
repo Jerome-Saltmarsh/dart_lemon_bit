@@ -129,7 +129,7 @@ class IsometricActions {
   }
 
   void updateTileRender(){
-    print("actions.updateTileRender()");
+    // print("actions.updateTileRender()");
     resetTilesSrcDst();
     resetLighting();
   }
@@ -166,17 +166,15 @@ class IsometricActions {
     if (state.minColumn > state.maxColumn){
       state.minColumn = state.maxColumn;
     }
-    // assert(state.minRow <= state.maxRow);
-    // assert(state.minColumn <= state.maxColumn);
   }
 
   void resetTilesSrcDst() {
-    print("isometric.actions.resetTilesSrcDst()");
+    // print("isometric.actions.resetTilesSrcDst()");
     final tiles = state.tiles;
     final tileSize = constants.tileSize;
     final tileSizeHalf = tileSize / 2;
     final rows = tiles.length;
-    final columns = tiles[0].length;
+    final columns = rows > 0 ? tiles[0].length : 0;
     final List<double> tileLeft = [];
     for (var rowIndex = 0; rowIndex < rows; rowIndex++) {
       final row = tiles[rowIndex];

@@ -239,7 +239,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
         return;
       }
 
-      int? clientRequestInt = int.tryParse(arguments[0]);
+      final clientRequestInt = int.tryParse(arguments[0]);
       if (clientRequestInt == null) {
         error(GameError.ClientRequestRequired);
         return;
@@ -392,7 +392,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                   break;
               }
 
-              // @on player perform ability
               player.magic -= ability.cost;
               player.performing = ability;
               ability.cooldownRemaining = ability.cooldown;
