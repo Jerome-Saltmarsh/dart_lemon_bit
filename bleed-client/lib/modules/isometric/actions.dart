@@ -347,12 +347,19 @@ class IsometricActions {
     if (shade >= state.ambient.value) return;
     final rStart = max(row - size, state.minRow);
     if (rStart > state.maxRow) return;
-    final rEnd = min(row + size, state.maxRow);
+    var rEnd = min(row + size, state.maxRow);
     if (rEnd < state.minRow) return;
     final cStart = max(column - size, state.minColumn);
     if (cStart > state.maxColumn) return;
-    final cEnd = min(column + size, state.maxColumn);
+    var cEnd = min(column + size, state.maxColumn);
     if (cEnd < state.minColumn) return;
+
+    if (rEnd >= state.totalRowsInt){
+      rEnd = state.totalRowsInt - 1;
+    }
+    if (cEnd >= state.totalColumnsInt){
+      cEnd = state.totalColumnsInt - 1;
+    }
 
     final rowStart = shader[rStart];
     final rowEnd = shader[rEnd];
