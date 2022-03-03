@@ -356,12 +356,12 @@ class IsometricActions {
     final rowStart = shader[rStart];
     final rowEnd = shader[rEnd];
 
-    for (var r = rStart; r <= rEnd; r++) {
+    for (var r = rStart + 1; r < rEnd; r++) {
       final shadeRow = shader[r];
       applyShadeAtRow(shadeRow, cStart, shade);
       applyShadeAtRow(shadeRow, cEnd, shade);
     }
-    for (var c = cStart + 1; c < cEnd; c++) {
+    for (var c = cStart; c <= cEnd; c++) {
       applyShadeAtRow(rowStart, c, shade);
       applyShadeAtRow(rowEnd, c, shade);
     }
