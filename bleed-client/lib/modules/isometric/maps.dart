@@ -53,6 +53,4 @@ class IsometricMaps {
     ItemType.Orb_Ruby: atlas.items.orbRed,
     ItemType.Orb_Topaz: atlas.items.orbTopaz,
   };
-
-
 }

@@ -3,7 +3,7 @@ import 'package:bleed_client/classes/Character.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 
-final _Atlas atlas = _Atlas();
+final atlas = _Atlas();
 
 const _shadesX = 1.0;
 const _shadesY = 1.0;
@@ -29,7 +29,7 @@ void renderCharacterHealthBar(Character character){
 class _Atlas {
   final shadow = Vector2(1, 34);
   final blood = Vector2(89, 25);
-  final myst = Vector2(2410, 1);
+  final myst = Vector2(5488, 1);
   final circle = Vector2(2410, 513);
   final particles = _Particles();
   final shades = _Shades();
@@ -49,57 +49,57 @@ class _Atlas {
 }
 
 class _Items {
-  final Vector2 handgun = Vector2(2,  567);
-  final Vector2 shotgun = Vector2(2,  632);
-  final Vector2 armour = Vector2(2,  1634);
-  final Vector2 health = Vector2(2,  1698);
-  final Vector2 crate = Vector2(2,  1763);
-  final Vector2 emerald = Vector2(2, 1836);
-  final Vector2 orbRed = Vector2(2, 1901);
-  final Vector2 orbTopaz = Vector2(2, 1966);
+  final handgun = Vector2(2,  567);
+  final shotgun = Vector2(2,  632);
+  final armour = Vector2(2,  1634);
+  final health = Vector2(2,  1698);
+  final crate = Vector2(2,  1763);
+  final emerald = Vector2(2, 1836);
+  final orbRed = Vector2(2, 1901);
+  final orbTopaz = Vector2(2, 1966);
 }
 
 class _Witch {
-  final Vector2 idle = Vector2(2,  3459);
-  final Vector2 running = Vector2(2,  3524);
-  final Vector2 striking = Vector2(2,  3589);
+  final idle = Vector2(2,  3459);
+  final running = Vector2(2,  3524);
+  final striking = Vector2(2,  3589);
 }
 
 class  _Archer {
-  final Vector2 idle = Vector2(2,  3654);
-  final Vector2 running = Vector2(2,  3719);
-  final Vector2 firing = Vector2(2,  3784);
+  final idle = Vector2(2,  3654);
+  final running = Vector2(2,  3719);
+  final firing = Vector2(2,  3784);
 }
 
 class _Knight {
-  final Vector2 idle = Vector2(2,  3849);
-  final Vector2 running = Vector2(2,  3914);
-  final Vector2 striking = Vector2(2,  3979);
+  final idle = Vector2(2,  3849);
+  final running = Vector2(2,  3914);
+  final striking = Vector2(2,  3979);
 }
 
 class _Projectiles {
-  final _Item fireball = _Item(975, 1, 32, 4);
-  final Vector2 arrow = Vector2(2182, 1);
-  final Vector2 arrowShadow = Vector2(2172, 1 );
+  final fireball = _Item(975, 1, 32, 4);
+  final arrow = Vector2(2182, 1);
+  final arrowShadow = Vector2(2172, 1 );
 }
 
 class _Particles {
-  final Vector2 zombieHead = Vector2(770, 3218);
-  final Vector2 shell  = Vector2(1008, 1);
-  final Vector2 zombieLeg  = Vector2(2491, 1);
-  final Vector2 zombieArm  = Vector2(3004, 1);
-  final Vector2 zombieTorso  = Vector2(3517 , 1);
-  final Vector2 circle32 = Vector2(2410, 515);
-  final Vector2 flame  = Vector2(2290, 1193);
-  final Vector2 circleBlackSmall  = Vector2(2316, 1193);
+  final zombieHead = Vector2(770, 3218);
+  final shell  = Vector2(1008, 1);
+  final zombieLeg  = Vector2(2491, 1);
+  final zombieArm  = Vector2(3004, 1);
+  final zombieTorso  = Vector2(3517 , 1);
+  final circle32 = Vector2(2410, 515);
+  final flame  = Vector2(2290, 1193);
+  final circleBlackSmall  = Vector2(2316, 1193);
 }
 
 class _Shades {
-  final double x = _shadesX;
-  final double y = _shadesY;
-  final Vector2 red1 = Vector2(_shadesX + (11 * _pixelSize), _shadesY + (3 * _pixelSize));
-  final Vector2 white1 = Vector2(_shadesX + (9 * _pixelSize), _shadesY + (3 * _pixelSize));
-  final Vector2 yellow1 = Vector2(_shadesX + (23 * _pixelSize), _shadesY + (3 * _pixelSize));
+  final x = _shadesX;
+  final y = _shadesY;
+  final red1 = Vector2(_shadesX + (11 * _pixelSize), _shadesY + (3 * _pixelSize));
+  final white1 = Vector2(_shadesX + (9 * _pixelSize), _shadesY + (3 * _pixelSize));
+  final yellow1 = Vector2(_shadesX + (23 * _pixelSize), _shadesY + (3 * _pixelSize));
 }
 
 class _Item {

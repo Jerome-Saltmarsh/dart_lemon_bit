@@ -39,6 +39,9 @@ const _orbRubyY = 0.0;
 final _bloodX = atlas.blood.x;
 final _bloodY = atlas.blood.y;
 
+final _mystX = atlas.myst.x;
+final _mystY = atlas.myst.y;
+
 void mapParticleToSrc(Particle particle){
   final shade = _isometricState.getShadeAtPosition(particle.x, particle.y);
 
@@ -108,9 +111,8 @@ void mapParticleToSrc(Particle particle){
     case ParticleType.Myst:
       // TODO Optimize
       final index = _mapMystDurationToIndex(particle.duration);
-      final x = atlas.myst.x;
-      final y = atlas.myst.y + (index * _particleSize);
-      engine.mapSrc(x: x, y: y, width: _size64, height: _size64);
+      final y = _mystY + (index * _particleSize);
+      engine.mapSrc(x: _mystX, y: y, width: _size64, height: _size64);
       break;
 
     case ParticleType.FireYellow:

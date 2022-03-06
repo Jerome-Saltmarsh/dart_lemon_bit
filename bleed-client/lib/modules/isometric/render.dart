@@ -51,6 +51,9 @@ const _animationRunning = [12, 13, 14, 15];
 const _animationRunning2 = [16, 17, 18, 19];
 
 final _screen = engine.screen;
+final _shadowX = atlas.shadow.x;
+final _shadowY = atlas.shadow.y;
+
 
 enum SpriteLayer {
   Shadow,
@@ -230,11 +233,9 @@ class IsometricRender {
   }
 
   void renderParticle(Particle value){
-    if (!engine.screen.contains(value.x, value.y)) return;
+    if (!_screen.contains(value.x, value.y)) return;
     final shade = state.getShadeAtPosition(value.x, value.y);
     if (shade >= Shade.Very_Dark) return;
-
-    // engine.draw.circle(value.x, value.y, 10, colours.white);
 
     mapParticleToDst(value);
     mapParticleToSrc(value);
@@ -255,7 +256,7 @@ class IsometricRender {
   }
 
   void mapShadeShadow(){
-    engine.mapSrc(x: atlas.shadow.x, y: atlas.shadow.y, width: _size8, height: _size8);
+    engine.mapSrc(x: _shadowX, y: _shadowY, width: _size8, height: _size8);
   }
 
   void renderItem(Item item) {

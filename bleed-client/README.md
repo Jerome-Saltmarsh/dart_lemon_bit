@@ -101,7 +101,7 @@
 [ ] Arrow Capacity (Auto regenerates)
 [ ] Zombie Pause after attack
 [ ] Spell Cooldown
-[ ] Fix Batch Rendering glitches
+[x] Fix Batch Rendering glitches
 [x] FIX Particle blood renders as shell
 [RELEASE]
 [ ] Finish Inventory
