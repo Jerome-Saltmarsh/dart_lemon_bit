@@ -19,8 +19,6 @@ class GameUpdate {
 
   GameUpdate(this.state);
 
-  // Vector2 _mouseWorldStart = Offset(0, 0);
-
   void update() {
     if (!webSocket.connected) return;
     if (state.player.uuid.value.isEmpty) return;
@@ -68,7 +66,7 @@ class GameUpdate {
   }
 
   void cameraFollowPlayer() {
-    engine.cameraFollow(modules.game.state.player.x, modules.game.state.player.y, engine.cameraFollowSpeed);
+    engine.cameraFollow(state.player.x, state.player.y, engine.cameraFollowSpeed);
   }
 
   void readPlayerInput() {
