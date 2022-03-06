@@ -99,8 +99,11 @@ class IsometricRender {
 
     for (var rowIndex = minRow; rowIndex < maxRow; rowIndex++){
       final dynamicRow = dynamicShade[rowIndex];
+      final rowIndexMultiplier = rowIndex * totalColumnsInt4;
       for(var columnIndex = minColumn; columnIndex < maxColumn; columnIndex++){
-        final i = rowIndex * totalColumnsInt4 + (columnIndex * 4);
+        final i = rowIndexMultiplier + (columnIndex * 4);
+        // TODO Optimize do not render offscreen
+
         engine.mapDstCheap(
           x: tilesDst[i + 2],
           y: tilesDst[i + 3],
@@ -122,8 +125,10 @@ class IsometricRender {
     final totalParticles = properties.totalActiveParticles;
     final totalEnvironment = environmentObjects.length;
     final zombies = game.zombies;
+    final humans = game.humans;
     final interactableNpcs = game.interactableNpcs;
     final screenBottom = engine.screen.bottom;
+
 
     var indexHuman = 0;
     var indexEnv = 0;
@@ -150,7 +155,7 @@ class IsometricRender {
           !npcsRemaining) return;
 
       if (humansRemaining) {
-        final human = game.humans[indexHuman];
+        final human = humans[indexHuman];
         final humanY = human.y;
 
         if (!environmentRemaining ||
@@ -206,7 +211,7 @@ class IsometricRender {
       if (zombiesRemaining) {
         final zombie = zombies[indexZombie];
         if (!npcsRemaining || zombie.y < interactableNpcs[indexNpc].y) {
-          renderCharacter(zombies[indexZombie]);
+          renderCharacter(zombie);
           indexZombie++;
           continue;
         }
