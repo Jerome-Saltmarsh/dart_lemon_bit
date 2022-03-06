@@ -97,8 +97,8 @@ class IsometricRender {
     final tilesSrc = state.tilesSrc;
     final tilesDst = state.tilesDst;
 
-    engine.offScreenTiles = 0;
-    engine.onScreenTiles = 0;
+    state.offScreenTiles = 0;
+    state.onScreenTiles = 0;
 
     for (var rowIndex = minRow; rowIndex < maxRow; rowIndex++){
       final dynamicRow = dynamicShade[rowIndex];
@@ -106,10 +106,12 @@ class IsometricRender {
       for (var columnIndex = minColumn; columnIndex < maxColumn; columnIndex++) {
         final i = rowIndexMultiplier + (columnIndex * 4);
         final x = tilesDst[i + 2];
+        if (x < _screen.left) break;
         final y = tilesDst[i + 3];
-        if (!_screen.contains(x, y)){
-           continue;
-        }
+        if (y > _screen.bottom) break;
+        if (x > _screen.right) continue;
+        if (y < _screen.top) continue;
+
         engine.mapDstCheap(
           x: x,
           y: y,

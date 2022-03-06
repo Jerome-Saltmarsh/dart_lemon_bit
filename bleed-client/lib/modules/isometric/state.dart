@@ -46,6 +46,9 @@ class IsometricState {
   int minColumn = 0;
   int maxColumn = 0;
 
+  int offScreenTiles = 0;
+  int onScreenTiles = 0;
+
   Particle? next;
 
   // properties

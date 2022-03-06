@@ -884,13 +884,13 @@ class GameBuild {
 
   Widget get offscreenTiles {
     return Refresh((){
-      return text("Offscreen: ${engine.offScreenTiles}");
+      return text("Offscreen: ${isometric.state.offScreenTiles}");
     });
   }
 
   Widget get onScreenTiles {
     return Refresh((){
-      return text("OnScreen: ${engine.onScreenTiles}");
+      return text("OnScreen: ${isometric.state.onScreenTiles}");
     });
   }
 
