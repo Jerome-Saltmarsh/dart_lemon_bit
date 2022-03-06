@@ -882,6 +882,19 @@ class GameBuild {
     });
   }
 
+  Widget get offscreenTiles {
+    return Refresh((){
+      return text("Offscreen: ${engine.offScreenTiles}");
+    });
+  }
+
+  Widget get onScreenTiles {
+    return Refresh((){
+      return text("OnScreen: ${engine.onScreenTiles}");
+    });
+  }
+
+
   Widget version(){
     return text("v-0.1.0");
   }
@@ -920,6 +933,8 @@ class GameBuild {
           buildTotalParticles,
           buildActiveParticles,
           tileAtMouse,
+          offscreenTiles,
+          onScreenTiles
       ],
     );
   }
