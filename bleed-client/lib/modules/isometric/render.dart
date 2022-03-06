@@ -93,18 +93,19 @@ class IsometricRender {
     final maxColumn = state.maxColumn;
     final atlasY = atlas.tiles.y;
     final dynamicShade = state.dynamic;
-    final totalColumnsInt = state.totalColumnsInt;
+    final totalColumnsInt4 = state.totalColumnsInt * 4;
     final tilesSrc = state.tilesSrc;
     final tilesDst = state.tilesDst;
 
-    for (var row = minRow; row < maxRow; row++){
-      for(var column = minColumn; column < maxColumn; column++){
-        final i = row * totalColumnsInt * 4 + (column * 4);
+    for (var rowIndex = minRow; rowIndex < maxRow; rowIndex++){
+      final dynamicRow = dynamicShade[rowIndex];
+      for(var columnIndex = minColumn; columnIndex < maxColumn; columnIndex++){
+        final i = rowIndex * totalColumnsInt4 + (columnIndex * 4);
         engine.mapDstCheap(
           x: tilesDst[i + 2],
           y: tilesDst[i + 3],
         );
-        final shade = dynamicShade[row][column];
+        final shade = dynamicRow[columnIndex];
         final top = atlasY + shade * tileSize; // top
         final left = tilesSrc[i];
         engine.mapSrc(x: left, y: top, width: tileSize, height: tileSize);
