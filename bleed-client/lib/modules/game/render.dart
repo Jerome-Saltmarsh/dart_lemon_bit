@@ -58,14 +58,14 @@ class GameRender {
     drawBulletHoles(game.bulletHoles);
 
     drawAbility();
-    // attackTargetCircle();
+    attackTargetCircle();
 
     if (state.compilePaths.value) {
       drawPaths();
       drawDebugNpcs(game.npcDebug);
     }
 
-    engine.setPaintColorWhite();
+    // engine.setPaintColorWhite();
     isometric.render.sprites();
     drawEffects();
     // drawItems();
@@ -77,7 +77,7 @@ class GameRender {
     // _drawFloatingTexts();
     // _drawPlayerNames();
     // drawPlayerText();
-    engine.setPaintColorWhite();
+    // engine.setPaintColorWhite();
     // collectedOrbImage();
   }
 
