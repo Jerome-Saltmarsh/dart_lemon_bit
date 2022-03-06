@@ -103,9 +103,9 @@ class IsometricRender {
     for (var rowIndex = minRow; rowIndex < maxRow; rowIndex++){
       final dynamicRow = dynamicShade[rowIndex];
       final rowIndexMultiplier = rowIndex * totalColumnsInt4;
-      for(var columnIndex = minColumn; columnIndex < maxColumn; columnIndex++){
+      for (var columnIndex = minColumn; columnIndex < maxColumn; columnIndex++) {
         final i = rowIndexMultiplier + (columnIndex * 4);
-        // TODO Optimize do not render offscreen
+        // TODO Optimize do not render offscreen tiles
 
         engine.mapDstCheap(
           x: tilesDst[i + 2],
