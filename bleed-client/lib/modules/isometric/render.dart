@@ -105,11 +105,14 @@ class IsometricRender {
       final rowIndexMultiplier = rowIndex * totalColumnsInt4;
       for (var columnIndex = minColumn; columnIndex < maxColumn; columnIndex++) {
         final i = rowIndexMultiplier + (columnIndex * 4);
-        // TODO Optimize do not render offscreen tiles
-
+        final x = tilesDst[i + 2];
+        final y = tilesDst[i + 3];
+        if (!_screen.contains(x, y)){
+           continue;
+        }
         engine.mapDstCheap(
-          x: tilesDst[i + 2],
-          y: tilesDst[i + 3],
+          x: x,
+          y: y,
         );
         final shade = dynamicRow[columnIndex];
         final top = atlasY + shade * tileSize; // top
