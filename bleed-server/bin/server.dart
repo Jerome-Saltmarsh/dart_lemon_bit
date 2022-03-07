@@ -87,6 +87,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
     final sink = webSocket.sink;
 
+    Player? _player;
+
     void reply(String response) {
       sink.add(response);
     }
@@ -161,14 +163,14 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     void joinGameMMO({required String playerName}) {
       clearBuffer();
       final player = spawnPlayerInTown();
+      _player = player;
       player.name = playerName;
       player.orbs.emerald = 10;
       player.orbs.topaz = 10;
       player.orbs.ruby = 10;
 
       compilePlayer(_buffer, player);
-      write(
-          '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.team}');
+      write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.team}');
       write(player.game.compiledTiles);
       write(player.game.compiledEnvironmentObjects);
       write(player.game.compiled);
@@ -258,13 +260,15 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       final clientRequest = clientRequests[clientRequestInt];
       switch (clientRequest) {
         case ClientRequest.Update:
-          if (arguments.length < 2){
-            errorInvalidArg("player uuid required");
-            return;
-          }
+          // if (arguments.length < 2){
+          //   errorInvalidArg("player uuid required");
+          //   return;
+          // }
 
-          final playerId = arguments[1];
-          final player = engine.findPlayerByUuid(playerId);
+          // final playerId = arguments[1];
+          // final player = engine.findPlayerByUuid(playerId);
+          final player = _player;
+
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -312,17 +316,18 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          if (arguments.length < 6){
+          if (arguments.length < 5){
             errorInvalidArg("Insufficient Arguments. 6 Required");
             return;
           }
 
-          final actionIndex = int.parse(arguments[2]);
-          final action = characterActions[actionIndex];
-          final mouseX = double.parse(arguments[4]);
-          final mouseY = double.parse(arguments[5]);
+          final actionIndex = int.parse(arguments[1]);
+          final angle = double.parse(arguments[2]);
+          final mouseX = double.parse(arguments[3]);
+          final mouseY = double.parse(arguments[4]);
           player.mouseX = mouseX;
           player.mouseY = mouseY;
+          final action = characterActions[actionIndex];
 
           player.aimTarget = null;
           final closestEnemy = game.getClosestEnemy(mouseX, mouseY, player.team);
@@ -401,7 +406,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               game.setCharacterState(player, CharacterState.Performing);
               break;
             case CharacterAction.Run:
-              final angle = double.parse(arguments[3]);
+              // final angle = double.parse(arguments[2]);
               setAngle(player, angle);
               game.setCharacterStateRunning(player);
               player.target = null;
@@ -443,7 +448,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             errorArgsExpected(2, arguments);
             return;
           }
-          final int? gameTypeIndex = int.tryParse(arguments[1]);
+          final gameTypeIndex = int.tryParse(arguments[1]);
 
           if (gameTypeIndex == null) {
             errorInvalidArg('expected integer at args[1]');
@@ -512,6 +517,19 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           reply(ServerResponse.Pong.index.toString());
           break;
 
+        case ClientRequest.Character_Save:
+          // if (arguments.length != 3) {
+          //   errorArgsExpected(3, arguments);
+          //   return;
+          // }
+          //
+          // final player = engine.findPlayerByUuid(arguments[1]);
+          // if (player == null) {
+          //   errorPlayerNotFound();
+          //   return;
+          // }
+          break;
+
         case ClientRequest.Revive:
           final player = engine.findPlayerByUuid(arguments[1]);
 
@@ -532,7 +550,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          Player? player = engine.findPlayerByUuid(arguments[1]);
+          final player = engine.findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;

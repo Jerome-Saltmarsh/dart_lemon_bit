@@ -92,6 +92,10 @@
 [ENGINE]
 [x] Atlas Buffer 64
 [ ] Auto cull render calls
+[SKIRMISH]
+-   In skirmish mode there are two teams each with an own base
+    The aim of the game is to capture all of the control points
+    
 [ROYAL]
 [ ] Implement game over dialog
 [ ] Design Map  

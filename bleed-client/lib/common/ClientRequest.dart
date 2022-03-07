@@ -25,5 +25,7 @@ enum ClientRequest {
   Modify_Game,
   Sell_Slot,
   Equip_Slot,
-  Unequip_Slot
+  Unequip_Slot,
+  Character_Save,
+  Character_Load,
 }
