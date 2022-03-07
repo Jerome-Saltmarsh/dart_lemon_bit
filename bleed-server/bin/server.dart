@@ -143,6 +143,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     void joinBattleRoyal() {
       final royal = engine.findPendingRoyalGames();
       final player = royal.playerJoin();
+      _player = player;
       player.name = _account != null ? _account.publicName : generateName();
       compileWholeGame(royal);
       compilePlayerJoined(_buffer, player);
