@@ -894,6 +894,13 @@ class GameBuild {
     });
   }
 
+  Widget get mousePositionWorld {
+    return Refresh((){
+      return text("Mouse World: x: ${mouseWorldX.toInt()}, y: ${mouseWorldY.toInt()}");
+    });
+  }
+
+
 
   Widget version(){
     return text("v-0.1.0");
@@ -934,7 +941,8 @@ class GameBuild {
           buildActiveParticles,
           tileAtMouse,
           offscreenTiles,
-          onScreenTiles
+          onScreenTiles,
+          mousePositionWorld
       ],
     );
   }

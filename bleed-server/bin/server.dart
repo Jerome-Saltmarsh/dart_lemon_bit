@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:bleed_server/CubeGame.dart';
 import 'package:bleed_server/system.dart';
 import 'package:bleed_server/user-service-client/firestoreService.dart';
@@ -229,8 +227,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
     void onEvent(requestD) {
 
-      if (requestD is Uint8List){
-        final Uint8List args = requestD;
+      if (requestD is List<int>){
+        final List<int> args = requestD;
 
         final clientRequestInt = args[0];
         if (clientRequestInt < 0) {
@@ -300,11 +298,23 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             // }
 
             final actionIndex = args[1];
-            final mouseX = args[2].toDouble();
-            final mouseY = args[3].toDouble();
+            final mouseXSign = args[2] == 0 ? -1.0 : 1.0;
+            final mouseXCount = args[3];
+            final mouseXRemainder = args[4];
+            final mouseYSign = args[5] == 0 ? -1.0 : 1.0;
+            final mouseYCount = args[6];
+            final mouseYRemainder = args[7];
+
+            final mouseX = mouseXSign * ((mouseXCount * 256) + mouseXRemainder);
+            final mouseY = mouseYSign * ((mouseYCount * 256) + mouseYRemainder);
+
             player.mouseX = mouseX;
             player.mouseY = mouseY;
             final action = characterActions[actionIndex];
+
+            // if (action != CharacterAction.Idle){
+              // print(action.name);
+            // }
 
             player.aimTarget = null;
             final closestEnemy = game.getClosestEnemy(mouseX, mouseY, player.team);
@@ -383,7 +393,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 game.setCharacterState(player, CharacterState.Performing);
                 break;
               case CharacterAction.Run:
-                player.angle = args[4].toDouble() * 0.01;
+                // player.angle = args[4].toDouble() * 0.01;
                 game.setCharacterStateRunning(player);
                 player.target = null;
                 break;
@@ -428,7 +438,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
             switch (gameType) {
               case GameType.None:
-                break;
+                throw Exception("Join Game - GameType.None invalid");
               case GameType.MMO:
                 // if (args.length < 3) {
                   return joinGameMMO(playerName: generateName());
@@ -466,7 +476,13 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 break;
             }
             break;
+          default:
+            throw Exception("Cannot parse ${clientRequests[clientRequestInt]}");
         }
+      }
+
+      if (requestD is String == false){
+        throw Exception();
       }
 
       final String requestString = requestD;

@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:bleed_client/common/CharacterAction.dart';
@@ -9,10 +10,7 @@ import 'package:lemon_engine/engine.dart';
 import 'common/GameType.dart';
 import 'webSocket.dart';
 
-// final StringBuffer _buffer = StringBuffer();
 final gameUpdateIndex = ClientRequest.Update.index;
-const _space = " ";
-
 final sendRequest = _SendRequestToServer();
 
 final _buffer1 = Int8List(1);
@@ -20,8 +18,9 @@ final _buffer2 = Int8List(2);
 final _buffer3 = Int8List(3);
 final _buffer4 = Int8List(4);
 final _buffer5 = Int8List(5);
-
-// String get session => game.session;
+final _buffer6 = Int8List(6);
+final _buffer7 = Int8List(7);
+final _buffer8 = Int8List(8);
 
 void speak(String message){
   // if (message.isEmpty) return;
@@ -36,6 +35,7 @@ void sendRequestPing(){
 }
 
 void sendRequestTeleport(double x, double y){
+  print("sendRequestTeleport($x, $y)");
   _buffer3[0] = ClientRequest.Teleport.index;
   _buffer3[1] = x.toInt();
   _buffer3[2] = y.toInt();
@@ -93,27 +93,53 @@ void sendRequestAcquireAbility(WeaponType type) {
 
 final _characterController = modules.game.state.characterController;
 
+const _256 = 256;
+
+void compileDouble({required double value, required List<int> list, required int index}){
+  final abs = value.toInt().abs();
+  list[index] = value < 0 ? 0 : 1; // sign
+  list[index + 1] = abs ~/ _256;  // count
+  list[index + 2] = abs % _256;   // remainder
+}
+
 void sendRequestUpdatePlayer() {
-  // _buffer.clear();
-  // _write(gameUpdateIndex);
-  _buffer5[0] = gameUpdateIndex;
-  _buffer5[1] = _characterController.action.value.index;
-  _buffer5[2] = mouseWorldX.toInt();
-  _buffer5[3] = mouseWorldY.toInt();
+  final x = mouseWorldX.toInt();
+  final xSign = x < 0 ? 0 : 1;
+  final xAbs = x.abs();
+  final xCount = xAbs ~/ _256;
+  final xRemainder = xAbs % _256;
+
+  final y = mouseWorldY.toInt();
+  final ySign = y < 0 ? 0 : 1;
+  final yAbs = y.abs();
+  final yCount = yAbs ~/ _256;
+  final yRemainder = yAbs % _256;
+
+  _buffer8[0] = gameUpdateIndex;
+  _buffer8[1] = _characterController.action.value.index;
+
+  _buffer8[2] = xSign;
+  _buffer8[3] = xCount;
+  _buffer8[4] = xRemainder;
+
+  _buffer8[5] = ySign;
+  _buffer8[6] = yCount;
+  _buffer8[7] = yRemainder;
+
   // _write(_characterController.action.value.index); // 1
   // _write(mouseWorldX.toInt());
   // _write(mouseWorldY.toInt());
 
   if (_characterController.action.value == CharacterAction.Run){
     // _write(_characterController.angle.toStringAsFixed(1));
-    _buffer5[4] = _characterController.angle.toInt() * 100;
+    // _buffer8[6] = _characterController.angle.toInt() * 100;
   } else {
-    _buffer5[4] = 0;
+    // _buffer8[6] = 0;
   }
 
   // webSocket.send(_buffer.toString());
-  // webSocket.sink.add(data)
-  webSocket.sink.add(_buffer5);
+  // webSocket.sink.add(data)s
+  webSocket.sink.add(_buffer8);
 
   _characterController.action.value = CharacterAction.Idle;
 }
