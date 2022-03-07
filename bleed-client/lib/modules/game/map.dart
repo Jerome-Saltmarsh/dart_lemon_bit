@@ -13,8 +13,8 @@ class GameMap {
 
   GameMap(this.state, this.actions){
     keyPressedHandlers = {
-      state.keyMap.runUp: actions.playerInteract,
-      state.keyMap.interact: actions.playerInteract,
+      // state.keyMap.runUp: actions.playerInteract,
+      // state.keyMap.interact: actions.playerInteract,
       state.keyMap.perform: actions.playerPerform,
       state.keyMap.speakLetsGo: actions.sayLetsGo,
       state.keyMap.speakLetsGreeting: actions.sayGreeting,

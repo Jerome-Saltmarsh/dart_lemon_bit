@@ -38,8 +38,7 @@ int clampInt(int value, int min, int max) {
 
 // TODO floating logic
 void setAngle(Character character, double value) {
-  if (character.dead) return;
-  if (character.busy) return;
+  if (character.deadOrBusy) return;
   character.angle = value;
 }
 

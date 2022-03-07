@@ -276,7 +276,7 @@ class _Buttons {
   final Widget editor = button("Editor", core.actions.openMapEditor);
   final Widget register = button("Register", core.actions.openMapEditor);
   final Widget changeCharacter = button("Change Hero", () {
-    sendClientRequest(ClientRequest.Reset_Character_Type);
+    // sendClientRequest(ClientRequest.Reset_Character_Type);
   });
 }
 

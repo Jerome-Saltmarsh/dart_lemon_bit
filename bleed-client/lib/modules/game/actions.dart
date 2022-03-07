@@ -32,9 +32,9 @@ class GameActions {
     setCharacterAction(CharacterAction.Run);
   }
 
-  void playerInteract(){
-    webSocket.send('${ClientRequest.Interact.index} $session');
-  }
+  // void playerInteract(){
+  //   webSocket.send('${ClientRequest.Interact.index} $session');
+  // }
 
   void cameraCenterPlayer(){
     engine.cameraCenter(modules.game.state.player.x, modules.game.state.player.y);
@@ -105,17 +105,17 @@ class GameActions {
 
   void purchaseSlotType(SlotType slotType){
     print("game.actions.purchaseSlotType('${slotType.name}')");
-    webSocket.send('${ClientRequest.Purchase.index} $session ${slotType.index}');
+    // webSocket.send('${ClientRequest.Purchase.index} $session ${slotType.index}');
   }
 
   void playerEquip(int index) {
     print("game.actions.playerEquip(index: $index)");
-    webSocket.send('${ClientRequest.Equip.index} $session ${index - 1}');
+    // webSocket.send('${ClientRequest.Equip.index} $session ${index - 1}');
   }
 
   void deselectAbility() {
     print("game.actions.deselectAbility()");
-    webSocket.send('${ClientRequest.DeselectAbility.index} $session');
+    // webSocket.send('${ClientRequest.DeselectAbility.index} $session');
   }
 
   void showTextBox(){
@@ -135,7 +135,7 @@ class GameActions {
   void sellSlotItem(int index){
     print("game.actions.sellSlotItem($index)");
     _verifyValidSlotIndex(index);
-    sendClientRequest(ClientRequest.Sell_Slot, index);
+    // sendClientRequest(ClientRequest.Sell_Slot, index);
   }
 
   void equipSlot1(){
@@ -171,7 +171,7 @@ class GameActions {
   void equipSlot(int index){
     print("game.actions.equipSlot($index)");
     _verifyValidSlotIndex(index);
-    sendClientRequest(ClientRequest.Equip_Slot, index);
+    // sendClientRequest(ClientRequest.Equip_Slot, index);
   }
 
   void unequipWeapon(){
@@ -188,7 +188,7 @@ class GameActions {
 
   void unequip(SlotTypeCategory value){
     print("game.actions.unequip(${value.name})");
-    sendClientRequest(ClientRequest.Unequip_Slot, value.index);
+    // sendClientRequest(ClientRequest.Unequip_Slot, value.index);
   }
 
   void _verifyValidSlotIndex(int index){
@@ -206,11 +206,11 @@ class GameActions {
   }
 
   modifyGame(ModifyGame request){
-    sendClientRequest(ClientRequest.Modify_Game, request.index);
+    // sendClientRequest(ClientRequest.Modify_Game, request.index);
   }
 
   void respawn() {
-    webSocket.send('${ClientRequest.Revive.index} $session');
+    // webSocket.send('${ClientRequest.Revive.index} $session');
   }
 
 }

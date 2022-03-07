@@ -1,41 +1,53 @@
+import 'dart:typed_data';
+
 import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:vector_math/vector_math_64.dart';
 
 import 'common/GameType.dart';
-import 'cube/camera3d.dart';
 import 'webSocket.dart';
 
-final StringBuffer _buffer = StringBuffer();
+// final StringBuffer _buffer = StringBuffer();
 final gameUpdateIndex = ClientRequest.Update.index;
 const _space = " ";
 
-final _SendRequestToServer sendRequest = _SendRequestToServer();
+final sendRequest = _SendRequestToServer();
 
-String get session => game.session;
+final _buffer1 = Int8List(1);
+final _buffer2 = Int8List(2);
+final _buffer3 = Int8List(3);
+final _buffer4 = Int8List(4);
+final _buffer5 = Int8List(5);
+
+// String get session => game.session;
 
 void speak(String message){
-  if (message.isEmpty) return;
-  webSocket.send('${ClientRequest.Speak.index} $session $message');
+  // if (message.isEmpty) return;
+  // webSocket.send('${ClientRequest.Speak.index} $session $message');
 }
 
 void sendRequestPing(){
-  webSocket.sinkMessage(ClientRequest.Ping.index.toString());
+  print("ping()");
+  // webSocket.sinkMessage(ClientRequest.Ping.index.toString());
+  _buffer1[0] = ClientRequest.Ping.index;
+  webSocket.sink.add(_buffer1);
 }
 
 void sendRequestTeleport(double x, double y){
-  webSocket.send('${ClientRequest.Teleport.index} $session ${x.toInt()} ${y.toInt()} ');
+  _buffer3[0] = ClientRequest.Teleport.index;
+  _buffer3[1] = x.toInt();
+  _buffer3[2] = y.toInt();
+  webSocket.sink.add(_buffer3);
+  // webSocket.send('${ClientRequest.Teleport.index} $session ${} ${y.toInt()} ');
 }
 
 void sendRequestSelectAbility(int index) {
-  if (index < 1 || index > 4){
-    throw Exception("sendRequestSelectAbility(index: $index) - index must be between 1 and 4 inclusive");
-  }
-  webSocket.send('${ClientRequest.SelectAbility.index} $session $index');
+  // if (index < 1 || index > 4){
+  //   throw Exception("sendRequestSelectAbility(index: $index) - index must be between 1 and 4 inclusive");
+  // }
+  // webSocket.send('${ClientRequest.SelectAbility.index} $session $index');
 }
 
 void requestThrowGrenade(double strength) {
@@ -51,10 +63,22 @@ void sendRequestAcquireHandgun(){
 }
 
 void sendRequestJoinGame(GameType type, {String? playerId}) {
+  _buffer2[0] = ClientRequest.Join.index;
+  _buffer2[1] = type.index;
+  webSocket.sink.add(_buffer2);
+  return;
   if (playerId == null){
-    webSocket.send('${ClientRequest.Join.index} ${type.index}');
-  }else{
-    webSocket.send('${ClientRequest.Join.index} ${type.index} $playerId');
+    // webSocket.send('${ClientRequest.Join.index} ${type.index}');
+    _buffer2[0] = ClientRequest.Join.index;
+    _buffer2[1] = type.index;
+    webSocket.sink.add(_buffer2);
+
+  } else {
+    _buffer3[0] = ClientRequest.Join.index;
+    _buffer3[1] = type.index;
+    // _sendBuffer3[2] = playerId;
+    // webSocket.sink.add(_sendBuffer2);
+    // webSocket.send('${ClientRequest.Join.index} ${type.index} $playerId');
   }
 }
 
@@ -64,41 +88,49 @@ void sendRequestJoinCustomGame({required String mapName, required String playerI
 }
 
 void sendRequestAcquireAbility(WeaponType type) {
-  webSocket.send('${ClientRequest.AcquireAbility.index} $session ${type.index}');
+  // webSocket.send('${ClientRequest.AcquireAbility.index} $session ${type.index}');
 }
 
 final _characterController = modules.game.state.characterController;
 
 void sendRequestUpdatePlayer() {
-  _buffer.clear();
-  _write(gameUpdateIndex);
-  _write(_characterController.action.value.index); // 1
-  _write(mouseWorldX.toInt());
-  _write(mouseWorldY.toInt());
+  // _buffer.clear();
+  // _write(gameUpdateIndex);
+  _buffer5[0] = gameUpdateIndex;
+  _buffer5[1] = _characterController.action.value.index;
+  _buffer5[2] = mouseWorldX.toInt();
+  _buffer5[3] = mouseWorldY.toInt();
+  // _write(_characterController.action.value.index); // 1
+  // _write(mouseWorldX.toInt());
+  // _write(mouseWorldY.toInt());
 
   if (_characterController.action.value == CharacterAction.Run){
-    _write(_characterController.angle.toStringAsFixed(1));
+    // _write(_characterController.angle.toStringAsFixed(1));
+    _buffer5[4] = _characterController.angle.toInt() * 100;
+  } else {
+    _buffer5[4] = 0;
   }
 
-
-  webSocket.send(_buffer.toString());
+  // webSocket.send(_buffer.toString());
+  // webSocket.sink.add(data)
+  webSocket.sink.add(_buffer5);
 
   _characterController.action.value = CharacterAction.Idle;
 }
 
 void sendRequestSetCompilePaths(bool value) {
   isometric.state.paths.clear();
-  webSocket.send('${ClientRequest.SetCompilePaths.index} $session ${value ? 1 : 0}');
+  // webSocket.send('${ClientRequest.SetCompilePaths.index} $session ${value ? 1 : 0}');
 }
 
-void sendClientRequest(ClientRequest request, [dynamic message = ""]) {
-  webSocket.send('${request.index} $session $message');
-}
+// void sendClientRequest(ClientRequest request, [dynamic message = ""]) {
+//   webSocket.send('${request.index} $session $message');
+// }
 
-void _write(dynamic value) {
-  _buffer.write(value);
-  _buffer.write(_space);
-}
+// void _write(dynamic value) {
+//   _buffer.write(value);
+//   _buffer.write(_space);
+// }
 
 void request(ClientRequest request, String value) {
   webSocket.send('${request.index} $value');
@@ -107,25 +139,25 @@ void request(ClientRequest request, String value) {
 class _SendRequestToServer {
   upgradeAbility(int index){
     print("sendRequest.upgradeAbility(index: $index)");
-    sendClientRequest(ClientRequest.Upgrade_Ability, index);
+    // sendClientRequest(ClientRequest.Upgrade_Ability, index);
   }
 }
 
-void sendRequestUpdateCube3D(){
-  _write(ClientRequest.Update_Cube3D.index);
-  _write(modules.game.state.player.uuid.value);
-  _writeVector3(camera3D.position);
-  _writeVector3(camera3D.rotation);
-  _sendAndClearBuffer();
-}
+// void sendRequestUpdateCube3D(){
+//   _write(ClientRequest.Update_Cube3D.index);
+//   _write(modules.game.state.player.uuid.value);
+//   _writeVector3(camera3D.position);
+//   _writeVector3(camera3D.rotation);
+//   _sendAndClearBuffer();
+// }
 
-void _sendAndClearBuffer(){
-  webSocket.send(_buffer.toString());
-  _buffer.clear();
-}
+// void _sendAndClearBuffer(){
+//   webSocket.send(_buffer.toString());
+//   _buffer.clear();
+// }
 
-void _writeVector3(Vector3 value){
-  _write(value.x.toInt());
-  _write(value.y.toInt());
-  _write(value.z.toInt());
-}
+// void _writeVector3(Vector3 value){
+//   _write(value.x.toInt());
+//   _write(value.y.toInt());
+//   _write(value.z.toInt());
+// }

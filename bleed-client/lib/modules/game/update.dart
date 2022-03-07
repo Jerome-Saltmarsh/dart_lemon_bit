@@ -38,9 +38,9 @@ class GameUpdate {
       case GameType.BATTLE_ROYAL:
         _updateBleed();
         break;
-      case GameType.CUBE3D:
-        sendRequestUpdateCube3D();
-        break;
+      // case GameType.CUBE3D:
+        // sendRequestUpdateCube3D();
+        // break;
       default:
         throw Exception("No update for ${game.type.value}");
     }

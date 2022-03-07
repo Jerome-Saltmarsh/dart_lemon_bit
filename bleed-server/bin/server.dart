@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:bleed_server/CubeGame.dart';
 import 'package:bleed_server/system.dart';
 import 'package:bleed_server/user-service-client/firestoreService.dart';
@@ -225,17 +227,241 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       error(GameError.InsufficientSkillPoints);
     }
 
-    void errorInsufficientOrbs() {
-      error(GameError.InsufficientOrbs);
-    }
-
-    void errorInventoryFull() {
-      error(GameError.Inventory_Full);
-    }
-
     void onEvent(requestD) {
+
+      if (requestD is Uint8List){
+        final Uint8List args = requestD;
+
+        final clientRequestInt = args[0];
+        if (clientRequestInt < 0) {
+          error(GameError.UnrecognizedClientRequest);
+          return;
+        }
+
+        if (clientRequestInt >= clientRequestsLength) {
+          error(GameError.UnrecognizedClientRequest);
+          return;
+        }
+
+        switch(clientRequests[clientRequestInt]){
+          case ClientRequest.Update:
+            final player = _player;
+
+            if (player == null) {
+              errorPlayerNotFound();
+              return;
+            }
+
+            player.lastUpdateFrame = 0;
+            final game = player.game;
+            compileGameStatus(_buffer, game.status);
+
+            if (game.awaitingPlayers) {
+              compileLobby(_buffer, game);
+              compileGameMeta(_buffer, game);
+              sendAndClearBuffer();
+              return;
+            }
+
+            if (game.countingDown){
+              compileCountDownFramesRemaining(_buffer, game);
+              sendAndClearBuffer();
+              return;
+            }
+
+            if (game.finished) {
+              if (game is GameMoba) {
+                compileTeamLivesRemaining(_buffer, game);
+              }
+              reply(_buffer.toString());
+              return;
+            }
+
+            if (player.sceneChanged) {
+              player.sceneChanged = false;
+              _buffer.clear();
+              _buffer.write(
+                  '${ServerResponse.Scene_Changed.index} ${player.x.toInt()} ${player.y.toInt()} ');
+              _buffer.write(game.compiledTiles);
+              _buffer.write(game.compiledEnvironmentObjects);
+              _buffer.write(game.compiled);
+              reply(_buffer.toString());
+              return;
+            }
+
+            if (player.deadOrBusy) {
+              sendCompiledPlayerState(game, player);
+              return;
+            }
+
+            // if (arguments.length < 5){
+            //   errorInvalidArg("Insufficient Arguments. 6 Required");
+            //   return;
+            // }
+
+            final actionIndex = args[1];
+            final mouseX = args[2].toDouble();
+            final mouseY = args[3].toDouble();
+            player.mouseX = mouseX;
+            player.mouseY = mouseY;
+            final action = characterActions[actionIndex];
+
+            player.aimTarget = null;
+            final closestEnemy = game.getClosestEnemy(mouseX, mouseY, player.team);
+            if (closestEnemy != null) {
+              if (withinDistance(
+                  closestEnemy, mouseX, mouseY, settings.radius.cursor)) {
+                player.aimTarget = closestEnemy;
+              }
+            }
+
+            switch (action) {
+              case CharacterAction.Idle:
+                game.setCharacterState(player, CharacterState.Idle);
+                break;
+              case CharacterAction.Perform:
+                final ability = player.ability;
+                final aimTarget = player.aimTarget;
+                player.attackTarget = aimTarget;
+                playerSetAbilityTarget(player, mouseX, mouseY);
+                if (ability == null) {
+                  if (aimTarget != null) {
+                    player.target = aimTarget;
+                    if (withinRadius(player, aimTarget, player.weapon.range)){
+                      characterFaceV2(player, aimTarget);
+                      game.setCharacterStatePerforming(player);
+                    }
+                  } else {
+                    player.runTarget.x = mouseX;
+                    player.runTarget.y = mouseY;
+                    player.target = player.runTarget;
+                  }
+                  break;
+                }
+
+                if (player.magic < ability.cost) {
+                  error(GameError.InsufficientMana);
+                  break;
+                }
+
+                if (ability.cooldownRemaining > 0) {
+                  error(GameError.Cooldown_Remaining);
+                  break;
+                }
+
+                switch (ability.mode) {
+                  case AbilityMode.None:
+                    return;
+                  case AbilityMode.Targeted:
+                    if (aimTarget != null) {
+                      player.target = aimTarget;
+                      player.attackTarget = aimTarget;
+                      return;
+                    } else {
+                      player.runTarget.x = mouseX;
+                      player.runTarget.y = mouseY;
+                      player.target = player.runTarget;
+                      return;
+                    }
+                  case AbilityMode.Activated:
+                  // TODO: Handle this case.
+                    break;
+                  case AbilityMode.Area:
+                  // TODO: Handle this case.
+                    break;
+                  case AbilityMode.Directed:
+                  // TODO: Handle this case.
+                    break;
+                }
+
+                player.magic -= ability.cost;
+                player.performing = ability;
+                ability.cooldownRemaining = ability.cooldown;
+                player.ability = null;
+
+                characterAimAt(player, mouseX, mouseY);
+                game.setCharacterState(player, CharacterState.Performing);
+                break;
+              case CharacterAction.Run:
+                player.angle = args[4].toDouble() * 0.01;
+                game.setCharacterStateRunning(player);
+                player.target = null;
+                break;
+            }
+            sendCompiledPlayerState(game, player);
+            return;
+
+          case ClientRequest.Join:
+            if (args.length < 2) {
+              errorArgsExpected(2, args);
+              return;
+            }
+            final gameTypeIndex = args[1];
+
+            if (gameTypeIndex >= gameTypes.length) {
+              errorInvalidArg(
+                  'game type index cannot exceed ${gameTypes.length - 1}');
+              return;
+            }
+            if (gameTypeIndex < 0) {
+              errorInvalidArg('game type must be greater than 0');
+              return;
+            }
+
+            final gameType = gameTypes[gameTypeIndex];
+
+            // if (!freeToPlay.contains(gameType)){
+            //   if (arguments.length < 3) {
+            //     return error(GameError.PlayerId_Required);
+            //   }
+            // }
+
+            switch (gameType) {
+              case GameType.None:
+                break;
+              case GameType.MMO:
+                // if (args.length < 3) {
+                  return joinGameMMO(playerName: generateName());
+                // }
+                // final playerId = args[2];
+                // firestoreService.findUserById(playerId).then((account){
+                //   if (account == null) {
+                //     return errorAccountNotFound();
+                //   }
+                //   joinGameMMO(playerName: account.publicName);
+                // });
+                break;
+              case GameType.Moba:
+                joinGameMoba();
+                break;
+              case GameType.CUBE3D:
+                joinCube3D();
+                break;
+              case GameType.BATTLE_ROYAL:
+                // if (args.length < 3) {
+                  return joinBattleRoyal(generateName());
+                // }
+
+                // final playerId = arguments[2];
+                // firestoreService.findUserById(playerId).then((account){
+                //   if (account == null){
+                //     return errorAccountNotFound();
+                //   }
+                //   if (!account.isPremium) {
+                //     return errorPremiumAccountOnly();
+                //   }
+                //   joinBattleRoyal(account.publicName);
+                // });
+
+                break;
+            }
+            break;
+        }
+      }
+
       final String requestString = requestD;
       final arguments = requestString.split(_space);
+
 
       if (arguments.isEmpty) {
         error(GameError.ClientRequestArgumentsEmpty);
@@ -260,154 +486,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
       final clientRequest = clientRequests[clientRequestInt];
       switch (clientRequest) {
-        case ClientRequest.Update:
-          final player = _player;
-
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
-
-          player.lastUpdateFrame = 0;
-          final game = player.game;
-          compileGameStatus(_buffer, game.status);
-
-          if (game.awaitingPlayers) {
-            compileLobby(_buffer, game);
-            compileGameMeta(_buffer, game);
-            sendAndClearBuffer();
-            return;
-          }
-
-          if (game.countingDown){
-            compileCountDownFramesRemaining(_buffer, game);
-            sendAndClearBuffer();
-            return;
-          }
-
-          if (game.finished) {
-            if (game is GameMoba) {
-              compileTeamLivesRemaining(_buffer, game);
-            }
-            reply(_buffer.toString());
-            return;
-          }
-
-          if (player.sceneChanged) {
-            player.sceneChanged = false;
-            _buffer.clear();
-            _buffer.write(
-                '${ServerResponse.Scene_Changed.index} ${player.x.toInt()} ${player.y.toInt()} ');
-            _buffer.write(game.compiledTiles);
-            _buffer.write(game.compiledEnvironmentObjects);
-            _buffer.write(game.compiled);
-            reply(_buffer.toString());
-            return;
-          }
-
-          if (player.deadOrBusy) {
-            sendCompiledPlayerState(game, player);
-            return;
-          }
-
-          if (arguments.length < 5){
-            errorInvalidArg("Insufficient Arguments. 6 Required");
-            return;
-          }
-
-          final actionIndex = int.parse(arguments[1]);
-          final mouseX = double.parse(arguments[2]);
-          final mouseY = double.parse(arguments[3]);
-          player.mouseX = mouseX;
-          player.mouseY = mouseY;
-          final action = characterActions[actionIndex];
-
-          player.aimTarget = null;
-          final closestEnemy = game.getClosestEnemy(mouseX, mouseY, player.team);
-          if (closestEnemy != null) {
-            if (withinDistance(
-                closestEnemy, mouseX, mouseY, settings.radius.cursor)) {
-              player.aimTarget = closestEnemy;
-            }
-          }
-
-          switch (action) {
-            case CharacterAction.Idle:
-              game.setCharacterState(player, CharacterState.Idle);
-              break;
-            case CharacterAction.Perform:
-              final ability = player.ability;
-              final aimTarget = player.aimTarget;
-              player.attackTarget = aimTarget;
-              playerSetAbilityTarget(player, mouseX, mouseY);
-              if (ability == null) {
-                if (aimTarget != null) {
-                  player.target = aimTarget;
-                  if (withinRadius(player, aimTarget, player.weapon.range)){
-                    characterFaceV2(player, aimTarget);
-                    game.setCharacterStatePerforming(player);
-                  }
-                } else {
-                  player.runTarget.x = mouseX;
-                  player.runTarget.y = mouseY;
-                  player.target = player.runTarget;
-                }
-              break;
-              }
-
-              if (player.magic < ability.cost) {
-                error(GameError.InsufficientMana);
-                break;
-              }
-
-              if (ability.cooldownRemaining > 0) {
-                error(GameError.Cooldown_Remaining);
-                break;
-              }
-
-              switch (ability.mode) {
-                case AbilityMode.None:
-                  return;
-                case AbilityMode.Targeted:
-                  if (aimTarget != null) {
-                    player.target = aimTarget;
-                    player.attackTarget = aimTarget;
-                    return;
-                  } else {
-                    player.runTarget.x = mouseX;
-                    player.runTarget.y = mouseY;
-                    player.target = player.runTarget;
-                    return;
-                  }
-                case AbilityMode.Activated:
-                // TODO: Handle this case.
-                  break;
-                case AbilityMode.Area:
-                // TODO: Handle this case.
-                  break;
-                case AbilityMode.Directed:
-                // TODO: Handle this case.
-                  break;
-              }
-
-              player.magic -= ability.cost;
-              player.performing = ability;
-              ability.cooldownRemaining = ability.cooldown;
-              player.ability = null;
-
-              characterAimAt(player, mouseX, mouseY);
-              game.setCharacterState(player, CharacterState.Performing);
-              break;
-            case CharacterAction.Run:
-              final angle = double.parse(arguments[4]);
-              setAngle(player, angle);
-              game.setCharacterStateRunning(player);
-              player.target = null;
-              break;
-          }
-          sendCompiledPlayerState(game, player);
-          return;
-
         case ClientRequest.Join_Custom:
           if (arguments.length < 3) {
             errorArgsExpected(3, arguments);
@@ -434,76 +512,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             compileGameMeta(_buffer, customGame);
             sendAndClearBuffer();
           });
-          break;
-
-        case ClientRequest.Join:
-          if (arguments.length < 2) {
-            errorArgsExpected(2, arguments);
-            return;
-          }
-          final gameTypeIndex = int.tryParse(arguments[1]);
-
-          if (gameTypeIndex == null) {
-            errorInvalidArg('expected integer at args[1]');
-            return;
-          }
-          if (gameTypeIndex >= gameTypes.length) {
-            errorInvalidArg(
-                'game type index cannot exceed ${gameTypes.length - 1}');
-            return;
-          }
-          if (gameTypeIndex < 0) {
-            errorInvalidArg('game type must be greater than 0');
-            return;
-          }
-
-          final gameType = gameTypes[gameTypeIndex];
-
-          // if (!freeToPlay.contains(gameType)){
-          //   if (arguments.length < 3) {
-          //     return error(GameError.PlayerId_Required);
-          //   }
-          // }
-
-          switch (gameType) {
-            case GameType.None:
-              break;
-            case GameType.MMO:
-              if (arguments.length < 3) {
-                return joinGameMMO(playerName: generateName());
-              }
-              final playerId = arguments[2];
-              firestoreService.findUserById(playerId).then((account){
-                if (account == null) {
-                  return errorAccountNotFound();
-                }
-                joinGameMMO(playerName: account.publicName);
-              });
-              break;
-            case GameType.Moba:
-              joinGameMoba();
-              break;
-            case GameType.CUBE3D:
-              joinCube3D();
-              break;
-            case GameType.BATTLE_ROYAL:
-              if (arguments.length < 3) {
-                return joinBattleRoyal(generateName());
-              }
-
-              final playerId = arguments[2];
-              firestoreService.findUserById(playerId).then((account){
-                if (account == null){
-                  return errorAccountNotFound();
-                }
-                if (!account.isPremium) {
-                  return errorPremiumAccountOnly();
-                }
-                joinBattleRoyal(account.publicName);
-              });
-
-              break;
-          }
           break;
 
         case ClientRequest.Ping:

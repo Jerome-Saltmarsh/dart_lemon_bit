@@ -11,7 +11,7 @@ enum Connection {
   Failed_To_Connect
 }
 
-final _WebSocket webSocket = _WebSocket();
+final webSocket = _WebSocket();
 
 class _WebSocket {
   late WebSocketChannel webSocketChannel;

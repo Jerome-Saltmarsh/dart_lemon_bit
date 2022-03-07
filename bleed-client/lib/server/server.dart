@@ -10,12 +10,12 @@ class _Server {
   _Send send = _Send();
 
   void leaveLobby(){
-    sendClientRequest(ClientRequest.Leave_Lobby);
+    // sendClientRequest(ClientRequest.Leave_Lobby);
   }
 }
 
 class _Send {
   void selectCharacterType(CharacterType value){
-    webSocket.send('${ClientRequest.SelectCharacterType.index} $session ${value.index}');
+    // webSocket.send('${ClientRequest.SelectCharacterType.index} $session ${value.index}');
   }
 }
