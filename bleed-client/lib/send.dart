@@ -68,28 +68,28 @@ void compileDouble({required double value, required List<int> list, required int
 }
 
 void sendRequestUpdatePlayer() {
-  final x = mouseWorldX.toInt();
-  final xSign = x < 0 ? 0 : 1;
-  final xAbs = x.abs();
-  final xCount = xAbs ~/ _256;
-  final xRemainder = xAbs % _256;
-
-  final y = mouseWorldY.toInt();
-  final ySign = y < 0 ? 0 : 1;
-  final yAbs = y.abs();
-  final yCount = yAbs ~/ _256;
-  final yRemainder = yAbs % _256;
+  // final x = mouseWorldX.toInt();
+  // final xSign = x < 0 ? 0 : 1;
+  // final xAbs = x.abs();
+  // final xCount = xAbs ~/ _256;
+  // final xRemainder = xAbs % _256;
+  // final y = mouseWorldY.toInt();
+  // final ySign = y < 0 ? 0 : 1;
+  // final yAbs = y.abs();
+  // final yCount = yAbs ~/ _256;
+  // final yRemainder = yAbs % _256;
 
   _buffer9[0] = gameUpdateIndex;
   _buffer9[1] = _characterController.action.value.index;
-
-  _buffer9[2] = xSign;
-  _buffer9[3] = xCount;
-  _buffer9[4] = xRemainder;
-
-  _buffer9[5] = ySign;
-  _buffer9[6] = yCount;
-  _buffer9[7] = yRemainder;
+  compileDouble(value: mouseWorldX, list: _buffer9, index: 2);
+  compileDouble(value: mouseWorldY, list: _buffer9, index: 5);
+  // _buffer9[2] = xSign;
+  // _buffer9[3] = xCount;
+  // _buffer9[4] = xRemainder;
+  //
+  // _buffer9[5] = ySign;
+  // _buffer9[6] = yCount;
+  // _buffer9[7] = yRemainder;
 
   if (_characterController.action.value == CharacterAction.Run){
     _buffer9[8] = _characterController.angle.toInt();
