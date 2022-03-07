@@ -36,11 +36,9 @@ import 'utilities.dart';
 import 'values/world.dart';
 
 const _space = " ";
-final errorIndex = ServerResponse.Error.index;
+final _errorIndex = ServerResponse.Error.index;
 final _buffer = StringBuffer();
-const clientRequests = ClientRequest.values;
-final clientRequestsLength = clientRequests.length;
-
+final _clientRequestsLength = clientRequests.length;
 
 void clearBuffer() {
   _buffer.clear();
@@ -182,11 +180,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     }
 
     void error(GameError error, {String message = ""}) {
-      reply('$errorIndex ${error.index} $message');
+      reply('$_errorIndex ${error.index} $message');
     }
 
     void errorInvalidArg(String message) {
-      reply('$errorIndex ${GameError.InvalidArguments.index} $message');
+      reply('$_errorIndex ${GameError.InvalidArguments.index} $message');
     }
 
     void errorArgsExpected(int expected, List arguments) {
@@ -238,7 +236,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           return;
         }
 
-        if (clientRequestInt >= clientRequestsLength) {
+        if (clientRequestInt >= _clientRequestsLength) {
           error(GameError.UnrecognizedClientRequest);
           return;
         }
@@ -484,7 +482,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
         return;
       }
 
-      if (clientRequestInt >= clientRequestsLength) {
+      if (clientRequestInt >= _clientRequestsLength) {
         error(GameError.UnrecognizedClientRequest);
         return;
       }

@@ -29,3 +29,5 @@ enum ClientRequest {
   Character_Save,
   Character_Load,
 }
+
+const clientRequests = ClientRequest.values;
