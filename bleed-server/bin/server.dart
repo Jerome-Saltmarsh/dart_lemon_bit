@@ -21,6 +21,7 @@ import 'common/ServerResponse.dart';
 import 'common/SlotType.dart';
 import 'common/SlotTypeCategory.dart';
 import 'common/WeaponType.dart';
+import 'common/compile_util.dart';
 import 'common/enums/Direction.dart';
 import 'common/version.dart';
 import 'compile.dart';
@@ -294,15 +295,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             }
 
             final actionIndex = args[1];
-            final mouseXSign = args[2] == 0 ? -1.0 : 1.0;
-            final mouseXCount = args[3];
-            final mouseXRemainder = args[4];
-            final mouseYSign = args[5] == 0 ? -1.0 : 1.0;
-            final mouseYCount = args[6];
-            final mouseYRemainder = args[7];
-
-            final mouseX = mouseXSign * ((mouseXCount * 256) + mouseXRemainder);
-            final mouseY = mouseYSign * ((mouseYCount * 256) + mouseYRemainder);
+            final mouseX = consumeDouble(list: args, index: 2);
+            final mouseY = consumeDouble(list: args, index: 5);
 
             player.mouseX = mouseX;
             player.mouseY = mouseY;
@@ -391,6 +385,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 player.target = null;
                 break;
             }
+
+            // reply(game.compiled);
             sendCompiledPlayerState(game, player);
             return;
 
