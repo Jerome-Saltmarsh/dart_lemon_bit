@@ -39,6 +39,11 @@ final _buffer = StringBuffer();
 const clientRequests = ClientRequest.values;
 final clientRequestsLength = clientRequests.length;
 
+
+void clearBuffer() {
+  _buffer.clear();
+}
+
 void write(dynamic value) {
   _buffer.write(value);
   _buffer.write(_space);
@@ -91,10 +96,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
     void reply(String response) {
       sink.add(response);
-    }
-
-    void clearBuffer() {
-      _buffer.clear();
     }
 
     void sendAndClearBuffer() {
@@ -260,13 +261,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       final clientRequest = clientRequests[clientRequestInt];
       switch (clientRequest) {
         case ClientRequest.Update:
-          // if (arguments.length < 2){
-          //   errorInvalidArg("player uuid required");
-          //   return;
-          // }
-
-          // final playerId = arguments[1];
-          // final player = engine.findPlayerByUuid(playerId);
           final player = _player;
 
           if (player == null) {
@@ -322,9 +316,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
 
           final actionIndex = int.parse(arguments[1]);
-          final angle = double.parse(arguments[2]);
-          final mouseX = double.parse(arguments[3]);
-          final mouseY = double.parse(arguments[4]);
+          final mouseX = double.parse(arguments[2]);
+          final mouseY = double.parse(arguments[3]);
           player.mouseX = mouseX;
           player.mouseY = mouseY;
           final action = characterActions[actionIndex];
@@ -406,7 +399,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               game.setCharacterState(player, CharacterState.Performing);
               break;
             case CharacterAction.Run:
-              // final angle = double.parse(arguments[2]);
+              final angle = double.parse(arguments[4]);
               setAngle(player, angle);
               game.setCharacterStateRunning(player);
               player.target = null;

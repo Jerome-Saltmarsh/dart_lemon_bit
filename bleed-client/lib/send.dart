@@ -73,9 +73,14 @@ void sendRequestUpdatePlayer() {
   _buffer.clear();
   _write(gameUpdateIndex);
   _write(_characterController.action.value.index); // 1
-  _write(_characterController.angle.toStringAsFixed(1));
   _write(mouseWorldX.toInt());
   _write(mouseWorldY.toInt());
+
+  if (_characterController.action.value == CharacterAction.Run){
+    _write(_characterController.angle.toStringAsFixed(1));
+  }
+
+
   webSocket.send(_buffer.toString());
 
   _characterController.action.value = CharacterAction.Idle;
