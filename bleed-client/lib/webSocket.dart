@@ -54,8 +54,15 @@ class _WebSocket {
     if (connecting) {
       connection.value = Connection.Connected;
     }
-    event = _response;
-    parseState();
+    if (_response is String){
+      event = _response;
+      parseState();
+      return;
+    }
+
+    if (_response is List<int>){
+      
+    }
   }
 
   void _onError(dynamic value) {

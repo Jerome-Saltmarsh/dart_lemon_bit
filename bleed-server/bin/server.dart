@@ -6,6 +6,7 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+import 'byte_compiler.dart';
 import 'classes/Game.dart';
 import 'classes/Player.dart';
 import 'common/AbilityMode.dart';
@@ -285,6 +286,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               reply(_buffer.toString());
               return;
             }
+
+
+            byteCompiler.writeZombies(game.zombies);
+            final bytes = byteCompiler.writeToSendBuffer();
+            sink.add(bytes);
+
 
             if (player.deadOrBusy) {
               sendCompiledPlayerState(game, player);

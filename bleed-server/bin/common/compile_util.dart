@@ -10,8 +10,8 @@ const _zero = 0;
 /// Index 0: Sign 0 for negative and 1 for positive
 /// Index 1: Number of 256
 /// Index 2: Remainder from 256
-void compileDouble({
-  required double value,
+void compileNumber({
+  required num value,
   required List<int> list,
   required int index
 }){

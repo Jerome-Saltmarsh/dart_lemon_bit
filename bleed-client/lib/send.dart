@@ -62,8 +62,8 @@ final _characterController = modules.game.state.characterController;
 void sendRequestUpdatePlayer() {
   _buffer9[0] = gameUpdateIndex;
   _buffer9[1] = _characterController.action.value.index;
-  compileDouble(value: mouseWorldX, list: _buffer9, index: 2);
-  compileDouble(value: mouseWorldY, list: _buffer9, index: 5);
+  compileNumber(value: mouseWorldX, list: _buffer9, index: 2);
+  compileNumber(value: mouseWorldY, list: _buffer9, index: 5);
   if (_characterController.action.value == CharacterAction.Run){
     _buffer9[8] = _characterController.angle.toInt();
   } else {
