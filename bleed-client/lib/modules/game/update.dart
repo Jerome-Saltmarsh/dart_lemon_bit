@@ -90,7 +90,7 @@ class GameUpdate {
     }
     final direction = getKeyDirection();
     if (direction != null){
-      modules.game.state.characterController.angle = convertDirectionToAngle(direction);
+      modules.game.state.characterController.angle = direction.index.toDouble();
       modules.game.actions.setCharacterActionRun();
       return;
     }

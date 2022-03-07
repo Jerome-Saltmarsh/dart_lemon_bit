@@ -21,6 +21,7 @@ final _buffer5 = Int8List(5);
 final _buffer6 = Int8List(6);
 final _buffer7 = Int8List(7);
 final _buffer8 = Int8List(8);
+final _buffer9 = Int8List(9);
 
 void speak(String message){
   // if (message.isEmpty) return;
@@ -115,31 +116,26 @@ void sendRequestUpdatePlayer() {
   final yCount = yAbs ~/ _256;
   final yRemainder = yAbs % _256;
 
-  _buffer8[0] = gameUpdateIndex;
-  _buffer8[1] = _characterController.action.value.index;
+  _buffer9[0] = gameUpdateIndex;
+  _buffer9[1] = _characterController.action.value.index;
 
-  _buffer8[2] = xSign;
-  _buffer8[3] = xCount;
-  _buffer8[4] = xRemainder;
+  _buffer9[2] = xSign;
+  _buffer9[3] = xCount;
+  _buffer9[4] = xRemainder;
 
-  _buffer8[5] = ySign;
-  _buffer8[6] = yCount;
-  _buffer8[7] = yRemainder;
-
-  // _write(_characterController.action.value.index); // 1
-  // _write(mouseWorldX.toInt());
-  // _write(mouseWorldY.toInt());
+  _buffer9[5] = ySign;
+  _buffer9[6] = yCount;
+  _buffer9[7] = yRemainder;
 
   if (_characterController.action.value == CharacterAction.Run){
-    // _write(_characterController.angle.toStringAsFixed(1));
-    // _buffer8[6] = _characterController.angle.toInt() * 100;
+    _buffer9[8] = _characterController.angle.toInt();
   } else {
-    // _buffer8[6] = 0;
+    _buffer9[8] = 0;
   }
 
   // webSocket.send(_buffer.toString());
   // webSocket.sink.add(data)s
-  webSocket.sink.add(_buffer8);
+  webSocket.sink.add(_buffer9);
 
   _characterController.action.value = CharacterAction.Idle;
 }

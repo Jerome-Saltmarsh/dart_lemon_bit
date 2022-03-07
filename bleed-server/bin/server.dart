@@ -21,6 +21,7 @@ import 'common/ServerResponse.dart';
 import 'common/SlotType.dart';
 import 'common/SlotTypeCategory.dart';
 import 'common/WeaponType.dart';
+import 'common/enums/Direction.dart';
 import 'common/version.dart';
 import 'compile.dart';
 import 'engine.dart';
@@ -292,11 +293,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               return;
             }
 
-            // if (arguments.length < 5){
-            //   errorInvalidArg("Insufficient Arguments. 6 Required");
-            //   return;
-            // }
-
             final actionIndex = args[1];
             final mouseXSign = args[2] == 0 ? -1.0 : 1.0;
             final mouseXCount = args[3];
@@ -311,10 +307,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             player.mouseX = mouseX;
             player.mouseY = mouseY;
             final action = characterActions[actionIndex];
-
-            // if (action != CharacterAction.Idle){
-              // print(action.name);
-            // }
 
             player.aimTarget = null;
             final closestEnemy = game.getClosestEnemy(mouseX, mouseY, player.team);
@@ -393,7 +385,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 game.setCharacterState(player, CharacterState.Performing);
                 break;
               case CharacterAction.Run:
-                // player.angle = args[4].toDouble() * 0.01;
+                final direction = directions[args[8]];
+                player.angle = convertDirectionToAngle(direction);
                 game.setCharacterStateRunning(player);
                 player.target = null;
                 break;
