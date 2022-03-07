@@ -93,6 +93,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     final sink = webSocket.sink;
 
     Player? _player;
+    Account? _account;
 
     void reply(String response) {
       sink.add(response);
@@ -139,15 +140,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       sendAndClearBuffer();
     }
 
-    void joinBattleRoyal(String playerName) {
-      print('$playerName joining battle royal');
+    void joinBattleRoyal() {
       final royal = engine.findPendingRoyalGames();
       final player = royal.playerJoin();
-      player.name = playerName;
+      player.name = _account != null ? _account.publicName : generateName();
       compileWholeGame(royal);
       compilePlayerJoined(_buffer, player);
-      // compilePlayerWeaponValues(_buffer, player);
-      // compilePlayerWeapons(_buffer, player);
       compileGameStatus(_buffer, royal.status);
       compileGameMeta(_buffer, royal);
       compileCrates(_buffer, royal.crates);
@@ -161,11 +159,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       reply('${ServerResponse.Cube_Joined.index} ${cubePlayer.uuid}');
     }
 
-    void joinGameMMO({required String playerName}) {
+    void joinGameMMO() {
       clearBuffer();
       final player = spawnPlayerInTown();
       _player = player;
-      player.name = playerName;
+      player.name = _account != null ? _account.publicName : generateName();
       player.orbs.emerald = 10;
       player.orbs.topaz = 10;
       player.orbs.ruby = 10;
@@ -417,17 +415,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               case GameType.None:
                 throw Exception("Join Game - GameType.None invalid");
               case GameType.MMO:
-                // if (args.length < 3) {
-                  return joinGameMMO(playerName: generateName());
-                // }
-                // final playerId = args[2];
-                // firestoreService.findUserById(playerId).then((account){
-                //   if (account == null) {
-                //     return errorAccountNotFound();
-                //   }
-                //   joinGameMMO(playerName: account.publicName);
-                // });
-                break;
+                return joinGameMMO();
               case GameType.Moba:
                 joinGameMoba();
                 break;
@@ -435,22 +423,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 joinCube3D();
                 break;
               case GameType.BATTLE_ROYAL:
-                // if (args.length < 3) {
-                  return joinBattleRoyal(generateName());
-                // }
-
-                // final playerId = arguments[2];
-                // firestoreService.findUserById(playerId).then((account){
-                //   if (account == null){
-                //     return errorAccountNotFound();
-                //   }
-                //   if (!account.isPremium) {
-                //     return errorPremiumAccountOnly();
-                //   }
-                //   joinBattleRoyal(account.publicName);
-                // });
-
-                break;
+                return joinBattleRoyal();
             }
             break;
           default:
