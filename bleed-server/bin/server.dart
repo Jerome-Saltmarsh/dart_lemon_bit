@@ -391,6 +391,16 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             sendCompiledPlayerState(game, player);
             return;
 
+          case ClientRequest.Teleport:
+            final player = _player;
+            if (player == null) {
+              errorPlayerNotFound();
+              return;
+            }
+            player.x = args[1].toDouble();
+            player.y = args[2].toDouble();
+            return;
+
           case ClientRequest.Join:
             if (args.length < 2) {
               errorArgsExpected(2, args);
@@ -848,18 +858,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               // player.abilityPoints--;
               break;
           }
-          break;
-
-        case ClientRequest.Teleport:
-          Player? player =engine.findPlayerByUuid(arguments[1]);
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
-          double x = double.parse(arguments[2]);
-          double y = double.parse(arguments[3]);
-          player.x = x;
-          player.y = y;
           break;
 
         case ClientRequest.Equip:
