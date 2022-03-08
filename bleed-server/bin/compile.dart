@@ -42,7 +42,7 @@ class _Compile {
 
   void game(Game game) {
     _gameBuffer.clear();
-    _compilePlayers(_gameBuffer, game.players);
+    // _compilePlayers(_gameBuffer, game.players);
     // _compileZombies(_gameBuffer, game.zombies);
     _compileInteractableNpcs(_gameBuffer, game.npcs);
     _compileProjectiles(_gameBuffer, game.projectiles);
