@@ -44,7 +44,7 @@ class _Compile {
     _gameBuffer.clear();
     // _compilePlayers(_gameBuffer, game.players);
     // _compileZombies(_gameBuffer, game.zombies);
-    _compileInteractableNpcs(_gameBuffer, game.npcs);
+    // _compileInteractableNpcs(_gameBuffer, game.npcs);
     _compileProjectiles(_gameBuffer, game.projectiles);
     _compileGameEvents(_gameBuffer, game.gameEvents);
 

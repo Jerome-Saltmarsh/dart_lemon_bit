@@ -68,6 +68,21 @@ class _ByteCompiler {
     writeByte(player.slots.helm.index);
   }
 
+  void writeNpcs(List<Character> npcs){
+    writeByte(ServerResponse.Npcs.index);
+    var total = 0;
+    for (final npc in npcs) {
+      if (npc.active) total++;
+    }
+    writeBigInt(total);
+    npcs.forEach(writeNpc);
+  }
+
+  void writeNpc(Character npc) {
+    writeCharacter(npc);
+    writeByte(npc.weapon.index);
+  }
+
   List<int> _getSendBuffer(){
      for (var i = 0; i < _buffers.length; i++) {
        final buff = _buffers[i];

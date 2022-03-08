@@ -1,1 +1,1 @@
-const noSquad = -1;
+const noSquad = 0;

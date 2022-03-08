@@ -27,6 +27,9 @@ class _ByteStreamParser {
         case ServerResponse.Players:
           _parsePlayers();
           break;
+        case ServerResponse.Npcs:
+          _parseNpcs();
+          break;
         case ServerResponse.End:
           return;
         default:
@@ -51,6 +54,20 @@ class _ByteStreamParser {
     for (var i = 0; i < total; i++){
       _readPlayer(players[i]);
     }
+  }
+
+  void _parseNpcs() {
+    final total = _nextInt();
+    final npcs = game.interactableNpcs;
+    game.totalNpcs = total;
+    for (var i = 0; i < total; i++){
+      _readNpc(npcs[i]);
+    }
+  }
+
+  void _readNpc(Character character){
+    _readCharacter(character);
+    character.equippedWeapon = _readSlotType();
   }
 
   void _readPlayer(Character character){
