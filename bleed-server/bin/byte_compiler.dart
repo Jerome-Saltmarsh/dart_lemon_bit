@@ -1,10 +1,15 @@
 
 import 'dart:typed_data';
 
+import 'package:lemon_math/angle.dart';
+
 import 'classes/Character.dart';
+import 'classes/GameObject.dart';
 import 'classes/Player.dart';
+import 'classes/Projectile.dart';
 import 'common/ServerResponse.dart';
 import 'common/compile_util.dart';
+import 'common/constants.dart';
 
 final byteCompiler = _ByteCompiler();
 
@@ -41,6 +46,34 @@ class _ByteCompiler {
       if (!zombie.active) continue;
       writeCharacter(zombie);
     }
+  }
+
+  void writeProjectiles(List<Projectile> projectiles){
+    writeByte(ServerResponse.Projectiles.index);
+    writeTotalActive(projectiles);
+    projectiles.forEach(writeProjectile);
+  }
+
+  void writeTotalActive(List<GameObject> values){
+    var total = 0;
+    for (final gameObject in values) {
+      if (!gameObject.active) continue;
+      total++;
+    }
+    writeBigInt(total);
+  }
+
+  void writeProjectile(Projectile projectile){
+    writeBigInt(projectile.x);
+    writeBigInt(projectile.y);
+    writeByte(projectile.type.index);
+    final degrees = angle(projectile.xv, projectile.yv) * radiansToDegrees;
+    writeBigInt(degrees);
+    // _write(buffer, projectile.x.toInt());
+    // _write(buffer, projectile.y.toInt());
+    // _write(buffer, projectile.type.index);
+
+    // _write(buffer, degrees.toInt());
   }
 
   void writePlayers(List<Player> players){

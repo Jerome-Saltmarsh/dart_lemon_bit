@@ -27,7 +27,7 @@ final _playersIndex = ServerResponse.Players.index;
 final _playerIndex = ServerResponse.Player.index;
 final _indexZombies = ServerResponse.Zombies.index;
 final _indexNpcs = ServerResponse.Npcs.index;
-final _indexBullets = ServerResponse.Bullets.index;
+final _indexProjectiles = ServerResponse.Projectiles.index;
 final _indexNpcMessage = ServerResponse.NpcMessage.index;
 
 const _space = ' ';
@@ -45,7 +45,7 @@ class _Compile {
     // _compilePlayers(_gameBuffer, game.players);
     // _compileZombies(_gameBuffer, game.zombies);
     // _compileInteractableNpcs(_gameBuffer, game.npcs);
-    _compileProjectiles(_gameBuffer, game.projectiles);
+    // _compileProjectiles(_gameBuffer, game.projectiles);
     _compileGameEvents(_gameBuffer, game.gameEvents);
 
     _write(_gameBuffer, ServerResponse.Debug_Mode.index);
@@ -398,7 +398,7 @@ void _compileInteractableNpcs(StringBuffer buffer, List<InteractableNpc> npcs) {
 }
 
 void _compileProjectiles(StringBuffer buffer, List<Projectile> projectiles) {
-  _write(buffer, _indexBullets);
+  _write(buffer, _indexProjectiles);
   for (final projectile in projectiles) {
     if (!projectile.active) continue;
     _compileProjectile(buffer, projectile);

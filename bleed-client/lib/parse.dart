@@ -167,7 +167,7 @@ void parseState() {
         pub(error);
         return;
 
-      case ServerResponse.Bullets:
+      case ServerResponse.Projectiles:
         _parseProjectiles();
         break;
 

@@ -3,6 +3,7 @@ import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
 import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/compile_util.dart';
+import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/state/game.dart';
 
 final byteStreamParser = _ByteStreamParser();
@@ -30,11 +31,28 @@ class _ByteStreamParser {
         case ServerResponse.Npcs:
           _parseNpcs();
           break;
+        case ServerResponse.Projectiles:
+          _parseProjectiles();
+          break;
         case ServerResponse.End:
           return;
+
         default:
           throw Exception("Cannot parse $response");
       }
+    }
+  }
+
+  void _parseProjectiles(){
+    final total = _nextInt();
+    final projectiles = game.projectiles;
+    game.totalProjectiles = total;
+    for(var i = 0; i < total; i++){
+      final projectile = projectiles[i];
+      projectile.x = _nextDouble();
+      projectile.y = _nextDouble();
+      projectile.type = projectileTypes[_nextByte()];
+      projectile.angle = _nextDouble();
     }
   }
 

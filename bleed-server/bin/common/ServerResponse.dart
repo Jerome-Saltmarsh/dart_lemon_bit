@@ -2,7 +2,7 @@ enum ServerResponse {
   Player,
   Players,
   Error,
-  Bullets,
+  Projectiles,
   Zombies,
   Tiles,
   Game_Events,

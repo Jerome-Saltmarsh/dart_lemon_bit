@@ -3,6 +3,15 @@ import 'dart:math';
 
 import 'package:lemon_math/Vector2.dart';
 
+int countActive(List<GameObject> values){
+  var total = 0;
+  for(final gameObject in values){
+    if (!gameObject.active) continue;
+    total++;
+  }
+  return total;
+}
+
 class GameObject extends Vector2 {
 
   static int _idCount = 0;
