@@ -44,7 +44,7 @@ enum ServerResponse {
   Player_Slot_Types,
   Debug_Mode,
   Gem_Spawns,
-  End
+  End,
 }
 
 final serverResponses = ServerResponse.values;

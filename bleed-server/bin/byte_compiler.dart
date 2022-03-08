@@ -9,19 +9,13 @@ final byteCompiler = _ByteCompiler();
 
 class _ByteCompiler {
   final _buffer = Int8List(1000);
-
   final List<Int8List> buffers = [];
-
-  _ByteCompiler(){
-    for (int i = 0; i < 10; i++) {
-      buffers.add(Int8List(i * 100));
-    }
-  }
 
   var _index = 0;
 
   void writeByte(int value){
     assert(value <= 256);
+    assert(value >= 0);
     _buffer[_index] = value;
     _index++;
   }
@@ -32,6 +26,7 @@ class _ByteCompiler {
 
   void writeBigInt(num value){
     assert(value <= 65536);
+    assert(value >= -65536);
     compileNumber(value: value, list: _buffer, index: _index);
     _index += 3;
   }

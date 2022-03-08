@@ -1,3 +1,4 @@
+import 'package:bleed_client/bytestream_parser.dart';
 import 'package:bleed_client/parse.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -61,7 +62,7 @@ class _WebSocket {
     }
 
     if (_response is List<int>){
-      
+       byteStreamParser.parse(_response);
     }
   }
 
