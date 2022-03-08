@@ -11,6 +11,8 @@ import 'package:bleed_client/state/game.dart';
 final byteStreamParser = _ByteStreamParser();
 
 const _100D = 100.0;
+const _1 = 1;
+const _2 = 2;
 const _3 = 3;
 
 final _time = modules.isometric.state.time;
@@ -165,8 +167,13 @@ class _ByteStreamParser {
   }
 
   int _nextInt(){
+    final pivot = values[_index];
     final value = readNumberFromByteArray(values, index: _index);
-    _index += _3;
+    if (pivot <= _1){
+      _index += _2;
+    } else {
+      _index += _3;
+    }
     return value;
   }
 

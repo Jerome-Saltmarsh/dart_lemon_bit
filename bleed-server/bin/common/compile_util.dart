@@ -41,11 +41,9 @@ int readNumberFromByteArray(List<int> bytes, {required int index}){
     case _oneInt:
       return value1;
     case _twoInt:
-      final remainder = bytes[index + _twoInt];
-      return -((value1 * _256Int) + remainder);
+      return -((value1 * _256Int) + (bytes[index + _twoInt]));
     case _threeInt:
-      final remainder = bytes[index + _twoInt];
-      return ((value1 * _256Int) + remainder);
+      return ((value1 * _256Int) + bytes[index + _twoInt]);
     default:
       throw Exception("Invalid pivot number ${bytes[index]} at index $index");
   }

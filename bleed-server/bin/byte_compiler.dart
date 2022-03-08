@@ -33,7 +33,11 @@ class _ByteCompiler {
 
   void writeBigInt(num value){
     writeNumberToByteArray(number: value, list: _buffer, index: _index);
-    _index += 3;
+    if (value >= -256 && value <= 256){
+      _index += 2;
+    } else {
+      _index += 3;
+    }
   }
 
   void writeZombies(List<Character> zombies){

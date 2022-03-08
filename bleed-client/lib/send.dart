@@ -58,19 +58,20 @@ void sendRequestAcquireAbility(WeaponType type) {
 }
 
 final _characterController = modules.game.state.characterController;
+final _characterControllerAction = _characterController.action;
 
 void sendRequestUpdatePlayer() {
   _buffer9[0] = gameUpdateIndex;
-  _buffer9[1] = _characterController.action.value.index;
+  _buffer9[1] = _characterControllerAction.value.index;
   writeNumberToByteArray(number: mouseWorldX, list: _buffer9, index: 2);
   writeNumberToByteArray(number: mouseWorldY, list: _buffer9, index: 5);
-  if (_characterController.action.value == CharacterAction.Run){
+  if (_characterControllerAction.value == CharacterAction.Run){
     _buffer9[8] = _characterController.angle.toInt();
   } else {
     _buffer9[8] = 0;
   }
   webSocket.sink.add(_buffer9);
-  _characterController.action.value = CharacterAction.Idle;
+  _characterControllerAction.value = CharacterAction.Idle;
 }
 
 void sendRequestSetCompilePaths(bool value) {
