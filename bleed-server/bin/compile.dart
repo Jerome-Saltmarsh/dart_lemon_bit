@@ -75,25 +75,25 @@ class _Compile {
     game.compiled = _gameBuffer.toString();
     /// GAME COMPILATION FINISHED
 
-    game.compiledTeamText.clear();
+    // game.compiledTeamText.clear();
 
-    for (final player in game.players) {
-      if (!game.compiledTeamText.containsKey(player.team)) {
-        final buffer = StringBuffer();
-        buffer.write(ServerResponse.Player_Text.index);
-        buffer.write(_space);
-        game.compiledTeamText[player.team] = buffer;
-        buffer.write(_space);
-      }
-      game.compiledTeamText[player.team]?.write(player.x.toInt());
-      _gameBuffer.write(_space);
-      game.compiledTeamText[player.team]?.write(player.y.toInt());
-      _gameBuffer.write(_space);
-      game.compiledTeamText[player.team]?.write(player.text);
-      _gameBuffer.write(_space);
-      game.compiledTeamText[player.team]?.write(_comma);
-      _gameBuffer.write(_space);
-    }
+    // for (final player in game.players) {
+    //   if (!game.compiledTeamText.containsKey(player.team)) {
+    //     final buffer = StringBuffer();
+    //     buffer.write(ServerResponse.Player_Text.index);
+    //     buffer.write(_space);
+    //     game.compiledTeamText[player.team] = buffer;
+    //     buffer.write(_space);
+    //   }
+    //   game.compiledTeamText[player.team]?.write(player.x.toInt());
+    //   _gameBuffer.write(_space);
+    //   game.compiledTeamText[player.team]?.write(player.y.toInt());
+    //   _gameBuffer.write(_space);
+    //   game.compiledTeamText[player.team]?.write(player.text);
+    //   _gameBuffer.write(_space);
+    //   game.compiledTeamText[player.team]?.write(_comma);
+    //   _gameBuffer.write(_space);
+    // }
   }
 }
 

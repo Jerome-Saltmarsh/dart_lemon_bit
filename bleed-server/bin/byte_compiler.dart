@@ -2,16 +2,17 @@
 import 'dart:typed_data';
 
 import 'classes/Character.dart';
+import 'classes/Player.dart';
 import 'common/ServerResponse.dart';
 import 'common/compile_util.dart';
 
 final byteCompiler = _ByteCompiler();
 
 class _ByteCompiler {
-  final _buffer = Int8List(1000);
-  final List<Int8List> buffers = [];
-
   var _index = 0;
+
+  final _buffer = Int8List(2000);
+  final List<Int8List> _buffers = [];
 
   void writeByte(int value){
     assert(value <= 256);
@@ -25,8 +26,6 @@ class _ByteCompiler {
   }
 
   void writeBigInt(num value){
-    assert(value <= 65536);
-    assert(value >= -65536);
     compileNumber(value: value, list: _buffer, index: _index);
     _index += 3;
   }
@@ -40,30 +39,45 @@ class _ByteCompiler {
     writeBigInt(total);
     for (final zombie in zombies) {
       if (!zombie.active) continue;
-      writeZombie(zombie);
+      writeCharacter(zombie);
     }
   }
 
-  void writeZombie(Character zombie){
-    writeByte(zombie.state.index);
-    writeByte(zombie.direction);
-    writeBigInt(zombie.x);
-    writeBigInt(zombie.y);
-    writeByte(zombie.animationFrame);
-    writePercentage(zombie.health / zombie.maxHealth);
-    writeByte(zombie.team);
+  void writePlayers(List<Player> players){
+    writeByte(ServerResponse.Players.index);
+    final total = players.length;
+    writeBigInt(total);
+    players.forEach(writePlayer);
+  }
+
+  void writeCharacter(Character character){
+    writeByte(character.state.index);
+    writeByte(character.direction);
+    writeBigInt(character.x);
+    writeBigInt(character.y);
+    writeByte(character.animationFrame);
+    writePercentage(character.health / character.maxHealth);
+    writeByte(character.team);
+  }
+
+  void writePlayer(Player player) {
+    writeCharacter(player);
+    writePercentage(player.magic / player.maxMagic);
+    writeByte(player.weapon.index);
+    writeByte(player.slots.armour.index);
+    writeByte(player.slots.helm.index);
   }
 
   List<int> _getSendBuffer(){
-     for (var i = 0; i < buffers.length; i++) {
-       final buff = buffers[i];
+     for (var i = 0; i < _buffers.length; i++) {
+       final buff = _buffers[i];
        if (_index < buff.length){
          return buff;
        }
      }
      final newBufferLength = _index ~/ 100 * 100 + 100;
      final buffer = Int8List(newBufferLength);
-     buffers.add(buffer);
+     _buffers.add(buffer);
      return buffer;
   }
 

@@ -1,11 +1,14 @@
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
+import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/compile_util.dart';
-import 'package:bleed_client/parse.dart';
 import 'package:bleed_client/state/game.dart';
 
 final byteStreamParser = _ByteStreamParser();
+
+const _100D = 100.0;
+const _3 = 3;
 
 class _ByteStreamParser {
 
@@ -16,30 +19,72 @@ class _ByteStreamParser {
     _index = 0;
     this.values = values;
     while (true) {
-      switch(serverResponses[_nextByte()]){
+      final response = _nextServerResponse();
+      switch(response){
         case ServerResponse.Zombies:
-          final total = _nextInt();
-          final zombies = game.zombies;
-          game.totalZombies.value = total;
-          for (var i = 0; i < total; i++){
-            _readZombie(zombies[i]);
-          }
-          return;
+          _parseZombies();
+          break;
+        case ServerResponse.Players:
+          _parsePlayers();
+          break;
         case ServerResponse.End:
           return;
+        default:
+          throw Exception("Cannot parse $response");
       }
-      _index++;
     }
   }
 
-  void _readZombie(Character character){
-     character.state = characterStates[_nextByte()];
+  void _parseZombies() {
+    final total = _nextInt();
+    final zombies = game.zombies;
+    game.totalZombies.value = total;
+    for (var i = 0; i < total; i++){
+      _readCharacter(zombies[i]);
+    }
+  }
+
+  void _parsePlayers() {
+    final total = _nextInt();
+    final players = game.humans;
+    game.totalHumans = total;
+    for (var i = 0; i < total; i++){
+      _readPlayer(players[i]);
+    }
+  }
+
+  void _readPlayer(Character character){
+    _readCharacter(character);
+    character.magic = _nextPercentage();
+    character.equippedWeapon = _readSlotType();
+    character.equippedArmour = _readSlotType();
+    character.equippedHead = _readSlotType();
+  }
+
+  void _readCharacter(Character character){
+     character.state = _readCharacterState();
      character.direction = _nextByte();
      character.x = _nextDouble();
      character.y = _nextDouble();
      character.frame = _nextByte();
-     character.health = _nextByte() / 100.0;
+     character.health = _nextPercentage();
      character.team = _nextByte();
+  }
+
+  CharacterState _readCharacterState(){
+    return characterStates[_nextByte()];
+  }
+
+  SlotType _readSlotType(){
+    return slotTypes[_nextByte()];
+  }
+
+  double _nextPercentage(){
+    return _nextByte() / _100D;
+  }
+
+  ServerResponse _nextServerResponse(){
+    return serverResponses[_nextByte()];
   }
 
   int _nextByte(){
@@ -50,7 +95,7 @@ class _ByteStreamParser {
 
   int _nextInt(){
     final value = readInt(list: values, index: _index);
-    _index += 3;
+    _index += _3;
     return value;
   }
 

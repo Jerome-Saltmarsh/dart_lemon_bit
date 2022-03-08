@@ -16,6 +16,9 @@ void compileNumber({
   required List<int> list,
   required int index
 }){
+  assert(value <= 65536);
+  assert(value >= -65536);
+
   final abs = value.toInt().abs();
   list[index] = value < _zero ? _zero : _oneInt; // sign
   list[index + _oneInt] = abs ~/ _256Int;  // count
