@@ -105,7 +105,7 @@ class GameActions {
 
   void purchaseSlotType(SlotType slotType){
     print("game.actions.purchaseSlotType('${slotType.name}')");
-    // webSocket.send('${ClientRequest.Purchase.index} $session ${slotType.index}');
+    webSocket.send('${ClientRequest.Purchase.index} ${slotType.index}');
   }
 
   void playerEquip(int index) {

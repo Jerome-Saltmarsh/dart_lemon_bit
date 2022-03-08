@@ -871,15 +871,16 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           return;
 
         case ClientRequest.Purchase:
-          if (arguments.length < 3) {
+          if (arguments.length < 2) {
             return error(GameError.InvalidArguments,
                 message:
                 "ClientRequest.Purchase Error: Expected 2 args but got ${arguments.length}");
           }
 
-          final player =engine.findPlayerByUuid(arguments[1]);
+          final player = _player;
           if (player == null) {
-            return errorPlayerNotFound();
+            errorPlayerNotFound();
+            return;
           }
 
           if (player.dead){
@@ -890,7 +891,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return errorPlayerBusy();
           }
 
-          final slotItemIndexString = arguments[2];
+          final slotItemIndexString = arguments[1];
           final slotItemIndex = int.tryParse(slotItemIndexString);
           if (slotItemIndex == null){
             return error(GameError.InvalidArguments,
