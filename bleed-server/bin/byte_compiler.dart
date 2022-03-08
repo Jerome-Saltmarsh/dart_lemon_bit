@@ -20,24 +20,14 @@ class _ByteCompiler {
   final _buffer = Uint8List(2000);
   final List<Uint8List> _buffers = [];
 
-  void writeByte(int value){
-    assert(value <= 256);
-    assert(value >= 0);
-    _buffer[_index] = value;
-    _index++;
-  }
-
-  void writePercentage(double value){
-    writeByte((value * 100).toInt());
-  }
-
-  void writeBigInt(num value){
-    writeNumberToByteArray(number: value, list: _buffer, index: _index);
-    if (value >= -256 && value <= 256){
-      _index += 2;
-    } else {
-      _index += 3;
+  List<int> writeToSendBuffer() {
+    writeByte(ServerResponse.End.index);
+    final sendBuffer = _getSendBuffer();
+    for (var i = 0; i < _index; i++) {
+      sendBuffer[i] = _buffer[i];
     }
+    _index = 0;
+    return sendBuffer;
   }
 
   void writeZombies(List<Character> zombies){
@@ -74,10 +64,8 @@ class _ByteCompiler {
   }
 
   void writeGameTime(Game game){
-    // _write(_gameBuffer, ServerResponse.Game_Time.index);
     writeByte(ServerResponse.Game_Time.index);
     writeBigInt(game.getTime());
-    // _write(_gameBuffer, game.getTime());
   }
 
   void writeTotalActive(List<GameObject> values){
@@ -105,16 +93,6 @@ class _ByteCompiler {
     players.forEach(writePlayer);
   }
 
-  void writeCharacter(Character character){
-    writeByte(character.state.index);
-    writeByte(character.direction);
-    writeBigInt(character.x);
-    writeBigInt(character.y);
-    writeByte(character.animationFrame);
-    writePercentage(character.health / character.maxHealth);
-    writeByte(character.team);
-  }
-
   void writePlayer(Player player) {
     writeCharacter(player);
     writePercentage(player.magic / player.maxMagic);
@@ -135,6 +113,16 @@ class _ByteCompiler {
     writeByte(npc.weapon.index);
   }
 
+  void writeCharacter(Character character){
+    writeByte(character.state.index);
+    writeByte(character.direction);
+    writeBigInt(character.x);
+    writeBigInt(character.y);
+    writeByte(character.animationFrame);
+    writePercentage(character.health / character.maxHealth);
+    writeByte(character.team);
+  }
+
   List<int> _getSendBuffer(){
      for (var i = 0; i < _buffers.length; i++) {
        final buff = _buffers[i];
@@ -148,13 +136,23 @@ class _ByteCompiler {
      return buffer;
   }
 
-  List<int> writeToSendBuffer() {
-    writeByte(ServerResponse.End.index);
-    final sendBuffer = _getSendBuffer();
-    for (var i = 0; i < _index; i++) {
-      sendBuffer[i] = _buffer[i];
+  void writePercentage(double value){
+    writeByte((value * 100).toInt());
+  }
+
+  void writeBigInt(num value){
+    writeNumberToByteArray(number: value, list: _buffer, index: _index);
+    if (value >= -256 && value <= 256){
+      _index += 2;
+    } else {
+      _index += 3;
     }
-    _index = 0;
-    return sendBuffer;
+  }
+
+  void writeByte(int value){
+    assert(value <= 256);
+    assert(value >= 0);
+    _buffer[_index] = value;
+    _index++;
   }
 }
