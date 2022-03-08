@@ -46,7 +46,7 @@ class _Compile {
     // _compileZombies(_gameBuffer, game.zombies);
     // _compileInteractableNpcs(_gameBuffer, game.npcs);
     // _compileProjectiles(_gameBuffer, game.projectiles);
-    _compileGameEvents(_gameBuffer, game.gameEvents);
+    // _compileGameEvents(_gameBuffer, game.gameEvents);
 
     _write(_gameBuffer, ServerResponse.Debug_Mode.index);
     _write(_gameBuffer, game.debugMode ? 1 : 0);

@@ -291,6 +291,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             byteCompiler.writePlayers(game.players);
             byteCompiler.writeProjectiles(game.projectiles);
             byteCompiler.writeNpcs(game.npcs);
+            byteCompiler.writeGameEvents(game.gameEvents);
             final bytes = byteCompiler.writeToSendBuffer();
             sink.add(bytes);
 

@@ -1,9 +1,11 @@
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/common/CharacterState.dart';
+import 'package:bleed_client/common/GameEventType.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
 import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/compile_util.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 
 final byteStreamParser = _ByteStreamParser();
@@ -34,6 +36,9 @@ class _ByteStreamParser {
         case ServerResponse.Projectiles:
           _parseProjectiles();
           break;
+        case ServerResponse.Game_Events:
+          _parseGameEvents();
+          break;
         case ServerResponse.End:
           _index = 0;
           return;
@@ -41,6 +46,23 @@ class _ByteStreamParser {
         default:
           throw Exception("Cannot parse $response");
       }
+    }
+  }
+
+  void _parseGameEvents(){
+    final total = _nextInt();
+    final gameEvents = game.gameEvents;
+    for(var i = 0; i < total; i++){
+      final id = _nextInt();
+      final type = gameEventTypes[_nextByte()];
+      final x = _nextDouble();
+      final y = _nextDouble();
+      final angle = _nextDouble();
+      if (gameEvents.containsKey(id)) {
+        continue;
+      }
+      gameEvents[id] = true;
+      modules.game.events.onGameEvent(type, x, y, angle);
     }
   }
 

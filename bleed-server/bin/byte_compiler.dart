@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:lemon_math/angle.dart';
 
 import 'classes/Character.dart';
+import 'classes/GameEvent.dart';
 import 'classes/GameObject.dart';
 import 'classes/Player.dart';
 import 'classes/Projectile.dart';
@@ -40,6 +41,24 @@ class _ByteCompiler {
     for (final zombie in zombies) {
       if (!zombie.active) continue;
       writeCharacter(zombie);
+    }
+  }
+
+  void writeGameEvents(List<GameEvent> gameEvents){
+    writeByte(ServerResponse.Game_Events.index);
+    var total = 0;
+    for (final gameEvent in gameEvents) {
+      if (gameEvent.frameDuration <= 0) continue;
+      total++;
+    }
+    writeBigInt(total);
+    for (final gameEvent in gameEvents) {
+      if (gameEvent.frameDuration <= 0) continue;
+      writeBigInt(gameEvent.id);
+      writeByte(gameEvent.type.index);
+      writeBigInt(gameEvent.x);
+      writeBigInt(gameEvent.y);
+      writeBigInt(gameEvent.angle);
     }
   }
 
