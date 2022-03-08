@@ -13,6 +13,8 @@ final byteStreamParser = _ByteStreamParser();
 const _100D = 100.0;
 const _3 = 3;
 
+final _time = modules.isometric.state.time;
+
 class _ByteStreamParser {
 
   var _index = 0;
@@ -38,6 +40,9 @@ class _ByteStreamParser {
           break;
         case ServerResponse.Game_Events:
           _parseGameEvents();
+          break;
+        case ServerResponse.Game_Time:
+          _time.value = _nextInt();
           break;
         case ServerResponse.End:
           _index = 0;

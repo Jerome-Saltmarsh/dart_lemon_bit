@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:lemon_math/angle.dart';
 
 import 'classes/Character.dart';
+import 'classes/Game.dart';
 import 'classes/GameEvent.dart';
 import 'classes/GameObject.dart';
 import 'classes/Player.dart';
@@ -33,6 +34,11 @@ class _ByteCompiler {
   void writeBigInt(num value){
     compileNumber(value: value, list: _buffer, index: _index);
     _index += 3;
+  }
+
+  void writeExtraLargeInt(num value){
+    compileLargeNumber(value: value, list: _buffer, index: _index);
+    _index += 4;
   }
 
   void writeZombies(List<Character> zombies){
@@ -66,6 +72,13 @@ class _ByteCompiler {
     writeByte(ServerResponse.Projectiles.index);
     writeTotalActive(projectiles);
     projectiles.forEach(writeProjectile);
+  }
+
+  void writeGameTime(Game game){
+    // _write(_gameBuffer, ServerResponse.Game_Time.index);
+    writeByte(ServerResponse.Game_Time.index);
+    writeBigInt(game.getTime());
+    // _write(_gameBuffer, game.getTime());
   }
 
   void writeTotalActive(List<GameObject> values){

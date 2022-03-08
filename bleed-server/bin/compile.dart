@@ -48,11 +48,12 @@ class _Compile {
     // _compileProjectiles(_gameBuffer, game.projectiles);
     // _compileGameEvents(_gameBuffer, game.gameEvents);
 
+    // _write(_gameBuffer, ServerResponse.Game_Time.index);
+    // _write(_gameBuffer, game.getTime());
     _write(_gameBuffer, ServerResponse.Debug_Mode.index);
     _write(_gameBuffer, game.debugMode ? 1 : 0);
 
-    _write(_gameBuffer, ServerResponse.Game_Time.index);
-    _write(_gameBuffer, game.getTime());
+
 
     if (game.debugMode) {
       _compilePaths(_gameBuffer, game.zombies);
