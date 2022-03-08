@@ -47,11 +47,11 @@ class _ByteStreamParser {
     final total = _nextInt();
     final projectiles = game.projectiles;
     game.totalProjectiles = total;
-    for(var i = 0; i < total; i++){
+    for (var i = 0; i < total; i++) {
       final projectile = projectiles[i];
       projectile.x = _nextDouble();
       projectile.y = _nextDouble();
-      projectile.type = projectileTypes[_nextByte()];
+      projectile.type = _readProjectileType();
       projectile.angle = _nextDouble();
     }
   }
@@ -112,6 +112,10 @@ class _ByteStreamParser {
 
   SlotType _readSlotType(){
     return slotTypes[_nextByte()];
+  }
+
+  ProjectileType _readProjectileType(){
+    return projectileTypes[_nextByte()];
   }
 
   double _nextPercentage(){

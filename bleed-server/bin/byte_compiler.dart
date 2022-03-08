@@ -15,7 +15,6 @@ final byteCompiler = _ByteCompiler();
 
 class _ByteCompiler {
   var _index = 0;
-
   final _buffer = Uint8List(2000);
   final List<Uint8List> _buffers = [];
 
@@ -37,11 +36,7 @@ class _ByteCompiler {
 
   void writeZombies(List<Character> zombies){
     writeByte(ServerResponse.Zombies.index);
-    var total = 0;
-    for (final zombie in zombies) {
-      if (zombie.active) total++;
-    }
-    writeBigInt(total);
+    writeTotalActive(zombies);
     for (final zombie in zombies) {
       if (!zombie.active) continue;
       writeCharacter(zombie);
@@ -64,16 +59,11 @@ class _ByteCompiler {
   }
 
   void writeProjectile(Projectile projectile){
+    final degrees = angle(projectile.xv, projectile.yv) * radiansToDegrees;
     writeBigInt(projectile.x);
     writeBigInt(projectile.y);
     writeByte(projectile.type.index);
-    final degrees = angle(projectile.xv, projectile.yv) * radiansToDegrees;
     writeBigInt(degrees);
-    // _write(buffer, projectile.x.toInt());
-    // _write(buffer, projectile.y.toInt());
-    // _write(buffer, projectile.type.index);
-
-    // _write(buffer, degrees.toInt());
   }
 
   void writePlayers(List<Player> players){
@@ -103,11 +93,7 @@ class _ByteCompiler {
 
   void writeNpcs(List<Character> npcs){
     writeByte(ServerResponse.Npcs.index);
-    var total = 0;
-    for (final npc in npcs) {
-      if (npc.active) total++;
-    }
-    writeBigInt(total);
+    writeTotalActive(npcs);
     npcs.forEach(writeNpc);
   }
 
