@@ -165,7 +165,7 @@ class _ByteStreamParser {
   }
 
   int _nextInt(){
-    final value = readInt(list: values, index: _index);
+    final value = readNumberFromByteArray(values, index: _index);
     _index += _3;
     return value;
   }

@@ -13,9 +13,9 @@ import 'webSocket.dart';
 final gameUpdateIndex = ClientRequest.Update.index;
 final sendRequest = _SendRequestToServer();
 
-final _buffer1 = Int8List(1);
-final _buffer2 = Int8List(2);
-final _buffer9 = Int8List(9);
+final _buffer1 = Uint8List(1);
+final _buffer2 = Uint8List(2);
+final _buffer9 = Uint8List(9);
 
 void speak(String message){
   // if (message.isEmpty) return;
@@ -62,8 +62,8 @@ final _characterController = modules.game.state.characterController;
 void sendRequestUpdatePlayer() {
   _buffer9[0] = gameUpdateIndex;
   _buffer9[1] = _characterController.action.value.index;
-  compileNumber(value: mouseWorldX, list: _buffer9, index: 2);
-  compileNumber(value: mouseWorldY, list: _buffer9, index: 5);
+  writeNumberToByteArray(number: mouseWorldX, list: _buffer9, index: 2);
+  writeNumberToByteArray(number: mouseWorldY, list: _buffer9, index: 5);
   if (_characterController.action.value == CharacterAction.Run){
     _buffer9[8] = _characterController.angle.toInt();
   } else {

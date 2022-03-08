@@ -32,13 +32,8 @@ class _ByteCompiler {
   }
 
   void writeBigInt(num value){
-    compileNumber(value: value, list: _buffer, index: _index);
+    writeNumberToByteArray(number: value, list: _buffer, index: _index);
     _index += 3;
-  }
-
-  void writeExtraLargeInt(num value){
-    compileLargeNumber(value: value, list: _buffer, index: _index);
-    _index += 4;
   }
 
   void writeZombies(List<Character> zombies){

@@ -303,8 +303,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             }
 
             final actionIndex = args[1];
-            final mouseX = consumeDouble(list: args, index: 2);
-            final mouseY = consumeDouble(list: args, index: 5);
+            final mouseX = readNumberFromByteArray(args, index: 2).toDouble();
+            final mouseY = readNumberFromByteArray(args, index: 5).toDouble();
 
             player.mouseX = mouseX;
             player.mouseY = mouseY;
@@ -395,7 +395,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             }
 
             // reply(game.compiled);
-            sendCompiledPlayerState(game, player);
+            // sendCompiledPlayerState(game, player);
             return;
 
           case ClientRequest.Join:
