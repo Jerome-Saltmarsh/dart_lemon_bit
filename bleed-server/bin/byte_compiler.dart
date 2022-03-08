@@ -11,8 +11,8 @@ final byteCompiler = _ByteCompiler();
 class _ByteCompiler {
   var _index = 0;
 
-  final _buffer = Int8List(2000);
-  final List<Int8List> _buffers = [];
+  final _buffer = Uint8List(2000);
+  final List<Uint8List> _buffers = [];
 
   void writeByte(int value){
     assert(value <= 256);
@@ -76,7 +76,7 @@ class _ByteCompiler {
        }
      }
      final newBufferLength = _index ~/ 100 * 100 + 100;
-     final buffer = Int8List(newBufferLength);
+     final buffer = Uint8List(newBufferLength);
      _buffers.add(buffer);
      return buffer;
   }
