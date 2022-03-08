@@ -111,7 +111,11 @@ class _ByteStreamParser {
   }
 
   SlotType _readSlotType(){
-    return slotTypes[_nextByte()];
+    final valueIndex = _nextByte();
+    if (valueIndex >= slotTypesLength){
+      throw Exception();
+    }
+    return slotTypes[valueIndex];
   }
 
   ProjectileType _readProjectileType(){

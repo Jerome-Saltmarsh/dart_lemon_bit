@@ -45,6 +45,7 @@ enum SlotType {
 }
 
 final List<SlotType> slotTypes = SlotType.values;
+final slotTypesLength = slotTypes.length;
 
 const List<SlotType> _bows = [
   SlotType.Bow_Wooden,
