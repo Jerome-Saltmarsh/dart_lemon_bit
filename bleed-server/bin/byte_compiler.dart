@@ -59,6 +59,7 @@ class _ByteCompiler {
   }
 
   void writeProjectile(Projectile projectile){
+    if (!projectile.active) return;
     final degrees = angle(projectile.xv, projectile.yv) * radiansToDegrees;
     writeBigInt(projectile.x);
     writeBigInt(projectile.y);
@@ -98,6 +99,7 @@ class _ByteCompiler {
   }
 
   void writeNpc(Character npc) {
+    if (!npc.active) return;
     writeCharacter(npc);
     writeByte(npc.weapon.index);
   }

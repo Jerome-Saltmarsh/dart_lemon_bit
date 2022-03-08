@@ -35,6 +35,7 @@ class _ByteStreamParser {
           _parseProjectiles();
           break;
         case ServerResponse.End:
+          _index = 0;
           return;
 
         default:
