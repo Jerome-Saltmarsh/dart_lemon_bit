@@ -20,8 +20,7 @@ final _hours = modules.isometric.state.hours;
 final _minutes = modules.isometric.state.minutes;
 
 final Watch<int> byteLength = Watch(0);
-
-
+final Watch<int> bufferSize = Watch(0);
 
 class _ByteStreamParser {
 
@@ -30,6 +29,7 @@ class _ByteStreamParser {
 
   void parse(List<int> values){
     _index = 0;
+    bufferSize.value = values.length;
     this.values = values;
     while (true) {
       final response = _nextServerResponse();

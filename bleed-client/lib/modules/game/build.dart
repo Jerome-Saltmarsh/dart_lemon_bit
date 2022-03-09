@@ -907,6 +907,12 @@ class GameBuild {
     });
   }
 
+  Widget get bufferLengthWatcher {
+    return WatchBuilder(bufferSize, (int count){
+      return text("Buffer Size: $count");
+    });
+  }
+
   Widget version(){
     return text("v-0.1.0");
   }
@@ -948,7 +954,8 @@ class GameBuild {
           offscreenTiles,
           onScreenTiles,
           mousePositionWorld,
-          byteCountWatcher
+          byteCountWatcher,
+          bufferLengthWatcher,
       ],
     );
   }
