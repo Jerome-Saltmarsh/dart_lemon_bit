@@ -24,6 +24,7 @@ const _defaultMaxMagic = 10;
 
 class Player extends Character with Entity {
   String name = generateName();
+  /// How many frames have elapsed since the server received a message from this client
   int lastUpdateFrame = 0;
   int frameOfDeath = -1;
   int pointsRecord = 0;

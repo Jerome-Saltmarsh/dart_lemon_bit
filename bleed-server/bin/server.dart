@@ -231,10 +231,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
         final List<int> args = requestD;
 
         final clientRequestInt = args[0];
-        if (clientRequestInt < 0) {
-          error(GameError.UnrecognizedClientRequest);
-          return;
-        }
 
         if (clientRequestInt >= _clientRequestsLength) {
           error(GameError.UnrecognizedClientRequest);
@@ -288,14 +284,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             }
 
 
-
-
             if (player.deadOrBusy) {
               byteCompiler.writeGame(game);
-
               byteCompiler.writeByte(ServerResponse.Player.index);
               byteCompiler.writePlayer(player);
-
               final bytes = byteCompiler.writeToSendBuffer();
               sink.add(bytes);
               return;
@@ -319,7 +311,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
             switch (action) {
               case CharacterAction.Idle:
-                game.setCharacterState(player, CharacterState.Idle);
+                if (player.target == null){
+                  game.setCharacterState(player, CharacterState.Idle);
+                }
                 break;
               case CharacterAction.Perform:
                 final ability = player.ability;
