@@ -202,6 +202,7 @@ extension SceneFunctions on Scene {
         current = current.previous;
         if (current != null){
           index++;
+          if (index >= maxAIPathLength) return false;
         }
       }
       pathFindAI.pathIndex = index;

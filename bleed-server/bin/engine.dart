@@ -34,7 +34,7 @@ class _Engine {
   void init() {
     Future.delayed(Duration(seconds: 3), () {
       periodic(fixedUpdate, ms: msPerFrame);
-      periodic(updateZombieWander, seconds: secondsPerUpdateNpcObjective);
+      // periodic(updateZombieWander, seconds: secondsPerUpdateNpcObjective);
       periodic(removeDisconnectedPlayers, seconds: secondsPerRemoveDisconnectedPlayers);
       periodic(updateNpcTargets, ms: msPerUpdateNpcTarget);
       periodic(regenCharacters, ms: msPerRegen);
@@ -100,20 +100,20 @@ class _Engine {
     }
   }
 
-  void updateZombieWander(Timer timer) {
-    for (final game in games) {
-      for (final zombie in game.zombies) {
-        if (zombie.inactive) continue;
-        if (zombie.busy) continue;
-        if (zombie.dead) continue;
-        final ai = zombie.ai;
-        if (ai == null) continue;
-        if (ai.target != null) continue;
-        if (ai.mode != NpcMode.Aggressive) continue;
-        game.npcSetRandomDestination(ai);
-      }
-    }
-  }
+  // void updateZombieWander(Timer timer) {
+  //   for (final game in games) {
+  //     for (final zombie in game.zombies) {
+  //       if (zombie.inactive) continue;
+  //       if (zombie.busy) continue;
+  //       if (zombie.dead) continue;
+  //       final ai = zombie.ai;
+  //       if (ai == null) continue;
+  //       if (ai.target != null) continue;
+  //       if (ai.mode != NpcMode.Aggressive) continue;
+  //       game.npcSetRandomDestination(ai);
+  //     }
+  //   }
+  // }
 
 
   Player? findPlayerByUuid(String uuid) {

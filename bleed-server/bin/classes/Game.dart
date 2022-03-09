@@ -509,6 +509,7 @@ extension GameFunctions on Game {
       }
     }
 
+
     if (ai.pathIndex >= 0) {
       if (arrivedAtPath(ai)) {
         ai.pathIndex--;
@@ -521,7 +522,11 @@ extension GameFunctions on Game {
       characterFace(character, ai.destX, ai.destY);
       character.state = CharacterState.Running;
       return;
+    } else if (ai.mode == NpcMode.Aggressive && ai.idleDuration++ > 120){
+      ai.idleDuration = 0;
+      npcSetRandomDestination(ai);
     }
+
     character.state = CharacterState.Idle;
   }
 

@@ -32,6 +32,7 @@ class AI {
   int _pathIndex = -1;
   double destX = -1;
   double destY = -1;
+  int idleDuration = 0;
 
   int get pathIndex => _pathIndex;
 
