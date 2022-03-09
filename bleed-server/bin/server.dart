@@ -292,6 +292,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
             if (player.deadOrBusy) {
               byteCompiler.writeGame(game);
+
+              byteCompiler.writeByte(ServerResponse.Player.index);
+              byteCompiler.writePlayer(player);
+
               final bytes = byteCompiler.writeToSendBuffer();
               sink.add(bytes);
               return;
@@ -300,7 +304,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             final actionIndex = args[1];
             final mouseX = readNumberFromByteArray(args, index: 2).toDouble();
             final mouseY = readNumberFromByteArray(args, index: 5).toDouble();
-
             player.mouseX = mouseX;
             player.mouseY = mouseY;
             final action = characterActions[actionIndex];
@@ -390,6 +393,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             }
 
             byteCompiler.writeGame(game);
+            byteCompiler.writeByte(ServerResponse.Player.index);
+            byteCompiler.writePlayer(player);
             final bytes = byteCompiler.writeToSendBuffer();
             sink.add(bytes);
             return;

@@ -182,11 +182,12 @@ class CoreActions {
   }
 
   void clearCompileGameState() {
-    modules.game.state.player.id = -1;
+    final player = modules.game.state.player;
+    player.id = -1;
     game.id = -1;
-    modules.game.state.player.uuid.value = "";
-    modules.game.state.player.x = -1;
-    modules.game.state.player.y = -1;
+    player.uuid.value = "";
+    player.character.x = -1;
+    player.character.y = -1;
     game.totalZombies.value = 0;
     game.totalHumans = 0;
     game.totalProjectiles = 0;

@@ -1,3 +1,4 @@
+import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Weapon.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterState.dart';
@@ -152,16 +153,17 @@ class _Soldier {
 }
 
 class _Player {
+  final character = Character(type: CharacterType.Human);
   int id = -1;
-  double x = -1;
-  double y = -1;
+  // double x = -1;
+  // double y = -1;
   Vector2 abilityTarget = Vector2(0, 0);
   double abilityRange = 0;
   double abilityRadius = 0;
   double maxHealth = 0;
   Tile tile = Tile.Grass;
   double attackRange = 0;
-  int team = 0;
+  // int team = 0;
   final Vector2 attackTarget = Vector2(0, 0);
   final orbs = _PlayerOrbs();
   final slots = _PlayerSlots();
@@ -183,5 +185,8 @@ class _Player {
   // Properties
   bool get dead => !alive.value;
   bool get isHuman => characterType.value == CharacterType.Human;
+  double get x => character.x;
+  double get y => character.y;
+  int get team => character.team;
 }
 

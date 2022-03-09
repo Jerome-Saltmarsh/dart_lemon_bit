@@ -53,6 +53,9 @@ class _ByteStreamParser {
           _hours.value = _nextByte();
           _minutes.value = _nextByte();
           break;
+        case ServerResponse.Player:
+          _readPlayer(modules.game.state.player.character);
+          break;
         case ServerResponse.End:
           byteLength.value = _index;
           _index = 0;
