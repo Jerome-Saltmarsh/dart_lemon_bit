@@ -111,6 +111,17 @@ class _ByteCompiler {
     players.forEach(writePlayer);
   }
 
+  void writeAttackTarget(Player player){
+    final aimTarget = player.aimTarget;
+    if (aimTarget == null){
+      writeByte(ServerResponse.Player_Attack_Target_None.index);
+      return;
+    }
+    writeByte(ServerResponse.Player_Attack_Target.index);
+    writeBigInt(aimTarget.x);
+    writeBigInt(aimTarget.y);
+  }
+
   void writePlayer(Player player) {
     writeCharacter(player);
     writePercentage(player.magic / player.maxMagic);

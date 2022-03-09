@@ -10,6 +10,9 @@ import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 
+
+final _player = modules.game.state.player;
+
 final byteStreamParser = _ByteStreamParser();
 
 const _100D = 100.0;
@@ -49,6 +52,14 @@ class _ByteStreamParser {
           break;
         case ServerResponse.Game_Events:
           _parseGameEvents();
+          break;
+        case ServerResponse.Player_Attack_Target:
+          _player.attackTarget.x = _nextDouble();
+          _player.attackTarget.y = _nextDouble();
+          break;
+        case ServerResponse.Player_Attack_Target_None:
+          _player.attackTarget.x = 0;
+          _player.attackTarget.y = 0;
           break;
         case ServerResponse.Game_Time:
           _hours.value = _nextByte();

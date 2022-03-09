@@ -288,6 +288,16 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               byteCompiler.writeGame(game);
               byteCompiler.writeByte(ServerResponse.Player.index);
               byteCompiler.writePlayer(player);
+              byteCompiler.writeAttackTarget(player);
+              final aimTarget = player.aimTarget;
+              if (aimTarget != null){
+                byteCompiler.writeByte(ServerResponse.Player_Attack_Target.index);
+                byteCompiler.writeBigInt(aimTarget.x);
+                byteCompiler.writeBigInt(aimTarget.y);
+              } else {
+                byteCompiler.writeByte(ServerResponse.Player_Attack_Target_None.index);
+              }
+
               final bytes = byteCompiler.writeToSendBuffer();
               sink.add(bytes);
               return;
@@ -389,6 +399,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             byteCompiler.writeGame(game);
             byteCompiler.writeByte(ServerResponse.Player.index);
             byteCompiler.writePlayer(player);
+            byteCompiler.writeAttackTarget(player);
             final bytes = byteCompiler.writeToSendBuffer();
             sink.add(bytes);
             return;
