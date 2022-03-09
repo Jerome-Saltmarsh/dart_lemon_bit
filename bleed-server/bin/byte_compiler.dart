@@ -34,6 +34,14 @@ class _ByteCompiler {
     return sendBuffer;
   }
 
+
+  void writePlayerGame(Player player){
+    byteCompiler.writeGame(player.game);
+    byteCompiler.writeByte(ServerResponse.Player.index);
+    byteCompiler.writePlayer(player);
+    byteCompiler.writeAttackTarget(player);
+  }
+
   void writeGame(Game game){
     writeZombies(game.zombies);
     writePlayers(game.players);

@@ -179,6 +179,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       sendAndClearBuffer();
     }
 
+    void compileAndSendPlayerGame(Player player){
+        byteCompiler.writePlayerGame(player);
+        final bytes = byteCompiler.writeToSendBuffer();
+        sink.add(bytes);
+    }
+
     void error(GameError error, {String message = ""}) {
       reply('$_errorIndex ${error.index} $message');
     }
@@ -283,23 +289,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               return;
             }
 
-
             if (player.deadOrBusy) {
-              byteCompiler.writeGame(game);
-              byteCompiler.writeByte(ServerResponse.Player.index);
-              byteCompiler.writePlayer(player);
-              byteCompiler.writeAttackTarget(player);
-              final aimTarget = player.aimTarget;
-              if (aimTarget != null){
-                byteCompiler.writeByte(ServerResponse.Player_Attack_Target.index);
-                byteCompiler.writeBigInt(aimTarget.x);
-                byteCompiler.writeBigInt(aimTarget.y);
-              } else {
-                byteCompiler.writeByte(ServerResponse.Player_Attack_Target_None.index);
-              }
-
-              final bytes = byteCompiler.writeToSendBuffer();
-              sink.add(bytes);
+              compileAndSendPlayerGame(player);
               return;
             }
 
@@ -396,12 +387,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 break;
             }
 
-            byteCompiler.writeGame(game);
-            byteCompiler.writeByte(ServerResponse.Player.index);
-            byteCompiler.writePlayer(player);
-            byteCompiler.writeAttackTarget(player);
-            final bytes = byteCompiler.writeToSendBuffer();
-            sink.add(bytes);
+            compileAndSendPlayerGame(player);
             return;
 
           case ClientRequest.Join:
