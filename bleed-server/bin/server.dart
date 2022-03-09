@@ -287,18 +287,18 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               return;
             }
 
-            byteCompiler.writeZombies(game.zombies);
-            byteCompiler.writePlayers(game.players);
-            byteCompiler.writeProjectiles(game.projectiles);
-            byteCompiler.writeNpcs(game.npcs);
-            byteCompiler.writeGameEvents(game.gameEvents);
-            byteCompiler.writeGameTime(game);
-            final bytes = byteCompiler.writeToSendBuffer();
-            sink.add(bytes);
+
 
 
             if (player.deadOrBusy) {
-              sendCompiledPlayerState(game, player);
+              byteCompiler.writeZombies(game.zombies);
+              byteCompiler.writePlayers(game.players);
+              byteCompiler.writeProjectiles(game.projectiles);
+              byteCompiler.writeNpcs(game.npcs);
+              byteCompiler.writeGameEvents(game.gameEvents);
+              byteCompiler.writeGameTime(game);
+              final bytes = byteCompiler.writeToSendBuffer();
+              sink.add(bytes);
               return;
             }
 
@@ -394,8 +394,14 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 break;
             }
 
-            // reply(game.compiled);
-            // sendCompiledPlayerState(game, player);
+            byteCompiler.writeZombies(game.zombies);
+            byteCompiler.writePlayers(game.players);
+            byteCompiler.writeProjectiles(game.projectiles);
+            byteCompiler.writeNpcs(game.npcs);
+            byteCompiler.writeGameEvents(game.gameEvents);
+            byteCompiler.writeGameTime(game);
+            final bytes = byteCompiler.writeToSendBuffer();
+            sink.add(bytes);
             return;
 
           case ClientRequest.Join:
