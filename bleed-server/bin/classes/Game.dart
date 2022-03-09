@@ -11,7 +11,6 @@ import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/randomItem.dart';
 
 import '../bleed/zombie_health.dart';
-import '../common/AbilityMode.dart';
 import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
@@ -24,7 +23,6 @@ import '../common/OrbType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/SlotType.dart';
 import '../common/Tile.dart';
-import '../common/WeaponType.dart';
 import '../common/configuration.dart';
 import '../common/enums/ObjectType.dart';
 import '../common/enums/ProjectileType.dart';
@@ -41,7 +39,6 @@ import '../maths.dart';
 import '../physics.dart';
 import '../settings.dart';
 import '../utilities.dart';
-import 'Ability.dart';
 import 'Character.dart';
 import 'Collider.dart';
 import 'Crate.dart';
@@ -56,9 +53,6 @@ import 'Projectile.dart';
 import 'Scene.dart';
 import 'SpawnPoint.dart';
 import 'TileNode.dart';
-import 'Weapon.dart';
-
-const _none = -1;
 
 final teams = _Teams();
 
@@ -74,10 +68,12 @@ class _GameEvents {
 }
 
 // constants
+const _none = -1;
 const castFrame = 3;
 const tileCollisionResolve = 3;
 const framePerformStrike = 10;
 const gameEventDuration = 4;
+const _aiWanderPauseDuration = 120;
 
 // This should be OpenWorldScene
 abstract class Game {
@@ -475,8 +471,7 @@ extension GameFunctions on Game {
   }
 
   void _updateCharacterAI(Character character) {
-    if (character.dead) return;
-    if (character.busy) return;
+    if (character.deadOrBusy) return;
     if (character.inactive) return;
     final ai = character.ai;
     if (ai == null) return;
@@ -502,7 +497,7 @@ extension GameFunctions on Game {
 
       // @on npc update find
       if (ai.mode == NpcMode.Aggressive) {
-        // TODO REFACTOR
+        // TODO OPTIMIZE
         if (engine.frame % 30 == 0) {
           npcSetPathTo(ai, target.x, target.y);
         }
@@ -522,7 +517,7 @@ extension GameFunctions on Game {
       characterFace(character, ai.destX, ai.destY);
       character.state = CharacterState.Running;
       return;
-    } else if (ai.mode == NpcMode.Aggressive && ai.idleDuration++ > 120){
+    } else if (ai.mode == NpcMode.Aggressive && ai.idleDuration++ > _aiWanderPauseDuration){
       ai.idleDuration = 0;
       npcSetRandomDestination(ai);
     }
@@ -711,7 +706,8 @@ extension GameFunctions on Game {
   }
 
   void _updateProjectiles() {
-    for (int i = 0; i < projectiles.length; i++) {
+    var projectilesLength = projectiles.length;
+    for (var i = 0; i < projectilesLength; i++) {
       final projectile = projectiles[i];
       if (!projectile.active) continue;
       projectile.x += projectile.xv;
@@ -723,8 +719,8 @@ extension GameFunctions on Game {
         deactivateProjectile(projectile);
       }
     }
-
-    for (int i = 0; i < projectiles.length; i++) {
+    projectilesLength = projectiles.length;
+    for (var i = 0; i < projectilesLength; i++) {
       final projectile = projectiles[i];
       if (projectile.collideWithEnvironment) continue;
       if (scene.bulletCollisionAt(projectile.x, projectile.y)) {
@@ -735,14 +731,17 @@ extension GameFunctions on Game {
     sortVertically(projectiles);
     checkProjectileCollision(zombies);
     checkProjectileCollision(players);
+    final environments = scene.environment;
+    projectilesLength = projectiles.length;
 
-    for (int i = 0; i < projectiles.length; i++) {
-      if (!projectiles[i].active) continue;
-      if (!projectiles[i].collideWithEnvironment) continue;
-      for (EnvironmentObject environmentObject in scene.environment) {
+    for (var i = 0; i < projectilesLength; i++) {
+      final projectile = projectiles[i];
+      if (!projectile.active) continue;
+      if (!projectile.collideWithEnvironment) continue;
+      for (final environmentObject in environments) {
         if (!environmentObject.collidable) continue;
-        if (!overlapping(projectiles[i], environmentObject)) continue;
-        deactivateProjectile(projectiles[i]);
+        if (!overlapping(projectile, environmentObject)) continue;
+        deactivateProjectile(projectile);
         break;
       }
     }
