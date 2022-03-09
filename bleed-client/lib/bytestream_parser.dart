@@ -1,4 +1,5 @@
 import 'package:bleed_client/classes/Character.dart';
+import 'package:lemon_watch/watch.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameEventType.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
@@ -17,6 +18,9 @@ const _3 = 3;
 
 final _hours = modules.isometric.state.hours;
 final _minutes = modules.isometric.state.minutes;
+
+final Watch<int> byteLength = Watch(0);
+
 
 
 class _ByteStreamParser {
@@ -50,6 +54,7 @@ class _ByteStreamParser {
           _minutes.value = _nextByte();
           break;
         case ServerResponse.End:
+          byteLength.value = _index;
           _index = 0;
           return;
 

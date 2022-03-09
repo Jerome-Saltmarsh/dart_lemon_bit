@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:bleed_client/audio.dart';
+import 'package:bleed_client/bytestream_parser.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
@@ -900,7 +901,11 @@ class GameBuild {
     });
   }
 
-
+  Widget get byteCountWatcher {
+    return WatchBuilder(byteLength, (int count){
+        return text("Bytes: $count");
+    });
+  }
 
   Widget version(){
     return text("v-0.1.0");
@@ -942,7 +947,8 @@ class GameBuild {
           tileAtMouse,
           offscreenTiles,
           onScreenTiles,
-          mousePositionWorld
+          mousePositionWorld,
+          byteCountWatcher
       ],
     );
   }
