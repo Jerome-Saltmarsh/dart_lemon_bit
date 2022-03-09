@@ -112,7 +112,9 @@ class GameBuild {
         goldenRatio_0381;
 
     return WatchBuilder(state.player.magic, (double magic) {
-      final percentage = magic / state.player.maxMagic.value;
+      final maxMagic = state.player.maxMagic.value;
+      if (maxMagic <= 0) return empty;
+      final percentage = magic / maxMagic;
       return Container(
         width: width,
         height: height,
@@ -150,7 +152,11 @@ class GameBuild {
         goldenRatio_0381;
 
     return WatchBuilder(state.player.health, (double health) {
-      final percentage = health / state.player.maxHealth;
+
+      final maxHealth = state.player.maxHealth;
+      if (maxHealth <= 0) return empty;
+
+      final percentage = health / maxHealth;
       return Container(
         width: width,
         height: height,
