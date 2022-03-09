@@ -215,7 +215,6 @@ class GameActions {
   }
 
   void respawn() {
-    // webSocket.send('${ClientRequest.Revive.index} $session');
+    webSocket.sink.add(ClientRequest.Revive.index);
   }
-
 }

@@ -526,8 +526,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Revive:
-          final player = engine.findPlayerByUuid(arguments[1]);
-
+          final player = _player;
           if (player == null) {
             errorPlayerNotFound();
             return;
