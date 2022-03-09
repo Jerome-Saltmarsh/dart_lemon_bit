@@ -15,7 +15,9 @@ const _1 = 1;
 const _2 = 2;
 const _3 = 3;
 
-final _time = modules.isometric.state.time;
+final _hours = modules.isometric.state.hours;
+final _minutes = modules.isometric.state.minutes;
+
 
 class _ByteStreamParser {
 
@@ -44,7 +46,8 @@ class _ByteStreamParser {
           _parseGameEvents();
           break;
         case ServerResponse.Game_Time:
-          _time.value = _nextInt();
+          _hours.value = _nextByte();
+          _minutes.value = _nextByte();
           break;
         case ServerResponse.End:
           _index = 0;

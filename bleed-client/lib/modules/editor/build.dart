@@ -130,9 +130,17 @@ class EditorBuild {
       Row(children: [
           Container(
             width: _textWidth,
-            child: WatchBuilder(modules.isometric.state.time, (int value){
-              return text("Time ${modules.game.properties.timeInHours}");
-            }),
+            child: Row(
+              children: [
+                text("Time "),
+                WatchBuilder(modules.isometric.state.hours, (int hours){
+                  return text(hours);
+                }),
+                WatchBuilder(modules.isometric.state.minutes, (int minutes){
+                  return text(minutes);
+                }),
+              ],
+            ),
           ),
         width8,
         button("-", modules.isometric.actions.detractHour),

@@ -291,12 +291,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
 
             if (player.deadOrBusy) {
-              byteCompiler.writeZombies(game.zombies);
-              byteCompiler.writePlayers(game.players);
-              byteCompiler.writeProjectiles(game.projectiles);
-              byteCompiler.writeNpcs(game.npcs);
-              byteCompiler.writeGameEvents(game.gameEvents);
-              byteCompiler.writeGameTime(game);
+              byteCompiler.writeGame(game);
               final bytes = byteCompiler.writeToSendBuffer();
               sink.add(bytes);
               return;
@@ -394,14 +389,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 break;
             }
 
-            byteCompiler.writeZombies(game.zombies);
-            byteCompiler.writePlayers(game.players);
-            byteCompiler.writeProjectiles(game.projectiles);
-            byteCompiler.writeNpcs(game.npcs);
-            byteCompiler.writeGameEvents(game.gameEvents);
-            byteCompiler.writeGameTime(game);
-            final bytes = byteCompiler.writeToSendBuffer();
-            sink.add(bytes);
+            byteCompiler.writeGame(game);
+            sink.add(byteCompiler.writeToSendBuffer());
             return;
 
           case ClientRequest.Join:

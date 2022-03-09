@@ -15,9 +15,8 @@ class IsometricEvents {
     // print("isometric.events.register()");
     state.eventsRegistered = true;
     isometric.subscriptions.onAmbientChanged = state.ambient.onChanged(onAmbientChanged);
-    state.time.onChanged(onTimeChanged);
     state.maxAmbientBrightness.onChanged(onMaxAmbientBrightnessChanged);
-    state.hour.onChanged(onHourChanged);
+    state.hours.onChanged(onHourChanged);
     state.totalColumns.onChanged(onTotalColumnsChanged);
     state.totalRows.onChanged(onTotalRowsChanged);
   }
@@ -44,14 +43,7 @@ class IsometricEvents {
     state.totalRowsInt = value;
   }
 
-  void onTimeChanged(int timeInSeconds) {
-    final timeInMinutes = timeInSeconds / 60;
-    final timeInHours = timeInMinutes / 60;
-    state.hour.value = timeInHours.toInt();
-  }
-
   void onHourChanged(int hour){
-    // print("isometric.events.onHourChanged($hour)");
     final phase = modules.isometric.map.hourToPhase(hour);
     final phaseBrightness = modules.isometric.map.phaseToShade(phase);
     final maxAmbientBrightness = state.maxAmbientBrightness.value;

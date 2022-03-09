@@ -306,7 +306,7 @@ void parseState() {
 }
 
 void parseGameTime() {
-  modules.isometric.state.time.value = consumeInt();
+  modules.isometric.state.minutes.value = consumeInt();
 }
 
 void parseItems() {

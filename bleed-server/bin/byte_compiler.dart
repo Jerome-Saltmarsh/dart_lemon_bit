@@ -13,6 +13,10 @@ import 'common/ServerResponse.dart';
 import 'common/compile_util.dart';
 import 'common/constants.dart';
 
+const _60 = 60;
+const _100 = 100;
+const _256 = 256;
+
 final byteCompiler = _ByteCompiler();
 
 class _ByteCompiler {
@@ -28,6 +32,15 @@ class _ByteCompiler {
     }
     _index = 0;
     return sendBuffer;
+  }
+
+  void writeGame(Game game){
+    writeZombies(game.zombies);
+    writePlayers(game.players);
+    writeProjectiles(game.projectiles);
+    writeNpcs(game.npcs);
+    writeGameEvents(game.gameEvents);
+    writeGameTime(game);
   }
 
   void writeZombies(List<Character> zombies){
@@ -65,7 +78,12 @@ class _ByteCompiler {
 
   void writeGameTime(Game game){
     writeByte(ServerResponse.Game_Time.index);
-    writeBigInt(game.getTime());
+    final totalSeconds = game.getTime();
+    final totalMinutes = totalSeconds ~/ _60;
+    final hours = totalMinutes ~/ _60;
+    final minutes = totalMinutes % _60;
+    writeByte(hours);
+    writeByte(minutes);
   }
 
   void writeTotalActive(List<GameObject> values){
@@ -130,19 +148,19 @@ class _ByteCompiler {
          return buff;
        }
      }
-     final newBufferLength = _index ~/ 100 * 100 + 100;
+     final newBufferLength = _index ~/ _100 * _100 + _100;
      final buffer = Uint8List(newBufferLength);
      _buffers.add(buffer);
      return buffer;
   }
 
   void writePercentage(double value){
-    writeByte((value * 100).toInt());
+    writeByte((value * _100).toInt());
   }
 
   void writeBigInt(num value){
     writeNumberToByteArray(number: value, list: _buffer, index: _index);
-    if (value >= -256 && value <= 256){
+    if (value >= -_256 && value <= _256){
       _index += 2;
     } else {
       _index += 3;
@@ -150,7 +168,7 @@ class _ByteCompiler {
   }
 
   void writeByte(int value){
-    assert(value <= 256);
+    assert(value <= _256);
     assert(value >= 0);
     _buffer[_index] = value;
     _index++;

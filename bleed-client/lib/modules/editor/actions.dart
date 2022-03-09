@@ -101,7 +101,7 @@ class EditorActions with EditorScope {
     );
 
     editor.state.timeSpeed.value = TimeSpeed.Normal;
-    isometric.state.time.value = config.defaultStartTime;
+    isometric.state.minutes.value = config.defaultStartTime;
     editor.state.characters.clear();
     for (int row = 0; row < rows; row++) {
       List<Tile> columnTiles = [];
@@ -169,7 +169,7 @@ class EditorActions with EditorScope {
       state.environmentObjects.add(EnvironmentObject(x: x, y: y, type: type, radius: 25));
     }
 
-    isometric.state.time.value = mapJson[sceneFieldNames.startTime] / secondsPerHour;
+    isometric.state.minutes.value = mapJson[sceneFieldNames.startTime] / secondsPerHour;
 
     final List<Character> characters = [];
     for(Json json in mapJson['characters']){

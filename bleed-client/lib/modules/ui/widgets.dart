@@ -24,13 +24,19 @@ class UIWidgets {
     ],
   );
 
-  final time = Tooltip(
-    message: "Time",
-    child: WatchBuilder(isometric.state.time, (int value) {
-      return text("${padZero(modules.game.properties.timeInHours)} : ${padZero(modules.game.properties.timeInMinutes % 60)} ${isometric.properties.phase.name}");
-    }),
-  );
-
   final exit = button("Exit", core.actions.disconnect);
+
+  final time = Row(
+    children: [
+      text("Time "),
+      WatchBuilder(modules.isometric.state.hours, (int hours){
+        return text(padZero(hours));
+      }),
+      text(":"),
+      WatchBuilder(modules.isometric.state.minutes, (int minutes){
+        return text(padZero(minutes));
+      }),
+    ],
+  );
 
 }

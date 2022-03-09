@@ -131,6 +131,7 @@ abstract class Game {
   Map<int, StringBuffer> compiledTeamText = {};
   int countDownFramesRemaining = framesPerSecond * 3;
 
+  /// In seconds
   int getTime();
 
   void onGameStarted() {}

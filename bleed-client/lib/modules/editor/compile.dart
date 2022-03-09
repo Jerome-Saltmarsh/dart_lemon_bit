@@ -22,7 +22,7 @@ class EditorCompile {
       "crates": compileCrates(game.crates),
       "environment": compileEnvironmentObjects(state.environmentObjects),
       'characters': compileCharactersToJson(state.characters),
-      sceneFieldNames.startTime: modules.isometric.state.time.value * secondsPerHour,
+      sceneFieldNames.startTime: modules.isometric.state.minutes.value * secondsPerHour,
       sceneFieldNames.secondsPerFrame: state.timeSpeed.value.index,
       sceneFieldNames.playerSpawnPoints: compileVector2ListToIntList(state.teamSpawnPoints),
       sceneFieldNames.items: compileItemsToJson(),

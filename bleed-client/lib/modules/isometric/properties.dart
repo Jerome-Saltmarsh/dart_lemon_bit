@@ -30,7 +30,7 @@ class IsometricProperties {
   }
 
   Phase get phase {
-     return modules.isometric.map.hourToPhase(state.hour.value);
+     return modules.isometric.map.hourToPhase(state.hours.value);
   }
 
   Vector2 get mapCenter {

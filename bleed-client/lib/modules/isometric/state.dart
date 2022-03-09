@@ -33,8 +33,8 @@ class IsometricState {
   final List<Item> items = [];
   final Watch<int> totalColumns = Watch(0);
   final Watch<int> totalRows = Watch(0);
-  final Watch<int> hour = Watch(0);
-  final Watch<int> time = Watch(0);
+  final Watch<int> hours = Watch(0);
+  final Watch<int> minutes = Watch(0);
   final Watch<int> ambient = Watch(Shade.Bright);
   final Watch<int> maxAmbientBrightness = Watch(Shade.Bright);
   final nameTextStyle = TextStyle(color: Colors.white);

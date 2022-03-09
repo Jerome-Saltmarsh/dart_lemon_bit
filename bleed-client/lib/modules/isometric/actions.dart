@@ -282,21 +282,21 @@ class IsometricActions {
 
   void detractHour(){
     print("isometric.actions.detractHour()");
-    final amount = state.time.value - secondsPerHour;
+    final amount = state.minutes.value - secondsPerHour;
     if (amount > 0) {
-      state.time.value = amount;
+      state.minutes.value = amount;
     } else {
-      state.time.value = secondsPerDay + amount;
+      state.minutes.value = secondsPerDay + amount;
     }
   }
 
   void addHour(){
-    state.time.value += secondsPerHour;
+    state.minutes.value += secondsPerHour;
   }
 
   void setHour(int hour) {
     print("isometric.actions.setHour($hour)");
-    state.time.value = hour * secondsPerHour;
+    state.minutes.value = hour * secondsPerHour;
   }
 
   void removeGeneratedEnvironmentObjects(){
