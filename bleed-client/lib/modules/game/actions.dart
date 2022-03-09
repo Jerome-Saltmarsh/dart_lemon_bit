@@ -207,7 +207,11 @@ class GameActions {
   }
 
   modifyGame(ModifyGame request){
-    // sendClientRequest(ClientRequest.Modify_Game, request.index);
+    sendClientRequest(ClientRequest.Modify_Game, request.index);
+  }
+
+  void sendClientRequest(ClientRequest request, dynamic value){
+    webSocket.send('${request.index} $value');
   }
 
   void respawn() {

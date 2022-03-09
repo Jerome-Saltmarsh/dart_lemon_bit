@@ -634,20 +634,20 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
         case ClientRequest.Modify_Game:
 
-          if (arguments.length != 3) {
-            errorArgsExpected(3, arguments);
+          if (arguments.length != 2) {
+            errorArgsExpected(2, arguments);
             return;
           }
 
-          Player? player =engine.findPlayerByUuid(arguments[1]);
+          final player = _player;
           if (player == null) {
             errorPlayerNotFound();
             return;
           }
 
-          int? modifyGameIndex = int.tryParse(arguments[2]);
+          final modifyGameIndex = int.tryParse(arguments[1]);
           if (modifyGameIndex == null){
-            errorIntegerExpected(2, arguments[2]);
+            errorIntegerExpected(1, arguments[1]);
             return;
           }
           if (modifyGameIndex < 0){
@@ -659,7 +659,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          final ModifyGame modifyGame = gameModifications[modifyGameIndex];
+          final modifyGame = gameModifications[modifyGameIndex];
           switch(modifyGame){
             case ModifyGame.Spawn_Zombie:
               player.game.spawnZombie(
@@ -667,7 +667,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 y: player.mouseY,
                 damage: 1,
                 health: 5,
-                team: -1,
+                team: 0,
               );
               break;
             case ModifyGame.Remove_Zombie:

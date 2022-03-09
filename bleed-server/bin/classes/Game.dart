@@ -1140,6 +1140,7 @@ extension GameFunctions on Game {
     required int damage,
     List<Vector2>? objectives,
   }) {
+    assert(team >= 0 && team <= 256);
     final zombie = _getAvailableZombie();
     zombie.damage = damage;
     zombie.team = team;
