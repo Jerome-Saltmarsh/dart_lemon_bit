@@ -1344,7 +1344,7 @@ extension GameFunctions on Game {
     if (ai.character == value) {
       throw Exception("AI cannot target itself");
     }
-    if (ai.character.team == value.team && value.team != -1) {
+    if (ai.character.team == value.team && value.team != 0) {
       throw Exception("Npc target same team");
     }
     if (value.dead) {
@@ -1410,6 +1410,7 @@ extension GameFunctions on Game {
 
   void npcSetRandomDestination(AI ai, {int radius = 10}) {
     final node = scene.tileNodeAt(ai.x, ai.y);
+    if (!node.open) return;
     final minColumn = max(0, node.column - radius);
     final maxColumn = min(scene.columns, node.column + radius);
     final minRow = max(0, node.row - radius);

@@ -21,7 +21,7 @@ final byteCompiler = _ByteCompiler();
 
 class _ByteCompiler {
   var _index = 0;
-  final _buffer = Uint8List(10000);
+  final _buffer = Uint8List(100000); // 100kb
   final List<Uint8List> _buffers = [];
 
   List<int> writeToSendBuffer() {

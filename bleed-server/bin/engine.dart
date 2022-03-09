@@ -69,7 +69,7 @@ class _Engine {
 
         case GameStatus.In_Progress:
           game.updateInProgress();
-          compile.game(game);
+          // compile.game(game);
           break;
 
         case GameStatus.Finished:

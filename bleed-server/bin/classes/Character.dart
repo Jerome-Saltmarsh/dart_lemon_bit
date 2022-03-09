@@ -5,7 +5,6 @@ import 'package:lemon_math/Vector2.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
 import '../common/SlotType.dart';
-import '../common/WeaponType.dart';
 import '../constants.dart';
 import '../constants/no_squad.dart';
 import '../enums/npc_mode.dart';
@@ -14,9 +13,7 @@ import '../settings.dart';
 import '../utilities.dart';
 import 'Ability.dart';
 import 'GameObject.dart';
-import 'Weapon.dart';
 
-const _notFound = -1;
 const _defaultMode = NpcMode.Defensive;
 const _defaultViewRange = 300.0;
 const _defaultCharacterSpeed = 3.0;
@@ -26,20 +23,28 @@ const maxAIPathLengthMinusOne = maxAIPathLength - 3;
 class AI {
   late Character character;
   Character? target;
-  // List<Vector2> path = [];
   List<Vector2> objectives = [];
   NpcMode mode = NpcMode.Aggressive;
   double viewRange = 200;
   double chaseRange = 500;
-  Float32List pathX = Float32List(maxAIPathLength);
-  Float32List pathY = Float32List(maxAIPathLength);
-  int pathIndex = -1;
+  final pathX = Float32List(maxAIPathLength);
+  final pathY = Float32List(maxAIPathLength);
+  int _pathIndex = -1;
+  double destX = -1;
+  double destY = -1;
+
+  int get pathIndex => _pathIndex;
+
+  set pathIndex(int value){
+    _pathIndex = value;
+    if (value < 0) return;
+    destX = pathX[value];
+    destY = pathY[value];
+  }
 
   double get x => character.x;
   double get y => character.y;
 
-  double get destX => pathX[pathIndex];
-  double get destY => pathY[pathIndex];
 
   AI({
     this.mode = _defaultMode,

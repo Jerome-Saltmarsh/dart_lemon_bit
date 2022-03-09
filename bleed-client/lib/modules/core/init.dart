@@ -36,26 +36,27 @@ Future init() async {
 }
 
 void initializeGameInstances() {
-  for (int i = 0; i < 1000; i++) {
+  for (var i = 0; i < 1000; i++) {
     game.projectiles.add(Projectile(0, 0, ProjectileType.Bullet, 0));
     isometric.state.items.add(Item(type: ItemType.None, x: 0, y: 0));
   }
 
-  for (int i = 0; i < 1000; i++) {
+  for (var i = 0; i < 1000; i++) {
     game.crates.add(Vector2(0, 0));
   }
 
-  for (int i = 0; i < game.settings.maxBulletHoles; i++) {
+  for (var i = 0; i < game.settings.maxBulletHoles; i++) {
     game.bulletHoles.add(Vector2(0, 0));
   }
 
-  game.zombies.clear();
-  for (int i = 0; i < 2500; i++) {
-    game.zombies.add(Character(type: CharacterType.Zombie));
+  final zombies = game.zombies;
+  zombies.clear();
+  for (var i = 0; i < 5000; i++) {
+    zombies.add(Character(type: CharacterType.Zombie));
   }
 
   game.interactableNpcs.clear();
-  for (int i = 0; i < 200; i++) {
+  for (int i = 0; i < 300; i++) {
     game.interactableNpcs.add(Character(type: CharacterType.Human));
   }
 
