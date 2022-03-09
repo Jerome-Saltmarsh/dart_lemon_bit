@@ -55,7 +55,9 @@ class _ByteStreamParser {
           _minutes.value = _nextByte();
           break;
         case ServerResponse.Player:
-          _readPlayer(modules.game.state.player.character);
+          final player = modules.game.state.player;
+          _readPlayer(player.character);
+          player.alive.value = player.character.alive;
           break;
         case ServerResponse.End:
           byteLength.value = _index;
