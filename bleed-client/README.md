@@ -129,6 +129,7 @@
 [ ] Destructible Items to collect gems
 [ ] Rain Particles
 [ ] (MMO) Save / Load Character
+[x] FIX Arrow angle
 [x] Fix bug, click running stutters
 [x] FIX Aim circle remains after target killed
 [x] FIX Change scene

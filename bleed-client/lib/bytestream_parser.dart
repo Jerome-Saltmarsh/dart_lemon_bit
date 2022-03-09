@@ -1,4 +1,5 @@
 import 'package:bleed_client/classes/Character.dart';
+import 'package:bleed_client/common/constants.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameEventType.dart';
@@ -93,7 +94,7 @@ class _ByteStreamParser {
       projectile.x = _nextDouble();
       projectile.y = _nextDouble();
       projectile.type = _readProjectileType();
-      projectile.angle = _nextDouble();
+      projectile.angle = _nextDouble() * degreesToRadians;
     }
   }
 
