@@ -59,8 +59,9 @@ final teams = _Teams();
 typedef void OnKilled(Game game, Character src, Character by, int damage);
 
 class _Teams {
-  final west = 0;
-  final east = 1;
+  final none = 0;
+  final west = 1;
+  final east = 2;
 }
 
 class _GameEvents {

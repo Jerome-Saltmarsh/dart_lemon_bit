@@ -129,6 +129,8 @@
 [ ] Destructible Items to collect gems
 [ ] Rain Particles
 [ ] (MMO) Save / Load Character
+[ ] FIX Slots UI
+[x] FIX Zombies attack
 [x] FIX Arrow angle
 [x] Fix bug, click running stutters
 [x] FIX Aim circle remains after target killed
