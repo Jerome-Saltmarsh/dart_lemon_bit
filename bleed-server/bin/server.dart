@@ -390,7 +390,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             }
 
             byteCompiler.writeGame(game);
-            sink.add(byteCompiler.writeToSendBuffer());
+            final bytes = byteCompiler.writeToSendBuffer();
+            sink.add(bytes);
             return;
 
           case ClientRequest.Join:
