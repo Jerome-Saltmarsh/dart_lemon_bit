@@ -25,8 +25,8 @@ const _3 = 3;
 final _hours = modules.isometric.state.hours;
 final _minutes = modules.isometric.state.minutes;
 
-final Watch<int> byteLength = Watch(0);
-final Watch<int> bufferSize = Watch(0);
+final byteLength = Watch<int>(0);
+final bufferSize = Watch<int>(0);
 
 class _ByteStreamParser {
 
@@ -75,6 +75,13 @@ class _ByteStreamParser {
           final player = modules.game.state.player;
           _readPlayer(player.character);
           player.alive.value = player.character.alive;
+
+          player.slots.slot1.value = _readSlotType();
+          player.slots.slot2.value = _readSlotType();
+          player.slots.slot3.value = _readSlotType();
+          player.slots.slot4.value = _readSlotType();
+          player.slots.slot5.value = _readSlotType();
+          player.slots.slot6.value = _readSlotType();
           break;
         case ServerResponse.End:
           byteLength.value = _index;

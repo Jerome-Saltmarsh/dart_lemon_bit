@@ -39,6 +39,14 @@ class _ByteCompiler {
     byteCompiler.writeGame(player.game);
     byteCompiler.writeByte(ServerResponse.Player.index);
     byteCompiler.writePlayer(player);
+
+    byteCompiler.writeByte(player.slots.slot1.index);
+    byteCompiler.writeByte(player.slots.slot2.index);
+    byteCompiler.writeByte(player.slots.slot3.index);
+    byteCompiler.writeByte(player.slots.slot4.index);
+    byteCompiler.writeByte(player.slots.slot5.index);
+    byteCompiler.writeByte(player.slots.slot6.index);
+
     byteCompiler.writeAttackTarget(player);
   }
 
