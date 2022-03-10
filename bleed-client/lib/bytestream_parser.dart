@@ -130,16 +130,11 @@ class _ByteStreamParser {
   }
 
   void _parseZombies() {
-    // final total = _nextInt();
     final zombies = game.zombies;
-    // game.totalZombies.value = total;
-    // for (var i = 0; i < total; i++){
-    //   _readCharacter(zombies[i]);
-    // }
-    int total = 0;
-    while(true){
+    var total = 0;
+    while(true) {
       final stateInt = _nextByte();
-      if (stateInt == 100) break;
+      if (stateInt == END) break;
       final character = zombies[total];
       character.state = characterStates[stateInt];
       character.direction = _nextByte();

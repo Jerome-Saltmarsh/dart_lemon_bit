@@ -6,6 +6,8 @@ const _256Int = 256;
 const _zero = 0;
 const _max = 65536;
 
+const END = 100;
+
 void writeNumberToByteArray({
   required num number,
   required List<int> list,

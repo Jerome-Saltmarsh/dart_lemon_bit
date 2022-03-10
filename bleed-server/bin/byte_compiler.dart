@@ -69,7 +69,7 @@ class _ByteCompiler {
       if (zombie.x > player.screenRight) continue;
       writeCharacter(zombie);
     }
-    writeByte(100); // ZOMBIES FINISHED;
+    writeByte(END); // ZOMBIES FINISHED;  see bytestream_parser._parseZombies();
   }
 
   void writeZombies(List<Character> zombies){
