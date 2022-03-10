@@ -170,9 +170,8 @@ class GameActions {
 
   /// valid between 1 and 6 inclusive
   void equipSlot(int index){
-    print("game.actions.equipSlot($index)");
     _verifyValidSlotIndex(index);
-    // sendClientRequest(ClientRequest.Equip_Slot, index);
+    sendClientRequest(ClientRequest.Equip_Slot, index);
   }
 
   void unequipWeapon(){

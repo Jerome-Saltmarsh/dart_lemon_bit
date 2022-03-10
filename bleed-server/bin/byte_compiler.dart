@@ -34,7 +34,6 @@ class _ByteCompiler {
     return sendBuffer;
   }
 
-
   void writePlayerGame(Player player){
     final slots = player.slots;
     writeGame(player.game);
