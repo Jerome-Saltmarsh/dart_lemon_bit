@@ -891,6 +891,14 @@ class GameBuild {
     });
   }
 
+  Widget get playerPosition {
+    final character = modules.game.state.player.character;
+    return Refresh((){
+      return text("Player Position: X: ${character.x}, Y: ${character.y}");
+    });
+  }
+
+
   Widget get offscreenTiles {
     return Refresh((){
       return text("Offscreen: ${isometric.state.offScreenTiles}");
@@ -922,7 +930,7 @@ class GameBuild {
   }
 
   Widget version(){
-    return text("v-0.1.0");
+    return text("v-0.1.6");
   }
 
   Widget frameSmoothing(){
@@ -959,11 +967,12 @@ class GameBuild {
           buildTotalParticles,
           buildActiveParticles,
           tileAtMouse,
-          offscreenTiles,
-          onScreenTiles,
+          // offscreenTiles,
+          // onScreenTiles,
           mousePositionWorld,
           byteCountWatcher,
           bufferLengthWatcher,
+          playerPosition,
       ],
     );
   }

@@ -59,13 +59,11 @@ class _ByteStreamParser {
           _player.attackTarget.x = _nextDouble();
           _player.attackTarget.y = _nextDouble();
           engine.cursorType.value = CursorType.Click;
-          // setCursorHand();
           break;
         case ServerResponse.Player_Attack_Target_None:
           _player.attackTarget.x = 0;
           _player.attackTarget.y = 0;
           engine.cursorType.value = CursorType.Basic;
-          // setCursorPointer();
           break;
         case ServerResponse.Game_Time:
           _hours.value = _nextByte();
