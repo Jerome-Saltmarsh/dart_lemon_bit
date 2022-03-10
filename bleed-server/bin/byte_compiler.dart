@@ -36,18 +36,17 @@ class _ByteCompiler {
 
 
   void writePlayerGame(Player player){
-    byteCompiler.writeGame(player.game);
-    byteCompiler.writeByte(ServerResponse.Player.index);
-    byteCompiler.writePlayer(player);
-
-    byteCompiler.writeByte(player.slots.slot1.index);
-    byteCompiler.writeByte(player.slots.slot2.index);
-    byteCompiler.writeByte(player.slots.slot3.index);
-    byteCompiler.writeByte(player.slots.slot4.index);
-    byteCompiler.writeByte(player.slots.slot5.index);
-    byteCompiler.writeByte(player.slots.slot6.index);
-
-    byteCompiler.writeAttackTarget(player);
+    final slots = player.slots;
+    writeGame(player.game);
+    writeByte(ServerResponse.Player.index);
+    writePlayer(player);
+    writeByte(slots.slot1.index);
+    writeByte(slots.slot2.index);
+    writeByte(slots.slot3.index);
+    writeByte(slots.slot4.index);
+    writeByte(slots.slot5.index);
+    writeByte(slots.slot6.index);
+    writeAttackTarget(player);
   }
 
   void writeGame(Game game){
