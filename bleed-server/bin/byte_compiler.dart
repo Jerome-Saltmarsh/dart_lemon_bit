@@ -38,6 +38,7 @@ class _ByteCompiler {
     final slots = player.slots;
     writeGame(player.game);
     writePlayerZombies(player);
+    writePlayers(player);
     writeByte(ServerResponse.Player.index);
     writePlayer(player);
     writeByte(slots.slot1.index);
@@ -50,7 +51,6 @@ class _ByteCompiler {
   }
 
   void writeGame(Game game){
-    writePlayers(game.players);
     writeProjectiles(game.projectiles);
     writeNpcs(game.npcs);
     writeGameEvents(game.gameEvents);
@@ -132,11 +132,17 @@ class _ByteCompiler {
     writeBigInt(degrees);
   }
 
-  void writePlayers(List<Player> players){
+  void writePlayers(Player player){
     writeByte(ServerResponse.Players.index);
-    final total = players.length;
-    writeBigInt(total);
-    players.forEach(writePlayer);
+    final players = player.game.players;
+    for(final otherPlayer in players){
+      if (otherPlayer.top < player.screenTop) continue;
+      if (otherPlayer.bottom > player.screenBottom) break;
+      if (otherPlayer.left < player.screenLeft) continue;
+      if (otherPlayer.right > player.screenRight) continue;
+      writePlayer(otherPlayer);
+    }
+    writeByte(END);
   }
 
   void writeAttackTarget(Player player){

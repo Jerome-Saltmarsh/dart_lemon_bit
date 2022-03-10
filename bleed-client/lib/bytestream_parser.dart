@@ -149,12 +149,26 @@ class _ByteStreamParser {
   }
 
   void _parsePlayers() {
-    final total = _nextInt();
     final players = game.humans;
-    game.totalHumans = total;
-    for (var i = 0; i < total; i++){
-      _readPlayer(players[i]);
+    var total = 0;
+    while(true){
+      final stateInt = _nextByte();
+      if (stateInt == END) break;
+      final character = players[total];
+      character.state = characterStates[stateInt];
+      character.direction = _nextByte();
+      character.x = _nextDouble();
+      character.y = _nextDouble();
+      character.frame = _nextByte();
+      character.health = _nextPercentage();
+      character.team = _nextByte();
+      character.magic = _nextPercentage();
+      character.equippedWeapon = _readSlotType();
+      character.equippedArmour = _readSlotType();
+      character.equippedHead = _readSlotType();
+      total++;
     }
+    game.totalHumans = total;
   }
 
   void _parseNpcs() {
