@@ -155,15 +155,12 @@ class _Soldier {
 class _Player {
   final character = Character(type: CharacterType.Human);
   int id = -1;
-  // double x = -1;
-  // double y = -1;
   Vector2 abilityTarget = Vector2(0, 0);
   double abilityRange = 0;
   double abilityRadius = 0;
   double maxHealth = 0;
   Tile tile = Tile.Grass;
   double attackRange = 0;
-  // int team = 0;
   final Vector2 attackTarget = Vector2(0, 0);
   final orbs = _PlayerOrbs();
   final slots = _PlayerSlots();

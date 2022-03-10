@@ -73,15 +73,20 @@ class _ByteStreamParser {
           break;
         case ServerResponse.Player:
           final player = modules.game.state.player;
-          _readPlayer(player.character);
-          player.alive.value = player.character.alive;
+          final character = player.character;
+          final slots = player.slots;
+          _readPlayer(character);
+          player.alive.value = character.alive;
+          slots.slot1.value = _readSlotType();
+          slots.slot2.value = _readSlotType();
+          slots.slot3.value = _readSlotType();
+          slots.slot4.value = _readSlotType();
+          slots.slot5.value = _readSlotType();
+          slots.slot6.value = _readSlotType();
 
-          player.slots.slot1.value = _readSlotType();
-          player.slots.slot2.value = _readSlotType();
-          player.slots.slot3.value = _readSlotType();
-          player.slots.slot4.value = _readSlotType();
-          player.slots.slot5.value = _readSlotType();
-          player.slots.slot6.value = _readSlotType();
+          slots.weapon.value = character.equippedWeapon;
+          slots.armour.value = character.equippedArmour;
+          slots.helm.value = character.equippedHead;
           break;
         case ServerResponse.End:
           byteLength.value = _index;

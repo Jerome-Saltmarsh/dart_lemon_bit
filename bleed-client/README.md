@@ -129,7 +129,7 @@
 [ ] Destructible Items to collect gems
 [ ] Rain Particles
 [ ] (MMO) Save / Load Character
-[ ] FIX Slots UI
+[x] FIX Slots UI
 [x] FIX Mouse cursor on attack target
 [x] FIX Zombies attack
 [x] FIX Arrow angle
