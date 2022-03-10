@@ -60,9 +60,9 @@ void initializeGameInstances() {
     game.interactableNpcs.add(Character(type: CharacterType.Human));
   }
 
-  game.humans.clear();
+  game.players.clear();
   for (int i = 0; i < 500; i++) {
-    game.humans.add(Character(type: CharacterType.Human));
+    game.players.add(Character(type: CharacterType.Human));
   }
 }
 

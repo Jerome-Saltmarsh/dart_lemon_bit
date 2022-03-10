@@ -29,12 +29,12 @@ class _Game {
   int cratesTotal = 0;
   List<EnvironmentObject> torches = [];
   List<NpcDebug> npcDebug = [];
-  final List<Character> humans = [];
+  final List<Character> players = [];
   final List<Character> zombies = [];
   final List<Character> interactableNpcs = [];
   final Watch<int> totalZombies = Watch(0);
   int totalNpcs = 0;
-  int totalHumans = 0;
+  int totalPlayers = 0;
   int totalCubes = 0;
   List<Projectile> projectiles = [];
   List<Vector2> bulletHoles = [];

@@ -149,7 +149,7 @@ class _ByteStreamParser {
   }
 
   void _parsePlayers() {
-    final players = game.humans;
+    final players = game.players;
     var total = 0;
     while(true){
       final stateInt = _nextByte();
@@ -168,7 +168,7 @@ class _ByteStreamParser {
       character.equippedHead = _readSlotType();
       total++;
     }
-    game.totalHumans = total;
+    game.totalPlayers = total;
   }
 
   void _parseNpcs() {

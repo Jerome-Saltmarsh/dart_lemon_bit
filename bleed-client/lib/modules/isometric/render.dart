@@ -136,7 +136,7 @@ class IsometricRender {
     final totalParticles = properties.totalActiveParticles;
     final totalEnvironment = environmentObjects.length;
     final zombies = game.zombies;
-    final humans = game.humans;
+    final humans = game.players;
     final interactableNpcs = game.interactableNpcs;
     final screenBottom = engine.screen.bottom;
 
@@ -147,13 +147,13 @@ class IsometricRender {
     var indexZombie = 0;
     var indexNpc = 0;
     var zombiesRemaining = indexZombie < game.totalZombies.value;
-    var humansRemaining = indexHuman < game.totalHumans;
+    var humansRemaining = indexHuman < game.totalPlayers;
     var npcsRemaining = indexHuman < game.totalNpcs;
     var environmentRemaining = indexEnv < totalEnvironment;
     var particlesRemaining = indexParticle < totalParticles;
 
     while (true) {
-      humansRemaining = indexHuman < game.totalHumans;
+      humansRemaining = indexHuman < game.totalPlayers;
       environmentRemaining = indexEnv < totalEnvironment;
       particlesRemaining = indexParticle < totalParticles;
       zombiesRemaining = indexZombie < game.totalZombies.value;

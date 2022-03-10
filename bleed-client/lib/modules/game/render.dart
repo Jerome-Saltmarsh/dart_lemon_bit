@@ -114,7 +114,7 @@ class GameRender {
     if (!state.frameSmoothing.value) return;
     if (state.smoothed >= 0) return;
       state.smoothed--;
-      for(final character in game.humans) {
+      for(final character in game.players) {
         if (character.state.running) {
           final angle = character.angle;
           final speed = 0.5;
@@ -182,8 +182,8 @@ class GameRender {
   }
 
   void _drawPlayerNames() {
-    for (var i = 0; i < game.totalHumans; i++) {
-      final player = game.humans[i];
+    for (var i = 0; i < game.totalPlayers; i++) {
+      final player = game.players[i];
       if (player.x == state.player.x) continue;
       if (diff(mouseWorldX, player.x) > style.nameRadius) continue;
       if (diff(mouseWorldY, player.y) > style.nameRadius) continue;
@@ -345,8 +345,8 @@ class GameRender {
   }
 
   void drawPlayerText() {
-    for (int i = 0; i < game.totalHumans; i++) {
-      Character human = game.humans[i];
+    for (int i = 0; i < game.totalPlayers; i++) {
+      Character human = game.players[i];
       if (human.text.isEmpty) continue;
       double width = isometric.constants.charWidth * human.text.length;
       double left = human.x - width;

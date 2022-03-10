@@ -659,9 +659,9 @@ bool _commaConsumed() {
 }
 
 void _parsePlayers() {
-  game.totalHumans = consumeInt();
-  final humans = game.humans;
-  for (var i = 0; i < game.totalHumans; i++) {
+  game.totalPlayers = consumeInt();
+  final humans = game.players;
+  for (var i = 0; i < game.totalPlayers; i++) {
     _consumeHuman(humans[i]);
   }
 }

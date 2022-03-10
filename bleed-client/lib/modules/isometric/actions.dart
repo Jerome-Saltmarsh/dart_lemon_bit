@@ -482,7 +482,7 @@ class IsometricActions {
   void applyDynamicEmissions() {
     if (properties.dayTime) return;
     resetDynamicShadesToBakeMap();
-    applyEmissionFromCharactersBright(game.humans);
+    applyEmissionFromCharactersBright(game.players);
     // applyEmissionFromCharactersMedium(game.zombies);
     applyEmissionFromCharactersMedium(game.interactableNpcs);
     applyEmissionFromProjectiles();
