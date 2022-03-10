@@ -130,6 +130,7 @@
 [ ] Rain Particles
 [ ] (MMO) Save / Load Character
 [ ] FIX Slots UI
+[x] FIX Mouse cursor on attack target
 [x] FIX Zombies attack
 [x] FIX Arrow angle
 [x] Fix bug, click running stutters

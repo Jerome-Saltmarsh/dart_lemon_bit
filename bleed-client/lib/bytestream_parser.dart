@@ -1,17 +1,16 @@
 import 'package:bleed_client/classes/Character.dart';
-import 'package:bleed_client/common/constants.dart';
-import 'package:bleed_client/document/request_pointer_lock.dart';
-import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/enums.dart';
-import 'package:lemon_watch/watch.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameEventType.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
 import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/compile_util.dart';
+import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/enums.dart';
+import 'package:lemon_watch/watch.dart';
 
 
 final _player = modules.game.state.player;
