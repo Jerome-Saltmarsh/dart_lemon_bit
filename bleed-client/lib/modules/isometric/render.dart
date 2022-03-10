@@ -293,7 +293,6 @@ class IsometricRender {
 
     if (character.dead) return;
 
-    if (!_screen.contains(character.x, character.y)) return;
     final shade = state.getShadeAtPosition(character.x, character.y);
     if (shade > Shade.Dark) return;
     renderCharacterHealthBar(character);

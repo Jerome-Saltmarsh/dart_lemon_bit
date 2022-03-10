@@ -50,7 +50,6 @@ class _ByteCompiler {
   }
 
   void writeGame(Game game){
-    // writeZombies(game.zombies);
     writePlayers(game.players);
     writeProjectiles(game.projectiles);
     writeNpcs(game.npcs);
