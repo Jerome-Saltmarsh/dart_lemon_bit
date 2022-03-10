@@ -20,3 +20,15 @@ void setFavicon(String filename){
   link.setAttribute("href", filename);
   document.getElementsByTagName('head')[0].append(link);
 }
+
+void setCursorHand(){
+  final body = document.body;
+  if (body == null) return;
+  body.style.cursor = 'wait';
+}
+
+void setCursorPointer(){
+  final body = document.body;
+  if (body == null) return;
+  body.style.cursor = 'default';
+}

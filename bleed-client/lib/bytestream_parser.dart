@@ -1,5 +1,8 @@
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/common/constants.dart';
+import 'package:bleed_client/document/request_pointer_lock.dart';
+import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/enums.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameEventType.dart';
@@ -56,10 +59,14 @@ class _ByteStreamParser {
         case ServerResponse.Player_Attack_Target:
           _player.attackTarget.x = _nextDouble();
           _player.attackTarget.y = _nextDouble();
+          engine.cursorType.value = CursorType.Click;
+          // setCursorHand();
           break;
         case ServerResponse.Player_Attack_Target_None:
           _player.attackTarget.x = 0;
           _player.attackTarget.y = 0;
+          engine.cursorType.value = CursorType.Basic;
+          // setCursorPointer();
           break;
         case ServerResponse.Game_Time:
           _hours.value = _nextByte();
