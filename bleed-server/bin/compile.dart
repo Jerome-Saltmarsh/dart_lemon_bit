@@ -24,7 +24,7 @@ import 'games/Royal.dart';
 
 // constants
 final _playersIndex = ServerResponse.Players.index;
-final _playerIndex = ServerResponse.Player.index;
+// final _playerIndex = ServerResponse.Player.index;
 final _indexZombies = ServerResponse.Zombies.index;
 final _indexNpcs = ServerResponse.Npcs.index;
 final _indexProjectiles = ServerResponse.Projectiles.index;
@@ -213,59 +213,59 @@ void _compileAbility(StringBuffer buffer, Ability ability) {
   _write(buffer, ability.cost);
 }
 
-void compilePlayer(StringBuffer buffer, Player player) {
-  _write(buffer, _playerIndex);
-  _writeInt(buffer, player.x);
-  _writeInt(buffer, player.y);
-  _write(buffer, player.health);
-  _write(buffer, player.maxHealth);
-  _write(buffer, player.state.index);
-  _write(buffer, player.experience);
-  _write(buffer, player.level);
-  _write(buffer, player.abilityPoints);
-  final experienceRequired = levelExperience[player.level];
-  _write(buffer, experienceRequired);
-  final perc = player.experience / experienceRequired * 100;
-  _writeInt(buffer, perc); // todo make sure player is not max level
-  _write(buffer, player.type.index);
-  _writeInt(buffer, player.abilityTarget.x);
-  _writeInt(buffer, player.abilityTarget.y);
-  _write(buffer, player.magic);
-  _write(buffer, player.maxMagic);
-  _writeInt(buffer, player.attackRange);
-  _write(buffer, player.team);
-  _write(buffer, player.weapon.index);
-  _write(buffer, player.slots.armour.index);
-  _write(buffer, player.slots.helm.index);
-
-
-  final aimTarget = player.aimTarget;
-  if (aimTarget != null && aimTarget.alive) {
-    _write(buffer, ServerResponse.Player_Attack_Target.index);
-    _writeInt(buffer, aimTarget.x);
-    _writeInt(buffer, aimTarget.y);
-  } else {
-    _write(buffer, ServerResponse.Player_Attack_Target.index);
-    _writeInt(buffer, 0);
-    _writeInt(buffer, 0);
-  }
-
-  compilePlayerOrbs(buffer, player);
-  compilePlayerSlotTypes(buffer, player);
-  _compilePlayerAbility(buffer, player);
-  _compilePlayerEvents(buffer, player);
-
-  if (player.gemSpawns.isNotEmpty) {
-     _write(buffer, ServerResponse.Gem_Spawns.index);
-     _write(buffer, player.gemSpawns.length);
-     for(final gemSpawn in player.gemSpawns){
-       _write(buffer, gemSpawn.type.index);
-       _write(buffer, gemSpawn.x.toInt());
-       _write(buffer, gemSpawn.y.toInt());
-     }
-     player.gemSpawns.clear();
-  }
-}
+// void compilePlayer(StringBuffer buffer, Player player) {
+//   _write(buffer, _playerIndex);
+//   _writeInt(buffer, player.x);
+//   _writeInt(buffer, player.y);
+//   _write(buffer, player.health);
+//   _write(buffer, player.maxHealth);
+//   _write(buffer, player.state.index);
+//   _write(buffer, player.experience);
+//   _write(buffer, player.level);
+//   _write(buffer, player.abilityPoints);
+//   final experienceRequired = levelExperience[player.level];
+//   _write(buffer, experienceRequired);
+//   final perc = player.experience / experienceRequired * 100;
+//   _writeInt(buffer, perc); // todo make sure player is not max level
+//   _write(buffer, player.type.index);
+//   _writeInt(buffer, player.abilityTarget.x);
+//   _writeInt(buffer, player.abilityTarget.y);
+//   _write(buffer, player.magic);
+//   _write(buffer, player.maxMagic);
+//   _writeInt(buffer, player.attackRange);
+//   _write(buffer, player.team);
+//   _write(buffer, player.weapon.index);
+//   _write(buffer, player.slots.armour.index);
+//   _write(buffer, player.slots.helm.index);
+//
+//
+//   final aimTarget = player.aimTarget;
+//   if (aimTarget != null && aimTarget.alive) {
+//     _write(buffer, ServerResponse.Player_Attack_Target.index);
+//     _writeInt(buffer, aimTarget.x);
+//     _writeInt(buffer, aimTarget.y);
+//   } else {
+//     _write(buffer, ServerResponse.Player_Attack_Target.index);
+//     _writeInt(buffer, 0);
+//     _writeInt(buffer, 0);
+//   }
+//
+//   compilePlayerOrbs(buffer, player);
+//   compilePlayerSlotTypes(buffer, player);
+//   _compilePlayerAbility(buffer, player);
+//   _compilePlayerEvents(buffer, player);
+//
+//   if (player.gemSpawns.isNotEmpty) {
+//      _write(buffer, ServerResponse.Gem_Spawns.index);
+//      _write(buffer, player.gemSpawns.length);
+//      for(final gemSpawn in player.gemSpawns){
+//        _write(buffer, gemSpawn.type.index);
+//        _write(buffer, gemSpawn.x.toInt());
+//        _write(buffer, gemSpawn.y.toInt());
+//      }
+//      player.gemSpawns.clear();
+//   }
+// }
 
 void compilePlayerOrbs(StringBuffer buffer, Player player) {
   _write(buffer, ServerResponse.Player_Orbs.index);

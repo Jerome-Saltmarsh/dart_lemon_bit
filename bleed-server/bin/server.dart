@@ -105,33 +105,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       clearBuffer();
     }
 
-    void sendCompiledPlayerState(Game game, Player player) {
-      clearBuffer();
-      write(game.compiled);
-      compilePlayer(_buffer, player);
-      if (player.message.isNotEmpty) {
-        compilePlayerMessage(_buffer, player.message);
-        player.message = "";
-      }
-
-      if (game is GameMoba) {
-        if (game.awaitingPlayers) {
-          compilePlayersRemaining(
-              _buffer, game.totalPlayersRequired - game.players.length);
-          sendAndClearBuffer();
-          return;
-        } else {
-          compilePlayersRemaining(_buffer, 0);
-        }
-
-        if (game.inProgress) {
-          compileTeamLivesRemaining(_buffer, game);
-        }
-      }
-
-      sendAndClearBuffer();
-    }
-
     void joinGameMoba() {
       final moba = engine.findPendingMobaGame();
       final player = moba.playerJoin();
@@ -161,6 +134,13 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       reply('${ServerResponse.Cube_Joined.index} ${cubePlayer.uuid}');
     }
 
+    void compileAndSendPlayerGame(Player player){
+      byteCompiler.writePlayerGame(player);
+      final bytes = byteCompiler.writeToSendBuffer();
+      sink.add(bytes);
+    }
+
+
     void joinGameMMO() {
       clearBuffer();
       final player = spawnPlayerInTown();
@@ -169,20 +149,14 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       player.orbs.emerald = 10;
       player.orbs.topaz = 10;
       player.orbs.ruby = 10;
+      compileAndSendPlayerGame(player);
 
-      compilePlayer(_buffer, player);
       write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.team}');
       write(player.game.compiledTiles);
       write(player.game.compiledEnvironmentObjects);
       write(player.game.compiled);
       compilePlayersRemaining(_buffer, 0);
       sendAndClearBuffer();
-    }
-
-    void compileAndSendPlayerGame(Player player){
-        byteCompiler.writePlayerGame(player);
-        final bytes = byteCompiler.writeToSendBuffer();
-        sink.add(bytes);
     }
 
     void error(GameError error, {String message = ""}) {
