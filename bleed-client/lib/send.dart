@@ -15,7 +15,7 @@ final sendRequest = _SendRequestToServer();
 
 final _buffer1 = Uint8List(1);
 final _buffer2 = Uint8List(2);
-final _buffer9 = Uint8List(9);
+final _buffer9 = Uint8List(21);
 
 void speak(String message){
   // if (message.isEmpty) return;
@@ -70,6 +70,13 @@ void sendRequestUpdatePlayer() {
   } else {
     _buffer9[8] = 0;
   }
+
+  final screen = engine.screen;
+  writeNumberToByteArray(number: screen.left, list: _buffer9, index: 9);
+  writeNumberToByteArray(number: screen.top, list: _buffer9, index: 12);
+  writeNumberToByteArray(number: screen.right, list: _buffer9, index: 15);
+  writeNumberToByteArray(number: screen.bottom, list: _buffer9, index: 18);
+
   webSocket.sink.add(_buffer9);
   _characterControllerAction.value = CharacterAction.Idle;
 }

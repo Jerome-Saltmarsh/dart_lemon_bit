@@ -273,6 +273,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             final mouseY = readNumberFromByteArray(args, index: 5).toDouble();
             player.mouseX = mouseX;
             player.mouseY = mouseY;
+            player.screenLeft = readNumberFromByteArray(args, index: 9).toDouble();
+            player.screenTop = readNumberFromByteArray(args, index: 12).toDouble();
+            player.screenRight = readNumberFromByteArray(args, index: 15).toDouble();
+            player.screenBottom = readNumberFromByteArray(args, index: 18).toDouble();
+
             final action = characterActions[actionIndex];
 
             player.aimTarget = null;

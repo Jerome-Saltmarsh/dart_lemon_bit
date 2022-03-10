@@ -46,6 +46,11 @@ class Player extends Character with Entity {
   double mouseX = 0;
   double mouseY = 0;
 
+  double screenLeft = 0;
+  double screenTop = 0;
+  double screenRight = 0;
+  double screenBottom = 0;
+
   final List<PlayerEvent> events = [];
   final List<GemSpawn> gemSpawns = [];
 

@@ -37,6 +37,7 @@ class _ByteCompiler {
   void writePlayerGame(Player player){
     final slots = player.slots;
     writeGame(player.game);
+    writePlayerZombies(player);
     writeByte(ServerResponse.Player.index);
     writePlayer(player);
     writeByte(slots.slot1.index);
@@ -49,12 +50,26 @@ class _ByteCompiler {
   }
 
   void writeGame(Game game){
-    writeZombies(game.zombies);
+    // writeZombies(game.zombies);
     writePlayers(game.players);
     writeProjectiles(game.projectiles);
     writeNpcs(game.npcs);
     writeGameEvents(game.gameEvents);
     writeGameTime(game);
+  }
+
+  void writePlayerZombies(Player player){
+    writeByte(ServerResponse.Zombies.index);
+    final zombies = player.game.zombies;
+    for (final zombie in zombies) {
+      if (!zombie.active) continue;
+      if (zombie.y < player.screenTop) continue;
+      if (zombie.y > player.screenBottom) break;
+      if (zombie.x < player.screenLeft) continue;
+      if (zombie.x > player.screenRight) continue;
+      writeCharacter(zombie);
+    }
+    writeByte(100); // ZOMBIES FINISHED;
   }
 
   void writeZombies(List<Character> zombies){

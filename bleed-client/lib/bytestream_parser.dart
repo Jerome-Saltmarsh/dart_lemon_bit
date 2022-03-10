@@ -130,12 +130,27 @@ class _ByteStreamParser {
   }
 
   void _parseZombies() {
-    final total = _nextInt();
+    // final total = _nextInt();
     final zombies = game.zombies;
-    game.totalZombies.value = total;
-    for (var i = 0; i < total; i++){
-      _readCharacter(zombies[i]);
+    // game.totalZombies.value = total;
+    // for (var i = 0; i < total; i++){
+    //   _readCharacter(zombies[i]);
+    // }
+    int total = 0;
+    while(true){
+      final stateInt = _nextByte();
+      if (stateInt == 100) break;
+      final character = zombies[total];
+      character.state = characterStates[stateInt];
+      character.direction = _nextByte();
+      character.x = _nextDouble();
+      character.y = _nextDouble();
+      character.frame = _nextByte();
+      character.health = _nextPercentage();
+      character.team = _nextByte();
+      total++;
     }
+    game.totalZombies.value = total;
   }
 
   void _parsePlayers() {
