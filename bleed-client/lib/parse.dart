@@ -506,14 +506,15 @@ void _parseGrenades() {
 }
 
 void _parseGameJoined() {
+  print("parseGameJoined()");
   final player = modules.game.state.player;
   player.id = consumeInt();
   player.uuid.value = _consumeString();
-  consumeDouble();
-  consumeDouble();
   game.id = consumeInt();
-  consumeInt();
-  print("ServerResponse.Game_Joined: playerId: ${player.id} gameId: ${game.id}");
+  player.team = consumeInt();
+  final byteIdString = _consumeString();
+  player.byteId = byteIdString.split(":").map(int.parse).toList();
+  // print("ServerResponse.Game_Joined: playerId: ${player.id} gameId: ${game.id} $byteId");
 }
 
 ObjectType _consumeEnvironmentObjectType() {

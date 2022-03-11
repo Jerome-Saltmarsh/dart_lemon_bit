@@ -72,16 +72,6 @@ void startWebsocketServer(){
   });
 }
 
-Player spawnPlayerInTown() {
-  return Player(
-      game: world.town,
-      x: 0,
-      y: 1750,
-      team: teams.west,
-      health: 10,
-      weapon: SlotType.Empty,
-  );
-}
 
 void compileWholeGame(Game game) {
   compile.game(game);
@@ -95,7 +85,6 @@ int totalConnections = 0;
 void buildWebSocketHandler(WebSocketChannel webSocket) {
     totalConnections++;
     print("New connection established. Total Connections $totalConnections");
-
     final sink = webSocket.sink;
 
     Player? _player;
@@ -160,7 +149,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       player.orbs.ruby = 10;
       compileAndSendPlayerGame();
 
-      write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.team}');
+      write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.game.id} ${player.team} ${player.byteIdString}');
       write(player.game.compiledTiles);
       write(player.game.compiledEnvironmentObjects);
       write(player.game.compiled);
@@ -192,10 +181,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
     void errorPremiumAccountOnly() {
       error(GameError.Subscription_Required);
-    }
-
-    void errorCustomMapNotFound() {
-      error(GameError.Custom_Map_Not_Found);
     }
 
     void errorAccountNotFound() {
@@ -964,18 +949,13 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     webSocket.stream.listen(onEvent);
   }
 
-
-
-List<int> generateByteId() {
-  return [
-    randomByte,
-    randomByte,
-    randomByte,
-    randomByte,
-  ];
+Player spawnPlayerInTown() {
+  return Player(
+    game: world.town,
+    x: 0,
+    y: 1750,
+    team: teams.west,
+    health: 10,
+    weapon: SlotType.Empty,
+  );
 }
-
-int get randomByte => randomInt(0, 257);
-
-
-

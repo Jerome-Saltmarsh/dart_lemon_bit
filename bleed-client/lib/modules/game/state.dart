@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Weapon.dart';
 import 'package:bleed_client/common/AbilityType.dart';
@@ -153,7 +155,7 @@ class _Soldier {
 }
 
 class _Player {
-  // final character = Character(type: CharacterType.Human);
+  late List<int> byteId;
   double x = 0;
   double y = 0;
   int id = -1;
@@ -185,8 +187,5 @@ class _Player {
   // Properties
   bool get dead => !alive.value;
   bool get isHuman => characterType.value == CharacterType.Human;
-  // double get x => character.x;
-  // double get y => character.y;
-  // int get team => character.team;
 }
 

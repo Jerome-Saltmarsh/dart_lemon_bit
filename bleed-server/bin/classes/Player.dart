@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/randomInt.dart';
 
 import '../common/AbilityMode.dart';
 import '../common/AbilityType.dart';
@@ -24,7 +27,19 @@ const _defaultMaxMagic = 10;
 
 int _idCount = 0;
 
+Uint8List generateByteId() {
+  final idList = Uint8List(4);
+  idList[0] = randomByte;
+  idList[1] = randomByte;
+  idList[2] = randomByte;
+  idList[3] = randomByte;
+  return idList;
+}
+
+int get randomByte => randomInt(0, 257);
+
 class Player extends Character with Entity {
+  final byteId = generateByteId();
   int id = _idCount++;
   String name = generateName();
   /// How many frames have elapsed since the server received a message from this client
@@ -68,6 +83,8 @@ class Player extends Character with Entity {
   Vector2 runTarget = Vector2(0, 0);
 
   Character? get aimTarget => _aimTarget;
+
+  String get byteIdString => "${byteId[0]}:${byteId[1]}:${byteId[2]}:${byteId[3]}";
 
   void attainOrb(OrbType orb){
     switch(orb) {
