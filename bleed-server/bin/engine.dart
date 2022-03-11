@@ -35,12 +35,10 @@ class _Engine {
     print("engine.init()");
     await scenes.load();
     world = World();
-    Future.delayed(Duration(seconds: 3), () {
-      periodic(fixedUpdate, ms: Duration.millisecondsPerSecond ~/ framesPerSecond);
-      periodic(removeDisconnectedPlayers, seconds: _secondsPerRemoveDisconnectedPlayers);
-      periodic(updateNpcTargets, ms: _msPerUpdateNpcTarget);
-      periodic(regenCharacters, ms: _msPerRegen);
-    });
+    periodic(fixedUpdate, ms: Duration.millisecondsPerSecond ~/ framesPerSecond);
+    periodic(removeDisconnectedPlayers, seconds: _secondsPerRemoveDisconnectedPlayers);
+    periodic(updateNpcTargets, ms: _msPerUpdateNpcTarget);
+    periodic(regenCharacters, ms: _msPerRegen);
     print("engine.init() finished");
   }
 
