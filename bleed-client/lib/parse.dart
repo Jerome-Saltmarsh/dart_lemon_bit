@@ -512,8 +512,8 @@ void _parseGameJoined() {
   player.uuid.value = _consumeString();
   game.id = consumeInt();
   player.team = consumeInt();
-  final byteIdString = _consumeString();
-  player.byteId = byteIdString.split(":").map(int.parse).toList();
+  // final byteIdString = _consumeString();
+  // player.byteId = byteIdString.split(":").map(int.parse).toList();
   // print("ServerResponse.Game_Joined: playerId: ${player.id} gameId: ${game.id} $byteId");
 }
 

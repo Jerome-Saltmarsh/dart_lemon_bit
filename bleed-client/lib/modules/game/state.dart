@@ -155,7 +155,7 @@ class _Soldier {
 }
 
 class _Player {
-  late List<int> byteId;
+  // late List<int> byteId;
   double x = 0;
   double y = 0;
   int id = -1;

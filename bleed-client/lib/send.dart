@@ -16,7 +16,7 @@ final _player = modules.game.state.player;
 
 final _buffer1 = Uint8List(1);
 final _buffer2 = Uint8List(2);
-final _buffer9 = Uint8List(26);
+final _buffer9 = Uint8List(22);
 
 void speak(String message){
   // if (message.isEmpty) return;
@@ -78,10 +78,10 @@ void sendRequestUpdatePlayer() {
   writeNumberToByteArray(number: screen.right, list: _buffer9, index: 15);
   writeNumberToByteArray(number: screen.bottom, list: _buffer9, index: 18);
 
-  _buffer9[22] = _player.byteId[0];
-  _buffer9[23] = _player.byteId[1];
-  _buffer9[24] = _player.byteId[2];
-  _buffer9[25] = _player.byteId[3];
+  // _buffer9[22] = _player.byteId[0];
+  // _buffer9[23] = _player.byteId[1];
+  // _buffer9[24] = _player.byteId[2];
+  // _buffer9[25] = _player.byteId[3];
 
   webSocket.sink.add(_buffer9);
   _characterControllerAction.value = CharacterAction.Idle;

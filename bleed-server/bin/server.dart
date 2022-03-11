@@ -87,7 +87,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     print("New connection established. Total Connections $totalConnections");
     final sink = webSocket.sink;
 
-    // Player? _player;
+    Player? _player;
     // Account? _account;
     // String? uuid;
 
@@ -103,6 +103,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     void joinGameMoba() {
       final moba = engine.findPendingMobaGame();
       final player = moba.playerJoin();
+      _player = _player;
       compileWholeGame(moba);
       compilePlayerJoined(_buffer, player);
       compileGameMeta(_buffer, moba);
@@ -112,6 +113,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     void joinBattleRoyal() {
       final royal = engine.findPendingRoyalGames();
       final player = royal.playerJoin();
+      _player = _player;
       // _player = player;
       // uuid = player.uuid;
       // player.name = _account != null ? _account.publicName : generateName();
@@ -139,6 +141,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     void joinGameMMO() {
       clearBuffer();
       final player = spawnPlayerInTown();
+      _player = player;
       // uuid = player.uuid;
       // _player = player;
       // player.name = _account != null ? _account.publicName : generateName();
@@ -148,7 +151,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       player.orbs.ruby = 10;
       compileAndSendPlayerGame(player);
 
-      write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.game.id} ${player.team} ${player.byteIdString}');
+      write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.game.id} ${player.team}');
       write(player.game.compiledTiles);
       write(player.game.compiledEnvironmentObjects);
       write(player.game.compiled);
@@ -212,18 +215,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
         switch(clientRequests[clientRequestInt]){
           case ClientRequest.Update:
-            // final player = _player;
-            final byteString = "${args[22]}:${args[23]}:${args[24]}:${args[25]}";
-            final player = engine.findPlayerByUuid(byteString);
+            final player = _player;
 
             if (player == null) {
               errorPlayerNotFound();
               return;
             }
-
-            // if (player.uuid != null){
-            //   throw Exception();
-            // }
 
             player.lastUpdateFrame = 0;
             final game = player.game;
