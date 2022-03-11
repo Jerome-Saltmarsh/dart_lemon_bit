@@ -7,7 +7,6 @@ import 'classes/Player.dart';
 import 'common/GameStatus.dart';
 import 'common/Settings.dart';
 import 'compile.dart';
-import 'enums/npc_mode.dart';
 import 'functions/loadScenes.dart';
 import 'games/Moba.dart';
 import 'games/Royal.dart';
@@ -121,7 +120,7 @@ class _Engine {
   }
 
   void registerPlayer(Player player){
-    playerMap[player.uuid] = player;
+    playerMap[player.byteIdString] = player;
   }
 
   void deregisterPlayer(Player player){

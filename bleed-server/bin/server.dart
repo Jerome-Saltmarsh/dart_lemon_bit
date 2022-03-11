@@ -87,9 +87,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     print("New connection established. Total Connections $totalConnections");
     final sink = webSocket.sink;
 
-    Player? _player;
-    Account? _account;
-    String? uuid;
+    // Player? _player;
+    // Account? _account;
+    // String? uuid;
 
     void reply(String response) {
       sink.add(response);
@@ -112,9 +112,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     void joinBattleRoyal() {
       final royal = engine.findPendingRoyalGames();
       final player = royal.playerJoin();
-      _player = player;
-      uuid = player.uuid;
-      player.name = _account != null ? _account.publicName : generateName();
+      // _player = player;
+      // uuid = player.uuid;
+      // player.name = _account != null ? _account.publicName : generateName();
       compileWholeGame(royal);
       compilePlayerJoined(_buffer, player);
       compileGameStatus(_buffer, royal.status);
@@ -130,24 +130,23 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       reply('${ServerResponse.Cube_Joined.index} ${cubePlayer.uuid}');
     }
 
-    void compileAndSendPlayerGame(){
-      if (_player == null) return;
-      byteCompiler.writePlayerGame(_player!);
+    void compileAndSendPlayerGame(Player player){
+      byteCompiler.writePlayerGame(player);
       final bytes = byteCompiler.writeToSendBuffer();
       sink.add(bytes);
     }
 
-
     void joinGameMMO() {
       clearBuffer();
       final player = spawnPlayerInTown();
-      uuid = player.uuid;
-      _player = player;
-      player.name = _account != null ? _account.publicName : generateName();
+      // uuid = player.uuid;
+      // _player = player;
+      // player.name = _account != null ? _account.publicName : generateName();
+      player.name = generateName();
       player.orbs.emerald = 10;
       player.orbs.topaz = 10;
       player.orbs.ruby = 10;
-      compileAndSendPlayerGame();
+      compileAndSendPlayerGame(player);
 
       write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.game.id} ${player.team} ${player.byteIdString}');
       write(player.game.compiledTiles);
@@ -213,16 +212,18 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
         switch(clientRequests[clientRequestInt]){
           case ClientRequest.Update:
-            final player = _player;
+            // final player = _player;
+            final byteString = "${args[22]}:${args[23]}:${args[24]}:${args[25]}";
+            final player = engine.findPlayerByUuid(byteString);
 
             if (player == null) {
               errorPlayerNotFound();
               return;
             }
 
-            if (player.uuid != uuid){
-              throw Exception();
-            }
+            // if (player.uuid != null){
+            //   throw Exception();
+            // }
 
             player.lastUpdateFrame = 0;
             final game = player.game;
@@ -262,7 +263,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             }
 
             if (player.deadOrBusy) {
-              compileAndSendPlayerGame();
+              compileAndSendPlayerGame(player);
               return;
             }
 
@@ -364,7 +365,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 break;
             }
 
-            compileAndSendPlayerGame();
+            compileAndSendPlayerGame(player);
             return;
 
           case ClientRequest.Join:
@@ -445,7 +446,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       switch (clientRequest) {
 
         case ClientRequest.Teleport:
-          final player = _player;
+          final player = null;
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -500,7 +501,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Revive:
-          final player = _player;
+          final player = null;
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -564,7 +565,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return errorArgsExpected(2, arguments);
           }
 
-          final player = _player;
+          final player = null;
           if (player == null) {
             return errorPlayerNotFound();
           }
@@ -606,7 +607,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          final player = _player;
+          final player = null;
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -847,7 +848,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 "ClientRequest.Purchase Error: Expected 2 args but got ${arguments.length}");
           }
 
-          final player = _player;
+          final player = null;
           if (player == null) {
             errorPlayerNotFound();
             return;
