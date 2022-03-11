@@ -10,6 +10,7 @@ import 'classes/Projectile.dart';
 import 'common/SlotType.dart';
 import 'common/WeaponType.dart';
 import 'functions/withinRadius.dart';
+import 'interfaces/HasSquad.dart';
 import 'maths.dart';
 import 'settings.dart';
 
@@ -148,6 +149,11 @@ void sortVertically(List<Vector2> items) {
     items.setRange(min + 1, pos + 1, items, min);
     items[min] = element;
   }
+}
+
+bool sameTeam(Character a, Character b){
+   if (a.team == 0) return false;
+   return a.team == b.team;
 }
 
 // / returns -1 if the player does not have the weapon

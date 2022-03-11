@@ -32,13 +32,9 @@ class GameActions {
     setCharacterAction(CharacterAction.Run);
   }
 
-  // void playerInteract(){
-  //   webSocket.send('${ClientRequest.Interact.index} $session');
-  // }
-
   void cameraCenterPlayer(){
-    final character = modules.game.state.player.character;
-    engine.cameraCenter(character.x, character.y);
+    final player = modules.game.state.player;
+    engine.cameraCenter(player.x, player.y);
   }
 
   void emitPixelExplosion(double x, double y, {int amount = 10}) {

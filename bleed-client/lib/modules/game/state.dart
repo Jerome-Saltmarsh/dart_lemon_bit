@@ -153,8 +153,11 @@ class _Soldier {
 }
 
 class _Player {
-  final character = Character(type: CharacterType.Human);
+  // final character = Character(type: CharacterType.Human);
+  double x = 0;
+  double y = 0;
   int id = -1;
+  int team = 0;
   Vector2 abilityTarget = Vector2(0, 0);
   double abilityRange = 0;
   double abilityRadius = 0;
@@ -182,8 +185,8 @@ class _Player {
   // Properties
   bool get dead => !alive.value;
   bool get isHuman => characterType.value == CharacterType.Human;
-  double get x => character.x;
-  double get y => character.y;
-  int get team => character.team;
+  // double get x => character.x;
+  // double get y => character.y;
+  // int get team => character.team;
 }
 

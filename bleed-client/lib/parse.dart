@@ -183,8 +183,8 @@ void parseState() {
         print("ServerResponse.Scene_Changed");
         final x = consumeDouble();
         final y = consumeDouble();
-        modules.game.state.player.character.x = x;
-        modules.game.state.player.character.y = y;
+        modules.game.state.player.x = x;
+        modules.game.state.player.y = y;
         engine.cameraCenter(x, y);
 
         Future.delayed(Duration(milliseconds: 150), () {
@@ -417,27 +417,27 @@ void _parseTiles() {
 }
 
 void _parsePlayer() {
-  final player = modules.game.state.player;
-  player.character.x = _consumeDoubleUnsafe();
-  player..character.y = _consumeDoubleUnsafe();
-  player.health.value = _consumeDoubleUnsafe();
-  player.maxHealth = _consumeDoubleUnsafe();
-  player.state.value = _consumeCharacterState();
-  player.experience.value = _consumeIntUnsafe();
-  player.level.value = _consumeIntUnsafe();
-  player.skillPoints.value = _consumeIntUnsafe();
-  player.nextLevelExperience.value = _consumeIntUnsafe();
-  player.experiencePercentage.value = _consumePercentage();
-  player.characterType.value = _consumeCharacterType();
-  player.abilityTarget.x = _consumeDoubleUnsafe();
-  player.abilityTarget.y = _consumeDoubleUnsafe();
-  player.magic.value = _consumeDoubleUnsafe();
-  player.maxMagic.value = _consumeDoubleUnsafe();
-  player.attackRange = _consumeDoubleUnsafe();
-  player.character.team = _consumeIntUnsafe();
-  player.slots.weapon.value = consumeSlotType();
-  player.slots.armour.value = consumeSlotType();
-  player.slots.helm.value = consumeSlotType();
+  // final player = modules.game.state.player;
+  // player.character.x = _consumeDoubleUnsafe();
+  // player..character.y = _consumeDoubleUnsafe();
+  // player.health.value = _consumeDoubleUnsafe();
+  // player.maxHealth = _consumeDoubleUnsafe();
+  // player.state.value = _consumeCharacterState();
+  // player.experience.value = _consumeIntUnsafe();
+  // player.level.value = _consumeIntUnsafe();
+  // player.skillPoints.value = _consumeIntUnsafe();
+  // player.nextLevelExperience.value = _consumeIntUnsafe();
+  // player.experiencePercentage.value = _consumePercentage();
+  // player.characterType.value = _consumeCharacterType();
+  // player.abilityTarget.x = _consumeDoubleUnsafe();
+  // player.abilityTarget.y = _consumeDoubleUnsafe();
+  // player.magic.value = _consumeDoubleUnsafe();
+  // player.maxMagic.value = _consumeDoubleUnsafe();
+  // player.attackRange = _consumeDoubleUnsafe();
+  // player.character.team = _consumeIntUnsafe();
+  // player.slots.weapon.value = consumeSlotType();
+  // player.slots.armour.value = consumeSlotType();
+  // player.slots.helm.value = consumeSlotType();
 }
 
 void _parsePlayerAbility(){
@@ -509,10 +509,10 @@ void _parseGameJoined() {
   final player = modules.game.state.player;
   player.id = consumeInt();
   player.uuid.value = _consumeString();
-  player.character.x = consumeDouble();
-  player.character.y = consumeDouble();
+  consumeDouble();
+  consumeDouble();
   game.id = consumeInt();
-  player.character.team = consumeInt();
+  consumeInt();
   print("ServerResponse.Game_Joined: playerId: ${player.id} gameId: ${game.id}");
 }
 

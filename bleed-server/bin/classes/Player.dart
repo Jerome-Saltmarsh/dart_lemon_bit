@@ -22,7 +22,10 @@ import 'Game.dart';
 
 const _defaultMaxMagic = 10;
 
+int _idCount = 0;
+
 class Player extends Character with Entity {
+  int id = _idCount++;
   String name = generateName();
   /// How many frames have elapsed since the server received a message from this client
   int lastUpdateFrame = 0;

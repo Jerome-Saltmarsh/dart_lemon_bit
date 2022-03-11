@@ -13,6 +13,8 @@ import 'package:lemon_engine/engine.dart';
 
 import 'state.dart';
 
+final _player = modules.game.state.player;
+
 class GameUpdate {
 
   final GameState state;
@@ -21,7 +23,7 @@ class GameUpdate {
 
   void update() {
     if (!webSocket.connected) return;
-    if (state.player.uuid.value.isEmpty) return;
+    if (_player.uuid.value.isEmpty) return;
 
     switch(game.type.value){
       case GameType.None:
@@ -50,7 +52,7 @@ class GameUpdate {
     if (core.state.status.value == GameStatus.Finished) return;
     readPlayerInput();
     isometric.update.call();
-    if (!state.panningCamera && modules.game.state.player.alive.value) {
+    if (!state.panningCamera && _player.alive.value) {
       cameraFollowPlayer();
     }
 
@@ -66,7 +68,7 @@ class GameUpdate {
   }
 
   void cameraFollowPlayer() {
-    engine.cameraFollow(state.player.x, state.player.y, engine.cameraFollowSpeed);
+    engine.cameraFollow(_player.x, _player.y, engine.cameraFollowSpeed);
   }
 
   void readPlayerInput() {

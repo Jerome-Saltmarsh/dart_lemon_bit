@@ -892,9 +892,16 @@ class GameBuild {
   }
 
   Widget get playerPosition {
-    final character = modules.game.state.player.character;
+    final character = modules.game.state.player;
     return Refresh((){
       return text("Player Position: X: ${character.x}, Y: ${character.y}");
+    });
+  }
+
+  Widget get playerId {
+    final character = modules.game.state.player;
+    return Refresh((){
+      return text("Player Id: ${character.id}");
     });
   }
 
@@ -973,6 +980,7 @@ class GameBuild {
           byteCountWatcher,
           bufferLengthWatcher,
           playerPosition,
+          playerId,
       ],
     );
   }

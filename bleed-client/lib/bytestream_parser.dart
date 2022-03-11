@@ -28,6 +28,8 @@ final _minutes = modules.isometric.state.minutes;
 final byteLength = Watch<int>(0);
 final bufferSize = Watch<int>(0);
 
+var previousY = 0.0;
+
 class _ByteStreamParser {
 
   var _index = 0;
@@ -71,10 +73,25 @@ class _ByteStreamParser {
           break;
         case ServerResponse.Player:
           final player = modules.game.state.player;
-          final character = player.character;
+          // final character = player.character;
           final slots = player.slots;
-          _readPlayer(character);
-          player.alive.value = character.alive;
+          // _readPlayer(character);
+          // if (previousY != character.y){
+          //   print("y changed by ${previousY - character.y}");
+          //   previousY = character.y;
+          // }
+          // player.alive.value = character.alive;
+          player.x = _nextDouble();
+          player.y = _nextDouble();
+          slots.weapon.value = _readSlotType();
+          slots.armour.value = _readSlotType();
+          slots.helm.value = _readSlotType();
+          final id = _nextByte();
+          if (player.id != id){
+            print("changed to id $id");
+            player.id = id;
+          }
+
           slots.slot1.value = _readSlotType();
           slots.slot2.value = _readSlotType();
           slots.slot3.value = _readSlotType();
@@ -82,9 +99,6 @@ class _ByteStreamParser {
           slots.slot5.value = _readSlotType();
           slots.slot6.value = _readSlotType();
 
-          slots.weapon.value = character.equippedWeapon;
-          slots.armour.value = character.equippedArmour;
-          slots.helm.value = character.equippedHead;
           break;
         case ServerResponse.End:
           byteLength.value = _index;
@@ -183,14 +197,6 @@ class _ByteStreamParser {
     character.equippedWeapon = _readSlotType();
   }
 
-  void _readPlayer(Character character){
-    _readCharacter(character);
-    character.magic = _nextPercentage();
-    character.equippedWeapon = _readSlotType();
-    character.equippedArmour = _readSlotType();
-    character.equippedHead = _readSlotType();
-  }
-
   void _readCharacter(Character character){
      character.state = _readCharacterState();
      character.direction = _nextByte();
@@ -206,11 +212,7 @@ class _ByteStreamParser {
   }
 
   SlotType _readSlotType(){
-    final valueIndex = _nextByte();
-    if (valueIndex >= slotTypesLength){
-      throw Exception();
-    }
-    return slotTypes[valueIndex];
+    return slotTypes[_nextByte()];
   }
 
   ProjectileType _readProjectileType(){

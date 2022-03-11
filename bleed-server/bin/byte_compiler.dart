@@ -12,6 +12,7 @@ import 'classes/Projectile.dart';
 import 'common/ServerResponse.dart';
 import 'common/compile_util.dart';
 import 'common/constants.dart';
+import 'utilities.dart';
 
 const _60 = 60;
 const _100 = 100;
@@ -40,7 +41,15 @@ class _ByteCompiler {
     writePlayerZombies(player);
     writePlayers(player);
     writeByte(ServerResponse.Player.index);
-    writePlayer(player);
+    // writePlayer(player);
+
+    writeBigInt(player.x);
+    writeBigInt(player.y);
+    writeByte(player.weapon.index);
+    writeByte(player.slots.armour.index);
+    writeByte(player.slots.helm.index);
+    writeByte(player.id);
+
     writeByte(slots.slot1.index);
     writeByte(slots.slot2.index);
     writeByte(slots.slot3.index);
@@ -135,11 +144,14 @@ class _ByteCompiler {
   void writePlayers(Player player){
     writeByte(ServerResponse.Players.index);
     final players = player.game.players;
-    for(final otherPlayer in players){
-      if (otherPlayer.top < player.screenTop) continue;
-      if (otherPlayer.bottom > player.screenBottom) break;
-      if (otherPlayer.left < player.screenLeft) continue;
-      if (otherPlayer.right > player.screenRight) continue;
+    for(final otherPlayer in players) {
+      // players on same team emit light offscreen
+      if (!sameTeam(otherPlayer, player)) {
+        if (otherPlayer.top < player.screenTop) continue;
+        if (otherPlayer.bottom > player.screenBottom) continue;
+        if (otherPlayer.left < player.screenLeft) continue;
+        if (otherPlayer.right > player.screenRight) continue;
+      }
       writePlayer(otherPlayer);
     }
     writeByte(END);

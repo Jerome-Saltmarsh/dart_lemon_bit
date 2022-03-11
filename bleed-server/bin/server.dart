@@ -2,6 +2,7 @@ import 'package:bleed_server/CubeGame.dart';
 import 'package:bleed_server/system.dart';
 import 'package:bleed_server/user-service-client/firestoreService.dart';
 import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/randomInt.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -50,7 +51,7 @@ void write(dynamic value) {
   _buffer.write(_space);
 }
 
-void main() {
+Future main() async {
   print('gamestream.online server starting');
   if (isLocalMachine){
     print("Environment Detected: Jerome's Computer");
@@ -58,9 +59,13 @@ void main() {
     print("Environment Detected: Google Cloud Machine");
   }
   engine.init();
-  loadScenes();
+  await loadScenes();
+  startWebsocketServer();
+}
 
-  var handler = webSocketHandler(buildWebSocketHandler,);
+void startWebsocketServer(){
+  print("startWebsocketServer()");
+  var handler = webSocketHandler(buildWebSocketHandler);
 
   shelf_io.serve(handler, settings.host, settings.port).then((server) {
     print('Serving at wss://${server.address.host}:${server.port}');
@@ -95,6 +100,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
     Player? _player;
     Account? _account;
+    String? uuid;
 
     void reply(String response) {
       sink.add(response);
@@ -118,6 +124,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       final royal = engine.findPendingRoyalGames();
       final player = royal.playerJoin();
       _player = player;
+      uuid = player.uuid;
       player.name = _account != null ? _account.publicName : generateName();
       compileWholeGame(royal);
       compilePlayerJoined(_buffer, player);
@@ -134,8 +141,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       reply('${ServerResponse.Cube_Joined.index} ${cubePlayer.uuid}');
     }
 
-    void compileAndSendPlayerGame(Player player){
-      byteCompiler.writePlayerGame(player);
+    void compileAndSendPlayerGame(){
+      if (_player == null) return;
+      byteCompiler.writePlayerGame(_player!);
       final bytes = byteCompiler.writeToSendBuffer();
       sink.add(bytes);
     }
@@ -144,12 +152,13 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     void joinGameMMO() {
       clearBuffer();
       final player = spawnPlayerInTown();
+      uuid = player.uuid;
       _player = player;
       player.name = _account != null ? _account.publicName : generateName();
       player.orbs.emerald = 10;
       player.orbs.topaz = 10;
       player.orbs.ruby = 10;
-      compileAndSendPlayerGame(player);
+      compileAndSendPlayerGame();
 
       write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.team}');
       write(player.game.compiledTiles);
@@ -226,6 +235,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               return;
             }
 
+            if (player.uuid != uuid){
+              throw Exception();
+            }
+
             player.lastUpdateFrame = 0;
             final game = player.game;
             compileGameStatus(_buffer, game.status);
@@ -264,7 +277,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             }
 
             if (player.deadOrBusy) {
-              compileAndSendPlayerGame(player);
+              compileAndSendPlayerGame();
               return;
             }
 
@@ -366,7 +379,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 break;
             }
 
-            compileAndSendPlayerGame(player);
+            compileAndSendPlayerGame();
             return;
 
           case ClientRequest.Join:
@@ -950,3 +963,19 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
     webSocket.stream.listen(onEvent);
   }
+
+
+
+List<int> generateByteId() {
+  return [
+    randomByte,
+    randomByte,
+    randomByte,
+    randomByte,
+  ];
+}
+
+int get randomByte => randomInt(0, 257);
+
+
+
