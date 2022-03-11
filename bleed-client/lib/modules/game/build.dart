@@ -937,7 +937,7 @@ class GameBuild {
   }
 
   Widget version(){
-    return text("v-0.1.6");
+    return text("v-0.1.7");
   }
 
   Widget frameSmoothing(){
