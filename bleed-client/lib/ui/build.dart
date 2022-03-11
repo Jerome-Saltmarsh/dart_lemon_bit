@@ -36,7 +36,7 @@ class _Build {
 
             return onPressed(
               callback: () {
-                sendRequest.upgradeAbility(ability.index);
+                // sendRequest.upgradeAbility(ability.index);
               },
               child: mouseOver(builder: (BuildContext context, bool mouseOver) {
                 return border(

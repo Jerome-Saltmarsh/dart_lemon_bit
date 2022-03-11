@@ -28,7 +28,6 @@ import 'common/version.dart';
 import 'compile.dart';
 import 'engine.dart';
 import 'functions/generateName.dart';
-import 'functions/loadScenes.dart';
 import 'functions/withinRadius.dart';
 import 'games/Moba.dart';
 import 'games/world.dart';
@@ -85,7 +84,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     final sink = webSocket.sink;
 
     Player? _player;
-    // Account? _account;
+    Account? _account;
 
     void reply(String response) {
       sink.add(response);
@@ -94,6 +93,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     void sendAndClearBuffer() {
       reply(_buffer.toString());
       clearBuffer();
+    }
+
+    void compileAndSendPlayerGame(Player player){
+      byteCompiler.writePlayerGame(player);
+      final bytes = byteCompiler.writeToSendBuffer();
+      sink.add(bytes);
     }
 
     void joinGameMoba() {
@@ -117,19 +122,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       compileGameMeta(_buffer, royal);
       compileCrates(_buffer, royal.crates);
       sendAndClearBuffer();
-    }
-
-    void joinCube3D() {
-      final CubePlayer cubePlayer =
-      CubePlayer(position: Vector3(), rotation: Vector3());
-      cubeGame.cubes.add(cubePlayer);
-      reply('${ServerResponse.Cube_Joined.index} ${cubePlayer.uuid}');
-    }
-
-    void compileAndSendPlayerGame(Player player){
-      byteCompiler.writePlayerGame(player);
-      final bytes = byteCompiler.writeToSendBuffer();
-      sink.add(bytes);
     }
 
     void joinGameMMO() {
@@ -358,46 +350,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             compileAndSendPlayerGame(player);
             return;
 
-          case ClientRequest.Join:
-            if (args.length < 2) {
-              errorArgsExpected(2, args);
-              return;
-            }
-            final gameTypeIndex = args[1];
-
-            if (gameTypeIndex >= gameTypes.length) {
-              errorInvalidArg(
-                  'game type index cannot exceed ${gameTypes.length - 1}');
-              return;
-            }
-            if (gameTypeIndex < 0) {
-              errorInvalidArg('game type must be greater than 0');
-              return;
-            }
-
-            final gameType = gameTypes[gameTypeIndex];
-
-            // if (!freeToPlay.contains(gameType)){
-            //   if (arguments.length < 3) {
-            //     return error(GameError.PlayerId_Required);
-            //   }
-            // }
-
-            switch (gameType) {
-              case GameType.None:
-                throw Exception("Join Game - GameType.None invalid");
-              case GameType.MMO:
-                return joinGameMMO();
-              case GameType.Moba:
-                joinGameMoba();
-                break;
-              case GameType.CUBE3D:
-                joinCube3D();
-                break;
-              case GameType.BATTLE_ROYAL:
-                return joinBattleRoyal();
-            }
-            break;
           default:
             throw Exception("Cannot parse ${clientRequests[clientRequestInt]}");
         }
@@ -434,6 +386,38 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
       final clientRequest = clientRequests[clientRequestInt];
       switch (clientRequest) {
+
+        case ClientRequest.Join:
+          if (arguments.length < 2) {
+            errorArgsExpected(2, arguments);
+            return;
+          }
+          final gameTypeIndex = int.parse(arguments[1]);
+
+          if (gameTypeIndex >= gameTypes.length) {
+            errorInvalidArg(
+                'game type index cannot exceed ${gameTypes.length - 1}');
+            return;
+          }
+          if (gameTypeIndex < 0) {
+            errorInvalidArg('game type must be greater than 0');
+            return;
+          }
+
+          final gameType = gameTypes[gameTypeIndex];
+
+          switch (gameType) {
+            case GameType.None:
+              throw Exception("Join Game - GameType.None invalid");
+            case GameType.MMO:
+              return joinGameMMO();
+            case GameType.Moba:
+              joinGameMoba();
+              break;
+            case GameType.BATTLE_ROYAL:
+              return joinBattleRoyal();
+          }
+          break;
 
         case ClientRequest.Teleport:
           if (player == null) {

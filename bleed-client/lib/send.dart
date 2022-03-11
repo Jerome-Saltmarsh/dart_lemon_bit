@@ -10,12 +10,8 @@ import 'package:lemon_engine/engine.dart';
 import 'common/GameType.dart';
 import 'webSocket.dart';
 
-final gameUpdateIndex = ClientRequest.Update.index;
-final sendRequest = _SendRequestToServer();
-final _player = modules.game.state.player;
-
+final _gameUpdateIndex = ClientRequest.Update.index;
 final _buffer1 = Uint8List(1);
-final _buffer2 = Uint8List(2);
 final _buffer9 = Uint8List(22);
 
 void speak(String message){
@@ -25,7 +21,6 @@ void speak(String message){
 
 void sendRequestPing(){
   print("ping()");
-  // webSocket.sinkMessage(ClientRequest.Ping.index.toString());
   _buffer1[0] = ClientRequest.Ping.index;
   webSocket.sink.add(_buffer1);
 }
@@ -42,11 +37,13 @@ void sendRequestSelectAbility(int index) {
   // webSocket.send('${ClientRequest.SelectAbility.index} $session $index');
 }
 
-void sendRequestJoinGame(GameType type, {String? playerId}) {
-  _buffer2[0] = ClientRequest.Join.index;
-  _buffer2[1] = type.index;
-  webSocket.sink.add(_buffer2);
-  return;
+void sendRequestJoinGame(GameType type) {
+  final account = core.state.account.value;
+  if (account != null) {
+    webSocket.send('${ClientRequest.Join.index} ${type.index} ${account.userId}');
+  } else {
+    webSocket.send('${ClientRequest.Join.index} ${type.index}');
+  }
 }
 
 void sendRequestJoinCustomGame({required String mapName, required String playerId}) {
@@ -62,7 +59,7 @@ final _characterController = modules.game.state.characterController;
 final _characterControllerAction = _characterController.action;
 
 void sendRequestUpdatePlayer() {
-  _buffer9[0] = gameUpdateIndex;
+  _buffer9[0] = _gameUpdateIndex;
   _buffer9[1] = _characterControllerAction.value.index;
   writeNumberToByteArray(number: mouseWorldX, list: _buffer9, index: 2);
   writeNumberToByteArray(number: mouseWorldY, list: _buffer9, index: 5);

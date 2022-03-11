@@ -145,7 +145,7 @@ class CoreEvents {
           }
           sendRequestJoinCustomGame(mapName: mapName, playerId: account.userId);
         }else{
-          sendRequestJoinGame(game.type.value, playerId: core.state.account.value?.userId);
+          sendRequestJoinGame(game.type.value);
         }
         break;
       case Connection.Done:

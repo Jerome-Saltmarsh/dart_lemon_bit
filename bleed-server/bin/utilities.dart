@@ -5,14 +5,10 @@ import 'package:lemon_math/give_or_take.dart';
 
 import 'classes/Character.dart';
 import 'classes/GameObject.dart';
-import 'classes/Player.dart';
 import 'classes/Projectile.dart';
 import 'common/SlotType.dart';
-import 'common/WeaponType.dart';
 import 'functions/withinRadius.dart';
-import 'interfaces/HasSquad.dart';
 import 'maths.dart';
-import 'settings.dart';
 
 const double tileSize = 48.0;
 const double halfTileSize = 24;
@@ -132,8 +128,8 @@ int calculateTime({int minute = 0, int hour = 0}){
 }
 
 void sortVertically(List<Vector2> items) {
-  int start = 0;
-  int end = items.length;
+  var start = 0;
+  var end = items.length;
   for (var pos = start + 1; pos < end; pos++) {
     var min = start;
     var max = pos;
@@ -150,18 +146,3 @@ void sortVertically(List<Vector2> items) {
     items[min] = element;
   }
 }
-
-bool sameTeam(Character a, Character b){
-   if (a.team == 0) return false;
-   return a.team == b.team;
-}
-
-// / returns -1 if the player does not have the weapon
-// int getIndexOfWeaponType(Player player, WeaponType type){
-//   for(int i = 0; i < player.weapons.length; i++){
-//       if (player.weapons[i].type == type){
-//         return i;
-//       }
-//   }
-//   return -1;
-// }
