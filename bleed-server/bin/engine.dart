@@ -48,6 +48,11 @@ class _Engine {
 
     for (final game in games) {
       switch(game.status) {
+
+        case GameStatus.In_Progress:
+          game.updateInProgress();
+          break;
+
         case GameStatus.Awaiting_Players:
           for (int i = 0; i < game.players.length; i++) {
             final player = game.players[i];
@@ -66,11 +71,6 @@ class _Engine {
             game.status = GameStatus.In_Progress;
             game.onGameStarted();
           }
-          break;
-
-        case GameStatus.In_Progress:
-          game.updateInProgress();
-          // compile.game(game);
           break;
 
         case GameStatus.Finished:
