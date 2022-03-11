@@ -126,10 +126,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
     void joinGameMMO() {
       clearBuffer();
+      final account = _account;
       final player = engine.spawnPlayerInTown();
       _player = player;
-      // player.name = _account != null ? _account.publicName : generateName();
-      player.name = generateName();
+      player.name = account != null ? account.publicName : generateName();
       player.orbs.emerald = 10;
       player.orbs.topaz = 10;
       player.orbs.ruby = 10;
@@ -170,7 +170,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     }
 
     void errorAccountNotFound() {
-      error(GameError.GameNotFound);
+      error(GameError.Account_Not_Found);
+    }
+
+    void errorAccountRequired() {
+      error(GameError.Account_Required);
     }
 
     void errorPlayerDead() {
@@ -188,6 +192,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     void onEvent(requestD) {
 
       final player = _player;
+
 
       if (requestD is List<int>){
         final List<int> args = requestD;
@@ -404,6 +409,31 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
+          if (arguments.length > 2) {
+            final userId = arguments[2];
+
+            firestoreService.findUserById(userId).then((account){
+               if (account == null) {
+                 return errorAccountNotFound();
+               }
+               _account = account;
+               final gameType = gameTypes[gameTypeIndex];
+
+               switch (gameType) {
+                 case GameType.None:
+                   throw Exception("Join Game - GameType.None invalid");
+                 case GameType.MMO:
+                   return joinGameMMO();
+                 case GameType.Moba:
+                   joinGameMoba();
+                   break;
+                 case GameType.BATTLE_ROYAL:
+                   return joinBattleRoyal();
+               }
+            });
+            return;
+          }
+
           final gameType = gameTypes[gameTypeIndex];
 
           switch (gameType) {
@@ -461,16 +491,14 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Character_Save:
-          // if (arguments.length != 3) {
-          //   errorArgsExpected(3, arguments);
-          //   return;
-          // }
-          //
-          // final player = engine.findPlayerByUuid(arguments[1]);
-          // if (player == null) {
-          //   errorPlayerNotFound();
-          //   return;
-          // }
+          final account = _account;
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+          if (account == null) {
+            errorAccountRequired();
+          }
           break;
 
         case ClientRequest.Revive:

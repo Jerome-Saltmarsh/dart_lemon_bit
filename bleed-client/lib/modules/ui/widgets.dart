@@ -3,6 +3,7 @@ import 'package:bleed_client/assets.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/modules/modules.dart';
+import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -25,6 +26,9 @@ class UIWidgets {
   );
 
   final exit = button("Exit", core.actions.disconnect);
+
+  final saveCharacter = button("Save", sendRequestCharacterSave);
+  final loadCharacter = button("Load", sendRequestCharacterLoad);
 
   final time = Row(
     children: [

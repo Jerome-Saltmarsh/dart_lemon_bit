@@ -34,4 +34,5 @@ enum GameError {
   PlayerId_Required,
   Login_Error,
   Account_Not_Found,
+  Account_Required,
 }

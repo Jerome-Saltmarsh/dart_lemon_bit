@@ -39,7 +39,7 @@ class _WebSocket {
     connection.value = Connection.None;
   }
 
-  void send(String message) {
+  void send(dynamic message) {
     if (!connected) {
       print("warning cannot send because not connected");
       return;
@@ -47,7 +47,7 @@ class _WebSocket {
     sinkMessage(message);
   }
 
-  void sinkMessage(String message) {
+  void sinkMessage(dynamic message) {
     sink.add(message);
   }
 
@@ -55,14 +55,15 @@ class _WebSocket {
     if (connecting) {
       connection.value = Connection.Connected;
     }
-    if (_response is String){
-      event = _response;
-      parseState();
-      return;
-    }
 
     if (_response is List<int>){
        byteStreamParser.parse(_response);
+       return;
+    }
+
+    if (_response is String){
+      event = _response;
+      parseState();
     }
   }
 

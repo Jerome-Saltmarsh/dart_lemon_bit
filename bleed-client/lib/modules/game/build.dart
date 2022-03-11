@@ -66,7 +66,6 @@ class GameBuild {
           case GameStatus.In_Progress:
             switch (game.type.value) {
               case GameType.MMO:
-                // return playerCharacterType();
                 return layoutRoyal();
               case GameType.Custom:
                 return playerCharacterType();
@@ -226,6 +225,8 @@ class GameBuild {
                   toggleAudioEnabled(),
                   width8,
                   ui.widgets.exit,
+                  ui.widgets.saveCharacter,
+                  ui.widgets.loadCharacter,
                 ],
               ),
               right: _pad,
