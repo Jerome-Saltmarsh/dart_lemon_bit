@@ -78,6 +78,9 @@ const _aiWanderPauseDuration = 120;
 
 // This should be OpenWorldScene
 abstract class Game {
+
+  final _cursorRadius = 50.0;
+
   static int _id = 0;
   final String id = (_id++).toString();
   final Scene scene;
@@ -298,10 +301,11 @@ extension GameFunctions on Game {
       required int team,
       required double radius
   }) {
-    final top = y - radius - settings.radius.character;
-    final bottom = y + radius + settings.radius.character;
-    final left = x - radius - settings.radius.character;
-    final right = x + radius + settings.radius.character;
+    final characterRadius = settings.radius.character;
+    final top = y - radius - characterRadius;
+    final bottom = y + radius + characterRadius;
+    final left = x - radius - characterRadius;
+    final right = x + radius + characterRadius;
     Character? closest = null;
     var distance = -1.0;
     for (final zombie in zombies) {
@@ -326,13 +330,13 @@ extension GameFunctions on Game {
     final aliveEnemyIndex = getFirstAlivePlayerEnemyIndex(team);
     if (aliveEnemyIndex == -1) return null;
 
-    final top = y - settings.radius.cursor - settings.radius.character;
-    final bottom = x + settings.radius.cursor + settings.radius.character;
+    final top = y - _cursorRadius - settings.radius.character;
+    final bottom = x + _cursorRadius + settings.radius.character;
     Character closest = players[aliveEnemyIndex];
     var closestX = diff(x, closest.x);
     var closestY = diff(y, closest.y);
     var close = min(closestX, closestY);
-    for (Character player in players) {
+    for (final player in players) {
       if (player.team == team) continue;
       if (player.dead) continue;
       if (!player.active) continue;
