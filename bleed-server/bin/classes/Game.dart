@@ -126,7 +126,7 @@ abstract class Game {
   String compiledEnvironmentObjects = "";
   bool debugMode = false;
   Map<int, StringBuffer> compiledTeamText = {};
-  int countDownFramesRemaining = framesPerSecond * 3;
+  int countDownFramesRemaining = engine.framesPerSecond * 3;
 
   /// In seconds
   int getTime();

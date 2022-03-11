@@ -15,28 +15,28 @@ import 'games/world.dart';
 import 'language.dart';
 import 'settings.dart';
 
-const _targetFPS = 30;
-const framesPerSecond = _targetFPS;
-const _msPerFrame = Duration.millisecondsPerSecond ~/ framesPerSecond;
-const _msPerUpdateNpcTarget = 500;
-const _msPerRegen = 5000;
-const _secondsPerRemoveDisconnectedPlayers = 4;
-
 final engine = _Engine();
 
 class _Engine {
+  // constants
+  final framesPerSecond = 30;
+  static const _msPerUpdateNpcTarget = 500;
+  static const _msPerRegen = 5000;
+  static const _secondsPerRemoveDisconnectedPlayers = 4;
+  // immutables
   final Map<String, Player> playerMap = {};
   final List<Game> games = [];
-  late final world;
   final scenes = _Scenes();
-  int frame = 0;
+  late final world;
+  // variables
+  var frame = 0;
 
   Future init() async {
     print("engine.init()");
     await scenes.load();
     world = World();
     Future.delayed(Duration(seconds: 3), () {
-      periodic(fixedUpdate, ms: _msPerFrame);
+      periodic(fixedUpdate, ms: Duration.millisecondsPerSecond ~/ framesPerSecond);
       periodic(removeDisconnectedPlayers, seconds: _secondsPerRemoveDisconnectedPlayers);
       periodic(updateNpcTargets, ms: _msPerUpdateNpcTarget);
       periodic(regenCharacters, ms: _msPerRegen);
