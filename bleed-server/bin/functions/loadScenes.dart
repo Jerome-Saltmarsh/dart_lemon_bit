@@ -13,19 +13,18 @@ import '../common/SceneJson.dart';
 import '../common/SlotType.dart';
 import '../common/Tile.dart';
 import '../common/enums/ObjectType.dart';
-import '../instances/scenes.dart';
 
-Future loadScenes() async {
-  print("loadScenes()");
-  await loadSceneFromFile('town').then((value) => scenes.town = value);
-  await loadSceneFromFile('tavern').then((value) => scenes.tavern = value);
-  await loadSceneFromFile('cave').then((value) => scenes.cave = value);
-  await loadSceneFromFile('wilderness-west-01').then((value) => scenes.wildernessWest01 = value);
-  await loadSceneFromFile('wilderness-north-01').then((value) => scenes.wildernessNorth01 = value);
-  await loadSceneFromFile('wilderness-east').then((value) => scenes.wildernessEast = value);
-  await loadSceneFromFireStore('royal').then((value) => scenes.royal = value);
-  print("Finished loading scenes");
-}
+// Future loadScenes() async {
+//   print("loadScenes()");
+//   await loadSceneFromFile('town').then((value) => scenes.town = value);
+//   await loadSceneFromFile('tavern').then((value) => scenes.tavern = value);
+//   await loadSceneFromFile('cave').then((value) => scenes.cave = value);
+//   await loadSceneFromFile('wilderness-west-01').then((value) => scenes.wildernessWest01 = value);
+//   await loadSceneFromFile('wilderness-north-01').then((value) => scenes.wildernessNorth01 = value);
+//   await loadSceneFromFile('wilderness-east').then((value) => scenes.wildernessEast = value);
+//   await loadSceneFromFireStore('royal').then((value) => scenes.royal = value);
+//   print("Finished loading scenes");
+// }
 
 Future<Scene> loadSceneFromFile(String name) async {
   final String dir = Directory.current.path;

@@ -9,6 +9,7 @@ import '../common/GameEventType.dart';
 import '../common/GameStatus.dart';
 import '../common/GameType.dart';
 import '../common/SlotType.dart';
+import '../engine.dart';
 import '../instances/scenes.dart';
 import '../language.dart';
 import '../utilities.dart';
@@ -36,7 +37,7 @@ class GameMoba extends Game {
   int teamLivesEast = 10;
 
   GameMoba() : super(
-      scenes.wildernessNorth01,
+      engine.scenes.wildernessNorth01,
       status: GameStatus.Awaiting_Players,
       gameType: GameType.Moba
   ) {

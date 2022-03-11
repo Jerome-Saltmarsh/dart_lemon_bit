@@ -1,1 +1,0 @@
-const targetFPS = 30;

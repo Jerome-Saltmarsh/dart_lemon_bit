@@ -17,7 +17,7 @@ class WildernessWest01 extends Game {
 
   late Character boss;
 
-  WildernessWest01() : super(scenes.wildernessWest01){
+  WildernessWest01() : super(engine.scenes.wildernessWest01){
     boss = Character(
         type: CharacterType.Zombie,
         x: 0,

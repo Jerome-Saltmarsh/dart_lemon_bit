@@ -34,7 +34,6 @@ import 'games/Moba.dart';
 import 'games/world.dart';
 import 'settings.dart';
 import 'utilities.dart';
-import 'values/world.dart';
 
 const _space = " ";
 final _errorIndex = ServerResponse.Error.index;
@@ -57,8 +56,7 @@ Future main() async {
   }else{
     print("Environment Detected: Google Cloud Machine");
   }
-  engine.init();
-  await loadScenes();
+  await engine.init();
   startWebsocketServer();
 }
 
@@ -136,7 +134,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
     void joinGameMMO() {
       clearBuffer();
-      final player = spawnPlayerInTown();
+      final player = engine.spawnPlayerInTown();
       _player = player;
       // player.name = _account != null ? _account.publicName : generateName();
       player.name = generateName();
@@ -923,13 +921,3 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     webSocket.stream.listen(onEvent);
   }
 
-Player spawnPlayerInTown() {
-  return Player(
-    game: world.town,
-    x: 0,
-    y: 1750,
-    team: teams.west,
-    health: 10,
-    weapon: SlotType.Empty,
-  );
-}

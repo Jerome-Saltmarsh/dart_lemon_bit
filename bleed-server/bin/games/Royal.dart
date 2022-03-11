@@ -18,6 +18,7 @@ import '../common/OrbType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/SlotType.dart';
 import '../common/WeaponType.dart';
+import '../engine.dart';
 import '../functions/withinRadius.dart';
 import '../instances/scenes.dart';
 import '../utilities.dart';
@@ -37,7 +38,7 @@ class GameRoyal extends Game {
 
   static const _zombieTeam = -2;
 
-  GameRoyal() : super(scenes.royal, gameType: GameType.BATTLE_ROYAL) {
+  GameRoyal() : super(engine.scenes.royal, gameType: GameType.BATTLE_ROYAL) {
     status = GameStatus.Awaiting_Players;
     teamSize = 1;
     numberOfTeams = 2;

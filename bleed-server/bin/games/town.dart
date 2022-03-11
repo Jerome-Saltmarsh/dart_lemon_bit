@@ -23,7 +23,7 @@ class Town extends Game {
   final int _maxZombies = 1;
   final int _framesPerZombieSpawn = 5;
 
-  Town() : super(scenes.town) {
+  Town() : super(engine.scenes.town) {
     npcDavis = InteractableNpc(
         name: "Davis",
         onInteractedWith: _onNpcInteractedWithMain,

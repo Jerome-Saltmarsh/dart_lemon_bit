@@ -4,8 +4,9 @@ import 'package:bleed_server/user-service-client/firestoreService.dart';
 
 import 'classes/Game.dart';
 import 'classes/Player.dart';
+import 'classes/Scene.dart';
 import 'common/GameStatus.dart';
-import 'common/Settings.dart';
+import 'common/SlotType.dart';
 import 'compile.dart';
 import 'functions/loadScenes.dart';
 import 'games/Moba.dart';
@@ -14,30 +15,33 @@ import 'games/world.dart';
 import 'language.dart';
 import 'settings.dart';
 
-const framesPerSecond = targetFPS;
-const msPerFrame = Duration.millisecondsPerSecond ~/ framesPerSecond;
-const msPerUpdateNpcTarget = 500;
-const msPerRegen = 5000;
-const secondsPerRemoveDisconnectedPlayers = 4;
-const secondsPerUpdateNpcObjective = 4;
+const _targetFPS = 30;
+const framesPerSecond = _targetFPS;
+const _msPerFrame = Duration.millisecondsPerSecond ~/ framesPerSecond;
+const _msPerUpdateNpcTarget = 500;
+const _msPerRegen = 5000;
+const _secondsPerRemoveDisconnectedPlayers = 4;
 
-final _Engine engine = _Engine();
+final engine = _Engine();
 
 class _Engine {
-  // state
   final Map<String, Player> playerMap = {};
   final List<Game> games = [];
+  late final world;
+  final scenes = _Scenes();
   int frame = 0;
 
-
-  void init() {
+  Future init() async {
+    print("engine.init()");
+    await scenes.load();
+    world = World();
     Future.delayed(Duration(seconds: 3), () {
-      periodic(fixedUpdate, ms: msPerFrame);
-      // periodic(updateZombieWander, seconds: secondsPerUpdateNpcObjective);
-      periodic(removeDisconnectedPlayers, seconds: secondsPerRemoveDisconnectedPlayers);
-      periodic(updateNpcTargets, ms: msPerUpdateNpcTarget);
-      periodic(regenCharacters, ms: msPerRegen);
+      periodic(fixedUpdate, ms: _msPerFrame);
+      periodic(removeDisconnectedPlayers, seconds: _secondsPerRemoveDisconnectedPlayers);
+      periodic(updateNpcTargets, ms: _msPerUpdateNpcTarget);
+      periodic(regenCharacters, ms: _msPerRegen);
     });
+    print("engine.init() finished");
   }
 
   void fixedUpdate(Timer timer) {
@@ -177,6 +181,37 @@ class _Engine {
     final scene = parseJsonToScene(customMapJson, mapId);
     return CustomGame(scene);
   }
+
+  Player spawnPlayerInTown() {
+    return Player(
+      game: world.town,
+      x: 0,
+      y: 1750,
+      team: teams.west,
+      health: 10,
+      weapon: SlotType.Empty,
+    );
+  }
+
 }
 
+class _Scenes {
+  late Scene town;
+  late Scene tavern;
+  late Scene wildernessWest01;
+  late Scene wildernessNorth01;
+  late Scene cave;
+  late Scene wildernessEast;
+  late Scene royal;
 
+  Future load() async {
+    print("loadScenes()");
+    town = await loadSceneFromFile('town');
+    tavern = await loadSceneFromFile('tavern');
+    cave = await loadSceneFromFile('cave');
+    wildernessWest01 = await loadSceneFromFile('wilderness-west-01');
+    wildernessNorth01 = await loadSceneFromFile('wilderness-north-01');
+    wildernessEast = await loadSceneFromFile('wilderness-east');
+    royal = await loadSceneFromFireStore('royal');
+  }
+}
