@@ -354,7 +354,11 @@ extension GameFunctions on Game {
 
   Character? getClosestEnemy(double x, double y, int team) {
     final zombie = getClosestEnemyZombie(
-        x: x, y: y, team: team, radius: settings.radius.cursor);
+        x: x,
+        y: y,
+        team: team,
+        radius: _cursorRadius,
+    );
     final player = getClosestEnemyPlayer(x, y, team);
 
     if (zombie == null) {
@@ -366,8 +370,6 @@ extension GameFunctions on Game {
 
     final zombieDistance = diff(zombie.x, x) + diff(zombie.y, y);
     final playerDistance = diff(player.x, x) + diff(player.y, y);
-    // final zombieDistance = distanceV2From(zombie, x, y);
-    // final playerDistance = distanceV2From(player, x, y);
     return zombieDistance < playerDistance ? zombie : player;
   }
 
@@ -742,9 +744,18 @@ extension GameFunctions on Game {
       final projectile = projectiles[i];
       if (!projectile.active) continue;
       if (!projectile.collideWithEnvironment) continue;
+
+      final projectileLeft = projectile.left;
+      final projectileTop = projectile.top;
+      final projectileRight = projectile.right;
+      final projectileBottom = projectile.bottom;
+
       for (final environmentObject in environments) {
         if (!environmentObject.collidable) continue;
-        if (!overlapping(projectile, environmentObject)) continue;
+        if (projectileBottom < environmentObject.top) continue;
+        if (projectileLeft > environmentObject.right) continue;
+        if (projectileRight < environmentObject.left) continue;
+        if (projectileTop > environmentObject.bottom) break;
         deactivateProjectile(projectile);
         break;
       }
