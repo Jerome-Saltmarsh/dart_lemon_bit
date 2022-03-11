@@ -358,17 +358,16 @@ extension GameFunctions on Game {
     final player = getClosestEnemyPlayer(x, y, team);
 
     if (zombie == null) {
-      if (player == null) {
-        return null;
-      }
       return player;
     }
     if (player == null) {
       return zombie;
     }
 
-    final zombieDistance = distanceV2From(zombie, x, y);
-    final playerDistance = distanceV2From(player, x, y);
+    final zombieDistance = diff(zombie.x, x) + diff(zombie.y, y);
+    final playerDistance = diff(player.x, x) + diff(player.y, y);
+    // final zombieDistance = distanceV2From(zombie, x, y);
+    // final playerDistance = distanceV2From(player, x, y);
     return zombieDistance < playerDistance ? zombie : player;
   }
 
