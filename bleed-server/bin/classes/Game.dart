@@ -80,6 +80,7 @@ const _aiWanderPauseDuration = 120;
 abstract class Game {
 
   final _cursorRadius = 50.0;
+  final _characterRadius = 10.0;
 
   static int _id = 0;
   final String id = (_id++).toString();
@@ -729,7 +730,7 @@ extension GameFunctions on Game {
     for (var i = 0; i < projectilesLength; i++) {
       final projectile = projectiles[i];
       if (projectile.collideWithEnvironment) continue;
-      if (scene.bulletCollisionAt(projectile.x, projectile.y)) {
+      if (scene.projectileCollisionAt(projectile.x, projectile.y)) {
         deactivateProjectile(projectile);
       }
     }
@@ -853,12 +854,13 @@ extension GameFunctions on Game {
 
   void checkProjectileCollision(List<Character> characters) {
     int s = 0;
-    for (int i = 0; i < projectiles.length; i++) {
+    final projectilesLength = projectiles.length;
+    for (var i = 0; i < projectilesLength; i++) {
       final projectile = projectiles[i];
       if (!projectile.active) continue;
       final target = projectile.target;
       if (target != null) {
-        if (withinRadius(projectile, target, settings.radius.character)){
+        if (withinRadius(projectile, target, _characterRadius)){
           handleProjectileHit(projectile, target);
           return;
         }

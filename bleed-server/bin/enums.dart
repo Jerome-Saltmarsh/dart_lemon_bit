@@ -29,7 +29,7 @@ bool isWalkable(Tile tile){
   return _walkableTiles.containsKey(tile);
 }
 
-bool isBulletCollideable(Tile tile){
+bool isProjectileCollideable(Tile tile){
   return !isShootable(tile);
 }
 

@@ -324,8 +324,8 @@ extension SceneFunctions on Scene {
     return tileNodes[row][column];
   }
 
-  bool bulletCollisionAt(double x, double y) {
-    return isBulletCollideable(tileAt(x, y));
+  bool projectileCollisionAt(double x, double y) {
+    return isProjectileCollideable(tileAt(x, y));
   }
 
   double projectedToWorldX(double x, double y) {
