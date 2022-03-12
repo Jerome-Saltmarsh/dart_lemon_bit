@@ -9,7 +9,7 @@ import 'package:typedef/json.dart';
 final firestoreService = _FirestoreService();
 
 class _FirestoreService {
-  final String _url = "https://gamestream-firestore-24-osbmaezptq-ts.a.run.app";
+  final _url = "https://gamestream-firestore-26-osbmaezptq-ts.a.run.app";
 
   String get _host => _url.replaceAll("https://", "");
 
@@ -43,9 +43,13 @@ class _FirestoreService {
       'x': x.toInt().toString(),
       'y': y.toInt().toString(),
     };
-
     var url = Uri.https(_host, '/characters');
     await http.post(url, headers: _headersJSON, body: jsonEncode(body));
+  }
+
+  Future loadCharacter(Account account) async {
+    final response = await httpGet('/characters', {'id': account.userId});
+    return jsonDecode(response.body);
   }
 
   Future createAccount({
@@ -191,6 +195,10 @@ class _FirestoreService {
       header.accessControlAllowOrigin: "*",
     }, body: body);
   }
+
+  Future<http.Response> httpGet(String url, Map<String, dynamic>? queries){
+    return http.get(Uri.https(_host, url, queries), headers: _headers);
+  }
 }
 
 final _ContentType contentType = _ContentType();
@@ -320,3 +328,4 @@ String _enumString(dynamic value){
   if (index == -1) return text;
   return text.substring(index + 1, text.length).replaceAll("_", " ");
 }
+

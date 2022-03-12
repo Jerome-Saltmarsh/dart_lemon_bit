@@ -34,6 +34,10 @@ class _Firestore {
 
   ProjectsDatabasesDocumentsResource get documents => _firestoreApi!.projects.databases.documents;
 
+  Future<Document?> findCharacterById(String id) async {
+    return findDocumentById(collection: collections.characters, id: id);
+  }
+
   Future<Document?> findUserById(String id) async {
     return findDocumentById(collection: collections.users, id: id);
   }

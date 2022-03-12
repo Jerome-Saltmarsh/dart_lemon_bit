@@ -492,6 +492,22 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           reply(ServerResponse.Pong.index.toString());
           break;
 
+        case ClientRequest.Character_Load:
+          final account = _account;
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+          if (account == null) {
+            errorAccountRequired();
+            return;
+          }
+          firestoreService.loadCharacter(account).then((response){
+            print(response);
+          });
+
+          break;
+
         case ClientRequest.Character_Save:
           final account = _account;
           if (player == null) {

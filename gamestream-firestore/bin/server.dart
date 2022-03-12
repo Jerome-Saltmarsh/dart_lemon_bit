@@ -106,18 +106,52 @@ FutureOr<Response> handleRequest(Request request) async {
       return ok(subscription);
 
     case "characters":
-      if (request.method == "POST"){
-        print("Saving Character()");
-        request.readAsString().then((data) async {
-          final json = jsonDecode(data) as Json;
-          final id = json['id'];
-          final x = json.getDouble('x').toInt();
-          final y = json.getDouble('y').toInt();
-          firestore.saveDocument(userId: id, x: x, y: y);
-        });
-      }
 
-      return ok('success');
+      print("characters request received: ${request.method}");
+
+      switch(request.method){
+        case Method.POST:
+          print("Saving Character()");
+          request.readAsString().then((data) async {
+            final json = jsonDecode(data) as Json;
+            final id = json['id'];
+            final x = json.getDouble('x').toInt();
+            final y = json.getDouble('y').toInt();
+            firestore.saveDocument(userId: id, x: x, y: y);
+          });
+          return ok("character saved");
+
+        case Method.GET:
+          print("Getting Character()");
+          if (!params.containsKey('id')){
+            return notFound('missing parameter id');
+          }
+
+          final characterId = params.getString('id');
+          final results = await firestore.findCharacterById(characterId);
+          if (results == null){
+            return notFound('no character could be found with id $characterId');
+          }
+          final fields = results.fields;
+          if (fields == null){
+            return internalServerError('map $characterId does not have any fields');
+          }
+          final xField = fields['x'];
+          if (xField == null){
+            return internalServerError('x field missing');
+          }
+          final yField = fields['y'];
+          if (yField == null){
+            return internalServerError('u field missing');
+          }
+          return ok({
+            'x': xField.integerValue,
+            'y': yField.integerValue,
+          });
+
+        default:
+          return Response.notFound('Cannot handle method ${request.method}');
+      }
 
     case "users":
 
@@ -394,4 +428,10 @@ String generateRandomName(){
 
 String formatDate(DateTime date){
   return date.toUtc().toIso8601String();
+}
+
+class Method {
+  static const GET = "GET";
+  static const POST = "POST";
+
 }
