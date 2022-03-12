@@ -503,7 +503,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
           firestoreService.loadCharacter(account).then((response){
-            print(response);
+            player.x = double.parse(response['x']);
+            player.y = double.parse(response['y']);
           });
 
           break;
