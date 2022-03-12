@@ -129,16 +129,19 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       final account = _account;
       final player = engine.spawnPlayerInTown();
       _player = player;
+
+      final orbs = player.orbs;
+      final game = player.game;
       player.name = account != null ? account.publicName : generateName();
-      player.orbs.emerald = 10;
-      player.orbs.topaz = 10;
-      player.orbs.ruby = 10;
+      orbs.emerald = 10;
+      orbs.topaz = 10;
+      orbs.ruby = 10;
       compileAndSendPlayerGame(player);
 
-      write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.game.id} ${player.team}');
-      write(player.game.compiledTiles);
-      write(player.game.compiledEnvironmentObjects);
-      write(player.game.compiled);
+      write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${game.id} ${player.team}');
+      write(game.compiledTiles);
+      write(game.compiledEnvironmentObjects);
+      write(game.compiled);
       compilePlayersRemaining(_buffer, 0);
       sendAndClearBuffer();
     }
