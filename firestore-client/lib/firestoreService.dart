@@ -9,7 +9,7 @@ import 'package:typedef/json.dart';
 final firestoreService = _FirestoreService();
 
 class _FirestoreService {
-  final String _url = "https://gamestream-firestore-23-osbmaezptq-ts.a.run.app";
+  final String _url = "https://gamestream-firestore-24-osbmaezptq-ts.a.run.app";
 
   String get _host => _url.replaceAll("https://", "");
 

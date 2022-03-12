@@ -111,9 +111,9 @@ FutureOr<Response> handleRequest(Request request) async {
         request.readAsString().then((data) async {
           final json = jsonDecode(data) as Json;
           final id = json['id'];
-          final x = json.getDouble('x');
-          final y = json.getDouble('y');
-          print("Saving Character (id: $id, x: $x, y: $y)");
+          final x = json.getDouble('x').toInt();
+          final y = json.getDouble('y').toInt();
+          firestore.saveDocument(userId: id, x: x, y: y);
         });
       }
 

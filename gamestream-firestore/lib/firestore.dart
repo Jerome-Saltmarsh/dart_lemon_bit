@@ -9,6 +9,7 @@ final firestore = _Firestore();
 class _Collections {
   final users = "users";
   final maps = "maps";
+  final characters = "characters";
 }
 
 class _Firestore {
@@ -128,6 +129,24 @@ class _Firestore {
       fields[fieldNames.subscriptionExpirationDate] = Value(timestampValue: _getTimeStampOneMonth());
       saveUser(user);
       return user;
+  }
+
+  Future saveDocument({
+    required String userId,
+    required int x,
+    required int y
+  }) async {
+    final document = Document(
+        name: getDocumentName(collection: collections.characters, value: userId),
+        createTime: _getTimestampNow(),
+        fields: {
+          'user-id': Value(stringValue: userId),
+          'x': Value(integerValue: x.toString()),
+          'y': Value(integerValue: y.toString()),
+        }
+    );
+    await documents.patch(document, getDocumentName(collection: collections.characters, value: userId));
+    print("saveDocument() Finished");
   }
 
   Future saveUser(Document userDocument) async {
