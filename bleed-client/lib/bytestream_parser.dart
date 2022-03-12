@@ -73,25 +73,16 @@ class _ByteStreamParser {
           break;
         case ServerResponse.Player:
           final player = modules.game.state.player;
-          // final character = player.character;
           final slots = player.slots;
-          // _readPlayer(character);
-          // if (previousY != character.y){
-          //   print("y changed by ${previousY - character.y}");
-          //   previousY = character.y;
-          // }
-          // player.alive.value = character.alive;
           player.x = _nextDouble();
           player.y = _nextDouble();
+          player.health.value = _nextDouble();
+          player.maxHealth = _nextDouble();
+          player.magic.value = _nextDouble();
+          player.maxMagic.value = _nextDouble();
           slots.weapon.value = _readSlotType();
           slots.armour.value = _readSlotType();
           slots.helm.value = _readSlotType();
-          final id = _nextByte();
-          if (player.id != id){
-            print("changed to id $id");
-            player.id = id;
-          }
-
           slots.slot1.value = _readSlotType();
           slots.slot2.value = _readSlotType();
           slots.slot3.value = _readSlotType();

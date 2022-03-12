@@ -41,15 +41,15 @@ class _ByteCompiler {
     writePlayerZombies(player);
     writePlayers(player);
     writeByte(ServerResponse.Player.index);
-    // writePlayer(player);
-
     writeBigInt(player.x);
     writeBigInt(player.y);
+    writeBigInt(player.health);
+    writeBigInt(player.maxHealth);
+    writeBigInt(player.magic);
+    writeBigInt(player.maxMagic);
     writeByte(player.weapon.index);
     writeByte(player.slots.armour.index);
     writeByte(player.slots.helm.index);
-    writeByte(player.id);
-
     writeByte(slots.slot1.index);
     writeByte(slots.slot2.index);
     writeByte(slots.slot3.index);
