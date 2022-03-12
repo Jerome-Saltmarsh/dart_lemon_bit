@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:bleed_server/user-service-client/firestoreService.dart';
+import 'package:bleed_server/firestoreClient/firestoreService.dart';
 
 import 'classes/Game.dart';
 import 'classes/Player.dart';

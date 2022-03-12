@@ -1,5 +1,5 @@
+import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
-import 'package:bleed_server/user-service-client/firestoreService.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
@@ -500,7 +500,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
           if (account == null) {
             errorAccountRequired();
+            return;
           }
+
+          firestoreService.saveCharacter(userId: account.userId);
           break;
 
         case ClientRequest.Revive:

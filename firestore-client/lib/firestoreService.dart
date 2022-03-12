@@ -36,6 +36,10 @@ class _FirestoreService {
     return ChangeNameStatus.Success;
   }
 
+  Future saveCharacter({required String userId}) async {
+
+  }
+
   Future createAccount({
     required String userId,
     required String email,
