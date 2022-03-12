@@ -9,7 +9,7 @@ import 'package:typedef/json.dart';
 final firestoreService = _FirestoreService();
 
 class _FirestoreService {
-  final String _url = "https://gamestream-firestore-22-osbmaezptq-ey.a.run.app";
+  final String _url = "https://gamestream-firestore-23-osbmaezptq-ts.a.run.app";
 
   String get _host => _url.replaceAll("https://", "");
 
@@ -36,8 +36,16 @@ class _FirestoreService {
     return ChangeNameStatus.Success;
   }
 
-  Future saveCharacter({required String userId}) async {
+  Future saveCharacter({required Account account, required double x, required double y}) async {
+    print("saveCharacter()");
+    final Map<String, String> body = {
+      'id': account.userId,
+      'x': x.toInt().toString(),
+      'y': y.toInt().toString(),
+    };
 
+    var url = Uri.https(_host, '/characters');
+    await http.post(url, headers: _headersJSON, body: jsonEncode(body));
   }
 
   Future createAccount({
@@ -230,6 +238,12 @@ class Account {
 final _headers = {
   "Accept": "*/*",
   "Access-Control-Allow-Origin": "*",
+};
+
+final _headersJSON = {
+  "Accept": "*/*",
+  "Access-Control-Allow-Origin": "*",
+  "Content-Type": "application/json"
 };
 
 enum SubscriptionStatus {

@@ -105,6 +105,20 @@ FutureOr<Response> handleRequest(Request request) async {
       final subscription = await stripeApi.getSubscription(subscriptionId);
       return ok(subscription);
 
+    case "characters":
+      if (request.method == "POST"){
+        print("Saving Character()");
+        request.readAsString().then((data) async {
+          final json = jsonDecode(data) as Json;
+          final id = json['id'];
+          final x = json.getDouble('x');
+          final y = json.getDouble('y');
+          print("Saving Character (id: $id, x: $x, y: $y)");
+        });
+      }
+
+      return ok('success');
+
     case "users":
 
       final id = params['id'];

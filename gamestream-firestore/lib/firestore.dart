@@ -4,17 +4,17 @@ import 'package:googleapis/firestore/v1.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:googleapis_auth/auth_io.dart' as auth;
 
-final _Firestore firestore = _Firestore();
+final firestore = _Firestore();
 
 class _Collections {
-  final String users = "users";
-  final String maps = "maps";
+  final users = "users";
+  final maps = "maps";
 }
 
 class _Firestore {
 
   final _projectId = "gogameserver";
-  final _Collections collections = _Collections();
+  final collections = _Collections();
 
   FirestoreApi? _firestoreApi;
 
@@ -42,7 +42,7 @@ class _Firestore {
   }
 
   Future<Document?> findDocumentById({required String collection, required String id}) async {
-    int tries = 0;
+    var tries = 0;
     final int maxTries = 10;
     while(_firestoreApi == null){
       tries++;

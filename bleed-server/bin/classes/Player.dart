@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/randomInt.dart';
 
@@ -39,6 +40,7 @@ Uint8List generateByteId() {
 int get randomByte => randomInt(0, 257);
 
 class Player extends Character with Entity {
+  Account? account;
   final byteId = generateByteId();
   int id = _idCount++;
   String name = generateName();

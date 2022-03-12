@@ -503,7 +503,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          firestoreService.saveCharacter(userId: account.userId);
+          firestoreService.saveCharacter(
+            account: account,
+            x: player.x,
+            y: player.y,
+          );
           break;
 
         case ClientRequest.Revive:
