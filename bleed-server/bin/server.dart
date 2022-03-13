@@ -563,18 +563,15 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Unequip_Slot:
-          if (arguments.length != 3) {
-            return errorArgsExpected(3, arguments);
-          }
 
-          Player? player = engine.findPlayerByUuid(arguments[1]);
+          final player = _player;
           if (player == null) {
             return errorPlayerNotFound();
           }
 
-          int? slotTypeCategoryIndex = int.tryParse(arguments[2]);
+          int? slotTypeCategoryIndex = int.tryParse(arguments[1]);
           if (slotTypeCategoryIndex == null){
-            return errorIntegerExpected(2, arguments[2]);
+            return errorIntegerExpected(1, arguments[1]);
           }
           if (slotTypeCategoryIndex < 0 || slotTypeCategoryIndex >= slotTypeCategories.length) {
             return errorInvalidArg('inventory index out of bounds: $slotTypeCategoryIndex');

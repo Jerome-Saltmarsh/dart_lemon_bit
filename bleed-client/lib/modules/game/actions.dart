@@ -184,7 +184,7 @@ class GameActions {
 
   void unequip(SlotTypeCategory value){
     print("game.actions.unequip(${value.name})");
-    // sendClientRequest(ClientRequest.Unequip_Slot, value.index);
+    sendClientRequest(ClientRequest.Unequip_Slot, value.index);
   }
 
   void _verifyValidSlotIndex(int index){
