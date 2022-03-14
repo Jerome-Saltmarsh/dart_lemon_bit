@@ -73,9 +73,9 @@ class GameRender {
     if (game.type.value == GameType.BATTLE_ROYAL){
       drawRoyalPerimeter();
     }
-    // engine.setPaintColorWhite();
+    engine.setPaintColorWhite();
     // _drawFloatingTexts();
-    // _drawPlayerNames();
+    _drawPlayerNames();
     // drawPlayerText();
     // engine.setPaintColorWhite();
     // collectedOrbImage();
