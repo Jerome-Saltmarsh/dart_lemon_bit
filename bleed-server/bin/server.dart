@@ -132,9 +132,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       final orbs = player.orbs;
       final game = player.game;
       player.name = account != null ? account.publicName : generateName();
-      orbs.emerald = 10;
-      orbs.topaz = 10;
-      orbs.ruby = 10;
+      orbs.emerald = 100;
+      orbs.topaz = 100;
+      orbs.ruby = 100;
       compileAndSendPlayerGame(player);
 
       write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${game.id} ${player.team}');
@@ -569,7 +569,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return errorPlayerNotFound();
           }
 
-          int? slotTypeCategoryIndex = int.tryParse(arguments[1]);
+          final slotTypeCategoryIndex = int.tryParse(arguments[1]);
           if (slotTypeCategoryIndex == null){
             return errorIntegerExpected(1, arguments[1]);
           }
@@ -602,17 +602,14 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Sell_Slot:
-          if (arguments.length != 3) {
-            return errorArgsExpected(3, arguments);
-          }
-          final player = engine.findPlayerByUuid(arguments[1]);
+          final player = _player;
           if (player == null) {
             return errorPlayerNotFound();
           }
 
-          final inventoryIndex = int.tryParse(arguments[2]);
+          final inventoryIndex = int.tryParse(arguments[1]);
           if (inventoryIndex == null){
-            return errorIntegerExpected(2, arguments[2]);
+            return errorIntegerExpected(1, arguments[1]);
           }
           if (inventoryIndex < 1 || inventoryIndex > 6) {
             return errorInvalidArg('inventory index out of bounds');

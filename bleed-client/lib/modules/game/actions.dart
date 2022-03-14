@@ -132,7 +132,7 @@ class GameActions {
   void sellSlotItem(int index){
     print("game.actions.sellSlotItem($index)");
     _verifyValidSlotIndex(index);
-    // sendClientRequest(ClientRequest.Sell_Slot, index);
+    sendClientRequest(ClientRequest.Sell_Slot, index);
   }
 
   void equipSlot1(){

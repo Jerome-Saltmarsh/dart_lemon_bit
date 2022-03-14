@@ -2,7 +2,7 @@
 
 import 'package:bleed_client/classes/Timeline.dart';
 import 'package:bleed_client/common/GameStatus.dart';
-import 'package:bleed_client/user-service-client/firestoreService.dart';
+import 'package:firestore_client/firestoreService.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'enums.dart';

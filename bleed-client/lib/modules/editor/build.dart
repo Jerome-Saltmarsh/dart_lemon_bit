@@ -15,7 +15,7 @@ import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/views.dart';
-import 'package:bleed_client/user-service-client/firestoreService.dart';
+import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';

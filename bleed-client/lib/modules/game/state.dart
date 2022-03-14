@@ -1,6 +1,3 @@
-import 'dart:typed_data';
-
-import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Weapon.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterState.dart';

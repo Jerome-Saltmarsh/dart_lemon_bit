@@ -1,11 +1,9 @@
 import 'package:bleed_client/classes/Authentication.dart';
 import 'package:bleed_client/common/CharacterType.dart';
-import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/modules/website/enums.dart';
-import 'package:bleed_client/send.dart';
 import 'package:bleed_client/server/server.dart';
 import 'package:bleed_client/ui/actions/signInWithFacebook.dart';
 import 'package:bleed_client/ui/build.dart';

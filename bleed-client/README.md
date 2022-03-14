@@ -129,6 +129,7 @@
 [ ] Destructible Items to collect gems
 [ ] Rain Particles
 [ ] (MMO) Save / Load Character
+[ ] Fix Google Login
 [x] FIX Equip Slot
 [x] FIX Slots UI
 [x] FIX Mouse cursor on attack target
