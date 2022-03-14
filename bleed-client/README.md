@@ -133,7 +133,7 @@
 [ ] FIX Write Message
 [ ] FIX Map Editor
 [ ] FIX Join Custom Game
-[ ] FIX Respawn Window
+[x] FIX Respawn Window
 [x] FIX Orb Count
 [x] FIX Player Name
 [x] Fix Google Login
