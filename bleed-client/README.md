@@ -131,9 +131,9 @@
 [ ] (MMO) Save / Load Character
 [ ] FIX Town Guards don't damage zombies
 [ ] FIX Write Message
-[ ] FIX Player Name
 [ ] FIX Map Editor
 [ ] FIX Join Custom Game
+[x] FIX Player Name
 [x] Fix Google Login
 [x] FIX Equip Slot
 [x] FIX Slots UI
