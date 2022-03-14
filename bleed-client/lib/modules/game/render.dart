@@ -76,7 +76,7 @@ class GameRender {
     engine.setPaintColorWhite();
     // _drawFloatingTexts();
     _drawPlayerNames();
-    // drawPlayerText();
+    drawPlayerText();
     // engine.setPaintColorWhite();
     // collectedOrbImage();
   }
@@ -345,12 +345,16 @@ class GameRender {
   }
 
   void drawPlayerText() {
-    for (int i = 0; i < game.totalPlayers; i++) {
-      Character human = game.players[i];
+    final totalPlayers = game.totalPlayers;
+    final players = game.players;
+    final charWidth = isometric.constants.charWidth;
+
+    for (var i = 0; i < totalPlayers; i++) {
+      final human = players[i];
       if (human.text.isEmpty) continue;
-      double width = isometric.constants.charWidth * human.text.length;
-      double left = human.x - width;
-      double y = human.y - 50;
+      final width = charWidth * human.text.length;
+      final left = human.x - width;
+      final y = human.y - 50;
       engine.draw.text(human.text, left, y, style: state.playerTextStyle);
     }
   }

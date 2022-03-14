@@ -219,6 +219,7 @@ class GameBuild {
               right: _pad,
               bottom: _pad,
               child: _panelMagicStore()),
+          buildTextBox(),
           Positioned(
               child: Row(
                 children: [

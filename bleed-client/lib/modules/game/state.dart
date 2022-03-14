@@ -28,7 +28,7 @@ class GameState {
   final Watch<bool> debugPanelVisible = Watch(false);
   final Watch<bool> compilePaths = Watch(false);
   final Watch<StoreTab> storeTab = Watch(storeTabs[0]);
-  final Watch<bool> textMode = Watch(false);
+  final Watch<bool> textBoxVisible = Watch(false);
   final Watch<SlotType> highLightSlotType = Watch(SlotType.Empty);
   final highlightPanelPosition = Vector2(0, 0);
   final Watch<bool> frameSmoothing = Watch(true);

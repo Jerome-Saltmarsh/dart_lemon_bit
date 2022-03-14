@@ -73,7 +73,7 @@ class GameActions {
   }
 
   void toggleMessageBox() {
-    state.textMode.value = !state.textMode.value;
+    state.textBoxVisible.value = !state.textBoxVisible.value;
   }
 
   void skipHour(){
@@ -116,11 +116,11 @@ class GameActions {
   }
 
   void showTextBox(){
-    state.textMode.value = true;
+    state.textBoxVisible.value = true;
   }
 
   void hideTextBox(){
-    state.textMode.value = false;
+    state.textBoxVisible.value = false;
   }
 
   void sendAndCloseTextBox(){

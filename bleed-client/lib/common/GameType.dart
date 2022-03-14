@@ -12,7 +12,7 @@ final List<GameType> gameTypes = GameType.values;
 
 final List<GameType> selectableGameTypes = [
     GameType.MMO,
-    GameType.BATTLE_ROYAL,
+    // GameType.BATTLE_ROYAL,
     // GameType.Moba,
     // GameType.CUBE3D,
     // GameType.DeathMatch,

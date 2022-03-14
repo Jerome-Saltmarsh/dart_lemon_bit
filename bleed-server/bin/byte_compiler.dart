@@ -36,6 +36,7 @@ class _ByteCompiler {
 
   void writePlayerGame(Player player){
     final slots = player.slots;
+    final orbs = player.orbs;
     writeGame(player.game);
     writePlayerZombies(player);
     writePlayers(player);
@@ -55,7 +56,15 @@ class _ByteCompiler {
     writeByte(slots.slot4.index);
     writeByte(slots.slot5.index);
     writeByte(slots.slot6.index);
+    writeBigInt(orbs.topaz);
+    writeBigInt(orbs.emerald);
+    writeBigInt(orbs.ruby);
+    writeBool(player.alive);
     writeAttackTarget(player);
+  }
+
+  void writeBool(bool value){
+    writeByte(value ? 1 : 0);
   }
 
   void writeGame(Game game){
@@ -145,13 +154,20 @@ class _ByteCompiler {
     final players = player.game.players;
     for(final otherPlayer in players) {
       // players on same team emit light offscreen
-      if (!sameTeam(otherPlayer, player)) {
+      bool onSameTeam = sameTeam(otherPlayer, player);
+
+      if (!onSameTeam) {
         if (otherPlayer.top < player.screenTop) continue;
         if (otherPlayer.bottom > player.screenBottom) continue;
         if (otherPlayer.left < player.screenLeft) continue;
         if (otherPlayer.right > player.screenRight) continue;
       }
       writePlayer(otherPlayer);
+      if (onSameTeam){
+        writeString(otherPlayer.text);
+      } else {
+        writeBigInt(0);
+      }
     }
     writeByte(END);
   }

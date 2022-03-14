@@ -15,8 +15,8 @@ final _buffer1 = Uint8List(1);
 final _buffer9 = Uint8List(22);
 
 void speak(String message){
-  // if (message.isEmpty) return;
-  // webSocket.send('${ClientRequest.Speak.index} $session $message');
+  if (message.isEmpty) return;
+  webSocket.send('${ClientRequest.Speak.index} $message');
 }
 
 void sendRequestPing(){

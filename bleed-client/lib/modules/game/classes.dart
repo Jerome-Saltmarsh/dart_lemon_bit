@@ -32,7 +32,7 @@ class KeyMap {
   LogicalKeyboardKey speakLetsGo = LogicalKeyboardKey.digit9;
   LogicalKeyboardKey speakLetsGreeting = LogicalKeyboardKey.digit8;
   LogicalKeyboardKey waitASecond = LogicalKeyboardKey.digit0;
-  LogicalKeyboardKey text = LogicalKeyboardKey.enter;
+  LogicalKeyboardKey speak = LogicalKeyboardKey.enter;
   LogicalKeyboardKey toggleLantern = LogicalKeyboardKey.keyL;
   LogicalKeyboardKey toggleAudio = LogicalKeyboardKey.keyM;
   LogicalKeyboardKey hourForwards = LogicalKeyboardKey.arrowRight;

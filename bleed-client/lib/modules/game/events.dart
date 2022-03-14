@@ -45,7 +45,7 @@ class GameEvents {
     state.player.uuid.onChanged(_onPlayerUuidChanged);
     state.player.alive.onChanged(_onPlayerAliveChanged);
     state.player.state.onChanged(onPlayerCharacterStateChanged);
-    state.textMode.onChanged(onTextModeChanged);
+    state.textBoxVisible.onChanged(onTextModeChanged);
     state.player.orbs.emerald.listen(onEmeraldsChanged);
     state.player.orbs.ruby.listen(onEmeraldsChanged);
     state.player.orbs.topaz.listen(onEmeraldsChanged);

@@ -7,8 +7,8 @@ import 'package:lemon_watch/watch_builder.dart';
 import '../../flutterkit.dart';
 
 Widget buildTextBox() {
-  return WatchBuilder(modules.game.state.textMode, (bool textMode){
-    if (!textMode) return blank;
+  return WatchBuilder(modules.game.state.textBoxVisible, (bool visible){
+    if (!visible) return blank;
 
     return Positioned(
         bottom: 100,

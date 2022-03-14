@@ -77,6 +77,7 @@ class _ByteStreamParser {
         case ServerResponse.Player:
           final player = modules.game.state.player;
           final slots = player.slots;
+          final orbs = player.orbs;
           player.x = _nextDouble();
           player.y = _nextDouble();
           player.health.value = _nextDouble();
@@ -92,7 +93,10 @@ class _ByteStreamParser {
           slots.slot4.value = _readSlotType();
           slots.slot5.value = _readSlotType();
           slots.slot6.value = _readSlotType();
-
+          player.orbs.topaz.value = _nextInt();
+          player.orbs.emerald.value = _nextInt();
+          player.orbs.ruby.value = _nextInt();
+          player.alive.value = readBool();
           break;
         case ServerResponse.End:
           byteLength.value = _index;
@@ -173,6 +177,7 @@ class _ByteStreamParser {
       character.equippedArmour = _readSlotType();
       character.equippedHead = _readSlotType();
       character.name = readString();
+      character.text = readString();
       total++;
     }
     game.totalPlayers = total;
@@ -226,6 +231,11 @@ class _ByteStreamParser {
     final value = values[_index];
     _index++;
     return value;
+  }
+
+  bool readBool(){
+    final value = _nextByte();
+    return value == 1;
   }
 
   int _nextInt(){

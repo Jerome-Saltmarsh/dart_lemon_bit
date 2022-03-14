@@ -931,7 +931,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
 
           player.text = arguments
-              .sublist(2, arguments.length)
+              .sublist(1, arguments.length)
               .fold("", (previousValue, element) => '$previousValue $element');
           player.textDuration = 150;
           break;

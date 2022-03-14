@@ -90,9 +90,9 @@ void initializeEventListeners() {
 
   modules.game.state.textFieldMessage.addListener(() {
     if (hud.textBoxFocused){
-        modules.game.state.textMode.value = true;
+        modules.game.state.textBoxVisible.value = true;
     }else{
-      modules.game.state.textMode.value = false;
+      modules.game.state.textBoxVisible.value = false;
     }
   });
 
