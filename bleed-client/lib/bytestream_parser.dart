@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameEventType.dart';
@@ -169,6 +172,7 @@ class _ByteStreamParser {
       character.equippedWeapon = _readSlotType();
       character.equippedArmour = _readSlotType();
       character.equippedHead = _readSlotType();
+      character.name = readString();
       total++;
     }
     game.totalPlayers = total;
@@ -238,4 +242,19 @@ class _ByteStreamParser {
   double _nextDouble(){
     return _nextInt().toDouble();
   }
+
+  String readString(){
+     final length = _nextInt();
+     if (length == 0) return "";
+     return utf8.decode(readBytes(length));
+  }
+
+  List<int> readBytes(int length){
+    final values = Uint8List(length);
+    for (var i = 0; i < length; i++) {
+      values[i] = _nextByte();
+    }
+    return values;
+  }
+
 }

@@ -11,8 +11,10 @@ import 'package:bleed_client/modules/core/enums.dart';
 import 'package:bleed_client/modules/editor/compile.dart';
 import 'package:bleed_client/modules/editor/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
+import 'package:bleed_client/parse.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
+import 'package:bleed_client/utils/list_util.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
@@ -39,6 +41,8 @@ class EditorActions with EditorScope {
     if (state.objectType.value == ObjectType.Torch) {
       isometric.actions.resetLighting();
     }
+    sortReversed(modules.isometric.state.environmentObjects, environmentObjectY);
+    engine.redrawCanvas();
   }
 
   void setTile(){

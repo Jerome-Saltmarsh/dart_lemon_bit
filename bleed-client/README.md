@@ -129,7 +129,12 @@
 [ ] Destructible Items to collect gems
 [ ] Rain Particles
 [ ] (MMO) Save / Load Character
-[ ] Fix Google Login
+[ ] FIX Town Guards don't damage zombies
+[ ] FIX Write Message
+[ ] FIX Player Name
+[ ] FIX Map Editor
+[ ] FIX Join Custom Game
+[x] Fix Google Login
 [x] FIX Equip Slot
 [x] FIX Slots UI
 [x] FIX Mouse cursor on attack target

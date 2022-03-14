@@ -1,6 +1,6 @@
 
 import 'dart:typed_data';
-
+import 'dart:convert' show utf8;
 import 'package:lemon_math/angle.dart';
 
 import 'classes/Character.dart';
@@ -12,7 +12,6 @@ import 'classes/Projectile.dart';
 import 'common/ServerResponse.dart';
 import 'common/compile_util.dart';
 import 'common/constants.dart';
-import 'utilities.dart';
 
 const _60 = 60;
 const _100 = 100;
@@ -174,6 +173,16 @@ class _ByteCompiler {
     writeByte(player.weapon.index);
     writeByte(player.slots.armour.index);
     writeByte(player.slots.helm.index);
+    writeString(player.name);
+  }
+  
+  void writeString(String value){
+    writeBigInt(value.length);
+    if (value.length == 0) return;
+    final encoded = utf8.encode(value);
+    for(final character in encoded){
+      writeByte(character);
+    }
   }
 
   void writeNpcs(List<Character> npcs){
