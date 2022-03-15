@@ -129,6 +129,9 @@
 [ ] Destructible Items to collect gems
 [ ] Rain Particles
 [ ] (MMO) Save / Load Character
+[ ] Ammunition
+[ ] Shop visible when interact with NPC
+[ ] Experience Bar
 [ ] FIX Map Editor
 [ ] FIX Join Custom Game
 [x] FIX DEBUG PATHS

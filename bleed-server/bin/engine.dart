@@ -36,7 +36,7 @@ class _Engine {
     await scenes.load();
     world = World();
     periodic(fixedUpdate, ms: Duration.millisecondsPerSecond ~/ framesPerSecond);
-    periodic(removeDisconnectedPlayers, seconds: _secondsPerRemoveDisconnectedPlayers);
+    // periodic(removeDisconnectedPlayers, seconds: _secondsPerRemoveDisconnectedPlayers);
     periodic(updateNpcTargets, ms: _msPerUpdateNpcTarget);
     periodic(regenCharacters, ms: _msPerRegen);
     print("engine.init() finished");
@@ -47,6 +47,9 @@ class _Engine {
     frame++;
 
     for (final game in games) {
+
+     game.removeDisconnectedPlayers();
+
       switch(game.status) {
 
         case GameStatus.In_Progress:
@@ -95,34 +98,12 @@ class _Engine {
     }
   }
 
-  void removeDisconnectedPlayers(Timer timer) {
-    for (final game in games) {
-      game.removeDisconnectedPlayers();
-    }
-  }
-
-  // void updateZombieWander(Timer timer) {
-  //   for (final game in games) {
-  //     for (final zombie in game.zombies) {
-  //       if (zombie.inactive) continue;
-  //       if (zombie.busy) continue;
-  //       if (zombie.dead) continue;
-  //       final ai = zombie.ai;
-  //       if (ai == null) continue;
-  //       if (ai.target != null) continue;
-  //       if (ai.mode != NpcMode.Aggressive) continue;
-  //       game.npcSetRandomDestination(ai);
-  //     }
-  //   }
-  // }
-
-
   Player? findPlayerByUuid(String uuid) {
     return playerMap[uuid];
   }
 
   void registerPlayer(Player player){
-    playerMap[player.byteIdString] = player;
+    playerMap[player.uuid] = player;
   }
 
   void deregisterPlayer(Player player){

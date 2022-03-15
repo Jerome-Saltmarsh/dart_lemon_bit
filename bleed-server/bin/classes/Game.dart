@@ -1381,12 +1381,12 @@ extension GameFunctions on Game {
   }
 
   void removeDisconnectedPlayers() {
-    for (int i = 0; i < players.length; i++) {
-      if (players[i].lastUpdateFrame < settings.framesUntilPlayerDisconnected)
+    for (var i = 0; i < players.length; i++) {
+      final player = players[i];
+
+      if (player.lastUpdateFrame++ < settings.framesUntilPlayerDisconnected)
         continue;
 
-      print("removing disconnected player");
-      Player player = players[i];
       for (final npc in zombies) {
         npc.ai?.clearTargetIf(player);
       }
