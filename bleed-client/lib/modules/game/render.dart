@@ -354,7 +354,7 @@ class GameRender {
       if (human.text.isEmpty) continue;
       final width = charWidth * human.text.length;
       final left = human.x - width;
-      final y = human.y - 50;
+      final y = human.y - 70;
       engine.draw.text(human.text, left, y, style: state.playerTextStyle);
     }
   }

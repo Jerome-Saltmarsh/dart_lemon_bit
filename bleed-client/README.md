@@ -130,9 +130,9 @@
 [ ] Rain Particles
 [ ] (MMO) Save / Load Character
 [ ] FIX Town Guards don't damage zombies
-[ ] FIX Write Message
 [ ] FIX Map Editor
 [ ] FIX Join Custom Game
+[ ] FIX Write Message
 [x] FIX Respawn Window
 [x] FIX Orb Count
 [x] FIX Player Name

@@ -10,6 +10,7 @@ import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/modules/game/actions.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/parse.dart';
+import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
@@ -98,14 +99,14 @@ class GameEvents {
     }
   }
 
-
-  void onTextModeChanged(bool textMode){
-    if (textMode){
+  void onTextModeChanged(bool textMode) {
+    if (textMode) {
       state.textFieldMessage.requestFocus();
-    }else{
-      state.textFieldMessage.unfocus();
-      state.textEditingControllerMessage.text = "";
+      return;
     }
+    sendRequestSpeak(state.textEditingControllerMessage.text);
+    state.textFieldMessage.unfocus();
+    state.textEditingControllerMessage.text = "";
   }
 
   void onPlayerCharacterStateChanged(CharacterState characterState){

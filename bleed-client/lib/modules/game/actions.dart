@@ -61,15 +61,15 @@ class GameActions {
   }
 
   void sayGreeting() {
-    speak(randomItem(state.greetings));
+    sendRequestSpeak(randomItem(state.greetings));
   }
 
   void sayLetsGo() {
-    speak(randomItem(state.letsGo));
+    sendRequestSpeak(randomItem(state.letsGo));
   }
 
   void sayWaitASecond() {
-    speak(randomItem(state.waitASecond));
+    sendRequestSpeak(randomItem(state.waitASecond));
   }
 
   void toggleMessageBox() {
@@ -125,7 +125,7 @@ class GameActions {
 
   void sendAndCloseTextBox(){
     print("sendAndCloseTextBox()");
-    speak(state.textEditingControllerMessage.text);
+    sendRequestSpeak(state.textEditingControllerMessage.text);
     hideTextBox();
   }
 

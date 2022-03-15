@@ -14,7 +14,7 @@ final _gameUpdateIndex = ClientRequest.Update.index;
 final _buffer1 = Uint8List(1);
 final _buffer9 = Uint8List(22);
 
-void speak(String message){
+void sendRequestSpeak(String message){
   if (message.isEmpty) return;
   webSocket.send('${ClientRequest.Speak.index} $message');
 }
