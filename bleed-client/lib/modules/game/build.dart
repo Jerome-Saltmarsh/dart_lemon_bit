@@ -496,34 +496,40 @@ class GameBuild {
   }
 
   Widget rowOrbs(){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            width8,
+            Row(
+              children: [
+                resources.icons.ruby,
+                width4,
+                AdvancedWatchBuilder(state.player.orbs.ruby, (int value, int previous){
+                  return text(value);
+                }),
+              ],
+            ),
+            width8,
+            Row(
+              children: [
+                resources.icons.emerald,
+                width4,
+                AdvancedWatchBuilder(state.player.orbs.emerald, (int value, int previous){
+                  return text(value);
+                }),
+              ],
+            ),
+          ],
+        ),
+        height8,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             resources.icons.topaz,
             width4,
             AdvancedWatchBuilder(state.player.orbs.topaz, (int value, int previous){
-              return text(value);
-            }),
-          ],
-        ),
-        width8,
-        Row(
-          children: [
-            resources.icons.ruby,
-            width4,
-            AdvancedWatchBuilder(state.player.orbs.ruby, (int value, int previous){
-              return text(value);
-            }),
-          ],
-        ),
-        width8,
-        Row(
-          children: [
-            resources.icons.emerald,
-            width4,
-            AdvancedWatchBuilder(state.player.orbs.emerald, (int value, int previous){
               return text(value);
             }),
           ],
