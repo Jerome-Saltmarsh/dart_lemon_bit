@@ -131,7 +131,7 @@
 [ ] (MMO) Save / Load Character
 [ ] FIX Map Editor
 [ ] FIX Join Custom Game
-[ ] FIX DEBUG PATHS
+[x] FIX DEBUG PATHS
 [x] FIX Town Guards don't damage zombies
 [x] FIX Write Message
 [x] FIX Respawn Window

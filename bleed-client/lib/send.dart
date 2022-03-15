@@ -88,6 +88,7 @@ void sendRequestUpdatePlayer() {
 }
 
 void sendRequestTogglePaths() {
+  modules.game.state.compilePaths.value = false;
   webSocket.send('${ClientRequest.SetCompilePaths.index}');
 }
 
