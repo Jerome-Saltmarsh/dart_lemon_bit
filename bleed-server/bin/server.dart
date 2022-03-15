@@ -897,8 +897,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           return;
 
         case ClientRequest.SetCompilePaths:
-          if (arguments.length != 3) {
-            errorArgsExpected(3, arguments);
+          if (arguments.length != 2) {
+            errorArgsExpected(2, arguments);
             return;
           }
 
@@ -907,8 +907,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          final value = int.parse(arguments[2]);
-          player.game.debugMode = value == 1;
+          final value = arguments[1];
+          player.game.debugMode = value == "true";
           print("game.compilePaths = ${player.game.debugMode}");
           break;
 

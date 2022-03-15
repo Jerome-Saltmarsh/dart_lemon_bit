@@ -94,6 +94,7 @@ void sendRequestUpdatePlayer() {
 
 void sendRequestSetCompilePaths(bool value) {
   isometric.state.paths.clear();
+  webSocket.send('${ClientRequest.SetCompilePaths.index} $value');
 }
 
 void request(ClientRequest request, String value) {
