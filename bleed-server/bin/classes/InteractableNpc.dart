@@ -16,6 +16,7 @@ class InteractableNpc extends Character {
       required double y,
       required int health,
       required SlotType weapon,
+      int team = 1,
       NpcMode npcMode = NpcMode.Stand_Ground,
   })
       : super(
@@ -25,5 +26,6 @@ class InteractableNpc extends Character {
             ai: AI(mode: npcMode),
             health: health,
             weapon: weapon,
+            team: team,
   );
 }

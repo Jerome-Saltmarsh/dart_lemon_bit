@@ -129,9 +129,10 @@
 [ ] Destructible Items to collect gems
 [ ] Rain Particles
 [ ] (MMO) Save / Load Character
-[ ] FIX Town Guards don't damage zombies
 [ ] FIX Map Editor
 [ ] FIX Join Custom Game
+[ ] FIX DEBUG PATHS
+[x] FIX Town Guards don't damage zombies
 [x] FIX Write Message
 [x] FIX Respawn Window
 [x] FIX Orb Count

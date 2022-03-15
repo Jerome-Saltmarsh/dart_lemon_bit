@@ -148,6 +148,7 @@ class Player extends Character with Entity {
             team: team,
             ai: ai,
             weapon: weapon,
+
   ){
     maxMagic = magic;
     _magic = maxMagic;

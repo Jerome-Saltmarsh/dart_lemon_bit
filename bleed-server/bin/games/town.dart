@@ -1,17 +1,13 @@
 
-import '../classes/Character.dart';
 import '../classes/Game.dart';
 import '../classes/InteractableNpc.dart';
 import '../classes/Item.dart';
 import '../classes/Player.dart';
-import '../classes/Weapon.dart';
 import '../common/ItemType.dart';
 import '../common/Quests.dart';
 import '../common/SlotType.dart';
-import '../common/WeaponType.dart';
 import '../engine.dart';
 import '../handlers.dart';
-import '../instances/scenes.dart';
 import 'world.dart';
 
 class Town extends Game {
@@ -30,7 +26,9 @@ class Town extends Game {
         x: -100,
         y: 1650,
         health: 100,
-        weapon: SlotType.Empty);
+        weapon: SlotType.Empty,
+        team: teams.west,
+    );
     npcs.add(npcDavis);
 
     events.onKilled.add(handlers.onKilledEarnOrb);
@@ -41,7 +39,9 @@ class Town extends Game {
         x: -300,
         y: 1950,
         health: 100,
-        weapon: SlotType.Empty);
+        weapon: SlotType.Empty,
+        team: teams.west,
+    );
     npcs.add(npcSmith);
 
     guard1 = InteractableNpc(
@@ -50,7 +50,8 @@ class Town extends Game {
         x: 180,
         y: 2000,
         health: 100,
-        weapon: SlotType.Bow_Wooden
+        weapon: SlotType.Bow_Wooden,
+        team: teams.west,
     );
     npcs.add(guard1);
 
@@ -60,7 +61,8 @@ class Town extends Game {
         x: 215,
         y: 1970,
         health: 100,
-        weapon: SlotType.Bow_Wooden
+        weapon: SlotType.Bow_Wooden,
+        team: teams.west,
     );
     npcs.add(guard2);
   }
