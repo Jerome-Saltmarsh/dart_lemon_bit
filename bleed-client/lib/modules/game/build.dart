@@ -214,7 +214,9 @@ class GameBuild {
           Positioned(
               left: _pad,
               bottom: _pad,
-              child: toggleDebugMode()),
+              child: WatchBuilder(state.debugPanelVisible, (bool visible){
+                return visible ? toggleDebugMode() : empty;
+              })),
           Positioned(
               right: _pad,
               bottom: _pad,
