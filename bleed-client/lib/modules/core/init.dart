@@ -87,16 +87,7 @@ void onPlayerWeaponChanged(WeaponType weapon) {
 
 void initializeEventListeners() {
   engine.callbacks.onMouseScroll = engine.events.onMouseScroll;
-
-  modules.game.state.textFieldMessage.addListener(() {
-    if (hud.textBoxFocused){
-        modules.game.state.textBoxVisible.value = true;
-    }else{
-      modules.game.state.textBoxVisible.value = false;
-    }
-  });
-
-   modules.game.state.soldier.weaponType.onChanged(onPlayerWeaponChanged);
+  modules.game.state.soldier.weaponType.onChanged(onPlayerWeaponChanged);
 }
 
 Future loadSharedPreferences() async {
