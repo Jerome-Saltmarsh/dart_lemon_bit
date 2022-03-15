@@ -20,9 +20,7 @@ final engine = _Engine();
 class _Engine {
   // constants
   final framesPerSecond = 30;
-  static const _msPerUpdateNpcTarget = 500;
-  static const _msPerRegen = 5000;
-  static const _secondsPerRemoveDisconnectedPlayers = 4;
+  final framesPerRegen = 30 * 4;
   // immutables
   final Map<String, Player> playerMap = {};
   final List<Game> games = [];
@@ -36,15 +34,16 @@ class _Engine {
     await scenes.load();
     world = World();
     periodic(fixedUpdate, ms: Duration.millisecondsPerSecond ~/ framesPerSecond);
-    // periodic(removeDisconnectedPlayers, seconds: _secondsPerRemoveDisconnectedPlayers);
-    // periodic(updateNpcTargets, ms: _msPerUpdateNpcTarget);
-    periodic(regenCharacters, ms: _msPerRegen);
     print("engine.init() finished");
   }
 
   void fixedUpdate(Timer timer) {
     worldTime = (worldTime + secondsPerFrame) % secondsPerDay;
     frame++;
+
+    if (frame % framesPerRegen == 0){
+      regenCharacters();
+    }
 
     for (final game in games) {
 
@@ -82,14 +81,7 @@ class _Engine {
     }
   }
 
-  // void updateNpcTargets(Timer timer) {
-  //   for (final game in games) {
-  //     game.updateInteractableNpcTargets();
-  //     game.updateZombieTargets();
-  //   }
-  // }
-
-  void regenCharacters(Timer timer){
+  void regenCharacters(){
     for (final game in games) {
       for(final player in game.players){
         player.health++;
