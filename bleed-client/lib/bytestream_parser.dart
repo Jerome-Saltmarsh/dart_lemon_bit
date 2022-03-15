@@ -71,14 +71,20 @@ class _ByteStreamParser {
           engine.cursorType.value = CursorType.Basic;
           break;
         case ServerResponse.Paths:
+          modules.game.state.compilePaths.value = true;
           final paths = modules.isometric.state.paths;
-          while(true){
+          var index = 0;
+          while (true) {
             final pathIndex = _nextInt();
-            if (pathIndex == 256) break;
-
+            paths[index] = pathIndex.toDouble();
+            index++;
+            if (pathIndex == 250) break;
+            for (var i = 0; i < pathIndex; i++) {
+              paths[index] = _nextDouble();
+              paths[index + 1] = _nextDouble();
+              index += 2;
+            }
           }
-
-          paths.clear();
           break;
         case ServerResponse.Game_Time:
           _hours.value = _nextByte();
@@ -103,9 +109,9 @@ class _ByteStreamParser {
           slots.slot4.value = _readSlotType();
           slots.slot5.value = _readSlotType();
           slots.slot6.value = _readSlotType();
-          player.orbs.topaz.value = _nextInt();
-          player.orbs.emerald.value = _nextInt();
-          player.orbs.ruby.value = _nextInt();
+          orbs.topaz.value = _nextInt();
+          orbs.emerald.value = _nextInt();
+          orbs.ruby.value = _nextInt();
           player.alive.value = readBool();
           break;
         case ServerResponse.End:

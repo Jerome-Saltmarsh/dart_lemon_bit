@@ -83,26 +83,14 @@ void sendRequestUpdatePlayer() {
   writeNumberToByteArray(number: screen.right, list: _buffer9, index: 15);
   writeNumberToByteArray(number: screen.bottom, list: _buffer9, index: 18);
 
-  // _buffer9[22] = _player.byteId[0];
-  // _buffer9[23] = _player.byteId[1];
-  // _buffer9[24] = _player.byteId[2];
-  // _buffer9[25] = _player.byteId[3];
-
   webSocket.sink.add(_buffer9);
   _characterControllerAction.value = CharacterAction.Idle;
 }
 
 void sendRequestSetCompilePaths(bool value) {
-  isometric.state.paths.clear();
   webSocket.send('${ClientRequest.SetCompilePaths.index} $value');
 }
 
 void request(ClientRequest request, String value) {
   webSocket.send('${request.index} $value');
-}
-
-class _SendRequestToServer {
-  upgradeAbility(int index){
-    print("sendRequest.upgradeAbility(index: $index)");
-  }
 }

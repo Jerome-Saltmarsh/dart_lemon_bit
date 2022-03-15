@@ -62,7 +62,6 @@ class GameRender {
 
     if (state.compilePaths.value) {
       drawPaths();
-      drawDebugNpcs(game.npcDebug);
     }
 
     // engine.setPaintColorWhite();
@@ -194,10 +193,26 @@ class GameRender {
   void drawPaths() {
     engine.setPaintColor(colours.blue);
     engine.paint.strokeWidth = 4.0;
-    for (final path in isometric.state.paths) {
-      // for (var i = 0; i < path.length - 1; i++) {
-        // drawLine(path[i].x, path[i].y, path[i + 1].x, path[i + 1].y);
-      // }
+
+    var index = 0;
+    final paths = modules.isometric.state.paths;
+    while(true){
+      final length = paths[index];
+      if (length == 250) break;
+      index++;
+      var aX = paths[index];
+      index++;
+      var aY = paths[index];
+      index++;
+      for(var i = 1; i < length; i++){
+        final bX = paths[index];
+        final bY = paths[index + 1];
+        index += 2;
+        drawLine(aX, aY, bX, bY);
+        aX = bX;
+        aY = bY;
+      }
+      // index+=2;
     }
   }
 

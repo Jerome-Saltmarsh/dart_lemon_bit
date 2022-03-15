@@ -87,13 +87,13 @@ class _ByteCompiler {
       final ai = zombie.ai;
       if (ai == null) continue;
       if (ai.pathIndex < 0) continue;
-      writeBigInt(ai.pathIndex);
+      writeBigInt(ai.pathIndex + 1);
       for (var i = ai.pathIndex; i >= 0; i--) {
         writeBigInt(ai.pathX[i]);
         writeBigInt(ai.pathY[i]);
       }
     }
-    writeBigInt(256);
+    writeBigInt(250);
   }
 
   void writePlayerZombies(Player player) {

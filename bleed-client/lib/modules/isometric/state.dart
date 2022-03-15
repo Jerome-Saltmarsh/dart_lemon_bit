@@ -19,8 +19,6 @@ import 'utilities.dart';
 class IsometricState {
   List<ParticleEmitter> particleEmitters = [];
   late ui.Image image;
-  // List<List<Vector2>> paths = [];
-  var totalPaths = 0;
   final paths = Float32List(10000);
   List<FloatingText> floatingText = [];
   bool eventsRegistered = false;
