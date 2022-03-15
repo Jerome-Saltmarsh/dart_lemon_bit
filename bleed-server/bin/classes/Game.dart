@@ -376,6 +376,12 @@ extension GameFunctions on Game {
 
   void updateInProgress() {
     duration++;
+
+    if (duration % 15 == 0){
+      updateInteractableNpcTargets();
+      updateZombieTargets();
+    }
+
     update();
     _updatePlayersAndNpcs();
     _updateCollisions();

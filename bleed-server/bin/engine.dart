@@ -37,7 +37,7 @@ class _Engine {
     world = World();
     periodic(fixedUpdate, ms: Duration.millisecondsPerSecond ~/ framesPerSecond);
     // periodic(removeDisconnectedPlayers, seconds: _secondsPerRemoveDisconnectedPlayers);
-    periodic(updateNpcTargets, ms: _msPerUpdateNpcTarget);
+    // periodic(updateNpcTargets, ms: _msPerUpdateNpcTarget);
     periodic(regenCharacters, ms: _msPerRegen);
     print("engine.init() finished");
   }
@@ -82,12 +82,12 @@ class _Engine {
     }
   }
 
-  void updateNpcTargets(Timer timer) {
-    for (final game in games) {
-      game.updateInteractableNpcTargets();
-      game.updateZombieTargets();
-    }
-  }
+  // void updateNpcTargets(Timer timer) {
+  //   for (final game in games) {
+  //     game.updateInteractableNpcTargets();
+  //     game.updateZombieTargets();
+  //   }
+  // }
 
   void regenCharacters(Timer timer){
     for (final game in games) {
