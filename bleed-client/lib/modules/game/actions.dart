@@ -194,7 +194,7 @@ class GameActions {
 
   void toggleDebugPaths() {
     print("game.actions.enableDebugNpc()");
-    sendRequestSetCompilePaths(!state.compilePaths.value);
+    sendRequestTogglePaths();
   }
 
   spawnZombie(){

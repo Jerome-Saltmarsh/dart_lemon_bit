@@ -897,19 +897,13 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           return;
 
         case ClientRequest.SetCompilePaths:
-          if (arguments.length != 2) {
-            errorArgsExpected(2, arguments);
-            return;
-          }
 
           if (player == null) {
             errorPlayerNotFound();
             return;
           }
-
-          final value = arguments[1];
-          player.game.debugMode = value == "true";
-          print("game.compilePaths = ${player.game.debugMode}");
+          final game = player.game;
+          game.debugMode = !game.debugMode;
           break;
 
         case ClientRequest.Version:

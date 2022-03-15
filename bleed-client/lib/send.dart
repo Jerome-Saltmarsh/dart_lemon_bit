@@ -87,8 +87,8 @@ void sendRequestUpdatePlayer() {
   _characterControllerAction.value = CharacterAction.Idle;
 }
 
-void sendRequestSetCompilePaths(bool value) {
-  webSocket.send('${ClientRequest.SetCompilePaths.index} $value');
+void sendRequestTogglePaths() {
+  webSocket.send('${ClientRequest.SetCompilePaths.index}');
 }
 
 void request(ClientRequest request, String value) {

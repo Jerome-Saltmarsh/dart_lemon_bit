@@ -75,9 +75,6 @@ class _ByteCompiler {
 
     if (game.debugMode)
       writePaths(game);
-
-
-
   }
 
   void writePaths(Game game) {
