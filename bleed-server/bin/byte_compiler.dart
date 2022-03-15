@@ -104,13 +104,14 @@ class _ByteCompiler {
     final bottom = player.screenBottom;
     final left = player.screenLeft;
     final right = player.screenRight;
+    final lengthMinusOne = length - 1;
 
     if (length == 0) {
       writeByte(END);
       return;
     }
     var start = 0;
-    for (start = 0; start < length; start++){
+    for (start = 0; start < lengthMinusOne; start++){
       if (zombies[start].y > top) {
         if (zombies[start].y > bottom){
           writeByte(END);
@@ -121,7 +122,6 @@ class _ByteCompiler {
     }
 
     var end = start;
-    final lengthMinusOne = length - 1;
     for (end = start; end < lengthMinusOne; end++){
       if (zombies[end].y > bottom) break;
     }
