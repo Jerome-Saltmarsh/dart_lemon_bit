@@ -195,9 +195,9 @@ class GameRender {
     engine.setPaintColor(colours.blue);
     engine.paint.strokeWidth = 4.0;
     for (final path in isometric.state.paths) {
-      for (var i = 0; i < path.length - 1; i++) {
-        drawLine(path[i].x, path[i].y, path[i + 1].x, path[i + 1].y);
-      }
+      // for (var i = 0; i < path.length - 1; i++) {
+        // drawLine(path[i].x, path[i].y, path[i + 1].x, path[i + 1].y);
+      // }
     }
   }
 

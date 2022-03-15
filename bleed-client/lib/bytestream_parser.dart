@@ -70,6 +70,16 @@ class _ByteStreamParser {
           _player.attackTarget.y = 0;
           engine.cursorType.value = CursorType.Basic;
           break;
+        case ServerResponse.Paths:
+          final paths = modules.isometric.state.paths;
+          while(true){
+            final pathIndex = _nextInt();
+            if (pathIndex == 256) break;
+
+          }
+
+          paths.clear();
+          break;
         case ServerResponse.Game_Time:
           _hours.value = _nextByte();
           _minutes.value = _nextByte();

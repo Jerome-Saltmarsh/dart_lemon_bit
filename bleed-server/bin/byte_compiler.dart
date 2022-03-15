@@ -72,17 +72,64 @@ class _ByteCompiler {
     writeNpcs(game.npcs);
     writeGameEvents(game.gameEvents);
     writeGameTime(game);
+
+    if (game.debugMode)
+      writePaths(game);
+
+
+
   }
 
-  void writePlayerZombies(Player player){
+  void writePaths(Game game) {
+    writeByte(ServerResponse.Paths.index);
+    for (final zombie in game.zombies) {
+      if (!zombie.active) continue;
+      final ai = zombie.ai;
+      if (ai == null) continue;
+      if (ai.pathIndex < 0) continue;
+      writeBigInt(ai.pathIndex);
+      for (var i = ai.pathIndex; i >= 0; i--) {
+        writeBigInt(ai.pathX[i]);
+        writeBigInt(ai.pathY[i]);
+      }
+    }
+    writeBigInt(256);
+  }
+
+  void writePlayerZombies(Player player) {
     writeByte(ServerResponse.Zombies.index);
     final zombies = player.game.zombies;
-    for (final zombie in zombies) {
-      if (!zombie.active) continue;
-      if (zombie.y < player.screenTop) continue;
-      if (zombie.y > player.screenBottom) break;
-      if (zombie.x < player.screenLeft) continue;
-      if (zombie.x > player.screenRight) continue;
+    final length = zombies.length;
+    final top = player.screenTop;
+    final bottom = player.screenBottom;
+    final left = player.screenLeft;
+    final right = player.screenRight;
+
+    if (length == 0) {
+      writeByte(END);
+      return;
+    }
+    var start = 0;
+    for (start = 0; start < length; start++){
+      if (zombies[start].y > top) {
+        if (zombies[start].y > bottom){
+          writeByte(END);
+          return;
+        }
+        break;
+      }
+    }
+
+    var end = start;
+    final lengthMinusOne = length - 1;
+    for (end = start; end < lengthMinusOne; end++){
+      if (zombies[end].y > bottom) break;
+    }
+
+    for(var i = start; i <= end; i++){
+      final zombie = zombies[i];
+      if (zombie.x < left) continue;
+      if (zombie.x > right) continue;
       writeCharacter(zombie);
     }
     writeByte(END); // ZOMBIES FINISHED;  see bytestream_parser._parseZombies();

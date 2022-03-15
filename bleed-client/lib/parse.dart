@@ -74,9 +74,9 @@ void parseState() {
         }
         break;
 
-      case ServerResponse.Paths:
-        _parsePaths();
-        break;
+      // case ServerResponse.Paths:
+      //   _parsePaths();
+      //   break;
 
       case ServerResponse.Game_Time:
         parseGameTime();
@@ -383,16 +383,16 @@ double environmentObjectY(EnvironmentObject environmentObject) {
   return environmentObject.y;
 }
 
-void _parsePaths() {
-  isometric.state.paths.clear();
-  while (!_simiColonConsumed()) {
-    final List<Vector2> path = [];
-    isometric.state.paths.add(path);
-    while (!_commaConsumed()) {
-      path.add(_consumeVector2());
-    }
-  }
-}
+// void _parsePaths() {
+//   isometric.state.paths.clear();
+//   while (!_simiColonConsumed()) {
+//     final List<Vector2> path = [];
+//     isometric.state.paths.add(path);
+//     while (!_commaConsumed()) {
+//       path.add(_consumeVector2());
+//     }
+//   }
+// }
 
 void _parseTiles() {
   print("parse.tiles()");

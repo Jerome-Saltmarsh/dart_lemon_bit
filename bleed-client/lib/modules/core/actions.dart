@@ -170,7 +170,7 @@ class CoreActions {
   void clearState() {
     print('clearState()');
     clearCompileGameState();
-    isometric.state.paths.clear();
+    // isometric.state.paths.clear();
     engine.zoom = 1;
     game.gameEvents.clear();
     refreshUI();
