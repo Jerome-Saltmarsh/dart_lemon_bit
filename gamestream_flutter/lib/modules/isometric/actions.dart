@@ -60,8 +60,18 @@ class IsometricActions {
     applyDynamicShadeToTileSrc();
   }
 
+  void refreshAmbientLight(){
+    print("isometric.actions.refreshAmbientLight()");
+    final phase = modules.isometric.map.hourToPhase(state.hours.value);
+    final phaseBrightness = modules.isometric.map.phaseToShade(phase);
+    final maxAmbientBrightness = state.maxAmbientBrightness.value;
+    if (maxAmbientBrightness > phaseBrightness) return;
+    state.ambient.value = phaseBrightness;
+  }
+
   void resetBakeMap(){
     print("isometric.actions.resetBakeMap()");
+    refreshAmbientLight();
     final bake = state.bake;
     final ambient = state.ambient.value;
     final rows = state.totalRows.value;

@@ -1,11 +1,11 @@
 [IDEAS]
+[ ] Rain Particles
 [ ] Faster to walk on concrete than grass, mud is very slow.
 [ ] Animate tiles flowing water
 [ ] Dynamic Shadow direction
 [ ] Black Fade Screen on change scene
 [GAME TYPES]
-[ ] Game Type: Capture The Squares
-[ ] Game Type: Sandbox
+[ ] CAPTURE THE SQUARES
 [ ] COUNTER STRIKE
 [ ] MOBA
 [ ] MMO
@@ -32,15 +32,11 @@
 [ ] Number of Teams
 [ ] Team spawn points
 [ ] Base Building Module
-[x] Load Royal Map from cloud
-[ENGINE]
-[x] Atlas Buffer 64
-[ ] Auto cull render calls
 [SKIRMISH]
 -   In skirmish mode there are two teams each with an own base
     The aim of the game is to capture all of the control points
-
 [ROYAL]
+[ ] LOOT
 [ ] Implement game over dialog
 [ ] Design Map  
 [ ] Score  
@@ -49,19 +45,11 @@
 [ ] Arrow Capacity (Auto regenerates)
 [ ] Zombie Pause after attack
 [ ] Spell Cooldown
-[x] Fix Batch Rendering glitches
-[x] FIX Particle blood renders as shell
 [ALPHA-RELEASE]
-[ ] Finish Inventory
 [ ] Drag inventory slots to change position
 [ ] Hover inventory context menu
-[ ] Remaining Spells and items
-[ ] Weapon Handgun
-[ ] Weapon Shotgun
-[ ] Weapon Crossbow
 [ ] Spell Shield
 [ ] Item Blink Ring
-[ ] Slot Capacity
 [ ] Boots of sprint
 [ ] Slot Cooldown
 [ ] Fix fireball explosion
@@ -69,15 +57,16 @@
 [ ] Bow Spells, Charged shot
 [ ] Bow Spells,
 [ ] Sword Spells, Strong Swing
-[ ] FIX BUG Initial lighting incorrect
 [ ] Destructible Items to collect gems
-[ ] Rain Particles
-[ ] Ammunition
 [ ] Shop visible when interact with NPC
 [ ] Experience Bar
 [ ] FIX Map Editor
 [ ] FIX Join Custom Game
 [ ] (MMO) Save / Load Character
+[ ] Slot Capacity
+[x] FIX BUG Initial lighting incorrect
+[x] Fix Batch Rendering glitches
+[x] FIX Particle blood renders as shell
 [x] FIX Player Disconnects
 [x] FIX DEBUG PATHS
 [x] FIX Town Guards don't damage zombies

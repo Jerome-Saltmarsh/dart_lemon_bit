@@ -508,13 +508,13 @@ extension GameFunctions on Game {
       }
 
 
-      // @on npc update find
-      if (ai.mode == NpcMode.Aggressive) {
-        // TODO OPTIMIZE
-        if (engine.frame % 30 == 0) {
-          npcSetPathTo(ai, target.x, target.y);
-        }
-      }
+      // // @on npc update find
+      // if (ai.mode == NpcMode.Aggressive) {
+      //   // TODO OPTIMIZE
+      //   if (engine.frame % 30 == 0) {
+      //     npcSetPathTo(ai, target.x, target.y);
+      //   }
+      // }
     }
 
 

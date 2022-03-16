@@ -8,6 +8,7 @@ import 'classes/Scene.dart';
 import 'common/GameStatus.dart';
 import 'common/SlotType.dart';
 import 'compile.dart';
+import 'enums/npc_mode.dart';
 import 'functions/loadScenes.dart';
 import 'games/Moba.dart';
 import 'games/Royal.dart';
@@ -21,6 +22,7 @@ class _Engine {
   // constants
   final framesPerSecond = 30;
   final framesPerRegen = 30 * 4;
+  final framesPerUpdateAIPath = 30;
   // immutables
   final Map<String, Player> playerMap = {};
   final List<Game> games = [];
@@ -43,6 +45,21 @@ class _Engine {
 
     if (frame % framesPerRegen == 0){
       regenCharacters();
+    }
+
+    if (engine.frame % framesPerUpdateAIPath == 0) {
+      for (final game in games) {
+        final zombies = game.zombies;
+        for (final zombie in zombies){
+            if (zombie.deadOrBusy) continue;
+            final ai = zombie.ai;
+            if (ai == null) continue;
+            if (ai.mode != NpcMode.Aggressive) continue;
+            final target = ai.target;
+            if (target == null) continue;
+            game.npcSetPathTo(ai, target.x, target.y);
+        }
+      }
     }
 
     for (final game in games) {

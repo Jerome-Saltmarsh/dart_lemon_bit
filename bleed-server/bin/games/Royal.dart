@@ -3,24 +3,17 @@ import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomItem.dart';
 
 import '../classes/Character.dart';
-import '../classes/Crate.dart';
 import '../classes/Game.dart';
 import '../classes/Item.dart';
 import '../classes/Player.dart';
-import '../classes/Vector2.dart';
 import '../classes/Weapon.dart';
-import '../common/CharacterType.dart';
-import '../common/GameEventType.dart';
 import '../common/GameStatus.dart';
 import '../common/GameType.dart';
-import '../common/ItemType.dart';
 import '../common/OrbType.dart';
-import '../common/PlayerEvent.dart';
 import '../common/SlotType.dart';
 import '../common/WeaponType.dart';
 import '../engine.dart';
 import '../functions/withinRadius.dart';
-import '../instances/scenes.dart';
 import '../utilities.dart';
 
 class GameRoyal extends Game {
