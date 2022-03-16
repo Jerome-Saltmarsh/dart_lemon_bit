@@ -156,7 +156,7 @@ class _Engine {
   // This method is called by the game constructor automatically
   // and should not be called again
   void onGameCreated(Game game) {
-    compile.game(game);
+    // compile.game(game);
     game.compiledTiles = compileTiles(game.scene.tiles);
     game.compiledEnvironmentObjects =
         compileEnvironmentObjects(game.scene.environment);

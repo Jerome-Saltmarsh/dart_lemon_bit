@@ -24,7 +24,6 @@ import 'games/Royal.dart';
 
 // constants
 final _playersIndex = ServerResponse.Players.index;
-// final _playerIndex = ServerResponse.Player.index;
 final _indexZombies = ServerResponse.Zombies.index;
 final _indexNpcs = ServerResponse.Npcs.index;
 final _indexProjectiles = ServerResponse.Projectiles.index;
@@ -43,18 +42,12 @@ class _Compile {
   void game(Game game) {
     _gameBuffer.clear();
 
-    // _write(_gameBuffer, ServerResponse.Scene_Shade_Max.index);
-    // _write(_gameBuffer, game.shadeMax);
-    //
-    // compileGameStatus(_gameBuffer, game.status);
-
     if (game is GameRoyal) {
       compileRoyal(_gameBuffer, game);
     }
 
     compileItems(_gameBuffer, game.items);
     compileCrates(_gameBuffer, game.crates);
-    game.compiled = _gameBuffer.toString();
   }
 }
 

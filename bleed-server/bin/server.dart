@@ -79,7 +79,6 @@ void compileWholeGame(Game game) {
   compile.game(game);
   write(game.compiledTiles);
   write(game.compiledEnvironmentObjects);
-  write(game.compiled);
 }
 
 int totalConnections = 0;
@@ -127,7 +126,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       compileAndSendPlayerGame(player);
       write(game.compiledTiles);
       write(game.compiledEnvironmentObjects);
-      write(game.compiled);
       write(ServerResponse.Scene_Shade_Max.index);
       write(game.shadeMax);
       write(ServerResponse.Game_Status.index);
@@ -141,9 +139,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       final game = engine.findGameSkirmish();
       _player = game.playerJoin();
       onGameJoined();
-      // compileWholeGame(game);
-      // compilePlayerJoined(_buffer, player);
-      // sendAndClearBuffer();
     }
 
     void joinGameMoba() {
@@ -283,7 +278,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                   '${ServerResponse.Scene_Changed.index} ${player.x.toInt()} ${player.y.toInt()} ');
               _buffer.write(game.compiledTiles);
               _buffer.write(game.compiledEnvironmentObjects);
-              _buffer.write(game.compiled);
               reply(_buffer.toString());
               return;
             }
@@ -468,7 +462,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                    return joinBattleRoyal();
                  case GameType.SKIRMISH:
                    return joinGameSkirmish();
-
                }
             });
             return;
@@ -482,8 +475,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             case GameType.MMO:
               return joinGameMMO();
             case GameType.Moba:
-              joinGameMoba();
-              break;
+              return joinGameMoba();
             case GameType.BATTLE_ROYAL:
               return joinBattleRoyal();
             case GameType.SKIRMISH:
@@ -491,7 +483,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             default:
               throw Exception("Cannot join ${gameType}");
           }
-          break;
 
         case ClientRequest.Teleport:
           if (player == null) {

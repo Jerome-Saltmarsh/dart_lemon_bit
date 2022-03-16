@@ -125,7 +125,7 @@ abstract class Game {
   List<Crate> crates = [];
   bool cratesDirty = false;
   int spawnPointIndex = 0;
-  String compiled = "";
+  // String compiled = "";
   String compiledTiles = "";
   String compiledEnvironmentObjects = "";
   bool debugMode = false;
