@@ -127,30 +127,22 @@ class EditorBuild {
             button("+", isometric.actions.addColumn)
         ],
       ),
-      Row(children: [
-          Container(
-            width: _textWidth,
-            child: Row(
-              children: [
-                text("Time "),
-                WatchBuilder(modules.isometric.state.hours, (int hours){
-                  return text(hours);
-                }),
-                WatchBuilder(modules.isometric.state.minutes, (int minutes){
-                  return text(minutes);
-                }),
-              ],
-            ),
-          ),
-        width8,
-        button("-", modules.isometric.actions.detractHour),
-        width8,
-        button("+", modules.isometric.actions.addHour),
-        width8,
+      Row(
+        children: [
+          text("Hour "),
+          WatchBuilder(modules.isometric.state.hours, (int hours){
+            return text(hours);
+          }),
+          width8,
+          button("-", modules.isometric.actions.detractHour),
+          width8,
+          button("+", modules.isometric.actions.addHour),
+          width8,
+        ],
+      ),
         WatchBuilder(modules.isometric.state.ambient, (int ambient){
-          return text(shadeName(ambient));
-        })
-      ],),
+      return text(shadeName(ambient));
+        }),
       Row(children: [
         Container(
           width: _textWidth,

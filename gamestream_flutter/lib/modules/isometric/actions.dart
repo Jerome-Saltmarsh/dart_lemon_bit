@@ -295,16 +295,11 @@ class IsometricActions {
 
   void detractHour(){
     print("isometric.actions.detractHour()");
-    final amount = state.minutes.value - secondsPerHour;
-    if (amount > 0) {
-      state.minutes.value = amount;
-    } else {
-      state.minutes.value = secondsPerDay + amount;
-    }
+    state.hours.value = (state.hours.value - 1) % 24;
   }
 
   void addHour(){
-    state.minutes.value += secondsPerHour;
+    state.hours.value = (state.hours.value + 1) % 24;
   }
 
   void setHour(int hour) {
