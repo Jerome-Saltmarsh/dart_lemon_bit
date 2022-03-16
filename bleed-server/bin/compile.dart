@@ -2,7 +2,6 @@ import 'package:bleed_server/CubeGame.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/angle.dart';
 
-import 'bleed/zombie_health.dart';
 import 'classes/Ability.dart';
 import 'classes/Character.dart';
 import 'classes/Crate.dart';
@@ -32,24 +31,6 @@ final _indexNpcMessage = ServerResponse.NpcMessage.index;
 const _space = ' ';
 const _semiColon = '; ';
 const _comma = ', ';
-
-final compile = _Compile();
-
-class _Compile {
-
-  final _gameBuffer = StringBuffer();
-
-  void game(Game game) {
-    _gameBuffer.clear();
-
-    if (game is GameRoyal) {
-      compileRoyal(_gameBuffer, game);
-    }
-
-    compileItems(_gameBuffer, game.items);
-    compileCrates(_gameBuffer, game.crates);
-  }
-}
 
 void compilePlayerJoined(StringBuffer buffer, Player player) {
   _write(buffer,

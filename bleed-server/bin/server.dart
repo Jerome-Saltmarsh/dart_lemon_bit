@@ -38,6 +38,8 @@ final _errorIndex = ServerResponse.Error.index;
 final _buffer = StringBuffer();
 final _clientRequestsLength = clientRequests.length;
 
+var totalConnections = 0;
+
 void clearBuffer() {
   _buffer.clear();
 }
@@ -76,12 +78,9 @@ void startWebsocketServer(){
 
 
 void compileWholeGame(Game game) {
-  compile.game(game);
   write(game.compiledTiles);
   write(game.compiledEnvironmentObjects);
 }
-
-int totalConnections = 0;
 
 void buildWebSocketHandler(WebSocketChannel webSocket) {
     totalConnections++;
