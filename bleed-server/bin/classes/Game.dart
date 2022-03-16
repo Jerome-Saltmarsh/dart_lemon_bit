@@ -282,19 +282,12 @@ extension GameFunctions on Game {
   Vector2 getSceneCenter() =>
       getTilePosition(scene.rows ~/ 2, scene.columns ~/ 2);
 
-  int getFirstAliveZombieEnemyIndex(int team) {
-    for (int i = 0; i < zombies.length; i++) {
-      if (zombies[i].dead) continue;
-      if (zombies[i].team == team) continue;
-      return i;
-    }
-    return -1;
-  }
-
   int getFirstAlivePlayerEnemyIndex(int team) {
-    for (int i = 0; i < players.length; i++) {
-      if (players[i].dead) continue;
-      if (players[i].team == team) continue;
+    final numberOfPlayers = players.length;
+    for (var i = 0; i < numberOfPlayers; i++) {
+      final player = players[i];
+      if (player.dead) continue;
+      if (player.team == team) continue;
       return i;
     }
     return -1;
