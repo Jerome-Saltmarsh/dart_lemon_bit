@@ -4,7 +4,6 @@ import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
-import 'package:gamestream_flutter/server/server.dart';
 import 'package:gamestream_flutter/ui/actions/signInWithFacebook.dart';
 import 'package:gamestream_flutter/ui/build.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
@@ -59,7 +58,7 @@ class _BuildDialog {
                 builder: (BuildContext context, bool mouseOver) {
                   return onPressed(
                     callback: () {
-                      server.send.selectCharacterType(characterType);
+                      
                     },
                     child: border(
                       margin: EdgeInsets.only(bottom: 16),

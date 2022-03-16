@@ -9,7 +9,6 @@ import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
-import 'package:gamestream_flutter/server/server.dart';
 import 'package:gamestream_flutter/services/authService.dart';
 import 'package:gamestream_flutter/sharedPreferences.dart';
 import 'package:gamestream_flutter/state/game.dart';
@@ -310,7 +309,6 @@ class CoreActions {
 
   // functions
   void leaveLobby() {
-    server.leaveLobby();
     exitGame();
   }
 
