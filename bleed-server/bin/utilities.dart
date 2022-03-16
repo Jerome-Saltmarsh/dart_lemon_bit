@@ -45,8 +45,8 @@ bool withinViewRange(AI ai, GameObject target) {
 
 const _dstRadius = 15;
 bool arrivedAtPath(AI ai) {
-  if (diffOver(ai.character.x, ai.destX, _dstRadius)) return false;
-  if (diffOver(ai.character.y, ai.destY, _dstRadius)) return false;
+  if ((ai.character.x - ai.destX).abs() > _dstRadius) return false;
+  if ((ai.character.y - ai.destY).abs() > _dstRadius) return false;
   return true;
 }
 

@@ -269,6 +269,7 @@ const secondsPerFrame = 5;
 const secondsPerHour = secondsPerMinute * minutesPerHour;
 const characterFramesChange = 4;
 const characterMaxFrames = 99;
+final characterRadius = settings.radius.character;
 
 extension GameFunctions on Game {
   void spawnRandomOrb(double x, double y) {
@@ -302,12 +303,12 @@ extension GameFunctions on Game {
       required int team,
       required double radius
   }) {
-    final characterRadius = settings.radius.character;
     final top = y - radius - characterRadius;
     final bottom = y + radius + characterRadius;
     final left = x - radius - characterRadius;
     final right = x + radius + characterRadius;
     Character? closest = null;
+    var closestNull = true;
     var distance = -1.0;
     for (final zombie in zombies) {
       if (zombie.y < top) continue;
@@ -317,10 +318,11 @@ extension GameFunctions on Game {
       if (zombie.team == team) continue;
       if (zombie.dead) continue;
       if (!zombie.active) continue;
-      final zombieDistance = distanceV2From(zombie, x, y);
-      if (closest == null || zombieDistance < distance) {
+      final zombieDistance = diff(zombie.x, x) + diff(zombie.y, y);
+      if (closestNull || zombieDistance < distance) {
         closest = zombie;
-        distance = zombieDistance;
+        distance = zombieDistance.toDouble();
+        closestNull = false;
         continue;
       }
     }
@@ -506,15 +508,6 @@ extension GameFunctions on Game {
         _characterAttack(character, target);
         return;
       }
-
-
-      // // @on npc update find
-      // if (ai.mode == NpcMode.Aggressive) {
-      //   // TODO OPTIMIZE
-      //   if (engine.frame % 30 == 0) {
-      //     npcSetPathTo(ai, target.x, target.y);
-      //   }
-      // }
     }
 
 
@@ -1653,39 +1646,6 @@ void selectCharacterType(Player player, CharacterType value) {
   player.abilityPoints = 1;
   player.magic = player.maxMagic;
   player.health = player.maxHealth;
-}
-
-Character? getClosestEnemy({
-  required double x,
-  required double y,
-  required int team,
-  required double radius,
-  required List<Character> characters,
-}) {
-  double top = y - radius;
-  double bottom = y + radius;
-  double left = x - radius;
-  double right = x + radius;
-
-  Character? closest = null;
-  double distance = -1;
-  for (Character character in characters) {
-    if (character.y < top) continue;
-    if (character.y > bottom) break;
-    if (character.x < left) continue;
-    if (character.x > right) continue;
-    if (character.team == team) continue;
-    if (character.dead) continue;
-    if (!character.active) continue;
-
-    double characterDistance = distanceV2From(character, x, y);
-    if (closest == null || characterDistance < distance) {
-      closest = character;
-      distance = characterDistance;
-      continue;
-    }
-  }
-  return closest;
 }
 
 class CustomGame extends Game {

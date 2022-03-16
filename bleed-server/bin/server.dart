@@ -90,10 +90,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     final sink = webSocket.sink;
     Player? _player;
     Account? _account;
+    DateTime started = DateTime.now();
 
     sink.done.then((value){
       totalConnections--;
       print("Connection Lost. Total Connections $totalConnections");
+      print("Duration ${started.difference(DateTime.now()).inMinutes} minutes");
       final closeReason = webSocket.closeReason;
       final closeCode = webSocket.closeCode;
       print("Close Reason: $closeReason");

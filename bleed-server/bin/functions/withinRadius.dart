@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/abs.dart';
 import 'package:lemon_math/diff.dart';
 
 import '../classes/Player.dart';
@@ -12,10 +13,10 @@ bool withinRadius(Vector2 a, Vector2 b, double radius){
 }
 
 bool withinDistance(Vector2 positioned, double x, double y, double radius){
-  final xDiff = diff(positioned.x, x);
+  final xDiff = (positioned.x - x).abs();
   if (xDiff > radius) return false;
 
-  final yDiff = diff(positioned.y, y);
+  final yDiff = (positioned.y - y).abs();
   if (yDiff > radius) return false;
 
   return magnitude(xDiff, yDiff) <= radius;
