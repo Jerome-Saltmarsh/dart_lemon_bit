@@ -1,54 +1,11 @@
 [IDEAS]
-[ ] Critical Damage
-[ ] Accuracy
-[ ] Weapon Smg
-[ ] Weapon: Bazooka
-[ ] Weapon: Mini gun
-[ ] Game Type: Capture The Squares
-[ ] Game Type: Sandbox
-[ ] Throw Animation
-[ ] Line of Sight
-[ ] Particle Gunshot smoke
 [ ] Faster to walk on concrete than grass, mud is very slow.
-[ ] Zombie Hurt Animation
-[ ] Grenade tile collision
-[ ] Stamina Potion
-[ ] Rag doll death
-[ ] Cursor Cooldown Circle
-[ ] Explosion Crater
-[ ] Random Power up Square
-[ ] Fire Shotgun Animation
-[ ] Fire Handgun Animation
-[ ] Fire Assault Rifle Animation
-[ ] Bullet holes in blocks
-[ ] Item.RevivalKit (revive fallen squad member)
-[ ] Ranged zombies
-[ ] Bullet fired Flash
-[ ] Player chat
-[ ] Giant Zombie
-[ ] Flying Bat Enemy
-[ ] Improve Connection Failed Dialog
-[ ] Activate Shield
-[ ] Heal animation
-[ ] Find Promotions for you weapons
-[ ] Right click activates items special ability
-[ ] Body Armor
-[ ] Connect to specific container instance
-[ ] Gain XP and levelsp
 [ ] Animate tiles flowing water
 [ ] Dynamic Shadow direction
 [ ] Black Fade Screen on change scene
-[ ] 4 sides light sources to light up rock
-[ ] Trees apply shadow to tile
-[ ] Anti lights, opposite of torches to apply darkness
-[ ] Elevate ground like aoe2
-[ ] Getting kills charges your weapons super ability
-[ ] Deploy auto turret
-[ ] Standing on home base heals health && refills handgun ammo
-[ ] Send custom news updates to client
-[ ] Guards on walls
-[ ] Fall into water and die
 [GAME TYPES]
+[ ] Game Type: Capture The Squares
+[ ] Game Type: Sandbox
 [ ] COUNTER STRIKE
 [ ] MOBA
 [ ] MMO
@@ -58,19 +15,6 @@
 [ ] SOCCER
 [ ] GOLDEN EYE / PERFECT DARK
 [ ] BATTLEFIELD (Capture flags)
-[MMO]
-[ ] Attributes (Intelligence, Strength, Agility)
-[ ] Items
-[ ] Cooldown widget
-[ ] Remove old atlas sprites
-[ ] Replace town guards with archers
-[ ] Design witch attack orb sprite
-[ ] Design Freeze Circle sprite
-[ ] Implement Activity Level upgrades
-[MOBA]
-[ ] Defense Tower
-[ ] Fix bug starting new game should reset light maps
-[ ] Fix Game Time
 [WEBSITE]
 [ ] Sign in with email password
 [ ] Sign up with email password  
@@ -134,6 +78,7 @@
 [ ] FIX Map Editor
 [ ] FIX Join Custom Game
 [ ] (MMO) Save / Load Character
+[x] FIX Player Disconnects
 [x] FIX DEBUG PATHS
 [x] FIX Town Guards don't damage zombies
 [x] FIX Write Message

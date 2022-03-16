@@ -60,10 +60,17 @@ Future main() async {
 
 void startWebsocketServer(){
   print("startWebsocketServer()");
-  var handler = webSocketHandler(buildWebSocketHandler);
+  var handler = webSocketHandler(
+      buildWebSocketHandler,
+      protocols: ['gamestream.online'],
+      pingInterval: Duration(hours: 1),
+  );
 
   shelf_io.serve(handler, settings.host, settings.port).then((server) {
     print('Serving at wss://${server.address.host}:${server.port}');
+  }).catchError((error){
+    print("Websocket error occurred");
+    print(error);
   });
 }
 
@@ -81,9 +88,20 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     totalConnections++;
     print("New connection established. Total Connections $totalConnections");
     final sink = webSocket.sink;
-
     Player? _player;
     Account? _account;
+
+    sink.done.then((value){
+      totalConnections--;
+      print("Connection Lost. Total Connections $totalConnections");
+      final closeReason = webSocket.closeReason;
+      final closeCode = webSocket.closeCode;
+      print("Close Reason: $closeReason");
+      print("Close Code: $closeCode");
+      _player = null;
+      _account = null;
+    });
+
 
     void reply(String response) {
       sink.add(response);
@@ -944,6 +962,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       }
     }
 
-    webSocket.stream.listen(onEvent);
-  }
+    webSocket.stream.listen(onEvent, onError: (Object error, StackTrace stackTrace){
+      print("connection error");
+      print(error);
+      print(stackTrace);
+    });
+}
 

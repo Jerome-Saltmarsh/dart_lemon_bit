@@ -1,4 +1,5 @@
 import 'package:gamestream_flutter/bytestream_parser.dart';
+import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/parse.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -22,13 +23,28 @@ class _WebSocket {
   String connectionUri = "";
   late WebSocketSink sink;
 
+  DateTime? connectionEstablished;
+
   // interface
   void connect({required String uri, required dynamic message}) {
     print("webSocket.connect($uri)");
     connection.value = Connection.Connecting;
-    webSocketChannel = WebSocketChannel.connect(Uri.parse(uri));
+    webSocketChannel = WebSocketChannel.connect(Uri.parse(uri), protocols: ['gamestream.online']);
     webSocketChannel.stream.listen(_onEvent, onError: _onError, onDone: _onDone);
     sink = webSocketChannel.sink;
+    connectionEstablished = DateTime.now();
+
+    sink.done.then((value){
+      print("Connection Finished");
+      print("webSocketChannel.closeCode: ${webSocketChannel.closeCode}");
+      print("webSocketChannel.closeReason: ${webSocketChannel.closeReason}");
+
+      if (connectionEstablished != null){
+        final duration = DateTime.now().difference(connectionEstablished!);
+        print("Connection Duration ${duration.inSeconds} seconds");
+      }
+
+    });
     connectionUri = uri;
     sinkMessage(message);
   }
@@ -67,8 +83,9 @@ class _WebSocket {
     }
   }
 
-  void _onError(dynamic value) {
+  void _onError(Object error, StackTrace stackTrace) {
     print("network.onError()");
+    core.actions.setError(error.toString());
   }
 
   void _onDone() {

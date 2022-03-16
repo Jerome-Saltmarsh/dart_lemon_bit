@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/common/GameType.dart';
 import 'package:gamestream_flutter/common/RoyalCost.dart';
 import 'package:gamestream_flutter/common/SlotType.dart';
 import 'package:gamestream_flutter/common/WeaponType.dart';
+import 'package:gamestream_flutter/common/version.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
@@ -948,8 +949,8 @@ class GameBuild {
     });
   }
 
-  Widget version(){
-    return text("v-0.1.7");
+  Widget buildVersion(){
+    return text(version);
   }
 
   Widget frameSmoothing(){
@@ -982,7 +983,7 @@ class GameBuild {
           ui.widgets.time,
           buildTotalZombies(),
           mouseRowColumn(),
-          version(),
+          buildVersion(),
           buildTotalParticles,
           buildActiveParticles,
           tileAtMouse,
