@@ -3,6 +3,7 @@ enum GameType {
     MMO,
     Moba,
     BATTLE_ROYAL,
+    SKIRMISH,
     CUBE3D,
     DeathMatch,
     Custom

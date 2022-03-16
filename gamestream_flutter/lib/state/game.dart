@@ -8,22 +8,22 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';
 
-final _Game game = _Game();
+final game = _Game();
 
 class _Game {
   int lag = 0;
   final Map<int, bool> gameEvents = Map();
-  final Watch<int> countDownFramesRemaining = Watch(0);
-  final Watch<int> numberOfPlayersNeeded = Watch(0);
+  final countDownFramesRemaining = Watch<int>(0);
+  final numberOfPlayersNeeded = Watch<int>(0);
   final List<Effect> effects = [];
-  final _Settings settings = _Settings();
-  final Watch<int> teamLivesWest = Watch(-1);
-  final Watch<int> teamLivesEast = Watch(-1);
-  final Watch<GameType> type = Watch(GameType.None);
+  final settings = _Settings();
+  final teamLivesWest = Watch<int>(-1);
+  final teamLivesEast = Watch<int>(-1);
+  final type = Watch<GameType>(GameType.None);
   String? customGameName = "";
-  final _Lobby lobby = _Lobby();
-  final Watch<int> teamSize = Watch(0);
-  final Watch<int> numberOfTeams = Watch(0);
+  final lobby = _Lobby();
+  final teamSize = Watch<int>(0);
+  final numberOfTeams = Watch<int>(0);
   List<int> collectables = [];
   List<Vector2> crates = [];
   int cratesTotal = 0;
@@ -32,7 +32,7 @@ class _Game {
   final List<Character> players = [];
   final List<Character> zombies = [];
   final List<Character> interactableNpcs = [];
-  final Watch<int> totalZombies = Watch(0);
+  final totalZombies = Watch<int>(0);
   int totalNpcs = 0;
   int totalPlayers = 0;
   int totalCubes = 0;
@@ -44,7 +44,7 @@ class _Game {
   int totalProjectiles = 0;
   int itemsTotal = 0;
 
-  final _Royal royal = _Royal();
+  final royal = _Royal();
 
   // properties
   String get session => modules.game.state.player.uuid.value;

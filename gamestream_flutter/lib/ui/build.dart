@@ -22,8 +22,9 @@ import 'compose/hudUI.dart';
 
 final build = _Build();
 
-final List<GameType> selectableGameTypes = [
+final selectableGameTypes = [
   GameType.MMO,
+  GameType.SKIRMISH,
   GameType.BATTLE_ROYAL,
   // GameType.Moba,
   // GameType.CUBE3D,
