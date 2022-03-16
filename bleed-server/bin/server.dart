@@ -120,6 +120,16 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       sink.add(bytes);
     }
 
+    void joinGameSkirmish() {
+      final moba = engine.findPendingMobaGame();
+      final player = moba.playerJoin();
+      _player = _player;
+      compileWholeGame(moba);
+      compilePlayerJoined(_buffer, player);
+      compileGameMeta(_buffer, moba);
+      sendAndClearBuffer();
+    }
+
     void joinGameMoba() {
       final moba = engine.findPendingMobaGame();
       final player = moba.playerJoin();
@@ -134,7 +144,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       final royal = engine.findPendingRoyalGames();
       final player = royal.playerJoin();
       _player = player;
-      // player.name = _account != null ? _account.publicName : generateName();
+      player.name = _account != null ? _account!.publicName : generateName();
       compileWholeGame(royal);
       compilePlayerJoined(_buffer, player);
       compileGameStatus(_buffer, royal.status);
@@ -422,8 +432,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           final gameTypeIndex = int.parse(arguments[1]);
 
           if (gameTypeIndex >= gameTypes.length) {
-            errorInvalidArg(
-                'game type index cannot exceed ${gameTypes.length - 1}');
+            errorInvalidArg('game type index cannot exceed ${gameTypes.length - 1}');
             return;
           }
           if (gameTypeIndex < 0) {
@@ -447,10 +456,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                  case GameType.MMO:
                    return joinGameMMO();
                  case GameType.Moba:
-                   joinGameMoba();
-                   break;
+                   return joinGameMoba();
                  case GameType.BATTLE_ROYAL:
                    return joinBattleRoyal();
+                 case GameType.SKIRMISH:
+
                }
             });
             return;
@@ -468,6 +478,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               break;
             case GameType.BATTLE_ROYAL:
               return joinBattleRoyal();
+            default:
+              throw Exception("Cannot join ${gameType}");
           }
           break;
 

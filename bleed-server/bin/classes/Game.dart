@@ -239,19 +239,22 @@ abstract class Game {
     }
 
     for (final environmentObject in scene.environment) {
-      if (environmentObject.radius > 0) {
-        colliders.add(Collider(environmentObject.x, environmentObject.y,
-            environmentObject.radius));
-      }
+      if (environmentObject.radius <= 0) continue;
+      colliders.add(
+        Collider(
+          environmentObject.x,
+          environmentObject.y,
+          environmentObject.radius
+        )
+      );
     }
 
-    for (int row = 0; row < scene.rows; row++) {
-      for (int column = 0; column < scene.columns; column++) {
-        switch (scene.tiles[row][column]) {
+    for (var rowIndex = 0; rowIndex < scene.rows; rowIndex++) {
+      final row = scene.tiles[rowIndex];
+      for (var columnIndex = 0; columnIndex < scene.columns; columnIndex++) {
+        switch (row[columnIndex]) {
           case Tile.ZombieSpawn:
-            zombieSpawnPoints.add(getTilePosition(row, column));
-            break;
-          case Tile.RandomItemSpawn:
+            zombieSpawnPoints.add(getTilePosition(rowIndex, columnIndex));
             break;
           default:
             break;

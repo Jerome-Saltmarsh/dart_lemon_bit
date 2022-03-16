@@ -180,7 +180,6 @@ class _Engine {
       weapon: SlotType.Empty,
     );
   }
-
 }
 
 class _Scenes {
@@ -191,6 +190,7 @@ class _Scenes {
   late Scene cave;
   late Scene wildernessEast;
   late Scene royal;
+  late Scene skirmish;
 
   Future load() async {
     print("loadScenes()");
@@ -201,5 +201,6 @@ class _Scenes {
     wildernessNorth01 = await loadSceneFromFile('wilderness-north-01');
     wildernessEast = await loadSceneFromFile('wilderness-east');
     royal = await loadSceneFromFireStore('royal');
+    skirmish = await loadSceneFromFireStore('skirmish');
   }
 }
