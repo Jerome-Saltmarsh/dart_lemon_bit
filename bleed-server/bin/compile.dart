@@ -42,18 +42,8 @@ class _Compile {
 
   void game(Game game) {
     _gameBuffer.clear();
-    // _compilePlayers(_gameBuffer, game.players);
-    // _compileZombies(_gameBuffer, game.zombies);
-    // _compileInteractableNpcs(_gameBuffer, game.npcs);
-    // _compileProjectiles(_gameBuffer, game.projectiles);
-    // _compileGameEvents(_gameBuffer, game.gameEvents);
-
-    // _write(_gameBuffer, ServerResponse.Game_Time.index);
-    // _write(_gameBuffer, game.getTime());
     _write(_gameBuffer, ServerResponse.Debug_Mode.index);
     _write(_gameBuffer, game.debugMode ? 1 : 0);
-
-
 
     if (game.debugMode) {
       _compilePaths(_gameBuffer, game.zombies);
@@ -72,29 +62,7 @@ class _Compile {
 
     compileItems(_gameBuffer, game.items);
     compileCrates(_gameBuffer, game.crates);
-
     game.compiled = _gameBuffer.toString();
-    /// GAME COMPILATION FINISHED
-
-    // game.compiledTeamText.clear();
-
-    // for (final player in game.players) {
-    //   if (!game.compiledTeamText.containsKey(player.team)) {
-    //     final buffer = StringBuffer();
-    //     buffer.write(ServerResponse.Player_Text.index);
-    //     buffer.write(_space);
-    //     game.compiledTeamText[player.team] = buffer;
-    //     buffer.write(_space);
-    //   }
-    //   game.compiledTeamText[player.team]?.write(player.x.toInt());
-    //   _gameBuffer.write(_space);
-    //   game.compiledTeamText[player.team]?.write(player.y.toInt());
-    //   _gameBuffer.write(_space);
-    //   game.compiledTeamText[player.team]?.write(player.text);
-    //   _gameBuffer.write(_space);
-    //   game.compiledTeamText[player.team]?.write(_comma);
-    //   _gameBuffer.write(_space);
-    // }
   }
 }
 

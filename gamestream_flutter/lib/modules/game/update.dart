@@ -28,23 +28,9 @@ class GameUpdate {
     switch(game.type.value){
       case GameType.None:
         break;
-      case GameType.Custom:
-        _updateBleed();
-        break;
-      case GameType.MMO:
-        _updateBleed();
-        break;
-      case GameType.Moba:
-        _updateBleed();
-        break;
-      case GameType.BATTLE_ROYAL:
-        _updateBleed();
-        break;
-      // case GameType.CUBE3D:
-        // sendRequestUpdateCube3D();
-        // break;
       default:
-        throw Exception("No update for ${game.type.value}");
+        _updateBleed();
+        break;
     }
   }
 

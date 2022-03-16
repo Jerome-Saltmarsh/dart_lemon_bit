@@ -121,19 +121,19 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     }
 
     void joinGameSkirmish() {
-      final moba = engine.findPendingMobaGame();
-      final player = moba.playerJoin();
-      _player = _player;
-      compileWholeGame(moba);
+      final game = engine.findGameSkirmish();
+      final player = game.playerJoin();
+      _player = player;
+      compileWholeGame(game);
       compilePlayerJoined(_buffer, player);
-      compileGameMeta(_buffer, moba);
+      compileGameMeta(_buffer, game);
       sendAndClearBuffer();
     }
 
     void joinGameMoba() {
       final moba = engine.findPendingMobaGame();
       final player = moba.playerJoin();
-      _player = _player;
+      _player = player;
       compileWholeGame(moba);
       compilePlayerJoined(_buffer, player);
       compileGameMeta(_buffer, moba);
@@ -460,6 +460,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                  case GameType.BATTLE_ROYAL:
                    return joinBattleRoyal();
                  case GameType.SKIRMISH:
+                   return joinGameSkirmish();
 
                }
             });
@@ -478,6 +479,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               break;
             case GameType.BATTLE_ROYAL:
               return joinBattleRoyal();
+            case GameType.SKIRMISH:
+              return joinGameSkirmish();
             default:
               throw Exception("Cannot join ${gameType}");
           }

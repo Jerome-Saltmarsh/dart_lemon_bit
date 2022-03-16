@@ -12,6 +12,7 @@ import 'enums/npc_mode.dart';
 import 'functions/loadScenes.dart';
 import 'games/Moba.dart';
 import 'games/Royal.dart';
+import 'games/Skirmish.dart';
 import 'games/world.dart';
 import 'language.dart';
 import 'settings.dart';
@@ -117,6 +118,15 @@ class _Engine {
 
   void deregisterPlayer(Player player){
     playerMap.remove(player.uuid);
+  }
+
+  GameSkirmish findGameSkirmish() {
+    for (final game in games) {
+      if (game is GameSkirmish) {
+        return game;
+      }
+    }
+    return GameSkirmish();
   }
 
   GameMoba findPendingMobaGame() {
