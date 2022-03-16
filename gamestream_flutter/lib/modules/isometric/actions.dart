@@ -260,34 +260,37 @@ class IsometricActions {
 
   void addRow(){
     final List<Tile> row = [];
-    for(int i = 0; i < state.tiles[0].length; i++){
+    final rows = state.tiles[0].length;
+    for(var i = 0; i < rows; i++){
       row.add(Tile.Grass);
     }
     state.tiles.add(row);
-    refreshTileSize();
-    resetTilesSrcDst();
+    _refreshMapTiles();
   }
 
   void removeRow(){
     state.tiles.removeLast();
+    _refreshMapTiles();
+  }
+
+  void _refreshMapTiles(){
     refreshTileSize();
     resetTilesSrcDst();
+    resetLighting();
   }
 
   void addColumn() {
     for (final row in state.tiles) {
       row.add(Tile.Grass);
     }
-    refreshTileSize();
-    resetTilesSrcDst();
+    _refreshMapTiles();
   }
 
   void removeColumn() {
-    for (int i = 0; i < state.tiles.length; i++) {
+    for (var i = 0; i < state.tiles.length; i++) {
       state.tiles[i].removeLast();
     }
-    refreshTileSize();
-    resetTilesSrcDst();
+    _refreshMapTiles();
   }
 
   void detractHour(){

@@ -28,7 +28,7 @@ class EditorActions with EditorScope {
   final EditorCompile compile;
   EditorActions(this.compile);
 
-  void addEnvironmentObject (){
+  void addEnvironmentObject () {
     print("editor.actions.addEnvironmentObject()");
     state.environmentObjects.add(
         EnvironmentObject(
@@ -45,7 +45,7 @@ class EditorActions with EditorScope {
     engine.redrawCanvas();
   }
 
-  void setTile(){
+  void setTile() {
     setTileAtMouse(state.tile.value);
   }
 
@@ -166,7 +166,7 @@ class EditorActions with EditorScope {
     isometric.actions.refreshTileSize();
     final jsonEnvironment = mapJson['environment'];
     state.environmentObjects.clear();
-    for (Json json in jsonEnvironment) {
+    for (var json in jsonEnvironment) {
       final x = json.getDouble('x');
       final y = json.getDouble('y');
       final type = parseObjectTypeFromString(json['type']);
@@ -176,7 +176,7 @@ class EditorActions with EditorScope {
     isometric.state.minutes.value = mapJson[sceneFieldNames.startTime] / secondsPerHour;
 
     final List<Character> characters = [];
-    for(Json json in mapJson['characters']){
+    for(var json in mapJson['characters']){
       final x = json.getDouble('x');
       final y = json.getDouble('y');
       final type = parseCharacterType(json['type']);
@@ -186,7 +186,7 @@ class EditorActions with EditorScope {
     state.items.clear();
     if (mapJson.containsKey(sceneFieldNames.items)){
       final List items = mapJson[sceneFieldNames.items];
-      for(int i = 0; i < items.length; i += 3){
+      for(var i = 0; i < items.length; i += 3){
         state.items.add(
             Item(
                 type: itemTypes[items[i]],
@@ -196,10 +196,10 @@ class EditorActions with EditorScope {
       }
     }
 
-    if (mapJson.containsKey(sceneFieldNames.playerSpawnPoints)){
+    if (mapJson.containsKey(sceneFieldNames.playerSpawnPoints)) {
       final List spawnPoints = mapJson[sceneFieldNames.playerSpawnPoints];
       state.teamSpawnPoints.clear();
-      for(int i = 0; i < spawnPoints.length; i += 2){
+      for (var i = 0; i < spawnPoints.length; i += 2) {
          final x = (spawnPoints[i] as int).toDouble();
          final y = (spawnPoints[i + 1] as int).toDouble();
          state.teamSpawnPoints.add(Vector2(x, y));

@@ -286,7 +286,8 @@ class CoreActions {
   }
 
   void toggleEditMode() {
-    core.state.mode.value = core.state.mode.value == Mode.Player ? Mode.Editor : Mode.Player;
+    final mode = core.state.mode;
+    mode.value = mode.value == Mode.Player ? Mode.Editor : Mode.Player;
   }
 
   void setModePlay() {
