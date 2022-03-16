@@ -223,11 +223,6 @@ Widget buildDialogGames() {
 
 Widget buildDialogGameTypeSelected(GameType gameType) {
   return watchAccount((Account? account){
-    final isFreeToPlay = freeToPlay.contains(gameType);
-    final canPlay = isFreeToPlay || core.properties.premiumAccountAuthenticated;
-    if (!canPlay){
-      return buildDialogPremiumAccountRequired();
-    }
 
     return dialog(
         color: colours.white05,

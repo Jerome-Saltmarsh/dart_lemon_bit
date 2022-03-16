@@ -277,6 +277,7 @@ class CoreActions {
   }
 
   void connectToSelectedGame(){
+    print("connectToSelectedGame()");
     connectToWebSocketServer(core.state.region.value, game.type.value);
   }
 
