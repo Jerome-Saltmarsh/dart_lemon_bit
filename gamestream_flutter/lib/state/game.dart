@@ -4,35 +4,35 @@ import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/Projectile.dart';
 import 'package:bleed_common/GameType.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';
 
 final game = _Game();
 
 class _Game {
-  int lag = 0;
   final Map<int, bool> gameEvents = Map();
+  final settings = _Settings();
+  final type = Watch<GameType>(GameType.None);
+  final lobby = _Lobby();
   final countDownFramesRemaining = Watch<int>(0);
   final numberOfPlayersNeeded = Watch<int>(0);
-  final List<Effect> effects = [];
-  final settings = _Settings();
   final teamLivesWest = Watch<int>(-1);
   final teamLivesEast = Watch<int>(-1);
-  final type = Watch<GameType>(GameType.None);
-  String? customGameName = "";
-  final lobby = _Lobby();
   final teamSize = Watch<int>(0);
   final numberOfTeams = Watch<int>(0);
+  final totalZombies = Watch<int>(0);
+  final royal = _Royal();
+  final List<Character> players = [];
+  final List<Character> zombies = [];
+  final List<Character> interactableNpcs = [];
+  final List<Effect> effects = [];
+  int lag = 0;
+  String? customGameName = "";
   List<int> collectables = [];
   List<Vector2> crates = [];
   int cratesTotal = 0;
   List<EnvironmentObject> torches = [];
   List<NpcDebug> npcDebug = [];
-  final List<Character> players = [];
-  final List<Character> zombies = [];
-  final List<Character> interactableNpcs = [];
-  final totalZombies = Watch<int>(0);
   int totalNpcs = 0;
   int totalPlayers = 0;
   int totalCubes = 0;
@@ -43,11 +43,6 @@ class _Game {
   int id = -1;
   int totalProjectiles = 0;
   int itemsTotal = 0;
-
-  final royal = _Royal();
-
-  // properties
-  String get session => modules.game.state.player.uuid.value;
 }
 
 class _Royal {
