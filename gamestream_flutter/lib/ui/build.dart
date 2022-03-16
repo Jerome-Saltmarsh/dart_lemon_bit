@@ -20,7 +20,15 @@ import 'package:lemon_watch/watch_builder.dart';
 
 import 'compose/hudUI.dart';
 
-final _Build build = _Build();
+final build = _Build();
+
+final List<GameType> selectableGameTypes = [
+  GameType.MMO,
+  GameType.BATTLE_ROYAL,
+  // GameType.Moba,
+  // GameType.CUBE3D,
+  // GameType.DeathMatch,
+];
 
 class _Build {
 
