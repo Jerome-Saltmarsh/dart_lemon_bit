@@ -398,12 +398,12 @@ void _parseTiles() {
   final isometricState = isometric.state;
   final rows = consumeInt();
   final columns = consumeInt();
-  isometricState.totalRowsInt = rows;
-  isometricState.totalColumnsInt = columns;
+  final tiles = isometricState.tiles;
+  tiles.clear();
   isometricState.totalRows.value = rows;
   isometricState.totalColumns.value = columns;
-  final tiles = isometricState.tiles;
-  isometricState.tiles.clear();
+  isometricState.totalRowsInt = rows;
+  isometricState.totalColumnsInt = columns;
   for (var row = 0; row < rows; row++) {
     final List<Tile> column = [];
     for (var columnIndex = 0; columnIndex < columns; columnIndex++) {

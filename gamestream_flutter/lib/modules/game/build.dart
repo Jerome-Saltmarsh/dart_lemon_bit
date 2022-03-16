@@ -77,7 +77,7 @@ class GameBuild {
               case GameType.CUBE3D:
                 return buildUI3DCube();
               default:
-                return text(game.type.value);
+                return layoutRoyal();
             }
           case GameStatus.Finished:
             return buildDialogGameFinished();

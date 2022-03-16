@@ -42,19 +42,11 @@ class _Compile {
 
   void game(Game game) {
     _gameBuffer.clear();
-    _write(_gameBuffer, ServerResponse.Debug_Mode.index);
-    _write(_gameBuffer, game.debugMode ? 1 : 0);
 
-    if (game.debugMode) {
-      _compilePaths(_gameBuffer, game.zombies);
-      _compileNpcDebug(_gameBuffer, game.npcs);
-      _compileNpcDebug(_gameBuffer, game.zombies);
-    }
-
-    _write(_gameBuffer, ServerResponse.Scene_Shade_Max.index);
-    _write(_gameBuffer, game.shadeMax);
-
-    compileGameStatus(_gameBuffer, game.status);
+    // _write(_gameBuffer, ServerResponse.Scene_Shade_Max.index);
+    // _write(_gameBuffer, game.shadeMax);
+    //
+    // compileGameStatus(_gameBuffer, game.status);
 
     if (game is GameRoyal) {
       compileRoyal(_gameBuffer, game);

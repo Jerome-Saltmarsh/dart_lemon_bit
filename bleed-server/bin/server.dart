@@ -126,7 +126,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       _player = player;
       compileWholeGame(game);
       compilePlayerJoined(_buffer, player);
-      compileGameMeta(_buffer, game);
       sendAndClearBuffer();
     }
 
@@ -166,12 +165,15 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       orbs.topaz = 100;
       orbs.ruby = 100;
       compileAndSendPlayerGame(player);
-
-      write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${game.id} ${player.team}');
       write(game.compiledTiles);
       write(game.compiledEnvironmentObjects);
       write(game.compiled);
+      write(ServerResponse.Scene_Shade_Max.index);
+      write(game.shadeMax);
+      write(ServerResponse.Game_Status.index);
+      write(game.status.index);
       compilePlayersRemaining(_buffer, 0);
+      write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${game.id} ${player.team}');
       sendAndClearBuffer();
     }
 
