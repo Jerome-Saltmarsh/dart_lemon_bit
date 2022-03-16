@@ -120,13 +120,30 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       sink.add(bytes);
     }
 
+    void onGameJoined(){
+      final player = _player;
+      if (player == null) return;
+      final game = player.game;
+      compileAndSendPlayerGame(player);
+      write(game.compiledTiles);
+      write(game.compiledEnvironmentObjects);
+      write(game.compiled);
+      write(ServerResponse.Scene_Shade_Max.index);
+      write(game.shadeMax);
+      write(ServerResponse.Game_Status.index);
+      write(game.status.index);
+      compilePlayersRemaining(_buffer, 0);
+      write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${game.id} ${player.team}');
+      sendAndClearBuffer();
+    }
+
     void joinGameSkirmish() {
       final game = engine.findGameSkirmish();
-      final player = game.playerJoin();
-      _player = player;
-      compileWholeGame(game);
-      compilePlayerJoined(_buffer, player);
-      sendAndClearBuffer();
+      _player = game.playerJoin();
+      onGameJoined();
+      // compileWholeGame(game);
+      // compilePlayerJoined(_buffer, player);
+      // sendAndClearBuffer();
     }
 
     void joinGameMoba() {
@@ -157,24 +174,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       final account = _account;
       final player = engine.spawnPlayerInTown();
       _player = player;
-
       final orbs = player.orbs;
-      final game = player.game;
       player.name = account != null ? account.publicName : generateName();
       orbs.emerald = 100;
       orbs.topaz = 100;
       orbs.ruby = 100;
-      compileAndSendPlayerGame(player);
-      write(game.compiledTiles);
-      write(game.compiledEnvironmentObjects);
-      write(game.compiled);
-      write(ServerResponse.Scene_Shade_Max.index);
-      write(game.shadeMax);
-      write(ServerResponse.Game_Status.index);
-      write(game.status.index);
-      compilePlayersRemaining(_buffer, 0);
-      write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${game.id} ${player.team}');
-      sendAndClearBuffer();
+      onGameJoined();
     }
 
     void error(GameError error, {String message = ""}) {
