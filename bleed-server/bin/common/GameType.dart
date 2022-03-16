@@ -9,17 +9,18 @@ enum GameType {
     Custom
 }
 
-final List<GameType> gameTypes = GameType.values;
+const gameTypes = GameType.values;
 
-final Map<GameType, String> gameTypeNames = {
+const gameTypeNames = {
     GameType.MMO: "SANDBOX",
+    GameType.SKIRMISH: "SKIRMISH",
     GameType.BATTLE_ROYAL: "ROYAL",
     GameType.CUBE3D: "CUBE 3D",
     GameType.Moba: "HEROES MOBA",
     GameType.DeathMatch: "COUNTER STRIKE",
 };
 
-final List<GameType> freeToPlay = [
+const freeToPlay = [
     GameType.MMO,
     GameType.Moba,
     GameType.BATTLE_ROYAL,

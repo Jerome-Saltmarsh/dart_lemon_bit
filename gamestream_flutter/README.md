@@ -65,6 +65,7 @@
 [ ] (MMO) Save / Load Character
 [ ] Looting Engine
 [ ] Slot Capacity
+[ ] Release Casual Skirmish     
 [x] FIX BUG Initial lighting incorrect
 [x] Fix Batch Rendering glitches
 [x] FIX Particle blood renders as shell
