@@ -296,6 +296,8 @@ class CoreActions {
 
   void openMapEditor(){
     core.state.mode.value = Mode.Editor;
+    modules.isometric.state.hours.value = 12;
+    modules.isometric.state.minutes.value = 0;
   }
 
   void exitGame(){

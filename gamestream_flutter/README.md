@@ -63,6 +63,7 @@
 [ ] FIX Map Editor
 [ ] FIX Join Custom Game
 [ ] (MMO) Save / Load Character
+[ ] Looting Engine
 [ ] Slot Capacity
 [x] FIX BUG Initial lighting incorrect
 [x] Fix Batch Rendering glitches
