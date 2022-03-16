@@ -1,10 +1,10 @@
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:gamestream_flutter/classes/Weapon.dart';
-import 'package:gamestream_flutter/common/CharacterAction.dart';
-import 'package:gamestream_flutter/common/CharacterType.dart';
-import 'package:gamestream_flutter/common/GameType.dart';
-import 'package:gamestream_flutter/common/WeaponType.dart';
+import 'package:bleed_common/CharacterAction.dart';
+import 'package:bleed_common/CharacterType.dart';
+import 'package:bleed_common/GameType.dart';
+import 'package:bleed_common/WeaponType.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/cube/camera3d.dart';
 import 'package:gamestream_flutter/flutterkit.dart';

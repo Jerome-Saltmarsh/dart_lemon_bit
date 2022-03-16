@@ -1,6 +1,6 @@
 
 
-import 'package:gamestream_flutter/common/enums/ProjectileType.dart';
+import 'package:bleed_common/enums/ProjectileType.dart';
 
 class Projectile {
   double x;

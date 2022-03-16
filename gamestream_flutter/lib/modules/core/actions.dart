@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/classes/Authentication.dart';
-import 'package:gamestream_flutter/common/GameType.dart';
+import 'package:bleed_common/GameType.dart';
 import 'package:gamestream_flutter/constants/servers.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/state.dart';

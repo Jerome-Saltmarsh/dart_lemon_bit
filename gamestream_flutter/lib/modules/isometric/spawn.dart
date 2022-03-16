@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/FloatingText.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
-import 'package:gamestream_flutter/common/OrbType.dart';
+import 'package:bleed_common/OrbType.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/state/game.dart';
 import 'package:lemon_math/adjacent.dart';

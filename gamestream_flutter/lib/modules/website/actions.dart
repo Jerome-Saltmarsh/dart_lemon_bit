@@ -1,6 +1,6 @@
 
 
-import 'package:gamestream_flutter/common/GameType.dart';
+import 'package:bleed_common/GameType.dart';
 import 'package:gamestream_flutter/constants/servers.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/state/game.dart';

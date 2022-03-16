@@ -1,9 +1,9 @@
 
-import 'package:gamestream_flutter/common/CharacterAction.dart';
-import 'package:gamestream_flutter/common/ClientRequest.dart';
-import 'package:gamestream_flutter/common/Modify_Game.dart';
-import 'package:gamestream_flutter/common/SlotType.dart';
-import 'package:gamestream_flutter/common/SlotTypeCategory.dart';
+import 'package:bleed_common/CharacterAction.dart';
+import 'package:bleed_common/ClientRequest.dart';
+import 'package:bleed_common/Modify_Game.dart';
+import 'package:bleed_common/SlotType.dart';
+import 'package:bleed_common/SlotTypeCategory.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/state/game.dart';

@@ -1,4 +1,4 @@
-import 'package:gamestream_flutter/common/GameType.dart';
+import 'package:bleed_common/GameType.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/state/game.dart';
 import 'package:gamestream_flutter/styles.dart';

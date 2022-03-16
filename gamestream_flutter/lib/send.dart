@@ -1,13 +1,13 @@
 import 'dart:typed_data';
 
-import 'package:gamestream_flutter/common/CharacterAction.dart';
-import 'package:gamestream_flutter/common/ClientRequest.dart';
-import 'package:gamestream_flutter/common/WeaponType.dart';
-import 'package:gamestream_flutter/common/compile_util.dart';
+import 'package:bleed_common/CharacterAction.dart';
+import 'package:bleed_common/ClientRequest.dart';
+import 'package:bleed_common/GameType.dart';
+import 'package:bleed_common/WeaponType.dart';
+import 'package:bleed_common/compile_util.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 
-import 'common/GameType.dart';
 import 'webSocket.dart';
 
 final _gameUpdateIndex = ClientRequest.Update.index;

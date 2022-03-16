@@ -1,5 +1,5 @@
 import 'package:gamestream_flutter/classes/Authentication.dart';
-import 'package:gamestream_flutter/common/CharacterType.dart';
+import 'package:bleed_common/CharacterType.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/modules.dart';

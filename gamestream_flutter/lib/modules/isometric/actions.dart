@@ -2,12 +2,12 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:gamestream_flutter/classes/Character.dart';
-import 'package:gamestream_flutter/common/ObjectType.dart';
-import 'package:gamestream_flutter/common/Tile.dart';
-import 'package:gamestream_flutter/common/constants.dart';
-import 'package:gamestream_flutter/common/enums/ObjectType.dart';
-import 'package:gamestream_flutter/common/enums/ProjectileType.dart';
-import 'package:gamestream_flutter/common/enums/Shade.dart';
+import 'package:bleed_common/ObjectType.dart';
+import 'package:bleed_common/Tile.dart';
+import 'package:bleed_common/constants.dart';
+import 'package:bleed_common/enums/ObjectType.dart';
+import 'package:bleed_common/enums/ProjectileType.dart';
+import 'package:bleed_common/enums/Shade.dart';
 import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
 import 'package:gamestream_flutter/modules/isometric/constants.dart';

@@ -1,5 +1,5 @@
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
-import 'package:gamestream_flutter/common/Tile.dart';
+import 'package:bleed_common/Tile.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'state.dart';

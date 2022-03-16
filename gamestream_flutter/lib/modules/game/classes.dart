@@ -1,6 +1,6 @@
 
-import 'package:gamestream_flutter/common/AbilityType.dart';
-import 'package:gamestream_flutter/common/CharacterAction.dart';
+import 'package:bleed_common/AbilityType.dart';
+import 'package:bleed_common/CharacterAction.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_watch/watch.dart';
 

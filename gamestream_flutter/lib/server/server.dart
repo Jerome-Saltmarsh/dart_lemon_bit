@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/common/CharacterType.dart';
+import 'package:bleed_common/CharacterType.dart';
 
 final _Server server = _Server();
 

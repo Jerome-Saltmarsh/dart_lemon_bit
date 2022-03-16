@@ -1,5 +1,5 @@
-import 'package:gamestream_flutter/common/ItemType.dart';
-import 'package:gamestream_flutter/common/enums/Shade.dart';
+import 'package:bleed_common/ItemType.dart';
+import 'package:bleed_common/enums/Shade.dart';
 import 'package:lemon_math/Vector2.dart';
 
 import 'atlas.dart';

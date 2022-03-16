@@ -2,8 +2,8 @@
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/audio.dart';
-import 'package:gamestream_flutter/common/GameStatus.dart';
-import 'package:gamestream_flutter/common/GameType.dart';
+import 'package:bleed_common/GameStatus.dart';
+import 'package:bleed_common/GameType.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/common/Tile.dart';
-import 'package:gamestream_flutter/common/enums/Shade.dart';
+import 'package:bleed_common/Tile.dart';
+import 'package:bleed_common/enums/Shade.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
 import 'package:gamestream_flutter/modules/editor/enums.dart';

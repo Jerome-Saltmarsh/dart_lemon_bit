@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/common/WeaponType.dart';
+import 'package:bleed_common/WeaponType.dart';
 
 class Weapon {
   WeaponType type;

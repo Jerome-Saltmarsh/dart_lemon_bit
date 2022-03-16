@@ -2,7 +2,7 @@
 
 import 'dart:math';
 
-import 'package:gamestream_flutter/common/enums/Direction.dart';
+import 'package:bleed_common/enums/Direction.dart';
 
 const _piQuater = pi * 0.25;
 const _piHalf = pi * 0.5;

@@ -2,7 +2,7 @@
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/classes/Timeline.dart';
-import 'package:gamestream_flutter/common/GameStatus.dart';
+import 'package:bleed_common/GameStatus.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'enums.dart';

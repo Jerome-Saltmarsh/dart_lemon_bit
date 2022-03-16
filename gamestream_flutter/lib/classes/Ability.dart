@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/common/AbilityType.dart';
+import 'package:bleed_common/AbilityType.dart';
 import 'package:lemon_watch/watch.dart';
 
 class Ability {

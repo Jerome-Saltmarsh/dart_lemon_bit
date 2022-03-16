@@ -1,4 +1,4 @@
-import 'package:gamestream_flutter/common/AbilityType.dart';
+import 'package:bleed_common/AbilityType.dart';
 import 'package:flutter/material.dart';
 
 Map<AbilityType, DecorationImage> mapAbilityTypeToDecorationImage = {

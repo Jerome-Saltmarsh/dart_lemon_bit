@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:gamestream_flutter/common/ItemType.dart';
+import 'package:bleed_common/ItemType.dart';
 
 // interface
 Rect mapItemToRect(ItemType item) {

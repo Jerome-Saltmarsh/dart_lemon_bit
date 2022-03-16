@@ -3,7 +3,7 @@ import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/Projectile.dart';
-import 'package:gamestream_flutter/common/GameType.dart';
+import 'package:bleed_common/GameType.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';

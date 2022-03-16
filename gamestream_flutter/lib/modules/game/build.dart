@@ -1,14 +1,14 @@
 import 'dart:math';
 
+import 'package:bleed_common/version.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/bytestream_parser.dart';
-import 'package:gamestream_flutter/common/CharacterType.dart';
-import 'package:gamestream_flutter/common/GameStatus.dart';
-import 'package:gamestream_flutter/common/GameType.dart';
-import 'package:gamestream_flutter/common/RoyalCost.dart';
-import 'package:gamestream_flutter/common/SlotType.dart';
-import 'package:gamestream_flutter/common/WeaponType.dart';
-import 'package:gamestream_flutter/common/version.dart';
+import 'package:bleed_common/CharacterType.dart';
+import 'package:bleed_common/GameStatus.dart';
+import 'package:bleed_common/GameType.dart';
+import 'package:bleed_common/RoyalCost.dart';
+import 'package:bleed_common/SlotType.dart';
+import 'package:bleed_common/WeaponType.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';

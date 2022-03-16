@@ -32,6 +32,8 @@ dependencies:
   intl: ^0.17.0
   flutter_facebook_auth: ^4.0.1
   typedef: ^1.0.5
+  bleed_common:
+    path: C:\Users\Jerome\github\bleed\bleed-common
 
 flutter:
   fonts:

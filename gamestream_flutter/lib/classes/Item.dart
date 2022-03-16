@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/common/ItemType.dart';
+import 'package:bleed_common/ItemType.dart';
 import 'package:lemon_math/Vector2.dart';
 
 class Item extends Vector2 {

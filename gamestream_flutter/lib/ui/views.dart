@@ -1,6 +1,6 @@
 
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:gamestream_flutter/common/GameType.dart';
+import 'package:bleed_common/GameType.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/constants/servers.dart';
 import 'package:gamestream_flutter/flutterkit.dart';

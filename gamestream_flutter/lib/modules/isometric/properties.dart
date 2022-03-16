@@ -1,5 +1,5 @@
-import 'package:gamestream_flutter/common/Tile.dart';
-import 'package:gamestream_flutter/common/enums/Shade.dart';
+import 'package:bleed_common/Tile.dart';
+import 'package:bleed_common/enums/Shade.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:gamestream_flutter/modules/isometric/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';

@@ -1,6 +1,6 @@
 
 // interface
-import 'package:gamestream_flutter/common/Tile.dart';
+import 'package:bleed_common/Tile.dart';
 
 double mapTileToSrcLeft(Tile tile) {
   switch (tile) {

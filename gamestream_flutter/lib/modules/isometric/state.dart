@@ -7,9 +7,9 @@ import 'package:gamestream_flutter/classes/FloatingText.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
-import 'package:gamestream_flutter/common/GemSpawn.dart';
-import 'package:gamestream_flutter/common/Tile.dart';
-import 'package:gamestream_flutter/common/enums/Shade.dart';
+import 'package:bleed_common/GemSpawn.dart';
+import 'package:bleed_common/Tile.dart';
+import 'package:bleed_common/enums/Shade.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_watch/watch.dart';
 

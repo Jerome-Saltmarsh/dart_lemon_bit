@@ -1,7 +1,7 @@
 
 
-import 'package:gamestream_flutter/common/CharacterState.dart';
-import 'package:gamestream_flutter/common/enums/Shade.dart';
+import 'package:bleed_common/CharacterState.dart';
+import 'package:bleed_common/enums/Shade.dart';
 import 'package:gamestream_flutter/modules/isometric/animations.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
 import 'package:gamestream_flutter/modules/isometric/functions.dart';

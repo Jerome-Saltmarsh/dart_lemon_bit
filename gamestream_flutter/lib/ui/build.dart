@@ -1,7 +1,7 @@
 import 'package:gamestream_flutter/assets.dart';
 import 'package:gamestream_flutter/classes/Ability.dart';
-import 'package:gamestream_flutter/common/AbilityType.dart';
-import 'package:gamestream_flutter/common/GameType.dart';
+import 'package:bleed_common/AbilityType.dart';
+import 'package:bleed_common/GameType.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';

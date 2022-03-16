@@ -1,6 +1,6 @@
-import 'package:gamestream_flutter/common/CharacterState.dart';
-import 'package:gamestream_flutter/common/CharacterType.dart';
-import 'package:gamestream_flutter/common/SlotType.dart';
+import 'package:bleed_common/CharacterState.dart';
+import 'package:bleed_common/CharacterType.dart';
+import 'package:bleed_common/SlotType.dart';
 import 'package:lemon_math/Vector2.dart';
 
 import '../maths.dart';
