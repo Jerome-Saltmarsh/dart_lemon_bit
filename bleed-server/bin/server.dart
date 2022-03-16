@@ -142,25 +142,14 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
     void joinGameMoba() {
       final moba = engine.findPendingMobaGame();
-      final player = moba.playerJoin();
-      _player = player;
-      compileWholeGame(moba);
-      compilePlayerJoined(_buffer, player);
-      compileGameMeta(_buffer, moba);
-      sendAndClearBuffer();
+      _player = moba.playerJoin();
+      onGameJoined();
     }
 
     void joinBattleRoyal() {
       final royal = engine.findPendingRoyalGames();
-      final player = royal.playerJoin();
-      _player = player;
-      player.name = _account != null ? _account!.publicName : generateName();
-      compileWholeGame(royal);
-      compilePlayerJoined(_buffer, player);
-      compileGameStatus(_buffer, royal.status);
-      compileGameMeta(_buffer, royal);
-      compileCrates(_buffer, royal.crates);
-      sendAndClearBuffer();
+      _player = royal.playerJoin();
+      onGameJoined();
     }
 
     void joinGameMMO() {
