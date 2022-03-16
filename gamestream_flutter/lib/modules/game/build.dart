@@ -228,7 +228,9 @@ class GameBuild {
                   toggleAudioEnabled(),
                   width8,
                   ui.widgets.exit,
+                  if (core.state.account.isNotNull)
                   ui.widgets.saveCharacter,
+                  if (core.state.account.isNotNull)
                   ui.widgets.loadCharacter,
                 ],
               ),
