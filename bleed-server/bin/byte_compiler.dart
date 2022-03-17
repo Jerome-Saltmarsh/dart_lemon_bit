@@ -266,17 +266,18 @@ class _ByteCompiler {
     final allie = sameTeam(player, character) ? 100 : 0;
     final directionInt = character.direction * 10;
     final stateInt = character.state.index;
-
     final value = allie + directionInt + stateInt;
+
+    // writeByte(value);
 
 
     writeByte(character.state.index);
     writeByte(character.direction);
+    writeByte(character.team);
     writeBigInt(character.x);
     writeBigInt(character.y);
     writeByte(character.animationFrame);
     writePercentage(character.health / character.maxHealth);
-    writeByte(character.team);
   }
 
   List<int> _getSendBuffer(){

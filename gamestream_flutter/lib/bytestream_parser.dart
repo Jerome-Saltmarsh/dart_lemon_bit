@@ -165,11 +165,11 @@ class _ByteStreamParser {
       final character = zombies[total];
       character.state = characterStates[stateInt];
       character.direction = _nextByte();
+      character.team = _nextByte();
       character.x = _nextDouble();
       character.y = _nextDouble();
       character.frame = _nextByte();
       character.health = _nextPercentage();
-      character.team = _nextByte();
       total++;
     }
     game.totalZombies.value = total;
@@ -184,11 +184,11 @@ class _ByteStreamParser {
       final character = players[total];
       character.state = characterStates[stateInt];
       character.direction = _nextByte();
+      character.team = _nextByte();
       character.x = _nextDouble();
       character.y = _nextDouble();
       character.frame = _nextByte();
       character.health = _nextPercentage();
-      character.team = _nextByte();
       character.magic = _nextPercentage();
       character.equippedWeapon = _readSlotType();
       character.equippedArmour = _readSlotType();
@@ -217,11 +217,11 @@ class _ByteStreamParser {
   void _readCharacter(Character character){
      character.state = _readCharacterState();
      character.direction = _nextByte();
+     character.team = _nextByte();
      character.x = _nextDouble();
      character.y = _nextDouble();
      character.frame = _nextByte();
      character.health = _nextPercentage();
-     character.team = _nextByte();
   }
 
   CharacterState _readCharacterState(){
