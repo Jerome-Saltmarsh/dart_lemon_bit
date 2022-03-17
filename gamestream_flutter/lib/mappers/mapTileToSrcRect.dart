@@ -24,10 +24,6 @@ double mapTileToSrcLeft(Tile tile) {
       return _longGrass;
     case Tile.Flowers:
       return _flowers;
-    case Tile.Concrete_Horizontal:
-      return _concreteHorizontal;
-    case Tile.Concrete_Vertical:
-      return _concreteVertical;
     case Tile.Bridge:
       return _bridge;
     case Tile.Wooden_Floor:
@@ -48,8 +44,6 @@ final _grass = _frame(1);
 final _longGrass = _frame(2);
 final _block = _frame(3);
 final _concrete = _frame(4);
-final _concreteHorizontal = _concrete;
-final _concreteVertical =  _concrete;
 final water = _frame(5);
 final _zombieSpawn = _frame(7);
 final _flowers = _longGrass;

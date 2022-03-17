@@ -70,17 +70,6 @@ Scene parseJsonToScene(Json json, String name) {
     }
   }
 
-  // final List<Vector2> crates = [];
-  //
-  // if (json.containsKey('crates')){
-  //   List cratesJson = json['crates'];
-  //   for (int i = 0; i < cratesJson.length; i += 2) {
-  //     int x = cratesJson[i];
-  //     int y = cratesJson[i + 1];
-  //     crates.add(Vector2(x.toDouble(), y.toDouble()));
-  //   }
-  // }
-
   final List compiledTiles = json['tiles'];
   final List<List<Tile>> tiles = [];
 

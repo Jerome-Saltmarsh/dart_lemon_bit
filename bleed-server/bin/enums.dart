@@ -7,8 +7,6 @@ const Map<Tile, bool> _walkableTiles = {
   Tile.Long_Grass: true,
   Tile.ZombieSpawn: true,
   Tile.Concrete: true,
-  Tile.Concrete_Vertical: true,
-  Tile.Concrete_Horizontal: true,
   Tile.Bridge: true,
   Tile.Wooden_Floor: true,
   Tile.Rock: true,
