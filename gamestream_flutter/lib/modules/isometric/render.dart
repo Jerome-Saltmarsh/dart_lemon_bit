@@ -156,15 +156,15 @@ class IsometricRender {
 
     var playerY = particlesRemaining ? players[0].y : 0;
     var envY = environmentRemaining ? environmentObjects[0].y : 0;
+    var particleY = particlesRemaining ? particles[0].y : 0;
+    var particleIsBlood = particlesRemaining ? particles[0].type == ParticleType.Blood : false;
 
     while (true) {
 
       if (playersRemaining) {
 
         if (!environmentRemaining || playerY < envY) {
-          if (!particlesRemaining ||
-              playerY < particles[indexParticle].y &&
-                  particles[indexParticle].type != ParticleType.Blood) {
+          if (!particlesRemaining || playerY < particleY && !particleIsBlood) {
             if (!zombiesRemaining || playerY < zombies[indexZombie].y) {
               if (!npcsRemaining || playerY < npcs[indexNpc].y) {
                 renderCharacter(players[indexPlayer]);
@@ -183,8 +183,7 @@ class IsometricRender {
       }
 
       if (environmentRemaining) {
-        if (!particlesRemaining || envY < particles[indexParticle].y &&
-                particles[indexParticle].type != ParticleType.Blood) {
+        if (!particlesRemaining || envY < particleY && !particleIsBlood) {
           if (!zombiesRemaining || envY < zombies[indexZombie].y) {
             if (!npcsRemaining || envY < npcs[indexNpc].y) {
               final env = environmentObjects[indexEnv];
@@ -204,20 +203,26 @@ class IsometricRender {
       }
 
       if (particlesRemaining) {
-        final particle = particles[indexParticle];
-
-        if (particle.type == ParticleType.Blood) {
-          renderParticle(particle);
+        if (particleIsBlood) {
+          renderParticle(particles[indexParticle]);
           indexParticle++;
           particlesRemaining = indexParticle < totalParticles;
+          if (particlesRemaining){
+            particleIsBlood = particles[indexParticle].type == ParticleType.Blood;
+            particleY = particles[indexParticle].y;
+          }
           continue;
         }
 
-        if (!zombiesRemaining || particle.y < zombies[indexZombie].y) {
-          if (!npcsRemaining || particle.y < npcs[indexNpc].y) {
-            renderParticle(particle);
+        if (!zombiesRemaining || particleY < zombies[indexZombie].y) {
+          if (!npcsRemaining || particleY < npcs[indexNpc].y) {
+            renderParticle(particles[indexParticle]);
             indexParticle++;
             particlesRemaining = indexParticle < totalParticles;
+            if (particlesRemaining){
+              particleIsBlood = particles[indexParticle].type == ParticleType.Blood;
+              particleY = particles[indexParticle].y;
+            }
             continue;
           }
         }
