@@ -158,6 +158,7 @@ class IsometricRender {
     var envY = environmentRemaining ? environmentObjects[0].y : 0;
     var particleY = particlesRemaining ? particles[0].y : 0;
     var particleIsBlood = particlesRemaining ? particles[0].type == ParticleType.Blood : false;
+    var zombieY = zombiesRemaining ? zombies[0].y : 0;
 
     while (true) {
 
@@ -184,7 +185,7 @@ class IsometricRender {
 
       if (environmentRemaining) {
         if (!particlesRemaining || envY < particleY && !particleIsBlood) {
-          if (!zombiesRemaining || envY < zombies[indexZombie].y) {
+          if (!zombiesRemaining || envY < zombieY) {
             if (!npcsRemaining || envY < npcs[indexNpc].y) {
               final env = environmentObjects[indexEnv];
               if (env.top > screenBottom) return;
@@ -214,7 +215,7 @@ class IsometricRender {
           continue;
         }
 
-        if (!zombiesRemaining || particleY < zombies[indexZombie].y) {
+        if (!zombiesRemaining || particleY < zombieY) {
           if (!npcsRemaining || particleY < npcs[indexNpc].y) {
             renderParticle(particles[indexParticle]);
             indexParticle++;
@@ -229,11 +230,13 @@ class IsometricRender {
       }
 
       if (zombiesRemaining) {
-        final zombie = zombies[indexZombie];
-        if (!npcsRemaining || zombie.y < npcs[indexNpc].y) {
-          renderCharacter(zombie);
+        if (!npcsRemaining || zombieY < npcs[indexNpc].y) {
+          renderCharacter(zombies[indexZombie]);
           indexZombie++;
           zombiesRemaining = indexZombie < totalZombies;
+          if (zombiesRemaining){
+            zombieY = zombies[indexZombie].y;
+          }
           continue;
         }
       }
