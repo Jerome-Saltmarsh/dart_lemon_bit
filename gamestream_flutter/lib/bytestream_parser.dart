@@ -22,9 +22,6 @@ final _player = modules.game.state.player;
 final byteStreamParser = _ByteStreamParser();
 
 const _100D = 100.0;
-const _1 = 1;
-const _2 = 2;
-const _3 = 3;
 
 final _hours = modules.isometric.state.hours;
 final _minutes = modules.isometric.state.minutes;
