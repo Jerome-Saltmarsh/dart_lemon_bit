@@ -474,6 +474,7 @@ class IsometricActions {
   void applyEmissionFromCharactersBright(List<Character> characters) {
     final shading = state.dynamic;
     for(final character in characters) {
+      if (character.dead) continue;
       if (!character.allie) continue;
       emitLightHigh(shading, character.x, character.y);
     }
@@ -482,6 +483,8 @@ class IsometricActions {
   void applyEmissionFromCharactersMedium(List<Character> characters) {
     final dynamicShading = state.dynamic;
     for (final character in characters) {
+      if (character.dead) continue;
+      if (!character.allie) continue;
       emitLightMedium(dynamicShading, character.x, character.y);
     }
   }

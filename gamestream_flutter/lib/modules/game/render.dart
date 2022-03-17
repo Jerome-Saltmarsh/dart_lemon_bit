@@ -33,6 +33,8 @@ import 'style.dart';
 
 class GameRender {
 
+  final _smoothSpeed = 0.5;
+
   final GameQueries queries;
   final GameState state;
   final GameStyle style;
@@ -112,12 +114,12 @@ class GameRender {
     if (!state.frameSmoothing.value) return;
     if (state.smoothed >= 0) return;
       state.smoothed--;
-      for(final character in game.players) {
+      final players = game.players;
+      for(final character in players) {
         if (character.state.running) {
           final angle = character.angle;
-          final speed = 0.5;
-          character.x += adjacent(angle, speed);
-          character.y += opposite(angle, speed);
+          character.x += adjacent(angle, _smoothSpeed);
+          character.y += opposite(angle, _smoothSpeed);
         }
       }
   }
