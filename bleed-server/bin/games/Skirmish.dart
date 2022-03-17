@@ -12,7 +12,7 @@ import '../engine.dart';
 
 class GameSkirmish extends Game {
   late final List<EnvironmentObject> _flags;
-  final _time = 12 * 60 * 60;
+  final _time = 16 * 60 * 60;
 
   GameSkirmish() : super(engine.scenes.skirmish){
      _flags = scene.environment.where((env) => env.type == ObjectType.Flag).toList();

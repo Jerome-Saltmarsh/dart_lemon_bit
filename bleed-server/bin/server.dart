@@ -230,9 +230,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
             player.lastUpdateFrame = 0;
             final game = player.game;
-            compileGameStatus(_buffer, game.status);
 
             if (game.awaitingPlayers) {
+              compileGameStatus(_buffer, game.status);
               compileLobby(_buffer, game);
               compileGameMeta(_buffer, game);
               sendAndClearBuffer();
@@ -240,12 +240,14 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             }
 
             if (game.countingDown){
+              compileGameStatus(_buffer, game.status);
               compileCountDownFramesRemaining(_buffer, game);
               sendAndClearBuffer();
               return;
             }
 
             if (game.finished) {
+              compileGameStatus(_buffer, game.status);
               if (game is GameMoba) {
                 compileTeamLivesRemaining(_buffer, game);
               }

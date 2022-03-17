@@ -67,7 +67,10 @@
 [ ] Slot Capacity
 [SKIRMISH]     
 [ ] FIX Environment Render order in skirmish
-[ ] Player Spawn Location    
+[ ] FIX Kill zombie particles angle    
+[ ] FIX Double shot    
+[ ] Cannot attack enemy players    
+[x] Player Spawn Location    
 [COMPLETED]    
 [x] FIX BUG Initial lighting incorrect
 [x] Fix Batch Rendering glitches
