@@ -258,8 +258,13 @@ class _ByteCompiler {
     writeByte(value); // 1
     writeBigInt(character.x); // 2
     writeBigInt(character.y); // 2
-    writeByte(character.animationFrame); // 1
-    writePercentage(character.health / character.maxHealth); // 1
+
+    // final frameHealth =
+    final healthPercentage = ((character.health / character.maxHealth) * 24).toInt() * 10;
+    writeByte(healthPercentage + character.animationFrame);
+
+    // writeByte(character.animationFrame); // 1
+    // writePercentage(character.health / character.maxHealth); // 1
   }
 
   List<int> _getSendBuffer(){
