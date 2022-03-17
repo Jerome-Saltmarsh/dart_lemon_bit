@@ -86,14 +86,15 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     totalConnections++;
     print("New connection established. Total Connections $totalConnections");
     final sink = webSocket.sink;
+    final started = DateTime.now();
     Player? _player;
     Account? _account;
-    DateTime started = DateTime.now();
 
     sink.done.then((value){
       totalConnections--;
       print("Connection Lost. Total Connections $totalConnections");
-      print("Duration ${started.difference(DateTime.now()).inMinutes} minutes");
+      final duration = started.difference(DateTime.now());
+      print("Duration ${duration.inMinutes} minutes ${duration.inSeconds % 60} seconds");
       final closeReason = webSocket.closeReason;
       final closeCode = webSocket.closeCode;
       print("Close Reason: $closeReason");
@@ -101,7 +102,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       _player = null;
       _account = null;
     });
-
 
     void reply(String response) {
       sink.add(response);
