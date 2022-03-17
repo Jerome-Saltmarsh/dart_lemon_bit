@@ -59,19 +59,20 @@ class _ByteCompiler {
     writeBigInt(orbs.ruby);
     writeBool(player.alive);
     writeAttackTarget(player);
-    writeGame(player.game);
-    writePlayerZombies(player);
+    writeGame(player);
   }
 
   void writeBool(bool value){
     writeByte(value ? 1 : 0);
   }
 
-  void writeGame(Game game){
+  void writeGame(Player player){
+    final game = player.game;
     writeProjectiles(game.projectiles);
-    writeNpcs(game.npcs);
+    writeNpcs(player);
     writeGameEvents(game.gameEvents);
     writeGameTime(game);
+    writePlayerZombies(player);
 
     if (game.debugMode)
       writePaths(game);
@@ -127,17 +128,18 @@ class _ByteCompiler {
       final zombie = zombies[i];
       if (zombie.x < left) continue;
       if (zombie.x > right) continue;
-      writeCharacter(zombie);
+      writeCharacter(player, zombie);
     }
     writeByte(END); // ZOMBIES FINISHED;  see bytestream_parser._parseZombies();
   }
 
-  void writeZombies(List<Character> zombies){
+  void writeZombies(Player player){
+    final zombies = player.game.zombies;
     writeByte(ServerResponse.Zombies.index);
     writeTotalActive(zombies);
     for (final zombie in zombies) {
       if (!zombie.active) continue;
-      writeCharacter(zombie);
+      writeCharacter(player, zombie);
     }
   }
 
@@ -228,7 +230,7 @@ class _ByteCompiler {
   }
 
   void writePlayer(Player player) {
-    writeCharacter(player);
+    writeCharacter(player, player);
     writePercentage(player.magic / player.maxMagic);
     writeByte(player.weapon.index);
     writeByte(player.slots.armour.index);
@@ -245,19 +247,29 @@ class _ByteCompiler {
     }
   }
 
-  void writeNpcs(List<Character> npcs){
+  void writeNpcs(Player player){
+    final npcs = player.game.npcs;
     writeByte(ServerResponse.Npcs.index);
     writeTotalActive(npcs);
-    npcs.forEach(writeNpc);
+    for(final npc in npcs) {
+      writeNpc(player, npc);
+    }
   }
 
-  void writeNpc(Character npc) {
+  void writeNpc(Player player, Character npc) {
     if (!npc.active) return;
-    writeCharacter(npc);
+    writeCharacter(player, npc);
     writeByte(npc.weapon.index);
   }
 
-  void writeCharacter(Character character){
+  void writeCharacter(Player player, Character character){
+    final allie = sameTeam(player, character) ? 100 : 0;
+    final directionInt = character.direction * 10;
+    final stateInt = character.state.index;
+
+    final value = allie + directionInt + stateInt;
+
+
     writeByte(character.state.index);
     writeByte(character.direction);
     writeBigInt(character.x);
@@ -287,11 +299,6 @@ class _ByteCompiler {
   void writeBigInt(num value){
     writeNumberToByteArray(number: value, list: _buffer, index: _index);
     _index += 2;
-    // if (value >= -_256 && value <= _256){
-    //   _index += 2;
-    // } else {
-    //   _index += 3;
-    // }
   }
 
   void writeByte(int value){

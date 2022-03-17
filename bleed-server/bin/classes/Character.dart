@@ -93,6 +93,7 @@ class Character extends GameObject {
   double speedModifier = 0;
   bool invincible = false;
   int team;
+  bool allie = false;
   Vector2 abilityTarget = Vector2(0, 0);
 
   SlotType weapon;

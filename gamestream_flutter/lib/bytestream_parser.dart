@@ -178,7 +178,7 @@ class _ByteStreamParser {
   void _parsePlayers() {
     final players = game.players;
     var total = 0;
-    while(true){
+    while(true) {
       final stateInt = _nextByte();
       if (stateInt == END) break;
       final character = players[total];
