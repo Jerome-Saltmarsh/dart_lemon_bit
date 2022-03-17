@@ -29,7 +29,7 @@ class GameSkirmish extends Game {
       x: location.x,
       y: location.y,
       game: this,
-      team:teams.none,
+      team: teams.none,
       weapon: SlotType.Handgun,
     );
     return player;

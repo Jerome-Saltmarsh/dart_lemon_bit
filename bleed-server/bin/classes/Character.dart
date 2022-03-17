@@ -151,6 +151,7 @@ class Character extends GameObject implements HasSquad {
 }
 
 bool sameTeam(Character a, Character b){
+  if (a == b) return true;
   if (a.team == 0) return false;
   return a.team == b.team;
 }

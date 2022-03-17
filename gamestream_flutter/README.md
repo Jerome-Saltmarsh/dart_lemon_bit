@@ -69,6 +69,7 @@
 [ ] FIX Environment Render order in skirmish
 [ ] FIX Kill zombie particles angle    
 [ ] FIX Double shot    
+[ ] FIX Shell Particle    
 [ ] Cannot attack enemy players    
 [x] Player Spawn Location    
 [COMPLETED]    

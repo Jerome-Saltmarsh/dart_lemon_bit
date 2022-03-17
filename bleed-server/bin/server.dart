@@ -1,6 +1,5 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
-import 'package:lemon_math/Vector2.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -34,11 +33,13 @@ import 'settings.dart';
 import 'utilities.dart';
 
 const _space = " ";
+const _cursorRadius = 50.0;
 final _errorIndex = ServerResponse.Error.index;
 final _buffer = StringBuffer();
 final _clientRequestsLength = clientRequests.length;
 
 var totalConnections = 0;
+
 
 void clearBuffer() {
   _buffer.clear();
@@ -284,10 +285,14 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             final action = characterActions[actionIndex];
 
             player.aimTarget = null;
-            final closestEnemy = game.getClosestEnemy(mouseX, mouseY, player.team);
+            final closestEnemy = game.getClosestEnemy(mouseX, mouseY, player);
             if (closestEnemy != null) {
               if (withinDistance(
-                  closestEnemy, mouseX, mouseY, settings.radius.cursor)) {
+                  closestEnemy,
+                  mouseX,
+                  mouseY,
+                  _cursorRadius
+              )) {
                 player.aimTarget = closestEnemy;
               }
             }

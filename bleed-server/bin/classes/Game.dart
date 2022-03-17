@@ -157,7 +157,7 @@ abstract class Game {
 
     players.remove(player);
 
-    for (Character zombie in player.game.zombies) {
+    for (final zombie in player.game.zombies) {
       final ai = zombie.ai;
       if (ai == null) continue;
       if (ai.target != player) continue;
@@ -169,19 +169,9 @@ abstract class Game {
     player.sceneChanged = true;
   }
 
-  int numberOfPlayersOnTeam(int team) {
-    int count = 0;
-    for (Player player in players) {
-      if (!player.active) continue;
-      if (player.team != team) continue;
-      count++;
-    }
-    return count;
-  }
-
   int get numberOfAlivePlayers {
-    int playersRemaining = 0;
-    for (Player player in players) {
+    var playersRemaining = 0;
+    for (final player in players) {
       if (player.alive) playersRemaining++;
     }
     return playersRemaining;
@@ -286,12 +276,12 @@ extension GameFunctions on Game {
   Vector2 getSceneCenter() =>
       getTilePosition(scene.rows ~/ 2, scene.columns ~/ 2);
 
-  int getFirstAlivePlayerEnemyIndex(int team) {
+  int getFirstAlivePlayerEnemyIndex(Character character) {
     final numberOfPlayers = players.length;
     for (var i = 0; i < numberOfPlayers; i++) {
       final player = players[i];
       if (player.dead) continue;
-      if (player.team == team) continue;
+      if (sameTeam(character, player)) continue;
       return i;
     }
     return -1;
@@ -300,7 +290,7 @@ extension GameFunctions on Game {
   Character? getClosestEnemyZombie({
       required double x,
       required double y,
-      required int team,
+      required Character character,
       required double radius
   }) {
     final top = y - radius - characterRadius;
@@ -311,11 +301,11 @@ extension GameFunctions on Game {
     var closestNull = true;
     var distance = -1.0;
     for (final zombie in zombies) {
+      if (sameTeam(zombie, character)) continue;
       if (zombie.y < top) continue;
       if (zombie.y > bottom) break;
       if (zombie.x < left) continue;
       if (zombie.x > right) continue;
-      if (zombie.team == team) continue;
       if (zombie.dead) continue;
       if (!zombie.active) continue;
       final zombieDistance = diff(zombie.x, x) + diff(zombie.y, y);
@@ -329,8 +319,8 @@ extension GameFunctions on Game {
     return closest;
   }
 
-  Character? getClosestEnemyPlayer(double x, double y, int team) {
-    final aliveEnemyIndex = getFirstAlivePlayerEnemyIndex(team);
+  Character? getClosestEnemyPlayer(double x, double y, Character character) {
+    final aliveEnemyIndex = getFirstAlivePlayerEnemyIndex(character);
     if (aliveEnemyIndex == -1) return null;
 
     final top = y - _cursorRadius - settings.radius.character;
@@ -340,7 +330,7 @@ extension GameFunctions on Game {
     var closestY = diff(y, closest.y);
     var close = min(closestX, closestY);
     for (final player in players) {
-      if (player.team == team) continue;
+      // if (sameTeam(player, b)) continue;
       if (player.dead) continue;
       if (!player.active) continue;
       if (player.y < top) continue;
@@ -355,14 +345,14 @@ extension GameFunctions on Game {
     return closest;
   }
 
-  Character? getClosestEnemy(double x, double y, int team) {
+  Character? getClosestEnemy(double x, double y, Character character) {
     final zombie = getClosestEnemyZombie(
         x: x,
         y: y,
-        team: team,
+        character: character,
         radius: _cursorRadius,
     );
-    final player = getClosestEnemyPlayer(x, y, team);
+    final player = getClosestEnemyPlayer(x, y, character);
 
     if (zombie == null) {
       return player;

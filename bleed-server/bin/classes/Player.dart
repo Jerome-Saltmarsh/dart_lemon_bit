@@ -94,15 +94,9 @@ class Player extends Character with Entity {
       _aimTarget = null;
       return;
     }
-    if (value.team == team){
-      throw Exception("cannot aim at same team");
-    }
-    if (value.dead){
-      throw Exception("cannot aim at dead target");
-    }
-    if (!value.active){
-      throw Exception("cannot aim at inactive target");
-    }
+    assert(!sameTeam(this, value));
+    assert(value.alive);
+    assert(value.active);
     _aimTarget = value;
   }
 
