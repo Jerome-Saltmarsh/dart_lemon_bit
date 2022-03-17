@@ -875,7 +875,7 @@ extension GameFunctions on Game {
   }
 
   void applyStrike(Character src, Character target, int damage) {
-    if (!enemies(src, target)) return;
+    if (sameTeam(src, target)) return;
     if (target.dead) return;
     applyDamage(src, target, damage);
     final angleBetweenSrcAndTarget = radiansV2(src, target);
