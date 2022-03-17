@@ -140,7 +140,7 @@ class IsometricRender {
     final npcs = game.interactableNpcs;
     final screenBottom = engine.screen.bottom;
     final totalZombies = game.totalZombies.value;
-    final totalPlayers = game.totalZombies.value;
+    final totalPlayers = game.totalPlayers;
     final totalNpcs = game.totalNpcs;
 
     var indexPlayer = 0;
@@ -148,9 +148,9 @@ class IsometricRender {
     var indexParticle = 0;
     var indexZombie = 0;
     var indexNpc = 0;
-    var zombiesRemaining = indexZombie < game.totalZombies.value;
-    var playersRemaining = indexPlayer < game.totalPlayers;
-    var npcsRemaining = indexPlayer < game.totalNpcs;
+    var zombiesRemaining = indexZombie < totalZombies;
+    var playersRemaining = indexPlayer < totalPlayers;
+    var npcsRemaining = indexPlayer < totalNpcs;
     var environmentRemaining = indexEnv < totalEnvironment;
     var particlesRemaining = indexParticle < totalParticles;
 
@@ -159,23 +159,22 @@ class IsometricRender {
     var particleY = particlesRemaining ? particles[0].y : 0;
     var particleIsBlood = particlesRemaining ? particles[0].type == ParticleType.Blood : false;
     var zombieY = zombiesRemaining ? zombies[0].y : 0;
+    var npcY = npcsRemaining ? npcs[0].y : 0;
 
     while (true) {
 
       if (playersRemaining) {
 
         if (!environmentRemaining || playerY < envY) {
-          if (!particlesRemaining || playerY < particleY && !particleIsBlood) {
-            if (!zombiesRemaining || playerY < zombies[indexZombie].y) {
-              if (!npcsRemaining || playerY < npcs[indexNpc].y) {
+          if (!particlesRemaining || (playerY < particleY && !particleIsBlood)) {
+            if (!zombiesRemaining || playerY < zombieY) {
+              if (!npcsRemaining || playerY < npcY) {
                 renderCharacter(players[indexPlayer]);
                 indexPlayer++;
                 playersRemaining = indexPlayer < totalPlayers;
-
-                if (playersRemaining){
+                if (playersRemaining) {
                   playerY = players[indexPlayer].y;
                 }
-
                 continue;
               }
             }
@@ -186,17 +185,15 @@ class IsometricRender {
       if (environmentRemaining) {
         if (!particlesRemaining || envY < particleY && !particleIsBlood) {
           if (!zombiesRemaining || envY < zombieY) {
-            if (!npcsRemaining || envY < npcs[indexNpc].y) {
+            if (!npcsRemaining || envY < npcY) {
               final env = environmentObjects[indexEnv];
-              if (env.top > screenBottom) return;
               renderEnvironmentObject(env);
               indexEnv++;
               environmentRemaining = indexEnv < totalEnvironment;
-
               if (environmentRemaining){
                 envY = environmentObjects[indexEnv].y;
+                if (envY > screenBottom) return;
               }
-
               continue;
             }
           }
@@ -216,7 +213,7 @@ class IsometricRender {
         }
 
         if (!zombiesRemaining || particleY < zombieY) {
-          if (!npcsRemaining || particleY < npcs[indexNpc].y) {
+          if (!npcsRemaining || particleY < npcY) {
             renderParticle(particles[indexParticle]);
             indexParticle++;
             particlesRemaining = indexParticle < totalParticles;
@@ -230,7 +227,7 @@ class IsometricRender {
       }
 
       if (zombiesRemaining) {
-        if (!npcsRemaining || zombieY < npcs[indexNpc].y) {
+        if (!npcsRemaining || zombieY < npcY) {
           renderCharacter(zombies[indexZombie]);
           indexZombie++;
           zombiesRemaining = indexZombie < totalZombies;
@@ -241,15 +238,17 @@ class IsometricRender {
         }
       }
 
-      if (npcsRemaining){
+      if (npcsRemaining) {
         drawInteractableNpc(npcs[indexNpc]);
         indexNpc++;
         npcsRemaining = indexNpc < totalNpcs;
+        if (npcsRemaining){
+          npcY = npcs[indexNpc].y;
+        }
         continue;
       }
 
       return;
-
     }
   }
 
@@ -305,6 +304,7 @@ class IsometricRender {
       anchorX: value.anchorX,
       anchorY: value.anchorY
     );
+    engine.draw.circle(value.x, value.y, 20, colours.white);
     engine.renderAtlas();
   }
 

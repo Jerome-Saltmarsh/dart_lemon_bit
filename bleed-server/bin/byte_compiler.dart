@@ -37,8 +37,6 @@ class _ByteCompiler {
   void writePlayerGame(Player player){
     final slots = player.slots;
     final orbs = player.orbs;
-    writeGame(player.game);
-    writePlayerZombies(player);
     writePlayers(player);
     writeByte(ServerResponse.Player.index);
     writeBigInt(player.x);
@@ -61,6 +59,8 @@ class _ByteCompiler {
     writeBigInt(orbs.ruby);
     writeBool(player.alive);
     writeAttackTarget(player);
+    writeGame(player.game);
+    writePlayerZombies(player);
   }
 
   void writeBool(bool value){
