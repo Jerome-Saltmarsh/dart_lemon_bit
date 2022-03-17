@@ -154,12 +154,11 @@ class IsometricRender {
     var environmentRemaining = indexEnv < totalEnvironment;
     var particlesRemaining = indexParticle < totalParticles;
 
+    var playerY = particlesRemaining ? players[0].y : 0;
 
     while (true) {
 
       if (playersRemaining) {
-        final player = players[indexPlayer];
-        final playerY = player.y;
 
         if (!environmentRemaining ||
             playerY < environmentObjects[indexEnv].y) {
@@ -168,9 +167,14 @@ class IsometricRender {
                   particles[indexParticle].type != ParticleType.Blood) {
             if (!zombiesRemaining || playerY < zombies[indexZombie].y) {
               if (!npcsRemaining || playerY < npcs[indexNpc].y) {
-                renderCharacter(player);
+                renderCharacter(players[indexPlayer]);
                 indexPlayer++;
                 playersRemaining = indexPlayer < totalPlayers;
+
+                if (playersRemaining){
+                  playerY = players[indexPlayer].y;
+                }
+
                 continue;
               }
             }
