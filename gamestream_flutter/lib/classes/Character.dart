@@ -16,6 +16,7 @@ class Character extends Vector2 {
   int team;
   String name;
   String text;
+  bool allie = false;
   /// percentage between 0 and 1
   double health = 1;
   /// percentage between 0 and 1

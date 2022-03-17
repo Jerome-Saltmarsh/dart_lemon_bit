@@ -156,6 +156,20 @@ class _ByteStreamParser {
     }
   }
 
+  void _parseCharacterTeamDirectionState(Character character){
+    final teamDirectionState = _nextByte();
+    readTeamDirectionState(character, teamDirectionState);
+  }
+
+  void readTeamDirectionState(Character character, int byte){
+    final allie = byte >= 100;
+    final direction = (byte % 100) ~/ 10;
+    final state = byte % 10;
+    character.allie == allie;
+    character.direction = direction;
+    character.state = characterStates[state]; // OPTIMIZE unpacking enum
+  }
+
   void _parseZombies() {
     final zombies = game.zombies;
     var total = 0;
@@ -163,9 +177,7 @@ class _ByteStreamParser {
       final stateInt = _nextByte();
       if (stateInt == END) break;
       final character = zombies[total];
-      character.state = characterStates[stateInt];
-      character.direction = _nextByte();
-      character.team = _nextByte();
+      readTeamDirectionState(character, stateInt);
       character.x = _nextDouble();
       character.y = _nextDouble();
       character.frame = _nextByte();
@@ -179,12 +191,10 @@ class _ByteStreamParser {
     final players = game.players;
     var total = 0;
     while(true) {
-      final stateInt = _nextByte();
-      if (stateInt == END) break;
+      final teamDirectionState = _nextByte();
+      if (teamDirectionState == END) break;
       final character = players[total];
-      character.state = characterStates[stateInt];
-      character.direction = _nextByte();
-      character.team = _nextByte();
+      readTeamDirectionState(character, teamDirectionState);
       character.x = _nextDouble();
       character.y = _nextDouble();
       character.frame = _nextByte();
@@ -215,18 +225,16 @@ class _ByteStreamParser {
   }
 
   void _readCharacter(Character character){
-     character.state = _readCharacterState();
-     character.direction = _nextByte();
-     character.team = _nextByte();
+     _parseCharacterTeamDirectionState(character);
      character.x = _nextDouble();
      character.y = _nextDouble();
      character.frame = _nextByte();
      character.health = _nextPercentage();
   }
 
-  CharacterState _readCharacterState(){
-    return characterStates[_nextByte()];
-  }
+  // CharacterState _readCharacterState(){
+  //   return characterStates[_nextByte()];
+  // }
 
   SlotType _readSlotType(){
     return slotTypes[_nextByte()];

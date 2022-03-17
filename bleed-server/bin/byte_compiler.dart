@@ -267,13 +267,7 @@ class _ByteCompiler {
     final directionInt = character.direction * 10;
     final stateInt = character.state.index;
     final value = allie + directionInt + stateInt;
-
-    // writeByte(value);
-
-
-    writeByte(character.state.index);
-    writeByte(character.direction);
-    writeByte(character.team);
+    writeByte(value);
     writeBigInt(character.x);
     writeBigInt(character.y);
     writeByte(character.animationFrame);
