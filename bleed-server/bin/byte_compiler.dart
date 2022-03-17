@@ -37,6 +37,7 @@ class _ByteCompiler {
   void writePlayerGame(Player player){
     final slots = player.slots;
     final orbs = player.orbs;
+    final game = player.game;
     writePlayers(player);
     writeByte(ServerResponse.Player.index);
     writeBigInt(player.x);
@@ -48,26 +49,17 @@ class _ByteCompiler {
     writeByte(player.weapon.index);
     writeByte(player.slots.armour.index);
     writeByte(player.slots.helm.index);
-    writeByte(slots.slot1.index);
-    writeByte(slots.slot2.index);
-    writeByte(slots.slot3.index);
-    writeByte(slots.slot4.index);
-    writeByte(slots.slot5.index);
-    writeByte(slots.slot6.index);
+    writeByte(slots.slot1.index); // 1
+    writeByte(slots.slot2.index); // 1
+    writeByte(slots.slot3.index); // 1
+    writeByte(slots.slot4.index); // 1
+    writeByte(slots.slot5.index); // 1
+    writeByte(slots.slot6.index); // 1
     writeBigInt(orbs.topaz); // 2
     writeBigInt(orbs.emerald); // 2
     writeBigInt(orbs.ruby); // 2
     writeBool(player.alive); // 1
     writeAttackTarget(player);
-    writeGame(player);
-  }
-
-  void writeBool(bool value){
-    writeByte(value ? 1 : 0);
-  }
-
-  void writeGame(Player player){
-    final game = player.game;
     writeProjectiles(game.projectiles);
     writeNpcs(player);
     writeGameEvents(game.gameEvents);
@@ -76,6 +68,10 @@ class _ByteCompiler {
 
     if (game.debugMode)
       writePaths(game);
+  }
+
+  void writeBool(bool value){
+    writeByte(value ? 1 : 0);
   }
 
   void writePaths(Game game) {
