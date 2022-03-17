@@ -54,10 +54,10 @@ class _ByteCompiler {
     writeByte(slots.slot4.index);
     writeByte(slots.slot5.index);
     writeByte(slots.slot6.index);
-    writeBigInt(orbs.topaz);
-    writeBigInt(orbs.emerald);
-    writeBigInt(orbs.ruby);
-    writeBool(player.alive);
+    writeBigInt(orbs.topaz); // 2
+    writeBigInt(orbs.emerald); // 2
+    writeBigInt(orbs.ruby); // 2
+    writeBool(player.alive); // 1
     writeAttackTarget(player);
     writeGame(player);
   }
