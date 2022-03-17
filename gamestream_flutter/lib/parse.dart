@@ -152,10 +152,6 @@ void parseState() {
         }
         break;
 
-      case ServerResponse.Players:
-        _parsePlayers();
-        break;
-
       case ServerResponse.Version:
         // sendRequestJoinGame();
         break;
@@ -195,10 +191,6 @@ void parseState() {
       case ServerResponse.EnvironmentObjects:
         isometric.state.particleEmitters.clear();
         _parseEnvironmentObjects();
-        break;
-
-      case ServerResponse.Zombies:
-        _parseZombies();
         break;
 
       case ServerResponse.Game_Events:
@@ -657,14 +649,6 @@ bool _commaConsumed() {
   return false;
 }
 
-void _parsePlayers() {
-  game.totalPlayers = consumeInt();
-  final humans = game.players;
-  for (var i = 0; i < game.totalPlayers; i++) {
-    _consumeHuman(humans[i]);
-  }
-}
-
 GameError _consumeError() {
   return GameError.values[consumeInt()];
 }
@@ -709,14 +693,6 @@ ProjectileType _consumeProjectileType() {
   return projectileTypes[consumeInt()];
 }
 
-void _parseZombies() {
-  final total = consumeInt();
-  game.totalZombies.value = total;
-  final zombies = game.zombies;
-  for (var i = 0; i < total; i++) {
-    _consumeZombie(zombies[i]);
-  }
-}
 
 final _npcs = game.interactableNpcs;
 
@@ -726,32 +702,6 @@ void _parseNpcs() {
     _consumeInteractableNpc(_npcs[game.totalNpcs]);
     game.totalNpcs++;
   }
-}
-
-void _consumeHuman(Character character) {
-  character.type = _consumeCharacterType();
-  character.state = _consumeCharacterState();
-  character.direction = _consumeSingleDigitInt();
-  character.x = consumeDouble();
-  character.y = consumeDouble();
-  character.frame = consumeInt();
-  character.team = consumeInt();
-  character.name = _consumeString();
-  character.health = _consumePercentage();
-  character.magic = _consumePercentage();
-  character.equippedWeapon = consumeSlotType();
-  character.equippedArmour = consumeSlotType();
-  character.equippedHead = consumeSlotType();
-}
-
-void _consumeZombie(Character zombie) {
-  zombie.state = _consumeCharacterState();
-  zombie.direction = _consumeSingleDigitInt();
-  zombie.x = _consumeDoubleUnsafe();
-  zombie.y = _consumeDoubleUnsafe();
-  zombie.frame = _consumeIntUnsafe();
-  zombie.health = _consumePercentage();
-  zombie.team = consumeInt();
 }
 
 void _consumeInteractableNpc(Character character) {

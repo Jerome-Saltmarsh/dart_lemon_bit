@@ -377,31 +377,9 @@ class EditorBuild {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 text("Position ${selected.x.toInt()} ${selected.y.toInt()}"),
-                ...buildSelectedFields(selected),
             ],),
         );
     });
-  }
-
-  List<Widget> buildSelectedFields(Vector2 selected){
-     if (selected is Character){
-        return [
-           Row(
-             children: [
-               text("Team: ${selected.team}"),
-               button("-", (){
-                 selected.team--;
-                 editor.actions.refreshSelected();
-               }),
-               button("+", (){
-                 selected.team++;
-                 editor.actions.refreshSelected();
-               })
-             ],
-           ),
-        ];
-     }
-    return [];
   }
 }
 

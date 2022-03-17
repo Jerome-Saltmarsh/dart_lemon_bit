@@ -473,9 +473,8 @@ class IsometricActions {
 
   void applyEmissionFromCharactersBright(List<Character> characters) {
     final shading = state.dynamic;
-    final playerTeam = modules.game.state.player.team;
     for(final character in characters) {
-      if (character.team != playerTeam) continue;
+      if (!character.allie) continue;
       emitLightHigh(shading, character.x, character.y);
     }
   }

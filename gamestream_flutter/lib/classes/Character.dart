@@ -13,7 +13,7 @@ class Character extends Vector2 {
   SlotType equippedWeapon = SlotType.Empty;
   SlotType equippedArmour = SlotType.Empty;
   SlotType equippedHead = SlotType.Empty;
-  int team;
+  // int team;
   String name;
   String text;
   bool allie = false;
@@ -34,7 +34,6 @@ class Character extends Vector2 {
     double x = 0,
     double y = 0,
     this.frame = 0,
-    this.team = 0,
     this.name = "",
     this.text = "",
   }): super(x, y);

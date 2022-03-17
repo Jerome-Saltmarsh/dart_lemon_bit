@@ -267,11 +267,11 @@ class _ByteCompiler {
     final directionInt = character.direction * 10;
     final stateInt = character.state.index;
     final value = allie + directionInt + stateInt;
-    writeByte(value);
-    writeBigInt(character.x);
-    writeBigInt(character.y);
-    writeByte(character.animationFrame);
-    writePercentage(character.health / character.maxHealth);
+    writeByte(value); // 1
+    writeBigInt(character.x); // 2
+    writeBigInt(character.y); // 2
+    writeByte(character.animationFrame); // 1
+    writePercentage(character.health / character.maxHealth); // 1
   }
 
   List<int> _getSendBuffer(){
