@@ -123,6 +123,7 @@ class _ByteCompiler {
 
     for(var i = start; i <= end; i++){
       final zombie = zombies[i];
+      if (zombie.dead) continue;
       if (zombie.x < left) continue;
       if (zombie.x > right) continue;
       writeCharacter(player, zombie);
