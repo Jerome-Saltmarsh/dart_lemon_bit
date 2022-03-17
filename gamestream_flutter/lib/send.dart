@@ -12,7 +12,7 @@ import 'webSocket.dart';
 
 final _gameUpdateIndex = ClientRequest.Update.index;
 final _buffer1 = Uint8List(1);
-final _buffer9 = Uint8List(22);
+final _updateBuffer = Uint8List(15);
 
 void sendRequestSpeak(String message){
   if (message.isEmpty) return;
@@ -67,23 +67,24 @@ final _characterController = modules.game.state.characterController;
 final _characterControllerAction = _characterController.action;
 
 void sendRequestUpdatePlayer() {
-  _buffer9[0] = _gameUpdateIndex;
-  _buffer9[1] = _characterControllerAction.value.index;
-  writeNumberToByteArray(number: mouseWorldX, list: _buffer9, index: 2);
-  writeNumberToByteArray(number: mouseWorldY, list: _buffer9, index: 5);
+  final screen = engine.screen;
+
+  _updateBuffer[0] = _gameUpdateIndex;
+  _updateBuffer[1] = _characterControllerAction.value.index;
+  writeNumberToByteArray(number: mouseWorldX, list: _updateBuffer, index: 2);
+  writeNumberToByteArray(number: mouseWorldY, list: _updateBuffer, index: 4);
   if (_characterControllerAction.value == CharacterAction.Run){
-    _buffer9[8] = _characterController.angle.toInt();
+    _updateBuffer[6] = _characterController.angle.toInt();
   } else {
-    _buffer9[8] = 0;
+    _updateBuffer[6] = 0;
   }
 
-  final screen = engine.screen;
-  writeNumberToByteArray(number: screen.left, list: _buffer9, index: 9);
-  writeNumberToByteArray(number: screen.top, list: _buffer9, index: 12);
-  writeNumberToByteArray(number: screen.right, list: _buffer9, index: 15);
-  writeNumberToByteArray(number: screen.bottom, list: _buffer9, index: 18);
+  writeNumberToByteArray(number: screen.left, list: _updateBuffer, index: 7);
+  writeNumberToByteArray(number: screen.top, list: _updateBuffer, index: 9);
+  writeNumberToByteArray(number: screen.right, list: _updateBuffer, index: 11);
+  writeNumberToByteArray(number: screen.bottom, list: _updateBuffer, index: 13);
 
-  webSocket.sink.add(_buffer9);
+  webSocket.sink.add(_updateBuffer);
   _characterControllerAction.value = CharacterAction.Idle;
 }
 

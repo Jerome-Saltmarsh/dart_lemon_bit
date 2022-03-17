@@ -274,13 +274,13 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
             final actionIndex = args[1];
             final mouseX = readNumberFromByteArray(args, index: 2).toDouble();
-            final mouseY = readNumberFromByteArray(args, index: 5).toDouble();
+            final mouseY = readNumberFromByteArray(args, index: 4).toDouble();
             player.mouseX = mouseX;
             player.mouseY = mouseY;
-            player.screenLeft = readNumberFromByteArray(args, index: 9).toDouble();
-            player.screenTop = readNumberFromByteArray(args, index: 12).toDouble();
-            player.screenRight = readNumberFromByteArray(args, index: 15).toDouble();
-            player.screenBottom = readNumberFromByteArray(args, index: 18).toDouble();
+            player.screenLeft = readNumberFromByteArray(args, index: 7).toDouble();
+            player.screenTop = readNumberFromByteArray(args, index: 9).toDouble();
+            player.screenRight = readNumberFromByteArray(args, index: 11).toDouble();
+            player.screenBottom = readNumberFromByteArray(args, index: 13).toDouble();
 
             final action = characterActions[actionIndex];
 
@@ -367,7 +367,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 game.setCharacterState(player, CharacterState.Performing);
                 break;
               case CharacterAction.Run:
-                final direction = directions[args[8]];
+                final direction = directions[args[6]];
                 player.angle = convertDirectionToAngle(direction);
                 game.setCharacterStateRunning(player);
                 player.target = null;
