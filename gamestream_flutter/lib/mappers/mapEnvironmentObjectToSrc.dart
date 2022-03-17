@@ -95,14 +95,11 @@ final _timeline = core.state.timeline;
 void mapEnvironmentObjectToSrc(EnvironmentObject env){
   // TODO Optimize
   var shade = _isoState.getShade(env.row, env.column);
-  final type = env.type;
-
   if (env.isHouse){
     shade = _ambient.value == Shade.Bright ? 0 : 1;
   }
-
   var top = shade * env.height;
-  if (type == ObjectType.Torch && _ambient.value > Shade.Bright){
+  if (env.isTorch && _ambient.value > Shade.Bright){
     top = _translations.torches.y + ((_timeline.frame % 4) * _torchHeight) + _torchHeight;
   }
   engine.mapSrc(x: env.srcX, y: top, width: env.width, height: env.height);
