@@ -65,7 +65,7 @@ void startWebsocketServer(){
   var handler = webSocketHandler(
       buildWebSocketHandler,
       protocols: ['gamestream.online'],
-      pingInterval: Duration(hours: 1),
+      // pingInterval: Duration(hours: 1),
   );
 
   shelf_io.serve(handler, settings.host, settings.port).then((server) {

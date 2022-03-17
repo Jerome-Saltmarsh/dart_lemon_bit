@@ -166,7 +166,7 @@ class EditorActions with EditorScope {
     isometric.actions.refreshTileSize();
     final jsonEnvironment = mapJson['environment'];
     state.environmentObjects.clear();
-    for (var json in jsonEnvironment) {
+    for (Json json in jsonEnvironment) {
       final x = json.getDouble('x');
       final y = json.getDouble('y');
       final type = parseObjectTypeFromString(json['type']);
@@ -176,7 +176,7 @@ class EditorActions with EditorScope {
     isometric.state.minutes.value = mapJson[sceneFieldNames.startTime] / secondsPerHour;
 
     final List<Character> characters = [];
-    for(var json in mapJson['characters']){
+    for(Json json in mapJson['characters']){
       final x = json.getDouble('x');
       final y = json.getDouble('y');
       final type = parseCharacterType(json['type']);

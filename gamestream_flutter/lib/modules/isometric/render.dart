@@ -293,7 +293,7 @@ class IsometricRender {
   }
 
   void renderEnvironmentObject(EnvironmentObject value) {
-    if (!queries.environmentObjectOnScreenScreen(value)) return;
+    if (!_screen.containsV(value)) return;
     final shade = state.getShade(value.row, value.column);
     if (shade == Shade.Pitch_Black) return;
 
@@ -304,7 +304,6 @@ class IsometricRender {
       anchorX: value.anchorX,
       anchorY: value.anchorY
     );
-    engine.draw.circle(value.x, value.y, 20, colours.white);
     engine.renderAtlas();
   }
 

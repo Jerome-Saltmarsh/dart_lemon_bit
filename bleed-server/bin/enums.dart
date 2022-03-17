@@ -3,7 +3,6 @@ import 'common/Tile.dart';
 /// can a person pass through this tile
 const Map<Tile, bool> _walkableTiles = {
   Tile.Grass: true,
-  Tile.Grass02: true,
   Tile.Flowers: true,
   Tile.Long_Grass: true,
   Tile.ZombieSpawn: true,

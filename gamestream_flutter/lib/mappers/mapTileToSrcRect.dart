@@ -24,8 +24,6 @@ double mapTileToSrcLeft(Tile tile) {
       return _longGrass;
     case Tile.Flowers:
       return _flowers;
-    case Tile.Grass02:
-      return _grass02;
     case Tile.Concrete_Horizontal:
       return _concreteHorizontal;
     case Tile.Concrete_Vertical:
@@ -47,7 +45,6 @@ double mapTileToSrcLeft(Tile tile) {
 
 // abstraction
 final _grass = _frame(1);
-final _grass02 = _frame(1);
 final _longGrass = _frame(2);
 final _block = _frame(3);
 final _concrete = _frame(4);
