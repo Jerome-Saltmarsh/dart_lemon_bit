@@ -14,7 +14,8 @@ enum ObjectType {
   Tree_Stump,
   Rock_Small,
   LongGrass,
-  Rock_Wall
+  Rock_Wall,
+  Player_Spawn,
 }
 
 final List<ObjectType> objectTypes = ObjectType.values;

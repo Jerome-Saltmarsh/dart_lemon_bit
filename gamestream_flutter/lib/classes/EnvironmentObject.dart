@@ -10,6 +10,7 @@ class EnvironmentObject extends Vector2 {
   late int column;
   final ObjectType type;
   final bool generated;
+  late bool isHouse;
 
   late double top;
   late double right;
@@ -40,6 +41,7 @@ class EnvironmentObject extends Vector2 {
     right = x + anchorX;
     bottom = y + (height - anchorY);
     left = x - anchorX;
+    isHouse = type == ObjectType.House01 || type == ObjectType.House02;
     move(x, y);
 
     final translation = objectTypeSrcPosition[type]!;

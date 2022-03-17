@@ -1,4 +1,5 @@
 [IDEAS]
+[ ] Perspective Mode
 [ ] Rain Particles
 [ ] Faster to walk on concrete than grass, mud is very slow.
 [ ] Animate tiles flowing water
@@ -60,12 +61,14 @@
 [ ] Destructible Items to collect gems
 [ ] Shop visible when interact with NPC
 [ ] Experience Bar
-[ ] FIX Map Editor
 [ ] FIX Join Custom Game
 [ ] (MMO) Save / Load Character
 [ ] Looting Engine
 [ ] Slot Capacity
-[ ] Release Casual Skirmish     
+[SKIRMISH]     
+[ ] FIX Environment Render order in skirmish
+[ ] Player Spawn Location    
+[COMPLETED]    
 [x] FIX BUG Initial lighting incorrect
 [x] Fix Batch Rendering glitches
 [x] FIX Particle blood renders as shell

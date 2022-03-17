@@ -90,19 +90,20 @@ final Map<ObjectType, Vector2> objectTypeSrcPosition = {
 
 final _ambient = modules.isometric.state.ambient;
 final _isoState = isometric.state;
+final _timeline = core.state.timeline;
 
 void mapEnvironmentObjectToSrc(EnvironmentObject env){
   // TODO Optimize
   var shade = _isoState.getShade(env.row, env.column);
   final type = env.type;
 
-  if (type == ObjectType.House01 || type == ObjectType.House02){
+  if (env.isHouse){
     shade = _ambient.value == Shade.Bright ? 0 : 1;
   }
 
-  var top = shade * env.height + 1;
+  var top = shade * env.height;
   if (type == ObjectType.Torch && _ambient.value > Shade.Bright){
-    top = _translations.torches.y + ((core.state.timeline.frame % 4) * _torchHeight) + _torchHeight;
+    top = _translations.torches.y + ((_timeline.frame % 4) * _torchHeight) + _torchHeight;
   }
   engine.mapSrc(x: env.srcX, y: top, width: env.width, height: env.height);
 }

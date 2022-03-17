@@ -12,8 +12,6 @@ enum Tile {
   Block,
   Block_Horizontal,
   Block_Vertical,
-  // Concrete_Horizontal,
-  // Concrete_Vertical,
   Bridge,
   Rock,
   Black,
