@@ -64,7 +64,7 @@ class GameRender {
     }
 
     // engine.setPaintColorWhite();
-    isometric.render.sprites();
+    isometric.render.renderSprites();
     drawEffects();
     // drawItems();
 

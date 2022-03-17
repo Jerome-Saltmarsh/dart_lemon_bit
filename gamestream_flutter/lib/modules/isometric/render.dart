@@ -128,7 +128,7 @@ class IsometricRender {
     }
   }
 
-  void sprites() {
+  void renderSprites() {
     engine.setPaintColorWhite();
 
     final environmentObjects = state.environmentObjects;
@@ -139,7 +139,9 @@ class IsometricRender {
     final humans = game.players;
     final interactableNpcs = game.interactableNpcs;
     final screenBottom = engine.screen.bottom;
-
+    final totalZombies = game.totalZombies.value;
+    final totalPlayers = game.totalZombies.value;
+    final totalNpcs = game.totalNpcs;
 
     var indexHuman = 0;
     var indexEnv = 0;
@@ -147,25 +149,26 @@ class IsometricRender {
     var indexZombie = 0;
     var indexNpc = 0;
     var zombiesRemaining = indexZombie < game.totalZombies.value;
-    var humansRemaining = indexHuman < game.totalPlayers;
+    var playersRemaining = indexHuman < game.totalPlayers;
     var npcsRemaining = indexHuman < game.totalNpcs;
     var environmentRemaining = indexEnv < totalEnvironment;
     var particlesRemaining = indexParticle < totalParticles;
 
+
     while (true) {
-      humansRemaining = indexHuman < game.totalPlayers;
+      playersRemaining = indexHuman < totalPlayers;
       environmentRemaining = indexEnv < totalEnvironment;
       particlesRemaining = indexParticle < totalParticles;
-      zombiesRemaining = indexZombie < game.totalZombies.value;
-      npcsRemaining = indexNpc < game.totalNpcs;
+      zombiesRemaining = indexZombie < totalZombies;
+      npcsRemaining = indexNpc < totalNpcs;
 
-      if (!zombiesRemaining &&
-          !humansRemaining &&
-          !environmentRemaining &&
-          !particlesRemaining &&
-          !npcsRemaining) return;
+      // if (!zombiesRemaining &&
+      //     !playersRemaining &&
+      //     !environmentRemaining &&
+      //     !particlesRemaining &&
+      //     !npcsRemaining) return;
 
-      if (humansRemaining) {
+      if (playersRemaining) {
         final human = humans[indexHuman];
         final humanY = human.y;
 
@@ -227,8 +230,14 @@ class IsometricRender {
           continue;
         }
       }
-      drawInteractableNpc(interactableNpcs[indexNpc]);
-      indexNpc++;
+
+      if (npcsRemaining){
+        drawInteractableNpc(interactableNpcs[indexNpc]);
+        indexNpc++;
+      }
+
+      return;
+
     }
   }
 

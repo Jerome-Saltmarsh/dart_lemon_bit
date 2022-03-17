@@ -76,12 +76,6 @@ void startWebsocketServer(){
   });
 }
 
-
-void compileWholeGame(Game game) {
-  write(game.compiledTiles);
-  write(game.compiledEnvironmentObjects);
-}
-
 void buildWebSocketHandler(WebSocketChannel webSocket) {
     totalConnections++;
     print("New connection established. Total Connections $totalConnections");
@@ -486,26 +480,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             errorArgsExpected(3, arguments);
             return;
           }
-          final indexPlayerId = 1;
-          final indexMapId = 2;
-
-
-          final playerId = arguments[indexPlayerId];
-          firestoreService.findUserById(playerId).then((account) async {
-            if (account == null){
-              return errorAccountNotFound();
-            }
-            if (!account.isPremium) {
-              return errorPremiumAccountOnly();
-            }
-
-            final mapId = arguments[indexMapId];
-            final customGame = await engine.findOrCreateCustomGame(mapId);
-            final Player player = customGame.playerJoin();
-            compileWholeGame(customGame);
-            compilePlayerJoined(_buffer, player);
-            compileGameMeta(_buffer, customGame);
-            sendAndClearBuffer();
+          final mapId = arguments[1];
+          engine.findOrCreateCustomGame(mapId).then((value){
+            _player = value.playerJoin();
+            onGameJoined();
           });
           break;
 
@@ -672,7 +650,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 y: player.mouseY,
                 damage: 1,
                 health: 5,
-                team: 0,
+                team: 100,
               );
               break;
             case ModifyGame.Remove_Zombie:
