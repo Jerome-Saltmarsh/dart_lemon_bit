@@ -256,13 +256,9 @@ class _ByteStreamParser {
   }
 
   int _nextInt(){
-    final pivot = values[_index];
+    // final pivot = values[_index];
     final value = readNumberFromByteArray(values, index: _index);
-    if (pivot <= _1){
-      _index += _2;
-    } else {
-      _index += _3;
-    }
+    _index += 2;
     return value;
   }
 

@@ -286,11 +286,12 @@ class _ByteCompiler {
 
   void writeBigInt(num value){
     writeNumberToByteArray(number: value, list: _buffer, index: _index);
-    if (value >= -_256 && value <= _256){
-      _index += 2;
-    } else {
-      _index += 3;
-    }
+    _index += 2;
+    // if (value >= -_256 && value <= _256){
+    //   _index += 2;
+    // } else {
+    //   _index += 3;
+    // }
   }
 
   void writeByte(int value){

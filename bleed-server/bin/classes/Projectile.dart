@@ -1,11 +1,10 @@
 
 import '../common/enums/ProjectileType.dart';
-import '../interfaces/HasSquad.dart';
 import '../maths.dart';
 import 'Character.dart';
 import 'GameObject.dart';
 
-class Projectile extends GameObject implements HasSquad {
+class Projectile extends GameObject {
   late double xStart;
   late double yStart;
   late Character owner;

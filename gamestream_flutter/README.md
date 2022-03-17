@@ -70,7 +70,7 @@
 [ ] FIX Kill zombie particles angle    
 [ ] FIX Double shot    
 [ ] FIX Shell Particle    
-[ ] Cannot attack enemy players    
+[x] Cannot attack enemy players    
 [x] Player Spawn Location    
 [COMPLETED]    
 [x] FIX BUG Initial lighting incorrect

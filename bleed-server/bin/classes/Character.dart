@@ -8,7 +8,6 @@ import '../common/SlotType.dart';
 import '../constants.dart';
 import '../constants/no_squad.dart';
 import '../enums/npc_mode.dart';
-import '../interfaces/HasSquad.dart';
 import '../settings.dart';
 import '../utilities.dart';
 import 'Ability.dart';
@@ -68,7 +67,7 @@ class AI {
   }
 }
 
-class Character extends GameObject implements HasSquad {
+class Character extends GameObject {
   late CharacterType type;
   late int _health;
   late int maxHealth;

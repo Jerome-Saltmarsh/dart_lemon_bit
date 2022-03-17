@@ -34,7 +34,6 @@ import '../enums/npc_mode.dart';
 import '../functions.dart';
 import '../functions/applyForce.dart';
 import '../functions/withinRadius.dart';
-import '../interfaces/HasSquad.dart';
 import '../maths.dart';
 import '../physics.dart';
 import '../settings.dart';
