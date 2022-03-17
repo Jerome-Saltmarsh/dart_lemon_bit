@@ -162,7 +162,7 @@ class _ByteStreamParser {
     final allie = byte >= 100;
     final direction = (byte % 100) ~/ 10;
     final state = byte % 10;
-    character.allie == allie;
+    character.allie = allie;
     character.direction = direction;
     character.state = characterStates[state]; // OPTIMIZE unpacking enum
   }
