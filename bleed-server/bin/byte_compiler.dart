@@ -106,8 +106,9 @@ class _ByteCompiler {
     }
     var start = 0;
     for (start = 0; start < lengthMinusOne; start++){
-      if (zombies[start].y > top) {
-        if (zombies[start].y > bottom){
+      final zombieY = zombies[start].y;
+      if (zombieY > top) {
+        if (zombieY > bottom){
           writeByte(END);
           return;
         }
@@ -127,16 +128,6 @@ class _ByteCompiler {
       writeCharacter(player, zombie);
     }
     writeByte(END); // ZOMBIES FINISHED;  see bytestream_parser._parseZombies();
-  }
-
-  void writeZombies(Player player){
-    final zombies = player.game.zombies;
-    writeByte(ServerResponse.Zombies.index);
-    writeTotalActive(zombies);
-    for (final zombie in zombies) {
-      if (!zombie.active) continue;
-      writeCharacter(player, zombie);
-    }
   }
 
   void writeGameEvents(List<GameEvent> gameEvents){
