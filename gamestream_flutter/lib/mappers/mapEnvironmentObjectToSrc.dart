@@ -26,7 +26,8 @@ const Map<ObjectType, double> environmentObjectWidth = {
   ObjectType.Tree01: 96,
   ObjectType.House01: 150,
   ObjectType.House02: 150,
-  ObjectType.MystEmitter: 48
+  ObjectType.MystEmitter: 48,
+  ObjectType.Flag: 48,
 };
 
 const Map<ObjectType, double> environmentObjectHeight = {
@@ -43,7 +44,8 @@ const Map<ObjectType, double> environmentObjectHeight = {
   ObjectType.Tree01: 96,
   ObjectType.House01: 150,
   ObjectType.House02: 150,
-  ObjectType.MystEmitter: 48
+  ObjectType.MystEmitter: 48,
+  ObjectType.Flag: 48
 };
 
 const Map<ObjectType, int> environmentObjectIndex = {
@@ -61,10 +63,11 @@ const Map<ObjectType, int> environmentObjectIndex = {
   ObjectType.Palisade_V: 2,
   ObjectType.MystEmitter: 0,
   ObjectType.Rock_Wall: 0,
+  ObjectType.Flag: 6,
 };
 
 class _Translations {
-  final Vector2 objects48 = Vector2(1459, 1);
+  final Vector2 objects48 = Vector2(5592, 1);
   final Vector2 trees  = Vector2(2049, 1);
   final Vector2 objects150  = Vector2(1748, 1);
   final Vector2 palisades  = Vector2(1314, 1);
@@ -77,6 +80,7 @@ final Map<ObjectType, Vector2> objectTypeSrcPosition = {
   ObjectType.Tree_Stump: _translations.objects48,
   ObjectType.Rock_Small: _translations.objects48,
   ObjectType.LongGrass: _translations.objects48,
+  ObjectType.Flag: _translations.objects48,
   ObjectType.Torch: _translations.torches,
   ObjectType.Tree01: _translations.trees,
   ObjectType.House01: _translations.objects150,

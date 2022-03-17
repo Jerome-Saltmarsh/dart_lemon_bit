@@ -691,7 +691,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
 
           player.type = CharacterType.Human;
-          final spawnPoint = player.game.getNextSpawnPoint() ?? Vector2(0, 200);
+          final spawnPoint = player.game.getNextSpawnPoint();
           player.x = spawnPoint.x;
           player.y = spawnPoint.y;
           break;

@@ -143,6 +143,10 @@ abstract class Game {
 
   void updateNpcBehavior(Character npc) {}
 
+  Vector2 getNextSpawnPoint() {
+    return getSceneCenter();
+  }
+
   /// Returning true will cause the item to be removed
   bool onPlayerItemCollision(Player player, Item item) {
     return true;
@@ -1410,18 +1414,8 @@ extension GameFunctions on Game {
     }
 
     final spawnPoint = getNextSpawnPoint();
-    if (spawnPoint != null){
-      character.x = spawnPoint.x;
-      character.y = spawnPoint.y;
-    }
-  }
-
-  Vector2? getNextSpawnPoint() {
-    if (scene.playerSpawnPoints.isEmpty) {
-      throw Exception("player spawn points is empty (scene: '${scene.name}')");
-    }
-    spawnPointIndex = (spawnPointIndex + 1) % scene.playerSpawnPoints.length;
-    return scene.playerSpawnPoints[spawnPointIndex];
+    character.x = spawnPoint.x;
+    character.y = spawnPoint.y;
   }
 
   void npcSetRandomDestination(AI ai, {int radius = 10}) {

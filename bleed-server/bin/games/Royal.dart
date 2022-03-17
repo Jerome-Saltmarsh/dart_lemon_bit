@@ -147,7 +147,7 @@ class GameRoyal extends Game {
     if (status != GameStatus.Awaiting_Players) {
       throw Exception("Game already started");
     }
-    final spawnPoint = getNextSpawnPoint() ?? Vector2(0, 100);
+    final spawnPoint = getNextSpawnPoint();
     final player = Player(
       game: this,
       x: spawnPoint.x,

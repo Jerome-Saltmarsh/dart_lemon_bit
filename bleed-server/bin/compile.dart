@@ -18,6 +18,7 @@ import 'common/GameStatus.dart';
 import 'common/ServerResponse.dart';
 import 'common/Tile.dart';
 import 'common/constants.dart';
+import 'common/enums/ObjectType.dart';
 import 'games/Moba.dart';
 import 'games/Royal.dart';
 
@@ -97,6 +98,7 @@ String compileEnvironmentObjects(List<EnvironmentObject> environmentObjects) {
   final buffer = StringBuffer();
   _write(buffer, ServerResponse.EnvironmentObjects.index);
   for (final environmentObject in environmentObjects) {
+    if (environmentObject.type == ObjectType.Flag) continue;
     _writeInt(buffer, environmentObject.x);
     _writeInt(buffer, environmentObject.y);
     _writeInt(buffer, environmentObject.radius);
