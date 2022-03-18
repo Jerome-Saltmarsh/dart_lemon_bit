@@ -184,15 +184,15 @@ class GameEvents {
     switch (type) {
       case GameEventType.Handgun_Fired:
         audio.handgunShot(x, y);
-        isometric.spawn.shell(x: x, y: y);
+        _spawn.shell(x: x, y: y);
         break;
       case GameEventType.Shotgun_Fired:
         audio.shotgunShot(x, y);
-        isometric.spawn.shell(x: x, y: y);
+        _spawn.shell(x: x, y: y);
         break;
       case GameEventType.SniperRifle_Fired:
         audio.sniperShot(x, y);
-        isometric.spawn.shell(x: x, y: y);
+        _spawn.shell(x: x, y: y);
         break;
       case GameEventType.MachineGun_Fired:
         audio.assaultRifleShot(x, y);
@@ -200,17 +200,24 @@ class GameEvents {
         break;
       case GameEventType.Character_Struck:
         audio.bloodyImpact(x, y);
-        final speed = 4.0;
-        final speedVariation = 2;
-        final total = randomInt(5, 10);
+        const speed = 4.0;
+        const speedVariation = 2;
+        const angleVariation = 0.2;
+        const height = 0.3;
+        const zVelocityBase = 0.07;
+        const zVelocityVariation = 0.01;
+        const min = 5;
+        const max = 10;
+
+        final total = randomInt(min, max);
         for (var i = 0; i < total; i++) {
-          isometric.spawn.blood(
+          _spawn.blood(
             x: x,
             y: y,
-            z: 0.3,
-            angle: angle + giveOrTake(0.2),
+            z: height,
+            angle: angle + giveOrTake(angleVariation),
             speed: speed + giveOrTake(speedVariation),
-            zv: 0.07 + giveOrTake(0.01),
+            zv: zVelocityBase + giveOrTake(zVelocityVariation),
           );
         }
         break;
@@ -251,10 +258,10 @@ class GameEvents {
         actions.emitPixelExplosion(x, y);
         break;
       case GameEventType.Explosion:
-        isometric.spawn.explosion(x, y);
+        _spawn.explosion(x, y);
         break;
       case GameEventType.FreezeCircle:
-        isometric.spawn.freezeCircle(x: x, y: y,);
+        _spawn.freezeCircle(x: x, y: y,);
         break;
       case GameEventType.Teleported:
         actions.emitPixelExplosion(x, y);
