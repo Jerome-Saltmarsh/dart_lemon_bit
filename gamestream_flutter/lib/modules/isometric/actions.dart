@@ -471,32 +471,47 @@ class IsometricActions {
     applyShadeRing(shader, row, column, 3, Shade.Very_Dark);
   }
 
-  void applyEmissionFromCharactersBright(List<Character> characters) {
-    final shading = state.dynamic;
-    for(final character in characters) {
-      if (character.dead) continue;
-      if (!character.allie) continue;
-      emitLightHigh(shading, character.x, character.y);
-    }
-  }
-
-  void applyEmissionFromCharactersMedium(List<Character> characters) {
-    final dynamicShading = state.dynamic;
-    for (final character in characters) {
-      if (character.dead) continue;
-      if (!character.allie) continue;
-      emitLightMedium(dynamicShading, character.x, character.y);
-    }
-  }
+  // void applyEmissionFromCharactersBright(List<Character> characters) {
+  //   final shading = state.dynamic;
+  //   for(final character in characters) {
+  //     if (character.dead) continue;
+  //     if (!character.allie) continue;
+  //     emitLightHigh(shading, character.x, character.y);
+  //   }
+  // }
+  //
+  // void applyEmissionFromCharactersMedium(List<Character> characters) {
+  //   final dynamicShading = state.dynamic;
+  //   for (final character in characters) {
+  //     if (character.dead) continue;
+  //     if (!character.allie) continue;
+  //     emitLightMedium(dynamicShading, character.x, character.y);
+  //   }
+  // }
 
   void applyDynamicEmissions() {
     if (properties.dayTime) return;
     resetDynamicShadesToBakeMap();
-    applyEmissionFromCharactersBright(game.players);
-    // applyEmissionFromCharactersMedium(game.zombies);
-    applyEmissionFromCharactersMedium(game.interactableNpcs);
+
+    final totalPlayers = game.totalPlayers;
+    final totalNpcs = game.totalNpcs;
+    final players = game.players;
+    final npcs = game.interactableNpcs;
+    final shading = isometric.state.dynamic;
+
+    for (var i = 0; i < totalPlayers; i++){
+      final player = players[i];
+      if (!player.allie) continue;
+      emitLightHigh(shading, player.x, player.y);
+    }
+
+    for (var i = 0; i < totalNpcs; i++){
+      final npc = npcs[i];
+      if (!npc.allie) continue;
+      emitLightHigh(shading, npc.x, npc.y);
+    }
+
     applyEmissionFromProjectiles();
-    // applyEmissionFromItems();
     applyEmissionFromEffects();
   }
 
