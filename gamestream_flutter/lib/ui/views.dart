@@ -100,7 +100,6 @@ WatchBuilder<Connection> buildWatchConnection(Account? account) {
     switch (connection) {
       case Connection.Connecting:
         return ui.layouts.waitingForGame();
-        // return _views.connecting;
       case Connection.Connected:
         return modules.game.build.buildUIGame();
       case Connection.None:

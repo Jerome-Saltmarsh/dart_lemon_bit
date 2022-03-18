@@ -42,6 +42,9 @@ final _bloodY = atlas.blood.y;
 final _mystX = atlas.myst.x;
 final _mystY = atlas.myst.y;
 
+final _shellX = _particles.shell.x;
+final _shellY = _particles.shell.y;
+
 void mapParticleToSrc(Particle particle){
   final shade = _isometricState.getShadeAtPosition(particle.x, particle.y);
 
@@ -58,12 +61,12 @@ void mapParticleToSrc(Particle particle){
 
     case ParticleType.Pixel:
       final x = atlas.shades.x + (particle.hue * 8);
-      final y = atlas.shades.y + (3 * 8);
+      final y = atlas.shades.y + 24;
       engine.mapSrc(x: x, y: y, width: pixelSize, height: pixelSize);
       return;
 
     case ParticleType.Smoke:
-      engine.mapSrc(x: atlas.circle.x, y: atlas.circle.y);
+      engine.mapSrc64(x: atlas.circle.x, y: atlas.circle.y);
       return;
 
     case ParticleType.Leg:
@@ -77,7 +80,7 @@ void mapParticleToSrc(Particle particle){
       final direction = convertAngleToDirectionInt(particle.rotation);
       final x = _particles.zombieArm.x + (direction * _size64);
       final y = _particles.zombieArm.y + shade * _size64;
-      engine.mapSrc(x: x, y: y);
+      engine.mapSrc64(x: x, y: y);
       return;
 
     case ParticleType.Organ:
@@ -89,15 +92,15 @@ void mapParticleToSrc(Particle particle){
 
     case ParticleType.Shell:
       final direction = convertAngleToDirectionInt(particle.rotation);
-      final x = _particles.shell.x + (direction * _size32);
-      final y = _particles.shell.y + shade * _size32;
+      final x = _shellX + (direction * _size32);
+      final y = _shellY + shade * _size32;
       engine.mapSrc(x: x, y: y, width: _size32, height: _size32);
       return;
 
     case ParticleType.Human_Head:
       final direction = convertAngleToDirectionInt(particle.rotation);
-      final x = atlas.particles.shell.x + (direction * _size64);
-      final y = atlas.particles.shell.y + shade * _size64;
+      final x = atlas.particles.zombieHead.x + (direction * _size64);
+      final y = atlas.particles.zombieHead.y + shade * _size64;
       engine.mapSrc(x: x, y: y, width: _size64, height: _size64);
       return;
 

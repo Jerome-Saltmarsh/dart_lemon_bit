@@ -22,6 +22,8 @@ import 'package:lemon_math/randomInt.dart';
 import 'state.dart';
 
 
+final _spawn = isometric.spawn;
+
 class GameEvents {
 
   final GameActions actions;
@@ -182,27 +184,26 @@ class GameEvents {
     switch (type) {
       case GameEventType.Handgun_Fired:
         audio.handgunShot(x, y);
-        isometric.spawn.shell(x: x, y: y, z: 0.2, zv: 0.1, angle: angle, speed: 0.1);
+        isometric.spawn.shell(x: x, y: y);
         break;
       case GameEventType.Shotgun_Fired:
         audio.shotgunShot(x, y);
-        isometric.spawn.shell(x: x, y: y, z: 0.2, zv: 0.1, angle: angle, speed: 0.1);
-        // isometric.spawn.shotSmoke(x, y, xv, yv);
+        isometric.spawn.shell(x: x, y: y);
         break;
       case GameEventType.SniperRifle_Fired:
         audio.sniperShot(x, y);
-        isometric.spawn.shell(x: x, y: y, z: 0.2, zv: 0.1, angle: angle, speed: 0.1);
+        isometric.spawn.shell(x: x, y: y);
         break;
       case GameEventType.MachineGun_Fired:
         audio.assaultRifleShot(x, y);
-        isometric.spawn.shell(x: x, y: y, z: 0.2, zv: 0.1, angle: angle, speed: 0.1);
+        isometric.spawn.shell(x: x, y: y);
         break;
       case GameEventType.Character_Struck:
         audio.bloodyImpact(x, y);
         final speed = 4.0;
         final speedVariation = 2;
         final total = randomInt(5, 10);
-        for (int i = 0; i < total; i++) {
+        for (var i = 0; i < total; i++) {
           isometric.spawn.blood(
             x: x,
             y: y,
@@ -219,13 +220,12 @@ class GameEvents {
         }
         break;
       case GameEventType.Zombie_Killed:
-        print("GameEventType.Zombie_Killed");
-        isometric.spawn.headZombie(x: x, y: y, z: 0.5, angle: angle, speed: 4.0);
-        isometric.spawn.arm(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
-        isometric.spawn.arm(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
-        isometric.spawn.legZombie(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
-        isometric.spawn.legZombie(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
-        isometric.spawn.organ(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5), zv: 0.1);
+        _spawn.headZombie(x: x, y: y, z: 0.5, angle: angle, speed: 4.0);
+        _spawn.arm(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
+        _spawn.arm(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
+        _spawn.legZombie(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
+        _spawn.legZombie(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
+        _spawn.organ(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5), zv: 0.1);
         audio.zombieDeath(x, y);
         break;
 

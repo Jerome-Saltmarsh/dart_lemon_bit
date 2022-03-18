@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/state/game.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/angle.dart' as getAngle;
+import 'package:lemon_math/randomAngle.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/opposite.dart';
 import 'package:lemon_math/piHalf.dart';
@@ -230,10 +231,6 @@ class IsometricSpawn {
   void shell({
     required double x,
     required double y,
-    required double z,
-    required double zv,
-    required double angle,
-    required double speed
   }) {
     final xv = giveOrTake(pi) * 0.5;
     final yv = giveOrTake(pi) * 0.5;
@@ -243,8 +240,8 @@ class IsometricSpawn {
       x: x,
       y: y,
       z: 0.4,
-      angle: angle,
-      speed: speed,
+      angle: randomAngle(),
+      speed: 0.5,
       zv: 0.05,
       weight: 0.2,
       duration: 100,

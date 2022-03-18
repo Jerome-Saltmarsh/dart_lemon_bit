@@ -37,22 +37,6 @@ class EditorRender with EditorScope {
     state.environmentObjects.forEach(isometric.render.renderEnvironmentObject);
   }
 
-  void renderTilePreview() {
-    if (state.tab.value != ToolTab.Tiles) return;
-    if (isometric.queries.mouseOutOfBounds()) return;
-
-    srcTile(state.tile.value);
-    dstTile(state.tile.value, mouseWorldX, mouseWorldY);
-    engine.renderAtlas();
-  }
-
-  void srcTile(Tile tile, {int shade = Shade.Bright}){
-    engine.mapSrc(
-        x: atlas.tiles.x + mapTileToSrcLeft(tile),
-        y: atlas.tiles.y + (isometric.constants.tileSize * shade)
-    );
-  }
-
   void dstTile(Tile tile, double x, double y){
     int row = getRow(x, y);
     int column = getColumn(x, y);
