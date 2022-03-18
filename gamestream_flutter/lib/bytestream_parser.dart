@@ -233,10 +233,6 @@ class _ByteStreamParser {
     character.health = health;
   }
 
-  // CharacterState _readCharacterState(){
-  //   return characterStates[_nextByte()];
-  // }
-
   SlotType _readSlotType(){
     return slotTypes[_nextByte()];
   }

@@ -101,7 +101,9 @@ class _Engine {
 
   void regenCharacters(){
     for (final game in games) {
-      for(final player in game.players){
+      final players = game.players;
+      for (final player in players) {
+        if (player.dead) continue;
         player.health++;
         player.magic++;
       }
