@@ -154,7 +154,7 @@ class IsometricRender {
     var environmentRemaining = indexEnv < totalEnvironment;
     var particlesRemaining = indexParticle < totalParticles;
 
-    var playerY = particlesRemaining ? players[0].y : 0;
+    var playerY = playersRemaining ? players[0].y : 0;
     var envY = environmentRemaining ? environmentObjects[0].y : 0;
     var particleY = particlesRemaining ? particles[0].y : 0;
     var particleIsBlood = particlesRemaining ? particles[0].type == ParticleType.Blood : false;
