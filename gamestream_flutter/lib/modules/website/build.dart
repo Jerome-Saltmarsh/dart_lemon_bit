@@ -50,7 +50,7 @@ class WebsiteBuild {
               children: [
                 buttons.buildAccount(mouseOver),
                 buttons.buttonAccount,
-                buttons.buttonGames,
+                // buttons.buttonGames,
                 buttonEditor(),
                 buttonCustomMap(),
                 buttons.buttonLogout,
@@ -67,9 +67,8 @@ class WebsiteBuild {
   }
 
   Widget buttonEditor(){
-    return buildMenuButton("Map Editor", core.actions.openMapEditor);
+    return buildMenuButton("Editor", core.actions.openMapEditor);
   }
-
 
   Widget dialogCustomMaps() {
     print("website.build.dialogCustomMaps()");

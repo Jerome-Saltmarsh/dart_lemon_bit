@@ -1,6 +1,7 @@
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_common/GameType.dart';
+import 'package:bleed_common/version.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/constants/servers.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
@@ -114,16 +115,25 @@ Widget buildViewConnectionNone() {
   return layout(
       padding: 16,
       expand: true,
-      topLeft: widgets.title,
-      top:  Container(
-          width: engine.screen.width,
-          margin: EdgeInsets.only(top: 20),
-          child: Row(
-              mainAxisAlignment: axis.main.center,
-              children: [
-                buildTopMessage()
-              ])
+      topLeft: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          WatchBuilder(core.state.region, (Region region){
+            return text(region.name, onPressed: modules.website.actions.showDialogChangeRegion);
+          }),
+          text(version, color: colours.white618, size: style.fontSize.small),
+        ],
       ),
+      // topLeft: widgets.title,
+      // top:  Container(
+      //     width: engine.screen.width,
+      //     margin: EdgeInsets.only(top: 20),
+      //     child: Row(
+      //         mainAxisAlignment: axis.main.center,
+      //         children: [
+      //           buildTopMessage()
+      //         ])
+      // ),
       topRight: website.build.mainMenu(),
       bottomLeft: buildMenuDebug(),
       child: buildWatchBuilderDialog(),
@@ -214,10 +224,10 @@ WatchBuilder<WebsiteDialog> buildWatchBuilderDialog() {
 
 Widget buildDialogGames() {
   return WatchBuilder(game.type, (GameType gameType) {
-    if (gameType == GameType.None) {
+    // if (gameType == GameType.None) {
       return build.gamesList();
-    }
-    return buildDialogGameTypeSelected(gameType);
+    // }
+    // return buildDialogGameTypeSelected(gameType);
   });
 }
 
@@ -257,15 +267,6 @@ Widget buildDialogChangeRegion() {
           child: Column(
             crossAxisAlignment: axis.cross.start,
             children: [
-              border(
-                  color: colours.white618,
-                  child: text(
-                    "Distance impacts performance",
-                    color: colours.white60,
-                    italic: true,
-                    size: 15,
-                  )),
-              height32,
               ...selectableRegions.map((region) {
                 return button(enumString(region), () {
                   core.state.region.value = region;

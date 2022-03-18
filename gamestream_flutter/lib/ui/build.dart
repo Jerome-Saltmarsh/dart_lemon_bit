@@ -3,6 +3,7 @@ import 'package:gamestream_flutter/classes/Ability.dart';
 import 'package:bleed_common/AbilityType.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
+import 'package:gamestream_flutter/constants/servers.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -19,13 +20,14 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import 'compose/hudUI.dart';
+import 'widgets.dart';
 
 final build = _Build();
 
 final selectableGameTypes = [
   GameType.MMO,
   GameType.SKIRMISH,
-  GameType.BATTLE_ROYAL,
+  // GameType.BATTLE_ROYAL,
   // GameType.Moba,
   // GameType.CUBE3D,
   // GameType.DeathMatch,
@@ -206,6 +208,7 @@ class _Build {
 
   Widget title(){
     final child = Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         text("GAME",
             size: 60,
@@ -241,6 +244,32 @@ class _Build {
   }
 
   Widget gamesList(){
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          widgets.title,
+          height32,
+          ...selectableGameTypes.map((gameType) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: mouseOver(
+                builder: (BuildContext context, bool mouseOver) {
+                  return text(gameTypeNames[gameType], color: mouseOver ? colours.white : colours.white85, onPressed: (){
+                    game.type.value = gameType;
+                    core.actions.connectToSelectedGame();
+                  }, size: style.fontSize.large, bold: true);
+                },
+            ),
+          );
+        }
+        ),
+          height(120),
+         ].toList(),
+      ),
+    );
+
     final account = core.state.account.value;
     final premiumActive = account != null && account.isPremium;
     return Container(

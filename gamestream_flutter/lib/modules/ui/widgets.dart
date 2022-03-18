@@ -11,6 +11,7 @@ import 'package:lemon_watch/watch_builder.dart';
 
 class UIWidgets {
   final title = Row(
+    mainAxisAlignment: MainAxisAlignment.center,
     children: [
       text("GAME",
           size: 60,

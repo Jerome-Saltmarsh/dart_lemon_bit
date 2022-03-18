@@ -23,6 +23,7 @@
 [ ] Show youtube video of game in preview  
 [ ] Stripe Webhooks, Catch save subscription errors
 [ ] Popup Auto suggest sign in
+[ ] FIX Sign in with Facebook
 [EDITOR]
 [ ] Play button
 [ ] Time Speed

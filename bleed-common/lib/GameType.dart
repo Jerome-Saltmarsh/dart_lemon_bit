@@ -12,7 +12,7 @@ enum GameType {
 const gameTypes = GameType.values;
 
 const gameTypeNames = {
-    GameType.MMO: "SANDBOX",
+    GameType.MMO: "ADVENTURE",
     GameType.SKIRMISH: "SKIRMISH",
     GameType.BATTLE_ROYAL: "ROYAL",
     GameType.CUBE3D: "CUBE 3D",
