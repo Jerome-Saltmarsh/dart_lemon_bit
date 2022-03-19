@@ -43,13 +43,6 @@ bool withinViewRange(AI ai, GameObject target) {
   return distanceV2(ai.character, target) < ai.viewRange;
 }
 
-const _dstRadius = 15;
-bool arrivedAtPath(AI ai) {
-  if ((ai.character.x - ai.destX).abs() > _dstRadius) return false;
-  if ((ai.character.y - ai.destY).abs() > _dstRadius) return false;
-  return true;
-}
-
 void setVelocity(GameObject gameObject, double rotation, double speed) {
   gameObject.xv = velX(rotation, speed);
   gameObject.yv = velY(rotation, speed);

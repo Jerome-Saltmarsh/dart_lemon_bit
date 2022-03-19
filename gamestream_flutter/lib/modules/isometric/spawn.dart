@@ -243,8 +243,9 @@ class IsometricSpawn {
     const weight = 0.35;
     const zVelocity = 0.075;
     const speed = 1.5;
-    const height = 0.4;
+    const height = 0.8;
     const rotationVelocity = 0.01;
+    const bounciness = 1.0;
 
     _particle(
       type: ParticleType.Shell,
@@ -259,6 +260,7 @@ class IsometricSpawn {
       rotation: randomAngle(),
       rotationV: rotationVelocity,
       scale: scale,
+      bounciness: bounciness,
     );
   }
 

@@ -393,16 +393,17 @@ extension GameFunctions on Game {
     }
   }
 
+  /// TODO Optimize
   /// calculates if there is a wall between two objects
   bool isVisibleBetween(Vector2 a, Vector2 b) {
-    double r = radiansV2(a, b);
-    double d = distanceV2(a, b);
-    double vX = adj(r, tileSize);
-    double vY = opp(r, tileSize);
-    int jumps = d ~/ tileSize;
-    double x = a.x + vX;
-    double y = a.y + vY;
-    for (int i = 0; i < jumps; i++) {
+    final angle = radiansV2(a, b);
+    final distance = distanceV2(a, b);
+    final vX = adj(angle, tileSize);
+    final vY = opp(angle, tileSize);
+    final jumps = distance ~/ tileSize;
+    var x = a.x + vX;
+    var y = a.y + vY;
+    for (var i = 0; i < jumps; i++) {
       if (!isShootable(scene.tileAt(x, y))) {
         return false;
       }
@@ -502,7 +503,7 @@ extension GameFunctions on Game {
 
 
     if (ai.pathIndex >= 0) {
-      if (arrivedAtPath(ai)) {
+      if (ai.arrivedAtDest) {
         ai.pathIndex--;
         if (ai.pathIndex < 0) {
           character.state = CharacterState.Idle;
@@ -582,7 +583,8 @@ extension GameFunctions on Game {
   }
 
   void setCharacterStateRunning(Character character) {
-    setCharacterState(character, CharacterState.Running);
+    const running = CharacterState.Running;
+    setCharacterState(character, running);
   }
 
   void setCharacterStateDead(Character character) {
@@ -629,8 +631,9 @@ extension GameFunctions on Game {
       return;
     }
 
-    if (value == CharacterState.Hurt){
-      character.stateDurationRemaining = 10;
+    if (value == CharacterState.Hurt) {
+      const duration = 10;
+      character.stateDurationRemaining = duration;
       character.state = value;
       return;
     }
@@ -639,14 +642,13 @@ extension GameFunctions on Game {
 
     switch (value) {
       case CharacterState.Changing:
-        character.stateDurationRemaining = 10;
+        const duration = 10;
+        character.stateDurationRemaining = duration;
         break;
-      // case CharacterState.Firing:
-      //   _fireWeapon(character);
-      //   break;
       case CharacterState.Performing:
-        character.stateDurationRemaining = settings.duration.strike;
-        if (character is Player){
+        const duration = 20;
+        character.stateDurationRemaining = duration;
+        if (character is Player) {
           final ability = character.performing;
           if (ability == null) {
             character.stateDurationRemaining = character.weapon.duration;
@@ -667,7 +669,8 @@ extension GameFunctions on Game {
   }
 
   void setCharacterStateIdle(Character character) {
-    setCharacterState(character, CharacterState.Idle);
+    const idle = CharacterState.Idle;
+    setCharacterState(character, idle);
   }
 
   void changeCharacterHealth(Character character, int amount) {
@@ -1279,7 +1282,7 @@ extension GameFunctions on Game {
 
       for (final player in players) {
         if (player.dead) continue;
-        if (zombie.team == player.team) continue;
+        if (sameTeam(player, zombie)) continue;
         if (!withinViewRange(zombieAI, player)) continue;
         final npcDistance = cheapDistance(zombie, player);
         if (npcDistance >= targetDistance) continue;

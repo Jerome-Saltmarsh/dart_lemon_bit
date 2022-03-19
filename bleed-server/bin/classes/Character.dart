@@ -45,6 +45,12 @@ class AI {
   double get x => character.x;
   double get y => character.y;
 
+  bool get arrivedAtDest {
+      const radius = 15;
+      if ((character.x - destX).abs() > radius) return false;
+      if ((character.y - destY).abs() > radius) return false;
+      return true;
+  }
 
   AI({
     this.mode = _defaultMode,
