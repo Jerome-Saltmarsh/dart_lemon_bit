@@ -1,4 +1,6 @@
 import 'package:gamestream_flutter/audio.dart';
+import 'package:lemon_math/adjacent.dart';
+import 'package:lemon_math/opposite.dart';
 import 'package:bleed_common/AbilityType.dart';
 import 'package:bleed_common/CharacterState.dart';
 import 'package:bleed_common/CharacterType.dart';
@@ -184,7 +186,10 @@ class GameEvents {
     switch (type) {
       case GameEventType.Handgun_Fired:
         audio.handgunShot(x, y);
-        _spawn.shell(x: x, y: y);
+        const distance = 10.0;
+        final xForward = adjacent(angle, distance);
+        final yForward = opposite(angle, distance);
+        _spawn.shell(x: x + xForward, y: y + yForward);
         break;
       case GameEventType.Shotgun_Fired:
         audio.shotgunShot(x, y);

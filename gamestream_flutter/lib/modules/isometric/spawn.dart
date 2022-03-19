@@ -8,11 +8,9 @@ import 'package:bleed_common/OrbType.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/state/game.dart';
 import 'package:lemon_math/adjacent.dart';
-import 'package:lemon_math/angle.dart' as getAngle;
 import 'package:lemon_math/randomAngle.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/opposite.dart';
-import 'package:lemon_math/piHalf.dart';
 import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/random_between.dart';
 
@@ -138,22 +136,30 @@ class IsometricSpawn {
     required double angle,
     required double speed
   }) {
+    const type = ParticleType.Blood;
+    const weight = 0.135;
+    const zero = 0.0;
+    const scale = 0.6;
+    const durationMin = 120;
+    const durationMax = 200;
+    const hasShadow = true;
+
     _particle(
-        type: ParticleType.Blood,
+        type: type,
         x: x,
         y: y,
         z: z,
         zv: zv,
         angle: angle,
         speed: speed,
-        weight: 0.135,
-        duration: bodyPartDuration,
-        rotation: 0,
-        rotationV: 0,
-        scale: 0.6,
-        scaleV: 0,
-        bounciness: 0,
-        hasShadow: true,
+        weight: weight,
+        duration: randomInt(durationMin, durationMax),
+        rotation: zero,
+        rotationV: zero,
+        scale: scale,
+        scaleV: zero,
+        bounciness: zero,
+        hasShadow: hasShadow,
     );
   }
 
@@ -232,22 +238,27 @@ class IsometricSpawn {
     required double x,
     required double y,
   }) {
-    final xv = giveOrTake(pi) * 0.5;
-    final yv = giveOrTake(pi) * 0.5;
-    final rotation = getAngle.angle(xv, yv) + piHalf;
+    const scale = 0.3;
+    const duration = 100;
+    const weight = 0.35;
+    const zVelocity = 0.075;
+    const speed = 1.5;
+    const height = 0.4;
+    const rotationVelocity = 0.01;
+
     _particle(
       type: ParticleType.Shell,
       x: x,
       y: y,
-      z: 0.4,
+      z: height,
       angle: randomAngle(),
-      speed: 0.5,
-      zv: 0.05,
-      weight: 0.2,
-      duration: 100,
-      rotation: rotation,
-      rotationV: 0,
-      scale: 0.25,
+      speed: speed,
+      zv: zVelocity,
+      weight: weight,
+      duration: duration,
+      rotation: randomAngle(),
+      rotationV: rotationVelocity,
+      scale: scale,
     );
   }
 

@@ -92,6 +92,7 @@ void mapParticleToSrc(Particle particle){
 
     case ParticleType.Shell:
       final direction = convertAngleToDirectionInt(particle.rotation);
+      assert(direction >= 0 && direction <= 8);
       final x = _shellX + (direction * _size32);
       final y = _shellY + shade * _size32;
       engine.mapSrc(x: x, y: y, width: _size32, height: _size32);

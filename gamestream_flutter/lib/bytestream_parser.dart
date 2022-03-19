@@ -131,7 +131,7 @@ class _ByteStreamParser {
       final type = gameEventTypes[_nextByte()];
       final x = _nextDouble();
       final y = _nextDouble();
-      final angle = _nextDouble();
+      final angle = _nextDouble() * degreesToRadians;
       if (gameEvents.containsKey(id)) {
         continue;
       }

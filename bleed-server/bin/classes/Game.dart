@@ -24,6 +24,7 @@ import '../common/PlayerEvent.dart';
 import '../common/SlotType.dart';
 import '../common/Tile.dart';
 import '../common/configuration.dart';
+import '../common/constants.dart';
 import '../common/enums/ObjectType.dart';
 import '../common/enums/ProjectileType.dart';
 import '../common/enums/Shade.dart';
@@ -1236,8 +1237,8 @@ extension GameFunctions on Game {
     return count;
   }
 
-  void dispatchV2(GameEventType type, Vector2 position){
-    dispatch(type, position.x, position.y);
+  void dispatchV2(GameEventType type, Vector2 position, {double angle = 0}){
+    dispatch(type, position.x, position.y, angle);
   }
 
   void dispatch(GameEventType type, double x, double y,
@@ -1246,7 +1247,7 @@ extension GameFunctions on Game {
     event.type = type;
     event.x = x;
     event.y = y;
-    event.angle = angle;
+    event.angle = angle * radiansToDegrees;
     event.frameDuration = gameEventDuration;
   }
 
@@ -1504,7 +1505,7 @@ extension GameFunctions on Game {
 
       if (weapon.isHandgun) {
         if (stateDuration == 1){
-          dispatchV2(GameEventType.Handgun_Fired, character);
+          dispatchV2(GameEventType.Handgun_Fired, character, angle: character.angle);
           return;
         }
         if (stateDuration == 2){
@@ -1564,7 +1565,6 @@ extension GameFunctions on Game {
           return;
         }
       }
-    // }
   }
 }
 
