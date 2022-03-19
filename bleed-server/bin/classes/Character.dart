@@ -13,6 +13,7 @@ import '../utilities.dart';
 import 'Ability.dart';
 import 'GameObject.dart';
 
+const _zero = 0;
 const _defaultMode = NpcMode.Defensive;
 const _defaultViewRange = 300.0;
 const _defaultCharacterSpeed = 3.0;
@@ -46,10 +47,10 @@ class AI {
   double get y => character.y;
 
   bool get arrivedAtDest {
-      const radius = 15;
-      if ((character.x - destX).abs() > radius) return false;
-      if ((character.y - destY).abs() > radius) return false;
-      return true;
+    const radius = 15;
+    if ((character.x - destX).abs() > radius) return false;
+    if ((character.y - destY).abs() > radius) return false;
+    return true;
   }
 
   AI({
@@ -106,7 +107,7 @@ class Character extends GameObject {
 
   // properties
   int get direction => (((angle + piEighth) % pi2) ~/ piQuarter) % 8;
-  bool get frozen => frozenDuration > 0;
+  bool get frozen => frozenDuration > _zero;
 
   double get speed {
     if (frozen) {
@@ -118,18 +119,18 @@ class Character extends GameObject {
   int get health => _health;
 
   set health(int value) {
-    _health = clampInt(value, 0, maxHealth);
+    _health = clampInt(value, _zero, maxHealth);
   }
 
-  bool get alive => state != CharacterState.Dead;
+  bool get alive => state != stateDead;
 
-  bool get dead => state == CharacterState.Dead;
+  bool get dead => state == stateDead;
 
-  bool get running => state == CharacterState.Running;
+  bool get running => state == stateRunning;
 
-  bool get idling => state == CharacterState.Idle;
+  bool get idling => state == stateIdle;
 
-  bool get busy => stateDurationRemaining > 0;
+  bool get busy => stateDurationRemaining > _zero;
 
   bool get deadOrBusy => dead || busy;
 
@@ -147,11 +148,6 @@ class Character extends GameObject {
     _health = health;
     _speed = speed;
     ai?.character = this;
-  }
-
-  @override
-  int getSquad() {
-    return team;
   }
 }
 

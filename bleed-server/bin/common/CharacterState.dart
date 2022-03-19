@@ -7,12 +7,18 @@ enum CharacterState {
   Hurt,
 }
 
+const stateIdle = CharacterState.Idle;
+const stateRunning = CharacterState.Running;
+const stateDead = CharacterState.Dead;
+const stateHurt = CharacterState.Hurt;
+const statePerforming = CharacterState.Hurt;
+
 const characterStates = CharacterState.values;
 
 extension CharacterStateProperties on CharacterState {
-  bool get idle => this == CharacterState.Idle;
-  bool get running => this == CharacterState.Running;
-  bool get hurt => this == CharacterState.Hurt;
-  bool get performing => this == CharacterState.Performing;
+  bool get idle => this == stateIdle;
+  bool get running => this == stateRunning;
+  bool get hurt => this == stateHurt;
+  bool get performing => this == statePerforming;
 }
 

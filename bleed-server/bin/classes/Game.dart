@@ -473,7 +473,7 @@ extension GameFunctions on Game {
 
   void _characterRunAt(Character character, Vector2 target){
     characterFaceV2(character, target);
-    setCharacterState(character, CharacterState.Running);
+    setCharacterState(character, stateRunning);
   }
 
   void _updateCharacterAI(Character character) {
@@ -489,7 +489,8 @@ extension GameFunctions on Game {
           _characterAttack(character, target);
           return;
         }
-        if (cheapDistance(character, target) < 100) {
+        const runAtTargetDistance = 100;
+        if (cheapDistance(character, target) < runAtTargetDistance) {
           _characterRunAt(character, target);
           return;
         }
@@ -506,20 +507,20 @@ extension GameFunctions on Game {
       if (ai.arrivedAtDest) {
         ai.pathIndex--;
         if (ai.pathIndex < 0) {
-          character.state = CharacterState.Idle;
+          character.state = stateIdle;
           return;
         }
       }
       // @on npc going to path
       characterFace(character, ai.destX, ai.destY);
-      character.state = CharacterState.Running;
+      character.state = stateRunning;
       return;
     } else if (ai.mode == NpcMode.Aggressive && ai.idleDuration++ > _aiWanderPauseDuration){
       ai.idleDuration = 0;
       npcSetRandomDestination(ai);
     }
 
-    character.state = CharacterState.Idle;
+    character.state = stateIdle;
   }
 
   void _updatePlayersAndNpcs() {
