@@ -476,6 +476,10 @@ extension GameFunctions on Game {
     setCharacterState(character, stateRunning);
   }
 
+  int get someNumber {
+    return 5;
+  }
+
   void _updateCharacterAI(Character character) {
     if (character.deadOrBusy) return;
     if (character.inactive) return;
@@ -525,16 +529,20 @@ extension GameFunctions on Game {
 
   void _updatePlayersAndNpcs() {
 
-    for (var i = 0; i < players.length; i++) {
-      updatePlayer(players[i]);
-      updateCharacter(players[i]);
+    final playersLength = players.length;
+    for (var i = 0; i < playersLength; i++) {
+      final player = players[i];
+      updatePlayer(player);
+      updateCharacter(player);
     }
 
-    for (var i = 0; i < zombies.length; i++) {
+    final zombiesLength = zombies.length;
+    for (var i = 0; i < zombiesLength; i++) {
       updateCharacter(zombies[i]);
     }
 
-    for (var i = 0; i < npcs.length; i++) {
+    final npcsLength = npcs.length;
+    for (var i = 0; i < npcsLength; i++) {
       updateCharacter(npcs[i]);
     }
 
@@ -584,8 +592,7 @@ extension GameFunctions on Game {
   }
 
   void setCharacterStateRunning(Character character) {
-    const running = CharacterState.Running;
-    setCharacterState(character, running);
+    setCharacterState(character, stateRunning);
   }
 
   void setCharacterStateDead(Character character) {

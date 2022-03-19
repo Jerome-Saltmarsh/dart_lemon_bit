@@ -45,6 +45,8 @@ final _mystY = atlas.myst.y;
 final _shellX = _particles.shell.x;
 final _shellY = _particles.shell.y;
 
+const _zombieHeadX = 4030.0;
+
 void mapParticleToSrc(Particle particle){
   final shade = _isometricState.getShadeAtPosition(particle.x, particle.y);
 
@@ -100,8 +102,8 @@ void mapParticleToSrc(Particle particle){
 
     case ParticleType.Human_Head:
       final direction = convertAngleToDirectionInt(particle.rotation);
-      final x = atlas.particles.zombieHead.x + (direction * _size64);
-      final y = atlas.particles.zombieHead.y + shade * _size64;
+      final x = _zombieHeadX + (direction * _size64);
+      final y = shade * _size64;
       engine.mapSrc(x: x, y: y, width: _size64, height: _size64);
       return;
 

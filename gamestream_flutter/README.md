@@ -68,6 +68,7 @@
 [ ] Slot Capacity
 [SKIRMISH]     
 [ ] FIX Double shot    
+[x] FIX Zombie head invisible
 [x] FIX Kill zombie particles angle    
 [x] FIX Shell Particle    
 [x] FIX Environment Render order in skirmish
