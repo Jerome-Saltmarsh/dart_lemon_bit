@@ -627,6 +627,9 @@ extension GameFunctions on Game {
     if (character.dead) return;
     if (character.state == value) return;
 
+    character.stateDuration = 0;
+    character.animationFrame = 0;
+
     if (value == CharacterState.Dead){
       setCharacterStateDead(character);
       return;
@@ -1015,7 +1018,6 @@ extension GameFunctions on Game {
 
     if (character.dead) return;
 
-    character.stateDuration++;
 
     if (character.frozenDuration > 0) {
       character.frozenDuration--;
@@ -1025,6 +1027,7 @@ extension GameFunctions on Game {
       character.stateDurationRemaining--;
       if (character.stateDurationRemaining == 0) {
         setCharacterState(character, CharacterState.Idle);
+
       }
     }
 
@@ -1040,11 +1043,8 @@ extension GameFunctions on Game {
         break;
     }
 
-    if (character.previousState != character.state) {
-      character.previousState = character.state;
-      character.animationFrame = 0;
-      character.stateDuration = 0;
-    }
+
+    character.stateDuration++;
   }
 
   void _updateCharacterStateRunning(Character character) {
@@ -1161,7 +1161,6 @@ extension GameFunctions on Game {
     zombie.active = true;
     zombie.state = CharacterState.Idle;
     zombie.stateDurationRemaining = 0;
-    zombie.previousState = CharacterState.Idle;
     zombie.maxHealth = health;
     zombie.health = health;
     zombie.collidable = true;

@@ -52,6 +52,7 @@ void write(dynamic value) {
 
 Future main() async {
   print('gamestream.online server starting');
+  print('v${version}');
   if (isLocalMachine){
     print("Environment Detected: Jerome's Computer");
   }else{

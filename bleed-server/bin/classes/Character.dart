@@ -83,7 +83,6 @@ class Character extends GameObject {
   Ability? ability = null;
   Ability? performing = null;
   CharacterState state = CharacterState.Idle;
-  CharacterState previousState = CharacterState.Idle;
   double angle = 0;
   int equippedIndex = 0;
   double aimAngle = 0;
