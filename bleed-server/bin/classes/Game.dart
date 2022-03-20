@@ -1581,19 +1581,19 @@ extension GameFunctions on Game {
   }
 }
 
-void applyCratePhysics(Crate crate, List<Character> characters) {
-  for (Character character in characters) {
-    if (!character.active) continue;
-    if (diffOver(crate.x, character.x, radius.crate)) continue;
-    if (diffOver(crate.y, character.y, radius.crate)) continue;
-    double dis = distanceBetween(crate.x, crate.y, character.x, character.y);
-    if (dis >= radius.crate) continue;
-    double b = radius.crate - dis;
-    double r = radiansBetween(crate.x, crate.y, character.x, character.y);
-    character.x += adj(r, b);
-    character.y += opp(r, b);
-  }
-}
+// void applyCratePhysics(Crate crate, List<Character> characters) {
+//   for (final character in characters) {
+//     if (!character.active) continue;
+//     if (diffOver(crate.x, character.x, radius.crate)) continue;
+//     if (diffOver(crate.y, character.y, radius.crate)) continue;
+//     final dis = approximateDistance(crate, character);
+//     if (dis >= radius.crate) continue;
+//     final b = radius.crate - dis;
+//     final r = radiansBetween(crate.x, crate.y, character.x, character.y);
+//     character.x += adj(r, b);
+//     character.y += opp(r, b);
+//   }
+// }
 
 void playerInteract(Player player) {
   for (InteractableNpc npc in player.game.npcs) {
@@ -1613,7 +1613,7 @@ void playerSetAbilityTarget(Player player, double x, double y) {
   final ability = player.ability;
   if (ability == null) return;
 
-  final distance = distanceBetween(player.x, player.y, x, y);
+  final distance = approximateLength(player.x - x, player.y - y);
 
   if (distance > ability.range) {
     double rotation = pi2 - angle2(player.x - x, player.y - y);
