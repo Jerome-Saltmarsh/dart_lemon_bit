@@ -69,7 +69,7 @@
 [ ] Slot Capacity
 [ ] FIX Flashing Particles    
 [SKIRMISH]      
-[ ] FIX Zombie dead particle anomaly   
+[x] FIX Zombie dead particle anomaly   
 [x] Flames render in different orders   
 [x] Center Flames    
 [x] FIX Double shot    
