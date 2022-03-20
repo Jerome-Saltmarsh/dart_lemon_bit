@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:lemon_math/Vector2.dart';
-import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/hypotenuse.dart';
 
 import 'constants.dart';
@@ -11,11 +10,7 @@ const half = 0.5;
 const _1 = 1.0;
 
 double distanceV2(Vector2 a, Vector2 b) {
-  return distanceBetween(a.x, a.y, b.x, b.y);
-}
-
-double distanceV2From(Vector2 a, double x, double y) {
-  return distanceBetween(a.x, a.y, x, y);
+  return approximateLength(a.x - b.x, a.y - b.y);
 }
 
 int absInt(int value) {
@@ -82,4 +77,28 @@ double clampMagnitudeY(double x, double y, double value) {
 
 bool isLeft(double aX, double aY, double bX, double bY, double cX, double cY) {
   return ((bX - aX) * (cY - aY) - (bY - aY) * (cX - aX)) > _0;
+}
+
+double approximateLength(num a, num b){
+  const squareRatio = 0.70710656237;
+  const inverseRatio = 1.0 - squareRatio;
+  const _1 = 1.0;
+
+  final aAbs = a.abs();
+  final bAbs = b.abs();
+
+  late final long;
+  late final short;
+
+  if (aAbs > bAbs) {
+    long = aAbs;
+    short = bAbs;
+  } else {
+    long = bAbs;
+    short = aAbs;
+  }
+  final ratio = (short / long);
+  final longRatio = _1 - (ratio * inverseRatio);
+  final value =  long / longRatio;
+  return value;
 }

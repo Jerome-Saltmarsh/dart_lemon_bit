@@ -1,11 +1,8 @@
 import 'package:lemon_math/Vector2.dart';
-import 'package:lemon_math/diff_over.dart';
-import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/give_or_take.dart';
 
 import 'classes/Character.dart';
 import 'classes/GameObject.dart';
-import 'classes/Projectile.dart';
 import 'common/SlotType.dart';
 import 'functions/withinRadius.dart';
 import 'maths.dart';
@@ -16,10 +13,6 @@ const secondsPerMinute = 60;
 const minutesPerHour = 60;
 
 double tilesLeftY = 0;
-
-double projectileDistanceTravelled(Projectile bullet) {
-  return distanceBetween(bullet.x, bullet.y, bullet.xStart, bullet.yStart);
-}
 
 double clamp(double value, double min, double max) {
   if (value < min) return min;
@@ -46,10 +39,6 @@ bool withinViewRange(AI ai, GameObject target) {
 void setVelocity(GameObject gameObject, double rotation, double speed) {
   gameObject.xv = velX(rotation, speed);
   gameObject.yv = velY(rotation, speed);
-}
-
-double objectDistanceFrom(GameObject gameObject, double x, double y) {
-  return distanceBetween(gameObject.x, gameObject.y, x, y);
 }
 
 void characterFace(Character character, double x, double y) {

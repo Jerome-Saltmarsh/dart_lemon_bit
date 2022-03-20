@@ -20,9 +20,12 @@ class Projectile extends GameObject {
 
   int get squad => owner.team;
 
-  @override
-  int getSquad() {
-    return owner.team;
+  bool get overRange {
+    return distanceTravelled > range;
+  }
+
+  double get distanceTravelled {
+    return approximateLength(x - xStart, y - yStart);
   }
 }
 

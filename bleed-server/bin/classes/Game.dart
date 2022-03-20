@@ -725,7 +725,7 @@ extension GameFunctions on Game {
       final target = projectile.target;
       if (target != null) {
         setVelocityTowards(projectile, target, projectile.speed);
-      } else if (projectileDistanceTravelled(projectile) > projectile.range) {
+      } else if (projectile.overRange) {
         deactivateProjectile(projectile);
       }
     }
@@ -793,7 +793,7 @@ extension GameFunctions on Game {
     }
 
     for (final player in players) {
-      if (objectDistanceFrom(player, x, y) > settings.radius.explosion)
+      if (approximateLength(player.x - x, player.y - y) > settings.radius.explosion)
         continue;
       final rotation = radiansBetween2(player, x, y);
       final magnitude = 10.0;

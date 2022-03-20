@@ -66,15 +66,18 @@
 [ ] (MMO) Save / Load Character
 [ ] Looting Engine
 [ ] Slot Capacity
+[ ] FIX Flashing Particles    
 [SKIRMISH]     
-[ ] FIX Double shot    
+[ ] Flames render in different orders    
+[ ] FIX Zombie dead particle anomaly    
+[x] FIX Double shot    
 [x] FIX Zombie head invisible
 [x] FIX Kill zombie particles angle    
 [x] FIX Shell Particle    
+[COMPLETED]    
 [x] FIX Environment Render order in skirmish
 [x] Cannot attack enemy players    
 [x] Player Spawn Location    
-[COMPLETED]    
 [x] FIX BUG Initial lighting incorrect
 [x] Fix Batch Rendering glitches
 [x] FIX Particle blood renders as shell
