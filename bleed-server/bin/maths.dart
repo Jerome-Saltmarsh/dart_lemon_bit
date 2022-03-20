@@ -56,7 +56,7 @@ double opp(double rotation, num magnitude) {
 }
 
 double normalize(double x, double y) {
-  return _1 / hypotenuse(x, y);
+  return _1 / approximateLength(x, y);
 }
 
 double normalizeX(double x, double y) {
@@ -77,6 +77,10 @@ double clampMagnitudeY(double x, double y, double value) {
 
 bool isLeft(double aX, double aY, double bX, double bY, double cX, double cY) {
   return ((bX - aX) * (cY - aY) - (bY - aY) * (cX - aX)) > _0;
+}
+
+double approximateDistance(Vector2 a, Vector2 b){
+  return approximateLength(a.x - b.x, a.y - b.y);
 }
 
 double approximateLength(num a, num b){

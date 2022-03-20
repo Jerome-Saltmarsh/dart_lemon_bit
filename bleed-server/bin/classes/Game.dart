@@ -1135,7 +1135,7 @@ extension GameFunctions on Game {
     projectile.y = projectile.yStart;
     projectile.xv = velX(character.aimAngle + giveOrTake(accuracy), speed);
     projectile.yv = velY(character.aimAngle + giveOrTake(accuracy), speed);
-    projectile.speed = hypotenuse(projectile.xv, projectile.yv);
+    projectile.speed = approximateLength(projectile.xv, projectile.yv);
     projectile.owner = character;
     projectile.range = range;
     projectile.damage = damage;
@@ -1321,10 +1321,11 @@ extension GameFunctions on Game {
 
   void updateInteractableNpcTargets() {
     if (zombies.isEmpty) return;
-    int initial = getFirstAliveZombieIndex();
+    final initial = getFirstAliveZombieIndex();
     if (initial == _none) return;
 
-    for (int i = 0; i < npcs.length; i++) {
+    final npcsLength = npcs.length;
+    for (var i = 0; i < npcsLength; i++) {
       final ai = npcs[i].ai;
       if (ai == null) continue;
       updateInteractableNpcTarget(ai, initial);
@@ -1341,18 +1342,20 @@ extension GameFunctions on Game {
   void updateInteractableNpcTarget(AI ai, int j) {
     if (ai.mode == NpcMode.Ignore) return;
 
+    final aiWeaponRange = ai.character.weapon.range;
     var closest = zombies[j];
-    var closestDistance = cheapDistance(closest, ai.character);
-    for (var i = j + 1; i < zombies.length; i++) {
-      if (!zombies[i].alive) continue;
-      var distance2 = cheapDistance(zombies[i], ai.character);
+    var closestDistance = approximateDistance(closest, ai.character);
+    final zombiesLength = zombies.length;
+    for (var i = j + 1; i < zombiesLength; i++) {
+      final zombie = zombies[i];
+      if (!zombie.alive) continue;
+      var distance2 = approximateDistance(zombie, ai.character);
       if (distance2 > closestDistance) continue;
-      closest = zombies[i];
+      closest = zombie;
       closestDistance = distance2;
     }
-
-    final actualDistance = distanceBetween(ai.character.x, ai.character.y, closest.x, closest.y);
-    if (actualDistance > ai.character.weapon.range) {
+    final actualDistance = approximateDistance(ai.character, closest);
+    if (actualDistance > aiWeaponRange) {
       ai.clearTarget();
       ai.character.state = CharacterState.Idle;
     } else {
