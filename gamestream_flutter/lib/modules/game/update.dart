@@ -14,6 +14,7 @@ import 'package:lemon_engine/engine.dart';
 import 'state.dart';
 
 final _player = modules.game.state.player;
+final _controller = modules.game.state.characterController;
 
 class GameUpdate {
 
@@ -75,7 +76,7 @@ class GameUpdate {
     // }
     final direction = getKeyDirection();
     if (direction != null){
-      modules.game.state.characterController.angle = direction.index.toDouble();
+      _controller.angle = direction.index.toDouble();
       modules.game.actions.setCharacterActionRun();
       return;
     }
