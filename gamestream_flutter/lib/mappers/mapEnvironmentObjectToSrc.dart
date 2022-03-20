@@ -98,6 +98,8 @@ final _timeline = core.state.timeline;
 final _torchesY = _translations.torches.y;
 
 void mapEnvironmentObjectToSrc(EnvironmentObject env){
+  const frames = 5;
+
   // TODO Optimize
   var shade = _isoState.getShade(env.row, env.column);
   if (env.isHouse){
@@ -105,7 +107,7 @@ void mapEnvironmentObjectToSrc(EnvironmentObject env){
   }
   var top = shade * env.height;
   if (env.isTorch && _ambient.value > Shade.Bright){
-    top = _torchesY + ((_timeline.frame % 4) * _torchHeight) + _torchHeight;
+    top = _torchesY + (((_timeline.frame + env.frameRandom) % frames) * _torchHeight) + _torchHeight;
   }
   engine.mapSrc(x: env.srcX, y: top, width: env.width, height: env.height);
 }

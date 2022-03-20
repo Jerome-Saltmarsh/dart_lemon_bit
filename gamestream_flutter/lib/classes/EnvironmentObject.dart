@@ -4,6 +4,7 @@ import 'package:bleed_common/enums/ObjectType.dart';
 import 'package:gamestream_flutter/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:gamestream_flutter/modules/isometric/utilities.dart';
 import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/random.dart';
 
 class EnvironmentObject extends Vector2 {
   late int row;
@@ -25,6 +26,8 @@ class EnvironmentObject extends Vector2 {
 
   late double srcX;
 
+  var frameRandom = 0;
+
   static const _anchorYRatio = 0.66666;
 
   EnvironmentObject({
@@ -45,6 +48,10 @@ class EnvironmentObject extends Vector2 {
     isHouse = type == ObjectType.House01 || type == ObjectType.House02;
     isTorch = type == ObjectType.Torch;
     move(x, y);
+
+    if(isTorch){
+      frameRandom = random.nextInt(99);
+    }
 
     final translation = objectTypeSrcPosition[type]!;
     final index =  environmentObjectIndex[type]!;

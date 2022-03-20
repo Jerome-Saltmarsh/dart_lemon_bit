@@ -68,9 +68,9 @@
 [ ] Structure System
 [ ] Slot Capacity
 [ ] FIX Flashing Particles    
-[SKIRMISH]     
-[ ] Flames render in different orders    
+[SKIRMISH]      
 [ ] FIX Zombie dead particle anomaly   
+[x] Flames render in different orders   
 [x] Center Flames    
 [x] FIX Double shot    
 [x] FIX Zombie head invisible
