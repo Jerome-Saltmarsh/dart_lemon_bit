@@ -54,6 +54,10 @@ class EnvironmentObject extends Vector2 {
   void move(double x, double y){
     this.x = x;
     this.y = y;
+    refreshRowAndColumn();
+  }
+
+  void refreshRowAndColumn(){
     row = getRow(x, y);
     column = getColumn(x, y);
   }

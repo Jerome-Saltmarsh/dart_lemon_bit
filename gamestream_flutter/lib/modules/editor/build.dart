@@ -8,12 +8,15 @@ import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:bleed_common/CharacterType.dart';
 import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/enums/Shade.dart';
+import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
+import 'package:gamestream_flutter/modules/isometric/utilities.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/toString.dart';
 import 'package:gamestream_flutter/ui/compose/hudUI.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/style.dart';
+import 'package:gamestream_flutter/utils.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
@@ -377,6 +380,9 @@ class EditorBuild {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 text("Position ${selected.x.toInt()} ${selected.y.toInt()}"),
+                text("Snap To Grid", onPressed: (){
+                  snapToGrid(selected);
+                })
             ],),
         );
     });

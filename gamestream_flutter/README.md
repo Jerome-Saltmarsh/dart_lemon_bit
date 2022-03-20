@@ -64,12 +64,14 @@
 [ ] Experience Bar
 [ ] FIX Join Custom Game
 [ ] (MMO) Save / Load Character
-[ ] Looting Engine
+[ ] Loot System
+[ ] Structure System
 [ ] Slot Capacity
 [ ] FIX Flashing Particles    
 [SKIRMISH]     
 [ ] Flames render in different orders    
-[ ] FIX Zombie dead particle anomaly    
+[ ] FIX Zombie dead particle anomaly   
+[x] Center Flames    
 [x] FIX Double shot    
 [x] FIX Zombie head invisible
 [x] FIX Kill zombie particles angle    

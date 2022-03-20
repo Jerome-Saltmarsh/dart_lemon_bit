@@ -58,9 +58,6 @@ class GameUpdate {
   }
 
   void readPlayerInput() {
-    // TODO This should be reactive
-    if (!playerAssigned) return;
-
     if (hud.textBoxFocused) return;
 
     // if (keysPressed.contains(LogicalKeyboardKey.keyE) && !state.panningCamera) {
@@ -71,11 +68,11 @@ class GameUpdate {
     //   state.panningCamera = false;
     // }
 
-    if (state.panningCamera) {
+    // if (state.panningCamera) {
       // Offset mouseWorldDiff = _mouseWorldStart - mouseWorld;
       // engine.state.camera.y += mouseWorldDiff.dy * engine.state.zoom;
       // engine.state.camera.x += mouseWorldDiff.dx * engine.state.zoom;
-    }
+    // }
     final direction = getKeyDirection();
     if (direction != null){
       modules.game.state.characterController.angle = direction.index.toDouble();
