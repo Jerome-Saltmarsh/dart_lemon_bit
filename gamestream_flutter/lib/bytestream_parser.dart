@@ -35,6 +35,7 @@ class _ByteStreamParser {
 
   var _index = 0;
   late List<int> values;
+  final Map<int, Uint8List> _byteStreamPool = {};
 
   void parse(List<int> values){
     _index = 0;
@@ -278,11 +279,20 @@ class _ByteStreamParser {
   }
 
   List<int> readBytes(int length){
-    final values = Uint8List(length);
+    final values = _getByteStream(length);
     for (var i = 0; i < length; i++) {
       values[i] = _nextByte();
     }
     return values;
+  }
+
+  /// Recycles bytestreams to prevent memory leak
+  List<int> _getByteStream(int length){
+    var stream = _byteStreamPool[length];
+    if (stream != null) return stream;
+    stream = Uint8List(length);
+    _byteStreamPool[length] = stream;
+    return stream;
   }
 
 }
