@@ -793,7 +793,7 @@ extension GameFunctions on Game {
     }
 
     for (final player in players) {
-      if (approximateLength(player.x - x, player.y - y) > settings.radius.explosion)
+      if (hypotenuse(player.x - x, player.y - y) > settings.radius.explosion)
         continue;
       final rotation = radiansBetween2(player, x, y);
       final magnitude = 10.0;
@@ -1135,7 +1135,7 @@ extension GameFunctions on Game {
     projectile.y = projectile.yStart;
     projectile.xv = velX(character.aimAngle + giveOrTake(accuracy), speed);
     projectile.yv = velY(character.aimAngle + giveOrTake(accuracy), speed);
-    projectile.speed = approximateLength(projectile.xv, projectile.yv);
+    projectile.speed = hypotenuse(projectile.xv, projectile.yv);
     projectile.owner = character;
     projectile.range = range;
     projectile.damage = damage;
@@ -1344,17 +1344,17 @@ extension GameFunctions on Game {
 
     final aiWeaponRange = ai.character.weapon.range;
     var closest = zombies[j];
-    var closestDistance = approximateDistance(closest, ai.character);
+    var closestDistance = distanceV2(closest, ai.character);
     final zombiesLength = zombies.length;
     for (var i = j + 1; i < zombiesLength; i++) {
       final zombie = zombies[i];
       if (!zombie.alive) continue;
-      var distance2 = approximateDistance(zombie, ai.character);
+      var distance2 = distanceV2(zombie, ai.character);
       if (distance2 > closestDistance) continue;
       closest = zombie;
       closestDistance = distance2;
     }
-    final actualDistance = approximateDistance(ai.character, closest);
+    final actualDistance = distanceV2(ai.character, closest);
     if (actualDistance > aiWeaponRange) {
       ai.clearTarget();
       ai.character.state = CharacterState.Idle;
@@ -1613,7 +1613,7 @@ void playerSetAbilityTarget(Player player, double x, double y) {
   final ability = player.ability;
   if (ability == null) return;
 
-  final distance = approximateLength(player.x - x, player.y - y);
+  final distance = hypotenuse(player.x - x, player.y - y);
 
   if (distance > ability.range) {
     double rotation = pi2 - angle2(player.x - x, player.y - y);

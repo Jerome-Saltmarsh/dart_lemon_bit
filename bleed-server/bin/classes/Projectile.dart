@@ -1,4 +1,6 @@
 
+import 'package:lemon_math/hypotenuse.dart';
+
 import '../common/enums/ProjectileType.dart';
 import '../maths.dart';
 import 'Character.dart';
@@ -25,7 +27,7 @@ class Projectile extends GameObject {
   }
 
   double get distanceTravelled {
-    return approximateLength(x - xStart, y - yStart);
+    return hypotenuse(x - xStart, y - yStart);
   }
 }
 

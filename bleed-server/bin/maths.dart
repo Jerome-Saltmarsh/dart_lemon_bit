@@ -10,7 +10,7 @@ const half = 0.5;
 const _1 = 1.0;
 
 double distanceV2(Vector2 a, Vector2 b) {
-  return approximateLength(a.x - b.x, a.y - b.y);
+  return hypotenuse(a.x - b.x, a.y - b.y);
 }
 
 int absInt(int value) {
@@ -56,7 +56,7 @@ double opp(double rotation, num magnitude) {
 }
 
 double normalize(double x, double y) {
-  return _1 / approximateLength(x, y);
+  return _1 / hypotenuse(x, y);
 }
 
 double normalizeX(double x, double y) {
@@ -79,30 +79,30 @@ bool isLeft(double aX, double aY, double bX, double bY, double cX, double cY) {
   return ((bX - aX) * (cY - aY) - (bY - aY) * (cX - aX)) > _0;
 }
 
-double approximateDistance(Vector2 a, Vector2 b){
-  return approximateLength(a.x - b.x, a.y - b.y);
-}
-
-double approximateLength(num a, num b){
-  const squareRatio = 0.70710656237;
-  const inverseRatio = 1.0 - squareRatio;
-  const _1 = 1.0;
-
-  final aAbs = a.abs();
-  final bAbs = b.abs();
-
-  late final long;
-  late final short;
-
-  if (aAbs > bAbs) {
-    long = aAbs;
-    short = bAbs;
-  } else {
-    long = bAbs;
-    short = aAbs;
-  }
-  final ratio = (short / long);
-  final longRatio = _1 - (ratio * inverseRatio);
-  final value =  long / longRatio;
-  return value;
-}
+// double approximateDistance(Vector2 a, Vector2 b){
+//   return approximateLength(a.x - b.x, a.y - b.y);
+// }
+//
+// double approximateLength(num a, num b){
+//   const squareRatio = 0.70710656237;
+//   const inverseRatio = 1.0 - squareRatio;
+//   const _1 = 1.0;
+//
+//   final aAbs = a.abs();
+//   final bAbs = b.abs();
+//
+//   late final long;
+//   late final short;
+//
+//   if (aAbs > bAbs) {
+//     long = aAbs;
+//     short = bAbs;
+//   } else {
+//     long = bAbs;
+//     short = aAbs;
+//   }
+//   final ratio = (short / long);
+//   final longRatio = _1 - (ratio * inverseRatio);
+//   final value =  long / longRatio;
+//   return value;
+// }

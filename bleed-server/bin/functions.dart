@@ -44,7 +44,7 @@ void resolveCollisionA(GameObject a, GameObject b) {
   }
 
   final halfOverlap = overlap * 0.5;
-  final mag = approximateLength(xDiff, yDiff);
+  final mag = hypotenuse(xDiff, yDiff);
   final ratio = 1.0 / mag;
   final xDiffNormalized = xDiff * ratio;
   final yDiffNormalized = yDiff * ratio;
@@ -61,7 +61,7 @@ void resolveCollisionB(GameObject a, GameObject b) {
   if (overlap < 0) return;
   double xDiff = a.x - b.x;
   double yDiff = a.y - b.y;
-  double mag = approximateLength(xDiff, yDiff);
+  double mag = hypotenuse(xDiff, yDiff);
   double ratio = 1.0 / mag;
   double xDiffNormalized = xDiff * ratio;
   double yDiffNormalized = yDiff * ratio;
