@@ -206,8 +206,9 @@ class IsometricRender {
           indexParticle++;
           particlesRemaining = indexParticle < totalParticles;
           if (particlesRemaining){
-            particleIsBlood = particles[indexParticle].type == ParticleType.Blood;
-            particleY = particles[indexParticle].y;
+            final nextParticle = particles[indexParticle];
+            particleIsBlood = nextParticle.type == ParticleType.Blood;
+            particleY = nextParticle.y;
           }
           continue;
         }
@@ -218,8 +219,9 @@ class IsometricRender {
             indexParticle++;
             particlesRemaining = indexParticle < totalParticles;
             if (particlesRemaining){
-              particleIsBlood = particles[indexParticle].type == ParticleType.Blood;
-              particleY = particles[indexParticle].y;
+              final nextParticle = particles[indexParticle];
+              particleIsBlood = nextParticle.type == ParticleType.Blood;
+              particleY = nextParticle.y;
             }
             continue;
           }

@@ -190,57 +190,60 @@ class GameBuild {
   }
 
   Widget respawnButton(){
-    return WatchBuilder(state.player.alive, (bool alive){
-      if (alive) return empty;
-      return button("Respawn", actions.respawn);
-    });
+    return button("Respawn", actions.respawn);
   }
 
   Widget layoutRoyal(){
-    final _pad = 8.0;
-    return layout(
-        children: [
-          bottomCenter(child: Column(
-            children: [
-              _magicBar(),
-              _healthBar(),
-            ],
-          ), padding: _pad),
-          Positioned(
-              left: _pad,
-              top: _pad,
-              child: WatchBuilder(state.debugPanelVisible, (bool visible){
-                return visible ? debugContainer() : ui.widgets.time;
-              })),
-          Positioned(
-              left: _pad,
-              bottom: _pad,
-              child: WatchBuilder(state.debugPanelVisible, (bool visible){
-                return visible ? toggleDebugMode() : empty;
-              })),
-          Positioned(
-              right: _pad,
-              bottom: _pad,
-              child: _panelMagicStore()),
-          buildTextBox(),
-          Positioned(
+    const _pad = 8.0;
+
+    return WatchBuilder(state.player.alive, (bool alive){
+      return layout(
+          children: [
+            if (alive)
+            bottomCenter(child: Column(
+              children: [
+                _magicBar(),
+                _healthBar(),
+              ],
+            ), padding: _pad),
+            Positioned(
+                left: _pad,
+                top: _pad,
+                child: WatchBuilder(state.debugPanelVisible, (bool visible){
+                  return visible ? debugContainer() : ui.widgets.time;
+                })),
+            Positioned(
+                left: _pad,
+                bottom: _pad,
+                child: WatchBuilder(state.debugPanelVisible, (bool visible){
+                  return visible ? toggleDebugMode() : empty;
+                })),
+            if (alive)
+            Positioned(
+                right: _pad,
+                bottom: _pad,
+                child: _panelMagicStore()),
+            buildTextBox(),
+            Positioned(
               child: Row(
                 children: [
                   toggleAudioEnabled(),
                   width8,
                   ui.widgets.exit,
                   if (core.state.account.isNotNull)
-                  ui.widgets.saveCharacter,
+                    ui.widgets.saveCharacter,
                   if (core.state.account.isNotNull)
-                  ui.widgets.loadCharacter,
+                    ui.widgets.loadCharacter,
                 ],
               ),
               right: _pad,
               top: _pad,
-          ),
-          respawnButton(),
-      _panelHighlightedSlot(),
-    ]);
+            ),
+            if (!alive)
+            respawnButton(),
+            _panelHighlightedSlot(),
+          ]);
+    });
   }
 
   WatchBuilder<SlotType> _panelHighlightedSlot() {

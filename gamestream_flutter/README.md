@@ -1,4 +1,5 @@
 [IDEAS]
+[ ] Enemies drop recipes, recipes can be used to construct equipment and specify what they cost
 [ ] Perspective Mode
 [ ] Rain Particles
 [ ] Faster to walk on concrete than grass, mud is very slow.
