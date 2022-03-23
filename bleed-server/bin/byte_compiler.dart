@@ -24,6 +24,19 @@ class _ByteCompiler {
   final _buffer = Uint8List(100000); // 100kb
   final List<Uint8List> _buffers = [];
 
+
+  _ByteCompiler(){
+    _buffers.add(Uint8List(75));
+    _buffers.add(Uint8List(100));
+    _buffers.add(Uint8List(125));
+    _buffers.add(Uint8List(150));
+    _buffers.add(Uint8List(175));
+    _buffers.add(Uint8List(200));
+    _buffers.add(Uint8List(250));
+    _buffers.add(Uint8List(300));
+    _buffers.add(Uint8List(350));
+  }
+
   List<int> writeToSendBuffer() {
     writeByte(ServerResponse.End.index);
     final sendBuffer = _getSendBuffer();
