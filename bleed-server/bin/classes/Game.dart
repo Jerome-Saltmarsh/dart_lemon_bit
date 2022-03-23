@@ -4,7 +4,6 @@ import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/abs.dart';
 import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/diff_over.dart';
-import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/hypotenuse.dart';
 import 'package:lemon_math/randomInt.dart';
@@ -107,6 +106,10 @@ abstract class Game {
   }
 
   void onNpcKilled(Character npc, Character src) {}
+
+  void onCharacterKilled(Character killed, Character by){
+
+  }
 
   final List<Collider> colliders = [];
   final List<Item> items = [];
@@ -430,6 +433,8 @@ extension GameFunctions on Game {
       setCharacterState(target, CharacterState.Hurt);
       return;
     }
+
+    onCharacterKilled(target, src);
 
     if (src is Player) {
       src.gemSpawns.add(GemSpawn(x: target.x, y: target.y, type: OrbType.Ruby));
@@ -1449,7 +1454,6 @@ extension GameFunctions on Game {
   void npcSetPathToTileNode(AI ai, TileNode node) {
     pathFindDestination = node;
     pathFindAI = ai;
-    pathFindPrevious = null;
     pathFindSearchID++;
     ai.pathIndex = -1;
     scene.visitNode(scene.tileNodeAt(ai.x, ai.y));

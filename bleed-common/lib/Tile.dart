@@ -25,6 +25,8 @@ extension TileExtension on Tile {
 
 const tiles = Tile.values;
 
+const tileBoundary = Tile.Boundary;
+
 String parseTileToString(Tile tile){
   return tile.toString().replaceAll("Tile.", "");
 }

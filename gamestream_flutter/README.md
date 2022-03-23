@@ -60,12 +60,13 @@
 [ ] Bow Spells, Charged shot
 [ ] Bow Spells,
 [ ] Sword Spells, Strong Swing
-[ ] Destructible Items to collect gems
 [ ] Shop visible when interact with NPC
 [ ] Experience Bar
 [ ] FIX Join Custom Game
 [ ] (MMO) Save / Load Character
 [ ] Loot System
+[ ] Resource Gathering System (Rock, Wood, Etc)
+[ ] Destructible Objects    
 [ ] Structure System
 [ ] Slot Capacity
 [ ] FIX Flashing Particles  

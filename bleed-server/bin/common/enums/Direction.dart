@@ -14,6 +14,7 @@ enum Direction {
 final directionRightIndex = Direction.Right.index;
 const directions = Direction.values;
 final directionsLength = directions.length;
+final directionsMaxIndex = directions.length - 1;
 const _piQuarter = pi / 4.0;
 const _pi2 = pi + pi;
 

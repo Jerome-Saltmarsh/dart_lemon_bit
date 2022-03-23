@@ -3,6 +3,7 @@
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/randomItem.dart';
 
+import '../classes/Character.dart';
 import '../classes/EnvironmentObject.dart';
 import '../classes/Game.dart';
 import '../classes/Player.dart';
@@ -17,7 +18,6 @@ class GameSkirmish extends Game {
   GameSkirmish() : super(engine.scenes.skirmish){
      _flags = scene.environment.where((env) => env.type == ObjectType.Flag).toList();
   }
-
 
   @override
   void update(){
@@ -48,5 +48,10 @@ class GameSkirmish extends Game {
   @override
   Vector2 getNextSpawnPoint(){
     return randomItem(_flags);
+  }
+
+  @override
+  void onCharacterKilled(Character killed, Character by) {
+    // drop random loot
   }
 }

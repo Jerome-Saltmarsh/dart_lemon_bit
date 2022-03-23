@@ -45,5 +45,7 @@ class TileNode {
   TileNode? previous;
   int score = 0;
 
+  int depth = 0;
+
   TileNode(this.open);
 }
