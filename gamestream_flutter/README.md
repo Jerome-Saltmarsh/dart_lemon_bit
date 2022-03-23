@@ -70,9 +70,9 @@
 [ ] Structure System
 [ ] Slot Capacity
 [ ] FIX Flashing Particles  
-[ ] Improve AI Pathfinding      
 [ ] FIX Myst Particle Render order    
 [ ] Myst Emitter Sprite    
+[x] Improve AI Pathfinding      
 [SKIRMISH]      
 [x] FIX Zombie dead particle anomaly   
 [x] Flames render in different orders   

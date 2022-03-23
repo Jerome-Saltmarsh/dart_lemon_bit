@@ -22,6 +22,11 @@ double convertDirectionToAngle(Direction direction){
   return direction.index * _piQuarter;
 }
 
+
+Direction directionFromIndex(int index){
+  return directions[index >= 0 ? index % directionsLength : (index + directionsMaxIndex) % directionsLength];
+}
+
 double _fixAngle(double angle){
   if (angle < 0) {
     angle = (_pi2 + angle).abs() % _pi2;

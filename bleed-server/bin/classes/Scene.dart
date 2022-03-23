@@ -175,7 +175,7 @@ late AI pathFindAI;
 late TileNode pathFindDestination;
 var pathFindSearchID = 0;
 
-const _maxSearchDepth = 20;
+const _maxSearchDepth = 30;
 
 Direction parseRowsAndColumnsToDirection(int rows, int columns){
   assert(rows != 0 || columns != 0);
@@ -205,7 +205,7 @@ Direction parseRowsAndColumnsToDirection(int rows, int columns){
 
 extension SceneFunctions on Scene {
 
-  void reserve(TileNode src, TileNode target){
+  void _reserve(TileNode src, TileNode target){
     if (target.reservedSearchId == pathFindSearchID) return;
     target.reserved = src;
     target.reservedSearchId = pathFindSearchID;
@@ -278,17 +278,15 @@ extension SceneFunctions on Scene {
 
     final distanceRows = pathFindDestination.row - node.row;
     final distanceColumns = pathFindDestination.column - node.column;
-    final totalDistance = distanceRows.abs() + distanceColumns.abs();
     final direction = parseRowsAndColumnsToDirection(distanceRows, distanceColumns);
-
-    reserve(node, node.up);
-    reserve(node, node.upRight);
-    reserve(node, node.right);
-    reserve(node, node.downRight);
-    reserve(node, node.down);
-    reserve(node, node.downLeft);
-    reserve(node, node.left);
-    reserve(node, node.upLeft);
+    _reserve(node, node.up);
+    _reserve(node, node.upRight);
+    _reserve(node, node.right);
+    _reserve(node, node.downRight);
+    _reserve(node, node.down);
+    _reserve(node, node.downLeft);
+    _reserve(node, node.left);
+    _reserve(node, node.upLeft);
 
     if (visitDirection(direction, node)){
       return true;
@@ -296,106 +294,19 @@ extension SceneFunctions on Scene {
 
     final directionIndex = direction.index;
 
-    // if visit direction is not true, fan out and search other directions
     for (var i = 1; i < 4; i++) {
-      final left = directionIndex - i;
-      final leftIndex = left >= 0 ? left % directionsLength : left + directionsMaxIndex;
-      final leftDirection = directions[leftIndex];
-      if (visitDirection(leftDirection, node)){
+      final leftDirection = directionFromIndex(directionIndex - i);
+      if (visitDirection(leftDirection, node)) {
         return true;
       }
-      final right = directionIndex + i;
-      final rightIndex = right >= 0 ? right % directionsLength : right + directionsMaxIndex;
-      final rightDirection = directions[rightIndex];
-
-      if (visitDirection(rightDirection, node)){
+      final rightDirection = directionFromIndex(directionIndex + i);
+      if (visitDirection(rightDirection, node)) {
         return true;
       }
     }
 
-    return false;
-
-    // // convert to direction
-    //
-    // final nextDepth = depth + 1;
-    //
-    // if (distanceRows < 0) { // above
-    //   if (distanceColumns < 0) { // left
-    //      if (node.up.open || node.left.open){
-    //        if (visitNode(node.upLeft, depth: nextDepth)) {
-    //          return true;
-    //        }
-    //      }
-    //      if (visitNode(node.left, depth: nextDepth)) {
-    //        return true;
-    //      }
-    //      if (visitNode(node.up, depth: nextDepth)) {
-    //        return true;
-    //      }
-    //   } else if (distanceColumns > 0) {
-    //     if (node.up.open || node.right.open) {
-    //       if (visitNode(node.upRight, depth: nextDepth)) {
-    //         return true;
-    //       }
-    //       if (visitNode(node.right, depth: nextDepth)) {
-    //         return true;
-    //       }
-    //       if (visitNode(node.up, depth: nextDepth)) {
-    //         return true;
-    //       }
-    //     }
-    //   } else if (visitNode(node.up, depth: nextDepth)) {
-    //     return true;
-    //   } else if (visitNode(node.left, depth: nextDepth)) {
-    //     return true;
-    //   } else if (visitNode(node.right, depth: nextDepth)) {
-    //     return true;
-    //   }
-    //
-    // } else if (distanceRows > 0) { // below
-    //
-    //   if (distanceColumns < 0) {
-    //     if (node.down.open || node.left.open){
-    //       if (visitNode(node.downLeft, depth: nextDepth)) {
-    //         return true;
-    //       }
-    //       if (visitNode(node.left, depth: nextDepth)) {
-    //         return true;
-    //       }
-    //       if (visitNode(node.down, depth: nextDepth)) {
-    //         return true;
-    //       }
-    //     }
-    //   } else if (distanceColumns > 0) {
-    //     if (node.down.open || node.right.open) {
-    //       if (visitNode(node.downRight, depth: nextDepth)) {
-    //         return true;
-    //       }
-    //       if (visitNode(node.right, depth: nextDepth)) {
-    //         return true;
-    //       }
-    //       if (visitNode(node.down, depth: nextDepth)) {
-    //         return true;
-    //       }
-    //     }
-    //   } else if (visitNode(node.down, depth: nextDepth)) { // down
-    //     return true;
-    //   } else if (visitNode(node.right, depth: nextDepth)) { // down
-    //     return true;
-    //   } else if (visitNode(node.left, depth: nextDepth)) { // down
-    //     return true;
-    //   }
-    // } else { // rows == 0
-    //   if (distanceColumns < 0){
-    //      if (visitNode(node.left, depth: nextDepth)){
-    //        return true;
-    //      }
-    //   } else if (visitNode(node.right, depth: nextDepth)) {
-    //       return true;
-    //   }
-    // }
-    //
-    // return false;
+    final directionBehind = directionFromIndex(directionIndex + 4);
+    return visitDirection(directionBehind, node);
   }
 
   bool waterAt(double x, double y) {
