@@ -19,6 +19,13 @@ const _256 = 256;
 
 final byteCompiler = _ByteCompiler();
 
+final _serverResponsePlayerIndex = ServerResponse.Player.index;
+final _serverResponseZombiesIndex = ServerResponse.Zombies.index;
+final _serverResponsePlayersIndex = ServerResponse.Players.index;
+final _serverResponseEndIndex = ServerResponse.End.index;
+final _serverResponseGameEventsIndex = ServerResponse.Game_Events.index;
+final _serverResponseProjectilesIndex = ServerResponse.Projectiles.index;
+
 class _ByteCompiler {
   var _index = 0;
   final _buffer = Uint8List(100000); // 100kb
@@ -38,7 +45,7 @@ class _ByteCompiler {
   }
 
   List<int> writeToSendBuffer() {
-    writeByte(ServerResponse.End.index);
+    writeByte(_serverResponseEndIndex);
     final sendBuffer = _getSendBuffer();
     for (var i = 0; i < _index; i++) {
       sendBuffer[i] = _buffer[i];
@@ -52,7 +59,7 @@ class _ByteCompiler {
     final orbs = player.orbs;
     final game = player.game;
     writePlayers(player);
-    writeByte(ServerResponse.Player.index);
+    writeByte(_serverResponsePlayerIndex);
     writeBigInt(player.x);
     writeBigInt(player.y);
     writeBigInt(player.health);
@@ -104,7 +111,7 @@ class _ByteCompiler {
   }
 
   void writePlayerZombies(Player player) {
-    writeByte(ServerResponse.Zombies.index);
+    writeByte(_serverResponseZombiesIndex);
     final zombies = player.game.zombies;
     final length = zombies.length;
     final top = player.screenTop;
@@ -145,7 +152,7 @@ class _ByteCompiler {
   }
 
   void writeGameEvents(List<GameEvent> gameEvents){
-    writeByte(ServerResponse.Game_Events.index);
+    writeByte(_serverResponseGameEventsIndex);
     var total = 0;
     for (final gameEvent in gameEvents) {
       if (gameEvent.frameDuration <= 0) continue;
@@ -163,7 +170,7 @@ class _ByteCompiler {
   }
 
   void writeProjectiles(List<Projectile> projectiles){
-    writeByte(ServerResponse.Projectiles.index);
+    writeByte(_serverResponseProjectilesIndex);
     writeTotalActive(projectiles);
     projectiles.forEach(writeProjectile);
   }
@@ -197,7 +204,7 @@ class _ByteCompiler {
   }
 
   void writePlayers(Player player){
-    writeByte(ServerResponse.Players.index);
+    writeByte(_serverResponsePlayersIndex);
     final players = player.game.players;
     for(final otherPlayer in players) {
       // players on same team emit light offscreen
@@ -276,7 +283,8 @@ class _ByteCompiler {
   }
 
   List<int> _getSendBuffer() {
-     for (var i = 0; i < _buffers.length; i++) {
+    final buffersLength = _buffers.length;
+     for (var i = 0; i < buffersLength; i++) {
        final buff = _buffers[i];
        if (_index < buff.length){
          return buff;
