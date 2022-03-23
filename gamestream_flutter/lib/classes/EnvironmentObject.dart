@@ -49,7 +49,7 @@ class EnvironmentObject extends Vector2 {
     isTorch = type == ObjectType.Torch;
     move(x, y);
 
-    if(isTorch){
+    if (isTorch) {
       frameRandom = random.nextInt(99);
     }
 

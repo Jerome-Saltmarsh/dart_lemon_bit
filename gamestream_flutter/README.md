@@ -71,7 +71,7 @@
 [ ] Slot Capacity
 [ ] FIX Flashing Particles  
 [ ] FIX Myst Particle Render order    
-[ ] Myst Emitter Sprite    
+[x] Myst Emitter Sprite    
 [x] Improve AI Pathfinding      
 [SKIRMISH]      
 [x] FIX Zombie dead particle anomaly   

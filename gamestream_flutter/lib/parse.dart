@@ -329,21 +329,16 @@ void _parseEnvironmentObjects() {
     final radius = consumeDouble();
     final type = _consumeEnvironmentObjectType();
 
-    switch (type) {
-      case ObjectType.SmokeEmitter:
-        addParticleEmitter(
-            ParticleEmitter(x: x, y: y, rate: 20, emit: modules.game.factories.buildParticleSmoke));
-        break;
-      case ObjectType.MystEmitter:
-        addParticleEmitter(
-            ParticleEmitter(x: x, y: y, rate: 20, emit: modules.game.factories.emitMyst));
-        break;
-      case ObjectType.Torch:
-        // addParticleEmitter(ParticleEmitter(x: x, y: y - 40, rate: 75, emit: emitPixel));
-        break;
-      default:
-        // ignore
-        break;
+    if (type == ObjectType.SmokeEmitter){
+      addParticleEmitter(
+          ParticleEmitter(x: x, y: y, rate: 20, emit: modules.game.factories.buildParticleSmoke));
+      continue;
+    }
+
+    if (type == ObjectType.MystEmitter){
+      addParticleEmitter(
+          ParticleEmitter(x: x, y: y, rate: 20, emit: modules.game.factories.emitMyst));
+      continue;
     }
 
     final env = EnvironmentObject(
