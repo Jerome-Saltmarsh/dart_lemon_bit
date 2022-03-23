@@ -11,7 +11,15 @@ enum Direction {
   UpLeft,
 }
 
-final directionRightIndex = Direction.Right.index;
+const directionUpIndex = 0;
+const directionUpRightIndex = 1;
+const directionRightIndex = 2;
+const directionDownRightIndex = 3;
+const directionDownIndex = 4;
+const directionDownLeftIndex = 5;
+const directionLeftIndex = 6;
+const directionUpLeftIndex = 7;
+
 const directions = Direction.values;
 final directionsLength = directions.length;
 final directionsMaxIndex = directions.length - 1;
@@ -23,8 +31,8 @@ double convertDirectionToAngle(Direction direction){
 }
 
 
-Direction directionFromIndex(int index){
-  return directions[index >= 0 ? index % directionsLength : (index + directionsMaxIndex) % directionsLength];
+int sanitizeDirectionIndex(int index){
+  return index >= 0 ? index % directionsLength : (index + directionsMaxIndex) % directionsLength;
 }
 
 double _fixAngle(double angle){

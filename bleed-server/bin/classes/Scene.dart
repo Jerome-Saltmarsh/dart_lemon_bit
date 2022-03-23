@@ -177,30 +177,30 @@ var pathFindSearchID = 0;
 
 const _maxSearchDepth = 30;
 
-Direction parseRowsAndColumnsToDirection(int rows, int columns){
+int parseRowsAndColumnsToDirection(int rows, int columns){
   assert(rows != 0 || columns != 0);
   if (rows > 0) {
      if (columns < 0){
-       return Direction.DownLeft;
+       return directionDownLeftIndex;
      }
      if (columns == 0){
-       return Direction.Down;
+       return directionDownIndex;
      }
-     return Direction.DownRight;
+     return directionDownRightIndex;
   }
   if (rows < 0) {
     if (columns < 0){
-      return Direction.UpLeft;
+      return directionUpLeftIndex;
     }
     if (columns == 0){
-      return Direction.Up;
+      return directionUpIndex;
     }
-    return Direction.UpRight;
+    return directionUpRightIndex;
   }
   if (columns < 0){
-    return Direction.Left;
+    return directionLeftIndex;
   }
-  return Direction.Right;
+  return directionRightIndex;
 }
 
 extension SceneFunctions on Scene {
@@ -211,24 +211,26 @@ extension SceneFunctions on Scene {
     target.reservedSearchId = pathFindSearchID;
   }
 
-  bool visitDirection(Direction direction, TileNode from){
+  bool visitDirection(int direction, TileNode from){
     switch(direction){
-      case Direction.Up:
+      case directionUpIndex:
         return visitNode(from.up, previous: from);
-      case Direction.UpRight:
+      case directionUpRightIndex:
         return visitNode(from.upRight, previous: from);
-      case Direction.Right:
+      case directionRightIndex:
         return visitNode(from.right, previous: from);
-      case Direction.DownRight:
+      case directionDownRightIndex:
         return visitNode(from.downRight, previous: from);
-      case Direction.Down:
+      case directionDownIndex:
         return visitNode(from.down, previous: from);
-      case Direction.DownLeft:
+      case directionDownLeftIndex:
         return visitNode(from.downLeft, previous: from);
-      case Direction.Left:
+      case directionLeftIndex:
         return visitNode(from.left, previous: from);
-      case Direction.UpLeft:
+      case directionUpLeftIndex:
         return visitNode(from.upLeft, previous: from);
+      default:
+        throw Exception("Invalid Direction index $direction");
     }
   }
 
@@ -292,20 +294,20 @@ extension SceneFunctions on Scene {
       return true;
     }
 
-    final directionIndex = direction.index;
+    final directionIndex = direction;
 
     for (var i = 1; i < 4; i++) {
-      final leftDirection = directionFromIndex(directionIndex - i);
+      final leftDirection = sanitizeDirectionIndex(directionIndex - i);
       if (visitDirection(leftDirection, node)) {
         return true;
       }
-      final rightDirection = directionFromIndex(directionIndex + i);
+      final rightDirection = sanitizeDirectionIndex(directionIndex + i);
       if (visitDirection(rightDirection, node)) {
         return true;
       }
     }
 
-    final directionBehind = directionFromIndex(directionIndex + 4);
+    final directionBehind = sanitizeDirectionIndex(directionIndex + 4);
     return visitDirection(directionBehind, node);
   }
 
