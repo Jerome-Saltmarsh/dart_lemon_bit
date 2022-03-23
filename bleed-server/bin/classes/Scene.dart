@@ -205,6 +205,12 @@ Direction parseRowsAndColumnsToDirection(int rows, int columns){
 
 extension SceneFunctions on Scene {
 
+  void reserve(TileNode src, TileNode target){
+    if (target.reservedSearchId == pathFindSearchID) return;
+    target.reserved = src;
+    target.reservedSearchId = pathFindSearchID;
+  }
+
   bool visitDirection(Direction direction, TileNode from){
     switch(direction){
       case Direction.Up:
@@ -228,14 +234,24 @@ extension SceneFunctions on Scene {
 
   bool visitNode(TileNode node, {TileNode? previous}){
     if (!node.open) return false;
-    if (node.searchId == pathFindSearchID) return false;
-    node.searchId = pathFindSearchID;
-    node.previous = previous;
-    if (previous != null){
+    if (previous != null) {
+      if (node.searchId == pathFindSearchID) {
+        return false;
+      }
+
+      if (node.reservedSearchId == pathFindSearchID){
+        if (node.reserved != previous){
+          return visitNode(node, previous: node.reserved);
+        }
+      }
+
       node.depth = previous.depth + 1;
-    }else {
+    } else {
       node.depth = 0;
     }
+
+    node.previous = previous;
+    node.searchId = pathFindSearchID;
 
     if (node == pathFindDestination) {
       TileNode? current = node.previous;
@@ -264,6 +280,15 @@ extension SceneFunctions on Scene {
     final distanceColumns = pathFindDestination.column - node.column;
     final totalDistance = distanceRows.abs() + distanceColumns.abs();
     final direction = parseRowsAndColumnsToDirection(distanceRows, distanceColumns);
+
+    reserve(node, node.up);
+    reserve(node, node.upRight);
+    reserve(node, node.right);
+    reserve(node, node.downRight);
+    reserve(node, node.down);
+    reserve(node, node.downLeft);
+    reserve(node, node.left);
+    reserve(node, node.upLeft);
 
     if (visitDirection(direction, node)){
       return true;

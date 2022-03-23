@@ -42,6 +42,8 @@ class TileNode {
   late Vector2 position;
   bool open;
   int searchId = -1;
+  int reservedSearchId = -1;
+  TileNode? reserved;
   TileNode? previous;
   int score = 0;
 

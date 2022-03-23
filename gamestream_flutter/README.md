@@ -72,6 +72,7 @@
 [ ] FIX Flashing Particles  
 [ ] Improve AI Pathfinding      
 [ ] FIX Myst Particle Render order    
+[ ] Myst Emitter Sprite    
 [SKIRMISH]      
 [x] FIX Zombie dead particle anomaly   
 [x] Flames render in different orders   
