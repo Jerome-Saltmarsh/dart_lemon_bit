@@ -250,7 +250,7 @@ class _ByteCompiler {
     writeByte(npc.weapon.index);
   }
 
-  void writeCharacter(Player player, Character character){
+  void writeCharacter(Player player, Character character) {
     final allie = sameTeam(player, character) ? 100 : 0;
     final directionInt = character.direction * 10;
     final stateInt = character.state.index;

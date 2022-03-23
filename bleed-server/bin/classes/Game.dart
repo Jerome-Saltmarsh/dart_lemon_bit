@@ -177,6 +177,14 @@ abstract class Game {
     return playersRemaining;
   }
 
+  int get numberOfAliveZombies {
+    var count = 0;
+    for (final zombie in zombies) {
+      if (zombie.alive) count++;
+    }
+    return count;
+  }
+
   void update() {}
 
   void onPlayerDisconnected(Player player) {}
@@ -1223,8 +1231,8 @@ extension GameFunctions on Game {
   }
 
   Character spawnRandomZombie({
-    required int health,
-    required int damage,
+    int health = 10,
+    int damage = 1,
     int experience = 1
   }) {
     if (zombieSpawnPoints.isEmpty) throw ZombieSpawnPointsEmptyException();
@@ -1444,7 +1452,7 @@ extension GameFunctions on Game {
     pathFindPrevious = null;
     pathFindSearchID++;
     ai.pathIndex = -1;
-    scene.visitNode(node: scene.tileNodeAt(ai.x, ai.y));
+    scene.visitNode(scene.tileNodeAt(ai.x, ai.y));
   }
 
   void _updateGameEvents() {

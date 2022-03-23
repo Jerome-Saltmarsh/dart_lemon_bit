@@ -67,7 +67,9 @@
 [ ] Loot System
 [ ] Structure System
 [ ] Slot Capacity
-[ ] FIX Flashing Particles    
+[ ] FIX Flashing Particles  
+[ ] Improve AI Pathfinding      
+[ ] FIX Myst Particle Render order    
 [SKIRMISH]      
 [x] FIX Zombie dead particle anomaly   
 [x] Flames render in different orders   

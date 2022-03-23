@@ -18,6 +18,16 @@ class GameSkirmish extends Game {
      _flags = scene.environment.where((env) => env.type == ObjectType.Flag).toList();
   }
 
+
+  @override
+  void update(){
+    if (duration % 100 == 0) {
+      if (numberOfAliveZombies < 10){
+        spawnRandomZombie(health: 10, damage: 1);
+      }
+    }
+  }
+
   @override
   int getTime() {
     return _time;

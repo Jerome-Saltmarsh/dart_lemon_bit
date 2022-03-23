@@ -179,11 +179,9 @@ const _maxSearchDepth = 20;
 
 extension SceneFunctions on Scene {
 
-  bool visitNode({
-    required TileNode node,
+  bool visitNode(TileNode node, {
     int depth = 0,
   }){
-
     if (depth > _maxSearchDepth) {
       return false;
     }
@@ -195,10 +193,13 @@ extension SceneFunctions on Scene {
     pathFindPrevious = node;
     if (node == pathFindDestination) {
       TileNode? current = node.previous;
+      final pathX = pathFindAI.pathX;
+      final pathY = pathFindAI.pathY;
       var index = 0;
       while (current != null) {
-        pathFindAI.pathX[index] = current.position.x;
-        pathFindAI.pathY[index] = current.position.y;
+        final position = current.position;
+        pathX[index] = position.x;
+        pathY[index] = position.y;
         current = current.previous;
         if (current != null){
           index++;
@@ -216,33 +217,33 @@ extension SceneFunctions on Scene {
     if (distanceRows < 0) { // above
       if (distanceColumns < 0) { // left
          if (node.up.open || node.left.open){
-           if (visitNode(node: node.upLeft, depth: nextDepth)) {
+           if (visitNode(node.upLeft, depth: nextDepth)) {
              return true;
            }
          }
-         if (visitNode(node: node.left, depth: nextDepth)) {
+         if (visitNode(node.left, depth: nextDepth)) {
            return true;
          }
-         if (visitNode(node: node.up, depth: nextDepth)) {
+         if (visitNode(node.up, depth: nextDepth)) {
            return true;
          }
       } else if (distanceColumns > 0) {
         if (node.up.open || node.right.open) {
-          if (visitNode(node: node.upRight, depth: nextDepth)) {
+          if (visitNode(node.upRight, depth: nextDepth)) {
             return true;
           }
-          if (visitNode(node: node.right, depth: nextDepth)) {
+          if (visitNode(node.right, depth: nextDepth)) {
             return true;
           }
-          if (visitNode(node: node.up, depth: nextDepth)) {
+          if (visitNode(node.up, depth: nextDepth)) {
             return true;
           }
         }
-      } else if (visitNode(node: node.up, depth: nextDepth)) {
+      } else if (visitNode(node.up, depth: nextDepth)) {
         return true;
-      } else if (visitNode(node: node.left, depth: nextDepth)) {
+      } else if (visitNode(node.left, depth: nextDepth)) {
         return true;
-      } else if (visitNode(node: node.right, depth: nextDepth)) {
+      } else if (visitNode(node.right, depth: nextDepth)) {
         return true;
       }
 
@@ -250,41 +251,41 @@ extension SceneFunctions on Scene {
 
       if (distanceColumns < 0) {
         if (node.down.open || node.left.open){
-          if (visitNode(node: node.downLeft, depth: nextDepth)) {
+          if (visitNode(node.downLeft, depth: nextDepth)) {
             return true;
           }
-          if (visitNode(node: node.left, depth: nextDepth)) {
+          if (visitNode(node.left, depth: nextDepth)) {
             return true;
           }
-          if (visitNode(node: node.down, depth: nextDepth)) {
+          if (visitNode(node.down, depth: nextDepth)) {
             return true;
           }
         }
       } else if (distanceColumns > 0) {
         if (node.down.open || node.right.open) {
-          if (visitNode(node: node.downRight, depth: nextDepth)) {
+          if (visitNode(node.downRight, depth: nextDepth)) {
             return true;
           }
-          if (visitNode(node: node.right, depth: nextDepth)) {
+          if (visitNode(node.right, depth: nextDepth)) {
             return true;
           }
-          if (visitNode(node: node.down, depth: nextDepth)) {
+          if (visitNode(node.down, depth: nextDepth)) {
             return true;
           }
         }
-      } else if (visitNode(node: node.down, depth: nextDepth)) { // down
+      } else if (visitNode(node.down, depth: nextDepth)) { // down
         return true;
-      } else if (visitNode(node: node.right, depth: nextDepth)) { // down
+      } else if (visitNode(node.right, depth: nextDepth)) { // down
         return true;
-      } else if (visitNode(node: node.left, depth: nextDepth)) { // down
+      } else if (visitNode(node.left, depth: nextDepth)) { // down
         return true;
       }
     } else { // rows == 0
       if (distanceColumns < 0){
-         if (visitNode(node: node.left, depth: nextDepth)){
+         if (visitNode(node.left, depth: nextDepth)){
            return true;
          }
-      } else if (visitNode(node: node.right, depth: nextDepth)) {
+      } else if (visitNode(node.right, depth: nextDepth)) {
           return true;
       }
     }
