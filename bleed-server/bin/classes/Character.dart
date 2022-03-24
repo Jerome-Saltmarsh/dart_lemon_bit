@@ -12,6 +12,7 @@ import '../settings.dart';
 import '../utilities.dart';
 import 'Ability.dart';
 import 'GameObject.dart';
+import 'Player.dart';
 
 const _zero = 0;
 const _defaultMode = NpcMode.Defensive;
@@ -89,7 +90,6 @@ class Character extends GameObject {
   double accuracy = 0;
   int stateDurationRemaining = 0;
   int stateDuration = 0;
-  /// This is updated every
   int animationFrame = 0;
   int frozenDuration = 0;
   double attackRange = 50;
@@ -99,9 +99,9 @@ class Character extends GameObject {
   double speedModifier = 0;
   bool invincible = false;
   int team;
-  Vector2 abilityTarget = Vector2(0, 0);
+  final abilityTarget = Vector2(0, 0);
 
-  SlotType weapon;
+  final slots = Slots();
 
 
   // properties
@@ -133,12 +133,15 @@ class Character extends GameObject {
 
   bool get deadOrBusy => dead || busy;
 
+  SlotType get weapon => slots.weapon;
+
+
   Character({
     required this.type,
     required double x,
     required double y,
     required int health,
-    required this.weapon,
+    SlotType weapon = SlotType.Empty,
     double speed = _defaultCharacterSpeed,
     this.team = noSquad,
     this.ai,
@@ -147,6 +150,7 @@ class Character extends GameObject {
     _health = health;
     _speed = speed;
     ai?.character = this;
+    slots.weapon = weapon;
   }
 }
 

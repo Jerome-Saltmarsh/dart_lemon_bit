@@ -144,7 +144,7 @@ class Player extends Character with Entity {
         if (weapon.isEmpty) return;
         slots.assignToEmpty(weapon);
         onUnequipped(weapon);
-        weapon = SlotType.Empty;
+        slots.weapon = SlotType.Empty;
         setStateChangingWeapons();
         break;
       case SlotTypeCategory.Armour:
@@ -173,7 +173,7 @@ class Player extends Character with Entity {
     setStateChangingWeapons();
     if (slotType.isWeapon) {
       if (weapon.isEmpty){
-        weapon = slotType;
+        slots.weapon = slotType;
         onEquipped(slotType);
         return;
       }
@@ -206,10 +206,10 @@ class Player extends Character with Entity {
       final slot = slots.getSlotTypeAtIndex(index);
       if (slot.isEmpty) return;
 
-      if (slot.isWeapon){
+      if (slot.isWeapon) {
         if (slot == weapon) return;
         final currentWeapon = weapon;
-        weapon = slot;
+        slots.weapon = slot;
         slots.assignSlotAtIndex(index, currentWeapon);
         setStateChangingWeapons();
         dispatch(PlayerEvent.Item_Equipped);
@@ -294,8 +294,6 @@ class Player extends Character with Entity {
   }
 
   void sellSlot(int index){
-    if (index < 1) return;
-    if (index > 6) return;
     final slotAtIndex = slots.getSlotTypeAtIndex(index);
     if (slotAtIndex.isEmpty) return;
     slots.assignSlotAtIndex(index, SlotType.Empty);
