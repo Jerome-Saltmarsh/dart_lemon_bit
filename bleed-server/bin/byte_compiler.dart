@@ -65,8 +65,8 @@ class _ByteCompiler {
     writeBigInt(player.magic);
     writeBigInt(player.maxMagic);
     writeByte(player.weapon.index);
-    writeByte(player.slots.armour.index);
-    writeByte(player.slots.helm.index);
+    writeByte(slots.armour.index);
+    writeByte(slots.helm.index);
     writeByte(slots.slot1.index); // 1
     writeByte(slots.slot2.index); // 1
     writeByte(slots.slot3.index); // 1
@@ -95,13 +95,15 @@ class _ByteCompiler {
 
   void writePaths(Game game) {
     writeByte(ServerResponse.Paths.index);
-    for (final zombie in game.zombies) {
+    final zombies = game.zombies;
+    for (final zombie in zombies) {
       if (!zombie.active) continue;
       final ai = zombie.ai;
       if (ai == null) continue;
-      if (ai.pathIndex < 0) continue;
-      writeBigInt(ai.pathIndex + 1);
-      for (var i = ai.pathIndex; i >= 0; i--) {
+      final pathIndex = ai.pathIndex;
+      if (pathIndex < 0) continue;
+      writeBigInt(pathIndex + 1);
+      for (var i = pathIndex; i >= 0; i--) {
         writeBigInt(ai.pathX[i]);
         writeBigInt(ai.pathY[i]);
       }
@@ -152,7 +154,7 @@ class _ByteCompiler {
     }
 
     var end = start;
-    for (end = start; end < lengthMinusOne; end++){
+    for (end = start; end < lengthMinusOne; end++) {
       if (zombies[end].y > bottom) break;
     }
 

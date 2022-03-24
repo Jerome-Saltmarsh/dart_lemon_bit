@@ -47,7 +47,6 @@ class IsometricMaps {
   final Map<ItemType, Vector2> itemAtlas = {
     ItemType.Handgun: atlas.items.handgun,
     ItemType.Shotgun: atlas.items.shotgun,
-    ItemType.Armour: atlas.items.armour,
     ItemType.Health: atlas.items.health,
     ItemType.Orb_Emerald: atlas.items.emerald,
     ItemType.Orb_Ruby: atlas.items.orbRed,

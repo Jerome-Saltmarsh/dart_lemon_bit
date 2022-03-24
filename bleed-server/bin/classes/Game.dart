@@ -267,6 +267,24 @@ abstract class Game {
       }
     }
   }
+
+  void checkCollisionPlayerItem() {
+    var itemLength = items.length;
+    for (final player in players) {
+      for (var i = 0; i < itemLength; i++) {
+        final item = items[i];
+        if (item.top > player.bottom) break;
+        if (item.bottom < player.top) continue;
+        if (item.right < player.left) continue;
+        if (item.left > player.right) continue;
+        if (!onPlayerItemCollision(player, item)) continue;
+        items.removeAt(i);
+        i--;
+        itemLength--;
+      }
+    }
+  }
+
 }
 
 const secondsPerMinute = 60;
@@ -580,20 +598,7 @@ extension GameFunctions on Game {
     updateCollisionBetween(players);
     resolveCollisionBetween(zombies, players, resolveCollisionA);
     resolveCollisionBetween(players, npcs, resolveCollisionB);
-
-    for (final player in players) {
-      for (var i = 0; i < items.length; i++) {
-        final item = items[i];
-        if (item.top > player.bottom) break;
-        if (item.bottom < player.top) continue;
-        if (item.right < player.left) continue;
-        if (item.left > player.right) continue;
-        if (onPlayerItemCollision(player, item)) {
-          items.removeAt(i);
-          i--;
-        }
-      }
-    }
+    checkCollisionPlayerItem();
   }
 
   void sortGameObjects() {
@@ -1592,6 +1597,7 @@ extension GameFunctions on Game {
       }
   }
 }
+
 
 // void applyCratePhysics(Crate crate, List<Character> characters) {
 //   for (final character in characters) {

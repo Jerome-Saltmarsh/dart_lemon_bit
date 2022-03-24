@@ -3,23 +3,15 @@ import 'WeaponType.dart';
 final Map<ItemType, WeaponType> _itemTypeWeaponType = {
   ItemType.Handgun: WeaponType.HandGun,
   ItemType.Shotgun: WeaponType.Shotgun,
-  ItemType.SniperRifle: WeaponType.SniperRifle,
-  ItemType.Assault_Rifle: WeaponType.AssaultRifle,
 };
 
 enum ItemType {
-  Box,
-  Armour,
   Health,
-  Grenade,
-  Credits,
   Handgun,
   Shotgun,
-  SniperRifle,
-  Assault_Rifle,
-  Orb_Emerald,
   Orb_Ruby,
   Orb_Topaz,
+  Orb_Emerald,
 }
 
 final List<ItemType> itemTypes = ItemType.values;

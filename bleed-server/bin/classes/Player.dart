@@ -319,6 +319,20 @@ class _PlayerSlots {
   SlotType slot5 = SlotType.Empty;
   SlotType slot6 = SlotType.Empty;
 
+  bool has(SlotType value){
+    return getIndexOf(value) != null;
+  }
+
+  int? getIndexOf(SlotType slotType){
+    if (slot1 == slotType) return 1;
+    if (slot2 == slotType) return 2;
+    if (slot3 == slotType) return 3;
+    if (slot4 == slotType) return 4;
+    if (slot5 == slotType) return 5;
+    if (slot6 == slotType) return 6;
+    return null;
+  }
+
   int? getSlotIndexWhere(bool Function(SlotType slotType) where){
      if(where(slot1)) return 1;
      if(where(slot2)) return 2;
@@ -384,32 +398,32 @@ class _PlayerSlots {
      return false;
   }
 
-  void assignToEmpty(SlotType type){
+  bool assignToEmpty(SlotType type){
     if(slot1 == SlotType.Empty) {
       slot1 = type;
-      return;
+      return true;
     }
     if(slot2 == SlotType.Empty) {
       slot2 = type;
-      return;
+      return true;
     }
     if(slot3 == SlotType.Empty) {
       slot3 = type;
-      return;
+      return true;
     }
     if(slot4 == SlotType.Empty) {
       slot4 = type;
-      return;
+      return true;
     }
     if(slot5 == SlotType.Empty) {
       slot5 = type;
-      return;
+      return true;
     }
     if(slot6 == SlotType.Empty) {
       slot6 = type;
-      return;
+      return true;
     }
-    throw Exception("could not assign item, not empty slots");
+    return false;
   }
 }
 
