@@ -165,10 +165,6 @@ void parseState() {
         _parseProjectiles();
         break;
 
-      case ServerResponse.Npcs:
-        _parseNpcs();
-        break;
-
       case ServerResponse.Scene_Shade_Max:
         modules.isometric.state.maxAmbientBrightness.value = _consumeShade();
         break;
@@ -686,27 +682,6 @@ void _parseProjectiles() {
 
 ProjectileType _consumeProjectileType() {
   return projectileTypes[consumeInt()];
-}
-
-
-final _npcs = game.interactableNpcs;
-
-void _parseNpcs() {
-  game.totalNpcs = 0;
-  while (!_simiColonConsumed()) {
-    _consumeInteractableNpc(_npcs[game.totalNpcs]);
-    game.totalNpcs++;
-  }
-}
-
-void _consumeInteractableNpc(Character character) {
-  character.state = _consumeCharacterState();
-  character.direction = _consumeSingleDigitInt();
-  character.x = consumeDouble();
-  character.y = consumeDouble();
-  character.frame = consumeInt();
-  character.equippedWeapon = consumeSlotType();
-  character.name = _consumeString();
 }
 
 int _consumeShade() {

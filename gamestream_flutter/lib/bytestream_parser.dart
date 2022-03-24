@@ -162,7 +162,7 @@ class _ByteStreamParser {
     final state = byte % 10;
     character.allie = allie;
     character.direction = direction;
-    character.state = characterStates[state]; // OPTIMIZE unpacking enum
+    character.state = state;
   }
 
   void _parseZombies() {

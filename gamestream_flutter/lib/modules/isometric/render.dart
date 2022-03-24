@@ -351,32 +351,34 @@ class IsometricRender {
 
   double mapZombieSrcX(Character character, int shade){
     switch(character.state){
-      case CharacterState.Idle:
+
+      case stateRunningIndex:
+        return loop4(
+            animation: animations.zombie.running,
+            character: character,
+            framesPerDirection: _framesPerDirectionZombie
+        );
+
+      case stateIdleIndex:
         return single(
             frame: 1,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionZombie
         );
 
-      case CharacterState.Hurt:
+      case stateHurtIndex:
         return single(
             frame: 2,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionZombie
         );
 
-      case CharacterState.Performing:
+      case statePerformingIndex:
         return animate(
             animation: animations.zombie.striking,
             character: character,
             framesPerDirection:
             _framesPerDirectionZombie
-        );
-      case CharacterState.Running:
-        return loop4(
-            animation: animations.zombie.running,
-            character: character,
-            framesPerDirection: _framesPerDirectionZombie
         );
       default:
         throw Exception("Render zombie invalid state ${character.state}");
@@ -516,29 +518,36 @@ class IsometricRender {
     final weapon = character.equippedWeapon;
     final variation = weapon.isShotgun || weapon.isBow;
 
-    switch(character.state){
-      case CharacterState.Idle:
+    switch(character.state) {
+      case stateRunningIndex:
+        return loop4(
+            animation: variation ? _animationRunning2 : _animationRunning,
+            character: character,
+            framesPerDirection: _framesPerDirectionHuman
+        );
+
+      case stateIdleIndex:
         return single(
             frame: variation ? 1 : 2,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionHuman
         );
 
-      case CharacterState.Hurt:
+      case stateHurtIndex:
         return single(
             frame: 3,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionHuman
         );
 
-      case CharacterState.Changing:
+      case stateRunningIndex:
         return single(
             frame: 4,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionHuman
         );
 
-      case CharacterState.Performing:
+      case statePerformingIndex:
         final weapon = character.equippedWeapon;
         return animate(
             animation: weapon.isBow
@@ -552,15 +561,8 @@ class IsometricRender {
             framesPerDirection: _framesPerDirectionHuman
         );
 
-      case CharacterState.Running:
-        return loop4(
-            animation: variation ? _animationRunning2 : _animationRunning,
-            character: character,
-            framesPerDirection: _framesPerDirectionHuman
-        );
-
       default:
-        throw Exception("getCharacterSrcX cannot get body x for state ${character.state.name}");
+        throw Exception("getCharacterSrcX cannot get body x for state ${character.state}");
     }
   }
 

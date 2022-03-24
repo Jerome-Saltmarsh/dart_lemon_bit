@@ -7,7 +7,8 @@ import '../maths.dart';
 
 class Character extends Vector2 {
   CharacterType type;
-  CharacterState state;
+  // CharacterState state;
+  int state;
   int direction;
   int frame;
   SlotType equippedWeapon = SlotType.Empty;
@@ -23,13 +24,14 @@ class Character extends Vector2 {
   double magic = 1;
 
   // properties
-  bool get dead => state == CharacterState.Dead;
-  bool get alive => state != CharacterState.Dead;
+  bool get dead => state == stateDeadIndex;
+  bool get running => state == stateRunningIndex;
+  bool get alive => !dead;
   double get angle => direction * piQuarter;
 
   Character({
     required this.type,
-    this.state = CharacterState.Idle,
+    this.state = 0,
     this.direction = 0,
     double x = 0,
     double y = 0,

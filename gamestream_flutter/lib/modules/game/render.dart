@@ -107,11 +107,10 @@ class GameRender {
       state.smoothed--;
       final players = game.players;
       for(final character in players) {
-        if (character.state.running) {
-          final angle = character.angle;
-          character.x += adjacent(angle, _smoothSpeed);
-          character.y += opposite(angle, _smoothSpeed);
-        }
+        if (!character.running) continue;
+        final angle = character.angle;
+        character.x += adjacent(angle, _smoothSpeed);
+        character.y += opposite(angle, _smoothSpeed);
       }
   }
 
