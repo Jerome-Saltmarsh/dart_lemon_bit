@@ -54,7 +54,7 @@ class GameEvents {
     state.player.orbs.emerald.listen(onEmeraldsChanged);
     state.player.orbs.ruby.listen(onEmeraldsChanged);
     state.player.orbs.topaz.listen(onEmeraldsChanged);
-    state.player.slots.weapon.onChanged(onPlayerWeaponChanged);
+    state.player.slots.weapon.type.onChanged(onPlayerWeaponChanged);
     state.player.slots.armour.onChanged(onPlayerArmourChanged);
     state.player.slots.helm.onChanged(onPlayerHelmChanged);
     sub(_onGameError);

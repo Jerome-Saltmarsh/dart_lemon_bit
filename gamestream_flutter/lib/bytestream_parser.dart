@@ -96,7 +96,8 @@ class _ByteStreamParser {
           player.maxHealth = _nextDouble();
           player.magic.value = _nextDouble();
           player.maxMagic.value = _nextDouble();
-          slots.weapon.value = _readSlotType();
+          slots.weapon.type.value = _readSlotType();
+          slots.weapon.amount.value = _nextInt();
           slots.armour.value = _readSlotType();
           slots.helm.value = _readSlotType();
           slots.slot1.value = _readSlotType();

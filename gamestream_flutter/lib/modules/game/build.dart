@@ -757,7 +757,7 @@ class GameBuild {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              WatchBuilder(state.player.slots.weapon, (SlotType slotType){
+              WatchBuilder(state.player.slots.weapon.type, (SlotType slotType){
                 final child = slot(slotType: slotType, color: colours.white382);
                 if (slotType.isEmpty) return child;
                 return onPressed(

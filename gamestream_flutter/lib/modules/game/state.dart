@@ -92,9 +92,9 @@ class Slot {
 }
 
 class Slots {
-  final weapon = Watch(SlotType.Empty);
-  final Watch<SlotType> armour = Watch(SlotType.Empty);
-  final Watch<SlotType> helm = Watch(SlotType.Empty);
+  final weapon = Slot();
+  final armour = Watch(SlotType.Empty);
+  final helm = Watch(SlotType.Empty);
 
   final Watch<SlotType> slot1 = Watch(SlotType.Empty);
   final Watch<SlotType> slot2 = Watch(SlotType.Empty);
