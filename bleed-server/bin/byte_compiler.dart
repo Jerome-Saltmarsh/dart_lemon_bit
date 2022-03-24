@@ -65,6 +65,7 @@ class _ByteCompiler {
     writeBigInt(player.magic);
     writeBigInt(player.maxMagic);
     writeByte(slots.weapon.type.index);
+    // writeBigInt(slots.weapon.amount);
     writeByte(slots.armour.index);
     writeByte(slots.helm.index);
     writeByte(slots.slot1.type.index); // 1

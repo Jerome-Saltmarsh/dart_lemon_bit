@@ -86,8 +86,13 @@ class _PlayerOrbs {
   final AdvancedWatch<int> emerald = AdvancedWatch(0);
 }
 
-class _PlayerSlots {
-  final Watch<SlotType> weapon = Watch(SlotType.Empty);
+class Slot {
+  final type = Watch(SlotType.Empty);
+  final amount = Watch(0);
+}
+
+class Slots {
+  final weapon = Watch(SlotType.Empty);
   final Watch<SlotType> armour = Watch(SlotType.Empty);
   final Watch<SlotType> helm = Watch(SlotType.Empty);
 
@@ -97,15 +102,6 @@ class _PlayerSlots {
   final Watch<SlotType> slot4 = Watch(SlotType.Empty);
   final Watch<SlotType> slot5 = Watch(SlotType.Empty);
   final Watch<SlotType> slot6 = Watch(SlotType.Empty);
-
-  List<Watch<SlotType>> get list => [
-    slot1,
-    slot2,
-    slot3,
-    slot4,
-    slot5,
-    slot6,
-  ];
 
   Watch<SlotType>? get emptySlot {
      if (slot1.value == SlotType.Empty){
@@ -165,7 +161,7 @@ class _Player {
   double attackRange = 0;
   final Vector2 attackTarget = Vector2(0, 0);
   final orbs = _PlayerOrbs();
-  final slots = _PlayerSlots();
+  final slots = Slots();
   final Watch<String> uuid = Watch("");
   final Watch<CharacterType> characterType = Watch(CharacterType.Human);
   final Watch<double> health = Watch(0.0);

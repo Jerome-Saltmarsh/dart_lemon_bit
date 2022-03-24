@@ -1514,20 +1514,18 @@ extension GameFunctions on Game {
   void _updateCharacterStateAttacking(Character character) {
     final stateDuration = character.stateDuration;
 
-    if (character.type == CharacterType.Zombie){
-        if (stateDuration != framePerformStrike){
-          final attackTarget = character.attackTarget;
-          if (attackTarget != null){
-            applyStrike(character, attackTarget, character.damage);
-            character.attackTarget = null;
-          }
-        }
+    if (character.type == CharacterType.Zombie) {
+      if (stateDuration != framePerformStrike) return;
+      final attackTarget = character.attackTarget;
+      if (attackTarget == null) return;
+      applyStrike(character, attackTarget, character.damage);
+      character.attackTarget = null;
+      return;
     }
 
-    // if (character is Player) {
       final weapon = character.weapon;
 
-      if (weapon.isSword){
+      if (weapon.isSword) {
         if (stateDuration == 1){
           dispatchV2(GameEventType.Sword_Woosh, character);
         }
