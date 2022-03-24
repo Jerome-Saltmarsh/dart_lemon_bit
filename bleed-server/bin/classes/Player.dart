@@ -132,6 +132,7 @@ class Player extends Character with Entity {
   }
 
   void setStateChangingWeapons(){
+    dispatch(PlayerEvent.Item_Equipped); // TODO
     game.setCharacterState(this, CharacterState.Changing);
   }
 
@@ -168,18 +169,21 @@ class Player extends Character with Entity {
   }
 
   void acquire(SlotType slotType) {
-    if (!slots.emptySlotAvailable) return;
-    dispatch(PlayerEvent.Item_Purchased);
-    setStateChangingWeapons();
     if (slotType.isWeapon) {
-      if (weapon.isEmpty){
-        slots.weapon.type = slotType;
-        onEquipped(slotType);
-        return;
-      }
+      final slot = slots.getEmptyWeaponSlot();
+      if (slot == null) return;
+      dispatch(PlayerEvent.Item_Purchased);
+      setStateChangingWeapons();
+      slot.type = slotType;
+      slot.amount = 10;
+      onEquipped(slotType);
+      return;
     }
+
     if (slotType.isArmour) {
       if (slots.armour.isEmpty) {
+        dispatch(PlayerEvent.Item_Purchased);
+        setStateChangingWeapons();
         slots.armour = slotType;
         onEquipped(slotType);
         return;
@@ -187,15 +191,22 @@ class Player extends Character with Entity {
     }
     if (slotType.isHelm) {
       if (slots.helm.isEmpty) {
+        dispatch(PlayerEvent.Item_Purchased);
+        setStateChangingWeapons();
         slots.helm = slotType;
         onEquipped(slotType);
         return;
       }
     }
+
+    if (!slots.emptySlotAvailable) return;
+    dispatch(PlayerEvent.Item_Purchased);
+    setStateChangingWeapons();
     slots.assignToEmpty(slotType);
     if (slotType.isItem){
       onEquipped(slotType);
     }
+    return;
   }
 
   void useSlot(int index) {
@@ -203,35 +214,32 @@ class Player extends Character with Entity {
       if (index < 0) return;
       if (index > 6) return;
 
-      final slot = slots.getSlotTypeAtIndex(index);
+      final slot = slots.getSlotAtIndex(index);
       if (slot.isEmpty) return;
+      final slotType = slot.type;
 
-      if (slot.isWeapon) {
-        if (slot == weapon) return;
-        final currentWeapon = weapon;
-        slots.weapon.type = slot;
+      if (slotType.isWeapon) {
+        final currentWeapon = slots.weapon;
+        slots.weapon = slot;
         slots.assignSlotAtIndex(index, currentWeapon);
         setStateChangingWeapons();
-        dispatch(PlayerEvent.Item_Equipped);
         return;
       }
 
-      if (slot.isArmour){
-        final previousArmour = slots.armour;
-        slots.armour = slot;
-        onEquipped(slot);
-        onUnequipped(previousArmour);
-        slots.assignSlotAtIndex(index, previousArmour);
+      if (slotType.isArmour) {
+        final currentArmour = slots.armour;
+        slots.armour = slotType;
+        onEquipped(slotType);
+        onUnequipped(currentArmour);
+        slots.assignSlotTypeAtIndex(index, currentArmour);
         setStateChangingWeapons();
-        dispatch(PlayerEvent.Item_Equipped);
       }
 
-      if (slot.isHelm){
+      if (slotType.isHelm) {
         final previous = slots.helm;
-        slots.helm = slot;
-        slots.assignSlotAtIndex(index, previous);
+        slots.helm = slotType;
+        slots.assignSlotTypeAtIndex(index, previous);
         setStateChangingWeapons();
-        dispatch(PlayerEvent.Item_Equipped);
       }
 
       if (slot == SlotType.Spell_Tome_Fireball) {
@@ -280,14 +288,14 @@ class Player extends Character with Entity {
 
       if (slot == SlotType.Potion_Red) {
         health = maxHealth;
-        slots.assignSlotAtIndex(index, SlotType.Empty);
+        slots.assignSlotTypeAtIndex(index, SlotType.Empty);
         setStateChangingWeapons();
         dispatch(PlayerEvent.Drink_Potion);
       }
 
       if (slot == SlotType.Potion_Blue) {
         magic = maxMagic;
-        slots.assignSlotAtIndex(index, SlotType.Empty);
+        slots.assignSlotTypeAtIndex(index, SlotType.Empty);
         setStateChangingWeapons();
         dispatch(PlayerEvent.Drink_Potion);
       }
@@ -296,7 +304,7 @@ class Player extends Character with Entity {
   void sellSlot(int index){
     final slotAtIndex = slots.getSlotTypeAtIndex(index);
     if (slotAtIndex.isEmpty) return;
-    slots.assignSlotAtIndex(index, SlotType.Empty);
+    slots.assignSlotTypeAtIndex(index, SlotType.Empty);
     dispatch(PlayerEvent.Item_Sold);
   }
 }
@@ -317,12 +325,12 @@ class Slots {
   var armour = SlotType.Empty;
   var helm = SlotType.Empty;
 
-  final slot1 = Slot();
-  final slot2 = Slot();
-  final slot3 = Slot();
-  final slot4 = Slot();
-  final slot5 = Slot();
-  final slot6 = Slot();
+  var slot1 = Slot();
+  var slot2 = Slot();
+  var slot3 = Slot();
+  var slot4 = Slot();
+  var slot5 = Slot();
+  var slot6 = Slot();
 
   int? getSlotIndexWhere(bool Function(SlotType slotType) where){
      if (where(slot1.type)) return 1;
@@ -357,29 +365,33 @@ class Slots {
     return getSlotAtIndex(index).type;
   }
 
-  void assignSlotAtIndex(int index, SlotType value){
+  void assignSlotAtIndex(int index, Slot value){
     switch(index){
       case 1:
-        slot1.type = value;
+        slot1 = value;
         break;
       case 2:
-        slot2.type = value;
+        slot2 = value;
         break;
       case 3:
-        slot3.type = value;
+        slot3 = value;
         break;
       case 4:
-        slot4.type = value;
+        slot4 = value;
         break;
       case 5:
-        slot5.type = value;
+        slot5 = value;
         break;
       case 6:
-        slot6.type = value;
+        slot6 = value;
         break;
       default:
         throw Exception("cannot assign slot $index it out of bounds");
     }
+  }
+
+  void assignSlotTypeAtIndex(int index, SlotType type){
+    getSlotAtIndex(index).type = type;
   }
 
   bool get emptySlotAvailable => getEmptySlot() != null;
@@ -392,6 +404,18 @@ class Slots {
     if (weapon.isEmpty) return weapon;
     return findSlotByType(SlotType.Empty);
   }
+
+  Slot? findWeaponSlotByType(SlotType type){
+    if (weapon.isType(type)) return weapon;
+    if (slot1.isType(type)) return slot1;
+    if (slot2.isType(type)) return slot2;
+    if (slot3.isType(type)) return slot3;
+    if (slot4.isType(type)) return slot4;
+    if (slot5.isType(type)) return slot5;
+    if (slot6.isType(type)) return slot6;
+    return null;
+  }
+
 
   Slot? findSlotByType(SlotType type){
     if (slot1.isType(type)) return slot1;

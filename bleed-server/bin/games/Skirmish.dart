@@ -70,7 +70,7 @@ class GameSkirmish extends Game {
         return true;
 
       case ItemType.Handgun:
-        final slot = slots.findSlotByType(SlotType.Handgun);
+        final slot = slots.findWeaponSlotByType(SlotType.Handgun);
         if (slot == null) {
           final emptySlot = slots.getEmptyWeaponSlot();
           if (emptySlot == null) return false;
@@ -82,7 +82,7 @@ class GameSkirmish extends Game {
         return true;
 
       case ItemType.Shotgun:
-        final slot = slots.findSlotByType(SlotType.Shotgun);
+        final slot = slots.findWeaponSlotByType(SlotType.Shotgun);
         if (slot == null) {
           final emptySlot = slots.getEmptyWeaponSlot();
           if (emptySlot == null) return false;
