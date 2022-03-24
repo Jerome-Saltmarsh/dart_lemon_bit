@@ -68,9 +68,9 @@
 [ ] Resource Gathering System (Rock, Wood, Etc)
 [ ] Destructible Objects    
 [ ] Structure System
-[ ] Slot Capacity
 [ ] FIX Flashing Particles  
 [ ] FIX Myst Particle Render order    
+[ ] Slot Capacity
 [x] Myst Emitter Sprite    
 [x] Improve AI Pathfinding      
 [SKIRMISH]      

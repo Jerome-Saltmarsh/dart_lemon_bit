@@ -184,10 +184,14 @@ class GameRender {
   void _drawPlayerNames() {
     for (var i = 0; i < game.totalPlayers; i++) {
       final player = game.players[i];
-      if (player.x == state.player.x) continue;
-      if (diff(mouseWorldX, player.x) > style.nameRadius) continue;
-      if (diff(mouseWorldY, player.y) > style.nameRadius) continue;
-      engine.draw.text(player.name, player.x - isometric.constants.charWidth * player.name.length, player.y, style: style.playerNameTextStyle);
+      if (!engine.screen.containsV(player)) continue;
+      // if (player.x == state.player.x) continue;
+      // if (diff(mouseWorldX, player.x) > style.nameRadius) continue;
+      // if (diff(mouseWorldY, player.y) > style.nameRadius) continue;
+      engine.textPainter.text = game.getTextSpan(player.name);
+      engine.textPainter.layout();
+      engine.textPainter.paint(engine.canvas, Offset(player.x - isometric.constants.charWidth * player.name.length, player.y + 5));
+      // engine.draw.text(player.name, player.x - isometric.constants.charWidth * player.name.length, player.y + 5, style: style.playerNameTextStyle);
     }
   }
 

@@ -1,9 +1,11 @@
+import 'package:flutter/painting.dart';
 import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/Projectile.dart';
 import 'package:bleed_common/GameType.dart';
+import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -43,6 +45,17 @@ class _Game {
   int id = -1;
   int totalProjectiles = 0;
   int itemsTotal = 0;
+  Map<String, TextSpan> textSpans = {
+
+  };
+
+  TextSpan getTextSpan(String text){
+    var value = textSpans[text];
+    if (value != null) return value;
+    value = TextSpan(style: TextStyle(color: colours.white), text: text);
+    textSpans[text] = value;
+    return value;
+  }
 }
 
 class _Royal {
