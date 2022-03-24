@@ -24,7 +24,6 @@ import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/adjacent.dart';
-import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/opposite.dart';
 
 import 'state.dart';
@@ -188,9 +187,10 @@ class GameRender {
       // if (player.x == state.player.x) continue;
       // if (diff(mouseWorldX, player.x) > style.nameRadius) continue;
       // if (diff(mouseWorldY, player.y) > style.nameRadius) continue;
-      engine.textPainter.text = game.getTextSpan(player.name);
-      engine.textPainter.layout();
-      engine.textPainter.paint(engine.canvas, Offset(player.x - isometric.constants.charWidth * player.name.length, player.y + 5));
+      engine.writeText(player.name, player.x - isometric.constants.charWidth * player.name.length, player.y + 5);
+      // engine.textPainter.text = game.getTextSpan(player.name);
+      // engine.textPainter.layout();
+      // engine.textPainter.paint(engine.canvas, Offset(player.x - isometric.constants.charWidth * player.name.length, player.y + 5));
       // engine.draw.text(player.name, player.x - isometric.constants.charWidth * player.name.length, player.y + 5, style: style.playerNameTextStyle);
     }
   }
@@ -290,8 +290,9 @@ class GameRender {
     final items = isometric.state.items;
     for (var i = 0; i < game.itemsTotal; i++){
       final item = items[i];
+
       engine.draw.circle(item.x, item.y, 20, colours.white618);
-      isometric.render.renderItem(item);
+      // isometric.render.renderItem(item);
     }
   }
 

@@ -64,13 +64,14 @@
 [ ] Experience Bar
 [ ] FIX Join Custom Game
 [ ] (MMO) Save / Load Character
-[ ] Loot System
 [ ] Resource Gathering System (Rock, Wood, Etc)
 [ ] Destructible Objects    
 [ ] Structure System
 [ ] FIX Flashing Particles  
 [ ] FIX Myst Particle Render order    
+[ ] OPTIMIZE Render character state    
 [ ] Slot Capacity
+[ ] Loot System
 [x] Myst Emitter Sprite    
 [x] Improve AI Pathfinding      
 [SKIRMISH]      
