@@ -61,9 +61,8 @@ class Player extends Character with Entity {
 
   CharacterState characterState = CharacterState.Idle;
 
-  final slots = _PlayerSlots();
-
-  final orbs = _Orbs();
+  final slots = Slots();
+  final orbs = Orbs();
 
   Character? _aimTarget; // the currently highlighted character
   Vector2? target;
@@ -305,64 +304,59 @@ class Player extends Character with Entity {
 }
 
 class Slot {
-  SlotType type = SlotType.Empty;
-  int amount = 0;
+  var type = SlotType.Empty;
+  var amount = 0;
 
   bool get isEmpty => type.isEmpty;
+
+  bool isType(SlotType value){
+    return type == value;
+  }
 }
 
-class _PlayerSlots {
-  SlotType armour = SlotType.Empty;
-  SlotType helm = SlotType.Empty;
+class Slots {
+  var weapon = SlotType.Empty;
+  var armour = SlotType.Empty;
+  var helm = SlotType.Empty;
 
-  Slot slot1 = Slot();
-  Slot slot2 = Slot();
-  Slot slot3 = Slot();
-  Slot slot4 = Slot();
-  Slot slot5 = Slot();
-  Slot slot6 = Slot();
-
-  bool has(SlotType value){
-    return getIndexOf(value) != null;
-  }
-
-  int? getIndexOf(SlotType slotType){
-    if (slot1 == slotType) return 1;
-    if (slot2 == slotType) return 2;
-    if (slot3 == slotType) return 3;
-    if (slot4 == slotType) return 4;
-    if (slot5 == slotType) return 5;
-    if (slot6 == slotType) return 6;
-    return null;
-  }
+  final slot1 = Slot();
+  final slot2 = Slot();
+  final slot3 = Slot();
+  final slot4 = Slot();
+  final slot5 = Slot();
+  final slot6 = Slot();
 
   int? getSlotIndexWhere(bool Function(SlotType slotType) where){
-     if(where(slot1.type)) return 1;
-     if(where(slot2.type)) return 2;
-     if(where(slot3.type)) return 3;
-     if(where(slot4.type)) return 4;
-     if(where(slot5.type)) return 5;
-     if(where(slot6.type)) return 6;
+     if (where(slot1.type)) return 1;
+     if (where(slot2.type)) return 2;
+     if (where(slot3.type)) return 3;
+     if (where(slot4.type)) return 4;
+     if (where(slot5.type)) return 5;
+     if (where(slot6.type)) return 6;
      return null;
   }
 
+  Slot getSlotAtIndex(int index) {
+    switch (index) {
+      case 1:
+        return slot1;
+      case 2:
+        return slot2;
+      case 3:
+        return slot3;
+      case 4:
+        return slot4;
+      case 5:
+        return slot5;
+      case 6:
+        return slot6;
+      default:
+        throw Exception("$index is not a valid slot index (1 - 6 inclusive)");
+    }
+  }
+
   SlotType getSlotTypeAtIndex(int index){
-      switch(index){
-        case 1:
-          return slot1.type;
-        case 2:
-          return slot2.type;
-        case 3:
-          return slot3.type;
-        case 4:
-          return slot4.type;
-        case 5:
-          return slot5.type;
-        case 6:
-          return slot6.type;
-        default:
-          throw Exception("$index is not a valid slot index (1 - 6 inclusive)");
-      }
+    return getSlotAtIndex(index).type;
   }
 
   void assignSlotAtIndex(int index, SlotType value){
@@ -393,12 +387,16 @@ class _PlayerSlots {
   bool get emptySlotAvailable => getEmptySlot() != null;
 
   Slot? getEmptySlot(){
-    if (slot1.isEmpty) return slot1;
-    if (slot2.isEmpty) return slot2;
-    if (slot3.isEmpty) return slot3;
-    if (slot4.isEmpty) return slot4;
-    if (slot5.isEmpty) return slot5;
-    if (slot6.isEmpty) return slot6;
+    return findSlotByType(SlotType.Empty);
+  }
+
+  Slot? findSlotByType(SlotType type){
+    if (slot1.isType(type)) return slot1;
+    if (slot2.isType(type)) return slot2;
+    if (slot3.isType(type)) return slot3;
+    if (slot4.isType(type)) return slot4;
+    if (slot5.isType(type)) return slot5;
+    if (slot6.isType(type)) return slot6;
     return null;
   }
 
@@ -410,7 +408,7 @@ class _PlayerSlots {
   }
 }
 
-class _Orbs {
+class Orbs {
   int topaz = 0;
   int ruby = 0;
   int emerald = 0;

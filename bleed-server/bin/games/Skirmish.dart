@@ -62,16 +62,36 @@ class GameSkirmish extends Game {
   @override
   bool onPlayerItemCollision(Player player, Item item){
     final slots = player.slots;
-    switch(item.type){
+    switch(item.type) {
+
       case ItemType.Health:
-        player.health = player.maxHealth;
+        player.health += 5;
         return true;
+
       case ItemType.Handgun:
-        if (slots.has(SlotType.Handgun)) return true;
-        return slots.assignToEmpty(SlotType.Handgun);
+        final slot = slots.findSlotByType(SlotType.Handgun);
+        if (slot == null) {
+          final emptySlot = slots.getEmptySlot();
+          if (emptySlot == null) return false;
+          emptySlot.type = SlotType.Handgun;
+          emptySlot.amount = 10;
+          return true;
+        }
+        slot.amount += 10;
+        return true;
+
       case ItemType.Shotgun:
-        if (slots.has(SlotType.Shotgun)) return true;
-        return slots.assignToEmpty(SlotType.Shotgun);
+        final slot = slots.findSlotByType(SlotType.Shotgun);
+        if (slot == null) {
+          final emptySlot = slots.getEmptySlot();
+          if (emptySlot == null) return false;
+          emptySlot.type = SlotType.Shotgun;
+          emptySlot.amount = 10;
+          return true;
+        }
+        slot.amount += 10;
+        return true;
+
       default:
         return true;
     }

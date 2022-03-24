@@ -7,18 +7,10 @@ Rect mapItemToRect(ItemType item) {
   switch (item) {
     case ItemType.Health:
       return _health[0];
-    case ItemType.Grenade:
-      return _grenade[0];
-    case ItemType.Credits:
-      return _credits[0];
     case ItemType.Handgun:
       return _handgun[0];
     case ItemType.Shotgun:
       return _shotgun[0];
-    case ItemType.SniperRifle:
-      return _sniper[0];
-    case ItemType.Assault_Rifle:
-      return _assaultRifle[0];
     default:
       throw Exception("Could not map $item to Rect");
   }
