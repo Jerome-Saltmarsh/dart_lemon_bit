@@ -133,7 +133,7 @@ class Character extends GameObject {
 
   bool get deadOrBusy => dead || busy;
 
-  SlotType get weapon => slots.weapon;
+  SlotType get weapon => slots.weapon.type;
 
 
   Character({
@@ -150,7 +150,7 @@ class Character extends GameObject {
     _health = health;
     _speed = speed;
     ai?.character = this;
-    slots.weapon = weapon;
+    slots.weapon.type = weapon;
   }
 }
 

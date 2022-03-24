@@ -64,7 +64,7 @@ class _ByteCompiler {
     writeBigInt(player.maxHealth);
     writeBigInt(player.magic);
     writeBigInt(player.maxMagic);
-    writeByte(slots.weapon.index);
+    writeByte(slots.weapon.type.index);
     writeByte(slots.armour.index);
     writeByte(slots.helm.index);
     writeByte(slots.slot1.type.index); // 1
@@ -258,7 +258,7 @@ class _ByteCompiler {
     final slots = player.slots;
     writeCharacter(player, player);
     writePercentage(player.magic / player.maxMagic);
-    writeByte(slots.weapon.index);
+    writeByte(slots.weapon.type.index);
     writeByte(slots.armour.index);
     writeByte(slots.helm.index);
     writeString(player.name);
@@ -285,7 +285,7 @@ class _ByteCompiler {
   void writeNpc(Player player, Character npc) {
     if (!npc.active) return;
     writeCharacter(player, npc);
-    writeByte(npc.slots.weapon.index);
+    writeByte(npc.slots.weapon.type.index);
   }
 
   void writeCharacter(Player player, Character character) {

@@ -144,7 +144,7 @@ class Player extends Character with Entity {
         if (weapon.isEmpty) return;
         slots.assignToEmpty(weapon);
         onUnequipped(weapon);
-        slots.weapon = SlotType.Empty;
+        slots.weapon.type = SlotType.Empty;
         setStateChangingWeapons();
         break;
       case SlotTypeCategory.Armour:
@@ -173,7 +173,7 @@ class Player extends Character with Entity {
     setStateChangingWeapons();
     if (slotType.isWeapon) {
       if (weapon.isEmpty){
-        slots.weapon = slotType;
+        slots.weapon.type = slotType;
         onEquipped(slotType);
         return;
       }
@@ -209,7 +209,7 @@ class Player extends Character with Entity {
       if (slot.isWeapon) {
         if (slot == weapon) return;
         final currentWeapon = weapon;
-        slots.weapon = slot;
+        slots.weapon.type = slot;
         slots.assignSlotAtIndex(index, currentWeapon);
         setStateChangingWeapons();
         dispatch(PlayerEvent.Item_Equipped);
@@ -313,7 +313,7 @@ class Slot {
 }
 
 class Slots {
-  var weapon = SlotType.Empty;
+  var weapon = Slot();
   var armour = SlotType.Empty;
   var helm = SlotType.Empty;
 
@@ -385,6 +385,11 @@ class Slots {
   bool get emptySlotAvailable => getEmptySlot() != null;
 
   Slot? getEmptySlot(){
+    return findSlotByType(SlotType.Empty);
+  }
+
+  Slot? getEmptyWeaponSlot(){
+    if (weapon.isEmpty) return weapon;
     return findSlotByType(SlotType.Empty);
   }
 

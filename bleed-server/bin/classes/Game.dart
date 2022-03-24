@@ -680,7 +680,7 @@ extension GameFunctions on Game {
         if (character is Player) {
           final ability = character.performing;
           if (ability == null) {
-            character.stateDurationRemaining = character.slots.weapon.duration;
+            character.stateDurationRemaining = character.slots.weapon.type.duration;
             break;
           }
           if (character.magic < ability.cost) {
