@@ -243,7 +243,7 @@ class _ByteStreamParser {
   }
 
   double _nextPercentage(){
-    return _nextByte() / _100D;
+    return _nextByte() / 100.0;
   }
 
   ServerResponse _nextServerResponse(){
@@ -251,18 +251,14 @@ class _ByteStreamParser {
   }
 
   int _nextByte(){
-    final value = values[_index];
-    _index++;
-    return value;
+    return values[_index++];
   }
 
   bool readBool(){
-    final value = _nextByte();
-    return value == 1;
+    return _nextByte() == 1;
   }
 
   int _nextInt(){
-    // final pivot = values[_index];
     final value = readNumberFromByteArray(values, index: _index);
     _index += 2;
     return value;
@@ -272,10 +268,11 @@ class _ByteStreamParser {
     return _nextInt().toDouble();
   }
 
-  String readString(){
-     final length = _nextInt();
-     if (length == 0) return "";
-     return utf8.decode(readBytes(length));
+  String readString() {
+    const emptyString = "";
+    final length = _nextInt();
+    if (length == 0) return emptyString;
+    return utf8.decode(readBytes(length));
   }
 
   List<int> readBytes(int length){
