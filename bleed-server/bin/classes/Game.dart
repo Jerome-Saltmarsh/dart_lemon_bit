@@ -972,13 +972,13 @@ extension GameFunctions on Game {
         break;
       case AbilityType.Split_Arrow:
         if (character.stateDurationRemaining == castFrame) {
-          Projectile arrow1 = spawnArrow(character, damage: character.damage);
+          Projectile arrow1 = spawnArrow(character, damage: character.weapon.damage);
           double angle = piSixteenth;
           arrow1.target = null;
           setProjectileAngle(arrow1, character.aimAngle - angle);
-          Projectile arrow2 = spawnArrow(character, damage: character.damage);
+          Projectile arrow2 = spawnArrow(character, damage: character.weapon.damage);
           arrow2.target = null;
-          Projectile arrow3 = spawnArrow(character, damage: character.damage);
+          Projectile arrow3 = spawnArrow(character, damage: character.weapon.damage);
           arrow3.target = null;
           setProjectileAngle(arrow3, character.aimAngle + angle);
           character.performing = null;
@@ -989,7 +989,7 @@ extension GameFunctions on Game {
       case AbilityType.Long_Shot:
         if (character.stateDurationRemaining == castFrame) {
           final int damageMultiplier = 3;
-          spawnArrow(character, damage: character.damage * damageMultiplier)
+          spawnArrow(character, damage: character.weapon.damage * damageMultiplier)
               .range = ability.range;
           character.attackTarget = null;
           character.performing = null;
@@ -1000,12 +1000,12 @@ extension GameFunctions on Game {
         final int castFrame = 8;
         if (character.stateDurationRemaining == castFrame) {
           character.performing = null;
-          const damageMultiplier = 2;
+          // const damageMultiplier = 2;
           for (final zombie in zombies) {
-            if (distanceV2(zombie, character) < character.attackRange) {
-              applyStrike(
-                  character, zombie, character.damage * damageMultiplier);
-            }
+            // if (distanceV2(zombie, character) < character.attackRange) {
+            //   applyStrike(
+            //       character, zombie, character.weapon.damage * damageMultiplier);
+            // }
           }
           character.attackTarget = null;
           character.performing = null;
@@ -1018,7 +1018,7 @@ extension GameFunctions on Game {
           Character? attackTarget = character.attackTarget;
           if (attackTarget != null) {
             applyStrike(
-                character, attackTarget, character.damage * damageMultiplier);
+                character, attackTarget, character.weapon.damage * damageMultiplier);
           }
           character.attackTarget = null;
           character.performing = null;
@@ -1181,7 +1181,6 @@ extension GameFunctions on Game {
   }) {
     assert(team >= 0 && team <= 256);
     final zombie = _getAvailableZombie();
-    zombie.damage = damage;
     zombie.team = team;
     zombie.active = true;
     zombie.state = CharacterState.Idle;
@@ -1495,19 +1494,19 @@ extension GameFunctions on Game {
   }
 
   void _updateCharacterFrames() {
-    if (engine.frame % characterFramesChange == 0) {
-      updateFrames(players);
-      updateFrames(zombies);
-      updateFrames(npcs);
-    }
+    if (engine.frame % characterFramesChange != 0) return;
+    updateFrames(players);
+    updateFrames(zombies);
+    updateFrames(npcs);
   }
 
   void _updateItems() {
-    for (int i = 0; i < items.length; i++) {
+    var itemsLength = items.length;
+    for (var i = 0; i < itemsLength; i++) {
       final item = items[i];
-      item.duration--;
-      if (item.duration > 0) continue;
+      if (item.duration-- > 0) continue;
       items.removeAt(i);
+      itemsLength--;
     }
   }
 
@@ -1518,7 +1517,7 @@ extension GameFunctions on Game {
       if (stateDuration != framePerformStrike) return;
       final attackTarget = character.attackTarget;
       if (attackTarget == null) return;
-      applyStrike(character, attackTarget, character.damage);
+      applyStrike(character, attackTarget, character.weapon.damage);
       character.attackTarget = null;
       return;
     }
@@ -1537,6 +1536,7 @@ extension GameFunctions on Game {
           return;
         }
         if (stateDuration == 2){
+          character.slots.weapon.amount--;
           spawnProjectile(
               character: character,
               accuracy: 0,
@@ -1551,6 +1551,7 @@ extension GameFunctions on Game {
       if (weapon.isShotgun) {
         if (stateDuration == 1){
           dispatchV2(GameEventType.Shotgun_Fired, character);
+          character.slots.weapon.amount--;
           final totalBullets = 4;
           for (int i = 0; i < totalBullets; i++){
             spawnProjectile(
@@ -1580,7 +1581,7 @@ extension GameFunctions on Game {
         if (weapon.isMelee) {
           final attackTarget = character.attackTarget;
           if (attackTarget != null) {
-            applyStrike(character, attackTarget, character.damage);
+            applyStrike(character, attackTarget, character.weapon.damage);
             return;
           }
           final hit = physics.raycastHit(
@@ -1588,7 +1589,7 @@ extension GameFunctions on Game {
               characters: zombies,
               range: weapon.range);
           if (hit != null) {
-            applyStrike(character, hit, character.damage);
+            applyStrike(character, hit, character.weapon.damage);
           }
           return;
         }

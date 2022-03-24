@@ -92,8 +92,6 @@ class Character extends GameObject {
   int stateDuration = 0;
   int animationFrame = 0;
   int frozenDuration = 0;
-  double attackRange = 50;
-  int damage = 1;
   /// the character that was highlighted when the player clicked
   Character? attackTarget;
   double speedModifier = 0;

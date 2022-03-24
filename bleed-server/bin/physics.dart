@@ -5,6 +5,7 @@ import 'package:lemon_math/angle_between.dart';
 
 import 'classes/Character.dart';
 import 'classes/GameObject.dart';
+import 'common/SlotType.dart';
 import 'functions.dart';
 import 'maths.dart';
 
@@ -18,12 +19,13 @@ class _Physics {
     double angleRange = pi,
   }) {
     double targetDistance = 0;
-    final radiusTop = character.y - character.attackRange;
-    final radiusBottom = character.y + character.attackRange;
-    final radiusLeft = character.x - character.attackRange;
-    final radiusRight = character.x + character.attackRange;
+    final range = character.weapon.range;
+    final radiusTop = character.y - range;
+    final radiusBottom = character.y + range;
+    final radiusLeft = character.x - range;
+    final radiusRight = character.x + range;
     Character? target;
-    for (Character char in characters) {
+    for (var char in characters) {
       if (char.bottom < radiusTop) continue;
       if (char.top > radiusBottom) return null;
       if (char.right < radiusLeft) continue;
