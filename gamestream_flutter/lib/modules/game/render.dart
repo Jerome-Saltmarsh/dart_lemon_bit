@@ -279,6 +279,7 @@ class GameRender {
       final item = items[i];
 
       engine.draw.circle(item.x, item.y, 20, colours.white618);
+      engine.writeText(item.type.name, item.x, item.y);
       // isometric.render.renderItem(item);
     }
   }

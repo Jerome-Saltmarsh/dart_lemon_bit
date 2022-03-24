@@ -163,7 +163,7 @@ class _ByteCompiler {
       if (zombie.x > right) continue;
       writeCharacter(player, zombie);
     }
-    writeByte(END); // ZOMBIES FINISHED;  see bytestream_parser._parseZombies();
+    writeByte(END);
   }
 
   void writeGameEvents(List<GameEvent> gameEvents){

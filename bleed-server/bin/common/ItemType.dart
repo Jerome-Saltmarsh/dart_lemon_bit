@@ -8,7 +8,6 @@ final Map<ItemType, WeaponType> _itemTypeWeaponType = {
 };
 
 enum ItemType {
-  None,
   Box,
   Armour,
   Health,

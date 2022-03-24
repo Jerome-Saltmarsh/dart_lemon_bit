@@ -61,17 +61,17 @@
 [ ] Bow Spells,
 [ ] Sword Spells, Strong Swing
 [ ] Shop visible when interact with NPC
-[ ] Experience Bar
+[ ] Experience Barw
 [ ] FIX Join Custom Game
 [ ] (MMO) Save / Load Character
+[ ] FIX Flashing Particles  
 [ ] Resource Gathering System (Rock, Wood, Etc)
 [ ] Destructible Objects    
 [ ] Structure System
-[ ] FIX Flashing Particles  
 [ ] FIX Myst Particle Render order    
-[ ] OPTIMIZE Render character state    
 [ ] Slot Capacity
 [ ] Loot System
+[x] OPTIMIZE Render character state
 [x] Myst Emitter Sprite    
 [x] Improve AI Pathfinding      
 [SKIRMISH]      

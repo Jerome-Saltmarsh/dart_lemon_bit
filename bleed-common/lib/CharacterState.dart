@@ -16,7 +16,7 @@ const statePerforming = CharacterState.Hurt;
 const stateIdleIndex = 0;
 const stateDeadIndex = 1;
 const stateRunningIndex = 2;
-const stateChanging = 3;
+const stateChangingIndex = 3;
 const statePerformingIndex = 4;
 const stateHurtIndex = 5;
 

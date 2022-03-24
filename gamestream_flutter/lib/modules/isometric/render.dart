@@ -540,7 +540,7 @@ class IsometricRender {
             framesPerDirection: _framesPerDirectionHuman
         );
 
-      case stateRunningIndex:
+      case stateChangingIndex:
         return single(
             frame: 4,
             direction: character.direction,
