@@ -16,22 +16,15 @@ import 'package:lemon_watch/watch.dart';
 
 import 'state/game.dart';
 
-
-final _player = modules.game.state.player;
-
 final byteStreamParser = _ByteStreamParser();
-
-const _100D = 100.0;
-
-final _hours = modules.isometric.state.hours;
-final _minutes = modules.isometric.state.minutes;
-
 final byteLength = Watch<int>(0);
 final bufferSize = Watch<int>(0);
 
-var previousY = 0.0;
-
 class _ByteStreamParser {
+
+  final _player = modules.game.state.player;
+  final _hours = modules.isometric.state.hours;
+  final _minutes = modules.isometric.state.minutes;
 
   var _index = 0;
   late List<int> values;

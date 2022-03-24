@@ -6,7 +6,9 @@ import 'package:lemon_math/randomItem.dart';
 import '../classes/Character.dart';
 import '../classes/EnvironmentObject.dart';
 import '../classes/Game.dart';
+import '../classes/Item.dart';
 import '../classes/Player.dart';
+import '../common/ItemType.dart';
 import '../common/SlotType.dart';
 import '../common/enums/ObjectType.dart';
 import '../engine.dart';
@@ -52,6 +54,8 @@ class GameSkirmish extends Game {
 
   @override
   void onCharacterKilled(Character killed, Character by) {
-    // drop random loot
+    final randomItemType = randomItem(itemTypes);
+    final item = Item(type: randomItemType, x: killed.x, y: killed.y);
+    items.add(item);
   }
 }

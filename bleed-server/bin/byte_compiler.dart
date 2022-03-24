@@ -108,6 +108,22 @@ class _ByteCompiler {
     writeBigInt(250);
   }
 
+  void writeItems(Player player){
+    writeByte(ServerResponse.Items.index);
+    final items = player.game.items;
+    for(final item in items){
+      if (item.inactive) continue;
+      if (item.left < player.screenLeft) continue;
+      if (item.right > player.screenRight) continue;
+      if (item.top < player.screenTop) continue;
+      if (item.bottom > player.screenBottom) break;
+      writeByte(item.type.index);
+      writeBigInt(item.x);
+      writeBigInt(item.y);
+    }
+    writeByte(END);
+  }
+
   void writePlayerZombies(Player player) {
     writeByte(_serverResponseZombiesIndex);
     final zombies = player.game.zombies;
