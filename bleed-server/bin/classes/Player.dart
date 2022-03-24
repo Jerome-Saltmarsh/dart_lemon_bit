@@ -1,8 +1,5 @@
-import 'dart:typed_data';
-
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:lemon_math/Vector2.dart';
-import 'package:lemon_math/randomInt.dart';
 
 import '../common/AbilityMode.dart';
 import '../common/AbilityType.dart';
@@ -307,17 +304,23 @@ class Player extends Character with Entity {
   }
 }
 
+class Slot {
+  SlotType type = SlotType.Empty;
+  int amount = 0;
+
+  bool get isEmpty => type.isEmpty;
+}
+
 class _PlayerSlots {
-  // SlotType weapon = SlotType.Empty;
   SlotType armour = SlotType.Empty;
   SlotType helm = SlotType.Empty;
 
-  SlotType slot1 = SlotType.Empty;
-  SlotType slot2 = SlotType.Empty;
-  SlotType slot3 = SlotType.Empty;
-  SlotType slot4 = SlotType.Empty;
-  SlotType slot5 = SlotType.Empty;
-  SlotType slot6 = SlotType.Empty;
+  Slot slot1 = Slot();
+  Slot slot2 = Slot();
+  Slot slot3 = Slot();
+  Slot slot4 = Slot();
+  Slot slot5 = Slot();
+  Slot slot6 = Slot();
 
   bool has(SlotType value){
     return getIndexOf(value) != null;
@@ -334,29 +337,29 @@ class _PlayerSlots {
   }
 
   int? getSlotIndexWhere(bool Function(SlotType slotType) where){
-     if(where(slot1)) return 1;
-     if(where(slot2)) return 2;
-     if(where(slot3)) return 3;
-     if(where(slot4)) return 4;
-     if(where(slot5)) return 5;
-     if(where(slot6)) return 6;
+     if(where(slot1.type)) return 1;
+     if(where(slot2.type)) return 2;
+     if(where(slot3.type)) return 3;
+     if(where(slot4.type)) return 4;
+     if(where(slot5.type)) return 5;
+     if(where(slot6.type)) return 6;
      return null;
   }
 
   SlotType getSlotTypeAtIndex(int index){
       switch(index){
         case 1:
-          return slot1;
+          return slot1.type;
         case 2:
-          return slot2;
+          return slot2.type;
         case 3:
-          return slot3;
+          return slot3.type;
         case 4:
-          return slot4;
+          return slot4.type;
         case 5:
-          return slot5;
+          return slot5.type;
         case 6:
-          return slot6;
+          return slot6.type;
         default:
           throw Exception("$index is not a valid slot index (1 - 6 inclusive)");
       }
@@ -365,65 +368,45 @@ class _PlayerSlots {
   void assignSlotAtIndex(int index, SlotType value){
     switch(index){
       case 1:
-        slot1 = value;
+        slot1.type = value;
         break;
       case 2:
-        slot2 = value;
+        slot2.type = value;
         break;
       case 3:
-        slot3 = value;
+        slot3.type = value;
         break;
       case 4:
-        slot4 = value;
+        slot4.type = value;
         break;
       case 5:
-        slot5 = value;
+        slot5.type = value;
         break;
       case 6:
-        slot6 = value;
+        slot6.type = value;
         break;
       default:
         throw Exception("cannot assign slot $index it out of bounds");
     }
-
   }
 
-  bool get emptySlotAvailable {
-     if(slot1 == SlotType.Empty) return true;
-     if(slot2 == SlotType.Empty) return true;
-     if(slot3 == SlotType.Empty) return true;
-     if(slot4 == SlotType.Empty) return true;
-     if(slot5 == SlotType.Empty) return true;
-     if(slot6 == SlotType.Empty) return true;
-     return false;
+  bool get emptySlotAvailable => getEmptySlot() != null;
+
+  Slot? getEmptySlot(){
+    if (slot1.isEmpty) return slot1;
+    if (slot2.isEmpty) return slot2;
+    if (slot3.isEmpty) return slot3;
+    if (slot4.isEmpty) return slot4;
+    if (slot5.isEmpty) return slot5;
+    if (slot6.isEmpty) return slot6;
+    return null;
   }
 
   bool assignToEmpty(SlotType type){
-    if(slot1 == SlotType.Empty) {
-      slot1 = type;
-      return true;
-    }
-    if(slot2 == SlotType.Empty) {
-      slot2 = type;
-      return true;
-    }
-    if(slot3 == SlotType.Empty) {
-      slot3 = type;
-      return true;
-    }
-    if(slot4 == SlotType.Empty) {
-      slot4 = type;
-      return true;
-    }
-    if(slot5 == SlotType.Empty) {
-      slot5 = type;
-      return true;
-    }
-    if(slot6 == SlotType.Empty) {
-      slot6 = type;
-      return true;
-    }
-    return false;
+    final empty = getEmptySlot();
+    if (empty == null) return false;
+    empty.type = type;
+    return true;
   }
 }
 

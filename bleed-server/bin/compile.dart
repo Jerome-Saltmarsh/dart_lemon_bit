@@ -129,17 +129,6 @@ void compilePlayerOrbs(StringBuffer buffer, Player player) {
   _write(buffer, player.orbs.emerald);
 }
 
-void compilePlayerSlotTypes(StringBuffer buffer, Player player) {
-  _write(buffer, ServerResponse.Player_Slot_Types.index);
-  final slots = player.slots;
-  _write(buffer, slots.slot1.index);
-  _write(buffer, slots.slot2.index);
-  _write(buffer, slots.slot3.index);
-  _write(buffer, slots.slot4.index);
-  _write(buffer, slots.slot5.index);
-  _write(buffer, slots.slot6.index);
-}
-
 void compilePlayerWeaponValues(StringBuffer buffer, Player player){
   _write(buffer, ServerResponse.Player_Weapon.index);
 }

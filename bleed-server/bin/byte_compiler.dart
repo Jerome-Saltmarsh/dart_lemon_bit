@@ -67,12 +67,12 @@ class _ByteCompiler {
     writeByte(player.weapon.index);
     writeByte(slots.armour.index);
     writeByte(slots.helm.index);
-    writeByte(slots.slot1.index); // 1
-    writeByte(slots.slot2.index); // 1
-    writeByte(slots.slot3.index); // 1
-    writeByte(slots.slot4.index); // 1
-    writeByte(slots.slot5.index); // 1
-    writeByte(slots.slot6.index); // 1
+    writeByte(slots.slot1.type.index); // 1
+    writeByte(slots.slot2.type.index); // 1
+    writeByte(slots.slot3.type.index); // 1
+    writeByte(slots.slot4.type.index); // 1
+    writeByte(slots.slot5.type.index); // 1
+    writeByte(slots.slot6.type.index); // 1
     writeBigInt(orbs.topaz); // 2
     writeBigInt(orbs.emerald); // 2
     writeBigInt(orbs.ruby); // 2
