@@ -751,27 +751,47 @@ class GameBuild {
             )));
   }
 
+  Widget buildEquippedWeaponSlot(){
+    final weapon = state.player.slots.weapon;
+    return onPressed(
+        callback: actions.unequipWeapon,
+        child: Stack(
+          children: [
+            WatchBuilder(weapon.type, (SlotType slotType){
+              final child = slot(slotType: slotType, color: colours.white382);
+              if (slotType.isEmpty) return child;
+              return onPressed(
+                  callback: actions.unequipWeapon,
+                  child: Stack(
+                    children: [
+                      child,
+                    ],
+                  ));
+            }),
+            WatchBuilder(weapon.amount, (int amount){
+              return text(amount, size: style.fontSize.small);
+            })
+          ],
+        ));
+
+  }
+
   Widget _panelEquipped(){
+    final slots = state.player.slots;
       return Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              WatchBuilder(state.player.slots.weapon.type, (SlotType slotType){
-                final child = slot(slotType: slotType, color: colours.white382);
-                if (slotType.isEmpty) return child;
-                return onPressed(
-                    callback: actions.unequipWeapon,
-                    child: child);
-              }),
-              WatchBuilder(state.player.slots.armour, (SlotType slotType){
+              buildEquippedWeaponSlot(),
+              WatchBuilder(slots.armour, (SlotType slotType){
                 final child = slot(slotType: slotType, color: colours.white382);
                 if (slotType.isEmpty) return child;
                 return onPressed(
                     callback: actions.unequipArmour,
                     child: child);
               }),
-              WatchBuilder(state.player.slots.helm, (SlotType slotType){
+              WatchBuilder(slots.helm, (SlotType slotType){
                 final child = slot(slotType: slotType, color: colours.white382);
                 if (slotType.isEmpty) return child;
                 return onPressed(

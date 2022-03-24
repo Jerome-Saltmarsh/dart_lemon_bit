@@ -44,6 +44,7 @@ class GameSkirmish extends Game {
       team: teams.none,
       weapon: SlotType.Handgun,
     );
+    player.slots.weapon.amount = 12;
     return player;
   }
 

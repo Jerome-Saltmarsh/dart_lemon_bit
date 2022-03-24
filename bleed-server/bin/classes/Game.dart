@@ -1522,34 +1522,46 @@ extension GameFunctions on Game {
       return;
     }
 
-      final weapon = character.weapon;
+    final weapon = character.slots.weapon;
+    final weaponType = weapon.type;
 
-      if (weapon.isSword) {
-        if (stateDuration == 1){
-          dispatchV2(GameEventType.Sword_Woosh, character);
-        }
+    if (weaponType.isSword) {
+      if (stateDuration == 1) {
+        dispatchV2(GameEventType.Sword_Woosh, character);
       }
+    }
 
-      if (weapon.isHandgun) {
+    if (weaponType.isHandgun) {
         if (stateDuration == 1){
+          if (weapon.amount <= 0) {
+            dispatchV2(GameEventType.Clip_Empty, character);
+            return;
+          }
           dispatchV2(GameEventType.Handgun_Fired, character, angle: character.angle);
           return;
         }
         if (stateDuration == 2){
-          character.slots.weapon.amount--;
+          if (weapon.amount <= 0){
+            return;
+          }
+          weapon.amount--;
           spawnProjectile(
               character: character,
               accuracy: 0,
               speed: 12.0,
-              range: weapon.range,
-              damage: weapon.damage,
+              range: weaponType.range,
+              damage: weaponType.damage,
               type: ProjectileType.Bullet);
           return;
         }
       }
 
-      if (weapon.isShotgun) {
+      if (weaponType.isShotgun) {
         if (stateDuration == 1){
+          if (weapon.amount <= 0){
+            dispatchV2(GameEventType.Ammo_Acquired, character);
+            return;
+          }
           dispatchV2(GameEventType.Shotgun_Fired, character);
           character.slots.weapon.amount--;
           final totalBullets = 4;
@@ -1558,27 +1570,27 @@ extension GameFunctions on Game {
                 character: character,
                 accuracy: 0.1,
                 speed: 12.0,
-                range: weapon.range,
-                damage: weapon.damage,
+                range: weaponType.range,
+                damage: weaponType.damage,
                 type: ProjectileType.Bullet);
           }
         }
       }
 
-      if (weapon.isBow){
+      if (weaponType.isBow){
         if (character.stateDuration == 1){
           dispatchV2(GameEventType.Draw_Bow, character);
         }
       }
 
       if (character.stateDuration == framePerformStrike) {
-        if (weapon.isBow) {
+        if (weaponType.isBow) {
           dispatchV2(GameEventType.Release_Bow, character);
-          spawnArrow(character, damage: weapon.damage);
+          spawnArrow(character, damage: weaponType.damage);
           character.attackTarget = character.attackTarget;
           return;
         }
-        if (weapon.isMelee) {
+        if (weaponType.isMelee) {
           final attackTarget = character.attackTarget;
           if (attackTarget != null) {
             applyStrike(character, attackTarget, character.weapon.damage);
@@ -1587,7 +1599,7 @@ extension GameFunctions on Game {
           final hit = physics.raycastHit(
               character: character,
               characters: zombies,
-              range: weapon.range);
+              range: weaponType.range);
           if (hit != null) {
             applyStrike(character, hit, character.weapon.damage);
           }

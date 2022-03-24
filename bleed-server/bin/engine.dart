@@ -22,7 +22,7 @@ final engine = _Engine();
 class _Engine {
   // constants
   final framesPerSecond = 30;
-  final framesPerRegen = 30 * 4;
+  final framesPerRegen = 30 * 10;
   final framesPerUpdateAIPath = 30;
   // immutables
   final Map<String, Player> playerMap = {};
