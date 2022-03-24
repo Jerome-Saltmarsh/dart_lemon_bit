@@ -13,10 +13,6 @@ import 'common/ServerResponse.dart';
 import 'common/compile_util.dart';
 import 'common/constants.dart';
 
-const _60 = 60;
-const _100 = 100;
-const _256 = 256;
-
 final byteCompiler = _ByteCompiler();
 
 final _serverResponsePlayerIndex = ServerResponse.Player.index;
@@ -25,6 +21,7 @@ final _serverResponsePlayersIndex = ServerResponse.Players.index;
 final _serverResponseEndIndex = ServerResponse.End.index;
 final _serverResponseGameEventsIndex = ServerResponse.Game_Events.index;
 final _serverResponseProjectilesIndex = ServerResponse.Projectiles.index;
+final _serverResponseGameTimeIndex = ServerResponse.Game_Time.index;
 
 class _ByteCompiler {
   var _index = 0;
@@ -34,6 +31,7 @@ class _ByteCompiler {
 
   _ByteCompiler(){
     _buffers.add(Uint8List(75));
+    _buffers.add(Uint8List(85));
     _buffers.add(Uint8List(100));
     _buffers.add(Uint8List(125));
     _buffers.add(Uint8List(150));
@@ -176,11 +174,11 @@ class _ByteCompiler {
   }
 
   void writeGameTime(Game game){
-    writeByte(ServerResponse.Game_Time.index);
+    writeByte(_serverResponseGameTimeIndex);
     final totalSeconds = game.getTime();
-    final totalMinutes = totalSeconds ~/ _60;
-    final hours = totalMinutes ~/ _60;
-    final minutes = totalMinutes % _60;
+    final totalMinutes = totalSeconds ~/ 60;
+    final hours = totalMinutes ~/ 60;
+    final minutes = totalMinutes % 60;
     writeByte(hours);
     writeByte(minutes);
   }
@@ -290,14 +288,14 @@ class _ByteCompiler {
          return buff;
        }
      }
-     final newBufferLength = _index ~/ _100 * _100 + _100;
+     final newBufferLength = _index ~/ 100 * 100 + 100;
      final buffer = Uint8List(newBufferLength);
      _buffers.add(buffer);
      return buffer;
   }
 
   void writePercentage(double value){
-    writeByte((value * _100).toInt());
+    writeByte((value * 100).toInt());
   }
 
   void writeBigInt(num value){
@@ -306,7 +304,7 @@ class _ByteCompiler {
   }
 
   void writeByte(int value){
-    assert(value <= _256);
+    assert(value <= 256);
     assert(value >= 0);
     _buffer[_index] = value;
     _index++;
