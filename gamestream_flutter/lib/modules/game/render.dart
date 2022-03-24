@@ -29,7 +29,6 @@ import 'package:lemon_math/opposite.dart';
 import 'state.dart';
 import 'style.dart';
 
-
 class GameRender {
 
   final _smoothSpeed = 0.5;
@@ -43,13 +42,6 @@ class GameRender {
   void render(Canvas canvas, Size size) {
 
     applyFrameSmoothing();
-
-    if (state.player.uuid.value.isEmpty) {
-      return;
-    }
-    if (core.state.status.value == GameStatus.Awaiting_Players){
-      return;
-    }
 
     isometric.actions.applyDynamicEmissions();
     isometric.actions.applyDynamicShadeToTileSrc();
@@ -188,10 +180,6 @@ class GameRender {
       // if (diff(mouseWorldX, player.x) > style.nameRadius) continue;
       // if (diff(mouseWorldY, player.y) > style.nameRadius) continue;
       engine.writeText(player.name, player.x - isometric.constants.charWidth * player.name.length, player.y + 5);
-      // engine.textPainter.text = game.getTextSpan(player.name);
-      // engine.textPainter.layout();
-      // engine.textPainter.paint(engine.canvas, Offset(player.x - isometric.constants.charWidth * player.name.length, player.y + 5));
-      // engine.draw.text(player.name, player.x - isometric.constants.charWidth * player.name.length, player.y + 5, style: style.playerNameTextStyle);
     }
   }
 
