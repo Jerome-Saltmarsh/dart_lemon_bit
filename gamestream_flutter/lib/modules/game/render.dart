@@ -68,7 +68,7 @@ class GameRender {
     // engine.setPaintColorWhite();
     isometric.render.renderSprites();
     drawEffects();
-    // drawItems();
+    drawItems();
 
     if (game.type.value == GameType.BATTLE_ROYAL){
       drawRoyalPerimeter();
@@ -287,9 +287,11 @@ class GameRender {
   }
 
   void drawItems() {
-    final isoState = isometric.state;
-    for (int i = 0; i < game.itemsTotal; i++){
-      isometric.render.renderItem(isoState.items[i]);
+    final items = isometric.state.items;
+    for (var i = 0; i < game.itemsTotal; i++){
+      final item = items[i];
+      engine.draw.circle(item.x, item.y, 20, colours.white618);
+      isometric.render.renderItem(item);
     }
   }
 

@@ -83,6 +83,7 @@ class _ByteCompiler {
     writeGameEvents(game.gameEvents);
     writeGameTime(game);
     writePlayerZombies(player);
+    writeItems(player);
 
     if (game.debugMode)
       writePaths(game);

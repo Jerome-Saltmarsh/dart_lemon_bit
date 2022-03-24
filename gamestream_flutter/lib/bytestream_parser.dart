@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:bleed_common/ItemType.dart';
 import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:bleed_common/CharacterState.dart';
 import 'package:bleed_common/GameEventType.dart';
@@ -39,6 +40,9 @@ class _ByteStreamParser {
       switch(response){
         case ServerResponse.Zombies:
           _parseZombies();
+          break;
+        case ServerResponse.Items:
+          _parseItems();
           break;
         case ServerResponse.Players:
           _parsePlayers();
@@ -175,6 +179,21 @@ class _ByteStreamParser {
       total++;
     }
     game.totalZombies.value = total;
+  }
+
+  void _parseItems(){
+    final items = isometric.state.items;
+    var index = 0;
+    while(true) {
+      final itemTypeIndex = _nextByte();
+      if (itemTypeIndex == END) break;
+      final item = items[index];
+      item.type = itemTypes[itemTypeIndex];
+      item.x = _nextDouble();
+      item.y = _nextDouble();
+      index++;
+    }
+    game.itemsTotal = index;
   }
 
   void _parsePlayers() {
