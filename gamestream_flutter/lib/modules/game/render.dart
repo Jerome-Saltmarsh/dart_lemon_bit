@@ -2,8 +2,6 @@
 import 'dart:math';
 
 import 'package:bleed_common/AbilityType.dart';
-import 'package:bleed_common/CharacterState.dart';
-import 'package:bleed_common/GameStatus.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/OrbType.dart';
 import 'package:bleed_common/SlotType.dart';
@@ -277,11 +275,20 @@ class GameRender {
     final items = isometric.state.items;
     for (var i = 0; i < game.itemsTotal; i++){
       final item = items[i];
-
-      engine.draw.circle(item.x, item.y, 20, colours.white618);
-      engine.writeText(item.type.name, item.x, item.y);
-      // isometric.render.renderItem(item);
+      // engine.writeText(item.type.name, item.x, item.y);
+      renderText(
+          text: item.type.name,
+          x: item.x,
+          y: item.y
+      );
+      isometric.render.renderItem(item);
     }
+  }
+
+  void renderText({required String text, required double x, required double y}){
+    if (!engine.screen.contains(x, y)) return;
+    const charWidth = 4.5;
+    engine.writeText(text, x - charWidth * text.length, y);
   }
 
   void drawEffects() {

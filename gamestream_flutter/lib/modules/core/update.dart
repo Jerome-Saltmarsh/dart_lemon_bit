@@ -1,14 +1,18 @@
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 
+
+final _timeline = core.state.timeline;
+final _mode = core.state.mode;
+final _game = modules.game;
+
 void update() {
-  core.state.timeline.update();
-  switch(core.state.mode.value){
+  _timeline.update();
+  switch(_mode.value){
     case Mode.Website:
-      // TODO: Handle this case.
       break;
     case Mode.Player:
-      modules.game.update.update();
+      _game.update.update();
       break;
     case Mode.Editor:
       editor.update();

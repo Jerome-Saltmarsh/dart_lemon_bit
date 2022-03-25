@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
-
+import 'package:lemon_math/Vector2.dart';
 import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
@@ -53,6 +53,8 @@ const _animationRunning2 = [16, 17, 18, 19];
 final _screen = engine.screen;
 final _shadowX = atlas.shadow.x;
 final _shadowY = atlas.shadow.y;
+
+final _itemBeam = Vector2(5939, 0);
 
 
 enum SpriteLayer {
@@ -282,14 +284,22 @@ class IsometricRender {
   }
 
   void renderItem(Item item) {
-    if (!maps.itemAtlas.containsKey(item.type)) return;
+    // if (!maps.itemAtlas.containsKey(item.type)) return;
+    // final _anchor = 32;
+    // srcLoop(
+    //     atlas: maps.itemAtlas[item.type]!,
+    //     direction: Direction.Down.index,
+    //     frame: core.state.timeline.frame,
+    //     framesPerDirection: 8);
+    // engine.mapDst(x: item.x - _anchor, y: item.y - _anchor,);
+    // engine.renderAtlas();
 
-    final _anchor = 32;
-    srcLoop(
-        atlas: maps.itemAtlas[item.type]!,
-        direction: Direction.Down.index,
-        frame: core.state.timeline.frame,
-        framesPerDirection: 8);
+    const _anchor = 16;
+    srcLoopSimple(
+        x: 5939,
+        size: 32,
+        frames: 4,
+    );
     engine.mapDst(x: item.x - _anchor, y: item.y - _anchor,);
     engine.renderAtlas();
   }

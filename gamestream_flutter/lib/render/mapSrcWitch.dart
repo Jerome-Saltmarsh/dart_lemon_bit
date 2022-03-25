@@ -15,10 +15,10 @@ void mapSrcWitch({
       return srcLoop(
           atlas: atlas.witch.idle,
           direction: direction,
-          shade: Shade.Bright,
+          row: Shade.Bright,
           size: 64,
           framesPerDirection: 1,
-          frame: frame);
+          column: frame);
     case CharacterState.Dead:
     // TODO: Handle this case.
       break;
@@ -35,10 +35,10 @@ void mapSrcWitch({
       return srcLoop(
           atlas: atlas.witch.running,
           direction: direction,
-          shade: Shade.Bright,
+          row: Shade.Bright,
           size: 64,
           framesPerDirection: 4,
-          frame: frame);
+          column: frame);
     case CharacterState.Changing:
     // TODO: Handle this case.
       break;

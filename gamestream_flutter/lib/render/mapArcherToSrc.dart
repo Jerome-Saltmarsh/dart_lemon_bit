@@ -16,7 +16,7 @@ void mapSrcArcher({
           atlas: atlas.archer.idle,
           direction: direction,
           framesPerDirection: 1,
-          frame: frame
+          column: frame
       );
     case CharacterState.Performing:
       return srcAnimate(
@@ -29,7 +29,7 @@ void mapSrcArcher({
       return srcLoop(
           atlas: atlas.archer.running,
           direction: direction,
-          frame: frame
+          column: frame
       );
   }
 

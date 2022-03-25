@@ -16,10 +16,10 @@ void mapSrcKnight({
       return srcLoop(
           atlas: atlas.knight.idle,
           direction: direction,
-          shade: Shade.Bright,
+          row: Shade.Bright,
           size: 64,
           framesPerDirection: 1,
-          frame: frame);
+          column: frame);
     case CharacterState.Performing:
       return srcAnimate(
           animation: animations.knight.striking,
@@ -33,10 +33,10 @@ void mapSrcKnight({
       return srcLoop(
           atlas: atlas.knight.running,
           direction: direction,
-          shade: Shade.Bright,
+          row: Shade.Bright,
           size: 64,
           framesPerDirection: 4,
-          frame: frame);
+          column: frame);
     default:
       throw Exception("Could not map knight src");
   }

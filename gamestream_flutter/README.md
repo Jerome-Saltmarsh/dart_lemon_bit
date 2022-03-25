@@ -73,6 +73,7 @@
 [ ] Destructible Objects      
 [ ] Structure System
 [ ] Loot System
+[ ] Loot Sprite (Like RE4)    
 [x] Display unequipped slot amount    
 [x] Fix Gem Layout  
 [x] FIX Unequip weapons loses all ammo
