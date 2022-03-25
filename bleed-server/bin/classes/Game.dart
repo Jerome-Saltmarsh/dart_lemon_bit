@@ -840,9 +840,16 @@ extension GameFunctions on Game {
       setCharacterStateIdle(player);
     }
 
+    final aimTarget = player.aimTarget;
+    if (aimTarget != null && aimTarget.dead){
+      player.aimTarget = null;
+    }
+
     final target = player.target;
     if (target == null) return;
     characterFaceV2(player, target);
+
+
 
     if (target is Character){
       if (target.dead) {
