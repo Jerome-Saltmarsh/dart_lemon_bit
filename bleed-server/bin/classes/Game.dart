@@ -271,6 +271,7 @@ abstract class Game {
   void checkCollisionPlayerItem() {
     var itemLength = items.length;
     for (final player in players) {
+      if (player.dead) continue;
       for (var i = 0; i < itemLength; i++) {
         final item = items[i];
         if (item.top > player.bottom) break;
@@ -445,10 +446,12 @@ extension GameFunctions on Game {
   void applyDamage(Character src, Character target, int amount) {
     if (target.dead) return;
     if (target.invincible) return;
-
     changeCharacterHealth(target, -amount);
-    if (target.alive && target.type.isZombie) {
-      setCharacterState(target, CharacterState.Hurt);
+
+    if (target.alive) {
+      if (target.type.isZombie){
+        setCharacterState(target, CharacterState.Hurt);
+      }
       return;
     }
 

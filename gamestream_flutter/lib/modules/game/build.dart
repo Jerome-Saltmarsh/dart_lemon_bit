@@ -315,8 +315,8 @@ class GameBuild {
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 8),
                       child: rowOrbs()),
-                  height16,
-                  panel(child: _panelStore()),
+                  // height16,
+                  // panel(child: _panelStore()),
                   height64,
                   panel(child: _panelEquipped()),
                   height16,

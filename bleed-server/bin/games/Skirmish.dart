@@ -56,6 +56,7 @@ class GameSkirmish extends Game {
 
   @override
   void onCharacterKilled(Character killed, Character by) {
+    if (killed is Player) return;
     final randomItemType = randomItem(itemTypes);
     final item = Item(type: randomItemType, x: killed.x, y: killed.y);
     items.add(item);
@@ -82,8 +83,6 @@ class GameSkirmish extends Game {
       player.orbs.emerald++;
       return true;
     }
-
-
 
     switch(item.type) {
 
