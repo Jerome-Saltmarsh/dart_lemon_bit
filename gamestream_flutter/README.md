@@ -73,7 +73,7 @@
 [ ] Destructible Objects      
 [ ] Structure System
 [ ] Loot System
-[ ] Display unequipped slot amount    
+[x] Display unequipped slot amount    
 [x] Fix Gem Layout  
 [x] FIX Unequip weapons loses all ammo
 [x] Slot Capacity

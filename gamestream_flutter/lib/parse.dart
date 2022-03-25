@@ -59,7 +59,6 @@ void parseState() {
         break;
 
       case ServerResponse.Gem_Spawns:
-        print("ServerResponse.Gem_Spawns");
         final total = consumeInt();
         for (var i = 0; i < total; i++) {
           final type = consumeOrbType();
@@ -68,10 +67,6 @@ void parseState() {
           isometric.spawn.orb(type, x, y);
         }
         break;
-
-      // case ServerResponse.Paths:
-      //   _parsePaths();
-      //   break;
 
       case ServerResponse.Game_Time:
         parseGameTime();

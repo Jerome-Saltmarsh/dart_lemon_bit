@@ -1,14 +1,15 @@
 import 'dart:math';
 
-import 'package:bleed_common/version.dart';
-import 'package:gamestream_flutter/audio.dart';
-import 'package:gamestream_flutter/bytestream_parser.dart';
 import 'package:bleed_common/CharacterType.dart';
 import 'package:bleed_common/GameStatus.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/RoyalCost.dart';
 import 'package:bleed_common/SlotType.dart';
 import 'package:bleed_common/WeaponType.dart';
+import 'package:bleed_common/version.dart';
+import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/audio.dart';
+import 'package:gamestream_flutter/bytestream_parser.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
@@ -27,10 +28,8 @@ import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
-import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../../toString.dart';
@@ -307,7 +306,6 @@ class GameBuild {
   Container _panelMagicStore() {
     return Container(
             width: 200,
-            // height: 650,
             padding: padding8,
             color: colours.brownDark,
               child: Column(
@@ -749,6 +747,35 @@ class GameBuild {
             )));
   }
 
+  Widget buildSlot(Slot slo, Function onPressed) {
+    return onPressed(
+        callback: onPressed,
+        child: Stack(
+          children: [
+            WatchBuilder(slo.type, (SlotType slotType) {
+              final child = slot(slotType: slotType, color: colours.white382);
+              if (slotType.isEmpty) return child;
+              return onPressed(
+                  callback: actions.unequipWeapon,
+                  child: Stack(
+                    children: [
+                      child,
+                    ],
+                  ));
+            }),
+            WatchBuilder(slo.amount, (int amount){
+              if (amount < 0) return const SizedBox();
+              return Padding(
+                padding: const EdgeInsets.all(1.0),
+                child: text(amount, size: style.fontSize.small),
+              );
+            })
+          ],
+        ));
+
+  }
+
+
   Widget buildEquippedWeaponSlot(){
     final weapon = state.player.slots.weapon;
     return onPressed(
@@ -806,9 +833,18 @@ class GameBuild {
       );
   }
 
-  Widget _inventorySlot(Slot slot, int index){
-    return WatchBuilder(slot.type, (SlotType slotType){
+  Widget _inventorySlot(Slot slot, int index) {
 
+    final amount = WatchBuilder(slot.amount, (int amount){
+      if (amount < 0) return const SizedBox();
+      return Padding(
+        padding: const EdgeInsets.all(1.0),
+        child: text(amount, size: style.fontSize.small),
+      );
+    });
+
+
+    final type = WatchBuilder(slot.type, (SlotType slotType) {
       final child = Container(
           width: 60,
           height: 60,
@@ -824,7 +860,6 @@ class GameBuild {
           ));
 
       if (slotType.isEmpty) return child;
-
       return onPressed(
         callback: (){
           actions.equipSlot(index);
@@ -835,6 +870,13 @@ class GameBuild {
         child: child,
       );
     });
+
+    return Stack(
+      children: [
+        type,
+        amount,
+      ],
+    );
   }
 
   Widget _storeSlot(SlotType slotType){
