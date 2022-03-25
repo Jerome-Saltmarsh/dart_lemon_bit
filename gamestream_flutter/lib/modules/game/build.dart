@@ -769,7 +769,10 @@ class GameBuild {
                   ));
             }),
             WatchBuilder(weapon.amount, (int amount){
-              return text(amount, size: style.fontSize.small);
+              return Padding(
+                padding: const EdgeInsets.all(1.0),
+                child: text(amount, size: style.fontSize.small),
+              );
             })
           ],
         ));

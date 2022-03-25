@@ -9,6 +9,7 @@ import '../classes/Game.dart';
 import '../classes/Item.dart';
 import '../classes/Player.dart';
 import '../common/ItemType.dart';
+import '../common/PlayerEvent.dart';
 import '../common/SlotType.dart';
 import '../common/enums/ObjectType.dart';
 import '../engine.dart';
@@ -63,6 +64,27 @@ class GameSkirmish extends Game {
   @override
   bool onPlayerItemCollision(Player player, Item item){
     final slots = player.slots;
+
+    if (item.type == ItemType.Orb_Topaz) {
+      player.dispatch(PlayerEvent.Orb_Earned_Topaz);
+      player.orbs.topaz++;
+      return true;
+    }
+
+    if (item.type == ItemType.Orb_Ruby) {
+      player.dispatch(PlayerEvent.Orb_Earned_Ruby);
+      player.orbs.ruby++;
+      return true;
+    }
+
+    if (item.type == ItemType.Orb_Emerald) {
+      player.dispatch(PlayerEvent.Orb_Earned_Emerald);
+      player.orbs.emerald++;
+      return true;
+    }
+
+
+
     switch(item.type) {
 
       case ItemType.Health:
@@ -78,6 +100,7 @@ class GameSkirmish extends Game {
           emptySlot.amount = 10;
           return true;
         }
+        player.dispatch(PlayerEvent.Ammo_Acquired);
         slot.amount += 10;
         return true;
 
@@ -90,6 +113,7 @@ class GameSkirmish extends Game {
           emptySlot.amount = 10;
           return true;
         }
+        player.dispatch(PlayerEvent.Ammo_Acquired);
         slot.amount += 10;
         return true;
 

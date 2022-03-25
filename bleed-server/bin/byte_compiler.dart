@@ -85,9 +85,21 @@ class _ByteCompiler {
     writeGameTime(game);
     writePlayerZombies(player);
     writeItems(player);
+    writePlayerEvents(player);
 
     if (game.debugMode)
       writePaths(game);
+  }
+
+  void writePlayerEvents(Player player){
+    final events = player.events;
+    if (events.isEmpty) return;
+    writeByte(ServerResponse.Player_Events.index);
+    writeByte(events.length);
+    for (var i = 0; i < events.length; i++) {
+      writeByte(events[i].index);
+    }
+    events.clear();
   }
 
   void writeBool(bool value){

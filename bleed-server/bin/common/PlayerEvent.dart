@@ -3,6 +3,7 @@ enum PlayerEvent {
   Level_Up,
   Skill_Upgraded,
   Teleported,
+  Ammo_Acquired,
   Dash_Activated,
   Item_Purchased,
   Item_Equipped,
@@ -13,4 +14,4 @@ enum PlayerEvent {
   Orb_Earned_Emerald,
 }
 
-final List<PlayerEvent> playerEvents = PlayerEvent.values;
+const playerEvents = PlayerEvent.values;

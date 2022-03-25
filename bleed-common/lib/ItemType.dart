@@ -28,6 +28,10 @@ extension ItemTypeExtension on ItemType {
     return weaponType != null;
   }
 
+  bool get isOrb {
+    return orbItemTypes.contains(this);
+  }
+
   WeaponType? get weaponType {
     return _itemTypeWeaponType[this];
   }

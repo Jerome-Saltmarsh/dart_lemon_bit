@@ -66,7 +66,7 @@ class _Audio {
     _playPositioned('reload-06.mp3', x, y);
   }
 
-  void itemEquipped(double x, double y) {
+  void itemAcquired(double x, double y) {
     _playPositioned('item-acquired.mp3', x, y);
   }
 

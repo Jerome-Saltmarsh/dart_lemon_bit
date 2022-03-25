@@ -1,3 +1,4 @@
+import 'package:bleed_common/PlayerEvent.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/opposite.dart';
@@ -66,6 +67,37 @@ class GameEvents {
     } else {
       audio.changeCloths(screenCenterWorldX, screenCenterWorldY);
     }
+  }
+
+  void onPlayerEvent(PlayerEvent event){
+    switch (event) {
+      case PlayerEvent.Level_Up:
+        modules.game.actions.emitPixelExplosion(modules.game.state.player.x, modules.game.state.player.y, amount: 10);
+        audio.buff(modules.game.state.player.x, modules.game.state.player.y);
+        break;
+      case PlayerEvent.Skill_Upgraded:
+        audio.unlock(modules.game.state.player.x, modules.game.state.player.y);
+        break;
+      case PlayerEvent.Dash_Activated:
+        audio.buff11(modules.game.state.player.x, modules.game.state.player.y);
+        break;
+      case PlayerEvent.Item_Purchased:
+        audio.itemPurchased(screenCenterWorldX, screenCenterWorldY);
+        break;
+      case PlayerEvent.Ammo_Acquired:
+        audio.itemAcquired(screenCenterWorldX, screenCenterWorldY);
+        break;
+      case PlayerEvent.Item_Equipped:
+        audio.itemAcquired(screenCenterWorldX, screenCenterWorldY);
+        break;
+      case PlayerEvent.Item_Sold:
+        audio.coins(screenCenterWorldX, screenCenterWorldY);
+        break;
+      case PlayerEvent.Drink_Potion:
+        audio.bottle(screenCenterWorldX, screenCenterWorldY);
+        break;
+    }
+
   }
 
   void onPlayerArmourChanged(SlotType armour){
@@ -309,7 +341,7 @@ class GameEvents {
         audio.playAudioThrowGrenade(x, y);
         break;
       case GameEventType.Item_Acquired:
-        audio.itemEquipped(x, y);
+        audio.itemAcquired(x, y);
         break;
       case GameEventType.Knife_Strike:
         audio.playAudioKnifeStrike(x, y);

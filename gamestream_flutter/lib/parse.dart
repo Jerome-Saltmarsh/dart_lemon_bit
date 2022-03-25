@@ -440,30 +440,6 @@ void _parsePlayerEvents() {
   final total = consumeInt();
   for (var i = 0; i < total; i++) {
     final event = _consumePlayerEventType();
-    switch (event) {
-      case PlayerEvent.Level_Up:
-        modules.game.actions.emitPixelExplosion(modules.game.state.player.x, modules.game.state.player.y, amount: 10);
-        audio.buff(modules.game.state.player.x, modules.game.state.player.y);
-        break;
-      case PlayerEvent.Skill_Upgraded:
-        audio.unlock(modules.game.state.player.x, modules.game.state.player.y);
-        break;
-      case PlayerEvent.Dash_Activated:
-        audio.buff11(modules.game.state.player.x, modules.game.state.player.y);
-        break;
-      case PlayerEvent.Item_Purchased:
-        audio.itemPurchased(screenCenterWorldX, screenCenterWorldY);
-        break;
-      case PlayerEvent.Item_Equipped:
-        audio.itemEquipped(screenCenterWorldX, screenCenterWorldY);
-        break;
-      case PlayerEvent.Item_Sold:
-        audio.coins(screenCenterWorldX, screenCenterWorldY);
-        break;
-      case PlayerEvent.Drink_Potion:
-        audio.bottle(screenCenterWorldX, screenCenterWorldY);
-        break;
-    }
   }
 }
 

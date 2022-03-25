@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:bleed_common/ItemType.dart';
+import 'package:bleed_common/PlayerEvent.dart';
 import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:bleed_common/CharacterState.dart';
 import 'package:bleed_common/GameEventType.dart';
@@ -56,6 +57,10 @@ class _ByteStreamParser {
         case ServerResponse.Game_Events:
           _parseGameEvents();
           break;
+        case ServerResponse.Player_Events:
+          _parsePlayerEvents();
+          break;
+
         case ServerResponse.Player_Attack_Target:
           _player.attackTarget.x = _nextDouble();
           _player.attackTarget.y = _nextDouble();
@@ -303,6 +308,13 @@ class _ByteStreamParser {
     stream = Uint8List(length);
     _byteStreamPool[length] = stream;
     return stream;
+  }
+
+  void _parsePlayerEvents() {
+     final total = _nextByte();
+     for(var i = 0; i < total; i++){
+        modules.game.events.onPlayerEvent(playerEvents[_nextByte()]);
+     }
   }
 
 }
