@@ -64,16 +64,15 @@ class _ByteCompiler {
     writeBigInt(player.maxHealth);
     writeBigInt(player.magic);
     writeBigInt(player.maxMagic);
-    writeByte(slots.weapon.type.index);
-    writeBigInt(slots.weapon.amount);
+    writeSlot(slots.weapon);
     writeByte(slots.armour.index);
     writeByte(slots.helm.index);
-    writeByte(slots.slot1.type.index); // 1
-    writeByte(slots.slot2.type.index); // 1
-    writeByte(slots.slot3.type.index); // 1
-    writeByte(slots.slot4.type.index); // 1
-    writeByte(slots.slot5.type.index); // 1
-    writeByte(slots.slot6.type.index); // 1
+    writeSlot(slots.slot1);
+    writeSlot(slots.slot2);
+    writeSlot(slots.slot3);
+    writeSlot(slots.slot4);
+    writeSlot(slots.slot5);
+    writeSlot(slots.slot6);
     writeBigInt(orbs.topaz); // 2
     writeBigInt(orbs.emerald); // 2
     writeBigInt(orbs.ruby); // 2
@@ -341,5 +340,10 @@ class _ByteCompiler {
     assert(value >= 0);
     _buffer[_index] = value;
     _index++;
+  }
+
+  void writeSlot(Slot slot){
+    writeByte(slot.type.index);
+    writeBigInt(slot.amount);
   }
 }

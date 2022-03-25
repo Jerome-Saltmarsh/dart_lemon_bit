@@ -11,6 +11,7 @@ import 'package:bleed_common/SlotType.dart';
 import 'package:bleed_common/compile_util.dart';
 import 'package:bleed_common/constants.dart';
 import 'package:bleed_common/enums/ProjectileType.dart';
+import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
@@ -101,16 +102,15 @@ class _ByteStreamParser {
           player.maxHealth = _nextDouble();
           player.magic.value = _nextDouble();
           player.maxMagic.value = _nextDouble();
-          slots.weapon.type.value = _readSlotType();
-          slots.weapon.amount.value = _nextInt();
+          readSlot(slots.weapon);
           slots.armour.value = _readSlotType();
           slots.helm.value = _readSlotType();
-          slots.slot1.value = _readSlotType();
-          slots.slot2.value = _readSlotType();
-          slots.slot3.value = _readSlotType();
-          slots.slot4.value = _readSlotType();
-          slots.slot5.value = _readSlotType();
-          slots.slot6.value = _readSlotType();
+          readSlot(slots.slot1);
+          readSlot(slots.slot2);
+          readSlot(slots.slot3);
+          readSlot(slots.slot4);
+          readSlot(slots.slot5);
+          readSlot(slots.slot6);
           orbs.topaz.value = _nextInt();
           orbs.emerald.value = _nextInt();
           orbs.ruby.value = _nextInt();
@@ -250,6 +250,11 @@ class _ByteStreamParser {
     final health = (byte - frame) / 240.0;
     character.frame = frame;
     character.health = health;
+  }
+
+  void readSlot(Slot slot) {
+     slot.type.value = _readSlotType();
+     slot.amount.value = _nextInt();
   }
 
   SlotType _readSlotType(){

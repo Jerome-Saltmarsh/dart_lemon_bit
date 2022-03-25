@@ -1,15 +1,9 @@
 
-import 'package:gamestream_flutter/audio.dart';
-import 'package:gamestream_flutter/classes/Ability.dart';
-import 'package:gamestream_flutter/classes/Character.dart';
-import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
-import 'package:gamestream_flutter/classes/NpcDebug.dart';
-import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
-import 'package:gamestream_flutter/classes/Weapon.dart';
 import 'package:bleed_common/AbilityType.dart';
 import 'package:bleed_common/CharacterState.dart';
 import 'package:bleed_common/CharacterType.dart';
 import 'package:bleed_common/GameError.dart';
+import 'package:bleed_common/GameEventType.dart';
 import 'package:bleed_common/GameStatus.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/ItemType.dart';
@@ -17,8 +11,16 @@ import 'package:bleed_common/OrbType.dart';
 import 'package:bleed_common/PlayerEvent.dart';
 import 'package:bleed_common/ServerResponse.dart';
 import 'package:bleed_common/SlotType.dart';
+import 'package:bleed_common/Tile.dart';
+import 'package:bleed_common/WeaponType.dart';
+import 'package:bleed_common/constants.dart';
 import 'package:bleed_common/enums/ObjectType.dart';
 import 'package:bleed_common/enums/ProjectileType.dart';
+import 'package:gamestream_flutter/classes/Ability.dart';
+import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
+import 'package:gamestream_flutter/classes/NpcDebug.dart';
+import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
+import 'package:gamestream_flutter/classes/Weapon.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/parser/parseCubePlayers.dart';
 import 'package:gamestream_flutter/state/game.dart';
@@ -27,11 +29,6 @@ import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
 import 'package:lemon_math/Vector2.dart';
-
-import 'package:bleed_common/GameEventType.dart';
-import 'package:bleed_common/Tile.dart';
-import 'package:bleed_common/WeaponType.dart';
-import 'package:bleed_common/constants.dart';
 
 // variables
 var event = "";
@@ -89,16 +86,6 @@ void parseState() {
         orbs.ruby.value = consumeInt();
         orbs.topaz.value = consumeInt();
         orbs.emerald.value = consumeInt();
-        break;
-
-      case ServerResponse.Player_Slot_Types:
-        final slots = modules.game.state.player.slots;
-        slots.slot1.value = consumeSlotType();
-        slots.slot2.value = consumeSlotType();
-        slots.slot3.value = consumeSlotType();
-        slots.slot4.value = consumeSlotType();
-        slots.slot5.value = consumeSlotType();
-        slots.slot6.value = consumeSlotType();
         break;
 
       case ServerResponse.NpcsDebug:

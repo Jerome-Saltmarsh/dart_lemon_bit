@@ -315,7 +315,7 @@ class GameBuild {
                   rowOrbs(),
                   // height16,
                   // panel(child: _panelStore()),
-                  height64,
+                  height16,
                   panel(child: _panelEquipped()),
                   height16,
                   panel(child: _panelInventory())
@@ -500,21 +500,22 @@ class GameBuild {
   }
 
   Widget rowOrbs(){
-    return Container(
-      color: colours.black382,
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16.0),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              resources.icons.ruby,
-              width8,
-              AdvancedWatchBuilder(state.player.orbs.ruby, (int value, int previous){
-                return text(value);
-              }),
-            ],
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                resources.icons.ruby,
+                width8,
+                AdvancedWatchBuilder(state.player.orbs.ruby, (int value, int previous){
+                  return text(value);
+                }),
+              ],
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -805,8 +806,8 @@ class GameBuild {
       );
   }
 
-  Widget _inventorySlot(Watch<SlotType> slot, int index){
-    return WatchBuilder(slot, (SlotType slotType){
+  Widget _inventorySlot(Slot slot, int index){
+    return WatchBuilder(slot.type, (SlotType slotType){
 
       final child = Container(
           width: 60,

@@ -49,6 +49,7 @@
 [ ] Zombie Pause after attack
 [ ] Spell Cooldown
 [ALPHA-RELEASE]
+[ ] CRAFT-WARS    
 [ ] Drag inventory slots to change position
 [ ] Hover inventory context menu
 [ ] Spell Shield
@@ -61,16 +62,19 @@
 [ ] Bow Spells,
 [ ] Sword Spells, Strong Swing
 [ ] Shop visible when interact with NPC
-[ ] Experience Barw
+[ ] Experience Bar
 [ ] FIX Join Custom Game
 [ ] (MMO) Save / Load Character
 [ ] FIX Flashing Particles  
 [ ] FIX Myst Particle Render order   
+[ ] Weapon: Shovel    
+[ ] Weapon: Crowbar    
 [ ] Resource Gathering System (Rock, Wood, Etc)
-[ ] Destructible Objects    
+[ ] Destructible Objects      
 [ ] Structure System
 [ ] Loot System
-[ ] Fix Gem Layout  
+[ ] Display unequipped slot amount    
+[x] Fix Gem Layout  
 [x] FIX Unequip weapons loses all ammo
 [x] Slot Capacity
 [x] FIX Player regen
@@ -647,3 +651,13 @@ When a player gains a level they can choose an attribute to improve
 [ ] Water Crystal
 [ ] Air Crystal
 [ ] Grass Crystal
+
+
+
+# Law
+37 years ago a strange weed began to appear. It spread very fast and was very dangerous. 
+
+Today only one last city remains. Protected by large walls.
+
+Children are not allowed outside of the walls, however those that turn 14 are required to enlist.
+

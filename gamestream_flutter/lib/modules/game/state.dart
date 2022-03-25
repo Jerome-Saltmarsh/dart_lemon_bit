@@ -96,34 +96,12 @@ class Slots {
   final armour = Watch(SlotType.Empty);
   final helm = Watch(SlotType.Empty);
 
-  final Watch<SlotType> slot1 = Watch(SlotType.Empty);
-  final Watch<SlotType> slot2 = Watch(SlotType.Empty);
-  final Watch<SlotType> slot3 = Watch(SlotType.Empty);
-  final Watch<SlotType> slot4 = Watch(SlotType.Empty);
-  final Watch<SlotType> slot5 = Watch(SlotType.Empty);
-  final Watch<SlotType> slot6 = Watch(SlotType.Empty);
-
-  Watch<SlotType>? get emptySlot {
-     if (slot1.value == SlotType.Empty){
-       return slot1;
-     }
-     if (slot2.value == SlotType.Empty){
-       return slot2;
-     }
-     if (slot3.value == SlotType.Empty){
-       return slot3;
-     }
-     if (slot4.value == SlotType.Empty){
-       return slot4;
-     }
-     if (slot5.value == SlotType.Empty){
-       return slot5;
-     }
-     if (slot6.value == SlotType.Empty){
-       return slot6;
-     }
-     return null;
-  }
+  final slot1 = Slot();
+  final slot2 = Slot();
+  final slot3 = Slot();
+  final slot4 = Slot();
+  final slot5 = Slot();
+  final slot6 = Slot();
 }
 
 class _Soldier {
