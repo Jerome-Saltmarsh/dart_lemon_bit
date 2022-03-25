@@ -312,9 +312,7 @@ class GameBuild {
             color: colours.brownDark,
               child: Column(
                 children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 8),
-                      child: rowOrbs()),
+                  rowOrbs(),
                   // height16,
                   // panel(child: _panelStore()),
                   height64,
@@ -502,45 +500,44 @@ class GameBuild {
   }
 
   Widget rowOrbs(){
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            width8,
-            Row(
-              children: [
-                resources.icons.ruby,
-                width4,
-                AdvancedWatchBuilder(state.player.orbs.ruby, (int value, int previous){
-                  return text(value);
-                }),
-              ],
-            ),
-            width8,
-            Row(
-              children: [
-                resources.icons.emerald,
-                width4,
-                AdvancedWatchBuilder(state.player.orbs.emerald, (int value, int previous){
-                  return text(value);
-                }),
-              ],
-            ),
-          ],
-        ),
-        height8,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            resources.icons.topaz,
-            width4,
-            AdvancedWatchBuilder(state.player.orbs.topaz, (int value, int previous){
-              return text(value);
-            }),
-          ],
-        ),
-      ],
+    return Container(
+      color: colours.black382,
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              resources.icons.ruby,
+              width8,
+              AdvancedWatchBuilder(state.player.orbs.ruby, (int value, int previous){
+                return text(value);
+              }),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              resources.icons.emerald,
+              width8,
+              AdvancedWatchBuilder(state.player.orbs.emerald, (int value, int previous){
+                return text(value);
+              }),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              resources.icons.topaz,
+              width8,
+              AdvancedWatchBuilder(state.player.orbs.topaz, (int value, int previous){
+                return text(value);
+              }),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
