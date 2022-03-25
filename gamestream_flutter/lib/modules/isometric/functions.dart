@@ -27,7 +27,11 @@ void srcAnimate({
 
 final _timeline = core.state.timeline;
 
-void srcLoopSimple({required double x, required int frames, required double size}){
+void srcLoopSimple({
+  required double x,
+  required int frames,
+  required double size
+}){
   final frame = _timeline.frame % frames;
   engine.mapSrc(
       x: x,
