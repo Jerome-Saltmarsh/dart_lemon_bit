@@ -7,6 +7,7 @@ enum PlayerEvent {
   Dash_Activated,
   Item_Purchased,
   Item_Equipped,
+  Medkit,
   Item_Sold,
   Drink_Potion,
   Orb_Earned_Topaz,

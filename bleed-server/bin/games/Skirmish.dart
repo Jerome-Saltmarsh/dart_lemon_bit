@@ -89,6 +89,7 @@ class GameSkirmish extends Game {
 
       case ItemType.Health:
         player.health += 5;
+        player.dispatch(PlayerEvent.Medkit);
         return true;
 
       case ItemType.Handgun:

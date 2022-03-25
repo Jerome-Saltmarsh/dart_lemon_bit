@@ -70,6 +70,7 @@
 [ ] Structure System
 [ ] FIX Myst Particle Render order    
 [ ] Slot Capacity
+[ ] FIX Player regen    
 [ ] Loot System
 [x] OPTIMIZE Render character state
 [x] Myst Emitter Sprite    

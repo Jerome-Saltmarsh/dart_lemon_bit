@@ -90,6 +90,9 @@ class GameEvents {
       case PlayerEvent.Item_Equipped:
         audio.itemAcquired(screenCenterWorldX, screenCenterWorldY);
         break;
+      case PlayerEvent.Medkit:
+        audio.medkit(screenCenterWorldX, screenCenterWorldY);
+        break;
       case PlayerEvent.Item_Sold:
         audio.coins(screenCenterWorldX, screenCenterWorldY);
         break;
@@ -97,7 +100,6 @@ class GameEvents {
         audio.bottle(screenCenterWorldX, screenCenterWorldY);
         break;
     }
-
   }
 
   void onPlayerArmourChanged(SlotType armour){
