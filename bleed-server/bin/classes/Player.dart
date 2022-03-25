@@ -313,17 +313,12 @@ class Player extends Character with Entity {
 
 class Slot {
   var type = SlotType.Empty;
-  var amount = 0;
+  var amount = -1;
 
   bool get isEmpty => type.isEmpty;
 
   bool isType(SlotType value){
     return type == value;
-  }
-
-  void clear(){
-    type = SlotType.Empty;
-    amount = 0;
   }
 
   void swapWith(Slot other){

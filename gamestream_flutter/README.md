@@ -70,8 +70,8 @@
 [ ] Destructible Objects    
 [ ] Structure System
 [ ] Loot System
-[ ] FIX Unequip weapons loses all ammo
 [ ] Fix Gem Layout  
+[x] FIX Unequip weapons loses all ammo
 [x] Slot Capacity
 [x] FIX Player regen
 [x] OPTIMIZE Render character state

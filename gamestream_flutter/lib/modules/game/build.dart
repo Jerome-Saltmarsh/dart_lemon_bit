@@ -769,6 +769,7 @@ class GameBuild {
                   ));
             }),
             WatchBuilder(weapon.amount, (int amount){
+              if (amount < 0) return const SizedBox();
               return Padding(
                 padding: const EdgeInsets.all(1.0),
                 child: text(amount, size: style.fontSize.small),
