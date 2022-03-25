@@ -65,13 +65,15 @@
 [ ] FIX Join Custom Game
 [ ] (MMO) Save / Load Character
 [ ] FIX Flashing Particles  
+[ ] FIX Myst Particle Render order   
 [ ] Resource Gathering System (Rock, Wood, Etc)
 [ ] Destructible Objects    
 [ ] Structure System
-[ ] FIX Myst Particle Render order    
-[ ] Slot Capacity
-[ ] FIX Player regen    
 [ ] Loot System
+[ ] FIX Unequip weapons loses all ammo
+[ ] Fix Gem Layout  
+[x] Slot Capacity
+[x] FIX Player regen
 [x] OPTIMIZE Render character state
 [x] Myst Emitter Sprite    
 [x] Improve AI Pathfinding      

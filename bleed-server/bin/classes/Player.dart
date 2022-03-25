@@ -143,9 +143,11 @@ class Player extends Character with Entity {
     switch(slotTypeCategory) {
       case SlotTypeCategory.Weapon:
         if (weapon.isEmpty) return;
-        slots.assignToEmpty(weapon);
+        final emptySlot = slots.getEmptySlot();
+        if (emptySlot == null) return;
+        final weaponSlot = slots.weapon;
+        emptySlot.swapWith(weaponSlot);
         onUnequipped(weapon);
-        slots.weapon.type = SlotType.Empty;
         setStateChangingWeapons();
         break;
       case SlotTypeCategory.Armour:
@@ -317,6 +319,20 @@ class Slot {
 
   bool isType(SlotType value){
     return type == value;
+  }
+
+  void clear(){
+    type = SlotType.Empty;
+    amount = 0;
+  }
+
+  void swapWith(Slot other){
+    final otherType = other.type;
+    final otherAmount = other.amount;
+    other.type = type;
+    other.amount = amount;
+    type = otherType;
+    amount = otherAmount;
   }
 }
 
