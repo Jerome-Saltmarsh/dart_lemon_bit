@@ -78,6 +78,8 @@
 [ ] Tile Flowers      
 [ ] Send Message to All or to Allies only    
 [ ] Click to pickup loot    
+[ ] Highlight Armour Slot    
+[ ] Highlight Weapon Slot    
 [x] Fix water Bridge Tile    
 [x] FIX BUG: enemies are too close bullets go through    
 [x] Limit Zoom    

@@ -235,7 +235,8 @@ class _ByteCompiler {
   void writePlayers(Player player){
     writeByte(_serverResponsePlayersIndex);
     final players = player.game.players;
-    for(final otherPlayer in players) {
+    for (final otherPlayer in players) {
+      if (otherPlayer.dead) continue;
       // players on same team emit light offscreen
       bool onSameTeam = sameTeam(otherPlayer, player);
 
