@@ -74,9 +74,11 @@
 [ ] Structure System
 [ ] Spawn Allies that follow you    
 [ ] Loot System
+[ ] Grass Ledge Block    
 [ ] Tile Flowers      
 [ ] Send Message to All or to Allies only    
 [ ] Click to pickup loot    
+[x] Fix water Bridge Tile    
 [x] FIX BUG: enemies are too close bullets go through    
 [x] Limit Zoom    
 [x] Inventory: Show highlight panel  

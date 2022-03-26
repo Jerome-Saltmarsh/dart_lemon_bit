@@ -193,11 +193,11 @@ class IsometricActions {
       final row = tiles[rowIndex];
       for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
         final tile = row[columnIndex];
-        final tileAboveLeft = rowIndex > 0 && tiles[rowIndex - 1][columnIndex] != Tile.Water;
-        final tileAboveRight = columnIndex > 0 && row[columnIndex - 1] != Tile.Water;
+        final tileAboveLeft = rowIndex > 0 && _isBridgeOrWater(tiles[rowIndex - 1][columnIndex]);
+        final tileAboveRight = columnIndex > 0 && _isBridgeOrWater(row[columnIndex - 1]);
         final tileAbove = rowIndex > 0 &&
             columnIndex > 0 &&
-            tiles[rowIndex - 1][columnIndex - 1] != Tile.Water;
+            _isBridgeOrWater(tiles[rowIndex - 1][columnIndex - 1]);
 
         if (tile == Tile.Water) {
           if (!tileAboveLeft && !tileAboveRight) {
