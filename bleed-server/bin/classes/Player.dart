@@ -98,6 +98,12 @@ class Player extends Character with Entity {
 
   int get magic => _magic;
 
+  double get magicPercentage {
+    if (_magic == 0) return 0;
+    if (maxMagic == 0) return 0;
+    return _magic / maxMagic;
+  }
+
   set magic(int value){
     _magic = clampInt(value, 0, maxMagic);
   }

@@ -269,7 +269,7 @@ class _ByteCompiler {
   void writePlayer(Player player) {
     final slots = player.slots;
     writeCharacter(player, player);
-    writePercentage(player.magic / player.maxMagic);
+    writePercentage(player.magicPercentage);
     writeByte(slots.weapon.type.index);
     writeByte(slots.armour.type.index);
     writeByte(slots.helm.type.index);
