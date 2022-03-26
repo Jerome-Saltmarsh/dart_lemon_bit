@@ -1147,7 +1147,7 @@ extension GameFunctions on Game {
     required ProjectileType type,
     Character? target,
   }) {
-    final spawnDistance = character.radius + 20;
+    final spawnDistance = character.radius + 5;
     final projectile = getAvailableProjectile();
     if (target != null && target.alive && target.active) {
       projectile.target = target;
@@ -1548,8 +1548,8 @@ extension GameFunctions on Game {
           dispatchV2(GameEventType.Handgun_Fired, character, angle: character.angle);
           return;
         }
-        if (stateDuration == 2){
-          if (weapon.amount <= 0){
+        if (stateDuration == 2) {
+          if (weapon.amount <= 0) {
             return;
           }
           weapon.amount--;
@@ -1559,7 +1559,8 @@ extension GameFunctions on Game {
               speed: 12.0,
               range: weaponType.range,
               damage: weaponType.damage,
-              type: ProjectileType.Bullet);
+              type: ProjectileType.Bullet
+          );
           return;
         }
       }

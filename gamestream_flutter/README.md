@@ -76,7 +76,8 @@
 [ ] Loot System
 [ ] Tile Flowers      
 [ ] Send Message to All or to Allies only    
-[ ] FIX BUG: enemies are too close bullets go through    
+[ ] Click to pickup loot    
+[x] FIX BUG: enemies are too close bullets go through    
 [x] Limit Zoom    
 [x] Inventory: Show highlight panel  
 [x] Loot Sprite (Like RE4)    
