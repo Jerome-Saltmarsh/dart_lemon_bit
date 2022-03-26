@@ -1,6 +1,6 @@
 
 import 'dart:math';
-
+import 'package:lemon_math/diff_over.dart';
 import 'package:bleed_common/AbilityType.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/OrbType.dart';
@@ -64,7 +64,7 @@ class GameRender {
     }
     engine.setPaintColorWhite();
     // _drawFloatingTexts();
-    _drawPlayerNames();
+    _renderPlayerNames();
     drawPlayerText();
     // engine.setPaintColorWhite();
     // collectedOrbImage();
@@ -169,14 +169,17 @@ class GameRender {
     }
   }
 
-  void _drawPlayerNames() {
-    for (var i = 0; i < game.totalPlayers; i++) {
+  void _renderPlayerNames() {
+    final total = game.totalPlayers.value;
+    for (var i = 0; i < total; i++) {
       final player = game.players[i];
       if (!engine.screen.containsV(player)) continue;
-      // if (player.x == state.player.x) continue;
-      // if (diff(mouseWorldX, player.x) > style.nameRadius) continue;
-      // if (diff(mouseWorldY, player.y) > style.nameRadius) continue;
-      engine.writeText(player.name, player.x - isometric.constants.charWidth * player.name.length, player.y + 5);
+      if (player.dead) continue;
+      const minDistance = 100;
+      if (diffOver(mouseWorldX, player.x, minDistance)) continue;
+      if (diffOver(mouseWorldY, player.y, minDistance)) continue;
+      renderText(text: player.name, x: player.x, y: player.y + 5);
+      // engine.writeText(player.name, player.x - isometric.constants.charWidth * player.name.length, player.y + 5);
     }
   }
 
@@ -370,10 +373,9 @@ class GameRender {
   }
 
   void drawPlayerText() {
-    final totalPlayers = game.totalPlayers;
     final players = game.players;
     final charWidth = isometric.constants.charWidth;
-
+    final totalPlayers = game.totalPlayers.value;
     for (var i = 0; i < totalPlayers; i++) {
       final human = players[i];
       if (human.text.isEmpty) continue;

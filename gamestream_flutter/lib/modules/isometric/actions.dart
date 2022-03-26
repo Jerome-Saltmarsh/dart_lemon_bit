@@ -496,7 +496,7 @@ class IsometricActions {
     if (properties.dayTime) return;
     resetDynamicShadesToBakeMap();
 
-    final totalPlayers = game.totalPlayers;
+    final totalPlayers = game.totalPlayers.value;
     final totalNpcs = game.totalNpcs;
     final players = game.players;
     final npcs = game.interactableNpcs;

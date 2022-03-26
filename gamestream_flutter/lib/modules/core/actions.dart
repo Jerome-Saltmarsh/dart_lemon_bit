@@ -188,7 +188,7 @@ class CoreActions {
     player.x = -1;
     player.y = -1;
     game.totalZombies.value = 0;
-    game.totalPlayers = 0;
+    game.totalPlayers.value = 0;
     game.totalProjectiles = 0;
     game.grenades.clear();
     game.collectables.clear();

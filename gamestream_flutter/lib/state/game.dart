@@ -34,7 +34,7 @@ class _Game {
   List<EnvironmentObject> torches = [];
   List<NpcDebug> npcDebug = [];
   int totalNpcs = 0;
-  int totalPlayers = 0;
+  final totalPlayers = Watch(0);
   int totalCubes = 0;
   List<Projectile> projectiles = [];
   List<Vector2> bulletHoles = [];

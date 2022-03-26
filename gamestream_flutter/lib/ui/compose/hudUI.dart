@@ -83,6 +83,13 @@ Widget buildTotalZombies() {
   });
 }
 
+Widget buildTotalPlayers() {
+  return WatchBuilder(game.totalPlayers, (int value) {
+    return text('Players: $value');
+  });
+}
+
+
 Widget buildPlayerLevel() {
   return WatchBuilder(modules.game.state.player.level, (int value) {
     return text('Level $value');

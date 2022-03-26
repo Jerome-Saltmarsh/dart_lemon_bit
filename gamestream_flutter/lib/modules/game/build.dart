@@ -182,7 +182,7 @@ class GameBuild {
                 left: _pad,
                 top: _pad,
                 child: WatchBuilder(state.debugPanelVisible, (bool visible){
-                  return visible ? debugContainer() : ui.widgets.time;
+                  return visible ? buildDebugPanel() : ui.widgets.time;
                 })),
             Positioned(
                 left: _pad,
@@ -1016,12 +1016,13 @@ class GameBuild {
     });
   }
 
-  Widget debugContainer(){
+  Widget buildDebugPanel(){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
           ui.widgets.time,
           buildTotalZombies(),
+          buildTotalPlayers(),
           mouseRowColumn(),
           buildVersion(),
           buildTotalParticles,

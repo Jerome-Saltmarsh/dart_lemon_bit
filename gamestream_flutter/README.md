@@ -76,6 +76,7 @@
 [ ] Loot System
 [ ] Tile Flowers    
 [ ] Inventory: Show highlight panel    
+[ ] FIX BUG: enemies are too close bullets go through    
 [x] Loot Sprite (Like RE4)    
 [x] FIX Aim target should disappear on enemy killed    
 [x] Display unequipped slot amount    

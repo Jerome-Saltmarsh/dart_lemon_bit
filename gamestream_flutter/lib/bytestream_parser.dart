@@ -221,7 +221,7 @@ class _ByteStreamParser {
       character.text = readString();
       total++;
     }
-    game.totalPlayers = total;
+    game.totalPlayers.value = total;
   }
 
   void _parseNpcs() {

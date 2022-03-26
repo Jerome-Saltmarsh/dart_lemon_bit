@@ -142,7 +142,7 @@ class IsometricRender {
     final npcs = game.interactableNpcs;
     final screenBottom = engine.screen.bottom;
     final totalZombies = game.totalZombies.value;
-    final totalPlayers = game.totalPlayers;
+    final totalPlayers = game.totalPlayers.value;
     final totalNpcs = game.totalNpcs;
 
     var indexPlayer = 0;
