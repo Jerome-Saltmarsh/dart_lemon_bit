@@ -33,8 +33,6 @@ class UIWidgets {
 
   final time = Row(
     children: [
-      // text("Time"),
-      // width8,
       WatchBuilder(modules.isometric.state.hours, (int hours){
         return text(padZero(hours));
       }),

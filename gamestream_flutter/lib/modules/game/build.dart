@@ -790,6 +790,12 @@ class GameBuild {
     });
   }
 
+  Widget get cameraZoom {
+    return Refresh((){
+      return text("Zoom: ${engine.zoom}");
+    });
+  }
+
   Widget get byteCountWatcher {
     return WatchBuilder(byteLength, (int count){
         return text("Bytes: $count");
@@ -848,6 +854,7 @@ class GameBuild {
           bufferLengthWatcher,
           playerPosition,
           playerId,
+          cameraZoom,
       ],
     );
   }
