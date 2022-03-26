@@ -65,8 +65,8 @@ class _ByteCompiler {
     writeBigInt(player.magic);
     writeBigInt(player.maxMagic);
     writeSlot(slots.weapon);
-    writeByte(slots.armour.index);
-    writeByte(slots.helm.index);
+    writeByte(slots.armour.type.index);
+    writeByte(slots.helm.type.index);
     writeSlot(slots.slot1);
     writeSlot(slots.slot2);
     writeSlot(slots.slot3);
@@ -271,8 +271,8 @@ class _ByteCompiler {
     writeCharacter(player, player);
     writePercentage(player.magic / player.maxMagic);
     writeByte(slots.weapon.type.index);
-    writeByte(slots.armour.index);
-    writeByte(slots.helm.index);
+    writeByte(slots.armour.type.index);
+    writeByte(slots.helm.type.index);
     writeString(player.name);
   }
   

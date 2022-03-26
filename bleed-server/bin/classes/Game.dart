@@ -849,8 +849,6 @@ extension GameFunctions on Game {
     if (target == null) return;
     characterFaceV2(player, target);
 
-
-
     if (target is Character){
       if (target.dead) {
         player.target = null;

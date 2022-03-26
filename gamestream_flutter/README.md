@@ -48,31 +48,35 @@
 [ ] Arrow Capacity (Auto regenerates)
 [ ] Zombie Pause after attack
 [ ] Spell Cooldown
-[ALPHA-RELEASE]
-[ ] CRAFT-WARS    
-[ ] Drag inventory slots to change position
-[ ] Hover inventory context menu
-[ ] Spell Shield
-[ ] Item Blink Ring
-[ ] Boots of sprint
-[ ] Slot Cooldown
-[ ] Fix fireball explosion
-[ ] Spell Lightening Bolt
-[ ] Bow Spells, Charged shot
-[ ] Bow Spells,
-[ ] Sword Spells, Strong Swing
-[ ] Shop visible when interact with NPC
-[ ] Experience Bar
+[BETA-RELEASE]
 [ ] FIX Join Custom Game
-[ ] (MMO) Save / Load Character
-[ ] FIX Flashing Particles  
-[ ] FIX Myst Particle Render order   
+[ ] Drag inventory slots to change position    
+[ ] Spell Shield    
+[ ] Item Blink Ring    
+[ ] Boots of sprint   
+[ ] Spell Lightening Bolt    
 [ ] Weapon: Shovel    
 [ ] Weapon: Crowbar    
+[ ] (MMO) Save / Load Character   
+[ALPHA-RELEASE]
+[ ] Hover inventory context menu
+[ ] Slot Cooldown
+[ ] Fix fireball explosion
+[ ] Bow Spells,
+[ ] Sword Spells, Strong Swing
+[ ] Shop becomes visible when interact with NPC
+[ ] Experience Bar
+[ ] FIX Flashing Particles  
+[ ] FIX Myst Particle Render order   
 [ ] Resource Gathering System (Rock, Wood, Etc)
+[ ] Upgrade System    
 [ ] Destructible Objects      
 [ ] Structure System
 [ ] Loot System
+[ ] Find Armour Loot
+[ ] Find Bow Loot
+[ ] Find Sword Loot
+[ ] Inventory: Show highlight panel    
 [x] Loot Sprite (Like RE4)    
 [x] FIX Aim target should disappear on enemy killed    
 [x] Display unequipped slot amount    

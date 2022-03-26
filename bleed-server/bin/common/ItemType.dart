@@ -1,10 +1,3 @@
-import 'WeaponType.dart';
-
-final Map<ItemType, WeaponType> _itemTypeWeaponType = {
-  ItemType.Handgun: WeaponType.HandGun,
-  ItemType.Shotgun: WeaponType.Shotgun,
-};
-
 enum ItemType {
   Health,
   Handgun,
@@ -12,9 +5,14 @@ enum ItemType {
   Orb_Ruby,
   Orb_Topaz,
   Orb_Emerald,
+  Sword_Wooden,
+  Sword_Steel,
+  Armour_Plated,
+  Wizards_Hat,
+  Steel_Helm,
 }
 
-final List<ItemType> itemTypes = ItemType.values;
+const itemTypes = ItemType.values;
 
 final List<ItemType> orbItemTypes = [
   ItemType.Orb_Ruby,
@@ -24,16 +22,8 @@ final List<ItemType> orbItemTypes = [
 
 
 extension ItemTypeExtension on ItemType {
-  bool get isWeapon {
-    return weaponType != null;
-  }
-
   bool get isOrb {
     return orbItemTypes.contains(this);
-  }
-
-  WeaponType? get weaponType {
-    return _itemTypeWeaponType[this];
   }
 }
 

@@ -137,32 +137,26 @@ class Player extends Character with Entity {
   }
 
   void unequip(SlotTypeCategory slotTypeCategory){
-    if (!slots.emptySlotAvailable) return;
-    dispatch(PlayerEvent.Item_Equipped);
+    final emptySlot = slots.getEmptySlot();
+    if (emptySlot == null) return;
 
     switch(slotTypeCategory) {
       case SlotTypeCategory.Weapon:
         if (weapon.isEmpty) return;
-        final emptySlot = slots.getEmptySlot();
-        if (emptySlot == null) return;
         final weaponSlot = slots.weapon;
         emptySlot.swapWith(weaponSlot);
         onUnequipped(weapon);
         setStateChangingWeapons();
         break;
       case SlotTypeCategory.Armour:
-        final previousArmour = slots.armour;
-        if (previousArmour.isEmpty) return;
-        slots.assignToEmpty(previousArmour);
-        onUnequipped(slots.armour);
-        slots.armour = SlotType.Empty;
+        onUnequipped(slots.armour.type);
+        emptySlot.swapWith(slots.armour);
         setStateChangingWeapons();
         break;
       case SlotTypeCategory.Helm:
-        if (slots.helm.isEmpty) return;
-        slots.assignToEmpty(slots.helm);
-        onUnequipped(slots.helm);
-        slots.helm = SlotType.Empty;
+        onUnequipped(slots.helm.type);
+        emptySlot.swapWith(slots.armour);
+        setStateChangingWeapons();
         setStateChangingWeapons();
         break;
       case SlotTypeCategory.Pants:
@@ -183,28 +177,28 @@ class Player extends Character with Entity {
     }
 
     if (slotType.isArmour) {
-      if (slots.armour.isEmpty) {
-        dispatch(PlayerEvent.Item_Purchased);
-        setStateChangingWeapons();
-        slots.armour = slotType;
-        onEquipped(slotType);
-        return;
-      }
+      final slot = slots.getEmptyArmourSlot();
+      if (slot == null) return;
+      dispatch(PlayerEvent.Item_Purchased);
+      setStateChangingWeapons();
+      slot.type = slotType;
+      onEquipped(slotType);
+      return;
     }
     if (slotType.isHelm) {
-      if (slots.helm.isEmpty) {
-        dispatch(PlayerEvent.Item_Purchased);
-        setStateChangingWeapons();
-        slots.helm = slotType;
-        onEquipped(slotType);
-        return;
-      }
+      final slot = slots.getEmptyHeadSlot();
+      if (slot == null) return;
+      dispatch(PlayerEvent.Item_Purchased);
+      setStateChangingWeapons();
+      slot.type = slotType;
+      onEquipped(slotType);
     }
 
-    if (!slots.emptySlotAvailable) return;
+    final emptySlot = slots.getEmptySlot();
+    if (emptySlot == null) return;
     dispatch(PlayerEvent.Item_Purchased);
     setStateChangingWeapons();
-    slots.assignToEmpty(slotType);
+    emptySlot.type = slotType;
     if (slotType.isItem){
       onEquipped(slotType);
     }
@@ -229,18 +223,18 @@ class Player extends Character with Entity {
       }
 
       if (slotType.isArmour) {
-        final currentArmour = slots.armour;
-        slots.armour = slotType;
+        final currentArmourType = slots.armour.type;
+        slots.armour.swapWith(slot);
         onEquipped(slotType);
-        onUnequipped(currentArmour);
-        slots.assignSlotTypeAtIndex(index, currentArmour);
+        onUnequipped(currentArmourType);
         setStateChangingWeapons();
       }
 
       if (slotType.isHelm) {
-        final previous = slots.helm;
-        slots.helm = slotType;
-        slots.assignSlotTypeAtIndex(index, previous);
+        final currentArmourType = slots.helm.type;
+        slots.helm.swapWith(slot);
+        onEquipped(slotType);
+        onUnequipped(currentArmourType);
         setStateChangingWeapons();
       }
 
@@ -333,8 +327,8 @@ class Slot {
 
 class Slots {
   var weapon = Slot();
-  var armour = SlotType.Empty;
-  var helm = SlotType.Empty;
+  var armour = Slot();
+  var helm = Slot();
 
   var slot1 = Slot();
   var slot2 = Slot();
@@ -413,6 +407,16 @@ class Slots {
 
   Slot? getEmptyWeaponSlot(){
     if (weapon.isEmpty) return weapon;
+    return findSlotByType(SlotType.Empty);
+  }
+
+  Slot? getEmptyArmourSlot(){
+    if (armour.isEmpty) return armour;
+    return findSlotByType(SlotType.Empty);
+  }
+
+  Slot? getEmptyHeadSlot(){
+    if (helm.isEmpty) return helm;
     return findSlotByType(SlotType.Empty);
   }
 

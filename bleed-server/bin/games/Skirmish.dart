@@ -90,6 +90,7 @@ class GameSkirmish extends Game {
     switch(item.type) {
 
       case ItemType.Health:
+        if (player.health >= player.maxHealth) return false;
         player.health += 5;
         player.dispatch(PlayerEvent.Medkit);
         return true;
@@ -105,6 +106,36 @@ class GameSkirmish extends Game {
         }
         player.dispatch(PlayerEvent.Ammo_Acquired);
         slot.amount += 10;
+        return true;
+
+      case ItemType.Sword_Wooden:
+        final emptySlot = slots.getEmptyWeaponSlot();
+        if (emptySlot == null) return false;
+        emptySlot.type = SlotType.Sword_Wooden;
+        return true;
+
+      case ItemType.Sword_Steel:
+        final emptySlot = slots.getEmptyWeaponSlot();
+        if (emptySlot == null) return false;
+        emptySlot.type = SlotType.Sword_Short;
+        return true;
+
+      case ItemType.Armour_Plated:
+        final emptySlot = slots.getEmptyArmourSlot();
+        if (emptySlot == null) return false;
+        emptySlot.type = SlotType.Armour_Padded;
+        return true;
+
+      case ItemType.Wizards_Hat:
+        final emptySlot = slots.getEmptyHeadSlot();
+        if (emptySlot == null) return false;
+        emptySlot.type = SlotType.Magic_Hat;
+        return true;
+
+      case ItemType.Steel_Helm:
+        final emptySlot = slots.getEmptyHeadSlot();
+        if (emptySlot == null) return false;
+        emptySlot.type = SlotType.Steel_Helmet;
         return true;
 
       case ItemType.Shotgun:
