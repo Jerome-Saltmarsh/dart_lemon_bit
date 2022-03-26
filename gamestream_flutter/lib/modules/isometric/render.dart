@@ -188,13 +188,15 @@ class IsometricRender {
         if (!particlesRemaining || envY < particleY && !particleIsBlood) {
           if (!zombiesRemaining || envY < zombieY) {
             if (!npcsRemaining || envY < npcY) {
+              if (envY > screenBottom){
+                return;
+              }
               final env = environmentObjects[indexEnv];
               renderEnvironmentObject(env);
               indexEnv++;
               environmentRemaining = indexEnv < totalEnvironment;
               if (environmentRemaining){
                 envY = environmentObjects[indexEnv].y;
-                if (envY > screenBottom) return;
               }
               continue;
             }
