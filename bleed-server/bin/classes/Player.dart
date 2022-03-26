@@ -155,14 +155,17 @@ class Player extends Character with Entity {
         setStateChangingWeapons();
         break;
       case SlotTypeCategory.Armour:
-        onUnequipped(slots.armour.type);
-        emptySlot.swapWith(slots.armour);
+        final armour = slots.armour;
+        if (armour.isEmpty) return;
+        onUnequipped(armour.type);
+        emptySlot.swapWith(armour);
         setStateChangingWeapons();
         break;
       case SlotTypeCategory.Helm:
-        onUnequipped(slots.helm.type);
-        emptySlot.swapWith(slots.armour);
-        setStateChangingWeapons();
+        final helm = slots.helm;
+        if (helm.isEmpty) return;
+        onUnequipped(helm.type);
+        emptySlot.swapWith(helm);
         setStateChangingWeapons();
         break;
       case SlotTypeCategory.Pants:
