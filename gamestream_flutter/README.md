@@ -73,6 +73,7 @@
 [ ] Destructible Objects      
 [ ] Structure System
 [ ] Loot System
+[ ] Tile Flowers    
 [ ] Find Armour Loot
 [ ] Find Bow Loot
 [ ] Find Sword Loot

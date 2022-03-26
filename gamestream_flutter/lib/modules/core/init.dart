@@ -51,17 +51,17 @@ void initializeGameInstances() {
   final zombies = game.zombies;
   zombies.clear();
   for (var i = 0; i < 5000; i++) {
-    zombies.add(Character(type: CharacterType.Zombie));
+    zombies.add(Character());
   }
 
   game.interactableNpcs.clear();
   for (int i = 0; i < 300; i++) {
-    game.interactableNpcs.add(Character(type: CharacterType.Human));
+    game.interactableNpcs.add(Character());
   }
 
   game.players.clear();
   for (int i = 0; i < 500; i++) {
-    game.players.add(Character(type: CharacterType.Human));
+    game.players.add(Character());
   }
 }
 

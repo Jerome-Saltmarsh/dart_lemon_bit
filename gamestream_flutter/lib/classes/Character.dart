@@ -1,13 +1,10 @@
 import 'package:bleed_common/CharacterState.dart';
-import 'package:bleed_common/CharacterType.dart';
 import 'package:bleed_common/SlotType.dart';
 import 'package:lemon_math/Vector2.dart';
 
 import '../maths.dart';
 
 class Character extends Vector2 {
-  CharacterType type;
-  // CharacterState state;
   int state;
   int direction;
   int frame;
@@ -30,7 +27,6 @@ class Character extends Vector2 {
   double get angle => direction * piQuarter;
 
   Character({
-    required this.type,
     this.state = 0,
     this.direction = 0,
     double x = 0,

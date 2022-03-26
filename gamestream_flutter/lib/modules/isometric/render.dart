@@ -232,7 +232,7 @@ class IsometricRender {
 
       if (zombiesRemaining) {
         if (!npcsRemaining || zombieY < npcY) {
-          renderCharacter(zombies[indexZombie]);
+          renderZombie(zombies[indexZombie]);
           indexZombie++;
           zombiesRemaining = indexZombie < totalZombies;
           if (zombiesRemaining){
@@ -319,6 +319,16 @@ class IsometricRender {
     engine.renderAtlas();
   }
 
+  void renderZombie(Character character){
+    final shade = state.getShadeAtPosition(character.x, character.y);
+    if (shade > Shade.Dark) return;
+
+    if (shade < Shade.Dark) {
+      renderCharacterHealthBar(character);
+    }
+    _renderZombie(character, shade);
+  }
+
   void renderCharacter(Character character) {
     assert(character.direction >= 0);
     assert(character.direction < directionsLength);
@@ -330,11 +340,6 @@ class IsometricRender {
 
     if (shade < Shade.Dark) {
       renderCharacterHealthBar(character);
-    }
-
-    if (character.type == CharacterType.Zombie){
-      _renderZombie(character, shade);
-      return;
     }
 
     final weapon = character.equippedWeapon;

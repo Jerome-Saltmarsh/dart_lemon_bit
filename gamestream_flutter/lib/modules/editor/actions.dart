@@ -180,7 +180,7 @@ class EditorActions with EditorScope {
       final x = json.getDouble('x');
       final y = json.getDouble('y');
       final type = parseCharacterType(json['type']);
-      characters.add(Character(type: type, x: x, y: y));
+      // characters.add(Character(type: type, x: x, y: y));
     }
 
     state.items.clear();

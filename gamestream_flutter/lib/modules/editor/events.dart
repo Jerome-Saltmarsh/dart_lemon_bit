@@ -101,7 +101,7 @@ class EditorEvents with EditorScope {
 
     switch (state.tab.value) {
       case ToolTab.Units:
-        state.characters.add(Character(type: editor.state.characterType.value, x: mouseWorldX, y: mouseWorldY));
+        state.characters.add(Character(x: mouseWorldX, y: mouseWorldY));
         break;
       case ToolTab.Tiles:
         actions.setTile();

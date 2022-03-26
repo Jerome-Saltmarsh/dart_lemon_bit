@@ -89,7 +89,7 @@ class EditorCompile {
 
   Json compileCharacterToJson(Character character){
     return {
-      'type': enumString(character.type.name),
+      // 'type': enumString(character.type.name),
       'x': character.x.toInt(),
       'y': character.y.toInt(),
     };
