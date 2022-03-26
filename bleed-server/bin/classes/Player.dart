@@ -247,7 +247,7 @@ class Player extends Character with Entity {
         setStateChangingWeapons();
       }
 
-      if (slot == SlotType.Spell_Tome_Fireball) {
+      if (slotType == SlotType.Spell_Tome_Fireball) {
         final cost = 5;
         if (magic < cost) return;
         ability = Ability(type: AbilityType.Fireball,
@@ -259,7 +259,7 @@ class Player extends Character with Entity {
         return;
       }
 
-      if (slot == SlotType.Spell_Tome_Ice_Ring) {
+      if (slotType == SlotType.Spell_Tome_Ice_Ring) {
         final cost = 5;
         if (magic < cost) return;
         magic -= cost;
@@ -273,7 +273,7 @@ class Player extends Character with Entity {
         return;
       }
 
-      if (slot == SlotType.Spell_Tome_Split_Arrow) {
+      if (slotType == SlotType.Spell_Tome_Split_Arrow) {
         final cost = 5;
         if (magic < cost) return;
         if (!weapon.isBow){
@@ -291,14 +291,14 @@ class Player extends Character with Entity {
         return;
       }
 
-      if (slot == SlotType.Potion_Red) {
+      if (slotType == SlotType.Potion_Red) {
         health = maxHealth;
         slots.assignSlotTypeAtIndex(index, SlotType.Empty);
         setStateChangingWeapons();
         dispatch(PlayerEvent.Drink_Potion);
       }
 
-      if (slot == SlotType.Potion_Blue) {
+      if (slotType == SlotType.Potion_Blue) {
         magic = maxMagic;
         slots.assignSlotTypeAtIndex(index, SlotType.Empty);
         setStateChangingWeapons();
