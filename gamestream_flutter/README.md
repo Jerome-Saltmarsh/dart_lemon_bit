@@ -72,11 +72,9 @@
 [ ] Upgrade System    
 [ ] Destructible Objects      
 [ ] Structure System
+[ ] Spawn Allies that follow you    
 [ ] Loot System
 [ ] Tile Flowers    
-[ ] Find Armour Loot
-[ ] Find Bow Loot
-[ ] Find Sword Loot
 [ ] Inventory: Show highlight panel    
 [x] Loot Sprite (Like RE4)    
 [x] FIX Aim target should disappear on enemy killed    

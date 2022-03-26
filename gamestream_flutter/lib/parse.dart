@@ -116,20 +116,6 @@ void parseState() {
         game.numberOfTeams.value = consumeInt();
         break;
 
-      case ServerResponse.Player_Weapon:
-        modules.game.state.soldier.weaponType.value = _consumeWeaponType();
-        modules.game.state.soldier.weaponRounds.value = consumeInt();
-        modules.game.state.soldier.weaponCapacity.value = consumeInt();
-        break;
-
-      case ServerResponse.Weapons:
-        modules.game.state.soldier.weapons.clear();
-        int length = _consumeIntUnsafe();
-        for (int i = 0; i < length; i++) {
-          modules.game.state.soldier.weapons.add(_consumeWeapon());
-        }
-        break;
-
       case ServerResponse.Version:
         // sendRequestJoinGame();
         break;

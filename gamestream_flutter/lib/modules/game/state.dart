@@ -19,19 +19,19 @@ import 'enums.dart';
 typedef BasicWidgetBuilder = Widget Function();
 
 class GameState {
-  final _Player player = _Player();
-  final _Soldier soldier = _Soldier();
-  final TextEditingController textEditingControllerMessage = TextEditingController();
-  final CharacterController characterController = CharacterController();
-  final KeyMap keyMap = KeyMap();
-  final FocusNode textFieldMessage = FocusNode();
-  final Watch<bool> debugPanelVisible = Watch(false);
-  final Watch<bool> compilePaths = Watch(false);
-  final Watch<StoreTab> storeTab = Watch(storeTabs[0]);
-  final Watch<bool> textBoxVisible = Watch(false);
-  final Watch<SlotType> highLightSlotType = Watch(SlotType.Empty);
+  final player = _Player();
+  final textEditingControllerMessage = TextEditingController();
+  final characterController = CharacterController();
+  final keyMap = KeyMap();
+  final textFieldMessage = FocusNode();
+  final debugPanelVisible = Watch(false);
+  final compilePaths = Watch(false);
+  final storeTab = Watch(storeTabs[0]);
+  final textBoxVisible = Watch(false);
+  final highLightSlotType = Watch(SlotType.Empty);
+
   final highlightPanelPosition = Vector2(0, 0);
-  final Watch<bool> frameSmoothing = Watch(true);
+  final frameSmoothing = Watch(true);
   final playerTextStyle = TextStyle(color: Colors.white);
   var panningCamera = false;
   var framesSinceOrbAcquired = 999;
@@ -102,27 +102,6 @@ class Slots {
   final slot4 = Slot();
   final slot5 = Slot();
   final slot6 = Slot();
-}
-
-class _Soldier {
-  final Watch<WeaponType> weaponType = Watch(WeaponType.Unarmed);
-  final List<Weapon> weapons = [];
-  final Watch<int> weaponRounds = Watch(0);
-  final Watch<int> weaponCapacity = Watch(0);
-
-  bool weaponUnlocked(WeaponType weaponType) {
-    for (Weapon weapon in weapons) {
-      if (weapon.type == weaponType) return true;
-    }
-    return false;
-  }
-
-  bool get shotgunUnlocked {
-    for (Weapon weapon in weapons) {
-      if (weapon.type == WeaponType.Shotgun) return true;
-    }
-    return false;
-  }
 }
 
 class _Player {

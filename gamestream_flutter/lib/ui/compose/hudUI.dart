@@ -234,20 +234,6 @@ Positioned buildCharacterAction() {
   );
 }
 
-bool shotgunUnlocked() {
-  for (Weapon weapon in modules.game.state.soldier.weapons) {
-    if (weapon.type == WeaponType.Shotgun) return true;
-  }
-  return false;
-}
-
-bool unlockedFirebolt() {
-  for (Weapon weapon in modules.game.state.soldier.weapons) {
-    if (weapon.type == WeaponType.Shotgun) return true;
-  }
-  return false;
-}
-
 Widget buildTopRight() {
   return Positioned(
     top: _padding,
@@ -352,33 +338,6 @@ Widget buildWeaponStats(Weapon weapon) {
 
 String mapWeaponTypeToString(WeaponType weaponType) {
   return weaponType.toString().replaceAll("WeaponType.", "");
-}
-
-Widget buildEquippedWeaponSlot() {
-
-  return WatchBuilder(modules.game.state.soldier.weaponType, (WeaponType weaponType){
-      return WatchBuilder(modules.game.state.soldier.weaponCapacity, (int weaponCapacity){
-          return WatchBuilder(modules.game.state.soldier.weaponRounds, (int weaponRounds){
-            return Column(
-              children: [
-                Stack(
-                  children: [
-                    buildWeaponSlot(weaponType),
-                    // if (weaponType != WeaponType.Unarmed)
-                    //   buildTag(weaponRounds),
-                  ],
-                ),
-                if (weaponCapacity == 0)
-                  buildAmmoBar(rounds: 1, capacity: 1, weaponType: weaponType),
-                if (weaponCapacity > 0)
-                  buildAmmoBar(rounds: weaponRounds,
-                      capacity: weaponCapacity,
-                      weaponType: weaponType),
-              ],
-            );
-          });
-      });
-  });
 }
 
 Widget buildAmmoBar({
@@ -504,33 +463,6 @@ class MyCustomClipper extends CustomClipper<Path> {
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
 
-Widget buildExpandedWeapons() {
-  int index = -1;
-  return Column(
-    crossAxisAlignment: axis.cross.start,
-    children: modules.game.state.soldier.weapons.map((weapon) {
-      index++;
-      return Container(
-        child: buildEquipWeaponSlot(weapon, index),
-        margin: const EdgeInsets.only(bottom: 4),
-      );
-    }).toList(),
-  );
-}
-
-Widget buildWeaponMenu() {
-  return mouseOver(builder: (BuildContext context, bool mouseOver) {
-    return Column(
-      mainAxisAlignment: axis.main.end,
-      crossAxisAlignment: axis.cross.start,
-      children: [
-        if (mouseOver) buildExpandedWeapons(),
-        buildEquippedWeaponSlot(),
-      ],
-    );
-  });
-}
-
 Widget buildImageButton(DecorationImage image, GestureTapCallback onTap,
     {double width = 120}) {
   return GestureDetector(
@@ -562,27 +494,6 @@ Widget buildLoadingScreen() {
       ),
     ],
   );
-}
-
-Widget buildLowAmmo() {
-  return Positioned(
-      bottom: 80,
-      child: Container(
-        width: engine.screen.width,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-                padding: EdgeInsets.all(10),
-                color: Colors.black26,
-                child: text(
-                    modules.game.state.soldier.weaponRounds.value == 0
-                        ? "Empty"
-                        : "Low Ammo",
-                    size: 20)),
-          ],
-        ),
-      ));
 }
 
 Widget buildTag(dynamic value, {Color color = Colors.white}) {

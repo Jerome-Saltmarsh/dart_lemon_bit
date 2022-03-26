@@ -65,14 +65,6 @@ class GameBuild {
             return ui.layouts.waitingForGame();
           case GameStatus.In_Progress:
             switch (game.type.value) {
-              case GameType.MMO:
-                return layoutRoyal();
-              case GameType.Custom:
-                return playerCharacterType();
-              case GameType.Moba:
-                return playerCharacterType();
-              case GameType.BATTLE_ROYAL:
-                return layoutRoyal();
               case GameType.CUBE3D:
                 return buildUI3DCube();
               default:
@@ -84,25 +76,6 @@ class GameBuild {
             return text(enumString(gameStatus));
         }
       });
-    });
-  }
-
-  Widget playerCharacterType() {
-    return WatchBuilder(modules.game.state.player.characterType, (CharacterType value) {
-      if (value == CharacterType.Human) {
-        return _buildHudWeapons();
-      }
-      return _buildHudAbilities();
-    });
-  }
-
-  Widget _buildHudWeapons(){
-    return WatchBuilder(modules.game.state.soldier.weaponType, (WeaponType weaponType){
-      return layout(
-          padding: 16,
-          topRight: buttons.exit,
-          bottomLeft: buildWeaponMenu(),
-      );
     });
   }
 
@@ -240,12 +213,12 @@ class GameBuild {
             ),
             if (!alive)
             respawnButton(),
-            _panelHighlightedSlot(),
+            _panelHighlightedStoreSlot(),
           ]);
     });
   }
 
-  WatchBuilder<SlotType> _panelHighlightedSlot() {
+  WatchBuilder<SlotType> _panelHighlightedStoreSlot() {
     return WatchBuilder(state.highLightSlotType, (SlotType slotType) {
       if (slotType == SlotType.Empty) return empty;
 

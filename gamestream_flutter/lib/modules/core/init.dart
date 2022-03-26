@@ -65,28 +65,8 @@ void initializeGameInstances() {
   }
 }
 
-void onPlayerWeaponChanged(WeaponType weapon) {
-  switch (weapon) {
-    case WeaponType.HandGun:
-      audio.reload(screenCenterWorldX, screenCenterWorldY);
-      break;
-    case WeaponType.Shotgun:
-      audio.cockShotgun(screenCenterWorldX, screenCenterWorldY);
-      break;
-    case WeaponType.SniperRifle:
-      audio.sniperEquipped(screenCenterWorldX, screenCenterWorldY);
-      break;
-    case WeaponType.AssaultRifle:
-      audio.reload(screenCenterWorldX, screenCenterWorldY);
-      break;
-    default:
-      break;
-  }
-}
-
 void initializeEventListeners() {
   engine.callbacks.onMouseScroll = engine.events.onMouseScroll;
-  modules.game.state.soldier.weaponType.onChanged(onPlayerWeaponChanged);
 }
 
 Future loadSharedPreferences() async {
