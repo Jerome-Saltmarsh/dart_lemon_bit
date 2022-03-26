@@ -221,6 +221,11 @@ class GameBuild {
       final slotType = slot.type.value;
       if (slotType.isEmpty) return empty;
 
+      final damage = slotType.damage;
+      final health = slotType.health;
+      final magic = slotType.magic;
+      final range = slotType.range;
+
       return Positioned(
         right: 220,
         bottom: 10,
@@ -233,6 +238,15 @@ class GameBuild {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               text(slotTypeNames[slotType] ?? "?"),
+              if (damage > 0)
+                text("Damage: $damage"),
+              if (health > 0)
+                text("Health: $health"),
+              if (magic > 0)
+                text("Magic: $magic"),
+              if (range > 0)
+                text("Range: $range"),
+
             ],
           ),
         )
@@ -537,23 +551,32 @@ class GameBuild {
 
   Widget buildEquippedWeaponSlot(){
     final weapon = state.player.slots.weapon;
+
     return onPressed(
         callback: actions.unequipWeapon,
-        child: Stack(
-          children: [
-            WatchBuilder(weapon.type, (SlotType slotType){
-              final child = slot(slotType: slotType, color: colours.white382);
-              if (slotType.isEmpty) return child;
-              return child;
-            }),
-            WatchBuilder(weapon.amount, (int amount){
-              if (amount < 0) return const SizedBox();
-              return Padding(
-                padding: const EdgeInsets.all(1.0),
-                child: text(amount, size: style.fontSize.small),
-              );
-            })
-          ],
+        child: MouseRegion(
+          onEnter: (event){
+            state.highlightSlot.value = weapon;
+          },
+          onExit: (event){
+            state.highlightSlot.value = null;
+          },
+          child: Stack(
+            children: [
+              WatchBuilder(weapon.type, (SlotType slotType){
+                final child = slot(slotType: slotType, color: colours.white382);
+                if (slotType.isEmpty) return child;
+                return child;
+              }),
+              WatchBuilder(weapon.amount, (int amount){
+                if (amount < 0) return const SizedBox();
+                return Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: text(amount, size: style.fontSize.small),
+                );
+              })
+            ],
+          ),
         ));
 
   }

@@ -296,13 +296,17 @@ class IsometricRender {
     // engine.mapDst(x: item.x - _anchor, y: item.y - _anchor,);
     // engine.renderAtlas();
 
-    const _anchor = 16;
     srcLoopSimple(
         x: 5939,
         size: 32,
         frames: 4,
     );
-    engine.mapDst(x: item.x - _anchor, y: item.y - _anchor,);
+    engine.mapDst(
+      anchorX: 16,
+      anchorY: 23,
+      x: item.x,
+        y: item.y
+    );
     engine.renderAtlas();
   }
 
