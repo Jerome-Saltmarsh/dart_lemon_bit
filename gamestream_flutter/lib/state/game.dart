@@ -10,23 +10,22 @@ import 'package:lemon_watch/watch.dart';
 final game = _Game();
 
 class _Game {
-  final Map<int, bool> gameEvents = Map();
+  final gameEvents = Map<int, bool>();
   final settings = _Settings();
-  final type = Watch<GameType>(GameType.None);
+  final type = Watch(GameType.None);
   final lobby = _Lobby();
-  final countDownFramesRemaining = Watch<int>(0);
-  final numberOfPlayersNeeded = Watch<int>(0);
-  final teamLivesWest = Watch<int>(-1);
-  final teamLivesEast = Watch<int>(-1);
-  final teamSize = Watch<int>(0);
-  final numberOfTeams = Watch<int>(0);
-  final totalZombies = Watch<int>(0);
+  final countDownFramesRemaining = Watch(0);
+  final numberOfPlayersNeeded = Watch(0);
+  final teamLivesWest = Watch(-1);
+  final teamLivesEast = Watch(-1);
+  final teamSize = Watch(0);
+  final numberOfTeams = Watch(0);
+  final totalZombies = Watch(0);
   final royal = _Royal();
   final List<Character> players = [];
   final List<Character> zombies = [];
   final List<Character> interactableNpcs = [];
   final List<Effect> effects = [];
-  int lag = 0;
   String? customGameName = "";
   List<int> collectables = [];
   List<Vector2> crates = [];
@@ -71,14 +70,8 @@ class _Lobby {
 }
 
 class _Settings {
-  double zoomFollowSpeed = 0.1;
-  double zoomSpeed = 0.0005;
-  double maxZoom = 0.1;
   int floatingTextDuration = 100;
   final maxBulletHoles = 50;
-  int maxParticlesMinusOne = 299;
-  double interactRadius = 60;
-  double manRenderSize = 40.0;
 }
 
 class _LobbyPlayer {
@@ -87,10 +80,5 @@ class _LobbyPlayer {
   bool notSet = true;
 
   _LobbyPlayer(this.name, this.team);
-}
-
-mixin Position {
-  double x = 0;
-  double y = 0;
 }
 

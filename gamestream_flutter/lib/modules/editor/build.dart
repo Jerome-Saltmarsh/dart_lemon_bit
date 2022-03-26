@@ -88,8 +88,7 @@ class EditorBuild {
 
   List<Widget> _tabAll() {
     return modules.isometric.state.environmentObjects.map((env) {
-      return NullableWatchBuilder<Vector2?>(editor.state.selected,
-              (Vector2? selected) {
+      return WatchBuilder(editor.state.selected, (Vector2? selected) {
             return button(enumString(env.type), () {
               editor.state.selected.value = env;
               engine.cameraCenter(env.x, env.y);
@@ -368,7 +367,7 @@ class EditorBuild {
   }
 
   Widget _buildSelected() {
-    return NullableWatchBuilder<Vector2?>(state.selected, (Vector2? selected){
+    return WatchBuilder(state.selected, (Vector2? selected){
         if (selected == null) return empty;
 
         return Container(

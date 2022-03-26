@@ -33,9 +33,6 @@ import 'build.dart';
 
 final nameController = TextEditingController();
 
-// const dialogHeight = 400.0;
-// const dialogWidth = dialogHeight * goldenRatio_1381;
-
 Widget buildDialogLogin() {
   return dialog(
       padding: 16,
@@ -64,7 +61,7 @@ Widget buildDialogLogin() {
 }
 
 Widget buildWatchErrorMessage(){
-  return NullableWatchBuilder<String?>(core.state.error, (String? message){
+  return WatchBuilder(core.state.error, (String? message){
     if (message == null) return empty;
     return buildErrorDialog(message);
   });
@@ -453,7 +450,7 @@ Widget margin({
 
 
 Widget watchAccount(Widget builder(Account? value)) {
-  return NullableWatchBuilder<Account?>(core.state.account, (Account? account) {
+  return WatchBuilder(core.state.account, (Account? account) {
     return builder(account);
   });
 }

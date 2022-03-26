@@ -74,9 +74,11 @@
 [ ] Structure System
 [ ] Spawn Allies that follow you    
 [ ] Loot System
-[ ] Tile Flowers    
-[ ] Inventory: Show highlight panel    
+[ ] Tile Flowers      
+[ ] Send Message to All or to Allies only    
 [ ] FIX BUG: enemies are too close bullets go through    
+[ ] Limit Zoom Out    
+[ ] Inventory: Show highlight panel  
 [x] Loot Sprite (Like RE4)    
 [x] FIX Aim target should disappear on enemy killed    
 [x] Display unequipped slot amount    

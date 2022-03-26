@@ -29,6 +29,7 @@ class GameState {
   final storeTab = Watch(storeTabs[0]);
   final textBoxVisible = Watch(false);
   final highLightSlotType = Watch(SlotType.Empty);
+  final highlightSlot = Watch<Slot?>(null);
 
   final highlightPanelPosition = Vector2(0, 0);
   final frameSmoothing = Watch(true);

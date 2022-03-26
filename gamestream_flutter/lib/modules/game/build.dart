@@ -1,11 +1,7 @@
-import 'dart:math';
-
-import 'package:bleed_common/CharacterType.dart';
 import 'package:bleed_common/GameStatus.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/RoyalCost.dart';
 import 'package:bleed_common/SlotType.dart';
-import 'package:bleed_common/WeaponType.dart';
 import 'package:bleed_common/version.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/audio.dart';
@@ -23,10 +19,8 @@ import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/ui/compose/buildTextBox.dart';
 import 'package:gamestream_flutter/ui/compose/hudUI.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
-import 'package:gamestream_flutter/ui/state/hud.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
-import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
@@ -34,6 +28,8 @@ import 'package:lemon_watch/watch_builder.dart';
 
 import '../../toString.dart';
 import 'state.dart';
+
+const empty = SizedBox();
 
 class GameBuild {
 
@@ -214,7 +210,33 @@ class GameBuild {
             if (!alive)
             respawnButton(),
             _panelHighlightedStoreSlot(),
+            buildHighlightedSlot(),
           ]);
+    });
+  }
+
+  Widget buildHighlightedSlot(){
+    return WatchBuilder(state.highlightSlot, (Slot? slot){
+      if (slot == null) return empty;
+      final slotType = slot.type.value;
+      if (slotType.isEmpty) return empty;
+
+      return Positioned(
+        right: 220,
+        bottom: 10,
+        child: Container(
+          width: 200,
+          height: 300,
+          padding: const EdgeInsets.all(8),
+          color: colours.brownDark,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              text(slotTypeNames[slotType] ?? "?"),
+            ],
+          ),
+        )
+      );
     });
   }
 
@@ -327,20 +349,20 @@ class GameBuild {
       children: [
         Column(
           children: [
-            _inventorySlot(slots.slot1, 1),
-            _inventorySlot(slots.slot4, 4),
+            buildInventorySlot(slots.slot1, 1),
+            buildInventorySlot(slots.slot4, 4),
           ],
         ),
         Column(
           children: [
-            _inventorySlot(slots.slot2, 2),
-            _inventorySlot(slots.slot5, 5),
+            buildInventorySlot(slots.slot2, 2),
+            buildInventorySlot(slots.slot5, 5),
           ],
         ),
         Column(
           children: [
-            _inventorySlot(slots.slot3, 3),
-             _inventorySlot(slots.slot6, 6),
+            buildInventorySlot(slots.slot3, 3),
+             buildInventorySlot(slots.slot6, 6),
           ],
         ),
       ],
@@ -513,242 +535,6 @@ class GameBuild {
     );
   }
 
-  Widget _buildHudAbilities(){
-    return WatchBuilder(modules.game.state.player.alive, (bool alive) {
-      return Stack(
-        children: [
-          buildTextBox(),
-          if (alive) buildBottomRight(),
-          buildTopLeft(),
-          if (alive) characterStatistics(),
-          if (!hud.state.observeMode && !alive) _buildViewRespawn(),
-          if (!alive && hud.state.observeMode) _buildRespawnLight(),
-          _buildServerText(),
-          buildTopRight(),
-          buildNumberOfPlayersRequiredDialog(),
-          // bottomLeft(child: fps),
-        ],
-      );
-    });
-  }
-
-  Widget _buildViewRespawn() {
-    print("buildViewRespawn()");
-    return Container(
-      width: engine.screen.width,
-      height: engine.screen.height,
-      child: Row(
-        mainAxisAlignment: axis.main.center,
-        crossAxisAlignment: axis.cross.center,
-        children: [
-          Container(
-              padding: padding16,
-              width: max(engine.screen.width * goldenRatio_0381, 480),
-              decoration: BoxDecoration(
-                  borderRadius: borderRadius4, color: Colors.black38),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: axis.cross.center,
-                  children: [
-                    Container(
-                        decoration: BoxDecoration(
-                          borderRadius: borderRadius4,
-                          color: colours.blood,
-                        ),
-                        padding: padding8,
-                        child: text("BLEED beta v1.0.0")),
-                    height16,
-                    text("YOU DIED", size: 30, underline: true),
-                    height16,
-                    Container(
-                      padding: padding16,
-                      decoration: BoxDecoration(
-                        borderRadius: borderRadius4,
-                        color: black26,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: axis.cross.center,
-                        children: [
-                          text("Please Support Me"),
-                          height16,
-                          Row(
-                            mainAxisAlignment: axis.main.even,
-                            children: [
-                              onPressed(
-                                child: border(
-                                    child: Container(
-                                        width: 70,
-                                        alignment: Alignment.center,
-                                        child: text(
-                                          "Paypal",
-                                        )),
-                                    radius: borderRadius4,
-                                    padding: padding8),
-                                callback: () {
-                                  // openLink(links.paypal);
-                                },
-                                // hint: links.paypal
-                              ),
-                              onPressed(
-                                child: border(
-                                    child: Container(
-                                        width: 70,
-                                        alignment: Alignment.center,
-                                        child: text("Patreon")),
-                                    radius: borderRadius4,
-                                    padding: padding8),
-                                callback: () {
-                                  // openLink(links.patreon);
-                                },
-                                // hint: links.patreon
-                              )
-                            ],
-                          ),
-                          height8,
-                        ],
-                      ),
-                    ),
-                    height8,
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: borderRadius4,
-                        color: black26,
-                      ),
-                      padding: padding16,
-                      child: Column(
-                        children: [
-                          text("Hints"),
-                          Row(
-                            mainAxisAlignment: axis.main.center,
-                            crossAxisAlignment: axis.cross.center,
-                            children: [
-                              Container(
-                                  width: 350,
-                                  alignment: Alignment.center,
-                                  child: text(hud.currentTip)),
-                              width16,
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    height32,
-                    Row(
-                      mainAxisAlignment: axis.main.between,
-                      children: [
-                        onPressed(
-                            child: Container(
-                                padding: padding16, child: text("Close")),
-                            callback: () {
-                              hud.state.observeMode = true;
-                            }),
-                        width16,
-                        mouseOver(
-                            builder: (BuildContext context, bool mouseOver) {
-                              return onPressed(
-                                child: border(
-                                    child: text(
-                                      "RESPAWN",
-                                      weight: bold,
-                                    ),
-                                    padding: padding16,
-                                    radius: borderRadius4,
-                                    color: Colors.white,
-                                    borderWidth: 1,
-                                    fillColor: mouseOver ? black54 : black26),
-                                callback: actions.respawn,
-                                hint: "Click to respawn",
-                              );
-                            })
-                      ],
-                    ),
-                  ],
-                ),
-              )),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildServerText() {
-    return WatchBuilder(modules.game.state.player.message, (String value) {
-      if (value.isEmpty) return blank;
-
-      return Positioned(
-          child: Container(
-            width: engine.screen.width,
-            alignment: Alignment.center,
-            child: Container(
-              width: 300,
-              color: Colors.black45,
-              padding: padding16,
-              child: Column(
-                children: [
-                  text(modules.game.state.player.message.value),
-                  height16,
-                  button("Next", clearPlayerMessage),
-                ],
-              ),
-            ),
-          ),
-          bottom: 100);
-    });
-  }
-
-  Positioned _buildRespawnLight() {
-    return Positioned(
-        top: 30,
-        child: Container(
-            width: engine.screen.width,
-            child: Column(
-              crossAxisAlignment: axis.cross.center,
-              children: [
-                Row(mainAxisAlignment: axis.main.center, children: [
-                  onPressed(
-                      callback: () {
-                        actions.respawn();
-                        hud.state.observeMode = false;
-                      },
-                      child: border(
-                          child: text("Respawn", size: 30),
-                          padding: padding8,
-                          radius: borderRadius4))
-                ]),
-                height32,
-                text("Hold E to pan camera")
-              ],
-            )));
-  }
-
-  Widget buildSlot(Slot slo, Function onPressed) {
-    return onPressed(
-        callback: onPressed,
-        child: Stack(
-          children: [
-            WatchBuilder(slo.type, (SlotType slotType) {
-              final child = slot(slotType: slotType, color: colours.white382);
-              if (slotType.isEmpty) return child;
-              return onPressed(
-                  callback: actions.unequipWeapon,
-                  child: Stack(
-                    children: [
-                      child,
-                    ],
-                  ));
-            }),
-            WatchBuilder(slo.amount, (int amount){
-              if (amount < 0) return const SizedBox();
-              return Padding(
-                padding: const EdgeInsets.all(1.0),
-                child: text(amount, size: style.fontSize.small),
-              );
-            })
-          ],
-        ));
-
-  }
-
-
   Widget buildEquippedWeaponSlot(){
     final weapon = state.player.slots.weapon;
     return onPressed(
@@ -758,13 +544,7 @@ class GameBuild {
             WatchBuilder(weapon.type, (SlotType slotType){
               final child = slot(slotType: slotType, color: colours.white382);
               if (slotType.isEmpty) return child;
-              return onPressed(
-                  callback: actions.unequipWeapon,
-                  child: Stack(
-                    children: [
-                      child,
-                    ],
-                  ));
+              return child;
             }),
             WatchBuilder(weapon.amount, (int amount){
               if (amount < 0) return const SizedBox();
@@ -806,7 +586,7 @@ class GameBuild {
       );
   }
 
-  Widget _inventorySlot(Slot slot, int index) {
+  Widget buildInventorySlot(Slot slot, int index) {
 
     final amount = WatchBuilder(slot.amount, (int amount){
       if (amount < 0) return const SizedBox();
@@ -818,19 +598,29 @@ class GameBuild {
 
 
     final type = WatchBuilder(slot.type, (SlotType slotType) {
-      final child = Container(
-          width: 60,
-          height: 60,
-          child: Stack(
-            children: [
-              Container(
-                width: 50,
-                height: 50,
-                child: getSlotTypeImage(slotType),
-              ),
-              Positioned(child: text(index, size: 14, color: colours.white618), bottom: 5, right: 5,)
-            ],
-          ));
+
+      final child = mouseOver(builder: (BuildContext context, bool mouseOver){
+        if (mouseOver){
+          state.highlightSlot.value = slot;
+        } else if (state.highlightSlot.value == slot){
+          state.highlightSlot.value = null;
+        }
+
+        return Container(
+            width: 60,
+            height: 60,
+            child: Stack(
+              children: [
+                Container(
+                  width: 50,
+                  height: 50,
+                  child: getSlotTypeImage(slotType),
+                ),
+                Positioned(child: text(index, size: 14, color: colours.white618), bottom: 5, right: 5,)
+              ],
+            ));
+      });
+
 
       if (slotType.isEmpty) return child;
       return onPressed(
