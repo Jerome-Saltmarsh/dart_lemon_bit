@@ -177,6 +177,9 @@ class IsometricActions {
       state.minColumn = state.maxColumn;
     }
   }
+  bool _isBridgeOrWater(Tile tile){
+    return tile != Tile.Water && tile != Tile.Bridge;
+  }
 
   void resetTilesSrcDst() {
     // print("isometric.actions.resetTilesSrcDst()");

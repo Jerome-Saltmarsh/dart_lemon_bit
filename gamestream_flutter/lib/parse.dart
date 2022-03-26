@@ -1,14 +1,12 @@
 
 import 'package:bleed_common/AbilityType.dart';
 import 'package:bleed_common/CharacterState.dart';
-import 'package:bleed_common/CharacterType.dart';
 import 'package:bleed_common/GameError.dart';
 import 'package:bleed_common/GameEventType.dart';
 import 'package:bleed_common/GameStatus.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/OrbType.dart';
-import 'package:bleed_common/PlayerEvent.dart';
 import 'package:bleed_common/ServerResponse.dart';
 import 'package:bleed_common/SlotType.dart';
 import 'package:bleed_common/Tile.dart';
@@ -36,8 +34,6 @@ var _index = 0;
 // constants
 const _space = " ";
 const _semiColon = ";";
-const _comma = ",";
-const _onePercent = 0.01;
 // finals
 final _consumer = StringBuffer();
 final _stringBuffer = StringBuffer();
@@ -243,16 +239,8 @@ void parseState() {
         _parseCollectables();
         break;
 
-      case ServerResponse.Player_Events:
-        _parsePlayerEvents();
-        return;
-
       case ServerResponse.Player_Ability:
         _parsePlayerAbility();
-        break;
-
-      case ServerResponse.Player:
-        _parsePlayer();
         break;
 
       default:
@@ -379,30 +367,6 @@ void _parseTiles() {
   isometric.actions.updateTileRender();
 }
 
-void _parsePlayer() {
-  // final player = modules.game.state.player;
-  // player.character.x = _consumeDoubleUnsafe();
-  // player..character.y = _consumeDoubleUnsafe();
-  // player.health.value = _consumeDoubleUnsafe();
-  // player.maxHealth = _consumeDoubleUnsafe();
-  // player.state.value = _consumeCharacterState();
-  // player.experience.value = _consumeIntUnsafe();
-  // player.level.value = _consumeIntUnsafe();
-  // player.skillPoints.value = _consumeIntUnsafe();
-  // player.nextLevelExperience.value = _consumeIntUnsafe();
-  // player.experiencePercentage.value = _consumePercentage();
-  // player.characterType.value = _consumeCharacterType();
-  // player.abilityTarget.x = _consumeDoubleUnsafe();
-  // player.abilityTarget.y = _consumeDoubleUnsafe();
-  // player.magic.value = _consumeDoubleUnsafe();
-  // player.maxMagic.value = _consumeDoubleUnsafe();
-  // player.attackRange = _consumeDoubleUnsafe();
-  // player.character.team = _consumeIntUnsafe();
-  // player.slots.weapon.value = consumeSlotType();
-  // player.slots.armour.value = consumeSlotType();
-  // player.slots.helm.value = consumeSlotType();
-}
-
 void _parsePlayerAbility(){
   final player = modules.game.state.player;
   player.ability.value = _consumeAbilityType();
@@ -412,21 +376,6 @@ void _parsePlayerAbility(){
 
 AbilityType _consumeAbilityType() {
   return abilities[consumeInt()];
-}
-
-CharacterType _consumeCharacterType() {
-  return characterTypes[consumeInt()];
-}
-
-void _parsePlayerEvents() {
-  final total = consumeInt();
-  for (var i = 0; i < total; i++) {
-    final event = _consumePlayerEventType();
-  }
-}
-
-PlayerEvent _consumePlayerEventType() {
-  return playerEvents[consumeInt()];
 }
 
 void _parseCollectables() {
@@ -566,14 +515,6 @@ double consumeDouble() {
   return double.parse(_consumeString());
 }
 
-double _consumePercentage() {
-  return consumeDouble() * _onePercent;
-}
-
-double _consumeDoubleUnsafe() {
-  return double.parse(_consumeStringUnsafe());
-}
-
 Vector2 _consumeVector2() {
   final x = _consumeIntUnsafe();
   final y = consumeDouble();
@@ -583,15 +524,6 @@ Vector2 _consumeVector2() {
 bool _simiColonConsumed() {
   _consumeSpace();
   if (_currentCharacter == _semiColon) {
-    _index++;
-    return true;
-  }
-  return false;
-}
-
-bool _commaConsumed() {
-  _consumeSpace();
-  if (_currentCharacter == _comma) {
     _index++;
     return true;
   }
