@@ -1,5 +1,3 @@
-
-
 import 'package:lemon_watch/watch.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -7,17 +5,17 @@ class Cache<T> extends Watch<T> {
 
   final String key;
 
-  Cache({required this.key, required T value}) : super(value){
-    onChanged(_onChanged);
+  Cache({required this.key, required T value, Function(T t)? onChanged}) : super(value){
+    this.onChanged(_onChanged);
+    if (onChanged != null) {
+      this.onChanged(onChanged);
+    }
     SharedPreferences.getInstance().then((shared){
       if (shared.containsKey(key)){
         final cachedValue = shared.get(key);
         if (cachedValue is T){
-          value = cachedValue;
-          print("cache loaded {key: $key, value: $value}");
-          return;
+          this.value = cachedValue;
         }
-        print("Invalid cached value type $cachedValue");
       }
     });
   }
