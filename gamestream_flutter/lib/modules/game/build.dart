@@ -856,6 +856,15 @@ class GameBuild {
     });
   }
 
+  Widget toggleEnabledMusic(){
+    return WatchBuilder(audio.enabled, (bool enabled){
+      return button(text("Audio", decoration: enabled
+          ? TextDecoration.none
+          : TextDecoration.lineThrough
+      ), audio.toggle);
+    });
+  }
+
   Widget buildDebugPanel(){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

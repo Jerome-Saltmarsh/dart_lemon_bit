@@ -34,6 +34,8 @@ class CoreEvents {
 
   void _onGameStatusChanged(GameStatus value){
     print('events.onGameStatusChanged(value: $value)');
+    audio.stopMusic();
+
     switch(value){
       case GameStatus.In_Progress:
         engine.drawCanvas.value = modules.game.render.render;
@@ -156,6 +158,7 @@ class CoreEvents {
         engine.clearCallbacks();
         engine.drawCanvasAfterUpdate = true;
         engine.cursorType.value = CursorType.Basic;
+        core.state.status.value = GameStatus.None;
         break;
       default:
         break;

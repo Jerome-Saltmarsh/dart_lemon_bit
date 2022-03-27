@@ -11,9 +11,14 @@ final audio = _Audio();
 class _Audio {
 
   final Cache<bool> enabled = Cache(key: 'audio-enabled', value: true);
+  final music = Cache(key: 'audio-enabled', value: true);
 
   void playSong(){
-    _play('music/song01.mp3');
+    _playMusic('song01.mp3');
+  }
+
+  void stopMusic(){
+    _musicPlayer.stop();
   }
 
   void toggle(){
@@ -176,6 +181,14 @@ class _Audio {
         .catchError((error) {});
   }
 
+  void _playMusic(String name){
+    _musicPlayer.stop();
+    _musicPlayer.play(
+        'assets/audio/music/$name',
+        isLocal: true,
+    );
+  }
+
 
   void playAudioHeal(double x, double y) {
     audio._playPositioned('revive-heal-1.mp3', x, y);
@@ -222,6 +235,7 @@ class _Audio {
 int _index = 0;
 
 final List<AudioPlayer> _audioPlayers = [];
+final _musicPlayer = AudioPlayer();
 const _audioDistanceFade = 0.0065;
 const _totalAudioPlayers = 200;
 
