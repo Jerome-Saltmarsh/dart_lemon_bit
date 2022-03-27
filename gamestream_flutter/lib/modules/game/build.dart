@@ -195,7 +195,8 @@ class GameBuild {
             Positioned(
               child: Row(
                 children: [
-                  toggleAudioEnabled(),
+                  buildToggleEnabledSound(),
+                  buildToggleEnabledMusic(),
                   width8,
                   ui.widgets.exit,
                   if (core.state.account.isNotNull)
@@ -847,21 +848,21 @@ class GameBuild {
     });
   }
 
-  Widget toggleAudioEnabled(){
-    return WatchBuilder(audio.enabled, (bool enabled){
+  Widget buildToggleEnabledSound(){
+    return WatchBuilder(audio.soundEnabled, (bool enabled){
       return button(text("Audio", decoration: enabled
           ? TextDecoration.none
           : TextDecoration.lineThrough
-      ), audio.toggle);
+      ), audio.toggleEnabledSound);
     });
   }
 
-  Widget toggleEnabledMusic(){
-    return WatchBuilder(audio.enabled, (bool enabled){
-      return button(text("Audio", decoration: enabled
+  Widget buildToggleEnabledMusic(){
+    return WatchBuilder(audio.musicEnabled, (bool enabled){
+      return button(text("Music", decoration: enabled
           ? TextDecoration.none
           : TextDecoration.lineThrough
-      ), audio.toggle);
+      ), audio.toggleEnabledMusic);
     });
   }
 

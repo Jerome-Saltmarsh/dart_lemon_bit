@@ -10,8 +10,8 @@ final audio = _Audio();
 
 class _Audio {
 
-  final Cache<bool> enabled = Cache(key: 'audio-enabled', value: true);
-  final music = Cache(key: 'audio-enabled', value: true);
+  final soundEnabled = Cache(key: 'audio-enabled', value: true);
+  final musicEnabled = Cache(key: 'music-enabled', value: true);
 
   void playSong(){
     _playMusic('song01.mp3');
@@ -21,10 +21,18 @@ class _Audio {
     _musicPlayer.stop();
   }
 
-  void toggle(){
-    print("audio.toggle()");
-    enabled.value = !enabled.value;
-    print("audio.enabled: ${enabled.value}");
+  void toggleEnabledSound(){
+    soundEnabled.value = !soundEnabled.value;
+  }
+
+  void toggleEnabledMusic(){
+    musicEnabled.value = !musicEnabled.value;
+
+    if (!musicEnabled.value){
+      _musicPlayer.setVolume(0);
+    } else {
+      _musicPlayer.setVolume(1.0);
+    }
   }
 
   void sniperShot(double x, double y) {
@@ -170,7 +178,7 @@ class _Audio {
   }
 
   void _playPositioned(String name, double x, double y) {
-    if (!enabled.value) return;
+    if (!soundEnabled.value) return;
     _play(name, volume: _calculateVolume(x, y));
   }
 
