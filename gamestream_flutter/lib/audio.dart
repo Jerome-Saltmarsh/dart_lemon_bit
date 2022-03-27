@@ -12,6 +12,10 @@ class _Audio {
 
   final Cache<bool> enabled = Cache(key: 'audio-enabled', value: true);
 
+  void playSong(){
+    _play('music/song01.mp3');
+  }
+
   void toggle(){
     print("audio.toggle()");
     enabled.value = !enabled.value;

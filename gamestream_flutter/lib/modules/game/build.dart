@@ -312,7 +312,7 @@ class GameBuild {
     });
   }
 
-  Container buildBottomRight() {
+  Widget buildBottomRight() {
     return Container(
             width: 200,
             padding: padding8,
