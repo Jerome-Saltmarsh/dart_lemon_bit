@@ -549,18 +549,25 @@ class GameBuild {
     );
   }
 
+  Widget buildHighlightSlot({required Slot slot, required Widget child}){
+    return MouseRegion(
+        onEnter: (event){
+          state.highlightSlot.value = slot;
+        },
+        onExit: (event){
+          state.highlightSlot.value = null;
+        },
+        child: child,
+    );
+  }
+
   Widget buildEquippedWeaponSlot(){
     final weapon = state.player.slots.weapon;
 
     return onPressed(
         callback: actions.unequipWeapon,
-        child: MouseRegion(
-          onEnter: (event){
-            state.highlightSlot.value = weapon;
-          },
-          onExit: (event){
-            state.highlightSlot.value = null;
-          },
+        child: buildHighlightSlot(
+          slot: weapon,
           child: Stack(
             children: [
               WatchBuilder(weapon.type, (SlotType slotType){
@@ -589,20 +596,26 @@ class GameBuild {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               buildEquippedWeaponSlot(),
-              WatchBuilder(slots.armour, (SlotType slotType){
-                final child = slot(slotType: slotType, color: colours.white382);
-                if (slotType.isEmpty) return child;
-                return onPressed(
-                    callback: actions.unequipArmour,
-                    child: child);
-              }),
-              WatchBuilder(slots.helm, (SlotType slotType){
-                final child = slot(slotType: slotType, color: colours.white382);
-                if (slotType.isEmpty) return child;
-                return onPressed(
-                    callback: actions.unequipHelm,
-                    child: child);
-              }),
+              buildHighlightSlot(
+                slot: slots.armour,
+                child: WatchBuilder(slots.armour.type, (SlotType slotType){
+                  final child = slot(slotType: slotType, color: colours.white382);
+                  if (slotType.isEmpty) return child;
+                  return onPressed(
+                      callback: actions.unequipArmour,
+                      child: child);
+                }),
+              ),
+              buildHighlightSlot(
+                slot: slots.helm,
+                child: WatchBuilder(slots.helm.type, (SlotType slotType){
+                  final child = slot(slotType: slotType, color: colours.white382);
+                  if (slotType.isEmpty) return child;
+                  return onPressed(
+                      callback: actions.unequipHelm,
+                      child: child);
+                }),
+              ),
             ],
           )
         ],

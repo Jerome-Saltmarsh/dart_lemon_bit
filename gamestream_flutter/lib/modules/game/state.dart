@@ -94,8 +94,8 @@ class Slot {
 
 class Slots {
   final weapon = Slot();
-  final armour = Watch(SlotType.Empty);
-  final helm = Watch(SlotType.Empty);
+  final armour = Slot();
+  final helm = Slot();
 
   final slot1 = Slot();
   final slot2 = Slot();
