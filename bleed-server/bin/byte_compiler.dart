@@ -77,6 +77,7 @@ class _ByteCompiler {
     writeBigInt(orbs.emerald); // 2
     writeBigInt(orbs.ruby); // 2
     writeBool(player.alive); // 1
+    writeBool(player.storeVisible); // 1
     writeAttackTarget(player);
     writeProjectiles(game.projectiles);
     writeNpcs(player);

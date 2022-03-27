@@ -2,17 +2,15 @@
 import 'dart:math';
 
 import 'package:lemon_math/Vector2.dart';
-import 'package:lemon_math/abs.dart';
-import 'package:lemon_math/diff.dart';
 
 import '../classes/Player.dart';
 import '../common/SlotType.dart';
 
-bool withinRadius(Vector2 a, Vector2 b, double radius){
+bool withinRadius(Vector2 a, Vector2 b, num radius){
   return withinDistance(a, b.x, b.y, radius);
 }
 
-bool withinDistance(Vector2 positioned, double x, double y, double radius){
+bool withinDistance(Vector2 positioned, double x, double y, num radius){
   final xDiff = (positioned.x - x).abs();
   if (xDiff > radius) return false;
 

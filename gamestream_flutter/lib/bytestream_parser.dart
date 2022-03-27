@@ -115,6 +115,7 @@ class _ByteStreamParser {
           orbs.emerald.value = _nextInt();
           orbs.ruby.value = _nextInt();
           player.alive.value = readBool();
+          player.storeVisible.value = readBool();
           break;
         case ServerResponse.End:
           byteLength.value = _index;

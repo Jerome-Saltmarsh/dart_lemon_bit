@@ -6,6 +6,7 @@ import 'package:lemon_math/randomItem.dart';
 import '../classes/Character.dart';
 import '../classes/EnvironmentObject.dart';
 import '../classes/Game.dart';
+import '../classes/InteractableNpc.dart';
 import '../classes/Item.dart';
 import '../classes/Player.dart';
 import '../common/ItemType.dart';
@@ -13,13 +14,28 @@ import '../common/PlayerEvent.dart';
 import '../common/SlotType.dart';
 import '../common/enums/ObjectType.dart';
 import '../engine.dart';
+import '../functions/withinRadius.dart';
 
 class GameSkirmish extends Game {
   late final List<EnvironmentObject> _flags;
   final _time = 16 * 60 * 60;
+  late final InteractableNpc storeKeeper;
 
   GameSkirmish() : super(engine.scenes.skirmish){
      _flags = scene.environment.where((env) => env.type == ObjectType.Flag).toList();
+
+     storeKeeper = InteractableNpc(
+         name: "Store Keeper",
+         onInteractedWith: (Player player){
+
+         },
+         x: 0,
+         y: 100,
+         health: 100,
+         weapon: SlotType.Empty
+     );
+     storeKeeper.invincible = true;
+     npcs.add(storeKeeper);
   }
 
   @override
@@ -28,6 +44,11 @@ class GameSkirmish extends Game {
       if (numberOfAliveZombies < 10){
         spawnRandomZombie(health: 10, damage: 1);
       }
+    }
+
+    for (final player in players) {
+      const storeRadius = 100.0;
+      player.storeVisible = withinRadius(player, storeKeeper, storeRadius);
     }
   }
 

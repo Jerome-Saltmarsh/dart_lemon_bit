@@ -115,6 +115,7 @@ class _Player {
   double abilityRange = 0;
   double abilityRadius = 0;
   double maxHealth = 0;
+  final storeVisible = Watch(false);
   Tile tile = Tile.Grass;
   double attackRange = 0;
   final Vector2 attackTarget = Vector2(0, 0);

@@ -47,6 +47,7 @@ class Player extends Character with Entity {
   int maxMagic = 100;
   int magicRegen = 1;
   int healthRegen = 1;
+  bool storeVisible = false;
 
   double mouseX = 0;
   double mouseY = 0;

@@ -190,7 +190,7 @@ class GameBuild {
             Positioned(
                 right: _pad,
                 bottom: _pad,
-                child: _panelMagicStore()),
+                child: buildBottomRight()),
             buildTextBox(),
             Positioned(
               child: Row(
@@ -312,16 +312,16 @@ class GameBuild {
     });
   }
 
-  Container _panelMagicStore() {
+  Container buildBottomRight() {
     return Container(
             width: 200,
             padding: padding8,
             color: colours.brownDark,
               child: Column(
                 children: [
+                  buildPanelStore(),
+                  height32,
                   rowOrbs(),
-                  // height16,
-                  // panel(child: _panelStore()),
                   height16,
                   panel(child: _panelEquipped()),
                   height16,
@@ -394,13 +394,14 @@ class GameBuild {
     }
   }
 
-  Widget _panelStore() {
-    return WatchBuilder(state.storeTab, (StoreTab activeStoreTab){
+  Widget buildPanelStore() {
+
+    final storeTab = WatchBuilder(state.storeTab, (StoreTab activeStoreTab) {
       return Column(
         children: [
           _storeTabs(activeStoreTab),
           if (activeStoreTab == StoreTab.Weapons)
-          _storeTabWeapons(),
+            _storeTabWeapons(),
           if (activeStoreTab == StoreTab.Armor)
             _storeTabArmour(),
           if (activeStoreTab == StoreTab.Items)
@@ -408,6 +409,13 @@ class GameBuild {
         ],
       );
     });
+
+    return panel(
+      child: WatchBuilder(state.player.storeVisible, (bool storeVisible) {
+        if (!storeVisible) return empty;
+        return storeTab;
+      }),
+    );
   }
 
   Widget _storeTabs(StoreTab activeStoreTab) {
