@@ -59,14 +59,14 @@
 [ ] Weapon: Crowbar    
 [ ] (MMO) Save / Load Character   
 [ ] Unlock portals
+[ ] Experience Bar
+[ ] FIX Myst Particle Render order  
 [ALPHA-RELEASE]
 [ ] Slot Cooldown
 [ ] Fix fireball explosion
 [ ] Bow Spells,
 [ ] Sword Spells, Strong Swing
-[ ] Experience Bar
-[ ] FIX Flashing Particles  
-[ ] FIX Myst Particle Render order   
+[ ] FIX Flashing Particles   
 [ ] Resource Gathering System (Rock, Wood, Etc)
 [ ] Upgrade System    
 [ ] Destructible Objects      
@@ -74,11 +74,10 @@
 [ ] Spawn Allies that follow you    
 [ ] Loot System
 [ ] Tile Flowers      
-[ ] Send Message to All or to Allies only    
 [ ] Design Store Keeper Model
 [ ] Click to pickup loot    
+[ ] Send Message to All or to Allies only
 [ ] Grass Ledge Block    
-[ ] Refactor: Render walls as Tile    
 [x] Shop becomes visible when nearby npc shop
 [x] Highlight Armour Slot    
 [x] Highlight Weapon Slot    

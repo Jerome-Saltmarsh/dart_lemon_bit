@@ -34,6 +34,8 @@ double mapTileToSrcLeft(Tile tile) {
       return _black;
     case Tile.Rock_Wall:
       return _rockWall;
+    case Tile.Block_Grass:
+      return _rockWall;
     case Tile.Boundary:
       throw Exception("Boundary has no rect");
   }

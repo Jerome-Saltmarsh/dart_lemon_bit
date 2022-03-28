@@ -15,7 +15,8 @@ enum Tile {
   Bridge,
   Rock,
   Black,
-  Rock_Wall
+  Rock_Wall,
+  Block_Grass,
 }
 
 extension TileExtension on Tile {

@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/PlayerEvent.dart';
 import 'package:gamestream_flutter/classes/Character.dart';
-import 'package:bleed_common/CharacterState.dart';
 import 'package:bleed_common/GameEventType.dart';
 import 'package:bleed_common/ServerResponse.dart';
 import 'package:bleed_common/SlotType.dart';
@@ -20,8 +19,8 @@ import 'package:lemon_watch/watch.dart';
 import 'state/game.dart';
 
 final byteStreamParser = _ByteStreamParser();
-final byteLength = Watch<int>(0);
-final bufferSize = Watch<int>(0);
+final byteLength = Watch(0);
+final bufferSize = Watch(0);
 
 class _ByteStreamParser {
 
