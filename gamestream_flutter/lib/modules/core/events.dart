@@ -131,8 +131,9 @@ class CoreEvents {
   void onConnectionChanged(Connection connection) {
     print("events.onConnectionChanged($connection)");
 
-    switch(connection){
+    switch (connection) {
       case Connection.Connected:
+        engine.update = modules.game.update.update;
         core.state.mode.value = Mode.Player;
         if (game.type.value == GameType.Custom){
           final account = core.state.account.value;
@@ -141,17 +142,13 @@ class CoreEvents {
             return;
           }
           final mapName = game.customGameName;
-          if (mapName == null){
-            core.actions.setError("No custom map chosen");
-            core.actions.disconnect();
-            return;
-          }
           sendRequestJoinCustomGame(mapName: mapName, playerId: account.userId);
         }else{
           sendRequestJoinGame(game.type.value);
         }
         break;
       case Connection.Done:
+        engine.update = null;
         core.state.mode.value = Mode.Website;
         engine.fullScreenExit();
         core.actions.clearSession();
@@ -159,6 +156,7 @@ class CoreEvents {
         engine.drawCanvasAfterUpdate = true;
         engine.cursorType.value = CursorType.Basic;
         core.state.status.value = GameStatus.None;
+        game.type.value = GameType.None;
         break;
       default:
         break;

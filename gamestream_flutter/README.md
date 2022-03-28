@@ -77,6 +77,7 @@
 [ ] Design Store Keeper Model
 [ ] Click to pickup loot    
 [ ] Send Message to All or to Allies only
+[ ] FIX Website Account required popup    
 [ ] Grass Ledge Block    
 [x] Shop becomes visible when nearby npc shop
 [x] Highlight Armour Slot    
