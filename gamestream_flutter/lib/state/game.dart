@@ -11,8 +11,9 @@ final game = _Game();
 
 class _Game {
   final gameEvents = Map<int, bool>();
-  final type = Watch(GameType.None);
   final lobby = _Lobby();
+  final royal = _Royal();
+  final type = Watch(GameType.None);
   final countDownFramesRemaining = Watch(0);
   final numberOfPlayersNeeded = Watch(0);
   final teamLivesWest = Watch(-1);
@@ -21,21 +22,20 @@ class _Game {
   final numberOfTeams = Watch(0);
   final totalZombies = Watch(0);
   final totalPlayers = Watch(0);
-  final royal = _Royal();
   final players = <Character>[];
   final zombies = <Character>[];
   final interactableNpcs = <Character>[];
   final effects = <Effect>[];
-  var torches = <EnvironmentObject>[];
-  var projectiles = <Projectile>[];
-  var collectables = <int>[];
-  var crates = <Vector2>[];
+  final torches = <EnvironmentObject>[];
+  final projectiles = <Projectile>[];
+  final collectables = <int>[];
+  final crates = <Vector2>[];
+  final bulletHoles = <Vector2>[];
+  final npcDebug = <NpcDebug>[];
   var customGameName = "";
   var cratesTotal = 0;
-  var npcDebug = <NpcDebug>[];
   var totalNpcs = 0;
   var totalCubes = 0;
-  var bulletHoles = <Vector2>[];
   var bulletHoleIndex = 0;
   var id = -1;
   var totalProjectiles = 0;
@@ -43,13 +43,13 @@ class _Game {
 }
 
 class _Royal {
-  double radius = 0;
-  Vector2 mapCenter = Vector2(0, 0);
+  var radius = 0.0;
+  var mapCenter = Vector2(0, 0);
 }
 
 class _Lobby {
-  final Watch<int> playerCount = Watch(0);
-  final List<_LobbyPlayer> players = [];
+  final playerCount = Watch(0);
+  final players = <_LobbyPlayer>[];
 
   void add({
     required int team,

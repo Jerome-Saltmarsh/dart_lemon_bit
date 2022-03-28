@@ -254,9 +254,9 @@ abstract class Game {
       );
     }
 
-    for (var rowIndex = 0; rowIndex < scene.rows; rowIndex++) {
+    for (var rowIndex = 0; rowIndex < scene.numberOfRows; rowIndex++) {
       final row = scene.tiles[rowIndex];
-      for (var columnIndex = 0; columnIndex < scene.columns; columnIndex++) {
+      for (var columnIndex = 0; columnIndex < scene.numberOfColumns; columnIndex++) {
         switch (row[columnIndex]) {
           case Tile.ZombieSpawn:
             zombieSpawnPoints.add(getTilePosition(rowIndex, columnIndex));
@@ -286,6 +286,21 @@ abstract class Game {
     }
   }
 
+  void checkPlayerColliderCollision() {
+    for (final character in players) {
+      for (final collider in colliders) {
+        final combinedRadius = character.radius + collider.radius;
+        if (diffOver(character.x, collider.x, combinedRadius)) continue;
+        if (diffOver(character.y, collider.y, combinedRadius)) continue;
+        final _distance = distanceV2(character, collider);
+        if (_distance > combinedRadius) continue;
+        final overlap = combinedRadius - _distance;
+        final r = radiansV2(character, collider);
+        character.x -= adj(r, overlap);
+        character.y -= opp(r, overlap);
+      }
+    }
+  }
 }
 
 const secondsPerMinute = 60;
@@ -304,7 +319,7 @@ extension GameFunctions on Game {
   }
 
   Vector2 getSceneCenter() =>
-      getTilePosition(scene.rows ~/ 2, scene.columns ~/ 2);
+      getTilePosition(scene.numberOfRows ~/ 2, scene.numberOfColumns ~/ 2);
 
   int getFirstAlivePlayerEnemyIndex(Character character) {
     final numberOfPlayers = players.length;
@@ -580,19 +595,7 @@ extension GameFunctions on Game {
       updateCharacter(npcs[i]);
     }
 
-    for (final character in players) {
-      for (final collider in colliders) {
-        final combinedRadius = character.radius + collider.radius;
-        if (diffOver(character.x, collider.x, combinedRadius)) continue;
-        if (diffOver(character.y, collider.y, combinedRadius)) continue;
-        final _distance = distanceV2(character, collider);
-        if (_distance > combinedRadius) continue;
-        final overlap = combinedRadius - _distance;
-        final r = radiansV2(character, collider);
-        character.x -= adj(r, overlap);
-        character.y -= opp(r, overlap);
-      }
-    }
+    checkPlayerColliderCollision();
   }
 
   void _updateCollisions() {
@@ -1450,9 +1453,9 @@ extension GameFunctions on Game {
     final node = scene.tileNodeAt(ai.x, ai.y);
     if (!node.open) return;
     final minColumn = max(0, node.column - radius);
-    final maxColumn = min(scene.columns, node.column + radius);
+    final maxColumn = min(scene.numberOfColumns, node.column + radius);
     final minRow = max(0, node.row - radius);
-    final maxRow = min(scene.rows, node.row + radius);
+    final maxRow = min(scene.numberOfRows, node.row + radius);
     final randomColumn = randomInt(minColumn, maxColumn);
     final randomRow = randomInt(minRow, maxRow);
     final randomTile = scene.tileNodes[randomRow][randomColumn];
@@ -1617,7 +1620,6 @@ extension GameFunctions on Game {
       }
   }
 }
-
 
 // void applyCratePhysics(Crate crate, List<Character> characters) {
 //   for (final character in characters) {

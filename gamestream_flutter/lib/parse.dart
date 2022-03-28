@@ -302,7 +302,7 @@ void _parseEnvironmentObjects() {
     modules.isometric.state.environmentObjects.add(env);
   }
 
-  // * on environmentObjects changed
+  modules.isometric.actions.refreshGeneratedObjects();
   sortReversed(modules.isometric.state.environmentObjects, environmentObjectY);
   modules.isometric.actions.resetLighting();
 }
@@ -334,6 +334,8 @@ void _parseTiles() {
     }
     tiles.add(column);
   }
+
+  isometric.actions.refreshGeneratedObjects();
   isometric.actions.updateTileRender();
 }
 

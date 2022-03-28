@@ -19,6 +19,15 @@ enum Tile {
   Block_Grass,
 }
 
+const generatesObject = [
+  Tile.Rock_Wall,
+  Tile.Block_Grass,
+  Tile.Block_Grass,
+  Tile.Block_Vertical,
+  Tile.Block_Horizontal,
+  Tile.Block,
+];
+
 extension TileExtension on Tile {
   bool get isWater => this == Tile.Water;
   bool get isBoundary => this == Tile.Boundary;

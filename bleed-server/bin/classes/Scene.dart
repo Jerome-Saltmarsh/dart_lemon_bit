@@ -2,7 +2,7 @@ import 'package:lemon_math/Vector2.dart';
 
 import '../common/Tile.dart';
 import '../common/enums/Direction.dart';
-import '../common/enums/ObjectType.dart';
+import '../common/tileTypeToObjectType.dart';
 import '../enums.dart';
 import 'Character.dart';
 import 'EnvironmentObject.dart';
@@ -37,8 +37,8 @@ class Scene {
   final String name;
 
   late final List<List<TileNode>> tileNodes;
-  late final int rows;
-  late final int columns;
+  late final int numberOfRows;
+  late final int numberOfColumns;
 
   int? startHour;
   int? secondsPerFrames;
@@ -51,54 +51,18 @@ class Scene {
     required this.characters,
     required this.name,
   }) {
-    rows = tiles.length;
-    columns = tiles[0].length;
+    numberOfRows = tiles.length;
+    numberOfColumns = numberOfRows > 0 ? tiles[0].length : 0;
     tileNodes = [];
 
-    for (int row = 0; row < rows; row++) {
-      for (int column = 0; column < columns; column++) {
-
-        Tile tile = tiles[row][column];
-
-        if (tile == Tile.Block) {
-          environment.add(EnvironmentObject(
-              x: mapTilePositionX(row, column),
-              y: mapTilePositionY(row, column) + _tileSizeHalf,
-              type: ObjectType.Palisade));
-        } else
-
-        if (tile == Tile.Block_Horizontal) {
-          environment.add(EnvironmentObject(
-              x: mapTilePositionX(row, column),
-              y: mapTilePositionY(row, column) + _tileSizeHalf,
-              type: ObjectType.Palisade_H));
-        } else
-
-        if (tile == Tile.Block_Vertical) {
-          environment.add(EnvironmentObject(
-              x: mapTilePositionX(row, column),
-              y: mapTilePositionY(row, column)+ _tileSizeHalf,
-              type: ObjectType.Palisade_V));
-        }
-
-        else
-
-        if (tile == Tile.Rock_Wall) {
-          environment.add(EnvironmentObject(
-              x: mapTilePositionX(row, column),
-              y: mapTilePositionY(row, column)+ _tileSizeHalf,
-              type: ObjectType.Rock_Wall));
-        }
-      }
-    }
-
-    for (var row = 0; row < rows; row++) {
+    for (var rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
       final List<TileNode> nodeRow = [];
-      for (var column = 0; column < columns; column++) {
-        final node = TileNode(isWalkable(tiles[row][column]));
-        node.row = row;
-        node.column = column;
-        final halfTileSize = 24.0;
+      final tileRow = tiles[rowIndex];
+      for (var columnIndex = 0; columnIndex < numberOfColumns; columnIndex++) {
+        final node = TileNode(isWalkable(tileRow[columnIndex]));
+        node.row = rowIndex;
+        node.column = columnIndex;
+        const halfTileSize = 24.0;
         final px =
             perspectiveProjectX(node.row * halfTileSize, node.column * halfTileSize);
         final py =
@@ -110,61 +74,63 @@ class Scene {
       tileNodes.add(nodeRow);
     }
 
-    for (var row = 0; row < rows; row++) {
-      for (var column = 0; column < columns; column++) {
-        bool canLeft = column > 0;
-        bool canRight = column < columns - 1;
-        bool canUp = row > 0;
-        bool canDown = row < rows - 1;
+    for (var rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
+      final tileNodeRow = tileNodes[rowIndex];
+      for (var columnIndex = 0; columnIndex < numberOfColumns; columnIndex++) {
+        final tileNode = tileNodeRow[columnIndex];
+        final canLeft = columnIndex > 0;
+        final canRight = columnIndex < numberOfColumns - 1;
+        final canUp = rowIndex > 0;
+        final canDown = rowIndex < numberOfRows - 1;
 
         if (canUp) {
-          tileNodes[row][column].up = tileNodes[row - 1][column];
+          tileNode.up = tileNodes[rowIndex - 1][columnIndex];
           if (canLeft) {
-            tileNodes[row][column].upLeft = tileNodes[row - 1][column - 1];
+            tileNode.upLeft = tileNodes[rowIndex - 1][columnIndex - 1];
           } else {
-            tileNodes[row][column].upLeft = _boundary;
+            tileNode.upLeft = _boundary;
           }
           if (canRight) {
-            tileNodes[row][column].upRight = tileNodes[row - 1][column + 1];
+            tileNode.upRight = tileNodes[rowIndex - 1][columnIndex + 1];
           } else {
-            tileNodes[row][column].upRight = _boundary;
+            tileNode.upRight = _boundary;
           }
         } else {
-          tileNodes[row][column].up = _boundary;
-          tileNodes[row][column].upRight = _boundary;
-          tileNodes[row][column].upLeft = _boundary;
+          tileNode.up = _boundary;
+          tileNode.upRight = _boundary;
+          tileNode.upLeft = _boundary;
         }
 
         if (canDown) {
-          tileNodes[row][column].down = tileNodes[row + 1][column];
+          tileNode.down = tileNodes[rowIndex + 1][columnIndex];
 
           if (canRight) {
-            tileNodes[row][column].downRight = tileNodes[row + 1][column + 1];
+            tileNode.downRight = tileNodes[rowIndex + 1][columnIndex + 1];
           } else {
-            tileNodes[row][column].downRight = _boundary;
+            tileNode.downRight = _boundary;
           }
 
           if (canLeft) {
-            tileNodes[row][column].downLeft = tileNodes[row + 1][column - 1];
+            tileNode.downLeft = tileNodes[rowIndex + 1][columnIndex - 1];
           } else {
-            tileNodes[row][column].downLeft = _boundary;
+            tileNode.downLeft = _boundary;
           }
         } else {
-          tileNodes[row][column].down = _boundary;
-          tileNodes[row][column].downRight = _boundary;
-          tileNodes[row][column].downLeft = _boundary;
+          tileNode.down = _boundary;
+          tileNode.downRight = _boundary;
+          tileNode.downLeft = _boundary;
         }
 
         if (canLeft) {
-          tileNodes[row][column].left = tileNodes[row][column - 1];
+          tileNode.left = tileNodes[rowIndex][columnIndex - 1];
         } else {
-          tileNodes[row][column].left = _boundary;
+          tileNode.left = _boundary;
         }
 
         if (canRight) {
-          tileNodes[row][column].right = tileNodes[row][column + 1];
+          tileNode.right = tileNodes[rowIndex][columnIndex + 1];
         } else {
-          tileNodes[row][column].right = _boundary;
+          tileNode.right = _boundary;
         }
       }
     }
@@ -325,9 +291,9 @@ extension SceneFunctions on Scene {
     final projectedY = x + y;
     if (projectedY < 0) return tileBoundary;
     final row = projectedY ~/ _tileSize;
-    if (row >= rows) return tileBoundary;
+    if (row >= numberOfRows) return tileBoundary;
     final column = projectedX ~/ _tileSize;
-    if (column >= columns) return tileBoundary;
+    if (column >= numberOfColumns) return tileBoundary;
     return this.tiles[row][column];
   }
 
@@ -337,9 +303,9 @@ extension SceneFunctions on Scene {
     final projectedY = x + y; // projectedToWorldY(x, y)
     if (projectedY < 0) return _boundary;
     final row = projectedY ~/ _tileSize;
-    if (row >= rows) return _boundary;
+    if (row >= numberOfRows) return _boundary;
     final column = projectedX ~/ _tileSize;
-    if (column >= columns) return _boundary;
+    if (column >= numberOfColumns) return _boundary;
     return tileNodes[row][column];
   }
 

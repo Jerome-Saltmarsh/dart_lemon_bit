@@ -6,6 +6,8 @@ import 'package:bleed_common/constants.dart';
 import 'package:bleed_common/enums/ObjectType.dart';
 import 'package:bleed_common/enums/ProjectileType.dart';
 import 'package:bleed_common/enums/Shade.dart';
+import 'package:bleed_common/tileTypeToObjectType.dart';
+import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
 import 'package:gamestream_flutter/modules/isometric/constants.dart';
@@ -28,6 +30,27 @@ class IsometricActions {
   final _atlasTilesY = atlas.tiles.y;
 
   IsometricActions(this.state, this.queries, this.constants, this.properties);
+
+  void refreshGeneratedObjects() {
+    final tiles = state.tiles;
+    final totalRows = tiles.length;
+    final totalColumns = totalRows > 0 ? tiles[0].length : 0;
+    for (var rowIndex = 0; rowIndex < totalRows; rowIndex++) {
+       final row = tiles[rowIndex];
+       for (var columnIndex = 0; columnIndex < totalColumns; columnIndex++){
+         final tile = row[columnIndex];
+         final objectType = tileTypeToObjectType[tile];
+         if (objectType == null) continue;
+         final env = EnvironmentObject(
+             x: getTileWorldX(rowIndex, columnIndex),
+             y: getTileWorldY(rowIndex, columnIndex) + halfTileSize,
+             type: objectType,
+             radius: 0
+         );
+         state.environmentObjects.add(env);
+       }
+    }
+  }
 
   void applyDynamicShadeToTileSrc() {
     final tileSize = constants.tileSize;
@@ -183,7 +206,6 @@ class IsometricActions {
   }
 
   void resetTilesSrcDst() {
-    // print("isometric.actions.resetTilesSrcDst()");
     final tiles = state.tiles;
     final tileSize = constants.tileSize;
     final tileSizeHalf = tileSize / 2;
