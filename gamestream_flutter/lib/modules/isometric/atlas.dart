@@ -35,6 +35,7 @@ class _Atlas {
   final shades = _Shades();
   final tiles = Vector2(4543,  1);
   final rockWall = Vector2(1265, 1);
+  final blockGrass = Vector2(5981.0, 0);
   final witch = _Witch();
   final archer = _Archer();
   final knight = _Knight();

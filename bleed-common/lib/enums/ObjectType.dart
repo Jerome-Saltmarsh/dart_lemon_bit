@@ -16,6 +16,7 @@ enum ObjectType {
   LongGrass,
   Rock_Wall,
   Flag,
+  Block_Grass,
 }
 
 final List<ObjectType> objectTypes = ObjectType.values;

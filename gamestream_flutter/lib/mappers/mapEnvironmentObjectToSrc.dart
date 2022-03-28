@@ -17,6 +17,7 @@ const Map<ObjectType, double> environmentObjectWidth = {
   ObjectType.Palisade_H: 48,
   ObjectType.Palisade_V: 48,
   ObjectType.Rock_Wall: 48,
+  ObjectType.Block_Grass: 48,
   ObjectType.Rock: 48,
   ObjectType.Grave: 48,
   ObjectType.Tree_Stump: 48,
@@ -45,7 +46,8 @@ const Map<ObjectType, double> environmentObjectHeight = {
   ObjectType.House01: 150,
   ObjectType.House02: 150,
   ObjectType.MystEmitter: 48,
-  ObjectType.Flag: 48
+  ObjectType.Flag: 48,
+  ObjectType.Block_Grass: 100,
 };
 
 const Map<ObjectType, int> environmentObjectIndex = {
@@ -90,6 +92,7 @@ final Map<ObjectType, Vector2> objectTypeSrcPosition = {
   ObjectType.Palisade_H: _translations.palisades,
   ObjectType.MystEmitter: atlas.circle,
   ObjectType.Rock_Wall: atlas.rockWall,
+  ObjectType.Block_Grass: atlas.blockGrass,
 };
 
 final _ambient = modules.isometric.state.ambient;

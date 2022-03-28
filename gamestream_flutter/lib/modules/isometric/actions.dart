@@ -1,8 +1,6 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:gamestream_flutter/classes/Character.dart';
-import 'package:bleed_common/ObjectType.dart';
 import 'package:bleed_common/Tile.dart';
 import 'package:bleed_common/constants.dart';
 import 'package:bleed_common/enums/ObjectType.dart';
@@ -26,6 +24,8 @@ class IsometricActions {
   final IsometricQueries queries;
   final IsometricConstants constants;
   final IsometricProperties properties;
+  final _atlasTilesX = atlas.tiles.x;
+  final _atlasTilesY = atlas.tiles.y;
 
   IsometricActions(this.state, this.queries, this.constants, this.properties);
 
@@ -177,6 +177,7 @@ class IsometricActions {
       state.minColumn = state.maxColumn;
     }
   }
+
   bool _isBridgeOrWater(Tile tile){
     return tile != Tile.Water && tile != Tile.Bridge;
   }
@@ -252,8 +253,8 @@ class IsometricActions {
       tilesDst[index1] = 0;
       tilesDst[index2] = getTileWorldX(row, column) - tileSizeHalf;
       tilesDst[index3] = getTileWorldY(row, column);
-      tilesSrc[index0] = atlas.tiles.x + tileLeft[i];
-      tilesSrc[index1] = atlas.tiles.y;
+      tilesSrc[index0] = _atlasTilesX + tileLeft[i];
+      tilesSrc[index1] = _atlasTilesY;
       tilesSrc[index2] = tilesSrc[index0] + tileSize;
       tilesSrc[index3] = tilesSrc[index1] + tileSize;
     }
@@ -311,7 +312,14 @@ class IsometricActions {
   }
 
   void removeGeneratedEnvironmentObjects(){
-    state.environmentObjects.removeWhere((env) => isGeneratedAtBuild(env.type));
+    const generated = [
+      ObjectType.Palisade,
+      ObjectType.Palisade_H,
+      ObjectType.Palisade_V,
+      ObjectType.Rock_Wall,
+      ObjectType.Block_Grass,
+    ];
+    state.environmentObjects.removeWhere((env) => generated.contains(env));
   }
 
   void cameraCenterMap(){
