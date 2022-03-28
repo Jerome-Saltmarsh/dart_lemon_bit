@@ -58,13 +58,12 @@
 [ ] Weapon: Shovel    
 [ ] Weapon: Crowbar    
 [ ] (MMO) Save / Load Character   
+[ ] Unlock portals
 [ALPHA-RELEASE]
-[ ] Hover inventory context menu
 [ ] Slot Cooldown
 [ ] Fix fireball explosion
 [ ] Bow Spells,
 [ ] Sword Spells, Strong Swing
-[ ] Shop becomes visible when interact with NPC
 [ ] Experience Bar
 [ ] FIX Flashing Particles  
 [ ] FIX Myst Particle Render order   
@@ -74,10 +73,13 @@
 [ ] Structure System
 [ ] Spawn Allies that follow you    
 [ ] Loot System
-[ ] Grass Ledge Block    
 [ ] Tile Flowers      
 [ ] Send Message to All or to Allies only    
+[ ] Design Store Keeper Model
 [ ] Click to pickup loot    
+[ ] Grass Ledge Block    
+[ ] Refactor: Render walls as Tile    
+[x] Shop becomes visible when nearby npc shop
 [x] Highlight Armour Slot    
 [x] Highlight Weapon Slot    
 [x] Fix water Bridge Tile    

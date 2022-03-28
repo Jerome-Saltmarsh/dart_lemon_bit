@@ -42,7 +42,7 @@ class CoreEvents {
         if (state.statusPrevious.value == GameStatus.Awaiting_Players){
           audio.gong();
         }
-        audio.playSong();
+        audio.playRandomSong();
         engine.fullScreenEnter();
         break;
       default:

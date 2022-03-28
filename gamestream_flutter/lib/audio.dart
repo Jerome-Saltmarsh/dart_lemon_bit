@@ -10,6 +10,18 @@ final audio = _Audio();
 
 class _Audio {
 
+  _Audio(){
+    _musicPlayer.setReleaseMode(ReleaseMode.LOOP);
+    _musicPlayer.onPlayerCompletion.listen((event) {
+       playRandomSong();
+    });
+  }
+
+  final songs = [
+    'song01',
+    'song02',
+  ];
+
   final soundEnabled = Cache(key: 'audio-enabled', value: true);
   final musicEnabled = Cache(key: 'music-enabled', value: true, onChanged: (bool value){
     print("music enabled: $value");
@@ -20,8 +32,16 @@ class _Audio {
      }
   });
 
-  void playSong(){
-    _playMusic('song01.mp3');
+  void playRandomSong(){
+    _playMusic(randomItem(songs));
+  }
+
+  void playSong01(){
+    _playMusic('song01');
+  }
+
+  void playSong02(){
+    _playMusic('song02');
   }
 
   void stopMusic(){
@@ -194,7 +214,7 @@ class _Audio {
     _musicPlayer.stop();
     if (!musicEnabled.value) return;
     _musicPlayer.play(
-        'assets/audio/music/$name',
+        'assets/audio/music/$name.mp3',
         isLocal: true,
     );
   }
