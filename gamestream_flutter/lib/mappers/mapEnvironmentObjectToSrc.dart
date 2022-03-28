@@ -12,7 +12,7 @@ import 'package:lemon_math/Vector2.dart';
 final _translations = _Translations();
 final _torchHeight = environmentObjectHeight[ObjectType.Torch]!;
 
-const Map<ObjectType, double> environmentObjectWidth = {
+const environmentObjectWidth = <ObjectType, double> {
   ObjectType.Palisade: 48,
   ObjectType.Palisade_H: 48,
   ObjectType.Palisade_V: 48,
@@ -31,7 +31,7 @@ const Map<ObjectType, double> environmentObjectWidth = {
   ObjectType.Flag: 48,
 };
 
-const Map<ObjectType, double> environmentObjectHeight = {
+const environmentObjectHeight = <ObjectType, double> {
   ObjectType.Palisade: 100,
   ObjectType.Palisade_H: 100,
   ObjectType.Palisade_V: 100,
@@ -50,7 +50,7 @@ const Map<ObjectType, double> environmentObjectHeight = {
   ObjectType.Block_Grass: 100,
 };
 
-const Map<ObjectType, int> environmentObjectIndex = {
+const environmentObjectIndex = <ObjectType, int> {
   ObjectType.Rock: 0,
   ObjectType.Grave: 1,
   ObjectType.Tree_Stump: 2,
@@ -69,14 +69,14 @@ const Map<ObjectType, int> environmentObjectIndex = {
 };
 
 class _Translations {
-  final Vector2 objects48 = Vector2(5592, 1);
-  final Vector2 trees  = Vector2(2049, 1);
-  final Vector2 objects150  = Vector2(1748, 1);
-  final Vector2 palisades  = Vector2(1314, 1);
-  final Vector2 torches = Vector2(2146, 1 );
+  final objects48 = Vector2(5592, 1);
+  final trees  = Vector2(2049, 1);
+  final objects150  = Vector2(1748, 1);
+  final palisades  = Vector2(1314, 1);
+  final torches = Vector2(2146, 1 );
 }
 
-final Map<ObjectType, Vector2> objectTypeSrcPosition = {
+final objectTypeSrcPosition = <ObjectType, Vector2> {
   ObjectType.Rock: _translations.objects48,
   ObjectType.Grave: _translations.objects48,
   ObjectType.Tree_Stump: _translations.objects48,

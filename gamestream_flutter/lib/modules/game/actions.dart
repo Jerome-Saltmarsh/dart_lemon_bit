@@ -13,6 +13,8 @@ import 'package:lemon_math/randomItem.dart';
 
 import 'state.dart';
 
+final _bulletHoles = game.bulletHoles;
+
 class GameActions {
 
   final GameState state;
@@ -20,9 +22,11 @@ class GameActions {
   GameActions(this.state);
 
   void spawnBulletHole(double x, double y){
-    game.bulletHoles[game.bulletHoleIndex].x = x;
-    game.bulletHoles[game.bulletHoleIndex].y = y;
-    game.bulletHoleIndex = (game.bulletHoleIndex + 1) % game.settings.maxBulletHoles;
+    final bulletHole = _bulletHoles[game.bulletHoleIndex];
+    bulletHole.x = x;
+    bulletHole.y = y;
+    game.bulletHoleIndex++;
+    game.bulletHoleIndex %= _bulletHoles.length;
   }
 
   void playerPerform() {

@@ -1,6 +1,5 @@
 
 import 'package:bleed_common/AbilityType.dart';
-import 'package:bleed_common/CharacterState.dart';
 import 'package:bleed_common/GameError.dart';
 import 'package:bleed_common/GameEventType.dart';
 import 'package:bleed_common/GameStatus.dart';
@@ -10,15 +9,12 @@ import 'package:bleed_common/OrbType.dart';
 import 'package:bleed_common/ServerResponse.dart';
 import 'package:bleed_common/SlotType.dart';
 import 'package:bleed_common/Tile.dart';
-import 'package:bleed_common/WeaponType.dart';
 import 'package:bleed_common/constants.dart';
 import 'package:bleed_common/enums/ObjectType.dart';
 import 'package:bleed_common/enums/ProjectileType.dart';
-import 'package:gamestream_flutter/classes/Ability.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
-import 'package:gamestream_flutter/classes/Weapon.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/parser/parseCubePlayers.dart';
 import 'package:gamestream_flutter/state/game.dart';
@@ -320,17 +316,6 @@ double environmentObjectY(EnvironmentObject environmentObject) {
   return environmentObject.y;
 }
 
-// void _parsePaths() {
-//   isometric.state.paths.clear();
-//   while (!_simiColonConsumed()) {
-//     final List<Vector2> path = [];
-//     isometric.state.paths.add(path);
-//     while (!_commaConsumed()) {
-//       path.add(_consumeVector2());
-//     }
-//   }
-// }
-
 void _parseTiles() {
   print("parse.tiles()");
   final isometric = modules.isometric;
@@ -386,9 +371,6 @@ void _parseGameJoined() {
   player.uuid.value = _consumeString();
   game.id = consumeInt();
   player.team = consumeInt();
-  // final byteIdString = _consumeString();
-  // player.byteId = byteIdString.split(":").map(int.parse).toList();
-  // print("ServerResponse.Game_Joined: playerId: ${player.id} gameId: ${game.id} $byteId");
 }
 
 ObjectType _consumeEnvironmentObjectType() {
@@ -403,14 +385,6 @@ void _consumeSpace() {
   while (_currentCharacter == _space) {
     _next();
   }
-}
-
-void _consumeAbility(Ability ability) {
-  ability.type.value = _consumeAbilityType();
-  ability.level.value = consumeInt();
-  ability.cooldown.value = consumeInt();
-  ability.cooldownRemaining.value = consumeInt();
-  ability.magicCost.value = consumeInt();
 }
 
 int consumeInt() {
@@ -432,22 +406,6 @@ int _consumeIntUnsafe() {
 
 int _consumeSingleDigitInt() {
   return int.parse(_consumeSingleCharacter());
-}
-
-WeaponType _consumeWeaponType() {
-  return weaponTypes[_consumeSingleDigitInt()];
-}
-
-Weapon _consumeWeapon() {
-  final type = _consumeWeaponType();
-  final rounds = _consumeIntUnsafe();
-  final capacity = _consumeIntUnsafe();
-  final damage = consumeInt();
-  return Weapon(type: type, rounds: rounds, capacity: capacity, damage: damage);
-}
-
-CharacterState _consumeCharacterState() {
-  return characterStates[_consumeSingleDigitInt()];
 }
 
 Tile _consumeTile() {

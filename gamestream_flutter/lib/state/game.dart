@@ -11,7 +11,6 @@ final game = _Game();
 
 class _Game {
   final gameEvents = Map<int, bool>();
-  final settings = _Settings();
   final type = Watch(GameType.None);
   final lobby = _Lobby();
   final countDownFramesRemaining = Watch(0);
@@ -67,11 +66,6 @@ class _Lobby {
   List<_LobbyPlayer> getPlayersOnTeam(int team) {
     return players.where((element) => element.team == team).toList();
   }
-}
-
-class _Settings {
-  int floatingTextDuration = 100;
-  final maxBulletHoles = 50;
 }
 
 class _LobbyPlayer {

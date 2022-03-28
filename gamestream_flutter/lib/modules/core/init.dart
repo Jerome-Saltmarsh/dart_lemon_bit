@@ -4,9 +4,7 @@ import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Projectile.dart';
-import 'package:bleed_common/CharacterType.dart';
 import 'package:bleed_common/ItemType.dart';
-import 'package:bleed_common/WeaponType.dart';
 import 'package:bleed_common/enums/ProjectileType.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/sharedPreferences.dart';
@@ -17,11 +15,11 @@ import 'package:lemon_math/Vector2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-final isLocalHost = Uri.base.host == 'localhost';
+final isLocalHost = Uri.base.host == 'localhost'; // TODO move to lemon-engine
 
 Future init() async {
   await loadSharedPreferences();
-  isometric.state.image = await loadImage('images/atlas.png');
+  isometric.state.image = await loadImage('images/atlas.png'); // TODO move to lemon-engine
   engine.image = isometric.state.image;
   initializeGameInstances();
   initializeEventListeners();
@@ -40,11 +38,7 @@ void initializeGameInstances() {
     isometric.state.items.add(Item(type: ItemType.Handgun, x: 0, y: 0));
   }
 
-  for (var i = 0; i < 1000; i++) {
-    game.crates.add(Vector2(0, 0));
-  }
-
-  for (var i = 0; i < game.settings.maxBulletHoles; i++) {
+  for (var i = 0; i < 50; i++) {
     game.bulletHoles.add(Vector2(0, 0));
   }
 
@@ -60,7 +54,7 @@ void initializeGameInstances() {
   }
 
   game.players.clear();
-  for (int i = 0; i < 500; i++) {
+  for (int i = 0; i < 300; i++) {
     game.players.add(Character());
   }
 }
@@ -75,7 +69,6 @@ Future loadSharedPreferences() async {
 }
 
 void _loadStateFromSharedPreferences(){
-  print("_loadStateFromSharedPreferences()");
 
   if (storage.serverSaved) {
     core.state.region.value = storage.serverType;
@@ -84,8 +77,4 @@ void _loadStateFromSharedPreferences(){
   if (storage.authorizationRemembered) {
     core.actions.login(storage.recallAuthorization());
   }
-
-  // userService.getVersion().then((version) {
-  //     print("server-version: $version");
-  // });
 }

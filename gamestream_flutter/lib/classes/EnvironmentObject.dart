@@ -10,7 +10,6 @@ class EnvironmentObject extends Vector2 {
   late int row;
   late int column;
   final ObjectType type;
-  final bool generated;
   late bool isHouse;
   late bool isTorch;
 
@@ -35,7 +34,6 @@ class EnvironmentObject extends Vector2 {
     required double y,
     required this.type,
     required this.radius,
-    this.generated = false,
   }) :super(x, y) {
     width = environmentObjectWidth[type]!;
     height = environmentObjectHeight[type]!;
