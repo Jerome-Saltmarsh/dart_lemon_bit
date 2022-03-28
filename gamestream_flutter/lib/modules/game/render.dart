@@ -160,15 +160,6 @@ class GameRender {
     }
   }
 
-  void _drawFloatingTexts() {
-    for (final floatingText in isometric.state.floatingText) {
-      if (floatingText.duration == 0) continue;
-      floatingText.duration--;
-      floatingText.y -= 0.5;
-      engine.draw.text(floatingText.value, floatingText.x, floatingText.y, style: style.floatingTextStyle);
-    }
-  }
-
   void _renderPlayerNames() {
     final total = game.totalPlayers.value;
     for (var i = 0; i < total; i++) {

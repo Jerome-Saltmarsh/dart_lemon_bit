@@ -543,16 +543,11 @@ class IsometricActions {
     }
   }
 
-  void applyEmissionFromItems() {
-    for (final item in state.items) {
-      applyShadeDynamicPositionUnchecked(item.x, item.y, Shade.Bright);
-    }
-  }
-
   void applyEmissionFromProjectiles() {
     final total = game.totalProjectiles;
+    final projectiles = game.projectiles;
     for (var i = 0; i < total; i++) {
-      final projectile = game.projectiles[i];
+      final projectile = projectiles[i];
       if (projectile.type != ProjectileType.Fireball) continue;
       emitLightBrightSmall(state.dynamic, projectile.x, projectile.y);
     }

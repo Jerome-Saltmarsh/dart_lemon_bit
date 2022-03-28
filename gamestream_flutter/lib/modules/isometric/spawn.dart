@@ -445,20 +445,4 @@ class IsometricSpawn {
   }){
     spawnEffect(x: x, y: y, type: EffectType.FreezeCircle, duration: 45);
   }
-
-  void spawnFloatingText(double x, double y, dynamic value) {
-    for (final text in isometric.state.floatingText) {
-      if (text.duration > 0) continue;
-      text.duration = game.settings.floatingTextDuration;
-      text.x = x;
-      text.y = y;
-      text.value = value.toString();
-      return;
-    }
-    isometric.state.floatingText.add(FloatingText(
-        x: x,
-        y: y,
-        value: value.toString(),
-        duration: game.settings.floatingTextDuration));
-  }
 }
