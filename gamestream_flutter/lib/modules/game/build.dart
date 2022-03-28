@@ -28,6 +28,7 @@ import 'package:lemon_watch/watch_builder.dart';
 
 import '../../toString.dart';
 import 'state.dart';
+import 'package:lemon_watch/watch.dart';
 
 const empty = SizedBox();
 
@@ -192,28 +193,33 @@ class GameBuild {
                 bottom: _pad,
                 child: buildBottomRight()),
             buildTextBox(),
-            Positioned(
-              child: Row(
-                children: [
-                  buildToggleEnabledSound(),
-                  buildToggleEnabledMusic(),
-                  width8,
-                  ui.widgets.exit,
-                  if (core.state.account.isNotNull)
-                    ui.widgets.saveCharacter,
-                  if (core.state.account.isNotNull)
-                    ui.widgets.loadCharacter,
-                ],
-              ),
-              right: _pad,
-              top: _pad,
-            ),
+            visibleBuilder(modules.hud.menuVisible, buildMenu()),
             if (!alive)
             respawnButton(),
             _panelHighlightedStoreSlot(),
             buildHighlightedSlot(),
           ]);
     });
+  }
+
+  Widget buildMenu(){
+    return Positioned(
+      right: 8.0,
+      top: 8.0,
+      child: Row(
+        children: [
+          buildToggleEnabledSound(),
+          width8,
+          buildToggleEnabledMusic(),
+          width8,
+          ui.widgets.exit,
+          if (core.state.account.isNotNull)
+            ui.widgets.saveCharacter,
+          if (core.state.account.isNotNull)
+            ui.widgets.loadCharacter,
+        ],
+      ),
+    );
   }
 
   Widget buildHighlightedSlot(){
@@ -812,6 +818,12 @@ class GameBuild {
     });
   }
 
+  Widget get mousePositionScreen {
+    return Refresh((){
+      return text("Mouse Screen: x: ${engine.mousePosition.x.toInt()}, y: ${engine.mousePosition.y.toInt()}");
+    });
+  }
+
   Widget get cameraZoom {
     return Refresh((){
       return text("Zoom: ${engine.zoom}");
@@ -850,7 +862,7 @@ class GameBuild {
 
   Widget buildToggleEnabledSound(){
     return WatchBuilder(audio.soundEnabled, (bool enabled){
-      return button(text("Audio", decoration: enabled
+      return button(text("Sound", decoration: enabled
           ? TextDecoration.none
           : TextDecoration.lineThrough
       ), audio.toggleEnabledSound);
@@ -878,9 +890,8 @@ class GameBuild {
           buildTotalParticles,
           buildActiveParticles,
           tileAtMouse,
-          // offscreenTiles,
-          // onScreenTiles,
           mousePositionWorld,
+          mousePositionScreen,
           byteCountWatcher,
           bufferLengthWatcher,
           playerPosition,
@@ -891,3 +902,12 @@ class GameBuild {
   }
 }
 
+
+Widget visibleBuilder(Watch<bool> watch, Widget widget){
+   return WatchBuilder(watch, (bool visible){
+       if (!visible){
+          return const SizedBox();
+       }
+       return widget;
+   });
+}

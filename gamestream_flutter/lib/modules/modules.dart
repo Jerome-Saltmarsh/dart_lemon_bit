@@ -1,11 +1,11 @@
 
+import 'package:gamestream_flutter/modules/hud/hud_state.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
 
 import 'core/module.dart';
 import 'editor/module.dart';
 import 'game/module.dart';
 import 'website/module.dart';
-
 
 final modules = Modules();
 
@@ -15,6 +15,7 @@ class Modules {
   final editor = EditorModule();
   final game = GameModule();
   final isometric = IsometricModule();
+  final hud = HudState();
 }
 
 CoreModule get core => modules.core;

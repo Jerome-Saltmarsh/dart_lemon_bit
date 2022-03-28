@@ -207,7 +207,7 @@ WatchBuilder<WebsiteDialog> buildWatchBuilderDialog() {
           return dialog(child: text("Subscription Required"));
 
         case WebsiteDialog.Games:
-          return buildDialogGames();
+          return build.gamesList();
 
         case WebsiteDialog.Confirm_Logout:
           return dialog(child: text("Confirm Logout"));
@@ -216,15 +216,6 @@ WatchBuilder<WebsiteDialog> buildWatchBuilderDialog() {
           return buildDialogConfirmCancelSubscription();
       }
     });
-}
-
-Widget buildDialogGames() {
-  return WatchBuilder(game.type, (GameType gameType) {
-    // if (gameType == GameType.None) {
-      return build.gamesList();
-    // }
-    // return buildDialogGameTypeSelected(gameType);
-  });
 }
 
 Widget buildDialogGameTypeSelected(GameType gameType) {

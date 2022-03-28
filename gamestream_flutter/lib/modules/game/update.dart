@@ -7,8 +7,6 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/state/game.dart';
 import 'package:gamestream_flutter/ui/state/hud.dart';
-import 'package:gamestream_flutter/utils.dart';
-import 'package:gamestream_flutter/webSocket.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'state.dart';
@@ -23,8 +21,6 @@ class GameUpdate {
   GameUpdate(this.state);
 
   void update() {
-    if (!webSocket.connected) return;
-    if (_player.uuid.value.isEmpty) return;
 
     switch(game.type.value){
       case GameType.None:
@@ -44,12 +40,12 @@ class GameUpdate {
     }
 
     state.framesSinceOrbAcquired++;
-
-    // for (final character in game.humans) {
-    //    if(!character.state.running) continue;
-    //    if (character.frame % 4 != 0) continue;
-    //    audio.footstep(character.x, character.y);
-    // }
+    final mousePosition = engine.mousePosition;
+    modules.hud.menuVisible.value =
+        mousePosition.y < 200
+            &&
+        mousePosition.x > engine.screen.width - 300
+    ;
 
     sendRequestUpdatePlayer();
   }
