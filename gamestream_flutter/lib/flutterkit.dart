@@ -7,7 +7,10 @@ import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:lemon_engine/engine.dart';
 
-final empty = SizedBox();
+import 'package:lemon_watch/watch_builder.dart';
+import 'package:lemon_watch/watch.dart';
+
+const empty = SizedBox();
 
 
 class _FlutterKitConfiguration {
@@ -361,4 +364,19 @@ Widget buildDecorationImage({
       borderRadius: borderRadius4,
     ),
   );
+}
+
+Widget visibleBuilder(Watch<bool> watch, Widget widget){
+  return WatchBuilder(watch, (bool visible){
+    if (!visible){
+      return const SizedBox();
+    }
+    return widget;
+  });
+}
+
+Widget boolBuilder(Watch<bool> watch, {required Widget widgetTrue, required Widget widgetFalse}){
+  return WatchBuilder(watch, (bool visible){
+    return visible ? widgetTrue : widgetFalse;
+  });
 }

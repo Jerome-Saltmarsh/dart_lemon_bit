@@ -28,7 +28,6 @@ import 'package:lemon_watch/watch_builder.dart';
 
 import '../../toString.dart';
 import 'state.dart';
-import 'package:lemon_watch/watch.dart';
 
 const empty = SizedBox();
 
@@ -193,7 +192,7 @@ class GameBuild {
                 bottom: _pad,
                 child: buildBottomRight()),
             buildTextBox(),
-            visibleBuilder(modules.hud.menuVisible, buildMenu()),
+            buildTopRight(),
             if (!alive)
             respawnButton(),
             _panelHighlightedStoreSlot(),
@@ -202,23 +201,25 @@ class GameBuild {
     });
   }
 
-  Widget buildMenu(){
+  Widget buildTopRight(){
+
+    final menu = Row(
+      children: [
+        buildToggleEnabledSound(),
+        width8,
+        buildToggleEnabledMusic(),
+        width8,
+        ui.widgets.exit,
+        if (core.state.account.isNotNull)
+          ui.widgets.saveCharacter,
+        if (core.state.account.isNotNull)
+          ui.widgets.loadCharacter,
+      ],
+    );
     return Positioned(
       right: 8.0,
       top: 8.0,
-      child: Row(
-        children: [
-          buildToggleEnabledSound(),
-          width8,
-          buildToggleEnabledMusic(),
-          width8,
-          ui.widgets.exit,
-          if (core.state.account.isNotNull)
-            ui.widgets.saveCharacter,
-          if (core.state.account.isNotNull)
-            ui.widgets.loadCharacter,
-        ],
-      ),
+      child: boolBuilder(modules.hud.menuVisible, widgetTrue: menu, widgetFalse: text("Menu")),
     );
   }
 
@@ -902,12 +903,3 @@ class GameBuild {
   }
 }
 
-
-Widget visibleBuilder(Watch<bool> watch, Widget widget){
-   return WatchBuilder(watch, (bool visible){
-       if (!visible){
-          return const SizedBox();
-       }
-       return widget;
-   });
-}
