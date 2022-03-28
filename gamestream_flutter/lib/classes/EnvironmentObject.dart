@@ -52,7 +52,7 @@ class EnvironmentObject extends Vector2 {
     }
 
     final translation = objectTypeSrcPosition[type]!;
-    final index =  environmentObjectIndex[type]!;
+    final index =  environmentObjectIndex[type] ?? 0;
     srcX = index * width + translation.x;
   }
 

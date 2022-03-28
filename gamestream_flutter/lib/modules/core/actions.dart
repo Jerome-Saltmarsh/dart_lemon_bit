@@ -293,6 +293,11 @@ class CoreActions {
     core.state.mode.value = core.state.mode.value = Mode.Player;
   }
 
+  void setModeWebsite() {
+    print("actions.setModePlay()");
+    core.state.mode.value = core.state.mode.value = Mode.Website;
+  }
+
   void openMapEditor(){
     core.state.mode.value = Mode.Editor;
     modules.isometric.state.hours.value = 12;

@@ -92,6 +92,9 @@ class CoreEvents {
     print("core.events.onGameModeChanged($mode)");
     engine.clearCallbacks();
     core.actions.clearState();
+    engine.drawCanvas.value = null;
+    engine.drawCanvasAfterUpdate = true;
+    engine.keyPressedHandlers = {};
 
     switch(mode){
 

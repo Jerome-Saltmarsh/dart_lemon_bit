@@ -193,7 +193,7 @@ class EditorBuild {
 
   Widget _buttonSave() => text("Save", onPressed: editor.actions.showDialogSave);
 
-  Widget _buttonExit() => text("Exit", onPressed: core.actions.setModePlay);
+  Widget _buttonExit() => text("Exit", onPressed: core.actions.setModeWebsite);
 
   Widget _buildEditorDialog(){
     return WatchBuilder(editor.state.dialog, (EditorDialog dialog){
