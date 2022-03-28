@@ -185,9 +185,16 @@ class GameBuild {
             Positioned(
                 left: _pad,
                 bottom: _pad,
-                child: WatchBuilder(state.debugPanelVisible, (bool visible){
-                  return visible ? toggleDebugMode() : empty;
-                })),
+                child: visibleBuilder(state.debugPanelVisible, Row(
+                  children: [
+                    toggleDebugMode(),
+                    width8,
+                    button("Edit Map", (){
+                      core.actions.openMapEditor(newScene: false);
+                    }),
+                  ],
+                )),
+            ),
             if (alive)
             Positioned(
                 right: _pad,

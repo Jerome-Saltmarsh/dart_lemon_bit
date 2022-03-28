@@ -91,9 +91,9 @@ class CoreEvents {
   void onModeChanged(Mode mode){
     print("core.events.onGameModeChanged($mode)");
     engine.clearCallbacks();
-    core.actions.clearState();
     engine.drawCanvas.value = null;
     engine.drawCanvasAfterUpdate = true;
+    engine.update = null;
     engine.keyPressedHandlers = {};
 
     switch(mode){
@@ -116,7 +116,7 @@ class CoreEvents {
 
       case Mode.Editor:
         modules.isometric.events.register();
-        editor.actions.newScene();
+        // editor.actions.newScene();
         engine.drawCanvas.value = editor.render.render;
         engine.drawCanvasAfterUpdate = true;
         editor.events.onActivated();

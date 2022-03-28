@@ -36,6 +36,7 @@ const environmentObjectHeight = <ObjectType, double> {
   ObjectType.Palisade_H: 100,
   ObjectType.Palisade_V: 100,
   ObjectType.Rock_Wall: 100,
+  ObjectType.Block_Grass: 100,
   ObjectType.Rock: 48,
   ObjectType.Grave: 48,
   ObjectType.Tree_Stump: 48,
@@ -47,7 +48,6 @@ const environmentObjectHeight = <ObjectType, double> {
   ObjectType.House02: 150,
   ObjectType.MystEmitter: 48,
   ObjectType.Flag: 48,
-  ObjectType.Block_Grass: 100,
 };
 
 const environmentObjectIndex = <ObjectType, int> {

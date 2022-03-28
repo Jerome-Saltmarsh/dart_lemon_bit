@@ -298,10 +298,13 @@ class CoreActions {
     core.state.mode.value = core.state.mode.value = Mode.Website;
   }
 
-  void openMapEditor(){
+  void openMapEditor({bool newScene = true}){
     core.state.mode.value = Mode.Editor;
     modules.isometric.state.hours.value = 12;
     modules.isometric.state.minutes.value = 0;
+    if (newScene) {
+      editor.actions.newScene();
+    }
   }
 
   void exitGame(){
