@@ -12,7 +12,6 @@ class IsometricEvents {
 
   void register(){
     if (state.eventsRegistered) return;
-    // print("isometric.events.register()");
     state.eventsRegistered = true;
     isometric.subscriptions.onAmbientChanged = state.ambient.onChanged(onAmbientChanged);
     state.maxAmbientBrightness.onChanged(onMaxAmbientBrightnessChanged);

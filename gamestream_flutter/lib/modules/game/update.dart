@@ -21,17 +21,6 @@ class GameUpdate {
   GameUpdate(this.state);
 
   void update() {
-
-    switch(game.type.value){
-      case GameType.None:
-        break;
-      default:
-        _updateBleed();
-        break;
-    }
-  }
-
-  void _updateBleed(){
     if (core.state.status.value == GameStatus.Finished) return;
     readPlayerInput();
     isometric.update.call();
@@ -44,11 +33,12 @@ class GameUpdate {
     modules.hud.menuVisible.value =
         mousePosition.y < 200
             &&
-        mousePosition.x > engine.screen.width - 300
+            mousePosition.x > engine.screen.width - 300
     ;
 
     sendRequestUpdatePlayer();
   }
+
 
   void cameraFollowPlayer() {
     engine.cameraFollow(_player.x, _player.y, engine.cameraFollowSpeed);

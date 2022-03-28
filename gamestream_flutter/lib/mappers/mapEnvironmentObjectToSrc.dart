@@ -97,7 +97,6 @@ final objectTypeSrcPosition = <ObjectType, Vector2> {
 
 final _ambient = modules.isometric.state.ambient;
 final _isoState = isometric.state;
-final _timeline = core.state.timeline;
 final _torchesY = _translations.torches.y;
 
 void mapEnvironmentObjectToSrc(EnvironmentObject env){
@@ -110,7 +109,7 @@ void mapEnvironmentObjectToSrc(EnvironmentObject env){
   }
   var top = shade * env.height;
   if (env.isTorch && _ambient.value > Shade.Bright){
-    top = _torchesY + (((_timeline.frame + env.frameRandom) % frames) * _torchHeight) + _torchHeight;
+    top = _torchesY + (((engine.animationFrame + env.frameRandom) % frames) * _torchHeight) + _torchHeight;
   }
   engine.mapSrc(x: env.srcX, y: top, width: env.width, height: env.height);
 }

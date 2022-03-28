@@ -98,10 +98,12 @@ class CoreEvents {
       case Mode.Website:
         engine.drawCanvas.value = null;
         engine.drawCanvasAfterUpdate = true;
+        engine.keyPressedHandlers = {};
         break;
 
       case Mode.Player:
         engine.drawCanvas.value = modules.game.render.render;
+        engine.update = modules.game.update.update;
         engine.drawCanvasAfterUpdate = true;
         modules.isometric.events.register();
         modules.game.events.register();
@@ -133,7 +135,6 @@ class CoreEvents {
 
     switch (connection) {
       case Connection.Connected:
-        engine.update = modules.game.update.update;
         core.state.mode.value = Mode.Player;
         if (game.type.value == GameType.Custom){
           final account = core.state.account.value;

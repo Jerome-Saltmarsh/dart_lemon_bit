@@ -1,7 +1,6 @@
 
 
 import 'package:firestore_client/firestoreService.dart';
-import 'package:gamestream_flutter/classes/Timeline.dart';
 import 'package:bleed_common/GameStatus.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -15,7 +14,6 @@ class CoreState {
   final Watch<Region> region = Watch(Region.Australia);
   final String title = "GAMESTREAM";
   final Watch<double> download = Watch(0);
-  final Timeline timeline = Timeline();
   final debug = true;
   final Watch<GameStatus> status = Watch(GameStatus.None);
   final Watch<GameStatus> statusPrevious = Watch(GameStatus.None);

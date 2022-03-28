@@ -247,8 +247,7 @@ class GameRender {
         anchorY: 16,
         translateX: x,
         translateY: y);
-    int frame = core.state.timeline.frame % 4;
-    Rect rect = Rect.fromLTWH(atlas.projectiles.fireball.x, atlas.projectiles.fireball.y + (frame * atlas.projectiles.fireball.size),
+    Rect rect = Rect.fromLTWH(atlas.projectiles.fireball.x, atlas.projectiles.fireball.y + (engine.animationFrame * atlas.projectiles.fireball.size),
         atlas.projectiles.fireball.size, atlas.projectiles.fireball.size);
 
     // TODO use atlas instead

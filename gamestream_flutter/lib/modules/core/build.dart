@@ -15,7 +15,6 @@ import 'package:lemon_engine/game.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import 'init.dart';
-import 'update.dart';
 
 class CoreBuild {
 
@@ -23,7 +22,7 @@ class CoreBuild {
     return Game(
       title: core.state.title,
       init: init,
-      update: update,
+      update: (){},
       buildUI: buildUI,
       drawCanvas: null,
       drawCanvasAfterUpdate: true,
