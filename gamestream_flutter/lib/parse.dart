@@ -175,7 +175,6 @@ void parseState() {
         parseCrates();
         break;
       case ServerResponse.Grenades:
-        _parseGrenades();
         break;
 
       case ServerResponse.Pong:
@@ -354,13 +353,6 @@ void _parseCollectables() {
   game.collectables.clear();
   while (!_simiColonConsumed()) {
     game.collectables.add(consumeInt());
-  }
-}
-
-void _parseGrenades() {
-  game.grenades.clear();
-  while (!_simiColonConsumed()) {
-    game.grenades.add(consumeDouble());
   }
 }
 

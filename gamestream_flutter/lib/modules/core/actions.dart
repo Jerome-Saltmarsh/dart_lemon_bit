@@ -190,7 +190,6 @@ class CoreActions {
     game.totalZombies.value = 0;
     game.totalPlayers.value = 0;
     game.totalProjectiles = 0;
-    game.grenades.clear();
     game.collectables.clear();
     game.bulletHoleIndex = 0;
     isometric.state.particles.clear();

@@ -20,27 +20,26 @@ class _Game {
   final teamSize = Watch(0);
   final numberOfTeams = Watch(0);
   final totalZombies = Watch(0);
-  final royal = _Royal();
-  final List<Character> players = [];
-  final List<Character> zombies = [];
-  final List<Character> interactableNpcs = [];
-  final List<Effect> effects = [];
-  String? customGameName = "";
-  List<int> collectables = [];
-  List<Vector2> crates = [];
-  int cratesTotal = 0;
-  List<EnvironmentObject> torches = [];
-  List<NpcDebug> npcDebug = [];
-  int totalNpcs = 0;
   final totalPlayers = Watch(0);
-  int totalCubes = 0;
-  List<Projectile> projectiles = [];
-  List<Vector2> bulletHoles = [];
-  int bulletHoleIndex = 0;
-  List<double> grenades = [];
-  int id = -1;
-  int totalProjectiles = 0;
-  int itemsTotal = 0;
+  final royal = _Royal();
+  final players = <Character>[];
+  final zombies = <Character>[];
+  final interactableNpcs = <Character>[];
+  final effects = <Effect>[];
+  var torches = <EnvironmentObject>[];
+  var projectiles = <Projectile>[];
+  var collectables = <int>[];
+  var crates = <Vector2>[];
+  var customGameName = "";
+  var cratesTotal = 0;
+  var npcDebug = <NpcDebug>[];
+  var totalNpcs = 0;
+  var totalCubes = 0;
+  var bulletHoles = <Vector2>[];
+  var bulletHoleIndex = 0;
+  var id = -1;
+  var totalProjectiles = 0;
+  var itemsTotal = 0;
 }
 
 class _Royal {
