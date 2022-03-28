@@ -36,6 +36,8 @@ class GameBuild {
   final GameState state;
   final GameActions actions;
 
+  final storeColumnKey = GlobalKey();
+
   final double slotSize = 50;
 
   GameBuild(this.state, this.actions);
@@ -195,7 +197,7 @@ class GameBuild {
             buildTopRight(),
             if (!alive)
             respawnButton(),
-            _panelHighlightedStoreSlot(),
+            buildHighlightedStoreSlot(),
             buildHighlightedSlot(),
           ]);
     });
@@ -262,7 +264,7 @@ class GameBuild {
     });
   }
 
-  WatchBuilder<SlotType> _panelHighlightedStoreSlot() {
+  WatchBuilder<SlotType> buildHighlightedStoreSlot() {
     return WatchBuilder(state.highLightSlotType, (SlotType slotType) {
       if (slotType == SlotType.Empty) return empty;
 
@@ -271,7 +273,17 @@ class GameBuild {
         throw Exception("No SlotTypeCost found for $slotType");
       }
 
+      final storeColumnContext = storeColumnKey.currentContext;
+      if (storeColumnContext != null) {
+        final renderBox = storeColumnContext.findRenderObject() as RenderBox;
+        final offset = renderBox.localToGlobal(Offset.zero);
+        state.highlightPanelPosition.y = offset.dy;
+        state.highlightPanelPosition.x = engine.screen.width - 500;
+      }
+
       return Positioned(
+        right: 220,
+        top: state.highlightPanelPosition.y,
         child: Container(
           padding: padding16,
           color: colours.brownDark,
@@ -312,39 +324,40 @@ class GameBuild {
             ],
           )
         ),
-        // right: (engine.screen.width - engine.mousePosition.x) + 50,
-        // top: engine.mousePosition.y,
-        right: 220,
-        top: state.highlightPanelPosition.y,
       );
     });
   }
 
   Widget buildBottomRight() {
-    return Container(
-            width: 200,
-            padding: padding8,
-            color: colours.brownDark,
-              child: Column(
-                children: [
-                  buildPanelStore(),
-                  height32,
-                  rowOrbs(),
-                  height16,
-                  panel(child: _panelEquipped()),
-                  height16,
-                  panel(child: _panelInventory())
-                ],
-              ),
-        );
+    return Column(
+      children: [
+        buildPanelStore(),
+        height32,
+        Container(
+                width: 200,
+                padding: padding8,
+                color: colours.brownDark,
+                  child: Column(
+                    children: [
+                      rowOrbs(),
+                      height16,
+                      panel(child: _panelEquipped()),
+                      height16,
+                      panel(child: _panelInventory())
+                    ],
+                  ),
+            ),
+      ],
+    );
   }
 
-  Widget panel({required Widget child, Alignment? alignment, EdgeInsets? padding}){
+  Widget panel({required Widget child, Alignment? alignment, EdgeInsets? padding, double? width}){
     return Container(
         color: colours.brownLight,
         child: child,
         alignment: alignment,
         padding: padding,
+        width: width,
     );
   }
 
@@ -405,8 +418,11 @@ class GameBuild {
   Widget buildPanelStore() {
 
     final storeTab = WatchBuilder(state.storeTab, (StoreTab activeStoreTab) {
+
       return Column(
+        key: storeColumnKey,
         children: [
+          Container(child: text("PURCHASE"), padding: EdgeInsets.all(8.0),),
           _storeTabs(activeStoreTab),
           if (activeStoreTab == StoreTab.Weapons)
             _storeTabWeapons(),
@@ -416,13 +432,12 @@ class GameBuild {
             _storeTabItems(),
         ],
       );
+
     });
 
     return panel(
-      child: WatchBuilder(state.player.storeVisible, (bool storeVisible) {
-        if (!storeVisible) return empty;
-        return storeTab;
-      }),
+      child: visibleBuilder(state.player.storeVisible, storeTab),
+      width: 200,
     );
   }
 
@@ -433,6 +448,7 @@ class GameBuild {
               mapStoreTabToIcon(storeTab),
                   () => state.storeTab.value = storeTab,
               borderColor: none,
+             hint: storeTab.name,
              fillColor: activeStoreTab == storeTab ? colours.white618 : colours.white10,
             borderColorMouseOver: none,
             fillColorMouseOver: activeStoreTab == storeTab ? colours.white618 : colours.black618,
@@ -712,12 +728,12 @@ class GameBuild {
     }, builder: (context, isOver) {
 
       if (isOver){
-        final renderObject = context.findRenderObject();
-        if (renderObject != null){
-          final translation = renderObject.getTransformTo(null).getTranslation();
-          state.highlightPanelPosition.x = translation.x;
-          state.highlightPanelPosition.y = translation.y;
-        }
+        // final renderObject = context.findRenderObject();
+        // if (renderObject != null){
+        //   final translation = renderObject.getTransformTo(null).getTranslation();
+        //   state.highlightPanelPosition.x = translation.x;
+        //   state.highlightPanelPosition.y = translation.y;
+        // }
       }
 
 
