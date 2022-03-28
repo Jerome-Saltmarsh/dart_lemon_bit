@@ -1,17 +1,16 @@
 import 'package:flutter/cupertino.dart';
 
-// Constants
-const _orbSize = 20.0;
-
 // Instance
 final resources = _Resources();
 
 // Classes
 class _Resources {
-  final _Icons icons = _Icons();
+  final icons = _Icons();
 }
 
 class _Icons {
+  static const _orbSize = 20.0;
+  final settings = _image("settings", width: 32, height: 32);
   final topaz = _image("orb-topaz", width: _orbSize, height: _orbSize);
   final emerald = _image("orb-emerald", width: _orbSize, height: _orbSize);
   final ruby = _image("orb-ruby", width: _orbSize, height: _orbSize);

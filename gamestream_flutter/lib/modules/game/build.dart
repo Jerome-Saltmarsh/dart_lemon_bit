@@ -219,7 +219,7 @@ class GameBuild {
     return Positioned(
       right: 8.0,
       top: 8.0,
-      child: boolBuilder(modules.hud.menuVisible, widgetTrue: menu, widgetFalse: text("Menu")),
+      child: boolBuilder(modules.hud.menuVisible, widgetTrue: menu, widgetFalse: resources.icons.settings),
     );
   }
 
