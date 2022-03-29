@@ -63,22 +63,30 @@
 [ ] FIX Myst Particle Render order  
 [ ] Tile Flowers      
 [ ] Send Message to All or to Allies only
+[ ] Spawn Allies that follow you    
+[ ] Characters can fall in water and die    
 [ALPHA-RELEASE]
+[ ] FIX Sometimes zombies disappear on death    
 [ ] Slot Cooldown
 [ ] Fix fireball explosion
 [ ] Bow Spells,
 [ ] Sword Spells, Strong Swing
 [ ] FIX Flashing Particles   
 [ ] Resource Gathering System (Rock, Wood, Etc)
-[ ] Upgrade System    
-[ ] Destructible Objects      
+[ ] Upgrade System      
 [ ] Structure System
-[ ] Spawn Allies that follow you    
 [ ] Loot System
 [ ] Design Store Keeper Model
 [ ] Click to pickup loot    
 [ ] FIX Website Account required popup    
+[ ] First heavy guitar track    
 [ ] Design Map Skirmish
+[ ] Regenerate Destructible objects    
+[ ] Destructible Objects    
+    [ ] Bush
+    [ ] Rock
+    [ ] Chest
+    [ ] Pot 
 [x] Remove save load from menu in skirmish (signed in only)    
 [x] FIX Playing as signed in account throws error    
 [x] Player Score    

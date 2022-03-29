@@ -1,7 +1,6 @@
 
 import 'package:bleed_common/AbilityType.dart';
 import 'package:bleed_common/GameError.dart';
-import 'package:bleed_common/GameEventType.dart';
 import 'package:bleed_common/GameStatus.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/ItemType.dart';
@@ -147,10 +146,6 @@ void parseState() {
       case ServerResponse.EnvironmentObjects:
         isometric.state.particleEmitters.clear();
         _parseEnvironmentObjects();
-        break;
-
-      case ServerResponse.Game_Events:
-        _consumeGameEvents();
         break;
 
       case ServerResponse.NpcMessage:
@@ -470,26 +465,6 @@ bool _simiColonConsumed() {
 
 GameError _consumeError() {
   return GameError.values[consumeInt()];
-}
-
-void _consumeGameEvents() {
-  final gameEvents = game.gameEvents;
-  while (!_simiColonConsumed()) {
-    final id = consumeInt();
-    final type = _consumeEventType();
-    final x = consumeDouble();
-    final y = consumeDouble();
-    final angle = consumeDouble();
-    if (gameEvents.containsKey(id)) {
-      continue;
-    }
-    gameEvents[id] = true;
-    modules.game.events.onGameEvent(type, x, y, angle);
-  }
-}
-
-GameEventType _consumeEventType() {
-  return gameEventTypes[consumeInt()];
 }
 
 ItemType _consumeItemType() {

@@ -72,7 +72,6 @@ const _none = -1;
 const castFrame = 3;
 const tileCollisionResolve = 3;
 const framePerformStrike = 10;
-const gameEventDuration = 4;
 const _aiWanderPauseDuration = 120;
 
 // This should be OpenWorldScene
@@ -195,7 +194,7 @@ abstract class Game {
   GameEvent _getAvailableGameEvent() {
     for (final gameEvent in gameEvents) {
       if (gameEvent.frameDuration <= 0) {
-        gameEvent.frameDuration = gameEventDuration;
+        gameEvent.frameDuration = 5;
         gameEvent.assignNewId();
         return gameEvent;
       }
@@ -1286,7 +1285,7 @@ extension GameFunctions on Game {
     event.x = x;
     event.y = y;
     event.angle = angle * radiansToDegrees;
-    event.frameDuration = gameEventDuration;
+    event.frameDuration = 5;
   }
 
   void updateZombieTargets() {

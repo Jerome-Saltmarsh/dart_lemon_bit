@@ -10,7 +10,7 @@ import 'package:lemon_watch/watch.dart';
 final game = _Game();
 
 class _Game {
-  final gameEvents = Map<int, bool>();
+  // final gameEvents = Map<int, bool>();
   final lobby = _Lobby();
   final royal = _Royal();
   final type = Watch(GameType.None);

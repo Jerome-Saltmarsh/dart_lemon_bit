@@ -8,7 +8,7 @@ class GameEvent extends Vector2 {
 
   int id = idGen++;
   GameEventType type;
-  int frameDuration = 2;
+  int frameDuration = 5;
   double angle = 0;
 
   GameEvent({

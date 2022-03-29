@@ -128,18 +128,13 @@ class _ByteStreamParser {
   }
 
   void _parseGameEvents(){
-    final total = _nextInt();
-    final gameEvents = game.gameEvents;
-    for(var i = 0; i < total; i++){
-      final id = _nextInt();
-      final type = gameEventTypes[_nextByte()];
+    while (true) {
+      final typeIndex = _nextByte();
+      if (typeIndex == END) break;
+      final type = gameEventTypes[typeIndex];
       final x = _nextDouble();
       final y = _nextDouble();
       final angle = _nextDouble() * degreesToRadians;
-      if (gameEvents.containsKey(id)) {
-        continue;
-      }
-      gameEvents[id] = true;
       modules.game.events.onGameEvent(type, x, y, angle);
     }
   }

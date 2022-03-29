@@ -20,6 +20,7 @@ class _Audio {
   final songs = [
     'song01',
     'song02',
+    'song03',
   ];
 
   final soundEnabled = Cache(key: 'audio-enabled', value: true);

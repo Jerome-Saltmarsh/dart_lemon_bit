@@ -171,7 +171,6 @@ class CoreActions {
     clearCompileGameState();
     // isometric.state.paths.clear();
     engine.zoom = 1;
-    game.gameEvents.clear();
     refreshUI();
     isometric.actions.state.tiles.clear();
     isometric.actions.state.tilesDst = Float32List(0);

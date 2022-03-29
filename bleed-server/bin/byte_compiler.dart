@@ -81,7 +81,7 @@ class _ByteCompiler {
     writeAttackTarget(player);
     writeProjectiles(game.projectiles);
     writeNpcs(player);
-    writeGameEvents(game.gameEvents);
+    writeGameEvents(player);
     writeGameTime(game);
     writePlayerZombies(player);
     writeItems(player);
@@ -181,22 +181,21 @@ class _ByteCompiler {
     writeByte(END);
   }
 
-  void writeGameEvents(List<GameEvent> gameEvents){
+  void writeGameEvents(Player player){
+    final gameEvents = player.game.gameEvents;
     writeByte(_serverResponseGameEventsIndex);
-    var total = 0;
+    final gameEventIds = player.gameEventIds;
     for (final gameEvent in gameEvents) {
       if (gameEvent.frameDuration <= 0) continue;
-      total++;
-    }
-    writeBigInt(total);
-    for (final gameEvent in gameEvents) {
-      if (gameEvent.frameDuration <= 0) continue;
-      writeBigInt(gameEvent.id);
+      final id = gameEvent.id;
+      if (gameEventIds.containsKey(id)) continue;
+      gameEventIds[id] = true;
       writeByte(gameEvent.type.index);
       writeBigInt(gameEvent.x);
       writeBigInt(gameEvent.y);
       writeBigInt(gameEvent.angle);
     }
+    writeByte(END);
   }
 
   void writeProjectiles(List<Projectile> projectiles){
