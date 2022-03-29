@@ -43,23 +43,39 @@ class _Game {
   var totalProjectiles = 0;
   var itemsTotal = 0;
 
+  Character getNextHighestScore(){
+     Character? highestPlayer;
+     for(var i = 0; i < totalPlayers.value; i++){
+        final player = players[i];
+        if (player.scoreMeasured) continue;
+        if (highestPlayer == null){
+          highestPlayer = player;
+          continue;
+        }
+        if (player.score < highestPlayer.score) continue;
+        highestPlayer = player;
+     }
+     if (highestPlayer == null){
+       throw Exception("Could not find highest player");
+     }
+     highestPlayer.scoreMeasured = true;
+     return highestPlayer;
+  }
+
   void updateScoreText(){
     scoreBuilder.clear();
-    scoreBuilder.write("SCORE \n");
-    final players = game.players;
-    final totalPlayers = game.totalPlayers.value;
+    final totalNumberOfPlayers = totalPlayers.value;
+    if (totalNumberOfPlayers <= 0) return;
+    scoreBuilder.write("SCORE\n");
 
-    for (var i = 0; i < totalPlayers; i++) {
+    for (var i = 0; i < totalNumberOfPlayers; i++) {
       final player = players[i];
       player.scoreMeasured = false;
     }
-    for (var i = 0; i < totalPlayers; i++) {
-      final player = players[i];
-      scoreBuilder.write('${i + 1}. ');
-      scoreBuilder.write(player.name);
-      scoreBuilder.write(' ');
-      scoreBuilder.write(player.score);
-      scoreBuilder.write('\n');
+
+    for (var i = 0; i < totalNumberOfPlayers; i++) {
+      final player = getNextHighestScore();
+      scoreBuilder.write('${i + 1}. ${player.name} ${player.score}\n');
     }
     scoreText.value = scoreBuilder.toString();
   }

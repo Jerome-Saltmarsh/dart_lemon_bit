@@ -115,7 +115,6 @@ class _ByteStreamParser {
           orbs.ruby.value = _nextInt();
           player.alive.value = readBool();
           player.storeVisible.value = readBool();
-          player.score = _nextInt();
           break;
         case ServerResponse.End:
           byteLength.value = _index;
@@ -219,8 +218,8 @@ class _ByteStreamParser {
       character.equippedArmour = _readSlotType();
       character.equippedHead = _readSlotType();
       character.name = readString();
-      character.text = readString();
       character.score = _nextInt();
+      character.text = readString();
       total++;
     }
     game.totalPlayers.value = total;

@@ -32,7 +32,7 @@ void srcLoopSimple({
 }){
   engine.mapSrc(
       x: x,
-      y: (engine.animationFrame * size),
+      y: ((engine.animationFrame % 4) * size),
       width: size,
       height: size
   );

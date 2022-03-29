@@ -79,7 +79,8 @@
 [ ] Click to pickup loot    
 [ ] FIX Website Account required popup    
 [ ] Design Map Skirmish
-[ ] Player Score    
+[x] Player Score    
+[x] FIX Item shine not visible
 [x] Grass Ledge Block    
 [x] Shop becomes visible when nearby npc shop
 [x] Highlight Armour Slot    

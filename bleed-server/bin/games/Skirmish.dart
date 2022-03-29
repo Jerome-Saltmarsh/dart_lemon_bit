@@ -80,7 +80,15 @@ class GameSkirmish extends Game {
 
   @override
   void onCharacterKilled(Character killed, Character by) {
-    if (killed is Player) return;
+    if (killed is Player) {
+      if (by is Player){
+        by.score += 5;
+      }
+      return;
+    }
+    if (by is Player){
+      by.score++;
+    }
     final randomItemType = randomItem(itemTypes);
     final item = Item(type: randomItemType, x: killed.x, y: killed.y);
     items.add(item);

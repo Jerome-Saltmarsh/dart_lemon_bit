@@ -78,7 +78,6 @@ class _ByteCompiler {
     writeBigInt(orbs.ruby); // 2
     writeBool(player.alive); // 1
     writeBool(player.storeVisible); // 1
-    writeBigInt(player.score);
     writeAttackTarget(player);
     writeProjectiles(game.projectiles);
     writeNpcs(player);
@@ -239,15 +238,13 @@ class _ByteCompiler {
     final players = player.game.players;
     for (final otherPlayer in players) {
       if (otherPlayer.dead) continue;
-      // players on same team emit light offscreen
-      bool onSameTeam = sameTeam(otherPlayer, player);
-
-      if (!onSameTeam) {
-        if (otherPlayer.top < player.screenTop) continue;
-        if (otherPlayer.bottom > player.screenBottom) continue;
-        if (otherPlayer.left < player.screenLeft) continue;
-        if (otherPlayer.right > player.screenRight) continue;
-      }
+      final onSameTeam = sameTeam(otherPlayer, player);
+      // if (!onSameTeam) {
+      //   if (otherPlayer.top < player.screenTop) continue;
+      //   if (otherPlayer.bottom > player.screenBottom) continue;
+      //   if (otherPlayer.left < player.screenLeft) continue;
+      //   if (otherPlayer.right > player.screenRight) continue;
+      // }
       writePlayer(otherPlayer);
       if (onSameTeam){
         writeString(otherPlayer.text);

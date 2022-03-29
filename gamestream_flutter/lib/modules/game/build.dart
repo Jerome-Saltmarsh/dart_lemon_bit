@@ -910,8 +910,6 @@ class GameBuild {
     });
   }
 
-
-
   Widget buildScoreBoard(){
     return textBuilder(game.scoreText);
   }
