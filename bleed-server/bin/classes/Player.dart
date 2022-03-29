@@ -26,8 +26,9 @@ const _defaultMaxMagic = 10;
 int _idCount = 0;
 
 class Player extends Character with Entity {
-  Map<int, bool> gameEventIds = {};
+  final gameEventIds = <int, bool>{};
   var score = 0;
+  var sceneChanged = false;
   Account? account;
   int id = _idCount++;
   String name = generateName();
@@ -38,8 +39,6 @@ class Player extends Character with Entity {
   String message = "";
   String text = "";
   int textDuration = 0;
-  MainQuest questMain = MainQuest.Introduction;
-  bool sceneChanged = false;
   Game game;
   int handgunDamage = 10;
   int experience = 0;

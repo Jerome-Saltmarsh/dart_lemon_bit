@@ -86,45 +86,10 @@ class Town extends Game {
 
   void _onNpcInteractedWithMain(Player player) {
     player.health = 100;
-
-    switch (player.questMain) {
-      case MainQuest.Introduction:
-        player.message = "Welcome Traveller. "
-            "You may rest easy, the walls of our town are well protected. "
-            "If you need to earn some income I recommend talking to various folks. "
-            "Smith was looking for help with an issue ";
-        player.questMain = MainQuest.Talk_To_Smith;
-        break;
-      case MainQuest.Talk_To_Smith:
-        player.message = "Smith was looking for help with something";
-        break;
-      default:
-        player.message = "I'm glad you are still with us traveller";
-        break;
-    }
   }
 
   void _onNpcInteractedWithSmith(Player player) {
-    if (player.questMain.index <= MainQuest.Talk_To_Smith.index) {
-      player.message = "Hello there, I'm smith "
-          "Just west outside of town there is a zombie boss, go kill it and return to me";
-      player.questMain = MainQuest.Kill_Zombie_Boss;
-      return;
-    }
 
-    switch (player.questMain) {
-      case MainQuest.Kill_Zombie_Boss:
-        player.message = "The zombie boss is in the wilderness west of town "
-            "Come back to me once its dead";
-        break;
-      case MainQuest.Kill_Zombie_Boss_Talk_To_Smith:
-        player.message = "You did it! Well done here is your reward";
-        player.questMain = MainQuest.Finished;
-        break;
-      default:
-        player.message = "Good to see you well";
-        break;
-    }
   }
 
   @override
