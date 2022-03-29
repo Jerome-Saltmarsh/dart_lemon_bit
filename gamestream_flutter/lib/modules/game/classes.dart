@@ -4,6 +4,7 @@ import 'package:bleed_common/CharacterAction.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_watch/watch.dart';
 
+
 class CharacterController {
   double angle = 0;
   final Watch<CharacterAction> action = Watch(CharacterAction.Idle);

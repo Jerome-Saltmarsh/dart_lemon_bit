@@ -5,7 +5,6 @@ import 'package:lemon_math/angle.dart';
 
 import 'classes/Character.dart';
 import 'classes/Game.dart';
-import 'classes/GameEvent.dart';
 import 'classes/GameObject.dart';
 import 'classes/Player.dart';
 import 'classes/Projectile.dart';
@@ -57,6 +56,7 @@ class _ByteCompiler {
     final orbs = player.orbs;
     final game = player.game;
     writePlayers(player);
+
     writeByte(_serverResponsePlayerIndex);
     writeBigInt(player.x);
     writeBigInt(player.y);
@@ -78,6 +78,7 @@ class _ByteCompiler {
     writeBigInt(orbs.ruby); // 2
     writeBool(player.alive); // 1
     writeBool(player.storeVisible); // 1
+
     writeAttackTarget(player);
     writeProjectiles(game.projectiles);
     writeNpcs(player);
@@ -86,9 +87,26 @@ class _ByteCompiler {
     writePlayerZombies(player);
     writeItems(player);
     writePlayerEvents(player);
+    // writeDynamicObjects(player);
 
     if (game.debugMode)
       writePaths(game);
+  }
+
+  void writeDynamicObjects(Player player) {
+     writeByte(ServerResponse.Dynamic_Objects.index);
+     final dynamicObjects = player.game.dynamicObjects;
+     for (final dynamicObject in dynamicObjects) {
+       if (dynamicObject.x < player.screenLeft) continue;
+       if (dynamicObject.x > player.screenRight) continue;
+       if (dynamicObject.y < player.screenTop) continue;
+       if (dynamicObject.y > player.screenBottom) break;
+       writeByte(dynamicObject.type.index);
+       writeBigInt(dynamicObject.x);
+       writeBigInt(dynamicObject.y);
+       writePercentage(dynamicObject.health / dynamicObject.maxHealth);
+     }
+     writeByte(END);
   }
 
   void writePlayerEvents(Player player){

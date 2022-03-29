@@ -41,6 +41,7 @@ import '../utilities.dart';
 import 'Character.dart';
 import 'Collider.dart';
 import 'Crate.dart';
+import 'DynamicObject.dart';
 import 'EnvironmentObject.dart';
 import 'GameEvent.dart';
 import 'GameObject.dart';
@@ -77,8 +78,28 @@ const _aiWanderPauseDuration = 120;
 // This should be OpenWorldScene
 abstract class Game {
 
-  final _cursorRadius = 50.0;
-  final _characterRadius = 10.0;
+  final List<Collider> colliders = [];
+  final List<Item> items = [];
+  final List<Vector2> zombieSpawnPoints = [];
+  final List<Character> zombies = [];
+  final List<InteractableNpc> npcs = [];
+  final List<Player> players = [];
+  final List<Projectile> projectiles = [];
+  final List<Grenade> grenades = [];
+  final List<GameEvent> gameEvents = [];
+  final List<Crate> crates = [];
+  final List<DynamicObject> dynamicObjects = [];
+  List<SpawnPoint> spawnPoints = [];
+  int shadeMax = Shade.Bright;
+  int duration = 0;
+  int teamSize = 1;
+  int numberOfTeams = 2;
+  bool cratesDirty = false;
+  int spawnPointIndex = 0;
+  String compiledTiles = "";
+  String compiledEnvironmentObjects = "";
+  bool debugMode = false;
+  int countDownFramesRemaining = engine.framesPerSecond * 3;
 
   static int _id = 0;
   final String id = (_id++).toString();
@@ -109,30 +130,6 @@ abstract class Game {
   void onCharacterKilled(Character killed, Character by){
 
   }
-
-  final List<Collider> colliders = [];
-  final List<Item> items = [];
-  final List<Vector2> zombieSpawnPoints = [];
-  int shadeMax = Shade.Bright;
-  int duration = 0;
-  int teamSize = 1;
-  int numberOfTeams = 2;
-  List<Character> zombies = [];
-  List<InteractableNpc> npcs = [];
-  List<SpawnPoint> spawnPoints = [];
-  List<Player> players = [];
-  List<Projectile> projectiles = [];
-  List<Grenade> grenades = [];
-  List<GameEvent> gameEvents = [];
-  List<Crate> crates = [];
-  bool cratesDirty = false;
-  int spawnPointIndex = 0;
-  // String compiled = "";
-  String compiledTiles = "";
-  String compiledEnvironmentObjects = "";
-  bool debugMode = false;
-  Map<int, StringBuffer> compiledTeamText = {};
-  int countDownFramesRemaining = engine.framesPerSecond * 3;
 
   /// In seconds
   int getTime();
@@ -367,8 +364,9 @@ extension GameFunctions on Game {
     final aliveEnemyIndex = getFirstAlivePlayerEnemyIndex(character);
     if (aliveEnemyIndex == -1) return null;
 
-    final top = y - _cursorRadius - settings.radius.character;
-    final bottom = x + _cursorRadius + settings.radius.character;
+    const cursorRadius = 50.0;
+    final top = y - cursorRadius - settings.radius.character;
+    final bottom = x + cursorRadius + settings.radius.character;
     Character closest = players[aliveEnemyIndex];
     var closestX = diff(x, closest.x);
     var closestY = diff(y, closest.y);
@@ -394,7 +392,7 @@ extension GameFunctions on Game {
         x: x,
         y: y,
         character: character,
-        radius: _cursorRadius,
+        radius: 50,
     );
     final player = getClosestEnemyPlayer(x, y, character);
 
@@ -891,7 +889,7 @@ extension GameFunctions on Game {
       if (!projectile.active) continue;
       final target = projectile.target;
       if (target != null) {
-        if (withinRadius(projectile, target, _characterRadius)){
+        if (withinRadius(projectile, target, 10.0)){
           handleProjectileHit(projectile, target);
           return;
         }

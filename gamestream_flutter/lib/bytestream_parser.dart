@@ -60,7 +60,9 @@ class _ByteStreamParser {
         case ServerResponse.Player_Events:
           _parsePlayerEvents();
           break;
-
+        case ServerResponse.Dynamic_Objects:
+          _parseDynamicObjects();
+          break;
         case ServerResponse.Player_Attack_Target:
           _player.attackTarget.x = _nextDouble();
           _player.attackTarget.y = _nextDouble();
@@ -317,6 +319,11 @@ class _ByteStreamParser {
      for(var i = 0; i < total; i++){
         modules.game.events.onPlayerEvent(playerEvents[_nextByte()]);
      }
+  }
+
+  void _parseDynamicObjects() {
+
+
   }
 
 }

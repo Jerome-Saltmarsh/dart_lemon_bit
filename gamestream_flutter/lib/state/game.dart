@@ -1,5 +1,6 @@
 import 'package:bleed_common/GameType.dart';
 import 'package:gamestream_flutter/classes/Character.dart';
+import 'package:gamestream_flutter/classes/DynamicObject.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
@@ -10,7 +11,6 @@ import 'package:lemon_watch/watch.dart';
 final game = _Game();
 
 class _Game {
-  // final gameEvents = Map<int, bool>();
   final lobby = _Lobby();
   final royal = _Royal();
   final type = Watch(GameType.None);
@@ -22,9 +22,11 @@ class _Game {
   final numberOfTeams = Watch(0);
   final totalZombies = Watch(0);
   final totalPlayers = Watch(0);
+  final totalDynamicObjects = Watch(0);
   final players = <Character>[];
   final zombies = <Character>[];
   final interactableNpcs = <Character>[];
+  final dynamicObjects = <DynamicObject>[];
   final effects = <Effect>[];
   final torches = <EnvironmentObject>[];
   final projectiles = <Projectile>[];
@@ -42,6 +44,25 @@ class _Game {
   var id = -1;
   var totalProjectiles = 0;
   var itemsTotal = 0;
+
+  _Game() {
+    for (var i = 0; i < 2000; i++) {
+      dynamicObjects.add(DynamicObject());
+    }
+    for (var i = 0; i < 300; i++) {
+      players.add(Character());
+      interactableNpcs.add(Character());
+    }
+    for (var i = 0; i < 5000; i++) {
+      zombies.add(Character());
+    }
+    for (var i = 0; i < 50; i++) {
+      bulletHoles.add(Vector2(0, 0));
+    }
+    for (var i = 0; i < 1000; i++) {
+      projectiles.add(Projectile());
+    }
+  }
 
   Character getNextHighestScore(){
      Character? highestPlayer;

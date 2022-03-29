@@ -20,6 +20,7 @@ enum ServerResponse {
   NpcMessage,
   Npcs,
   EnvironmentObjects,
+  Dynamic_Objects,
   NpcsDebug,
   Game_Time,
   Scene_Changed,

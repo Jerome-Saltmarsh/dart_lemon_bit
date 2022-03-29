@@ -34,29 +34,10 @@ Future init() async {
 
 void initializeGameInstances() {
   for (var i = 0; i < 1000; i++) {
-    game.projectiles.add(Projectile(0, 0, ProjectileType.Bullet, 0));
     isometric.state.items.add(Item(type: ItemType.Handgun, x: 0, y: 0));
   }
 
-  for (var i = 0; i < 50; i++) {
-    game.bulletHoles.add(Vector2(0, 0));
-  }
 
-  final zombies = game.zombies;
-  zombies.clear();
-  for (var i = 0; i < 5000; i++) {
-    zombies.add(Character());
-  }
-
-  game.interactableNpcs.clear();
-  for (int i = 0; i < 300; i++) {
-    game.interactableNpcs.add(Character());
-  }
-
-  game.players.clear();
-  for (int i = 0; i < 300; i++) {
-    game.players.add(Character());
-  }
 }
 
 void initializeEventListeners() {
