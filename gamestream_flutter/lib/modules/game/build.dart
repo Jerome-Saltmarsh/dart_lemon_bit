@@ -911,7 +911,11 @@ class GameBuild {
   }
 
   Widget buildScoreBoard(){
-    return textBuilder(game.scoreText);
+    return SingleChildScrollView(
+      child: Container(
+          constraints: BoxConstraints(maxHeight: 400),
+          child: textBuilder(game.scoreText)),
+    );
   }
 
   Widget buildDebugPanel(){

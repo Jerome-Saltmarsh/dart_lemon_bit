@@ -71,17 +71,11 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
   return dialog(
       width: style.dialogWidthMedium,
       height: style.dialogHeightVerySmall,
-      color: colours.orange,
+      color: colours.brownDark,
       borderColor: colours.none,
       child: layout(
           child: Center(
-            child: Container(
-                decoration: BoxDecoration(
-                  color: colours.black10,
-                  borderRadius: borderRadius4,
-                ),
-                padding: padding16,
-                child: text(message, color: colours.white),),
+            child: text(message, color: colours.white),
           ),
           bottomRight: bottomRight ?? text("okay", onPressed: core.actions.clearError)
       )

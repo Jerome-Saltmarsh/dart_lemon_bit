@@ -61,8 +61,9 @@
 [ ] Unlock portals
 [ ] Experience Bar
 [ ] FIX Myst Particle Render order  
-[ALPHA-RELEASE]
+[ ] Tile Flowers      
 [ ] Send Message to All or to Allies only
+[ALPHA-RELEASE]
 [ ] Slot Cooldown
 [ ] Fix fireball explosion
 [ ] Bow Spells,
@@ -74,11 +75,12 @@
 [ ] Structure System
 [ ] Spawn Allies that follow you    
 [ ] Loot System
-[ ] Tile Flowers      
 [ ] Design Store Keeper Model
 [ ] Click to pickup loot    
 [ ] FIX Website Account required popup    
 [ ] Design Map Skirmish
+[ ] Remove save load from menu in skirmish (signed in only)    
+[x] FIX Playing as signed in account throws error    
 [x] Player Score    
 [x] FIX Item shine not visible
 [x] Grass Ledge Block    

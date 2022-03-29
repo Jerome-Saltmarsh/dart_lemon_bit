@@ -117,6 +117,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     void onGameJoined(){
       final player = _player;
       if (player == null) return;
+      final account = _account;
+      if (account != null) {
+        player.name = account.publicName;
+      }
+
       final game = player.game;
       compileAndSendPlayerGame(player);
       write(game.compiledTiles);
@@ -226,7 +231,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           case ClientRequest.Update:
 
             if (player == null) {
-              errorPlayerNotFound();
+              // errorPlayerNotFound();
               return;
             }
 
