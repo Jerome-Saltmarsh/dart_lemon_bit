@@ -81,6 +81,7 @@ class GameSkirmish extends Game {
   @override
   void onCharacterKilled(Character killed, Character by) {
     if (killed is Player) {
+      killed.score = 0;
       if (by is Player){
         by.score += 5;
       }

@@ -222,11 +222,11 @@ class GameBuild {
         width8,
         buildToggleEnabledMusic(),
         width8,
-        ui.widgets.exit,
-        if (core.state.account.isNotNull)
-          ui.widgets.saveCharacter,
-        if (core.state.account.isNotNull)
-          ui.widgets.loadCharacter,
+        buildButtonExit(),
+        // if (core.state.account.isNotNull)
+        //   ui.widgets.saveCharacter,
+        // if (core.state.account.isNotNull)
+        //   ui.widgets.loadCharacter,
       ],
     );
     return Positioned(
@@ -235,6 +235,8 @@ class GameBuild {
       child: boolBuilder(modules.hud.menuVisible, widgetTrue: menu, widgetFalse: resources.icons.settings),
     );
   }
+
+  Widget buildButtonExit() => button("Exit", core.actions.disconnect);
 
   Widget buildHighlightedSlot(){
     return WatchBuilder(state.highlightSlot, (Slot? slot){

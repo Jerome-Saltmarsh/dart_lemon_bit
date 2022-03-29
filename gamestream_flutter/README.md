@@ -79,7 +79,7 @@
 [ ] Click to pickup loot    
 [ ] FIX Website Account required popup    
 [ ] Design Map Skirmish
-[ ] Remove save load from menu in skirmish (signed in only)    
+[x] Remove save load from menu in skirmish (signed in only)    
 [x] FIX Playing as signed in account throws error    
 [x] Player Score    
 [x] FIX Item shine not visible
