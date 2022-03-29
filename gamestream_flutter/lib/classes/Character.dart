@@ -4,7 +4,10 @@ import 'package:lemon_math/Vector2.dart';
 
 import '../maths.dart';
 
+
 class Character extends Vector2 {
+  bool scoreMeasured = false;
+  int score = 0;
   int state;
   int direction;
   int frame;

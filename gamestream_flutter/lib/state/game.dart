@@ -32,6 +32,8 @@ class _Game {
   final crates = <Vector2>[];
   final bulletHoles = <Vector2>[];
   final npcDebug = <NpcDebug>[];
+  final scoreBuilder = StringBuffer();
+  final scoreText = Watch("");
   var customGameName = "";
   var cratesTotal = 0;
   var totalNpcs = 0;
@@ -40,6 +42,27 @@ class _Game {
   var id = -1;
   var totalProjectiles = 0;
   var itemsTotal = 0;
+
+  void updateScoreText(){
+    scoreBuilder.clear();
+    scoreBuilder.write("SCORE \n");
+    final players = game.players;
+    final totalPlayers = game.totalPlayers.value;
+
+    for (var i = 0; i < totalPlayers; i++) {
+      final player = players[i];
+      player.scoreMeasured = false;
+    }
+    for (var i = 0; i < totalPlayers; i++) {
+      final player = players[i];
+      scoreBuilder.write('${i + 1}. ');
+      scoreBuilder.write(player.name);
+      scoreBuilder.write(' ');
+      scoreBuilder.write(player.score);
+      scoreBuilder.write('\n');
+    }
+    scoreText.value = scoreBuilder.toString();
+  }
 }
 
 class _Royal {

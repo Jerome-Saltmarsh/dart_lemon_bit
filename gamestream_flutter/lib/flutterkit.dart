@@ -375,6 +375,12 @@ Widget visibleBuilder(Watch<bool> watch, Widget widget){
   });
 }
 
+Widget textBuilder(Watch watch){
+  return WatchBuilder(watch, (dynamic value){
+    return text(value);
+  });
+}
+
 Widget boolBuilder(Watch<bool> watch, {required Widget widgetTrue, required Widget widgetFalse}){
   return WatchBuilder(watch, (bool visible){
     return visible ? widgetTrue : widgetFalse;

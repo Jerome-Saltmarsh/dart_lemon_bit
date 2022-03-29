@@ -1,4 +1,4 @@
-import 'package:bleed_common/GameStatus.dart';
+import 'package:lemon_watch/watch.dart';import 'package:bleed_common/GameStatus.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/RoyalCost.dart';
 import 'package:bleed_common/SlotType.dart';
@@ -185,15 +185,7 @@ class GameBuild {
             Positioned(
                 left: _pad,
                 bottom: _pad,
-                child: visibleBuilder(state.debugPanelVisible, Row(
-                  children: [
-                    toggleDebugMode(),
-                    width8,
-                    button("Edit Map", (){
-                      core.actions.openMapEditor(newScene: false);
-                    }),
-                  ],
-                )),
+                child: boolBuilder(state.debugPanelVisible, widgetTrue: buildDebugMenu(), widgetFalse: buildScoreBoard()),
             ),
             if (alive)
             Positioned(
@@ -208,6 +200,18 @@ class GameBuild {
             buildHighlightedSlot(),
           ]);
     });
+  }
+
+  Row buildDebugMenu() {
+    return Row(
+      children: [
+        toggleDebugMode(),
+        width8,
+        button("Edit Map", () {
+          core.actions.openMapEditor(newScene: false);
+        }),
+      ],
+    );
   }
 
   Widget buildTopRight(){
@@ -426,18 +430,22 @@ class GameBuild {
 
     final storeTab = WatchBuilder(state.storeTab, (StoreTab activeStoreTab) {
 
-      return Column(
-        key: storeColumnKey,
-        children: [
-          Container(child: text("PURCHASE"), padding: EdgeInsets.all(8.0),),
-          _storeTabs(activeStoreTab),
-          if (activeStoreTab == StoreTab.Weapons)
-            _storeTabWeapons(),
-          if (activeStoreTab == StoreTab.Armor)
-            _storeTabArmour(),
-          if (activeStoreTab == StoreTab.Items)
-            _storeTabItems(),
-        ],
+      return border(
+        color: colours.white,
+        width: 2,
+        child: Column(
+          key: storeColumnKey,
+          children: [
+            Container(child: text("PURCHASE"), padding: EdgeInsets.all(8.0),),
+            _storeTabs(activeStoreTab),
+            if (activeStoreTab == StoreTab.Weapons)
+              _storeTabWeapons(),
+            if (activeStoreTab == StoreTab.Armor)
+              _storeTabArmour(),
+            if (activeStoreTab == StoreTab.Items)
+              _storeTabItems(),
+          ],
+        ),
       );
 
     });
@@ -900,6 +908,12 @@ class GameBuild {
           : TextDecoration.lineThrough
       ), audio.toggleEnabledMusic);
     });
+  }
+
+
+
+  Widget buildScoreBoard(){
+    return textBuilder(game.scoreText);
   }
 
   Widget buildDebugPanel(){

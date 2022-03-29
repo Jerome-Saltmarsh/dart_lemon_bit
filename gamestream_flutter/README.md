@@ -62,6 +62,7 @@
 [ ] Experience Bar
 [ ] FIX Myst Particle Render order  
 [ALPHA-RELEASE]
+[ ] Send Message to All or to Allies only
 [ ] Slot Cooldown
 [ ] Fix fireball explosion
 [ ] Bow Spells,
@@ -76,9 +77,10 @@
 [ ] Tile Flowers      
 [ ] Design Store Keeper Model
 [ ] Click to pickup loot    
-[ ] Send Message to All or to Allies only
 [ ] FIX Website Account required popup    
-[ ] Grass Ledge Block    
+[ ] Design Map Skirmish
+[ ] Player Score    
+[x] Grass Ledge Block    
 [x] Shop becomes visible when nearby npc shop
 [x] Highlight Armour Slot    
 [x] Highlight Weapon Slot    

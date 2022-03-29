@@ -78,6 +78,7 @@ class _ByteCompiler {
     writeBigInt(orbs.ruby); // 2
     writeBool(player.alive); // 1
     writeBool(player.storeVisible); // 1
+    writeBigInt(player.score);
     writeAttackTarget(player);
     writeProjectiles(game.projectiles);
     writeNpcs(player);
@@ -276,6 +277,7 @@ class _ByteCompiler {
     writeByte(slots.armour.type.index);
     writeByte(slots.helm.type.index);
     writeString(player.name);
+    writeBigInt(player.score);
   }
   
   void writeString(String value){

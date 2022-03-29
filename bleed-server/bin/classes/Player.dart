@@ -26,6 +26,7 @@ const _defaultMaxMagic = 10;
 int _idCount = 0;
 
 class Player extends Character with Entity {
+  var score = 0;
   Account? account;
   int id = _idCount++;
   String name = generateName();

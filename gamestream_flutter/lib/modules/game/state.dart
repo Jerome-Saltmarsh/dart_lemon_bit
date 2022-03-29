@@ -106,7 +106,7 @@ class Slots {
 }
 
 class _Player {
-  // late List<int> byteId;
+  int score = 0;
   double x = 0;
   double y = 0;
   int id = -1;
