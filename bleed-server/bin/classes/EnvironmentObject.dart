@@ -1,14 +1,14 @@
 import '../common/enums/ObjectType.dart';
-import 'GameObject.dart';
+import 'Collider.dart';
 
-class EnvironmentObject extends GameObject {
+class EnvironmentObject extends Collider {
   ObjectType type;
 
   EnvironmentObject({
     required double x,
     required double y,
     required this.type
-  }) : super(x, y, radius: _getRadius(type)) {
+  }) : super(x, y, _getRadius(type)) {
     this.x = x;
     this.y = y;
 

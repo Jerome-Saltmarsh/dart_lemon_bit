@@ -280,29 +280,15 @@ abstract class Game {
     }
   }
 
-  void checkPlayerColliderCollision() {
-    for (final character in players) {
-      for (final collider in colliders) {
-        final combinedRadius = character.radius + collider.radius;
-        if (diffOver(character.x, collider.x, combinedRadius)) continue;
-        if (diffOver(character.y, collider.y, combinedRadius)) continue;
-        final _distance = distanceV2(character, collider);
-        if (_distance > combinedRadius) continue;
-        final overlap = combinedRadius - _distance;
-        final r = radiansV2(character, collider);
-        character.x -= adj(r, overlap);
-        character.y -= opp(r, overlap);
-      }
-    }
-  }
-
   void checkColliderCollision(List<GameObject> gameObjects, List<Collider> colliders) {
     var colliderI = 0;
     final totalColliders = colliders.length;
     for (final gameObject in gameObjects) {
+      if (!gameObject.collidable) continue;
       final gameObjectTop = gameObject.top;
       for (var i = colliderI; i < totalColliders; i++) {
         final collider = colliders[i];
+        if (!collider.collidable) continue;
         if (collider.bottom < gameObjectTop){
            colliderI = i;
            continue;
@@ -319,7 +305,6 @@ abstract class Game {
       }
     }
   }
-
 }
 
 const secondsPerMinute = 60;
@@ -836,7 +821,7 @@ extension GameFunctions on Game {
       applyForce(zombie, rotation + pi, magnitude);
 
       if (zombie.dead) continue;
-      applyDamage(src, zombie, settings.damage.grenade);
+      applyDamage(src, zombie, 15);
     }
 
     for (final player in players) {
@@ -847,7 +832,7 @@ extension GameFunctions on Game {
       applyForce(player, rotation + pi, magnitude);
 
       if (player.alive) {
-        changeCharacterHealth(player, -settings.damage.grenade);
+        changeCharacterHealth(player, -15);
       }
     }
   }

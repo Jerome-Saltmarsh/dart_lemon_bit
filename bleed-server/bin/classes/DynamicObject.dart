@@ -4,7 +4,6 @@ import '../common/DynamicObjectType.dart';
 import 'Collider.dart';
 
 class DynamicObject extends Collider {
-
   late DynamicObjectType type;
   late int maxHealth;
   late int health;
