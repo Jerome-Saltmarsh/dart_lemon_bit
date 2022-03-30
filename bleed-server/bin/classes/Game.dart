@@ -4,6 +4,7 @@ import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/abs.dart';
 import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/diff_over.dart';
+import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/hypotenuse.dart';
 import 'package:lemon_math/randomInt.dart';
@@ -363,6 +364,26 @@ extension GameFunctions on Game {
     return closest;
   }
 
+  DynamicObject? getClosestDynamicObject(double x, double y){
+       if (dynamicObjects.isEmpty) return null;
+       DynamicObject? closest;
+       var distance = 0.0;
+       for(final dynamicObject in dynamicObjects){
+          if (dynamicObject.health <= 0) continue;
+          final dis = distanceBetween(x, dynamicObject.x, y, dynamicObject.y);
+          if (closest == null){
+            closest = dynamicObject;
+            distance = dis;
+            continue;
+          }
+          if (dis < distance){
+            distance = dis;
+            closest = dynamicObject;
+          }
+       }
+       return closest;
+  }
+
   Character? getClosestEnemyPlayer(double x, double y, Character character) {
     final aliveEnemyIndex = getFirstAlivePlayerEnemyIndex(character);
     if (aliveEnemyIndex == -1) return null;
@@ -390,7 +411,7 @@ extension GameFunctions on Game {
     return closest;
   }
 
-  Character? getClosestEnemy(double x, double y, Character character) {
+  Collider? getClosestCollider(double x, double y, Character character) {
     final zombie = getClosestEnemyZombie(
         x: x,
         y: y,
@@ -398,17 +419,22 @@ extension GameFunctions on Game {
         radius: 50,
     );
     final player = getClosestEnemyPlayer(x, y, character);
+    final dynamicObject = getClosestDynamicObject(x, y);
 
-    if (zombie == null) {
+    final zombieDistance = zombie != null ? diff(zombie.x, x) + diff(zombie.y, y) : 9999;
+    final playerDistance =  player != null ? diff(player.x, x) + diff(player.y, y) : 9999;
+    final dynamicDistance = dynamicObject != null ? diff(dynamicObject.x, x) + diff(dynamicObject.y, y) : 9999;
+
+    if (zombieDistance < playerDistance) {
+       if (zombieDistance < dynamicDistance) {
+         return zombie;
+       }
+       return dynamicObject;
+    }
+    if (playerDistance < dynamicDistance){
       return player;
     }
-    if (player == null) {
-      return zombie;
-    }
-
-    final zombieDistance = diff(zombie.x, x) + diff(zombie.y, y);
-    final playerDistance = diff(player.x, x) + diff(player.y, y);
-    return zombieDistance < playerDistance ? zombie : player;
+    return dynamicObject;
   }
 
   void updateInProgress() {

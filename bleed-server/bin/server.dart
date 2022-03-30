@@ -288,15 +288,15 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           final action = characterActions[actionIndex];
 
           player.aimTarget = null;
-          final closestEnemy = game.getClosestEnemy(mouseX, mouseY, player);
-          if (closestEnemy != null) {
+          final closestCollider = game.getClosestCollider(mouseX, mouseY, player);
+          if (closestCollider != null) {
             if (withinDistance(
-                closestEnemy,
+                closestCollider,
                 mouseX,
                 mouseY,
                 _cursorRadius
             )) {
-              player.aimTarget = closestEnemy;
+              player.aimTarget = closestCollider;
             }
           }
 
