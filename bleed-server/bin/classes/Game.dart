@@ -523,7 +523,7 @@ extension GameFunctions on Game {
         target.health -= amount;
         if (target.health <= 0) {
           target.collidable = false;
-          // TODO Dispatch drop items
+          spawnRandomOrb(target.x, target.y);
         }
     }
   }
@@ -800,9 +800,11 @@ extension GameFunctions on Game {
       }
     }
 
-    sortVertically(projectiles);
     checkProjectileCollision(zombies);
     checkProjectileCollision(players);
+    checkProjectileCollision(dynamicObjects);
+
+
     final environments = scene.environment;
     projectilesLength = projectiles.length;
 
@@ -922,9 +924,9 @@ extension GameFunctions on Game {
     setCharacterStateRunning(player);
   }
 
-  void checkProjectileCollision(List<Character> characters) {
-    int s = 0;
+  void checkProjectileCollision(List<Collider> colliders) {
     final projectilesLength = projectiles.length;
+    final collidersLength = colliders.length;
     for (var i = 0; i < projectilesLength; i++) {
       final projectile = projectiles[i];
       if (!projectile.active) continue;
@@ -935,15 +937,14 @@ extension GameFunctions on Game {
           return;
         }
       }
-      for (int j = s; j < characters.length; j++) {
-        final character = characters[j];
-        if (!character.active) continue;
-        if (character.dead) continue;
-        if (character.left > projectile.right) continue;
-        if (projectile.left > character.right) continue;
-        if (projectile.top > character.bottom) continue;
-        if (projectile.bottom < character.top) continue;
-        handleProjectileHit(projectile, character);
+      for (var j = 0; j < collidersLength; j++) {
+        final collider = colliders[j];
+        if (!collider.collidable) continue;
+        if (projectile.right < projectile.left) continue;
+        if (projectile.left > collider.right) continue;
+        if (projectile.top > collider.bottom) continue;
+        if (projectile.bottom < collider.top) continue;
+        handleProjectileHit(projectile, collider);
         break;
       }
     }
