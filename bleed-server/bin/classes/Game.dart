@@ -1105,23 +1105,14 @@ extension GameFunctions on Game {
 
     switch (character.state) {
       case CharacterState.Running:
-        _updateCharacterStateRunning(character);
+        character.updateMotion();
         break;
 
       case CharacterState.Performing:
         updateCharacterStatePerforming(character);
         break;
     }
-
-
     character.stateDuration++;
-  }
-
-  void _updateCharacterStateRunning(Character character) {
-    final speed = character.speed;
-    final angle = character.angle;
-    character.x += adj(angle, speed);
-    character.y += opp(angle, speed);
   }
 
   void updateCharacterTileCollision(Character character) {

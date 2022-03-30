@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:lemon_math/Vector2.dart';
 
+import '../classes/Collider.dart';
 import '../classes/Player.dart';
 import '../common/SlotType.dart';
 
@@ -24,6 +25,6 @@ double magnitude(num adjacent, num opposite){
   return sqrt((adjacent * adjacent) + (opposite * opposite));
 }
 
-bool withinAttackRadius(Player player, Vector2 target){
-  return withinRadius(player, target, player.weapon.range);
+bool withinAttackRadius(Player player, Collider target){
+  return withinRadius(player, target, player.weapon.range + target.radius);
 }

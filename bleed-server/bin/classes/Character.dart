@@ -8,6 +8,7 @@ import '../common/SlotType.dart';
 import '../constants.dart';
 import '../constants/no_squad.dart';
 import '../enums/npc_mode.dart';
+import '../maths.dart';
 import '../settings.dart';
 import '../utilities.dart';
 import 'Ability.dart';
@@ -151,6 +152,14 @@ class Character extends GameObject {
     ai?.character = this;
     slots.weapon.type = weapon;
   }
+
+  void updateMotion(){
+    x += velocityX;
+    y += velocityY;
+  }
+
+  double get velocityX => adj(angle, speed);
+  double get velocityY => opp(angle, speed);
 }
 
 bool sameTeam(Character a, Character b){

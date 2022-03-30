@@ -3,8 +3,6 @@ import 'dart:math';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/hypotenuse.dart';
 
-import 'constants.dart';
-
 double distanceV2(Vector2 a, Vector2 b) {
   return hypotenuse(a.x - b.x, a.y - b.y);
 }
@@ -31,24 +29,30 @@ double radiansBetween(double x1, double y1, double x2, double y2) {
 }
 
 double velX(double rotation, double speed) {
-  return -cos(rotation + piHalf) * speed;
+  return -cos(rotation + 1.57) * speed;
 }
 
 double velY(double rotation, double speed) {
-  return -sin(rotation + piHalf) * speed;
+  return -sin(rotation + 1.57) * speed;
 }
 
 double radians(double x, double y) {
   if (x < 0) return -atan2(x, y);
-  return pi2 - atan2(x, y);
+  /// 6.2831853 = pi * 2
+  /// Reduces memory lookups
+  return 6.283 - atan2(x, y);
 }
 
 double adj(double rotation, num magnitude) {
-  return -cos(rotation + piHalf) * magnitude;
+  /// 1.570796325 = pi / 2
+  /// this prevents having to do a memory lookup
+  return -cos(rotation + 1.57) * magnitude;
 }
 
 double opp(double rotation, num magnitude) {
-  return -sin(rotation + piHalf) * magnitude;
+  /// 1.570796325 = pi / 2
+  /// this prevents having to do a memory lookup
+  return -sin(rotation + 1.570796325) * magnitude;
 }
 
 double normalize(double x, double y) {
@@ -74,31 +78,3 @@ double clampMagnitudeY(double x, double y, double value) {
 bool isLeft(double aX, double aY, double bX, double bY, double cX, double cY) {
   return ((bX - aX) * (cY - aY) - (bY - aY) * (cX - aX)) > 0;
 }
-
-// double approximateDistance(Vector2 a, Vector2 b){
-//   return approximateLength(a.x - b.x, a.y - b.y);
-// }
-//
-// double approximateLength(num a, num b){
-//   const squareRatio = 0.70710656237;
-//   const inverseRatio = 1.0 - squareRatio;
-//   const _1 = 1.0;
-//
-//   final aAbs = a.abs();
-//   final bAbs = b.abs();
-//
-//   late final long;
-//   late final short;
-//
-//   if (aAbs > bAbs) {
-//     long = aAbs;
-//     short = bAbs;
-//   } else {
-//     long = bAbs;
-//     short = aAbs;
-//   }
-//   final ratio = (short / long);
-//   final longRatio = _1 - (ratio * inverseRatio);
-//   final value =  long / longRatio;
-//   return value;
-// }

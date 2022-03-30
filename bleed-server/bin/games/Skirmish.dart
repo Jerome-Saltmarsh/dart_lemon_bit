@@ -38,7 +38,15 @@ class GameSkirmish extends Game {
      );
      storeKeeper.invincible = true;
      npcs.add(storeKeeper);
-     dynamicObjects.add(DynamicObject(type: DynamicObjectType.Pot, x: 0, y: 150, health: 10));
+     dynamicObjects.add(
+         DynamicObject(
+             type: DynamicObjectType.Pot,
+             x: 0,
+             y: 150,
+             health: 10,
+             radius: 14,
+         )
+     );
   }
 
   @override
