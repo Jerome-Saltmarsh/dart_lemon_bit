@@ -11,6 +11,7 @@ import '../enums/npc_mode.dart';
 import '../settings.dart';
 import '../utilities.dart';
 import 'Ability.dart';
+import 'Collider.dart';
 import 'GameObject.dart';
 import 'Player.dart';
 
@@ -93,7 +94,7 @@ class Character extends GameObject {
   int animationFrame = 0;
   int frozenDuration = 0;
   /// the character that was highlighted when the player clicked
-  Character? attackTarget;
+  Collider? attackTarget;
   double speedModifier = 0;
   bool invincible = false;
   int team;

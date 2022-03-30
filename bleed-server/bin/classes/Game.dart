@@ -458,38 +458,44 @@ extension GameFunctions on Game {
     return true;
   }
 
-  void applyDamage(Character src, Character target, int amount) {
-    if (target.dead) return;
-    if (target.invincible) return;
-    changeCharacterHealth(target, -amount);
+  void applyDamage(Character src, Collider target, int amount) {
+    if (target is Character){
+      if (target.dead) return;
+      if (target.invincible) return;
+      changeCharacterHealth(target, -amount);
+      if (target.alive) {
+        if (target.type.isZombie){
+          setCharacterState(target, CharacterState.Hurt);
+        }
+        return;
+      }
 
-    if (target.alive) {
-      if (target.type.isZombie){
-        setCharacterState(target, CharacterState.Hurt);
+      onCharacterKilled(target, src);
+
+      if (src is Player) {
+        src.gemSpawns.add(GemSpawn(x: target.x, y: target.y, type: OrbType.Ruby));
+      }
+
+      final targetAI = target.ai;
+      if (targetAI != null) {
+        target.active = false;
+        onNpcKilled(target, src);
+      }
+
+      events.onKilled.forEach((onKilledHandler) {
+        onKilledHandler(this, src, target, amount);
+      });
+
+      if (target.alive && targetAI != null) {
+        if (targetAI.target == null) {
+          targetAI.target = src;
+        }
       }
       return;
     }
 
-    onCharacterKilled(target, src);
-
-    if (src is Player) {
-      src.gemSpawns.add(GemSpawn(x: target.x, y: target.y, type: OrbType.Ruby));
-    }
-
-    final targetAI = target.ai;
-    if (targetAI != null) {
-      target.active = false;
-      onNpcKilled(target, src);
-    }
-
-    events.onKilled.forEach((onKilledHandler) {
-      onKilledHandler(this, src, target, amount);
-    });
-
-    if (target.alive && targetAI != null) {
-      if (targetAI.target == null) {
-        targetAI.target = src;
-      }
+    if (target is DynamicObject){
+        target.health -= amount;
     }
   }
 
@@ -847,7 +853,7 @@ extension GameFunctions on Game {
     }
 
     final aimTarget = player.aimTarget;
-    if (aimTarget != null && aimTarget.dead){
+    if (aimTarget is Character && aimTarget.dead){
       player.aimTarget = null;
     }
 
@@ -914,23 +920,25 @@ extension GameFunctions on Game {
     }
   }
 
-  void handleProjectileHit(Projectile projectile, Character character) {
+  void handleProjectileHit(Projectile projectile, Collider collider) {
     projectile.active = false;
-    applyStrike(projectile.owner, character, projectile.damage);
-    dispatch(GameEventType.Arrow_Hit, character.x, character.y);
+    applyStrike(projectile.owner, collider, projectile.damage);
+    dispatch(GameEventType.Arrow_Hit, collider.x, collider.y);
   }
 
-  void applyStrike(Character src, Character target, int damage) {
-    if (sameTeam(src, target)) return;
-    if (target.dead) return;
+  void applyStrike(Character src, Collider target, int damage) {
+    if (target is Character) {
+      if (sameTeam(src, target)) return;
+      if (target.dead) return;
+    }
+
     applyDamage(src, target, damage);
     final angleBetweenSrcAndTarget = radiansV2(src, target);
-    final healthPercentage = damage / target.maxHealth;
-    // if (target.type.isZombie){
-    //   target.angle = radiansV2(target, src);
-    // }
-    final forceMultiplier = 3.0;
-    applyForce(target, angleBetweenSrcAndTarget, healthPercentage * forceMultiplier);
+    if (target is Character) {
+      const forceMultiplier = 3.0;
+      final healthPercentage = damage / target.maxHealth;
+      applyForce(target, angleBetweenSrcAndTarget, healthPercentage * forceMultiplier);
+    }
 
     dispatch(
         GameEventType.Character_Struck,
@@ -939,15 +947,19 @@ extension GameFunctions on Game {
         angleBetweenSrcAndTarget
     );
 
-    if (target.dead) {
-      if (target.type.isZombie){
+    if (
+        target is Character
+        &&
+        target.dead
+        &&
+        target.type.isZombie
+    ) {
         dispatch(
             GameEventType.Zombie_Killed,
             target.x,
             target.y,
             src.aimAngle
         );
-      }
     }
   }
 
@@ -1011,28 +1023,18 @@ extension GameFunctions on Game {
         break;
 
       case AbilityType.Brutal_Strike:
-        final int castFrame = 8;
-        if (character.stateDurationRemaining == castFrame) {
-          character.performing = null;
-          // const damageMultiplier = 2;
-          for (final zombie in zombies) {
-            // if (distanceV2(zombie, character) < character.attackRange) {
-            //   applyStrike(
-            //       character, zombie, character.weapon.damage * damageMultiplier);
-            // }
-          }
-          character.attackTarget = null;
-          character.performing = null;
-        }
         break;
       case AbilityType.Death_Strike:
         final int castFrame = 8;
         const damageMultiplier = 3;
         if (character.stateDurationRemaining == castFrame) {
-          Character? attackTarget = character.attackTarget;
+          final attackTarget = character.attackTarget;
           if (attackTarget != null) {
             applyStrike(
-                character, attackTarget, character.weapon.damage * damageMultiplier);
+                character,
+                attackTarget,
+                character.weapon.damage * damageMultiplier
+            );
           }
           character.attackTarget = null;
           character.performing = null;
@@ -1151,15 +1153,11 @@ extension GameFunctions on Game {
     required double range,
     required int damage,
     required ProjectileType type,
-    Character? target,
+    Collider? target,
   }) {
     final spawnDistance = character.radius + 5;
     final projectile = getAvailableProjectile();
-    if (target != null && target.alive && target.active) {
-      projectile.target = target;
-    } else {
-      projectile.target = null;
-    }
+    projectile.target = target;
     projectile.active = true;
     projectile.xStart = character.x + adj(character.aimAngle, spawnDistance);
     projectile.yStart = character.y + opp(character.aimAngle, spawnDistance);

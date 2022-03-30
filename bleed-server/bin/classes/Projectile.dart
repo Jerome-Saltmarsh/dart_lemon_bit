@@ -4,6 +4,7 @@ import 'package:lemon_math/hypotenuse.dart';
 import '../common/enums/ProjectileType.dart';
 import '../maths.dart';
 import 'Character.dart';
+import 'Collider.dart';
 import 'GameObject.dart';
 
 class Projectile extends GameObject {
@@ -13,7 +14,7 @@ class Projectile extends GameObject {
   late double range;
   late int damage;
   late ProjectileType type;
-  late Character? target;
+  late Collider? target;
   late double speed;
   late bool collideWithEnvironment = false;
   double angle = 0;

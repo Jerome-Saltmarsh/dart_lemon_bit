@@ -18,6 +18,7 @@ import '../settings.dart';
 import '../utilities.dart';
 import 'Ability.dart';
 import 'Character.dart';
+import 'Collider.dart';
 import 'Entity.dart';
 import 'Game.dart';
 
@@ -66,11 +67,11 @@ class Player extends Character {
   final slots = Slots();
   final orbs = Orbs();
 
-  Character? _aimTarget; // the currently highlighted character
+  Collider? _aimTarget; // the currently highlighted character
   Vector2? target;
   Vector2 runTarget = Vector2(0, 0);
 
-  Character? get aimTarget => _aimTarget;
+  Collider? get aimTarget => _aimTarget;
 
   void attainOrb(OrbType orb){
     switch(orb) {
@@ -87,14 +88,16 @@ class Player extends Character {
     }
   }
 
-  set aimTarget(Character? value){
-    if (value == null){
+  set aimTarget(Collider? value){
+    if (value == null) {
       _aimTarget = null;
       return;
     }
-    assert(!sameTeam(this, value));
-    assert(value.alive);
-    assert(value.active);
+    if (value is Character) {
+      assert(!sameTeam(this, value));
+      assert(value.alive);
+      assert(value.active);
+    }
     _aimTarget = value;
   }
 
