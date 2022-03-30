@@ -1611,12 +1611,26 @@ extension GameFunctions on Game {
             applyStrike(character, attackTarget, character.weapon.damage);
             return;
           }
-          final hit = physics.raycastHit(
+          final zombieHit = physics.raycastHit(
               character: character,
-              characters: zombies,
-              range: weaponType.range);
-          if (hit != null) {
-            applyStrike(character, hit, character.weapon.damage);
+              colliders: zombies,
+              range: weaponType.range
+          );
+          if (zombieHit != null) {
+            applyStrike(character, zombieHit, character.weapon.damage);
+            return;
+          }
+          final dynamicObjectHit = physics.raycastHit(
+              character: character,
+              colliders: dynamicObjects,
+              range: weaponType.range
+          );
+          if (dynamicObjectHit != null) {
+            dynamicObjectHit.health -= character.weapon.damage;
+            if (dynamicObjectHit.health <= 0){
+              dynamicObjectHit.collidable = false;
+            }
+            return;
           }
           return;
         }

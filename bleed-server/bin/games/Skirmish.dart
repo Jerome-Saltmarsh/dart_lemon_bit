@@ -73,6 +73,7 @@ class GameSkirmish extends Game {
     player.slots.slot1.type = SlotType.Potion_Red;
     player.slots.slot2.type = SlotType.Shotgun;
     player.slots.slot2.amount = 100;
+    player.slots.slot3.type = SlotType.Sword_Short;
     return player;
   }
 

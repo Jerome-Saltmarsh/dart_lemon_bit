@@ -4,17 +4,18 @@ import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/angle_between.dart';
 
 import 'classes/Character.dart';
+import 'classes/Collider.dart';
 import 'classes/GameObject.dart';
 import 'common/SlotType.dart';
 import 'functions.dart';
 import 'maths.dart';
 
-final _Physics physics = _Physics();
+final physics = _Physics();
 
 class _Physics {
-  Character? raycastHit({
+  I? raycastHit<I extends Collider>({
     required Character character,
-    required List<Character> characters,
+    required List<I> colliders,
     required double range,
     double angleRange = pi,
   }) {
@@ -24,21 +25,22 @@ class _Physics {
     final radiusBottom = character.y + range;
     final radiusLeft = character.x - range;
     final radiusRight = character.x + range;
-    Character? target;
-    for (var char in characters) {
-      if (char.bottom < radiusTop) continue;
-      if (char.top > radiusBottom) return null;
-      if (char.right < radiusLeft) continue;
-      if (char.left > radiusRight) continue;
+    I? target;
+    for (var collider in colliders) {
+      if (!collider.collidable) continue;
+      if (collider.bottom < radiusTop) continue;
+      if (collider.top > radiusBottom) return null;
+      if (collider.right < radiusLeft) continue;
+      if (collider.left > radiusRight) continue;
       final angle = angleBetween(
-          character.x, character.y, char.x, char.y);
+          character.x, character.y, collider.x, collider.y);
       final angleDiff =
       calculateAngleDifference(angle, character.aimAngle);
       if (angleDiff > angleRange) continue;
-      final charDistance = distanceV2(char, character);
+      final charDistance = distanceV2(collider, character);
       if (charDistance > range) continue;
       if (target == null || charDistance < targetDistance) {
-        target = char;
+        target = collider;
         targetDistance = charDistance;
       }
     }

@@ -97,6 +97,7 @@ class _ByteCompiler {
      writeByte(ServerResponse.Dynamic_Objects.index);
      final dynamicObjects = player.game.dynamicObjects;
      for (final dynamicObject in dynamicObjects) {
+       if (dynamicObject.health <= 0) continue;
        if (dynamicObject.x < player.screenLeft) continue;
        if (dynamicObject.x > player.screenRight) continue;
        if (dynamicObject.y < player.screenTop) continue;
