@@ -45,7 +45,6 @@ import 'DynamicObject.dart';
 import 'EnvironmentObject.dart';
 import 'GameEvent.dart';
 import 'GameObject.dart';
-import 'Grenade.dart';
 import 'InteractableNpc.dart';
 import 'Item.dart';
 import 'Player.dart';
@@ -85,7 +84,6 @@ abstract class Game {
   final List<InteractableNpc> npcs = [];
   final List<Player> players = [];
   final List<Projectile> projectiles = [];
-  final List<Grenade> grenades = [];
   final List<GameEvent> gameEvents = [];
   final List<Crate> crates = [];
   final List<DynamicObject> dynamicObjects = [];

@@ -70,8 +70,6 @@ class GameRender {
     engine.setPaintColorWhite();
     _renderPlayerNames();
     drawPlayerText();
-    // engine.setPaintColorWhite();
-    // collectedOrbImage();
   }
 
   void collectedOrbImage() {

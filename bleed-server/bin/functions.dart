@@ -9,8 +9,8 @@ import 'common/OrbType.dart';
 import 'constants.dart';
 import 'maths.dart';
 
-double calculateAngleDifference(double angleA, double angleB) {
-  double diff = abs(angleA - angleB).toDouble();
+num calculateAngleDifference(double angleA, double angleB) {
+  final diff = abs(angleA - angleB);
   if (diff < pi) {
     return diff;
   }
@@ -24,10 +24,11 @@ void updateCollisionBetween(List<GameObject> gameObjects) {
   for (var i = 0; i < numberOfGameObjectsMinusOne; i++) {
     final gameObjectI = gameObjects[i];
     if (!gameObjectI.collidable) continue;
+    final gameObjectIBottom = gameObjectI.bottom;
     for (var j = i + 1; j < numberOfGameObjects; j++) {
       final gameObjectJ = gameObjects[j];
       if (!gameObjectJ.collidable) continue;
-      if (gameObjectJ.top > gameObjectI.bottom) break;
+      if (gameObjectJ.top > gameObjectIBottom) break;
       if (gameObjectJ.left > gameObjectI.right) continue;
       if (gameObjectJ.bottom < gameObjectI.top) continue;
       resolveCollisionA(gameObjectI, gameObjectJ);

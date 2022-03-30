@@ -8,11 +8,9 @@ class EnvironmentObject extends GameObject {
     required double x,
     required double y,
     required this.type
-  }) : super(x, y) {
+  }) : super(x, y, radius: _getRadius(type)) {
     this.x = x;
     this.y = y;
-    // TODO Forbidden game logic inside data class
-    radius = _getRadius(type);
 
     // TODO Forbidden game logic inside data class
     if (type == ObjectType.Rock_Small){

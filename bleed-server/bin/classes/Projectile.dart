@@ -18,7 +18,7 @@ class Projectile extends GameObject {
   late bool collideWithEnvironment = false;
   double angle = 0;
 
-  Projectile():super(0, 0);
+  Projectile() : super(0, 0, radius: 5);
 
   int get squad => owner.team;
 
