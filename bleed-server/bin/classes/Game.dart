@@ -970,26 +970,21 @@ extension GameFunctions on Game {
       applyForce(target, angleBetweenSrcAndTarget, healthPercentage * forceMultiplier);
     }
 
-    dispatch(
-        GameEventType.Character_Struck,
-        target.x,
-        target.y,
-        angleBetweenSrcAndTarget
-    );
-
-    if (
-        target is Character
-        &&
-        target.dead
-        &&
-        target.type.isZombie
-    ) {
+    if (target is Character) {
+      dispatch(
+          GameEventType.Character_Struck,
+          target.x,
+          target.y,
+          angleBetweenSrcAndTarget
+      );
+      if (target.dead && target.type.isZombie){
         dispatch(
             GameEventType.Zombie_Killed,
             target.x,
             target.y,
             src.aimAngle
         );
+      }
     }
   }
 

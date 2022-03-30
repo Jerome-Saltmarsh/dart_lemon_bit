@@ -90,7 +90,7 @@
     [ ] Chest
     [ ] Pot
 [ ] FIX Sword sprite cut off on strike  
-[ ] Right Click to strike        
+[x] Right Click to strike        
 [x] FIX Center camera on game start   
 [x] Player, zombie collision        
 [x] Remove save load from menu in skirmish (signed in only)    
