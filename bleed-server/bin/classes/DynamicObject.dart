@@ -1,9 +1,9 @@
 
 
 import '../common/DynamicObjectType.dart';
-import 'GameObject.dart';
+import 'Collider.dart';
 
-class DynamicObject extends GameObject {
+class DynamicObject extends Collider {
 
   late DynamicObjectType type;
   late int maxHealth;
@@ -14,7 +14,7 @@ class DynamicObject extends GameObject {
     required double x,
     required double y,
     required this.health
-  }) : super(x, y) {
+  }) : super(x, y, 20) {
     maxHealth = health;
   }
 }

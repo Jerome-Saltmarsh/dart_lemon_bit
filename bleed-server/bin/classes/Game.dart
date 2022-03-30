@@ -297,6 +297,23 @@ abstract class Game {
       }
     }
   }
+
+  void checkColliderCollision(List<GameObject> gameObjects, List<Collider> colliders) {
+    for (final gameObject in gameObjects) {
+      for (final collider in colliders) {
+        final combinedRadius = gameObject.radius + collider.radius;
+        if (diffOver(gameObject.x, collider.x, combinedRadius)) continue;
+        if (diffOver(gameObject.y, collider.y, combinedRadius)) continue;
+        final _distance = distanceV2(gameObject, collider);
+        if (_distance > combinedRadius) continue;
+        final overlap = combinedRadius - _distance;
+        final r = radiansV2(gameObject, collider);
+        gameObject.x -= adj(r, overlap);
+        gameObject.y -= opp(r, overlap);
+      }
+    }
+  }
+
 }
 
 const secondsPerMinute = 60;
@@ -592,7 +609,9 @@ extension GameFunctions on Game {
       updateCharacter(npcs[i]);
     }
 
-    checkPlayerColliderCollision();
+    checkColliderCollision(players, colliders);
+    checkColliderCollision(zombies, colliders);
+    checkColliderCollision(players, dynamicObjects);
   }
 
   void _updateCollisions() {
