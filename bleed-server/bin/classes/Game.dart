@@ -610,6 +610,7 @@ extension GameFunctions on Game {
     sortVertically(npcs);
     sortVertically(items);
     sortVertically(projectiles);
+    sortVertically(dynamicObjects);
   }
 
   void setCharacterStateRunning(Character character) {

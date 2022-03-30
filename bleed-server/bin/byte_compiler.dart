@@ -345,6 +345,10 @@ class _ByteCompiler {
   }
 
   void writePercentage(double value){
+    if (value.isNaN) {
+      writeByte(0);
+      return;
+    }
     writeByte((value * 100).toInt());
   }
 

@@ -4,11 +4,13 @@ import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/randomItem.dart';
 
 import '../classes/Character.dart';
+import '../classes/DynamicObject.dart';
 import '../classes/EnvironmentObject.dart';
 import '../classes/Game.dart';
 import '../classes/InteractableNpc.dart';
 import '../classes/Item.dart';
 import '../classes/Player.dart';
+import '../common/DynamicObjectType.dart';
 import '../common/ItemType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/SlotType.dart';
@@ -36,6 +38,7 @@ class GameSkirmish extends Game {
      );
      storeKeeper.invincible = true;
      npcs.add(storeKeeper);
+     dynamicObjects.add(DynamicObject(type: DynamicObjectType.Pot, x: 0, y: 150, health: 10));
   }
 
   @override

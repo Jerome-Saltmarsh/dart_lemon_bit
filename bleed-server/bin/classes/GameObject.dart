@@ -3,30 +3,15 @@ import 'dart:math';
 
 import 'package:lemon_math/Vector2.dart';
 
-int countActive(List<GameObject> values){
-  var total = 0;
-  for(final gameObject in values){
-    if (!gameObject.active) continue;
-    total++;
-  }
-  return total;
-}
-
 class GameObject extends Vector2 {
+  var z = 0.0;
+  var xv = 0.0;
+  var yv = 0.0;
+  var zv = 0.0;
+  var radius = 0.0;
+  var collidable = true;
+  var active = true;
 
-  static int _idCount = 0;
-
-  // state
-  int id = _idCount++;
-  double z = 0;
-  double xv = 0;
-  double yv = 0;
-  double zv = 0;
-  double radius = 0;
-  bool collidable = true;
-  bool active = true;
-
-  // properties
   double get angle => atan2(xv, yv);
   double get left => x - radius;
   double get right => x + radius;
@@ -34,12 +19,11 @@ class GameObject extends Vector2 {
   double get bottom => y + radius;
   bool get inactive => !active;
 
-  // constructor
-  GameObject(double x, double y,
-      {this.z = 0, this.xv = 0, this.yv = 0, this.zv = 0, this.radius = 5}) : super(x, y);
-
-  // methods
-  void assignNewId(){
-    id = _idCount++;
-  }
+  GameObject(double x, double y, {
+    this.z = 0,
+    this.xv = 0,
+    this.yv = 0,
+    this.zv = 0,
+    this.radius = 5
+  }) : super(x, y);
 }

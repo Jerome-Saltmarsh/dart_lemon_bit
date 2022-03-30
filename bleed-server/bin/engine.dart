@@ -48,7 +48,7 @@ class _Engine {
       regenCharacters();
     }
 
-    if (engine.frame % framesPerUpdateAIPath == 0) {
+    if (frame % framesPerUpdateAIPath == 0) {
       for (final game in games) {
         final zombies = game.zombies;
         for (final zombie in zombies){

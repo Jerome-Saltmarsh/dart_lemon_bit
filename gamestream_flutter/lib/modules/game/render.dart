@@ -54,7 +54,12 @@ class GameRender {
       drawPaths();
     }
 
-    // engine.setPaintColorWhite();
+    final totalDynamicEnvironmentObjects = game.totalDynamicObjects.value;
+    for (var i = 0; i < totalDynamicEnvironmentObjects; i++) {
+       final dynamicObject = game.dynamicObjects[i];
+       drawCircle36(dynamicObject.x, dynamicObject.y);
+    }
+
     isometric.render.renderSprites();
     drawEffects();
     drawItems();
@@ -63,7 +68,6 @@ class GameRender {
       drawRoyalPerimeter();
     }
     engine.setPaintColorWhite();
-    // _drawFloatingTexts();
     _renderPlayerNames();
     drawPlayerText();
     // engine.setPaintColorWhite();
@@ -129,6 +133,10 @@ class GameRender {
     if (x == 0 && y == 0) return;
     final shade = isometric.state.getShadeAtPosition(x, y);
     if (shade >= Shade.Very_Dark) return;
+    drawCircle36(x, y);
+  }
+
+  void drawCircle36(double x, double y){
     engine.render(dstX: x, dstY: y, srcX: 2420, srcY: 57, srcSize: 37);
   }
 
@@ -269,7 +277,6 @@ class GameRender {
     for (var i = 0; i < game.itemsTotal; i++){
       final item = items[i];
       const mouseDist = 100;
-
       if ((mouseWorldX - item.x).abs() < mouseDist){
         if((mouseWorldY - item.y).abs() < mouseDist){
           renderText(
@@ -279,8 +286,6 @@ class GameRender {
           );
         }
       }
-
-
       isometric.render.renderItem(item);
     }
   }
