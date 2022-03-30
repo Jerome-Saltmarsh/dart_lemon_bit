@@ -64,6 +64,7 @@
 [ ] Tile Flowers      
 [ ] Send Message to All or to Allies only
 [ ] Spawn Allies that follow you    
+[ ] Generate Random Map    
 [ ] Characters can fall in water and die    
 [ALPHA-RELEASE]
 [ ] FIX Sometimes zombies disappear on death    
@@ -83,12 +84,15 @@
 [ ] Design Map Skirmish
 [ ] Regenerate Destructible objects    
 [ ] SKIP TRACK    
+[ ] FIX Sword sprite cut off on strike    
+[ ] FIX Center camera on game start   
 [ ] Destructible Objects    
     [ ] Bush
     [ ] Rock
     [ ] Chest
     [ ] Pot 
-[ ] Right Click to strike        
+[ ] Right Click to strike      
+[x] Player, zombie collision        
 [x] Remove save load from menu in skirmish (signed in only)    
 [x] FIX Playing as signed in account throws error    
 [x] Player Score    

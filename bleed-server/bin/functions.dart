@@ -86,19 +86,15 @@ void resolveCollisionBetween(
     List<Collider> gameObjectsB,
     CollisionResolver resolve
     ) {
-  var minJ = 0;
   final aLength = gameObjectsA.length;
   final bLength = gameObjectsB.length;
   for (var i = 0; i < aLength; i++) {
     final a = gameObjectsA[i];
     if (!a.collidable) continue;
-    for (var j = minJ; j < bLength; j++) {
+    for (var j = 0; j < bLength; j++) {
       final b = gameObjectsB[j];
       if (!b.collidable) continue;
-      if (a.bottom < b.top) {
-        minJ++;
-        break;
-      }
+      if (a.bottom < b.top) continue;
       if (a.top > b.bottom) continue;
       if (a.right < b.left) continue;
       if (a.left > b.right) continue;

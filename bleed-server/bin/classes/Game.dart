@@ -420,10 +420,9 @@ extension GameFunctions on Game {
     );
     final player = getClosestEnemyPlayer(x, y, character);
     final dynamicObject = getClosestDynamicObject(x, y);
-
-    final zombieDistance = zombie != null ? diff(zombie.x, x) + diff(zombie.y, y) : 9999;
-    final playerDistance =  player != null ? diff(player.x, x) + diff(player.y, y) : 9999;
-    final dynamicDistance = dynamicObject != null ? diff(dynamicObject.x, x) + diff(dynamicObject.y, y) : 9999;
+    final zombieDistance = zombie != null ? diff(zombie.x, x) + diff(zombie.y, y) : 99999;
+    final playerDistance =  player != null ? diff(player.x, x) + diff(player.y, y) : 99999;
+    final dynamicDistance = dynamicObject != null ? diff(dynamicObject.x, x) + diff(dynamicObject.y, y) : 99999;
 
     if (zombieDistance < playerDistance) {
        if (zombieDistance < dynamicDistance) {
@@ -431,7 +430,7 @@ extension GameFunctions on Game {
        }
        return dynamicObject;
     }
-    if (playerDistance < dynamicDistance){
+    if (playerDistance < dynamicDistance) {
       return player;
     }
     return dynamicObject;
@@ -992,7 +991,7 @@ extension GameFunctions on Game {
   void updateCharacterStatePerforming(Character character) {
     final ability = character.performing;
     if (ability == null) {
-      _updateCharacterStateAttacking(character);
+      updateCharacterStateAttacking(character);
       return;
     }
     switch (ability.type) {
@@ -1547,7 +1546,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void _updateCharacterStateAttacking(Character character) {
+  void updateCharacterStateAttacking(Character character) {
     final stateDuration = character.stateDuration;
 
     if (character.type == CharacterType.Zombie) {
@@ -1660,20 +1659,6 @@ extension GameFunctions on Game {
       }
   }
 }
-
-// void applyCratePhysics(Crate crate, List<Character> characters) {
-//   for (final character in characters) {
-//     if (!character.active) continue;
-//     if (diffOver(crate.x, character.x, radius.crate)) continue;
-//     if (diffOver(crate.y, character.y, radius.crate)) continue;
-//     final dis = approximateDistance(crate, character);
-//     if (dis >= radius.crate) continue;
-//     final b = radius.crate - dis;
-//     final r = radiansBetween(crate.x, crate.y, character.x, character.y);
-//     character.x += adj(r, b);
-//     character.y += opp(r, b);
-//   }
-// }
 
 void playerInteract(Player player) {
   for (InteractableNpc npc in player.game.npcs) {

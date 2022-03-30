@@ -63,6 +63,10 @@ void sendRequestAcquireAbility(WeaponType type) {
   // webSocket.send('${ClientRequest.AcquireAbility.index} $session ${type.index}');
 }
 
+void sendRequestAttack() {
+  webSocket.send(ClientRequest.Attack.index);
+}
+
 final _characterController = modules.game.state.characterController;
 final _characterControllerAction = _characterController.action;
 

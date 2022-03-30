@@ -1,5 +1,6 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
+import 'package:lemon_math/angle_between.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -29,6 +30,7 @@ import 'functions/generateName.dart';
 import 'functions/withinRadius.dart';
 import 'games/Moba.dart';
 import 'games/world.dart';
+import 'maths.dart';
 import 'settings.dart';
 import 'utilities.dart';
 
@@ -216,8 +218,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
       final player = _player;
 
-
-      if (requestD is List<int>){
+      if (requestD is List<int>) {
         final List<int> args = requestD;
 
         final clientRequestInt = args[0];
@@ -831,6 +832,14 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               // player.abilityPoints--;
               break;
           }
+          break;
+
+        case ClientRequest.Attack:
+          if (player == null) return;
+          if (player.deadOrBusy) return;
+          final mouseAngle = radiansBetween(player.x, player.y, player.mouseX, player.mouseY);
+          characterFaceAngle(player, mouseAngle);
+          player.game.setCharacterStatePerforming(player);
           break;
 
         case ClientRequest.Equip:

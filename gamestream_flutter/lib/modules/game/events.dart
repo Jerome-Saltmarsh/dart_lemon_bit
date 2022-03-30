@@ -39,15 +39,9 @@ class GameEvents {
     engine.callbacks.onLeftClicked = actions.playerPerform;
     engine.callbacks.onPanStarted = actions.playerPerform;
     engine.callbacks.onLongLeftClicked = actions.playerRun;
-    engine.callbacks.onRightClicked = (){
-      if (state.player.ability.value == AbilityType.None) {
-        actions.spawnZombie();
-      } else {
-        actions.deselectAbility();
-      }
-    };
-    state.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
+    engine.callbacks.onRightClicked = onMouseRightClick;
     game.type.onChanged(_onGameTypeChanged);
+    state.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     state.player.alive.onChanged(_onPlayerAliveChanged);
     state.player.state.onChanged(onPlayerCharacterStateChanged);
     state.textBoxVisible.onChanged(onTextModeChanged);
@@ -58,6 +52,14 @@ class GameEvents {
     state.player.slots.armour.type.onChanged(onPlayerArmourChanged);
     state.player.slots.helm.type.onChanged(onPlayerHelmChanged);
     sub(_onGameError);
+  }
+
+  void onMouseRightClick(){
+    if (state.player.ability.value != AbilityType.None) {
+      actions.deselectAbility();
+      return;
+    }
+    sendRequestAttack();
   }
 
   void onPlayerWeaponChanged(SlotType value){

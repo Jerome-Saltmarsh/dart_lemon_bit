@@ -5,6 +5,7 @@ enum ClientRequest {
   Join,
   Join_Custom,
   Update_Cube3D,
+  Attack,
   Revive,
   Equip,
   Ping,
