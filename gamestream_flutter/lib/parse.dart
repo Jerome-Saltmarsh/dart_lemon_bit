@@ -359,6 +359,9 @@ void _parseGameJoined() {
   player.id = consumeInt();
   game.id = consumeInt();
   player.team = consumeInt();
+  player.x = consumeDouble();
+  player.y = consumeDouble();
+  modules.game.actions.cameraCenterPlayer();
 }
 
 ObjectType _consumeEnvironmentObjectType() {

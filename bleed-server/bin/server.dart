@@ -133,7 +133,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       write(ServerResponse.Game_Status.index);
       write(game.status.index);
       compilePlayersRemaining(_buffer, 0);
-      write('${ServerResponse.Game_Joined.index} ${player.id} ${game.id} ${player.team}');
+      write('${ServerResponse.Game_Joined.index} ${player.id} ${game.id} ${player.team} ${player.x.toInt()} ${player.y.toInt()}');
       sendAndClearBuffer();
     }
 

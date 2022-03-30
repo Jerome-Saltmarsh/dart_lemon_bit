@@ -63,7 +63,7 @@ class GameFactories {
     particle.duration = mystDuration;
     particle.x += giveOrTake(mystPositionRange);
     particle.y += giveOrTake(mystPositionRange);
-    particle.z = 0.25;
+    particle.z = 0.5;
     particle.weight = 0;
     particle.scale = 1;
     particle.scaleV = 0;

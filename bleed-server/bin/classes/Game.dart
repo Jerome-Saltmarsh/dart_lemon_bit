@@ -519,8 +519,12 @@ extension GameFunctions on Game {
       return;
     }
 
-    if (target is DynamicObject){
+    if (target is DynamicObject) {
         target.health -= amount;
+        if (target.health <= 0) {
+          target.collidable = false;
+          // TODO Dispatch drop items
+        }
     }
   }
 

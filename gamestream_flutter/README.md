@@ -84,14 +84,14 @@
 [ ] Design Map Skirmish
 [ ] Regenerate Destructible objects    
 [ ] SKIP TRACK    
-[ ] FIX Sword sprite cut off on strike    
-[ ] FIX Center camera on game start   
 [ ] Destructible Objects    
     [ ] Bush
     [ ] Rock
     [ ] Chest
-    [ ] Pot 
-[ ] Right Click to strike      
+    [ ] Pot
+[ ] FIX Sword sprite cut off on strike  
+[ ] Right Click to strike        
+[x] FIX Center camera on game start   
 [x] Player, zombie collision        
 [x] Remove save load from menu in skirmish (signed in only)    
 [x] FIX Playing as signed in account throws error    

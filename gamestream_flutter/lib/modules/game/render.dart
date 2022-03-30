@@ -57,7 +57,10 @@ class GameRender {
     final totalDynamicEnvironmentObjects = game.totalDynamicObjects.value;
     for (var i = 0; i < totalDynamicEnvironmentObjects; i++) {
        final dynamicObject = game.dynamicObjects[i];
-       drawCircle36(dynamicObject.x, dynamicObject.y);
+       // drawCircle36(dynamicObject.x, dynamicObject.y);
+       engine.mapSrc64(x: 6032, y: 0);
+       engine.mapDst(x: dynamicObject.x, y: dynamicObject.y, anchorX: 32, anchorY: 32);
+       engine.renderAtlas();
     }
 
     isometric.render.renderSprites();
