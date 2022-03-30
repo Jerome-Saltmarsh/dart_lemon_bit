@@ -280,28 +280,23 @@ abstract class Game {
     }
   }
 
-  void checkColliderCollision(List<GameObject> gameObjects, List<Collider> colliders) {
-    var colliderI = 0;
-    final totalColliders = colliders.length;
-    for (final gameObject in gameObjects) {
-      if (!gameObject.collidable) continue;
-      final gameObjectTop = gameObject.top;
-      for (var i = colliderI; i < totalColliders; i++) {
-        final collider = colliders[i];
-        if (!collider.collidable) continue;
-        if (collider.bottom < gameObjectTop){
-           colliderI = i;
-           continue;
-        }
-        final combinedRadius = gameObject.radius + collider.radius;
-        if (diffOver(gameObject.x, collider.x, combinedRadius)) continue;
-        if (diffOver(gameObject.y, collider.y, combinedRadius)) continue;
-        final _distance = distanceV2(gameObject, collider);
+  void checkColliderCollision(List<Collider> collidersA, List<Collider> collidersB) {
+    final totalColliders = collidersB.length;
+    for (final a in collidersA) {
+      if (!a.collidable) continue;
+      final aRadius = a.radius;
+      for (var i = 0; i < totalColliders; i++) {
+        final b = collidersB[i];
+        if (!b.collidable) continue;
+        final combinedRadius = aRadius + b.radius;
+        if (diffOver(a.x, b.x, combinedRadius)) continue;
+        if (diffOver(a.y, b.y, combinedRadius)) continue;
+        final _distance = distanceV2(a, b);
         if (_distance > combinedRadius) continue;
         final overlap = combinedRadius - _distance;
-        final r = radiansV2(gameObject, collider);
-        gameObject.x -= adj(r, overlap);
-        gameObject.y -= opp(r, overlap);
+        final r = radiansV2(a, b);
+        a.x -= adj(r, overlap);
+        a.y -= opp(r, overlap);
       }
     }
   }

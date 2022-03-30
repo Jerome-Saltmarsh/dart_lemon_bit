@@ -5,16 +5,12 @@ import 'package:lemon_math/hypotenuse.dart';
 
 import 'constants.dart';
 
-const _0 = 0.0;
-const half = 0.5;
-const _1 = 1.0;
-
 double distanceV2(Vector2 a, Vector2 b) {
   return hypotenuse(a.x - b.x, a.y - b.y);
 }
 
 int absInt(int value) {
-  if (value < _0) return -value;
+  if (value < 0) return -value;
   return value;
 }
 
@@ -43,7 +39,7 @@ double velY(double rotation, double speed) {
 }
 
 double radians(double x, double y) {
-  if (x < _0) return -atan2(x, y);
+  if (x < 0) return -atan2(x, y);
   return pi2 - atan2(x, y);
 }
 
@@ -56,7 +52,7 @@ double opp(double rotation, num magnitude) {
 }
 
 double normalize(double x, double y) {
-  return _1 / hypotenuse(x, y);
+  return 1.0 / hypotenuse(x, y);
 }
 
 double normalizeX(double x, double y) {
@@ -76,7 +72,7 @@ double clampMagnitudeY(double x, double y, double value) {
 }
 
 bool isLeft(double aX, double aY, double bX, double bY, double cX, double cY) {
-  return ((bX - aX) * (cY - aY) - (bY - aY) * (cX - aX)) > _0;
+  return ((bX - aX) * (cY - aY) - (bY - aY) * (cX - aX)) > 0;
 }
 
 // double approximateDistance(Vector2 a, Vector2 b){
