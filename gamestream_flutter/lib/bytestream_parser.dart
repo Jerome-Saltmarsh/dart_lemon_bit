@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:bleed_common/DynamicObjectType.dart';
 import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/PlayerEvent.dart';
 import 'package:gamestream_flutter/classes/Character.dart';
@@ -322,8 +323,17 @@ class _ByteStreamParser {
   }
 
   void _parseDynamicObjects() {
-
-
+      var total = 0;
+      while (true) {
+         final typeIndex = _nextByte();
+         if (typeIndex == END) break;
+         final dynamicObject = game.dynamicObjects[total];
+         dynamicObject.type = dynamicObjectTypes[typeIndex];
+         dynamicObject.x = _nextDouble();
+         dynamicObject.y = _nextDouble();
+         dynamicObject.health = _nextPercentage();
+         total++;
+      }
+      game.totalDynamicObjects.value = total;
   }
-
 }

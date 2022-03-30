@@ -87,7 +87,7 @@ class _ByteCompiler {
     writePlayerZombies(player);
     writeItems(player);
     writePlayerEvents(player);
-    // writeDynamicObjects(player);
+    writeDynamicObjects(player);
 
     if (game.debugMode)
       writePaths(game);

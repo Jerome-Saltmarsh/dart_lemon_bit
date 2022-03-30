@@ -66,7 +66,8 @@ class _Game {
 
   Character getNextHighestScore(){
      Character? highestPlayer;
-     for(var i = 0; i < totalPlayers.value; i++){
+     final numberOfPlayers = totalPlayers.value;
+     for(var i = 0; i < numberOfPlayers; i++){
         final player = players[i];
         if (player.scoreMeasured) continue;
         if (highestPlayer == null){
