@@ -890,8 +890,8 @@ extension GameFunctions on Game {
     if (target == null) return;
     characterFaceV2(player, target);
 
-    if (target is Character){
-      if (target.dead) {
+    if (target is Collider){
+      if (!target.collidable) {
         player.target = null;
         return;
       }
