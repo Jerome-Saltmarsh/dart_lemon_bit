@@ -299,8 +299,16 @@ abstract class Game {
   }
 
   void checkColliderCollision(List<GameObject> gameObjects, List<Collider> colliders) {
+    var colliderI = 0;
+    final totalColliders = colliders.length;
     for (final gameObject in gameObjects) {
-      for (final collider in colliders) {
+      final gameObjectTop = gameObject.top;
+      for (var i = colliderI; i < totalColliders; i++) {
+        final collider = colliders[i];
+        if (collider.bottom < gameObjectTop){
+           colliderI = i;
+           continue;
+        }
         final combinedRadius = gameObject.radius + collider.radius;
         if (diffOver(gameObject.x, collider.x, combinedRadius)) continue;
         if (diffOver(gameObject.y, collider.y, combinedRadius)) continue;

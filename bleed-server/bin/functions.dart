@@ -19,14 +19,18 @@ double calculateAngleDifference(double angleA, double angleB) {
 
 
 void updateCollisionBetween(List<GameObject> gameObjects) {
-  for (int i = 0; i < gameObjects.length - 1; i++) {
-    if (!gameObjects[i].collidable) continue;
-    for (int j = i + 1; j < gameObjects.length; j++) {
-      if (!gameObjects[j].collidable) continue;
-      if (gameObjects[j].top > gameObjects[i].bottom) break;
-      if (gameObjects[j].left > gameObjects[i].right) continue;
-      if (gameObjects[j].bottom < gameObjects[i].top) continue;
-      resolveCollisionA(gameObjects[i], gameObjects[j]);
+  final numberOfGameObjects = gameObjects.length;
+  final numberOfGameObjectsMinusOne = numberOfGameObjects - 1;
+  for (var i = 0; i < numberOfGameObjectsMinusOne; i++) {
+    final gameObjectI = gameObjects[i];
+    if (!gameObjectI.collidable) continue;
+    for (var j = i + 1; j < numberOfGameObjects; j++) {
+      final gameObjectJ = gameObjects[j];
+      if (!gameObjectJ.collidable) continue;
+      if (gameObjectJ.top > gameObjectI.bottom) break;
+      if (gameObjectJ.left > gameObjectI.right) continue;
+      if (gameObjectJ.bottom < gameObjectI.top) continue;
+      resolveCollisionA(gameObjectI, gameObjectJ);
     }
   }
 }
