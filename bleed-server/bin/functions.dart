@@ -3,6 +3,7 @@ import 'package:lemon_math/abs.dart';
 import 'package:lemon_math/hypotenuse.dart';
 import 'package:lemon_math/randomItem.dart';
 
+import 'classes/Collider.dart';
 import 'classes/GameObject.dart';
 import 'classes/Player.dart';
 import 'common/OrbType.dart';
@@ -18,7 +19,7 @@ num calculateAngleDifference(double angleA, double angleB) {
 }
 
 
-void updateCollisionBetween(List<GameObject> gameObjects) {
+void updateCollisionBetween(List<Collider> gameObjects) {
   final numberOfGameObjects = gameObjects.length;
   final numberOfGameObjectsMinusOne = numberOfGameObjects - 1;
   for (var i = 0; i < numberOfGameObjectsMinusOne; i++) {
@@ -36,7 +37,7 @@ void updateCollisionBetween(List<GameObject> gameObjects) {
   }
 }
 
-void resolveCollisionA(GameObject a, GameObject b) {
+void resolveCollisionA(Collider a, Collider b) {
   final overlap = collisionOverlap(a, b);
   if (overlap < 0) return;
   var xDiff = a.x - b.x;
@@ -61,27 +62,30 @@ void resolveCollisionA(GameObject a, GameObject b) {
   b.y -= targetY;
 }
 
-void resolveCollisionB(GameObject a, GameObject b) {
-  double overlap = collisionOverlap(a, b);
-  if (overlap < 0) return;
-  double xDiff = a.x - b.x;
-  double yDiff = a.y - b.y;
-  double mag = hypotenuse(xDiff, yDiff);
-  double ratio = 1.0 / mag;
-  double xDiffNormalized = xDiff * ratio;
-  double yDiffNormalized = yDiff * ratio;
-  double targetX = xDiffNormalized * overlap;
-  double targetY = yDiffNormalized * overlap;
+void resolveCollisionB(Collider a, Collider b) {
+  final overlap = collisionOverlap(a, b);
+  if (overlap <= 0) return;
+  final xDiff = a.x - b.x;
+  final yDiff = a.y - b.y;
+  final mag = hypotenuse(xDiff, yDiff);
+  final ratio = 1.0 / mag;
+  final xDiffNormalized = xDiff * ratio;
+  final yDiffNormalized = yDiff * ratio;
+  final targetX = xDiffNormalized * overlap;
+  final targetY = yDiffNormalized * overlap;
   a.x += targetX;
   a.y += targetY;
 }
 
-double collisionOverlap(GameObject a, GameObject b) {
+double collisionOverlap(Collider a, Collider b) {
   return a.radius + b.radius - distanceV2(a, b);
 }
 
-void resolveCollisionBetween(List<GameObject> gameObjectsA,
-    List<GameObject> gameObjectsB, CollisionResolver resolve) {
+void resolveCollisionBetween(
+    List<Collider> gameObjectsA,
+    List<Collider> gameObjectsB,
+    CollisionResolver resolve
+    ) {
   var minJ = 0;
   final aLength = gameObjectsA.length;
   final bLength = gameObjectsB.length;
@@ -103,7 +107,7 @@ void resolveCollisionBetween(List<GameObject> gameObjectsA,
   }
 }
 
-typedef void CollisionResolver(GameObject a, GameObject b);
+typedef void CollisionResolver(Collider a, Collider b);
 
 void playerEarnRandomOrb(Player player){
   final orbs = player.orbs;

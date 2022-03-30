@@ -7,6 +7,7 @@ class Collider extends Vector2 {
   double get right => x + radius;
   double get top => y - radius;
   double get bottom => y + radius;
+  var collidable = true;
 
   Collider(double x, double y, this.radius) : super(x, y);
 }

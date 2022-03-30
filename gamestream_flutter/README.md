@@ -82,6 +82,7 @@
 [ ] First heavy guitar track    
 [ ] Design Map Skirmish
 [ ] Regenerate Destructible objects    
+[ ] SKIP TRACK    
 [ ] Destructible Objects    
     [ ] Bush
     [ ] Rock

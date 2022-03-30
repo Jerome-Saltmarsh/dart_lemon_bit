@@ -8,7 +8,6 @@ class GameObject extends Collider {
   var xv = 0.0;
   var yv = 0.0;
   var zv = 0.0;
-  var collidable = true;
   var active = true;
 
   double get angle => atan2(xv, yv);
