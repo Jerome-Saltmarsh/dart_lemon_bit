@@ -25,7 +25,7 @@ const _defaultMaxMagic = 10;
 
 int _idCount = 0;
 
-class Player extends Character with Entity {
+class Player extends Character {
   final gameEventIds = <int, bool>{};
   var score = 0;
   var sceneChanged = false;

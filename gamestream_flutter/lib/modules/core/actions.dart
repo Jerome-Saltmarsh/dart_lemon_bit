@@ -183,7 +183,6 @@ class CoreActions {
     final player = modules.game.state.player;
     player.id = -1;
     game.id = -1;
-    player.uuid.value = "";
     player.x = -1;
     player.y = -1;
     game.totalZombies.value = 0;
@@ -320,6 +319,5 @@ class CoreActions {
 
   void clearSession(){
     print("logic.clearSession()");
-    modules.game.state.player.uuid.value = "";
   }
 }

@@ -1,3 +1,5 @@
+final clientRequestIndexUpdate = ClientRequest.Update.index;
+
 enum ClientRequest {
   Update,
   Join,

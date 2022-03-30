@@ -25,7 +25,7 @@ class _Engine {
   final framesPerRegen = 30 * 10;
   final framesPerUpdateAIPath = 30;
   // immutables
-  final Map<String, Player> playerMap = {};
+  // final Map<String, Player> playerMap = {};
   final List<Game> games = [];
   final scenes = _Scenes();
   late final world;
@@ -79,7 +79,6 @@ class _Engine {
             player.lastUpdateFrame++;
             if (player.lastUpdateFrame > settings.framesUntilPlayerDisconnected) {
               game.players.removeAt(i);
-              deregisterPlayer(player);
               i--;
             }
           }
@@ -108,18 +107,6 @@ class _Engine {
         player.magic++;
       }
     }
-  }
-
-  Player? findPlayerByUuid(String uuid) {
-    return playerMap[uuid];
-  }
-
-  void registerPlayer(Player player){
-    playerMap[player.uuid] = player;
-  }
-
-  void deregisterPlayer(Player player){
-    playerMap.remove(player.uuid);
   }
 
   GameSkirmish findGameSkirmish() {
@@ -167,7 +154,6 @@ class _Engine {
 
   void onPlayerCreated(Player player){
     player.game.players.add(player);
-    registerPlayer(player);
   }
 
   Future<CustomGame> findOrCreateCustomGame(String mapId) async {

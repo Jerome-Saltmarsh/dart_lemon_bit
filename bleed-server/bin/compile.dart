@@ -18,12 +18,6 @@ final _indexNpcMessage = ServerResponse.NpcMessage.index;
 const _space = ' ';
 const _semiColon = '; ';
 
-void compilePlayerJoined(StringBuffer buffer, Player player) {
-  _write(buffer,
-      '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player
-          .x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.team} ');
-}
-
 void compileCrates(StringBuffer buffer, List<Crate> crates) {
   _write(buffer, ServerResponse.Crates.index);
   _write(buffer, crates.length);

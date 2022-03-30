@@ -88,6 +88,7 @@
     [ ] Rock
     [ ] Chest
     [ ] Pot 
+[ ] Right Click to strike        
 [x] Remove save load from menu in skirmish (signed in only)    
 [x] FIX Playing as signed in account throws error    
 [x] Player Score    

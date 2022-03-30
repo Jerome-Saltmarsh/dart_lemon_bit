@@ -116,7 +116,6 @@ class _Player {
   final Vector2 attackTarget = Vector2(0, 0);
   final orbs = _PlayerOrbs();
   final slots = Slots();
-  final Watch<String> uuid = Watch("");
   final Watch<CharacterType> characterType = Watch(CharacterType.Human);
   final Watch<double> health = Watch(0.0);
   final Watch<int> experience = Watch(0);

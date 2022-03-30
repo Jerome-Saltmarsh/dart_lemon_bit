@@ -188,7 +188,7 @@ void parseState() {
         break;
 
       case ServerResponse.Cube_Joined:
-        modules.game.state.player.uuid.value = _consumeString();
+        // modules.game.state.player.uuid.value = _consumeString();
         break;
 
       case ServerResponse.Cube_Players:
@@ -357,7 +357,6 @@ void _parseGameJoined() {
   print("parseGameJoined()");
   final player = modules.game.state.player;
   player.id = consumeInt();
-  player.uuid.value = _consumeString();
   game.id = consumeInt();
   player.team = consumeInt();
 }

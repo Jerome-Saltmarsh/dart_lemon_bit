@@ -131,7 +131,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       write(ServerResponse.Game_Status.index);
       write(game.status.index);
       compilePlayersRemaining(_buffer, 0);
-      write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${game.id} ${player.team}');
+      write('${ServerResponse.Game_Joined.index} ${player.id} ${game.id} ${player.team}');
       sendAndClearBuffer();
     }
 
@@ -227,165 +227,160 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           return;
         }
 
-        switch(clientRequests[clientRequestInt]){
-          case ClientRequest.Update:
+        if (clientRequestInt == clientRequestIndexUpdate) {
+          if (player == null) {
+            return;
+          }
 
-            if (player == null) {
-              // errorPlayerNotFound();
-              return;
+          player.lastUpdateFrame = 0;
+          final game = player.game;
+
+          if (game.awaitingPlayers) {
+            compileGameStatus(_buffer, game.status);
+            compileLobby(_buffer, game);
+            compileGameMeta(_buffer, game);
+            sendAndClearBuffer();
+            return;
+          }
+
+          if (game.countingDown){
+            compileGameStatus(_buffer, game.status);
+            compileCountDownFramesRemaining(_buffer, game);
+            sendAndClearBuffer();
+            return;
+          }
+
+          if (game.finished) {
+            compileGameStatus(_buffer, game.status);
+            if (game is GameMoba) {
+              compileTeamLivesRemaining(_buffer, game);
             }
+            reply(_buffer.toString());
+            return;
+          }
 
-            player.lastUpdateFrame = 0;
-            final game = player.game;
+          if (player.sceneChanged) {
+            player.sceneChanged = false;
+            _buffer.clear();
+            _buffer.write(
+                '${ServerResponse.Scene_Changed.index} ${player.x.toInt()} ${player.y.toInt()} ');
+            _buffer.write(game.compiledTiles);
+            _buffer.write(game.compiledEnvironmentObjects);
+            reply(_buffer.toString());
+            return;
+          }
 
-            if (game.awaitingPlayers) {
-              compileGameStatus(_buffer, game.status);
-              compileLobby(_buffer, game);
-              compileGameMeta(_buffer, game);
-              sendAndClearBuffer();
-              return;
+          if (player.deadOrBusy) {
+            compileAndSendPlayerGame(player);
+            return;
+          }
+
+          final actionIndex = args[1];
+          final mouseX = readNumberFromByteArray(args, index: 2).toDouble();
+          final mouseY = readNumberFromByteArray(args, index: 4).toDouble();
+          player.mouseX = mouseX;
+          player.mouseY = mouseY;
+          player.screenLeft = readNumberFromByteArray(args, index: 7).toDouble();
+          player.screenTop = readNumberFromByteArray(args, index: 9).toDouble();
+          player.screenRight = readNumberFromByteArray(args, index: 11).toDouble();
+          player.screenBottom = readNumberFromByteArray(args, index: 13).toDouble();
+
+          final action = characterActions[actionIndex];
+
+          player.aimTarget = null;
+          final closestEnemy = game.getClosestEnemy(mouseX, mouseY, player);
+          if (closestEnemy != null) {
+            if (withinDistance(
+                closestEnemy,
+                mouseX,
+                mouseY,
+                _cursorRadius
+            )) {
+              player.aimTarget = closestEnemy;
             }
+          }
 
-            if (game.countingDown){
-              compileGameStatus(_buffer, game.status);
-              compileCountDownFramesRemaining(_buffer, game);
-              sendAndClearBuffer();
-              return;
-            }
-
-            if (game.finished) {
-              compileGameStatus(_buffer, game.status);
-              if (game is GameMoba) {
-                compileTeamLivesRemaining(_buffer, game);
+          switch (action) {
+            case CharacterAction.Idle:
+              if (player.target == null){
+                game.setCharacterState(player, CharacterState.Idle);
               }
-              reply(_buffer.toString());
-              return;
-            }
-
-            if (player.sceneChanged) {
-              player.sceneChanged = false;
-              _buffer.clear();
-              _buffer.write(
-                  '${ServerResponse.Scene_Changed.index} ${player.x.toInt()} ${player.y.toInt()} ');
-              _buffer.write(game.compiledTiles);
-              _buffer.write(game.compiledEnvironmentObjects);
-              reply(_buffer.toString());
-              return;
-            }
-
-            if (player.deadOrBusy) {
-              compileAndSendPlayerGame(player);
-              return;
-            }
-
-            final actionIndex = args[1];
-            final mouseX = readNumberFromByteArray(args, index: 2).toDouble();
-            final mouseY = readNumberFromByteArray(args, index: 4).toDouble();
-            player.mouseX = mouseX;
-            player.mouseY = mouseY;
-            player.screenLeft = readNumberFromByteArray(args, index: 7).toDouble();
-            player.screenTop = readNumberFromByteArray(args, index: 9).toDouble();
-            player.screenRight = readNumberFromByteArray(args, index: 11).toDouble();
-            player.screenBottom = readNumberFromByteArray(args, index: 13).toDouble();
-
-            final action = characterActions[actionIndex];
-
-            player.aimTarget = null;
-            final closestEnemy = game.getClosestEnemy(mouseX, mouseY, player);
-            if (closestEnemy != null) {
-              if (withinDistance(
-                  closestEnemy,
-                  mouseX,
-                  mouseY,
-                  _cursorRadius
-              )) {
-                player.aimTarget = closestEnemy;
-              }
-            }
-
-            switch (action) {
-              case CharacterAction.Idle:
-                if (player.target == null){
-                  game.setCharacterState(player, CharacterState.Idle);
+              break;
+            case CharacterAction.Perform:
+              final ability = player.ability;
+              final aimTarget = player.aimTarget;
+              player.attackTarget = aimTarget;
+              playerSetAbilityTarget(player, mouseX, mouseY);
+              if (ability == null) {
+                if (aimTarget != null) {
+                  player.target = aimTarget;
+                  if (withinRadius(player, aimTarget, player.weapon.range)){
+                    characterFaceV2(player, aimTarget);
+                    game.setCharacterStatePerforming(player);
+                  }
+                } else {
+                  player.runTarget.x = mouseX;
+                  player.runTarget.y = mouseY;
+                  player.target = player.runTarget;
                 }
                 break;
-              case CharacterAction.Perform:
-                final ability = player.ability;
-                final aimTarget = player.aimTarget;
-                player.attackTarget = aimTarget;
-                playerSetAbilityTarget(player, mouseX, mouseY);
-                if (ability == null) {
+              }
+
+              if (player.magic < ability.cost) {
+                error(GameError.InsufficientMana);
+                break;
+              }
+
+              if (ability.cooldownRemaining > 0) {
+                error(GameError.Cooldown_Remaining);
+                break;
+              }
+
+              switch (ability.mode) {
+                case AbilityMode.None:
+                  return;
+                case AbilityMode.Targeted:
                   if (aimTarget != null) {
                     player.target = aimTarget;
-                    if (withinRadius(player, aimTarget, player.weapon.range)){
-                      characterFaceV2(player, aimTarget);
-                      game.setCharacterStatePerforming(player);
-                    }
+                    player.attackTarget = aimTarget;
+                    return;
                   } else {
                     player.runTarget.x = mouseX;
                     player.runTarget.y = mouseY;
                     player.target = player.runTarget;
-                  }
-                  break;
-                }
-
-                if (player.magic < ability.cost) {
-                  error(GameError.InsufficientMana);
-                  break;
-                }
-
-                if (ability.cooldownRemaining > 0) {
-                  error(GameError.Cooldown_Remaining);
-                  break;
-                }
-
-                switch (ability.mode) {
-                  case AbilityMode.None:
                     return;
-                  case AbilityMode.Targeted:
-                    if (aimTarget != null) {
-                      player.target = aimTarget;
-                      player.attackTarget = aimTarget;
-                      return;
-                    } else {
-                      player.runTarget.x = mouseX;
-                      player.runTarget.y = mouseY;
-                      player.target = player.runTarget;
-                      return;
-                    }
-                  case AbilityMode.Activated:
-                  // TODO: Handle this case.
-                    break;
-                  case AbilityMode.Area:
-                  // TODO: Handle this case.
-                    break;
-                  case AbilityMode.Directed:
-                  // TODO: Handle this case.
-                    break;
-                }
+                  }
+                case AbilityMode.Activated:
+                // TODO: Handle this case.
+                  break;
+                case AbilityMode.Area:
+                // TODO: Handle this case.
+                  break;
+                case AbilityMode.Directed:
+                // TODO: Handle this case.
+                  break;
+              }
 
-                player.magic -= ability.cost;
-                player.performing = ability;
-                ability.cooldownRemaining = ability.cooldown;
-                player.ability = null;
+              player.magic -= ability.cost;
+              player.performing = ability;
+              ability.cooldownRemaining = ability.cooldown;
+              player.ability = null;
 
-                characterAimAt(player, mouseX, mouseY);
-                game.setCharacterState(player, CharacterState.Performing);
-                break;
-              case CharacterAction.Run:
-                final direction = directions[args[6]];
-                player.angle = convertDirectionToAngle(direction);
-                game.setCharacterStateRunning(player);
-                player.target = null;
-                break;
-            }
+              characterAimAt(player, mouseX, mouseY);
+              game.setCharacterState(player, CharacterState.Performing);
+              break;
+            case CharacterAction.Run:
+              final direction = directions[args[6]];
+              player.angle = convertDirectionToAngle(direction);
+              game.setCharacterStateRunning(player);
+              player.target = null;
+              break;
+          }
 
-            compileAndSendPlayerGame(player);
-            return;
-
-          default:
-            throw Exception("Cannot parse ${clientRequests[clientRequestInt]}");
+          compileAndSendPlayerGame(player);
+          return;
         }
+        throw Exception("Cannot parse ${clientRequests[clientRequestInt]}");
       }
 
       if (requestD is String == false){
@@ -688,8 +683,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             errorPlayerNotFound();
             return;
           }
-          player.game.players
-              .removeWhere((element) => element.uuid == player.uuid);
           break;
 
         case ClientRequest.Reset_Character_Type:

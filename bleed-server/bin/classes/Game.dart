@@ -1425,7 +1425,6 @@ extension GameFunctions on Game {
       }
       player.active = false;
       players.removeAt(i);
-      engine.deregisterPlayer(player);
       i--;
 
       if (status == GameStatus.Awaiting_Players) {

@@ -45,35 +45,30 @@ class GameBuild {
   Widget buildUIGame() {
     print("buildUIGame()");
 
-    return WatchBuilder(state.player.uuid, (String uuid) {
-      if (uuid.isEmpty) {
-        return ui.layouts.waitingForGame();
+    return WatchBuilder(core.state.status, (GameStatus gameStatus) {
+      switch (gameStatus) {
+        case GameStatus.Counting_Down:
+          return buildDialog(
+              width: style.dialogWidthMedium,
+              height: style.dialogHeightMedium,
+              child: WatchBuilder(game.countDownFramesRemaining, (int frames){
+                final seconds =  frames ~/ 30.0;
+                return Center(child: text("Starting in $seconds seconds"));
+              }));
+        case GameStatus.Awaiting_Players:
+          return ui.layouts.waitingForGame();
+        case GameStatus.In_Progress:
+          switch (game.type.value) {
+            case GameType.CUBE3D:
+              return buildUI3DCube();
+            default:
+              return layoutRoyal();
+          }
+        case GameStatus.Finished:
+          return buildDialogGameFinished();
+        default:
+          return text(enumString(gameStatus));
       }
-      return WatchBuilder(core.state.status, (GameStatus gameStatus) {
-        switch (gameStatus) {
-          case GameStatus.Counting_Down:
-            return buildDialog(
-                width: style.dialogWidthMedium,
-                height: style.dialogHeightMedium,
-                child: WatchBuilder(game.countDownFramesRemaining, (int frames){
-                  final seconds =  frames ~/ 30.0;
-                  return Center(child: text("Starting in $seconds seconds"));
-                }));
-          case GameStatus.Awaiting_Players:
-            return ui.layouts.waitingForGame();
-          case GameStatus.In_Progress:
-            switch (game.type.value) {
-              case GameType.CUBE3D:
-                return buildUI3DCube();
-              default:
-                return layoutRoyal();
-            }
-          case GameStatus.Finished:
-            return buildDialogGameFinished();
-          default:
-            return text(enumString(gameStatus));
-        }
-      });
     });
   }
 

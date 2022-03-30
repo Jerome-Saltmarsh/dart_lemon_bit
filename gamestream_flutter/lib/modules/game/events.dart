@@ -48,7 +48,6 @@ class GameEvents {
     };
     state.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     game.type.onChanged(_onGameTypeChanged);
-    state.player.uuid.onChanged(_onPlayerUuidChanged);
     state.player.alive.onChanged(_onPlayerAliveChanged);
     state.player.state.onChanged(onPlayerCharacterStateChanged);
     state.textBoxVisible.onChanged(onTextModeChanged);
