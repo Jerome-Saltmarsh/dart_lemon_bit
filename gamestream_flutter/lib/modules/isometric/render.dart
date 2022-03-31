@@ -313,10 +313,10 @@ class IsometricRender {
 
     final weapon = character.equippedWeapon;
     final variation = weapon.isShotgun || weapon.isBow;
-    final maxDirection = variation ? Direction.Right : Direction.UpRight;
-    final minDirection = variation ? Direction.DownLeft : Direction.Down;
+    final maxDirection = variation ? directionRightIndex : directionUpRightIndex;
+    final minDirection = variation ? directionDownLeftIndex : directionDownIndex;
 
-    if ( character.direction <= minDirection.index && character.direction >= maxDirection.index) {
+    if ( character.direction <= minDirection && character.direction >= maxDirection) {
       _renderCharacterTemplate(character);
       _renderCharacterTemplateWeapon(character);
       return;
@@ -458,7 +458,7 @@ class IsometricRender {
         scale: 0.75,
     );
     engine.mapSrc64(
-        x: getTemplateSrcX(character),
+        x: getTemplateSrcX(character, size: 64),
         y: 1051.0 + (layer.index * 64)
     );
     engine.renderAtlas();
@@ -498,7 +498,7 @@ class IsometricRender {
     return SpriteLayer.Legs_Blue;
   }
 
-  double getTemplateSrcX(Character character){
+  double getTemplateSrcX(Character character, {required double size}){
     final weapon = character.equippedWeapon;
     final variation = weapon.isShotgun || weapon.isBow;
 
@@ -507,13 +507,15 @@ class IsometricRender {
         const frames1 = [12, 13, 14, 15];
         const frames2 = [16, 17, 18, 19];
         return loop4(
-            animation: variation ? frames1 : frames2,
+            size: size,
+            animation: variation ? frames2 : frames1,
             character: character,
             framesPerDirection: _framesPerDirectionHuman
         );
 
       case stateIdle:
         return single(
+            size: size,
             frame: variation ? 1 : 2,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionHuman
@@ -521,6 +523,7 @@ class IsometricRender {
 
       case stateHurt:
         return single(
+            size: size,
             frame: 3,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionHuman
@@ -528,6 +531,7 @@ class IsometricRender {
 
       case stateChanging:
         return single(
+            size: size,
             frame: 4,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionHuman
@@ -536,6 +540,7 @@ class IsometricRender {
       case statePerforming:
         final weapon = character.equippedWeapon;
         return animate(
+            size: size,
             animation: weapon.isBow
                 ? animations.firingBow
                 : weapon.isHandgun
@@ -583,7 +588,19 @@ class IsometricRender {
 
   void _renderCharacterTemplateWeapon(Character character) {
     if (character.equippedWeapon == SlotType.Empty) return;
-    _renderCharacterPart(character, mapEquippedWeaponToSpriteIndex(character));
+
+    engine.mapDst(
+      x: character.x,
+      y: character.y,
+      anchorX: 48,
+      anchorY: 72,
+      scale: 0.75,
+    );
+    engine.mapSrc96(
+        x: getTemplateSrcX(character, size: 96),
+        y: 2159.0 + (0 * 96)
+    );
+    engine.renderAtlas();
   }
 
   void drawInteractableNpc(Character npc) {
