@@ -593,7 +593,7 @@ class IsometricRender {
       x: character.x,
       y: character.y,
       anchorX: 48,
-      anchorY: 72,
+      anchorY: 66,
       scale: 0.75,
     );
     engine.mapSrc96(
