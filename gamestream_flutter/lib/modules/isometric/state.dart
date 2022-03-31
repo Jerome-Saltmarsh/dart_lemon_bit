@@ -43,8 +43,6 @@ class IsometricState {
   var maxRow = 0;
   var minColumn = 0;
   var maxColumn = 0;
-  var offScreenTiles = 0;
-  var onScreenTiles = 0;
 
   Particle? next;
 

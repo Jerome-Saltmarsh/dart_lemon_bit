@@ -828,19 +828,6 @@ class GameBuild {
     });
   }
 
-
-  Widget get offscreenTiles {
-    return Refresh((){
-      return text("Offscreen: ${isometric.state.offScreenTiles}");
-    });
-  }
-
-  Widget get onScreenTiles {
-    return Refresh((){
-      return text("OnScreen: ${isometric.state.onScreenTiles}");
-    });
-  }
-
   Widget get mousePositionWorld {
     return Refresh((){
       return text("Mouse World: x: ${mouseWorldX.toInt()}, y: ${mouseWorldY.toInt()}");
