@@ -148,8 +148,9 @@ class GameEvents {
     state.textEditingControllerMessage.text = "";
   }
 
-  void onPlayerCharacterStateChanged(CharacterState characterState){
-    modules.game.state.player.alive.value = characterState != CharacterState.Dead;
+  // TODO Remove
+  void onPlayerCharacterStateChanged(int characterState){
+    modules.game.state.player.alive.value = characterState != stateDead;
   }
 
   void _onPlayerAliveChanged(bool value) {

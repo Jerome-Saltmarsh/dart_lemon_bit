@@ -1,6 +1,5 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
-import 'package:lemon_math/angle_between.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -304,7 +303,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           switch (action) {
             case CharacterAction.Idle:
               if (player.target == null){
-                game.setCharacterState(player, CharacterState.Idle);
+                game.setCharacterState(player, stateIdle);
               }
               break;
             case CharacterAction.Perform:
@@ -368,7 +367,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               player.ability = null;
 
               characterAimAt(player, mouseX, mouseY);
-              game.setCharacterState(player, CharacterState.Performing);
+              game.setCharacterState(player, statePerforming);
               break;
             case CharacterAction.Run:
               final direction = directions[args[6]];

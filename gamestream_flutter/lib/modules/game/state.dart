@@ -124,7 +124,7 @@ class _Player {
   final Watch<int> nextLevelExperience = Watch(1);
   final Watch<double> experiencePercentage = Watch(0);
   final Watch<String> message = Watch("");
-  final Watch<CharacterState> state = Watch(CharacterState.Idle);
+  final Watch<int> state = Watch(stateIdle);
   final Watch<bool> alive = Watch(true);
   final Watch<AbilityType> ability = Watch(AbilityType.None);
   final Watch<double> magic = Watch(0);

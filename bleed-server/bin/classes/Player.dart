@@ -8,7 +8,6 @@ import '../common/CharacterType.dart';
 import '../common/GemSpawn.dart';
 import '../common/OrbType.dart';
 import '../common/PlayerEvent.dart';
-import '../common/Quests.dart';
 import '../common/SlotType.dart';
 import '../common/SlotTypeCategory.dart';
 import '../constants/no_squad.dart';
@@ -19,7 +18,6 @@ import '../utilities.dart';
 import 'Ability.dart';
 import 'Character.dart';
 import 'Collider.dart';
-import 'Entity.dart';
 import 'Game.dart';
 
 const _defaultMaxMagic = 10;
@@ -62,7 +60,7 @@ class Player extends Character {
   final List<PlayerEvent> events = [];
   final List<GemSpawn> gemSpawns = [];
 
-  CharacterState characterState = CharacterState.Idle;
+  var characterState = stateIdle;
 
   final slots = Slots();
   final orbs = Orbs();
@@ -144,7 +142,7 @@ class Player extends Character {
 
   void setStateChangingWeapons(){
     dispatch(PlayerEvent.Item_Equipped); // TODO
-    game.setCharacterState(this, CharacterState.Changing);
+    game.setCharacterState(this, stateChanging);
   }
 
   void unequip(SlotTypeCategory slotTypeCategory){

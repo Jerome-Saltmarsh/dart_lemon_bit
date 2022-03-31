@@ -343,7 +343,7 @@ class IsometricRender {
   double mapZombieSrcX(Character character, int shade){
     switch(character.state){
 
-      case stateRunningIndex:
+      case stateRunning:
         const frames = [3, 4, 5, 6];
         return loop4(
             animation: frames,
@@ -351,21 +351,21 @@ class IsometricRender {
             framesPerDirection: _framesPerDirectionZombie
         );
 
-      case stateIdleIndex:
+      case stateIdle:
         return single(
             frame: 1,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionZombie
         );
 
-      case stateHurtIndex:
+      case stateHurt:
         return single(
             frame: 2,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionZombie
         );
 
-      case statePerformingIndex:
+      case statePerforming:
         return animate(
             animation: animations.zombie.striking,
             character: character,
@@ -503,7 +503,7 @@ class IsometricRender {
     final variation = weapon.isShotgun || weapon.isBow;
 
     switch(character.state) {
-      case stateRunningIndex:
+      case stateRunning:
         const frames1 = [12, 13, 14, 15];
         const frames2 = [16, 17, 18, 19];
         return loop4(
@@ -512,28 +512,28 @@ class IsometricRender {
             framesPerDirection: _framesPerDirectionHuman
         );
 
-      case stateIdleIndex:
+      case stateIdle:
         return single(
             frame: variation ? 1 : 2,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionHuman
         );
 
-      case stateHurtIndex:
+      case stateHurt:
         return single(
             frame: 3,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionHuman
         );
 
-      case stateChangingIndex:
+      case stateChanging:
         return single(
             frame: 4,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionHuman
         );
 
-      case statePerformingIndex:
+      case statePerforming:
         final weapon = character.equippedWeapon;
         return animate(
             animation: weapon.isBow

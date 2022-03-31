@@ -24,8 +24,8 @@ class Character extends Vector2 {
   double magic = 1;
 
   // properties
-  bool get dead => state == stateDeadIndex;
-  bool get running => state == stateRunningIndex;
+  bool get dead => state == stateDead;
+  bool get running => state == stateRunning;
   bool get alive => !dead;
   double get angle => direction * piQuarter;
 

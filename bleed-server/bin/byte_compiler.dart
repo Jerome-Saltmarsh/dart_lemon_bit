@@ -322,7 +322,7 @@ class _ByteCompiler {
   void writeCharacter(Player player, Character character) {
     final allie = sameTeam(player, character) ? 100 : 0;
     final directionInt = character.direction * 10;
-    final stateInt = character.state.index;
+    final stateInt = character.state;
     final value = allie + directionInt + stateInt;
     writeByte(value); // 1
     writeBigInt(character.x); // 2

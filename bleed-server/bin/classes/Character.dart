@@ -85,7 +85,7 @@ class Character extends GameObject {
   late AI? ai;
   Ability? ability = null;
   Ability? performing = null;
-  CharacterState state = CharacterState.Idle;
+  int state = stateIdle;
   double angle = 0;
   int equippedIndex = 0;
   double aimAngle = 0;

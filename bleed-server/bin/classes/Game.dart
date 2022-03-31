@@ -490,7 +490,7 @@ extension GameFunctions on Game {
       changeCharacterHealth(target, -amount);
       if (target.alive) {
         if (target.type.isZombie){
-          setCharacterState(target, CharacterState.Hurt);
+          setCharacterState(target, stateHurt);
         }
         return;
       }
@@ -659,7 +659,7 @@ extension GameFunctions on Game {
 
   void setCharacterStateDead(Character character) {
     if (character.dead) return;
-    character.state = CharacterState.Dead;
+    character.state = stateDead;
     character.collidable = false;
     character.ai?.onDeath();
 
@@ -689,22 +689,24 @@ extension GameFunctions on Game {
   void setCharacterStatePerforming(Character character){
     character.performing = character.ability;
     character.ability = null;
-    setCharacterState(character, CharacterState.Performing);
+    setCharacterState(character, statePerforming);
   }
 
-  void setCharacterState(Character character, CharacterState value) {
+  void setCharacterState(Character character, int value) {
+    assert(value >= 0);
+    assert(value <= 5);
     if (character.dead) return;
     if (character.state == value) return;
 
     character.stateDuration = 0;
     character.animationFrame = 0;
 
-    if (value == CharacterState.Dead){
+    if (value == stateDead){
       setCharacterStateDead(character);
       return;
     }
 
-    if (value == CharacterState.Hurt) {
+    if (value == stateHurt) {
       const duration = 10;
       character.stateDurationRemaining = duration;
       character.state = value;
@@ -714,11 +716,11 @@ extension GameFunctions on Game {
     if (character.busy) return;
 
     switch (value) {
-      case CharacterState.Changing:
+      case stateChanging:
         const duration = 10;
         character.stateDurationRemaining = duration;
         break;
-      case CharacterState.Performing:
+      case statePerforming:
         const duration = 20;
         character.stateDurationRemaining = duration;
         if (character is Player) {
@@ -742,8 +744,7 @@ extension GameFunctions on Game {
   }
 
   void setCharacterStateIdle(Character character) {
-    const idle = CharacterState.Idle;
-    setCharacterState(character, idle);
+    setCharacterState(character, stateIdle);
   }
 
   void changeCharacterHealth(Character character, int amount) {
@@ -1092,7 +1093,7 @@ extension GameFunctions on Game {
     if (character.stateDurationRemaining > 0) {
       character.stateDurationRemaining--;
       if (character.stateDurationRemaining == 0) {
-        setCharacterState(character, CharacterState.Idle);
+        setCharacterState(character, stateIdle);
 
       }
     }
@@ -1100,11 +1101,11 @@ extension GameFunctions on Game {
     scene.resolveCharacterTileCollision(character);
 
     switch (character.state) {
-      case CharacterState.Running:
+      case stateRunning:
         character.updateMotion();
         break;
 
-      case CharacterState.Performing:
+      case statePerforming:
         updateCharacterStatePerforming(character);
         break;
     }
@@ -1211,7 +1212,7 @@ extension GameFunctions on Game {
     final zombie = _getAvailableZombie();
     zombie.team = team;
     zombie.active = true;
-    zombie.state = CharacterState.Idle;
+    zombie.state = stateIdle;
     zombie.stateDurationRemaining = 0;
     zombie.maxHealth = health;
     zombie.health = health;
@@ -1402,7 +1403,7 @@ extension GameFunctions on Game {
     final actualDistance = distanceV2(ai.character, closest);
     if (actualDistance > aiWeaponRange) {
       ai.clearTarget();
-      ai.character.state = CharacterState.Idle;
+      ai.character.state = stateIdle;
     } else {
       setNpcTarget(ai, closest);
     }
@@ -1451,7 +1452,7 @@ extension GameFunctions on Game {
   }
 
   void revive(Character character) {
-    character.state = CharacterState.Idle;
+    character.state = stateIdle;
     character.health = character.maxHealth;
     character.active = true;
     character.collidable = true;
