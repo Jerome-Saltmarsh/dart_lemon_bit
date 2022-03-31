@@ -1,13 +1,8 @@
-import '../classes/Character.dart';
 import '../classes/Game.dart';
 import '../classes/InteractableNpc.dart';
 import '../classes/Player.dart';
-import '../classes/Weapon.dart';
 import '../common/SlotType.dart';
-import '../common/WeaponType.dart';
 import '../engine.dart';
-import '../enums/npc_mode.dart';
-import '../instances/scenes.dart';
 import 'world.dart';
 
 class Tavern extends Game {

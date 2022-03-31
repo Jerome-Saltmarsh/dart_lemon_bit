@@ -775,6 +775,8 @@ extension GameFunctions on Game {
         break;
       case ProjectileType.Arrow:
         break;
+      default:
+        break;
     }
   }
 

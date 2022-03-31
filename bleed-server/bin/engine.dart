@@ -92,7 +92,7 @@ class _Engine {
           }
           break;
 
-        case GameStatus.Finished:
+        default:
           break;
       }
     }

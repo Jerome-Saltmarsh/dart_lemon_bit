@@ -6,12 +6,10 @@ import '../classes/Character.dart';
 import '../classes/Game.dart';
 import '../classes/Item.dart';
 import '../classes/Player.dart';
-import '../classes/Weapon.dart';
 import '../common/GameStatus.dart';
 import '../common/GameType.dart';
 import '../common/OrbType.dart';
 import '../common/SlotType.dart';
-import '../common/WeaponType.dart';
 import '../engine.dart';
 import '../functions/withinRadius.dart';
 import '../utilities.dart';
@@ -89,59 +87,6 @@ class GameRoyal extends Game {
     // return true;
   }
 
-  Weapon _buildWeapon(WeaponType type){
-    return Weapon(
-        type: type,
-        damage: _getWeaponTypeDamage(type),
-        capacity: _getWeaponTypeCapacity(type),
-        rounds: _getWeaponTypeRounds(type),
-    );
-  }
-
-  int _getWeaponTypeDamage(WeaponType type){
-    switch(type){
-      case WeaponType.Unarmed:
-        return 0;
-      case WeaponType.HandGun:
-        return 5;
-      case WeaponType.Shotgun:
-        return 20;
-      case WeaponType.SniperRifle:
-        return 20;
-      case WeaponType.AssaultRifle:
-        return 4;
-    }
-  }
-
-  int _getWeaponTypeRounds(WeaponType type){
-    switch(type){
-      case WeaponType.Unarmed:
-        return 0;
-      case WeaponType.HandGun:
-        return 10;
-      case WeaponType.Shotgun:
-        return 8;
-      case WeaponType.SniperRifle:
-        return 5;
-      case WeaponType.AssaultRifle:
-        return 15;
-    }
-  }
-
-  int _getWeaponTypeCapacity(WeaponType type){
-    switch(type){
-      case WeaponType.Unarmed:
-        return 0;
-      case WeaponType.HandGun:
-        return 50;
-      case WeaponType.Shotgun:
-        return 20;
-      case WeaponType.SniperRifle:
-        return 12;
-      case WeaponType.AssaultRifle:
-        return 120;
-    }
-  }
 
   Player playerJoin() {
     if (status != GameStatus.Awaiting_Players) {

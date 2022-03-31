@@ -1,6 +1,7 @@
 
-import 'dart:typed_data';
 import 'dart:convert' show utf8;
+import 'dart:typed_data';
+
 import 'package:lemon_math/angle.dart';
 
 import 'classes/Character.dart';

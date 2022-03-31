@@ -189,10 +189,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       error(GameError.PlayerNotFound);
     }
 
-    void errorPremiumAccountOnly() {
-      error(GameError.Subscription_Required);
-    }
-
     void errorAccountNotFound() {
       error(GameError.Account_Not_Found);
     }
@@ -452,6 +448,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                    return joinBattleRoyal();
                  case GameType.SKIRMISH:
                    return joinGameSkirmish();
+                 default:
+                   break;
                }
             });
             return;
@@ -813,24 +811,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             errorInvalidArg("WeaponType $weaponTypeIndex cannot be negative");
             return;
           }
-
-          final type = weaponTypes[int.parse(arguments[2])];
-
-          switch (type) {
-            case WeaponType.Shotgun:
-              // player.weapons.add(
-              //     Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 5));
-              // player.weaponsDirty = true;
-              // player.abilityPoints--;
-              break;
-
-            case WeaponType.HandGun:
-              // player.weapons.add(
-              //     Weapon(type: WeaponType.HandGun, damage: 1, capacity: 5));
-              // player.weaponsDirty = true;
-              // player.abilityPoints--;
-              break;
-          }
           break;
 
         case ClientRequest.Attack:
@@ -955,6 +935,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
 
           playerInteract(player);
+          break;
+        default:
+          break;
       }
     }
 

@@ -4,7 +4,6 @@ import '../classes/InteractableNpc.dart';
 import '../classes/Item.dart';
 import '../classes/Player.dart';
 import '../common/ItemType.dart';
-import '../common/Quests.dart';
 import '../common/SlotType.dart';
 import '../engine.dart';
 import '../handlers.dart';

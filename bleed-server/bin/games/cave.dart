@@ -2,7 +2,6 @@
 import '../classes/Game.dart';
 import '../common/enums/Shade.dart';
 import '../engine.dart';
-import '../instances/scenes.dart';
 import 'world.dart';
 
 class Cave extends Game {

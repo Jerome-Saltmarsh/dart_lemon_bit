@@ -4,7 +4,6 @@ import 'package:lemon_math/hypotenuse.dart';
 import 'package:lemon_math/randomItem.dart';
 
 import 'classes/Collider.dart';
-import 'classes/GameObject.dart';
 import 'classes/Player.dart';
 import 'common/OrbType.dart';
 import 'constants.dart';
