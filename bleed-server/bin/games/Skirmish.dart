@@ -77,11 +77,14 @@ class GameSkirmish extends Game {
       team: teams.none,
       weapon: SlotType.Handgun,
     );
-    player.slots.weapon.amount = 12;
-    player.slots.slot1.type = SlotType.Potion_Red;
-    player.slots.slot2.type = SlotType.Shotgun;
-    player.slots.slot2.amount = 100;
-    player.slots.slot3.type = SlotType.Sword_Short;
+    final slots = player.slots;
+    slots.weapon.amount = 50;
+    slots.slot1.type = SlotType.Potion_Red;
+    slots.slot2.type = SlotType.Shotgun;
+    slots.slot2.amount = 100;
+    slots.slot3.type = SlotType.Sword_Short;
+    slots.slot4.type = SlotType.Bow_Wooden;
+    slots.slot4.amount = 100;
     return player;
   }
 

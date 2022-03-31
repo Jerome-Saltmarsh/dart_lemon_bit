@@ -29,11 +29,11 @@ double radiansBetween(double x1, double y1, double x2, double y2) {
 }
 
 double velX(double rotation, double speed) {
-  return -cos(rotation + 1.57) * speed;
+  return -cos(rotation + 1.5707963268) * speed;
 }
 
 double velY(double rotation, double speed) {
-  return -sin(rotation + 1.57) * speed;
+  return -sin(rotation + 1.5707963268) * speed;
 }
 
 double radians(double x, double y) {
@@ -46,7 +46,7 @@ double radians(double x, double y) {
 double adj(double rotation, num magnitude) {
   /// 1.570796325 = pi / 2
   /// this prevents having to do a memory lookup
-  return -cos(rotation + 1.57) * magnitude;
+  return -cos(rotation + 1.5707963268) * magnitude;
 }
 
 double opp(double rotation, num magnitude) {

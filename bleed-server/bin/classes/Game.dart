@@ -797,40 +797,17 @@ extension GameFunctions on Game {
     projectilesLength = projectiles.length;
     for (var i = 0; i < projectilesLength; i++) {
       final projectile = projectiles[i];
+      if (!projectile.active) continue;
       if (projectile.collideWithEnvironment) continue;
       if (scene.projectileCollisionAt(projectile.x, projectile.y)) {
         deactivateProjectile(projectile);
       }
     }
 
+    checkProjectileCollision(scene.environment);
     checkProjectileCollision(zombies);
     checkProjectileCollision(players);
     checkProjectileCollision(dynamicObjects);
-
-
-    final environments = scene.environment;
-    projectilesLength = projectiles.length;
-
-    for (var i = 0; i < projectilesLength; i++) {
-      final projectile = projectiles[i];
-      if (!projectile.active) continue;
-      if (!projectile.collideWithEnvironment) continue;
-
-      final projectileLeft = projectile.left;
-      final projectileTop = projectile.top;
-      final projectileRight = projectile.right;
-      final projectileBottom = projectile.bottom;
-
-      for (final environmentObject in environments) {
-        if (!environmentObject.collidable) continue;
-        if (projectileBottom < environmentObject.top) continue;
-        if (projectileLeft > environmentObject.right) continue;
-        if (projectileRight < environmentObject.left) continue;
-        if (projectileTop > environmentObject.bottom) break;
-        deactivateProjectile(projectile);
-        break;
-      }
-    }
   }
 
   void spawnFreezeRing({required Character src, int duration = 100, int damage = 1}){
@@ -943,10 +920,11 @@ extension GameFunctions on Game {
       for (var j = 0; j < collidersLength; j++) {
         final collider = colliders[j];
         if (!collider.collidable) continue;
-        if (projectile.right < projectile.left) continue;
+        if (projectile.right < collider.left) continue;
         if (projectile.left > collider.right) continue;
         if (projectile.top > collider.bottom) continue;
         if (projectile.bottom < collider.top) continue;
+        if (projectile.owner == collider) continue;
         handleProjectileHit(projectile, collider);
         break;
       }
@@ -1176,8 +1154,9 @@ extension GameFunctions on Game {
   }) {
     final spawnDistance = character.radius + 5;
     final projectile = getAvailableProjectile();
-    projectile.target = target;
+    projectile.collidable = true;
     projectile.active = true;
+    projectile.target = target;
     projectile.xStart = character.x + adj(character.aimAngle, spawnDistance);
     projectile.yStart = character.y + opp(character.aimAngle, spawnDistance);
     projectile.x = projectile.xStart;

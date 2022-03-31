@@ -94,7 +94,7 @@
 [ ] Pot Struck Audio
 [ ] Pot Destroyed Animation    
 [ ] FIX Sword sprite cut off on strike  
-[ ] FIX Some time bullets don't come out of shot    
+[x] FIX Some time bullets don't come out of shot    
 [x] FIX Torches Block Path    
 [x] Right Click to strike        
 [x] FIX Center camera on game start   
