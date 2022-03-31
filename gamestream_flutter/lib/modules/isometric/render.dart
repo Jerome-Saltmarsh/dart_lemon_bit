@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:bleed_common/CharacterState.dart';
 import 'package:bleed_common/SlotType.dart';
@@ -10,7 +9,6 @@ import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
-import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:gamestream_flutter/modules/isometric/animations.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
@@ -21,24 +19,14 @@ import 'package:gamestream_flutter/modules/isometric/queries.dart';
 import 'package:gamestream_flutter/render/mapParticleToDst.dart';
 import 'package:gamestream_flutter/render/mapParticleToSrc.dart';
 import 'package:gamestream_flutter/state/game.dart';
-import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/diff_over.dart';
 
 import 'functions.dart';
 import 'state.dart';
 
-
 const _framesPerDirectionHuman = 19;
 const _framesPerDirectionZombie = 8;
-
-const _healthBarWidth = 35.0;
-const _healthBarWidthHalf = _healthBarWidth * 0.5;
-const _healthBarHeight = _healthBarWidth * goldenRatio_0381 * goldenRatio_0381;
-const _healthBarMargin = 50;
-const _animationRunning = [12, 13, 14, 15];
-const _animationRunning2 = [16, 17, 18, 19];
-
 final _screen = engine.screen;
 
 enum SpriteLayer {
@@ -356,8 +344,9 @@ class IsometricRender {
     switch(character.state){
 
       case stateRunningIndex:
+        const frames = [3, 4, 5, 6];
         return loop4(
-            animation: animations.zombie.running,
+            animation: frames,
             character: character,
             framesPerDirection: _framesPerDirectionZombie
         );
@@ -415,9 +404,7 @@ class IsometricRender {
     required int framesPerDirection,
     double size = 64
   }){
-    final animationFrame = character.frame % 4;
-    final frame = animation[animationFrame] - 1;
-    return (character.direction * framesPerDirection * size) + (frame * size);
+    return (character.direction * framesPerDirection * size) + ((animation[character.frame % 4] - 1) * size);
   }
 
 
@@ -517,8 +504,10 @@ class IsometricRender {
 
     switch(character.state) {
       case stateRunningIndex:
+        const frames1 = [12, 13, 14, 15];
+        const frames2 = [16, 17, 18, 19];
         return loop4(
-            animation: variation ? _animationRunning2 : _animationRunning,
+            animation: variation ? frames1 : frames2,
             character: character,
             framesPerDirection: _framesPerDirectionHuman
         );
@@ -595,16 +584,6 @@ class IsometricRender {
   void _renderCharacterTemplateWeapon(Character character) {
     if (character.equippedWeapon == SlotType.Empty) return;
     _renderCharacterPart(character, mapEquippedWeaponToSpriteIndex(character));
-  }
-
-  void drawCharacterHealthBar(Character character){
-    if (!engine.screen.containsV(character)) return;
-    final shade = state.getShadeAtPosition(character.x, character.y);
-    if (shade >= Shade.Dark) return;
-    engine.setPaintColor(colours.redDarkest);
-    engine.canvas.drawRect(Rect.fromLTWH(character.x - _healthBarWidthHalf, character.y - _healthBarMargin, _healthBarWidth, _healthBarHeight), engine.paint);
-    engine.setPaintColor(colours.red);
-    engine.canvas.drawRect(Rect.fromLTWH(character.x - _healthBarWidthHalf, character.y - _healthBarMargin, _healthBarWidth * character.health, _healthBarHeight), engine.paint);
   }
 
   void drawInteractableNpc(Character npc) {

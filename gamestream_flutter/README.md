@@ -65,6 +65,7 @@
 [ ] Send Message to All or to Allies only
 [ ] Spawn Allies that follow you    
 [ ] Generate Random Map    
+[ ] FIX Player run animation    
 [ ] Characters can fall in water and die    
 [ALPHA-RELEASE]
 [ ] FIX Sometimes zombies disappear on death    
@@ -93,6 +94,7 @@
 [ ] Pot Struck Audio
 [ ] Pot Destroyed Animation    
 [ ] FIX Sword sprite cut off on strike  
+[ ] FIX Some time bullets don't come out of shot    
 [x] FIX Torches Block Path    
 [x] Right Click to strike        
 [x] FIX Center camera on game start   
