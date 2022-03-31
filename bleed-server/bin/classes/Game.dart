@@ -310,7 +310,6 @@ const secondsPerDay = secondsPerMinute * minutesPerHour * hoursPerDay;
 const secondsPerFrame = 5;
 const secondsPerHour = secondsPerMinute * minutesPerHour;
 const characterFramesChange = 4;
-const characterMaxFrames = 10;
 final characterRadius = settings.radius.character;
 
 extension GameFunctions on Game {
@@ -459,7 +458,7 @@ extension GameFunctions on Game {
   void updateFrames(List<Character> character) {
     for (final character in character) {
       character.animationFrame =
-          (character.animationFrame + 1) % characterMaxFrames;
+          (character.animationFrame + 1) % 8;
     }
   }
 
