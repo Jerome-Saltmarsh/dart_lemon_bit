@@ -1,16 +1,15 @@
 import 'dart:math';
 import 'dart:ui';
+
+import 'package:bleed_common/CharacterState.dart';
+import 'package:bleed_common/SlotType.dart';
 import 'package:bleed_common/Tile.dart';
-import 'package:lemon_math/Vector2.dart';
+import 'package:bleed_common/enums/Direction.dart';
+import 'package:bleed_common/enums/Shade.dart';
 import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
-import 'package:bleed_common/CharacterState.dart';
-import 'package:bleed_common/CharacterType.dart';
-import 'package:bleed_common/SlotType.dart';
-import 'package:bleed_common/enums/Direction.dart';
-import 'package:bleed_common/enums/Shade.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:gamestream_flutter/modules/isometric/animations.dart';
@@ -19,8 +18,6 @@ import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:gamestream_flutter/modules/isometric/maps.dart';
 import 'package:gamestream_flutter/modules/isometric/properties.dart';
 import 'package:gamestream_flutter/modules/isometric/queries.dart';
-import 'package:gamestream_flutter/modules/isometric/utilities.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/render/mapParticleToDst.dart';
 import 'package:gamestream_flutter/render/mapParticleToSrc.dart';
 import 'package:gamestream_flutter/state/game.dart';
@@ -31,16 +28,7 @@ import 'package:lemon_math/diff_over.dart';
 import 'functions.dart';
 import 'state.dart';
 
-const _size4 = 4.0;
-const _size8 = 8.0;
-const _size32 = 32.0;
-const _size48 = 48.0;
-const _size64 = 64.0;
 
-const _scaleZombie = 0.7;
-const _scaleTemplate = 0.75;
-const _atlasZombieY = 789.0;
-const _atlasSpritesY = 1051.0;
 const _framesPerDirectionHuman = 19;
 const _framesPerDirectionZombie = 8;
 
@@ -52,11 +40,6 @@ const _animationRunning = [12, 13, 14, 15];
 const _animationRunning2 = [16, 17, 18, 19];
 
 final _screen = engine.screen;
-final _shadowX = atlas.shadow.x;
-final _shadowY = atlas.shadow.y;
-
-final _itemBeam = Vector2(5939, 0);
-
 
 enum SpriteLayer {
   Shadow,
@@ -275,8 +258,8 @@ class IsometricRender {
       engine.mapDst(
           x: value.x,
           y: value.y,
-          anchorX: _size4,
-          anchorY: _size4,
+          anchorX: 4.0,
+          anchorY: 4.0,
           scale: value.z,
       );
       engine.renderAtlas();
@@ -284,20 +267,10 @@ class IsometricRender {
   }
 
   void mapShadeShadow(){
-    engine.mapSrc(x: _shadowX, y: _shadowY, width: _size8, height: _size8);
+    engine.mapSrc(x: 35, y: 0, width: 8.0, height: 8.0);
   }
 
   void renderItem(Item item) {
-    // if (!maps.itemAtlas.containsKey(item.type)) return;
-    // final _anchor = 32;
-    // srcLoop(
-    //     atlas: maps.itemAtlas[item.type]!,
-    //     direction: Direction.Down.index,
-    //     frame: core.state.timeline.frame,
-    //     framesPerDirection: 8);
-    // engine.mapDst(x: item.x - _anchor, y: item.y - _anchor,);
-    // engine.renderAtlas();
-
     srcLoopSimple(
         x: 5939,
         size: 32,
@@ -365,10 +338,17 @@ class IsometricRender {
   }
 
   void _renderZombie(Character character, int shade) {
-    final x = mapZombieSrcX(character, shade);
-    final y = _atlasZombieY + (shade * _size64);
-    engine.mapSrc64(x: x, y: y);
-    engine.mapDst(x: character.x, y: character.y, anchorX: _size32, anchorY: _size48, scale: _scaleZombie);
+    engine.mapSrc64(
+        x: mapZombieSrcX(character, shade),
+        y: 789.0 + (shade * 64.0),
+    );
+    engine.mapDst(
+        x: character.x,
+        y: character.y,
+        anchorX: 32,
+        anchorY: 48,
+        scale: 0.7
+    );
     engine.renderAtlas();
   }
 
@@ -412,16 +392,16 @@ class IsometricRender {
     required int frame,
     required num direction,
     required int framesPerDirection,
-    num size = _size64
+    num size = 64.0
   }){
-    return ((direction * framesPerDirection) + (frame - 1)) * _size64;
+    return ((direction * framesPerDirection) + (frame - 1)) * size.toDouble();
   }
 
   double loop({
     required List<int> animation,
     required Character character,
     required int framesPerDirection,
-    double size = _size64
+    double size = 64.0
   }){
     // TODO Optimize length call
     final animationFrame = character.frame % animation.length;
@@ -433,7 +413,7 @@ class IsometricRender {
     required List<int> animation,
     required Character character,
     required int framesPerDirection,
-    double size = _size64
+    double size = 64
   }){
     final animationFrame = character.frame % 4;
     final frame = animation[animationFrame] - 1;
@@ -486,19 +466,13 @@ class IsometricRender {
     engine.mapDst(
         x: character.x,
         y: character.y,
-        anchorX: _size32,
-        anchorY: _size48,
-        scale: _scaleTemplate
+        anchorX: 32,
+        anchorY: 48,
+        scale: 0.75,
     );
-
     engine.mapSrc64(
         x: getTemplateSrcX(character),
-        y: _atlasSpritesY + (layer.index * _size64)
-    );
-
-    engine.mapSrc64(
-        x: getTemplateSrcX(character),
-        y: _atlasSpritesY + (layer.index * _size64)
+        y: 1051.0 + (layer.index * 64)
     );
     engine.renderAtlas();
   }
@@ -624,40 +598,19 @@ class IsometricRender {
   }
 
   void drawCharacterHealthBar(Character character){
-    if (!engine.screen.contains(character.x, character.y)) return;
+    if (!engine.screen.containsV(character)) return;
     final shade = state.getShadeAtPosition(character.x, character.y);
     if (shade >= Shade.Dark) return;
-    // engine.render(dstX: character.x , dstY: character.y, srcX: atlas.shades.red1.x, srcY: atlas.shades.red1.y, anchorX: _widthHalf);
     engine.setPaintColor(colours.redDarkest);
     engine.canvas.drawRect(Rect.fromLTWH(character.x - _healthBarWidthHalf, character.y - _healthBarMargin, _healthBarWidth, _healthBarHeight), engine.paint);
     engine.setPaintColor(colours.red);
     engine.canvas.drawRect(Rect.fromLTWH(character.x - _healthBarWidthHalf, character.y - _healthBarMargin, _healthBarWidth * character.health, _healthBarHeight), engine.paint);
   }
 
-  void drawCharacterMagicBar(Character character){
-    engine.setPaintColorWhite();
-    engine.canvas.drawRect(Rect.fromLTWH(character.x - _healthBarWidthHalf, character.y - _healthBarMargin + _healthBarHeight, _healthBarWidth, _healthBarHeight), engine.paint);
-    engine.setPaintColor(colours.blue);
-    engine.canvas.drawRect(Rect.fromLTWH(character.x - _healthBarWidthHalf, character.y - _healthBarMargin + _healthBarHeight, _healthBarWidth * character.magic, _healthBarHeight), engine.paint);
-  }
-
   void drawInteractableNpc(Character npc) {
     renderCharacter(npc);
     if (diffOver(npc.x, mouseWorldX, 50)) return;
     if (diffOver(npc.y, mouseWorldY, 50)) return;
-    engine.draw.text(npc.name, npc.x - isometric.constants.charWidth * npc.name.length, npc.y, style: state.nameTextStyle);
-  }
-
-  void mapCharacterDst(
-      Character character,
-      CharacterType type,
-      ) {
-    return engine.mapDst(
-      scale: 0.7,
-      x: character.x,
-      y: character.y,
-      anchorX: _size32,
-      anchorY: _size48,
-    );
+    engine.draw.text(npc.name, npc.x - 4.5 * npc.name.length, npc.y, style: state.nameTextStyle);
   }
 }
