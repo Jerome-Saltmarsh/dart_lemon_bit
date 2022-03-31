@@ -2,8 +2,9 @@ import 'package:lemon_math/Vector2.dart';
 
 import '../common/Tile.dart';
 import '../common/enums/Direction.dart';
-import '../common/tileTypeToObjectType.dart';
+import '../common/enums/ObjectType.dart';
 import '../enums.dart';
+import '../utilities.dart';
 import 'Character.dart';
 import 'EnvironmentObject.dart';
 import 'TileNode.dart';
@@ -133,6 +134,14 @@ class Scene {
           tileNode.right = _boundary;
         }
       }
+    }
+
+    for (final env in environment){
+       if (env.type != ObjectType.Torch) continue;
+       snapToGrid(env);
+       final row = getRow(env.x, env.y);
+       final column = getColumn(env.x, env.y);
+       tileNodes[row][column].open = false;
     }
   }
 }

@@ -84,12 +84,16 @@
 [ ] Design Map Skirmish
 [ ] Regenerate Destructible objects    
 [ ] SKIP TRACK    
+[ ] AI Should avoid colliders in front of them.    
 [ ] Destructible Objects    
     [ ] Bush
     [ ] Rock
     [ ] Chest
     [ ] Pot
 [ ] FIX Sword sprite cut off on strike  
+[ ] Pot Struck Audio
+[ ] Pot Destroyed Animation    
+[x] FIX Torches Block Path    
 [x] Right Click to strike        
 [x] FIX Center camera on game start   
 [x] Player, zombie collision        
