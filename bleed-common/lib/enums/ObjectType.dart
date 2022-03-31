@@ -19,7 +19,7 @@ enum ObjectType {
   Block_Grass,
 }
 
-final List<ObjectType> objectTypes = ObjectType.values;
+const objectTypes = ObjectType.values;
 
 String parseEnvironmentObjectTypeToString(ObjectType type){
   return type.toString().replaceAll("ObjectType.", "");

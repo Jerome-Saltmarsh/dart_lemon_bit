@@ -137,7 +137,12 @@ class Scene {
     }
 
     for (final env in environment){
-       if (env.type != ObjectType.Torch) continue;
+      const snapToGridTypes = [
+        ObjectType.Torch,
+        ObjectType.House01,
+        ObjectType.House02,
+      ];
+      if (!snapToGridTypes.contains(env.type)) continue;
        snapToGrid(env);
        final row = getRow(env.x, env.y);
        final column = getColumn(env.x, env.y);
