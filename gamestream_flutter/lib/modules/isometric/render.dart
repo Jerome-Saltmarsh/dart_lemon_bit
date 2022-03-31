@@ -123,9 +123,10 @@ class IsometricRender {
           y: y,
         );
         final shade = dynamicRow[columnIndex];
-        final top = atlasY + shade * tileSize; // top
-        final left = tilesSrc[i];
-        engine.mapSrc(x: left, y: top, width: tileSize, height: tileSize);
+        engine.mapSrc48(
+            x: tilesSrc[i],
+            y: atlasY + shade * 48.0,
+        );
         engine.renderAtlas();
       }
     }
