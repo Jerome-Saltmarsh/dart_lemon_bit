@@ -85,6 +85,7 @@
 [ ] Regenerate Destructible objects    
 [ ] SKIP TRACK    
 [ ] AI Should avoid colliders in front of them.    
+[ ] Arrow Capacity    
 [ ] Destructible Objects    
     [ ] Bush
     [ ] Rock
@@ -92,7 +93,7 @@
     [ ] Pot
 [ ] Pot Struck Audio
 [ ] Pot Destroyed Animation    
-[ ] FIX Shadow Colour    
+[x] FIX Shadow Colour    
 [x] FIX Sword sprite cut off on strike  
 [x] FIX Player run animation    
 [x] FIX Some time bullets don't come out of shot    

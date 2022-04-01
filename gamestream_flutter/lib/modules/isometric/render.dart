@@ -255,7 +255,7 @@ class IsometricRender {
   }
 
   void mapShadeShadow(){
-    engine.mapSrc(x: 35, y: 0, width: 8.0, height: 8.0);
+    engine.mapSrc(x: 1, y: 34, width: 8.0, height: 8.0);
   }
 
   void renderItem(Item item) {
