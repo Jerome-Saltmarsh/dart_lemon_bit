@@ -213,6 +213,8 @@ class GameBuild {
 
     final menu = Row(
       children: [
+        buildButtonSkipTrack(),
+        width8,
         buildToggleEnabledSound(),
         width8,
         buildToggleEnabledMusic(),
@@ -892,6 +894,10 @@ class GameBuild {
           : TextDecoration.lineThrough
       ), audio.toggleEnabledMusic);
     });
+  }
+
+  Widget buildButtonSkipTrack(){
+    return button("Next Song", audio.nextSong);
   }
 
   Widget buildScoreBoard(){

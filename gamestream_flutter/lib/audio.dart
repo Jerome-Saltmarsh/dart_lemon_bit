@@ -2,6 +2,8 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/randomItem.dart';
+import 'package:lemon_math/randomInt.dart';
+
 
 import 'Cache.dart';
 
@@ -10,6 +12,8 @@ final audio = _Audio();
 
 class _Audio {
 
+  var trackIndex = 0;
+
   _Audio(){
     _musicPlayer.setReleaseMode(ReleaseMode.LOOP);
     _musicPlayer.onPlayerCompletion.listen((event) {
@@ -17,7 +21,7 @@ class _Audio {
     });
   }
 
-  final songs = [
+  final tracks = [
     'song01',
     'song02',
     'song03',
@@ -35,15 +39,8 @@ class _Audio {
   });
 
   void playRandomSong(){
-    _playMusic(randomItem(songs));
-  }
-
-  void playSong01(){
-    _playMusic('song01');
-  }
-
-  void playSong02(){
-    _playMusic('song02');
+    trackIndex = randomInt(0, tracks.length) % tracks.length;
+    _playMusic(tracks[trackIndex]);
   }
 
   void stopMusic(){
@@ -52,6 +49,12 @@ class _Audio {
 
   void toggleEnabledSound(){
     soundEnabled.value = !soundEnabled.value;
+  }
+
+  void nextSong(){
+     trackIndex++;
+     trackIndex %= tracks.length;
+     _playMusic(tracks[trackIndex]);
   }
 
   void toggleEnabledMusic(){
