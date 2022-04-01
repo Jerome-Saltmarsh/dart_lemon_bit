@@ -256,7 +256,8 @@ class _Build {
             padding: const EdgeInsets.all(8.0),
             child: mouseOver(
                 builder: (BuildContext context, bool mouseOver) {
-                  return text(gameTypeNames[gameType], color: mouseOver ? colours.white : colours.white85, onPressed: (){
+                  final gameName = gameTypeNames[gameType];
+                  return text(mouseOver ? '-$gameName-' : gameName, color: mouseOver ? colours.white : colours.white85, onPressed: (){
                     game.type.value = gameType;
                     core.actions.connectToSelectedGame();
                   }, size: style.fontSize.large, bold: true);

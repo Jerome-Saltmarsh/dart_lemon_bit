@@ -68,11 +68,11 @@
 [ ] Characters can fall in water and die    
 [ALPHA-RELEASE]
 [ ] FIX Sometimes zombies disappear on death    
+[ ] FIX Flashing Particles   
 [ ] Slot Cooldown
 [ ] Fix fireball explosion
 [ ] Bow Spells,
 [ ] Sword Spells, Strong Swing
-[ ] FIX Flashing Particles   
 [ ] Resource Gathering System (Rock, Wood, Etc)
 [ ] Upgrade System      
 [ ] Structure System
@@ -83,9 +83,10 @@
 [ ] First heavy guitar track    
 [ ] Design Map Skirmish
 [ ] Regenerate Destructible objects    
-[ ] SKIP TRACK    
+[ ] FIX Shotgun fire animation loops    
 [ ] AI Should avoid colliders in front of them.    
 [ ] Arrow Capacity    
+[ ] Frontend check version    
 [ ] Destructible Objects    
     [ ] Bush
     [ ] Rock
@@ -93,6 +94,7 @@
     [ ] Pot
 [ ] Pot Struck Audio
 [ ] Pot Destroyed Animation    
+[ ] SKIP TRACK    
 [x] FIX Shadow Colour    
 [x] FIX Sword sprite cut off on strike  
 [x] FIX Player run animation    
