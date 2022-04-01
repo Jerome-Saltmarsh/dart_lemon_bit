@@ -13,7 +13,10 @@ class UILayouts {
 
   UILayouts(this.style, this.widgets);
 
+  var dots = 0;
+
   Widget waitingForGame(){
+    dots = 0;
     return layout(
       padding: style.layoutPadding,
       child: Center(child: Column(
@@ -22,7 +25,16 @@ class UILayouts {
         children: [
           widgets.title,
           height32,
-          text("LOADING", size: style.font.large, color: colours.white618),
+          Refresh((){
+            var dotText = "";
+            var dotSpace = "";
+            for(var i = 0; i < dots; i++){
+              dotText += ".";
+              dotSpace += " ";
+            }
+            dots = (dots + 1) % 4;
+            return text("${dotSpace}LOADING$dotText", size: style.font.large, color: colours.white618);
+          }, milliseconds: 200,),
           height(100),
         ],
       )),

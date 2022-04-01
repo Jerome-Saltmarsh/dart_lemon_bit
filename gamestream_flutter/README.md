@@ -94,7 +94,7 @@
     [ ] Pot
 [ ] Pot Struck Audio
 [ ] Pot Destroyed Animation    
-[ ] Loading Text Animation    
+[x] Loading Text Animation    
 [x] SKIP TRACK
 [x] FIX Shadow Colour    
 [x] FIX Sword sprite cut off on strike  
