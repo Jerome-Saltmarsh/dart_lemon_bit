@@ -48,15 +48,9 @@ class GameBuild {
     return WatchBuilder(core.state.status, (GameStatus gameStatus) {
       switch (gameStatus) {
         case GameStatus.Counting_Down:
-          return buildDialog(
-              width: style.dialogWidthMedium,
-              height: style.dialogHeightMedium,
-              child: WatchBuilder(game.countDownFramesRemaining, (int frames){
-                final seconds =  frames ~/ 30.0;
-                return Center(child: text("Starting in $seconds seconds"));
-              }));
+          return buildLayoutCountDown();
         case GameStatus.Awaiting_Players:
-          return ui.layouts.waitingForGame();
+          return ui.layouts.buildLayoutLoading();
         case GameStatus.In_Progress:
           switch (game.type.value) {
             case GameType.CUBE3D:
@@ -67,9 +61,19 @@ class GameBuild {
         case GameStatus.Finished:
           return buildDialogGameFinished();
         default:
-          return text(enumString(gameStatus));
+          return ui.layouts.buildLayoutLoading();
       }
     });
+  }
+
+  Widget buildLayoutCountDown() {
+    return buildDialog(
+        width: style.dialogWidthMedium,
+        height: style.dialogHeightMedium,
+        child: WatchBuilder(game.countDownFramesRemaining, (int frames){
+          final seconds =  frames ~/ 30.0;
+          return Center(child: text("Starting in $seconds seconds"));
+        }));
   }
 
   Widget _magicBar() {

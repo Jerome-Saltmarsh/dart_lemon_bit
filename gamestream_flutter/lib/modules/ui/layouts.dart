@@ -15,7 +15,7 @@ class UILayouts {
 
   var dots = 0;
 
-  Widget waitingForGame(){
+  Widget buildLayoutLoading(){
     dots = 0;
     return layout(
       padding: style.layoutPadding,
