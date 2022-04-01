@@ -588,19 +588,25 @@ class IsometricRender {
 
   void _renderCharacterTemplateWeapon(Character character) {
     if (character.equippedWeapon == SlotType.Empty) return;
-
-    engine.mapDst(
-      x: character.x,
-      y: character.y,
-      anchorX: 48,
-      anchorY: 66,
-      scale: 0.75,
-    );
-    engine.mapSrc96(
-        x: getTemplateSrcX(character, size: 96),
-        y: 2159.0 + (0 * 96)
-    );
-    engine.renderAtlas();
+    if (character.equippedWeapon.isMelee){
+      engine.mapDst(
+        x: character.x,
+        y: character.y,
+        anchorX: 48,
+        anchorY: 61,
+        scale: 1.0,
+      );
+      final equipped = character.equippedWeapon;
+      final row = equipped == SlotType.Sword_Short || equipped == SlotType.Sword_Short ? 0
+                              : equipped == SlotType.Sword_Wooden ? 1 : 0;
+      engine.mapSrc96(
+          x: getTemplateSrcX(character, size: 96),
+          y: 2159.0 + (row * 96)
+      );
+      engine.renderAtlas();
+    } else {
+      _renderCharacterPart(character, mapEquippedWeaponToSpriteIndex(character));
+    }
   }
 
   void drawInteractableNpc(Character npc) {

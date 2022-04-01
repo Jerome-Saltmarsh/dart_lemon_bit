@@ -92,7 +92,8 @@
     [ ] Pot
 [ ] Pot Struck Audio
 [ ] Pot Destroyed Animation    
-[ ] FIX Sword sprite cut off on strike  
+[ ] FIX Shadow Colour    
+[x] FIX Sword sprite cut off on strike  
 [x] FIX Player run animation    
 [x] FIX Some time bullets don't come out of shot    
 [x] FIX Torches Block Path    
