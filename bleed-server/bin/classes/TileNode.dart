@@ -1,6 +1,5 @@
 import 'package:lemon_math/Vector2.dart';
 
-import '../common/enums/Direction.dart';
 import 'Scene.dart';
 
 class TileNodeVisit {
@@ -23,7 +22,7 @@ class TileNodeVisit {
   }
 }
 
-class TileNode {
+class TileNode extends Vector2 {
   /// row - 1
   late TileNode up;
   /// row - 1, column + 1
@@ -42,7 +41,7 @@ class TileNode {
   late TileNode upLeft;
   late int row;
   late int column;
-  late Vector2 position;
+  // late Vector2 position;
   bool open;
   int searchId = -1;
   int reserveId = -1;
@@ -52,7 +51,7 @@ class TileNode {
 
   int depth = 0;
 
-  TileNode(this.open);
+  TileNode(this.open) : super(0, 0);
 
   TileNode getNodeByDirection(int direction){
     if (direction <= 3 ) {

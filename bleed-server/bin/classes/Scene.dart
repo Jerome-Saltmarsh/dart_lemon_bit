@@ -69,7 +69,8 @@ class Scene {
         final py =
             perspectiveProjectY(node.row * halfTileSize, node.column * halfTileSize) +
                 halfTileSize;
-        node.position = Vector2(px, py);
+        node.x = px;
+        node.y = py;
         nodeRow.add(node);
       }
       tileNodes.add(nodeRow);
@@ -216,9 +217,8 @@ extension SceneFunctions on Scene {
       final pathY = pathFindAI.pathY;
       var index = 0;
       while (current != null) {
-        final position = current.position;
-        pathX[index] = position.x;
-        pathY[index] = position.y;
+        pathX[index] = current.x;
+        pathY[index] = current.y;
         current = current.previous;
         if (current != null){
           index++;
