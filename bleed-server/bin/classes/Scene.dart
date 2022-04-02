@@ -78,12 +78,12 @@ class Scene {
 
     for (var rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
       final tileNodeRow = tileNodes[rowIndex];
+      final canUp = rowIndex > 0;
+      final canDown = rowIndex < numberOfRows - 1;
       for (var columnIndex = 0; columnIndex < numberOfColumns; columnIndex++) {
         final tileNode = tileNodeRow[columnIndex];
         final canLeft = columnIndex > 0;
         final canRight = columnIndex < numberOfColumns - 1;
-        final canUp = rowIndex > 0;
-        final canDown = rowIndex < numberOfRows - 1;
 
         if (canUp) {
           tileNode.up = tileNodes[rowIndex - 1][columnIndex];
@@ -124,13 +124,13 @@ class Scene {
         }
 
         if (canLeft) {
-          tileNode.left = tileNodes[rowIndex][columnIndex - 1];
+          tileNode.left = tileNodeRow[columnIndex - 1];
         } else {
           tileNode.left = _boundary;
         }
 
         if (canRight) {
-          tileNode.right = tileNodes[rowIndex][columnIndex + 1];
+          tileNode.right = tileNodeRow[columnIndex + 1];
         } else {
           tileNode.right = _boundary;
         }
@@ -237,14 +237,6 @@ extension SceneFunctions on Scene {
     final distanceColumns = pathFindDestination.column - node.column;
     final direction = parseRowsAndColumnsToDirection(distanceRows, distanceColumns);
     node.reserveSurroundingNodes();
-    // _reserve(node, node.up);
-    // _reserve(node, node.upRight);
-    // _reserve(node, node.right);
-    // _reserve(node, node.downRight);
-    // _reserve(node, node.down);
-    // _reserve(node, node.downLeft);
-    // _reserve(node, node.left);
-    // _reserve(node, node.upLeft);
 
     if (visitDirection(direction, node)){
       return true;

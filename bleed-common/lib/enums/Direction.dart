@@ -30,9 +30,8 @@ double convertDirectionToAngle(Direction direction){
   return direction.index * _piQuarter;
 }
 
-
 int sanitizeDirectionIndex(int index){
-  return index >= 0 ? index % directionsLength : (index + directionsMaxIndex) % directionsLength;
+  return index >= 0 ? index % 8 : (index + 7) % 8;
 }
 
 double _fixAngle(double angle){
