@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/angle_between.dart';
+import 'package:lemon_math/distance_between.dart';
 
 import 'classes/Character.dart';
 import 'classes/Collider.dart';
@@ -47,6 +48,35 @@ class _Physics {
     return target;
   }
 }
+
+T? sphereCaste<T extends Collider>({
+  required List<T> colliders,
+  required double x,
+  required double y,
+  required double radius,
+  required Function(T t) predicate,
+}) {
+  final top = y - radius;
+  final bottom = y + radius;
+  final left = x - radius;
+  final right = x + radius;
+  T? closest = null;
+  var closestDistance = 9999999.0;
+
+  for (final collider in colliders) {
+    if (predicate(collider)) continue;
+    if (collider.bottom < top) continue;
+    if (collider.top > bottom) break;
+    if (collider.right < left) continue;
+    if (collider.left > right) continue;
+    final colliderDistance = distanceBetween(collider.x, collider.y, x, y);
+    if (colliderDistance >= closestDistance) continue;
+    closest = collider;
+    closestDistance = colliderDistance;
+  }
+  return closest;
+}
+
 
 void setVelocityTowards(GameObject gameObject, Vector2 target, double speed){
   final angle = radiansV2(gameObject, target);

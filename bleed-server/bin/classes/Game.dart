@@ -321,43 +321,19 @@ extension GameFunctions on Game {
   Vector2 getSceneCenter() =>
       getTilePosition(scene.numberOfRows ~/ 2, scene.numberOfColumns ~/ 2);
 
-  int getFirstAlivePlayerEnemyIndex(Character character) {
-    final numberOfPlayers = players.length;
-    for (var i = 0; i < numberOfPlayers; i++) {
-      final player = players[i];
-      if (player.dead) continue;
-      if (sameTeam(character, player)) continue;
-      return i;
-    }
-    return -1;
-  }
-
-  Character? getClosestEnemyZombie({
-      required double x,
-      required double y,
-      required Character character,
-      required double radius
+  Character? getClosestEnemy({
+    required double x,
+    required double y,
+    required Character character,
+    required List<Character> characters,
   }) {
-    final top = y - radius - characterRadius;
-    final bottom = y + radius + characterRadius;
-    final left = x - radius - characterRadius;
-    final right = x + radius + characterRadius;
-    Character? closest = null;
-    var distance = 9999999.0;
-
-    for (final zombie in zombies) {
-      if (zombie.dead) continue;
-      if (sameTeam(zombie, character)) continue;
-      if (zombie.y < top) continue;
-      if (zombie.y > bottom) break;
-      if (zombie.x < left) continue;
-      if (zombie.x > right) continue;
-      final zombieDistance = distanceBetween(zombie.x, zombie.y, x, y);
-      if (zombieDistance >= distance) continue;
-      closest = zombie;
-      distance = zombieDistance;
-    }
-    return closest;
+    return sphereCaste(
+        colliders: characters,
+        x: x,
+        y: y,
+        radius: 15,
+        predicate: (other) => other.dead || sameTeam(other, character)
+    );
   }
 
   DynamicObject? getClosestDynamicObject(double x, double y){
@@ -383,40 +359,9 @@ extension GameFunctions on Game {
        return closest;
   }
 
-  Character? getClosestEnemyPlayer(double x, double y, Character character) {
-    final aliveEnemyIndex = getFirstAlivePlayerEnemyIndex(character);
-    if (aliveEnemyIndex == -1) return null;
-
-    const cursorRadius = 50.0;
-    final top = y - cursorRadius - 10;
-    final bottom = x + cursorRadius + 10;
-    var closest = players[aliveEnemyIndex];
-    var closestX = diff(x, closest.x);
-    var closestY = diff(y, closest.y);
-    var close = min(closestX, closestY);
-    for (final player in players) {
-      if (player.dead) continue;
-      if (!player.active) continue;
-      if (player.y < top) continue;
-      if (player.y > bottom) break;
-      var closestX2 = diff(x, player.x);
-      var closestY2 = diff(y, player.y);
-      var closes2 = min(closestX2, closestY2);
-      if (closes2 >= close) continue;
-      closest = player;
-      close = closes2;
-    }
-    return closest;
-  }
-
   Collider? getClosestCollider(double x, double y, Character character) {
-    final zombie = getClosestEnemyZombie(
-        x: x,
-        y: y,
-        character: character,
-        radius: 50,
-    );
-    final player = getClosestEnemyPlayer(x, y, character);
+    final zombie = getClosestEnemy(x: x, y: y, character: character, characters: zombies);
+    final player = getClosestEnemy(x: x, y: y, character: character, characters: players);
     final dynamicObject = getClosestDynamicObject(x, y);
     final zombieDistance = zombie != null ? diff(zombie.x, x) + diff(zombie.y, y) : 99999;
     final playerDistance =  player != null ? diff(player.x, x) + diff(player.y, y) : 99999;
@@ -433,6 +378,7 @@ extension GameFunctions on Game {
     }
     return dynamicObject;
   }
+
 
   void updateInProgress() {
     duration++;

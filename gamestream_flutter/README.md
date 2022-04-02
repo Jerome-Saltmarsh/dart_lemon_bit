@@ -84,9 +84,9 @@
 [ ] First heavy guitar track    
 [ ] Design Map Skirmish
 [ ] Regenerate Destructible objects    
-[ ] FIX Shotgun fire animation loops    
-[ ] AI Should avoid colliders in front of them.    
+[ ] FIX Shotgun fire animation loops      
 [ ] Arrow Capacity    
+[ ] FIX Sword Strike range too big   
 [ ] Frontend check version    
 [ ] Destructible Objects    
     [ ] Bush
@@ -94,8 +94,8 @@
     [ ] Chest
     [ ] Pot
 [ ] Pot Struck Audio
-[ ] Shades    
-[ ] FIX Sword Strike range too big    
+[ ] Shades     
+[ ] AI Should avoid colliders in front of them.      
 [x] FIX Highlight Pot at mouse
 [x] Pot Shadow
 [x] Pot Destroyed Animation    
