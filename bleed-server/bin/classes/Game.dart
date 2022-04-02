@@ -412,16 +412,23 @@ extension GameFunctions on Game {
       if (target.dead) return;
       if (target.invincible) return;
       changeCharacterHealth(target, -amount);
+      final targetAI = target.ai;
+
       if (target.alive) {
         if (target.type.isZombie){
           setCharacterState(target, stateHurt);
+        }
+        if (targetAI != null) {
+          if (targetAI.target == null) {
+             targetAI.target = src;
+          }
         }
         return;
       }
 
       onCharacterKilled(target, src);
 
-      final targetAI = target.ai;
+
       if (targetAI != null) {
         target.active = false;
       }
