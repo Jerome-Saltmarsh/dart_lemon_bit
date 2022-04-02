@@ -119,9 +119,11 @@ abstract class Game {
     countDownFramesRemaining = 0;
   }
 
-  void onNpcKilled(Character npc, Character src) {}
-
   void onCharacterKilled(Character killed, Character by){
+
+  }
+
+  void onDynamicObjectDestroyed(DynamicObject dynamicObject){
 
   }
 
@@ -390,10 +392,9 @@ extension GameFunctions on Game {
   /// calculates if there is a wall between two objects
   bool isVisibleBetween(Vector2 a, Vector2 b) {
     final angle = radiansV2(a, b);
-    final distance = distanceV2(a, b);
     final vX = adj(angle, 48);
     final vY = opp(angle, 48);
-    final jumps = distance ~/ 48;
+    final jumps = distanceV2(a, b) ~/ 48;
     var x = a.x + vX;
     var y = a.y + vY;
     for (var i = 0; i < jumps; i++) {
@@ -420,16 +421,10 @@ extension GameFunctions on Game {
 
       onCharacterKilled(target, src);
 
-      if (src is Player) {
-        src.gemSpawns.add(GemSpawn(x: target.x, y: target.y, type: OrbType.Ruby));
-      }
-
       final targetAI = target.ai;
       if (targetAI != null) {
         target.active = false;
-        onNpcKilled(target, src);
       }
-
       if (target.alive && targetAI != null) {
         if (targetAI.target == null) {
           targetAI.target = src;
@@ -439,14 +434,14 @@ extension GameFunctions on Game {
     }
 
     if (target is DynamicObject) {
-        target.health -= amount;
-        if (target.health <= 0) {
-          target.collidable = false;
-          spawnRandomOrb(target.x, target.y);
-          if (target.type == DynamicObjectType.Pot) {
-            dispatchV2(GameEventType.Pot_Destroyed, target);
-          }
+      target.health -= amount;
+      if (target.health <= 0) {
+        target.collidable = false;
+        if (target.type == DynamicObjectType.Pot) {
+          dispatchV2(GameEventType.Pot_Destroyed, target);
         }
+        onDynamicObjectDestroyed(target);
+      }
     }
   }
 
