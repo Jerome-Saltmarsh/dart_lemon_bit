@@ -1395,25 +1395,29 @@ extension GameFunctions on Game {
   }
 
   void _updateGameEvents() {
-    for (int i = 0; i < gameEvents.length; i++) {
-      if (gameEvents[i].frameDuration <= 0) continue;
-      gameEvents[i].frameDuration--;
+    final gameEventsLength = gameEvents.length;
+    for (var i = 0; i < gameEventsLength; i++) {
+      final event = gameEvents[i];
+      if (event.frameDuration <= 0) continue;
+      event.frameDuration--;
     }
   }
 
   void _updateSpawnPointCollisions() {
-    for (int i = 0; i < players.length; i++) {
-      Player player = players[i];
-      for (SpawnPoint spawnPoint in spawnPoints) {
-        if (diffOver(player.x, spawnPoint.x, settings.radius.spawnPoint))
+    if (spawnPoints.isEmpty) return;
+    for (var i = 0; i < players.length; i++) {
+      final player = players[i];
+      for (final spawnPoint in spawnPoints) {
+        const collisionRadius = 20;
+        if (diffOver(player.x, spawnPoint.x, collisionRadius))
           continue;
-        if (diffOver(player.y, spawnPoint.y, settings.radius.spawnPoint))
+        if (diffOver(player.y, spawnPoint.y, collisionRadius))
           continue;
-        for (SpawnPoint point in spawnPoint.game.spawnPoints) {
+        for (final point in spawnPoint.game.spawnPoints) {
           if (point.game != this) continue;
           changeGame(player, spawnPoint.game);
-          double xDiff = spawnPoint.x - player.x;
-          double yDiff = spawnPoint.y - player.y;
+          final xDiff = spawnPoint.x - player.x;
+          final yDiff = spawnPoint.y - player.y;
           player.x = point.x + xDiff * 1.25;
           player.y = point.y + yDiff * 1.25;
           i--;

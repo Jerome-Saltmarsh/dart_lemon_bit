@@ -156,7 +156,6 @@ late AI pathFindAI;
 late TileNode pathFindDestination;
 var pathFindSearchID = 0;
 
-const _maxSearchDepth = 30;
 
 int parseRowsAndColumnsToDirection(int rows, int columns) {
   assert(rows != 0 || columns != 0);
@@ -229,18 +228,17 @@ extension SceneFunctions on Scene {
       return true;
     }
 
-    if (node.depth > _maxSearchDepth) {
+    if (node.depth > 30) {
       return false;
     }
 
-    final distanceRows = pathFindDestination.row - node.row;
-    final distanceColumns = pathFindDestination.column - node.column;
-    final direction = parseRowsAndColumnsToDirection(distanceRows, distanceColumns);
+    final direction = parseRowsAndColumnsToDirection(
+        pathFindDestination.row - node.row,
+        pathFindDestination.column - node.column,
+    );
     node.reserveSurroundingNodes();
 
-    if (visitDirection(direction, node)){
-      return true;
-    }
+    if (visitDirection(direction, node)) return true;
 
     final directionIndex = direction;
 

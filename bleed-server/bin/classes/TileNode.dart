@@ -2,26 +2,6 @@ import 'package:lemon_math/Vector2.dart';
 
 import 'Scene.dart';
 
-class TileNodeVisit {
-  TileNodeVisit? previous;
-  late int travelled;
-  late int score;
-  TileNode tileNode;
-
-  TileNodeVisit(this.previous, int remaining, this.tileNode) {
-    if (previous != null) {
-      travelled = previous!.travelled + 1;
-    } else {
-      travelled = 0;
-    }
-    score = travelled + remaining;
-  }
-
-  bool isCloserThan(TileNodeVisit that) {
-    return this.score < that.score;
-  }
-}
-
 class TileNode extends Vector2 {
   /// row - 1
   late TileNode up;
