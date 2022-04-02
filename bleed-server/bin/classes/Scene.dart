@@ -157,38 +157,38 @@ var pathFindSearchID = 0;
 
 const _maxSearchDepth = 30;
 
-int parseRowsAndColumnsToDirection(int rows, int columns){
+int parseRowsAndColumnsToDirection(int rows, int columns) {
   assert(rows != 0 || columns != 0);
   if (rows > 0) {
      if (columns < 0){
-       return directionDownLeftIndex;
+       return 5; // directionDownLeftIndex;
      }
      if (columns == 0){
-       return directionDownIndex;
+       return 4; //directionDownIndex;
      }
-     return directionDownRightIndex;
+     return 3; // directionDownRightIndex;
   }
   if (rows < 0) {
     if (columns < 0){
-      return directionUpLeftIndex;
+      return 7; // directionUpLeftIndex;
     }
     if (columns == 0){
-      return directionUpIndex;
+      return 0; // directionUpIndex;
     }
-    return directionUpRightIndex;
+    return 1; // directionUpRightIndex;
   }
   if (columns < 0){
-    return directionLeftIndex;
+    return 6; // directionLeftIndex;
   }
-  return directionRightIndex;
+  return 2; // directionRightIndex;
 }
 
 extension SceneFunctions on Scene {
 
   void _reserve(TileNode src, TileNode target){
-    if (target.reservedSearchId == pathFindSearchID) return;
+    if (target.reserveId == pathFindSearchID) return;
     target.reserved = src;
-    target.reservedSearchId = pathFindSearchID;
+    target.reserveId = pathFindSearchID;
   }
 
   bool visitDirection(int direction, TileNode from){
@@ -222,7 +222,7 @@ extension SceneFunctions on Scene {
         return false;
       }
 
-      if (node.reservedSearchId == pathFindSearchID){
+      if (node.reserveId == pathFindSearchID){
         if (node.reserved != previous){
           return visitNode(node, previous: node.reserved);
         }

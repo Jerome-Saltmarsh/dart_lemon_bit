@@ -44,7 +44,7 @@ class TileNode {
   late Vector2 position;
   bool open;
   int searchId = -1;
-  int reservedSearchId = -1;
+  int reserveId = -1;
   TileNode? reserved;
   TileNode? previous;
   int score = 0;
@@ -65,8 +65,8 @@ class TileNode {
   }
 
   void _reserve(TileNode node){
-    if (node.reservedSearchId == pathFindSearchID) return;
+    if (node.reserveId == pathFindSearchID) return;
     node.reserved = this;
-    node.reservedSearchId = pathFindSearchID;
+    node.reserveId = pathFindSearchID;
   }
 }
