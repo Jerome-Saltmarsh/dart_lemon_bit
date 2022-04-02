@@ -21,7 +21,6 @@ import 'common/SlotType.dart';
 import 'common/SlotTypeCategory.dart';
 import 'common/WeaponType.dart';
 import 'common/compile_util.dart';
-import 'common/enums/Direction.dart';
 import 'common/version.dart';
 import 'compile.dart';
 import 'engine.dart';
@@ -364,8 +363,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               game.setCharacterState(player, statePerforming);
               break;
             case CharacterAction.Run:
-              final direction = directions[args[6]];
-              player.angle = convertDirectionToAngle(direction);
+              player.angle =  args[6] * 0.78539816339;
               game.setCharacterStateRunning(player);
               player.target = null;
               break;

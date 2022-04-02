@@ -26,8 +26,8 @@ final directionsMaxIndex = directions.length - 1;
 const _piQuarter = pi / 4.0;
 const _pi2 = pi + pi;
 
-double convertDirectionToAngle(Direction direction){
-  return direction.index * _piQuarter;
+double convertDirectionToAngle(int direction){
+  return direction * 0.78539816339; // 0.78539816339 == pi / 4
 }
 
 int sanitizeDirectionIndex(int index){
