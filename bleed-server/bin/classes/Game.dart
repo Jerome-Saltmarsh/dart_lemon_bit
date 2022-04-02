@@ -419,8 +419,15 @@ extension GameFunctions on Game {
           setCharacterState(target, stateHurt);
         }
         if (targetAI != null) {
-          if (targetAI.target == null) {
+          final targetAITarget = targetAI.target;
+          if (targetAITarget == null) {
              targetAI.target = src;
+          } else {
+            final aiTargetDistance = distanceV2(target, targetAITarget);
+            final srcTargetDistance = distanceV2(src, target);
+            if (srcTargetDistance < aiTargetDistance){
+              targetAI.target = src;
+            }
           }
         }
         return;
