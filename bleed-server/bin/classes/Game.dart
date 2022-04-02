@@ -368,18 +368,21 @@ extension GameFunctions on Game {
        if (dynamicObjects.isEmpty) return null;
        DynamicObject? closest;
        var distance = 0.0;
-       for(final dynamicObject in dynamicObjects){
-          if (dynamicObject.health <= 0) continue;
-          final dis = distanceBetween(x, dynamicObject.x, y, dynamicObject.y);
-          if (closest == null){
-            closest = dynamicObject;
-            distance = dis;
-            continue;
+       final total = dynamicObjects.length;
+       for (var i = 0; i < total; i++) {
+          final dynamicObject = dynamicObjects[i];
+          if (!dynamicObject.collidable) continue;
+          closest = dynamicObject;
+          distance = distanceBetween(x, y, dynamicObject.x, dynamicObject.y);
+          for (var j = i + 1; j < total; j++) {
+            final jObject = dynamicObjects[j];
+            final jDistance = distanceBetween(x, y, jObject.x, jObject.y);
+            if (jDistance < distance){
+              distance = jDistance;
+              closest = jObject;
+            }
           }
-          if (dis < distance){
-            distance = dis;
-            closest = dynamicObject;
-          }
+         return closest;
        }
        return closest;
   }

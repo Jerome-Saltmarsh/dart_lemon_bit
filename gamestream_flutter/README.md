@@ -95,8 +95,8 @@
     [ ] Pot
 [ ] Pot Struck Audio
 [ ] Shades    
-[ ] Pot Shadow    
-[ ] FIX Highlight Pot at mouse
+[x] FIX Highlight Pot at mouse
+[x] Pot Shadow
 [x] Pot Destroyed Animation    
 [x] Pot Destroyed Audio
 [x] Pot Shades
