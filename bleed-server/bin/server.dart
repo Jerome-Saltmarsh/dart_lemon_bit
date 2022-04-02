@@ -34,7 +34,6 @@ import 'settings.dart';
 import 'utilities.dart';
 
 const _space = " ";
-const _cursorRadius = 50.0;
 final _errorIndex = ServerResponse.Error.index;
 final _buffer = StringBuffer();
 final _clientRequestsLength = clientRequests.length;
@@ -280,17 +279,16 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.screenTop = readNumberFromByteArray(args, index: 9).toDouble();
           player.screenRight = readNumberFromByteArray(args, index: 11).toDouble();
           player.screenBottom = readNumberFromByteArray(args, index: 13).toDouble();
-
           final action = characterActions[actionIndex];
 
           player.aimTarget = null;
-          final closestCollider = game.getClosestCollider(mouseX, mouseY, player);
+          final closestCollider = game.getClosestEnemyCollider(mouseX, mouseY, player);
           if (closestCollider != null) {
             if (withinDistance(
                 closestCollider,
                 mouseX,
                 mouseY,
-                _cursorRadius
+                50.0, // cursor radius
             )) {
               player.aimTarget = closestCollider;
             }

@@ -96,6 +96,7 @@
 [ ] Pot Struck Audio
 [ ] Shades     
 [ ] AI Should avoid colliders in front of them.      
+[ ] FIX Respawn Screen showing red screen of death    
 [x] FIX Highlight Pot at mouse
 [x] Pot Shadow
 [x] Pot Destroyed Animation    

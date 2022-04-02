@@ -56,6 +56,7 @@ T? sphereCaste<T extends Collider>({
   required double radius,
   required Function(T t) predicate,
 }) {
+  if (colliders.isEmpty) return null;
   final top = y - radius;
   final bottom = y + radius;
   final left = x - radius;
@@ -64,11 +65,32 @@ T? sphereCaste<T extends Collider>({
   var closestDistance = 9999999.0;
 
   for (final collider in colliders) {
+    if (!collider.collidable) continue;
     if (predicate(collider)) continue;
     if (collider.bottom < top) continue;
     if (collider.top > bottom) break;
     if (collider.right < left) continue;
     if (collider.left > right) continue;
+    final colliderDistance = distanceBetween(collider.x, collider.y, x, y);
+    if (colliderDistance >= closestDistance) continue;
+    closest = collider;
+    closestDistance = colliderDistance;
+  }
+  return closest;
+}
+
+T? findClosestVector2<T extends Vector2>({
+  required double x,
+  required double y,
+  required List<T> colliders,
+  required Function(T t) predicate,
+}) {
+  if (colliders.isEmpty) return null;
+  T? closest = null;
+  var closestDistance = 9999999.0;
+
+  for (final collider in colliders) {
+    if (predicate(collider)) continue;
     final colliderDistance = distanceBetween(collider.x, collider.y, x, y);
     if (colliderDistance >= closestDistance) continue;
     closest = collider;

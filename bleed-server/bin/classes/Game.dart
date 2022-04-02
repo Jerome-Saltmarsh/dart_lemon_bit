@@ -327,45 +327,30 @@ extension GameFunctions on Game {
     required Character character,
     required List<Character> characters,
   }) {
-    return sphereCaste(
+    return findClosestVector2(
         colliders: characters,
         x: x,
         y: y,
-        radius: 15,
         predicate: (other) => other.dead || sameTeam(other, character)
     );
   }
 
   DynamicObject? getClosestDynamicObject(double x, double y){
-       if (dynamicObjects.isEmpty) return null;
-       DynamicObject? closest;
-       var distance = 0.0;
-       final total = dynamicObjects.length;
-       for (var i = 0; i < total; i++) {
-          final dynamicObject = dynamicObjects[i];
-          if (!dynamicObject.collidable) continue;
-          closest = dynamicObject;
-          distance = distanceBetween(x, y, dynamicObject.x, dynamicObject.y);
-          for (var j = i + 1; j < total; j++) {
-            final jObject = dynamicObjects[j];
-            final jDistance = distanceBetween(x, y, jObject.x, jObject.y);
-            if (jDistance < distance){
-              distance = jDistance;
-              closest = jObject;
-            }
-          }
-         return closest;
-       }
-       return closest;
+    return findClosestVector2(
+        colliders: dynamicObjects,
+        x: x,
+        y: y,
+        predicate: (other) => !other.collidable
+    );
   }
 
-  Collider? getClosestCollider(double x, double y, Character character) {
+  Collider? getClosestEnemyCollider(double x, double y, Character character) {
     final zombie = getClosestEnemy(x: x, y: y, character: character, characters: zombies);
     final player = getClosestEnemy(x: x, y: y, character: character, characters: players);
     final dynamicObject = getClosestDynamicObject(x, y);
-    final zombieDistance = zombie != null ? diff(zombie.x, x) + diff(zombie.y, y) : 99999;
-    final playerDistance =  player != null ? diff(player.x, x) + diff(player.y, y) : 99999;
-    final dynamicDistance = dynamicObject != null ? diff(dynamicObject.x, x) + diff(dynamicObject.y, y) : 99999;
+    final zombieDistance = zombie != null ? distanceBetween(x, y, zombie.x, zombie.y) : 99999;
+    final playerDistance =  player != null ? distanceBetween(x, y, player.x, player.y) : 99999;
+    final dynamicDistance = dynamicObject != null ? distanceBetween(x, y, dynamicObject.x, dynamicObject.y) : 99999;
 
     if (zombieDistance < playerDistance) {
        if (zombieDistance < dynamicDistance) {
