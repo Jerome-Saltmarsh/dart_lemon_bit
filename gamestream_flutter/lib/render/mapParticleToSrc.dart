@@ -103,6 +103,14 @@ void mapParticleToSrc(Particle particle){
       );
       return;
 
+    case ParticleType.Pot_Shard:
+      engine.mapSrcSquare(
+          x: 6090,
+          y: shade * 64,
+          size: 16,
+      );
+      return;
+
     case ParticleType.Myst:
       engine.mapSrc64(
           x: 5488,

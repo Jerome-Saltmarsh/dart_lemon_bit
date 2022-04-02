@@ -297,11 +297,12 @@ class IsometricSpawn {
         z: 0,
         angle: randomAngle(),
         speed: 1.0,
-        zv: randomBetween(0.1, 0.4),
+        zv: randomBetween(0.1, 0.2),
         weight: 0.5,
         duration: randomInt(150, 200),
         scale: randomBetween(0.6, 1.25),
         scaleV: 0,
+        rotationV: giveOrTake(10),
         castShadow: true,
     );
   }
