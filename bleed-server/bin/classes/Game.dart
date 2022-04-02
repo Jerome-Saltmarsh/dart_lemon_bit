@@ -343,23 +343,19 @@ extension GameFunctions on Game {
     final left = x - radius - characterRadius;
     final right = x + radius + characterRadius;
     Character? closest = null;
-    var closestNull = true;
-    var distance = -1.0;
+    var distance = 9999999.0;
+
     for (final zombie in zombies) {
+      if (zombie.dead) continue;
       if (sameTeam(zombie, character)) continue;
       if (zombie.y < top) continue;
       if (zombie.y > bottom) break;
       if (zombie.x < left) continue;
       if (zombie.x > right) continue;
-      if (zombie.dead) continue;
-      if (!zombie.active) continue;
-      final zombieDistance = diff(zombie.x, x) + diff(zombie.y, y);
-      if (closestNull || zombieDistance < distance) {
-        closest = zombie;
-        distance = zombieDistance.toDouble();
-        closestNull = false;
-        continue;
-      }
+      final zombieDistance = distanceBetween(zombie.x, zombie.y, x, y);
+      if (zombieDistance >= distance) continue;
+      closest = zombie;
+      distance = zombieDistance;
     }
     return closest;
   }
@@ -392,14 +388,13 @@ extension GameFunctions on Game {
     if (aliveEnemyIndex == -1) return null;
 
     const cursorRadius = 50.0;
-    final top = y - cursorRadius - settings.radius.character;
-    final bottom = x + cursorRadius + settings.radius.character;
-    Character closest = players[aliveEnemyIndex];
+    final top = y - cursorRadius - 10;
+    final bottom = x + cursorRadius + 10;
+    var closest = players[aliveEnemyIndex];
     var closestX = diff(x, closest.x);
     var closestY = diff(y, closest.y);
     var close = min(closestX, closestY);
     for (final player in players) {
-      // if (sameTeam(player, b)) continue;
       if (player.dead) continue;
       if (!player.active) continue;
       if (player.y < top) continue;

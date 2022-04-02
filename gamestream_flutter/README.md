@@ -95,6 +95,7 @@
     [ ] Pot
 [ ] Pot Struck Audio
 [ ] Shades    
+[ ] FIX Sword Strike range too big    
 [x] FIX Highlight Pot at mouse
 [x] Pot Shadow
 [x] Pot Destroyed Animation    
