@@ -300,7 +300,7 @@ class IsometricRender {
 
   void renderCharacter(Character character) {
     assert(character.direction >= 0);
-    assert(character.direction < directionsLength);
+    assert(character.direction < 8);
 
     if (character.dead) return;
 

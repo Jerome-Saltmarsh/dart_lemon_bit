@@ -6,42 +6,42 @@ import 'package:lemon_watch/watch.dart';
 
 
 class CharacterController {
-  double angle = 0;
-  final Watch<CharacterAction> action = Watch(CharacterAction.Idle);
-  AbilityType ability = AbilityType.None;
+  final action = Watch(CharacterAction.Idle);
+  var ability = AbilityType.None;
+  var angle = 0;
 }
 
 class KeyMap {
-  LogicalKeyboardKey perform = LogicalKeyboardKey.space;
-  LogicalKeyboardKey interact = LogicalKeyboardKey.keyA;
-  LogicalKeyboardKey runUp = LogicalKeyboardKey.keyW;
-  LogicalKeyboardKey runRight = LogicalKeyboardKey.keyD;
-  LogicalKeyboardKey runDown = LogicalKeyboardKey.keyS;
-  LogicalKeyboardKey runLeft = LogicalKeyboardKey.keyA;
-  LogicalKeyboardKey throwGrenade = LogicalKeyboardKey.keyG;
-  LogicalKeyboardKey equip1 = LogicalKeyboardKey.digit1;
-  LogicalKeyboardKey equip2 = LogicalKeyboardKey.digit2;
-  LogicalKeyboardKey equip3 = LogicalKeyboardKey.digit3;
-  LogicalKeyboardKey equip4 = LogicalKeyboardKey.digit4;
-  LogicalKeyboardKey equip5 = LogicalKeyboardKey.digit5;
-  LogicalKeyboardKey equip6 = LogicalKeyboardKey.digit6;
-  LogicalKeyboardKey debug = LogicalKeyboardKey.keyZ;
-  LogicalKeyboardKey equip1B = LogicalKeyboardKey.keyQ;
-  LogicalKeyboardKey equip2B = LogicalKeyboardKey.keyE;
-  LogicalKeyboardKey equip3B = LogicalKeyboardKey.keyF;
-  LogicalKeyboardKey equip4B = LogicalKeyboardKey.keyC;
-  LogicalKeyboardKey speakLetsGo = LogicalKeyboardKey.digit9;
-  LogicalKeyboardKey speakLetsGreeting = LogicalKeyboardKey.digit8;
-  LogicalKeyboardKey waitASecond = LogicalKeyboardKey.digit0;
-  LogicalKeyboardKey speak = LogicalKeyboardKey.enter;
-  LogicalKeyboardKey toggleLantern = LogicalKeyboardKey.keyL;
-  LogicalKeyboardKey toggleAudio = LogicalKeyboardKey.keyM;
-  LogicalKeyboardKey hourForwards = LogicalKeyboardKey.arrowRight;
-  LogicalKeyboardKey hourBackwards = LogicalKeyboardKey.arrowLeft;
-  LogicalKeyboardKey teleport = LogicalKeyboardKey.keyG;
-  LogicalKeyboardKey spawnZombie = LogicalKeyboardKey.arrowUp;
-  LogicalKeyboardKey respawn = LogicalKeyboardKey.keyN;
-  LogicalKeyboardKey casteFireball = LogicalKeyboardKey.keyZ;
-  LogicalKeyboardKey cubeFace0 = LogicalKeyboardKey.keyO;
-  LogicalKeyboardKey cubeFaceI = LogicalKeyboardKey.keyI;
+  final perform = LogicalKeyboardKey.space;
+  final interact = LogicalKeyboardKey.keyA;
+  final runUp = LogicalKeyboardKey.keyW;
+  final runRight = LogicalKeyboardKey.keyD;
+  final runDown = LogicalKeyboardKey.keyS;
+  final runLeft = LogicalKeyboardKey.keyA;
+  final throwGrenade = LogicalKeyboardKey.keyG;
+  final equip1 = LogicalKeyboardKey.digit1;
+  final equip2 = LogicalKeyboardKey.digit2;
+  final equip3 = LogicalKeyboardKey.digit3;
+  final equip4 = LogicalKeyboardKey.digit4;
+  final equip5 = LogicalKeyboardKey.digit5;
+  final equip6 = LogicalKeyboardKey.digit6;
+  final debug = LogicalKeyboardKey.keyZ;
+  final equip1B = LogicalKeyboardKey.keyQ;
+  final equip2B = LogicalKeyboardKey.keyE;
+  final equip3B = LogicalKeyboardKey.keyF;
+  final equip4B = LogicalKeyboardKey.keyC;
+  final speakLetsGo = LogicalKeyboardKey.digit9;
+  final speakLetsGreeting = LogicalKeyboardKey.digit8;
+  final waitASecond = LogicalKeyboardKey.digit0;
+  final speak = LogicalKeyboardKey.enter;
+  final toggleLantern = LogicalKeyboardKey.keyL;
+  final toggleAudio = LogicalKeyboardKey.keyM;
+  final hourForwards = LogicalKeyboardKey.arrowRight;
+  final hourBackwards = LogicalKeyboardKey.arrowLeft;
+  final teleport = LogicalKeyboardKey.keyG;
+  final spawnZombie = LogicalKeyboardKey.arrowUp;
+  final respawn = LogicalKeyboardKey.keyN;
+  final casteFireball = LogicalKeyboardKey.keyZ;
+  final cubeFace0 = LogicalKeyboardKey.keyO;
+  final cubeFaceI = LogicalKeyboardKey.keyI;
 }

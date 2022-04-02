@@ -1,16 +1,3 @@
-import 'dart:math';
-
-enum Direction {
-  Up,
-  UpRight,
-  Right,
-  DownRight,
-  Down,
-  DownLeft,
-  Left,
-  UpLeft,
-}
-
 const directionUpIndex = 0;
 const directionUpRightIndex = 1;
 const directionRightIndex = 2;
@@ -20,36 +7,23 @@ const directionDownLeftIndex = 5;
 const directionLeftIndex = 6;
 const directionUpLeftIndex = 7;
 
-const directions = Direction.values;
-final directionsLength = directions.length;
-final directionsMaxIndex = directions.length - 1;
-const _piQuarter = pi / 4.0;
-const _pi2 = pi + pi;
-
-double convertDirectionToAngle(int direction){
-  return direction * 0.78539816339; // 0.78539816339 == pi / 4
-}
-
 int sanitizeDirectionIndex(int index){
   return index >= 0 ? index % 8 : (index + 7) % 8;
 }
 
-double _fixAngle(double angle){
-  if (angle < 0) {
-    angle = (_pi2 + angle).abs() % _pi2;
-  }
-  return angle % _pi2;
-}
-
-Direction convertAngleToDirection(double angle) {
-  return directions[convertAngleToDirectionInt(angle)];
+int convertAngleToDirection(double angle) {
+  return convertAngleToDirectionInt(angle);
 }
 
 int convertAngleToDirectionInt(double angle){
-  return _fixAngle(angle) ~/ _piQuarter;
+  const piQuarter = 0.78539816339;
+  return _fixAngle(angle) ~/ piQuarter;
 }
 
-int angleToDirection(double angle){
-  return _fixAngle(angle) ~/ _piQuarter;
+double _fixAngle(double angle){
+  const pi2 = 6.28318530718;
+  if (angle < 0) {
+    angle = (pi2 + angle).abs() % pi2;
+  }
+  return angle % pi2;
 }
-

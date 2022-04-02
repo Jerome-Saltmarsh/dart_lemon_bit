@@ -59,46 +59,47 @@ class GameUpdate {
       // engine.state.camera.x += mouseWorldDiff.dx * engine.state.zoom;
     // }
     final direction = getKeyDirection();
+    final gameActions = modules.game.actions;
+
     if (direction != null){
-      _controller.angle = direction.index.toDouble();
-      modules.game.actions.setCharacterActionRun();
+      _controller.angle = direction;
+      gameActions.setCharacterActionRun();
       return;
     }
-
     if (engine.mouseLeftDown.value){
-      modules.game.actions.setCharacterActionPerform();
+      gameActions.setCharacterActionPerform();
     }
   }
 
-  Direction? getKeyDirection() {
+  int? getKeyDirection() {
     final keysPressed = keyboardInstance.keysPressed;
     final keyMap = state.keyMap;
 
     if (keysPressed.contains(keyMap.runUp)) {
       if (keysPressed.contains(keyMap.runRight)) {
-        return Direction.UpRight;
+        return directionUpRightIndex;
       }
       if (keysPressed.contains(keyMap.runLeft)) {
-        return Direction.UpLeft;
+        return directionUpLeftIndex;
       }
-      return Direction.Up;
+      return directionUpIndex;
     }
 
     if (keysPressed.contains(keyMap.runDown)) {
       if (keysPressed.contains(keyMap.runRight)) {
-        return Direction.DownRight;
+        return directionDownRightIndex;
       }
       if (keysPressed.contains(keyMap.runLeft)) {
-        return Direction.DownLeft;
+        return directionDownLeftIndex;
       }
-      return Direction.Down;
+      return directionDownIndex;
     }
 
     if (keysPressed.contains(keyMap.runLeft)) {
-      return Direction.Left;
+      return directionLeftIndex;
     }
     if (keysPressed.contains(keyMap.runRight)) {
-      return Direction.Right;
+      return directionRightIndex;
     }
     return null;
   }
