@@ -2,17 +2,15 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
-import 'package:gamestream_flutter/classes/Item.dart';
-import 'package:gamestream_flutter/classes/Particle.dart';
-import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
 import 'package:bleed_common/GemSpawn.dart';
 import 'package:bleed_common/Tile.dart';
 import 'package:bleed_common/enums/Shade.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
+import 'package:gamestream_flutter/classes/Item.dart';
+import 'package:gamestream_flutter/classes/Particle.dart';
+import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
 import 'package:lemon_watch/watch.dart';
-
-import 'utilities.dart';
 
 class IsometricState {
   late ui.Image image;

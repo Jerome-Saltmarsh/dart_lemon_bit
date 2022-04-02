@@ -67,6 +67,7 @@
 [ ] Generate Random Map    
 [ ] Characters can fall in water and die    
 [ALPHA-RELEASE]
+[ ] SKIRMISH -SOLO- -TEAM-    
 [ ] FIX Sometimes zombies disappear on death    
 [ ] FIX Flashing Particles   
 [ ] Slot Cooldown
@@ -94,6 +95,9 @@
     [ ] Pot
 [ ] Pot Struck Audio
 [ ] Pot Destroyed Animation    
+[ ] Shades    
+[x] Pot Destroyed Audio
+[x] Pot Shades
 [x] Loading Text Animation    
 [x] SKIP TRACK
 [x] FIX Shadow Colour    

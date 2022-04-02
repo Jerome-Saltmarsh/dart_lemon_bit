@@ -30,7 +30,8 @@ enum GameEventType {
   Arrow_Hit,
   Draw_Bow,
   Release_Bow,
-  Sword_Woosh
+  Sword_Woosh,
+  Pot_Destroyed,
 }
 
-const List<GameEventType> gameEventTypes = GameEventType.values;
+const gameEventTypes = GameEventType.values;

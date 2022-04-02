@@ -2,15 +2,15 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:bleed_common/DynamicObjectType.dart';
+import 'package:bleed_common/GameEventType.dart';
 import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/PlayerEvent.dart';
-import 'package:gamestream_flutter/classes/Character.dart';
-import 'package:bleed_common/GameEventType.dart';
 import 'package:bleed_common/ServerResponse.dart';
 import 'package:bleed_common/SlotType.dart';
 import 'package:bleed_common/compile_util.dart';
 import 'package:bleed_common/constants.dart';
 import 'package:bleed_common/enums/ProjectileType.dart';
+import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';

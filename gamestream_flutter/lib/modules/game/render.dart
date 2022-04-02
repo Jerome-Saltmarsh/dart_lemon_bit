@@ -1,6 +1,6 @@
 
 import 'dart:math';
-import 'package:lemon_math/diff_over.dart';
+
 import 'package:bleed_common/AbilityType.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/OrbType.dart';
@@ -22,6 +22,7 @@ import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/adjacent.dart';
+import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/opposite.dart';
 
 import 'state.dart';
@@ -57,8 +58,9 @@ class GameRender {
     final totalDynamicEnvironmentObjects = game.totalDynamicObjects.value;
     for (var i = 0; i < totalDynamicEnvironmentObjects; i++) {
        final dynamicObject = game.dynamicObjects[i];
+       final shade = isometric.state.getShadeAtPosition(dynamicObject.x, dynamicObject.y);
        // drawCircle36(dynamicObject.x, dynamicObject.y);
-       engine.mapSrc64(x: 6032, y: 0);
+       engine.mapSrc64(x: 6032, y: shade * 64);
        engine.mapDst(x: dynamicObject.x, y: dynamicObject.y, anchorX: 32, anchorY: 32);
        engine.renderAtlas();
     }
@@ -345,27 +347,6 @@ class GameRender {
     for (EnvironmentObject env in modules.isometric.state.environmentObjects) {
       engine.draw.circle(env.x, env.y, env.radius, Colors.blue);
     }
-  }
-
-  void _drawMouseAim() {
-    // if (modules.game.state.player.dead) return;
-    //
-    // engine.state.paint.strokeWidth = 3;
-    // double angle =
-    // angleBetween(mouseWorldX, mouseWorldY, modules.game.state.player.x, modules.game.state.player.y);
-    //
-    // double mouseDistance =
-    // distanceBetween(mouseWorldX, mouseWorldY, modules.game.state.player.x, modules.game.state.player.y);
-    //
-    // double scope = queries.mapWeaponAimLength(modules.game.state.soldier.weaponType.value);
-    // double d = min(mouseDistance, scope);
-    //
-    // double vX = adjacent(angle, d);
-    // double vY = opposite(angle, d);
-    // Offset mouseOffset = Offset(mouseWorldX, mouseWorldY);
-    // Offset aimOffset = Offset(mouseWorldX + vX, mouseWorldY + vY);
-    // _drawLine(mouseOffset, aimOffset, Colors.transparent);
-    // engine.actions.setPaintColorWhite();
   }
 
   void drawPlayerText() {

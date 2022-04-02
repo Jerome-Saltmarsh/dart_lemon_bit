@@ -1,5 +1,6 @@
-import 'package:gamestream_flutter/classes/Authentication.dart';
 import 'package:bleed_common/CharacterType.dart';
+import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/classes/Authentication.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -10,7 +11,6 @@ import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/state/decorationImages.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
-import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/random.dart';
 

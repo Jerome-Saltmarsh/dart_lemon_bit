@@ -2,6 +2,8 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/version.dart';
+import 'package:firestore_client/firestoreService.dart';
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/constants/servers.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
@@ -20,8 +22,6 @@ import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
-import 'package:firestore_client/firestoreService.dart';
-import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';

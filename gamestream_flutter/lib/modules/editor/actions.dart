@@ -1,13 +1,12 @@
-import 'package:firestore_client/firestoreService.dart';
-import 'package:gamestream_flutter/classes/Character.dart';
-import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
-import 'package:gamestream_flutter/classes/Item.dart';
-import 'package:bleed_common/CharacterType.dart';
 import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/SceneJson.dart';
 import 'package:bleed_common/Tile.dart';
 import 'package:bleed_common/constants.dart';
 import 'package:bleed_common/enums/ObjectType.dart';
+import 'package:firestore_client/firestoreService.dart';
+import 'package:gamestream_flutter/classes/Character.dart';
+import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
+import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/parse.dart';
@@ -177,9 +176,9 @@ class EditorActions with EditorScope {
 
     final List<Character> characters = [];
     for(Json json in mapJson['characters']){
-      final x = json.getDouble('x');
-      final y = json.getDouble('y');
-      final type = parseCharacterType(json['type']);
+      // final x = json.getDouble('x');
+      // final y = json.getDouble('y');
+      // final type = parseCharacterType(json['type']);
       // characters.add(Character(type: type, x: x, y: y));
     }
 

@@ -1,16 +1,15 @@
 import 'dart:math';
 
+import 'package:bleed_common/OrbType.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
-import 'package:gamestream_flutter/classes/FloatingText.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
-import 'package:bleed_common/OrbType.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/state/game.dart';
 import 'package:lemon_math/adjacent.dart';
-import 'package:lemon_math/randomAngle.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/opposite.dart';
+import 'package:lemon_math/randomAngle.dart';
 import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/random_between.dart';
 
@@ -73,13 +72,13 @@ class IsometricSpawn {
     double rotationV = 0,
     bounciness = 0.5,
     double airFriction = 0.98,
-    bool hasShadow = false,
+    bool castShadow = false,
   }) {
     assert(duration > 0);
     final particle = getAvailableParticle();
     particle.size = _particleTypeSize[type] ?? 0;
     particle.type = type;
-    particle.hasShadow = hasShadow;
+    particle.hasShadow = castShadow;
     particle.x = x;
     particle.y = y;
     particle.z = z;
@@ -124,7 +123,7 @@ class IsometricSpawn {
         rotationV: giveOrTake(0.25),
         scale: 0.75,
         scaleV: 0,
-        hasShadow: true,
+        castShadow: true,
     );
   }
 
@@ -159,7 +158,7 @@ class IsometricSpawn {
         scale: scale,
         scaleV: zero,
         bounciness: zero,
-        hasShadow: hasShadow,
+        castShadow: hasShadow,
     );
   }
 
@@ -290,6 +289,23 @@ class IsometricSpawn {
     }
   }
 
+  void potShard(double x, double y){
+    _particle(
+        type: ParticleType.Pot_Shard,
+        x: x,
+        y: y,
+        z: 0,
+        angle: randomAngle(),
+        speed: 1.0,
+        zv: randomBetween(0.1, 0.4),
+        weight: 0.5,
+        duration: randomInt(150, 200),
+        scale: randomBetween(0.6, 1.25),
+        scaleV: 0,
+        castShadow: true,
+    );
+  }
+
   void shrapnel({
     required double x,
     required double y,
@@ -357,7 +373,7 @@ class IsometricSpawn {
       rotationV: 0.05,
       scale: 0.75,
       scaleV: 0,
-      hasShadow: true
+      castShadow: true
     );
   }
 

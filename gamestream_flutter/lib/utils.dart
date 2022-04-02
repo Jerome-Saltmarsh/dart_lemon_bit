@@ -1,12 +1,12 @@
 import 'dart:ui';
 
 import 'package:bleed_common/Tile.dart';
+import 'package:clipboard/clipboard.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:clipboard/clipboard.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/angle_between.dart';
 import 'package:universal_html/html.dart';
 
 import 'modules/isometric/utilities.dart';

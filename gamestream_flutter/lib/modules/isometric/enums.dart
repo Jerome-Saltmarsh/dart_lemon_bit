@@ -24,4 +24,5 @@ enum ParticleType {
   Myst,
   Pixel,
   Orb_Ruby,
+  Pot_Shard,
 }

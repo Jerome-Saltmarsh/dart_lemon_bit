@@ -1,7 +1,3 @@
-import 'package:bleed_common/PlayerEvent.dart';
-import 'package:gamestream_flutter/audio.dart';
-import 'package:lemon_math/adjacent.dart';
-import 'package:lemon_math/opposite.dart';
 import 'package:bleed_common/AbilityType.dart';
 import 'package:bleed_common/CharacterState.dart';
 import 'package:bleed_common/CharacterType.dart';
@@ -9,7 +5,9 @@ import 'package:bleed_common/GameError.dart';
 import 'package:bleed_common/GameEventType.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/OrbType.dart';
+import 'package:bleed_common/PlayerEvent.dart';
 import 'package:bleed_common/SlotType.dart';
+import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/parse.dart';
@@ -18,7 +16,9 @@ import 'package:gamestream_flutter/state/game.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
+import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/give_or_take.dart';
+import 'package:lemon_math/opposite.dart';
 import 'package:lemon_math/randomBool.dart';
 import 'package:lemon_math/randomInt.dart';
 
@@ -211,13 +211,6 @@ class GameEvents {
     engine.zoom = 1;
   }
 
-  void _onPlayerUuidChanged(String uuid) {
-    print("events.onPlayerUuidChanged($uuid)");
-    if (uuid.isNotEmpty) {
-      actions.cameraCenterPlayer();
-    }
-  }
-
   void onGameEvent(GameEventType type, double x, double y, double angle) {
     switch (type) {
       case GameEventType.Handgun_Fired:
@@ -361,6 +354,12 @@ class GameEvents {
         break;
       case GameEventType.Credits_Acquired:
         audio.playAudioCollectStar(x, y);
+        break;
+      case GameEventType.Pot_Destroyed:
+        for (var i = 0; i < 5; i++) {
+          isometric.spawn.potShard(x, y);
+        }
+        audio.potBreaking(x, y);
         break;
     }
   }

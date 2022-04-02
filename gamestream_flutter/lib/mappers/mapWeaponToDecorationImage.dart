@@ -1,5 +1,5 @@
-import 'package:flutter/painting.dart';
 import 'package:bleed_common/WeaponType.dart';
+import 'package:flutter/painting.dart';
 
 final Map<WeaponType, DecorationImage> mapWeaponTypeToImage = {
   WeaponType.HandGun: _load("weapon-handgun"),

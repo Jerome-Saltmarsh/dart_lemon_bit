@@ -3,7 +3,6 @@
 import 'package:bleed_common/Tile.dart';
 import 'package:bleed_common/enums/ObjectType.dart';
 import 'package:gamestream_flutter/mappers/mapEnvironmentObjectToSrc.dart';
-import 'package:gamestream_flutter/modules/isometric/utilities.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/random.dart';
 

@@ -14,6 +14,7 @@ import '../bleed/zombie_health.dart';
 import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
+import '../common/DynamicObjectType.dart';
 import '../common/GameEventType.dart';
 import '../common/GameStatus.dart';
 import '../common/GameType.dart';
@@ -523,6 +524,9 @@ extension GameFunctions on Game {
         if (target.health <= 0) {
           target.collidable = false;
           spawnRandomOrb(target.x, target.y);
+          if (target.type == DynamicObjectType.Pot) {
+            dispatchV2(GameEventType.Pot_Destroyed, target);
+          }
         }
     }
   }
@@ -1601,30 +1605,28 @@ extension GameFunctions on Game {
         }
         if (weaponType.isMelee) {
           final attackTarget = character.attackTarget;
+          final damage = character.weapon.damage;
           if (attackTarget != null) {
-            applyStrike(character, attackTarget, character.weapon.damage);
+            applyStrike(character, attackTarget, damage);
             return;
           }
+          final range = weaponType.range;
           final zombieHit = physics.raycastHit(
               character: character,
               colliders: zombies,
-              range: weaponType.range
+              range: range
           );
           if (zombieHit != null) {
-            applyStrike(character, zombieHit, character.weapon.damage);
+            applyStrike(character, zombieHit, damage);
             return;
           }
           final dynamicObjectHit = physics.raycastHit(
               character: character,
               colliders: dynamicObjects,
-              range: weaponType.range
+              range: range
           );
           if (dynamicObjectHit != null) {
-            dynamicObjectHit.health -= character.weapon.damage;
-            if (dynamicObjectHit.health <= 0){
-              dynamicObjectHit.collidable = false;
-            }
-            return;
+            applyDamage(character, dynamicObjectHit, damage);
           }
           return;
         }

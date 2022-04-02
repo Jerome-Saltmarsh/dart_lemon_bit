@@ -1,5 +1,4 @@
 
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_common/CharacterAction.dart';
 import 'package:bleed_common/CharacterType.dart';
 import 'package:bleed_common/GameType.dart';
@@ -11,10 +10,8 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/state/game.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/ui/state/decorationImages.dart';
-import 'package:gamestream_flutter/ui/state/styleguide.dart';
 import 'package:gamestream_flutter/ui/ui.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
-import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 

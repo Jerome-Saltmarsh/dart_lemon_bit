@@ -47,6 +47,26 @@ class GameSkirmish extends Game {
              radius: 14,
          )
      );
+
+     dynamicObjects.add(
+         DynamicObject(
+           type: DynamicObjectType.Pot,
+           x: 50,
+           y: 150,
+           health: 10,
+           radius: 14,
+         )
+     );
+
+     dynamicObjects.add(
+         DynamicObject(
+           type: DynamicObjectType.Pot,
+           x: -50,
+           y: 150,
+           health: 10,
+           radius: 14,
+         )
+     );
   }
 
   @override

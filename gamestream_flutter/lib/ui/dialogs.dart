@@ -1,3 +1,5 @@
+import 'package:firestore_client/firestoreService.dart';
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/styles.dart';
@@ -8,8 +10,6 @@ import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
-import 'package:firestore_client/firestoreService.dart';
-import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 
 import '../flutterkit.dart';

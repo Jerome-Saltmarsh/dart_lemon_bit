@@ -1,9 +1,8 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/distance_between.dart';
-import 'package:lemon_math/randomItem.dart';
 import 'package:lemon_math/randomInt.dart';
-
+import 'package:lemon_math/randomItem.dart';
 
 import 'Cache.dart';
 
@@ -83,6 +82,10 @@ class _Audio {
 
   void gunPickup(double x, double y) {
     _playPositioned("gun-pickup-01.mp3", x, y);
+  }
+
+  void potBreaking(double x, double y){
+    _playPositioned('pot-breaking.mp3', x, y);
   }
 
   void arrowImpact(double x, double y) {
