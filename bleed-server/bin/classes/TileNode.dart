@@ -1,5 +1,6 @@
 import 'package:lemon_math/Vector2.dart';
 
+import '../common/enums/Direction.dart';
 import 'Scene.dart';
 
 class TileNodeVisit {
@@ -52,6 +53,35 @@ class TileNode {
   int depth = 0;
 
   TileNode(this.open);
+
+  TileNode getNodeByDirection(int direction){
+    if (direction <= 3 ) {
+      switch (direction) {
+        case 0:
+          return up;
+        case 1:
+          return upRight;
+        case 2:
+          return right;
+        case 3:
+          return downRight;
+        default:
+          throw Exception();
+      }
+    }
+    switch(direction) {
+      case 4:
+        return down;
+      case 5:
+        return downLeft;
+      case 6:
+        return left;
+      case 7:
+        return upLeft;
+      default:
+        throw Exception();
+    }
+  }
 
   void reserveSurroundingNodes(){
     _reserve(up);

@@ -185,34 +185,8 @@ int parseRowsAndColumnsToDirection(int rows, int columns) {
 
 extension SceneFunctions on Scene {
 
-  void _reserve(TileNode src, TileNode target){
-    if (target.reserveId == pathFindSearchID) return;
-    target.reserved = src;
-    target.reserveId = pathFindSearchID;
-  }
-
-  bool visitDirection(int direction, TileNode from){
-    // TODO Expensive
-    switch(direction){
-      case directionUpIndex:
-        return visitNode(from.up, previous: from);
-      case directionUpRightIndex:
-        return visitNode(from.upRight, previous: from);
-      case directionRightIndex:
-        return visitNode(from.right, previous: from);
-      case directionDownRightIndex:
-        return visitNode(from.downRight, previous: from);
-      case directionDownIndex:
-        return visitNode(from.down, previous: from);
-      case directionDownLeftIndex:
-        return visitNode(from.downLeft, previous: from);
-      case directionLeftIndex:
-        return visitNode(from.left, previous: from);
-      case directionUpLeftIndex:
-        return visitNode(from.upLeft, previous: from);
-      default:
-        throw Exception("Invalid Direction index $direction");
-    }
+  bool visitDirection(int direction, TileNode from) {
+    return visitNode(from.getNodeByDirection(direction), previous: from);
   }
 
   bool visitNode(TileNode node, {TileNode? previous}){
