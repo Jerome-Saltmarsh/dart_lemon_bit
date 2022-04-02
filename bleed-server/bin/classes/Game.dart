@@ -18,9 +18,7 @@ import '../common/DynamicObjectType.dart';
 import '../common/GameEventType.dart';
 import '../common/GameStatus.dart';
 import '../common/GameType.dart';
-import '../common/GemSpawn.dart';
 import '../common/ItemType.dart';
-import '../common/OrbType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/SlotType.dart';
 import '../common/Tile.dart';
@@ -408,7 +406,7 @@ extension GameFunctions on Game {
   }
 
   void applyDamage(Character src, Collider target, int amount) {
-    if (target is Character){
+    if (target is Character) {
       if (target.dead) return;
       if (target.invincible) return;
       changeCharacterHealth(target, -amount);
@@ -1322,29 +1320,20 @@ extension GameFunctions on Game {
   }
 
   void setNpcTarget(AI ai, Character value) {
-    if (ai.character == value) {
-      throw Exception("AI cannot target itself");
-    }
-    if (ai.character.team == value.team && value.team != 0) {
-      throw Exception("Npc target same team");
-    }
-    if (value.dead) {
-      throw Exception("Npc cannot target dead");
-    }
-    if (!value.active) {
-      throw Exception("Npc cannot target deactive");
-    }
-    if (ai.character.dead) {
-      throw Exception("Npc cannot set target because self is dead");
-    }
+    assert (ai.character != value);
+    assert (!sameTeam(ai.character, value));
+    assert (value.alive);
+    assert (value.active);
+    assert (ai.character.alive);
     ai.target = value;
   }
 
   void removeDisconnectedPlayers() {
-    for (var i = 0; i < players.length; i++) {
+    var playerLength = players.length;
+    for (var i = 0; i < playerLength; i++) {
       final player = players[i];
 
-      if (player.lastUpdateFrame++ < settings.framesUntilPlayerDisconnected)
+      if (player.lastUpdateFrame++ < 100)
         continue;
 
       for (final npc in zombies) {
@@ -1353,6 +1342,7 @@ extension GameFunctions on Game {
       player.active = false;
       players.removeAt(i);
       i--;
+      playerLength--;
 
       if (status == GameStatus.Awaiting_Players) {
         cancelCountDown();

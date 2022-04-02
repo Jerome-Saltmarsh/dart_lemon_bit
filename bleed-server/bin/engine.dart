@@ -15,7 +15,6 @@ import 'games/Royal.dart';
 import 'games/Skirmish.dart';
 import 'games/world.dart';
 import 'language.dart';
-import 'settings.dart';
 
 final engine = _Engine();
 
@@ -77,7 +76,7 @@ class _Engine {
           for (int i = 0; i < game.players.length; i++) {
             final player = game.players[i];
             player.lastUpdateFrame++;
-            if (player.lastUpdateFrame > settings.framesUntilPlayerDisconnected) {
+            if (player.lastUpdateFrame > 100) {
               game.players.removeAt(i);
               i--;
             }
