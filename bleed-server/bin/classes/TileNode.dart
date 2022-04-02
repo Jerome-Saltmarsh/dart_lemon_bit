@@ -1,5 +1,7 @@
 import 'package:lemon_math/Vector2.dart';
 
+import 'Scene.dart';
+
 class TileNodeVisit {
   TileNodeVisit? previous;
   late int travelled;
@@ -50,4 +52,21 @@ class TileNode {
   int depth = 0;
 
   TileNode(this.open);
+
+  void reserveSurroundingNodes(){
+    _reserve(up);
+    _reserve(upRight);
+    _reserve(right);
+    _reserve(downRight);
+    _reserve(down);
+    _reserve(downLeft);
+    _reserve(left);
+    _reserve(upLeft);
+  }
+
+  void _reserve(TileNode node){
+    if (node.reservedSearchId == pathFindSearchID) return;
+    node.reserved = this;
+    node.reservedSearchId = pathFindSearchID;
+  }
 }

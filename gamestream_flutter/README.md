@@ -1,7 +1,7 @@
 [IDEAS]
 [ ] Enemies drop recipes, recipes can be used to construct equipment and specify what they cost
 [ ] Perspective Mode
-[ ] Rain Particles
+[ ] Rain Particles (Weather System)
 [ ] Faster to walk on concrete than grass, mud is very slow.
 [ ] Animate tiles flowing water
 [ ] Dynamic Shadow direction
@@ -88,6 +88,7 @@
 [ ] Arrow Capacity    
 [ ] FIX Sword Strike range too big   
 [ ] Frontend check version    
+[ ] Display Highlighted Target info (Zombie, Pot, etc)    
 [ ] Destructible Objects    
     [ ] Bush
     [ ] Rock
@@ -96,6 +97,7 @@
 [ ] Pot Struck Audio
 [ ] Shades     
 [ ] AI Should avoid colliders in front of them.      
+[ ] Fix Slash Sword audio out of sink    
 [ ] FIX Respawn Screen showing red screen of death    
 [x] FIX Highlight Pot at mouse
 [x] Pot Shadow

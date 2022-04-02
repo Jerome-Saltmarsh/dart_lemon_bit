@@ -192,6 +192,7 @@ extension SceneFunctions on Scene {
   }
 
   bool visitDirection(int direction, TileNode from){
+    // TODO Expensive
     switch(direction){
       case directionUpIndex:
         return visitNode(from.up, previous: from);
@@ -261,14 +262,15 @@ extension SceneFunctions on Scene {
     final distanceRows = pathFindDestination.row - node.row;
     final distanceColumns = pathFindDestination.column - node.column;
     final direction = parseRowsAndColumnsToDirection(distanceRows, distanceColumns);
-    _reserve(node, node.up);
-    _reserve(node, node.upRight);
-    _reserve(node, node.right);
-    _reserve(node, node.downRight);
-    _reserve(node, node.down);
-    _reserve(node, node.downLeft);
-    _reserve(node, node.left);
-    _reserve(node, node.upLeft);
+    node.reserveSurroundingNodes();
+    // _reserve(node, node.up);
+    // _reserve(node, node.upRight);
+    // _reserve(node, node.right);
+    // _reserve(node, node.downRight);
+    // _reserve(node, node.down);
+    // _reserve(node, node.downLeft);
+    // _reserve(node, node.left);
+    // _reserve(node, node.upLeft);
 
     if (visitDirection(direction, node)){
       return true;
@@ -324,7 +326,7 @@ extension SceneFunctions on Scene {
   }
 
   bool projectileCollisionAt(double x, double y) {
-    return isProjectileCollideable(tileAt(x, y));
+    return !isShootable(tileAt(x, y));
   }
 
   double projectedToWorldX(double x, double y) {

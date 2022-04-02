@@ -6,7 +6,6 @@ import 'classes/EnvironmentObject.dart';
 import 'classes/Game.dart';
 import 'classes/Item.dart';
 import 'classes/Player.dart';
-import 'classes/Weapon.dart';
 import 'common/GameStatus.dart';
 import 'common/ServerResponse.dart';
 import 'common/Tile.dart';
@@ -109,12 +108,6 @@ void compilePlayerWeapons(StringBuffer buffer, Player player) {
   _write(buffer, ServerResponse.Weapons.index);
 }
 
-void compileWeapon(StringBuffer buffer, Weapon weapon) {
-  _write(buffer, weapon.type.index);
-  _write(buffer, weapon.rounds);
-  _write(buffer, weapon.capacity);
-  _write(buffer, weapon.damage);
-}
 
 void compilePlayerOrbs(StringBuffer buffer, Player player) {
   _write(buffer, ServerResponse.Player_Orbs.index);

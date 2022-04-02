@@ -65,10 +65,6 @@ class _Teams {
   final east = 2;
 }
 
-class _GameEvents {
-  List<OnKilled> onKilled = [];
-}
-
 // constants
 const _none = -1;
 const castFrame = 3;
@@ -109,8 +105,6 @@ abstract class Game {
   late GameStatus status;
   GameType gameType;
 
-
-  final _GameEvents events = _GameEvents();
 
   bool get countingDown => status == GameStatus.Counting_Down;
 
@@ -397,9 +391,9 @@ extension GameFunctions on Game {
   bool isVisibleBetween(Vector2 a, Vector2 b) {
     final angle = radiansV2(a, b);
     final distance = distanceV2(a, b);
-    final vX = adj(angle, tileSize);
-    final vY = opp(angle, tileSize);
-    final jumps = distance ~/ tileSize;
+    final vX = adj(angle, 48);
+    final vY = opp(angle, 48);
+    final jumps = distance ~/ 48;
     var x = a.x + vX;
     var y = a.y + vY;
     for (var i = 0; i < jumps; i++) {
@@ -435,10 +429,6 @@ extension GameFunctions on Game {
         target.active = false;
         onNpcKilled(target, src);
       }
-
-      events.onKilled.forEach((onKilledHandler) {
-        onKilledHandler(this, src, target, amount);
-      });
 
       if (target.alive && targetAI != null) {
         if (targetAI.target == null) {

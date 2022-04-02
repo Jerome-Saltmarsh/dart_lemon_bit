@@ -6,7 +6,6 @@ import '../classes/Player.dart';
 import '../common/ItemType.dart';
 import '../common/SlotType.dart';
 import '../engine.dart';
-import '../handlers.dart';
 import 'world.dart';
 
 class Town extends Game {
@@ -29,8 +28,6 @@ class Town extends Game {
         team: teams.west,
     );
     npcs.add(npcDavis);
-
-    events.onKilled.add(handlers.onKilledEarnOrb);
 
     npcSmith = InteractableNpc(
         name: "Smith",
