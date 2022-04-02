@@ -18,7 +18,7 @@ void mapParticleToDst(Particle particle){
 
   return engine.mapDst(
     scale: renderScale,
-    rotation: zero,
+    rotation: particle.rotation,
     x: particle.x,
     y: particle.y,
     anchorX: sizeHalf,

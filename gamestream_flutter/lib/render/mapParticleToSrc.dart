@@ -105,7 +105,7 @@ void mapParticleToSrc(Particle particle){
 
     case ParticleType.Pot_Shard:
       engine.mapSrcSquare(
-          x: 6090,
+          x: 6097,
           y: shade * 64,
           size: 16,
       );

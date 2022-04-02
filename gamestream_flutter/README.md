@@ -94,8 +94,10 @@
     [ ] Chest
     [ ] Pot
 [ ] Pot Struck Audio
-[ ] Pot Destroyed Animation    
 [ ] Shades    
+[ ] Pot Shadow    
+[ ] FIX Highlight Pot at mouse
+[x] Pot Destroyed Animation    
 [x] Pot Destroyed Audio
 [x] Pot Shades
 [x] Loading Text Animation    

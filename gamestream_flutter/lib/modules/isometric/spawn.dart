@@ -17,22 +17,6 @@ import 'enums.dart';
 import 'state.dart';
 
 
-const Map<ParticleType, double> _particleTypeSize = {
-  ParticleType.Zombie_Head: 64.0,
-  ParticleType.Blood: 8.0,
-  ParticleType.Human_Head: 64.0,
-  ParticleType.Myst: 64.0,
-  ParticleType.Smoke: 32.0,
-  ParticleType.Shrapnel: 32.0,
-  ParticleType.Shell: 32.0,
-  ParticleType.Organ: 64,
-  ParticleType.FireYellow: 32.0,
-  ParticleType.Arm: 64,
-  ParticleType.Leg: 64,
-  ParticleType.Pixel: 8,
-  ParticleType.Orb_Ruby: 24.0,
-};
-
 class IsometricSpawn {
 
   final IsometricState state;
@@ -75,8 +59,24 @@ class IsometricSpawn {
     bool castShadow = false,
   }) {
     assert(duration > 0);
+    const mapTypeToSize = <ParticleType, double> {
+      ParticleType.Zombie_Head: 64.0,
+      ParticleType.Blood: 8.0,
+      ParticleType.Human_Head: 64.0,
+      ParticleType.Myst: 64.0,
+      ParticleType.Smoke: 32.0,
+      ParticleType.Shrapnel: 32.0,
+      ParticleType.Shell: 32.0,
+      ParticleType.Organ: 64,
+      ParticleType.FireYellow: 32.0,
+      ParticleType.Arm: 64,
+      ParticleType.Leg: 64,
+      ParticleType.Pixel: 8,
+      ParticleType.Orb_Ruby: 24.0,
+      ParticleType.Pot_Shard: 16.0,
+    };
     final particle = getAvailableParticle();
-    particle.size = _particleTypeSize[type] ?? 0;
+    particle.size = mapTypeToSize[type] ?? 0;
     particle.type = type;
     particle.hasShadow = castShadow;
     particle.x = x;
@@ -302,7 +302,7 @@ class IsometricSpawn {
         duration: randomInt(150, 200),
         scale: randomBetween(0.6, 1.25),
         scaleV: 0,
-        rotationV: giveOrTake(10),
+        rotation: randomAngle(),
         castShadow: true,
     );
   }
