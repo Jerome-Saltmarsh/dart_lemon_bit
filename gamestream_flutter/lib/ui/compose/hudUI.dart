@@ -224,16 +224,6 @@ Widget buildNumberOfPlayersRequiredDialog() {
   });
 }
 
-Positioned buildCharacterAction() {
-  return Positioned(
-    left: 200,
-    top: 300,
-    child: WatchBuilder(modules.game.state.characterController.action, (CharacterAction action) {
-      return text(action);
-    }),
-  );
-}
-
 Widget buildTopRight() {
   return Positioned(
     top: _padding,

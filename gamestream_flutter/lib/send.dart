@@ -74,7 +74,7 @@ void sendRequestUpdatePlayer() {
   final screen = engine.screen;
 
   _updateBuffer[0] = _gameUpdateIndex;
-  _updateBuffer[1] = _characterControllerAction.value.index;
+  _updateBuffer[1] = _characterControllerAction.value;
   writeNumberToByteArray(number: mouseWorldX, list: _updateBuffer, index: 2);
   writeNumberToByteArray(number: mouseWorldY, list: _updateBuffer, index: 4);
   if (_characterControllerAction.value == CharacterAction.Run){

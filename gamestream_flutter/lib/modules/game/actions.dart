@@ -48,8 +48,8 @@ class GameActions {
     }
   }
 
-  void setCharacterAction(CharacterAction value){
-    if (value.index < state.characterController.action.value.index) return;
+  void setCharacterAction(int value){
+    if (value < state.characterController.action.value) return;
     state.characterController.action.value = value;
   }
 

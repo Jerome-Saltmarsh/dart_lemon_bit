@@ -269,7 +269,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          final actionIndex = args[1];
+
           final mouseX = readNumberFromByteArray(args, index: 2).toDouble();
           final mouseY = readNumberFromByteArray(args, index: 4).toDouble();
           player.mouseX = mouseX;
@@ -278,7 +278,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.screenTop = readNumberFromByteArray(args, index: 9).toDouble();
           player.screenRight = readNumberFromByteArray(args, index: 11).toDouble();
           player.screenBottom = readNumberFromByteArray(args, index: 13).toDouble();
-          final action = characterActions[actionIndex];
 
           player.aimTarget = null;
           final closestCollider = game.getClosestEnemyCollider(mouseX, mouseY, player);
@@ -292,8 +291,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               player.aimTarget = closestCollider;
             }
           }
-
-          switch (action) {
+          switch (args[1]) {
             case CharacterAction.Idle:
               if (player.target == null){
                 game.setCharacterState(player, stateIdle);
