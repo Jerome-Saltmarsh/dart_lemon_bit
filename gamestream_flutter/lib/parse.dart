@@ -40,7 +40,6 @@ String get _currentCharacter {
 // functions
 void parseState() {
   _index = 0;
-  modules.game.state.smoothed = 10;
   final eventLength = event.length;
   while (_index < eventLength) {
     final _currentServerResponse = consumeInt();

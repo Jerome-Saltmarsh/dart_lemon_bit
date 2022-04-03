@@ -1,15 +1,18 @@
-
-
+import 'package:lemon_math/adjacent.dart';
+import 'package:lemon_math/opposite.dart';
 import 'package:bleed_common/GameStatus.dart';
 import 'package:bleed_common/enums/Direction.dart';
+import 'package:gamestream_flutter/bytestream_parser.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/ui/state/hud.dart';
 import 'package:lemon_engine/engine.dart';
 
+import '../../state/game.dart';
 import 'state.dart';
 
 final _player = modules.game.state.player;
+final _players = game.players;
 final _controller = modules.game.state.characterController;
 final _status = core.state.status;
 
@@ -19,10 +22,25 @@ class GameUpdate {
 
   GameUpdate(this.state);
 
+  void applyFrameSmoothing() {
+    if (!state.frameSmoothing.value) return;
+    if (byteStreamParser.framesSinceUpdateReceived <= 1) return;
+    if (byteStreamParser.framesSinceUpdateReceived > 10) return;
+    for (final character in _players) {
+      if (!character.running) continue;
+      final angle = character.angle;
+      const amount = 0.5;
+      character.x += adjacent(angle, amount);
+      character.y += opposite(angle, amount);
+    }
+  }
+
   void update() {
     // TODO remove this check
     if (_status.value == GameStatus.Finished) return;
 
+    applyFrameSmoothing();
+    byteStreamParser.framesSinceUpdateReceived++;
     readPlayerInput();
     isometric.update.call();
     if (!state.panningCamera && _player.alive.value) {

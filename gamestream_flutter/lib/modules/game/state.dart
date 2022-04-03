@@ -32,7 +32,6 @@ class GameState {
   var panningCamera = false;
   var framesSinceOrbAcquired = 999;
   var lastOrbAcquired = OrbType.Emerald;
-  var smoothed = 3;
 
   final List<String> letsGo = [
     "Come on!",
@@ -102,6 +101,8 @@ class Slots {
 
 class _Player {
   int score = 0;
+  final previousPosition = Vector2(0, 0);
+  final velocity = Vector2(0, 0);
   double x = 0;
   double y = 0;
   int id = -1;

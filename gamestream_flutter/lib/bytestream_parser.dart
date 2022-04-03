@@ -29,13 +29,15 @@ final _orbs = _player.orbs;
 final _hours = modules.isometric.state.hours;
 final _minutes = modules.isometric.state.minutes;
 
-class _ByteStreamParser {
 
+class _ByteStreamParser {
   var _index = 0;
   var values = <int>[];
   final _byteStreamPool = <int, Uint8List>{};
+  var framesSinceUpdateReceived = 3;
 
-  void parse(List<int> values){
+  void parse(List<int> values) {
+    framesSinceUpdateReceived = 0;
     _index = 0;
     bufferSize.value = values.length;
     this.values = values;
@@ -97,8 +99,12 @@ class _ByteStreamParser {
           _minutes.value = _nextByte();
           break;
         case ServerResponse.Player:
+          _player.previousPosition.x = _player.x;
+          _player.previousPosition.y = _player.y;
           _player.x = _nextDouble();
           _player.y = _nextDouble();
+          _player.velocity.x = _player.x - _player.previousPosition.x;
+          _player.velocity.y = _player.x - _player.previousPosition.y;
           _player.health.value = _nextDouble();
           _player.maxHealth = _nextDouble();
           _player.magic.value = _nextDouble();

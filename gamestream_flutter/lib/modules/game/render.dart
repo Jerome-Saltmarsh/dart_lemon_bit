@@ -9,6 +9,7 @@ import 'package:bleed_common/configuration.dart';
 import 'package:bleed_common/enums/ProjectileType.dart';
 import 'package:bleed_common/enums/Shade.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/bytestream_parser.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
@@ -30,8 +31,6 @@ import 'style.dart';
 
 class GameRender {
 
-  final _smoothSpeed = 0.5;
-
   final GameQueries queries;
   final GameState state;
   final GameStyle style;
@@ -39,8 +38,6 @@ class GameRender {
   GameRender(this.state, this.style, this.queries);
 
   void render(Canvas canvas, Size size) {
-
-    applyFrameSmoothing();
 
     isometric.actions.applyDynamicEmissions();
     isometric.actions.applyDynamicShadeToTileSrc();
@@ -104,19 +101,6 @@ class GameRender {
         scale: 0.7
       );
     }
-  }
-
-  void applyFrameSmoothing() {
-    if (!state.frameSmoothing.value) return;
-    if (state.smoothed >= 0) return;
-      state.smoothed--;
-      final players = game.players;
-      for(final character in players) {
-        if (!character.running) continue;
-        final angle = character.angle;
-        character.x += adjacent(angle, _smoothSpeed);
-        character.y += opposite(angle, _smoothSpeed);
-      }
   }
 
   void weaponRangeCircle() {
