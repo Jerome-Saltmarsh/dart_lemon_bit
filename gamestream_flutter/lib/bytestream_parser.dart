@@ -23,14 +23,16 @@ final byteStreamParser = _ByteStreamParser();
 final byteLength = Watch(0);
 final bufferSize = Watch(0);
 
+final _player = modules.game.state.player;
+final _slots = _player.slots;
+final _orbs = _player.orbs;
+final _hours = modules.isometric.state.hours;
+final _minutes = modules.isometric.state.minutes;
+
 class _ByteStreamParser {
 
-  final _player = modules.game.state.player;
-  final _hours = modules.isometric.state.hours;
-  final _minutes = modules.isometric.state.minutes;
-
   var _index = 0;
-  late List<int> values;
+  var values = <int>[];
   final _byteStreamPool = <int, Uint8List>{};
 
   void parse(List<int> values){
@@ -95,29 +97,26 @@ class _ByteStreamParser {
           _minutes.value = _nextByte();
           break;
         case ServerResponse.Player:
-          final player = modules.game.state.player;
-          final slots = player.slots;
-          final orbs = player.orbs;
-          player.x = _nextDouble();
-          player.y = _nextDouble();
-          player.health.value = _nextDouble();
-          player.maxHealth = _nextDouble();
-          player.magic.value = _nextDouble();
-          player.maxMagic.value = _nextDouble();
-          readSlot(slots.weapon);
-          slots.armour.type.value = _readSlotType();
-          slots.helm.type.value = _readSlotType();
-          readSlot(slots.slot1);
-          readSlot(slots.slot2);
-          readSlot(slots.slot3);
-          readSlot(slots.slot4);
-          readSlot(slots.slot5);
-          readSlot(slots.slot6);
-          orbs.topaz.value = _nextInt();
-          orbs.emerald.value = _nextInt();
-          orbs.ruby.value = _nextInt();
-          player.alive.value = readBool();
-          player.storeVisible.value = readBool();
+          _player.x = _nextDouble();
+          _player.y = _nextDouble();
+          _player.health.value = _nextDouble();
+          _player.maxHealth = _nextDouble();
+          _player.magic.value = _nextDouble();
+          _player.maxMagic.value = _nextDouble();
+          readSlot(_slots.weapon);
+          _slots.armour.type.value = _readSlotType();
+          _slots.helm.type.value = _readSlotType();
+          readSlot(_slots.slot1);
+          readSlot(_slots.slot2);
+          readSlot(_slots.slot3);
+          readSlot(_slots.slot4);
+          readSlot(_slots.slot5);
+          readSlot(_slots.slot6);
+          _orbs.topaz.value = _nextInt();
+          _orbs.emerald.value = _nextInt();
+          _orbs.ruby.value = _nextInt();
+          _player.alive.value = readBool();
+          _player.storeVisible.value = readBool();
           break;
         case ServerResponse.End:
           byteLength.value = _index;
