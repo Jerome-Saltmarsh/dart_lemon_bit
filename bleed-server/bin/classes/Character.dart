@@ -100,9 +100,7 @@ class Character extends GameObject {
   bool invincible = false;
   int team;
   final abilityTarget = Vector2(0, 0);
-
   final slots = Slots();
-
 
   // properties
   int get direction => (((angle + piEighth) % pi2) ~/ piQuarter) % 8;

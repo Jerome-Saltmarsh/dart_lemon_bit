@@ -11,6 +11,7 @@ import 'state.dart';
 
 final _player = modules.game.state.player;
 final _controller = modules.game.state.characterController;
+final _status = core.state.status;
 
 class GameUpdate {
 
@@ -19,7 +20,9 @@ class GameUpdate {
   GameUpdate(this.state);
 
   void update() {
-    if (core.state.status.value == GameStatus.Finished) return;
+    // TODO remove this check
+    if (_status.value == GameStatus.Finished) return;
+
     readPlayerInput();
     isometric.update.call();
     if (!state.panningCamera && _player.alive.value) {

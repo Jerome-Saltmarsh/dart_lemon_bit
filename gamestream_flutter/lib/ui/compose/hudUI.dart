@@ -1,5 +1,4 @@
 
-import 'package:bleed_common/CharacterAction.dart';
 import 'package:bleed_common/CharacterType.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:flutter/material.dart';

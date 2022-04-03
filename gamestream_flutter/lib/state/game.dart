@@ -46,20 +46,22 @@ class _Game {
   var itemsTotal = 0;
 
   _Game() {
-    for (var i = 0; i < 2000; i++) {
+    for (var i = 0; i < 1000; i++) {
       dynamicObjects.add(DynamicObject());
     }
-    for (var i = 0; i < 300; i++) {
+    for (var i = 0; i < 150; i++) {
       players.add(Character());
+    }
+    for (var i = 0; i < 50; i++) {
       interactableNpcs.add(Character());
     }
-    for (var i = 0; i < 5000; i++) {
+    for (var i = 0; i < 1500; i++) {
       zombies.add(Character());
     }
     for (var i = 0; i < 50; i++) {
       bulletHoles.add(Vector2(0, 0));
     }
-    for (var i = 0; i < 1000; i++) {
+    for (var i = 0; i < 200; i++) {
       projectiles.add(Projectile());
     }
   }

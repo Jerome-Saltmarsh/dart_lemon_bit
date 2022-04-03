@@ -44,51 +44,51 @@ enum SlotType {
   Assault_Rifle,
 }
 
-final List<SlotType> slotTypes = SlotType.values;
+const slotTypes = SlotType.values;
 final slotTypesLength = slotTypes.length;
 
-const List<SlotType> _bows = [
+const _bows = <SlotType>[
   SlotType.Bow_Wooden,
   SlotType.Bow_Green,
   SlotType.Bow_Gold,
 ];
 
-const List<SlotType> _firearms = [
+const _firearms = <SlotType>[
   SlotType.Handgun,
   SlotType.Shotgun,
 ];
 
-const List<SlotType> _swords = [
+const _swords = <SlotType>[
   SlotType.Sword_Wooden,
   SlotType.Sword_Short,
   SlotType.Sword_Long,
 ];
 
-const List<SlotType> _staffs = [
+const _staffs = <SlotType>[
   SlotType.Staff_Wooden,
   SlotType.Staff_Golden,
   SlotType.Staff_Blue,
 ];
 
-const List<SlotType> _metal = [
+const _metal = <SlotType>[
   SlotType.Sword_Short,
   SlotType.Sword_Long,
 ];
 
-const List<SlotType> _armour = [
+const _armour = <SlotType>[
   SlotType.Body_Blue,
   SlotType.Armour_Padded,
   SlotType.Magic_Robes,
 ];
 
-const List<SlotType> _helms = [
+const _helms = <SlotType>[
   SlotType.Steel_Helmet,
   SlotType.Leather_Cap,
   SlotType.Magic_Hat,
   SlotType.Rogue_Hood,
 ];
 
-const List<SlotType> _items = [
+const _items = <SlotType>[
   SlotType.Silver_Pendant,
   SlotType.Golden_Necklace,
 ];
