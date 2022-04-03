@@ -172,7 +172,7 @@ class _Engine {
       game: world.town,
       x: 0,
       y: 1750,
-      team: teams.west,
+      team: Teams.west,
       health: 10,
       weapon: SlotType.Empty,
     );

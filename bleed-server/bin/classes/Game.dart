@@ -53,14 +53,11 @@ import 'Scene.dart';
 import 'SpawnPoint.dart';
 import 'TileNode.dart';
 
-final teams = _Teams();
 
-typedef void OnKilled(Game game, Character src, Character by, int damage);
-
-class _Teams {
-  final none = 0;
-  final west = 1;
-  final east = 2;
+class Teams {
+  static const none = 0;
+  static const west = 1;
+  static const east = 2;
 }
 
 // constants
@@ -112,6 +109,10 @@ abstract class Game {
 
   bool get awaitingPlayers => status == GameStatus.Awaiting_Players;
 
+  int get numberOfAlivePlayers => countAlive(players);
+
+  int get numberOfAliveZombies => countAlive(zombies);
+
   void cancelCountDown() {
     status = GameStatus.Awaiting_Players;
     countDownFramesRemaining = 0;
@@ -162,20 +163,12 @@ abstract class Game {
     player.sceneChanged = true;
   }
 
-  int get numberOfAlivePlayers {
-    var playersRemaining = 0;
-    for (final player in players) {
-      if (player.alive) playersRemaining++;
+  int countAlive(List<Character> characters){
+    var total = 0;
+    for (final character in characters) {
+      if (character.alive) total++;
     }
-    return playersRemaining;
-  }
-
-  int get numberOfAliveZombies {
-    var count = 0;
-    for (final zombie in zombies) {
-      if (zombie.alive) count++;
-    }
-    return count;
+    return total;
   }
 
   void update() {}
@@ -184,11 +177,10 @@ abstract class Game {
 
   GameEvent _getAvailableGameEvent() {
     for (final gameEvent in gameEvents) {
-      if (gameEvent.frameDuration <= 0) {
-        gameEvent.frameDuration = 5;
-        gameEvent.assignNewId();
-        return gameEvent;
-      }
+      if (gameEvent.frameDuration > 0) continue;
+      gameEvent.frameDuration = 5;
+      gameEvent.assignNewId();
+      return gameEvent;
     }
     final empty = GameEvent(
       type: GameEventType.Sword_Woosh,
@@ -1188,14 +1180,14 @@ extension GameFunctions on Game {
     return spawnZombie(
         x: spawnPoint.x,
         y: spawnPoint.y,
-        team: teams.east,
+        team: Teams.east,
         health: health,
         damage: damage
     );
   }
 
   int get zombieCount {
-    int count = 0;
+    var count = 0;
     for (final zombie in zombies) {
       if (!zombie.alive) continue;
       count++;
@@ -1276,10 +1268,8 @@ extension GameFunctions on Game {
   }
 
   void updateInteractableNpcTargets() {
-    if (zombies.isEmpty) return;
-    final initial = getFirstAliveZombieIndex();
+    final initial = getFirstAliveIndex(zombies);
     if (initial == _none) return;
-
     final npcsLength = npcs.length;
     for (var i = 0; i < npcsLength; i++) {
       final ai = npcs[i].ai;
@@ -1288,9 +1278,10 @@ extension GameFunctions on Game {
     }
   }
 
-  int getFirstAliveZombieIndex() {
-    for (int i = 0; i < zombies.length; i++) {
-      if (zombies[i].alive) return i;
+  int getFirstAliveIndex(List<Character> characters){
+    final length = characters.length;
+    for (var i = 0; i < length; i++) {
+      if (characters[i].alive) return i;
     }
     return _none;
   }

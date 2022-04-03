@@ -114,7 +114,7 @@ class GameSkirmish extends Game {
       x: location.x,
       y: location.y,
       game: this,
-      team: teams.none,
+      team: Teams.none,
       weapon: SlotType.Handgun,
     );
     final slots = player.slots;

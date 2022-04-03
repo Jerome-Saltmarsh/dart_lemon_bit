@@ -43,7 +43,7 @@ void parseState() {
   modules.game.state.smoothed = 10;
   final eventLength = event.length;
   while (_index < eventLength) {
-    final _currentServerResponse = _consumeServerResponse();
+    final _currentServerResponse = consumeInt();
     switch (_currentServerResponse) {
       case ServerResponse.Tiles:
         _parseTiles();
@@ -403,13 +403,13 @@ Tile _consumeTile() {
   return tiles[consumeInt()];
 }
 
-ServerResponse _consumeServerResponse() {
-  final responseInt = consumeInt();
-  if (responseInt >= serverResponsesLength) {
-    throw Exception('$responseInt is not a valid server response');
-  }
-  return serverResponses[responseInt];
-}
+// ServerResponse _consumeServerResponse() {
+//   final responseInt = consumeInt();
+//   if (responseInt >= serverResponsesLength) {
+//     throw Exception('$responseInt is not a valid server response');
+//   }
+//   return serverResponses[responseInt];
+// }
 
 String _consumeString() {
   _consumeSpace();

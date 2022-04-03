@@ -99,6 +99,8 @@
 [ ] AI Should avoid colliders in front of them.      
 [ ] Fix Slash Sword audio out of sink    
 [ ] FIX Respawn Screen showing red screen of death    
+[ ] Convert ServerResponse from enum to constants    
+[ ] Convert ClientRequest from enum to constants    
 [x] FIX Highlight Pot at mouse
 [x] Pot Shadow
 [x] Pot Destroyed Animation    

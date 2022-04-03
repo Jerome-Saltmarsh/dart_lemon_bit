@@ -31,14 +31,14 @@ class _ByteStreamParser {
 
   var _index = 0;
   late List<int> values;
-  final Map<int, Uint8List> _byteStreamPool = {};
+  final _byteStreamPool = <int, Uint8List>{};
 
   void parse(List<int> values){
     _index = 0;
     bufferSize.value = values.length;
     this.values = values;
     while (true) {
-      final response = _nextServerResponse();
+      final response = _nextByte();
       switch(response){
         case ServerResponse.Zombies:
           _parseZombies();
@@ -267,10 +267,6 @@ class _ByteStreamParser {
 
   double _nextPercentage(){
     return _nextByte() / 100.0;
-  }
-
-  ServerResponse _nextServerResponse(){
-    return serverResponses[_nextByte()];
   }
 
   int _nextByte(){

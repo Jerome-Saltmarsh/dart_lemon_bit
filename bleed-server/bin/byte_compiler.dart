@@ -15,14 +15,6 @@ import 'common/constants.dart';
 
 final byteCompiler = _ByteCompiler();
 
-final _serverResponsePlayerIndex = ServerResponse.Player.index;
-final _serverResponseZombiesIndex = ServerResponse.Zombies.index;
-final _serverResponsePlayersIndex = ServerResponse.Players.index;
-final _serverResponseEndIndex = ServerResponse.End.index;
-final _serverResponseGameEventsIndex = ServerResponse.Game_Events.index;
-final _serverResponseProjectilesIndex = ServerResponse.Projectiles.index;
-final _serverResponseGameTimeIndex = ServerResponse.Game_Time.index;
-
 class _ByteCompiler {
   var _index = 0;
   final _buffer = Uint8List(100000); // 100kb
@@ -43,7 +35,7 @@ class _ByteCompiler {
   }
 
   List<int> writeToSendBuffer() {
-    writeByte(_serverResponseEndIndex);
+    writeByte(ServerResponse.End);
     final sendBuffer = _getSendBuffer();
     for (var i = 0; i < _index; i++) {
       sendBuffer[i] = _buffer[i];
@@ -58,7 +50,7 @@ class _ByteCompiler {
     final game = player.game;
     writePlayers(player);
 
-    writeByte(_serverResponsePlayerIndex);
+    writeByte(ServerResponse.Player);
     writeBigInt(player.x);
     writeBigInt(player.y);
     writeBigInt(player.health);
@@ -95,7 +87,7 @@ class _ByteCompiler {
   }
 
   void writeDynamicObjects(Player player) {
-     writeByte(ServerResponse.Dynamic_Objects.index);
+     writeByte(ServerResponse.Dynamic_Objects);
      final dynamicObjects = player.game.dynamicObjects;
      for (final dynamicObject in dynamicObjects) {
        if (dynamicObject.health <= 0) continue;
@@ -114,7 +106,7 @@ class _ByteCompiler {
   void writePlayerEvents(Player player){
     final events = player.events;
     if (events.isEmpty) return;
-    writeByte(ServerResponse.Player_Events.index);
+    writeByte(ServerResponse.Player_Events);
     writeByte(events.length);
     for (var i = 0; i < events.length; i++) {
       writeByte(events[i].index);
@@ -127,7 +119,7 @@ class _ByteCompiler {
   }
 
   void writePaths(Game game) {
-    writeByte(ServerResponse.Paths.index);
+    writeByte(ServerResponse.Paths);
     final zombies = game.zombies;
     for (final zombie in zombies) {
       if (!zombie.active) continue;
@@ -145,7 +137,7 @@ class _ByteCompiler {
   }
 
   void writeItems(Player player){
-    writeByte(ServerResponse.Items.index);
+    writeByte(ServerResponse.Items);
     final items = player.game.items;
     for(final item in items){
       if (item.inactive) continue;
@@ -161,7 +153,7 @@ class _ByteCompiler {
   }
 
   void writePlayerZombies(Player player) {
-    writeByte(_serverResponseZombiesIndex);
+    writeByte(ServerResponse.Zombies);
     final zombies = player.game.zombies;
     final length = zombies.length;
     final top = player.screenTop;
@@ -203,7 +195,7 @@ class _ByteCompiler {
 
   void writeGameEvents(Player player){
     final gameEvents = player.game.gameEvents;
-    writeByte(_serverResponseGameEventsIndex);
+    writeByte(ServerResponse.Game_Events);
     final gameEventIds = player.gameEventIds;
     for (final gameEvent in gameEvents) {
       if (gameEvent.frameDuration <= 0) continue;
@@ -219,13 +211,13 @@ class _ByteCompiler {
   }
 
   void writeProjectiles(List<Projectile> projectiles){
-    writeByte(_serverResponseProjectilesIndex);
+    writeByte(ServerResponse.Projectiles);
     writeTotalActive(projectiles);
     projectiles.forEach(writeProjectile);
   }
 
   void writeGameTime(Game game){
-    writeByte(_serverResponseGameTimeIndex);
+    writeByte(ServerResponse.Game_Time);
     final totalSeconds = game.getTime();
     final totalMinutes = totalSeconds ~/ 60;
     final hours = totalMinutes ~/ 60;
@@ -253,7 +245,7 @@ class _ByteCompiler {
   }
 
   void writePlayers(Player player){
-    writeByte(_serverResponsePlayersIndex);
+    writeByte(ServerResponse.Players);
     final players = player.game.players;
     for (final otherPlayer in players) {
       if (otherPlayer.dead) continue;
@@ -277,10 +269,10 @@ class _ByteCompiler {
   void writeAttackTarget(Player player){
     final aimTarget = player.aimTarget;
     if (aimTarget == null){
-      writeByte(ServerResponse.Player_Attack_Target_None.index);
+      writeByte(ServerResponse.Player_Attack_Target_None);
       return;
     }
-    writeByte(ServerResponse.Player_Attack_Target.index);
+    writeByte(ServerResponse.Player_Attack_Target);
     writeBigInt(aimTarget.x);
     writeBigInt(aimTarget.y);
   }
@@ -307,7 +299,7 @@ class _ByteCompiler {
 
   void writeNpcs(Player player){
     final npcs = player.game.npcs;
-    writeByte(ServerResponse.Npcs.index);
+    writeByte(ServerResponse.Npcs);
     writeTotalActive(npcs);
     for(final npc in npcs) {
       writeNpc(player, npc);

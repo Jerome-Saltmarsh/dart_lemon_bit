@@ -33,7 +33,7 @@ import 'settings.dart';
 import 'utilities.dart';
 
 const _space = " ";
-final _errorIndex = ServerResponse.Error.index;
+final _errorIndex = ServerResponse.Error;
 final _buffer = StringBuffer();
 final _clientRequestsLength = clientRequests.length;
 
@@ -125,12 +125,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       compileAndSendPlayerGame(player);
       write(game.compiledTiles);
       write(game.compiledEnvironmentObjects);
-      write(ServerResponse.Scene_Shade_Max.index);
+      write(ServerResponse.Scene_Shade_Max);
       write(game.shadeMax);
-      write(ServerResponse.Game_Status.index);
+      write(ServerResponse.Game_Status);
       write(game.status.index);
       compilePlayersRemaining(_buffer, 0);
-      write('${ServerResponse.Game_Joined.index} ${player.id} ${game.id} ${player.team} ${player.x.toInt()} ${player.y.toInt()}');
+      write('${ServerResponse.Game_Joined} ${player.id} ${game.id} ${player.team} ${player.x.toInt()} ${player.y.toInt()}');
       sendAndClearBuffer();
     }
 
@@ -257,7 +257,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             player.sceneChanged = false;
             _buffer.clear();
             _buffer.write(
-                '${ServerResponse.Scene_Changed.index} ${player.x.toInt()} ${player.y.toInt()} ');
+                '${ServerResponse.Scene_Changed} ${player.x.toInt()} ${player.y.toInt()} ');
             _buffer.write(game.compiledTiles);
             _buffer.write(game.compiledEnvironmentObjects);
             reply(_buffer.toString());
@@ -490,7 +490,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Ping:
-          reply(ServerResponse.Pong.index.toString());
+          reply(ServerResponse.Pong.toString());
           break;
 
         case ClientRequest.Character_Load:
@@ -897,7 +897,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Version:
-          reply('${ServerResponse.Version.index} $version');
+          reply('${ServerResponse.Version} $version');
           break;
 
         case ClientRequest.SkipHour:

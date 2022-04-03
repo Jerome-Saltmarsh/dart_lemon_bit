@@ -13,12 +13,12 @@ import 'common/enums/ObjectType.dart';
 import 'games/Moba.dart';
 import 'games/Royal.dart';
 
-final _indexNpcMessage = ServerResponse.NpcMessage.index;
+final _indexNpcMessage = ServerResponse.NpcMessage;
 const _space = ' ';
 const _semiColon = '; ';
 
 void compileCrates(StringBuffer buffer, List<Crate> crates) {
-  _write(buffer, ServerResponse.Crates.index);
+  _write(buffer, ServerResponse.Crates);
   _write(buffer, crates.length);
   for (Crate crate in crates) {
     _writeVector2Int(buffer, crate);
@@ -26,7 +26,7 @@ void compileCrates(StringBuffer buffer, List<Crate> crates) {
 }
 
 void compileItems(StringBuffer buffer, List<Item> items) {
-  _write(buffer, ServerResponse.Items.index);
+  _write(buffer, ServerResponse.Items);
   _write(buffer, items.length);
   for (final item in items) {
     _write(buffer, item.type.index);
@@ -35,36 +35,36 @@ void compileItems(StringBuffer buffer, List<Item> items) {
 }
 
 void compileTeamLivesRemaining(StringBuffer buffer, GameMoba moba) {
-  _write(buffer, ServerResponse.Team_Lives_Remaining.index);
+  _write(buffer, ServerResponse.Team_Lives_Remaining);
   _write(buffer, moba.teamLivesWest);
   _write(buffer, moba.teamLivesEast);
 }
 
 void compileGameStatus(StringBuffer buffer, GameStatus gameStatus) {
-  _write(buffer, ServerResponse.Game_Status.index);
+  _write(buffer, ServerResponse.Game_Status);
   _write(buffer, gameStatus.index);
 }
 
 void compileRoyal(StringBuffer buffer, GameRoyal royal){
-  _write(buffer, ServerResponse.Game_Royal.index);
+  _write(buffer, ServerResponse.Game_Royal);
   _write(buffer, royal.boundaryCenter.x.toInt());
   _write(buffer, royal.boundaryCenter.y.toInt());
   _write(buffer, royal.boundaryRadius.toInt());
 }
 
 void compileCountDownFramesRemaining(StringBuffer buffer, Game game) {
-  _write(buffer, ServerResponse.Lobby_CountDown.index);
+  _write(buffer, ServerResponse.Lobby_CountDown);
   _write(buffer, game.countDownFramesRemaining);
 }
 
 void compileGameMeta(StringBuffer buffer, Game game) {
-  _write(buffer, ServerResponse.Game_Meta.index);
+  _write(buffer, ServerResponse.Game_Meta);
   _write(buffer, game.teamSize);
   _write(buffer, game.numberOfTeams);
 }
 
 void compileLobby(StringBuffer buffer, Game game) {
-  _write(buffer, ServerResponse.Lobby.index);
+  _write(buffer, ServerResponse.Lobby);
   _write(buffer, game.players.length);
   for (Player player in game.players) {
     _write(buffer, player.name);
@@ -74,7 +74,7 @@ void compileLobby(StringBuffer buffer, Game game) {
 
 String compileEnvironmentObjects(List<EnvironmentObject> environmentObjects) {
   final buffer = StringBuffer();
-  _write(buffer, ServerResponse.EnvironmentObjects.index);
+  _write(buffer, ServerResponse.EnvironmentObjects);
   for (final environmentObject in environmentObjects) {
     if (environmentObject.type == ObjectType.Flag) continue;
     _writeInt(buffer, environmentObject.x);
@@ -88,7 +88,7 @@ String compileEnvironmentObjects(List<EnvironmentObject> environmentObjects) {
 
 String compileTiles(List<List<Tile>> tiles) {
   final buffer = StringBuffer();
-  buffer.write(ServerResponse.Tiles.index);
+  buffer.write(ServerResponse.Tiles);
   buffer.write(_space);
   buffer.write(tiles.length);
   buffer.write(_space);
@@ -105,23 +105,23 @@ String compileTiles(List<List<Tile>> tiles) {
 }
 
 void compilePlayerWeapons(StringBuffer buffer, Player player) {
-  _write(buffer, ServerResponse.Weapons.index);
+  _write(buffer, ServerResponse.Weapons);
 }
 
 
 void compilePlayerOrbs(StringBuffer buffer, Player player) {
-  _write(buffer, ServerResponse.Player_Orbs.index);
+  _write(buffer, ServerResponse.Player_Orbs);
   _write(buffer, player.orbs.ruby);
   _write(buffer, player.orbs.topaz);
   _write(buffer, player.orbs.emerald);
 }
 
 void compilePlayerWeaponValues(StringBuffer buffer, Player player){
-  _write(buffer, ServerResponse.Player_Weapon.index);
+  _write(buffer, ServerResponse.Player_Weapon);
 }
 
 void compileScore(StringBuffer buffer, List<Player> players) {
-  _write(buffer, ServerResponse.Score.index);
+  _write(buffer, ServerResponse.Score);
   for (final player in players) {
     _write(buffer, player.name);
     _write(buffer, player.pointsRecord);
@@ -154,12 +154,12 @@ void _write(StringBuffer buffer, dynamic value) {
 }
 
 void compilePlayersRemaining(StringBuffer buffer, int remaining) {
-  _write(buffer, ServerResponse.Waiting_For_More_Players.index);
+  _write(buffer, ServerResponse.Waiting_For_More_Players);
   _write(buffer, remaining);
 }
 
 void compileCubePlayers(StringBuffer buffer, List<CubePlayer> cubePlayers) {
-  _write(buffer, ServerResponse.Cube_Players.index);
+  _write(buffer, ServerResponse.Cube_Players);
   _write(buffer, cubePlayers.length);
   for (CubePlayer player in cubePlayers) {
     writeVector3(buffer, player.position);

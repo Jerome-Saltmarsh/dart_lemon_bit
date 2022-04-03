@@ -59,7 +59,7 @@ class GameMoba extends Game {
           y: creepSpawn1.y,
           health: 100,
           objectives: copy(creepWestObjectives),
-          team: teams.west,
+          team: Teams.west,
           damage: 5
       );
 
@@ -68,7 +68,7 @@ class GameMoba extends Game {
         y: creepSpawnEast.y,
         health: 100,
         objectives: copy(creepEastObjectives),
-        team: teams.east,
+        team: Teams.east,
         damage: 5
       );
     }
@@ -79,7 +79,7 @@ class GameMoba extends Game {
     if (!inProgress) return;
     setCharacterStateDead(character);
     dispatch(GameEventType.Objective_Reached, character.x, character.y);
-    if (character.team == teams.west) {
+    if (character.team == Teams.west) {
       teamLivesEast--;
       if (teamLivesEast <= 0) {
         status = GameStatus.Finished;
@@ -96,13 +96,13 @@ class GameMoba extends Game {
     int totalGood = 0;
     int totalBad = 0;
     for (Player player in players) {
-      if (player.team == teams.west) {
+      if (player.team == Teams.west) {
         totalGood++;
       } else {
         totalBad++;
       }
     }
-    return totalGood > totalBad ? teams.east : teams.west;
+    return totalGood > totalBad ? Teams.east : Teams.west;
   }
 
   @override
@@ -111,7 +111,7 @@ class GameMoba extends Game {
   @override
   void onGameStarted() {
     for (Player player in players) {
-      if (player.team == teams.west) {
+      if (player.team == Teams.west) {
         player.x = teamSpawnWest.x += giveOrTake(5);
         player.y = teamSpawnWest.y += giveOrTake(5);
       } else {

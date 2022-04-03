@@ -14,9 +14,6 @@ class Town extends Game {
   late InteractableNpc guard1;
   late InteractableNpc guard2;
 
-  final int _maxZombies = 1;
-  final int _framesPerZombieSpawn = 5;
-
   Town() : super(engine.scenes.town) {
     npcDavis = InteractableNpc(
         name: "Davis",
@@ -25,7 +22,7 @@ class Town extends Game {
         y: 1650,
         health: 100,
         weapon: SlotType.Empty,
-        team: teams.west,
+        team: Teams.west,
     );
     npcs.add(npcDavis);
 
@@ -36,7 +33,7 @@ class Town extends Game {
         y: 1950,
         health: 100,
         weapon: SlotType.Empty,
-        team: teams.west,
+        team: Teams.west,
     );
     npcs.add(npcSmith);
 
@@ -47,7 +44,7 @@ class Town extends Game {
         y: 2000,
         health: 100,
         weapon: SlotType.Bow_Wooden,
-        team: teams.west,
+        team: Teams.west,
     );
     npcs.add(guard1);
 
@@ -58,7 +55,7 @@ class Town extends Game {
         y: 1970,
         health: 100,
         weapon: SlotType.Bow_Wooden,
-        team: teams.west,
+        team: Teams.west,
     );
     npcs.add(guard2);
   }
@@ -90,8 +87,10 @@ class Town extends Game {
 
   @override
   void update() {
-    if (engine.frame % _framesPerZombieSpawn != 0) return;
-    if (zombieCount >= _maxZombies) return;
+    const framesPerZombieSpawn = 5;
+    const maxZombies = 1;
+    if (engine.frame % framesPerZombieSpawn != 0) return;
+    if (zombieCount >= maxZombies) return;
     spawnRandomZombie(
         health: 5,
         experience: 1,
