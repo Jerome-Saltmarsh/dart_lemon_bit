@@ -22,6 +22,7 @@ import 'state/game.dart';
 final byteStreamParser = _ByteStreamParser();
 final byteLength = Watch(0);
 final bufferSize = Watch(0);
+final framesSinceUpdateReceived = Watch(0);
 
 final _player = modules.game.state.player;
 final _slots = _player.slots;
@@ -34,10 +35,9 @@ class _ByteStreamParser {
   var _index = 0;
   var values = <int>[];
   final _byteStreamPool = <int, Uint8List>{};
-  var framesSinceUpdateReceived = 3;
 
   void parse(List<int> values) {
-    framesSinceUpdateReceived = 0;
+    framesSinceUpdateReceived.value = 0;
     _index = 0;
     bufferSize.value = values.length;
     this.values = values;
@@ -104,7 +104,7 @@ class _ByteStreamParser {
           _player.x = _nextDouble();
           _player.y = _nextDouble();
           _player.velocity.x = _player.x - _player.previousPosition.x;
-          _player.velocity.y = _player.x - _player.previousPosition.y;
+          _player.velocity.y = _player.y - _player.previousPosition.y;
           _player.health.value = _nextDouble();
           _player.maxHealth = _nextDouble();
           _player.magic.value = _nextDouble();

@@ -796,7 +796,13 @@ class GameBuild {
 
   Widget mouseRowColumn(){
     return Refresh((){
-      return text("Mouse row:$mouseRow, column $mouseColumn");
+      return text("Mouse Row:$mouseRow, Column: $mouseColumn");
+    });
+  }
+
+  Widget buildFramesSinceUpdate(){
+    return WatchBuilder(framesSinceUpdateReceived, (int frames){
+      return text("Frames Since Update: $frames");
     });
   }
 
@@ -851,6 +857,13 @@ class GameBuild {
     });
   }
 
+  Widget get playerVelocity {
+    final vel = state.player.velocity;
+    return Refresh((){
+      return text("Player Velocity: x: ${vel.x.toStringAsFixed(4)}, y: ${vel.y.toStringAsFixed(4)}");
+    });
+  }
+
   Widget get byteCountWatcher {
     return WatchBuilder(byteLength, (int count){
         return text("Bytes: $count");
@@ -867,7 +880,7 @@ class GameBuild {
     return text(version);
   }
 
-  Widget frameSmoothing(){
+  Widget buildToggleFrameSmoothing(){
     return WatchBuilder(state.frameSmoothing, (bool frameSmoothing){
        return text("Frame Smoothing: $frameSmoothing", onPressed: (){
          state.frameSmoothing.value = !state.frameSmoothing.value;
@@ -930,6 +943,9 @@ class GameBuild {
           playerPosition,
           playerId,
           cameraZoom,
+          buildFramesSinceUpdate(),
+          buildToggleFrameSmoothing(),
+          playerVelocity,
       ],
     );
   }

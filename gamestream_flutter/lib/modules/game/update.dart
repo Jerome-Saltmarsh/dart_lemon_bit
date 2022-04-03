@@ -24,23 +24,25 @@ class GameUpdate {
 
   void applyFrameSmoothing() {
     if (!state.frameSmoothing.value) return;
-    if (byteStreamParser.framesSinceUpdateReceived <= 1) return;
-    if (byteStreamParser.framesSinceUpdateReceived > 10) return;
-    for (final character in _players) {
+    if (framesSinceUpdateReceived.value != 1) return;
+    final total = game.totalPlayers.value;
+    for (var i = 0; i < total; i++) {
+      final character = game.players[i];
       if (!character.running) continue;
       final angle = character.angle;
-      const amount = 0.5;
+      const amount = 2.5;
       character.x += adjacent(angle, amount);
       character.y += opposite(angle, amount);
     }
+    _player.x += _player.velocity.x * 0.5;
+    _player.y += _player.velocity.y * 0.5;
   }
 
   void update() {
     // TODO remove this check
     if (_status.value == GameStatus.Finished) return;
-
     applyFrameSmoothing();
-    byteStreamParser.framesSinceUpdateReceived++;
+    framesSinceUpdateReceived.value++;
     readPlayerInput();
     isometric.update.call();
     if (!state.panningCamera && _player.alive.value) {
