@@ -1,6 +1,5 @@
 import 'package:gamestream_flutter/classes/Character.dart';
-import 'package:lemon_math/adjacent.dart';
-import 'package:lemon_math/opposite.dart';
+import 'package:lemon_watch/watch.dart';
 import 'package:bleed_common/GameStatus.dart';
 import 'package:bleed_common/enums/Direction.dart';
 import 'package:gamestream_flutter/bytestream_parser.dart';
@@ -16,6 +15,7 @@ final _player = modules.game.state.player;
 final _controller = modules.game.state.characterController;
 final _status = core.state.status;
 final _menuVisible = modules.hud.menuVisible;
+final totalUpdates = Watch(0);
 
 class GameUpdate {
 
@@ -36,27 +36,31 @@ class GameUpdate {
 
   void applyFrameSmoothing() {
     if (!state.frameSmoothing.value) return;
-    if (framesSinceUpdateReceived.value != 1) return;
-    state.framesSmoothed.value++;
-    final total = game.totalPlayers.value;
-    for (var i = 0; i < total; i++) {
-      final character = game.players[i];
-      if (!character.running) continue;
-      final angle = character.angle;
-      const amount = 2.5;
-      if (character.x == _player.x && character.y == _player.y) {
-        // character.x += adjacent(angle, amount);
-        // character.y += opposite(angle, amount);
-        _player.x += _player.velocity.x * 0.5;
-        _player.y += _player.velocity.y * 0.5;
-        character.x = _player.x;
-        character.y = _player.y;
-      }
-    }
+    
+    // final previousPlayerScreen = worldToScreenX(x)
+    
+    // if (framesSinceUpdateReceived.value != 1) return;
+    // state.framesSmoothed.value++;
+    // final total = game.totalPlayers.value;
+    // for (var i = 0; i < total; i++) {
+    //   final character = game.players[i];
+    //   if (!character.running) continue;
+    //   final angle = character.angle;
+    //   const amount = 2.5;
+    //   if (character.x == _player.x && character.y == _player.y) {
+    //     // character.x += adjacent(angle, amount);
+    //     // character.y += opposite(angle, amount);
+    //     _player.x += _player.velocity.x * 0.5;
+    //     _player.y += _player.velocity.y * 0.5;
+    //     character.x = _player.x;
+    //     character.y = _player.y;
+    //   }
+    // }
   }
 
   void update() {
     // TODO remove this check
+    totalUpdates.value++;
     if (_status.value == GameStatus.Finished) return;
     applyFrameSmoothing();
     framesSinceUpdateReceived.value++;
@@ -71,15 +75,32 @@ class GameUpdate {
     _menuVisible.value =
         mousePosition.y < 200
             &&
-            mousePosition.x > engine.screen.width - 300
+            mousePosition.x > engine.screen.width - 500
     ;
 
     sendRequestUpdatePlayer();
   }
 
+  var previousPlayerScreenX = 0.0;
+  var previousPlayerScreenY = 0.0;
 
   void cameraFollowPlayer() {
-    engine.cameraFollow(_player.x, _player.y, engine.cameraFollowSpeed);
+    const cameraFollowSpeed = 0.005;
+    // engine.cameraFollow(_player.x, _player.y, cameraFollowSpeed);
+    // if (!state.frameSmoothing.value) return;
+
+    // engine.cameraCenter(_player.x, _player.y);
+
+    // final currentPlayerScreenX = worldToScreenX(_player.x);
+    // final currentPlayerScreenY = worldToScreenY(_player.y);
+    // final diffPlayerScreenX = currentPlayerScreenX - previousPlayerScreenX;
+    // final diffPlayerScreenY = currentPlayerScreenY - previousPlayerScreenY;
+    // final adjustmentX = (diffPlayerScreenX * 0.5) / engine.zoom;
+    // final adjustmentY = (diffPlayerScreenY * 0.5) / engine.zoom;
+    // engine.camera.x += adjustmentX;
+    // engine.camera.y += adjustmentY;
+    // previousPlayerScreenX = worldToScreenX(_player.x);
+    // previousPlayerScreenY = worldToScreenY(_player.y);
   }
 
   void readPlayerInput() {

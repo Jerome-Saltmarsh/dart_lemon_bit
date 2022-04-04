@@ -51,6 +51,7 @@ class _ByteCompiler {
     writePlayers(player);
 
     writeByte(ServerResponse.Player);
+    writeByte(player.state);
     writeBigInt(player.x);
     writeBigInt(player.y);
     writeBigInt(player.health);
@@ -71,6 +72,8 @@ class _ByteCompiler {
     writeBigInt(orbs.ruby); // 2
     writeBool(player.alive); // 1
     writeBool(player.storeVisible); // 1
+
+    writeBigInt(player.game.duration);
 
     writeAttackTarget(player);
     writeProjectiles(game.projectiles);

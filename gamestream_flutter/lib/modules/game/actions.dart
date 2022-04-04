@@ -14,6 +14,7 @@ import 'package:lemon_math/randomItem.dart';
 import 'state.dart';
 
 final _bulletHoles = game.bulletHoles;
+final _player = modules.game.state.player;
 
 class GameActions {
 
@@ -37,9 +38,23 @@ class GameActions {
     setCharacterAction(CharacterAction.Run);
   }
 
+
   void cameraCenterPlayer(){
-    final player = modules.game.state.player;
-    engine.cameraCenter(player.x, player.y);
+    // final diffX = previousX - _player.x;
+    // final diffY = previousY - _player.y;
+    // final renderX = (_player.x + previousX) * 0.5;
+    // final renderY = (_player.y + previousY) * 0.5;
+    // engine.cameraCenter(renderX, renderY);
+    // previousX = renderX;
+    // previousY = renderY;
+    // const ratio = 0.05;
+    // final diffX = previousX - _player.x;
+    // final diffY = previousY - _player.y;
+    // final renderX = previousX + (diffX * ratio);
+    // final renderY = previousY + (diffY * ratio);
+    // engine.cameraCenter(renderX, renderY);
+    // previousX = renderX;
+    // previousY = renderY;
   }
 
   void emitPixelExplosion(double x, double y, {int amount = 10}) {
@@ -167,6 +182,10 @@ class GameActions {
   void toggleDebugPanel(){
     print("game.actions.toggleDebugPanel()");
     state.debugPanelVisible.value = !state.debugPanelVisible.value;
+  }
+
+  void toggleSmoothing(){
+    state.frameSmoothing.value = !state.frameSmoothing.value;
   }
 
   /// valid between 1 and 6 inclusive

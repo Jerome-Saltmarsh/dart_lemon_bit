@@ -99,7 +99,7 @@
 [ ] AI Should avoid colliders in front of them.      
 [ ] Fix Slash Sword audio out of sink    
 [ ] FIX Respawn Screen showing red screen of death    
-[ ] FIX Player Shake    
+[ ] FIX Player Shake (MILESTONE)    
 [x] Convert ServerResponse from enum to constants    
 [x] Convert ClientRequest from enum to constants    
 [x] FIX Highlight Pot at mouse

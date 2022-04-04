@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:bleed_common/CharacterState.dart';
 import 'package:bleed_common/DynamicObjectType.dart';
 import 'package:bleed_common/GameEventType.dart';
 import 'package:bleed_common/ItemType.dart';
@@ -22,7 +23,9 @@ import 'state/game.dart';
 final byteStreamParser = _ByteStreamParser();
 final byteLength = Watch(0);
 final bufferSize = Watch(0);
+final totalEvents = Watch(0);
 final framesSinceUpdateReceived = Watch(0);
+
 
 final _player = modules.game.state.player;
 final _slots = _player.slots;
@@ -37,6 +40,7 @@ class _ByteStreamParser {
   final _byteStreamPool = <int, Uint8List>{};
 
   void parse(List<int> values) {
+    totalEvents.value++;
     framesSinceUpdateReceived.value = 0;
     _index = 0;
     bufferSize.value = values.length;
@@ -99,12 +103,44 @@ class _ByteStreamParser {
           _minutes.value = _nextByte();
           break;
         case ServerResponse.Player:
-          _player.previousPosition.x = _player.x;
-          _player.previousPosition.y = _player.y;
-          _player.x = _nextDouble();
-          _player.y = _nextDouble();
-          _player.velocity.x = _player.x - _player.previousPosition.x;
-          _player.velocity.y = _player.y - _player.previousPosition.y;
+          final previousX = _player.x;
+          final previousY = _player.y;
+          // _player.x = _nextDouble();
+          // _player.y = _nextDouble();
+          final state = _nextByte();
+          final x = _nextDouble();
+          final y = _nextDouble();
+          final velocityX = x - previousX;
+          final velocityY = y - previousY;
+
+          final velX = (_player.velocity.x + _player.velocity2.x + velocityX) * 0.3333;
+          final velY = (_player.velocity.y + _player.velocity2.y + velocityY) * 0.33333;
+
+          if (state == stateRunning) {
+            _player.x += velX;
+            _player.y += velY;
+            _player.velocity2.x = _player.velocity.x;
+            _player.velocity2.y = _player.velocity.y;
+            _player.velocity.x = velX;
+            _player.velocity.y = velY;
+          } else {
+            _player.x = x;
+            _player.y = y;
+            _player.velocity.x = 0;
+            _player.velocity.y = 0;
+            _player.velocity2.x = 0;
+            _player.velocity2.y = 0;
+          }
+
+          if (modules.game.state.frameSmoothing.value){
+            const cameraFollowSpeed = 0.006;
+            engine.cameraFollow(_player.x, _player.y, cameraFollowSpeed);
+          } else {
+            engine.cameraCenter(_player.x, _player.y);
+          }
+
+
+
           _player.health.value = _nextDouble();
           _player.maxHealth = _nextDouble();
           _player.magic.value = _nextDouble();
@@ -123,6 +159,7 @@ class _ByteStreamParser {
           _orbs.ruby.value = _nextInt();
           _player.alive.value = readBool();
           _player.storeVisible.value = readBool();
+          _player.serverFrame.value = _nextInt();
           break;
         case ServerResponse.End:
           byteLength.value = _index;

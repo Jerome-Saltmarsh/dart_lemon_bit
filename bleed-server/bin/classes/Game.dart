@@ -296,7 +296,6 @@ const hoursPerDay = 24;
 const secondsPerDay = secondsPerMinute * minutesPerHour * hoursPerDay;
 const secondsPerFrame = 5;
 const secondsPerHour = secondsPerMinute * minutesPerHour;
-const characterFramesChange = 4;
 final characterRadius = settings.radius.character;
 
 extension GameFunctions on Game {
@@ -1419,6 +1418,7 @@ extension GameFunctions on Game {
   }
 
   void _updateCharacterFrames() {
+    const characterFramesChange = 4;
     if (engine.frame % characterFramesChange != 0) return;
     updateFrames(players);
     updateFrames(zombies);

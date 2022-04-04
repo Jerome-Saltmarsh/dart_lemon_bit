@@ -103,8 +103,9 @@ class Slots {
 
 class _Player {
   int score = 0;
-  final previousPosition = Vector2(0, 0);
   final velocity = Vector2(0, 0);
+  final velocity2 = Vector2(0, 0);
+  final xv = Watch(0.0);
   double x = 0;
   double y = 0;
   int id = -1;
@@ -123,6 +124,7 @@ class _Player {
   final Watch<double> health = Watch(0.0);
   final Watch<int> experience = Watch(0);
   final Watch<int> level = Watch(1);
+  final Watch<int> serverFrame = Watch(1);
   final Watch<int> skillPoints = Watch(1);
   final Watch<int> nextLevelExperience = Watch(1);
   final Watch<double> experiencePercentage = Watch(0);

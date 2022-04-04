@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/game/enums.dart';
+import 'package:gamestream_flutter/modules/game/update.dart';
 import 'package:gamestream_flutter/modules/isometric/utilities.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/module.dart';
@@ -29,6 +30,8 @@ import 'package:lemon_watch/watch_builder.dart';
 import 'state.dart';
 
 const empty = SizedBox();
+
+final _player = modules.game.state.player;
 
 class GameBuild {
 
@@ -216,6 +219,8 @@ class GameBuild {
 
     final menu = Row(
       children: [
+        buildButtonToggleCameraMode(),
+        width8,
         buildButtonSkipTrack(),
         width8,
         buildToggleEnabledSound(),
@@ -812,6 +817,24 @@ class GameBuild {
     });
   }
 
+  Widget buildTotalEvents(){
+    return WatchBuilder(totalEvents, (int frames){
+      return text("Events: $frames");
+    });
+  }
+
+  Widget buildPlayerXV(){
+    return WatchBuilder(_player.serverFrame, (int frames){
+      return text("Server Frame: $frames");
+    });
+  }
+
+  Widget buildTotalFrames(){
+    return WatchBuilder(totalUpdates, (int frames){
+      return text("Frames: $frames");
+    });
+  }
+
   Widget get buildTotalParticles {
     return Refresh((){
       return text("Particles: ${isometric.state.particles.length}");
@@ -923,6 +946,12 @@ class GameBuild {
     });
   }
 
+  Widget buildButtonToggleCameraMode(){
+    return WatchBuilder(modules.game.state.frameSmoothing, (bool smooth){
+       return button(smooth ? 'Camera Locked' : "Camera Free", modules.game.actions.toggleSmoothing);
+    });
+  }
+
   Widget buildButtonSkipTrack(){
     return button("Next Song", audio.nextSong);
   }
@@ -959,6 +988,9 @@ class GameBuild {
           buildFramesSmoothed(),
           playerVelocity,
           playerScreen,
+          buildTotalEvents(),
+          buildTotalFrames(),
+          buildPlayerXV(),
       ],
     );
   }

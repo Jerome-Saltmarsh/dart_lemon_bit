@@ -76,7 +76,6 @@ class Settings {
   final _ReloadDuration reloadDuration = _ReloadDuration();
   final _PointsEarned pointsEarned = _PointsEarned();
   final double zombieSpeed = 2;
-  final double playerSpeed = 4.25;
   final double machineGunBulletSpeed = 18;
   final int crateDeactiveDuration = 1000;
   final double knifeHitAcceleration = 3;

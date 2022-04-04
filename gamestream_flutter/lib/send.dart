@@ -70,7 +70,7 @@ void sendRequestAttack() {
 final _characterController = modules.game.state.characterController;
 final _characterControllerAction = _characterController.action;
 
-void sendRequestUpdatePlayer() {
+Future sendRequestUpdatePlayer() async {
   final screen = engine.screen;
 
   _updateBuffer[0] = _gameUpdateIndex;

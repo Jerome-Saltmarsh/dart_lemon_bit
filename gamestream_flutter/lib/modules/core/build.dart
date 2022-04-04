@@ -29,7 +29,7 @@ class CoreBuild {
       backgroundColor: colours.black,
       buildLoadingScreen: buildLoadingScreen,
       themeData: themes.jetbrains,
-      framesPerSecond: 45,
+      framesPerSecond: 30,
     );
   }
 

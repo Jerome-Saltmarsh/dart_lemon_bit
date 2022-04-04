@@ -19,16 +19,12 @@ import 'language.dart';
 final engine = _Engine();
 
 class _Engine {
-  // constants
   final framesPerSecond = 30;
   final framesPerRegen = 30 * 10;
   final framesPerUpdateAIPath = 30;
-  // immutables
-  // final Map<String, Player> playerMap = {};
-  final List<Game> games = [];
+  final games = <Game>[];
   final scenes = _Scenes();
   late final world;
-  // variables
   var frame = 0;
 
   Future init() async {

@@ -13,7 +13,6 @@ import '../common/SlotTypeCategory.dart';
 import '../constants/no_squad.dart';
 import '../engine.dart';
 import '../functions/generateName.dart';
-import '../settings.dart';
 import '../utilities.dart';
 import 'Ability.dart';
 import 'Character.dart';
@@ -129,7 +128,7 @@ class Player extends Character {
             x: x,
             y: y,
             health: health,
-            speed: settings.playerSpeed,
+            speed: 5.0,
             team: team,
             ai: ai,
             weapon: weapon,
