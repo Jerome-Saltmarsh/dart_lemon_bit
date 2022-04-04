@@ -25,6 +25,9 @@ final byteLength = Watch(0);
 final bufferSize = Watch(0);
 final totalEvents = Watch(0);
 final framesSinceUpdateReceived = Watch(0);
+final msSinceLastUpdate = Watch(0);
+final averageUpdate = Watch(0.0);
+var durationTotal = 0;
 
 
 final _player = modules.game.state.player;
@@ -34,13 +37,24 @@ final _hours = modules.isometric.state.hours;
 final _minutes = modules.isometric.state.minutes;
 
 
+var time = DateTime.now();
+
 class _ByteStreamParser {
   var _index = 0;
   var values = <int>[];
   final _byteStreamPool = <int, Uint8List>{};
 
   void parse(List<int> values) {
+    final now = DateTime.now();
+    final duration = now.difference(time);
+    time = now;
+    msSinceLastUpdate.value = duration.inMilliseconds;
     totalEvents.value++;
+    durationTotal += duration.inMilliseconds;
+    averageUpdate.value = durationTotal / totalEvents.value;
+
+    final differenceFromAverage = duration.inMilliseconds / averageUpdate.value;
+
     framesSinceUpdateReceived.value = 0;
     _index = 0;
     bufferSize.value = values.length;
@@ -105,24 +119,20 @@ class _ByteStreamParser {
         case ServerResponse.Player:
           final previousX = _player.x;
           final previousY = _player.y;
-          // _player.x = _nextDouble();
-          // _player.y = _nextDouble();
           final state = _nextByte();
           final x = _nextDouble();
           final y = _nextDouble();
           final velocityX = x - previousX;
           final velocityY = y - previousY;
 
-          final velX = (_player.velocity.x + _player.velocity2.x + velocityX) * 0.3333;
-          final velY = (_player.velocity.y + _player.velocity2.y + velocityY) * 0.33333;
 
           if (state == stateRunning) {
-            _player.x += velX;
-            _player.y += velY;
+            _player.x += velocityX * differenceFromAverage;
+            _player.y += velocityY * differenceFromAverage;
             _player.velocity2.x = _player.velocity.x;
             _player.velocity2.y = _player.velocity.y;
-            _player.velocity.x = velX;
-            _player.velocity.y = velY;
+            _player.velocity.x = velocityX;
+            _player.velocity.y = velocityY;
           } else {
             _player.x = x;
             _player.y = y;
@@ -138,8 +148,6 @@ class _ByteStreamParser {
           } else {
             engine.cameraCenter(_player.x, _player.y);
           }
-
-
 
           _player.health.value = _nextDouble();
           _player.maxHealth = _nextDouble();

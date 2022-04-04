@@ -823,9 +823,9 @@ class GameBuild {
     });
   }
 
-  Widget buildPlayerXV(){
-    return WatchBuilder(_player.serverFrame, (int frames){
-      return text("Server Frame: $frames");
+  Widget buildMSSinceUpdate(){
+    return WatchBuilder(averageUpdate, (double frames){
+      return text("Milliseconds Since Last: $frames");
     });
   }
 
@@ -990,7 +990,7 @@ class GameBuild {
           playerScreen,
           buildTotalEvents(),
           buildTotalFrames(),
-          buildPlayerXV(),
+          buildMSSinceUpdate(),
       ],
     );
   }
