@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:bleed_common/CharacterState.dart';
 import 'package:bleed_common/DynamicObjectType.dart';
 import 'package:bleed_common/GameEventType.dart';
 import 'package:bleed_common/ItemType.dart';
@@ -122,33 +121,13 @@ class _ByteStreamParser {
         case ServerResponse.Player:
           final previousX = _player.x;
           final previousY = _player.y;
-          final state = _nextByte();
           final x = _nextDouble();
           final y = _nextDouble();
           final velocityX = x - previousX;
           final velocityY = y - previousY;
 
-          // _player.x += velocityX * differenceFromAverage;
-          // _player.y += velocityY * differenceFromAverage;
-
           _player.x += velocityX;
           _player.y += velocityY;
-
-          // if (state == stateRunning) {
-          //   _player.x += velocityX * differenceFromAverage;
-          //   _player.y += velocityY * differenceFromAverage;
-          //   _player.velocity2.x = _player.velocity.x;
-          //   _player.velocity2.y = _player.velocity.y;
-          //   _player.velocity.x = velocityX;
-          //   _player.velocity.y = velocityY;
-          // } else {
-          //   _player.x = x;
-          //   _player.y = y;
-          //   _player.velocity.x = 0;
-          //   _player.velocity.y = 0;
-          //   _player.velocity2.x = 0;
-          //   _player.velocity2.y = 0;
-          // }
 
           if (modules.game.state.frameSmoothing.value){
             const cameraFollowSpeed = 0.01;

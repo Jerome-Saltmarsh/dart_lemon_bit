@@ -51,7 +51,6 @@ class _ByteCompiler {
     writePlayers(player);
 
     writeByte(ServerResponse.Player);
-    writeByte(player.state);
     writeBigInt(player.x);
     writeBigInt(player.y);
     writeBigInt(player.health);
