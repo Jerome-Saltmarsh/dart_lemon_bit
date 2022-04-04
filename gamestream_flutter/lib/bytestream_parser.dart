@@ -51,6 +51,9 @@ class _ByteStreamParser {
     msSinceLastUpdate.value = duration.inMilliseconds;
     totalEvents.value++;
     durationTotal += duration.inMilliseconds;
+    if (durationTotal == 0){
+      durationTotal = 35;
+    }
     averageUpdate.value = durationTotal / totalEvents.value;
 
     final differenceFromAverage = duration.inMilliseconds / averageUpdate.value;
@@ -125,26 +128,31 @@ class _ByteStreamParser {
           final velocityX = x - previousX;
           final velocityY = y - previousY;
 
+          // _player.x += velocityX * differenceFromAverage;
+          // _player.y += velocityY * differenceFromAverage;
 
-          if (state == stateRunning) {
-            _player.x += velocityX * differenceFromAverage;
-            _player.y += velocityY * differenceFromAverage;
-            _player.velocity2.x = _player.velocity.x;
-            _player.velocity2.y = _player.velocity.y;
-            _player.velocity.x = velocityX;
-            _player.velocity.y = velocityY;
-          } else {
-            _player.x = x;
-            _player.y = y;
-            _player.velocity.x = 0;
-            _player.velocity.y = 0;
-            _player.velocity2.x = 0;
-            _player.velocity2.y = 0;
-          }
+          _player.x += velocityX;
+          _player.y += velocityY;
+
+          // if (state == stateRunning) {
+          //   _player.x += velocityX * differenceFromAverage;
+          //   _player.y += velocityY * differenceFromAverage;
+          //   _player.velocity2.x = _player.velocity.x;
+          //   _player.velocity2.y = _player.velocity.y;
+          //   _player.velocity.x = velocityX;
+          //   _player.velocity.y = velocityY;
+          // } else {
+          //   _player.x = x;
+          //   _player.y = y;
+          //   _player.velocity.x = 0;
+          //   _player.velocity.y = 0;
+          //   _player.velocity2.x = 0;
+          //   _player.velocity2.y = 0;
+          // }
 
           if (modules.game.state.frameSmoothing.value){
-            const cameraFollowSpeed = 0.006;
-            engine.cameraFollow(_player.x, _player.y, cameraFollowSpeed);
+            const cameraFollowSpeed = 0.01;
+            engine.cameraFollow(_player.x, _player.y, cameraFollowSpeed * differenceFromAverage);
           } else {
             engine.cameraCenter(_player.x, _player.y);
           }
@@ -172,6 +180,7 @@ class _ByteStreamParser {
         case ServerResponse.End:
           byteLength.value = _index;
           _index = 0;
+          engine.redrawCanvas();
           return;
 
         default:
