@@ -9,6 +9,7 @@ import 'package:bleed_common/ServerResponse.dart';
 import 'package:bleed_common/SlotType.dart';
 import 'package:bleed_common/compile_util.dart';
 import 'package:bleed_common/constants.dart';
+import 'package:bleed_common/enums/Direction.dart';
 import 'package:bleed_common/enums/ProjectileType.dart';
 import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
@@ -138,37 +139,51 @@ class _ByteStreamParser {
           final x = _nextDouble();
           final y = _nextDouble();
 
-
-
-
           final velocityX = x - previousX;
           final velocityY = y - previousY;
+
+          _player.velocity.x = velocityX;
+          _player.velocity.y = velocityY;
 
           _player.x += velocityX;
           _player.y += velocityY;
 
           final playerCharacter = findPlayerCharacter();
 
+          if (playerCharacter != null){
+            if (playerCharacter.running){
+               if (playerCharacter.direction == directionRightIndex){
+                    if (velocityX <= 0){
+                      // _player.x += 2.5;
+                      print("patched");
+                    }
+               }
+            }
+          }
+
 
           switch(modules.game.state.cameraMode.value){
             case CameraMode.Chase:
               const cameraFollowSpeed = 0.01;
-              engine.cameraFollow(_player.x, _player.y, cameraFollowSpeed * sync.value);
-              if (playerCharacter != null){
-                final diffX = screenCenterWorldX - x;
-                final diffY = screenCenterWorldY - y;
-                playerCharacter.x -= (diffX * 4) * cameraFollowSpeed * sync.value;
-                playerCharacter.y -= (diffY * 4) * cameraFollowSpeed * sync.value;
-              }
+              // engine.cameraFollow(_player.x, _player.y, cameraFollowSpeed * sync.value);
+              engine.cameraFollow(_player.x, _player.y, cameraFollowSpeed);
+              // if (playerCharacter != null) {
+              //   if (playerCharacter.running) {
+              //     final diffX = screenCenterWorldX - x;
+              //     final diffY = screenCenterWorldY - y;
+              //     playerCharacter.x -= (diffX * 4) * cameraFollowSpeed * sync.value;
+              //     playerCharacter.y -= (diffY * 4) * cameraFollowSpeed * sync.value;
+              //   }
+              // }
               break;
             case CameraMode.Locked:
-              if (playerCharacter != null){
-                final diffX = screenCenterWorldX - x;
-                final diffY = screenCenterWorldY - y;
-                const cameraFollowSpeed = 0.01;
-                playerCharacter.x -= (diffX * 4) * cameraFollowSpeed * sync.value;
-                playerCharacter.y -= (diffY * 4) * cameraFollowSpeed * sync.value;
-              }
+              // if (playerCharacter != null){
+              //   final diffX = screenCenterWorldX - x;
+              //   final diffY = screenCenterWorldY - y;
+              //   const cameraFollowSpeed = 0.01;
+              //   playerCharacter.x -= (diffX * 4) * cameraFollowSpeed * sync.value;
+              //   playerCharacter.y -= (diffY * 4) * cameraFollowSpeed * sync.value;
+              // }
               engine.cameraCenter(_player.x, _player.y);
               break;
             case CameraMode.Free:
