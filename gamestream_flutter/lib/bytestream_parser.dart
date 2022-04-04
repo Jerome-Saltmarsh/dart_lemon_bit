@@ -26,6 +26,7 @@ final totalEvents = Watch(0);
 final framesSinceUpdateReceived = Watch(0);
 final msSinceLastUpdate = Watch(0);
 final averageUpdate = Watch(0.0);
+final sync = Watch(0.0);
 var durationTotal = 0;
 
 
@@ -37,6 +38,19 @@ final _minutes = modules.isometric.state.minutes;
 
 
 var time = DateTime.now();
+
+
+Character? findPlayerCharacter(){
+  final total = game.totalPlayers.value;
+  for (var i = 0; i < total; i++) {
+    final character = game.players[i];
+    if (character.x != _player.x) continue;
+    if (character.y != _player.y) continue;
+    return character;
+  }
+  return null;
+}
+
 
 class _ByteStreamParser {
   var _index = 0;
@@ -55,7 +69,7 @@ class _ByteStreamParser {
     }
     averageUpdate.value = durationTotal / totalEvents.value;
 
-    final differenceFromAverage = duration.inMilliseconds / averageUpdate.value;
+    sync.value = duration.inMilliseconds / averageUpdate.value;
 
     framesSinceUpdateReceived.value = 0;
     _index = 0;
@@ -123,18 +137,38 @@ class _ByteStreamParser {
           final previousY = _player.y;
           final x = _nextDouble();
           final y = _nextDouble();
+
+
+
+
           final velocityX = x - previousX;
           final velocityY = y - previousY;
 
           _player.x += velocityX;
           _player.y += velocityY;
 
+          final playerCharacter = findPlayerCharacter();
+
+
           switch(modules.game.state.cameraMode.value){
             case CameraMode.Chase:
               const cameraFollowSpeed = 0.01;
-              engine.cameraFollow(_player.x, _player.y, cameraFollowSpeed * differenceFromAverage);
+              engine.cameraFollow(_player.x, _player.y, cameraFollowSpeed * sync.value);
+              if (playerCharacter != null){
+                final diffX = screenCenterWorldX - x;
+                final diffY = screenCenterWorldY - y;
+                playerCharacter.x -= (diffX * 4) * cameraFollowSpeed * sync.value;
+                playerCharacter.y -= (diffY * 4) * cameraFollowSpeed * sync.value;
+              }
               break;
             case CameraMode.Locked:
+              if (playerCharacter != null){
+                final diffX = screenCenterWorldX - x;
+                final diffY = screenCenterWorldY - y;
+                const cameraFollowSpeed = 0.01;
+                playerCharacter.x -= (diffX * 4) * cameraFollowSpeed * sync.value;
+                playerCharacter.y -= (diffY * 4) * cameraFollowSpeed * sync.value;
+              }
               engine.cameraCenter(_player.x, _player.y);
               break;
             case CameraMode.Free:

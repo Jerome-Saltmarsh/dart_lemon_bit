@@ -829,6 +829,12 @@ class GameBuild {
     });
   }
 
+  Widget buildSync(){
+    return WatchBuilder(sync, (double frames){
+      return text("Sync: $frames");
+    });
+  }
+
   Widget buildTotalFrames(){
     return WatchBuilder(totalUpdates, (int frames){
       return text("Frames: $frames");
@@ -983,6 +989,7 @@ class GameBuild {
           buildTotalEvents(),
           buildTotalFrames(),
           buildMSSinceUpdate(),
+          buildSync(),
       ],
     );
   }

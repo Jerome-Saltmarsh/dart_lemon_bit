@@ -23,17 +23,6 @@ class GameUpdate {
 
   GameUpdate(this.state);
 
-  Character? findPlayerCharacter(){
-    final total = game.totalPlayers.value;
-    for (var i = 0; i < total; i++) {
-      final character = game.players[i];
-      if (character.x != _player.x) continue;
-      if (character.y != _player.y) continue;
-      return character;
-    }
-    return null;
-  }
-
   void update() {
     // TODO remove this check
     totalUpdates.value++;
