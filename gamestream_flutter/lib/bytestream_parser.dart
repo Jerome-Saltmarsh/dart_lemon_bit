@@ -129,11 +129,16 @@ class _ByteStreamParser {
           _player.x += velocityX;
           _player.y += velocityY;
 
-          if (modules.game.state.frameSmoothing.value){
-            const cameraFollowSpeed = 0.01;
-            engine.cameraFollow(_player.x, _player.y, cameraFollowSpeed * differenceFromAverage);
-          } else {
-            engine.cameraCenter(_player.x, _player.y);
+          switch(modules.game.state.cameraMode.value){
+            case CameraMode.Chase:
+              const cameraFollowSpeed = 0.01;
+              engine.cameraFollow(_player.x, _player.y, cameraFollowSpeed * differenceFromAverage);
+              break;
+            case CameraMode.Locked:
+              engine.cameraCenter(_player.x, _player.y);
+              break;
+            case CameraMode.Free:
+              break;
           }
 
           _player.health.value = _nextDouble();

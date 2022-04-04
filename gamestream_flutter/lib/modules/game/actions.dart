@@ -184,8 +184,8 @@ class GameActions {
     state.debugPanelVisible.value = !state.debugPanelVisible.value;
   }
 
-  void toggleSmoothing(){
-    state.frameSmoothing.value = !state.frameSmoothing.value;
+  void nextCameraMode(){
+    state.cameraMode.value = cameraModes[(state.cameraMode.value.index + 1) % cameraModes.length];
   }
 
   /// valid between 1 and 6 inclusive

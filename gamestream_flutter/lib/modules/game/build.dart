@@ -914,14 +914,6 @@ class GameBuild {
     return text(version);
   }
 
-  Widget buildToggleFrameSmoothing(){
-    return WatchBuilder(state.frameSmoothing, (bool frameSmoothing){
-       return text("Frame Smoothing: $frameSmoothing", onPressed: (){
-         state.frameSmoothing.value = !state.frameSmoothing.value;
-       });
-    });
-  }
-
   Widget toggleDebugMode(){
     return WatchBuilder(state.compilePaths, (bool compilePaths){
       return button("Debug Mode: $compilePaths", actions.toggleDebugPaths);
@@ -947,8 +939,8 @@ class GameBuild {
   }
 
   Widget buildButtonToggleCameraMode(){
-    return WatchBuilder(modules.game.state.frameSmoothing, (bool smooth){
-       return button(smooth ? 'Camera Locked' : "Camera Free", modules.game.actions.toggleSmoothing);
+    return WatchBuilder(modules.game.state.cameraMode, (CameraMode mode){
+       return button(mode.name, modules.game.actions.nextCameraMode);
     });
   }
 
@@ -984,7 +976,7 @@ class GameBuild {
           playerId,
           cameraZoom,
           buildFramesSinceUpdate(),
-          buildToggleFrameSmoothing(),
+          buildButtonToggleCameraMode(),
           buildFramesSmoothed(),
           playerVelocity,
           playerScreen,

@@ -13,6 +13,14 @@ import 'package:lemon_watch/watch.dart';
 import 'classes.dart';
 import 'enums.dart';
 
+const cameraModes = CameraMode.values;
+
+enum CameraMode {
+  Chase,
+  Locked,
+  Free,
+}
+
 class GameState {
   final player = _Player();
   final textEditingControllerMessage = TextEditingController();
@@ -27,7 +35,7 @@ class GameState {
   final highlightSlot = Watch<Slot?>(null);
 
   final highlightPanelPosition = Vector2(0, 0);
-  final frameSmoothing = Watch(true);
+  final cameraMode = Watch(CameraMode.Chase);
   final framesSmoothed = Watch(0);
 
   final playerTextStyle = TextStyle(color: Colors.white);
