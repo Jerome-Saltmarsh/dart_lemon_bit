@@ -28,6 +28,8 @@ class GameState {
 
   final highlightPanelPosition = Vector2(0, 0);
   final frameSmoothing = Watch(true);
+  final framesSmoothed = Watch(0);
+
   final playerTextStyle = TextStyle(color: Colors.white);
   var panningCamera = false;
   var framesSinceOrbAcquired = 999;

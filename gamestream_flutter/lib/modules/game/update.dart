@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/opposite.dart';
 import 'package:bleed_common/GameStatus.dart';
@@ -12,9 +13,9 @@ import '../../state/game.dart';
 import 'state.dart';
 
 final _player = modules.game.state.player;
-final _players = game.players;
 final _controller = modules.game.state.characterController;
 final _status = core.state.status;
+final _menuVisible = modules.hud.menuVisible;
 
 class GameUpdate {
 
@@ -22,20 +23,36 @@ class GameUpdate {
 
   GameUpdate(this.state);
 
+  Character? findPlayerCharacter(){
+    final total = game.totalPlayers.value;
+    for (var i = 0; i < total; i++) {
+      final character = game.players[i];
+      if (character.x != _player.x) continue;
+      if (character.y != _player.y) continue;
+      return character;
+    }
+    return null;
+  }
+
   void applyFrameSmoothing() {
     if (!state.frameSmoothing.value) return;
     if (framesSinceUpdateReceived.value != 1) return;
+    state.framesSmoothed.value++;
     final total = game.totalPlayers.value;
     for (var i = 0; i < total; i++) {
       final character = game.players[i];
       if (!character.running) continue;
       final angle = character.angle;
       const amount = 2.5;
-      character.x += adjacent(angle, amount);
-      character.y += opposite(angle, amount);
+      if (character.x == _player.x && character.y == _player.y) {
+        // character.x += adjacent(angle, amount);
+        // character.y += opposite(angle, amount);
+        _player.x += _player.velocity.x * 0.5;
+        _player.y += _player.velocity.y * 0.5;
+        character.x = _player.x;
+        character.y = _player.y;
+      }
     }
-    _player.x += _player.velocity.x * 0.5;
-    _player.y += _player.velocity.y * 0.5;
   }
 
   void update() {
@@ -51,7 +68,7 @@ class GameUpdate {
 
     state.framesSinceOrbAcquired++;
     final mousePosition = engine.mousePosition;
-    modules.hud.menuVisible.value =
+    _menuVisible.value =
         mousePosition.y < 200
             &&
             mousePosition.x > engine.screen.width - 300

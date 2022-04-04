@@ -806,12 +806,23 @@ class GameBuild {
     });
   }
 
+  Widget buildFramesSmoothed(){
+    return WatchBuilder(state.framesSmoothed, (int frames){
+      return text("Frames Smoothed: $frames");
+    });
+  }
+
   Widget get buildTotalParticles {
     return Refresh((){
       return text("Particles: ${isometric.state.particles.length}");
     });
   }
 
+  Widget get playerScreen {
+    return Refresh(() {
+      return text("Player Screen: x: ${worldToScreenX(state.player.x)}, y: ${worldToScreenY(state.player.y)}");
+    });
+  }
 
   Widget get buildActiveParticles {
     return Refresh((){
@@ -945,7 +956,9 @@ class GameBuild {
           cameraZoom,
           buildFramesSinceUpdate(),
           buildToggleFrameSmoothing(),
+          buildFramesSmoothed(),
           playerVelocity,
+          playerScreen,
       ],
     );
   }
