@@ -66,9 +66,6 @@ class GameUpdate {
     framesSinceUpdateReceived.value++;
     readPlayerInput();
     isometric.update.call();
-    if (!state.panningCamera && _player.alive.value) {
-      cameraFollowPlayer();
-    }
 
     state.framesSinceOrbAcquired++;
     final mousePosition = engine.mousePosition;
