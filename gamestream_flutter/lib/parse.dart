@@ -11,6 +11,7 @@ import 'package:bleed_common/Tile.dart';
 import 'package:bleed_common/constants.dart';
 import 'package:bleed_common/enums/ObjectType.dart';
 import 'package:bleed_common/enums/ProjectileType.dart';
+import 'package:gamestream_flutter/bytestream_parser.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
@@ -360,7 +361,8 @@ void _parseGameJoined() {
   player.team = consumeInt();
   player.x = consumeDouble();
   player.y = consumeDouble();
-  modules.game.actions.cameraCenterPlayer();
+  // modules.game.actions.cameraCenterPlayer();
+  cameraCenterOnPlayer();
 }
 
 ObjectType _consumeEnvironmentObjectType() {

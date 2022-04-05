@@ -8,6 +8,7 @@ import 'package:bleed_common/OrbType.dart';
 import 'package:bleed_common/PlayerEvent.dart';
 import 'package:bleed_common/SlotType.dart';
 import 'package:gamestream_flutter/audio.dart';
+import 'package:gamestream_flutter/bytestream_parser.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/parse.dart';
@@ -156,7 +157,8 @@ class GameEvents {
   void _onPlayerAliveChanged(bool value) {
     print("events.onPlayerAliveChanged($value)");
     if (value) {
-      actions.cameraCenterPlayer();
+      // actions.cameraCenterPlayer();
+      cameraCenterOnPlayer();
     }
   }
 

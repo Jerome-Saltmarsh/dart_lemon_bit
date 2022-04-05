@@ -40,6 +40,16 @@ final _minutes = modules.isometric.state.minutes;
 
 var time = DateTime.now();
 
+void cameraCenterOnPlayer(){
+  engine.cameraCenter(_player.x, _player.y);
+  _previousPlayerScreenX1 = worldToScreenX(_player.x);
+  _previousPlayerScreenY1 = worldToScreenY(_player.y);
+  _previousPlayerScreenX2 = _previousPlayerScreenX1;
+  _previousPlayerScreenY2 = _previousPlayerScreenY1;
+  _previousPlayerScreenX3 = _previousPlayerScreenX1;
+  _previousPlayerScreenY3 = _previousPlayerScreenY1;
+}
+
 Character? findPlayerCharacter(){
   final total = game.totalPlayers.value;
   for (var i = 0; i < total; i++) {
