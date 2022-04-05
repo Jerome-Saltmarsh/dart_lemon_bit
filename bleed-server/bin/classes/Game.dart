@@ -973,6 +973,12 @@ extension GameFunctions on Game {
 
   void updateCharacter(Character character) {
     if (!character.active) return;
+
+    if (character.skipUpdate) {
+      character.skipUpdate = false;
+      return;
+    }
+
     _updateCharacterAI(character);
     character.updateMovement();
 

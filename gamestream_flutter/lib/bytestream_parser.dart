@@ -212,11 +212,10 @@ class _ByteStreamParser {
 
           final currentServerFrame = _player.serverFrame.value;
           final nextServerFrame =  _nextInt();
-
-          if (nextServerFrame == currentServerFrame){
-            print("No Change Detected");
-            return;
-          }
+          // if (nextServerFrame == currentServerFrame){
+          //   print("No Change Detected");
+          //   return;
+          // }
           _player.serverFrame.value = nextServerFrame;
           break;
         case ServerResponse.End:
