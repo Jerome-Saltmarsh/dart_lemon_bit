@@ -48,7 +48,6 @@ class _ByteCompiler {
     final slots = player.slots;
     final orbs = player.orbs;
     final game = player.game;
-    writePlayers(player);
 
     writeByte(ServerResponse.Player);
     writeBigInt(player.x);
@@ -74,6 +73,7 @@ class _ByteCompiler {
 
     writeBigInt(player.game.duration);
 
+    writePlayers(player);
     writeAttackTarget(player);
     writeProjectiles(game.projectiles);
     writeNpcs(player);

@@ -12,7 +12,9 @@ import 'webSocket.dart';
 
 final _gameUpdateIndex = ClientRequest.Update.index;
 final _buffer1 = Uint8List(1);
-final _updateBuffer = Uint8List(15);
+final _updateBuffer = Uint8List(18);
+
+final _serverFrames = modules.game.state.player.serverFrame;
 
 void sendRequestSpeak(String message){
   if (message.isEmpty) return;
@@ -87,6 +89,7 @@ Future sendRequestUpdatePlayer() async {
   writeNumberToByteArray(number: screen.top, list: _updateBuffer, index: 9);
   writeNumberToByteArray(number: screen.right, list: _updateBuffer, index: 11);
   writeNumberToByteArray(number: screen.bottom, list: _updateBuffer, index: 13);
+  writeBigNumberToArray(number: _serverFrames.value, list: _updateBuffer, index: 15);
 
   webSocket.sink.add(_updateBuffer);
   _characterControllerAction.value = CharacterAction.Idle;

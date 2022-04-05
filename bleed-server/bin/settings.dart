@@ -92,8 +92,6 @@ class Settings {
   final int gameStartingCountDown = 400;
   final int casualGameMaxPlayers = 16;
 
-  final double minVelocity = 0.005;
-  final double velocityFriction = 0.88;
   final double npcChaseRange = 600;
   final double weaponRangeVariation = 10.0;
   final double playerStartRadius = 50;

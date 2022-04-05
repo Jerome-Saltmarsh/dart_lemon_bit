@@ -77,6 +77,8 @@ void startWebsocketServer(){
   });
 }
 
+final _5ms = Duration(seconds: 3);
+
 void buildWebSocketHandler(WebSocketChannel webSocket) {
     totalConnections++;
     print("New connection established. Total Connections $totalConnections");
@@ -207,7 +209,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       error(GameError.InsufficientSkillPoints);
     }
 
-    void onEvent(requestD) {
+    void onEvent(dynamic requestD) {
 
       final player = _player;
 
@@ -278,6 +280,15 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.screenTop = readNumberFromByteArray(args, index: 9).toDouble();
           player.screenRight = readNumberFromByteArray(args, index: 11).toDouble();
           player.screenBottom = readNumberFromByteArray(args, index: 13).toDouble();
+          final serverFrame = readBigNumberFromArray(args, index: 15);
+
+          if (serverFrame == player.game.duration){
+            const end = [ServerResponse.End];
+            return sink.add(end);
+            // await Future.delayed(_5ms);
+            // bool stillMatch = serverFrame == player.game.duration;
+            // print("Still match $stillMatch");
+          }
 
           player.aimTarget = null;
           final closestCollider = game.getClosestEnemyCollider(mouseX, mouseY, player);

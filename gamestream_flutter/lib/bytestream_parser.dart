@@ -148,18 +148,19 @@ class _ByteStreamParser {
           _player.x += velocityX;
           _player.y += velocityY;
 
-          final playerCharacter = findPlayerCharacter();
-
-          if (playerCharacter != null){
-            if (playerCharacter.running){
-               if (playerCharacter.direction == directionRightIndex){
-                    if (velocityX <= 0){
-                      // _player.x += 2.5;
-                      print("patched");
-                    }
-               }
-            }
-          }
+          // final playerCharacter = findPlayerCharacter();
+          //
+          // if (playerCharacter != null){
+          //   if (playerCharacter.running){
+          //      if (playerCharacter.direction == directionRightIndex){
+          //           if (velocityX <= 0){
+          //             // _player.x += 2.5;
+          //             // print("Patched: ${sync.value}");
+          //             // return;
+          //           }
+          //      }
+          //   }
+          // }
 
 
           switch(modules.game.state.cameraMode.value){
@@ -208,7 +209,15 @@ class _ByteStreamParser {
           _orbs.ruby.value = _nextInt();
           _player.alive.value = readBool();
           _player.storeVisible.value = readBool();
-          _player.serverFrame.value = _nextInt();
+
+          final currentServerFrame = _player.serverFrame.value;
+          final nextServerFrame =  _nextInt();
+
+          if (nextServerFrame == currentServerFrame){
+            print("No Change Detected");
+            return;
+          }
+          _player.serverFrame.value = nextServerFrame;
           break;
         case ServerResponse.End:
           byteLength.value = _index;

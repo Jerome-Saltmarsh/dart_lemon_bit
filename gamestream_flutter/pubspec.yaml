@@ -35,6 +35,10 @@ dependencies:
   bleed_common:
     path: C:\Users\Jerome\github\bleed\bleed-common
 
+dev_dependencies:
+  test: ^1.16.0
+
+
 flutter:
   fonts:
     - family: PermanentMarker
