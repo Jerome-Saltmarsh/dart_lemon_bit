@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/abs.dart';
 
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
@@ -151,13 +152,23 @@ class Character extends GameObject {
     slots.weapon.type = weapon;
   }
 
-  void updateMotion(){
+  void applyVelocity(){
     x += velocityX;
     y += velocityY;
   }
 
   double get velocityX => adj(angle, speed);
   double get velocityY => opp(angle, speed);
+
+  void updateMovement() {
+    const minVelocity = 0.005;
+    if (abs(xv) <= minVelocity) return;
+    x += xv;
+    y += yv;
+    const velocityFriction = 0.88;
+    xv *= velocityFriction;
+    yv *= velocityFriction;
+  }
 }
 
 bool sameTeam(Character a, Character b){

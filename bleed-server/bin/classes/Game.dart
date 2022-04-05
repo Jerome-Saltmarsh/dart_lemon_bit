@@ -974,18 +974,9 @@ extension GameFunctions on Game {
   void updateCharacter(Character character) {
     if (!character.active) return;
     _updateCharacterAI(character);
-
-    const minVelocity = 0.005;
-    if (abs(character.xv) > minVelocity) {
-      character.x += character.xv;
-      character.y += character.yv;
-      const velocityFriction = 0.88;
-      character.xv *= velocityFriction;
-      character.yv *= velocityFriction;
-    }
+    character.updateMovement();
 
     if (character.dead) return;
-
 
     if (character.frozenDuration > 0) {
       character.frozenDuration--;
@@ -1002,7 +993,7 @@ extension GameFunctions on Game {
 
     switch (character.state) {
       case stateRunning:
-        character.updateMotion();
+        character.applyVelocity();
         break;
 
       case statePerforming:
