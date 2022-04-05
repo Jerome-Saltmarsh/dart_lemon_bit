@@ -154,10 +154,8 @@ class _ByteStreamParser {
           sendRequestUpdatePlayer();
           return;
         case ServerResponse.Player:
-
-          final currentServerFrame = _player.serverFrame.value;
           final nextServerFrame =  _nextInt();
-          if (nextServerFrame == currentServerFrame){
+          if (nextServerFrame == _player.serverFrame.value){
             // HOW IS THIS STILL BEING REACHED, PATCHED SHOULD BE GETTING RETURNED
             print("NO CHANGE FROM SERVER");
             // modules.game.update.readPlayerInput();
