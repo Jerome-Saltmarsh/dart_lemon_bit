@@ -186,14 +186,14 @@ class _ByteStreamParser {
               final distanceWorldX2 = ((playerScreenX2 - _previousPlayerScreenX2) / engine.zoom) * 0.5;
               final distanceWorldY2 = ((playerScreenY2 - _previousPlayerScreenY2) / engine.zoom) * 0.5;
 
-              engine.camera.x += distanceWorldX2 * 0.5;
-              engine.camera.y += distanceWorldY2 * 0.5;
+              engine.camera.x += distanceWorldX2 * 0.4;
+              engine.camera.y += distanceWorldY2 * 0.4;
 
               final distanceWorldX3 = ((playerScreenX2 - _previousPlayerScreenX3) / engine.zoom) * 0.5;
               final distanceWorldY3 = ((playerScreenY2 - _previousPlayerScreenY3) / engine.zoom) * 0.5;
 
-              engine.camera.x += distanceWorldX3 * 0.5;
-              engine.camera.y += distanceWorldY3 * 0.5;
+              engine.camera.x += distanceWorldX3 * 0.3;
+              engine.camera.y += distanceWorldY3 * 0.3;
 
               _previousPlayerScreenX3 = _previousPlayerScreenX2;
               _previousPlayerScreenY3 = _previousPlayerScreenY2;

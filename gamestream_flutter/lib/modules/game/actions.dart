@@ -40,21 +40,7 @@ class GameActions {
 
 
   void cameraCenterPlayer(){
-    // final diffX = previousX - _player.x;
-    // final diffY = previousY - _player.y;
-    // final renderX = (_player.x + previousX) * 0.5;
-    // final renderY = (_player.y + previousY) * 0.5;
-    // engine.cameraCenter(renderX, renderY);
-    // previousX = renderX;
-    // previousY = renderY;
-    // const ratio = 0.05;
-    // final diffX = previousX - _player.x;
-    // final diffY = previousY - _player.y;
-    // final renderX = previousX + (diffX * ratio);
-    // final renderY = previousY + (diffY * ratio);
-    // engine.cameraCenter(renderX, renderY);
-    // previousX = renderX;
-    // previousY = renderY;
+    engine.cameraCenter(_player.x, _player.y);
   }
 
   void emitPixelExplosion(double x, double y, {int amount = 10}) {

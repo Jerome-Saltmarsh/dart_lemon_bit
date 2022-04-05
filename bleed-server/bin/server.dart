@@ -271,8 +271,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
 
           if (player.lastFrameSent >= player.game.frame){
-            const patch = [ServerResponse.No_Change];
-            sink.add(patch);
+            // NO CHANGE
             return;
           }
 
