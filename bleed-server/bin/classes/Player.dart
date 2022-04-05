@@ -49,6 +49,8 @@ class Player extends Character {
   bool storeVisible = false;
   bool skipUpdate = false;
 
+  int lastFrameSent = -1;
+
   double mouseX = 0;
   double mouseY = 0;
 

@@ -270,6 +270,15 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
 
 
+          if (player.lastFrameSent >= player.game.frame){
+            const patch = [ServerResponse.No_Change];
+            sink.add(patch);
+            return;
+          }
+
+          player.lastFrameSent = player.game.frame;
+
+
           final mouseX = readNumberFromByteArray(args, index: 2).toDouble();
           final mouseY = readNumberFromByteArray(args, index: 4).toDouble();
           player.mouseX = mouseX;
@@ -281,9 +290,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           final serverFrame = readBigNumberFromArray(args, index: 15);
 
           if (serverFrame == player.game.frame) {
-            const patch = [ServerResponse.No_Change];
-            sink.add(patch);
-            return;
+            // const patch = [ServerResponse.No_Change];
+            // sink.add(patch);
+            // return;
           }
 
           player.aimTarget = null;

@@ -48,7 +48,6 @@ class _ByteCompiler {
     final slots = player.slots;
     final orbs = player.orbs;
     final game = player.game;
-
     writeByte(ServerResponse.Player);
     writeBigInt(player.game.frame);
     writeBigInt(player.x);
