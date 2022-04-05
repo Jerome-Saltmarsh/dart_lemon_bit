@@ -129,7 +129,7 @@ class Player extends Character {
             x: x,
             y: y,
             health: health,
-            speed: 5.0,
+            speed: 3.5,
             team: team,
             ai: ai,
             weapon: weapon,

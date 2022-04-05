@@ -1413,7 +1413,7 @@ extension GameFunctions on Game {
   }
 
   void _updateCharacterFrames() {
-    const characterFramesChange = 4;
+    const characterFramesChange = 6;
     if (engine.frame % characterFramesChange != 0) return;
     updateFrames(players);
     updateFrames(zombies);

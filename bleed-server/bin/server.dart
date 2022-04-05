@@ -281,14 +281,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           final serverFrame = readBigNumberFromArray(args, index: 15);
 
           if (serverFrame == player.game.duration){
-            // const end = [ServerResponse.End];
-            // return sink.add(end);
-            player.game.updateCharacter(player);
-            player.skipUpdate = true;
-
-            // await Future.delayed(_5ms);
-            // bool stillMatch = serverFrame == player.game.duration;
+            // player.game.updateCharacter(player);
+            // player.skipUpdate = true;
             print("Patched");
+            const patch = [ServerResponse.No_Change];
+            sink.add(patch);
+            return;
           }
 
           player.aimTarget = null;

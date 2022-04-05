@@ -13,6 +13,7 @@ import 'package:bleed_common/enums/ProjectileType.dart';
 import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
+import 'package:gamestream_flutter/send.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
 import 'package:lemon_watch/watch.dart';
@@ -38,6 +39,9 @@ final _minutes = modules.isometric.state.minutes;
 
 
 var time = DateTime.now();
+
+var previousVelocityX = 0.0;
+var previousVelocityY = 0.0;
 
 
 Character? findPlayerCharacter(){
@@ -132,6 +136,11 @@ class _ByteStreamParser {
           _hours.value = _nextByte();
           _minutes.value = _nextByte();
           break;
+        case ServerResponse.No_Change:
+          print("ServerResponse.No_Change");
+          modules.game.update.readPlayerInput();
+          sendRequestUpdatePlayer();
+          return;
         case ServerResponse.Player:
           final previousX = _player.x;
           final previousY = _player.y;
@@ -144,23 +153,8 @@ class _ByteStreamParser {
           _player.velocity.x = velocityX;
           _player.velocity.y = velocityY;
 
-          _player.x += velocityX;
-          _player.y += velocityY;
-
-          // final playerCharacter = findPlayerCharacter();
-          //
-          // if (playerCharacter != null){
-          //   if (playerCharacter.running){
-          //      if (playerCharacter.direction == directionRightIndex){
-          //           if (velocityX <= 0){
-          //             // _player.x += 2.5;
-          //             // print("Patched: ${sync.value}");
-          //             // return;
-          //           }
-          //      }
-          //   }
-          // }
-
+          _player.x = x;
+          _player.y = y;
 
           switch(modules.game.state.cameraMode.value){
             case CameraMode.Chase:
@@ -210,10 +204,13 @@ class _ByteStreamParser {
           _player.storeVisible.value = readBool();
           final currentServerFrame = _player.serverFrame.value;
           final nextServerFrame =  _nextInt();
-          // if (nextServerFrame == currentServerFrame){
-          //   print("No Change Detected");
-          //   return;
-          // }
+          if (nextServerFrame == currentServerFrame){
+            print("NO CHANGE FROM SERVER");
+            return;
+          } else {
+            previousVelocityX = velocityX;
+            previousVelocityY = velocityY;
+          }
           _player.serverFrame.value = nextServerFrame;
           break;
         case ServerResponse.End:

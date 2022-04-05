@@ -47,7 +47,6 @@ class ServerResponse {
   static const Debug_Mode = 45;
   static const Gem_Spawns = 46;
   static const End = 47;
+  static const No_Change = 48;
 }
 
-// final serverResponses = ServerResponse.values;
-// final serverResponsesLength = serverResponses.length;

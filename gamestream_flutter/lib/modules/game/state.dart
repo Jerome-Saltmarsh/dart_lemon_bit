@@ -112,7 +112,6 @@ class Slots {
 class _Player {
   int score = 0;
   final velocity = Vector2(0, 0);
-  final velocity2 = Vector2(0, 0);
   final xv = Watch(0.0);
   double x = 0;
   double y = 0;
