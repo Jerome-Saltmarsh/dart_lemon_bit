@@ -21,14 +21,11 @@ import 'Game.dart';
 
 const _defaultMaxMagic = 10;
 
-int _idCount = 0;
-
 class Player extends Character {
   final gameEventIds = <int, bool>{};
   var score = 0;
   var sceneChanged = false;
   Account? account;
-  int id = _idCount++;
   String name = generateName();
   /// How many frames have elapsed since the server received a message from this client
   int lastUpdateFrame = 0;
@@ -67,11 +64,10 @@ class Player extends Character {
   final slots = Slots();
   final orbs = Orbs();
 
-  Collider? _aimTarget; // the currently highlighted character
+  Collider? aimTarget; // the currently highlighted character
   Vector2? target;
   Vector2 runTarget = Vector2(0, 0);
 
-  Collider? get aimTarget => _aimTarget;
 
   void attainOrb(OrbType orb){
     switch(orb) {
@@ -86,19 +82,6 @@ class Player extends Character {
         orbs.emerald++;
         return;
     }
-  }
-
-  set aimTarget(Collider? value){
-    if (value == null) {
-      _aimTarget = null;
-      return;
-    }
-    if (value is Character) {
-      assert(!sameTeam(this, value));
-      assert(value.alive);
-      assert(value.active);
-    }
-    _aimTarget = value;
   }
 
   int get magic => _magic;

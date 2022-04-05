@@ -130,7 +130,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       write(ServerResponse.Game_Status);
       write(game.status.index);
       compilePlayersRemaining(_buffer, 0);
-      write('${ServerResponse.Game_Joined} ${player.id} ${game.id} ${player.team} ${player.x.toInt()} ${player.y.toInt()}');
+      write('${ServerResponse.Game_Joined} 0 ${game.id} ${player.team} ${player.x.toInt()} ${player.y.toInt()}');
       sendAndClearBuffer();
     }
 
@@ -826,6 +826,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (player == null) return;
           if (player.deadOrBusy) return;
           player.target = null;
+          player.aimTarget = null;
           final mouseAngle = radiansBetween(player.x, player.y, player.mouseX, player.mouseY);
           characterFaceAngle(player, mouseAngle);
           player.game.setCharacterStatePerforming(player);

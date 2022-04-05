@@ -98,8 +98,7 @@
 [ ] FIX Pot destroyed Particles    
 [ ] AI Should avoid colliders in front of them.      
 [ ] Fix Slash Sword audio out of sink    
-[ ] FIX Respawn Screen showing red screen of death    
-[ ] Client send server frame, if server frame not changed return nothing;    
+[ ] FIX Right click melee hit previous aim target    
 [x] FIX Player Shake (MILESTONE)    
 [x] Convert ServerResponse from enum to constants    
 [x] Convert ClientRequest from enum to constants    

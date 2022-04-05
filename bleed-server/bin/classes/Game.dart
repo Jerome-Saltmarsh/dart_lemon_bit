@@ -1446,7 +1446,7 @@ extension GameFunctions on Game {
     final weaponType = weapon.type;
 
     if (weaponType.isSword) {
-      if (stateDuration == 1) {
+      if (stateDuration == 7) {
         dispatchV2(GameEventType.Sword_Woosh, character);
       }
     }
