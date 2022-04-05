@@ -55,6 +55,8 @@ var _previousPlayerScreenX1 = 0.0;
 var _previousPlayerScreenY1 = 0.0;
 var _previousPlayerScreenX2 = 0.0;
 var _previousPlayerScreenY2 = 0.0;
+var _previousPlayerScreenX3 = 0.0;
+var _previousPlayerScreenY3 = 0.0;
 
 class _ByteStreamParser {
   var _index = 0;
@@ -169,7 +171,7 @@ class _ByteStreamParser {
 
           switch(modules.game.state.cameraMode.value){
             case CameraMode.Chase:
-              const cameraFollowSpeed = 0.01;
+              const cameraFollowSpeed = 0.001;
               final playerScreenX = worldToScreenX(_player.x);
               final playerScreenY = worldToScreenY(_player.y);
               engine.cameraFollow(_player.x, _player.y, cameraFollowSpeed);
@@ -187,6 +189,14 @@ class _ByteStreamParser {
               engine.camera.x += distanceWorldX2 * 0.5;
               engine.camera.y += distanceWorldY2 * 0.5;
 
+              final distanceWorldX3 = ((playerScreenX2 - _previousPlayerScreenX3) / engine.zoom) * 0.5;
+              final distanceWorldY3 = ((playerScreenY2 - _previousPlayerScreenY3) / engine.zoom) * 0.5;
+
+              engine.camera.x += distanceWorldX3 * 0.5;
+              engine.camera.y += distanceWorldY3 * 0.5;
+
+              _previousPlayerScreenX3 = _previousPlayerScreenX2;
+              _previousPlayerScreenY3 = _previousPlayerScreenY2;
               _previousPlayerScreenX2 = _previousPlayerScreenX1;
               _previousPlayerScreenY2 = _previousPlayerScreenY1;
               _previousPlayerScreenX1 = worldToScreenX(_player.x);
