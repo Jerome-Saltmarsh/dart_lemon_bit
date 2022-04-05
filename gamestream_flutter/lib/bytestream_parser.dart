@@ -51,8 +51,10 @@ Character? findPlayerCharacter(){
   return null;
 }
 
-var _previousPlayerScreenX = 0.0;
-var _previousPlayerScreenY = 0.0;
+var _previousPlayerScreenX1 = 0.0;
+var _previousPlayerScreenY1 = 0.0;
+var _previousPlayerScreenX2 = 0.0;
+var _previousPlayerScreenY2 = 0.0;
 
 class _ByteStreamParser {
   var _index = 0;
@@ -175,8 +177,20 @@ class _ByteStreamParser {
               final playerScreenY2 = worldToScreenY(_player.y);
               final distanceWorldX = ((playerScreenX2 - playerScreenX) / engine.zoom) * 0.5;
               final distanceWorldY = ((playerScreenY2 - playerScreenY) / engine.zoom) * 0.5;
+
               engine.camera.x += distanceWorldX * 0.5;
               engine.camera.y += distanceWorldY * 0.5;
+
+              final distanceWorldX2 = ((playerScreenX2 - _previousPlayerScreenX2) / engine.zoom) * 0.5;
+              final distanceWorldY2 = ((playerScreenY2 - _previousPlayerScreenY2) / engine.zoom) * 0.5;
+
+              engine.camera.x += distanceWorldX2 * 0.5;
+              engine.camera.y += distanceWorldY2 * 0.5;
+
+              _previousPlayerScreenX2 = _previousPlayerScreenX1;
+              _previousPlayerScreenY2 = _previousPlayerScreenY1;
+              _previousPlayerScreenX1 = worldToScreenX(_player.x);
+              _previousPlayerScreenY2 = worldToScreenY(_player.y);
               break;
             case CameraMode.Locked:
               engine.cameraCenter(_player.x, _player.y);
