@@ -47,6 +47,7 @@ class Player extends Character {
   int magicRegen = 1;
   int healthRegen = 1;
   bool storeVisible = false;
+  bool skipUpdate = false;
 
   double mouseX = 0;
   double mouseY = 0;

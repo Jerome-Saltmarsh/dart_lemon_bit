@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:lemon_math/Vector2.dart';
-import 'package:lemon_math/abs.dart';
 import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/distance_between.dart';
@@ -537,6 +536,10 @@ extension GameFunctions on Game {
     for (var i = 0; i < playersLength; i++) {
       final player = players[i];
       updatePlayer(player);
+      if (player.skipUpdate) {
+        player.skipUpdate = false;
+        continue;
+      }
       updateCharacter(player);
     }
 
@@ -973,11 +976,6 @@ extension GameFunctions on Game {
 
   void updateCharacter(Character character) {
     if (!character.active) return;
-
-    if (character.skipUpdate) {
-      character.skipUpdate = false;
-      return;
-    }
 
     _updateCharacterAI(character);
     character.updateMovement();

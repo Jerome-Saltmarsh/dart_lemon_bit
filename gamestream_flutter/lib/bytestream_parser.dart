@@ -9,7 +9,6 @@ import 'package:bleed_common/ServerResponse.dart';
 import 'package:bleed_common/SlotType.dart';
 import 'package:bleed_common/compile_util.dart';
 import 'package:bleed_common/constants.dart';
-import 'package:bleed_common/enums/Direction.dart';
 import 'package:bleed_common/enums/ProjectileType.dart';
 import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
@@ -209,7 +208,6 @@ class _ByteStreamParser {
           _orbs.ruby.value = _nextInt();
           _player.alive.value = readBool();
           _player.storeVisible.value = readBool();
-
           final currentServerFrame = _player.serverFrame.value;
           final nextServerFrame =  _nextInt();
           // if (nextServerFrame == currentServerFrame){

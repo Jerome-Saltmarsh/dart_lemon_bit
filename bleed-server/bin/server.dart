@@ -77,8 +77,6 @@ void startWebsocketServer(){
   });
 }
 
-final _5ms = Duration(seconds: 3);
-
 void buildWebSocketHandler(WebSocketChannel webSocket) {
     totalConnections++;
     print("New connection established. Total Connections $totalConnections");
