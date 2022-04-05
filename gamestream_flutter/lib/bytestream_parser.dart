@@ -40,10 +40,6 @@ final _minutes = modules.isometric.state.minutes;
 
 var time = DateTime.now();
 
-var previousVelocityX = 0.0;
-var previousVelocityY = 0.0;
-
-
 Character? findPlayerCharacter(){
   final total = game.totalPlayers.value;
   for (var i = 0; i < total; i++) {
@@ -144,6 +140,17 @@ class _ByteStreamParser {
           sendRequestUpdatePlayer();
           return;
         case ServerResponse.Player:
+
+          final currentServerFrame = _player.serverFrame.value;
+          final nextServerFrame =  _nextInt();
+          if (nextServerFrame == currentServerFrame){
+            // HOW IS THIS STILL BEING REACHED, PATCHED SHOULD BE GETTING RETURNED
+            print("NO CHANGE FROM SERVER");
+            // modules.game.update.readPlayerInput();
+            // sendRequestUpdatePlayer();
+            return;
+          }
+
           final previousX = _player.x;
           final previousY = _player.y;
           final x = _nextDouble();
@@ -196,18 +203,6 @@ class _ByteStreamParser {
           _orbs.ruby.value = _nextInt();
           _player.alive.value = readBool();
           _player.storeVisible.value = readBool();
-          final currentServerFrame = _player.serverFrame.value;
-          final nextServerFrame =  _nextInt();
-          if (nextServerFrame == currentServerFrame){
-            // HOW IS THIS STILL BEING REACHED, PATCHED SHOULD BE GETTING RETURNED
-            print("NO CHANGE FROM SERVER");
-            // modules.game.update.readPlayerInput();
-            // sendRequestUpdatePlayer();
-            return;
-          } else {
-            previousVelocityX = velocityX;
-            previousVelocityY = velocityY;
-          }
           _player.serverFrame.value = nextServerFrame;
           break;
         case ServerResponse.End:

@@ -50,6 +50,7 @@ class _ByteCompiler {
     final game = player.game;
 
     writeByte(ServerResponse.Player);
+    writeBigInt(player.game.frame);
     writeBigInt(player.x);
     writeBigInt(player.y);
     writeBigInt(player.health);
@@ -71,7 +72,6 @@ class _ByteCompiler {
     writeBool(player.alive); // 1
     writeBool(player.storeVisible); // 1
 
-    writeBigInt(player.game.frame);
 
     writePlayers(player);
     writeAttackTarget(player);
