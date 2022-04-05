@@ -160,7 +160,20 @@ class _ByteStreamParser {
             case CameraMode.Chase:
               const cameraFollowSpeed = 0.01;
               // engine.cameraFollow(_player.x, _player.y, cameraFollowSpeed * sync.value);
+              final playerScreenX = worldToScreenX(_player.x);
+              final playerScreenY = worldToScreenY(_player.y);
               engine.cameraFollow(_player.x, _player.y, cameraFollowSpeed);
+              final playerScreenX2 = worldToScreenX(_player.x);
+              final playerScreenY2 = worldToScreenY(_player.y);
+
+              final distanceWorldX = ((playerScreenX2 - playerScreenX) / engine.zoom) * 0.5;
+              final distanceWorldY = ((playerScreenY2 - playerScreenY) / engine.zoom) * 0.5;
+
+              engine.camera.x += distanceWorldX;
+              engine.camera.y += distanceWorldY;
+
+              print("Fixed x: $distanceWorldX, y: $distanceWorldY");
+
               // if (playerCharacter != null) {
               //   if (playerCharacter.running) {
               //     final diffX = screenCenterWorldX - x;
