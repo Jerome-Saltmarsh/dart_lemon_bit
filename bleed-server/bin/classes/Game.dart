@@ -81,7 +81,7 @@ abstract class Game {
   final List<DynamicObject> dynamicObjects = [];
   List<SpawnPoint> spawnPoints = [];
   int shadeMax = Shade.Bright;
-  int duration = 0;
+  int frame = 0;
   int teamSize = 1;
   int numberOfTeams = 2;
   bool cratesDirty = false;
@@ -350,9 +350,9 @@ extension GameFunctions on Game {
 
 
   void updateInProgress() {
-    duration++;
+    frame++;
 
-    if (duration % 15 == 0){
+    if (frame % 15 == 0){
       updateInteractableNpcTargets();
       updateZombieTargets();
     }

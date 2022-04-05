@@ -71,7 +71,7 @@ class _ByteCompiler {
     writeBool(player.alive); // 1
     writeBool(player.storeVisible); // 1
 
-    writeBigInt(player.game.duration);
+    writeBigInt(player.game.frame);
 
     writePlayers(player);
     writeAttackTarget(player);

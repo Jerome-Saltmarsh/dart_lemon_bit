@@ -91,7 +91,7 @@ class GameSkirmish extends Game {
 
   @override
   void update(){
-    if (duration % 100 == 0) {
+    if (frame % 100 == 0) {
       if (numberOfAliveZombies < 10){
         spawnRandomZombie(health: 10, damage: 1);
       }

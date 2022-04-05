@@ -280,10 +280,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.screenBottom = readNumberFromByteArray(args, index: 13).toDouble();
           final serverFrame = readBigNumberFromArray(args, index: 15);
 
-          if (serverFrame == player.game.duration){
-            // player.game.updateCharacter(player);
-            // player.skipUpdate = true;
-            print("Patched");
+          if (serverFrame == player.game.frame) {
             const patch = [ServerResponse.No_Change];
             sink.add(patch);
             return;

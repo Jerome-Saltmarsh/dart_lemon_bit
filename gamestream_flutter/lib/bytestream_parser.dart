@@ -55,6 +55,8 @@ Character? findPlayerCharacter(){
   return null;
 }
 
+var _previousPlayerScreenX = 0.0;
+var _previousPlayerScreenY = 0.0;
 
 class _ByteStreamParser {
   var _index = 0;
@@ -159,38 +161,17 @@ class _ByteStreamParser {
           switch(modules.game.state.cameraMode.value){
             case CameraMode.Chase:
               const cameraFollowSpeed = 0.01;
-              // engine.cameraFollow(_player.x, _player.y, cameraFollowSpeed * sync.value);
               final playerScreenX = worldToScreenX(_player.x);
               final playerScreenY = worldToScreenY(_player.y);
               engine.cameraFollow(_player.x, _player.y, cameraFollowSpeed);
               final playerScreenX2 = worldToScreenX(_player.x);
               final playerScreenY2 = worldToScreenY(_player.y);
-
               final distanceWorldX = ((playerScreenX2 - playerScreenX) / engine.zoom) * 0.5;
               final distanceWorldY = ((playerScreenY2 - playerScreenY) / engine.zoom) * 0.5;
-
-              engine.camera.x += distanceWorldX;
-              engine.camera.y += distanceWorldY;
-
-              print("Fixed x: $distanceWorldX, y: $distanceWorldY");
-
-              // if (playerCharacter != null) {
-              //   if (playerCharacter.running) {
-              //     final diffX = screenCenterWorldX - x;
-              //     final diffY = screenCenterWorldY - y;
-              //     playerCharacter.x -= (diffX * 4) * cameraFollowSpeed * sync.value;
-              //     playerCharacter.y -= (diffY * 4) * cameraFollowSpeed * sync.value;
-              //   }
-              // }
+              engine.camera.x += distanceWorldX * 0.5;
+              engine.camera.y += distanceWorldY * 0.5;
               break;
             case CameraMode.Locked:
-              // if (playerCharacter != null){
-              //   final diffX = screenCenterWorldX - x;
-              //   final diffY = screenCenterWorldY - y;
-              //   const cameraFollowSpeed = 0.01;
-              //   playerCharacter.x -= (diffX * 4) * cameraFollowSpeed * sync.value;
-              //   playerCharacter.y -= (diffY * 4) * cameraFollowSpeed * sync.value;
-              // }
               engine.cameraCenter(_player.x, _player.y);
               break;
             case CameraMode.Free:
@@ -218,7 +199,10 @@ class _ByteStreamParser {
           final currentServerFrame = _player.serverFrame.value;
           final nextServerFrame =  _nextInt();
           if (nextServerFrame == currentServerFrame){
+            // HOW IS THIS STILL BEING REACHED, PATCHED SHOULD BE GETTING RETURNED
             print("NO CHANGE FROM SERVER");
+            // modules.game.update.readPlayerInput();
+            // sendRequestUpdatePlayer();
             return;
           } else {
             previousVelocityX = velocityX;
