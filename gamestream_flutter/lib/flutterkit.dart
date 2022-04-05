@@ -9,6 +9,8 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
+import 'ui/style.dart';
+
 const empty = SizedBox();
 
 
@@ -384,4 +386,23 @@ Widget boolBuilder(Watch<bool> watch, {required Widget widgetTrue, required Widg
   return WatchBuilder(watch, (bool visible){
     return visible ? widgetTrue : widgetFalse;
   });
+}
+
+Widget loadingText(String value, Function onPressed){
+  var frame = 0;
+  return Refresh(() {
+     frame = (frame + 1) % 4;
+     switch(frame){
+       case 0:
+         return text('-- $value --', size: style.fontSize.large, bold: true, onPressed: onPressed);
+       case 1:
+         return text('/- $value -\\', size: style.fontSize.large, bold: true, onPressed: onPressed);
+       case 2:
+         return text('|- $value -|', size: style.fontSize.large, bold: true, onPressed: onPressed);
+       case 3:
+         return text('\\- $value -/', size: style.fontSize.large, bold: true, onPressed: onPressed);
+       default:
+          return text(value);
+     }
+  }, milliseconds: 100);
 }

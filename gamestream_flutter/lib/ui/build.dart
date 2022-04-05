@@ -256,6 +256,15 @@ class _Build {
             child: mouseOver(
                 builder: (BuildContext context, bool mouseOver) {
                   final gameName = gameTypeNames[gameType];
+
+                  if (mouseOver){
+                    return loadingText(gameName!, (){
+                      game.type.value = gameType;
+                      core.actions.connectToSelectedGame();
+                    });
+                  }
+
+
                   return text(mouseOver ? '-$gameName-' : gameName, color: mouseOver ? colours.white : colours.white85, onPressed: (){
                     game.type.value = gameType;
                     core.actions.connectToSelectedGame();
