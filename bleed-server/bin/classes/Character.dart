@@ -171,13 +171,9 @@ class Character extends GameObject {
     slots.weapon.type = weapon;
   }
 
-  void applyVelocity(){
-    x += velocityX;
-    y += velocityY;
+  void applyVelocity() {
+    move(angle, speed);
   }
-
-  double get velocityX => adj(angle, speed);
-  double get velocityY => opp(angle, speed);
 
   void updateMovement() {
     const minVelocity = 0.005;
