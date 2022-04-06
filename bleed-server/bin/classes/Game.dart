@@ -177,7 +177,7 @@ abstract class Game {
   GameEvent _getAvailableGameEvent() {
     for (final gameEvent in gameEvents) {
       if (gameEvent.frameDuration > 0) continue;
-      gameEvent.frameDuration = 5;
+      gameEvent.frameDuration = 3;
       gameEvent.assignNewId();
       return gameEvent;
     }
@@ -359,6 +359,13 @@ extension GameFunctions on Game {
       updateZombieTargets();
     }
 
+    for (final dynamicObject in dynamicObjects) {
+      if (dynamicObject.respawnDuration <= 0) continue;
+      if (dynamicObject.respawnDuration-- > 1) continue;
+      dynamicObject.collidable = true;
+      dynamicObject.health = 3;
+    }
+
     update();
     _updateCollisions();
     _updatePlayersAndNpcs();
@@ -441,7 +448,9 @@ extension GameFunctions on Game {
       target.health -= amount;
       if (target.health <= 0) {
         target.collidable = false;
+        target.respawnDuration = 150;
         if (target.type == DynamicObjectType.Pot) {
+          print("Pot Destroyed");
           dispatchV2(GameEventType.Pot_Destroyed, target);
         }
         onDynamicObjectDestroyed(target);
@@ -1194,12 +1203,13 @@ extension GameFunctions on Game {
 
   void dispatch(GameEventType type, double x, double y,
       [double angle = 0]) {
+    print('game.dispatch($type)');
     final event = _getAvailableGameEvent();
     event.type = type;
     event.x = x;
     event.y = y;
     event.angle = angle * radiansToDegrees;
-    event.frameDuration = 5;
+    event.frameDuration = 3;
   }
 
   void updateZombieTargets() {

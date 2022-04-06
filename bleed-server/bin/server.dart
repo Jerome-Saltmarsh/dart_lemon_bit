@@ -109,8 +109,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
     void compileAndSendPlayerGame(Player player){
       byteCompiler.writePlayerGame(player);
-      final bytes = byteCompiler.writeToSendBuffer();
-      sink.add(bytes);
+      sink.add(byteCompiler.writeToSendBuffer());
     }
 
     void onGameJoined(){

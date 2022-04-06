@@ -9,6 +9,7 @@ import 'classes/Game.dart';
 import 'classes/GameObject.dart';
 import 'classes/Player.dart';
 import 'classes/Projectile.dart';
+import 'common/GameEventType.dart';
 import 'common/ServerResponse.dart';
 import 'common/compile_util.dart';
 import 'common/constants.dart';
@@ -70,7 +71,6 @@ class _ByteCompiler {
     writeBigInt(orbs.ruby); // 2
     writeBool(player.alive); // 1
     writeBool(player.storeVisible); // 1
-
 
     writePlayers(player);
     writeAttackTarget(player);
@@ -200,8 +200,15 @@ class _ByteCompiler {
     final gameEventIds = player.gameEventIds;
     for (final gameEvent in gameEvents) {
       if (gameEvent.frameDuration <= 0) continue;
+
       final id = gameEvent.id;
-      if (gameEventIds.containsKey(id)) continue;
+      if (gameEventIds.containsKey(id)) {
+        if (gameEvent.type == GameEventType.Pot_Destroyed){
+          print("POT DESTROYED EVENT ALREADY SENT $id");
+        }
+        continue;
+      }
+      print("SENDING NEW POT DESTROYED EVENT $id");
       gameEventIds[id] = true;
       writeByte(gameEvent.type.index);
       writeBigInt(gameEvent.x);
