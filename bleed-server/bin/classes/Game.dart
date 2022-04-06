@@ -284,6 +284,8 @@ abstract class Game {
         final r = radiansV2(a, b);
         a.x -= adj(r, overlap);
         a.y -= opp(r, overlap);
+        a.onCollisionWith(b);
+        b.onCollisionWith(a);
       }
     }
   }
@@ -358,8 +360,8 @@ extension GameFunctions on Game {
     }
 
     update();
-    _updatePlayersAndNpcs();
     _updateCollisions();
+    _updatePlayersAndNpcs();
     _updateProjectiles();
     _updateProjectiles(); // called twice to fix collision detection
     _updateGameEvents();
@@ -512,11 +514,8 @@ extension GameFunctions on Game {
 
     if (ai.pathIndex >= 0) {
       if (ai.arrivedAtDest) {
-        ai.pathIndex--;
-        if (ai.pathIndex < 0) {
-          character.state = stateIdle;
-          return;
-        }
+        ai.nextPath();
+        return;
       }
       // @on npc going to path
       characterFace(character, ai.destX, ai.destY);
@@ -552,14 +551,13 @@ extension GameFunctions on Game {
     for (var i = 0; i < npcsLength; i++) {
       updateCharacter(npcs[i]);
     }
-
-    checkColliderCollision(players, colliders);
-    checkColliderCollision(zombies, colliders);
-    checkColliderCollision(players, dynamicObjects);
   }
 
   void _updateCollisions() {
-    sortGameObjects();
+    // sortGameObjects();
+    checkColliderCollision(players, colliders);
+    checkColliderCollision(zombies, colliders);
+    checkColliderCollision(players, dynamicObjects);
     updateCollisionBetween(zombies);
     updateCollisionBetween(players);
     resolveCollisionBetween(zombies, players, resolveCollisionA);

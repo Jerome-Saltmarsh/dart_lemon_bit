@@ -1,5 +1,6 @@
 
 import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/distance_between.dart';
 
 class Collider extends Vector2 {
   double radius;
@@ -10,4 +11,10 @@ class Collider extends Vector2 {
   var collidable = true;
 
   Collider(double x, double y, this.radius) : super(x, y);
+
+  void onCollisionWith(Collider other){ }
+
+  bool withinBounds(double x, double y) {
+    return distanceBetween(this.x, this.y, x, y) <= radius;
+  }
 }

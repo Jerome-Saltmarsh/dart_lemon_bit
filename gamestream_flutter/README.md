@@ -97,9 +97,11 @@
 [ ] Pot Struck Audio
 [ ] FIX Pot destroyed Particles    
 [ ] AI Should avoid colliders in front of them.      
-[ ] Fix Slash Sword audio out of sink    
+[ ] (MILESTONE) FIX Sometimes game events don't fire    
+[ ] FIX Zombies run into lamps forever    
+[x] Fix Slash Sword audio out of sink    
 [x] FIX Right click melee hit previous aim target    
-[x] FIX Player Shake (MILESTONE)    
+[x] (MILESTONE) FIX Player Shake     
 [x] Convert ServerResponse from enum to constants    
 [x] Convert ClientRequest from enum to constants    
 [x] FIX Highlight Pot at mouse

@@ -145,9 +145,9 @@ class Scene {
       ];
       if (!snapToGridTypes.contains(env.type)) continue;
        snapToGrid(env);
-       final row = getRow(env.x, env.y);
-       final column = getColumn(env.x, env.y);
-       tileNodes[row][column].open = false;
+       // final row = getRow(env.x, env.y);
+       // final column = getColumn(env.x, env.y);
+       // tileNodes[row][column].open = false;
     }
   }
 }

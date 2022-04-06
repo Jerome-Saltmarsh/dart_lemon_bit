@@ -40,11 +40,26 @@ class AI {
 
   int get pathIndex => _pathIndex;
 
+  void stopPath(){
+    if (character.deadOrBusy) return;
+    _pathIndex = -1;
+    character.state = stateIdle;
+  }
+
   set pathIndex(int value){
     _pathIndex = value;
-    if (value < 0) return;
+    if (value < 0) {
+      if (character.alive) {
+        character.state = stateIdle;
+      }
+      return;
+    }
     destX = pathX[value];
     destY = pathY[value];
+  }
+
+  void nextPath(){
+    pathIndex = _pathIndex - 1;
   }
 
   double get x => character.x;
@@ -172,6 +187,12 @@ class Character extends GameObject {
     const velocityFriction = 0.88;
     xv *= velocityFriction;
     yv *= velocityFriction;
+  }
+
+  void onCollisionWith(Collider other){
+     if (ai == null) return;
+     if (!other.withinBounds(ai!.destX, ai!.destY)) return;
+     ai!.stopPath();
   }
 }
 
