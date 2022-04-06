@@ -99,6 +99,7 @@
 [ ] AI Should avoid colliders in front of them.      
 [ ] (MILESTONE) FIX Sometimes game events don't fire    
 [ ] FIX Zombies run into lamps forever    
+[x] FIX Raycast sword does not hit zombie    
 [x] Fix Slash Sword audio out of sink    
 [x] FIX Right click melee hit previous aim target    
 [x] (MILESTONE) FIX Player Shake     
