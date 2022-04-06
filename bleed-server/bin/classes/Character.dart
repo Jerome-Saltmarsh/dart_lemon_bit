@@ -79,12 +79,15 @@ class AI {
 }
 
 class Character extends GameObject {
+  // TODO remove from character
   late CharacterType type;
   late int _health;
   late int maxHealth;
   late double _speed;
   late AI? ai;
+  // TODO remove from character
   Ability? ability = null;
+  // TODO remove from character
   Ability? performing = null;
   int state = stateIdle;
   double angle = 0;
@@ -95,7 +98,8 @@ class Character extends GameObject {
   int stateDuration = 0;
   int animationFrame = 0;
   int frozenDuration = 0;
-  /// the character that was highlighted when the player clicked
+  /// the character that was highlighted as the character began attacking
+  /// This forces a hit to occur even if the target goes out of range of the attack
   Collider? attackTarget;
   double speedModifier = 0;
   bool invincible = false;

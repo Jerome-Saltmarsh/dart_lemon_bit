@@ -861,6 +861,7 @@ extension GameFunctions on Game {
   }
 
   void applyStrike(Character src, Collider target, int damage) {
+    if (!target.collidable) return;
     if (target is Character) {
       if (sameTeam(src, target)) return;
       if (target.dead) return;
@@ -1515,8 +1516,12 @@ extension GameFunctions on Game {
           final attackTarget = character.attackTarget;
           final damage = character.weapon.damage;
           if (attackTarget != null) {
-            applyStrike(character, attackTarget, damage);
-            return;
+            if (attackTarget.collidable){
+              applyStrike(character, attackTarget, damage);
+              return;
+            } else {
+              character.attackTarget = null;
+            }
           }
           final range = weaponType.range;
           final zombieHit = physics.raycastHit(

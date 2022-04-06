@@ -19,22 +19,21 @@ import 'Character.dart';
 import 'Collider.dart';
 import 'Game.dart';
 
-const _defaultMaxMagic = 10;
-
 class Player extends Character {
   final gameEventIds = <int, bool>{};
+  final events = <PlayerEvent>[];
+  final gemSpawns = <GemSpawn>[];
+  final slots = Slots();
+  final orbs = Orbs();
   var score = 0;
   var sceneChanged = false;
+  var characterState = stateIdle;
   Account? account;
-  String name = generateName();
   /// How many frames have elapsed since the server received a message from this client
   int lastUpdateFrame = 0;
   int frameOfDeath = -1;
   int pointsRecord = 0;
-  String message = "";
-  String text = "";
   int textDuration = 0;
-  Game game;
   int handgunDamage = 10;
   int experience = 0;
   int level = 1;
@@ -43,27 +42,19 @@ class Player extends Character {
   int maxMagic = 100;
   int magicRegen = 1;
   int healthRegen = 1;
+  int lastFrameSent = -1;
+  String message = "";
+  String text = "";
+  String name = generateName();
+  Game game;
   bool storeVisible = false;
   bool skipUpdate = false;
-
-  int lastFrameSent = -1;
-
   double mouseX = 0;
   double mouseY = 0;
-
   double screenLeft = 0;
   double screenTop = 0;
   double screenRight = 0;
   double screenBottom = 0;
-
-  final List<PlayerEvent> events = [];
-  final List<GemSpawn> gemSpawns = [];
-
-  var characterState = stateIdle;
-
-  final slots = Slots();
-  final orbs = Orbs();
-
   Collider? aimTarget; // the currently highlighted character
   Vector2? target;
   Vector2 runTarget = Vector2(0, 0);
@@ -106,7 +97,7 @@ class Player extends Character {
     double x = 0,
     double y = 0,
     int team = noSquad,
-    int magic = _defaultMaxMagic,
+    int magic = 10,
     int health = 10,
     AI? ai,
   }) : super(
