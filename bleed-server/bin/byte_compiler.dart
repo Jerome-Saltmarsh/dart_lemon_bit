@@ -203,12 +203,8 @@ class _ByteCompiler {
 
       final id = gameEvent.id;
       if (gameEventIds.containsKey(id)) {
-        if (gameEvent.type == GameEventType.Pot_Destroyed){
-          print("POT DESTROYED EVENT ALREADY SENT $id");
-        }
         continue;
       }
-      print("SENDING NEW POT DESTROYED EVENT $id");
       gameEventIds[id] = true;
       writeByte(gameEvent.type.index);
       writeBigInt(gameEvent.x);

@@ -899,13 +899,6 @@ class GameBuild {
     });
   }
 
-  Widget get playerVelocity {
-    final vel = state.player.velocity;
-    return Refresh((){
-      return text("Player Velocity: x: ${vel.x.toStringAsFixed(4)}, y: ${vel.y.toStringAsFixed(4)}");
-    });
-  }
-
   Widget get byteCountWatcher {
     return WatchBuilder(byteLength, (int count){
         return text("Bytes: $count");
@@ -986,7 +979,6 @@ class GameBuild {
           buildFramesSinceUpdate(),
           buildButtonToggleCameraMode(),
           buildFramesSmoothed(),
-          playerVelocity,
           playerScreen,
           buildTotalEvents(),
           buildTotalFrames(),

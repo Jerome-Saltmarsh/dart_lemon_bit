@@ -163,19 +163,8 @@ class _ByteStreamParser {
             return;
           }
 
-          final previousX = _player.x;
-          final previousY = _player.y;
-          final x = _nextDouble();
-          final y = _nextDouble();
-
-          final velocityX = x - previousX;
-          final velocityY = y - previousY;
-
-          _player.velocity.x = velocityX;
-          _player.velocity.y = velocityY;
-
-          _player.x = x;
-          _player.y = y;
+          _player.x = _nextDouble();
+          _player.y = _nextDouble();
 
           switch(modules.game.state.cameraMode.value){
             case CameraMode.Chase:

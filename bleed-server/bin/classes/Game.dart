@@ -1203,7 +1203,6 @@ extension GameFunctions on Game {
 
   void dispatch(GameEventType type, double x, double y,
       [double angle = 0]) {
-    print('game.dispatch($type)');
     final event = _getAvailableGameEvent();
     event.type = type;
     event.x = x;
