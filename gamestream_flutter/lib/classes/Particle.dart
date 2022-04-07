@@ -1,10 +1,11 @@
+import 'dart:math';
+
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/opposite.dart';
+import 'package:lemon_math/Vector2.dart';
 
-class Particle {
-  double x = 0;
-  double y = 0;
+class Particle extends Vector2 {
   double z = 0;
   double xv = 0;
   double yv = 0;
@@ -27,9 +28,27 @@ class Particle {
 
   bool get active => duration > 0;
 
+  Particle():super(0,0);
+
   void setAngle({required double value, required double speed}){
     xv = adjacent(value, speed);
     yv = opposite(value, speed);
+  }
+
+  void updateMotion(){
+    const pi2 = pi * 2;
+    z += zv;
+    x += xv;
+    y += yv;
+    rotation = (rotation + rotationV) % pi2;
+    scale += scaleV;
+  }
+
+  void applyAirFriction(){
+    const gravity = 0.04;
+    zv -= gravity * weight;
+    xv *= airFriction;
+    yv *= airFriction;
   }
 }
 

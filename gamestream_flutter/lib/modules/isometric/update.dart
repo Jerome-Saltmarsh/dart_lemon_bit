@@ -38,17 +38,16 @@ class IsometricUpdate {
   }
 
   void _updateParticles() {
-    insertionSort(
-        _particles,
-        compare: compareParticles,
-        start: 0,
-        end: _particles.length);
 
     for (final particle in _particles) {
       if (!particle.active) break;
       updateParticle(particle);
     }
 
+    insertionSort(
+      _particles,
+      compare: compareParticles,
+    );
 
     if (engine.frame % 4 == 0) {
       for (final particle in _particles) {
@@ -61,36 +60,25 @@ class IsometricUpdate {
   }
 
   void updateParticle(Particle particle){
-    final gravity = 0.04;
-    final bounceFriction = 0.99;
-    final rotationFriction = 0.93;
-    final floorFriction = 0.9;
+    const bounceFriction = 0.99;
+    const rotationFriction = 0.93;
+    const floorFriction = 0.9;
     final airBorn = particle.z > 0.01;
     final falling = particle.zv < 0;
-    final bounce = falling && airBorn && particle.z <= 0;
-    particle.z += particle.zv;
-    particle.x += particle.xv;
-    particle.y += particle.yv;
-    if (particle.rotationV != 0){
-      particle.rotation = (particle.rotation + particle.rotationV) % _pi2;
-    }
-    particle.scale += particle.scaleV;
+    final bounce = falling && !airBorn;
+    particle.updateMotion();
 
     if (bounce) {
-
       if (!queries.tileIsWalkable(particle.x, particle.y)){
         deactivateParticle(particle);
         return;
       }
-
       particle.zv = -particle.zv * particle.bounciness;
       particle.xv = particle.xv * bounceFriction;
       particle.yv = particle.yv * bounceFriction;
       particle.rotationV *= rotationFriction;
     } else if (airBorn) {
-      particle.zv -= gravity * particle.weight;
-      particle.xv *= particle.airFriction;
-      particle.yv *= particle.airFriction;
+      particle.applyAirFriction();
     } else {
       // on floor
       particle.xv *= floorFriction;
