@@ -61,10 +61,10 @@ void mapParticleToSrc(Particle particle){
       return;
 
     case ParticleType.Leg:
-      final direction = convertAngleToDirectionInt(particle.rotation);
-      final x = _particles.zombieLeg.x + (direction * 64);
-      final y = _particles.zombieLeg.y + shade * 64;
-      engine.mapSrc(x: x, y: y, width: 64, height: 64);
+      engine.mapSrc64(
+          x: 2491 + (convertAngleToDirectionInt(particle.rotation) * 64),
+          y:  shade * 64
+      );
       return;
 
     case ParticleType.Arm:
@@ -75,18 +75,17 @@ void mapParticleToSrc(Particle particle){
       return;
 
     case ParticleType.Organ:
-      final direction = convertAngleToDirectionInt(particle.rotation);
-      final x = _particles.zombieTorso.x + (direction * 64);
-      final y = _particles.zombieTorso.y + shade * 64;
-      engine.mapSrc(x: x, y: y, width: 64, height: 64);
+      engine.mapSrc64(
+          x: 3517 + (convertAngleToDirectionInt(particle.rotation) * 64),
+          y: shade * 64
+      );
       return;
 
     case ParticleType.Shell:
-      final direction = convertAngleToDirectionInt(particle.rotation);
-      assert(direction >= 0 && direction <= 8);
-      final x = _shellX + (direction * 32);
-      final y = _shellY + shade * 32;
-      engine.mapSrc(x: x, y: y, width: 32, height: 32);
+      engine.mapSrc32(
+          x: _shellX + (convertAngleToDirectionInt(particle.rotation) * 32),
+          y: _shellY + shade * 32
+      );
       return;
 
     case ParticleType.Human_Head:
@@ -106,7 +105,7 @@ void mapParticleToSrc(Particle particle){
     case ParticleType.Pot_Shard:
       engine.mapSrcSquare(
           x: 6097,
-          y: shade * 64,
+          y: shade * 16,
           size: 16,
       );
       return;
@@ -131,7 +130,7 @@ void mapParticleToSrc(Particle particle){
       return;
 
     default:
-      throw Exception("Could not map particle '${particle.type.name}' to src");
+      throw Exception("Could not map particle '${particle.type}' to src");
   }
 }
 

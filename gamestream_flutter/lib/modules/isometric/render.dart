@@ -235,7 +235,6 @@ class IsometricRender {
     if (!_screen.contains(value.x, value.y)) return;
     final shade = state.getShadeAtPosition(value.x, value.y);
     if (shade >= Shade.Very_Dark) return;
-
     mapParticleToDst(value);
     mapParticleToSrc(value);
     engine.renderAtlas();

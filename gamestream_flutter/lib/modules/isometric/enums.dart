@@ -8,21 +8,21 @@ enum Phase {
   MidNight, // - 5
 }
 
-final List<Phase> phases = Phase.values;
+const phases = Phase.values;
 
-enum ParticleType {
-  Smoke,
-  Human_Head,
-  Zombie_Head,
-  Shell,
-  Arm,
-  Leg,
-  Organ,
-  Blood,
-  Shrapnel,
-  FireYellow,
-  Myst,
-  Pixel,
-  Orb_Ruby,
-  Pot_Shard,
+class ParticleType {
+  static const Smoke = 0;
+  static const Human_Head = 1;
+  static const Zombie_Head = 2;
+  static const Shell = 3;
+  static const Arm = 4;
+  static const Leg = 5;
+  static const Organ = 6;
+  static const Blood = 7;
+  static const Shrapnel = 8;
+  static const FireYellow = 9;
+  static const Myst = 10;
+  static const Pixel = 11;
+  static const Orb_Ruby = 12;
+  static const Pot_Shard = 13;
 }

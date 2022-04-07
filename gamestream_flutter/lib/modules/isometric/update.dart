@@ -11,8 +11,6 @@ import 'package:gamestream_flutter/modules/isometric/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 
-const _pi2 = pi + pi;
-
 final _particles = isometric.state.particles;
 final _spawn = isometric.spawn;
 final _screen = engine.screen;
@@ -96,8 +94,7 @@ class IsometricUpdate {
     if (particle.z <= 0) {
       particle.z = 0;
     }
-    particle.duration--;
-    if (particle.duration <= 0) {
+    if (particle.duration-- <= 0) {
       deactivateParticle(particle);
     }
   }

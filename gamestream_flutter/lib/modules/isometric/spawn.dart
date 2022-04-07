@@ -41,7 +41,7 @@ class IsometricSpawn {
   }
 
   void _particle({
-    required ParticleType type,
+    required int type,
     required double x,
     required double y,
     required double angle,
@@ -59,7 +59,7 @@ class IsometricSpawn {
     bool castShadow = false,
   }) {
     assert(duration > 0);
-    const mapTypeToSize = <ParticleType, double> {
+    const mapTypeToSize = <int, double> {
       ParticleType.Zombie_Head: 64.0,
       ParticleType.Blood: 8.0,
       ParticleType.Human_Head: 64.0,
@@ -109,8 +109,9 @@ class IsometricSpawn {
     required double angle,
     required double speed
   }) {
+    final type = ParticleType.Arm;
     _particle(
-        type: ParticleType.Arm,
+        type: type,
         x: x,
         y: y,
         z: z,
@@ -136,13 +137,6 @@ class IsometricSpawn {
     required double speed
   }) {
     const type = ParticleType.Blood;
-    const weight = 0.135;
-    const zero = 0.0;
-    const scale = 0.6;
-    const durationMin = 120;
-    const durationMax = 200;
-    const hasShadow = true;
-
     _particle(
         type: type,
         x: x,
@@ -151,14 +145,14 @@ class IsometricSpawn {
         zv: zv,
         angle: angle,
         speed: speed,
-        weight: weight,
-        duration: randomInt(durationMin, durationMax),
-        rotation: zero,
-        rotationV: zero,
-        scale: scale,
-        scaleV: zero,
-        bounciness: zero,
-        castShadow: hasShadow,
+        weight: 0.135,
+        duration: randomInt(120, 200),
+        rotation: 0,
+        rotationV: 0,
+        scale: 0.6,
+        scaleV: 0,
+        bounciness: 0,
+        castShadow: true,
     );
   }
 
@@ -170,8 +164,9 @@ class IsometricSpawn {
     required double angle,
     required double speed
 }){
+    const type = ParticleType.FireYellow;
     _particle(
-        type: ParticleType.FireYellow,
+        type: type,
         x: x,
         y: y,
         z: 0,
@@ -192,8 +187,9 @@ class IsometricSpawn {
         required double angle,
         required double speed
       }) {
+    const type = ParticleType.Human_Head;
     _particle(
-      type: ParticleType.Human_Head,
+      type: type,
       x: x,
       y: y,
       z: z,
@@ -217,8 +213,9 @@ class IsometricSpawn {
     required double angle,
     required double speed
   }) {
+    final type = ParticleType.Organ;
     _particle(
-        type: ParticleType.Organ,
+        type: type,
         x: x,
         y: y,
         z: z,
@@ -237,29 +234,22 @@ class IsometricSpawn {
     required double x,
     required double y,
   }) {
-    const scale = 0.3;
-    const duration = 100;
-    const weight = 0.35;
-    const zVelocity = 0.075;
-    const speed = 1.5;
-    const height = 0.8;
-    const rotationVelocity = 0.01;
-    const bounciness = 1.0;
-
+    final type = ParticleType.Shell;
     _particle(
-      type: ParticleType.Shell,
+      type: type,
       x: x,
       y: y,
-      z: height,
+      z: 0.8,
       angle: randomAngle(),
-      speed: speed,
-      zv: zVelocity,
-      weight: weight,
-      duration: duration,
+      speed: 1.5,
+      zv: 0.075,
+      weight: 0.35,
+      duration: 100,
       rotation: randomAngle(),
-      rotationV: rotationVelocity,
-      scale: scale,
-      bounciness: bounciness,
+      rotationV: 0.01,
+      scale: 0.3,
+      bounciness: 0.4,
+      castShadow: true,
     );
   }
 
@@ -271,7 +261,7 @@ class IsometricSpawn {
     required double angle,
     required double speed
   }) {
-    for (int i = 0; i < 4; i++) {
+    for (var i = 0; i < 4; i++) {
       _particle(
           type: ParticleType.Smoke,
           x: x,

@@ -4,24 +4,19 @@ import 'package:lemon_engine/engine.dart';
 
 const zToScaleRatio = 0.4;
 const zToHeightRatio = 20;
-const zero = 0.0;
-const half = 0.5;
-const one = 1;
 
 void mapParticleToDst(Particle particle){
-  final renderScale = (one + (particle.z * zToScaleRatio)) * particle.scale;
-  final sizeHalf = particle.size * half;
+  final renderScale = (1.0 + (particle.z * zToScaleRatio)) * particle.scale;
+  final sizeHalf = particle.size * 0.5;
 
-  if (renderScale <= 0){
-    throw Exception();
-  }
+  assert(renderScale > 0);
 
   return engine.mapDst(
     scale: renderScale,
     rotation: particle.rotation,
     x: particle.x,
-    y: particle.y,
+    y: particle.y - (particle.z * zToHeightRatio),
     anchorX: sizeHalf,
-    anchorY: sizeHalf + (particle.z * zToHeightRatio)
+    anchorY: sizeHalf,
   );
 }
