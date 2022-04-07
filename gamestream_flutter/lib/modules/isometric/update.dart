@@ -58,12 +58,8 @@ class IsometricUpdate {
   }
 
   void updateParticle(Particle particle){
-    const bounceFriction = 0.99;
-    const rotationFriction = 0.93;
-    const floorFriction = 0.9;
     final airBorn = particle.z > 0.01;
-    final falling = particle.zv < 0;
-    final bounce = falling && !airBorn;
+    final bounce = particle.zv < 0 && !airBorn;
     particle.updateMotion();
 
     if (bounce) {
@@ -72,13 +68,11 @@ class IsometricUpdate {
         return;
       }
       particle.zv = -particle.zv * particle.bounciness;
-      particle.xv = particle.xv * bounceFriction;
-      particle.yv = particle.yv * bounceFriction;
-      particle.rotationV *= rotationFriction;
     } else if (airBorn) {
       particle.applyAirFriction();
     } else {
-      // on floor
+      const floorFriction = 0.9;
+      const rotationFriction = 0.93;
       particle.xv *= floorFriction;
       particle.yv *= floorFriction;
       particle.rotationV *= rotationFriction;
@@ -88,12 +82,7 @@ class IsometricUpdate {
         return;
       }
     }
-    if (particle.scale < 0) {
-      particle.scale = 0;
-    }
-    if (particle.z <= 0) {
-      particle.z = 0;
-    }
+    particle.applyLimits();
     if (particle.duration-- <= 0) {
       deactivateParticle(particle);
     }

@@ -50,5 +50,14 @@ class Particle extends Vector2 {
     xv *= airFriction;
     yv *= airFriction;
   }
+
+  void applyLimits(){
+    if (scale < 0) {
+      scale = 0;
+    }
+    if (z <= 0) {
+      z = 0;
+    }
+  }
 }
 
