@@ -9,7 +9,6 @@ import 'package:bleed_common/configuration.dart';
 import 'package:bleed_common/enums/ProjectileType.dart';
 import 'package:bleed_common/enums/Shade.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/bytestream_parser.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
@@ -23,7 +22,7 @@ import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/adjacent.dart';
-import 'package:lemon_math/diff_over.dart';
+import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/opposite.dart';
 
 import 'state.dart';
@@ -56,7 +55,6 @@ class GameRender {
     for (var i = 0; i < totalDynamicEnvironmentObjects; i++) {
        final dynamicObject = game.dynamicObjects[i];
        final shade = isometric.state.getShadeAtPosition(dynamicObject.x, dynamicObject.y);
-       // drawCircle36(dynamicObject.x, dynamicObject.y);
        engine.mapSrc64(x: 6032, y: shade * 64);
        engine.mapDst(x: dynamicObject.x, y: dynamicObject.y, anchorX: 32, anchorY: 32);
        engine.renderAtlas();
@@ -165,7 +163,6 @@ class GameRender {
       if (diffOver(mouseWorldX, player.x, minDistance)) continue;
       if (diffOver(mouseWorldY, player.y, minDistance)) continue;
       renderText(text: player.name, x: player.x, y: player.y + 5);
-      // engine.writeText(player.name, player.x - isometric.constants.charWidth * player.name.length, player.y + 5);
     }
   }
 

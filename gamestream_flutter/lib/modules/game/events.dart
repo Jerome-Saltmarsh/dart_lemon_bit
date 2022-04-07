@@ -358,13 +358,14 @@ class GameEvents {
         audio.playAudioCollectStar(x, y);
         break;
       case GameEventType.Pot_Destroyed:
-        print('GameEventType.Pot_Destroyed');
         for (var i = 0; i < 8; i++) {
           isometric.spawn.potShard(x, y);
         }
         audio.potBreaking(x, y);
         break;
+      case GameEventType.Object_Struck:
+        audio.objectStruck(x, y);
+        break;
     }
   }
-
 }

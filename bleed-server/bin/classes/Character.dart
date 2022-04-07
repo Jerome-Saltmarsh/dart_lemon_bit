@@ -9,7 +9,6 @@ import '../common/SlotType.dart';
 import '../constants.dart';
 import '../constants/no_squad.dart';
 import '../enums/npc_mode.dart';
-import '../maths.dart';
 import '../settings.dart';
 import '../utilities.dart';
 import 'Ability.dart';

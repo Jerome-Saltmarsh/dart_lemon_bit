@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/diff.dart';
-import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/hypotenuse.dart';
@@ -276,8 +275,6 @@ abstract class Game {
         final b = collidersB[i];
         if (!b.collidable) continue;
         final combinedRadius = aRadius + b.radius;
-        if (diffOver(a.x, b.x, combinedRadius)) continue;
-        if (diffOver(a.y, b.y, combinedRadius)) continue;
         final _distance = distanceV2(a, b);
         if (_distance > combinedRadius) continue;
         final overlap = combinedRadius - _distance;
@@ -454,6 +451,7 @@ extension GameFunctions on Game {
           dispatchV2(GameEventType.Pot_Destroyed, target);
         }
         onDynamicObjectDestroyed(target);
+        return;
       }
     }
   }
@@ -880,9 +878,6 @@ extension GameFunctions on Game {
       const forceMultiplier = 3.0;
       final healthPercentage = damage / target.maxHealth;
       applyForce(target, angleBetweenSrcAndTarget, healthPercentage * forceMultiplier);
-    }
-
-    if (target is Character) {
       dispatch(
           GameEventType.Character_Struck,
           target.x,
@@ -897,6 +892,11 @@ extension GameFunctions on Game {
             src.aimAngle
         );
       }
+      return;
+    }
+
+    if (target is DynamicObject) {
+      dispatchV2(GameEventType.Object_Struck, target);
     }
   }
 
@@ -1546,7 +1546,7 @@ extension GameFunctions on Game {
               range: range
           );
           if (dynamicObjectHit != null) {
-            applyDamage(character, dynamicObjectHit, damage);
+            applyStrike(character, dynamicObjectHit, damage);
           }
           return;
         }

@@ -95,9 +95,10 @@
     [ ] Chest
     [ ] Pot
 [ ] Pot Struck Audio
-[ ] FIX Pot destroyed Particles    
 [ ] AI Should avoid colliders in front of them.      
 [ ] FIX Zombies run into lamps forever    
+[ ] FIX Pot destroyed Particles    
+[x] Pot Struck Audio    
 [x] (MILESTONE) FIX Sometimes game events don't fire    
 [x] FIX Raycast sword does not hit zombie    
 [x] Fix Slash Sword audio out of sink    

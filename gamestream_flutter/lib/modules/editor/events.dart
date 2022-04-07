@@ -74,21 +74,21 @@ class EditorEvents with EditorScope {
   void onMouseLeftClicked() {
     print("editor.events.onMouseLeftClicked()");
 
-    final closest =  getClosest(mouseWorldX, mouseWorldY, [
-      state.environmentObjects,
-      state.teamSpawnPoints,
-      state.items,
-      state.characters,
-    ]);
-
-    if (closest != null){
-      final closestDistance = distanceFromMouse(closest.x, closest.y);
-      final double selectRadius = 25;
-      if (closestDistance <= selectRadius) {
-        state.selected.value = closest;
-        return;
-      }
-    }
+    // final closest =  getClosest(mouseWorldX, mouseWorldY, [
+    //   state.environmentObjects,
+    //   state.teamSpawnPoints,
+    //   state.items,
+    //   state.characters,
+    // ]);
+    //
+    // if (closest != null){
+    //   final closestDistance = distanceFromMouse(closest.x, closest.y);
+    //   final double selectRadius = 25;
+    //   if (closestDistance <= selectRadius) {
+    //     state.selected.value = closest;
+    //     return;
+    //   }
+    // }
 
     if (state.selected.isNotNull){
       actions.deleteSelected();

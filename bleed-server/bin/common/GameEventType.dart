@@ -32,6 +32,7 @@ enum GameEventType {
   Release_Bow,
   Sword_Woosh,
   Pot_Destroyed,
+  Object_Struck,
 }
 
 const gameEventTypes = GameEventType.values;

@@ -20,7 +20,7 @@ import 'package:gamestream_flutter/render/mapParticleToDst.dart';
 import 'package:gamestream_flutter/render/mapParticleToSrc.dart';
 import 'package:gamestream_flutter/state/game.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/diff_over.dart';
+import 'package:lemon_math/diff.dart';
 
 import 'functions.dart';
 import 'state.dart';

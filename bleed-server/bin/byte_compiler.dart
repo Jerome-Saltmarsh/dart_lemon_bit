@@ -9,7 +9,6 @@ import 'classes/Game.dart';
 import 'classes/GameObject.dart';
 import 'classes/Player.dart';
 import 'classes/Projectile.dart';
-import 'common/GameEventType.dart';
 import 'common/ServerResponse.dart';
 import 'common/compile_util.dart';
 import 'common/constants.dart';

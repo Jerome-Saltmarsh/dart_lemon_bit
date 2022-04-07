@@ -42,6 +42,10 @@ class _Audio {
     _playMusic(tracks[trackIndex]);
   }
 
+  void objectStruck(double x, double y) {
+    _playPositioned('object-struck.mp3', x, y);
+  }
+
   void stopMusic(){
     _musicPlayer.stop();
   }
