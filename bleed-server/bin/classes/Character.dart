@@ -135,7 +135,7 @@ class Character extends GameObject {
   int get health => _health;
 
   set health(int value) {
-    _health = clampInt(value, _zero, maxHealth);
+    _health = clampInt(value, 0, maxHealth);
   }
 
   bool get alive => state != stateDead;
@@ -146,7 +146,7 @@ class Character extends GameObject {
 
   bool get idling => state == stateIdle;
 
-  bool get busy => stateDurationRemaining > _zero;
+  bool get busy => stateDurationRemaining > 0;
 
   bool get deadOrBusy => dead || busy;
 
