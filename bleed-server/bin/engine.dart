@@ -147,8 +147,9 @@ class _Engine {
     games.add(game);
   }
 
-  void onPlayerCreated(Player player){
+  void onPlayerCreated(Player player) {
     player.game.players.add(player);
+    player.game.disableCountDown = 0;
   }
 
   Future<CustomGame> findOrCreateCustomGame(String mapId) async {
