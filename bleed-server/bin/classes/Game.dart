@@ -626,9 +626,6 @@ extension GameFunctions on Game {
     if (character.dead) return;
     if (character.state == value) return;
 
-    character.stateDuration = 0;
-    character.animationFrame = 0;
-
     if (value == stateDead){
       setCharacterStateDead(character);
       return;
@@ -638,6 +635,8 @@ extension GameFunctions on Game {
       const duration = 10;
       character.stateDurationRemaining = duration;
       character.state = value;
+      character.stateDuration = 0;
+      character.animationFrame = 0;
       return;
     }
 
@@ -645,12 +644,10 @@ extension GameFunctions on Game {
 
     switch (value) {
       case stateChanging:
-        const duration = 10;
-        character.stateDurationRemaining = duration;
+        character.stateDurationRemaining = 10;
         break;
       case statePerforming:
-        const duration = 20;
-        character.stateDurationRemaining = duration;
+        character.stateDurationRemaining = 20;
         if (character is Player) {
           final ability = character.performing;
           if (ability == null) {
@@ -660,7 +657,7 @@ extension GameFunctions on Game {
           if (character.magic < ability.cost) {
             character.ability = null;
             character.attackTarget = null;
-            return;
+            break;;
           }
           character.magic -= ability.cost;
         }
@@ -669,6 +666,8 @@ extension GameFunctions on Game {
         break;
     }
     character.state = value;
+    character.stateDuration = 0;
+    character.animationFrame = 0;
   }
 
   void setCharacterStateIdle(Character character) {

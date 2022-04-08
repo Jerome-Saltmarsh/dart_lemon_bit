@@ -97,7 +97,7 @@
 [ ] AI Should avoid colliders in front of them.      
 [ ] FIX Zombies run into lamps forever    
 [ ] (MILESTONE) FIX Particles flash    
-[ ] FIX Double shot    
+[ ] (MILESTONE) FIX Double shot    
 [x] Render Text using Foreground renderer    
 [x] FIX Particle Rotation Flicker    
 [x] FIX Pot destroyed Particles    
