@@ -42,7 +42,6 @@ class Player extends Character {
   int maxMagic = 100;
   int magicRegen = 1;
   int healthRegen = 1;
-  int lastFrameSent = -1;
   String message = "";
   String text = "";
   String name = generateName();

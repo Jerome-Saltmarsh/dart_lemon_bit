@@ -14,8 +14,6 @@ final _gameUpdateIndex = ClientRequest.Update.index;
 final _buffer1 = Uint8List(1);
 final _updateBuffer = Uint8List(16);
 
-// final _serverFrames = modules.game.state.player.serverFrame;
-
 void sendRequestSpeak(String message){
   if (message.isEmpty) return;
   webSocket.send('${ClientRequest.Speak.index} $message');

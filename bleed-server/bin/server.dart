@@ -225,7 +225,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
+          if (player.lastUpdateFrame == 0){
+            return;
+          }
           player.lastUpdateFrame = 0;
+
           final game = player.game;
 
           if (game.awaitingPlayers) {
@@ -263,18 +267,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          if (player.lastFrameSent >= player.game.frame){
-            // NO CHANGE
-            return;
-          }
 
           if (player.deadOrBusy) {
             compileAndSendPlayerGame(player);
             return;
           }
 
-
-          player.lastFrameSent = player.game.frame;
           final mouseX = readNumberFromByteArray(args, index: 2).toDouble();
           final mouseY = readNumberFromByteArray(args, index: 4).toDouble();
           player.mouseX = mouseX;
