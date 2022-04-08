@@ -16,6 +16,7 @@ import 'package:lemon_math/random_between.dart';
 import 'enums.dart';
 import 'state.dart';
 
+final particles = isometric.state.particles;
 
 class IsometricSpawn {
 
@@ -35,7 +36,7 @@ class IsometricSpawn {
       return value;
     }
 
-    for(final particle in state.particles){
+    for(final particle in particles) {
       if (particle.active) continue;
       return particle;
     }

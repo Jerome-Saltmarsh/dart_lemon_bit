@@ -96,7 +96,9 @@
     [ ] Pot
 [ ] AI Should avoid colliders in front of them.      
 [ ] FIX Zombies run into lamps forever    
-[ ] FIX Game Freezes up when zombie killed
+[ ] Fix tile colours in Adventure    
+[x] FIX Game Freezes up when zombie killed
+[x] Do not update games which have no players since some time    
 [x] (MILESTONE) FIX Particles flash
 [x] FIX Particles aren't recycling    
 [x] (MILESTONE) FIX Double shot    

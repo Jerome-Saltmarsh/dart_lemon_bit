@@ -89,6 +89,7 @@ abstract class Game {
   String compiledEnvironmentObjects = "";
   bool debugMode = false;
   int countDownFramesRemaining = engine.framesPerSecond * 3;
+  var disableCountDown = 0;
 
   static int _id = 0;
   final String id = (_id++).toString();
@@ -354,6 +355,16 @@ extension GameFunctions on Game {
     if (frame % 15 == 0){
       updateInteractableNpcTargets();
       updateZombieTargets();
+
+      if (players.isEmpty){
+        disableCountDown++;
+      } else {
+        disableCountDown = 0;
+      }
+    }
+
+    if (disableCountDown > 30) {
+      return;
     }
 
     for (final dynamicObject in dynamicObjects) {
