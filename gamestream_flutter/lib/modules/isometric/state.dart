@@ -44,7 +44,13 @@ class IsometricState {
 
   Particle? next;
 
-  // properties
+
+  IsometricState(){
+      for(var i = 0; i < 300; i++){
+         particles.add(Particle());
+      }
+  }
+
   int getShade(int row, int column){
     if (row < 0) return Pitch_Black;
     if (column < 0) return Pitch_Black;
