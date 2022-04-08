@@ -262,17 +262,17 @@ class GameEvents {
         _spawn.organ(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5), zv: 0.1);
         audio.zombieDeath(x, y);
 
-        final total = randomInt(5, 10);
-        for (var i = 0; i < total; i++) {
-          _spawn.blood(
-            x: x,
-            y: y,
-            z: 0.3,
-            angle: angle + giveOrTake(0.2),
-            speed: 4.0 + giveOrTake(2),
-            zv: 0.07 + giveOrTake(0.01),
-          );
-        }
+        // final total = randomInt(5, 10);
+        // for (var i = 0; i < total; i++) {
+        //   _spawn.blood(
+        //     x: x,
+        //     y: y,
+        //     z: 0.3,
+        //     angle: angle + giveOrTake(0.2),
+        //     speed: 4.0 + giveOrTake(2),
+        //     zv: 0.07 + giveOrTake(0.01),
+        //   );
+        // }
         break;
 
       case GameEventType.Zombie_Target_Acquired:

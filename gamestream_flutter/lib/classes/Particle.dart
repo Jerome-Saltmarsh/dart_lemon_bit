@@ -20,7 +20,6 @@ class Particle extends Vector2 {
   int type = ParticleType.Zombie_Head;
   double bounciness = 0;
   double airFriction = 0.98;
-  bool foreground = false;
   int hue = 0;
   bool hasShadow = false;
   double size = 0;

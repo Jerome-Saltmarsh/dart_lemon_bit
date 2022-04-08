@@ -38,7 +38,7 @@ class IsometricUpdate {
   void _updateParticles() {
 
     for (final particle in _particles) {
-      if (!particle.active) break;
+      if (!particle.active) continue;
       updateParticle(particle);
     }
 
@@ -47,9 +47,9 @@ class IsometricUpdate {
       compare: compareParticles,
     );
 
-    if (engine.frame % 5 == 0) {
+    if (engine.frame % 6 == 0) {
       for (final particle in _particles) {
-        if (!particle.active) break;
+        if (!particle.active) continue;
         if (particle.type != ParticleType.Zombie_Head
             &&
             particle.type != ParticleType.Organ

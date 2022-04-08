@@ -4,10 +4,10 @@ import 'package:gamestream_flutter/modules/isometric/enums.dart';
 
 int compareParticles(Particle a, Particle b) {
   if (!a.active) {
-    return 1;
+    return -1;
   }
   if (!b.active) {
-    return -1;
+    return 1;
   }
   if (a.type == ParticleType.Blood) return -1;
   if (b.type == ParticleType.Blood) return 1;

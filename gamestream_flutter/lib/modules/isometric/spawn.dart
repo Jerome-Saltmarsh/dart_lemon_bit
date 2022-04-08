@@ -35,6 +35,11 @@ class IsometricSpawn {
       return value;
     }
 
+    for(final particle in state.particles){
+      if (particle.active) continue;
+      return particle;
+    }
+
     final instance = Particle();
     particles.add(instance);
     return instance;

@@ -96,8 +96,10 @@
     [ ] Pot
 [ ] AI Should avoid colliders in front of them.      
 [ ] FIX Zombies run into lamps forever    
-[ ] (MILESTONE) FIX Particles flash    
-[ ] (MILESTONE) FIX Double shot    
+[ ] FIX Game Freezes up when zombie killed
+[x] (MILESTONE) FIX Particles flash
+[x] FIX Particles aren't recycling    
+[x] (MILESTONE) FIX Double shot    
 [x] Render Text using Foreground renderer    
 [x] FIX Particle Rotation Flicker    
 [x] FIX Pot destroyed Particles    

@@ -121,6 +121,7 @@ class IsometricRender {
     var indexPlayer = 0;
     var indexEnv = 0;
     var indexParticle = 0;
+    var renderedParticles = 0;
     var indexZombie = 0;
     var indexNpc = 0;
     var zombiesRemaining = indexZombie < totalZombies;
@@ -135,6 +136,12 @@ class IsometricRender {
     var particleIsBlood = particlesRemaining ? particles[0].type == ParticleType.Blood : false;
     var zombieY = zombiesRemaining ? zombies[0].y : 0;
     var npcY = npcsRemaining ? npcs[0].y : 0;
+
+    if (particlesRemaining){
+      while(!particles[indexParticle].active) {
+        indexParticle++;
+      }
+    }
 
     while (true) {
 
@@ -180,10 +187,15 @@ class IsometricRender {
       if (particlesRemaining) {
         if (particleIsBlood) {
           renderParticle(particles[indexParticle]);
+          renderedParticles++;
           indexParticle++;
-          particlesRemaining = indexParticle < totalParticles;
+          particlesRemaining = renderedParticles < totalParticles;
           if (particlesRemaining){
-            final nextParticle = particles[indexParticle];
+            var nextParticle = particles[indexParticle];
+            while(!nextParticle.active){
+              indexParticle++;
+              nextParticle = particles[indexParticle];
+            }
             particleIsBlood = nextParticle.type == ParticleType.Blood;
             particleY = nextParticle.y;
           }
@@ -193,10 +205,15 @@ class IsometricRender {
         if (!zombiesRemaining || particleY < zombieY) {
           if (!npcsRemaining || particleY < npcY) {
             renderParticle(particles[indexParticle]);
+            renderedParticles++;
             indexParticle++;
-            particlesRemaining = indexParticle < totalParticles;
+            particlesRemaining = renderedParticles < totalParticles;
             if (particlesRemaining){
-              final nextParticle = particles[indexParticle];
+              var nextParticle = particles[indexParticle];
+              while(!nextParticle.active){
+                 indexParticle++;
+                 nextParticle = particles[indexParticle];
+              }
               particleIsBlood = nextParticle.type == ParticleType.Blood;
               particleY = nextParticle.y;
             }
