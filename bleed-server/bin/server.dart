@@ -263,20 +263,18 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
+          if (player.lastFrameSent >= player.game.frame){
+            // NO CHANGE
+            return;
+          }
+
           if (player.deadOrBusy) {
             compileAndSendPlayerGame(player);
             return;
           }
 
 
-          if (player.lastFrameSent >= player.game.frame){
-            // NO CHANGE
-            return;
-          }
-
           player.lastFrameSent = player.game.frame;
-
-
           final mouseX = readNumberFromByteArray(args, index: 2).toDouble();
           final mouseY = readNumberFromByteArray(args, index: 4).toDouble();
           player.mouseX = mouseX;
@@ -285,13 +283,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.screenTop = readNumberFromByteArray(args, index: 9).toDouble();
           player.screenRight = readNumberFromByteArray(args, index: 11).toDouble();
           player.screenBottom = readNumberFromByteArray(args, index: 13).toDouble();
-          final serverFrame = readBigNumberFromArray(args, index: 15);
-
-          if (serverFrame == player.game.frame) {
-            // const patch = [ServerResponse.No_Change];
-            // sink.add(patch);
-            // return;
-          }
 
           player.aimTarget = null;
           final closestCollider = game.getClosestEnemyCollider(mouseX, mouseY, player);
