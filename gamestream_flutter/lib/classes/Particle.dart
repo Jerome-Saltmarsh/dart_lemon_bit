@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bleed_common/enums/Direction.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/opposite.dart';
@@ -23,6 +24,7 @@ class Particle extends Vector2 {
   int hue = 0;
   bool hasShadow = false;
   double size = 0;
+  bool customRotation = false;
 
   Particle? next;
 
@@ -30,20 +32,22 @@ class Particle extends Vector2 {
 
   Particle():super(0,0);
 
+  double get speed => (sqrt(xv * xv + yv * yv));
+
   void setAngle({required double value, required double speed}){
     xv = adjacent(value, speed);
     yv = opposite(value, speed);
   }
 
   void updateMotion(){
-    const pi2 = pi * 2;
     z += zv;
     x += xv;
     y += yv;
     if (z < 0){
       z = 0;
     }
-    rotation = (rotation + rotationV) % pi2;
+    rotation = clampAngle(rotation + rotationV);
+
     scale += scaleV;
     if (scale < 0){
       scale = 0;

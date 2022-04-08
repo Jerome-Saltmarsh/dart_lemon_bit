@@ -1,3 +1,5 @@
+import 'dart:math';
+
 const directionUpIndex = 0;
 const directionUpRightIndex = 1;
 const directionRightIndex = 2;
@@ -12,18 +14,14 @@ int sanitizeDirectionIndex(int index){
 }
 
 int convertAngleToDirection(double angle) {
-  return convertAngleToDirectionInt(angle);
+  const piQuarter = pi * 0.25;
+  return clampAngle(angle) ~/ piQuarter;
 }
 
-int convertAngleToDirectionInt(double angle){
-  const piQuarter = 0.78539816339;
-  return _fixAngle(angle) ~/ piQuarter;
-}
-
-double _fixAngle(double angle){
-  const pi2 = 6.28318530718;
+double clampAngle(double angle){
+  const pi2 = pi * 2;
   if (angle < 0) {
-    angle = (pi2 + angle).abs() % pi2;
+    angle = pi2 - (-angle % pi2);
   }
   return angle % pi2;
 }

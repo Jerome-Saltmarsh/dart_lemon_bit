@@ -26,9 +26,6 @@ const pixelSize = 6.0;
 
 final _isometricState = isometric.state;
 
-const _orbRubyX = 2306.0;
-const _orbRubyY = 0.0;
-
 void mapParticleToSrc(Particle particle){
   final shade = _isometricState.getShadeAtPosition(particle.x, particle.y);
 
@@ -41,7 +38,7 @@ void mapParticleToSrc(Particle particle){
       return;
 
     case ParticleType.Orb_Ruby:
-      engine.mapSrc(x: _orbRubyX, y: _orbRubyY, width: 24, height: 24);
+      engine.mapSrc(x: 2306.0, y: 0, width: 24, height: 24);
       return;
 
     case ParticleType.Pixel:
@@ -56,35 +53,35 @@ void mapParticleToSrc(Particle particle){
 
     case ParticleType.Leg:
       engine.mapSrc64(
-          x: 2491 + (convertAngleToDirectionInt(particle.rotation) * 64),
+          x: 2491 + (convertAngleToDirection(particle.rotation) * 64),
           y:  shade * 64
       );
       return;
 
     case ParticleType.Arm:
       engine.mapSrc64(
-          x: 3004 + (convertAngleToDirectionInt(particle.rotation) * 64),
+          x: 3004 + (convertAngleToDirection(particle.rotation) * 64),
           y: shade * 64,
       );
       return;
 
     case ParticleType.Organ:
       engine.mapSrc64(
-          x: 3517 + (convertAngleToDirectionInt(particle.rotation) * 64),
+          x: 3517 + (convertAngleToDirection(particle.rotation) * 64),
           y: shade * 64
       );
       return;
 
     case ParticleType.Shell:
       engine.mapSrc32(
-          x: 1008 + (convertAngleToDirectionInt(particle.rotation) * 32),
+          x: 1008 + (convertAngleToDirection(particle.rotation) * 32),
           y: shade * 32
       );
       return;
 
     case ParticleType.Zombie_Head:
       engine.mapSrc64(
-          x: 4030 + (convertAngleToDirectionInt(particle.rotation) * 64),
+          x: 4030 + (convertAngleToDirection(particle.rotation) * 64),
           y: shade * 64
       );
       return;
@@ -123,19 +120,19 @@ void mapParticleToSrc(Particle particle){
 
 int _mapMystDurationToIndex(int duration){
   if (duration > _a){
-    return _mystIndex02;
+    return 0;
   }
   if (duration > _b){
-    return _mystIndex05;
+    return 1;
   }
   if (duration > _c){
-    return _mystIndex10;
+    return 2;
   }
   if (duration > _d){
-    return _mystIndex20;
+    return 3;
   }
   if (duration > _d){
-    return _mystIndex30;
+    return 4;
   }
   if (duration > _e){
     return _mystIndex40;

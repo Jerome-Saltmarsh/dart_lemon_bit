@@ -94,10 +94,11 @@
     [ ] Rock
     [ ] Chest
     [ ] Pot
-[ ] Pot Struck Audio
 [ ] AI Should avoid colliders in front of them.      
 [ ] FIX Zombies run into lamps forever    
-[ ] FIX Pot destroyed Particles    
+[ ] (MILESTONE) FIX Particles flash    
+[x] FIX Particle Rotation Flicker    
+[x] FIX Pot destroyed Particles    
 [x] Pot Struck Audio    
 [x] (MILESTONE) FIX Sometimes game events don't fire    
 [x] FIX Raycast sword does not hit zombie    

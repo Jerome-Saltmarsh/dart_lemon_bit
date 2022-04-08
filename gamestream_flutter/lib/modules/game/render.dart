@@ -260,16 +260,16 @@ class GameRender {
     final items = isometric.state.items;
     for (var i = 0; i < game.itemsTotal; i++){
       final item = items[i];
-      const mouseDist = 100;
-      if ((mouseWorldX - item.x).abs() < mouseDist){
-        if((mouseWorldY - item.y).abs() < mouseDist){
-          renderText(
-              text: item.type.name,
-              x: item.x,
-              y: item.y
-          );
-        }
-      }
+      // const mouseDist = 100;
+      // if ((mouseWorldX - item.x).abs() < mouseDist){
+      //   if((mouseWorldY - item.y).abs() < mouseDist){
+      //     renderText(
+      //         text: item.type.name,
+      //         x: item.x,
+      //         y: item.y
+      //     );
+      //   }
+      // }
       isometric.render.renderItem(item);
     }
   }

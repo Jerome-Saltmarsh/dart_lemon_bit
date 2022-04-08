@@ -58,6 +58,7 @@ class IsometricSpawn {
     bounciness = 0.5,
     double airFriction = 0.98,
     bool castShadow = false,
+    bool customRotation = true
   }) {
     assert(duration > 0);
     const mapTypeToSize = <int, double> {
@@ -76,6 +77,7 @@ class IsometricSpawn {
       ParticleType.Pot_Shard: 16.0,
     };
     final particle = getAvailableParticle();
+    particle.customRotation = customRotation;
     particle.size = mapTypeToSize[type] ?? 0;
     particle.type = type;
     particle.hasShadow = castShadow;
@@ -258,9 +260,9 @@ class IsometricSpawn {
         type: ParticleType.Pot_Shard,
         x: x,
         y: y,
-        z: 0,
+        z: randomBetween(0.0, 0.2),
         angle: randomAngle(),
-        speed: 1.0,
+        speed: randomBetween(0.5, 1.25),
         zv: randomBetween(0.1, 0.2),
         weight: 0.5,
         duration: randomInt(150, 200),
@@ -268,7 +270,8 @@ class IsometricSpawn {
         scaleV: 0,
         rotation: randomAngle(),
         castShadow: true,
-        bounciness: 0.35
+        bounciness: 0.35,
+        customRotation: false
     );
   }
 
