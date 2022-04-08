@@ -93,6 +93,7 @@ class CoreEvents {
     print("core.events.onGameModeChanged($mode)");
     engine.clearCallbacks();
     engine.drawCanvas.value = null;
+    engine.drawForeground.value = null;
     engine.drawCanvasAfterUpdate = true;
     engine.update = null;
     engine.keyPressedHandlers = {};
@@ -107,6 +108,7 @@ class CoreEvents {
 
       case Mode.Player:
         engine.drawCanvas.value = modules.game.render.render;
+        engine.drawForeground.value = modules.game.render.renderForeground;
         engine.update = modules.game.update.update;
         engine.drawCanvasAfterUpdate = true;
         modules.isometric.events.register();

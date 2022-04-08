@@ -25,7 +25,7 @@ class GameUpdate {
     totalUpdates.value++;
     framesSinceUpdateReceived.value++;
 
-    // if (framesSinceUpdateReceived.value >= 2){
+    // if (framesSinceUpdateReceived.value >= 3){
     //   print("frames since update: ${framesSinceUpdateReceived.value}");
     // }
 

@@ -28,6 +28,9 @@ import 'package:lemon_math/opposite.dart';
 import 'state.dart';
 import 'style.dart';
 
+
+final _screen = engine.screen;
+
 class GameRender {
 
   final GameQueries queries;
@@ -36,8 +39,14 @@ class GameRender {
 
   GameRender(this.state, this.style, this.queries);
 
-  void render(Canvas canvas, Size size) {
+  void renderForeground(Canvas canvas, Size size) {
+      engine.setPaintColorWhite();
+      _renderPlayerNames();
+      drawPlayerText();
+      drawItemText();
+  }
 
+  void render(Canvas canvas, Size size) {
     isometric.actions.applyDynamicEmissions();
     isometric.actions.applyDynamicShadeToTileSrc();
     isometric.render.tiles();
@@ -67,9 +76,9 @@ class GameRender {
     if (game.type.value == GameType.BATTLE_ROYAL){
       drawRoyalPerimeter();
     }
-    engine.setPaintColorWhite();
-    _renderPlayerNames();
-    drawPlayerText();
+    // engine.setPaintColorWhite();
+    // _renderPlayerNames();
+    // drawPlayerText();
   }
 
   void collectedOrbImage() {
@@ -259,23 +268,29 @@ class GameRender {
   void drawItems() {
     final items = isometric.state.items;
     for (var i = 0; i < game.itemsTotal; i++){
+      isometric.render.renderItem(items[i]);
+    }
+  }
+
+  void drawItemText() {
+    final items = isometric.state.items;
+    for (var i = 0; i < game.itemsTotal; i++){
       final item = items[i];
-      // const mouseDist = 100;
-      // if ((mouseWorldX - item.x).abs() < mouseDist){
-      //   if((mouseWorldY - item.y).abs() < mouseDist){
-      //     renderText(
-      //         text: item.type.name,
-      //         x: item.x,
-      //         y: item.y
-      //     );
-      //   }
-      // }
-      isometric.render.renderItem(item);
+      const mouseDist = 100;
+      if ((mouseWorldX - item.x).abs() < mouseDist){
+        if((mouseWorldY - item.y).abs() < mouseDist){
+          renderText(
+              text: item.type.name,
+              x: item.x,
+              y: item.y
+          );
+        }
+      }
     }
   }
 
   void renderText({required String text, required double x, required double y}){
-    if (!engine.screen.contains(x, y)) return;
+    if (!_screen.contains(x, y)) return;
     const charWidth = 4.5;
     engine.writeText(text, x - charWidth * text.length, y);
   }

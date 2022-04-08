@@ -58,7 +58,7 @@ class IsometricUpdate {
             &&
             particle.type != ParticleType.Leg
         ) continue;
-        if (particle.speed< 0.005) continue;
+        if (particle.speed < 0.01) continue;
         spawn.blood(x: particle.x, y: particle.y, z: particle.z, zv: 0, angle: 0, speed: 0);
       }
     }
