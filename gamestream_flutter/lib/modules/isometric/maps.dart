@@ -44,7 +44,7 @@ class IsometricMaps {
     return Phase.Night;
   }
 
-  final Map<ItemType, Vector2> itemAtlas = {
+  final itemAtlas = <ItemType, Vector2>{
     ItemType.Handgun: atlas.items.handgun,
     ItemType.Shotgun: atlas.items.shotgun,
     ItemType.Health: atlas.items.health,

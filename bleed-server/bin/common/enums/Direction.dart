@@ -8,7 +8,7 @@ const directionLeftIndex = 6;
 const directionUpLeftIndex = 7;
 
 int sanitizeDirectionIndex(int index){
-  return index >= 0 ? index % 8 : (index + 7) % 8;
+  return index >= 0 ? index % 8 : 8 - (index.abs() % 8);
 }
 
 int convertAngleToDirection(double angle) {

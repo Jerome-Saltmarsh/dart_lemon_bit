@@ -24,16 +24,10 @@ const _mystIndex40 = 5;
 const _mystIndex50 = 6;
 const pixelSize = 6.0;
 
-final _particles = atlas.particles;
 final _isometricState = isometric.state;
 
 const _orbRubyX = 2306.0;
 const _orbRubyY = 0.0;
-
-final _shellX = _particles.shell.x;
-final _shellY = _particles.shell.y;
-
-const _zombieHeadX = 4030.0;
 
 void mapParticleToSrc(Particle particle){
   final shade = _isometricState.getShadeAtPosition(particle.x, particle.y);
@@ -68,10 +62,10 @@ void mapParticleToSrc(Particle particle){
       return;
 
     case ParticleType.Arm:
-      final direction = convertAngleToDirectionInt(particle.rotation);
-      final x = _particles.zombieArm.x + (direction * 64);
-      final y = _particles.zombieArm.y + shade * 64;
-      engine.mapSrc64(x: x, y: y);
+      engine.mapSrc64(
+          x: 3004 + (convertAngleToDirectionInt(particle.rotation) * 64),
+          y: shade * 64,
+      );
       return;
 
     case ParticleType.Organ:
@@ -83,16 +77,9 @@ void mapParticleToSrc(Particle particle){
 
     case ParticleType.Shell:
       engine.mapSrc32(
-          x: _shellX + (convertAngleToDirectionInt(particle.rotation) * 32),
-          y: _shellY + shade * 32
+          x: 1008 + (convertAngleToDirectionInt(particle.rotation) * 32),
+          y: shade * 32
       );
-      return;
-
-    case ParticleType.Human_Head:
-      final direction = convertAngleToDirectionInt(particle.rotation);
-      final x = _zombieHeadX + (direction * 64);
-      final y = shade * 64.0;
-      engine.mapSrc64(x: x, y: y);
       return;
 
     case ParticleType.Zombie_Head:

@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/state/game.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/opposite.dart';
@@ -62,7 +63,6 @@ class IsometricSpawn {
     const mapTypeToSize = <int, double> {
       ParticleType.Zombie_Head: 64.0,
       ParticleType.Blood: 8.0,
-      ParticleType.Human_Head: 64.0,
       ParticleType.Myst: 64.0,
       ParticleType.Smoke: 32.0,
       ParticleType.Shrapnel: 32.0,
@@ -179,32 +179,6 @@ class IsometricSpawn {
     );
   }
 
-  void headHuman({
-        required double x,
-        required double y,
-        required double z,
-        required double zv,
-        required double angle,
-        required double speed
-      }) {
-    const type = ParticleType.Human_Head;
-    _particle(
-      type: type,
-      x: x,
-      y: y,
-      z: z,
-      angle: angle,
-      speed: speed,
-      zv: randomBetween(0, 0.03),
-      weight: 0.25,
-      duration: bodyPartDuration,
-      rotation: giveOrTake(pi),
-      rotationV: giveOrTake(10),
-      scale: 1,
-      scaleV: 0,
-    );
-  }
-
   void organ({
     required double x,
     required double y,
@@ -244,9 +218,9 @@ class IsometricSpawn {
       speed: 1.5,
       zv: 0.075,
       weight: 0.35,
-      duration: 100,
+      duration: 1000,
       rotation: randomAngle(),
-      rotationV: 0.01,
+      rotationV: 0.75,
       scale: 0.3,
       bounciness: 0.4,
       castShadow: true,
@@ -294,6 +268,7 @@ class IsometricSpawn {
         scaleV: 0,
         rotation: randomAngle(),
         castShadow: true,
+        bounciness: 0.35
     );
   }
 

@@ -67,7 +67,12 @@ class IsometricUpdate {
         deactivateParticle(particle);
         return;
       }
-      particle.zv = -particle.zv * particle.bounciness;
+      if (particle.zv < -0.1){
+        particle.zv = -particle.zv * particle.bounciness;
+      } else {
+        particle.zv = 0;
+      }
+
     } else if (airBorn) {
       particle.applyAirFriction();
     } else {

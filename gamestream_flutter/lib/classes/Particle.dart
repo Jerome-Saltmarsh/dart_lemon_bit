@@ -40,8 +40,14 @@ class Particle extends Vector2 {
     z += zv;
     x += xv;
     y += yv;
+    if (z < 0){
+      z = 0;
+    }
     rotation = (rotation + rotationV) % pi2;
     scale += scaleV;
+    if (scale < 0){
+      scale = 0;
+    }
   }
 
   void applyAirFriction(){

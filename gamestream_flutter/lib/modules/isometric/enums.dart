@@ -12,7 +12,6 @@ const phases = Phase.values;
 
 class ParticleType {
   static const Smoke = 0;
-  static const Human_Head = 1;
   static const Zombie_Head = 2;
   static const Shell = 3;
   static const Arm = 4;
