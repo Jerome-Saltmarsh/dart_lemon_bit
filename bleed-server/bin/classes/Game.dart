@@ -1,452 +1,247 @@
 import 'dart:math';
 
-import '../classes.dart';
-import '../common/GameState.dart';
-import '../common/ItemType.dart';
-import '../common/Tile.dart';
-import 'Collider.dart';
-import 'EnvironmentObject.dart';
-import '../common/classes/Vector2.dart';
-import '../common/constants.dart';
-import '../common/functions/diffOver.dart';
-import '../compile.dart';
-import '../constants.dart';
-import '../enums.dart';
-import '../common/CollectableType.dart';
+import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/diff.dart';
+import 'package:lemon_math/distance_between.dart';
+import 'package:lemon_math/give_or_take.dart';
+import 'package:lemon_math/hypotenuse.dart';
+import 'package:lemon_math/randomInt.dart';
+import 'package:lemon_math/randomItem.dart';
+
+import '../bleed/zombie_health.dart';
+import '../common/AbilityType.dart';
+import '../common/CharacterState.dart';
+import '../common/CharacterType.dart';
+import '../common/DynamicObjectType.dart';
 import '../common/GameEventType.dart';
+import '../common/GameStatus.dart';
 import '../common/GameType.dart';
-import '../common/Weapons.dart';
-import '../exceptions/ZombieSpawnPointsEmptyException.dart';
+import '../common/ItemType.dart';
+import '../common/PlayerEvent.dart';
+import '../common/SlotType.dart';
+import '../common/Tile.dart';
+import '../common/configuration.dart';
+import '../common/constants.dart';
+import '../common/enums/ObjectType.dart';
+import '../common/enums/ProjectileType.dart';
+import '../common/enums/Shade.dart';
+import '../constants.dart';
+import '../engine.dart';
+import '../enums.dart';
+import '../enums/npc_mode.dart';
+import '../functions.dart';
 import '../functions/applyForce.dart';
-import '../functions/generateUUID.dart';
-import '../instances/scenes.dart';
-import '../language.dart';
+import '../functions/withinRadius.dart';
 import '../maths.dart';
+import '../physics.dart';
 import '../settings.dart';
-import '../state.dart';
-import '../update.dart';
-import '../utils.dart';
-import '../utils/game_utils.dart';
-import '../utils/player_utils.dart';
-import 'Block.dart';
-import 'Collectable.dart';
+import '../utilities.dart';
+import 'Character.dart';
+import 'Collider.dart';
 import 'Crate.dart';
-import 'Inventory.dart';
+import 'DynamicObject.dart';
+import 'EnvironmentObject.dart';
+import 'GameEvent.dart';
+import 'GameObject.dart';
+import 'InteractableNpc.dart';
 import 'Item.dart';
 import 'Player.dart';
+import 'Projectile.dart';
 import 'Scene.dart';
+import 'SpawnPoint.dart';
 import 'TileNode.dart';
 
-class Fortress extends Game {
-  int nextWave = 100;
-  int wave = 0;
-  int lives = 10;
 
-  Map<TileNode, List<Vector2>> nodeToFortress = Map();
-
-  Fortress({required int maxPlayers})
-      : super(GameType.Fortress, scenes.fortress, maxPlayers);
-
-  void update() {
-    if (lives <= 0) return;
-
-    for (int i = 0; i < zombies.length; i++) {
-      Npc npc = zombies[i];
-      if (npc.path.isEmpty) {
-        npcSetPathTo(npc, scene.fortressPosition.x, scene.fortressPosition.y);
-        continue;
-      }
-
-      if (diff(npc.x, scene.fortressPosition.x) > 50) continue;
-      if (diff(npc.y, scene.fortressPosition.y) > 50) continue;
-      zombies.removeAt(i);
-      i--;
-      lives--;
-      if (lives <= 0) {
-        return;
-      }
-    }
-
-    if (nextWave > 0) {
-      nextWave--;
-    } else {
-      wave++;
-      nextWave = 200;
-
-      for (int row = 0; row < scene.rows; row++) {
-        for (int column = 0; column < scene.columns; column++) {
-          if (scene.tiles[row][column] == Tile.ZombieSpawn) {
-            double x = getTilePositionX(row, column);
-            double y = getTilePositionY(row, column);
-            for (int i = 0; i < wave; i++) {
-              spawnZombie(x + giveOrTake(5), y + giveOrTake(5));
-            }
-          }
-        }
-      }
-    }
-  }
-
-  @override
-  bool gameOver() {
-    return lives <= 0;
-  }
-
-  @override
-  void onPlayerKilled(Player player) {
-    // TODO auto respawn in 20 seconds
-  }
-
-  @override
-  Player doSpawnPlayer() {
-    Vector2 spawnPoint = getNextSpawnPoint();
-    Player player = Player(
-      x: spawnPoint.x + giveOrTake(3),
-      y: spawnPoint.y + giveOrTake(2),
-      inventory: Inventory(3, 3, [
-        InventoryItem(0, 0, InventoryItemType.Handgun),
-        InventoryItem(0, 1, InventoryItemType.HealthPack),
-        InventoryItem(1, 0, InventoryItemType.HandgunClip),
-        InventoryItem(2, 2, InventoryItemType.HandgunClip),
-        InventoryItem(1, 1, InventoryItemType.ShotgunClip),
-      ]),
-      grenades: 2,
-      meds: 2,
-      clips: Clips(handgun: 2),
-      rounds: Rounds(handgun: constants.maxRounds.handgun),
-    );
-
-    return player;
-  }
+class Teams {
+  static const none = 0;
+  static const west = 1;
+  static const east = 2;
 }
 
-class DeathMatch extends Game {
-  final int squadSize;
-  bool teamsEnabled = false;
+// constants
+const _none = -1;
+const castFrame = 3;
+const tileCollisionResolve = 3;
+const framePerformStrike = 10;
+const _aiWanderPauseDuration = 120;
 
-  int get numberOfSquads => maxPlayers ~/ squadSize;
-
-  int get nextSquadNumber {
-    if (!teamsEnabled) return -1;
-    if (squadSize <= 1) return -1;
-
-    for (int squad = 0; squad < numberOfSquads; squad++) {
-      if (numberOfPlayersOnSquad(squad) < squadSize) return squad;
-    }
-
-    throw Exception("this code should never run");
-  }
-
-  DeathMatch({required maxPlayers, required this.squadSize})
-      : super(GameType.DeathMatch, scenes.town, maxPlayers);
-
-  @override
-  void update() {}
-
-  @override
-  bool gameOver() {
-    return false;
-  }
-
-  @override
-  void onPlayerDisconnected(Player player) {
-    _updateGameState(player);
-  }
-
-  @override
-  void onPlayerKilled(Player player) {
-    _updateGameState(player);
-  }
-
-  void _updateGameState(Player player) {
-    player.gameState = GameState.Lost;
-
-    if (squadSize == 1) {
-      if (numberOfAlivePlayers == 1) {
-        for (Player player in players) {
-          if (player.alive) player.gameState = GameState.Won;
-        }
-      }
-      return;
-    }
-
-    int squad = -1;
-    for (Player player in players) {
-      if (!player.alive) continue;
-      squad = player.squad;
-      break;
-    }
-
-    for (Player player in players) {
-      if (!player.alive) continue;
-      if (player.squad == squad) continue;
-      return;
-    }
-
-    for (Player player in players) {
-      if (!player.alive) continue;
-      player.gameState = GameState.Won;
-    }
-  }
-
-  int numberOfPlayersOnSquad(int squad) {
-    int count = 0;
-    for (Player player in players) {
-      if (player.squad != squad) continue;
-      count++;
-    }
-    return count;
-  }
-
-  Vector2 getSquadSpawnPoint(int squad) {
-    if (squad == -1) return getNextSpawnPoint();
-    return playerSpawnPoints[squad % playerSpawnPoints.length];
-  }
-
-  @override
-  Player doSpawnPlayer() {
-    int squad = nextSquadNumber;
-    Vector2 spawnPoint = getSquadSpawnPoint(squad);
-
-    Player player = Player(
-        x: spawnPoint.x + giveOrTake(3),
-        y: spawnPoint.y + giveOrTake(2),
-        inventory: Inventory(3, 3, [
-          InventoryItem(0, 0, InventoryItemType.Handgun),
-          InventoryItem(0, 1, InventoryItemType.HealthPack),
-          InventoryItem(1, 0, InventoryItemType.HandgunClip),
-          InventoryItem(2, 2, InventoryItemType.HandgunClip),
-          InventoryItem(1, 1, InventoryItemType.ShotgunClip),
-        ]),
-        grenades: 2,
-        meds: 2,
-        clips: Clips(handgun: 2),
-        rounds: Rounds(handgun: constants.maxRounds.handgun),
-        squad: squad);
-
-    return player;
-  }
-}
-
-class GameCasual extends Game {
-  int totalSquads = 4;
-  final int spawnGrenades = 1;
-  final int spawnMeds = 1;
-
-  GameCasual(Scene scene, int maxPlayers)
-      : super(GameType.Casual, scene, maxPlayers) {
-    spawnRandomNpcs(10);
-  }
-
-  void spawnRandomNpcs(int amount) {
-    for (int i = 0; i < amount; i++) {
-      spawnRandomZombie();
-    }
-  }
-
-  @override
-  bool gameOver() {
-    return false;
-  }
-
-  @override
-  void update() {
-    if (duration % 50 == 0 && zombieCount < 100) {
-      Npc npc = spawnRandomZombie();
-      npcSetRandomDestination(npc);
-    }
-  }
-
-  @override
-  void onPlayerKilled(Player player) {
-    resetPlayer(player);
-  }
-
-  @override
-  void onNpcKilled(Npc npc) {
-    // @on npc killed
-    // items.add(Item(type: ItemType.Health, x: npc.x, y: npc.y));
-    if (chance(settings.chanceOfDropItem)) {
-      spawnRandomItem(npc.x, npc.y);
-      return;
-    }
-  }
-
-  @override
-  void onNpcSpawned(Npc npc) {
-    if (chance(0.05)) {
-      npc.pointMultiplier = 5;
-    } else {
-      npc.pointMultiplier = 1;
-    }
-  }
-
-  Clips spawnClip() {
-    return Clips(handgun: 3, shotgun: 3, sniperRifle: 2, assaultRifle: 2);
-  }
-
-  Rounds spawnRounds() {
-    return Rounds(
-      handgun: constants.maxRounds.handgun ~/ 2,
-      shotgun: 0,
-      sniperRifle: 0,
-      assaultRifle: 0,
-    );
-  }
-
-  int getNextSquad() {
-    int playersInSquad0 = numberOfPlayersInSquad(0);
-    int playersInSquad1 = numberOfPlayersInSquad(1);
-    int playersInSquad2 = numberOfPlayersInSquad(2);
-    int playersInSquad3 = numberOfPlayersInSquad(3);
-
-    int squad = 0;
-    int minSquad = playersInSquad0;
-
-    if (playersInSquad1 < minSquad) {
-      minSquad = playersInSquad1;
-      squad = 1;
-    }
-    if (playersInSquad2 < minSquad) {
-      minSquad = playersInSquad2;
-      squad = 2;
-    }
-    if (playersInSquad3 < minSquad) {
-      minSquad = playersInSquad3;
-      squad = 3;
-    }
-
-    return squad;
-  }
-
-  @override
-  Player doSpawnPlayer() {
-    // @on spawn player casual
-    Vector2 spawnPoint = getNextSpawnPoint();
-    Player player = Player(
-      x: spawnPoint.x + giveOrTake(3),
-      y: spawnPoint.y + giveOrTake(2),
-      inventory: Inventory(3, 3, [
-        InventoryItem(1, 1, InventoryItemType.ShotgunClip),
-      ]),
-      grenades: spawnGrenades,
-      meds: spawnMeds,
-      clips: spawnClip(),
-      rounds: spawnRounds(),
-    );
-
-    resetPlayer(player);
-    return player;
-  }
-
-  @override
-  void onPlayerRevived(Player player) {
-    resetPlayer(player);
-  }
-
-  void resetPlayer(Player player) {
-    player.resetPoints();
-    player.meds = spawnMeds;
-    player.grenades = spawnGrenades;
-    player.clips = spawnClip();
-    player.rounds = spawnRounds();
-    player.squad = getNextSquad();
-    player.weapon = Weapon.HandGun;
-  }
-}
-
+// This should be OpenWorldScene
 abstract class Game {
-  static int _id = 0;
-  final String id = (_id++).toString();
-  final String uuid = generateUUID();
-  final GameType type;
-  final int maxPlayers;
-  final Scene scene;
-  int duration = 0;
-  int time = 0;
-  List<Npc> zombies = [];
-  List<InteractableNpc> npcs = [];
-  List<Player> players = [];
-  List<Bullet> bullets = [];
-  List<Grenade> grenades = [];
-  List<GameEvent> gameEvents = [];
-  List<Crate> crates = [];
 
-  // List<EnvironmentObject>
   final List<Collider> colliders = [];
-  final List<Collectable> collectables = [];
-  final List<Vector2> playerSpawnPoints = [];
   final List<Item> items = [];
-  int spawnPointIndex = 0;
   final List<Vector2> zombieSpawnPoints = [];
-  String compiled = "";
+  final List<Character> zombies = [];
+  final List<InteractableNpc> npcs = [];
+  final List<Player> players = [];
+  final List<Projectile> projectiles = [];
+  final List<GameEvent> gameEvents = [];
+  final List<Crate> crates = [];
+  final List<DynamicObject> dynamicObjects = [];
+  List<SpawnPoint> spawnPoints = [];
+  int shadeMax = Shade.Bright;
+  int frame = 0;
+  int teamSize = 1;
+  int numberOfTeams = 2;
+  bool cratesDirty = false;
+  int spawnPointIndex = 0;
   String compiledTiles = "";
   String compiledEnvironmentObjects = "";
-  bool compilePaths = false;
+  bool debugMode = false;
+  int countDownFramesRemaining = engine.framesPerSecond * 3;
+  var disableCountDown = 0;
 
-  // TODO doesn't belong here
-  StringBuffer buffer = StringBuffer();
+  static int _id = 0;
+  final String id = (_id++).toString();
+  final Scene scene;
 
-  Player doSpawnPlayer();
+  // late bool started;
+  late GameStatus status;
+  GameType gameType;
 
-  int numberOfPlayersInSquad(int squad) {
-    int count = 0;
-    for (Player player in players) {
-      if (!player.active) continue;
-      if (player.squad != squad) continue;
-      count++;
-    }
-    return count;
+
+  bool get countingDown => status == GameStatus.Counting_Down;
+
+  bool get inProgress => status == GameStatus.In_Progress;
+
+  bool get finished => status == GameStatus.Finished;
+
+  bool get awaitingPlayers => status == GameStatus.Awaiting_Players;
+
+  int get numberOfAlivePlayers => countAlive(players);
+
+  int get numberOfAliveZombies => countAlive(zombies);
+
+  void cancelCountDown() {
+    status = GameStatus.Awaiting_Players;
+    countDownFramesRemaining = 0;
   }
 
-  int get numberOfAlivePlayers {
-    int playersRemaining = 0;
-    for (Player player in players) {
-      if (player.alive) playersRemaining++;
-    }
-    return playersRemaining;
+  void onCharacterKilled(Character killed, Character by){
+
   }
 
-  void update();
+  void onDynamicObjectDestroyed(DynamicObject dynamicObject){
 
-  void onPlayerKilled(Player player);
+  }
 
-  void onNpcKilled(Npc npc) {}
+  /// In seconds
+  int getTime();
+
+  void onGameStarted() {}
+
+  void onPlayerDeath(Player player) {}
+
+  void onNpcObjectivesCompleted(Character npc) {}
+
+  void updateNpcBehavior(Character npc) {}
+
+  Vector2 getNextSpawnPoint() {
+    return getSceneCenter();
+  }
+
+  /// Returning true will cause the item to be removed
+  bool onPlayerItemCollision(Player player, Item item) {
+    return true;
+  }
+
+  void changeGame(Player player, Game to) {
+    if (player.game == to) return;
+
+    players.remove(player);
+
+    for (final zombie in player.game.zombies) {
+      final ai = zombie.ai;
+      if (ai == null) continue;
+      if (ai.target != player) continue;
+      ai.target = null;
+    }
+
+    to.players.add(player);
+    player.game = to;
+    to.disableCountDown = 0;
+    player.sceneChanged = true;
+  }
+
+  int countAlive(List<Character> characters){
+    var total = 0;
+    for (final character in characters) {
+      if (character.alive) total++;
+    }
+    return total;
+  }
+
+  void update() {}
 
   void onPlayerDisconnected(Player player) {}
 
-  void onPlayerRevived(Player player) {}
+  GameEvent _getAvailableGameEvent() {
+    for (final gameEvent in gameEvents) {
+      if (gameEvent.frameDuration > 0) continue;
+      gameEvent.frameDuration = 3;
+      gameEvent.assignNewId();
+      return gameEvent;
+    }
+    final empty = GameEvent(
+      type: GameEventType.Sword_Woosh,
+      x: 0,
+      y: 0,
+    );
+    gameEvents.add(empty);
+    return empty;
+  }
 
-  void onNpcSpawned(Npc npc) {}
-
-  bool gameOver();
-
-  Game(this.type, this.scene, this.maxPlayers) {
+  Game(this.scene, {
+      this.gameType = GameType.MMO,
+      this.shadeMax = Shade.Bright,
+      this.status = GameStatus.In_Progress
+  }) {
     this.crates.clear();
-    for (Vector2 crate in scene.crates) {
+    engine.onGameCreated(this);
+
+    for (final crate in scene.crates) {
       crates.add(Crate(x: crate.x, y: crate.y));
     }
 
-    for (EnvironmentObject environmentObject in scene.environment) {
-      if (environmentObject.radius > 0) {
-        colliders.add(Collider(environmentObject.x, environmentObject.y,
-            environmentObject.radius));
+    for (final character in scene.characters) {
+      if (character.type == CharacterType.Zombie) {
+        zombies.add(Character(
+            type: CharacterType.Zombie,
+            x: character.x,
+            y: character.y,
+            health: 100,
+            ai: AI(mode: NpcMode.Aggressive),
+            weapon: SlotType.Empty,
+            ));
+      } else {
+        npcs.add(InteractableNpc(
+            name: "Bob",
+            onInteractedWith: (Player player) {},
+            x: character.x,
+            y: character.y,
+            health: 100,
+            weapon: SlotType.Empty,
+        ));
       }
     }
 
-    for (int row = 0; row < scene.rows; row++) {
-      for (int column = 0; column < scene.columns; column++) {
-        switch (scene.tiles[row][column]) {
+    for (final environmentObject in scene.environment) {
+      if (environmentObject.radius <= 0) continue;
+      colliders.add(
+        Collider(
+          environmentObject.x,
+          environmentObject.y,
+          environmentObject.radius
+        )
+      );
+    }
+
+    for (var rowIndex = 0; rowIndex < scene.numberOfRows; rowIndex++) {
+      final row = scene.tiles[rowIndex];
+      for (var columnIndex = 0; columnIndex < scene.numberOfColumns; columnIndex++) {
+        switch (row[columnIndex]) {
           case Tile.ZombieSpawn:
-            zombieSpawnPoints.add(getTilePosition(row, column));
-            break;
-          case Tile.PlayerSpawn:
-            playerSpawnPoints.add(getTilePosition(row, column));
-            break;
-          case Tile.RandomItemSpawn:
-            Vector2 tilePosition = getTilePosition(row, column);
-            collectables.add(Collectable(
-                tilePosition.x, tilePosition.y, randomCollectableType));
+            zombieSpawnPoints.add(getTilePosition(rowIndex, columnIndex));
             break;
           default:
             break;
@@ -454,561 +249,542 @@ abstract class Game {
       }
     }
   }
-}
 
+  void checkCollisionPlayerItem() {
+    var itemLength = items.length;
+    for (final player in players) {
+      if (player.dead) continue;
+      for (var i = 0; i < itemLength; i++) {
+        final item = items[i];
+        if (item.top > player.bottom) break;
+        if (item.bottom < player.top) continue;
+        if (item.right < player.left) continue;
+        if (item.left > player.right) continue;
+        if (!onPlayerItemCollision(player, item)) continue;
+        items.removeAt(i);
+        i--;
+        itemLength--;
+      }
+    }
+  }
+
+  void checkColliderCollision(List<Collider> collidersA, List<Collider> collidersB) {
+    final totalColliders = collidersB.length;
+    for (final a in collidersA) {
+      if (!a.collidable) continue;
+      final aRadius = a.radius;
+      for (var i = 0; i < totalColliders; i++) {
+        final b = collidersB[i];
+        if (!b.collidable) continue;
+        final combinedRadius = aRadius + b.radius;
+        final _distance = distanceV2(a, b);
+        if (_distance > combinedRadius) continue;
+        final overlap = combinedRadius - _distance;
+        final r = radiansV2(a, b);
+        a.x -= adj(r, overlap);
+        a.y -= opp(r, overlap);
+        a.onCollisionWith(b);
+        b.onCollisionWith(a);
+      }
+    }
+  }
+}
 
 const secondsPerMinute = 60;
 const minutesPerHour = 60;
 const hoursPerDay = 24;
 const secondsPerDay = secondsPerMinute * minutesPerHour * hoursPerDay;
 const secondsPerFrame = 5;
+const secondsPerHour = secondsPerMinute * minutesPerHour;
+final characterRadius = settings.radius.character;
 
 extension GameFunctions on Game {
-  void updateAndCompile() {
-    // @on update game
-    if (!gameOver()) {
-      duration++;
-      time = (time + secondsPerFrame) % secondsPerDay;
-      update();
-      _updatePlayersAndNpcs();
-      _updateCollisions();
-      _updateBullets();
-      _updateBullets(); // called twice to fix collision detection
-      _updateNpcs();
-      _updateGrenades();
-      _updateCollectables();
-      _updateGameEvents();
-      _updateItems();
-      _updateCrates();
-    }
-    compileGame(this);
+  void spawnRandomOrb(double x, double y) {
+    items.add(Item(type: randomItem(orbItemTypes), x: x, y: y));
   }
 
-  void _updateCollectables() {
-    // @on update collectables
-    for (Player player in players) {
-      for (int i = 0; i < collectables.length; i++) {
-        if (!collectables[i].active) continue;
+  Vector2 getSceneCenter() =>
+      getTilePosition(scene.numberOfRows ~/ 2, scene.numberOfColumns ~/ 2);
 
-        if (abs(player.x - collectables[i].x) > settings.itemCollectRadius)
-          continue;
-        if (abs(player.y - collectables[i].y) > settings.itemCollectRadius)
-          continue;
-
-        switch (collectables[i].type) {
-          case CollectableType.Health:
-            if (player.meds >= settings.maxMeds) continue;
-            player.meds++;
-            dispatch(GameEventType.Item_Acquired, collectables[i].x,
-                collectables[i].y, 0, 0);
-            break;
-          case CollectableType.Handgun_Ammo:
-            if (!player.inventory.acquire(InventoryItemType.HandgunClip)) {
-              continue;
-            }
-            dispatch(GameEventType.Item_Acquired, collectables[i].x,
-                collectables[i].y, 0, 0);
-            break;
-
-          case CollectableType.Grenade:
-            if (player.grenades >= settings.maxGrenades) continue;
-            player.grenades++;
-            dispatch(GameEventType.Item_Acquired, collectables[i].x,
-                collectables[i].y, 0, 0);
-            break;
-          default:
-            break;
-        }
-        collectables[i].active = false;
-        // TODO expensive call
-        delayed(() {
-          activateCollectable(collectables[i]);
-        }, seconds: settings.itemReactivationInSeconds);
-      }
-    }
+  Character? getClosestEnemy({
+    required double x,
+    required double y,
+    required Character character,
+    required List<Character> characters,
+  }) {
+    return findClosestVector2(
+        colliders: characters,
+        x: x,
+        y: y,
+        predicate: (other) => other.dead || sameTeam(other, character)
+    );
   }
 
-  void activateCollectable(Collectable collectable) {
-    collectable.active = true;
-    collectable.setType(randomCollectableType);
+  DynamicObject? getClosestDynamicObject(double x, double y){
+    return findClosestVector2(
+        colliders: dynamicObjects,
+        x: x,
+        y: y,
+        predicate: (other) => !other.collidable
+    );
   }
 
-  void updateNpc(Npc npc) {
-    // @on update npc
-    if (npc.dead) return;
-    if (npc.busy) return;
-    if (npc.inactive) return;
+  Collider? getClosestEnemyCollider(double x, double y, Character character) {
+    final zombie = getClosestEnemy(x: x, y: y, character: character, characters: zombies);
+    final player = getClosestEnemy(x: x, y: y, character: character, characters: players);
+    final dynamicObject = getClosestDynamicObject(x, y);
+    final zombieDistance = zombie != null ? distanceBetween(x, y, zombie.x, zombie.y) : 99999;
+    final playerDistance =  player != null ? distanceBetween(x, y, player.x, player.y) : 99999;
+    final dynamicDistance = dynamicObject != null ? distanceBetween(x, y, dynamicObject.x, dynamicObject.y) : 99999;
 
-    // todo this belongs in update character
-    if (npc.state == CharacterState.Striking) {
-      if (npc.stateDuration-- > 0) return;
-      setCharacterStateIdle(npc);
+    if (zombieDistance < playerDistance) {
+       if (zombieDistance < dynamicDistance) {
+         return zombie;
+       }
+       return dynamicObject;
     }
+    if (playerDistance < dynamicDistance) {
+      return player;
+    }
+    return dynamicObject;
+  }
 
-    if (npc.targetSet) {
-      switch (npc.weapon) {
-        case Weapon.Unarmed:
-          if (!targetWithinStrikingRange(npc, npc.target)) break;
-          // @on npc target within striking range
-          characterFaceObject(npc, npc.target);
-          setCharacterState(npc, CharacterState.Striking);
-          changeCharacterHealth(npc.target, -settings.damage.zombieStrike);
 
-          double speed = 0.1;
-          double rotation = radiansBetweenObject(npc, npc.target);
-          dispatch(GameEventType.Zombie_Strike, npc.target.x, npc.target.y,
-              velX(rotation, speed), velY(rotation, speed));
-          return;
-        default:
-          if (!targetWithinFiringRange(npc, npc.target)) break;
-          characterAimAt(npc, npc.target.x, npc.target.y);
-          setCharacterState(npc, CharacterState.Firing);
-          return;
-      }
+  void updateInProgress() {
+    frame++;
 
-      // @on npc update find
-      if (npc.mode == NpcMode.Aggressive) {
-        if (frame % 30 == 0) {
-          npc.path = scene.findPath(npc.x, npc.y, npc.target.x, npc.target.y);
-        }
-        if (npc.path.length <= 1 &&
-            !targetWithinStrikingRange(npc, npc.target)) {
-          characterFaceObject(npc, npc.target);
-          setCharacterState(npc, CharacterState.Walking);
-          return;
-        }
+    if (frame % 15 == 0){
+      updateInteractableNpcTargets();
+      updateZombieTargets();
+
+      if (players.isEmpty){
+        disableCountDown++;
+      } else {
+        disableCountDown = 0;
       }
     }
 
-    if (npc.path.isNotEmpty) {
-      if (arrivedAtPath(npc)) {
-        // @on npc arrived at path
-        npc.path.removeAt(0);
-        if (npc.path.isEmpty) {
-          npc.state = CharacterState.Idle;
-          return;
-        }
-      }
-      // @on npc going to path
-      characterFace(npc, npc.path[0].x, npc.path[0].y);
-      npc.state = CharacterState.Walking;
+    if (disableCountDown > 30) {
       return;
     }
-    npc.state = CharacterState.Idle;
+
+    for (final dynamicObject in dynamicObjects) {
+      if (dynamicObject.respawnDuration <= 0) continue;
+      if (dynamicObject.respawnDuration-- > 1) continue;
+      dynamicObject.collidable = true;
+      dynamicObject.health = 3;
+    }
+
+    update();
+    _updateCollisions();
+    _updatePlayersAndNpcs();
+    _updateProjectiles();
+    _updateProjectiles(); // called twice to fix collision detection
+    _updateGameEvents();
+    _updateSpawnPointCollisions();
+    _updateItems();
+    _updateCharacterFrames();
+    sortGameObjects();
+  }
+
+  void updateFrames(List<Character> character) {
+    for (final character in character) {
+      character.animationFrame =
+          (character.animationFrame + 1) % 8;
+    }
+  }
+
+  /// TODO Optimize
+  /// calculates if there is a wall between two objects
+  bool isVisibleBetween(Vector2 a, Vector2 b) {
+    final angle = radiansV2(a, b);
+    final vX = adj(angle, 48);
+    final vY = opp(angle, 48);
+    final jumps = distanceV2(a, b) ~/ 48;
+    var x = a.x + vX;
+    var y = a.y + vY;
+    for (var i = 0; i < jumps; i++) {
+      if (!isShootable(scene.tileAt(x, y))) {
+        return false;
+      }
+      x += vX;
+      y += vY;
+    }
+    return true;
+  }
+
+  void applyDamage(Character src, Collider target, int amount) {
+    if (target is Character) {
+      if (target.dead) return;
+      if (target.invincible) return;
+      changeCharacterHealth(target, -amount);
+      final targetAI = target.ai;
+
+      if (target.alive) {
+        if (target.type.isZombie){
+          setCharacterState(target, stateHurt);
+        }
+        if (targetAI != null) {
+          final targetAITarget = targetAI.target;
+          if (targetAITarget == null) {
+             targetAI.target = src;
+          } else {
+            final aiTargetDistance = distanceV2(target, targetAITarget);
+            final srcTargetDistance = distanceV2(src, target);
+            if (srcTargetDistance < aiTargetDistance){
+              targetAI.target = src;
+            }
+          }
+        }
+        return;
+      }
+
+      onCharacterKilled(target, src);
+
+
+      if (targetAI != null) {
+        target.active = false;
+      }
+      if (target.alive && targetAI != null) {
+        if (targetAI.target == null) {
+          targetAI.target = src;
+        }
+      }
+      return;
+    }
+
+    if (target is DynamicObject) {
+      target.health -= amount;
+      if (target.health <= 0) {
+        target.collidable = false;
+        target.respawnDuration = 150;
+        if (target.type == DynamicObjectType.Pot) {
+          print("Pot Destroyed");
+          dispatchV2(GameEventType.Pot_Destroyed, target);
+        }
+        onDynamicObjectDestroyed(target);
+        return;
+      }
+    }
+  }
+
+  void playerGainExperience(Player player, int experience) {
+    if (player.level >= maxPlayerLevel) return;
+    player.experience += experience;
+    while (player.experience >= levelExperience[player.level]) {
+      // on player level increased
+      player.experience -= levelExperience[player.level];
+      player.level++;
+      player.abilityPoints++;
+      player.events.add(PlayerEvent.Level_Up);
+      player.maxHealth += settings.levelUpHealthIncrease;
+      player.maxMagic += settings.levelUpMagicIncrease;
+      player.health = player.maxHealth;
+      player.magic = player.maxMagic;
+      if (player.level >= maxPlayerLevel) {
+        player.experience = 0;
+        return;
+      }
+    }
+  }
+
+  void _characterAttack(Character character, Character target){
+    if (!targetWithinAttackRange(character, target)) return;
+    characterFaceV2(character, target);
+    setCharacterStatePerforming(character);
+    character.attackTarget = target;
+  }
+
+  void _characterRunAt(Character character, Vector2 target){
+    characterFaceV2(character, target);
+    setCharacterState(character, stateRunning);
+  }
+
+  int get someNumber {
+    return 5;
+  }
+
+  void _updateCharacterAI(Character character) {
+    if (character.deadOrBusy) return;
+    if (character.inactive) return;
+    final ai = character.ai;
+    if (ai == null) return;
+
+    final target = ai.target;
+    if (target != null) {
+      if (character.type.isZombie) {
+        if (targetWithinAttackRange(character, target)){
+          _characterAttack(character, target);
+          return;
+        }
+        const runAtTargetDistance = 100;
+        if (cheapDistance(character, target) < runAtTargetDistance) {
+          _characterRunAt(character, target);
+          return;
+        }
+      } else { // not zombie
+        if (!targetWithinAttackRange(character, target)) return;
+        if (!isVisibleBetween(character, target)) return;
+        _characterAttack(character, target);
+        return;
+      }
+    }
+
+
+    if (ai.pathIndex >= 0) {
+      if (ai.arrivedAtDest) {
+        ai.nextPath();
+        return;
+      }
+      // @on npc going to path
+      characterFace(character, ai.destX, ai.destY);
+      character.state = stateRunning;
+      return;
+    } else if (ai.mode == NpcMode.Aggressive && ai.idleDuration++ > _aiWanderPauseDuration){
+      ai.idleDuration = 0;
+      npcSetRandomDestination(ai);
+    }
+
+    character.state = stateIdle;
   }
 
   void _updatePlayersAndNpcs() {
-    for (int i = 0; i < players.length; i++) {
-      updatePlayer(players[i]);
-      updateCharacter(players[i]);
+
+    final playersLength = players.length;
+    for (var i = 0; i < playersLength; i++) {
+      final player = players[i];
+      updatePlayer(player);
+      if (player.skipUpdate) {
+        player.skipUpdate = false;
+        continue;
+      }
+      updateCharacter(player);
     }
 
-    for (int i = 0; i < zombies.length; i++) {
+    final zombiesLength = zombies.length;
+    for (var i = 0; i < zombiesLength; i++) {
       updateCharacter(zombies[i]);
     }
 
-    for (int i = 0; i < npcs.length; i++) {
+    final npcsLength = npcs.length;
+    for (var i = 0; i < npcsLength; i++) {
       updateCharacter(npcs[i]);
-    }
-
-    for (Character character in players) {
-      for (Collider collider in colliders) {
-        double combinedRadius = character.radius + collider.radius;
-        if (diffOver(character.x, collider.x, combinedRadius)) continue;
-        if (diffOver(character.y, collider.y, combinedRadius)) continue;
-        double _distance = distanceBetween(character, collider);
-        if (_distance > combinedRadius) continue;
-        double overlap = combinedRadius - _distance;
-        double r = radiansBetweenObject(character, collider);
-        character.x -= adj(r, overlap);
-        character.y -= opp(r, overlap);
-      }
-    }
-  }
-
-  void handleBlockCollisions(List<GameObject> gameObjects) {
-    for (int i = 0; i < gameObjects.length; i++) {
-      GameObject gameObject = gameObjects[i];
-      for (int j = 0; j < scene.blocks.length; j++) {
-        Block block = scene.blocks[j];
-        if (block.rightX < gameObject.left) continue;
-        if (gameObject.right < block.leftX) break;
-        if (gameObject.y < block.topY) continue;
-        if (gameObject.y > block.bottomY) continue;
-
-        if (gameObject.x < block.topX && gameObject.y < block.leftY) {
-          double xd = block.topX - gameObject.x;
-          double yd = gameObject.y - block.topY;
-          if (yd > xd) {
-            gameObject.x = block.topX - yd;
-            gameObject.y--;
-          }
-          continue;
-        }
-
-        if (gameObject.x < block.bottomX && gameObject.y > block.leftY) {
-          double xd = gameObject.x - block.leftX;
-          double yd = gameObject.y - block.leftY;
-          if (xd > yd) {
-            gameObject.x -= xd - yd;
-            gameObject.y += xd - yd;
-          }
-          continue;
-        }
-        if (gameObject.x > block.topX && gameObject.y < block.rightY) {
-          double xd = gameObject.x - block.topX;
-          double yd = gameObject.y - block.topY;
-
-          if (yd > xd) {
-            gameObject.x += yd - xd;
-            gameObject.y -= yd - xd;
-          }
-          continue;
-        }
-
-        if (gameObject.x > block.bottomX && gameObject.y > block.rightY) {
-          double xd = block.rightX - gameObject.x;
-          double yd = gameObject.y - block.rightY;
-          if (xd > yd) {
-            gameObject.x += xd - yd;
-            gameObject.y += xd - yd;
-          }
-          continue;
-        }
-      }
     }
   }
 
   void _updateCollisions() {
-    zombies.sort(compareGameObjects);
-    players.sort(compareGameObjects);
-    npcs.sort(compareGameObjects);
+    // sortGameObjects();
+    checkColliderCollision(players, colliders);
+    checkColliderCollision(zombies, colliders);
+    checkColliderCollision(players, dynamicObjects);
     updateCollisionBetween(zombies);
     updateCollisionBetween(players);
     resolveCollisionBetween(zombies, players, resolveCollisionA);
     resolveCollisionBetween(players, npcs, resolveCollisionB);
+    checkCollisionPlayerItem();
   }
 
-  Player? findPlayerById(int id) {
-    for (Player player in players) {
-      if (player.id == id) return player;
-    }
-    return null;
+  void sortGameObjects() {
+    sortVertically(zombies);
+    sortVertically(players);
+    sortVertically(npcs);
+    sortVertically(items);
+    sortVertically(projectiles);
+    sortVertically(dynamicObjects);
   }
 
-  void _characterFireWeapon(Character character) {
+  void setCharacterStateRunning(Character character) {
+    setCharacterState(character, stateRunning);
+  }
+
+  void setCharacterStateDead(Character character) {
     if (character.dead) return;
-    if (character.stateDuration > 0) return;
-    faceAimDirection(character);
+    character.state = stateDead;
+    character.collidable = false;
+    character.ai?.onDeath();
 
     if (character is Player) {
-      if (equippedWeaponRounds(character) <= 0) {
-        // @on character insufficient bullets to fire
-        character.stateDuration = settings.coolDown.clipEmpty;
-        dispatch(GameEventType.Clip_Empty, character.x, character.y, 0, 0);
-        return;
-      }
+      dispatchV2(GameEventType.Player_Death, character);
+      onPlayerDeath(character);
     }
 
-    double d = 15;
-    double x = character.x + adj(character.aimAngle, d);
-    double y = character.y + opp(character.aimAngle, d) - 5;
-    character.state = CharacterState.Firing;
-    switch (character.weapon) {
-      case Weapon.HandGun:
-        // @on character fire handgun
-        if (character is Player) {
-          character.rounds.handgun--;
-        }
-        Bullet bullet = spawnBullet(character);
-        character.stateDuration = coolDown.handgun;
-        dispatch(GameEventType.Handgun_Fired, x, y, bullet.xv, bullet.yv);
-        break;
-      case Weapon.Shotgun:
-        // @on character fire shotgun
-        if (character is Player) {
-          character.rounds.shotgun--;
-        }
-        character.xv += velX(character.aimAngle + pi, 1);
-        character.yv += velY(character.aimAngle + pi, 1);
-        for (int i = 0; i < settings.shotgunBulletsPerShot; i++) {
-          spawnBullet(character);
-        }
-        Bullet bullet = bullets.last;
-        character.stateDuration = coolDown.shotgun;
-        dispatch(GameEventType.Shotgun_Fired, x, y, bullet.xv, bullet.yv);
-        break;
-      case Weapon.SniperRifle:
-        // @on character fire sniper rifle
-        if (character is Player) {
-          character.rounds.sniperRifle--;
-        }
-        Bullet bullet = spawnBullet(character);
-        character.stateDuration = coolDown.sniperRifle;
-        dispatch(GameEventType.SniperRifle_Fired, x, y, bullet.xv, bullet.yv);
-        break;
-      case Weapon.AssaultRifle:
-        // @on character fire assault rifle
-        if (character is Player) {
-          character.rounds.assaultRifle--;
-        }
-        Bullet bullet = spawnBullet(character);
-        character.stateDuration = coolDown.assaultRifle;
-        dispatch(GameEventType.MachineGun_Fired, x, y, bullet.xv, bullet.yv);
-        break;
-      default:
-        break;
+    for (final npc in zombies) {
+      final npcAI = npc.ai;
+      if (npcAI == null) continue;
+      if (npcAI.target != character) continue;
+      npcAI.target = null;
+    }
+
+    for (final projectile in projectiles) {
+      if (projectile.target != character) continue;
+      projectile.target = null;
+    }
+
+    for (final player in players) {
+      if (player.attackTarget != character) continue;
+      player.attackTarget = null;
     }
   }
 
-  void setCharacterState(Character character, CharacterState value) {
-    // @on character set state
+  void setCharacterStatePerforming(Character character){
+    character.performing = character.ability;
+    character.ability = null;
+    setCharacterState(character, statePerforming);
+  }
+
+  void setCharacterState(Character character, int value) {
+    assert(value >= 0);
+    assert(value <= 5);
     if (character.dead) return;
     if (character.state == value) return;
-    if (value != CharacterState.Dead && character.busy) return;
+
+    if (value == stateDead){
+      setCharacterStateDead(character);
+      return;
+    }
+
+    if (value == stateHurt) {
+      const duration = 10;
+      character.stateDurationRemaining = duration;
+      character.state = value;
+      character.stateDuration = 0;
+      character.animationFrame = 0;
+      return;
+    }
+
+    if (character.busy) return;
 
     switch (value) {
-      case CharacterState.Running:
-        // @on character running
-        if (character is Player && character.stamina <= settings.minStamina) {
-          character.state = CharacterState.Walking;
-          return;
-        }
+      case stateChanging:
+        character.stateDurationRemaining = 10;
         break;
-      case CharacterState.Dead:
-        // @on character death
-        character.collidable = false;
-        character.stateFrameCount = duration;
-        character.state = value;
+      case statePerforming:
+        character.stateDurationRemaining = 20;
         if (character is Player) {
-          // @on player killed
-          character.score.deaths++;
-          onPlayerKilled(character);
-
-          for (Npc npc in zombies) {
-            if (npc.target != character) continue;
-            // @on npc target player killed
-            npc.clearTarget();
+          final ability = character.performing;
+          if (ability == null) {
+            character.stateDurationRemaining = character.slots.weapon.type.duration;
+            break;
           }
-        } else if (character is Npc) {
-          character.clearTarget();
-          onNpcKilled(character);
-        }
-        return;
-      case CharacterState.ChangingWeapon:
-        character.stateDuration = 10;
-        break;
-      case CharacterState.Aiming:
-        character.accuracy = 0;
-        break;
-      case CharacterState.Firing:
-        // @on character firing weapon
-        _characterFireWeapon(character);
-        break;
-      case CharacterState.Striking:
-        // @on character striking
-        character.stateDuration = settings.duration.knifeStrike;
-        break;
-      case CharacterState.Reloading:
-        // @on reload weapon
-        Player player = character as Player;
-
-        switch (character.weapon) {
-          case Weapon.HandGun:
-            // @on reload handgun
-            if (player.rounds.handgun >= constants.maxRounds.handgun) return;
-            if (player.clips.handgun <= 0) return;
-            player.rounds.handgun = constants.maxRounds.handgun;
-            player.clips.handgun--;
-            player.stateDuration = settings.reloadDuration.handgun;
-            break;
-          case Weapon.Shotgun:
-            // @on reload shotgun
-            if (player.rounds.shotgun >= constants.maxRounds.shotgun) return;
-            if (player.clips.shotgun <= 0) return;
-            player.rounds.shotgun = constants.maxRounds.shotgun;
-            player.clips.shotgun--;
-            player.stateDuration = settings.reloadDuration.shotgun;
-            break;
-          case Weapon.SniperRifle:
-            // @on reload sniper rifle
-            if (player.rounds.sniperRifle >= constants.maxRounds.sniperRifle)
-              return;
-            if (player.clips.sniperRifle <= 0) return;
-            player.rounds.sniperRifle = constants.maxRounds.sniperRifle;
-            player.clips.sniperRifle--;
-            player.stateDuration = settings.reloadDuration.sniperRifle;
-            break;
-          case Weapon.AssaultRifle:
-            // @on reload assault rifle
-            if (player.rounds.assaultRifle >= constants.maxRounds.assaultRifle)
-              return;
-            if (player.clips.assaultRifle <= 0) return;
-            player.rounds.assaultRifle = constants.maxRounds.assaultRifle;
-            player.clips.assaultRifle--;
-            player.stateDuration = settings.reloadDuration.assaultRifle;
-            break;
-          default:
-            break;
+          if (character.magic < ability.cost) {
+            character.ability = null;
+            character.attackTarget = null;
+            break;;
+          }
+          character.magic -= ability.cost;
         }
         break;
       default:
         break;
     }
     character.state = value;
+    character.stateDuration = 0;
+    character.animationFrame = 0;
   }
 
   void setCharacterStateIdle(Character character) {
-    setCharacterState(character, CharacterState.Idle);
+    setCharacterState(character, stateIdle);
   }
 
   void changeCharacterHealth(Character character, int amount) {
-    // @on change character health
     if (character.dead) return;
-
     character.health += amount;
-    if (character.health == 0) {
-      setCharacterState(character, CharacterState.Dead);
-    }
+    if (character.health > 0) return;
+    setCharacterStateDead(character);
   }
 
-  void _updateBullets() {
-    // @on update bullet
-    for (int i = 0; i < bullets.length; i++) {
-      if (!bullets[i].active) continue;
-      Bullet bullet = bullets[i];
-      bullet.x += bullet.xv;
-      bullet.y += bullet.yv;
-      if (bulletDistanceTravelled(bullet) > bullet.range) {
-        if (!scene.waterAt(bullet.x, bullet.y)) {
-          dispatch(GameEventType.Bullet_Hole, bullet.x, bullet.y, 0, 0);
-        }
+  bool overlapping(GameObject a, GameObject b) {
+    if (a.right < b.left) return false;
+    if (a.left > b.right) return false;
+    if (a.bottom < b.top) return false;
+    if (a.top > b.bottom) return false;
+    return true;
+  }
 
-        bullet.active = false;
-      }
-    }
-
-    for (int i = 0; i < bullets.length; i++) {
-      if (scene.bulletCollisionAt(bullets[i].x, bullets[i].y)) {
-        bullets[i].active = false;
-      }
-    }
-
-    bullets.sort(compareGameObjects);
-    checkBulletCollision(zombies);
-    checkBulletCollision(players);
-
-    for (int i = 0; i < crates.length; i++) {
-      if (!crates[i].active) continue;
-      Crate crate = crates[i];
-      applyCratePhysics(crate, players);
-      applyCratePhysics(crate, zombies);
-
-      for (int j = 0; j < bullets.length; j++) {
-        if (!bullets[j].active) continue;
-        if (diffOver(crate.x, bullets[j].x, radius.crate)) continue;
-        if (diffOver(crate.y, bullets[j].y, radius.crate)) continue;
-        // @on crate struck by bullet
-        breakCrate(crate);
-        bullets[j].active = false;
+  void deactivateProjectile(Projectile projectile) {
+    if (!projectile.active) return;
+    projectile.active = false;
+    if (scene.waterAt(projectile.x, projectile.y)) return;
+    switch (projectile.type) {
+      case ProjectileType.Bullet:
+        dispatch(GameEventType.Bullet_Hole, projectile.x, projectile.y);
         break;
+      case ProjectileType.Fireball:
+        spawnExplosion(src: projectile.owner, x: projectile.x, y: projectile.y);
+        break;
+      case ProjectileType.Arrow:
+        break;
+      default:
+        break;
+    }
+  }
+
+  void _updateProjectiles() {
+    var projectilesLength = projectiles.length;
+    for (var i = 0; i < projectilesLength; i++) {
+      final projectile = projectiles[i];
+      if (!projectile.active) continue;
+      projectile.x += projectile.xv;
+      projectile.y += projectile.yv;
+      final target = projectile.target;
+      if (target != null) {
+        setVelocityTowards(projectile, target, projectile.speed);
+      } else if (projectile.overRange) {
+        deactivateProjectile(projectile);
       }
     }
-  }
-
-  void breakCrate(Crate crate) {
-    // @on break crate
-    if (!crate.active) return;
-    spawnRandomItem(crate.x, crate.y);
-    crate.deactiveDuration = settings.crateDeactiveDuration;
-    dispatch(GameEventType.Crate_Breaking, crate.x, crate.y);
-  }
-
-  void spawnRandomItem(double x, double y) {
-    items.add(Item(type: randomValue(itemTypes), x: x, y: y));
-  }
-
-  void spawnExplosion(Grenade grenade) {
-    double x = grenade.x;
-    double y = grenade.y;
-
-    dispatch(GameEventType.Explosion, x, y, 0, 0);
-
-    for (Crate crate in crates) {
-      if (!crate.active) continue;
-      if (diffOver(grenade.x, crate.x, settings.grenadeExplosionRadius))
-        continue;
-      if (diffOver(grenade.y, crate.y, settings.grenadeExplosionRadius))
-        continue;
-      breakCrate(crate);
-    }
-
-    for (Character character in zombies) {
-      if (objectDistanceFrom(character, x, y) > settings.grenadeExplosionRadius)
-        continue;
-      double rotation = radiansBetween2(character, x, y);
-      double magnitude = 10;
-      applyForce(character, rotation + pi, magnitude);
-
-      if (character.alive) {
-        changeCharacterHealth(character, -settings.damage.grenade);
-
-        if (!character.alive) {
-          // @on npc killed by grenade
-          grenade.owner.earnPoints(settings.pointsEarned.zombieKilled);
-
-          double forceX =
-              clampMagnitudeX(character.x - x, character.y - y, magnitude);
-          double forceY =
-              clampMagnitudeY(character.x - x, character.y - y, magnitude);
-
-          if (randomBool()) {
-            dispatch(GameEventType.Zombie_Killed, character.x, character.y,
-                forceX, forceY);
-            characterFace(character, x, y);
-            delayed(() => character.active = false, ms: randomInt(1000, 2000));
-          } else {
-            character.active = false;
-            dispatch(GameEventType.Zombie_killed_Explosion, character.x,
-                character.y, forceX, forceY);
-          }
-        }
+    projectilesLength = projectiles.length;
+    for (var i = 0; i < projectilesLength; i++) {
+      final projectile = projectiles[i];
+      if (!projectile.active) continue;
+      if (projectile.collideWithEnvironment) continue;
+      if (scene.projectileCollisionAt(projectile.x, projectile.y)) {
+        deactivateProjectile(projectile);
       }
     }
 
-    for (Player player in players) {
-      if (objectDistanceFrom(player, x, y) > settings.grenadeExplosionRadius)
+    checkProjectileCollision(scene.environment);
+    checkProjectileCollision(zombies);
+    checkProjectileCollision(players);
+    checkProjectileCollision(dynamicObjects);
+  }
+
+  void spawnFreezeRing({required Character src, int duration = 100, int damage = 1}){
+    dispatchV2(GameEventType.FreezeCircle, src);
+    for (final zombie in zombies) {
+      if (zombie.dead) continue;
+      if (!withinRadius(zombie, src, SpellRadius.Freeze_Ring)) continue;
+      applyStrike(src, zombie, damage);
+      zombie.frozenDuration += duration;
+    }
+  }
+
+  void spawnExplosion({
+    required Character src,
+    required double x,
+    required double y
+  }) {
+    dispatch(GameEventType.Explosion, x, y);
+    for (final zombie in zombies) {
+      if (!withinDistance(zombie, x, y, settings.radius.explosion)) continue;
+      final rotation = radiansBetween2(zombie, x, y);
+      final magnitude = 10.0;
+      applyForce(zombie, rotation + pi, magnitude);
+
+      if (zombie.dead) continue;
+      applyDamage(src, zombie, 15);
+    }
+
+    for (final player in players) {
+      if (hypotenuse(player.x - x, player.y - y) > settings.radius.explosion)
         continue;
-      double rotation = radiansBetween2(player, x, y);
-      double magnitude = 10;
+      final rotation = radiansBetween2(player, x, y);
+      final magnitude = 10.0;
       applyForce(player, rotation + pi, magnitude);
 
       if (player.alive) {
-        changeCharacterHealth(player, -settings.damage.grenade);
-        if (!player.alive) {
-          // @on player killed by grenade
-          if (!sameTeam(player, grenade.owner)) {
-            grenade.owner.earnPoints(settings.pointsEarned.playerKilled);
-          }
-        }
+        changeCharacterHealth(player, -15);
       }
-    }
-  }
-
-  bool sameTeam(Player a, Player b) {
-    if (a == b) return true;
-    if (a.squad == noSquad) return false;
-    if (b.squad == noSquad) return false;
-    return a.squad == b.squad;
-  }
-
-  void _updateNpcs() {
-    for (Npc npc in zombies) {
-      updateNpc(npc);
-    }
-
-    for (InteractableNpc interactableNpc in npcs) {
-      updateNpc(interactableNpc);
     }
   }
 
@@ -1022,653 +798,846 @@ extension GameFunctions on Game {
       }
     }
 
-    switch (player.state) {
-      case CharacterState.Running:
-        // player.stamina -= 3;
-        if (player.stamina <= 0) {
-          setCharacterState(player, CharacterState.Walking);
-        }
-        break;
-      case CharacterState.Walking:
-        player.stamina += settings.staminaRefreshRate;
-        if (player.lastUpdateFrame > 5) {
-          setCharacterStateIdle(player);
-        }
-        break;
-      case CharacterState.Idle:
-        player.stamina += settings.staminaRefreshRate;
-        break;
-      case CharacterState.Aiming:
-        player.stamina += settings.staminaRefreshRate;
-        break;
-      case CharacterState.Firing:
-        player.stamina += settings.staminaRefreshRate;
-        break;
-      case CharacterState.Striking:
-        // @on player striking
-        // @on character striking
-        if (player.stateDuration == 10) {
-          dispatch(GameEventType.Knife_Strike, player.x, player.y);
-        }
-
-        if (player.stateDuration == 8) {
-          double frontX =
-              player.x + velX(player.aimAngle, settings.range.knife);
-          double frontY =
-              player.y + velY(player.aimAngle, settings.range.knife);
-
-          for (Npc npc in zombies) {
-            // @on zombie struck by player
-            if (!npc.alive) continue;
-            if (!npc.active) continue;
-            if (diffOver(npc.x, frontX, radius.character)) continue;
-            if (diffOver(npc.y, frontY, radius.character)) continue;
-            npc.xv += velX(player.aimAngle, settings.knifeHitAcceleration);
-            npc.yv += velY(player.aimAngle, settings.knifeHitAcceleration);
-            changeCharacterHealth(npc, -settings.damage.knife);
-            dispatch(
-                GameEventType.Zombie_Hit,
-                npc.x,
-                npc.y,
-                velX(player.aimAngle, settings.knifeHitAcceleration * 2),
-                velY(player.aimAngle, settings.knifeHitAcceleration * 2));
-            return;
-          }
-
-          for (Crate crate in crates) {
-            if (!crate.active) continue;
-            if (diffOver(crate.x, frontX, radius.crate)) continue;
-            if (diffOver(crate.y, frontY, radius.crate)) continue;
-            breakCrate(crate);
-          }
-        }
+    if (player.lastUpdateFrame > 5) {
+      setCharacterStateIdle(player);
     }
-    player.stamina = clampInt(player.stamina, 0, player.maxStamina);
-    player.currentTile = scene.tileAt(player.x, player.y);
-  }
 
-  void _updateGrenades() {
-    for (Grenade grenade in grenades) {
-      applyMovement(grenade);
-      applyFriction(grenade, settings.grenadeFriction);
-      grenade.zv -= settings.grenadeGravity;
+    final aimTarget = player.aimTarget;
+    if (aimTarget is Character && aimTarget.dead){
+      player.aimTarget = null;
+    }
 
-      if (grenade.z < 0) {
-        grenade.z = 0;
-        grenade.zv = -grenade.zv * 0.5;
+    final target = player.target;
+    if (target == null) return;
+    characterFaceV2(player, target);
+
+    if (target is Collider){
+      if (!target.collidable) {
+        player.target = null;
+        return;
       }
+
+      final ability = player.ability;
+
+      if (ability != null){
+         if (withinRadius(player, target, ability.range)) {
+           player.attackTarget = target;
+           setCharacterStatePerforming(player);
+           player.target = null;
+           return;
+         }
+         setCharacterStateRunning(player);
+         return;
+      }
+
+      if (withinAttackRadius(player, target)) {
+        player.attackTarget = target;
+        setCharacterStatePerforming(player);
+        player.target = null;
+        return;
+      }
+    } else if (withinRadius(player, target, player.speed)){
+        player.target = null;
+        return;
     }
+    setCharacterStateRunning(player);
   }
 
-  void checkBulletCollision(List<Character> characters) {
-    int s = 0;
-    for (int i = 0; i < bullets.length; i++) {
-      if (!bullets[i].active) continue;
-      Bullet bullet = bullets[i];
-      for (int j = s; j < characters.length; j++) {
-        Character character = characters[j];
-        if (!character.active) continue;
-        if (character.dead) continue;
-        if (character.left > bullet.right) break;
-        if (bullet.left > character.right) {
-          s++;
-          continue;
+  void checkProjectileCollision(List<Collider> colliders) {
+    final projectilesLength = projectiles.length;
+    final collidersLength = colliders.length;
+    for (var i = 0; i < projectilesLength; i++) {
+      final projectile = projectiles[i];
+      if (!projectile.active) continue;
+      final target = projectile.target;
+      if (target != null) {
+        if (withinRadius(projectile, target, 10.0)){
+          handleProjectileHit(projectile, target);
+          return;
         }
-        if (bullet.top > character.bottom) continue;
-        if (bullet.bottom < character.top) continue;
-
-        if (bullet.weapon != Weapon.SniperRifle) {
-          bullet.active = false;
-        }
-
-        character.xv += bullet.xv * settings.bulletImpactVelocityTransfer;
-        character.yv += bullet.yv * settings.bulletImpactVelocityTransfer;
-
-        if (enemies(bullet, character)) {
-          // @on zombie hit by bullet
-          changeCharacterHealth(character, -bullet.damage);
-
-          if (character is Player) {
-            if (character.dead) {
-              if (bullet.owner is Player) {
-                // @on player killed by player
-                Player owner = bullet.owner as Player;
-                owner.earnPoints(settings.pointsEarned.playerKilled);
-                owner.score.playersKilled++;
-              }
-            }
-
-            dispatch(GameEventType.Player_Hit, character.x, character.y,
-                bullet.xv, bullet.yv);
-            return;
-          }
-        }
-
-        if (character.alive) {
-          dispatch(GameEventType.Zombie_Hit, character.x, character.y,
-              bullet.xv, bullet.yv);
-        } else {
-          // @on zombie killed by player
-          if (bullet.owner is Player) {
-            Player owner = bullet.owner as Player;
-            // call interface instead
-            owner.score.zombiesKilled++;
-            if (character is Npc) {
-              owner.earnPoints(
-                  constants.points.zombieKilled * character.pointMultiplier);
-            }
-          } else if (bullet.owner is Npc) {
-            // on zombie killed by npc
-            (bullet.owner as Npc).clearTarget();
-          }
-
-          if (randomBool()) {
-            dispatch(GameEventType.Zombie_Killed, character.x, character.y,
-                bullet.xv, bullet.yv);
-            delayed(() => character.active = false, ms: 2000);
-          } else {
-            character.active = false;
-            dispatch(GameEventType.Zombie_killed_Explosion, character.x,
-                character.y, bullet.xv, bullet.yv);
-          }
-        }
+      }
+      for (var j = 0; j < collidersLength; j++) {
+        final collider = colliders[j];
+        if (!collider.collidable) continue;
+        if (projectile.right < collider.left) continue;
+        if (projectile.left > collider.right) continue;
+        if (projectile.top > collider.bottom) continue;
+        if (projectile.bottom < collider.top) continue;
+        if (projectile.owner == collider) continue;
+        handleProjectileHit(projectile, collider);
         break;
       }
     }
   }
 
-  void clearNpcs() {
-    zombies.clear();
+  void handleProjectileHit(Projectile projectile, Collider collider) {
+    projectile.active = false;
+    applyStrike(projectile.owner, collider, projectile.damage);
+    dispatch(GameEventType.Arrow_Hit, collider.x, collider.y);
+  }
+
+  void applyStrike(Character src, Collider target, int damage) {
+    if (!target.collidable) return;
+    if (target is Character) {
+      if (sameTeam(src, target)) return;
+      if (target.dead) return;
+    }
+
+    applyDamage(src, target, damage);
+    final angleBetweenSrcAndTarget = radiansV2(src, target);
+    if (target is Character) {
+      const forceMultiplier = 3.0;
+      final healthPercentage = damage / target.maxHealth;
+      applyForce(target, angleBetweenSrcAndTarget, healthPercentage * forceMultiplier);
+      dispatch(
+          GameEventType.Character_Struck,
+          target.x,
+          target.y,
+          angleBetweenSrcAndTarget
+      );
+      if (target.dead && target.type.isZombie){
+        dispatch(
+            GameEventType.Zombie_Killed,
+            target.x,
+            target.y,
+            src.aimAngle
+        );
+      }
+      return;
+    }
+
+    if (target is DynamicObject) {
+      dispatchV2(GameEventType.Object_Struck, target);
+    }
+  }
+
+  void updateCharacterStatePerforming(Character character) {
+    final ability = character.performing;
+    if (ability == null) {
+      updateCharacterStateAttacking(character);
+      return;
+    }
+    switch (ability.type) {
+      case AbilityType.Explosion:
+        if (character.stateDurationRemaining == castFrame) {
+          spawnExplosion(
+              src: character,
+              x: character.abilityTarget.x,
+              y: character.abilityTarget.y);
+          character.performing = null;
+        }
+        break;
+      case AbilityType.Blink:
+        if (character.stateDurationRemaining == castFrame) {
+          dispatch(GameEventType.Teleported, character.x, character.y);
+          character.x = character.abilityTarget.x;
+          character.y = character.abilityTarget.y;
+          dispatch(GameEventType.Teleported, character.x, character.y);
+          character.performing = null;
+          character.attackTarget = null;
+        }
+        break;
+      case AbilityType.Fireball:
+        if (character.stateDurationRemaining == castFrame) {
+          spawnFireball(character);
+          character.performing = null;
+          character.attackTarget = null;
+        }
+        break;
+      case AbilityType.Split_Arrow:
+        if (character.stateDurationRemaining == castFrame) {
+          Projectile arrow1 = spawnArrow(character, damage: character.weapon.damage);
+          double angle = piSixteenth;
+          arrow1.target = null;
+          setProjectileAngle(arrow1, character.aimAngle - angle);
+          Projectile arrow2 = spawnArrow(character, damage: character.weapon.damage);
+          arrow2.target = null;
+          Projectile arrow3 = spawnArrow(character, damage: character.weapon.damage);
+          arrow3.target = null;
+          setProjectileAngle(arrow3, character.aimAngle + angle);
+          character.performing = null;
+          character.attackTarget = null;
+        }
+        break;
+
+      case AbilityType.Long_Shot:
+        if (character.stateDurationRemaining == castFrame) {
+          final int damageMultiplier = 3;
+          spawnArrow(character, damage: character.weapon.damage * damageMultiplier)
+              .range = ability.range;
+          character.attackTarget = null;
+          character.performing = null;
+        }
+        break;
+
+      case AbilityType.Brutal_Strike:
+        break;
+      case AbilityType.Death_Strike:
+        final int castFrame = 8;
+        const damageMultiplier = 3;
+        if (character.stateDurationRemaining == castFrame) {
+          final attackTarget = character.attackTarget;
+          if (attackTarget != null) {
+            applyStrike(
+                character,
+                attackTarget,
+                character.weapon.damage * damageMultiplier
+            );
+          }
+          character.attackTarget = null;
+          character.performing = null;
+        }
+        break;
+      default:
+        break;
+    }
   }
 
   void updateCharacter(Character character) {
     if (!character.active) return;
 
-    if (abs(character.xv) > settings.minVelocity) {
-      character.x += character.xv;
-      character.y += character.yv;
-      character.xv *= settings.velocityFriction;
-      character.yv *= settings.velocityFriction;
-    }
+    _updateCharacterAI(character);
+    character.updateMovement();
 
     if (character.dead) return;
 
-    if (character.stateDuration > 0) {
-      character.stateDuration--;
+    if (character.frozenDuration > 0) {
+      character.frozenDuration--;
+    }
 
-      if (character.stateDuration == 0) {
-        switch (character.state) {
-          case CharacterState.Reloading:
-            dispatch(GameEventType.Reloaded, character.x, character.y, 0, 0);
-            break;
-        }
-        setCharacterState(character, CharacterState.Idle);
+    if (character.stateDurationRemaining > 0) {
+      character.stateDurationRemaining--;
+      if (character.stateDurationRemaining == 0) {
+        setCharacterState(character, stateIdle);
       }
     }
 
-    while (scene.tileBoundaryAt(character.left, character.top)) {
-      character.x++;
-      character.y++;
-    }
-    while (scene.tileBoundaryAt(character.right, character.top)) {
-      character.x--;
-      character.y++;
-    }
-    while (scene.tileBoundaryAt(character.left, character.bottom)) {
-      character.x++;
-      character.y--;
-    }
-    while (scene.tileBoundaryAt(character.right, character.bottom)) {
-      character.x--;
-      character.y--;
-    }
+    scene.resolveCharacterTileCollision(character);
 
     switch (character.state) {
-      case CharacterState.Aiming:
-        if (character.accuracy > 0.05) {
-          character.accuracy -= 0.005;
-        }
+      case stateRunning:
+        character.applyVelocity();
         break;
-      case CharacterState.Walking:
-        switch (character.direction) {
-          case Direction.Up:
-            character.y -= character.speed;
-            break;
-          case Direction.UpRight:
-            character.x += velX(piQuarter, character.speed);
-            character.y += velY(piQuarter, character.speed);
-            break;
-          case Direction.Right:
-            character.x += character.speed;
-            break;
-          case Direction.DownRight:
-            character.x += velX(piQuarter, character.speed);
-            character.y -= velY(piQuarter, character.speed);
-            break;
-          case Direction.Down:
-            character.y += character.speed;
-            break;
-          case Direction.DownLeft:
-            character.x -= velX(piQuarter, character.speed);
-            character.y -= velY(piQuarter, character.speed);
-            break;
-          case Direction.Left:
-            character.x -= character.speed;
-            break;
-          case Direction.UpLeft:
-            character.x -= velX(piQuarter, character.speed);
-            character.y += velY(piQuarter, character.speed);
-            break;
-        }
-        break;
-      case CharacterState.Striking:
-        break;
-      case CharacterState.Running:
-        double runRatio = character.speed * (1.0 + goldenRatioInverse);
-        switch (character.direction) {
-          case Direction.Up:
-            character.y -= runRatio;
-            break;
-          case Direction.UpRight:
-            character.x += velX(piQuarter, runRatio);
-            character.y += velY(piQuarter, runRatio);
-            break;
-          case Direction.Right:
-            character.x += runRatio;
-            break;
-          case Direction.DownRight:
-            character.x += velX(piQuarter, runRatio);
-            character.y -= velY(piQuarter, runRatio);
-            break;
-          case Direction.Down:
-            character.y += runRatio;
-            break;
-          case Direction.DownLeft:
-            character.x -= velX(piQuarter, runRatio);
-            character.y -= velY(piQuarter, runRatio);
-            break;
-          case Direction.Left:
-            character.x -= runRatio;
-            break;
-          case Direction.UpLeft:
-            character.x -= velX(piQuarter, runRatio);
-            character.y += velY(piQuarter, runRatio);
-            break;
-        }
+
+      case statePerforming:
+        updateCharacterStatePerforming(character);
         break;
     }
+    character.stateDuration++;
+  }
 
-    if (character.previousState != character.state) {
-      character.previousState = character.state;
-      character.stateFrameCount = 0;
-    } else {
-      character.stateFrameCount++;
-      character.stateFrameCount %=
-          100; // prevents the frame count digits getting over 2
+  void updateCharacterTileCollision(Character character) {
+    if (!scene.tileWalkableAt(character.left, character.y)) {
+      character.x += tileCollisionResolve;
+    } else if (!scene.tileWalkableAt(character.right, character.y)){
+      character.x -= tileCollisionResolve;
+    }
+    if (!scene.tileWalkableAt(character.x, character.top)) {
+      character.y += tileCollisionResolve;
+    } else if (!scene.tileWalkableAt(character.x, character.bottom)){
+      character.y -= tileCollisionResolve;
     }
   }
 
-  void throwGrenade(Player player, double angle, double strength) {
-    double speed = settings.grenadeSpeed * strength;
-    Grenade grenade =
-        Grenade(player, adj(angle, speed), opp(angle, speed), 0.8 * strength);
-    grenades.add(grenade);
-    delayed(() {
-      grenades.remove(grenade);
-      spawnExplosion(grenade);
-    }, ms: settings.grenadeDuration);
+  Projectile spawnFireball(Character character) {
+    return spawnProjectile(
+        character: character,
+        accuracy: 0,
+        speed: settings.projectileSpeed.fireball,
+        damage: 100,
+        range: settings.range.firebolt,
+        type: ProjectileType.Fireball,
+        target: character.attackTarget,
+    );
   }
 
-  Bullet spawnBullet(Character character) {
-    double d = 5;
-    double x = character.x + adj(character.aimAngle, d);
-    double y = character.y + opp(character.aimAngle, d);
+  Projectile spawnBlueOrb(Character character) {
+    dispatch(GameEventType.Blue_Orb_Fired, character.x, character.y);
+    return spawnProjectile(
+        character: character,
+        accuracy: 0,
+        speed: settings.projectileSpeed.fireball,
+        damage: 1,
+        range: settings.range.firebolt,
+        target: character.attackTarget,
+        type: ProjectileType.Blue_Orb);
+  }
 
-    double weaponAccuracy = getWeaponAccuracy(character.weapon);
-    double bulletSpeed = getBulletSpeed(character.weapon);
+  void casteSlowingCircle(Character character, double x, double y) {}
 
-    double xv =
-        velX(character.aimAngle + giveOrTake(weaponAccuracy), bulletSpeed);
+  Projectile spawnArrow(Character character, {required int damage}) {
+    dispatch(GameEventType.Arrow_Fired, character.x, character.y);
+    return spawnProjectile(
+        character: character,
+        accuracy: 0,
+        speed: settings.projectileSpeed.arrow,
+        damage: damage,
+        range: settings.range.arrow,
+        target: character.attackTarget,
+        type: ProjectileType.Arrow);
+  }
 
-    double yv =
-        velY(character.aimAngle + giveOrTake(weaponAccuracy), bulletSpeed);
+  Projectile spawnProjectile({
+    required Character character,
+    required double accuracy,
+    required double speed,
+    required double range,
+    required int damage,
+    required ProjectileType type,
+    Collider? target,
+  }) {
+    final spawnDistance = character.radius + 5;
+    final projectile = getAvailableProjectile();
+    projectile.collidable = true;
+    projectile.active = true;
+    projectile.target = target;
+    projectile.xStart = character.x + adj(character.aimAngle, spawnDistance);
+    projectile.yStart = character.y + opp(character.aimAngle, spawnDistance);
+    projectile.x = projectile.xStart;
+    projectile.y = projectile.yStart;
+    projectile.xv = velX(character.aimAngle + giveOrTake(accuracy), speed);
+    projectile.yv = velY(character.aimAngle + giveOrTake(accuracy), speed);
+    projectile.speed = hypotenuse(projectile.xv, projectile.yv);
+    projectile.owner = character;
+    projectile.range = range;
+    projectile.damage = damage;
+    projectile.type = type;
+    return projectile;
+  }
 
-    double range = getWeaponRange(character.weapon) +
-        giveOrTake(settings.weaponRangeVariation);
-
-    int damage = getWeaponDamage(character.weapon);
-
-    for (int i = 0; i < bullets.length; i++) {
-      if (bullets[i].active) continue;
-      Bullet bullet = bullets[i];
-      bullet.active = true;
-      bullet.xStart = x;
-      bullet.yStart = y;
-      bullet.x = x;
-      bullet.y = y;
-      bullet.xv = xv;
-      bullet.yv = yv;
-      bullet.owner = character;
-      bullet.range = range;
-      bullet.damage = damage;
-      bullet.weapon = character.weapon;
-      return bullet;
+  Projectile getAvailableProjectile() {
+    for (var i = 0; i < projectiles.length; i++) {
+      if (projectiles[i].active) continue;
+      return projectiles[i];
     }
-
-    Bullet bullet = Bullet(x, y, xv, yv, character, range, damage);
-    bullets.add(bullet);
-    return bullet;
+    final projectile = Projectile();
+    projectiles.add(projectile);
+    return projectile;
   }
 
-  Npc spawnZombie(double x, double y) {
+  Character spawnZombie({
+    required double x,
+    required double y,
+    required int health,
+    required int team,
+    required int damage,
+    List<Vector2>? objectives,
+  }) {
+    assert(team >= 0 && team <= 256);
+    final zombie = _getAvailableZombie();
+    zombie.team = team;
+    zombie.active = true;
+    zombie.state = stateIdle;
+    zombie.stateDurationRemaining = 0;
+    zombie.maxHealth = health;
+    zombie.health = health;
+    zombie.collidable = true;
+    zombie.x = x + giveOrTake(radius.zombieSpawnVariation);
+    zombie.y = y + giveOrTake(radius.zombieSpawnVariation);
+    zombie.yv = 0;
+    zombie.xv = 0;
+
+    final zombieAI = zombie.ai;
+
+    if (zombieAI != null){
+      if (objectives != null) {
+        zombieAI.objectives = objectives;
+      } else {
+        zombieAI.objectives = [];
+      }
+    }
+    return zombie;
+  }
+
+  Character _getAvailableZombie() {
     for (int i = 0; i < zombies.length; i++) {
       if (zombies[i].active) continue;
-      Npc npc = zombies[i];
-      npc.active = true;
-      npc.state = CharacterState.Idle;
-      npc.previousState = CharacterState.Idle;
-      npc.health = settings.health.zombie;
-      npc.x = x;
-      npc.y = y;
-      npc.yv = 0;
-      npc.xv = 0;
-      onNpcSpawned(npc);
-      return npc;
+      return zombies[i];
     }
-
-    Npc npc =
-        Npc(x: x, y: y, health: settings.health.zombie, weapon: Weapon.Unarmed);
-    zombies.add(npc);
-    onNpcSpawned(npc);
-    return npc;
+    final zombie = Character(
+        type: CharacterType.Zombie,
+        x: 0,
+        y: 0,
+        ai: AI(
+          mode: NpcMode.Aggressive,
+        ),
+        health: settings.health.zombie,
+        weapon: SlotType.Empty,
+        );
+    zombies.add(zombie);
+    return zombie;
   }
 
-  Npc spawnRandomZombie() {
+  Character spawnRandomZombieLevel(int level) {
+    return spawnRandomZombie(
+        damage: level,
+        health: zombieHealth[clampInt(
+          level,
+          0,
+          maxZombieLevel,
+        )],
+        experience: zombieExperience[clampInt(
+          level,
+          0,
+          maxZombieLevel,
+        )]);
+  }
+
+  Character spawnRandomZombie({
+    int health = 10,
+    int damage = 1,
+    int experience = 1
+  }) {
     if (zombieSpawnPoints.isEmpty) throw ZombieSpawnPointsEmptyException();
-    Vector2 spawnPoint = randomValue(zombieSpawnPoints);
-    return spawnZombie(spawnPoint.x + giveOrTake(radius.zombieSpawnVariation),
-        spawnPoint.y + giveOrTake(radius.zombieSpawnVariation));
+    final spawnPoint = randomItem(zombieSpawnPoints);
+    return spawnZombie(
+        x: spawnPoint.x,
+        y: spawnPoint.y,
+        team: Teams.east,
+        health: health,
+        damage: damage
+    );
   }
 
   int get zombieCount {
-    int count = 0;
-    for (Npc npc in zombies) {
-      if (!npc.alive) continue;
+    var count = 0;
+    for (final zombie in zombies) {
+      if (!zombie.alive) continue;
       count++;
     }
     return count;
   }
 
-  Player spawnPlayer() {
-    Player player = doSpawnPlayer();
-    players.add(player);
-    return player;
+  void dispatchV2(GameEventType type, Vector2 position, {double angle = 0}){
+    dispatch(type, position.x, position.y, angle);
   }
 
-  // TODO Optimize
   void dispatch(GameEventType type, double x, double y,
-      [double xv = 0, double xy = 0]) {
-    gameEvents.add(GameEvent(type, x, y, xv, xy));
+      [double angle = 0]) {
+    final event = _getAvailableGameEvent();
+    event.type = type;
+    event.x = x;
+    event.y = y;
+    event.angle = angle * radiansToDegrees;
+    event.frameDuration = 3;
   }
 
   void updateZombieTargets() {
-    Npc npc;
-    for (int i = 0; i < zombies.length; i++) {
-      npc = zombies[i];
-      if (npc.targetSet) {
-        // @on update npc with target
-        if (diff(npc.x, npc.target.x) < settings.zombieChaseRange) continue;
-        if (diff(npc.y, npc.target.y) < settings.zombieChaseRange) continue;
-        npc.clearTarget();
-        npc.state = CharacterState.Idle;
+    for (final zombie in zombies) {
+      if (zombie.dead) {
+        continue;
+      }
+      final zombieAI = zombie.ai;
+      if (zombieAI == null) continue;
+      final zombieAITarget = zombieAI.target;
+      if (zombieAITarget != null &&
+          (zombieAITarget.dead || !withinChaseRange(zombieAI, zombieAITarget))) {
+          zombieAI.target = null;
       }
 
-      for (int p = 0; p < players.length; p++) {
-        if (!players[p].alive) continue;
-        if (diff(players[p].x, npc.x) > settings.npc.viewRange) continue;
-        if (diff(players[p].y, npc.y) > settings.npc.viewRange) continue;
-        npc.target = players[p];
+      num targetDistance = 9999999.0;
+
+      for (final otherZombie in zombies) {
+        if (otherZombie.dead) continue;
+        if (zombie.team == otherZombie.team) continue;
+        if (!withinViewRange(zombieAI, otherZombie)) continue;
+        final npcDistance = cheapDistance(zombie, otherZombie);
+        if (npcDistance >= targetDistance) continue;
+        if (!isVisibleBetween(zombie, otherZombie)) continue;
+        setNpcTarget(zombieAI, otherZombie);
+        targetDistance = npcDistance;
+      }
+
+      for (final player in players) {
+        if (player.dead) continue;
+        if (sameTeam(player, zombie)) continue;
+        if (!withinViewRange(zombieAI, player)) continue;
+        final npcDistance = cheapDistance(zombie, player);
+        if (npcDistance >= targetDistance) continue;
+        if (!isVisibleBetween(zombie, player)) continue;
+        setNpcTarget(zombieAI, player);
+        targetDistance = npcDistance;
         break;
       }
+      final target = zombieAI.target;
+      if (target != null){
+        if (targetDistance > 100) {
+          npcSetPathTo(zombieAI, target.x, target.y);
+        }
+      }
     }
+  }
+
+  bool withinViewRange(AI ai, Vector2 target) {
+    return withinRadius(ai.character, target, ai.viewRange);
+  }
+
+  bool withinChaseRange(AI ai, Vector2 target) {
+    return withinRadius(ai.character, target, ai.chaseRange);
+  }
+
+  num cheapDistance(Vector2 a, Vector2 b) {
+    return diff(a.y, b.y) + diff(a.x, b.x);
   }
 
   void updateInteractableNpcTargets() {
-    InteractableNpc npc;
-    for (int i = 0; i < npcs.length; i++) {
-      npc = npcs[i];
-
-      if (npc.mode == NpcMode.Ignore) continue;
-
-      if (npc.targetSet) {
-        // @on update npc with target
-        if (npc.mode == NpcMode.Stand_Ground) {
-          if (diffOver(npc.x, npc.target.x, getWeaponRange(npc.weapon))) continue;
-          if (diffOver(npc.y, npc.target.y, getWeaponRange(npc.weapon))) continue;
-          npc.clearTarget();
-          npc.state = CharacterState.Idle;
-        } else {
-          if (diffOver(npc.x, npc.target.x, settings.npcChaseRange)) continue;
-          if (diffOver(npc.y, npc.target.y, settings.npcChaseRange)) continue;
-          npc.clearTarget();
-          npc.state = CharacterState.Idle;
-        }
-      }
-
-      for (int j = 0; j < zombies.length; j++) {
-        if (!zombies[j].alive) continue;
-        if (diff(zombies[j].x, npc.x) > settings.npc.viewRange) continue;
-        if (diff(zombies[j].y, npc.y) > settings.npc.viewRange) continue;
-        npc.target = zombies[j];
-        break;
-      }
+    final initial = getFirstAliveIndex(zombies);
+    if (initial == _none) return;
+    final npcsLength = npcs.length;
+    for (var i = 0; i < npcsLength; i++) {
+      final ai = npcs[i].ai;
+      if (ai == null) continue;
+      updateInteractableNpcTarget(ai, initial);
     }
   }
 
-  void jobNpcWander() {
-    for (Npc npc in zombies) {
-      if (npc.inactive) continue;
-      if (npc.busy) continue;
-      if (npc.dead) continue;
-      if (npc.targetSet) continue;
-      if (npc.path.isNotEmpty) continue;
-      npcSetRandomDestination(npc);
+  int getFirstAliveIndex(List<Character> characters){
+    final length = characters.length;
+    for (var i = 0; i < length; i++) {
+      if (characters[i].alive) return i;
+    }
+    return _none;
+  }
+
+  void updateInteractableNpcTarget(AI ai, int j) {
+    if (ai.mode == NpcMode.Ignore) return;
+
+    final aiWeaponRange = ai.character.weapon.range;
+    var closest = zombies[j];
+    var closestDistance = distanceV2(closest, ai.character);
+    final zombiesLength = zombies.length;
+    for (var i = j + 1; i < zombiesLength; i++) {
+      final zombie = zombies[i];
+      if (!zombie.alive) continue;
+      var distance2 = distanceV2(zombie, ai.character);
+      if (distance2 > closestDistance) continue;
+      closest = zombie;
+      closestDistance = distance2;
+    }
+    final actualDistance = distanceV2(ai.character, closest);
+    if (actualDistance > aiWeaponRange) {
+      ai.clearTarget();
+      ai.character.state = stateIdle;
+    } else {
+      setNpcTarget(ai, closest);
     }
   }
 
-  void jobRemoveDisconnectedPlayers() {
-    for (int i = 0; i < players.length; i++) {
-      if (players[i].lastUpdateFrame < settings.playerDisconnectFrames)
+  void setNpcTarget(AI ai, Character value) {
+    assert (ai.character != value);
+    assert (!sameTeam(ai.character, value));
+    assert (value.alive);
+    assert (value.active);
+    assert (ai.character.alive);
+    ai.target = value;
+  }
+
+  void removeDisconnectedPlayers() {
+    var playerLength = players.length;
+    for (var i = 0; i < playerLength; i++) {
+      final player = players[i];
+
+      if (player.lastUpdateFrame++ < 100)
         continue;
-      Player player = players[i];
-      for (Npc npc in zombies) {
-        if (npc.target == player) {
-          npc.clearTarget();
-        }
+
+      for (final npc in zombies) {
+        npc.ai?.clearTargetIf(player);
       }
       player.active = false;
       players.removeAt(i);
       i--;
-      onPlayerDisconnected(player);
+      playerLength--;
+
+      if (status == GameStatus.Awaiting_Players) {
+        cancelCountDown();
+      }
+      if (status == GameStatus.In_Progress) {
+        onPlayerDisconnected(player);
+      }
     }
   }
 
   void revive(Character character) {
-    character.state = CharacterState.Idle;
+    character.state = stateIdle;
     character.health = character.maxHealth;
-
-    if (playerSpawnPoints.isEmpty) {
-      character.x = giveOrTake(settings.playerStartRadius);
-      character.y = tilesLeftY + giveOrTake(settings.playerStartRadius);
-    } else {
-      Vector2 spawnPoint = getNextSpawnPoint();
-      character.x = spawnPoint.x;
-      character.y = spawnPoint.y;
-    }
-
-    onPlayerRevived(character as Player);
+    character.active = true;
     character.collidable = true;
-  }
 
-  Vector2 randomPlayerSpawnPoint() {
-    return playerSpawnPoints[randomInt(0, playerSpawnPoints.length)];
-  }
-
-  Vector2 getNextSpawnPoint() {
-    spawnPointIndex = (spawnPointIndex + 1) % playerSpawnPoints.length;
-    return playerSpawnPoints[spawnPointIndex];
-  }
-
-  void npcSetRandomDestination(Npc npc) {
-    // @on npc set random destination
-    npcSetPathToTileNode(npc, getRandomOpenTileNode());
-  }
-
-  TileNode getRandomOpenTileNode() {
-    while (true) {
-      TileNode node = randomValue(randomValue(scene.tileNodes));
-      if (!node.open) continue;
-      return node;
+    if (character is Player) {
+      character.magic = character.maxMagic;
     }
+
+    final spawnPoint = getNextSpawnPoint();
+    character.x = spawnPoint.x;
+    character.y = spawnPoint.y;
   }
 
-  void npcSetPathTo(Npc npc, double x, double y) {
-    npcSetPathToTileNode(npc, scene.tileNodeAt(x, y));
+  void npcSetRandomDestination(AI ai, {int radius = 10}) {
+    final node = scene.tileNodeAt(ai.x, ai.y);
+    if (!node.open) return;
+    final minColumn = max(0, node.column - radius);
+    final maxColumn = min(scene.numberOfColumns, node.column + radius);
+    final minRow = max(0, node.row - radius);
+    final maxRow = min(scene.numberOfRows, node.row + radius);
+    final randomColumn = randomInt(minColumn, maxColumn);
+    final randomRow = randomInt(minRow, maxRow);
+    final randomTile = scene.tileNodes[randomRow][randomColumn];
+    npcSetPathToTileNode(ai, randomTile);
   }
 
-  void npcSetPathToTileNode(Npc npc, TileNode node) {
-    npc.path = scene.findPathNodes(scene.tileNodeAt(npc.x, npc.y), node);
+  void npcSetPathTo(AI ai, double x, double y) {
+    npcSetPathToTileNode(ai, scene.tileNodeAt(x, y));
+  }
+
+  void npcSetPathToTileNode(AI ai, TileNode node) {
+    pathFindDestination = node;
+    pathFindAI = ai;
+    pathFindSearchID++;
+    ai.pathIndex = -1;
+    scene.visitNode(scene.tileNodeAt(ai.x, ai.y));
   }
 
   void _updateGameEvents() {
-    // TODO Expensive operation
-    for (int i = 0; i < gameEvents.length; i++) {
-      if (gameEvents[i].frameDuration-- < 0) {
-        gameEvents.removeAt(i);
-        i--;
+    final gameEventsLength = gameEvents.length;
+    for (var i = 0; i < gameEventsLength; i++) {
+      final event = gameEvents[i];
+      if (event.frameDuration <= 0) continue;
+      event.frameDuration--;
+    }
+  }
+
+  void _updateSpawnPointCollisions() {
+    if (spawnPoints.isEmpty) return;
+    for (var i = 0; i < players.length; i++) {
+      final player = players[i];
+      for (final spawnPoint in spawnPoints) {
+        const collisionRadius = 20;
+        if (diffOver(player.x, spawnPoint.x, collisionRadius))
+          continue;
+        if (diffOver(player.y, spawnPoint.y, collisionRadius))
+          continue;
+        for (final point in spawnPoint.game.spawnPoints) {
+          if (point.game != this) continue;
+          changeGame(player, spawnPoint.game);
+          final xDiff = spawnPoint.x - player.x;
+          final yDiff = spawnPoint.y - player.y;
+          player.x = point.x + xDiff * 1.25;
+          player.y = point.y + yDiff * 1.25;
+          i--;
+          break;
+        }
+        break;
       }
     }
+  }
+
+  void _updateCharacterFrames() {
+    const characterFramesChange = 6;
+    if (engine.frame % characterFramesChange != 0) return;
+    updateFrames(players);
+    updateFrames(zombies);
+    updateFrames(npcs);
   }
 
   void _updateItems() {
-    for (int i = 0; i < items.length; i++) {
-      Item item = items[i];
+    var itemsLength = items.length;
+    for (var i = 0; i < itemsLength; i++) {
+      final item = items[i];
+      if (item.duration-- > 0) continue;
+      items.removeAt(i);
+      itemsLength--;
+    }
+  }
 
-      // TODO Optimize
-      if (item.duration-- <= 0) {
-        items.removeAt(i);
-        i--;
-        continue;
+  void updateCharacterStateAttacking(Character character) {
+    final stateDuration = character.stateDuration;
+
+    if (character.type == CharacterType.Zombie) {
+      if (stateDuration != framePerformStrike) return;
+      final attackTarget = character.attackTarget;
+      if (attackTarget == null) return;
+      applyStrike(character, attackTarget, character.weapon.damage);
+      character.attackTarget = null;
+      return;
+    }
+
+    final weapon = character.slots.weapon;
+    final weaponType = weapon.type;
+
+    if (weaponType.isSword) {
+      if (stateDuration == 7) {
+        dispatchV2(GameEventType.Sword_Woosh, character);
       }
-      for (Player player in players) {
-        if (diffOver(item.x, player.x, radius.item)) continue;
-        if (diffOver(item.y, player.y, radius.item)) continue;
-        if (player.dead) continue;
+    }
 
-        // @on item collectable
-
-        switch (item.type) {
-          case ItemType.Handgun:
-            // @on handgun acquired
-            if (player.acquiredHandgun) {
-              if (player.rounds.handgun >= constants.maxRounds.handgun)
-                continue;
-              player.rounds.handgun = min(
-                  player.rounds.handgun + settings.pickup.handgun,
-                  constants.maxRounds.handgun);
-              dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
-              break;
-            }
-            player.clips.handgun = settings.maxClips.handgun;
-            player.rounds.handgun = settings.pickup.handgun;
-            player.weapon = Weapon.HandGun;
-            break;
-          case ItemType.Shotgun:
-            // @on shotgun acquired
-            if (player.acquiredShotgun) {
-              if (player.rounds.shotgun >= constants.maxRounds.shotgun)
-                continue;
-              player.rounds.shotgun = clampInt(
-                  player.rounds.shotgun + settings.pickup.shotgun,
-                  0,
-                  constants.maxRounds.shotgun);
-              dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
-              break;
-            }
-            player.rounds.shotgun = settings.pickup.shotgun;
-            player.weapon = Weapon.Shotgun;
-            break;
-          case ItemType.SniperRifle:
-            // @on sniper rifle acquired
-            if (player.acquiredSniperRifle) {
-              if (player.rounds.sniperRifle >= constants.maxRounds.sniperRifle)
-                continue;
-              player.rounds.sniperRifle = clampInt(
-                  player.rounds.sniperRifle + settings.pickup.sniperRifle,
-                  0,
-                  constants.maxRounds.sniperRifle);
-              dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
-              break;
-            }
-            player.rounds.sniperRifle = settings.pickup.sniperRifle;
-            player.weapon = Weapon.SniperRifle;
-            break;
-          case ItemType.Assault_Rifle:
-            // @on assault rifle acquired
-            if (player.acquiredAssaultRifle) {
-              if (player.rounds.assaultRifle >=
-                  constants.maxRounds.assaultRifle) continue;
-              player.rounds.assaultRifle = clampInt(
-                  player.rounds.assaultRifle +
-                      constants.maxRounds.assaultRifle ~/ 5,
-                  0,
-                  constants.maxRounds.assaultRifle);
-              dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
-              break;
-            }
-            player.rounds.assaultRifle = settings.pickup.assaultRifle;
-            player.weapon = Weapon.AssaultRifle;
-            break;
-          case ItemType.Credits:
-            player.earnPoints(settings.collectCreditAmount);
-            dispatch(GameEventType.Credits_Acquired, item.x, item.y);
-            break;
-          case ItemType.Health:
-            if (player.health >= player.maxHealth) continue;
-            player.health = player.maxHealth;
-            dispatch(GameEventType.Health_Acquired, item.x, item.y);
-            break;
-          case ItemType.Grenade:
-            if (player.grenades >= settings.maxGrenades) continue;
-            player.grenades++;
-            dispatch(GameEventType.Item_Acquired, item.x, item.y);
-            break;
+    if (weaponType.isHandgun) {
+        if (stateDuration == 1){
+          if (weapon.amount <= 0) {
+            dispatchV2(GameEventType.Clip_Empty, character);
+            return;
+          }
+          dispatchV2(GameEventType.Handgun_Fired, character, angle: character.angle);
+          return;
         }
-
-        items.removeAt(i);
-        i--;
+        if (stateDuration == 2) {
+          if (weapon.amount <= 0) {
+            return;
+          }
+          weapon.amount--;
+          spawnProjectile(
+              character: character,
+              accuracy: 0,
+              speed: 12.0,
+              range: weaponType.range,
+              damage: weaponType.damage,
+              type: ProjectileType.Bullet
+          );
+          return;
+        }
       }
-    }
-  }
 
-  void _updateCrates() {
-    for (Crate crate in crates) {
-      if (crate.active) continue;
-      crate.deactiveDuration--;
-    }
+      if (weaponType.isShotgun) {
+        if (stateDuration == 1){
+          if (weapon.amount <= 0){
+            dispatchV2(GameEventType.Ammo_Acquired, character);
+            return;
+          }
+          dispatchV2(GameEventType.Shotgun_Fired, character);
+          character.slots.weapon.amount--;
+          final totalBullets = 4;
+          for (int i = 0; i < totalBullets; i++){
+            spawnProjectile(
+                character: character,
+                accuracy: 0.1,
+                speed: 12.0,
+                range: weaponType.range,
+                damage: weaponType.damage,
+                type: ProjectileType.Bullet);
+          }
+        }
+      }
+
+      if (weaponType.isBow){
+        if (character.stateDuration == 1){
+          dispatchV2(GameEventType.Draw_Bow, character);
+        }
+      }
+
+      if (character.stateDuration == framePerformStrike) {
+        if (weaponType.isBow) {
+          dispatchV2(GameEventType.Release_Bow, character);
+          if (character.slots.weapon.amount == 0) return;
+          spawnArrow(character, damage: weaponType.damage);
+          character.attackTarget = character.attackTarget;
+          character.slots.weapon.amount--;
+          return;
+        }
+        if (weaponType.isMelee) {
+          final attackTarget = character.attackTarget;
+          final damage = character.weapon.damage;
+          if (attackTarget != null) {
+            if (attackTarget.collidable){
+              applyStrike(character, attackTarget, damage);
+              return;
+            } else {
+              character.attackTarget = null;
+            }
+          }
+          final range = weaponType.range;
+          final zombieHit = physics.raycastHit(
+              character: character,
+              colliders: zombies,
+              range: range
+          );
+          if (zombieHit != null) {
+            applyStrike(character, zombieHit, damage);
+            return;
+          }
+          final dynamicObjectHit = physics.raycastHit(
+              character: character,
+              colliders: dynamicObjects,
+              range: range
+          );
+          if (dynamicObjectHit != null) {
+            applyStrike(character, dynamicObjectHit, damage);
+          }
+          return;
+        }
+      }
   }
 }
 
-void applyCratePhysics(Crate crate, List<Character> characters) {
-  for (Character character in characters) {
-    if (!character.active) continue;
-    if (diffOver(crate.x, character.x, radius.crate)) continue;
-    if (diffOver(crate.y, character.y, radius.crate)) continue;
-    double dis = distance(crate.x, crate.y, character.x, character.y);
-    if (dis >= radius.crate) continue;
-    double b = radius.crate - dis;
-    double r = radiansBetween(crate.x, crate.y, character.x, character.y);
-    character.x += adj(r, b);
-    character.y += opp(r, b);
+void playerInteract(Player player) {
+  for (InteractableNpc npc in player.game.npcs) {
+    if (diffOver(npc.x, player.x, radius.interact)) continue;
+    if (diffOver(npc.y, player.y, radius.interact)) continue;
+    npc.onInteractedWith(player);
+    return;
+  }
+
+  for (EnvironmentObject environmentObject in player.game.scene.environment) {
+    if (environmentObject.type == ObjectType.House02) {}
+    ;
   }
 }
+
+void playerSetAbilityTarget(Player player, double x, double y) {
+  final ability = player.ability;
+  if (ability == null) return;
+
+  final distance = hypotenuse(player.x - x, player.y - y);
+
+  if (distance > ability.range) {
+    double rotation = pi2 - angle2(player.x - x, player.y - y);
+    player.abilityTarget.x = player.x + adj(rotation, ability.range);
+    player.abilityTarget.y = player.y + opp(rotation, ability.range);
+  } else {
+    player.abilityTarget.x = x;
+    player.abilityTarget.y = y;
+  }
+}
+
+double angle2(double adjacent, double opposite) {
+  if (adjacent > 0) {
+    return pi2 - (atan2(adjacent, opposite) * -1);
+  }
+  return atan2(adjacent, opposite);
+}
+
+void selectCharacterType(Player player, CharacterType value) {
+  player.type = value;
+  player.level = 1;
+  player.abilityPoints = 1;
+  player.magic = player.maxMagic;
+  player.health = player.maxHealth;
+}
+
+class CustomGame extends Game {
+  int timeInSeconds = calculateTime(hour: 12);
+  int secondsPerFrame = 1;
+
+  CustomGame(Scene scene) : super(scene) {
+    if (scene.startHour != null) {
+      timeInSeconds = scene.startHour! * secondsPerHour;
+    }
+    if (scene.secondsPerFrames != null) {
+      secondsPerFrame = scene.secondsPerFrames!;
+    }
+  }
+
+  @override
+  void update() {
+    timeInSeconds = (timeInSeconds + secondsPerFrame) % secondsPerDay;
+  }
+
+  @override
+  int getTime() {
+    return timeInSeconds;
+  }
+
+  Player playerJoin() {
+    return Player(game: this, y: 500, weapon: SlotType.Empty);
+  }
+}
+
+class ZombieSpawnPointsEmptyException implements Exception {}

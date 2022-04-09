@@ -1,11 +1,8 @@
-import 'dart:math';
+import 'dart:math' as math;
 
-const Duration duration15ms = Duration(milliseconds: 15);
-const Duration duration30ms = Duration(milliseconds: 30);
-const Duration duration45ms = Duration(milliseconds: 45);
-const Duration duration90ms = Duration(milliseconds: 90);
-
-const double pi2 = pi * 2;
-const double piEighth = pi / 8.0;
-const double piQuarter = pi / 4.0;
-const double piHalf = pi / 2.0;
+const pi = math.pi;
+const pi2 = pi * 2;
+const piEighth = pi / 8.0;
+const piSixteenth = pi / 16.0;
+const piQuarter = pi / 4.0;
+const piHalf = pi / 2.0;

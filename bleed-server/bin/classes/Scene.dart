@@ -1,22 +1,18 @@
-import '../common/ObjectType.dart';
+import 'package:lemon_math/Vector2.dart';
+
 import '../common/Tile.dart';
-import '../common/enums/EnvironmentObjectType.dart';
-import 'EnvironmentObject.dart';
-import '../common/classes/Vector2.dart';
+import '../common/enums/Direction.dart';
+import '../common/enums/ObjectType.dart';
 import '../enums.dart';
-import '../maths.dart';
-import 'Block.dart';
+import '../utilities.dart';
+import 'Character.dart';
+import 'EnvironmentObject.dart';
 import 'TileNode.dart';
 
 // constants
-const List<Vector2> _emptyPath = [];
-const int _tileSize = 48;
-const double _tileSizeHalf = _tileSize * 0.5;
-final Vector2 _vector2Zero = Vector2(0, 0);
-final Vector2 _vector2 = Vector2(0, 0);
-final TileNode _boundary = TileNode(false);
-// state
-int _search = 0;
+const _tileSize = 48;
+const _tileSizeHalf = _tileSize * 0.5;
+final _boundary = TileNode(false);
 
 double mapTilePositionX(int row, int column) {
   return perspectiveProjectX(row * _tileSizeHalf, column * _tileSizeHalf);
@@ -35,312 +31,266 @@ double perspectiveProjectY(double x, double y) {
 }
 
 class Scene {
+  final List<Character> characters;
   final List<List<Tile>> tiles;
-  final List<Block> blocks;
   final List<Vector2> crates;
   final List<EnvironmentObject> environment;
-  late Vector2 fortressPosition;
+  final String name;
 
   late final List<List<TileNode>> tileNodes;
-  late final int rows;
-  late final int columns;
+  late final int numberOfRows;
+  late final int numberOfColumns;
 
-  Scene(
-      {required this.tiles,
-      required this.blocks,
-      required this.crates,
-      required this.environment}) {
-    rows = tiles.length;
-    columns = tiles[0].length;
+  int? startHour;
+  int? secondsPerFrames;
+  List<Vector2> playerSpawnPoints = [];
+
+  Scene({
+    required this.tiles,
+    required this.crates,
+    required this.environment,
+    required this.characters,
+    required this.name,
+  }) {
+    numberOfRows = tiles.length;
+    numberOfColumns = numberOfRows > 0 ? tiles[0].length : 0;
     tileNodes = [];
 
-    for (int row = 0; row < rows; row++) {
-      for (int column = 0; column < columns; column++) {
-
-        Tile tile = tiles[row][column];
-
-        if (tile == Tile.Block) {
-          environment.add(EnvironmentObject(
-              x: mapTilePositionX(row, column),
-              y: mapTilePositionY(row, column) + _tileSizeHalf,
-              type: EnvironmentObjectType.Palisade));
-        } else
-
-        if (tile == Tile.Block_Horizontal) {
-          environment.add(EnvironmentObject(
-              x: mapTilePositionX(row, column),
-              y: mapTilePositionY(row, column) + _tileSizeHalf,
-              type: EnvironmentObjectType.Palisade_H));
-        } else
-
-        if (tile == Tile.Block_Vertical) {
-          environment.add(EnvironmentObject(
-              x: mapTilePositionX(row, column),
-              y: mapTilePositionY(row, column)+ _tileSizeHalf,
-              type: EnvironmentObjectType.Palisade_V));
-        }
-      }
-    }
-
-    for (int row = 0; row < rows; row++) {
-      List<TileNode> nodeRow = [];
-      for (int column = 0; column < columns; column++) {
-        TileNode node = TileNode(isWalkable(tiles[row][column]));
-        node.y = column;
-        node.x = row;
-        double halfTileSize = 24;
-        double px =
-            perspectiveProjectX(node.x * halfTileSize, node.y * halfTileSize);
-        double py =
-            perspectiveProjectY(node.x * halfTileSize, node.y * halfTileSize) +
+    for (var rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
+      final List<TileNode> nodeRow = [];
+      final tileRow = tiles[rowIndex];
+      for (var columnIndex = 0; columnIndex < numberOfColumns; columnIndex++) {
+        final node = TileNode(isWalkable(tileRow[columnIndex]));
+        node.row = rowIndex;
+        node.column = columnIndex;
+        const halfTileSize = 24.0;
+        final px =
+            perspectiveProjectX(node.row * halfTileSize, node.column * halfTileSize);
+        final py =
+            perspectiveProjectY(node.row * halfTileSize, node.column * halfTileSize) +
                 halfTileSize;
-        node.position = Vector2(px, py);
+        node.x = px;
+        node.y = py;
         nodeRow.add(node);
-
-        // TODO Does not belong
-        if (tiles[row][column] == Tile.Fortress) {
-          fortressPosition = node.position;
-        }
       }
       tileNodes.add(nodeRow);
     }
 
-    for (int row = 0; row < rows; row++) {
-      for (int column = 0; column < columns; column++) {
-        bool canLeft = column > 0;
-        bool canRight = column < columns - 1;
-        bool canUp = row > 0;
-        bool canDown = row < rows - 1;
+    for (var rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
+      final tileNodeRow = tileNodes[rowIndex];
+      final canUp = rowIndex > 0;
+      final canDown = rowIndex < numberOfRows - 1;
+      for (var columnIndex = 0; columnIndex < numberOfColumns; columnIndex++) {
+        final tileNode = tileNodeRow[columnIndex];
+        final canLeft = columnIndex > 0;
+        final canRight = columnIndex < numberOfColumns - 1;
 
         if (canUp) {
-          tileNodes[row][column].up = tileNodes[row - 1][column];
+          tileNode.up = tileNodes[rowIndex - 1][columnIndex];
           if (canLeft) {
-            tileNodes[row][column].leftUp = tileNodes[row - 1][column - 1];
+            tileNode.upLeft = tileNodes[rowIndex - 1][columnIndex - 1];
           } else {
-            tileNodes[row][column].leftUp = _boundary;
+            tileNode.upLeft = _boundary;
           }
           if (canRight) {
-            tileNodes[row][column].upRight = tileNodes[row - 1][column + 1];
+            tileNode.upRight = tileNodes[rowIndex - 1][columnIndex + 1];
           } else {
-            tileNodes[row][column].upRight = _boundary;
+            tileNode.upRight = _boundary;
           }
         } else {
-          tileNodes[row][column].up = _boundary;
-          tileNodes[row][column].upRight = _boundary;
-          tileNodes[row][column].leftUp = _boundary;
+          tileNode.up = _boundary;
+          tileNode.upRight = _boundary;
+          tileNode.upLeft = _boundary;
         }
 
         if (canDown) {
-          tileNodes[row][column].down = tileNodes[row + 1][column];
+          tileNode.down = tileNodes[rowIndex + 1][columnIndex];
 
           if (canRight) {
-            tileNodes[row][column].rightDown = tileNodes[row + 1][column + 1];
+            tileNode.downRight = tileNodes[rowIndex + 1][columnIndex + 1];
           } else {
-            tileNodes[row][column].rightDown = _boundary;
+            tileNode.downRight = _boundary;
           }
 
           if (canLeft) {
-            tileNodes[row][column].downLeft = tileNodes[row + 1][column - 1];
+            tileNode.downLeft = tileNodes[rowIndex + 1][columnIndex - 1];
           } else {
-            tileNodes[row][column].downLeft = _boundary;
+            tileNode.downLeft = _boundary;
           }
         } else {
-          tileNodes[row][column].down = _boundary;
-          tileNodes[row][column].rightDown = _boundary;
-          tileNodes[row][column].downLeft = _boundary;
+          tileNode.down = _boundary;
+          tileNode.downRight = _boundary;
+          tileNode.downLeft = _boundary;
         }
 
         if (canLeft) {
-          tileNodes[row][column].left = tileNodes[row][column - 1];
+          tileNode.left = tileNodeRow[columnIndex - 1];
         } else {
-          tileNodes[row][column].left = _boundary;
+          tileNode.left = _boundary;
         }
 
         if (canRight) {
-          tileNodes[row][column].right = tileNodes[row][column + 1];
+          tileNode.right = tileNodeRow[columnIndex + 1];
         } else {
-          tileNodes[row][column].right = _boundary;
+          tileNode.right = _boundary;
         }
       }
+    }
+
+    for (final env in environment){
+      const snapToGridTypes = [
+        ObjectType.Torch,
+        ObjectType.House01,
+        ObjectType.House02,
+      ];
+      if (!snapToGridTypes.contains(env.type)) continue;
+       snapToGrid(env);
+       // final row = getRow(env.x, env.y);
+       // final column = getColumn(env.x, env.y);
+       // tileNodes[row][column].open = false;
     }
   }
 }
 
-int sortTileNodeVisits(TileNodeVisit a, TileNodeVisit b) {
-  int scoreA = a.travelled + a.remaining;
-  int scoreB = b.travelled + b.remaining;
-  if (scoreA < scoreB) return 1;
-  if (scoreA > scoreB) return -1;
-  if (a.remaining < b.remaining) return 1;
-  if (a.remaining > b.remaining) return -1;
-  return 0;
+late AI pathFindAI;
+late TileNode pathFindDestination;
+var pathFindSearchID = 0;
+
+
+int parseRowsAndColumnsToDirection(int rows, int columns) {
+  assert(rows != 0 || columns != 0);
+  if (rows > 0) {
+     if (columns < 0){
+       return 5; // directionDownLeftIndex;
+     }
+     if (columns == 0){
+       return 4; //directionDownIndex;
+     }
+     return 3; // directionDownRightIndex;
+  }
+  if (rows < 0) {
+    if (columns < 0){
+      return 7; // directionUpLeftIndex;
+    }
+    if (columns == 0){
+      return 0; // directionUpIndex;
+    }
+    return 1; // directionUpRightIndex;
+  }
+  if (columns < 0){
+    return 6; // directionLeftIndex;
+  }
+  return 2; // directionRightIndex;
 }
 
 extension SceneFunctions on Scene {
-  void sortBlocks() {
-    blocks.sort((a, b) => a.leftX < b.leftX ? -1 : 1);
+
+  bool visitDirection(int direction, TileNode from) {
+    return visitNode(from.getNodeByDirection(direction), previous: from);
   }
 
-  void addBlock(double x, double y, double width, double length) {
-    blocks.add(Block.build(x, y, width, length));
-  }
-
-  List<Vector2> findPath(double x1, double y1, double x2, double y2) {
-    TileNode startNode = tileNodeAt(x1, y1);
-    if (!startNode.open) return _emptyPath;
-    TileNode endNode = tileNodeAt(x2, y2);
-    if (!endNode.open) return _emptyPath;
-    return findPathNodes(startNode, endNode);
-  }
-
-  void visit(TileNode tileNode, TileNodeVisit previous,
-      List<TileNodeVisit> visits, TileNode endNode) {
-    if (!tileNode.open) return;
-    if (tileNode.search == _search) return;
-
-    int remaining =
-        diffInt(tileNode.x, endNode.x) + diffInt(tileNode.y, endNode.y);
-    TileNodeVisit tileNodeVisit = TileNodeVisit(previous, remaining, tileNode);
-    visits.add(tileNodeVisit);
-    tileNode.search = _search;
-  }
-
-  List<Vector2> findPathNodes(TileNode startNode, TileNode endNode) {
-    if (!startNode.open) return _emptyPath;
-    if (!endNode.open) return _emptyPath;
-
-    _search++;
-
-    int remaining =
-        diffInt(startNode.x, endNode.x) + diffInt(startNode.y, endNode.y);
-
-    List<TileNodeVisit> visits = [TileNodeVisit(null, remaining, startNode)];
-    startNode.search = _search;
-
-    while (visits.isNotEmpty) {
-      if (visits.last.tileNode == endNode) {
-        TileNodeVisit visit = visits.last;
-        List<Vector2> nodes =
-            List.filled(visit.travelled, _vector2Zero, growable: true);
-        int index = visit.travelled - 1;
-        while (visit.previous != null) {
-          nodes[index] = visit.tileNode.position;
-          index--;
-          visit = visit.previous!;
-        }
-        visits.clear();
-        return nodes;
+  bool visitNode(TileNode node, {TileNode? previous}){
+    if (!node.open) return false;
+    if (previous != null) {
+      if (node.searchId == pathFindSearchID) {
+        return false;
       }
 
-      TileNodeVisit last = visits.removeLast();
+      if (node.reserveId == pathFindSearchID){
+        if (node.reserved != previous){
+          return visitNode(node, previous: node.reserved);
+        }
+      }
 
-      if (last.tileNode.up.open) {
-        visit(last.tileNode.up, last, visits, endNode);
-        if (last.tileNode.right.open) {
-          visit(last.tileNode.upRight, last, visits, endNode);
-        }
-        if (last.tileNode.left.open) {
-          visit(last.tileNode.upRight, last, visits, endNode);
-        }
-      }
-      if (last.tileNode.down.open) {
-        visit(last.tileNode.down, last, visits, endNode);
-        if (last.tileNode.right.open) {
-          visit(last.tileNode.rightDown, last, visits, endNode);
-        }
-        if (last.tileNode.left.open) {
-          visit(last.tileNode.downLeft, last, visits, endNode);
-        }
-      }
-      visit(last.tileNode.right, last, visits, endNode);
-      visit(last.tileNode.left, last, visits, endNode);
-      visits.sort(sortTileNodeVisits);
+      node.depth = previous.depth + 1;
+    } else {
+      node.depth = 0;
     }
-    return _emptyPath;
-  }
 
-  Vector2 getLeft(double x1, double y1, double x2, double y2) {
-    double middleX = (x2 - x1) * 0.5;
-    double middleY = (y2 - y1) * 0.5;
-    double perpendicularX = middleY;
-    double perpendicularY = -middleX;
-    _vector2.x = x1 + middleX + perpendicularX;
-    _vector2.y = y1 + middleY + perpendicularY;
-    return _vector2;
-  }
+    node.previous = previous;
+    node.searchId = pathFindSearchID;
 
-  Vector2 getRight(double x1, double y1, double x2, double y2) {
-    double middleX = (x2 - x1) * 0.5;
-    double middleY = (y2 - y1) * 0.5;
-    double perpendicularX = -middleY;
-    double perpendicularY = middleX;
-    _vector2.x = x1 + middleX + perpendicularX;
-    _vector2.y = y1 + middleY + perpendicularY;
-    return _vector2;
-  }
-
-  bool pathClear(double x1, double y1, double x2, double y2) {
-    double angle = radiansBetween(x1, y1, x2, y2);
-    double posX = x1;
-    double posY = y1;
-    double vx = velX(angle, 24);
-    double vy = velY(angle, 24);
-
-    while (diff(posX, x2) > _tileSize || diff(posY, y2) > _tileSize) {
-      if (tileBoundaryAt(posX, posY)) return false;
-      posX += vx;
-      posY += vy;
+    if (node == pathFindDestination) {
+      TileNode? current = node.previous;
+      final pathX = pathFindAI.pathX;
+      final pathY = pathFindAI.pathY;
+      var index = 0;
+      while (current != null) {
+        pathX[index] = current.x;
+        pathY[index] = current.y;
+        current = current.previous;
+        if (current != null){
+          index++;
+          if (index >= maxAIPathLength) return false;
+        }
+      }
+      pathFindAI.pathIndex = index;
+      return true;
     }
-    return true;
+
+    if (node.depth > 30) {
+      return false;
+    }
+
+    final direction = parseRowsAndColumnsToDirection(
+        pathFindDestination.row - node.row,
+        pathFindDestination.column - node.column,
+    );
+    node.reserveSurroundingNodes();
+
+    if (visitDirection(direction, node)) return true;
+
+    final directionIndex = direction;
+
+    for (var i = 1; i < 4; i++) {
+      final leftDirection = sanitizeDirectionIndex(directionIndex - i);
+      if (visitDirection(leftDirection, node)) {
+        return true;
+      }
+      final rightDirection = sanitizeDirectionIndex(directionIndex + i);
+      if (visitDirection(rightDirection, node)) {
+        return true;
+      }
+    }
+
+    final directionBehind = sanitizeDirectionIndex(directionIndex + 4);
+    return visitDirection(directionBehind, node);
   }
 
   bool waterAt(double x, double y) {
-    return isWater(tileAt(x, y));
+    return tileAt(x, y).isWater;
+  }
+
+  bool tileWalkableAt(double x, double y){
+    return tileNodeAt(x, y).open;
   }
 
   Tile tileAt(double x, double y) {
-    double projectedX = projectedToWorldX(x, y);
-    if (projectedX < 0) return Tile.Boundary;
-
-    double projectedY = projectedToWorldY(x, y);
-    if (projectedY < 0) return Tile.Boundary;
-
-    double tileX = projectedX / _tileSize;
-    int tileXInt = tileX.toInt();
-    if (tileX > columns) return Tile.Boundary;
-
-    double tileY = projectedY / _tileSize;
-    int tileYInt = tileY.toInt();
-    if (tileY > rows) return Tile.Boundary;
-
-    return this.tiles[tileYInt][tileXInt];
+    final projectedX = y - x;
+    if (projectedX < 0) return tileBoundary;
+    final projectedY = x + y;
+    if (projectedY < 0) return tileBoundary;
+    final row = projectedY ~/ _tileSize;
+    if (row >= numberOfRows) return tileBoundary;
+    final column = projectedX ~/ _tileSize;
+    if (column >= numberOfColumns) return tileBoundary;
+    return this.tiles[row][column];
   }
 
   TileNode tileNodeAt(double x, double y) {
-    double projectedX = projectedToWorldX(x, y);
+    final projectedX = y - x; // projectedToWorldX(x, y)
     if (projectedX < 0) return _boundary;
-
-    double projectedY = projectedToWorldY(x, y);
+    final projectedY = x + y; // projectedToWorldY(x, y)
     if (projectedY < 0) return _boundary;
-
-    double tileX = projectedX / _tileSize;
-    double tileY = projectedY / _tileSize;
-
-    int row = tileY.toInt();
-    int column = tileX.toInt();
-
-    if (column >= columns) return _boundary;
-    if (row >= rows) return _boundary;
-
+    final row = projectedY ~/ _tileSize;
+    if (row >= numberOfRows) return _boundary;
+    final column = projectedX ~/ _tileSize;
+    if (column >= numberOfColumns) return _boundary;
     return tileNodes[row][column];
   }
 
-  bool tileBoundaryAt(double x, double y) {
-    return !isOpen(tileAt(x, y));
-  }
-
-  bool bulletCollisionAt(double x, double y) {
-    return isCollision(tileAt(x, y));
+  bool projectileCollisionAt(double x, double y) {
+    return !isShootable(tileAt(x, y));
   }
 
   double projectedToWorldX(double x, double y) {
@@ -349,5 +299,25 @@ extension SceneFunctions on Scene {
 
   double projectedToWorldY(double x, double y) {
     return x + y;
+  }
+
+  void resolveCharacterTileCollision(Character character) {
+    const distance = 3;
+    if (!tileWalkableAt(character.left, character.top)) {
+      character.x += distance;
+      character.y += distance;
+    } else
+    if (!tileWalkableAt(character.right, character.bottom)) {
+      character.x -= distance;
+      character.y -= distance;
+    }
+    if (!tileWalkableAt(character.right, character.top)) {
+      character.x -= distance;
+      character.y += distance;
+    } else
+    if (!tileWalkableAt(character.left, character.bottom)) {
+      character.x += distance;
+      character.y -= distance;
+    }
   }
 }

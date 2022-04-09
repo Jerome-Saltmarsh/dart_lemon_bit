@@ -1,5 +1,6 @@
 
 enum GameError {
+  CharacterTypeAlreadySelected,
   GameNotFound,
   PlayerNotFound,
   ClientRequestRequired,
@@ -7,7 +8,10 @@ enum GameError {
   InvalidPlayerUUID,
   ClientRequestArgumentsEmpty,
   PlayerStillAlive,
+  PlayerDead,
+  PlayerBusy,
   InvalidArguments,
+  InvalidWeaponIndex,
   LobbyNotFound,
   LobbyUserNotFound,
   GameFull,
@@ -17,5 +21,18 @@ enum GameError {
   IntegerExpected,
   InsufficientFunds,
   WeaponNotAcquired,
-  WeaponAlreadyAcquired
+  WeaponAlreadyAcquired,
+  InsufficientSkillPoints,
+  InsufficientOrbs,
+  Inventory_Full,
+  InsufficientMana,
+  Cooldown_Remaining,
+  SkillLocked,
+  SkillPointsRequired,
+  Subscription_Required,
+  Custom_Map_Not_Found,
+  PlayerId_Required,
+  Login_Error,
+  Account_Not_Found,
+  Account_Required,
 }

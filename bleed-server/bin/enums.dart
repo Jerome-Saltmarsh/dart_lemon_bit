@@ -1,77 +1,28 @@
 import 'common/Tile.dart';
 
-List<Tile> _walkableTiles = [
-  Tile.Grass,
-  Tile.Grass02,
-  Tile.Flowers,
-  Tile.Long_Grass,
-  Tile.ZombieSpawn,
-  Tile.Concrete,
-  Tile.Concrete_Vertical,
-  Tile.Concrete_Horizontal,
-  Tile.PlayerSpawn
-];
+/// can a person pass through this tile
+const _walkableTiles = <Tile, bool>{
+  Tile.Grass: true,
+  Tile.Flowers: true,
+  Tile.Long_Grass: true,
+  Tile.ZombieSpawn: true,
+  Tile.Concrete: true,
+  Tile.Bridge: true,
+  Tile.Wooden_Floor: true,
+  Tile.Rock: true,
+};
 
-List<Tile> _closedTiles = [
-  Tile.Water,
-  Tile.Water_Corner_01,
-  Tile.Water_Corner_02,
-  Tile.Water_Corner_03,
-  Tile.Water_Corner_04,
-  Tile.Water_Side_01,
-  Tile.Water_Side_02,
-  Tile.Water_Side_03,
-  Tile.Water_Side_04,
-  Tile.Block,
-  Tile.Block_Horizontal,
-  Tile.Block_Vertical,
-  Tile.Block_Corner_01,
-  Tile.Block_Corner_02,
-  Tile.Block_Corner_03,
-  Tile.Block_Corner_04,
-];
-
-List<Tile> _collisionTiles = [
-  Tile.Block,
-  Tile.Block_Horizontal,
-  Tile.Block_Vertical,
-  Tile.Block_Corner_01,
-  Tile.Block_Corner_02,
-  Tile.Block_Corner_03,
-  Tile.Block_Corner_04,
-];
+bool isShootable(Tile tile) {
+  const shootableTiles = <Tile, bool>{
+    Tile.Water: true,
+    ..._walkableTiles,
+  };
+  return shootableTiles.containsKey(tile);
+}
 
 bool isWalkable(Tile tile){
-  return _walkableTiles.contains(tile);
+  return _walkableTiles.containsKey(tile);
 }
 
-bool isOpen(Tile tile){
-  return !_closedTiles.contains(tile);
-}
 
-bool isCollision(Tile tile){
-  return _collisionTiles.contains(tile);
-}
 
-enum CharacterState { Idle, Walking, Dead, Aiming, Firing, Striking, Running, Reloading, ChangingWeapon }
-
-enum Direction {
-  Up,
-  UpRight,
-  Right,
-  DownRight,
-  Down,
-  DownLeft,
-  Left,
-  UpLeft,
-  None
-}
-
-enum ParticleType {
-  Blood,
-  Shell,
-  Head,
-  Arm,
-  Organ,
-  Smoke
-}

@@ -1,5 +1,8 @@
-int frame = 0;
+// TODO floating state
+
+// TODO floating state
 DateTime frameTime = DateTime.now();
+// TODO floating state
 Duration frameDuration = Duration();
 
 

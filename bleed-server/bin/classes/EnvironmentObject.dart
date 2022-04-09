@@ -1,35 +1,45 @@
-import '../classes.dart';
-import '../common/enums/EnvironmentObjectType.dart';
+import '../common/enums/ObjectType.dart';
+import 'Collider.dart';
 
-class EnvironmentObject extends GameObject {
-  EnvironmentObjectType type;
+class EnvironmentObject extends Collider {
+  ObjectType type;
 
   EnvironmentObject({
     required double x,
     required double y,
     required this.type
-  }) : super(x, y) {
+  }) : super(x, y, _getRadius(type)) {
     this.x = x;
     this.y = y;
-    // hacky
-    radius = _getRadius(type);
+
+    // TODO Forbidden game logic inside data class
+    if (type == ObjectType.Rock_Small){
+      collidable = false;
+    }
+    // TODO Forbidden game logic inside data class
+    if (type == ObjectType.LongGrass){
+      collidable = false;
+    }
+    // TODO Forbidden game logic inside data class
+    if (type == ObjectType.Tree_Stump){
+      collidable = false;
+    }
   }
 }
 
 // state doesn't belong in classes directory
-final Map<EnvironmentObjectType, double> _radiusMap = {
-  EnvironmentObjectType.House01: 40,
-  EnvironmentObjectType.House02: 40,
-  EnvironmentObjectType.Tree01: 8,
-  EnvironmentObjectType.Tree02: 8,
-  EnvironmentObjectType.Rock: 14,
-  EnvironmentObjectType.Torch: 10,
-  EnvironmentObjectType.Tree_Stump: 8,
-  EnvironmentObjectType.Rock_Small: 4,
-  EnvironmentObjectType.Grave: 13,
+final Map<ObjectType, double> _radiusMap = {
+  ObjectType.House01: 40,
+  ObjectType.House02: 40,
+  ObjectType.Tree01: 8,
+  ObjectType.Rock: 14,
+  ObjectType.Torch: 10,
+  ObjectType.Tree_Stump: 8,
+  ObjectType.Rock_Small: 4,
+  ObjectType.Grave: 13,
 };
 
-double _getRadius(EnvironmentObjectType type){
+double _getRadius(ObjectType type){
   if (_radiusMap.containsKey(type)){
     return _radiusMap[type] ?? 0;
   }

@@ -1,673 +1,947 @@
+import 'package:bleed_server/firestoreClient/firestoreService.dart';
+import 'package:bleed_server/system.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'classes.dart';
+import 'byte_compiler.dart';
 import 'classes/Game.dart';
-import 'classes/Lobby.dart';
 import 'classes/Player.dart';
-import 'common/PlayerEvents.dart';
-import 'common/functions/diffOver.dart';
-import 'common/version.dart';
-import 'common/constants.dart';
-import 'compile.dart';
+import 'common/AbilityMode.dart';
+import 'common/CharacterAction.dart';
+import 'common/CharacterState.dart';
+import 'common/CharacterType.dart';
 import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
-import 'common/GameEventType.dart';
 import 'common/GameType.dart';
+import 'common/Modify_Game.dart';
+import 'common/RoyalCost.dart';
 import 'common/ServerResponse.dart';
-import 'common/PurchaseType.dart';
-import 'common/Weapons.dart';
-import 'enums.dart';
-import 'functions/loadScenes.dart';
-import 'instances/gameManager.dart';
+import 'common/SlotType.dart';
+import 'common/SlotTypeCategory.dart';
+import 'common/WeaponType.dart';
+import 'common/compile_util.dart';
+import 'common/version.dart';
+import 'compile.dart';
+import 'engine.dart';
+import 'functions/generateName.dart';
+import 'functions/withinRadius.dart';
+import 'games/Moba.dart';
+import 'games/world.dart';
+import 'maths.dart';
 import 'settings.dart';
-import 'update.dart';
-import 'utils.dart';
+import 'utilities.dart';
 
-const String _space = " ";
-final int errorIndex = ServerResponse.Error.index;
-final StringBuffer _buffer = StringBuffer();
+const _space = " ";
+final _errorIndex = ServerResponse.Error;
+final _buffer = StringBuffer();
+final _clientRequestsLength = clientRequests.length;
 
-const List<ClientRequest> clientRequests = ClientRequest.values;
-const List<PurchaseType> purchaseTypes = PurchaseType.values;
-final int clientRequestsLength = clientRequests.length;
+var totalConnections = 0;
 
-void main() {
-  print('Bleed Game Server Starting');
-  initUpdateLoop();
-  loadScenes();
 
-  var handler = webSocketHandler((WebSocketChannel webSocket) {
-    void sendToClient(String response) {
-      webSocket.sink.add(response);
+void clearBuffer() {
+  _buffer.clear();
+}
+
+void write(dynamic value) {
+  _buffer.write(value);
+  _buffer.write(_space);
+}
+
+Future main() async {
+  print('gamestream.online server starting');
+  print('v${version}');
+  if (isLocalMachine){
+    print("Environment Detected: Jerome's Computer");
+  }else{
+    print("Environment Detected: Google Cloud Machine");
+  }
+  await engine.init();
+  startWebsocketServer();
+}
+
+void startWebsocketServer(){
+  print("startWebsocketServer()");
+  var handler = webSocketHandler(
+      buildWebSocketHandler,
+      protocols: ['gamestream.online'],
+      // pingInterval: Duration(hours: 1),
+  );
+
+  shelf_io.serve(handler, settings.host, settings.port).then((server) {
+    print('Serving at wss://${server.address.host}:${server.port}');
+  }).catchError((error){
+    print("Websocket error occurred");
+    print(error);
+  });
+}
+
+void buildWebSocketHandler(WebSocketChannel webSocket) {
+    totalConnections++;
+    print("New connection established. Total Connections $totalConnections");
+    final sink = webSocket.sink;
+    final started = DateTime.now();
+    Player? _player;
+    Account? _account;
+
+    sink.done.then((value){
+      totalConnections--;
+      print("Connection Lost. Total Connections $totalConnections");
+      final duration = started.difference(DateTime.now());
+      print("Duration ${duration.inMinutes} minutes ${duration.inSeconds % 60} seconds");
+      final closeReason = webSocket.closeReason;
+      final closeCode = webSocket.closeCode;
+      print("Close Reason: $closeReason");
+      print("Close Code: $closeCode");
+      _player = null;
+      _account = null;
+    });
+
+    void reply(String response) {
+      sink.add(response);
     }
 
-    void sendCompiledPlayerState(Game game, Player player) {
-      _buffer.clear();
-      _buffer.write(game.compiled);
-      compilePlayer(_buffer, player);
-      if (player.message.isNotEmpty) {
-        compilePlayerMessage(_buffer, player.message);
-        player.message = "";
+    void sendAndClearBuffer() {
+      reply(_buffer.toString());
+      clearBuffer();
+    }
+
+    void compileAndSendPlayerGame(Player player){
+      byteCompiler.writePlayerGame(player);
+      sink.add(byteCompiler.writeToSendBuffer());
+    }
+
+    void onGameJoined(){
+      final player = _player;
+      if (player == null) return;
+      final account = _account;
+      if (account != null) {
+        player.name = account.publicName;
       }
-      sendToClient(_buffer.toString());
+
+      final game = player.game;
+      compileAndSendPlayerGame(player);
+      write(game.compiledTiles);
+      write(game.compiledEnvironmentObjects);
+      write(ServerResponse.Scene_Shade_Max);
+      write(game.shadeMax);
+      write(ServerResponse.Game_Status);
+      write(game.status.index);
+      compilePlayersRemaining(_buffer, 0);
+      write('${ServerResponse.Game_Joined} 0 ${game.id} ${player.team} ${player.x.toInt()} ${player.y.toInt()}');
+      sendAndClearBuffer();
     }
 
-    void joinGame(Game game) {
-      _buffer.clear();
-      Player player = game.spawnPlayer();
-      compilePlayer(_buffer, player);
-      _buffer.write(
-          '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ${game.type.index} ${player.squad} ');
-      _buffer.write(game.compiledTiles);
-      _buffer.write(game.compiledEnvironmentObjects);
-      _buffer.write(game.compiled);
-      sendToClient(_buffer.toString());
+    void joinGameSkirmish() {
+      final game = engine.findGameSkirmish();
+      _player = game.playerJoin();
+      onGameJoined();
+    }
+
+    void joinGameMoba() {
+      final moba = engine.findPendingMobaGame();
+      _player = moba.playerJoin();
+      onGameJoined();
+    }
+
+    void joinBattleRoyal() {
+      final royal = engine.findPendingRoyalGames();
+      _player = royal.playerJoin();
+      onGameJoined();
+    }
+
+    void joinGameMMO() {
+      clearBuffer();
+      final account = _account;
+      final player = engine.spawnPlayerInTown();
+      _player = player;
+      final orbs = player.orbs;
+      player.name = account != null ? account.publicName : generateName();
+      orbs.emerald = 100;
+      orbs.topaz = 100;
+      orbs.ruby = 100;
+      onGameJoined();
     }
 
     void error(GameError error, {String message = ""}) {
-      sendToClient('$errorIndex ${error.index} $message');
+      reply('$_errorIndex ${error.index} $message');
+    }
+
+    void errorInvalidArg(String message) {
+      reply('$_errorIndex ${GameError.InvalidArguments.index} $message');
     }
 
     void errorArgsExpected(int expected, List arguments) {
-      sendToClient(
-          '$errorIndex ${GameError.InvalidArguments.index} expected $expected but got ${arguments.length}');
+      errorInvalidArg(
+          'Invalid number of arguments received. Expected $expected but got ${arguments.length}');
     }
 
-    void errorGameNotFound() {
-      error(GameError.GameNotFound);
-    }
-
-    void errorCannotSpawnNpc() {
-      error(GameError.CannotSpawnNpc);
-    }
-
-    void errorGameFull() {
-      error(GameError.GameFull);
-    }
-
-    void errorInvalidArguments() {
-      error(GameError.InvalidArguments);
-    }
-
-    void errorLobbyNotFound() {
-      error(GameError.LobbyNotFound);
-    }
-
-    void errorLobbyUserNotFound() {
-      error(GameError.LobbyUserNotFound);
+    void errorIntegerExpected(int index, got) {
+      errorInvalidArg(
+          'Invalid type at index $index, expected integer but got $got');
     }
 
     void errorPlayerNotFound() {
       error(GameError.PlayerNotFound);
     }
 
-    void errorCannotRevive() {
-      error(GameError.CannotRevive);
+    void errorAccountNotFound() {
+      error(GameError.Account_Not_Found);
     }
 
-    void errorInvalidPlayerUUID() {
-      error(GameError.InvalidPlayerUUID);
+    void errorAccountRequired() {
+      error(GameError.Account_Required);
     }
 
-    void errorWeaponNotAcquired() {
-      error(GameError.WeaponNotAcquired);
+    void errorPlayerDead() {
+      error(GameError.PlayerDead);
     }
 
-    void errorWeaponAlreadyAcquired() {
-      error(GameError.WeaponAlreadyAcquired);
+    void errorPlayerBusy() {
+      error(GameError.PlayerBusy);
     }
 
-    void onEvent(requestD) {
-      String requestString = requestD;
-      List<String> arguments = requestString.split(_space);
+    void errorInsufficientSkillPoints() {
+      error(GameError.InsufficientSkillPoints);
+    }
+
+    void onEvent(dynamic requestD) {
+
+      final player = _player;
+
+      if (requestD is List<int>) {
+        final List<int> args = requestD;
+
+        final clientRequestInt = args[0];
+
+        if (clientRequestInt >= _clientRequestsLength) {
+          error(GameError.UnrecognizedClientRequest);
+          return;
+        }
+
+        if (clientRequestInt == clientRequestIndexUpdate) {
+          if (player == null) {
+            return;
+          }
+
+          if (player.lastUpdateFrame == 0){
+            return;
+          }
+          player.lastUpdateFrame = 0;
+
+          final game = player.game;
+
+          if (game.awaitingPlayers) {
+            compileGameStatus(_buffer, game.status);
+            compileLobby(_buffer, game);
+            compileGameMeta(_buffer, game);
+            sendAndClearBuffer();
+            return;
+          }
+
+          if (game.countingDown){
+            compileGameStatus(_buffer, game.status);
+            compileCountDownFramesRemaining(_buffer, game);
+            sendAndClearBuffer();
+            return;
+          }
+
+          if (game.finished) {
+            compileGameStatus(_buffer, game.status);
+            if (game is GameMoba) {
+              compileTeamLivesRemaining(_buffer, game);
+            }
+            reply(_buffer.toString());
+            return;
+          }
+
+          if (player.sceneChanged) {
+            player.sceneChanged = false;
+            _buffer.clear();
+            _buffer.write(
+                '${ServerResponse.Scene_Changed} ${player.x.toInt()} ${player.y.toInt()} ');
+            _buffer.write(game.compiledTiles);
+            _buffer.write(game.compiledEnvironmentObjects);
+            reply(_buffer.toString());
+            return;
+          }
+
+          final mouseX = readNumberFromByteArray(args, index: 2).toDouble();
+          final mouseY = readNumberFromByteArray(args, index: 4).toDouble();
+          player.mouseX = mouseX;
+          player.mouseY = mouseY;
+          player.screenLeft = readNumberFromByteArray(args, index: 7).toDouble();
+          player.screenTop = readNumberFromByteArray(args, index: 9).toDouble();
+          player.screenRight = readNumberFromByteArray(args, index: 11).toDouble();
+          player.screenBottom = readNumberFromByteArray(args, index: 13).toDouble();
+
+          if (player.deadOrBusy) {
+            compileAndSendPlayerGame(player);
+            return;
+          }
+
+          player.aimTarget = null;
+          final closestCollider = game.getClosestEnemyCollider(mouseX, mouseY, player);
+          if (closestCollider != null) {
+            if (withinDistance(
+                closestCollider,
+                mouseX,
+                mouseY,
+                50.0, // cursor radius
+            )) {
+              player.aimTarget = closestCollider;
+            }
+          }
+          switch (args[1]) {
+            case CharacterAction.Idle:
+              if (player.target == null){
+                game.setCharacterState(player, stateIdle);
+              }
+              break;
+            case CharacterAction.Perform:
+              final ability = player.ability;
+              final aimTarget = player.aimTarget;
+              player.attackTarget = aimTarget;
+              playerSetAbilityTarget(player, mouseX, mouseY);
+              if (ability == null) {
+                if (aimTarget != null) {
+                  player.target = aimTarget;
+                  if (withinRadius(player, aimTarget, player.weapon.range)){
+                    characterFaceV2(player, aimTarget);
+                    game.setCharacterStatePerforming(player);
+                  }
+                } else {
+                  player.runTarget.x = mouseX;
+                  player.runTarget.y = mouseY;
+                  player.target = player.runTarget;
+                }
+                break;
+              }
+
+              if (player.magic < ability.cost) {
+                error(GameError.InsufficientMana);
+                break;
+              }
+
+              if (ability.cooldownRemaining > 0) {
+                error(GameError.Cooldown_Remaining);
+                break;
+              }
+
+              switch (ability.mode) {
+                case AbilityMode.None:
+                  return;
+                case AbilityMode.Targeted:
+                  if (aimTarget != null) {
+                    player.target = aimTarget;
+                    player.attackTarget = aimTarget;
+                    return;
+                  } else {
+                    player.runTarget.x = mouseX;
+                    player.runTarget.y = mouseY;
+                    player.target = player.runTarget;
+                    return;
+                  }
+                case AbilityMode.Activated:
+                // TODO: Handle this case.
+                  break;
+                case AbilityMode.Area:
+                // TODO: Handle this case.
+                  break;
+                case AbilityMode.Directed:
+                // TODO: Handle this case.
+                  break;
+              }
+
+              player.magic -= ability.cost;
+              player.performing = ability;
+              ability.cooldownRemaining = ability.cooldown;
+              player.ability = null;
+
+              characterAimAt(player, mouseX, mouseY);
+              game.setCharacterState(player, statePerforming);
+              break;
+            case CharacterAction.Run:
+              player.angle =  args[6] * 0.78539816339; // 0.78539816339 == pi / 4
+              game.setCharacterStateRunning(player);
+              player.target = null;
+              break;
+          }
+
+          compileAndSendPlayerGame(player);
+          return;
+        }
+        throw Exception("Cannot parse ${clientRequests[clientRequestInt]}");
+      }
+
+      if (requestD is String == false){
+        throw Exception();
+      }
+
+      final String requestString = requestD;
+      final arguments = requestString.split(_space);
+
 
       if (arguments.isEmpty) {
         error(GameError.ClientRequestArgumentsEmpty);
         return;
       }
 
-      int? clientRequestInt = int.tryParse(arguments[0]);
+      final clientRequestInt = int.tryParse(arguments[0]);
       if (clientRequestInt == null) {
         error(GameError.ClientRequestRequired);
         return;
       }
 
-      if (clientRequestInt >= clientRequestsLength) {
+      if (clientRequestInt < 0) {
         error(GameError.UnrecognizedClientRequest);
         return;
       }
 
-      ClientRequest request = clientRequests[clientRequestInt];
+      if (clientRequestInt >= _clientRequestsLength) {
+        error(GameError.UnrecognizedClientRequest);
+        return;
+      }
 
-      switch (request) {
-        case ClientRequest.Lobby_Join_Fortress:
-          LobbyUser user = LobbyUser();
-          Lobby lobby = gameManager.findAvailableLobbyFortress();
-          lobby.players.add(user);
-          sendToClient(
-              '${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
-          break;
+      final clientRequest = clientRequests[clientRequestInt];
+      switch (clientRequest) {
 
-        case ClientRequest.Game_Update:
-          Game? game = findGameById(arguments[1]);
-          if (game == null) {
-            errorGameNotFound();
+        case ClientRequest.Join:
+          if (arguments.length < 2) {
+            errorArgsExpected(2, arguments);
             return;
           }
-          Player? player = game.findPlayerById(int.parse(arguments[2]));
+          final gameTypeIndex = int.parse(arguments[1]);
+
+          if (gameTypeIndex >= gameTypes.length) {
+            errorInvalidArg('game type index cannot exceed ${gameTypes.length - 1}');
+            return;
+          }
+          if (gameTypeIndex < 0) {
+            errorInvalidArg('game type must be greater than 0');
+            return;
+          }
+
+          if (arguments.length > 2) {
+            final userId = arguments[2];
+
+            firestoreService.findUserById(userId).then((account){
+               if (account == null) {
+                 return errorAccountNotFound();
+               }
+               _account = account;
+               final gameType = gameTypes[gameTypeIndex];
+
+               switch (gameType) {
+                 case GameType.None:
+                   throw Exception("Join Game - GameType.None invalid");
+                 case GameType.MMO:
+                   return joinGameMMO();
+                 case GameType.Moba:
+                   return joinGameMoba();
+                 case GameType.BATTLE_ROYAL:
+                   return joinBattleRoyal();
+                 case GameType.SKIRMISH:
+                   return joinGameSkirmish();
+                 default:
+                   break;
+               }
+            });
+            return;
+          }
+
+          final gameType = gameTypes[gameTypeIndex];
+
+          switch (gameType) {
+            case GameType.None:
+              throw Exception("Join Game - GameType.None invalid");
+            case GameType.MMO:
+              return joinGameMMO();
+            case GameType.Moba:
+              return joinGameMoba();
+            case GameType.BATTLE_ROYAL:
+              return joinBattleRoyal();
+            case GameType.SKIRMISH:
+              return joinGameSkirmish();
+            default:
+              throw Exception("Cannot join ${gameType}");
+          }
+
+        case ClientRequest.Teleport:
           if (player == null) {
             errorPlayerNotFound();
             return;
           }
-          if (arguments[3] != player.uuid) {
-            errorInvalidPlayerUUID();
+          player.x = double.parse(arguments[1]);
+          player.y = double.parse(arguments[2]);
+          return;
+
+        case ClientRequest.Join_Custom:
+          if (arguments.length < 3) {
+            errorArgsExpected(3, arguments);
             return;
           }
-
-          if (player.events.isNotEmpty) {
-            // TODO compile player events
-          }
-
-          player.lastUpdateFrame = 0;
-          CharacterState requestedState =
-              CharacterState.values[int.parse(arguments[4])];
-          Direction requestedDirection =
-              Direction.values[int.parse(arguments[5])];
-          double aim = double.parse(arguments[6]);
-          player.aimAngle = aim;
-          setDirection(player, requestedDirection);
-          game.setCharacterState(player, requestedState);
-          sendCompiledPlayerState(game, player);
-          return;
-
-        case ClientRequest.Player_Use_MedKit:
-          return;
-        // return;
-        // Game? game = findGameById(arguments[1]);
-        // if (game == null) {
-        //   errorGameNotFound();
-        //   return;
-        // }
-        // Player? player = game.findPlayerById(int.parse(arguments[2]));
-        // if (player == null) {
-        //   errorPlayerNotFound();
-        //   return;
-        // }
-        // if (arguments[3] != player.uuid) {
-        //   errorInvalidPlayerUUID();
-        //   return;
-        // }
-        // if (player.health == player.maxHealth) return;
-        // if (player.dead) return;
-        // if (player.meds <= 0) return;
-        // player.meds--;
-        // player.health = player.maxHealth;
-        // game.dispatch(GameEventType.Use_MedKit, player.x, player.y, 0, 0);
-        // break;
-
-        case ClientRequest.Lobby_Create:
-          if (arguments.length < 4) {
-            errorInvalidArguments();
-            return;
-          }
-
-          int maxPlayers = int.parse(arguments[1]);
-          // TODO read from the arguments
-          int squadSize = 4;
-          GameType gameType = GameType.values[int.parse(arguments[2])];
-          String name = arguments[3];
-          bool private = arguments[4] == "1";
-          Lobby lobby = gameManager.createLobby(
-              maxPlayers: maxPlayers,
-              squadSize: squadSize,
-              gameType: gameType,
-              name: name,
-              private: private);
-          LobbyUser user = LobbyUser();
-          lobby.players.add(user);
-          sendToClient(
-              '${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
-          return;
-
-        case ClientRequest.Game_Join_Casual:
-          joinGame(gameManager.getAvailableCasualGame());
-          break;
-
-        case ClientRequest.Game_Join_Open_World:
-          joinGame(gameManager.getAvailableOpenWorld());
+          final mapId = arguments[1];
+          engine.findOrCreateCustomGame(mapId).then((value){
+            _player = value.playerJoin();
+            onGameJoined();
+          });
           break;
 
         case ClientRequest.Ping:
-          sendToClient('${ServerResponse.Pong.index} ;');
+          reply(ServerResponse.Pong.toString());
           break;
 
-        case ClientRequest.Lobby_Join:
-          if (arguments.length <= 1) {
-            errorInvalidArguments();
-            return;
-          }
-
-          String lobbyUuid = arguments[1];
-          Lobby? lobby = findLobbyByUuid(lobbyUuid);
-          if (lobby == null) {
-            errorLobbyNotFound();
-            return;
-          }
-          LobbyUser user = LobbyUser();
-          lobby.players.add(user);
-          sendToClient(
-              '${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
-          break;
-
-        case ClientRequest.Lobby_Join_DeathMatch:
-          LobbyUser user = LobbyUser();
-          if (arguments.length <= 1) {
-            errorInvalidArguments();
-            return;
-          }
-
-          int squadSize = int.parse(arguments[1]);
-          int maxPlayers = squadSize * 2;
-
-          Lobby lobby = gameManager.findAvailableDeathMatchLobby(
-              squadSize: squadSize, maxPlayers: maxPlayers);
-          lobby.players.add(user);
-
-          sendToClient(
-              '${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
-          break;
-
-        case ClientRequest.Game_Join:
-          print("ClientRequest.Game_Join");
-
-          if (arguments.length < 2) {
-            errorInvalidArguments();
-            return;
-          }
-          String gameUuid = arguments[1];
-
-          for (Game game in gameManager.games) {
-            if (game.uuid != gameUuid) continue;
-            if (game.players.length == game.maxPlayers) {
-              errorGameFull();
-              return;
-            }
-            joinGame(game);
-            return;
-          }
-
-          errorGameNotFound();
-          break;
-
-        case ClientRequest.Lobby_Update:
-          if (arguments.length < 3) {
-            errorInvalidArguments();
-            return;
-          }
-          String lobbyUuid = arguments[1];
-          Lobby? lobby = findLobbyByUuid(lobbyUuid);
-          if (lobby == null) {
-            errorLobbyNotFound();
-            return;
-          }
-          String playerUuid = arguments[2];
-          LobbyUser? user = findLobbyUser(lobby, playerUuid);
-          if (user == null) {
-            errorLobbyUserNotFound();
-            return;
-          }
-          user.framesSinceUpdate = 0;
-          StringBuffer buffer =
-              StringBuffer("${ServerResponse.Lobby_Update.index} ");
-          compileLobby(buffer, lobby);
-          sendToClient(buffer.toString());
-          break;
-
-        case ClientRequest.Lobby_List:
-          sendToClient(compileLobbies());
-          return;
-
-        case ClientRequest.Player_Revive:
-          String gameId = arguments[1];
-          Game? game = findGameById(gameId);
-          if (game == null) {
-            errorGameNotFound();
-            return;
-          }
-
-          int id = int.parse(arguments[2]);
-          Player? player = game.findPlayerById(id);
+        case ClientRequest.Character_Load:
+          final account = _account;
           if (player == null) {
             errorPlayerNotFound();
             return;
           }
-          String uuid = arguments[3];
-          if (uuid != player.uuid) {
-            errorInvalidPlayerUUID();
+          if (account == null) {
+            errorAccountRequired();
+            return;
+          }
+          firestoreService.loadCharacter(account).then((response){
+            player.x = double.parse(response['x']);
+            player.y = double.parse(response['y']);
+          });
+
+          break;
+
+        case ClientRequest.Character_Save:
+          final account = _account;
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+          if (account == null) {
+            errorAccountRequired();
+            return;
+          }
+
+          firestoreService.saveCharacter(
+            account: account,
+            x: player.x,
+            y: player.y,
+          );
+          break;
+
+        case ClientRequest.Revive:
+          if (player == null) {
+            errorPlayerNotFound();
             return;
           }
           if (player.alive) {
             error(GameError.PlayerStillAlive);
             return;
           }
-          game.revive(player);
+          player.game.revive(player);
           return;
 
-        case ClientRequest.Spawn_Npc:
-          return; // disabled
-          String gameId = arguments[1];
-          Game? game = findGameById(gameId);
-          if (game == null) {
-            errorGameNotFound();
+        case ClientRequest.SelectCharacterType:
+          if (arguments.length != 3) {
+            errorArgsExpected(3, arguments);
             return;
           }
-
-          if (game.type != GameType.Casual) {
-            errorCannotSpawnNpc();
-            return;
-          }
-
-          game.spawnRandomZombie();
-          return;
-
-        case ClientRequest.Player_Equip:
-          String gameId = arguments[1];
-          Game? game = findGameById(gameId);
-          if (game == null) {
-            errorGameNotFound();
-            return;
-          }
-          int id = int.parse(arguments[2]);
-          Player? player = game.findPlayerById(id);
           if (player == null) {
             errorPlayerNotFound();
             return;
           }
-          String uuid = arguments[3];
-          if (uuid != player.uuid) {
-            errorInvalidPlayerUUID();
-            return;
-          }
-          Weapon weapon = Weapon.values[int.parse(arguments[4])];
-          if (player.stateDuration > 0) return;
-          if (player.weapon == weapon) return;
-
-          switch (weapon) {
-            case Weapon.HandGun:
-              if (!player.acquiredHandgun) {
-                errorWeaponNotAcquired();
-                return;
-              }
-              break;
-            case Weapon.Shotgun:
-              if (!player.acquiredShotgun) {
-                errorWeaponNotAcquired();
-                return;
-              }
-              break;
-            case Weapon.SniperRifle:
-              if (!player.acquiredSniperRifle) {
-                errorWeaponNotAcquired();
-                return;
-              }
-              break;
-            case Weapon.AssaultRifle:
-              if (!player.acquiredAssaultRifle) {
-                errorWeaponNotAcquired();
-                return;
-              }
-              break;
+          if (player.type != CharacterType.Human) {
+            error(GameError.CharacterTypeAlreadySelected);
+            break;
           }
 
-          player.weapon = weapon;
-          game.setCharacterState(player, CharacterState.ChangingWeapon);
-          return;
+          int? characterTypeIndex = int.tryParse(arguments[2]);
+          if (characterTypeIndex == null) {
+            errorIntegerExpected(1, arguments[2]);
+            return;
+          }
 
-        case ClientRequest.Lobby_Exit:
-          if (arguments.length < 3) {
-            errorInvalidArguments();
-            return;
-          }
-          String lobbyUuid = arguments[1];
-          Lobby? lobby = findLobbyByUuid(lobbyUuid);
-          if (lobby == null) {
-            errorLobbyNotFound();
-            return;
-          }
-          String playerUuid = arguments[2];
-          removePlayerFromLobby(lobby, playerUuid);
+          selectCharacterType(player, characterTypes[characterTypeIndex]);
           break;
 
-        case ClientRequest.Player_Throw_Grenade:
-          String gameId = arguments[1];
-          Game? game = findGameById(gameId);
-          if (game == null) {
-            error(GameError.GameNotFound);
-            return;
-          }
+        case ClientRequest.Unequip_Slot:
 
-          int id = int.parse(arguments[2]);
-          Player? player = game.findPlayerById(id);
+          final player = _player;
           if (player == null) {
-            error(GameError.PlayerNotFound);
+            return errorPlayerNotFound();
+          }
+
+          final slotTypeCategoryIndex = int.tryParse(arguments[1]);
+          if (slotTypeCategoryIndex == null){
+            return errorIntegerExpected(1, arguments[1]);
+          }
+          if (slotTypeCategoryIndex < 0 || slotTypeCategoryIndex >= slotTypeCategories.length) {
+            return errorInvalidArg('inventory index out of bounds: $slotTypeCategoryIndex');
+          }
+
+          final slotTypeCategory = slotTypeCategories[slotTypeCategoryIndex];
+          player.unequip(slotTypeCategory);
+          break;
+
+        case ClientRequest.Equip_Slot:
+          if (arguments.length != 2) {
+            return errorArgsExpected(2, arguments);
+          }
+
+          if (player == null) {
+            return errorPlayerNotFound();
+          }
+
+          final inventoryIndex = int.tryParse(arguments[1]);
+          if (inventoryIndex == null){
+            return errorIntegerExpected(1, arguments[1]);
+          }
+          if (inventoryIndex < 1 || inventoryIndex > 6) {
+            return errorInvalidArg('inventory index out of bounds');
+          }
+
+          player.useSlot(inventoryIndex);
+          break;
+
+        case ClientRequest.Sell_Slot:
+          final player = _player;
+          if (player == null) {
+            return errorPlayerNotFound();
+          }
+
+          final inventoryIndex = int.tryParse(arguments[1]);
+          if (inventoryIndex == null){
+            return errorIntegerExpected(1, arguments[1]);
+          }
+          if (inventoryIndex < 1 || inventoryIndex > 6) {
+            return errorInvalidArg('inventory index out of bounds');
+          }
+          player.sellSlot(inventoryIndex);
+          break;
+
+        case ClientRequest.Modify_Game:
+
+          if (arguments.length != 2) {
+            errorArgsExpected(2, arguments);
             return;
           }
 
-          String uuid = arguments[3];
-          if (uuid != player.uuid) {
-            error(GameError.InvalidPlayerUUID);
+          if (player == null) {
+            errorPlayerNotFound();
             return;
           }
 
-          if (player.grenades <= 0) return;
+          final modifyGameIndex = int.tryParse(arguments[1]);
+          if (modifyGameIndex == null){
+            errorIntegerExpected(1, arguments[1]);
+            return;
+          }
+          if (modifyGameIndex < 0){
+            errorInvalidArg('gameModificationIndex: $modifyGameIndex cannot be negative');
+            return;
+          }
+          if (modifyGameIndex >= gameModifications.length){
+            errorInvalidArg('gameModificationIndex: $modifyGameIndex not a valid index');
+            return;
+          }
 
-          double strength = double.parse(arguments[4]);
-          double aim = double.parse(arguments[5]);
-          game.throwGrenade(player, aim, strength);
-          game.dispatch(GameEventType.Throw_Grenade, player.x, player.y, 0, 0);
-          player.grenades--;
+          final modifyGame = gameModifications[modifyGameIndex];
+          switch(modifyGame){
+            case ModifyGame.Spawn_Zombie:
+              player.game.spawnZombie(
+                x: player.mouseX,
+                y: player.mouseY,
+                damage: 1,
+                health: 5,
+                team: 100,
+              );
+              break;
+            case ModifyGame.Remove_Zombie:
+            // TODO: Handle this case.
+              break;
+            case ModifyGame.Hour_Increase:
+              worldTime += secondsPerHour;
+              break;
+            case ModifyGame.Hour_Decrease:
+              worldTime -= secondsPerHour;
+              break;
+          }
+          break;
+
+        case ClientRequest.Leave_Lobby:
+          if (arguments.length != 3) {
+            errorArgsExpected(3, arguments);
+            return;
+          }
+
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+          break;
+
+        case ClientRequest.Reset_Character_Type:
+          if (arguments.length != 3) {
+            errorArgsExpected(3, arguments);
+            return;
+          }
+
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+
+          player.type = CharacterType.Human;
+          final spawnPoint = player.game.getNextSpawnPoint();
+          player.x = spawnPoint.x;
+          player.y = spawnPoint.y;
+          break;
+
+        case ClientRequest.Upgrade_Ability:
+          if (arguments.length != 3) {
+            errorArgsExpected(3, arguments);
+            return;
+          }
+
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+
+          if (player.abilityPoints < 1) {
+            error(GameError.SkillPointsRequired);
+            return;
+          }
+
+          final upgradeIndex = int.tryParse(arguments[2]);
+          if (upgradeIndex == null) {
+            errorInvalidArg('arg[2] expected int but got $upgradeIndex');
+            return;
+          }
+          if (upgradeIndex < 0) {
+            errorInvalidArg('arg[2] $upgradeIndex must be greater than 0');
+            return;
+          }
+          if (upgradeIndex > 4) {
+            errorInvalidArg('arg[2] $upgradeIndex must be less than 5');
+            return;
+          }
+
+          break;
+
+        case ClientRequest.DeselectAbility:
+          if (arguments.length != 2) {
+            errorArgsExpected(2, arguments);
+            return;
+          }
+
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+          player.ability = null;
+          break;
+
+        case ClientRequest.SelectAbility:
+          if (arguments.length != 3) {
+            errorArgsExpected(3, arguments);
+            return;
+          }
+
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+
+          if (player.busy) return;
+          if (player.dead) return;
+
+          int? abilityIndex = int.tryParse(arguments[2]);
+          if (abilityIndex == null) {
+            errorInvalidArg('arg[2] expected int but got $abilityIndex');
+            return;
+          }
+          if (abilityIndex < 0) {
+            errorInvalidArg('arg[2] $abilityIndex must be greater than 0');
+            return;
+          }
+          if (abilityIndex > 4) {
+            errorInvalidArg('arg[2] $abilityIndex must be less than 5');
+            return;
+          }
+          break;
+
+        case ClientRequest.AcquireAbility:
+          if (arguments.length != 3) {
+            errorArgsExpected(3, arguments);
+            return;
+          }
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+          if (player.dead) {
+            errorPlayerDead();
+            return;
+          }
+          if (player.busy) {
+            return;
+          }
+          if (player.abilityPoints <= 0) {
+            errorInsufficientSkillPoints();
+            return;
+          }
+
+          int? weaponTypeIndex = int.tryParse(arguments[2]);
+          if (weaponTypeIndex == null) {
+            errorIntegerExpected(2, arguments[2]);
+            return;
+          }
+
+          if (weaponTypeIndex >= weaponTypes.length) {
+            errorInvalidArg(
+                "WeaponType $weaponTypeIndex cannot be greater than ${weaponTypes.length}");
+            return;
+          }
+
+          if (weaponTypeIndex < 0) {
+            errorInvalidArg("WeaponType $weaponTypeIndex cannot be negative");
+            return;
+          }
+          break;
+
+        case ClientRequest.Attack:
+          if (player == null) return;
+          if (player.deadOrBusy) return;
+          player.target = null;
+          player.attackTarget = null;
+          final mouseAngle = radiansBetween(player.x, player.y, player.mouseX, player.mouseY);
+          characterFaceAngle(player, mouseAngle);
+          player.game.setCharacterStatePerforming(player);
+          break;
+
+        case ClientRequest.Equip:
+          if (arguments.length < 3) {
+            error(GameError.InvalidArguments,
+                message:
+                "ClientRequest.Equip Error: Expected 2 args but got ${arguments.length}");
+            return;
+          }
+
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+
+          final weaponIndex = int.tryParse(arguments[2]);
+          if (weaponIndex == null) {
+            error(GameError.InvalidArguments,
+                message: "arg4, weapon-index: $weaponIndex integer expected");
+            return;
+          }
+          // changeWeapon(player, weaponIndex);
           return;
 
         case ClientRequest.Purchase:
-          if (arguments.length != 5) {
-            errorArgsExpected(5, arguments);
-            return;
+          if (arguments.length < 2) {
+            return error(GameError.InvalidArguments,
+                message:
+                "ClientRequest.Purchase Error: Expected 2 args but got ${arguments.length}");
           }
 
-          String gameId = arguments[1];
-          Game? game = findGameById(gameId);
-          if (game == null) {
-            error(GameError.GameNotFound);
-            return;
-          }
-
-          int id = int.parse(arguments[2]);
-          Player? player = game.findPlayerById(id);
           if (player == null) {
-            error(GameError.PlayerNotFound);
-            return;
+            return errorPlayerNotFound();
           }
 
-          String uuid = arguments[3];
-          if (uuid != player.uuid) {
-            error(GameError.InvalidPlayerUUID);
-            return;
+          if (player.dead){
+            return errorPlayerDead();
           }
 
-          int? purchaseTypeIndex = int.tryParse(arguments[4]);
-
-          if (purchaseTypeIndex == null) {
-            sendToClient(
-                '$errorIndex ${GameError.IntegerExpected} arguments[4] but got ${arguments[4]}');
-            return;
+          if (player.busy){
+            return errorPlayerBusy();
           }
 
-          if (purchaseTypeIndex >= purchaseTypes.length) {
-            sendToClient(
-                '$errorIndex ${GameError.InvalidArguments} $purchaseTypeIndex is not a valid PurchaseType index');
-            return;
+          final slotItemIndexString = arguments[1];
+          final slotItemIndex = int.tryParse(slotItemIndexString);
+          if (slotItemIndex == null){
+            return error(GameError.InvalidArguments,
+                message:
+                "ClientRequest.Purchase Error: could not parse argument 2 to int");
           }
 
-          PurchaseType purchaseType = purchaseTypes[purchaseTypeIndex];
-          int cost = getPurchaseTypeCost(purchaseType);
-          if (player.points < cost) {
-            error(GameError.InsufficientFunds);
-            return;
+          if (slotItemIndex < 0 || slotItemIndex >= slotTypes.length){
+            return error(GameError.InvalidArguments,
+                message:
+                "$slotItemIndex is not a valid slot type index");
           }
-
-          switch (purchaseType) {
-            case PurchaseType.Weapon_Handgun:
-              if (player.acquiredHandgun) {
-                errorWeaponAlreadyAcquired();
-                return;
-              }
-              player.removeCredits(prices.weapon.handgun);
-              player.clips.handgun = 1;
-              player.rounds.handgun = constants.maxRounds.handgun;
-              player.addEvent(PlayerEventType.Acquired_Handgun, 1);
-              player.weapon = Weapon.HandGun;
-              game.setCharacterState(player, CharacterState.ChangingWeapon);
-              return;
-
-            case PurchaseType.Weapon_Shotgun:
-              if (player.acquiredShotgun) {
-                errorWeaponAlreadyAcquired();
-                return;
-              }
-              player.removeCredits(prices.weapon.shotgun);
-              player.clips.shotgun = 1;
-              player.rounds.shotgun = constants.maxRounds.shotgun;
-              player.addEvent(PlayerEventType.Acquired_Shotgun, 1);
-              player.weapon = Weapon.Shotgun;
-              game.setCharacterState(player, CharacterState.ChangingWeapon);
-              return;
-
-            case PurchaseType.Weapon_SniperRifle:
-              if (player.acquiredSniperRifle) {
-                errorWeaponAlreadyAcquired();
-                return;
-              }
-              player.removeCredits(prices.weapon.sniperRifle);
-              player.clips.sniperRifle = 1;
-              player.rounds.sniperRifle = constants.maxRounds.sniperRifle;
-              player.addEvent(PlayerEventType.Acquired_SniperRifle, 1);
-              player.weapon = Weapon.SniperRifle;
-              game.setCharacterState(player, CharacterState.ChangingWeapon);
-              return;
-
-            case PurchaseType.Weapon_AssaultRifle:
-              if (player.acquiredAssaultRifle) {
-                errorWeaponAlreadyAcquired();
-                return;
-              }
-              player.removeCredits(prices.weapon.assaultRifle);
-              player.clips.assaultRifle = 1;
-              player.rounds.assaultRifle = constants.maxRounds.assaultRifle;
-              player.addEvent(PlayerEventType.Acquired_AssaultRifle, 1);
-              player.weapon = Weapon.AssaultRifle;
-              game.setCharacterState(player, CharacterState.ChangingWeapon);
-              return;
+          if (!player.slots.emptySlotAvailable) return;
+          final slotType = slotTypes[slotItemIndex];
+          final cost = slotTypeCosts[slotType];
+          if (cost != null) {
+              if (cost.topaz > player.orbs.topaz) return;
+              if (cost.rubies > player.orbs.ruby) return;
+              if (cost.emeralds > player.orbs.emerald) return;
+              player.orbs.topaz -= cost.topaz;
+              player.orbs.ruby -= cost.rubies;
+              player.orbs.emerald -= cost.emeralds;
           }
+          player.acquire(slotType);
           return;
 
-        case ClientRequest.Score:
-          String gameId = arguments[1];
-          Game? game = findGameById(gameId);
-          if (game == null) {
-            error(GameError.GameNotFound);
-            return;
-          }
-
-          StringBuffer buffer = StringBuffer();
-          compileScore(buffer, game.players);
-          sendToClient(buffer.toString());
-          break;
-
         case ClientRequest.SetCompilePaths:
-          if (arguments.length != 5) {
-            errorArgsExpected(5, arguments);
-            return;
-          }
 
-          String gameId = arguments[1];
-          Game? game = findGameById(gameId);
-          if (game == null) {
-            error(GameError.GameNotFound);
+          if (player == null) {
+            errorPlayerNotFound();
             return;
           }
-          // type gameId playerId playerUuid value
-          int value = int.parse(arguments[4]);
-          game.compilePaths = value == 1;
-          print("game.compilePaths = ${game.compilePaths}");
+          final game = player.game;
+          game.debugMode = !game.debugMode;
           break;
 
         case ClientRequest.Version:
-          sendToClient('${ServerResponse.Version.index} $version');
+          reply('${ServerResponse.Version} $version');
+          break;
+
+        case ClientRequest.SkipHour:
+          worldTime = (worldTime + secondsPerHour) % secondsPerDay;
+          break;
+
+        case ClientRequest.ReverseHour:
+          worldTime = (worldTime - secondsPerHour) % secondsPerDay;
           break;
 
         case ClientRequest.Speak:
-          String gameId = arguments[1];
-          Game? game = findGameById(gameId);
-          if (game == null) {
-            errorGameNotFound();
-            return;
-          }
-
-          int id = int.parse(arguments[2]);
-          Player? player = game.findPlayerById(id);
           if (player == null) {
             errorPlayerNotFound();
             return;
           }
 
-          String uuid = arguments[3];
-          if (uuid != player.uuid) {
-            errorInvalidPlayerUUID();
-            return;
-          }
-
-          player.text = arguments.sublist(4, arguments.length).fold("", (previousValue, element) => '$previousValue $element');
+          player.text = arguments
+              .sublist(1, arguments.length)
+              .fold("", (previousValue, element) => '$previousValue $element');
           player.textDuration = 150;
-        break;
+          break;
 
         case ClientRequest.Interact:
-          String gameId = arguments[1];
-          Game? game = findGameById(gameId);
-          if (game == null) {
-            error(GameError.GameNotFound);
-            return;
-          }
-
-          int id = int.parse(arguments[2]);
-          Player? player = game.findPlayerById(id);
           if (player == null) {
-            error(GameError.PlayerNotFound);
+            errorPlayerNotFound();
+            return;
+          }
+          if (player.dead) {
+            errorPlayerDead();
             return;
           }
 
-          String uuid = arguments[3];
-          if (uuid != player.uuid) {
-            error(GameError.InvalidPlayerUUID);
-            return;
-          }
-
-          if (player.dead) return;
-
-          for (InteractableNpc interactable in game.npcs){
-            if (diffOver(interactable.x, player.x, radius.interact)) continue;
-            if (diffOver(interactable.y, player.y, radius.interact)) continue;
-            interactable.onInteractedWith(player);
-            return;
-          }
+          playerInteract(player);
+          break;
+        default:
+          break;
       }
     }
 
-    webSocket.stream.listen(onEvent);
-  });
-
-  shelf_io.serve(handler, settings.host, settings.port).then((server) {
-    print('Serving at wss://${server.address.host}:${server.port}');
-  });
+    webSocket.stream.listen(onEvent, onError: (Object error, StackTrace stackTrace){
+      print("connection error");
+      print(error);
+      print(stackTrace);
+    });
 }
+

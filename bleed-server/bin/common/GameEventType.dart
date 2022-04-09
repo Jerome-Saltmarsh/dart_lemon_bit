@@ -1,11 +1,11 @@
 enum GameEventType {
   Handgun_Fired,
+  Arrow_Fired,
   Shotgun_Fired,
   SniperRifle_Fired,
   MachineGun_Fired,
-  Zombie_Hit,
+  Character_Struck,
   Zombie_Killed,
-  Zombie_killed_Explosion,
   Zombie_Target_Acquired,
   Bullet_Hole,
   Zombie_Strike,
@@ -22,4 +22,17 @@ enum GameEventType {
   Crate_Breaking,
   Ammo_Acquired,
   Credits_Acquired,
+  FreezeCircle,
+  Teleported,
+  EnemyTargeted,
+  Blue_Orb_Fired,
+  Objective_Reached,
+  Arrow_Hit,
+  Draw_Bow,
+  Release_Bow,
+  Sword_Woosh,
+  Pot_Destroyed,
+  Object_Struck,
 }
+
+const gameEventTypes = GameEventType.values;

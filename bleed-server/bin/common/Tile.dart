@@ -1,69 +1,71 @@
+
 enum Tile {
   Concrete,
   Grass,
+  Wooden_Floor,
+  Long_Grass,
+  Flowers,
   Water,
   Boundary,
-  Fortress,
-  PlayerSpawn,
   ZombieSpawn,
   RandomItemSpawn,
   Block,
   Block_Horizontal,
   Block_Vertical,
-  Block_Corner_01,
-  Block_Corner_02,
-  Block_Corner_03,
-  Block_Corner_04,
-  Crate,
-  Water_Side_01,
-  Water_Side_02,
-  Water_Side_03,
-  Water_Side_04,
-  Water_Corner_01,
-  Water_Corner_02,
-  Water_Corner_03,
-  Water_Corner_04,
-  Long_Grass,
-  Flowers,
-  Grass02,
-  Concrete_Horizontal,
-  Concrete_Vertical,
+  Bridge,
+  Rock,
+  Black,
+  Rock_Wall,
+  Block_Grass,
 }
 
-final List<Tile> tiles = Tile.values;
+const generatesObject = [
+  Tile.Rock_Wall,
+  Tile.Block_Grass,
+  Tile.Block_Grass,
+  Tile.Block_Vertical,
+  Tile.Block_Horizontal,
+  Tile.Block,
+];
 
-Tile parseStringToTile(String text){
-  return tiles.firstWhere((element) => parseTileToString(element) == text, orElse: (){
-    throw Exception("could not parse $text to tile");
-  });
+extension TileExtension on Tile {
+  bool get isWater => this == Tile.Water;
+  bool get isBoundary => this == Tile.Boundary;
 }
+
+const tiles = Tile.values;
+
+const tileBoundary = Tile.Boundary;
 
 String parseTileToString(Tile tile){
   return tile.toString().replaceAll("Tile.", "");
 }
 
-List<Tile> _blocks = [
-  Tile.Block,
-  Tile.Block_Horizontal,
-  Tile.Block_Vertical,
-];
-
-List<Tile> _water = [
-  Tile.Water,
-  Tile.Water_Side_01,
-  Tile.Water_Side_02,
-  Tile.Water_Side_03,
-  Tile.Water_Side_04,
-  Tile.Water_Corner_01,
-  Tile.Water_Corner_02,
-  Tile.Water_Corner_03,
-  Tile.Water_Corner_04,
-];
-
-bool isBlock(Tile tile){
-  return _blocks.contains(tile);
+List<List<Tile>> mapJsonToTiles(dynamic json){
+  final List<List<Tile>> rows = [];
+  for(var jsonRow in json){
+    final List<Tile> column = [];
+    rows.add(column);
+    for(var jsonColumn in jsonRow){
+      final Tile tile = parseStringToTile(jsonColumn);
+      column.add(tile);
+    }
+  }
+  return rows;
 }
 
-bool isWater(Tile tile){
-  return _water.contains(tile);
+Tile parseStringToTile(String text){
+  return tiles.firstWhere((tile) => parseTileToString(tile) == text, orElse: (){
+    throw Exception("could not parse $text to tile");
+  });
 }
+
+int getRow(double x, double y){
+  return (x + y) ~/ 48.0;
+}
+
+int getColumn(double x, double y){
+  return (y - x) ~/ 48.0;
+}
+
+

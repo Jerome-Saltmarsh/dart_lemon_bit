@@ -1,91 +1,26 @@
 import 'dart:math';
-import 'classes.dart';
-import 'constants.dart';
 
-const double _0 = 0;
-const double half = 0.5;
-const double _1 = 1.0;
-const double goldenRatio = 1.61803398875;
-const double goldenRatioInverse = _1 / goldenRatio;
-const double degreesToRadians = 0.0174533;
-const double radiansToDegrees = 57.29578;
-final Random random = Random();
+import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/hypotenuse.dart';
 
-T randomValue<T>(List<T> list){
-  return list[randomInt(0, list.length)];
-}
-
-double randomBetween(num a, num b) {
-  return (random.nextDouble() * (b - a)) + a;
-}
-
-
-bool randomBool() {
-  return random.nextDouble() > half;
-}
-
-bool chance(double value) {
-  return random.nextDouble() <= value;
-}
-
-int randomInt(int min, int max) {
-  return random.nextInt(max - min) + min;
-}
-
-double randomRadion() {
-  return random.nextDouble() * pi2;
-}
-
-double giveOrTake(double value) {
-  return randomBetween(-value, value);
-}
-
-double distanceBetween(Positioned a, Positioned b) {
-  return distance(a.x, a.y, b.x, b.y);
-}
-
-double distance(double x1, double y1, double x2, double y2) {
-  return magnitude(x1 - x2, y1 - y2);
-}
-
-double magnitude(double a, double b) {
-  return sqrt((a * a) + (b * b));
-}
-
-double abs(double value) {
-  if (value < _0) return -value;
-  return value;
+double distanceV2(Vector2 a, Vector2 b) {
+  return hypotenuse(a.x - b.x, a.y - b.y);
 }
 
 int absInt(int value) {
-  if (value < _0) return -value;
+  if (value < 0) return -value;
   return value;
-}
-
-double diff(double a, double b){
-  return abs(a - b);
 }
 
 int diffInt(int a, int b){
   return absInt(a - b);
 }
 
-// utility methods
-int millisecondsSince(DateTime value) {
-  return durationSince(value).inMilliseconds;
-}
-
-Duration durationSince(DateTime value) {
-  return now().difference(value);
-}
-
-DateTime now() => DateTime.now();
-
-double radiansBetweenObject(Positioned a, Positioned b) {
+double radiansV2(Vector2 a, Vector2 b) {
   return radiansBetween(a.x, a.y, b.x, b.y);
 }
 
-double radiansBetween2(Positioned a, double x, double y) {
+double radiansBetween2(Vector2 a, double x, double y) {
   return radiansBetween(a.x, a.y, x, y);
 }
 
@@ -94,28 +29,34 @@ double radiansBetween(double x1, double y1, double x2, double y2) {
 }
 
 double velX(double rotation, double speed) {
-  return -cos(rotation + piHalf) * speed;
+  return -cos(rotation + 1.5707963268) * speed;
 }
 
 double velY(double rotation, double speed) {
-  return -sin(rotation + piHalf) * speed;
+  return -sin(rotation + 1.5707963268) * speed;
 }
 
 double radians(double x, double y) {
-  if (x < _0) return -atan2(x, y);
-  return pi2 - atan2(x, y);
+  if (x < 0) return -atan2(x, y);
+  /// 6.2831853 = pi * 2
+  /// Reduces memory lookups
+  return 6.283 - atan2(x, y);
 }
 
 double adj(double rotation, num magnitude) {
-  return -cos(rotation + piHalf) * magnitude;
+  /// 1.570796325 = pi / 2
+  /// this prevents having to do a memory lookup
+  return -cos(rotation + 1.5707963268) * magnitude;
 }
 
 double opp(double rotation, num magnitude) {
-  return -sin(rotation + piHalf) * magnitude;
+  /// 1.570796325 = pi / 2
+  /// this prevents having to do a memory lookup
+  return -sin(rotation + 1.570796325) * magnitude;
 }
 
 double normalize(double x, double y) {
-  return _1 / magnitude(x, y);
+  return 1.0 / hypotenuse(x, y);
 }
 
 double normalizeX(double x, double y) {
@@ -135,5 +76,5 @@ double clampMagnitudeY(double x, double y, double value) {
 }
 
 bool isLeft(double aX, double aY, double bX, double bY, double cX, double cY) {
-  return ((bX - aX) * (cY - aY) - (bY - aY) * (cX - aX)) > _0;
+  return ((bX - aX) * (cY - aY) - (bY - aY) * (cX - aX)) > 0;
 }
