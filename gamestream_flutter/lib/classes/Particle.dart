@@ -29,9 +29,18 @@ class Particle extends Vector2 {
 
   bool get active => duration > 0;
 
+  bool get bleeds {
+     if (type == ParticleType.Blood) return false;
+     if (type == ParticleType.Zombie_Head) return true;
+     if (type == ParticleType.Organ) return true;
+     if (type == ParticleType.Arm) return true;
+     if (type == ParticleType.Leg) return true;
+     return false;
+  }
+
   Particle():super(0,0);
 
-  double get speed => (sqrt(xv * xv + yv * yv));
+  double get speed => sqrt(xv * xv + yv * yv);
 
   void setAngle({required double value, required double speed}){
     xv = adjacent(value, speed);

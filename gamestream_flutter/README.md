@@ -67,8 +67,7 @@
 [ ] Generate Random Map    
 [ ] Characters can fall in water and die    
 [ALPHA-RELEASE]
-[ ] SKIRMISH -SOLO- -TEAM-    
-[ ] FIX Flashing Particles   
+[ ] SKIRMISH -SOLO- -TEAM-   
 [ ] Slot Cooldown
 [ ] Fix fireball explosion
 [ ] Bow Spells,
@@ -82,9 +81,7 @@
 [ ] FIX Website Account required popup    
 [ ] First heavy guitar track    
 [ ] Design Map Skirmish
-[ ] Regenerate Destructible objects    
 [ ] FIX Shotgun fire animation loops  
-[ ] FIX Sword Strike range too big   
 [ ] Frontend check version    
 [ ] Display Highlighted Target info (Zombie, Pot, etc)    
 [ ] Destructible Objects    
