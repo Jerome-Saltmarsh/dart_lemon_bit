@@ -31,10 +31,10 @@ class EditorCompile {
 
   List<List<String>> compileTiles(List<List<int>> tiles) {
     List<List<String>> _tiles = [];
-    for (int row = 0; row < tiles.length; row++) {
+    for (var row = 0; row < tiles.length; row++) {
       List<String> _row = [];
       for (int column = 0; column < tiles[0].length; column++) {
-        _row.add(parseTileToString(tiles[row][column]));
+        _row.add(tileNames[tiles[row][column]]!);
       }
       _tiles.add(_row);
     }
