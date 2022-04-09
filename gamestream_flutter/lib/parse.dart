@@ -361,7 +361,11 @@ void _parseGameJoined() {
   player.team = consumeInt();
   player.x = consumeDouble();
   player.y = consumeDouble();
-  // modules.game.actions.cameraCenterPlayer();
+
+  final particles = modules.isometric.state.particles;
+  for(final particle in particles) {
+    particle.duration = 0;
+  }
   cameraCenterOnPlayer();
 }
 

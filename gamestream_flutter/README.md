@@ -68,7 +68,6 @@
 [ ] Characters can fall in water and die    
 [ALPHA-RELEASE]
 [ ] SKIRMISH -SOLO- -TEAM-    
-[ ] FIX Sometimes zombies disappear on death    
 [ ] FIX Flashing Particles   
 [ ] Slot Cooldown
 [ ] Fix fireball explosion
@@ -84,8 +83,7 @@
 [ ] First heavy guitar track    
 [ ] Design Map Skirmish
 [ ] Regenerate Destructible objects    
-[ ] FIX Shotgun fire animation loops      
-[ ] Arrow Capacity    
+[ ] FIX Shotgun fire animation loops  
 [ ] FIX Sword Strike range too big   
 [ ] Frontend check version    
 [ ] Display Highlighted Target info (Zombie, Pot, etc)    
@@ -97,6 +95,9 @@
 [ ] AI Should avoid colliders in front of them.      
 [ ] FIX Zombies run into lamps forever    
 [ ] Fix tile colours in Adventure    
+[ ] FIX Flickering Myst particle        
+[x] Arrow Capacity    
+[x] FIX Sometimes zombies disappear on death    
 [x] FIX Game Freezes up when zombie killed
 [x] Do not update games which have no players since some time    
 [x] (MILESTONE) FIX Particles flash

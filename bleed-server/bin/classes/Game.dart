@@ -1526,8 +1526,10 @@ extension GameFunctions on Game {
       if (character.stateDuration == framePerformStrike) {
         if (weaponType.isBow) {
           dispatchV2(GameEventType.Release_Bow, character);
+          if (character.slots.weapon.amount == 0) return;
           spawnArrow(character, damage: weaponType.damage);
           character.attackTarget = character.attackTarget;
+          character.slots.weapon.amount--;
           return;
         }
         if (weaponType.isMelee) {
