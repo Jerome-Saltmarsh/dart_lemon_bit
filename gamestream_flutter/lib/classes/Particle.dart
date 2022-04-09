@@ -21,7 +21,7 @@ class Particle extends Vector2 {
   double bounciness = 0;
   double airFriction = 0.98;
   int hue = 0;
-  bool hasShadow = false;
+  bool casteShadow = false;
   double size = 0;
   bool customRotation = false;
 

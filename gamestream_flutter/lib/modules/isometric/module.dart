@@ -1,5 +1,6 @@
 
 
+import 'package:gamestream_flutter/functions.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 
 import 'actions.dart';
@@ -25,6 +26,13 @@ class IsometricModule {
   late final IsometricSpawn spawn;
   late final IsometricEvents events;
   late final IsometricQueries queries;
+
+  void sortParticles(){
+    insertionSort(
+      state.particles,
+      compare: compareParticles,
+    );
+  }
 
   IsometricModule(){
     spawn = IsometricSpawn(state);

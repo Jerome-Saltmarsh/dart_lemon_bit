@@ -42,11 +42,6 @@ class IsometricUpdate {
       updateParticle(particle);
     }
 
-    insertionSort(
-      _particles,
-      compare: compareParticles,
-    );
-
     if (engine.frame % 6 == 0) {
       for (final particle in _particles) {
         if (!particle.active) continue;

@@ -4,18 +4,22 @@ import 'package:gamestream_flutter/modules/isometric/enums.dart';
 
 int compareParticles(Particle a, Particle b) {
   if (!a.active) {
-    return -1;
-  }
-  if (!b.active) {
+    if (!b.active){
+      return 0;
+    }
     return 1;
   }
-  if (a.type == ParticleType.Blood) return -1;
-  if (b.type == ParticleType.Blood) return 1;
-
+  if (!b.active) {
+    return -1;
+  }
   return a.y > b.y ? 1 : -1;
 }
 
-void insertionSort<E>(List<E> elements, {required int Function(E, E) compare, int start = 0, int? end}) {
+void insertionSort<E>(List<E> elements, {
+  required int Function(E, E) compare,
+  int start = 0,
+  int? end
+}) {
   end ??= elements.length;
   for (var pos = start + 1; pos < end; pos++) {
     var min = start;

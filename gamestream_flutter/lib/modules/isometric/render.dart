@@ -22,6 +22,7 @@ import 'package:gamestream_flutter/state/game.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/diff.dart';
 
+import '../modules.dart';
 import 'functions.dart';
 import 'state.dart';
 
@@ -106,9 +107,17 @@ class IsometricRender {
   void renderSprites() {
     engine.setPaintColorWhite();
 
+    modules.isometric.sortParticles();
+
+    var totalParticles = 0;
+    final particles = modules.isometric.state.particles;
+
+    for (final particle in particles){
+        if (!particle.active) continue;
+        totalParticles++;
+    }
+
     final environmentObjects = state.environmentObjects;
-    final particles = state.particles;
-    final totalParticles = properties.totalActiveParticles;
     final totalEnvironment = environmentObjects.length;
     final zombies = game.zombies;
     final players = game.players;
@@ -121,7 +130,6 @@ class IsometricRender {
     var indexPlayer = 0;
     var indexEnv = 0;
     var indexParticle = 0;
-    var renderedParticles = 0;
     var indexZombie = 0;
     var indexNpc = 0;
     var zombiesRemaining = indexZombie < totalZombies;
@@ -136,12 +144,6 @@ class IsometricRender {
     var particleIsBlood = particlesRemaining ? particles[0].type == ParticleType.Blood : false;
     var zombieY = zombiesRemaining ? zombies[0].y : 0;
     var npcY = npcsRemaining ? npcs[0].y : 0;
-
-    if (particlesRemaining){
-      while(!particles[indexParticle].active) {
-        indexParticle++;
-      }
-    }
 
     while (true) {
 
@@ -187,15 +189,10 @@ class IsometricRender {
       if (particlesRemaining) {
         if (particleIsBlood) {
           renderParticle(particles[indexParticle]);
-          renderedParticles++;
           indexParticle++;
-          particlesRemaining = renderedParticles < totalParticles;
+          particlesRemaining = indexParticle < totalParticles;
           if (particlesRemaining){
             var nextParticle = particles[indexParticle];
-            while(!nextParticle.active){
-              indexParticle++;
-              nextParticle = particles[indexParticle];
-            }
             particleIsBlood = nextParticle.type == ParticleType.Blood;
             particleY = nextParticle.y;
           }
@@ -205,15 +202,10 @@ class IsometricRender {
         if (!zombiesRemaining || particleY < zombieY) {
           if (!npcsRemaining || particleY < npcY) {
             renderParticle(particles[indexParticle]);
-            renderedParticles++;
             indexParticle++;
-            particlesRemaining = renderedParticles < totalParticles;
+            particlesRemaining = indexParticle < totalParticles;
             if (particlesRemaining){
               var nextParticle = particles[indexParticle];
-              while(!nextParticle.active){
-                 indexParticle++;
-                 nextParticle = particles[indexParticle];
-              }
               particleIsBlood = nextParticle.type == ParticleType.Blood;
               particleY = nextParticle.y;
             }
@@ -256,7 +248,7 @@ class IsometricRender {
     mapParticleToSrc(value);
     engine.renderAtlas();
 
-    if (value.hasShadow) {
+    if (value.casteShadow) {
       if (value.z < 0.1) return;
       mapShadeShadow();
       engine.mapDst(

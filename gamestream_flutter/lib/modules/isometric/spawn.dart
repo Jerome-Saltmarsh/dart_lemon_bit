@@ -85,7 +85,7 @@ class IsometricSpawn {
     particle.customRotation = customRotation;
     particle.size = mapTypeToSize[type] ?? 0;
     particle.type = type;
-    particle.hasShadow = castShadow;
+    particle.casteShadow = castShadow;
     particle.x = x;
     particle.y = y;
     particle.z = z;

@@ -74,6 +74,7 @@ class GameFactories {
     particle.xv = giveOrTake(pi * mystMaxVelocity);
     particle.yv = giveOrTake(pi * mystMaxVelocity);
     particle.zv = 0.0;
+    particle.casteShadow = false;
   }
 
 }
