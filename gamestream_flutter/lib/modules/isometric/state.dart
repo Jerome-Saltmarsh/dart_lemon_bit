@@ -32,7 +32,7 @@ class IsometricState {
   final nameTextStyle = TextStyle(color: Colors.white);
 
   var eventsRegistered = false;
-  var tiles = <List<Tile>>[];
+  var tiles = <List<int>>[];
   var tilesDst = Float32List(0);
   var tilesSrc = Float32List(0);
   var totalColumnsInt = 0;

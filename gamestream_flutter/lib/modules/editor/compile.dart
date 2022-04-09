@@ -29,7 +29,7 @@ class EditorCompile {
     };
   }
 
-  List<List<String>> compileTiles(List<List<Tile>> tiles) {
+  List<List<String>> compileTiles(List<List<int>> tiles) {
     List<List<String>> _tiles = [];
     for (int row = 0; row < tiles.length; row++) {
       List<String> _row = [];

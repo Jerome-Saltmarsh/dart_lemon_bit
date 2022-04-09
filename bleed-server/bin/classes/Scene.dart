@@ -32,7 +32,7 @@ double perspectiveProjectY(double x, double y) {
 
 class Scene {
   final List<Character> characters;
-  final List<List<Tile>> tiles;
+  final List<List<int>> tiles;
   final List<Vector2> crates;
   final List<EnvironmentObject> environment;
   final String name;
@@ -258,14 +258,14 @@ extension SceneFunctions on Scene {
   }
 
   bool waterAt(double x, double y) {
-    return tileAt(x, y).isWater;
+    return tileAt(x, y) == Tile.Water;
   }
 
   bool tileWalkableAt(double x, double y){
     return tileNodeAt(x, y).open;
   }
 
-  Tile tileAt(double x, double y) {
+  int tileAt(double x, double y) {
     final projectedX = y - x;
     if (projectedX < 0) return tileBoundary;
     final projectedY = x + y;

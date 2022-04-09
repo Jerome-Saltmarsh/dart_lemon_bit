@@ -171,7 +171,7 @@ class IsometricActions {
   void setTile({
     required int row,
     required int column,
-    required Tile tile,
+    required int tile,
   }) {
     if (row < 0) return;
     if (column < 0) return;
@@ -201,14 +201,13 @@ class IsometricActions {
     }
   }
 
-  bool _isBridgeOrWater(Tile tile){
+  bool _isBridgeOrWater(int tile){
     return tile != Tile.Water && tile != Tile.Bridge;
   }
 
   void resetTilesSrcDst() {
     final tiles = state.tiles;
-    final tileSize = constants.tileSize;
-    final tileSizeHalf = tileSize / 2;
+    const tileSize = 48.0;
     final rows = tiles.length;
     final columns = rows > 0 ? tiles[0].length : 0;
     final List<double> tileLeft = [];
@@ -273,6 +272,7 @@ class IsometricActions {
       final column = i % columns;
       tilesDst[index0] = 1;
       tilesDst[index1] = 0;
+      const tileSizeHalf = tileSize / 2;
       tilesDst[index2] = getTileWorldX(row, column) - tileSizeHalf;
       tilesDst[index3] = getTileWorldY(row, column);
       tilesSrc[index0] = _atlasTilesX + tileLeft[i];
@@ -285,7 +285,7 @@ class IsometricActions {
   }
 
   void addRow(){
-    final List<Tile> row = [];
+    final List<int> row = [];
     final rows = state.tiles[0].length;
     for(var i = 0; i < rows; i++){
       row.add(Tile.Grass);

@@ -80,7 +80,6 @@
 [ ] Click to pickup loot    
 [ ] FIX Website Account required popup    
 [ ] First heavy guitar track    
-[ ] Design Map Skirmish
 [ ] FIX Shotgun fire animation loops  
 [ ] Frontend check version    
 [ ] Display Highlighted Target info (Zombie, Pot, etc)    
@@ -91,6 +90,7 @@
     [ ] Pot
 [ ] AI Should avoid colliders in front of them.      
 [ ] FIX Zombies run into lamps forever    
+[ ] Design Map Skirmish
 [x] Fix tile colours in Adventure    
 [x] FIX Flickering Myst particle        
 [x] Arrow Capacity    

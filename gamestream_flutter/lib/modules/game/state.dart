@@ -121,7 +121,7 @@ class _Player {
   double abilityRadius = 0;
   double maxHealth = 0;
   final storeVisible = Watch(false);
-  Tile tile = Tile.Grass;
+  int tile = Tile.Grass;
   double attackRange = 0;
   final Vector2 attackTarget = Vector2(0, 0);
   final orbs = _PlayerOrbs();

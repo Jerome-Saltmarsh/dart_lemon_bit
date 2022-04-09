@@ -1,6 +1,5 @@
 
 import 'package:gamestream_flutter/classes/Particle.dart';
-import 'package:gamestream_flutter/modules/isometric/enums.dart';
 
 int compareParticles(Particle a, Particle b) {
   if (!a.active) {

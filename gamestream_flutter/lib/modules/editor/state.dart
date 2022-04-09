@@ -25,7 +25,7 @@ class EditorState {
   final Watch<TimeSpeed> timeSpeed = Watch(TimeSpeed.Normal);
   final Watch<Vector2?> selected = Watch(null);
   final Watch<ToolTab> tab = Watch(ToolTab.Tiles);
-  final Watch<Tile> tile = Watch(Tile.Grass);
+  final Watch<int> tile = Watch(Tile.Grass);
   final Watch<CharacterType> characterType = Watch(CharacterType.Human);
   final Watch<ItemType> itemType = Watch(ItemType.Shotgun);
   final Watch<ObjectType> objectType = Watch(objectTypes.first);

@@ -90,7 +90,7 @@ class EditorActions with EditorScope {
   void newScene({
     int rows = 40,
     int columns = 40,
-    Tile tile = Tile.Grass,
+    int tile = Tile.Grass,
   }){
     print("editor.actions.newScene()");
     isometric.state.totalRows.value = rows;
@@ -107,7 +107,7 @@ class EditorActions with EditorScope {
     isometric.state.minutes.value = config.defaultStartTime;
     editor.state.characters.clear();
     for (int row = 0; row < rows; row++) {
-      List<Tile> columnTiles = [];
+      List<int> columnTiles = [];
       for (int column = 0; column < columns; column++) {
         columnTiles.add(tile);
       }

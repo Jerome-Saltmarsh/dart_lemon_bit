@@ -71,10 +71,10 @@ Scene parseJsonToScene(Json json, String name) {
   }
 
   final List compiledTiles = json['tiles'];
-  final List<List<Tile>> tiles = [];
+  final List<List<int>> tiles = [];
 
   for(var row = 0; row < compiledTiles.length; row++){
-    final List<Tile> _row = [];
+    final List<int> _row = [];
     for(var column = 0; column < compiledTiles[0].length; column++){
       final String tileName = compiledTiles[row][column];
       final tile = parseStringToTile(tileName);

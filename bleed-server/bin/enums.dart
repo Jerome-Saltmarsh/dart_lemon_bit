@@ -1,7 +1,7 @@
 import 'common/Tile.dart';
 
 /// can a person pass through this tile
-const _walkableTiles = <Tile, bool>{
+const _walkableTiles = <int, bool>{
   Tile.Grass: true,
   Tile.Flowers: true,
   Tile.Long_Grass: true,
@@ -12,15 +12,15 @@ const _walkableTiles = <Tile, bool>{
   Tile.Rock: true,
 };
 
-bool isShootable(Tile tile) {
-  const shootableTiles = <Tile, bool>{
+bool isShootable(int tile) {
+  const shootableTiles = <int, bool>{
     Tile.Water: true,
     ..._walkableTiles,
   };
   return shootableTiles.containsKey(tile);
 }
 
-bool isWalkable(Tile tile){
+bool isWalkable(int tile){
   return _walkableTiles.containsKey(tile);
 }
 

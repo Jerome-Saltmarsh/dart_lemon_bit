@@ -7,7 +7,6 @@ import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/OrbType.dart';
 import 'package:bleed_common/ServerResponse.dart';
 import 'package:bleed_common/SlotType.dart';
-import 'package:bleed_common/Tile.dart';
 import 'package:bleed_common/constants.dart';
 import 'package:bleed_common/enums/ObjectType.dart';
 import 'package:bleed_common/enums/ProjectileType.dart';
@@ -323,7 +322,7 @@ void _parseTiles() {
   isometricState.totalRowsInt = rows;
   isometricState.totalColumnsInt = columns;
   for (var row = 0; row < rows; row++) {
-    final List<Tile> column = [];
+    final List<int> column = [];
     for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
       column.add(_consumeTile());
     }
@@ -404,8 +403,8 @@ int _consumeSingleDigitInt() {
   return int.parse(_consumeSingleCharacter());
 }
 
-Tile _consumeTile() {
-  return tiles[consumeInt()];
+int _consumeTile() {
+  return consumeInt();
 }
 
 // ServerResponse _consumeServerResponse() {

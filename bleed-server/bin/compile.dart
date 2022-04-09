@@ -8,7 +8,6 @@ import 'classes/Item.dart';
 import 'classes/Player.dart';
 import 'common/GameStatus.dart';
 import 'common/ServerResponse.dart';
-import 'common/Tile.dart';
 import 'common/enums/ObjectType.dart';
 import 'games/Moba.dart';
 import 'games/Royal.dart';
@@ -86,7 +85,7 @@ String compileEnvironmentObjects(List<EnvironmentObject> environmentObjects) {
   return buffer.toString();
 }
 
-String compileTiles(List<List<Tile>> tiles) {
+String compileTiles(List<List<int>> tiles) {
   final buffer = StringBuffer();
   buffer.write(ServerResponse.Tiles);
   buffer.write(_space);
@@ -96,7 +95,7 @@ String compileTiles(List<List<Tile>> tiles) {
   buffer.write(_space);
   for (var x = 0; x < tiles.length; x++) {
     for (var y = 0; y < tiles[0].length; y++) {
-      buffer.write(tiles[x][y].index);
+      buffer.write(tiles[x][y]);
       buffer.write(_space);
     }
   }

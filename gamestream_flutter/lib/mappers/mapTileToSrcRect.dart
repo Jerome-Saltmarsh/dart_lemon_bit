@@ -2,7 +2,7 @@
 // interface
 import 'package:bleed_common/Tile.dart';
 
-double mapTileToSrcLeft(Tile tile) {
+double mapTileToSrcLeft(int tile) {
   switch (tile) {
     case Tile.Concrete:
       return _concrete;
@@ -38,6 +38,8 @@ double mapTileToSrcLeft(Tile tile) {
       return _rockWall;
     case Tile.Boundary:
       throw Exception("Boundary has no rect");
+    default:
+      throw Exception("Cannot map left");
   }
 }
 

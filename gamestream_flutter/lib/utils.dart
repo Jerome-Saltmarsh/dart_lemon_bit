@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:bleed_common/Tile.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -33,7 +32,7 @@ Offset offset(double x, double y) {
   return Offset(x, y);
 }
 
-void setTileAtMouse(Tile tile) {
+void setTileAtMouse(int tile) {
   isometric.actions.setTile(row: mouseRow, column: mouseColumn, tile: tile);
 }
 

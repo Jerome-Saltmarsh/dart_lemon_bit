@@ -2,7 +2,6 @@
 
 import 'package:bleed_common/CharacterType.dart';
 import 'package:bleed_common/ItemType.dart';
-import 'package:bleed_common/Tile.dart';
 import 'package:bleed_common/enums/ObjectType.dart';
 import 'package:bleed_common/enums/Shade.dart';
 import 'package:firestore_client/firestoreService.dart';
@@ -71,16 +70,17 @@ class EditorBuild {
   }
 
   List<Widget> _tabTiles() {
-    return Tile.values.map((tile) {
-      return WatchBuilder(state.tile, (Tile selected) {
-        return button(enumString(tile), () {
-          state.tile.value = tile;
-        },
-            width: _buttonWidth,
-            alignment: Alignment.centerLeft,
-            fillColor: selected == tile ? _highlight : colours.transparent);
-      });
-    }).toList();
+    // return Tile.values.map((tile) {
+    //   return WatchBuilder(state.tile, (Tile selected) {
+    //     return button(enumString(tile), () {
+    //       state.tile.value = tile;
+    //     },
+    //         width: _buttonWidth,
+    //         alignment: Alignment.centerLeft,
+    //         fillColor: selected == tile ? _highlight : colours.transparent);
+    //   });
+    // }).toList();
+    return [];
   }
 
   List<Widget> _tabAll() {

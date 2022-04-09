@@ -13,7 +13,7 @@ class IsometricProperties {
 
   bool get dayTime => state.ambient.value == Shade.Bright;
 
-  Tile get tileAtMouse {
+  int get tileAtMouse {
     if (mouseRow < 0) return Tile.Boundary;
     if (mouseColumn < 0) return Tile.Boundary;
     if (mouseRow >= state.totalRows.value) return Tile.Boundary;
