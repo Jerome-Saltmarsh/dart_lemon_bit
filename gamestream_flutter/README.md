@@ -91,7 +91,7 @@
     [ ] Pot
 [ ] AI Should avoid colliders in front of them.      
 [ ] FIX Zombies run into lamps forever    
-[ ] Fix tile colours in Adventure    
+[x] Fix tile colours in Adventure    
 [x] FIX Flickering Myst particle        
 [x] Arrow Capacity    
 [x] FIX Sometimes zombies disappear on death    

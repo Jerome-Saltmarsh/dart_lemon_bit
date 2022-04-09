@@ -221,6 +221,8 @@ class GameBuild {
 
     final menu = Row(
       children: [
+        buildButtonFullScreen(),
+        width8,
         buildButtonToggleCameraMode(),
         width8,
         buildButtonSkipTrack(),
@@ -946,7 +948,11 @@ class GameBuild {
   }
 
   Widget buildButtonSkipTrack(){
-    return button("Next Song", audio.nextSong);
+    return button("Next", audio.nextSong);
+  }
+
+  Widget buildButtonFullScreen(){
+    return button("Fullscreen", engine.fullscreenToggle);
   }
 
   Widget buildScoreBoard(){
