@@ -59,6 +59,7 @@ class IsometricRender {
   IsometricRender(this.state, this.properties, this.queries, this.maps);
 
   void tiles() {
+
     final screen = engine.screen;
     state.minRow = max(0, getRow(screen.left, screen.top));
     state.maxRow = min(state.totalRowsInt, getRow(screen.right, screen.bottom));

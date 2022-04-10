@@ -240,7 +240,7 @@ abstract class Game {
       final row = scene.tiles[rowIndex];
       for (var columnIndex = 0; columnIndex < scene.numberOfColumns; columnIndex++) {
         switch (row[columnIndex]) {
-          case Tile.ZombieSpawn:
+          case Tile.Zombie_Spawn:
             zombieSpawnPoints.add(getTilePosition(rowIndex, columnIndex));
             break;
           default:

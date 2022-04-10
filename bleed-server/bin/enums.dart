@@ -5,7 +5,7 @@ const _walkableTiles = <int, bool>{
   Tile.Grass: true,
   Tile.Flowers: true,
   Tile.Long_Grass: true,
-  Tile.ZombieSpawn: true,
+  Tile.Zombie_Spawn: true,
   Tile.Concrete: true,
   Tile.Bridge: true,
   Tile.Wooden_Floor: true,

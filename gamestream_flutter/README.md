@@ -91,6 +91,7 @@
 [ ] AI Should avoid colliders in front of them.      
 [ ] FIX Zombies run into lamps forever    
 [ ] Design Map Skirmish
+[ ] Remove Block_Horizontal and Block_Vertical     
 [x] Fix tile colours in Adventure    
 [x] FIX Flickering Myst particle        
 [x] Arrow Capacity    

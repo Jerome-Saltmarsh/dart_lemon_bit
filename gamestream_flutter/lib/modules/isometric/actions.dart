@@ -20,6 +20,14 @@ import 'package:lemon_engine/engine.dart';
 
 import 'utilities.dart';
 
+final _dynamic = isometric.state.dynamic;
+final _tilesSrc = isometric.state.tilesSrc;
+final _maxRow = isometric.state.maxRow;
+final _maxColumn =  isometric.state.maxRow;
+final _rowIndex16 = isometric.state.totalColumnsInt * 16;
+final _minRow = isometric.state.minRow;
+final _minColumn = isometric.state.minColumn;
+
 class IsometricActions {
 
   final IsometricState state;
@@ -53,22 +61,13 @@ class IsometricActions {
   }
 
   void applyDynamicShadeToTileSrc() {
-    final tileSize = constants.tileSize;
-    final atlasY = atlas.tiles.y;
-    final dynamic = state.dynamic;
-    final tilesSrc = state.tilesSrc;
-    final maxRow = state.maxRow;
-    final maxColumn =  state.maxRow;
-    final rowIndex16 = state.totalColumnsInt * 16;
-    final minRow = state.minRow;
-    final minColumn = state.minColumn;
-    for (var rowIndex = minRow; rowIndex < maxRow; rowIndex++) {
-      final row = dynamic[rowIndex];
-      for (var columnIndex = minColumn; columnIndex < maxColumn; columnIndex++) {
-        final i = rowIndex16 + (columnIndex * 4);
-        final top = atlasY + row[columnIndex] * tileSize;
-        tilesSrc[i + 1] = top; // top
-        tilesSrc[i + 3] = top + tileSize; // bottom
+    for (var rowIndex = _minRow; rowIndex < _maxRow; rowIndex++) {
+      final row = _dynamic[rowIndex];
+      for (var columnIndex = _minColumn; columnIndex < _maxColumn; columnIndex++) {
+        final i = _rowIndex16 + (columnIndex * 4);
+        final top = row[columnIndex] * 48.0;
+        _tilesSrc[i + 1] = top; // top
+        _tilesSrc[i + 3] = top + tileSize; // bottom
       }
     }
   }

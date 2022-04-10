@@ -8,16 +8,12 @@ double mapTileToSrcLeft(int tile) {
       return _concrete;
     case Tile.Grass:
       return _grass;
-    case Tile.ZombieSpawn:
+    case Tile.Zombie_Spawn:
       return _zombieSpawn;
-    case Tile.RandomItemSpawn:
+    case Tile.Random_Item_Spawn:
       return _concrete;
-    case Tile.Block:
-        return _block;
-    case Tile.Block_Horizontal:
-      return _block;
-    case Tile.Block_Vertical:
-      return _block;
+    case Tile.Palisade:
+        return _palisade;
     case Tile.Water:
       return water;
     case Tile.Long_Grass:
@@ -46,7 +42,7 @@ double mapTileToSrcLeft(int tile) {
 // abstraction
 final _grass = _frame(1);
 final _longGrass = _frame(2);
-final _block = _frame(3);
+final _palisade = _frame(3);
 final _concrete = _frame(4);
 final water = _frame(5);
 final _zombieSpawn = _frame(7);
@@ -63,5 +59,4 @@ final waterCorner4 = _frame(17);
 final waterHor = _frame(18);
 final waterVer = _frame(19);
 
-const int tileCanvasWidth = 48;
-double _frame(int index) => (index - 1) * tileCanvasWidth.toDouble();
+double _frame(int index) => (index - 1) * 48.0;

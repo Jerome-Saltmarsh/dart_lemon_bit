@@ -7,11 +7,9 @@ const tileNames = <int, String> {
    Tile.Flowers: "Flowers",
    Tile.Water: "Water",
    Tile.Boundary: "Boundary",
-   Tile.ZombieSpawn: "ZombieSpawn",
-   Tile.RandomItemSpawn: "RandomItemSpawn",
-   Tile.Block: "Block",
-   Tile.Block_Horizontal: "Block_Horizontal",
-   Tile.Block_Vertical: "Block_Vertical",
+   Tile.Zombie_Spawn: "ZombieSpawn",
+   Tile.Random_Item_Spawn: "RandomItemSpawn",
+   Tile.Palisade: "Palisade",
    Tile.Bridge: "Bridge",
    Tile.Rock: "Rock",
    Tile.Black: "Black",
@@ -41,11 +39,9 @@ class Tile {
   static const Flowers = 4;
   static const Water = 5;
   static const Boundary = 6;
-  static const ZombieSpawn = 7;
-  static const RandomItemSpawn = 8;
-  static const Block = 9;
-  static const Block_Horizontal = 10;
-  static const Block_Vertical = 11;
+  static const Zombie_Spawn = 7;
+  static const Random_Item_Spawn = 8;
+  static const Palisade = 9;
   static const Bridge = 12;
   static const Rock = 13;
   static const Black = 14;
@@ -57,9 +53,7 @@ const generatesObject = [
   Tile.Rock_Wall,
   Tile.Block_Grass,
   Tile.Block_Grass,
-  Tile.Block_Vertical,
-  Tile.Block_Horizontal,
-  Tile.Block,
+  Tile.Palisade,
 ];
 
 extension TileExtension on Tile {
