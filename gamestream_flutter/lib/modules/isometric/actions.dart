@@ -47,8 +47,23 @@ class IsometricActions {
        final row = tiles[rowIndex];
        for (var columnIndex = 0; columnIndex < totalColumns; columnIndex++){
          final tile = row[columnIndex];
-         final objectType = tileTypeToObjectType[tile];
+         var objectType = tileTypeToObjectType[tile];
          if (objectType == null) continue;
+
+         if (objectType == ObjectType.Palisade) {
+              if (rowIndex > 0 && rowIndex < totalRows -1) {
+                  if (tiles[rowIndex - 1][columnIndex] == Tile.Palisade && tiles[rowIndex + 1][columnIndex] == Tile.Palisade) {
+                      objectType = ObjectType.Palisade_H;
+                  }
+              }
+
+              if (columnIndex > 0 && columnIndex < totalColumns - 1) {
+                if (row[columnIndex -1] == Tile.Palisade && row[columnIndex + 1] == Tile.Palisade) {
+                  objectType = ObjectType.Palisade_V;
+                }
+              }
+         }
+
          final env = EnvironmentObject(
              x: getTileWorldX(rowIndex, columnIndex),
              y: getTileWorldY(rowIndex, columnIndex) + halfTileSize,
