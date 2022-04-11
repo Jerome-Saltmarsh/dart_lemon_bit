@@ -6,19 +6,13 @@ void writeNumberToByteArray({
   required int index
 }){
   final abs = number.toInt().abs();
-  final count = abs ~/ 100;
-  final remainder = abs % 100;
-  final sign = number >= 0 ? 100 : 0;
-  list[index] = sign + count;
-  list[index + 1] = remainder;
+  list[index] = (number >= 0 ? 100 : 0) + abs ~/ 100;
+  list[index + 1] = abs % 100;
 }
 
 int readNumberFromByteArray(List<int> bytes, {required int index}){
   final a = bytes[index];
-  final b = bytes[index + 1];
-  final sign = a < 100 ? -1 : 1;
-  final count = a % 100;
-  return sign * (count * 100 + b);
+  return (a < 100 ? -1 : 1) * ((a % 100) * 100 + bytes[index + 1]);
 }
 
 /// Writes numbers up to 256^3
@@ -30,13 +24,10 @@ void writeBigNumberToArray({
 }){
   assert(number <= 16777216);
   final numberInt = number.toInt();
-  final count65536 = numberInt ~/ 65536;
   final remainder65536 = numberInt % 65536;
-  final count256 = remainder65536 ~/ 256;
-  final remainder = remainder65536 % 256;
-  list[index] = count65536;
-  list[index + 1] = count256;
-  list[index + 2] = remainder;
+  list[index] = numberInt ~/ 65536;
+  list[index + 1] = remainder65536 ~/ 256;
+  list[index + 2] = remainder65536 % 256;
 }
 
 int readBigNumberFromArray(List<int> bytes, {required int index}) {

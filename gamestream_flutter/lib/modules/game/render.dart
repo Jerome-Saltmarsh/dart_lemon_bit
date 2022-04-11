@@ -224,7 +224,8 @@ class GameRender {
   }
 
   void drawProjectiles(List<Projectile> projectiles) {
-    for (var i = 0; i < game.totalProjectiles; i++) {
+    final count = game.totalProjectiles;
+    for (var i = 0; i < count; i++) {
       projectile(game.projectiles[i]);
     }
   }

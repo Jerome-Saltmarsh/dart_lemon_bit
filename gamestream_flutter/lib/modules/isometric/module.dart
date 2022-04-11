@@ -112,7 +112,10 @@ class IsometricModule {
   }
 
   int getShadeAtPosition(double x, double y){
-    return getShade(getRow(x, y), getColumn(x, y));
+    return getShade(
+        (x + y) ~/ 48.0,
+        (y - x) ~/ 48.0,
+    );
   }
 
   bool inDarkness(double x, double y){
