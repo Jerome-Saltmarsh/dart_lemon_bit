@@ -497,6 +497,18 @@ class IsometricActions {
     applyShadeRing(shader, row, column, 4, Shade.Very_Dark);
   }
 
+  void emitLightHighLarge(List<List<int>> shader, double x, double y) {
+    final column = getColumn(x, y);
+    final row = getRow(x, y);
+    if (state.outOfBounds(row, column)) return;
+    applyShade(shader, row, column, Shade.Bright);
+    applyShadeRing(shader, row, column, 1, Shade.Bright);
+    applyShadeRing(shader, row, column, 2, Shade.Bright);
+    applyShadeRing(shader, row, column, 3, Shade.Medium);
+    applyShadeRing(shader, row, column, 4, Shade.Dark);
+    applyShadeRing(shader, row, column, 5, Shade.Very_Dark);
+  }
+
   void emitLightBakeHigh(double x, double y) {
     final column = getColumn(x, y);
     final row = getRow(x, y);
@@ -549,7 +561,7 @@ class IsometricActions {
     for (var i = 0; i < totalPlayers; i++){
       final player = players[i];
       if (!player.allie) continue;
-      emitLightHigh(shading, player.x, player.y);
+      emitLightHighLarge(shading, player.x, player.y);
     }
 
     for (var i = 0; i < totalNpcs; i++){

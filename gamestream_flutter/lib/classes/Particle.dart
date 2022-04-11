@@ -14,7 +14,7 @@ class Particle extends Vector2 {
   double weight = 0;
   int duration = 0;
   double rotation = 0;
-  double rotationV = 0;
+  double rotationVelocity = 0;
   double scale = 0;
   double scaleV = 0;
   int type = ParticleType.Zombie_Head;
@@ -54,7 +54,7 @@ class Particle extends Vector2 {
     if (z < 0){
       z = 0;
     }
-    rotation = clampAngle(rotation + rotationV);
+    rotation = clampAngle(rotation + rotationVelocity);
 
     scale += scaleV;
     if (scale < 0){
@@ -67,6 +67,14 @@ class Particle extends Vector2 {
     zv -= gravity * weight;
     xv *= airFriction;
     yv *= airFriction;
+  }
+
+  void applyFloorFriction(){
+    const floorFriction = 0.9;
+    const rotationFriction = 0.93;
+    xv *= floorFriction;
+    yv *= floorFriction;
+    rotationVelocity *= rotationFriction;
   }
 
   void applyLimits(){

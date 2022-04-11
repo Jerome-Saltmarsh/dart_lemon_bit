@@ -12,12 +12,7 @@ class IsometricQueries {
 
   IsometricQueries(this.state);
 
-  int get tileAtMouse => getTileAt(mouseWorldX, mouseWorldY);
-
-  int getTile(int row, int column){
-    if (outOfBounds(row, column)) return Tile.Boundary;
-    return state.tiles[row][column];
-  }
+  int get tileAtMouse => state.getTileAt(mouseWorldX, mouseWorldY);
 
   bool outOfBounds(int row, int column){
     if (row < 0) return true;
@@ -29,17 +24,6 @@ class IsometricQueries {
 
   bool mouseOutOfBounds(){
     return outOfBounds(mouseRow, mouseColumn);
-  }
-
-  int getTileAt(double x, double y){
-    return getTile(getRow(x, y), getColumn(x, y));
-  }
-
-  bool tileIsWalkable(double x, double y){
-    final tile = getTileAt(x, y);
-    if (tile == Tile.Boundary) return false;
-    if (tile == Tile.Water) return false;
-    return true;
   }
 
   bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {

@@ -30,6 +30,12 @@ import 'style.dart';
 
 
 final _screen = engine.screen;
+final _actions = isometric.actions;
+final _state = isometric.state;
+final _render = isometric.render;
+final _gameType = game.type;
+final _projectiles = game.projectiles;
+final _bulletHoles = game.bulletHoles;
 
 class GameRender {
 
@@ -47,11 +53,11 @@ class GameRender {
   }
 
   void render(Canvas canvas, Size size) {
-    isometric.actions.applyDynamicEmissions();
-    isometric.actions.applyDynamicShadeToTileSrc();
-    isometric.render.renderTiles();
-    drawProjectiles(game.projectiles);
-    drawBulletHoles(game.bulletHoles);
+    _actions.applyDynamicEmissions();
+    _actions.applyDynamicShadeToTileSrc();
+    _render.renderTiles();
+    drawProjectiles(_projectiles);
+    drawBulletHoles(_bulletHoles);
 
     drawAbility();
     attackTargetCircle();
@@ -60,29 +66,31 @@ class GameRender {
       drawPaths();
     }
 
-    final totalDynamicEnvironmentObjects = game.totalDynamicObjects.value;
-    for (var i = 0; i < totalDynamicEnvironmentObjects; i++) {
-       final dynamicObject = game.dynamicObjects[i];
-       final shade = isometric.state.getShadeAtPosition(dynamicObject.x, dynamicObject.y);
-       engine.mapSrc64(x: 6032, y: shade * 64);
-       engine.mapDst(x: dynamicObject.x, y: dynamicObject.y, anchorX: 32, anchorY: 32);
-       engine.renderAtlas();
-    }
-
-    isometric.render.renderSprites();
+    renderDynamicObjects();
+    _render.renderSprites();
     drawEffects();
     drawItems();
 
-    if (game.type.value == GameType.BATTLE_ROYAL){
+    if (_gameType.value == GameType.BATTLE_ROYAL){
       drawRoyalPerimeter();
     }
-    // engine.setPaintColorWhite();
-    // _renderPlayerNames();
-    // drawPlayerText();
+  }
+
+  void renderDynamicObjects() {
+    final totalDynamicEnvironmentObjects = game.totalDynamicObjects.value;
+    for (var i = 0; i < totalDynamicEnvironmentObjects; i++) {
+       final dynamicObject = game.dynamicObjects[i];
+       engine.mapSrc64(
+           x: 6032,
+           y: _state.getShadeAtPosition(dynamicObject.x, dynamicObject.y) * 64
+       );
+       engine.mapDst(x: dynamicObject.x, y: dynamicObject.y, anchorX: 32, anchorY: 32);
+       engine.renderAtlas();
+    }
   }
 
   void collectedOrbImage() {
-     final totalFrames = 60;
+     const totalFrames = 60;
     final totalFramesHalf = ((totalFrames) * 0.5).toInt();
     final framesSinceOrbAcquired = state.framesSinceOrbAcquired;
 

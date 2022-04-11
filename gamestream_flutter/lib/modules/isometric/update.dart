@@ -56,7 +56,7 @@ class IsometricUpdate {
     particle.updateMotion();
 
     if (bounce) {
-      if (!queries.tileIsWalkable(particle.x, particle.y)){
+      if (!state.tileIsWalkable(particle.x, particle.y)){
         deactivateParticle(particle);
         return;
       }
@@ -69,13 +69,8 @@ class IsometricUpdate {
     } else if (airBorn) {
       particle.applyAirFriction();
     } else {
-      const floorFriction = 0.9;
-      const rotationFriction = 0.93;
-      particle.xv *= floorFriction;
-      particle.yv *= floorFriction;
-      particle.rotationV *= rotationFriction;
-
-      if (!queries.tileIsWalkable(particle.x, particle.y)){
+      particle.applyFloorFriction();
+      if (!state.tileIsWalkable(particle.x, particle.y)){
         deactivateParticle(particle);
         return;
       }

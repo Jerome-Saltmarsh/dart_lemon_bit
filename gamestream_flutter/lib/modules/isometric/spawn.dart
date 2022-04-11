@@ -104,7 +104,7 @@ class IsometricSpawn {
     particle.scale = scale;
     particle.scaleV = scaleV;
     particle.rotation = rotation;
-    particle.rotationV = rotationV;
+    particle.rotationVelocity = rotationV;
     particle.bounciness = bounciness;
     particle.airFriction = airFriction;
   }

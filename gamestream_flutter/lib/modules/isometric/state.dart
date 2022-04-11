@@ -44,6 +44,13 @@ class IsometricState {
 
   Particle? next;
 
+  bool outOfBounds(int row, int column){
+    if (row < 0) return true;
+    if (column < 0) return true;
+    if (row >= totalRowsInt) return true;
+    if (column >= totalColumnsInt) return true;
+    return false;
+  }
 
   IsometricState(){
       for(var i = 0; i < 300; i++){
@@ -69,5 +76,21 @@ class IsometricState {
 
   bool inDarkness(double x, double y){
     return getShadeAtPosition(x, y) >= Shade.Very_Dark;
+  }
+
+  bool tileIsWalkable(double x, double y){
+    final tile = getTileAt(x, y);
+    if (tile == Tile.Boundary) return false;
+    if (tile == Tile.Water) return false;
+    return true;
+  }
+
+  int getTileAt(double x, double y){
+    return getTile((x + y) ~/ 48.0, (y - x) ~/ 48.0);
+  }
+
+  int getTile(int row, int column){
+    if (outOfBounds(row, column)) return Tile.Boundary;
+    return tiles[row][column];
   }
 }

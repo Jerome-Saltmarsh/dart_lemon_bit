@@ -26,7 +26,7 @@ class GameFactories {
     particle.scale = 1;
     particle.scaleV = 0;
     particle.rotation = 0;
-    particle.rotationV = 0;
+    particle.rotationVelocity = 0;
     particle.bounciness = 0;
     particle.xv = randomBetween(0, -pi * 0.1);
     particle.yv = randomBetween(0, pi * 0.1);
@@ -48,7 +48,7 @@ class GameFactories {
     particle.scale = 0.33;
     particle.scaleV = 0.0025;
     particle.rotation = 0;
-    particle.rotationV = 0;
+    particle.rotationVelocity = 0;
     particle.airFriction = 0.95;
     particle.xv = giveOrTake(pi * randomBetween(_initialVelocityMin, _initialVelocityMax));
     particle.yv = giveOrTake(pi * randomBetween(_initialVelocityMin, _initialVelocityMax));
@@ -68,7 +68,7 @@ class GameFactories {
     particle.scale = 1;
     particle.scaleV = 0;
     particle.rotation = 0;
-    particle.rotationV = 0;
+    particle.rotationVelocity = 0;
     particle.bounciness = 0;
     particle.airFriction = 1.0;
     particle.xv = giveOrTake(pi * mystMaxVelocity);
