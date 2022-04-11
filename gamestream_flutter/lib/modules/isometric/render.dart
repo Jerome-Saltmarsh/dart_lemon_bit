@@ -25,30 +25,29 @@ import 'package:lemon_math/diff.dart';
 
 import '../modules.dart';
 import 'functions.dart';
-import 'state.dart';
 
 const _framesPerDirectionHuman = 19;
 const _framesPerDirectionZombie = 8;
 final _screen = engine.screen;
 
-enum SpriteLayer {
-  Shadow,
-  Legs_Blue,
-  Legs_Swat,
-  Staff_Wooden,
-  Sword_Wooden,
-  Sword_Steel,
-  Weapon_Shotgun,
-  Weapon_Handgun,
-  Bow_Wooden,
-  Body_Cyan,
-  Body_Blue,
-  Body_Swat,
-  Head_Plain,
-  Head_Steel,
-  Head_Rogue,
-  Head_Magic,
-  Head_Swat,
+class SpriteLayer {
+  static const Shadow = 0;
+  static const Legs_Blue = 1;
+  static const Legs_Swat = 2;
+  static const Staff_Wooden = 3;
+  static const Sword_Wooden = 4;
+  static const Sword_Steel = 5;
+  static const Weapon_Shotgun = 6;
+  static const Weapon_Handgun = 7;
+  static const Bow_Wooden = 8;
+  static const Body_Cyan = 9;
+  static const Body_Blue = 10;
+  static const Body_Swat = 11;
+  static const Head_Plain = 12;
+  static const Head_Steel = 13;
+  static const Head_Rogue = 14;
+  static const Head_Magic = 15;
+  static const Head_Swat = 16;
 }
 
 class IsometricRender {
@@ -460,7 +459,7 @@ class IsometricRender {
     _renderCharacterPart(character, getSpriteIndexLegs(character));
   }
 
-  void _renderCharacterPart(Character character, SpriteLayer layer) {
+  void _renderCharacterPart(Character character, int layer) {
     engine.mapDst(
         x: character.x,
         y: character.y,
@@ -470,12 +469,12 @@ class IsometricRender {
     );
     engine.mapSrc64(
         x: getTemplateSrcX(character, size: 64),
-        y: 1051.0 + (layer.index * 64)
+        y: 1051.0 + (layer * 64)
     );
     engine.renderAtlas();
   }
 
-  SpriteLayer getSpriteIndexHead(Character character){
+  int getSpriteIndexHead(Character character){
     switch(character.equippedHead){
       case SlotType.Empty:
         return SpriteLayer.Head_Plain;
@@ -490,7 +489,7 @@ class IsometricRender {
     }
   }
 
-  SpriteLayer getSpriteIndexBody(Character character){
+  int getSpriteIndexBody(Character character){
     switch(character.equippedArmour){
       case SlotType.Empty:
         return SpriteLayer.Body_Cyan;
@@ -505,7 +504,7 @@ class IsometricRender {
     }
   }
 
-  SpriteLayer getSpriteIndexLegs(Character character){
+  int getSpriteIndexLegs(Character character){
     return SpriteLayer.Legs_Blue;
   }
 
@@ -568,7 +567,7 @@ class IsometricRender {
     }
   }
 
-  SpriteLayer mapEquippedWeaponToSpriteIndex(Character character){
+  int mapEquippedWeaponToSpriteIndex(Character character){
      switch(character.equippedWeapon){
        case SlotType.Sword_Wooden:
          return SpriteLayer.Sword_Wooden;

@@ -1,10 +1,7 @@
-import 'package:bleed_common/Tile.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
 import 'package:lemon_engine/engine.dart';
 
-import 'state.dart';
-import 'utilities.dart';
 
 class IsometricQueries {
   final IsometricModule state;
