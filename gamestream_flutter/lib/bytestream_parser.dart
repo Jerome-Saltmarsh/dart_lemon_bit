@@ -212,12 +212,12 @@ class _ByteStreamParser {
           readSlot(_slots.weapon);
           _slots.armour.type.value = _readSlotType();
           _slots.helm.type.value = _readSlotType();
-          readSlot(_slots.slot1);
-          readSlot(_slots.slot2);
-          readSlot(_slots.slot3);
-          readSlot(_slots.slot4);
-          readSlot(_slots.slot5);
-          readSlot(_slots.slot6);
+          // readSlot(_slots.slot1);
+          // readSlot(_slots.slot2);
+          // readSlot(_slots.slot3);
+          // readSlot(_slots.slot4);
+          // readSlot(_slots.slot5);
+          // readSlot(_slots.slot6);
           // _orbs.topaz.value = _nextInt();
           // _orbs.emerald.value = _nextInt();
           // _orbs.ruby.value = _nextInt();
@@ -231,6 +231,15 @@ class _ByteStreamParser {
           _orbs.topaz.value = _nextInt();
           _orbs.emerald.value = _nextInt();
           _orbs.ruby.value = _nextInt();
+          break;
+
+        case ServerResponse.Player_Slots:
+          readSlot(_slots.slot1);
+          readSlot(_slots.slot2);
+          readSlot(_slots.slot3);
+          readSlot(_slots.slot4);
+          readSlot(_slots.slot5);
+          readSlot(_slots.slot6);
           break;
 
 

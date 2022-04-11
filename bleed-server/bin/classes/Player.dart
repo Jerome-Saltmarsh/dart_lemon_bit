@@ -60,6 +60,7 @@ class Player extends Character {
 
   late Function compileAndUpdate;
   late Function onOrbsChanged;
+  late Function onSlotsChanged;
 
   void attainOrb(OrbType orb){
     switch(orb) {
@@ -208,6 +209,7 @@ class Player extends Character {
         final currentWeapon = slots.weapon;
         slots.weapon = slot;
         slots.assignSlotAtIndex(index, currentWeapon);
+        onSlotsChanged();
         setStateChangingWeapons();
         return;
       }
@@ -218,6 +220,7 @@ class Player extends Character {
         onEquipped(slotType);
         onUnequipped(currentArmourType);
         setStateChangingWeapons();
+        onSlotsChanged();
       }
 
       if (SlotType.isHelm(slotType)) {
@@ -226,6 +229,7 @@ class Player extends Character {
         onEquipped(slotType);
         onUnequipped(currentArmourType);
         setStateChangingWeapons();
+        onSlotsChanged();
       }
 
       if (slotType == SlotType.Spell_Tome_Fireball) {
@@ -251,6 +255,7 @@ class Player extends Character {
         }
         game.spawnFreezeRing(src: this);
         setStateChangingWeapons();
+        onSlotsChanged();
         return;
       }
 
@@ -277,6 +282,7 @@ class Player extends Character {
         slots.assignSlotTypeAtIndex(index, SlotType.Empty);
         setStateChangingWeapons();
         dispatch(PlayerEvent.Drink_Potion);
+        onSlotsChanged();
       }
 
       if (slotType == SlotType.Potion_Blue) {
@@ -284,6 +290,7 @@ class Player extends Character {
         slots.assignSlotTypeAtIndex(index, SlotType.Empty);
         setStateChangingWeapons();
         dispatch(PlayerEvent.Drink_Potion);
+        onSlotsChanged();
       }
   }
 
@@ -292,6 +299,7 @@ class Player extends Character {
     if (slotAtIndex == SlotType.Empty) return;
     slots.assignSlotTypeAtIndex(index, SlotType.Empty);
     dispatch(PlayerEvent.Item_Sold);
+    onSlotsChanged();
   }
 }
 
@@ -383,6 +391,7 @@ class Slots {
       default:
         throw Exception("cannot assign slot $index it out of bounds");
     }
+
   }
 
   void assignSlotTypeAtIndex(int index, int type){

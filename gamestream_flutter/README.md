@@ -93,7 +93,7 @@
 [ ] AI Should avoid colliders in front of them.      
 [ ] FIX Zombies run into lamps forever    
 [ ] Design Map Skirmish
-[ ] Player update slots on changed    
+[x] Player update slots on changed    
 [x] Player update gems on changed
 [x] Remove Block_Horizontal and Block_Vertical     
 [x] Fix tile colours in Adventure    
