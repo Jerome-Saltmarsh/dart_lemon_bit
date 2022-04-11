@@ -63,8 +63,8 @@ class GameEvents {
     sendRequestAttack();
   }
 
-  void onPlayerWeaponChanged(SlotType value){
-    if (value.isSword && value.isMetal) {
+  void onPlayerWeaponChanged(int value){
+    if (SlotType.isMetal(value)) {
       audio.drawSword(screenCenterWorldX, screenCenterWorldY);
     } else {
       audio.changeCloths(screenCenterWorldX, screenCenterWorldY);
@@ -104,11 +104,11 @@ class GameEvents {
     }
   }
 
-  void onPlayerArmourChanged(SlotType armour){
+  void onPlayerArmourChanged(int armour){
     audio.changeCloths(screenCenterWorldX, screenCenterWorldY);
   }
 
-  void onPlayerHelmChanged(SlotType value){
+  void onPlayerHelmChanged(int value){
     audio.changeCloths(screenCenterWorldX, screenCenterWorldY);
   }
 

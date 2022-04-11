@@ -1,5 +1,4 @@
 import '../common/CharacterType.dart';
-import '../common/SlotType.dart';
 import '../enums/npc_mode.dart';
 import 'Character.dart';
 import 'Player.dart';
@@ -15,7 +14,7 @@ class InteractableNpc extends Character {
       required double x,
       required double y,
       required int health,
-      required SlotType weapon,
+      required int weapon,
       int team = 1,
       NpcMode npcMode = NpcMode.Stand_Ground,
   })

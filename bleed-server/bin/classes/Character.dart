@@ -150,15 +150,16 @@ class Character extends GameObject {
 
   bool get deadOrBusy => dead || busy;
 
-  SlotType get weapon => slots.weapon.type;
+  int get weapon => slots.weapon.type;
 
+  double get weaponRange => SlotType.getRange(weapon);
 
   Character({
     required this.type,
     required double x,
     required double y,
     required int health,
-    SlotType weapon = SlotType.Empty,
+    int weapon = SlotType.Empty,
     double speed = _defaultCharacterSpeed,
     this.team = noSquad,
     this.ai,

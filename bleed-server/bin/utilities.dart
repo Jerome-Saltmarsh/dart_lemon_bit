@@ -3,7 +3,6 @@ import 'package:lemon_math/give_or_take.dart';
 
 import 'classes/Character.dart';
 import 'classes/GameObject.dart';
-import 'common/SlotType.dart';
 import 'functions/withinRadius.dart';
 import 'maths.dart';
 
@@ -78,7 +77,7 @@ void applyFriction(GameObject gameObject, double value) {
 }
 
 bool targetWithinAttackRange(Character character, GameObject target){
-  return withinRadius(character, target, character.weapon.range);
+  return withinRadius(character, target, character.weaponRange);
 }
 
 Vector2 getTilePosition(int row, int column) {

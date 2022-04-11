@@ -307,7 +307,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               if (ability == null) {
                 if (aimTarget != null) {
                   player.target = aimTarget;
-                  if (withinRadius(player, aimTarget, player.weapon.range)){
+                  if (withinRadius(player, aimTarget, SlotType.getRange(player.weapon))){
                     characterFaceV2(player, aimTarget);
                     game.setCharacterStatePerforming(player);
                   }
@@ -868,13 +868,13 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 "ClientRequest.Purchase Error: could not parse argument 2 to int");
           }
 
-          if (slotItemIndex < 0 || slotItemIndex >= slotTypes.length){
+          if (slotItemIndex < 0){
             return error(GameError.InvalidArguments,
                 message:
                 "$slotItemIndex is not a valid slot type index");
           }
           if (!player.slots.emptySlotAvailable) return;
-          final slotType = slotTypes[slotItemIndex];
+          final slotType = slotItemIndex;
           final cost = slotTypeCosts[slotType];
           if (cost != null) {
               if (cost.topaz > player.orbs.topaz) return;

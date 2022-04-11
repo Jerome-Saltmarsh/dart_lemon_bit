@@ -321,7 +321,7 @@ class IsometricRender {
     }
 
     final weapon = character.equippedWeapon;
-    final variation = weapon.isShotgun || weapon.isBow;
+    final variation = weapon == SlotType.Shotgun || SlotType.isBow(weapon);
     final maxDirection = variation ? directionRightIndex : directionUpRightIndex;
     final minDirection = variation ? directionDownLeftIndex : directionDownIndex;
     final direction = character.direction;
@@ -485,7 +485,7 @@ class IsometricRender {
       case SlotType.Rogue_Hood:
         return SpriteLayer.Head_Rogue;
       default:
-        throw Exception("cannot render head ${character.equippedHead.name}");
+        throw Exception("cannot render head ${character.equippedHead}");
     }
   }
 
@@ -500,7 +500,7 @@ class IsometricRender {
       case SlotType.Magic_Robes:
         return SpriteLayer.Body_Blue;
       default:
-        throw Exception("cannot render body ${character.equippedHead.name}");
+        throw Exception("cannot render body ${character.equippedHead}");
     }
   }
 
@@ -510,7 +510,7 @@ class IsometricRender {
 
   double getTemplateSrcX(Character character, {required double size}){
     final weapon = character.equippedWeapon;
-    final variation = weapon.isShotgun || weapon.isBow;
+    final variation = weapon == SlotType.Shotgun || SlotType.isBow(weapon);
 
     switch(character.state) {
       case stateRunning:
@@ -551,11 +551,11 @@ class IsometricRender {
         final weapon = character.equippedWeapon;
         return animate(
             size: size,
-            animation: weapon.isBow
+            animation: SlotType.isBow(weapon)
                 ? animations.firingBow
-                : weapon.isHandgun
+                : weapon == SlotType.Handgun
                 ? animations.firingHandgun
-                : weapon.isShotgun
+                : weapon == SlotType.Shotgun
                 ? animations.firingShotgun
                 : animations.strikingSword,
             character: character,
@@ -597,8 +597,9 @@ class IsometricRender {
   }
 
   void _renderCharacterTemplateWeapon(Character character) {
-    if (character.equippedWeapon == SlotType.Empty) return;
-    if (character.equippedWeapon.isMelee){
+    final equipped = character.equippedWeapon;
+    if (equipped == SlotType.Empty) return;
+    if (SlotType.isMelee(equipped)){
       engine.mapDst(
         x: character.x,
         y: character.y,
@@ -606,7 +607,6 @@ class IsometricRender {
         anchorY: 61,
         scale: 1.0,
       );
-      final equipped = character.equippedWeapon;
       final row = equipped == SlotType.Sword_Short || equipped == SlotType.Sword_Short ? 0
                               : equipped == SlotType.Sword_Wooden ? 1 : 0;
       engine.mapSrc96(

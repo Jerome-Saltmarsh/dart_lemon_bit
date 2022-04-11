@@ -390,8 +390,8 @@ int consumeInt() {
   return value;
 }
 
-SlotType consumeSlotType(){
-   return slotTypes[_consumeIntUnsafe()];
+int consumeSlotType(){
+   return _consumeIntUnsafe();
 }
 
 int _consumeIntUnsafe() {

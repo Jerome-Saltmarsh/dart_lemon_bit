@@ -5,7 +5,7 @@ import 'SlotType.dart';
 /// Staff  - Topaz
 /// Swords  - Rubies
 /// Bows    - Emeralds
-const Map<SlotType, _SlotTypeCost> slotTypeCosts = {
+const slotTypeCosts = <int, _SlotTypeCost> {
   SlotType.Sword_Wooden: _SlotTypeCost(
       rubies: 3,
   ),
@@ -92,32 +92,6 @@ const Map<SlotType, _SlotTypeCost> slotTypeCosts = {
   SlotType.Shotgun: _SlotTypeCost(
     emeralds: 0,
   ),
-};
-
-const Map<SlotType, String> slotTypeNames = {
-  SlotType.Golden_Necklace: "King's Necklace",
-  SlotType.Sword_Wooden: "Wooden Sword",
-  SlotType.Sword_Short: "Steel Sword",
-  SlotType.Sword_Long: "Iron Sword",
-  SlotType.Bow_Wooden: "Wooden Bow",
-  SlotType.Bow_Gold: "Golden Bow",
-  SlotType.Bow_Green: "Forest Bow",
-  SlotType.Staff_Wooden: "Gnarled Staff",
-  SlotType.Staff_Blue: "Sapphire Staff",
-  SlotType.Staff_Golden: "Golden Staff",
-  SlotType.Spell_Tome_Fireball: "Ability Fireball",
-  SlotType.Spell_Tome_Ice_Ring: "Ability Ice Ring",
-  SlotType.Spell_Tome_Split_Arrow: "Ability Split Arrows",
-  SlotType.Steel_Helmet: "Knight's Helm",
-  SlotType.Armour_Padded: "Padded Armour",
-  SlotType.Body_Blue: "Steel Tunic",
-  SlotType.Potion_Red: "Health Potion",
-  SlotType.Rogue_Hood: "Rogue's Hood",
-  SlotType.Potion_Blue: "Magic Potion",
-  SlotType.Magic_Hat: "Wizards Hat",
-  SlotType.Magic_Robes: "Robes of Magic",
-  SlotType.Handgun: "handgun",
-  SlotType.Shotgun: "Shotgun",
 };
 
 class _SlotTypeCost {

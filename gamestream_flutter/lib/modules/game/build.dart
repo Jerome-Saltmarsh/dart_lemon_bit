@@ -251,12 +251,13 @@ class GameBuild {
     return WatchBuilder(state.highlightSlot, (Slot? slot){
       if (slot == null) return empty;
       final slotType = slot.type.value;
-      if (slotType.isEmpty) return empty;
+      if (slotType == SlotType.Empty) return empty;
 
-      final damage = slotType.damage;
-      final health = slotType.health;
-      final magic = slotType.magic;
-      final range = slotType.range;
+      final name = SlotType.getName(slotType);
+      final damage = SlotType.getDamage(slotType);
+      final health = SlotType.getHealth(slotType);
+      final magic = SlotType.getMagic(slotType);
+      final range = SlotType.getRange(slotType);;
 
       return Positioned(
         right: 220,
@@ -269,7 +270,7 @@ class GameBuild {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              text(slotTypeNames[slotType] ?? "?"),
+              text(name),
               if (damage > 0)
                 text("Damage: $damage"),
               if (health > 0)
@@ -286,8 +287,8 @@ class GameBuild {
     });
   }
 
-  WatchBuilder<SlotType> buildHighlightedStoreSlot() {
-    return WatchBuilder(state.highLightSlotType, (SlotType slotType) {
+  Widget buildHighlightedStoreSlot() {
+    return WatchBuilder(state.highLightSlotType, (int slotType) {
       if (slotType == SlotType.Empty) return empty;
 
       final cost = slotTypeCosts[slotType];
@@ -303,6 +304,11 @@ class GameBuild {
         state.highlightPanelPosition.x = engine.screen.width - 500;
       }
 
+      final damage = SlotType.getDamage(slotType);
+      final magic = SlotType.getMagic(slotType);
+      final health = SlotType.getHealth(slotType);
+      final name = SlotType.getName(slotType);
+
       return Positioned(
         right: 220,
         top: state.highlightPanelPosition.y,
@@ -313,7 +319,7 @@ class GameBuild {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Center(child: text(slotTypeNames[slotType] ?? slotType.name, color: colours.white80, bold: true, size: 20)),
+              Center(child: text(name, color: colours.white80, bold: true, size: 20)),
               height8,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -335,12 +341,12 @@ class GameBuild {
               height8,
               Column(
                 children: [
-                  if (slotType.damage > 0)
-                    _itemSlotStatRow("Damage", slotType.damage),
-                  if (slotType.health > 0)
-                    _itemSlotStatRow("Health", slotType.health),
-                  if (slotType.magic > 0)
-                    _itemSlotStatRow("Magic", slotType.magic),
+                  if (damage > 0)
+                    _itemSlotStatRow("Damage", damage),
+                  if (health > 0)
+                    _itemSlotStatRow("Health", health),
+                  if (magic > 0)
+                    _itemSlotStatRow("Magic", magic),
                 ],
               )
             ],
@@ -553,7 +559,7 @@ class GameBuild {
   }
 
 
-  Widget shopSlotRow(SlotType a, SlotType b, SlotType c){
+  Widget shopSlotRow(int a, int b, int c){
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -628,9 +634,9 @@ class GameBuild {
           slot: weapon,
           child: Stack(
             children: [
-              WatchBuilder(weapon.type, (SlotType slotType){
+              WatchBuilder(weapon.type, (int slotType){
                 final child = slot(slotType: slotType, color: colours.white382);
-                if (slotType.isEmpty) return child;
+                if (slotType == SlotType.Empty) return child;
                 return child;
               }),
               WatchBuilder(weapon.amount, (int amount){
@@ -656,9 +662,9 @@ class GameBuild {
               buildEquippedWeaponSlot(),
               buildHighlightSlot(
                 slot: slots.armour,
-                child: WatchBuilder(slots.armour.type, (SlotType slotType){
+                child: WatchBuilder(slots.armour.type, (int slotType){
                   final child = slot(slotType: slotType, color: colours.white382);
-                  if (slotType.isEmpty) return child;
+                  if (slotType == SlotType.Empty) return child;
                   return onPressed(
                       callback: actions.unequipArmour,
                       child: child);
@@ -666,9 +672,9 @@ class GameBuild {
               ),
               buildHighlightSlot(
                 slot: slots.helm,
-                child: WatchBuilder(slots.helm.type, (SlotType slotType){
+                child: WatchBuilder(slots.helm.type, (int slotType){
                   final child = slot(slotType: slotType, color: colours.white382);
-                  if (slotType.isEmpty) return child;
+                  if (slotType == SlotType.Empty) return child;
                   return onPressed(
                       callback: actions.unequipHelm,
                       child: child);
@@ -691,7 +697,7 @@ class GameBuild {
     });
 
 
-    final type = WatchBuilder(slot.type, (SlotType slotType) {
+    final type = WatchBuilder(slot.type, (int slotType) {
 
       final child = mouseOver(builder: (BuildContext context, bool mouseOver){
         if (mouseOver){
@@ -716,7 +722,7 @@ class GameBuild {
       });
 
 
-      if (slotType.isEmpty) return child;
+      if (slotType == SlotType.Empty) return child;
       return onPressed(
         callback: (){
           actions.equipSlot(index);
@@ -736,9 +742,9 @@ class GameBuild {
     );
   }
 
-  Widget _storeSlot(SlotType slotType){
+  Widget _storeSlot(int slotType){
 
-    if (slotType.isEmpty){
+    if (slotType == SlotType.Empty){
       return Container(
           width: slotSize,
           height: slotSize,
@@ -770,13 +776,13 @@ class GameBuild {
         child: Container(
             width: slotSize,
             height: slotSize,
-            color: isOver && !slotType.isEmpty ? colours.black382 : none,
+            color: isOver && slotType != SlotType.Empty ? colours.black382 : none,
             child: getSlotTypeImage(slotType)),
       );
     });
   }
 
-  Widget slot({required SlotType slotType, required Color color}){
+  Widget slot({required int slotType, required Color color}){
     return Container(
         width: 50,
         height: 50,
@@ -784,7 +790,7 @@ class GameBuild {
         child: getSlotTypeImage(slotType));
   }
 
-  Widget getSlotTypeImage(SlotType value){
+  Widget getSlotTypeImage(int value){
     if (state.slotTypeImages.containsKey(value)){
       return state.slotTypeImages[value]!;
     }

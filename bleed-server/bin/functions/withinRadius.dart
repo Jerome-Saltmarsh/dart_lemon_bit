@@ -5,7 +5,6 @@ import 'package:lemon_math/Vector2.dart';
 
 import '../classes/Collider.dart';
 import '../classes/Player.dart';
-import '../common/SlotType.dart';
 
 bool withinRadius(Vector2 a, Vector2 b, num radius){
   return withinDistance(a, b.x, b.y, radius);
@@ -26,5 +25,5 @@ double magnitude(num adjacent, num opposite){
 }
 
 bool withinAttackRadius(Player player, Collider target){
-  return withinRadius(player, target, player.weapon.range + target.radius);
+  return withinRadius(player, target, player.weaponRange + target.radius);
 }

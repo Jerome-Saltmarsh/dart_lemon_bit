@@ -365,8 +365,8 @@ class _ByteStreamParser {
      slot.amount.value = _nextInt();
   }
 
-  SlotType _readSlotType(){
-    return slotTypes[_nextByte()];
+  int _readSlotType(){
+    return _nextByte();
   }
 
   ProjectileType _readProjectileType(){

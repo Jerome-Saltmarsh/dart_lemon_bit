@@ -663,7 +663,7 @@ extension GameFunctions on Game {
         if (character is Player) {
           final ability = character.performing;
           if (ability == null) {
-            character.stateDurationRemaining = character.slots.weapon.type.duration;
+            character.stateDurationRemaining = SlotType.getDuration(character.slots.weapon.type);
             break;
           }
           if (character.magic < ability.cost) {
@@ -946,13 +946,14 @@ extension GameFunctions on Game {
         break;
       case AbilityType.Split_Arrow:
         if (character.stateDurationRemaining == castFrame) {
-          Projectile arrow1 = spawnArrow(character, damage: character.weapon.damage);
+          final damage = SlotType.getDamage(character.weapon);
+          Projectile arrow1 = spawnArrow(character, damage: damage);
           double angle = piSixteenth;
           arrow1.target = null;
           setProjectileAngle(arrow1, character.aimAngle - angle);
-          Projectile arrow2 = spawnArrow(character, damage: character.weapon.damage);
+          Projectile arrow2 = spawnArrow(character, damage: damage);
           arrow2.target = null;
-          Projectile arrow3 = spawnArrow(character, damage: character.weapon.damage);
+          Projectile arrow3 = spawnArrow(character, damage: damage);
           arrow3.target = null;
           setProjectileAngle(arrow3, character.aimAngle + angle);
           character.performing = null;
@@ -963,7 +964,7 @@ extension GameFunctions on Game {
       case AbilityType.Long_Shot:
         if (character.stateDurationRemaining == castFrame) {
           final int damageMultiplier = 3;
-          spawnArrow(character, damage: character.weapon.damage * damageMultiplier)
+          spawnArrow(character, damage: SlotType.getDamage(character.weapon) * damageMultiplier)
               .range = ability.range;
           character.attackTarget = null;
           character.performing = null;
@@ -981,7 +982,7 @@ extension GameFunctions on Game {
             applyStrike(
                 character,
                 attackTarget,
-                character.weapon.damage * damageMultiplier
+                SlotType.getDamage(character.weapon) * damageMultiplier
             );
           }
           character.attackTarget = null;
@@ -1302,7 +1303,7 @@ extension GameFunctions on Game {
   void updateInteractableNpcTarget(AI ai, int j) {
     if (ai.mode == NpcMode.Ignore) return;
 
-    final aiWeaponRange = ai.character.weapon.range;
+    final aiWeaponRange = SlotType.getRange(ai.character.weapon);
     var closest = zombies[j];
     var closestDistance = distanceV2(closest, ai.character);
     final zombiesLength = zombies.length;
@@ -1456,7 +1457,7 @@ extension GameFunctions on Game {
       if (stateDuration != framePerformStrike) return;
       final attackTarget = character.attackTarget;
       if (attackTarget == null) return;
-      applyStrike(character, attackTarget, character.weapon.damage);
+      applyStrike(character, attackTarget, SlotType.getDamage(character.weapon));
       character.attackTarget = null;
       return;
     }
@@ -1464,13 +1465,13 @@ extension GameFunctions on Game {
     final weapon = character.slots.weapon;
     final weaponType = weapon.type;
 
-    if (weaponType.isSword) {
+    if (SlotType.isSword(weaponType)) {
       if (stateDuration == 7) {
         dispatchV2(GameEventType.Sword_Woosh, character);
       }
     }
 
-    if (weaponType.isHandgun) {
+    if (weaponType == SlotType.Handgun) {
         if (stateDuration == 1){
           if (weapon.amount <= 0) {
             dispatchV2(GameEventType.Clip_Empty, character);
@@ -1488,15 +1489,15 @@ extension GameFunctions on Game {
               character: character,
               accuracy: 0,
               speed: 12.0,
-              range: weaponType.range,
-              damage: weaponType.damage,
+              range: SlotType.getRange(weaponType),
+              damage: SlotType.getDamage(weaponType),
               type: ProjectileType.Bullet
           );
           return;
         }
       }
 
-      if (weaponType.isShotgun) {
+      if (weaponType == SlotType.Shotgun) {
         if (stateDuration == 1){
           if (weapon.amount <= 0){
             dispatchV2(GameEventType.Ammo_Acquired, character);
@@ -1510,31 +1511,31 @@ extension GameFunctions on Game {
                 character: character,
                 accuracy: 0.1,
                 speed: 12.0,
-                range: weaponType.range,
-                damage: weaponType.damage,
+                range: SlotType.getRange(weaponType),
+                damage: SlotType.getDamage(weaponType),
                 type: ProjectileType.Bullet);
           }
         }
       }
 
-      if (weaponType.isBow){
+      if (SlotType.isBow(weaponType)){
         if (character.stateDuration == 1){
           dispatchV2(GameEventType.Draw_Bow, character);
         }
       }
 
       if (character.stateDuration == framePerformStrike) {
-        if (weaponType.isBow) {
+        if (SlotType.isBow(weaponType)) {
           dispatchV2(GameEventType.Release_Bow, character);
           if (character.slots.weapon.amount == 0) return;
-          spawnArrow(character, damage: weaponType.damage);
+          spawnArrow(character, damage: SlotType.getDamage(weaponType));
           character.attackTarget = character.attackTarget;
           character.slots.weapon.amount--;
           return;
         }
-        if (weaponType.isMelee) {
+        if (SlotType.isMelee(weaponType)) {
           final attackTarget = character.attackTarget;
-          final damage = character.weapon.damage;
+          final damage = SlotType.getDamage(character.weapon);
           if (attackTarget != null) {
             if (attackTarget.collidable){
               applyStrike(character, attackTarget, damage);
@@ -1543,7 +1544,7 @@ extension GameFunctions on Game {
               character.attackTarget = null;
             }
           }
-          final range = weaponType.range;
+          final range = SlotType.getRange(weaponType);
           final zombieHit = physics.raycastHit(
               character: character,
               colliders: zombies,

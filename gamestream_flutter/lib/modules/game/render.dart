@@ -119,7 +119,7 @@ class GameRender {
 
   void weaponRangeCircle() {
     engine.draw.drawCircleOutline(
-        radius: state.player.slots.weapon.type.value.range,
+        radius: SlotType.getRange(state.player.slots.weapon.type.value).toDouble(),
         x: state.player.x,
         y: state.player.y,
         color: colours.white80,

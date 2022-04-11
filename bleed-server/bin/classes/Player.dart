@@ -91,7 +91,7 @@ class Player extends Character {
 
   Player({
     required this.game,
-    required SlotType weapon,
+    required int weapon,
     double x = 0,
     double y = 0,
     int team = noSquad,
@@ -125,7 +125,7 @@ class Player extends Character {
 
     switch(slotTypeCategory) {
       case SlotTypeCategory.Weapon:
-        if (weapon.isEmpty) return;
+        if (weapon == SlotType.Empty) return;
         final weaponSlot = slots.weapon;
         emptySlot.swapWith(weaponSlot);
         onUnequipped(weapon);
@@ -150,8 +150,8 @@ class Player extends Character {
     }
   }
 
-  void acquire(SlotType slotType) {
-    if (slotType.isWeapon) {
+  void acquire(int slotType) {
+    if (SlotType.isWeapon(slotType)) {
       final slot = slots.getEmptyWeaponSlot();
       if (slot == null) return;
       dispatch(PlayerEvent.Item_Purchased);
@@ -162,7 +162,7 @@ class Player extends Character {
       return;
     }
 
-    if (slotType.isArmour) {
+    if (SlotType.isArmour(slotType)) {
       final slot = slots.getEmptyArmourSlot();
       if (slot == null) return;
       dispatch(PlayerEvent.Item_Purchased);
@@ -171,7 +171,7 @@ class Player extends Character {
       onEquipped(slotType);
       return;
     }
-    if (slotType.isHelm) {
+    if (SlotType.isHelm(slotType)) {
       final slot = slots.getEmptyHeadSlot();
       if (slot == null) return;
       dispatch(PlayerEvent.Item_Purchased);
@@ -185,7 +185,7 @@ class Player extends Character {
     dispatch(PlayerEvent.Item_Purchased);
     setStateChangingWeapons();
     emptySlot.type = slotType;
-    if (slotType.isItem){
+    if (SlotType.isItem(slotType)){
       onEquipped(slotType);
     }
     return;
@@ -200,7 +200,7 @@ class Player extends Character {
       if (slot.isEmpty) return;
       final slotType = slot.type;
 
-      if (slotType.isWeapon) {
+      if (SlotType.isWeapon(slotType)) {
         final currentWeapon = slots.weapon;
         slots.weapon = slot;
         slots.assignSlotAtIndex(index, currentWeapon);
@@ -208,7 +208,7 @@ class Player extends Character {
         return;
       }
 
-      if (slotType.isArmour) {
+      if (SlotType.isArmour(slotType)) {
         final currentArmourType = slots.armour.type;
         slots.armour.swapWith(slot);
         onEquipped(slotType);
@@ -216,7 +216,7 @@ class Player extends Character {
         setStateChangingWeapons();
       }
 
-      if (slotType.isHelm) {
+      if (SlotType.isHelm(slotType)) {
         final currentArmourType = slots.helm.type;
         slots.helm.swapWith(slot);
         onEquipped(slotType);
@@ -240,8 +240,8 @@ class Player extends Character {
         final cost = 5;
         if (magic < cost) return;
         magic -= cost;
-        if (!weapon.isStaff) {
-          final index = slots.getSlotIndexWhere(isStaff);
+        if (!SlotType.isStaff(weapon)) {
+          final index = slots.getSlotIndexWhere(SlotType.isStaff);
           if (index == null) return;
           useSlot(index);
         }
@@ -253,8 +253,8 @@ class Player extends Character {
       if (slotType == SlotType.Spell_Tome_Split_Arrow) {
         final cost = 5;
         if (magic < cost) return;
-        if (!weapon.isBow){
-           final bowIndex = slots.getSlotIndexWhere(isBow);
+        if (!SlotType.isBow(weapon)){
+           final bowIndex = slots.getSlotIndexWhere(SlotType.isBow);
            if (bowIndex == null) return;
            useSlot(bowIndex);
         }
@@ -285,7 +285,7 @@ class Player extends Character {
 
   void sellSlot(int index){
     final slotAtIndex = slots.getSlotTypeAtIndex(index);
-    if (slotAtIndex.isEmpty) return;
+    if (slotAtIndex == SlotType.Empty) return;
     slots.assignSlotTypeAtIndex(index, SlotType.Empty);
     dispatch(PlayerEvent.Item_Sold);
   }
@@ -295,9 +295,9 @@ class Slot {
   var type = SlotType.Empty;
   var amount = -1;
 
-  bool get isEmpty => type.isEmpty;
+  bool get isEmpty => type == SlotType.Empty;
 
-  bool isType(SlotType value){
+  bool isType(int value){
     return type == value;
   }
 
@@ -323,7 +323,7 @@ class Slots {
   var slot5 = Slot();
   var slot6 = Slot();
 
-  int? getSlotIndexWhere(bool Function(SlotType slotType) where){
+  int? getSlotIndexWhere(bool Function(int slotType) where){
      if (where(slot1.type)) return 1;
      if (where(slot2.type)) return 2;
      if (where(slot3.type)) return 3;
@@ -352,7 +352,7 @@ class Slots {
     }
   }
 
-  SlotType getSlotTypeAtIndex(int index){
+  int getSlotTypeAtIndex(int index){
     return getSlotAtIndex(index).type;
   }
 
@@ -381,7 +381,7 @@ class Slots {
     }
   }
 
-  void assignSlotTypeAtIndex(int index, SlotType type){
+  void assignSlotTypeAtIndex(int index, int type){
     getSlotAtIndex(index).type = type;
   }
 
@@ -406,8 +406,8 @@ class Slots {
     return findSlotByType(SlotType.Empty);
   }
 
-  Slot? findWeaponSlotByType(SlotType type){
-    if (weapon.isType(type)) return weapon;
+  Slot? findWeaponSlotByType(int type){
+    if (SlotType.isWeapon(type)) return weapon;
     if (slot1.isType(type)) return slot1;
     if (slot2.isType(type)) return slot2;
     if (slot3.isType(type)) return slot3;
@@ -418,7 +418,7 @@ class Slots {
   }
 
 
-  Slot? findSlotByType(SlotType type){
+  Slot? findSlotByType(int type){
     if (slot1.isType(type)) return slot1;
     if (slot2.isType(type)) return slot2;
     if (slot3.isType(type)) return slot3;
@@ -428,7 +428,7 @@ class Slots {
     return null;
   }
 
-  bool assignToEmpty(SlotType type){
+  bool assignToEmpty(int type){
     final empty = getEmptySlot();
     if (empty == null) return false;
     empty.type = type;
@@ -446,19 +446,23 @@ extension PlayerProperties on Player {
 
   bool get isHuman => type == CharacterType.Human;
 
-  bool get unarmed => weapon.isEmpty;
+  bool get unarmed => weapon == SlotType.Empty;
 
-  void onEquipped(SlotType slotType){
-    maxHealth += slotType.health;
-    health = clampInt(health + slotType.health, 1, maxHealth);
-    maxMagic += slotType.magic;
-    magic = clampInt(magic + slotType.magic, 1, maxMagic);
+  void onEquipped(int slotType){
+    final healthIncrease = SlotType.getHealth(slotType);
+    maxHealth += healthIncrease;
+    health = clampInt(health + healthIncrease, 1, maxHealth);
+    final magicIncrease = SlotType.getMagic(slotType);
+    maxMagic += magicIncrease;
+    magic = clampInt(magic + magicIncrease, 1, maxMagic);
   }
 
-  void onUnequipped(SlotType slotType){
-    maxHealth -= slotType.health;
-    health = clampInt(health - slotType.health, 1, maxHealth);
-    maxMagic -= slotType.magic;
-    magic = clampInt(magic - slotType.magic, 1, maxMagic);
+  void onUnequipped(int slotType){
+    final healthAmount = SlotType.getHealth(slotType);
+    maxHealth -= healthAmount;
+    health = clampInt(health - healthAmount, 1, maxHealth);
+    final magicAmount = SlotType.getMagic(slotType);
+    maxMagic -= magicAmount;
+    magic = clampInt(magic - magicAmount, 1, maxMagic);
   }
 }
