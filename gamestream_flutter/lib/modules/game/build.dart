@@ -871,7 +871,7 @@ class GameBuild {
 
   Widget get tileAtMouse {
     return Refresh((){
-      return text("Tile: ${isometric.queries.tileAtMouse}");
+      return text("Tile: ${isometric.tileAtMouse}");
     });
   }
 

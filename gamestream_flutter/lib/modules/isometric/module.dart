@@ -30,18 +30,18 @@ import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 
 import 'enums.dart';
 import 'events.dart';
-import 'queries.dart';
 import 'render.dart';
 import 'subscriptions.dart';
 import 'update.dart';
 
+
 class IsometricModule {
+  final _screen = engine.screen;
   final subscriptions = IsometricSubscriptions();
   late final IsometricRender render;
   late final IsometricUpdate update;
   late final IsometricSpawn spawn;
   late final IsometricEvents events;
-  late final IsometricQueries queries;
 
   late ui.Image image;
 
@@ -121,10 +121,9 @@ class IsometricModule {
 
   IsometricModule(){
     spawn = IsometricSpawn(this);
-    queries = IsometricQueries(this);
     events = IsometricEvents(this);
-    update = IsometricUpdate(this, queries, spawn);
-    render = IsometricRender(this, queries);
+    update = IsometricUpdate(this, spawn);
+    render = IsometricRender(this);
 
     for(var i = 0; i < 300; i++){
       particles.add(Particle());
@@ -132,6 +131,14 @@ class IsometricModule {
   }
 
   // METHODS
+
+  bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
+    if (environmentObject.top > _screen.bottom) return false;
+    if (environmentObject.right < _screen.left) return false;
+    if (environmentObject.left > _screen.right) return false;
+    if (environmentObject.bottom < _screen.top) return false;
+    return true;
+  }
 
   void sortParticles(){
     insertionSort(
