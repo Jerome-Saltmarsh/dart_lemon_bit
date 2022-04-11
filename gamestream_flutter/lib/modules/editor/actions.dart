@@ -38,9 +38,9 @@ class EditorActions with EditorScope {
         )
     );
     if (state.objectType.value == ObjectType.Torch) {
-      isometric.state.resetLighting();
+      isometric.resetLighting();
     }
-    sortReversed(modules.isometric.state.environmentObjects, environmentObjectY);
+    sortReversed(modules.isometric.environmentObjects, environmentObjectY);
     engine.redrawCanvas();
   }
 
@@ -50,7 +50,7 @@ class EditorActions with EditorScope {
 
   void deleteSelected() {
     if (state.selected.value == null) return;
-    isometric.state.environmentObjects.remove(state.selected.value);
+    isometric.environmentObjects.remove(state.selected.value);
     state.selected.value = null;
     engine.redrawCanvas();
   }
@@ -67,8 +67,8 @@ class EditorActions with EditorScope {
 
   void clear() {
     newScene(
-        rows: isometric.state.totalRows.value,
-        columns: isometric.state.totalColumns.value
+        rows: isometric.totalRows.value,
+        columns: isometric.totalColumns.value
     );
   }
 
@@ -93,32 +93,32 @@ class EditorActions with EditorScope {
     int tile = Tile.Grass,
   }){
     print("editor.actions.newScene()");
-    isometric.state.totalRows.value = rows;
-    isometric.state.totalColumns.value = columns;
-    isometric.state.maxColumn = columns;
-    isometric.state.maxRow = rows;
-    isometric.state.tiles.clear();
+    isometric.totalRows.value = rows;
+    isometric.totalColumns.value = columns;
+    isometric.maxColumn = columns;
+    isometric.maxRow = rows;
+    isometric.tiles.clear();
     editor.state.teamSpawnPoints.clear();
     editor.state.teamSpawnPoints.add(
        isometric.properties.mapCenter
     );
 
     editor.state.timeSpeed.value = TimeSpeed.Normal;
-    isometric.state.minutes.value = config.defaultStartTime;
+    isometric.minutes.value = config.defaultStartTime;
     editor.state.characters.clear();
     for (int row = 0; row < rows; row++) {
       List<int> columnTiles = [];
       for (int column = 0; column < columns; column++) {
         columnTiles.add(tile);
       }
-      isometric.state.tiles.add(columnTiles);
+      isometric.tiles.add(columnTiles);
     }
     game.crates.clear();
-    isometric.state.particleEmitters.clear();
-    isometric.state.environmentObjects.clear();
+    isometric.particleEmitters.clear();
+    isometric.environmentObjects.clear();
     game.collectables.clear();
     game.itemsTotal = 0;
-    isometric.state.updateTileRender();
+    isometric.updateTileRender();
   }
 
   void closeDialog(){
@@ -161,8 +161,8 @@ class EditorActions with EditorScope {
         .whenComplete(core.actions.operationCompleted)
     ;
     final jsonRows = mapJson['tiles'];
-    isometric.state.tiles = mapJsonToTiles(jsonRows);
-    isometric.state.refreshTileSize();
+    isometric.tiles = mapJsonToTiles(jsonRows);
+    isometric.refreshTileSize();
     final jsonEnvironment = mapJson['environment'];
     state.environmentObjects.clear();
     for (Json json in jsonEnvironment) {
@@ -172,7 +172,7 @@ class EditorActions with EditorScope {
       state.environmentObjects.add(EnvironmentObject(x: x, y: y, type: type, radius: 25));
     }
 
-    isometric.state.minutes.value = mapJson[sceneFieldNames.startTime] / secondsPerHour;
+    isometric.minutes.value = mapJson[sceneFieldNames.startTime] / secondsPerHour;
 
     final List<Character> characters = [];
     for(Json json in mapJson['characters']){
@@ -206,8 +206,8 @@ class EditorActions with EditorScope {
     }
 
     state.characters = characters;
-    isometric.state.updateTileRender();
-    isometric.state.refreshTileSize();
+    isometric.updateTileRender();
+    isometric.refreshTileSize();
     engine.redrawCanvas();
   }
 

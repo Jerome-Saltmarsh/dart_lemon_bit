@@ -90,15 +90,14 @@ final objectTypeSrcPosition = <ObjectType, Vector2> {
   ObjectType.Block_Grass: atlas.blockGrass,
 };
 
-final _ambient = modules.isometric.state.ambient;
-final _isoState = isometric.state;
+final _ambient = modules.isometric.ambient;
 final _torchesY = _translations.torches.y;
 
 void mapEnvironmentObjectToSrc(EnvironmentObject env){
   const frames = 5;
 
   // TODO Optimize
-  var shade = _isoState.getShade(env.row, env.column);
+  var shade = isometric.getShade(env.row, env.column);
   if (env.isHouse){
     shade = _ambient.value == Shade.Bright ? 0 : 1;
   }

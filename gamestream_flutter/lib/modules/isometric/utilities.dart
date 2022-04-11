@@ -41,7 +41,7 @@ double get mouseUnprojectPositionX => projectedToWorldX(mouseWorldX, mouseWorldY
 double get mouseUnprojectPositionY =>
     projectedToWorldY(mouseWorldX, mouseWorldY);
 
-final _tileSize =  isometric.constants.tileSize;
+const _tileSize =  48.0;
 
 int get mouseColumn {
   return mouseUnprojectPositionX ~/ _tileSize;

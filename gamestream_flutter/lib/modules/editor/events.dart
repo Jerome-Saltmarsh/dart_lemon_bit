@@ -22,7 +22,7 @@ class EditorEvents with EditorScope {
 
   onActivated(){
     print("editor.events.onActivated()");
-    modules.isometric.state.setHour(12);
+    modules.isometric.setHour(12);
     register();
   }
 

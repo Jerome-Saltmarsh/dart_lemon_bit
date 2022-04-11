@@ -84,7 +84,7 @@ class EditorBuild {
   }
 
   List<Widget> _tabAll() {
-    return modules.isometric.state.environmentObjects.map((env) {
+    return modules.isometric.environmentObjects.map((env) {
       return WatchBuilder(editor.state.selected, (Vector2? selected) {
             return button(enumString(env.type), () {
               editor.state.selected.value = env;
@@ -106,40 +106,40 @@ class EditorBuild {
         children: [
           Container(
             width: _textWidth,
-            child: WatchBuilder(modules.isometric.state.totalRows, (int total){
+            child: WatchBuilder(modules.isometric.totalRows, (int total){
               return text("Rows $total");
             }),
           ),
-          button("-", isometric.state.removeRow),
-          button("+", isometric.state.addRow)
+          button("-", isometric.removeRow),
+          button("+", isometric.addRow)
         ],
       ),
       Row(
         children: [
             Container(
               width: _textWidth,
-              child: WatchBuilder(modules.isometric.state.totalColumns, (int total){
+              child: WatchBuilder(modules.isometric.totalColumns, (int total){
                  return text("Columns $total");
               }),
             ),
-            button("-", isometric.state.removeColumn),
-            button("+", isometric.state.addColumn)
+            button("-", isometric.removeColumn),
+            button("+", isometric.addColumn)
         ],
       ),
       Row(
         children: [
           text("Hour "),
-          WatchBuilder(modules.isometric.state.hours, (int hours){
+          WatchBuilder(modules.isometric.hours, (int hours){
             return text(hours);
           }),
           width8,
-          button("-", modules.isometric.state.detractHour),
+          button("-", modules.isometric.detractHour),
           width8,
-          button("+", modules.isometric.state.addHour),
+          button("+", modules.isometric.addHour),
           width8,
         ],
       ),
-        WatchBuilder(modules.isometric.state.ambient, (int ambient){
+        WatchBuilder(modules.isometric.ambient, (int ambient){
       return text(shadeName(ambient));
         }),
       Row(children: [

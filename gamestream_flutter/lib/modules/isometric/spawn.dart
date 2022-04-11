@@ -4,6 +4,7 @@ import 'package:bleed_common/OrbType.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
+import 'package:gamestream_flutter/modules/isometric/module.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/state/game.dart';
 import 'package:lemon_math/adjacent.dart';
@@ -14,13 +15,12 @@ import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/random_between.dart';
 
 import 'enums.dart';
-import 'state.dart';
 
-final particles = isometric.state.particles;
+final particles = isometric.particles;
 
 class IsometricSpawn {
 
-  final IsometricState state;
+  final IsometricModule state;
   late final particles;
   IsometricSpawn(this.state){
     particles = state.particles;

@@ -1,6 +1,7 @@
 import 'package:bleed_common/Tile.dart';
 import 'package:bleed_common/enums/Shade.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
+import 'package:gamestream_flutter/modules/isometric/module.dart';
 import 'package:gamestream_flutter/modules/isometric/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_math/Vector2.dart';
@@ -8,7 +9,7 @@ import 'package:lemon_math/Vector2.dart';
 import 'utilities.dart';
 
 class IsometricProperties {
-  final IsometricState state;
+  final IsometricModule state;
   IsometricProperties(this.state);
 
   bool get dayTime => state.ambient.value == Shade.Bright;
@@ -41,7 +42,7 @@ class IsometricProperties {
 
   int get totalActiveParticles {
     var totalParticles = 0;
-    final particles = isometric.state.particles;
+    final particles = isometric.particles;
     final length = particles.length;
     for (var i = 0; i < length; i++) {
       if (!particles[i].active) continue;

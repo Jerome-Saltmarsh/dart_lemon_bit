@@ -111,7 +111,7 @@ Widget buildMessageBoxIcon() {
 }
 
 Widget buildMouseWorldPosition() {
-  return WatchBuilder(modules.isometric.state.minutes, (int value) {
+  return WatchBuilder(modules.isometric.minutes, (int value) {
     return text("Mouse X: ${mouseWorldX.toInt()}, Y: ${mouseWorldY.toInt()}");
   });
 }

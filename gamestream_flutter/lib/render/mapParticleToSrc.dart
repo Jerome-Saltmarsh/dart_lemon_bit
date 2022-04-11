@@ -24,10 +24,8 @@ const _mystIndex40 = 5;
 const _mystIndex50 = 6;
 const pixelSize = 6.0;
 
-final _isometricState = isometric.state;
-
 void mapParticleToSrc(Particle particle){
-  final shade = _isometricState.getShadeAtPosition(particle.x, particle.y);
+  final shade = isometric.getShadeAtPosition(particle.x, particle.y);
 
   switch(particle.type) {
     case ParticleType.Blood:

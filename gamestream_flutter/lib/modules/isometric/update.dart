@@ -5,17 +5,18 @@ import 'package:bleed_common/Tile.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/modules/isometric/queries.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
-import 'package:gamestream_flutter/modules/isometric/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 
-final _particles = isometric.state.particles;
+import 'module.dart';
+
+final _particles = isometric.particles;
 final _spawn = isometric.spawn;
 final _screen = engine.screen;
 
 class IsometricUpdate {
 
-  final IsometricState state;
+  final IsometricModule state;
   final IsometricQueries queries;
   final IsometricSpawn spawn;
   IsometricUpdate(this.state, this.queries, this.spawn);

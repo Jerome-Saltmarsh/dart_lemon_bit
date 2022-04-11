@@ -18,11 +18,11 @@ class EditorCompile {
   Json compileGameToJson() {
     return {
       "collectables": game.collectables,
-      "tiles": compileTiles(isometric.state.tiles),
+      "tiles": compileTiles(isometric.tiles),
       "crates": compileCrates(game.crates),
       "environment": compileEnvironmentObjects(state.environmentObjects),
       'characters': compileCharactersToJson(state.characters),
-      sceneFieldNames.startTime: modules.isometric.state.minutes.value * secondsPerHour,
+      sceneFieldNames.startTime: modules.isometric.minutes.value * secondsPerHour,
       sceneFieldNames.secondsPerFrame: state.timeSpeed.value.index,
       sceneFieldNames.playerSpawnPoints: compileVector2ListToIntList(state.teamSpawnPoints),
       sceneFieldNames.items: compileItemsToJson(),

@@ -34,8 +34,8 @@ var durationTotal = 0;
 final _player = modules.game.state.player;
 final _slots = _player.slots;
 final _orbs = _player.orbs;
-final _hours = modules.isometric.state.hours;
-final _minutes = modules.isometric.state.minutes;
+final _hours = modules.isometric.hours;
+final _minutes = modules.isometric.minutes;
 
 
 var time = DateTime.now();
@@ -130,7 +130,7 @@ class _ByteStreamParser {
           break;
         case ServerResponse.Paths:
           modules.game.state.compilePaths.value = true;
-          final paths = modules.isometric.state.paths;
+          final paths = modules.isometric.paths;
           var index = 0;
           while (true) {
             final pathIndex = _nextInt();
@@ -294,7 +294,7 @@ class _ByteStreamParser {
   }
 
   void _parseItems(){
-    final items = isometric.state.items;
+    final items = isometric.items;
     var index = 0;
     while(true) {
       final itemTypeIndex = _nextByte();

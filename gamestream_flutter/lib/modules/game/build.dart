@@ -847,7 +847,7 @@ class GameBuild {
 
   Widget get buildTotalParticles {
     return Refresh((){
-      return text("Particles: ${isometric.state.particles.length}");
+      return text("Particles: ${isometric.particles.length}");
     });
   }
 

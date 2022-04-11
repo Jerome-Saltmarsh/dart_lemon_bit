@@ -172,10 +172,10 @@ class CoreActions {
     // isometric.state.paths.clear();
     engine.zoom = 1;
     refreshUI();
-    isometric.actions.state.tiles.clear();
-    isometric.actions.state.tilesDst = Float32List(0);
-    isometric.actions.state.tilesSrc = Float32List(0);
-    isometric.state.refreshTileSize();
+    isometric.tiles.clear();
+    isometric.tilesDst = Float32List(0);
+    isometric.tilesSrc = Float32List(0);
+    isometric.refreshTileSize();
     engine.redrawCanvas();
   }
 
@@ -190,8 +190,8 @@ class CoreActions {
     game.totalProjectiles = 0;
     game.collectables.clear();
     game.bulletHoleIndex = 0;
-    isometric.state.particles.clear();
-    isometric.state.next = null;
+    isometric.particles.clear();
+    isometric.next = null;
 
     for (final bullet in game.bulletHoles) {
       bullet.x = 0;
@@ -298,8 +298,8 @@ class CoreActions {
 
   void openMapEditor({bool newScene = true}){
     core.state.mode.value = Mode.Editor;
-    modules.isometric.state.hours.value = 12;
-    modules.isometric.state.minutes.value = 0;
+    modules.isometric.hours.value = 12;
+    modules.isometric.minutes.value = 0;
     if (newScene) {
       editor.actions.newScene();
     }

@@ -33,7 +33,7 @@ Offset offset(double x, double y) {
 }
 
 void setTileAtMouse(int tile) {
-  isometric.state.setTile(row: mouseRow, column: mouseColumn, tile: tile);
+  isometric.setTile(row: mouseRow, column: mouseColumn, tile: tile);
 }
 
 void copy(String value){

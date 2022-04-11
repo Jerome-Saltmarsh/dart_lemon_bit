@@ -30,8 +30,7 @@ import 'style.dart';
 
 
 final _screen = engine.screen;
-final _actions = isometric.actions;
-final _state = isometric.state;
+// final _actions = isometric.actions;
 final _render = isometric.render;
 final _gameType = game.type;
 final _projectiles = game.projectiles;
@@ -53,8 +52,8 @@ class GameRender {
   }
 
   void render(Canvas canvas, Size size) {
-    isometric.state.applyDynamicEmissions();
-    isometric.state.applyDynamicShadeToTileSrc();
+    isometric.applyDynamicEmissions();
+    isometric.applyDynamicShadeToTileSrc();
     _render.renderTiles();
     drawProjectiles(_projectiles);
     drawBulletHoles(_bulletHoles);
@@ -82,7 +81,7 @@ class GameRender {
        final dynamicObject = game.dynamicObjects[i];
        engine.mapSrc64(
            x: 6032,
-           y: _state.getShadeAtPosition(dynamicObject.x, dynamicObject.y) * 64
+           y: isometric.getShadeAtPosition(dynamicObject.x, dynamicObject.y) * 64
        );
        engine.mapDst(x: dynamicObject.x, y: dynamicObject.y, anchorX: 32, anchorY: 32);
        engine.renderAtlas();
@@ -133,7 +132,7 @@ class GameRender {
     final x = attackTarget.x;
     final y = attackTarget.y;
     if (x == 0 && y == 0) return;
-    final shade = isometric.state.getShadeAtPosition(x, y);
+    final shade = isometric.getShadeAtPosition(x, y);
     if (shade >= Shade.Very_Dark) return;
     drawCircle36(x, y);
   }
@@ -188,7 +187,7 @@ class GameRender {
     engine.paint.strokeWidth = 4.0;
 
     var index = 0;
-    final paths = modules.isometric.state.paths;
+    final paths = modules.isometric.paths;
     while(true){
       final length = paths[index];
       if (length == 250) break;
@@ -213,7 +212,7 @@ class GameRender {
     for (final bulletHole in bulletHoles) {
       if (bulletHole.x == 0) return;
       if (!engine.screen.contains(bulletHole.x, bulletHole.y)) continue;
-      if (isometric.state.inDarkness(bulletHole.x, bulletHole.y)) continue;
+      if (isometric.inDarkness(bulletHole.x, bulletHole.y)) continue;
       engine.render(
           dstX: bulletHole.x,
           dstY: bulletHole.y,
@@ -260,7 +259,7 @@ class GameRender {
         atlas.projectiles.fireball.size, atlas.projectiles.fireball.size);
 
     // TODO use atlas instead
-    engine.canvas.drawAtlas(isometric.state.image, [rsTransform],
+    engine.canvas.drawAtlas(isometric.image, [rsTransform],
         [rect], null, null, null, engine.paint);
   }
 
@@ -274,14 +273,14 @@ class GameRender {
   }
 
   void drawItems() {
-    final items = isometric.state.items;
+    final items = isometric.items;
     for (var i = 0; i < game.itemsTotal; i++){
       isometric.render.renderItem(items[i]);
     }
   }
 
   void drawItemText() {
-    final items = isometric.state.items;
+    final items = isometric.items;
     for (var i = 0; i < game.itemsTotal; i++){
       final item = items[i];
       const mouseDist = 100;
@@ -341,21 +340,21 @@ class GameRender {
 
   void drawDebugEnvironmentObjects() {
     engine.paint.color = Colors.red;
-    for (EnvironmentObject env in modules.isometric.state.environmentObjects) {
+    for (EnvironmentObject env in modules.isometric.environmentObjects) {
       drawLine(env.left, env.top, env.right, env.top); // top left to top right
       drawLine(
           env.right, env.top, env.right, env.bottom); // top left to bottom right
       drawLine(env.right, env.bottom, env.left, env.bottom);
       drawLine(env.left, env.top, env.left, env.bottom);
     }
-    for (EnvironmentObject env in modules.isometric.state.environmentObjects) {
+    for (EnvironmentObject env in modules.isometric.environmentObjects) {
       engine.draw.circle(env.x, env.y, env.radius, Colors.blue);
     }
   }
 
   void drawPlayerText() {
     final players = game.players;
-    final charWidth = isometric.constants.charWidth;
+    const charWidth = 4.5;
     final totalPlayers = game.totalPlayers.value;
     for (var i = 0; i < totalPlayers; i++) {
       final human = players[i];

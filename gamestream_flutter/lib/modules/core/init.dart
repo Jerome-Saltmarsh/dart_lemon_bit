@@ -14,8 +14,8 @@ final isLocalHost = Uri.base.host == 'localhost'; // TODO move to lemon-engine
 
 Future init() async {
   await loadSharedPreferences();
-  isometric.state.image = await loadImage('images/atlas.png'); // TODO move to lemon-engine
-  engine.image = isometric.state.image;
+  isometric.image = await loadImage('images/atlas.png'); // TODO move to lemon-engine
+  engine.image = isometric.image;
   initializeGameInstances();
   initializeEventListeners();
   audio.init();
@@ -28,11 +28,9 @@ Future init() async {
 }
 
 void initializeGameInstances() {
-  for (var i = 0; i < 1000; i++) {
-    isometric.state.items.add(Item(type: ItemType.Handgun, x: 0, y: 0));
+  for (var i = 0; i < 300; i++) {
+    isometric.items.add(Item(type: ItemType.Handgun, x: 0, y: 0));
   }
-
-
 }
 
 void initializeEventListeners() {

@@ -124,7 +124,7 @@ void parseState() {
         break;
 
       case ServerResponse.Scene_Shade_Max:
-        modules.isometric.state.maxAmbientBrightness.value = _consumeShade();
+        modules.isometric.maxAmbientBrightness.value = _consumeShade();
         break;
 
       case ServerResponse.Scene_Changed:
@@ -138,12 +138,12 @@ void parseState() {
         Future.delayed(Duration(milliseconds: 150), () {
           engine.cameraCenter(x, y);
         });
-        isometric.state.particles.clear();
-        isometric.state.next = null;
+        isometric.particles.clear();
+        isometric.next = null;
         break;
 
       case ServerResponse.EnvironmentObjects:
-        isometric.state.particleEmitters.clear();
+        isometric.particleEmitters.clear();
         _parseEnvironmentObjects();
         break;
 
@@ -237,12 +237,12 @@ void parseState() {
 }
 
 void parseGameTime() {
-  modules.isometric.state.minutes.value = consumeInt();
+  modules.isometric.minutes.value = consumeInt();
 }
 
 void parseItems() {
   game.itemsTotal = consumeInt();
-  final items = isometric.state.items;
+  final items = isometric.items;
   for (int i = 0; i < game.itemsTotal; i++) {
     final item = items[i];
     item.type = _consumeItemType();
@@ -261,7 +261,7 @@ void parseCrates() {
 
 void _parseEnvironmentObjects() {
   print("parse.environmentObjects()");
-  modules.isometric.state.environmentObjects.clear();
+  modules.isometric.environmentObjects.clear();
   game.torches.clear();
 
   while (!_simiColonConsumed()) {
@@ -293,16 +293,16 @@ void _parseEnvironmentObjects() {
       game.torches.add(env);
     }
 
-    modules.isometric.state.environmentObjects.add(env);
+    modules.isometric.environmentObjects.add(env);
   }
 
-  modules.isometric.actions.refreshGeneratedObjects();
-  sortReversed(modules.isometric.state.environmentObjects, environmentObjectY);
-  modules.isometric.state.resetLighting();
+  modules.isometric.refreshGeneratedObjects();
+  sortReversed(modules.isometric.environmentObjects, environmentObjectY);
+  modules.isometric.resetLighting();
 }
 
 void addParticleEmitter(ParticleEmitter value) {
-  isometric.state.particleEmitters.add(value);
+  isometric.particleEmitters.add(value);
 }
 
 double environmentObjectY(EnvironmentObject environmentObject) {
@@ -312,15 +312,14 @@ double environmentObjectY(EnvironmentObject environmentObject) {
 void _parseTiles() {
   print("parse.tiles()");
   final isometric = modules.isometric;
-  final isometricState = isometric.state;
   final rows = consumeInt();
   final columns = consumeInt();
-  final tiles = isometricState.tiles;
+  final tiles = isometric.tiles;
   tiles.clear();
-  isometricState.totalRows.value = rows;
-  isometricState.totalColumns.value = columns;
-  isometricState.totalRowsInt = rows;
-  isometricState.totalColumnsInt = columns;
+  isometric.totalRows.value = rows;
+  isometric.totalColumns.value = columns;
+  isometric.totalRowsInt = rows;
+  isometric.totalColumnsInt = columns;
   for (var row = 0; row < rows; row++) {
     final List<int> column = [];
     for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
@@ -329,8 +328,8 @@ void _parseTiles() {
     tiles.add(column);
   }
 
-  isometric.actions.refreshGeneratedObjects();
-  isometric.state.updateTileRender();
+  isometric.refreshGeneratedObjects();
+  isometric.updateTileRender();
 }
 
 void _parsePlayerAbility(){
@@ -361,7 +360,7 @@ void _parseGameJoined() {
   player.x = consumeDouble();
   player.y = consumeDouble();
 
-  final particles = modules.isometric.state.particles;
+  final particles = modules.isometric.particles;
   for(final particle in particles) {
     particle.duration = 0;
   }
