@@ -16,7 +16,7 @@ Future init() async {
   await loadSharedPreferences();
   isometric.image = await loadImage('images/atlas.png'); // TODO move to lemon-engine
   engine.image = isometric.image;
-  initializeGameInstances();
+  // initializeGameInstances();
   initializeEventListeners();
   audio.init();
   if (isLocalHost) {

@@ -798,7 +798,7 @@ extension GameFunctions on Game {
       }
     }
 
-    if (player.lastUpdateFrame > 5) {
+    if (player.lastUpdateFrame > 10) {
       setCharacterStateIdle(player);
     }
 

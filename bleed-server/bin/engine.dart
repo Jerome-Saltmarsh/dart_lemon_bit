@@ -201,7 +201,7 @@ class _Scenes {
     wildernessWest01 = await loadSceneFromFile('wilderness-west-01');
     wildernessNorth01 = await loadSceneFromFile('wilderness-north-01');
     wildernessEast = await loadSceneFromFile('wilderness-east');
-    royal = await loadSceneFromFireStore('royal');
+    // royal = await loadSceneFromFireStore('royal');
     skirmish = await loadSceneFromFireStore('skirmish');
   }
 }
