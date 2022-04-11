@@ -1,7 +1,4 @@
 
-import 'dart:math';
-
-import 'package:bleed_common/Tile.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -11,7 +8,6 @@ import 'module.dart';
 
 final _particles = isometric.particles;
 final _spawn = isometric.spawn;
-final _screen = engine.screen;
 
 class IsometricUpdate {
 
@@ -21,17 +17,10 @@ class IsometricUpdate {
   IsometricUpdate(this.state, this.spawn);
 
   void call(){
-    updateVisibleTiles();
     _updateParticles();
     _updateParticleEmitters();
   }
 
-  void updateVisibleTiles() {
-    state.minRow = max(0, getRow(_screen.left, _screen.top));
-    state.maxRow = min(state.totalRowsInt, getRow(_screen.right, _screen.bottom));
-    state.minColumn = max(0, getColumn(_screen.right, _screen.top));
-    state.maxColumn = min(state.totalColumnsInt, getColumn(_screen.left, _screen.bottom));
-  }
 
   void _updateParticles() {
 

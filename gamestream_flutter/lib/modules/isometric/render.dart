@@ -54,6 +54,7 @@ class IsometricRender {
   void renderTiles() {
 
     final screen = engine.screen;
+
     state.minRow = max(0, getRow(screen.left, screen.top));
     state.maxRow = min(state.totalRowsInt, getRow(screen.right, screen.bottom));
     state.minColumn = max(0, getColumn(screen.right, screen.top));
