@@ -100,7 +100,7 @@ class EditorActions with EditorScope {
     isometric.tiles.clear();
     editor.state.teamSpawnPoints.clear();
     editor.state.teamSpawnPoints.add(
-       isometric.properties.mapCenter
+       isometric.mapCenter
     );
 
     editor.state.timeSpeed.value = TimeSpeed.Normal;

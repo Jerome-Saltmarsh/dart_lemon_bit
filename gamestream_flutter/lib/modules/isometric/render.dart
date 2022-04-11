@@ -15,7 +15,6 @@ import 'package:gamestream_flutter/modules/isometric/atlas.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:gamestream_flutter/modules/isometric/maps.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
-import 'package:gamestream_flutter/modules/isometric/properties.dart';
 import 'package:gamestream_flutter/modules/isometric/queries.dart';
 import 'package:gamestream_flutter/render/mapParticleToDst.dart';
 import 'package:gamestream_flutter/render/mapParticleToSrc.dart';
@@ -53,10 +52,9 @@ class SpriteLayer {
 class IsometricRender {
 
   final IsometricModule state;
-  final IsometricProperties properties;
   final IsometricQueries queries;
   final IsometricMaps maps;
-  IsometricRender(this.state, this.properties, this.queries, this.maps);
+  IsometricRender(this.state, this.queries, this.maps);
 
   void renderTiles() {
 

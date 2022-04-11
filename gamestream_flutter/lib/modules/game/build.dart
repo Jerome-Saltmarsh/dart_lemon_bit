@@ -865,7 +865,7 @@ class GameBuild {
 
   Widget get buildActiveParticles {
     return Refresh((){
-      return text("Active Particles: ${isometric.properties.totalActiveParticles}");
+      return text("Active Particles: ${isometric.totalActiveParticles}");
     });
   }
 

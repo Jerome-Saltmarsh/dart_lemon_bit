@@ -1,12 +1,10 @@
 import 'package:gamestream_flutter/modules/isometric/module.dart';
-import 'package:gamestream_flutter/modules/isometric/properties.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 
 class IsometricEvents {
   
   final IsometricModule state;
-  final IsometricProperties properties;
-  IsometricEvents(this.state, this.properties);
+  IsometricEvents(this.state);
 
   void register(){
     if (isometric.eventsRegistered) return;
@@ -27,7 +25,7 @@ class IsometricEvents {
       isometric.ambient.value = maxShade;
       return;
     }
-    isometric.ambient.value = properties.currentPhaseShade;
+    isometric.ambient.value = isometric.currentPhaseShade;
   }
 
   void onTotalColumnsChanged(int value){

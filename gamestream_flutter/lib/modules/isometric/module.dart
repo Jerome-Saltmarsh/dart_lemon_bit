@@ -28,9 +28,9 @@ import 'package:lemon_watch/watch.dart';
 import 'package:gamestream_flutter/functions.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 
+import 'enums.dart';
 import 'events.dart';
 import 'maps.dart';
-import 'properties.dart';
 import 'queries.dart';
 import 'render.dart';
 import 'subscriptions.dart';
@@ -39,7 +39,6 @@ import 'update.dart';
 class IsometricModule {
   final subscriptions = IsometricSubscriptions();
   final map = IsometricMaps();
-  late final IsometricProperties properties;
   late final IsometricRender render;
   late final IsometricUpdate update;
   late final IsometricSpawn spawn;
@@ -77,25 +76,70 @@ class IsometricModule {
 
   Particle? next;
 
+  // PROPERTIES
+
+  bool get dayTime => ambient.value == Shade.Bright;
+
+  int get tileAtMouse {
+    if (mouseRow < 0) return Tile.Boundary;
+    if (mouseColumn < 0) return Tile.Boundary;
+    if (mouseRow >= totalRows.value) return Tile.Boundary;
+    if (mouseColumn >= totalColumns.value) return Tile.Boundary;
+    return tiles[mouseRow][mouseColumn];
+  }
+
+  int get currentPhaseShade {
+    return modules.isometric.map.phaseToShade(phase);
+  }
+
+  String get currentAmbientShadeName {
+    return shadeName(currentPhaseShade);
+  }
+
+  Phase get phase {
+    return map.hourToPhase(hours.value);
+  }
+
+  Vector2 get mapCenter {
+    final row = totalRows.value ~/ 2;
+    final column = totalColumns.value ~/ 2;
+    return getTilePosition(row: row, column: column);
+  }
+
+  int get totalActiveParticles {
+    var totalParticles = 0;
+    final particles = isometric.particles;
+    final length = particles.length;
+    for (var i = 0; i < length; i++) {
+      if (!particles[i].active) continue;
+      totalParticles++;
+    }
+    return totalParticles;
+  }
+
+  bool get boundaryAtMouse => tileAtMouse == Tile.Boundary;
+
+  // CONSTRUCTOR
+
+  IsometricModule(){
+    spawn = IsometricSpawn(this);
+    queries = IsometricQueries(this);
+    events = IsometricEvents(this);
+    update = IsometricUpdate(this, queries, spawn);
+    render = IsometricRender(this, queries, map);
+
+    for(var i = 0; i < 300; i++){
+      particles.add(Particle());
+    }
+  }
+
+  // METHODS
 
   void sortParticles(){
     insertionSort(
       particles,
       compare: compareParticles,
     );
-  }
-
-  IsometricModule(){
-    spawn = IsometricSpawn(this);
-    properties = IsometricProperties(this);
-    queries = IsometricQueries(this);
-    events = IsometricEvents(this, properties);
-    update = IsometricUpdate(this, queries, spawn);
-    render = IsometricRender(this, properties, queries, map);
-
-    for(var i = 0; i < 300; i++){
-      particles.add(Particle());
-    }
   }
 
 
@@ -571,12 +615,12 @@ class IsometricModule {
   }
 
   void cameraCenterMap(){
-    final center = modules.isometric.properties.mapCenter;
+    final center = mapCenter;
     engine.cameraCenter(center.x, center.y);
   }
 
   void applyDynamicEmissions() {
-    if (modules.isometric.properties.dayTime) return;
+    if (dayTime) return;
     resetDynamicShadesToBakeMap();
 
     final totalPlayers = game.totalPlayers.value;

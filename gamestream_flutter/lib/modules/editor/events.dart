@@ -95,7 +95,7 @@ class EditorEvents with EditorScope {
       return;
     }
 
-    if (modules.isometric.properties.tileAtMouse == Tile.Boundary){
+    if (modules.isometric.tileAtMouse == Tile.Boundary){
       return;
     }
 
