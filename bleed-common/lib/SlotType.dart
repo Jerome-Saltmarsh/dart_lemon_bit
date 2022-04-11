@@ -152,8 +152,8 @@ class SlotType {
 
   static bool isItem(int value) {
     return const <int>[
-      SlotType.Silver_Pendant,
-      SlotType.Golden_Necklace,
+      Silver_Pendant,
+      Golden_Necklace,
     ].contains(value);
   }
 
@@ -171,7 +171,7 @@ class SlotType {
   }
 
   static int getDuration(int value) {
-    return const <int, int>{
+    return const {
       Empty: 20,
       Sword_Wooden: 20,
       Sword_Short: 25,
@@ -198,7 +198,7 @@ class SlotType {
       Staff_Golden: 45,
       Handgun: 400,
       Shotgun: 300,
-    }[value] ?? 25;
+    }[value] ?? 0;
   }
 }
 
