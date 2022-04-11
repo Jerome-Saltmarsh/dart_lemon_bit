@@ -40,14 +40,12 @@ double get mouseUnprojectPositionX => projectedToWorldX(mouseWorldX, mouseWorldY
 double get mouseUnprojectPositionY =>
     projectedToWorldY(mouseWorldX, mouseWorldY);
 
-const _tileSize =  48.0;
-
 int get mouseColumn {
-  return mouseUnprojectPositionX ~/ _tileSize;
+  return mouseUnprojectPositionX ~/ tileSize;
 }
 
 int get mouseRow {
-  return mouseUnprojectPositionY ~/ _tileSize;
+  return mouseUnprojectPositionY ~/ tileSize;
 }
 
 double shiftHeight(double z) {
@@ -57,13 +55,3 @@ double shiftHeight(double z) {
 double shiftScale(double z) {
   return 1 + (z * 0.15);
 }
-
-// int getRow(double x, double y){
-//   return (x + y) ~/ tileSize;
-// }
-//
-// int getColumn(double x, double y){
-//   return (y - x) ~/ tileSize;
-// }
-
-

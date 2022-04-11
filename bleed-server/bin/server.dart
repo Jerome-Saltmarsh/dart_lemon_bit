@@ -107,6 +107,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       clearBuffer();
     }
 
+    void compileOrbsChanged(){
+      final player = _player;
+      if (player == null) return;
+      byteCompiler.writePlayerOrbs(player);
+    }
+
     void compileAndSend(){
      final player = _player;
      if (player == null) return;
@@ -123,6 +129,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       final player = _player;
       if (player == null) return;
       player.compileAndUpdate = compileAndSend;
+      player.onOrbsChanged = compileOrbsChanged;
       final account = _account;
       if (account != null) {
         player.name = account.publicName;
@@ -139,6 +146,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       compilePlayersRemaining(_buffer, 0);
       write('${ServerResponse.Game_Joined} 0 ${game.id} ${player.team} ${player.x.toInt()} ${player.y.toInt()}');
       sendAndClearBuffer();
+      compileOrbsChanged();
     }
 
     void joinGameSkirmish() {
@@ -889,6 +897,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               player.orbs.topaz -= cost.topaz;
               player.orbs.ruby -= cost.rubies;
               player.orbs.emerald -= cost.emeralds;
+              player.onOrbsChanged();
           }
           player.acquire(slotType);
           return;

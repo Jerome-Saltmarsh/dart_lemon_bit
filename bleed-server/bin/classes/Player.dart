@@ -59,20 +59,22 @@ class Player extends Character {
   Vector2 runTarget = Vector2(0, 0);
 
   late Function compileAndUpdate;
+  late Function onOrbsChanged;
 
   void attainOrb(OrbType orb){
     switch(orb) {
       case OrbType.Topaz:
         orbs.topaz++;
         dispatch(PlayerEvent.Orb_Earned_Topaz);
-        return;
+        break;
       case OrbType.Ruby:
         orbs.ruby++;
-        return;
+        break;
       case OrbType.Emerald:
         orbs.emerald++;
-        return;
+        break;
     }
+    onOrbsChanged();
   }
 
   int get magic => _magic;
@@ -439,9 +441,9 @@ class Slots {
 }
 
 class Orbs {
-  int topaz = 0;
-  int ruby = 0;
-  int emerald = 0;
+  var topaz = 0;
+  var ruby = 0;
+  var emerald = 0;
 }
 
 extension PlayerProperties on Player {

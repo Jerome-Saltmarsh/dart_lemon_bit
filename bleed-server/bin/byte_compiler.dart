@@ -44,12 +44,20 @@ class _ByteCompiler {
     return sendBuffer;
   }
 
+  void writePlayerOrbs(Player player) {
+    writeByte(ServerResponse.Player_Orbs);
+    final orbs = player.orbs;
+    writeBigInt(orbs.topaz); // 2
+    writeBigInt(orbs.emerald); // 2
+    writeBigInt(orbs.ruby); // 2
+  }
+
   void writePlayerGame(Player player){
     final slots = player.slots;
     final orbs = player.orbs;
     final game = player.game;
     writeByte(ServerResponse.Player);
-    writeBigInt(player.game.frame);
+    // writeBigInt(player.game.frame);
     writeBigInt(player.x);
     writeBigInt(player.y);
     writeBigInt(player.health);
@@ -59,15 +67,15 @@ class _ByteCompiler {
     writeSlot(slots.weapon);
     writeByte(slots.armour.type);
     writeByte(slots.helm.type);
-    writeSlot(slots.slot1);
-    writeSlot(slots.slot2);
-    writeSlot(slots.slot3);
-    writeSlot(slots.slot4);
-    writeSlot(slots.slot5);
-    writeSlot(slots.slot6);
-    writeBigInt(orbs.topaz); // 2
-    writeBigInt(orbs.emerald); // 2
-    writeBigInt(orbs.ruby); // 2
+    writeSlot(slots.slot1); // 2
+    writeSlot(slots.slot2); // 2
+    writeSlot(slots.slot3); // 2
+    writeSlot(slots.slot4); // 2
+    writeSlot(slots.slot5); // 2
+    writeSlot(slots.slot6); // 2
+    // writeBigInt(orbs.topaz); // 2
+    // writeBigInt(orbs.emerald); // 2
+    // writeBigInt(orbs.ruby); // 2
     writeBool(player.alive); // 1
     writeBool(player.storeVisible); // 1
 

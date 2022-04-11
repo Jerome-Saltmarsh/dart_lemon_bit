@@ -130,7 +130,7 @@ class _Player {
   final Watch<double> health = Watch(0.0);
   final Watch<int> experience = Watch(0);
   final Watch<int> level = Watch(1);
-  final Watch<int> serverFrame = Watch(1);
+  // final Watch<int> serverFrame = Watch(1);
   final Watch<int> skillPoints = Watch(1);
   final Watch<int> nextLevelExperience = Watch(1);
   final Watch<double> experiencePercentage = Watch(0);

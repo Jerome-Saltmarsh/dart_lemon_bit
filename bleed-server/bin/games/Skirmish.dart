@@ -161,18 +161,21 @@ class GameSkirmish extends Game {
     if (item.type == ItemType.Orb_Topaz) {
       player.dispatch(PlayerEvent.Orb_Earned_Topaz);
       player.orbs.topaz++;
+      player.onOrbsChanged();
       return true;
     }
 
     if (item.type == ItemType.Orb_Ruby) {
       player.dispatch(PlayerEvent.Orb_Earned_Ruby);
       player.orbs.ruby++;
+      player.onOrbsChanged();
       return true;
     }
 
     if (item.type == ItemType.Orb_Emerald) {
       player.dispatch(PlayerEvent.Orb_Earned_Emerald);
       player.orbs.emerald++;
+      player.onOrbsChanged();
       return true;
     }
 

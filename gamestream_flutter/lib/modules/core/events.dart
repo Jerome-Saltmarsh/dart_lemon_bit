@@ -119,7 +119,6 @@ class CoreEvents {
 
       case Mode.Editor:
         modules.isometric.events.register();
-        // editor.actions.newScene();
         engine.drawCanvas.value = editor.render.render;
         engine.drawCanvasAfterUpdate = true;
         editor.events.onActivated();

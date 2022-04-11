@@ -153,14 +153,14 @@ class _ByteStreamParser {
           sendRequestUpdatePlayer();
           return;
         case ServerResponse.Player:
-          final nextServerFrame =  _nextInt();
-          if (nextServerFrame == _player.serverFrame.value){
-            // HOW IS THIS STILL BEING REACHED, PATCHED SHOULD BE GETTING RETURNED
-            // print("NO CHANGE FROM SERVER");
-            // modules.game.update.readPlayerInput();
-            // sendRequestUpdatePlayer();
-            return;
-          }
+          // final nextServerFrame =  _nextInt();
+          // if (nextServerFrame == _player.serverFrame.value){
+          //   // HOW IS THIS STILL BEING REACHED, PATCHED SHOULD BE GETTING RETURNED
+          //   // print("NO CHANGE FROM SERVER");
+          //   // modules.game.update.readPlayerInput();
+          //   // sendRequestUpdatePlayer();
+          //   return;
+          // }
 
           _player.x = _nextDouble();
           _player.y = _nextDouble();
@@ -218,13 +218,22 @@ class _ByteStreamParser {
           readSlot(_slots.slot4);
           readSlot(_slots.slot5);
           readSlot(_slots.slot6);
+          // _orbs.topaz.value = _nextInt();
+          // _orbs.emerald.value = _nextInt();
+          // _orbs.ruby.value = _nextInt();
+          _player.alive.value = readBool();
+          _player.storeVisible.value = readBool();
+          // _player.serverFrame.value = nextServerFrame;
+          break;
+
+
+        case ServerResponse.Player_Orbs:
           _orbs.topaz.value = _nextInt();
           _orbs.emerald.value = _nextInt();
           _orbs.ruby.value = _nextInt();
-          _player.alive.value = readBool();
-          _player.storeVisible.value = readBool();
-          _player.serverFrame.value = nextServerFrame;
           break;
+
+
         case ServerResponse.End:
           byteLength.value = _index;
           _index = 0;

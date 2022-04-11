@@ -82,16 +82,19 @@
 [ ] First heavy guitar track    
 [ ] FIX Shotgun fire animation loops  
 [ ] Frontend check version    
+[ ] Fix flames freeze    
 [ ] Display Highlighted Target info (Zombie, Pot, etc)    
 [ ] Tutorial    
 [ ] Destructible Objects    
     [ ] Bush
     [ ] Rock
     [ ] Chest
-    [ ] Pot
+    [x] Pot
 [ ] AI Should avoid colliders in front of them.      
 [ ] FIX Zombies run into lamps forever    
 [ ] Design Map Skirmish
+[ ] Player update slots on changed    
+[x] Player update gems on changed
 [x] Remove Block_Horizontal and Block_Vertical     
 [x] Fix tile colours in Adventure    
 [x] FIX Flickering Myst particle        
