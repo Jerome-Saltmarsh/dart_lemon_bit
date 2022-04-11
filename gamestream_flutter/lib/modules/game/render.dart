@@ -53,8 +53,8 @@ class GameRender {
   }
 
   void render(Canvas canvas, Size size) {
-    _actions.applyDynamicEmissions();
-    _actions.applyDynamicShadeToTileSrc();
+    isometric.state.applyDynamicEmissions();
+    isometric.state.applyDynamicShadeToTileSrc();
     _render.renderTiles();
     drawProjectiles(_projectiles);
     drawBulletHoles(_bulletHoles);

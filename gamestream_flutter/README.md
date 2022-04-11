@@ -83,6 +83,7 @@
 [ ] FIX Shotgun fire animation loops  
 [ ] Frontend check version    
 [ ] Display Highlighted Target info (Zombie, Pot, etc)    
+[ ] Tutorial    
 [ ] Destructible Objects    
     [ ] Bush
     [ ] Rock

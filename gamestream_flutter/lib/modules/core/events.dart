@@ -123,12 +123,12 @@ class CoreEvents {
         engine.drawCanvas.value = editor.render.render;
         engine.drawCanvasAfterUpdate = true;
         editor.events.onActivated();
-        isometric.actions.removeGeneratedEnvironmentObjects();
+        isometric.state.removeGeneratedEnvironmentObjects();
         game.totalZombies.value = 0;
         game.totalProjectiles = 0;
         game.totalNpcs = 0;
         engine.registerZoomCameraOnMouseScroll();
-        isometric.actions.cameraCenterMap();
+        isometric.state.cameraCenterMap();
         break;
     }
 

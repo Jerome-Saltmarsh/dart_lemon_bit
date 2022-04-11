@@ -298,7 +298,7 @@ void _parseEnvironmentObjects() {
 
   modules.isometric.actions.refreshGeneratedObjects();
   sortReversed(modules.isometric.state.environmentObjects, environmentObjectY);
-  modules.isometric.actions.resetLighting();
+  modules.isometric.state.resetLighting();
 }
 
 void addParticleEmitter(ParticleEmitter value) {
@@ -330,7 +330,7 @@ void _parseTiles() {
   }
 
   isometric.actions.refreshGeneratedObjects();
-  isometric.actions.updateTileRender();
+  isometric.state.updateTileRender();
 }
 
 void _parsePlayerAbility(){

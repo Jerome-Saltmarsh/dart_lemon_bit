@@ -43,10 +43,10 @@ class IsometricEvents {
   }
 
   void onHourChanged(int hour){
-    modules.isometric.actions.refreshAmbientLight();
+    modules.isometric.state.refreshAmbientLight();
   }
 
   void onAmbientChanged(int value){
-    actions.resetLighting();
+    state.resetLighting();
   }
 }

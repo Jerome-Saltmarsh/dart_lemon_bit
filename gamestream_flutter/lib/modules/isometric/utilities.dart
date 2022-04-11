@@ -2,8 +2,8 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 
-final tileSize = isometric.constants.tileSize;
-final halfTileSize = isometric.constants.halfTileSize;
+const tileSize = 48.0;
+const halfTileSize = 24.0;
 
 double perspectiveProjectX(double x, double y) {
   return -y + x;

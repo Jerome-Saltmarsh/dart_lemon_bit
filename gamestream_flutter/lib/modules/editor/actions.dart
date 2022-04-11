@@ -38,7 +38,7 @@ class EditorActions with EditorScope {
         )
     );
     if (state.objectType.value == ObjectType.Torch) {
-      isometric.actions.resetLighting();
+      isometric.state.resetLighting();
     }
     sortReversed(modules.isometric.state.environmentObjects, environmentObjectY);
     engine.redrawCanvas();
@@ -118,7 +118,7 @@ class EditorActions with EditorScope {
     isometric.state.environmentObjects.clear();
     game.collectables.clear();
     game.itemsTotal = 0;
-    isometric.actions.updateTileRender();
+    isometric.state.updateTileRender();
   }
 
   void closeDialog(){
@@ -162,7 +162,7 @@ class EditorActions with EditorScope {
     ;
     final jsonRows = mapJson['tiles'];
     isometric.state.tiles = mapJsonToTiles(jsonRows);
-    isometric.actions.refreshTileSize();
+    isometric.state.refreshTileSize();
     final jsonEnvironment = mapJson['environment'];
     state.environmentObjects.clear();
     for (Json json in jsonEnvironment) {
@@ -206,8 +206,8 @@ class EditorActions with EditorScope {
     }
 
     state.characters = characters;
-    isometric.actions.updateTileRender();
-    isometric.actions.refreshTileSize();
+    isometric.state.updateTileRender();
+    isometric.state.refreshTileSize();
     engine.redrawCanvas();
   }
 

@@ -14,6 +14,6 @@ class Collider extends Vector2 {
   void onCollisionWith(Collider other){ }
 
   bool withinBounds(double x, double y) {
-    return distanceWithin(x, y, radius);
+    return getDistanceXY(x, y) <= radius;
   }
 }

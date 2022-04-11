@@ -110,8 +110,8 @@ class EditorBuild {
               return text("Rows $total");
             }),
           ),
-          button("-", isometric.actions.removeRow),
-          button("+", isometric.actions.addRow)
+          button("-", isometric.state.removeRow),
+          button("+", isometric.state.addRow)
         ],
       ),
       Row(
@@ -122,8 +122,8 @@ class EditorBuild {
                  return text("Columns $total");
               }),
             ),
-            button("-", isometric.actions.removeColumn),
-            button("+", isometric.actions.addColumn)
+            button("-", isometric.state.removeColumn),
+            button("+", isometric.state.addColumn)
         ],
       ),
       Row(
@@ -133,9 +133,9 @@ class EditorBuild {
             return text(hours);
           }),
           width8,
-          button("-", modules.isometric.actions.detractHour),
+          button("-", modules.isometric.state.detractHour),
           width8,
-          button("+", modules.isometric.actions.addHour),
+          button("+", modules.isometric.state.addHour),
           width8,
         ],
       ),
