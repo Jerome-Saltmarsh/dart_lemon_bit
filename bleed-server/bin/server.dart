@@ -107,6 +107,13 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       clearBuffer();
     }
 
+    void compileAndSend(){
+     final player = _player;
+     if (player == null) return;
+      byteCompiler.writePlayerGame(player);
+      sink.add(byteCompiler.writeToSendBuffer());
+    }
+
     void compileAndSendPlayerGame(Player player){
       byteCompiler.writePlayerGame(player);
       sink.add(byteCompiler.writeToSendBuffer());
@@ -115,6 +122,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     void onGameJoined(){
       final player = _player;
       if (player == null) return;
+      player.compileAndUpdate = compileAndSend;
       final account = _account;
       if (account != null) {
         player.name = account.publicName;
@@ -277,7 +285,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.screenBottom = readNumberFromByteArray(args, index: 13).toDouble();
 
           if (player.deadOrBusy) {
-            compileAndSendPlayerGame(player);
             return;
           }
 
@@ -369,7 +376,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               break;
           }
 
-          compileAndSendPlayerGame(player);
           return;
         }
         throw Exception("Cannot parse ${clientRequests[clientRequestInt]}");

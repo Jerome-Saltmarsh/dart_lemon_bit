@@ -58,6 +58,8 @@ class Player extends Character {
   Vector2? target;
   Vector2 runTarget = Vector2(0, 0);
 
+  late Function compileAndUpdate;
+
   void attainOrb(OrbType orb){
     switch(orb) {
       case OrbType.Topaz:

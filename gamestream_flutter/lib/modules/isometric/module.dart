@@ -28,7 +28,6 @@ import 'package:lemon_watch/watch.dart';
 import 'package:gamestream_flutter/functions.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 
-import 'actions.dart';
 import 'events.dart';
 import 'maps.dart';
 import 'properties.dart';
@@ -38,18 +37,14 @@ import 'subscriptions.dart';
 import 'update.dart';
 
 class IsometricModule {
-  // final state = IsometricState();
-  // final constants = IsometricConstants();
   final subscriptions = IsometricSubscriptions();
   final map = IsometricMaps();
   late final IsometricProperties properties;
   late final IsometricRender render;
-  late final IsometricActions actions;
   late final IsometricUpdate update;
   late final IsometricSpawn spawn;
   late final IsometricEvents events;
   late final IsometricQueries queries;
-
 
   late ui.Image image;
 
@@ -94,8 +89,7 @@ class IsometricModule {
     spawn = IsometricSpawn(this);
     properties = IsometricProperties(this);
     queries = IsometricQueries(this);
-    actions = IsometricActions(queries, properties);
-    events = IsometricEvents(this, actions, properties);
+    events = IsometricEvents(this, properties);
     update = IsometricUpdate(this, queries, spawn);
     render = IsometricRender(this, properties, queries, map);
 

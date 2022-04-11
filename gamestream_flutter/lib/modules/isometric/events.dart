@@ -1,4 +1,3 @@
-import 'package:gamestream_flutter/modules/isometric/actions.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
 import 'package:gamestream_flutter/modules/isometric/properties.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -6,9 +5,8 @@ import 'package:gamestream_flutter/modules/modules.dart';
 class IsometricEvents {
   
   final IsometricModule state;
-  final IsometricActions actions;
   final IsometricProperties properties;
-  IsometricEvents(this.state, this.actions, this.properties);
+  IsometricEvents(this.state, this.properties);
 
   void register(){
     if (isometric.eventsRegistered) return;
