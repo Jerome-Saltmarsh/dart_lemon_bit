@@ -1,13 +1,15 @@
 import 'dart:math';
 
-const directionUpIndex = 0;
-const directionUpRightIndex = 1;
-const directionRightIndex = 2;
-const directionDownRightIndex = 3;
-const directionDownIndex = 4;
-const directionDownLeftIndex = 5;
-const directionLeftIndex = 6;
-const directionUpLeftIndex = 7;
+class Direction {
+  static const Up = 0;
+  static const UpRight = 1;
+  static const Right = 2;
+  static const DownRight = 3;
+  static const Down = 4;
+  static const DownLeft = 5;
+  static const Left = 6;
+  static const UpLeft = 7;
+}
 
 int sanitizeDirectionIndex(int index){
   return index >= 0 ? index % 8 : 8 - (index.abs() % 8);

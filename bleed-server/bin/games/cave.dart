@@ -1,6 +1,6 @@
 
 import '../classes/Game.dart';
-import '../common/enums/Shade.dart';
+import '../common/Shade.dart';
 import '../engine.dart';
 import 'world.dart';
 

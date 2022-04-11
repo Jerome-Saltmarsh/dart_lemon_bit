@@ -1,4 +1,4 @@
-import '../common/enums/ObjectType.dart';
+import '../common/ObjectType.dart';
 import 'Collider.dart';
 
 class EnvironmentObject extends Collider {

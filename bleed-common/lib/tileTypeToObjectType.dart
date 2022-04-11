@@ -1,5 +1,5 @@
 import 'Tile.dart';
-import 'enums/ObjectType.dart';
+import 'ObjectType.dart';
 
 const tileTypeToObjectType = <int, ObjectType> {
   Tile.Block_Grass: ObjectType.Block_Grass,

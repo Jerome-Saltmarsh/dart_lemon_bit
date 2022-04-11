@@ -1,4 +1,4 @@
-import 'package:bleed_common/enums/Direction.dart';
+import 'package:bleed_common/Direction.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/bytestream_parser.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -65,29 +65,29 @@ class GameUpdate {
 
     if (keysPressed.contains(LogicalKeyboardKey.keyW)) {
       if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
-        return directionUpRightIndex;
+        return Direction.UpRight;
       }
       if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
-        return directionUpLeftIndex;
+        return Direction.UpLeft;
       }
-      return directionUpIndex;
+      return Direction.Up;
     }
 
     if (keysPressed.contains(LogicalKeyboardKey.keyS)) {
       if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
-        return directionDownRightIndex;
+        return Direction.DownRight;
       }
       if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
-        return directionDownLeftIndex;
+        return Direction.DownLeft;
       }
-      return directionDownIndex;
+      return Direction.Down;
     }
 
     if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
-      return directionLeftIndex;
+      return Direction.Left;
     }
     if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
-      return directionRightIndex;
+      return Direction.Right;
     }
     return null;
   }

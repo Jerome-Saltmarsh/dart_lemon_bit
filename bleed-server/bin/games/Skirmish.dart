@@ -14,7 +14,7 @@ import '../common/DynamicObjectType.dart';
 import '../common/ItemType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/SlotType.dart';
-import '../common/enums/ObjectType.dart';
+import '../common/ObjectType.dart';
 import '../engine.dart';
 import '../functions/withinRadius.dart';
 

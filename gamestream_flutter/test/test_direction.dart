@@ -1,7 +1,7 @@
 
 
 import 'dart:math';
-import 'package:bleed_common/enums/Direction.dart';
+import 'package:bleed_common/Direction.dart';
 import 'package:test/test.dart';
 
 void main() {

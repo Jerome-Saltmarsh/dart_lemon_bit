@@ -8,7 +8,7 @@ import 'classes/Item.dart';
 import 'classes/Player.dart';
 import 'common/GameStatus.dart';
 import 'common/ServerResponse.dart';
-import 'common/enums/ObjectType.dart';
+import 'common/ObjectType.dart';
 import 'games/Moba.dart';
 import 'games/Royal.dart';
 

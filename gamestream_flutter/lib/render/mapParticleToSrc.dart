@@ -1,5 +1,5 @@
 
-import 'package:bleed_common/enums/Direction.dart';
+import 'package:bleed_common/Direction.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';

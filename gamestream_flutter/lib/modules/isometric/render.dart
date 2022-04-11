@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:bleed_common/CharacterState.dart';
 import 'package:bleed_common/SlotType.dart';
 import 'package:bleed_common/Tile.dart';
-import 'package:bleed_common/enums/Direction.dart';
-import 'package:bleed_common/enums/Shade.dart';
+import 'package:bleed_common/Direction.dart';
+import 'package:bleed_common/Shade.dart';
 import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
@@ -322,8 +322,8 @@ class IsometricRender {
 
     final weapon = character.equippedWeapon;
     final variation = weapon == SlotType.Shotgun || SlotType.isBow(weapon);
-    final maxDirection = variation ? directionRightIndex : directionUpRightIndex;
-    final minDirection = variation ? directionDownLeftIndex : directionDownIndex;
+    final maxDirection = variation ? Direction.Right : Direction.UpRight;
+    final minDirection = variation ? Direction.DownLeft : Direction.Down;
     final direction = character.direction;
 
     if (direction <= minDirection && direction >= maxDirection) {

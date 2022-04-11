@@ -1,8 +1,8 @@
 import 'package:lemon_math/Vector2.dart';
 
 import '../common/Tile.dart';
-import '../common/enums/Direction.dart';
-import '../common/enums/ObjectType.dart';
+import '../common/Direction.dart';
+import '../common/ObjectType.dart';
 import '../enums.dart';
 import '../utilities.dart';
 import 'Character.dart';

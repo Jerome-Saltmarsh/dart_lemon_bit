@@ -12,7 +12,7 @@ import '../common/CharacterType.dart';
 import '../common/SceneJson.dart';
 import '../common/SlotType.dart';
 import '../common/Tile.dart';
-import '../common/enums/ObjectType.dart';
+import '../common/ObjectType.dart';
 
 Future<Scene> loadSceneFromFile(String name) async {
   final String dir = Directory.current.path;

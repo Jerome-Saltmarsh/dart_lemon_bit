@@ -2,8 +2,8 @@
 
 import 'package:bleed_common/CharacterType.dart';
 import 'package:bleed_common/ItemType.dart';
-import 'package:bleed_common/enums/ObjectType.dart';
-import 'package:bleed_common/enums/Shade.dart';
+import 'package:bleed_common/ObjectType.dart';
+import 'package:bleed_common/Shade.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/constants/colours.dart';

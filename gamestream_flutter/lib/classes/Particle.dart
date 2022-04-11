@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:bleed_common/enums/Direction.dart';
+import 'package:bleed_common/Direction.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/opposite.dart';

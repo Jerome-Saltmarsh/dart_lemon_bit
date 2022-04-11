@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:bleed_common/constants.dart';
-import 'package:bleed_common/enums/ObjectType.dart';
-import 'package:bleed_common/enums/ProjectileType.dart';
+import 'package:bleed_common/ObjectType.dart';
+import 'package:bleed_common/ProjectileType.dart';
 import 'package:bleed_common/tileTypeToObjectType.dart';
 import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
 import 'package:gamestream_flutter/modules/isometric/utilities.dart';
@@ -16,7 +16,7 @@ import 'dart:ui' as ui;
 
 import 'package:bleed_common/GemSpawn.dart';
 import 'package:bleed_common/Tile.dart';
-import 'package:bleed_common/enums/Shade.dart';
+import 'package:bleed_common/Shade.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Item.dart';

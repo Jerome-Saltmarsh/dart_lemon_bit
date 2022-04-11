@@ -1,7 +1,7 @@
 
 import 'package:lemon_math/hypotenuse.dart';
 
-import '../common/enums/ProjectileType.dart';
+import '../common/ProjectileType.dart';
 import '../maths.dart';
 import 'Character.dart';
 import 'Collider.dart';

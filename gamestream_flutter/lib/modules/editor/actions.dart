@@ -2,7 +2,7 @@ import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/SceneJson.dart';
 import 'package:bleed_common/Tile.dart';
 import 'package:bleed_common/constants.dart';
-import 'package:bleed_common/enums/ObjectType.dart';
+import 'package:bleed_common/ObjectType.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';

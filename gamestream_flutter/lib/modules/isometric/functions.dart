@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:bleed_common/enums/Shade.dart';
+import 'package:bleed_common/Shade.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 

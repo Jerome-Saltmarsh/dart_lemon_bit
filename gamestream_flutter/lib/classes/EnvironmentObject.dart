@@ -1,7 +1,7 @@
 
 
 import 'package:bleed_common/Tile.dart';
-import 'package:bleed_common/enums/ObjectType.dart';
+import 'package:bleed_common/ObjectType.dart';
 import 'package:gamestream_flutter/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/random.dart';

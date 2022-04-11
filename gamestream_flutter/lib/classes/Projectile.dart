@@ -1,5 +1,5 @@
 
-import 'package:bleed_common/enums/ProjectileType.dart';
+import 'package:bleed_common/ProjectileType.dart';
 import 'package:lemon_math/Vector2.dart';
 
 class Projectile extends Vector2 {
