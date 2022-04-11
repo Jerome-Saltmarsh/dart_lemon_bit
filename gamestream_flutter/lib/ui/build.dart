@@ -279,74 +279,11 @@ class _Build {
       ),
     );
 
-    final account = core.state.account.value;
-    final premiumActive = account != null && account.isPremium;
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(top: 120),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            ...selectableGameTypes.map((GameType gameType) {
-
-              return onHover((hovering){
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 16),
-                  color: colours.white05,
-                  width: 500,
-                  child: onPressed(
-                    callback: (){
-                      game.type.value = gameType;
-                    },
-                    child: border(
-                      color: hovering ? colours.white05 : colours.none,
-                      borderWidth: 3,
-                      child: Row(
-                        crossAxisAlignment: axis.cross.center,
-                        children: [
-                          Stack(
-                            children: [
-                              Container(
-                                width: 180,
-                                height: 111,
-                                decoration: BoxDecoration(
-                                  image: gameTypeDecorationImage[gameType] ?? decorationImages.royal,
-                                ),
-                              ),
-                              if (hovering)
-                              Positioned(
-                                  left: 60,
-                                  height: 100,
-                                  child: playIcon),
-                            ],
-                          ),
-                          width8,
-                          Expanded(child: Center(child:
-
-                          text(gameTypeNames[gameType],
-                              size: hovering ? 25 : 20,
-                              weight: FontWeight.bold,
-                              color: premiumActive || freeToPlay.contains(gameType) ? colours.white80 : colours.white382
-
-                          )
-                          )),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              });
-
-            }).toList()
-          ],
-        ),
-      ),
-    );
   }
 
   Widget magicBar() {
-    double width = 200;
-    double height = width *
+    final width = 200.0;
+    final height = width *
         goldenRatio_0381 *
         goldenRatio_0381 *
         goldenRatio_0381 *

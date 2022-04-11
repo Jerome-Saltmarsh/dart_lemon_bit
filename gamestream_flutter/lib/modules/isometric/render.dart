@@ -13,7 +13,6 @@ import 'package:gamestream_flutter/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:gamestream_flutter/modules/isometric/animations.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
-import 'package:gamestream_flutter/modules/isometric/maps.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
 import 'package:gamestream_flutter/modules/isometric/queries.dart';
 import 'package:gamestream_flutter/render/mapParticleToDst.dart';
@@ -23,7 +22,6 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/diff.dart';
 
 import '../modules.dart';
-import 'functions.dart';
 
 const _framesPerDirectionHuman = 19;
 const _framesPerDirectionZombie = 8;
@@ -53,8 +51,7 @@ class IsometricRender {
 
   final IsometricModule state;
   final IsometricQueries queries;
-  final IsometricMaps maps;
-  IsometricRender(this.state, this.queries, this.maps);
+  IsometricRender(this.state, this.queries);
 
   void renderTiles() {
 
@@ -278,6 +275,19 @@ class IsometricRender {
         y: item.y
     );
     engine.renderAtlas();
+  }
+
+  void srcLoopSimple({
+    required double x,
+    required int frames,
+    required double size
+  }){
+    engine.mapSrc(
+        x: x,
+        y: ((engine.animationFrame % 4) * size),
+        width: size,
+        height: size
+    );
   }
 
   void renderEnvironmentObject(EnvironmentObject value) {

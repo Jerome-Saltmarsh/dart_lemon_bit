@@ -1,14 +1,37 @@
-enum Phase {
-  Early_Morning,
-  Morning, // 5 - 9
-  Day, // 9 - 5
-  Early_Evening,
-  Evening, // 5 - 9
-  Night, // 9
-  MidNight, // - 5
-}
+import 'package:bleed_common/Shade.dart';
 
-const phases = Phase.values;
+class Phase {
+  static const Early_Morning = 0;
+  static const Morning = 1; // 5 - 9
+  static const Day = 2; // 9 - 5
+  static const Early_Evening = 3;
+  static const Evening = 4; // 5 - 9
+  static const Night = 5; // 9
+  static const MidNight = 6; // - 5
+
+  static int fromHour(int hour){
+    if (hour < 2) return MidNight;
+    if (hour < 4) return Night;
+    if (hour < 6) return Early_Morning;
+    if (hour < 10) return Morning;
+    if (hour < 16) return Day;
+    if (hour < 18) return Early_Evening;
+    if (hour < 20) return Evening;
+    return Night;
+  }
+
+  static int toShade(int phase) {
+    return const {
+      Early_Morning: Shade.Dark,
+      Morning: Shade.Medium,
+      Day: Shade.Bright,
+      Early_Evening: Shade.Medium,
+      Evening: Shade.Dark,
+      Night: Shade.Very_Dark,
+      MidNight: Shade.Pitch_Black,
+    }[phase]!;
+  }
+}
 
 class ParticleType {
   static const Smoke = 0;

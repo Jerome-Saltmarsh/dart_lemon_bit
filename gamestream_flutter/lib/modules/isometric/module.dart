@@ -30,7 +30,6 @@ import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 
 import 'enums.dart';
 import 'events.dart';
-import 'maps.dart';
 import 'queries.dart';
 import 'render.dart';
 import 'subscriptions.dart';
@@ -38,7 +37,6 @@ import 'update.dart';
 
 class IsometricModule {
   final subscriptions = IsometricSubscriptions();
-  final map = IsometricMaps();
   late final IsometricRender render;
   late final IsometricUpdate update;
   late final IsometricSpawn spawn;
@@ -89,15 +87,15 @@ class IsometricModule {
   }
 
   int get currentPhaseShade {
-    return modules.isometric.map.phaseToShade(phase);
+    return Phase.toShade(phase);
   }
 
   String get currentAmbientShadeName {
     return shadeName(currentPhaseShade);
   }
 
-  Phase get phase {
-    return map.hourToPhase(hours.value);
+  int get phase {
+    return Phase.fromHour(hours.value);
   }
 
   Vector2 get mapCenter {
@@ -126,7 +124,7 @@ class IsometricModule {
     queries = IsometricQueries(this);
     events = IsometricEvents(this);
     update = IsometricUpdate(this, queries, spawn);
-    render = IsometricRender(this, queries, map);
+    render = IsometricRender(this, queries);
 
     for(var i = 0; i < 300; i++){
       particles.add(Particle());
@@ -379,7 +377,7 @@ class IsometricModule {
 
 
   void resetBakeMap(){
-    print("isometric.actions.resetBakeMap()");
+    // print("isometric.actions.resetBakeMap()");
     refreshAmbientLight();
     final ambient = this.ambient.value;
     final rows = this.totalRows.value;
@@ -685,9 +683,8 @@ class IsometricModule {
   }
 
   void refreshAmbientLight(){
-    // print("isometric.actions.refreshAmbientLight()");
-    final phase = modules.isometric.map.hourToPhase(hours.value);
-    final phaseBrightness = modules.isometric.map.phaseToShade(phase);
+    final phase = Phase.fromHour(hours.value);
+    final phaseBrightness = Phase.toShade(phase);
     if (maxAmbientBrightness.value > phaseBrightness) return;
     ambient.value = phaseBrightness;
   }
