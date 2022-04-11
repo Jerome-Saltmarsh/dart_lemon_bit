@@ -56,7 +56,7 @@ class IsometricUpdate {
     particle.updateMotion();
 
     if (bounce) {
-      if (!state.tileIsWalkable(particle.x, particle.y)){
+      if (!state.tileIsWalkable(particle)){
         deactivateParticle(particle);
         return;
       }
@@ -70,7 +70,7 @@ class IsometricUpdate {
       particle.applyAirFriction();
     } else {
       particle.applyFloorFriction();
-      if (!state.tileIsWalkable(particle.x, particle.y)){
+      if (!state.tileIsWalkable(particle)){
         deactivateParticle(particle);
         return;
       }

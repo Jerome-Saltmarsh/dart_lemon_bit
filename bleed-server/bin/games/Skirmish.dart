@@ -118,6 +118,9 @@ class GameSkirmish extends Game {
       weapon: SlotType.Handgun,
     );
     final slots = player.slots;
+    player.orbs.emerald = 50;
+    player.orbs.ruby = 50;
+    player.orbs.topaz = 50;
     slots.weapon.amount = 50;
     slots.slot1.type = SlotType.Potion_Red;
     slots.slot2.type = SlotType.Shotgun;

@@ -1,3 +1,4 @@
+import 'package:lemon_math/Vector2.dart';
 
 import 'dart:typed_data';
 import 'dart:ui' as ui;
@@ -44,13 +45,6 @@ class IsometricState {
 
   Particle? next;
 
-  bool outOfBounds(int row, int column){
-    if (row < 0) return true;
-    if (column < 0) return true;
-    if (row >= totalRowsInt) return true;
-    if (column >= totalColumnsInt) return true;
-    return false;
-  }
 
   IsometricState(){
       for(var i = 0; i < 300; i++){
@@ -78,8 +72,8 @@ class IsometricState {
     return getShadeAtPosition(x, y) >= Shade.Very_Dark;
   }
 
-  bool tileIsWalkable(double x, double y){
-    final tile = getTileAt(x, y);
+  bool tileIsWalkable(Vector2 position){
+    final tile = getTileAt(position.x, position.y);
     if (tile == Tile.Boundary) return false;
     if (tile == Tile.Water) return false;
     return true;
@@ -92,5 +86,13 @@ class IsometricState {
   int getTile(int row, int column){
     if (outOfBounds(row, column)) return Tile.Boundary;
     return tiles[row][column];
+  }
+
+  bool outOfBounds(int row, int column){
+    if (row < 0) return true;
+    if (column < 0) return true;
+    if (row >= totalRowsInt) return true;
+    if (column >= totalColumnsInt) return true;
+    return false;
   }
 }
