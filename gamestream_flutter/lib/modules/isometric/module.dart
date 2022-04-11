@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/constants.dart';
 import 'package:bleed_common/ObjectType.dart';
 import 'package:bleed_common/ProjectileType.dart';
@@ -106,7 +107,6 @@ class IsometricModule {
 
   int get totalActiveParticles {
     var totalParticles = 0;
-    final particles = isometric.particles;
     final length = particles.length;
     for (var i = 0; i < length; i++) {
       if (!particles[i].active) continue;
@@ -127,6 +127,7 @@ class IsometricModule {
 
     for(var i = 0; i < 300; i++){
       particles.add(Particle());
+      items.add(Item(type: ItemType.Armour_Plated, x: 0, y: 0));
     }
   }
 
@@ -729,5 +730,72 @@ class IsometricModule {
         environmentObjects.add(env);
       }
     }
+  }
+
+  void updateParticles() {
+
+    for (final emitter in particleEmitters) {
+      if (emitter.next-- > 0) continue;
+      emitter.next = emitter.rate;
+      final particle = spawn.getAvailableParticle();
+      particle.x = emitter.x;
+      particle.y = emitter.y;
+      emitter.emit(particle);
+    }
+
+    for (final particle in particles) {
+      if (!particle.active) continue;
+      _updateParticle(particle);
+    }
+
+    if (engine.frame % 6 == 0) {
+      for (final particle in particles) {
+        if (!particle.active) continue;
+        if (!particle.bleeds) continue;
+        if (particle.speed < 2.0) continue;
+        spawn.blood(x: particle.x, y: particle.y, z: particle.z, zv: 0, angle: 0, speed: 0);
+      }
+    }
+  }
+
+  void _updateParticle(Particle particle){
+    final airBorn = particle.z > 0.01;
+    final bounce = particle.zv < 0 && !airBorn;
+    particle.updateMotion();
+
+    if (bounce) {
+      if (!tileIsWalkable(particle)){
+        _deactivateParticle(particle);
+        return;
+      }
+      if (particle.zv < -0.1){
+        particle.zv = -particle.zv * particle.bounciness;
+      } else {
+        particle.zv = 0;
+      }
+
+    } else if (airBorn) {
+      particle.applyAirFriction();
+    } else {
+      particle.applyFloorFriction();
+      if (!tileIsWalkable(particle)){
+        _deactivateParticle(particle);
+        return;
+      }
+    }
+    particle.applyLimits();
+    if (particle.duration-- <= 0) {
+      _deactivateParticle(particle);
+    }
+  }
+
+  void _deactivateParticle(Particle particle) {
+    particle.duration = -1;
+    if (next != null) {
+      next = particle;
+      particle.next = next;
+      return;
+    }
+    next = particle;
   }
 }

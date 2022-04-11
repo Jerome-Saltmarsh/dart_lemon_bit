@@ -30,7 +30,8 @@ class GameUpdate {
     // }
 
     readPlayerInput();
-    isometric.update.call();
+    isometric.updateParticles();
+
 
     state.framesSinceOrbAcquired++;
     final mousePosition = engine.mousePosition;
