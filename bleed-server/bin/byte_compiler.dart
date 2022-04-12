@@ -84,7 +84,6 @@ class _ByteCompiler {
     writeAttackTarget(player);
     writeProjectiles(game.projectiles);
     writeNpcs(player);
-    // writeGameEvents(player);
     writeGameTime(game);
     writePlayerZombies(player);
     writeItems(player);
@@ -310,15 +309,14 @@ class _ByteCompiler {
   }
 
   void writeCharacter(Player player, Character character) {
-    final allie = sameTeam(player, character) ? 100 : 0;
-    final directionInt = character.direction * 10;
-    final stateInt = character.state;
-    final value = allie + directionInt + stateInt;
-    writeByte(value); // 1
+    // final allie = sameTeam(player, character) ? 100 : 0;
+    // final directionInt = character.direction * 10;
+    // final stateInt = character.state;
+    // final value = allie + directionInt + stateInt;
+    writeByte((sameTeam(player, character) ? 100 : 0) + (character.direction * 10) + character.state); // 1
     writeBigInt(character.x); // 2
     writeBigInt(character.y); // 2
-    final healthPercentage = ((character.health / character.maxHealth) * 24).toInt() * 10;
-    writeByte(healthPercentage + character.animationFrame);
+    writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);
   }
 
   List<int> _getSendBuffer() {

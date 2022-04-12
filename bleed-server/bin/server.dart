@@ -131,23 +131,17 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       byteCompiler.writeGameEvent(player, type, x, y, angle);
     }
 
-    void compileAndSendPlayerGame(Player player){
-      byteCompiler.writePlayerGame(player);
-      sink.add(byteCompiler.writeToSendBuffer());
-    }
-
-    void compileAndSend(){
+    void compileAndSendPlayer(){
      final player = _player;
      if (player == null) return;
-     compileAndSendPlayerGame(player);
-     // byteCompiler.writePlayerGame(player);
-     // sink.add(byteCompiler.writeToSendBuffer());
+     byteCompiler.writePlayerGame(player);
+     sink.add(byteCompiler.writeToSendBuffer());
     }
 
     void onGameJoined(){
       final player = _player;
       if (player == null) return;
-      player.onUpdated = compileAndSend;
+      player.onUpdated = compileAndSendPlayer;
       player.onOrbsChanged = compileOrbsChanged;
       player.onSlotsChanged = compileAndSendPlayerSlots;
       player.onGameEvent = sendGameEvent;
@@ -157,7 +151,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       }
 
       final game = player.game;
-      // compileAndSendPlayerGame(player);
       write(game.compiledTiles);
       write(game.compiledEnvironmentObjects);
       write(ServerResponse.Scene_Shade_Max);
@@ -169,7 +162,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       sendAndClearBuffer();
       compileOrbsChanged();
       compileAndSendPlayerSlots();
-      compileAndSend();
+      compileAndSendPlayer();
     }
 
     void joinGameSkirmish() {
