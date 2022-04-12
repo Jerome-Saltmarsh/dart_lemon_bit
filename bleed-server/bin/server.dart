@@ -13,6 +13,7 @@ import 'common/CharacterState.dart';
 import 'common/CharacterType.dart';
 import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
+import 'common/GameEventType.dart';
 import 'common/GameType.dart';
 import 'common/Modify_Game.dart';
 import 'common/RoyalCost.dart';
@@ -107,6 +108,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       clearBuffer();
     }
 
+
     void compileOrbsChanged(){
       final player = _player;
       if (player == null) return;
@@ -119,11 +121,14 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       byteCompiler.writePlayerSlots(player);
     }
 
-    void compileAndSend(){
-     final player = _player;
-     if (player == null) return;
-      byteCompiler.writePlayerGame(player);
-      sink.add(byteCompiler.writeToSendBuffer());
+    void sendGameEvent(GameEventType type, double x, double y, double angle){
+      final player = _player;
+      if (player == null) {
+        print("player is null");
+        return;
+      }
+      print("dispatch($type)");
+      byteCompiler.writeGameEvent(player, type, x, y, angle);
     }
 
     void compileAndSendPlayerGame(Player player){
@@ -131,19 +136,28 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       sink.add(byteCompiler.writeToSendBuffer());
     }
 
+    void compileAndSend(){
+     final player = _player;
+     if (player == null) return;
+     compileAndSendPlayerGame(player);
+     // byteCompiler.writePlayerGame(player);
+     // sink.add(byteCompiler.writeToSendBuffer());
+    }
+
     void onGameJoined(){
       final player = _player;
       if (player == null) return;
-      player.compileAndUpdate = compileAndSend;
+      player.onUpdated = compileAndSend;
       player.onOrbsChanged = compileOrbsChanged;
       player.onSlotsChanged = compileAndSendPlayerSlots;
+      player.onGameEvent = sendGameEvent;
       final account = _account;
       if (account != null) {
         player.name = account.publicName;
       }
 
       final game = player.game;
-      compileAndSendPlayerGame(player);
+      // compileAndSendPlayerGame(player);
       write(game.compiledTiles);
       write(game.compiledEnvironmentObjects);
       write(ServerResponse.Scene_Shade_Max);
@@ -155,6 +169,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       sendAndClearBuffer();
       compileOrbsChanged();
       compileAndSendPlayerSlots();
+      compileAndSend();
     }
 
     void joinGameSkirmish() {

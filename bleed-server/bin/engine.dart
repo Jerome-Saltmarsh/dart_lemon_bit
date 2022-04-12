@@ -95,7 +95,7 @@ class _Engine {
     for (final game in games) {
       final players = game.players;
       for (final player in players) {
-        player.compileAndUpdate();
+        player.onUpdated();
       }
     }
   }

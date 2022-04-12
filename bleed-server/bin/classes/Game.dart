@@ -21,7 +21,6 @@ import '../common/PlayerEvent.dart';
 import '../common/SlotType.dart';
 import '../common/Tile.dart';
 import '../common/configuration.dart';
-import '../common/constants.dart';
 import '../common/ObjectType.dart';
 import '../common/ProjectileType.dart';
 import '../common/Shade.dart';
@@ -41,7 +40,6 @@ import 'Collider.dart';
 import 'Crate.dart';
 import 'DynamicObject.dart';
 import 'EnvironmentObject.dart';
-import 'GameEvent.dart';
 import 'GameObject.dart';
 import 'InteractableNpc.dart';
 import 'Item.dart';
@@ -75,7 +73,6 @@ abstract class Game {
   final List<InteractableNpc> npcs = [];
   final List<Player> players = [];
   final List<Projectile> projectiles = [];
-  final List<GameEvent> gameEvents = [];
   final List<Crate> crates = [];
   final List<DynamicObject> dynamicObjects = [];
   List<SpawnPoint> spawnPoints = [];
@@ -175,21 +172,21 @@ abstract class Game {
 
   void onPlayerDisconnected(Player player) {}
 
-  GameEvent _getAvailableGameEvent() {
-    for (final gameEvent in gameEvents) {
-      if (gameEvent.frameDuration > 0) continue;
-      gameEvent.frameDuration = 3;
-      gameEvent.assignNewId();
-      return gameEvent;
-    }
-    final empty = GameEvent(
-      type: GameEventType.Sword_Woosh,
-      x: 0,
-      y: 0,
-    );
-    gameEvents.add(empty);
-    return empty;
-  }
+  // GameEvent _getAvailableGameEvent() {
+  //   for (final gameEvent in gameEvents) {
+  //     if (gameEvent.frameDuration > 0) continue;
+  //     gameEvent.frameDuration = 3;
+  //     gameEvent.assignNewId();
+  //     return gameEvent;
+  //   }
+  //   final empty = GameEvent(
+  //     type: GameEventType.Sword_Woosh,
+  //     x: 0,
+  //     y: 0,
+  //   );
+  //   gameEvents.add(empty);
+  //   return empty;
+  // }
 
   Game(this.scene, {
       this.gameType = GameType.MMO,
@@ -380,7 +377,6 @@ extension GameFunctions on Game {
     _updatePlayersAndNpcs();
     _updateProjectiles();
     _updateProjectiles(); // called twice to fix collision detection
-    _updateGameEvents();
     _updateSpawnPointCollisions();
     _updateItems();
     _updateCharacterFrames();
@@ -669,7 +665,7 @@ extension GameFunctions on Game {
           if (character.magic < ability.cost) {
             character.ability = null;
             character.attackTarget = null;
-            break;;
+            break;
           }
           character.magic -= ability.cost;
         }
@@ -1215,12 +1211,9 @@ extension GameFunctions on Game {
 
   void dispatch(GameEventType type, double x, double y,
       [double angle = 0]) {
-    final event = _getAvailableGameEvent();
-    event.type = type;
-    event.x = x;
-    event.y = y;
-    event.angle = angle * radiansToDegrees;
-    event.frameDuration = 3;
+    for(final player in players) {
+      player.onGameEvent(type, x, y, angle);
+    }
   }
 
   void updateZombieTargets() {
@@ -1396,15 +1389,6 @@ extension GameFunctions on Game {
     pathFindSearchID++;
     ai.pathIndex = -1;
     scene.visitNode(scene.tileNodeAt(ai.x, ai.y));
-  }
-
-  void _updateGameEvents() {
-    final gameEventsLength = gameEvents.length;
-    for (var i = 0; i < gameEventsLength; i++) {
-      final event = gameEvents[i];
-      if (event.frameDuration <= 0) continue;
-      event.frameDuration--;
-    }
   }
 
   void _updateSpawnPointCollisions() {

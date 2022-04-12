@@ -5,6 +5,7 @@ import '../common/AbilityMode.dart';
 import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
+import '../common/GameEventType.dart';
 import '../common/GemSpawn.dart';
 import '../common/OrbType.dart';
 import '../common/PlayerEvent.dart';
@@ -20,7 +21,7 @@ import 'Collider.dart';
 import 'Game.dart';
 
 class Player extends Character {
-  final gameEventIds = <int, bool>{};
+  // final gameEventIds = <int, bool>{};
   final events = <PlayerEvent>[];
   final gemSpawns = <GemSpawn>[];
   final slots = Slots();
@@ -58,9 +59,10 @@ class Player extends Character {
   Vector2? target;
   Vector2 runTarget = Vector2(0, 0);
 
-  late Function compileAndUpdate;
+  late Function onUpdated;
   late Function onOrbsChanged;
   late Function onSlotsChanged;
+  late Function(GameEventType type, double x, double y, double angle) onGameEvent;
 
   void attainOrb(OrbType orb){
     switch(orb) {

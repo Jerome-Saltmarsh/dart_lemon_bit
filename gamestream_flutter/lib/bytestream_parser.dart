@@ -212,18 +212,8 @@ class _ByteStreamParser {
           readSlot(_slots.weapon);
           _slots.armour.type.value = _readSlotType();
           _slots.helm.type.value = _readSlotType();
-          // readSlot(_slots.slot1);
-          // readSlot(_slots.slot2);
-          // readSlot(_slots.slot3);
-          // readSlot(_slots.slot4);
-          // readSlot(_slots.slot5);
-          // readSlot(_slots.slot6);
-          // _orbs.topaz.value = _nextInt();
-          // _orbs.emerald.value = _nextInt();
-          // _orbs.ruby.value = _nextInt();
           _player.alive.value = readBool();
           _player.storeVisible.value = readBool();
-          // _player.serverFrame.value = nextServerFrame;
           break;
 
 
@@ -256,15 +246,13 @@ class _ByteStreamParser {
   }
 
   void _parseGameEvents(){
-    while (true) {
-      final typeIndex = _nextByte();
-      if (typeIndex == END) break;
-      final type = gameEventTypes[typeIndex];
+      // final typeIndex = ;
+      final type = gameEventTypes[_nextByte()];
       final x = _nextDouble();
       final y = _nextDouble();
       final angle = _nextDouble() * degreesToRadians;
+      print("game-event($type)");
       modules.game.events.onGameEvent(type, x, y, angle);
-    }
   }
 
   void _parseProjectiles(){

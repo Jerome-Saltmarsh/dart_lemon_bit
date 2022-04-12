@@ -9,6 +9,7 @@ import 'classes/Game.dart';
 import 'classes/GameObject.dart';
 import 'classes/Player.dart';
 import 'classes/Projectile.dart';
+import 'common/GameEventType.dart';
 import 'common/ServerResponse.dart';
 import 'common/compile_util.dart';
 import 'common/constants.dart';
@@ -83,7 +84,7 @@ class _ByteCompiler {
     writeAttackTarget(player);
     writeProjectiles(game.projectiles);
     writeNpcs(player);
-    writeGameEvents(player);
+    // writeGameEvents(player);
     writeGameTime(game);
     writePlayerZombies(player);
     writeItems(player);
@@ -201,24 +202,12 @@ class _ByteCompiler {
     writeByte(END);
   }
 
-  void writeGameEvents(Player player){
-    final gameEvents = player.game.gameEvents;
+  void writeGameEvent(Player player, GameEventType type, double x, double y, double angle){
     writeByte(ServerResponse.Game_Events);
-    final gameEventIds = player.gameEventIds;
-    for (final gameEvent in gameEvents) {
-      if (gameEvent.frameDuration <= 0) continue;
-
-      final id = gameEvent.id;
-      if (gameEventIds.containsKey(id)) {
-        continue;
-      }
-      gameEventIds[id] = true;
-      writeByte(gameEvent.type.index);
-      writeBigInt(gameEvent.x);
-      writeBigInt(gameEvent.y);
-      writeBigInt(gameEvent.angle);
-    }
-    writeByte(END);
+    writeByte(type.index);
+    writeBigInt(x);
+    writeBigInt(y);
+    writeBigInt(angle * radiansToDegrees);
   }
 
   void writeProjectiles(List<Projectile> projectiles){
@@ -229,12 +218,9 @@ class _ByteCompiler {
 
   void writeGameTime(Game game){
     writeByte(ServerResponse.Game_Time);
-    final totalSeconds = game.getTime();
-    final totalMinutes = totalSeconds ~/ 60;
-    final hours = totalMinutes ~/ 60;
-    final minutes = totalMinutes % 60;
-    writeByte(hours);
-    writeByte(minutes);
+    final totalMinutes = game.getTime() ~/ 60;
+    writeByte(totalMinutes ~/ 60);
+    writeByte(totalMinutes % 60);
   }
 
   void writeTotalActive(List<GameObject> values){
