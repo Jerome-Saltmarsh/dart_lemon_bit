@@ -1,38 +1,36 @@
-enum GameEventType {
-  Handgun_Fired,
-  Arrow_Fired,
-  Shotgun_Fired,
-  SniperRifle_Fired,
-  MachineGun_Fired,
-  Character_Struck,
-  Zombie_Killed,
-  Zombie_Target_Acquired,
-  Bullet_Hole,
-  Zombie_Strike,
-  Player_Death,
-  Explosion,
-  Clip_Empty,
-  Reloaded,
-  Player_Hit,
-  Use_MedKit,
-  Throw_Grenade,
-  Item_Acquired,
-  Health_Acquired,
-  Knife_Strike,
-  Crate_Breaking,
-  Ammo_Acquired,
-  Credits_Acquired,
-  FreezeCircle,
-  Teleported,
-  EnemyTargeted,
-  Blue_Orb_Fired,
-  Objective_Reached,
-  Arrow_Hit,
-  Draw_Bow,
-  Release_Bow,
-  Sword_Woosh,
-  Pot_Destroyed,
-  Object_Struck,
+class GameEventType {
+  static const Handgun_Fired = 0;
+  static const Arrow_Fired = 1;
+  static const Shotgun_Fired = 2;
+  static const SniperRifle_Fired = 3;
+  static const MachineGun_Fired = 4;
+  static const Character_Struck = 5;
+  static const Zombie_Killed = 6;
+  static const Zombie_Target_Acquired = 7;
+  static const Bullet_Hole = 8;
+  static const Zombie_Strike = 9;
+  static const Player_Death = 10;
+  static const Explosion = 11;
+  static const Clip_Empty = 12;
+  static const Reloaded = 13;
+  static const Player_Hit = 14;
+  static const Use_MedKit = 15;
+  static const Throw_Grenade = 16;
+  static const Item_Acquired = 17;
+  static const Health_Acquired = 18;
+  static const Knife_Strike = 19;
+  static const Crate_Breaking = 20;
+  static const Ammo_Acquired = 21;
+  static const Credits_Acquired = 22;
+  static const FreezeCircle = 23;
+  static const Teleported = 24;
+  static const EnemyTargeted = 25;
+  static const Blue_Orb_Fired = 26;
+  static const Objective_Reached = 27;
+  static const Arrow_Hit = 28;
+  static const Draw_Bow = 29;
+  static const Release_Bow = 30;
+  static const Sword_Woosh = 31;
+  static const Pot_Destroyed = 32;
+  static const Object_Struck = 33;
 }
-
-const gameEventTypes = GameEventType.values;

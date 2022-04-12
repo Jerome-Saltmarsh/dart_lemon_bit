@@ -9,7 +9,6 @@ import 'classes/Game.dart';
 import 'classes/GameObject.dart';
 import 'classes/Player.dart';
 import 'classes/Projectile.dart';
-import 'common/GameEventType.dart';
 import 'common/PlayerEvent.dart';
 import 'common/ServerResponse.dart';
 import 'common/compile_util.dart';
@@ -195,9 +194,9 @@ class _ByteCompiler {
     writeByte(value.index);
   }
 
-  void writeGameEvent(Player player, GameEventType type, double x, double y, double angle){
+  void writeGameEvent(Player player, int type, double x, double y, double angle){
     writeByte(ServerResponse.Game_Events);
-    writeByte(type.index);
+    writeByte(type);
     writeBigInt(x);
     writeBigInt(y);
     writeBigInt(angle * radiansToDegrees);

@@ -213,7 +213,7 @@ class GameEvents {
     engine.zoom = 1;
   }
 
-  void onGameEvent(GameEventType type, double x, double y, double angle) {
+  void onGameEvent(int type, double x, double y, double angle) {
     switch (type) {
       case GameEventType.Handgun_Fired:
         audio.handgunShot(x, y);

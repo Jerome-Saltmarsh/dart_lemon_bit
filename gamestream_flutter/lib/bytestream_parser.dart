@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:bleed_common/DynamicObjectType.dart';
-import 'package:bleed_common/GameEventType.dart';
 import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/PlayerEvent.dart';
 import 'package:bleed_common/ServerResponse.dart';
@@ -35,6 +34,7 @@ final _slots = _player.slots;
 final _orbs = _player.orbs;
 final _hours = modules.isometric.hours;
 final _minutes = modules.isometric.minutes;
+final _events = modules.game.events;
 
 
 var time = DateTime.now();
@@ -247,12 +247,10 @@ class _ByteStreamParser {
   }
 
   void _parseGameEvents(){
-      // final typeIndex = ;
-      final type = gameEventTypes[_nextByte()];
+      final type = _nextByte();
       final x = _nextDouble();
       final y = _nextDouble();
       final angle = _nextDouble() * degreesToRadians;
-      print("game-event($type)");
       modules.game.events.onGameEvent(type, x, y, angle);
   }
 
@@ -426,7 +424,7 @@ class _ByteStreamParser {
   }
 
   void _parsePlayerEvents() {
-    modules.game.events.onPlayerEvent(playerEvents[_nextByte()]);
+    _events.onPlayerEvent(playerEvents[_nextByte()]);
   }
 
   void _parseDynamicObjects() {

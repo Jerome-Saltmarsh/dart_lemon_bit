@@ -5,7 +5,6 @@ import '../common/AbilityMode.dart';
 import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
-import '../common/GameEventType.dart';
 import '../common/GemSpawn.dart';
 import '../common/OrbType.dart';
 import '../common/PlayerEvent.dart';
@@ -61,7 +60,7 @@ class Player extends Character {
   late Function onOrbsChanged;
   late Function onSlotsChanged;
   late Function(PlayerEvent value) onPlayerEvent;
-  late Function(GameEventType type, double x, double y, double angle) onGameEvent;
+  late Function(int type, double x, double y, double angle) onGameEvent;
 
   void attainOrb(OrbType orb){
     switch(orb) {

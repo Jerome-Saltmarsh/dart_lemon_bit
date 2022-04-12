@@ -13,7 +13,6 @@ import 'common/CharacterState.dart';
 import 'common/CharacterType.dart';
 import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
-import 'common/GameEventType.dart';
 import 'common/GameType.dart';
 import 'common/Modify_Game.dart';
 import 'common/PlayerEvent.dart';
@@ -128,7 +127,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       byteCompiler.writePlayerEvents(event);
     }
 
-    void sendGameEvent(GameEventType type, double x, double y, double angle){
+    void sendGameEvent(int type, double x, double y, double angle){
       final player = _player;
       if (player == null) return;
       byteCompiler.writeGameEvent(player, type, x, y, angle);

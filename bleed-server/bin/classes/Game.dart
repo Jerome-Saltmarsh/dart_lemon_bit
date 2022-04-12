@@ -1205,11 +1205,11 @@ extension GameFunctions on Game {
     return count;
   }
 
-  void dispatchV2(GameEventType type, Vector2 position, {double angle = 0}){
+  void dispatchV2(int type, Vector2 position, {double angle = 0}){
     dispatch(type, position.x, position.y, angle);
   }
 
-  void dispatch(GameEventType type, double x, double y,
+  void dispatch(int type, double x, double y,
       [double angle = 0]) {
     for(final player in players) {
       player.onGameEvent(type, x, y, angle);

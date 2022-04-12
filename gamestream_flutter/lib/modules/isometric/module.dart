@@ -7,7 +7,6 @@ import 'package:bleed_common/ProjectileType.dart';
 import 'package:bleed_common/tileTypeToObjectType.dart';
 import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
 import 'package:gamestream_flutter/modules/isometric/utilities.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/state/game.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
@@ -33,14 +32,12 @@ import 'enums.dart';
 import 'events.dart';
 import 'render.dart';
 import 'subscriptions.dart';
-import 'update.dart';
 
 
 class IsometricModule {
   final _screen = engine.screen;
   final subscriptions = IsometricSubscriptions();
   late final IsometricRender render;
-  late final IsometricUpdate update;
   late final IsometricSpawn spawn;
   late final IsometricEvents events;
 
@@ -122,7 +119,6 @@ class IsometricModule {
   IsometricModule(){
     spawn = IsometricSpawn(this);
     events = IsometricEvents(this);
-    update = IsometricUpdate(this, spawn);
     render = IsometricRender(this);
 
     for(var i = 0; i < 300; i++){
