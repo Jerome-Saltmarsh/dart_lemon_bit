@@ -30,7 +30,6 @@ import 'style.dart';
 
 
 final _screen = engine.screen;
-// final _actions = isometric.actions;
 final _render = isometric.render;
 final _gameType = game.type;
 final _projectiles = game.projectiles;
@@ -52,6 +51,8 @@ class GameRender {
   }
 
   void render(Canvas canvas, Size size) {
+    engine.updateEngine();
+
     isometric.applyDynamicEmissions();
     isometric.applyDynamicShadeToTileSrc();
     _render.renderTiles();
@@ -74,6 +75,7 @@ class GameRender {
       drawRoyalPerimeter();
     }
   }
+
 
   void renderDynamicObjects() {
     final totalDynamicEnvironmentObjects = game.totalDynamicObjects.value;

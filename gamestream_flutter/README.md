@@ -93,9 +93,11 @@
     [x] Pot
 [ ] AI Should avoid colliders in front of them.      
 [ ] FIX Zombies run into lamps forever    
-[ ] Convert GameEventType to const    
-[ ] Convert ItemType to const    
 [ ] Design Map Skirmish
+[ ] Convert ItemType to const    
+[ ] Convert DynamicObjectType to const    
+[ ] Convert PlayerEventType to const    
+[x] Convert GameEventType to const    
 [x] Player update slots on changed    
 [x] Player update gems on changed
 [x] Remove Block_Horizontal and Block_Vertical     

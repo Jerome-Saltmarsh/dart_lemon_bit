@@ -24,24 +24,20 @@ class GameUpdate {
   void update() {
     totalUpdates.value++;
     framesSinceUpdateReceived.value++;
-
-    // if (framesSinceUpdateReceived.value >= 3){
-    //   print("frames since update: ${framesSinceUpdateReceived.value}");
-    // }
-
     readPlayerInput();
     isometric.updateParticles();
-
-
     state.framesSinceOrbAcquired++;
+    updateMenuVisibility();
+    sendRequestUpdatePlayer();
+  }
+
+  void updateMenuVisibility() {
     final mousePosition = engine.mousePosition;
     _menuVisible.value =
         mousePosition.y < 200
             &&
             mousePosition.x > engine.screen.width - 500
     ;
-
-    sendRequestUpdatePlayer();
   }
 
   void readPlayerInput() {
