@@ -10,6 +10,7 @@ import 'classes/GameObject.dart';
 import 'classes/Player.dart';
 import 'classes/Projectile.dart';
 import 'common/GameEventType.dart';
+import 'common/PlayerEvent.dart';
 import 'common/ServerResponse.dart';
 import 'common/compile_util.dart';
 import 'common/constants.dart';
@@ -87,7 +88,6 @@ class _ByteCompiler {
     writeGameTime(game);
     writePlayerZombies(player);
     writeItems(player);
-    writePlayerEvents(player);
     writeDynamicObjects(player);
 
     if (game.debugMode)
@@ -109,17 +109,6 @@ class _ByteCompiler {
        writePercentage(dynamicObject.health / dynamicObject.maxHealth);
      }
      writeByte(END);
-  }
-
-  void writePlayerEvents(Player player){
-    final events = player.events;
-    if (events.isEmpty) return;
-    writeByte(ServerResponse.Player_Events);
-    writeByte(events.length);
-    for (var i = 0; i < events.length; i++) {
-      writeByte(events[i].index);
-    }
-    events.clear();
   }
 
   void writeBool(bool value){
@@ -199,6 +188,11 @@ class _ByteCompiler {
       writeCharacter(player, zombie);
     }
     writeByte(END);
+  }
+
+  void writePlayerEvents(PlayerEvent value){
+    writeByte(ServerResponse.Player_Events);
+    writeByte(value.index);
   }
 
   void writeGameEvent(Player player, GameEventType type, double x, double y, double angle){
@@ -349,8 +343,7 @@ class _ByteCompiler {
   void writeByte(int value){
     assert(value <= 256);
     assert(value >= 0);
-    _buffer[_index] = value;
-    _index++;
+    _buffer[_index++] = value;
   }
 
   void writeSlot(Slot slot){

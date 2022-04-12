@@ -79,6 +79,7 @@
 [ ] Design Store Keeper Model
 [ ] Click to pickup loot    
 [ ] FIX Website Account required popup    
+[ ] Fix Camera zonks on change scene    
 [ ] First heavy guitar track    
 [ ] FIX Shotgun fire animation loops  
 [ ] Frontend check version    
@@ -93,6 +94,7 @@
 [ ] AI Should avoid colliders in front of them.      
 [ ] FIX Zombies run into lamps forever    
 [ ] Convert GameEventType to const    
+[ ] Convert ItemType to const    
 [ ] Design Map Skirmish
 [x] Player update slots on changed    
 [x] Player update gems on changed

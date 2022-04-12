@@ -208,6 +208,7 @@ class _ByteStreamParser {
           _player.health.value = _nextDouble();
           _player.maxHealth = _nextDouble();
           _player.magic.value = _nextDouble();
+
           _player.maxMagic.value = _nextDouble();
           readSlot(_slots.weapon);
           _slots.armour.type.value = _readSlotType();
@@ -425,10 +426,7 @@ class _ByteStreamParser {
   }
 
   void _parsePlayerEvents() {
-     final total = _nextByte();
-     for(var i = 0; i < total; i++){
-        modules.game.events.onPlayerEvent(playerEvents[_nextByte()]);
-     }
+    modules.game.events.onPlayerEvent(playerEvents[_nextByte()]);
   }
 
   void _parseDynamicObjects() {

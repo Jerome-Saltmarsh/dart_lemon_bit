@@ -159,21 +159,21 @@ class GameSkirmish extends Game {
     final slots = player.slots;
 
     if (item.type == ItemType.Orb_Topaz) {
-      player.dispatch(PlayerEvent.Orb_Earned_Topaz);
+      player.onPlayerEvent(PlayerEvent.Orb_Earned_Topaz);
       player.orbs.topaz++;
       player.onOrbsChanged();
       return true;
     }
 
     if (item.type == ItemType.Orb_Ruby) {
-      player.dispatch(PlayerEvent.Orb_Earned_Ruby);
+      player.onPlayerEvent(PlayerEvent.Orb_Earned_Ruby);
       player.orbs.ruby++;
       player.onOrbsChanged();
       return true;
     }
 
     if (item.type == ItemType.Orb_Emerald) {
-      player.dispatch(PlayerEvent.Orb_Earned_Emerald);
+      player.onPlayerEvent(PlayerEvent.Orb_Earned_Emerald);
       player.orbs.emerald++;
       player.onOrbsChanged();
       return true;
@@ -184,7 +184,7 @@ class GameSkirmish extends Game {
       case ItemType.Health:
         if (player.health >= player.maxHealth) return false;
         player.health += 5;
-        player.dispatch(PlayerEvent.Medkit);
+        player.onPlayerEvent(PlayerEvent.Medkit);
         return true;
 
       case ItemType.Handgun:
@@ -196,7 +196,7 @@ class GameSkirmish extends Game {
           emptySlot.amount = 10;
           return true;
         }
-        player.dispatch(PlayerEvent.Ammo_Acquired);
+        player.onPlayerEvent(PlayerEvent.Ammo_Acquired);
         slot.amount += 10;
         return true;
 
@@ -239,7 +239,7 @@ class GameSkirmish extends Game {
           emptySlot.amount = 10;
           return true;
         }
-        player.dispatch(PlayerEvent.Ammo_Acquired);
+        player.onPlayerEvent(PlayerEvent.Ammo_Acquired);
         slot.amount += 10;
         return true;
 

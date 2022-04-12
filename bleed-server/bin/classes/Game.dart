@@ -472,7 +472,7 @@ extension GameFunctions on Game {
       player.experience -= levelExperience[player.level];
       player.level++;
       player.abilityPoints++;
-      player.events.add(PlayerEvent.Level_Up);
+      player.onPlayerEvent(PlayerEvent.Level_Up);
       player.maxHealth += settings.levelUpHealthIncrease;
       player.maxMagic += settings.levelUpMagicIncrease;
       player.health = player.maxHealth;

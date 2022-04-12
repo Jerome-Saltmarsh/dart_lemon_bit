@@ -21,8 +21,6 @@ import 'Collider.dart';
 import 'Game.dart';
 
 class Player extends Character {
-  // final gameEventIds = <int, bool>{};
-  final events = <PlayerEvent>[];
   final gemSpawns = <GemSpawn>[];
   final slots = Slots();
   final orbs = Orbs();
@@ -62,13 +60,14 @@ class Player extends Character {
   late Function onUpdated;
   late Function onOrbsChanged;
   late Function onSlotsChanged;
+  late Function(PlayerEvent value) onPlayerEvent;
   late Function(GameEventType type, double x, double y, double angle) onGameEvent;
 
   void attainOrb(OrbType orb){
     switch(orb) {
       case OrbType.Topaz:
         orbs.topaz++;
-        dispatch(PlayerEvent.Orb_Earned_Topaz);
+        onPlayerEvent(PlayerEvent.Orb_Earned_Topaz);
         break;
       case OrbType.Ruby:
         orbs.ruby++;
@@ -90,10 +89,6 @@ class Player extends Character {
 
   set magic(int value){
     _magic = clampInt(value, 0, maxMagic);
-  }
-
-  void dispatch(PlayerEvent event){
-    events.add(event);
   }
 
   Player({
@@ -122,7 +117,7 @@ class Player extends Character {
   }
 
   void setStateChangingWeapons(){
-    dispatch(PlayerEvent.Item_Equipped); // TODO
+    onPlayerEvent(PlayerEvent.Item_Equipped); // TODO
     game.setCharacterState(this, stateChanging);
   }
 
@@ -161,7 +156,7 @@ class Player extends Character {
     if (SlotType.isWeapon(slotType)) {
       final slot = slots.getEmptyWeaponSlot();
       if (slot == null) return;
-      dispatch(PlayerEvent.Item_Purchased);
+      onPlayerEvent(PlayerEvent.Item_Purchased);
       setStateChangingWeapons();
       slot.type = slotType;
       slot.amount = 10;
@@ -172,7 +167,7 @@ class Player extends Character {
     if (SlotType.isArmour(slotType)) {
       final slot = slots.getEmptyArmourSlot();
       if (slot == null) return;
-      dispatch(PlayerEvent.Item_Purchased);
+      onPlayerEvent(PlayerEvent.Item_Purchased);
       setStateChangingWeapons();
       slot.type = slotType;
       onEquipped(slotType);
@@ -181,7 +176,7 @@ class Player extends Character {
     if (SlotType.isHelm(slotType)) {
       final slot = slots.getEmptyHeadSlot();
       if (slot == null) return;
-      dispatch(PlayerEvent.Item_Purchased);
+      onPlayerEvent(PlayerEvent.Item_Purchased);
       setStateChangingWeapons();
       slot.type = slotType;
       onEquipped(slotType);
@@ -189,7 +184,7 @@ class Player extends Character {
 
     final emptySlot = slots.getEmptySlot();
     if (emptySlot == null) return;
-    dispatch(PlayerEvent.Item_Purchased);
+    onPlayerEvent(PlayerEvent.Item_Purchased);
     setStateChangingWeapons();
     emptySlot.type = slotType;
     if (SlotType.isItem(slotType)){
@@ -283,7 +278,7 @@ class Player extends Character {
         health = maxHealth;
         slots.assignSlotTypeAtIndex(index, SlotType.Empty);
         setStateChangingWeapons();
-        dispatch(PlayerEvent.Drink_Potion);
+        onPlayerEvent(PlayerEvent.Drink_Potion);
         onSlotsChanged();
       }
 
@@ -291,7 +286,7 @@ class Player extends Character {
         magic = maxMagic;
         slots.assignSlotTypeAtIndex(index, SlotType.Empty);
         setStateChangingWeapons();
-        dispatch(PlayerEvent.Drink_Potion);
+        onPlayerEvent(PlayerEvent.Drink_Potion);
         onSlotsChanged();
       }
   }
@@ -300,7 +295,7 @@ class Player extends Character {
     final slotAtIndex = slots.getSlotTypeAtIndex(index);
     if (slotAtIndex == SlotType.Empty) return;
     slots.assignSlotTypeAtIndex(index, SlotType.Empty);
-    dispatch(PlayerEvent.Item_Sold);
+    onPlayerEvent(PlayerEvent.Item_Sold);
     onSlotsChanged();
   }
 }

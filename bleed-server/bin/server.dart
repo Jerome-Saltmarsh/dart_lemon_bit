@@ -16,6 +16,7 @@ import 'common/GameError.dart';
 import 'common/GameEventType.dart';
 import 'common/GameType.dart';
 import 'common/Modify_Game.dart';
+import 'common/PlayerEvent.dart';
 import 'common/RoyalCost.dart';
 import 'common/ServerResponse.dart';
 import 'common/SlotType.dart';
@@ -121,13 +122,15 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       byteCompiler.writePlayerSlots(player);
     }
 
+    void sendPlayerEvent(PlayerEvent event){
+      final player = _player;
+      if (player == null) return;
+      byteCompiler.writePlayerEvents(event);
+    }
+
     void sendGameEvent(GameEventType type, double x, double y, double angle){
       final player = _player;
-      if (player == null) {
-        print("player is null");
-        return;
-      }
-      print("dispatch($type)");
+      if (player == null) return;
       byteCompiler.writeGameEvent(player, type, x, y, angle);
     }
 
@@ -145,6 +148,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       player.onOrbsChanged = compileOrbsChanged;
       player.onSlotsChanged = compileAndSendPlayerSlots;
       player.onGameEvent = sendGameEvent;
+      player.onPlayerEvent = sendPlayerEvent;
       final account = _account;
       if (account != null) {
         player.name = account.publicName;
