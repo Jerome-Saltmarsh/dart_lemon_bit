@@ -284,13 +284,14 @@ class GameRender {
 
   void drawItemText() {
     final items = isometric.items;
-    for (var i = 0; i < game.itemsTotal; i++){
+    final total = game.itemsTotal;
+    for (var i = 0; i < total; i++){
       final item = items[i];
       const mouseDist = 100;
       if ((mouseWorldX - item.x).abs() < mouseDist){
         if((mouseWorldY - item.y).abs() < mouseDist){
           renderText(
-              text: item.type.name,
+              text: item.type.toString(),
               x: item.x,
               y: item.y
           );

@@ -140,7 +140,7 @@ class _ByteCompiler {
       if (item.right > player.screenRight) continue;
       if (item.top < player.screenTop) continue;
       if (item.bottom > player.screenBottom) break;
-      writeByte(item.type.index);
+      writeByte(item.type);
       writeBigInt(item.x);
       writeBigInt(item.y);
     }

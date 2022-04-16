@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:bleed_common/ItemType.dart';
 
 // interface
-Rect mapItemToRect(ItemType item) {
-  switch (item) {
+Rect mapItemToRect(int itemType) {
+  switch (itemType) {
     case ItemType.Health:
       return _health[0];
     case ItemType.Handgun:
@@ -12,7 +12,7 @@ Rect mapItemToRect(ItemType item) {
     case ItemType.Shotgun:
       return _shotgun[0];
     default:
-      throw Exception("Could not map $item to Rect");
+      throw Exception("Could not map $itemType to Rect");
   }
 }
 

@@ -297,7 +297,7 @@ final characterRadius = settings.radius.character;
 
 extension GameFunctions on Game {
   void spawnRandomOrb(double x, double y) {
-    items.add(Item(type: randomItem(orbItemTypes), x: x, y: y));
+    items.add(Item(type: randomItem(ItemType.orbs), x: x, y: y));
   }
 
   Vector2 getSceneCenter() =>

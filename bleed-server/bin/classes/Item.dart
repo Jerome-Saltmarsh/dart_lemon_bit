@@ -1,11 +1,10 @@
 
 import '../common/CommonSettings.dart';
-import '../common/ItemType.dart';
 import '../settings.dart';
 import 'GameObject.dart';
 
 class Item extends GameObject {
-  ItemType type;
+  int type;
   int duration = settings.itemDuration;
   bool timed;
 

@@ -28,7 +28,7 @@ void compileItems(StringBuffer buffer, List<Item> items) {
   _write(buffer, ServerResponse.Items);
   _write(buffer, items.length);
   for (final item in items) {
-    _write(buffer, item.type.index);
+    _write(buffer, item.type);
     _writeVector2Int(buffer, item);
   }
 }

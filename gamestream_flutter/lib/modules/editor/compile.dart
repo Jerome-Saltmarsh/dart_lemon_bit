@@ -44,7 +44,7 @@ class EditorCompile {
   List<int> compileItemsToJson(){
     final List<int> list = [];
     for(final item in state.items){
-      list.add(item.type.index);
+      list.add(item.type);
       list.add(item.x.toInt());
       list.add(item.y.toInt());
     }

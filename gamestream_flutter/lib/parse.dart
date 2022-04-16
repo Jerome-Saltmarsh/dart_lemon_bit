@@ -3,7 +3,6 @@ import 'package:bleed_common/AbilityType.dart';
 import 'package:bleed_common/GameError.dart';
 import 'package:bleed_common/GameStatus.dart';
 import 'package:bleed_common/GameType.dart';
-import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/OrbType.dart';
 import 'package:bleed_common/ServerResponse.dart';
 import 'package:bleed_common/constants.dart';
@@ -160,9 +159,9 @@ void parseState() {
         modules.game.state.compilePaths.value = debugInt == 1;
         break;
 
-      case ServerResponse.Items:
-        parseItems();
-        break;
+      // case ServerResponse.Items:
+      //   parseItems();
+      //   break;
 
       case ServerResponse.Crates:
         parseCrates();
@@ -239,16 +238,16 @@ void parseGameTime() {
   modules.isometric.minutes.value = consumeInt();
 }
 
-void parseItems() {
-  game.itemsTotal = consumeInt();
-  final items = isometric.items;
-  for (int i = 0; i < game.itemsTotal; i++) {
-    final item = items[i];
-    item.type = _consumeItemType();
-    item.x = consumeDouble();
-    item.y = consumeDouble();
-  }
-}
+// void parseItems() {
+//   game.itemsTotal = consumeInt();
+//   final items = isometric.items;
+//   for (int i = 0; i < game.itemsTotal; i++) {
+//     final item = items[i];
+//     item.type = _consumeItemType();
+//     item.x = consumeDouble();
+//     item.y = consumeDouble();
+//   }
+// }
 
 void parseCrates() {
   game.cratesTotal = consumeInt();
@@ -469,10 +468,6 @@ bool _simiColonConsumed() {
 
 GameError _consumeError() {
   return GameError.values[consumeInt()];
-}
-
-ItemType _consumeItemType() {
-  return itemTypes[consumeInt()];
 }
 
 void _parseProjectiles() {

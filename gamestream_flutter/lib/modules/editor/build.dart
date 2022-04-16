@@ -246,7 +246,7 @@ class EditorBuild {
   }
 
   List<Widget> _tabItems(){
-     return itemTypes.map((itemType){
+     return ItemType.values.map((itemType){
        return WatchBuilder(state.itemType, (selectedItemType){
          return tabButton(
             enumString(itemType), (){

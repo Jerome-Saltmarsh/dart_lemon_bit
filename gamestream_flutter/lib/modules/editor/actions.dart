@@ -188,7 +188,7 @@ class EditorActions with EditorScope {
       for(var i = 0; i < items.length; i += 3){
         state.items.add(
             Item(
-                type: itemTypes[items[i]],
+                type: ItemType.values[items[i]],
                 x: items[i + 1].toDouble(),
                 y: items[i + 2].toDouble())
         );

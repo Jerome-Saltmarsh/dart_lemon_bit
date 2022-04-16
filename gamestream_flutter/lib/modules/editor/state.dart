@@ -27,7 +27,7 @@ class EditorState {
   final Watch<ToolTab> tab = Watch(ToolTab.Tiles);
   final Watch<int> tile = Watch(Tile.Grass);
   final Watch<CharacterType> characterType = Watch(CharacterType.Human);
-  final Watch<ItemType> itemType = Watch(ItemType.Shotgun);
+  final itemType = Watch(ItemType.Shotgun);
   final Watch<ObjectType> objectType = Watch(objectTypes.first);
   final Watch<EditorDialog> dialog = Watch(EditorDialog.None);
   final mapNameController = TextEditingController();

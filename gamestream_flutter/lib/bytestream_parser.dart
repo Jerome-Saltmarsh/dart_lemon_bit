@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/ServerResponse.dart';
 import 'package:bleed_common/compile_util.dart';
 import 'package:bleed_common/constants.dart';
@@ -302,7 +301,7 @@ class _ByteStreamParser {
       final itemTypeIndex = _nextByte();
       if (itemTypeIndex == END) break;
       final item = items[index];
-      item.type = itemTypes[itemTypeIndex];
+      item.type = itemTypeIndex;
       item.x = _nextDouble();
       item.y = _nextDouble();
       index++;
