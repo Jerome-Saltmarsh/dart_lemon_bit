@@ -43,17 +43,15 @@ class GameUpdate {
   void readPlayerInput() {
     if (hud.textBoxFocused) return;
 
-    final direction = getKeyDirection();
-
     if (_mouseLeftDown.value){
       _gameActions.setCharacterActionPerform();
       return;
     }
 
+    final direction = getKeyDirection();
     if (direction != null){
       _controller.angle = direction;
       _gameActions.setCharacterActionRun();
-      return;
     }
   }
 

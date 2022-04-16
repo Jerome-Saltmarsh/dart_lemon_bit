@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/DynamicObjectType.dart';
 import 'package:bleed_common/ItemType.dart';
-import 'package:bleed_common/PlayerEvent.dart';
 import 'package:bleed_common/ServerResponse.dart';
 import 'package:bleed_common/compile_util.dart';
 import 'package:bleed_common/constants.dart';
@@ -424,7 +423,7 @@ class _ByteStreamParser {
   }
 
   void _parsePlayerEvents() {
-    _events.onPlayerEvent(playerEvents[_nextByte()]);
+    _events.onPlayerEvent(_nextByte());
   }
 
   void _parseDynamicObjects() {

@@ -59,7 +59,7 @@ class Player extends Character {
   late Function onUpdated;
   late Function onOrbsChanged;
   late Function onSlotsChanged;
-  late Function(PlayerEvent value) onPlayerEvent;
+  late Function(int value) onPlayerEvent;
   late Function(int type, double x, double y, double angle) onGameEvent;
 
   void attainOrb(OrbType orb){

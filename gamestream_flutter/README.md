@@ -93,10 +93,13 @@
     [x] Pot
 [ ] AI Should avoid colliders in front of them.      
 [ ] FIX Zombies run into lamps forever    
+[ ] FIX Zombies run backwards and flicker    
 [ ] Design Map Skirmish
+[ ] 2 Player Survival Game waves
 [ ] Convert ItemType to const    
 [ ] Convert DynamicObjectType to const    
-[ ] Convert PlayerEventType to const    
+[x] Convert PlayerEventType to const       
+[x] Remove Update Timer (Merge render and update)    
 [x] Convert GameEventType to const    
 [x] Player update slots on changed    
 [x] Player update gems on changed

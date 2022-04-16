@@ -15,7 +15,6 @@ import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
 import 'common/GameType.dart';
 import 'common/Modify_Game.dart';
-import 'common/PlayerEvent.dart';
 import 'common/RoyalCost.dart';
 import 'common/ServerResponse.dart';
 import 'common/SlotType.dart';
@@ -121,7 +120,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       byteCompiler.writePlayerSlots(player);
     }
 
-    void sendPlayerEvent(PlayerEvent event){
+    void sendPlayerEvent(int event){
       final player = _player;
       if (player == null) return;
       byteCompiler.writePlayerEvents(event);

@@ -9,7 +9,6 @@ import 'classes/Game.dart';
 import 'classes/GameObject.dart';
 import 'classes/Player.dart';
 import 'classes/Projectile.dart';
-import 'common/PlayerEvent.dart';
 import 'common/ServerResponse.dart';
 import 'common/compile_util.dart';
 import 'common/constants.dart';
@@ -189,9 +188,9 @@ class _ByteCompiler {
     writeByte(END);
   }
 
-  void writePlayerEvents(PlayerEvent value){
+  void writePlayerEvents(int value){
     writeByte(ServerResponse.Player_Events);
-    writeByte(value.index);
+    writeByte(value);
   }
 
   void writeGameEvent(Player player, int type, double x, double y, double angle){

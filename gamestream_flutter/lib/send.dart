@@ -69,10 +69,9 @@ void sendRequestAttack() {
 
 final _characterController = modules.game.state.characterController;
 final _characterControllerAction = _characterController.action;
+final _screen = engine.screen;
 
 Future sendRequestUpdatePlayer() async {
-  final screen = engine.screen;
-
   _updateBuffer[0] = _gameUpdateIndex;
   _updateBuffer[1] = _characterControllerAction.value;
   writeNumberToByteArray(number: mouseWorldX, list: _updateBuffer, index: 2);
@@ -83,10 +82,10 @@ Future sendRequestUpdatePlayer() async {
     _updateBuffer[6] = 0;
   }
 
-  writeNumberToByteArray(number: screen.left, list: _updateBuffer, index: 7);
-  writeNumberToByteArray(number: screen.top, list: _updateBuffer, index: 9);
-  writeNumberToByteArray(number: screen.right, list: _updateBuffer, index: 11);
-  writeNumberToByteArray(number: screen.bottom, list: _updateBuffer, index: 13);
+  writeNumberToByteArray(number: _screen.left, list: _updateBuffer, index: 7);
+  writeNumberToByteArray(number: _screen.top, list: _updateBuffer, index: 9);
+  writeNumberToByteArray(number: _screen.right, list: _updateBuffer, index: 11);
+  writeNumberToByteArray(number: _screen.bottom, list: _updateBuffer, index: 13);
 
   webSocket.sink.add(_updateBuffer);
   _characterControllerAction.value = CharacterAction.Idle;

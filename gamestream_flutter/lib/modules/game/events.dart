@@ -71,7 +71,7 @@ class GameEvents {
     }
   }
 
-  void onPlayerEvent(PlayerEvent event){
+  void onPlayerEvent(int event){
     switch (event) {
       case PlayerEvent.Level_Up:
         modules.game.actions.emitPixelExplosion(modules.game.state.player.x, modules.game.state.player.y, amount: 10);
