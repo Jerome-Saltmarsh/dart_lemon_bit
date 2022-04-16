@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:bleed_common/DynamicObjectType.dart';
 import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/ServerResponse.dart';
 import 'package:bleed_common/compile_util.dart';
@@ -432,7 +431,7 @@ class _ByteStreamParser {
          final typeIndex = _nextByte();
          if (typeIndex == END) break;
          final dynamicObject = game.dynamicObjects[total];
-         dynamicObject.type = dynamicObjectTypes[typeIndex];
+         dynamicObject.type = typeIndex;
          dynamicObject.x = _nextDouble();
          dynamicObject.y = _nextDouble();
          dynamicObject.health = _nextPercentage();

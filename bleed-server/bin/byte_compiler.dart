@@ -101,7 +101,7 @@ class _ByteCompiler {
        if (dynamicObject.x > player.screenRight) continue;
        if (dynamicObject.y < player.screenTop) continue;
        if (dynamicObject.y > player.screenBottom) break;
-       writeByte(dynamicObject.type.index);
+       writeByte(dynamicObject.type);
        writeBigInt(dynamicObject.x);
        writeBigInt(dynamicObject.y);
        writePercentage(dynamicObject.health / dynamicObject.maxHealth);

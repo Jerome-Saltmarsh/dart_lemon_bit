@@ -1,10 +1,9 @@
 
 
-import '../common/DynamicObjectType.dart';
 import 'Collider.dart';
 
 class DynamicObject extends Collider {
-  late DynamicObjectType type;
+  late int type; // DynamicObjectType.dart
   late int maxHealth;
   late int health;
   var respawnDuration = 1000;

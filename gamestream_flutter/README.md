@@ -97,7 +97,7 @@
 [ ] Design Map Skirmish
 [ ] 2 Player Survival Game waves
 [ ] Convert ItemType to const    
-[ ] Convert DynamicObjectType to const    
+[x] Convert DynamicObjectType to const    
 [x] Convert PlayerEventType to const       
 [x] Remove Update Timer (Merge render and update)    
 [x] Convert GameEventType to const    

@@ -1,8 +1,6 @@
-const dynamicObjectTypes = DynamicObjectType.values;
-
-enum DynamicObjectType {
-  Rock,
-  Pot,
-  Crate,
-  Grass
+class DynamicObjectType {
+  static const Rock = 0;
+  static const Pot = 1;
+  static const Crate = 2;
+  static const Grass = 3;
 }
