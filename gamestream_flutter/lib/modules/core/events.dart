@@ -97,6 +97,7 @@ class CoreEvents {
     engine.drawCanvasAfterUpdate = true;
     engine.update = null;
     engine.keyPressedHandlers = {};
+    modules.game.events.deregister();
 
     switch(mode){
 

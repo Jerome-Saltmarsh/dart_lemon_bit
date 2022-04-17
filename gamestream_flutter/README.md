@@ -67,6 +67,7 @@
 [ ] Generate Random Map    
 [ ] Characters can fall in water and die    
 [ALPHA-RELEASE]
+[ ] Handle keyboard events dynamically    
 [ ] SKIRMISH -SOLO- -TEAM-   
 [ ] Slot Cooldown
 [ ] Fix fireball explosion
@@ -99,6 +100,8 @@
 [ ] 2 Player Survival Game waves
 [ ] Construct Tower    
 [ ] Upgrade Items    
+[ ] Single Player Swarms    
+[x] FIX Game freezes when change tab    
 [x] Convert ItemType to const    
 [x] Convert DynamicObjectType to const    
 [x] Convert PlayerEventType to const       

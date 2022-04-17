@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bleed_common/AbilityType.dart';
 import 'package:bleed_common/CharacterState.dart';
 import 'package:bleed_common/CharacterType.dart';
@@ -7,6 +9,7 @@ import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/OrbType.dart';
 import 'package:bleed_common/PlayerEvent.dart';
 import 'package:bleed_common/SlotType.dart';
+import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/bytestream_parser.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
@@ -33,6 +36,8 @@ class GameEvents {
   final GameActions actions;
   final GameState state;
 
+  Timer? updateTimer;
+
   GameEvents(this.actions, this.state);
 
   void register(){
@@ -52,8 +57,29 @@ class GameEvents {
     state.player.slots.weapon.type.onChanged(onPlayerWeaponChanged);
     state.player.slots.armour.type.onChanged(onPlayerArmourChanged);
     state.player.slots.helm.type.onChanged(onPlayerHelmChanged);
+    // RawKeyboard.instance.addListener(onKeyboardEvent);
     sub(_onGameError);
+
+    updateTimer = Timer.periodic(Duration(milliseconds: 1000.0 ~/ 30.0), (timer) {
+      engine.updateEngine();
+    });
   }
+
+
+  void deregister(){
+    // RawKeyboard.instance.removeListener(onKeyboardEvent);
+    updateTimer?.cancel();
+
+  }
+  //
+  // void onKeyboardEvent(RawKeyEvent event){
+  //    print("game.events.onKeyboardEvent()");
+  //    if (event is KeyDownEvent){
+  //       if (event.physicalKey == PhysicalKeyboardKey.keyW){
+  //          // modules.game.state.characterController.angle
+  //       }
+  //    }
+  // }
 
   void onMouseRightClick(){
     if (state.player.ability.value != AbilityType.None) {

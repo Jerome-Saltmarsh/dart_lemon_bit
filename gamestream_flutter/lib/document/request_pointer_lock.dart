@@ -7,6 +7,11 @@ void requestPointerLock() {
   }
 }
 
+void getFrame(){
+  // final frame = window.animationFrame;
+
+}
+
 void setDocumentTitle(String value){
   document.title = value;
 }
