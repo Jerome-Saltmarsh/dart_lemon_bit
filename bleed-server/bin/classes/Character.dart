@@ -9,6 +9,7 @@ import '../common/SlotType.dart';
 import '../constants.dart';
 import '../constants/no_squad.dart';
 import '../enums/npc_mode.dart';
+import '../functions/withinRadius.dart';
 import '../settings.dart';
 import '../utilities.dart';
 import 'Ability.dart';
@@ -20,11 +21,12 @@ const maxAIPathLength = 80;
 const maxAIPathLengthMinusOne = maxAIPathLength - 3;
 
 class AI extends Character {
+  static const viewRange = 200.0;
+  static const chaseRange = 500.0;
+
   final pathX = Float32List(maxAIPathLength);
   final pathY = Float32List(maxAIPathLength);
   var mode = NpcMode.Aggressive;
-  var viewRange = 200.0;
-  var chaseRange = 500.0;
   var _pathIndex = -1;
   var destX = -1.0;
   var destY = -1.0;
@@ -66,7 +68,6 @@ class AI extends Character {
     required double x,
     required double y,
     this.mode = NpcMode.Defensive,
-    this.viewRange = 300.0,
     required CharacterType type,
     required int health,
     int team = noSquad,
@@ -77,6 +78,16 @@ class AI extends Character {
   void clearTargetIf(Character value){
     if (target != value) return;
     target = null;
+  }
+
+  bool withinViewRange(Vector2 target) {
+    if (mode == NpcMode.Swarm) return true;
+    return withinRadius(this, target, viewRange);
+  }
+
+  bool withinChaseRange(Vector2 target) {
+    if (mode == NpcMode.Swarm) return true;
+    return withinRadius(this, target, chaseRange);
   }
 }
 
@@ -93,7 +104,6 @@ class Character extends GameObject {
   Ability? performing = null;
   int state = stateIdle;
   double angle = 0;
-  int equippedIndex = 0;
   double aimAngle = 0;
   double accuracy = 0;
   int stateDurationRemaining = 0;
@@ -170,6 +180,7 @@ class Character extends GameObject {
     xv *= velocityFriction;
     yv *= velocityFriction;
   }
+
   // void onCollisionWith(Collider other){
   //    if (ai == null) return;
   //    if (!other.withinBounds(ai!.destX, ai!.destY)) return;

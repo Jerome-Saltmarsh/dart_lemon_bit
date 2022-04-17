@@ -1211,7 +1211,7 @@ extension GameFunctions on Game {
       final zombieAITarget = zombie.target;
       if (
           zombieAITarget != null &&
-          (zombieAITarget.dead || !withinChaseRange(zombie, zombieAITarget))
+          (zombieAITarget.dead || !zombie.withinChaseRange(zombieAITarget))
       ) {
         zombie.target = null;
       }
@@ -1221,7 +1221,7 @@ extension GameFunctions on Game {
       for (final otherZombie in zombies) {
         if (otherZombie.dead) continue;
         if (zombie.team == otherZombie.team) continue;
-        if (!withinViewRange(zombie, otherZombie)) continue;
+        if (!zombie.withinViewRange(otherZombie)) continue;
         final npcDistance = cheapDistance(zombie, otherZombie);
         if (npcDistance >= targetDistance) continue;
         if (!isVisibleBetween(zombie, otherZombie)) continue;
@@ -1232,11 +1232,10 @@ extension GameFunctions on Game {
       for (final player in players) {
         if (player.dead) continue;
         if (sameTeam(player, zombie)) continue;
-        if (!withinViewRange(zombie, player)) continue;
+        if (!zombie.withinViewRange(player)) continue;
         final npcDistance = cheapDistance(zombie, player);
         if (npcDistance >= targetDistance) continue;
-        // if (!isVisibleBetween(zombie, player)) continue;
-        // setNpcTarget(zombieAI, player);
+        setNpcTarget(zombie, player);
         targetDistance = npcDistance;
         break;
       }
@@ -1247,16 +1246,6 @@ extension GameFunctions on Game {
         }
       }
     }
-  }
-
-  bool withinViewRange(AI ai, Vector2 target) {
-    if (ai.mode == NpcMode.Swarm) return true;
-    return withinRadius(ai, target, ai.viewRange);
-  }
-
-  bool withinChaseRange(AI ai, Vector2 target) {
-    if (ai.mode == NpcMode.Swarm) return true;
-    return withinRadius(ai, target, ai.chaseRange);
   }
 
   num cheapDistance(Vector2 a, Vector2 b) {

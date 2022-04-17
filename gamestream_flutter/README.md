@@ -99,6 +99,7 @@
 [ ] 2 Player Survival Game waves
 [ ] Construct Tower    
 [ ] Upgrade Items    
+[x] Fix Zombies not attacking player   
 [Game Type Swarm]
 [x] AI Always run at player
 [x] Debug draw ai target line    
