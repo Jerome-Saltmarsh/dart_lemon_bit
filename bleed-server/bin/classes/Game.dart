@@ -1249,8 +1249,8 @@ extension GameFunctions on Game {
         if (!withinViewRange(zombieAI, player)) continue;
         final npcDistance = cheapDistance(zombie, player);
         if (npcDistance >= targetDistance) continue;
-        if (!isVisibleBetween(zombie, player)) continue;
-        setNpcTarget(zombieAI, player);
+        // if (!isVisibleBetween(zombie, player)) continue;
+        // setNpcTarget(zombieAI, player);
         targetDistance = npcDistance;
         break;
       }
@@ -1264,6 +1264,7 @@ extension GameFunctions on Game {
   }
 
   bool withinViewRange(AI ai, Vector2 target) {
+    if (ai.mode == NpcMode.Swarm) return true;
     return withinRadius(ai.character, target, ai.viewRange);
   }
 
@@ -1390,7 +1391,16 @@ extension GameFunctions on Game {
     pathFindAI = ai;
     pathFindSearchID++;
     ai.pathIndex = -1;
-    scene.visitNode(scene.tileNodeAt(ai.x, ai.y));
+    if (scene.visitNode(scene.tileNodeAt(ai.x, ai.y))){
+       // final path = ai.pathIndex;
+       // if (path > 1){
+       //    final d1X = ai.pathX[path];
+       //    final d1Y = ai.pathY[path];
+       //    final d2X = ai.pathX[path - 1];
+       //    final d2Y = ai.pathY[path - 1];
+       //
+       // }
+    }
   }
 
   void _updateSpawnPointCollisions() {

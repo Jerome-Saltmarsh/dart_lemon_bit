@@ -95,14 +95,14 @@
 [ ] AI Should avoid colliders in front of them.      
 [ ] Block Tiles caste Shadows    
 [ ] FIX Zombies run into lamps forever    
-[ ] FIX Zombies run backwards and flicker    
 [ ] Design Map Skirmish
 [ ] 2 Player Survival Game waves
 [ ] Construct Tower    
 [ ] Upgrade Items    
 [Game Type Swarm]
-[ ] AI Always run at player
+[x] AI Always run at player
 [x] Debug draw ai target line    
+[x] FIX Zombies run backwards and flicker    
 [COMPLETED]    
 [x] FIX Game freezes when change tab    
 [x] Convert ItemType to const    

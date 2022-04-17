@@ -210,8 +210,8 @@ extension SceneFunctions on Scene {
     node.previous = previous;
     node.searchId = pathFindSearchID;
 
-    if (node == pathFindDestination) {
-      TileNode? current = node.previous;
+    if (node.depth == 50 || node == pathFindDestination) {
+      var current = node.previous;
       final pathX = pathFindAI.pathX;
       final pathY = pathFindAI.pathY;
       var index = 0;
@@ -219,17 +219,10 @@ extension SceneFunctions on Scene {
         pathX[index] = current.x;
         pathY[index] = current.y;
         current = current.previous;
-        if (current != null){
-          index++;
-          if (index >= maxAIPathLength) return false;
-        }
+        index++;
       }
-      pathFindAI.pathIndex = index;
+      pathFindAI.pathIndex = index - 2;
       return true;
-    }
-
-    if (node.depth > 30) {
-      return false;
     }
 
     final direction = parseRowsAndColumnsToDirection(

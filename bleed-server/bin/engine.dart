@@ -97,7 +97,7 @@ class _Engine {
           if (zombie.deadOrBusy) continue;
           final ai = zombie.ai;
           if (ai == null) continue;
-          if (ai.mode != NpcMode.Aggressive || ai.mode != NpcMode.Swarm) continue;
+          if (ai.mode != NpcMode.Aggressive && ai.mode != NpcMode.Swarm) continue;
           final target = ai.target;
           if (target == null) continue;
           game.npcSetPathTo(ai, target.x, target.y);

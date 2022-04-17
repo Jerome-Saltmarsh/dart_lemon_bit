@@ -141,6 +141,7 @@ class _ByteStreamParser {
           }
           final targets = modules.isometric.targets;
           var i = 0;
+
           while(_nextByte() != 0) {
              targets[i] = _nextDouble();
              targets[i + 1] = _nextDouble();
