@@ -32,7 +32,6 @@ class Player extends Character {
   int frameOfDeath = -1;
   int pointsRecord = 0;
   int textDuration = 0;
-  int handgunDamage = 10;
   int experience = 0;
   int level = 1;
   int abilityPoints = 0;
@@ -45,9 +44,7 @@ class Player extends Character {
   String name = generateName();
   Game game;
   bool storeVisible = false;
-  bool skipUpdate = false;
-  double mouseX = 0;
-  double mouseY = 0;
+  Vector2 mouse = Vector2(0, 0);
   double screenLeft = 0;
   double screenTop = 0;
   double screenRight = 0;
@@ -62,21 +59,7 @@ class Player extends Character {
   late Function(int value) onPlayerEvent;
   late Function(int type, double x, double y, double angle) onGameEvent;
 
-  void attainOrb(OrbType orb){
-    switch(orb) {
-      case OrbType.Topaz:
-        orbs.topaz++;
-        onPlayerEvent(PlayerEvent.Orb_Earned_Topaz);
-        break;
-      case OrbType.Ruby:
-        orbs.ruby++;
-        break;
-      case OrbType.Emerald:
-        orbs.emerald++;
-        break;
-    }
-    onOrbsChanged();
-  }
+  double get mouseAngle => getAngle(mouse);
 
   int get magic => _magic;
 
@@ -111,6 +94,22 @@ class Player extends Character {
     maxMagic = magic;
     _magic = maxMagic;
     engine.onPlayerCreated(this);
+  }
+
+  void attainOrb(OrbType orb){
+    switch(orb) {
+      case OrbType.Topaz:
+        orbs.topaz++;
+        onPlayerEvent(PlayerEvent.Orb_Earned_Topaz);
+        break;
+      case OrbType.Ruby:
+        orbs.ruby++;
+        break;
+      case OrbType.Emerald:
+        orbs.emerald++;
+        break;
+    }
+    onOrbsChanged();
   }
 
   void setStateChangingWeapons(){

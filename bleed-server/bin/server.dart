@@ -28,7 +28,6 @@ import 'functions/generateName.dart';
 import 'functions/withinRadius.dart';
 import 'games/Moba.dart';
 import 'games/world.dart';
-import 'maths.dart';
 import 'settings.dart';
 import 'utilities.dart';
 
@@ -309,8 +308,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
           final mouseX = readNumberFromByteArray(args, index: 2).toDouble();
           final mouseY = readNumberFromByteArray(args, index: 4).toDouble();
-          player.mouseX = mouseX;
-          player.mouseY = mouseY;
+          player.mouse.x = mouseX;
+          player.mouse.y = mouseY;
           player.screenLeft = readNumberFromByteArray(args, index: 7).toDouble();
           player.screenTop = readNumberFromByteArray(args, index: 9).toDouble();
           player.screenRight = readNumberFromByteArray(args, index: 11).toDouble();
@@ -690,8 +689,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           switch(modifyGame){
             case ModifyGame.Spawn_Zombie:
               player.game.spawnZombie(
-                x: player.mouseX,
-                y: player.mouseY,
+                x: player.mouse.x,
+                y: player.mouse.y,
                 damage: 1,
                 health: 5,
                 team: 100,
@@ -856,8 +855,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (player.deadOrBusy) return;
           player.target = null;
           player.attackTarget = null;
-          final mouseAngle = radiansBetween(player.x, player.y, player.mouseX, player.mouseY);
-          characterFaceAngle(player, mouseAngle);
+          characterFaceAngle(player, player.mouseAngle);
           player.game.setCharacterStatePerforming(player);
           break;
 

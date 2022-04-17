@@ -544,10 +544,6 @@ extension GameFunctions on Game {
     for (var i = 0; i < playersLength; i++) {
       final player = players[i];
       updatePlayer(player);
-      if (player.skipUpdate) {
-        player.skipUpdate = false;
-        continue;
-      }
       updateCharacter(player);
     }
 
@@ -563,7 +559,6 @@ extension GameFunctions on Game {
   }
 
   void _updateCollisions() {
-    // sortGameObjects();
     checkColliderCollision(players, colliders);
     checkColliderCollision(zombies, colliders);
     checkColliderCollision(players, dynamicObjects);
