@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:bleed_common/AbilityType.dart';
 import 'package:bleed_common/GameType.dart';
+import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/OrbType.dart';
 import 'package:bleed_common/SlotType.dart';
 import 'package:bleed_common/configuration.dart';
@@ -291,7 +292,7 @@ class GameRender {
       if ((mouseWorldX - item.x).abs() < mouseDist){
         if((mouseWorldY - item.y).abs() < mouseDist){
           renderText(
-              text: item.type.toString(),
+              text: ItemType.names[item.type] ?? "?",
               x: item.x,
               y: item.y
           );

@@ -11,6 +11,20 @@ class ItemType {
   static const Wizards_Hat = 9;
   static const Steel_Helm = 10;
 
+  static const names = <int, String>{
+    Health: "Health",
+    Handgun: "Handgun",
+    Shotgun: "Shotgun",
+    Orb_Ruby: "Ruby",
+    Orb_Topaz: "Topaz",
+    Orb_Emerald: "Emerald",
+    Sword_Wooden: "Wooden Sword",
+    Sword_Steel: "Steel Sword",
+    Armour_Plated: "Plated Armour",
+    Wizards_Hat: "Wizard's Hat",
+    Steel_Helm: "Steel Helmet"
+  };
+
   static const orbs = [
     Orb_Emerald,
     Orb_Topaz,

@@ -92,11 +92,14 @@
     [ ] Chest
     [x] Pot
 [ ] AI Should avoid colliders in front of them.      
+[ ] Block Tiles caste Shadows    
 [ ] FIX Zombies run into lamps forever    
 [ ] FIX Zombies run backwards and flicker    
 [ ] Design Map Skirmish
 [ ] 2 Player Survival Game waves
-[ ] Convert ItemType to const    
+[ ] Construct Tower    
+[ ] Upgrade Items    
+[x] Convert ItemType to const    
 [x] Convert DynamicObjectType to const    
 [x] Convert PlayerEventType to const       
 [x] Remove Update Timer (Merge render and update)    
