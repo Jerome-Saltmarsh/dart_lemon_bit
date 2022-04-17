@@ -139,6 +139,16 @@ class _ByteStreamParser {
               index += 2;
             }
           }
+          final targets = modules.isometric.targets;
+          var i = 0;
+          while(_nextByte() != 0) {
+             targets[i] = _nextDouble();
+             targets[i + 1] = _nextDouble();
+             targets[i + 2] = _nextDouble();
+             targets[i + 3] = _nextDouble();
+             i += 4;
+          }
+          modules.isometric.targetsTotal = i;
           break;
         case ServerResponse.Game_Time:
           _hours.value = _nextByte();

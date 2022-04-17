@@ -10,6 +10,7 @@ import 'common/SlotType.dart';
 import 'compile.dart';
 import 'enums/npc_mode.dart';
 import 'functions/loadScenes.dart';
+import 'games/GameSwarm.dart';
 import 'games/Moba.dart';
 import 'games/Royal.dart';
 import 'games/Skirmish.dart';
@@ -44,18 +45,7 @@ class _Engine {
     }
 
     if (frame % framesPerUpdateAIPath == 0) {
-      for (final game in games) {
-        final zombies = game.zombies;
-        for (final zombie in zombies){
-            if (zombie.deadOrBusy) continue;
-            final ai = zombie.ai;
-            if (ai == null) continue;
-            if (ai.mode != NpcMode.Aggressive) continue;
-            final target = ai.target;
-            if (target == null) continue;
-            game.npcSetPathTo(ai, target.x, target.y);
-        }
-      }
+      _updateAIPaths();
     }
 
     for (final game in games) {
@@ -100,6 +90,21 @@ class _Engine {
     }
   }
 
+  void _updateAIPaths() {
+    for (final game in games) {
+      final zombies = game.zombies;
+      for (final zombie in zombies){
+          if (zombie.deadOrBusy) continue;
+          final ai = zombie.ai;
+          if (ai == null) continue;
+          if (ai.mode != NpcMode.Aggressive || ai.mode != NpcMode.Swarm) continue;
+          final target = ai.target;
+          if (target == null) continue;
+          game.npcSetPathTo(ai, target.x, target.y);
+      }
+    }
+  }
+
   void regenCharacters(){
     for (final game in games) {
       final players = game.players;
@@ -118,6 +123,10 @@ class _Engine {
       }
     }
     return GameSkirmish();
+  }
+
+  GameSwarm findGameSwarm() {
+    return GameSwarm();
   }
 
   GameMoba findPendingMobaGame() {

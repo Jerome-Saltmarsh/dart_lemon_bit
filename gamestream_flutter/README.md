@@ -100,7 +100,10 @@
 [ ] 2 Player Survival Game waves
 [ ] Construct Tower    
 [ ] Upgrade Items    
-[ ] Single Player Swarms    
+[Game Type Swarm]
+[ ] AI Always run at player
+[x] Debug draw ai target line    
+[COMPLETED]    
 [x] FIX Game freezes when change tab    
 [x] Convert ItemType to const    
 [x] Convert DynamicObjectType to const    

@@ -205,7 +205,13 @@ class GameRender {
         aX = bX;
         aY = bY;
       }
-      // index+=2;
+    }
+
+    engine.setPaintColor(colours.yellow);
+    final targets = modules.isometric.targets;
+    final targetsTotal = modules.isometric.targetsTotal * 4;
+    for (var i = 0; i < targetsTotal; i += 4){
+      drawLine(targets[i], targets[i + 1], targets[i + 2], targets[i + 3]);
     }
   }
 

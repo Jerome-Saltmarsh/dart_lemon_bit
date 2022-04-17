@@ -45,6 +45,8 @@ class IsometricModule {
 
   final particleEmitters = <ParticleEmitter>[];
   final paths = Float32List(10000);
+  final targets = Float32List(10000);
+  var targetsTotal = 0;
   final particles = <Particle>[];
   final gemSpawns = <GemSpawn>[];
   final environmentObjects = <EnvironmentObject>[];

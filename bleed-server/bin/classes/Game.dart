@@ -96,7 +96,6 @@ abstract class Game {
   late GameStatus status;
   GameType gameType;
 
-
   bool get countingDown => status == GameStatus.Counting_Down;
 
   bool get inProgress => status == GameStatus.In_Progress;
@@ -1213,21 +1212,21 @@ extension GameFunctions on Game {
   /// GameEventType
   void dispatch(int type, double x, double y,
       [double angle = 0]) {
-    for(final player in players) {
+    for (final player in players) {
       player.onGameEvent(type, x, y, angle);
     }
   }
 
   void updateZombieTargets() {
     for (final zombie in zombies) {
-      if (zombie.dead) {
-        continue;
-      }
+      if (zombie.dead) continue;
       final zombieAI = zombie.ai;
       if (zombieAI == null) continue;
       final zombieAITarget = zombieAI.target;
-      if (zombieAITarget != null &&
-          (zombieAITarget.dead || !withinChaseRange(zombieAI, zombieAITarget))) {
+      if (
+          zombieAITarget != null &&
+          (zombieAITarget.dead || !withinChaseRange(zombieAI, zombieAITarget))
+      ) {
           zombieAI.target = null;
       }
 
@@ -1269,6 +1268,7 @@ extension GameFunctions on Game {
   }
 
   bool withinChaseRange(AI ai, Vector2 target) {
+    if (ai.mode == NpcMode.Swarm) return true;
     return withinRadius(ai.character, target, ai.chaseRange);
   }
 

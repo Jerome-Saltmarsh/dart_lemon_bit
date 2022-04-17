@@ -167,6 +167,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       compileAndSendPlayer();
     }
 
+    void joinGameSwarm() {
+      final game = engine.findGameSwarm();
+      _player = game.spawnPlayer();
+      onGameJoined();
+    }
+
     void joinGameSkirmish() {
       final game = engine.findGameSkirmish();
       _player = game.playerJoin();
@@ -476,6 +482,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                    return joinBattleRoyal();
                  case GameType.SKIRMISH:
                    return joinGameSkirmish();
+                 case GameType.SWARM:
+                   return joinGameSwarm();
                  default:
                    break;
                }
@@ -496,6 +504,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               return joinBattleRoyal();
             case GameType.SKIRMISH:
               return joinGameSkirmish();
+            case GameType.SWARM:
+              return joinGameSwarm();
             default:
               throw Exception("Cannot join ${gameType}");
           }

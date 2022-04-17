@@ -26,6 +26,7 @@ final build = _Build();
 final selectableGameTypes = [
   GameType.MMO,
   GameType.SKIRMISH,
+  GameType.SWARM,
   // GameType.BATTLE_ROYAL,
   // GameType.Moba,
   // GameType.CUBE3D,

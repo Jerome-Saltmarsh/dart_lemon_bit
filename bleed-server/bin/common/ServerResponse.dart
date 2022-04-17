@@ -48,5 +48,6 @@ class ServerResponse {
   static const Gem_Spawns = 46;
   static const End = 47;
   static const No_Change = 48;
+  static const Targets = 49;
 }
 

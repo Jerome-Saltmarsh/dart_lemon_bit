@@ -16,26 +16,23 @@ import 'Collider.dart';
 import 'GameObject.dart';
 import 'Player.dart';
 
-const _zero = 0;
-const _defaultMode = NpcMode.Defensive;
-const _defaultViewRange = 300.0;
-const _defaultCharacterSpeed = 3.0;
 const maxAIPathLength = 80;
 const maxAIPathLengthMinusOne = maxAIPathLength - 3;
 
+/// Merge into character class
 class AI {
-  late Character character;
-  Character? target;
-  List<Vector2> objectives = [];
-  NpcMode mode = NpcMode.Aggressive;
-  double viewRange = 200;
-  double chaseRange = 500;
   final pathX = Float32List(maxAIPathLength);
   final pathY = Float32List(maxAIPathLength);
-  int _pathIndex = -1;
-  double destX = -1;
-  double destY = -1;
-  int idleDuration = 0;
+  late Character character;
+  Character? target;
+  var objectives = <Vector2>[];
+  var mode = NpcMode.Aggressive;
+  var viewRange = 200.0;
+  var chaseRange = 500.0;
+  var _pathIndex = -1;
+  var destX = -1.0;
+  var destY = -1.0;
+  var idleDuration = 0;
 
   int get pathIndex => _pathIndex;
 
@@ -72,8 +69,8 @@ class AI {
   }
 
   AI({
-    this.mode = _defaultMode,
-    this.viewRange = _defaultViewRange,
+    this.mode = NpcMode.Defensive,
+    this.viewRange = 300.0,
   });
 
   void clearTarget(){
@@ -123,7 +120,7 @@ class Character extends GameObject {
 
   // properties
   int get direction => (((angle + piEighth) % pi2) ~/ piQuarter) % 8;
-  bool get frozen => frozenDuration > _zero;
+  bool get frozen => frozenDuration > 0;
 
   double get speed {
     if (frozen) {
@@ -160,7 +157,7 @@ class Character extends GameObject {
     required double y,
     required int health,
     int weapon = SlotType.Empty,
-    double speed = _defaultCharacterSpeed,
+    double speed = 3.0,
     this.team = noSquad,
     this.ai,
   }) : super(x, y, radius: settings.radius.character) {

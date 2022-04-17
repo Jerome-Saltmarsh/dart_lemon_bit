@@ -129,6 +129,20 @@ class _ByteCompiler {
       }
     }
     writeBigInt(250);
+
+    for (final zombie in zombies) {
+      if (!zombie.active) continue;
+      final ai = zombie.ai;
+      if (ai == null) continue;
+      final aiTarget = ai.target;
+      if (aiTarget == null) continue;
+      writeByte(1);
+      writeBigInt(zombie.x);
+      writeBigInt(zombie.y);
+      writeBigInt(aiTarget.x);
+      writeBigInt(aiTarget.y);
+    }
+    writeByte(0);
   }
 
   void writeItems(Player player){
