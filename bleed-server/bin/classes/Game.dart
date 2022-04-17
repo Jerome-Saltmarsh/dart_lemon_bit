@@ -47,6 +47,7 @@ import 'Player.dart';
 import 'Projectile.dart';
 import 'Scene.dart';
 import 'SpawnPoint.dart';
+import 'Structure.dart';
 import 'TileNode.dart';
 
 
@@ -65,36 +66,34 @@ const _aiWanderPauseDuration = 120;
 
 // This should be OpenWorldScene
 abstract class Game {
-
-  final List<Collider> colliders = [];
-  final List<Item> items = [];
-  final List<Vector2> zombieSpawnPoints = [];
-  final List<AI> zombies = [];
-  final List<InteractableNpc> npcs = [];
-  final List<Player> players = [];
-  final List<Projectile> projectiles = [];
-  final List<Crate> crates = [];
-  final List<DynamicObject> dynamicObjects = [];
-  List<SpawnPoint> spawnPoints = [];
-  int shadeMax = Shade.Bright;
-  int frame = 0;
-  int teamSize = 1;
-  int numberOfTeams = 2;
-  bool cratesDirty = false;
-  int spawnPointIndex = 0;
-  String compiledTiles = "";
-  String compiledEnvironmentObjects = "";
-  bool debugMode = false;
-  int countDownFramesRemaining = engine.framesPerSecond * 3;
+  final structures = <Structure>[];
+  final colliders = <Collider>[];
+  final items = <Item>[];
+  final zombieSpawnPoints = <Vector2>[];
+  final zombies = <AI>[];
+  final npcs = <InteractableNpc>[];
+  final players = <Player>[];
+  final projectiles = <Projectile>[];
+  final crates = <Crate>[];
+  final dynamicObjects = <DynamicObject>[];
+  var spawnPoints = <SpawnPoint>[];
+  var shadeMax = Shade.Bright;
+  var frame = 0;
+  var teamSize = 1;
+  var numberOfTeams = 2;
+  var cratesDirty = false;
+  var spawnPointIndex = 0;
+  var compiledTiles = "";
+  var compiledEnvironmentObjects = "";
+  var debugMode = false;
+  var countDownFramesRemaining = engine.framesPerSecond * 3;
   var disableCountDown = 0;
-
-  static int _id = 0;
+  late GameStatus status;
+  GameType gameType;
   final String id = (_id++).toString();
   final Scene scene;
 
-  // late bool started;
-  late GameStatus status;
-  GameType gameType;
+  static int _id = 0;
 
   bool get countingDown => status == GameStatus.Counting_Down;
 
