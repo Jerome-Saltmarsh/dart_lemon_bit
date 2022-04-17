@@ -98,7 +98,6 @@ class Player extends Character {
     int team = noSquad,
     int magic = 10,
     int health = 10,
-    AI? ai,
   }) : super(
             type: CharacterType.Human,
             x: x,
@@ -106,7 +105,6 @@ class Player extends Character {
             health: health,
             speed: 3.5,
             team: team,
-            ai: ai,
             weapon: weapon,
 
   ){

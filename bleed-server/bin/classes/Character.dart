@@ -19,11 +19,9 @@ import 'Player.dart';
 const maxAIPathLength = 80;
 const maxAIPathLengthMinusOne = maxAIPathLength - 3;
 
-/// Merge into character class
-class AI {
+class AI extends Character {
   final pathX = Float32List(maxAIPathLength);
   final pathY = Float32List(maxAIPathLength);
-  late Character character;
   Character? target;
   var objectives = <Vector2>[];
   var mode = NpcMode.Aggressive;
@@ -37,16 +35,16 @@ class AI {
   int get pathIndex => _pathIndex;
 
   void stopPath(){
-    if (character.deadOrBusy) return;
+    if (deadOrBusy) return;
     _pathIndex = -1;
-    character.state = stateIdle;
+    state = stateIdle;
   }
 
   set pathIndex(int value){
     _pathIndex = value;
     if (value < 0) {
-      if (character.alive) {
-        character.state = stateIdle;
+      if (alive) {
+        state = stateIdle;
       }
       return;
     }
@@ -58,20 +56,24 @@ class AI {
     pathIndex = _pathIndex - 1;
   }
 
-  double get x => character.x;
-  double get y => character.y;
-
   bool get arrivedAtDest {
     const radius = 15;
-    if ((character.x - destX).abs() > radius) return false;
-    if ((character.y - destY).abs() > radius) return false;
+    if ((x - destX).abs() > radius) return false;
+    if ((y - destY).abs() > radius) return false;
     return true;
   }
 
   AI({
+    required double x,
+    required double y,
     this.mode = NpcMode.Defensive,
     this.viewRange = 300.0,
-  });
+    required CharacterType type,
+    required int health,
+    int team = noSquad,
+    int weapon = SlotType.Empty,
+    double speed = 3.0,
+  }): super(x: x, y: y, type: type, health: health, team: team, weapon: weapon, speed: speed);
 
   void clearTarget(){
     target = null;
@@ -95,7 +97,7 @@ class Character extends GameObject {
   late int _health;
   late int maxHealth;
   late double _speed;
-  late AI? ai;
+  // late AI? ai;
   // TODO remove from character
   Ability? ability = null;
   // TODO remove from character
@@ -151,6 +153,8 @@ class Character extends GameObject {
 
   double get weaponRange => SlotType.getRange(weapon);
 
+  void onDeath(){}
+
   Character({
     required this.type,
     required double x,
@@ -159,12 +163,10 @@ class Character extends GameObject {
     int weapon = SlotType.Empty,
     double speed = 3.0,
     this.team = noSquad,
-    this.ai,
   }) : super(x, y, radius: settings.radius.character) {
     maxHealth = health;
     _health = health;
     _speed = speed;
-    ai?.character = this;
     slots.weapon.type = weapon;
   }
 
@@ -181,12 +183,11 @@ class Character extends GameObject {
     xv *= velocityFriction;
     yv *= velocityFriction;
   }
-
-  void onCollisionWith(Collider other){
-     if (ai == null) return;
-     if (!other.withinBounds(ai!.destX, ai!.destY)) return;
-     ai!.stopPath();
-  }
+  // void onCollisionWith(Collider other){
+  //    if (ai == null) return;
+  //    if (!other.withinBounds(ai!.destX, ai!.destY)) return;
+  //    ai!.stopPath();
+  // }
 }
 
 bool sameTeam(Character a, Character b){

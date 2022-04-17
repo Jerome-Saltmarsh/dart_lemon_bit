@@ -118,23 +118,21 @@ class _ByteCompiler {
     final zombies = game.zombies;
     for (final zombie in zombies) {
       if (!zombie.active) continue;
-      final ai = zombie.ai;
-      if (ai == null) continue;
-      final pathIndex = ai.pathIndex;
+      // final ai = zombie.ai;
+      // if (ai == null) continue;
+      final pathIndex = zombie.pathIndex;
       if (pathIndex < 0) continue;
       writeBigInt(pathIndex + 1);
       for (var i = pathIndex; i >= 0; i--) {
-        writeBigInt(ai.pathX[i]);
-        writeBigInt(ai.pathY[i]);
+        writeBigInt(zombie.pathX[i]);
+        writeBigInt(zombie.pathY[i]);
       }
     }
     writeBigInt(250);
 
     for (final zombie in zombies) {
       if (!zombie.active) continue;
-      final ai = zombie.ai;
-      if (ai == null) continue;
-      final aiTarget = ai.target;
+      final aiTarget = zombie.target;
       if (aiTarget == null) continue;
       writeByte(1);
       writeBigInt(zombie.x);

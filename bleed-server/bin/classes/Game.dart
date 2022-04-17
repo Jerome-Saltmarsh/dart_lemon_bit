@@ -69,7 +69,7 @@ abstract class Game {
   final List<Collider> colliders = [];
   final List<Item> items = [];
   final List<Vector2> zombieSpawnPoints = [];
-  final List<Character> zombies = [];
+  final List<AI> zombies = [];
   final List<InteractableNpc> npcs = [];
   final List<Player> players = [];
   final List<Projectile> projectiles = [];
@@ -147,10 +147,8 @@ abstract class Game {
     players.remove(player);
 
     for (final zombie in player.game.zombies) {
-      final ai = zombie.ai;
-      if (ai == null) continue;
-      if (ai.target != player) continue;
-      ai.target = null;
+      if (zombie.target != player) continue;
+      zombie.target = null;
     }
 
     to.players.add(player);
@@ -201,12 +199,12 @@ abstract class Game {
 
     for (final character in scene.characters) {
       if (character.type == CharacterType.Zombie) {
-        zombies.add(Character(
+        zombies.add(AI(
             type: CharacterType.Zombie,
             x: character.x,
             y: character.y,
             health: 100,
-            ai: AI(mode: NpcMode.Aggressive),
+            mode: NpcMode.Aggressive,
             weapon: SlotType.Empty,
             ));
       } else {
@@ -413,21 +411,20 @@ extension GameFunctions on Game {
       if (target.dead) return;
       if (target.invincible) return;
       changeCharacterHealth(target, -amount);
-      final targetAI = target.ai;
 
       if (target.alive) {
         if (target.type.isZombie){
           setCharacterState(target, stateHurt);
         }
-        if (targetAI != null) {
-          final targetAITarget = targetAI.target;
+        if (target is AI) {
+          final targetAITarget = target.target;
           if (targetAITarget == null) {
-             targetAI.target = src;
+            target.target = src;
           } else {
             final aiTargetDistance = distanceV2(target, targetAITarget);
             final srcTargetDistance = distanceV2(src, target);
             if (srcTargetDistance < aiTargetDistance){
-              targetAI.target = src;
+              target.target = src;
             }
           }
         }
@@ -437,12 +434,12 @@ extension GameFunctions on Game {
       onCharacterKilled(target, src);
 
 
-      if (targetAI != null) {
+      if (target is AI == false) {
         target.active = false;
       }
-      if (target.alive && targetAI != null) {
-        if (targetAI.target == null) {
-          targetAI.target = src;
+      if (target.alive && target is AI) {
+        if (target.target == null) {
+          target.target = src;
         }
       }
       return;
@@ -499,28 +496,26 @@ extension GameFunctions on Game {
     return 5;
   }
 
-  void _updateCharacterAI(Character character) {
-    if (character.deadOrBusy) return;
-    if (character.inactive) return;
-    final ai = character.ai;
-    if (ai == null) return;
+  void _updateCharacterAI(AI ai) {
+    if (ai.deadOrBusy) return;
+    if (ai.inactive) return;
 
     final target = ai.target;
     if (target != null) {
-      if (character.type.isZombie) {
-        if (targetWithinAttackRange(character, target)){
-          _characterAttack(character, target);
+      if (ai.type.isZombie) {
+        if (targetWithinAttackRange(ai, target)){
+          _characterAttack(ai, target);
           return;
         }
         const runAtTargetDistance = 100;
-        if (cheapDistance(character, target) < runAtTargetDistance) {
-          _characterRunAt(character, target);
+        if (cheapDistance(ai, target) < runAtTargetDistance) {
+          _characterRunAt(ai, target);
           return;
         }
       } else { // not zombie
-        if (!targetWithinAttackRange(character, target)) return;
-        if (!isVisibleBetween(character, target)) return;
-        _characterAttack(character, target);
+        if (!targetWithinAttackRange(ai, target)) return;
+        if (!isVisibleBetween(ai, target)) return;
+        _characterAttack(ai, target);
         return;
       }
     }
@@ -532,15 +527,15 @@ extension GameFunctions on Game {
         return;
       }
       // @on npc going to path
-      characterFace(character, ai.destX, ai.destY);
-      character.state = stateRunning;
+      characterFace(ai, ai.destX, ai.destY);
+      ai.state = stateRunning;
       return;
     } else if (ai.mode == NpcMode.Aggressive && ai.idleDuration++ > _aiWanderPauseDuration){
       ai.idleDuration = 0;
       npcSetRandomDestination(ai);
     }
 
-    character.state = stateIdle;
+    ai.state = stateIdle;
   }
 
   void _updatePlayersAndNpcs() {
@@ -596,7 +591,7 @@ extension GameFunctions on Game {
     if (character.dead) return;
     character.state = stateDead;
     character.collidable = false;
-    character.ai?.onDeath();
+    character.onDeath();
 
     if (character is Player) {
       dispatchV2(GameEventType.Player_Death, character);
@@ -604,10 +599,8 @@ extension GameFunctions on Game {
     }
 
     for (final npc in zombies) {
-      final npcAI = npc.ai;
-      if (npcAI == null) continue;
-      if (npcAI.target != character) continue;
-      npcAI.target = null;
+      if (npc.target != character) continue;
+      npc.target = null;
     }
 
     for (final projectile in projectiles) {
@@ -992,7 +985,9 @@ extension GameFunctions on Game {
   void updateCharacter(Character character) {
     if (!character.active) return;
 
-    _updateCharacterAI(character);
+    if (character is AI){
+      _updateCharacterAI(character);
+    }
     character.updateMovement();
 
     if (character.dead) return;
@@ -1132,16 +1127,6 @@ extension GameFunctions on Game {
     zombie.y = y + giveOrTake(radius.zombieSpawnVariation);
     zombie.yv = 0;
     zombie.xv = 0;
-
-    final zombieAI = zombie.ai;
-
-    if (zombieAI != null){
-      if (objectives != null) {
-        zombieAI.objectives = objectives;
-      } else {
-        zombieAI.objectives = [];
-      }
-    }
     return zombie;
   }
 
@@ -1150,16 +1135,14 @@ extension GameFunctions on Game {
       if (zombies[i].active) continue;
       return zombies[i];
     }
-    final zombie = Character(
+    final zombie = AI(
         type: CharacterType.Zombie,
         x: 0,
         y: 0,
-        ai: AI(
-          mode: NpcMode.Aggressive,
-        ),
+        mode: NpcMode.Aggressive,
         health: settings.health.zombie,
         weapon: SlotType.Empty,
-        );
+    );
     zombies.add(zombie);
     return zombie;
   }
@@ -1182,14 +1165,15 @@ extension GameFunctions on Game {
   Character spawnRandomZombie({
     int health = 10,
     int damage = 1,
-    int experience = 1
+    int experience = 1,
+    int team = Teams.none,
   }) {
     if (zombieSpawnPoints.isEmpty) throw ZombieSpawnPointsEmptyException();
     final spawnPoint = randomItem(zombieSpawnPoints);
     return spawnZombie(
         x: spawnPoint.x,
         y: spawnPoint.y,
-        team: Teams.east,
+        team: team,
         health: health,
         damage: damage
     );
@@ -1220,14 +1204,12 @@ extension GameFunctions on Game {
   void updateZombieTargets() {
     for (final zombie in zombies) {
       if (zombie.dead) continue;
-      final zombieAI = zombie.ai;
-      if (zombieAI == null) continue;
-      final zombieAITarget = zombieAI.target;
+      final zombieAITarget = zombie.target;
       if (
           zombieAITarget != null &&
-          (zombieAITarget.dead || !withinChaseRange(zombieAI, zombieAITarget))
+          (zombieAITarget.dead || !withinChaseRange(zombie, zombieAITarget))
       ) {
-          zombieAI.target = null;
+        zombie.target = null;
       }
 
       num targetDistance = 9999999.0;
@@ -1235,18 +1217,18 @@ extension GameFunctions on Game {
       for (final otherZombie in zombies) {
         if (otherZombie.dead) continue;
         if (zombie.team == otherZombie.team) continue;
-        if (!withinViewRange(zombieAI, otherZombie)) continue;
+        if (!withinViewRange(zombie, otherZombie)) continue;
         final npcDistance = cheapDistance(zombie, otherZombie);
         if (npcDistance >= targetDistance) continue;
         if (!isVisibleBetween(zombie, otherZombie)) continue;
-        setNpcTarget(zombieAI, otherZombie);
+        setNpcTarget(zombie, otherZombie);
         targetDistance = npcDistance;
       }
 
       for (final player in players) {
         if (player.dead) continue;
         if (sameTeam(player, zombie)) continue;
-        if (!withinViewRange(zombieAI, player)) continue;
+        if (!withinViewRange(zombie, player)) continue;
         final npcDistance = cheapDistance(zombie, player);
         if (npcDistance >= targetDistance) continue;
         // if (!isVisibleBetween(zombie, player)) continue;
@@ -1254,10 +1236,10 @@ extension GameFunctions on Game {
         targetDistance = npcDistance;
         break;
       }
-      final target = zombieAI.target;
+      final target = zombie.target;
       if (target != null){
         if (targetDistance > 100) {
-          npcSetPathTo(zombieAI, target.x, target.y);
+          npcSetPathTo(zombie, target.x, target.y);
         }
       }
     }
@@ -1265,12 +1247,12 @@ extension GameFunctions on Game {
 
   bool withinViewRange(AI ai, Vector2 target) {
     if (ai.mode == NpcMode.Swarm) return true;
-    return withinRadius(ai.character, target, ai.viewRange);
+    return withinRadius(ai, target, ai.viewRange);
   }
 
   bool withinChaseRange(AI ai, Vector2 target) {
     if (ai.mode == NpcMode.Swarm) return true;
-    return withinRadius(ai.character, target, ai.chaseRange);
+    return withinRadius(ai, target, ai.chaseRange);
   }
 
   num cheapDistance(Vector2 a, Vector2 b) {
@@ -1282,9 +1264,7 @@ extension GameFunctions on Game {
     if (initial == _none) return;
     final npcsLength = npcs.length;
     for (var i = 0; i < npcsLength; i++) {
-      final ai = npcs[i].ai;
-      if (ai == null) continue;
-      updateInteractableNpcTarget(ai, initial);
+      updateInteractableNpcTarget(npcs[i], initial);
     }
   }
 
@@ -1299,33 +1279,32 @@ extension GameFunctions on Game {
   void updateInteractableNpcTarget(AI ai, int j) {
     if (ai.mode == NpcMode.Ignore) return;
 
-    final aiWeaponRange = SlotType.getRange(ai.character.weapon);
+    final aiWeaponRange = SlotType.getRange(ai.weapon);
     var closest = zombies[j];
-    var closestDistance = distanceV2(closest, ai.character);
+    var closestDistance = distanceV2(closest, ai);
     final zombiesLength = zombies.length;
     for (var i = j + 1; i < zombiesLength; i++) {
       final zombie = zombies[i];
       if (!zombie.alive) continue;
-      var distance2 = distanceV2(zombie, ai.character);
+      var distance2 = distanceV2(zombie, ai);
       if (distance2 > closestDistance) continue;
       closest = zombie;
       closestDistance = distance2;
     }
-    final actualDistance = distanceV2(ai.character, closest);
+    final actualDistance = distanceV2(ai, closest);
     if (actualDistance > aiWeaponRange) {
       ai.clearTarget();
-      ai.character.state = stateIdle;
+      ai.state = stateIdle;
     } else {
       setNpcTarget(ai, closest);
     }
   }
 
   void setNpcTarget(AI ai, Character value) {
-    assert (ai.character != value);
-    assert (!sameTeam(ai.character, value));
+    assert (!sameTeam(ai, value));
     assert (value.alive);
     assert (value.active);
-    assert (ai.character.alive);
+    assert (ai.alive);
     ai.target = value;
   }
 
@@ -1338,7 +1317,7 @@ extension GameFunctions on Game {
         continue;
 
       for (final npc in zombies) {
-        npc.ai?.clearTargetIf(player);
+        npc.clearTargetIf(player);
       }
       player.active = false;
       players.removeAt(i);

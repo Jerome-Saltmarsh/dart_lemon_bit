@@ -3,7 +3,7 @@ import '../enums/npc_mode.dart';
 import 'Character.dart';
 import 'Player.dart';
 
-class InteractableNpc extends Character {
+class InteractableNpc extends AI {
   final String name;
 
   Function(Player player) onInteractedWith;
@@ -22,7 +22,7 @@ class InteractableNpc extends Character {
             type: CharacterType.Human,
             x: x,
             y: y,
-            ai: AI(mode: npcMode),
+            mode: npcMode,
             health: health,
             weapon: weapon,
             team: team,

@@ -14,15 +14,17 @@ class GameSwarm extends Game {
   @override
   void update() {
     if (swarming) {
-       if (timer % 5 == 0) {
-          spawnRandomZombie();
+       if (timer % 100 == 0) {
+          spawnRandomZombie(
+            health: 1,
+          );
        }
     }
 
     if (players.isNotEmpty) {
       final player = players[0];
       for (final zombie in zombies) {
-          zombie.ai!.target = player;
+          zombie.target = player;
       }
     }
 

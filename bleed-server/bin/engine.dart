@@ -95,12 +95,10 @@ class _Engine {
       final zombies = game.zombies;
       for (final zombie in zombies){
           if (zombie.deadOrBusy) continue;
-          final ai = zombie.ai;
-          if (ai == null) continue;
-          if (ai.mode != NpcMode.Aggressive && ai.mode != NpcMode.Swarm) continue;
-          final target = ai.target;
+          if (zombie.mode != NpcMode.Aggressive && zombie.mode != NpcMode.Swarm) continue;
+          final target = zombie.target;
           if (target == null) continue;
-          game.npcSetPathTo(ai, target.x, target.y);
+          game.npcSetPathTo(zombie, target.x, target.y);
       }
     }
   }

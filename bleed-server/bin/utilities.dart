@@ -32,7 +32,7 @@ void setAngle(Character character, double value) {
 }
 
 bool withinViewRange(AI ai, GameObject target) {
-  return distanceV2(ai.character, target) < ai.viewRange;
+  return distanceV2(ai, target) < ai.viewRange;
 }
 
 void setVelocity(GameObject gameObject, double rotation, double speed) {

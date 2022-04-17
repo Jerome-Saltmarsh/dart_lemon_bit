@@ -93,7 +93,7 @@ class GameSkirmish extends Game {
   void update(){
     if (frame % 100 == 0) {
       if (numberOfAliveZombies < 10){
-        spawnRandomZombie(health: 10, damage: 1);
+        spawnRandomZombie(health: 10, damage: 1, team: 1);
       }
     }
 
