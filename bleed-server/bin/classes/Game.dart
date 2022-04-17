@@ -508,7 +508,7 @@ extension GameFunctions on Game {
           return;
         }
         const runAtTargetDistance = 100;
-        if (cheapDistance(ai, target) < runAtTargetDistance) {
+        if ((ai.getDistance(target) < runAtTargetDistance)) {
           _characterRunAt(ai, target);
           return;
         }
@@ -1222,7 +1222,7 @@ extension GameFunctions on Game {
         if (otherZombie.dead) continue;
         if (zombie.team == otherZombie.team) continue;
         if (!zombie.withinViewRange(otherZombie)) continue;
-        final npcDistance = cheapDistance(zombie, otherZombie);
+        final npcDistance = zombie.getDistance(otherZombie);
         if (npcDistance >= targetDistance) continue;
         if (!isVisibleBetween(zombie, otherZombie)) continue;
         setNpcTarget(zombie, otherZombie);
@@ -1233,23 +1233,19 @@ extension GameFunctions on Game {
         if (player.dead) continue;
         if (sameTeam(player, zombie)) continue;
         if (!zombie.withinViewRange(player)) continue;
-        final npcDistance = cheapDistance(zombie, player);
+        final npcDistance = zombie.getDistance(player);
         if (npcDistance >= targetDistance) continue;
         setNpcTarget(zombie, player);
         targetDistance = npcDistance;
         break;
       }
       final target = zombie.target;
-      if (target != null){
+      if (target != null) {
         if (targetDistance > 100) {
           npcSetPathTo(zombie, target.x, target.y);
         }
       }
     }
-  }
-
-  num cheapDistance(Vector2 a, Vector2 b) {
-    return diff(a.y, b.y) + diff(a.x, b.x);
   }
 
   void updateInteractableNpcTargets() {
