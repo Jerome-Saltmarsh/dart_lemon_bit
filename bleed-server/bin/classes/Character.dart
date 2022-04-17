@@ -22,8 +22,6 @@ const maxAIPathLengthMinusOne = maxAIPathLength - 3;
 class AI extends Character {
   final pathX = Float32List(maxAIPathLength);
   final pathY = Float32List(maxAIPathLength);
-  Character? target;
-  var objectives = <Vector2>[];
   var mode = NpcMode.Aggressive;
   var viewRange = 200.0;
   var chaseRange = 500.0;
@@ -31,6 +29,7 @@ class AI extends Character {
   var destX = -1.0;
   var destY = -1.0;
   var idleDuration = 0;
+  Character? target;
 
   int get pathIndex => _pathIndex;
 
@@ -75,19 +74,9 @@ class AI extends Character {
     double speed = 3.0,
   }): super(x: x, y: y, type: type, health: health, team: team, weapon: weapon, speed: speed);
 
-  void clearTarget(){
-    target = null;
-  }
-
   void clearTargetIf(Character value){
     if (target != value) return;
     target = null;
-  }
-
-  void onDeath(){
-    target = null;
-    pathIndex = -1;
-    objectives.clear();
   }
 }
 
@@ -152,8 +141,6 @@ class Character extends GameObject {
   int get weapon => slots.weapon.type;
 
   double get weaponRange => SlotType.getRange(weapon);
-
-  void onDeath(){}
 
   Character({
     required this.type,

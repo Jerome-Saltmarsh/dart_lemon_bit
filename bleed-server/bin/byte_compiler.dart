@@ -118,8 +118,6 @@ class _ByteCompiler {
     final zombies = game.zombies;
     for (final zombie in zombies) {
       if (!zombie.active) continue;
-      // final ai = zombie.ai;
-      // if (ai == null) continue;
       final pathIndex = zombie.pathIndex;
       if (pathIndex < 0) continue;
       writeBigInt(pathIndex + 1);

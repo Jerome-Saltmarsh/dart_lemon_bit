@@ -591,7 +591,11 @@ extension GameFunctions on Game {
     if (character.dead) return;
     character.state = stateDead;
     character.collidable = false;
-    character.onDeath();
+
+    if (character is AI){
+      character.target = null;
+      character.pathIndex = -1;
+    }
 
     if (character is Player) {
       dispatchV2(GameEventType.Player_Death, character);
@@ -1293,7 +1297,7 @@ extension GameFunctions on Game {
     }
     final actualDistance = distanceV2(ai, closest);
     if (actualDistance > aiWeaponRange) {
-      ai.clearTarget();
+      ai.target = null;
       ai.state = stateIdle;
     } else {
       setNpcTarget(ai, closest);
