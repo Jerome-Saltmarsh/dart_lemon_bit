@@ -94,22 +94,25 @@ class AI extends Character with TeamObject {
     if (mode == NpcMode.Swarm) return true;
     return withinRadius(this, target, chaseRange);
   }
+
+  @override
+  void onCollisionWith(Collider other){
+    if (_pathIndex < 0) return;
+    if (!other.withinBounds(destX, destY)) return;
+    nextPath();
+  }
 }
 
 mixin Team {
-  int team = 0;
+  var team = 0;
 }
 
 class Character extends GameObject with Team {
-  // TODO remove from character
   late CharacterType type;
   late int _health;
   late int maxHealth;
   late double _speed;
-  // late AI? ai;
-  // TODO remove from character
   Ability? ability = null;
-  // TODO remove from character
   Ability? performing = null;
   int state = stateIdle;
   double angle = 0;
