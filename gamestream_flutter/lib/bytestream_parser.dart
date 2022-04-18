@@ -8,7 +8,6 @@ import 'package:bleed_common/ProjectileType.dart';
 import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/send.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
 import 'package:lemon_watch/watch.dart';

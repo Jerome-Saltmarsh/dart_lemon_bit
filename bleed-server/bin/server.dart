@@ -7,6 +7,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'byte_compiler.dart';
 import 'classes/Game.dart';
 import 'classes/Player.dart';
+import 'classes/Structure.dart';
 import 'common/AbilityMode.dart';
 import 'common/CharacterAction.dart';
 import 'common/CharacterState.dart';
@@ -534,12 +535,25 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           reply(ServerResponse.Pong.toString());
           break;
 
-        case ClientRequest.Character_Load:
-          final account = _account;
+        case ClientRequest.Construct:
           if (player == null) {
             errorPlayerNotFound();
             return;
           }
+          player.game.structures.add(Structure(
+              x: player.mouse.x,
+              y: player.mouse.y,
+              team: player.team,
+              attackRate: 200,
+          ));
+          break;
+
+        case ClientRequest.Character_Load:
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+          final account = _account;
           if (account == null) {
             errorAccountRequired();
             return;

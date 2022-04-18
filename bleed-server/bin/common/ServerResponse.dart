@@ -11,7 +11,6 @@ class ServerResponse {
   static const Game_Joined = 9;
   static const Scene = 10;
   static const Collectables = 11;
-  
   static const Paths = 12; 
   static const Score = 13;
   static const Player_Events = 14;

@@ -572,6 +572,8 @@ extension GameFunctions on Game {
   }
 
   void _updateCollisions() {
+    checkColliderCollision(players, structures);
+    checkColliderCollision(zombies, structures);
     checkColliderCollision(players, colliders);
     checkColliderCollision(zombies, colliders);
     checkColliderCollision(players, dynamicObjects);

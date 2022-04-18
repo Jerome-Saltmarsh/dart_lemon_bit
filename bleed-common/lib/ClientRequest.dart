@@ -31,6 +31,7 @@ enum ClientRequest {
   Unequip_Slot,
   Character_Save,
   Character_Load,
+  Construct,
 }
 
 const clientRequests = ClientRequest.values;

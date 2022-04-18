@@ -67,6 +67,11 @@ void sendRequestAttack() {
   webSocket.send(ClientRequest.Attack.index);
 }
 
+void sendRequestConstruct() {
+  print('sendRequestConstruct()');
+  webSocket.send(ClientRequest.Construct.index);
+}
+
 final _characterController = modules.game.state.characterController;
 final _characterControllerAction = _characterController.action;
 final _screen = engine.screen;
