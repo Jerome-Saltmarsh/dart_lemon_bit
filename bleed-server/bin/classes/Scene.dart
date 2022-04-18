@@ -186,6 +186,10 @@ int parseRowsAndColumnsToDirection(int rows, int columns) {
 extension SceneFunctions on Scene {
 
   bool visitDirection(int direction, TileNode from) {
+    if (direction == Direction.UpLeft && !from.up.open && !from.left.open) return false;
+    if (direction == Direction.DownLeft && !from.down.open && !from.left.open) return false;
+    if (direction == Direction.DownRight && !from.down.open && !from.right.open) return false;
+    if (direction == Direction.UpRight && !from.up.open && !from.right.open) return false;
     return visitNode(from.getNodeByDirection(direction), from);
   }
 
