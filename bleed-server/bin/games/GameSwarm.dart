@@ -10,10 +10,14 @@ class GameSwarm extends Game {
   var timer = 200;
   var swarming = false;
 
+  late Structure tower1;
+  late Structure tower2;
+
   GameSwarm() : super(engine.scenes.skirmish);
 
   @override
   void update() {
+
     if (swarming) {
        if (timer % 100 == 0) {
           spawnRandomZombie(
@@ -49,7 +53,10 @@ class GameSwarm extends Game {
      final player = Player(game: this, weapon: SlotType.Bow_Wooden);
      player.x = 317;
      player.y = 2136;
-     structures.add(Structure(x: 350, y: 2250, team: player.team, attackRate: 200));
+     tower1 = Structure(x: 350, y: 2250, team: player.team, attackRate: 200);
+     tower2 = Structure(x: 450, y: 2250, team: player.team, attackRate: 200);
+     structures.add(tower1);
+     structures.add(tower2);
      return player;
   }
 }

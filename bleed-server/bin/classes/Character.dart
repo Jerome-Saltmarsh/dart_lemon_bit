@@ -21,11 +21,8 @@ import 'Player.dart';
 const maxAIPathLength = 80;
 const maxAIPathLengthMinusOne = maxAIPathLength - 3;
 
-mixin TeamObject {
-  int team = 0;
-}
 
-class AI extends Character with TeamObject {
+class AI extends Character {
   static const viewRange = 200.0;
   static const chaseRange = 500.0;
 
@@ -98,6 +95,7 @@ class AI extends Character with TeamObject {
   @override
   void onCollisionWith(Collider other){
     if (_pathIndex < 0) return;
+    rotateAround(other, 0.1);
     if (!other.withinBounds(destX, destY)) return;
     nextPath();
   }

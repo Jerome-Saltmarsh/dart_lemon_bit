@@ -74,6 +74,7 @@ class GameRender {
       engine.renderCustom(dstX: structure.x, dstY: structure.y, srcX: 6125, srcY: 0, srcWidth: 48, srcHeight: 100, anchorY: 0.66);
     }
 
+
     _render.renderSprites();
     drawEffects();
     drawItems();
