@@ -1108,17 +1108,16 @@ extension GameFunctions on Game {
     Collider? target,
   }) {
     final projectile = getAvailableProjectile();
+    if (src is Character){
+      angle = src.aimAngle;
+    }
     projectile.collidable = true;
     projectile.active = true;
     projectile.target = target;
-    // projectile.xStart = src.x + adj(src.aimAngle, spawnDistance);
-    // projectile.yStart = src.y + opp(src.aimAngle, spawnDistance);
-    projectile.xStart = src.x;
-    projectile.yStart = src.y;
-    projectile.x = projectile.xStart;
-    projectile.y = projectile.yStart;
-    // projectile.xv = velX(src.aimAngle + giveOrTake(accuracy), speed);
-    // projectile.yv = velY(src.aimAngle + giveOrTake(accuracy), speed);
+    projectile.start.x = src.x;
+    projectile.start.y = src.y;
+    projectile.x = src.x;
+    projectile.y = src.y;
     projectile.xv = velX(angle + giveOrTake(accuracy), speed);
     projectile.yv = velY(angle + giveOrTake(accuracy), speed);
     projectile.speed = speed;

@@ -540,6 +540,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             errorPlayerNotFound();
             return;
           }
+
           player.game.structures.add(Structure(
               x: player.mouse.x,
               y: player.mouse.y,

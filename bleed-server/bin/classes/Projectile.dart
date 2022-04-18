@@ -1,5 +1,5 @@
 
-import 'package:lemon_math/hypotenuse.dart';
+import 'package:lemon_math/Vector2.dart';
 
 import '../common/ProjectileType.dart';
 import '../maths.dart';
@@ -7,8 +7,7 @@ import 'Collider.dart';
 import 'GameObject.dart';
 
 class Projectile extends GameObject {
-  late double xStart;
-  late double yStart;
+  final start = Vector2(0, 0);
   late dynamic owner;
   late double range;
   late int damage;
@@ -25,7 +24,7 @@ class Projectile extends GameObject {
   }
 
   double get distanceTravelled {
-    return hypotenuse(x - xStart, y - yStart);
+    return getDistance(start);
   }
 }
 

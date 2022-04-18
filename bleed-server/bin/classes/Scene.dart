@@ -286,13 +286,13 @@ extension SceneFunctions on Scene {
     return !isShootable(tileAt(x, y));
   }
 
-  double projectedToWorldX(double x, double y) {
-    return y - x;
-  }
-
-  double projectedToWorldY(double x, double y) {
-    return x + y;
-  }
+  // double projectedToWorldX(double x, double y) {
+  //   return y - x;
+  // }
+  //
+  // double projectedToWorldY(double x, double y) {
+  //   return x + y;
+  // }
 
   void resolveCharacterTileCollision(Character character) {
     const distance = 3;

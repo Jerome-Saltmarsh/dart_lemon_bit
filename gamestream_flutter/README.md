@@ -91,17 +91,21 @@
     [ ] Bush
     [ ] Rock
     [ ] Chest
-    [x] Pot
-[ ] AI Should avoid colliders in front of them.      
-[ ] Block Tiles caste Shadows    
-[ ] FIX Zombies run into lamps forever    
+    [x] Pot 
+[ ] Block Tiles caste Shadows     
 [ ] Design Map Skirmish
 [ ] 2 Player Survival Game waves
 [ ] Upgrade Items    
-[ ] Construct Tower    
-[ ] Design Tower Sprite    
-[x] Fix Zombies not attacking player   
 [Game Type Swarm]
+[ ] Construct Palisade    
+[ ] Construct Tower    
+[ ] Zombies Attack Tower    
+[ ] Design Tower Sprite    
+[ ] GameOver on death    
+[ ] AI Should avoid colliders in front of them.     
+[ ] FIX Zombies run into lamps forever   
+[x] Fix guns aren't doing damage on hit    
+[x] Fix Zombies not attacking player    
 [x] AI Always run at player
 [x] Debug draw ai target line    
 [x] FIX Zombies run backwards and flicker    
