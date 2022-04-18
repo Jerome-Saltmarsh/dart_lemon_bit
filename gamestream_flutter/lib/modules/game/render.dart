@@ -70,7 +70,8 @@ class GameRender {
 
     for(var i = 0; i < game.totalStructures; i++){
       final structure = game.structures[i];
-      drawCircle36V2(structure);
+      // drawCircle36V2(structure);
+      engine.renderCustom(dstX: structure.x, dstY: structure.y, srcX: 6125, srcY: 0, srcWidth: 48, srcHeight: 100, anchorY: 0.66);
     }
 
     _render.renderSprites();
