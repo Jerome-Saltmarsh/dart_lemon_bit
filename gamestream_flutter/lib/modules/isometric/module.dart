@@ -159,6 +159,10 @@ class IsometricModule {
     return dynamic[row][column];
   }
 
+  int getShadeAt(Vector2 position){
+    return getShadeAtPosition(position.x, position.y);
+  }
+
   int getShadeAtPosition(double x, double y){
     return getShade(
         (x + y) ~/ 48.0,

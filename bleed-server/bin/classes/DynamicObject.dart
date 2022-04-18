@@ -13,8 +13,7 @@ class DynamicObject extends Collider {
     required double x,
     required double y,
     required this.health,
-    required double radius,
-  }) : super(x, y, radius) {
+  }) : super(x, y, 15) {
     maxHealth = health;
   }
 }

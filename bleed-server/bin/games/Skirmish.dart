@@ -44,7 +44,6 @@ class GameSkirmish extends Game {
              x: 0,
              y: 150,
              health: 10,
-             radius: 14,
          )
      );
 
@@ -54,7 +53,6 @@ class GameSkirmish extends Game {
            x: 50,
            y: 150,
            health: 10,
-           radius: 14,
          )
      );
 
@@ -64,7 +62,6 @@ class GameSkirmish extends Game {
            x: -50,
            y: 150,
            health: 10,
-           radius: 14,
          )
      );
 
@@ -74,7 +71,6 @@ class GameSkirmish extends Game {
            x: 0,
            y: 200,
            health: 10,
-           radius: 14,
          )
      );
 
@@ -84,7 +80,6 @@ class GameSkirmish extends Game {
            x: 0,
            y: 250,
            health: 10,
-           radius: 14,
          )
      );
   }

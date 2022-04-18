@@ -1,7 +1,9 @@
 
+import '../classes/DynamicObject.dart';
 import '../classes/Game.dart';
 import '../classes/Player.dart';
 import '../classes/Structure.dart';
+import '../common/DynamicObjectType.dart';
 import '../common/SlotType.dart';
 import '../engine.dart';
 
@@ -13,7 +15,14 @@ class GameSwarm extends Game {
   late Structure tower1;
   late Structure tower2;
 
-  GameSwarm() : super(engine.scenes.skirmish);
+  GameSwarm() : super(engine.scenes.skirmish) {
+    dynamicObjects.add(DynamicObject(
+        type: DynamicObjectType.Rock,
+        x: 500,
+        y: 2250,
+        health: 50,
+    ));
+  }
 
   @override
   void update() {

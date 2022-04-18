@@ -21,8 +21,8 @@ class TileNode extends Vector2 {
   late TileNode upLeft;
   late int row;
   late int column;
-  // late Vector2 position;
   bool open;
+  bool obstructed = false;
   int searchId = -1;
   int reserveId = -1;
   TileNode? reserved;

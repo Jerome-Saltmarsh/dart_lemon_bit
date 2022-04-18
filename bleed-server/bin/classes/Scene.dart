@@ -2,7 +2,6 @@ import 'package:lemon_math/Vector2.dart';
 
 import '../common/Tile.dart';
 import '../common/Direction.dart';
-import '../common/ObjectType.dart';
 import '../enums.dart';
 import '../utilities.dart';
 import 'Character.dart';
@@ -138,13 +137,14 @@ class Scene {
     }
 
     for (final env in environment){
-      const snapToGridTypes = [
-        ObjectType.Torch,
-        ObjectType.House01,
-        ObjectType.House02,
-      ];
-      if (!snapToGridTypes.contains(env.type)) continue;
+      // const snapToGridTypes = [
+      //   ObjectType.Torch,
+      //   ObjectType.House01,
+      //   ObjectType.House02,
+      // ];
+      // if (!snapToGridTypes.contains(env.type)) continue;
        snapToGrid(env);
+       tileNodeAt(env).obstructed = true;
        // final row = getRow(env.x, env.y);
        // final column = getColumn(env.x, env.y);
        // tileNodes[row][column].open = false;
@@ -186,26 +186,70 @@ int parseRowsAndColumnsToDirection(int rows, int columns) {
 extension SceneFunctions on Scene {
 
   bool visitDirection(int direction, TileNode from) {
-    return visitNode(from.getNodeByDirection(direction), previous: from);
+    return visitNode(from.getNodeByDirection(direction), from);
   }
 
-  bool visitNode(TileNode node, {TileNode? previous}){
-    if (!node.open) return false;
-    if (previous != null) {
-      if (node.searchId == pathFindSearchID) {
-        return false;
-      }
+  bool visitNodeFirst(TileNode node){
+    node.depth = 0;
+    node.previous = null;
+    node.searchId = pathFindSearchID;
 
-      if (node.reserveId == pathFindSearchID){
-        if (node.reserved != previous){
-          return visitNode(node, previous: node.reserved);
-        }
+    if (node.depth == 50 || node == pathFindDestination) {
+      var current = node.previous;
+      final pathX = pathFindAI.pathX;
+      final pathY = pathFindAI.pathY;
+      var index = 0;
+      while (current != null) {
+        pathX[index] = current.x;
+        pathY[index] = current.y;
+        current = current.previous;
+        index++;
       }
-
-      node.depth = previous.depth + 1;
-    } else {
-      node.depth = 0;
+      pathFindAI.pathIndex = index - 2;
+      return true;
     }
+
+    final direction = parseRowsAndColumnsToDirection(
+      pathFindDestination.row - node.row,
+      pathFindDestination.column - node.column,
+    );
+    node.reserveSurroundingNodes();
+
+    if (visitDirection(direction, node)) return true;
+
+    final directionIndex = direction;
+
+    for (var i = 1; i < 4; i++) {
+      final leftDirection = sanitizeDirectionIndex(directionIndex - i);
+      if (visitDirection(leftDirection, node)) {
+        return true;
+      }
+      final rightDirection = sanitizeDirectionIndex(directionIndex + i);
+      if (visitDirection(rightDirection, node)) {
+        return true;
+      }
+    }
+
+    final directionBehind = sanitizeDirectionIndex(directionIndex + 4);
+    return visitDirection(directionBehind, node);
+  }
+
+
+  bool visitNode(TileNode node, TileNode previous){
+    if (!node.open) return false;
+    if (node.obstructed) return false;
+
+    if (node.searchId == pathFindSearchID) {
+      return false;
+    }
+
+    if (node.reserveId == pathFindSearchID){
+      if (node.reserved != previous){
+        return visitNode(node, node.reserved!);
+      }
+    }
+
+    node.depth = previous.depth + 1;
 
     node.previous = previous;
     node.searchId = pathFindSearchID;
@@ -255,7 +299,7 @@ extension SceneFunctions on Scene {
   }
 
   bool tileWalkableAt(double x, double y){
-    return tileNodeAt(x, y).open;
+    return tileNodeAtXY(x, y).open;
   }
 
   int tileAt(double x, double y) {
@@ -270,7 +314,11 @@ extension SceneFunctions on Scene {
     return this.tiles[row][column];
   }
 
-  TileNode tileNodeAt(double x, double y) {
+  TileNode tileNodeAt(Vector2 position) {
+    return tileNodeAtXY(position.x, position.y);
+  }
+
+  TileNode tileNodeAtXY(double x, double y) {
     final projectedX = y - x; // projectedToWorldX(x, y)
     if (projectedX < 0) return _boundary;
     final projectedY = x + y; // projectedToWorldY(x, y)

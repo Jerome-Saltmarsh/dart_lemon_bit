@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:bleed_common/AbilityType.dart';
+import 'package:bleed_common/DynamicObjectType.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/OrbType.dart';
@@ -89,12 +90,28 @@ class GameRender {
     final totalDynamicEnvironmentObjects = game.totalDynamicObjects.value;
     for (var i = 0; i < totalDynamicEnvironmentObjects; i++) {
        final dynamicObject = game.dynamicObjects[i];
-       engine.mapSrc64(
-           x: 6032,
-           y: isometric.getShadeAtPosition(dynamicObject.x, dynamicObject.y) * 64
-       );
-       engine.mapDst(x: dynamicObject.x, y: dynamicObject.y, anchorX: 32, anchorY: 32);
-       engine.renderAtlas();
+       final shade = isometric.getShadeAt(dynamicObject);
+       switch(dynamicObject.type) {
+         case DynamicObjectType.Pot:
+           engine.mapSrc64(
+               x: 6032,
+               y: shade * 64
+           );
+           engine.mapDst(x: dynamicObject.x, y: dynamicObject.y, anchorX: 32, anchorY: 32);
+           engine.renderAtlas();
+           break;
+         case DynamicObjectType.Rock:
+           engine.renderCustom(
+               dstX: dynamicObject.x,
+               dstY: dynamicObject.y,
+               srcX: 5592,
+               srcY: shade * 48,
+               srcWidth: 48,
+               srcHeight: 48
+           );
+           break;
+       }
+
     }
   }
 

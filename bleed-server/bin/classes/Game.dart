@@ -1270,7 +1270,7 @@ extension GameFunctions on Game {
       final target = zombie.target;
       if (target != null) {
         if (targetDistance > 100) {
-          npcSetPathTo(zombie, target.x, target.y);
+          npcSetPathTo(zombie, target);
         }
       }
     }
@@ -1366,7 +1366,7 @@ extension GameFunctions on Game {
   }
 
   void npcSetRandomDestination(AI ai, {int radius = 10}) {
-    final node = scene.tileNodeAt(ai.x, ai.y);
+    final node = scene.tileNodeAt(ai);
     if (!node.open) return;
     final minColumn = max(0, node.column - radius);
     final maxColumn = min(scene.numberOfColumns, node.column + radius);
@@ -1378,8 +1378,8 @@ extension GameFunctions on Game {
     npcSetPathToTileNode(ai, randomTile);
   }
 
-  void npcSetPathTo(AI ai, double x, double y) {
-    npcSetPathToTileNode(ai, scene.tileNodeAt(x, y));
+  void npcSetPathTo(AI ai, Vector2 position) {
+    npcSetPathToTileNode(ai, scene.tileNodeAt(position));
   }
 
   void npcSetPathToTileNode(AI ai, TileNode node) {
@@ -1387,7 +1387,7 @@ extension GameFunctions on Game {
     pathFindAI = ai;
     pathFindSearchID++;
     ai.pathIndex = -1;
-    scene.visitNode(scene.tileNodeAt(ai.x, ai.y));
+    scene.visitNodeFirst(scene.tileNodeAt(ai));
   }
 
   void _updateSpawnPointCollisions() {

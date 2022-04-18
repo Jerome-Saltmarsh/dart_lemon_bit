@@ -98,7 +98,7 @@ class _Engine {
           if (zombie.mode != NpcMode.Aggressive && zombie.mode != NpcMode.Swarm) continue;
           final target = zombie.target;
           if (target == null) continue;
-          game.npcSetPathTo(zombie, target.x, target.y);
+          game.npcSetPathTo(zombie, target);
       }
     }
   }

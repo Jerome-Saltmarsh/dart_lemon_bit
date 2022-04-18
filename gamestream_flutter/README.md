@@ -87,15 +87,9 @@
 [ ] Fix flames freeze    
 [ ] Display Highlighted Target info (Zombie, Pot, etc)    
 [ ] Tutorial    
-[ ] Destructible Objects    
-    [ ] Bush
-    [ ] Rock
-    [ ] Chest
-    [x] Pot 
 [ ] Block Tiles caste Shadows     
 [ ] Design Map Skirmish
 [ ] 2 Player Survival Game waves
-[ ] Upgrade Items    
 [Game Type Swarm]
 [ ] Construct Palisade    
 [ ] Construct Tower    
@@ -104,6 +98,13 @@
 [ ] GameOver on death    
 [ ] AI Should avoid colliders in front of them.     
 [ ] FIX Zombies run into lamps forever   
+[ ] FIX AI getting stuck on corners   
+[ ] Destructible Bush
+    
+[ ] Destructible Chest
+[ ] Upgrade Panel    
+[ ] Destructible Rock
+[x] Destructible Pot    
 [x] Fix guns aren't doing damage on hit    
 [x] Fix Zombies not attacking player    
 [x] AI Always run at player
@@ -756,3 +757,12 @@ Today only one last city remains. Protected by large walls.
 
 Children are not allowed outside of the walls, however those that turn 14 are required to enlist.
 
+## SWARM
+# Survive waves of creeps
+# Build defensive structures and upgrade your base
+
+## STONE AGE
+# Spawn in a tribe in the stone age
+# Forage and hunt 
+# Find Materials and learn you skills
+# Survive against Dinosaurs and other tribes
