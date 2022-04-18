@@ -112,7 +112,7 @@ abstract class Game {
     countDownFramesRemaining = 0;
   }
 
-  void onCharacterKilled(Character killed, Character by){
+  void onCharacterKilled(Character killed, dynamic by){
 
   }
 
@@ -367,6 +367,22 @@ extension GameFunctions on Game {
       dynamicObject.collidable = true;
       dynamicObject.health = 3;
     }
+    
+    
+    for (final structure in structures) {
+      if (structure.cooldown > 0) {
+        structure.cooldown--;
+        continue;
+      }
+      for(final zombie in zombies) {
+        if (zombie.dead) continue;
+        if (sameTeam(structure, zombie)) continue;
+        if (zombie.getDistance(structure) > 200) continue;
+        spawnArrow(structure, damage: 1, target: zombie);
+        structure.cooldown = structure.attackRate;
+        break;
+      }
+    }
 
     update();
     _updateCollisions();
@@ -405,7 +421,7 @@ extension GameFunctions on Game {
     return true;
   }
 
-  void applyDamage(Character src, Collider target, int amount) {
+  void applyDamage(dynamic src, Collider target, int amount) {
     if (target is Character) {
       if (target.dead) return;
       if (target.invincible) return;
@@ -450,7 +466,6 @@ extension GameFunctions on Game {
         target.collidable = false;
         target.respawnDuration = 150;
         if (target.type == DynamicObjectType.Pot) {
-          print("Pot Destroyed");
           dispatchV2(GameEventType.Pot_Destroyed, target);
         }
         onDynamicObjectDestroyed(target);
@@ -463,7 +478,6 @@ extension GameFunctions on Game {
     if (player.level >= maxPlayerLevel) return;
     player.experience += experience;
     while (player.experience >= levelExperience[player.level]) {
-      // on player level increased
       player.experience -= levelExperience[player.level];
       player.level++;
       player.abilityPoints++;
@@ -740,7 +754,7 @@ extension GameFunctions on Game {
     for (final zombie in zombies) {
       if (zombie.dead) continue;
       if (!withinRadius(zombie, src, SpellRadius.Freeze_Ring)) continue;
-      applyStrike(src, zombie, damage);
+      applyHit(src, zombie, damage);
       zombie.frozenDuration += duration;
     }
   }
@@ -858,11 +872,11 @@ extension GameFunctions on Game {
 
   void handleProjectileHit(Projectile projectile, Collider collider) {
     projectile.active = false;
-    applyStrike(projectile.owner, collider, projectile.damage);
+    applyHit(projectile.owner, collider, projectile.damage);
     dispatch(GameEventType.Arrow_Hit, collider.x, collider.y);
   }
 
-  void applyStrike(Character src, Collider target, int damage) {
+  void applyHit(dynamic src, Collider target, int damage) {
     if (!target.collidable) return;
     if (target is Character) {
       if (sameTeam(src, target)) return;
@@ -886,7 +900,7 @@ extension GameFunctions on Game {
             GameEventType.Zombie_Killed,
             target.x,
             target.y,
-            src.aimAngle
+            angleBetweenSrcAndTarget,
         );
       }
       return;
@@ -965,7 +979,7 @@ extension GameFunctions on Game {
         if (character.stateDurationRemaining == castFrame) {
           final attackTarget = character.attackTarget;
           if (attackTarget != null) {
-            applyStrike(
+            applyHit(
                 character,
                 attackTarget,
                 SlotType.getDamage(character.weapon) * damageMultiplier
@@ -1030,7 +1044,7 @@ extension GameFunctions on Game {
 
   Projectile spawnFireball(Character character) {
     return spawnProjectile(
-        character: character,
+        src: character,
         accuracy: 0,
         speed: settings.projectileSpeed.fireball,
         damage: 100,
@@ -1043,7 +1057,7 @@ extension GameFunctions on Game {
   Projectile spawnBlueOrb(Character character) {
     dispatch(GameEventType.Blue_Orb_Fired, character.x, character.y);
     return spawnProjectile(
-        character: character,
+        src: character,
         accuracy: 0,
         speed: settings.projectileSpeed.fireball,
         damage: 1,
@@ -1054,40 +1068,59 @@ extension GameFunctions on Game {
 
   void casteSlowingCircle(Character character, double x, double y) {}
 
-  Projectile spawnArrow(Character character, {required int damage}) {
-    dispatch(GameEventType.Arrow_Fired, character.x, character.y);
+  Projectile spawnArrow(Vector2 src, {required int damage, Collider? target}) {
+    dispatch(GameEventType.Arrow_Fired, src.x, src.y);
+
+    if (src is Character){
+      return spawnProjectile(
+          src: src,
+          accuracy: 0,
+          speed: settings.projectileSpeed.arrow,
+          damage: damage,
+          range: settings.range.arrow,
+          target: src.attackTarget,
+          angle: src.aimAngle,
+          type: ProjectileType.Arrow,
+      );
+    }
+
     return spawnProjectile(
-        character: character,
+        src: src,
         accuracy: 0,
         speed: settings.projectileSpeed.arrow,
         damage: damage,
         range: settings.range.arrow,
-        target: character.attackTarget,
-        type: ProjectileType.Arrow);
+        target: target,
+        type: ProjectileType.Arrow,
+    );
   }
 
   Projectile spawnProjectile({
-    required Character character,
-    required double accuracy,
+    required Vector2 src,
     required double speed,
     required double range,
     required int damage,
     required ProjectileType type,
+    double angle = 0,
+    double accuracy = 0,
     Collider? target,
   }) {
-    final spawnDistance = character.radius + 5;
     final projectile = getAvailableProjectile();
     projectile.collidable = true;
     projectile.active = true;
     projectile.target = target;
-    projectile.xStart = character.x + adj(character.aimAngle, spawnDistance);
-    projectile.yStart = character.y + opp(character.aimAngle, spawnDistance);
+    // projectile.xStart = src.x + adj(src.aimAngle, spawnDistance);
+    // projectile.yStart = src.y + opp(src.aimAngle, spawnDistance);
+    projectile.xStart = src.x;
+    projectile.yStart = src.y;
     projectile.x = projectile.xStart;
     projectile.y = projectile.yStart;
-    projectile.xv = velX(character.aimAngle + giveOrTake(accuracy), speed);
-    projectile.yv = velY(character.aimAngle + giveOrTake(accuracy), speed);
-    projectile.speed = hypotenuse(projectile.xv, projectile.yv);
-    projectile.owner = character;
+    // projectile.xv = velX(src.aimAngle + giveOrTake(accuracy), speed);
+    // projectile.yv = velY(src.aimAngle + giveOrTake(accuracy), speed);
+    projectile.xv = velX(angle + giveOrTake(accuracy), speed);
+    projectile.yv = velY(angle + giveOrTake(accuracy), speed);
+    projectile.speed = speed;
+    projectile.owner = src;
     projectile.range = range;
     projectile.damage = damage;
     projectile.type = type;
@@ -1353,16 +1386,7 @@ extension GameFunctions on Game {
     pathFindAI = ai;
     pathFindSearchID++;
     ai.pathIndex = -1;
-    if (scene.visitNode(scene.tileNodeAt(ai.x, ai.y))){
-       // final path = ai.pathIndex;
-       // if (path > 1){
-       //    final d1X = ai.pathX[path];
-       //    final d1Y = ai.pathY[path];
-       //    final d2X = ai.pathX[path - 1];
-       //    final d2Y = ai.pathY[path - 1];
-       //
-       // }
-    }
+    scene.visitNode(scene.tileNodeAt(ai.x, ai.y));
   }
 
   void _updateSpawnPointCollisions() {
@@ -1415,7 +1439,7 @@ extension GameFunctions on Game {
       if (stateDuration != framePerformStrike) return;
       final attackTarget = character.attackTarget;
       if (attackTarget == null) return;
-      applyStrike(character, attackTarget, SlotType.getDamage(character.weapon));
+      applyHit(character, attackTarget, SlotType.getDamage(character.weapon));
       character.attackTarget = null;
       return;
     }
@@ -1444,7 +1468,7 @@ extension GameFunctions on Game {
           }
           weapon.amount--;
           spawnProjectile(
-              character: character,
+              src: character,
               accuracy: 0,
               speed: 12.0,
               range: SlotType.getRange(weaponType),
@@ -1466,7 +1490,7 @@ extension GameFunctions on Game {
           final totalBullets = 4;
           for (int i = 0; i < totalBullets; i++){
             spawnProjectile(
-                character: character,
+                src: character,
                 accuracy: 0.1,
                 speed: 12.0,
                 range: SlotType.getRange(weaponType),
@@ -1496,7 +1520,7 @@ extension GameFunctions on Game {
           final damage = SlotType.getDamage(character.weapon);
           if (attackTarget != null) {
             if (attackTarget.collidable){
-              applyStrike(character, attackTarget, damage);
+              applyHit(character, attackTarget, damage);
               return;
             } else {
               character.attackTarget = null;
@@ -1509,7 +1533,7 @@ extension GameFunctions on Game {
               range: range
           );
           if (zombieHit != null) {
-            applyStrike(character, zombieHit, damage);
+            applyHit(character, zombieHit, damage);
             return;
           }
           final dynamicObjectHit = physics.raycastHit(
@@ -1518,7 +1542,7 @@ extension GameFunctions on Game {
               range: range
           );
           if (dynamicObjectHit != null) {
-            applyStrike(character, dynamicObjectHit, damage);
+            applyHit(character, dynamicObjectHit, damage);
           }
           return;
         }

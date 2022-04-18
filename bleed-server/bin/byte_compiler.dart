@@ -44,6 +44,17 @@ class _ByteCompiler {
     return sendBuffer;
   }
 
+  void writeStructures(Player player) {
+    writeByte(ServerResponse.Structures);
+    final structures = player.game.structures;
+    for(final structure in structures){
+       writeByte(1);
+       writeBigInt(structure.x);
+       writeBigInt(structure.y);
+    }
+    writeByte(0);
+  }
+
   void writePlayerOrbs(Player player) {
     writeByte(ServerResponse.Player_Orbs);
     final orbs = player.orbs;
@@ -79,6 +90,7 @@ class _ByteCompiler {
     writeBool(player.alive); // 1
     writeBool(player.storeVisible); // 1
 
+    writeStructures(player);
     writePlayers(player);
     writeAttackTarget(player);
     writeProjectiles(game.projectiles);
@@ -131,12 +143,13 @@ class _ByteCompiler {
     for (final zombie in zombies) {
       if (!zombie.active) continue;
       final aiTarget = zombie.target;
-      if (aiTarget == null) continue;
-      writeByte(1);
-      writeBigInt(zombie.x);
-      writeBigInt(zombie.y);
-      writeBigInt(aiTarget.x);
-      writeBigInt(aiTarget.y);
+      if (aiTarget is Character) {
+        writeByte(1);
+        writeBigInt(zombie.x);
+        writeBigInt(zombie.y);
+        writeBigInt(aiTarget.x);
+        writeBigInt(aiTarget.y);
+      }
     }
     writeByte(0);
   }

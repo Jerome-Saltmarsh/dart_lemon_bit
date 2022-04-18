@@ -31,15 +31,6 @@ void setAngle(Character character, double value) {
   character.angle = value;
 }
 
-// bool withinViewRange(AI ai, GameObject target) {
-//   return distanceV2(ai, target) < ai.viewRange;
-// }
-
-void setVelocity(GameObject gameObject, double rotation, double speed) {
-  gameObject.xv = velX(rotation, speed);
-  gameObject.yv = velY(rotation, speed);
-}
-
 void characterFace(Character character, double x, double y) {
   characterFaceAngle(character, radiansBetween2(character, x, y));
 }
@@ -63,17 +54,6 @@ double getShotAngle(Character character) {
 
 void faceAimDirection(Character character) {
   setAngle(character, character.aimAngle);
-}
-
-void applyMovement(GameObject gameObject) {
-  gameObject.x += gameObject.xv;
-  gameObject.y += gameObject.yv;
-  gameObject.z += gameObject.zv;
-}
-
-void applyFriction(GameObject gameObject, double value) {
-  gameObject.xv *= value;
-  gameObject.yv *= value;
 }
 
 bool targetWithinAttackRange(Character character, GameObject target){

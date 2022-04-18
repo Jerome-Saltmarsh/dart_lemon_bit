@@ -124,6 +124,17 @@ class _ByteStreamParser {
           _player.attackTarget.y = 0;
           engine.cursorType.value = CursorType.Basic;
           break;
+        case ServerResponse.Structures:
+          final structures = game.structures;
+          var total = 0;
+          while (readBool()) {
+             final structure = structures[total];
+             structure.x = _nextDouble();
+             structure.y = _nextDouble();
+             total++;
+          }
+          game.totalStructures = total;
+          break;
         case ServerResponse.Paths:
           modules.game.state.compilePaths.value = true;
           final paths = modules.isometric.paths;
@@ -155,21 +166,7 @@ class _ByteStreamParser {
           _hours.value = _nextByte();
           _minutes.value = _nextByte();
           break;
-        case ServerResponse.No_Change:
-          print("ServerResponse.No_Change");
-          modules.game.update.readPlayerInput();
-          sendRequestUpdatePlayer();
-          return;
         case ServerResponse.Player:
-          // final nextServerFrame =  _nextInt();
-          // if (nextServerFrame == _player.serverFrame.value){
-          //   // HOW IS THIS STILL BEING REACHED, PATCHED SHOULD BE GETTING RETURNED
-          //   // print("NO CHANGE FROM SERVER");
-          //   // modules.game.update.readPlayerInput();
-          //   // sendRequestUpdatePlayer();
-          //   return;
-          // }
-
           _player.x = _nextDouble();
           _player.y = _nextDouble();
 

@@ -65,7 +65,14 @@ class GameRender {
       drawPaths();
     }
 
+
     renderDynamicObjects();
+
+    for(var i = 0; i < game.totalStructures; i++){
+      final structure = game.structures[i];
+      drawCircle36V2(structure);
+    }
+
     _render.renderSprites();
     drawEffects();
     drawItems();
@@ -136,6 +143,10 @@ class GameRender {
     final shade = isometric.getShadeAtPosition(x, y);
     if (shade >= Shade.Very_Dark) return;
     drawCircle36(x, y);
+  }
+
+  void drawCircle36V2(Vector2 vector2){
+    drawCircle36(vector2.x, vector2.y);
   }
 
   void drawCircle36(double x, double y){

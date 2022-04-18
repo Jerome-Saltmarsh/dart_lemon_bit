@@ -11,6 +11,7 @@ class ServerResponse {
   static const Game_Joined = 9;
   static const Scene = 10;
   static const Collectables = 11;
+  
   static const Paths = 12; 
   static const Score = 13;
   static const Player_Events = 14;
@@ -47,7 +48,6 @@ class ServerResponse {
   static const Debug_Mode = 45;
   static const Gem_Spawns = 46;
   static const End = 47;
-  static const No_Change = 48;
-  static const Targets = 49;
+  static const Structures = 48;
 }
 

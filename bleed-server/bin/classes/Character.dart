@@ -14,13 +14,18 @@ import '../settings.dart';
 import '../utilities.dart';
 import 'Ability.dart';
 import 'Collider.dart';
+import 'Game.dart';
 import 'GameObject.dart';
 import 'Player.dart';
 
 const maxAIPathLength = 80;
 const maxAIPathLengthMinusOne = maxAIPathLength - 3;
 
-class AI extends Character {
+mixin TeamObject {
+  int team = 0;
+}
+
+class AI extends Character with TeamObject {
   static const viewRange = 200.0;
   static const chaseRange = 500.0;
 
@@ -31,7 +36,7 @@ class AI extends Character {
   var destX = -1.0;
   var destY = -1.0;
   var idleDuration = 0;
-  Character? target;
+  dynamic target;
 
   int get pathIndex => _pathIndex;
 
@@ -91,7 +96,11 @@ class AI extends Character {
   }
 }
 
-class Character extends GameObject {
+mixin Team {
+  int team = 0;
+}
+
+class Character extends GameObject with Team {
   // TODO remove from character
   late CharacterType type;
   late int _health;
@@ -115,7 +124,6 @@ class Character extends GameObject {
   Collider? attackTarget;
   double speedModifier = 0;
   bool invincible = false;
-  int team;
   final abilityTarget = Vector2(0, 0);
   final slots = Slots();
 
@@ -159,12 +167,13 @@ class Character extends GameObject {
     required int health,
     int weapon = SlotType.Empty,
     double speed = 3.0,
-    this.team = noSquad,
+    int team = Teams.none,
   }) : super(x, y, radius: settings.radius.character) {
     maxHealth = health;
     _health = health;
     _speed = speed;
     slots.weapon.type = weapon;
+    this.team = team;
   }
 
   void applyVelocity() {
@@ -188,8 +197,10 @@ class Character extends GameObject {
   // }
 }
 
-bool sameTeam(Character a, Character b){
+bool sameTeam(dynamic a, dynamic b){
   if (a == b) return true;
+  if (a is Team == false) return false;
+  if (b is Team == false) return false;
   if (a.team == 0) return false;
   return a.team == b.team;
 }

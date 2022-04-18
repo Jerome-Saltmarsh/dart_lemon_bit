@@ -25,6 +25,7 @@ class _Game {
   final totalDynamicObjects = Watch(0);
   final players = <Character>[];
   final zombies = <Character>[];
+  final structures = <Vector2>[];
   final interactableNpcs = <Character>[];
   final dynamicObjects = <DynamicObject>[];
   final effects = <Effect>[];
@@ -40,6 +41,7 @@ class _Game {
   var cratesTotal = 0;
   var totalNpcs = 0;
   var totalCubes = 0;
+  var totalStructures = 0;
   var bulletHoleIndex = 0;
   var id = -1;
   var totalProjectiles = 0;
@@ -63,6 +65,9 @@ class _Game {
     }
     for (var i = 0; i < 200; i++) {
       projectiles.add(Projectile());
+    }
+    for (var i = 0; i < 1000; i++) {
+      structures.add(Vector2(0, 0));
     }
   }
 
