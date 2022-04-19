@@ -105,8 +105,8 @@
 [ ] Weapon Pickaxe
 [ ] Weapon Axe    
 [ ] Resources [Stone, Wood, Gold, Food]
-[ ] Render Dynamic Objects 3D    
 [ ] Fix Map Editor    
+[x] Render Dynamic Objects 3D    
 [x] Rock Destroyed Animation    
 [x] AI Should avoid colliders in front of them.    
 [x] FIX AI getting stuck on corners    

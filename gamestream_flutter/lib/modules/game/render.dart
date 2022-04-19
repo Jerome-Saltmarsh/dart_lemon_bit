@@ -67,7 +67,7 @@ class GameRender {
     }
 
 
-    renderDynamicObjects();
+    // renderDynamicObjects();
 
     for(var i = 0; i < game.totalStructures; i++){
       final structure = game.structures[i];
@@ -111,7 +111,6 @@ class GameRender {
            );
            break;
        }
-
     }
   }
 

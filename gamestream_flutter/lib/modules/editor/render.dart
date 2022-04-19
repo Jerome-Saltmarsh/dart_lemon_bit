@@ -1,7 +1,5 @@
-import 'package:bleed_common/Tile.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
-import 'package:gamestream_flutter/modules/isometric/utilities.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
@@ -31,14 +29,6 @@ class EditorRender with EditorScope {
 
   void _environmentObjects() {
     state.environmentObjects.forEach(isometric.render.renderEnvironmentObject);
-  }
-
-  void dstTile(Tile tile, double x, double y){
-    int row = getRow(x, y);
-    int column = getColumn(x, y);
-    double x2 = getTileWorldX(row, column);
-    double y2 = getTileWorldY(row, column);
-    engine.mapDst(x: x2, y: y2);
   }
 
   void _characters() {
