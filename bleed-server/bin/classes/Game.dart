@@ -1279,43 +1279,24 @@ extension GameFunctions on Game {
   }
 
   void updateInteractableNpcTargets() {
-    final initial = getFirstAliveIndex(zombies);
-    if (initial == _none) return;
-    final npcsLength = npcs.length;
-    for (var i = 0; i < npcsLength; i++) {
-      updateInteractableNpcTarget(npcs[i], initial);
-    }
-  }
-
-  int getFirstAliveIndex(List<Character> characters){
-    final length = characters.length;
-    for (var i = 0; i < length; i++) {
-      if (characters[i].alive) return i;
-    }
-    return _none;
-  }
-
-  void updateInteractableNpcTarget(AI ai, int j) {
-    if (ai.mode == NpcMode.Ignore) return;
-
-    final aiWeaponRange = SlotType.getRange(ai.weapon);
-    var closest = zombies[j];
-    var closestDistance = distanceV2(closest, ai);
-    final zombiesLength = zombies.length;
-    for (var i = j + 1; i < zombiesLength; i++) {
-      final zombie = zombies[i];
-      if (!zombie.alive) continue;
-      var distance2 = distanceV2(zombie, ai);
-      if (distance2 > closestDistance) continue;
-      closest = zombie;
-      closestDistance = distance2;
-    }
-    final actualDistance = distanceV2(ai, closest);
-    if (actualDistance > aiWeaponRange) {
-      ai.target = null;
-      ai.state = stateIdle;
-    } else {
-      setNpcTarget(ai, closest);
+    for (final npc in npcs) {
+      if (npc.mode == NpcMode.Ignore) return;
+      Character? closest;
+      var closestDistance = 99999.0;
+      for (final zombie in zombies) {
+        if (!zombie.alive) continue;
+        if (sameTeam(npc, zombie)) continue;
+        var distance2 = distanceV2(zombie, npc);
+        if (distance2 > closestDistance) continue;
+        closest = zombie;
+        closestDistance = distance2;
+      }
+      if (closest == null || closestDistance > npc.weaponRange) {
+        npc.target = null;
+        npc.state = stateIdle;
+        continue;
+      }
+      setNpcTarget(npc, closest);
     }
   }
 
