@@ -12,27 +12,26 @@ import 'package:lemon_watch/watch.dart';
 
 import 'enums.dart';
 
-
 class EditorState {
-  final List<EnvironmentObject> environmentObjects = [];
-  final Watch<bool> waitForPlayersToJoin = Watch(true);
-  final Watch<int> numberOfPlayers = Watch(8);
-  final Watch<TeamType> teamType = Watch(TeamType.Solo);
-  final Watch<int> teamSize = Watch(1);
-  final Watch<int> numberOfTeams= Watch(4);
-  int selectedCollectable = -1;
-  final List<Vector2> teamSpawnPoints = [];
-  final Watch<TimeSpeed> timeSpeed = Watch(TimeSpeed.Normal);
-  final Watch<Vector2?> selected = Watch(null);
-  final Watch<ToolTab> tab = Watch(ToolTab.Tiles);
-  final Watch<int> tile = Watch(Tile.Grass);
-  final Watch<CharacterType> characterType = Watch(CharacterType.Human);
+  final environmentObjects = <EnvironmentObject>[];
+  final waitForPlayersToJoin = Watch(true);
+  final numberOfPlayers = Watch(8);
+  final teamType = Watch(TeamType.Solo);
+  final teamSize = Watch(1);
+  final numberOfTeams= Watch(4);
+  final teamSpawnPoints = <Vector2>[];
+  final timeSpeed = Watch(TimeSpeed.Normal);
+  final selected = Watch<Vector2?>(null);
+  final tab = Watch(ToolTab.Tiles);
+  final tile = Watch(Tile.Grass);
+  final characterType = Watch(CharacterType.Human);
   final itemType = Watch(ItemType.Shotgun);
-  final Watch<ObjectType> objectType = Watch(objectTypes.first);
-  final Watch<EditorDialog> dialog = Watch(EditorDialog.None);
+  final objectType = Watch(objectTypes.first);
+  final dialog = Watch(EditorDialog.None);
   final mapNameController = TextEditingController();
-  final Watch<String> error = Watch("");
-  List<Character> characters = [];
-  final List<Item> items = [];
+  final error = Watch("");
+  final items = <Item>[];
+  var characters = <Character>[];
+  var selectedCollectable = -1;
 }
 

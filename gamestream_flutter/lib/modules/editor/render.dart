@@ -11,8 +11,8 @@ import 'scope.dart';
 class EditorRender with EditorScope {
 
   void render(Canvas canvas, Size size) {
+    print("editor.render()");
     isometric.render.renderTiles();
-    // renderTilePreview();
     _drawSelectedObject();
     _characters();
     _environmentObjects();

@@ -4,6 +4,7 @@ import 'package:bleed_common/CharacterType.dart';
 import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/ObjectType.dart';
 import 'package:bleed_common/Shade.dart';
+import 'package:bleed_common/Tile.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
@@ -70,17 +71,16 @@ class EditorBuild {
   }
 
   List<Widget> _tabTiles() {
-    // return Tile.values.map((tile) {
-    //   return WatchBuilder(state.tile, (Tile selected) {
-    //     return button(enumString(tile), () {
-    //       state.tile.value = tile;
-    //     },
-    //         width: _buttonWidth,
-    //         alignment: Alignment.centerLeft,
-    //         fillColor: selected == tile ? _highlight : colours.transparent);
-    //   });
-    // }).toList();
-    return [];
+    return Tile.values.map((int tile) {
+      return WatchBuilder(state.tile, (int selected) {
+        return button(Tile.getName(tile), () {
+          state.tile.value = tile;
+        },
+            width: _buttonWidth,
+            alignment: Alignment.centerLeft,
+            fillColor: selected == tile ? _highlight : colours.transparent);
+      });
+    }).toList();
   }
 
   List<Widget> _tabAll() {

@@ -6,6 +6,7 @@
 [ ] Animate tiles flowing water
 [ ] Dynamic Shadow direction
 [ ] Black Fade Screen on change scene
+[ ] As weapons lose durability they do less damage
 [GAME TYPES]
 [ ] CAPTURE THE SQUARES
 [ ] COUNTER STRIKE
@@ -104,7 +105,9 @@
 [ ] Weapon Pickaxe
 [ ] Weapon Axe    
 [ ] Resources [Stone, Wood, Gold, Food]
-[ ] Rock Destroyed Animation    
+[ ] Render Dynamic Objects 3D    
+[ ] Fix Map Editor    
+[x] Rock Destroyed Animation    
 [x] AI Should avoid colliders in front of them.    
 [x] FIX AI getting stuck on corners    
 [x] Destructible Pot    
