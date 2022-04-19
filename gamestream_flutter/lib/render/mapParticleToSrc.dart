@@ -1,5 +1,6 @@
 
 import 'package:bleed_common/Direction.dart';
+import 'package:bleed_common/Shade.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
@@ -105,10 +106,29 @@ void mapParticleToSrc(Particle particle){
       engine.mapSrc(x: x, y: y, width: 25, height: 24);
       return;
 
+
     case ParticleType.Shrapnel:
       final x = atlas.particles.circleBlackSmall.x;
       final y = atlas.particles.circleBlackSmall.y;
       engine.mapSrc(x: x, y: y, width: 7, height: 7);
+      return;
+
+    case ParticleType.Rock:
+      switch(shade){
+        case Shade.Bright:
+          engine.mapSrc(x: 49, y: 25, width: 7, height: 7);
+          break;
+        case Shade.Medium:
+          engine.mapSrc(x: 41, y: 25, width: 7, height: 7);
+          break;
+        case Shade.Dark:
+          engine.mapSrc(x: 9, y: 25, width: 7, height: 7);
+          break;
+        case Shade.Very_Dark:
+          engine.mapSrc(x: 1, y: 25, width: 7, height: 7);
+          break;
+      }
+
       return;
 
     default:

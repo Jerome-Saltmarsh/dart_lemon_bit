@@ -404,6 +404,12 @@ class GameEvents {
       case GameEventType.Object_Struck:
         audio.objectStruck(x, y);
         break;
+      case GameEventType.Rock_Destroyed:
+        for (var i = 0; i < 8; i++) {
+          isometric.spawn.rockShard(x, y);
+        }
+        audio.rockBreaking(x, y);
+        break;
     }
   }
 }

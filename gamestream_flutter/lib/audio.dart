@@ -233,7 +233,7 @@ class _Audio {
 
 
   void playAudioHeal(double x, double y) {
-    audio._playPositioned('revive-heal-1.mp3', x, y);
+    _playPositioned('revive-heal-1.mp3', x, y);
   }
 
   void playAudioKnifeStrike(double x, double y) {
@@ -241,33 +241,36 @@ class _Audio {
   }
 
   void playAudioThrowGrenade(double x, double y) {
-    audio._playPositioned('throw.mp3', x, y);
+    _playPositioned('throw.mp3', x, y);
   }
 
   void playAudioCrateBreaking(double x, double y) {
-    audio._playPositioned('crate-breaking.mp3', x, y);
+    _playPositioned('crate-breaking.mp3', x, y);
   }
 
   void unlock(double x, double y) {
-    audio._playPositioned('unlock.mp3', x, y);
+    _playPositioned('unlock.mp3', x, y);
   }
 
   void buff11(double x, double y) {
-    audio._playPositioned('buff-11.mp3', x, y);
+    _playPositioned('buff-11.mp3', x, y);
   }
 
   void arrowFlyingPast6(double x, double y) {
-    audio._playPositioned('arrow-flying-past-6.mp3', x, y);
+    _playPositioned('arrow-flying-past-6.mp3', x, y);
   }
 
   void sciFiBlaster1(double x, double y) {
-    audio._playPositioned('sci-fi-blaster-1.mp3', x, y);
+    _playPositioned('sci-fi-blaster-1.mp3', x, y);
   }
 
   void playAudioCollectStar(double x, double y) {
-    audio._playPositioned('collect-star-4.mp3', x, y);
+    _playPositioned('collect-star-4.mp3', x, y);
   }
 
+  void rockBreaking(double x, double y) {
+    _playPositioned('rock-breaking.mp3', x, y);
+  }
 }
 
 

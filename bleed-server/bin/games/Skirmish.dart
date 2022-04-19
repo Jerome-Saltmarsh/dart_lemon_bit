@@ -49,7 +49,7 @@ class GameSkirmish extends Game {
 
      dynamicObjects.add(
          DynamicObject(
-           type: DynamicObjectType.Pot,
+           type: DynamicObjectType.Rock,
            x: 50,
            y: 150,
            health: 10,
@@ -58,7 +58,7 @@ class GameSkirmish extends Game {
 
      dynamicObjects.add(
          DynamicObject(
-           type: DynamicObjectType.Pot,
+           type: DynamicObjectType.Rock,
            x: -50,
            y: 150,
            health: 10,

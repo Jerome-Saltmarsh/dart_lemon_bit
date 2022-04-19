@@ -33,7 +33,7 @@ double _getRadius(ObjectType type){
     ObjectType.House02: 40,
     ObjectType.Tree01: 7,
     ObjectType.Rock: 14,
-    ObjectType.Torch: 10,
+    ObjectType.Torch: 9,
     ObjectType.Tree_Stump: 7,
     ObjectType.Rock_Small: 4,
     ObjectType.Grave: 13,

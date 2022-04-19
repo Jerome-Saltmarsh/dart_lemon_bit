@@ -47,4 +47,5 @@ class ParticleType {
   static const Pixel = 11;
   static const Orb_Ruby = 12;
   static const Pot_Shard = 13;
+  static const Rock = 14;
 }

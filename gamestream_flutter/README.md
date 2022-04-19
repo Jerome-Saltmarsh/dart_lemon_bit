@@ -96,14 +96,17 @@
 [ ] Zombies Attack Tower    
 [ ] Design Tower Sprite    
 [ ] GameOver on death    
-[ ] AI Should avoid colliders in front of them.     
 [ ] FIX Zombies run into lamps forever   
-[ ] FIX AI getting stuck on corners   
 [ ] Destructible Bush
-    
 [ ] Destructible Chest
 [ ] Upgrade Panel    
 [ ] Destructible Rock
+[ ] Weapon Pickaxe
+[ ] Weapon Axe    
+[ ] Resources [Stone, Wood, Gold, Food]
+[ ] Rock Destroyed Animation    
+[x] AI Should avoid colliders in front of them.    
+[x] FIX AI getting stuck on corners    
 [x] Destructible Pot    
 [x] Fix guns aren't doing damage on hit    
 [x] Fix Zombies not attacking player    

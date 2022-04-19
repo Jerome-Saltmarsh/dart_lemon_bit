@@ -467,6 +467,8 @@ extension GameFunctions on Game {
         target.respawnDuration = 150;
         if (target.type == DynamicObjectType.Pot) {
           dispatchV2(GameEventType.Pot_Destroyed, target);
+        }else if (target.type == DynamicObjectType.Rock) {
+          dispatchV2(GameEventType.Rock_Destroyed, target);
         }
         onDynamicObjectDestroyed(target);
         return;
