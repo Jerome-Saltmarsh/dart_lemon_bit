@@ -75,7 +75,6 @@ abstract class Game {
   final players = <Player>[];
   final projectiles = <Projectile>[];
   final crates = <Crate>[];
-  final dynamicObjects = <DynamicObject>[];
   var spawnPoints = <SpawnPoint>[];
   var shadeMax = Shade.Bright;
   var frame = 0;
@@ -94,6 +93,8 @@ abstract class Game {
   final Scene scene;
 
   static int _id = 0;
+
+  List<DynamicObject> get dynamicObjects => scene.dynamicObjects;
 
   bool get countingDown => status == GameStatus.Counting_Down;
 
@@ -315,7 +316,7 @@ extension GameFunctions on Game {
 
   DynamicObject? getClosestDynamicObject(double x, double y){
     return findClosestVector2(
-        colliders: dynamicObjects,
+        colliders: scene.dynamicObjects,
         x: x,
         y: y,
         predicate: (other) => !other.collidable
@@ -361,7 +362,7 @@ extension GameFunctions on Game {
       return;
     }
 
-    for (final dynamicObject in dynamicObjects) {
+    for (final dynamicObject in scene.dynamicObjects) {
       if (dynamicObject.respawnDuration <= 0) continue;
       if (dynamicObject.respawnDuration-- > 1) continue;
       dynamicObject.collidable = true;
@@ -578,7 +579,7 @@ extension GameFunctions on Game {
     checkColliderCollision(zombies, structures);
     checkColliderCollision(players, colliders);
     checkColliderCollision(zombies, colliders);
-    checkColliderCollision(players, dynamicObjects);
+    checkColliderCollision(players, scene.dynamicObjects);
     updateCollisionBetween(zombies);
     updateCollisionBetween(players);
     resolveCollisionBetween(zombies, players, resolveCollisionA);
@@ -592,7 +593,7 @@ extension GameFunctions on Game {
     sortVertically(npcs);
     sortVertically(items);
     sortVertically(projectiles);
-    sortVertically(dynamicObjects);
+    sortVertically(scene.dynamicObjects);
   }
 
   void setCharacterStateRunning(Character character) {

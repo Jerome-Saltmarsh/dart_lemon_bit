@@ -106,7 +106,7 @@ class _ByteCompiler {
 
   void writeDynamicObjects(Player player) {
      writeByte(ServerResponse.Dynamic_Objects);
-     final dynamicObjects = player.game.dynamicObjects;
+     final dynamicObjects = player.game.scene.dynamicObjects;
      for (final dynamicObject in dynamicObjects) {
        if (dynamicObject.health <= 0) continue;
        if (dynamicObject.x < player.screenLeft) continue;

@@ -1,31 +1,22 @@
 import 'package:lemon_math/Vector2.dart';
 
+import '../common/DynamicObjectType.dart';
+import '../common/ObjectType.dart';
 import '../common/Tile.dart';
 import '../common/Direction.dart';
 import '../enums.dart';
 import '../utilities.dart';
 import 'Character.dart';
+import 'DynamicObject.dart';
 import 'EnvironmentObject.dart';
 import 'TileNode.dart';
-
-// constants
-const _tileSize = 48;
-final _boundary = TileNode(false);
-
-
-double perspectiveProjectX(double x, double y) {
-  return -y + x;
-}
-
-double perspectiveProjectY(double x, double y) {
-  return x + y;
-}
 
 class Scene {
   final List<Character> characters;
   final List<List<int>> tiles;
   final List<Vector2> crates;
   final List<EnvironmentObject> environment;
+  final List<DynamicObject> dynamicObjects = [];
   final String name;
 
   late final List<List<TileNode>> tileNodes;
@@ -35,6 +26,8 @@ class Scene {
   int? startHour;
   int? secondsPerFrames;
   List<Vector2> playerSpawnPoints = [];
+
+  final _boundary = TileNode(false);
 
   Scene({
     required this.tiles,
@@ -128,7 +121,7 @@ class Scene {
       }
     }
 
-    for (final env in environment){
+    for (final env in environment) {
       // const snapToGridTypes = [
       //   ObjectType.Torch,
       //   ObjectType.House01,
@@ -140,6 +133,22 @@ class Scene {
        // final row = getRow(env.x, env.y);
        // final column = getColumn(env.x, env.y);
        // tileNodes[row][column].open = false;
+    }
+
+    for (int i = 0; i < environment.length; i++) {
+       final env = environment[i];
+       if (env.type == ObjectType.Rock) {
+          environment.removeAt(i);
+          i--;
+          dynamicObjects.add(
+              DynamicObject(
+                  type: DynamicObjectType.Rock,
+                  x: env.x,
+                  y: env.y,
+                  health: 10
+              )
+          );
+       }
     }
   }
 }
@@ -293,9 +302,10 @@ extension SceneFunctions on Scene {
     if (projectedX < 0) return tileBoundary;
     final projectedY = x + y;
     if (projectedY < 0) return tileBoundary;
-    final row = projectedY ~/ _tileSize;
+    const tileSize = 48;
+    final row = projectedY ~/ tileSize;
     if (row >= numberOfRows) return tileBoundary;
-    final column = projectedX ~/ _tileSize;
+    final column = projectedX ~/ tileSize;
     if (column >= numberOfColumns) return tileBoundary;
     return this.tiles[row][column];
   }
@@ -309,9 +319,10 @@ extension SceneFunctions on Scene {
     if (projectedX < 0) return _boundary;
     final projectedY = x + y; // projectedToWorldY(x, y)
     if (projectedY < 0) return _boundary;
-    final row = projectedY ~/ _tileSize;
+    const tileSize = 48;
+    final row = projectedY ~/ tileSize;
     if (row >= numberOfRows) return _boundary;
-    final column = projectedX ~/ _tileSize;
+    final column = projectedX ~/ tileSize;
     if (column >= numberOfColumns) return _boundary;
     return tileNodes[row][column];
   }
@@ -347,4 +358,12 @@ extension SceneFunctions on Scene {
       character.y -= distance;
     }
   }
+}
+
+double perspectiveProjectX(double x, double y) {
+  return -y + x;
+}
+
+double perspectiveProjectY(double x, double y) {
+  return x + y;
 }
