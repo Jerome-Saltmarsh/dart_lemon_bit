@@ -10,16 +10,8 @@ import 'TileNode.dart';
 
 // constants
 const _tileSize = 48;
-const _tileSizeHalf = _tileSize * 0.5;
 final _boundary = TileNode(false);
 
-double mapTilePositionX(int row, int column) {
-  return perspectiveProjectX(row * _tileSizeHalf, column * _tileSizeHalf);
-}
-
-double mapTilePositionY(int row, int column) {
-  return perspectiveProjectY(row * _tileSizeHalf, column * _tileSizeHalf);
-}
 
 double perspectiveProjectX(double x, double y) {
   return -y + x;
@@ -160,27 +152,17 @@ var pathFindSearchID = 0;
 int parseRowsAndColumnsToDirection(int rows, int columns) {
   assert(rows != 0 || columns != 0);
   if (rows > 0) {
-     if (columns < 0){
-       return 5; // directionDownLeftIndex;
-     }
-     if (columns == 0){
-       return 4; //directionDownIndex;
-     }
-     return 3; // directionDownRightIndex;
+     if (columns < 0) return Direction.DownLeft;
+     if (columns == 0) return Direction.Down;
+     return Direction.DownRight;
   }
   if (rows < 0) {
-    if (columns < 0){
-      return 7; // directionUpLeftIndex;
-    }
-    if (columns == 0){
-      return 0; // directionUpIndex;
-    }
-    return 1; // directionUpRightIndex;
+    if (columns < 0) return Direction.UpLeft;
+    if (columns == 0) return Direction.Up;
+    return Direction.UpRight;
   }
-  if (columns < 0){
-    return 6; // directionLeftIndex;
-  }
-  return 2; // directionRightIndex;
+  if (columns < 0) return Direction.Left;
+  return Direction.Right;
 }
 
 extension SceneFunctions on Scene {
