@@ -660,8 +660,14 @@ class IsometricRender {
         anchorY: 61,
         scale: 1.0,
       );
-      final row = equipped == SlotType.Sword_Short || equipped == SlotType.Sword_Short ? 0
-                              : equipped == SlotType.Sword_Wooden ? 1 : 0;
+
+      final row = const [
+        SlotType.Pickaxe,
+        SlotType.Sword_Short,
+        SlotType.Sword_Wooden,
+        SlotType.Staff_Wooden,
+      ].indexOf(equipped);
+
       engine.mapSrc96(
           x: getTemplateSrcX(character, size: 96),
           y: 2159.0 + (row * 96)
@@ -679,3 +685,4 @@ class IsometricRender {
     engine.draw.text(npc.name, npc.x - 4.5 * npc.name.length, npc.y, style: state.nameTextStyle);
   }
 }
+

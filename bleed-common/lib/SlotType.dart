@@ -30,6 +30,7 @@ class SlotType {
   static const Shotgun = 28;
   static const Sniper_Rifle = 29;
   static const Assault_Rifle = 30;
+  static const Pickaxe = 31;
 
   static bool isWeapon(int value) {
     return isSword(value) || isBow(value) || isStaff(value) || isFirearm(value);
@@ -49,6 +50,7 @@ class SlotType {
       Staff_Golden: 6,
       Handgun: 2,
       Shotgun: 6,
+      Pickaxe: 2,
     }[value] ?? 0;
   }
 
@@ -100,11 +102,12 @@ class SlotType {
       Magic_Robes: "Robes of Magic",
       Handgun: "handgun",
       Shotgun: "Shotgun",
+      Pickaxe: "Pickaxe",
     } [value] ?? "?";
   }
 
   static bool isFirearm(int value) {
-    return const <int>[
+    return const [
       Handgun,
       Shotgun,
     ].contains(value);
@@ -115,11 +118,12 @@ class SlotType {
       Sword_Wooden,
       Sword_Short,
       Sword_Long,
+      Pickaxe,
     ].contains(value);
   }
 
   static bool isStaff(int value) {
-    return const <int>[
+    return const [
       Staff_Wooden,
       Staff_Golden,
       Staff_Blue,
@@ -127,14 +131,14 @@ class SlotType {
   }
 
   static bool isMetal(int value) {
-    return const <int>[
+    return const [
       Sword_Short,
       Sword_Long,
     ].contains(value);
   }
 
   static bool isArmour(int value) {
-    return const <int>[
+    return const [
       Body_Blue,
       Armour_Padded,
       Magic_Robes,
@@ -142,7 +146,7 @@ class SlotType {
   }
 
   static bool isHelm(int value) {
-    return const <int>[
+    return const [
       Steel_Helmet,
       Leather_Cap,
       Magic_Hat,
@@ -151,7 +155,7 @@ class SlotType {
   }
 
   static bool isItem(int value) {
-    return const <int>[
+    return const [
       Silver_Pendant,
       Golden_Necklace,
     ].contains(value);
@@ -198,6 +202,7 @@ class SlotType {
       Staff_Golden: 45,
       Handgun: 400,
       Shotgun: 300,
+      Pickaxe: 35,
     }[value] ?? 0;
   }
 }

@@ -82,6 +82,7 @@ class GameState {
     SlotType.Magic_Robes : resources.icons.armour.magic,
     SlotType.Handgun : resources.icons.firearms.handgun,
     SlotType.Shotgun : resources.icons.firearms.shotgun,
+    SlotType.Pickaxe : resources.icons.swords.pickaxe,
   };
 }
 

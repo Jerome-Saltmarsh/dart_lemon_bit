@@ -106,6 +106,8 @@
 [ ] Weapon Axe    
 [ ] Resources [Stone, Wood, Gold, Food]
 [ ] Fix Map Editor    
+[ ] FIX AI Pathfinding     
+[x] SlotType Pickaxe    
 [x] Render Dynamic Objects 3D    
 [x] Rock Destroyed Animation    
 [x] AI Should avoid colliders in front of them.    

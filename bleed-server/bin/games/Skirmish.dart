@@ -123,7 +123,7 @@ class GameSkirmish extends Game {
     slots.slot3.type = SlotType.Sword_Short;
     slots.slot4.type = SlotType.Bow_Wooden;
     slots.slot4.amount = 3;
-    slots.slot5.type = SlotType.Sword_Wooden;
+    slots.slot5.type = SlotType.Pickaxe;
     return player;
   }
 

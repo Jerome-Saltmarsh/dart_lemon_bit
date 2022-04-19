@@ -70,6 +70,7 @@ class _PotionIcons {
 class _SwordIcons {
   final wooden = _image("sword-wooden");
   final iron = _image("sword-iron");
+  final pickaxe = _image("pickaxe");
 }
 
 class _BowIcons {
