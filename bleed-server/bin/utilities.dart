@@ -5,8 +5,6 @@ import 'classes/Character.dart';
 
 const tileSize = 48.0;
 const halfTileSize = 24.0;
-const secondsPerMinute = 60;
-const minutesPerHour = 60;
 
 double tilesLeftY = 0;
 
@@ -28,34 +26,13 @@ void setAngle(Character character, double value) {
   character.angle = value;
 }
 
-// void characterFace(Character character, double x, double y) {
-//   characterFaceAngle(character, radiansBetween2(character, x, y));
-// }
-//
-// void characterAimAt(Character character, double x, double y){
-//   characterFaceAngle(character, radiansBetween2(character, x, y));
-// }
-//
-// void characterFaceAngle(Character character, double angle){
-//   character.aimAngle = angle;
-//   setAngle(character, angle);
-// }
-
-// void characterFaceV2(Character character, Vector2 target) {
-//   characterFace(character, target.x, target.y);
-// }
-
 double getShotAngle(Character character) {
-  return character.aimAngle + giveOrTake(character.accuracy * 0.5);
+  return character.angle + giveOrTake(character.accuracy * 0.5);
 }
 
 void faceAimDirection(Character character) {
-  setAngle(character, character.aimAngle);
+  setAngle(character, character.angle);
 }
-
-// bool targetWithinAttackRange(Character character, GameObject target){
-//   return withinRadius(character, target, character.weaponRange);
-// }
 
 Vector2 getTilePosition(int row, int column) {
   return Vector2(
@@ -82,6 +59,8 @@ double perspectiveProjectY(double x, double y) {
 }
 
 int calculateTime({int minute = 0, int hour = 0}){
+  const secondsPerMinute = 60;
+  const minutesPerHour = 60;
   return secondsPerMinute * minutesPerHour * hour + minute;
 }
 

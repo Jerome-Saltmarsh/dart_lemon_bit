@@ -952,12 +952,12 @@ extension GameFunctions on Game {
           Projectile arrow1 = spawnArrow(character, damage: damage);
           double angle = piSixteenth;
           arrow1.target = null;
-          setProjectileAngle(arrow1, character.aimAngle - angle);
+          setProjectileAngle(arrow1, character.angle - angle);
           Projectile arrow2 = spawnArrow(character, damage: damage);
           arrow2.target = null;
           Projectile arrow3 = spawnArrow(character, damage: damage);
           arrow3.target = null;
-          setProjectileAngle(arrow3, character.aimAngle + angle);
+          setProjectileAngle(arrow3, character.angle + angle);
           character.performing = null;
           character.attackTarget = null;
         }
@@ -1082,7 +1082,7 @@ extension GameFunctions on Game {
           damage: damage,
           range: settings.range.arrow,
           target: src.attackTarget,
-          angle: src.aimAngle,
+          angle: src.angle,
           type: ProjectileType.Arrow,
       );
     }
@@ -1110,7 +1110,7 @@ extension GameFunctions on Game {
   }) {
     final projectile = getAvailableProjectile();
     if (src is Character){
-      angle = src.aimAngle;
+      angle = src.angle;
     }
     projectile.collidable = true;
     projectile.active = true;

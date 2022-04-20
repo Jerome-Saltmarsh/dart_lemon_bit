@@ -869,7 +869,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (player.deadOrBusy) return;
           player.target = null;
           player.attackTarget = null;
-          player.aimAngle = player.mouseAngle;
           player.angle = player.mouseAngle;
           player.game.setCharacterStatePerforming(player);
           break;

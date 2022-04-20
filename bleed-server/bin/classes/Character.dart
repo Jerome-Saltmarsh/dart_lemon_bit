@@ -126,7 +126,7 @@ class Character extends GameObject with Team, Health {
   Ability? performing = null;
   int state = CharacterState.Idle;
   double angle = 0;
-  double aimAngle = 0;
+  // double aimAngle = 0;
   double accuracy = 0;
   int stateDurationRemaining = 0;
   int stateDuration = 0;
@@ -199,8 +199,7 @@ class Character extends GameObject with Team, Health {
 
   void face(Vector2 position){
     if (deadOrBusy) return;
-    aimAngle =  getAngle(position);
-    angle = aimAngle;
+    angle = getAngle(position);
   }
 }
 
