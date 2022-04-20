@@ -2,6 +2,7 @@
 import 'dart:convert' show utf8;
 import 'dart:typed_data';
 
+import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/angle.dart';
 
 import 'classes/Character.dart';
@@ -49,8 +50,7 @@ class _ByteCompiler {
     final structures = player.game.structures;
     for(final structure in structures){
        writeByte(1);
-       writeBigInt(structure.x);
-       writeBigInt(structure.y);
+       writeVector2(structure);
     }
     writeByte(0);
   }
@@ -114,8 +114,7 @@ class _ByteCompiler {
        if (dynamicObject.y < player.screenTop) continue;
        if (dynamicObject.y > player.screenBottom) break;
        writeByte(dynamicObject.type);
-       writeBigInt(dynamicObject.x);
-       writeBigInt(dynamicObject.y);
+       writeVector2(dynamicObject);
        writePercentage(dynamicObject.health / dynamicObject.maxHealth);
      }
      writeByte(END);
@@ -141,14 +140,12 @@ class _ByteCompiler {
     writeBigInt(250);
 
     for (final zombie in zombies) {
-      if (!zombie.active) continue;
+      if (zombie.dead) continue;
       final aiTarget = zombie.target;
       if (aiTarget is Character) {
         writeByte(1);
-        writeBigInt(zombie.x);
-        writeBigInt(zombie.y);
-        writeBigInt(aiTarget.x);
-        writeBigInt(aiTarget.y);
+        writeVector2(zombie);
+        writeVector2(aiTarget);
       }
     }
     writeByte(0);
@@ -164,8 +161,7 @@ class _ByteCompiler {
       if (item.top < player.screenTop) continue;
       if (item.bottom > player.screenBottom) break;
       writeByte(item.type);
-      writeBigInt(item.x);
-      writeBigInt(item.y);
+      writeVector2(item);
     }
     writeByte(END);
   }
@@ -249,8 +245,7 @@ class _ByteCompiler {
   void writeProjectile(Projectile projectile){
     if (!projectile.active) return;
     final degrees = angle(projectile.xv, projectile.yv) * radiansToDegrees;
-    writeBigInt(projectile.x);
-    writeBigInt(projectile.y);
+    writeVector2(projectile);
     writeByte(projectile.type.index);
     writeBigInt(degrees);
   }
@@ -260,15 +255,8 @@ class _ByteCompiler {
     final players = player.game.players;
     for (final otherPlayer in players) {
       if (otherPlayer.dead) continue;
-      final onSameTeam = sameTeam(otherPlayer, player);
-      // if (!onSameTeam) {
-      //   if (otherPlayer.top < player.screenTop) continue;
-      //   if (otherPlayer.bottom > player.screenBottom) continue;
-      //   if (otherPlayer.left < player.screenLeft) continue;
-      //   if (otherPlayer.right > player.screenRight) continue;
-      // }
       writePlayer(otherPlayer);
-      if (onSameTeam){
+      if (sameTeam(otherPlayer, player)){
         writeString(otherPlayer.text);
       } else {
         writeBigInt(0);
@@ -284,8 +272,7 @@ class _ByteCompiler {
       return;
     }
     writeByte(ServerResponse.Player_Attack_Target);
-    writeBigInt(aimTarget.x);
-    writeBigInt(aimTarget.y);
+    writeVector2(aimTarget);
   }
 
   void writePlayer(Player player) {
@@ -329,8 +316,7 @@ class _ByteCompiler {
     // final stateInt = character.state;
     // final value = allie + directionInt + stateInt;
     writeByte((sameTeam(player, character) ? 100 : 0) + (character.direction * 10) + character.state); // 1
-    writeBigInt(character.x); // 2
-    writeBigInt(character.y); // 2
+    writeVector2(character);
     writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);
   }
 
@@ -356,10 +342,16 @@ class _ByteCompiler {
     writeByte((value * 100).toInt());
   }
 
+  void writeVector2(Vector2 value){
+    writeBigInt(value.x);
+    writeBigInt(value.y);
+  }
+
   void writeBigInt(num value){
     writeNumberToByteArray(number: value, list: _buffer, index: _index);
     _index += 2;
   }
+
 
   void writeByte(int value){
     assert(value <= 256);

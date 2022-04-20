@@ -109,6 +109,8 @@
 [ ] Construct Menu    
 [ ] Footstep Audio    
 [ ] Collect Rewards 
+[ ] Zombies attack and destroy Structures    
+    
 [x] Destroy Trees    
 [x] Weapon Pickaxe    
 [x] SlotType Pickaxe    
