@@ -463,13 +463,29 @@ extension GameFunctions on Game {
 
     if (target is DynamicObject) {
       target.health -= amount;
+
+      switch (target.type) {
+        case DynamicObjectType.Rock:
+          dispatchV2(GameEventType.Rock_Struck, target);
+          break;
+        case DynamicObjectType.Tree:
+          dispatchV2(GameEventType.Tree_Struck, target);
+          break;
+      }
+
       if (target.health <= 0) {
         target.collidable = false;
         target.respawnDuration = 150;
         if (target.type == DynamicObjectType.Pot) {
           dispatchV2(GameEventType.Pot_Destroyed, target);
-        }else if (target.type == DynamicObjectType.Rock) {
+        }
+        else
+        if (target.type == DynamicObjectType.Rock) {
           dispatchV2(GameEventType.Rock_Destroyed, target);
+        }
+        else
+        if (target.type == DynamicObjectType.Tree) {
+          dispatchV2(GameEventType.Tree_Destroyed, target);
         }
         onDynamicObjectDestroyed(target);
         return;
@@ -909,10 +925,6 @@ extension GameFunctions on Game {
         );
       }
       return;
-    }
-
-    if (target is DynamicObject) {
-      dispatchV2(GameEventType.Object_Struck, target);
     }
   }
 

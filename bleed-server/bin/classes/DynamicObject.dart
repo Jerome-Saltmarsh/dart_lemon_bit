@@ -1,5 +1,6 @@
 
 
+import '../common/DynamicObjectType.dart';
 import 'Collider.dart';
 
 class DynamicObject extends Collider {
@@ -13,7 +14,13 @@ class DynamicObject extends Collider {
     required double x,
     required double y,
     required this.health,
-  }) : super(x, y, 15) {
+  }) : super(x, y, const<int, double> {
+    DynamicObjectType.Rock: 10,
+    DynamicObjectType.Tree: 7,
+    DynamicObjectType.Grass: 7,
+    DynamicObjectType.Pot: 12,
+    DynamicObjectType.Crate: 12,
+  }[type] ?? 10) {
     maxHealth = health;
   }
 }

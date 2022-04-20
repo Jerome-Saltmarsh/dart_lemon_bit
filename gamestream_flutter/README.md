@@ -102,11 +102,13 @@
 [ ] Destructible Chest
 [ ] Upgrade Panel    
 [ ] Destructible Rock
-[ ] Weapon Pickaxe
 [ ] Weapon Axe    
 [ ] Resources [Stone, Wood, Gold, Food]
 [ ] Fix Map Editor    
-[ ] FIX AI Pathfinding     
+[ ] FIX AI Pathfinding
+[ ] Footstep Audio    
+[x] Destroy Trees    
+[x] Weapon Pickaxe    
 [x] SlotType Pickaxe    
 [x] Render Dynamic Objects 3D    
 [x] Rock Destroyed Animation    

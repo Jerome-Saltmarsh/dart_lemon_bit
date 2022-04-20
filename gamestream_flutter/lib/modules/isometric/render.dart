@@ -278,6 +278,17 @@ class IsometricRender {
             srcHeight: 48
         );
         break;
+      case DynamicObjectType.Tree:
+        engine.renderCustom(
+            dstX: dynamicObject.x,
+            dstY: dynamicObject.y,
+            srcX: 2049,
+            srcY: shade * 96,
+            srcWidth: 96,
+            srcHeight: 96,
+            anchorY: 0.66,
+        );
+        break;
     }
   }
 

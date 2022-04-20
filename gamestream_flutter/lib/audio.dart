@@ -271,6 +271,14 @@ class _Audio {
   void rockBreaking(double x, double y) {
     _playPositioned('rock-breaking.mp3', x, y);
   }
+
+  void strikeWood(double x, double y) {
+    _playPositioned('rock-breaking.mp3', x, y);
+  }
+
+  void treeBreaking(double x, double y) {
+    _playPositioned('tree-breaking.mp3', x, y);
+  }
 }
 
 

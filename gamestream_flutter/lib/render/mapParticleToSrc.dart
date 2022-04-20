@@ -114,19 +114,28 @@ void mapParticleToSrc(Particle particle){
       return;
 
     case ParticleType.Rock:
-      switch(shade){
+      switch (shade) {
         case Shade.Bright:
-          engine.mapSrc(x: 49, y: 25, width: 7, height: 7);
-          break;
+          return engine.mapSrc(x: 49, y: 25, width: 7, height: 7);
         case Shade.Medium:
-          engine.mapSrc(x: 41, y: 25, width: 7, height: 7);
-          break;
+          return engine.mapSrc(x: 41, y: 25, width: 7, height: 7);
         case Shade.Dark:
-          engine.mapSrc(x: 9, y: 25, width: 7, height: 7);
-          break;
+          return engine.mapSrc(x: 9, y: 25, width: 7, height: 7);
         case Shade.Very_Dark:
-          engine.mapSrc(x: 1, y: 25, width: 7, height: 7);
-          break;
+          return engine.mapSrc(x: 1, y: 25, width: 7, height: 7);
+      }
+      return;
+
+    case ParticleType.Tree_Shard:
+      switch (shade) {
+        case Shade.Bright:
+          return engine.mapSrc(x: 281, y: 25, width: 7, height: 7);
+        case Shade.Medium:
+          return engine.mapSrc(x: 289, y: 17, width: 7, height: 7);
+        case Shade.Dark:
+          return engine.mapSrc(x: 289, y: 9, width: 7, height: 7);
+        case Shade.Very_Dark:
+          return engine.mapSrc(x: 289, y: 1 , width: 7, height: 7);
       }
 
       return;

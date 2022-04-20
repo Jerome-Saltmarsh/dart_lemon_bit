@@ -149,6 +149,18 @@ class Scene {
               )
           );
        }
+       if (env.type == ObjectType.Tree01) {
+         environment.removeAt(i);
+         i--;
+         dynamicObjects.add(
+             DynamicObject(
+                 type: DynamicObjectType.Tree,
+                 x: env.x,
+                 y: env.y,
+                 health: 10
+             )
+         );
+       }
     }
   }
 }

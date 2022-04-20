@@ -250,6 +250,7 @@ class GameEvents {
   }
 
   void onGameEvent(int type, double x, double y, double angle) {
+    print('game event $type');
     switch (type) {
       case GameEventType.Handgun_Fired:
         audio.handgunShot(x, y);
@@ -409,6 +410,26 @@ class GameEvents {
           isometric.spawn.rockShard(x, y);
         }
         audio.rockBreaking(x, y);
+        break;
+
+      case GameEventType.Rock_Struck:
+        for (var i = 0; i < 8; i++) {
+          isometric.spawn.rockShard(x, y);
+        }
+        audio.objectStruck(x, y);
+        break;
+      case GameEventType.Tree_Struck:
+        for (var i = 0; i < 8; i++) {
+          isometric.spawn.treeShard(x, y);
+        }
+        audio.objectStruck(x, y);
+        break;
+
+      case GameEventType.Tree_Destroyed:
+        for (var i = 0; i < 8; i++) {
+          isometric.spawn.treeShard(x, y);
+        }
+        audio.treeBreaking(x, y);
         break;
     }
   }

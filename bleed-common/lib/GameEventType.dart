@@ -34,4 +34,7 @@ class GameEventType {
   static const Pot_Destroyed = 32;
   static const Object_Struck = 33;
   static const Rock_Destroyed = 34;
+  static const Rock_Struck = 35;
+  static const Tree_Struck = 36;
+  static const Tree_Destroyed = 37;
 }
