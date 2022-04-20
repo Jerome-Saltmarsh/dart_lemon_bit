@@ -2,7 +2,6 @@ import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/give_or_take.dart';
 
 import 'classes/Character.dart';
-import 'maths.dart';
 
 const tileSize = 48.0;
 const halfTileSize = 24.0;
@@ -29,22 +28,22 @@ void setAngle(Character character, double value) {
   character.angle = value;
 }
 
-void characterFace(Character character, double x, double y) {
-  characterFaceAngle(character, radiansBetween2(character, x, y));
-}
+// void characterFace(Character character, double x, double y) {
+//   characterFaceAngle(character, radiansBetween2(character, x, y));
+// }
+//
+// void characterAimAt(Character character, double x, double y){
+//   characterFaceAngle(character, radiansBetween2(character, x, y));
+// }
+//
+// void characterFaceAngle(Character character, double angle){
+//   character.aimAngle = angle;
+//   setAngle(character, angle);
+// }
 
-void characterAimAt(Character character, double x, double y){
-  characterFaceAngle(character, radiansBetween2(character, x, y));
-}
-
-void characterFaceAngle(Character character, double angle){
-  character.aimAngle = angle;
-  setAngle(character, angle);
-}
-
-void characterFaceV2(Character character, Vector2 target) {
-  characterFace(character, target.x, target.y);
-}
+// void characterFaceV2(Character character, Vector2 target) {
+//   characterFace(character, target.x, target.y);
+// }
 
 double getShotAngle(Character character) {
   return character.aimAngle + giveOrTake(character.accuracy * 0.5);

@@ -13,7 +13,7 @@ class Collider extends Vector2 {
 
   void onCollisionWith(Collider other){ }
 
-  bool withinBounds(double x, double y) {
-    return getDistanceXY(x, y) <= radius;
+  bool withinBounds(Vector2 position) {
+    return getDistance(position) <= radius;
   }
 }

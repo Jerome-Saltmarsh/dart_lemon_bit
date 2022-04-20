@@ -30,7 +30,6 @@ import 'functions/withinRadius.dart';
 import 'games/Moba.dart';
 import 'games/world.dart';
 import 'settings.dart';
-import 'utilities.dart';
 
 const _space = " ";
 final _errorIndex = ServerResponse.Error;
@@ -347,7 +346,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 if (aimTarget != null) {
                   player.target = aimTarget;
                   if (withinRadius(player, aimTarget, SlotType.getRange(player.weapon))){
-                    characterFaceV2(player, aimTarget);
+                    player.face(aimTarget);
                     game.setCharacterStatePerforming(player);
                   }
                 } else {
@@ -398,7 +397,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               ability.cooldownRemaining = ability.cooldown;
               player.ability = null;
 
-              characterAimAt(player, mouseX, mouseY);
+              player.face(player.mouse);
               game.setCharacterState(player, CharacterState.Performing);
               break;
             case CharacterAction.Run:
@@ -870,7 +869,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (player.deadOrBusy) return;
           player.target = null;
           player.attackTarget = null;
-          characterFaceAngle(player, player.mouseAngle);
+          player.aimAngle = player.mouseAngle;
+          player.angle = player.mouseAngle;
           player.game.setCharacterStatePerforming(player);
           break;
 

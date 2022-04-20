@@ -498,13 +498,13 @@ extension GameFunctions on Game {
 
   void _characterAttack(Character character, Character target){
     if (!character.withinAttackRange(target)) return;
-    characterFaceV2(character, target);
+    character.face(target);
     setCharacterStatePerforming(character);
     character.attackTarget = target;
   }
 
   void _characterRunAt(Character character, Vector2 target){
-    characterFaceV2(character, target);
+    character.face(target);
     setCharacterState(character, CharacterState.Running);
   }
 
@@ -543,7 +543,7 @@ extension GameFunctions on Game {
         return;
       }
       // @on npc going to path
-      characterFace(ai, ai.destX, ai.destY);
+      ai.face(ai.dest);
       ai.state = CharacterState.Running;
       return;
     } else if (ai.mode == NpcMode.Aggressive && ai.idleDuration++ > 120){
@@ -814,7 +814,7 @@ extension GameFunctions on Game {
 
     final target = player.target;
     if (target == null) return;
-    characterFaceV2(player, target);
+    player.face(target);
 
     if (target is Collider){
       if (!target.collidable) {

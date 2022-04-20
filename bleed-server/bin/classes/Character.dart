@@ -30,8 +30,7 @@ class AI extends Character {
   final pathY = Float32List(maxAIPathLength);
   var mode = NpcMode.Aggressive;
   var _pathIndex = -1;
-  var destX = -1.0;
-  var destY = -1.0;
+  var dest = Vector2(-1, -1);
   var idleDuration = 0;
   dynamic target;
 
@@ -51,8 +50,8 @@ class AI extends Character {
       }
       return;
     }
-    destX = pathX[value];
-    destY = pathY[value];
+    dest.x = pathX[value];
+    dest.y = pathY[value];
   }
 
   void nextPath(){
@@ -61,8 +60,8 @@ class AI extends Character {
 
   bool get arrivedAtDest {
     const radius = 15;
-    if ((x - destX).abs() > radius) return false;
-    if ((y - destY).abs() > radius) return false;
+    if ((x - dest.x).abs() > radius) return false;
+    if ((y - dest.x).abs() > radius) return false;
     return true;
   }
 
@@ -96,7 +95,7 @@ class AI extends Character {
   void onCollisionWith(Collider other){
     if (_pathIndex < 0) return;
     rotateAround(other, 0.1);
-    if (!other.withinBounds(destX, destY)) return;
+    if (!other.withinBounds(dest)) return;
     nextPath();
   }
 }
@@ -196,6 +195,12 @@ class Character extends GameObject with Team, Health {
 
   bool withinAttackRange(Vector2 target){
     return withinRadius(this, target, weaponRange);
+  }
+
+  void face(Vector2 position){
+    if (deadOrBusy) return;
+    aimAngle =  getAngle(position);
+    angle = aimAngle;
   }
 }
 
