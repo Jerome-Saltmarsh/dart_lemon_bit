@@ -107,6 +107,7 @@
 [ ] Fix Map Editor    
 [ ] FIX AI Pathfinding
 [ ] Footstep Audio    
+[ ] Collect Rewards     
 [x] Destroy Trees    
 [x] Weapon Pickaxe    
 [x] SlotType Pickaxe    

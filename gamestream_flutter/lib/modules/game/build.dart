@@ -31,10 +31,6 @@ import 'state.dart';
 
 const empty = SizedBox();
 
-final _player = modules.game.state.player;
-
-
-
 class GameBuild {
 
   final GameState state;
@@ -183,7 +179,13 @@ class GameBuild {
                 left: _pad,
                 top: _pad,
                 child: WatchBuilder(state.debugPanelVisible, (bool visible){
-                  return visible ? buildDebugPanel() : ui.widgets.time;
+                  return visible ? buildDebugPanel() : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      buildVersion(),
+                      // ui.widgets.time,
+                    ],
+                  );
                 })),
             Positioned(
                 left: _pad,
