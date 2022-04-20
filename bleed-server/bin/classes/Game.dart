@@ -854,7 +854,7 @@ extension GameFunctions on Game {
       if (target != null) {
         if (withinRadius(projectile, target, 10.0)){
           handleProjectileHit(projectile, target);
-          return;
+          continue;
         }
       }
       for (var j = 0; j < collidersLength; j++) {
@@ -865,6 +865,7 @@ extension GameFunctions on Game {
         if (projectile.top > collider.bottom) continue;
         if (projectile.bottom < collider.top) continue;
         if (projectile.owner == collider) continue;
+        if (target != null && sameTeam(projectile, collider)) continue;
         handleProjectileHit(projectile, collider);
         break;
       }
