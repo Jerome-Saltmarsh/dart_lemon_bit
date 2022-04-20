@@ -71,7 +71,7 @@ abstract class Game {
   var countDownFramesRemaining = engine.framesPerSecond * 3;
   var disableCountDown = 0;
   late GameStatus status;
-  GameType gameType;
+  final GameType gameType;
   final String id = (_id++).toString();
   final Scene scene;
 
@@ -497,7 +497,7 @@ extension GameFunctions on Game {
   }
 
   void _characterAttack(Character character, Character target){
-    if (!targetWithinAttackRange(character, target)) return;
+    if (!character.withinAttackRange(target)) return;
     characterFaceV2(character, target);
     setCharacterStatePerforming(character);
     character.attackTarget = target;
@@ -519,7 +519,7 @@ extension GameFunctions on Game {
     final target = ai.target;
     if (target != null) {
       if (ai.type.isZombie) {
-        if (targetWithinAttackRange(ai, target)){
+        if (ai.withinAttackRange(target)){
           _characterAttack(ai, target);
           return;
         }
@@ -529,7 +529,7 @@ extension GameFunctions on Game {
           return;
         }
       } else { // not zombie
-        if (!targetWithinAttackRange(ai, target)) return;
+        if (!ai.withinAttackRange(target)) return;
         if (!isVisibleBetween(ai, target)) return;
         _characterAttack(ai, target);
         return;

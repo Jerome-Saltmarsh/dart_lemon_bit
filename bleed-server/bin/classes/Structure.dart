@@ -6,10 +6,11 @@ import 'package:lemon_math/Vector2.dart';
 import 'Character.dart';
 import 'Collider.dart';
 
-class Structure extends Collider with Team {
+class Structure extends Collider with Team, Health {
   var cooldown = 0;
   int attackRate;
   double range;
+
   Structure({
     required double x,
     required double y,

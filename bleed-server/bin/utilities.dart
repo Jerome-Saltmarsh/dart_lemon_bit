@@ -2,12 +2,10 @@ import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/give_or_take.dart';
 
 import 'classes/Character.dart';
-import 'classes/GameObject.dart';
-import 'functions/withinRadius.dart';
 import 'maths.dart';
 
-const double tileSize = 48.0;
-const double halfTileSize = 24;
+const tileSize = 48.0;
+const halfTileSize = 24.0;
 const secondsPerMinute = 60;
 const minutesPerHour = 60;
 
@@ -56,9 +54,9 @@ void faceAimDirection(Character character) {
   setAngle(character, character.aimAngle);
 }
 
-bool targetWithinAttackRange(Character character, GameObject target){
-  return withinRadius(character, target, character.weaponRange);
-}
+// bool targetWithinAttackRange(Character character, GameObject target){
+//   return withinRadius(character, target, character.weaponRange);
+// }
 
 Vector2 getTilePosition(int row, int column) {
   return Vector2(

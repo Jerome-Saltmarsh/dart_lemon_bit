@@ -105,10 +105,23 @@ mixin Team {
   var team = 0;
 }
 
-class Character extends GameObject with Team {
+mixin Health {
+  var _health = 1;
+  var maxHealth = 1;
+
+  bool get dead => _health <= 0;
+
+  bool get alive => _health > 0;
+
+  int get health => _health;
+
+  set health(int value) {
+    _health = clampInt(value, 0, maxHealth);
+  }
+}
+
+class Character extends GameObject with Team, Health {
   late CharacterType type;
-  late int _health;
-  late int maxHealth;
   late double _speed;
   Ability? ability = null;
   Ability? performing = null;
@@ -139,16 +152,6 @@ class Character extends GameObject with Team {
     return (_speed + speedModifier);
   }
 
-  int get health => _health;
-
-  set health(int value) {
-    _health = clampInt(value, 0, maxHealth);
-  }
-
-  bool get alive => state != CharacterState.Dead;
-
-  bool get dead => state == CharacterState.Dead;
-
   bool get running => state == CharacterState.Running;
 
   bool get idling => state == CharacterState.Idle;
@@ -171,7 +174,7 @@ class Character extends GameObject with Team {
     int team = Teams.none,
   }) : super(x, y, radius: settings.radius.character) {
     maxHealth = health;
-    _health = health;
+    this.health = health;
     _speed = speed;
     slots.weapon.type = weapon;
     this.team = team;
@@ -191,11 +194,9 @@ class Character extends GameObject with Team {
     yv *= velocityFriction;
   }
 
-  // void onCollisionWith(Collider other){
-  //    if (ai == null) return;
-  //    if (!other.withinBounds(ai!.destX, ai!.destY)) return;
-  //    ai!.stopPath();
-  // }
+  bool withinAttackRange(Vector2 target){
+    return withinRadius(this, target, weaponRange);
+  }
 }
 
 bool sameTeam(dynamic a, dynamic b){
