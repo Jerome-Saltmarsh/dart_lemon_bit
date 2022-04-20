@@ -129,7 +129,7 @@ class _ByteCompiler {
     writeByte(ServerResponse.Paths);
     final zombies = game.zombies;
     for (final zombie in zombies) {
-      if (!zombie.active) continue;
+      if (zombie.dead) continue;
       final pathIndex = zombie.pathIndex;
       if (pathIndex < 0) continue;
       writeBigInt(pathIndex + 1);

@@ -61,7 +61,7 @@ class AI extends Character {
   bool get arrivedAtDest {
     const radius = 15;
     if ((x - dest.x).abs() > radius) return false;
-    if ((y - dest.x).abs() > radius) return false;
+    if ((y - dest.y).abs() > radius) return false;
     return true;
   }
 
