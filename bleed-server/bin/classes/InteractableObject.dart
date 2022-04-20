@@ -1,7 +1,7 @@
-import 'GameObject.dart';
+import 'Collider.dart';
 import 'Player.dart';
 
-class InteractableObject extends GameObject {
+class InteractableObject extends Collider {
   Function(Player player) onInteractedWithBy;
 
   InteractableObject({
@@ -10,5 +10,5 @@ class InteractableObject extends GameObject {
     required double radius,
     required this.onInteractedWithBy
   })
-      : super(x, y, radius: radius);
+      : super(x: x, y: y, radius: radius);
 }

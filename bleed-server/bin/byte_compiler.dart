@@ -7,7 +7,6 @@ import 'package:lemon_math/angle.dart';
 
 import 'classes/Character.dart';
 import 'classes/Game.dart';
-import 'classes/GameObject.dart';
 import 'classes/Player.dart';
 import 'classes/Projectile.dart';
 import 'common/ServerResponse.dart';
@@ -155,7 +154,7 @@ class _ByteCompiler {
     writeByte(ServerResponse.Items);
     final items = player.game.items;
     for(final item in items){
-      if (item.inactive) continue;
+      if (!item.collidable) continue;
       if (item.left < player.screenLeft) continue;
       if (item.right > player.screenRight) continue;
       if (item.top < player.screenTop) continue;
@@ -233,7 +232,7 @@ class _ByteCompiler {
     writeByte(totalMinutes % 60);
   }
 
-  void writeTotalActive(List<GameObject> values){
+  void writeTotalActive(List<Active> values){
     var total = 0;
     for (final gameObject in values) {
       if (!gameObject.active) continue;

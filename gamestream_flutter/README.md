@@ -104,7 +104,7 @@
 [ ] Destructible Rock
 [ ] Weapon Axe    
 [ ] Resources [Stone, Wood, Gold, Food]
-[ ] Fix Map Editor    
+[ ] Fix Map Editor
 [ ] FIX AI Pathfinding
 [ ] Construct Menu    
 [ ] Footstep Audio    

@@ -40,7 +40,6 @@ import 'Collider.dart';
 import 'Crate.dart';
 import 'DynamicObject.dart';
 import 'EnvironmentObject.dart';
-import 'GameObject.dart';
 import 'InteractableNpc.dart';
 import 'Item.dart';
 import 'Player.dart';
@@ -207,9 +206,9 @@ abstract class Game {
       if (environmentObject.radius <= 0) continue;
       colliders.add(
         Collider(
-          environmentObject.x,
-          environmentObject.y,
-          environmentObject.radius
+          x: environmentObject.x,
+          y: environmentObject.y,
+          radius: environmentObject.radius
         )
       );
     }
@@ -694,13 +693,13 @@ extension GameFunctions on Game {
     setCharacterStateDead(character);
   }
 
-  bool overlapping(GameObject a, GameObject b) {
-    if (a.right < b.left) return false;
-    if (a.left > b.right) return false;
-    if (a.bottom < b.top) return false;
-    if (a.top > b.bottom) return false;
-    return true;
-  }
+  // bool overlapping(Collider a, Collider b) {
+  //   if (a.right < b.left) return false;
+  //   if (a.left > b.right) return false;
+  //   if (a.bottom < b.top) return false;
+  //   if (a.top > b.bottom) return false;
+  //   return true;
+  // }
 
   void deactivateProjectile(Projectile projectile) {
     if (!projectile.active) return;
@@ -729,7 +728,8 @@ extension GameFunctions on Game {
       projectile.y += projectile.yv;
       final target = projectile.target;
       if (target != null) {
-        setVelocityTowards(projectile, target, projectile.speed);
+        projectile.setVelocityTowards(target);
+
       } else if (projectile.overRange) {
         deactivateProjectile(projectile);
       }

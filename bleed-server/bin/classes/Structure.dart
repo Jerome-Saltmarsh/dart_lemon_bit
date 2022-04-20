@@ -17,7 +17,7 @@ class Structure extends Collider with Team, Health {
     required int team,
     required this.attackRate,
     this.attackRange = 200.0,
-  }) : super(x, y, 25) {
+  }) : super(x: x, y: y, radius: 25) {
     this.team = team;
   }
 

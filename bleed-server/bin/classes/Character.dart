@@ -17,6 +17,7 @@ import 'Collider.dart';
 import 'Game.dart';
 import 'GameObject.dart';
 import 'Player.dart';
+import 'Projectile.dart';
 
 const maxAIPathLength = 80;
 const maxAIPathLengthMinusOne = maxAIPathLength - 3;
@@ -119,14 +120,13 @@ mixin Health {
   }
 }
 
-class Character extends GameObject with Team, Health {
+class Character extends Collider with Team, Health, Velocity, Active {
   late CharacterType type;
   late double _speed;
   Ability? ability = null;
   Ability? performing = null;
   int state = CharacterState.Idle;
   double angle = 0;
-  // double aimAngle = 0;
   double accuracy = 0;
   int stateDurationRemaining = 0;
   int stateDuration = 0;
@@ -171,7 +171,7 @@ class Character extends GameObject with Team, Health {
     int weapon = SlotType.Empty,
     double speed = 3.0,
     int team = Teams.none,
-  }) : super(x, y, radius: settings.radius.character) {
+  }) : super(x: x, y: y, radius: settings.radius.character) {
     maxHealth = health;
     this.health = health;
     _speed = speed;

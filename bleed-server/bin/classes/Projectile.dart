@@ -6,7 +6,11 @@ import '../maths.dart';
 import 'Collider.dart';
 import 'GameObject.dart';
 
-class Projectile extends GameObject {
+mixin Active {
+  bool active = true;
+}
+
+class Projectile extends Collider with Active, Velocity {
   final start = Vector2(0, 0);
   late dynamic owner;
   late double range;
@@ -17,7 +21,7 @@ class Projectile extends GameObject {
   late bool collideWithEnvironment = false;
   double angle = 0;
 
-  Projectile() : super(0, 0, radius: 5);
+  Projectile() : super(x: 0, y: 0, radius: 5);
 
   bool get overRange {
     return distanceTravelled > range;
@@ -25,6 +29,12 @@ class Projectile extends GameObject {
 
   double get distanceTravelled {
     return getDistance(start);
+  }
+
+  void setVelocityTowards(Vector2 position){
+    angle = getAngle(position);
+    xv = adj(angle, speed);
+    yv = opp(angle, speed);
   }
 }
 

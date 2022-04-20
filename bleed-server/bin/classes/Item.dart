@@ -1,9 +1,9 @@
 
 import '../common/CommonSettings.dart';
 import '../settings.dart';
-import 'GameObject.dart';
+import 'Collider.dart';
 
-class Item extends GameObject {
+class Item extends Collider {
   int type;
   int duration = settings.itemDuration;
   bool timed;
@@ -13,6 +13,6 @@ class Item extends GameObject {
     required double x,
     required double y,
     bool this.timed = false
-  }) : super(x, y, radius: commonSettings.itemRadius);
+  }) : super(x: x, y: y, radius: commonSettings.itemRadius);
 }
 

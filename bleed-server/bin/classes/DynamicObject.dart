@@ -14,7 +14,7 @@ class DynamicObject extends Collider {
     required double x,
     required double y,
     required this.health,
-  }) : super(x, y, const<int, double> {
+  }) : super(x: x, y: y, radius: const<int, double> {
     DynamicObjectType.Rock: 10,
     DynamicObjectType.Tree: 7,
     DynamicObjectType.Grass: 7,

@@ -5,9 +5,7 @@ import 'package:lemon_math/distance_between.dart';
 
 import 'classes/Character.dart';
 import 'classes/Collider.dart';
-import 'classes/GameObject.dart';
 import 'functions.dart';
-import 'maths.dart';
 
 final physics = _Physics();
 
@@ -84,11 +82,4 @@ T? findClosestVector2<T extends Vector2>({
     closestDistance = colliderDistance;
   }
   return closest;
-}
-
-
-void setVelocityTowards(GameObject gameObject, Vector2 target, double speed){
-  final angle = radiansV2(gameObject, target);
-  gameObject.xv = adj(angle, speed);
-  gameObject.yv = opp(angle, speed);
 }
