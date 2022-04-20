@@ -110,7 +110,7 @@
 [ ] Footstep Audio    
 [ ] Collect Rewards 
 [ ] Zombies attack and destroy Structures    
-    
+[ ] Build Mode    
 [x] Destroy Trees    
 [x] Weapon Pickaxe    
 [x] SlotType Pickaxe    

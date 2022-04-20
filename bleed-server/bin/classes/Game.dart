@@ -331,11 +331,11 @@ extension GameFunctions on Game {
   void updateInProgress() {
     frame++;
 
-    if (frame % 15 == 0){
+    if (frame % 15 == 0) {
       updateInteractableNpcTargets();
       updateZombieTargets();
 
-      if (players.isEmpty){
+      if (players.isEmpty) {
         disableCountDown++;
       } else {
         disableCountDown = 0;
@@ -346,20 +346,20 @@ extension GameFunctions on Game {
       return;
     }
 
-    for (final dynamicObject in scene.dynamicObjects) {
+    final dynamicObjects = scene.dynamicObjects;
+    for (final dynamicObject in dynamicObjects) {
       if (dynamicObject.respawnDuration <= 0) continue;
       if (dynamicObject.respawnDuration-- > 1) continue;
       dynamicObject.collidable = true;
       dynamicObject.health = 3;
     }
-    
-    
+
     for (final structure in structures) {
       if (structure.cooldown > 0) {
         structure.cooldown--;
         continue;
       }
-      for(final zombie in zombies) {
+      for (final zombie in zombies) {
         if (zombie.dead) continue;
         if (sameTeam(structure, zombie)) continue;
         if (zombie.getDistance(structure) > 200) continue;
@@ -496,25 +496,21 @@ extension GameFunctions on Game {
     }
   }
 
-  void _characterAttack(Character character, Character target){
-    if (!character.withinAttackRange(target)) return;
+  void _characterAttack(Character character, Collider target){
+    assert (character.withinAttackRange(target));
+    assert (character.alive);
     character.face(target);
     setCharacterStatePerforming(character);
     character.attackTarget = target;
   }
 
-  void _characterRunAt(Character character, Vector2 target){
+  void _characterRunAt(Character character, Vector2 target) {
     character.face(target);
     setCharacterState(character, CharacterState.Running);
   }
 
-  int get someNumber {
-    return 5;
-  }
-
-  void _updateCharacterAI(AI ai) {
+  void updateAI(AI ai) {
     if (ai.deadOrBusy) return;
-    if (ai.inactive) return;
 
     final target = ai.target;
     if (target != null) {
@@ -1000,7 +996,7 @@ extension GameFunctions on Game {
     if (!character.active) return;
 
     if (character is AI){
-      _updateCharacterAI(character);
+      updateAI(character);
     }
     character.updateMovement();
 

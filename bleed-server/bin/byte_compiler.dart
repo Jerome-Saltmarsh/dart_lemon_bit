@@ -352,7 +352,6 @@ class _ByteCompiler {
     _index += 2;
   }
 
-
   void writeByte(int value){
     assert(value <= 256);
     assert(value >= 0);

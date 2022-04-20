@@ -194,6 +194,9 @@ class Character extends GameObject with Team, Health {
   }
 
   bool withinAttackRange(Vector2 target){
+    if (target is Collider){
+      return withinRadius(this, target, weaponRange + (target.radius * 0.5));
+    }
     return withinRadius(this, target, weaponRange);
   }
 
