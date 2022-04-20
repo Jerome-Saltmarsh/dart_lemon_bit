@@ -67,6 +67,14 @@ class GameRender {
     }
 
 
+    for (var i = 0; i < game.totalPlayers.value; i++){
+       final player = game.players[i];
+
+       // if (player.state == stateRunning){
+       //
+       // }
+    }
+
     // renderDynamicObjects();
 
     for(var i = 0; i < game.totalStructures; i++){

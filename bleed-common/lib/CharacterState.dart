@@ -1,7 +1,8 @@
-const stateIdle = 0;
-const stateRunning = 1;
-const stateDead = 2;
-const stateChanging = 3;
-const statePerforming = 4;
-const stateHurt = 5;
-
+class CharacterState {
+  static const Idle = 0;
+  static const Running = 1;
+  static const Dead = 2;
+  static const Changing = 3;
+  static const Performing = 4;
+  static const Hurt = 5;
+}

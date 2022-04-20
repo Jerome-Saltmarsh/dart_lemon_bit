@@ -417,7 +417,7 @@ class IsometricRender {
   double mapZombieSrcX(Character character, int shade){
     switch(character.state){
 
-      case stateRunning:
+      case CharacterState.Running:
         const frames = [3, 4, 5, 6];
         return loop4(
             animation: frames,
@@ -425,21 +425,21 @@ class IsometricRender {
             framesPerDirection: _framesPerDirectionZombie
         );
 
-      case stateIdle:
+      case CharacterState.Idle:
         return single(
             frame: 1,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionZombie
         );
 
-      case stateHurt:
+      case CharacterState.Hurt:
         return single(
             frame: 2,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionZombie
         );
 
-      case statePerforming:
+      case CharacterState.Performing:
         return animate(
             animation: animations.zombie.striking,
             character: character,
@@ -577,7 +577,7 @@ class IsometricRender {
     final variation = weapon == SlotType.Shotgun || SlotType.isBow(weapon);
 
     switch(character.state) {
-      case stateRunning:
+      case CharacterState.Running:
         const frames1 = [12, 13, 14, 15];
         const frames2 = [16, 17, 18, 19];
         return loop4(
@@ -587,7 +587,7 @@ class IsometricRender {
             framesPerDirection: _framesPerDirectionHuman
         );
 
-      case stateIdle:
+      case CharacterState.Idle:
         return single(
             size: size,
             frame: variation ? 1 : 2,
@@ -595,7 +595,7 @@ class IsometricRender {
             framesPerDirection: _framesPerDirectionHuman
         );
 
-      case stateHurt:
+      case CharacterState.Hurt:
         return single(
             size: size,
             frame: 3,
@@ -603,7 +603,7 @@ class IsometricRender {
             framesPerDirection: _framesPerDirectionHuman
         );
 
-      case stateChanging:
+      case CharacterState.Changing:
         return single(
             size: size,
             frame: 4,
@@ -611,7 +611,7 @@ class IsometricRender {
             framesPerDirection: _framesPerDirectionHuman
         );
 
-      case statePerforming:
+      case CharacterState.Performing:
         final weapon = character.equippedWeapon;
         return animate(
             size: size,

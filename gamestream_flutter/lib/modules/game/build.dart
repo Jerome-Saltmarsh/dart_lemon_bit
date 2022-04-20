@@ -76,7 +76,7 @@ class GameBuild {
         }));
   }
 
-  Widget _magicBar() {
+  Widget buildMagicBar() {
     final width = 280.0;
     final height = width *
         goldenRatio_0381 *
@@ -116,7 +116,7 @@ class GameBuild {
     });
   }
 
-  Widget _healthBar() {
+  Widget buildHealthBar() {
     final width = 280.0;
     final height = width *
         goldenRatio_0381 *
@@ -171,8 +171,8 @@ class GameBuild {
             if (alive)
             bottomCenter(child: Column(
               children: [
-                _magicBar(),
-                _healthBar(),
+                // buildMagicBar(),
+                buildHealthBar(),
               ],
             ), padding: _pad),
             Positioned(

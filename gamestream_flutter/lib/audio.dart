@@ -137,7 +137,7 @@ class _Audio {
   }
 
   void cockShotgun(double x, double y) {
-    audio._playPositioned('cock-shotgun-03.mp3', x, y);
+    _playPositioned('cock-shotgun-03.mp3', x, y);
   }
 
   void maleScream(double x, double y) {
@@ -145,15 +145,15 @@ class _Audio {
   }
 
   void magIn2(double x, double y) {
-    audio._playPositioned('mag-in-02.mp3', x, y);
+    _playPositioned('mag-in-02.mp3', x, y);
   }
 
   void footstep(double x, double y) {
-    audio._playPositioned('footstep.mp3', x, y);
+    _playPositioned('footstep.mp3', x, y);
   }
 
   void dryShot2(double x, double y) {
-    audio._playPositioned('dry-shot-02.mp3', x, y);
+    _playPositioned('dry-shot-02.mp3', x, y);
   }
 
   void zombieBite(double x, double y) {

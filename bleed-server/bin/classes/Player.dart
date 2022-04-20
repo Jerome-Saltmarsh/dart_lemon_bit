@@ -25,7 +25,7 @@ class Player extends Character {
   final orbs = Orbs();
   var score = 0;
   var sceneChanged = false;
-  var characterState = stateIdle;
+  var characterState = CharacterState.Idle;
   Account? account;
   /// How many frames have elapsed since the server received a message from this client
   int lastUpdateFrame = 0;
@@ -114,7 +114,7 @@ class Player extends Character {
 
   void setStateChangingWeapons(){
     onPlayerEvent(PlayerEvent.Item_Equipped); // TODO
-    game.setCharacterState(this, stateChanging);
+    game.setCharacterState(this, CharacterState.Changing);
   }
 
   void unequip(SlotTypeCategory slotTypeCategory){

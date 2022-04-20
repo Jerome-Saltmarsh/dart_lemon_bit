@@ -40,14 +40,14 @@ class AI extends Character {
   void stopPath(){
     if (deadOrBusy) return;
     _pathIndex = -1;
-    state = stateIdle;
+    state = CharacterState.Idle;
   }
 
   set pathIndex(int value){
     _pathIndex = value;
     if (value < 0) {
       if (alive) {
-        state = stateIdle;
+        state = CharacterState.Idle;
       }
       return;
     }
@@ -112,7 +112,7 @@ class Character extends GameObject with Team {
   late double _speed;
   Ability? ability = null;
   Ability? performing = null;
-  int state = stateIdle;
+  int state = CharacterState.Idle;
   double angle = 0;
   double aimAngle = 0;
   double accuracy = 0;
@@ -145,13 +145,13 @@ class Character extends GameObject with Team {
     _health = clampInt(value, 0, maxHealth);
   }
 
-  bool get alive => state != stateDead;
+  bool get alive => state != CharacterState.Dead;
 
-  bool get dead => state == stateDead;
+  bool get dead => state == CharacterState.Dead;
 
-  bool get running => state == stateRunning;
+  bool get running => state == CharacterState.Running;
 
-  bool get idling => state == stateIdle;
+  bool get idling => state == CharacterState.Idle;
 
   bool get busy => stateDurationRemaining > 0;
 

@@ -335,7 +335,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           switch (args[1]) {
             case CharacterAction.Idle:
               if (player.target == null){
-                game.setCharacterState(player, stateIdle);
+                game.setCharacterState(player, CharacterState.Idle);
               }
               break;
             case CharacterAction.Perform:
@@ -399,7 +399,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               player.ability = null;
 
               characterAimAt(player, mouseX, mouseY);
-              game.setCharacterState(player, statePerforming);
+              game.setCharacterState(player, CharacterState.Performing);
               break;
             case CharacterAction.Run:
               player.angle =  args[6] * 0.78539816339; // 0.78539816339 == pi / 4

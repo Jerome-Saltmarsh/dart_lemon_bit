@@ -251,7 +251,6 @@ class IsometricModule {
     }
   }
 
-
   void emitLightLow(List<List<int>> shader, double x, double y) {
     final column = getColumn(x, y);
     if (column < 0) return;
@@ -367,7 +366,6 @@ class IsometricModule {
   }
 
   void applyEnvironmentObjectsToBakeMapping(){
-    // print("isometric.actions.applyEnvironmentObjectsToBakeMapping()");
     for (final env in environmentObjects){
       final type = env.type;
       if (type == ObjectType.Torch){
@@ -387,7 +385,6 @@ class IsometricModule {
 
 
   void resetBakeMap(){
-    // print("isometric.actions.resetBakeMap()");
     refreshAmbientLight();
     final ambient = this.ambient.value;
     final rows = this.totalRows.value;
@@ -404,7 +401,6 @@ class IsometricModule {
   }
 
   void resetDynamicMap(){
-    print("isometric.actions.resetDynamicMap()");
     final rows = this.totalRows.value;
     final columns = this.totalColumns.value;
     final ambient = this.ambient.value;
@@ -418,7 +414,7 @@ class IsometricModule {
     }
   }
 
-
+  // TODO Optimize
   void resetDynamicShadesToBakeMap() {
     for (var row = minRow; row < maxRow; row++) {
       final dynamicRow = dynamic[row];
@@ -431,7 +427,6 @@ class IsometricModule {
 
   /// Expensive method
   void resetLighting(){
-    print("isometric.actions.resetLighting()");
     refreshTileSize();
     resetBakeMap();
     resetDynamicMap();
@@ -439,10 +434,7 @@ class IsometricModule {
     applyDynamicShadeToTileSrc();
   }
 
-
-
   void updateTileRender(){
-    // print("actions.updateTileRender()");
     resetTilesSrcDst();
     resetLighting();
   }

@@ -187,7 +187,7 @@ class GameEvents {
 
   // TODO Remove
   void onPlayerCharacterStateChanged(int characterState){
-    modules.game.state.player.alive.value = characterState != stateDead;
+    modules.game.state.player.alive.value = characterState != CharacterState.Dead;
   }
 
   void _onPlayerAliveChanged(bool value) {
@@ -250,7 +250,6 @@ class GameEvents {
   }
 
   void onGameEvent(int type, double x, double y, double angle) {
-    print('game event $type');
     switch (type) {
       case GameEventType.Handgun_Fired:
         audio.handgunShot(x, y);
