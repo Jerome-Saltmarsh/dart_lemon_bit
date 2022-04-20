@@ -106,8 +106,9 @@
 [ ] Resources [Stone, Wood, Gold, Food]
 [ ] Fix Map Editor    
 [ ] FIX AI Pathfinding
+[ ] Construct Menu    
 [ ] Footstep Audio    
-[ ] Collect Rewards     
+[ ] Collect Rewards 
 [x] Destroy Trees    
 [x] Weapon Pickaxe    
 [x] SlotType Pickaxe    

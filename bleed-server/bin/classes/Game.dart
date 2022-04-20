@@ -50,20 +50,6 @@ import 'SpawnPoint.dart';
 import 'Structure.dart';
 import 'TileNode.dart';
 
-
-class Teams {
-  static const none = 0;
-  static const west = 1;
-  static const east = 2;
-}
-
-// constants
-const castFrame = 3;
-const tileCollisionResolve = 3;
-const framePerformStrike = 10;
-const _aiWanderPauseDuration = 120;
-
-// This should be OpenWorldScene
 abstract class Game {
   final structures = <Structure>[];
   final colliders = <Collider>[];
@@ -79,8 +65,6 @@ abstract class Game {
   var frame = 0;
   var teamSize = 1;
   var numberOfTeams = 2;
-  var cratesDirty = false;
-  var spawnPointIndex = 0;
   var compiledTiles = "";
   var compiledEnvironmentObjects = "";
   var debugMode = false;
@@ -92,6 +76,7 @@ abstract class Game {
   final Scene scene;
 
   static int _id = 0;
+
 
   List<DynamicObject> get dynamicObjects => scene.dynamicObjects;
 
@@ -561,7 +546,7 @@ extension GameFunctions on Game {
       characterFace(ai, ai.destX, ai.destY);
       ai.state = CharacterState.Running;
       return;
-    } else if (ai.mode == NpcMode.Aggressive && ai.idleDuration++ > _aiWanderPauseDuration){
+    } else if (ai.mode == NpcMode.Aggressive && ai.idleDuration++ > 120){
       ai.idleDuration = 0;
       npcSetRandomDestination(ai);
     }
@@ -928,6 +913,7 @@ extension GameFunctions on Game {
   }
 
   void updateCharacterStatePerforming(Character character) {
+    const castFrame = 3;
     final ability = character.performing;
     if (ability == null) {
       updateCharacterStateAttacking(character);
@@ -1046,6 +1032,7 @@ extension GameFunctions on Game {
   }
 
   void updateCharacterTileCollision(Character character) {
+    const tileCollisionResolve = 3;
     if (!scene.tileWalkableAt(character.left, character.y)) {
       character.x += tileCollisionResolve;
     } else if (!scene.tileWalkableAt(character.right, character.y)){
@@ -1429,6 +1416,7 @@ extension GameFunctions on Game {
   }
 
   void updateCharacterStateAttacking(Character character) {
+    const framePerformStrike = 10;
     final stateDuration = character.stateDuration;
 
     if (character.type == CharacterType.Zombie) {
@@ -1620,3 +1608,9 @@ class CustomGame extends Game {
 }
 
 class ZombieSpawnPointsEmptyException implements Exception {}
+
+class Teams {
+  static const none = 0;
+  static const west = 1;
+  static const east = 2;
+}
