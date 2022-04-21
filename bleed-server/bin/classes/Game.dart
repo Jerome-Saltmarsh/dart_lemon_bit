@@ -47,6 +47,7 @@ import 'Scene.dart';
 import 'SpawnPoint.dart';
 import 'Structure.dart';
 import 'TileNode.dart';
+import 'components.dart';
 
 abstract class Game {
   final structures = <Structure>[];
@@ -75,7 +76,6 @@ abstract class Game {
 
   static int _id = 0;
 
-
   List<DynamicObject> get dynamicObjects => scene.dynamicObjects;
 
   bool get countingDown => status == GameStatus.Counting_Down;
@@ -95,13 +95,9 @@ abstract class Game {
     countDownFramesRemaining = 0;
   }
 
-  void onCharacterKilled(Character killed, dynamic by){
+  void onCharacterKilled(Character killed, dynamic by) {}
 
-  }
-
-  void onDynamicObjectDestroyed(DynamicObject dynamicObject){
-
-  }
+  void onDynamicObjectDestroyed(DynamicObject dynamicObject) {}
 
   /// In seconds
   int getTime();
@@ -139,7 +135,7 @@ abstract class Game {
     player.sceneChanged = true;
   }
 
-  int countAlive(List<Character> characters){
+  int countAlive(List<Character> characters) {
     var total = 0;
     for (final character in characters) {
       if (character.alive) total++;
@@ -167,11 +163,10 @@ abstract class Game {
   //   return empty;
   // }
 
-  Game(this.scene, {
-      this.gameType = GameType.MMO,
+  Game(this.scene,
+      {this.gameType = GameType.MMO,
       this.shadeMax = Shade.Bright,
-      this.status = GameStatus.In_Progress
-  }) {
+      this.status = GameStatus.In_Progress}) {
     this.crates.clear();
     engine.onGameCreated(this);
 
@@ -182,39 +177,38 @@ abstract class Game {
     for (final character in scene.characters) {
       if (character.type == CharacterType.Zombie) {
         zombies.add(AI(
-            type: CharacterType.Zombie,
-            x: character.x,
-            y: character.y,
-            health: 100,
-            mode: NpcMode.Aggressive,
-            weapon: SlotType.Empty,
-            ));
+          type: CharacterType.Zombie,
+          x: character.x,
+          y: character.y,
+          health: 100,
+          mode: NpcMode.Aggressive,
+          weapon: SlotType.Empty,
+        ));
       } else {
         npcs.add(InteractableNpc(
-            name: "Bob",
-            onInteractedWith: (Player player) {},
-            x: character.x,
-            y: character.y,
-            health: 100,
-            weapon: SlotType.Empty,
+          name: "Bob",
+          onInteractedWith: (Player player) {},
+          x: character.x,
+          y: character.y,
+          health: 100,
+          weapon: SlotType.Empty,
         ));
       }
     }
 
     for (final environmentObject in scene.environment) {
       if (environmentObject.radius <= 0) continue;
-      colliders.add(
-        Collider(
+      colliders.add(Collider(
           x: environmentObject.x,
           y: environmentObject.y,
-          radius: environmentObject.radius
-        )
-      );
+          radius: environmentObject.radius));
     }
 
     for (var rowIndex = 0; rowIndex < scene.numberOfRows; rowIndex++) {
       final row = scene.tiles[rowIndex];
-      for (var columnIndex = 0; columnIndex < scene.numberOfColumns; columnIndex++) {
+      for (var columnIndex = 0;
+          columnIndex < scene.numberOfColumns;
+          columnIndex++) {
         switch (row[columnIndex]) {
           case Tile.Zombie_Spawn:
             zombieSpawnPoints.add(getTilePosition(rowIndex, columnIndex));
@@ -244,7 +238,8 @@ abstract class Game {
     }
   }
 
-  void checkColliderCollision(List<Collider> collidersA, List<Collider> collidersB) {
+  void checkColliderCollision(
+      List<Collider> collidersA, List<Collider> collidersB) {
     final totalColliders = collidersB.length;
     for (final a in collidersA) {
       if (!a.collidable) continue;
@@ -292,39 +287,42 @@ extension GameFunctions on Game {
         colliders: characters,
         x: x,
         y: y,
-        predicate: (other) => other.dead || sameTeam(other, character)
-    );
+        predicate: (other) => other.dead || sameTeam(other, character));
   }
 
-  DynamicObject? getClosestDynamicObject(double x, double y){
+  DynamicObject? getClosestDynamicObject(double x, double y) {
     return findClosestVector2(
         colliders: scene.dynamicObjects,
         x: x,
         y: y,
-        predicate: (other) => !other.collidable
-    );
+        predicate: (other) => !other.collidable);
   }
 
   Collider? getClosestEnemyCollider(double x, double y, Character character) {
-    final zombie = getClosestEnemy(x: x, y: y, character: character, characters: zombies);
-    final player = getClosestEnemy(x: x, y: y, character: character, characters: players);
+    final zombie =
+        getClosestEnemy(x: x, y: y, character: character, characters: zombies);
+    final player =
+        getClosestEnemy(x: x, y: y, character: character, characters: players);
     final dynamicObject = getClosestDynamicObject(x, y);
-    final zombieDistance = zombie != null ? distanceBetween(x, y, zombie.x, zombie.y) : 99999;
-    final playerDistance =  player != null ? distanceBetween(x, y, player.x, player.y) : 99999;
-    final dynamicDistance = dynamicObject != null ? distanceBetween(x, y, dynamicObject.x, dynamicObject.y) : 99999;
+    final zombieDistance =
+        zombie != null ? distanceBetween(x, y, zombie.x, zombie.y) : 99999;
+    final playerDistance =
+        player != null ? distanceBetween(x, y, player.x, player.y) : 99999;
+    final dynamicDistance = dynamicObject != null
+        ? distanceBetween(x, y, dynamicObject.x, dynamicObject.y)
+        : 99999;
 
     if (zombieDistance < playerDistance) {
-       if (zombieDistance < dynamicDistance) {
-         return zombie;
-       }
-       return dynamicObject;
+      if (zombieDistance < dynamicDistance) {
+        return zombie;
+      }
+      return dynamicObject;
     }
     if (playerDistance < dynamicDistance) {
       return player;
     }
     return dynamicObject;
   }
-
 
   void updateInProgress() {
     frame++;
@@ -380,8 +378,7 @@ extension GameFunctions on Game {
 
   void updateFrames(List<Character> character) {
     for (final character in character) {
-      character.animationFrame =
-          (character.animationFrame + 1) % 8;
+      character.animationFrame = (character.animationFrame + 1) % 8;
     }
   }
 
@@ -404,47 +401,40 @@ extension GameFunctions on Game {
     return true;
   }
 
-  void applyDamage(dynamic src, Collider target, int amount) {
-    if (target is Character) {
-      if (target.dead) return;
-      if (target.invincible) return;
-      changeCharacterHealth(target, -amount);
+  void applyDamage(dynamic src, Health target, int amount) {
+    if (target.dead) return;
+    target.health -= amount;
+    final killed = target.dead;
 
-      if (target.alive) {
-        if (target.type.isZombie){
-          setCharacterState(target, CharacterState.Hurt);
-        }
-        if (target is AI) {
-          final targetAITarget = target.target;
-          if (targetAITarget == null) {
-            target.target = src;
-          } else {
-            final aiTargetDistance = distanceV2(target, targetAITarget);
-            final srcTargetDistance = distanceV2(src, target);
-            if (srcTargetDistance < aiTargetDistance){
-              target.target = src;
-            }
-          }
-        }
+    if (target is Character) {
+      if (killed) {
+        onCharacterKilled(target, src);
+        setCharacterStateDead(target);
         return;
       }
-
-      onCharacterKilled(target, src);
-
-
-      if (target is AI == false) {
-        target.active = false;
+      if (target.type.isZombie) {
+        setCharacterState(target, CharacterState.Hurt);
       }
-      if (target.alive && target is AI) {
-        if (target.target == null) {
+      if (target is AI) {
+        final targetAITarget = target.target;
+        if (targetAITarget == null) {
+          target.target = src;
+          return;
+        }
+        final aiTargetDistance = distanceV2(target, targetAITarget);
+        final srcTargetDistance = distanceV2(src, target);
+        if (srcTargetDistance < aiTargetDistance) {
           target.target = src;
         }
       }
       return;
     }
 
+    if (killed && target is Structure) {
+      target.collidable = false;
+    }
+
     if (target is DynamicObject) {
-      target.health -= amount;
 
       switch (target.type) {
         case DynamicObjectType.Rock:
@@ -455,22 +445,17 @@ extension GameFunctions on Game {
           break;
       }
 
-      if (target.health <= 0) {
+      if (killed) {
         target.collidable = false;
         target.respawnDuration = 150;
         if (target.type == DynamicObjectType.Pot) {
           dispatchV2(GameEventType.Pot_Destroyed, target);
-        }
-        else
-        if (target.type == DynamicObjectType.Rock) {
+        } else if (target.type == DynamicObjectType.Rock) {
           dispatchV2(GameEventType.Rock_Destroyed, target);
-        }
-        else
-        if (target.type == DynamicObjectType.Tree) {
+        } else if (target.type == DynamicObjectType.Tree) {
           dispatchV2(GameEventType.Tree_Destroyed, target);
         }
         onDynamicObjectDestroyed(target);
-        return;
       }
     }
   }
@@ -494,9 +479,9 @@ extension GameFunctions on Game {
     }
   }
 
-  void _characterAttack(Character character, Collider target){
-    assert (character.withinAttackRange(target));
-    assert (character.alive);
+  void _characterAttack(Character character, Collider target) {
+    assert(character.withinAttackRange(target));
+    assert(character.alive);
     character.face(target);
     setCharacterStatePerforming(character);
     character.attackTarget = target;
@@ -513,7 +498,7 @@ extension GameFunctions on Game {
     final target = ai.target;
     if (target != null) {
       if (ai.type.isZombie) {
-        if (ai.withinAttackRange(target)){
+        if (ai.withinAttackRange(target)) {
           _characterAttack(ai, target);
           return;
         }
@@ -522,14 +507,14 @@ extension GameFunctions on Game {
           _characterRunAt(ai, target);
           return;
         }
-      } else { // not zombie
+      } else {
+        // not zombie
         if (!ai.withinAttackRange(target)) return;
         if (!isVisibleBetween(ai, target)) return;
         _characterAttack(ai, target);
         return;
       }
     }
-
 
     if (ai.pathIndex >= 0) {
       if (ai.arrivedAtDest) {
@@ -540,7 +525,7 @@ extension GameFunctions on Game {
       ai.face(ai.dest);
       ai.state = CharacterState.Running;
       return;
-    } else if (ai.mode == NpcMode.Aggressive && ai.idleDuration++ > 120){
+    } else if (ai.mode == NpcMode.Aggressive && ai.idleDuration++ > 120) {
       ai.idleDuration = 0;
       npcSetRandomDestination(ai);
     }
@@ -549,7 +534,6 @@ extension GameFunctions on Game {
   }
 
   void _updatePlayersAndNpcs() {
-
     final playersLength = players.length;
     for (var i = 0; i < playersLength; i++) {
       final player = players[i];
@@ -599,7 +583,7 @@ extension GameFunctions on Game {
     character.state = CharacterState.Dead;
     character.collidable = false;
 
-    if (character is AI){
+    if (character is AI) {
       character.target = null;
       character.pathIndex = -1;
     }
@@ -625,7 +609,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void setCharacterStatePerforming(Character character){
+  void setCharacterStatePerforming(Character character) {
     character.performing = character.ability;
     character.ability = null;
     setCharacterState(character, CharacterState.Performing);
@@ -637,7 +621,7 @@ extension GameFunctions on Game {
     if (character.dead) return;
     if (character.state == value) return;
 
-    if (value == CharacterState.Dead){
+    if (value == CharacterState.Dead) {
       setCharacterStateDead(character);
       return;
     }
@@ -662,7 +646,8 @@ extension GameFunctions on Game {
         if (character is Player) {
           final ability = character.performing;
           if (ability == null) {
-            character.stateDurationRemaining = SlotType.getDuration(character.slots.weapon.type);
+            character.stateDurationRemaining =
+                SlotType.getDuration(character.slots.weapon.type);
             break;
           }
           if (character.magic < ability.cost) {
@@ -692,14 +677,6 @@ extension GameFunctions on Game {
     setCharacterStateDead(character);
   }
 
-  // bool overlapping(Collider a, Collider b) {
-  //   if (a.right < b.left) return false;
-  //   if (a.left > b.right) return false;
-  //   if (a.bottom < b.top) return false;
-  //   if (a.top > b.bottom) return false;
-  //   return true;
-  // }
-
   void deactivateProjectile(Projectile projectile) {
     if (!projectile.active) return;
     projectile.active = false;
@@ -728,7 +705,6 @@ extension GameFunctions on Game {
       final target = projectile.target;
       if (target != null) {
         projectile.setVelocityTowards(target);
-
       } else if (projectile.overRange) {
         deactivateProjectile(projectile);
       }
@@ -749,7 +725,8 @@ extension GameFunctions on Game {
     checkProjectileCollision(dynamicObjects);
   }
 
-  void spawnFreezeRing({required Character src, int duration = 100, int damage = 1}){
+  void spawnFreezeRing(
+      {required Character src, int duration = 100, int damage = 1}) {
     dispatchV2(GameEventType.FreezeCircle, src);
     for (final zombie in zombies) {
       if (zombie.dead) continue;
@@ -759,11 +736,8 @@ extension GameFunctions on Game {
     }
   }
 
-  void spawnExplosion({
-    required Character src,
-    required double x,
-    required double y
-  }) {
+  void spawnExplosion(
+      {required Character src, required double x, required double y}) {
     dispatch(GameEventType.Explosion, x, y);
     for (final zombie in zombies) {
       if (!withinDistance(zombie, x, y, settings.radius.explosion)) continue;
@@ -803,7 +777,7 @@ extension GameFunctions on Game {
     }
 
     final aimTarget = player.aimTarget;
-    if (aimTarget is Character && aimTarget.dead){
+    if (aimTarget is Character && aimTarget.dead) {
       player.aimTarget = null;
     }
 
@@ -811,7 +785,7 @@ extension GameFunctions on Game {
     if (target == null) return;
     player.face(target);
 
-    if (target is Collider){
+    if (target is Collider) {
       if (!target.collidable) {
         player.target = null;
         return;
@@ -819,15 +793,15 @@ extension GameFunctions on Game {
 
       final ability = player.ability;
 
-      if (ability != null){
-         if (withinRadius(player, target, ability.range)) {
-           player.attackTarget = target;
-           setCharacterStatePerforming(player);
-           player.target = null;
-           return;
-         }
-         setCharacterStateRunning(player);
-         return;
+      if (ability != null) {
+        if (withinRadius(player, target, ability.range)) {
+          player.attackTarget = target;
+          setCharacterStatePerforming(player);
+          player.target = null;
+          return;
+        }
+        setCharacterStateRunning(player);
+        return;
       }
 
       if (withinAttackRadius(player, target)) {
@@ -836,9 +810,9 @@ extension GameFunctions on Game {
         player.target = null;
         return;
       }
-    } else if (withinRadius(player, target, player.speed)){
-        player.target = null;
-        return;
+    } else if (withinRadius(player, target, player.speed)) {
+      player.target = null;
+      return;
     }
     setCharacterStateRunning(player);
   }
@@ -851,7 +825,7 @@ extension GameFunctions on Game {
       if (!projectile.active) continue;
       final target = projectile.target;
       if (target != null) {
-        if (withinRadius(projectile, target, 10.0)){
+        if (withinRadius(projectile, target, 10.0)) {
           handleProjectileHit(projectile, target);
           continue;
         }
@@ -884,23 +858,22 @@ extension GameFunctions on Game {
       if (target.dead) return;
     }
 
-    applyDamage(src, target, damage);
+    if (target is Health) {
+      applyDamage(src, target as Health, damage);
+    }
+
     final angleBetweenSrcAndTarget = radiansV2(src, target);
     if (target is Character) {
       const forceMultiplier = 3.0;
-      target.applyForce(angleBetweenSrcAndTarget, damage / target.maxHealth * forceMultiplier);
-      dispatch(
-          GameEventType.Character_Struck,
-          target.x,
-          target.y,
-          angleBetweenSrcAndTarget
-      );
-      if (target.dead && target.type.isZombie){
-        dispatch(
-            GameEventType.Zombie_Killed,
-            target.x,
-            target.y,
-            angleBetweenSrcAndTarget,
+      target.applyForce(angleBetweenSrcAndTarget,
+          damage / target.maxHealth * forceMultiplier);
+      dispatchV2(GameEventType.Character_Struck, target,
+          angle: angleBetweenSrcAndTarget);
+      if (target.dead && target.type.isZombie) {
+        dispatchV2(
+          GameEventType.Zombie_Killed,
+          target,
+          angle: angleBetweenSrcAndTarget,
         );
       }
       return;
@@ -961,7 +934,9 @@ extension GameFunctions on Game {
       case AbilityType.Long_Shot:
         if (character.stateDurationRemaining == castFrame) {
           final int damageMultiplier = 3;
-          spawnArrow(character, damage: SlotType.getDamage(character.weapon) * damageMultiplier)
+          spawnArrow(character,
+                  damage:
+                      SlotType.getDamage(character.weapon) * damageMultiplier)
               .range = ability.range;
           character.attackTarget = null;
           character.performing = null;
@@ -976,11 +951,8 @@ extension GameFunctions on Game {
         if (character.stateDurationRemaining == castFrame) {
           final attackTarget = character.attackTarget;
           if (attackTarget != null) {
-            applyHit(
-                character,
-                attackTarget,
-                SlotType.getDamage(character.weapon) * damageMultiplier
-            );
+            applyHit(character, attackTarget,
+                SlotType.getDamage(character.weapon) * damageMultiplier);
           }
           character.attackTarget = null;
           character.performing = null;
@@ -992,14 +964,12 @@ extension GameFunctions on Game {
   }
 
   void updateCharacter(Character character) {
-    if (!character.active) return;
+    if (character.dead) return;
 
-    if (character is AI){
+    if (character is AI) {
       updateAI(character);
     }
     character.updateMovement();
-
-    if (character.dead) return;
 
     if (character.frozenDuration > 0) {
       character.frozenDuration--;
@@ -1030,25 +1000,25 @@ extension GameFunctions on Game {
     const tileCollisionResolve = 3;
     if (!scene.tileWalkableAt(character.left, character.y)) {
       character.x += tileCollisionResolve;
-    } else if (!scene.tileWalkableAt(character.right, character.y)){
+    } else if (!scene.tileWalkableAt(character.right, character.y)) {
       character.x -= tileCollisionResolve;
     }
     if (!scene.tileWalkableAt(character.x, character.top)) {
       character.y += tileCollisionResolve;
-    } else if (!scene.tileWalkableAt(character.x, character.bottom)){
+    } else if (!scene.tileWalkableAt(character.x, character.bottom)) {
       character.y -= tileCollisionResolve;
     }
   }
 
   Projectile spawnFireball(Character character) {
     return spawnProjectile(
-        src: character,
-        accuracy: 0,
-        speed: settings.projectileSpeed.fireball,
-        damage: 100,
-        range: settings.range.firebolt,
-        type: ProjectileType.Fireball,
-        target: character.attackTarget,
+      src: character,
+      accuracy: 0,
+      speed: settings.projectileSpeed.fireball,
+      damage: 100,
+      range: settings.range.firebolt,
+      type: ProjectileType.Fireball,
+      target: character.attackTarget,
     );
   }
 
@@ -1069,27 +1039,27 @@ extension GameFunctions on Game {
   Projectile spawnArrow(Vector2 src, {required int damage, Collider? target}) {
     dispatch(GameEventType.Arrow_Fired, src.x, src.y);
 
-    if (src is Character){
+    if (src is Character) {
       return spawnProjectile(
-          src: src,
-          accuracy: 0,
-          speed: settings.projectileSpeed.arrow,
-          damage: damage,
-          range: settings.range.arrow,
-          target: src.attackTarget,
-          angle: src.angle,
-          type: ProjectileType.Arrow,
-      );
-    }
-
-    return spawnProjectile(
         src: src,
         accuracy: 0,
         speed: settings.projectileSpeed.arrow,
         damage: damage,
         range: settings.range.arrow,
-        target: target,
+        target: src.attackTarget,
+        angle: src.angle,
         type: ProjectileType.Arrow,
+      );
+    }
+
+    return spawnProjectile(
+      src: src,
+      accuracy: 0,
+      speed: settings.projectileSpeed.arrow,
+      damage: damage,
+      range: settings.range.arrow,
+      target: target,
+      type: ProjectileType.Arrow,
     );
   }
 
@@ -1104,7 +1074,7 @@ extension GameFunctions on Game {
     Collider? target,
   }) {
     final projectile = getAvailableProjectile();
-    if (src is Character){
+    if (src is Character) {
       angle = src.angle;
     }
     projectile.collidable = true;
@@ -1145,7 +1115,6 @@ extension GameFunctions on Game {
     assert(team >= 0 && team <= 256);
     final zombie = _getAvailableZombie();
     zombie.team = team;
-    zombie.active = true;
     zombie.state = CharacterState.Idle;
     zombie.stateDurationRemaining = 0;
     zombie.maxHealth = health;
@@ -1159,17 +1128,17 @@ extension GameFunctions on Game {
   }
 
   Character _getAvailableZombie() {
-    for (int i = 0; i < zombies.length; i++) {
-      if (zombies[i].active) continue;
-      return zombies[i];
+    for (final zombie in zombies) {
+      if (zombie.alive) continue;
+      return zombie;
     }
     final zombie = AI(
-        type: CharacterType.Zombie,
-        x: 0,
-        y: 0,
-        mode: NpcMode.Aggressive,
-        health: settings.health.zombie,
-        weapon: SlotType.Empty,
+      type: CharacterType.Zombie,
+      x: 0,
+      y: 0,
+      mode: NpcMode.Aggressive,
+      health: settings.health.zombie,
+      weapon: SlotType.Empty,
     );
     zombies.add(zombie);
     return zombie;
@@ -1203,8 +1172,7 @@ extension GameFunctions on Game {
         y: spawnPoint.y,
         team: team,
         health: health,
-        damage: damage
-    );
+        damage: damage);
   }
 
   int get zombieCount {
@@ -1217,13 +1185,12 @@ extension GameFunctions on Game {
   }
 
   /// GameEventType
-  void dispatchV2(int type, Vector2 position, {double angle = 0}){
+  void dispatchV2(int type, Vector2 position, {double angle = 0}) {
     dispatch(type, position.x, position.y, angle);
   }
 
   /// GameEventType
-  void dispatch(int type, double x, double y,
-      [double angle = 0]) {
+  void dispatch(int type, double x, double y, [double angle = 0]) {
     for (final player in players) {
       player.onGameEvent(type, x, y, angle);
     }
@@ -1233,10 +1200,8 @@ extension GameFunctions on Game {
     for (final zombie in zombies) {
       if (zombie.dead) continue;
       final zombieAITarget = zombie.target;
-      if (
-          zombieAITarget != null &&
-          (zombieAITarget.dead || !zombie.withinChaseRange(zombieAITarget))
-      ) {
+      if (zombieAITarget != null &&
+          (zombieAITarget.dead || !zombie.withinChaseRange(zombieAITarget))) {
         zombie.target = null;
       }
 
@@ -1295,10 +1260,9 @@ extension GameFunctions on Game {
   }
 
   void setNpcTarget(AI ai, Character value) {
-    assert (!sameTeam(ai, value));
-    assert (value.alive);
-    assert (value.active);
-    assert (ai.alive);
+    assert(!sameTeam(ai, value));
+    assert(value.alive);
+    assert(ai.alive);
     ai.target = value;
   }
 
@@ -1307,13 +1271,11 @@ extension GameFunctions on Game {
     for (var i = 0; i < playerLength; i++) {
       final player = players[i];
 
-      if (player.lastUpdateFrame++ < 100)
-        continue;
+      if (player.lastUpdateFrame++ < 100) continue;
 
       for (final npc in zombies) {
         npc.clearTargetIf(player);
       }
-      player.active = false;
       players.removeAt(i);
       i--;
       playerLength--;
@@ -1330,7 +1292,6 @@ extension GameFunctions on Game {
   void revive(Character character) {
     character.state = CharacterState.Idle;
     character.health = character.maxHealth;
-    character.active = true;
     character.collidable = true;
 
     if (character is Player) {
@@ -1373,10 +1334,8 @@ extension GameFunctions on Game {
       final player = players[i];
       for (final spawnPoint in spawnPoints) {
         const collisionRadius = 20;
-        if (diffOver(player.x, spawnPoint.x, collisionRadius))
-          continue;
-        if (diffOver(player.y, spawnPoint.y, collisionRadius))
-          continue;
+        if (diffOver(player.x, spawnPoint.x, collisionRadius)) continue;
+        if (diffOver(player.y, spawnPoint.y, collisionRadius)) continue;
         for (final point in spawnPoint.game.spawnPoints) {
           if (point.game != this) continue;
           changeGame(player, spawnPoint.game);
@@ -1433,99 +1392,93 @@ extension GameFunctions on Game {
     }
 
     if (weaponType == SlotType.Handgun) {
-        if (stateDuration == 1){
-          if (weapon.amount <= 0) {
-            dispatchV2(GameEventType.Clip_Empty, character);
-            return;
-          }
-          dispatchV2(GameEventType.Handgun_Fired, character, angle: character.angle);
+      if (stateDuration == 1) {
+        if (weapon.amount <= 0) {
+          dispatchV2(GameEventType.Clip_Empty, character);
           return;
         }
-        if (stateDuration == 2) {
-          if (weapon.amount <= 0) {
-            return;
-          }
-          weapon.amount--;
+        dispatchV2(GameEventType.Handgun_Fired, character,
+            angle: character.angle);
+        return;
+      }
+      if (stateDuration == 2) {
+        if (weapon.amount <= 0) {
+          return;
+        }
+        weapon.amount--;
+        spawnProjectile(
+            src: character,
+            accuracy: 0,
+            speed: 12.0,
+            range: SlotType.getRange(weaponType),
+            damage: SlotType.getDamage(weaponType),
+            type: ProjectileType.Bullet);
+        return;
+      }
+    }
+
+    if (weaponType == SlotType.Shotgun) {
+      if (stateDuration == 1) {
+        if (weapon.amount <= 0) {
+          dispatchV2(GameEventType.Ammo_Acquired, character);
+          return;
+        }
+        dispatchV2(GameEventType.Shotgun_Fired, character);
+        character.slots.weapon.amount--;
+        final totalBullets = 4;
+        for (int i = 0; i < totalBullets; i++) {
           spawnProjectile(
               src: character,
-              accuracy: 0,
+              accuracy: 0.1,
               speed: 12.0,
               range: SlotType.getRange(weaponType),
               damage: SlotType.getDamage(weaponType),
-              type: ProjectileType.Bullet
-          );
-          return;
+              type: ProjectileType.Bullet);
         }
       }
+    }
 
-      if (weaponType == SlotType.Shotgun) {
-        if (stateDuration == 1){
-          if (weapon.amount <= 0){
-            dispatchV2(GameEventType.Ammo_Acquired, character);
+    if (SlotType.isBow(weaponType)) {
+      if (character.stateDuration == 1) {
+        dispatchV2(GameEventType.Draw_Bow, character);
+      }
+    }
+
+    if (character.stateDuration == framePerformStrike) {
+      if (SlotType.isBow(weaponType)) {
+        dispatchV2(GameEventType.Release_Bow, character);
+        if (character.slots.weapon.amount == 0) return;
+        spawnArrow(character, damage: SlotType.getDamage(weaponType));
+        character.attackTarget = character.attackTarget;
+        character.slots.weapon.amount--;
+        return;
+      }
+      if (SlotType.isMelee(weaponType)) {
+        final attackTarget = character.attackTarget;
+        final damage = SlotType.getDamage(character.weapon);
+        if (attackTarget != null) {
+          if (attackTarget.collidable) {
+            applyHit(character, attackTarget, damage);
             return;
-          }
-          dispatchV2(GameEventType.Shotgun_Fired, character);
-          character.slots.weapon.amount--;
-          final totalBullets = 4;
-          for (int i = 0; i < totalBullets; i++){
-            spawnProjectile(
-                src: character,
-                accuracy: 0.1,
-                speed: 12.0,
-                range: SlotType.getRange(weaponType),
-                damage: SlotType.getDamage(weaponType),
-                type: ProjectileType.Bullet);
+          } else {
+            character.attackTarget = null;
           }
         }
-      }
-
-      if (SlotType.isBow(weaponType)){
-        if (character.stateDuration == 1){
-          dispatchV2(GameEventType.Draw_Bow, character);
-        }
-      }
-
-      if (character.stateDuration == framePerformStrike) {
-        if (SlotType.isBow(weaponType)) {
-          dispatchV2(GameEventType.Release_Bow, character);
-          if (character.slots.weapon.amount == 0) return;
-          spawnArrow(character, damage: SlotType.getDamage(weaponType));
-          character.attackTarget = character.attackTarget;
-          character.slots.weapon.amount--;
+        final range = SlotType.getRange(weaponType);
+        final zombieHit = physics.raycastHit(
+            character: character, colliders: zombies, range: range);
+        if (zombieHit != null) {
+          applyHit(character, zombieHit, damage);
           return;
         }
-        if (SlotType.isMelee(weaponType)) {
-          final attackTarget = character.attackTarget;
-          final damage = SlotType.getDamage(character.weapon);
-          if (attackTarget != null) {
-            if (attackTarget.collidable){
-              applyHit(character, attackTarget, damage);
-              return;
-            } else {
-              character.attackTarget = null;
-            }
-          }
-          final range = SlotType.getRange(weaponType);
-          final zombieHit = physics.raycastHit(
-              character: character,
-              colliders: zombies,
-              range: range
-          );
-          if (zombieHit != null) {
-            applyHit(character, zombieHit, damage);
-            return;
-          }
-          final dynamicObjectHit = physics.raycastHit(
-              character: character,
-              colliders: dynamicObjects,
-              range: range
-          );
-          if (dynamicObjectHit != null) {
-            applyHit(character, dynamicObjectHit, damage);
-          }
-          return;
+        final dynamicObjectHit = physics.raycastHit(
+            character: character, colliders: dynamicObjects, range: range);
+        if (dynamicObjectHit != null) {
+          applyHit(character, dynamicObjectHit, damage);
         }
+        return;
       }
+    }
   }
 }
 

@@ -2,18 +2,17 @@
 
 import '../common/DynamicObjectType.dart';
 import 'Collider.dart';
+import 'components.dart';
 
-class DynamicObject extends Collider {
+class DynamicObject extends Collider with Health {
   late int type; // DynamicObjectType.dart
-  late int maxHealth;
-  late int health;
   var respawnDuration = 5000;
 
   DynamicObject({
     required this.type,
     required double x,
     required double y,
-    required this.health,
+    required int health,
   }) : super(x: x, y: y, radius: const<int, double> {
     DynamicObjectType.Rock: 10,
     DynamicObjectType.Tree: 7,
@@ -22,5 +21,6 @@ class DynamicObject extends Collider {
     DynamicObjectType.Crate: 12,
   }[type] ?? 10) {
     maxHealth = health;
+    this.health = health;
   }
 }

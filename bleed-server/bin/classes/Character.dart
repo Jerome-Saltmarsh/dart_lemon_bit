@@ -99,7 +99,7 @@ class AI extends Character {
   }
 }
 
-class Character extends Collider with Team, Health, Velocity, Active {
+class Character extends Collider with Team, Health, Velocity {
   late CharacterType type;
   late double _speed;
   Ability? ability = null;

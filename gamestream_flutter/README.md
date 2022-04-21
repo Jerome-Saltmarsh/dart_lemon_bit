@@ -103,15 +103,14 @@
 [ ] Upgrade Panel    
 [ ] Destructible Rock
 [ ] Weapon Axe    
-    
 [ ] Resources [Stone, Wood, Gold, Food]
 [ ] Fix Map Editor
 [ ] FIX AI Pathfinding
 [ ] Construct Menu    
 [ ] Footstep Audio    
 [ ] Collect Rewards 
-[ ] Zombies attack and destroy Structures    
 [ ] Build Mode    
+[x] Zombies attack and destroy Structures
 [x] Destroy Trees    
 [x] Weapon Pickaxe    
 [x] SlotType Pickaxe    

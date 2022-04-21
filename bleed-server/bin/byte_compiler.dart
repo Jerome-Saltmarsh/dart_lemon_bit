@@ -49,6 +49,7 @@ class _ByteCompiler {
     writeByte(ServerResponse.Structures);
     final structures = player.game.structures;
     for(final structure in structures){
+      if (structure.dead) continue;
        writeByte(1);
        writeVector2(structure);
     }
@@ -242,6 +243,15 @@ class _ByteCompiler {
     writeBigInt(total);
   }
 
+  void writeTotalAlive(List<Health> values){
+    var total = 0;
+    for (final gameObject in values) {
+      if (gameObject.dead) continue;
+      total++;
+    }
+    writeBigInt(total);
+  }
+
   void writeProjectile(Projectile projectile){
     if (!projectile.active) return;
     final degrees = angle(projectile.xv, projectile.yv) * radiansToDegrees;
@@ -298,14 +308,14 @@ class _ByteCompiler {
   void writeNpcs(Player player){
     final npcs = player.game.npcs;
     writeByte(ServerResponse.Npcs);
-    writeTotalActive(npcs);
+    writeTotalAlive(npcs);
     for(final npc in npcs) {
       writeNpc(player, npc);
     }
   }
 
   void writeNpc(Player player, Character npc) {
-    if (!npc.active) return;
+    if (npc.dead) return;
     writeCharacter(player, npc);
     writeByte(npc.slots.weapon.type);
   }
