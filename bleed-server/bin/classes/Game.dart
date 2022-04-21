@@ -19,6 +19,7 @@ import '../common/GameType.dart';
 import '../common/ItemType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/SlotType.dart';
+import '../common/StructureType.dart';
 import '../common/Tile.dart';
 import '../common/configuration.dart';
 import '../common/ObjectType.dart';
@@ -1469,6 +1470,7 @@ extension GameFunctions on Game {
 
   void updateStructures() {
     for (final structure in structures) {
+      if (!structure.isTower) continue;
       if (structure.dead) continue;
       if (structure.cooldown > 0) {
         structure.cooldown--;

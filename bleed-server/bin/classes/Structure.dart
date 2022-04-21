@@ -3,6 +3,7 @@
 
 import 'package:lemon_math/Vector2.dart';
 
+import '../common/StructureType.dart';
 import 'Collider.dart';
 import 'components.dart';
 
@@ -12,6 +13,8 @@ class Structure extends Collider with Team, Health {
   int attackDamage;
   double attackRange;
   int type; // StructureType.dart
+
+  bool get isTower => type == StructureType.Tower;
 
   Structure({
     required this.type,

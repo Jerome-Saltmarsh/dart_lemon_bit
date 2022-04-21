@@ -109,7 +109,8 @@
 [ ] Construct Menu    
 [ ] Footstep Audio    
 [ ] Collect Rewards
-[ ] Construct Palisade    
+[x] Palisade shouldn't fire arrows     
+[x] Construct Palisade    
 [x] Build Mode    
 [x] Zombies attack and destroy Structures
 [x] Destroy Trees    

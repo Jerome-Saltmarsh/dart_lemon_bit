@@ -84,7 +84,6 @@ class GameRender {
           isometric.render.palisade(x: structure.x, y: structure.y);
           continue;
       }
-
     }
   }
 
