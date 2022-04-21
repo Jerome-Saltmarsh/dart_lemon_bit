@@ -67,7 +67,7 @@ class GameRender {
     }
 
     for (var i = 0; i < game.totalCollectables; i++) {
-      isometric.render.renderCircle36V2(game.collectables[i]);
+      isometric.render.renderIconWood(game.collectables[i]);
     }
 
     _render.renderSprites();

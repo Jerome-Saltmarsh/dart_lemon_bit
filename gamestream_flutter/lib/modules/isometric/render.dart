@@ -805,5 +805,15 @@ class IsometricRender {
   void renderCircle36(double x, double y){
     engine.render(dstX: x, dstY: y, srcX: 2420, srcY: 57, srcSize: 37);
   }
+
+  void renderIconWood(Vector2 position){
+    engine.renderCustom(
+        dstX: position.x,
+        dstY: position.y,
+        srcX: 6189,
+        srcWidth: 26,
+        srcHeight: 26
+    );
+  }
 }
 
