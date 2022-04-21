@@ -15,7 +15,6 @@ import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/Projectile.dart';
-import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
@@ -60,25 +59,21 @@ class GameRender {
     renderBuildMode();
 
     drawAbility();
+
     attackTargetCircle();
 
     if (state.compilePaths.value) {
       drawPaths();
     }
 
-    // renderStructures();
+    for (var i = 0; i < game.totalCollectables; i++) {
+      isometric.render.renderCircle36V2(game.collectables[i]);
+    }
+
     _render.renderSprites();
     drawEffects();
     drawItems();
   }
-
-  // void renderStructures() {
-  //   final totalStructures = game.totalStructures;
-  //   final structures = game.structures;
-  //   for (var i = 0; i < totalStructures; i++) {
-  //     renderStructure(structures[i]);
-  //   }
-  // }
 
   void renderBuildMode() {
     final value = modules.game.structureType.value;

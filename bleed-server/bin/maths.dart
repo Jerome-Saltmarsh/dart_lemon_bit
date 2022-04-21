@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/hypotenuse.dart';
+import 'package:lemon_math/pi2.dart';
+import 'package:lemon_math/piHalf.dart';
 
 double distanceV2(Vector2 a, Vector2 b) {
   return hypotenuse(a.x - b.x, a.y - b.y);
@@ -29,30 +31,24 @@ double radiansBetween(double x1, double y1, double x2, double y2) {
 }
 
 double velX(double rotation, double speed) {
-  return -cos(rotation + 1.5707963268) * speed;
+  return -cos(rotation + piHalf) * speed;
 }
 
 double velY(double rotation, double speed) {
-  return -sin(rotation + 1.5707963268) * speed;
+  return -sin(rotation + piHalf) * speed;
 }
 
 double radians(double x, double y) {
   if (x < 0) return -atan2(x, y);
-  /// 6.2831853 = pi * 2
-  /// Reduces memory lookups
-  return 6.283 - atan2(x, y);
+  return pi2 - atan2(x, y);
 }
 
 double adj(double rotation, num magnitude) {
-  /// 1.570796325 = pi / 2
-  /// this prevents having to do a memory lookup
-  return -cos(rotation + 1.5707963268) * magnitude;
+  return -cos(rotation + piHalf) * magnitude;
 }
 
 double opp(double rotation, num magnitude) {
-  /// 1.570796325 = pi / 2
-  /// this prevents having to do a memory lookup
-  return -sin(rotation + 1.570796325) * magnitude;
+  return -sin(rotation + piHalf) * magnitude;
 }
 
 double normalize(double x, double y) {

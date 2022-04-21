@@ -23,19 +23,47 @@ mixin Health {
 }
 
 mixin Velocity {
-  var z = 0.0;
   var xv = 0.0;
   var yv = 0.0;
   var zv = 0.0;
 
-  double get angle => atan2(xv, yv);
+  double get angleVelocity => atan2(xv, yv);
 
-  void applyForce(double rotation, double amount) {
-    xv += adj(rotation, amount);
-    yv += opp(rotation, amount);
+  void applyFriction(double amount){
+    xv *= amount;
+    yv *= amount;
+  }
+
+  void accelerate(double rotation, double acceleration) {
+    xv += adj(rotation, acceleration);
+    yv += opp(rotation, acceleration);
+  }
+
+  void setVelocity(double rotation, double speed){
+    xv = adj(rotation, speed);
+    yv = opp(rotation, speed);
   }
 }
 
 mixin Active {
   bool active = true;
+
+  bool get inactive => !active;
+
+  void deactivate(){
+    active = false;
+  }
+}
+
+mixin Position {
+  var x = 0.0;
+  var y = 0.0;
+}
+
+mixin Target<T> {
+  late T target;
+}
+
+mixin Duration {
+  var duration = 0;
 }

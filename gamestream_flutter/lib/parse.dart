@@ -207,11 +207,6 @@ void parseState() {
         }
         break;
 
-      case ServerResponse.Collectables:
-        if (game.id < 0) return;
-        _parseCollectables();
-        break;
-
       case ServerResponse.Player_Ability:
         _parsePlayerAbility();
         break;
@@ -339,14 +334,6 @@ void _parsePlayerAbility(){
 
 AbilityType _consumeAbilityType() {
   return abilities[consumeInt()];
-}
-
-void _parseCollectables() {
-  // todo this is really expensive
-  game.collectables.clear();
-  while (!_simiColonConsumed()) {
-    game.collectables.add(consumeInt());
-  }
 }
 
 void _parseGameJoined() {

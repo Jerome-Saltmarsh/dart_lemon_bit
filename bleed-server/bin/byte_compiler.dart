@@ -56,6 +56,17 @@ class _ByteCompiler {
     writeByte(END);
   }
 
+  void writeCollectables(Player player) {
+    writeByte(ServerResponse.Collectables);
+    final collectables = player.game.collectables;
+    for (final collectable in collectables) {
+      if (collectable.inactive) continue;
+      writeByte(1);
+      writeVector2(collectable);
+    }
+    writeByte(0);
+  }
+
   void writePlayerOrbs(Player player) {
     writeByte(ServerResponse.Player_Orbs);
     final orbs = player.orbs;
@@ -92,6 +103,7 @@ class _ByteCompiler {
     writeBool(player.storeVisible); // 1
 
     writeStructures(player);
+    writeCollectables(player);
     writePlayers(player);
     writeAttackTarget(player);
     writeProjectiles(game.projectiles);

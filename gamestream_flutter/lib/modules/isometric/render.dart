@@ -1,3 +1,4 @@
+import 'package:lemon_math/Vector2.dart';
 import 'dart:math';
 
 import 'package:bleed_common/CharacterState.dart';
@@ -795,6 +796,14 @@ class IsometricRender {
     if (diffOver(npc.x, mouseWorldX, 50)) return;
     if (diffOver(npc.y, mouseWorldY, 50)) return;
     engine.draw.text(npc.name, npc.x - 4.5 * npc.name.length, npc.y, style: state.nameTextStyle);
+  }
+
+  void renderCircle36V2(Vector2 vector2){
+    renderCircle36(vector2.x, vector2.y);
+  }
+
+  void renderCircle36(double x, double y){
+    engine.render(dstX: x, dstY: y, srcX: 2420, srcY: 57, srcSize: 37);
   }
 }
 

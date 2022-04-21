@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:lemon_math/Vector2.dart';
 import 'dart:typed_data';
 
 import 'package:bleed_common/ServerResponse.dart';
@@ -122,6 +123,15 @@ class _ByteStreamParser {
           _player.attackTarget.x = 0;
           _player.attackTarget.y = 0;
           engine.cursorType.value = CursorType.Basic;
+          break;
+        case ServerResponse.Collectables:
+          final collectables = game.collectables;
+          var total = 0;
+          while (readBool()) {
+            readVector2(collectables[total]);
+            total++;
+          }
+          game.totalCollectables = total;
           break;
         case ServerResponse.Structures:
           final structures = game.structures;
@@ -447,5 +457,10 @@ class _ByteStreamParser {
          total++;
       }
       game.totalDynamicObjects.value = total;
+  }
+
+  void readVector2(Vector2 value){
+    value.x = _nextDouble();
+    value.y = _nextDouble();
   }
 }

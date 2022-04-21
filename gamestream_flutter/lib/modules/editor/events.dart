@@ -58,8 +58,6 @@ class EditorEvents with EditorScope {
 
   void onMouseDragging(){
     if (editor.state.selectedCollectable > -1) {
-      game.collectables[editor.state.selectedCollectable + 1] = mouseWorldX.toInt();
-      game.collectables[editor.state.selectedCollectable + 2] = mouseWorldY.toInt();
       return;
     }
 

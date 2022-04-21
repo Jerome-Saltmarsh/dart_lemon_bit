@@ -12,4 +12,6 @@ class PlayerEvent {
   static const Orb_Earned_Topaz = 10;
   static const Orb_Earned_Ruby = 11;
   static const Orb_Earned_Emerald = 12;
+  static const Collect_Wood = 13;
+  static const Collect_Rock = 14;
 }

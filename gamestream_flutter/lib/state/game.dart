@@ -28,12 +28,12 @@ class _Game {
   final players = <Character>[];
   final zombies = <Character>[];
   final structures = <Structure>[];
+  final collectables = <Vector2>[];
   final interactableNpcs = <Character>[];
   final dynamicObjects = <DynamicObject>[];
   final effects = <Effect>[];
   final torches = <EnvironmentObject>[];
   final projectiles = <Projectile>[];
-  final collectables = <int>[];
   final crates = <Vector2>[];
   final bulletHoles = <Vector2>[];
   final npcDebug = <NpcDebug>[];
@@ -44,6 +44,7 @@ class _Game {
   var totalNpcs = 0;
   var totalCubes = 0;
   var totalStructures = 0;
+  var totalCollectables = 0;
   var bulletHoleIndex = 0;
   var id = -1;
   var totalProjectiles = 0;
@@ -70,6 +71,9 @@ class _Game {
     }
     for (var i = 0; i < 1000; i++) {
       structures.add(Structure());
+    }
+    for (var i = 0; i < 500; i++) {
+      collectables.add(Vector2(0, 0));
     }
   }
 

@@ -5,6 +5,7 @@ import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/hypotenuse.dart';
+import 'package:lemon_math/randomAngle.dart';
 import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/randomItem.dart';
 
@@ -19,7 +20,6 @@ import '../common/GameType.dart';
 import '../common/ItemType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/SlotType.dart';
-import '../common/StructureType.dart';
 import '../common/Tile.dart';
 import '../common/configuration.dart';
 import '../common/ObjectType.dart';
@@ -36,6 +36,7 @@ import '../physics.dart';
 import '../settings.dart';
 import '../utilities.dart';
 import 'Character.dart';
+import 'Collectable.dart';
 import 'Collider.dart';
 import 'Crate.dart';
 import 'DynamicObject.dart';
@@ -60,6 +61,7 @@ abstract class Game {
   final players = <Player>[];
   final projectiles = <Projectile>[];
   final crates = <Crate>[];
+  final collectables = <Collectable>[];
   var spawnPoints = <SpawnPoint>[];
   var shadeMax = Shade.Bright;
   var frame = 0;
@@ -147,22 +149,6 @@ abstract class Game {
   void update() {}
 
   void onPlayerDisconnected(Player player) {}
-
-  // GameEvent _getAvailableGameEvent() {
-  //   for (final gameEvent in gameEvents) {
-  //     if (gameEvent.frameDuration > 0) continue;
-  //     gameEvent.frameDuration = 3;
-  //     gameEvent.assignNewId();
-  //     return gameEvent;
-  //   }
-  //   final empty = GameEvent(
-  //     type: GameEventType.Sword_Woosh,
-  //     x: 0,
-  //     y: 0,
-  //   );
-  //   gameEvents.add(empty);
-  //   return empty;
-  // }
 
   Game(this.scene,
       {this.gameType = GameType.MMO,
@@ -352,6 +338,7 @@ extension GameFunctions on Game {
     }
 
     update();
+    updateCollectables();
     updateStructures();
     _updateCollisions();
     _updatePlayersAndNpcs();
@@ -429,6 +416,14 @@ extension GameFunctions on Game {
           break;
         case DynamicObjectType.Tree:
           dispatchV2(GameEventType.Tree_Struck, target);
+          if (src is Player) {
+            final collectable = Collectable();
+            collectable.target = src;
+            collectable.x = target.x;
+            collectable.y = target.y;
+            collectable.setVelocity(randomAngle(), 3.0);
+            collectables.add(collectable);
+          }
           break;
       }
 
@@ -731,7 +726,7 @@ extension GameFunctions on Game {
       if (!withinDistance(zombie, x, y, settings.radius.explosion)) continue;
       final rotation = radiansBetween2(zombie, x, y);
       final magnitude = 10.0;
-      zombie.applyForce(rotation + pi, magnitude);
+      zombie.accelerate(rotation + pi, magnitude);
 
       if (zombie.dead) continue;
       applyDamage(src, zombie, 15);
@@ -742,7 +737,7 @@ extension GameFunctions on Game {
         continue;
       final rotation = radiansBetween2(player, x, y);
       final magnitude = 10.0;
-      player.applyForce(rotation + pi, magnitude);
+      player.accelerate(rotation + pi, magnitude);
 
       if (player.alive) {
         changeCharacterHealth(player, -15);
@@ -853,7 +848,7 @@ extension GameFunctions on Game {
     final angleBetweenSrcAndTarget = radiansV2(src, target);
     if (target is Character) {
       const forceMultiplier = 3.0;
-      target.applyForce(angleBetweenSrcAndTarget,
+      target.accelerate(angleBetweenSrcAndTarget,
           damage / target.maxHealth * forceMultiplier);
       dispatchV2(GameEventType.Character_Struck, target,
           angle: angleBetweenSrcAndTarget);
@@ -864,7 +859,6 @@ extension GameFunctions on Game {
           angle: angleBetweenSrcAndTarget,
         );
       }
-      return;
     }
   }
 
@@ -1487,8 +1481,22 @@ extension GameFunctions on Game {
       }
     }
   }
-}
 
+  void updateCollectables() {
+    for (final collectable in collectables) {
+      if (collectable.inactive) continue;
+      collectable.duration++;
+      collectable.x += collectable.xv;
+      collectable.y += collectable.yv;
+      collectable.applyFriction(0.96);
+      collectable.moveTowards(collectable.target, collectable.duration * 0.075);
+      if (collectable.getDistance(collectable.target) < 10) {
+         collectable.deactivate();
+         collectable.target.onPlayerEvent(PlayerEvent.Collect_Wood);
+      }
+    }
+  }
+}
 
 void playerInteract(Player player) {
   for (InteractableNpc npc in player.game.npcs) {

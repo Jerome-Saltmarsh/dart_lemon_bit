@@ -143,6 +143,9 @@ class GameEvents {
       case PlayerEvent.Drink_Potion:
         audio.bottle(screenCenterWorldX, screenCenterWorldY);
         break;
+      case PlayerEvent.Collect_Wood:
+        audio.coins(screenCenterWorldX, screenCenterWorldY);
+        break;
     }
   }
 
