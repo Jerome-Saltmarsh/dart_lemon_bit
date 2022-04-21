@@ -183,7 +183,6 @@ class GameBuild {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       buildVersion(),
-                      // ui.widgets.time,
                     ],
                   );
                 })),
@@ -361,6 +360,8 @@ class GameBuild {
   Widget buildBottomRight() {
     return Column(
       children: [
+        buildPanelStructures(),
+        height32,
         buildPanelStore(),
         height32,
         Container(
@@ -434,8 +435,8 @@ class GameBuild {
     );
   }
 
-  Widget mapStoreTabToIcon(StoreTab value){
-    switch(value){
+  Widget mapStoreTabToIcon(StoreTab value) {
+    switch (value) {
       case StoreTab.Weapons:
         return resources.icons.sword;
       case StoreTab.Armor:
@@ -443,6 +444,12 @@ class GameBuild {
       case StoreTab.Items:
         return resources.icons.books.grey;
     }
+  }
+
+  Widget buildPanelStructures() {
+      return Column(children: [
+         button("Tower", modules.game.enterBuildMode)
+      ],);
   }
 
   Widget buildPanelStore() {

@@ -1,4 +1,5 @@
 
+import 'package:lemon_watch/watch.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/game/build.dart';
 import 'package:gamestream_flutter/modules/game/events.dart';
@@ -22,6 +23,8 @@ class GameModule {
   late final GameMap map;
   late final GameQueries queries;
 
+  final buildMode = Watch(false);
+
   GameModule(){
     state = GameState();
     actions = GameActions(state);
@@ -31,5 +34,9 @@ class GameModule {
     update = GameUpdate(state);
     map = GameMap(state, actions);
     build = GameBuild(state, actions);
+  }
+
+  void enterBuildMode() {
+     buildMode.value = !buildMode.value;
   }
 }

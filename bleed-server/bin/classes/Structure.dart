@@ -9,6 +9,7 @@ import 'components.dart';
 class Structure extends Collider with Team, Health {
   var cooldown = 0;
   int attackRate;
+  int attackDamage;
   double attackRange;
 
   Structure({
@@ -16,6 +17,7 @@ class Structure extends Collider with Team, Health {
     required double y,
     required int team,
     required this.attackRate,
+    required this.attackDamage,
     this.attackRange = 200.0,
   }) : super(x: x, y: y, radius: 25) {
     this.team = team;

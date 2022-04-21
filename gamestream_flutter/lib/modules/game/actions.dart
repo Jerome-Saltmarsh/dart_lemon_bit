@@ -29,7 +29,12 @@ class GameActions {
   }
 
   void playerPerform() {
-    setCharacterAction(CharacterAction.Perform);
+    if (modules.game.buildMode.value){
+      modules.game.buildMode.value = false;
+      sendRequestConstruct();
+    } else {
+      setCharacterAction(CharacterAction.Perform);
+    }
   }
 
   void playerRun() {

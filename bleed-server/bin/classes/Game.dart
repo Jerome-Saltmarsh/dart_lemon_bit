@@ -1477,8 +1477,8 @@ extension GameFunctions on Game {
       for (final zombie in zombies) {
         if (zombie.dead) continue;
         if (sameTeam(structure, zombie)) continue;
-        if (zombie.getDistance(structure) > 200) continue;
-        spawnArrow(structure, damage: 1, target: zombie);
+        if (zombie.getDistance(structure) > structure.attackRange) continue;
+        spawnArrow(structure, damage: structure.attackDamage, target: zombie);
         structure.cooldown = structure.attackRate;
         break;
       }

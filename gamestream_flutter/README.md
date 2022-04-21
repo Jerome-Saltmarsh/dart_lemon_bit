@@ -102,6 +102,7 @@
 [ ] Destructible Chest
 [ ] Upgrade Panel    
 [ ] Destructible Rock
+    
 [ ] Weapon Axe    
 [ ] Resources [Stone, Wood, Gold, Food]
 [ ] Fix Map Editor

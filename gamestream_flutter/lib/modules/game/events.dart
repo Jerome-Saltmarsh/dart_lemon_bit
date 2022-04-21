@@ -92,6 +92,11 @@ class GameEvents {
   }
 
   void onMouseRightClick(){
+    if (modules.game.buildMode.value) {
+      modules.game.buildMode.value = false;
+      return;
+    }
+
     if (state.player.ability.value != AbilityType.None) {
       actions.deselectAbility();
       return;

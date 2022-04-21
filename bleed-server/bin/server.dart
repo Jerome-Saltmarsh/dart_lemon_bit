@@ -326,7 +326,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 closestCollider,
                 mouseX,
                 mouseY,
-                50.0, // cursor radius
+                30.0, // cursor radius
             )) {
               player.aimTarget = closestCollider;
             }
@@ -545,6 +545,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               y: player.mouse.y,
               team: player.team,
               attackRate: 200,
+              attackDamage: 1,
           ));
           break;
 

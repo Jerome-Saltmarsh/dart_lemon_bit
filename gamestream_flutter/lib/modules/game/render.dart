@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:bleed_common/AbilityType.dart';
 import 'package:bleed_common/DynamicObjectType.dart';
-import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/OrbType.dart';
 import 'package:bleed_common/SlotType.dart';
@@ -30,10 +29,8 @@ import 'package:lemon_math/opposite.dart';
 import 'state.dart';
 import 'style.dart';
 
-
 final _screen = engine.screen;
 final _render = isometric.render;
-final _gameType = game.type;
 final _projectiles = game.projectiles;
 final _bulletHoles = game.bulletHoles;
 
@@ -59,6 +56,10 @@ class GameRender {
     drawProjectiles(_projectiles);
     drawBulletHoles(_bulletHoles);
 
+    if (modules.game.buildMode.value) {
+      renderStructure(mouseWorldX, mouseWorldY);
+    }
+
     drawAbility();
     attackTargetCircle();
 
@@ -66,31 +67,28 @@ class GameRender {
       drawPaths();
     }
 
-
-    for (var i = 0; i < game.totalPlayers.value; i++){
-       final player = game.players[i];
-
-       // if (player.state == stateRunning){
-       //
-       // }
+    final totalStructures = game.totalStructures;
+    final structures = game.structures;
+    for (var i = 0; i < totalStructures; i++) {
+      final structure = structures[i];
+      renderStructure(structure.x, structure.y);
     }
-
-    // renderDynamicObjects();
-
-    for(var i = 0; i < game.totalStructures; i++){
-      final structure = game.structures[i];
-      // drawCircle36V2(structure);
-      engine.renderCustom(dstX: structure.x, dstY: structure.y, srcX: 6125, srcY: 0, srcWidth: 48, srcHeight: 100, anchorY: 0.66);
-    }
-
 
     _render.renderSprites();
     drawEffects();
     drawItems();
+  }
 
-    if (_gameType.value == GameType.BATTLE_ROYAL){
-      drawRoyalPerimeter();
-    }
+  void renderStructure(double x, double y) {
+    engine.renderCustom(
+        dstX: x,
+        dstY: y,
+        srcX: 6125,
+        srcY: 0,
+        srcWidth: 48,
+        srcHeight: 100,
+        anchorY: 0.66
+    );
   }
 
 

@@ -62,8 +62,8 @@ class GameSwarm extends Game {
      final player = Player(game: this, weapon: SlotType.Bow_Wooden);
      player.x = 317;
      player.y = 2136;
-     tower1 = Structure(x: 350, y: 2250, team: player.team, attackRate: 200);
-     tower2 = Structure(x: 450, y: 2250, team: player.team, attackRate: 200);
+     tower1 = Structure(x: 350, y: 2250, team: player.team, attackRate: 200, attackDamage: 1);
+     tower2 = Structure(x: 450, y: 2250, team: player.team, attackRate: 200, attackDamage: 1);
      structures.add(tower1);
      structures.add(tower2);
      return player;
