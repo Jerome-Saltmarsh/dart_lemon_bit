@@ -350,22 +350,8 @@ extension GameFunctions on Game {
       dynamicObject.health = 3;
     }
 
-    for (final structure in structures) {
-      if (structure.cooldown > 0) {
-        structure.cooldown--;
-        continue;
-      }
-      for (final zombie in zombies) {
-        if (zombie.dead) continue;
-        if (sameTeam(structure, zombie)) continue;
-        if (zombie.getDistance(structure) > 200) continue;
-        spawnArrow(structure, damage: 1, target: zombie);
-        structure.cooldown = structure.attackRate;
-        break;
-      }
-    }
-
     update();
+    updateStructures();
     _updateCollisions();
     _updatePlayersAndNpcs();
     _updateProjectiles();
@@ -1480,7 +1466,26 @@ extension GameFunctions on Game {
       }
     }
   }
+
+  void updateStructures() {
+    for (final structure in structures) {
+      if (structure.dead) continue;
+      if (structure.cooldown > 0) {
+        structure.cooldown--;
+        continue;
+      }
+      for (final zombie in zombies) {
+        if (zombie.dead) continue;
+        if (sameTeam(structure, zombie)) continue;
+        if (zombie.getDistance(structure) > 200) continue;
+        spawnArrow(structure, damage: 1, target: zombie);
+        structure.cooldown = structure.attackRate;
+        break;
+      }
+    }
+  }
 }
+
 
 void playerInteract(Player player) {
   for (InteractableNpc npc in player.game.npcs) {
