@@ -9,6 +9,7 @@ import 'classes/Character.dart';
 import 'classes/Game.dart';
 import 'classes/Player.dart';
 import 'classes/Projectile.dart';
+import 'classes/components.dart';
 import 'common/ServerResponse.dart';
 import 'common/compile_util.dart';
 import 'common/constants.dart';

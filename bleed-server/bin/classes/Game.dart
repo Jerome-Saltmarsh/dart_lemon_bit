@@ -29,7 +29,6 @@ import '../engine.dart';
 import '../enums.dart';
 import '../enums/npc_mode.dart';
 import '../functions.dart';
-import '../functions/applyForce.dart';
 import '../functions/withinRadius.dart';
 import '../maths.dart';
 import '../physics.dart';
@@ -770,7 +769,7 @@ extension GameFunctions on Game {
       if (!withinDistance(zombie, x, y, settings.radius.explosion)) continue;
       final rotation = radiansBetween2(zombie, x, y);
       final magnitude = 10.0;
-      applyForce(zombie, rotation + pi, magnitude);
+      zombie.applyForce(rotation + pi, magnitude);
 
       if (zombie.dead) continue;
       applyDamage(src, zombie, 15);
@@ -781,7 +780,7 @@ extension GameFunctions on Game {
         continue;
       final rotation = radiansBetween2(player, x, y);
       final magnitude = 10.0;
-      applyForce(player, rotation + pi, magnitude);
+      player.applyForce(rotation + pi, magnitude);
 
       if (player.alive) {
         changeCharacterHealth(player, -15);
@@ -889,8 +888,7 @@ extension GameFunctions on Game {
     final angleBetweenSrcAndTarget = radiansV2(src, target);
     if (target is Character) {
       const forceMultiplier = 3.0;
-      final healthPercentage = damage / target.maxHealth;
-      applyForce(target, angleBetweenSrcAndTarget, healthPercentage * forceMultiplier);
+      target.applyForce(angleBetweenSrcAndTarget, damage / target.maxHealth * forceMultiplier);
       dispatch(
           GameEventType.Character_Struck,
           target.x,

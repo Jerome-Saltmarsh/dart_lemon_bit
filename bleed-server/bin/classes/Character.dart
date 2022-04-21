@@ -11,13 +11,11 @@ import '../constants/no_squad.dart';
 import '../enums/npc_mode.dart';
 import '../functions/withinRadius.dart';
 import '../settings.dart';
-import '../utilities.dart';
 import 'Ability.dart';
 import 'Collider.dart';
 import 'Game.dart';
-import 'GameObject.dart';
 import 'Player.dart';
-import 'Projectile.dart';
+import 'components.dart';
 
 const maxAIPathLength = 80;
 const maxAIPathLengthMinusOne = maxAIPathLength - 3;
@@ -98,25 +96,6 @@ class AI extends Character {
     rotateAround(other, 0.1);
     if (!other.withinBounds(dest)) return;
     nextPath();
-  }
-}
-
-mixin Team {
-  var team = 0;
-}
-
-mixin Health {
-  var _health = 1;
-  var maxHealth = 1;
-
-  bool get dead => _health <= 0;
-
-  bool get alive => _health > 0;
-
-  int get health => _health;
-
-  set health(int value) {
-    _health = clampInt(value, 0, maxHealth);
   }
 }
 

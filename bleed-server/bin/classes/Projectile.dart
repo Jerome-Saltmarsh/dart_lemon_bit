@@ -4,11 +4,8 @@ import 'package:lemon_math/Vector2.dart';
 import '../common/ProjectileType.dart';
 import '../maths.dart';
 import 'Collider.dart';
-import 'GameObject.dart';
+import 'components.dart';
 
-mixin Active {
-  bool active = true;
-}
 
 class Projectile extends Collider with Active, Velocity {
   final start = Vector2(0, 0);

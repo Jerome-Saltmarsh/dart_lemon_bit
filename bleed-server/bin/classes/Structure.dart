@@ -3,8 +3,8 @@
 
 import 'package:lemon_math/Vector2.dart';
 
-import 'Character.dart';
 import 'Collider.dart';
+import 'components.dart';
 
 class Structure extends Collider with Team, Health {
   var cooldown = 0;
