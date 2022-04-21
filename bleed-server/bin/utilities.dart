@@ -65,8 +65,16 @@ int calculateTime({int minute = 0, int hour = 0}){
 }
 
 void snapToGrid(Vector2 value){
-  value.x = (value.x - value.x % tileSize) + halfTileSize;
-  value.y = value.y - value.y % tileSize;
+  value.x = snapX(value.x);
+  value.y = snapY(value.y);
+}
+
+double snapX(double x){
+  return  (x - x % tileSize) + halfTileSize;
+}
+
+double snapY(double y){
+  return y - y % tileSize;
 }
 
 void sortVertically(List<Vector2> items) {

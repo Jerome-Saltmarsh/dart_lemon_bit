@@ -163,30 +163,20 @@ class Scene {
        }
     }
   }
-}
 
-late AI pathFindAI;
-late TileNode pathFindDestination;
-var pathFindSearchID = 0;
-
-
-int parseRowsAndColumnsToDirection(int rows, int columns) {
-  assert(rows != 0 || columns != 0);
-  if (rows > 0) {
-     if (columns < 0) return Direction.DownLeft;
-     if (columns == 0) return Direction.Down;
-     return Direction.DownRight;
+  int tileAt(double x, double y) {
+    final projectedX = y - x;
+    if (projectedX < 0) return tileBoundary;
+    final projectedY = x + y;
+    if (projectedY < 0) return tileBoundary;
+    const tileSize = 48;
+    final row = projectedY ~/ tileSize;
+    if (row >= numberOfRows) return tileBoundary;
+    final column = projectedX ~/ tileSize;
+    if (column >= numberOfColumns) return tileBoundary;
+    return this.tiles[row][column];
   }
-  if (rows < 0) {
-    if (columns < 0) return Direction.UpLeft;
-    if (columns == 0) return Direction.Up;
-    return Direction.UpRight;
-  }
-  if (columns < 0) return Direction.Left;
-  return Direction.Right;
-}
 
-extension SceneFunctions on Scene {
 
   bool visitDirection(int direction, TileNode from) {
     if (direction == Direction.UpLeft && !from.up.open && !from.left.open) return false;
@@ -277,8 +267,8 @@ extension SceneFunctions on Scene {
     }
 
     final direction = parseRowsAndColumnsToDirection(
-        pathFindDestination.row - node.row,
-        pathFindDestination.column - node.column,
+      pathFindDestination.row - node.row,
+      pathFindDestination.column - node.column,
     );
     node.reserveSurroundingNodes();
 
@@ -307,19 +297,6 @@ extension SceneFunctions on Scene {
 
   bool tileWalkableAt(double x, double y){
     return tileNodeAtXY(x, y).open;
-  }
-
-  int tileAt(double x, double y) {
-    final projectedX = y - x;
-    if (projectedX < 0) return tileBoundary;
-    final projectedY = x + y;
-    if (projectedY < 0) return tileBoundary;
-    const tileSize = 48;
-    final row = projectedY ~/ tileSize;
-    if (row >= numberOfRows) return tileBoundary;
-    final column = projectedX ~/ tileSize;
-    if (column >= numberOfColumns) return tileBoundary;
-    return this.tiles[row][column];
   }
 
   TileNode tileNodeAt(Vector2 position) {
@@ -370,6 +347,27 @@ extension SceneFunctions on Scene {
       character.y -= distance;
     }
   }
+}
+
+late AI pathFindAI;
+late TileNode pathFindDestination;
+var pathFindSearchID = 0;
+
+
+int parseRowsAndColumnsToDirection(int rows, int columns) {
+  assert(rows != 0 || columns != 0);
+  if (rows > 0) {
+     if (columns < 0) return Direction.DownLeft;
+     if (columns == 0) return Direction.Down;
+     return Direction.DownRight;
+  }
+  if (rows < 0) {
+    if (columns < 0) return Direction.UpLeft;
+    if (columns == 0) return Direction.Up;
+    return Direction.UpRight;
+  }
+  if (columns < 0) return Direction.Left;
+  return Direction.Right;
 }
 
 double perspectiveProjectX(double x, double y) {

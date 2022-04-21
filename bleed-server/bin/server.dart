@@ -30,6 +30,7 @@ import 'functions/withinRadius.dart';
 import 'games/Moba.dart';
 import 'games/world.dart';
 import 'settings.dart';
+import 'utilities.dart';
 
 const _space = " ";
 final _errorIndex = ServerResponse.Error;
@@ -541,12 +542,13 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
 
           player.game.structures.add(Structure(
-              x: player.mouse.x,
-              y: player.mouse.y,
+              x: snapX(player.mouse.x),
+              y: snapY(player.mouse.y),
               team: player.team,
               attackRate: 200,
               attackDamage: 1,
           ));
+          player.game.scene.tileNodeAt(player.mouse).open = true;
           break;
 
         case ClientRequest.Character_Load:
