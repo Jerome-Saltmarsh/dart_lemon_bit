@@ -2,6 +2,7 @@ import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/give_or_take.dart';
 
 import 'classes/Character.dart';
+import 'common/utilities.dart';
 
 const tileSize = 48.0;
 const halfTileSize = 24.0;
@@ -69,13 +70,13 @@ void snapToGrid(Vector2 value){
   value.y = snapY(value.y);
 }
 
-double snapX(double x){
-  return  (x - x % tileSize) + halfTileSize;
-}
-
-double snapY(double y){
-  return y - y % tileSize;
-}
+// double snapX(double x){
+//   return  (x - x % tileSize) + halfTileSize;
+// }
+//
+// double snapY(double y){
+//   return y - y % tileSize;
+// }
 
 void sortVertically(List<Vector2> items) {
   var start = 0;

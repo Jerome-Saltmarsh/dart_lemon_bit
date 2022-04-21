@@ -46,7 +46,6 @@ class IsometricModule {
   final particleEmitters = <ParticleEmitter>[];
   final paths = Float32List(10000);
   final targets = Float32List(10000);
-  var targetsTotal = 0;
   final particles = <Particle>[];
   final gemSpawns = <GemSpawn>[];
   final environmentObjects = <EnvironmentObject>[];
@@ -66,6 +65,7 @@ class IsometricModule {
   var tilesDst = Float32List(0);
   var tilesSrc = Float32List(0);
   var totalColumnsInt = 0;
+  var targetsTotal = 0;
   var totalRowsInt = 0;
   var minRow = 0;
   var maxRow = 0;
@@ -182,7 +182,7 @@ class IsometricModule {
   }
 
   int getTileAt(double x, double y){
-    return getTile((x + y) ~/ 48.0, (y - x) ~/ 48.0);
+    return getTile((x + y) ~/ tileSize, (y - x) ~/ tileSize);
   }
 
   int getTile(int row, int column){

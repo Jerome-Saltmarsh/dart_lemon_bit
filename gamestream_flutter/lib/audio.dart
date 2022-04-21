@@ -216,6 +216,7 @@ class _Audio {
   }
 
   void _play(String name, {double volume = 1}){
+    if (volume.isNaN) return;
     _getAudioPlayer().play('assets/audio/$name',
         isLocal: true,
         volume: volume)

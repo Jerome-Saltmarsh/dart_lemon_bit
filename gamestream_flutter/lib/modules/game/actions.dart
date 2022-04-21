@@ -13,6 +13,7 @@ import 'package:lemon_math/randomItem.dart';
 import 'state.dart';
 
 final _bulletHoles = game.bulletHoles;
+final _action = modules.game.state.characterController.action;
 
 class GameActions {
 
@@ -32,29 +33,24 @@ class GameActions {
     if (modules.game.buildMode.value){
       modules.game.buildMode.value = false;
       sendRequestConstruct();
-    } else {
-      setCharacterAction(CharacterAction.Perform);
+      return;
     }
+    setCharacterAction(CharacterAction.Perform);
   }
 
   void playerRun() {
     setCharacterAction(CharacterAction.Run);
   }
 
-
-  // void cameraCenterPlayer(){
-  //   engine.cameraCenter(_player.x, _player.y);
-  // }
-
   void emitPixelExplosion(double x, double y, {int amount = 10}) {
-    for (int i = 0; i < amount; i++) {
+    for (var i = 0; i < amount; i++) {
       modules.game.factories.emitPixel(x: x, y: y);
     }
   }
 
   void setCharacterAction(int value){
-    if (value < state.characterController.action.value) return;
-    state.characterController.action.value = value;
+    if (value < _action.value) return;
+    _action.value = value;
   }
 
   void setCharacterActionRun(){
@@ -109,7 +105,7 @@ class GameActions {
     sendRequestSelectAbility(4);
   }
 
-  void purchaseSlotType(int slotType){
+  void purchaseSlotType(int slotType) {
     webSocket.send('${ClientRequest.Purchase.index} $slotType');
   }
 

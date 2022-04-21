@@ -2,6 +2,8 @@
 import 'dart:math';
 
 import 'package:bleed_common/AbilityType.dart';
+import 'package:bleed_common/Tile.dart';
+import 'package:bleed_common/utilities.dart';
 import 'package:bleed_common/DynamicObjectType.dart';
 import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/OrbType.dart';
@@ -17,6 +19,7 @@ import 'package:gamestream_flutter/classes/Projectile.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
+import 'package:gamestream_flutter/modules/isometric/utilities.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/state/game.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -57,8 +60,15 @@ class GameRender {
     drawBulletHoles(_bulletHoles);
 
     if (modules.game.buildMode.value) {
-      renderStructure(mouseWorldX, mouseWorldY);
+      final row = getRow(mouseWorldX, mouseWorldY);
+      final column = getColumn(mouseWorldX, mouseWorldY);
+      renderStructure(
+          getTileWorldX(row, column),
+          getTileWorldY(row, column) + 24.0,
+      );
     }
+
+
 
     drawAbility();
     attackTargetCircle();

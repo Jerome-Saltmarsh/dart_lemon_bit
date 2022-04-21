@@ -22,6 +22,7 @@ import 'common/SlotType.dart';
 import 'common/SlotTypeCategory.dart';
 import 'common/WeaponType.dart';
 import 'common/compile_util.dart';
+import 'common/utilities.dart';
 import 'common/version.dart';
 import 'compile.dart';
 import 'engine.dart';
@@ -30,15 +31,12 @@ import 'functions/withinRadius.dart';
 import 'games/Moba.dart';
 import 'games/world.dart';
 import 'settings.dart';
-import 'utilities.dart';
 
 const _space = " ";
-final _errorIndex = ServerResponse.Error;
+const _errorIndex = ServerResponse.Error;
 final _buffer = StringBuffer();
 final _clientRequestsLength = clientRequests.length;
-
 var totalConnections = 0;
-
 
 void clearBuffer() {
   _buffer.clear();
