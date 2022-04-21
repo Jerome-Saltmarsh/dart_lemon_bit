@@ -66,8 +66,8 @@ int calculateTime({int minute = 0, int hour = 0}){
 }
 
 void snapToGrid(Vector2 value){
-  value.x = snapX(value.x);
-  value.y = snapY(value.y);
+  value.x = snapX(value.x, value.y);
+  value.y = snapY(value.x, value.y);
 }
 
 // double snapX(double x){

@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:bleed_common/CharacterState.dart';
-import 'package:bleed_common/DynamicObjectType.dart';
-import 'package:bleed_common/SlotType.dart';
-import 'package:bleed_common/Tile.dart';
 import 'package:bleed_common/Direction.dart';
+import 'package:bleed_common/DynamicObjectType.dart';
 import 'package:bleed_common/Shade.dart';
+import 'package:bleed_common/SlotType.dart';
+import 'package:bleed_common/utilities.dart';
 import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:gamestream_flutter/classes/DynamicObject.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';

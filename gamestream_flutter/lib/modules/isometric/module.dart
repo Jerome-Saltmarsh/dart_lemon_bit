@@ -1,32 +1,30 @@
 import 'dart:math';
-
-import 'package:bleed_common/ItemType.dart';
-import 'package:bleed_common/constants.dart';
-import 'package:bleed_common/ObjectType.dart';
-import 'package:bleed_common/ProjectileType.dart';
-import 'package:bleed_common/tileTypeToObjectType.dart';
-import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
-import 'package:gamestream_flutter/modules/isometric/utilities.dart';
-import 'package:gamestream_flutter/state/game.dart';
-import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/Vector2.dart';
-
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:bleed_common/GemSpawn.dart';
-import 'package:bleed_common/Tile.dart';
+import 'package:bleed_common/utilities.dart';
+import 'package:bleed_common/ItemType.dart';
+import 'package:bleed_common/ObjectType.dart';
+import 'package:bleed_common/ProjectileType.dart';
 import 'package:bleed_common/Shade.dart';
+import 'package:bleed_common/Tile.dart';
+import 'package:bleed_common/constants.dart';
+import 'package:bleed_common/tileTypeToObjectType.dart';
+import 'package:bleed_common/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
-import 'package:lemon_watch/watch.dart';
-
-
 import 'package:gamestream_flutter/functions.dart';
+import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
+import 'package:gamestream_flutter/modules/isometric/utilities.dart';
+import 'package:gamestream_flutter/state/game.dart';
+import 'package:lemon_engine/engine.dart';
+import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_watch/watch.dart';
 
 import 'enums.dart';
 import 'events.dart';
@@ -182,7 +180,7 @@ class IsometricModule {
   }
 
   int getTileAt(double x, double y){
-    return getTile((x + y) ~/ tileSize, (y - x) ~/ tileSize);
+    return getTile((x + y) ~/ 48.0, (y - x) ~/ 48.0);
   }
 
   int getTile(int row, int column){

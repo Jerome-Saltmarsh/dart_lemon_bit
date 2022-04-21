@@ -539,9 +539,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
+          final mouse = player.mouse;
           player.game.structures.add(Structure(
-              x: snapX(player.mouse.x),
-              y: snapY(player.mouse.y),
+              x: snapX(mouse.x, mouse.y),
+              y: snapY(mouse.x, mouse.y),
               team: player.team,
               attackRate: 200,
               attackDamage: 1,

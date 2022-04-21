@@ -101,12 +101,5 @@ int parseStringToTile(String text) {
   return nameTiles[text]!;
 }
 
-int getRow(double x, double y) {
-  return (x + y) ~/ 48.0;
-}
-
-int getColumn(double x, double y) {
-  return (y - x) ~/ 48.0;
-}
 
 

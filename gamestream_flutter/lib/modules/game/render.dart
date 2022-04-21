@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:bleed_common/AbilityType.dart';
 import 'package:bleed_common/Tile.dart';
-import 'package:bleed_common/utilities.dart';
 import 'package:bleed_common/DynamicObjectType.dart';
 import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/OrbType.dart';
@@ -11,6 +10,7 @@ import 'package:bleed_common/SlotType.dart';
 import 'package:bleed_common/configuration.dart';
 import 'package:bleed_common/ProjectileType.dart';
 import 'package:bleed_common/Shade.dart';
+import 'package:bleed_common/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
@@ -60,11 +60,9 @@ class GameRender {
     drawBulletHoles(_bulletHoles);
 
     if (modules.game.buildMode.value) {
-      final row = getRow(mouseWorldX, mouseWorldY);
-      final column = getColumn(mouseWorldX, mouseWorldY);
       renderStructure(
-          getTileWorldX(row, column),
-          getTileWorldY(row, column) + 24.0,
+          snapX(mouseWorldX, mouseWorldY),
+          snapY(mouseWorldX, mouseWorldY),
       );
     }
 
