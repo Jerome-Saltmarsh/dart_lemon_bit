@@ -102,15 +102,15 @@
 [ ] Destructible Chest
 [ ] Upgrade Panel    
 [ ] Destructible Rock
-    
 [ ] Weapon Axe    
 [ ] Resources [Stone, Wood, Gold, Food]
 [ ] Fix Map Editor
 [ ] FIX AI Pathfinding
 [ ] Construct Menu    
 [ ] Footstep Audio    
-[ ] Collect Rewards 
-[ ] Build Mode    
+[ ] Collect Rewards
+[ ] Construct Palisade    
+[x] Build Mode    
 [x] Zombies attack and destroy Structures
 [x] Destroy Trees    
 [x] Weapon Pickaxe    

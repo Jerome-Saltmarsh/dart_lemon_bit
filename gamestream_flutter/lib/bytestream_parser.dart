@@ -126,11 +126,14 @@ class _ByteStreamParser {
         case ServerResponse.Structures:
           final structures = game.structures;
           var total = 0;
-          while (readBool()) {
+          var type = _nextByte();
+          while (type != END) {
              final structure = structures[total];
              structure.x = _nextDouble();
              structure.y = _nextDouble();
+             structure.type = type;
              total++;
+             type = _nextByte();
           }
           game.totalStructures = total;
           break;

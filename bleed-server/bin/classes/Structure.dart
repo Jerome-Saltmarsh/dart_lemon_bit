@@ -11,8 +11,10 @@ class Structure extends Collider with Team, Health {
   int attackRate;
   int attackDamage;
   double attackRange;
+  int type; // StructureType.dart
 
   Structure({
+    required this.type,
     required double x,
     required double y,
     required int team,

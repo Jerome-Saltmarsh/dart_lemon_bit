@@ -2,15 +2,14 @@
 import 'dart:math';
 
 import 'package:bleed_common/AbilityType.dart';
-import 'package:bleed_common/Tile.dart';
 import 'package:bleed_common/DynamicObjectType.dart';
 import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/OrbType.dart';
 import 'package:bleed_common/SlotType.dart';
+import 'package:bleed_common/StructureType.dart';
 import 'package:bleed_common/configuration.dart';
 import 'package:bleed_common/ProjectileType.dart';
 import 'package:bleed_common/Shade.dart';
-import 'package:bleed_common/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
@@ -19,7 +18,6 @@ import 'package:gamestream_flutter/classes/Projectile.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
-import 'package:gamestream_flutter/modules/isometric/utilities.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/state/game.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -58,15 +56,7 @@ class GameRender {
     _render.renderTiles();
     drawProjectiles(_projectiles);
     drawBulletHoles(_bulletHoles);
-
-    if (modules.game.buildMode.value) {
-      renderStructure(
-          snapX(mouseWorldX, mouseWorldY),
-          snapY(mouseWorldX, mouseWorldY),
-      );
-    }
-
-
+    renderBuildMode();
 
     drawAbility();
     attackTargetCircle();
@@ -75,30 +65,45 @@ class GameRender {
       drawPaths();
     }
 
-    final totalStructures = game.totalStructures;
-    final structures = game.structures;
-    for (var i = 0; i < totalStructures; i++) {
-      final structure = structures[i];
-      renderStructure(structure.x, structure.y);
-    }
-
+    renderStructures();
     _render.renderSprites();
     drawEffects();
     drawItems();
   }
 
-  void renderStructure(double x, double y) {
-    engine.renderCustom(
-        dstX: x,
-        dstY: y,
-        srcX: 6125,
-        srcY: 0,
-        srcWidth: 48,
-        srcHeight: 100,
-        anchorY: 0.66
-    );
+  void renderStructures() {
+    final totalStructures = game.totalStructures;
+    final structures = game.structures;
+    for (var i = 0; i < totalStructures; i++) {
+      final structure = structures[i];
+      switch(structure.type){
+        case StructureType.Tower:
+          isometric.render.tower(structure.x, structure.y);
+          continue;
+        case StructureType.Palisade:
+          isometric.render.palisade(x: structure.x, y: structure.y);
+          continue;
+      }
+
+    }
   }
 
+  void renderBuildMode() {
+    final value = modules.game.structureType.value;
+    if (value == null) return;
+
+    final x = getMouseSnapX();
+    final y = getMouseSnapY();
+
+    switch (modules.game.structureType.value) {
+      case StructureType.Tower:
+        return isometric.render.tower(x, y);
+      case StructureType.Palisade:
+        return isometric.render.palisade(x: x, y: y);
+      default:
+        return;
+    }
+  }
 
   void renderDynamicObjects() {
     final totalDynamicEnvironmentObjects = game.totalDynamicObjects.value;

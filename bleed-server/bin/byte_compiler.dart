@@ -50,10 +50,10 @@ class _ByteCompiler {
     final structures = player.game.structures;
     for(final structure in structures){
       if (structure.dead) continue;
-       writeByte(1);
+       writeByte(structure.type);
        writeVector2(structure);
     }
-    writeByte(0);
+    writeByte(END);
   }
 
   void writePlayerOrbs(Player player) {

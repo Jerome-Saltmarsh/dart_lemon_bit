@@ -535,18 +535,29 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
         case ClientRequest.Construct:
           if (player == null) {
-            errorPlayerNotFound();
-            return;
+            return errorPlayerNotFound();
           }
-
+          if (arguments.length < 2) {
+            return errorArgsExpected(2, arguments);
+          }
+          final structureType = int.tryParse(arguments[1]);
+          if (structureType == null) {
+            return errorInvalidArg('arg int required');
+          }
+          if (structureType > 1 || structureType < 0){
+            return errorInvalidArg('invalid build mode index $structureType');
+          }
           final mouse = player.mouse;
-          player.game.structures.add(Structure(
-              x: snapX(mouse.x, mouse.y),
-              y: snapY(mouse.x, mouse.y),
-              team: player.team,
-              attackRate: 200,
-              attackDamage: 1,
-          ));
+          player.game.structures.add(
+              Structure(
+                type: structureType,
+                x: snapX(mouse.x, mouse.y),
+                y: snapY(mouse.x, mouse.y),
+                team: player.team,
+                attackRate: 200,
+                attackDamage: 1,
+              )
+          );
           player.game.scene.tileNodeAt(player.mouse).open = true;
           break;
 

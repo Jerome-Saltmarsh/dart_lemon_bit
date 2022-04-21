@@ -49,3 +49,5 @@ void refreshPage(){
   document.window!.location.href = document.domain!;
 }
 
+double getMouseSnapX() => snapX(mouseWorldX, mouseWorldY);
+double getMouseSnapY() => snapY(mouseWorldX, mouseWorldY);

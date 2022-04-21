@@ -30,9 +30,10 @@ class GameActions {
   }
 
   void playerPerform() {
-    if (modules.game.buildMode.value){
-      modules.game.buildMode.value = false;
-      sendRequestConstruct();
+    final structureType = modules.game.structureType.value;
+    if (structureType != null) {
+      sendRequestConstruct(structureType);
+      modules.game.structureType.value = null;
       return;
     }
     setCharacterAction(CharacterAction.Perform);

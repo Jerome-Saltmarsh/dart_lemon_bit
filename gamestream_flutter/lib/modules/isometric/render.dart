@@ -257,6 +257,36 @@ class IsometricRender {
     }
   }
 
+  void palisade({
+    required double x,
+    required double y,
+    int shade = Shade.Bright
+  }){
+    engine.renderCustom(
+      dstX: x,
+      dstY: y,
+      srcX: 1314 ,
+      srcY: shade * 96,
+      srcWidth: 48,
+      srcHeight: 96,
+      anchorY: 0.66,
+    );
+  }
+
+  void tower(double x, double y) {
+    engine.renderCustom(
+        dstX: x,
+        dstY: y,
+        srcX: 6125,
+        srcY: 0,
+        srcWidth: 48,
+        srcHeight: 100,
+        anchorY: 0.66
+    );
+  }
+
+
+
   void renderDynamicObject(DynamicObject dynamicObject){
     final shade = isometric.getShadeAt(dynamicObject);
     switch(dynamicObject.type) {

@@ -1,4 +1,5 @@
 
+import 'package:bleed_common/StructureType.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/game/build.dart';
@@ -23,7 +24,7 @@ class GameModule {
   late final GameMap map;
   late final GameQueries queries;
 
-  final buildMode = Watch(false);
+  final structureType = Watch<int?>(null);
 
   GameModule(){
     state = GameState();
@@ -36,7 +37,15 @@ class GameModule {
     build = GameBuild(state, actions);
   }
 
-  void enterBuildMode() {
-     buildMode.value = !buildMode.value;
+  void exitBuildMode(){
+    structureType.value = null;
+  }
+
+  void enterBuildModeTower() {
+     structureType.value = StructureType.Tower;
+  }
+
+  void enterBuildModePalisade() {
+    structureType.value = StructureType.Palisade;
   }
 }

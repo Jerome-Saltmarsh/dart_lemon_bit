@@ -4,4 +4,5 @@ class DynamicObjectType {
   static const Crate = 2;
   static const Grass = 3;
   static const Tree = 4;
+  static const Palisade = 5;
 }

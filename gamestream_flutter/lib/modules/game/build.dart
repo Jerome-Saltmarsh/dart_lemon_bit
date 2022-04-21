@@ -448,7 +448,8 @@ class GameBuild {
 
   Widget buildPanelStructures() {
       return Column(children: [
-         button("Tower", modules.game.enterBuildMode)
+         button("Tower", modules.game.enterBuildModeTower),
+         button("Palisade", modules.game.enterBuildModePalisade),
       ],);
   }
 

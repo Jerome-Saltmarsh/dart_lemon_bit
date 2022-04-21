@@ -11,7 +11,6 @@ import 'package:bleed_common/Shade.dart';
 import 'package:bleed_common/Tile.dart';
 import 'package:bleed_common/constants.dart';
 import 'package:bleed_common/tileTypeToObjectType.dart';
-import 'package:bleed_common/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Item.dart';

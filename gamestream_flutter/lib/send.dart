@@ -67,9 +67,15 @@ void sendRequestAttack() {
   webSocket.send(ClientRequest.Attack.index);
 }
 
-void sendRequestConstruct() {
-  print('sendRequestConstruct()');
-  webSocket.send(ClientRequest.Construct.index);
+void sendRequestConstruct(int value) {
+  sendClientRequest(ClientRequest.Construct, value);
+}
+
+void sendClientRequest(ClientRequest value, [dynamic message]){
+  if (message != null){
+    return webSocket.send('${value.index} $message');
+  }
+  webSocket.send(value.index);
 }
 
 final _characterController = modules.game.state.characterController;
