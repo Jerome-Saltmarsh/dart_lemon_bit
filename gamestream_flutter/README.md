@@ -109,6 +109,7 @@
 [ ] Construct Menu    
 [ ] Footstep Audio    
 [ ] Collect Rewards
+[x] Structure Render Order    
 [x] Palisade shouldn't fire arrows     
 [x] Construct Palisade    
 [x] Build Mode    

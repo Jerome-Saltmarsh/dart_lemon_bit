@@ -231,8 +231,7 @@ class Scene {
     return visitDirection(directionBehind, node);
   }
 
-
-  bool visitNode(TileNode node, TileNode previous){
+  bool visitNode(TileNode node, TileNode previous) {
     if (!node.open) return false;
     if (node.obstructed) return false;
 

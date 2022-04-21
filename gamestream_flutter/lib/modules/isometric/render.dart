@@ -5,12 +5,14 @@ import 'package:bleed_common/Direction.dart';
 import 'package:bleed_common/DynamicObjectType.dart';
 import 'package:bleed_common/Shade.dart';
 import 'package:bleed_common/SlotType.dart';
+import 'package:bleed_common/StructureType.dart';
 import 'package:bleed_common/utilities.dart';
 import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:gamestream_flutter/classes/DynamicObject.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
+import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:gamestream_flutter/modules/isometric/animations.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
@@ -120,11 +122,13 @@ class IsometricRender {
     final players = game.players;
     final npcs = game.interactableNpcs;
     final dynamicObjects = game.dynamicObjects;
+    final structures = game.structures;
     final screenBottom = engine.screen.bottom;
     final totalZombies = game.totalZombies.value;
     final totalPlayers = game.totalPlayers.value;
     final totalNpcs = game.totalNpcs;
     final totalDynamicObjects = game.totalDynamicObjects.value;
+    final totalStructures = game.totalStructures;
 
     var indexPlayer = 0;
     var indexEnv = 0;
@@ -132,12 +136,14 @@ class IsometricRender {
     var indexZombie = 0;
     var indexNpc = 0;
     var indexDynamicObject = 0;
+    var indexStructure = 0;
     var zombiesRemaining = indexZombie < totalZombies;
     var playersRemaining = indexPlayer < totalPlayers;
     var npcsRemaining = indexPlayer < totalNpcs;
     var environmentRemaining = indexEnv < totalEnvironment;
     var particlesRemaining = indexParticle < totalParticles;
     var dynamicObjectsRemaining = indexDynamicObject < totalDynamicObjects;
+    var structuresRemaining = indexStructure < totalStructures;
 
     var playerY = playersRemaining ? players[0].y : 0;
     var envY = environmentRemaining ? environmentObjects[0].y : 0;
@@ -146,23 +152,29 @@ class IsometricRender {
     var zombieY = zombiesRemaining ? zombies[0].y : 0;
     var npcY = npcsRemaining ? npcs[0].y : 0;
     var dynamicObjectY = dynamicObjectsRemaining ? dynamicObjects[0].y : 0;
+    var structureY = structuresRemaining ? structures[0].y : 0;
+
 
     while (true) {
 
       if (playersRemaining) {
-
         if (!environmentRemaining || playerY < envY) {
           if (!particlesRemaining || (playerY < particleY && !particleIsBlood)) {
             if (!zombiesRemaining || playerY < zombieY) {
-              if (!dynamicObjectsRemaining || playerY < dynamicObjectY) {
-                if (!npcsRemaining || playerY < npcY) {
-                  renderCharacter(players[indexPlayer]);
-                  indexPlayer++;
-                  playersRemaining = indexPlayer < totalPlayers;
-                  if (playersRemaining) {
-                    playerY = players[indexPlayer].y;
+              if (!structuresRemaining || playerY < structureY) {
+                if (!dynamicObjectsRemaining || playerY < dynamicObjectY) {
+                  if (!npcsRemaining || playerY < npcY) {
+                    renderCharacter(players[indexPlayer]);
+                    indexPlayer++;
+                    playersRemaining = indexPlayer < totalPlayers;
+                    if (playersRemaining) {
+                      playerY = players[indexPlayer].y;
+                      if (playerY > screenBottom) {
+                         playersRemaining = false;
+                      }
+                    }
+                    continue;
                   }
-                  continue;
                 }
               }
             }
@@ -171,21 +183,23 @@ class IsometricRender {
       }
 
       if (environmentRemaining) {
-        if (!particlesRemaining || envY < particleY && !particleIsBlood) {
-          if (!dynamicObjectsRemaining || envY < dynamicObjectY) {
-            if (!zombiesRemaining || envY < zombieY) {
-              if (!npcsRemaining || envY < npcY) {
-                if (envY > screenBottom) {
-                  return;
+        if (!structuresRemaining || envY < structureY) {
+          if (!particlesRemaining || envY < particleY && !particleIsBlood) {
+            if (!dynamicObjectsRemaining || envY < dynamicObjectY) {
+              if (!zombiesRemaining || envY < zombieY) {
+                if (!npcsRemaining || envY < npcY) {
+                  final env = environmentObjects[indexEnv];
+                  renderEnvironmentObject(env);
+                  indexEnv++;
+                  environmentRemaining = indexEnv < totalEnvironment;
+                  if (environmentRemaining) {
+                    envY = environmentObjects[indexEnv].y;
+                    if (envY > screenBottom) {
+                      environmentRemaining = false;
+                    }
+                  }
+                  continue;
                 }
-                final env = environmentObjects[indexEnv];
-                renderEnvironmentObject(env);
-                indexEnv++;
-                environmentRemaining = indexEnv < totalEnvironment;
-                if (environmentRemaining) {
-                  envY = environmentObjects[indexEnv].y;
-                }
-                continue;
               }
             }
           }
@@ -197,24 +211,51 @@ class IsometricRender {
           renderParticle(particles[indexParticle]);
           indexParticle++;
           particlesRemaining = indexParticle < totalParticles;
-          if (particlesRemaining){
+          if (particlesRemaining) {
             var nextParticle = particles[indexParticle];
             particleIsBlood = nextParticle.type == ParticleType.Blood;
             particleY = nextParticle.y;
+            if (particleY > screenBottom) {
+              particlesRemaining = false;
+            }
           }
           continue;
         }
 
         if (!zombiesRemaining || particleY < zombieY) {
-          if (!dynamicObjectsRemaining || particleY < dynamicObjectY) {
-            if (!npcsRemaining || particleY < npcY) {
-              renderParticle(particles[indexParticle]);
-              indexParticle++;
-              particlesRemaining = indexParticle < totalParticles;
-              if (particlesRemaining) {
-                var nextParticle = particles[indexParticle];
-                particleIsBlood = nextParticle.type == ParticleType.Blood;
-                particleY = nextParticle.y;
+          if (!structuresRemaining || particleY < structureY) {
+            if (!dynamicObjectsRemaining || particleY < dynamicObjectY) {
+              if (!npcsRemaining || particleY < npcY) {
+                renderParticle(particles[indexParticle]);
+                indexParticle++;
+                particlesRemaining = indexParticle < totalParticles;
+                if (particlesRemaining) {
+                  var nextParticle = particles[indexParticle];
+                  particleIsBlood = nextParticle.type == ParticleType.Blood;
+                  particleY = nextParticle.y;
+                  if (particleY > screenBottom) {
+                    particlesRemaining = false;
+                  }
+                }
+                continue;
+              }
+            }
+          }
+        }
+      }
+
+      if (zombiesRemaining) {
+        if (!structuresRemaining || zombieY < structureY) {
+          if (!dynamicObjectsRemaining || zombieY < dynamicObjectY) {
+            if (!npcsRemaining || zombieY < npcY) {
+              renderZombie(zombies[indexZombie]);
+              indexZombie++;
+              zombiesRemaining = indexZombie < totalZombies;
+              if (zombiesRemaining) {
+                zombieY = zombies[indexZombie].y;
+                if (zombieY > screenBottom) {
+                  zombiesRemaining = false;
+                }
               }
               continue;
             }
@@ -222,42 +263,72 @@ class IsometricRender {
         }
       }
 
-      if (zombiesRemaining) {
-        if (!dynamicObjectsRemaining || zombieY < dynamicObjectY) {
-          if (!npcsRemaining || zombieY < npcY) {
-            renderZombie(zombies[indexZombie]);
-            indexZombie++;
-            zombiesRemaining = indexZombie < totalZombies;
-            if (zombiesRemaining) {
-              zombieY = zombies[indexZombie].y;
+      if (npcsRemaining) {
+        if (!structuresRemaining || npcY < structureY) {
+          if (!dynamicObjectsRemaining || npcY < dynamicObjectY) {
+            drawInteractableNpc(npcs[indexNpc]);
+            indexNpc++;
+            npcsRemaining = indexNpc < totalNpcs;
+            if (npcsRemaining) {
+              npcY = npcs[indexNpc].y;
+              if (npcY > screenBottom) {
+                npcsRemaining = false;
+              }
             }
             continue;
           }
         }
       }
 
-      if (npcsRemaining) {
-        if (!dynamicObjectsRemaining || npcY < dynamicObjectY) {
-          drawInteractableNpc(npcs[indexNpc]);
-          indexNpc++;
-          npcsRemaining = indexNpc < totalNpcs;
-          if (npcsRemaining) {
-            npcY = npcs[indexNpc].y;
+      if (dynamicObjectsRemaining) {
+        if (!structuresRemaining || dynamicObjectY < structureY) {
+          renderDynamicObject(dynamicObjects[indexDynamicObject]);
+          indexDynamicObject++;
+          dynamicObjectsRemaining = indexDynamicObject < totalDynamicObjects;
+          if (dynamicObjectsRemaining) {
+            dynamicObjectY = dynamicObjects[indexDynamicObject].y;
+            if (dynamicObjectY > screenBottom) {
+              dynamicObjectsRemaining = false;
+            }
           }
           continue;
         }
       }
 
-      renderDynamicObject(dynamicObjects[indexDynamicObject]);
-      indexDynamicObject++;
-      dynamicObjectsRemaining = indexDynamicObject < totalDynamicObjects;
-      if (dynamicObjectsRemaining){
-        dynamicObjectY = dynamicObjects[indexDynamicObject].y;
+      renderStructure(structures[indexStructure]);
+      indexStructure++;
+      structuresRemaining = indexStructure < totalStructures;
+      if (structuresRemaining) {
+        structureY = structures[indexStructure].y;
+        if (structureY > screenBottom) {
+          structuresRemaining = false;
+        }
+        continue;
       }
+
+      if (
+          zombiesRemaining ||
+          playersRemaining ||
+          npcsRemaining ||
+          environmentRemaining ||
+          dynamicObjectsRemaining ||
+          structuresRemaining ||
+          particlesRemaining
+      ) continue;
+      return;
     }
   }
 
-  void palisade({
+  void renderStructure(Structure structure){
+    switch(structure.type){
+      case StructureType.Tower:
+        return renderTower(structure.x, structure.y);
+      case StructureType.Palisade:
+        return renderPalisade(x: structure.x, y: structure.y);
+    }
+  }
+
+  void renderPalisade({
     required double x,
     required double y,
     int shade = Shade.Bright
@@ -273,7 +344,7 @@ class IsometricRender {
     );
   }
 
-  void tower(double x, double y) {
+  void renderTower(double x, double y) {
     engine.renderCustom(
         dstX: x,
         dstY: y,

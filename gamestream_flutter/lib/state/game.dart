@@ -50,7 +50,7 @@ class _Game {
   var itemsTotal = 0;
 
   _Game() {
-    for (var i = 0; i < 1000; i++) {
+    for (var i = 0; i < 2000; i++) {
       dynamicObjects.add(DynamicObject());
     }
     for (var i = 0; i < 150; i++) {

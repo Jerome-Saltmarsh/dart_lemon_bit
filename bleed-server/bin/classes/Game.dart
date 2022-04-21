@@ -559,6 +559,7 @@ extension GameFunctions on Game {
     sortVertically(items);
     sortVertically(projectiles);
     sortVertically(scene.dynamicObjects);
+    sortVertically(structures);
   }
 
   void setCharacterStateRunning(Character character) {

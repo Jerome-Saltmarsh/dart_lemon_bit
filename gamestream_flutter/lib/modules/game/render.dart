@@ -15,6 +15,7 @@ import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/Projectile.dart';
+import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/constants/colours.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
@@ -65,27 +66,19 @@ class GameRender {
       drawPaths();
     }
 
-    renderStructures();
+    // renderStructures();
     _render.renderSprites();
     drawEffects();
     drawItems();
   }
 
-  void renderStructures() {
-    final totalStructures = game.totalStructures;
-    final structures = game.structures;
-    for (var i = 0; i < totalStructures; i++) {
-      final structure = structures[i];
-      switch(structure.type){
-        case StructureType.Tower:
-          isometric.render.tower(structure.x, structure.y);
-          continue;
-        case StructureType.Palisade:
-          isometric.render.palisade(x: structure.x, y: structure.y);
-          continue;
-      }
-    }
-  }
+  // void renderStructures() {
+  //   final totalStructures = game.totalStructures;
+  //   final structures = game.structures;
+  //   for (var i = 0; i < totalStructures; i++) {
+  //     renderStructure(structures[i]);
+  //   }
+  // }
 
   void renderBuildMode() {
     final value = modules.game.structureType.value;
@@ -96,9 +89,9 @@ class GameRender {
 
     switch (modules.game.structureType.value) {
       case StructureType.Tower:
-        return isometric.render.tower(x, y);
+        return isometric.render.renderTower(x, y);
       case StructureType.Palisade:
-        return isometric.render.palisade(x: x, y: y);
+        return isometric.render.renderPalisade(x: x, y: y);
       default:
         return;
     }
