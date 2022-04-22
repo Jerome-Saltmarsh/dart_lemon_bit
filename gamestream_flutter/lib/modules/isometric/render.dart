@@ -812,7 +812,8 @@ class IsometricRender {
         dstY: position.y,
         srcX: 6189,
         srcWidth: 26,
-        srcHeight: 26
+        srcHeight: 37,
+        anchorY: 0.66
     );
   }
 
