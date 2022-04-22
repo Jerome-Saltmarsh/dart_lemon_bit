@@ -160,7 +160,29 @@ class GameBuild {
                   child: textBuilder(modules.game.state.player.stone)),
             ],
           ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            color: colours.brownDark,
+            borderRadius: borderRadius4,
+          ),
+          child: Column(
+            children: [
+              Container(
+                width: 48,
+                height: 48,
+                alignment: Alignment.center,
+                child: resources.icons.resources.gold,
+              ),
+              Container(
+                  alignment: Alignment.center,
+                  width: 48,
+                  height: 48,
+                  child: textBuilder(modules.game.state.player.gold)),
+            ],
+          ),
         )
+
 
       ],
     );

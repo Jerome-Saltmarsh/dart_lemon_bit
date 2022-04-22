@@ -146,6 +146,15 @@ class GameEvents {
       case PlayerEvent.Collect_Wood:
         audio.coins(screenCenterWorldX, screenCenterWorldY);
         break;
+      case PlayerEvent.Collect_Rock:
+        audio.coins(screenCenterWorldX, screenCenterWorldY);
+        break;
+      case PlayerEvent.Collect_Experience:
+        audio.collectStar3(screenCenterWorldX, screenCenterWorldY);
+        break;
+      case PlayerEvent.Collect_Gold:
+        audio.coins(screenCenterWorldX, screenCenterWorldY);
+        break;
     }
   }
 
@@ -402,7 +411,7 @@ class GameEvents {
         audio.gunPickup(x, y);
         break;
       case GameEventType.Credits_Acquired:
-        audio.playAudioCollectStar(x, y);
+        audio.collectStar4(x, y);
         break;
       case GameEventType.Pot_Destroyed:
         for (var i = 0; i < 8; i++) {

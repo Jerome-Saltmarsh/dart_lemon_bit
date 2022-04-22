@@ -19,13 +19,22 @@ class Collectable extends Vector2 with Velocity, Active, Target<Player>, Duratio
     moveTowards(target, duration * 0.075);
     if (getDistance(target) > 10) return;
     deactivate();
-    target.onPlayerEvent(PlayerEvent.Collect_Wood);
-    switch(type){
+
+    switch (type) {
       case CollectableType.Wood:
         target.wood++;
+        target.onPlayerEvent(PlayerEvent.Collect_Wood);
         break;
       case CollectableType.Stone:
         target.stone++;
+        target.onPlayerEvent(PlayerEvent.Collect_Rock);
+        break;
+      case CollectableType.Experience:
+        target.onPlayerEvent(PlayerEvent.Collect_Experience);
+        break;
+      case CollectableType.Gold:
+        target.gold++;
+        target.onPlayerEvent(PlayerEvent.Collect_Gold);
         break;
     }
   }

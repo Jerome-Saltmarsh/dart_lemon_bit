@@ -228,6 +228,7 @@ class _ByteStreamParser {
           _player.storeVisible.value = readBool();
           _player.wood.value = nextInt();
           _player.stone.value = nextInt();
+          _player.gold.value = nextInt();
           break;
 
 

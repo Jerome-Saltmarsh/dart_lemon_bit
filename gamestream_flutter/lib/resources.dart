@@ -33,6 +33,7 @@ class _Icons {
 class _IconsResources {
   final wood = buildIcon("wood", width: 32, height: 32);
   final stone = buildIcon("stone", width: 32, height: 32);
+  final gold = buildIcon("gold", width: 32, height: 32);
 }
 
 class _IconsFirearms {

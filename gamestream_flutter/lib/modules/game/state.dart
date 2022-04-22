@@ -97,37 +97,37 @@ class Slots {
 }
 
 class Player {
-  int score = 0;
-  final xv = Watch(0.0);
-  double x = 0;
-  double y = 0;
-  int id = -1;
-  int team = 0;
-  Vector2 abilityTarget = Vector2(0, 0);
-  double abilityRange = 0;
-  double abilityRadius = 0;
-  double maxHealth = 0;
+  var score = 0;
+  var x = 0.0;
+  var y = 0.0;
+  var id = -1;
+  var team = 0;
+  var abilityRange = 0.0;
+  var abilityRadius = 0.0;
+  var maxHealth = 0.0;
+  var tile = Tile.Grass;
+  var attackRange = 0.0;
+  final abilityTarget = Vector2(0, 0);
   final storeVisible = Watch(false);
-  int tile = Tile.Grass;
-  double attackRange = 0;
-  final Vector2 attackTarget = Vector2(0, 0);
+  final attackTarget = Vector2(0, 0);
   final orbs = _PlayerOrbs();
   final slots = Slots();
-  final Watch<CharacterType> characterType = Watch(CharacterType.Human);
-  final Watch<double> health = Watch(0.0);
-  final Watch<int> experience = Watch(0);
-  final Watch<int> level = Watch(1);
-  final Watch<int> skillPoints = Watch(1);
-  final Watch<int> nextLevelExperience = Watch(1);
-  final Watch<double> experiencePercentage = Watch(0);
-  final Watch<String> message = Watch("");
-  final Watch<int> state = Watch(CharacterState.Idle);
-  final Watch<bool> alive = Watch(true);
-  final Watch<AbilityType> ability = Watch(AbilityType.None);
-  final Watch<double> magic = Watch(0);
-  final Watch<double> maxMagic = Watch(0);
+  final characterType = Watch(CharacterType.Human);
+  final health = Watch(0.0);
+  final experience = Watch(0);
+  final level = Watch(1);
+  final skillPoints = Watch(1);
+  final nextLevelExperience = Watch(1);
+  final experiencePercentage = Watch(0.0);
+  final message = Watch("");
+  final state = Watch(CharacterState.Idle);
+  final alive = Watch(true);
+  final ability = Watch(AbilityType.None);
+  final magic = Watch(0.0);
+  final maxMagic = Watch(0.0);
   final wood = Watch(0);
   final stone = Watch(0);
+  final gold = Watch(0);
 
   // Properties
   bool get dead => !alive.value;

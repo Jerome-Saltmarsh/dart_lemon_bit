@@ -375,12 +375,19 @@ extension GameFunctions on Game {
     final killed = target.dead;
 
     if (target is Character) {
+      final isZombie = target.type.isZombie;
+
       if (killed) {
         onCharacterKilled(target, src);
         setCharacterStateDead(target);
+        if (isZombie) {
+          spawnCollectable(position: target, target: src, type: CollectableType.Gold);
+          spawnCollectable(position: target, target: src, type: CollectableType.Experience);
+        }
         return;
       }
-      if (target.type.isZombie) {
+      if (isZombie) {
+        spawnCollectable(position: target, target: src, type: CollectableType.Experience);
         setCharacterState(target, CharacterState.Hurt);
       }
       if (target is AI) {
@@ -410,13 +417,7 @@ extension GameFunctions on Game {
           if (src is Player) {
             final amount = killed ? 3 : 1;
             for (var i = 0; i < amount; i++) {
-              final collectable = Collectable();
-              collectable.type = CollectableType.Stone;
-              collectable.target = src;
-              collectable.x = target.x;
-              collectable.y = target.y;
-              collectable.setVelocity(randomAngle(), 3.0);
-              collectables.add(collectable);
+              spawnCollectable(position: target, target: src, type: CollectableType.Stone);
             }
           }
           break;
@@ -425,13 +426,7 @@ extension GameFunctions on Game {
           if (src is Player) {
             final amount = killed ? 3 : 1;
             for (var i = 0; i < amount; i++) {
-              final collectable = Collectable();
-              collectable.type = CollectableType.Wood;
-              collectable.target = src;
-              collectable.x = target.x;
-              collectable.y = target.y;
-              collectable.setVelocity(randomAngle(), 3.0);
-              collectables.add(collectable);
+              spawnCollectable(position: target, target: src, type: CollectableType.Wood);
             }
           }
           break;
@@ -450,6 +445,20 @@ extension GameFunctions on Game {
         onDynamicObjectDestroyed(target);
       }
     }
+  }
+
+  void spawnCollectable({
+    required Vector2 position,
+    required Player target,
+    required int type
+  }){
+    final collectable = Collectable();
+    collectable.type = type;
+    collectable.target = target;
+    collectable.x = position.x;
+    collectable.y = position.y;
+    collectable.setVelocity(randomAngle(), 3.0);
+    collectables.add(collectable);
   }
 
   void playerGainExperience(Player player, int experience) {
@@ -852,16 +861,29 @@ extension GameFunctions on Game {
     }
 
     if (target is Health) {
-      applyDamage(src, target as Health, damage);
+      final health = target as Health;
+      applyDamage(src, health, damage);
     }
 
     final angleBetweenSrcAndTarget = radiansV2(src, target);
+    if (target is Velocity) {
+      final velocity = target as Velocity;
+      if (target is Health) {
+         const forceMultiplier = 3.0;
+         final health = target as Health;
+         velocity.accelerate(angleBetweenSrcAndTarget, damage / health.maxHealth * forceMultiplier);
+      } else {
+        velocity.accelerate(angleBetweenSrcAndTarget, damage.toDouble());
+      }
+    }
+
     if (target is Character) {
-      const forceMultiplier = 3.0;
-      target.accelerate(angleBetweenSrcAndTarget,
-          damage / target.maxHealth * forceMultiplier);
-      dispatchV2(GameEventType.Character_Struck, target,
-          angle: angleBetweenSrcAndTarget);
+      dispatchV2(
+          GameEventType.Character_Struck,
+          target,
+          angle: angleBetweenSrcAndTarget
+      );
+
       if (target.dead && target.type.isZombie) {
         dispatchV2(
           GameEventType.Zombie_Killed,

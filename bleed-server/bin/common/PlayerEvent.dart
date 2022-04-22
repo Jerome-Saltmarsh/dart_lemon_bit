@@ -14,4 +14,6 @@ class PlayerEvent {
   static const Orb_Earned_Emerald = 12;
   static const Collect_Wood = 13;
   static const Collect_Rock = 14;
+  static const Collect_Experience = 15;
+  static const Collect_Gold = 16;
 }

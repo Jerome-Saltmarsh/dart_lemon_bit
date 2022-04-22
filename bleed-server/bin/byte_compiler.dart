@@ -103,6 +103,7 @@ class _ByteCompiler {
     writeBool(player.storeVisible); // 1
     writeBigInt(player.wood);
     writeBigInt(player.stone);
+    writeBigInt(player.gold);
 
     writeStructures(player);
     writeCollectables(player);

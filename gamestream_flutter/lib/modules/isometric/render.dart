@@ -827,5 +827,15 @@ class IsometricRender {
         anchorY: 0.66,
     );
   }
+
+  void renderIconGold(Vector2 position){
+    engine.renderCustomV2(
+      dst: position,
+      srcX: 6245,
+      srcWidth: 25,
+      srcHeight: 32,
+      anchorY: 0.66,
+    );
+  }
 }
 

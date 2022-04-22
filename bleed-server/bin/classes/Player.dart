@@ -56,6 +56,7 @@ class Player extends Character {
 
   var wood = 0;
   var stone = 0;
+  var gold = 0;
 
   late Function onUpdated;
   late Function onOrbsChanged;

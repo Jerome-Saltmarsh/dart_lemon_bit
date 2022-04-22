@@ -265,7 +265,11 @@ class _Audio {
     _playPositioned('sci-fi-blaster-1.mp3', x, y);
   }
 
-  void playAudioCollectStar(double x, double y) {
+  void collectStar3(double x, double y) {
+    _playPositioned('collect-star-3.mp3', x, y);
+  }
+
+  void collectStar4(double x, double y) {
     _playPositioned('collect-star-4.mp3', x, y);
   }
 

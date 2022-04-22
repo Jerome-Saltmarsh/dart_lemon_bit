@@ -58,17 +58,20 @@ class GameRender {
     drawProjectiles(_projectiles);
     drawBulletHoles(_bulletHoles);
     renderBuildMode();
-
     drawAbility();
-
     attackTargetCircle();
+    drawPaths();
+    renderCollectables();
+    _render.renderSprites();
+    drawEffects();
+    drawItems();
+  }
 
-    if (state.compilePaths.value) {
-      drawPaths();
-    }
-
-    for (var i = 0; i < game.totalCollectables; i++) {
-      final collectable = game.collectables[i];
+  void renderCollectables() {
+    final total = game.totalCollectables;
+    final collectables = game.collectables;
+    for (var i = 0; i < total; i++) {
+      final collectable = collectables[i];
       switch (collectable.type) {
         case CollectableType.Wood:
           isometric.render.renderIconWood(collectable);
@@ -76,12 +79,19 @@ class GameRender {
         case CollectableType.Stone:
           isometric.render.renderIconStone(collectable);
           continue;
+        case CollectableType.Experience:
+          engine.renderCustomV2(
+              dst: collectable,
+              srcX: 417,
+              srcWidth: 7,
+              srcHeight: 7
+          );
+          continue;
+        case CollectableType.Gold:
+          isometric.render.renderIconGold(collectable);
+          continue;
       }
     }
-
-    _render.renderSprites();
-    drawEffects();
-    drawItems();
   }
 
   void renderBuildMode() {
@@ -98,34 +108,6 @@ class GameRender {
         return isometric.render.renderPalisade(x: x, y: y);
       default:
         return;
-    }
-  }
-
-  void renderDynamicObjects() {
-    final totalDynamicEnvironmentObjects = game.totalDynamicObjects.value;
-    for (var i = 0; i < totalDynamicEnvironmentObjects; i++) {
-       final dynamicObject = game.dynamicObjects[i];
-       final shade = isometric.getShadeAt(dynamicObject);
-       switch(dynamicObject.type) {
-         case DynamicObjectType.Pot:
-           engine.mapSrc64(
-               x: 6032,
-               y: shade * 64
-           );
-           engine.mapDst(x: dynamicObject.x, y: dynamicObject.y, anchorX: 32, anchorY: 32);
-           engine.renderAtlas();
-           break;
-         case DynamicObjectType.Rock:
-           engine.renderCustom(
-               dstX: dynamicObject.x,
-               dstY: dynamicObject.y,
-               srcX: 5592,
-               srcY: shade * 48,
-               srcWidth: 48,
-               srcHeight: 48
-           );
-           break;
-       }
     }
   }
 
@@ -228,6 +210,7 @@ class GameRender {
   }
 
   void drawPaths() {
+    if (!state.compilePaths.value) return;
     engine.setPaintColor(colours.blue);
     engine.paint.strokeWidth = 4.0;
 
