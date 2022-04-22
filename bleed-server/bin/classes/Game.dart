@@ -329,15 +329,8 @@ extension GameFunctions on Game {
       return;
     }
 
-    final dynamicObjects = scene.dynamicObjects;
-    for (final dynamicObject in dynamicObjects) {
-      if (dynamicObject.respawnDuration <= 0) continue;
-      if (dynamicObject.respawnDuration-- > 1) continue;
-      dynamicObject.collidable = true;
-      dynamicObject.health = 3;
-    }
-
     update();
+    updateDynamicObjects();
     updateCollectables();
     updateStructures();
     _updateCollisions();
@@ -417,12 +410,15 @@ extension GameFunctions on Game {
         case DynamicObjectType.Tree:
           dispatchV2(GameEventType.Tree_Struck, target);
           if (src is Player) {
-            final collectable = Collectable();
-            collectable.target = src;
-            collectable.x = target.x;
-            collectable.y = target.y;
-            collectable.setVelocity(randomAngle(), 3.0);
-            collectables.add(collectable);
+            final amount = killed ? 3 : 1;
+            for (var i = 0; i < amount; i++) {
+              final collectable = Collectable();
+              collectable.target = src;
+              collectable.x = target.x;
+              collectable.y = target.y;
+              collectable.setVelocity(randomAngle(), 3.0);
+              collectables.add(collectable);
+            }
           }
           break;
       }
@@ -1494,6 +1490,16 @@ extension GameFunctions on Game {
          collectable.deactivate();
          collectable.target.onPlayerEvent(PlayerEvent.Collect_Wood);
       }
+    }
+  }
+
+  void updateDynamicObjects() {
+    final dynamicObjects = scene.dynamicObjects;
+    for (final dynamicObject in dynamicObjects) {
+      if (dynamicObject.respawnDuration <= 0) continue;
+      if (dynamicObject.respawnDuration-- > 1) continue;
+      dynamicObject.collidable = true;
+      dynamicObject.health = 12;
     }
   }
 }
