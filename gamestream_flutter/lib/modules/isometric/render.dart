@@ -815,5 +815,15 @@ class IsometricRender {
         srcHeight: 26
     );
   }
+
+  void renderIconStone(Vector2 position){
+    engine.renderCustom(
+        dstX: position.x,
+        dstY: position.y,
+        srcX: 6216,
+        srcWidth: 26,
+        srcHeight: 25
+    );
+  }
 }
 

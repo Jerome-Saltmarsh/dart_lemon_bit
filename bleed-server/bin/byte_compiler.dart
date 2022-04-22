@@ -61,10 +61,10 @@ class _ByteCompiler {
     final collectables = player.game.collectables;
     for (final collectable in collectables) {
       if (collectable.inactive) continue;
-      writeByte(1);
+      writeByte(collectable.type);
       writeVector2(collectable);
     }
-    writeByte(0);
+    writeByte(END);
   }
 
   void writePlayerOrbs(Player player) {

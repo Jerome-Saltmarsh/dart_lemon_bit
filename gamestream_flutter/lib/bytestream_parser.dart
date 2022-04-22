@@ -118,9 +118,13 @@ class _ByteStreamParser {
         case ServerResponse.Collectables:
           final collectables = game.collectables;
           var total = 0;
-          while (readBool()) {
-            readVector2(collectables[total]);
+          var type = nextByte();
+          while (type != END) {
+            final collectable = collectables[total];
+            collectable.type = type;
+            readVector2(collectable);
             total++;
+            type = nextByte();
           }
           game.totalCollectables = total;
           break;

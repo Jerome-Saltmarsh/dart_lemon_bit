@@ -13,6 +13,7 @@ import '../bleed/zombie_health.dart';
 import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
+import '../common/CollectableType.dart';
 import '../common/DynamicObjectType.dart';
 import '../common/GameEventType.dart';
 import '../common/GameStatus.dart';
@@ -406,6 +407,18 @@ extension GameFunctions on Game {
       switch (target.type) {
         case DynamicObjectType.Rock:
           dispatchV2(GameEventType.Rock_Struck, target);
+          if (src is Player) {
+            final amount = killed ? 3 : 1;
+            for (var i = 0; i < amount; i++) {
+              final collectable = Collectable();
+              collectable.type = CollectableType.Stone;
+              collectable.target = src;
+              collectable.x = target.x;
+              collectable.y = target.y;
+              collectable.setVelocity(randomAngle(), 3.0);
+              collectables.add(collectable);
+            }
+          }
           break;
         case DynamicObjectType.Tree:
           dispatchV2(GameEventType.Tree_Struck, target);
@@ -413,6 +426,7 @@ extension GameFunctions on Game {
             final amount = killed ? 3 : 1;
             for (var i = 0; i < amount; i++) {
               final collectable = Collectable();
+              collectable.type = CollectableType.Wood;
               collectable.target = src;
               collectable.x = target.x;
               collectable.y = target.y;
@@ -1479,19 +1493,7 @@ extension GameFunctions on Game {
   }
 
   void updateCollectables() {
-    for (final collectable in collectables) {
-      if (collectable.inactive) continue;
-      collectable.duration++;
-      collectable.x += collectable.xv;
-      collectable.y += collectable.yv;
-      collectable.applyFriction(0.96);
-      collectable.moveTowards(collectable.target, collectable.duration * 0.075);
-      if (collectable.getDistance(collectable.target) < 10) {
-         collectable.deactivate();
-         collectable.target.onPlayerEvent(PlayerEvent.Collect_Wood);
-         collectable.target.wood++;
-      }
-    }
+    collectables.forEach((collectable) => collectable.update());
   }
 
   void updateDynamicObjects() {

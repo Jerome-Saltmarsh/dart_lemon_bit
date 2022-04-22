@@ -28,7 +28,7 @@ class _Game {
   final players = <Character>[];
   final zombies = <Character>[];
   final structures = <Structure>[];
-  final collectables = <Vector2>[];
+  final collectables = <Collectable>[];
   final interactableNpcs = <Character>[];
   final dynamicObjects = <DynamicObject>[];
   final effects = <Effect>[];
@@ -73,7 +73,7 @@ class _Game {
       structures.add(Structure());
     }
     for (var i = 0; i < 500; i++) {
-      collectables.add(Vector2(0, 0));
+      collectables.add(Collectable());
     }
   }
 
@@ -149,3 +149,11 @@ class _LobbyPlayer {
   _LobbyPlayer(this.name, this.team);
 }
 
+
+class Collectable extends Vector2 with Type {
+  Collectable() : super(0, 0);
+}
+
+mixin Type {
+  var type = 0;
+}

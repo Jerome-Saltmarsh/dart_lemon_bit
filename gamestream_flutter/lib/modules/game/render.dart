@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:bleed_common/AbilityType.dart';
+import 'package:bleed_common/CollectableType.dart';
 import 'package:bleed_common/DynamicObjectType.dart';
 import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/OrbType.dart';
@@ -67,7 +68,15 @@ class GameRender {
     }
 
     for (var i = 0; i < game.totalCollectables; i++) {
-      isometric.render.renderIconWood(game.collectables[i]);
+      final collectable = game.collectables[i];
+      switch (collectable.type) {
+        case CollectableType.Wood:
+          isometric.render.renderIconWood(collectable);
+          continue;
+        case CollectableType.Stone:
+          isometric.render.renderIconStone(collectable);
+          continue;
+      }
     }
 
     _render.renderSprites();
