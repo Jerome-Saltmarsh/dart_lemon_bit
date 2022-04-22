@@ -383,6 +383,7 @@ extension GameFunctions on Game {
         if (isZombie) {
           spawnCollectable(position: target, target: src, type: CollectableType.Gold);
           spawnCollectable(position: target, target: src, type: CollectableType.Experience);
+          spawnCollectable(position: target, target: src, type: CollectableType.Experience);
         }
         return;
       }

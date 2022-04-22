@@ -80,12 +80,7 @@ class GameRender {
           isometric.render.renderIconStone(collectable);
           continue;
         case CollectableType.Experience:
-          engine.renderCustomV2(
-              dst: collectable,
-              srcX: 417,
-              srcWidth: 7,
-              srcHeight: 7
-          );
+          isometric.render.renderIconExperience(collectable);
           continue;
         case CollectableType.Gold:
           isometric.render.renderIconGold(collectable);

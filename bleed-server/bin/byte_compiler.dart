@@ -104,7 +104,6 @@ class _ByteCompiler {
     writeBigInt(player.wood);
     writeBigInt(player.stone);
     writeBigInt(player.gold);
-
     writeStructures(player);
     writeCollectables(player);
     writePlayers(player);
