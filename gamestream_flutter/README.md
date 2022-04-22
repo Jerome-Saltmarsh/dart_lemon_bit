@@ -36,19 +36,6 @@
 [ ] Number of Teams
 [ ] Team spawn points
 [ ] Base Building Module
-[SKIRMISH]
--   In skirmish mode there are two teams each with an own base
-    The aim of the game is to capture all of the control points
-[ROYAL]
-[ ] LOOT
-[ ] Implement game over dialog
-[ ] Design Map  
-[ ] Score  
-[ ] Chests (drop 3 random gems)
-[ ] Server Strike Damage Calculation
-[ ] Arrow Capacity (Auto regenerates)
-[ ] Zombie Pause after attack
-[ ] Spell Cooldown
 [BETA-RELEASE]
 [ ] FIX Join Custom Game
 [ ] Drag inventory slots to change position    
@@ -91,7 +78,6 @@
 [ ] Block Tiles caste Shadows     
 [ ] Design Map Skirmish
 [ ] 2 Player Survival Game waves
-[Game Type Swarm]
 [ ] Construct Palisade    
 [ ] Construct Tower    
 [ ] Zombies Attack Tower    
@@ -104,11 +90,16 @@
 [ ] Destructible Rock
 [ ] Weapon Axe    
 [ ] Resources [Stone, Wood, Gold, Food]
-[ ] Fix Map Editor
-[ ] FIX AI Pathfinding
+[ ] (CRITICAL) Fix Map Editor
+[ ] (CRITICAL) FIX AI Pathfinding
+[ ] (CRITICAL) Fix 204 error    
 [ ] Construct Menu    
 [ ] Footstep Audio    
-[ ] Collect Rewards
+[ ] Construction cost materials
+[ ] Render Construction Preview using zordering    
+[ ] On kill enemy gain gold and experience    
+[ ] On strike enemy gain experience    
+[x] Collect Rewards
 [x] Structure Render Order    
 [x] Palisade shouldn't fire arrows     
 [x] Construct Palisade    

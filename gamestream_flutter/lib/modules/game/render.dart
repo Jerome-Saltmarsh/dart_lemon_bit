@@ -220,7 +220,7 @@ class GameRender {
       final player = game.players[i];
       if (!engine.screen.containsV(player)) continue;
       if (player.dead) continue;
-      const minDistance = 100;
+      const minDistance = 15;
       if (diffOver(mouseWorldX, player.x, minDistance)) continue;
       if (diffOver(mouseWorldY, player.y, minDistance)) continue;
       renderText(text: player.name, x: player.x, y: player.y + 5);
