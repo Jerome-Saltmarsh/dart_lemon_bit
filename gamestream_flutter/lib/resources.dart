@@ -10,14 +10,14 @@ class _Resources {
 
 class _Icons {
   static const _orbSize = 20.0;
-  final settings = _image("settings", width: 32, height: 32);
-  final topaz = _image("orb-topaz", width: _orbSize, height: _orbSize);
-  final emerald = _image("orb-emerald", width: _orbSize, height: _orbSize);
-  final ruby = _image("orb-ruby", width: _orbSize, height: _orbSize);
-  final sword = _image("sword");
-  final shield = _image("shield");
-  final unknown = _image("unknown");
-  final empty = _image("slot-empty");
+  final settings = buildIcon("settings", width: 32, height: 32);
+  final topaz = buildIcon("orb-topaz", width: _orbSize, height: _orbSize);
+  final emerald = buildIcon("orb-emerald", width: _orbSize, height: _orbSize);
+  final ruby = buildIcon("orb-ruby", width: _orbSize, height: _orbSize);
+  final sword = buildIcon("sword");
+  final shield = buildIcon("shield");
+  final unknown = buildIcon("unknown");
+  final empty = buildIcon("slot-empty");
   final armour = _ArmourIcons();
   final swords = _SwordIcons();
   final bows = _BowIcons();
@@ -27,60 +27,65 @@ class _Icons {
   final staffs = _StaffIcons();
   final books = _IconsBooks();
   final firearms = _IconsFirearms();
+  final resources = _IconsResources();
+}
+
+class _IconsResources {
+  final wood = buildIcon("wood", width: 32, height: 32);
 }
 
 class _IconsFirearms {
-  final handgun = _image("handgun");
-  final shotgun = _image("shotgun");
+  final handgun = buildIcon("handgun");
+  final shotgun = buildIcon("shotgun");
 }
 
 class _IconsBooks {
-  final grey = _image("book-grey");
-  final red = _image("book-red");
-  final blue = _image("book-blue");
+  final grey = buildIcon("book-grey");
+  final red = buildIcon("book-red");
+  final blue = buildIcon("book-blue");
 }
 
 class _StaffIcons {
-  final wooden = _image("staff-wooden");
-  final blue = _image("staff-blue");
-  final golden = _image("staff-golden");
+  final wooden = buildIcon("staff-wooden");
+  final blue = buildIcon("staff-blue");
+  final golden = buildIcon("staff-golden");
 }
 
 class _ArmourIcons {
-  final padded = _image('armour-padded');
-  final standard = _image("armour-standard");
-  final magic = _image("armour-magic");
+  final padded = buildIcon('armour-padded');
+  final standard = buildIcon("armour-standard");
+  final magic = buildIcon("armour-magic");
 }
 
 class _Trinkets {
-  final goldenNecklace = _image('necklace');
+  final goldenNecklace = buildIcon('necklace');
 }
 
 class _HeadIcons {
-  final steel = _image("helmet-steel");
-  final magic = _image("magic-hat");
-  final rogue = _image("hat-rogue");
+  final steel = buildIcon("helmet-steel");
+  final magic = buildIcon("magic-hat");
+  final rogue = buildIcon("hat-rogue");
 }
 
 class _PotionIcons {
-  final red = _image('potion-red');
-  final blue = _image('potion-blue');
+  final red = buildIcon('potion-red');
+  final blue = buildIcon('potion-blue');
 }
 
 class _SwordIcons {
-  final wooden = _image("sword-wooden");
-  final iron = _image("sword-iron");
-  final pickaxe = _image("pickaxe");
+  final wooden = buildIcon("sword-wooden");
+  final iron = buildIcon("sword-iron");
+  final pickaxe = buildIcon("pickaxe");
 }
 
 class _BowIcons {
-  final wooden = _image("bow-wooden");
-  final green = _image("bow-green");
-  final gold = _image("bow-gold");
+  final wooden = buildIcon("bow-wooden");
+  final green = buildIcon("bow-green");
+  final gold = buildIcon("bow-gold");
 }
 
 // Functions
-Widget _image(String fileName, {
+Widget buildIcon(String fileName, {
   double? width,
   double? height,
   double borderWidth = 1,

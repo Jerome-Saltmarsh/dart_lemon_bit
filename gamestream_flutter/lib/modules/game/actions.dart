@@ -8,7 +8,6 @@ import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/state/game.dart';
 import 'package:gamestream_flutter/webSocket.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/randomItem.dart';
 
 import 'state.dart';
 
@@ -64,18 +63,6 @@ class GameActions {
 
   void teleportToMouse() {
     sendRequestTeleport(mouseWorldX, mouseWorldY);
-  }
-
-  void sayGreeting() {
-    sendRequestSpeak(randomItem(state.greetings));
-  }
-
-  void sayLetsGo() {
-    sendRequestSpeak(randomItem(state.letsGo));
-  }
-
-  void sayWaitASecond() {
-    sendRequestSpeak(randomItem(state.waitASecond));
   }
 
   void toggleMessageBox() {

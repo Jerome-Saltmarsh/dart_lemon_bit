@@ -116,6 +116,34 @@ class GameBuild {
     });
   }
 
+  Widget buildResourcePanel() {
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: colours.brownDark,
+            borderRadius: borderRadius4,
+          ),
+          child: Column(
+            children: [
+              Container(
+                width: 48,
+                height: 48,
+                alignment: Alignment.center,
+                child: resources.icons.resources.wood,
+              ),
+              Container(
+                  alignment: Alignment.center,
+                  width: 48,
+                  height: 48,
+                  child: textBuilder(modules.game.state.player.wood)),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
   Widget buildHealthBar() {
     final width = 280.0;
     final height = width *
@@ -172,6 +200,7 @@ class GameBuild {
             bottomCenter(child: Column(
               children: [
                 // buildMagicBar(),
+                buildResourcePanel(),
                 buildHealthBar(),
               ],
             ), padding: _pad),
@@ -370,8 +399,8 @@ class GameBuild {
                 color: colours.brownDark,
                   child: Column(
                     children: [
-                      rowOrbs(),
-                      height16,
+                      // buildPanelOrbs(),
+                      // height16,
                       panel(child: _panelEquipped()),
                       height16,
                       panel(child: _panelInventory())
@@ -580,7 +609,7 @@ class GameBuild {
     );
   }
 
-  Widget rowOrbs(){
+  Widget buildPanelOrbs(){
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(

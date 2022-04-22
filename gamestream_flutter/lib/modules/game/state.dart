@@ -43,21 +43,7 @@ class GameState {
   var framesSinceOrbAcquired = 999;
   var lastOrbAcquired = OrbType.Emerald;
 
-  final List<String> letsGo = [
-    "Come on!",
-    "Let's go!",
-    'Follow me!',
-  ];
-
-  final List<String> greetings = [
-    'Hello',
-    'Hi',
-    'Greetings',
-  ];
-
-  final List<String> waitASecond = ['Wait a second', 'Just a moment'];
-
-  final Map<int, Widget> slotTypeImages = {
+  final slotTypeImages = <int, Widget> {
     SlotType.Empty: resources.icons.empty,
     SlotType.Sword_Short : resources.icons.sword,
     SlotType.Sword_Wooden : resources.icons.swords.wooden,

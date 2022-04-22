@@ -17,9 +17,6 @@ class GameMap {
         if (state.textBoxVisible.value) return;
         actions.playerPerform();
       },
-      state.keyMap.speakLetsGo: actions.sayLetsGo,
-      state.keyMap.speakLetsGreeting: actions.sayGreeting,
-      state.keyMap.waitASecond: actions.sayWaitASecond,
       state.keyMap.speak: actions.toggleMessageBox,
       state.keyMap.toggleAudio: audio.toggleEnabledSound,
       state.keyMap.hourForwards: actions.skipHour,
