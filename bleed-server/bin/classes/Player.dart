@@ -54,7 +54,8 @@ class Player extends Character {
   Vector2? target;
   Vector2 runTarget = Vector2(0, 0);
 
-  int wood = 0;
+  var wood = 0;
+  var stone = 0;
 
   late Function onUpdated;
   late Function onOrbsChanged;

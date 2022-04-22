@@ -101,7 +101,8 @@ class _ByteCompiler {
     writeByte(slots.helm.type); // 1
     writeBool(player.alive); // 1
     writeBool(player.storeVisible); // 1
-    writeBigInt(player.wood); // 1
+    writeBigInt(player.wood);
+    writeBigInt(player.stone);
 
     writeStructures(player);
     writeCollectables(player);

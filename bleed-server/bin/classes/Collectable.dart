@@ -1,6 +1,7 @@
 
 import 'package:lemon_math/Vector2.dart';
 
+import '../common/CollectableType.dart';
 import '../common/PlayerEvent.dart';
 import 'Player.dart';
 import 'components.dart';
@@ -19,6 +20,13 @@ class Collectable extends Vector2 with Velocity, Active, Target<Player>, Duratio
     if (getDistance(target) > 10) return;
     deactivate();
     target.onPlayerEvent(PlayerEvent.Collect_Wood);
-    target.wood++;
+    switch(type){
+      case CollectableType.Wood:
+        target.wood++;
+        break;
+      case CollectableType.Stone:
+        target.stone++;
+        break;
+    }
   }
 }

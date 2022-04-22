@@ -127,6 +127,7 @@ class Player {
   final Watch<double> magic = Watch(0);
   final Watch<double> maxMagic = Watch(0);
   final wood = Watch(0);
+  final stone = Watch(0);
 
   // Properties
   bool get dead => !alive.value;
