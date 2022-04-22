@@ -22,7 +22,7 @@ enum CameraMode {
 }
 
 class GameState {
-  final player = _Player();
+  final player = Player();
   final textEditingControllerMessage = TextEditingController();
   final characterController = CharacterController();
   final keyMap = KeyMap();
@@ -110,7 +110,7 @@ class Slots {
   final slot6 = Slot();
 }
 
-class _Player {
+class Player {
   int score = 0;
   final xv = Watch(0.0);
   double x = 0;
@@ -131,7 +131,6 @@ class _Player {
   final Watch<double> health = Watch(0.0);
   final Watch<int> experience = Watch(0);
   final Watch<int> level = Watch(1);
-  // final Watch<int> serverFrame = Watch(1);
   final Watch<int> skillPoints = Watch(1);
   final Watch<int> nextLevelExperience = Watch(1);
   final Watch<double> experiencePercentage = Watch(0);
@@ -141,6 +140,7 @@ class _Player {
   final Watch<AbilityType> ability = Watch(AbilityType.None);
   final Watch<double> magic = Watch(0);
   final Watch<double> maxMagic = Watch(0);
+  final wood = Watch(0);
 
   // Properties
   bool get dead => !alive.value;

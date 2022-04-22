@@ -20,6 +20,7 @@ import 'Collider.dart';
 import 'Game.dart';
 
 class Player extends Character {
+
   final gemSpawns = <GemSpawn>[];
   final slots = Slots();
   final orbs = Orbs();
@@ -52,6 +53,8 @@ class Player extends Character {
   Collider? aimTarget; // the currently highlighted character
   Vector2? target;
   Vector2 runTarget = Vector2(0, 0);
+
+  int wood = 0;
 
   late Function onUpdated;
   late Function onOrbsChanged;

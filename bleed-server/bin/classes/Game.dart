@@ -1489,6 +1489,7 @@ extension GameFunctions on Game {
       if (collectable.getDistance(collectable.target) < 10) {
          collectable.deactivate();
          collectable.target.onPlayerEvent(PlayerEvent.Collect_Wood);
+         collectable.target.wood++;
       }
     }
   }

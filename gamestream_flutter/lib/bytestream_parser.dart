@@ -70,25 +70,16 @@ class _ByteStreamParser {
   final _byteStreamPool = <int, Uint8List>{};
 
   void parse(List<int> values) {
-    final now = DateTime.now();
-    final duration = now.difference(time);
-    time = now;
-    msSinceLastUpdate.value = duration.inMilliseconds;
-    totalEvents.value++;
-    durationTotal += duration.inMilliseconds;
-    if (durationTotal == 0){
-      durationTotal = 35;
+    if (modules.game.state.debugPanelVisible.value){
+      updateSync();
     }
-    averageUpdate.value = durationTotal / totalEvents.value;
-
-    sync.value = duration.inMilliseconds / averageUpdate.value;
 
     framesSinceUpdateReceived.value = 0;
     _index = 0;
     bufferSize.value = values.length;
     this.values = values;
     while (true) {
-      final response = _nextByte();
+      final response = nextByte();
       switch(response){
         case ServerResponse.Zombies:
           _parseZombies();
@@ -115,8 +106,8 @@ class _ByteStreamParser {
           _parseDynamicObjects();
           break;
         case ServerResponse.Player_Attack_Target:
-          _player.attackTarget.x = _nextDouble();
-          _player.attackTarget.y = _nextDouble();
+          _player.attackTarget.x = nextDouble();
+          _player.attackTarget.y = nextDouble();
           engine.cursorType.value = CursorType.Click;
           break;
         case ServerResponse.Player_Attack_Target_None:
@@ -136,14 +127,14 @@ class _ByteStreamParser {
         case ServerResponse.Structures:
           final structures = game.structures;
           var total = 0;
-          var type = _nextByte();
+          var type = nextByte();
           while (type != END) {
              final structure = structures[total];
-             structure.x = _nextDouble();
-             structure.y = _nextDouble();
+             structure.x = nextDouble();
+             structure.y = nextDouble();
              structure.type = type;
              total++;
-             type = _nextByte();
+             type = nextByte();
           }
           game.totalStructures = total;
           break;
@@ -152,35 +143,35 @@ class _ByteStreamParser {
           final paths = modules.isometric.paths;
           var index = 0;
           while (true) {
-            final pathIndex = _nextInt();
+            final pathIndex = nextInt();
             paths[index] = pathIndex.toDouble();
             index++;
             if (pathIndex == 250) break;
             for (var i = 0; i < pathIndex; i++) {
-              paths[index] = _nextDouble();
-              paths[index + 1] = _nextDouble();
+              paths[index] = nextDouble();
+              paths[index + 1] = nextDouble();
               index += 2;
             }
           }
           final targets = modules.isometric.targets;
           var i = 0;
 
-          while(_nextByte() != 0) {
-             targets[i] = _nextDouble();
-             targets[i + 1] = _nextDouble();
-             targets[i + 2] = _nextDouble();
-             targets[i + 3] = _nextDouble();
+          while(nextByte() != 0) {
+             targets[i] = nextDouble();
+             targets[i + 1] = nextDouble();
+             targets[i + 2] = nextDouble();
+             targets[i + 3] = nextDouble();
              i += 4;
           }
           modules.isometric.targetsTotal = i;
           break;
         case ServerResponse.Game_Time:
-          _hours.value = _nextByte();
-          _minutes.value = _nextByte();
+          _hours.value = nextByte();
+          _minutes.value = nextByte();
           break;
         case ServerResponse.Player:
-          _player.x = _nextDouble();
-          _player.y = _nextDouble();
+          _player.x = nextDouble();
+          _player.y = nextDouble();
 
           switch(modules.game.state.cameraMode.value){
             case CameraMode.Chase:
@@ -222,23 +213,23 @@ class _ByteStreamParser {
               break;
           }
 
-          _player.health.value = _nextDouble();
-          _player.maxHealth = _nextDouble();
-          _player.magic.value = _nextDouble();
-
-          _player.maxMagic.value = _nextDouble();
+          _player.health.value = nextDouble();
+          _player.maxHealth = nextDouble();
+          _player.magic.value = nextDouble();
+          _player.maxMagic.value = nextDouble();
           readSlot(_slots.weapon);
-          _slots.armour.type.value = _readSlotType();
-          _slots.helm.type.value = _readSlotType();
+          _slots.armour.type.value = nextByte();
+          _slots.helm.type.value = nextByte();
           _player.alive.value = readBool();
           _player.storeVisible.value = readBool();
+          _player.wood.value = nextInt();
           break;
 
 
         case ServerResponse.Player_Orbs:
-          _orbs.topaz.value = _nextInt();
-          _orbs.emerald.value = _nextInt();
-          _orbs.ruby.value = _nextInt();
+          _orbs.topaz.value = nextInt();
+          _orbs.emerald.value = nextInt();
+          _orbs.ruby.value = nextInt();
           break;
 
         case ServerResponse.Player_Slots:
@@ -263,29 +254,43 @@ class _ByteStreamParser {
     }
   }
 
+  void updateSync() {
+    final now = DateTime.now();
+    final duration = now.difference(time);
+    time = now;
+    msSinceLastUpdate.value = duration.inMilliseconds;
+    totalEvents.value++;
+    durationTotal += duration.inMilliseconds;
+    if (durationTotal == 0){
+      durationTotal = 35;
+    }
+    averageUpdate.value = durationTotal / totalEvents.value;
+    sync.value = duration.inMilliseconds / averageUpdate.value;
+  }
+
   void _parseGameEvents(){
-      final type = _nextByte();
-      final x = _nextDouble();
-      final y = _nextDouble();
-      final angle = _nextDouble() * degreesToRadians;
+      final type = nextByte();
+      final x = nextDouble();
+      final y = nextDouble();
+      final angle = nextDouble() * degreesToRadians;
       modules.game.events.onGameEvent(type, x, y, angle);
   }
 
   void _parseProjectiles(){
-    final total = _nextInt();
+    final total = nextInt();
     final projectiles = game.projectiles;
     game.totalProjectiles = total;
     for (var i = 0; i < total; i++) {
       final projectile = projectiles[i];
-      projectile.x = _nextDouble();
-      projectile.y = _nextDouble();
+      projectile.x = nextDouble();
+      projectile.y = nextDouble();
       projectile.type = _readProjectileType();
-      projectile.angle = _nextDouble() * degreesToRadians;
+      projectile.angle = nextDouble() * degreesToRadians;
     }
   }
 
   void _parseCharacterTeamDirectionState(Character character){
-    final teamDirectionState = _nextByte();
+    final teamDirectionState = nextByte();
     readTeamDirectionState(character, teamDirectionState);
   }
 
@@ -302,13 +307,13 @@ class _ByteStreamParser {
     final zombies = game.zombies;
     var total = 0;
     while(true) {
-      final stateInt = _nextByte();
+      final stateInt = nextByte();
       if (stateInt == END) break;
       final character = zombies[total];
       readTeamDirectionState(character, stateInt);
-      character.x = _nextDouble();
-      character.y = _nextDouble();
-      _parseCharacterFrameHealth(character, _nextByte());
+      character.x = nextDouble();
+      character.y = nextDouble();
+      _parseCharacterFrameHealth(character, nextByte());
       total++;
     }
     game.totalZombies.value = total;
@@ -318,12 +323,12 @@ class _ByteStreamParser {
     final items = isometric.items;
     var index = 0;
     while(true) {
-      final itemTypeIndex = _nextByte();
+      final itemTypeIndex = nextByte();
       if (itemTypeIndex == END) break;
       final item = items[index];
       item.type = itemTypeIndex;
-      item.x = _nextDouble();
-      item.y = _nextDouble();
+      item.x = nextDouble();
+      item.y = nextDouble();
       index++;
     }
     game.itemsTotal = index;
@@ -333,19 +338,19 @@ class _ByteStreamParser {
     final players = game.players;
     var total = 0;
     while(true) {
-      final teamDirectionState = _nextByte();
+      final teamDirectionState = nextByte();
       if (teamDirectionState == END) break;
       final character = players[total];
       readTeamDirectionState(character, teamDirectionState);
-      character.x = _nextDouble();
-      character.y = _nextDouble();
-      _parseCharacterFrameHealth(character, _nextByte());
+      character.x = nextDouble();
+      character.y = nextDouble();
+      _parseCharacterFrameHealth(character, nextByte());
       character.magic = _nextPercentage();
-      character.equippedWeapon = _readSlotType();
-      character.equippedArmour = _readSlotType();
-      character.equippedHead = _readSlotType();
+      character.equippedWeapon = readSlotType();
+      character.equippedArmour = readSlotType();
+      character.equippedHead = readSlotType();
       character.name = readString();
-      character.score = _nextInt();
+      character.score = nextInt();
       character.text = readString();
       total++;
     }
@@ -354,7 +359,7 @@ class _ByteStreamParser {
   }
 
   void _parseNpcs() {
-    final total = _nextInt();
+    final total = nextInt();
     final npcs = game.interactableNpcs;
     game.totalNpcs = total;
     for (var i = 0; i < total; i++){
@@ -364,14 +369,14 @@ class _ByteStreamParser {
 
   void _readNpc(Character character){
     _readCharacter(character);
-    character.equippedWeapon = _readSlotType();
+    character.equippedWeapon = readSlotType();
   }
 
   void _readCharacter(Character character){
      _parseCharacterTeamDirectionState(character);
-     character.x = _nextDouble();
-     character.y = _nextDouble();
-     _parseCharacterFrameHealth(character, _nextByte());
+     character.x = nextDouble();
+     character.y = nextDouble();
+     _parseCharacterFrameHealth(character, nextByte());
   }
 
   void _parseCharacterFrameHealth(Character character, int byte){
@@ -382,43 +387,43 @@ class _ByteStreamParser {
   }
 
   void readSlot(Slot slot) {
-     slot.type.value = _readSlotType();
-     slot.amount.value = _nextInt();
+     slot.type.value = readSlotType();
+     slot.amount.value = nextInt();
   }
 
-  int _readSlotType(){
-    return _nextByte();
+  int readSlotType(){
+    return nextByte();
   }
 
   ProjectileType _readProjectileType(){
-    return projectileTypes[_nextByte()];
+    return projectileTypes[nextByte()];
   }
 
   double _nextPercentage(){
-    return _nextByte() / 100.0;
+    return nextByte() / 100.0;
   }
 
-  int _nextByte(){
+  int nextByte(){
     return values[_index++];
   }
 
   bool readBool(){
-    return _nextByte() == 1;
+    return nextByte() == 1;
   }
 
-  int _nextInt(){
+  int nextInt(){
     final value = readNumberFromByteArray(values, index: _index);
     _index += 2;
     return value;
   }
 
-  double _nextDouble(){
-    return _nextInt().toDouble();
+  double nextDouble(){
+    return nextInt().toDouble();
   }
 
   String readString() {
     const emptyString = "";
-    final length = _nextInt();
+    final length = nextInt();
     if (length == 0) return emptyString;
     return utf8.decode(readBytes(length));
   }
@@ -426,7 +431,7 @@ class _ByteStreamParser {
   List<int> readBytes(int length){
     final values = _getByteStream(length);
     for (var i = 0; i < length; i++) {
-      values[i] = _nextByte();
+      values[i] = nextByte();
     }
     return values;
   }
@@ -441,18 +446,18 @@ class _ByteStreamParser {
   }
 
   void _parsePlayerEvents() {
-    _events.onPlayerEvent(_nextByte());
+    _events.onPlayerEvent(nextByte());
   }
 
   void _parseDynamicObjects() {
       var total = 0;
       while (true) {
-         final typeIndex = _nextByte();
+         final typeIndex = nextByte();
          if (typeIndex == END) break;
          final dynamicObject = game.dynamicObjects[total];
          dynamicObject.type = typeIndex;
-         dynamicObject.x = _nextDouble();
-         dynamicObject.y = _nextDouble();
+         dynamicObject.x = nextDouble();
+         dynamicObject.y = nextDouble();
          dynamicObject.health = _nextPercentage();
          total++;
       }
@@ -460,7 +465,7 @@ class _ByteStreamParser {
   }
 
   void readVector2(Vector2 value){
-    value.x = _nextDouble();
-    value.y = _nextDouble();
+    value.x = nextDouble();
+    value.y = nextDouble();
   }
 }
