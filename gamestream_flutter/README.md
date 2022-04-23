@@ -89,19 +89,18 @@
 [ ] Upgrade Panel    
 [ ] Destructible Rock
 [ ] Weapon Axe    
-[ ] Resources [Stone, Wood, Gold, Food]
 [ ] (CRITICAL) Fix Map Editor
 [ ] (CRITICAL) FIX AI Pathfinding
 [ ] (CRITICAL) Fix 204 error    
 [ ] Footstep Audio    
-[ ] Construction cost materials
-[ ] Render Construction Preview using zordering    
+[ ] Render Construction Preview using z-ordering    
 [ ] On kill enemy gain gold and experience    
 [ ] Dynamic Object Chest
 [ ] Only build structures on valid spots
 [ ] Render Structure Health
-[ ] Fix Player runs at structure on built
 [ ] Fix Zombies attack structure animation
+[x] Fix Player runs at structure on built
+[x] Construction cost materials
 [x] Structure Panel Costs
 [x] Construct Menu
 [x] On strike enemy gain experience    
