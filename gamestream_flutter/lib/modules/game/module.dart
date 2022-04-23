@@ -1,5 +1,6 @@
 
 import 'package:bleed_common/StructureType.dart';
+import 'package:gamestream_flutter/audio.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/game/build.dart';
@@ -35,10 +36,15 @@ class GameModule {
     update = GameUpdate(state);
     map = GameMap(state, actions);
     build = GameBuild(state, actions);
+    structureType.onChanged(onStructureTypeChanged);
   }
 
   void exitBuildMode(){
     structureType.value = null;
+  }
+
+  void onStructureTypeChanged(int? value) {
+     audio.clickSound8();
   }
 
   void enterBuildModeTower() {
