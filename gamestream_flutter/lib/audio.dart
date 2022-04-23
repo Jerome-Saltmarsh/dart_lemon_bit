@@ -72,6 +72,10 @@ class _Audio {
     _play('click-sound-8.mp3');
   }
 
+  void error(){
+    _play('error-sound-15.mp3');
+  }
+
   void gong() {
     _play('gong.mp3');
   }

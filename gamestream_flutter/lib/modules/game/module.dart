@@ -49,17 +49,17 @@ class GameModule {
 
   void enterBuildModeTower() {
     final cost = StructureType.getCost(StructureType.Tower);
-    if (cost.wood > state.player.wood.value) return;
-    if (cost.gold > state.player.gold.value) return;
-    if (cost.stone > state.player.stone.value) return;
+    if (cost.wood > state.player.wood.value) return audio.error();
+    if (cost.gold > state.player.gold.value) return audio.error();
+    if (cost.stone > state.player.stone.value) return audio.error();
      structureType.value = StructureType.Tower;
   }
 
   void enterBuildModePalisade() {
     final cost = StructureType.getCost(StructureType.Palisade);
-    if (cost.wood > state.player.wood.value) return;
-    if (cost.gold > state.player.gold.value) return;
-    if (cost.stone > state.player.stone.value) return;
+    if (cost.wood > state.player.wood.value) return audio.error();
+    if (cost.gold > state.player.gold.value) return audio.error();
+    if (cost.stone > state.player.stone.value) return audio.error();
      structureType.value = StructureType.Palisade;
   }
 }
