@@ -2,6 +2,7 @@ import 'package:bleed_common/GameStatus.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/RoyalCost.dart';
 import 'package:bleed_common/SlotType.dart';
+import 'package:bleed_common/StructureType.dart';
 import 'package:bleed_common/version.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/audio.dart';
@@ -29,14 +30,16 @@ import 'package:lemon_watch/watch_builder.dart';
 
 import 'state.dart';
 
-const empty = SizedBox();
 
 class GameBuild {
 
   final GameState state;
   final GameActions actions;
 
+  static const empty = SizedBox();
+
   final storeColumnKey = GlobalKey();
+  final keyPanelStructure = GlobalKey();
 
   final double slotSize = 50;
 
@@ -274,6 +277,7 @@ class GameBuild {
             if (!alive)
             respawnButton(),
             buildHighlightedStoreSlot(),
+            buildPanelHighlightedStructureType(),
             buildHighlightedSlot(),
           ]);
     });
@@ -361,8 +365,31 @@ class GameBuild {
     });
   }
 
+  Widget buildPanelHighlightedStructureType(){
+    return WatchBuilder(state.highlightStructureType, (int? type){
+       if (type == null) return const SizedBox();
+       final context = keyPanelStructure.currentContext;
+       if (context == null) return const SizedBox();
+       final renderBox = context.findRenderObject() as RenderBox;
+
+       return Positioned(
+        right: 220,
+        top: renderBox.localToGlobal(Offset.zero).dy,
+        child: Container(
+          width: 200,
+          height: 200,
+          decoration: BoxDecoration(
+            color: colours.brownDark,
+            borderRadius: borderRadius4,
+          ),
+          child: text(StructureType.getName(type)),
+        ),
+      );
+    });
+  }
+
   Widget buildHighlightedStoreSlot() {
-    return WatchBuilder(state.highLightSlotType, (int slotType) {
+    return WatchBuilder(state.highlightSlotType, (int slotType) {
       if (slotType == SlotType.Empty) return empty;
 
       final cost = slotTypeCosts[slotType];
@@ -371,11 +398,11 @@ class GameBuild {
       }
 
       final storeColumnContext = storeColumnKey.currentContext;
+      var y = 0.0;
       if (storeColumnContext != null) {
         final renderBox = storeColumnContext.findRenderObject() as RenderBox;
         final offset = renderBox.localToGlobal(Offset.zero);
-        state.highlightPanelPosition.y = offset.dy;
-        state.highlightPanelPosition.x = engine.screen.width - 500;
+        y = offset.dy;
       }
 
       final damage = SlotType.getDamage(slotType);
@@ -385,7 +412,7 @@ class GameBuild {
 
       return Positioned(
         right: 220,
-        top: state.highlightPanelPosition.y,
+        top: y,
         child: Container(
           padding: padding16,
           color: colours.brownDark,
@@ -520,10 +547,60 @@ class GameBuild {
   }
 
   Widget buildPanelStructures() {
-      return Column(children: [
-         button("Tower", modules.game.enterBuildModeTower),
-         button("Palisade", modules.game.enterBuildModePalisade),
-      ],);
+      return Container(
+        key: keyPanelStructure,
+        decoration: BoxDecoration(
+          color: colours.brownDark,
+          borderRadius: borderRadius4,
+        ),
+        child: Row(
+          children: [
+            MouseRegion(
+              onEnter: (event) {
+                state.highlightStructureType.value = StructureType.Tower;
+              },
+              onExit: (event) {
+                if (state.highlightStructureType.value != StructureType.Tower) return;
+                state.highlightStructureType.value = null;
+              },
+              child: onPressed(
+                callback: modules.game.enterBuildModeTower,
+                child: Container(
+                    child: resources.icons.structures.tower,
+                    width: 48,
+                    height: 48,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: colours.brownDark,
+                      borderRadius: borderRadius4,
+                    ),
+                ),
+              ),
+            ),
+          MouseRegion(
+            onEnter: (event){
+              state.highlightStructureType.value = StructureType.Palisade;
+            },
+            onExit: (event){
+              if (state.highlightStructureType.value != StructureType.Palisade) return;
+              state.highlightStructureType.value = null;
+            },
+            child: onPressed(
+              callback: modules.game.enterBuildModePalisade,
+              child: Container(
+                child: resources.icons.structures.palisade,
+                width: 48,
+                height: 48,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: colours.brownDark,
+                  borderRadius: borderRadius4,
+                ),
+              ),
+            ),
+          )
+        ],),
+      );
   }
 
   Widget buildPanelStore() {
@@ -835,10 +912,10 @@ class GameBuild {
     }
 
     return mouseOver(onEnter: () {
-      state.highLightSlotType.value = slotType;
+      state.highlightSlotType.value = slotType;
     }, onExit: () {
-      if (state.highLightSlotType.value == slotType){
-        state.highLightSlotType.value = SlotType.Empty;
+      if (state.highlightSlotType.value == slotType){
+        state.highlightSlotType.value = SlotType.Empty;
       }
     }, builder: (context, isOver) {
 

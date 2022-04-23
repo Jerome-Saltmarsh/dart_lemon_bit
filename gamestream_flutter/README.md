@@ -93,12 +93,13 @@
 [ ] (CRITICAL) Fix Map Editor
 [ ] (CRITICAL) FIX AI Pathfinding
 [ ] (CRITICAL) Fix 204 error    
-[ ] Construct Menu    
 [ ] Footstep Audio    
 [ ] Construction cost materials
 [ ] Render Construction Preview using zordering    
 [ ] On kill enemy gain gold and experience    
-[ ] On strike enemy gain experience    
+[ ] Dynamic Object Chest
+[ ] Construct Menu
+[x] On strike enemy gain experience    
 [x] Collect Rewards
 [x] Structure Render Order    
 [x] Palisade shouldn't fire arrows     

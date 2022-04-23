@@ -28,12 +28,18 @@ class _Icons {
   final books = _IconsBooks();
   final firearms = _IconsFirearms();
   final resources = _IconsResources();
+  final structures = _IconsStructures();
 }
 
 class _IconsResources {
   final wood = buildIcon("wood", width: 32, height: 32);
   final stone = buildIcon("stone", width: 32, height: 32);
   final gold = buildIcon("gold", width: 32, height: 32);
+}
+
+class _IconsStructures {
+  final palisade = buildIcon("structure-palisade", width: 32, height: 32);
+  final tower = buildIcon("structure-tower", width: 32, height: 32);
 }
 
 class _IconsFirearms {

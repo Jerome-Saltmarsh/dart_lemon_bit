@@ -31,10 +31,11 @@ class GameState {
   final compilePaths = Watch(false);
   final storeTab = Watch(storeTabs[0]);
   final textBoxVisible = Watch(false);
-  final highLightSlotType = Watch(SlotType.Empty);
+  final highlightSlotType = Watch(SlotType.Empty);
+  final highlightStructureType = Watch<int?>(null);
   final highlightSlot = Watch<Slot?>(null);
 
-  final highlightPanelPosition = Vector2(0, 0);
+  // final highlightPanelPosition = Vector2(0, 0);
   final cameraMode = Watch(CameraMode.Chase);
   final framesSmoothed = Watch(0);
 
