@@ -19,11 +19,15 @@ class StructureType {
     }
     return cost;
   }
+
+  static bool isValid(int value){
+     return value >= 0 && value <= Palisade;
+  }
 }
 
 class Cost {
-  final wood;
-  final stone;
-  final gold;
+  final int wood;
+  final int stone;
+  final int gold;
   const Cost({this.wood = 0, this.stone = 0, this.gold = 0});
 }

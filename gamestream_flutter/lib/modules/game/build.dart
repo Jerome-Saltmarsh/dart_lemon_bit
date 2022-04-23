@@ -601,8 +601,8 @@ class GameBuild {
                 callback: modules.game.enterBuildModeTower,
                 child: Container(
                     child: resources.icons.structures.tower,
-                    width: 48,
-                    height: 48,
+                    width: 64,
+                    height: 64,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: colours.brownDark,

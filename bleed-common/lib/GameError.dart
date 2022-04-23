@@ -35,4 +35,5 @@ enum GameError {
   Login_Error,
   Account_Not_Found,
   Account_Required,
+  Construct_Insufficient_Resources,
 }

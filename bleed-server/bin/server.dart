@@ -20,6 +20,7 @@ import 'common/RoyalCost.dart';
 import 'common/ServerResponse.dart';
 import 'common/SlotType.dart';
 import 'common/SlotTypeCategory.dart';
+import 'common/StructureType.dart';
 import 'common/WeaponType.dart';
 import 'common/compile_util.dart';
 import 'common/utilities.dart';
@@ -544,9 +545,20 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (structureType == null) {
             return errorInvalidArg('arg int required');
           }
-          if (structureType > 1 || structureType < 0){
-            return errorInvalidArg('invalid build mode index $structureType');
+          if (!StructureType.isValid(structureType)){
+            return errorInvalidArg('Invalid StructureType $structureType');
           }
+          final cost = StructureType.getCost(structureType);
+
+          if (
+            cost.wood > player.wood ||
+            cost.gold > player.gold ||
+            cost.stone > player.stone
+          ) {
+            return error(GameError.Construct_Insufficient_Resources);
+          }
+
+          // TODO Shift game logic to game class
           final mouse = player.mouse;
           player.game.structures.add(
               Structure(
@@ -560,6 +572,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 health: 20,
               )
           );
+          player.stone -= cost.stone;
+          player.wood -= cost.wood;
+          player.gold -= cost.gold;
           player.game.scene.tileNodeAt(player.mouse).open = true;
           break;
 
