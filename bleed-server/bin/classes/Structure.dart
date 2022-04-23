@@ -26,9 +26,12 @@ class Structure extends Collider with Team, Health, Owner<Player> {
     required this.attackDamage,
     required Player owner,
     this.attackRange = 200.0,
+    required int health,
   }) : super(x: x, y: y, radius: 25) {
     this.team = team;
     this.owner = owner;
+    this.maxHealth = health;
+    this.health = health;
   }
 
   bool withinRange(Vector2 value) {

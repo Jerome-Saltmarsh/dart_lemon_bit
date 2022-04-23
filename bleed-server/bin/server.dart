@@ -555,8 +555,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 y: snapY(mouse.x, mouse.y),
                 team: player.team,
                 attackRate: 200,
-                attackDamage: 1,
+                attackDamage: 3,
                 owner: player,
+                health: 20,
               )
           );
           player.game.scene.tileNodeAt(player.mouse).open = true;

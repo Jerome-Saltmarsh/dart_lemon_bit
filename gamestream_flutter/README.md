@@ -98,7 +98,12 @@
 [ ] Render Construction Preview using zordering    
 [ ] On kill enemy gain gold and experience    
 [ ] Dynamic Object Chest
-[ ] Construct Menu
+[ ] Only build structures on valid spots
+[ ] Render Structure Health
+[ ] Fix Player runs at structure on built
+[ ] Fix Zombies attack structure animation
+[x] Structure Panel Costs
+[x] Construct Menu
 [x] On strike enemy gain experience    
 [x] Collect Rewards
 [x] Structure Render Order    

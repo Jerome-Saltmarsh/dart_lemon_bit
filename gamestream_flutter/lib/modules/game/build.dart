@@ -372,17 +372,51 @@ class GameBuild {
        if (context == null) return const SizedBox();
        final renderBox = context.findRenderObject() as RenderBox;
 
+       final cost = StructureType.getCost(type);
+
        return Positioned(
         right: 220,
         top: renderBox.localToGlobal(Offset.zero).dy,
         child: Container(
           width: 200,
-          height: 200,
+          // height: 200,
+          padding: padding8,
           decoration: BoxDecoration(
             color: colours.brownDark,
             borderRadius: borderRadius4,
           ),
-          child: text(StructureType.getName(type)),
+          child: Column(
+            children: [
+              text(StructureType.getName(type)),
+              height8,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  if (cost.wood > 0)
+                  Column(
+                    children: [
+                      resources.icons.resources.wood,
+                      text(cost.wood),
+                    ],
+                  ),
+                  if (cost.stone > 0)
+                    Column(
+                      children: [
+                        resources.icons.resources.stone,
+                        text(cost.stone),
+                      ],
+                    ),
+                  if (cost.gold > 0)
+                    Column(
+                      children: [
+                        resources.icons.resources.gold,
+                        text(cost.gold),
+                      ],
+                    ),
+                ],
+              ),
+            ],
+          ),
         ),
       );
     });
