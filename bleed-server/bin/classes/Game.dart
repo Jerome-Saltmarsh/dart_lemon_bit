@@ -450,7 +450,7 @@ extension GameFunctions on Game {
 
   void spawnCollectable({
     required Vector2 position,
-    required Player target,
+    required Vector2 target,
     required int type
   }){
     final collectable = Collectable();

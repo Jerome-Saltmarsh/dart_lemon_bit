@@ -556,6 +556,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 team: player.team,
                 attackRate: 200,
                 attackDamage: 1,
+                owner: player,
               )
           );
           player.game.scene.tileNodeAt(player.mouse).open = true;

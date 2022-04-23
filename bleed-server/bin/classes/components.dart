@@ -3,6 +3,10 @@ import 'dart:math';
 import '../maths.dart';
 import '../utilities.dart';
 
+mixin Owner <T> {
+  late T owner;
+}
+
 mixin Team {
   var team = 0;
 }
