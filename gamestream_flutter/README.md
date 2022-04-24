@@ -93,11 +93,12 @@
 [ ] (CRITICAL) FIX AI Pathfinding
 [ ] (CRITICAL) Fix 204 error    
 [ ] Footstep Audio    
-[ ] On kill enemy gain gold and experience    
 [ ] Dynamic Object Chest
 [ ] Render Structure Health
 [ ] Fix Zombies attack structure animation
-[ ] Only build structures on valid spots
+[ ] Construct Torch
+[x] On kill enemy gain gold and experiencea
+[x] Only build structures on valid spots
 [x] Render Construction Preview using z-ordering    
 [x] Fix Player runs at structure on built
 [x] Construction cost materials

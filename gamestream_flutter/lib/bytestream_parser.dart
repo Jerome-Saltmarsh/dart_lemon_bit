@@ -464,7 +464,6 @@ class _ByteStreamParser {
          dynamicObject.type = typeIndex;
          dynamicObject.x = nextDouble();
          dynamicObject.y = nextDouble();
-         dynamicObject.health = _nextPercentage();
          total++;
       }
       game.totalDynamicObjects.value = total;

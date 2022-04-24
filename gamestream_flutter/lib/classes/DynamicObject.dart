@@ -3,6 +3,6 @@ import 'package:lemon_math/Vector2.dart';
 
 class DynamicObject extends Vector2 {
   var type = DynamicObjectType.Rock;
-  var health = 1.0;
+  // var health = 1.0;
   DynamicObject() : super(0, 0);
 }

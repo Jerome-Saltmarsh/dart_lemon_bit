@@ -130,7 +130,7 @@ class _ByteCompiler {
        if (dynamicObject.y > player.screenBottom) break;
        writeByte(dynamicObject.type);
        writeVector2(dynamicObject);
-       writePercentage(dynamicObject.health / dynamicObject.maxHealth);
+       // writePercentage(dynamicObject.health / dynamicObject.maxHealth);
      }
      writeByte(END);
   }
