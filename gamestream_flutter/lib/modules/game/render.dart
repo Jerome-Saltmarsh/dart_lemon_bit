@@ -57,9 +57,13 @@ class GameRender {
     _render.renderTiles();
     drawProjectiles(_projectiles);
     drawBulletHoles(_bulletHoles);
-    renderBuildMode();
     drawAbility();
-    attackTargetCircle();
+    if (modules.game.structureType.value != null){
+      renderBuildMode();
+    } else {
+      attackTargetCircle();
+    }
+
     drawPaths();
     renderCollectables();
     _render.renderSprites();
