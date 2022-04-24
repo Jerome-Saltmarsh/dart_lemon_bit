@@ -98,7 +98,7 @@
 [ ] Only build structures on valid spots
 [ ] Render Structure Health
 [ ] Fix Zombies attack structure animation
-[ ] Render Construction Preview using z-ordering    
+[x] Render Construction Preview using z-ordering    
 [x] Fix Player runs at structure on built
 [x] Construction cost materials
 [x] Structure Panel Costs

@@ -58,12 +58,9 @@ class GameRender {
     drawProjectiles(_projectiles);
     drawBulletHoles(_bulletHoles);
     drawAbility();
-    if (modules.game.structureType.value != null){
-      renderBuildMode();
-    } else {
+    if (modules.game.structureType.value == null){
       attackTargetCircle();
     }
-
     drawPaths();
     renderCollectables();
     _render.renderSprites();
@@ -90,23 +87,6 @@ class GameRender {
           isometric.render.renderIconGold(collectable);
           continue;
       }
-    }
-  }
-
-  void renderBuildMode() {
-    final value = modules.game.structureType.value;
-    if (value == null) return;
-
-    final x = getMouseSnapX();
-    final y = getMouseSnapY();
-
-    switch (modules.game.structureType.value) {
-      case StructureType.Tower:
-        return isometric.render.renderTower(x, y);
-      case StructureType.Palisade:
-        return isometric.render.renderPalisade(x: x, y: y);
-      default:
-        return;
     }
   }
 
