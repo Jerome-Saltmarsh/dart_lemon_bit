@@ -557,9 +557,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           ) {
             return error(GameError.Construct_Insufficient_Resources);
           }
-
-          // TODO Shift game logic to game class
           final mouse = player.mouse;
+          if (!player.game.scene.tileWalkableAt(mouse.x, mouse.y)) {
+            return error(GameError.Construct_Invalid_Tile);
+          }
+          // TODO Shift game logic to game class
           player.game.structures.add(
               Structure(
                 type: structureType,

@@ -36,4 +36,5 @@ enum GameError {
   Account_Not_Found,
   Account_Required,
   Construct_Insufficient_Resources,
+  Construct_Invalid_Tile,
 }
