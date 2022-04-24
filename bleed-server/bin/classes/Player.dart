@@ -5,6 +5,7 @@ import '../common/AbilityMode.dart';
 import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
+import '../common/GameError.dart';
 import '../common/GemSpawn.dart';
 import '../common/OrbType.dart';
 import '../common/PlayerEvent.dart';
@@ -63,6 +64,7 @@ class Player extends Character {
   late Function onSlotsChanged;
   late Function(int value) onPlayerEvent;
   late Function(int type, double x, double y, double angle) onGameEvent;
+  late Function(GameError error, {String message}) dispatchError;
 
   double get mouseAngle => getAngle(mouse);
 

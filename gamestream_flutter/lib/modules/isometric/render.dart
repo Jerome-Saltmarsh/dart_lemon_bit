@@ -329,7 +329,6 @@ class IsometricRender {
         renderBuildMode();
         buildModeRemaining = false;
       }
-
       if (
           zombiesRemaining ||
           playersRemaining ||

@@ -31,6 +31,7 @@ import 'functions/generateName.dart';
 import 'functions/withinRadius.dart';
 import 'games/Moba.dart';
 import 'games/world.dart';
+import 'physics.dart';
 import 'settings.dart';
 
 const _space = " ";
@@ -138,6 +139,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
      sink.add(byteCompiler.writeToSendBuffer());
     }
 
+    void error(GameError error, {String message = ""}) {
+      reply('${ServerResponse.Error} ${error.index} $message');
+    }
+
     void onGameJoined(){
       final player = _player;
       if (player == null) return;
@@ -145,6 +150,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       player.onOrbsChanged = compileOrbsChanged;
       player.onSlotsChanged = compileAndSendPlayerSlots;
       player.onGameEvent = sendGameEvent;
+      player.dispatchError = error;
       player.onPlayerEvent = sendPlayerEvent;
       final account = _account;
       if (account != null) {
@@ -201,10 +207,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       orbs.topaz = 100;
       orbs.ruby = 100;
       onGameJoined();
-    }
-
-    void error(GameError error, {String message = ""}) {
-      reply('$_errorIndex ${error.index} $message');
     }
 
     void errorInvalidArg(String message) {
@@ -561,12 +563,52 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (!player.game.scene.tileWalkableAt(mouse.x, mouse.y)) {
             return error(GameError.Construct_Invalid_Tile);
           }
+
+          final mouseSnapX = snapX(mouse.x, mouse.y);
+          final mouseSnapY = snapY(mouse.x, mouse.y);
+
+          if (sphereCaste(
+              colliders: player.game.colliders,
+              x: mouseSnapX,
+              y: mouseSnapY,
+              radius: halfTileSize
+          ) != null) {
+            return error(GameError.Construct_Area_Not_Available);
+          }
+
+          if (sphereCaste(
+              colliders: player.game.zombies,
+              x: mouseSnapX,
+              y: mouseSnapY,
+              radius: halfTileSize
+          ) != null) {
+            return error(GameError.Construct_Area_Not_Available);
+          }
+
+          if (sphereCaste(
+              colliders: player.game.players,
+              x: mouseSnapX,
+              y: mouseSnapY,
+              radius: halfTileSize
+          ) != null) {
+            return error(GameError.Construct_Area_Not_Available);
+          }
+
+          if (sphereCaste(
+              colliders: player.game.dynamicObjects,
+              x: mouseSnapX,
+              y: mouseSnapY,
+              radius: halfTileSize
+          ) != null) {
+            return error(GameError.Construct_Area_Not_Available);
+          }
+
           // TODO Shift game logic to game class
           player.game.structures.add(
               Structure(
                 type: structureType,
-                x: snapX(mouse.x, mouse.y),
-                y: snapY(mouse.x, mouse.y),
+                x: mouseSnapX,
+                y: mouseSnapY,
                 team: player.team,
                 attackRate: 200,
                 attackDamage: 3,
@@ -577,7 +619,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.stone -= cost.stone;
           player.wood -= cost.wood;
           player.gold -= cost.gold;
-          player.game.scene.tileNodeAt(player.mouse).open = true;
+          player.game.scene.tileNodeAt(player.mouse).open = false;
           break;
 
         case ClientRequest.Character_Load:

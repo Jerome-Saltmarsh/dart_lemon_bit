@@ -39,7 +39,7 @@ T? sphereCaste<T extends Collider>({
   required double x,
   required double y,
   required double radius,
-  required Function(T t) predicate,
+  Function(T t)? predicate,
 }) {
   if (colliders.isEmpty) return null;
   final top = y - radius;
@@ -51,7 +51,7 @@ T? sphereCaste<T extends Collider>({
 
   for (final collider in colliders) {
     if (!collider.collidable) continue;
-    if (predicate(collider)) continue;
+    if (predicate != null && predicate(collider)) continue;
     if (collider.bottom < top) continue;
     if (collider.top > bottom) break;
     if (collider.right < left) continue;
