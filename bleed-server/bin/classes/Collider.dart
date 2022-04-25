@@ -1,8 +1,9 @@
 
 import 'package:lemon_math/Vector2.dart';
 
-class Collider with Position {
-  double radius;
+import 'components.dart';
+
+class Collider with Position, Radius {
   double get left => x - radius;
   double get right => x + radius;
   double get top => y - radius;
@@ -12,10 +13,11 @@ class Collider with Position {
   Collider({
     required double x,
     required double y,
-    required this.radius
+    required double radius
   }) {
     this.x = x;
     this.y = y;
+    this.radius = radius;
   }
 
   void onCollisionWith(Collider other){ }

@@ -2,12 +2,15 @@ import 'package:lemon_math/Vector2.dart';
 
 import 'Game.dart';
 
-class SpawnPoint extends Vector2 {
+class SpawnPoint with Position {
   final Game game;
 
   SpawnPoint({
     required this.game,
     required double x,
     required double y,
-  }) : super(x, y);
+  }) {
+    this.x = x;
+    this.y = y;
+  }
 }

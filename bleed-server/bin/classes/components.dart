@@ -66,3 +66,7 @@ mixin Target<T> {
 mixin Duration {
   var duration = 0;
 }
+
+mixin Radius {
+  var radius = 0.0;
+}

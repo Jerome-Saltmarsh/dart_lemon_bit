@@ -1,7 +1,5 @@
 import 'package:bleed_server/CubeGame.dart';
-import 'package:lemon_math/Vector2.dart';
 
-import 'classes/Crate.dart';
 import 'classes/EnvironmentObject.dart';
 import 'classes/Game.dart';
 import 'classes/Player.dart';
@@ -14,23 +12,6 @@ import 'games/Royal.dart';
 final _indexNpcMessage = ServerResponse.NpcMessage;
 const _space = ' ';
 const _semiColon = '; ';
-
-void compileCrates(StringBuffer buffer, List<Crate> crates) {
-  _write(buffer, ServerResponse.Crates);
-  _write(buffer, crates.length);
-  for (Crate crate in crates) {
-    _writeVector2Int(buffer, crate);
-  }
-}
-
-// void compileItems(StringBuffer buffer, List<Item> items) {
-//   _write(buffer, ServerResponse.Items);
-//   _write(buffer, items.length);
-//   for (final item in items) {
-//     _write(buffer, item.type);
-//     _writeVector2Int(buffer, item);
-//   }
-// }
 
 void compileTeamLivesRemaining(StringBuffer buffer, GameMoba moba) {
   _write(buffer, ServerResponse.Team_Lives_Remaining);
@@ -139,11 +120,6 @@ void _writeSemiColon(StringBuffer buffer) {
 
 void _writeInt(StringBuffer buffer, double value) {
   _write(buffer, value.toInt());
-}
-
-void _writeVector2Int(StringBuffer buffer, Vector2 vector2){
-  _writeInt(buffer, vector2.x);
-  _writeInt(buffer, vector2.y);
 }
 
 void _write(StringBuffer buffer, dynamic value) {

@@ -85,7 +85,7 @@ class AI extends Character {
     return withinRadius(this, target, viewRange);
   }
 
-  bool withinChaseRange(Vector2 target) {
+  bool withinChaseRange(Position target) {
     if (mode == NpcMode.Swarm) return true;
     return withinRadius(this, target, chaseRange);
   }

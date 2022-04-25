@@ -2,7 +2,7 @@ import 'package:lemon_math/Vector2.dart';
 
 import 'Scene.dart';
 
-class TileNode extends Vector2 {
+class TileNode with Position {
   /// row - 1
   late TileNode up;
   /// row - 1, column + 1
@@ -31,7 +31,7 @@ class TileNode extends Vector2 {
 
   int depth = 0;
 
-  TileNode(this.open) : super(0, 0);
+  TileNode(this.open);
 
   TileNode getNodeByDirection(int direction){
     if (direction <= 3 ) {

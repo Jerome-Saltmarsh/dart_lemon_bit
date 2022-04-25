@@ -62,7 +62,7 @@ class _ByteCompiler {
     for (final collectable in collectables) {
       if (collectable.inactive) continue;
       writeByte(collectable.type);
-      writeVector2(collectable);
+      writePosition(collectable);
     }
     writeByte(END);
   }

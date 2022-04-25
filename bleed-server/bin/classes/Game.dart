@@ -39,7 +39,6 @@ import '../utilities.dart';
 import 'Character.dart';
 import 'Collectable.dart';
 import 'Collider.dart';
-import 'Crate.dart';
 import 'DynamicObject.dart';
 import 'EnvironmentObject.dart';
 import 'InteractableNpc.dart';
@@ -61,7 +60,6 @@ abstract class Game {
   final npcs = <InteractableNpc>[];
   final players = <Player>[];
   final projectiles = <Projectile>[];
-  final crates = <Crate>[];
   final collectables = <Collectable>[];
   var spawnPoints = <SpawnPoint>[];
   var shadeMax = Shade.Bright;
@@ -155,12 +153,7 @@ abstract class Game {
       {this.gameType = GameType.MMO,
       this.shadeMax = Shade.Bright,
       this.status = GameStatus.In_Progress}) {
-    this.crates.clear();
     engine.onGameCreated(this);
-
-    for (final crate in scene.crates) {
-      crates.add(Crate(x: crate.x, y: crate.y));
-    }
 
     for (final character in scene.characters) {
       if (character.type == CharacterType.Zombie) {
@@ -491,7 +484,7 @@ extension GameFunctions on Game {
     character.attackTarget = target;
   }
 
-  void _characterRunAt(Character character, Vector2 target) {
+  void _characterRunAt(Character character, Position target) {
     character.face(target);
     setCharacterState(character, CharacterState.Running);
   }
@@ -1333,7 +1326,7 @@ extension GameFunctions on Game {
     npcSetPathToTileNode(ai, randomTile);
   }
 
-  void npcSetPathTo(AI ai, Vector2 position) {
+  void npcSetPathTo(AI ai, Position position) {
     npcSetPathToTileNode(ai, scene.tileNodeAt(position));
   }
 
