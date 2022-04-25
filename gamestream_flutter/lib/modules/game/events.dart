@@ -314,18 +314,6 @@ class GameEvents {
         _spawn.legZombie(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
         _spawn.organ(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5), zv: 0.1);
         audio.zombieDeath(x, y);
-
-        // final total = randomInt(5, 10);
-        // for (var i = 0; i < total; i++) {
-        //   _spawn.blood(
-        //     x: x,
-        //     y: y,
-        //     z: 0.3,
-        //     angle: angle + giveOrTake(0.2),
-        //     speed: 4.0 + giveOrTake(2),
-        //     zv: 0.07 + giveOrTake(0.01),
-        //   );
-        // }
         break;
 
       case GameEventType.Zombie_Target_Acquired:
@@ -336,14 +324,6 @@ class GameEvents {
         break;
       case GameEventType.Zombie_Strike:
         audio.zombieBite(x, y);
-        // double r = 1;
-        // double s = 0.15;
-        // for (int i = 0; i < randomInt(2, 4); i++) {
-        //   isometric.spawn.blood(x, y, 0.3,
-        //       xv: xv * s + giveOrTake(r),
-        //       yv: yv * s + giveOrTake(r),
-        //       zv: randomBetween(0, 0.07));
-        // }
         break;
       case GameEventType.Player_Death:
         actions.emitPixelExplosion(x, y);
@@ -404,7 +384,7 @@ class GameEvents {
         audio.playAudioHeal(x, y);
         break;
       case GameEventType.Crate_Breaking:
-        audio.playAudioCrateBreaking(x, y);
+        audio.crateBreaking(x, y);
         break;
       case GameEventType.Ammo_Acquired:
         audio.gunPickup(x, y);
@@ -446,6 +426,13 @@ class GameEvents {
           isometric.spawn.treeShard(x, y);
         }
         audio.treeBreaking(x, y);
+        break;
+
+      case GameEventType.Object_Destroyed_Chest:
+        for (var i = 0; i < 8; i++) {
+          isometric.spawn.shardWood(x, y);
+        }
+        audio.crateDestroyed(x, y);
         break;
     }
   }

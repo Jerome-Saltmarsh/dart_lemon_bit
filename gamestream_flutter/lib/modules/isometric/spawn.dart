@@ -300,6 +300,26 @@ class IsometricSpawn {
     );
   }
 
+  void shardWood(double x, double y){
+    _particle(
+        type: ParticleType.Shard_Wood,
+        x: x,
+        y: y,
+        z: randomBetween(0.0, 0.2),
+        angle: randomAngle(),
+        speed: randomBetween(0.5, 1.25),
+        zv: randomBetween(0.1, 0.2),
+        weight: 0.5,
+        duration: randomInt(150, 200),
+        scale: randomBetween(1.0, 1.75),
+        scaleV: 0,
+        rotation: randomAngle(),
+        castShadow: true,
+        bounciness: 0.35,
+        customRotation: false
+    );
+  }
+
   void potShard(double x, double y){
     _particle(
         type: ParticleType.Pot_Shard,

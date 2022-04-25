@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:lemon_engine/engine.dart';
+import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/randomItem.dart';
@@ -218,6 +219,10 @@ class _Audio {
     }
   }
 
+  void _playPos(String name, Position position) {
+    return _playPositioned(name, position.x, position.y);
+  }
+
   void _playPositioned(String name, double x, double y) {
     if (!soundEnabled.value) return;
     _play(name, volume: _calculateVolume(x, y));
@@ -227,8 +232,7 @@ class _Audio {
     if (volume.isNaN) return;
     _getAudioPlayer().play('assets/audio/$name',
         isLocal: true,
-        volume: volume)
-        .catchError((error) {});
+        volume: volume);
   }
 
   void _playMusic(String name){
@@ -253,8 +257,12 @@ class _Audio {
     _playPositioned('throw.mp3', x, y);
   }
 
-  void playAudioCrateBreaking(double x, double y) {
+  void crateBreaking(double x, double y) {
     _playPositioned('crate-breaking.mp3', x, y);
+  }
+
+  void crateDestroyed(double x, double y) {
+    _playPositioned('crate-destroyed.mp3', x, y);
   }
 
   void unlock(double x, double y) {

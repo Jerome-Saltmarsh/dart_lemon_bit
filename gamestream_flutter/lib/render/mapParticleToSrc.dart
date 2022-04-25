@@ -136,9 +136,23 @@ void mapParticleToSrc(Particle particle){
           return engine.mapSrc(x: 289, y: 9, width: 7, height: 7);
         case Shade.Very_Dark:
           return engine.mapSrc(x: 289, y: 1 , width: 7, height: 7);
+        default:
+          return;
       }
 
-      return;
+    case ParticleType.Shard_Wood:
+      switch (shade) {
+        case Shade.Bright:
+          return engine.mapSrc(x: 25, y: 25, width: 7, height: 7);
+        case Shade.Medium:
+          return engine.mapSrc(x: 25, y: 17, width: 7, height: 7);
+        case Shade.Dark:
+          return engine.mapSrc(x: 25 , y: 9, width: 7, height: 7);
+        case Shade.Very_Dark:
+          return engine.mapSrc(x: 17, y: 1 , width: 7, height: 7);
+        default:
+          return;
+      }
 
     default:
       throw Exception("Could not map particle '${particle.type}' to src");
