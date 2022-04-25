@@ -96,7 +96,7 @@
 [ ] Dynamic Object Chest
 [ ] Render Structure Health
 [ ] Fix Zombies attack structure animation
-[ ] Construct Torch
+[x] Construct Torch
 [x] On kill enemy gain gold and experiencea
 [x] Only build structures on valid spots
 [x] Render Construction Preview using z-ordering    
