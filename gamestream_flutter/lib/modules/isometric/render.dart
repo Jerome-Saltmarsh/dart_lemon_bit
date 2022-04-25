@@ -441,7 +441,7 @@ class IsometricRender {
   }
 
   void renderChest(Position position){
-    renderCircle36V2(position);
+    // renderCircle36V2(position);
     engine.renderCustomV2(
       dst: position,
       srcX: 6329,

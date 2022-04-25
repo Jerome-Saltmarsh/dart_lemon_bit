@@ -365,9 +365,15 @@ extension GameFunctions on Game {
     return true;
   }
 
-  void applyDamage(dynamic src, Health target, int amount) {
+  void applyDamage(dynamic src, Health target, int amount, {bool projectile = false}) {
     if (target.dead) return;
-    target.health -= amount;
+
+    final damageApplied = !projectile || target is DynamicObject == false;
+
+    if (damageApplied) {
+      target.health -= amount;
+    }
+
     final killed = target.dead;
 
     if (target is Character) {
@@ -417,7 +423,7 @@ extension GameFunctions on Game {
           break;
         case DynamicObjectType.Rock:
           dispatchV2(GameEventType.Rock_Struck, target);
-          if (src is Player) {
+          if (damageApplied && src is Player) {
             final amount = killed ? 3 : 1;
             for (var i = 0; i < amount; i++) {
               spawnCollectable(position: target, target: src, type: CollectableType.Stone);
@@ -426,7 +432,7 @@ extension GameFunctions on Game {
           break;
         case DynamicObjectType.Tree:
           dispatchV2(GameEventType.Tree_Struck, target);
-          if (src is Player) {
+          if (damageApplied && src is Player) {
             final amount = killed ? 3 : 1;
             for (var i = 0; i < amount; i++) {
               spawnCollectable(position: target, target: src, type: CollectableType.Wood);
@@ -857,11 +863,11 @@ extension GameFunctions on Game {
 
   void handleProjectileHit(Projectile projectile, Collider collider) {
     projectile.active = false;
-    applyHit(projectile.owner, collider, projectile.damage);
+    applyHit(projectile.owner, collider, projectile.damage, projectile: true);
     dispatch(GameEventType.Arrow_Hit, collider.x, collider.y);
   }
 
-  void applyHit(dynamic src, Collider target, int damage) {
+  void applyHit(dynamic src, Collider target, int damage, {bool projectile = false}) {
     if (!target.collidable) return;
     if (target is Character) {
       if (sameTeam(src, target)) return;
@@ -870,7 +876,7 @@ extension GameFunctions on Game {
 
     if (target is Health) {
       final health = target as Health;
-      applyDamage(src, health, damage);
+      applyDamage(src, health, damage, projectile: projectile);
     }
 
     final angleBetweenSrcAndTarget = radiansV2(src, target);

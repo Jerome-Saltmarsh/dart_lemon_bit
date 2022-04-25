@@ -94,9 +94,9 @@
 [ ] Render Structure Health
 [ ] Fix Zombies attack structure animation
 [ ] Palisades draw horizontal and vertical when aligned
-[ ] Projectiles should not damage dynamic objects
 [ ] Destructible Bush revives health
-[ ] Dynamic Object Chest gives gold
+[ ] Projectiles should not damage dynamic objects
+[x] Dynamic Object Chest gives gold
 [x] Construct Torch
 [x] On kill enemy gain gold and experiencea
 [x] Only build structures on valid spots
