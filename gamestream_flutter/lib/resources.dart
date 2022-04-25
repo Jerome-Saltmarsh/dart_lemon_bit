@@ -40,6 +40,7 @@ class _IconsResources {
 class _IconsStructures {
   final palisade = buildIcon("structure-palisade", width: 32, height: 32);
   final tower = buildIcon("structure-tower", width: 32, height: 32);
+  final torch = buildIcon("structure-torch", width: 32, height: 32);
 }
 
 class _IconsFirearms {

@@ -632,8 +632,31 @@ class GameBuild {
                 ),
               ),
             ),
-          )
-        ],),
+          ),
+            MouseRegion(
+              onEnter: (event){
+                state.highlightStructureType.value = StructureType.Torch;
+              },
+              onExit: (event){
+                if (state.highlightStructureType.value != StructureType.Torch) return;
+                state.highlightStructureType.value = null;
+              },
+              child: onPressed(
+                callback: modules.game.enterBuildModeTorch,
+                child: Container(
+                  child: resources.icons.structures.torch,
+                  width: 48,
+                  height: 48,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: colours.brownDark,
+                    borderRadius: borderRadius4,
+                  ),
+                ),
+              ),
+            )
+
+          ],),
       );
   }
 

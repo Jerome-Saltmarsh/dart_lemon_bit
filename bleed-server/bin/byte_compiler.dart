@@ -123,14 +123,13 @@ class _ByteCompiler {
      writeByte(ServerResponse.Dynamic_Objects);
      final dynamicObjects = player.game.scene.dynamicObjects;
      for (final dynamicObject in dynamicObjects) {
-       if (dynamicObject.health <= 0) continue;
+       if (dynamicObject.dead) continue;
        if (dynamicObject.x < player.screenLeft) continue;
        if (dynamicObject.x > player.screenRight) continue;
        if (dynamicObject.y < player.screenTop) continue;
        if (dynamicObject.y > player.screenBottom) break;
        writeByte(dynamicObject.type);
        writeVector2(dynamicObject);
-       // writePercentage(dynamicObject.health / dynamicObject.maxHealth);
      }
      writeByte(END);
   }

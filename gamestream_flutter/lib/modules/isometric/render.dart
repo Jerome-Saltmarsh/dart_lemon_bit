@@ -344,11 +344,13 @@ class IsometricRender {
   }
 
   void renderStructure(Structure structure){
-    switch(structure.type){
+    switch(structure.type) {
       case StructureType.Tower:
         return renderTower(structure.x, structure.y);
       case StructureType.Palisade:
         return renderPalisade(x: structure.x, y: structure.y);
+      case StructureType.Torch:
+        return renderTorch(structure);
     }
   }
 
@@ -380,7 +382,15 @@ class IsometricRender {
     );
   }
 
-
+  void renderTorch(Vector2 position) {
+    engine.renderCustomV2(
+        dst: position,
+        srcX: 2145,
+        srcWidth: 25,
+        srcHeight: 70,
+        anchorY: 0.66
+    );
+  }
 
   void renderDynamicObject(DynamicObject dynamicObject){
     final shade = isometric.getShadeAt(dynamicObject);
@@ -881,22 +891,27 @@ class IsometricRender {
     );
   }
 
+  final _mouseSnap = Vector2(0, 0);
+
   void renderBuildMode() {
     final value = modules.game.structureType.value;
     if (value == null) return;
 
     final x = getMouseSnapX();
     final y = getMouseSnapY();
+    _mouseSnap.x = x;
+    _mouseSnap.y = y;
 
     switch (modules.game.structureType.value) {
       case StructureType.Tower:
         return isometric.render.renderTower(x, y);
       case StructureType.Palisade:
         return isometric.render.renderPalisade(x: x, y: y);
+      case StructureType.Torch:
+        return isometric.render.renderTorch(_mouseSnap);
       default:
         return;
     }
   }
-
 }
 

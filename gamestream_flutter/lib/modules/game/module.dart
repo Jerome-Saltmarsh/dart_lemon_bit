@@ -62,4 +62,12 @@ class GameModule {
     if (cost.stone > state.player.stone.value) return audio.error();
      structureType.value = StructureType.Palisade;
   }
+
+  void enterBuildModeTorch() {
+    final cost = StructureType.getCost(StructureType.Torch);
+    if (cost.wood > state.player.wood.value) return audio.error();
+    if (cost.gold > state.player.gold.value) return audio.error();
+    if (cost.stone > state.player.stone.value) return audio.error();
+    structureType.value = StructureType.Torch;
+  }
 }
