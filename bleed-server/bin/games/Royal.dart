@@ -116,7 +116,7 @@ class GameRoyal extends Game {
     }
   }
 
-  bool withinDeathBoundary(Vector2 position){
+  bool withinDeathBoundary(Position position){
     return withinRadius(position, boundaryCenter, boundaryRadius);
   }
 }

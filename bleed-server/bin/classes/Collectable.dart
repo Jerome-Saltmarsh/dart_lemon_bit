@@ -7,7 +7,7 @@ import 'Player.dart';
 import 'Structure.dart';
 import 'components.dart';
 
-class Collectable extends Vector2 with Velocity, Active, Target<Vector2>, Duration {
+class Collectable extends Vector2 with Velocity, Active, Target<Position>, Duration {
   var type = 0;
   Collectable() : super(0, 0);
 

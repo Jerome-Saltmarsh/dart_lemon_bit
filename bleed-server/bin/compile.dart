@@ -4,7 +4,6 @@ import 'package:lemon_math/Vector2.dart';
 import 'classes/Crate.dart';
 import 'classes/EnvironmentObject.dart';
 import 'classes/Game.dart';
-import 'classes/Item.dart';
 import 'classes/Player.dart';
 import 'common/GameStatus.dart';
 import 'common/ServerResponse.dart';
@@ -24,14 +23,14 @@ void compileCrates(StringBuffer buffer, List<Crate> crates) {
   }
 }
 
-void compileItems(StringBuffer buffer, List<Item> items) {
-  _write(buffer, ServerResponse.Items);
-  _write(buffer, items.length);
-  for (final item in items) {
-    _write(buffer, item.type);
-    _writeVector2Int(buffer, item);
-  }
-}
+// void compileItems(StringBuffer buffer, List<Item> items) {
+//   _write(buffer, ServerResponse.Items);
+//   _write(buffer, items.length);
+//   for (final item in items) {
+//     _write(buffer, item.type);
+//     _writeVector2Int(buffer, item);
+//   }
+// }
 
 void compileTeamLivesRemaining(StringBuffer buffer, GameMoba moba) {
   _write(buffer, ServerResponse.Team_Lives_Remaining);

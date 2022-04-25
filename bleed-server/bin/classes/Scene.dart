@@ -298,7 +298,7 @@ class Scene {
     return tileNodeAtXY(x, y).open;
   }
 
-  TileNode tileNodeAt(Vector2 position) {
+  TileNode tileNodeAt(Position position) {
     return tileNodeAtXY(position.x, position.y);
   }
 

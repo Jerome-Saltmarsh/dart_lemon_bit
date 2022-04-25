@@ -51,7 +51,7 @@ class _ByteCompiler {
     for(final structure in structures){
       if (structure.dead) continue;
        writeByte(structure.type);
-       writeVector2(structure);
+       writePosition(structure);
     }
     writeByte(END);
   }
@@ -129,7 +129,7 @@ class _ByteCompiler {
        if (dynamicObject.y < player.screenTop) continue;
        if (dynamicObject.y > player.screenBottom) break;
        writeByte(dynamicObject.type);
-       writeVector2(dynamicObject);
+       writePosition(dynamicObject);
      }
      writeByte(END);
   }
@@ -158,8 +158,8 @@ class _ByteCompiler {
       final aiTarget = zombie.target;
       if (aiTarget is Character) {
         writeByte(1);
-        writeVector2(zombie);
-        writeVector2(aiTarget);
+        writePosition(zombie);
+        writePosition(aiTarget);
       }
     }
     writeByte(0);
@@ -175,7 +175,7 @@ class _ByteCompiler {
       if (item.top < player.screenTop) continue;
       if (item.bottom > player.screenBottom) break;
       writeByte(item.type);
-      writeVector2(item);
+      writePosition(item);
     }
     writeByte(END);
   }
@@ -268,7 +268,7 @@ class _ByteCompiler {
   void writeProjectile(Projectile projectile){
     if (!projectile.active) return;
     final degrees = angle(projectile.xv, projectile.yv) * radiansToDegrees;
-    writeVector2(projectile);
+    writePosition(projectile);
     writeByte(projectile.type.index);
     writeBigInt(degrees);
   }
@@ -295,7 +295,7 @@ class _ByteCompiler {
       return;
     }
     writeByte(ServerResponse.Player_Attack_Target);
-    writeVector2(aimTarget);
+    writePosition(aimTarget);
   }
 
   void writePlayer(Player player) {
@@ -334,12 +334,8 @@ class _ByteCompiler {
   }
 
   void writeCharacter(Player player, Character character) {
-    // final allie = sameTeam(player, character) ? 100 : 0;
-    // final directionInt = character.direction * 10;
-    // final stateInt = character.state;
-    // final value = allie + directionInt + stateInt;
     writeByte((sameTeam(player, character) ? 100 : 0) + (character.direction * 10) + character.state); // 1
-    writeVector2(character);
+    writePosition(character);
     writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);
   }
 
@@ -366,6 +362,11 @@ class _ByteCompiler {
   }
 
   void writeVector2(Vector2 value){
+    writeBigInt(value.x);
+    writeBigInt(value.y);
+  }
+
+  void writePosition(Position value){
     writeBigInt(value.x);
     writeBigInt(value.y);
   }

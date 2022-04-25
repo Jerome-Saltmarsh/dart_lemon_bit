@@ -129,7 +129,7 @@ class GameSkirmish extends Game {
   }
 
   @override
-  Vector2 getNextSpawnPoint(){
+  Position getNextSpawnPoint(){
     return randomItem(_flags);
   }
 

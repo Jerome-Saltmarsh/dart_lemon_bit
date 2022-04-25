@@ -59,11 +59,6 @@ mixin Active {
   }
 }
 
-mixin Position {
-  var x = 0.0;
-  var y = 0.0;
-}
-
 mixin Target<T> {
   late T target;
 }

@@ -52,7 +52,7 @@ class Player extends Character {
   double screenRight = 0;
   double screenBottom = 0;
   Collider? aimTarget; // the currently highlighted character
-  Vector2? target;
+  Position? target;
   Vector2 runTarget = Vector2(0, 0);
 
   var wood = 0;

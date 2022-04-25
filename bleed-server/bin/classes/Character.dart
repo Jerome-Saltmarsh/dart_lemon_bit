@@ -80,7 +80,7 @@ class AI extends Character {
     target = null;
   }
 
-  bool withinViewRange(Vector2 target) {
+  bool withinViewRange(Position target) {
     if (mode == NpcMode.Swarm) return true;
     return withinRadius(this, target, viewRange);
   }
@@ -174,14 +174,14 @@ class Character extends Collider with Team, Health, Velocity {
     yv *= velocityFriction;
   }
 
-  bool withinAttackRange(Vector2 target){
+  bool withinAttackRange(Position target){
     if (target is Collider){
       return withinRadius(this, target, weaponRange + (target.radius * 0.5));
     }
     return withinRadius(this, target, weaponRange);
   }
 
-  void face(Vector2 position){
+  void face(Position position){
     if (deadOrBusy) return;
     angle = getAngle(position);
   }

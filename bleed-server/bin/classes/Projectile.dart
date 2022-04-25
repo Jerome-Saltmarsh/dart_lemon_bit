@@ -28,7 +28,7 @@ class Projectile extends Collider with Active, Velocity {
     return getDistance(start);
   }
 
-  void setVelocityTowards(Vector2 position){
+  void setVelocityTowards(Position position){
     angle = getAngle(position);
     xv = adj(angle, speed);
     yv = opp(angle, speed);

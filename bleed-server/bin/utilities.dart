@@ -65,7 +65,7 @@ int calculateTime({int minute = 0, int hour = 0}){
   return secondsPerMinute * minutesPerHour * hour + minute;
 }
 
-void snapToGrid(Vector2 value){
+void snapToGrid(Position value){
   value.x = snapX(value.x, value.y);
   value.y = snapY(value.x, value.y);
 }
@@ -78,7 +78,7 @@ void snapToGrid(Vector2 value){
 //   return y - y % tileSize;
 // }
 
-void sortVertically(List<Vector2> items) {
+void sortVertically(List<Position> items) {
   var start = 0;
   var end = items.length;
   for (var pos = start + 1; pos < end; pos++) {

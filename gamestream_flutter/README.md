@@ -85,7 +85,6 @@
 [ ] GameOver on death    
 [ ] FIX Zombies run into lamps forever   
 [ ] Destructible Bush
-[ ] Destructible Chest
 [ ] Upgrade Panel    
 [ ] Destructible Rock
 [ ] Weapon Axe    
@@ -93,9 +92,10 @@
 [ ] (CRITICAL) FIX AI Pathfinding
 [ ] (CRITICAL) Fix 204 error    
 [ ] Footstep Audio    
-[ ] Dynamic Object Chest
 [ ] Render Structure Health
 [ ] Fix Zombies attack structure animation
+[ ] Dynamic Object Chest
+[ ] Palisades draw horizontal and vertical when aligned
 [x] Construct Torch
 [x] On kill enemy gain gold and experiencea
 [x] Only build structures on valid spots

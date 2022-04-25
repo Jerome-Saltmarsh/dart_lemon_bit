@@ -64,7 +64,7 @@ T? sphereCaste<T extends Collider>({
   return closest;
 }
 
-T? findClosestVector2<T extends Vector2>({
+T? findClosestVector2<T extends Position>({
   required double x,
   required double y,
   required List<T> colliders,

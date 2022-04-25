@@ -6,11 +6,11 @@ import 'package:lemon_math/Vector2.dart';
 import '../classes/Collider.dart';
 import '../classes/Player.dart';
 
-bool withinRadius(Vector2 a, Vector2 b, num radius){
+bool withinRadius(Position a, Position b, num radius){
   return withinDistance(a, b.x, b.y, radius);
 }
 
-bool withinDistance(Vector2 positioned, double x, double y, num radius){
+bool withinDistance(Position positioned, double x, double y, num radius){
   final xDiff = (positioned.x - x).abs();
   if (xDiff > radius) return false;
 

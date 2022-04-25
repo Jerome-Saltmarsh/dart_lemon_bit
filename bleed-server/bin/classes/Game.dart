@@ -114,7 +114,7 @@ abstract class Game {
 
   void updateNpcBehavior(Character npc) {}
 
-  Vector2 getNextSpawnPoint() {
+  Position getNextSpawnPoint() {
     return getSceneCenter();
   }
 
@@ -354,7 +354,7 @@ extension GameFunctions on Game {
 
   /// TODO Optimize
   /// calculates if there is a wall between two objects
-  bool isVisibleBetween(Vector2 a, Vector2 b) {
+  bool isVisibleBetween(Position a, Position b) {
     final angle = radiansV2(a, b);
     final vX = adj(angle, 48);
     final vY = opp(angle, 48);
@@ -451,8 +451,8 @@ extension GameFunctions on Game {
   }
 
   void spawnCollectable({
-    required Vector2 position,
-    required Vector2 target,
+    required Position position,
+    required Position target,
     required int type
   }){
     final collectable = Collectable();
@@ -1053,7 +1053,7 @@ extension GameFunctions on Game {
 
   void casteSlowingCircle(Character character, double x, double y) {}
 
-  Projectile spawnArrow(Vector2 src, {required int damage, Collider? target}) {
+  Projectile spawnArrow(Position src, {required int damage, Collider? target}) {
     dispatch(GameEventType.Arrow_Fired, src.x, src.y);
 
     if (src is Character) {
@@ -1081,7 +1081,7 @@ extension GameFunctions on Game {
   }
 
   Projectile spawnProjectile({
-    required Vector2 src,
+    required Position src,
     required double speed,
     required double range,
     required int damage,
@@ -1202,7 +1202,7 @@ extension GameFunctions on Game {
   }
 
   /// GameEventType
-  void dispatchV2(int type, Vector2 position, {double angle = 0}) {
+  void dispatchV2(int type, Position position, {double angle = 0}) {
     dispatch(type, position.x, position.y, angle);
   }
 

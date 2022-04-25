@@ -5,7 +5,7 @@ import 'package:lemon_math/hypotenuse.dart';
 import 'package:lemon_math/pi2.dart';
 import 'package:lemon_math/piHalf.dart';
 
-double distanceV2(Vector2 a, Vector2 b) {
+double distanceV2(Position a, Position b) {
   return hypotenuse(a.x - b.x, a.y - b.y);
 }
 
@@ -18,11 +18,11 @@ int diffInt(int a, int b){
   return absInt(a - b);
 }
 
-double radiansV2(Vector2 a, Vector2 b) {
+double radiansV2(Position a, Position b) {
   return radiansBetween(a.x, a.y, b.x, b.y);
 }
 
-double radiansBetween2(Vector2 a, double x, double y) {
+double radiansBetween2(Position a, double x, double y) {
   return radiansBetween(a.x, a.y, x, y);
 }
 
