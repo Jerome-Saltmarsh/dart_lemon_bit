@@ -149,10 +149,11 @@ abstract class Game {
 
   void onPlayerDisconnected(Player player) {}
 
-  Game(this.scene,
-      {this.gameType = GameType.MMO,
-      this.shadeMax = Shade.Bright,
-      this.status = GameStatus.In_Progress}) {
+  Game(this.scene, {
+        this.gameType = GameType.MMO,
+        this.shadeMax = Shade.Bright,
+        this.status = GameStatus.In_Progress
+      }) {
     engine.onGameCreated(this);
 
     for (final character in scene.characters) {
@@ -403,6 +404,9 @@ extension GameFunctions on Game {
 
     if (killed && target is Structure) {
       target.collidable = false;
+      final node = scene.tileNodeAt(target);
+      node.open = true;
+      node.obstructed = false;
     }
 
     if (target is DynamicObject) {

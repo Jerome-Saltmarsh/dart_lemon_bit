@@ -21,6 +21,7 @@ import 'common/ServerResponse.dart';
 import 'common/SlotType.dart';
 import 'common/SlotTypeCategory.dart';
 import 'common/StructureType.dart';
+import 'common/Tile.dart';
 import 'common/WeaponType.dart';
 import 'common/compile_util.dart';
 import 'common/utilities.dart';
@@ -560,10 +561,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return error(GameError.Construct_Insufficient_Resources);
           }
           final mouse = player.mouse;
-          if (!player.game.scene.tileWalkableAt(mouse.x, mouse.y)) {
+          if (!Tile.isBuildable(player.game.scene.tileAt(mouse.x, mouse.y))) {
             return error(GameError.Construct_Invalid_Tile);
           }
-
           final mouseSnapX = snapX(mouse.x, mouse.y);
           final mouseSnapY = snapY(mouse.x, mouse.y);
 
@@ -619,7 +619,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.stone -= cost.stone;
           player.wood -= cost.wood;
           player.gold -= cost.gold;
-          player.game.scene.tileNodeAt(player.mouse).open = false;
+
+          if (structureType == StructureType.Torch) {
+            player.game.scene.tileNodeAt(player.mouse).obstructed = true;
+          } else {
+            player.game.scene.tileNodeAt(player.mouse).open = false;
+          }
           break;
 
         case ClientRequest.Character_Load:

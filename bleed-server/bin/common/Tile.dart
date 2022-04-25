@@ -50,6 +50,10 @@ class Tile {
     return tileNames[value] ?? "?";
   }
 
+  static bool isBuildable(int value){
+    return const [Grass, Long_Grass].contains(value);
+  }
+
   static const values = [
     Concrete,
     Grass,
