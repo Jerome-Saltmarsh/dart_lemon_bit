@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:bleed_common/GemSpawn.dart';
+import 'package:bleed_common/StructureType.dart';
 import 'package:bleed_common/utilities.dart';
 import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/ObjectType.dart';
@@ -16,6 +17,7 @@ import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
+import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/functions.dart';
 import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
@@ -44,6 +46,7 @@ class IsometricModule {
   final paths = Float32List(10000);
   final targets = Float32List(10000);
   final particles = <Particle>[];
+  final structures = <Structure>[];
   final gemSpawns = <GemSpawn>[];
   final environmentObjects = <EnvironmentObject>[];
   final dynamic = <Int8List>[];
@@ -64,6 +67,7 @@ class IsometricModule {
   var totalColumnsInt = 0;
   var targetsTotal = 0;
   var totalRowsInt = 0;
+  var totalStructures = 0;
   var minRow = 0;
   var maxRow = 0;
   var minColumn = 0;
@@ -123,6 +127,9 @@ class IsometricModule {
     for(var i = 0; i < 300; i++){
       particles.add(Particle());
       items.add(Item(type: ItemType.Armour_Plated, x: 0, y: 0));
+    }
+    for (var i = 0; i < 1000; i++) {
+      structures.add(Structure());
     }
   }
 
@@ -318,7 +325,9 @@ class IsometricModule {
     applyShadeRing(shader, row, column, 4, Shade.Very_Dark);
   }
 
-  void emitLightHigh(List<List<int>> shader, double x, double y) {
+  void emitLightHigh(List<List<int>> shader, Vector2 position) {
+    final x = position.x;
+    final y = position.y;
     final column = getColumn(x, y);
     final row = getRow(x, y);
     if (outOfBounds(row, column)) return;
@@ -625,6 +634,12 @@ class IsometricModule {
     final players = game.players;
     final npcs = game.interactableNpcs;
 
+    for (var i = 0; i < totalStructures; i++) {
+       final structure = structures[i];
+       if (structure.type != StructureType.Torch) continue;
+       emitLightHigh(dynamic, structure);
+    }
+
     for (var i = 0; i < totalPlayers; i++){
       final player = players[i];
       if (!player.allie) continue;
@@ -634,7 +649,7 @@ class IsometricModule {
     for (var i = 0; i < totalNpcs; i++){
       final npc = npcs[i];
       if (!npc.allie) continue;
-      emitLightHigh(dynamic, npc.x, npc.y);
+      emitLightHigh(dynamic, npc);
     }
 
     applyEmissionFromProjectiles();
@@ -646,7 +661,7 @@ class IsometricModule {
       if (!effect.enabled) continue;
       final percentage = effect.percentage;
       if (percentage < 0.33) {
-        emitLightHigh(dynamic, effect.x, effect.y);
+        emitLightHigh(dynamic, effect);
         break;
       }
       if (percentage < 0.66) {

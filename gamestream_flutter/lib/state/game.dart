@@ -8,7 +8,6 @@ import 'package:gamestream_flutter/classes/Projectile.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';
 
-import '../classes/Structure.dart';
 
 final game = _Game();
 
@@ -27,7 +26,6 @@ class _Game {
   final totalDynamicObjects = Watch(0);
   final players = <Character>[];
   final zombies = <Character>[];
-  final structures = <Structure>[];
   final collectables = <Collectable>[];
   final interactableNpcs = <Character>[];
   final dynamicObjects = <DynamicObject>[];
@@ -43,7 +41,6 @@ class _Game {
   var cratesTotal = 0;
   var totalNpcs = 0;
   var totalCubes = 0;
-  var totalStructures = 0;
   var totalCollectables = 0;
   var bulletHoleIndex = 0;
   var id = -1;
@@ -68,9 +65,6 @@ class _Game {
     }
     for (var i = 0; i < 200; i++) {
       projectiles.add(Projectile());
-    }
-    for (var i = 0; i < 1000; i++) {
-      structures.add(Structure());
     }
     for (var i = 0; i < 500; i++) {
       collectables.add(Collectable());

@@ -129,7 +129,7 @@ class _ByteStreamParser {
           game.totalCollectables = total;
           break;
         case ServerResponse.Structures:
-          final structures = game.structures;
+          final structures = isometric.structures;
           var total = 0;
           var type = nextByte();
           while (type != END) {
@@ -140,7 +140,7 @@ class _ByteStreamParser {
              total++;
              type = nextByte();
           }
-          game.totalStructures = total;
+          isometric.totalStructures = total;
           break;
         case ServerResponse.Paths:
           modules.game.state.compilePaths.value = true;

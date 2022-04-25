@@ -44,3 +44,4 @@ int getRow(double x, double y) {
 int getColumn(double x, double y) {
   return (y - x) ~/ tileSize;
 }
+

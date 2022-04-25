@@ -3,11 +3,9 @@ import 'dart:math';
 
 import 'package:bleed_common/AbilityType.dart';
 import 'package:bleed_common/CollectableType.dart';
-import 'package:bleed_common/DynamicObjectType.dart';
 import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/OrbType.dart';
 import 'package:bleed_common/SlotType.dart';
-import 'package:bleed_common/StructureType.dart';
 import 'package:bleed_common/configuration.dart';
 import 'package:bleed_common/ProjectileType.dart';
 import 'package:bleed_common/Shade.dart';

@@ -93,7 +93,9 @@ class AI extends Character {
   @override
   void onCollisionWith(Collider other){
     if (_pathIndex < 0) return;
-    rotateAround(other, 0.1);
+    if (other is AI) {
+      rotateAround(other, 0.2);
+    }
     if (!other.withinBounds(dest)) return;
     nextPath();
   }

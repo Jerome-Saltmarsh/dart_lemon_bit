@@ -124,13 +124,13 @@ class IsometricRender {
     final players = game.players;
     final npcs = game.interactableNpcs;
     final dynamicObjects = game.dynamicObjects;
-    final structures = game.structures;
+    final structures = isometric.structures;
     final screenBottom = engine.screen.bottom;
     final totalZombies = game.totalZombies.value;
     final totalPlayers = game.totalPlayers.value;
     final totalNpcs = game.totalNpcs;
     final totalDynamicObjects = game.totalDynamicObjects.value;
-    final totalStructures = game.totalStructures;
+    final totalStructures = isometric.totalStructures;
 
     var indexPlayer = 0;
     var indexEnv = 0;
