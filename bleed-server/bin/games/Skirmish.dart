@@ -38,11 +38,12 @@ class GameSkirmish extends Game {
      );
      storeKeeper.invincible = true;
      npcs.add(storeKeeper);
+
      dynamicObjects.add(
          DynamicObject(
              type: DynamicObjectType.Pot,
-             x: 0,
-             y: 150,
+             x: -1825,
+             y: 2130,
              health: 10,
          )
      );
@@ -50,8 +51,8 @@ class GameSkirmish extends Game {
      dynamicObjects.add(
          DynamicObject(
            type: DynamicObjectType.Rock,
-           x: 50,
-           y: 150,
+           x: -800,
+           y: 2650,
            health: 10,
          )
      );
@@ -59,8 +60,8 @@ class GameSkirmish extends Game {
      dynamicObjects.add(
          DynamicObject(
            type: DynamicObjectType.Rock,
-           x: -50,
-           y: 150,
+           x: -300,
+           y: 3450,
            health: 10,
          )
      );
@@ -68,8 +69,8 @@ class GameSkirmish extends Game {
      dynamicObjects.add(
          DynamicObject(
            type: DynamicObjectType.Pot,
-           x: 0,
-           y: 200,
+           x: 500,
+           y: 3000,
            health: 10,
          )
      );
@@ -77,8 +78,8 @@ class GameSkirmish extends Game {
      dynamicObjects.add(
          DynamicObject(
            type: DynamicObjectType.Pot,
-           x: 0,
-           y: 250,
+           x: 1850,
+           y: 2120,
            health: 10,
          )
      );
@@ -88,6 +89,25 @@ class GameSkirmish extends Game {
            type: DynamicObjectType.Chest,
            x: 0,
            y: 1000,
+           health: 10,
+         )
+     );
+
+     dynamicObjects.add(
+         DynamicObject(
+           type: DynamicObjectType.Chest,
+           x: 640,
+           y: 1700,
+           health: 10,
+         )
+     );
+
+
+     dynamicObjects.add(
+         DynamicObject(
+           type: DynamicObjectType.Chest,
+           x: -1850,
+           y: 2650,
            health: 10,
          )
      );
