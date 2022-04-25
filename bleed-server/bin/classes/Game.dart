@@ -412,6 +412,9 @@ extension GameFunctions on Game {
     if (target is DynamicObject) {
 
       switch (target.type) {
+        case DynamicObjectType.Chest:
+          dispatchV2(GameEventType.Object_Struck, target);
+          break;
         case DynamicObjectType.Rock:
           dispatchV2(GameEventType.Rock_Struck, target);
           if (src is Player) {
@@ -441,6 +444,11 @@ extension GameFunctions on Game {
           dispatchV2(GameEventType.Rock_Destroyed, target);
         } else if (target.type == DynamicObjectType.Tree) {
           dispatchV2(GameEventType.Tree_Destroyed, target);
+        } else if (target.type == DynamicObjectType.Chest) {
+          dispatchV2(GameEventType.Object_Destroyed_Chest, target);
+          for (var i = 0; i < 3; i++) {
+            spawnCollectable(position: target, target: src, type: CollectableType.Gold);
+          }
         }
         onDynamicObjectDestroyed(target);
       }

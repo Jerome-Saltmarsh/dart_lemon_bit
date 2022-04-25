@@ -82,6 +82,15 @@ class GameSkirmish extends Game {
            health: 10,
          )
      );
+
+     dynamicObjects.add(
+         DynamicObject(
+           type: DynamicObjectType.Chest,
+           x: 0,
+           y: 1000,
+           health: 10,
+         )
+     );
   }
 
   @override

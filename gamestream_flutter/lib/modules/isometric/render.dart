@@ -435,7 +435,21 @@ class IsometricRender {
             anchorY: 0.66,
         );
         break;
+      case DynamicObjectType.Chest:
+        return renderChest(dynamicObject);
     }
+  }
+
+  void renderChest(Position position){
+    renderCircle36V2(position);
+    engine.renderCustomV2(
+      dst: position,
+      srcX: 6329,
+      srcWidth: 50,
+      srcHeight: 70,
+      scale: 0.75,
+      anchorY: 0.6,
+    );
   }
 
   void renderParticle(Particle value){
@@ -842,8 +856,8 @@ class IsometricRender {
     engine.draw.text(npc.name, npc.x - 4.5 * npc.name.length, npc.y, style: state.nameTextStyle);
   }
 
-  void renderCircle36V2(Vector2 vector2){
-    renderCircle36(vector2.x, vector2.y);
+  void renderCircle36V2(Position position){
+    renderCircle36(position.x, position.y);
   }
 
   void renderCircle36(double x, double y){
