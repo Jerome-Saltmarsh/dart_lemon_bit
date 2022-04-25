@@ -70,3 +70,7 @@ mixin Duration {
 mixin Radius {
   var radius = 0.0;
 }
+
+mixin Type<T> {
+  late T type;
+}

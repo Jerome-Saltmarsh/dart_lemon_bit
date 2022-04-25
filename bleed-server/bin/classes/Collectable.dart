@@ -7,9 +7,14 @@ import 'Player.dart';
 import 'Structure.dart';
 import 'components.dart';
 
-class Collectable with Position, Velocity, Active, Target<Position>, Duration {
-  var type = 0;
-
+class Collectable with
+    Position,
+    Velocity,
+    Active,
+    Target<Position>,
+    Duration,
+    Type<int>
+{
   void update(){
     if (inactive) return;
     duration++;
