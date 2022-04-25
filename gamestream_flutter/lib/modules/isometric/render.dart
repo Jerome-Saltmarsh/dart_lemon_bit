@@ -383,9 +383,11 @@ class IsometricRender {
   }
 
   void renderTorch(Vector2 position) {
+    final frame = (position.x + position.y + engine.animationFrame) % 6;
     engine.renderCustomV2(
         dst: position,
         srcX: 2145,
+        srcY: 70 + frame * 70,
         srcWidth: 25,
         srcHeight: 70,
         anchorY: 0.66
