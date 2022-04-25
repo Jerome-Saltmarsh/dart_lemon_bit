@@ -169,12 +169,12 @@ class CoreActions {
   void clearState() {
     print('clearState()');
     clearCompileGameState();
-    // isometric.state.paths.clear();
     engine.zoom = 1;
     refreshUI();
     isometric.tiles.clear();
     isometric.tilesDst = Float32List(0);
     isometric.tilesSrc = Float32List(0);
+    isometric.totalStructures = 0;
     isometric.refreshTileSize();
     engine.redrawCanvas();
   }
@@ -308,16 +308,12 @@ class CoreActions {
   void exitGame(){
     print("logic.exit()");
     game.type.value = GameType.None;
-    clearSession();
+    clearState();
     webSocket.disconnect();
   }
 
   // functions
   void leaveLobby() {
     exitGame();
-  }
-
-  void clearSession(){
-    print("logic.clearSession()");
   }
 }

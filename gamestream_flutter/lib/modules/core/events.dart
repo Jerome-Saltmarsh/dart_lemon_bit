@@ -158,7 +158,7 @@ class CoreEvents {
         engine.update = null;
         core.state.mode.value = Mode.Website;
         engine.fullScreenExit();
-        core.actions.clearSession();
+        core.actions.clearState();
         engine.clearCallbacks();
         engine.drawCanvasAfterUpdate = true;
         engine.cursorType.value = CursorType.Basic;

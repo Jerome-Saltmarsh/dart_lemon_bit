@@ -261,7 +261,6 @@ class GameEvents {
 
   void _onGameTypeChanged(GameType type) {
     print('events.onGameTypeChanged($type)');
-    core.actions.clearSession();
     engine.camera.x = 0;
     engine.camera.y = 0;
     engine.zoom = 1;
