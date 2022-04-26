@@ -41,18 +41,25 @@ class _Engine {
     worldTime = (worldTime + secondsPerFrame) % secondsPerDay;
     frame++;
 
-    if (frame % framesPerRegen == 0){
+    if (frame % 10 == 0) {
+      for (var i = 0; i < games.length; i++) {
+        final game = games[i];
+        if (game.disableCountDown < 15) continue;
+        assert(game.players.isEmpty);
+        games.removeAt(i);
+        i--;
+        print("Empty game removed");
+      }
+    }
+    if (frame % framesPerRegen == 0) {
       regenCharacters();
     }
-
     if (frame % framesPerUpdateAIPath == 0) {
       _updateAIPaths();
     }
 
     for (final game in games) {
-
      game.removeDisconnectedPlayers();
-
       switch(game.status) {
 
         case GameStatus.In_Progress:
@@ -94,7 +101,7 @@ class _Engine {
   void _updateAIPaths() {
     for (final game in games) {
       final zombies = game.zombies;
-      for (final zombie in zombies){
+      for (final zombie in zombies) {
           if (zombie.deadOrBusy) continue;
           if (zombie.mode != NpcMode.Aggressive && zombie.mode != NpcMode.Swarm) continue;
           final target = zombie.target;

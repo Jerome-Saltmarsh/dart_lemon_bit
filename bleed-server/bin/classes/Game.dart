@@ -310,22 +310,15 @@ extension GameFunctions on Game {
 
   void updateInProgress() {
     frame++;
-
     if (frame % 15 == 0) {
       updateInteractableNpcTargets();
       updateZombieTargets();
-
       if (players.isEmpty) {
         disableCountDown++;
       } else {
         disableCountDown = 0;
       }
     }
-
-    if (disableCountDown > 30) {
-      return;
-    }
-
     update();
     updateDynamicObjects();
     updateCollectables();

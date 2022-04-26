@@ -313,18 +313,21 @@ class IsometricRender {
         }
       }
 
-      if (!buildModeRemaining || structureY < buildModeY) {
-        renderStructure(structures[indexStructure]);
-        indexStructure++;
-        structuresRemaining = indexStructure < totalStructures;
-        if (structuresRemaining) {
-          structureY = structures[indexStructure].y;
-          if (structureY > screenBottom) {
-            structuresRemaining = false;
+      if (structuresRemaining) {
+        if (!buildModeRemaining || structureY < buildModeY) {
+          renderStructure(structures[indexStructure]);
+          indexStructure++;
+          structuresRemaining = indexStructure < totalStructures;
+          if (structuresRemaining) {
+            structureY = structures[indexStructure].y;
+            if (structureY > screenBottom) {
+              structuresRemaining = false;
+            }
+            continue;
           }
-          continue;
         }
       }
+
       if (buildModeRemaining){
         renderBuildMode();
         buildModeRemaining = false;
@@ -343,7 +346,7 @@ class IsometricRender {
     }
   }
 
-  void renderStructure(Structure structure){
+  void renderStructure(Structure structure) {
     switch(structure.type) {
       case StructureType.Tower:
         return renderTower(structure.x, structure.y);

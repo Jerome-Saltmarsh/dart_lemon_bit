@@ -1,8 +1,4 @@
-import 'package:bleed_common/GameStatus.dart';
-import 'package:bleed_common/GameType.dart';
-import 'package:bleed_common/SlotType.dart';
-import 'package:bleed_common/StructureType.dart';
-import 'package:bleed_common/version.dart';
+import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/bytestream_parser.dart';
@@ -254,13 +250,9 @@ class GameBuild {
                 left: _pad,
                 top: _pad,
                 child: WatchBuilder(state.debugPanelVisible, (bool visible){
-                  return visible ? buildDebugPanel() : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildVersion(),
-                    ],
-                  );
-                })),
+                  return visible ? buildDebugPanel() : buildVersion();
+                })
+            ),
             Positioned(
                 left: _pad,
                 bottom: _pad,
@@ -270,7 +262,8 @@ class GameBuild {
             Positioned(
                 right: _pad,
                 bottom: _pad,
-                child: buildBottomRight()),
+                child: buildBottomRight()
+            ),
             buildTextBox(),
             buildTopRight(),
             if (!alive)
@@ -278,6 +271,7 @@ class GameBuild {
             buildHighlightedStoreSlot(),
             buildPanelHighlightedStructureType(),
             buildHighlightedSlot(),
+            buildPanelUpgrades(),
           ]);
     });
   }
@@ -362,6 +356,40 @@ class GameBuild {
         )
       );
     });
+  }
+
+  Widget buildPanelUpgrades(){
+        return Positioned(
+            top: 100,
+            left: 100,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                 Row(
+                   children: [
+                     Container(
+                         width: 32,
+                         height: 32,
+                         child: resources.icons.swords.pickaxe
+                     ),
+                     width16,
+                     text("Pickaxe"),
+                   ],
+                 ),
+                Row(
+                  children: [
+                    Container(
+                        width: 32,
+                        height: 32,
+                        child: resources.icons.swords.wooden
+                    ),
+                    width16,
+                    text("Sword"),
+                  ],
+                ),
+              ],
+            )
+        );
   }
 
   Widget buildPanelHighlightedStructureType(){
