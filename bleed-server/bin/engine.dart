@@ -48,7 +48,6 @@ class _Engine {
         assert(game.players.isEmpty);
         games.removeAt(i);
         i--;
-        print("Empty game removed");
       }
     }
     if (frame % framesPerRegen == 0) {

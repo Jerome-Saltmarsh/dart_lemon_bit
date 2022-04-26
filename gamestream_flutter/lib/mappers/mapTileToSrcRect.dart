@@ -1,5 +1,4 @@
 
-// interface
 import 'package:bleed_common/Tile.dart';
 
 double mapTileToSrcLeft(int tile) {

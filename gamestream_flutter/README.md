@@ -96,6 +96,10 @@
 [ ] As you gain levels decide which item you wish to upgrade or purchase
 [ ] Unlock Bow, Pickaxe, Sword, Staff, Armour, Max Towers etc
 [ ] Palisades draw horizontal and vertical when aligned
+[ ] Randomly Generate Zombie Spawn Locations
+[ ] Randomly Generate Player Spawn Locations
+[ ] Randomly Generate Caves
+[ ] Randomly Generate Roads
 [x] Generate Random Map
 [x] Projectiles should not damage dynamic objects
 [x] Dynamic Object Chest gives gold

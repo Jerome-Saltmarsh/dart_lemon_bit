@@ -36,7 +36,7 @@ class GameBuild {
   final storeColumnKey = GlobalKey();
   final keyPanelStructure = GlobalKey();
 
-  final double slotSize = 50;
+  final slotSize = 50.0;
 
   GameBuild(this.state, this.actions);
 
