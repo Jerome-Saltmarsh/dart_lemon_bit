@@ -10,6 +10,7 @@ import 'common/SlotType.dart';
 import 'compile.dart';
 import 'enums/npc_mode.dart';
 import 'functions/loadScenes.dart';
+import 'games/GameRandom.dart';
 import 'games/GameSwarm.dart';
 import 'games/Moba.dart';
 import 'games/Royal.dart';
@@ -125,6 +126,10 @@ class _Engine {
 
   GameSwarm findGameSwarm() {
     return GameSwarm();
+  }
+
+  GameRandom findRandomGame() {
+    return GameRandom();
   }
 
   GameMoba findPendingMobaGame() {

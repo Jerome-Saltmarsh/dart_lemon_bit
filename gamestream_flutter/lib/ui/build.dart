@@ -27,10 +27,7 @@ final selectableGameTypes = [
   GameType.MMO,
   GameType.SKIRMISH,
   GameType.SWARM,
-  // GameType.BATTLE_ROYAL,
-  // GameType.Moba,
-  // GameType.CUBE3D,
-  // GameType.DeathMatch,
+  GameType.RANDOM,
 ];
 
 class _Build {

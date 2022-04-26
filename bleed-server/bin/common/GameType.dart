@@ -4,6 +4,7 @@ enum GameType {
     Moba,
     BATTLE_ROYAL,
     SKIRMISH,
+    RANDOM,
     SWARM,
     CUBE3D,
     DeathMatch,
@@ -20,6 +21,7 @@ const gameTypeNames = {
     GameType.Moba: "HEROES MOBA",
     GameType.DeathMatch: "COUNTER STRIKE",
     GameType.SWARM: "SWARM",
+    GameType.RANDOM: "RANDOM",
 };
 
 const freeToPlay = [
