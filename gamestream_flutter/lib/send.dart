@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:bleed_common/CharacterAction.dart';
 import 'package:bleed_common/ClientRequest.dart';
 import 'package:bleed_common/GameType.dart';
-import 'package:bleed_common/WeaponType.dart';
 import 'package:bleed_common/compile_util.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
@@ -57,10 +56,6 @@ void sendRequestCharacterLoad(){
 void sendRequestJoinCustomGame({required String mapName, required String playerId}) {
   print("sendRequestJoinCustomGame()");
   webSocket.send('${ClientRequest.Join_Custom.index} $playerId $mapName');
-}
-
-void sendRequestAcquireAbility(WeaponType type) {
-  // webSocket.send('${ClientRequest.AcquireAbility.index} $session ${type.index}');
 }
 
 void sendRequestAttack() {

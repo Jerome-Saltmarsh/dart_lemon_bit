@@ -1,11 +1,8 @@
 
 import 'package:lemon_math/abs.dart';
 import 'package:lemon_math/hypotenuse.dart';
-import 'package:lemon_math/randomItem.dart';
 
 import 'classes/Collider.dart';
-import 'classes/Player.dart';
-import 'common/OrbType.dart';
 import 'constants.dart';
 import 'maths.dart';
 
@@ -103,21 +100,6 @@ void resolveCollisionBetween(
 }
 
 typedef void CollisionResolver(Collider a, Collider b);
-
-void playerEarnRandomOrb(Player player){
-  final orbs = player.orbs;
-  switch(randomItem(orbTypes)) {
-    case OrbType.Topaz:
-      orbs.topaz++;
-      return;
-    case OrbType.Ruby:
-      orbs.ruby++;
-      return;
-    case OrbType.Emerald:
-      orbs.emerald++;
-      return;
-  }
-}
 
 
 

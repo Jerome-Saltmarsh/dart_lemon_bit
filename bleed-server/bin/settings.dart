@@ -1,62 +1,9 @@
 
-import '../bin/common/WeaponType.dart';
-
 final Settings settings = Settings();
 
 _Radius get radius => settings.radius;
 
 _CoolDown get coolDown => settings.coolDown;
-
-_Accuracy get _accuracy => settings.accuracy;
-
-_Range get _range => settings.range;
-
-_ProjectileSpeed _bulletSpeed = settings.projectileSpeed;
-
-double getBulletSpeed(WeaponType weapon) {
-  switch (weapon) {
-    case WeaponType.HandGun:
-      return _bulletSpeed.handgun;
-    case WeaponType.Shotgun:
-      return _bulletSpeed.shotgun;
-    case WeaponType.SniperRifle:
-      return _bulletSpeed.sniperRifle;
-    case WeaponType.AssaultRifle:
-      return _bulletSpeed.assaultRifle;
-    default:
-      throw Exception("no range found for $weapon");
-  }
-}
-
-double getWeaponAccuracy(WeaponType weapon){
-  switch (weapon){
-    case WeaponType.HandGun:
-      return _accuracy.handgun;
-    case WeaponType.Shotgun:
-      return _accuracy.shotgun;
-    case WeaponType.SniperRifle:
-      return _accuracy.sniperRifle;
-    case WeaponType.AssaultRifle:
-      return _accuracy.assaultRifle;
-    default:
-      throw Exception("No accuracy found for $weapon");
-  }
-}
-
-double getWeaponRange(WeaponType weapon) {
-  switch (weapon) {
-    case WeaponType.HandGun:
-      return _range.handgun;
-    case WeaponType.Shotgun:
-      return _range.shotgun;
-    case WeaponType.SniperRifle:
-      return _range.sniperRifle;
-    case WeaponType.AssaultRifle:
-      return _range.assaultRifle;
-    default:
-      throw Exception("no range found for $weapon");
-  }
-}
 
 class Settings {
   final host = '0.0.0.0';

@@ -67,14 +67,6 @@ class _ByteCompiler {
     writeByte(END);
   }
 
-  void writePlayerOrbs(Player player) {
-    writeByte(ServerResponse.Player_Orbs);
-    final orbs = player.orbs;
-    writeBigInt(orbs.topaz); // 2
-    writeBigInt(orbs.emerald); // 2
-    writeBigInt(orbs.ruby); // 2
-  }
-
   void writePlayerSlots(Player player) {
     writeByte(ServerResponse.Player_Slots);
     final slots = player.slots;

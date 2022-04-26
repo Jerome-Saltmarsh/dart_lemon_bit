@@ -31,8 +31,8 @@ class _Engine {
 
   Future init() async {
     print("engine.init()");
-    await scenes.load();
-    world = World();
+    // await scenes.load();
+    // world = World();
     periodic(fixedUpdate, ms: Duration.millisecondsPerSecond ~/ framesPerSecond);
     print("engine.init() finished");
   }
@@ -129,7 +129,13 @@ class _Engine {
   }
 
   GameRandom findRandomGame() {
-    return GameRandom();
+    for (final game in games) {
+      if (game is GameRandom) {
+        if (game.full) continue;
+        return game;
+      }
+    }
+    return GameRandom(maxPlayers: 10);
   }
 
   GameMoba findPendingMobaGame() {

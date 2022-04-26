@@ -1,16 +1,7 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:lemon_math/Vector2.dart';
 
-import '../common/AbilityMode.dart';
-import '../common/AbilityType.dart';
-import '../common/CharacterState.dart';
-import '../common/CharacterType.dart';
-import '../common/GameError.dart';
-import '../common/GemSpawn.dart';
-import '../common/OrbType.dart';
-import '../common/PlayerEvent.dart';
-import '../common/SlotType.dart';
-import '../common/SlotTypeCategory.dart';
+import '../common/library.dart';
 import '../constants/no_squad.dart';
 import '../engine.dart';
 import '../functions/generateName.dart';
@@ -22,45 +13,41 @@ import 'Game.dart';
 
 class Player extends Character {
 
-  final gemSpawns = <GemSpawn>[];
+  final mouse = Vector2(0, 0);
+  final runTarget = Vector2(0, 0);
   final slots = Slots();
-  final orbs = Orbs();
   var score = 0;
   var sceneChanged = false;
   var characterState = CharacterState.Idle;
   Account? account;
   /// How many frames have elapsed since the server received a message from this client
-  int lastUpdateFrame = 0;
-  int frameOfDeath = -1;
-  int pointsRecord = 0;
-  int textDuration = 0;
-  int experience = 0;
-  int level = 1;
-  int abilityPoints = 0;
-  int _magic = 0;
-  int maxMagic = 100;
-  int magicRegen = 1;
-  int healthRegen = 1;
-  String message = "";
-  String text = "";
-  String name = generateName();
+  var lastUpdateFrame = 0;
+  var pointsRecord = 0;
+  var textDuration = 0;
+  var experience = 0;
+  var level = 1;
+  var abilityPoints = 0;
+  var _magic = 0;
+  var maxMagic = 100;
+  var magicRegen = 1;
+  var healthRegen = 1;
+  var message = "";
+  var text = "";
+  var name = generateName();
+  var storeVisible = false;
+  var screenLeft = 0.0;
+  var screenTop = 0.0;
+  var screenRight = 0.0;
+  var screenBottom = 0.0;
   Game game;
-  bool storeVisible = false;
-  Vector2 mouse = Vector2(0, 0);
-  double screenLeft = 0;
-  double screenTop = 0;
-  double screenRight = 0;
-  double screenBottom = 0;
   Collider? aimTarget; // the currently highlighted character
   Position? target;
-  Vector2 runTarget = Vector2(0, 0);
 
   var wood = 0;
   var stone = 0;
   var gold = 0;
 
   late Function onUpdated;
-  late Function onOrbsChanged;
   late Function onSlotsChanged;
   late Function(int value) onPlayerEvent;
   late Function(int type, double x, double y, double angle) onGameEvent;
@@ -101,22 +88,6 @@ class Player extends Character {
     maxMagic = magic;
     _magic = maxMagic;
     engine.onPlayerCreated(this);
-  }
-
-  void attainOrb(OrbType orb){
-    switch(orb) {
-      case OrbType.Topaz:
-        orbs.topaz++;
-        onPlayerEvent(PlayerEvent.Orb_Earned_Topaz);
-        break;
-      case OrbType.Ruby:
-        orbs.ruby++;
-        break;
-      case OrbType.Emerald:
-        orbs.emerald++;
-        break;
-    }
-    onOrbsChanged();
   }
 
   void setStateChangingWeapons(){
@@ -447,12 +418,6 @@ class Slots {
     empty.type = type;
     return true;
   }
-}
-
-class Orbs {
-  var topaz = 0;
-  var ruby = 0;
-  var emerald = 0;
 }
 
 extension PlayerProperties on Player {

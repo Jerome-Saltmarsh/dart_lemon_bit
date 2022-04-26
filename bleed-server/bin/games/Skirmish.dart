@@ -142,9 +142,6 @@ class GameSkirmish extends Game {
       weapon: SlotType.Pickaxe,
     );
     final slots = player.slots;
-    player.orbs.emerald = 50;
-    player.orbs.ruby = 50;
-    player.orbs.topaz = 50;
     slots.weapon.amount = 50;
     slots.slot1.type = SlotType.Potion_Red;
     slots.slot2.type = SlotType.Shotgun;
@@ -182,27 +179,6 @@ class GameSkirmish extends Game {
   @override
   bool onPlayerItemCollision(Player player, Item item){
     final slots = player.slots;
-
-    if (item.type == ItemType.Orb_Topaz) {
-      player.onPlayerEvent(PlayerEvent.Orb_Earned_Topaz);
-      player.orbs.topaz++;
-      player.onOrbsChanged();
-      return true;
-    }
-
-    if (item.type == ItemType.Orb_Ruby) {
-      player.onPlayerEvent(PlayerEvent.Orb_Earned_Ruby);
-      player.orbs.ruby++;
-      player.onOrbsChanged();
-      return true;
-    }
-
-    if (item.type == ItemType.Orb_Emerald) {
-      player.onPlayerEvent(PlayerEvent.Orb_Earned_Emerald);
-      player.orbs.emerald++;
-      player.onOrbsChanged();
-      return true;
-    }
 
     switch(item.type) {
 

@@ -1,6 +1,5 @@
 import 'package:bleed_common/GameStatus.dart';
 import 'package:bleed_common/GameType.dart';
-import 'package:bleed_common/RoyalCost.dart';
 import 'package:bleed_common/SlotType.dart';
 import 'package:bleed_common/StructureType.dart';
 import 'package:bleed_common/version.dart';
@@ -426,11 +425,6 @@ class GameBuild {
     return WatchBuilder(state.highlightSlotType, (int slotType) {
       if (slotType == SlotType.Empty) return empty;
 
-      final cost = slotTypeCosts[slotType];
-      if (cost == null){
-        throw Exception("No SlotTypeCost found for $slotType");
-      }
-
       final storeColumnContext = storeColumnKey.currentContext;
       var y = 0.0;
       if (storeColumnContext != null) {
@@ -459,18 +453,6 @@ class GameBuild {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  if (cost.topaz > 0)
-                    Row(
-                      children: [resources.icons.topaz, text(cost.topaz)],
-                    ),
-                  if (cost.rubies > 0)
-                    Row(
-                      children: [resources.icons.ruby, text(cost.rubies)],
-                    ),
-                  if (cost.emeralds > 0)
-                    Row(
-                      children: [resources.icons.emerald, text(cost.emeralds)],
-                    )
                 ],
               ),
               height8,

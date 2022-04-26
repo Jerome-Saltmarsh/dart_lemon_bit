@@ -16,13 +16,11 @@ import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
 import 'common/GameType.dart';
 import 'common/Modify_Game.dart';
-import 'common/RoyalCost.dart';
 import 'common/ServerResponse.dart';
 import 'common/SlotType.dart';
 import 'common/SlotTypeCategory.dart';
 import 'common/StructureType.dart';
 import 'common/Tile.dart';
-import 'common/WeaponType.dart';
 import 'common/compile_util.dart';
 import 'common/utilities.dart';
 import 'common/version.dart';
@@ -30,6 +28,7 @@ import 'compile.dart';
 import 'engine.dart';
 import 'functions/generateName.dart';
 import 'functions/withinRadius.dart';
+import 'games/GameRandom.dart';
 import 'games/Moba.dart';
 import 'games/world.dart';
 import 'physics.dart';
@@ -108,13 +107,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       clearBuffer();
     }
 
-
-    void compileOrbsChanged(){
-      final player = _player;
-      if (player == null) return;
-      byteCompiler.writePlayerOrbs(player);
-    }
-
     void compileAndSendPlayerSlots(){
       final player = _player;
       if (player == null) return;
@@ -148,7 +140,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       final player = _player;
       if (player == null) return;
       player.onUpdated = compileAndSendPlayer;
-      player.onOrbsChanged = compileOrbsChanged;
       player.onSlotsChanged = compileAndSendPlayerSlots;
       player.onGameEvent = sendGameEvent;
       player.dispatchError = error;
@@ -168,7 +159,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       compilePlayersRemaining(_buffer, 0);
       write('${ServerResponse.Game_Joined} 0 ${game.id} ${player.team} ${player.x.toInt()} ${player.y.toInt()}');
       sendAndClearBuffer();
-      compileOrbsChanged();
       compileAndSendPlayerSlots();
       compileAndSendPlayer();
     }
@@ -179,7 +169,13 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       onGameJoined();
     }
 
-    void joinGameRandom() {
+    void joinNewRandomGame() {
+      final game = GameRandom(maxPlayers: 1);
+      _player = game.spawnPlayer();
+      onGameJoined();
+    }
+
+    void joinExistingRandomGame() {
       final game = engine.findRandomGame();
       _player = game.spawnPlayer();
       onGameJoined();
@@ -208,11 +204,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       final account = _account;
       final player = engine.spawnPlayerInTown();
       _player = player;
-      final orbs = player.orbs;
       player.name = account != null ? account.publicName : generateName();
-      orbs.emerald = 100;
-      orbs.topaz = 100;
-      orbs.ruby = 100;
       onGameJoined();
     }
 
@@ -493,7 +485,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                  case GameType.SWARM:
                    return joinGameSwarm();
                  case GameType.RANDOM:
-                   return joinGameRandom();
+                   return joinNewRandomGame();
+                 case GameType.RANDOM_SOLO:
+                   return joinExistingRandomGame();
                  default:
                    break;
                }
@@ -517,7 +511,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             case GameType.SWARM:
               return joinGameSwarm();
             case GameType.RANDOM:
-              return joinGameRandom();
+              return joinNewRandomGame();
+            case GameType.RANDOM_SOLO:
+              return joinExistingRandomGame();
             default:
               throw Exception("Cannot join ${gameType}");
           }
@@ -934,23 +930,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             errorInsufficientSkillPoints();
             return;
           }
-
-          int? weaponTypeIndex = int.tryParse(arguments[2]);
-          if (weaponTypeIndex == null) {
-            errorIntegerExpected(2, arguments[2]);
-            return;
-          }
-
-          if (weaponTypeIndex >= weaponTypes.length) {
-            errorInvalidArg(
-                "WeaponType $weaponTypeIndex cannot be greater than ${weaponTypes.length}");
-            return;
-          }
-
-          if (weaponTypeIndex < 0) {
-            errorInvalidArg("WeaponType $weaponTypeIndex cannot be negative");
-            return;
-          }
           break;
 
         case ClientRequest.Attack:
@@ -1018,16 +997,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
           if (!player.slots.emptySlotAvailable) return;
           final slotType = slotItemIndex;
-          final cost = slotTypeCosts[slotType];
-          if (cost != null) {
-              if (cost.topaz > player.orbs.topaz) return;
-              if (cost.rubies > player.orbs.ruby) return;
-              if (cost.emeralds > player.orbs.emerald) return;
-              player.orbs.topaz -= cost.topaz;
-              player.orbs.ruby -= cost.rubies;
-              player.orbs.emerald -= cost.emeralds;
-              player.onOrbsChanged();
-          }
           player.acquire(slotType);
           return;
 

@@ -24,10 +24,11 @@ import 'widgets.dart';
 final build = _Build();
 
 final selectableGameTypes = [
-  GameType.MMO,
-  GameType.SKIRMISH,
-  GameType.SWARM,
+  // GameType.MMO,
+  // GameType.SKIRMISH,
+  // GameType.SWARM,
   GameType.RANDOM,
+  GameType.RANDOM_SOLO,
 ];
 
 class _Build {

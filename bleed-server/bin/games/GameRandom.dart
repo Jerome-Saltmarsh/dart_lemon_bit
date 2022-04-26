@@ -6,7 +6,11 @@ import '../common/SlotType.dart';
 import '../scene_generator.dart';
 
 class GameRandom extends Game {
-  GameRandom() : super(generateRandomScene());
+  final int maxPlayers;
+
+  GameRandom({required this.maxPlayers}) : super(generateRandomScene());
+
+  bool get full => players.length >= maxPlayers;
 
   @override
   int getTime() {

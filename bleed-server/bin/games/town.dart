@@ -3,7 +3,6 @@ import '../classes/Game.dart';
 import '../classes/InteractableNpc.dart';
 import '../classes/Item.dart';
 import '../classes/Player.dart';
-import '../common/ItemType.dart';
 import '../common/SlotType.dart';
 import '../engine.dart';
 import 'world.dart';
@@ -62,15 +61,6 @@ class Town extends Game {
 
   @override
   bool onPlayerItemCollision(Player player, Item item){
-    if (item.type == ItemType.Orb_Emerald){
-      player.orbs.emerald++;
-    }
-    if (item.type == ItemType.Orb_Topaz){
-      player.orbs.topaz++;
-    }
-    if (item.type == ItemType.Orb_Ruby){
-      player.orbs.ruby++;
-    }
     return true;
   }
 

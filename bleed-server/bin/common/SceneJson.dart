@@ -1,5 +1,5 @@
 
-final _SceneFieldNames sceneFieldNames = _SceneFieldNames();
+final sceneFieldNames = _SceneFieldNames();
 
 class _SceneFieldNames {
    final String startTime = 'start-time';

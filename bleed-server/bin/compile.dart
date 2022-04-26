@@ -87,14 +87,6 @@ void compilePlayerWeapons(StringBuffer buffer, Player player) {
   _write(buffer, ServerResponse.Weapons);
 }
 
-
-void compilePlayerOrbs(StringBuffer buffer, Player player) {
-  _write(buffer, ServerResponse.Player_Orbs);
-  _write(buffer, player.orbs.ruby);
-  _write(buffer, player.orbs.topaz);
-  _write(buffer, player.orbs.emerald);
-}
-
 void compilePlayerWeaponValues(StringBuffer buffer, Player player){
   _write(buffer, ServerResponse.Player_Weapon);
 }
