@@ -106,9 +106,10 @@ class Character extends Collider with Team, Health, Velocity {
   late double _speed;
   Ability? ability = null;
   Ability? performing = null;
-  int state = CharacterState.Idle;
   double angle = 0;
   double accuracy = 0;
+  double speedModifier = 0;
+  int state = CharacterState.Idle;
   int stateDurationRemaining = 0;
   int stateDuration = 0;
   int animationFrame = 0;
@@ -116,7 +117,6 @@ class Character extends Collider with Team, Health, Velocity {
   /// the character that was highlighted as the character began attacking
   /// This forces a hit to occur even if the target goes out of range of the attack
   Collider? attackTarget;
-  double speedModifier = 0;
   bool invincible = false;
   final abilityTarget = Vector2(0, 0);
   final slots = Slots();

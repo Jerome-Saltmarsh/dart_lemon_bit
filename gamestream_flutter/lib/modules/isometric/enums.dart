@@ -51,3 +51,11 @@ class ParticleType {
   static const Tree_Shard = 15;
   static const Shard_Wood = 16;
 }
+
+enum CameraMode {
+  Chase,
+  Locked,
+  Free,
+}
+
+const cameraModes = CameraMode.values;

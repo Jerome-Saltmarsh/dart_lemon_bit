@@ -5,21 +5,13 @@ import 'package:bleed_common/OrbType.dart';
 import 'package:bleed_common/SlotType.dart';
 import 'package:bleed_common/Tile.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/resources.dart';
+import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/advanced_watch.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'classes.dart';
 import 'enums.dart';
-
-const cameraModes = CameraMode.values;
-
-enum CameraMode {
-  Chase,
-  Locked,
-  Free,
-}
 
 class GameState {
   final player = Player();
@@ -35,7 +27,6 @@ class GameState {
   final highlightStructureType = Watch<int?>(null);
   final highlightSlot = Watch<Slot?>(null);
 
-  // final highlightPanelPosition = Vector2(0, 0);
   final cameraMode = Watch(CameraMode.Chase);
   final framesSmoothed = Watch(0);
 
@@ -44,33 +35,6 @@ class GameState {
   var framesSinceOrbAcquired = 999;
   var lastOrbAcquired = OrbType.Emerald;
 
-  final slotTypeImages = <int, Widget> {
-    SlotType.Empty: resources.icons.empty,
-    SlotType.Sword_Short : resources.icons.sword,
-    SlotType.Sword_Wooden : resources.icons.swords.wooden,
-    SlotType.Golden_Necklace : resources.icons.trinkets.goldenNecklace,
-    SlotType.Sword_Long : resources.icons.swords.iron,
-    SlotType.Bow_Wooden : resources.icons.bows.wooden,
-    SlotType.Bow_Green : resources.icons.bows.green,
-    SlotType.Bow_Gold : resources.icons.bows.gold,
-    SlotType.Staff_Wooden : resources.icons.staffs.wooden,
-    SlotType.Staff_Blue : resources.icons.staffs.blue,
-    SlotType.Staff_Golden : resources.icons.staffs.golden,
-    SlotType.Spell_Tome_Fireball : resources.icons.books.red,
-    SlotType.Spell_Tome_Ice_Ring : resources.icons.books.blue,
-    SlotType.Spell_Tome_Split_Arrow : resources.icons.books.blue,
-    SlotType.Body_Blue : resources.icons.armour.standard,
-    SlotType.Steel_Helmet : resources.icons.heads.steel,
-    SlotType.Magic_Hat : resources.icons.heads.magic,
-    SlotType.Rogue_Hood : resources.icons.heads.rogue,
-    SlotType.Potion_Red : resources.icons.potions.red,
-    SlotType.Potion_Blue : resources.icons.potions.blue,
-    SlotType.Armour_Padded : resources.icons.armour.padded,
-    SlotType.Magic_Robes : resources.icons.armour.magic,
-    SlotType.Handgun : resources.icons.firearms.handgun,
-    SlotType.Shotgun : resources.icons.firearms.shotgun,
-    SlotType.Pickaxe : resources.icons.swords.pickaxe,
-  };
 }
 
 class _PlayerOrbs {

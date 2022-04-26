@@ -13,6 +13,7 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
 import 'package:lemon_watch/watch.dart';
 
+import 'modules/isometric/enums.dart';
 import 'state/game.dart';
 
 final byteStreamParser = _ByteStreamParser();

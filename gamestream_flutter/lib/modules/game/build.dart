@@ -23,6 +23,7 @@ import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
+import '../isometric/enums.dart';
 import 'state.dart';
 
 
@@ -365,16 +366,21 @@ class GameBuild {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                 Row(
-                   children: [
-                     Container(
-                         width: 32,
-                         height: 32,
-                         child: resources.icons.swords.pickaxe
-                     ),
-                     width16,
-                     text("Pickaxe"),
-                   ],
+                 onPressed(
+                   callback: (){
+                     // sendCl
+                   },
+                   child: Row(
+                     children: [
+                       Container(
+                           width: 32,
+                           height: 32,
+                           child: resources.icons.swords.pickaxe
+                       ),
+                       width16,
+                       text("Pickaxe"),
+                     ],
+                   ),
                  ),
                 Row(
                   children: [
@@ -1018,13 +1024,10 @@ class GameBuild {
   }
 
   Widget getSlotTypeImage(int value){
-    if (state.slotTypeImages.containsKey(value)){
-      return state.slotTypeImages[value]!;
-    }
-    return resources.icons.unknown;
+    return _slotTypeImages[value] ?? resources.icons.unknown;
   }
 
-  Widget mousePosition(){
+  Widget mousePosition() {
     return Refresh((){
       return text("Mouse Screen: x: ${engine.mousePosition.x}, y: ${engine.mousePosition.y}");
     });
@@ -1226,3 +1229,31 @@ class GameBuild {
   }
 }
 
+
+final _slotTypeImages = <int, Widget> {
+  SlotType.Empty: resources.icons.empty,
+  SlotType.Sword_Short : resources.icons.sword,
+  SlotType.Sword_Wooden : resources.icons.swords.wooden,
+  SlotType.Golden_Necklace : resources.icons.trinkets.goldenNecklace,
+  SlotType.Sword_Long : resources.icons.swords.iron,
+  SlotType.Bow_Wooden : resources.icons.bows.wooden,
+  SlotType.Bow_Green : resources.icons.bows.green,
+  SlotType.Bow_Gold : resources.icons.bows.gold,
+  SlotType.Staff_Wooden : resources.icons.staffs.wooden,
+  SlotType.Staff_Blue : resources.icons.staffs.blue,
+  SlotType.Staff_Golden : resources.icons.staffs.golden,
+  SlotType.Spell_Tome_Fireball : resources.icons.books.red,
+  SlotType.Spell_Tome_Ice_Ring : resources.icons.books.blue,
+  SlotType.Spell_Tome_Split_Arrow : resources.icons.books.blue,
+  SlotType.Body_Blue : resources.icons.armour.standard,
+  SlotType.Steel_Helmet : resources.icons.heads.steel,
+  SlotType.Magic_Hat : resources.icons.heads.magic,
+  SlotType.Rogue_Hood : resources.icons.heads.rogue,
+  SlotType.Potion_Red : resources.icons.potions.red,
+  SlotType.Potion_Blue : resources.icons.potions.blue,
+  SlotType.Armour_Padded : resources.icons.armour.padded,
+  SlotType.Magic_Robes : resources.icons.armour.magic,
+  SlotType.Handgun : resources.icons.firearms.handgun,
+  SlotType.Shotgun : resources.icons.firearms.shotgun,
+  SlotType.Pickaxe : resources.icons.swords.pickaxe,
+};

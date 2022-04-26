@@ -11,7 +11,6 @@ import 'classes/Structure.dart';
 import 'common/AbilityMode.dart';
 import 'common/CharacterAction.dart';
 import 'common/CharacterState.dart';
-import 'common/CharacterType.dart';
 import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
 import 'common/GameType.dart';
@@ -39,6 +38,8 @@ const _errorIndex = ServerResponse.Error;
 final _buffer = StringBuffer();
 final _clientRequestsLength = clientRequests.length;
 var totalConnections = 0;
+
+final clientRequestIndexUpdate = ClientRequest.Update.index;
 
 void clearBuffer() {
   _buffer.clear();
@@ -240,10 +241,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
     void errorPlayerBusy() {
       error(GameError.PlayerBusy);
-    }
-
-    void errorInsufficientSkillPoints() {
-      error(GameError.InsufficientSkillPoints);
     }
 
     void onEvent(dynamic requestD) {
@@ -680,29 +677,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.game.revive(player);
           return;
 
-        case ClientRequest.SelectCharacterType:
-          if (arguments.length != 3) {
-            errorArgsExpected(3, arguments);
-            return;
-          }
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
-          if (player.type != CharacterType.Human) {
-            error(GameError.CharacterTypeAlreadySelected);
-            break;
-          }
-
-          int? characterTypeIndex = int.tryParse(arguments[2]);
-          if (characterTypeIndex == null) {
-            errorIntegerExpected(1, arguments[2]);
-            return;
-          }
-
-          selectCharacterType(player, characterTypes[characterTypeIndex]);
-          break;
-
         case ClientRequest.Unequip_Slot:
 
           final player = _player;
@@ -807,131 +781,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
           break;
 
-        case ClientRequest.Leave_Lobby:
-          if (arguments.length != 3) {
-            errorArgsExpected(3, arguments);
-            return;
-          }
-
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
-          break;
-
-        case ClientRequest.Reset_Character_Type:
-          if (arguments.length != 3) {
-            errorArgsExpected(3, arguments);
-            return;
-          }
-
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
-
-          player.type = CharacterType.Human;
-          final spawnPoint = player.game.getNextSpawnPoint();
-          player.x = spawnPoint.x;
-          player.y = spawnPoint.y;
-          break;
-
-        case ClientRequest.Upgrade_Ability:
-          if (arguments.length != 3) {
-            errorArgsExpected(3, arguments);
-            return;
-          }
-
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
-
-          if (player.abilityPoints < 1) {
-            error(GameError.SkillPointsRequired);
-            return;
-          }
-
-          final upgradeIndex = int.tryParse(arguments[2]);
-          if (upgradeIndex == null) {
-            errorInvalidArg('arg[2] expected int but got $upgradeIndex');
-            return;
-          }
-          if (upgradeIndex < 0) {
-            errorInvalidArg('arg[2] $upgradeIndex must be greater than 0');
-            return;
-          }
-          if (upgradeIndex > 4) {
-            errorInvalidArg('arg[2] $upgradeIndex must be less than 5');
-            return;
-          }
-
-          break;
-
-        case ClientRequest.DeselectAbility:
-          if (arguments.length != 2) {
-            errorArgsExpected(2, arguments);
-            return;
-          }
-
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
-          player.ability = null;
-          break;
-
-        case ClientRequest.SelectAbility:
-          if (arguments.length != 3) {
-            errorArgsExpected(3, arguments);
-            return;
-          }
-
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
-
-          if (player.busy) return;
-          if (player.dead) return;
-
-          int? abilityIndex = int.tryParse(arguments[2]);
-          if (abilityIndex == null) {
-            errorInvalidArg('arg[2] expected int but got $abilityIndex');
-            return;
-          }
-          if (abilityIndex < 0) {
-            errorInvalidArg('arg[2] $abilityIndex must be greater than 0');
-            return;
-          }
-          if (abilityIndex > 4) {
-            errorInvalidArg('arg[2] $abilityIndex must be less than 5');
-            return;
-          }
-          break;
-
-        case ClientRequest.AcquireAbility:
-          if (arguments.length != 3) {
-            errorArgsExpected(3, arguments);
-            return;
-          }
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
-          if (player.dead) {
-            errorPlayerDead();
-            return;
-          }
-          if (player.busy) {
-            return;
-          }
-          if (player.abilityPoints <= 0) {
-            errorInsufficientSkillPoints();
-            return;
-          }
-          break;
-
         case ClientRequest.Attack:
           if (player == null) return;
           if (player.deadOrBusy) return;
@@ -1000,7 +849,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.acquire(slotType);
           return;
 
-        case ClientRequest.SetCompilePaths:
+        case ClientRequest.Set_Compile_Paths:
 
           if (player == null) {
             errorPlayerNotFound();
@@ -1014,11 +863,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           reply('${ServerResponse.Version} $version');
           break;
 
-        case ClientRequest.SkipHour:
+        case ClientRequest.Skip_Hour:
           worldTime = (worldTime + secondsPerHour) % secondsPerDay;
           break;
 
-        case ClientRequest.ReverseHour:
+        case ClientRequest.Reverse_Hour:
           worldTime = (worldTime - secondsPerHour) % secondsPerDay;
           break;
 

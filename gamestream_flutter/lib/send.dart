@@ -99,7 +99,7 @@ Future sendRequestUpdatePlayer() async {
 
 void sendRequestTogglePaths() {
   modules.game.state.compilePaths.value = false;
-  webSocket.send('${ClientRequest.SetCompilePaths.index}');
+  webSocket.send('${ClientRequest.Set_Compile_Paths.index}');
 }
 
 void request(ClientRequest request, String value) {

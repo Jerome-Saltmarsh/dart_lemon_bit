@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/cube/cube.dart';
 import 'package:gamestream_flutter/cube/v3.dart';
-import 'package:gamestream_flutter/document/request_pointer_lock.dart';
+import 'package:gamestream_flutter/utils/document_utils.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:lemon_engine/engine.dart';

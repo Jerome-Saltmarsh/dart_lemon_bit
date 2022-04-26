@@ -3,6 +3,7 @@ import 'package:bleed_common/CharacterAction.dart';
 import 'package:bleed_common/ClientRequest.dart';
 import 'package:bleed_common/Modify_Game.dart';
 import 'package:bleed_common/SlotTypeCategory.dart';
+import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/state/game.dart';
@@ -70,11 +71,11 @@ class GameActions {
   }
 
   void skipHour(){
-    webSocket.send(ClientRequest.SkipHour.index.toString());
+    webSocket.send(ClientRequest.Skip_Hour.index.toString());
   }
 
   void reverseHour(){
-    webSocket.send(ClientRequest.ReverseHour.index.toString());
+    webSocket.send(ClientRequest.Reverse_Hour.index.toString());
   }
 
   void selectAbility1() {

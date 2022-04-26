@@ -10,28 +10,29 @@ import 'common/Tile.dart';
 
 typedef TileMap = List<List<int>>;
 
-Scene generateRandomScene() {
-  const totalColumns = 100;
-  const totalRows = 100;
+Scene generateRandomScene({
+  required int columns,
+  required int rows,
+  int seed = 0,
+}) {
   final noiseMap = noise2(
-      totalColumns,
-      totalRows,
-      seed: random.nextInt(2000),
+      columns,
+      rows,
+      seed: seed,
       noiseType: NoiseType.Perlin,
-      octaves: 10,
-      frequency: 0.040,
-      cellularReturnType: CellularReturnType.Distance2Add
+      octaves: 3,
+      frequency: 0.05,
   );
 
   final tiles = <List<int>>[];
   final environment = <EnvironmentObject>[];
-  for (var columnIndex = 0; columnIndex < totalColumns; columnIndex++) {
+  for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
     final noiseColumn = noiseMap[columnIndex];
     final column = <int>[];
     tiles.add(column);
-    for (var rowIndex = 0; rowIndex < totalRows; rowIndex++) {
+    for (var rowIndex = 0; rowIndex < rows; rowIndex++) {
        final noise = noiseColumn[rowIndex];
-       if (noise < 0.0001) {
+       if (noise < -0.1) {
          column.add(Tile.Water);
        }
        else

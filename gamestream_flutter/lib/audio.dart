@@ -1,6 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/randomItem.dart';
@@ -217,10 +216,6 @@ class _Audio {
     for (int i = 0; i < _totalAudioPlayers; i++) {
       _audioPlayers.add(AudioPlayer());
     }
-  }
-
-  void _playPos(String name, Position position) {
-    return _playPositioned(name, position.x, position.y);
   }
 
   void _playPositioned(String name, double x, double y) {
