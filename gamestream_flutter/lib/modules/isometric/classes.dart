@@ -1,8 +1,12 @@
 import 'package:bleed_common/library.dart';
 import 'package:lemon_math/Vector2.dart';
 
-import '../maths.dart';
+import '../../maths.dart';
+import 'mixins.dart';
 
+class Collectable extends Vector2 with Type {
+  Collectable() : super(0, 0);
+}
 
 class Character extends Vector2 {
   bool scoreMeasured = false;

@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:gamestream_flutter/classes/DynamicObject.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
@@ -21,6 +20,7 @@ import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/diff.dart';
 
 import '../modules.dart';
+import 'classes.dart';
 
 const _framesPerDirectionHuman = 19;
 const _framesPerDirectionZombie = 8;

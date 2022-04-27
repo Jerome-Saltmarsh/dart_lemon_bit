@@ -1,5 +1,4 @@
 import 'package:bleed_common/GameType.dart';
-import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:gamestream_flutter/classes/DynamicObject.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
@@ -7,6 +6,8 @@ import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/Projectile.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';
+
+import 'modules/isometric/classes.dart';
 
 
 final game = _Game();
@@ -144,10 +145,3 @@ class _LobbyPlayer {
 }
 
 
-class Collectable extends Vector2 with Type {
-  Collectable() : super(0, 0);
-}
-
-mixin Type {
-  var type = 0;
-}

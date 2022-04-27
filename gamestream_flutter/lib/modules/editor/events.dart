@@ -3,9 +3,9 @@
 
 import 'package:bleed_common/Tile.dart';
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/modules/editor/scope.dart';
+import 'package:gamestream_flutter/modules/isometric/classes.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/utils.dart';

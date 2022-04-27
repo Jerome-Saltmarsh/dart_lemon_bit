@@ -1,7 +1,8 @@
 
-import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
+
+import 'classes.dart';
 
 final atlas = _Atlas();
 
