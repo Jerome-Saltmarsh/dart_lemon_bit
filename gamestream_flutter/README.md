@@ -100,6 +100,7 @@
 [ ] Randomly Generate Player Spawn Locations
 [ ] Randomly Generate Caves
 [ ] Randomly Generate Roads
+[ ] Item Type Hammer (Used to construct buildings)
 [x] Generate Random Map
 [x] Projectiles should not damage dynamic objects
 [x] Dynamic Object Chest gives gold

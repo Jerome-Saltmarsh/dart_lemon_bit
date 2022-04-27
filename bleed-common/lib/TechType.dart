@@ -45,6 +45,7 @@ class TechType {
   static bool isValid(int index) => index >= 0 && index <= Handgun;
 
   static String getName(int value) {
+    assert (isValid(value));
     return const {
       Unarmed: "Unarmed",
       Pickaxe: "Pickaxe",
@@ -53,6 +54,19 @@ class TechType {
       Shotgun: "Shotgun",
       Handgun: "Handgun"
     }[value] ?? "?";
+  }
+  
+  static String getDescription(int value) {
+    assert (isValid(value));
+    return const {
+      Unarmed: "Unarmed",
+      Pickaxe: "+5 Damage to Rocks",
+      Bow: "Shoot enemies from a distance",
+      Sword: "Fight enemies at close range",
+      Shotgun: "Shotgun",
+      Handgun: "Handgun"
+    }[value] ?? "?";
+    
   }
 
   static bool isBow(int value) {

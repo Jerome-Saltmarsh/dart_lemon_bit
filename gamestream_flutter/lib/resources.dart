@@ -88,12 +88,15 @@ class _PotionIcons {
 
 class _SwordIcons {
   final wooden = buildIcon("sword-wooden");
+  final woodenGray = buildIcon("sword-wooden-gray");
   final iron = buildIcon("sword-iron");
   final pickaxe = buildIcon("pickaxe");
+  final pickaxeGray = buildIcon("pickaxe-gray");
 }
 
 class _BowIcons {
   final wooden = buildIcon("bow-wooden");
+  final woodenGray = buildIcon("bow-wooden-gray");
   final green = buildIcon("bow-green");
   final gold = buildIcon("bow-gold");
 }

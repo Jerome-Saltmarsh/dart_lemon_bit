@@ -93,6 +93,9 @@ class Player {
   final wood = Watch(0);
   final stone = Watch(0);
   final gold = Watch(0);
+  final levelPickaxe = Watch(0);
+  final levelSword = Watch(0);
+  final levelBow = Watch(0);
 
   // Properties
   bool get dead => !alive.value;

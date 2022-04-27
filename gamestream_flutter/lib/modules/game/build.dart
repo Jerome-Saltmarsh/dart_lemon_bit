@@ -1,4 +1,5 @@
 import 'package:bleed_common/library.dart';
+import 'package:lemon_watch/watch.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/bytestream_parser.dart';
@@ -41,6 +42,11 @@ class GameBuild {
   final slotSize = 50.0;
 
   GameBuild(this.state, this.actions);
+
+  final boxStandard = BoxDecoration(
+    color: colours.brownDark,
+    borderRadius: borderRadius4,
+  );
 
   Widget buildUIGame() {
     print("buildUIGame()");
@@ -134,7 +140,8 @@ class GameBuild {
                     alignment: Alignment.center,
                     width: 48,
                     height: 48,
-                    child: textBuilder(modules.game.state.player.wood)),
+                    child: textBuilder(modules.game.state.player.wood)
+                ),
               ],
             ),
           ),
@@ -150,7 +157,8 @@ class GameBuild {
                   alignment: Alignment.center,
                   width: 48,
                   height: 48,
-                  child: textBuilder(modules.game.state.player.stone)),
+                  child: textBuilder(modules.game.state.player.stone)
+              ),
             ],
           ),
           Column(
@@ -165,7 +173,8 @@ class GameBuild {
                   alignment: Alignment.center,
                   width: 48,
                   height: 48,
-                  child: textBuilder(modules.game.state.player.gold)),
+                  child: textBuilder(modules.game.state.player.gold)
+              ),
             ],
           ),
         ],
@@ -355,58 +364,73 @@ class GameBuild {
 
   final panelTypeKey = <int, GlobalKey> {};
 
-  Widget buildTechTypeRow(int type) {
+  Widget buildTechTypeRow(int type, Watch<int> levelWatch) {
     final key = GlobalKey();
     panelTypeKey[type] = key;
-    return Container(
-      key: key,
-      child: WatchBuilder(state.player.equipped, (int equipped) {
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            onPressed(
+
+    return WatchBuilder(levelWatch, (int level) {
+      final unlocked = level > 0;
+      return Container(
+        key: key,
+        child: WatchBuilder(state.player.equipped, (int equipped) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              onPressed(
                 child: resources.icons.symbols.plus,
                 callback: () => Server.upgrade(type),
-            ),
-            width16,
-            Expanded(
-              child: MouseRegion(
-                onEnter: (event) {
-                  state.highlightedTechType.value = type;
-                },
-                onExit: (event) {
-
-                  if (state.highlightedTechType.value != type) return;
-                  state.highlightedTechType.value = null;
-                },
-                child: onPressed(
-                  callback: () => Server.equip(type),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: equipped == type ? colours.white382 : colours.none,
-                      borderRadius: borderRadius4,
-                    ),
-                    height: 48,
-                    child: Row(
-                      children: [
-                        Container(
-                            width: 32,
-                            height: 32,
-                            alignment: Alignment.center,
-                            child: techTypeIcons[type],
+              ),
+              width16,
+              Expanded(
+                child: MouseRegion(
+                  onEnter: (event) {
+                    state.highlightedTechType.value = type;
+                  },
+                  onExit: (event) {
+                    if (state.highlightedTechType.value != type) return;
+                    state.highlightedTechType.value = null;
+                  },
+                  child: onPressed(
+                    callback: () => Server.equip(type),
+                    child: WatchBuilder(state.player.equipped, (int equipped) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: equipped == type
+                              ? colours.white382
+                              : colours.none,
+                          borderRadius: borderRadius4,
                         ),
-                        width16,
-                        text(TechType.getName(type)),
-                      ],
-                    ),
+                        height: 48,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 32,
+                              height: 32,
+                              alignment: Alignment.center,
+                              child: unlocked
+                                  ? techTypeIcons[type]
+                                  : techTypeIconsGray[type],
+                            ),
+                            width16,
+                            text(
+                                TechType.getName(type),
+                                color: unlocked
+                                    ? colours.white
+                                    : colours.white618
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
                   ),
                 ),
               ),
-            ),
-          ],
-        );
-      }),
-    );
+            ],
+          );
+        }),
+      );
+    });
   }
 
   Widget buildPanelPrimary() {
@@ -438,9 +462,9 @@ class GameBuild {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          buildTechTypeRow(TechType.Pickaxe),
-          buildTechTypeRow(TechType.Sword),
-          buildTechTypeRow(TechType.Bow),
+          buildTechTypeRow(TechType.Pickaxe, modules.game.state.player.levelPickaxe),
+          buildTechTypeRow(TechType.Sword, modules.game.state.player.levelSword),
+          buildTechTypeRow(TechType.Bow, modules.game.state.player.levelBow),
         ],
       ),
     );
@@ -457,12 +481,18 @@ class GameBuild {
       if (context == null) return const SizedBox();
       final renderBox = context.findRenderObject() as RenderBox;
       return Positioned(
-          right: 220,
+          right: 238,
           top: renderBox.localToGlobal(Offset.zero).dy,
           child: Container(
             width: 200,
-            color: colours.red,
-            child: text(TechType.getName(type)),
+            padding: padding8,
+            decoration: boxStandard,
+            child: Column(
+              children: [
+                text(TechType.getName(type)),
+                text(TechType.getDescription(type)),
+              ],
+            ),
           ),
       );
     });
@@ -1347,4 +1377,11 @@ final techTypeIcons = <int, Widget> {
   TechType.Sword: resources.icons.swords.wooden,
   TechType.Bow: resources.icons.bows.wooden,
   TechType.Pickaxe: resources.icons.swords.pickaxe,
+};
+
+final techTypeIconsGray = <int, Widget> {
+  TechType.Unarmed: resources.icons.unknown,
+  TechType.Sword: resources.icons.swords.woodenGray,
+  TechType.Bow: resources.icons.bows.woodenGray,
+  TechType.Pickaxe: resources.icons.swords.pickaxeGray,
 };
