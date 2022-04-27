@@ -3,23 +3,23 @@ class TechTree {
   var bow = 0;
   var sword = 0;
 
-  double getRange(int type){
-     switch(type) {
-       case TechType.Unarmed:
-         return 20;
-       case TechType.Pickaxe:
-         return 20;
-       case TechType.Bow:
-         return 100;
-       case TechType.Sword:
-         return 30;
-       default:
-         throw Exception("Invalid tech type index $type");
-     }
+  double getRange(int type) {
+    switch (type) {
+      case TechType.Unarmed:
+        return 20;
+      case TechType.Pickaxe:
+        return 20;
+      case TechType.Bow:
+        return 100;
+      case TechType.Sword:
+        return 30;
+      default:
+        throw Exception("Invalid tech type index $type");
+    }
   }
 
   int getDamage(int type) {
-    switch(type) {
+    switch (type) {
       case TechType.Unarmed:
         return 1;
       case TechType.Pickaxe:
@@ -44,19 +44,30 @@ class TechType {
 
   static bool isValid(int index) => index >= 0 && index <= Handgun;
 
+  static String getName(int value) {
+    return const {
+      Unarmed: "Unarmed",
+      Pickaxe: "Pickaxe",
+      Bow: "Bow",
+      Sword: "Sword",
+      Shotgun: "Shotgun",
+      Handgun: "Handgun"
+    }[value] ?? "?";
+  }
+
   static bool isBow(int value) {
     return value == Bow;
   }
-  
-  static bool isMelee(int value){
-     return const [
-        Unarmed,
-        Pickaxe,
-        Sword,
-     ].contains(value);
+
+  static bool isMelee(int value) {
+    return const [
+      Unarmed,
+      Pickaxe,
+      Sword,
+    ].contains(value);
   }
 
-  static int getDuration(int type){
+  static int getDuration(int type) {
     return const {
       Unarmed: 20,
       Sword: 20,

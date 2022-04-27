@@ -29,6 +29,11 @@ class _Icons {
   final firearms = _IconsFirearms();
   final resources = _IconsResources();
   final structures = _IconsStructures();
+  final symbols = _IconsSymbols();
+}
+
+class _IconsSymbols {
+  final plus = buildIcon("plus", width: 32, height: 32);
 }
 
 class _IconsResources {

@@ -71,16 +71,18 @@ void sendClientRequest(ClientRequest value, [dynamic message]){
 }
 
 class Server {
-  static void upgradePickaxe() => _upgrade(TechType.Pickaxe);
-  static void upgradeSword() => _upgrade(TechType.Sword);
-  static void equipPickaxe() => _equip(TechType.Pickaxe);
-  static void equipSword() => _equip(TechType.Sword);
+  static void upgradePickaxe() => upgrade(TechType.Pickaxe);
+  static void upgradeSword() => upgrade(TechType.Sword);
+  static void upgradeBow() => upgrade(TechType.Bow);
+  static void equipPickaxe() => equip(TechType.Pickaxe);
+  static void equipSword() => equip(TechType.Sword);
+  static void equipBow() => equip(TechType.Bow);
 
-  static void _upgrade(int value){
+  static void upgrade(int value){
     sendClientRequest(ClientRequest.Upgrade, value);
   }
 
-  static void _equip(int value){
+  static void equip(int value){
     sendClientRequest(ClientRequest.Equip, value);
   }
 }

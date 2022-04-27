@@ -249,6 +249,8 @@ class GameRender {
       case ProjectileType.Blue_Orb:
         engine.draw.circle(value.x, value.y, 5, colours.blue);
         break;
+      case ProjectileType.Bullet:
+        break;
     }
   }
 

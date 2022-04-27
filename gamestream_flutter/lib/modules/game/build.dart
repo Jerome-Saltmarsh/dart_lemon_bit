@@ -269,7 +269,7 @@ class GameBuild {
             buildHighlightedStoreSlot(),
             buildPanelHighlightedStructureType(),
             buildHighlightedSlot(),
-            buildPanelUpgrades(),
+            buildPanelPrimary(),
           ]);
     });
   }
@@ -357,76 +357,80 @@ class GameBuild {
     });
   }
 
-  Widget _buildUpgradeRow({
-    required Function upgrade,
-    required Function equip,
-    required Widget icon,
-    required String name
-  }){
-    return Row(
-      children: [
-        text("+", onPressed: upgrade, size: 30, color: colours.green, weight: FontWeight.bold),
-        width16,
-        onPressed(
-          callback: equip,
-          child: Row(
-            children: [
-              Container(
-                  width: 32,
-                  height: 32,
-                  alignment: Alignment.center,
-                  child: icon
-              ),
-              width16,
-              text(name),
-            ],
+  Widget buildTechTypeRow(int type){
+    return WatchBuilder(state.player.equipped, (int equipped) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          onPressed(
+              child: resources.icons.symbols.plus,
+            callback: () => Server.upgrade(type),
           ),
-        ),
-      ],
-    );
+          width16,
+          onPressed(
+            callback: () => Server.equip(type),
+            child: Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: equipped == type ? colours.white382 : colours.none,
+                  borderRadius: borderRadius4,
+                ),
+                height: 48,
+                child: Row(
+                  children: [
+                    Container(
+                        width: 32,
+                        height: 32,
+                        alignment: Alignment.center,
+                        child: techTypeIcons[type],
+                    ),
+                    width16,
+                    text(TechType.getName(type)),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    });
   }
 
-  Widget buildPanelUpgrades() {
-        return Positioned(
-            top: 200,
-            right: 32,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildTime(),
-                height8,
-                buildHealthBar(),
-                height8,
-                 buildResourcePanel(),
-                  height8,
-                  Container(
-                    width: 200,
-                    padding: padding8,
-                    decoration: BoxDecoration(
-                      color: colours.brownDark,
-                      borderRadius: borderRadius4,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildUpgradeRow(
-                          upgrade: Server.upgradePickaxe,
-                          equip: Server.equipPickaxe,
-                          icon: resources.icons.swords.pickaxe,
-                          name: "Pickaxe",
-                        ),
-                        _buildUpgradeRow(
-                          upgrade: Server.upgradeSword,
-                          equip: Server.equipSword,
-                          icon: resources.icons.swords.wooden,
-                          name: "Sword",
-                        ),
-                      ],
-                    ),
-                  )
-              ],
-            )
-        );
+  Widget buildPanelPrimary() {
+    return Positioned(
+        top: 200,
+        right: 32,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildTime(),
+            height6,
+            buildHealthBar(),
+            height6,
+            buildResourcePanel(),
+            height6,
+            buildPanelTech()
+          ],
+        ));
+  }
+
+  Widget buildPanelTech() {
+    return Container(
+      width: 200,
+      padding: padding8,
+      decoration: BoxDecoration(
+        color: colours.brownDark,
+        borderRadius: borderRadius4,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          buildTechTypeRow(TechType.Pickaxe),
+          buildTechTypeRow(TechType.Sword),
+          buildTechTypeRow(TechType.Bow),
+        ],
+      ),
+    );
   }
 
   Widget buildPanelHighlightedStructureType(){
@@ -1301,4 +1305,11 @@ final _slotTypeImages = <int, Widget> {
   SlotType.Handgun : resources.icons.firearms.handgun,
   SlotType.Shotgun : resources.icons.firearms.shotgun,
   SlotType.Pickaxe : resources.icons.swords.pickaxe,
+};
+
+final techTypeIcons = <int, Widget> {
+  TechType.Unarmed: resources.icons.unknown,
+  TechType.Sword: resources.icons.swords.wooden,
+  TechType.Bow: resources.icons.bows.wooden,
+  TechType.Pickaxe: resources.icons.swords.pickaxe,
 };

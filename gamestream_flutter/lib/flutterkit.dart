@@ -31,16 +31,18 @@ Widget text(dynamic value, {
     bool underline = false,
     Color? color,
     String? family,
+    TextAlign? align,
 }) {
   final Widget _text = Text(
       value.toString(),
+      textAlign: align,
       style: TextStyle(
           color: color ?? flutterKitConfiguration.defaultTextColor,
           fontSize: size?.toDouble() ?? flutterKitConfiguration.defaultTextFontSize,
           decoration: underline ? TextDecoration.underline : decoration,
           fontWeight: bold ? FontWeight.bold : weight,
           fontFamily: family,
-          fontStyle: italic ? FontStyle.italic : FontStyle.normal
+          fontStyle: italic ? FontStyle.italic : FontStyle.normal,
       )
   );
 
@@ -238,6 +240,7 @@ Widget height(double value) {
 
 final Widget height2 = height(2);
 final Widget height4 = height(4);
+final Widget height6 = height(6);
 final Widget height8 = height(8);
 final Widget height16 = height(16);
 final Widget height20 = height(20);
