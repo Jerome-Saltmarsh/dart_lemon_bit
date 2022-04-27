@@ -2,11 +2,10 @@
 import 'package:bleed_common/CharacterType.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/constants/colours.dart';
-import 'package:gamestream_flutter/cube/camera3d.dart';
+import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/state/game.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/ui/state/decorationImages.dart';
 import 'package:gamestream_flutter/ui/ui.dart';
@@ -185,33 +184,6 @@ Widget layout({
   );
 
   return expand ? fullScreen(child: stack, color: color): stack;
-}
-
-Widget buildUI3DCube() {
-  return Column(
-    children: [
-      buttons.exit,
-      Refresh(() {
-        return text('camera3D.rotation: ${camera3D.rotation}');
-      }),
-      // Refresh((){
-      //   return text('camera3D.viewportWidth: ${camera3D.viewportWidth.toInt()}');
-      // }),
-      // Refresh((){
-      //   return text('camera3D.viewportHeight: ${camera3D.viewportHeight.toInt()}');
-      // }),
-      Refresh(() {
-        return text('camera3D.fov: ${camera3D.fov.toInt()}');
-      }),
-      Refresh(() {
-        return text(
-            'camera.position: { x: ${engine.camera.x.toInt()}, y: ${engine.camera.y.toInt()}}');
-      }),
-      Refresh(() {
-        return text('camera.zoom: ${engine.zoom}');
-      }),
-    ],
-  );
 }
 
 Widget buildNumberOfPlayersRequiredDialog() {

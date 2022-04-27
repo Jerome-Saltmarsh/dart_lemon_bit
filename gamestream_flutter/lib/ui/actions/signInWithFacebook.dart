@@ -1,7 +1,7 @@
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:gamestream_flutter/classes/Authentication.dart';
 
-bool _initialized = false;
+var _initialized = false;
 
 Future<Authentication?> getAuthenticationFacebook() async {
   if (!_initialized) {

@@ -1,6 +1,6 @@
 
 import 'package:flutter/widgets.dart';
-import 'package:gamestream_flutter/constants/colours.dart';
+import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/ui/style.dart';
 import 'package:gamestream_flutter/modules/ui/widgets.dart';

@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/constants/colors/white.dart';
-import 'package:gamestream_flutter/constants/fontWeights/normal.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:lemon_engine/engine.dart';
@@ -25,7 +23,7 @@ Widget text(dynamic value, {
     num? size,
     Function? onPressed,
     TextDecoration decoration = TextDecoration.none,
-    FontWeight weight = normal,
+    FontWeight weight = FontWeight.normal,
     bool italic = false,
     bool bold = false,
     bool underline = false,
@@ -87,7 +85,7 @@ Widget border({
 
 BoxDecoration boxDecoration({
   double borderWidth = 2.0,
-  Color borderColor = white,
+  Color borderColor = Colors.white,
   double borderRadius = 4,
   Color fillColor = Colors.white,
 }) {

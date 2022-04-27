@@ -1,7 +1,7 @@
 import 'package:bleed_common/CharacterType.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/Authentication.dart';
-import 'package:gamestream_flutter/constants/colours.dart';
+import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';

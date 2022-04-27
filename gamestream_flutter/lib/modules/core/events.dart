@@ -9,7 +9,7 @@ import 'package:gamestream_flutter/modules/core/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/sharedPreferences.dart';
-import 'package:gamestream_flutter/state/game.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/toString.dart';
 import 'package:gamestream_flutter/webSocket.dart';
 import 'package:lemon_dispatch/instance.dart';

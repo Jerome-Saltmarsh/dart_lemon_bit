@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/state/game.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/utils/list_util.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
@@ -219,17 +219,6 @@ void parseState() {
 void parseGameTime() {
   modules.isometric.minutes.value = consumeInt();
 }
-
-// void parseItems() {
-//   game.itemsTotal = consumeInt();
-//   final items = isometric.items;
-//   for (int i = 0; i < game.itemsTotal; i++) {
-//     final item = items[i];
-//     item.type = _consumeItemType();
-//     item.x = consumeDouble();
-//     item.y = consumeDouble();
-//   }
-// }
 
 void parseCrates() {
   game.cratesTotal = consumeInt();

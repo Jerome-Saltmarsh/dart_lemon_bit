@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/state/game.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/opposite.dart';

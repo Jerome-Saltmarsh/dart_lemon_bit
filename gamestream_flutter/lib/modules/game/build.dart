@@ -2,7 +2,7 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/bytestream_parser.dart';
-import 'package:gamestream_flutter/constants/colours.dart';
+import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/game/enums.dart';
@@ -12,7 +12,7 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/module.dart';
 import 'package:gamestream_flutter/resources.dart';
 import 'package:gamestream_flutter/send.dart';
-import 'package:gamestream_flutter/state/game.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/ui/compose/buildTextBox.dart';
 import 'package:gamestream_flutter/ui/compose/hudUI.dart';
@@ -52,12 +52,7 @@ class GameBuild {
         case GameStatus.Awaiting_Players:
           return ui.layouts.buildLayoutLoading();
         case GameStatus.In_Progress:
-          switch (game.type.value) {
-            case GameType.CUBE3D:
-              return buildUI3DCube();
-            default:
-              return layoutRoyal();
-          }
+          return layoutRoyal();
         case GameStatus.Finished:
           return buildDialogGameFinished();
         default:

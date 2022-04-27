@@ -3,13 +3,13 @@ import 'package:bleed_common/GameType.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/assets.dart';
 import 'package:gamestream_flutter/classes/Ability.dart';
-import 'package:gamestream_flutter/constants/colours.dart';
+import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
 import 'package:gamestream_flutter/send.dart';
-import 'package:gamestream_flutter/state/game.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/ui/state/decorationImages.dart';
 import 'package:gamestream_flutter/ui/style.dart';
@@ -436,7 +436,6 @@ final Map<GameType, DecorationImage> gameTypeDecorationImage = {
   GameType.MMO: decorationImages.atlas,
   GameType.BATTLE_ROYAL: decorationImages.zombieRoyal,
   GameType.Moba: decorationImages.heroesLeague,
-  GameType.CUBE3D: decorationImages.cube,
   GameType.DeathMatch: decorationImages.counterStrike,
 };
 

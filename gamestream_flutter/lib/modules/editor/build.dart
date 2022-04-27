@@ -7,7 +7,7 @@ import 'package:bleed_common/Shade.dart';
 import 'package:bleed_common/Tile.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/constants/colours.dart';
+import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/toString.dart';
 import 'package:gamestream_flutter/ui/compose/hudUI.dart';
