@@ -32,7 +32,7 @@ Scene generateRandomScene({
     tiles.add(column);
     for (var rowIndex = 0; rowIndex < rows; rowIndex++) {
        final noise = noiseColumn[rowIndex];
-       if (noise < -0.1) {
+       if (noise < -0.15) {
          column.add(Tile.Water);
        }
        else

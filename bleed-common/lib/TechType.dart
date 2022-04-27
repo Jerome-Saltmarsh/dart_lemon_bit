@@ -20,6 +20,8 @@ class TechTree {
 
   int getDamage(int type) {
     switch(type) {
+      case TechType.Unarmed:
+        return 1;
       case TechType.Pickaxe:
         return 1;
       case TechType.Bow:

@@ -177,7 +177,7 @@ class GameBuild {
   }
 
   Widget buildHealthBar() {
-    final width = 280.0;
+    final width = 200.0;
     final height = width *
         goldenRatio_0381 *
         goldenRatio_0381;
@@ -228,14 +228,14 @@ class GameBuild {
     return WatchBuilder(state.player.alive, (bool alive){
       return layout(
           children: [
-            if (alive)
-            bottomCenter(child: Column(
-              children: [
-                // buildMagicBar(),
-                // buildResourcePanel(),
-                buildHealthBar(),
-              ],
-            ), padding: _pad),
+            // if (alive)
+            // bottomCenter(child: Column(
+            //   children: [
+            //     buildMagicBar(),
+            //     buildResourcePanel(),
+            //     buildHealthBar(),
+            //   ],
+            // ), padding: _pad),
             Positioned(
                 left: _pad,
                 top: _pad,
@@ -243,8 +243,8 @@ class GameBuild {
                   return visible ? buildDebugPanel() : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      buildVersion(),
-                      buildTime(),
+                      // buildVersion(),
+                      // buildTime(),
                     ],
                   );
                 })
@@ -390,6 +390,10 @@ class GameBuild {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                buildTime(),
+                height8,
+                buildHealthBar(),
+                height8,
                  buildResourcePanel(),
                   height8,
                   Container(
