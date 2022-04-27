@@ -10,9 +10,7 @@ import 'classes/Game.dart';
 import 'classes/Player.dart';
 import 'classes/Projectile.dart';
 import 'classes/components.dart';
-import 'common/ServerResponse.dart';
-import 'common/compile_util.dart';
-import 'common/constants.dart';
+import 'common/library.dart';
 
 final byteCompiler = _ByteCompiler();
 
@@ -69,17 +67,17 @@ class _ByteCompiler {
 
   void writePlayerSlots(Player player) {
     writeByte(ServerResponse.Player_Slots);
-    final slots = player.slots;
-    writeSlot(slots.slot1); // 3
-    writeSlot(slots.slot2); // 3
-    writeSlot(slots.slot3); // 3
-    writeSlot(slots.slot4); // 3
-    writeSlot(slots.slot5); // 3
-    writeSlot(slots.slot6); // 3
+    // final slots = player.slots;
+    // writeSlot(slots.slot1); // 3
+    // writeSlot(slots.slot2); // 3
+    // writeSlot(slots.slot3); // 3
+    // writeSlot(slots.slot4); // 3
+    // writeSlot(slots.slot5); // 3
+    // writeSlot(slots.slot6); // 3
   }
 
   void writePlayerGame(Player player){
-    final slots = player.slots;
+    // final slots = player.slots;
     final game = player.game;
     writeByte(ServerResponse.Player);
     writeBigInt(player.x);
@@ -88,9 +86,9 @@ class _ByteCompiler {
     writeBigInt(player.maxHealth); // 2
     writeBigInt(player.magic); // 2
     writeBigInt(player.maxMagic); // 2
-    writeSlot(slots.weapon); // 3
-    writeByte(slots.armour.type); // 1
-    writeByte(slots.helm.type); // 1
+    writeByte(player.equipped); // 3
+    writeByte(SlotType.Empty); // armour
+    writeByte(SlotType.Empty); // helm
     writeBool(player.alive); // 1
     writeBool(player.storeVisible); // 1
     writeBigInt(player.wood);
@@ -291,12 +289,13 @@ class _ByteCompiler {
   }
 
   void writePlayer(Player player) {
-    final slots = player.slots;
+    // final slots = player.slots;
     writeCharacter(player, player);
     writePercentage(player.magicPercentage);
-    writeByte(slots.weapon.type);
-    writeByte(slots.armour.type);
-    writeByte(slots.helm.type);
+    // writeByte(slots.weapon.type);
+    writeByte(player.equipped);
+    writeByte(SlotType.Empty); // armour
+    writeByte(SlotType.Empty); // helm
     writeString(player.name);
     writeBigInt(player.score);
   }
@@ -322,7 +321,7 @@ class _ByteCompiler {
   void writeNpc(Player player, Character npc) {
     if (npc.dead) return;
     writeCharacter(player, npc);
-    writeByte(npc.slots.weapon.type);
+    writeByte(npc.equipped);
   }
 
   void writeCharacter(Player player, Character character) {

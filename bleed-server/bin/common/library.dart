@@ -36,3 +36,4 @@ export 'tileTypeToObjectType.dart';
 export 'utilities.dart';
 export 'version.dart';
 export 'OrbType.dart';
+export 'TechType.dart';

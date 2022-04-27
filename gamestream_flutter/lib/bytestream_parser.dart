@@ -28,7 +28,7 @@ var durationTotal = 0;
 
 
 final _player = modules.game.state.player;
-final _slots = _player.slots;
+// final _slots = _player.slots;
 final _orbs = _player.orbs;
 final _hours = modules.isometric.hours;
 final _minutes = modules.isometric.minutes;
@@ -222,9 +222,12 @@ class _ByteStreamParser {
           _player.maxHealth = nextDouble();
           _player.magic.value = nextDouble();
           _player.maxMagic.value = nextDouble();
-          readSlot(_slots.weapon);
-          _slots.armour.type.value = nextByte();
-          _slots.helm.type.value = nextByte();
+          _player.equipped.value = nextByte();
+          _player.armour.value = nextByte();
+          _player.helm.value = nextByte();
+          // readSlot(_slots.weapon);
+          // _slots.armour.type.value = nextByte();
+          // _slots.helm.type.value = nextByte();
           _player.alive.value = readBool();
           _player.storeVisible.value = readBool();
           _player.wood.value = nextInt();
@@ -240,12 +243,12 @@ class _ByteStreamParser {
           break;
 
         case ServerResponse.Player_Slots:
-          readSlot(_slots.slot1);
-          readSlot(_slots.slot2);
-          readSlot(_slots.slot3);
-          readSlot(_slots.slot4);
-          readSlot(_slots.slot5);
-          readSlot(_slots.slot6);
+          // readSlot(_slots.slot1);
+          // readSlot(_slots.slot2);
+          // readSlot(_slots.slot3);
+          // readSlot(_slots.slot4);
+          // readSlot(_slots.slot5);
+          // readSlot(_slots.slot6);
           break;
 
 
@@ -353,9 +356,9 @@ class _ByteStreamParser {
       character.y = nextDouble();
       _parseCharacterFrameHealth(character, nextByte());
       character.magic = _nextPercentage();
-      character.equippedWeapon = readSlotType();
-      character.equippedArmour = readSlotType();
-      character.equippedHead = readSlotType();
+      character.equipped = nextByte();
+      character.armour = nextByte();
+      character.helm = nextByte();
       character.name = readString();
       character.score = nextInt();
       character.text = readString();
@@ -376,7 +379,7 @@ class _ByteStreamParser {
 
   void _readNpc(Character character){
     _readCharacter(character);
-    character.equippedWeapon = readSlotType();
+    character.equipped = nextByte();
   }
 
   void _readCharacter(Character character){

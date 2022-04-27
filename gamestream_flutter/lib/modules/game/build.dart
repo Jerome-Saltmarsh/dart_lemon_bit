@@ -11,6 +11,7 @@ import 'package:gamestream_flutter/modules/isometric/utilities.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/module.dart';
 import 'package:gamestream_flutter/resources.dart';
+import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/state/game.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/ui/compose/buildTextBox.dart';
@@ -243,7 +244,7 @@ class GameBuild {
             bottomCenter(child: Column(
               children: [
                 // buildMagicBar(),
-                buildResourcePanel(),
+                // buildResourcePanel(),
                 buildHealthBar(),
               ],
             ), padding: _pad),
@@ -251,7 +252,13 @@ class GameBuild {
                 left: _pad,
                 top: _pad,
                 child: WatchBuilder(state.debugPanelVisible, (bool visible){
-                  return visible ? buildDebugPanel() : buildVersion();
+                  return visible ? buildDebugPanel() : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      buildVersion(),
+                      buildTime(),
+                    ],
+                  );
                 })
             ),
             Positioned(
@@ -259,12 +266,12 @@ class GameBuild {
                 bottom: _pad,
                 child: boolBuilder(state.debugPanelVisible, widgetTrue: buildDebugMenu(), widgetFalse: buildScoreBoard()),
             ),
-            if (alive)
-            Positioned(
-                right: _pad,
-                bottom: _pad,
-                child: buildBottomRight()
-            ),
+            // if (alive)
+            // Positioned(
+            //     right: _pad,
+            //     bottom: _pad,
+            //     child: buildBottomRight()
+            // ),
             buildTextBox(),
             buildTopRight(),
             if (!alive)
@@ -359,39 +366,54 @@ class GameBuild {
     });
   }
 
-  Widget buildPanelUpgrades(){
+  Widget _buildUpgradeRow({
+    required Function upgrade,
+    required Function equip,
+    required Widget icon,
+    required String name
+  }){
+    return Row(
+      children: [
+        text("+", onPressed: upgrade, size: 30, color: colours.green, weight: FontWeight.bold),
+        width16,
+        onPressed(
+          callback: equip,
+          child: Row(
+            children: [
+              Container(
+                  width: 32,
+                  height: 32,
+                  alignment: Alignment.center,
+                  child: icon
+              ),
+              width16,
+              text(name),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildPanelUpgrades() {
         return Positioned(
             top: 100,
-            left: 100,
+            right: 100,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                 onPressed(
-                   callback: (){
-                     // sendCl
-                   },
-                   child: Row(
-                     children: [
-                       Container(
-                           width: 32,
-                           height: 32,
-                           child: resources.icons.swords.pickaxe
-                       ),
-                       width16,
-                       text("Pickaxe"),
-                     ],
-                   ),
-                 ),
-                Row(
-                  children: [
-                    Container(
-                        width: 32,
-                        height: 32,
-                        child: resources.icons.swords.wooden
-                    ),
-                    width16,
-                    text("Sword"),
-                  ],
+                 buildResourcePanel(),
+                _buildUpgradeRow(
+                  upgrade: Server.upgradePickaxe,
+                  equip: Server.equipPickaxe,
+                  icon: resources.icons.swords.pickaxe,
+                  name: "Pickaxe",
+                ),
+                _buildUpgradeRow(
+                  upgrade: Server.upgradeSword,
+                  equip: Server.equipSword,
+                  icon: resources.icons.swords.wooden,
+                  name: "Sword",
                 ),
               ],
             )
@@ -507,30 +529,30 @@ class GameBuild {
     });
   }
 
-  Widget buildBottomRight() {
-    return Column(
-      children: [
-        buildPanelStructures(),
-        height32,
-        buildPanelStore(),
-        height32,
-        Container(
-                width: 200,
-                padding: padding8,
-                color: colours.brownDark,
-                  child: Column(
-                    children: [
-                      // buildPanelOrbs(),
-                      // height16,
-                      panel(child: _panelEquipped()),
-                      height16,
-                      panel(child: _panelInventory())
-                    ],
-                  ),
-            ),
-      ],
-    );
-  }
+  // Widget buildBottomRight() {
+  //   return Column(
+  //     children: [
+  //       buildPanelStructures(),
+  //       height32,
+  //       buildPanelStore(),
+  //       height32,
+  //       Container(
+  //               width: 200,
+  //               padding: padding8,
+  //               color: colours.brownDark,
+  //                 child: Column(
+  //                   children: [
+  //                     // buildPanelOrbs(),
+  //                     // height16,
+  //                     panel(child: _panelEquipped()),
+  //                     height16,
+  //                     panel(child: _panelInventory())
+  //                   ],
+  //                 ),
+  //           ),
+  //     ],
+  //   );
+  // }
 
   Widget panel({required Widget child, Alignment? alignment, EdgeInsets? padding, double? width}){
     return Container(
@@ -558,32 +580,32 @@ class GameBuild {
     );
   }
 
-  Widget _panelInventory() {
-    final slots = state.player.slots;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Column(
-          children: [
-            buildInventorySlot(slots.slot1, 1),
-            buildInventorySlot(slots.slot4, 4),
-          ],
-        ),
-        Column(
-          children: [
-            buildInventorySlot(slots.slot2, 2),
-            buildInventorySlot(slots.slot5, 5),
-          ],
-        ),
-        Column(
-          children: [
-            buildInventorySlot(slots.slot3, 3),
-             buildInventorySlot(slots.slot6, 6),
-          ],
-        ),
-      ],
-    );
-  }
+  // Widget _panelInventory() {
+  //   final slots = state.player.slots;
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //     children: [
+  //       Column(
+  //         children: [
+  //           buildInventorySlot(slots.slot1, 1),
+  //           buildInventorySlot(slots.slot4, 4),
+  //         ],
+  //       ),
+  //       Column(
+  //         children: [
+  //           buildInventorySlot(slots.slot2, 2),
+  //           buildInventorySlot(slots.slot5, 5),
+  //         ],
+  //       ),
+  //       Column(
+  //         children: [
+  //           buildInventorySlot(slots.slot3, 3),
+  //            buildInventorySlot(slots.slot6, 6),
+  //         ],
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget mapStoreTabToIcon(StoreTab value) {
     switch (value) {
@@ -858,66 +880,66 @@ class GameBuild {
     );
   }
 
-  Widget buildEquippedWeaponSlot(){
-    final weapon = state.player.slots.weapon;
+  // Widget buildEquippedWeaponSlot(){
+  //   final weapon = state.player.slots.weapon;
+  //
+  //   return onPressed(
+  //       callback: actions.unequipWeapon,
+  //       child: buildHighlightSlot(
+  //         slot: weapon,
+  //         child: Stack(
+  //           children: [
+  //             WatchBuilder(weapon.type, (int slotType){
+  //               final child = slot(slotType: slotType, color: colours.white382);
+  //               if (slotType == SlotType.Empty) return child;
+  //               return child;
+  //             }),
+  //             WatchBuilder(weapon.amount, (int amount){
+  //               if (amount < 0) return const SizedBox();
+  //               return Padding(
+  //                 padding: const EdgeInsets.all(1.0),
+  //                 child: text(amount, size: style.fontSize.small),
+  //               );
+  //             })
+  //           ],
+  //         ),
+  //       ));
+  //
+  // }
 
-    return onPressed(
-        callback: actions.unequipWeapon,
-        child: buildHighlightSlot(
-          slot: weapon,
-          child: Stack(
-            children: [
-              WatchBuilder(weapon.type, (int slotType){
-                final child = slot(slotType: slotType, color: colours.white382);
-                if (slotType == SlotType.Empty) return child;
-                return child;
-              }),
-              WatchBuilder(weapon.amount, (int amount){
-                if (amount < 0) return const SizedBox();
-                return Padding(
-                  padding: const EdgeInsets.all(1.0),
-                  child: text(amount, size: style.fontSize.small),
-                );
-              })
-            ],
-          ),
-        ));
-
-  }
-
-  Widget _panelEquipped(){
-    final slots = state.player.slots;
-      return Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              buildEquippedWeaponSlot(),
-              buildHighlightSlot(
-                slot: slots.armour,
-                child: WatchBuilder(slots.armour.type, (int slotType){
-                  final child = slot(slotType: slotType, color: colours.white382);
-                  if (slotType == SlotType.Empty) return child;
-                  return onPressed(
-                      callback: actions.unequipArmour,
-                      child: child);
-                }),
-              ),
-              buildHighlightSlot(
-                slot: slots.helm,
-                child: WatchBuilder(slots.helm.type, (int slotType){
-                  final child = slot(slotType: slotType, color: colours.white382);
-                  if (slotType == SlotType.Empty) return child;
-                  return onPressed(
-                      callback: actions.unequipHelm,
-                      child: child);
-                }),
-              ),
-            ],
-          )
-        ],
-      );
-  }
+  // Widget _panelEquipped(){
+  //   final slots = state.player.slots;
+  //     return Column(
+  //       children: [
+  //         Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //           children: [
+  //             buildEquippedWeaponSlot(),
+  //             buildHighlightSlot(
+  //               slot: slots.armour,
+  //               child: WatchBuilder(slots.armour.type, (int slotType){
+  //                 final child = slot(slotType: slotType, color: colours.white382);
+  //                 if (slotType == SlotType.Empty) return child;
+  //                 return onPressed(
+  //                     callback: actions.unequipArmour,
+  //                     child: child);
+  //               }),
+  //             ),
+  //             buildHighlightSlot(
+  //               slot: slots.helm,
+  //               child: WatchBuilder(slots.helm.type, (int slotType){
+  //                 final child = slot(slotType: slotType, color: colours.white382);
+  //                 if (slotType == SlotType.Empty) return child;
+  //                 return onPressed(
+  //                     callback: actions.unequipHelm,
+  //                     child: child);
+  //               }),
+  //             ),
+  //           ],
+  //         )
+  //       ],
+  //     );
+  // }
 
   Widget buildInventorySlot(Slot slot, int index) {
 
@@ -1150,7 +1172,21 @@ class GameBuild {
   }
 
   Widget buildVersion(){
-    return text(version);
+    return text(version, color: colours.white618);
+  }
+
+  Widget buildTime(){
+    return Row(
+      children: [
+        WatchBuilder(modules.isometric.hours, (int hours){
+          return text(padZero(hours));
+        }),
+        text(":"),
+        WatchBuilder(modules.isometric.minutes, (int minutes){
+          return text(padZero(minutes));
+        }),
+      ],
+    );
   }
 
   Widget toggleDebugMode(){

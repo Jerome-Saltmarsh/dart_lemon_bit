@@ -1,9 +1,4 @@
-import 'package:bleed_common/AbilityType.dart';
-import 'package:bleed_common/CharacterState.dart';
-import 'package:bleed_common/CharacterType.dart';
-import 'package:bleed_common/OrbType.dart';
-import 'package:bleed_common/SlotType.dart';
-import 'package:bleed_common/Tile.dart';
+import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:lemon_math/Vector2.dart';
@@ -76,7 +71,11 @@ class Player {
   final storeVisible = Watch(false);
   final attackTarget = Vector2(0, 0);
   final orbs = _PlayerOrbs();
-  final slots = Slots();
+  // final slots = Slots();
+  final equipped = Watch(TechType.Unarmed);
+  final armour = Watch(TechType.Unarmed);
+  final helm = Watch(TechType.Unarmed);
+
   final characterType = Watch(CharacterType.Human);
   final health = Watch(0.0);
   final experience = Watch(0);

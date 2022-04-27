@@ -8,6 +8,7 @@ import '../common/SlotType.dart';
 import '../scene_generator.dart';
 
 class GameRandom extends Game {
+  var time = 12 * 60 * 60;
   final int maxPlayers;
 
   GameRandom({required this.maxPlayers}) : super(
@@ -21,8 +22,13 @@ class GameRandom extends Game {
   bool get full => players.length >= maxPlayers;
 
   @override
+  void update() {
+    time++;
+  }
+
+  @override
   int getTime() {
-    return 12 * 60 * 60;
+    return time;
   }
 
   Player spawnPlayer() {

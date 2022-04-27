@@ -3,20 +3,17 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/pi2.dart';
-import 'package:lemon_watch/watch_builder.dart';
 
 import 'tips.dart';
 
-final _Hud hud = _Hud();
+final hud = _Hud();
 
 class _Hud {
-  final _State state = _State();
-  final _TextEditingControllers textEditingControllers = _TextEditingControllers();
-  final _Properties properties = _Properties();
+  final state = _State();
+  final textEditingControllers = _TextEditingControllers();
+  final properties = _Properties();
 }
 
 extension HudProperties on _Hud {
@@ -25,16 +22,11 @@ extension HudProperties on _Hud {
   bool get textFieldFocused => modules.game.state.textFieldMessage.hasPrimaryFocus;
 }
 
-
-final Widget fps = WatchBuilder(engine.fps, (int fps){
-  return text("fps $fps");
-});
-
 class _State {
-  int tipIndex = 0;
-  bool observeMode = false;
-  bool showServers = false;
-  bool expandScore = false;
+  var tipIndex = 0;
+  var observeMode = false;
+  var showServers = false;
+  var expandScore = false;
 }
 
 class _Properties {
@@ -43,7 +35,6 @@ class _Properties {
 }
 
 class _TextEditingControllers {
-  // final TextEditingController speak = TextEditingController();
   final TextEditingController playerName = TextEditingController();
 }
 

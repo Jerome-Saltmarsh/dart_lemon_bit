@@ -5,7 +5,6 @@ import 'package:bleed_common/AbilityType.dart';
 import 'package:bleed_common/CollectableType.dart';
 import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/OrbType.dart';
-import 'package:bleed_common/SlotType.dart';
 import 'package:bleed_common/configuration.dart';
 import 'package:bleed_common/ProjectileType.dart';
 import 'package:bleed_common/Shade.dart';
@@ -117,15 +116,15 @@ class GameRender {
     }
   }
 
-  void weaponRangeCircle() {
-    engine.draw.drawCircleOutline(
-        radius: SlotType.getRange(state.player.slots.weapon.type.value).toDouble(),
-        x: state.player.x,
-        y: state.player.y,
-        color: colours.white80,
-        sides: 10
-    );
-  }
+  // void weaponRangeCircle() {
+  //   engine.draw.drawCircleOutline(
+  //       radius: SlotType.getRange(state.player.slots.weapon.type.value).toDouble(),
+  //       x: state.player.x,
+  //       y: state.player.y,
+  //       color: colours.white80,
+  //       sides: 10
+  //   );
+  // }
 
   void attackTargetCircle() {
     final attackTarget = state.player.attackTarget;

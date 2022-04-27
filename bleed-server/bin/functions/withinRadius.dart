@@ -25,5 +25,5 @@ double magnitude(num adjacent, num opposite){
 }
 
 bool withinAttackRadius(Player player, Collider target){
-  return withinRadius(player, target, player.weaponRange + target.radius);
+  return withinRadius(player, target, player.equippedRange + target.radius);
 }

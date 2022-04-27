@@ -55,9 +55,9 @@ class GameEvents {
     state.player.orbs.emerald.listen(onEmeraldsChanged);
     state.player.orbs.ruby.listen(onEmeraldsChanged);
     state.player.orbs.topaz.listen(onEmeraldsChanged);
-    state.player.slots.weapon.type.onChanged(onPlayerWeaponChanged);
-    state.player.slots.armour.type.onChanged(onPlayerArmourChanged);
-    state.player.slots.helm.type.onChanged(onPlayerHelmChanged);
+    state.player.equipped.onChanged(onPlayerWeaponChanged);
+    state.player.armour.onChanged(onPlayerArmourChanged);
+    state.player.helm.onChanged(onPlayerHelmChanged);
     RawKeyboard.instance.addListener(onKeyboardEvent);
     sub(_onGameError);
 

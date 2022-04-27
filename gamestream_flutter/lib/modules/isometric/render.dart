@@ -1,14 +1,6 @@
-import 'package:gamestream_flutter/utils.dart';
-import 'package:lemon_math/Vector2.dart';
 import 'dart:math';
 
-import 'package:bleed_common/CharacterState.dart';
-import 'package:bleed_common/Direction.dart';
-import 'package:bleed_common/DynamicObjectType.dart';
-import 'package:bleed_common/Shade.dart';
-import 'package:bleed_common/SlotType.dart';
-import 'package:bleed_common/StructureType.dart';
-import 'package:bleed_common/utilities.dart';
+import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/classes/Character.dart';
 import 'package:gamestream_flutter/classes/DynamicObject.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
@@ -16,14 +8,16 @@ import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/mappers/mapEnvironmentObjectToSrc.dart';
+import 'package:gamestream_flutter/mappers/mapParticleToDst.dart';
+import 'package:gamestream_flutter/mappers/mapParticleToSrc.dart';
 import 'package:gamestream_flutter/modules/isometric/animations.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
-import 'package:gamestream_flutter/mappers/mapParticleToDst.dart';
-import 'package:gamestream_flutter/mappers/mapParticleToSrc.dart';
 import 'package:gamestream_flutter/state/game.dart';
+import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
+import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/diff.dart';
 
 import '../modules.dart';
@@ -547,8 +541,8 @@ class IsometricRender {
       renderCharacterHealthBar(character);
     }
 
-    final weapon = character.equippedWeapon;
-    final variation = weapon == SlotType.Shotgun || SlotType.isBow(weapon);
+    final weapon = character.equipped;
+    final variation = weapon == SlotType.Shotgun || TechType.isBow(weapon);
     final maxDirection = variation ? Direction.Right : Direction.UpRight;
     final minDirection = variation ? Direction.DownLeft : Direction.Down;
     final direction = character.direction;
@@ -702,7 +696,7 @@ class IsometricRender {
   }
 
   int getSpriteIndexHead(Character character){
-    switch(character.equippedHead){
+    switch(character.helm){
       case SlotType.Empty:
         return SpriteLayer.Head_Plain;
       case SlotType.Steel_Helmet:
@@ -712,12 +706,12 @@ class IsometricRender {
       case SlotType.Rogue_Hood:
         return SpriteLayer.Head_Rogue;
       default:
-        throw Exception("cannot render head ${character.equippedHead}");
+        throw Exception("cannot render head ${character.helm}");
     }
   }
 
   int getSpriteIndexBody(Character character){
-    switch(character.equippedArmour){
+    switch(character.armour){
       case SlotType.Empty:
         return SpriteLayer.Body_Cyan;
       case SlotType.Body_Blue:
@@ -727,7 +721,7 @@ class IsometricRender {
       case SlotType.Magic_Robes:
         return SpriteLayer.Body_Blue;
       default:
-        throw Exception("cannot render body ${character.equippedHead}");
+        throw Exception("cannot render body ${character.armour}");
     }
   }
 
@@ -736,7 +730,7 @@ class IsometricRender {
   }
 
   double getTemplateSrcX(Character character, {required double size}){
-    final weapon = character.equippedWeapon;
+    final weapon = character.equipped;
     final variation = weapon == SlotType.Shotgun || SlotType.isBow(weapon);
 
     switch(character.state) {
@@ -775,7 +769,7 @@ class IsometricRender {
         );
 
       case CharacterState.Performing:
-        final weapon = character.equippedWeapon;
+        final weapon = character.equipped;
         return animate(
             size: size,
             animation: SlotType.isBow(weapon)
@@ -795,7 +789,7 @@ class IsometricRender {
   }
 
   int mapEquippedWeaponToSpriteIndex(Character character){
-     switch(character.equippedWeapon){
+     switch(character.equipped){
        case SlotType.Sword_Wooden:
          return SpriteLayer.Sword_Wooden;
        case SlotType.Sword_Short:
@@ -819,12 +813,12 @@ class IsometricRender {
        case SlotType.Shotgun:
          return SpriteLayer.Weapon_Shotgun;
        default:
-         throw Exception("cannot map ${character.equippedWeapon} to sprite index");
+         throw Exception("cannot map ${character.equipped} to sprite index");
      }
   }
 
   void _renderCharacterTemplateWeapon(Character character) {
-    final equipped = character.equippedWeapon;
+    final equipped = character.equipped;
     if (equipped == SlotType.Empty) return;
     if (SlotType.isMelee(equipped)){
       engine.mapDst(

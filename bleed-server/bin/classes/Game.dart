@@ -655,8 +655,7 @@ extension GameFunctions on Game {
         if (character is Player) {
           final ability = character.performing;
           if (ability == null) {
-            character.stateDurationRemaining =
-                SlotType.getDuration(character.slots.weapon.type);
+            character.stateDurationRemaining = character.equippedAttackDuration;
             break;
           }
           if (character.magic < ability.cost) {
@@ -937,7 +936,7 @@ extension GameFunctions on Game {
         break;
       case AbilityType.Split_Arrow:
         if (character.stateDurationRemaining == castFrame) {
-          final damage = SlotType.getDamage(character.weapon);
+          final damage = character.equippedDamage;
           Projectile arrow1 = spawnArrow(character, damage: damage);
           double angle = piSixteenth;
           arrow1.target = null;
@@ -955,10 +954,10 @@ extension GameFunctions on Game {
       case AbilityType.Long_Shot:
         if (character.stateDurationRemaining == castFrame) {
           final int damageMultiplier = 3;
-          spawnArrow(character,
-                  damage:
-                      SlotType.getDamage(character.weapon) * damageMultiplier)
-              .range = ability.range;
+          spawnArrow(
+                character,
+                damage: character.equippedDamage * damageMultiplier
+          ).range = ability.range;
           character.attackTarget = null;
           character.performing = null;
         }
@@ -972,8 +971,10 @@ extension GameFunctions on Game {
         if (character.stateDurationRemaining == castFrame) {
           final attackTarget = character.attackTarget;
           if (attackTarget != null) {
-            applyHit(character, attackTarget,
-                SlotType.getDamage(character.weapon) * damageMultiplier);
+            applyHit(
+                character,
+                attackTarget, character.equippedDamage * damageMultiplier
+            );
           }
           character.attackTarget = null;
           character.performing = null;
@@ -1271,7 +1272,7 @@ extension GameFunctions on Game {
         closest = zombie;
         closestDistance = distance2;
       }
-      if (closest == null || closestDistance > npc.weaponRange) {
+      if (closest == null || closestDistance > npc.equippedRange) {
         npc.target = null;
         npc.state = CharacterState.Idle;
         continue;
@@ -1398,23 +1399,22 @@ extension GameFunctions on Game {
       if (stateDuration != framePerformStrike) return;
       final attackTarget = character.attackTarget;
       if (attackTarget == null) return;
-      applyHit(character, attackTarget, SlotType.getDamage(character.weapon));
+      applyHit(character, attackTarget, character.equippedDamage);
       character.attackTarget = null;
       return;
     }
 
-    final weapon = character.slots.weapon;
-    final weaponType = weapon.type;
+    final equipped = character.equipped;
 
-    if (SlotType.isSword(weaponType)) {
+    if (SlotType.isSword(equipped)) {
       if (stateDuration == 7) {
         dispatchV2(GameEventType.Sword_Woosh, character);
       }
     }
 
-    if (weaponType == SlotType.Handgun) {
+    if (equipped == SlotType.Handgun) {
       if (stateDuration == 1) {
-        if (weapon.amount <= 0) {
+        if (character.equippedIsEmpty) {
           dispatchV2(GameEventType.Clip_Empty, character);
           return;
         }
@@ -1423,79 +1423,75 @@ extension GameFunctions on Game {
         return;
       }
       if (stateDuration == 2) {
-        if (weapon.amount <= 0) {
+        if (character.equippedIsEmpty) {
           return;
         }
-        weapon.amount--;
+        character.reduceEquippedAmount();
         spawnProjectile(
             src: character,
             accuracy: 0,
             speed: 12.0,
-            range: SlotType.getRange(weaponType),
-            damage: SlotType.getDamage(weaponType),
+            range: character.equippedRange,
+            damage: character.equippedDamage,
             type: ProjectileType.Bullet);
         return;
       }
     }
 
-    if (weaponType == SlotType.Shotgun) {
+    if (character.equippedTypeIsShotgun) {
       if (stateDuration == 1) {
-        if (weapon.amount <= 0) {
+        if (character.equippedIsEmpty) {
           dispatchV2(GameEventType.Ammo_Acquired, character);
           return;
         }
         dispatchV2(GameEventType.Shotgun_Fired, character);
-        character.slots.weapon.amount--;
+        character.reduceEquippedAmount();
         final totalBullets = 4;
         for (int i = 0; i < totalBullets; i++) {
           spawnProjectile(
               src: character,
               accuracy: 0.1,
               speed: 12.0,
-              range: SlotType.getRange(weaponType),
-              damage: SlotType.getDamage(weaponType),
+              range: character.equippedRange,
+              damage: character.equippedDamage,
               type: ProjectileType.Bullet);
         }
       }
     }
 
-    if (SlotType.isBow(weaponType)) {
+    if (character.equippedTypeIsBow) {
       if (character.stateDuration == 1) {
         dispatchV2(GameEventType.Draw_Bow, character);
       }
     }
 
     if (character.stateDuration == framePerformStrike) {
-      if (SlotType.isBow(weaponType)) {
+      if (character.equippedTypeIsBow) {
         dispatchV2(GameEventType.Release_Bow, character);
-        if (character.slots.weapon.amount == 0) return;
-        spawnArrow(character, damage: SlotType.getDamage(weaponType));
+        spawnArrow(character, damage: character.equippedDamage);
         character.attackTarget = character.attackTarget;
-        character.slots.weapon.amount--;
         return;
       }
-      if (SlotType.isMelee(weaponType)) {
+      if (character.equippedIsMelee) {
         final attackTarget = character.attackTarget;
-        final damage = SlotType.getDamage(character.weapon);
         if (attackTarget != null) {
           if (attackTarget.collidable) {
-            applyHit(character, attackTarget, damage);
+            applyHit(character, attackTarget, character.equippedDamage);
             return;
           } else {
             character.attackTarget = null;
           }
         }
-        final range = SlotType.getRange(weaponType);
         final zombieHit = physics.raycastHit(
-            character: character, colliders: zombies, range: range);
+            character: character, colliders: zombies, range: character.equippedRange);
         if (zombieHit != null) {
-          applyHit(character, zombieHit, damage);
+          applyHit(character, zombieHit, character.equippedDamage);
           return;
         }
         final dynamicObjectHit = physics.raycastHit(
-            character: character, colliders: dynamicObjects, range: range);
+            character: character, colliders: dynamicObjects, range: character.equippedRange);
         if (dynamicObjectHit != null) {
-          applyHit(character, dynamicObjectHit, damage);
+          applyHit(character, dynamicObjectHit, character.equippedDamage);
         }
         return;
       }

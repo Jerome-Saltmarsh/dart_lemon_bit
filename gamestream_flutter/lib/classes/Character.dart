@@ -1,5 +1,4 @@
-import 'package:bleed_common/CharacterState.dart';
-import 'package:bleed_common/SlotType.dart';
+import 'package:bleed_common/library.dart';
 import 'package:lemon_math/Vector2.dart';
 
 import '../maths.dart';
@@ -11,9 +10,9 @@ class Character extends Vector2 {
   int state;
   int direction;
   int frame;
-  int equippedWeapon = SlotType.Empty;
-  int equippedArmour = SlotType.Empty;
-  int equippedHead = SlotType.Empty;
+  int equipped = TechType.Unarmed;
+  int armour = TechType.Unarmed;
+  int helm = TechType.Unarmed;
   // int team;
   String name;
   String text;

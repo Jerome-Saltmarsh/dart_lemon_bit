@@ -1,9 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:bleed_common/CharacterAction.dart';
-import 'package:bleed_common/ClientRequest.dart';
-import 'package:bleed_common/GameType.dart';
-import 'package:bleed_common/compile_util.dart';
+import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -71,6 +68,21 @@ void sendClientRequest(ClientRequest value, [dynamic message]){
     return webSocket.send('${value.index} $message');
   }
   webSocket.send(value.index);
+}
+
+class Server {
+  static void upgradePickaxe() => _upgrade(TechType.Pickaxe);
+  static void upgradeSword() => _upgrade(TechType.Sword);
+  static void equipPickaxe() => _equip(TechType.Pickaxe);
+  static void equipSword() => _equip(TechType.Sword);
+
+  static void _upgrade(int value){
+    sendClientRequest(ClientRequest.Upgrade, value);
+  }
+
+  static void _equip(int value){
+    sendClientRequest(ClientRequest.Equip, value);
+  }
 }
 
 final _characterController = modules.game.state.characterController;

@@ -3,9 +3,7 @@ import 'dart:typed_data';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/abs.dart';
 
-import '../common/CharacterState.dart';
-import '../common/CharacterType.dart';
-import '../common/SlotType.dart';
+import '../common/library.dart';
 import '../constants.dart';
 import '../constants/no_squad.dart';
 import '../enums/npc_mode.dart';
@@ -14,7 +12,6 @@ import '../settings.dart';
 import 'Ability.dart';
 import 'Collider.dart';
 import 'Game.dart';
-import 'Player.dart';
 import 'components.dart';
 
 const maxAIPathLength = 80;
@@ -24,7 +21,6 @@ const maxAIPathLengthMinusOne = maxAIPathLength - 3;
 class AI extends Character {
   static const viewRange = 200.0;
   static const chaseRange = 500.0;
-
   final pathX = Float32List(maxAIPathLength);
   final pathY = Float32List(maxAIPathLength);
   var mode = NpcMode.Aggressive;
@@ -119,7 +115,9 @@ class Character extends Collider with Team, Health, Velocity {
   Collider? attackTarget;
   bool invincible = false;
   final abilityTarget = Vector2(0, 0);
-  final slots = Slots();
+  final techTree = TechTree();
+  // final slots = Slots();
+  var equipped = TechType.Unarmed;
 
   // properties
   int get direction => (((angle + piEighth) % pi2) ~/ piQuarter) % 8;
@@ -140,23 +138,34 @@ class Character extends Collider with Team, Health, Velocity {
 
   bool get deadOrBusy => dead || busy;
 
-  int get weapon => slots.weapon.type;
+  double get equippedRange => techTree.getRange(equipped);
+  int get equippedDamage => techTree.getDamage(equipped);
+  int get equippedAttackDuration => TechType.getDuration(equipped);
+  bool get equippedTypeIsBow => isEquipped(TechType.Bow);
+  bool get equippedTypeIsShotgun => isEquipped(TechType.Shotgun);
+  bool get equippedIsMelee => TechType.isMelee(equipped);
+  bool get equippedIsEmpty => false;
 
-  double get weaponRange => SlotType.getRange(weapon);
+  bool isEquipped(int type) {
+    return equipped == type;
+  }
+
+  void reduceEquippedAmount() {
+
+  }
 
   Character({
     required this.type,
     required double x,
     required double y,
     required int health,
-    int weapon = SlotType.Empty,
+    int weapon = TechType.Unarmed,
     double speed = 3.0,
     int team = Teams.none,
   }) : super(x: x, y: y, radius: settings.radius.character) {
     maxHealth = health;
     this.health = health;
     _speed = speed;
-    slots.weapon.type = weapon;
     this.team = team;
   }
 
@@ -176,9 +185,9 @@ class Character extends Collider with Team, Health, Velocity {
 
   bool withinAttackRange(Position target){
     if (target is Collider){
-      return withinRadius(this, target, weaponRange + (target.radius * 0.5));
+      return withinRadius(this, target, equippedRange + (target.radius * 0.5));
     }
-    return withinRadius(this, target, weaponRange);
+    return withinRadius(this, target, equippedRange);
   }
 
   void face(Position position){

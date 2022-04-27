@@ -15,7 +15,6 @@ class Player extends Character {
 
   final mouse = Vector2(0, 0);
   final runTarget = Vector2(0, 0);
-  final slots = Slots();
   var score = 0;
   var sceneChanged = false;
   var characterState = CharacterState.Idle;
@@ -95,79 +94,79 @@ class Player extends Character {
     game.setCharacterState(this, CharacterState.Changing);
   }
 
-  void unequip(SlotTypeCategory slotTypeCategory){
-    final emptySlot = slots.getEmptySlot();
-    if (emptySlot == null) return;
+  // void unequip(SlotTypeCategory slotTypeCategory){
+  //   final emptySlot = slots.getEmptySlot();
+  //   if (emptySlot == null) return;
+  //
+  //   switch(slotTypeCategory) {
+  //     case SlotTypeCategory.Weapon:
+  //       if (weapon == SlotType.Empty) return;
+  //       final weaponSlot = slots.weapon;
+  //       emptySlot.swapWith(weaponSlot);
+  //       onUnequipped(weapon);
+  //       setStateChangingWeapons();
+  //       break;
+  //     case SlotTypeCategory.Armour:
+  //       final armour = slots.armour;
+  //       if (armour.isEmpty) return;
+  //       onUnequipped(armour.type);
+  //       emptySlot.swapWith(armour);
+  //       setStateChangingWeapons();
+  //       break;
+  //     case SlotTypeCategory.Helm:
+  //       final helm = slots.helm;
+  //       if (helm.isEmpty) return;
+  //       onUnequipped(helm.type);
+  //       emptySlot.swapWith(helm);
+  //       setStateChangingWeapons();
+  //       break;
+  //     case SlotTypeCategory.Pants:
+  //       break;
+  //   }
+  // }
 
-    switch(slotTypeCategory) {
-      case SlotTypeCategory.Weapon:
-        if (weapon == SlotType.Empty) return;
-        final weaponSlot = slots.weapon;
-        emptySlot.swapWith(weaponSlot);
-        onUnequipped(weapon);
-        setStateChangingWeapons();
-        break;
-      case SlotTypeCategory.Armour:
-        final armour = slots.armour;
-        if (armour.isEmpty) return;
-        onUnequipped(armour.type);
-        emptySlot.swapWith(armour);
-        setStateChangingWeapons();
-        break;
-      case SlotTypeCategory.Helm:
-        final helm = slots.helm;
-        if (helm.isEmpty) return;
-        onUnequipped(helm.type);
-        emptySlot.swapWith(helm);
-        setStateChangingWeapons();
-        break;
-      case SlotTypeCategory.Pants:
-        break;
-    }
-  }
+  // void acquire(int slotType) {
+  //   if (SlotType.isWeapon(slotType)) {
+  //     final slot = slots.getEmptyWeaponSlot();
+  //     if (slot == null) return;
+  //     onPlayerEvent(PlayerEvent.Item_Purchased);
+  //     setStateChangingWeapons();
+  //     slot.type = slotType;
+  //     slot.amount = 10;
+  //     onEquipped(slotType);
+  //     return;
+  //   }
+  //
+  //   if (SlotType.isArmour(slotType)) {
+  //     final slot = slots.getEmptyArmourSlot();
+  //     if (slot == null) return;
+  //     onPlayerEvent(PlayerEvent.Item_Purchased);
+  //     setStateChangingWeapons();
+  //     slot.type = slotType;
+  //     onEquipped(slotType);
+  //     return;
+  //   }
+  //   if (SlotType.isHelm(slotType)) {
+  //     final slot = slots.getEmptyHeadSlot();
+  //     if (slot == null) return;
+  //     onPlayerEvent(PlayerEvent.Item_Purchased);
+  //     setStateChangingWeapons();
+  //     slot.type = slotType;
+  //     onEquipped(slotType);
+  //   }
+  //
+  //   final emptySlot = slots.getEmptySlot();
+  //   if (emptySlot == null) return;
+  //   onPlayerEvent(PlayerEvent.Item_Purchased);
+  //   setStateChangingWeapons();
+  //   emptySlot.type = slotType;
+  //   if (SlotType.isItem(slotType)){
+  //     onEquipped(slotType);
+  //   }
+  //   return;
+  // }
 
-  void acquire(int slotType) {
-    if (SlotType.isWeapon(slotType)) {
-      final slot = slots.getEmptyWeaponSlot();
-      if (slot == null) return;
-      onPlayerEvent(PlayerEvent.Item_Purchased);
-      setStateChangingWeapons();
-      slot.type = slotType;
-      slot.amount = 10;
-      onEquipped(slotType);
-      return;
-    }
-
-    if (SlotType.isArmour(slotType)) {
-      final slot = slots.getEmptyArmourSlot();
-      if (slot == null) return;
-      onPlayerEvent(PlayerEvent.Item_Purchased);
-      setStateChangingWeapons();
-      slot.type = slotType;
-      onEquipped(slotType);
-      return;
-    }
-    if (SlotType.isHelm(slotType)) {
-      final slot = slots.getEmptyHeadSlot();
-      if (slot == null) return;
-      onPlayerEvent(PlayerEvent.Item_Purchased);
-      setStateChangingWeapons();
-      slot.type = slotType;
-      onEquipped(slotType);
-    }
-
-    final emptySlot = slots.getEmptySlot();
-    if (emptySlot == null) return;
-    onPlayerEvent(PlayerEvent.Item_Purchased);
-    setStateChangingWeapons();
-    emptySlot.type = slotType;
-    if (SlotType.isItem(slotType)){
-      onEquipped(slotType);
-    }
-    return;
-  }
-
-  void useSlot(int index) {
+  void useSlot(Slots slots, int index) {
       if (deadOrBusy) return;
       if (index < 0) return;
       if (index > 6) return;
@@ -215,38 +214,38 @@ class Player extends Character {
         return;
       }
 
-      if (slotType == SlotType.Spell_Tome_Ice_Ring) {
-        final cost = 5;
-        if (magic < cost) return;
-        magic -= cost;
-        if (!SlotType.isStaff(weapon)) {
-          final index = slots.getSlotIndexWhere(SlotType.isStaff);
-          if (index == null) return;
-          useSlot(index);
-        }
-        game.spawnFreezeRing(src: this);
-        setStateChangingWeapons();
-        onSlotsChanged();
-        return;
-      }
+      // if (slotType == SlotType.Spell_Tome_Ice_Ring) {
+      //   final cost = 5;
+      //   if (magic < cost) return;
+      //   magic -= cost;
+      //   if (!SlotType.isStaff(weapon)) {
+      //     final index = slots.getSlotIndexWhere(SlotType.isStaff);
+      //     if (index == null) return;
+      //     useSlot(index);
+      //   }
+      //   game.spawnFreezeRing(src: this);
+      //   setStateChangingWeapons();
+      //   onSlotsChanged();
+      //   return;
+      // }
 
-      if (slotType == SlotType.Spell_Tome_Split_Arrow) {
-        final cost = 5;
-        if (magic < cost) return;
-        if (!SlotType.isBow(weapon)){
-           final bowIndex = slots.getSlotIndexWhere(SlotType.isBow);
-           if (bowIndex == null) return;
-           useSlot(bowIndex);
-        }
-
-        ability = Ability(type: AbilityType.Split_Arrow,
-            level: 1,
-            cost: cost,
-            range: 250,
-            cooldown: 100,
-            mode: AbilityMode.Directed);
-        return;
-      }
+      // if (slotType == SlotType.Spell_Tome_Split_Arrow) {
+      //   final cost = 5;
+      //   if (magic < cost) return;
+      //   if (!SlotType.isBow(weapon)){
+      //      final bowIndex = slots.getSlotIndexWhere(SlotType.isBow);
+      //      if (bowIndex == null) return;
+      //      useSlot(bowIndex);
+      //   }
+      //
+      //   ability = Ability(type: AbilityType.Split_Arrow,
+      //       level: 1,
+      //       cost: cost,
+      //       range: 250,
+      //       cooldown: 100,
+      //       mode: AbilityMode.Directed);
+      //   return;
+      // }
 
       if (slotType == SlotType.Potion_Red) {
         health = maxHealth;
@@ -265,7 +264,7 @@ class Player extends Character {
       }
   }
 
-  void sellSlot(int index){
+  void sellSlot(Slots slots, int index){
     final slotAtIndex = slots.getSlotTypeAtIndex(index);
     if (slotAtIndex == SlotType.Empty) return;
     slots.assignSlotTypeAtIndex(index, SlotType.Empty);
@@ -424,7 +423,7 @@ extension PlayerProperties on Player {
 
   bool get isHuman => type == CharacterType.Human;
 
-  bool get unarmed => weapon == SlotType.Empty;
+  bool get unarmed => equipped == TechType.Unarmed;
 
   void onEquipped(int slotType){
     final healthIncrease = SlotType.getHealth(slotType);

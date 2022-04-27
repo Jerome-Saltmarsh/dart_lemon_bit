@@ -16,10 +16,9 @@ import 'common/GameError.dart';
 import 'common/GameType.dart';
 import 'common/Modify_Game.dart';
 import 'common/ServerResponse.dart';
-import 'common/SlotType.dart';
-import 'common/SlotTypeCategory.dart';
 import 'common/StructureType.dart';
 import 'common/Tile.dart';
+import 'common/TechType.dart';
 import 'common/compile_util.dart';
 import 'common/utilities.dart';
 import 'common/version.dart';
@@ -239,10 +238,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       error(GameError.PlayerDead);
     }
 
-    void errorPlayerBusy() {
-      error(GameError.PlayerBusy);
-    }
-
     void onEvent(dynamic requestD) {
 
       final player = _player;
@@ -343,7 +338,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               if (ability == null) {
                 if (aimTarget != null) {
                   player.target = aimTarget;
-                  if (withinRadius(player, aimTarget, SlotType.getRange(player.weapon))){
+                  if (withinRadius(player, aimTarget, player.equippedRange)){
                     player.face(aimTarget);
                     game.setCharacterStatePerforming(player);
                   }
@@ -679,57 +674,57 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
         case ClientRequest.Unequip_Slot:
 
-          final player = _player;
-          if (player == null) {
-            return errorPlayerNotFound();
-          }
-
-          final slotTypeCategoryIndex = int.tryParse(arguments[1]);
-          if (slotTypeCategoryIndex == null){
-            return errorIntegerExpected(1, arguments[1]);
-          }
-          if (slotTypeCategoryIndex < 0 || slotTypeCategoryIndex >= slotTypeCategories.length) {
-            return errorInvalidArg('inventory index out of bounds: $slotTypeCategoryIndex');
-          }
-
-          final slotTypeCategory = slotTypeCategories[slotTypeCategoryIndex];
-          player.unequip(slotTypeCategory);
+          // final player = _player;
+          // if (player == null) {
+          //   return errorPlayerNotFound();
+          // }
+          //
+          // final slotTypeCategoryIndex = int.tryParse(arguments[1]);
+          // if (slotTypeCategoryIndex == null){
+          //   return errorIntegerExpected(1, arguments[1]);
+          // }
+          // if (slotTypeCategoryIndex < 0 || slotTypeCategoryIndex >= slotTypeCategories.length) {
+          //   return errorInvalidArg('inventory index out of bounds: $slotTypeCategoryIndex');
+          // }
+          //
+          // final slotTypeCategory = slotTypeCategories[slotTypeCategoryIndex];
+          // player.unequip(slotTypeCategory);
           break;
 
         case ClientRequest.Equip_Slot:
-          if (arguments.length != 2) {
-            return errorArgsExpected(2, arguments);
-          }
-
-          if (player == null) {
-            return errorPlayerNotFound();
-          }
-
-          final inventoryIndex = int.tryParse(arguments[1]);
-          if (inventoryIndex == null){
-            return errorIntegerExpected(1, arguments[1]);
-          }
-          if (inventoryIndex < 1 || inventoryIndex > 6) {
-            return errorInvalidArg('inventory index out of bounds');
-          }
-
-          player.useSlot(inventoryIndex);
+          // if (arguments.length != 2) {
+          //   return errorArgsExpected(2, arguments);
+          // }
+          //
+          // if (player == null) {
+          //   return errorPlayerNotFound();
+          // }
+          //
+          // final inventoryIndex = int.tryParse(arguments[1]);
+          // if (inventoryIndex == null){
+          //   return errorIntegerExpected(1, arguments[1]);
+          // }
+          // if (inventoryIndex < 1 || inventoryIndex > 6) {
+          //   return errorInvalidArg('inventory index out of bounds');
+          // }
+          //
+          // player.useSlot(inventoryIndex);
           break;
 
         case ClientRequest.Sell_Slot:
-          final player = _player;
-          if (player == null) {
-            return errorPlayerNotFound();
-          }
-
-          final inventoryIndex = int.tryParse(arguments[1]);
-          if (inventoryIndex == null){
-            return errorIntegerExpected(1, arguments[1]);
-          }
-          if (inventoryIndex < 1 || inventoryIndex > 6) {
-            return errorInvalidArg('inventory index out of bounds');
-          }
-          player.sellSlot(inventoryIndex);
+          // final player = _player;
+          // if (player == null) {
+          //   return errorPlayerNotFound();
+          // }
+          //
+          // final inventoryIndex = int.tryParse(arguments[1]);
+          // if (inventoryIndex == null){
+          //   return errorIntegerExpected(1, arguments[1]);
+          // }
+          // if (inventoryIndex < 1 || inventoryIndex > 6) {
+          //   return errorInvalidArg('inventory index out of bounds');
+          // }
+          // player.sellSlot(inventoryIndex);
           break;
 
         case ClientRequest.Modify_Game:
@@ -781,6 +776,33 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
           break;
 
+        case ClientRequest.Upgrade:
+          if (player == null) {
+            return errorPlayerNotFound();
+          }
+          if (arguments.length != 2) {
+            return errorArgsExpected(2, arguments);
+          }
+          final techType = int.tryParse(arguments[1]);
+          if (techType == null) {
+            return errorInvalidArg('tech type integer required: got $techType');
+          }
+          if (!TechType.isValid(techType)) {
+            return errorInvalidArg('invalid tech type index $techType');
+          }
+          switch(techType) {
+            case TechType.Pickaxe:
+              player.techTree.pickaxe++;
+              break;
+            case TechType.Bow:
+              player.techTree.bow++;
+              break;
+            case TechType.Sword:
+              player.techTree.sword++;
+              break;
+          }
+          break;
+
         case ClientRequest.Attack:
           if (player == null) return;
           if (player.deadOrBusy) return;
@@ -791,62 +813,57 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Equip:
-          if (arguments.length < 3) {
-            error(GameError.InvalidArguments,
-                message:
-                "ClientRequest.Equip Error: Expected 2 args but got ${arguments.length}");
-            return;
-          }
-
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
-
-          final weaponIndex = int.tryParse(arguments[2]);
-          if (weaponIndex == null) {
-            error(GameError.InvalidArguments,
-                message: "arg4, weapon-index: $weaponIndex integer expected");
-            return;
-          }
-          // changeWeapon(player, weaponIndex);
-          return;
-
-        case ClientRequest.Purchase:
-          if (arguments.length < 2) {
-            return error(GameError.InvalidArguments,
-                message:
-                "ClientRequest.Purchase Error: Expected 2 args but got ${arguments.length}");
-          }
-
           if (player == null) {
             return errorPlayerNotFound();
           }
-
-          if (player.dead){
-            return errorPlayerDead();
+          if (arguments.length != 2) {
+            return errorArgsExpected(2, arguments);
           }
-
-          if (player.busy){
-            return errorPlayerBusy();
+          final techType = int.tryParse(arguments[1]);
+          if (techType == null){
+            return errorInvalidArg('tech type integer required: got $techType');
           }
-
-          final slotItemIndexString = arguments[1];
-          final slotItemIndex = int.tryParse(slotItemIndexString);
-          if (slotItemIndex == null){
-            return error(GameError.InvalidArguments,
-                message:
-                "ClientRequest.Purchase Error: could not parse argument 2 to int");
+          if (!TechType.isValid(techType)){
+            return errorInvalidArg('Invalid tech type: got $techType');
           }
+          player.equipped = techType;
+          return;
 
-          if (slotItemIndex < 0){
-            return error(GameError.InvalidArguments,
-                message:
-                "$slotItemIndex is not a valid slot type index");
-          }
-          if (!player.slots.emptySlotAvailable) return;
-          final slotType = slotItemIndex;
-          player.acquire(slotType);
+        case ClientRequest.Purchase:
+          // if (arguments.length < 2) {
+          //   return error(GameError.InvalidArguments,
+          //       message:
+          //       "ClientRequest.Purchase Error: Expected 2 args but got ${arguments.length}");
+          // }
+          //
+          // if (player == null) {
+          //   return errorPlayerNotFound();
+          // }
+          //
+          // if (player.dead){
+          //   return errorPlayerDead();
+          // }
+          //
+          // if (player.busy){
+          //   return errorPlayerBusy();
+          // }
+          //
+          // final slotItemIndexString = arguments[1];
+          // final slotItemIndex = int.tryParse(slotItemIndexString);
+          // if (slotItemIndex == null){
+          //   return error(GameError.InvalidArguments,
+          //       message:
+          //       "ClientRequest.Purchase Error: could not parse argument 2 to int");
+          // }
+          //
+          // if (slotItemIndex < 0){
+          //   return error(GameError.InvalidArguments,
+          //       message:
+          //       "$slotItemIndex is not a valid slot type index");
+          // }
+          // if (!player.slots.emptySlotAvailable) return;
+          // final slotType = slotItemIndex;
+          // player.acquire(slotType);
           return;
 
         case ClientRequest.Set_Compile_Paths:

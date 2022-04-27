@@ -21,6 +21,7 @@ enum ClientRequest {
   Character_Save,
   Character_Load,
   Construct,
+  Upgrade,
 }
 
 const clientRequests = ClientRequest.values;

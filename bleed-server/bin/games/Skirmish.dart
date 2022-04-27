@@ -11,8 +11,6 @@ import '../classes/InteractableNpc.dart';
 import '../classes/Item.dart';
 import '../classes/Player.dart';
 import '../common/DynamicObjectType.dart';
-import '../common/ItemType.dart';
-import '../common/PlayerEvent.dart';
 import '../common/SlotType.dart';
 import '../common/ObjectType.dart';
 import '../engine.dart';
@@ -141,16 +139,16 @@ class GameSkirmish extends Game {
       team: Teams.none,
       weapon: SlotType.Pickaxe,
     );
-    final slots = player.slots;
-    slots.weapon.amount = 50;
-    slots.slot1.type = SlotType.Potion_Red;
-    slots.slot2.type = SlotType.Shotgun;
-    slots.slot2.amount = 100;
-    slots.slot3.type = SlotType.Sword_Short;
-    slots.slot4.type = SlotType.Bow_Wooden;
-    slots.slot4.amount = 30;
-    slots.slot5.type = SlotType.Handgun;
-    slots.slot5.amount = 32;
+    // final slots = player.slots;
+    // slots.weapon.amount = 50;
+    // slots.slot1.type = SlotType.Potion_Red;
+    // slots.slot2.type = SlotType.Shotgun;
+    // slots.slot2.amount = 100;
+    // slots.slot3.type = SlotType.Sword_Short;
+    // slots.slot4.type = SlotType.Bow_Wooden;
+    // slots.slot4.amount = 30;
+    // slots.slot5.type = SlotType.Handgun;
+    // slots.slot5.amount = 32;
     return player;
   }
 
@@ -178,74 +176,75 @@ class GameSkirmish extends Game {
 
   @override
   bool onPlayerItemCollision(Player player, Item item){
-    final slots = player.slots;
-
-    switch(item.type) {
-
-      case ItemType.Health:
-        if (player.health >= player.maxHealth) return false;
-        player.health += 5;
-        player.onPlayerEvent(PlayerEvent.Medkit);
-        return true;
-
-      case ItemType.Handgun:
-        final slot = slots.findWeaponSlotByType(SlotType.Handgun);
-        if (slot == null) {
-          final emptySlot = slots.getEmptyWeaponSlot();
-          if (emptySlot == null) return false;
-          emptySlot.type = SlotType.Handgun;
-          emptySlot.amount = 10;
-          return true;
-        }
-        player.onPlayerEvent(PlayerEvent.Ammo_Acquired);
-        slot.amount += 10;
-        return true;
-
-      case ItemType.Sword_Wooden:
-        final emptySlot = slots.getEmptyWeaponSlot();
-        if (emptySlot == null) return false;
-        emptySlot.type = SlotType.Sword_Wooden;
-        return true;
-
-      case ItemType.Sword_Steel:
-        final emptySlot = slots.getEmptyWeaponSlot();
-        if (emptySlot == null) return false;
-        emptySlot.type = SlotType.Sword_Short;
-        return true;
-
-      case ItemType.Armour_Plated:
-        final emptySlot = slots.getEmptyArmourSlot();
-        if (emptySlot == null) return false;
-        emptySlot.type = SlotType.Armour_Padded;
-        return true;
-
-      case ItemType.Wizards_Hat:
-        final emptySlot = slots.getEmptyHeadSlot();
-        if (emptySlot == null) return false;
-        emptySlot.type = SlotType.Magic_Hat;
-        return true;
-
-      case ItemType.Steel_Helm:
-        final emptySlot = slots.getEmptyHeadSlot();
-        if (emptySlot == null) return false;
-        emptySlot.type = SlotType.Steel_Helmet;
-        return true;
-
-      case ItemType.Shotgun:
-        final slot = slots.findWeaponSlotByType(SlotType.Shotgun);
-        if (slot == null) {
-          final emptySlot = slots.getEmptyWeaponSlot();
-          if (emptySlot == null) return false;
-          emptySlot.type = SlotType.Shotgun;
-          emptySlot.amount = 10;
-          return true;
-        }
-        player.onPlayerEvent(PlayerEvent.Ammo_Acquired);
-        slot.amount += 10;
-        return true;
-
-      default:
-        return true;
-    }
+    return true;
+    // final slots = player.slots;
+    //
+    // switch(item.type) {
+    //
+    //   case ItemType.Health:
+    //     if (player.health >= player.maxHealth) return false;
+    //     player.health += 5;
+    //     player.onPlayerEvent(PlayerEvent.Medkit);
+    //     return true;
+    //
+    //   case ItemType.Handgun:
+    //     final slot = slots.findWeaponSlotByType(SlotType.Handgun);
+    //     if (slot == null) {
+    //       final emptySlot = slots.getEmptyWeaponSlot();
+    //       if (emptySlot == null) return false;
+    //       emptySlot.type = SlotType.Handgun;
+    //       emptySlot.amount = 10;
+    //       return true;
+    //     }
+    //     player.onPlayerEvent(PlayerEvent.Ammo_Acquired);
+    //     slot.amount += 10;
+    //     return true;
+    //
+    //   case ItemType.Sword_Wooden:
+    //     final emptySlot = slots.getEmptyWeaponSlot();
+    //     if (emptySlot == null) return false;
+    //     emptySlot.type = SlotType.Sword_Wooden;
+    //     return true;
+    //
+    //   case ItemType.Sword_Steel:
+    //     final emptySlot = slots.getEmptyWeaponSlot();
+    //     if (emptySlot == null) return false;
+    //     emptySlot.type = SlotType.Sword_Short;
+    //     return true;
+    //
+    //   case ItemType.Armour_Plated:
+    //     final emptySlot = slots.getEmptyArmourSlot();
+    //     if (emptySlot == null) return false;
+    //     emptySlot.type = SlotType.Armour_Padded;
+    //     return true;
+    //
+    //   case ItemType.Wizards_Hat:
+    //     final emptySlot = slots.getEmptyHeadSlot();
+    //     if (emptySlot == null) return false;
+    //     emptySlot.type = SlotType.Magic_Hat;
+    //     return true;
+    //
+    //   case ItemType.Steel_Helm:
+    //     final emptySlot = slots.getEmptyHeadSlot();
+    //     if (emptySlot == null) return false;
+    //     emptySlot.type = SlotType.Steel_Helmet;
+    //     return true;
+    //
+    //   case ItemType.Shotgun:
+    //     final slot = slots.findWeaponSlotByType(SlotType.Shotgun);
+    //     if (slot == null) {
+    //       final emptySlot = slots.getEmptyWeaponSlot();
+    //       if (emptySlot == null) return false;
+    //       emptySlot.type = SlotType.Shotgun;
+    //       emptySlot.amount = 10;
+    //       return true;
+    //     }
+    //     player.onPlayerEvent(PlayerEvent.Ammo_Acquired);
+    //     slot.amount += 10;
+    //     return true;
+    //
+    //   default:
+    //     return true;
+    // }
   }
 }
