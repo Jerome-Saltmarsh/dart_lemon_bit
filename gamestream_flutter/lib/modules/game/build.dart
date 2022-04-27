@@ -118,11 +118,13 @@ class GameBuild {
 
   Widget buildResourcePanel() {
     return Container(
+      width: 200,
       decoration: BoxDecoration(
         color: colours.brownDark,
         borderRadius: borderRadius4,
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
             child: Column(
@@ -308,7 +310,8 @@ class GameBuild {
     return Positioned(
       right: 8.0,
       top: 8.0,
-      child: boolBuilder(modules.hud.menuVisible, widgetTrue: menu, widgetFalse: resources.icons.settings),
+      // child: boolBuilder(modules.hud.menuVisible, widgetTrue: menu, widgetFalse: resources.icons.settings),
+      child: boolBuilder(modules.hud.menuVisible, widgetTrue: menu, widgetFalse: empty),
     );
   }
 
@@ -397,6 +400,7 @@ class GameBuild {
                  buildResourcePanel(),
                   height8,
                   Container(
+                    width: 200,
                     padding: padding8,
                     decoration: BoxDecoration(
                       color: colours.brownDark,
