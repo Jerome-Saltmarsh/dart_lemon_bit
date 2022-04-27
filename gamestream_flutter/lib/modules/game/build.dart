@@ -367,9 +367,9 @@ class GameBuild {
             callback: () => Server.upgrade(type),
           ),
           width16,
-          onPressed(
-            callback: () => Server.equip(type),
-            child: Expanded(
+          Expanded(
+            child: onPressed(
+              callback: () => Server.equip(type),
               child: Container(
                 decoration: BoxDecoration(
                   color: equipped == type ? colours.white382 : colours.none,
@@ -423,7 +423,7 @@ class GameBuild {
         borderRadius: borderRadius4,
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           buildTechTypeRow(TechType.Pickaxe),
           buildTechTypeRow(TechType.Sword),
