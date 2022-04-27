@@ -1,10 +1,8 @@
 
 
-import 'package:bleed_common/ObjectType.dart';
-import 'package:bleed_common/utilities.dart';
+import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/mappers/mapEnvironmentObjectToSrc.dart';
-import 'package:lemon_math/Vector2.dart';
-import 'package:lemon_math/random.dart';
+import 'package:lemon_math/library.dart';
 
 class EnvironmentObject extends Vector2 {
   late int row;

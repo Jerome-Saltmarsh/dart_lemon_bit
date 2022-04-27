@@ -1,5 +1,5 @@
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/library.dart';
 import 'package:bleed_common/utilities.dart';
 
 // const tileSize = 48.0;

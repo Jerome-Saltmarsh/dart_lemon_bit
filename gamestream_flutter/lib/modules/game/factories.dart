@@ -4,9 +4,7 @@ import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToSrc.dart';
-import 'package:lemon_math/give_or_take.dart';
-import 'package:lemon_math/randomInt.dart';
-import 'package:lemon_math/random_between.dart';
+import 'package:lemon_math/library.dart';
 
 class GameFactories {
 

@@ -1,12 +1,9 @@
 import 'dart:math';
 
-import 'package:lemon_math/Vector2.dart';
-import 'package:lemon_math/hypotenuse.dart';
-import 'package:lemon_math/pi2.dart';
-import 'package:lemon_math/piHalf.dart';
+import 'package:lemon_math/library.dart';
 
 double distanceV2(Position a, Position b) {
-  return hypotenuse(a.x - b.x, a.y - b.y);
+  return getHypotenuse(a.x - b.x, a.y - b.y);
 }
 
 int absInt(int value) {
@@ -52,7 +49,7 @@ double opp(double rotation, num magnitude) {
 }
 
 double normalize(double x, double y) {
-  return 1.0 / hypotenuse(x, y);
+  return 1.0 / getHypotenuse(x, y);
 }
 
 double normalizeX(double x, double y) {

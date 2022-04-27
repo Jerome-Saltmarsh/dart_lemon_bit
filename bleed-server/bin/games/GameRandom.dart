@@ -1,6 +1,6 @@
 
 
-import 'package:lemon_math/random.dart';
+import 'package:lemon_math/library.dart';
 
 import '../classes/Game.dart';
 import '../classes/Player.dart';

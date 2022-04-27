@@ -1,5 +1,4 @@
-
-import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/library.dart';
 
 class Item extends Vector2 {
   int type;

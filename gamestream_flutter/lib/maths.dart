@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:lemon_math/normlize.dart';
+import 'package:lemon_math/library.dart';
 
 const piQuarter = pi / 4.0;
 

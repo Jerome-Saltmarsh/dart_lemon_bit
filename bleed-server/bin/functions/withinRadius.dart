@@ -1,7 +1,7 @@
 
 import 'dart:math';
 
-import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/library.dart';
 
 import '../classes/Collider.dart';
 import '../classes/Player.dart';

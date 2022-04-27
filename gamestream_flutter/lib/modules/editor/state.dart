@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/modules/isometric/classes.dart';
-import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'enums.dart';

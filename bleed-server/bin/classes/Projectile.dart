@@ -1,5 +1,5 @@
 
-import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/library.dart';
 
 import '../common/ProjectileType.dart';
 import '../maths.dart';
@@ -29,7 +29,7 @@ class Projectile extends Collider with Active, Velocity {
   }
 
   void setVelocityTowards(Position position){
-    angle = getAngle(position);
+    angle = this.getAngle(position);
     xv = adj(angle, speed);
     yv = opp(angle, speed);
   }

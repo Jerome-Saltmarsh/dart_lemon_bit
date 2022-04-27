@@ -1,6 +1,5 @@
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/angle_between.dart';
-import 'package:lemon_math/distance_between.dart';
+import 'package:lemon_math/library.dart';
 
 import 'state.dart';
 
@@ -9,7 +8,7 @@ class GameQueries {
   GameQueries(this.state);
 
   double getAngleBetweenMouseAndPlayer(){
-    return angleBetween(state.player.x, state.player.y, mouseWorldX, mouseWorldY);
+    return getAngleBetween(state.player.x, state.player.y, mouseWorldX, mouseWorldY);
   }
 
   double getDistanceBetweenMouseAndPlayer(){

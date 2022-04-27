@@ -1,13 +1,6 @@
 import 'dart:math';
 
-import 'package:lemon_math/Vector2.dart';
-import 'package:lemon_math/diff.dart';
-import 'package:lemon_math/distance_between.dart';
-import 'package:lemon_math/give_or_take.dart';
-import 'package:lemon_math/hypotenuse.dart';
-import 'package:lemon_math/randomAngle.dart';
-import 'package:lemon_math/randomInt.dart';
-import 'package:lemon_math/randomItem.dart';
+import 'package:lemon_math/library.dart';
 
 import '../bleed/zombie_health.dart';
 import '../common/AbilityType.dart';
@@ -758,7 +751,7 @@ extension GameFunctions on Game {
     }
 
     for (final player in players) {
-      if (hypotenuse(player.x - x, player.y - y) > settings.radius.explosion)
+      if (getHypotenuse(player.x - x, player.y - y) > settings.radius.explosion)
         continue;
       final rotation = radiansBetween2(player, x, y);
       final magnitude = 10.0;
@@ -1550,7 +1543,7 @@ void playerSetAbilityTarget(Player player, double x, double y) {
   final ability = player.ability;
   if (ability == null) return;
 
-  final distance = hypotenuse(player.x - x, player.y - y);
+  final distance = getHypotenuse(player.x - x, player.y - y);
 
   if (distance > ability.range) {
     double rotation = pi2 - angle2(player.x - x, player.y - y);

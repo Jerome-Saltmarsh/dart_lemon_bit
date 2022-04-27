@@ -1,9 +1,6 @@
-import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/library.dart';
 
-import '../common/DynamicObjectType.dart';
-import '../common/ObjectType.dart';
-import '../common/Tile.dart';
-import '../common/Direction.dart';
+import '../common/library.dart';
 import '../enums.dart';
 import '../utilities.dart';
 import 'Character.dart';

@@ -10,7 +10,7 @@ import 'package:gamestream_flutter/utils/list_util.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
-import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/library.dart';
 
 // variables
 var event = "";

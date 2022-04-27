@@ -1,5 +1,4 @@
-import 'package:lemon_math/Vector2.dart';
-import 'package:lemon_math/give_or_take.dart';
+import 'package:lemon_math/library.dart';
 
 import '../classes/Character.dart';
 import '../classes/Game.dart';

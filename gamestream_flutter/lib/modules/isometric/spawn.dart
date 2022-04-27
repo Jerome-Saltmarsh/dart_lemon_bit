@@ -7,12 +7,7 @@ import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/game.dart';
-import 'package:lemon_math/adjacent.dart';
-import 'package:lemon_math/give_or_take.dart';
-import 'package:lemon_math/opposite.dart';
-import 'package:lemon_math/randomAngle.dart';
-import 'package:lemon_math/randomInt.dart';
-import 'package:lemon_math/random_between.dart';
+import 'package:lemon_math/library.dart';
 
 import 'enums.dart';
 
@@ -91,7 +86,7 @@ class IsometricSpawn {
     particle.z = z;
 
     if (speed > 0){
-      particle.xv = adjacent(angle, speed);
+      particle.xv = getAdjacent(angle, speed);
       particle.yv = opposite(angle, speed);
     } else {
       particle.xv = 0;

@@ -1,4 +1,4 @@
-import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/library.dart';
 
 const explosionMaxDuration = 30;
 

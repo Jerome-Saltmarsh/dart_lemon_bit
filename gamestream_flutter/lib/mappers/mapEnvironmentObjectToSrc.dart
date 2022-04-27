@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/library.dart';
 
 
 final _translations = _Translations();

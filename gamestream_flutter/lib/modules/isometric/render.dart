@@ -16,8 +16,7 @@ import 'package:gamestream_flutter/modules/isometric/module.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/Vector2.dart';
-import 'package:lemon_math/diff.dart';
+import 'package:lemon_math/library.dart';
 
 import '../modules.dart';
 import 'classes.dart';

@@ -1,6 +1,6 @@
 
 import 'package:bleed_common/ProjectileType.dart';
-import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/library.dart';
 
 class Projectile extends Vector2 {
   var type = ProjectileType.Arrow;

@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:lemon_math/Vector2.dart';
-import 'package:lemon_math/abs.dart';
+import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
 import '../constants.dart';
@@ -175,7 +174,7 @@ class Character extends Collider with Team, Health, Velocity {
 
   void updateMovement() {
     const minVelocity = 0.005;
-    if (abs(xv) <= minVelocity) return;
+    if (xv.abs() <= minVelocity) return;
     x += xv;
     y += yv;
     const velocityFriction = 0.88;
@@ -192,7 +191,7 @@ class Character extends Collider with Team, Health, Velocity {
 
   void face(Position position){
     if (deadOrBusy) return;
-    angle = getAngle(position);
+    angle = this.getAngle(position);
   }
 }
 

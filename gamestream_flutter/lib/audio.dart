@@ -1,8 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/distance_between.dart';
-import 'package:lemon_math/randomInt.dart';
-import 'package:lemon_math/randomItem.dart';
+import 'package:lemon_math/library.dart';
 
 import 'Cache.dart';
 

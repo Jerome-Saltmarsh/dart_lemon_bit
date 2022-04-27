@@ -21,11 +21,7 @@ import 'package:gamestream_flutter/game.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
-import 'package:lemon_math/adjacent.dart';
-import 'package:lemon_math/give_or_take.dart';
-import 'package:lemon_math/opposite.dart';
-import 'package:lemon_math/randomBool.dart';
-import 'package:lemon_math/randomInt.dart';
+import 'package:lemon_math/library.dart';
 
 import 'state.dart';
 
@@ -271,7 +267,7 @@ class GameEvents {
       case GameEventType.Handgun_Fired:
         audio.handgunShot(x, y);
         const distance = 12.0;
-        final xForward = adjacent(angle, distance);
+        final xForward = getAdjacent(angle, distance);
         final yForward = opposite(angle, distance);
         _spawn.shell(x: x + xForward, y: y + yForward);
         break;

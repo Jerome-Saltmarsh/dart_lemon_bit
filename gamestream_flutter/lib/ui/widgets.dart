@@ -12,7 +12,7 @@ import 'package:gamestream_flutter/ui/state/decorationImages.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/random.dart';
+import 'package:lemon_math/library.dart';
 
 import '../styles.dart';
 

@@ -1,7 +1,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
-import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/advanced_watch.dart';
 import 'package:lemon_watch/watch.dart';
 

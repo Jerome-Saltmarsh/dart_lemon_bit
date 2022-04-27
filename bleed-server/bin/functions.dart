@@ -1,13 +1,12 @@
+import 'dart:math';
 
-import 'package:lemon_math/abs.dart';
-import 'package:lemon_math/hypotenuse.dart';
+import 'package:lemon_math/library.dart';
 
 import 'classes/Collider.dart';
-import 'constants.dart';
 import 'maths.dart';
 
 num calculateAngleDifference(double angleA, double angleB) {
-  final diff = abs(angleA - angleB);
+  final diff = (angleA - angleB).abs();
   if (diff < pi) {
     return diff;
   }
@@ -46,7 +45,7 @@ void resolveCollisionA(Collider a, Collider b) {
   }
 
   final halfOverlap = overlap * 0.5;
-  final mag = hypotenuse(xDiff, yDiff);
+  final mag = getHypotenuse(xDiff, yDiff);
   final ratio = 1.0 / mag;
   final xDiffNormalized = xDiff * ratio;
   final yDiffNormalized = yDiff * ratio;
@@ -63,7 +62,7 @@ void resolveCollisionB(Collider a, Collider b) {
   if (overlap <= 0) return;
   final xDiff = a.x - b.x;
   final yDiff = a.y - b.y;
-  final mag = hypotenuse(xDiff, yDiff);
+  final mag = getHypotenuse(xDiff, yDiff);
   final ratio = 1.0 / mag;
   final xDiffNormalized = xDiff * ratio;
   final yDiffNormalized = yDiff * ratio;

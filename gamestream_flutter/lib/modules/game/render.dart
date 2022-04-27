@@ -14,10 +14,7 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/Vector2.dart';
-import 'package:lemon_math/adjacent.dart';
-import 'package:lemon_math/diff.dart';
-import 'package:lemon_math/opposite.dart';
+import 'package:lemon_math/library.dart';
 
 import 'state.dart';
 import 'style.dart';
@@ -341,7 +338,7 @@ class GameRender {
     double angle = queries.getAngleBetweenMouseAndPlayer();
     double mouseDistance = queries.getDistanceBetweenMouseAndPlayer();
     double d = min(mouseDistance, modules.game.state.player.attackRange);
-    double vX = adjacent(angle, d);
+    double vX = getAdjacent(angle, d);
     double vY = opposite(angle, d);
     drawLine(modules.game.state.player.x, modules.game.state.player.y, modules.game.state.player.x + vX, modules.game.state.player.y + vY);
   }

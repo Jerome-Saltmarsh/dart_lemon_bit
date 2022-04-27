@@ -1,7 +1,6 @@
 
 import 'package:fast_noise/fast_noise.dart';
-import 'package:lemon_math/random.dart';
-import 'package:lemon_math/randomItem.dart';
+import 'package:lemon_math/library.dart';
 
 import 'classes/EnvironmentObject.dart';
 import 'classes/Scene.dart';

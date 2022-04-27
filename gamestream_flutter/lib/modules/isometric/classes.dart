@@ -1,5 +1,5 @@
 import 'package:bleed_common/library.dart';
-import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/library.dart';
 
 import '../../maths.dart';
 import 'mixins.dart';

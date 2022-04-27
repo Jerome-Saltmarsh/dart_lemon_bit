@@ -2,8 +2,7 @@
 import 'dart:convert' show utf8;
 import 'dart:typed_data';
 
-import 'package:lemon_math/Vector2.dart';
-import 'package:lemon_math/angle.dart';
+import 'package:lemon_math/library.dart';
 
 import 'classes/Character.dart';
 import 'classes/Game.dart';
@@ -257,7 +256,7 @@ class _ByteCompiler {
 
   void writeProjectile(Projectile projectile){
     if (!projectile.active) return;
-    final degrees = angle(projectile.xv, projectile.yv) * radiansToDegrees;
+    final degrees = getAngle(projectile.xv, projectile.yv) * radiansToDegrees;
     writePosition(projectile);
     writeByte(projectile.type.index);
     writeBigInt(degrees);

@@ -1,5 +1,5 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
-import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
 import '../constants/no_squad.dart';
@@ -52,7 +52,7 @@ class Player extends Character {
   late Function(int type, double x, double y, double angle) onGameEvent;
   late Function(GameError error, {String message}) dispatchError;
 
-  double get mouseAngle => getAngle(mouse);
+  double get mouseAngle => this.getAngle(mouse);
 
   int get magic => _magic;
 

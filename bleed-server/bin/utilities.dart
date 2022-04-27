@@ -1,5 +1,4 @@
-import 'package:lemon_math/Vector2.dart';
-import 'package:lemon_math/give_or_take.dart';
+import 'package:lemon_math/library.dart';
 
 import 'classes/Character.dart';
 import 'common/utilities.dart';
@@ -77,23 +76,3 @@ void snapToGrid(Position value){
 // double snapY(double y){
 //   return y - y % tileSize;
 // }
-
-void sortVertically(List<Position> items) {
-  var start = 0;
-  var end = items.length;
-  for (var pos = start + 1; pos < end; pos++) {
-    var min = start;
-    var max = pos;
-    var element = items[pos];
-    while (min < max) {
-      var mid = min + ((max - min) >> 1);
-      if (element.y < items[mid].y) {
-        max = mid;
-      } else {
-        min = mid + 1;
-      }
-    }
-    items.setRange(min + 1, pos + 1, items, min);
-    items[min] = element;
-  }
-}

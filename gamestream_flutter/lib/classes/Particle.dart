@@ -1,10 +1,7 @@
 import 'dart:math';
 
-import 'package:bleed_common/Direction.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
-import 'package:lemon_math/adjacent.dart';
-import 'package:lemon_math/opposite.dart';
-import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/library.dart';
 
 class Particle extends Vector2 {
   double z = 0;
@@ -43,7 +40,7 @@ class Particle extends Vector2 {
   double get speed => sqrt(xv * xv + yv * yv);
 
   void setAngle({required double value, required double speed}){
-    xv = adjacent(value, speed);
+    xv = getAdjacent(value, speed);
     yv = opposite(value, speed);
   }
 

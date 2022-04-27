@@ -1,8 +1,6 @@
 
-import 'package:lemon_math/Vector2.dart';
-
-import '../common/CollectableType.dart';
-import '../common/PlayerEvent.dart';
+import 'package:lemon_math/library.dart';
+import '../common/library.dart';
 import 'Player.dart';
 import 'Structure.dart';
 import 'components.dart';
