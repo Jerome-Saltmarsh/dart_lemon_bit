@@ -1,7 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:lemon_math/library.dart';
 
-import '../../maths.dart';
 import 'mixins.dart';
 
 class Collectable extends Vector2 with Type {

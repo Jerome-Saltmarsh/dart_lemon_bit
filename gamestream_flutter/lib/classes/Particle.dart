@@ -41,7 +41,7 @@ class Particle extends Vector2 {
 
   void setAngle({required double value, required double speed}){
     xv = getAdjacent(value, speed);
-    yv = opposite(value, speed);
+    yv = getOpposite(value, speed);
   }
 
   void updateMotion(){

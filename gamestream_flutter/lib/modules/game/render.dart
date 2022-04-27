@@ -339,7 +339,7 @@ class GameRender {
     double mouseDistance = queries.getDistanceBetweenMouseAndPlayer();
     double d = min(mouseDistance, modules.game.state.player.attackRange);
     double vX = getAdjacent(angle, d);
-    double vY = opposite(angle, d);
+    double vY = getOpposite(angle, d);
     drawLine(modules.game.state.player.x, modules.game.state.player.y, modules.game.state.player.x + vX, modules.game.state.player.y + vY);
   }
 

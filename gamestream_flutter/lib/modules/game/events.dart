@@ -268,7 +268,7 @@ class GameEvents {
         audio.handgunShot(x, y);
         const distance = 12.0;
         final xForward = getAdjacent(angle, distance);
-        final yForward = opposite(angle, distance);
+        final yForward = getOpposite(angle, distance);
         _spawn.shell(x: x + xForward, y: y + yForward);
         break;
       case GameEventType.Shotgun_Fired:

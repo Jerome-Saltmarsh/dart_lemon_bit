@@ -87,7 +87,7 @@ class IsometricSpawn {
 
     if (speed > 0){
       particle.xv = getAdjacent(angle, speed);
-      particle.yv = opposite(angle, speed);
+      particle.yv = getOpposite(angle, speed);
     } else {
       particle.xv = 0;
       particle.yv = 0;
