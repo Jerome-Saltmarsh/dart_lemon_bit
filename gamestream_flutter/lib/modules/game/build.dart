@@ -117,35 +117,31 @@ class GameBuild {
   }
 
   Widget buildResourcePanel() {
-    return Row(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: colours.brownDark,
-            borderRadius: borderRadius4,
-          ),
-          child: Column(
-            children: [
-              Container(
-                width: 48,
-                height: 48,
-                alignment: Alignment.center,
-                child: resources.icons.resources.wood,
-              ),
-              Container(
-                  alignment: Alignment.center,
+    return Container(
+      decoration: BoxDecoration(
+        color: colours.brownDark,
+        borderRadius: borderRadius4,
+      ),
+      child: Row(
+        children: [
+          Container(
+            child: Column(
+              children: [
+                Container(
                   width: 48,
                   height: 48,
-                  child: textBuilder(modules.game.state.player.wood)),
-            ],
+                  alignment: Alignment.center,
+                  child: resources.icons.resources.wood,
+                ),
+                Container(
+                    alignment: Alignment.center,
+                    width: 48,
+                    height: 48,
+                    child: textBuilder(modules.game.state.player.wood)),
+              ],
+            ),
           ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: colours.brownDark,
-            borderRadius: borderRadius4,
-          ),
-          child: Column(
+          Column(
             children: [
               Container(
                 width: 48,
@@ -160,13 +156,7 @@ class GameBuild {
                   child: textBuilder(modules.game.state.player.stone)),
             ],
           ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: colours.brownDark,
-            borderRadius: borderRadius4,
-          ),
-          child: Column(
+          Column(
             children: [
               Container(
                 width: 48,
@@ -181,10 +171,8 @@ class GameBuild {
                   child: textBuilder(modules.game.state.player.gold)),
             ],
           ),
-        )
-
-
-      ],
+        ],
+      ),
     );
   }
 
@@ -261,11 +249,11 @@ class GameBuild {
                   );
                 })
             ),
-            Positioned(
-                left: _pad,
-                bottom: _pad,
-                child: boolBuilder(state.debugPanelVisible, widgetTrue: buildDebugMenu(), widgetFalse: buildScoreBoard()),
-            ),
+            // Positioned(
+            //     left: _pad,
+            //     bottom: _pad,
+            //     child: boolBuilder(state.debugPanelVisible, widgetTrue: buildDebugMenu(), widgetFalse: buildScoreBoard()),
+            // ),
             // if (alive)
             // Positioned(
             //     right: _pad,
@@ -397,24 +385,37 @@ class GameBuild {
 
   Widget buildPanelUpgrades() {
         return Positioned(
-            top: 100,
-            right: 100,
+            top: 200,
+            right: 32,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                  buildResourcePanel(),
-                _buildUpgradeRow(
-                  upgrade: Server.upgradePickaxe,
-                  equip: Server.equipPickaxe,
-                  icon: resources.icons.swords.pickaxe,
-                  name: "Pickaxe",
-                ),
-                _buildUpgradeRow(
-                  upgrade: Server.upgradeSword,
-                  equip: Server.equipSword,
-                  icon: resources.icons.swords.wooden,
-                  name: "Sword",
-                ),
+                  height8,
+                  Container(
+                    padding: padding8,
+                    decoration: BoxDecoration(
+                      color: colours.brownDark,
+                      borderRadius: borderRadius4,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildUpgradeRow(
+                          upgrade: Server.upgradePickaxe,
+                          equip: Server.equipPickaxe,
+                          icon: resources.icons.swords.pickaxe,
+                          name: "Pickaxe",
+                        ),
+                        _buildUpgradeRow(
+                          upgrade: Server.upgradeSword,
+                          equip: Server.equipSword,
+                          icon: resources.icons.swords.wooden,
+                          name: "Sword",
+                        ),
+                      ],
+                    ),
+                  )
               ],
             )
         );
