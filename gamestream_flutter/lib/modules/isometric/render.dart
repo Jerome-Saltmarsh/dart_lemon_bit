@@ -789,29 +789,15 @@ class IsometricRender {
   }
 
   int mapEquippedWeaponToSpriteIndex(Character character){
-     switch(character.equipped){
-       case SlotType.Sword_Wooden:
+     switch(character.equipped) {
+       case TechType.Sword:
          return SpriteLayer.Sword_Wooden;
-       case SlotType.Sword_Short:
-         return SpriteLayer.Sword_Steel;
-       case SlotType.Sword_Long:
-         return SpriteLayer.Sword_Steel;
-       case SlotType.Bow_Wooden:
+       case TechType.Bow:
          return SpriteLayer.Bow_Wooden;
-       case SlotType.Bow_Green:
+       case TechType.Shotgun:
          return SpriteLayer.Bow_Wooden;
-       case SlotType.Bow_Gold:
-         return SpriteLayer.Bow_Wooden;
-       case SlotType.Staff_Wooden:
-         return SpriteLayer.Staff_Wooden;
-       case SlotType.Staff_Blue:
-         return SpriteLayer.Staff_Wooden;
-       case SlotType.Staff_Golden:
-         return SpriteLayer.Staff_Wooden;
-       case SlotType.Handgun:
+       case TechType.Handgun:
          return SpriteLayer.Weapon_Handgun;
-       case SlotType.Shotgun:
-         return SpriteLayer.Weapon_Shotgun;
        default:
          throw Exception("cannot map ${character.equipped} to sprite index");
      }
@@ -820,7 +806,7 @@ class IsometricRender {
   void _renderCharacterTemplateWeapon(Character character) {
     final equipped = character.equipped;
     if (equipped == SlotType.Empty) return;
-    if (SlotType.isMelee(equipped)){
+    if (TechType.isMelee(equipped)){
       engine.mapDst(
         x: character.x,
         y: character.y,
@@ -830,10 +816,10 @@ class IsometricRender {
       );
 
       final row = const [
-        SlotType.Pickaxe,
-        SlotType.Sword_Short,
-        SlotType.Sword_Wooden,
-        SlotType.Staff_Wooden,
+        TechType.Pickaxe,
+        TechType.Sword,
+        TechType.Sword,
+        TechType.Sword,
       ].indexOf(equipped);
 
       engine.mapSrc96(

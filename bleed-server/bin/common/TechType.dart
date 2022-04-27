@@ -38,8 +38,9 @@ class TechType {
   static const Bow = 2;
   static const Sword = 3;
   static const Shotgun = 4;
+  static const Handgun = 5;
 
-  static bool isValid(int index) => index >= 0 && index <= Shotgun;
+  static bool isValid(int index) => index >= 0 && index <= Handgun;
 
   static bool isBow(int value) {
     return value == Bow;
