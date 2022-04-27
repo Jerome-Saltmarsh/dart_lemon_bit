@@ -38,30 +38,8 @@ dependencies:
 dev_dependencies:
   test: ^1.16.0
 
-
 flutter:
   fonts:
-    - family: PermanentMarker
-      fonts:
-        - asset: fonts/PermanentMarker-Regular.ttf
-    - family: PressStart2P
-      fonts:
-        - asset: fonts/PressStart2P-Regular.ttf
-    - family: LuckiestGuy-Regular
-      fonts:
-        - asset: fonts/LuckiestGuy-Regular.ttf
-    - family: ConcertOne-Regular
-      fonts:
-        - asset: fonts/ConcertOne-Regular.ttf
-    - family: Slackey-Regular
-      fonts:
-        - asset: fonts/Slackey-Regular.ttf
-    - family: Gugi-Regular
-      fonts:
-        - asset: fonts/Gugi-Regular.ttf
-    - family: GermaniaOne-Regular
-      fonts:
-        - asset: fonts/GermaniaOne-Regular.ttf
     - family: LibreBarcode39Text-Regular
       fonts:
         - asset: fonts/LibreBarcode39Text-Regular.ttf
