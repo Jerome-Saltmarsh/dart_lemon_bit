@@ -20,6 +20,7 @@ class GameState {
   final textBoxVisible = Watch(false);
   final highlightSlotType = Watch(SlotType.Empty);
   final highlightStructureType = Watch<int?>(null);
+  final highlightedTechType = Watch<int?>(null);
   final highlightSlot = Watch<Slot?>(null);
 
   final cameraMode = Watch(CameraMode.Chase);

@@ -268,6 +268,7 @@ class GameBuild {
             respawnButton(),
             buildHighlightedStoreSlot(),
             buildPanelHighlightedStructureType(),
+            buildPanelHighlightedTechType(),
             buildHighlightedSlot(),
             buildPanelPrimary(),
           ]);
@@ -357,43 +358,60 @@ class GameBuild {
     });
   }
 
-  Widget buildTechTypeRow(int type){
-    return WatchBuilder(state.player.equipped, (int equipped) {
-      return Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          onPressed(
-              child: resources.icons.symbols.plus,
-            callback: () => Server.upgrade(type),
-          ),
-          width16,
-          Expanded(
-            child: onPressed(
-              callback: () => Server.equip(type),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: equipped == type ? colours.white382 : colours.none,
-                  borderRadius: borderRadius4,
-                ),
-                height: 48,
-                child: Row(
-                  children: [
-                    Container(
-                        width: 32,
-                        height: 32,
-                        alignment: Alignment.center,
-                        child: techTypeIcons[type],
+  final panelTypeKey = <int, GlobalKey> {};
+
+  Widget buildTechTypeRow(int type) {
+    final key = GlobalKey();
+    panelTypeKey[type] = key;
+    return Container(
+      key: key,
+      child: WatchBuilder(state.player.equipped, (int equipped) {
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            onPressed(
+                child: resources.icons.symbols.plus,
+                callback: () => Server.upgrade(type),
+            ),
+            width16,
+            Expanded(
+              child: MouseRegion(
+                onEnter: (event) {
+                  state.highlightedTechType.value = type;
+                },
+                onExit: (event) {
+
+                  if (state.highlightedTechType.value != type) return;
+                  state.highlightedTechType.value = null;
+                },
+                child: onPressed(
+                  callback: () => Server.equip(type),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: equipped == type ? colours.white382 : colours.none,
+                      borderRadius: borderRadius4,
                     ),
-                    width16,
-                    text(TechType.getName(type)),
-                  ],
+                    height: 48,
+                    child: Row(
+                      children: [
+                        Container(
+                            width: 32,
+                            height: 32,
+                            alignment: Alignment.center,
+                            child: techTypeIcons[type],
+                        ),
+                        width16,
+                        text(TechType.getName(type)),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      );
-    });
+          ],
+        );
+      }),
+    );
   }
 
   Widget buildPanelPrimary() {
@@ -431,6 +449,28 @@ class GameBuild {
         ],
       ),
     );
+  }
+
+  Widget buildPanelHighlightedTechType(){
+    return WatchBuilder(state.highlightedTechType, (int? type) {
+      if (type == null) return const SizedBox();
+      final key = panelTypeKey[type];
+      if (key == null) {
+         return empty;
+      }
+      final context = key.currentContext;
+      if (context == null) return const SizedBox();
+      final renderBox = context.findRenderObject() as RenderBox;
+      return Positioned(
+          right: 220,
+          top: renderBox.localToGlobal(Offset.zero).dy,
+          child: Container(
+            width: 200,
+            color: colours.red,
+            child: text(TechType.getName(type)),
+          ),
+      );
+    });
   }
 
   Widget buildPanelHighlightedStructureType(){
