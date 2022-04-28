@@ -215,6 +215,9 @@ class GameEvents {
   Future _onGameError(GameError error) async {
     print("events.onGameEvent('$error')");
     switch (error) {
+      case GameError.Insufficient_Resources:
+        audio.error();
+        break;
       case GameError.PlayerId_Required:
         core.actions.disconnect();
         website.actions.showDialogLogin();

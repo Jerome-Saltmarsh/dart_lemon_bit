@@ -1,5 +1,6 @@
 
 enum GameError {
+  Insufficient_Resources,
   CharacterTypeAlreadySelected,
   GameNotFound,
   PlayerNotFound,

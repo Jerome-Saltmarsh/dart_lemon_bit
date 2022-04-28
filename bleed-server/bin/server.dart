@@ -205,6 +205,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       reply('$_errorIndex ${GameError.InvalidArguments.index} $message');
     }
 
+    void errorInsufficientResources(){
+      error(GameError.Insufficient_Resources);
+    }
+
     void errorArgsExpected(int expected, List arguments) {
       errorInvalidArg(
           'Invalid number of arguments received. Expected $expected but got ${arguments.length}');
@@ -789,9 +793,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               player.getTechTypeLevel(techType)
           );
           if (cost == null) return;
-          if (cost.wood > player.wood) return;
-          if (cost.gold > player.gold) return;
-          if (cost.stone > player.stone) return;
+          if (cost.wood > player.wood) return errorInsufficientResources();
+          if (cost.gold > player.gold) return errorInsufficientResources();
+          if (cost.stone > player.stone) return errorInsufficientResources();
 
           player.wood -= cost.wood;
           player.gold -= cost.gold;

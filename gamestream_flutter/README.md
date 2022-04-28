@@ -95,7 +95,7 @@
 [ ] Palisades draw horizontal and vertical when aligned
 [ ] Armour Slot
 [ ] Helm Slot
-[ ] Loot Slot x 3
+[ ] Loot Slot x 3 Creeps occasionally drop random trinkets
 [ ] Randomly Generate Zombie Spawn Locations
 [ ] Randomly Generate Player Spawn Locations
 [ ] Randomly Generate Caves
