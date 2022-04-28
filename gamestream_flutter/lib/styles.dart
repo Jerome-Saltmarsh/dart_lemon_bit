@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 const EdgeInsets padding16 = EdgeInsets.all(16);
+const EdgeInsets padding6 = EdgeInsets.all(6);
 const EdgeInsets padding8 = EdgeInsets.all(8);
 const EdgeInsets padding4 = EdgeInsets.all(4);
 const EdgeInsets padding0 = EdgeInsets.zero;

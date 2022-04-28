@@ -380,55 +380,58 @@ class GameBuild {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              MouseRegion(
-                onEnter: (event) {
-                  state.highlightedTechType.value = type;
-                },
-                onExit: (event) {
-                  if (state.highlightedTechType.value != type) return;
-                  state.highlightedTechType.value = null;
-                },
-                child: onPressed(
-                  callback: () {
-                    if (unlocked) {
-                      Server.equip(type);
-                    } else {
-                      Server.upgrade(type);
-                    }
+              Expanded(
+                child: MouseRegion(
+                  onEnter: (event) {
+                    state.highlightedTechType.value = type;
                   },
-                  child: WatchBuilder(state.player.equipped, (int equipped) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: equipped == type
-                            ? colours.white382
-                            : colours.none,
-                        borderRadius: borderRadius4,
-                      ),
-                      height: 48,
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 32,
-                            height: 32,
-                            alignment: Alignment.center,
-                            child: unlocked
-                                ? techTypeIcons[type]
-                                : techTypeIconsGray[type],
-                          ),
-                          width16,
-                          text(
-                              TechType.getName(type),
-                              color: unlocked
-                                  ? colours.white
-                                  : colours.white618
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
+                  onExit: (event) {
+                    if (state.highlightedTechType.value != type) return;
+                    state.highlightedTechType.value = null;
+                  },
+                  child: onPressed(
+                    callback: () {
+                      if (unlocked) {
+                        Server.equip(type);
+                      } else {
+                        Server.upgrade(type);
+                      }
+                    },
+                    child: WatchBuilder(state.player.equipped, (int equipped) {
+                      return Container(
+                        padding: padding6,
+                        decoration: BoxDecoration(
+                          color: equipped == type
+                              ? colours.white382
+                              : colours.none,
+                          borderRadius: borderRadius4,
+                        ),
+                        height: 48,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 32,
+                              height: 32,
+                              alignment: Alignment.center,
+                              child: unlocked
+                                  ? techTypeIcons[type]
+                                  : techTypeIconsGray[type],
+                            ),
+                            width16,
+                            text(
+                                TechType.getName(type),
+                                color: unlocked
+                                    ? colours.white
+                                    : colours.white618
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
+                  ),
                 ),
               ),
-              if (level > 0 && upgradeAvailable)
+              // if (level > 0 && upgradeAvailable)
               onPressed(
                 child: resources.icons.symbols.plus,
                 callback: () => Server.upgrade(type),
