@@ -370,6 +370,9 @@ class GameBuild {
 
     return WatchBuilder(levelWatch, (int level) {
       final unlocked = level > 0;
+      final cost = TechType.getCost(type, level);
+      final upgradeAvailable = cost != null;
+
       return Container(
         key: key,
         child: WatchBuilder(state.player.equipped, (int equipped) {
@@ -419,10 +422,11 @@ class GameBuild {
                   }),
                 ),
               ),
-              // onPressed(
-              //   child: resources.icons.symbols.plus,
-              //   callback: () => Server.upgrade(type),
-              // ),
+              if (level > 0 && upgradeAvailable)
+              onPressed(
+                child: resources.icons.symbols.plus,
+                callback: () => Server.upgrade(type),
+              ),
             ],
           );
         }),
@@ -467,11 +471,12 @@ class GameBuild {
     );
   }
 
-  Widget buildPanelHighlightedTechType(){
+  Widget buildPanelHighlightedTechType() {
     return WatchBuilder(state.highlightedTechType, (int? type) {
       if (type == null) return const SizedBox();
 
       final level = state.player.getTechTypeLevel(type);
+      final cost = TechType.getCost(type, level);
       final acquired = level > 0;
       final name = TechType.getName(type);
 
@@ -490,9 +495,40 @@ class GameBuild {
             padding: padding8,
             decoration: boxStandard,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 text(acquired ? 'Equip $name' : 'Acquire $name'),
-                text(TechType.getDescription(type)),
+                height8,
+                if (!acquired && cost != null)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    if (cost.wood > 0)
+                      Column(
+                        children: [
+                          resources.icons.resources.wood,
+                          height4,
+                          text(cost.wood, color: cost.wood > state.player.wood.value ? colours.red : colours.green),
+                        ],
+                      ),
+                    if (cost.stone > 0)
+                      Column(
+                        children: [
+                          resources.icons.resources.stone,
+                          height4,
+                          text(cost.stone, color: cost.stone > state.player.stone.value ? colours.red : colours.green),
+                        ],
+                      ),
+                    if (cost.gold > 0)
+                      Column(
+                        children: [
+                          resources.icons.resources.gold,
+                          height4,
+                          text(cost.gold, color: cost.gold > state.player.gold.value ? colours.red : colours.green),
+                        ],
+                      ),
+                  ],
+                ),
               ],
             ),
           ),

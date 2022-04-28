@@ -84,8 +84,7 @@
 [ ] GameOver on death    
 [ ] FIX Zombies run into lamps forever   
 [ ] Destructible Bush
-[ ] Upgrade Panel    
-[ ] Weapon Axe    
+[ ] Upgrade Panel   
 [ ] (CRITICAL) Fix Map Editor
 [ ] (CRITICAL) FIX AI Pathfinding
 [ ] (CRITICAL) Fix 204 error    
@@ -93,14 +92,13 @@
 [ ] Render Structure Health
 [ ] Fix Zombies attack structure animation
 [ ] Destructible Bush revives health
-[ ] As you gain levels decide which item you wish to upgrade or purchase
-[ ] Unlock Bow, Pickaxe, Sword, Staff, Armour, Max Towers etc
 [ ] Palisades draw horizontal and vertical when aligned
 [ ] Randomly Generate Zombie Spawn Locations
 [ ] Randomly Generate Player Spawn Locations
 [ ] Randomly Generate Caves
 [ ] Randomly Generate Roads
 [ ] Item Type Hammer (Used to construct buildings)
+[ ] Item Type Axe (Used to chop trees)    
 [x] Generate Random Map
 [x] Projectiles should not damage dynamic objects
 [x] Dynamic Object Chest gives gold

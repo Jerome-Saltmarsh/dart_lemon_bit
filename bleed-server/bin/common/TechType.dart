@@ -1,3 +1,5 @@
+import 'Cost.dart';
+
 class TechTree {
   var pickaxe = 0;
   var bow = 0;
@@ -60,15 +62,14 @@ class TechType {
     assert (isValid(value));
     return const {
       Unarmed: "Unarmed",
-      Pickaxe: "+5 Damage to Rocks",
+      Pickaxe: "Used to mine rocks",
       Bow: "Shoot enemies from a distance",
       Sword: "Fight enemies at close range",
       Shotgun: "Shotgun",
       Handgun: "Handgun"
     }[value] ?? "?";
-    
   }
-
+  
   static bool isBow(int value) {
     return value == Bow;
   }
@@ -88,6 +89,26 @@ class TechType {
       Bow: 25,
       Shotgun: 45,
     }[type] ?? 20;
+  }
+
+  static Cost? getCost(int type, int level) {
+    final costs = const<int, List<Cost>> {
+      Pickaxe: const[
+        Cost(wood: 5, stone: 3),
+        Cost(wood: 5, stone: 3),
+      ],
+      Sword: const[
+        Cost(wood: 5, stone: 3),
+        Cost(wood: 5, stone: 3),
+      ],
+      Bow: const[
+        Cost(wood: 5, stone: 3),
+        Cost(wood: 5, stone: 3),
+      ],
+    }[type];
+    if (costs == null) throw Exception("cannot get cost for type $type");
+    if (level >= costs.length) return null;
+    return costs[level];
   }
 }
 
