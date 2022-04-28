@@ -5,7 +5,6 @@ import '../classes/Item.dart';
 import '../classes/Player.dart';
 import '../common/SlotType.dart';
 import '../engine.dart';
-import 'world.dart';
 
 class Town extends Game {
   late InteractableNpc npcDavis;
@@ -90,6 +89,6 @@ class Town extends Game {
 
   @override
   int getTime() {
-    return worldTime;
+    return 0;
   }
 }

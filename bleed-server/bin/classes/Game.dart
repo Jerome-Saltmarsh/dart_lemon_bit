@@ -241,9 +241,10 @@ abstract class Game {
 const secondsPerMinute = 60;
 const minutesPerHour = 60;
 const hoursPerDay = 24;
-const secondsPerDay = secondsPerMinute * minutesPerHour * hoursPerDay;
+// const secondsPerDay = secondsPerMinute * minutesPerHour * hoursPerDay;
+// const secondsPerHour = secondsPerMinute * minutesPerHour;
 const secondsPerFrame = 5;
-const secondsPerHour = secondsPerMinute * minutesPerHour;
+
 final characterRadius = settings.radius.character;
 
 extension GameFunctions on Game {
@@ -1576,7 +1577,7 @@ class CustomGame extends Game {
 
   CustomGame(Scene scene) : super(scene) {
     if (scene.startHour != null) {
-      timeInSeconds = scene.startHour! * secondsPerHour;
+      // timeInSeconds = scene.startHour! * secondsPerHour;
     }
     if (scene.secondsPerFrames != null) {
       secondsPerFrame = scene.secondsPerFrames!;
@@ -1585,7 +1586,7 @@ class CustomGame extends Game {
 
   @override
   void update() {
-    timeInSeconds = (timeInSeconds + secondsPerFrame) % secondsPerDay;
+    // timeInSeconds = (timeInSeconds + secondsPerFrame) % secondsPerDay;
   }
 
   @override

@@ -1,7 +1,6 @@
 
 import '../classes/Game.dart';
 import '../engine.dart';
-import 'world.dart';
 
 class WildernessNorth01 extends Game {
 
@@ -14,6 +13,6 @@ class WildernessNorth01 extends Game {
 
   @override
   int getTime() {
-    return worldTime;
+    return 12 * 60 * 60;
   }
 }

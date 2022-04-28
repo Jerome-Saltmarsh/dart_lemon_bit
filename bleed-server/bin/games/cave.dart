@@ -2,7 +2,6 @@
 import '../classes/Game.dart';
 import '../common/Shade.dart';
 import '../engine.dart';
-import 'world.dart';
 
 class Cave extends Game {
   Cave() : super(engine.scenes.cave, shadeMax: Shade.Very_Dark);
@@ -14,6 +13,6 @@ class Cave extends Game {
 
   @override
   int getTime() {
-    return worldTime;
+    return 0;
   }
 }

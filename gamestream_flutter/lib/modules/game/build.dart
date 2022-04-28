@@ -216,7 +216,7 @@ class GameBuild {
               width: width,
               height: height,
               alignment: Alignment.center,
-              child: text('${health.toInt()} / ${state.player.maxHealth}'),
+              child: text('${health.toInt()} | ${state.player.maxHealth}'),
             ),
           ],
         ),
@@ -431,7 +431,7 @@ class GameBuild {
                   ),
                 ),
               ),
-              // if (level > 0 && upgradeAvailable)
+              if (level > 0 && upgradeAvailable)
               onPressed(
                 child: resources.icons.symbols.plus,
                 callback: () => Server.upgrade(type),

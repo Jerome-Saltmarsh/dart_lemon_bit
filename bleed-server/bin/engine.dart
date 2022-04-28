@@ -15,7 +15,6 @@ import 'games/GameSwarm.dart';
 import 'games/Moba.dart';
 import 'games/Royal.dart';
 import 'games/Skirmish.dart';
-import 'games/world.dart';
 import 'language.dart';
 
 final engine = _Engine();
@@ -38,7 +37,7 @@ class _Engine {
   }
 
   void fixedUpdate(Timer timer) {
-    worldTime = (worldTime + secondsPerFrame) % secondsPerDay;
+    // worldTime = (worldTime + secondsPerFrame) % secondsPerDay;
     frame++;
 
     if (frame % 10 == 0) {

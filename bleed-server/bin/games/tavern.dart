@@ -3,7 +3,6 @@ import '../classes/InteractableNpc.dart';
 import '../classes/Player.dart';
 import '../common/SlotType.dart';
 import '../engine.dart';
-import 'world.dart';
 
 class Tavern extends Game {
   late InteractableNpc oscar;
@@ -31,6 +30,6 @@ class Tavern extends Game {
 
   @override
   int getTime() {
-    return worldTime;
+    return 0;
   }
 }

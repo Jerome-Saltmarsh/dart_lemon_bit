@@ -8,27 +8,13 @@ import 'byte_compiler.dart';
 import 'classes/Game.dart';
 import 'classes/Player.dart';
 import 'classes/Structure.dart';
-import 'common/AbilityMode.dart';
-import 'common/CharacterAction.dart';
-import 'common/CharacterState.dart';
-import 'common/ClientRequest.dart';
-import 'common/GameError.dart';
-import 'common/GameType.dart';
-import 'common/Modify_Game.dart';
-import 'common/ServerResponse.dart';
-import 'common/StructureType.dart';
-import 'common/Tile.dart';
-import 'common/TechType.dart';
-import 'common/compile_util.dart';
-import 'common/utilities.dart';
-import 'common/version.dart';
+import 'common/library.dart';
 import 'compile.dart';
 import 'engine.dart';
 import 'functions/generateName.dart';
 import 'functions/withinRadius.dart';
 import 'games/GameRandom.dart';
 import 'games/Moba.dart';
-import 'games/world.dart';
 import 'physics.dart';
 import 'settings.dart';
 
@@ -775,10 +761,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             // TODO: Handle this case.
               break;
             case ModifyGame.Hour_Increase:
-              worldTime += secondsPerHour;
+              // worldTime += secondsPerHour;
               break;
             case ModifyGame.Hour_Decrease:
-              worldTime -= secondsPerHour;
+              // worldTime -= secondsPerHour;
               break;
           }
           break;
@@ -804,6 +790,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               if (player.techTree.pickaxe == 1) {
                  player.equipped = TechType.Pickaxe;
                  player.setStateChangingWeapons();
+                 player.onPlayerEvent(PlayerEvent.Item_Purchased);
               }
               break;
             case TechType.Bow:
@@ -811,6 +798,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               if (player.techTree.bow == 1) {
                 player.equipped = TechType.Bow;
                 player.setStateChangingWeapons();
+                player.onPlayerEvent(PlayerEvent.Item_Purchased);
               }
               break;
             case TechType.Sword:
@@ -818,6 +806,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               if (player.techTree.sword == 1) {
                 player.equipped = TechType.Sword;
                 player.setStateChangingWeapons();
+                player.onPlayerEvent(PlayerEvent.Item_Purchased);
               }
               break;
           }
@@ -904,11 +893,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Skip_Hour:
-          worldTime = (worldTime + secondsPerHour) % secondsPerDay;
+          // worldTime = (worldTime + secondsPerHour) % secondsPerDay;
           break;
 
         case ClientRequest.Reverse_Hour:
-          worldTime = (worldTime - secondsPerHour) % secondsPerDay;
+          // worldTime = (worldTime - secondsPerHour) % secondsPerDay;
           break;
 
         case ClientRequest.Speak:
