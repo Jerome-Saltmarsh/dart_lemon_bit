@@ -93,6 +93,9 @@
 [ ] Fix Zombies attack structure animation
 [ ] Destructible Bush revives health
 [ ] Palisades draw horizontal and vertical when aligned
+[ ] Armour Slot
+[ ] Helm Slot
+[ ] Loot Slot x 3
 [ ] Randomly Generate Zombie Spawn Locations
 [ ] Randomly Generate Player Spawn Locations
 [ ] Randomly Generate Caves
@@ -103,7 +106,7 @@
 [x] Projectiles should not damage dynamic objects
 [x] Dynamic Object Chest gives gold
 [x] Construct Torch
-[x] On kill enemy gain gold and experiencea
+[x] On kill enemy gain gold and experience
 [x] Only build structures on valid spots
 [x] Render Construction Preview using z-ordering    
 [x] Fix Player runs at structure on built
