@@ -122,7 +122,7 @@ class GameEvents {
         audio.buff11(modules.game.state.player.x, modules.game.state.player.y);
         break;
       case PlayerEvent.Item_Purchased:
-        audio.itemPurchased(screenCenterWorldX, screenCenterWorldY);
+        audio.winSound2();
         break;
       case PlayerEvent.Ammo_Acquired:
         audio.itemAcquired(screenCenterWorldX, screenCenterWorldY);

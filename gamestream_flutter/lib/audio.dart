@@ -66,6 +66,10 @@ class _Audio {
     _playPositioned('sniper-shot-04.mp3', x, y);
   }
 
+  void winSound2() {
+    _play('win-sound-2.mp3');
+  }
+
   void clickSound8(){
     _play('click-sound-8.mp3');
   }
