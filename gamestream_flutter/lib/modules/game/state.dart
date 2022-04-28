@@ -97,6 +97,19 @@ class Player {
   final levelSword = Watch(0);
   final levelBow = Watch(0);
 
+  int getTechTypeLevel(int type){
+    switch(type){
+      case TechType.Pickaxe:
+        return levelPickaxe.value;
+      case TechType.Sword:
+        return levelSword.value;
+      case TechType.Bow:
+        return levelBow.value;
+      default:
+        throw Exception("cannot get tech type level. type: $type");
+    }
+  }
+
   // Properties
   bool get dead => !alive.value;
   bool get isHuman => characterType.value == CharacterType.Human;

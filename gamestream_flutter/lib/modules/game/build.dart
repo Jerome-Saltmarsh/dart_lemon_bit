@@ -374,58 +374,55 @@ class GameBuild {
         key: key,
         child: WatchBuilder(state.player.equipped, (int equipped) {
           return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              onPressed(
-                child: resources.icons.symbols.plus,
-                callback: () => Server.upgrade(type),
-              ),
-              width16,
-              Expanded(
-                child: MouseRegion(
-                  onEnter: (event) {
-                    state.highlightedTechType.value = type;
-                  },
-                  onExit: (event) {
-                    if (state.highlightedTechType.value != type) return;
-                    state.highlightedTechType.value = null;
-                  },
-                  child: onPressed(
-                    callback: () => Server.equip(type),
-                    child: WatchBuilder(state.player.equipped, (int equipped) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          color: equipped == type
-                              ? colours.white382
-                              : colours.none,
-                          borderRadius: borderRadius4,
-                        ),
-                        height: 48,
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 32,
-                              height: 32,
-                              alignment: Alignment.center,
-                              child: unlocked
-                                  ? techTypeIcons[type]
-                                  : techTypeIconsGray[type],
-                            ),
-                            width16,
-                            text(
-                                TechType.getName(type),
-                                color: unlocked
-                                    ? colours.white
-                                    : colours.white618
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-                  ),
+              MouseRegion(
+                onEnter: (event) {
+                  state.highlightedTechType.value = type;
+                },
+                onExit: (event) {
+                  if (state.highlightedTechType.value != type) return;
+                  state.highlightedTechType.value = null;
+                },
+                child: onPressed(
+                  callback: () => Server.equip(type),
+                  child: WatchBuilder(state.player.equipped, (int equipped) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: equipped == type
+                            ? colours.white382
+                            : colours.none,
+                        borderRadius: borderRadius4,
+                      ),
+                      height: 48,
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 32,
+                            height: 32,
+                            alignment: Alignment.center,
+                            child: unlocked
+                                ? techTypeIcons[type]
+                                : techTypeIconsGray[type],
+                          ),
+                          width16,
+                          text(
+                              TechType.getName(type),
+                              color: unlocked
+                                  ? colours.white
+                                  : colours.white618
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
                 ),
               ),
+              // onPressed(
+              //   child: resources.icons.symbols.plus,
+              //   callback: () => Server.upgrade(type),
+              // ),
             ],
           );
         }),
@@ -473,6 +470,11 @@ class GameBuild {
   Widget buildPanelHighlightedTechType(){
     return WatchBuilder(state.highlightedTechType, (int? type) {
       if (type == null) return const SizedBox();
+
+      final level = state.player.getTechTypeLevel(type);
+      final acquired = level > 0;
+      final name = TechType.getName(type);
+
       final key = panelTypeKey[type];
       if (key == null) {
          return empty;
@@ -489,7 +491,7 @@ class GameBuild {
             decoration: boxStandard,
             child: Column(
               children: [
-                text(TechType.getName(type)),
+                text(acquired ? 'Equip $name' : 'Acquire $name'),
                 text(TechType.getDescription(type)),
               ],
             ),
