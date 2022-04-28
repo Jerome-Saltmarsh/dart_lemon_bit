@@ -193,6 +193,19 @@ class Character extends Collider with Team, Health, Velocity {
     if (deadOrBusy) return;
     angle = this.getAngle(position);
   }
+
+  int getTechTypeLevel(int type) {
+    switch(type){
+      case TechType.Pickaxe:
+        return techTree.pickaxe;
+      case TechType.Sword:
+        return techTree.sword;
+      case TechType.Bow:
+        return techTree.bow;
+      default:
+        throw Exception("cannot get tech type level. type: $type");
+    }
+  }
 }
 
 bool sameTeam(dynamic a, dynamic b){

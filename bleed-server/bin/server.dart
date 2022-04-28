@@ -784,30 +784,43 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (!TechType.isValid(techType)) {
             return errorInvalidArg('invalid tech type index $techType');
           }
-          switch(techType) {
+          final cost = TechType.getCost(
+              techType,
+              player.getTechTypeLevel(techType)
+          );
+          if (cost == null) return;
+          if (cost.wood > player.wood) return;
+          if (cost.gold > player.gold) return;
+          if (cost.stone > player.stone) return;
+
+          player.wood -= cost.wood;
+          player.gold -= cost.gold;
+          player.stone -= cost.stone;
+
+          switch (techType) {
             case TechType.Pickaxe:
               player.techTree.pickaxe++;
               if (player.techTree.pickaxe == 1) {
                  player.equipped = TechType.Pickaxe;
                  player.setStateChangingWeapons();
-                 player.onPlayerEvent(PlayerEvent.Item_Purchased);
               }
+              player.onPlayerEvent(PlayerEvent.Item_Purchased);
               break;
             case TechType.Bow:
               player.techTree.bow++;
               if (player.techTree.bow == 1) {
                 player.equipped = TechType.Bow;
                 player.setStateChangingWeapons();
-                player.onPlayerEvent(PlayerEvent.Item_Purchased);
               }
+              player.onPlayerEvent(PlayerEvent.Item_Purchased);
               break;
             case TechType.Sword:
               player.techTree.sword++;
               if (player.techTree.sword == 1) {
                 player.equipped = TechType.Sword;
                 player.setStateChangingWeapons();
-                player.onPlayerEvent(PlayerEvent.Item_Purchased);
               }
+              player.onPlayerEvent(PlayerEvent.Item_Purchased);
               break;
           }
           sendPlayerTechTree();

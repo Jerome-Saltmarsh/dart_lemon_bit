@@ -102,6 +102,7 @@
 [ ] Randomly Generate Roads
 [ ] Item Type Hammer (Used to construct buildings)
 [ ] Item Type Axe (Used to chop trees)    
+[ ] Fix time
 [x] Generate Random Map
 [x] Projectiles should not damage dynamic objects
 [x] Dynamic Object Chest gives gold
