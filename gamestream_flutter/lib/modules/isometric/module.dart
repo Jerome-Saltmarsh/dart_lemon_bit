@@ -720,7 +720,7 @@ class IsometricModule {
 
         final env = EnvironmentObject(
             x: getTileWorldX(rowIndex, columnIndex),
-            y: getTileWorldY(rowIndex, columnIndex) + halfTileSize,
+            y: getTileWorldY(rowIndex, columnIndex) + tileSizeHalf,
             type: objectType,
             radius: 0
         );

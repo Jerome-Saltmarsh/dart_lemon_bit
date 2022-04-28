@@ -1,5 +1,4 @@
-const tileSize = 48.0;
-const halfTileSize = 24.0;
+import 'constants.dart';
 
 double snapX(double x, double y) {
   final row = getRow(x, y);
@@ -10,15 +9,15 @@ double snapX(double x, double y) {
 double snapY(double x, double y) {
   final row = getRow(x, y);
   final column = getColumn(x, y);
-  return getTileWorldY(row, column) + halfTileSize;
+  return getTileWorldY(row, column) + tileSizeHalf;
 }
 
 double getTileWorldX(int row, int column){
-  return perspectiveProjectX(row * halfTileSize, column * halfTileSize);
+  return perspectiveProjectX(row * tileSizeHalf, column * tileSizeHalf);
 }
 
 double getTileWorldY(int row, int column){
-  return perspectiveProjectY(row * halfTileSize, column * halfTileSize);
+  return perspectiveProjectY(row * tileSizeHalf, column * tileSizeHalf);
 }
 
 double perspectiveProjectX(double x, double y) {

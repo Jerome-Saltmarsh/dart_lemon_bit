@@ -6,7 +6,7 @@ environment:
   sdk: '>=2.14.0 <3.0.0'
 
 dependencies:
-  lemon_math: ^1.2.01
+  lemon_math: ^1.2.02
   web_socket_channel: ^2.1.0
   shelf_web_socket: ^1.0.1
   shelf_router: ^1.1.2

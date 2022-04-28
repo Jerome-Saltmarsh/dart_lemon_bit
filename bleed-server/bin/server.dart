@@ -566,7 +566,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               colliders: player.game.colliders,
               x: mouseSnapX,
               y: mouseSnapY,
-              radius: halfTileSize
+              radius: tileSizeHalf
           ) != null) {
             return error(GameError.Construct_Area_Not_Available);
           }
@@ -575,7 +575,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               colliders: player.game.zombies,
               x: mouseSnapX,
               y: mouseSnapY,
-              radius: halfTileSize
+              radius: tileSizeHalf
           ) != null) {
             return error(GameError.Construct_Area_Not_Available);
           }
@@ -584,7 +584,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               colliders: player.game.players,
               x: mouseSnapX,
               y: mouseSnapY,
-              radius: halfTileSize
+              radius: tileSizeHalf
           ) != null) {
             return error(GameError.Construct_Area_Not_Available);
           }
@@ -593,7 +593,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               colliders: player.game.dynamicObjects,
               x: mouseSnapX,
               y: mouseSnapY,
-              radius: halfTileSize
+              radius: tileSizeHalf
           ) != null) {
             return error(GameError.Construct_Area_Not_Available);
           }

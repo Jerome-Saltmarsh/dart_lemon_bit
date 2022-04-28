@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:bleed_common/utilities.dart';
+import 'package:bleed_common/library.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -15,7 +15,7 @@ double getMouseRotation() {
 }
 
 void snapToGrid(Vector2 value){
-  value.x = (value.x - value.x % tileSize) + halfTileSize;
+  value.x = (value.x - value.x % tileSize) + tileSizeHalf;
   value.y = value.y - value.y % tileSize;
   if (value is EnvironmentObject){
     value.refreshRowAndColumn();

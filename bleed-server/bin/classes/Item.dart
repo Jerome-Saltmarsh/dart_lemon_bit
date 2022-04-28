@@ -1,5 +1,4 @@
 
-import '../common/CommonSettings.dart';
 import '../settings.dart';
 import 'Collider.dart';
 
@@ -13,6 +12,6 @@ class Item extends Collider {
     required double x,
     required double y,
     bool this.timed = false
-  }) : super(x: x, y: y, radius: commonSettings.itemRadius);
+  }) : super(x: x, y: y, radius: 20);
 }
 
