@@ -75,6 +75,13 @@ class _ByteCompiler {
     // writeSlot(slots.slot6); // 3
   }
 
+  void writeTechTypes(Player player){
+    writeByte(ServerResponse.Tech_Types);
+    writeByte(player.techTree.pickaxe);
+    writeByte(player.techTree.sword);
+    writeByte(player.techTree.bow);
+  }
+
   void writePlayerGame(Player player){
     // final slots = player.slots;
     final game = player.game;

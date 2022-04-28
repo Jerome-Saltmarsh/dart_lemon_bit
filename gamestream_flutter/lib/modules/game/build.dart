@@ -389,7 +389,13 @@ class GameBuild {
                   state.highlightedTechType.value = null;
                 },
                 child: onPressed(
-                  callback: () => Server.equip(type),
+                  callback: () {
+                    if (unlocked) {
+                      Server.equip(type);
+                    } else {
+                      Server.upgrade(type);
+                    }
+                  },
                   child: WatchBuilder(state.player.equipped, (int equipped) {
                     return Container(
                       decoration: BoxDecoration(

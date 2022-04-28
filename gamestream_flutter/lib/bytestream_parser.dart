@@ -140,6 +140,13 @@ class _ByteStreamParser {
           }
           isometric.totalStructures = total;
           break;
+
+        case ServerResponse.Tech_Types:
+          _player.levelPickaxe.value = nextByte();
+          _player.levelSword.value = nextByte();
+          _player.levelBow.value = nextByte();
+          break;
+
         case ServerResponse.Paths:
           modules.game.state.compilePaths.value = true;
           final paths = modules.isometric.paths;

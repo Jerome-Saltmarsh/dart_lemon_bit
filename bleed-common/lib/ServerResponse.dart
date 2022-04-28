@@ -48,5 +48,6 @@ class ServerResponse {
   static const Gem_Spawns = 46;
   static const End = 47;
   static const Structures = 48;
+  static const Tech_Types = 49;
 }
 

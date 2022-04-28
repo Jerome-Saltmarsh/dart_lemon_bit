@@ -113,6 +113,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       byteCompiler.writePlayerSlots(player);
     }
 
+    void sendPlayerTechTree() {
+      final player = _player;
+      if (player == null) return;
+      byteCompiler.writeTechTypes(player);
+    }
+
     void sendPlayerEvent(int event){
       final player = _player;
       if (player == null) return;
@@ -801,6 +807,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               player.techTree.sword++;
               break;
           }
+          sendPlayerTechTree();
           break;
 
         case ClientRequest.Attack:
