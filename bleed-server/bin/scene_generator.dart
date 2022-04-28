@@ -2,8 +2,10 @@
 import 'package:fast_noise/fast_noise.dart';
 import 'package:lemon_math/library.dart';
 
+import 'classes/DynamicObject.dart';
 import 'classes/EnvironmentObject.dart';
 import 'classes/Scene.dart';
+import 'common/DynamicObjectType.dart';
 import 'common/ObjectType.dart';
 import 'common/Tile.dart';
 
@@ -25,6 +27,7 @@ Scene generateRandomScene({
 
   final tiles = <List<int>>[];
   final environment = <EnvironmentObject>[];
+  final dynamicObjects = <DynamicObject>[];
   for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
     final noiseColumn = noiseMap[columnIndex];
     final column = <int>[];
@@ -41,13 +44,26 @@ Scene generateRandomScene({
            const halfTileSize = 24.0;
            final px = perspectiveProjectX(columnIndex * halfTileSize, rowIndex * halfTileSize);
            final py = perspectiveProjectY(columnIndex * halfTileSize, rowIndex * halfTileSize) + halfTileSize;
-           environment.add(EnvironmentObject(x: px, y: py, type: randomItem(const [
-             ObjectType.Tree01,
-             ObjectType.Tree01,
-             ObjectType.Rock,
-             ObjectType.Tree_Stump,
-             ObjectType.LongGrass,
-           ])));
+           environment.add(
+               EnvironmentObject(x: px, y: py, type: randomItem(const [
+                 ObjectType.Tree01,
+                 ObjectType.Tree01,
+                 ObjectType.Rock,
+                 ObjectType.Tree_Stump,
+                 ObjectType.LongGrass,
+               ]))
+           );
+         }
+         else
+         if (random.nextDouble() < 0.001) {
+           const halfTileSize = 24.0;
+           dynamicObjects.add(
+               DynamicObject(
+                 type: DynamicObjectType.Chest,
+                 x: perspectiveProjectX(columnIndex * halfTileSize, rowIndex * halfTileSize),
+                 y: perspectiveProjectY(columnIndex * halfTileSize, rowIndex * halfTileSize) + halfTileSize,
+                 health: 50
+           ));
          }
        } else {
          column.add(Tile.Block_Grass);
@@ -60,6 +76,7 @@ Scene generateRandomScene({
       crates: [],
       environment: environment,
       characters: [],
+      dynamicObjects: dynamicObjects,
       name: 'random-map',
   );
 }

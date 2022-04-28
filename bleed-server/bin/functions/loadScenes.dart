@@ -99,6 +99,7 @@ Scene parseJsonToScene(Json json, String name) {
     tiles: tiles,
     crates: [],
     environment: environment,
+    dynamicObjects: [],
     characters: characters,
     name: name
   );

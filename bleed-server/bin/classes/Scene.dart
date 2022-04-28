@@ -13,7 +13,7 @@ class Scene {
   final List<List<int>> tiles;
   final List<Vector2> crates;
   final List<EnvironmentObject> environment;
-  final List<DynamicObject> dynamicObjects = [];
+  final List<DynamicObject> dynamicObjects;
   final String name;
 
   late final List<List<TileNode>> tileNodes;
@@ -30,6 +30,7 @@ class Scene {
     required this.tiles,
     required this.crates,
     required this.environment,
+    required this.dynamicObjects,
     required this.characters,
     required this.name,
   }) {
