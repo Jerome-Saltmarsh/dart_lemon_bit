@@ -1523,22 +1523,24 @@ int calculateDamage({
 }){
   switch(targetMaterialType) {
     case MaterialType.Rock:
-      if (techType == TechType.Pickaxe) return level;
+      if (techType == TechType.Pickaxe) return level + 1;
       if (techType == TechType.Unarmed) return 1;
       if (techType == TechType.Shotgun) return 0;
       if (techType == TechType.Handgun) return 0;
       if (techType == TechType.Bow) return 0;
+      if (techType == TechType.Axe) return 1;
       return 0;
     case MaterialType.Wood:
-      if (techType == TechType.Pickaxe) return level;
+      if (techType == TechType.Pickaxe) return 1;
       if (techType == TechType.Unarmed) return 1;
       if (techType == TechType.Shotgun) return 0;
       if (techType == TechType.Handgun) return 0;
       if (techType == TechType.Bow) return 0;
+      if (techType == TechType.Axe) return level + 1;
       return 0;
     case MaterialType.Plant:
-      if (techType == TechType.Pickaxe) return level;
-      if (techType == TechType.Unarmed) return level;
+      if (techType == TechType.Pickaxe) return 1;
+      if (techType == TechType.Unarmed) return 1;
       if (techType == TechType.Shotgun) return 0;
       if (techType == TechType.Handgun) return 0;
       if (techType == TechType.Bow) return 0;
@@ -1550,10 +1552,12 @@ int calculateDamage({
       if (techType == TechType.Handgun) return level;
       if (techType == TechType.Bow) return level;
       if (techType == TechType.Sword) return level;
+      if (techType == TechType.Axe) return level;
       return 0;
     case MaterialType.Metal:
       if (techType == TechType.Pickaxe) return level;
       if (techType == TechType.Unarmed) return level;
+      if (techType == TechType.Axe) return level;
       if (techType == TechType.Shotgun) return 0;
       if (techType == TechType.Handgun) return 0;
       if (techType == TechType.Bow) return 0;
