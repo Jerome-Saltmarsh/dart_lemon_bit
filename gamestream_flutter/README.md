@@ -105,8 +105,8 @@
 [ ] Item Type Hammer (Used to construct buildings)
 [ ] Item Type Axe (Used to chop trees)    
 [ ] Indicate tech type level
-[ ] Fix Fire Bow Animation
-[ ] Fix weapons do not damage zombies
+[x] Fix Fire Bow Animation
+[x] Fix weapons do not damage zombies
 [x] Render Damage Applied Floating Text
 [x] Upgrade cost and benefits panel
 [x] Amount of damage dictates resources gathered

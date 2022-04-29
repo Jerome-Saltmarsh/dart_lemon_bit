@@ -1551,11 +1551,12 @@ int calculateDamage({
       if (techType == TechType.Bow) return 0;
       return 0;
     case MaterialType.Flesh:
-      if (techType == TechType.Pickaxe) return level * 5;
+      if (techType == TechType.Pickaxe) return level;
       if (techType == TechType.Unarmed) return level;
-      if (techType == TechType.Shotgun) return 0;
-      if (techType == TechType.Handgun) return 0;
-      if (techType == TechType.Bow) return 0;
+      if (techType == TechType.Shotgun) return level * 3;
+      if (techType == TechType.Handgun) return level * 4;
+      if (techType == TechType.Bow) return level * 2;
+      if (techType == TechType.Sword) return level * 3;
       return 0;
     case MaterialType.Metal:
       if (techType == TechType.Pickaxe) return level * 5;

@@ -771,7 +771,7 @@ class IsometricRender {
         final weapon = character.equipped;
         return animate(
             size: size,
-            animation: SlotType.isBow(weapon)
+            animation: TechType.isBow(weapon)
                 ? animations.firingBow
                 : weapon == SlotType.Handgun
                 ? animations.firingHandgun
