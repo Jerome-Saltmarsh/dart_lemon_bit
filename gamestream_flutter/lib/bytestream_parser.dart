@@ -146,6 +146,13 @@ class _ByteStreamParser {
           _player.levelBow.value = nextByte();
           break;
 
+        case ServerResponse.Damage_Applied:
+          final x = nextDouble();
+          final y = nextDouble() - 5;
+          final amount = nextInt();
+          isometric.spawnFloatingText(x, y, amount.toString());
+          break;
+
         case ServerResponse.Paths:
           modules.game.state.compilePaths.value = true;
           final paths = modules.isometric.paths;

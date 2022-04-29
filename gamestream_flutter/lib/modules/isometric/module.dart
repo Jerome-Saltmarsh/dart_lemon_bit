@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
+import 'package:gamestream_flutter/classes/FloatingText.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
@@ -40,6 +41,7 @@ class IsometricModule {
   final structures = <Structure>[];
   final gemSpawns = <GemSpawn>[];
   final environmentObjects = <EnvironmentObject>[];
+  final floatingTexts = <FloatingText>[];
   final dynamic = <Int8List>[];
   final bake = <Int8List>[];
   final items = <Item>[];
@@ -794,5 +796,24 @@ class IsometricModule {
       return;
     }
     next = particle;
+  }
+
+  void spawnFloatingText(double x, double y, String text) {
+    final floatingText = _getFloatingText();
+    floatingText.duration = 200;
+    floatingText.x = x;
+    floatingText.y = y;
+    floatingText.xv = giveOrTake(0.1);
+    floatingText.value = text;
+  }
+
+  FloatingText _getFloatingText(){
+    for (final floatingText in floatingTexts) {
+      if (floatingText.duration > 0) continue;
+      return floatingText;
+    }
+    final instance = FloatingText();
+    floatingTexts.add(instance);
+    return instance;
   }
 }

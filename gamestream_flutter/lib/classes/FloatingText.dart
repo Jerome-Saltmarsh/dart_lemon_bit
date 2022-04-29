@@ -1,11 +1,8 @@
 import 'package:lemon_math/library.dart';
 
 class FloatingText with Position {
-  String value;
-  int duration;
-
-  FloatingText({
-      required this.value,
-      required this.duration
-  });
+  var value = "";
+  var duration = 0;
+  var xv = 0.0;
+  FloatingText();
 }

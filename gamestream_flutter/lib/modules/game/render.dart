@@ -23,6 +23,7 @@ final _screen = engine.screen;
 final _render = isometric.render;
 final _projectiles = game.projectiles;
 final _bulletHoles = game.bulletHoles;
+final _floatingTexts = isometric.floatingTexts;
 
 class GameRender {
 
@@ -36,7 +37,19 @@ class GameRender {
       engine.setPaintColorWhite();
       _renderPlayerNames();
       drawPlayerText();
-      drawItemText();
+      // drawItemText();
+
+      for (final floatingText in _floatingTexts) {
+        if (floatingText.duration <= 0) continue;
+        floatingText.duration--;
+        renderText(
+            text: floatingText.value,
+            x: floatingText.x,
+            y: floatingText.y
+        );
+        floatingText.y -= 0.5;
+        floatingText.x += floatingText.xv;
+      }
   }
 
   void render(Canvas canvas, Size size) {
@@ -127,7 +140,7 @@ class GameRender {
     drawCircle36(x, y);
   }
 
-  void drawCircle36V2(Vector2 vector2){
+  void drawCircle36V2(Position vector2){
     drawCircle36(vector2.x, vector2.y);
   }
 
