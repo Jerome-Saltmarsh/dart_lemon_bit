@@ -800,10 +800,10 @@ class IsometricModule {
 
   void spawnFloatingText(double x, double y, String text) {
     final floatingText = _getFloatingText();
-    floatingText.duration = 200;
+    floatingText.duration = 50;
     floatingText.x = x;
     floatingText.y = y;
-    floatingText.xv = giveOrTake(0.1);
+    floatingText.xv = giveOrTake(0.2);
     floatingText.value = text;
   }
 

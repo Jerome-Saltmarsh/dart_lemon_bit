@@ -47,7 +47,7 @@ class GameRender {
             x: floatingText.x,
             y: floatingText.y
         );
-        floatingText.y -= 0.5;
+        floatingText.y -= 1;
         floatingText.x += floatingText.xv;
       }
   }
