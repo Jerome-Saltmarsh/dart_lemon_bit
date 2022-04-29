@@ -104,8 +104,8 @@
 [ ] Randomly Generate Roads
 [ ] Item Type Hammer (Used to construct buildings)
 [ ] Indicate tech type level
-[ ] Fix bow render order
 [ ] Item Type Axe (Used to chop trees)    
+[ ] Fix bow render order
 [x] Fix Fire Bow Animation
 [x] Fix weapons do not damage zombies
 [x] Render Damage Applied Floating Text

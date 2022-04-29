@@ -66,19 +66,19 @@ class TechType {
     assert (level >= 0);
     final costs = const<int, List<Cost>> {
       Pickaxe: const[
-        Cost(wood: 5, stone: 3),
-        Cost(wood: 10, stone: 6),
-        Cost(wood: 50, stone: 60),
-        Cost(wood: 300, stone: 200),
+        Cost(wood: 10, stone: 10),
+        Cost(wood: 100, stone: 50, gold: 75),
+        Cost(wood: 150, stone: 150, gold: 150),
+        Cost(wood: 300, stone: 200, gold: 300),
       ],
       Sword: const[
-        Cost(wood: 5, stone: 3),
-        Cost(wood: 5, stone: 3),
-        Cost(wood: 5, stone: 3),
-        Cost(wood: 5, stone: 3),
+        Cost(wood: 5, stone: 3, gold: 5),
+        Cost(wood: 5, stone: 3, gold: 25),
+        Cost(wood: 5, stone: 3, gold: 100),
+        Cost(wood: 5, stone: 3, gold: 300),
       ],
       Bow: const[
-        Cost(wood: 5, stone: 3),
+        Cost(wood: 5, stone: 5, gold: 0),
         Cost(wood: 5, stone: 3),
         Cost(wood: 5, stone: 3),
         Cost(wood: 5, stone: 3),

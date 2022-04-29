@@ -128,6 +128,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
   int get direction => (((angle + piEighth) % pi2) ~/ piQuarter) % 8;
   bool get frozen => frozenDuration > 0;
 
+
   double get speed {
     if (frozen) {
       return (_speed + speedModifier) * 0.5;

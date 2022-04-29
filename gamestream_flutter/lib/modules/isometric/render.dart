@@ -547,12 +547,12 @@ class IsometricRender {
     final direction = character.direction;
 
     if (direction <= minDirection && direction >= maxDirection) {
-      _renderCharacterTemplate(character);
       _renderCharacterTemplateWeapon(character);
+      _renderCharacterTemplate(character);
       return;
     }
-    _renderCharacterTemplateWeapon(character);
     _renderCharacterTemplate(character);
+    _renderCharacterTemplateWeapon(character);
   }
 
   void _renderZombie(Character character, int shade) {

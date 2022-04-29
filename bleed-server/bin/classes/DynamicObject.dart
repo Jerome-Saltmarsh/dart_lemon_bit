@@ -9,6 +9,9 @@ class DynamicObject extends Collider with Health, Material {
   late int type; // DynamicObjectType.dart
   var respawnDuration = 5000;
 
+  bool get isRock => type == DynamicObjectType.Rock;
+  bool get isTree => type == DynamicObjectType.Tree;
+
   DynamicObject({
     required this.type,
     required double x,

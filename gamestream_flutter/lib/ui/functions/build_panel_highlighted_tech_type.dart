@@ -39,8 +39,6 @@ Widget buildPanelHighlightedTechType() {
             height8,
             if (acquired)
               text("Level $level"),
-            if (acquired && (type == TechType.Sword || type == TechType.Bow))
-              text("Damage ${TechType.getDamage(type, level)}"),
             if (!acquired && cost != null)
               buildCost(cost),
           ],

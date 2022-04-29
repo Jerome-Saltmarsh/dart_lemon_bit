@@ -7,6 +7,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'classes/Game.dart';
 import 'classes/Player.dart';
 import 'classes/Structure.dart';
+import 'classes/library.dart';
 import 'common/library.dart';
 import 'compile.dart';
 import 'engine.dart';
@@ -331,6 +332,18 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               final aimTarget = player.aimTarget;
               player.attackTarget = aimTarget;
               playerSetAbilityTarget(player, mouseX, mouseY);
+
+              if (aimTarget is DynamicObject) {
+                 if (aimTarget.isRock && !TechType.isMelee(player.equipped)) {
+                    player.equipped = player.techTree.pickaxe > 0 ? TechType.Pickaxe : TechType.Unarmed;
+                    player.setStateChangingWeapons();
+                 } else
+                 if (aimTarget.isTree && !TechType.isMelee(player.equipped)) {
+                   player.equipped = player.techTree.pickaxe > 0 ? TechType.Pickaxe : TechType.Unarmed;
+                   player.setStateChangingWeapons();
+                 }
+              }
+
               if (ability == null) {
                 if (aimTarget != null) {
                   player.target = aimTarget;

@@ -86,12 +86,6 @@ class Player extends Character with ByteWriter {
     maxMagic = magic;
     _magic = maxMagic;
     engine.onPlayerCreated(this);
-    // addByteWriterBuffer(75);
-    // addByteWriterBuffer(100);
-    // addByteWriterBuffer(125);
-    // addByteWriterBuffer(150);
-    // addByteWriterBuffer(175);
-    // addByteWriterBuffer(200);
   }
 
   void setStateChangingWeapons(){
