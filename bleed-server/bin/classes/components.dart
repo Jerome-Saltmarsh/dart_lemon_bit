@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../common/MaterialType.dart';
 import '../maths.dart';
 import '../utilities.dart';
 
@@ -73,4 +74,8 @@ mixin Radius {
 
 mixin Type<T> {
   late T type;
+}
+
+mixin Material {
+  late MaterialType material;
 }

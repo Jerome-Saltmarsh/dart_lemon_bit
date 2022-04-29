@@ -1,10 +1,11 @@
 
 
 import '../common/DynamicObjectType.dart';
+import '../common/MaterialType.dart';
 import 'Collider.dart';
 import 'components.dart';
 
-class DynamicObject extends Collider with Health {
+class DynamicObject extends Collider with Health, Material {
   late int type; // DynamicObjectType.dart
   var respawnDuration = 5000;
 
@@ -22,5 +23,13 @@ class DynamicObject extends Collider with Health {
   }[type] ?? 10) {
     maxHealth = health;
     this.health = health;
+
+    material = const <int, MaterialType> {
+        DynamicObjectType.Chest: MaterialType.Metal,
+        DynamicObjectType.Rock: MaterialType.Rock,
+        DynamicObjectType.Tree: MaterialType.Wood,
+        DynamicObjectType.Grass: MaterialType.Plant,
+        DynamicObjectType.Palisade: MaterialType.Wood,
+    }[type] ?? MaterialType.Other;
   }
 }

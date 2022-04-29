@@ -261,7 +261,7 @@ class _ByteCompiler {
     if (!projectile.active) return;
     final degrees = getAngle(projectile.xv, projectile.yv) * radiansToDegrees;
     writePosition(projectile);
-    writeByte(projectile.type.index);
+    writeByte(projectile.type);
     writeBigInt(degrees);
   }
 

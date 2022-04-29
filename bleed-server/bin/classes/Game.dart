@@ -2,21 +2,8 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
-import '../common/AbilityType.dart';
-import '../common/CharacterState.dart';
-import '../common/CharacterType.dart';
-import '../common/CollectableType.dart';
-import '../common/DynamicObjectType.dart';
-import '../common/GameEventType.dart';
-import '../common/GameStatus.dart';
-import '../common/GameType.dart';
-import '../common/ItemType.dart';
-import '../common/SlotType.dart';
-import '../common/Tile.dart';
-import '../common/configuration.dart';
-import '../common/ObjectType.dart';
-import '../common/ProjectileType.dart';
-import '../common/Shade.dart';
+import '../common/MaterialType.dart';
+import '../common/library.dart';
 import '../engine.dart';
 import '../enums.dart';
 import '../enums/npc_mode.dart';
@@ -349,14 +336,14 @@ extension GameFunctions on Game {
     return true;
   }
 
-  void applyDamage(dynamic src, Health target, int amount, {bool projectile = false}) {
+  void applyDamage({
+    required dynamic src,
+    required Health target,
+    required int amount,
+  }) {
     if (target.dead) return;
 
-    final damageApplied = !projectile || target is DynamicObject == false;
-
-    if (damageApplied) {
-      target.health -= amount;
-    }
+    target.health -= amount;
 
     final killed = target.dead;
 
@@ -367,14 +354,14 @@ extension GameFunctions on Game {
         onCharacterKilled(target, src);
         setCharacterStateDead(target);
         if (isZombie) {
-          spawnCollectable(position: target, target: src, type: CollectableType.Gold);
-          spawnCollectable(position: target, target: src, type: CollectableType.Experience);
-          spawnCollectable(position: target, target: src, type: CollectableType.Experience);
+          spawnCollectable(position: target, target: src, type: CollectableType.Gold, amount: 1);
+          spawnCollectable(position: target, target: src, type: CollectableType.Experience, amount: 1);
+          spawnCollectable(position: target, target: src, type: CollectableType.Experience, amount: 1);
         }
         return;
       }
       if (isZombie) {
-        spawnCollectable(position: target, target: src, type: CollectableType.Experience);
+        spawnCollectable(position: target, target: src, type: CollectableType.Experience, amount: amount);
         setCharacterState(target, CharacterState.Hurt);
       }
       if (target is AI) {
@@ -407,19 +394,19 @@ extension GameFunctions on Game {
           break;
         case DynamicObjectType.Rock:
           dispatchV2(GameEventType.Rock_Struck, target);
-          if (damageApplied && src is Player) {
+          if (src is Player) {
             final amount = killed ? 3 : 1;
             for (var i = 0; i < amount; i++) {
-              spawnCollectable(position: target, target: src, type: CollectableType.Stone);
+              spawnCollectable(position: target, target: src, type: CollectableType.Stone, amount: amount);
             }
           }
           break;
         case DynamicObjectType.Tree:
           dispatchV2(GameEventType.Tree_Struck, target);
-          if (damageApplied && src is Player) {
+          if (src is Player) {
             final amount = killed ? 3 : 1;
             for (var i = 0; i < amount; i++) {
-              spawnCollectable(position: target, target: src, type: CollectableType.Wood);
+              spawnCollectable(position: target, target: src, type: CollectableType.Wood, amount: amount);
             }
           }
           break;
@@ -437,7 +424,12 @@ extension GameFunctions on Game {
         } else if (target.type == DynamicObjectType.Chest) {
           dispatchV2(GameEventType.Object_Destroyed_Chest, target);
           for (var i = 0; i < 3; i++) {
-            spawnCollectable(position: target, target: src, type: CollectableType.Gold);
+            spawnCollectable(
+                position: target,
+                target: src,
+                type: CollectableType.Gold,
+                amount: 1
+            );
           }
         }
         onDynamicObjectDestroyed(target);
@@ -448,10 +440,12 @@ extension GameFunctions on Game {
   void spawnCollectable({
     required Position position,
     required Position target,
-    required int type
+    required int type,
+    required int amount,
   }){
     final collectable = Collectable();
     collectable.type = type;
+    collectable.amount = amount;
     collectable.target = target;
     collectable.x = position.x;
     collectable.y = position.y;
@@ -662,13 +656,11 @@ extension GameFunctions on Game {
     projectile.active = false;
     if (scene.waterAt(projectile.x, projectile.y)) return;
     switch (projectile.type) {
-      case ProjectileType.Bullet:
+      case TechType.Handgun:
         dispatch(GameEventType.Bullet_Hole, projectile.x, projectile.y);
         break;
-      case ProjectileType.Fireball:
-        spawnExplosion(src: projectile.owner, x: projectile.x, y: projectile.y);
-        break;
-      case ProjectileType.Arrow:
+      case TechType.Shotgun:
+        dispatch(GameEventType.Bullet_Hole, projectile.x, projectile.y);
         break;
       default:
         break;
@@ -703,43 +695,6 @@ extension GameFunctions on Game {
     checkProjectileCollision(zombies);
     checkProjectileCollision(players);
     checkProjectileCollision(dynamicObjects);
-  }
-
-  void spawnFreezeRing(
-      {required Character src, int duration = 100, int damage = 1}) {
-    dispatchV2(GameEventType.FreezeCircle, src);
-    for (final zombie in zombies) {
-      if (zombie.dead) continue;
-      if (!withinRadius(zombie, src, SpellRadius.Freeze_Ring)) continue;
-      applyHit(src, zombie, damage);
-      zombie.frozenDuration += duration;
-    }
-  }
-
-  void spawnExplosion(
-      {required Character src, required double x, required double y}) {
-    dispatch(GameEventType.Explosion, x, y);
-    for (final zombie in zombies) {
-      if (!withinDistance(zombie, x, y, settings.radius.explosion)) continue;
-      final rotation = radiansBetween2(zombie, x, y);
-      final magnitude = 10.0;
-      zombie.accelerate(rotation + pi, magnitude);
-
-      if (zombie.dead) continue;
-      applyDamage(src, zombie, 15);
-    }
-
-    for (final player in players) {
-      if (getHypotenuse(player.x - x, player.y - y) > settings.radius.explosion)
-        continue;
-      final rotation = radiansBetween2(player, x, y);
-      final magnitude = 10.0;
-      player.accelerate(rotation + pi, magnitude);
-
-      if (player.alive) {
-        changeCharacterHealth(player, -15);
-      }
-    }
   }
 
   void updatePlayer(Player player) {
@@ -827,20 +782,38 @@ extension GameFunctions on Game {
 
   void handleProjectileHit(Projectile projectile, Collider collider) {
     projectile.active = false;
-    applyHit(projectile.owner, collider, projectile.damage, projectile: true);
+    if (collider is Character) {
+      applyHit(
+          src: projectile.owner,
+          target: collider,
+          techType: projectile.type,
+          level: projectile.level,
+      );
+    }
     dispatch(GameEventType.Arrow_Hit, collider.x, collider.y);
   }
 
-  void applyHit(dynamic src, Collider target, int damage, {bool projectile = false}) {
+  void applyHit({
+    required dynamic src,
+    required Collider target,
+    required int techType,
+    required int level,
+  }) {
     if (!target.collidable) return;
     if (target is Character) {
       if (sameTeam(src, target)) return;
       if (target.dead) return;
     }
 
+    final damage = target is Material ? calculateDamage(
+        targetMaterialType: (target as Material).material,
+        techType: techType,
+        level: level
+    ) : 0;
+
     if (target is Health) {
       final health = target as Health;
-      applyDamage(src, health, damage, projectile: projectile);
+      applyDamage(src: src, target: health, amount: damage);
     }
 
     final angleBetweenSrcAndTarget = radiansV2(src, target);
@@ -881,13 +854,6 @@ extension GameFunctions on Game {
     }
     switch (ability.type) {
       case AbilityType.Explosion:
-        if (character.stateDurationRemaining == castFrame) {
-          spawnExplosion(
-              src: character,
-              x: character.abilityTarget.x,
-              y: character.abilityTarget.y);
-          character.performing = null;
-        }
         break;
       case AbilityType.Blink:
         if (character.stateDurationRemaining == castFrame) {
@@ -901,7 +867,7 @@ extension GameFunctions on Game {
         break;
       case AbilityType.Fireball:
         if (character.stateDurationRemaining == castFrame) {
-          spawnFireball(character);
+          // spawnFireball(character);
           character.performing = null;
           character.attackTarget = null;
         }
@@ -939,19 +905,6 @@ extension GameFunctions on Game {
       case AbilityType.Brutal_Strike:
         break;
       case AbilityType.Death_Strike:
-        final int castFrame = 8;
-        const damageMultiplier = 3;
-        if (character.stateDurationRemaining == castFrame) {
-          final attackTarget = character.attackTarget;
-          if (attackTarget != null) {
-            applyHit(
-                character,
-                attackTarget, character.equippedDamage * damageMultiplier
-            );
-          }
-          character.attackTarget = null;
-          character.performing = null;
-        }
         break;
       default:
         break;
@@ -1005,30 +958,6 @@ extension GameFunctions on Game {
     }
   }
 
-  Projectile spawnFireball(Character character) {
-    return spawnProjectile(
-      src: character,
-      accuracy: 0,
-      speed: settings.projectileSpeed.fireball,
-      damage: 100,
-      range: settings.range.firebolt,
-      type: ProjectileType.Fireball,
-      target: character.attackTarget,
-    );
-  }
-
-  Projectile spawnBlueOrb(Character character) {
-    dispatch(GameEventType.Blue_Orb_Fired, character.x, character.y);
-    return spawnProjectile(
-        src: character,
-        accuracy: 0,
-        speed: settings.projectileSpeed.fireball,
-        damage: 1,
-        range: settings.range.firebolt,
-        target: character.attackTarget,
-        type: ProjectileType.Blue_Orb);
-  }
-
   void casteSlowingCircle(Character character, double x, double y) {}
 
   Projectile spawnArrow(Position src, {required int damage, Collider? target}) {
@@ -1043,7 +972,8 @@ extension GameFunctions on Game {
         range: settings.range.arrow,
         target: src.attackTarget,
         angle: src.angle,
-        type: ProjectileType.Arrow,
+        techType: TechType.Bow,
+        level: src.equippedLevel,
       );
     }
 
@@ -1054,7 +984,8 @@ extension GameFunctions on Game {
       damage: damage,
       range: settings.range.arrow,
       target: target,
-      type: ProjectileType.Arrow,
+      techType: TechType.Bow,
+      level: 1 // TODO for structures
     );
   }
 
@@ -1063,7 +994,8 @@ extension GameFunctions on Game {
     required double speed,
     required double range,
     required int damage,
-    required ProjectileType type,
+    required int techType,
+    required int level,
     double angle = 0,
     double accuracy = 0,
     Collider? target,
@@ -1072,6 +1004,7 @@ extension GameFunctions on Game {
     if (src is Character) {
       angle = src.angle;
     }
+    projectile.level = level;
     projectile.collidable = true;
     projectile.active = true;
     projectile.target = target;
@@ -1085,7 +1018,7 @@ extension GameFunctions on Game {
     projectile.owner = src;
     projectile.range = range;
     projectile.damage = damage;
-    projectile.type = type;
+    projectile.type = techType;
     return projectile;
   }
 
@@ -1357,7 +1290,12 @@ extension GameFunctions on Game {
       if (stateDuration != framePerformStrike) return;
       final attackTarget = character.attackTarget;
       if (attackTarget == null) return;
-      applyHit(character, attackTarget, character.equippedDamage);
+      applyHit(
+          src: character,
+          target: attackTarget,
+          techType: character.equipped,
+          level: character.equippedLevel,
+      );
       character.attackTarget = null;
       return;
     }
@@ -1391,7 +1329,9 @@ extension GameFunctions on Game {
             speed: 12.0,
             range: character.equippedRange,
             damage: character.equippedDamage,
-            type: ProjectileType.Bullet);
+            techType: TechType.Handgun,
+            level: character.equippedLevel,
+        );
         return;
       }
     }
@@ -1412,7 +1352,9 @@ extension GameFunctions on Game {
               speed: 12.0,
               range: character.equippedRange,
               damage: character.equippedDamage,
-              type: ProjectileType.Bullet);
+              techType: TechType.Shotgun,
+              level: character.equippedLevel,
+          );
         }
       }
     }
@@ -1434,7 +1376,12 @@ extension GameFunctions on Game {
         final attackTarget = character.attackTarget;
         if (attackTarget != null) {
           if (attackTarget.collidable) {
-            applyHit(character, attackTarget, character.equippedDamage);
+            applyHit(
+                src: character,
+                target: attackTarget,
+                techType: character.equipped,
+                level: character.equippedLevel
+            );
             return;
           } else {
             character.attackTarget = null;
@@ -1443,13 +1390,23 @@ extension GameFunctions on Game {
         final zombieHit = physics.raycastHit(
             character: character, colliders: zombies, range: character.equippedRange);
         if (zombieHit != null) {
-          applyHit(character, zombieHit, character.equippedDamage);
+          applyHit(
+              src: character,
+              target: zombieHit,
+              techType: character.equipped,
+              level: character.equippedLevel
+          );
           return;
         }
         final dynamicObjectHit = physics.raycastHit(
             character: character, colliders: dynamicObjects, range: character.equippedRange);
         if (dynamicObjectHit != null) {
-          applyHit(character, dynamicObjectHit, character.equippedDamage);
+          applyHit(
+              src: character,
+              target: dynamicObjectHit,
+              techType: character.equipped,
+              level: character.equippedLevel,
+          );
         }
         return;
       }
@@ -1569,4 +1526,57 @@ class Teams {
   static const none = 0;
   static const west = 1;
   static const east = 2;
+}
+
+int calculateDamage({
+  required MaterialType targetMaterialType,
+  required int techType,
+  required int level,
+}){
+  switch(targetMaterialType) {
+    case MaterialType.Rock:
+      if (techType == TechType.Pickaxe) return level * 5;
+      if (techType == TechType.Unarmed) return level;
+      if (techType == TechType.Shotgun) return 0;
+      if (techType == TechType.Handgun) return 0;
+      if (techType == TechType.Bow) return 0;
+      return 0;
+    case MaterialType.Wood:
+      if (techType == TechType.Pickaxe) return level * 5;
+      if (techType == TechType.Unarmed) return level;
+      if (techType == TechType.Shotgun) return 0;
+      if (techType == TechType.Handgun) return 0;
+      if (techType == TechType.Bow) return 0;
+      return 0;
+    case MaterialType.Plant:
+      if (techType == TechType.Pickaxe) return level * 5;
+      if (techType == TechType.Unarmed) return level;
+      if (techType == TechType.Shotgun) return 0;
+      if (techType == TechType.Handgun) return 0;
+      if (techType == TechType.Bow) return 0;
+      return 0;
+    case MaterialType.Flesh:
+      if (techType == TechType.Pickaxe) return level * 5;
+      if (techType == TechType.Unarmed) return level;
+      if (techType == TechType.Shotgun) return 0;
+      if (techType == TechType.Handgun) return 0;
+      if (techType == TechType.Bow) return 0;
+      return 0;
+    case MaterialType.Metal:
+      if (techType == TechType.Pickaxe) return level * 5;
+      if (techType == TechType.Unarmed) return level;
+      if (techType == TechType.Shotgun) return 0;
+      if (techType == TechType.Handgun) return 0;
+      if (techType == TechType.Bow) return 0;
+      return 0;
+    case MaterialType.Other:
+      if (techType == TechType.Pickaxe) return level * 5;
+      if (techType == TechType.Unarmed) return level;
+      if (techType == TechType.Shotgun) return 0;
+      if (techType == TechType.Handgun) return 0;
+      if (techType == TechType.Bow) return 0;
+      return 0;
+    default:
+      return 0;
+  }
 }

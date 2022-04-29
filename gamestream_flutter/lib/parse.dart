@@ -108,10 +108,6 @@ void parseState() {
         pub(error);
         return;
 
-      case ServerResponse.Projectiles:
-        _parseProjectiles();
-        break;
-
       case ServerResponse.Scene_Shade_Max:
         modules.isometric.maxAmbientBrightness.value = _consumeShade();
         break;
@@ -431,22 +427,6 @@ bool _simiColonConsumed() {
 
 GameError _consumeError() {
   return GameError.values[consumeInt()];
-}
-
-void _parseProjectiles() {
-  game.totalProjectiles = 0;
-  while (!_simiColonConsumed()) {
-    final projectile = game.projectiles[game.totalProjectiles];
-    projectile.x = consumeDouble();
-    projectile.y = consumeDouble();
-    projectile.type = _consumeProjectileType();
-    projectile.angle = consumeDouble() * degreesToRadians;
-    game.totalProjectiles++;
-  }
-}
-
-ProjectileType _consumeProjectileType() {
-  return projectileTypes[consumeInt()];
 }
 
 int _consumeShade() {

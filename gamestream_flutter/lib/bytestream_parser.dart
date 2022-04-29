@@ -298,7 +298,7 @@ class _ByteStreamParser {
       final projectile = projectiles[i];
       projectile.x = nextDouble();
       projectile.y = nextDouble();
-      projectile.type = _readProjectileType();
+      projectile.type = nextByte();
       projectile.angle = nextDouble() * degreesToRadians;
     }
   }
@@ -407,10 +407,6 @@ class _ByteStreamParser {
 
   int readSlotType(){
     return nextByte();
-  }
-
-  ProjectileType _readProjectileType(){
-    return projectileTypes[nextByte()];
   }
 
   double _nextPercentage(){

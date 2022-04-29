@@ -643,7 +643,7 @@ class IsometricModule {
       emitLightHigh(dynamic, npc);
     }
 
-    applyEmissionFromProjectiles();
+    // applyEmissionFromProjectiles();
     applyEmissionFromEffects();
   }
 
@@ -663,15 +663,15 @@ class IsometricModule {
     }
   }
 
-  void applyEmissionFromProjectiles() {
-    final total = game.totalProjectiles;
-    final projectiles = game.projectiles;
-    for (var i = 0; i < total; i++) {
-      final projectile = projectiles[i];
-      if (projectile.type != ProjectileType.Fireball) continue;
-      emitLightBrightSmall(dynamic, projectile.x, projectile.y);
-    }
-  }
+  // void applyEmissionFromProjectiles() {
+  //   final total = game.totalProjectiles;
+  //   final projectiles = game.projectiles;
+  //   for (var i = 0; i < total; i++) {
+  //     final projectile = projectiles[i];
+  //     if (projectile.type != ProjectileType.Fireball) continue;
+  //     emitLightBrightSmall(dynamic, projectile.x, projectile.y);
+  //   }
+  // }
 
 
   void applyDynamicShadeToTileSrc() {

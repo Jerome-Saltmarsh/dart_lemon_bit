@@ -13,6 +13,8 @@ class Collectable with
     Duration,
     Type<int>
 {
+  var amount = 0;
+
   void update(){
     if (inactive) return;
     duration++;
@@ -35,18 +37,18 @@ class Collectable with
   void _playerCollect(Player player){
     switch (type) {
       case CollectableType.Wood:
-        player.wood++;
+        player.wood += amount;
         player.onPlayerEvent(PlayerEvent.Collect_Wood);
         break;
       case CollectableType.Stone:
-        player.stone++;
+        player.stone += amount;
         player.onPlayerEvent(PlayerEvent.Collect_Rock);
         break;
       case CollectableType.Experience:
         player.onPlayerEvent(PlayerEvent.Collect_Experience);
         break;
       case CollectableType.Gold:
-        player.gold++;
+        player.gold += amount;
         player.onPlayerEvent(PlayerEvent.Collect_Gold);
         break;
     }

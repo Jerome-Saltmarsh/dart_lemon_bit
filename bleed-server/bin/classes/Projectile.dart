@@ -1,7 +1,6 @@
 
 import 'package:lemon_math/library.dart';
 
-import '../common/ProjectileType.dart';
 import '../maths.dart';
 import 'Collider.dart';
 import 'components.dart';
@@ -12,7 +11,8 @@ class Projectile extends Collider with Active, Velocity {
   late dynamic owner;
   late double range;
   late int damage;
-  late ProjectileType type;
+  late int type; // TechType.dart
+  late int level;
   Collider? target = null;
   late double speed;
   late bool collideWithEnvironment = false;

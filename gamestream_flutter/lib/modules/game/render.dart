@@ -237,17 +237,11 @@ class GameRender {
 
   void projectile(Projectile value) {
     switch (value.type) {
-      case ProjectileType.Fireball:
-        drawFireball(value.x, value.y, value.angle);
-        break;
-      case ProjectileType.Arrow:
+      case TechType.Bow:
         arrow(value.x, value.y, value.angle);
         break;
-      case ProjectileType.Blue_Orb:
-        engine.draw.circle(value.x, value.y, 5, colours.blue);
-        break;
-      case ProjectileType.Bullet:
-        break;
+      default:
+        return;
     }
   }
 

@@ -106,6 +106,8 @@
 [ ] Item Type Axe (Used to chop trees)    
 [ ] Upgrade cost and benefits panel
 [ ] Indicate tech type level
+[ ] Amount of damage dictates resources gathered
+[ ] Tech Types apply different damage depending on target type
 [/] Fix time
 [x] Generate Random Map
 [x] Projectiles should not damage dynamic objects

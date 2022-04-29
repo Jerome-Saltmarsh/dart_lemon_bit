@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:lemon_math/library.dart';
 
+import '../common/MaterialType.dart';
 import '../common/library.dart';
 import '../constants/no_squad.dart';
 import '../enums/npc_mode.dart';
@@ -98,7 +99,7 @@ class AI extends Character {
 
 const piEighth = pi / 8.0;
 
-class Character extends Collider with Team, Health, Velocity {
+class Character extends Collider with Team, Health, Velocity, Material {
   late CharacterType type;
   late double _speed;
   Ability? ability = null;
@@ -147,6 +148,7 @@ class Character extends Collider with Team, Health, Velocity {
   bool get equippedTypeIsShotgun => isEquipped(TechType.Shotgun);
   bool get equippedIsMelee => TechType.isMelee(equipped);
   bool get equippedIsEmpty => false;
+  int get equippedLevel => getTechTypeLevel(equipped);
 
   bool isEquipped(int type) {
     return equipped == type;
@@ -169,6 +171,7 @@ class Character extends Collider with Team, Health, Velocity {
     this.health = health;
     _speed = speed;
     this.team = team;
+    this.material = MaterialType.Flesh;
   }
 
   void applyVelocity() {
@@ -199,6 +202,8 @@ class Character extends Collider with Team, Health, Velocity {
 
   int getTechTypeLevel(int type) {
     switch(type){
+      case TechType.Unarmed:
+        return 1;
       case TechType.Pickaxe:
         return techTree.pickaxe;
       case TechType.Sword:
