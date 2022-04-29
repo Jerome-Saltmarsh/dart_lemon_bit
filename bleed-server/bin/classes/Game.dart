@@ -963,7 +963,6 @@ extension GameFunctions on Game {
         src: src,
         accuracy: 0,
         speed: settings.projectileSpeed.arrow,
-        damage: damage,
         range: settings.range.arrow,
         target: src.attackTarget,
         angle: src.angle,
@@ -976,7 +975,6 @@ extension GameFunctions on Game {
       src: src,
       accuracy: 0,
       speed: settings.projectileSpeed.arrow,
-      damage: damage,
       range: settings.range.arrow,
       target: target,
       techType: TechType.Bow,
@@ -988,7 +986,6 @@ extension GameFunctions on Game {
     required Position src,
     required double speed,
     required double range,
-    required int damage,
     required int techType,
     required int level,
     double angle = 0,
@@ -1012,7 +1009,6 @@ extension GameFunctions on Game {
     projectile.speed = speed;
     projectile.owner = src;
     projectile.range = range;
-    projectile.damage = damage;
     projectile.type = techType;
     return projectile;
   }
@@ -1323,7 +1319,6 @@ extension GameFunctions on Game {
             accuracy: 0,
             speed: 12.0,
             range: character.equippedRange,
-            damage: character.equippedDamage,
             techType: TechType.Handgun,
             level: character.equippedLevel,
         );
@@ -1346,7 +1341,6 @@ extension GameFunctions on Game {
               accuracy: 0.1,
               speed: 12.0,
               range: character.equippedRange,
-              damage: character.equippedDamage,
               techType: TechType.Shotgun,
               level: character.equippedLevel,
           );
@@ -1530,21 +1524,21 @@ int calculateDamage({
 }){
   switch(targetMaterialType) {
     case MaterialType.Rock:
-      if (techType == TechType.Pickaxe) return level * 5;
-      if (techType == TechType.Unarmed) return level;
+      if (techType == TechType.Pickaxe) return level;
+      if (techType == TechType.Unarmed) return 1;
       if (techType == TechType.Shotgun) return 0;
       if (techType == TechType.Handgun) return 0;
       if (techType == TechType.Bow) return 0;
       return 0;
     case MaterialType.Wood:
-      if (techType == TechType.Pickaxe) return level * 5;
-      if (techType == TechType.Unarmed) return level;
+      if (techType == TechType.Pickaxe) return level;
+      if (techType == TechType.Unarmed) return 1;
       if (techType == TechType.Shotgun) return 0;
       if (techType == TechType.Handgun) return 0;
       if (techType == TechType.Bow) return 0;
       return 0;
     case MaterialType.Plant:
-      if (techType == TechType.Pickaxe) return level * 5;
+      if (techType == TechType.Pickaxe) return level;
       if (techType == TechType.Unarmed) return level;
       if (techType == TechType.Shotgun) return 0;
       if (techType == TechType.Handgun) return 0;
@@ -1553,20 +1547,20 @@ int calculateDamage({
     case MaterialType.Flesh:
       if (techType == TechType.Pickaxe) return level;
       if (techType == TechType.Unarmed) return level;
-      if (techType == TechType.Shotgun) return level * 3;
-      if (techType == TechType.Handgun) return level * 4;
-      if (techType == TechType.Bow) return level * 2;
-      if (techType == TechType.Sword) return level * 3;
+      if (techType == TechType.Shotgun) return level;
+      if (techType == TechType.Handgun) return level;
+      if (techType == TechType.Bow) return level;
+      if (techType == TechType.Sword) return level;
       return 0;
     case MaterialType.Metal:
-      if (techType == TechType.Pickaxe) return level * 5;
+      if (techType == TechType.Pickaxe) return level;
       if (techType == TechType.Unarmed) return level;
       if (techType == TechType.Shotgun) return 0;
       if (techType == TechType.Handgun) return 0;
       if (techType == TechType.Bow) return 0;
       return 0;
     case MaterialType.Other:
-      if (techType == TechType.Pickaxe) return level * 5;
+      if (techType == TechType.Pickaxe) return level;
       if (techType == TechType.Unarmed) return level;
       if (techType == TechType.Shotgun) return 0;
       if (techType == TechType.Handgun) return 0;

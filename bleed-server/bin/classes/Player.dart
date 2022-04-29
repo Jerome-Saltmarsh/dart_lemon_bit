@@ -13,14 +13,11 @@ import 'Collider.dart';
 import 'Game.dart';
 
 class Player extends Character with ByteWriter {
-  // final byteWriter = ByteWriter();
   final mouse = Vector2(0, 0);
   final runTarget = Vector2(0, 0);
   var score = 0;
   var sceneChanged = false;
   var characterState = CharacterState.Idle;
-  Account? account;
-  /// How many frames have elapsed since the server received a message from this client
   var lastUpdateFrame = 0;
   var pointsRecord = 0;
   var textDuration = 0;
@@ -39,13 +36,13 @@ class Player extends Character with ByteWriter {
   var screenTop = 0.0;
   var screenRight = 0.0;
   var screenBottom = 0.0;
-  Game game;
-  Collider? aimTarget; // the currently highlighted character
-  Position? target;
-
   var wood = 0;
   var stone = 0;
   var gold = 0;
+  Game game;
+  Collider? aimTarget; // the currently highlighted character
+  Position? target;
+  Account? account;
 
   late Function onUpdated;
   late Function onSlotsChanged;

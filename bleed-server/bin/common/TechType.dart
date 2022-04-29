@@ -4,36 +4,6 @@ class TechTree {
   var pickaxe = 0;
   var bow = 0;
   var sword = 0;
-
-  double getRange(int type) {
-    switch (type) {
-      case TechType.Unarmed:
-        return 20;
-      case TechType.Pickaxe:
-        return 20;
-      case TechType.Bow:
-        return 100;
-      case TechType.Sword:
-        return 30;
-      default:
-        throw Exception("Invalid tech type index $type");
-    }
-  }
-
-  int getDamage(int type) {
-    switch (type) {
-      case TechType.Unarmed:
-        return 1;
-      case TechType.Pickaxe:
-        return 1;
-      case TechType.Bow:
-        return 1;
-      case TechType.Sword:
-        return 2;
-      default:
-        throw Exception("Invalid tech type index $type");
-    }
-  }
 }
 
 class TechType {
@@ -122,5 +92,22 @@ class TechType {
     if (level >= costs.length) return null;
     return costs[level];
   }
+
+
+  static double getRange(int type) {
+    switch (type) {
+      case TechType.Unarmed:
+        return 20;
+      case TechType.Pickaxe:
+        return 20;
+      case TechType.Bow:
+        return 100;
+      case TechType.Sword:
+        return 30;
+      default:
+        throw Exception("Invalid tech type index $type");
+    }
+  }
+
 }
 

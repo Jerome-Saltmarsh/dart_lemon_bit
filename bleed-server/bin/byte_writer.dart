@@ -155,10 +155,8 @@ class ByteWriter {
   }
 
   void writePlayer(Player player) {
-    // final slots = player.slots;
     writeCharacter(player, player);
     writePercentage(player.magicPercentage);
-    // writeByte(slots.weapon.type);
     writeByte(player.equipped);
     writeByte(SlotType.Empty); // armour
     writeByte(SlotType.Empty); // helm
