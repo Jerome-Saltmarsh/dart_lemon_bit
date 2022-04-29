@@ -266,6 +266,7 @@ class ByteWriter {
   }
 
   void writeDamageApplied(Position target, int amount) {
+    if (amount <= 0) return;
     writeByte(ServerResponse.Damage_Applied);
     writePosition(target);
     writeBigInt(amount);

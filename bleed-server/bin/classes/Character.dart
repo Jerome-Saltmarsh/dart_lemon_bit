@@ -18,7 +18,7 @@ const maxAIPathLength = 80;
 const maxAIPathLengthMinusOne = maxAIPathLength - 3;
 
 
-class AI extends Character {
+class AI extends Character with Material {
   static const viewRange = 200.0;
   static const chaseRange = 500.0;
   final pathX = Float32List(maxAIPathLength);
@@ -69,7 +69,9 @@ class AI extends Character {
     int team = noSquad,
     int weapon = SlotType.Empty,
     double speed = 3.0,
-  }): super(x: x, y: y, type: type, health: health, team: team, weapon: weapon, speed: speed);
+  }): super(x: x, y: y, type: type, health: health, team: team, weapon: weapon, speed: speed) {
+    this.material = MaterialType.Flesh;
+  }
 
   void clearTargetIf(Character value){
     if (target != value) return;

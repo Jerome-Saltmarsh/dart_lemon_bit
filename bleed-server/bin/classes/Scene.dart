@@ -120,17 +120,8 @@ class Scene {
     }
 
     for (final env in environment) {
-      // const snapToGridTypes = [
-      //   ObjectType.Torch,
-      //   ObjectType.House01,
-      //   ObjectType.House02,
-      // ];
-      // if (!snapToGridTypes.contains(env.type)) continue;
        snapToGrid(env);
        tileNodeAt(env).obstructed = true;
-       // final row = getRow(env.x, env.y);
-       // final column = getColumn(env.x, env.y);
-       // tileNodes[row][column].open = false;
     }
 
     for (int i = 0; i < environment.length; i++) {
@@ -143,7 +134,7 @@ class Scene {
                   type: DynamicObjectType.Rock,
                   x: env.x,
                   y: env.y,
-                  health: 10
+                  health: 50
               )
           );
        }
@@ -155,7 +146,7 @@ class Scene {
                  type: DynamicObjectType.Tree,
                  x: env.x,
                  y: env.y,
-                 health: 10
+                 health: 50
              )
          );
        }

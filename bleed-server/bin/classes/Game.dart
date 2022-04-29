@@ -338,8 +338,12 @@ extension GameFunctions on Game {
     required int amount,
   }) {
     if (target.dead) return;
+    final damage = min(amount, target.health);
+    target.health -= damage;
 
-    target.health -= amount;
+    if (src is Player && target is Position) {
+      src.byteWriter.writeDamageApplied(target as Position, damage);
+    }
 
     final killed = target.dead;
 
@@ -351,13 +355,13 @@ extension GameFunctions on Game {
         setCharacterStateDead(target);
         if (isZombie) {
           spawnCollectable(position: target, target: src, type: CollectableType.Gold, amount: 1);
-          spawnCollectable(position: target, target: src, type: CollectableType.Experience, amount: 1);
-          spawnCollectable(position: target, target: src, type: CollectableType.Experience, amount: 1);
+          // spawnCollectable(position: target, target: src, type: CollectableType.Experience, amount: 1);
+          // spawnCollectable(position: target, target: src, type: CollectableType.Experience, amount: 1);
         }
         return;
       }
       if (isZombie) {
-        spawnCollectable(position: target, target: src, type: CollectableType.Experience, amount: amount);
+        // spawnCollectable(position: target, target: src, type: CollectableType.Experience, amount: amount);
         setCharacterState(target, CharacterState.Hurt);
       }
       if (target is AI) {
@@ -391,19 +395,14 @@ extension GameFunctions on Game {
         case DynamicObjectType.Rock:
           dispatchV2(GameEventType.Rock_Struck, target);
           if (src is Player) {
-            final spawns = killed ? 3 : 1;
-            for (var i = 0; i < spawns; i++) {
-              spawnCollectable(position: target, target: src, type: CollectableType.Stone, amount: amount);
-            }
+            // final spawns = killed ? 3 : 1;
+            spawnCollectable(position: target, target: src, type: CollectableType.Stone, amount: damage);
           }
           break;
         case DynamicObjectType.Tree:
           dispatchV2(GameEventType.Tree_Struck, target);
           if (src is Player) {
-            final spawns = killed ? 3 : 1;
-            for (var i = 0; i < spawns; i++) {
-              spawnCollectable(position: target, target: src, type: CollectableType.Wood, amount: amount);
-            }
+            spawnCollectable(position: target, target: src, type: CollectableType.Wood, amount: damage);
           }
           break;
       }
@@ -810,11 +809,6 @@ extension GameFunctions on Game {
     if (target is Health) {
       final health = target as Health;
       applyDamage(src: src, target: health, amount: damage);
-      if (damage > 0) {
-        if (src is Player) {
-          src.byteWriter.writeDamageApplied(target, damage);
-        }
-      }
     }
 
     final angleBetweenSrcAndTarget = radiansV2(src, target);
