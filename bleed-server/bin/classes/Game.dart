@@ -218,15 +218,11 @@ abstract class Game {
       }
     }
   }
-
-
 }
 
 const secondsPerMinute = 60;
 const minutesPerHour = 60;
 const hoursPerDay = 24;
-// const secondsPerDay = secondsPerMinute * minutesPerHour * hoursPerDay;
-// const secondsPerHour = secondsPerMinute * minutesPerHour;
 const secondsPerFrame = 5;
 
 final characterRadius = settings.radius.character;
@@ -395,8 +391,8 @@ extension GameFunctions on Game {
         case DynamicObjectType.Rock:
           dispatchV2(GameEventType.Rock_Struck, target);
           if (src is Player) {
-            final amount = killed ? 3 : 1;
-            for (var i = 0; i < amount; i++) {
+            final spawns = killed ? 3 : 1;
+            for (var i = 0; i < spawns; i++) {
               spawnCollectable(position: target, target: src, type: CollectableType.Stone, amount: amount);
             }
           }
@@ -404,8 +400,8 @@ extension GameFunctions on Game {
         case DynamicObjectType.Tree:
           dispatchV2(GameEventType.Tree_Struck, target);
           if (src is Player) {
-            final amount = killed ? 3 : 1;
-            for (var i = 0; i < amount; i++) {
+            final spawns = killed ? 3 : 1;
+            for (var i = 0; i < spawns; i++) {
               spawnCollectable(position: target, target: src, type: CollectableType.Wood, amount: amount);
             }
           }

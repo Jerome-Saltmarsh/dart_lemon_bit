@@ -35,6 +35,7 @@ class Collectable with
   }
 
   void _playerCollect(Player player){
+    print("collect amount $amount");
     switch (type) {
       case CollectableType.Wood:
         player.wood += amount;
