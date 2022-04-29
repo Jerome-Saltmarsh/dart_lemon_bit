@@ -212,6 +212,8 @@ class Character extends Collider with Team, Health, Velocity, Material {
         return techTree.sword;
       case TechType.Bow:
         return techTree.bow;
+      case TechType.Axe:
+        return techTree.axe;
       default:
         throw Exception("cannot get tech type level. type: $type");
     }

@@ -98,6 +98,7 @@ class Player {
   final levelPickaxe = Watch(0);
   final levelSword = Watch(0);
   final levelBow = Watch(0);
+  final levelAxe = Watch(0);
 
   int getTechTypeLevel(int type){
     switch(type){
@@ -107,6 +108,8 @@ class Player {
         return levelSword.value;
       case TechType.Bow:
         return levelBow.value;
+      case TechType.Axe:
+        return levelAxe.value;
       default:
         throw Exception("cannot get tech type level. type: $type");
     }

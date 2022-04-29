@@ -838,6 +838,14 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               }
               player.onPlayerEvent(PlayerEvent.Item_Purchased);
               break;
+            case TechType.Axe:
+              player.techTree.axe++;
+              if (player.techTree.axe == 1) {
+                player.equipped = TechType.Axe;
+                player.setStateChangingWeapons();
+              }
+              player.onPlayerEvent(PlayerEvent.Item_Purchased);
+              break;
           }
           sendPlayerTechTree();
           break;

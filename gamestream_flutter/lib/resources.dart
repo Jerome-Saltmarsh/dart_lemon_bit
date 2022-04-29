@@ -92,6 +92,8 @@ class _SwordIcons {
   final iron = buildIcon("sword-iron");
   final pickaxe = buildIcon("pickaxe");
   final pickaxeGray = buildIcon("pickaxe-gray");
+  final axe = buildIcon("axe");
+  final axeGray = buildIcon("axe-gray");
 }
 
 class _BowIcons {

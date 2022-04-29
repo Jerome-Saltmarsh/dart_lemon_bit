@@ -20,6 +20,7 @@ Widget buildPanelTech() {
         buildTechTypeRow(TechType.Pickaxe, player.levelPickaxe),
         buildTechTypeRow(TechType.Sword, player.levelSword),
         buildTechTypeRow(TechType.Bow, player.levelBow),
+        buildTechTypeRow(TechType.Axe, player.levelAxe),
       ],
     ),
   );
