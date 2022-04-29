@@ -810,6 +810,11 @@ extension GameFunctions on Game {
     if (target is Health) {
       final health = target as Health;
       applyDamage(src: src, target: health, amount: damage);
+      // if (damage > 0) {
+      //   if (src is Player){
+      //     src.onDamageApplied(target, damage);
+      //   }
+      // }
     }
 
     final angleBetweenSrcAndTarget = radiansV2(src, target);

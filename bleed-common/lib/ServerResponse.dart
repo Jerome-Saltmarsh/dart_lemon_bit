@@ -49,5 +49,6 @@ class ServerResponse {
   static const End = 47;
   static const Structures = 48;
   static const Tech_Types = 49;
+  static const Damage_Applied = 50;
 }
 

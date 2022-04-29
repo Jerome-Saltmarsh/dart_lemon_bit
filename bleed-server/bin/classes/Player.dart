@@ -1,6 +1,7 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:lemon_math/library.dart';
 
+import '../byte_compiler.dart';
 import '../common/library.dart';
 import '../constants/no_squad.dart';
 import '../engine.dart';
@@ -12,7 +13,7 @@ import 'Collider.dart';
 import 'Game.dart';
 
 class Player extends Character {
-
+  final byteWriter = ByteWriter();
   final mouse = Vector2(0, 0);
   final runTarget = Vector2(0, 0);
   var score = 0;
@@ -49,6 +50,7 @@ class Player extends Character {
   late Function onUpdated;
   late Function onSlotsChanged;
   late Function(int value) onPlayerEvent;
+  late Function(Position position, int amount) onDamageApplied;
   late Function(int type, double x, double y, double angle) onGameEvent;
   late Function(GameError error, {String message}) dispatchError;
 

@@ -104,10 +104,11 @@
 [ ] Randomly Generate Roads
 [ ] Item Type Hammer (Used to construct buildings)
 [ ] Item Type Axe (Used to chop trees)    
-[ ] Upgrade cost and benefits panel
 [ ] Indicate tech type level
-[ ] Amount of damage dictates resources gathered
-[ ] Tech Types apply different damage depending on target type
+[ ] Render Damage Applied Floating Text
+[x] Upgrade cost and benefits panel
+[x] Amount of damage dictates resources gathered
+[x] Tech Types apply different damage depending on target type
 [/] Fix time
 [x] Generate Random Map
 [x] Projectiles should not damage dynamic objects

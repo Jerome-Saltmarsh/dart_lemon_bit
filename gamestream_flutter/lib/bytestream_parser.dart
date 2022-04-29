@@ -25,7 +25,6 @@ var durationTotal = 0;
 
 
 final _player = modules.game.state.player;
-// final _slots = _player.slots;
 final _orbs = _player.orbs;
 final _hours = modules.isometric.hours;
 final _minutes = modules.isometric.minutes;

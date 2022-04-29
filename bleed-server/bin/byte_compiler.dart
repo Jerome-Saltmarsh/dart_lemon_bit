@@ -7,15 +7,15 @@ import 'package:lemon_math/library.dart';
 import 'classes/library.dart';
 import 'common/library.dart';
 
-final byteCompiler = _ByteCompiler();
+// final byteCompiler = ByteWriter();
 
-class _ByteCompiler {
+class ByteWriter {
   var _index = 0;
   final _buffer = Uint8List(100000); // 100kb
   final List<Uint8List> _buffers = [];
 
 
-  _ByteCompiler(){
+  ByteWriter() {
     _buffers.add(Uint8List(75));
     _buffers.add(Uint8List(85));
     _buffers.add(Uint8List(100));
@@ -263,6 +263,12 @@ class _ByteCompiler {
     writePosition(projectile);
     writeByte(projectile.type);
     writeBigInt(degrees);
+  }
+
+  void writeDamageApplied(Position target, int amount) {
+    writeByte(ServerResponse.Damage_Applied);
+    writePosition(target);
+    writeBigInt(amount);
   }
 
   void writePlayers(Player player){

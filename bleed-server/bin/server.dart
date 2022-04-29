@@ -4,7 +4,6 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'byte_compiler.dart';
 import 'classes/Game.dart';
 import 'classes/Player.dart';
 import 'classes/Structure.dart';
@@ -96,32 +95,32 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     void compileAndSendPlayerSlots(){
       final player = _player;
       if (player == null) return;
-      byteCompiler.writePlayerSlots(player);
+      player.byteWriter.writePlayerSlots(player);
     }
 
     void sendPlayerTechTree() {
       final player = _player;
       if (player == null) return;
-      byteCompiler.writeTechTypes(player);
+      player.byteWriter.writeTechTypes(player);
     }
 
     void sendPlayerEvent(int event){
       final player = _player;
       if (player == null) return;
-      byteCompiler.writePlayerEvents(event);
+      player.byteWriter.writePlayerEvents(event);
     }
 
     void sendGameEvent(int type, double x, double y, double angle){
       final player = _player;
       if (player == null) return;
-      byteCompiler.writeGameEvent(player, type, x, y, angle);
+      player.byteWriter.writeGameEvent(player, type, x, y, angle);
     }
 
     void compileAndSendPlayer(){
      final player = _player;
      if (player == null) return;
-     byteCompiler.writePlayerGame(player);
-     sink.add(byteCompiler.writeToSendBuffer());
+     player.byteWriter.writePlayerGame(player);
+     sink.add(player.byteWriter.writeToSendBuffer());
     }
 
     void error(GameError error, {String message = ""}) {
