@@ -4,11 +4,7 @@ import 'dart:typed_data';
 
 import 'package:lemon_math/library.dart';
 
-import 'classes/Character.dart';
-import 'classes/Game.dart';
-import 'classes/Player.dart';
-import 'classes/Projectile.dart';
-import 'classes/components.dart';
+import 'classes/library.dart';
 import 'common/library.dart';
 
 final byteCompiler = _ByteCompiler();

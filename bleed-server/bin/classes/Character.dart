@@ -1,9 +1,9 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
-import '../constants.dart';
 import '../constants/no_squad.dart';
 import '../enums/npc_mode.dart';
 import '../functions/withinRadius.dart';
@@ -96,6 +96,8 @@ class AI extends Character {
   }
 }
 
+const piEighth = pi / 8.0;
+
 class Character extends Collider with Team, Health, Velocity {
   late CharacterType type;
   late double _speed;
@@ -119,6 +121,7 @@ class Character extends Collider with Team, Health, Velocity {
   var equipped = TechType.Unarmed;
 
   // properties
+
   int get direction => (((angle + piEighth) % pi2) ~/ piQuarter) % 8;
   bool get frozen => frozenDuration > 0;
 

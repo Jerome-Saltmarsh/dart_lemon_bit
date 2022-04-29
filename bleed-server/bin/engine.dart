@@ -30,8 +30,6 @@ class _Engine {
 
   Future init() async {
     print("engine.init()");
-    // await scenes.load();
-    // world = World();
     periodic(fixedUpdate, ms: Duration.millisecondsPerSecond ~/ framesPerSecond);
     print("engine.init() finished");
   }

@@ -13,7 +13,6 @@ num calculateAngleDifference(double angleA, double angleB) {
   return pi2 - diff;
 }
 
-
 void updateCollisionBetween(List<Collider> gameObjects) {
   final numberOfGameObjects = gameObjects.length;
   final numberOfGameObjectsMinusOne = numberOfGameObjects - 1;

@@ -95,6 +95,8 @@
 [ ] Palisades draw horizontal and vertical when aligned
 [ ] Armour Slot
 [ ] Helm Slot
+[ ] Perk Type: Bag Size
+[ ] Perk Type: Torch Size
 [ ] Loot Slot x 3 Creeps occasionally drop random trinkets
 [ ] Randomly Generate Zombie Spawn Locations
 [ ] Randomly Generate Player Spawn Locations
@@ -102,7 +104,9 @@
 [ ] Randomly Generate Roads
 [ ] Item Type Hammer (Used to construct buildings)
 [ ] Item Type Axe (Used to chop trees)    
-[ ] Fix time
+[ ] Upgrade cost and benefits panel
+[ ] Indicate tech type level
+[/] Fix time
 [x] Generate Random Map
 [x] Projectiles should not damage dynamic objects
 [x] Dynamic Object Chest gives gold

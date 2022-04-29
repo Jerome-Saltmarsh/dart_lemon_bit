@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
-import '../bleed/zombie_health.dart';
 import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
@@ -12,14 +11,12 @@ import '../common/GameEventType.dart';
 import '../common/GameStatus.dart';
 import '../common/GameType.dart';
 import '../common/ItemType.dart';
-import '../common/PlayerEvent.dart';
 import '../common/SlotType.dart';
 import '../common/Tile.dart';
 import '../common/configuration.dart';
 import '../common/ObjectType.dart';
 import '../common/ProjectileType.dart';
 import '../common/Shade.dart';
-import '../constants.dart';
 import '../engine.dart';
 import '../enums.dart';
 import '../enums/npc_mode.dart';
@@ -460,25 +457,6 @@ extension GameFunctions on Game {
     collectable.y = position.y;
     collectable.setVelocity(randomAngle(), 3.0);
     collectables.add(collectable);
-  }
-
-  void playerGainExperience(Player player, int experience) {
-    if (player.level >= maxPlayerLevel) return;
-    player.experience += experience;
-    while (player.experience >= levelExperience[player.level]) {
-      player.experience -= levelExperience[player.level];
-      player.level++;
-      player.abilityPoints++;
-      player.onPlayerEvent(PlayerEvent.Level_Up);
-      player.maxHealth += settings.levelUpHealthIncrease;
-      player.maxMagic += settings.levelUpMagicIncrease;
-      player.health = player.maxHealth;
-      player.magic = player.maxMagic;
-      if (player.level >= maxPlayerLevel) {
-        player.experience = 0;
-        return;
-      }
-    }
   }
 
   void _characterAttack(Character character, Collider target) {
@@ -932,6 +910,7 @@ extension GameFunctions on Game {
         if (character.stateDurationRemaining == castFrame) {
           final damage = character.equippedDamage;
           Projectile arrow1 = spawnArrow(character, damage: damage);
+          const piSixteenth = pi / 16.0;
           double angle = piSixteenth;
           arrow1.target = null;
           setProjectileAngle(arrow1, character.angle - angle);
@@ -1158,21 +1137,6 @@ extension GameFunctions on Game {
     );
     zombies.add(zombie);
     return zombie;
-  }
-
-  Character spawnRandomZombieLevel(int level) {
-    return spawnRandomZombie(
-        damage: level,
-        health: zombieHealth[clampInt(
-          level,
-          0,
-          maxZombieLevel,
-        )],
-        experience: zombieExperience[clampInt(
-          level,
-          0,
-          maxZombieLevel,
-        )]);
   }
 
   Character spawnRandomZombie({

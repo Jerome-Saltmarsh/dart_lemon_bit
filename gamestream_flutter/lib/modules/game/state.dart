@@ -18,10 +18,10 @@ class GameState {
   final compilePaths = Watch(false);
   final storeTab = Watch(storeTabs[0]);
   final textBoxVisible = Watch(false);
-  final highlightSlotType = Watch(SlotType.Empty);
   final highlightStructureType = Watch<int?>(null);
   final highlightedTechType = Watch<int?>(null);
-  final highlightSlot = Watch<Slot?>(null);
+  final highlightedTechTypeUpgrade = Watch<int?>(null);
+  final panelTypeKey = <int, GlobalKey> {};
 
   final cameraMode = Watch(CameraMode.Chase);
   final framesSmoothed = Watch(0);
@@ -31,6 +31,8 @@ class GameState {
   var framesSinceOrbAcquired = 999;
   var lastOrbAcquired = OrbType.Emerald;
 
+  final storeColumnKey = GlobalKey();
+  final keyPanelStructure = GlobalKey();
 }
 
 class _PlayerOrbs {
