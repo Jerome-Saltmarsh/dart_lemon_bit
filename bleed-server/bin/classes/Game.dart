@@ -342,7 +342,7 @@ extension GameFunctions on Game {
     target.health -= damage;
 
     if (src is Player && target is Position) {
-      src.byteWriter.writeDamageApplied(target as Position, damage);
+      src.writeDamageApplied(target as Position, damage);
     }
 
     final killed = target.dead;

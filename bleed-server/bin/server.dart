@@ -95,32 +95,32 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     void compileAndSendPlayerSlots(){
       final player = _player;
       if (player == null) return;
-      player.byteWriter.writePlayerSlots(player);
+      player.writePlayerSlots(player);
     }
 
     void sendPlayerTechTree() {
       final player = _player;
       if (player == null) return;
-      player.byteWriter.writeTechTypes(player);
+      player.writeTechTypes(player);
     }
 
     void sendPlayerEvent(int event){
       final player = _player;
       if (player == null) return;
-      player.byteWriter.writePlayerEvents(event);
+      player.writePlayerEvents(event);
     }
 
     void sendGameEvent(int type, double x, double y, double angle){
       final player = _player;
       if (player == null) return;
-      player.byteWriter.writeGameEvent(player, type, x, y, angle);
+      player.writeGameEvent(player, type, x, y, angle);
     }
 
     void compileAndSendPlayer(){
      final player = _player;
      if (player == null) return;
-     player.byteWriter.writePlayerGame(player);
-     sink.add(player.byteWriter.writeToSendBuffer());
+     player.writePlayerGame();
+     sink.add(player.writeToSendBuffer());
     }
 
     void error(GameError error, {String message = ""}) {

@@ -7,26 +7,10 @@ import 'package:lemon_math/library.dart';
 import 'classes/library.dart';
 import 'common/library.dart';
 
-// final byteCompiler = ByteWriter();
-
 class ByteWriter {
   var _index = 0;
-  final _buffer = Uint8List(100000); // 100kb
-  final List<Uint8List> _buffers = [];
-
-
-  ByteWriter() {
-    _buffers.add(Uint8List(75));
-    _buffers.add(Uint8List(85));
-    _buffers.add(Uint8List(100));
-    _buffers.add(Uint8List(125));
-    _buffers.add(Uint8List(150));
-    _buffers.add(Uint8List(175));
-    _buffers.add(Uint8List(200));
-    _buffers.add(Uint8List(250));
-    _buffers.add(Uint8List(300));
-    _buffers.add(Uint8List(350));
-  }
+  final _buffer = Uint8List(50000); // 100kb
+  final _buffers = <Uint8List>[];
 
   List<int> writeToSendBuffer() {
     writeByte(ServerResponse.End);
@@ -36,17 +20,6 @@ class ByteWriter {
     }
     _index = 0;
     return sendBuffer;
-  }
-
-  void writeStructures(Player player) {
-    writeByte(ServerResponse.Structures);
-    final structures = player.game.structures;
-    for(final structure in structures){
-      if (structure.dead) continue;
-       writeByte(structure.type);
-       writePosition(structure);
-    }
-    writeByte(END);
   }
 
   void writeCollectables(Player player) {
@@ -76,39 +49,6 @@ class ByteWriter {
     writeByte(player.techTree.pickaxe);
     writeByte(player.techTree.sword);
     writeByte(player.techTree.bow);
-  }
-
-  void writePlayerGame(Player player){
-    // final slots = player.slots;
-    final game = player.game;
-    writeByte(ServerResponse.Player);
-    writeBigInt(player.x);
-    writeBigInt(player.y);
-    writeBigInt(player.health); // 2
-    writeBigInt(player.maxHealth); // 2
-    writeBigInt(player.magic); // 2
-    writeBigInt(player.maxMagic); // 2
-    writeByte(player.equipped); // 3
-    writeByte(SlotType.Empty); // armour
-    writeByte(SlotType.Empty); // helm
-    writeBool(player.alive); // 1
-    writeBool(player.storeVisible); // 1
-    writeBigInt(player.wood);
-    writeBigInt(player.stone);
-    writeBigInt(player.gold);
-    writeStructures(player);
-    writeCollectables(player);
-    writePlayers(player);
-    writeAttackTarget(player);
-    writeProjectiles(game.projectiles);
-    writeNpcs(player);
-    writeGameTime(game);
-    writePlayerZombies(player);
-    writeItems(player);
-    writeDynamicObjects(player);
-
-    if (game.debugMode)
-      writePaths(game);
   }
 
   void writeDynamicObjects(Player player) {

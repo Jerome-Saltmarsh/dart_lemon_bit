@@ -1,7 +1,7 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:lemon_math/library.dart';
 
-import '../byte_compiler.dart';
+import '../byte_writer.dart';
 import '../common/library.dart';
 import '../constants/no_squad.dart';
 import '../engine.dart';
@@ -12,8 +12,8 @@ import 'Character.dart';
 import 'Collider.dart';
 import 'Game.dart';
 
-class Player extends Character {
-  final byteWriter = ByteWriter();
+class Player extends Character with ByteWriter {
+  // final byteWriter = ByteWriter();
   final mouse = Vector2(0, 0);
   final runTarget = Vector2(0, 0);
   var score = 0;
@@ -89,6 +89,12 @@ class Player extends Character {
     maxMagic = magic;
     _magic = maxMagic;
     engine.onPlayerCreated(this);
+    // addByteWriterBuffer(75);
+    // addByteWriterBuffer(100);
+    // addByteWriterBuffer(125);
+    // addByteWriterBuffer(150);
+    // addByteWriterBuffer(175);
+    // addByteWriterBuffer(200);
   }
 
   void setStateChangingWeapons(){
@@ -443,5 +449,46 @@ extension PlayerProperties on Player {
     final magicAmount = SlotType.getMagic(slotType);
     maxMagic -= magicAmount;
     magic = clampInt(magic - magicAmount, 1, maxMagic);
+  }
+
+  void writePlayerGame() {
+    writeByte(ServerResponse.Player);
+    writeBigInt(x);
+    writeBigInt(y);
+    writeBigInt(health); // 2
+    writeBigInt(maxHealth); // 2
+    writeBigInt(magic); // 2
+    writeBigInt(maxMagic); // 2
+    writeByte(equipped); // 3
+    writeByte(SlotType.Empty); // armour
+    writeByte(SlotType.Empty); // helm
+    writeBool(alive); // 1
+    writeBool(storeVisible); // 1
+    writeBigInt(wood);
+    writeBigInt(stone);
+    writeBigInt(gold);
+    writeStructures();
+    writeCollectables(this);
+    writePlayers(this);
+    writeAttackTarget(this);
+    writeProjectiles(game.projectiles);
+    writeNpcs(this);
+    writeGameTime(game);
+    writePlayerZombies(this);
+    writeDynamicObjects(this);
+
+    if (game.debugMode)
+      writePaths(game);
+  }
+
+  void writeStructures() {
+    writeByte(ServerResponse.Structures);
+    final structures = game.structures;
+    for (final structure in structures){
+      if (structure.dead) continue;
+      writeByte(structure.type);
+      writePosition(structure);
+    }
+    writeByte(END);
   }
 }
