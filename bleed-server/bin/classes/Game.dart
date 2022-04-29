@@ -869,15 +869,14 @@ extension GameFunctions on Game {
         break;
       case AbilityType.Split_Arrow:
         if (character.stateDurationRemaining == castFrame) {
-          final damage = character.equippedDamage;
-          Projectile arrow1 = spawnArrow(character, damage: damage);
+          Projectile arrow1 = spawnArrow(character);
           const piSixteenth = pi / 16.0;
           double angle = piSixteenth;
           arrow1.target = null;
           setProjectileAngle(arrow1, character.angle - angle);
-          Projectile arrow2 = spawnArrow(character, damage: damage);
+          Projectile arrow2 = spawnArrow(character);
           arrow2.target = null;
-          Projectile arrow3 = spawnArrow(character, damage: damage);
+          Projectile arrow3 = spawnArrow(character);
           arrow3.target = null;
           setProjectileAngle(arrow3, character.angle + angle);
           character.performing = null;
@@ -886,15 +885,15 @@ extension GameFunctions on Game {
         break;
 
       case AbilityType.Long_Shot:
-        if (character.stateDurationRemaining == castFrame) {
-          final int damageMultiplier = 3;
-          spawnArrow(
-                character,
-                damage: character.equippedDamage * damageMultiplier
-          ).range = ability.range;
-          character.attackTarget = null;
-          character.performing = null;
-        }
+        // if (character.stateDurationRemaining == castFrame) {
+        //   final int damageMultiplier = 3;
+        //   spawnArrow(
+        //         character,
+        //         damage: character.equippedDamage * damageMultiplier
+        //   ).range = ability.range;
+        //   character.attackTarget = null;
+        //   character.performing = null;
+        // }
         break;
 
       case AbilityType.Brutal_Strike:
@@ -955,7 +954,7 @@ extension GameFunctions on Game {
 
   void casteSlowingCircle(Character character, double x, double y) {}
 
-  Projectile spawnArrow(Position src, {required int damage, Collider? target}) {
+  Projectile spawnArrow(Position src, {Collider? target}) {
     dispatch(GameEventType.Arrow_Fired, src.x, src.y);
 
     if (src is Character) {
@@ -1357,7 +1356,7 @@ extension GameFunctions on Game {
     if (character.stateDuration == framePerformStrike) {
       if (character.equippedTypeIsBow) {
         dispatchV2(GameEventType.Release_Bow, character);
-        spawnArrow(character, damage: character.equippedDamage);
+        spawnArrow(character);
         character.attackTarget = character.attackTarget;
         return;
       }
@@ -1413,8 +1412,8 @@ extension GameFunctions on Game {
       for (final zombie in zombies) {
         if (zombie.dead) continue;
         if (sameTeam(structure, zombie)) continue;
-        if (zombie.getDistance(structure) > structure.attackRange) continue;
-        spawnArrow(structure, damage: structure.attackDamage, target: zombie);
+        if (!structure.withinRange(zombie)) continue;
+        spawnArrow(structure, target: zombie);
         structure.cooldown = structure.attackRate;
         break;
       }

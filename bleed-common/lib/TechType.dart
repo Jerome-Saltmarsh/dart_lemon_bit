@@ -16,10 +16,6 @@ class TechType {
 
   static bool isValid(int index) => index >= 0 && index <= Handgun;
 
-  static int getDamage(int type, int level) {
-    return 1;
-  }
-  
   static String getName(int value) {
     assert (isValid(value));
     return const {
