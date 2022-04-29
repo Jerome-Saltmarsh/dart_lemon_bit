@@ -22,17 +22,6 @@ class ByteWriter {
     return sendBuffer;
   }
 
-  void writeCollectables(Player player) {
-    writeByte(ServerResponse.Collectables);
-    final collectables = player.game.collectables;
-    for (final collectable in collectables) {
-      if (collectable.inactive) continue;
-      writeByte(collectable.type);
-      writePosition(collectable);
-    }
-    writeByte(END);
-  }
-
   void writePlayerSlots(Player player) {
     writeByte(ServerResponse.Player_Slots);
     // final slots = player.slots;
@@ -112,47 +101,6 @@ class ByteWriter {
     writeByte(END);
   }
 
-  void writePlayerZombies(Player player) {
-    writeByte(ServerResponse.Zombies);
-    final zombies = player.game.zombies;
-    final length = zombies.length;
-    final top = player.screenTop;
-    final bottom = player.screenBottom;
-    final left = player.screenLeft;
-    final right = player.screenRight;
-    final lengthMinusOne = length - 1;
-
-    if (length == 0) {
-      writeByte(END);
-      return;
-    }
-    var start = 0;
-    for (start = 0; start < lengthMinusOne; start++){
-      final zombieY = zombies[start].y;
-      if (zombieY > top) {
-        if (zombieY > bottom){
-          writeByte(END);
-          return;
-        }
-        break;
-      }
-    }
-
-    var end = start;
-    for (end = start; end < lengthMinusOne; end++) {
-      if (zombies[end].y > bottom) break;
-    }
-
-    for(var i = start; i <= end; i++){
-      final zombie = zombies[i];
-      if (zombie.dead) continue;
-      if (zombie.x < left) continue;
-      if (zombie.x > right) continue;
-      writeCharacter(player, zombie);
-    }
-    writeByte(END);
-  }
-
   void writePlayerEvents(int value){
     writeByte(ServerResponse.Player_Events);
     writeByte(value);
@@ -164,12 +112,6 @@ class ByteWriter {
     writeBigInt(x);
     writeBigInt(y);
     writeBigInt(angle * radiansToDegrees);
-  }
-
-  void writeProjectiles(List<Projectile> projectiles){
-    writeByte(ServerResponse.Projectiles);
-    writeTotalActive(projectiles);
-    projectiles.forEach(writeProjectile);
   }
 
   void writeGameTime(Game game){
@@ -210,31 +152,6 @@ class ByteWriter {
     writeByte(ServerResponse.Damage_Applied);
     writePosition(target);
     writeBigInt(amount);
-  }
-
-  void writePlayers(Player player){
-    writeByte(ServerResponse.Players);
-    final players = player.game.players;
-    for (final otherPlayer in players) {
-      if (otherPlayer.dead) continue;
-      writePlayer(otherPlayer);
-      if (sameTeam(otherPlayer, player)){
-        writeString(otherPlayer.text);
-      } else {
-        writeBigInt(0);
-      }
-    }
-    writeByte(END);
-  }
-
-  void writeAttackTarget(Player player){
-    final aimTarget = player.aimTarget;
-    if (aimTarget == null){
-      writeByte(ServerResponse.Player_Attack_Target_None);
-      return;
-    }
-    writeByte(ServerResponse.Player_Attack_Target);
-    writePosition(aimTarget);
   }
 
   void writePlayer(Player player) {

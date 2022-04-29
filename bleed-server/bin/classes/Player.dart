@@ -468,18 +468,50 @@ extension PlayerProperties on Player {
     writeBigInt(stone);
     writeBigInt(gold);
     writeStructures();
-    writeCollectables(this);
-    writePlayers(this);
-    writeAttackTarget(this);
-    writeProjectiles(game.projectiles);
+    writeCollectables();
+    writePlayers();
+    writeAttackTarget();
+    writeProjectiles();
     writeNpcs(this);
     writeGameTime(game);
-    writePlayerZombies(this);
+    writePlayerZombies();
     writeDynamicObjects(this);
 
     if (game.debugMode)
       writePaths(game);
   }
+
+  void writeAttackTarget(){
+    if (aimTarget == null){
+      writeByte(ServerResponse.Player_Attack_Target_None);
+      return;
+    }
+    writeByte(ServerResponse.Player_Attack_Target);
+    writePosition(aimTarget!);
+  }
+
+  void writeProjectiles(){
+    writeByte(ServerResponse.Projectiles);
+    final projectiles = game.projectiles;
+    writeTotalActive(projectiles);
+    projectiles.forEach(writeProjectile);
+  }
+
+  void writePlayers(){
+    writeByte(ServerResponse.Players);
+    final players = game.players;
+    for (final otherPlayer in players) {
+      if (otherPlayer.dead) continue;
+      writePlayer(otherPlayer);
+      if (sameTeam(otherPlayer, this)){
+        writeString(otherPlayer.text);
+      } else {
+        writeBigInt(0);
+      }
+    }
+    writeByte(END);
+  }
+
 
   void writeStructures() {
     writeByte(ServerResponse.Structures);
@@ -491,4 +523,55 @@ extension PlayerProperties on Player {
     }
     writeByte(END);
   }
+
+
+  void writeCollectables() {
+    writeByte(ServerResponse.Collectables);
+    final collectables = game.collectables;
+    for (final collectable in collectables) {
+      if (collectable.inactive) continue;
+      writeByte(collectable.type);
+      writePosition(collectable);
+    }
+    writeByte(END);
+  }
+
+
+  void writePlayerZombies() {
+    writeByte(ServerResponse.Zombies);
+    final zombies = game.zombies;
+    final length = zombies.length;
+    final lengthMinusOne = length - 1;
+
+    if (length == 0) {
+      writeByte(END);
+      return;
+    }
+    var start = 0;
+    for (start = 0; start < lengthMinusOne; start++){
+      final zombieY = zombies[start].y;
+      if (zombieY > screenTop) {
+        if (zombieY > screenBottom){
+          writeByte(END);
+          return;
+        }
+        break;
+      }
+    }
+
+    var end = start;
+    for (end = start; end < lengthMinusOne; end++) {
+      if (zombies[end].y > screenBottom) break;
+    }
+
+    for(var i = start; i <= end; i++){
+      final zombie = zombies[i];
+      if (zombie.dead) continue;
+      if (zombie.x < screenLeft) continue;
+      if (zombie.x > screenRight) continue;
+      writeCharacter(this, zombie);
+    }
+    writeByte(END);
+  }
+
 }
