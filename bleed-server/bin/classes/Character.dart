@@ -147,6 +147,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
   double get equippedRange => TechType.getRange(equipped);
   int get equippedAttackDuration => TechType.getDuration(equipped);
   bool get equippedTypeIsBow => isEquipped(TechType.Bow);
+  bool get unarmed => isEquipped(TechType.Unarmed);
   bool get equippedTypeIsShotgun => isEquipped(TechType.Shotgun);
   bool get equippedIsMelee => TechType.isMelee(equipped);
   bool get equippedIsEmpty => false;

@@ -93,6 +93,21 @@ class Player extends Character with ByteWriter {
     game.setCharacterState(this, CharacterState.Changing);
   }
 
+  void equipPickaxe(){
+    equipped = TechType.Pickaxe;
+    setStateChangingWeapons();
+  }
+
+  void equipAxe(){
+    equipped = TechType.Axe;
+    setStateChangingWeapons();
+  }
+
+  void equipUnarmed(){
+    equipped = TechType.Unarmed;
+    setStateChangingWeapons();
+  }
+
   // void unequip(SlotTypeCategory slotTypeCategory){
   //   final emptySlot = slots.getEmptySlot();
   //   if (emptySlot == null) return;

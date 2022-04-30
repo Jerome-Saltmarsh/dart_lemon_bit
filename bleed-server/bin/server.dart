@@ -331,13 +331,19 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               playerSetAbilityTarget(player, mouseX, mouseY);
 
               if (aimTarget is DynamicObject) {
-                 if (aimTarget.isRock && !TechType.isMelee(player.equipped)) {
-                    player.equipped = player.techTree.pickaxe > 0 ? TechType.Pickaxe : TechType.Unarmed;
-                    player.setStateChangingWeapons();
+                 if (aimTarget.isRock && player.equipped != TechType.Pickaxe) {
+                    if (player.techTree.pickaxe > 0){
+                      player.equipPickaxe();
+                    } else if (!player.unarmed) {
+                      player.equipUnarmed();
+                    }
                  } else
-                 if (aimTarget.isTree && !TechType.isMelee(player.equipped)) {
-                   player.equipped = player.techTree.pickaxe > 0 ? TechType.Pickaxe : TechType.Unarmed;
-                   player.setStateChangingWeapons();
+                 if (aimTarget.isTree && player.equipped != TechType.Axe) {
+                   if (player.techTree.axe > 0){
+                     player.equipAxe();
+                   } else if (!player.unarmed) {
+                     player.equipUnarmed();
+                   }
                  }
               }
 
