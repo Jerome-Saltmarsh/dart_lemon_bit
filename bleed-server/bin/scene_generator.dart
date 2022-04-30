@@ -39,7 +39,12 @@ Scene generateRandomScene({
        }
        else
        if (noise < 0.4) {
-         column.add(Tile.Grass);
+
+         if (random.nextDouble() < 0.01) {
+           column.add(Tile.Long_Grass);
+         } else {
+           column.add(Tile.Grass);
+         }
          if (random.nextDouble() < 0.05) {
            const halfTileSize = 24.0;
            final px = perspectiveProjectX(columnIndex * halfTileSize, rowIndex * halfTileSize);

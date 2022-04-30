@@ -45,7 +45,7 @@ class _Audio {
   }
 
   void materialStruckWood(double x, double y){
-    _playPositioned('strike-wood.mp3', x, y);
+    _playPositioned('material-struck-wood.mp3', x, y);
   }
 
   void materialStruckRock(double x, double y){
