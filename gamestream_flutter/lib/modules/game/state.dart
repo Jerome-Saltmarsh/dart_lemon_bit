@@ -147,19 +147,23 @@ class Player {
     ;
   }
 
-  int getTechTypeLevel(int type){
+  Watch<int> getTechLevelWatch(int type){
     switch(type){
       case TechType.Pickaxe:
-        return levelPickaxe.value;
+        return levelPickaxe;
       case TechType.Sword:
-        return levelSword.value;
+        return levelSword;
       case TechType.Bow:
-        return levelBow.value;
+        return levelBow;
       case TechType.Axe:
-        return levelAxe.value;
+        return levelAxe;
       default:
         throw Exception("cannot get tech type level. type: $type");
     }
+  }
+
+  int getTechTypeLevel(int type){
+     return getTechLevelWatch(type).value;
   }
 
   // Properties

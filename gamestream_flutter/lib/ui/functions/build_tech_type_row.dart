@@ -67,27 +67,24 @@ Widget buildTechTypeRow(int type, Watch<int> levelWatch) {
                                     ? colours.white
                                     : colours.white618
                             ),
-                            Row(
-                              children: [
-                                Container(
-                                  width: 8,
-                                  height: 8,
-                                  color: Colors.blue,
-                                ),
-                                width8,
-                                Container(
-                                  width: 8,
-                                  height: 8,
-                                  color: Colors.blue,
-                                ),
-                                width8,
-                                Container(
-                                  width: 8,
-                                  height: 8,
-                                  color: Colors.blue,
-                                ),
-                              ],
-                            ),
+                            WatchBuilder(player.getTechLevelWatch(type), (int level) {
+                              final children = <Widget>[];
+                              for (var i = 0; i < level; i++){
+                                children.add(
+                                    Container(
+                                      width: 10,
+                                      height: 10,
+                                      color: Colors.blue,
+                                  )
+                                );
+                                if (i + 1 < level) {
+                                   children.add(width2);
+                                }
+                              }
+                              return Row(
+                                children: children,
+                              );
+                            }),
                           ],
                         ),
                       ],
