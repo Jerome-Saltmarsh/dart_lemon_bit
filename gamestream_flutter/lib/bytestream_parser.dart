@@ -144,6 +144,7 @@ class _ByteStreamParser {
           _player.levelPickaxe.value = nextByte();
           _player.levelSword.value = nextByte();
           _player.levelBow.value = nextByte();
+          _player.levelAxe.value = nextByte();
           break;
 
         case ServerResponse.Damage_Applied:

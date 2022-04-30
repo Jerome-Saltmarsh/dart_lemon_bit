@@ -96,12 +96,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       player.writePlayerSlots(player);
     }
 
-    void sendPlayerTechTree() {
-      final player = _player;
-      if (player == null) return;
-      player.writeTechTypes(player);
-    }
-
     void sendPlayerEvent(int event){
       final player = _player;
       if (player == null) return;
@@ -146,7 +140,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       write(ServerResponse.Game_Status);
       write(game.status.index);
       compilePlayersRemaining(_buffer, 0);
-      sendPlayerTechTree();
+      player.writeTechTypes();
       write('${ServerResponse.Game_Joined} 0 ${game.id} ${player.team} ${player.x.toInt()} ${player.y.toInt()}');
       sendAndClearBuffer();
       compileAndSendPlayerSlots();
@@ -821,7 +815,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               player.techTree.pickaxe++;
               if (player.techTree.pickaxe == 1) {
                  player.equipped = TechType.Pickaxe;
-                 player.setStateChangingWeapons();
+                 player.setStateChanging();
               }
               player.onPlayerEvent(PlayerEvent.Item_Purchased);
               break;
@@ -829,7 +823,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               player.techTree.bow++;
               if (player.techTree.bow == 1) {
                 player.equipped = TechType.Bow;
-                player.setStateChangingWeapons();
+                player.setStateChanging();
               }
               player.onPlayerEvent(PlayerEvent.Item_Purchased);
               break;
@@ -837,7 +831,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               player.techTree.sword++;
               if (player.techTree.sword == 1) {
                 player.equipped = TechType.Sword;
-                player.setStateChangingWeapons();
+                player.setStateChanging();
               }
               player.onPlayerEvent(PlayerEvent.Item_Purchased);
               break;
@@ -845,12 +839,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               player.techTree.axe++;
               if (player.techTree.axe == 1) {
                 player.equipped = TechType.Axe;
-                player.setStateChangingWeapons();
+                player.setStateChanging();
               }
               player.onPlayerEvent(PlayerEvent.Item_Purchased);
               break;
           }
-          sendPlayerTechTree();
+          player.writeTechTypes();
           break;
 
         case ClientRequest.Attack:
@@ -878,7 +872,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return errorInvalidArg('Invalid tech type: got $techType');
           }
           player.equipped = techType;
-          player.setStateChangingWeapons();
+          player.setStateChanging();
           return;
 
         case ClientRequest.Purchase:

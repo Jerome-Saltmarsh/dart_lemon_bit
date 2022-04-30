@@ -33,13 +33,6 @@ class ByteWriter {
     // writeSlot(slots.slot6); // 3
   }
 
-  void writeTechTypes(Player player){
-    writeByte(ServerResponse.Tech_Types);
-    writeByte(player.techTree.pickaxe);
-    writeByte(player.techTree.sword);
-    writeByte(player.techTree.bow);
-  }
-
   void writeDynamicObjects(Player player) {
      writeByte(ServerResponse.Dynamic_Objects);
      final dynamicObjects = player.game.scene.dynamicObjects;

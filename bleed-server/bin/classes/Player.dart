@@ -7,7 +7,6 @@ import '../constants/no_squad.dart';
 import '../engine.dart';
 import '../functions/generateName.dart';
 import '../utilities.dart';
-import 'Ability.dart';
 import 'Character.dart';
 import 'Collider.dart';
 import 'Game.dart';
@@ -88,203 +87,131 @@ class Player extends Character with ByteWriter {
     engine.onPlayerCreated(this);
   }
 
-  void setStateChangingWeapons(){
-    onPlayerEvent(PlayerEvent.Item_Equipped); // TODO
-    game.setCharacterState(this, CharacterState.Changing);
-  }
-
   void equipPickaxe(){
     equipped = TechType.Pickaxe;
-    setStateChangingWeapons();
+    setStateChanging();
   }
 
   void equipAxe(){
     equipped = TechType.Axe;
-    setStateChangingWeapons();
+    setStateChanging();
   }
 
   void equipUnarmed(){
     equipped = TechType.Unarmed;
-    setStateChangingWeapons();
+    setStateChanging();
   }
 
-  // void unequip(SlotTypeCategory slotTypeCategory){
-  //   final emptySlot = slots.getEmptySlot();
-  //   if (emptySlot == null) return;
+  void setStateChanging(){
+    onPlayerEvent(PlayerEvent.Item_Equipped);
+    game.setCharacterState(this, CharacterState.Changing);
+  }
+
+  // void useSlot(Slots slots, int index) {
+  //     if (deadOrBusy) return;
+  //     if (index < 0) return;
+  //     if (index > 6) return;
   //
-  //   switch(slotTypeCategory) {
-  //     case SlotTypeCategory.Weapon:
-  //       if (weapon == SlotType.Empty) return;
-  //       final weaponSlot = slots.weapon;
-  //       emptySlot.swapWith(weaponSlot);
-  //       onUnequipped(weapon);
+  //     final slot = slots.getSlotAtIndex(index);
+  //     if (slot.isEmpty) return;
+  //     final slotType = slot.type;
+  //
+  //     if (SlotType.isWeapon(slotType)) {
+  //       final currentWeapon = slots.weapon;
+  //       slots.weapon = slot;
+  //       slots.assignSlotAtIndex(index, currentWeapon);
+  //       onSlotsChanged();
   //       setStateChangingWeapons();
-  //       break;
-  //     case SlotTypeCategory.Armour:
-  //       final armour = slots.armour;
-  //       if (armour.isEmpty) return;
-  //       onUnequipped(armour.type);
-  //       emptySlot.swapWith(armour);
+  //       return;
+  //     }
+  //
+  //     if (SlotType.isArmour(slotType)) {
+  //       final currentArmourType = slots.armour.type;
+  //       slots.armour.swapWith(slot);
+  //       onEquipped(slotType);
+  //       onUnequipped(currentArmourType);
   //       setStateChangingWeapons();
-  //       break;
-  //     case SlotTypeCategory.Helm:
-  //       final helm = slots.helm;
-  //       if (helm.isEmpty) return;
-  //       onUnequipped(helm.type);
-  //       emptySlot.swapWith(helm);
+  //       onSlotsChanged();
+  //     }
+  //
+  //     if (SlotType.isHelm(slotType)) {
+  //       final currentArmourType = slots.helm.type;
+  //       slots.helm.swapWith(slot);
+  //       onEquipped(slotType);
+  //       onUnequipped(currentArmourType);
   //       setStateChangingWeapons();
-  //       break;
-  //     case SlotTypeCategory.Pants:
-  //       break;
-  //   }
+  //       onSlotsChanged();
+  //     }
+  //
+  //     if (slotType == SlotType.Spell_Tome_Fireball) {
+  //       final cost = 5;
+  //       if (magic < cost) return;
+  //       ability = Ability(type: AbilityType.Fireball,
+  //           level: 1,
+  //           cost: cost,
+  //           range: 250,
+  //           cooldown: 100,
+  //           mode: AbilityMode.Targeted);
+  //       return;
+  //     }
+  //
+  //     // if (slotType == SlotType.Spell_Tome_Ice_Ring) {
+  //     //   final cost = 5;
+  //     //   if (magic < cost) return;
+  //     //   magic -= cost;
+  //     //   if (!SlotType.isStaff(weapon)) {
+  //     //     final index = slots.getSlotIndexWhere(SlotType.isStaff);
+  //     //     if (index == null) return;
+  //     //     useSlot(index);
+  //     //   }
+  //     //   game.spawnFreezeRing(src: this);
+  //     //   setStateChangingWeapons();
+  //     //   onSlotsChanged();
+  //     //   return;
+  //     // }
+  //
+  //     // if (slotType == SlotType.Spell_Tome_Split_Arrow) {
+  //     //   final cost = 5;
+  //     //   if (magic < cost) return;
+  //     //   if (!SlotType.isBow(weapon)){
+  //     //      final bowIndex = slots.getSlotIndexWhere(SlotType.isBow);
+  //     //      if (bowIndex == null) return;
+  //     //      useSlot(bowIndex);
+  //     //   }
+  //     //
+  //     //   ability = Ability(type: AbilityType.Split_Arrow,
+  //     //       level: 1,
+  //     //       cost: cost,
+  //     //       range: 250,
+  //     //       cooldown: 100,
+  //     //       mode: AbilityMode.Directed);
+  //     //   return;
+  //     // }
+  //
+  //     if (slotType == SlotType.Potion_Red) {
+  //       health = maxHealth;
+  //       slots.assignSlotTypeAtIndex(index, SlotType.Empty);
+  //       setStateChangingWeapons();
+  //       onPlayerEvent(PlayerEvent.Drink_Potion);
+  //       onSlotsChanged();
+  //     }
+  //
+  //     if (slotType == SlotType.Potion_Blue) {
+  //       magic = maxMagic;
+  //       slots.assignSlotTypeAtIndex(index, SlotType.Empty);
+  //       setStateChangingWeapons();
+  //       onPlayerEvent(PlayerEvent.Drink_Potion);
+  //       onSlotsChanged();
+  //     }
   // }
-
-  // void acquire(int slotType) {
-  //   if (SlotType.isWeapon(slotType)) {
-  //     final slot = slots.getEmptyWeaponSlot();
-  //     if (slot == null) return;
-  //     onPlayerEvent(PlayerEvent.Item_Purchased);
-  //     setStateChangingWeapons();
-  //     slot.type = slotType;
-  //     slot.amount = 10;
-  //     onEquipped(slotType);
-  //     return;
-  //   }
   //
-  //   if (SlotType.isArmour(slotType)) {
-  //     final slot = slots.getEmptyArmourSlot();
-  //     if (slot == null) return;
-  //     onPlayerEvent(PlayerEvent.Item_Purchased);
-  //     setStateChangingWeapons();
-  //     slot.type = slotType;
-  //     onEquipped(slotType);
-  //     return;
-  //   }
-  //   if (SlotType.isHelm(slotType)) {
-  //     final slot = slots.getEmptyHeadSlot();
-  //     if (slot == null) return;
-  //     onPlayerEvent(PlayerEvent.Item_Purchased);
-  //     setStateChangingWeapons();
-  //     slot.type = slotType;
-  //     onEquipped(slotType);
-  //   }
-  //
-  //   final emptySlot = slots.getEmptySlot();
-  //   if (emptySlot == null) return;
-  //   onPlayerEvent(PlayerEvent.Item_Purchased);
-  //   setStateChangingWeapons();
-  //   emptySlot.type = slotType;
-  //   if (SlotType.isItem(slotType)){
-  //     onEquipped(slotType);
-  //   }
-  //   return;
+  // void sellSlot(Slots slots, int index){
+  //   final slotAtIndex = slots.getSlotTypeAtIndex(index);
+  //   if (slotAtIndex == SlotType.Empty) return;
+  //   slots.assignSlotTypeAtIndex(index, SlotType.Empty);
+  //   onPlayerEvent(PlayerEvent.Item_Sold);
+  //   onSlotsChanged();
   // }
-
-  void useSlot(Slots slots, int index) {
-      if (deadOrBusy) return;
-      if (index < 0) return;
-      if (index > 6) return;
-
-      final slot = slots.getSlotAtIndex(index);
-      if (slot.isEmpty) return;
-      final slotType = slot.type;
-
-      if (SlotType.isWeapon(slotType)) {
-        final currentWeapon = slots.weapon;
-        slots.weapon = slot;
-        slots.assignSlotAtIndex(index, currentWeapon);
-        onSlotsChanged();
-        setStateChangingWeapons();
-        return;
-      }
-
-      if (SlotType.isArmour(slotType)) {
-        final currentArmourType = slots.armour.type;
-        slots.armour.swapWith(slot);
-        onEquipped(slotType);
-        onUnequipped(currentArmourType);
-        setStateChangingWeapons();
-        onSlotsChanged();
-      }
-
-      if (SlotType.isHelm(slotType)) {
-        final currentArmourType = slots.helm.type;
-        slots.helm.swapWith(slot);
-        onEquipped(slotType);
-        onUnequipped(currentArmourType);
-        setStateChangingWeapons();
-        onSlotsChanged();
-      }
-
-      if (slotType == SlotType.Spell_Tome_Fireball) {
-        final cost = 5;
-        if (magic < cost) return;
-        ability = Ability(type: AbilityType.Fireball,
-            level: 1,
-            cost: cost,
-            range: 250,
-            cooldown: 100,
-            mode: AbilityMode.Targeted);
-        return;
-      }
-
-      // if (slotType == SlotType.Spell_Tome_Ice_Ring) {
-      //   final cost = 5;
-      //   if (magic < cost) return;
-      //   magic -= cost;
-      //   if (!SlotType.isStaff(weapon)) {
-      //     final index = slots.getSlotIndexWhere(SlotType.isStaff);
-      //     if (index == null) return;
-      //     useSlot(index);
-      //   }
-      //   game.spawnFreezeRing(src: this);
-      //   setStateChangingWeapons();
-      //   onSlotsChanged();
-      //   return;
-      // }
-
-      // if (slotType == SlotType.Spell_Tome_Split_Arrow) {
-      //   final cost = 5;
-      //   if (magic < cost) return;
-      //   if (!SlotType.isBow(weapon)){
-      //      final bowIndex = slots.getSlotIndexWhere(SlotType.isBow);
-      //      if (bowIndex == null) return;
-      //      useSlot(bowIndex);
-      //   }
-      //
-      //   ability = Ability(type: AbilityType.Split_Arrow,
-      //       level: 1,
-      //       cost: cost,
-      //       range: 250,
-      //       cooldown: 100,
-      //       mode: AbilityMode.Directed);
-      //   return;
-      // }
-
-      if (slotType == SlotType.Potion_Red) {
-        health = maxHealth;
-        slots.assignSlotTypeAtIndex(index, SlotType.Empty);
-        setStateChangingWeapons();
-        onPlayerEvent(PlayerEvent.Drink_Potion);
-        onSlotsChanged();
-      }
-
-      if (slotType == SlotType.Potion_Blue) {
-        magic = maxMagic;
-        slots.assignSlotTypeAtIndex(index, SlotType.Empty);
-        setStateChangingWeapons();
-        onPlayerEvent(PlayerEvent.Drink_Potion);
-        onSlotsChanged();
-      }
-  }
-
-  void sellSlot(Slots slots, int index){
-    final slotAtIndex = slots.getSlotTypeAtIndex(index);
-    if (slotAtIndex == SlotType.Empty) return;
-    slots.assignSlotTypeAtIndex(index, SlotType.Empty);
-    onPlayerEvent(PlayerEvent.Item_Sold);
-    onSlotsChanged();
-  }
 }
 
 class Slot {
@@ -580,4 +507,11 @@ extension PlayerProperties on Player {
     writeByte(END);
   }
 
+  void writeTechTypes() {
+    writeByte(ServerResponse.Tech_Types);
+    writeByte(techTree.pickaxe);
+    writeByte(techTree.sword);
+    writeByte(techTree.bow);
+    writeByte(techTree.axe);
+  }
 }
