@@ -34,6 +34,7 @@ class _Icons {
 
 class _IconsSymbols {
   final plus = buildIcon("plus", width: 32, height: 32);
+  final plusTransparent = buildIcon("plus-transparent", width: 32, height: 32);
 }
 
 class _IconsResources {

@@ -1,3 +1,4 @@
+import 'package:bleed_common/Cost.dart';
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
@@ -99,6 +100,49 @@ class Player {
   final levelSword = Watch(0);
   final levelBow = Watch(0);
   final levelAxe = Watch(0);
+
+  final canAffordUpgradePickaxe = Watch(false);
+  final canAffordUpgradeSword = Watch(false);
+  final canAffordUpgradeBow = Watch(false);
+  final canAffordUpgradeAxe = Watch(false);
+
+  Watch<bool> getCanAffordWatch(int type){
+    switch (type){
+      case TechType.Pickaxe:
+        return canAffordUpgradePickaxe;
+      case TechType.Sword:
+        return canAffordUpgradeSword;
+      case TechType.Unarmed:
+        return canAffordUpgradeSword;
+      case TechType.Axe:
+        return canAffordUpgradeAxe;
+      case TechType.Bow:
+        return canAffordUpgradeBow;
+    }
+    throw Exception('$type has not watch');
+  }
+
+  Player(){
+    wood.onChanged(_onResourcesChanged);
+    gold.onChanged(_onResourcesChanged);
+    stone.onChanged(_onResourcesChanged);
+  }
+
+  void _onResourcesChanged(int value){
+     _updateCanAffords();
+  }
+
+  void _updateCanAffords() {
+     final costPickaxe = TechType.getCost(TechType.Pickaxe, levelPickaxe.value);
+     canAffordUpgradePickaxe.value = costPickaxe != null && canAfford(costPickaxe);
+
+     final costSword = TechType.getCost(TechType.Sword, levelPickaxe.value);
+     canAffordUpgradeSword.value = costSword != null && canAfford(costSword);
+  }
+
+  bool canAfford(Cost cost){
+    return wood.value >= cost.wood && stone.value >= cost.stone && gold.value >= cost.gold;
+  }
 
   int getTechTypeLevel(int type){
     switch(type){

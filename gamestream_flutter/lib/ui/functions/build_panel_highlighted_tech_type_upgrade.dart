@@ -28,12 +28,7 @@ Widget buildPanelHighlightedTechTypeUpgrade(){
         width: 200,
         decoration: boxStandard,
         padding: padding6,
-        child: Column(
-          children: [
-            // text("Level ${level + 1}"),
-            buildCost(cost),
-          ],
-        ),
+        child: buildCost(cost),
       ),
     );
   });
