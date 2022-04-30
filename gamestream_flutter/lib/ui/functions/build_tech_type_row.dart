@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/resources.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/styles.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -69,16 +70,16 @@ Widget buildTechTypeRow(int type, Watch<int> levelWatch) {
                             ),
                             WatchBuilder(player.getTechLevelWatch(type), (int level) {
                               final children = <Widget>[];
-                              for (var i = 0; i < level; i++){
+                              for (var i = 0; i < 5; i++){
                                 children.add(
                                     Container(
                                       width: 10,
                                       height: 10,
-                                      color: Colors.blue,
+                                      color: i < level ? Colors.blue : Colors.blue.withOpacity(0.1),
                                   )
                                 );
-                                if (i + 1 < level) {
-                                   children.add(width2);
+                                if (i + 1 < 5) {
+                                   children.add(width4);
                                 }
                               }
                               return Row(
