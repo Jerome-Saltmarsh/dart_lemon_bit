@@ -355,8 +355,6 @@ extension GameFunctions on Game {
         setCharacterStateDead(target);
         if (isZombie) {
           spawnCollectable(position: target, target: src, type: CollectableType.Gold, amount: 1);
-          // spawnCollectable(position: target, target: src, type: CollectableType.Experience, amount: 1);
-          // spawnCollectable(position: target, target: src, type: CollectableType.Experience, amount: 1);
         }
         return;
       }
@@ -390,17 +388,17 @@ extension GameFunctions on Game {
 
       switch (target.type) {
         case DynamicObjectType.Chest:
-          dispatchV2(GameEventType.Object_Struck, target);
+          // dispatchV2(GameEventType.Object_Struck, target);
           break;
         case DynamicObjectType.Rock:
-          dispatchV2(GameEventType.Rock_Struck, target);
+          // dispatchV2(GameEventType.Rock_Struck, target);
           if (src is Player) {
             // final spawns = killed ? 3 : 1;
             spawnCollectable(position: target, target: src, type: CollectableType.Stone, amount: damage);
           }
           break;
         case DynamicObjectType.Tree:
-          dispatchV2(GameEventType.Tree_Struck, target);
+          // dispatchV2(GameEventType.Tree_Struck, target);
           if (src is Player) {
             spawnCollectable(position: target, target: src, type: CollectableType.Wood, amount: damage);
           }
@@ -411,11 +409,11 @@ extension GameFunctions on Game {
         target.collidable = false;
         target.respawnDuration = 150;
         if (target.type == DynamicObjectType.Pot) {
-          dispatchV2(GameEventType.Pot_Destroyed, target);
+          dispatchV2(GameEventType.Object_Destroyed_Pot, target);
         } else if (target.type == DynamicObjectType.Rock) {
-          dispatchV2(GameEventType.Rock_Destroyed, target);
+          dispatchV2(GameEventType.Object_Destroyed_Rock, target);
         } else if (target.type == DynamicObjectType.Tree) {
-          dispatchV2(GameEventType.Tree_Destroyed, target);
+          dispatchV2(GameEventType.Object_Destroyed_Tree, target);
         } else if (target.type == DynamicObjectType.Chest) {
           dispatchV2(GameEventType.Object_Destroyed_Chest, target);
           for (var i = 0; i < 3; i++) {
@@ -438,6 +436,7 @@ extension GameFunctions on Game {
     required int type,
     required int amount,
   }){
+    if (amount <= 0) return;
     final collectable = Collectable();
     collectable.type = type;
     collectable.amount = amount;
@@ -823,12 +822,34 @@ extension GameFunctions on Game {
       }
     }
 
+    if (target is Material) {
+      switch ((target as Material).material) {
+        case MaterialType.Rock:
+          dispatchV2(GameEventType.Material_Struck_Rock, target);
+          break;
+        case MaterialType.Wood:
+          dispatchV2(GameEventType.Material_Struck_Wood, target);
+          break;
+        case MaterialType.Plant:
+          dispatchV2(GameEventType.Material_Struck_Plant, target);
+          break;
+        case MaterialType.Flesh:
+          dispatchV2(GameEventType.Material_Struck_Flesh, target);
+          break;
+        case MaterialType.Metal:
+          dispatchV2(GameEventType.Material_Struck_Metal, target);
+          break;
+        case MaterialType.Other:
+          break;
+      }
+    }
+
     if (target is Character) {
-      dispatchV2(
-          GameEventType.Character_Struck,
-          target,
-          angle: angleBetweenSrcAndTarget
-      );
+      // dispatchV2(
+      //     GameEventType.Character_Struck,
+      //     target,
+      //     angle: angleBetweenSrcAndTarget
+      // );
 
       if (target.dead && target.type.isZombie) {
         dispatchV2(

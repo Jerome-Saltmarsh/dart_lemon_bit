@@ -44,6 +44,18 @@ class _Audio {
     _playPositioned('object-struck.mp3', x, y);
   }
 
+  void materialStruckWood(double x, double y){
+    _playPositioned('strike-wood.mp3', x, y);
+  }
+
+  void materialStruckRock(double x, double y){
+    _playPositioned('object-struck.mp3', x, y);
+  }
+
+  void materialStruckFlesh(double x, double y){
+    _playPositioned('bloody-punches-1.mp3', x, y);
+  }
+
   void stopMusic(){
     _musicPlayer.stop();
   }

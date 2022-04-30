@@ -391,36 +391,22 @@ class GameEvents {
       case GameEventType.Credits_Acquired:
         audio.collectStar4(x, y);
         break;
-      case GameEventType.Pot_Destroyed:
+
+      case GameEventType.Object_Destroyed_Pot:
         for (var i = 0; i < 8; i++) {
           isometric.spawn.potShard(x, y);
         }
         audio.potBreaking(x, y);
         break;
-      case GameEventType.Object_Struck:
-        audio.objectStruck(x, y);
-        break;
-      case GameEventType.Rock_Destroyed:
+
+      case GameEventType.Object_Destroyed_Rock:
         for (var i = 0; i < 8; i++) {
           isometric.spawn.rockShard(x, y);
         }
         audio.rockBreaking(x, y);
         break;
 
-      case GameEventType.Rock_Struck:
-        for (var i = 0; i < 8; i++) {
-          isometric.spawn.rockShard(x, y);
-        }
-        audio.objectStruck(x, y);
-        break;
-      case GameEventType.Tree_Struck:
-        for (var i = 0; i < 8; i++) {
-          isometric.spawn.treeShard(x, y);
-        }
-        audio.objectStruck(x, y);
-        break;
-
-      case GameEventType.Tree_Destroyed:
+      case GameEventType.Object_Destroyed_Tree:
         for (var i = 0; i < 8; i++) {
           isometric.spawn.treeShard(x, y);
         }
@@ -433,6 +419,25 @@ class GameEvents {
         }
         audio.crateDestroyed(x, y);
         break;
+
+      case GameEventType.Material_Struck_Wood:
+        for (var i = 0; i < 8; i++) {
+          isometric.spawn.treeShard(x, y);
+        }
+        audio.materialStruckWood(x, y);
+        break;
+
+      case GameEventType.Material_Struck_Rock:
+        for (var i = 0; i < 8; i++) {
+          isometric.spawn.rockShard(x, y);
+        }
+        audio.materialStruckRock(x, y);
+        break;
+
+      case GameEventType.Material_Struck_Flesh:
+        audio.materialStruckFlesh(x, y);
+        break;
+
     }
   }
 }
