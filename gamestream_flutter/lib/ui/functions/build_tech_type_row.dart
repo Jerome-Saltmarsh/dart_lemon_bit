@@ -79,7 +79,7 @@ Widget buildTechTypeRow(int type, Watch<int> levelWatch) {
                   if (state.highlightedTechTypeUpgrade.value != type) return;
                   state.highlightedTechTypeUpgrade.value = null;
                 },
-                child: WatchBuilder(player.getCanAffordWatch(0), (bool canAfford){
+                child: WatchBuilder(player.getCanAffordWatch(type), (bool canAfford){
                   return onPressed(
                     child: Container(
                         width: 32,

@@ -112,8 +112,6 @@ class Player {
         return canAffordUpgradePickaxe;
       case TechType.Sword:
         return canAffordUpgradeSword;
-      case TechType.Unarmed:
-        return canAffordUpgradeSword;
       case TechType.Axe:
         return canAffordUpgradeAxe;
       case TechType.Bow:
@@ -133,15 +131,20 @@ class Player {
   }
 
   void _updateCanAffords() {
-     final costPickaxe = TechType.getCost(TechType.Pickaxe, levelPickaxe.value);
-     canAffordUpgradePickaxe.value = costPickaxe != null && canAfford(costPickaxe);
-
-     final costSword = TechType.getCost(TechType.Sword, levelPickaxe.value);
-     canAffordUpgradeSword.value = costSword != null && canAfford(costSword);
+     canAffordUpgradePickaxe.value = canAfford(TechType.Pickaxe);
+     canAffordUpgradeSword.value = canAfford(TechType.Sword);
+     canAffordUpgradeBow.value = canAfford(TechType.Bow);
+     canAffordUpgradeAxe.value = canAfford(TechType.Axe);
   }
 
-  bool canAfford(Cost cost){
-    return wood.value >= cost.wood && stone.value >= cost.stone && gold.value >= cost.gold;
+  bool canAfford(int type) {
+    final cost = TechType.getCost(type, getTechTypeLevel(type));
+    return
+        cost != null &&
+        wood.value >= cost.wood &&
+        stone.value >= cost.stone &&
+        gold.value >= cost.gold
+    ;
   }
 
   int getTechTypeLevel(int type){
