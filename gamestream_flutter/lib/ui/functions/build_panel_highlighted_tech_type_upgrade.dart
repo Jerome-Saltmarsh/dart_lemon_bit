@@ -30,7 +30,7 @@ Widget buildPanelHighlightedTechTypeUpgrade(){
         padding: padding6,
         child: Column(
           children: [
-            text("Level ${level + 1}"),
+            // text("Level ${level + 1}"),
             buildCost(cost),
           ],
         ),

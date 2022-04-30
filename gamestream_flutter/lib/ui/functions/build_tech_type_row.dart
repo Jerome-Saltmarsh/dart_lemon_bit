@@ -30,58 +30,45 @@ Widget buildTechTypeRow(int type, Watch<int> levelWatch) {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
-              child: MouseRegion(
-                onEnter: (event) {
-                  state.highlightedTechType.value = type;
-                },
-                onExit: (event) {
-                  if (state.highlightedTechType.value != type) return;
-                  state.highlightedTechType.value = null;
-                },
-                child: onPressed(
-                  callback: () {
-                    if (unlocked) {
-                      Server.equip(type);
-                    } else {
-                      Server.upgrade(type);
-                    }
-                  },
-                  child: WatchBuilder(state.player.equipped, (int equipped) {
-                    return Container(
-                      padding: padding6,
-                      decoration: BoxDecoration(
-                        color: equipped == type
-                            ? colours.white382
-                            : colours.none,
-                        borderRadius: borderRadius4,
-                      ),
-                      height: 48,
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 32,
-                            height: 32,
-                            alignment: Alignment.center,
-                            child: unlocked
-                                ? techTypeIcons[type]
-                                : techTypeIconsGray[type],
-                          ),
-                          width16,
-                          text(
-                              TechType.getName(type),
-                              color: unlocked
-                                  ? colours.white
-                                  : colours.white618
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
-                ),
+              child: onPressed(
+                callback: unlocked ? () {
+                  Server.equip(type);
+                } : null,
+                child: WatchBuilder(state.player.equipped, (int equipped) {
+                  return Container(
+                    padding: padding6,
+                    decoration: BoxDecoration(
+                      color: equipped == type
+                          ? colours.white382
+                          : colours.none,
+                      borderRadius: borderRadius4,
+                    ),
+                    height: 48,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 32,
+                          height: 32,
+                          alignment: Alignment.center,
+                          child: unlocked
+                              ? techTypeIcons[type]
+                              : techTypeIconsGray[type],
+                        ),
+                        width16,
+                        text(
+                            TechType.getName(type),
+                            color: unlocked
+                                ? colours.white
+                                : colours.white618
+                        ),
+                      ],
+                    ),
+                  );
+                }),
               ),
             ),
             width6,
-            if (level > 0 && upgradeAvailable)
+            if (upgradeAvailable)
               MouseRegion(
                 onEnter: (event) {
                   state.highlightedTechTypeUpgrade.value = type;
