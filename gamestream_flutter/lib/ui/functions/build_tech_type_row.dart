@@ -57,11 +57,38 @@ Widget buildTechTypeRow(int type, Watch<int> levelWatch) {
                               : techTypeIconsGray[type],
                         ),
                         width16,
-                        text(
-                            TechType.getName(type),
-                            color: unlocked
-                                ? colours.white
-                                : colours.white618
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            text(
+                                TechType.getName(type),
+                                color: unlocked
+                                    ? colours.white
+                                    : colours.white618
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  width: 8,
+                                  height: 8,
+                                  color: Colors.blue,
+                                ),
+                                width8,
+                                Container(
+                                  width: 8,
+                                  height: 8,
+                                  color: Colors.blue,
+                                ),
+                                width8,
+                                Container(
+                                  width: 8,
+                                  height: 8,
+                                  color: Colors.blue,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ],
                     ),

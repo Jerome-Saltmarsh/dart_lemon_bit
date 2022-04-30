@@ -134,7 +134,6 @@ class GameBuild {
             if (!alive)
             respawnButton(),
             buildPanelHighlightedStructureType(),
-            buildPanelHighlightedTechType(),
             buildPanelHighlightedTechTypeUpgrade(),
             buildPanelPrimary(),
           ]);

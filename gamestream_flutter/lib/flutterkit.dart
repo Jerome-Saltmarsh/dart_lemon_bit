@@ -251,10 +251,11 @@ Widget width(double value) {
   return SizedBox(width: value);
 }
 
-final Widget width16 = width(16);
-final Widget width8 = width(8);
-final Widget width6 = width(6);
-final Widget width4 = width(4);
+final width16 = width(16);
+final width8 = width(8);
+final width6 = width(6);
+final width4 = width(4);
+final width2 = width(2);
 
 ButtonStyle buildButtonStyle(Color borderColor, double borderWidth) {
   return OutlinedButton.styleFrom(
