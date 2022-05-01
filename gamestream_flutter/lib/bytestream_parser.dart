@@ -100,7 +100,7 @@ class _ByteStreamParser {
           _parsePlayerEvents();
           break;
         case ServerResponse.Dynamic_Objects:
-          _parseDynamicObjects();
+          parseDynamicObjects();
           break;
         case ServerResponse.Player_Attack_Target:
           _player.attackTarget.x = nextDouble();
@@ -466,18 +466,19 @@ class _ByteStreamParser {
     _events.onPlayerEvent(nextByte());
   }
 
-  void _parseDynamicObjects() {
-      var total = 0;
-      while (true) {
-         final typeIndex = nextByte();
-         if (typeIndex == END) break;
-         final dynamicObject = game.dynamicObjects[total];
-         dynamicObject.type = typeIndex;
-         dynamicObject.x = nextDouble();
-         dynamicObject.y = nextDouble();
-         total++;
-      }
-      game.totalDynamicObjects.value = total;
+  void parseDynamicObjects() {
+    var total = 0;
+    while (true) {
+      final typeIndex = nextByte();
+      if (typeIndex == END) break;
+      final dynamicObject = game.dynamicObjects[total];
+      dynamicObject.type = typeIndex;
+      dynamicObject.x = nextDouble();
+      dynamicObject.y = nextDouble();
+      dynamicObject.id = nextInt();
+      total++;
+    }
+    game.totalDynamicObjects.value = total;
   }
 
   void readVector2(Vector2 value){

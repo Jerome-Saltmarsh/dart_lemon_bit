@@ -407,7 +407,7 @@ extension GameFunctions on Game {
 
       if (killed) {
         target.collidable = false;
-        target.respawnDuration = 150;
+        target.respawnDuration = 1000;
         if (target.type == DynamicObjectType.Pot) {
           dispatchV2(GameEventType.Object_Destroyed_Pot, target);
         } else if (target.type == DynamicObjectType.Rock) {
@@ -1116,7 +1116,7 @@ extension GameFunctions on Game {
   /// GameEventType
   void dispatch(int type, double x, double y, [double angle = 0]) {
     for (final player in players) {
-      player.onGameEvent(type, x, y, angle);
+      player.writeGameEvent(type, x, y, angle);
     }
   }
 

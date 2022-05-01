@@ -10,6 +10,7 @@ import '../utilities.dart';
 import 'Character.dart';
 import 'Collider.dart';
 import 'Game.dart';
+import 'Scene.dart';
 
 class Player extends Character with ByteWriter {
   final mouse = Vector2(0, 0);
@@ -44,13 +45,14 @@ class Player extends Character with ByteWriter {
   Account? account;
 
   late Function onUpdated;
-  late Function onSlotsChanged;
+  // late Function onSlotsChanged;
   late Function(int value) onPlayerEvent;
   late Function(Position position, int amount) onDamageApplied;
-  late Function(int type, double x, double y, double angle) onGameEvent;
   late Function(GameError error, {String message}) dispatchError;
 
   double get mouseAngle => this.getAngle(mouse);
+
+  Scene get scene => game.scene;
 
   int get magic => _magic;
 
@@ -386,20 +388,20 @@ extension PlayerProperties on Player {
 
   void writePlayerGame() {
     writeByte(ServerResponse.Player);
-    writeBigInt(x);
-    writeBigInt(y);
-    writeBigInt(health); // 2
-    writeBigInt(maxHealth); // 2
-    writeBigInt(magic); // 2
-    writeBigInt(maxMagic); // 2
+    writeInt(x);
+    writeInt(y);
+    writeInt(health); // 2
+    writeInt(maxHealth); // 2
+    writeInt(magic); // 2
+    writeInt(maxMagic); // 2
     writeByte(equipped); // 3
     writeByte(SlotType.Empty); // armour
     writeByte(SlotType.Empty); // helm
     writeBool(alive); // 1
     writeBool(storeVisible); // 1
-    writeBigInt(wood);
-    writeBigInt(stone);
-    writeBigInt(gold);
+    writeInt(wood);
+    writeInt(stone);
+    writeInt(gold);
     writeStructures();
     writeCollectables();
     writePlayers();
@@ -408,7 +410,7 @@ extension PlayerProperties on Player {
     writeNpcs(this);
     writeGameTime(game);
     writePlayerZombies();
-    writeDynamicObjects(this);
+    writeDynamicObjects();
 
     if (game.debugMode)
       writePaths(game);
@@ -439,7 +441,7 @@ extension PlayerProperties on Player {
       if (sameTeam(otherPlayer, this)){
         writeString(otherPlayer.text);
       } else {
-        writeBigInt(0);
+        writeInt(0);
       }
     }
     writeByte(END);
@@ -513,5 +515,24 @@ extension PlayerProperties on Player {
     writeByte(techTree.sword);
     writeByte(techTree.bow);
     writeByte(techTree.axe);
+  }
+
+  void writeDynamicObjects() {
+    writeByte(ServerResponse.Dynamic_Objects);
+    final dynamicObjects = scene.dynamicObjects;
+    for (final dynamicObject in dynamicObjects) {
+      writeByte(dynamicObject.type);
+      writePosition(dynamicObject);
+      writeInt(dynamicObject.id);
+    }
+    writeByte(END);
+  }
+
+  void writeGameEvent(int type, double x, double y, double angle){
+    writeByte(ServerResponse.Game_Events);
+    writeByte(type);
+    writeInt(x);
+    writeInt(y);
+    writeInt(angle * radiansToDegrees);
   }
 }

@@ -102,9 +102,11 @@
 [ ] Randomly Generate Player Spawn Locations
 [ ] Randomly Generate Caves
 [ ] Randomly Generate Roads
+[ ] Generate Scene - Connect islands with bridges
 [ ] Item Type Hammer (Used to construct buildings)
-[ ] Indicate tech type level
-[ ] Fix bow render order
+[ ] (Fix) bow render order
+[ ] (Engine) Update Dynamic Objects on when changed
+[x] Indicate tech type level
 [x] Item Type Axe (Used to chop trees)
 [x] Fix Fire Bow Animation
 [x] Fix weapons do not damage zombies

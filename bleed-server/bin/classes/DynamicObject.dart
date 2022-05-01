@@ -5,7 +5,7 @@ import '../common/MaterialType.dart';
 import 'Collider.dart';
 import 'components.dart';
 
-class DynamicObject extends Collider with Health, Material {
+class DynamicObject extends Collider with Health, Material, Id {
   late int type; // DynamicObjectType.dart
   var respawnDuration = 5000;
 

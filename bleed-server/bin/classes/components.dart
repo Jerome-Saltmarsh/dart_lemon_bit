@@ -79,3 +79,9 @@ mixin Type<T> {
 mixin Material {
   late MaterialType material;
 }
+
+mixin Id {
+  static var _id = 0;
+  var id = _id++;
+}
+

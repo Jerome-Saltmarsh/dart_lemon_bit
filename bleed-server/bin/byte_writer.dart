@@ -22,32 +22,6 @@ class ByteWriter {
     return sendBuffer;
   }
 
-  void writePlayerSlots(Player player) {
-    writeByte(ServerResponse.Player_Slots);
-    // final slots = player.slots;
-    // writeSlot(slots.slot1); // 3
-    // writeSlot(slots.slot2); // 3
-    // writeSlot(slots.slot3); // 3
-    // writeSlot(slots.slot4); // 3
-    // writeSlot(slots.slot5); // 3
-    // writeSlot(slots.slot6); // 3
-  }
-
-  void writeDynamicObjects(Player player) {
-     writeByte(ServerResponse.Dynamic_Objects);
-     final dynamicObjects = player.game.scene.dynamicObjects;
-     for (final dynamicObject in dynamicObjects) {
-       if (dynamicObject.dead) continue;
-       if (dynamicObject.x < player.screenLeft) continue;
-       if (dynamicObject.x > player.screenRight) continue;
-       if (dynamicObject.y < player.screenTop) continue;
-       if (dynamicObject.y > player.screenBottom) break;
-       writeByte(dynamicObject.type);
-       writePosition(dynamicObject);
-     }
-     writeByte(END);
-  }
-
   void writeBool(bool value){
     writeByte(value ? 1 : 0);
   }
@@ -59,13 +33,13 @@ class ByteWriter {
       if (zombie.dead) continue;
       final pathIndex = zombie.pathIndex;
       if (pathIndex < 0) continue;
-      writeBigInt(pathIndex + 1);
+      writeInt(pathIndex + 1);
       for (var i = pathIndex; i >= 0; i--) {
-        writeBigInt(zombie.pathX[i]);
-        writeBigInt(zombie.pathY[i]);
+        writeInt(zombie.pathX[i]);
+        writeInt(zombie.pathY[i]);
       }
     }
-    writeBigInt(250);
+    writeInt(250);
 
     for (final zombie in zombies) {
       if (zombie.dead) continue;
@@ -99,14 +73,6 @@ class ByteWriter {
     writeByte(value);
   }
 
-  void writeGameEvent(Player player, int type, double x, double y, double angle){
-    writeByte(ServerResponse.Game_Events);
-    writeByte(type);
-    writeBigInt(x);
-    writeBigInt(y);
-    writeBigInt(angle * radiansToDegrees);
-  }
-
   void writeGameTime(Game game){
     writeByte(ServerResponse.Game_Time);
     final totalMinutes = game.getTime() ~/ 60;
@@ -120,7 +86,7 @@ class ByteWriter {
       if (!gameObject.active) continue;
       total++;
     }
-    writeBigInt(total);
+    writeInt(total);
   }
 
   void writeTotalAlive(List<Health> values){
@@ -129,7 +95,7 @@ class ByteWriter {
       if (gameObject.dead) continue;
       total++;
     }
-    writeBigInt(total);
+    writeInt(total);
   }
 
   void writeProjectile(Projectile projectile){
@@ -137,14 +103,14 @@ class ByteWriter {
     final degrees = getAngle(projectile.xv, projectile.yv) * radiansToDegrees;
     writePosition(projectile);
     writeByte(projectile.type);
-    writeBigInt(degrees);
+    writeInt(degrees);
   }
 
   void writeDamageApplied(Position target, int amount) {
     if (amount <= 0) return;
     writeByte(ServerResponse.Damage_Applied);
     writePosition(target);
-    writeBigInt(amount);
+    writeInt(amount);
   }
 
   void writePlayer(Player player) {
@@ -154,11 +120,11 @@ class ByteWriter {
     writeByte(SlotType.Empty); // armour
     writeByte(SlotType.Empty); // helm
     writeString(player.name);
-    writeBigInt(player.score);
+    writeInt(player.score);
   }
   
   void writeString(String value){
-    writeBigInt(value.length);
+    writeInt(value.length);
     if (value.length == 0) return;
     final encoded = utf8.encode(value);
     for(final character in encoded){
@@ -210,16 +176,16 @@ class ByteWriter {
   }
 
   void writeVector2(Vector2 value){
-    writeBigInt(value.x);
-    writeBigInt(value.y);
+    writeInt(value.x);
+    writeInt(value.y);
   }
 
   void writePosition(Position value){
-    writeBigInt(value.x);
-    writeBigInt(value.y);
+    writeInt(value.x);
+    writeInt(value.y);
   }
 
-  void writeBigInt(num value){
+  void writeInt(num value){
     writeNumberToByteArray(number: value, list: _buffer, index: _index);
     _index += 2;
   }
@@ -232,6 +198,6 @@ class ByteWriter {
 
   void writeSlot(Slot slot){
     writeByte(slot.type);
-    writeBigInt(slot.amount);
+    writeInt(slot.amount);
   }
 }

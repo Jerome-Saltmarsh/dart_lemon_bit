@@ -90,22 +90,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       clearBuffer();
     }
 
-    void compileAndSendPlayerSlots(){
-      final player = _player;
-      if (player == null) return;
-      player.writePlayerSlots(player);
-    }
-
     void sendPlayerEvent(int event){
       final player = _player;
       if (player == null) return;
       player.writePlayerEvents(event);
-    }
-
-    void sendGameEvent(int type, double x, double y, double angle){
-      final player = _player;
-      if (player == null) return;
-      player.writeGameEvent(player, type, x, y, angle);
     }
 
     void compileAndSendPlayer(){
@@ -123,8 +111,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       final player = _player;
       if (player == null) return;
       player.onUpdated = compileAndSendPlayer;
-      player.onSlotsChanged = compileAndSendPlayerSlots;
-      player.onGameEvent = sendGameEvent;
       player.dispatchError = error;
       player.onPlayerEvent = sendPlayerEvent;
       final account = _account;
@@ -141,9 +127,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       write(game.status.index);
       compilePlayersRemaining(_buffer, 0);
       player.writeTechTypes();
+      // player.writeDynamicObjects();
       write('${ServerResponse.Game_Joined} 0 ${game.id} ${player.team} ${player.x.toInt()} ${player.y.toInt()}');
       sendAndClearBuffer();
-      compileAndSendPlayerSlots();
+      // compileAndSendPlayerSlots();
+      player.writeDynamicObjects();
       compileAndSendPlayer();
     }
 
