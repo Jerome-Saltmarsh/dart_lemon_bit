@@ -108,10 +108,10 @@ Widget buildTechTypeRow(int type, Watch<int> levelWatch) {
                     child: Container(
                         width: 32,
                         height: 32,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: canAfford ? colours.green : colours.green.withOpacity(0.5), width: 2.0, style: BorderStyle.solid),
-                          borderRadius: borderRadius4,
-                        ),
+                        // decoration: BoxDecoration(
+                        //   border: Border.all(color: canAfford ? colours.green : colours.green.withOpacity(0.5), width: 2.0, style: BorderStyle.solid),
+                        //   borderRadius: borderRadius4,
+                        // ),
                         child: canAfford ? resources.icons.symbols.plus : resources.icons.symbols.plusTransparent),
                     callback: canAfford ? () => Server.upgrade(type) : null,
                   );

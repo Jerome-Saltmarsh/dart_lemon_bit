@@ -164,6 +164,11 @@ class _ByteStreamParser {
           isometric.spawnFloatingText(x, y, amount.toString());
           break;
 
+        case ServerResponse.Dynamic_Object_Destroyed:
+          final id = nextInt();
+          game.dynamicObjects.removeWhere((dynamicObject) => dynamicObject.id == id);
+          break;
+
         case ServerResponse.Paths:
           modules.game.state.compilePaths.value = true;
           final paths = modules.isometric.paths;

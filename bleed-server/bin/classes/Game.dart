@@ -359,7 +359,6 @@ extension GameFunctions on Game {
         return;
       }
       if (isZombie) {
-        // spawnCollectable(position: target, target: src, type: CollectableType.Experience, amount: amount);
         setCharacterState(target, CharacterState.Hurt);
       }
       if (target is AI) {
@@ -408,6 +407,8 @@ extension GameFunctions on Game {
       if (killed) {
         target.collidable = false;
         target.respawnDuration = 1000;
+        onDynamicObjectDestroyed(target);
+
         if (target.type == DynamicObjectType.Pot) {
           dispatchV2(GameEventType.Object_Destroyed_Pot, target);
         } else if (target.type == DynamicObjectType.Rock) {
@@ -1117,6 +1118,12 @@ extension GameFunctions on Game {
   void dispatch(int type, double x, double y, [double angle = 0]) {
     for (final player in players) {
       player.writeGameEvent(type, x, y, angle);
+    }
+  }
+
+  void onDynamicObjectDestroyed(DynamicObject dynamicObject){
+    for (final player in players) {
+      player.writeDynamicObjectDestroyed(dynamicObject);
     }
   }
 

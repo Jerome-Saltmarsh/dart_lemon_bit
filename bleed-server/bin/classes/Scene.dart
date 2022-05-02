@@ -146,7 +146,7 @@ class Scene {
                  type: DynamicObjectType.Tree,
                  x: env.x,
                  y: env.y,
-                 health: 50
+                 health: 10
              )
          );
        }

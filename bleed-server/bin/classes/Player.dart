@@ -9,6 +9,7 @@ import '../functions/generateName.dart';
 import '../utilities.dart';
 import 'Character.dart';
 import 'Collider.dart';
+import 'DynamicObject.dart';
 import 'Game.dart';
 import 'Scene.dart';
 
@@ -566,5 +567,10 @@ extension PlayerProperties on Player {
     writeInt(x);
     writeInt(y);
     writeInt(angle * radiansToDegrees);
+  }
+
+  void writeDynamicObjectDestroyed(DynamicObject dynamicObject){
+    writeByte(ServerResponse.Dynamic_Object_Destroyed);
+    writeInt(dynamicObject.id);
   }
 }
