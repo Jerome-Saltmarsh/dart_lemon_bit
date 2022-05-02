@@ -23,7 +23,7 @@ class GameRandom extends Game {
 
   @override
   void update() {
-    time++ % Duration.secondsPerDay;
+    time = (time + 1) % Duration.secondsPerDay;
   }
 
   @override
