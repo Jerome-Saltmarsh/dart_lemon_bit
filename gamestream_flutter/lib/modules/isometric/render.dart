@@ -411,7 +411,7 @@ class IsometricRender {
   }){
     engine.renderCustomV2(
       dst: position,
-      srcX: 1314 ,
+      srcX: 5981 ,
       srcY: shade * 96,
       srcWidth: 48,
       srcHeight: 96,
