@@ -32,11 +32,14 @@ class GameRandom extends Game {
   }
 
   Player spawnPlayer() {
-      return Player(
+      final player = Player(
         game: this,
         weapon: SlotType.Empty,
         x: 500,
         y: 500,
       );
+      // player.techTree.bow = 2;
+      // player.techTree.pickaxe = 2;
+      return player;
   }
 }

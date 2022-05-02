@@ -625,16 +625,42 @@ class IsometricRender {
     if (shade < Shade.Dark) {
       renderCharacterHealthBar(character);
     }
-
     final weapon = character.equipped;
-    final variation = weapon == SlotType.Shotgun || TechType.isBow(weapon);
-    final maxDirection = variation ? Direction.Right : Direction.UpRight;
-    final minDirection = variation ? Direction.DownLeft : Direction.Down;
     final direction = character.direction;
 
-    if (direction <= minDirection && direction >= maxDirection) {
-      _renderCharacterTemplateWeapon(character);
-      _renderCharacterTemplate(character);
+    if (TechType.isBow(weapon)) {
+       if (
+            direction == Direction.Up
+            ||
+            direction == Direction.UpRight
+            ||
+            direction == Direction.Right
+            ||
+            direction == Direction.DownRight
+       ){
+         _renderCharacterTemplateWeapon(character);
+         _renderCharacterTemplate(character);
+       } else {
+         _renderCharacterTemplate(character);
+         _renderCharacterTemplateWeapon(character);
+       }
+       return;
+    }
+
+    if (TechType.isMelee(weapon)) {
+      if (
+          direction == Direction.Up
+          ||
+          direction == Direction.UpLeft
+          ||
+          direction == Direction.Left
+      ){
+        _renderCharacterTemplateWeapon(character);
+        _renderCharacterTemplate(character);
+      } else {
+        _renderCharacterTemplate(character);
+        _renderCharacterTemplateWeapon(character);
+      }
       return;
     }
     _renderCharacterTemplate(character);

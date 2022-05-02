@@ -104,7 +104,7 @@
 [ ] Randomly Generate Roads
 [ ] Generate Scene - Connect islands with bridges
 [ ] Item Type Hammer (Used to construct buildings)
-[ ] (Fix) bow render order
+[x] (Fix) weapon render order
 [x] Fix Join Game 
 [x] (Engine) Update Dynamic Objects on when changed
 [x] Indicate tech type level
