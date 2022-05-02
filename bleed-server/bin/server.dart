@@ -120,7 +120,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
       final game = player.game;
       // write(game.compiledTiles);
-      write(game.compiledEnvironmentObjects);
+      // write(game.compiledEnvironmentObjects);
       write(ServerResponse.Scene_Shade_Max);
       write(game.shadeMax);
       write(ServerResponse.Game_Status);
@@ -271,7 +271,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             _buffer.write(
                 '${ServerResponse.Scene_Changed} ${player.x.toInt()} ${player.y.toInt()} ');
             // _buffer.write(game.compiledTiles);
-            _buffer.write(game.compiledEnvironmentObjects);
+            // _buffer.write(game.compiledEnvironmentObjects);
+            player.sceneDownloaded = false;
             reply(_buffer.toString());
             return;
           }

@@ -416,6 +416,7 @@ extension PlayerProperties on Player {
     if (!sceneDownloaded){
       writeTiles();
       writeDynamicObjects();
+      writeStaticObjects();
       sceneDownloaded = true;
     }
 
@@ -522,6 +523,17 @@ extension PlayerProperties on Player {
     writeByte(techTree.sword);
     writeByte(techTree.bow);
     writeByte(techTree.axe);
+  }
+
+  void writeStaticObjects() {
+    writeByte(ServerResponse.EnvironmentObjects);
+    final staticObjects = scene.environment;
+    for (final value in staticObjects) {
+       if (dynamicObjectTypes.contains(value)) continue;
+       writeByte(value.type.index);
+       writePosition(value);
+    }
+    writeByte(END);
   }
 
   void writeDynamicObjects() {

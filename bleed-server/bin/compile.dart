@@ -1,11 +1,9 @@
 import 'package:bleed_server/CubeGame.dart';
 
-import 'classes/EnvironmentObject.dart';
 import 'classes/Game.dart';
 import 'classes/Player.dart';
 import 'common/GameStatus.dart';
 import 'common/ServerResponse.dart';
-import 'common/ObjectType.dart';
 import 'games/Moba.dart';
 import 'games/Royal.dart';
 
@@ -51,19 +49,19 @@ void compileLobby(StringBuffer buffer, Game game) {
   }
 }
 
-String compileEnvironmentObjects(List<EnvironmentObject> environmentObjects) {
-  final buffer = StringBuffer();
-  _write(buffer, ServerResponse.EnvironmentObjects);
-  for (final environmentObject in environmentObjects) {
-    if (environmentObject.type == ObjectType.Flag) continue;
-    _writeInt(buffer, environmentObject.x);
-    _writeInt(buffer, environmentObject.y);
-    _writeInt(buffer, environmentObject.radius);
-    _write(buffer, environmentObject.type.index);
-  }
-  _writeSemiColon(buffer);
-  return buffer.toString();
-}
+// String compileEnvironmentObjects(List<EnvironmentObject> environmentObjects) {
+//   final buffer = StringBuffer();
+//   _write(buffer, ServerResponse.EnvironmentObjects);
+//   for (final environmentObject in environmentObjects) {
+//     if (environmentObject.type == ObjectType.Flag) continue;
+//     _writeInt(buffer, environmentObject.x);
+//     _writeInt(buffer, environmentObject.y);
+//     _writeInt(buffer, environmentObject.radius);
+//     _write(buffer, environmentObject.type.index);
+//   }
+//   _writeSemiColon(buffer);
+//   return buffer.toString();
+// }
 
 // String compileTiles(List<List<int>> tiles) {
 //   final buffer = StringBuffer();

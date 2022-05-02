@@ -7,7 +7,6 @@ import 'classes/Player.dart';
 import 'classes/Scene.dart';
 import 'common/GameStatus.dart';
 import 'common/SlotType.dart';
-import 'compile.dart';
 import 'enums/npc_mode.dart';
 import 'functions/loadScenes.dart';
 import 'games/GameRandom.dart';
@@ -170,8 +169,8 @@ class _Engine {
   void onGameCreated(Game game) {
     // compile.game(game);
     // game.compiledTiles = compileTiles(game.scene.tiles);
-    game.compiledEnvironmentObjects =
-        compileEnvironmentObjects(game.scene.environment);
+    // game.compiledEnvironmentObjects =
+    //     compileEnvironmentObjects(game.scene.environment);
     games.add(game);
   }
 

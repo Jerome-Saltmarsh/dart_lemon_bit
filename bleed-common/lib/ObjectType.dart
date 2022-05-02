@@ -19,6 +19,11 @@ enum ObjectType {
   Block_Grass,
 }
 
+const dynamicObjectTypes = <ObjectType>[
+   ObjectType.Tree01,
+   ObjectType.Rock,
+];
+
 const objectTypes = ObjectType.values;
 
 String parseEnvironmentObjectTypeToString(ObjectType type){

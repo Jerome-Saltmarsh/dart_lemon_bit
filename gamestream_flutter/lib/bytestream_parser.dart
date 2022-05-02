@@ -9,6 +9,7 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
 import 'package:lemon_watch/watch.dart';
 
+import 'classes/EnvironmentObject.dart';
 import 'modules/isometric/classes.dart';
 import 'modules/isometric/enums.dart';
 import 'game.dart';
@@ -101,6 +102,10 @@ class _ByteStreamParser {
           break;
         case ServerResponse.Dynamic_Objects:
           parseDynamicObjects();
+          break;
+
+        case ServerResponse.EnvironmentObjects:
+          parseStaticObjects();
           break;
 
         case ServerResponse.Tiles:
@@ -492,6 +497,26 @@ class _ByteStreamParser {
 
   void _parsePlayerEvents() {
     _events.onPlayerEvent(nextByte());
+  }
+
+  void parseStaticObjects() {
+    print("parseStaticObjects()");
+    final environmentObjects = modules.isometric.environmentObjects;
+    environmentObjects.clear();
+    while (true) {
+      final typeIndex = nextByte();
+      if (typeIndex == END) break;
+      final x = nextDouble();
+      final y = nextDouble();
+      environmentObjects.add(
+          EnvironmentObject(
+              x: x,
+              y: y,
+              type: objectTypes[typeIndex],
+              radius: 10
+          )
+      );
+    }
   }
 
   void parseDynamicObjects() {

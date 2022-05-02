@@ -10,7 +10,7 @@ import 'common/library.dart';
 class ByteWriter {
   var _index = 0;
   final _buffer = Uint8List(50000); // 100kb
-  final _buffers = <Uint8List>[];
+  final _buffers = <int, Uint8List>{};
 
   List<int> writeToSendBuffer() {
     writeByte(ServerResponse.End);
@@ -154,17 +154,13 @@ class ByteWriter {
   }
 
   List<int> _getSendBuffer() {
-    final buffersLength = _buffers.length;
-     for (var i = 0; i < buffersLength; i++) {
-       final buff = _buffers[i];
-       if (_index < buff.length){
-         return buff;
-       }
-     }
-     final newBufferLength = _index ~/ 100 * 100 + 100;
-     final buffer = Uint8List(newBufferLength);
-     _buffers.add(buffer);
-     return buffer;
+    final bufferIndex = _index ~/ 100;
+    final buffer = _buffers[bufferIndex];
+    if (buffer != null) return buffer;
+    final newBufferLength = (bufferIndex + 1) * 100;
+    final newBuffer = Uint8List(newBufferLength);
+    _buffers[bufferIndex] = newBuffer;
+    return newBuffer;
   }
 
   void writePercentage(double value){
