@@ -1,10 +1,10 @@
 import '../common/ObjectType.dart';
 import 'Collider.dart';
 
-class EnvironmentObject extends Collider {
+class StaticObject extends Collider {
   ObjectType type;
 
-  EnvironmentObject({required double x, required double y, required this.type})
+  StaticObject({required double x, required double y, required this.type})
       : super(
             x: x,
             y: y,

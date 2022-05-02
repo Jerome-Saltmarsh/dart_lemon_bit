@@ -26,7 +26,7 @@ Scene generateRandomScene({
   );
 
   final tiles = <List<int>>[];
-  final environment = <EnvironmentObject>[];
+  final environment = <StaticObject>[];
   final dynamicObjects = <DynamicObject>[];
   for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
     final noiseColumn = noiseMap[columnIndex];
@@ -50,7 +50,7 @@ Scene generateRandomScene({
            final px = perspectiveProjectX(columnIndex * halfTileSize, rowIndex * halfTileSize);
            final py = perspectiveProjectY(columnIndex * halfTileSize, rowIndex * halfTileSize) + halfTileSize;
            environment.add(
-               EnvironmentObject(x: px, y: py, type: randomItem(const [
+               StaticObject(x: px, y: py, type: randomItem(const [
                  ObjectType.Tree01,
                  ObjectType.Tree01,
                  ObjectType.Rock,
@@ -79,7 +79,7 @@ Scene generateRandomScene({
   return Scene(
       tiles: tiles,
       crates: [],
-      environment: environment,
+      staticObjects: environment,
       characters: [],
       dynamicObjects: dynamicObjects,
       name: 'random-map',

@@ -12,7 +12,7 @@ class Scene {
   final List<Character> characters;
   final List<List<int>> tiles;
   final List<Vector2> crates;
-  final List<EnvironmentObject> environment;
+  final List<StaticObject> staticObjects;
   final List<DynamicObject> dynamicObjects;
   final String name;
 
@@ -29,7 +29,7 @@ class Scene {
   Scene({
     required this.tiles,
     required this.crates,
-    required this.environment,
+    required this.staticObjects,
     required this.dynamicObjects,
     required this.characters,
     required this.name,
@@ -119,15 +119,15 @@ class Scene {
       }
     }
 
-    for (final env in environment) {
+    for (final env in staticObjects) {
        snapToGrid(env);
        tileNodeAt(env).obstructed = true;
     }
 
-    for (int i = 0; i < environment.length; i++) {
-       final env = environment[i];
+    for (var i = 0; i < staticObjects.length; i++) {
+       final env = staticObjects[i];
        if (env.type == ObjectType.Rock) {
-          environment.removeAt(i);
+          staticObjects.removeAt(i);
           i--;
           dynamicObjects.add(
               DynamicObject(
@@ -139,7 +139,7 @@ class Scene {
           );
        }
        if (env.type == ObjectType.Tree01) {
-         environment.removeAt(i);
+         staticObjects.removeAt(i);
          i--;
          dynamicObjects.add(
              DynamicObject(

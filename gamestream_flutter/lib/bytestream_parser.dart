@@ -517,6 +517,8 @@ class _ByteStreamParser {
           )
       );
     }
+    sortVertically(environmentObjects);
+    print("total: ${environmentObjects.length}");
   }
 
   void parseDynamicObjects() {

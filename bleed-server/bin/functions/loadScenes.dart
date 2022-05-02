@@ -53,7 +53,7 @@ Scene parseJsonToScene(Json json, String name) {
     }
   }
 
-  final List<EnvironmentObject> environment = [];
+  final List<StaticObject> environment = [];
 
   if (json.containsKey('environment')) {
     final List jsonItems = json['environment'];
@@ -62,7 +62,7 @@ Scene parseJsonToScene(Json json, String name) {
       final int y = item['y'];
       final String typeName = item['type'];
       final ObjectType type = parseObjectTypeFromString(typeName);
-      environment.add(EnvironmentObject(
+      environment.add(StaticObject(
         x: x.toDouble(),
         y: y.toDouble(),
         type: type
@@ -98,7 +98,7 @@ Scene parseJsonToScene(Json json, String name) {
   final scene = Scene(
     tiles: tiles,
     crates: [],
-    environment: environment,
+    staticObjects: environment,
     dynamicObjects: [],
     characters: characters,
     name: name

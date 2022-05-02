@@ -16,12 +16,12 @@ import '../engine.dart';
 import '../functions/withinRadius.dart';
 
 class GameSkirmish extends Game {
-  late final List<EnvironmentObject> _flags;
+  late final List<StaticObject> _flags;
   final _time = 16 * 60 * 60;
   late final InteractableNpc storeKeeper;
 
   GameSkirmish() : super(engine.scenes.skirmish){
-     _flags = scene.environment.where((env) => env.type == ObjectType.Flag).toList();
+     _flags = scene.staticObjects.where((env) => env.type == ObjectType.Flag).toList();
 
      storeKeeper = InteractableNpc(
          name: "Store Keeper",

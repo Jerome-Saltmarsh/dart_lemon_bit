@@ -155,7 +155,7 @@ abstract class Game {
       }
     }
 
-    for (final environmentObject in scene.environment) {
+    for (final environmentObject in scene.staticObjects) {
       if (environmentObject.radius <= 0) continue;
       colliders.add(Collider(
           x: environmentObject.x,
@@ -685,7 +685,7 @@ extension GameFunctions on Game {
       }
     }
 
-    checkProjectileCollision(scene.environment);
+    checkProjectileCollision(scene.staticObjects);
     checkProjectileCollision(zombies);
     checkProjectileCollision(players);
     checkProjectileCollision(dynamicObjects);
@@ -1464,7 +1464,7 @@ void playerInteract(Player player) {
     return;
   }
 
-  for (EnvironmentObject environmentObject in player.game.scene.environment) {
+  for (StaticObject environmentObject in player.game.scene.staticObjects) {
     if (environmentObject.type == ObjectType.House02) {}
     ;
   }
