@@ -20,7 +20,7 @@ void _connectLocalHost({int port = 8080}) {
 }
 
 void _connectToServer(String uri){
-  webSocket.connect(uri: uri, message: ClientRequest.Ping.index.toString());
+  webSocket.connect(uri: uri, message: '${ClientRequest.Join} ${GameType.RANDOM.index}');
 }
 
 final List<Region> selectableServerTypes =

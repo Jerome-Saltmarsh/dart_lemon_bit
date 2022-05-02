@@ -7,7 +7,7 @@ class ServerResponse {
   static const Tiles = 5;
   static const Game_Events = 6;
   static const Grenades = 7;
-  static const Pong = 8;
+  // static const Pong = 8;
   static const Game_Joined = 9;
   static const Scene = 10;
   static const Collectables = 11;

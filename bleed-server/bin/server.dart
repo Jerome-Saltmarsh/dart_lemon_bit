@@ -525,9 +525,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           });
           break;
 
-        case ClientRequest.Ping:
-          reply(ServerResponse.Pong.toString());
-          break;
+        // case ClientRequest.Ping:
+        //   reply(ServerResponse.Pong.toString());
+        //   break;
 
         case ClientRequest.Construct:
           if (player == null) {

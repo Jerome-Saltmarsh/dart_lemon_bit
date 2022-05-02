@@ -16,7 +16,6 @@ import 'package:gamestream_flutter/ui/compose/buildTextBox.dart';
 import 'package:gamestream_flutter/ui/compose/hudUI.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel_highlighted_structure_type.dart';
-import 'package:gamestream_flutter/ui/functions/build_panel_highlighted_tech_type.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel_highlighted_tech_type_upgrade.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel_primary.dart';
 import 'package:gamestream_flutter/ui/style.dart';

@@ -5,7 +5,7 @@ enum ClientRequest {
   Attack,
   Revive,
   Equip,
-  Ping,
+  // Ping,
   Purchase,
   Set_Compile_Paths,
   Version,

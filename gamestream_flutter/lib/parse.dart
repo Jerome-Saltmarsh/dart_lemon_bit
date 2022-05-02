@@ -156,9 +156,6 @@ void parseState() {
       case ServerResponse.Grenades:
         break;
 
-      case ServerResponse.Pong:
-        break;
-
       case ServerResponse.Game_Joined:
         _parseGameJoined();
         break;

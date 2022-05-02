@@ -15,12 +15,6 @@ void sendRequestSpeak(String message){
   webSocket.send('${ClientRequest.Speak.index} $message');
 }
 
-void sendRequestPing(){
-  print("ping()");
-  _buffer1[0] = ClientRequest.Ping.index;
-  webSocket.sink.add(_buffer1);
-}
-
 void sendRequestTeleport(double x, double y){
   print("sendRequestTeleport($x, $y)");
   webSocket.send('${ClientRequest.Teleport.index} ${x.toInt()} ${y.toInt()}');
