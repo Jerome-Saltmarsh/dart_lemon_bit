@@ -716,6 +716,7 @@ class IsometricModule {
         );
       }
     }
+    sortVertically(game.generatedObjects);
   }
 
   void updateParticles() {
