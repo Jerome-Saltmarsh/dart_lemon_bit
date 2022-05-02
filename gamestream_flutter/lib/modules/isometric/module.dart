@@ -6,15 +6,16 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/FloatingText.dart';
+import 'package:gamestream_flutter/classes/GeneratedObject.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/functions.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:gamestream_flutter/modules/isometric/utilities.dart';
-import 'package:gamestream_flutter/game.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -604,9 +605,9 @@ class IsometricModule {
 
   void removeGeneratedEnvironmentObjects(){
     const generated = [
-      ObjectType.Palisade,
-      ObjectType.Palisade_H,
-      ObjectType.Palisade_V,
+      // ObjectType.Palisade,
+      // ObjectType.Palisade_H,
+      // ObjectType.Palisade_V,
       ObjectType.Rock_Wall,
       ObjectType.Block_Grass,
     ];
@@ -697,6 +698,7 @@ class IsometricModule {
   }
 
   void refreshGeneratedObjects() {
+    game.generatedObjects.clear();
     final totalRows = tiles.length;
     final totalColumns = totalRows > 0 ? tiles[0].length : 0;
     for (var rowIndex = 0; rowIndex < totalRows; rowIndex++) {
@@ -705,28 +707,13 @@ class IsometricModule {
         final tile = row[columnIndex];
         var objectType = tileTypeToObjectType[tile];
         if (objectType == null) continue;
-
-        if (objectType == ObjectType.Palisade) {
-          if (rowIndex > 0 && rowIndex < totalRows -1) {
-            if (tiles[rowIndex - 1][columnIndex] == Tile.Palisade && tiles[rowIndex + 1][columnIndex] == Tile.Palisade) {
-              objectType = ObjectType.Palisade_H;
-            }
-          }
-
-          if (columnIndex > 0 && columnIndex < totalColumns - 1) {
-            if (row[columnIndex -1] == Tile.Palisade && row[columnIndex + 1] == Tile.Palisade) {
-              objectType = ObjectType.Palisade_V;
-            }
-          }
-        }
-
-        final env = EnvironmentObject(
-            x: getTileWorldX(rowIndex, columnIndex),
-            y: getTileWorldY(rowIndex, columnIndex) + tileSizeHalf,
-            type: objectType,
-            radius: 0
+        game.generatedObjects.add(
+            GeneratedObject(
+              x: getTileWorldX(rowIndex, columnIndex),
+              y: getTileWorldY(rowIndex, columnIndex) + tileSizeHalf,
+              type: objectType,
+            )
         );
-        environmentObjects.add(env);
       }
     }
   }

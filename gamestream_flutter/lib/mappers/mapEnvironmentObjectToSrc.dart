@@ -13,9 +13,9 @@ final _translations = _Translations();
 final _torchHeight = environmentObjectHeight[ObjectType.Torch]!;
 
 const environmentObjectWidth = <ObjectType, double> {
-  ObjectType.Palisade: 48,
-  ObjectType.Palisade_H: 48,
-  ObjectType.Palisade_V: 48,
+  // ObjectType.Palisade: 48,
+  // ObjectType.Palisade_H: 48,
+  // ObjectType.Palisade_V: 48,
   ObjectType.Rock_Wall: 48,
   ObjectType.Block_Grass: 48,
   ObjectType.Rock: 48,
@@ -32,9 +32,9 @@ const environmentObjectWidth = <ObjectType, double> {
 };
 
 const environmentObjectHeight = <ObjectType, double> {
-  ObjectType.Palisade: 100,
-  ObjectType.Palisade_H: 100,
-  ObjectType.Palisade_V: 100,
+  // ObjectType.Palisade: 100,
+  // ObjectType.Palisade_H: 100,
+  // ObjectType.Palisade_V: 100,
   ObjectType.Rock_Wall: 100,
   ObjectType.Block_Grass: 100,
   ObjectType.Rock: 48,
@@ -57,9 +57,9 @@ const environmentObjectIndex = <ObjectType, int> {
   ObjectType.Rock_Small: 3,
   ObjectType.LongGrass: 4,
   ObjectType.House02: 1,
-  ObjectType.Palisade: 0,
-  ObjectType.Palisade_H: 1,
-  ObjectType.Palisade_V: 2,
+  // ObjectType.Palisade: 0,
+  // ObjectType.Palisade_H: 1,
+  // ObjectType.Palisade_V: 2,
   ObjectType.Flag: 6,
 };
 
@@ -82,9 +82,9 @@ final objectTypeSrcPosition = <ObjectType, Vector2> {
   ObjectType.Tree01: _translations.trees,
   ObjectType.House01: _translations.objects150,
   ObjectType.House02: _translations.objects150,
-  ObjectType.Palisade: _translations.palisades,
-  ObjectType.Palisade_V: _translations.palisades,
-  ObjectType.Palisade_H: _translations.palisades,
+  // ObjectType.Palisade: _translations.palisades,
+  // ObjectType.Palisade_V: _translations.palisades,
+  // ObjectType.Palisade_H: _translations.palisades,
   ObjectType.MystEmitter: atlas.circle,
   ObjectType.Rock_Wall: atlas.rockWall,
   ObjectType.Block_Grass: atlas.blockGrass,

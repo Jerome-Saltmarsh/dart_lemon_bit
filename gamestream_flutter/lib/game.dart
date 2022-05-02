@@ -2,6 +2,7 @@ import 'package:bleed_common/GameType.dart';
 import 'package:gamestream_flutter/classes/DynamicObject.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
+import 'package:gamestream_flutter/classes/GeneratedObject.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/Projectile.dart';
 import 'package:lemon_math/library.dart';
@@ -30,6 +31,7 @@ class _Game {
   final collectables = <Collectable>[];
   final interactableNpcs = <Character>[];
   final dynamicObjects = <DynamicObject>[];
+  final generatedObjects = <GeneratedObject>[];
   final effects = <Effect>[];
   final torches = <EnvironmentObject>[];
   final projectiles = <Projectile>[];

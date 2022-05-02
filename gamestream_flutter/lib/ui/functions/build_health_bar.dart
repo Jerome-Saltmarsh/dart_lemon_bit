@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:lemon_watch/watch_builder.dart';
 import 'package:golden_ratio/constants.dart';
+import 'package:lemon_watch/watch_builder.dart';
 
 import 'player.dart';
 

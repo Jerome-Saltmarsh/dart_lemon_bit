@@ -1,7 +1,6 @@
 
 import 'package:bleed_common/StructureType.dart';
 import 'package:gamestream_flutter/audio.dart';
-import 'package:lemon_watch/watch.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/game/build.dart';
 import 'package:gamestream_flutter/modules/game/events.dart';
@@ -12,6 +11,7 @@ import 'package:gamestream_flutter/modules/game/render.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/game/style.dart';
 import 'package:gamestream_flutter/modules/game/update.dart';
+import 'package:lemon_watch/watch.dart';
 
 class GameModule {
 

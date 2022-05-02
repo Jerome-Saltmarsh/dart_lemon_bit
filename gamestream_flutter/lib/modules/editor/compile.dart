@@ -1,11 +1,11 @@
+import 'package:bleed_common/ObjectType.dart';
 import 'package:bleed_common/SceneJson.dart';
 import 'package:bleed_common/Tile.dart';
 import 'package:bleed_common/constants.dart';
-import 'package:bleed_common/ObjectType.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/isometric/classes.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/game.dart';
 import 'package:lemon_math/library.dart';
 import 'package:typedef/json.dart';
 

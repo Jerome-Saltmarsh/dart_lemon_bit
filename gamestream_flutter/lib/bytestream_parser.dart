@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:lemon_math/library.dart';
 import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
@@ -7,12 +6,13 @@ import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
+import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'classes/EnvironmentObject.dart';
+import 'game.dart';
 import 'modules/isometric/classes.dart';
 import 'modules/isometric/enums.dart';
-import 'game.dart';
 
 final byteStreamParser = _ByteStreamParser();
 final byteLength = Watch(0);
@@ -478,7 +478,7 @@ class _ByteStreamParser {
     return utf8.decode(readBytes(length));
   }
 
-  List<int> readBytes(int length){
+  List<int> readBytes(int length) {
     final values = _getByteStream(length);
     for (var i = 0; i < length; i++) {
       values[i] = nextByte();
@@ -500,7 +500,6 @@ class _ByteStreamParser {
   }
 
   void parseStaticObjects() {
-    print("parseStaticObjects()");
     final environmentObjects = modules.isometric.environmentObjects;
     environmentObjects.clear();
     while (true) {
@@ -518,7 +517,6 @@ class _ByteStreamParser {
       );
     }
     sortVertically(environmentObjects);
-    print("total: ${environmentObjects.length}");
   }
 
   void parseDynamicObjects() {
