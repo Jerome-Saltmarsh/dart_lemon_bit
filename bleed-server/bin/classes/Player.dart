@@ -545,13 +545,14 @@ extension PlayerProperties on Player {
   }
 
   void writeTiles() {
-    print("writeTiles()");
     final tiles = scene.tiles;
+    final rows = scene.rows;
+    final columns = scene.columns;
     writeByte(ServerResponse.Tiles);
-    writeInt(tiles.length);
-    writeInt(tiles[0].length);
-    for (var x = 0; x < tiles.length; x++) {
-      for (var y = 0; y < tiles[0].length; y++) {
+    writeInt(rows);
+    writeInt(columns);
+    for (var x = 0; x < rows; x++) {
+      for (var y = 0; y < columns; y++) {
         writeByte(tiles[x][y]);
       }
     }

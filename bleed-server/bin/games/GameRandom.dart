@@ -13,8 +13,8 @@ class GameRandom extends Game {
 
   GameRandom({required this.maxPlayers}) : super(
       generateRandomScene(
-        rows: 100,
         columns: 100,
+        rows: 100,
         seed: random.nextInt(2000),
       )
   );

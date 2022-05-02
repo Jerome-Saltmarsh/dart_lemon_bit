@@ -9,16 +9,14 @@ import 'common/DynamicObjectType.dart';
 import 'common/ObjectType.dart';
 import 'common/Tile.dart';
 
-typedef TileMap = List<List<int>>;
-
 Scene generateRandomScene({
-  required int columns,
   required int rows,
+  required int columns,
   int seed = 0,
 }) {
   final noiseMap = noise2(
-      columns,
       rows,
+      columns,
       seed: seed,
       noiseType: NoiseType.Perlin,
       octaves: 3,
@@ -28,12 +26,12 @@ Scene generateRandomScene({
   final tiles = <List<int>>[];
   final environment = <StaticObject>[];
   final dynamicObjects = <DynamicObject>[];
-  for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
-    final noiseColumn = noiseMap[columnIndex];
+  for (var rowIndex = 0; rowIndex < rows; rowIndex++) {
+    final noiseColumn = noiseMap[rowIndex];
     final column = <int>[];
     tiles.add(column);
-    for (var rowIndex = 0; rowIndex < rows; rowIndex++) {
-       final noise = noiseColumn[rowIndex];
+    for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
+       final noise = noiseColumn[columnIndex];
        if (noise < -0.15) {
          column.add(Tile.Water);
        }
@@ -46,28 +44,28 @@ Scene generateRandomScene({
            column.add(Tile.Grass);
          }
          if (random.nextDouble() < 0.05) {
-           const halfTileSize = 24.0;
-           final px = perspectiveProjectX(columnIndex * halfTileSize, rowIndex * halfTileSize);
-           final py = perspectiveProjectY(columnIndex * halfTileSize, rowIndex * halfTileSize) + halfTileSize;
            environment.add(
-               StaticObject(x: px, y: py, type: randomItem(const [
-                 ObjectType.Tree01,
-                 ObjectType.Tree01,
-                 ObjectType.Rock,
-                 ObjectType.Tree_Stump,
-                 ObjectType.LongGrass,
-               ]))
+               StaticObject(
+                   x: getTilePositionX(columnIndex, rowIndex),
+                   y: getTilePositionY(columnIndex, rowIndex),
+                   type: randomItem(const [
+                     ObjectType.Tree01,
+                     ObjectType.Tree01,
+                     ObjectType.Rock,
+                     ObjectType.Tree_Stump,
+                     ObjectType.LongGrass,
+                   ])
+               )
            );
-         }
+       }
          else
          if (random.nextDouble() < 0.001) {
-           const halfTileSize = 24.0;
            dynamicObjects.add(
                DynamicObject(
                  type: DynamicObjectType.Chest,
-                 x: perspectiveProjectX(columnIndex * halfTileSize, rowIndex * halfTileSize),
-                 y: perspectiveProjectY(columnIndex * halfTileSize, rowIndex * halfTileSize) + halfTileSize,
-                 health: 50
+                   x: getTilePositionX(columnIndex, rowIndex),
+                   y: getTilePositionY(columnIndex, rowIndex),
+                   health: 50
            ));
          }
        } else {

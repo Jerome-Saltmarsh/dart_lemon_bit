@@ -386,18 +386,12 @@ extension GameFunctions on Game {
     if (target is DynamicObject) {
 
       switch (target.type) {
-        case DynamicObjectType.Chest:
-          // dispatchV2(GameEventType.Object_Struck, target);
-          break;
         case DynamicObjectType.Rock:
-          // dispatchV2(GameEventType.Rock_Struck, target);
           if (src is Player) {
-            // final spawns = killed ? 3 : 1;
             spawnCollectable(position: target, target: src, type: CollectableType.Stone, amount: damage);
           }
           break;
         case DynamicObjectType.Tree:
-          // dispatchV2(GameEventType.Tree_Struck, target);
           if (src is Player) {
             spawnCollectable(position: target, target: src, type: CollectableType.Wood, amount: damage);
           }

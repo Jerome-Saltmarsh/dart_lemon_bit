@@ -24,7 +24,10 @@ class Scene {
   int? secondsPerFrames;
   List<Vector2> playerSpawnPoints = [];
 
-  final _boundary = TileNode(false);
+  static final _boundary = TileNode(false);
+
+  int get rows => tiles.length;
+  int get columns => rows > 0 ? tiles[0].length : 0;
 
   Scene({
     required this.tiles,
@@ -45,14 +48,8 @@ class Scene {
         final node = TileNode(isWalkable(tileRow[columnIndex]));
         node.row = rowIndex;
         node.column = columnIndex;
-        const halfTileSize = 24.0;
-        final px =
-            perspectiveProjectX(node.row * halfTileSize, node.column * halfTileSize);
-        final py =
-            perspectiveProjectY(node.row * halfTileSize, node.column * halfTileSize) +
-                halfTileSize;
-        node.x = px;
-        node.y = py;
+        node.x = getTilePositionX(node.row, node.column);
+        node.y = getTilePositionY(node.row, node.column);
         nodeRow.add(node);
       }
       tileNodes.add(nodeRow);
@@ -308,14 +305,6 @@ class Scene {
     return !isShootable(tileAt(x, y));
   }
 
-  // double projectedToWorldX(double x, double y) {
-  //   return y - x;
-  // }
-  //
-  // double projectedToWorldY(double x, double y) {
-  //   return x + y;
-  // }
-
   void resolveCharacterTileCollision(Character character) {
     const distance = 3;
     if (!tileWalkableAt(character.left, character.top)) {
@@ -358,10 +347,11 @@ int parseRowsAndColumnsToDirection(int rows, int columns) {
   return Direction.Right;
 }
 
-double perspectiveProjectX(double x, double y) {
-  return -y + x;
+double getTilePositionX(int row, int column){
+  return (column * halfTileSize) - (row * halfTileSize);
 }
 
-double perspectiveProjectY(double x, double y) {
-  return x + y;
+double getTilePositionY(int row, int column){
+  return (row * halfTileSize) + (column * halfTileSize) + halfTileSize;
 }
+

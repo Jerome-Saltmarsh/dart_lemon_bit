@@ -62,6 +62,13 @@ class TileNode with Position {
     }
   }
 
+  void set(int row, int column){
+    this.row = row;
+    this.column = column;
+    this.x = getTilePositionX(row, column);
+    this.y = getTilePositionY(row, column);
+  }
+
   void reserveSurroundingNodes(){
     _reserve(up);
     _reserve(upRight);
