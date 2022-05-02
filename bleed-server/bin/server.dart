@@ -90,10 +90,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       clearBuffer();
     }
 
-    void compileAndSendPlayer(){
+    void sendBufferToClient(){
      final player = _player;
      if (player == null) return;
-     player.writePlayerGame();
      sink.add(player.writeToSendBuffer());
     }
 
@@ -104,7 +103,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     void onGameJoined(){
       final player = _player;
       if (player == null) return;
-      player.onUpdated = compileAndSendPlayer;
+      player.sendBufferToClient = sendBufferToClient;
       player.dispatchError = error;
       final account = _account;
       if (account != null) {

@@ -46,8 +46,7 @@ class Player extends Character with ByteWriter {
   Position? target;
   Account? account;
 
-  late Function onUpdated;
-  late Function(Position position, int amount) onDamageApplied;
+  late Function sendBufferToClient;
   late Function(GameError error, {String message}) dispatchError;
 
   double get mouseAngle => this.getAngle(mouse);
@@ -409,7 +408,6 @@ extension PlayerProperties on Player {
     writeProjectiles();
     writeNpcs(this);
     writeGameTime(game);
-    // writeDynamicObjects();
     writePlayerZombies();
 
     if (!sceneDownloaded){
