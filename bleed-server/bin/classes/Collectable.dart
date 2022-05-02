@@ -39,18 +39,18 @@ class Collectable with
     switch (type) {
       case CollectableType.Wood:
         player.wood += amount;
-        player.onPlayerEvent(PlayerEvent.Collect_Wood);
+        player.writePlayerEvent(PlayerEvent.Collect_Wood);
         break;
       case CollectableType.Stone:
         player.stone += amount;
-        player.onPlayerEvent(PlayerEvent.Collect_Rock);
+        player.writePlayerEvent(PlayerEvent.Collect_Rock);
         break;
       case CollectableType.Experience:
-        player.onPlayerEvent(PlayerEvent.Collect_Experience);
+        player.writePlayerEvent(PlayerEvent.Collect_Experience);
         break;
       case CollectableType.Gold:
         player.gold += amount;
-        player.onPlayerEvent(PlayerEvent.Collect_Gold);
+        player.writePlayerEvent(PlayerEvent.Collect_Gold);
         break;
     }
   }

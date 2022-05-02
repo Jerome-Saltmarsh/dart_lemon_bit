@@ -90,12 +90,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       clearBuffer();
     }
 
-    void sendPlayerEvent(int event){
-      final player = _player;
-      if (player == null) return;
-      player.writePlayerEvents(event);
-    }
-
     void compileAndSendPlayer(){
      final player = _player;
      if (player == null) return;
@@ -112,7 +106,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       if (player == null) return;
       player.onUpdated = compileAndSendPlayer;
       player.dispatchError = error;
-      player.onPlayerEvent = sendPlayerEvent;
       final account = _account;
       if (account != null) {
         player.name = account.publicName;
@@ -809,7 +802,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                  player.equipped = TechType.Pickaxe;
                  player.setStateChanging();
               }
-              player.onPlayerEvent(PlayerEvent.Item_Purchased);
+              player.writePlayerEvent(PlayerEvent.Item_Purchased);
               break;
             case TechType.Bow:
               player.techTree.bow++;
@@ -817,7 +810,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 player.equipped = TechType.Bow;
                 player.setStateChanging();
               }
-              player.onPlayerEvent(PlayerEvent.Item_Purchased);
+              player.writePlayerEvent(PlayerEvent.Item_Purchased);
               break;
             case TechType.Sword:
               player.techTree.sword++;
@@ -825,7 +818,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 player.equipped = TechType.Sword;
                 player.setStateChanging();
               }
-              player.onPlayerEvent(PlayerEvent.Item_Purchased);
+              player.writePlayerEvent(PlayerEvent.Item_Purchased);
               break;
             case TechType.Axe:
               player.techTree.axe++;
@@ -833,7 +826,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 player.equipped = TechType.Axe;
                 player.setStateChanging();
               }
-              player.onPlayerEvent(PlayerEvent.Item_Purchased);
+              player.writePlayerEvent(PlayerEvent.Item_Purchased);
               break;
           }
           player.writeTechTypes();

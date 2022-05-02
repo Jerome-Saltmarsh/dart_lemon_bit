@@ -47,8 +47,6 @@ class Player extends Character with ByteWriter {
   Account? account;
 
   late Function onUpdated;
-  // late Function onSlotsChanged;
-  late Function(int value) onPlayerEvent;
   late Function(Position position, int amount) onDamageApplied;
   late Function(GameError error, {String message}) dispatchError;
 
@@ -107,7 +105,7 @@ class Player extends Character with ByteWriter {
   }
 
   void setStateChanging(){
-    onPlayerEvent(PlayerEvent.Item_Equipped);
+    writePlayerEvent(PlayerEvent.Item_Equipped);
     game.setCharacterState(this, CharacterState.Changing);
   }
 

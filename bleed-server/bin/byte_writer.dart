@@ -68,7 +68,7 @@ class ByteWriter {
     writeByte(END);
   }
 
-  void writePlayerEvents(int value){
+  void writePlayerEvent(int value){
     writeByte(ServerResponse.Player_Events);
     writeByte(value);
   }
