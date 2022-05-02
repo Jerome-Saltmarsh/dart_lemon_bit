@@ -375,7 +375,14 @@ class IsometricRender {
   }
 
   void renderGeneratedObject(GeneratedObject generatedObject){
-    renderBlockGrass(position: generatedObject);
+    switch(generatedObject.type){
+      case GeneratedObjectType.Block_Grass:
+        renderBlockGrass(generatedObject);
+        break;
+      case GeneratedObjectType.Block_Grass_Level_2:
+        renderBlockGrassLevel2(generatedObject);
+        break;
+    }
   }
 
   void renderStructure(Structure structure) {
@@ -405,12 +412,25 @@ class IsometricRender {
     );
   }
 
-  void renderBlockGrass({
-    required Position position,
+  void renderBlockGrass(Position position, {
     int shade = Shade.Bright
   }){
     engine.renderCustomV2(
       dst: position,
+      srcX: 5981 ,
+      srcY: shade * 96,
+      srcWidth: 48,
+      srcHeight: 96,
+      anchorY: 0.66,
+    );
+  }
+
+  void renderBlockGrassLevel2(Position position, {
+    int shade = Shade.Bright
+  }){
+    engine.renderCustom(
+      dstX: position.x,
+      dstY: position.y - 48,
       srcX: 5981 ,
       srcY: shade * 96,
       srcWidth: 48,
