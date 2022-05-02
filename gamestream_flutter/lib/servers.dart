@@ -7,28 +7,28 @@ import 'package:gamestream_flutter/webSocket.dart';
 
 void connectToWebSocketServer(Region server, GameType gameType) {
   if (server == Region.LocalHost) {
-    _connectLocalHost();
+    _connectLocalHost(gameType: gameType);
     return;
   }
   final httpsConnectionString = getHttpsConnectionString(server, gameType);
   final wsConnectionString = parseHttpToWebSocket(httpsConnectionString);
-  _connectToServer(wsConnectionString);
+  _connectToServer(wsConnectionString, gameType);
 }
 
-void _connectLocalHost({int port = 8080}) {
-  _connectToServer('ws://localhost:$port');
+void _connectLocalHost({int port = 8080, required GameType gameType}) {
+  _connectToServer('ws://localhost:$port', gameType);
 }
 
-void _connectToServer(String uri){
-  webSocket.connect(uri: uri, message: '${ClientRequest.Join} ${GameType.RANDOM.index}');
+void _connectToServer(String uri, GameType gameType){
+  webSocket.connect(uri: uri, message: '${ClientRequest.Join} ${gameType.index}');
 }
 
 final List<Region> selectableServerTypes =
     regions.where((type) => (isLocalHost || type != Region.LocalHost)
     ).toList();
 
-class _Servers {
-  static const sydney = "https://gamestream-ws-osbmaezptq-ts.a.run.app";
+class ServerUri {
+  static const Sydney = "https://gamestream-ws-osbmaezptq-ts.a.run.app";
 }
 
 String parseHttpToWebSocket(String url) {
@@ -36,16 +36,15 @@ String parseHttpToWebSocket(String url) {
 }
 
 String getHttpsConnectionString(Region server, GameType gameType) {
-  print("HttpsConnectionString(server: $server)");
   switch (server) {
     case Region.Australia:
       switch (gameType) {
         case GameType.MMO:
-          return _Servers.sydney;
+          return ServerUri.Sydney;
         case GameType.Moba:
-          return _Servers.sydney;
+          return ServerUri.Sydney;
         default:
-          return _Servers.sydney;
+          return ServerUri.Sydney;
       }
     default:
       throw Exception();

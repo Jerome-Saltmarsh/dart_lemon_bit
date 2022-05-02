@@ -109,23 +109,15 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       if (account != null) {
         player.name = account.publicName;
       }
-
       final game = player.game;
-      // write(game.compiledTiles);
-      // write(game.compiledEnvironmentObjects);
       write(ServerResponse.Scene_Shade_Max);
       write(game.shadeMax);
       write(ServerResponse.Game_Status);
       write(game.status.index);
       compilePlayersRemaining(_buffer, 0);
       player.writeTechTypes();
-      // player.writeDynamicObjects();
       write('${ServerResponse.Game_Joined} 0 ${game.id} ${player.team} ${player.x.toInt()} ${player.y.toInt()}');
       sendAndClearBuffer();
-      // compileAndSendPlayerSlots();
-      // player.writeDynamicObjects();
-      // player.writeTiles();
-      // compileAndSendPlayer();
     }
 
     void joinGameSwarm() {
@@ -134,13 +126,13 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       onGameJoined();
     }
 
-    void joinNewRandomGame() {
+    void joinGamePractice() {
       final game = GameRandom(maxPlayers: 1);
       _player = game.spawnPlayer();
       onGameJoined();
     }
 
-    void joinExistingRandomGame() {
+    void joinGameRandom() {
       final game = engine.findRandomGame();
       _player = game.spawnPlayer();
       onGameJoined();
@@ -464,10 +456,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                    return joinGameSkirmish();
                  case GameType.SWARM:
                    return joinGameSwarm();
+                 case GameType.PRACTICE:
+                   return joinGamePractice();
                  case GameType.RANDOM:
-                   return joinNewRandomGame();
-                 case GameType.RANDOM_SOLO:
-                   return joinExistingRandomGame();
+                   return joinGameRandom();
                  default:
                    break;
                }
@@ -490,10 +482,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               return joinGameSkirmish();
             case GameType.SWARM:
               return joinGameSwarm();
+            case GameType.PRACTICE:
+              return joinGamePractice();
             case GameType.RANDOM:
-              return joinNewRandomGame();
-            case GameType.RANDOM_SOLO:
-              return joinExistingRandomGame();
+              return joinGameRandom();
             default:
               throw Exception("Cannot join ${gameType}");
           }

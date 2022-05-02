@@ -138,7 +138,7 @@ class _Engine {
         return game;
       }
     }
-    return GameRandom(maxPlayers: 10);
+    return GameRandom(maxPlayers: 12);
   }
 
   GameMoba findPendingMobaGame() {

@@ -23,12 +23,9 @@ import 'widgets.dart';
 
 final build = _Build();
 
-final selectableGameTypes = [
-  // GameType.MMO,
-  // GameType.SKIRMISH,
-  // GameType.SWARM,
+const selectableGameTypes = [
+  GameType.PRACTICE,
   GameType.RANDOM,
-  GameType.RANDOM_SOLO,
 ];
 
 class _Build {
@@ -258,21 +255,18 @@ class _Build {
 
                   if (mouseOver){
                     return loadingText(gameName!, (){
-                      game.type.value = gameType;
-                      core.actions.connectToSelectedGame();
+                      core.actions.connectToGame(gameType);
                     });
                   }
-
-
                   return text(mouseOver ? '-$gameName-' : gameName, color: mouseOver ? colours.white : colours.white85, onPressed: (){
-                    game.type.value = gameType;
-                    core.actions.connectToSelectedGame();
+                    core.actions.connectToGame(gameType);
                   }, size: style.fontSize.large, bold: true);
                 },
             ),
           );
         }
         ),
+
           height(120),
          ].toList(),
       ),

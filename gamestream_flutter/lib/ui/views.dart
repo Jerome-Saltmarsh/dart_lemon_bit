@@ -212,31 +212,6 @@ WatchBuilder<WebsiteDialog> buildWatchBuilderDialog() {
     });
 }
 
-Widget buildDialogGameTypeSelected(GameType gameType) {
-  return watchAccount((Account? account){
-
-    return dialog(
-        color: colours.white05,
-        borderColor: colours.none,
-        padding: 16,
-        height: style.dialogHeightMedium,
-        width: style.dialogWidthMedium,
-        child: layout(
-            topRight: website.build.buttonRegion(),
-            bottomLeft: buildButtonPrimary("PLAY", core.actions.connectToSelectedGame),
-            bottomRight:
-            buildButton("back", core.actions.deselectGameType),
-            child: Column(
-              crossAxisAlignment: axis.cross.start,
-              children: [
-                text(gameTypeNames[gameType],
-                    size: 25, color: colours.white80),
-                height32,
-              ],
-            )));
-  });
-}
-
 Widget buildDialogChangeRegion() {
   return dialog(
       height: 500,
@@ -623,11 +598,9 @@ Widget buildLayoutLobby() {
 
 Widget buildDialogGameFinished(){
   return buildDialogMedium(
-
       child: Center(
           child: text("Game Finished")),
           bottomRight: buildButton("Exit", core.actions.exitGame),
-          bottomLeft: buildButton("New Game", core.actions.connectToSelectedGame),
   );
 }
 

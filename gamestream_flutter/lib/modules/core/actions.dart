@@ -267,14 +267,10 @@ class CoreActions {
     core.state.error.value = null;
   }
 
-  void play(GameType gameType){
+  void connectToGame(GameType gameType){
+    print("connectToSelectedGame()");
     game.type.value = gameType;
     connectToWebSocketServer(core.state.region.value, gameType);
-  }
-
-  void connectToSelectedGame(){
-    print("connectToSelectedGame()");
-    connectToWebSocketServer(core.state.region.value, game.type.value);
   }
 
   void deselectGameType(){
