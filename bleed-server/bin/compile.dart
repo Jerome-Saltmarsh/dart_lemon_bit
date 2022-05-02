@@ -65,23 +65,23 @@ String compileEnvironmentObjects(List<EnvironmentObject> environmentObjects) {
   return buffer.toString();
 }
 
-String compileTiles(List<List<int>> tiles) {
-  final buffer = StringBuffer();
-  buffer.write(ServerResponse.Tiles);
-  buffer.write(_space);
-  buffer.write(tiles.length);
-  buffer.write(_space);
-  buffer.write(tiles[0].length);
-  buffer.write(_space);
-  for (var x = 0; x < tiles.length; x++) {
-    for (var y = 0; y < tiles[0].length; y++) {
-      buffer.write(tiles[x][y]);
-      buffer.write(_space);
-    }
-  }
-  buffer.write(_semiColon);
-  return buffer.toString();
-}
+// String compileTiles(List<List<int>> tiles) {
+//   final buffer = StringBuffer();
+//   buffer.write(ServerResponse.Tiles);
+//   buffer.write(_space);
+//   buffer.write(tiles.length);
+//   buffer.write(_space);
+//   buffer.write(tiles[0].length);
+//   buffer.write(_space);
+//   for (var x = 0; x < tiles.length; x++) {
+//     for (var y = 0; y < tiles[0].length; y++) {
+//       buffer.write(tiles[x][y]);
+//       buffer.write(_space);
+//     }
+//   }
+//   buffer.write(_semiColon);
+//   return buffer.toString();
+// }
 
 void compilePlayerWeapons(StringBuffer buffer, Player player) {
   _write(buffer, ServerResponse.Weapons);

@@ -102,6 +102,11 @@ class _ByteStreamParser {
         case ServerResponse.Dynamic_Objects:
           parseDynamicObjects();
           break;
+
+        case ServerResponse.Tiles:
+          parseTiles();
+          break;
+
         case ServerResponse.Player_Attack_Target:
           _player.attackTarget.x = nextDouble();
           _player.attackTarget.y = nextDouble();
@@ -263,6 +268,7 @@ class _ByteStreamParser {
           break;
 
 
+
         case ServerResponse.End:
           byteLength.value = _index;
           _index = 0;
@@ -273,6 +279,28 @@ class _ByteStreamParser {
           throw Exception("Cannot parse $response");
       }
     }
+  }
+
+  void parseTiles() {
+    print("parse.tiles()");
+    final isometric = modules.isometric;
+    final rows = nextInt();
+    final columns = nextInt();
+    final tiles = isometric.tiles;
+    tiles.clear();
+    isometric.totalRows.value = rows;
+    isometric.totalColumns.value = columns;
+    isometric.totalRowsInt = rows;
+    isometric.totalColumnsInt = columns;
+    for (var row = 0; row < rows; row++) {
+      final List<int> column = [];
+      for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
+        column.add(nextByte());
+      }
+      tiles.add(column);
+    }
+    isometric.refreshGeneratedObjects();
+    isometric.updateTileRender();
   }
 
   void updateSync() {

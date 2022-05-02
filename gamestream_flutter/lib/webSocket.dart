@@ -80,7 +80,11 @@ class _WebSocket {
     if (_response is String){
       event = _response;
       parseState();
+      return;
     }
+
+    throw Exception("cannot parse response: $_response");
+
   }
 
   void _onError(Object error, StackTrace stackTrace) {

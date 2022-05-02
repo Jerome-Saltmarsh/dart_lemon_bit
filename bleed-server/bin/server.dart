@@ -119,7 +119,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       }
 
       final game = player.game;
-      write(game.compiledTiles);
+      // write(game.compiledTiles);
       write(game.compiledEnvironmentObjects);
       write(ServerResponse.Scene_Shade_Max);
       write(game.shadeMax);
@@ -131,8 +131,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       write('${ServerResponse.Game_Joined} 0 ${game.id} ${player.team} ${player.x.toInt()} ${player.y.toInt()}');
       sendAndClearBuffer();
       // compileAndSendPlayerSlots();
-      player.writeDynamicObjects();
-      compileAndSendPlayer();
+      // player.writeDynamicObjects();
+      // player.writeTiles();
+      // compileAndSendPlayer();
     }
 
     void joinGameSwarm() {
@@ -269,7 +270,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             _buffer.clear();
             _buffer.write(
                 '${ServerResponse.Scene_Changed} ${player.x.toInt()} ${player.y.toInt()} ');
-            _buffer.write(game.compiledTiles);
+            // _buffer.write(game.compiledTiles);
             _buffer.write(game.compiledEnvironmentObjects);
             reply(_buffer.toString());
             return;
@@ -525,10 +526,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           });
           break;
 
-        // case ClientRequest.Ping:
-        //   reply(ServerResponse.Pong.toString());
-        //   break;
-
         case ClientRequest.Construct:
           if (player == null) {
             return errorPlayerNotFound();
@@ -768,6 +765,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               // worldTime -= secondsPerHour;
               break;
           }
+          break;
+
+        case ClientRequest.Scene:
+          // onGameJoined();
+          // player?.writeTiles();
+          // compileAndSendPlayer();
           break;
 
         case ClientRequest.Upgrade:

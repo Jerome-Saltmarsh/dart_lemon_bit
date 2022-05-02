@@ -39,6 +39,7 @@ class Player extends Character with ByteWriter {
   var wood = 0;
   var stone = 0;
   var gold = 0;
+  var sceneDownloaded = false;
   Game game;
   Collider? aimTarget; // the currently highlighted character
   Position? target;
@@ -409,8 +410,14 @@ extension PlayerProperties on Player {
     writeProjectiles();
     writeNpcs(this);
     writeGameTime(game);
+    // writeDynamicObjects();
     writePlayerZombies();
-    writeDynamicObjects();
+
+    if (!sceneDownloaded){
+      writeTiles();
+      writeDynamicObjects();
+      sceneDownloaded = true;
+    }
 
     if (game.debugMode)
       writePaths(game);
@@ -526,6 +533,19 @@ extension PlayerProperties on Player {
       writeInt(dynamicObject.id);
     }
     writeByte(END);
+  }
+
+  void writeTiles() {
+    print("writeTiles()");
+    final tiles = scene.tiles;
+    writeByte(ServerResponse.Tiles);
+    writeInt(tiles.length);
+    writeInt(tiles[0].length);
+    for (var x = 0; x < tiles.length; x++) {
+      for (var y = 0; y < tiles[0].length; y++) {
+        writeByte(tiles[x][y]);
+      }
+    }
   }
 
   void writeGameEvent(int type, double x, double y, double angle){

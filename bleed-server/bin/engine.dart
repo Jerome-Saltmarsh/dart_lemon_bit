@@ -169,7 +169,7 @@ class _Engine {
   // and should not be called again
   void onGameCreated(Game game) {
     // compile.game(game);
-    game.compiledTiles = compileTiles(game.scene.tiles);
+    // game.compiledTiles = compileTiles(game.scene.tiles);
     game.compiledEnvironmentObjects =
         compileEnvironmentObjects(game.scene.environment);
     games.add(game);

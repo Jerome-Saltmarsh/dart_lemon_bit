@@ -5,7 +5,6 @@ enum ClientRequest {
   Attack,
   Revive,
   Equip,
-  // Ping,
   Purchase,
   Set_Compile_Paths,
   Version,
@@ -22,6 +21,7 @@ enum ClientRequest {
   Character_Load,
   Construct,
   Upgrade,
+  Scene,
 }
 
 const clientRequests = ClientRequest.values;

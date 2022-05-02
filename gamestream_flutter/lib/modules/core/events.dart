@@ -1,5 +1,6 @@
 
 
+import 'package:bleed_common/ClientRequest.dart';
 import 'package:bleed_common/GameStatus.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:firestore_client/firestoreService.dart';
@@ -140,7 +141,9 @@ class CoreEvents {
     print("events.onConnectionChanged($connection)");
 
     switch (connection) {
+
       case Connection.Connected:
+        sendClientRequest(ClientRequest.Scene);
         core.state.mode.value = Mode.Player;
         if (game.type.value == GameType.Custom){
           final account = core.state.account.value;
@@ -154,6 +157,7 @@ class CoreEvents {
           sendRequestJoinGame(game.type.value);
         }
         break;
+
       case Connection.Done:
         engine.update = null;
         core.state.mode.value = Mode.Website;
