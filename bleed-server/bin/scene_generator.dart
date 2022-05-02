@@ -68,10 +68,12 @@ Scene generateRandomScene({
                    health: 50
            ));
          }
-       } else if (noise < 0.6) {
+       } else if (noise < 0.55) {
          column.add(Tile.Block_Grass);
-       } else {
+       } else if (noise < 0.65) {
          column.add(Tile.Block_Grass_Level_2);
+       } else {
+         column.add(Tile.Block_Grass_Level_3);
        }
     }
   }

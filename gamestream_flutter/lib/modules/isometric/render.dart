@@ -374,6 +374,7 @@ class IsometricRender {
     }
   }
 
+
   void renderGeneratedObject(GeneratedObject generatedObject){
     switch(generatedObject.type){
       case GeneratedObjectType.Block_Grass:
@@ -381,6 +382,9 @@ class IsometricRender {
         break;
       case GeneratedObjectType.Block_Grass_Level_2:
         renderBlockGrassLevel2(generatedObject);
+        break;
+      case GeneratedObjectType.Block_Grass_Level_3:
+        renderBlockGrassLevel3(generatedObject);
         break;
     }
   }
@@ -428,6 +432,18 @@ class IsometricRender {
     engine.renderCustom(
       dstX: position.x,
       dstY: position.y - 48,
+      srcX: 5981 ,
+      srcY: isometric.getShadeAt(position) * 96,
+      srcWidth: 48,
+      srcHeight: 96,
+      anchorY: 0.66,
+    );
+  }
+
+  void renderBlockGrassLevel3(Position position){
+    engine.renderCustom(
+      dstX: position.x,
+      dstY: position.y - 96,
       srcX: 5981 ,
       srcY: isometric.getShadeAt(position) * 96,
       srcWidth: 48,

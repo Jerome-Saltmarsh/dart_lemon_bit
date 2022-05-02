@@ -105,6 +105,7 @@
 [ ] Generate Scene - Connect islands with bridges
 [ ] Item Type Hammer (Used to construct buildings)
 [ ] (Fix) bow render order
+[ ] Fix Join Game 
 [x] (Engine) Update Dynamic Objects on when changed
 [x] Indicate tech type level
 [x] Item Type Axe (Used to chop trees)
