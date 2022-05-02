@@ -144,7 +144,6 @@ class IsometricModule {
     );
   }
 
-
   int getShade(int row, int column){
     if (row < 0) return Pitch_Black;
     if (column < 0) return Pitch_Black;
@@ -157,7 +156,7 @@ class IsometricModule {
     return dynamic[row][column];
   }
 
-  int getShadeAt(Vector2 position){
+  int getShadeAt(Position position){
     return getShadeAtPosition(position.x, position.y);
   }
 

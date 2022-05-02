@@ -412,27 +412,24 @@ class IsometricRender {
     );
   }
 
-  void renderBlockGrass(Position position, {
-    int shade = Shade.Bright
-  }){
+  void renderBlockGrass(Position position) {
     engine.renderCustomV2(
       dst: position,
       srcX: 5981 ,
-      srcY: shade * 96,
+      srcY: isometric.getShadeAt(position) * 96,
       srcWidth: 48,
       srcHeight: 96,
       anchorY: 0.66,
     );
   }
 
-  void renderBlockGrassLevel2(Position position, {
-    int shade = Shade.Bright
-  }){
+
+  void renderBlockGrassLevel2(Position position){
     engine.renderCustom(
       dstX: position.x,
       dstY: position.y - 48,
       srcX: 5981 ,
-      srcY: shade * 96,
+      srcY: isometric.getShadeAt(position) * 96,
       srcWidth: 48,
       srcHeight: 96,
       anchorY: 0.66,
