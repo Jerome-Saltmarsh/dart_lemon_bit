@@ -41,7 +41,6 @@ class ServerResponse {
   static const Game_Royal = 40;
   static const Subscription_Required = 41;
   static const Lobby_CountDown = 42;
-  static const Player_Orbs = 43;
   static const Player_Slots = 44;
   static const Debug_Mode = 45;
   static const Gem_Spawns = 46;

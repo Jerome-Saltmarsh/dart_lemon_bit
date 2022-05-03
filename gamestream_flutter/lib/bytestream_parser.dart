@@ -26,7 +26,6 @@ var durationTotal = 0;
 
 
 final _player = modules.game.state.player;
-final _orbs = _player.orbs;
 final _hours = modules.isometric.hours;
 final _minutes = modules.isometric.minutes;
 final _events = modules.game.events;
@@ -262,23 +261,8 @@ class _ByteStreamParser {
           _player.gold.value = nextInt();
           break;
 
-
-        case ServerResponse.Player_Orbs:
-          _orbs.topaz.value = nextInt();
-          _orbs.emerald.value = nextInt();
-          _orbs.ruby.value = nextInt();
-          break;
-
         case ServerResponse.Player_Slots:
-          // readSlot(_slots.slot1);
-          // readSlot(_slots.slot2);
-          // readSlot(_slots.slot3);
-          // readSlot(_slots.slot4);
-          // readSlot(_slots.slot5);
-          // readSlot(_slots.slot6);
           break;
-
-
 
         case ServerResponse.End:
           byteLength.value = _index;

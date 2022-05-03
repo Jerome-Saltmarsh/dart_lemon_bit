@@ -38,8 +38,9 @@ class GameRandom extends Game {
         x: 500,
         y: 500,
       );
-      // player.techTree.bow = 2;
-      // player.techTree.pickaxe = 2;
+      player.techTree.bow = 2;
+      player.techTree.pickaxe = 2;
+      player.techTree.hammer = 2;
       return player;
   }
 }

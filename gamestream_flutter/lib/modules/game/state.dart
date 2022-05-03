@@ -2,7 +2,6 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:lemon_math/library.dart';
-import 'package:lemon_watch/advanced_watch.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'classes.dart';
@@ -22,6 +21,7 @@ class GameState {
   final highlightedTechType = Watch<int?>(null);
   final highlightedTechTypeUpgrade = Watch<int?>(null);
   final panelTypeKey = <int, GlobalKey> {};
+  final canBuild = Watch(false);
 
   final cameraMode = Watch(CameraMode.Chase);
   final framesSmoothed = Watch(0);
@@ -33,12 +33,12 @@ class GameState {
 
   final storeColumnKey = GlobalKey();
   final keyPanelStructure = GlobalKey();
-}
 
-class _PlayerOrbs {
-  final AdvancedWatch<int> ruby = AdvancedWatch(0);
-  final AdvancedWatch<int> topaz = AdvancedWatch(0);
-  final AdvancedWatch<int> emerald = AdvancedWatch(0);
+  GameState(){
+    player.equipped.onChanged((equipped) {
+       canBuild.value = equipped == TechType.Hammer;
+    });
+  }
 }
 
 class Slot {
@@ -73,8 +73,6 @@ class Player {
   final abilityTarget = Vector2(0, 0);
   final storeVisible = Watch(false);
   final attackTarget = Vector2(0, 0);
-  final orbs = _PlayerOrbs();
-  // final slots = Slots();
   final equipped = Watch(TechType.Unarmed);
   final armour = Watch(TechType.Unarmed);
   final helm = Watch(TechType.Unarmed);

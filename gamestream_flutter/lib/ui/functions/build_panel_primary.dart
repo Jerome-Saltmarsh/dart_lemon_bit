@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/ui/functions/build_health_bar.dart';
 
+import 'build_panel_structures.dart';
 import 'build_panel_tech.dart';
 import 'build_resource_panel.dart';
 import 'build_time.dart';
@@ -19,7 +20,9 @@ Widget buildPanelPrimary() {
           height6,
           buildResourcePanel(),
           height6,
-          buildPanelTech()
+          buildPanelTech(),
+          height6,
+          buildPanelStructures(),
         ],
       ));
 }

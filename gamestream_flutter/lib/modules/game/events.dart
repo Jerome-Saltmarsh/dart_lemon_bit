@@ -48,9 +48,6 @@ class GameEvents {
     state.player.alive.onChanged(_onPlayerAliveChanged);
     state.player.state.onChanged(onPlayerCharacterStateChanged);
     state.textBoxVisible.onChanged(onTextModeChanged);
-    state.player.orbs.emerald.listen(onEmeraldsChanged);
-    state.player.orbs.ruby.listen(onEmeraldsChanged);
-    state.player.orbs.topaz.listen(onEmeraldsChanged);
     state.player.equipped.onChanged(onPlayerWeaponChanged);
     state.player.armour.onChanged(onPlayerArmourChanged);
     state.player.helm.onChanged(onPlayerHelmChanged);

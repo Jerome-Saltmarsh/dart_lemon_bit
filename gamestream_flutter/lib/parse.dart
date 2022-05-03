@@ -55,13 +55,6 @@ void parseState() {
         game.countDownFramesRemaining.value = consumeInt();
         break;
 
-      case ServerResponse.Player_Orbs:
-        final orbs = modules.game.state.player.orbs;
-        orbs.ruby.value = consumeInt();
-        orbs.topaz.value = consumeInt();
-        orbs.emerald.value = consumeInt();
-        break;
-
       case ServerResponse.NpcsDebug:
         game.npcDebug.clear();
         while (!_simiColonConsumed()) {

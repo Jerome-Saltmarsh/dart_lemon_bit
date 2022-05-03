@@ -7,7 +7,6 @@ import 'package:lemon_engine/engine.dart';
 import 'webSocket.dart';
 
 final _gameUpdateIndex = ClientRequest.Update.index;
-final _buffer1 = Uint8List(1);
 final _updateBuffer = Uint8List(16);
 
 void sendRequestSpeak(String message){
