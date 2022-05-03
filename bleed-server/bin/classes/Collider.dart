@@ -24,4 +24,8 @@ class Collider with Position, Radius {
   bool withinBounds(Vector2 position) {
     return getDistance(position) <= radius;
   }
+
+  double getOverlap(Collider collider){
+    return (radius + collider.radius) - getDistance(collider);
+  }
 }

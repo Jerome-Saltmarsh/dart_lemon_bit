@@ -8,6 +8,7 @@ import 'classes/Scene.dart';
 import 'common/DynamicObjectType.dart';
 import 'common/ObjectType.dart';
 import 'common/Tile.dart';
+import 'utilities.dart';
 
 Scene generateRandomScene({
   required int rows,
@@ -46,8 +47,8 @@ Scene generateRandomScene({
          if (random.nextDouble() < 0.05) {
            environment.add(
                StaticObject(
-                   x: getTilePositionX(columnIndex, rowIndex),
-                   y: getTilePositionY(columnIndex, rowIndex),
+                   x: getTilePositionX(rowIndex, columnIndex),
+                   y: getTilePositionY(rowIndex, columnIndex),
                    type: randomItem(const [
                      ObjectType.Tree01,
                      ObjectType.Tree01,
@@ -63,8 +64,8 @@ Scene generateRandomScene({
            dynamicObjects.add(
                DynamicObject(
                  type: DynamicObjectType.Chest,
-                   x: getTilePositionX(columnIndex, rowIndex),
-                   y: getTilePositionY(columnIndex, rowIndex),
+                   x: getTilePositionX(rowIndex, columnIndex),
+                   y: getTilePositionY(rowIndex, columnIndex),
                    health: 50
            ));
          }
@@ -78,13 +79,39 @@ Scene generateRandomScene({
     }
   }
 
+  final numberOfSpawnPoints = 5;
+  final spawnCells = <Cell>[];
+
+  for (var i = 0; i < numberOfSpawnPoints; i++) {
+    final row = randomInt(0, rows);
+    final column = randomInt(0, columns);
+      if (tiles[row][column] != Tile.Grass) {
+        i--;
+        continue;
+      }
+      spawnCells.add(Cell(row: row, column: column));
+  }
   return Scene(
       tiles: tiles,
-      crates: [],
       staticObjects: environment,
       characters: [],
       dynamicObjects: dynamicObjects,
       name: 'random-map',
-  );
+      playerSpawnPoints: spawnCells
+          .map((e) => Vector2(getTilePositionX(e.row, e.column),
+              getTilePositionY(e.row, e.column)))
+          .toList());
 }
 
+enum TileType {
+  Connected,
+  Blocked,
+  Disconnected,
+  Unvisited,
+}
+
+class Cell {
+   late int row;
+   late int column;
+   Cell({required this.row, required this.column});
+}

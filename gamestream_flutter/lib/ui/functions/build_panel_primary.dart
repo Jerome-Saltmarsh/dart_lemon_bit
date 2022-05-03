@@ -7,9 +7,10 @@ import 'build_panel_tech.dart';
 import 'build_resource_panel.dart';
 import 'build_time.dart';
 
+
 Widget buildPanelPrimary() {
   return Positioned(
-      top: 200,
+      top: 20,
       right: 32,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

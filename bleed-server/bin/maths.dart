@@ -6,15 +6,6 @@ double distanceV2(Position a, Position b) {
   return getHypotenuse(a.x - b.x, a.y - b.y);
 }
 
-int absInt(int value) {
-  if (value < 0) return -value;
-  return value;
-}
-
-int diffInt(int a, int b){
-  return absInt(a - b);
-}
-
 double radiansV2(Position a, Position b) {
   return radiansBetween(a.x, a.y, b.x, b.y);
 }

@@ -97,11 +97,11 @@ Scene parseJsonToScene(Json json, String name) {
 
   final scene = Scene(
     tiles: tiles,
-    crates: [],
     staticObjects: environment,
     dynamicObjects: [],
     characters: characters,
-    name: name
+    name: name,
+    playerSpawnPoints: [],
   );
 
   if (json.containsKey(sceneFieldNames.startTime)){
@@ -111,7 +111,7 @@ Scene parseJsonToScene(Json json, String name) {
     scene.secondsPerFrames = json[sceneFieldNames.secondsPerFrame];
   }
   if (json.containsKey(sceneFieldNames.playerSpawnPoints)) {
-    scene.playerSpawnPoints = compileIntListToVector2List(json[sceneFieldNames.playerSpawnPoints]);
+    // scene.playerSpawnPoints = compileIntListToVector2List(json[sceneFieldNames.playerSpawnPoints]);
   }
 
   return scene;

@@ -4,7 +4,6 @@ import 'package:lemon_math/library.dart';
 
 import 'classes/Character.dart';
 import 'classes/Collider.dart';
-import 'functions.dart';
 
 final physics = _Physics();
 
@@ -81,4 +80,12 @@ T? findClosestVector2<T extends Position>({
     closestDistance = colliderDistance;
   }
   return closest;
+}
+
+num calculateAngleDifference(double angleA, double angleB) {
+  final diff = (angleA - angleB).abs();
+  if (diff < pi) {
+    return diff;
+  }
+  return pi2 - diff;
 }

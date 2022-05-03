@@ -106,6 +106,7 @@ class Player {
   final canAffordUpgradeAxe = Watch(false);
   final canAffordUpgradeHammer = Watch(false);
   final canAffordUpgradeBag = Watch(false);
+  final canAffordPalisade = Watch(false);
 
   Watch<bool> getCanAffordWatch(int type){
     switch (type){

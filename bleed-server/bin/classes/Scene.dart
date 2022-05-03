@@ -11,9 +11,9 @@ import 'TileNode.dart';
 class Scene {
   final List<Character> characters;
   final List<List<int>> tiles;
-  final List<Vector2> crates;
   final List<StaticObject> staticObjects;
   final List<DynamicObject> dynamicObjects;
+  final List<Position> playerSpawnPoints;
   final String name;
 
   late final List<List<TileNode>> tileNodes;
@@ -22,7 +22,6 @@ class Scene {
 
   int? startHour;
   int? secondsPerFrames;
-  List<Vector2> playerSpawnPoints = [];
 
   static final _boundary = TileNode(false);
 
@@ -31,10 +30,10 @@ class Scene {
 
   Scene({
     required this.tiles,
-    required this.crates,
     required this.staticObjects,
     required this.dynamicObjects,
     required this.characters,
+    required this.playerSpawnPoints,
     required this.name,
   }) {
     numberOfRows = tiles.length;
@@ -347,11 +346,11 @@ int parseRowsAndColumnsToDirection(int rows, int columns) {
   return Direction.Right;
 }
 
-double getTilePositionX(int row, int column){
-  return (column * halfTileSize) - (row * halfTileSize);
-}
-
-double getTilePositionY(int row, int column){
-  return (row * halfTileSize) + (column * halfTileSize) + halfTileSize;
-}
-
+// double getTilePositionX(int row, int column){
+//   return (column * halfTileSize) - (row * halfTileSize);
+// }
+//
+// double getTilePositionY(int row, int column){
+//   return (row * halfTileSize) + (column * halfTileSize) + halfTileSize;
+// }
+//

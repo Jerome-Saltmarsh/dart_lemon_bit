@@ -74,8 +74,7 @@
 [ ] Fix flames freeze    
 [ ] Display Highlighted Target info (Zombie, Pot, etc)    
 [ ] Tutorial    
-[ ] Block Tiles caste Shadows     
-[ ] Design Tower Sprite    
+[ ] Block Tiles caste Shadows  
 [ ] GameOver on death    
 [ ] FIX Zombies run into lamps forever   
 [ ] (CRITICAL) Fix Map Editor
@@ -85,18 +84,27 @@
 [ ] Render Structure Health
 [ ] Fix Zombies attack structure animation
 [ ] Destructible Bush revives health
-[ ] Palisades draw horizontal and vertical when aligned
 [ ] Armour Slot
 [ ] Helm Slot
 [ ] Perk Type: Bag Size
 [ ] Perk Type: Torch Size
 [ ] Loot Slot x 3 Creeps occasionally drop random trinkets
-[ ] Randomly Generate Zombie Spawn Locations
-[ ] Randomly Generate Player Spawn Locations
 [ ] Randomly Generate Caves
 [ ] Randomly Generate Roads
-[ ] Generate Scene - Connect islands with bridges
+[ ] Character Type Orc
+[ ] Character Type Vampire
+[ ] Battle Mode (Last standing player wins)
+[ ] Character Selection (head, name, etc, staff, bow, sword etc),
+[ ] Train Character Archer
+[ ] Train Character Swordsman
+RELEASE [11 May - 2022]   
+[ ] Palisades draw horizontal and vertical when aligned
+[ ] Design Tower Sprite    
 [ ] Construct buildings using hammer
+[ ] Construct buildings within build radius
+[ ] Randomly Generate Zombie Spawn Locations
+[ ] Generate Scene - Connect islands with bridges
+[x] Randomly Generate Player Spawn Locations
 [x] Item Type Bag (used to store loot)
 [x] Item Type Hammer (Used to construct buildings)
 [x] (Fix) weapon render order
@@ -142,7 +150,6 @@
 [x] AI Always run at player
 [x] Debug draw ai target line    
 [x] FIX Zombies run backwards and flicker    
-[COMPLETED]    
 [x] FIX Game freezes when change tab    
 [x] Convert ItemType to const    
 [x] Convert DynamicObjectType to const    

@@ -114,7 +114,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       write(ServerResponse.Game_Status);
       write(game.status.index);
       compilePlayersRemaining(_buffer, 0);
-      player.writeTechTypes();
+      // player.writeTechTypes();
       write('${ServerResponse.Game_Joined} 0 ${game.id} ${player.team} ${player.x.toInt()} ${player.y.toInt()}');
       sendAndClearBuffer();
     }

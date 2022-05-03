@@ -1,5 +1,6 @@
 import 'package:lemon_math/library.dart';
 
+import '../utilities.dart';
 import 'Scene.dart';
 
 class TileNode with Position {

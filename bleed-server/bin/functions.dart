@@ -1,17 +1,6 @@
-import 'dart:math';
-
 import 'package:lemon_math/library.dart';
 
 import 'classes/Collider.dart';
-import 'maths.dart';
-
-num calculateAngleDifference(double angleA, double angleB) {
-  final diff = (angleA - angleB).abs();
-  if (diff < pi) {
-    return diff;
-  }
-  return pi2 - diff;
-}
 
 void updateCollisionBetween(List<Collider> gameObjects) {
   final numberOfGameObjects = gameObjects.length;
@@ -32,7 +21,7 @@ void updateCollisionBetween(List<Collider> gameObjects) {
 }
 
 void resolveCollisionA(Collider a, Collider b) {
-  final overlap = collisionOverlap(a, b);
+  final overlap = a.getOverlap(b);
   if (overlap < 0) return;
   var xDiff = a.x - b.x;
   var yDiff = a.y - b.y;
@@ -57,7 +46,7 @@ void resolveCollisionA(Collider a, Collider b) {
 }
 
 void resolveCollisionB(Collider a, Collider b) {
-  final overlap = collisionOverlap(a, b);
+  final overlap = a.getOverlap(b);
   if (overlap <= 0) return;
   final xDiff = a.x - b.x;
   final yDiff = a.y - b.y;
@@ -71,14 +60,10 @@ void resolveCollisionB(Collider a, Collider b) {
   a.y += targetY;
 }
 
-double collisionOverlap(Collider a, Collider b) {
-  return a.radius + b.radius - distanceV2(a, b);
-}
-
 void resolveCollisionBetween(
     List<Collider> gameObjectsA,
     List<Collider> gameObjectsB,
-    CollisionResolver resolve
+    Function(Collider a, Collider b) onCollision
     ) {
   final aLength = gameObjectsA.length;
   final bLength = gameObjectsB.length;
@@ -92,12 +77,10 @@ void resolveCollisionBetween(
       if (a.top > b.bottom) continue;
       if (a.right < b.left) continue;
       if (a.left > b.right) continue;
-      resolve(a, b);
+      onCollision(a, b);
     }
   }
 }
-
-typedef void CollisionResolver(Collider a, Collider b);
 
 
 
