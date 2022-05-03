@@ -97,7 +97,7 @@
 [ ] Randomly Generate Roads
 [ ] Generate Scene - Connect islands with bridges
 [ ] Construct buildings using hammer
-[ ] Upgrade 
+[x] Item Type Bag (used to store loot)
 [x] Item Type Hammer (Used to construct buildings)
 [x] (Fix) weapon render order
 [x] Fix Join Game 

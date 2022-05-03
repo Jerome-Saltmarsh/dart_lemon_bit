@@ -17,8 +17,9 @@ class TechType {
   static const Handgun = 5;
   static const Axe = 6;
   static const Hammer = 7;
+  static const Bag = 8;
 
-  static bool isValid(int index) => index >= 0 && index <= Hammer;
+  static bool isValid(int index) => index >= 0 && index <= Bag;
 
   static String getName(int value) {
     assert (isValid(value));
@@ -31,20 +32,7 @@ class TechType {
       Handgun: "Handgun",
       Axe: "Axe",
       Hammer: "Hammer",
-    }[value] ?? "?";
-  }
-  
-  static String getDescription(int value) {
-    assert (isValid(value));
-    return const {
-      Unarmed: "Unarmed",
-      Pickaxe: "Used to mine rocks",
-      Bow: "Shoot enemies from a distance",
-      Sword: "Fight enemies at close range",
-      Shotgun: "Shotgun",
-      Handgun: "Handgun",
-      Axe: "Used to chop wood",
-      Hammer: "Used to construct"
+      Bag: "Bag",
     }[value] ?? "?";
   }
   
@@ -107,6 +95,12 @@ class TechType {
         Cost(wood: 40, stone: 40),
         Cost(wood: 80, stone: 80),
       ],
+      Bag: const[
+        Cost(wood: 10, stone: 10),
+        Cost(wood: 20, stone: 20),
+        Cost(wood: 40, stone: 40),
+        Cost(wood: 80, stone: 80),
+      ],
     }[type];
     if (costs == null) throw Exception("cannot get cost for type $type");
     if (level >= costs.length) return null;
@@ -127,6 +121,8 @@ class TechType {
         return 20;
       case TechType.Hammer:
         return 20;
+      case TechType.Bag:
+        return 0;
       default:
         throw Exception("Invalid tech type index $type");
     }
