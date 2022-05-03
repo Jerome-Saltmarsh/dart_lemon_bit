@@ -819,6 +819,14 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               }
               player.writePlayerEvent(PlayerEvent.Item_Purchased);
               break;
+            case TechType.Hammer:
+              player.techTree.hammer++;
+              if (player.techTree.hammer == 1) {
+                player.equipped = TechType.Hammer;
+                player.setStateChanging();
+              }
+              player.writePlayerEvent(PlayerEvent.Item_Purchased);
+              break;
           }
           player.writeTechTypes();
           break;

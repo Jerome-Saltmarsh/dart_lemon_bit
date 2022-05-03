@@ -927,6 +927,7 @@ class IsometricRender {
       );
 
       final row = const [
+        TechType.Hammer,
         TechType.Axe,
         TechType.Pickaxe,
         TechType.Sword,

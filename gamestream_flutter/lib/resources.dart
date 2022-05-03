@@ -95,6 +95,8 @@ class _SwordIcons {
   final pickaxeGray = buildIcon("pickaxe-gray");
   final axe = buildIcon("axe");
   final axeGray = buildIcon("axe-gray");
+  final hammer = buildIcon("hammer");
+  final hammerGray = buildIcon("hammer-gray");
 }
 
 class _BowIcons {

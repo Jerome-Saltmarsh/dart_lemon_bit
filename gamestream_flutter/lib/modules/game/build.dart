@@ -437,6 +437,7 @@ final techTypeIcons = <int, Widget> {
   TechType.Bow: resources.icons.bows.wooden,
   TechType.Pickaxe: resources.icons.swords.pickaxe,
   TechType.Axe: resources.icons.swords.axe,
+  TechType.Hammer: resources.icons.swords.hammer,
 };
 
 final techTypeIconsGray = <int, Widget> {
@@ -445,5 +446,6 @@ final techTypeIconsGray = <int, Widget> {
   TechType.Bow: resources.icons.bows.woodenGray,
   TechType.Pickaxe: resources.icons.swords.pickaxeGray,
   TechType.Axe: resources.icons.swords.axeGray,
+  TechType.Hammer: resources.icons.swords.hammerGray,
 };
 

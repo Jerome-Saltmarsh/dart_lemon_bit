@@ -5,6 +5,7 @@ class TechTree {
   var bow = 0;
   var sword = 0;
   var axe = 0;
+  var hammer = 0;
 }
 
 class TechType {
@@ -15,8 +16,9 @@ class TechType {
   static const Shotgun = 4;
   static const Handgun = 5;
   static const Axe = 6;
+  static const Hammer = 7;
 
-  static bool isValid(int index) => index >= 0 && index <= Axe;
+  static bool isValid(int index) => index >= 0 && index <= Hammer;
 
   static String getName(int value) {
     assert (isValid(value));
@@ -28,6 +30,7 @@ class TechType {
       Shotgun: "Shotgun",
       Handgun: "Handgun",
       Axe: "Axe",
+      Hammer: "Hammer",
     }[value] ?? "?";
   }
   
@@ -40,7 +43,8 @@ class TechType {
       Sword: "Fight enemies at close range",
       Shotgun: "Shotgun",
       Handgun: "Handgun",
-      Axe: "Used to chop wood"
+      Axe: "Used to chop wood",
+      Hammer: "Used to construct"
     }[value] ?? "?";
   }
   
@@ -54,6 +58,7 @@ class TechType {
       Pickaxe,
       Sword,
       Axe,
+      Hammer,
     ].contains(value);
   }
 
@@ -64,6 +69,7 @@ class TechType {
       Sword: 20,
       Bow: 25,
       Shotgun: 45,
+      Hammer: 45,
     }[type] ?? 20;
   }
 
@@ -95,6 +101,12 @@ class TechType {
         Cost(wood: 40, stone: 40),
         Cost(wood: 80, stone: 80),
       ],
+      Hammer: const[
+        Cost(wood: 10, stone: 10),
+        Cost(wood: 20, stone: 20),
+        Cost(wood: 40, stone: 40),
+        Cost(wood: 80, stone: 80),
+      ],
     }[type];
     if (costs == null) throw Exception("cannot get cost for type $type");
     if (level >= costs.length) return null;
@@ -112,6 +124,8 @@ class TechType {
       case TechType.Sword:
         return 30;
       case TechType.Axe:
+        return 20;
+      case TechType.Hammer:
         return 20;
       default:
         throw Exception("Invalid tech type index $type");

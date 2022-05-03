@@ -75,16 +75,9 @@
 [ ] Display Highlighted Target info (Zombie, Pot, etc)    
 [ ] Tutorial    
 [ ] Block Tiles caste Shadows     
-[ ] Design Map Skirmish
-[ ] 2 Player Survival Game waves
-[ ] Construct Palisade    
-[ ] Construct Tower    
-[ ] Zombies Attack Tower    
 [ ] Design Tower Sprite    
 [ ] GameOver on death    
 [ ] FIX Zombies run into lamps forever   
-[ ] Destructible Bush
-[ ] Upgrade Panel   
 [ ] (CRITICAL) Fix Map Editor
 [ ] (CRITICAL) FIX AI Pathfinding
 [ ] (CRITICAL) Fix 204 error    

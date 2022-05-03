@@ -99,11 +99,13 @@ class Player {
   final levelSword = Watch(0);
   final levelBow = Watch(0);
   final levelAxe = Watch(0);
+  final levelHammer = Watch(0);
 
   final canAffordUpgradePickaxe = Watch(false);
   final canAffordUpgradeSword = Watch(false);
   final canAffordUpgradeBow = Watch(false);
   final canAffordUpgradeAxe = Watch(false);
+  final canAffordUpgradeHammer = Watch(false);
 
   Watch<bool> getCanAffordWatch(int type){
     switch (type){
@@ -115,8 +117,10 @@ class Player {
         return canAffordUpgradeAxe;
       case TechType.Bow:
         return canAffordUpgradeBow;
+      case TechType.Hammer:
+        return canAffordUpgradeHammer;
     }
-    throw Exception('$type has not watch');
+    throw Exception('getCanAffordWatch error, $type has no watch');
   }
 
   Player(){
@@ -134,6 +138,7 @@ class Player {
      canAffordUpgradeSword.value = canAfford(TechType.Sword);
      canAffordUpgradeBow.value = canAfford(TechType.Bow);
      canAffordUpgradeAxe.value = canAfford(TechType.Axe);
+     canAffordUpgradeHammer.value = canAfford(TechType.Hammer);
   }
 
   bool canAfford(int type) {
@@ -156,6 +161,8 @@ class Player {
         return levelBow;
       case TechType.Axe:
         return levelAxe;
+      case TechType.Hammer:
+        return levelHammer;
       default:
         throw Exception("cannot get tech type level. type: $type");
     }

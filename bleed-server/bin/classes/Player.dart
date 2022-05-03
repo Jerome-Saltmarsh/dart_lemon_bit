@@ -520,6 +520,7 @@ extension PlayerProperties on Player {
     writeByte(techTree.sword);
     writeByte(techTree.bow);
     writeByte(techTree.axe);
+    writeByte(techTree.hammer);
   }
 
   void writeStaticObjects() {
