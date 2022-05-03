@@ -3,7 +3,6 @@ import 'package:lemon_math/library.dart';
 
 import '../byte_writer.dart';
 import '../common/library.dart';
-import '../constants/no_squad.dart';
 import '../engine.dart';
 import '../functions/generateName.dart';
 import '../utilities.dart';
@@ -70,7 +69,7 @@ class Player extends Character with ByteWriter {
     required int weapon,
     double x = 0,
     double y = 0,
-    int team = noSquad,
+    int team = 0,
     int magic = 10,
     int health = 10,
   }) : super(

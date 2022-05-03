@@ -1,10 +1,9 @@
 
-import '../settings.dart';
 import 'Collider.dart';
 
 class Item extends Collider {
   int type;
-  int duration = settings.itemDuration;
+  int duration = 200;
   bool timed;
 
   Item({

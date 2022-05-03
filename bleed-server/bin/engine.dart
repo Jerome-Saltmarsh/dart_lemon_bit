@@ -2,12 +2,9 @@ import 'dart:async';
 
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 
-import 'classes/Game.dart';
-import 'classes/Player.dart';
-import 'classes/Scene.dart';
+import 'classes/library.dart';
 import 'common/GameStatus.dart';
 import 'common/SlotType.dart';
-import 'enums/npc_mode.dart';
 import 'functions/loadScenes.dart';
 import 'games/GameRandom.dart';
 import 'games/GameSwarm.dart';
@@ -29,7 +26,7 @@ class _Engine {
 
   Future init() async {
     print("engine.init()");
-    periodic(fixedUpdate, ms: Duration.millisecondsPerSecond ~/ framesPerSecond);
+    periodic(fixedUpdate, ms: 1000 ~/ framesPerSecond);
     print("engine.init() finished");
   }
 

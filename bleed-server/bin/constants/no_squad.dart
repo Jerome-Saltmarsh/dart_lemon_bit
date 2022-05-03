@@ -1,1 +1,0 @@
-const noSquad = 0;

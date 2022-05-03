@@ -13,7 +13,6 @@ import 'functions/withinRadius.dart';
 import 'games/GameRandom.dart';
 import 'games/Moba.dart';
 import 'physics.dart';
-import 'settings.dart';
 
 const _space = " ";
 const _errorIndex = ServerResponse.Error;
@@ -52,7 +51,7 @@ void startWebsocketServer(){
       // pingInterval: Duration(hours: 1),
   );
 
-  shelf_io.serve(handler, settings.host, settings.port).then((server) {
+  shelf_io.serve(handler, '0.0.0.0', 8080).then((server) {
     print('Serving at wss://${server.address.host}:${server.port}');
   }).catchError((error){
     print("Websocket error occurred");

@@ -6,12 +6,10 @@ import '../common/MaterialType.dart';
 import '../common/library.dart';
 import '../engine.dart';
 import '../enums.dart';
-import '../enums/npc_mode.dart';
 import '../functions.dart';
 import '../functions/withinRadius.dart';
 import '../maths.dart';
 import '../physics.dart';
-import '../settings.dart';
 import '../utilities.dart';
 import 'Character.dart';
 import 'Collectable.dart';
@@ -224,8 +222,6 @@ const secondsPerMinute = 60;
 const minutesPerHour = 60;
 const hoursPerDay = 24;
 const secondsPerFrame = 5;
-
-final characterRadius = settings.radius.character;
 
 extension GameFunctions on Game {
   void spawnRandomOrb(double x, double y) {
@@ -969,8 +965,8 @@ extension GameFunctions on Game {
       return spawnProjectile(
         src: src,
         accuracy: 0,
-        speed: settings.projectileSpeed.arrow,
-        range: settings.range.arrow,
+        speed: 7,
+        range: 300,
         target: src.attackTarget,
         angle: src.angle,
         techType: TechType.Bow,
@@ -981,8 +977,8 @@ extension GameFunctions on Game {
     return spawnProjectile(
       src: src,
       accuracy: 0,
-      speed: settings.projectileSpeed.arrow,
-      range: settings.range.arrow,
+      speed: 7,
+      range: 300,
       target: target,
       techType: TechType.Bow,
       level: 1 // TODO for structures
@@ -1046,8 +1042,8 @@ extension GameFunctions on Game {
     zombie.maxHealth = health;
     zombie.health = health;
     zombie.collidable = true;
-    zombie.x = x + giveOrTake(radius.zombieSpawnVariation);
-    zombie.y = y + giveOrTake(radius.zombieSpawnVariation);
+    zombie.x = x + giveOrTake(100);
+    zombie.y = y + giveOrTake(100);
     zombie.yv = 0;
     zombie.xv = 0;
     return zombie;
@@ -1063,7 +1059,7 @@ extension GameFunctions on Game {
       x: 0,
       y: 0,
       mode: NpcMode.Aggressive,
-      health: settings.health.zombie,
+      health: 10,
       weapon: SlotType.Empty,
     );
     zombies.add(zombie);
@@ -1451,8 +1447,8 @@ extension GameFunctions on Game {
 
 void playerInteract(Player player) {
   for (InteractableNpc npc in player.game.npcs) {
-    if (diffOver(npc.x, player.x, radius.interact)) continue;
-    if (diffOver(npc.y, player.y, radius.interact)) continue;
+    // if (diffOver(npc.x, player.x, radius.interact)) continue;
+    // if (diffOver(npc.y, player.y, radius.interact)) continue;
     npc.onInteractedWith(player);
     return;
   }

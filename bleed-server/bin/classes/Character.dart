@@ -5,10 +5,7 @@ import 'package:lemon_math/library.dart';
 
 import '../common/MaterialType.dart';
 import '../common/library.dart';
-import '../constants/no_squad.dart';
-import '../enums/npc_mode.dart';
 import '../functions/withinRadius.dart';
-import '../settings.dart';
 import 'Ability.dart';
 import 'Collider.dart';
 import 'Game.dart';
@@ -66,7 +63,7 @@ class AI extends Character with Material {
     this.mode = NpcMode.Defensive,
     required CharacterType type,
     required int health,
-    int team = noSquad,
+    int team = 0,
     int weapon = SlotType.Empty,
     double speed = 3.0,
   }): super(x: x, y: y, type: type, health: health, team: team, weapon: weapon, speed: speed) {
@@ -169,7 +166,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
     int weapon = TechType.Unarmed,
     double speed = 3.0,
     int team = Teams.none,
-  }) : super(x: x, y: y, radius: settings.radius.character) {
+  }) : super(x: x, y: y, radius: 10) {
     maxHealth = health;
     this.health = health;
     _speed = speed;
@@ -229,4 +226,12 @@ bool sameTeam(dynamic a, dynamic b){
   if (b is Team == false) return false;
   if (a.team == 0) return false;
   return a.team == b.team;
+}
+
+enum NpcMode {
+  Ignore,
+  Stand_Ground,
+  Defensive,
+  Aggressive,
+  Swarm,
 }

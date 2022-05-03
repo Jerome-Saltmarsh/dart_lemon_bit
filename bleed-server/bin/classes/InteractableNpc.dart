@@ -1,5 +1,4 @@
 import '../common/CharacterType.dart';
-import '../enums/npc_mode.dart';
 import 'Character.dart';
 import 'Player.dart';
 
