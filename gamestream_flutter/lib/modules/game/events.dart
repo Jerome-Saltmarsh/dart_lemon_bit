@@ -435,6 +435,10 @@ class GameEvents {
         audio.materialStruckFlesh(x, y);
         break;
 
+      case GameEventType.Material_Struck_Metal:
+        audio.materialStruckMetal(x, y);
+        break;
+
     }
   }
 }

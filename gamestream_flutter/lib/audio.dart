@@ -52,9 +52,12 @@ class _Audio {
     _playPositioned('material-struck-stone.mp3', x, y);
   }
 
-
   void materialStruckFlesh(double x, double y){
     _playPositioned('bloody-punches-1.mp3', x, y);
+  }
+
+  void materialStruckMetal(double x, double y){
+     objectStruck(x, y);
   }
 
   void stopMusic(){

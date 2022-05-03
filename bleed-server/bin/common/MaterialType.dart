@@ -5,5 +5,4 @@ enum MaterialType {
   Plant,
   Flesh,
   Metal,
-  Other,
 }

@@ -96,7 +96,9 @@
 [ ] Randomly Generate Caves
 [ ] Randomly Generate Roads
 [ ] Generate Scene - Connect islands with bridges
-[ ] Item Type Hammer (Used to construct buildings)
+[ ] Construct buildings using hammer
+[ ] Upgrade 
+[x] Item Type Hammer (Used to construct buildings)
 [x] (Fix) weapon render order
 [x] Fix Join Game 
 [x] (Engine) Update Dynamic Objects on when changed

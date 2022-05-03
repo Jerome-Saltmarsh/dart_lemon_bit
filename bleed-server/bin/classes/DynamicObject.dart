@@ -33,6 +33,6 @@ class DynamicObject extends Collider with Health, Material, Id {
         DynamicObjectType.Tree: MaterialType.Wood,
         DynamicObjectType.Grass: MaterialType.Plant,
         DynamicObjectType.Palisade: MaterialType.Wood,
-    }[type] ?? MaterialType.Other;
+    }[type] ?? MaterialType.Wood;
   }
 }
