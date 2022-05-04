@@ -86,7 +86,7 @@ class _Build {
                   }
                   return text(mouseOver ? '-$gameName-' : gameName, color: mouseOver ? colours.white : colours.white85, onPressed: (){
                     core.actions.connectToGame(gameType);
-                  }, size: style.fontSize.large, bold: true);
+                  }, size: FontSize.Large, bold: true);
                 },
             ),
           );

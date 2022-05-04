@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/bytestream_parser.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
-import 'package:gamestream_flutter/ui/state/hud.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -41,7 +40,7 @@ class GameUpdate {
   }
 
   void readPlayerInput() {
-    if (hud.textBoxFocused) return;
+    // if (hud.textBoxFocused) return;
 
     if (modules.game.structureType.value == null){
       if (_mouseLeftDown.value) {

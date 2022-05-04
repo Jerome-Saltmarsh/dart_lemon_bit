@@ -397,13 +397,13 @@ Widget loadingText(String value, Function onPressed){
      frame = (frame + 1) % 4;
      switch(frame){
        case 0:
-         return text('-- $value --', size: style.fontSize.large, bold: true, onPressed: onPressed);
+         return text('-- $value --', size: FontSize.Large, bold: true, onPressed: onPressed);
        case 1:
-         return text('/- $value -\\', size: style.fontSize.large, bold: true, onPressed: onPressed);
+         return text('/- $value -\\', size: FontSize.Large, bold: true, onPressed: onPressed);
        case 2:
-         return text('|- $value -|', size: style.fontSize.large, bold: true, onPressed: onPressed);
+         return text('|- $value -|', size: FontSize.Large, bold: true, onPressed: onPressed);
        case 3:
-         return text('\\- $value -/', size: style.fontSize.large, bold: true, onPressed: onPressed);
+         return text('\\- $value -/', size: FontSize.Large, bold: true, onPressed: onPressed);
        default:
           return text(value);
      }

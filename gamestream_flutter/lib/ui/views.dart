@@ -111,7 +111,7 @@ Widget buildViewConnectionNone() {
           WatchBuilder(core.state.region, (Region region){
             return text(region.name, onPressed: modules.website.actions.showDialogChangeRegion);
           }),
-          text(version, color: colours.white618, size: style.fontSize.small),
+          text(version, color: colours.white618, size: FontSize.Small),
         ],
       ),
       // topLeft: widgets.title,
