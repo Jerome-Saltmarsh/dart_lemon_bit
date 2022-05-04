@@ -98,6 +98,7 @@
 [ ] Train Character Swordsman
 [ ] DynamicObject.Id should be big int
 RELEASE [11 May - 2022]   
+[ ] Refactor Game with ByteReader
 [ ] Palisades draw horizontal and vertical when aligned
 [ ] Design Tower Sprite    
 [ ] Chest Shades
@@ -107,6 +108,7 @@ RELEASE [11 May - 2022]
 [ ] Preload audios
 [ ] Fix Terrain Culling
 [ ] Polish Menu
+[x] Add Fifth cost to tech types
 [x] Spawn blood forward on hit
 [x] Fix Blood Particles
 [?] (CRITICAL) Fix 204 Cache error    

@@ -70,36 +70,42 @@ class TechType {
         Cost(wood: 20, stone: 20),
         Cost(wood: 40, stone: 40),
         Cost(wood: 80, stone: 80),
+        Cost(wood: 160, stone: 160),
       ],
       Sword: const[
         Cost(wood: 10, stone: 10),
         Cost(wood: 20, stone: 20),
         Cost(wood: 40, stone: 40),
         Cost(wood: 80, stone: 80),
+        Cost(wood: 160, stone: 160),
       ],
       Bow: const[
         Cost(wood: 10, stone: 10),
         Cost(wood: 20, stone: 20),
         Cost(wood: 40, stone: 40),
         Cost(wood: 80, stone: 80),
+        Cost(wood: 160, stone: 160),
       ],
       Axe: const[
         Cost(wood: 10, stone: 10),
         Cost(wood: 20, stone: 20),
         Cost(wood: 40, stone: 40),
         Cost(wood: 80, stone: 80),
+        Cost(wood: 160, stone: 160),
       ],
       Hammer: const[
         Cost(wood: 10, stone: 10),
         Cost(wood: 20, stone: 20),
         Cost(wood: 40, stone: 40),
         Cost(wood: 80, stone: 80),
+        Cost(wood: 160, stone: 160),
       ],
       Bag: const[
         Cost(wood: 10, stone: 10),
         Cost(wood: 20, stone: 20),
         Cost(wood: 40, stone: 40),
         Cost(wood: 80, stone: 80),
+        Cost(wood: 160, stone: 160),
       ],
     }[type];
     if (costs == null) throw Exception("cannot get cost for type $type");
