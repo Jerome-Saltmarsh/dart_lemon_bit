@@ -953,13 +953,13 @@ extension GameFunctions on Game {
 
   void casteSlowingCircle(Character character, double x, double y) {}
 
-  Projectile spawnArrow(Position src, {Collider? target}) {
+  Projectile spawnArrow(Position src, {Collider? target, double accuracy = 0}) {
     dispatch(GameEventType.Arrow_Fired, src.x, src.y);
 
     if (src is Character) {
       return spawnProjectile(
         src: src,
-        accuracy: 0,
+        accuracy: accuracy,
         speed: 7,
         range: src.equippedRange,
         target: src.attackTarget,
@@ -1361,7 +1361,10 @@ extension GameFunctions on Game {
     if (character.stateDuration == framePerformStrike) {
       if (character.equippedTypeIsBow) {
         dispatchV2(GameEventType.Release_Bow, character);
-        spawnArrow(character);
+        final level = character.equippedLevel;
+        for (var i = 0; i < level; i++){
+          spawnArrow(character, accuracy: i.toDouble() * 0.1);
+        }
         character.attackTarget = character.attackTarget;
         return;
       }

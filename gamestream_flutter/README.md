@@ -105,10 +105,11 @@ RELEASE [11 May - 2022]
 [ ] Construct buildings using hammer
 [ ] Construct buildings within build radius
 [ ] Preload audios
-[?] (CRITICAL) Fix 204 Cache error    
 [ ] Fix Terrain Culling
 [ ] Polish Menu
 [ ] Fix Blood Particles
+[?] (CRITICAL) Fix 204 Cache error    
+[x] Increase Number of Arrows fired per tech level 
 [x] Fix destroyed tree fires stone destroyed event
 [x] Fix fire bow range
 [x] Fire DynamicObject spawned event
