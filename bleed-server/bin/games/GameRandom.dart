@@ -25,7 +25,7 @@ class GameRandom extends Game {
   @override
   void update() {
     time = (time + 1) % Duration.secondsPerDay;
-    if (time % 180 == 0){
+    if (time % 180 == 0 && numberOfAliveZombies < 30){
       spawnRandomZombie();
     }
   }
