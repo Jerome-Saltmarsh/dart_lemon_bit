@@ -373,6 +373,13 @@ class GameBuild {
     );
   }
 
+  Widget buildTotalZombies() {
+    return WatchBuilder(game.totalZombies, (int value) {
+      return text('Zombies: $value');
+    });
+  }
+
+
   Widget buildDebugPanel(){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

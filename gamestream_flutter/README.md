@@ -105,6 +105,10 @@ RELEASE [11 May - 2022]
 [ ] Construct buildings within build radius
 [ ] Preload audios
 [ ] (CRITICAL) Fix 204 Cache error    
+[ ] Fix Terrain Culling
+[ ] Polish Menu
+[ ] Fix destroyed tree fires stone destroyed event
+[ ] Fire DynamicObject spawned event
 [x] Randomly Generate Zombie Spawn Locations
 [x] Show player messages to everyone
 [x] Generate Scene - Connect islands with bridges

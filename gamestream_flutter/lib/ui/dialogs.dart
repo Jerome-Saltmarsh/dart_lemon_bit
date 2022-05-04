@@ -59,7 +59,7 @@ Widget buildDialogAccount(){
                 Row(
                   mainAxisAlignment: axis.main.apart,
                   children: [
-                    buildIconEdit(),
+                    // buildIconEdit(),
                     text(account.publicName,
                         color: colours.white60, size: 16)
                   ],

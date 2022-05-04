@@ -409,3 +409,12 @@ Widget loadingText(String value, Function onPressed){
      }
   }, milliseconds: 100);
 }
+
+Widget buildImage(String filename, {required double width, required double height}){
+  return Container(
+      width: width,
+      height: height,
+      decoration:
+      BoxDecoration(image: DecorationImage(image: AssetImage(filename)))
+  );
+}

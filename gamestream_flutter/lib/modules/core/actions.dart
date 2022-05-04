@@ -14,7 +14,6 @@ import 'package:gamestream_flutter/services/authService.dart';
 import 'package:gamestream_flutter/sharedPreferences.dart';
 import 'package:gamestream_flutter/stripe.dart';
 import 'package:gamestream_flutter/ui/actions/signInWithFacebook.dart';
-import 'package:gamestream_flutter/ui/logic/hudLogic.dart';
 import 'package:gamestream_flutter/webSocket.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
@@ -170,7 +169,6 @@ class CoreActions {
     print('clearState()');
     clearCompileGameState();
     engine.zoom = 1;
-    refreshUI();
     isometric.tiles.clear();
     isometric.tilesDst = Float32List(0);
     isometric.tilesSrc = Float32List(0);

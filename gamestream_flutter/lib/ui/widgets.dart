@@ -8,10 +8,8 @@ import 'package:gamestream_flutter/modules/website/enums.dart';
 import 'package:gamestream_flutter/ui/actions/signInWithFacebook.dart';
 import 'package:gamestream_flutter/ui/build.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
-import 'package:gamestream_flutter/ui/state/decorationImages.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
-import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
 import '../styles.dart';
@@ -22,24 +20,18 @@ final closeDialogButton = button(
     borderColor: colours.none
 );
 
-final _Widgets widgets = _Widgets();
-final _Buttons buttons = _Buttons();
-final _Logos logos = _Logos();
+final widgets = _Widgets();
+final buttons = _Buttons();
+final buildHudDialog = _BuildDialog();
 
-final _BuildDialog buildHudDialog = _BuildDialog();
-
-class _Logos {
-  Widget google = Container(
+class Icons {
+  static final Google = buildImage('images/icons/icon-google.png',
     width: 30,
     height: 30,
-    decoration: BoxDecoration(image: decorationImages.google),
   );
-  Widget facebook = Container(
+  static final Facebook = buildImage('images/icons/icon-facebook.png',
     width: 30,
     height: 30,
-    decoration: BoxDecoration(
-        color: none,
-        image: decorationImages.facebook),
   );
 }
 
@@ -119,31 +111,22 @@ class _Widgets {
 
 final authenticationRequired = Exception("Authentication Required");
 
-final _iconLogin = Container(
-  width: 32,
-  height: 32,
-  decoration: BoxDecoration(
-      image: decorationImages.login
-  ),
-);
+// final _iconLogin = Container(
+//   width: 32,
+//   height: 32,
+//   decoration: BoxDecoration(
+//       image: decorationImages.login
+//   ),
+// );
 
-final _iconSettings = Container(
-  width: 32,
-  height: 32,
-  decoration: BoxDecoration(
-      image: decorationImages.settings2
-  ),
-);
+final _iconSettings = buildImage('images/icons/icon-settings.png', width: 32, height: 32);
 
 class _Buttons {
 
   final Widget login = button(Row(
     mainAxisAlignment: axis.main.center,
     children: [
-      width16,
       text("LOGIN", size: 20, weight: bold),
-      width16,
-      _iconLogin,
     ],
   ), (){
     website.state.dialog.value = WebsiteDialog.Login;
@@ -174,7 +157,7 @@ class _Buttons {
     child: Row(
       mainAxisAlignment: axis.main.apart,
       children: [
-        logos.facebook,
+        Icons.Facebook,
         width16,
         text("Continue", color: Colors.white),
       ],
@@ -194,7 +177,7 @@ class _Buttons {
     child: Row(
       mainAxisAlignment: axis.main.apart,
       children: [
-        logos.google,
+        Icons.Google,
         width16,
         text("Continue", color: Colors.black),
       ],
@@ -214,7 +197,7 @@ class _Buttons {
       child: Row(
         mainAxisAlignment: axis.main.apart,
         children: [
-          logos.facebook,
+          Icons.Facebook,
           width16,
           text("Enter Username Password", color: Colors.white),
         ],
@@ -277,28 +260,28 @@ class _Buttons {
   });
 }
 
-Widget buildToggleFullscreen() {
-  return onPressed(
-    callback: () {
-      if (fullScreenActive) {
-        engine.fullScreenExit();
-      } else {
-        engine.fullScreenEnter();
-      }
-    },
-    hint: "F11",
-    child: border(
-      child: Row(
-        children: [
-          text(fullScreenActive ? "Exit Fullscreen" : "Fullscreen"),
-          width4,
-          buildDecorationImage(
-              image: decorationImages.fullscreen, width: 20, height: 20, borderWidth: 0),
-        ],
-      ),
-    ),
-  );
-}
+// Widget buildToggleFullscreen() {
+//   return onPressed(
+//     callback: () {
+//       if (fullScreenActive) {
+//         engine.fullScreenExit();
+//       } else {
+//         engine.fullScreenEnter();
+//       }
+//     },
+//     hint: "F11",
+//     child: border(
+//       child: Row(
+//         children: [
+//           text(fullScreenActive ? "Exit Fullscreen" : "Fullscreen"),
+//           width4,
+//           buildDecorationImage(
+//               image: decorationImages.fullscreen, width: 20, height: 20, borderWidth: 0),
+//         ],
+//       ),
+//     ),
+//   );
+// }
 
 Widget _buildFakeLoginButton(String userId, String text){
   return button('$userId $text', (){

@@ -1,15 +1,10 @@
 
 import 'package:bleed_common/CharacterType.dart';
-import 'package:bleed_common/GameType.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/styles.dart';
-import 'package:gamestream_flutter/ui/state/decorationImages.dart';
-import 'package:gamestream_flutter/ui/ui.dart';
-import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -17,62 +12,6 @@ import '../widgets.dart';
 
 const double _padding = 8;
 final emptyContainer = Container();
-
-Widget buildTopLeft() {
-  return Positioned(
-      top: _padding,
-      left: _padding,
-      child: Column(
-        crossAxisAlignment: axis.cross.start,
-        children: [
-          Row(
-            children: [
-              width8,
-              WatchBuilder(game.type, (GameType value) {
-                if (value == GameType.Moba) {
-                  return Row(
-                    children: [
-                      WatchBuilder(game.teamLivesWest, (int lives) {
-                        return text("West: $lives");
-                      }),
-                      width8,
-                      WatchBuilder(game.teamLivesEast, (int lives) {
-                        return text("East: $lives");
-                      }),
-                    ],
-                  );
-                }
-                return emptyContainer;
-              }),
-              // buildMouseWorldPosition(),
-            ],
-          ),
-          if (uiOptions.showTotalZombies)
-            widgets.totalZombies,
-        ],
-      ));
-}
-
-
-Widget buildSkillsButton() {
-  return WatchBuilder(modules.game.state.player.skillPoints, (int value) {
-    if (value == 0) return emptyContainer;
-    return Container(
-        height: 103,
-        alignment: Alignment.topLeft,
-        child: border(
-            color: Colors.white,
-            fillColor: Colors.black45,
-            padding: padding4,
-            child: text("Points $value", color: Colors.white, size: 20)));
-  });
-}
-
-Widget buildTotalZombies() {
-  return WatchBuilder(game.totalZombies, (int value) {
-    return text('Zombies: $value');
-  });
-}
 
 Widget buildTotalPlayers() {
   return WatchBuilder(game.totalPlayers, (int value) {
@@ -192,51 +131,6 @@ Widget buildNumberOfPlayersRequiredDialog() {
     return dialog(
         height: 80,
         child: text("Waiting for $number more players to join the game"));
-  });
-}
-
-Widget buildTopRight() {
-  return Positioned(
-    top: _padding,
-    right: _padding,
-    child: buildMenu(),
-  );
-}
-
-Widget buildIconEdit({
-  double size = 19
-}) {
-  return buildDecorationImage(
-      color: colours.none,
-      image: decorationImages.edit, width: size, height: size, borderWidth: 0);
-}
-
-final playIcon = buildDecorationImage(
-    color: colours.none,
-    image: decorationImages.play, width: 60, height: 60, borderWidth: 0);
-
-Widget buildMenu() {
-  return mouseOver(builder: (BuildContext context, bool mouseOver){
-
-    final menu = border(child: text("Menu"));
-
-    if (!mouseOver){
-      return menu;
-    }
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        if (core.state.debug) width8,
-        if (core.state.debug) buttons.edit,
-        buttons.exit,
-        buttons.changeCharacter,
-        width8,
-        buildToggleFullscreen(),
-        width8,
-        menu,
-      ],
-    );
   });
 }
 

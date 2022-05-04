@@ -1,24 +1,19 @@
-import 'package:bleed_common/AbilityType.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/assets.dart';
-import 'package:gamestream_flutter/classes/Ability.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
-import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/styles.dart';
-import 'package:gamestream_flutter/ui/state/decorationImages.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import 'compose/hudUI.dart';
 import 'widgets.dart';
 
 final build = _Build();
@@ -29,135 +24,6 @@ const selectableGameTypes = [
 ];
 
 class _Build {
-
-  Widget buildAbility(Ability ability) {
-    return WatchBuilder(ability.type, (AbilityType type) {
-      if (type == AbilityType.None) return emptyContainer;
-
-      return Column(
-        mainAxisAlignment: axis.main.end,
-        children: [
-          WatchBuilder(modules.game.state.player.skillPoints, (int points) {
-            if (points == 0) return emptyContainer;
-
-            return onPressed(
-              callback: () {
-                // sendRequest.upgradeAbility(ability.index);
-              },
-              child: mouseOver(builder: (BuildContext context, bool mouseOver) {
-                return border(
-                  child: text("+", size: 25),
-                  color: Colors.white,
-                  fillColor: mouseOver ? Colors.white54 : Colors.white12,
-                  padding: EdgeInsets.symmetric(horizontal: 5),
-                );
-              }),
-            );
-          }),
-          height20,
-          WatchBuilder(ability.level, (int level) {
-            bool unlocked = level > 0;
-
-            if (!unlocked) {
-              return Stack(
-                children: [
-                  buildDecorationImage(
-                      image: mapAbilityTypeToDecorationImage[type]!,
-                      width: 50,
-                      height: 50,
-                      borderColor: Colors.black54,
-                      borderWidth: 3),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    alignment: Alignment.center,
-                    color: Colors.black54,
-                  )
-                ],
-              );
-            }
-
-            return WatchBuilder(ability.cooldown, (int cooldown) {
-              return WatchBuilder(ability.cooldownRemaining,
-                      (int cooldownRemaining) {
-                    if (cooldownRemaining > 0) {
-                      return Stack(
-                        children: [
-                          buildDecorationImage(
-                              image: mapAbilityTypeToDecorationImage[type]!,
-                              width: 50,
-                              height: 50,
-                              borderColor: Colors.black54,
-                              borderWidth: 3),
-                          Container(
-                              width: 50,
-                              height: 50,
-                              alignment: Alignment.center,
-                              color: Colors.black54,
-                              child: text("${cooldownRemaining}s"))
-                        ],
-                      );
-                    }
-
-                    return WatchBuilder(ability.canAfford, (bool canAfford) {
-                      if (!canAfford) {
-                        return Stack(
-                          children: [
-                            buildDecorationImage(
-                                image: mapAbilityTypeToDecorationImage[type]!,
-                                width: 50,
-                                height: 50,
-                                borderColor: Colors.black54,
-                                borderWidth: 3),
-                            Container(
-                              width: 50,
-                              height: 50,
-                              alignment: Alignment.center,
-                              color: Colors.red.withOpacity(0.5),
-                            ),
-                            Container(
-                                color: Colors.black54,
-                                padding: padding4,
-                                child: text(level))
-                          ],
-                        );
-                      }
-
-                      return WatchBuilder(ability.selected, (bool selected) {
-                        return onPressed(
-                          hint: abilityTypeToString(ability.type.value),
-                          callback: () {
-                            sendRequestSelectAbility(ability.index);
-                          },
-                          child: Stack(
-                            children: [
-                              mouseOver(
-                                  builder: (BuildContext context, bool mouseOver) {
-                                    return buildDecorationImage(
-                                        image: mapAbilityTypeToDecorationImage[type]!,
-                                        width: 50,
-                                        height: 50,
-                                        borderColor: mouseOver || selected
-                                            ? Colors.white
-                                            : Colors.green,
-                                        borderWidth: 3);
-                                  }),
-                              Container(
-                                  color: Colors.black54,
-                                  padding: padding4,
-                                  child: text(level)),
-                            ],
-                          ),
-                        );
-                      });
-                    });
-                  });
-            });
-          }),
-        ],
-      );
-    });
-  }
 
   Widget theme(){
     return onHover((bool hovering){
@@ -426,10 +292,4 @@ Region detectRegion(){
   return Region.Australia;
 }
 
-final Map<GameType, DecorationImage> gameTypeDecorationImage = {
-  GameType.MMO: decorationImages.atlas,
-  GameType.BATTLE_ROYAL: decorationImages.zombieRoyal,
-  GameType.Moba: decorationImages.heroesLeague,
-  GameType.DeathMatch: decorationImages.counterStrike,
-};
 
