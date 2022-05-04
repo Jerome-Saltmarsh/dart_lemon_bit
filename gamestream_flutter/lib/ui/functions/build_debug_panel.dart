@@ -31,9 +31,6 @@ Widget buildDebugPanel(){
       cameraZoom,
       buildFramesSinceUpdate(),
       playerScreen,
-      // buildTotalFrames(),
-      // buildMSSinceUpdate(),
-      // buildSync(),
     ],
   );
 }

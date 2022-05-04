@@ -107,6 +107,7 @@ RELEASE [11 May - 2022]
 [ ] (CRITICAL) Fix 204 Cache error    
 [ ] Fix Terrain Culling
 [ ] Polish Menu
+[ ] Fix Blood Particles
 [ ] Fix destroyed tree fires stone destroyed event
 [ ] Fix fire bow range
 [ ] Fire DynamicObject spawned event

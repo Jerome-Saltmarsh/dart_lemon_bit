@@ -5,7 +5,6 @@ import 'package:golden_ratio/constants.dart';
 final style = _Style();
 
 class _Style {
-  final dialogTitleSize = 30;
   final buttonWidth = 200.0;
   get buttonHeight => style.buttonWidth * goldenRatio_0381;
   final dialogHeightMedium = 390.0;

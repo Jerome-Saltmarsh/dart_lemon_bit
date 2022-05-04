@@ -217,7 +217,7 @@ Widget buildDialogSmall({required Widget child, Widget? bottomLeft, Widget? bott
 }
 
 Widget buildDialogTitle(String value){
-  return text(value.toUpperCase(), size: style.dialogTitleSize, color: colours.white85);
+  return text(value.toUpperCase(), size: 20, color: colours.white85);
 }
 
 Widget buildDialogSubscriptionCancelled(){
