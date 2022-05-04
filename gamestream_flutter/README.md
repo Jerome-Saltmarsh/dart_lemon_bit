@@ -79,7 +79,6 @@
 [ ] FIX Zombies run into lamps forever   
 [ ] (CRITICAL) Fix Map Editor
 [ ] (CRITICAL) FIX AI Pathfinding
-[ ] (CRITICAL) Fix 204 error    
 [ ] Footstep Audio    
 [ ] Render Structure Health
 [ ] Fix Zombies attack structure animation
@@ -100,9 +99,13 @@
 RELEASE [11 May - 2022]   
 [ ] Palisades draw horizontal and vertical when aligned
 [ ] Design Tower Sprite    
+[ ] Chest Shades
 [ ] Construct buildings using hammer
 [ ] Construct buildings within build radius
+[ ] Preload audios
+[ ] Show player messages to everyone
 [ ] Randomly Generate Zombie Spawn Locations
+[ ] (CRITICAL) Fix 204 Cache error    
 [x] Generate Scene - Connect islands with bridges
 [x] Randomly Generate Player Spawn Locations
 [x] Item Type Bag (used to store loot)

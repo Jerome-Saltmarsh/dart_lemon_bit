@@ -232,7 +232,7 @@ class _Audio {
 
   void init() {
     for (int i = 0; i < _totalAudioPlayers; i++) {
-      _audioPlayers.add(AudioPlayer());
+      _audioPlayers.add(AudioPlayer(mode: PlayerMode.LOW_LATENCY));
     }
   }
 
@@ -243,9 +243,15 @@ class _Audio {
 
   void _play(String name, {double volume = 1}){
     if (volume.isNaN) return;
-    _getAudioPlayer().play('assets/audio/$name',
-        isLocal: true,
-        volume: volume);
+    try {
+      _getAudioPlayer().play('assets/audio/$name',
+          isLocal: true,
+          volume: volume).catchError((error) {
+        print("play error occurred for $name");
+      });
+    } catch(error) {
+      print("play error2 occurred for $name");
+    }
   }
 
   void _playMusic(String name){
@@ -321,7 +327,7 @@ class _Audio {
 // abstraction
 int _index = 0;
 
-final List<AudioPlayer> _audioPlayers = [];
+final _audioPlayers = <AudioPlayer>[];
 final _musicPlayer = AudioPlayer();
 const _audioDistanceFade = 0.0065;
 const _totalAudioPlayers = 200;

@@ -44,7 +44,6 @@ class CoreEvents {
           audio.gong();
         }
         engine.drawCanvasAfterUpdate = false;
-        audio.playRandomSong();
         engine.fullScreenEnter();
         break;
       default:

@@ -132,6 +132,7 @@ class _Engine {
     for (final game in games) {
       if (game is GameRandom) {
         if (game.full) continue;
+        if (game.empty) continue;
         return game;
       }
     }

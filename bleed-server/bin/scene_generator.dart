@@ -132,6 +132,15 @@ Scene generateRandomScene({
   late List<Cell> biggestIslandCells;
   var biggestIslandId = -1;
 
+  const minimumIslandSize = 8;
+  for (final island in islands.entries){
+    if (island.value.length > minimumIslandSize) continue;
+    for (final cell in island.value) {
+       tiles[cell.row][cell.column] == Tile.Water;
+    }
+  }
+  islands.removeWhere((key, value) => value.length <= minimumIslandSize);
+
   for (final island in islands.entries){
      if (island.value.length < biggestIslandCellsLength) continue;
      biggestIslandCells = island.value;

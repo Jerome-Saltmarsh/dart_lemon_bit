@@ -20,6 +20,7 @@ class GameRandom extends Game {
   );
 
   bool get full => players.length >= maxPlayers;
+  bool get empty => players.length <= 0;
 
   @override
   void update() {

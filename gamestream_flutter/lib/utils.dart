@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:bleed_common/library.dart';
-import 'package:clipboard/clipboard.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
@@ -37,7 +36,7 @@ void setTileAtMouse(int tile) {
 }
 
 void copy(String value){
-  FlutterClipboard.copy(value);
+  // FlutterClipboard.copy(value);
 }
 
 void openLink(String value, {bool newTab = true}){

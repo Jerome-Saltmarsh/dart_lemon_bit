@@ -413,6 +413,7 @@ extension PlayerProperties on Player {
       writeTiles();
       writeDynamicObjects();
       writeStaticObjects();
+      writeTechTypes();
       sceneDownloaded = true;
     }
 
