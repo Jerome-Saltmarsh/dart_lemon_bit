@@ -107,7 +107,7 @@ RELEASE [11 May - 2022]
 [ ] Preload audios
 [ ] Fix Terrain Culling
 [ ] Polish Menu
-[ ] Fix Blood Particles
+[x] Fix Blood Particles
 [?] (CRITICAL) Fix 204 Cache error    
 [x] Increase Number of Arrows fired per tech level 
 [x] Fix destroyed tree fires stone destroyed event

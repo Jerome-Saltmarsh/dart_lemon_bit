@@ -393,7 +393,7 @@ extension GameFunctions on Game {
 
       if (killed) {
         target.collidable = false;
-        target.respawnDuration = 100;
+        target.respawnDuration = 5000;
         onDynamicObjectDestroyed(target);
 
         if (target.type == DynamicObjectType.Pot) {
@@ -820,7 +820,8 @@ extension GameFunctions on Game {
           dispatchV2(GameEventType.Material_Struck_Plant, target);
           break;
         case MaterialType.Flesh:
-          dispatchV2(GameEventType.Material_Struck_Flesh, target);
+          dispatchV2(GameEventType.Material_Struck_Flesh,
+              target, angle: angleBetweenSrcAndTarget);
           break;
         case MaterialType.Metal:
           dispatchV2(GameEventType.Material_Struck_Metal, target);

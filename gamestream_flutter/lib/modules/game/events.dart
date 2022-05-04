@@ -283,20 +283,6 @@ class GameEvents {
         audio.assaultRifleShot(x, y);
         isometric.spawn.shell(x: x, y: y);
         break;
-      case GameEventType.Character_Struck:
-        audio.bloodyImpact(x, y);
-        final total = randomInt(5, 10);
-        for (var i = 0; i < total; i++) {
-          _spawn.blood(
-            x: x,
-            y: y,
-            z: 0.3,
-            angle: angle + giveOrTake(0.2),
-            speed: 4.0 + giveOrTake(2),
-            zv: 0.07 + giveOrTake(0.01),
-          );
-        }
-        break;
       case GameEventType.Player_Hit:
         if (randomBool()) {
           audio.humanHurt(x, y);
@@ -434,6 +420,17 @@ class GameEvents {
 
       case GameEventType.Material_Struck_Flesh:
         audio.materialStruckFlesh(x, y);
+        final total = randomInt(3, 6);
+        for (var i = 0; i < total; i++) {
+          _spawn.blood(
+            x: x,
+            y: y,
+            z: 0.3,
+            angle: angle + giveOrTake(0.2),
+            speed: 4.0 + giveOrTake(2),
+            zv: 0.07 + giveOrTake(0.01),
+          );
+        }
         break;
 
       case GameEventType.Material_Struck_Metal:

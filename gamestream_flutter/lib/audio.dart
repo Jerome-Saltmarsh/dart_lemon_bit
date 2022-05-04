@@ -53,7 +53,11 @@ class _Audio {
   }
 
   void materialStruckFlesh(double x, double y){
-    _playPositioned('bloody-punches-1.mp3', x, y);
+   if (random.nextBool()){
+     _playPositioned('bloody-punches-1.mp3', x, y);
+   } else {
+     bloodyImpact(x, y);
+   }
   }
 
   void materialStruckMetal(double x, double y){
