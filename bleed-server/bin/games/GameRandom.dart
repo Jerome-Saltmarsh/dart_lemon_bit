@@ -25,6 +25,9 @@ class GameRandom extends Game {
   @override
   void update() {
     time = (time + 1) % Duration.secondsPerDay;
+    if (time % 180 == 0){
+      spawnRandomZombie();
+    }
   }
 
   @override
@@ -42,7 +45,7 @@ class GameRandom extends Game {
       player.techTree.bow = 2;
       player.techTree.pickaxe = 2;
       player.techTree.hammer = 2;
-      final spawnLocation = randomItem(scene.playerSpawnPoints);
+      final spawnLocation = randomItem(scene.spawnPointPlayers);
       player.x = spawnLocation.x;
       player.y = spawnLocation.y;
       return player;

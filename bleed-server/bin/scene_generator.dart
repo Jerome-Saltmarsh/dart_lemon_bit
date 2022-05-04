@@ -186,10 +186,10 @@ Scene generateRandomScene({
     connectIsland(entry);
   }
 
-  final numberOfSpawnPoints = 5;
-  final spawnCells = <SpawnCell>[];
+  final numberOfSpawnPointPlayers = 5;
+  final spawnCellPlayers = <SpawnCell>[];
 
-  for (var i = 0; i < numberOfSpawnPoints; i++) {
+  for (var i = 0; i < numberOfSpawnPointPlayers; i++) {
     final row = randomInt(0, rows);
     final column = randomInt(0, columns);
     if (!isWalkable(tiles[row][column])) {
@@ -198,7 +198,7 @@ Scene generateRandomScene({
     }
 
     var tooClose = false;
-    for (final spawnCell in spawnCells) {
+    for (final spawnCell in spawnCellPlayers) {
       final rowDistance = (spawnCell.row - row).abs();
       final columnDistance = (spawnCell.column - column).abs();
       final distance = rowDistance + columnDistance;
@@ -207,19 +207,51 @@ Scene generateRandomScene({
       break;
     }
     if (tooClose) continue;
-    spawnCells.add(SpawnCell(row, column));
+    spawnCellPlayers.add(SpawnCell(row, column));
+  }
+
+
+  final numberOfSpawnPointZombies = 5;
+  final spawnCellZombies = <SpawnCell>[];
+
+  for (var i = 0; i < numberOfSpawnPointZombies; i++) {
+    final row = randomInt(0, rows);
+    final column = randomInt(0, columns);
+    if (!isWalkable(tiles[row][column])) {
+      i--;
+      continue;
+    }
+
+    var tooClose = false;
+    for (final spawnCell in spawnCellPlayers) {
+      final rowDistance = (spawnCell.row - row).abs();
+      final columnDistance = (spawnCell.column - column).abs();
+      final distance = rowDistance + columnDistance;
+      if (distance > 30) continue;
+      tooClose = true;
+      break;
+    }
+    if (tooClose) continue;
+    for (final spawnCell in spawnCellZombies) {
+      final rowDistance = (spawnCell.row - row).abs();
+      final columnDistance = (spawnCell.column - column).abs();
+      final distance = rowDistance + columnDistance;
+      if (distance > 30) continue;
+      tooClose = true;
+      break;
+    }
+    if (tooClose) continue;
+    spawnCellZombies.add(SpawnCell(row, column));
   }
 
   return Scene(
       tiles: tiles,
-      staticObjects: environment,
+      objectsStatic: environment,
       characters: [],
-      dynamicObjects: dynamicObjects,
-      name: 'random-map',
-      playerSpawnPoints: spawnCells
-          .map((e) => Vector2(getTilePositionX(e.row, e.column),
-              getTilePositionY(e.row, e.column)))
-          .toList());
+      objectsDynamic: dynamicObjects,
+      spawnPointZombies: spawnCellZombies,
+      spawnPointPlayers: spawnCellPlayers,
+  );
 }
 
 class Cell {
@@ -236,9 +268,11 @@ class Cell {
    bool get visitable => open && land == null;
 }
 
-class SpawnCell {
+class SpawnCell with Position {
   late final int row;
   late final int column;
-  SpawnCell(this.row, this.column);
+  SpawnCell(this.row, this.column) {
+    assign(this, row, column);
+  }
 }
 

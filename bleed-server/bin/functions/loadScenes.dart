@@ -97,11 +97,11 @@ Scene parseJsonToScene(Json json, String name) {
 
   final scene = Scene(
     tiles: tiles,
-    staticObjects: environment,
-    dynamicObjects: [],
+    objectsStatic: environment,
+    objectsDynamic: [],
     characters: characters,
-    name: name,
-    playerSpawnPoints: [],
+    spawnPointPlayers: [],
+    spawnPointZombies: []
   );
 
   if (json.containsKey(sceneFieldNames.startTime)){

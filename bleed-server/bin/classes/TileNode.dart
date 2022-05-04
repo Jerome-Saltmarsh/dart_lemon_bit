@@ -3,38 +3,38 @@ import 'package:lemon_math/library.dart';
 import '../utilities.dart';
 import 'Scene.dart';
 
-class TileNode with Position {
+class Node with Position {
   /// row - 1
-  late TileNode up;
+  late Node up;
   /// row - 1, column + 1
-  late TileNode upRight;
+  late Node upRight;
   /// column + 1
-  late TileNode right;
+  late Node right;
   /// row + 1, column + 1
-  late TileNode downRight;
+  late Node downRight;
   /// row + 1
-  late TileNode down;
+  late Node down;
   /// row + 1, column - 1
-  late TileNode downLeft;
+  late Node downLeft;
   /// column - 1
-  late TileNode left;
+  late Node left;
   /// row - 1, column - 1
-  late TileNode upLeft;
+  late Node upLeft;
   late int row;
   late int column;
   bool open;
   bool obstructed = false;
   int searchId = -1;
   int reserveId = -1;
-  TileNode? reserved;
-  TileNode? previous;
+  Node? reserved;
+  Node? previous;
   int score = 0;
 
   int depth = 0;
 
-  TileNode(this.open);
+  Node(this.open);
 
-  TileNode getNodeByDirection(int direction){
+  Node getNodeByDirection(int direction){
     if (direction <= 3 ) {
       switch (direction) {
         case 0:
@@ -81,7 +81,7 @@ class TileNode with Position {
     _reserve(upLeft);
   }
 
-  void _reserve(TileNode node){
+  void _reserve(Node node){
     if (node.reserveId == pathFindSearchID) return;
     node.reserved = this;
     node.reserveId = pathFindSearchID;

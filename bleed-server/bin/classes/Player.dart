@@ -520,7 +520,7 @@ extension PlayerProperties on Player {
 
   void writeStaticObjects() {
     writeByte(ServerResponse.EnvironmentObjects);
-    final staticObjects = scene.staticObjects;
+    final staticObjects = scene.objectsStatic;
     for (final value in staticObjects) {
        if (dynamicObjectTypes.contains(value)) continue;
        writeByte(value.type.index);
@@ -531,7 +531,7 @@ extension PlayerProperties on Player {
 
   void writeDynamicObjects() {
     writeByte(ServerResponse.Dynamic_Objects);
-    final dynamicObjects = scene.dynamicObjects;
+    final dynamicObjects = scene.objectsDynamic;
     for (final dynamicObject in dynamicObjects) {
       writeByte(dynamicObject.type);
       writePosition(dynamicObject);

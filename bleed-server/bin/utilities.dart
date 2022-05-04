@@ -45,6 +45,11 @@ double getTilePositionX(int row, int column){
   return perspectiveProjectX(row * halfTileSize, column * halfTileSize);
 }
 
+void assign(Position position, int row, int column){
+  position.x = getTilePositionX(row, column);
+  position.y = getTilePositionY(row, column);
+}
+
 double getTilePositionY(int row, int column){
   return perspectiveProjectY(row * halfTileSize, column * halfTileSize) +
       halfTileSize;

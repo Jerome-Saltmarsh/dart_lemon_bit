@@ -30,7 +30,6 @@ abstract class Game {
   final structures = <Structure>[];
   final colliders = <Collider>[];
   final items = <Item>[];
-  final zombieSpawnPoints = <Vector2>[];
   final zombies = <AI>[];
   final npcs = <InteractableNpc>[];
   final players = <Player>[];
@@ -51,7 +50,7 @@ abstract class Game {
 
   static int _id = 0;
 
-  List<DynamicObject> get dynamicObjects => scene.dynamicObjects;
+  List<DynamicObject> get dynamicObjects => scene.objectsDynamic;
 
   bool get countingDown => status == GameStatus.Counting_Down;
 
@@ -151,7 +150,7 @@ abstract class Game {
       }
     }
 
-    for (final environmentObject in scene.staticObjects) {
+    for (final environmentObject in scene.objectsStatic) {
       if (environmentObject.radius <= 0) continue;
       colliders.add(Collider(
           x: environmentObject.x,
@@ -166,7 +165,7 @@ abstract class Game {
           columnIndex++) {
         switch (row[columnIndex]) {
           case Tile.Zombie_Spawn:
-            zombieSpawnPoints.add(getTilePosition(rowIndex, columnIndex));
+            scene.spawnPointZombies.add(getTilePosition(rowIndex, columnIndex));
             break;
           default:
             break;
@@ -244,7 +243,7 @@ extension GameFunctions on Game {
 
   DynamicObject? getClosestDynamicObject(double x, double y) {
     return findClosestVector2(
-        colliders: scene.dynamicObjects,
+        colliders: scene.objectsDynamic,
         x: x,
         y: y,
         predicate: (other) => !other.collidable);
@@ -514,7 +513,7 @@ extension GameFunctions on Game {
     checkColliderCollision(zombies, structures);
     checkColliderCollision(players, colliders);
     checkColliderCollision(zombies, colliders);
-    checkColliderCollision(players, scene.dynamicObjects);
+    checkColliderCollision(players, scene.objectsDynamic);
     updateCollisionBetween(zombies);
     updateCollisionBetween(players);
     resolveCollisionBetween(zombies, players, resolveCollisionA);
@@ -528,7 +527,7 @@ extension GameFunctions on Game {
     sortVertically(npcs);
     sortVertically(items);
     sortVertically(projectiles);
-    sortVertically(scene.dynamicObjects);
+    sortVertically(scene.objectsDynamic);
     sortVertically(structures);
   }
 
@@ -674,7 +673,7 @@ extension GameFunctions on Game {
       }
     }
 
-    checkProjectileCollision(scene.staticObjects);
+    checkProjectileCollision(scene.objectsStatic);
     checkProjectileCollision(zombies);
     checkProjectileCollision(players);
     checkProjectileCollision(dynamicObjects);
@@ -1070,8 +1069,8 @@ extension GameFunctions on Game {
     int experience = 1,
     int team = Teams.none,
   }) {
-    if (zombieSpawnPoints.isEmpty) throw ZombieSpawnPointsEmptyException();
-    final spawnPoint = randomItem(zombieSpawnPoints);
+    if (scene.spawnPointZombies.isEmpty) throw ZombieSpawnPointsEmptyException();
+    final spawnPoint = randomItem(scene.spawnPointZombies);
     return spawnZombie(
         x: spawnPoint.x,
         y: spawnPoint.y,
@@ -1223,7 +1222,7 @@ extension GameFunctions on Game {
     final maxRow = min(scene.numberOfRows, node.row + radius);
     final randomColumn = randomInt(minColumn, maxColumn);
     final randomRow = randomInt(minRow, maxRow);
-    final randomTile = scene.tileNodes[randomRow][randomColumn];
+    final randomTile = scene.nodes[randomRow][randomColumn];
     npcSetPathToTileNode(ai, randomTile);
   }
 
@@ -1231,7 +1230,7 @@ extension GameFunctions on Game {
     npcSetPathToTileNode(ai, scene.tileNodeAt(position));
   }
 
-  void npcSetPathToTileNode(AI ai, TileNode node) {
+  void npcSetPathToTileNode(AI ai, Node node) {
     pathFindDestination = node;
     pathFindAI = ai;
     pathFindSearchID++;
@@ -1433,7 +1432,7 @@ extension GameFunctions on Game {
   }
 
   void updateDynamicObjects() {
-    final dynamicObjects = scene.dynamicObjects;
+    final dynamicObjects = scene.objectsDynamic;
     for (final dynamicObject in dynamicObjects) {
       if (dynamicObject.respawnDuration <= 0) continue;
       if (dynamicObject.respawnDuration-- > 1) continue;
@@ -1451,7 +1450,7 @@ void playerInteract(Player player) {
     return;
   }
 
-  for (StaticObject environmentObject in player.game.scene.staticObjects) {
+  for (StaticObject environmentObject in player.game.scene.objectsStatic) {
     if (environmentObject.type == ObjectType.House02) {}
     ;
   }

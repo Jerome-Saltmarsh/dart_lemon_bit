@@ -182,7 +182,6 @@ class _Engine {
     for(final game in games){
       if (game is CustomGame == false) continue;
       final customGame = game as CustomGame;
-      if (customGame.scene.name != mapId) continue;
       return customGame;
     }
     final customMapJson = await firestoreService.loadMap(mapId);

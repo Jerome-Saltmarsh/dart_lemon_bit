@@ -21,7 +21,7 @@ class GameSkirmish extends Game {
   late final InteractableNpc storeKeeper;
 
   GameSkirmish() : super(engine.scenes.skirmish){
-     _flags = scene.staticObjects.where((env) => env.type == ObjectType.Flag).toList();
+     _flags = scene.objectsStatic.where((env) => env.type == ObjectType.Flag).toList();
 
      storeKeeper = InteractableNpc(
          name: "Store Keeper",

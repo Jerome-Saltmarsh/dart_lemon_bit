@@ -11,51 +11,51 @@ import 'TileNode.dart';
 class Scene {
   final List<Character> characters;
   final List<List<int>> tiles;
-  final List<StaticObject> staticObjects;
-  final List<DynamicObject> dynamicObjects;
-  final List<Position> playerSpawnPoints;
-  final String name;
+  final List<StaticObject> objectsStatic;
+  final List<DynamicObject> objectsDynamic;
+  final List<Position> spawnPointPlayers;
+  final List<Position> spawnPointZombies;
 
-  late final List<List<TileNode>> tileNodes;
+  late final List<List<Node>> nodes;
   late final int numberOfRows;
   late final int numberOfColumns;
 
   int? startHour;
   int? secondsPerFrames;
 
-  static final _boundary = TileNode(false);
+  static final _boundary = Node(false);
 
   int get rows => tiles.length;
   int get columns => rows > 0 ? tiles[0].length : 0;
 
   Scene({
     required this.tiles,
-    required this.staticObjects,
-    required this.dynamicObjects,
+    required this.objectsStatic,
+    required this.objectsDynamic,
     required this.characters,
-    required this.playerSpawnPoints,
-    required this.name,
+    required this.spawnPointPlayers,
+    required this.spawnPointZombies,
   }) {
     numberOfRows = tiles.length;
     numberOfColumns = numberOfRows > 0 ? tiles[0].length : 0;
-    tileNodes = [];
+    nodes = [];
 
     for (var rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
-      final List<TileNode> nodeRow = [];
+      final List<Node> nodeRow = [];
       final tileRow = tiles[rowIndex];
       for (var columnIndex = 0; columnIndex < numberOfColumns; columnIndex++) {
-        final node = TileNode(isWalkable(tileRow[columnIndex]));
+        final node = Node(isWalkable(tileRow[columnIndex]));
         node.row = rowIndex;
         node.column = columnIndex;
         node.x = getTilePositionX(node.row, node.column);
         node.y = getTilePositionY(node.row, node.column);
         nodeRow.add(node);
       }
-      tileNodes.add(nodeRow);
+      nodes.add(nodeRow);
     }
 
     for (var rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
-      final tileNodeRow = tileNodes[rowIndex];
+      final tileNodeRow = nodes[rowIndex];
       final canUp = rowIndex > 0;
       final canDown = rowIndex < numberOfRows - 1;
       for (var columnIndex = 0; columnIndex < numberOfColumns; columnIndex++) {
@@ -64,14 +64,14 @@ class Scene {
         final canRight = columnIndex < numberOfColumns - 1;
 
         if (canUp) {
-          tileNode.up = tileNodes[rowIndex - 1][columnIndex];
+          tileNode.up = nodes[rowIndex - 1][columnIndex];
           if (canLeft) {
-            tileNode.upLeft = tileNodes[rowIndex - 1][columnIndex - 1];
+            tileNode.upLeft = nodes[rowIndex - 1][columnIndex - 1];
           } else {
             tileNode.upLeft = _boundary;
           }
           if (canRight) {
-            tileNode.upRight = tileNodes[rowIndex - 1][columnIndex + 1];
+            tileNode.upRight = nodes[rowIndex - 1][columnIndex + 1];
           } else {
             tileNode.upRight = _boundary;
           }
@@ -82,16 +82,16 @@ class Scene {
         }
 
         if (canDown) {
-          tileNode.down = tileNodes[rowIndex + 1][columnIndex];
+          tileNode.down = nodes[rowIndex + 1][columnIndex];
 
           if (canRight) {
-            tileNode.downRight = tileNodes[rowIndex + 1][columnIndex + 1];
+            tileNode.downRight = nodes[rowIndex + 1][columnIndex + 1];
           } else {
             tileNode.downRight = _boundary;
           }
 
           if (canLeft) {
-            tileNode.downLeft = tileNodes[rowIndex + 1][columnIndex - 1];
+            tileNode.downLeft = nodes[rowIndex + 1][columnIndex - 1];
           } else {
             tileNode.downLeft = _boundary;
           }
@@ -115,17 +115,17 @@ class Scene {
       }
     }
 
-    for (final env in staticObjects) {
+    for (final env in objectsStatic) {
        snapToGrid(env);
        tileNodeAt(env).obstructed = true;
     }
 
-    for (var i = 0; i < staticObjects.length; i++) {
-       final env = staticObjects[i];
+    for (var i = 0; i < objectsStatic.length; i++) {
+       final env = objectsStatic[i];
        if (env.type == ObjectType.Rock) {
-          staticObjects.removeAt(i);
+          objectsStatic.removeAt(i);
           i--;
-          dynamicObjects.add(
+          objectsDynamic.add(
               DynamicObject(
                   type: DynamicObjectType.Rock,
                   x: env.x,
@@ -135,9 +135,9 @@ class Scene {
           );
        }
        if (env.type == ObjectType.Tree01) {
-         staticObjects.removeAt(i);
+         objectsStatic.removeAt(i);
          i--;
-         dynamicObjects.add(
+         objectsDynamic.add(
              DynamicObject(
                  type: DynamicObjectType.Tree,
                  x: env.x,
@@ -163,7 +163,7 @@ class Scene {
   }
 
 
-  bool visitDirection(int direction, TileNode from) {
+  bool visitDirection(int direction, Node from) {
     if (direction == Direction.UpLeft && !from.up.open && !from.left.open) return false;
     if (direction == Direction.DownLeft && !from.down.open && !from.left.open) return false;
     if (direction == Direction.DownRight && !from.down.open && !from.right.open) return false;
@@ -171,7 +171,7 @@ class Scene {
     return visitNode(from.getNodeByDirection(direction), from);
   }
 
-  bool visitNodeFirst(TileNode node){
+  bool visitNodeFirst(Node node){
     node.depth = 0;
     node.previous = null;
     node.searchId = pathFindSearchID;
@@ -216,7 +216,7 @@ class Scene {
     return visitDirection(directionBehind, node);
   }
 
-  bool visitNode(TileNode node, TileNode previous) {
+  bool visitNode(Node node, Node previous) {
     if (!node.open) return false;
     if (node.obstructed) return false;
 
@@ -283,11 +283,11 @@ class Scene {
     return tileNodeAtXY(x, y).open;
   }
 
-  TileNode tileNodeAt(Position position) {
+  Node tileNodeAt(Position position) {
     return tileNodeAtXY(position.x, position.y);
   }
 
-  TileNode tileNodeAtXY(double x, double y) {
+  Node tileNodeAtXY(double x, double y) {
     final projectedX = y - x; // projectedToWorldX(x, y)
     if (projectedX < 0) return _boundary;
     final projectedY = x + y; // projectedToWorldY(x, y)
@@ -297,7 +297,7 @@ class Scene {
     if (row >= numberOfRows) return _boundary;
     final column = projectedX ~/ tileSize;
     if (column >= numberOfColumns) return _boundary;
-    return tileNodes[row][column];
+    return nodes[row][column];
   }
 
   bool projectileCollisionAt(double x, double y) {
@@ -326,7 +326,7 @@ class Scene {
 }
 
 late AI pathFindAI;
-late TileNode pathFindDestination;
+late Node pathFindDestination;
 var pathFindSearchID = 0;
 
 

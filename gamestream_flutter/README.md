@@ -100,11 +100,12 @@ RELEASE [11 May - 2022]
 [ ] Palisades draw horizontal and vertical when aligned
 [ ] Design Tower Sprite    
 [ ] Chest Shades
+[ ] Disable Teleport 
 [ ] Construct buildings using hammer
 [ ] Construct buildings within build radius
 [ ] Preload audios
 [ ] (CRITICAL) Fix 204 Cache error    
-[ ] Randomly Generate Zombie Spawn Locations
+[x] Randomly Generate Zombie Spawn Locations
 [x] Show player messages to everyone
 [x] Generate Scene - Connect islands with bridges
 [x] Randomly Generate Player Spawn Locations
