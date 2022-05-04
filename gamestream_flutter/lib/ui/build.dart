@@ -6,15 +6,12 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/modules/website/enums.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
-
-import 'widgets.dart';
 
 final build = _Build();
 
@@ -67,50 +64,13 @@ class _Build {
     });
   }
 
-  Widget title(){
-    final child = Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        text("GAME",
-            size: 60,
-            color: Colors.white,
-            family: assets.fonts.libreBarcode39Text
-        ),
-        text("STREAM",
-            size: 60,
-            color: colours.red,
-            family: assets.fonts.libreBarcode39Text,
-        ),
-      ],
-    );
-
-
-    return onPressed(
-      callback: (){
-        game.type.value = GameType.None;
-        if (website.state.dialog.value == WebsiteDialog.Games){
-          website.actions.showDialogAccount();
-        }else{
-          website.actions.showDialogGames();
-        }
-      },
-      child: border(
-        height: style.buttonHeight,
-        radius: borderRadius2,
-        child: child,
-        color: none,
-        borderWidth: 2,
-      ),
-    );
-  }
-
   Widget gamesList(){
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          widgets.title,
+          buildTitle(),
           height32,
           ...selectableGameTypes.map((gameType) {
           return Padding(
@@ -293,3 +253,20 @@ Region detectRegion(){
 }
 
 
+Widget buildTitle(){
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      text("GAME",
+          size: 60,
+          color: Colors.white,
+          family: assets.fonts.libreBarcode39Text
+      ),
+      text("STREAM",
+        size: 60,
+        color: colours.red,
+        family: assets.fonts.libreBarcode39Text,
+      ),
+    ],
+  );
+}

@@ -4,11 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/styles.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
-
-import '../widgets.dart';
 
 const double _padding = 8;
 final emptyContainer = Container();
@@ -58,34 +55,6 @@ String padZero(num value) {
   String t = value.toInt().toString();
   if (t.length >= 2) return t;
   return '0$t';
-}
-
-Widget characterStatistics() {
-  return Positioned(
-      bottom: _padding,
-      child: Container(
-        width: engine.screen.width,
-        child: Row(
-          mainAxisAlignment: axis.main.center,
-          crossAxisAlignment: axis.cross.end,
-          children: [
-            Column(
-              mainAxisAlignment: axis.main.end,
-              children: [
-                widgets.healthBar,
-                height2,
-                widgets.magicBar,
-                height2,
-                widgets.experienceBar,
-              ],
-            ),
-            width8,
-            Container(
-              width: 200,
-            )
-          ],
-        ),
-      ));
 }
 
 Widget layout({

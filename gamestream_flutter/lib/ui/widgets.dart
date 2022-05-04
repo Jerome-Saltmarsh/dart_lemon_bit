@@ -1,4 +1,3 @@
-import 'package:bleed_common/CharacterType.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/Authentication.dart';
 import 'package:gamestream_flutter/colours.dart';
@@ -9,7 +8,6 @@ import 'package:gamestream_flutter/ui/actions/signInWithFacebook.dart';
 import 'package:gamestream_flutter/ui/build.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/style.dart';
-import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:lemon_math/library.dart';
 
 import '../styles.dart';
@@ -22,7 +20,6 @@ final closeDialogButton = button(
 
 final widgets = _Widgets();
 final buttons = _Buttons();
-final buildHudDialog = _BuildDialog();
 
 class Icons {
   static final Google = buildImage('images/icons/icon-google.png',
@@ -35,46 +32,11 @@ class Icons {
   );
 }
 
-class _BuildDialog {
-  Widget selectCharacterType() {
-    final fontSize = 20;
-    return dialog(
-        color: Colors.white24,
-        child: Column(
-          children: [
-            height16,
-            text("Hero", size: 30),
-            height16,
-            ...playableCharacterTypes.map((characterType) {
-              return mouseOver(
-                builder: (BuildContext context, bool mouseOver) {
-                  return onPressed(
-                    callback: () {
-                      
-                    },
-                    child: border(
-                      margin: EdgeInsets.only(bottom: 16),
-                      fillColor: mouseOver ? Colors.black87 : Colors.black26,
-                      child: Container(
-                        width: 200,
-                        child: text(characterTypeToString(characterType),
-                            size: fontSize),
-                      ),
-                    ),
-                  );
-                },
-              );
-            }).toList(),
-          ],
-        ));
-  }
-}
 
 class _Widgets {
   final Widget experienceBar = build.experienceBar();
   final Widget healthBar = build.healthBar();
   final Widget magicBar = build.magicBar();
-  final Widget title = build.title();
   final Widget totalZombies = build.totalZombies();
   final Widget timeZone = build.timeZone();
   final Widget theme = build.theme();

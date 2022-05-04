@@ -377,7 +377,7 @@ Widget? dev(Widget child){
 
 Widget buildLayoutLoadingGame(){
   return layout(
-      topLeft: widgets.title,
+      topLeft: buildTitle(),
       child: fullScreen(
         child: Row(
           mainAxisAlignment: axis.main.center,
