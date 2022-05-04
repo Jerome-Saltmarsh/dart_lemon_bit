@@ -45,6 +45,7 @@ class GameRandom extends Game {
       player.techTree.bow = 2;
       player.techTree.pickaxe = 2;
       player.techTree.hammer = 2;
+      player.techTree.axe = 4;
       final spawnLocation = randomItem(scene.spawnPointPlayers);
       player.x = spawnLocation.x;
       player.y = spawnLocation.y;

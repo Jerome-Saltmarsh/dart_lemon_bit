@@ -413,7 +413,6 @@ extension GameFunctions on Game {
             );
           }
         }
-        onDynamicObjectDestroyed(target);
       }
     }
   }

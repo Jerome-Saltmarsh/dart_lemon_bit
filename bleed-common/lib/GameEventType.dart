@@ -33,11 +33,11 @@ class GameEventType {
   static const Sword_Woosh = 31;
   static const Object_Destroyed_Pot = 32;
   static const Object_Destroyed_Rock = 34;
-  static const Object_Destroyed_Tree = 34;
-  static const Object_Destroyed_Chest = 38;
-  static const Material_Struck_Flesh = 39;
-  static const Material_Struck_Rock = 40;
-  static const Material_Struck_Wood = 41;
-  static const Material_Struck_Metal = 42;
-  static const Material_Struck_Plant = 43;
+  static const Object_Destroyed_Tree = 35;
+  static const Object_Destroyed_Chest = 36;
+  static const Material_Struck_Flesh = 37;
+  static const Material_Struck_Rock = 48;
+  static const Material_Struck_Wood = 49;
+  static const Material_Struck_Metal = 50;
+  static const Material_Struck_Plant = 51;
 }

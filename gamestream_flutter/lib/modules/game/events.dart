@@ -396,6 +396,7 @@ class GameEvents {
         audio.potBreaking(x, y);
         break;
 
+
       case GameEventType.Object_Destroyed_Rock:
         for (var i = 0; i < 8; i++) {
           isometric.spawn.rockShard(x, y);
