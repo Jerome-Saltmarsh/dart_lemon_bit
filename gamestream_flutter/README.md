@@ -107,6 +107,7 @@ RELEASE [11 May - 2022]
 [ ] Preload audios
 [ ] Fix Terrain Culling
 [ ] Polish Menu
+[x] Spawn blood forward on hit
 [x] Fix Blood Particles
 [?] (CRITICAL) Fix 204 Cache error    
 [x] Increase Number of Arrows fired per tech level 

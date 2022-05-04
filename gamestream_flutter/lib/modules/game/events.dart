@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:bleed_common/AbilityType.dart';
 import 'package:bleed_common/CharacterState.dart';
@@ -420,7 +421,7 @@ class GameEvents {
 
       case GameEventType.Material_Struck_Flesh:
         audio.materialStruckFlesh(x, y);
-        final total = randomInt(3, 6);
+        final total = randomInt(2, 5);
         for (var i = 0; i < total; i++) {
           _spawn.blood(
             x: x,
@@ -431,6 +432,17 @@ class GameEvents {
             zv: 0.07 + giveOrTake(0.01),
           );
         }
+        for (var i = 0; i < 1; i++) {
+          _spawn.blood(
+            x: x,
+            y: y,
+            z: 0.3,
+            angle: angle + giveOrTake(0.2) + pi,
+            speed: 1.0 + giveOrTake(1),
+            zv: 0.07 + giveOrTake(0.01),
+          );
+        }
+
         break;
 
       case GameEventType.Material_Struck_Metal:
