@@ -103,7 +103,7 @@ RELEASE [11 May - 2022]
 [ ] Construct buildings using hammer
 [ ] Construct buildings within build radius
 [ ] Randomly Generate Zombie Spawn Locations
-[ ] Generate Scene - Connect islands with bridges
+[x] Generate Scene - Connect islands with bridges
 [x] Randomly Generate Player Spawn Locations
 [x] Item Type Bag (used to store loot)
 [x] Item Type Hammer (Used to construct buildings)

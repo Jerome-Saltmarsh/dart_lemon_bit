@@ -96,8 +96,8 @@ Scene generateRandomScene({
   }
 
   var land = 0;
-  final landSizes = <int, int> { };
-  landSizes[land] = 0;
+  final islands = <int, List<Cell>> { };
+  islands[land] = [];
 
   void visitCell(int row, int column) {
     if (row < 0) return;
@@ -107,7 +107,12 @@ Scene generateRandomScene({
     final cell = cells[row][column];
     if (!cell.visitable) return;
     cell.land = land;
-    landSizes[land] = (landSizes[land] ?? 0) + 1;
+    var island = islands[land];
+    if (island == null){
+       island = [];
+       islands[land] = island;
+    }
+    island.add(cell);
     visitCell(row - 1, column);
     visitCell(row + 1, column);
     visitCell(row, column - 1);
@@ -123,17 +128,53 @@ Scene generateRandomScene({
     }
   }
 
-  var biggestCellLandSize = -1;
-  var biggestCellLandSizeId = -1;
+  var biggestIslandCellsLength = -1;
+  late List<Cell> biggestIslandCells;
+  var biggestIslandId = -1;
 
-  for (final size in landSizes.entries){
-     if (size.value < biggestCellLandSize) continue;
-     biggestCellLandSize = biggestCellLandSize;
-     biggestCellLandSizeId = size.key;
+  for (final island in islands.entries){
+     if (island.value.length < biggestIslandCellsLength) continue;
+     biggestIslandCells = island.value;
+     biggestIslandId = island.key;
+     biggestIslandCellsLength = biggestIslandCells.length;
   }
 
-  for (final size in landSizes.entries){
-    if (size == biggestCellLandSize) continue;
+  void connectIsland(MapEntry<int, List<Cell>> island){
+    final islandCells = island.value;
+    final start = randomItem(islandCells);
+    final target = randomItem(biggestIslandCells);
+
+    final differenceRows = target.row - start.row;
+    final differenceColumns = target.column - start.column;
+    var row = start.row;
+    var column = start.column;
+
+    if (differenceRows != 0) {
+      final direction = differenceRows > 0 ? 1 : -1;
+      for (; row != target.row; row += direction) {
+        final cell = cells[row][column];
+        if (cell.land == target.land) return;
+        if (cell.open) continue;
+        if (cell.land == start.land) continue;
+        tiles[row][column] = Tile.Bridge;
+      }
+    }
+
+    if (differenceColumns != 0) {
+      final direction = differenceColumns > 0 ? 1 : -1;
+      for (; column != target.column; column += direction) {
+        final cell = cells[row][column];
+        if (cell.land == target.land) return;
+        if (cell.open) continue;
+        if (cell.land == start.land) continue;
+        tiles[row][column] = Tile.Bridge;
+      }
+    }
+  }
+
+  for (final entry in islands.entries){
+    if (entry.key == biggestIslandId) continue;
+    connectIsland(entry);
   }
 
   final numberOfSpawnPoints = 5;
@@ -144,12 +185,6 @@ Scene generateRandomScene({
     final column = randomInt(0, columns);
     if (!isWalkable(tiles[row][column])) {
       i--;
-      continue;
-    }
-    final cell = cells[row][column];
-    final cellLand = cell.land;
-    if (cellLand == null) throw Exception('cell.land is null');
-    if (cellLand != biggestCellLandSizeId) {
       continue;
     }
     spawnCells.add(SpawnCell(row, column));
