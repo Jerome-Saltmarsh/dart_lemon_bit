@@ -103,9 +103,9 @@ RELEASE [11 May - 2022]
 [ ] Construct buildings using hammer
 [ ] Construct buildings within build radius
 [ ] Preload audios
-[ ] Show player messages to everyone
 [ ] Randomly Generate Zombie Spawn Locations
 [ ] (CRITICAL) Fix 204 Cache error    
+[x] Show player messages to everyone
 [x] Generate Scene - Connect islands with bridges
 [x] Randomly Generate Player Spawn Locations
 [x] Item Type Bag (used to store loot)

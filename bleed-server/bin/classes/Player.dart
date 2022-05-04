@@ -443,15 +443,10 @@ extension PlayerProperties on Player {
     for (final otherPlayer in players) {
       if (otherPlayer.dead) continue;
       writePlayer(otherPlayer);
-      if (sameTeam(otherPlayer, this)){
-        writeString(otherPlayer.text);
-      } else {
-        writeInt(0);
-      }
+      writeString(otherPlayer.text);
     }
     writeByte(END);
   }
-
 
   void writeStructures() {
     writeByte(ServerResponse.Structures);
