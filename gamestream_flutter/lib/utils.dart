@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
+import 'package:intl/intl.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:universal_html/html.dart';
@@ -49,3 +50,9 @@ void refreshPage(){
 
 double getMouseSnapX() => snapX(mouseWorldX, mouseWorldY);
 double getMouseSnapY() => snapY(mouseWorldX, mouseWorldY);
+
+final _dateFormat = DateFormat(DateFormat.YEAR_MONTH_DAY);
+
+String formatDate(DateTime value){
+  return _dateFormat.format(value.toLocal());
+}

@@ -15,8 +15,7 @@ import 'package:gamestream_flutter/modules/website/enums.dart';
 import 'package:gamestream_flutter/servers.dart';
 import 'package:gamestream_flutter/sharedPreferences.dart';
 import 'package:gamestream_flutter/toString.dart';
-import 'package:gamestream_flutter/ui/compose/hudUI.dart';
-import 'package:gamestream_flutter/ui/constants.dart';
+import 'package:gamestream_flutter/ui/functions/build_layout.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
@@ -40,7 +39,7 @@ Widget buildDialogLogin() {
       borderColor: colours.none,
       height: 400,
       borderWidth: 3,
-      child: layout(
+      child: buildLayout(
           bottomLeft: button("Sign up", (){}),
           bottomRight: button("Back", () {
             website.state.dialog.value = WebsiteDialog.Games;
@@ -73,7 +72,7 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
       height: style.dialogHeightVerySmall,
       color: colours.brownDark,
       borderColor: colours.none,
-      child: layout(
+      child: buildLayout(
           child: Center(
             child: text(message, color: colours.white),
           ),
@@ -102,7 +101,7 @@ WatchBuilder<Connection> buildWatchConnection(Account? account) {
 }
 
 Widget buildViewConnectionNone() {
-  return layout(
+  return buildLayout(
       padding: 16,
       expand: true,
       topLeft: Column(
@@ -114,16 +113,6 @@ Widget buildViewConnectionNone() {
           text(version, color: colours.white618, size: FontSize.Small),
         ],
       ),
-      // topLeft: widgets.title,
-      // top:  Container(
-      //     width: engine.screen.width,
-      //     margin: EdgeInsets.only(top: 20),
-      //     child: Row(
-      //         mainAxisAlignment: axis.main.center,
-      //         children: [
-      //           buildTopMessage()
-      //         ])
-      // ),
       topRight: website.build.mainMenu(),
       bottomLeft: buildMenuDebug(),
       child: buildWatchBuilderDialog(),
@@ -182,7 +171,7 @@ WatchBuilder<WebsiteDialog> buildWatchBuilderDialog() {
 
         case WebsiteDialog.Login_Error:
           return dialog(
-              child: layout(
+              child: buildLayout(
                   child: text("Login Error"), bottomRight: backButton));
 
         case WebsiteDialog.Change_Public_Name:
@@ -218,7 +207,7 @@ Widget buildDialogChangeRegion() {
       padding: 16,
       borderColor: colours.none,
       color: colours.white05,
-      child: layout(
+      child: buildLayout(
           bottomRight: widgets.buttonClose,
           child: Column(
             crossAxisAlignment: axis.cross.start,
@@ -376,7 +365,7 @@ Widget? dev(Widget child){
 }
 
 Widget buildLayoutLoadingGame(){
-  return layout(
+  return buildLayout(
       topLeft: buildTitle(),
       child: fullScreen(
         child: Row(

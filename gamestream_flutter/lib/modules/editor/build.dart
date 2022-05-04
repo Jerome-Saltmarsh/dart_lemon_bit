@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/toString.dart';
-import 'package:gamestream_flutter/ui/compose/hudUI.dart';
+import 'package:gamestream_flutter/ui/functions/build_layout.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -31,7 +31,7 @@ class EditorBuild {
 
   Widget buildEditorUI() {
     print('editor.build.buildEditorUI()');
-    return layout(
+    return buildLayout(
         topLeft: _toolTabs(),
         topRight: _mainMenu(),
         bottomRight: _buildSelected(),

@@ -4,11 +4,11 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/toString.dart';
-import 'package:gamestream_flutter/ui/compose/hudUI.dart';
-import 'package:gamestream_flutter/ui/constants.dart';
+import 'package:gamestream_flutter/ui/functions/build_layout.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
+import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:golden_ratio/constants.dart';
 
@@ -19,7 +19,7 @@ Widget buildDialogAccount(){
 
   return watchAccount((account){
     if (account == null) {
-      return layout(
+      return buildLayout(
         bottomLeft: buttons.login,
         bottomRight: button("Close", website.actions.showDialogGames),
         child: dialog(
@@ -168,7 +168,7 @@ Widget buildDialog({
       padding: 16,
       width: width,
       height: height,
-      child: layout(
+      child: buildLayout(
           child: child,
           bottomLeft: bottomLeft,
           bottomRight: bottomRight

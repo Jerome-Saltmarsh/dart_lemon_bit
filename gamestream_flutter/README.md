@@ -108,6 +108,7 @@ RELEASE [11 May - 2022]
 [ ] Fix Terrain Culling
 [ ] Polish Menu
 [ ] Fix destroyed tree fires stone destroyed event
+[ ] Fix fire bow range
 [ ] Fire DynamicObject spawned event
 [x] Randomly Generate Zombie Spawn Locations
 [x] Show player messages to everyone

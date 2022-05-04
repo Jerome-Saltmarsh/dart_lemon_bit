@@ -8,16 +8,16 @@ import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/game/enums.dart';
 import 'package:gamestream_flutter/modules/game/update.dart';
-import 'package:gamestream_flutter/modules/isometric/utilities.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/module.dart';
 import 'package:gamestream_flutter/resources.dart';
-import 'package:gamestream_flutter/ui/compose/buildTextBox.dart';
-import 'package:gamestream_flutter/ui/compose/hudUI.dart';
+import 'package:gamestream_flutter/ui/functions/build_layout.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
+import 'package:gamestream_flutter/ui/functions/build_debug_panel.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel_highlighted_structure_type.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel_highlighted_tech_type_upgrade.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel_primary.dart';
+import 'package:gamestream_flutter/ui/functions/build_text_box.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:golden_ratio/constants.dart';
@@ -115,7 +115,7 @@ class GameBuild {
     const _pad = 8.0;
 
     return WatchBuilder(state.player.alive, (bool alive){
-      return layout(
+      return buildLayout(
           children: [
             Positioned(
                 left: _pad,
@@ -137,18 +137,6 @@ class GameBuild {
             buildPanelPrimary(),
           ]);
     });
-  }
-
-  Row buildDebugMenu() {
-    return Row(
-      children: [
-        toggleDebugMode(),
-        width8,
-        button("Edit Map", () {
-          core.actions.openMapEditor(newScene: false);
-        }),
-      ],
-    );
   }
 
   Widget buildTopRight(){
@@ -213,17 +201,6 @@ class GameBuild {
     });
   }
 
-  Widget mouseRowColumn(){
-    return Refresh((){
-      return text("Mouse Row:$mouseRow, Column: $mouseColumn");
-    });
-  }
-
-  Widget buildFramesSinceUpdate(){
-    return WatchBuilder(framesSinceUpdateReceived, (int frames){
-      return text("Frames Since Update: $frames");
-    });
-  }
 
   Widget buildFramesSmoothed(){
     return WatchBuilder(state.framesSmoothed, (int frames){
@@ -252,84 +229,6 @@ class GameBuild {
   Widget buildTotalFrames(){
     return WatchBuilder(totalUpdates, (int frames){
       return text("Frames: $frames");
-    });
-  }
-
-  Widget get buildTotalParticles {
-    return Refresh((){
-      return text("Particles: ${isometric.particles.length}");
-    });
-  }
-
-  Widget get playerScreen {
-    return Refresh(() {
-      return text("Player Screen: x: ${worldToScreenX(state.player.x)}, y: ${worldToScreenY(state.player.y)}");
-    });
-  }
-
-  Widget get buildActiveParticles {
-    return Refresh((){
-      return text("Active Particles: ${isometric.totalActiveParticles}");
-    });
-  }
-
-  Widget get tileAtMouse {
-    return Refresh((){
-      return text("Tile: ${isometric.tileAtMouse}");
-    });
-  }
-
-  Widget get playerPosition {
-    final character = modules.game.state.player;
-    return Refresh((){
-      return text("Player Position: X: ${character.x}, Y: ${character.y}");
-    });
-  }
-
-  Widget get playerId {
-    final character = modules.game.state.player;
-    return Refresh((){
-      return text("Player Id: ${character.id}");
-    });
-  }
-
-  Widget get mousePositionWorld {
-    return Refresh((){
-      return text("Mouse World: x: ${mouseWorldX.toInt()}, y: ${mouseWorldY.toInt()}");
-    });
-  }
-
-  Widget get mousePositionScreen {
-    return Refresh((){
-      return text("Mouse Screen: x: ${engine.mousePosition.x.toInt()}, y: ${engine.mousePosition.y.toInt()}");
-    });
-  }
-
-  Widget get cameraZoom {
-    return Refresh((){
-      return text("Zoom: ${engine.zoom}");
-    });
-  }
-
-  Widget get byteCountWatcher {
-    return WatchBuilder(byteLength, (int count){
-        return text("Bytes: $count");
-    });
-  }
-
-  Widget get bufferLengthWatcher {
-    return WatchBuilder(bufferSize, (int count){
-      return text("Buffer Size: $count");
-    });
-  }
-
-  Widget buildVersion(){
-    return text(version, color: colours.white618);
-  }
-
-  Widget toggleDebugMode(){
-    return WatchBuilder(state.compilePaths, (bool compilePaths){
-      return button("Debug Mode: $compilePaths", actions.toggleDebugPaths);
     });
   }
 
@@ -370,42 +269,6 @@ class GameBuild {
       child: Container(
           constraints: BoxConstraints(maxHeight: 400),
           child: textBuilder(game.scoreText)),
-    );
-  }
-
-  Widget buildTotalZombies() {
-    return WatchBuilder(game.totalZombies, (int value) {
-      return text('Zombies: $value');
-    });
-  }
-
-
-  Widget buildDebugPanel(){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-          ui.widgets.time,
-          buildTotalZombies(),
-          buildTotalPlayers(),
-          mouseRowColumn(),
-          buildVersion(),
-          buildTotalParticles,
-          buildActiveParticles,
-          tileAtMouse,
-          mousePositionWorld,
-          mousePositionScreen,
-          byteCountWatcher,
-          bufferLengthWatcher,
-          playerPosition,
-          cameraZoom,
-          buildFramesSinceUpdate(),
-          buildFramesSmoothed(),
-          playerScreen,
-          buildTotalEvents(),
-          buildTotalFrames(),
-          buildMSSinceUpdate(),
-          buildSync(),
-      ],
     );
   }
 }

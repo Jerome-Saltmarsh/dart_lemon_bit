@@ -9,7 +9,7 @@ import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/toString.dart';
-import 'package:gamestream_flutter/ui/compose/hudUI.dart';
+import 'package:gamestream_flutter/ui/functions/build_layout.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -57,7 +57,7 @@ class CoreBuild {
   }
 
   Widget _layoutOperationStatus(OperationStatus operationStatus) {
-    return layout(
+    return buildLayout(
         child: fullScreen(
           child: Row(
             mainAxisAlignment: axis.main.center,
