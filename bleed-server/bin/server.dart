@@ -938,7 +938,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             errorPlayerDead();
             return;
           }
-
           playerInteract(player);
           break;
         default:

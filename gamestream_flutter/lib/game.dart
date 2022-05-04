@@ -25,7 +25,6 @@ class _Game {
   final numberOfTeams = Watch(0);
   final totalZombies = Watch(0);
   final totalPlayers = Watch(0);
-  final totalDynamicObjects = Watch(0);
   final players = <Character>[];
   final zombies = <Character>[];
   final collectables = <Collectable>[];
@@ -51,9 +50,6 @@ class _Game {
   var itemsTotal = 0;
 
   _Game() {
-    for (var i = 0; i < 2000; i++) {
-      dynamicObjects.add(DynamicObject());
-    }
     for (var i = 0; i < 150; i++) {
       players.add(Character());
     }

@@ -147,6 +147,7 @@ class Scene {
          );
        }
     }
+    sortVertically(objectsDynamic);
   }
 
   int tileAt(double x, double y) {

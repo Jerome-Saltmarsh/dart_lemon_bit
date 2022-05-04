@@ -9,11 +9,6 @@ class _Resources {
 }
 
 class _Icons {
-  static const _orbSize = 20.0;
-  final settings = buildIcon("settings", width: 32, height: 32);
-  final topaz = buildIcon("orb-topaz", width: _orbSize, height: _orbSize);
-  final emerald = buildIcon("orb-emerald", width: _orbSize, height: _orbSize);
-  final ruby = buildIcon("orb-ruby", width: _orbSize, height: _orbSize);
   final sword = buildIcon("sword");
   final shield = buildIcon("shield");
   final unknown = buildIcon("unknown");

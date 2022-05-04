@@ -96,6 +96,7 @@
 [ ] Character Selection (head, name, etc, staff, bow, sword etc),
 [ ] Train Character Archer
 [ ] Train Character Swordsman
+[ ] DynamicObject.Id should be big int
 RELEASE [11 May - 2022]   
 [ ] Palisades draw horizontal and vertical when aligned
 [ ] Design Tower Sprite    
@@ -110,7 +111,7 @@ RELEASE [11 May - 2022]
 [ ] Fix Blood Particles
 [ ] Fix destroyed tree fires stone destroyed event
 [ ] Fix fire bow range
-[ ] Fire DynamicObject spawned event
+[x] Fire DynamicObject spawned event
 [x] Randomly Generate Zombie Spawn Locations
 [x] Show player messages to everyone
 [x] Generate Scene - Connect islands with bridges

@@ -566,4 +566,11 @@ extension PlayerProperties on Player {
     writeByte(ServerResponse.Dynamic_Object_Destroyed);
     writeInt(dynamicObject.id);
   }
+
+  void writeDynamicObjectSpawned(DynamicObject dynamicObject){
+    writeByte(ServerResponse.Dynamic_Object_Spawned);
+    writeByte(dynamicObject.type);
+    writePosition(dynamicObject);
+    writeInt(dynamicObject.id);
+  }
 }

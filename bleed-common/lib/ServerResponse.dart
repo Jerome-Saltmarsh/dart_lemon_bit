@@ -49,5 +49,6 @@ class ServerResponse {
   static const Tech_Types = 49;
   static const Damage_Applied = 50;
   static const Dynamic_Object_Destroyed = 51;
+  static const Dynamic_Object_Spawned = 52;
 }
 

@@ -126,7 +126,7 @@ class IsometricRender {
     final totalZombies = game.totalZombies.value;
     final totalPlayers = game.totalPlayers.value;
     final totalNpcs = game.totalNpcs;
-    final totalDynamicObjects = game.totalDynamicObjects.value;
+    final totalDynamicObjects = game.dynamicObjects.length;
     final totalStructures = isometric.totalStructures;
     final totalGenerated = generatedObjects.length;
 

@@ -393,7 +393,7 @@ extension GameFunctions on Game {
 
       if (killed) {
         target.collidable = false;
-        target.respawnDuration = 1000;
+        target.respawnDuration = 100;
         onDynamicObjectDestroyed(target);
 
         if (target.type == DynamicObjectType.Pot) {
@@ -527,7 +527,6 @@ extension GameFunctions on Game {
     sortVertically(npcs);
     sortVertically(items);
     sortVertically(projectiles);
-    sortVertically(scene.objectsDynamic);
     sortVertically(structures);
   }
 
@@ -1436,20 +1435,25 @@ extension GameFunctions on Game {
     for (final dynamicObject in dynamicObjects) {
       if (dynamicObject.respawnDuration <= 0) continue;
       if (dynamicObject.respawnDuration-- > 1) continue;
+      respawnDynamicObject(dynamicObject, health: 10);
+    }
+  }
+
+  void respawnDynamicObject(DynamicObject dynamicObject, {required int health}){
+    assert(health > 0);
+    for (final player in players) {
+      dynamicObject.health = health;
       dynamicObject.collidable = true;
-      dynamicObject.health = 12;
+      player.writeDynamicObjectSpawned(dynamicObject);
     }
   }
 }
 
 void playerInteract(Player player) {
   for (InteractableNpc npc in player.game.npcs) {
-    // if (diffOver(npc.x, player.x, radius.interact)) continue;
-    // if (diffOver(npc.y, player.y, radius.interact)) continue;
     npc.onInteractedWith(player);
     return;
   }
-
   for (StaticObject environmentObject in player.game.scene.objectsStatic) {
     if (environmentObject.type == ObjectType.House02) {}
     ;

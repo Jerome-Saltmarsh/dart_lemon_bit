@@ -13,7 +13,7 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/module.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
 import 'package:gamestream_flutter/servers.dart';
-import 'package:gamestream_flutter/sharedPreferences.dart';
+import 'package:gamestream_flutter/shared_preferences.dart';
 import 'package:gamestream_flutter/toString.dart';
 import 'package:gamestream_flutter/ui/functions/build_layout.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';

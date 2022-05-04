@@ -10,7 +10,7 @@ import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
-import 'package:gamestream_flutter/sharedPreferences.dart';
+import 'package:gamestream_flutter/shared_preferences.dart';
 import 'package:gamestream_flutter/toString.dart';
 import 'package:gamestream_flutter/webSocket.dart';
 import 'package:lemon_dispatch/instance.dart';

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/classes/DynamicObject.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
@@ -24,12 +25,10 @@ final averageUpdate = Watch(0.0);
 final sync = Watch(0.0);
 var durationTotal = 0;
 
-
 final _player = modules.game.state.player;
 final _hours = modules.isometric.hours;
 final _minutes = modules.isometric.minutes;
 final _events = modules.game.events;
-
 
 var time = DateTime.now();
 
@@ -41,17 +40,6 @@ void cameraCenterOnPlayer(){
   _previousPlayerScreenY2 = _previousPlayerScreenY1;
   _previousPlayerScreenX3 = _previousPlayerScreenX1;
   _previousPlayerScreenY3 = _previousPlayerScreenY1;
-}
-
-Character? findPlayerCharacter(){
-  final total = game.totalPlayers.value;
-  for (var i = 0; i < total; i++) {
-    final character = game.players[i];
-    if (character.x != _player.x) continue;
-    if (character.y != _player.y) continue;
-    return character;
-  }
-  return null;
 }
 
 var _previousPlayerScreenX1 = 0.0;
@@ -167,6 +155,16 @@ class _ByteStreamParser {
         case ServerResponse.Dynamic_Object_Destroyed:
           final id = nextInt();
           game.dynamicObjects.removeWhere((dynamicObject) => dynamicObject.id == id);
+          break;
+
+        case ServerResponse.Dynamic_Object_Spawned:
+          final instance = DynamicObject();
+          instance.type = nextByte();
+          instance.x = nextDouble();
+          instance.y = nextDouble();
+          instance.id = nextInt();
+          game.dynamicObjects.add(instance);
+          sortVertically(game.dynamicObjects);
           break;
 
         case ServerResponse.Paths:
@@ -509,19 +507,19 @@ class _ByteStreamParser {
     sortVertically(environmentObjects);
   }
 
+
   void parseDynamicObjects() {
-    var total = 0;
+    game.dynamicObjects.clear();
     while (true) {
       final typeIndex = nextByte();
       if (typeIndex == END) break;
-      final dynamicObject = game.dynamicObjects[total];
-      dynamicObject.type = typeIndex;
-      dynamicObject.x = nextDouble();
-      dynamicObject.y = nextDouble();
-      dynamicObject.id = nextInt();
-      total++;
+      final instance = DynamicObject();
+      instance.type = typeIndex;
+      instance.x = nextDouble();
+      instance.y = nextDouble();
+      instance.id = nextInt();
+      game.dynamicObjects.add(instance);
     }
-    game.totalDynamicObjects.value = total;
   }
 
   void readVector2(Vector2 value){

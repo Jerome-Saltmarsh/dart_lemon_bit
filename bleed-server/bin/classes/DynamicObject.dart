@@ -7,7 +7,7 @@ import 'components.dart';
 
 class DynamicObject extends Collider with Health, Material, Id {
   late int type; // DynamicObjectType.dart
-  var respawnDuration = 5000;
+  var respawnDuration = 0;
 
   bool get isRock => type == DynamicObjectType.Rock;
   bool get isTree => type == DynamicObjectType.Tree;
