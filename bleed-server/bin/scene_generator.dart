@@ -196,6 +196,17 @@ Scene generateRandomScene({
       i--;
       continue;
     }
+
+    var tooClose = false;
+    for (final spawnCell in spawnCells) {
+      final rowDistance = (spawnCell.row - row).abs();
+      final columnDistance = (spawnCell.column - column).abs();
+      final distance = rowDistance + columnDistance;
+      if (distance > 30) continue;
+      tooClose = true;
+      break;
+    }
+    if (tooClose) continue;
     spawnCells.add(SpawnCell(row, column));
   }
 

@@ -103,8 +103,8 @@ RELEASE [11 May - 2022]
 [ ] Construct buildings using hammer
 [ ] Construct buildings within build radius
 [ ] Preload audios
-[ ] Randomly Generate Zombie Spawn Locations
 [ ] (CRITICAL) Fix 204 Cache error    
+[ ] Randomly Generate Zombie Spawn Locations
 [x] Show player messages to everyone
 [x] Generate Scene - Connect islands with bridges
 [x] Randomly Generate Player Spawn Locations
