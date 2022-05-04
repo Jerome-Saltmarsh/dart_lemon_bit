@@ -962,10 +962,10 @@ extension GameFunctions on Game {
         src: src,
         accuracy: 0,
         speed: 7,
-        range: 300,
+        range: src.equippedRange,
         target: src.attackTarget,
         angle: src.angle,
-        techType: TechType.Bow,
+        techType: src.equippedType,
         level: src.equippedLevel,
       );
     }
@@ -1289,14 +1289,14 @@ extension GameFunctions on Game {
       applyHit(
           src: character,
           target: attackTarget,
-          techType: character.equipped,
+          techType: character.equippedType,
           level: character.equippedLevel,
       );
       character.attackTarget = null;
       return;
     }
 
-    final equipped = character.equipped;
+    final equipped = character.equippedType;
 
     if (SlotType.isSword(equipped)) {
       if (stateDuration == 7) {
@@ -1373,7 +1373,7 @@ extension GameFunctions on Game {
             applyHit(
                 src: character,
                 target: attackTarget,
-                techType: character.equipped,
+                techType: character.equippedType,
                 level: character.equippedLevel
             );
             return;
@@ -1387,7 +1387,7 @@ extension GameFunctions on Game {
           applyHit(
               src: character,
               target: zombieHit,
-              techType: character.equipped,
+              techType: character.equippedType,
               level: character.equippedLevel
           );
           return;
@@ -1398,7 +1398,7 @@ extension GameFunctions on Game {
           applyHit(
               src: character,
               target: dynamicObjectHit,
-              techType: character.equipped,
+              techType: character.equippedType,
               level: character.equippedLevel,
           );
         }

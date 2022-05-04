@@ -114,7 +114,7 @@ class TechType {
       case TechType.Pickaxe:
         return 20;
       case TechType.Bow:
-        return 100;
+        return 250;
       case TechType.Sword:
         return 30;
       case TechType.Axe:

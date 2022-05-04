@@ -117,8 +117,8 @@ class Character extends Collider with Team, Health, Velocity, Material {
   bool invincible = false;
   final abilityTarget = Vector2(0, 0);
   final techTree = TechTree();
-  // final slots = Slots();
-  var equipped = TechType.Unarmed;
+  /// TechType.dart
+  var equippedType = TechType.Unarmed;
 
   // properties
 
@@ -141,17 +141,17 @@ class Character extends Collider with Team, Health, Velocity, Material {
 
   bool get deadOrBusy => dead || busy;
 
-  double get equippedRange => TechType.getRange(equipped);
-  int get equippedAttackDuration => TechType.getDuration(equipped);
+  double get equippedRange => TechType.getRange(equippedType);
+  int get equippedAttackDuration => TechType.getDuration(equippedType);
   bool get equippedTypeIsBow => isEquipped(TechType.Bow);
   bool get unarmed => isEquipped(TechType.Unarmed);
   bool get equippedTypeIsShotgun => isEquipped(TechType.Shotgun);
-  bool get equippedIsMelee => TechType.isMelee(equipped);
+  bool get equippedIsMelee => TechType.isMelee(equippedType);
   bool get equippedIsEmpty => false;
-  int get equippedLevel => getTechTypeLevel(equipped);
+  int get equippedLevel => getTechTypeLevel(equippedType);
 
   bool isEquipped(int type) {
-    return equipped == type;
+    return equippedType == type;
   }
 
   void reduceEquippedAmount() {

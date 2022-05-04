@@ -298,14 +298,14 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               playerSetAbilityTarget(player, mouseX, mouseY);
 
               if (aimTarget is DynamicObject) {
-                 if (aimTarget.isRock && player.equipped != TechType.Pickaxe) {
+                 if (aimTarget.isRock && player.equippedType != TechType.Pickaxe) {
                     if (player.techTree.pickaxe > 0){
                       player.equipPickaxe();
                     } else if (!player.unarmed) {
                       player.equipUnarmed();
                     }
                  } else
-                 if (aimTarget.isTree && player.equipped != TechType.Axe) {
+                 if (aimTarget.isTree && player.equippedType != TechType.Axe) {
                    if (player.techTree.axe > 0){
                      player.equipAxe();
                    } else if (!player.unarmed) {
@@ -789,7 +789,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             case TechType.Pickaxe:
               player.techTree.pickaxe++;
               if (player.techTree.pickaxe == 1) {
-                 player.equipped = TechType.Pickaxe;
+                 player.equippedType = TechType.Pickaxe;
                  player.setStateChanging();
               }
               player.writePlayerEvent(PlayerEvent.Item_Purchased);
@@ -797,7 +797,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             case TechType.Bow:
               player.techTree.bow++;
               if (player.techTree.bow == 1) {
-                player.equipped = TechType.Bow;
+                player.equippedType = TechType.Bow;
                 player.setStateChanging();
               }
               player.writePlayerEvent(PlayerEvent.Item_Purchased);
@@ -805,7 +805,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             case TechType.Sword:
               player.techTree.sword++;
               if (player.techTree.sword == 1) {
-                player.equipped = TechType.Sword;
+                player.equippedType = TechType.Sword;
                 player.setStateChanging();
               }
               player.writePlayerEvent(PlayerEvent.Item_Purchased);
@@ -813,7 +813,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             case TechType.Axe:
               player.techTree.axe++;
               if (player.techTree.axe == 1) {
-                player.equipped = TechType.Axe;
+                player.equippedType = TechType.Axe;
                 player.setStateChanging();
               }
               player.writePlayerEvent(PlayerEvent.Item_Purchased);
@@ -821,7 +821,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             case TechType.Hammer:
               player.techTree.hammer++;
               if (player.techTree.hammer == 1) {
-                player.equipped = TechType.Hammer;
+                player.equippedType = TechType.Hammer;
                 player.setStateChanging();
               }
               player.writePlayerEvent(PlayerEvent.Item_Purchased);
@@ -854,7 +854,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (!TechType.isValid(techType)){
             return errorInvalidArg('Invalid tech type: got $techType');
           }
-          player.equipped = techType;
+          player.equippedType = techType;
           player.setStateChanging();
           return;
 

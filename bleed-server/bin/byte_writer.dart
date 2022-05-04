@@ -116,7 +116,7 @@ class ByteWriter {
   void writePlayer(Player player) {
     writeCharacter(player, player);
     writePercentage(player.magicPercentage);
-    writeByte(player.equipped);
+    writeByte(player.equippedType);
     writeByte(SlotType.Empty); // armour
     writeByte(SlotType.Empty); // helm
     writeString(player.name);
@@ -144,7 +144,7 @@ class ByteWriter {
   void writeNpc(Player player, Character npc) {
     if (npc.dead) return;
     writeCharacter(player, npc);
-    writeByte(npc.equipped);
+    writeByte(npc.equippedType);
   }
 
   void writeCharacter(Player player, Character character) {

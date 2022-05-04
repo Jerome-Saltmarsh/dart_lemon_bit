@@ -110,7 +110,7 @@ RELEASE [11 May - 2022]
 [ ] Polish Menu
 [ ] Fix Blood Particles
 [ ] Fix destroyed tree fires stone destroyed event
-[ ] Fix fire bow range
+[x] Fix fire bow range
 [x] Fire DynamicObject spawned event
 [x] Randomly Generate Zombie Spawn Locations
 [x] Show player messages to everyone

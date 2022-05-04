@@ -88,17 +88,17 @@ class Player extends Character with ByteWriter {
   }
 
   void equipPickaxe(){
-    equipped = TechType.Pickaxe;
+    equippedType = TechType.Pickaxe;
     setStateChanging();
   }
 
   void equipAxe(){
-    equipped = TechType.Axe;
+    equippedType = TechType.Axe;
     setStateChanging();
   }
 
   void equipUnarmed(){
-    equipped = TechType.Unarmed;
+    equippedType = TechType.Unarmed;
     setStateChanging();
   }
 
@@ -364,7 +364,7 @@ extension PlayerProperties on Player {
 
   bool get isHuman => type == CharacterType.Human;
 
-  bool get unarmed => equipped == TechType.Unarmed;
+  bool get unarmed => equippedType == TechType.Unarmed;
 
   void onEquipped(int slotType){
     final healthIncrease = SlotType.getHealth(slotType);
@@ -392,7 +392,7 @@ extension PlayerProperties on Player {
     writeInt(maxHealth); // 2
     writeInt(magic); // 2
     writeInt(maxMagic); // 2
-    writeByte(equipped); // 3
+    writeByte(equippedType); // 3
     writeByte(SlotType.Empty); // armour
     writeByte(SlotType.Empty); // helm
     writeBool(alive); // 1
