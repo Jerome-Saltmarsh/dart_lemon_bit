@@ -353,15 +353,22 @@ class IsometricRender {
             if (!remainingStructures || yDynamicObject < yStructure) {
               renderDynamicObject(dynamicObjects[indexDynamicObject]);
               indexDynamicObject++;
-              remainingDynamicObjects =
-                  indexDynamicObject < totalDynamicObjects;
-              if (remainingDynamicObjects) {
+              remainingDynamicObjects = indexDynamicObject < totalDynamicObjects;
+
+              while (remainingDynamicObjects) {
                 yDynamicObject = dynamicObjects[indexDynamicObject].y;
-                if (yDynamicObject > screenBottom100) {
+                if (yDynamicObject > screenBottom100){
                   remainingDynamicObjects = false;
+                  break;
                 }
+                final x = dynamicObjects[indexDynamicObject].x;
+                if (x < screenLeft || x > screenRight) {
+                  indexDynamicObject++;
+                  remainingDynamicObjects = indexDynamicObject < totalDynamicObjects;
+                  continue;
+                }
+                break;
               }
-              continue;
             }
           }
         }
