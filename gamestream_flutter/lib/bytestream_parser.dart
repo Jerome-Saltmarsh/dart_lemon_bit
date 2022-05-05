@@ -52,7 +52,6 @@ var _previousPlayerScreenY3 = 0.0;
 class _ByteStreamParser {
   var _index = 0;
   var values = <int>[];
-  final _byteStreamPool = <int, Uint8List>{};
 
   void parse(List<int> values) {
     if (modules.game.state.debugPanelVisible.value){
@@ -460,27 +459,11 @@ class _ByteStreamParser {
   }
 
   String readString() {
-    const emptyString = "";
     final length = nextInt();
-    if (length == 0) return emptyString;
-    return utf8.decode(readBytes(length));
-  }
-
-  List<int> readBytes(int length) {
-    final values = _getByteStream(length);
-    for (var i = 0; i < length; i++) {
-      values[i] = nextByte();
-    }
-    return values;
-  }
-
-  /// Recycles bytestreams to prevent memory leak
-  List<int> _getByteStream(int length){
-    var stream = _byteStreamPool[length];
-    if (stream != null) return stream;
-    stream = Uint8List(length);
-    _byteStreamPool[length] = stream;
-    return stream;
+    if (length == 0) return "";
+    final start = _index;
+    _index += length;
+    return utf8.decode(values.sublist(start, start + length));
   }
 
   void _parsePlayerEvents() {

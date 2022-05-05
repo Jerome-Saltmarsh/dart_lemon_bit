@@ -317,7 +317,7 @@ class IsometricRender {
                   indexDynamicObject < totalDynamicObjects;
               if (remainingDynamicObjects) {
                 yDynamicObject = dynamicObjects[indexDynamicObject].y;
-                if (yDynamicObject > screenBottom) {
+                if (yDynamicObject > screenBottom100) {
                   remainingDynamicObjects = false;
                 }
               }

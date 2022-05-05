@@ -98,21 +98,21 @@
 [ ] Train Character Swordsman
 [ ] DynamicObject.Id should be big int
 RELEASE [11 May - 2022]   
-[ ] Refactor Game with ByteReader
 [ ] Palisades draw horizontal and vertical when aligned
 [ ] Design Tower Sprite    
-[ ] Chest Shades
 [ ] Disable Teleport 
 [ ] Construct buildings using hammer
 [ ] Construct buildings within build radius
 [ ] Preload audios
+[ ] (CRITICAL) Fix 204 Cache error    
+[ ] Chest Shades
+[ ] Refactor Game with ByteReader
 [x] Fix Terrain Culling
 [x] (CRITICAL) Fix zombie spawn location bug
 [x] Polish Menu
 [x] Add Fifth cost to tech types
 [x] Spawn blood forward on hit
 [x] Fix Blood Particles
-[?] (CRITICAL) Fix 204 Cache error    
 [x] Increase Number of Arrows fired per tech level 
 [x] Fix destroyed tree fires stone destroyed event
 [x] Fix fire bow range
