@@ -4,7 +4,7 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 
-import 'webSocket.dart';
+import 'web_socket.dart';
 
 final _gameUpdateIndex = ClientRequest.Update.index;
 final _updateBuffer = Uint8List(16);

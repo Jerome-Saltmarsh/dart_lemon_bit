@@ -14,7 +14,7 @@ import 'package:gamestream_flutter/modules/ui/module.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
 import 'package:gamestream_flutter/servers.dart';
 import 'package:gamestream_flutter/shared_preferences.dart';
-import 'package:gamestream_flutter/toString.dart';
+import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/functions/build_layout.dart';
 import 'package:gamestream_flutter/ui/style.dart';
@@ -27,7 +27,7 @@ import 'package:lemon_watch/watch_builder.dart';
 
 import '../assets.dart';
 import '../styles.dart';
-import '../webSocket.dart';
+import '../web_socket.dart';
 import 'build.dart';
 
 final nameController = TextEditingController();

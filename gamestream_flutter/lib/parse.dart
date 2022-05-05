@@ -6,10 +6,8 @@ import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/server_response_reader.dart';
-import 'package:gamestream_flutter/utils/list_util.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/enums.dart';
 import 'package:lemon_math/library.dart';
 
 // variables
@@ -33,19 +31,6 @@ void parseState() {
   while (_index < eventLength) {
     final _currentServerResponse = consumeInt();
     switch (_currentServerResponse) {
-      case ServerResponse.Tiles:
-        _parseTiles();
-        break;
-
-      case ServerResponse.Gem_Spawns:
-        final total = consumeInt();
-        for (var i = 0; i < total; i++) {
-          final type = consumeOrbType();
-          final x = consumeDouble();
-          final y = consumeDouble();
-          isometric.spawn.orb(type, x, y);
-        }
-        break;
 
       case ServerResponse.Game_Time:
         parseGameTime();
@@ -71,17 +56,6 @@ void parseState() {
         game.numberOfPlayersNeeded.value = consumeInt();
         break;
 
-      case ServerResponse.Player_Attack_Target:
-        final attackTarget = modules.game.state.player.attackTarget;
-        attackTarget.x = consumeDouble();
-        attackTarget.y = consumeDouble();
-        if (attackTarget.x != 0 && attackTarget.y != 0) {
-          engine.cursorType.value = CursorType.Click;
-        } else {
-          engine.cursorType.value = CursorType.Basic;
-        }
-        break;
-
       case ServerResponse.Team_Lives_Remaining:
         game.teamLivesWest.value = consumeInt();
         game.teamLivesEast.value = consumeInt();
@@ -93,7 +67,6 @@ void parseState() {
         break;
 
       case ServerResponse.Version:
-        // sendRequestJoinGame();
         break;
 
       case ServerResponse.Error:
@@ -106,7 +79,6 @@ void parseState() {
         break;
 
       case ServerResponse.Scene_Changed:
-        print("ServerResponse.Scene_Changed");
         final x = consumeDouble();
         final y = consumeDouble();
         modules.game.state.player.x = x;
@@ -118,11 +90,6 @@ void parseState() {
         });
         isometric.particles.clear();
         isometric.next = null;
-        break;
-
-      case ServerResponse.EnvironmentObjects:
-        isometric.particleEmitters.clear();
-        _parseEnvironmentObjects();
         break;
 
       case ServerResponse.NpcMessage:
@@ -138,10 +105,6 @@ void parseState() {
         final debugInt = _consumeSingleDigitInt();
         modules.game.state.compilePaths.value = debugInt == 1;
         break;
-
-      // case ServerResponse.Items:
-      //   parseItems();
-      //   break;
 
       case ServerResponse.Crates:
         parseCrates();
@@ -214,77 +177,12 @@ void parseCrates() {
   }
 }
 
-void _parseEnvironmentObjects() {
-  print("parse.environmentObjects()");
-  modules.isometric.environmentObjects.clear();
-  game.torches.clear();
-
-  while (!_simiColonConsumed()) {
-    final x = consumeDouble();
-    final y = consumeDouble();
-    final radius = consumeDouble();
-    final type = _consumeEnvironmentObjectType();
-
-    if (type == ObjectType.SmokeEmitter){
-      addParticleEmitter(
-          ParticleEmitter(x: x, y: y, rate: 20, emit: modules.game.factories.buildParticleSmoke));
-      continue;
-    }
-
-    if (type == ObjectType.MystEmitter){
-      addParticleEmitter(
-          ParticleEmitter(x: x, y: y, rate: 20, emit: modules.game.factories.emitMyst));
-      continue;
-    }
-
-    final env = EnvironmentObject(
-        x: x,
-        y: y,
-        type: type,
-        radius: radius
-    );
-
-    if (type == ObjectType.Torch) {
-      game.torches.add(env);
-    }
-
-    modules.isometric.environmentObjects.add(env);
-  }
-
-  modules.isometric.refreshGeneratedObjects();
-  sortReversed(modules.isometric.environmentObjects, environmentObjectY);
-  modules.isometric.resetLighting();
-}
-
 void addParticleEmitter(ParticleEmitter value) {
   isometric.particleEmitters.add(value);
 }
 
 double environmentObjectY(EnvironmentObject environmentObject) {
   return environmentObject.y;
-}
-
-void _parseTiles() {
-  print("parse.tiles()");
-  final isometric = modules.isometric;
-  final rows = consumeInt();
-  final columns = consumeInt();
-  final tiles = isometric.tiles;
-  tiles.clear();
-  isometric.totalRows.value = rows;
-  isometric.totalColumns.value = columns;
-  isometric.totalRowsInt = rows;
-  isometric.totalColumnsInt = columns;
-  for (var row = 0; row < rows; row++) {
-    final List<int> column = [];
-    for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
-      column.add(_consumeTile());
-    }
-    tiles.add(column);
-  }
-
-  isometric.refreshGeneratedObjects();
-  isometric.updateTileRender();
 }
 
 void _parsePlayerAbility(){
@@ -312,10 +210,6 @@ void _parseGameJoined() {
     particle.duration = 0;
   }
   cameraCenterOnPlayer();
-}
-
-ObjectType _consumeEnvironmentObjectType() {
-  return objectTypes[consumeInt()];
 }
 
 void _next() {

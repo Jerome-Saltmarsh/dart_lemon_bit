@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/toString.dart';
+import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';

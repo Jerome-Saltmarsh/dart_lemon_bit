@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
-import 'package:gamestream_flutter/webSocket.dart';
+import 'package:gamestream_flutter/web_socket.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'state.dart';

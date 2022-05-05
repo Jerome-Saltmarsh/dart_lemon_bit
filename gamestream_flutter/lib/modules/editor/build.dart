@@ -5,7 +5,7 @@ import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/styles.dart';
-import 'package:gamestream_flutter/toString.dart';
+import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/functions/build_layout.dart';
 import 'package:gamestream_flutter/ui/style.dart';

@@ -10,9 +10,7 @@ import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/isometric/classes.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/parse.dart';
 import 'package:gamestream_flutter/utils.dart';
-import 'package:gamestream_flutter/utils/list_util.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:typedef/json.dart';
@@ -39,7 +37,6 @@ class EditorActions with EditorScope {
     if (state.objectType.value == ObjectType.Torch) {
       isometric.resetLighting();
     }
-    sortReversed(modules.isometric.environmentObjects, environmentObjectY);
     engine.redrawCanvas();
   }
 
