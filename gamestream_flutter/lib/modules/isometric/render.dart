@@ -355,8 +355,11 @@ class IsometricRender {
          renderGeneratedObject(generatedObject);
          indexGenerated++;
          remainingGenerated = indexGenerated < totalGenerated;
-         if (remainingGenerated){
+         if (remainingGenerated) {
            yGenerated = generatedObjects[indexGenerated].y;
+           if (yGenerated > screenBottom) {
+             remainingGenerated = false;
+           }
          }
       }
 
