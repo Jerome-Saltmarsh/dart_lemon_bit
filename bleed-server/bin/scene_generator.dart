@@ -26,8 +26,8 @@ Scene generateRandomScene({
   );
 
   final tiles = <List<int>>[];
-  final environment = <StaticObject>[];
-  final dynamicObjects = <DynamicObject>[];
+  final objectsStatic = <StaticObject>[];
+  final objectsDynamic = <DynamicObject>[];
   for (var rowIndex = 0; rowIndex < rows; rowIndex++) {
     final noiseColumn = noiseMap[rowIndex];
     final column = <int>[];
@@ -46,7 +46,7 @@ Scene generateRandomScene({
            column.add(Tile.Grass);
          }
          if (random.nextDouble() < 0.05) {
-           environment.add(
+           objectsStatic.add(
                StaticObject(
                    x: getTilePositionX(rowIndex, columnIndex),
                    y: getTilePositionY(rowIndex, columnIndex),
@@ -62,7 +62,7 @@ Scene generateRandomScene({
        }
          else
          if (random.nextDouble() < 0.001) {
-           dynamicObjects.add(
+           objectsDynamic.add(
                DynamicObject(
                  type: DynamicObjectType.Chest,
                    x: getTilePositionX(rowIndex, columnIndex),
@@ -206,8 +206,18 @@ Scene generateRandomScene({
       tooClose = true;
       break;
     }
-    if (tooClose) continue;
+    if (tooClose) {
+      i--;
+      continue;
+    }
     spawnCellPlayers.add(SpawnCell(row, column));
+    objectsStatic.add(
+        StaticObject(
+            x: getTilePositionX(row, column),
+            y: getTilePositionY(row, column),
+            type: ObjectType.Flag
+        )
+    );
   }
 
 
@@ -231,7 +241,10 @@ Scene generateRandomScene({
       tooClose = true;
       break;
     }
-    if (tooClose) continue;
+    if (tooClose) {
+      i--;
+      continue;
+    }
     for (final spawnCell in spawnCellZombies) {
       final rowDistance = (spawnCell.row - row).abs();
       final columnDistance = (spawnCell.column - column).abs();
@@ -240,15 +253,19 @@ Scene generateRandomScene({
       tooClose = true;
       break;
     }
-    if (tooClose) continue;
+    if (tooClose) {
+      i--;
+      continue;
+    }
+    tiles[row][column] = Tile.Zombie_Spawn;
     spawnCellZombies.add(SpawnCell(row, column));
   }
 
   return Scene(
       tiles: tiles,
-      objectsStatic: environment,
       characters: [],
-      objectsDynamic: dynamicObjects,
+      objectsStatic: objectsStatic,
+      objectsDynamic: objectsDynamic,
       spawnPointZombies: spawnCellZombies,
       spawnPointPlayers: spawnCellPlayers,
   );

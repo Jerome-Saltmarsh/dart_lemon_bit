@@ -85,7 +85,10 @@ abstract class Game {
   void updateNpcBehavior(Character npc) {}
 
   Position getNextSpawnPoint() {
-    return getSceneCenter();
+    if (scene.spawnPointPlayers.isEmpty){
+      return getSceneCenter();
+    }
+    return randomItem(scene.spawnPointPlayers);
   }
 
   /// Returning true will cause the item to be removed
@@ -158,20 +161,20 @@ abstract class Game {
           radius: environmentObject.radius));
     }
 
-    for (var rowIndex = 0; rowIndex < scene.numberOfRows; rowIndex++) {
-      final row = scene.tiles[rowIndex];
-      for (var columnIndex = 0;
-          columnIndex < scene.numberOfColumns;
-          columnIndex++) {
-        switch (row[columnIndex]) {
-          case Tile.Zombie_Spawn:
-            scene.spawnPointZombies.add(getTilePosition(rowIndex, columnIndex));
-            break;
-          default:
-            break;
-        }
-      }
-    }
+    // for (var rowIndex = 0; rowIndex < scene.numberOfRows; rowIndex++) {
+    //   final row = scene.tiles[rowIndex];
+    //   for (var columnIndex = 0;
+    //       columnIndex < scene.numberOfColumns;
+    //       columnIndex++) {
+    //     switch (row[columnIndex]) {
+    //       case Tile.Zombie_Spawn:
+    //         scene.spawnPointZombies.add(getTilePosition(rowIndex, columnIndex));
+    //         break;
+    //       default:
+    //         break;
+    //     }
+    //   }
+    // }
   }
 
   void checkCollisionPlayerItem() {
