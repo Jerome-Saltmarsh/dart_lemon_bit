@@ -112,6 +112,7 @@ class IsometricRender {
         totalParticles++;
     }
 
+    final screenTop = engine.screen.top;
     final screenBottom = engine.screen.bottom;
     final screenBottom100 = engine.screen.bottom + 120;
 
@@ -159,6 +160,31 @@ class IsometricRender {
     var yStructure = remainingStructures ? structures[0].y : 0;
     var yBuildMode = remainingBuildMode ? mouseWorldY : 0;
     var yGenerated = remainingGenerated ? generatedObjects[0].y : 0;
+    final screenLeft = _screen.left;
+    final screenRight = _screen.right;
+
+    while (remainingGenerated){
+      final x = generatedObjects[indexGenerated].x;
+      yGenerated = generatedObjects[indexGenerated].y;
+
+      if (yGenerated > screenBottom100){
+        remainingGenerated = false;
+        break;
+      }
+
+      if (
+        yGenerated < screenTop
+            ||
+        x < screenLeft
+            ||
+        x > screenRight
+      ){
+        indexGenerated++;
+        remainingGenerated = indexGenerated < totalGenerated;
+      } else {
+        break;
+      }
+    }
 
     var particleIsBlood = remainingParticles ? particles[0].type == ParticleType.Blood : false;
 
@@ -357,11 +383,20 @@ class IsometricRender {
          renderGeneratedObject(generatedObject);
          indexGenerated++;
          remainingGenerated = indexGenerated < totalGenerated;
-         if (remainingGenerated) {
+
+         while (remainingGenerated){
            yGenerated = generatedObjects[indexGenerated].y;
-           if (yGenerated > screenBottom100) {
+           if (yGenerated > screenBottom100){
              remainingGenerated = false;
+             break;
            }
+           final x = generatedObjects[indexGenerated].x;
+           if (x < screenLeft || x > screenRight) {
+             indexGenerated++;
+             remainingGenerated = indexGenerated < totalGenerated;
+             continue;
+           }
+           break;
          }
          continue;
       }
@@ -380,7 +415,6 @@ class IsometricRender {
       return;
     }
   }
-
 
   void renderGeneratedObject(GeneratedObject generatedObject){
     switch (generatedObject.type){

@@ -107,6 +107,7 @@ RELEASE [11 May - 2022]
 [ ] Chest Shades
 [ ] Refactor Game with ByteReader
 [ ] (CRITICAL) Fix 204 Cache error    
+[x] Only render visible Generated Objects
 [x] Fix Terrain Culling
 [x] (CRITICAL) Fix zombie spawn location bug
 [x] Polish Menu

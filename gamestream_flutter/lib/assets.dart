@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class Fonts {
   static final Jetbrains = 'JetBrainsMono-Regular';
   static final LibreBarcode39Text = 'LibreBarcode39Text-Regular';
