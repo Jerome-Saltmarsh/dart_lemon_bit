@@ -347,6 +347,7 @@ class IsometricRender {
         if (!remainingGenerated || yBuildMode < yGenerated) {
           renderBuildMode();
           remainingBuildMode = false;
+          continue;
         }
       }
 
@@ -361,6 +362,7 @@ class IsometricRender {
              remainingGenerated = false;
            }
          }
+         continue;
       }
 
       if (
