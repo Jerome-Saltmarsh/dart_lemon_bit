@@ -22,10 +22,8 @@ import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:golden_ratio/constants.dart';
-import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import '../assets.dart';
 import '../styles.dart';
 import '../web_socket.dart';
 import 'build.dart';
@@ -237,9 +235,6 @@ Widget? buildMenuDebug() {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (hovering) ...[
-              button("Font Jetbrains", () {
-                engine.themeData.value = themes.jetbrains;
-              }, width: 200, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
               buttons.showDialogSubscribed,
               buttons.loginTestUser01,
               buttons.loginTestUser02,

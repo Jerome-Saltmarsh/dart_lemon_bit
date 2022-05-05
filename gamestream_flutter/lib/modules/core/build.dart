@@ -27,7 +27,7 @@ class CoreBuild {
       drawCanvasAfterUpdate: true,
       backgroundColor: colours.black,
       buildLoadingScreen: buildLoadingScreen,
-      themeData: themes.jetbrains,
+      themeData: ThemeData(fontFamily: 'JetBrainsMono-Regular'),
       framesPerSecond: 35,
     );
   }
@@ -64,7 +64,7 @@ class CoreBuild {
               AnimatedTextKit(repeatForever: true, animatedTexts: [
                 RotateAnimatedText(enumString(operationStatus),
                     textStyle: TextStyle(color: Colors.white, fontSize: 45,
-                        fontFamily: assets.fonts.libreBarcode39Text
+                        fontFamily: Fonts.LibreBarcode39Text
                     )),
               ])
             ],

@@ -104,9 +104,9 @@ RELEASE [11 May - 2022]
 [ ] Construct buildings using hammer
 [ ] Construct buildings within build radius
 [ ] Preload audios
-[ ] (CRITICAL) Fix 204 Cache error    
 [ ] Chest Shades
 [ ] Refactor Game with ByteReader
+[ ] (CRITICAL) Fix 204 Cache error    
 [x] Fix Terrain Culling
 [x] (CRITICAL) Fix zombie spawn location bug
 [x] Polish Menu

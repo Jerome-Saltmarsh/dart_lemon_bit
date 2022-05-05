@@ -93,12 +93,12 @@ Widget buildTitle(){
       text("GAME",
           size: 60,
           color: Colors.white,
-          family: assets.fonts.libreBarcode39Text
+          family: Fonts.LibreBarcode39Text
       ),
       text("STREAM",
         size: 60,
         color: colours.red,
-        family: assets.fonts.libreBarcode39Text,
+        family: Fonts.LibreBarcode39Text,
       ),
     ],
   );
