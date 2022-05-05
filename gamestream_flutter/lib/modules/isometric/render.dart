@@ -113,6 +113,7 @@ class IsometricRender {
     }
 
     final screenBottom = engine.screen.bottom;
+    final screenBottom100 = engine.screen.bottom + 120;
 
     final environmentObjects = modules.isometric.environmentObjects;
     final totalEnvironment = environmentObjects.length;
@@ -358,7 +359,7 @@ class IsometricRender {
          remainingGenerated = indexGenerated < totalGenerated;
          if (remainingGenerated) {
            yGenerated = generatedObjects[indexGenerated].y;
-           if (yGenerated > screenBottom) {
+           if (yGenerated > screenBottom100) {
              remainingGenerated = false;
            }
          }
@@ -373,6 +374,7 @@ class IsometricRender {
           remainingDynamicObjects ||
           remainingStructures ||
           remainingParticles ||
+          remainingGenerated ||
           remainingBuildMode
       ) continue;
       return;
@@ -381,7 +383,7 @@ class IsometricRender {
 
 
   void renderGeneratedObject(GeneratedObject generatedObject){
-    switch(generatedObject.type){
+    switch (generatedObject.type){
       case GeneratedObjectType.Block_Grass:
         renderBlockGrass(generatedObject);
         break;

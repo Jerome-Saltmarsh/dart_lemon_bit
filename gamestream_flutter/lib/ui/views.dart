@@ -113,7 +113,7 @@ Widget buildViewConnectionNone() {
           text(version, color: colours.white618, size: FontSize.Small),
         ],
       ),
-      topRight: website.build.mainMenu(),
+      // topRight: website.build.mainMenu(),
       bottomLeft: buildMenuDebug(),
       child: buildWatchBuilderDialog(),
   );

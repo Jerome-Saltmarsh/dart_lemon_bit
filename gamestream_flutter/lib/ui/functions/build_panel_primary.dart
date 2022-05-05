@@ -9,11 +9,10 @@ import 'build_panel_tech.dart';
 import 'build_panel_resources.dart';
 import 'build_time.dart';
 
-
 Widget buildPanelPrimary() {
   return Positioned(
       top: 20,
-      right: 32,
+      right: 20,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
