@@ -112,6 +112,8 @@ class IsometricRender {
         totalParticles++;
     }
 
+    final screenLeft = _screen.left;
+    final screenRight = _screen.right;
     final screenTop = engine.screen.top;
     final screenBottom = engine.screen.bottom;
     final screenBottom100 = engine.screen.bottom + 120;
@@ -160,10 +162,8 @@ class IsometricRender {
     var yStructure = remainingStructures ? structures[0].y : 0;
     var yBuildMode = remainingBuildMode ? mouseWorldY : 0;
     var yGenerated = remainingGenerated ? generatedObjects[0].y : 0;
-    final screenLeft = _screen.left;
-    final screenRight = _screen.right;
 
-    while (remainingGenerated){
+    while (remainingGenerated) {
       final x = generatedObjects[indexGenerated].x;
       yGenerated = generatedObjects[indexGenerated].y;
 
@@ -184,6 +184,20 @@ class IsometricRender {
       } else {
         break;
       }
+    }
+
+    while (remainingDynamicObjects) {
+      yDynamicObject = dynamicObjects[indexDynamicObject].y;
+      if (yDynamicObject > screenBottom100) {
+        remainingDynamicObjects = false;
+        break;
+      }
+      if (yDynamicObject < screenTop) {
+        indexDynamicObject++;
+        remainingDynamicObjects = indexDynamicObject < totalDynamicObjects;
+        continue;
+      }
+      break;
     }
 
     var particleIsBlood = remainingParticles ? particles[0].type == ParticleType.Blood : false;
