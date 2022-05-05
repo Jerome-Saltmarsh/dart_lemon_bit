@@ -46,6 +46,13 @@ class SpriteLayer {
   static const Head_Swat = 16;
 }
 
+class RenderList {
+  List<Position> values;
+  var index = 0;
+
+  RenderList(this.values);
+}
+
 class IsometricRender {
 
   final IsometricModule state;
@@ -102,23 +109,17 @@ class IsometricRender {
   void renderSprites() {
     engine.setPaintColorWhite();
 
-    modules.isometric.sortParticles();
+    isometric.sortParticles();
 
-    var totalParticles = 0;
-    final particles = modules.isometric.particles;
-
-    for (final particle in particles){
-        if (!particle.active) continue;
-        totalParticles++;
-    }
-
+    final particles = isometric.particles;
+    final totalParticles = particles.length;
     final screenLeft = _screen.left;
     final screenRight = _screen.right;
     final screenTop = engine.screen.top;
     final screenBottom = engine.screen.bottom;
     final screenBottom100 = engine.screen.bottom + 120;
 
-    final environmentObjects = modules.isometric.environmentObjects;
+    final environmentObjects = isometric.environmentObjects;
     final totalEnvironment = environmentObjects.length;
     final zombies = game.zombies;
     final players = game.players;
@@ -164,14 +165,15 @@ class IsometricRender {
     var yGenerated = remainingGenerated ? generatedObjects[0].y : 0;
 
     while (remainingGenerated) {
-      final x = generatedObjects[indexGenerated].x;
-      yGenerated = generatedObjects[indexGenerated].y;
+      final generatedObject = generatedObjects[indexGenerated];
+      yGenerated = generatedObject.y;
 
       if (yGenerated > screenBottom100){
         remainingGenerated = false;
         break;
       }
 
+      final x = generatedObject.x;
       if (
         yGenerated < screenTop
             ||
@@ -185,6 +187,26 @@ class IsometricRender {
         break;
       }
     }
+
+    while (remainingParticles) {
+      final particle = particles[indexParticle];
+      if (!particle.active){
+        remainingParticles = false;
+        break;
+      }
+      yGenerated = particle.y;
+      if (yGenerated < screenTop){
+         indexParticle++;
+         remainingParticles = indexParticle < totalParticles;
+         continue;
+      }
+
+      if (yGenerated > screenBottom100){
+        remainingParticles = false;
+      }
+      break;
+    }
+
 
     while (remainingDynamicObjects) {
       yDynamicObject = dynamicObjects[indexDynamicObject].y;
@@ -266,13 +288,27 @@ class IsometricRender {
           renderParticle(particles[indexParticle]);
           indexParticle++;
           remainingParticles = indexParticle < totalParticles;
-          if (remainingParticles) {
-            var nextParticle = particles[indexParticle];
-            particleIsBlood = nextParticle.type == ParticleType.Blood;
-            yParticle = nextParticle.y;
-            if (yParticle > screenBottom) {
+          while (remainingParticles) {
+            final particle = particles[indexParticle];
+
+            if (!particle.active) {
               remainingParticles = false;
+              break;
             }
+
+            yParticle = particle.y;
+            if (yParticle > screenBottom100){
+              remainingParticles = false;
+              break;
+            }
+            final x = particle.x;
+            if (x < screenLeft || x > screenRight) {
+              indexParticle++;
+              remainingParticles = indexParticle < totalParticles;
+              continue;
+            }
+            particleIsBlood = particle.type == ParticleType.Blood;
+            break;
           }
           continue;
         }
@@ -286,13 +322,28 @@ class IsometricRender {
                     renderParticle(particles[indexParticle]);
                     indexParticle++;
                     remainingParticles = indexParticle < totalParticles;
-                    if (remainingParticles) {
-                      var nextParticle = particles[indexParticle];
-                      particleIsBlood = nextParticle.type == ParticleType.Blood;
-                      yParticle = nextParticle.y;
-                      if (yParticle > screenBottom) {
+
+                    while (remainingParticles) {
+                      final particle = particles[indexParticle];
+
+                      if (!particle.active) {
                         remainingParticles = false;
+                        break;
                       }
+
+                      yParticle = particle.y;
+                      if (yParticle > screenBottom100){
+                        remainingParticles = false;
+                        break;
+                      }
+                      final x = particle.x;
+                      if (x < screenLeft || x > screenRight) {
+                        indexParticle++;
+                        remainingParticles = indexParticle < totalParticles;
+                        continue;
+                      }
+                      particleIsBlood = particle.type == ParticleType.Blood;
+                      break;
                     }
                     continue;
                   }
