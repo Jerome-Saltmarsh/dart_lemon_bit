@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
+import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/ui/actions/sign_in_with_facebook.dart';
 import 'package:gamestream_flutter/ui/build.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
@@ -20,18 +21,18 @@ final closeDialogButton = button(
 
 final widgets = _Widgets();
 final buttons = _Buttons();
-
-class Icons {
-  static final Google = buildImage('images/icons/icon-google.png',
-    width: 30,
-    height: 30,
-  );
-  static final Facebook = buildImage('images/icons/icon-facebook.png',
-    width: 30,
-    height: 30,
-  );
-}
-
+//
+// class Icons {
+//   static final Google = buildImage('images/icons/icon-google.png',
+//     width: 30,
+//     height: 30,
+//   );
+//   static final Facebook = buildImage('images/icons/icon-facebook.png',
+//     width: 30,
+//     height: 30,
+//   );
+// }
+//
 
 class _Widgets {
   final Widget experienceBar = build.experienceBar();
@@ -109,17 +110,16 @@ class _Buttons {
     core.actions.login(Authentication(userId: userId, name: userId, email: "$userId@email.com"));
   });
 
-  final Widget showDialogSubscribed = button("Sub Success", website.actions.showDialogSubscriptionSuccessful);
+  final showDialogSubscribed = button("Sub Success", website.actions.showDialogSubscriptionSuccessful);
 
-
-  final Widget signInWithFacebookButton = button(
+  final signInWithFacebookButton = button(
     Container(
       width: 220,
     padding: EdgeInsets.symmetric(horizontal: 8),
     child: Row(
       mainAxisAlignment: axis.main.apart,
       children: [
-        Icons.Facebook,
+        icons.facebook,
         width16,
         text("Continue", color: Colors.white),
       ],
@@ -132,14 +132,14 @@ class _Buttons {
     borderWidth: 1,
   );
 
-  final Widget signInWithGoogleButton = button(
+  final signInWithGoogleButton = button(
     Container(
       width: 220,
     padding: EdgeInsets.symmetric(horizontal: 8),
     child: Row(
       mainAxisAlignment: axis.main.apart,
       children: [
-        Icons.Google,
+        icons.google,
         width16,
         text("Continue", color: Colors.black),
       ],
@@ -152,29 +152,7 @@ class _Buttons {
     borderWidth: 1,
   );
 
-  final Widget signInWithUsernamePassword = button(
-    Container(
-      width: 220,
-      padding: EdgeInsets.symmetric(horizontal: 8),
-      child: Row(
-        mainAxisAlignment: axis.main.apart,
-        children: [
-          Icons.Facebook,
-          width16,
-          text("Enter Username Password", color: Colors.white),
-        ],
-      ),
-    ), () async {
-
-  },
-    fillColor: colours.facebook,
-    fillColorMouseOver: colours.facebook,
-    borderColorMouseOver: none,
-    borderColor: none,
-    borderWidth: 1,
-  );
-
-  final Widget account = button(_iconSettings, (){
+  final account = button(_iconSettings, (){
     if (website.state.dialog.value != WebsiteDialog.Account){
       website.state.dialog.value = WebsiteDialog.Account;
     }else{

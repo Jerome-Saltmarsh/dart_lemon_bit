@@ -1,14 +1,10 @@
 import 'package:flutter/cupertino.dart';
 
-// Instance
-final resources = _Resources();
-
-// Classes
-class _Resources {
-  final icons = _Icons();
-}
+final icons = _Icons();
 
 class _Icons {
+  final google = buildIcon('google');
+  final facebook = buildIcon('google');
   final sword = buildIcon("sword");
   final shield = buildIcon("shield");
   final unknown = buildIcon("unknown");

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/resources.dart';
+import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/ui/functions/build_row_tech_type.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -39,21 +39,21 @@ Widget buildPanelHighlightedStructureType(){
                 if (cost.wood > 0)
                   Column(
                     children: [
-                      resources.icons.resources.wood,
+                      icons.resources.wood,
                       text(cost.wood),
                     ],
                   ),
                 if (cost.stone > 0)
                   Column(
                     children: [
-                      resources.icons.resources.stone,
+                      icons.resources.stone,
                       text(cost.stone),
                     ],
                   ),
                 if (cost.gold > 0)
                   Column(
                     children: [
-                      resources.icons.resources.gold,
+                      icons.resources.gold,
                       text(cost.gold),
                     ],
                   ),

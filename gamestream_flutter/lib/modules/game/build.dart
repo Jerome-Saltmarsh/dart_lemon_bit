@@ -10,7 +10,7 @@ import 'package:gamestream_flutter/modules/game/enums.dart';
 import 'package:gamestream_flutter/modules/game/update.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/module.dart';
-import 'package:gamestream_flutter/resources.dart';
+import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/ui/functions/build_layout.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/functions/build_debug_panel.dart';
@@ -177,16 +177,16 @@ class GameBuild {
   Widget mapStoreTabToIcon(StoreTab value) {
     switch (value) {
       case StoreTab.Weapons:
-        return resources.icons.sword;
+        return icons.sword;
       case StoreTab.Armor:
-        return resources.icons.shield;
+        return icons.shield;
       case StoreTab.Items:
-        return resources.icons.books.grey;
+        return icons.books.grey;
     }
   }
 
   Widget getSlotTypeImage(int value){
-    return _slotTypeImages[value] ?? resources.icons.unknown;
+    return _slotTypeImages[value] ?? icons.unknown;
   }
 
   Widget mousePosition() {
@@ -267,50 +267,50 @@ class GameBuild {
 }
 
 final _slotTypeImages = <int, Widget> {
-  SlotType.Empty: resources.icons.empty,
-  SlotType.Sword_Short : resources.icons.sword,
-  SlotType.Sword_Wooden : resources.icons.swords.wooden,
-  SlotType.Golden_Necklace : resources.icons.trinkets.goldenNecklace,
-  SlotType.Sword_Long : resources.icons.swords.iron,
-  SlotType.Bow_Wooden : resources.icons.bows.wooden,
-  SlotType.Bow_Green : resources.icons.bows.green,
-  SlotType.Bow_Gold : resources.icons.bows.gold,
-  SlotType.Staff_Wooden : resources.icons.staffs.wooden,
-  SlotType.Staff_Blue : resources.icons.staffs.blue,
-  SlotType.Staff_Golden : resources.icons.staffs.golden,
-  SlotType.Spell_Tome_Fireball : resources.icons.books.red,
-  SlotType.Spell_Tome_Ice_Ring : resources.icons.books.blue,
-  SlotType.Spell_Tome_Split_Arrow : resources.icons.books.blue,
-  SlotType.Body_Blue : resources.icons.armour.standard,
-  SlotType.Steel_Helmet : resources.icons.heads.steel,
-  SlotType.Magic_Hat : resources.icons.heads.magic,
-  SlotType.Rogue_Hood : resources.icons.heads.rogue,
-  SlotType.Potion_Red : resources.icons.potions.red,
-  SlotType.Potion_Blue : resources.icons.potions.blue,
-  SlotType.Armour_Padded : resources.icons.armour.padded,
-  SlotType.Magic_Robes : resources.icons.armour.magic,
-  SlotType.Handgun : resources.icons.firearms.handgun,
-  SlotType.Shotgun : resources.icons.firearms.shotgun,
-  SlotType.Pickaxe : resources.icons.swords.pickaxe,
+  SlotType.Empty: icons.empty,
+  SlotType.Sword_Short : icons.sword,
+  SlotType.Sword_Wooden : icons.swords.wooden,
+  SlotType.Golden_Necklace : icons.trinkets.goldenNecklace,
+  SlotType.Sword_Long : icons.swords.iron,
+  SlotType.Bow_Wooden : icons.bows.wooden,
+  SlotType.Bow_Green : icons.bows.green,
+  SlotType.Bow_Gold : icons.bows.gold,
+  SlotType.Staff_Wooden : icons.staffs.wooden,
+  SlotType.Staff_Blue : icons.staffs.blue,
+  SlotType.Staff_Golden : icons.staffs.golden,
+  SlotType.Spell_Tome_Fireball : icons.books.red,
+  SlotType.Spell_Tome_Ice_Ring : icons.books.blue,
+  SlotType.Spell_Tome_Split_Arrow : icons.books.blue,
+  SlotType.Body_Blue : icons.armour.standard,
+  SlotType.Steel_Helmet : icons.heads.steel,
+  SlotType.Magic_Hat : icons.heads.magic,
+  SlotType.Rogue_Hood : icons.heads.rogue,
+  SlotType.Potion_Red : icons.potions.red,
+  SlotType.Potion_Blue : icons.potions.blue,
+  SlotType.Armour_Padded : icons.armour.padded,
+  SlotType.Magic_Robes : icons.armour.magic,
+  SlotType.Handgun : icons.firearms.handgun,
+  SlotType.Shotgun : icons.firearms.shotgun,
+  SlotType.Pickaxe : icons.swords.pickaxe,
 };
 
 final techTypeIcons = <int, Widget> {
-  TechType.Unarmed: resources.icons.unknown,
-  TechType.Sword: resources.icons.swords.wooden,
-  TechType.Bow: resources.icons.bows.wooden,
-  TechType.Pickaxe: resources.icons.swords.pickaxe,
-  TechType.Axe: resources.icons.swords.axe,
-  TechType.Hammer: resources.icons.swords.hammer,
-  TechType.Bag: resources.icons.bag,
+  TechType.Unarmed: icons.unknown,
+  TechType.Sword: icons.swords.wooden,
+  TechType.Bow: icons.bows.wooden,
+  TechType.Pickaxe: icons.swords.pickaxe,
+  TechType.Axe: icons.swords.axe,
+  TechType.Hammer: icons.swords.hammer,
+  TechType.Bag: icons.bag,
 };
 
 final techTypeIconsGray = <int, Widget> {
-  TechType.Unarmed: resources.icons.unknown,
-  TechType.Sword: resources.icons.swords.woodenGray,
-  TechType.Bow: resources.icons.bows.woodenGray,
-  TechType.Pickaxe: resources.icons.swords.pickaxeGray,
-  TechType.Axe: resources.icons.swords.axeGray,
-  TechType.Hammer: resources.icons.swords.hammerGray,
-  TechType.Bag: resources.icons.bagGray,
+  TechType.Unarmed: icons.unknown,
+  TechType.Sword: icons.swords.woodenGray,
+  TechType.Bow: icons.bows.woodenGray,
+  TechType.Pickaxe: icons.swords.pickaxeGray,
+  TechType.Axe: icons.swords.axeGray,
+  TechType.Hammer: icons.swords.hammerGray,
+  TechType.Bag: icons.bagGray,
 };
 

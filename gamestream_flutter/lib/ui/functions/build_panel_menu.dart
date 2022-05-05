@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/resources.dart';
+import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel.dart';
 
 Widget buildPanelMenu() {
@@ -17,11 +17,11 @@ Widget buildPanelMenu() {
             child: WatchBuilder(engine.fullScreen, (bool fullscreen){
               return fullscreen ?
                 Tooltip(
-                    child: resources.icons.symbols.fullscreenEnter,
+                    child: icons.symbols.fullscreenEnter,
                     message: 'Exit Fullscreen'
                 ) :
                 Tooltip(
-                    child: resources.icons.symbols.fullscreenExit,
+                    child: icons.symbols.fullscreenExit,
                     message: 'Enter Fullscreen'
                 );
             }),
@@ -31,17 +31,17 @@ Widget buildPanelMenu() {
             child: WatchBuilder(audio.soundEnabled, (bool soundEnabled) {
               return soundEnabled
                   ? Tooltip(
-                      child: resources.icons.symbols.soundEnabled,
+                      child: icons.symbols.soundEnabled,
                       message: 'Disable Sound')
                   : Tooltip(
-                      child: resources.icons.symbols.soundDisabled,
+                      child: icons.symbols.soundDisabled,
                       message: 'Enable Sound');
       }),
           ),
           onPressed(
             callback: core.actions.exitGame,
             child: Tooltip(
-                child: resources.icons.symbols.home,
+                child: icons.symbols.home,
                 message: 'EXIT'
             ),
           ),

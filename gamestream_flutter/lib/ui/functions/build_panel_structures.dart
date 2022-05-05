@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/resources.dart';
+import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/styles.dart';
 
 Widget buildPanelStructures() {
@@ -31,7 +31,7 @@ Widget buildPanelStructures() {
               child: onPressed(
                 callback: modules.game.enterBuildModeTower,
                 child: Container(
-                  child: resources.icons.structures.tower,
+                  child: icons.structures.tower,
                   width: 64,
                   height: 64,
                   alignment: Alignment.center,
@@ -55,7 +55,7 @@ Widget buildPanelStructures() {
               child: onPressed(
                 callback: modules.game.enterBuildModePalisade,
                 child: Container(
-                  child: resources.icons.structures.palisade,
+                  child: icons.structures.palisade,
                   width: 48,
                   height: 48,
                   alignment: Alignment.center,
@@ -78,7 +78,7 @@ Widget buildPanelStructures() {
               child: onPressed(
                 callback: modules.game.enterBuildModeTorch,
                 child: Container(
-                  child: resources.icons.structures.torch,
+                  child: icons.structures.torch,
                   width: 48,
                   height: 48,
                   alignment: Alignment.center,

@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/game/build.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/resources.dart';
+import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:lemon_watch/watch.dart';
@@ -112,7 +112,7 @@ Widget buildRowTechType(int type, Watch<int> levelWatch) {
                         //   border: Border.all(color: canAfford ? colours.green : colours.green.withOpacity(0.5), width: 2.0, style: BorderStyle.solid),
                         //   borderRadius: borderRadius4,
                         // ),
-                        child: canAfford ? resources.icons.symbols.plus : resources.icons.symbols.plusTransparent),
+                        child: canAfford ? icons.symbols.plus : icons.symbols.plusTransparent),
                     callback: canAfford ? () => Server.upgrade(type) : null,
                   );
                 }),

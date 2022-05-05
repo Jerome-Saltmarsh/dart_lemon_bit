@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/resources.dart';
+import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/ui/functions/styles.dart';
 
 
@@ -20,7 +20,7 @@ Widget buildPanelResources() {
                 width: 48,
                 height: 48,
                 alignment: Alignment.center,
-                child: resources.icons.resources.wood,
+                child: icons.resources.wood,
               ),
               Container(
                   alignment: Alignment.center,
@@ -37,7 +37,7 @@ Widget buildPanelResources() {
               width: 48,
               height: 48,
               alignment: Alignment.center,
-              child: resources.icons.resources.stone,
+              child: icons.resources.stone,
             ),
             Container(
                 alignment: Alignment.center,
@@ -53,7 +53,7 @@ Widget buildPanelResources() {
               width: 48,
               height: 48,
               alignment: Alignment.center,
-              child: resources.icons.resources.gold,
+              child: icons.resources.gold,
             ),
             Container(
                 alignment: Alignment.center,
