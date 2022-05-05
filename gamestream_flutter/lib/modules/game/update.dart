@@ -25,7 +25,6 @@ class GameUpdate {
     framesSinceUpdateReceived.value++;
     readPlayerInput();
     isometric.updateParticles();
-    state.framesSinceOrbAcquired++;
     updateMenuVisibility();
     sendRequestUpdatePlayer();
   }

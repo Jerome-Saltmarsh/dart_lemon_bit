@@ -7,7 +7,6 @@ import 'package:bleed_common/CharacterType.dart';
 import 'package:bleed_common/GameError.dart';
 import 'package:bleed_common/GameEventType.dart';
 import 'package:bleed_common/GameType.dart';
-import 'package:bleed_common/OrbType.dart';
 import 'package:bleed_common/PlayerEvent.dart';
 import 'package:bleed_common/SlotType.dart';
 import 'package:bleed_common/StructureType.dart';
@@ -158,33 +157,6 @@ class GameEvents {
 
   void onPlayerHelmChanged(int value){
     audio.changeCloths(screenCenterWorldX, screenCenterWorldY);
-  }
-
-  void onEmeraldsChanged(int current, int previous){
-    // print('onEmeraldsChanged(current: $current, previous: $previous)');
-    if (current > previous) {
-      state.framesSinceOrbAcquired = 0;
-      state.lastOrbAcquired = OrbType.Emerald;
-      audio.coins24(screenCenterWorldX, screenCenterWorldY);
-    }
-  }
-
-  void onRubiesChanged(int current, int previous){
-    // print('onRubiesChanged(current: $current)');
-    if (current > previous) {
-      state.framesSinceOrbAcquired = 0;
-      state.lastOrbAcquired = OrbType.Ruby;
-      audio.coins24(screenCenterWorldX, screenCenterWorldY);
-    }
-  }
-
-  void onTopazChanged(int current, int previous){
-    // print('onTopazChanged(current: $current)');
-    if (current > previous) {
-      state.framesSinceOrbAcquired = 0;
-      state.lastOrbAcquired = OrbType.Topaz;
-      audio.coins24(screenCenterWorldX, screenCenterWorldY);
-    }
   }
 
   void onTextModeChanged(bool textMode) {

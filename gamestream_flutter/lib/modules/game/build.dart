@@ -201,13 +201,6 @@ class GameBuild {
     });
   }
 
-
-  Widget buildFramesSmoothed(){
-    return WatchBuilder(state.framesSmoothed, (int frames){
-      return text("Frames Smoothed: $frames");
-    });
-  }
-
   Widget buildTotalEvents(){
     return WatchBuilder(totalEvents, (int frames){
       return text("Events: $frames");

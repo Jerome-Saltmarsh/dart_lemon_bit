@@ -91,45 +91,6 @@ class GameRender {
     }
   }
 
-  void collectedOrbImage() {
-     const totalFrames = 60;
-    final totalFramesHalf = ((totalFrames) * 0.5).toInt();
-    final framesSinceOrbAcquired = state.framesSinceOrbAcquired;
-
-    if (framesSinceOrbAcquired < totalFrames) {
-      double y = 0;
-      final max = 30.0;
-      if (framesSinceOrbAcquired < totalFramesHalf){
-        y = framesSinceOrbAcquired / totalFramesHalf * max;
-      } else {
-        y = (totalFrames - framesSinceOrbAcquired) / totalFramesHalf * max;
-      }
-
-      engine.render(
-        dstX: state.player.x,
-        dstY: state.player.y - y - 30,
-        srcX: state.lastOrbAcquired == OrbType.Emerald ? atlas.orbEmerald.x
-              :
-              state.lastOrbAcquired == OrbType.Ruby ? atlas.orbRuby.x
-              :
-              atlas.orbTopaz.x,
-        srcY: atlas.orbTopaz.y,
-        srcSize: 24,
-        scale: 0.7
-      );
-    }
-  }
-
-  // void weaponRangeCircle() {
-  //   engine.draw.drawCircleOutline(
-  //       radius: SlotType.getRange(state.player.slots.weapon.type.value).toDouble(),
-  //       x: state.player.x,
-  //       y: state.player.y,
-  //       color: colours.white80,
-  //       sides: 10
-  //   );
-  // }
-
   void attackTargetCircle() {
     final attackTarget = state.player.attackTarget;
     final x = attackTarget.x;

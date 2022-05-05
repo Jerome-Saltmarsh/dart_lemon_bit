@@ -11,7 +11,6 @@ import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
-import 'package:gamestream_flutter/functions.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
@@ -143,6 +142,20 @@ class IsometricModule {
       compare: compareParticles,
     );
   }
+
+  int compareParticles(Particle a, Particle b) {
+    if (!a.active) {
+      if (!b.active){
+        return 0;
+      }
+      return 1;
+    }
+    if (!b.active) {
+      return -1;
+    }
+    return a.y > b.y ? 1 : -1;
+  }
+
 
   int getShade(int row, int column){
     if (row < 0) return Pitch_Black;

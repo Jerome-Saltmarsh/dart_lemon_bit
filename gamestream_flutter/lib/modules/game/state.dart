@@ -22,17 +22,11 @@ class GameState {
   final highlightedTechTypeUpgrade = Watch<int?>(null);
   final panelTypeKey = <int, GlobalKey> {};
   final canBuild = Watch(false);
-
   final cameraMode = Watch(CameraMode.Chase);
-  final framesSmoothed = Watch(0);
-
   final playerTextStyle = TextStyle(color: Colors.white);
-  var panningCamera = false;
-  var framesSinceOrbAcquired = 999;
-  var lastOrbAcquired = OrbType.Emerald;
-
   final storeColumnKey = GlobalKey();
   final keyPanelStructure = GlobalKey();
+  var panningCamera = false;
 
   GameState(){
     player.equipped.onChanged((equipped) {
