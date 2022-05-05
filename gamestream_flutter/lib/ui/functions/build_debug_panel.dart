@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/isometric/utilities.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/ui/functions/build_tech_type_row.dart';
+import 'package:gamestream_flutter/ui/functions/build_row_tech_type.dart';
 import 'package:gamestream_flutter/ui/functions/build_time.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';

@@ -29,9 +29,15 @@ class _Icons {
   final symbols = _IconsSymbols();
 }
 
+
 class _IconsSymbols {
-  final plus = buildIcon("plus", width: 32, height: 32);
-  final plusTransparent = buildIcon("plus-transparent", width: 32, height: 32);
+  final plus = buildIcon("plus");
+  final plusTransparent = buildIcon("plus-transparent");
+  final fullscreenEnter = buildIcon('fullscreen-enter');
+  final fullscreenExit = buildIcon('fullscreen-exit');
+  final soundEnabled = buildIcon('sound-enabled');
+  final soundDisabled = buildIcon('sound-disabled');
+  final home = buildIcon('home');
 }
 
 class _IconsResources {
@@ -105,8 +111,8 @@ class _BowIcons {
 
 // Functions
 Widget buildIcon(String fileName, {
-  double? width,
-  double? height,
+  double width = 32,
+  double height = 32,
   double borderWidth = 1,
   Color? color,
   Color? borderColor,

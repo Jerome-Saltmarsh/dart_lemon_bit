@@ -300,7 +300,6 @@ class CoreActions {
   }
 
   void exitGame(){
-    print("logic.exit()");
     game.type.value = GameType.None;
     clearState();
     webSocket.disconnect();

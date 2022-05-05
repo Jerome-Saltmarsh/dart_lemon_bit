@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/ui/functions/build_cost.dart';
-import 'package:gamestream_flutter/ui/functions/build_tech_type_row.dart';
+import 'package:gamestream_flutter/ui/functions/build_row_tech_type.dart';
 import 'package:gamestream_flutter/ui/functions/styles.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -25,8 +25,8 @@ Widget buildPanelHighlightedTechTypeUpgrade(){
       right: 238,
       top: renderBox.localToGlobal(Offset.zero).dy,
       child: Container(
-        width: 200,
-        decoration: boxStandard,
+        width: panelWidth,
+        decoration: panelDecoration,
         padding: padding6,
         child: buildCost(cost),
       ),

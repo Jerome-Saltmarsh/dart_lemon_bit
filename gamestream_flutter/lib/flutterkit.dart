@@ -83,17 +83,17 @@ Widget border({
   );
 }
 
-BoxDecoration boxDecoration({
-  double borderWidth = 2.0,
-  Color borderColor = Colors.white,
-  double borderRadius = 4,
-  Color fillColor = Colors.white,
-}) {
-  return BoxDecoration(
-      border: Border.all(color: borderColor, width: borderWidth),
-      borderRadius: borderRadius4,
-      color: fillColor);
-}
+// BoxDecoration panelDecoration({
+//   double borderWidth = 2.0,
+//   Color borderColor = Colors.white,
+//   double borderRadius = 4,
+//   Color fillColor = Colors.white,
+// }) {
+//   return BoxDecoration(
+//       border: Border.all(color: borderColor, width: borderWidth),
+//       borderRadius: borderRadius4,
+//       color: fillColor);
+// }
 
 Widget button(dynamic value, Function onPressed, {
   double? width,

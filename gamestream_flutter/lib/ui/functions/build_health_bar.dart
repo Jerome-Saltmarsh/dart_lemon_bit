@@ -12,38 +12,42 @@ Widget buildHealthBar() {
       goldenRatio_0381 *
       goldenRatio_0381;
 
-  return WatchBuilder(player.health, (double health) {
 
-    final maxHealth = player.maxHealth;
-    if (maxHealth <= 0) return empty;
+  return Tooltip(
+    message: 'Health',
+    child: WatchBuilder(player.health, (double health) {
 
-    final percentage = health / maxHealth;
-    return Container(
-      width: width,
-      height: height,
-      alignment: Alignment.centerLeft,
-      child: Stack(
+      final maxHealth = player.maxHealth;
+      if (maxHealth <= 0) return empty;
+
+      final percentage = health / maxHealth;
+      return Container(
+        width: width,
+        height: height,
         alignment: Alignment.centerLeft,
-        children: [
-          Container(
-            color: colours.redDarkest,
-            width: width,
-            height: height,
-          ),
-          Container(
-            color: colours.red,
-            width: width * percentage,
-            height: height,
-          ),
-          Container(
-            color: Colors.transparent,
-            width: width,
-            height: height,
-            alignment: Alignment.center,
-            child: text('${health.toInt()} | ${player.maxHealth}'),
-          ),
-        ],
-      ),
-    );
-  });
+        child: Stack(
+          alignment: Alignment.centerLeft,
+          children: [
+            Container(
+              color: colours.redDarkest,
+              width: width,
+              height: height,
+            ),
+            Container(
+              color: colours.red,
+              width: width * percentage,
+              height: height,
+            ),
+            Container(
+              color: Colors.transparent,
+              width: width,
+              height: height,
+              alignment: Alignment.center,
+              child: text('${health.toInt()} | ${player.maxHealth}'),
+            ),
+          ],
+        ),
+      );
+    }),
+  );
 }

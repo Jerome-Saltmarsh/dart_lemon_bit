@@ -129,7 +129,7 @@ class GameBuild {
                 })
             ),
             buildTextBox(),
-            buildTopRight(),
+            // buildTopRight(),
             if (!alive)
             respawnButton(),
             buildPanelHighlightedStructureType(),
@@ -237,7 +237,7 @@ class GameBuild {
       return button(text("Sound", decoration: enabled
           ? TextDecoration.none
           : TextDecoration.lineThrough
-      ), audio.toggleEnabledSound);
+      ), audio.toggleSoundEnabled);
     });
   }
 

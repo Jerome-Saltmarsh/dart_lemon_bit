@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/styles.dart';
 
-import 'build_tech_type_row.dart';
+import 'build_row_tech_type.dart';
 import 'player.dart';
 
 Widget buildPanelTech() {
@@ -17,12 +17,12 @@ Widget buildPanelTech() {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        buildTechTypeRow(TechType.Pickaxe, player.levelPickaxe),
-        buildTechTypeRow(TechType.Sword, player.levelSword),
-        buildTechTypeRow(TechType.Bow, player.levelBow),
-        buildTechTypeRow(TechType.Axe, player.levelAxe),
-        buildTechTypeRow(TechType.Hammer, player.levelHammer),
-        buildTechTypeRow(TechType.Bag, player.levelBag),
+        buildRowTechType(TechType.Pickaxe, player.levelPickaxe),
+        buildRowTechType(TechType.Sword, player.levelSword),
+        buildRowTechType(TechType.Bow, player.levelBow),
+        buildRowTechType(TechType.Axe, player.levelAxe),
+        buildRowTechType(TechType.Hammer, player.levelHammer),
+        buildRowTechType(TechType.Bag, player.levelBag),
       ],
     ),
   );

@@ -15,7 +15,7 @@ import 'player.dart';
 
 final state = modules.game.state;
 
-Widget buildTechTypeRow(int type, Watch<int> levelWatch) {
+Widget buildRowTechType(int type, Watch<int> levelWatch) {
   final key = GlobalKey();
   state.panelTypeKey[type] = key;
 

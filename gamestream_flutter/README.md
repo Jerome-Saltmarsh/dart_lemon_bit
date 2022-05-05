@@ -107,7 +107,7 @@ RELEASE [11 May - 2022]
 [ ] Construct buildings within build radius
 [ ] Preload audios
 [ ] Fix Terrain Culling
-[ ] Polish Menu
+[x] Polish Menu
 [x] Add Fifth cost to tech types
 [x] Spawn blood forward on hit
 [x] Fix Blood Particles

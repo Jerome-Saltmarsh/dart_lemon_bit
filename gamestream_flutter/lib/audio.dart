@@ -68,7 +68,7 @@ class _Audio {
     _musicPlayer.stop();
   }
 
-  void toggleEnabledSound(){
+  void toggleSoundEnabled(){
     soundEnabled.value = !soundEnabled.value;
   }
 

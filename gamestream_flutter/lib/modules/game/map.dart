@@ -18,7 +18,7 @@ class GameMap {
         actions.playerPerform();
       },
       state.keyMap.speak: actions.toggleMessageBox,
-      state.keyMap.toggleAudio: audio.toggleEnabledSound,
+      state.keyMap.toggleAudio: audio.toggleSoundEnabled,
       state.keyMap.hourForwards: actions.skipHour,
       state.keyMap.hourBackwards: actions.reverseHour,
       state.keyMap.teleport: actions.teleportToMouse,

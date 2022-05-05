@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/resources.dart';
-import 'package:gamestream_flutter/styles.dart';
+import 'package:gamestream_flutter/ui/functions/styles.dart';
 
-Widget buildResourcePanel() {
+
+Widget buildPanelResources() {
   return Container(
-    width: 200,
-    decoration: BoxDecoration(
-      color: colours.brownDark,
-      borderRadius: borderRadius4,
-    ),
+    width: panelWidth,
+    decoration: panelDecoration,
+    padding: panelPadding,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [

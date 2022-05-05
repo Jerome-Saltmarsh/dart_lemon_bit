@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/ui/functions/build_health_bar.dart';
+import 'package:gamestream_flutter/ui/functions/build_panel_menu.dart';
 
+import 'build_panel.dart';
 import 'build_panel_structures.dart';
 import 'build_panel_tech.dart';
-import 'build_resource_panel.dart';
+import 'build_panel_resources.dart';
 import 'build_time.dart';
 
 
@@ -15,11 +17,13 @@ Widget buildPanelPrimary() {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildTime(),
+          buildPanelMenu(),
+          height6,
+          buildPanel(child: buildTime()),
           height6,
           buildHealthBar(),
           height6,
-          buildResourcePanel(),
+          buildPanelResources(),
           height6,
           buildPanelTech(),
           height6,
