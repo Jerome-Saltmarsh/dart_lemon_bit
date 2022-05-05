@@ -50,9 +50,9 @@ var _previousPlayerScreenY3 = 0.0;
 class ServerResponseReader extends ByteReader {
 
   void parse(List<int> values) {
-    if (modules.game.state.debugPanelVisible.value){
-      updateSync();
-    }
+    // if (modules.game.state.debugPanelVisible.value){
+    //   updateSync();
+    // }
     framesSinceUpdateReceived.value = 0;
     index = 0;
     bufferSize.value = values.length;
@@ -116,6 +116,7 @@ class ServerResponseReader extends ByteReader {
           }
           game.totalCollectables = total;
           break;
+          
         case ServerResponse.Structures:
           final structures = isometric.structures;
           var total = 0;
@@ -188,10 +189,12 @@ class ServerResponseReader extends ByteReader {
           }
           modules.isometric.targetsTotal = i;
           break;
+
         case ServerResponse.Game_Time:
           _hours.value = readByte();
           _minutes.value = readByte();
           break;
+
         case ServerResponse.Player:
           _player.x = readDouble();
           _player.y = readDouble();

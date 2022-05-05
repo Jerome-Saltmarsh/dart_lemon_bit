@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/toString.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/style.dart';
@@ -32,7 +31,7 @@ class WebsiteBuild {
     return watchAccount((Account? account){
       if (account == null) {
         return Column(
-          crossAxisAlignment: axis.cross.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             buttons.signInWithGoogleButton,
             height8,
@@ -42,8 +41,8 @@ class WebsiteBuild {
       }
 
       return Row(
-        crossAxisAlignment: axis.cross.start,
-        mainAxisAlignment: axis.main.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           mouseOver(builder: (BuildContext context, bool mouseOver) {
             return mouseOver ? Column(

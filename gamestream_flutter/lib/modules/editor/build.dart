@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/toString.dart';
-import 'package:gamestream_flutter/ui/functions/build_layout.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
+import 'package:gamestream_flutter/ui/functions/build_layout.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:golden_ratio/constants.dart';
@@ -220,7 +220,7 @@ class EditorBuild {
           fillColor: active ? colours.purpleDarkest : Colors.transparent,
         );
       }).toList(),
-      mainAxisAlignment: axis.main.even,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     );
   }
 
@@ -300,7 +300,7 @@ class EditorBuild {
     return Builder(builder: (BuildContext context) {
       return WatchBuilder(state.tab, (ToolTab tab) {
         return Column(
-          crossAxisAlignment: axis.cross.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildTabs(tab),
             height8,
@@ -308,7 +308,7 @@ class EditorBuild {
               height: engine.screen.height - 100,
               child: SingleChildScrollView(
                 child: Column(
-                  crossAxisAlignment: axis.cross.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: _toolTab(tab),
                 ),
               ),
@@ -341,7 +341,7 @@ class EditorBuild {
           width: style.dialogWidthMedium,
           child: SingleChildScrollView(
             child: Column(
-                crossAxisAlignment: axis.cross.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: mapNames.map((name){
                   return button(name, () async {
                     editor.actions.loadMap(name);

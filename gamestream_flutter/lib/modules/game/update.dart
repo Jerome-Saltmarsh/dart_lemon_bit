@@ -1,15 +1,14 @@
 import 'package:bleed_common/Direction.dart';
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/server_response_reader.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
+import 'package:gamestream_flutter/server_response_reader.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'state.dart';
 
 final _controller = modules.game.state.characterController;
-final _menuVisible = modules.hud.menuVisible;
 final _gameActions = modules.game.actions;
 final _mouseLeftDown = engine.mouseLeftDown;
 final totalUpdates = Watch(0);
@@ -25,17 +24,7 @@ class GameUpdate {
     framesSinceUpdateReceived.value++;
     readPlayerInput();
     isometric.updateParticles();
-    updateMenuVisibility();
     sendRequestUpdatePlayer();
-  }
-
-  void updateMenuVisibility() {
-    final mousePosition = engine.mousePosition;
-    _menuVisible.value =
-        mousePosition.y < 200
-            &&
-            mousePosition.x > engine.screen.width - 500
-    ;
   }
 
   void readPlayerInput() {

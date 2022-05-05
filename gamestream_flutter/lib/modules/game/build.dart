@@ -1,19 +1,19 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/audio.dart';
-import 'package:gamestream_flutter/server_response_reader.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/game/enums.dart';
 import 'package:gamestream_flutter/modules/game/update.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/module.dart';
-import 'package:gamestream_flutter/icons.dart';
-import 'package:gamestream_flutter/ui/functions/build_layout.dart';
+import 'package:gamestream_flutter/server_response_reader.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/functions/build_debug_panel.dart';
+import 'package:gamestream_flutter/ui/functions/build_layout.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel_highlighted_structure_type.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel_highlighted_tech_type_upgrade.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel_primary.dart';
@@ -137,29 +137,6 @@ class GameBuild {
             buildPanelPrimary(),
           ]);
     });
-  }
-
-  Widget buildTopRight(){
-    final menu = Row(
-      children: [
-        buildButtonFullScreen(),
-        width8,
-        buildButtonToggleCameraMode(),
-        width8,
-        buildButtonSkipTrack(),
-        width8,
-        buildToggleEnabledSound(),
-        width8,
-        buildToggleEnabledMusic(),
-        width8,
-        buildButtonExit(),
-      ],
-    );
-    return Positioned(
-      right: 8.0,
-      top: 8.0,
-      child: boolBuilder(modules.hud.menuVisible, widgetTrue: menu, widgetFalse: empty),
-    );
   }
 
   Widget buildButtonExit() => button("Exit", core.actions.disconnect);

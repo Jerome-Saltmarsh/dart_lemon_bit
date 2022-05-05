@@ -14,7 +14,6 @@ import 'package:golden_ratio/constants.dart';
 
 import '../flutterkit.dart';
 
-
 Widget buildDialogAccount(){
 
   return watchAccount((account){
@@ -24,7 +23,7 @@ Widget buildDialogAccount(){
         bottomRight: button("Close", website.actions.showDialogGames),
         child: dialog(
             child: Column(
-              crossAxisAlignment: axis.cross.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 border(child: text("ACCOUNT")),
                 height16,
@@ -42,7 +41,7 @@ Widget buildDialogAccount(){
         bottomRight: margin(child: widgets.buttonClose, bottom: 32),
         child:
     Column(
-      crossAxisAlignment: axis.cross.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         height32,
         text("MY ACCOUNT",
@@ -57,7 +56,7 @@ Widget buildDialogAccount(){
             child: _buildRow(
                 "Public Name",
                 Row(
-                  mainAxisAlignment: axis.main.apart,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     // buildIconEdit(),
                     text(account.publicName,
@@ -82,10 +81,10 @@ Widget _buildSubscriptionPanel(Account account){
   final subscriptionEndDate = account.subscriptionEndDate;
   return panel(
       child: Column(
-    crossAxisAlignment: axis.cross.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Row(
-        mainAxisAlignment: axis.main.apart,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           text("PREMIUM", bold: true, color: colours.white80),
           if (!account.subscriptionActive) widgets.textReactivateSubscription,
@@ -138,7 +137,7 @@ Color getSubscriptionStatusColor(SubscriptionStatus value){
 
 Widget _buildRow(String title, dynamic value){
   return Row(
-    mainAxisAlignment: axis.main.apart,
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       text(title, color: colours.white85),
       Container(
@@ -262,14 +261,14 @@ Widget buildDialogWelcome2(){
       width: style.dialogWidthMedium,
       height: style.dialogHeightSmall,
       child: Column(
-        crossAxisAlignment: axis.cross.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
               width: double.infinity,
               color: colours.white05,
               padding: padding16,
               child: Column(
-                crossAxisAlignment: axis.cross.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   text("Many of our games can be played for free.", color: colours.white80),
                   height16,

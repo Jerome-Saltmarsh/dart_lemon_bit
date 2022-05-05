@@ -21,7 +21,6 @@ import 'compile.dart';
 import 'enums.dart';
 import 'scope.dart';
 
-
 class EditorActions with EditorScope {
 
   final EditorCompile compile;

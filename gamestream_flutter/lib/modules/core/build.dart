@@ -7,7 +7,6 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/toString.dart';
 import 'package:gamestream_flutter/ui/functions/build_layout.dart';
 import 'package:gamestream_flutter/ui/views.dart';
@@ -60,7 +59,7 @@ class CoreBuild {
     return buildLayout(
         child: fullScreen(
           child: Row(
-            mainAxisAlignment: axis.main.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AnimatedTextKit(repeatForever: true, animatedTexts: [
                 RotateAnimatedText(enumString(operationStatus),
@@ -85,7 +84,7 @@ class CoreBuild {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Column(
-              mainAxisAlignment: axis.main.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 text("${core.state.title} ${(value * 100).toInt()}%", color: Colors.white),
                 height8,

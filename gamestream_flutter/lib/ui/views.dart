@@ -15,8 +15,8 @@ import 'package:gamestream_flutter/modules/website/enums.dart';
 import 'package:gamestream_flutter/servers.dart';
 import 'package:gamestream_flutter/shared_preferences.dart';
 import 'package:gamestream_flutter/toString.dart';
-import 'package:gamestream_flutter/ui/functions/build_layout.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
+import 'package:gamestream_flutter/ui/functions/build_layout.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -47,9 +47,8 @@ Widget buildDialogLogin() {
             borderColor: colours.none,
           ),
           child: Column(
-            crossAxisAlignment: axis.cross.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // text("Sign in", weight: bold, size: 25),
               height32,
               buttons.signInWithGoogleButton,
               height16,
@@ -132,7 +131,7 @@ Positioned buildLoginSuggestionBox() {
             width: 230.0 * goldenRatio_1618,
             height: 230,
             child: Column(
-              crossAxisAlignment: axis.cross.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 height16,
                 buttons.signInWithGoogleButton,
@@ -210,7 +209,7 @@ Widget buildDialogChangeRegion() {
       child: buildLayout(
           bottomRight: widgets.buttonClose,
           child: Column(
-            crossAxisAlignment: axis.cross.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ...selectableRegions.map((region) {
                 return button(enumString(region), () {
@@ -229,16 +228,16 @@ Widget buildDialogChangeRegion() {
           )));
 }
 
+
 Widget? buildMenuDebug() {
   return dev(onHover((bool hovering){
       return Container(
         width: style.buttonWidth,
         child: Column(
-          crossAxisAlignment: axis.cross.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (hovering) ...[
-              widgets.theme,
-              button("Font Jetbrains", (){
+              button("Font Jetbrains", () {
                 engine.themeData.value = themes.jetbrains;
               }, width: 200, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
               buttons.showDialogSubscribed,
@@ -280,7 +279,7 @@ class _BuildView {
   Widget connection() {
     return WatchBuilder(webSocket.connection, (Connection value) {
       return center(Column(
-        mainAxisAlignment: axis.main.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           text(connectionMessage[value], size: 25),
           height16,
@@ -295,14 +294,14 @@ class _BuildView {
 
   Widget selectRegion() {
     return Row(
-      mainAxisAlignment: axis.main.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           margin: EdgeInsets.only(top: 140),
           child: SingleChildScrollView(
             child: Column(
-                mainAxisAlignment: axis.main.center,
-                crossAxisAlignment: axis.cross.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
                       child: text("SELECT REGION",
@@ -320,7 +319,7 @@ class _BuildView {
   Widget connecting() {
     return WatchBuilder(core.state.region, (Region region) {
       return center(Column(
-        mainAxisAlignment: axis.main.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             height: 80,
@@ -369,7 +368,7 @@ Widget buildLayoutLoadingGame(){
       topLeft: buildTitle(),
       child: fullScreen(
         child: Row(
-          mainAxisAlignment: axis.main.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             text("JOINING GAME.."),
           ],
@@ -499,10 +498,10 @@ Widget buildLayoutLobby() {
     height: style.dialogHeightLarge,
     bottomRight: buildButton('Cancel', core.actions.leaveLobby),
     child: Column(
-      crossAxisAlignment: axis.cross.stretch,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(
-          mainAxisAlignment: axis.main.apart,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             text(enumString(game.type.value),
                 size: 35, weight: FontWeight.bold, color: colours.white85),
@@ -534,7 +533,7 @@ Widget buildLayoutLobby() {
               playerNames.add(_textWaiting);
             }
             return Column(
-              crossAxisAlignment: axis.cross.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 text(
                     "Players ${game.lobby.players.length} / $totalPlayersRequired",
@@ -562,7 +561,7 @@ Widget buildLayoutLobby() {
           }
 
           return Column(
-            crossAxisAlignment: axis.cross.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               text("Team 1", decoration: underline),
               height8,

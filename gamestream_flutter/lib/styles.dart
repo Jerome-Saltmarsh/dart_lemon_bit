@@ -41,27 +41,27 @@ final Color black54 = Colors.black54;
 const FontWeight bold = FontWeight.bold;
 final TextDecoration underline = TextDecoration.underline;
 
-final _Axis axis = _Axis();
+// final _Axis axis = _Axis();
+//
+// class _Axis {
+//   final _Main main = _Main();
+//   final _Cross cross = _Cross();
+// }
 
-class _Axis {
-  final _Main main = _Main();
-  final _Cross cross = _Cross();
-}
-
-class _Main {
-  final MainAxisAlignment start = MainAxisAlignment.start;
-  final MainAxisAlignment end = MainAxisAlignment.end;
-  final MainAxisAlignment center = MainAxisAlignment.center;
-  final MainAxisAlignment between = MainAxisAlignment.spaceBetween;
-  final MainAxisAlignment spread = MainAxisAlignment.spaceBetween;
-  final MainAxisAlignment apart = MainAxisAlignment.spaceBetween;
-  final MainAxisAlignment even = MainAxisAlignment.spaceEvenly;
-}
-
-class _Cross {
-  final CrossAxisAlignment center = CrossAxisAlignment.center;
-  final CrossAxisAlignment start = CrossAxisAlignment.start;
-  final CrossAxisAlignment end = CrossAxisAlignment.end;
-  final CrossAxisAlignment stretch = CrossAxisAlignment.stretch;
-}
+// class _Main {
+//   final MainAxisAlignment start = MainAxisAlignment.start;
+//   final MainAxisAlignment end = MainAxisAlignment.end;
+//   final MainAxisAlignment center = MainAxisAlignment.center;
+//   final MainAxisAlignment between = MainAxisAlignment.spaceBetween;
+//   final MainAxisAlignment spread = MainAxisAlignment.spaceBetween;
+//   final MainAxisAlignment apart = MainAxisAlignment.spaceBetween;
+//   final MainAxisAlignment even = MainAxisAlignment.spaceEvenly;
+// }
+//
+// class _Cross {
+//   final CrossAxisAlignment center = CrossAxisAlignment.center;
+//   final CrossAxisAlignment start = CrossAxisAlignment.start;
+//   final CrossAxisAlignment end = CrossAxisAlignment.end;
+//   final CrossAxisAlignment stretch = CrossAxisAlignment.stretch;
+// }
 

@@ -4,9 +4,9 @@ import 'package:gamestream_flutter/ui/functions/build_health_bar.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel_menu.dart';
 
 import 'build_panel.dart';
+import 'build_panel_resources.dart';
 import 'build_panel_structures.dart';
 import 'build_panel_tech.dart';
-import 'build_panel_resources.dart';
 import 'build_time.dart';
 
 Widget buildPanelPrimary() {

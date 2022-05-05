@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/Authentication.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
-import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/ui/actions/sign_in_with_facebook.dart';
 import 'package:gamestream_flutter/ui/build.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
@@ -21,26 +21,10 @@ final closeDialogButton = button(
 
 final widgets = _Widgets();
 final buttons = _Buttons();
-//
-// class Icons {
-//   static final Google = buildImage('images/icons/icon-google.png',
-//     width: 30,
-//     height: 30,
-//   );
-//   static final Facebook = buildImage('images/icons/icon-facebook.png',
-//     width: 30,
-//     height: 30,
-//   );
-// }
-//
 
 class _Widgets {
-  final Widget experienceBar = build.experienceBar();
-  final Widget healthBar = build.healthBar();
-  final Widget magicBar = build.magicBar();
   final Widget totalZombies = build.totalZombies();
   final Widget timeZone = build.timeZone();
-  final Widget theme = build.theme();
 
   final textUpgrade = button(
     text("PURCHASE", color: green, bold: true),
@@ -87,7 +71,7 @@ final _iconSettings = buildImage('images/icons/icon-settings.png', width: 32, he
 class _Buttons {
 
   final Widget login = button(Row(
-    mainAxisAlignment: axis.main.center,
+    mainAxisAlignment: MainAxisAlignment.center,
     children: [
       text("LOGIN", size: 20, weight: bold),
     ],
@@ -117,7 +101,7 @@ class _Buttons {
       width: 220,
     padding: EdgeInsets.symmetric(horizontal: 8),
     child: Row(
-      mainAxisAlignment: axis.main.apart,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         icons.facebook,
         width16,
@@ -137,7 +121,7 @@ class _Buttons {
       width: 220,
     padding: EdgeInsets.symmetric(horizontal: 8),
     child: Row(
-      mainAxisAlignment: axis.main.apart,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         icons.google,
         width16,
