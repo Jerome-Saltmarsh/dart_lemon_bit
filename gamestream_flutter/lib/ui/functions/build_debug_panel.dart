@@ -1,6 +1,6 @@
 import 'package:bleed_common/version.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/bytestream_parser.dart';
+import 'package:gamestream_flutter/server_response_reader.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';

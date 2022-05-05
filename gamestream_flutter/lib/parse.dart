@@ -1,6 +1,6 @@
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/bytestream_parser.dart';
+import 'package:gamestream_flutter/server_response_reader.dart';
 import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/ParticleEmitter.dart';

@@ -13,7 +13,7 @@ import 'package:bleed_common/SlotType.dart';
 import 'package:bleed_common/StructureType.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/audio.dart';
-import 'package:gamestream_flutter/bytestream_parser.dart';
+import 'package:gamestream_flutter/server_response_reader.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/modules.dart';

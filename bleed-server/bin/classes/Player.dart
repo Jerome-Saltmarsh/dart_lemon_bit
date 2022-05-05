@@ -1,16 +1,12 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
+import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
-import '../byte_writer.dart';
 import '../common/library.dart';
 import '../engine.dart';
 import '../functions/generateName.dart';
 import '../utilities.dart';
-import 'Character.dart';
-import 'Collider.dart';
-import 'DynamicObject.dart';
-import 'Game.dart';
-import 'Scene.dart';
+import 'library.dart';
 
 class Player extends Character with ByteWriter {
   final mouse = Vector2(0, 0);
@@ -312,7 +308,7 @@ extension PlayerProperties on Player {
     }
 
     if (game.debugMode)
-      writePaths(game);
+      writePaths();
   }
 
   void writeAttackTarget(){
@@ -466,5 +462,142 @@ extension PlayerProperties on Player {
     writeByte(dynamicObject.type);
     writePosition(dynamicObject);
     writeInt(dynamicObject.id);
+  }
+
+
+  void writePaths() {
+    writeByte(ServerResponse.Paths);
+    final zombies = game.zombies;
+    for (final zombie in zombies) {
+      if (zombie.dead) continue;
+      final pathIndex = zombie.pathIndex;
+      if (pathIndex < 0) continue;
+      writeInt(pathIndex + 1);
+      for (var i = pathIndex; i >= 0; i--) {
+        writeInt(zombie.pathX[i]);
+        writeInt(zombie.pathY[i]);
+      }
+    }
+    writeInt(250);
+
+    for (final zombie in zombies) {
+      if (zombie.dead) continue;
+      final aiTarget = zombie.target;
+      if (aiTarget is Character) {
+        writeByte(1);
+        writePosition(zombie);
+        writePosition(aiTarget);
+      }
+    }
+    writeByte(0);
+  }
+
+  void writeItems(Player player){
+    writeByte(ServerResponse.Items);
+    final items = player.game.items;
+    for(final item in items){
+      if (!item.collidable) continue;
+      if (item.left < player.screenLeft) continue;
+      if (item.right > player.screenRight) continue;
+      if (item.top < player.screenTop) continue;
+      if (item.bottom > player.screenBottom) break;
+      writeByte(item.type);
+      writePosition(item);
+    }
+    writeByte(END);
+  }
+
+  void writePlayerEvent(int value){
+    writeByte(ServerResponse.Player_Events);
+    writeByte(value);
+  }
+
+  void writeGameTime(Game game){
+    writeByte(ServerResponse.Game_Time);
+    final totalMinutes = game.getTime() ~/ 60;
+    writeByte(totalMinutes ~/ 60);
+    writeByte(totalMinutes % 60);
+  }
+
+  void writeTotalActive(List<Active> values){
+    var total = 0;
+    for (final gameObject in values) {
+      if (!gameObject.active) continue;
+      total++;
+    }
+    writeInt(total);
+  }
+
+  void writeTotalAlive(List<Health> values){
+    var total = 0;
+    for (final gameObject in values) {
+      if (gameObject.dead) continue;
+      total++;
+    }
+    writeInt(total);
+  }
+
+  void writeProjectile(Projectile projectile){
+    if (!projectile.active) return;
+    final degrees = getAngle(projectile.xv, projectile.yv) * radiansToDegrees;
+    writePosition(projectile);
+    writeByte(projectile.type);
+    writeInt(degrees);
+  }
+
+  void writeDamageApplied(Position target, int amount) {
+    if (amount <= 0) return;
+    writeByte(ServerResponse.Damage_Applied);
+    writePosition(target);
+    writeInt(amount);
+  }
+
+  void writePlayer(Player player) {
+    writeCharacter(player, player);
+    writePercentage(player.magicPercentage);
+    writeByte(player.equippedType);
+    writeByte(SlotType.Empty); // armour
+    writeByte(SlotType.Empty); // helm
+    writeString(player.name);
+    writeInt(player.score);
+  }
+
+  void writeNpcs(Player player){
+    final npcs = player.game.npcs;
+    writeByte(ServerResponse.Npcs);
+    writeTotalAlive(npcs);
+    for(final npc in npcs) {
+      writeNpc(player, npc);
+    }
+  }
+
+  void writeNpc(Player player, Character npc) {
+    if (npc.dead) return;
+    writeCharacter(player, npc);
+    writeByte(npc.equippedType);
+  }
+
+  void writeCharacter(Player player, Character character) {
+    writeByte((sameTeam(player, character) ? 100 : 0) + (character.direction * 10) + character.state); // 1
+    writePosition(character);
+    writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);
+  }
+
+  void writePercentage(double value){
+    if (value.isNaN) {
+      writeByte(0);
+      return;
+    }
+    writeByte((value * 100).toInt());
+  }
+
+  void writeVector2(Vector2 value){
+    writeInt(value.x);
+    writeInt(value.y);
+  }
+
+  void writePosition(Position value){
+    writeInt(value.x);
+    writeInt(value.y);
   }
 }

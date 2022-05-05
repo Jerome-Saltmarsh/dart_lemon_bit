@@ -15,6 +15,8 @@ dependencies:
   firebase_auth: ^3.3.4
   url_strategy: ^0.2.0
   lemon_dispatch: 0.3.1
+  lemon_byte:
+    path: C:\Users\Jerome\github\dart-lemon-byte
   lemon_engine:
     path: C:\Users\Jerome\github\dart-lemon-engine
   firestore_client:

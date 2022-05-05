@@ -1,4 +1,4 @@
-import 'package:gamestream_flutter/bytestream_parser.dart';
+import 'package:gamestream_flutter/server_response_reader.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/parse.dart';
 import 'package:lemon_watch/watch.dart';

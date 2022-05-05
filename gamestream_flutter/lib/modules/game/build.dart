@@ -1,7 +1,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/audio.dart';
-import 'package:gamestream_flutter/bytestream_parser.dart';
+import 'package:gamestream_flutter/server_response_reader.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';

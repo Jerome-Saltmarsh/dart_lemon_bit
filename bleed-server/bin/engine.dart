@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 
 import 'classes/library.dart';
-import 'common/GameStatus.dart';
-import 'common/SlotType.dart';
+import 'common/library.dart';
 import 'functions/loadScenes.dart';
 import 'games/GameRandom.dart';
 import 'games/GameSwarm.dart';
@@ -86,6 +85,7 @@ class _Engine {
       final players = game.players;
       for (final player in players) {
         player.writePlayerGame();
+        player.writeByte(ServerResponse.End);
         player.sendBufferToClient();
       }
     }
