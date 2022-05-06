@@ -30,10 +30,9 @@ class EditorBuild {
   EditorState get state => editor.state;
 
   Widget buildEditorUI() {
-    print('editor.build.buildEditorUI()');
     return buildLayout(
         topLeft: _toolTabs(),
-        topRight: _mainMenu(),
+        // topRight: _mainMenu(),
         bottomRight: _buildSelected(),
         child: _buildEditorDialog()
     );

@@ -186,9 +186,9 @@ class CoreActions {
     game.totalZombies.value = 0;
     game.totalPlayers.value = 0;
     game.totalProjectiles = 0;
-    game.collectables.clear();
     game.bulletHoleIndex = 0;
-    isometric.particles.clear();
+    game.totalCollectables = 0;
+    game.totalNpcs = 0;
     isometric.next = null;
 
     for (final bullet in game.bulletHoles) {

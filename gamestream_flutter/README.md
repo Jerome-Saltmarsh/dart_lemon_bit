@@ -106,8 +106,8 @@ RELEASE [11 May - 2022]
 [ ] Preload audios
 [ ] Chest Shades
 [ ] Refactor Game with ByteReader
-[ ] (CRITICAL) Fix 204 Cache error    
-[x] Only render visible Generated Objects
+[x] (CRITICAL) Fix Freezing Error on destroy object    
+[x] (Optimization_ Only render visible Objects
 [x] Fix Terrain Culling
 [x] (CRITICAL) Fix zombie spawn location bug
 [x] Polish Menu

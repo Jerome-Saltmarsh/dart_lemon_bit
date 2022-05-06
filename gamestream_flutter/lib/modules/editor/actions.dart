@@ -112,7 +112,6 @@ class EditorActions with EditorScope {
     game.crates.clear();
     isometric.particleEmitters.clear();
     isometric.staticObjects.clear();
-    game.collectables.clear();
     game.itemsTotal = 0;
     isometric.updateTileRender();
   }

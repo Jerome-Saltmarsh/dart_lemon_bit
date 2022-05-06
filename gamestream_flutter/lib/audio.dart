@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
+import 'package:universal_html/html.dart';
 
 import 'cache.dart';
 
@@ -88,19 +89,19 @@ class _Audio {
   }
 
   void winSound2() {
-    _play('win-sound-2.mp3');
+    play('win-sound-2.mp3');
   }
 
   void clickSound8(){
-    _play('click-sound-8.mp3');
+    play('click-sound-8.mp3');
   }
 
   void error(){
-    _play('error-sound-15.mp3');
+    play('error-sound-15.mp3');
   }
 
   void gong() {
-    _play('gong.mp3');
+    play('gong.mp3');
   }
 
   void assaultRifleShot(double x, double y) {
@@ -243,20 +244,24 @@ class _Audio {
 
   void _playPositioned(String name, double x, double y) {
     if (!soundEnabled.value) return;
-    _play(name, volume: _calculateVolume(x, y));
+    play(name, volume: _calculateVolume(x, y));
   }
 
-  void _play(String name, {double volume = 1}){
+  void play(String name, {double volume = 1}){
+    // final instance = Element.audio();
+    // instance.attributes = {
+    //   'type' : ' audio/mp3',
+    //   'src' : ' assets/audio/$name',
+    //   'autoplay': '',
+    //   'volume' : volume.toString(),
+    // };
     if (volume.isNaN) return;
-    try {
-      _getAudioPlayer().play('assets/audio/$name',
+    if (volume <= 0) return;
+      _getAudioPlayer().play(
+          'assets/audio/$name',
           isLocal: true,
-          volume: volume).catchError((error) {
-        print("play error occurred for $name");
-      });
-    } catch(error) {
-      print("play error2 occurred for $name");
-    }
+          volume: volume
+      );
   }
 
   void _playMusic(String name){
@@ -325,9 +330,6 @@ class _Audio {
     _playPositioned('tree-breaking.mp3', x, y);
   }
 }
-
-
-
 
 // abstraction
 int _index = 0;
