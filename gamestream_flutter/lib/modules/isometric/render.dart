@@ -207,7 +207,6 @@ class IsometricRender {
       break;
     }
 
-
     while (remainingDynamicObjects) {
       yDynamicObject = dynamicObjects[indexDynamicObject].y;
       if (yDynamicObject > screenBottom100) {
@@ -238,11 +237,20 @@ class IsometricRender {
                         renderCharacter(players[indexPlayer]);
                         indexPlayer++;
                         remainingPlayers = indexPlayer < totalPlayers;
-                        if (remainingPlayers) {
-                          yPlayer = players[indexPlayer].y;
-                          if (yPlayer > screenBottom) {
+                        while (remainingPlayers) {
+                          final player = players[indexPlayer];
+                          yPlayer = player.y;
+                          if (yPlayer > screenBottom100){
                             remainingPlayers = false;
+                            break;
                           }
+                          final x = player.x;
+                          if (x < screenLeft || x > screenRight || yPlayer < screenTop) {
+                            indexPlayer++;
+                            remainingPlayers = indexPlayer < totalPlayers;
+                            continue;
+                          }
+                          break;
                         }
                         continue;
                       }
