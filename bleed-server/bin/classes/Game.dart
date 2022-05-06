@@ -354,7 +354,7 @@ extension GameFunctions on Game {
         }
         return;
       }
-      if (isZombie) {
+      if (isZombie && randomBool()) {
         setCharacterState(target, CharacterState.Hurt);
       }
       if (target is AI) {

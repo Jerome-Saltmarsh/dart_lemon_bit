@@ -96,15 +96,39 @@
 [ ] Character Selection (head, name, etc, staff, bow, sword etc),
 [ ] Train Character Archer
 [ ] Train Character Swordsman
-[ ] DynamicObject.Id should be big int
 [ ] Refactor Game with ByteReader
-RELEASE [11 May - 2022]   
-[ ] Palisades draw horizontal and vertical when aligned
-[ ] Design Tower Sprite    
-[ ] Disable Teleport 
+[DUNGEONIERS - PROMISES]
+[ ] Play in party (1 - 5)
+[ ] Find Loot
+[ ] Upgrade character skills
+[ ] Upgrade character items
+[ ] Kill Enemy Bosses
+[ ] Reach highest level
+[KINGDOM - PROMISES]
+[ ] Construct Town Center one time
+[ ] Build Town
+[ ] Upgrade Structures
+[ ] Defeat Waves of creeps
+[ ] Explore World
 [ ] Construct buildings using hammer
 [ ] Construct buildings within build radius
+[ ] Palisades draw horizontal and vertical when aligned
+[BATTLEFIELD - PROMISES]
+[ ] Kill enemy players
+[ ] Kill enemy npcs
+[ ] Capture flag points
+[ ] Design Tower Sprite    
+[ ] Disable Teleport
+[ ] Select one of five character types
+    [ ] Sniper
+    [ ] Rifleman
+    [ ] Medic
+    [ ] Bazooka
+    [ ] Machine gunner
+[ENGINE]
+[ ] DynamicObject.Id should be big int
 [ ] Preload audios
+[COMPLETED]  
 [x] Chest Shades
 [x] (CRITICAL) Fix Freezing Error on destroy object    
 [x] (Optimization_ Only render visible Objects

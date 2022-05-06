@@ -398,6 +398,13 @@ void _playRandom(List<String> values, double x, double y) {
 }
 
 AudioPlayer _getAudioPlayer() {
+  if (_audioPlayers.isEmpty) {
+    for (var i = 0; i < _totalAudioPlayers; i++) {
+      _audioPlayers.add(AudioPlayer(mode: PlayerMode.LOW_LATENCY));
+    }
+    _index = 0;
+  }
+
   _index = (_index + 1) % _audioPlayers.length;
   return _audioPlayers[_index];
 }
