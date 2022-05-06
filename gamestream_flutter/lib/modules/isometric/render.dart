@@ -371,11 +371,20 @@ class IsometricRender {
                   renderZombie(zombies[indexZombie]);
                   indexZombie++;
                   remainingZombies = indexZombie < totalZombies;
-                  if (remainingZombies) {
-                    yZombie = zombies[indexZombie].y;
-                    if (yZombie > screenBottom) {
+                  while (remainingZombies) {
+                    final zombie = zombies[indexZombie];
+                    yZombie = zombie.y;
+                    if (yZombie > screenBottom100){
                       remainingZombies = false;
+                      break;
                     }
+                    final x = zombie.x;
+                    if (x < screenLeft || x > screenRight || yZombie < screenTop) {
+                      indexZombie++;
+                      remainingZombies = indexZombie < totalZombies;
+                      continue;
+                    }
+                    break;
                   }
                   continue;
                 }
