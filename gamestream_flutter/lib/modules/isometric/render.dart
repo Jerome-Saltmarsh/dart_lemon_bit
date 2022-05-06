@@ -445,6 +445,7 @@ class IsometricRender {
                 }
                 break;
               }
+              continue;
             }
           }
         }
@@ -481,7 +482,7 @@ class IsometricRender {
          indexGenerated++;
          remainingGenerated = indexGenerated < totalGenerated;
 
-         while (remainingGenerated){
+         while (remainingGenerated) {
            yGenerated = generatedObjects[indexGenerated].y;
            if (yGenerated > screenBottom100){
              remainingGenerated = false;
