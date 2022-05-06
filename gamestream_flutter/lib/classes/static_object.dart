@@ -4,7 +4,7 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:lemon_math/library.dart';
 
-class EnvironmentObject extends Vector2 {
+class StaticObject extends Vector2 {
   late int row;
   late int column;
   final ObjectType type;
@@ -27,7 +27,7 @@ class EnvironmentObject extends Vector2 {
 
   static const _anchorYRatio = 0.66666;
 
-  EnvironmentObject({
+  StaticObject({
     required double x,
     required double y,
     required this.type,

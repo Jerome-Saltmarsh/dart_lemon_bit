@@ -2,7 +2,7 @@
 
 import 'package:bleed_common/ObjectType.dart';
 import 'package:bleed_common/Shade.dart';
-import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
+import 'package:gamestream_flutter/classes/static_object.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
@@ -93,7 +93,7 @@ final objectTypeSrcPosition = <ObjectType, Vector2> {
 final _ambient = modules.isometric.ambient;
 final _torchesY = _translations.torches.y;
 
-void mapEnvironmentObjectToSrc(EnvironmentObject env){
+void mapEnvironmentObjectToSrc(StaticObject env){
   const frames = 5;
 
   // TODO Optimize

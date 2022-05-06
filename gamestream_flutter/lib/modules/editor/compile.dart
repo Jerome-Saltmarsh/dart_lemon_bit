@@ -2,7 +2,7 @@ import 'package:bleed_common/ObjectType.dart';
 import 'package:bleed_common/SceneJson.dart';
 import 'package:bleed_common/Tile.dart';
 import 'package:bleed_common/constants.dart';
-import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
+import 'package:gamestream_flutter/classes/static_object.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/isometric/classes.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -62,7 +62,7 @@ class EditorCompile {
     return values;
   }
 
-  List<dynamic> compileEnvironmentObjects(List<EnvironmentObject> values) {
+  List<dynamic> compileEnvironmentObjects(List<StaticObject> values) {
     return values
         .map((environmentObject) => {
       'x': environmentObject.x.toInt(),

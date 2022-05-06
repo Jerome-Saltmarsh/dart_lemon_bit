@@ -4,7 +4,7 @@ import 'dart:ui' as ui;
 
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
+import 'package:gamestream_flutter/classes/static_object.dart';
 import 'package:gamestream_flutter/classes/FloatingText.dart';
 import 'package:gamestream_flutter/classes/GeneratedObject.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
@@ -40,7 +40,7 @@ class IsometricModule {
   final particles = <Particle>[];
   final structures = <Structure>[];
   final gemSpawns = <GemSpawn>[];
-  final environmentObjects = <EnvironmentObject>[];
+  final staticObjects = <StaticObject>[];
   final floatingTexts = <FloatingText>[];
   final dynamic = <Int8List>[];
   final bake = <Int8List>[];
@@ -128,7 +128,7 @@ class IsometricModule {
 
   // METHODS
 
-  bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
+  bool environmentObjectOnScreenScreen(StaticObject environmentObject) {
     if (environmentObject.top > _screen.bottom) return false;
     if (environmentObject.right < _screen.left) return false;
     if (environmentObject.left > _screen.right) return false;
@@ -378,7 +378,7 @@ class IsometricModule {
   }
 
   void applyEnvironmentObjectsToBakeMapping(){
-    for (final env in environmentObjects){
+    for (final env in staticObjects){
       final type = env.type;
       if (type == ObjectType.Torch){
         emitLightBakeHigh(env.x, env.y);
@@ -623,7 +623,7 @@ class IsometricModule {
       ObjectType.Rock_Wall,
       ObjectType.Block_Grass,
     ];
-    environmentObjects.removeWhere((env) => generated.contains(env));
+    staticObjects.removeWhere((env) => generated.contains(env));
   }
 
   void cameraCenterMap(){

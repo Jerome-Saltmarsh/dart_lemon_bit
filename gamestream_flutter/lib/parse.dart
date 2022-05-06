@@ -1,6 +1,5 @@
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
 import 'package:gamestream_flutter/game.dart';
@@ -106,9 +105,6 @@ void parseState() {
         modules.game.state.compilePaths.value = debugInt == 1;
         break;
 
-      case ServerResponse.Crates:
-        parseCrates();
-        break;
       case ServerResponse.Grenades:
         break;
 
@@ -169,20 +165,8 @@ void parseGameTime() {
   modules.isometric.minutes.value = consumeInt();
 }
 
-void parseCrates() {
-  game.cratesTotal = consumeInt();
-  game.crates.clear();
-  for (int i = 0; i < game.cratesTotal; i++) {
-    game.crates.add(_consumeVector2());
-  }
-}
-
 void addParticleEmitter(ParticleEmitter value) {
   isometric.particleEmitters.add(value);
-}
-
-double environmentObjectY(EnvironmentObject environmentObject) {
-  return environmentObject.y;
 }
 
 void _parsePlayerAbility(){

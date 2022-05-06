@@ -80,7 +80,7 @@ class EditorBuild {
   }
 
   List<Widget> _tabAll() {
-    return modules.isometric.environmentObjects.map((env) {
+    return modules.isometric.staticObjects.map((env) {
       return WatchBuilder(editor.state.selected, (Vector2? selected) {
             return button(enumString(env.type), () {
               editor.state.selected.value = env;

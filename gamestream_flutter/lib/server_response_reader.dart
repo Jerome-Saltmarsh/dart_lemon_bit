@@ -8,7 +8,7 @@ import 'package:lemon_engine/enums.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'classes/EnvironmentObject.dart';
+import 'classes/static_object.dart';
 import 'game.dart';
 import 'modules/isometric/classes.dart';
 import 'modules/isometric/enums.dart';
@@ -443,7 +443,7 @@ class ServerResponseReader extends ByteReader {
   }
 
   void parseStaticObjects() {
-    final environmentObjects = modules.isometric.environmentObjects;
+    final environmentObjects = modules.isometric.staticObjects;
     environmentObjects.clear();
     while (true) {
       final typeIndex = readByte();
@@ -451,7 +451,7 @@ class ServerResponseReader extends ByteReader {
       final x = readDouble();
       final y = readDouble();
       environmentObjects.add(
-          EnvironmentObject(
+          StaticObject(
               x: x,
               y: y,
               type: objectTypes[typeIndex],

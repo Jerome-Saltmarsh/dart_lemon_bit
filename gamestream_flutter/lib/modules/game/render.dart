@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
+import 'package:gamestream_flutter/classes/static_object.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/Projectile.dart';
@@ -313,14 +313,14 @@ class GameRender {
 
   void drawDebugEnvironmentObjects() {
     engine.paint.color = Colors.red;
-    for (EnvironmentObject env in modules.isometric.environmentObjects) {
+    for (StaticObject env in modules.isometric.staticObjects) {
       drawLine(env.left, env.top, env.right, env.top); // top left to top right
       drawLine(
           env.right, env.top, env.right, env.bottom); // top left to bottom right
       drawLine(env.right, env.bottom, env.left, env.bottom);
       drawLine(env.left, env.top, env.left, env.bottom);
     }
-    for (EnvironmentObject env in modules.isometric.environmentObjects) {
+    for (StaticObject env in modules.isometric.staticObjects) {
       engine.draw.circle(env.x, env.y, env.radius, Colors.blue);
     }
   }

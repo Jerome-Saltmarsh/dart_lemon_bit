@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/classes/DynamicObject.dart';
-import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
+import 'package:gamestream_flutter/classes/static_object.dart';
 import 'package:gamestream_flutter/classes/GeneratedObject.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
@@ -119,8 +119,7 @@ class IsometricRender {
     final screenBottom = engine.screen.bottom;
     final screenBottom100 = engine.screen.bottom + 120;
 
-    final environmentObjects = isometric.environmentObjects;
-    final totalEnvironment = environmentObjects.length;
+    final staticObjects = isometric.staticObjects;
     final zombies = game.zombies;
     final players = game.players;
     final npcs = game.interactableNpcs;
@@ -128,6 +127,7 @@ class IsometricRender {
     final generatedObjects = game.generatedObjects;
     final structures = isometric.structures;
 
+    final totalStaticObjects = staticObjects.length;
     final totalZombies = game.totalZombies.value;
     final totalPlayers = game.totalPlayers.value;
     final totalNpcs = game.totalNpcs;
@@ -136,7 +136,7 @@ class IsometricRender {
     final totalGenerated = generatedObjects.length;
 
     var indexPlayer = 0;
-    var indexEnv = 0;
+    var indexStaticObject = 0;
     var indexParticle = 0;
     var indexZombie = 0;
     var indexNpc = 0;
@@ -147,7 +147,7 @@ class IsometricRender {
     var remainingZombies = indexZombie < totalZombies;
     var remainingPlayers = indexPlayer < totalPlayers;
     var remainingNpcs = indexPlayer < totalNpcs;
-    var remainingEnvironment = indexEnv < totalEnvironment;
+    var remainingStaticObjects = indexStaticObject < totalStaticObjects;
     var remainingParticles = indexParticle < totalParticles;
     var remainingDynamicObjects = indexDynamicObject < totalDynamicObjects;
     var remainingStructures = indexStructure < totalStructures;
@@ -155,7 +155,7 @@ class IsometricRender {
     var remainingGenerated = indexGenerated < totalGenerated;
 
     var yPlayer = remainingPlayers ? players[0].y : 0;
-    var yEnv = remainingEnvironment ? environmentObjects[0].y : 0;
+    var yStaticObject = remainingStaticObjects ? staticObjects[0].y : 0;
     var yParticle = remainingParticles ? particles[0].y : 0;
     var yZombie = remainingZombies ? zombies[0].y : 0;
     var yNpc = remainingNpcs ? npcs[0].y : 0;
@@ -227,7 +227,7 @@ class IsometricRender {
       if (remainingPlayers) {
         if (!remainingGenerated || yPlayer < yGenerated) {
           if (!remainingBuildMode || yPlayer < yBuildMode) {
-            if (!remainingEnvironment || yPlayer < yEnv) {
+            if (!remainingStaticObjects || yPlayer < yStaticObject) {
               if (!remainingParticles ||
                   (yPlayer < yParticle && !particleIsBlood)) {
                 if (!remainingZombies || yPlayer < yZombie) {
@@ -263,23 +263,31 @@ class IsometricRender {
         }
       }
 
-      if (remainingEnvironment) {
-        if (!remainingGenerated || yEnv < yGenerated) {
-          if (!remainingBuildMode || yEnv < yBuildMode) {
-            if (!remainingStructures || yEnv < yStructure) {
-              if (!remainingParticles || yEnv < yParticle && !particleIsBlood) {
-                if (!remainingDynamicObjects || yEnv < yDynamicObject) {
-                  if (!remainingZombies || yEnv < yZombie) {
-                    if (!remainingNpcs || yEnv < yNpc) {
-                      final env = environmentObjects[indexEnv];
-                      renderEnvironmentObject(env);
-                      indexEnv++;
-                      remainingEnvironment = indexEnv < totalEnvironment;
-                      if (remainingEnvironment) {
-                        yEnv = environmentObjects[indexEnv].y;
-                        if (yEnv > screenBottom) {
-                          remainingEnvironment = false;
+      if (remainingStaticObjects) {
+        if (!remainingGenerated || yStaticObject < yGenerated) {
+          if (!remainingBuildMode || yStaticObject < yBuildMode) {
+            if (!remainingStructures || yStaticObject < yStructure) {
+              if (!remainingParticles || yStaticObject < yParticle && !particleIsBlood) {
+                if (!remainingDynamicObjects || yStaticObject < yDynamicObject) {
+                  if (!remainingZombies || yStaticObject < yZombie) {
+                    if (!remainingNpcs || yStaticObject < yNpc) {
+                      renderEnvironmentObject(staticObjects[indexStaticObject]);
+                      indexStaticObject++;
+                      remainingStaticObjects = indexStaticObject < totalStaticObjects;
+                      while (remainingStaticObjects) {
+                        final value = staticObjects[indexStaticObject];
+                        yStaticObject = value.y;
+                        if (yStaticObject > screenBottom100){
+                          remainingStaticObjects = false;
+                          break;
                         }
+                        final x = value.x;
+                        if (x < screenLeft || x > screenRight || yStaticObject < screenTop) {
+                          indexStaticObject++;
+                          remainingStaticObjects = indexStaticObject < totalStaticObjects;
+                          continue;
+                        }
+                        break;
                       }
                       continue;
                     }
@@ -494,7 +502,7 @@ class IsometricRender {
           remainingZombies ||
           remainingPlayers ||
           remainingNpcs ||
-          remainingEnvironment ||
+          remainingStaticObjects ||
           remainingDynamicObjects ||
           remainingStructures ||
           remainingParticles ||
@@ -718,7 +726,7 @@ class IsometricRender {
     );
   }
 
-  void renderEnvironmentObject(EnvironmentObject value) {
+  void renderEnvironmentObject(StaticObject value) {
     if (!_screen.containsV(value)) return;
     final shade = state.getShade(value.row, value.column);
     if (shade == Shade.Pitch_Black) return;

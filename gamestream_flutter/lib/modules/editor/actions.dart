@@ -4,7 +4,7 @@ import 'package:bleed_common/SceneJson.dart';
 import 'package:bleed_common/Tile.dart';
 import 'package:bleed_common/constants.dart';
 import 'package:firestore_client/firestoreService.dart';
-import 'package:gamestream_flutter/classes/EnvironmentObject.dart';
+import 'package:gamestream_flutter/classes/static_object.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
@@ -27,7 +27,7 @@ class EditorActions with EditorScope {
   void addEnvironmentObject () {
     print("editor.actions.addEnvironmentObject()");
     state.environmentObjects.add(
-        EnvironmentObject(
+        StaticObject(
           x: mouseWorldX,
           y: mouseWorldY,
           type: state.objectType.value,
@@ -46,7 +46,7 @@ class EditorActions with EditorScope {
 
   void deleteSelected() {
     if (state.selected.value == null) return;
-    isometric.environmentObjects.remove(state.selected.value);
+    isometric.staticObjects.remove(state.selected.value);
     state.selected.value = null;
     engine.redrawCanvas();
   }
@@ -75,7 +75,7 @@ class EditorActions with EditorScope {
   void moveSelectedToMouse(){
     final selected = state.selected.value;
     if (selected == null) return;
-    if (selected is EnvironmentObject){
+    if (selected is StaticObject){
       selected.move(mouseWorldX, mouseWorldY);
     } else{
       selected.x = mouseWorldX;
@@ -111,7 +111,7 @@ class EditorActions with EditorScope {
     }
     game.crates.clear();
     isometric.particleEmitters.clear();
-    isometric.environmentObjects.clear();
+    isometric.staticObjects.clear();
     game.collectables.clear();
     game.itemsTotal = 0;
     isometric.updateTileRender();
@@ -165,7 +165,7 @@ class EditorActions with EditorScope {
       final x = json.getDouble('x');
       final y = json.getDouble('y');
       final type = parseObjectTypeFromString(json['type']);
-      state.environmentObjects.add(EnvironmentObject(x: x, y: y, type: type, radius: 25));
+      state.environmentObjects.add(StaticObject(x: x, y: y, type: type, radius: 25));
     }
 
     isometric.minutes.value = mapJson[sceneFieldNames.startTime] / secondsPerHour;
