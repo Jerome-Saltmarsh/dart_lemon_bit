@@ -625,56 +625,66 @@ class IsometricRender {
   }
 
   void renderDynamicObject(DynamicObject dynamicObject){
-    final shade = isometric.getShadeAt(dynamicObject);
     switch(dynamicObject.type) {
       case DynamicObjectType.Pot:
-        engine.mapSrc64(
-            x: 6032,
-            y: shade * 64
-        );
-        engine.mapDst(x: dynamicObject.x, y: dynamicObject.y, anchorX: 32, anchorY: 32);
-        engine.renderAtlas();
+        renderPot(dynamicObject);
         break;
       case DynamicObjectType.Rock:
-        engine.renderCustom(
-            dstX: dynamicObject.x,
-            dstY: dynamicObject.y,
-            srcX: 5592,
-            srcY: shade * 48,
-            srcWidth: 48,
-            srcHeight: 48
-        );
+        renderRock(dynamicObject);
         break;
       case DynamicObjectType.Tree:
-        engine.renderCustom(
-            dstX: dynamicObject.x,
-            dstY: dynamicObject.y,
-            srcX: 2049,
-            srcY: shade * 96,
-            srcWidth: 96,
-            srcHeight: 96,
-            anchorY: 0.66,
-        );
+        renderTree(dynamicObject);
         break;
       case DynamicObjectType.Chest:
         return renderChest(dynamicObject);
     }
   }
 
+  void renderPot(Position position) {
+    engine.mapSrc64(
+        x: 6032,
+        y: isometric.getShadeAt(position) * 64
+    );
+    engine.mapDst(x: position.x, y: position.y, anchorX: 32, anchorY: 32);
+    engine.renderAtlas();
+  }
+
+  void renderRock(Position position) {
+    engine.renderCustom(
+        dstX: position.x,
+        dstY: position.y,
+        srcX: 5592,
+        srcY: isometric.getShadeAt(position) * 48,
+        srcWidth: 48,
+        srcHeight: 48
+    );
+  }
+
+  void renderTree(Position position) {
+    engine.renderCustom(
+        dstX: position.x,
+        dstY: position.y,
+        srcX: 2049,
+        srcY: isometric.getShadeAt(position) * 96,
+        srcWidth: 96,
+        srcHeight: 96,
+        anchorY: 0.66,
+    );
+  }
+
   void renderChest(Position position){
-    // renderCircle36V2(position);
     engine.renderCustomV2(
       dst: position,
       srcX: 6329,
+      srcY: isometric.getShadeAt(position) * 76.0,
       srcWidth: 50,
-      srcHeight: 70,
+      srcHeight: 76.0,
       scale: 0.75,
       anchorY: 0.6,
     );
   }
 
   void renderParticle(Particle value){
-    if (!_screen.contains(value.x, value.y)) return;
     final shade = state.getShadeAtPosition(value.x, value.y);
     if (shade >= Shade.Very_Dark) return;
     mapParticleToDst(value);

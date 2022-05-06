@@ -227,10 +227,6 @@ int _consumeSingleDigitInt() {
   return int.parse(_consumeSingleCharacter());
 }
 
-int _consumeTile() {
-  return consumeInt();
-}
-
 // ServerResponse _consumeServerResponse() {
 //   final responseInt = consumeInt();
 //   if (responseInt >= serverResponsesLength) {

@@ -97,6 +97,7 @@
 [ ] Train Character Archer
 [ ] Train Character Swordsman
 [ ] DynamicObject.Id should be big int
+[ ] Refactor Game with ByteReader
 RELEASE [11 May - 2022]   
 [ ] Palisades draw horizontal and vertical when aligned
 [ ] Design Tower Sprite    
@@ -104,8 +105,7 @@ RELEASE [11 May - 2022]
 [ ] Construct buildings using hammer
 [ ] Construct buildings within build radius
 [ ] Preload audios
-[ ] Chest Shades
-[ ] Refactor Game with ByteReader
+[x] Chest Shades
 [x] (CRITICAL) Fix Freezing Error on destroy object    
 [x] (Optimization_ Only render visible Objects
 [x] Fix Terrain Culling
