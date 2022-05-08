@@ -4,7 +4,7 @@ final icons = _Icons();
 
 class _Icons {
   final google = buildIcon('google');
-  final facebook = buildIcon('google');
+  final facebook = buildIcon('facebook');
   final sword = buildIcon("sword");
   final shield = buildIcon("shield");
   final unknown = buildIcon("unknown");

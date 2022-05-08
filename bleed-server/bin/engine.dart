@@ -10,6 +10,7 @@ import 'games/GameSwarm.dart';
 import 'games/Moba.dart';
 import 'games/Royal.dart';
 import 'games/Skirmish.dart';
+import 'games/game_night_survivors.dart';
 import 'language.dart';
 
 final engine = _Engine();
@@ -137,6 +138,15 @@ class _Engine {
       }
     }
     return GameRandom(maxPlayers: 12);
+  }
+
+  GameNightSurvivors findGameAfterDark() {
+    for (final game in games) {
+      if (game is GameNightSurvivors && !game.isFull) {
+        return game;
+      }
+    }
+    return GameNightSurvivors();
   }
 
   GameMoba findPendingMobaGame() {

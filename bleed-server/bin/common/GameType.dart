@@ -22,7 +22,7 @@ const gameTypeNames = {
     GameType.DeathMatch: "COUNTER STRIKE",
     GameType.SWARM: "SWARM",
     GameType.PRACTICE: "PRACTICE",
-    GameType.RANDOM: "JOIN",
+    GameType.RANDOM: "THEY COME AT NIGHT",
 };
 
 const freeToPlay = [

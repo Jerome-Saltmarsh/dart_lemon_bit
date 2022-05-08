@@ -1512,7 +1512,11 @@ class CustomGame extends Game {
 
   @override
   void update() {
-    // timeInSeconds = (timeInSeconds + secondsPerFrame) % secondsPerDay;
+    incrementSeconds();
+  }
+
+  void incrementSeconds(){
+    timeInSeconds = (timeInSeconds + secondsPerFrame) % secondsPerDay;
   }
 
   @override

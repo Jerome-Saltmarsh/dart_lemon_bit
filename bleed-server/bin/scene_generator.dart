@@ -15,6 +15,8 @@ Scene generateRandomScene({
   required int rows,
   required int columns,
   int seed = 0,
+  int numberOfSpawnPointPlayers = 5,
+  int numberOfSpawnPointZombies = 5,
 }) {
   final noiseMap = noise2(
       rows,
@@ -96,6 +98,7 @@ Scene generateRandomScene({
   }
 
   var land = 0;
+  var totalVisits = 0;
   final islands = <int, List<Cell>> { };
   islands[land] = [];
 
@@ -107,6 +110,8 @@ Scene generateRandomScene({
     final cell = cells[row][column];
     if (!cell.visitable) return;
     cell.land = land;
+    totalVisits++;
+    // print("visited row: $row, column: $column, land: $land, visit: $totalVisits");
     var island = islands[land];
     if (island == null){
        island = [];
@@ -125,6 +130,7 @@ Scene generateRandomScene({
       if (!cell.visitable) continue;
       visitCell(row, column);
       land++;
+      print("new island: $land");
     }
   }
 
@@ -186,7 +192,6 @@ Scene generateRandomScene({
     connectIsland(entry);
   }
 
-  final numberOfSpawnPointPlayers = 5;
   final spawnCellPlayers = <SpawnCell>[];
 
   for (var i = 0; i < numberOfSpawnPointPlayers; i++) {
@@ -221,7 +226,6 @@ Scene generateRandomScene({
   }
 
 
-  final numberOfSpawnPointZombies = 5;
   final spawnCellZombies = <SpawnCell>[];
 
   for (var i = 0; i < numberOfSpawnPointZombies; i++) {

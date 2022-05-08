@@ -137,6 +137,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       onGameJoined();
     }
 
+    void joinGameAfterDark() {
+      final game = engine.findGameAfterDark();
+      _player = game.spawnPlayer();
+      onGameJoined();
+    }
+
     void joinGameSkirmish() {
       final game = engine.findGameSkirmish();
       _player = game.playerJoin();
@@ -458,7 +464,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                  case GameType.PRACTICE:
                    return joinGamePractice();
                  case GameType.RANDOM:
-                   return joinGameRandom();
+                   return joinGameAfterDark();
+                   // return joinGameRandom();
                  default:
                    break;
                }
@@ -484,7 +491,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             case GameType.PRACTICE:
               return joinGamePractice();
             case GameType.RANDOM:
-              return joinGameRandom();
+              return joinGameAfterDark();
             default:
               throw Exception("Cannot join ${gameType}");
           }

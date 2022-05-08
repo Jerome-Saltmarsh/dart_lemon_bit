@@ -96,7 +96,6 @@
 [ ] Character Selection (head, name, etc, staff, bow, sword etc),
 [ ] Train Character Archer
 [ ] Train Character Swordsman
-[ ] Refactor Game with ByteReader
 [DUNGEONIERS - PROMISES]
 [ ] Play in party (1 - 5)
 [ ] Find Loot
@@ -125,9 +124,18 @@
     [ ] Medic
     [ ] Bazooka
     [ ] Machine gunner
+[THEY COME AT NIGHT]
+[ ] At night spawn waves of creeps to attack town center
+[ ] Waiting for x number of players to join before starting game
+[ ] Design Town Center
+[ ] AI Auto target town center at night
+[ ] (Critical Stack overflow) scene generator
+[x] Spawn Town Center
 [ENGINE]
 [ ] DynamicObject.Id should be big int
 [ ] Preload audios
+[ ] Refactor Game with ByteReader
+[ ] (SERVER) Remove colliders from game
 [COMPLETED]  
 [x] Chest Shades
 [x] (CRITICAL) Fix Freezing Error on destroy object    
@@ -846,3 +854,73 @@ Children are not allowed outside of the walls, however those that turn 14 are re
 # Forage and hunt 
 # Find Materials and learn you skills
 # Survive against Dinosaurs and other tribes
+
+[MODE]
+- Party 
+- Alone
+
+[TIME]
+- Wait for specific players to begin
+- Join existing game
+
+[GOAL]
+- Destroy enemy fortress
+- Kill all enemies
+- Reach highest level / wave
+- Sandbox
+
+[GENRE]
+- Fantasy
+- World War 2
+- Medieval historic
+
+[TYPE]
+- Micro manage units
+- Single Hero
+
+[ABILITIES]
+- Fixed 
+- Dynamic 
+- None
+- Item Based
+
+[Weapons]
+- Fixed
+- Dynamic
+- None
+
+[PROMISES]
+- Mine resources
+- Tower Defense  
+- Defend Base
+- Find Loot
+- Purchase Items
+- Abilities
+- Farm creeps
+- Kill players
+- Destroy enemy structures
+
+DOTA 
+        mode: party
+        genre: fantasy
+        goal: Destroy enemy Fortress 
+        type: single hero
+        time: Wait for specific players to begin
+        abilities: Fixed + Item Based
+        weapons: none
+        promises 
+            abilities
+            farm creeps
+            kill players
+            destroy enemy structures
+            get Gold
+            get Experience
+            last hit bonus
+            learn Abilities
+            purchase Items
+
+AGE OF EMPIRES
+    mode: alone || coop
+    genre: medieval_historic
+              
+
