@@ -26,8 +26,8 @@ class GameNightSurvivors extends Game {
 
   GameNightSurvivors() : super(
       generateRandomScene(
-          rows: 100,
-          columns: 100,
+          rows: 200,
+          columns: 200,
           seed: randomInt(0, 10000),
           numberOfSpawnPointPlayers: 1,
       )

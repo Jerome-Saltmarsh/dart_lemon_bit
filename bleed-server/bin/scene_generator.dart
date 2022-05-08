@@ -97,40 +97,47 @@ Scene generateRandomScene({
     }
   }
 
-  var land = 0;
-  var totalVisits = 0;
+  final visits = <Cell>[];
   final islands = <int, List<Cell>> { };
-  islands[land] = [];
+  var island = <Cell>[];
+  var land = 0;
+  islands[land] = island;
 
-  void visitCell(int row, int column) {
+  void addVisit(int row, int column) {
     if (row < 0) return;
     if (column < 0) return;
     if (row >= rows) return;
     if (column >= columns) return;
     final cell = cells[row][column];
     if (!cell.visitable) return;
+    visits.add(cell);
+  }
+
+  void visit(Cell cell) {
+    if (!cell.visitable) return;
     cell.land = land;
-    totalVisits++;
-    // print("visited row: $row, column: $column, land: $land, visit: $totalVisits");
     var island = islands[land];
-    if (island == null){
+    if (island == null) {
        island = [];
        islands[land] = island;
     }
     island.add(cell);
-    visitCell(row - 1, column);
-    visitCell(row + 1, column);
-    visitCell(row, column - 1);
-    visitCell(row, column + 1);
+    addVisit(cell.row - 1, cell.column);
+    addVisit(cell.row + 1, cell.column);
+    addVisit(cell.row, cell.column - 1);
+    addVisit(cell.row, cell.column + 1);
   }
 
-  for (var row = 0; row < rows; row++){
+  for (var row = 0; row < rows; row++) {
     for (var column = 0; column < columns; column++) {
       final cell = cells[row][column];
       if (!cell.visitable) continue;
-      visitCell(row, column);
+      visit(cell);
+      while (visits.isNotEmpty) {
+        final nextVisit = visits.removeLast();
+        visit(nextVisit);
+      }
       land++;
-      print("new island: $land");
     }
   }
 

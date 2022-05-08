@@ -129,7 +129,7 @@
 [ ] Waiting for x number of players to join before starting game
 [ ] Design Town Center
 [ ] AI Auto target town center at night
-[ ] (Critical Stack overflow) scene generator
+[x] (Critical Stack overflow) scene generator
 [x] Spawn Town Center
 [ENGINE]
 [ ] DynamicObject.Id should be big int
