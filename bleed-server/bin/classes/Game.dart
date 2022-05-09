@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
-import '../common/MaterialType.dart';
 import '../common/library.dart';
 import '../engine.dart';
 import '../enums.dart';
@@ -11,6 +10,7 @@ import '../functions/withinRadius.dart';
 import '../maths.dart';
 import '../physics.dart';
 import '../utilities.dart';
+import 'AI.dart';
 import 'Character.dart';
 import 'Collectable.dart';
 import 'Collider.dart';
@@ -138,7 +138,6 @@ abstract class Game {
           x: character.x,
           y: character.y,
           health: 100,
-          mode: NpcMode.Aggressive,
           weapon: SlotType.Empty,
         ));
       } else {
@@ -465,6 +464,7 @@ extension GameFunctions on Game {
           _characterRunAt(ai, target);
           return;
         }
+
       } else {
         // not zombie
         if (!ai.withinAttackRange(target)) return;
@@ -483,9 +483,12 @@ extension GameFunctions on Game {
       ai.face(ai.dest);
       ai.state = CharacterState.Running;
       return;
-    } else if (ai.mode == NpcMode.Aggressive && ai.idleDuration++ > 120) {
+    } else if (ai.idleDuration++ > 120) {
       ai.idleDuration = 0;
-      npcSetRandomDestination(ai);
+      // wander mode
+      if (ai.objective == null) {
+        npcSetRandomDestination(ai);
+      }
     }
 
     ai.state = CharacterState.Idle;
@@ -1025,7 +1028,7 @@ extension GameFunctions on Game {
     return projectile;
   }
 
-  Character spawnZombie({
+  AI spawnZombie({
     required double x,
     required double y,
     required int health,
@@ -1048,7 +1051,7 @@ extension GameFunctions on Game {
     return zombie;
   }
 
-  Character _getAvailableZombie() {
+  AI _getAvailableZombie() {
     for (final zombie in zombies) {
       if (zombie.alive) continue;
       return zombie;
@@ -1057,7 +1060,6 @@ extension GameFunctions on Game {
       type: CharacterType.Zombie,
       x: 0,
       y: 0,
-      mode: NpcMode.Aggressive,
       health: 10,
       weapon: SlotType.Empty,
     );
@@ -1065,7 +1067,7 @@ extension GameFunctions on Game {
     return zombie;
   }
 
-  Character spawnRandomZombie({
+  AI spawnRandomZombie({
     int health = 10,
     int damage = 1,
     int experience = 1,
@@ -1111,10 +1113,15 @@ extension GameFunctions on Game {
   void updateZombieTargets() {
     for (final zombie in zombies) {
       if (zombie.dead) continue;
+
+      if (zombie.target == null) {
+        zombie.target = zombie.objective;
+      }
+
       final zombieAITarget = zombie.target;
-      if (zombieAITarget != null &&
+      if (zombieAITarget != null && zombieAITarget != zombie.objective &&
           (zombieAITarget.dead || !zombie.withinChaseRange(zombieAITarget))) {
-        zombie.target = null;
+        zombie.target = zombie.objective;
       }
 
       num targetDistance = 9999999.0;
@@ -1125,7 +1132,7 @@ extension GameFunctions on Game {
         if (!zombie.withinViewRange(otherZombie)) continue;
         final npcDistance = zombie.getDistance(otherZombie);
         if (npcDistance >= targetDistance) continue;
-        if (!isVisibleBetween(zombie, otherZombie)) continue;
+        // if (!isVisibleBetween(zombie, otherZombie)) continue;
         setNpcTarget(zombie, otherZombie);
         targetDistance = npcDistance;
       }
@@ -1151,7 +1158,6 @@ extension GameFunctions on Game {
 
   void updateInteractableNpcTargets() {
     for (final npc in npcs) {
-      if (npc.mode == NpcMode.Ignore) return;
       Character? closest;
       var closestDistance = 99999.0;
       for (final zombie in zombies) {

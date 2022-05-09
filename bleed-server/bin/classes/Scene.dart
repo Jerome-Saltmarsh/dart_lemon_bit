@@ -3,6 +3,7 @@ import 'package:lemon_math/library.dart';
 import '../common/library.dart';
 import '../enums.dart';
 import '../utilities.dart';
+import 'AI.dart';
 import 'Character.dart';
 import 'DynamicObject.dart';
 import 'EnvironmentObject.dart';

@@ -125,10 +125,13 @@
     [ ] Bazooka
     [ ] Machine gunner
 [THEY COME AT NIGHT]
+[THE CURSED ISLAND]
+[ ] Design Town Center
+[ ] Select Character Name
+[ ] Select Character Type
 [ ] At night spawn waves of creeps to attack town center
 [ ] Waiting for x number of players to join before starting game
-[ ] Design Town Center
-[ ] AI Auto target town center at night
+[x] AI Auto target town center at night
 [x] (Critical Stack overflow) scene generator
 [x] Spawn Town Center
 [ENGINE]

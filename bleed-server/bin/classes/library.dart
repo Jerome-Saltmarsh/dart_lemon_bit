@@ -18,3 +18,4 @@ export 'Scene.dart';
 export 'SpawnPoint.dart';
 export 'Structure.dart';
 export 'TileNode.dart';
+export 'AI.dart';

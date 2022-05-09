@@ -1,6 +1,6 @@
 import '../common/CharacterType.dart';
-import 'Character.dart';
 import 'Player.dart';
+import 'AI.dart';
 
 class InteractableNpc extends AI {
   final String name;
@@ -15,13 +15,11 @@ class InteractableNpc extends AI {
       required int health,
       required int weapon,
       int team = 1,
-      NpcMode npcMode = NpcMode.Stand_Ground,
   })
       : super(
             type: CharacterType.Human,
             x: x,
             y: y,
-            mode: npcMode,
             health: health,
             weapon: weapon,
             team: team,

@@ -131,12 +131,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       onGameJoined();
     }
 
-    void joinGameRandom() {
-      final game = engine.findRandomGame();
-      _player = game.spawnPlayer();
-      onGameJoined();
-    }
-
     void joinGameAfterDark() {
       final game = engine.findGameAfterDark();
       _player = game.spawnPlayer();

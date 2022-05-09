@@ -1,100 +1,13 @@
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:lemon_math/library.dart';
 
-import '../common/MaterialType.dart';
 import '../common/library.dart';
 import '../functions/withinRadius.dart';
 import 'Ability.dart';
 import 'Collider.dart';
 import 'Game.dart';
 import 'components.dart';
-
-const maxAIPathLength = 80;
-const maxAIPathLengthMinusOne = maxAIPathLength - 3;
-
-
-class AI extends Character with Material {
-  static const viewRange = 200.0;
-  static const chaseRange = 500.0;
-  final pathX = Float32List(maxAIPathLength);
-  final pathY = Float32List(maxAIPathLength);
-  var mode = NpcMode.Aggressive;
-  var _pathIndex = -1;
-  var dest = Vector2(-1, -1);
-  var idleDuration = 0;
-  dynamic target;
-
-  int get pathIndex => _pathIndex;
-
-  void stopPath(){
-    if (deadOrBusy) return;
-    _pathIndex = -1;
-    state = CharacterState.Idle;
-  }
-
-  set pathIndex(int value){
-    _pathIndex = value;
-    if (value < 0) {
-      if (alive) {
-        state = CharacterState.Idle;
-      }
-      return;
-    }
-    dest.x = pathX[value];
-    dest.y = pathY[value];
-  }
-
-  void nextPath(){
-    pathIndex = _pathIndex - 1;
-  }
-
-  bool get arrivedAtDest {
-    const radius = 15;
-    if ((x - dest.x).abs() > radius) return false;
-    if ((y - dest.y).abs() > radius) return false;
-    return true;
-  }
-
-  AI({
-    required double x,
-    required double y,
-    this.mode = NpcMode.Defensive,
-    required CharacterType type,
-    required int health,
-    int team = 0,
-    int weapon = SlotType.Empty,
-    double speed = 3.0,
-  }): super(x: x, y: y, type: type, health: health, team: team, weapon: weapon, speed: speed) {
-    this.material = MaterialType.Flesh;
-  }
-
-  void clearTargetIf(Character value){
-    if (target != value) return;
-    target = null;
-  }
-
-  bool withinViewRange(Position target) {
-    if (mode == NpcMode.Swarm) return true;
-    return withinRadius(this, target, viewRange);
-  }
-
-  bool withinChaseRange(Position target) {
-    if (mode == NpcMode.Swarm) return true;
-    return withinRadius(this, target, chaseRange);
-  }
-
-  @override
-  void onCollisionWith(Collider other){
-    if (_pathIndex < 0) return;
-    if (other is AI) {
-      rotateAround(other, 0.2);
-    }
-    if (!other.withinBounds(dest)) return;
-    nextPath();
-  }
-}
 
 const piEighth = pi / 8.0;
 
@@ -228,10 +141,10 @@ bool sameTeam(dynamic a, dynamic b){
   return a.team == b.team;
 }
 
-enum NpcMode {
-  Ignore,
-  Stand_Ground,
-  Defensive,
-  Aggressive,
-  Swarm,
-}
+// enum NpcMode {
+//   Ignore,
+//   Stand_Ground,
+//   Defensive,
+//   Aggressive,
+//   // Swarm,
+// }

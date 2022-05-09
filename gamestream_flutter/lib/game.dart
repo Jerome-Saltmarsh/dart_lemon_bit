@@ -40,9 +40,7 @@ class _Game {
   final scoreBuilder = StringBuffer();
   final scoreText = Watch("");
   var customGameName = "";
-  var cratesTotal = 0;
   var totalNpcs = 0;
-  var totalCubes = 0;
   var totalCollectables = 0;
   var bulletHoleIndex = 0;
   var id = -1;
@@ -56,7 +54,7 @@ class _Game {
     for (var i = 0; i < 50; i++) {
       interactableNpcs.add(Character());
     }
-    for (var i = 0; i < 1500; i++) {
+    for (var i = 0; i < 2000; i++) {
       zombies.add(Character());
     }
     for (var i = 0; i < 50; i++) {
