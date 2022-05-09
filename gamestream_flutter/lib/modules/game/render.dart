@@ -11,6 +11,7 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
+import 'package:gamestream_flutter/modules/isometric/classes.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
@@ -30,6 +31,8 @@ class GameRender {
   final GameQueries queries;
   final GameState state;
   final GameStyle style;
+
+  bool get debug => state.debug.value;
 
   GameRender(this.state, this.style, this.queries);
 
@@ -64,9 +67,29 @@ class GameRender {
     }
     drawPaths();
     renderCollectables();
+    if (debug) {
+      renderTeamColours();
+    }
     _render.renderSprites();
     drawEffects();
     drawItems();
+  }
+
+  void renderTeamColours() {
+    final total = game.totalZombies.value;
+    final zombies = game.zombies;
+    for (var i = 0; i < total; i++) {
+      renderTeamColour(zombies[i]);
+    }
+  }
+
+  void renderTeamColour(Character character){
+     engine.draw.circle(
+         character.x,
+         character.y,
+         10,
+         character.allie ? Colors.green : Colors.red
+     );
   }
 
   void renderCollectables() {
