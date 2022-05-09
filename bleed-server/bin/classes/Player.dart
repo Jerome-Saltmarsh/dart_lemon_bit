@@ -11,6 +11,7 @@ import 'library.dart';
 class Player extends Character with ByteWriter {
   final mouse = Vector2(0, 0);
   final runTarget = Vector2(0, 0);
+  var debug = false;
   var score = 0;
   var sceneChanged = false;
   var characterState = CharacterState.Idle;
@@ -81,6 +82,12 @@ class Player extends Character with ByteWriter {
     maxMagic = magic;
     _magic = maxMagic;
     engine.onPlayerCreated(this);
+  }
+
+  void toggleDebug(){
+    debug = !debug;
+    writeByte(ServerResponse.Debug_Mode);
+    writeBool(debug);
   }
 
   void equipPickaxe(){
@@ -307,7 +314,7 @@ extension PlayerProperties on Player {
       sceneDownloaded = true;
     }
 
-    if (game.debugMode)
+    if (debug)
       writePaths();
   }
 

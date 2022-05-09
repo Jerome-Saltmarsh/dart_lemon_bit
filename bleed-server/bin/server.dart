@@ -896,14 +896,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           // player.acquire(slotType);
           return;
 
-        case ClientRequest.Set_Compile_Paths:
-
+        case ClientRequest.Toggle_Debug:
           if (player == null) {
             errorPlayerNotFound();
             return;
           }
-          final game = player.game;
-          game.debugMode = !game.debugMode;
+          player.toggleDebug();
           break;
 
         case ClientRequest.Version:

@@ -13,8 +13,7 @@ class GameState {
   final characterController = CharacterController();
   final keyMap = KeyMap();
   final textFieldMessage = FocusNode();
-  final debugPanelVisible = Watch(false);
-  final compilePaths = Watch(false);
+  final debug = Watch(false);
   final storeTab = Watch(storeTabs[0]);
   final textBoxVisible = Watch(false);
   final highlightStructureType = Watch<int?>(null);

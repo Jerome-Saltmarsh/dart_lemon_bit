@@ -151,7 +151,7 @@ class GameRender {
   }
 
   void drawPaths() {
-    if (!state.compilePaths.value) return;
+    if (!state.debug.value) return;
     engine.setPaintColor(colours.blue);
     engine.paint.strokeWidth = 4.0;
 

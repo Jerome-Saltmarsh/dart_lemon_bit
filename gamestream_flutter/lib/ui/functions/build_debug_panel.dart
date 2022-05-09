@@ -132,8 +132,3 @@ Widget get bufferLengthWatcher {
   });
 }
 
-Widget toggleDebugMode(){
-  return WatchBuilder(state.compilePaths, (bool compilePaths){
-    return button("Debug Mode: $compilePaths", modules.game.actions.toggleDebugPaths);
-  });
-}

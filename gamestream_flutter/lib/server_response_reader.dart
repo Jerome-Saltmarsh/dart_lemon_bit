@@ -93,6 +93,10 @@ class ServerResponseReader extends ByteReader {
           parseTiles();
           break;
 
+        case ServerResponse.Debug_Mode:
+          modules.game.state.debug.value = readBool();
+          break;
+
         case ServerResponse.Player_Attack_Target:
           _player.attackTarget.x = readDouble();
           _player.attackTarget.y = readDouble();
@@ -163,7 +167,7 @@ class ServerResponseReader extends ByteReader {
           break;
 
         case ServerResponse.Paths:
-          modules.game.state.compilePaths.value = true;
+          modules.game.state.debug.value = true;
           final paths = modules.isometric.paths;
           var index = 0;
           while (true) {

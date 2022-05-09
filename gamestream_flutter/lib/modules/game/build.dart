@@ -120,8 +120,8 @@ class GameBuild {
             Positioned(
                 left: _pad,
                 top: _pad,
-                child: WatchBuilder(state.debugPanelVisible, (bool visible){
-                  return visible ? buildDebugPanel() : Column(
+                child: WatchBuilder(state.debug, (bool debug){
+                  return debug ? buildDebugPanel() : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                     ],

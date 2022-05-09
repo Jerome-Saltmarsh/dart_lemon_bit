@@ -100,10 +100,10 @@ void parseState() {
         modules.game.state.player.message.value = message.trim();
         break;
 
-      case ServerResponse.Debug_Mode:
-        final debugInt = _consumeSingleDigitInt();
-        modules.game.state.compilePaths.value = debugInt == 1;
-        break;
+      // case ServerResponse.Debug_Mode:
+      //   final debugInt = _consumeSingleDigitInt();
+      //   modules.game.state.debug.value = debugInt == 1;
+      //   break;
 
       case ServerResponse.Grenades:
         break;
@@ -221,10 +221,6 @@ int consumeSlotType(){
 
 int _consumeIntUnsafe() {
   return int.parse(_consumeStringUnsafe());
-}
-
-int _consumeSingleDigitInt() {
-  return int.parse(_consumeSingleCharacter());
 }
 
 // ServerResponse _consumeServerResponse() {

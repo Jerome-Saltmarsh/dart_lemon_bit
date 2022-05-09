@@ -6,7 +6,7 @@ enum ClientRequest {
   Revive,
   Equip,
   Purchase,
-  Set_Compile_Paths,
+  Toggle_Debug,
   Version,
   Interact,
   Speak,

@@ -152,11 +152,6 @@ class GameActions {
     equipSlot(6);
   }
 
-  void toggleDebugPanel(){
-    print("game.actions.toggleDebugPanel()");
-    state.debugPanelVisible.value = !state.debugPanelVisible.value;
-  }
-
   void nextCameraMode(){
     state.cameraMode.value = cameraModes[(state.cameraMode.value.index + 1) % cameraModes.length];
   }
@@ -189,7 +184,7 @@ class GameActions {
         throw Exception("Slot item index must between 1 and 6 inclusive. (received $index)");
   }
 
-  void toggleDebugPaths() {
+  void toggleDebugMode() {
     print("game.actions.enableDebugNpc()");
     sendRequestTogglePaths();
   }

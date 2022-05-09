@@ -39,7 +39,6 @@ abstract class Game {
   var frame = 0;
   var teamSize = 1;
   var numberOfTeams = 2;
-  var debugMode = false;
   var countDownFramesRemaining = engine.framesPerSecond * 3;
   var disableCountDown = 0;
   late GameStatus status;
