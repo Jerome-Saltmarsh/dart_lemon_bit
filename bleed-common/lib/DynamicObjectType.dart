@@ -6,4 +6,5 @@ class DynamicObjectType {
   static const Tree = 4;
   static const Palisade = 5;
   static const Chest = 6;
+  static const House = 7;
 }

@@ -7,9 +7,11 @@ import 'AI.dart';
 import 'Character.dart';
 import 'DynamicObject.dart';
 import 'EnvironmentObject.dart';
+import 'Structure.dart';
 import 'TileNode.dart';
 
 class Scene {
+  final List<Structure> structures;
   final List<Character> characters;
   final List<List<int>> tiles;
   final List<StaticObject> objectsStatic;
@@ -31,6 +33,7 @@ class Scene {
 
   Scene({
     required this.tiles,
+    required this.structures,
     required this.objectsStatic,
     required this.objectsDynamic,
     required this.characters,
@@ -177,6 +180,10 @@ class Scene {
     node.depth = 0;
     node.previous = null;
     node.searchId = pathFindSearchID;
+
+    if (!node.open) {
+      return false;
+    }
 
     if (node.depth == 50 || node == pathFindDestination) {
       var current = node.previous;

@@ -536,6 +536,8 @@ class IsometricRender {
         return renderPalisade(x: structure.x, y: structure.y);
       case StructureType.Torch:
         return renderTorch(structure);
+      case StructureType.House:
+        return renderHouse(structure);
     }
   }
 
@@ -637,7 +639,18 @@ class IsometricRender {
         break;
       case DynamicObjectType.Chest:
         return renderChest(dynamicObject);
+      case DynamicObjectType.House:
+        return renderHouse(dynamicObject);
     }
+  }
+
+  void renderHouse(Position position){
+    engine.renderCustomV2(
+        dst: position,
+        srcX: 1748,
+        srcWidth: 150,
+        srcHeight: 150
+    );
   }
 
   void renderPot(Position position) {

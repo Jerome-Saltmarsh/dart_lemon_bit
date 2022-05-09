@@ -2,8 +2,7 @@
 import 'package:lemon_math/functions/random_int.dart';
 
 import '../classes/library.dart';
-import '../common/ObjectType.dart';
-import '../common/TechType.dart';
+import '../common/library.dart';
 import '../scene_generator.dart';
 
 /// THEY COME AT NIGHT
@@ -17,13 +16,14 @@ import '../scene_generator.dart';
 /// How many days can you and your group survive?
 /// Creating a fire costs 100 wood and lasts for a duration before burning out
 class GameNightSurvivors extends Game {
-  static const spawnStart = 22 * 60 * 60;
+  static const playerTeam = 1;
+  static const spawnStart = 15 * 60 * 60;
   static const spawnEnd = 6 * 60 * 60;
   var time = 12 * 60 * 60;
 
   bool spawnMode = false;
 
-  late final StaticObject townCenter;
+  late final Structure townCenter;
 
   bool get isFull => players.length >= 5;
 
@@ -37,12 +37,14 @@ class GameNightSurvivors extends Game {
   ) {
     assert(scene.spawnPointPlayers.isNotEmpty);
     final spawnPoint = scene.spawnPointPlayers.first;
-    townCenter = StaticObject(
+    townCenter = Structure (
+        team: playerTeam,
         x: spawnPoint.x,
         y: spawnPoint.y,
-        type: ObjectType.House01
+        type: StructureType.House,
+        health: 100,
     );
-    scene.objectsStatic.add(townCenter);
+    structures.add(townCenter);
   }
 
   Player spawnPlayer() {
@@ -66,9 +68,9 @@ class GameNightSurvivors extends Game {
         onSpawnModeEnded();
       }
     }
-    if (time % 10 == 0) {
-      spawnMonster();
-    }
+    // if (time % 10 == 0) {
+    //   spawnMonster();
+    // }
     time = (time + 1) % 86400;
   }
 

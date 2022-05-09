@@ -27,7 +27,6 @@ import 'TileNode.dart';
 import 'components.dart';
 
 abstract class Game {
-  final structures = <Structure>[];
   final colliders = <Collider>[];
   final items = <Item>[];
   final zombies = <AI>[];
@@ -51,6 +50,8 @@ abstract class Game {
   static int _id = 0;
 
   List<DynamicObject> get dynamicObjects => scene.objectsDynamic;
+
+  List<Structure> get structures => scene.structures;
 
   bool get countingDown => status == GameStatus.Counting_Down;
 

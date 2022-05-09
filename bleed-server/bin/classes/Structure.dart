@@ -6,7 +6,7 @@ import 'Collider.dart';
 import 'Player.dart';
 import 'components.dart';
 
-class Structure extends Collider with Team, Health, Owner<Player>, Type<int> {
+class Structure extends Collider with Team, Health, Owner<Player?>, Type<int> {
   var cooldown = 0;
   int attackRate;
   int attackDamage;
@@ -19,18 +19,19 @@ class Structure extends Collider with Team, Health, Owner<Player>, Type<int> {
     required double x,
     required double y,
     required int team,
-    required Player owner,
     required int health,
     required int type,
-    required this.attackRate,
-    required this.attackDamage,
+    this.attackRate = 0,
+    this.attackDamage = 0,
     this.attackRange = 200.0,
+    Player? owner,
   }) : super(x: x, y: y, radius: 25) {
     this.team = team;
     this.owner = owner;
     this.maxHealth = health;
     this.health = health;
     this.type = type;
+    this.owner = owner;
   }
 
   bool withinRange(Position value) {

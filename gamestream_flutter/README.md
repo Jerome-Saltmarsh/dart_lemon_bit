@@ -131,6 +131,7 @@
 [ ] Select Character Type
 [ ] At night spawn waves of creeps to attack town center
 [ ] Waiting for x number of players to join before starting game
+[ ] Game over when town center destroyed
 [x] AI Auto target town center at night
 [x] (Critical Stack overflow) scene generator
 [x] Spawn Town Center

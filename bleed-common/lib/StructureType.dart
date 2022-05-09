@@ -4,12 +4,14 @@ class StructureType {
   static const Tower = 0;
   static const Palisade = 1;
   static const Torch = 2;
+  static const House = 3;
 
   static String getName(int type) {
      return const <int, String> {
          Tower: "Tower",
          Palisade: "Palisade",
          Torch: "Torch",
+         House: "House",
      }[type] ?? "?";
   }
   
@@ -26,7 +28,7 @@ class StructureType {
   }
 
   static bool isValid(int value) {
-     return value >= 0 && value <= Torch;
+     return value >= 0 && value <= House;
   }
 }
 

@@ -30,7 +30,10 @@ class Collectable with
     }
     else
     if (target is Structure){
-      _playerCollect((target as Structure).owner);
+      final owner = (target as Structure).owner;
+      if (owner != null){
+        _playerCollect(owner);
+      }
     }
   }
 

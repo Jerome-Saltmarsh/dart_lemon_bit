@@ -273,6 +273,7 @@ Scene generateRandomScene({
   }
 
   return Scene(
+      structures: [],
       tiles: tiles,
       characters: [],
       objectsStatic: objectsStatic,

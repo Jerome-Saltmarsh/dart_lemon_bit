@@ -97,6 +97,7 @@ Scene parseJsonToScene(Json json, String name) {
 
   final scene = Scene(
     tiles: tiles,
+    structures: [],
     objectsStatic: environment,
     objectsDynamic: [],
     characters: characters,
