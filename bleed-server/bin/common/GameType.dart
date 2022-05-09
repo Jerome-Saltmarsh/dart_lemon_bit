@@ -21,7 +21,7 @@ const gameTypeNames = {
     GameType.Moba: "HEROES MOBA",
     GameType.DeathMatch: "COUNTER STRIKE",
     GameType.SWARM: "SWARM",
-    GameType.PRACTICE: "PRACTICE",
+    GameType.PRACTICE: "SANDBOX",
     GameType.RANDOM: "THEY COME AT NIGHT",
 };
 

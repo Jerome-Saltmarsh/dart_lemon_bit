@@ -16,9 +16,9 @@ import 'language.dart';
 final engine = _Engine();
 
 class _Engine {
-  final framesPerSecond = 45;
-  final framesPerRegen = 30 * 10;
-  final framesPerUpdateAIPath = 30;
+  static const framesPerSecond = 45;
+  static const framesPerRegen = 30 * 10;
+  static const framesPerUpdateAIPath = 30;
   final games = <Game>[];
   final scenes = _Scenes();
   late final world;

@@ -39,7 +39,7 @@ abstract class Game {
   var frame = 0;
   var teamSize = 1;
   var numberOfTeams = 2;
-  var countDownFramesRemaining = engine.framesPerSecond * 3;
+  var countDownFramesRemaining = 45 * 3;
   var disableCountDown = 0;
   late GameStatus status;
   final GameType gameType;
@@ -1130,16 +1130,15 @@ extension GameFunctions on Game {
         zombie.target = zombie.objective;
       }
 
-      num targetDistance = 9999999.0;
+      var targetDistance = 9999999.0;
 
-      for (final otherZombie in zombies) {
-        if (otherZombie.dead) continue;
-        if (zombie.team == otherZombie.team) continue;
-        if (!zombie.withinViewRange(otherZombie)) continue;
-        final npcDistance = zombie.getDistance(otherZombie);
+      for (final structure in structures) {
+        if (structure.dead) continue;
+        if (sameTeam(structure, zombie)) continue;
+        if (!zombie.withinViewRange(structure)) continue;
+        final npcDistance = zombie.getDistance(structure);
         if (npcDistance >= targetDistance) continue;
-        // if (!isVisibleBetween(zombie, otherZombie)) continue;
-        setNpcTarget(zombie, otherZombie);
+        setNpcTarget(zombie, structure);
         targetDistance = npcDistance;
       }
 
@@ -1151,14 +1150,11 @@ extension GameFunctions on Game {
         if (npcDistance >= targetDistance) continue;
         setNpcTarget(zombie, player);
         targetDistance = npcDistance;
-        break;
       }
       final target = zombie.target;
-      if (target != null) {
-        if (targetDistance > 100) {
-          npcSetPathTo(zombie, target);
-        }
-      }
+      if (target == null) return;
+      if (targetDistance < 100) return;
+      npcSetPathTo(zombie, target);
     }
   }
 
@@ -1183,7 +1179,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void setNpcTarget(AI ai, Character value) {
+  void setNpcTarget(AI ai, Health value) {
     assert(!sameTeam(ai, value));
     assert(value.alive);
     assert(ai.alive);

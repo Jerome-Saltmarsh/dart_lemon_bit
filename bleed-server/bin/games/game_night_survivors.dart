@@ -16,13 +16,12 @@ import '../scene_generator.dart';
 /// How many days can you and your group survive?
 /// Creating a fire costs 100 wood and lasts for a duration before burning out
 class GameNightSurvivors extends Game {
-  static const playerTeam = 1;
+  static const teamPlayers = 1;
+  static const teamZombies = 2;
   static const spawnStart = 15 * 60 * 60;
   static const spawnEnd = 6 * 60 * 60;
   var time = 12 * 60 * 60;
-
-  bool spawnMode = false;
-
+  var spawnMode = false;
   late final Structure townCenter;
 
   bool get isFull => players.length >= 5;
@@ -38,7 +37,7 @@ class GameNightSurvivors extends Game {
     assert(scene.spawnPointPlayers.isNotEmpty);
     final spawnPoint = scene.spawnPointPlayers.first;
     townCenter = Structure (
-        team: playerTeam,
+        team: teamPlayers,
         x: spawnPoint.x,
         y: spawnPoint.y,
         type: StructureType.House,
@@ -48,7 +47,13 @@ class GameNightSurvivors extends Game {
   }
 
   Player spawnPlayer() {
-     return Player(game: this, weapon: TechType.Unarmed, x: townCenter.x, y: townCenter.y + 100);
+     return Player(
+         game: this,
+         weapon: TechType.Unarmed,
+         x: townCenter.x,
+         y: townCenter.y + 100,
+         team: teamPlayers
+     );
   }
 
   @override
@@ -59,8 +64,7 @@ class GameNightSurvivors extends Game {
         onSpawnModeStarted();
       }
       if (time % 10 == 0) {
-        final zombie = spawnRandomZombie();
-        zombie.objective = townCenter;
+        spawnMonster();
       }
     } else {
       if (spawnMode) {
@@ -77,6 +81,7 @@ class GameNightSurvivors extends Game {
   void spawnMonster(){
     final zombie = spawnRandomZombie();
     zombie.objective = townCenter;
+    zombie.team = teamZombies;
   }
 
   void onSpawnModeStarted(){
