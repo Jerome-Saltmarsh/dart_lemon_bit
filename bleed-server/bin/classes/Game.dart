@@ -344,7 +344,35 @@ extension GameFunctions on Game {
       src.writeDamageApplied(target as Position, damage);
     }
 
+    if (target is Velocity && target is Position) {
+      final velocity = target as Velocity;
+      const forceMultiplier = 3.0;
+      velocity.accelerate(radiansV2(src, target as Position), damage / target.maxHealth * forceMultiplier);
+    }
+
     final destroyed = target.dead;
+
+    if (target is Material) {
+      switch ((target as Material).material) {
+        case MaterialType.Rock:
+          dispatchV2(GameEventType.Material_Struck_Rock, target as Position);
+          break;
+        case MaterialType.Wood:
+          dispatchV2(GameEventType.Material_Struck_Wood, target as Position);
+          break;
+        case MaterialType.Plant:
+          dispatchV2(GameEventType.Material_Struck_Plant, target as Position);
+          break;
+        case MaterialType.Flesh:
+          dispatchV2(GameEventType.Material_Struck_Flesh,
+              target as Position, angle: radiansV2(src, target as Position));
+          break;
+        case MaterialType.Metal:
+          dispatchV2(GameEventType.Material_Struck_Metal, target as Position);
+          break;
+      }
+    }
+
 
     if (destroyed) {
       if (target is Collider) {
@@ -817,49 +845,6 @@ extension GameFunctions on Game {
       final health = target as Health;
       applyDamage(src: src, target: health, amount: damage);
     }
-
-    final angleBetweenSrcAndTarget = radiansV2(src, target);
-    if (target is Velocity) {
-      final velocity = target as Velocity;
-      if (target is Health) {
-         const forceMultiplier = 3.0;
-         final health = target as Health;
-         velocity.accelerate(angleBetweenSrcAndTarget, damage / health.maxHealth * forceMultiplier);
-      } else {
-        velocity.accelerate(angleBetweenSrcAndTarget, damage.toDouble());
-      }
-    }
-
-    if (target is Material) {
-      switch ((target as Material).material) {
-        case MaterialType.Rock:
-          dispatchV2(GameEventType.Material_Struck_Rock, target);
-          break;
-        case MaterialType.Wood:
-          dispatchV2(GameEventType.Material_Struck_Wood, target);
-          break;
-        case MaterialType.Plant:
-          dispatchV2(GameEventType.Material_Struck_Plant, target);
-          break;
-        case MaterialType.Flesh:
-          dispatchV2(GameEventType.Material_Struck_Flesh,
-              target, angle: angleBetweenSrcAndTarget);
-          break;
-        case MaterialType.Metal:
-          dispatchV2(GameEventType.Material_Struck_Metal, target);
-          break;
-      }
-    }
-
-    // if (target is Character) {
-    //   if (target.dead && target.type.isZombie) {
-    //     dispatchV2(
-    //       GameEventType.Zombie_Killed,
-    //       target,
-    //       angle: angleBetweenSrcAndTarget,
-    //     );
-    //   }
-    // }
   }
 
   void updateCharacterStatePerforming(Character character) {

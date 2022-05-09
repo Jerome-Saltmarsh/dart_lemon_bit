@@ -127,7 +127,6 @@
 [THEY COME AT NIGHT]
 [THE CURSED ISLAND]
 [ ] Select Character Name
-
 [ ] Select Character Type
 [ ] At night spawn waves of creeps to attack town center
 [ ] Waiting for x number of players to join before starting game
