@@ -22,7 +22,9 @@ class GameNightSurvivors extends Game {
   static const spawnEnd = 6 * 60 * 60;
   var time = 12 * 60 * 60;
   var spawnMode = false;
-  late final Structure townCenter;
+  late final Structure campFire;
+
+  var lives = 10;
 
   bool get isFull => players.length >= 5;
 
@@ -36,22 +38,22 @@ class GameNightSurvivors extends Game {
   ) {
     assert(scene.spawnPointPlayers.isNotEmpty);
     final spawnPoint = scene.spawnPointPlayers.first;
-    townCenter = Structure (
+    campFire = Structure (
         team: teamPlayers,
         x: spawnPoint.x,
         y: spawnPoint.y,
         type: StructureType.House,
         health: 100,
     );
-    structures.add(townCenter);
+    structures.add(campFire);
   }
 
   Player spawnPlayer() {
      return Player(
          game: this,
          weapon: TechType.Unarmed,
-         x: townCenter.x,
-         y: townCenter.y + 100,
+         x: campFire.x,
+         y: campFire.y + 100,
          team: teamPlayers
      );
   }
@@ -76,11 +78,17 @@ class GameNightSurvivors extends Game {
     //   spawnMonster();
     // }
     time = (time + 1) % 86400;
+
+    for(final zombie in zombies) {
+      if (zombie.getDistance(campFire) > 50) continue;
+      applyDamage(src: campFire, target: zombie, amount: 9999);
+      lives--;
+    }
   }
 
   void spawnMonster(){
     final zombie = spawnRandomZombie();
-    zombie.objective = townCenter;
+    zombie.objective = campFire;
     zombie.team = teamZombies;
   }
 

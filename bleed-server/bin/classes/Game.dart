@@ -350,6 +350,16 @@ extension GameFunctions on Game {
       if (target is Collider) {
         (target as Collider).collidable = false;
       }
+      if (target is Character) {
+        if (target.dead && target.type.isZombie) {
+          dispatchV2(
+            GameEventType.Zombie_Killed,
+            target,
+            angle: radiansV2(src, target),
+          );
+        }
+      }
+
       onKilled(target, src);
     } else {
       onDamaged(target, src, damage);
@@ -841,15 +851,15 @@ extension GameFunctions on Game {
       }
     }
 
-    if (target is Character) {
-      if (target.dead && target.type.isZombie) {
-        dispatchV2(
-          GameEventType.Zombie_Killed,
-          target,
-          angle: angleBetweenSrcAndTarget,
-        );
-      }
-    }
+    // if (target is Character) {
+    //   if (target.dead && target.type.isZombie) {
+    //     dispatchV2(
+    //       GameEventType.Zombie_Killed,
+    //       target,
+    //       angle: angleBetweenSrcAndTarget,
+    //     );
+    //   }
+    // }
   }
 
   void updateCharacterStatePerforming(Character character) {
