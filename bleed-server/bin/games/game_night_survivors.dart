@@ -91,4 +91,14 @@ class GameNightSurvivors extends Game {
   int getTime() {
     return time;
   }
+
+  @override
+  void onDamaged(dynamic target, dynamic src, int damage) {
+
+  }
+
+  @override
+  void onKilled(dynamic target, dynamic src) {
+
+  }
 }

@@ -70,9 +70,13 @@ abstract class Game {
     countDownFramesRemaining = 0;
   }
 
-  void onCharacterKilled(Character killed, dynamic by) {}
+  void onKilled(dynamic target, dynamic src){
 
-  void onDynamicObjectDestroyed(DynamicObject dynamicObject) {}
+  }
+
+  void onDamaged(dynamic target, dynamic src, int amount){
+
+  }
 
   /// In seconds
   int getTime();
@@ -341,17 +345,22 @@ extension GameFunctions on Game {
       src.writeDamageApplied(target as Position, damage);
     }
 
-    final killed = target.dead;
+    final destroyed = target.dead;
+
+    if (destroyed) {
+      if (target is Collider) {
+        (target as Collider).collidable = false;
+      }
+      onKilled(target, src);
+    } else {
+      onDamaged(target, src, damage);
+    }
 
     if (target is Character) {
       final isZombie = target.type.isZombie;
 
-      if (killed) {
-        onCharacterKilled(target, src);
+      if (destroyed) {
         setCharacterStateDead(target);
-        if (isZombie) {
-          spawnCollectable(position: target, target: src, type: CollectableType.Gold, amount: 1);
-        }
         return;
       }
       if (isZombie && randomBool()) {
@@ -372,15 +381,13 @@ extension GameFunctions on Game {
       return;
     }
 
-    if (killed && target is Structure) {
-      target.collidable = false;
+    if (destroyed && target is Structure) {
       final node = scene.tileNodeAt(target);
       node.open = true;
       node.obstructed = false;
     }
 
     if (target is DynamicObject) {
-
       switch (target.type) {
         case DynamicObjectType.Rock:
           if (src is Player) {
@@ -394,10 +401,9 @@ extension GameFunctions on Game {
           break;
       }
 
-      if (killed) {
-        target.collidable = false;
+      if (destroyed) {
         target.respawnDuration = 5000;
-        onDynamicObjectDestroyed(target);
+        notifyPlayersDynamicObjectDestroyed(target);
 
         if (target.type == DynamicObjectType.Pot) {
           dispatchV2(GameEventType.Object_Destroyed_Pot, target);
@@ -1105,7 +1111,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void onDynamicObjectDestroyed(DynamicObject dynamicObject){
+  void notifyPlayersDynamicObjectDestroyed(DynamicObject dynamicObject){
     for (final player in players) {
       player.writeDynamicObjectDestroyed(dynamicObject);
     }
