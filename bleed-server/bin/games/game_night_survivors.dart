@@ -79,10 +79,19 @@ class GameNightSurvivors extends Game {
     // }
     time = (time + 1) % 86400;
 
-    for(final zombie in zombies) {
+    for (final zombie in zombies) {
+      if (zombie.dead) continue;
       if (zombie.getDistance(campFire) > 50) continue;
       applyDamage(src: campFire, target: zombie, amount: 9999);
-      lives--;
+      reduceLife();
+    }
+  }
+
+  void reduceLife(){
+    if (lives <= 0) return;
+    lives--;
+    for (final player in players) {
+      player.writeLivesRemaining(lives);
     }
   }
 
@@ -113,5 +122,10 @@ class GameNightSurvivors extends Game {
   @override
   void onKilled(dynamic target, dynamic src) {
 
+  }
+
+  @override
+  void onPlayerJoined(Player player) {
+    player.writeLivesRemaining(lives);
   }
 }

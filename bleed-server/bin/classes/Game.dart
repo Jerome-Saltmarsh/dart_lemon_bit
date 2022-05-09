@@ -82,6 +82,10 @@ abstract class Game {
 
   void onGameStarted() {}
 
+  void onPlayerJoined(Player player){
+
+  }
+
   void onPlayerDeath(Player player) {}
 
   void onNpcObjectivesCompleted(Character npc) {}

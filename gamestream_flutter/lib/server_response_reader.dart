@@ -166,6 +166,10 @@ class ServerResponseReader extends ByteReader {
           sortVertically(game.dynamicObjects);
           break;
 
+        case ServerResponse.Lives_Remaining:
+          modules.game.state.lives.value = readByte();
+          break;
+
         case ServerResponse.Paths:
           modules.game.state.debug.value = true;
           final paths = modules.isometric.paths;

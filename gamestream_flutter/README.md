@@ -133,6 +133,8 @@
 [ ] Game over when town center destroyed
 [ ] Design Camp Fire
 [ ] On enter campire fire parimeter lose life
+[ ] Valid player spawn location must be grass surrounded by grass
+[ ] Render lives remaining
 [x] AI Auto target town center at night
 [x] (Critical Stack overflow) scene generator
 [x] Spawn Town Center

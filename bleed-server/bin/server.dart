@@ -109,6 +109,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
         player.name = account.publicName;
       }
       final game = player.game;
+      game.onPlayerJoined(player);
       write(ServerResponse.Scene_Shade_Max);
       write(game.shadeMax);
       write(ServerResponse.Game_Status);

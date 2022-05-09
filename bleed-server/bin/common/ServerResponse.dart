@@ -50,5 +50,6 @@ class ServerResponse {
   static const Damage_Applied = 50;
   static const Dynamic_Object_Destroyed = 51;
   static const Dynamic_Object_Spawned = 52;
+  static const Lives_Remaining = 53;
 }
 

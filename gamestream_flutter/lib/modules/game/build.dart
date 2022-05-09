@@ -135,8 +135,19 @@ class GameBuild {
             buildPanelHighlightedStructureType(),
             buildPanelHighlightedTechTypeUpgrade(),
             buildPanelPrimary(),
+            buildTextLivesRemaining(),
           ]);
     });
+  }
+
+  Widget buildTextLivesRemaining(){
+    return Positioned(
+      right: 20,
+      bottom: 20,
+      child: WatchBuilder(modules.game.state.lives, (int lives){
+         return text('Lives: $lives');
+      }),
+    );
   }
 
   Widget buildButtonExit() => button("Exit", core.actions.disconnect);

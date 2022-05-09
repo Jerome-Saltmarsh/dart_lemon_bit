@@ -84,6 +84,11 @@ class Player extends Character with ByteWriter {
     engine.onPlayerCreated(this);
   }
 
+  void writeLivesRemaining(int lives){
+    writeByte(ServerResponse.Lives_Remaining);
+    writeByte(lives);
+  }
+
   void toggleDebug(){
     debug = !debug;
     writeByte(ServerResponse.Debug_Mode);
