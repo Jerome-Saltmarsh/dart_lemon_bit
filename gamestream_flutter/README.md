@@ -125,12 +125,14 @@
     [ ] Bazooka
     [ ] Machine gunner
 [THEY COME AT NIGHT]
-[THE CURSED ISLAND]
 [ ] Select Character Name
 [ ] Select Character Type
 [ ] Waiting for x number of players to join before starting game
 [ ] Game over when town center destroyed
 [ ] Valid player spawn location must be grass surrounded by grass
+[ ] Fix Render cliffs visible in pitch black
+[ ] Fix Zombies don't run into flame
+[x] Fix player spawns on water
 [x] At night spawn waves of creeps to attack town center
 [x] Design Camp Fire
 [x] On enter campire fire parimeter lose life
@@ -142,8 +144,8 @@
 [ ] DynamicObject.Id should be big int
 [ ] Preload audios
 [ ] Refactor Game with ByteReader
-[ ] (SERVER) Remove colliders from game
 [COMPLETED]  
+[x] (SERVER) Remove colliders from game
 [x] Chest Shades
 [x] (CRITICAL) Fix Freezing Error on destroy object    
 [x] (Optimization_ Only render visible Objects

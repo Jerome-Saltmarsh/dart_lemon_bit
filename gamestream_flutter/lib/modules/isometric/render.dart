@@ -684,18 +684,26 @@ class IsometricRender {
     );
   }
 
+  void renderSmoke({
+    required double x,
+    required double y,
+    required double scale
+  }){
+    engine.renderCustom(
+        dstX: x,
+        dstY: y,
+        srcX: 5612,
+        srcY: 0,
+        srcWidth: 50,
+        srcHeight: 50,
+        scale: scale
+    );
+  }
+
   void renderParticle(Particle value) {
     switch (value.type) {
       case ParticleType.Smoke:
-        return engine.renderCustom(
-          dstX: value.x,
-          dstY: value.renderY,
-          srcX: 5612,
-          srcY: 0,
-          srcWidth: 50,
-          srcHeight: 50,
-          scale: value.renderScale
-        );
+        return renderSmoke(x: value.x, y: value.renderY, scale: value.renderScale);
       default:
         break;
     }

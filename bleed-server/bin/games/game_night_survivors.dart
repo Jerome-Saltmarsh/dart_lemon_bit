@@ -49,13 +49,21 @@ class GameNightSurvivors extends Game {
   }
 
   Player spawnPlayer() {
-     return Player(
-         game: this,
-         weapon: TechType.Unarmed,
-         x: campFire.x,
-         y: campFire.y + 100,
-         team: teamPlayers
-     );
+
+     while(true){
+       final angle = randomAngle();
+       final posX = campFire.getPositionX(angle, tileSize);
+       final posY = campFire.getPositionY(angle, tileSize);
+       if (!scene.tileWalkableAt(posX, posY)) continue;
+       return Player(
+           game: this,
+           weapon: TechType.Unarmed,
+           x: posX,
+           y: posY,
+           team: teamPlayers
+       );
+     }
+
   }
 
   @override
