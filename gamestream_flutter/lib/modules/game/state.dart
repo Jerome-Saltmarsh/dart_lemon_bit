@@ -57,7 +57,6 @@ class Player {
   var score = 0;
   var x = 0.0;
   var y = 0.0;
-  var id = -1;
   var team = 0;
   var abilityRange = 0.0;
   var abilityRadius = 0.0;

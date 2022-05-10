@@ -95,13 +95,6 @@ Widget get playerPosition {
   });
 }
 
-Widget get playerId {
-  final character = modules.game.state.player;
-  return Refresh((){
-    return text("Player Id: ${character.id}");
-  });
-}
-
 Widget get mousePositionWorld {
   return Refresh((){
     return text("Mouse World: x: ${mouseWorldX.toInt()}, y: ${mouseWorldY.toInt()}");

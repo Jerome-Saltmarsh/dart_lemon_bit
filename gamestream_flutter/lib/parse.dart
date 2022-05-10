@@ -178,8 +178,6 @@ AbilityType _consumeAbilityType() {
 void _parseGameJoined() {
   print("parseGameJoined()");
   final player = modules.game.state.player;
-  player.id = consumeInt();
-  game.id = consumeInt();
   player.team = consumeInt();
   player.x = consumeDouble();
   player.y = consumeDouble();

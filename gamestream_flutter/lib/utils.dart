@@ -22,8 +22,6 @@ void snapToGrid(Vector2 value){
   }
 }
 
-bool get playerAssigned => modules.game.state.player.id >= 0;
-
 void drawLine(double x1, double y1, double x2, double y2) {
   engine.canvas.drawLine(offset(x1, y1), offset(x2, y2), engine.paint);
 }

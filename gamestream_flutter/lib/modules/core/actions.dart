@@ -167,8 +167,6 @@ class CoreActions {
 
   void clearState() {
     final player = modules.game.state.player;
-    player.id = -1;
-    game.id = -1;
     player.x = -1;
     player.y = -1;
     game.totalZombies.value = 0;

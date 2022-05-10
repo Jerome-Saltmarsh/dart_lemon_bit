@@ -43,7 +43,6 @@ class _Game {
   var totalNpcs = 0;
   var totalCollectables = 0;
   var bulletHoleIndex = 0;
-  var id = -1;
   var totalProjectiles = 0;
   var itemsTotal = 0;
 
