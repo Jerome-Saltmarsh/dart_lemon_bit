@@ -674,14 +674,13 @@ class IsometricRender {
   }
 
   void renderChest(Position position){
-    engine.renderCustomV2(
-      dst: position,
-      srcX: 6329,
-      srcY: isometric.getShadeAt(position) * 76.0,
-      srcWidth: 50,
-      srcHeight: 76.0,
-      scale: 0.75,
-      anchorY: 0.6,
+    render(
+        position: position,
+        srcX: 6328,
+        width: 50,
+        height: 76,
+        anchorY: 0.6,
+        scale: 0.75
     );
   }
 
@@ -750,6 +749,8 @@ class IsometricRender {
         return renderTreeStump(value);
       case ObjectType.Rock_Small:
         return renderRockSmall(value);
+      case ObjectType.Flag:
+        return renderFlag(value);
       default:
         break;
     }
@@ -760,7 +761,11 @@ class IsometricRender {
   }
   
   void renderFireplace(Position position) {
-    render(position: position, srcX: 6374, width: 54, height: 46);
+    render(position: position, srcX: 6379, width: 54, height: 46);
+  }
+
+  void renderFlag(Position position) {
+    render(position: position, srcX: 6437, width: 19, height: 33);
   }
 
   void renderLongGrass(Position position){
@@ -783,7 +788,9 @@ class IsometricRender {
     required Position position,
     required double srcX,
     required double width,
-    required double height
+    required double height,
+    double anchorY = 0.5,
+    double scale = 1.0,
   }){
     final shade =  isometric.getShadeAt(position);
     if (shade >= Shade.Pitch_Black) return;
@@ -793,6 +800,8 @@ class IsometricRender {
       srcY: shade * height,
       srcWidth: width,
       srcHeight: height,
+      anchorY: anchorY,
+      scale: scale,
     );
   }
 
