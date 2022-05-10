@@ -776,8 +776,14 @@ class IsometricRender {
   }
   
   void renderFireplace(Position position) {
-    render(position: position, srcX: 6379, width: 46, height: 40);
-    renderFlame(position);
+    engine.renderCustom(
+      dstX: position.x,
+      dstY: position.y,
+      srcY: ((position.x + position.y + engine.animationFrame) % 6) * 43,
+      srcX: 6464,
+      srcWidth: 46,
+      srcHeight: 43,
+    );
   }
 
   void renderFlame(Position position){

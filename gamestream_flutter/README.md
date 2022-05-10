@@ -131,7 +131,6 @@
 [ ] Waiting for x number of players to join before starting game
 [ ] Game over when town center destroyed
 [ ] Valid player spawn location must be grass surrounded by grass
-[ ] Fire should ignite at night time
 [x] At night spawn waves of creeps to attack town center
 [x] Design Camp Fire
 [x] On enter campire fire parimeter lose life

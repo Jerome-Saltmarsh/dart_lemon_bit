@@ -63,10 +63,10 @@ class GameFactories {
 void emitSmoke(Particle particle){
   particle.type = ParticleType.Smoke;
   particle.duration = randomBetween(100, 150).toInt();
-  particle.z = 1.0;
+  particle.z = 1;
   particle.weight = 0;
-  particle.scale = 0.25;
-  particle.scaleV = 0;
+  particle.scale = 0.15;
+  particle.scaleV = 0.001;
   particle.rotation = 0;
   particle.rotationVelocity = 0;
   particle.bounciness = 0;
