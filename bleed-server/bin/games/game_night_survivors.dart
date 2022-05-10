@@ -27,7 +27,7 @@ class GameNightSurvivors extends Game {
 
   var lives = 10;
 
-  bool get isFull => players.length >= 5;
+  bool get isFull => players.length >= 2;
 
   GameNightSurvivors() : super(
       generateRandomScene(
@@ -46,6 +46,7 @@ class GameNightSurvivors extends Game {
     );
     objectsStatic.add(campFire);
     onStaticObjectsChanged();
+    status = GameStatus.Awaiting_Players;
   }
 
   Player spawnPlayer() {
@@ -136,5 +137,9 @@ class GameNightSurvivors extends Game {
   @override
   void onPlayerJoined(Player player) {
     player.writeLivesRemaining(lives);
+
+    if (isFull) {
+      setGameStatus(GameStatus.Counting_Down);
+    }
   }
 }

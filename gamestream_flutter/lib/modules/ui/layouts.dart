@@ -32,12 +32,37 @@ class UILayouts {
               dotSpace += " ";
             }
             dots = (dots + 1) % 4;
-            return text("${dotSpace}LOADING$dotText", size: style.font.large, color: colours.white618);
+            return text("${dotSpace}LOADING$dotText", size: FontSize.Large, color: colours.white618);
           }, milliseconds: 200,),
           height(100),
         ],
       )),
     );
   }
+}
 
+Widget buildLayoutWaitingForPlayers(){
+  var dots = 0;
+  return buildLayout(
+    padding: 16,
+    child: Center(child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        buildTitle(),
+        height32,
+        Refresh((){
+          var dotText = "";
+          var dotSpace = "";
+          for(var i = 0; i < dots; i++){
+            dotText += ".";
+            dotSpace += " ";
+          }
+          dots = (dots + 1) % 4;
+          return text("${dotSpace}WAITING FOR PLAYERS$dotText", size: FontSize.Large, color: colours.white618);
+        }, milliseconds: 200,),
+        height(100),
+      ],
+    )),
+  );
 }

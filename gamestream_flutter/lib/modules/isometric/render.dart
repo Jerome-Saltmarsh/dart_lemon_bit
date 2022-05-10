@@ -105,11 +105,15 @@ class IsometricRender {
     }
   }
 
+  /// While this method is obviously a complete dog's breakfast all readability
+  /// has been sacrificed for sheer speed of execution.
+  ///
+  /// WARNING: Be very careful modifying anything in this code. If something
+  /// doesn't make any sense or doesn't seem to belong or do anything look
+  /// harder
   void renderSprites() {
     engine.setPaintColorWhite();
-
     isometric.sortParticles();
-
     final particles = isometric.particles;
     final totalParticles = particles.length;
     final screenLeft = _screen.left;

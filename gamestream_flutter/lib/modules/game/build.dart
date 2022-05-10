@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/game/enums.dart';
 import 'package:gamestream_flutter/modules/game/update.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
+import 'package:gamestream_flutter/modules/ui/layouts.dart';
 import 'package:gamestream_flutter/modules/ui/module.dart';
 import 'package:gamestream_flutter/server_response_reader.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
@@ -46,7 +47,7 @@ class GameBuild {
         case GameStatus.Counting_Down:
           return buildLayoutCountDown();
         case GameStatus.Awaiting_Players:
-          return ui.layouts.buildLayoutLoading();
+          return buildLayoutWaitingForPlayers();
         case GameStatus.In_Progress:
           return buildLayoutInProgress();
         case GameStatus.Finished:

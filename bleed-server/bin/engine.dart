@@ -73,7 +73,7 @@ class _Engine {
         case GameStatus.Counting_Down:
           game.countDownFramesRemaining--;
           if (game.countDownFramesRemaining <= 0) {
-            game.status = GameStatus.In_Progress;
+            game.setGameStatus(GameStatus.In_Progress);
             game.onGameStarted();
           }
           break;

@@ -358,21 +358,6 @@ Widget? dev(Widget child){
   return isLocalHost ? child : null;
 }
 
-Widget buildLayoutLoadingGame(){
-  return buildLayout(
-      topLeft: buildTitle(),
-      child: fullScreen(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            text("JOINING GAME.."),
-          ],
-        ),
-      )
-  );
-}
-
-
 Widget margin({
   required Widget child,
   double left = 0,

@@ -251,12 +251,6 @@ String _consumeStringUnsafe() {
   return _consumer.toString();
 }
 
-String _consumeSingleCharacter() {
-  var char = _currentCharacter;
-  _index += 2;
-  return char;
-}
-
 OrbType consumeOrbType(){
   return orbTypes[consumeInt()];
 }

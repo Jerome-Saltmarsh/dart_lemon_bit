@@ -3,13 +3,12 @@ import 'package:golden_ratio/constants.dart';
 
 class UIStyle {
   final layoutPadding = 16.0;
-  final font = _FontSize();
 }
 
-class _FontSize {
-  get veryLarge => large * goldenRatio_1381;
-  get large => regular * goldenRatio_1381;
-  final regular = 18.0;
-  get small => regular * goldenRatio_0618;
-  get verySmall => regular * goldenRatio_0381;
+class FontSize {
+  static const VerySmall = Regular * goldenRatio_0381;
+  static const Small = Regular * goldenRatio_0618;
+  static const Regular = 18.0;
+  static const Large = Regular * goldenRatio_1381;
+  static const VeryLarge = Large * goldenRatio_1381;
 }
