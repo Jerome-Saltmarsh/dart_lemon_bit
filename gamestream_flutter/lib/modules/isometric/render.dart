@@ -684,7 +684,23 @@ class IsometricRender {
     );
   }
 
-  void renderParticle(Particle value){
+  void renderParticle(Particle value) {
+    switch (value.type) {
+      case ParticleType.Smoke:
+        engine.renderCustom(
+          dstX: value.x,
+          dstY: value.renderY,
+          srcX: 5612,
+          srcY: 0,
+          srcWidth: 50,
+          srcHeight: 50,
+          scale: value.renderScale
+        );
+        break;
+      default:
+        break;
+    }
+
     final shade = state.getShadeAtPosition(value.x, value.y);
     if (shade >= Shade.Very_Dark) return;
     mapParticleToDst(value);

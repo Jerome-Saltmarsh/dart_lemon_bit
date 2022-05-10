@@ -453,28 +453,25 @@ class ServerResponseReader extends ByteReader {
   }
 
   void parseStaticObjects() {
-    final environmentObjects = isometric.staticObjects;
-    environmentObjects.clear();
+    final staticObjects = isometric.staticObjects;
+    staticObjects.clear();
     while (true) {
       final typeIndex = readByte();
       if (typeIndex == END) break;
       final x = readDouble();
       final y = readDouble();
-      environmentObjects.add(
+      staticObjects.add(
           StaticObject(
               x: x,
               y: y,
               type: objectTypes[typeIndex],
           )
       );
-
-      if (typeIndex == ObjectType.Fireplace) {
-        print("adding emit smoke emittor");
-         isometric.particleEmitters.add(ParticleEmitter(x: x, y: y, rate: 2, emit: emitSmoke));
-
+      if (typeIndex == ObjectType.Fireplace.index) {
+        isometric.addSmokeEmitter(x, y);
       }
     }
-    sortVertically(environmentObjects);
+    sortVertically(staticObjects);
   }
 
 

@@ -13,8 +13,10 @@ import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
+import 'package:gamestream_flutter/modules/game/factories.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:gamestream_flutter/modules/isometric/utilities.dart';
+import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -807,5 +809,9 @@ class IsometricModule {
     final instance = FloatingText();
     floatingTexts.add(instance);
     return instance;
+  }
+
+  void addSmokeEmitter(double x, double y){
+    particleEmitters.add(ParticleEmitter(x: x, y: y, rate: 3, emit: emitSmoke));
   }
 }

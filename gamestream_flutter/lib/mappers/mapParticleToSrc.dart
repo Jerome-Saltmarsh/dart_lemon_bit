@@ -36,9 +36,16 @@ void mapParticleToSrc(Particle particle){
       );
       return;
 
-    case ParticleType.Orb_Ruby:
-      engine.mapSrc(x: 2306.0, y: 0, width: 24, height: 24);
-      return;
+    case ParticleType.Myst:
+      engine.mapSrc64(
+        x: 5488,
+        y: _mapMystDurationToIndex(particle.duration) * 64.0,
+      );
+      break;
+
+    // case ParticleType.Orb_Ruby:
+    //   engine.mapSrc(x: 2306.0, y: 0, width: 24, height: 24);
+    //   return;
 
     case ParticleType.Pixel:
       final x = atlas.shades.x + (particle.hue * 8);
@@ -92,13 +99,6 @@ void mapParticleToSrc(Particle particle){
           size: 16,
       );
       return;
-
-    case ParticleType.Myst:
-      engine.mapSrc64(
-          x: 5488,
-          y: _mapMystDurationToIndex(particle.duration) * 64.0,
-      );
-      break;
 
     case ParticleType.FireYellow:
       final x = atlas.particles.flame.x;

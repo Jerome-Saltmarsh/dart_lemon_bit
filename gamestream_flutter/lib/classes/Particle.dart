@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:gamestream_flutter/mappers/mapParticleToDst.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:lemon_math/library.dart';
 
@@ -38,6 +39,9 @@ class Particle extends Vector2 {
   Particle():super(0,0);
 
   double get speed => sqrt(xv * xv + yv * yv);
+
+  double get renderScale => (1.0 + (z * zToScaleRatio)) * scale;
+  double get renderY => y - (z * zToHeightRatio);
 
   void setAngle({required double value, required double speed}){
     xv = getAdjacent(value, speed);
