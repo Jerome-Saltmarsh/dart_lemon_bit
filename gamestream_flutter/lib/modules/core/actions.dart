@@ -166,18 +166,6 @@ class CoreActions {
   }
 
   void clearState() {
-    print('clearState()');
-    clearCompileGameState();
-    engine.zoom = 1;
-    isometric.tiles.clear();
-    isometric.tilesDst = Float32List(0);
-    isometric.tilesSrc = Float32List(0);
-    isometric.totalStructures = 0;
-    isometric.refreshTileSize();
-    engine.redrawCanvas();
-  }
-
-  void clearCompileGameState() {
     final player = modules.game.state.player;
     player.id = -1;
     game.id = -1;
@@ -190,13 +178,22 @@ class CoreActions {
     game.totalCollectables = 0;
     game.totalNpcs = 0;
     isometric.next = null;
+    isometric.particleEmitters.clear();
+    isometric.particles.clear();
 
     for (final bullet in game.bulletHoles) {
       bullet.x = 0;
       bullet.y = 0;
     }
-  }
 
+    engine.zoom = 1;
+    isometric.tiles.clear();
+    isometric.tilesDst = Float32List(0);
+    isometric.tilesSrc = Float32List(0);
+    isometric.totalStructures = 0;
+    isometric.refreshTileSize();
+    engine.redrawCanvas();
+  }
 
   Future signInOrCreateAccount({
     required String userId,

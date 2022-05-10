@@ -131,6 +131,8 @@
 [ ] Game over when town center destroyed
 [ ] Valid player spawn location must be grass surrounded by grass
 [ ] Fix Zombies don't run into flame
+[ ] (CRITICAL) Fix Player rendering in front of grass block
+[x] Fix clear particle emitters on new game
 [x] Fix Render cliffs visible in pitch black
 [x] Fix player spawns on water
 [x] At night spawn waves of creeps to attack town center
