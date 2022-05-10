@@ -582,7 +582,7 @@ Widget buildLayoutLobby() {
 Widget buildDialogGameFinished(){
   return buildDialogMedium(
       child: Center(
-          child: text("Game Finished")),
+          child: text("Game Over")),
           bottomRight: buildButton("Exit", core.actions.exitGame),
   );
 }

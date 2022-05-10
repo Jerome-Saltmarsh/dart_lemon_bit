@@ -112,10 +112,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       game.onPlayerJoined(player);
       write(ServerResponse.Scene_Shade_Max);
       write(game.shadeMax);
-      write(ServerResponse.Game_Status);
-      write(game.status.index);
+      player.writeGameStatus();
       compilePlayersRemaining(_buffer, 0);
-      // player.writeTechTypes();
       write('${ServerResponse.Game_Joined} 0 ${game.id} ${player.team} ${player.x.toInt()} ${player.y.toInt()}');
       sendAndClearBuffer();
     }

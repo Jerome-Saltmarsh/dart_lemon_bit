@@ -25,16 +25,15 @@ class _Engine {
   var frame = 0;
 
   Future init() async {
-    print("engine.init()");
     periodic(fixedUpdate, ms: 1000 ~/ framesPerSecond);
-    print("engine.init() finished");
   }
 
   void fixedUpdate(Timer timer) {
-    // worldTime = (worldTime + secondsPerFrame) % secondsPerDay;
     frame++;
 
-    if (frame % 10 == 0) {
+    if (frame % 5 == 0) {
+      games.removeWhere((game) => game.finished);
+
       for (var i = 0; i < games.length; i++) {
         final game = games[i];
         if (game.disableCountDown < 15) continue;
@@ -42,7 +41,9 @@ class _Engine {
         games.removeAt(i);
         i--;
       }
+
     }
+
     if (frame % framesPerRegen == 0) {
       regenCharacters();
     }

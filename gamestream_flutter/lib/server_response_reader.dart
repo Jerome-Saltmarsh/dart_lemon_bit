@@ -91,6 +91,11 @@ class ServerResponseReader extends ByteReader {
           parseStaticObjects();
           break;
 
+        case ServerResponse.Game_Status:
+          core.state.status.value = gameStatuses[readByte()];
+          break;
+
+
         case ServerResponse.Tiles:
           parseTiles();
           break;

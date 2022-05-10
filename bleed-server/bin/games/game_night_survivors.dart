@@ -93,6 +93,8 @@ class GameNightSurvivors extends Game {
     for (final player in players) {
       player.writeLivesRemaining(lives);
     }
+    if (lives > 0) return;
+    setGameStatus(GameStatus.Finished);
   }
 
   void spawnMonster(){

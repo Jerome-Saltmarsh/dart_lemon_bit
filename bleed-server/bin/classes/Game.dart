@@ -65,6 +65,12 @@ abstract class Game {
 
   int get numberOfAliveZombies => countAlive(zombies);
 
+  void setGameStatus(GameStatus value){
+    if (status == value) return;
+    status = value;
+    players.forEach((player) => player.writeGameStatus());
+  }
+
   void onStaticObjectsChanged() {
     sortVertically(objectsStatic);
     for(final player in players){
@@ -1049,8 +1055,8 @@ extension GameFunctions on Game {
     zombie.maxHealth = health;
     zombie.health = health;
     zombie.collidable = true;
-    zombie.x = x + giveOrTake(100);
-    zombie.y = y + giveOrTake(100);
+    zombie.x = x;
+    zombie.y = y;
     zombie.yv = 0;
     zombie.xv = 0;
     return zombie;

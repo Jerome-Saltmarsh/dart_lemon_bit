@@ -7,4 +7,4 @@ enum GameStatus {
   Finished,
 }
 
-final List<GameStatus> gameStatuses = GameStatus.values;
+const gameStatuses = GameStatus.values;

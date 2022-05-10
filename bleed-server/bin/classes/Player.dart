@@ -89,6 +89,11 @@ class Player extends Character with ByteWriter {
     writeByte(lives);
   }
 
+  void writeGameStatus(){
+    writeByte(ServerResponse.Game_Status);
+    writeByte(game.status.index);
+  }
+
   void toggleDebug(){
     debug = !debug;
     writeByte(ServerResponse.Debug_Mode);
@@ -316,6 +321,7 @@ extension PlayerProperties on Player {
       writeDynamicObjects();
       writeStaticObjects();
       writeTechTypes();
+      writeGameStatus();
       sceneDownloaded = true;
     }
 
