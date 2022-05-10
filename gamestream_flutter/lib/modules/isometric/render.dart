@@ -739,16 +739,24 @@ class IsometricRender {
   }
 
   void renderStaticObject(StaticObject value) {
-    final shade = state.getShade(value.row, value.column);
-    if (shade == Shade.Pitch_Black) return;
-    switch(value.type){
+    switch(value.type) {
       case ObjectType.Fireplace:
         return renderFireplace(value);
       case ObjectType.Long_Grass:
         return renderLongGrass(value);
+      case ObjectType.Grave:
+        return renderGrave(value);
+      case ObjectType.Tree_Stump:
+        return renderTreeStump(value);
+      case ObjectType.Rock_Small:
+        return renderRockSmall(value);
       default:
         break;
     }
+  }
+
+  void renderRockSmall(Position position){
+    render(position: position, srcX: 5569, width: 12, height: 14);
   }
   
   void renderFireplace(Position position) {
@@ -756,10 +764,19 @@ class IsometricRender {
   }
 
   void renderLongGrass(Position position){
+    render(position: position, srcX: 5585, width: 19, height: 30);
   }
 
   void renderRockLarge(Position position){
     render(position: position, srcX: 5475, width: 40, height: 43);
+  }
+
+  void renderGrave(Position position){
+    render(position: position, srcX: 5524, width: 20, height: 41);
+  }
+
+  void renderTreeStump(Position position){
+    render(position: position, srcX: 5549, width: 15, height: 22);
   }
 
   void render({
