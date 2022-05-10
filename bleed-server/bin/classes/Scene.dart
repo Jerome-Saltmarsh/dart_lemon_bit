@@ -152,6 +152,7 @@ class Scene {
        }
     }
     sortVertically(objectsDynamic);
+    sortVertically(objectsStatic);
   }
 
   int tileAt(double x, double y) {

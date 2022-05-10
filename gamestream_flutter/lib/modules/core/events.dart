@@ -123,7 +123,6 @@ class CoreEvents {
         engine.drawCanvas.value = editor.render.render;
         engine.drawCanvasAfterUpdate = true;
         editor.events.onActivated();
-        isometric.removeGeneratedEnvironmentObjects();
         game.totalZombies.value = 0;
         game.totalProjectiles = 0;
         game.totalNpcs = 0;

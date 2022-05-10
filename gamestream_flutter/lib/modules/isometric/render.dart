@@ -166,25 +166,15 @@ class IsometricRender {
     while (remainingGenerated) {
       final generatedObject = generatedObjects[indexGenerated];
       yGenerated = generatedObject.y;
-
-      if (yGenerated > screenBottom100){
-        remainingGenerated = false;
-        break;
-      }
-
-      final x = generatedObject.x;
-      if (
-        yGenerated < screenTop
-            ||
-        x < screenLeft
-            ||
-        x > screenRight
-      ){
+      if (yGenerated < screenTop){
         indexGenerated++;
         remainingGenerated = indexGenerated < totalGenerated;
-      } else {
-        break;
+        continue;
       }
+      if (yGenerated > screenBottom100) {
+        remainingGenerated = false;
+      }
+      break;
     }
 
     while (remainingParticles) {
@@ -193,14 +183,13 @@ class IsometricRender {
         remainingParticles = false;
         break;
       }
-      yGenerated = particle.y;
-      if (yGenerated < screenTop){
+      yParticle = particle.y;
+      if (yParticle < screenTop){
          indexParticle++;
          remainingParticles = indexParticle < totalParticles;
          continue;
       }
-
-      if (yGenerated > screenBottom100){
+      if (yParticle > screenBottom100){
         remainingParticles = false;
       }
       break;
@@ -208,19 +197,20 @@ class IsometricRender {
 
     while (remainingDynamicObjects) {
       yDynamicObject = dynamicObjects[indexDynamicObject].y;
-      if (yDynamicObject > screenBottom100) {
-        remainingDynamicObjects = false;
-        break;
-      }
       if (yDynamicObject < screenTop) {
         indexDynamicObject++;
         remainingDynamicObjects = indexDynamicObject < totalDynamicObjects;
         continue;
       }
+      if (yDynamicObject > screenBottom100) {
+        remainingDynamicObjects = false;
+      }
       break;
     }
 
-    var particleIsBlood = remainingParticles ? particles[0].type == ParticleType.Blood : false;
+    var particleIsBlood = remainingParticles ? particles[indexParticle].type == ParticleType.Blood : false;
+
+    remainingParticles = false;
 
     while (true) {
       if (remainingPlayers) {
@@ -266,7 +256,7 @@ class IsometricRender {
         if (!remainingGenerated || yStaticObject < yGenerated) {
           if (!remainingBuildMode || yStaticObject < yBuildMode) {
             if (!remainingStructures || yStaticObject < yStructure) {
-              if (!remainingParticles || yStaticObject < yParticle && !particleIsBlood) {
+              if (!remainingParticles || (yStaticObject < yParticle && !particleIsBlood)) {
                 if (!remainingDynamicObjects || yStaticObject < yDynamicObject) {
                   if (!remainingZombies || yStaticObject < yZombie) {
                     if (!remainingNpcs || yStaticObject < yNpc) {
@@ -1189,7 +1179,7 @@ class IsometricRender {
     renderCharacter(npc);
     if (diffOver(npc.x, mouseWorldX, 50)) return;
     if (diffOver(npc.y, mouseWorldY, 50)) return;
-    engine.draw.text(npc.name, npc.x - 4.5 * npc.name.length, npc.y, style: state.nameTextStyle);
+    engine.renderText(npc.name, npc.x - 4.5 * npc.name.length, npc.y, style: state.nameTextStyle);
   }
 
   void renderCircle36V2(Position position){

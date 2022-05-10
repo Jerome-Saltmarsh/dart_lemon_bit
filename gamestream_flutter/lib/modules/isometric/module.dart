@@ -626,17 +626,6 @@ class IsometricModule {
     minutes.value = hour * secondsPerHour;
   }
 
-  void removeGeneratedEnvironmentObjects(){
-    const generated = [
-      // ObjectType.Palisade,
-      // ObjectType.Palisade_H,
-      // ObjectType.Palisade_V,
-      ObjectType.Rock_Wall,
-      ObjectType.Block_Grass,
-    ];
-    staticObjects.removeWhere((env) => generated.contains(env));
-  }
-
   void cameraCenterMap(){
     final center = mapCenter;
     engine.cameraCenter(center.x, center.y);
