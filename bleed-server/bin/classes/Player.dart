@@ -421,7 +421,7 @@ extension PlayerProperties on Player {
   }
 
   void writeStaticObjects() {
-    writeByte(ServerResponse.EnvironmentObjects);
+    writeByte(ServerResponse.Static_Objects);
     final staticObjects = scene.objectsStatic;
     for (final value in staticObjects) {
        if (dynamicObjectTypes.contains(value)) continue;

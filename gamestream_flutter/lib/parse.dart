@@ -1,7 +1,6 @@
 
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
-import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/server_response_reader.dart';
@@ -163,10 +162,6 @@ void parseState() {
 
 void parseGameTime() {
   modules.isometric.minutes.value = consumeInt();
-}
-
-void addParticleEmitter(ParticleEmitter value) {
-  isometric.particleEmitters.add(value);
 }
 
 void _parsePlayerAbility(){

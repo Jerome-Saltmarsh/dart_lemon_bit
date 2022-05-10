@@ -1,5 +1,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/classes/DynamicObject.dart';
+import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
+import 'package:gamestream_flutter/modules/game/factories.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_byte/byte_reader.dart';
@@ -85,7 +87,7 @@ class ServerResponseReader extends ByteReader {
           parseDynamicObjects();
           break;
 
-        case ServerResponse.EnvironmentObjects:
+        case ServerResponse.Static_Objects:
           parseStaticObjects();
           break;
 
@@ -451,7 +453,7 @@ class ServerResponseReader extends ByteReader {
   }
 
   void parseStaticObjects() {
-    final environmentObjects = modules.isometric.staticObjects;
+    final environmentObjects = isometric.staticObjects;
     environmentObjects.clear();
     while (true) {
       final typeIndex = readByte();
@@ -465,6 +467,12 @@ class ServerResponseReader extends ByteReader {
               type: objectTypes[typeIndex],
           )
       );
+
+      if (typeIndex == ObjectType.Fireplace) {
+        print("adding emit smoke emittor");
+         isometric.particleEmitters.add(ParticleEmitter(x: x, y: y, rate: 2, emit: emitSmoke));
+
+      }
     }
     sortVertically(environmentObjects);
   }

@@ -16,22 +16,6 @@ class GameFactories {
   static const  mystMaxVelocity = 0.1;
   static const  mystPositionRange = 50;
 
-  void buildParticleSmoke(Particle particle){
-    particle.type = ParticleType.Smoke;
-    particle.duration = randomBetween(100, 150).toInt();
-    particle.z = 0;
-    particle.weight = 0;
-    particle.scale = 1;
-    particle.scaleV = 0;
-    particle.rotation = 0;
-    particle.rotationVelocity = 0;
-    particle.bounciness = 0;
-    particle.xv = randomBetween(0, -pi * 0.1);
-    particle.yv = randomBetween(0, pi * 0.1);
-    particle.zv = 0.01;
-    particle.airFriction = 0.98;
-  }
-
   void emitPixel({
     required double x,
     required double y
@@ -74,5 +58,21 @@ class GameFactories {
     particle.zv = 0.0;
     particle.casteShadow = false;
   }
+}
 
+void emitSmoke(Particle particle){
+  print("emit smoke");
+  particle.type = ParticleType.Smoke;
+  particle.duration = randomBetween(100, 150).toInt();
+  particle.z = 0;
+  particle.weight = 0;
+  particle.scale = 1;
+  particle.scaleV = 0;
+  particle.rotation = 0;
+  particle.rotationVelocity = 0;
+  particle.bounciness = 0;
+  particle.xv = randomBetween(0, -pi * 0.1);
+  particle.yv = randomBetween(0, pi * 0.1);
+  particle.zv = 0.01;
+  particle.airFriction = 0.98;
 }
