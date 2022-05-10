@@ -543,7 +543,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           final mouseSnapY = snapY(mouse.x, mouse.y);
 
           if (sphereCaste(
-              colliders: player.game.colliders,
+              colliders: player.game.objectsStatic,
               x: mouseSnapX,
               y: mouseSnapY,
               radius: tileSizeHalf

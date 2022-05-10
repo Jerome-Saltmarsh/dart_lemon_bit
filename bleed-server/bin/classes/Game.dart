@@ -27,7 +27,6 @@ import 'TileNode.dart';
 import 'components.dart';
 
 abstract class Game {
-  final colliders = <Collider>[];
   final items = <Item>[];
   final zombies = <AI>[];
   final npcs = <InteractableNpc>[];
@@ -167,14 +166,6 @@ abstract class Game {
           weapon: SlotType.Empty,
         ));
       }
-    }
-
-    for (final environmentObject in scene.objectsStatic) {
-      if (environmentObject.radius <= 0) continue;
-      colliders.add(Collider(
-          x: environmentObject.x,
-          y: environmentObject.y,
-          radius: environmentObject.radius));
     }
 
     // for (var rowIndex = 0; rowIndex < scene.numberOfRows; rowIndex++) {
@@ -573,8 +564,8 @@ extension GameFunctions on Game {
   void _updateCollisions() {
     checkColliderCollision(players, structures);
     checkColliderCollision(zombies, structures);
-    checkColliderCollision(players, colliders);
-    checkColliderCollision(zombies, colliders);
+    checkColliderCollision(players, scene.objectsStatic);
+    checkColliderCollision(zombies, scene.objectsStatic);
     checkColliderCollision(players, scene.objectsDynamic);
     updateCollisionBetween(zombies);
     updateCollisionBetween(players);
