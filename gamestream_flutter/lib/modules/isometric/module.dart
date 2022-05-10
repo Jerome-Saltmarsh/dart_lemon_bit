@@ -350,6 +350,19 @@ class IsometricModule {
     applyShadeRing(shader, row, column, 5, Shade.Very_Dark);
   }
 
+  void emitLightHighLarge2(List<List<int>> shader, double x, double y) {
+    final column = getColumn(x, y);
+    final row = getRow(x, y);
+    if (outOfBounds(row, column)) return;
+    applyShade(shader, row, column, Shade.Bright);
+    applyShadeRing(shader, row, column, 1, Shade.Bright);
+    applyShadeRing(shader, row, column, 2, Shade.Bright);
+    applyShadeRing(shader, row, column, 3, Shade.Bright);
+    applyShadeRing(shader, row, column, 4, Shade.Medium);
+    applyShadeRing(shader, row, column, 5, Shade.Dark);
+    applyShadeRing(shader, row, column, 6, Shade.Very_Dark);
+  }
+
   void emitLightBakeHigh(double x, double y) {
     final column = getColumn(x, y);
     final row = getRow(x, y);
@@ -384,6 +397,10 @@ class IsometricModule {
       }
       if (type == ObjectType.House02){
         emitLightMedium(bake, env.x, env.y);
+        continue;
+      }
+      if (type == ObjectType.Fireplace){
+        emitLightHighLarge2(bake, env.x, env.y);
         continue;
       }
     }
