@@ -128,13 +128,14 @@
 [THE CURSED ISLAND]
 [ ] Select Character Name
 [ ] Select Character Type
-[ ] At night spawn waves of creeps to attack town center
 [ ] Waiting for x number of players to join before starting game
 [ ] Game over when town center destroyed
-[ ] Design Camp Fire
-[ ] On enter campire fire parimeter lose life
 [ ] Valid player spawn location must be grass surrounded by grass
-[ ] Render lives remaining
+[ ] Fire should ignite at night time
+[x] At night spawn waves of creeps to attack town center
+[x] Design Camp Fire
+[x] On enter campire fire parimeter lose life
+[x] Render lives remaining
 [x] AI Auto target town center at night
 [x] (Critical Stack overflow) scene generator
 [x] Spawn Town Center

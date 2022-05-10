@@ -12,6 +12,7 @@ import 'functions/generateName.dart';
 import 'functions/withinRadius.dart';
 import 'games/GameRandom.dart';
 import 'games/Moba.dart';
+import 'games/game_night_survivors.dart';
 import 'physics.dart';
 
 const _space = " ";
@@ -615,6 +616,28 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             player.y = double.parse(response['y']);
           });
 
+          break;
+
+        case ClientRequest.Skip_Hour:
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+          final game = player.game;
+          if (game is GameNightSurvivors){
+            game.time += 3600;
+          }
+          break;
+
+        case ClientRequest.Reverse_Hour:
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+          final game = player.game;
+          if (game is GameNightSurvivors){
+            game.time -= 3600;
+          }
           break;
 
         case ClientRequest.Character_Save:
