@@ -687,7 +687,7 @@ class IsometricRender {
   void renderParticle(Particle value) {
     switch (value.type) {
       case ParticleType.Smoke:
-        engine.renderCustom(
+        return engine.renderCustom(
           dstX: value.x,
           dstY: value.renderY,
           srcX: 5612,
@@ -696,7 +696,6 @@ class IsometricRender {
           srcHeight: 50,
           scale: value.renderScale
         );
-        break;
       default:
         break;
     }

@@ -435,6 +435,7 @@ extension PlayerProperties on Player {
     writeByte(ServerResponse.Dynamic_Objects);
     final dynamicObjects = scene.objectsDynamic;
     for (final dynamicObject in dynamicObjects) {
+      if (dynamicObject.dead) continue;
       writeByte(dynamicObject.type);
       writePosition(dynamicObject);
       writeInt(dynamicObject.id);
