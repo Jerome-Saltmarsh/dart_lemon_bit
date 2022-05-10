@@ -34,6 +34,8 @@ class _IconsSymbols {
   final soundEnabled = buildIcon('sound-enabled');
   final soundDisabled = buildIcon('sound-disabled');
   final home = buildIcon('home');
+  final upgrade = buildIcon("upgrade");
+  final upgradeTransparent = buildIcon("upgrade-transparent");
 }
 
 class _IconsResources {
