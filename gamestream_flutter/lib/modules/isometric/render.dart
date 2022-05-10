@@ -8,7 +8,6 @@ import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/game.dart';
-import 'package:gamestream_flutter/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToDst.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToSrc.dart';
 import 'package:gamestream_flutter/modules/isometric/animations.dart';
@@ -271,7 +270,7 @@ class IsometricRender {
                 if (!remainingDynamicObjects || yStaticObject < yDynamicObject) {
                   if (!remainingZombies || yStaticObject < yZombie) {
                     if (!remainingNpcs || yStaticObject < yNpc) {
-                      renderEnvironmentObject(staticObjects[indexStaticObject]);
+                      renderStaticObject(staticObjects[indexStaticObject]);
                       indexStaticObject++;
                       remainingStaticObjects = indexStaticObject < totalStaticObjects;
                       while (remainingStaticObjects) {
@@ -632,7 +631,7 @@ class IsometricRender {
         renderPot(dynamicObject);
         break;
       case DynamicObjectType.Rock:
-        renderRock(dynamicObject);
+        renderRockLarge(dynamicObject);
         break;
       case DynamicObjectType.Tree:
         renderTree(dynamicObject);
@@ -660,17 +659,6 @@ class IsometricRender {
     );
     engine.mapDst(x: position.x, y: position.y, anchorX: 32, anchorY: 32);
     engine.renderAtlas();
-  }
-
-  void renderRock(Position position) {
-    engine.renderCustom(
-        dstX: position.x,
-        dstY: position.y,
-        srcX: 5592,
-        srcY: isometric.getShadeAt(position) * 48,
-        srcWidth: 48,
-        srcHeight: 48
-    );
   }
 
   void renderTree(Position position) {
@@ -750,19 +738,45 @@ class IsometricRender {
     );
   }
 
-  void renderEnvironmentObject(StaticObject value) {
-    if (!_screen.containsV(value)) return;
+  void renderStaticObject(StaticObject value) {
     final shade = state.getShade(value.row, value.column);
     if (shade == Shade.Pitch_Black) return;
+    switch(value.type){
+      case ObjectType.Fireplace:
+        return renderFireplace(value);
+      case ObjectType.Long_Grass:
+        return renderLongGrass(value);
+      default:
+        break;
+    }
+  }
+  
+  void renderFireplace(Position position) {
+    render(position: position, srcX: 6374, width: 54, height: 46);
+  }
 
-    mapEnvironmentObjectToSrc(value);
-    engine.mapDst(
-      x: value.x,
-      y: value.y,
-      anchorX: value.anchorX,
-      anchorY: value.anchorY
+  void renderLongGrass(Position position){
+  }
+
+  void renderRockLarge(Position position){
+    render(position: position, srcX: 5475, width: 40, height: 43);
+  }
+
+  void render({
+    required Position position,
+    required double srcX,
+    required double width,
+    required double height
+  }){
+    final shade =  isometric.getShadeAt(position);
+    if (shade >= Shade.Pitch_Black) return;
+    engine.renderCustomV2(
+      dst: position,
+      srcX: srcX,
+      srcY: shade * height,
+      srcWidth: width,
+      srcHeight: height,
     );
-    engine.renderAtlas();
   }
 
   void renderZombie(Character character){

@@ -1,7 +1,6 @@
 
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:lemon_math/library.dart';
 
 class StaticObject extends Vector2 {
@@ -11,47 +10,19 @@ class StaticObject extends Vector2 {
   late bool isHouse;
   late bool isTorch;
 
-  late double top;
-  late double right;
-  late double bottom;
-  late double left;
-  late double width;
-  late double height;
-  late double radius;
-  late double anchorX;
-  late double anchorY;
-
-  late double srcX;
-
   var frameRandom = 0;
-
-  static const _anchorYRatio = 0.66666;
 
   StaticObject({
     required double x,
     required double y,
     required this.type,
-    required this.radius,
   }) :super(x, y) {
-    width = environmentObjectWidth[type]!;
-    height = environmentObjectHeight[type]!;
-    anchorX = width * 0.5;
-    anchorY = height * _anchorYRatio;
-    top = y - anchorY;
-    right = x + anchorX;
-    bottom = y + (height - anchorY);
-    left = x - anchorX;
     isHouse = type == ObjectType.House01 || type == ObjectType.House02;
     isTorch = type == ObjectType.Torch;
     move(x, y);
-
     if (isTorch) {
       frameRandom = random.nextInt(99);
     }
-
-    final translation = objectTypeSrcPosition[type]!;
-    final index =  environmentObjectIndex[type] ?? 0;
-    srcX = index * width + translation.x;
   }
 
   void move(double x, double y){

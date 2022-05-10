@@ -10,10 +10,11 @@ enum ObjectType {
   Bridge,
   Tree_Stump,
   Rock_Small,
-  LongGrass,
+  Long_Grass,
   Rock_Wall,
   Flag,
   Block_Grass,
+  Fireplace,
 }
 
 const dynamicObjectTypes = <ObjectType>[

@@ -334,20 +334,6 @@ class GameRender {
     drawLine(modules.game.state.player.x, modules.game.state.player.y, modules.game.state.player.x + vX, modules.game.state.player.y + vY);
   }
 
-  void drawDebugEnvironmentObjects() {
-    engine.paint.color = Colors.red;
-    for (StaticObject env in modules.isometric.staticObjects) {
-      drawLine(env.left, env.top, env.right, env.top); // top left to top right
-      drawLine(
-          env.right, env.top, env.right, env.bottom); // top left to bottom right
-      drawLine(env.right, env.bottom, env.left, env.bottom);
-      drawLine(env.left, env.top, env.left, env.bottom);
-    }
-    for (StaticObject env in modules.isometric.staticObjects) {
-      engine.draw.circle(env.x, env.y, env.radius, Colors.blue);
-    }
-  }
-
   void drawPlayerText() {
     final players = game.players;
     const charWidth = 4.5;

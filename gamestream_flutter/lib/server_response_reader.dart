@@ -463,7 +463,6 @@ class ServerResponseReader extends ByteReader {
               x: x,
               y: y,
               type: objectTypes[typeIndex],
-              radius: 10
           )
       );
     }

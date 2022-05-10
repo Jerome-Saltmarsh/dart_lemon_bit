@@ -128,14 +128,6 @@ class IsometricModule {
 
   // METHODS
 
-  bool environmentObjectOnScreenScreen(StaticObject environmentObject) {
-    if (environmentObject.top > _screen.bottom) return false;
-    if (environmentObject.right < _screen.left) return false;
-    if (environmentObject.left > _screen.right) return false;
-    if (environmentObject.bottom < _screen.top) return false;
-    return true;
-  }
-
   void sortParticles(){
     insertionSort(
       particles,

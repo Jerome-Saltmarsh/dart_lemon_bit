@@ -50,6 +50,8 @@ abstract class Game {
 
   List<DynamicObject> get dynamicObjects => scene.objectsDynamic;
 
+  List<StaticObject> get objectsStatic => scene.objectsStatic;
+
   List<Structure> get structures => scene.structures;
 
   bool get countingDown => status == GameStatus.Counting_Down;
@@ -63,6 +65,13 @@ abstract class Game {
   int get numberOfAlivePlayers => countAlive(players);
 
   int get numberOfAliveZombies => countAlive(zombies);
+
+  void onStaticObjectsChanged() {
+    sortVertically(objectsStatic);
+    for(final player in players){
+      player.writeStaticObjects();
+    }
+  }
 
   void cancelCountDown() {
     status = GameStatus.Awaiting_Players;

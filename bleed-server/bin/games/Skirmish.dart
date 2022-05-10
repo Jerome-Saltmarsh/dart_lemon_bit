@@ -2,7 +2,6 @@
 
 import 'package:lemon_math/library.dart';
 
-import '../classes/Character.dart';
 import '../classes/DynamicObject.dart';
 import '../classes/EnvironmentObject.dart';
 import '../classes/Game.dart';
@@ -154,23 +153,6 @@ class GameSkirmish extends Game {
   @override
   Position getNextSpawnPoint(){
     return randomItem(_flags);
-  }
-
-  @override
-  void onCharacterKilled(Character killed, dynamic by) {
-    if (killed is Player) {
-      killed.score = 0;
-      if (by is Player) {
-        by.score += 5;
-      }
-      return;
-    }
-    if (by is Player) {
-      by.score++;
-    }
-    // final randomItemType = randomItem(ItemType.values);
-    // final item = Item(type: randomItemType, x: killed.x, y: killed.y);
-    // items.add(item);
   }
 
   @override

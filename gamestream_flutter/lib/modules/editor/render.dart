@@ -13,7 +13,7 @@ class EditorRender with EditorScope {
     isometric.render.renderTiles();
     _drawSelectedObject();
     _characters();
-    _environmentObjects();
+    renderStaticObjects();
 
     state.items.forEach(isometric.render.renderItem);
 
@@ -27,8 +27,8 @@ class EditorRender with EditorScope {
     }
   }
 
-  void _environmentObjects() {
-    state.environmentObjects.forEach(isometric.render.renderEnvironmentObject);
+  void renderStaticObjects() {
+    state.environmentObjects.forEach(isometric.render.renderStaticObject);
   }
 
   void _characters() {

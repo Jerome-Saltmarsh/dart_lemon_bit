@@ -25,13 +25,11 @@ class EditorActions with EditorScope {
   EditorActions(this.compile);
 
   void addEnvironmentObject () {
-    print("editor.actions.addEnvironmentObject()");
     state.environmentObjects.add(
         StaticObject(
           x: mouseWorldX,
           y: mouseWorldY,
           type: state.objectType.value,
-          radius: 0,
         )
     );
     if (state.objectType.value == ObjectType.Torch) {
@@ -164,7 +162,7 @@ class EditorActions with EditorScope {
       final x = json.getDouble('x');
       final y = json.getDouble('y');
       final type = parseObjectTypeFromString(json['type']);
-      state.environmentObjects.add(StaticObject(x: x, y: y, type: type, radius: 25));
+      state.environmentObjects.add(StaticObject(x: x, y: y, type: type));
     }
 
     isometric.minutes.value = mapJson[sceneFieldNames.startTime] / secondsPerHour;

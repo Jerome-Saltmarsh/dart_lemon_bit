@@ -57,7 +57,7 @@ Scene generateRandomScene({
                      ObjectType.Tree01,
                      ObjectType.Rock,
                      ObjectType.Tree_Stump,
-                     ObjectType.LongGrass,
+                     ObjectType.Long_Grass,
                    ])
                )
            );

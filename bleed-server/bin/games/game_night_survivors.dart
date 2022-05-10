@@ -1,5 +1,6 @@
 
 import 'package:lemon_math/functions/random_int.dart';
+import 'package:lemon_math/library.dart';
 
 import '../classes/library.dart';
 import '../common/library.dart';
@@ -22,7 +23,7 @@ class GameNightSurvivors extends Game {
   static const spawnEnd = 6 * 60 * 60;
   var time = 12 * 60 * 60;
   var spawnMode = false;
-  late final Structure campFire;
+  late final StaticObject campFire;
 
   var lives = 10;
 
@@ -38,14 +39,13 @@ class GameNightSurvivors extends Game {
   ) {
     assert(scene.spawnPointPlayers.isNotEmpty);
     final spawnPoint = scene.spawnPointPlayers.first;
-    campFire = Structure (
-        team: teamPlayers,
+    campFire = StaticObject (
         x: spawnPoint.x,
         y: spawnPoint.y,
-        type: StructureType.House,
-        health: 100,
+        type: ObjectType.Fireplace,
     );
-    structures.add(campFire);
+    objectsStatic.add(campFire);
+    onStaticObjectsChanged();
   }
 
   Player spawnPlayer() {
