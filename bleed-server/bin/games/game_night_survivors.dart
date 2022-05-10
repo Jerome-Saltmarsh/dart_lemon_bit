@@ -49,8 +49,7 @@ class GameNightSurvivors extends Game {
   }
 
   Player spawnPlayer() {
-
-     while(true){
+     while(true) {
        final angle = randomAngle();
        final posX = campFire.getPositionX(angle, tileSize);
        final posY = campFire.getPositionY(angle, tileSize);

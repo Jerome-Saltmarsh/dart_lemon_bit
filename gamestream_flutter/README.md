@@ -130,8 +130,8 @@
 [ ] Waiting for x number of players to join before starting game
 [ ] Game over when town center destroyed
 [ ] Valid player spawn location must be grass surrounded by grass
-[ ] Fix Render cliffs visible in pitch black
 [ ] Fix Zombies don't run into flame
+[x] Fix Render cliffs visible in pitch black
 [x] Fix player spawns on water
 [x] At night spawn waves of creeps to attack town center
 [x] Design Camp Fire

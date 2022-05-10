@@ -557,37 +557,33 @@ class IsometricRender {
   }
 
   void renderBlockGrass(Position position) {
-    engine.renderCustomV2(
-      dst: position,
-      srcX: 5981 ,
-      srcY: isometric.getShadeAt(position) * 96,
-      srcWidth: 48,
-      srcHeight: 96,
-      anchorY: 0.66,
-    );
+    render(position: position, srcX: 5981, width: 48, height: 100, anchorY: 0.66);
   }
 
-
   void renderBlockGrassLevel2(Position position){
+    final shade =  isometric.getShadeAt(position);
+    if (shade >= Shade.Pitch_Black) return;
     engine.renderCustom(
       dstX: position.x,
-      dstY: position.y - 48,
+      dstY: position.y - 50,
       srcX: 5981 ,
-      srcY: isometric.getShadeAt(position) * 96,
+      srcY: shade * 100,
       srcWidth: 48,
-      srcHeight: 96,
+      srcHeight: 100,
       anchorY: 0.66,
     );
   }
 
   void renderBlockGrassLevel3(Position position){
+    final shade =  isometric.getShadeAt(position);
+    if (shade >= Shade.Pitch_Black) return;
     engine.renderCustom(
       dstX: position.x,
-      dstY: position.y - 96,
+      dstY: position.y - 100,
       srcX: 5981 ,
-      srcY: isometric.getShadeAt(position) * 96,
+      srcY: shade * 100,
       srcWidth: 48,
-      srcHeight: 96,
+      srcHeight: 100,
       anchorY: 0.66,
     );
   }
