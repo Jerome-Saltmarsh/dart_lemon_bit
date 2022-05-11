@@ -130,7 +130,7 @@
 [ ] Waiting for x number of players to join before starting game
 [ ] Fix Zombies sometimes don't run into flame
 [ ] Fix Zombie AI sometimes get stuck
-[ ] Once game started block new players
+[x] Once game started block new players
 [x] Valid player spawn location must be grass surrounded by grass
 [x] (CRITICAL) Fix Player rendering in front of grass block
 [x] Fix clear particle emitters on new game

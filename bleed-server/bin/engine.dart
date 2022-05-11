@@ -142,9 +142,7 @@ class _Engine {
 
   GameNightSurvivors findGameAfterDark() {
     for (final game in games) {
-      if (game is GameNightSurvivors && !game.isFull) {
-        return game;
-      }
+      if (game is GameNightSurvivors && game.awaitingPlayers) return game;
     }
     return GameNightSurvivors();
   }
