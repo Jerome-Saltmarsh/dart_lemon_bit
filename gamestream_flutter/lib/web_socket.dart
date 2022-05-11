@@ -90,7 +90,7 @@ class _WebSocket {
 
   void _onError(Object error, StackTrace stackTrace) {
     print("network.onError()");
-    core.actions.setError(error.toString());
+    // core.actions.setError(error.toString());
   }
 
   void _onDone() {

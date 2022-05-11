@@ -59,13 +59,10 @@ class GameBuild {
   }
 
   Widget buildLayoutCountDown() {
-    return buildDialog(
-        width: style.dialogWidthMedium,
-        height: style.dialogHeightMedium,
-        child: WatchBuilder(game.countDownFramesRemaining, (int frames){
-          final seconds =  frames ~/ 30.0;
-          return Center(child: text("Starting in $seconds seconds"));
-        }));
+    return WatchBuilder(game.countDownFramesRemaining, (int frames){
+      final seconds =  frames ~/ 45.0;
+      return Center(child: text("Game starts in $seconds", size: FontSize.Large));
+    });
   }
 
   Widget buildMagicBar() {

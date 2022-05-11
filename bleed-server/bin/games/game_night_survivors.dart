@@ -37,16 +37,48 @@ class GameNightSurvivors extends Game {
           numberOfSpawnPointPlayers: 1,
       )
   ) {
-    assert(scene.spawnPointPlayers.isNotEmpty);
-    final spawnPoint = scene.spawnPointPlayers.first;
+
+    final centerRow = scene.numberOfRows ~/ 2;
+    final centerColumn = scene.numberOfColumns ~/ 2;
+    final centerX = getTileWorldX(centerRow, centerColumn);
+    final centerY = getTileWorldY(centerRow, centerColumn);
+
+
     campFire = StaticObject (
-        x: spawnPoint.x,
-        y: spawnPoint.y,
-        type: ObjectType.Fireplace,
+      x: 0,
+      y: 0,
+      type: ObjectType.Fireplace,
     );
+
+    while(true){
+       final angle = randomAngle();
+       final distance = randomBetween(0, 500);
+       final posX = centerX + getAdjacent(angle, distance);
+       final posY = centerY + getOpposite(angle, distance);
+       final node = scene.tileNodeAtXY(posX, posY);
+       if (node.closed) continue;
+       if (node.up.closed) continue;
+       if (node.upRight.closed) continue;
+       if (node.right.closed) continue;
+       if (node.downRight.closed) continue;
+       if (node.down.closed) continue;
+       if (node.downLeft.closed) continue;
+       if (node.left.closed) continue;
+       if (node.upLeft.closed) continue;
+       campFire.x = posX;
+       campFire.y = posY;
+       break;
+    }
     objectsStatic.add(campFire);
     onStaticObjectsChanged();
     status = GameStatus.Awaiting_Players;
+    const minSpawnRadius = 150;
+    dynamicObjects.removeWhere((dynamicObject) {
+      return campFire.getDistance(dynamicObject) < minSpawnRadius;
+    });
+    objectsStatic.removeWhere((value) {
+      return value != campFire && campFire.getDistance(value) < minSpawnRadius;
+    });
   }
 
   Player spawnPlayer() {

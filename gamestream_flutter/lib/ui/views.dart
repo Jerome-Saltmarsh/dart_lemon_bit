@@ -251,8 +251,8 @@ Widget? buildMenuDebug() {
     ));
 }
 
-final _Views _views = _Views();
-final _BuildView _buildView = _BuildView();
+final _views = _Views();
+final _buildView = _BuildView();
 
 class _Views {
   final Widget selectRegion = _buildView.selectRegion();
@@ -265,8 +265,7 @@ final Map<Connection, String> connectionMessage = {
   Connection.Error: "An error occurred with the connection to the server",
   Connection.Connected: "Connected to server",
   Connection.Connecting: "Connecting to server",
-  Connection.Failed_To_Connect:
-      "Failed to establish a connection with the server",
+  Connection.Failed_To_Connect: "Unable to establish a connection",
   Connection.None: "There is no connection to the server",
 };
 
@@ -276,12 +275,15 @@ class _BuildView {
       return center(Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          text(connectionMessage[value], size: 25),
+          buildTitle(),
+          height64,
+          text(connectionMessage[value], size: FontSize.Large),
           height16,
           button("Cancel", () {
             core.actions.exitGame();
             webSocket.disconnect();
-          }, width: 100)
+          }, width: 100),
+          height64,
         ],
       ));
     });

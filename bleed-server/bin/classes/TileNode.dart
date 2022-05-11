@@ -32,6 +32,8 @@ class Node with Position {
 
   int depth = 0;
 
+  bool get closed => !open;
+
   Node(this.open);
 
   Node getNodeByDirection(int direction){

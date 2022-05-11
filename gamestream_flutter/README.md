@@ -130,6 +130,10 @@
 [ ] Waiting for x number of players to join before starting game
 [ ] Fix Zombies sometimes don't run into flame
 [ ] Fix Zombie AI sometimes get stuck
+[x] Spawn fireplace in center of map
+[x] Fireplace must be surrounded by grass
+[x] Prevent trees and rocks from spawning on fireplace
+[x] Polish disconnected dialog
 [x] Once game started block new players
 [x] Valid player spawn location must be grass surrounded by grass
 [x] (CRITICAL) Fix Player rendering in front of grass block

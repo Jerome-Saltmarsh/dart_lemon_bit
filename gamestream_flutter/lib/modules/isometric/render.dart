@@ -214,8 +214,6 @@ class IsometricRender {
 
     var particleIsBlood = remainingParticles ? particles[indexParticle].type == ParticleType.Blood : false;
 
-    remainingParticles = false;
-
     while (true) {
       if (remainingPlayers) {
         if (!remainingGenerated || yPlayer < yGenerated) {
