@@ -311,7 +311,7 @@ packages:
       path: "C:\\Users\\Jerome\\github\\dart-lemon-byte"
       relative: false
     source: path
-    version: "1.0.1"
+    version: "1.0.4"
   lemon_dispatch:
     dependency: "direct main"
     description:

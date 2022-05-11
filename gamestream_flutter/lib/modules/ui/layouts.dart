@@ -59,7 +59,7 @@ Widget buildLayoutWaitingForPlayers(){
             dotSpace += " ";
           }
           dots = (dots + 1) % 4;
-          return text("${dotSpace}WAITING FOR PLAYERS$dotText", size: FontSize.Large, color: colours.white618);
+          return text("${dotSpace}WAITING FOR PLAYERS$dotText", size: FontSize.Large, color: colours.white);
         }, milliseconds: 200,),
         height(100),
       ],

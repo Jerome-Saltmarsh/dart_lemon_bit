@@ -127,9 +127,10 @@
 [THEY COME AT NIGHT]
 [ ] Select Character Name
 [ ] Select Character Type
-[ ] Waiting for x number of players to join before starting game
 [ ] Fix Zombies sometimes don't run into flame
 [ ] Fix Zombie AI sometimes get stuck
+[ ] Balance wave 1 
+[x] Waiting for x number of players to join before starting game
 [x] Spawn fireplace in center of map
 [x] Fireplace must be surrounded by grass
 [x] Prevent trees and rocks from spawning on fireplace

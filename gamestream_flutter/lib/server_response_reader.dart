@@ -487,7 +487,7 @@ class ServerResponseReader extends ByteReader {
       instance.type = typeIndex;
       instance.x = readDouble();
       instance.y = readDouble();
-      instance.id = readInt();
+      instance.id = readPositiveInt();
       game.dynamicObjects.add(instance);
     }
   }

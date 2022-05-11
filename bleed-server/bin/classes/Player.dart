@@ -444,7 +444,7 @@ extension PlayerProperties on Player {
       if (dynamicObject.dead) continue;
       writeByte(dynamicObject.type);
       writePosition(dynamicObject);
-      writeInt(dynamicObject.id);
+      writePositiveInt(dynamicObject.id);
     }
     writeByte(END);
   }
