@@ -10,8 +10,7 @@ import 'compile.dart';
 import 'engine.dart';
 import 'functions/generateName.dart';
 import 'functions/withinRadius.dart';
-import 'games/GameRandom.dart';
-import 'games/Moba.dart';
+import 'games/game_random.dart';
 import 'games/game_night_survivors.dart';
 import 'physics.dart';
 
@@ -106,10 +105,17 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       player.sendBufferToClient = sendBufferToClient;
       player.dispatchError = error;
       final account = _account;
+      final game = player.game;
       if (account != null) {
         player.name = account.publicName;
+      } else {
+        while(true){
+          final randomName = generateRandomName();
+          if (game.containsPlayerWithName(randomName)) continue;
+          player.name = randomName;
+          break;
+        }
       }
-      final game = player.game;
       game.onPlayerJoined(player);
       write(ServerResponse.Scene_Shade_Max);
       write(game.shadeMax);
@@ -117,12 +123,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       compilePlayersRemaining(_buffer, 0);
       write('${ServerResponse.Game_Joined} ${player.team} ${player.x.toInt()} ${player.y.toInt()}');
       sendAndClearBuffer();
-    }
-
-    void joinGameSwarm() {
-      final game = engine.findGameSwarm();
-      _player = game.spawnPlayer();
-      onGameJoined();
     }
 
     void joinGamePractice() {
@@ -137,30 +137,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       onGameJoined();
     }
 
-    void joinGameSkirmish() {
-      final game = engine.findGameSkirmish();
-      _player = game.playerJoin();
-      onGameJoined();
-    }
-
-    void joinGameMoba() {
-      final moba = engine.findPendingMobaGame();
-      _player = moba.playerJoin();
-      onGameJoined();
-    }
-
-    void joinBattleRoyal() {
-      final royal = engine.findPendingRoyalGames();
-      _player = royal.playerJoin();
-      onGameJoined();
-    }
-
     void joinGameMMO() {
       clearBuffer();
       final account = _account;
       final player = engine.spawnPlayerInTown();
       _player = player;
-      player.name = account != null ? account.publicName : generateName();
+      player.name = account != null ? account.publicName : generateRandomName();
       onGameJoined();
     }
 
@@ -241,9 +223,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
           if (game.finished) {
             compileGameStatus(_buffer, game.status);
-            if (game is GameMoba) {
-              compileTeamLivesRemaining(_buffer, game);
-            }
             reply(_buffer.toString());
             return;
           }
@@ -447,14 +426,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                    throw Exception("Join Game - GameType.None invalid");
                  case GameType.MMO:
                    return joinGameMMO();
-                 case GameType.Moba:
-                   return joinGameMoba();
-                 case GameType.BATTLE_ROYAL:
-                   return joinBattleRoyal();
-                 case GameType.SKIRMISH:
-                   return joinGameSkirmish();
-                 case GameType.SWARM:
-                   return joinGameSwarm();
                  case GameType.PRACTICE:
                    return joinGamePractice();
                  case GameType.RANDOM:
@@ -474,14 +445,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               throw Exception("Join Game - GameType.None invalid");
             case GameType.MMO:
               return joinGameMMO();
-            case GameType.Moba:
-              return joinGameMoba();
-            case GameType.BATTLE_ROYAL:
-              return joinBattleRoyal();
-            case GameType.SKIRMISH:
-              return joinGameSkirmish();
-            case GameType.SWARM:
-              return joinGameSwarm();
             case GameType.PRACTICE:
               return joinGamePractice();
             case GameType.RANDOM:

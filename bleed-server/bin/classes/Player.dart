@@ -27,7 +27,7 @@ class Player extends Character with ByteWriter {
   var healthRegen = 1;
   var message = "";
   var text = "";
-  var name = generateName();
+  var name = 'anon';
   var storeVisible = false;
   var screenLeft = 0.0;
   var screenTop = 0.0;

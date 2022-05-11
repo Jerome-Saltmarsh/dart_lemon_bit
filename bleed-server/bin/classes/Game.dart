@@ -65,6 +65,13 @@ abstract class Game {
 
   int get numberOfAliveZombies => countAlive(zombies);
 
+  bool containsPlayerWithName(String name){
+     for(final player in players){
+       if (player.name == name) return true;
+     }
+     return false;
+  }
+
   void setGameStatus(GameStatus value){
     if (status == value) return;
     status = value;
@@ -96,9 +103,7 @@ abstract class Game {
 
   void onGameStarted() {}
 
-  void onPlayerJoined(Player player){
-
-  }
+  void onPlayerJoined(Player player) {}
 
   void onPlayerDeath(Player player) {}
 

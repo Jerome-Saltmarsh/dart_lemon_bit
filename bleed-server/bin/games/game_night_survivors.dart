@@ -135,7 +135,8 @@ class GameNightSurvivors extends Game {
 
   void spawnMonster(){
     final zombie = spawnRandomZombie();
-    zombie.health = 1;
+    zombie.maxHealth = 2;
+    zombie.health = 2;
     zombie.objective = campFire;
     zombie.team = teamZombies;
   }

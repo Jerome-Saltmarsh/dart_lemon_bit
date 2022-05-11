@@ -5,11 +5,7 @@ import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'classes/library.dart';
 import 'common/library.dart';
 import 'functions/loadScenes.dart';
-import 'games/GameRandom.dart';
-import 'games/GameSwarm.dart';
-import 'games/Moba.dart';
-import 'games/Royal.dart';
-import 'games/Skirmish.dart';
+import 'games/game_random.dart';
 import 'games/game_night_survivors.dart';
 import 'language.dart';
 
@@ -116,19 +112,6 @@ class _Engine {
     }
   }
 
-  GameSkirmish findGameSkirmish() {
-    for (final game in games) {
-      if (game is GameSkirmish) {
-        return game;
-      }
-    }
-    return GameSkirmish();
-  }
-
-  GameSwarm findGameSwarm() {
-    return GameSwarm();
-  }
-
   GameRandom findRandomGame() {
     for (final game in games) {
       if (game is GameRandom) {
@@ -145,21 +128,6 @@ class _Engine {
       if (game is GameNightSurvivors && game.awaitingPlayers) return game;
     }
     return GameNightSurvivors();
-  }
-
-  GameMoba findPendingMobaGame() {
-    for (final game in games) {
-      if (game is GameMoba) {
-        if (game.awaitingPlayers) {
-          return game;
-        }
-      }
-    }
-    return GameMoba();
-  }
-
-  GameRoyal findPendingRoyalGames() {
-    return findGameAwaitingPlayers<GameRoyal>() ?? GameRoyal();
   }
 
   T? findGameAwaitingPlayers<T extends Game>() {

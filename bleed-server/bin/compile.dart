@@ -1,32 +1,15 @@
-import 'package:bleed_server/CubeGame.dart';
-
 import 'classes/Game.dart';
 import 'classes/Player.dart';
 import 'common/GameStatus.dart';
 import 'common/ServerResponse.dart';
-import 'games/Moba.dart';
-import 'games/Royal.dart';
 
 final _indexNpcMessage = ServerResponse.NpcMessage;
 const _space = ' ';
 const _semiColon = '; ';
 
-void compileTeamLivesRemaining(StringBuffer buffer, GameMoba moba) {
-  _write(buffer, ServerResponse.Team_Lives_Remaining);
-  _write(buffer, moba.teamLivesWest);
-  _write(buffer, moba.teamLivesEast);
-}
-
 void compileGameStatus(StringBuffer buffer, GameStatus gameStatus) {
   _write(buffer, ServerResponse.Game_Status);
   _write(buffer, gameStatus.index);
-}
-
-void compileRoyal(StringBuffer buffer, GameRoyal royal){
-  _write(buffer, ServerResponse.Game_Royal);
-  _write(buffer, royal.boundaryCenter.x.toInt());
-  _write(buffer, royal.boundaryCenter.y.toInt());
-  _write(buffer, royal.boundaryRadius.toInt());
 }
 
 void compileCountDownFramesRemaining(StringBuffer buffer, Game game) {
@@ -108,10 +91,6 @@ void _writeSemiColon(StringBuffer buffer) {
   _write(buffer, _semiColon);
 }
 
-void _writeInt(StringBuffer buffer, double value) {
-  _write(buffer, value.toInt());
-}
-
 void _write(StringBuffer buffer, dynamic value) {
   buffer.write(value);
   buffer.write(_space);
@@ -120,20 +99,5 @@ void _write(StringBuffer buffer, dynamic value) {
 void compilePlayersRemaining(StringBuffer buffer, int remaining) {
   _write(buffer, ServerResponse.Waiting_For_More_Players);
   _write(buffer, remaining);
-}
-
-void compileCubePlayers(StringBuffer buffer, List<CubePlayer> cubePlayers) {
-  _write(buffer, ServerResponse.Cube_Players);
-  _write(buffer, cubePlayers.length);
-  for (CubePlayer player in cubePlayers) {
-    writeVector3(buffer, player.position);
-    writeVector3(buffer, player.rotation);
-  }
-}
-
-void writeVector3(StringBuffer buffer, Vector3 value) {
-  _writeInt(buffer, value.x);
-  _writeInt(buffer, value.y);
-  _writeInt(buffer, value.z);
 }
 
