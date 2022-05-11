@@ -1,5 +1,4 @@
 
-import 'package:lemon_math/functions/random_int.dart';
 import 'package:lemon_math/library.dart';
 
 import '../classes/library.dart';
@@ -19,9 +18,9 @@ import '../scene_generator.dart';
 class GameNightSurvivors extends Game {
   static const teamPlayers = 1;
   static const teamZombies = 2;
-  static const spawnStart = 15 * 60 * 60;
+  static const spawnStart = 20 * 60 * 60;
   static const spawnEnd = 6 * 60 * 60;
-  var time = 12 * 60 * 60;
+  var time = spawnEnd;
   var spawnMode = false;
   late final StaticObject campFire;
 
@@ -105,7 +104,7 @@ class GameNightSurvivors extends Game {
         spawnMode = true;
         onSpawnModeStarted();
       }
-      if (time % 10 == 0) {
+      if (time % 45 == 0) {
         spawnMonster();
       }
     } else {
@@ -114,10 +113,7 @@ class GameNightSurvivors extends Game {
         onSpawnModeEnded();
       }
     }
-    // if (time % 10 == 0) {
-    //   spawnMonster();
-    // }
-    time = (time + 1) % 86400;
+    time = (time + 5) % 86400;
 
     for (final zombie in zombies) {
       if (zombie.dead) continue;
@@ -139,6 +135,7 @@ class GameNightSurvivors extends Game {
 
   void spawnMonster(){
     final zombie = spawnRandomZombie();
+    zombie.health = 1;
     zombie.objective = campFire;
     zombie.team = teamZombies;
   }

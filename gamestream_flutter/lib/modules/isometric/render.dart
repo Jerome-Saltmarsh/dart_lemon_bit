@@ -650,15 +650,7 @@ class IsometricRender {
   }
 
   void renderTree(Position position) {
-    engine.renderCustom(
-        dstX: position.x,
-        dstY: position.y,
-        srcX: 2049,
-        srcY: isometric.getShadeAt(position) * 96,
-        srcWidth: 96,
-        srcHeight: 96,
-        anchorY: 0.66,
-    );
+    render(position: position, srcX: 2049, width: 64, height: 81, anchorY: 0.66);
   }
 
   void renderChest(Position position){

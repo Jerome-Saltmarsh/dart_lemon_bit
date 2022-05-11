@@ -124,12 +124,22 @@
     [ ] Medic
     [ ] Bazooka
     [ ] Machine gunner
+[ENGINE]
+[x] DynamicObject.Id should be big int
+[ ] Preload audios
+[ ] Refactor Game with ByteReader
+[ ] Refactor (client) Merge Game and GameState
 [THEY COME AT NIGHT]
-[ ] Select Character Name
 [ ] Select Character Type
+[ ] Cancel count down on player disconnected
 [ ] Fix Zombies sometimes don't run into flame
 [ ] Fix Zombie AI sometimes get stuck
 [ ] Balance wave 1 
+[ ] Indicate duration until next wave
+[ ] Indicate duration until wave finished
+[ ] Indicate Day Number
+[ ] Select Character Name
+[ ] Find trinkets
 [x] Waiting for x number of players to join before starting game
 [x] Spawn fireplace in center of map
 [x] Fireplace must be surrounded by grass
@@ -148,10 +158,6 @@
 [x] AI Auto target town center at night
 [x] (Critical Stack overflow) scene generator
 [x] Spawn Town Center
-[ENGINE]
-[ ] DynamicObject.Id should be big int
-[ ] Preload audios
-[ ] Refactor Game with ByteReader
 [COMPLETED]  
 [x] (SERVER) Remove colliders from game
 [x] Chest Shades
