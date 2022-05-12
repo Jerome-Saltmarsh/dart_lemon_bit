@@ -139,6 +139,7 @@
 [ ] Max Shoe cards is 1
 [ ] Max Passive Cards is 5
 [ ] remove objects around player spawn points
+[ ] build experience bar
 [x] Select Character Type
 [THEY COME AT NIGHT]
 [ ] Select Character Type
@@ -964,3 +965,19 @@ Cards can be
 - General Skills that any player can learn
 - Trinket
 - 
+
+[Head]
+[Armour]
+[Weapon] each time you upgrade it costs that amount in skill points
+[Pouch Size] (increases max passives)
+[Ability-1]
+[Ability-2]
+[Ability-3]
+
+[Item-1]
+[Item-2]
+[Item-3]
+
+[Passive 1]
+[Passive 2]
+[Passive 3]

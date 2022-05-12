@@ -57,6 +57,15 @@ class Player extends Character with ByteWriter {
     return _magic / maxMagic;
   }
 
+  double get experiencePercentage {
+    final currentLevel = getExperienceForLevel(level);
+    final nextLevel = getExperienceForLevel(level + 1);
+    final current = experience - currentLevel;
+    final next = nextLevel - current;
+    if (current == 0) return 0.0;
+    return current / next;
+  }
+
   set magic(int value){
     _magic = clampInt(value, 0, maxMagic);
   }
@@ -318,6 +327,7 @@ extension PlayerProperties on Player {
     writeInt(wood);
     writeInt(stone);
     writeInt(gold);
+    writePercentage(experiencePercentage);
     writeStructures();
     writeCollectables();
     writePlayers();
@@ -619,7 +629,7 @@ extension PlayerProperties on Player {
       writeByte(0);
       return;
     }
-    writeByte((value * 100).toInt());
+    writeByte((value * 256).toInt());
   }
 
   void writeVector2(Vector2 value){
@@ -631,4 +641,9 @@ extension PlayerProperties on Player {
     writeInt(value.x);
     writeInt(value.y);
   }
+}
+
+
+int getExperienceForLevel(int level){
+  return (((level -1) * (level - 1))) * 100;
 }

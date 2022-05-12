@@ -73,7 +73,7 @@ class Player {
 
   final characterType = Watch(CharacterType.Human);
   final health = Watch(0.0);
-  final experience = Watch(0);
+  final experience = Watch(0.0);
   final level = Watch(1);
   final skillPoints = Watch(1);
   final nextLevelExperience = Watch(1);

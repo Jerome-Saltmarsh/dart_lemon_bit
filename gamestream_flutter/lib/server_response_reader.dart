@@ -271,6 +271,7 @@ class ServerResponseReader extends ByteReader {
           _player.wood.value = readInt();
           _player.stone.value = readInt();
           _player.gold.value = readInt();
+          _player.experience.value = readPercentage();
           break;
 
         case ServerResponse.Player_Slots:
@@ -499,5 +500,11 @@ class ServerResponseReader extends ByteReader {
   void readVector2(Vector2 value){
     value.x = readDouble();
     value.y = readDouble();
+  }
+
+  double readPercentage(){
+    final value = readByte();
+    if (value == 0) return 0;
+     return value / 256.0;
   }
 }
