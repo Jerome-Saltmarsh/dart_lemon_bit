@@ -1,3 +1,4 @@
+import 'package:bleed_common/card_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
@@ -71,11 +72,13 @@ class Player {
   final armour = Watch(TechType.Unarmed);
   final helm = Watch(TechType.Unarmed);
 
+  final equippedLevel = Watch(0);
+
   final characterType = Watch(CharacterType.Human);
   final health = Watch(0.0);
   final experience = Watch(0.0);
   final level = Watch(1);
-  final skillPoints = Watch(1);
+  final skillPoints = Watch(0);
   final message = Watch("");
   final state = Watch(CharacterState.Idle);
   final alive = Watch(true);
@@ -91,6 +94,7 @@ class Player {
   final levelAxe = Watch(0);
   final levelHammer = Watch(0);
   final levelBag = Watch(0);
+  final cardChoices = Watch<List<CardType>>([]);
 
   final canAffordUpgradePickaxe = Watch(false);
   final canAffordUpgradeSword = Watch(false);

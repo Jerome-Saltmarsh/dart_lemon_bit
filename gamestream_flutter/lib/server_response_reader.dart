@@ -1,7 +1,9 @@
+import 'package:bleed_common/card_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/classes/DynamicObject.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
+import 'package:gamestream_flutter/ui/functions/player.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
@@ -85,8 +87,17 @@ class ServerResponseReader extends ByteReader {
           parseDynamicObjects();
           break;
 
+        case ServerResponse.Card_Choices:
+          final numberOfCards = readByte();
+          final cardChoices = <CardType>[];
+          for (var i = 0; i < numberOfCards; i++) {
+             cardChoices.add(cardTypes[readByte()]);
+          }
+          player.cardChoices.value = cardChoices;
+          break;
+
         case ServerResponse.Character_Select_Required:
-          modules.game.state.player.selectCharacterRequired.value = readBool();
+          parseCharacterSelectRequired();
           break;
 
         case ServerResponse.Static_Objects:
@@ -273,7 +284,9 @@ class ServerResponseReader extends ByteReader {
           _player.gold.value = readInt();
           _player.experience.value = readPercentage();
           _player.level.value = readByte();
+          _player.skillPoints.value = readByte();
           break;
+
 
         case ServerResponse.Player_Slots:
           break;
@@ -288,6 +301,10 @@ class ServerResponseReader extends ByteReader {
           throw Exception("Cannot parse $response");
       }
     }
+  }
+
+  void parseCharacterSelectRequired() {
+    modules.game.state.player.selectCharacterRequired.value = readBool();
   }
 
   void parseTiles() {

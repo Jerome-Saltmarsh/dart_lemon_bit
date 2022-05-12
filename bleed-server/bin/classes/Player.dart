@@ -5,9 +5,12 @@ import 'package:lemon_math/library.dart';
 import '../common/library.dart';
 import '../engine.dart';
 import '../utilities.dart';
+import '../common/card_type.dart';
 import 'library.dart';
 
+
 class Player extends Character with ByteWriter {
+  CharacterSelection? selection;
   final mouse = Vector2(0, 0);
   final runTarget = Vector2(0, 0);
   var characterSelectRequired = false;
@@ -20,7 +23,7 @@ class Player extends Character with ByteWriter {
   var textDuration = 0;
   var experience = 0;
   var level = 1;
-  var points = 0;
+  var skillPoints = 0;
   var _magic = 0;
   var maxMagic = 100;
   var magicRegen = 1;
@@ -41,6 +44,10 @@ class Player extends Character with ByteWriter {
   Collider? aimTarget; // the currently highlighted character
   Position? target;
   Account? account;
+
+  final cardsAbility = <CardType>[];
+  final cardsPassive = <CardType>[];
+  final cardChoices = <CardType>[];
 
   late Function sendBufferToClient;
   late Function(GameError error, {String message}) dispatchError;
@@ -142,7 +149,8 @@ class Player extends Character with ByteWriter {
       while (experience > experienceRequiredForNextLevel) {
         experience -= experienceRequiredForNextLevel;
         level++;
-        points++;
+        skillPoints++;
+        game.onPlayerLevelGained(this);
       }
   }
 }
@@ -335,6 +343,7 @@ extension PlayerProperties on Player {
     writeInt(gold);
     writePercentage(experiencePercentage);
     writeByte(level);
+    writeByte(skillPoints);
     writeStructures();
     writeCollectables();
     writePlayers();
@@ -646,9 +655,18 @@ extension PlayerProperties on Player {
     writeInt(value.x);
     writeInt(value.y);
   }
+
+  void writeCardChoices() {
+    writeByte(ServerResponse.Card_Choices);
+    writeByte(cardChoices.length);
+    for(final choice in cardChoices){
+      writeByte(choice.index);
+    }
+  }
 }
 
 
 int getExperienceForLevel(int level){
   return (((level -1) * (level - 1))) * 100;
 }
+

@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
-import '../common/Character_Selection.dart';
 import '../common/library.dart';
 import '../engine.dart';
 import '../enums.dart';
@@ -113,6 +112,10 @@ abstract class Game {
   void onNpcObjectivesCompleted(Character npc) {}
 
   void updateNpcBehavior(Character npc) {}
+
+  void onPlayerLevelGained(Player player){
+
+  }
 
   Position getNextSpawnPoint() {
     if (scene.spawnPointPlayers.isEmpty){

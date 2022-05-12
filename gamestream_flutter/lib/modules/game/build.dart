@@ -10,7 +10,6 @@ import 'package:gamestream_flutter/modules/game/enums.dart';
 import 'package:gamestream_flutter/modules/game/update.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/layouts.dart';
-import 'package:gamestream_flutter/modules/ui/module.dart';
 import 'package:gamestream_flutter/server_response_reader.dart';
 import 'package:gamestream_flutter/ui/functions/build_debug_panel.dart';
 import 'package:gamestream_flutter/ui/functions/build_layout.dart';

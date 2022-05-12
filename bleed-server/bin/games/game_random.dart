@@ -2,6 +2,7 @@
 
 import 'package:lemon_math/library.dart';
 
+import '../common/card_type.dart';
 import '../classes/Game.dart';
 import '../classes/Player.dart';
 import '../common/library.dart';
@@ -72,26 +73,37 @@ class GameRandom extends Game {
   }
 
   @override
+  void onPlayerLevelGained(Player player){
+    final selection = player.selection;
+    if (selection == null) return;
+    if (player.cardChoices.isNotEmpty) return;
+    for (var i = 0; i < 3; i++) {
+      player.cardChoices.add(randomItem(cardTypes));
+    }
+    player.writeCardChoices();
+  }
+
+  @override
   void onPlayerSelectCharacterType(Player player, CharacterSelection value) {
-    player.characterSelectRequired = false;
-    player.writeCharacterSelectRequired();
+    player.setCharacterSelectionRequired(false);
+    player.selection = value;
     player.level = 1;
     player.experience = 0;
-    player.points = 1;
+    player.skillPoints = 1;
     player.maxHealth = 10;
     player.health = 10;
 
     switch (value) {
       case CharacterSelection.Warrior:
-        player.techTree.sword = 1;
+        player.techTree.sword = 2;
         player.equippedType = TechType.Sword;
         break;
       case CharacterSelection.Wizard:
-        player.techTree.axe = 1;
+        player.techTree.axe = 3;
         player.equippedType = TechType.Axe;
         break;
       case CharacterSelection.Archer:
-        player.techTree.axe = 1;
+        player.techTree.axe = 2;
         player.equippedType = TechType.Bow;
         break;
     }
@@ -107,7 +119,9 @@ class GameRandom extends Game {
   @override
   void onKilled(dynamic target, dynamic src){
     if (src is Player) {
-      src.gainExperience(5);
+      src.gainExperience(45);
     }
   }
 }
+
+

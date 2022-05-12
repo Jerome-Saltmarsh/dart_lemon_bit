@@ -139,20 +139,9 @@
 [ ] Max Shoe cards is 1
 [ ] Max Passive Cards is 5
 [ ] remove objects around player spawn points
-[ ] build experience bar
+[ ] On upgrade improve (max Energy, max Health, max Magic)
+[x] build experience bar
 [x] Select Character Type
-[THEY COME AT NIGHT]
-[ ] Select Character Type
-[ ] Cancel count down on player disconnected
-[ ] Fix Zombies sometimes don't run into flame
-[ ] Fix Zombie AI sometimes get stuck
-[ ] Balance wave 1 
-[ ] Indicate duration until next wave
-[ ] Indicate duration until wave finished
-[ ] Indicate Day Number
-[ ] Select Character Name
-[ ] Find trinkets
-[ ] Shotgun 
 [x] Waiting for x number of players to join before starting game
 [x] Spawn fireplace in center of map
 [x] Fireplace must be surrounded by grass
