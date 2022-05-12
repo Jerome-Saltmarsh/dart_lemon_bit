@@ -35,8 +35,8 @@ class GameRandom extends Game {
 
   @override
   void update() {
-    time = (time + 1) % Duration.secondsPerDay;
-    if (time % 180 == 0 && numberOfAliveZombies < 30){
+    // time = (time + 1) % Duration.secondsPerDay;
+    if (frame % 180 == 0 && numberOfAliveZombies < 30){
       spawnRandomZombie();
     }
   }
@@ -89,7 +89,6 @@ class GameRandom extends Game {
       case CharacterSelection.Archer:
         player.techTree.axe = 1;
         player.equippedType = TechType.Bow;
-        // player.
         break;
     }
 

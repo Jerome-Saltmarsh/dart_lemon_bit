@@ -131,7 +131,15 @@
 [ ] Refactor (client) Merge Game and GameState
 [RANDOM]
 [ ] Generate Caves
-[ ] Select Character Type
+[ ] Critical zombies stop attack player after revive
+[ ] On level up select random card (from 3)
+[ ] Max Attack / Ability Cards is 5
+[ ] Max Armour cards is 1
+[ ] Max Helm cards is 1
+[ ] Max Shoe cards is 1
+[ ] Max Passive Cards is 5
+[ ] remove objects around player spawn points
+[x] Select Character Type
 [THEY COME AT NIGHT]
 [ ] Select Character Type
 [ ] Cancel count down on player disconnected
@@ -949,5 +957,10 @@ DOTA
 AGE OF EMPIRES
     mode: alone || coop
     genre: medieval_historic
-              
 
+When you gain a level, select one of 3 random upgrade cards
+Cards can be 
+- Specific skills for weapons
+- General Skills that any player can learn
+- Trinket
+- 

@@ -14,6 +14,7 @@ import 'package:gamestream_flutter/modules/ui/module.dart';
 import 'package:gamestream_flutter/server_response_reader.dart';
 import 'package:gamestream_flutter/ui/functions/build_debug_panel.dart';
 import 'package:gamestream_flutter/ui/functions/build_layout.dart';
+import 'package:gamestream_flutter/ui/functions/build_panel_character_stats.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel_highlighted_structure_type.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel_highlighted_tech_type_upgrade.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel_primary.dart';
@@ -137,8 +138,12 @@ class GameBuild {
                 respawnButton(),
               buildPanelHighlightedStructureType(),
               buildPanelHighlightedTechTypeUpgrade(),
+              if (game.type.value == GameType.SURVIVORS)
               buildPanelPrimary(),
+              if (game.type.value == GameType.SURVIVORS)
               buildTextLivesRemaining(),
+              if (game.type.value == GameType.RANDOM)
+              buildPanelCharacterStats(),
             ]);
       });
     });

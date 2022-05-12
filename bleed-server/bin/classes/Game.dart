@@ -46,6 +46,8 @@ abstract class Game {
   final String id = (_id++).toString();
   final Scene scene;
 
+  var playersCanAttackDynamicObjects = false;
+
   static int _id = 0;
 
   List<DynamicObject> get dynamicObjects => scene.objectsDynamic;
@@ -262,12 +264,12 @@ extension GameFunctions on Game {
         predicate: (other) => !other.collidable);
   }
 
-  Collider? getClosestEnemyCollider(double x, double y, Character character) {
+  Collider? getClosestCollider(double x, double y, Character character) {
     final zombie =
         getClosestEnemy(x: x, y: y, character: character, characters: zombies);
     final player =
         getClosestEnemy(x: x, y: y, character: character, characters: players);
-    final dynamicObject = getClosestDynamicObject(x, y);
+    final dynamicObject = playersCanAttackDynamicObjects ? getClosestDynamicObject(x, y) : null;
     final zombieDistance =
         zombie != null ? distanceBetween(x, y, zombie.x, zombie.y) : 99999;
     final playerDistance =

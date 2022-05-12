@@ -9,5 +9,6 @@ Widget buildPanel({required Widget child, double? height}){
       decoration: panelDecoration,
       child: child,
       alignment: Alignment.center,
+      padding: const EdgeInsets.all(8),
   );
 }
