@@ -111,29 +111,36 @@ class GameBuild {
   Widget buildLayoutInProgress(){
     const _pad = 8.0;
 
-    return WatchBuilder(state.player.alive, (bool alive){
-      return buildLayout(
-          children: [
-            Positioned(
-                left: _pad,
-                top: _pad,
-                child: WatchBuilder(state.debug, (bool debug){
-                  return debug ? buildDebugPanel() : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                    ],
-                  );
-                })
-            ),
-            buildTextBox(),
-            // buildTopRight(),
-            if (!alive)
-            respawnButton(),
-            buildPanelHighlightedStructureType(),
-            buildPanelHighlightedTechTypeUpgrade(),
-            buildPanelPrimary(),
-            buildTextLivesRemaining(),
-          ]);
+    return WatchBuilder(state.player.selectCharacterRequired, (bool selectCharacterRequired){
+
+      if (selectCharacterRequired){
+        return buildLayoutSelectCharacter();
+      }
+
+      return WatchBuilder(state.player.alive, (bool alive){
+        return buildLayout(
+            children: [
+              Positioned(
+                  left: _pad,
+                  top: _pad,
+                  child: WatchBuilder(state.debug, (bool debug){
+                    return debug ? buildDebugPanel() : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                      ],
+                    );
+                  })
+              ),
+              buildTextBox(),
+              // buildTopRight(),
+              if (!alive)
+                respawnButton(),
+              buildPanelHighlightedStructureType(),
+              buildPanelHighlightedTechTypeUpgrade(),
+              buildPanelPrimary(),
+              buildTextLivesRemaining(),
+            ]);
+      });
     });
   }
 

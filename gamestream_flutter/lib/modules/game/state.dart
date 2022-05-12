@@ -63,6 +63,7 @@ class Player {
   var maxHealth = 0.0;
   var tile = Tile.Grass;
   var attackRange = 0.0;
+  final selectCharacterRequired = Watch(false);
   final abilityTarget = Vector2(0, 0);
   final storeVisible = Watch(false);
   final attackTarget = Vector2(0, 0);

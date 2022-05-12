@@ -10,6 +10,7 @@ import 'library.dart';
 class Player extends Character with ByteWriter {
   final mouse = Vector2(0, 0);
   final runTarget = Vector2(0, 0);
+  var characterSelectRequired = false;
   var debug = false;
   var score = 0;
   var sceneChanged = false;
@@ -117,6 +118,11 @@ class Player extends Character with ByteWriter {
   void setStateChanging(){
     writePlayerEvent(PlayerEvent.Item_Equipped);
     game.setCharacterState(this, CharacterState.Changing);
+  }
+
+  void writeCharacterSelectRequired(){
+    writeByte(ServerResponse.Character_Select_Required);
+    writeBool(characterSelectRequired);
   }
 }
 
@@ -314,6 +320,7 @@ extension PlayerProperties on Player {
     writeNpcs(this);
     writeGameTime(game);
     writePlayerZombies();
+
 
     if (!sceneDownloaded){
       writeTiles();

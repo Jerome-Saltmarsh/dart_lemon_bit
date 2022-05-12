@@ -85,6 +85,10 @@ class ServerResponseReader extends ByteReader {
           parseDynamicObjects();
           break;
 
+        case ServerResponse.Character_Select_Required:
+          modules.game.state.player.selectCharacterRequired.value = readBool();
+          break;
+
         case ServerResponse.Static_Objects:
           parseStaticObjects();
           break;

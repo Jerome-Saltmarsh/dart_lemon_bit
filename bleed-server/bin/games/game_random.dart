@@ -66,7 +66,8 @@ class GameRandom extends Game {
   @override
   void onPlayerJoined(Player player){
     player.health = 0;
-    player.writeByte(ServerResponse.Game_Status);
-    player.writeByte(GameStatus.Select_Character.index);
+    player.characterSelectRequired = true;
+    player.writeByte(ServerResponse.Character_Select_Required);
+    player.writeBool(player.characterSelectRequired);
   }
 }

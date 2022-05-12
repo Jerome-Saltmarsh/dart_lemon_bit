@@ -66,3 +66,9 @@ Widget buildLayoutWaitingForPlayers(){
     )),
   );
 }
+
+Widget buildLayoutSelectCharacter(){
+  return Center(
+    child: text("Select Character"),
+  );
+}

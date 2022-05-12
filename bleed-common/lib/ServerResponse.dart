@@ -51,5 +51,6 @@ class ServerResponse {
   static const Dynamic_Object_Destroyed = 51;
   static const Dynamic_Object_Spawned = 52;
   static const Lives_Remaining = 53;
+  static const Character_Select_Required = 54;
 }
 
