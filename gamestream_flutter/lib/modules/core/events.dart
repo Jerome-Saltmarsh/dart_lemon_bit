@@ -2,7 +2,6 @@
 
 import 'package:bleed_common/ClientRequest.dart';
 import 'package:bleed_common/GameStatus.dart';
-import 'package:bleed_common/GameType.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/game.dart';
@@ -37,12 +36,9 @@ class CoreEvents {
     print('events.onGameStatusChanged(value: $value)');
     audio.stopMusic();
 
-    switch(value){
+    switch(value) {
       case GameStatus.In_Progress:
         engine.drawCanvas.value = modules.game.render.render;
-        if (state.statusPrevious.value == GameStatus.Awaiting_Players){
-          audio.gong();
-        }
         engine.drawCanvasAfterUpdate = false;
         engine.fullScreenEnter();
         break;
@@ -50,7 +46,6 @@ class CoreEvents {
         engine.fullScreenExit();
         break;
     }
-    core.state.statusPrevious.value = value;
   }
 
   void onDrawCanvasChanged(DrawCanvas? method){
@@ -143,17 +138,17 @@ class CoreEvents {
       case Connection.Connected:
         sendClientRequest(ClientRequest.Scene);
         core.state.mode.value = Mode.Player;
-        if (game.type.value == GameType.Custom){
-          final account = core.state.account.value;
-          if (account == null){
-            core.actions.setError("Account required to play custom map");
-            return;
-          }
-          final mapName = game.customGameName;
-          sendRequestJoinCustomGame(mapName: mapName, playerId: account.userId);
-        }else{
-          sendRequestJoinGame(game.type.value);
-        }
+        // if (game.type.value == GameType.Custom){
+        //   final account = core.state.account.value;
+        //   if (account == null){
+        //     core.actions.setError("Account required to play custom map");
+        //     return;
+        //   }
+        //   final mapName = game.customGameName;
+        //   sendRequestJoinCustomGame(mapName: mapName, playerId: account.userId);
+        // }else{
+        //   sendRequestJoinGame(game.type.value);
+        // }
         break;
 
       case Connection.Done:
@@ -165,7 +160,7 @@ class CoreEvents {
         engine.drawCanvasAfterUpdate = true;
         engine.cursorType.value = CursorType.Basic;
         core.state.status.value = GameStatus.None;
-        game.type.value = GameType.None;
+        game.type.value = null;
         break;
       default:
         break;

@@ -12,7 +12,6 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/layouts.dart';
 import 'package:gamestream_flutter/modules/ui/module.dart';
 import 'package:gamestream_flutter/server_response_reader.dart';
-import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/functions/build_debug_panel.dart';
 import 'package:gamestream_flutter/ui/functions/build_layout.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel_highlighted_structure_type.dart';
@@ -53,7 +52,7 @@ class GameBuild {
         case GameStatus.Finished:
           return buildDialogGameFinished();
         default:
-          return ui.layouts.buildLayoutLoading();
+          throw Exception("No builder for game status: $gameStatus");
       }
     });
   }

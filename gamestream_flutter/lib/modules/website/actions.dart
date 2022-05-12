@@ -1,9 +1,6 @@
 
 
-import 'package:bleed_common/GameType.dart';
-import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/servers.dart';
 
 import 'enums.dart';
 
@@ -48,9 +45,9 @@ class WebsiteActions {
 
   void connectToCustomGame(String customGame){
     _log("connectToCustomGame");
-    game.type.value = GameType.Custom;
-    game.customGameName = customGame;
-    connectToWebSocketServer(core.state.region.value, GameType.Custom);
+    // game.type.value = GameType.Custom;
+    // game.customGameName = customGame;
+    // connectToWebSocketServer(core.state.region.value, GameType.Custom);
   }
 
   void _log(String value){

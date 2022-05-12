@@ -1,12 +1,10 @@
 import 'dart:async';
 
-import 'package:bleed_server/firestoreClient/firestoreService.dart';
-
 import 'classes/library.dart';
 import 'common/library.dart';
 import 'functions/loadScenes.dart';
 import 'games/game_random.dart';
-import 'games/game_night_survivors.dart';
+import 'games/game_survivors.dart';
 import 'language.dart';
 
 final engine = _Engine();
@@ -116,7 +114,6 @@ class _Engine {
     for (final game in games) {
       if (game is GameRandom) {
         if (game.full) continue;
-        if (game.empty) continue;
         return game;
       }
     }
@@ -152,17 +149,6 @@ class _Engine {
   void onPlayerCreated(Player player) {
     player.game.players.add(player);
     player.game.disableCountDown = 0;
-  }
-
-  Future<CustomGame> findOrCreateCustomGame(String mapId) async {
-    for(final game in games){
-      if (game is CustomGame == false) continue;
-      final customGame = game as CustomGame;
-      return customGame;
-    }
-    final customMapJson = await firestoreService.loadMap(mapId);
-    final scene = parseJsonToScene(customMapJson, mapId);
-    return CustomGame(scene);
   }
 
   Player spawnPlayerInTown() {

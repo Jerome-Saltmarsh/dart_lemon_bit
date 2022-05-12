@@ -10,8 +10,7 @@ import 'compile.dart';
 import 'engine.dart';
 import 'functions/generateName.dart';
 import 'functions/withinRadius.dart';
-import 'games/game_random.dart';
-import 'games/game_night_survivors.dart';
+import 'games/game_survivors.dart';
 import 'physics.dart';
 
 const _space = " ";
@@ -125,24 +124,15 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       sendAndClearBuffer();
     }
 
-    void joinGamePractice() {
-      final game = GameRandom(maxPlayers: 1);
+    void joinGameRandom() {
+      final game = engine.findRandomGame();
       _player = game.spawnPlayer();
       onGameJoined();
     }
 
-    void joinGameAfterDark() {
+    void joinGameSurvivors() {
       final game = engine.findGameAfterDark();
       _player = game.spawnPlayer();
-      onGameJoined();
-    }
-
-    void joinGameMMO() {
-      clearBuffer();
-      final account = _account;
-      final player = engine.spawnPlayerInTown();
-      _player = player;
-      player.name = account != null ? account.publicName : generateRandomName();
       onGameJoined();
     }
 
@@ -422,15 +412,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                final gameType = gameTypes[gameTypeIndex];
 
                switch (gameType) {
-                 case GameType.None:
-                   throw Exception("Join Game - GameType.None invalid");
-                 case GameType.MMO:
-                   return joinGameMMO();
-                 case GameType.PRACTICE:
-                   return joinGamePractice();
                  case GameType.RANDOM:
-                   return joinGameAfterDark();
-                   // return joinGameRandom();
+                   return joinGameRandom();
+                 case GameType.SURVIVORS:
+                   return joinGameSurvivors();
                  default:
                    break;
                }
@@ -441,14 +426,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           final gameType = gameTypes[gameTypeIndex];
 
           switch (gameType) {
-            case GameType.None:
-              throw Exception("Join Game - GameType.None invalid");
-            case GameType.MMO:
-              return joinGameMMO();
-            case GameType.PRACTICE:
-              return joinGamePractice();
             case GameType.RANDOM:
-              return joinGameAfterDark();
+              return joinGameRandom();
+            case GameType.SURVIVORS:
+              return joinGameSurvivors();
             default:
               throw Exception("Cannot join ${gameType}");
           }
@@ -467,11 +448,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             errorArgsExpected(3, arguments);
             return;
           }
-          final mapId = arguments[1];
-          engine.findOrCreateCustomGame(mapId).then((value){
-            _player = value.playerJoin();
-            onGameJoined();
-          });
+          // final mapId = arguments[1];
+          // engine.findOrCreateCustomGame(mapId).then((value){
+          //   _player = value.playerJoin();
+          //   onGameJoined();
+          // });
           break;
 
         case ClientRequest.Construct:

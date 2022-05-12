@@ -15,6 +15,5 @@ class CoreState {
   final String title = "GAMESTREAM";
   final Watch<double> download = Watch(0);
   final debug = true;
-  final Watch<GameStatus> status = Watch(GameStatus.None);
-  final Watch<GameStatus> statusPrevious = Watch(GameStatus.None);
+  final status = Watch(GameStatus.None);
 }

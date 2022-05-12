@@ -1,6 +1,5 @@
 
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/version.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
@@ -382,12 +381,6 @@ Widget margin({
 Widget watchAccount(Widget builder(Account? value)) {
   return WatchBuilder(core.state.account, (Account? account) {
     return builder(account);
-  });
-}
-
-Widget watchGameType(Widget builder(GameType value)) {
-  return WatchBuilder<GameType>(game.type, (type) {
-    return builder(type);
   });
 }
 

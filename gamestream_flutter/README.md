@@ -129,6 +129,9 @@
 [ ] Preload audios
 [ ] Refactor Game with ByteReader
 [ ] Refactor (client) Merge Game and GameState
+[RANDOM]
+[ ] Generate Caves
+[ ] Select Character Type
 [THEY COME AT NIGHT]
 [ ] Select Character Type
 [ ] Cancel count down on player disconnected
@@ -140,6 +143,7 @@
 [ ] Indicate Day Number
 [ ] Select Character Name
 [ ] Find trinkets
+[ ] Shotgun 
 [x] Waiting for x number of players to join before starting game
 [x] Spawn fireplace in center of map
 [x] Fireplace must be surrounded by grass

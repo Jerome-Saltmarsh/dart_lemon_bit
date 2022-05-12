@@ -267,7 +267,7 @@ class CoreActions {
   }
 
   void deselectGameType(){
-    game.type.value = GameType.None;
+    game.type.value = null;
   }
 
   void toggleEditMode() {
@@ -295,7 +295,7 @@ class CoreActions {
   }
 
   void exitGame(){
-    game.type.value = GameType.None;
+    game.type.value = null;
     clearState();
     webSocket.disconnect();
   }

@@ -1,10 +1,10 @@
 import 'package:bleed_common/GameType.dart';
 import 'package:gamestream_flutter/classes/DynamicObject.dart';
-import 'package:gamestream_flutter/classes/static_object.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/GeneratedObject.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/Projectile.dart';
+import 'package:gamestream_flutter/classes/static_object.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -16,7 +16,7 @@ final game = _Game();
 class _Game {
   final lobby = _Lobby();
   final royal = _Royal();
-  final type = Watch(GameType.None);
+  final type = Watch<GameType?>(null);
   final countDownFramesRemaining = Watch(0);
   final numberOfPlayersNeeded = Watch(0);
   final teamLivesWest = Watch(-1);

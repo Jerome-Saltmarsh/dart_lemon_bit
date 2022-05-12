@@ -13,8 +13,8 @@ import 'package:lemon_watch/watch_builder.dart';
 final build = _Build();
 
 const selectableGameTypes = [
-  GameType.PRACTICE,
   GameType.RANDOM,
+  GameType.SURVIVORS,
 ];
 
 class _Build {

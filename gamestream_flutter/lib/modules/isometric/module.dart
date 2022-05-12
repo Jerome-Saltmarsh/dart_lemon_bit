@@ -4,13 +4,13 @@ import 'dart:ui' as ui;
 
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/classes/static_object.dart';
 import 'package:gamestream_flutter/classes/FloatingText.dart';
 import 'package:gamestream_flutter/classes/GeneratedObject.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
+import 'package:gamestream_flutter/classes/static_object.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
 import 'package:gamestream_flutter/modules/game/factories.dart';
@@ -27,7 +27,6 @@ import 'subscriptions.dart';
 
 
 class IsometricModule {
-  final _screen = engine.screen;
   final subscriptions = IsometricSubscriptions();
   late final IsometricRender render;
   late final IsometricSpawn spawn;

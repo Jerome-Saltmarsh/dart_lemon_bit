@@ -152,7 +152,7 @@ abstract class Game {
   void onPlayerDisconnected(Player player) {}
 
   Game(this.scene, {
-        this.gameType = GameType.MMO,
+        required this.gameType,
         this.shadeMax = Shade.Bright,
         this.status = GameStatus.In_Progress
       }) {
@@ -178,21 +178,6 @@ abstract class Game {
         ));
       }
     }
-
-    // for (var rowIndex = 0; rowIndex < scene.numberOfRows; rowIndex++) {
-    //   final row = scene.tiles[rowIndex];
-    //   for (var columnIndex = 0;
-    //       columnIndex < scene.numberOfColumns;
-    //       columnIndex++) {
-    //     switch (row[columnIndex]) {
-    //       case Tile.Zombie_Spawn:
-    //         scene.spawnPointZombies.add(getTilePosition(rowIndex, columnIndex));
-    //         break;
-    //       default:
-    //         break;
-    //     }
-    //   }
-    // }
   }
 
   void checkCollisionPlayerItem() {
@@ -234,6 +219,8 @@ abstract class Game {
       }
     }
   }
+
+  Player spawnPlayer();
 }
 
 const secondsPerMinute = 60;
@@ -1513,38 +1500,6 @@ void selectCharacterType(Player player, CharacterType value) {
   player.abilityPoints = 1;
   player.magic = player.maxMagic;
   player.health = player.maxHealth;
-}
-
-class CustomGame extends Game {
-  int timeInSeconds = calculateTime(hour: 12);
-  int secondsPerFrame = 1;
-
-  CustomGame(Scene scene) : super(scene) {
-    if (scene.startHour != null) {
-      // timeInSeconds = scene.startHour! * secondsPerHour;
-    }
-    if (scene.secondsPerFrames != null) {
-      secondsPerFrame = scene.secondsPerFrames!;
-    }
-  }
-
-  @override
-  void update() {
-    incrementSeconds();
-  }
-
-  void incrementSeconds(){
-    timeInSeconds = (timeInSeconds + secondsPerFrame) % secondsPerDay;
-  }
-
-  @override
-  int getTime() {
-    return timeInSeconds;
-  }
-
-  Player playerJoin() {
-    return Player(game: this, y: 500, weapon: SlotType.Empty);
-  }
 }
 
 class ZombieSpawnPointsEmptyException implements Exception {}

@@ -20,7 +20,7 @@ void _connectLocalHost({int port = 8080, required GameType gameType}) {
 }
 
 void _connectToServer(String uri, GameType gameType){
-  webSocket.connect(uri: uri, message: '${ClientRequest.Join} ${gameType.index}');
+  webSocket.connect(uri: uri, message: '${ClientRequest.Join.index} ${gameType.index}');
 }
 
 final List<Region> selectableServerTypes =
@@ -38,15 +38,8 @@ String parseHttpToWebSocket(String url) {
 String getHttpsConnectionString(Region server, GameType gameType) {
   switch (server) {
     case Region.Australia:
-      switch (gameType) {
-        case GameType.MMO:
           return ServerUri.Sydney;
-        case GameType.Moba:
-          return ServerUri.Sydney;
-        default:
-          return ServerUri.Sydney;
-      }
     default:
-      throw Exception();
+      return ServerUri.Sydney;
   }
 }

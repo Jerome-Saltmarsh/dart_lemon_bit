@@ -1,32 +1,11 @@
 enum GameType {
-    None,
-    MMO,
-    Moba,
-    BATTLE_ROYAL,
-    SKIRMISH,
     RANDOM,
-    PRACTICE,
-    SWARM,
-    DeathMatch,
-    Custom
+    SURVIVORS,
 }
-
 
 const gameTypes = GameType.values;
 
 const gameTypeNames = {
-    GameType.MMO: "ADVENTURE",
-    GameType.SKIRMISH: "SKIRMISH",
-    GameType.BATTLE_ROYAL: "ROYAL",
-    GameType.Moba: "HEROES MOBA",
-    GameType.DeathMatch: "COUNTER STRIKE",
-    GameType.SWARM: "SWARM",
-    GameType.PRACTICE: "SANDBOX",
-    GameType.RANDOM: "THEY COME AT NIGHT",
+    GameType.RANDOM: "RANDOM",
+    GameType.SURVIVORS: "SURVIVORS",
 };
-
-const freeToPlay = [
-    GameType.MMO,
-    GameType.Moba,
-    GameType.BATTLE_ROYAL,
-];
