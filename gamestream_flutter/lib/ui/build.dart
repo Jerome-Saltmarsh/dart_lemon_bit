@@ -14,7 +14,7 @@ final build = _Build();
 
 const selectableGameTypes = [
   GameType.RANDOM,
-  GameType.SURVIVORS,
+  // GameType.SURVIVORS,
 ];
 
 class _Build {
@@ -29,7 +29,7 @@ class _Build {
     });
   }
 
-  Widget gamesList(){
+  Widget buildPageSelectGame(){
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

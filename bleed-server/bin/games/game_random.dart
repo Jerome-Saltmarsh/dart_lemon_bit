@@ -76,6 +76,23 @@ class GameRandom extends Game {
   void onPlayerSelectCharacterType(Player player, CharacterSelection value) {
     player.characterSelectRequired = false;
     player.writeCharacterSelectRequired();
+
+    switch (value) {
+      case CharacterSelection.Warrior:
+        player.techTree.sword = 1;
+        player.equippedType = TechType.Sword;
+        break;
+      case CharacterSelection.Wizard:
+        player.techTree.axe = 1;
+        player.equippedType = TechType.Axe;
+        break;
+      case CharacterSelection.Archer:
+        player.techTree.axe = 1;
+        player.equippedType = TechType.Bow;
+        // player.
+        break;
+    }
+
     revive(player);
   }
 

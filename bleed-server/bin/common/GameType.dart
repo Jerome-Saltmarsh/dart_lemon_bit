@@ -6,6 +6,6 @@ enum GameType {
 const gameTypes = GameType.values;
 
 const gameTypeNames = {
-    GameType.RANDOM: "RANDOM",
+    GameType.RANDOM: "PLAY",
     GameType.SURVIVORS: "SURVIVORS",
 };

@@ -76,6 +76,7 @@ Widget buildLayoutSelectCharacter(){
       height: 300,
       child: Container(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             text("WARRIOR", onPressed: (){
               sendClientRequestSelectCharacterType(CharacterSelection.Warrior);
