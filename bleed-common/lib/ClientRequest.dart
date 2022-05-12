@@ -22,6 +22,7 @@ enum ClientRequest {
   Construct,
   Upgrade,
   Scene,
+  Select_Character_Type,
 }
 
 const clientRequests = ClientRequest.values;

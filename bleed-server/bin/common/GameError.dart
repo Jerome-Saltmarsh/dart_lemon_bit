@@ -39,4 +39,5 @@ enum GameError {
   Construct_Insufficient_Resources,
   Construct_Invalid_Tile,
   Construct_Area_Not_Available,
+  Character_Select_Not_Required,
 }

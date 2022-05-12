@@ -52,7 +52,7 @@ class GameBuild {
         case GameStatus.Finished:
           return buildDialogGameFinished();
         default:
-          throw Exception("No builder for game status: $gameStatus");
+          return empty;
       }
     });
   }

@@ -56,6 +56,10 @@ void sendRequestConstruct(int value) {
   sendClientRequest(ClientRequest.Construct, value);
 }
 
+void sendClientRequestSelectCharacterType(CharacterSelection value) {
+  sendClientRequest(ClientRequest.Select_Character_Type, value.index);
+}
+
 void sendClientRequest(ClientRequest value, [dynamic message]){
   if (message != null){
     return webSocket.send('${value.index} $message');

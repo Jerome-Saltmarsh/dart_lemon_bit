@@ -120,10 +120,16 @@ class Player extends Character with ByteWriter {
     game.setCharacterState(this, CharacterState.Changing);
   }
 
+  void setCharacterSelectionRequired(bool value){
+    characterSelectRequired = value;
+    writeCharacterSelectRequired();
+  }
+
   void writeCharacterSelectRequired(){
     writeByte(ServerResponse.Character_Select_Required);
     writeBool(characterSelectRequired);
   }
+
 }
 
 class Slot {

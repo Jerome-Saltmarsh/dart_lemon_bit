@@ -5,6 +5,7 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'classes/library.dart';
+import 'common/Character_Selection.dart';
 import 'common/library.dart';
 import 'compile.dart';
 import 'engine.dart';
@@ -725,6 +726,27 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           // compileAndSendPlayer();
           break;
 
+        case ClientRequest.Select_Character_Type:
+          if (player == null) {
+            return errorPlayerNotFound();
+          }
+          if (!player.characterSelectRequired){
+            return error(GameError.Character_Select_Not_Required);
+          }
+          if (arguments.length != 2) {
+            return errorArgsExpected(2, arguments);
+          }
+          final characterSelectIndex = int.tryParse(arguments[1]);
+          if (characterSelectIndex == null){
+            return errorInvalidArg('character select integer required: got ${arguments[1]}');
+          }
+          if (!isValidIndex(characterSelectIndex, characterSelections)){
+            return errorInvalidArg('invalid character selection index');
+          }
+          final selection = characterSelections[characterSelectIndex];
+          player.game.onPlayerSelectCharacterType(player, selection);
+          break;
+
         case ClientRequest.Upgrade:
           if (player == null) {
             return errorPlayerNotFound();
@@ -735,7 +757,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
           final techType = int.tryParse(arguments[1]);
           if (techType == null) {
-            return errorInvalidArg('tech type integer required: got $techType');
+            return errorInvalidArg('tech type integer required: got ${arguments[1]}');
           }
           if (!TechType.isValid(techType)) {
             return errorInvalidArg('invalid tech type index $techType');
@@ -918,3 +940,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     });
 }
 
+bool isValidIndex(int index, List values){
+   if (values.isEmpty) return false;
+   if (index < 0) return false;
+   return index < values.length;
+}

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
+import '../common/Character_Selection.dart';
 import '../common/library.dart';
 import '../engine.dart';
 import '../enums.dart';
@@ -221,6 +222,10 @@ abstract class Game {
   }
 
   Player spawnPlayer();
+
+  void onPlayerSelectCharacterType(Player player, CharacterSelection value){
+
+  }
 }
 
 const secondsPerMinute = 60;
@@ -586,7 +591,7 @@ extension GameFunctions on Game {
   }
 
   void setCharacterStateDead(Character character) {
-    if (character.dead) return;
+    if (character.state == CharacterState.Dead) return;
     character.state = CharacterState.Dead;
     character.collidable = false;
 

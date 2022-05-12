@@ -4,6 +4,7 @@ import 'package:lemon_math/library.dart';
 
 import '../classes/Game.dart';
 import '../classes/Player.dart';
+import '../common/Character_Selection.dart';
 import '../common/library.dart';
 import '../scene_generator.dart';
 
@@ -69,5 +70,17 @@ class GameRandom extends Game {
     player.characterSelectRequired = true;
     player.writeByte(ServerResponse.Character_Select_Required);
     player.writeBool(player.characterSelectRequired);
+  }
+
+  @override
+  void onPlayerSelectCharacterType(Player player, CharacterSelection value) {
+    player.characterSelectRequired = false;
+    player.writeCharacterSelectRequired();
+    revive(player);
+  }
+
+  @override
+  void onPlayerDeath(Player player) {
+     player.setCharacterSelectionRequired(true);
   }
 }

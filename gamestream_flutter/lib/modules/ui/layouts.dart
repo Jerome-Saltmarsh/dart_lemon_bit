@@ -1,10 +1,13 @@
 
+import 'package:bleed_common/library.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/ui/style.dart';
+import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/ui/build.dart';
 import 'package:gamestream_flutter/ui/functions/build_layout.dart';
+import 'package:gamestream_flutter/ui/functions/build_panel.dart';
 
 class UILayouts {
 
@@ -69,6 +72,23 @@ Widget buildLayoutWaitingForPlayers(){
 
 Widget buildLayoutSelectCharacter(){
   return Center(
-    child: text("Select Character"),
+    child: buildPanel(
+      height: 300,
+      child: Container(
+        child: Column(
+          children: [
+            text("WARRIOR", onPressed: (){
+              sendClientRequestSelectCharacterType(CharacterSelection.Warrior);
+            }),
+            text("WIZARD", onPressed: (){
+              sendClientRequestSelectCharacterType(CharacterSelection.Wizard);
+            }),
+            text("ARCHER", onPressed: (){
+              sendClientRequestSelectCharacterType(CharacterSelection.Archer);
+            }),
+          ],
+        ),
+      ),
+    ),
   );
 }
