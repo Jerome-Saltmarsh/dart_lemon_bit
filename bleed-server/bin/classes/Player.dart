@@ -20,7 +20,7 @@ class Player extends Character with ByteWriter {
   var textDuration = 0;
   var experience = 0;
   var level = 1;
-  var abilityPoints = 0;
+  var points = 0;
   var _magic = 0;
   var maxMagic = 100;
   var magicRegen = 1;
@@ -57,13 +57,11 @@ class Player extends Character with ByteWriter {
     return _magic / maxMagic;
   }
 
+  int get experienceRequiredForNextLevel => getExperienceForLevel(level + 1);
+
   double get experiencePercentage {
-    final currentLevel = getExperienceForLevel(level);
-    final nextLevel = getExperienceForLevel(level + 1);
-    final current = experience - currentLevel;
-    final next = nextLevel - current;
-    if (current == 0) return 0.0;
-    return current / next;
+    if (experience == 0) return 0.0;
+    return experience / experienceRequiredForNextLevel;
   }
 
   set magic(int value){
@@ -139,6 +137,14 @@ class Player extends Character with ByteWriter {
     writeBool(characterSelectRequired);
   }
 
+  void gainExperience(int amount){
+      experience += amount;
+      while (experience > experienceRequiredForNextLevel) {
+        experience -= experienceRequiredForNextLevel;
+        level++;
+        points++;
+      }
+  }
 }
 
 class Slot {

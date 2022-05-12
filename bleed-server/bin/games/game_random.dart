@@ -4,7 +4,6 @@ import 'package:lemon_math/library.dart';
 
 import '../classes/Game.dart';
 import '../classes/Player.dart';
-import '../common/Character_Selection.dart';
 import '../common/library.dart';
 import '../scene_generator.dart';
 
@@ -76,6 +75,10 @@ class GameRandom extends Game {
   void onPlayerSelectCharacterType(Player player, CharacterSelection value) {
     player.characterSelectRequired = false;
     player.writeCharacterSelectRequired();
+    player.level = 0;
+    player.points = 1;
+    player.maxHealth = 10;
+    player.health = 10;
 
     switch (value) {
       case CharacterSelection.Warrior:
@@ -102,8 +105,8 @@ class GameRandom extends Game {
 
   @override
   void onKilled(dynamic target, dynamic src){
-    if (src is Player){
-      src.experience += 5;
+    if (src is Player) {
+      src.gainExperience(5);
     }
   }
 }

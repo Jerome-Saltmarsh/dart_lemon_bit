@@ -1501,14 +1501,6 @@ double angle2(double adjacent, double opposite) {
   return atan2(adjacent, opposite);
 }
 
-void selectCharacterType(Player player, CharacterType value) {
-  player.type = value;
-  player.level = 1;
-  player.abilityPoints = 1;
-  player.magic = player.maxMagic;
-  player.health = player.maxHealth;
-}
-
 class ZombieSpawnPointsEmptyException implements Exception {}
 
 class Teams {
