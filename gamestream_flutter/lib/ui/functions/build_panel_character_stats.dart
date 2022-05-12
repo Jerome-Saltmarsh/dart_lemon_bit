@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/ui/functions/build_health_bar.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel.dart';
+import 'package:gamestream_flutter/ui/functions/build_panel_experience.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel_menu.dart';
 
 Widget buildPanelCharacterStats(){
@@ -16,6 +17,9 @@ Widget buildPanelCharacterStats(){
             buildPanelMenu(),
             height8,
             buildHealthBar(),
+            height8,
+            buildPanelExperience(),
+            height8,
           ],
         )
     ),

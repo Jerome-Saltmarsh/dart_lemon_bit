@@ -99,4 +99,11 @@ class GameRandom extends Game {
   void onPlayerDeath(Player player) {
      player.setCharacterSelectionRequired(true);
   }
+
+  @override
+  void onKilled(dynamic target, dynamic src){
+    if (src is Player){
+      src.experience += 5;
+    }
+  }
 }

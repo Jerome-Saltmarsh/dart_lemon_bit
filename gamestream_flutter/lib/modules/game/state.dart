@@ -76,8 +76,6 @@ class Player {
   final experience = Watch(0.0);
   final level = Watch(1);
   final skillPoints = Watch(1);
-  final nextLevelExperience = Watch(1);
-  final experiencePercentage = Watch(0.0);
   final message = Watch("");
   final state = Watch(CharacterState.Idle);
   final alive = Watch(true);
