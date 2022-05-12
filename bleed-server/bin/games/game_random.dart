@@ -75,7 +75,8 @@ class GameRandom extends Game {
   void onPlayerSelectCharacterType(Player player, CharacterSelection value) {
     player.characterSelectRequired = false;
     player.writeCharacterSelectRequired();
-    player.level = 0;
+    player.level = 1;
+    player.experience = 0;
     player.points = 1;
     player.maxHealth = 10;
     player.health = 10;

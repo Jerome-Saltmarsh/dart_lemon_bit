@@ -334,6 +334,7 @@ extension PlayerProperties on Player {
     writeInt(stone);
     writeInt(gold);
     writePercentage(experiencePercentage);
+    writeByte(level);
     writeStructures();
     writeCollectables();
     writePlayers();
@@ -342,7 +343,6 @@ extension PlayerProperties on Player {
     writeNpcs(this);
     writeGameTime(game);
     writePlayerZombies();
-
 
     if (!sceneDownloaded){
       writeTiles();
@@ -394,7 +394,6 @@ extension PlayerProperties on Player {
     }
     writeByte(END);
   }
-
 
   void writeCollectables() {
     writeByte(ServerResponse.Collectables);

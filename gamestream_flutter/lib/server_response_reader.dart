@@ -272,6 +272,7 @@ class ServerResponseReader extends ByteReader {
           _player.stone.value = readInt();
           _player.gold.value = readInt();
           _player.experience.value = readPercentage();
+          _player.level.value = readByte();
           break;
 
         case ServerResponse.Player_Slots:

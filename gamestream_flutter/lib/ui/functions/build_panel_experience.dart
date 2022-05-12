@@ -25,7 +25,7 @@ Widget buildPanelExperience() {
           alignment: Alignment.centerLeft,
           children: [
             Container(
-              color: colours.yellowDark,
+              color: colours.brownLight,
               width: width,
               height: height,
             ),
@@ -33,6 +33,15 @@ Widget buildPanelExperience() {
               color: colours.yellow,
               width: width * percentage,
               height: height,
+            ),
+            Container(
+              color: Colors.transparent,
+              width: width,
+              height: height,
+              alignment: Alignment.center,
+              child: WatchBuilder(player.level, (int level){
+                return text('Level $level');
+              }),
             ),
           ],
         ),
