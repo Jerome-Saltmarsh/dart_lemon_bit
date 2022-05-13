@@ -686,6 +686,10 @@ extension PlayerProperties on Player {
     }
     writeCardChoices();
   }
+
+  int getDamage(){
+    return 5;
+  }
 }
 
 int getExperienceForLevel(int level){

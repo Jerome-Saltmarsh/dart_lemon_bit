@@ -82,6 +82,7 @@ class GameRandom extends Game {
     player.level = 1;
     player.health = 10;
     player.collidable = true;
+    player.equippedType = TechType.Unarmed;
     player.skillPoints = 1;
     player.target = null;
     final spawnPoint = getNextSpawnPoint();
@@ -146,6 +147,14 @@ class GameRandom extends Game {
      } else {
        player.deck.add(cardType);
        player.writeDeck();
+
+       if (cardType == CardType.Passive_General_Max_HP_10) {
+         player.maxHealth += 10;
+         player.health += 10;
+       }
+       if (cardType == CardType.Passive_Bow_Run_Speed) {
+         player.speedModifier += 0.5;
+       }
      }
 
      player.skillPoints--;

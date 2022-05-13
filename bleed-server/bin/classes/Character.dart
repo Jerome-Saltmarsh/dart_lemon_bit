@@ -40,15 +40,8 @@ class Character extends Collider with Team, Health, Velocity, Material {
   // properties
 
   int get direction => (((angle + piEighth) % pi2) ~/ piQuarter) % 8;
-  bool get frozen => frozenDuration > 0;
 
-
-  double get speed {
-    if (frozen) {
-      return (_speed + speedModifier) * 0.5;
-    }
-    return (_speed + speedModifier);
-  }
+  double get speed => _speed + speedModifier;
 
   bool get running => state == CharacterState.Running;
 

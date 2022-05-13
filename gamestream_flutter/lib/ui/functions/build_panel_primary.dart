@@ -9,6 +9,7 @@ import 'build_panel_structures.dart';
 import 'build_panel_tech.dart';
 import 'build_time.dart';
 
+
 Widget buildPanelPrimary() {
   return Positioned(
       top: 20,

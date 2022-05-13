@@ -849,6 +849,22 @@ extension GameFunctions on Game {
     dispatch(GameEventType.Arrow_Hit, collider.x, collider.y);
   }
 
+  void applyHit2({
+    required dynamic src,
+    required Collider target,
+  }){
+    if (!target.collidable) return;
+    if (target is Character) {
+      if (sameTeam(src, target)) return;
+      if (target.dead) return;
+    }
+    if (target is Health == false) return;
+
+    if (src is Player) {
+       applyDamage(src: src, target: target as Health, amount: src.getDamage());
+    }
+  }
+
   void applyHit({
     required dynamic src,
     required Collider target,
@@ -1377,26 +1393,31 @@ extension GameFunctions on Game {
       }
     }
 
+
     if (character.stateDuration == framePerformStrike) {
       if (character.equippedTypeIsBow) {
         dispatchV2(GameEventType.Release_Bow, character);
-        final level = character.equippedLevel;
-        for (var i = 0; i < level; i++){
+        var numberOfArrows = 1;
+        // if (character is Player) {
+        //    numberOfArrows += character.deck.where((element) => element == CardType.Ability_Bow_Split).length;
+        // }
+        for (var i = 0; i < numberOfArrows; i++){
           spawnArrow(character, accuracy: i.toDouble() * 0.1);
         }
-        character.attackTarget = character.attackTarget;
+        // character.attackTarget = character.attackTarget;
         return;
       }
       if (character.equippedIsMelee) {
         final attackTarget = character.attackTarget;
         if (attackTarget != null) {
           if (attackTarget.collidable) {
-            applyHit(
-                src: character,
-                target: attackTarget,
-                techType: character.equippedType,
-                level: character.equippedLevel
-            );
+            // applyHit(
+            //     src: character,
+            //     target: attackTarget,
+            //     techType: character.equippedType,
+            //     level: character.equippedLevel
+            // );
+            applyHit2(src: character, target: attackTarget);
             return;
           } else {
             character.attackTarget = null;
