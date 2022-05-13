@@ -18,8 +18,9 @@ class TechType {
   static const Axe = 6;
   static const Hammer = 7;
   static const Bag = 8;
+  static const Staff = 9;
 
-  static bool isValid(int index) => index >= 0 && index <= Bag;
+  static bool isValid(int index) => index >= 0 && index <= Staff;
 
   static String getName(int value) {
     assert (isValid(value));
@@ -33,6 +34,7 @@ class TechType {
       Axe: "Axe",
       Hammer: "Hammer",
       Bag: "Bag",
+      Staff: "Staff",
     }[value] ?? "?";
   }
   
@@ -58,6 +60,7 @@ class TechType {
       Bow: 25,
       Shotgun: 45,
       Hammer: 45,
+      Staff: 35,
     }[type] ?? 20;
   }
 
@@ -129,6 +132,8 @@ class TechType {
         return 20;
       case TechType.Bag:
         return 0;
+      case TechType.Staff:
+        return 175;
       default:
         throw Exception("Invalid tech type index $type");
     }

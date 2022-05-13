@@ -2,7 +2,6 @@
 
 import 'package:lemon_math/library.dart';
 
-import '../classes/Character.dart';
 import '../common/card_type.dart';
 import '../classes/Game.dart';
 import '../classes/Player.dart';
@@ -139,8 +138,8 @@ class GameRandom extends Game {
      if (cardType == CardType.Weapon_Bow) {
        player.equippedType = TechType.Bow;
      }
-     if (cardType == CardType.Weapon_Axe) {
-       player.equippedType = TechType.Axe;
+     if (cardType == CardType.Weapon_Staff) {
+       player.equippedType = TechType.Staff;
      }
      if (cardTypesWeapons.contains(cardType)){
        player.setStateChanging();

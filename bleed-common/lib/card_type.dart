@@ -3,7 +3,6 @@
 enum CardType {
    Weapon_Sword,
    Weapon_Bow,
-   Weapon_Axe,
    Weapon_Staff,
    Ability_Bow_Split,
    Ability_Bow_Freeze,
@@ -23,8 +22,7 @@ const cardTypeChoicesBow = [
 const cardTypesWeapons = <CardType>[
   CardType.Weapon_Sword, 
   CardType.Weapon_Bow, 
-  CardType.Weapon_Axe, 
-  CardType.Weapon_Staff, 
+  CardType.Weapon_Staff,
 ];
 
 const cardTypesGeneralPassives = <CardType> [
@@ -44,7 +42,6 @@ const cardTypeBowPassives = <CardType> [
 
 String getCardTypeName(CardType value) {
    return const <CardType, String> {
-      CardType.Weapon_Axe: "Axe",
       CardType.Weapon_Bow: "Bow",
       CardType.Weapon_Sword: "Sword",
       CardType.Weapon_Staff: "Staff",

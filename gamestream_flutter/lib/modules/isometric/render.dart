@@ -1133,6 +1133,8 @@ class IsometricRender {
          return SpriteLayer.Bow_Wooden;
        case TechType.Handgun:
          return SpriteLayer.Weapon_Handgun;
+       case TechType.Staff:
+         return SpriteLayer.Weapon_Handgun;
        default:
          throw Exception("cannot map ${character.equipped} to sprite index");
      }
@@ -1141,32 +1143,32 @@ class IsometricRender {
   void _renderCharacterTemplateWeapon(Character character) {
     final equipped = character.equipped;
     if (equipped == SlotType.Empty) return;
-    if (TechType.isMelee(equipped)){
-      engine.mapDst(
-        x: character.x,
-        y: character.y,
-        anchorX: 48,
-        anchorY: 61,
-        scale: 1.0,
-      );
 
-      final row = const [
-        TechType.Hammer,
-        TechType.Axe,
-        TechType.Pickaxe,
-        TechType.Sword,
-        TechType.Sword,
-        TechType.Sword,
-      ].indexOf(equipped);
+    final row = const [
+      TechType.Hammer,
+      TechType.Axe,
+      TechType.Pickaxe,
+      TechType.Sword,
+      TechType.Sword,
+      TechType.Staff,
+    ].indexOf(equipped);
 
-      engine.mapSrc96(
-          x: getTemplateSrcX(character, size: 96),
-          y: 2159.0 + (row * 96)
-      );
-      engine.renderAtlas();
-    } else {
+    if (row == -1) {
       _renderCharacterPart(character, mapEquippedWeaponToSpriteIndex(character));
+      return;
     }
+    engine.mapDst(
+      x: character.x,
+      y: character.y,
+      anchorX: 48,
+      anchorY: 61,
+      scale: 1.0,
+    );
+    engine.mapSrc96(
+        x: getTemplateSrcX(character, size: 96),
+        y: 2159.0 + (row * 96)
+    );
+    engine.renderAtlas();
   }
 
   void drawInteractableNpc(Character npc) {
