@@ -245,7 +245,7 @@ class Scene {
     node.previous = previous;
     node.searchId = pathFindSearchID;
 
-    if (node.depth == 50 || node == pathFindDestination) {
+    if (node.depth == 60 || node == pathFindDestination) {
       var current = node.previous;
       final pathX = pathFindAI.pathX;
       final pathY = pathFindAI.pathY;

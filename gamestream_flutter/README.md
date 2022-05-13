@@ -43,7 +43,7 @@
 [ ] Max Shoe cards is 1
 [ ] Max Passive Cards is 5
 [ ] Power Cards
-[ ] FIX Critical zombies stop attack player after revive
+[x] FIX Critical zombies stop attack player after revive
 [x] Staff Attack casts orb
 [x] remove objects around player spawn points
 [x] Wizard has staff
