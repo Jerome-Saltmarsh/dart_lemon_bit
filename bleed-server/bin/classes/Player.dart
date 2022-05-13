@@ -632,7 +632,7 @@ extension PlayerProperties on Player {
   }
 
   void writeCharacter(Player player, Character character) {
-    writeByte((sameTeam(player, character) ? 100 : 0) + (character.direction * 10) + character.state); // 1
+    writeByte((onSameTeam(player, character) ? 100 : 0) + (character.direction * 10) + character.state); // 1
     writePosition(character);
     writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);
   }

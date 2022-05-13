@@ -49,6 +49,7 @@ class TechType {
       Sword,
       Axe,
       Hammer,
+      Staff,
     ].contains(value);
   }
 

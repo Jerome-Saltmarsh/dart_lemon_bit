@@ -221,9 +221,10 @@ class GameRender {
   }
 
   void drawProjectiles(List<Projectile> projectiles) {
-    final count = game.totalProjectiles;
-    for (var i = 0; i < count; i++) {
-      projectile(game.projectiles[i]);
+    final total = game.totalProjectiles;
+    final projectiles = game.projectiles;
+    for (var i = 0; i < total; i++) {
+      renderProjectile(projectiles[i]);
     }
   }
 
@@ -231,10 +232,13 @@ class GameRender {
     engine.mapDst(x: projectile.x, y: projectile.y, scale: 0.25, anchorX: 16, anchorY: 16);
   }
 
-  void projectile(Projectile value) {
+  void renderProjectile(Projectile value) {
     switch (value.type) {
-      case TechType.Bow:
-        arrow(value.x, value.y, value.angle);
+      case ProjectileType.Arrow:
+        renderArrow(value.x, value.y, value.angle);
+        break;
+      case ProjectileType.Orb:
+        engine.renderCustomV2(dst: value, srcX: 417, srcY: 26, srcWidth: 8, srcHeight: 8, scale: 1.5);
         break;
       default:
         return;
@@ -257,7 +261,7 @@ class GameRender {
         [rect], null, null, null, engine.paint);
   }
 
-  void arrow(double x, double y, double angle) {
+  void renderArrow(double x, double y, double angle) {
     engine.mapSrc(x: atlas.projectiles.arrow.x, y: atlas.projectiles.arrow.y, width: 13, height: 47);
     engine.mapDst(x: x, y: y - 20, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
     engine.renderAtlas();

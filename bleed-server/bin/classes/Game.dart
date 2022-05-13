@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
+import '../common/Projectile_Type.dart';
 import '../common/card_type.dart';
 import '../common/library.dart';
 import '../engine.dart';
@@ -270,7 +271,7 @@ extension GameFunctions on Game {
         colliders: characters,
         x: x,
         y: y,
-        predicate: (other) => other.dead || sameTeam(other, character));
+        predicate: (other) => other.dead || onSameTeam(other, character));
   }
 
   DynamicObject? getClosestDynamicObject(double x, double y) {
@@ -829,7 +830,7 @@ extension GameFunctions on Game {
         if (projectile.top > collider.bottom) continue;
         if (projectile.bottom < collider.top) continue;
         if (projectile.owner == collider) continue;
-        if (target != null && sameTeam(projectile, collider)) continue;
+        if (target != null && onSameTeam(projectile, collider)) continue;
         handleProjectileHit(projectile, collider);
         break;
       }
@@ -846,6 +847,8 @@ extension GameFunctions on Game {
           level: projectile.level,
       );
     }
+    projectile.owner = null;
+    projectile.target = null;
     dispatch(GameEventType.Arrow_Hit, collider.x, collider.y);
   }
 
@@ -855,7 +858,7 @@ extension GameFunctions on Game {
   }){
     if (!target.collidable) return;
     if (target is Character) {
-      if (sameTeam(src, target)) return;
+      if (onSameTeam(src, target)) return;
       if (target.dead) return;
     }
     if (target is Health == false) return;
@@ -873,7 +876,7 @@ extension GameFunctions on Game {
   }) {
     if (!target.collidable) return;
     if (target is Character) {
-      if (sameTeam(src, target)) return;
+      if (onSameTeam(src, target)) return;
       if (target.dead) return;
     }
 
@@ -1001,7 +1004,18 @@ extension GameFunctions on Game {
     }
   }
 
-  void casteSlowingCircle(Character character, double x, double y) {}
+  Projectile spawnProjectileOrb(Character src) {
+    return spawnProjectile(
+      src: src,
+      accuracy: 0,
+      speed: 4.5,
+      range: src.equippedRange,
+      target: src.attackTarget,
+      angle: src.angle,
+      projectileType: ProjectileType.Orb,
+      level: 1,
+    );
+  }
 
   Projectile spawnArrow(Position src, {Collider? target, double accuracy = 0}) {
     dispatch(GameEventType.Arrow_Fired, src.x, src.y);
@@ -1014,8 +1028,8 @@ extension GameFunctions on Game {
         range: src.equippedRange,
         target: src.attackTarget,
         angle: src.angle,
-        techType: src.equippedType,
-        level: src.equippedLevel,
+        projectileType: ProjectileType.Arrow,
+        level: 1,
       );
     }
 
@@ -1025,7 +1039,7 @@ extension GameFunctions on Game {
       speed: 7,
       range: 300,
       target: target,
-      techType: TechType.Bow,
+      projectileType: ProjectileType.Arrow,
       level: 1 // TODO for structures
     );
   }
@@ -1034,7 +1048,7 @@ extension GameFunctions on Game {
     required Position src,
     required double speed,
     required double range,
-    required int techType,
+    required int projectileType,
     required int level,
     double angle = 0,
     double accuracy = 0,
@@ -1057,7 +1071,7 @@ extension GameFunctions on Game {
     projectile.speed = speed;
     projectile.owner = src;
     projectile.range = range;
-    projectile.type = techType;
+    projectile.type = projectileType;
     return projectile;
   }
 
@@ -1171,7 +1185,7 @@ extension GameFunctions on Game {
 
       for (final structure in structures) {
         if (structure.dead) continue;
-        if (sameTeam(structure, zombie)) continue;
+        if (onSameTeam(structure, zombie)) continue;
         if (!zombie.withinViewRange(structure)) continue;
         final npcDistance = zombie.getDistance(structure);
         if (npcDistance >= targetDistance) continue;
@@ -1181,7 +1195,7 @@ extension GameFunctions on Game {
 
       for (final player in players) {
         if (player.dead) continue;
-        if (sameTeam(player, zombie)) continue;
+        if (onSameTeam(player, zombie)) continue;
         if (!zombie.withinViewRange(player)) continue;
         final npcDistance = zombie.getDistance(player);
         if (npcDistance >= targetDistance) continue;
@@ -1201,7 +1215,7 @@ extension GameFunctions on Game {
       var closestDistance = 99999.0;
       for (final zombie in zombies) {
         if (!zombie.alive) continue;
-        if (sameTeam(npc, zombie)) continue;
+        if (onSameTeam(npc, zombie)) continue;
         var distance2 = distanceV2(zombie, npc);
         if (distance2 > closestDistance) continue;
         closest = zombie;
@@ -1217,7 +1231,7 @@ extension GameFunctions on Game {
   }
 
   void setNpcTarget(AI ai, Health value) {
-    assert(!sameTeam(ai, value));
+    assert(!onSameTeam(ai, value));
     assert(value.alive);
     assert(ai.alive);
     ai.target = value;
@@ -1358,7 +1372,7 @@ extension GameFunctions on Game {
             accuracy: 0,
             speed: 12.0,
             range: character.equippedRange,
-            techType: TechType.Handgun,
+            projectileType: TechType.Handgun,
             level: character.equippedLevel,
         );
         return;
@@ -1380,7 +1394,7 @@ extension GameFunctions on Game {
               accuracy: 0.1,
               speed: 12.0,
               range: character.equippedRange,
-              techType: TechType.Shotgun,
+              projectileType: TechType.Shotgun,
               level: character.equippedLevel,
           );
         }
@@ -1395,6 +1409,11 @@ extension GameFunctions on Game {
 
 
     if (character.stateDuration == framePerformStrike) {
+      if (character.equippedType == TechType.Staff) {
+        spawnProjectileOrb(character);
+        return;
+      }
+
       if (character.equippedTypeIsBow) {
         dispatchV2(GameEventType.Release_Bow, character);
         var numberOfArrows = 1;
@@ -1459,7 +1478,7 @@ extension GameFunctions on Game {
       }
       for (final zombie in zombies) {
         if (zombie.dead) continue;
-        if (sameTeam(structure, zombie)) continue;
+        if (onSameTeam(structure, zombie)) continue;
         if (!structure.withinRange(zombie)) continue;
         spawnArrow(structure, target: zombie);
         structure.cooldown = structure.attackRate;

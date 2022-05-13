@@ -37,14 +37,14 @@
 [ ] Refactor (client) Merge Game and GameState
 [RANDOM]
 [ ] Generate Caves
-[ ] Critical zombies stop attack player after revive
 [ ] Max Attack / Ability Cards is 5
 [ ] Max Armour cards is 1
 [ ] Max Helm cards is 1
 [ ] Max Shoe cards is 1
 [ ] Max Passive Cards is 5
 [ ] Power Cards
-[ ] Staff Attack casts orb
+[ ] FIX Critical zombies stop attack player after revive
+[x] Staff Attack casts orb
 [x] remove objects around player spawn points
 [x] Wizard has staff
 [x] On level up select random card (from 3)

@@ -130,7 +130,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
   }
 }
 
-bool sameTeam(dynamic a, dynamic b){
+bool onSameTeam(dynamic a, dynamic b){
   if (a == b) return true;
   if (a is Team == false) return false;
   if (b is Team == false) return false;
