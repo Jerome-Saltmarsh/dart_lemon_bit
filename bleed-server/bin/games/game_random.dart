@@ -79,27 +79,26 @@ class GameRandom extends Game {
   void revive(Player player) {
     player.state = CharacterState.Idle;
     player.maxHealth = 10;
+    player.level = 1;
     player.health = 10;
     player.collidable = true;
+    player.skillPoints = 1;
+    player.target = null;
     final spawnPoint = getNextSpawnPoint();
     player.x = spawnPoint.x;
     player.y = spawnPoint.y;
-    player.skillPoints = 1;
-    player.target = null;
     player.cardChoices.clear();
     player.cardChoices.addAll(cardTypesWeapons);
     player.writeCardChoices();
+    player.deck.clear();
+    player.writeDeck();
   }
 
   @override
   void onPlayerSelectCharacterType(Player player, CharacterSelection value) {
     player.setCharacterSelectionRequired(false);
-    player.selection = value;
-    player.level = 1;
-    player.experience = 0;
-    player.skillPoints = 1;
-    player.maxHealth = 10;
-    player.health = 10;
+    player.deck.clear();
+    player.writeDeck();
 
     switch (value) {
       case CharacterSelection.Warrior:
