@@ -87,14 +87,14 @@ class ServerResponseReader extends ByteReader {
           parseDynamicObjects();
           break;
 
-        case ServerResponse.Card_Choices:
-          final numberOfCards = readByte();
-          final cardChoices = <CardType>[];
-          for (var i = 0; i < numberOfCards; i++) {
-             cardChoices.add(cardTypes[readByte()]);
-          }
-          player.cardChoices.value = cardChoices;
+        case ServerResponse.Player_Deck:
+          player.cards.value = readCardTypes();
           break;
+
+        case ServerResponse.Card_Choices:
+          player.cardChoices.value = readCardTypes();
+          break;
+
 
         case ServerResponse.Character_Select_Required:
           parseCharacterSelectRequired();
@@ -524,5 +524,14 @@ class ServerResponseReader extends ByteReader {
     final value = readByte();
     if (value == 0) return 0;
      return value / 256.0;
+  }
+
+  List<CardType> readCardTypes(){
+    final numberOfCards = readByte();
+    final cards = <CardType>[];
+    for (var i = 0; i < numberOfCards; i++) {
+      cards.add(cardTypes[readByte()]);
+    }
+    return cards;
   }
 }

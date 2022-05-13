@@ -95,6 +95,7 @@ class Player {
   final levelHammer = Watch(0);
   final levelBag = Watch(0);
   final cardChoices = Watch<List<CardType>>([]);
+  final cards = Watch<List<CardType>>([]);
 
   final canAffordUpgradePickaxe = Watch(false);
   final canAffordUpgradeSword = Watch(false);

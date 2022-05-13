@@ -53,5 +53,6 @@ class ServerResponse {
   static const Lives_Remaining = 53;
   static const Character_Select_Required = 54;
   static const Card_Choices = 55;
+  static const Player_Deck = 56;
 }
 

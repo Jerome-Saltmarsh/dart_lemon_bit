@@ -45,9 +45,8 @@ class Player extends Character with ByteWriter {
   Position? target;
   Account? account;
 
-  final cardsAbility = <CardType>[];
-  final cardsPassive = <CardType>[];
   final cardChoices = <CardType>[];
+  final deck = <CardType>[];
 
   late Function sendBufferToClient;
   late Function(GameError error, {String message}) dispatchError;
@@ -658,9 +657,18 @@ extension PlayerProperties on Player {
 
   void writeCardChoices() {
     writeByte(ServerResponse.Card_Choices);
-    writeByte(cardChoices.length);
-    for(final choice in cardChoices){
-      writeByte(choice.index);
+    writeCardTypes(cardChoices);
+  }
+
+  void writeDeck() {
+    writeByte(ServerResponse.Player_Deck);
+    writeCardTypes(deck);
+  }
+
+  void writeCardTypes(List<CardType> values){
+    writeByte(values.length);
+    for (final card in values) {
+      writeByte(card.index);
     }
   }
 

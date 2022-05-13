@@ -135,16 +135,20 @@ class GameRandom extends Game {
   void onPlayerChoseCard(Player player, CardType cardType){
      if (cardType == CardType.Weapon_Sword) {
        player.equippedType = TechType.Sword;
-       player.setStateChanging();
      }
      if (cardType == CardType.Weapon_Bow) {
        player.equippedType = TechType.Bow;
-       player.setStateChanging();
      }
      if (cardType == CardType.Weapon_Axe) {
        player.equippedType = TechType.Axe;
-       player.setStateChanging();
      }
+     if (cardTypesWeapons.contains(cardType)){
+       player.setStateChanging();
+     } else {
+       player.deck.add(cardType);
+       player.writeDeck();
+     }
+
      player.skillPoints--;
      player.cardChoices.clear();
 
