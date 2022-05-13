@@ -38,7 +38,6 @@
 [RANDOM]
 [ ] Generate Caves
 [ ] Critical zombies stop attack player after revive
-[ ] On level up select random card (from 3)
 [ ] Max Attack / Ability Cards is 5
 [ ] Max Armour cards is 1
 [ ] Max Helm cards is 1
@@ -47,7 +46,9 @@
 [ ] remove objects around player spawn points
 [ ] On upgrade improve (max Energy, max Health, max Magic)
 [ ] Wizard has staff
-[ ] Select a starting attack card
+[ ] Power Cards
+[x] On level up select random card (from 3)
+[x] Select a starting attack card
 [x] build experience bar
 [x] Select Character Type
 [x] Waiting for x number of players to join before starting game
