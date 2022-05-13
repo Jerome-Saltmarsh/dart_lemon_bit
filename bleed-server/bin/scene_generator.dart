@@ -272,6 +272,25 @@ Scene generateRandomScene({
     spawnCellZombies.add(SpawnCell(row, column));
   }
 
+
+  for (var i = 0; i < objectsStatic.length; i++) {
+    final object = objectsStatic[i];
+     for (final playerStarting in spawnCellPlayers) {
+       if (object.getDistance(playerStarting) > 100) continue;
+       objectsStatic.removeAt(i);
+       i--;
+     }
+  }
+
+  for (var i = 0; i < objectsDynamic.length; i++) {
+    final object = objectsDynamic[i];
+    for (final playerStarting in spawnCellPlayers) {
+      if (object.getDistance(playerStarting) > 100) continue;
+      objectsDynamic.removeAt(i);
+      i--;
+    }
+  }
+
   return Scene(
       structures: [],
       tiles: tiles,

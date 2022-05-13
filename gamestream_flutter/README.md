@@ -43,10 +43,10 @@
 [ ] Max Helm cards is 1
 [ ] Max Shoe cards is 1
 [ ] Max Passive Cards is 5
-[ ] remove objects around player spawn points
-[ ] On upgrade improve (max Energy, max Health, max Magic)
-[ ] Wizard has staff
 [ ] Power Cards
+[ ] Staff Attack casts orb
+[x] remove objects around player spawn points
+[x] Wizard has staff
 [x] On level up select random card (from 3)
 [x] Select a starting attack card
 [x] build experience bar
