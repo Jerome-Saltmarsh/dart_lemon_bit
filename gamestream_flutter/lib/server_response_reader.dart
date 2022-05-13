@@ -88,13 +88,12 @@ class ServerResponseReader extends ByteReader {
           break;
 
         case ServerResponse.Player_Deck:
-          player.cards.value = readCardTypes();
+          player.deck.value = readCardTypes();
           break;
 
         case ServerResponse.Card_Choices:
           player.cardChoices.value = readCardTypes();
           break;
-
 
         case ServerResponse.Character_Select_Required:
           parseCharacterSelectRequired();

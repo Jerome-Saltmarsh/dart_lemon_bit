@@ -142,7 +142,7 @@ class GameBuild {
               if (game.type.value == GameType.SURVIVORS)
               buildTextLivesRemaining(),
               if (game.type.value == GameType.RANDOM)
-              buildPanelCharacterStats(),
+              buildPanelGameRandom(),
             ]);
       });
     });

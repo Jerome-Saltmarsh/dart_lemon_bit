@@ -121,13 +121,13 @@ class GameRandom extends Game {
 
   @override
   void onPlayerDeath(Player player) {
-     player.setCharacterSelectionRequired(true);
+     // player.setCharacterSelectionRequired(true);
   }
 
   @override
   void onKilled(dynamic target, dynamic src){
     if (src is Player) {
-      src.gainExperience(45);
+      src.gainExperience(75);
     }
   }
 
