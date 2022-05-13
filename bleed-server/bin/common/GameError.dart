@@ -40,4 +40,5 @@ enum GameError {
   Construct_Invalid_Tile,
   Construct_Area_Not_Available,
   Character_Select_Not_Required,
+  Choose_Card,
 }

@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:bleed_common/card_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
@@ -58,6 +59,10 @@ void sendRequestConstruct(int value) {
 
 void sendClientRequestSelectCharacterType(CharacterSelection value) {
   sendClientRequest(ClientRequest.Select_Character_Type, value.index);
+}
+
+void sendClientRequestChooseCard(CardType value){
+  sendClientRequest(ClientRequest.Choose_Card, value.index);
 }
 
 void sendClientRequest(ClientRequest value, [dynamic message]){

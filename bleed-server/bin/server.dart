@@ -5,6 +5,7 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'classes/library.dart';
+import 'common/card_type.dart';
 import 'common/library.dart';
 import 'compile.dart';
 import 'engine.dart';
@@ -723,6 +724,30 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           // onGameJoined();
           // player?.writeTiles();
           // compileAndSendPlayer();
+          break;
+
+        case ClientRequest.Choose_Card:
+          if (player == null) {
+            return errorPlayerNotFound();
+          }
+          if (player.cardChoices.isEmpty){
+            return error(GameError.Choose_Card, message: "card choices empty");
+          }
+          if (arguments.length != 2) {
+            return errorArgsExpected(2, arguments);
+          }
+          final cardTypeIndex = int.tryParse(arguments[1]);
+          if (cardTypeIndex == null) {
+            return errorInvalidArg('card choice index required: got ${arguments[1]}');
+          }
+          if (!isValidIndex(cardTypeIndex, cardTypes)){
+            return errorInvalidArg('invalid card type index: $cardTypeIndex');
+          }
+          final cardType = cardTypes[cardTypeIndex];
+          if (!player.cardChoices.contains(cardType)){
+            return error(GameError.Choose_Card, message: 'selected card is not a choice');
+          }
+          player.game.onPlayerChoseCard(player, cardType);
           break;
 
         case ClientRequest.Select_Character_Type:

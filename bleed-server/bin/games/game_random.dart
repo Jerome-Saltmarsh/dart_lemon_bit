@@ -2,6 +2,7 @@
 
 import 'package:lemon_math/library.dart';
 
+import '../classes/Character.dart';
 import '../common/card_type.dart';
 import '../classes/Game.dart';
 import '../classes/Player.dart';
@@ -66,20 +67,27 @@ class GameRandom extends Game {
 
   @override
   void onPlayerJoined(Player player){
-    player.health = 0;
-    player.characterSelectRequired = true;
-    player.writeByte(ServerResponse.Character_Select_Required);
-    player.writeBool(player.characterSelectRequired);
+    revive(player);
   }
 
   @override
   void onPlayerLevelGained(Player player){
-    final selection = player.selection;
-    if (selection == null) return;
-    if (player.cardChoices.isNotEmpty) return;
-    for (var i = 0; i < 3; i++) {
-      player.cardChoices.add(randomItem(cardTypes));
-    }
+    player.generatedCardChoices();
+  }
+
+  @override
+  void revive(Player player) {
+    player.state = CharacterState.Idle;
+    player.maxHealth = 10;
+    player.health = 10;
+    player.collidable = true;
+    final spawnPoint = getNextSpawnPoint();
+    player.x = spawnPoint.x;
+    player.y = spawnPoint.y;
+    player.skillPoints = 1;
+    player.target = null;
+    player.cardChoices.clear();
+    player.cardChoices.addAll(cardTypesWeapons);
     player.writeCardChoices();
   }
 
@@ -121,6 +129,30 @@ class GameRandom extends Game {
     if (src is Player) {
       src.gainExperience(45);
     }
+  }
+
+  @override
+  void onPlayerChoseCard(Player player, CardType cardType){
+     if (cardType == CardType.Weapon_Sword) {
+       player.equippedType = TechType.Sword;
+       player.setStateChanging();
+     }
+     if (cardType == CardType.Weapon_Bow) {
+       player.equippedType = TechType.Bow;
+       player.setStateChanging();
+     }
+     if (cardType == CardType.Weapon_Axe) {
+       player.equippedType = TechType.Axe;
+       player.setStateChanging();
+     }
+     player.skillPoints--;
+     player.cardChoices.clear();
+
+     if (player.skillPoints > 0){
+       player.generatedCardChoices();
+     } else {
+       player.writeCardChoices();
+     }
   }
 }
 

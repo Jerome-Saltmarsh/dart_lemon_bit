@@ -18,100 +18,6 @@
 [ ] SOCCER
 [ ] GOLDEN EYE / PERFECT DARK
 [ ] BATTLEFIELD (Capture flags)
-[WEBSITE]
-[ ] Sign in with email password
-[ ] Sign up with email password  
-[ ] Live subscription  
-[ ] Show youtube video of game in preview  
-[ ] Stripe Webhooks, Catch save subscription errors
-[ ] Popup Auto suggest sign in
-[ ] FIX Sign in with Facebook
-[EDITOR]
-[ ] Play button
-[ ] Time Speed
-[ ] Flames spawn in tile center
-[ ] Unit Team
-[ ] Unit Health / Damage / Type
-[ ] Team Size
-[ ] Number of Teams
-[ ] Team spawn points
-[ ] Base Building Module
-[BETA-RELEASE]
-[ ] FIX Join Custom Game
-[ ] Drag inventory slots to change position    
-[ ] Spell Shield    
-[ ] Item Blink Ring    
-[ ] Boots of sprint   
-[ ] Spell Lightening Bolt    
-[ ] Weapon: Shovel    
-[ ] Weapon: Crowbar    
-[ ] (MMO) Save / Load Character   
-[ ] Unlock portals
-[ ] Experience Bar
-[ ] FIX Myst Particle Render order  
-[ ] Tile Flowers      
-[ ] Send Message to All or to Allies only
-[ ] Spawn Allies that follow you    
-[ ] Characters can fall in water and die    
-[ALPHA-RELEASE]
-[ ] Handle keyboard events dynamically    
-[ ] SKIRMISH -SOLO- -TEAM-   
-[ ] Slot Cooldown
-[ ] Fix fireball explosion
-[ ] Bow Spells,
-[ ] Sword Spells, Strong Swing
-[ ] Resource Gathering System (Rock, Wood, Etc)
-[ ] Upgrade System      
-[ ] Structure System
-[ ] Loot System
-[ ] Design Store Keeper Model
-[ ] Click to pickup loot    
-[ ] FIX Website Account required popup    
-[ ] Fix Camera zonks on change scene    
-[ ] First heavy guitar track    
-[ ] FIX Shotgun fire animation loops  
-[ ] Frontend check version    
-[ ] Fix flames freeze    
-[ ] Display Highlighted Target info (Zombie, Pot, etc)    
-[ ] Tutorial    
-[ ] Block Tiles caste Shadows  
-[ ] GameOver on death    
-[ ] FIX Zombies run into lamps forever   
-[ ] (CRITICAL) Fix Map Editor
-[ ] (CRITICAL) FIX AI Pathfinding
-[ ] Footstep Audio    
-[ ] Render Structure Health
-[ ] Fix Zombies attack structure animation
-[ ] Destructible Bush revives health
-[ ] Armour Slot
-[ ] Helm Slot
-[ ] Perk Type: Bag Size
-[ ] Perk Type: Torch Size
-[ ] Loot Slot x 3 Creeps occasionally drop random trinkets
-[ ] Randomly Generate Caves
-[ ] Randomly Generate Roads
-[ ] Character Type Orc
-[ ] Character Type Vampire
-[ ] Battle Mode (Last standing player wins)
-[ ] Character Selection (head, name, etc, staff, bow, sword etc),
-[ ] Train Character Archer
-[ ] Train Character Swordsman
-[DUNGEONIERS - PROMISES]
-[ ] Play in party (1 - 5)
-[ ] Find Loot
-[ ] Upgrade character skills
-[ ] Upgrade character items
-[ ] Kill Enemy Bosses
-[ ] Reach highest level
-[KINGDOM - PROMISES]
-[ ] Construct Town Center one time
-[ ] Build Town
-[ ] Upgrade Structures
-[ ] Defeat Waves of creeps
-[ ] Explore World
-[ ] Construct buildings using hammer
-[ ] Construct buildings within build radius
-[ ] Palisades draw horizontal and vertical when aligned
 [BATTLEFIELD - PROMISES]
 [ ] Kill enemy players
 [ ] Kill enemy npcs
@@ -140,6 +46,8 @@
 [ ] Max Passive Cards is 5
 [ ] remove objects around player spawn points
 [ ] On upgrade improve (max Energy, max Health, max Magic)
+[ ] Wizard has staff
+[ ] Select a starting attack card
 [x] build experience bar
 [x] Select Character Type
 [x] Waiting for x number of players to join before starting game
@@ -970,3 +878,10 @@ Cards can be
 [Passive 1]
 [Passive 2]
 [Passive 3]
+
+
+[SCOPE]
+- Different Character Classes
+- Random Abilities through card attainment
+- Improve Cards
+- Improve Character Attributes

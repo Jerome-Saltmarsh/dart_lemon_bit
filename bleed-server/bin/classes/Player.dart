@@ -663,8 +663,22 @@ extension PlayerProperties on Player {
       writeByte(choice.index);
     }
   }
-}
 
+  void generatedCardChoices(){
+    if (cardChoices.isNotEmpty) return;
+
+    while (cardChoices.length < 3) {
+      if (equippedTypeIsBow) {
+        final cardChoice = randomItem(cardTypeChoicesBow);
+        if (cardChoices.contains(cardChoice)) continue;
+        cardChoices.add(cardChoice);
+        continue;
+      }
+      break;
+    }
+    writeCardChoices();
+  }
+}
 
 int getExperienceForLevel(int level){
   return (((level -1) * (level - 1))) * 100;

@@ -25,10 +25,13 @@ Widget buildPanelCharacterStats(){
                 buildHealthBar(),
                 height8,
                 buildPanelExperience(),
-                height8,
-                buildPanelSkillPoints(),
-                height8,
-                buildPanelEquippedWeapon(),
+
+                // height8,
+                // buildPanelSkillPoints(),
+                // height8,
+                // buildPanelEquippedWeapon(),
+
+
                 height8,
               ],
             )

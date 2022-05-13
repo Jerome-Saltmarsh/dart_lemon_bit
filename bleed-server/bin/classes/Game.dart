@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
+import '../common/card_type.dart';
 import '../common/library.dart';
 import '../engine.dart';
 import '../enums.dart';
@@ -92,12 +93,25 @@ abstract class Game {
     countDownFramesRemaining = 0;
   }
 
+  void onPlayerChoseCard(Player player, CardType cardType){
+
+  }
+
   void onKilled(dynamic target, dynamic src){
 
   }
 
   void onDamaged(dynamic target, dynamic src, int amount){
 
+  }
+
+  void revive(Player character) {
+    character.state = CharacterState.Idle;
+    character.health = character.maxHealth;
+    character.collidable = true;
+    final spawnPoint = getNextSpawnPoint();
+    character.x = spawnPoint.x;
+    character.y = spawnPoint.y;
   }
 
   /// In seconds
@@ -1214,20 +1228,6 @@ extension GameFunctions on Game {
         onPlayerDisconnected(player);
       }
     }
-  }
-
-  void revive(Character character) {
-    character.state = CharacterState.Idle;
-    character.health = character.maxHealth;
-    character.collidable = true;
-
-    if (character is Player) {
-      character.magic = character.maxMagic;
-    }
-
-    final spawnPoint = getNextSpawnPoint();
-    character.x = spawnPoint.x;
-    character.y = spawnPoint.y;
   }
 
   void npcSetRandomDestination(AI ai, {int radius = 10}) {
