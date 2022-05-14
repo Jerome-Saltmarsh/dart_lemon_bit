@@ -1,15 +1,8 @@
 
-enum CardCategory {
-  Passive,
-  Weapon,
-  Ability,
-}
-
 enum CardType {
    Weapon_Sword,
    Weapon_Bow,
    Weapon_Staff,
-   Ability_Bow_Split,
    Ability_Bow_Freeze,
    Ability_Bow_Fire,
    Ability_Staff_Explosion,
@@ -17,7 +10,8 @@ enum CardType {
    Ability_Staff_Strong_Orb,
    Passive_General_Max_HP_10,
    Passive_Bow_Run_Speed,
-   Passive_Damage_2,
+   Passive_Increase_Damage_2,
+   Passive_Bow_Split, // Splits arrows that auto aim at nearby multiple nearby targets
 }
 
 const cardTypes = CardType.values;
@@ -31,7 +25,6 @@ const cardTypeChoicesBow = [
 const cardTypeChoicesStaff = [
   ...cardTypesGeneralPassives,
 ];
-
 
 const cardTypesWeapons = <CardType>[
   CardType.Weapon_Sword, 
@@ -52,24 +45,22 @@ const cardTypeStaffAbilities = <CardType> [
 const cardTypeBowAbilities = <CardType> [
   CardType.Ability_Bow_Fire,
   CardType.Ability_Bow_Freeze,
-  CardType.Ability_Bow_Split,
 ];
 
 const cardTypeBowPassives = <CardType> [
   CardType.Passive_Bow_Run_Speed,
 ];
 
-
 String getCardTypeName(CardType value) {
    return const <CardType, String> {
       CardType.Weapon_Bow: "Bow",
       CardType.Weapon_Sword: "Sword",
       CardType.Weapon_Staff: "Staff",
-      CardType.Ability_Bow_Split: "Split Arrow",
       CardType.Ability_Bow_Freeze: "Freeze Arrow",
       CardType.Ability_Bow_Fire: "Fire Arrow",
       CardType.Passive_General_Max_HP_10: "Max hp+10",
       CardType.Passive_Bow_Run_Speed: "Light Feet",
+      CardType.Passive_Bow_Split: "Split Arrow",
    }[value] ?? value.name;
 }
 

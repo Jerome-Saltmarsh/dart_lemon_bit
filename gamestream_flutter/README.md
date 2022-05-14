@@ -43,11 +43,11 @@
 [ ] Generate Caves
 [ ] Every 3 levels deck size increases by 1
 [ ] Sword Powers
-[ ] Bow Powers
 [ ] Staff Powers
-[ ] Fix Zombies missing hurt audio
 [ ] Fix spawn audio
-[ ] Level up confetti
+[ ] Bow Powers
+[x] Fix Zombies missing hurt audio
+[x] Level up confetti
 [x] Level up audio
 [x] Upgrade card audio
 [x] FIX Critical zombies stop attack player after revive

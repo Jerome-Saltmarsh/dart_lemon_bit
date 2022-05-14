@@ -270,7 +270,7 @@ extension GameFunctions on Game {
         colliders: characters,
         x: x,
         y: y,
-        predicate: (other) => other.dead || onSameTeam(other, character));
+        where: (other) => other.alive && !onSameTeam(other, character));
   }
 
   DynamicObject? getClosestDynamicObject(double x, double y) {
@@ -278,7 +278,7 @@ extension GameFunctions on Game {
         colliders: scene.objectsDynamic,
         x: x,
         y: y,
-        predicate: (other) => !other.collidable);
+        where: (other) => other.collidable);
   }
 
   Collider? getClosestCollider(double x, double y, Character character) {
@@ -1401,6 +1401,14 @@ extension GameFunctions on Game {
     if (character.equippedTypeIsBow) {
       dispatchV2(GameEventType.Release_Bow, character);
       spawnArrow(character, damage: damage);
+
+      if (character is Player){
+         if (character.deck.contains(CardType.Passive_Bow_Split)){
+
+
+         }
+      }
+
       return;
     }
     if (character.equippedIsMelee) {

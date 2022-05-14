@@ -74,8 +74,6 @@ class GameRandom extends Game {
   void onPlayerLevelGained(Player player){
     player.generatedCardChoices();
     player.writePlayerEvent(PlayerEvent.Level_Up);
-
-
   }
 
   @override

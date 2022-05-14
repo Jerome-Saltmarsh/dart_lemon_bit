@@ -66,14 +66,14 @@ T? findClosestVector2<T extends Position>({
   required double x,
   required double y,
   required List<T> colliders,
-  required Function(T t) predicate,
+  required bool Function(T t) where,
 }) {
   if (colliders.isEmpty) return null;
   T? closest = null;
   var closestDistance = 9999999.0;
 
   for (final collider in colliders) {
-    if (predicate(collider)) continue;
+    if (!where(collider)) continue;
     final colliderDistance = distanceBetween(collider.x, collider.y, x, y);
     if (colliderDistance >= closestDistance) continue;
     closest = collider;
