@@ -4,6 +4,7 @@ import 'package:lemon_math/library.dart';
 
 import 'classes/Character.dart';
 import 'classes/Collider.dart';
+import 'typedefs.dart';
 
 final physics = _Physics();
 
@@ -30,6 +31,18 @@ class _Physics {
     }
     return target;
   }
+}
+
+List<T> sphereCastAll<T extends Position>({
+  required Position position,
+  required double radius,
+  required List<T> values,
+  Predicate<T>? where,
+}) {
+  if (where != null) {
+    return values.where((value) => value.getDistance(position) < radius && where(value)).toList();
+  }
+  return values.where((value) => value.getDistance(position) < radius).toList();
 }
 
 T? sphereCaste<T extends Collider>({
@@ -65,18 +78,18 @@ T? sphereCaste<T extends Collider>({
 T? findClosestVector2<T extends Position>({
   required double x,
   required double y,
-  required List<T> colliders,
+  required List<T> positions,
   required bool Function(T t) where,
 }) {
-  if (colliders.isEmpty) return null;
+  if (positions.isEmpty) return null;
   T? closest = null;
   var closestDistance = 9999999.0;
 
-  for (final collider in colliders) {
-    if (!where(collider)) continue;
-    final colliderDistance = distanceBetween(collider.x, collider.y, x, y);
+  for (final position in positions) {
+    if (!where(position)) continue;
+    final colliderDistance = distanceBetween(position.x, position.y, x, y);
     if (colliderDistance >= closestDistance) continue;
-    closest = collider;
+    closest = position;
     closestDistance = colliderDistance;
   }
   return closest;

@@ -48,6 +48,10 @@ class Player extends Character with ByteWriter {
   final cardChoices = <CardType>[];
   final deck = <CardType>[];
 
+  int numberOfCardsOfType(CardType type){
+    return deck.where((card) => card == type).length;
+  }
+
   late Function sendBufferToClient;
   late Function(GameError error, {String message}) dispatchError;
 

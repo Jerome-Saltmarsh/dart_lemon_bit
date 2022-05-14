@@ -23,8 +23,8 @@ class GameRandom extends Game {
 
   GameRandom({required this.maxPlayers}) : super(
       generateRandomScene(
-        columns: 100,
-        rows: 100,
+        columns: 70,
+        rows: 300,
         seed: random.nextInt(2000),
       ),
      gameType: GameType.RANDOM,
@@ -74,6 +74,8 @@ class GameRandom extends Game {
   void onPlayerLevelGained(Player player){
     player.generatedCardChoices();
     player.writePlayerEvent(PlayerEvent.Level_Up);
+    player.maxHealth += 1;
+    player.health = player.maxHealth;
   }
 
   @override

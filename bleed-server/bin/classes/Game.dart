@@ -267,7 +267,7 @@ extension GameFunctions on Game {
     required List<Character> characters,
   }) {
     return findClosestVector2(
-        colliders: characters,
+        positions: characters,
         x: x,
         y: y,
         where: (other) => other.alive && !onSameTeam(other, character));
@@ -275,7 +275,7 @@ extension GameFunctions on Game {
 
   DynamicObject? getClosestDynamicObject(double x, double y) {
     return findClosestVector2(
-        colliders: scene.objectsDynamic,
+        positions: scene.objectsDynamic,
         x: x,
         y: y,
         where: (other) => other.collidable);
@@ -883,6 +883,15 @@ extension GameFunctions on Game {
 
     if (target is Health) {
       final health = target as Health;
+
+      if (src is Player) {
+        const chancePerCard = 0.075;
+        final critical = src.numberOfCardsOfType(CardType.Passive_General_Critical_Hit) * chancePerCard;
+        if (random.nextDouble() < critical) {
+          damage += damage;
+        }
+      }
+
       applyDamage(src: src, target: health, amount: damage);
     }
   }
@@ -989,7 +998,6 @@ extension GameFunctions on Game {
       speed: 4.5,
       range: src.equippedRange,
       target: src.attackTarget,
-      angle: src.angle,
       projectileType: ProjectileType.Orb,
       damage: damage,
     );
@@ -997,8 +1005,9 @@ extension GameFunctions on Game {
 
   Projectile spawnArrow(Position src, {
     required int damage,
-    Collider? target,
     double accuracy = 0,
+    Collider? target,
+    double? angle,
   }) {
     dispatch(GameEventType.Arrow_Fired, src.x, src.y);
     if (src is Character) {
@@ -1007,8 +1016,8 @@ extension GameFunctions on Game {
         accuracy: accuracy,
         speed: 7,
         range: src.equippedRange,
-        target: src.attackTarget,
-        angle: src.angle,
+        target: target,
+        angle: target != null ? null : angle ?? src.angle,
         projectileType: ProjectileType.Arrow,
         damage: damage,
       );
@@ -1031,14 +1040,15 @@ extension GameFunctions on Game {
     required double range,
     required int projectileType,
     required int damage,
-    double angle = 0,
+    double? angle = 0,
     double accuracy = 0,
     Collider? target,
   }) {
+    assert (angle != null || target != null);
+    assert (angle == null || target == null);
+
     final projectile = getAvailableProjectile();
-    if (src is Character) {
-      angle = src.angle;
-    }
+    final finalAngle = angle ?? src.getAngle(target!);
     projectile.damage = damage;
     projectile.collidable = true;
     projectile.active = true;
@@ -1047,8 +1057,8 @@ extension GameFunctions on Game {
     projectile.start.y = src.y;
     projectile.x = src.x;
     projectile.y = src.y;
-    projectile.xv = velX(angle + giveOrTake(accuracy), speed);
-    projectile.yv = velY(angle + giveOrTake(accuracy), speed);
+    projectile.xv = velX(finalAngle + giveOrTake(accuracy), speed);
+    projectile.yv = velY(finalAngle + giveOrTake(accuracy), speed);
     projectile.speed = speed;
     projectile.owner = src;
     projectile.range = range;
@@ -1400,13 +1410,15 @@ extension GameFunctions on Game {
 
     if (character.equippedTypeIsBow) {
       dispatchV2(GameEventType.Release_Bow, character);
-      spawnArrow(character, damage: damage);
+      spawnArrow(character, damage: damage, target: character.attackTarget);
 
       if (character is Player){
-         if (character.deck.contains(CardType.Passive_Bow_Split)){
+        final split = character.numberOfCardsOfType(CardType.Passive_Bow_Split);
 
-
-         }
+        for (var i = 0; i < split; i++) {
+          const offset = pi * 0.0625;
+          spawnArrow(character, damage: damage, angle: character.angle + giveOrTake(offset));
+        }
       }
 
       return;

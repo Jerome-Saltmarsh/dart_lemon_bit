@@ -36,6 +36,7 @@
 [ ] Refactor Game with ByteReader
 [ ] Refactor (client) Merge Game and GameState
 [RANDOM]
+[ ] New areas on level arrival
 [ ] Head Card
 [ ] Body Card
 [ ] Item Cards
