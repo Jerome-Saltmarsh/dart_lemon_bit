@@ -199,6 +199,10 @@ class _Audio {
     _playRandom(_zombieDeath, x, y);
   }
 
+  void zombieHurt(double x, double y){
+    _playRandom(_zombieHurt, x, y);
+  }
+
   void playAudioZombieHit(double x, double y) {
     _playRandom(_zombieHits, x, y);
   }
@@ -354,6 +358,10 @@ const _zombieDeath = [
   'zombie-death-02.mp3',
   'zombie-death-09.mp3',
   'zombie-death-15.mp3',
+];
+
+const _zombieHurt = [
+  'zombie-hurt-1.mp3',
 ];
 
 const _zombieTalking = [

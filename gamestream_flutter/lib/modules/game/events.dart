@@ -18,6 +18,7 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/parse.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/server_response_reader.dart';
+import 'package:gamestream_flutter/ui/functions/player.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
@@ -105,17 +106,18 @@ class GameEvents {
     }
   }
 
-  void onPlayerEvent(int event){
+  void onPlayerEvent(int event) {
     switch (event) {
       case PlayerEvent.Level_Up:
-        modules.game.actions.emitPixelExplosion(modules.game.state.player.x, modules.game.state.player.y, amount: 10);
-        audio.buff(modules.game.state.player.x, modules.game.state.player.y);
+        modules.game.actions.emitPixelExplosion(player.x, player.y, amount: 20);
+        audio.buff(player.x, player.y);
+        isometric.spawnFloatingText(player.x, player.y, 'LEVEL UP');
         break;
       case PlayerEvent.Skill_Upgraded:
-        audio.unlock(modules.game.state.player.x, modules.game.state.player.y);
+        audio.unlock(player.x, player.y);
         break;
       case PlayerEvent.Dash_Activated:
-        audio.buff11(modules.game.state.player.x, modules.game.state.player.y);
+        audio.buff11(player.x, player.y);
         break;
       case PlayerEvent.Item_Purchased:
         audio.winSound2();
@@ -170,7 +172,7 @@ class GameEvents {
 
   // TODO Remove
   void onPlayerCharacterStateChanged(int characterState){
-    modules.game.state.player.alive.value = characterState != CharacterState.Dead;
+    player.alive.value = characterState != CharacterState.Dead;
   }
 
   void _onPlayerAliveChanged(bool value) {
@@ -418,6 +420,10 @@ class GameEvents {
 
       case GameEventType.Material_Struck_Metal:
         audio.materialStruckMetal(x, y);
+        break;
+
+      case GameEventType.Zombie_Hurt:
+        audio.zombieHurt(x, y);
         break;
 
     }

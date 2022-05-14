@@ -36,12 +36,15 @@ class Character extends Collider with Team, Health, Velocity, Material {
   final techTree = TechTree();
   /// TechType.dart
   var equippedType = TechType.Unarmed;
-
   // properties
 
   int get direction => (((angle + piEighth) % pi2) ~/ piQuarter) % 8;
 
   double get speed => _speed + speedModifier;
+
+  void setSpeed(double value){
+    _speed = value;
+  }
 
   bool get running => state == CharacterState.Running;
 
@@ -51,6 +54,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
 
   bool get deadOrBusy => dead || busy;
 
+  int get equippedDamage => 1;
   double get equippedRange => TechType.getRange(equippedType);
   int get equippedAttackDuration => TechType.getDuration(equippedType);
   bool get equippedTypeIsBow => isEquipped(TechType.Bow);
@@ -138,10 +142,9 @@ bool onSameTeam(dynamic a, dynamic b){
   return a.team == b.team;
 }
 
-// enum NpcMode {
-//   Ignore,
-//   Stand_Ground,
-//   Defensive,
-//   Aggressive,
-//   // Swarm,
-// }
+class RunSpeed {
+   static const Slow = 1.0;
+   static const Regular = 2.0;
+   static const Fast = 3.0;
+   static const Very_Fast = 4.0;
+}

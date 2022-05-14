@@ -89,3 +89,4 @@ num calculateAngleDifference(double angleA, double angleB) {
   }
   return pi2 - diff;
 }
+

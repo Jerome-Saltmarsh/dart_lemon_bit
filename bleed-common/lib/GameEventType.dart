@@ -39,4 +39,5 @@ class GameEventType {
   static const Material_Struck_Wood = 49;
   static const Material_Struck_Metal = 50;
   static const Material_Struck_Plant = 51;
+  static const Zombie_Hurt = 52;
 }

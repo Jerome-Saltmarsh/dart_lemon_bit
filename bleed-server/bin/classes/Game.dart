@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
-import '../common/Projectile_Type.dart';
 import '../common/card_type.dart';
 import '../common/library.dart';
 import '../engine.dart';
@@ -428,6 +427,10 @@ extension GameFunctions on Game {
         return;
       }
       if (isZombie && randomBool()) {
+        dispatchV2(
+          GameEventType.Zombie_Hurt,
+          target,
+        );
         setCharacterState(target, CharacterState.Hurt);
       }
       if (target is AI) {
@@ -843,8 +846,7 @@ extension GameFunctions on Game {
       applyHit(
           src: projectile.owner,
           target: collider,
-          techType: projectile.type,
-          level: projectile.level,
+          damage: projectile.damage,
       );
     }
     projectile.owner = null;
@@ -852,39 +854,32 @@ extension GameFunctions on Game {
     dispatch(GameEventType.Arrow_Hit, collider.x, collider.y);
   }
 
-  void applyHit2({
-    required dynamic src,
-    required Collider target,
-  }){
-    if (!target.collidable) return;
-    if (target is Character) {
-      if (onSameTeam(src, target)) return;
-      if (target.dead) return;
-    }
-    if (target is Health == false) return;
-
-    if (src is Player) {
-       applyDamage(src: src, target: target as Health, amount: src.getDamage());
-    }
-  }
+  // void applyHit2({
+  //   required dynamic src,
+  //   required Collider target,
+  // }){
+  //   if (!target.collidable) return;
+  //   if (target is Character) {
+  //     if (onSameTeam(src, target)) return;
+  //     if (target.dead) return;
+  //   }
+  //   if (target is Health == false) return;
+  //
+  //   if (src is Player) {
+  //      applyDamage(src: src, target: target as Health, amount: src.getDamage());
+  //   }
+  // }
 
   void applyHit({
     required dynamic src,
     required Collider target,
-    required int techType,
-    required int level,
+    required int damage,
   }) {
     if (!target.collidable) return;
     if (target is Character) {
       if (onSameTeam(src, target)) return;
       if (target.dead) return;
     }
-
-    final damage = target is Material ? calculateDamage(
-        targetMaterialType: (target as Material).material,
-        techType: techType,
-        level: level
-    ) : 0;
 
     if (target is Health) {
       final health = target as Health;
@@ -893,12 +888,12 @@ extension GameFunctions on Game {
   }
 
   void updateCharacterStatePerforming(Character character) {
-    const castFrame = 3;
     final ability = character.performing;
     if (ability == null) {
       updateCharacterStateAttacking(character);
       return;
     }
+    const castFrame = 3;
     switch (ability.type) {
       case AbilityType.Explosion:
         break;
@@ -919,23 +914,6 @@ extension GameFunctions on Game {
           character.attackTarget = null;
         }
         break;
-      case AbilityType.Split_Arrow:
-        if (character.stateDurationRemaining == castFrame) {
-          Projectile arrow1 = spawnArrow(character);
-          const piSixteenth = pi / 16.0;
-          double angle = piSixteenth;
-          arrow1.target = null;
-          setProjectileAngle(arrow1, character.angle - angle);
-          Projectile arrow2 = spawnArrow(character);
-          arrow2.target = null;
-          Projectile arrow3 = spawnArrow(character);
-          arrow3.target = null;
-          setProjectileAngle(arrow3, character.angle + angle);
-          character.performing = null;
-          character.attackTarget = null;
-        }
-        break;
-
       case AbilityType.Long_Shot:
         // if (character.stateDurationRemaining == castFrame) {
         //   final int damageMultiplier = 3;
@@ -1004,7 +982,7 @@ extension GameFunctions on Game {
     }
   }
 
-  Projectile spawnProjectileOrb(Character src) {
+  Projectile spawnProjectileOrb(Character src, {required int damage}) {
     return spawnProjectile(
       src: src,
       accuracy: 0,
@@ -1013,13 +991,16 @@ extension GameFunctions on Game {
       target: src.attackTarget,
       angle: src.angle,
       projectileType: ProjectileType.Orb,
-      level: 1,
+      damage: damage,
     );
   }
 
-  Projectile spawnArrow(Position src, {Collider? target, double accuracy = 0}) {
+  Projectile spawnArrow(Position src, {
+    required int damage,
+    Collider? target,
+    double accuracy = 0,
+  }) {
     dispatch(GameEventType.Arrow_Fired, src.x, src.y);
-
     if (src is Character) {
       return spawnProjectile(
         src: src,
@@ -1029,7 +1010,7 @@ extension GameFunctions on Game {
         target: src.attackTarget,
         angle: src.angle,
         projectileType: ProjectileType.Arrow,
-        level: 1,
+        damage: damage,
       );
     }
 
@@ -1040,7 +1021,7 @@ extension GameFunctions on Game {
       range: 300,
       target: target,
       projectileType: ProjectileType.Arrow,
-      level: 1 // TODO for structures
+      damage: damage,
     );
   }
 
@@ -1049,7 +1030,7 @@ extension GameFunctions on Game {
     required double speed,
     required double range,
     required int projectileType,
-    required int level,
+    required int damage,
     double angle = 0,
     double accuracy = 0,
     Collider? target,
@@ -1058,7 +1039,7 @@ extension GameFunctions on Game {
     if (src is Character) {
       angle = src.angle;
     }
-    projectile.level = level;
+    projectile.damage = damage;
     projectile.collidable = true;
     projectile.active = true;
     projectile.target = target;
@@ -1091,6 +1072,7 @@ extension GameFunctions on Game {
     required int health,
     required int team,
     required int damage,
+    double speed = RunSpeed.Regular,
     List<Vector2>? objectives,
   }) {
     assert(team >= 0 && team <= 256);
@@ -1105,6 +1087,7 @@ extension GameFunctions on Game {
     zombie.y = y;
     zombie.yv = 0;
     zombie.xv = 0;
+    zombie.setSpeed(speed);
     return zombie;
   }
 
@@ -1129,6 +1112,7 @@ extension GameFunctions on Game {
     int damage = 1,
     int experience = 1,
     int team = Teams.none,
+    double speed = RunSpeed.Regular,
   }) {
     if (scene.spawnPointZombies.isEmpty) throw ZombieSpawnPointsEmptyException();
     final spawnPoint = randomItem(scene.spawnPointZombies);
@@ -1137,7 +1121,9 @@ extension GameFunctions on Game {
         y: spawnPoint.y,
         team: team,
         health: health,
-        damage: damage);
+        damage: damage,
+        speed: speed,
+    );
   }
 
   int get zombieCount {
@@ -1326,10 +1312,11 @@ extension GameFunctions on Game {
     }
   }
 
+  /// This represents a standard attack from the character, no powers
   void updateCharacterStateAttacking(Character character) {
     const framePerformStrike = 10;
     final stateDuration = character.stateDuration;
-
+    final damage = character.equippedDamage;
     if (character.type == CharacterType.Zombie) {
       if (stateDuration != framePerformStrike) return;
       final attackTarget = character.attackTarget;
@@ -1337,8 +1324,7 @@ extension GameFunctions on Game {
       applyHit(
           src: character,
           target: attackTarget,
-          techType: character.equippedType,
-          level: character.equippedLevel,
+          damage: damage,
       );
       character.attackTarget = null;
       return;
@@ -1372,8 +1358,8 @@ extension GameFunctions on Game {
             accuracy: 0,
             speed: 12.0,
             range: character.equippedRange,
-            projectileType: TechType.Handgun,
-            level: character.equippedLevel,
+            projectileType: ProjectileType.Bullet,
+            damage: damage,
         );
         return;
       }
@@ -1394,77 +1380,63 @@ extension GameFunctions on Game {
               accuracy: 0.1,
               speed: 12.0,
               range: character.equippedRange,
-              projectileType: TechType.Shotgun,
-              level: character.equippedLevel,
+              projectileType: ProjectileType.Bullet,
+              damage: damage,
           );
         }
       }
+    }
+
+    if (character.equippedTypeIsBow && stateDuration == 1) {
+      dispatchV2(GameEventType.Draw_Bow, character);
+    }
+
+    if (stateDuration != framePerformStrike) return;
+
+    if (character.equippedType == TechType.Staff) {
+      spawnProjectileOrb(character, damage: damage);
+      return;
     }
 
     if (character.equippedTypeIsBow) {
-      if (character.stateDuration == 1) {
-        dispatchV2(GameEventType.Draw_Bow, character);
-      }
+      dispatchV2(GameEventType.Release_Bow, character);
+      spawnArrow(character, damage: damage);
+      return;
     }
-
-
-    if (character.stateDuration == framePerformStrike) {
-      if (character.equippedType == TechType.Staff) {
-        spawnProjectileOrb(character);
-        return;
-      }
-
-      if (character.equippedTypeIsBow) {
-        dispatchV2(GameEventType.Release_Bow, character);
-        var numberOfArrows = 1;
-        // if (character is Player) {
-        //    numberOfArrows += character.deck.where((element) => element == CardType.Ability_Bow_Split).length;
-        // }
-        for (var i = 0; i < numberOfArrows; i++){
-          spawnArrow(character, accuracy: i.toDouble() * 0.1);
-        }
-        // character.attackTarget = character.attackTarget;
-        return;
-      }
-      if (character.equippedIsMelee) {
-        final attackTarget = character.attackTarget;
-        if (attackTarget != null) {
-          if (attackTarget.collidable) {
-            // applyHit(
-            //     src: character,
-            //     target: attackTarget,
-            //     techType: character.equippedType,
-            //     level: character.equippedLevel
-            // );
-            applyHit2(src: character, target: attackTarget);
-            return;
-          } else {
-            character.attackTarget = null;
-          }
-        }
-        final zombieHit = physics.raycastHit(
-            character: character, colliders: zombies, range: character.equippedRange);
-        if (zombieHit != null) {
-          applyHit(
-              src: character,
-              target: zombieHit,
-              techType: character.equippedType,
-              level: character.equippedLevel
-          );
+    if (character.equippedIsMelee) {
+      final attackTarget = character.attackTarget;
+      if (attackTarget != null) {
+        if (attackTarget.collidable) {
+          applyHit(src: character, target: attackTarget, damage: damage);
           return;
+        } else {
+          character.attackTarget = null;
         }
-        final dynamicObjectHit = physics.raycastHit(
-            character: character, colliders: dynamicObjects, range: character.equippedRange);
-        if (dynamicObjectHit != null) {
-          applyHit(
-              src: character,
-              target: dynamicObjectHit,
-              techType: character.equippedType,
-              level: character.equippedLevel,
-          );
-        }
+      }
+      final zombieHit = physics.raycastHit(
+          character: character,
+          colliders: zombies,
+          range: character.equippedRange);
+      if (zombieHit != null) {
+        applyHit(
+          src: character,
+          target: zombieHit,
+          damage: damage,
+        );
         return;
       }
+      final dynamicObjectHit = physics.raycastHit(
+          character: character,
+          colliders: dynamicObjects,
+          range: character.equippedRange);
+      if (dynamicObjectHit != null) {
+        applyHit(
+          src: character,
+          target: dynamicObjectHit,
+          damage: damage,
+        );
+      }
+      return;
     }
   }
 
@@ -1480,7 +1452,7 @@ extension GameFunctions on Game {
         if (zombie.dead) continue;
         if (onSameTeam(structure, zombie)) continue;
         if (!structure.withinRange(zombie)) continue;
-        spawnArrow(structure, target: zombie);
+        spawnArrow(structure, target: zombie, damage: 1);
         structure.cooldown = structure.attackRate;
         break;
       }

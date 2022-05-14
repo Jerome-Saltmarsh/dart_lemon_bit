@@ -302,6 +302,25 @@ Scene generateRandomScene({
   );
 }
 
+Scene generateCave({
+  required int rows,
+  required int columns,
+  int seed = 0,
+  int numberOfSpawnPointPlayers = 5,
+  int numberOfSpawnPointZombies = 5,
+}) {
+  final tiles = <List<int>>[];
+  return Scene(
+      tiles: tiles,
+      structures: [],
+      objectsStatic: [],
+      objectsDynamic: [],
+      characters: [],
+      spawnPointPlayers: [],
+      spawnPointZombies: []
+  );
+}
+
 class Cell {
    late final int row;
    late final int column;

@@ -36,13 +36,20 @@
 [ ] Refactor Game with ByteReader
 [ ] Refactor (client) Merge Game and GameState
 [RANDOM]
-[ ] Generate Caves
-[ ] Max Attack / Ability Cards is 5
-[ ] Max Armour cards is 1
-[ ] Max Helm cards is 1
-[ ] Max Shoe cards is 1
-[ ] Max Passive Cards is 5
+[ ] Head Card
+[ ] Body Card
+[ ] Item Cards
 [ ] Power Cards
+[ ] Generate Caves
+[ ] Every 3 levels deck size increases by 1
+[ ] Sword Powers
+[ ] Bow Powers
+[ ] Staff Powers
+[ ] Fix Zombies missing hurt audio
+[ ] Fix spawn audio
+[ ] Level up confetti
+[x] Level up audio
+[x] Upgrade card audio
 [x] FIX Critical zombies stop attack player after revive
 [x] Staff Attack casts orb
 [x] remove objects around player spawn points

@@ -10,8 +10,8 @@ class Projectile extends Collider with Active, Velocity {
   final start = Vector2(0, 0);
   late dynamic owner;
   late double range;
-  late int type; // TechType.dart
-  late int level;
+  late int type; // ProjectileType.dart
+  int damage = 0;
   Collider? target = null;
   late double speed;
   late bool collideWithEnvironment = false;

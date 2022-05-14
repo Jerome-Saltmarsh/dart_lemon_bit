@@ -2,6 +2,7 @@
 
 import 'package:lemon_math/library.dart';
 
+import '../classes/Character.dart';
 import '../common/card_type.dart';
 import '../classes/Game.dart';
 import '../classes/Player.dart';
@@ -37,7 +38,7 @@ class GameRandom extends Game {
   void update() {
     // time = (time + 1) % Duration.secondsPerDay;
     if (frame % 180 == 0 && numberOfAliveZombies < 30){
-      spawnRandomZombie();
+      spawnRandomZombie(health: 5, speed: randomBetween(RunSpeed.Slow, RunSpeed.Very_Fast));
     }
   }
 
@@ -72,6 +73,9 @@ class GameRandom extends Game {
   @override
   void onPlayerLevelGained(Player player){
     player.generatedCardChoices();
+    player.writePlayerEvent(PlayerEvent.Level_Up);
+
+
   }
 
   @override
@@ -132,6 +136,7 @@ class GameRandom extends Game {
 
   @override
   void onPlayerChoseCard(Player player, CardType cardType){
+     player.writePlayerEvent(PlayerEvent.Item_Purchased);
      if (cardType == CardType.Weapon_Sword) {
        player.equippedType = TechType.Sword;
      }

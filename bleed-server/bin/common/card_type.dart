@@ -1,4 +1,9 @@
 
+enum CardCategory {
+  Passive,
+  Weapon,
+  Ability,
+}
 
 enum CardType {
    Weapon_Sword,
@@ -7,8 +12,12 @@ enum CardType {
    Ability_Bow_Split,
    Ability_Bow_Freeze,
    Ability_Bow_Fire,
+   Ability_Staff_Explosion,
+   Ability_Staff_Heal_10,
+   Ability_Staff_Strong_Orb,
    Passive_General_Max_HP_10,
    Passive_Bow_Run_Speed,
+   Passive_Damage_2,
 }
 
 const cardTypes = CardType.values;
@@ -19,6 +28,11 @@ const cardTypeChoicesBow = [
   ...cardTypeBowPassives,
 ];
 
+const cardTypeChoicesStaff = [
+  ...cardTypesGeneralPassives,
+];
+
+
 const cardTypesWeapons = <CardType>[
   CardType.Weapon_Sword, 
   CardType.Weapon_Bow, 
@@ -27,6 +41,12 @@ const cardTypesWeapons = <CardType>[
 
 const cardTypesGeneralPassives = <CardType> [
   CardType.Passive_General_Max_HP_10,
+];
+
+const cardTypeStaffAbilities = <CardType> [
+  CardType.Ability_Staff_Explosion,
+  CardType.Ability_Staff_Heal_10,
+  CardType.Ability_Staff_Strong_Orb,
 ];
 
 const cardTypeBowAbilities = <CardType> [

@@ -42,6 +42,10 @@ class TechType {
     return value == Bow;
   }
 
+  static bool isGun(int value){
+    return const [Handgun, Shotgun].contains(value);
+  }
+
   static bool isMelee(int value) {
     return const [
       Unarmed,
