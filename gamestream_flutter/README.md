@@ -36,17 +36,25 @@
 [ ] Refactor Game with ByteReader
 [ ] Refactor (client) Merge Game and GameState
 [RANDOM]
-[ ] New areas on level arrival
+[ ] Every 7 levels travel to the next world difficulty
 [ ] Head Card
 [ ] Body Card
 [ ] Item Cards
 [ ] Power Cards
 [ ] Generate Caves
 [ ] Every 3 levels deck size increases by 1
+[ ] Collectable Health
+[ ] Collectable Experience
 [ ] Sword Powers
 [ ] Staff Powers
 [ ] Fix spawn audio
 [ ] Bow Powers
+[ ] Card Images
+[ ] Card Description Panel
+[ ] Discard Card
+[ ] Weapon Slot
+[ ] Armour Slot
+[ ] Helm Slot
 [x] Fix Zombies missing hurt audio
 [x] Level up confetti
 [x] Level up audio

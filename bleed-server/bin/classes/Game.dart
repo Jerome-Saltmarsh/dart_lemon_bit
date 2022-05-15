@@ -458,12 +458,12 @@ extension GameFunctions on Game {
       switch (target.type) {
         case DynamicObjectType.Rock:
           if (src is Player) {
-            spawnCollectable(position: target, target: src, type: CollectableType.Stone, amount: damage);
+            // spawnCollectable(position: target, target: src, type: CollectableType.Stone, amount: damage);
           }
           break;
         case DynamicObjectType.Tree:
           if (src is Player) {
-            spawnCollectable(position: target, target: src, type: CollectableType.Wood, amount: damage);
+            // spawnCollectable(position: target, target: src, type: CollectableType.Wood, amount: damage);
           }
           break;
       }
@@ -824,6 +824,7 @@ extension GameFunctions on Game {
           handleProjectileHit(projectile, target);
           continue;
         }
+        continue;
       }
       for (var j = 0; j < collidersLength; j++) {
         final collider = colliders[j];

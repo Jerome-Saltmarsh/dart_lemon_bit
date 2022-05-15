@@ -2,6 +2,7 @@
 
 import 'package:lemon_math/library.dart';
 
+import '../classes/AI.dart';
 import '../classes/Character.dart';
 import '../common/card_type.dart';
 import '../classes/Game.dart';
@@ -20,6 +21,7 @@ import '../scene_generator.dart';
 class GameRandom extends Game {
   var time = 12 * 60 * 60;
   final int maxPlayers;
+  final maxCreeps = 32;
 
   GameRandom({required this.maxPlayers}) : super(
       generateRandomScene(
@@ -29,7 +31,11 @@ class GameRandom extends Game {
       ),
      gameType: GameType.RANDOM,
       status: GameStatus.In_Progress
-  );
+  ) {
+    for (var i = 0; i < maxCreeps; i++) {
+      spawnCreep();
+    }
+  }
 
   bool get full => players.length >= maxPlayers;
   bool get empty => players.length <= 0;
@@ -37,9 +43,13 @@ class GameRandom extends Game {
   @override
   void update() {
     // time = (time + 1) % Duration.secondsPerDay;
-    if (frame % 180 == 0 && numberOfAliveZombies < 30){
-      spawnRandomZombie(health: 5, speed: randomBetween(RunSpeed.Slow, RunSpeed.Very_Fast));
-    }
+    // if (frame % 180 == 0 && numberOfAliveZombies < 30){
+    //   spawnRandomZombie(health: 5, speed: randomBetween(RunSpeed.Slow, RunSpeed.Very_Fast));
+    // }
+  }
+
+  void spawnCreep(){
+    spawnRandomZombie(health: 5, speed: randomBetween(RunSpeed.Slow, RunSpeed.Very_Fast));
   }
 
   @override
@@ -49,19 +59,13 @@ class GameRandom extends Game {
 
   @override
   Player spawnPlayer() {
+    final spawnLocation = randomItem(scene.spawnPointPlayers);
       final player = Player(
         game: this,
         weapon: SlotType.Empty,
-        x: 500,
-        y: 500,
+        x: spawnLocation.x,
+        y: spawnLocation.y,
       );
-      player.techTree.bow = 2;
-      player.techTree.pickaxe = 2;
-      player.techTree.hammer = 2;
-      player.techTree.axe = 4;
-      final spawnLocation = randomItem(scene.spawnPointPlayers);
-      player.x = spawnLocation.x;
-      player.y = spawnLocation.y;
       return player;
   }
 
@@ -131,6 +135,10 @@ class GameRandom extends Game {
   void onKilled(dynamic target, dynamic src){
     if (src is Player) {
       src.gainExperience(75);
+    }
+
+    if (src is AI) {
+       spawnCreep();
     }
   }
 
