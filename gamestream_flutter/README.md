@@ -35,16 +35,17 @@
 [ ] Preload audios
 [ ] Refactor Game with ByteReader
 [ ] Refactor (client) Merge Game and GameState
-[RANDOM]
+[RELEASE]
 [ ] Every 7 levels travel to the next world difficulty
 [ ] Head Card
 [ ] Body Card
 [ ] Item Cards
-[ ] Power Cards
 [ ] Generate Caves
 [ ] Every 3 levels deck size increases by 1
 [ ] Collectable Health
 [ ] Collectable Experience
+[BETA-RELEASE]
+[ ] Power Cards
 [ ] Sword Powers
 [ ] Staff Powers
 [ ] Fix spawn audio
@@ -56,6 +57,10 @@
 [ ] Armour Slot
 [ ] Helm Slot
 [ ] Select card panel must be more obvious
+[ ] Stun Shot (every 5th shot stuns your enemy)
+[ ] Kill shot (applies 3x damage)
+[ ] Vampire Shot
+[ ] FUCK PERFECTIONISM
 [x] Fix Zombies missing hurt audio
 [x] Level up confetti
 [x] Level up audio

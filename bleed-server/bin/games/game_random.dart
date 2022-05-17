@@ -10,29 +10,21 @@ import '../classes/Player.dart';
 import '../common/library.dart';
 import '../scene_generator.dart';
 
-/// Spawn somewhere on the map, select one of several characters
-/// Warrior
-/// Wizard
-/// Gunslinger
-/// Archer
-///
-/// There's no goal except to explore the map, kill other players and
-/// Find treasure
 class GameRandom extends Game {
   var time = 12 * 60 * 60;
-  final int maxPlayers;
-  final maxCreeps = 300;
+
+  static const maxPlayers = 12;
+  static const maxCreeps = 300;
 
   bool get full => players.length >= maxPlayers;
   bool get empty => players.length <= 0;
 
-  GameRandom({required this.maxPlayers}) : super(
+  GameRandom() : super(
       generateRandomScene(
         columns: 150,
         rows: 300,
         seed: random.nextInt(2000),
       ),
-     gameType: GameType.RANDOM,
       status: GameStatus.In_Progress
   ) {
     for (var i = 0; i < maxCreeps; i++) {
@@ -43,9 +35,6 @@ class GameRandom extends Game {
   @override
   void update() {
     // time = (time + 5) % Duration.secondsPerDay;
-    // if (frame % 180 == 0 && numberOfAliveZombies < 30){
-    //   spawnRandomZombie(health: 5, speed: randomBetween(RunSpeed.Slow, RunSpeed.Very_Fast));
-    // }
   }
 
   void spawnCreep(){
@@ -65,17 +54,7 @@ class GameRandom extends Game {
       x: spawnLocation.x,
       y: spawnLocation.y,
     );
-    switch(selection) {
-      case CharacterSelection.Warrior:
-        player.equippedType = TechType.Sword;
-        break;
-      case CharacterSelection.Wizard:
-        player.equippedType = TechType.Staff;
-        break;
-      case CharacterSelection.Archer:
-        player.equippedType = TechType.Bow;
-        break;
-    }
+    onPlayerSelectCharacterType(player, selection);
     return player;
   }
 
@@ -120,7 +99,6 @@ class GameRandom extends Game {
     player.x = spawnPoint.x;
     player.y = spawnPoint.y;
     player.cardChoices.clear();
-    // player.cardChoices.addAll(cardTypesWeapons);
     player.writeCardChoices();
     player.deck.clear();
     player.writeDeck();
@@ -128,31 +106,23 @@ class GameRandom extends Game {
 
   @override
   void onPlayerSelectCharacterType(Player player, CharacterSelection value) {
-    player.setCharacterSelectionRequired(false);
-    player.deck.clear();
-    player.writeDeck();
-
+    player.selection = value;
     switch (value) {
       case CharacterSelection.Warrior:
-        player.techTree.sword = 2;
         player.equippedType = TechType.Sword;
         break;
       case CharacterSelection.Wizard:
-        player.techTree.axe = 3;
-        player.equippedType = TechType.Axe;
+        player.equippedType = TechType.Staff;
         break;
       case CharacterSelection.Archer:
-        player.techTree.axe = 2;
         player.equippedType = TechType.Bow;
         break;
     }
-
-    revive(player);
   }
 
   @override
   void onPlayerDeath(Player player) {
-     // player.setCharacterSelectionRequired(true);
+
   }
 
   @override

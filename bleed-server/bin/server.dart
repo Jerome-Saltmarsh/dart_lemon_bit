@@ -758,9 +758,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (player == null) {
             return errorPlayerNotFound();
           }
-          if (!player.characterSelectRequired){
-            return error(GameError.Character_Select_Not_Required);
-          }
+          // if (!player.characterSelectRequired){
+          //   return error(GameError.Character_Select_Not_Required);
+          // }
           if (arguments.length != 2) {
             return errorArgsExpected(2, arguments);
           }
@@ -773,6 +773,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
           final selection = characterSelections[characterSelectIndex];
           player.game.onPlayerSelectCharacterType(player, selection);
+          player.game.revive(player);
           break;
 
         case ClientRequest.Upgrade:

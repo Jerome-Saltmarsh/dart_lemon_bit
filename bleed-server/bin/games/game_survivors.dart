@@ -35,7 +35,6 @@ class GameNightSurvivors extends Game {
           seed: randomInt(0, 10000),
           numberOfSpawnPointPlayers: 1,
       ),
-    gameType: GameType.SURVIVORS,
   ) {
 
     final centerRow = scene.numberOfRows ~/ 2;

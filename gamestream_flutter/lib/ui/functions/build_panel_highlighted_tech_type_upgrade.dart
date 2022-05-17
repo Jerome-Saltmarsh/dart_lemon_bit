@@ -25,7 +25,7 @@ Widget buildPanelHighlightedTechTypeUpgrade(){
       right: 238,
       top: renderBox.localToGlobal(Offset.zero).dy,
       child: Container(
-        width: panelWidth,
+        width: defaultPanelWidth,
         decoration: panelDecoration,
         padding: padding6,
         child: buildCost(cost),

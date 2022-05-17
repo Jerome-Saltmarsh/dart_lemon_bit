@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/ui/functions/styles.dart';
 
 Widget buildPanelResources() {
   return Container(
-    width: panelWidth,
+    width: defaultPanelWidth,
     decoration: panelDecoration,
     padding: panelPadding,
     child: Row(

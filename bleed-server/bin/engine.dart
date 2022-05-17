@@ -117,7 +117,7 @@ class _Engine {
         return game;
       }
     }
-    return GameRandom(maxPlayers: 12);
+    return GameRandom();
   }
 
   GameNightSurvivors findGameAfterDark() {

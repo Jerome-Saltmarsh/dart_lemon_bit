@@ -9,6 +9,7 @@ import 'package:lemon_watch/watch_builder.dart';
 
 Widget buildPanelMenu() {
   return buildPanel(
+      width: 200,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

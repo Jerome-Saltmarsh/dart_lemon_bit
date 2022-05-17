@@ -42,7 +42,7 @@ abstract class Game {
   var countDownFramesRemaining = 45 * 5;
   var disableCountDown = 0;
   late GameStatus status;
-  final GameType gameType;
+  // final GameType gameType;
   final String id = (_id++).toString();
   final Scene scene;
 
@@ -172,7 +172,6 @@ abstract class Game {
   void onPlayerDisconnected(Player player) {}
 
   Game(this.scene, {
-        required this.gameType,
         this.shadeMax = Shade.Bright,
         this.status = GameStatus.In_Progress
       }) {

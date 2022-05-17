@@ -7,6 +7,6 @@ final panelDecoration = BoxDecoration(
   borderRadius: borderRadius4,
 );
 
-const panelWidth = 200.0;
 
+const defaultPanelWidth = 216.0;
 const panelPadding = EdgeInsets.all(6);

@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel.dart';
 import 'package:gamestream_flutter/ui/functions/player.dart';
+import 'package:gamestream_flutter/ui/functions/styles.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 Widget buildPanelCardChoices() {
@@ -11,6 +12,7 @@ Widget buildPanelCardChoices() {
     if (cardChoices.isEmpty) return empty;
 
     return buildPanel(
+      width: defaultPanelWidth,
         child: Column(
       children: cardChoices
           .map(
