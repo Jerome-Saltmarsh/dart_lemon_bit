@@ -88,6 +88,7 @@ class ServerResponseReader extends ByteReader {
           break;
 
         case ServerResponse.Player_Deck:
+          print("ServerResponse.Player_Deck");
           player.deck.value = readCardTypes();
           break;
 

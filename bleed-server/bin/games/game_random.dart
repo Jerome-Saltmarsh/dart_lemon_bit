@@ -4,6 +4,8 @@ import 'package:lemon_math/library.dart';
 
 import '../classes/AI.dart';
 import '../classes/Character.dart';
+import '../classes/EnvironmentObject.dart';
+import '../common/ObjectType.dart';
 import '../common/card_type.dart';
 import '../classes/Game.dart';
 import '../classes/Player.dart';
@@ -29,6 +31,17 @@ class GameRandom extends Game {
   ) {
     for (var i = 0; i < maxCreeps; i++) {
       spawnCreep();
+    }
+
+    for (final playerSpawn in scene.spawnPointPlayers){
+       objectsStatic.add(
+           StaticObject(
+               x: playerSpawn.x,
+               y: playerSpawn.y,
+               type: ObjectType.Fireplace
+           )
+       );
+       scene.tileNodeAt(playerSpawn).obstructed = true;
     }
   }
 
@@ -63,18 +76,17 @@ class GameRandom extends Game {
     final spawnLocation = randomItem(scene.spawnPointPlayers);
       final player = Player(
         game: this,
-        weapon: SlotType.Empty,
+        weapon: TechType.Unarmed,
         x: spawnLocation.x,
         y: spawnLocation.y,
       );
+      revive(player);
       return player;
   }
 
   @override
   void onPlayerJoined(Player player){
-    // revive(player);
-    // player.health = 0;
-    // player.state = CharacterState.Dead;
+    revive(player);
   }
 
   @override

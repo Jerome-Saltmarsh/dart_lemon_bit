@@ -665,6 +665,7 @@ extension PlayerProperties on Player {
   }
 
   void writeDeck() {
+    print("writeDeck()");
     writeByte(ServerResponse.Player_Deck);
     writeCardTypes(deck);
   }
