@@ -854,6 +854,8 @@ class IsometricRender {
 
     if (TechType.isBow(weapon)) {
        if (
+            direction == Direction.UpLeft
+            ||
             direction == Direction.Up
             ||
             direction == Direction.UpRight
@@ -1066,7 +1068,7 @@ class IsometricRender {
 
   double getTemplateSrcX(Character character, {required double size}){
     final weapon = character.equipped;
-    final variation = weapon == SlotType.Shotgun || SlotType.isBow(weapon);
+    final variation = weapon == SlotType.Shotgun || TechType.isBow(weapon);
 
     switch(character.state) {
       case CharacterState.Running:
