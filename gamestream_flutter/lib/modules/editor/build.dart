@@ -16,7 +16,6 @@ import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../../flutterkit.dart';
-import '../../ui/views.dart';
 import '../modules.dart';
 import 'enums.dart';
 import 'state.dart';
@@ -38,27 +37,6 @@ class EditorBuild {
     );
   }
 
-
-
-  Widget _mainMenu() {
-    return margin(
-      top: 16,
-      right: 16,
-      child: Row(
-            children: [
-              _buttonPlay(),
-              width16,
-              _buttonClear(),
-              width16,
-              _buttonLoad(),
-              width16,
-              _buttonSave(),
-              width16,
-              _buttonExit(),
-            ],
-          ),
-    );
-  }
 
 
   List<Widget> _tabObjects() {
@@ -179,16 +157,6 @@ class EditorBuild {
       }),
     ];
   }
-
-  Widget _buttonPlay() => text("Play", onPressed: editor.actions.play);
-
-  Widget _buttonClear() => text("Clear", onPressed: editor.actions.clear);
-
-  Widget _buttonLoad() => text("Load", onPressed: editor.actions.showDialogLoadMap);
-
-  Widget _buttonSave() => text("Save", onPressed: editor.actions.showDialogSave);
-
-  Widget _buttonExit() => text("Exit", onPressed: core.actions.setModeWebsite);
 
   Widget _buildEditorDialog(){
     return WatchBuilder(editor.state.dialog, (EditorDialog dialog){

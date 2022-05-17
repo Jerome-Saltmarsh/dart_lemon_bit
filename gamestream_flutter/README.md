@@ -55,6 +55,7 @@
 [ ] Weapon Slot
 [ ] Armour Slot
 [ ] Helm Slot
+[ ] Select card panel must be more obvious
 [x] Fix Zombies missing hurt audio
 [x] Level up confetti
 [x] Level up audio

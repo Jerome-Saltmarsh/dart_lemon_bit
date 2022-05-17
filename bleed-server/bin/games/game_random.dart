@@ -21,11 +21,14 @@ import '../scene_generator.dart';
 class GameRandom extends Game {
   var time = 12 * 60 * 60;
   final int maxPlayers;
-  final maxCreeps = 32;
+  final maxCreeps = 300;
+
+  bool get full => players.length >= maxPlayers;
+  bool get empty => players.length <= 0;
 
   GameRandom({required this.maxPlayers}) : super(
       generateRandomScene(
-        columns: 70,
+        columns: 150,
         rows: 300,
         seed: random.nextInt(2000),
       ),
@@ -37,12 +40,9 @@ class GameRandom extends Game {
     }
   }
 
-  bool get full => players.length >= maxPlayers;
-  bool get empty => players.length <= 0;
-
   @override
   void update() {
-    // time = (time + 1) % Duration.secondsPerDay;
+    // time = (time + 5) % Duration.secondsPerDay;
     // if (frame % 180 == 0 && numberOfAliveZombies < 30){
     //   spawnRandomZombie(health: 5, speed: randomBetween(RunSpeed.Slow, RunSpeed.Very_Fast));
     // }
@@ -55,6 +55,28 @@ class GameRandom extends Game {
   @override
   int getTime() {
     return time;
+  }
+
+  Player playerJoin(CharacterSelection selection){
+    final spawnLocation = randomItem(scene.spawnPointPlayers);
+    final player = Player(
+      game: this,
+      weapon: SlotType.Empty,
+      x: spawnLocation.x,
+      y: spawnLocation.y,
+    );
+    switch(selection) {
+      case CharacterSelection.Warrior:
+        player.equippedType = TechType.Sword;
+        break;
+      case CharacterSelection.Wizard:
+        player.equippedType = TechType.Staff;
+        break;
+      case CharacterSelection.Archer:
+        player.equippedType = TechType.Bow;
+        break;
+    }
+    return player;
   }
 
   @override
@@ -71,7 +93,9 @@ class GameRandom extends Game {
 
   @override
   void onPlayerJoined(Player player){
-    revive(player);
+    // revive(player);
+    // player.health = 0;
+    // player.state = CharacterState.Dead;
   }
 
   @override
@@ -87,16 +111,16 @@ class GameRandom extends Game {
     player.state = CharacterState.Idle;
     player.maxHealth = 10;
     player.level = 1;
+    player.experience = 0;
     player.health = 10;
     player.collidable = true;
-    player.equippedType = TechType.Unarmed;
-    player.skillPoints = 1;
+    player.skillPoints = 0;
     player.target = null;
     final spawnPoint = getNextSpawnPoint();
     player.x = spawnPoint.x;
     player.y = spawnPoint.y;
     player.cardChoices.clear();
-    player.cardChoices.addAll(cardTypesWeapons);
+    // player.cardChoices.addAll(cardTypesWeapons);
     player.writeCardChoices();
     player.deck.clear();
     player.writeDeck();

@@ -126,9 +126,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       sendAndClearBuffer();
     }
 
-    void joinGameRandom() {
+    void joinGameRandom(CharacterSelection characterClass) {
       final game = engine.findRandomGame();
-      _player = game.spawnPlayer();
+      _player = game.playerJoin(characterClass);
       onGameJoined();
     }
 
@@ -392,49 +392,53 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             errorArgsExpected(2, arguments);
             return;
           }
-          final gameTypeIndex = int.parse(arguments[1]);
+          final characterClassIndex = int.tryParse(arguments[1]);
 
-          if (gameTypeIndex >= gameTypes.length) {
-            errorInvalidArg('game type index cannot exceed ${gameTypes.length - 1}');
-            return;
-          }
-          if (gameTypeIndex < 0) {
-            errorInvalidArg('game type must be greater than 0');
-            return;
+          if (characterClassIndex == null){
+            return errorInvalidArg('index required');
           }
 
-          if (arguments.length > 2) {
-            final userId = arguments[2];
+          // if (characterClassIndex >= gameTypes.length) {
+          //   errorInvalidArg('game type index cannot exceed ${gameTypes.length - 1}');
+          //   return;
+          // }
+          // if (characterClassIndex < 0) {
+          //   errorInvalidArg('game type must be greater than 0');
+          //   return;
+          // }
 
-            firestoreService.findUserById(userId).then((account){
-               if (account == null) {
-                 return errorAccountNotFound();
-               }
-               _account = account;
-               final gameType = gameTypes[gameTypeIndex];
+          // if (arguments.length > 2) {
+          //   final userId = arguments[2];
+          //
+          //   firestoreService.findUserById(userId).then((account){
+          //      if (account == null) {
+          //        return errorAccountNotFound();
+          //      }
+          //      _account = account;
+          //      final gameType = gameTypes[characterClassIndex];
+          //
+          //      switch (gameType) {
+          //        case GameType.RANDOM:
+          //          return joinGameRandom();
+          //        case GameType.SURVIVORS:
+          //          return joinGameSurvivors();
+          //        default:
+          //          break;
+          //      }
+          //   });
+          //   return;
+          // }
 
-               switch (gameType) {
-                 case GameType.RANDOM:
-                   return joinGameRandom();
-                 case GameType.SURVIVORS:
-                   return joinGameSurvivors();
-                 default:
-                   break;
-               }
-            });
-            return;
-          }
-
-          final gameType = gameTypes[gameTypeIndex];
-
-          switch (gameType) {
-            case GameType.RANDOM:
-              return joinGameRandom();
-            case GameType.SURVIVORS:
-              return joinGameSurvivors();
-            default:
-              throw Exception("Cannot join ${gameType}");
-          }
+          final characterClass = characterSelections[characterClassIndex];
+          return joinGameRandom(characterClass);
+          // switch (characterClass) {
+          //   case GameType.RANDOM:
+          //     return joinGameRandom();
+          //   case GameType.SURVIVORS:
+          //     return joinGameSurvivors();
+          //   default:
+          //     throw Exception("Cannot join ${characterClass}");
+          // }
 
         case ClientRequest.Teleport:
           if (player == null) {

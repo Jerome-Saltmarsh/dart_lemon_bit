@@ -13,9 +13,7 @@ import 'package:gamestream_flutter/modules/ui/layouts.dart';
 import 'package:gamestream_flutter/server_response_reader.dart';
 import 'package:gamestream_flutter/ui/functions/build_debug_panel.dart';
 import 'package:gamestream_flutter/ui/functions/build_layout.dart';
-import 'package:gamestream_flutter/ui/functions/build_panel_character_stats.dart';
-import 'package:gamestream_flutter/ui/functions/build_panel_highlighted_structure_type.dart';
-import 'package:gamestream_flutter/ui/functions/build_panel_highlighted_tech_type_upgrade.dart';
+import 'package:gamestream_flutter/ui/functions/build_panel_game_random.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel_primary.dart';
 import 'package:gamestream_flutter/ui/functions/build_text_box.dart';
 import 'package:gamestream_flutter/ui/style.dart';
@@ -109,43 +107,29 @@ class GameBuild {
   }
 
   Widget buildLayoutInProgress(){
-    const _pad = 8.0;
-
-    return WatchBuilder(state.player.selectCharacterRequired, (bool selectCharacterRequired){
-
-      if (selectCharacterRequired){
-        return buildLayoutSelectCharacter();
-      }
-
-      return WatchBuilder(state.player.alive, (bool alive){
-        return buildLayout(
-            children: [
-              Positioned(
-                  left: _pad,
-                  top: _pad,
-                  child: WatchBuilder(state.debug, (bool debug){
-                    return debug ? buildDebugPanel() : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                      ],
-                    );
-                  })
-              ),
-              buildTextBox(),
-              // buildTopRight(),
-              if (!alive)
-                respawnButton(),
-              buildPanelHighlightedStructureType(),
-              buildPanelHighlightedTechTypeUpgrade(),
-              if (game.type.value == GameType.SURVIVORS)
-              buildPanelPrimary(),
-              if (game.type.value == GameType.SURVIVORS)
-              buildTextLivesRemaining(),
-              if (game.type.value == GameType.RANDOM)
-              buildPanelGameRandom(),
-            ]);
-      });
-    });
+    return buildLayout(
+        children: [
+          Positioned(
+              left: 8,
+              top: 8,
+              child: WatchBuilder(state.debug, (bool debug){
+                return debug ? buildDebugPanel() : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                  ],
+                );
+              })
+          ),
+          buildTextBox(),
+          // buildPanelHighlightedStructureType(),
+          // buildPanelHighlightedTechTypeUpgrade(),
+          if (game.type.value == GameType.SURVIVORS)
+            buildPanelPrimary(),
+          if (game.type.value == GameType.SURVIVORS)
+            buildTextLivesRemaining(),
+          if (game.type.value == GameType.RANDOM)
+            buildPanelGameRandom(),
+        ]);
   }
 
   Widget buildTextLivesRemaining(){

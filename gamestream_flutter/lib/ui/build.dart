@@ -29,40 +29,40 @@ class _Build {
     });
   }
 
-  Widget buildPageSelectGame(){
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          buildTitle(),
-          height32,
-          ...selectableGameTypes.map((gameType) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: mouseOver(
-                builder: (BuildContext context, bool mouseOver) {
-                  final gameName = gameTypeNames[gameType];
-
-                  if (mouseOver){
-                    return loadingText(gameName!, (){
-                      core.actions.connectToGame(gameType);
-                    });
-                  }
-                  return text(mouseOver ? '-$gameName-' : gameName, color: mouseOver ? colours.white : colours.white85, onPressed: (){
-                    core.actions.connectToGame(gameType);
-                  }, size: FontSize.Large, bold: true);
-                },
-            ),
-          );
-        }
-        ),
-
-          height(120),
-         ].toList(),
-      ),
-    );
-  }
+  // Widget buildPageSelectGame(){
+  //   return Center(
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       crossAxisAlignment: CrossAxisAlignment.center,
+  //       children: [
+  //         buildTitle(),
+  //         height32,
+  //         ...selectableGameTypes.map((gameType) {
+  //         return Padding(
+  //           padding: const EdgeInsets.all(8.0),
+  //           child: mouseOver(
+  //               builder: (BuildContext context, bool mouseOver) {
+  //                 final gameName = gameTypeNames[gameType];
+  //
+  //                 if (mouseOver){
+  //                   return loadingText(gameName!, (){
+  //                     // core.actions.connectToGame(gameType);
+  //                   });
+  //                 }
+  //                 return text(mouseOver ? '-$gameName-' : gameName, color: mouseOver ? colours.white : colours.white85, onPressed: (){
+  //                   core.actions.connectToGame(gameType);
+  //                 }, size: FontSize.Large, bold: true);
+  //               },
+  //           ),
+  //         );
+  //       }
+  //       ),
+  //
+  //         height(120),
+  //        ].toList(),
+  //     ),
+  //   );
+  // }
 }
 
 

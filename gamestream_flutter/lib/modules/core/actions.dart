@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:bleed_common/Character_Selection.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/services.dart';
@@ -260,10 +261,10 @@ class CoreActions {
     core.state.error.value = null;
   }
 
-  void connectToGame(GameType gameType){
+  void connectToGame(CharacterSelection character){
     print("connectToSelectedGame()");
-    game.type.value = gameType;
-    connectToWebSocketServer(core.state.region.value, gameType);
+    game.type.value = GameType.RANDOM;
+    connectToWebSocketServer(core.state.region.value, character);
   }
 
   void deselectGameType(){

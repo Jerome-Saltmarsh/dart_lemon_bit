@@ -16,6 +16,7 @@ import 'package:gamestream_flutter/shared_preferences.dart';
 import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/functions/build_layout.dart';
+import 'package:gamestream_flutter/ui/functions/build_panel_select_character_class.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -186,7 +187,7 @@ WatchBuilder<WebsiteDialog> buildWatchBuilderDialog() {
           return dialog(child: text("Subscription Required"));
 
         case WebsiteDialog.Games:
-          return build.buildPageSelectGame();
+          return buildPanelSelectCharacterClass();
 
         case WebsiteDialog.Confirm_Logout:
           return dialog(child: text("Confirm Logout"));
@@ -463,9 +464,6 @@ Widget buildTopMessage(){
     });
   });
 }
-
-
-final _textWaiting = text("- waiting", color: colours.white382);
 
 Widget buildDialogGameFinished(){
   return buildDialogMedium(

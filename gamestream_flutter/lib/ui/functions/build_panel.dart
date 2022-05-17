@@ -2,9 +2,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/ui/functions/styles.dart';
 
-Widget buildPanel({required Widget child, double? height}){
+Widget buildPanel({required Widget child, double? width, double? height}){
   return Container(
-      width: panelWidth,
+      width: width,
       height: height,
       decoration: panelDecoration,
       child: child,

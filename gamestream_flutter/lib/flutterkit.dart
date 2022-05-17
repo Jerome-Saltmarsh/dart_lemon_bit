@@ -251,6 +251,7 @@ Widget width(double value) {
   return SizedBox(width: value);
 }
 
+final width32 = width(32);
 final width16 = width(16);
 final width8 = width(8);
 final width6 = width(6);
