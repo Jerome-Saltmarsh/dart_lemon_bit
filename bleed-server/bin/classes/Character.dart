@@ -36,10 +36,11 @@ class Character extends Collider with Team, Health, Velocity, Material {
   final techTree = TechTree();
   /// TechType.dart
   var equippedType = TechType.Unarmed;
+  var equippedArmour = SlotType.Empty;
+  var equippedHead = SlotType.Empty;
+
   // properties
-
   int get direction => (((angle + piEighth) % pi2) ~/ piQuarter) % 8;
-
   double get speed => _speed + speedModifier;
 
   void setSpeed(double value){

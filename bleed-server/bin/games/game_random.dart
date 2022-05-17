@@ -110,12 +110,18 @@ class GameRandom extends Game {
     switch (value) {
       case CharacterSelection.Warrior:
         player.equippedType = TechType.Sword;
+        player.equippedArmour = SlotType.Armour_Padded;
+        player.equippedHead = SlotType.Steel_Helmet;
         break;
       case CharacterSelection.Wizard:
         player.equippedType = TechType.Staff;
+        player.equippedArmour = SlotType.Magic_Robes;
+        player.equippedHead = SlotType.Magic_Hat;
         break;
       case CharacterSelection.Archer:
         player.equippedType = TechType.Bow;
+        player.equippedArmour = SlotType.Body_Blue;
+        player.equippedHead = SlotType.Rogue_Hood;
         break;
     }
   }

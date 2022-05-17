@@ -337,8 +337,8 @@ extension PlayerProperties on Player {
     writeInt(magic); // 2
     writeInt(maxMagic); // 2
     writeByte(equippedType); // 3
-    writeByte(SlotType.Empty); // armour
-    writeByte(SlotType.Empty); // helm
+    writeByte(SlotType.Armour_Padded); // armour
+    writeByte(SlotType.Steel_Helmet); // helm
     writeBool(alive); // 1
     writeBool(storeVisible); // 1
     writeInt(wood);
@@ -614,8 +614,8 @@ extension PlayerProperties on Player {
     writeCharacter(player, player);
     writePercentage(player.magicPercentage);
     writeByte(player.equippedType);
-    writeByte(SlotType.Empty); // armour
-    writeByte(SlotType.Empty); // helm
+    writeByte(player.equippedArmour); // armour
+    writeByte(player.equippedHead); // helm
     writeString(player.name);
     writeInt(player.score);
   }

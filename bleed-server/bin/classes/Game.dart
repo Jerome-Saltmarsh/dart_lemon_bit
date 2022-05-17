@@ -999,6 +999,7 @@ extension GameFunctions on Game {
       range: src.equippedRange,
       target: src.attackTarget,
       projectileType: ProjectileType.Orb,
+      angle: src.attackTarget != null ? null : src.angle ?? src.angle,
       damage: damage,
     );
   }
