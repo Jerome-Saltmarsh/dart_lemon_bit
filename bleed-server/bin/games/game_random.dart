@@ -5,7 +5,6 @@ import 'package:lemon_math/library.dart';
 import '../classes/AI.dart';
 import '../classes/Character.dart';
 import '../classes/EnvironmentObject.dart';
-import '../common/ObjectType.dart';
 import '../common/card_type.dart';
 import '../classes/Game.dart';
 import '../classes/Player.dart';
@@ -44,9 +43,12 @@ class GameRandom extends Game {
        scene.getNodeByPosition(playerSpawn).obstructed = true;
     }
 
-    for (var i = 0; i < 20; i++) {
-       // scene.spawn
-    }
+    // for (var i = 0; i < 20; i++) {
+    //    final node = scene.getRandomNodeByTileType(Tile.Grass);
+    //    objectsStatic.add(
+    //        StaticObject(x: node.x, y: node.y, type: ObjectType.Torch)
+    //    );
+    // }
   }
 
   @override

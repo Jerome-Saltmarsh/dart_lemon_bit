@@ -1,5 +1,4 @@
 import 'package:lemon_math/library.dart';
-
 import '../common/library.dart';
 import '../enums.dart';
 import '../utilities.dart';
@@ -173,11 +172,11 @@ class Scene {
   }
 
   int getTileAtRowColumn({required int row, required int column}){
-    if (row < 0) return tileBoundary;
-    if (column < 0) return tileBoundary;
-    if (row >= numberOfRows) return tileBoundary;
-    if (column >= numberOfColumns) return tileBoundary;
-    return this.tiles[row][column];
+    if (row < 0) return boundary;
+    if (column < 0) return boundary;
+    if (row >= numberOfRows) return boundary;
+    if (column >= numberOfColumns) return boundary;
+    return tiles[row][column];
   }
 
 
@@ -305,17 +304,19 @@ class Scene {
     return getNodeByXY(x, y).open;
   }
 
+  Node getRandomNodeByTileType(int type){
+     while(true){
+        final node = getRandomTileNode();
+        if (getTileAtPosition(node) != type) continue;
+        return node;
+     }
+  }
+
   Node getRandomTileNode() {
     return getNodeByRowColumn(
         row: randomInt(0, rows),
         column: randomInt(0, columns)
     );
-  }
-
-  Node getRandomGrassNode(){
-     while(true){
-        final node = getRandomTileNode();
-     }
   }
 
   Node getNodeByPosition(Position position) {
@@ -324,7 +325,10 @@ class Scene {
 
   Node getNodeByXY(double x, double y) {
     const tileSize = 48;
-    return getNodeByRowColumn(row: (x + y) ~/ tileSize, column: (y - x) ~/ tileSize);
+    return getNodeByRowColumn(
+        row: (x + y) ~/ tileSize,
+        column: (y - x) ~/ tileSize
+    );
   }
 
   Node getNodeByRowColumn({required int row, required int column}){

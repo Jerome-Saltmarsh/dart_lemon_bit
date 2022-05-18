@@ -88,7 +88,7 @@ extension TileExtension on Tile {
   bool get isBoundary => this == Tile.Boundary;
 }
 
-const tileBoundary = Tile.Boundary;
+const boundary = Tile.Boundary;
 
 List<List<int>> mapJsonToTiles(dynamic json) {
   final List<List<int>> rows = [];
