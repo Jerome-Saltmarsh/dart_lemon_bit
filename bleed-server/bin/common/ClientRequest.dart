@@ -24,6 +24,7 @@ enum ClientRequest {
   Scene,
   Select_Character_Type,
   Choose_Card,
+  Toggle_Objects_Destroyable,
 }
 
 const clientRequests = ClientRequest.values;

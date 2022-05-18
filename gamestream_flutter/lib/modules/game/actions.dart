@@ -78,6 +78,10 @@ class GameActions {
     webSocket.send(ClientRequest.Reverse_Hour.index.toString());
   }
 
+  void toggleObjectsDestroyable(){
+    webSocket.send(ClientRequest.Toggle_Objects_Destroyable.index.toString());
+  }
+
   void selectAbility1() {
     sendRequestSelectAbility(1);
   }

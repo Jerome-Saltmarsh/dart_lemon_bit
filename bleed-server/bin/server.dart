@@ -569,6 +569,15 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
           break;
 
+        case ClientRequest.Toggle_Objects_Destroyable:
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+          final game = player.game;
+          game.playersCanAttackDynamicObjects = !game.playersCanAttackDynamicObjects;
+          break;
+
         case ClientRequest.Skip_Hour:
           if (player == null) {
             errorPlayerNotFound();

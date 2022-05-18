@@ -38,6 +38,7 @@ class KeyMap {
   final toggleAudio = LogicalKeyboardKey.keyM;
   final hourForwards = LogicalKeyboardKey.arrowRight;
   final hourBackwards = LogicalKeyboardKey.arrowLeft;
+  final toggleObjectsDestroyable = LogicalKeyboardKey.keyP;
   final teleport = LogicalKeyboardKey.keyG;
   final spawnZombie = LogicalKeyboardKey.arrowUp;
   final respawn = LogicalKeyboardKey.keyN;
