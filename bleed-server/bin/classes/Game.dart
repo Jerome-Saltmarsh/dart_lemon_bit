@@ -696,7 +696,7 @@ extension GameFunctions on Game {
       default:
         break;
     }
-    if (value != CharacterState.Performing) {
+    if (character.state == CharacterState.Performing) {
        character.ability = null;
     }
     character.state = value;
@@ -914,6 +914,21 @@ extension GameFunctions on Game {
         spawnArrow(character, damage: 5, angle: character.angle - 0.1);
         spawnArrow(character, damage: 5, angle: character.angle - 0.2);
     }
+    if (character.stateDuration == 8 && ability is AbilityBowVolley) {
+      spawnArrow(character, damage: 5);
+      spawnArrow(character, damage: 5, angle: character.angle + 0.1);
+      spawnArrow(character, damage: 5, angle: character.angle + 0.2);
+      spawnArrow(character, damage: 5, angle: character.angle - 0.1);
+      spawnArrow(character, damage: 5, angle: character.angle - 0.2);
+    }
+    if (character.stateDuration == 11 && ability is AbilityBowVolley) {
+      spawnArrow(character, damage: 5);
+      spawnArrow(character, damage: 5, angle: character.angle + 0.1);
+      spawnArrow(character, damage: 5, angle: character.angle + 0.2);
+      spawnArrow(character, damage: 5, angle: character.angle - 0.1);
+      spawnArrow(character, damage: 5, angle: character.angle - 0.2);
+    }
+
   }
 
   void updateCharacter(Character character) {

@@ -67,6 +67,7 @@ String getCardTypeName(CardType value) {
       CardType.Weapon_Staff: "Staff",
       CardType.Ability_Bow_Freeze: "Freeze Arrow",
       CardType.Ability_Bow_Fire: "Fire Arrow",
+      CardType.Ability_Bow_Volley: "Volley",
       CardType.Passive_General_Max_HP_10: "Max hp+10",
       CardType.Passive_General_Critical_Hit: "Critical Hit",
       CardType.Passive_Bow_Run_Speed: "Light Feet",

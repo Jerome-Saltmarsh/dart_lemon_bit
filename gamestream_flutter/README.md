@@ -7,7 +7,6 @@
 [ ] Dynamic Shadow direction
 [ ] Black Fade Screen on change scene
 [ ] As weapons lose durability they do less damage
-
 [GAME TYPES]
 [ ] TRIBE (Stone age)
 [ ] CAPTURE THE SQUARES
