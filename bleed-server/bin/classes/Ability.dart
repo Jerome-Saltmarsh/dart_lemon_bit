@@ -22,13 +22,13 @@ abstract class Ability {
 }
 
 class AbilityBowVolley extends Ability {
-  AbilityBowVolley({
-    required int level,
-    required int cost,
-    required double range,
-    required int cooldown
-  })
-      : super(level: level, cost: cost, range: range, cooldown: cooldown, mode: AbilityMode.Directed);
+  AbilityBowVolley() : super(
+      level: 1,
+      cost: 1,
+      range: 200,
+      cooldown: 100,
+      mode: AbilityMode.Directed
+  );
 }
 
 

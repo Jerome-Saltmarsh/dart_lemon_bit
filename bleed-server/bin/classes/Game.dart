@@ -98,10 +98,6 @@ abstract class Game {
 
   }
 
-  void onPlayerSelectCardFromDeck(int index) {
-
-  }
-
   void onKilled(dynamic target, dynamic src){
 
   }
@@ -911,47 +907,13 @@ extension GameFunctions on Game {
       updateCharacterStateAttacking(character);
       return;
     }
-    if (character.stateDuration == 3 && ability is AbilityBowVolley) {
+    if (character.stateDuration == 5 && ability is AbilityBowVolley) {
         spawnArrow(character, damage: 5);
         spawnArrow(character, damage: 5, angle: character.angle + 0.1);
         spawnArrow(character, damage: 5, angle: character.angle + 0.2);
         spawnArrow(character, damage: 5, angle: character.angle - 0.1);
         spawnArrow(character, damage: 5, angle: character.angle - 0.2);
     }
-
-    // switch (ability.type) {
-    //   case AbilityType.Explosion:
-    //     break;
-    //
-    //   case AbilityType.Blink:
-    //     if (character.stateDurationRemaining == castFrame) {
-    //       dispatch(GameEventType.Teleported, character.x, character.y);
-    //       character.x = character.abilityTarget.x;
-    //       character.y = character.abilityTarget.y;
-    //       dispatch(GameEventType.Teleported, character.x, character.y);
-    //       character.performing = null;
-    //       character.attackTarget = null;
-    //     }
-    //     break;
-    //
-    //   case AbilityType.Fireball:
-    //     if (character.stateDurationRemaining == castFrame) {
-    //       // spawnFireball(character);
-    //       character.performing = null;
-    //       character.attackTarget = null;
-    //     }
-    //     break;
-    //
-    //   case AbilityType.Long_Shot:
-    //     break;
-    //
-    //   case AbilityType.Brutal_Strike:
-    //     break;
-    //   case AbilityType.Death_Strike:
-    //     break;
-    //   default:
-    //     break;
-    // }
   }
 
   void updateCharacter(Character character) {

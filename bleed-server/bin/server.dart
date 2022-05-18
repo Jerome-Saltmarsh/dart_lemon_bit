@@ -730,6 +730,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
         case ClientRequest.Deck_Select_Card:
           if (player == null) return errorPlayerNotFound();
+          if (player.dead) return errorPlayerDead();
           if (arguments.length != 2) return errorArgsExpected(2, arguments);
           final deckIndex = int.tryParse(arguments[1]);
           if (deckIndex == null) {
@@ -738,7 +739,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (!isValidIndex(deckIndex, player.deck)){
             return errorInvalidArg('Invalid deck index $deckIndex');
           }
-          player.game.onPlayerSelectCardFromDeck(deckIndex);
+          final card = player.deck[deckIndex];
+
+          if (card == CardType.Ability_Bow_Volley){
+            player.ability = AbilityBowVolley();
+          }
+
           break;
 
         case ClientRequest.Deck_Add_Card:

@@ -214,11 +214,6 @@ class GameRandom extends Game {
        player.writeCardChoices();
      }
   }
-
-  @override
-  void onPlayerSelectCardFromDeck(int index) {
-     print("onPlayerSelectCardFromDeck($index)");
-  }
 }
 
 
