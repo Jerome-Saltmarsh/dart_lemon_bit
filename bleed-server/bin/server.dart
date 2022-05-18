@@ -485,7 +485,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return error(GameError.Construct_Insufficient_Resources);
           }
           final mouse = player.mouse;
-          if (!Tile.isBuildable(player.game.scene.tileAt(mouse.x, mouse.y))) {
+          if (!Tile.isBuildable(player.game.scene.getTileAtXY(mouse.x, mouse.y))) {
             return error(GameError.Construct_Invalid_Tile);
           }
           final mouseSnapX = snapX(mouse.x, mouse.y);

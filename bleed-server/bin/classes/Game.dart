@@ -347,7 +347,7 @@ extension GameFunctions on Game {
     var x = a.x + vX;
     var y = a.y + vY;
     for (var i = 0; i < jumps; i++) {
-      if (!isShootable(scene.tileAt(x, y))) {
+      if (!isShootable(scene.getTileAtXY(x, y))) {
         return false;
       }
       x += vX;

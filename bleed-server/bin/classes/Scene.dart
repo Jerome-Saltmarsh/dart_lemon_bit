@@ -156,22 +156,26 @@ class Scene {
   }
 
   void addRandomTorch(){
-     while(true){
-     }
+     // while(true){
+     // }
   }
 
+  int getTileAtPosition(Position position){
+    return getTileAtXY(position.x, position.y);
+  }
 
-  int tileAt(double x, double y) {
-
-
-    final projectedX = y - x;
-    if (projectedX < 0) return tileBoundary;
-    final projectedY = x + y;
-    if (projectedY < 0) return tileBoundary;
+  int getTileAtXY(double x, double y) {
     const tileSize = 48;
-    final row = projectedY ~/ tileSize;
+    return getTileAtRowColumn(
+        row: (x + y) ~/ tileSize,
+        column: (y - x) ~/ tileSize
+    );
+  }
+
+  int getTileAtRowColumn({required int row, required int column}){
+    if (row < 0) return tileBoundary;
+    if (column < 0) return tileBoundary;
     if (row >= numberOfRows) return tileBoundary;
-    final column = projectedX ~/ tileSize;
     if (column >= numberOfColumns) return tileBoundary;
     return this.tiles[row][column];
   }
@@ -294,7 +298,7 @@ class Scene {
   }
 
   bool waterAt(double x, double y) {
-    return tileAt(x, y) == Tile.Water;
+    return getTileAtXY(x, y) == Tile.Water;
   }
 
   bool tileWalkableAt(double x, double y){
@@ -306,6 +310,12 @@ class Scene {
         row: randomInt(0, rows),
         column: randomInt(0, columns)
     );
+  }
+
+  Node getRandomGrassNode(){
+     while(true){
+        final node = getRandomTileNode();
+     }
   }
 
   Node getNodeByPosition(Position position) {
@@ -326,7 +336,7 @@ class Scene {
   }
 
   bool projectileCollisionAt(double x, double y) {
-    return !isShootable(tileAt(x, y));
+    return !isShootable(getTileAtXY(x, y));
   }
 
   void resolveCharacterTileCollision(Character character) {
