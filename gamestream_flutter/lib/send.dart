@@ -61,8 +61,12 @@ void sendClientRequestSelectCharacterType(CharacterSelection value) {
   sendClientRequest(ClientRequest.Select_Character_Type, value.index);
 }
 
-void sendClientRequestChooseCard(CardType value){
-  sendClientRequest(ClientRequest.Choose_Card, value.index);
+void sendClientRequestDeckAddCard(CardType value){
+  sendClientRequest(ClientRequest.Deck_Add_Card, value.index);
+}
+
+void sendClientRequestDeckSelectCard(int index) {
+  sendClientRequest(ClientRequest.Deck_Select_Card, index);
 }
 
 void sendClientRequest(ClientRequest value, [dynamic message]){

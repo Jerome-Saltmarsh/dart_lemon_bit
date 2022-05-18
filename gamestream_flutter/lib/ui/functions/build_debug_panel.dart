@@ -2,10 +2,9 @@ import 'package:bleed_common/version.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/isometric/utilities.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/server_response_reader.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/ui/functions/build_row_tech_type.dart';
 import 'package:gamestream_flutter/ui/functions/build_time.dart';
 import 'package:lemon_engine/engine.dart';
@@ -36,13 +35,13 @@ Widget buildDebugPanel(){
 }
 
 Widget buildTotalZombies() {
-  return WatchBuilder(game.totalZombies, (int value) {
+  return WatchBuilder(byteStreamParser.totalZombies, (int value) {
     return text('Zombies: $value');
   });
 }
 
 Widget buildTotalPlayers() {
-  return WatchBuilder(game.totalPlayers, (int value) {
+  return WatchBuilder(byteStreamParser.totalPlayers, (int value) {
     return text('Players: $value');
   });
 }

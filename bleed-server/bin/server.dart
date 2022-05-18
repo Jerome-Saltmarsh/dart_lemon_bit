@@ -12,7 +12,6 @@ import 'engine.dart';
 import 'functions/generateName.dart';
 import 'functions/withinRadius.dart';
 import 'games/game_random.dart';
-import 'games/game_survivors.dart';
 import 'physics.dart';
 
 const _space = " ";
@@ -130,12 +129,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     void joinGameRandom(CharacterSelection characterClass) {
       final game = engine.findRandomGame();
       _player = game.playerJoin(characterClass);
-      onGameJoined();
-    }
-
-    void joinGameSurvivors() {
-      final game = engine.findGameAfterDark();
-      _player = game.spawnPlayer();
       onGameJoined();
     }
 
@@ -312,8 +305,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               }
 
               switch (ability.mode) {
-                case AbilityMode.None:
-                  return;
                 case AbilityMode.Targeted:
                   if (aimTarget != null) {
                     player.target = aimTarget;
@@ -337,10 +328,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               }
 
               player.magic -= ability.cost;
-              player.performing = ability;
               ability.cooldownRemaining = ability.cooldown;
-              player.ability = null;
-
               player.face(player.mouse);
               game.setCharacterState(player, CharacterState.Performing);
               break;
@@ -740,7 +728,20 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           // compileAndSendPlayer();
           break;
 
-        case ClientRequest.Choose_Card:
+        case ClientRequest.Deck_Select_Card:
+          if (player == null) return errorPlayerNotFound();
+          if (arguments.length != 2) return errorArgsExpected(2, arguments);
+          final deckIndex = int.tryParse(arguments[1]);
+          if (deckIndex == null) {
+            return errorInvalidArg('card choice index required: got ${arguments[1]}');
+          }
+          if (!isValidIndex(deckIndex, player.deck)){
+            return errorInvalidArg('Invalid deck index $deckIndex');
+          }
+          player.game.onPlayerSelectCardFromDeck(deckIndex);
+          break;
+
+        case ClientRequest.Deck_Add_Card:
           if (player == null) {
             return errorPlayerNotFound();
           }
@@ -761,7 +762,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (!player.cardChoices.contains(cardType)){
             return error(GameError.Choose_Card, message: 'selected card is not a choice');
           }
-          player.game.onPlayerChoseCard(player, cardType);
+          player.game.onPlayerAddCardToDeck(player, cardType);
           break;
 
         case ClientRequest.Select_Character_Type:

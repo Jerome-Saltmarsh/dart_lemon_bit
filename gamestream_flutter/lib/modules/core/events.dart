@@ -4,11 +4,11 @@ import 'package:bleed_common/ClientRequest.dart';
 import 'package:bleed_common/GameStatus.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/audio.dart';
-import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/shared_preferences.dart';
 import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/web_socket.dart';
@@ -118,9 +118,9 @@ class CoreEvents {
         engine.drawCanvas.value = editor.render.render;
         engine.drawCanvasAfterUpdate = true;
         editor.events.onActivated();
-        game.totalZombies.value = 0;
-        game.totalProjectiles = 0;
-        game.totalNpcs = 0;
+        byteStreamParser.totalZombies.value = 0;
+        byteStreamParser.totalProjectiles = 0;
+        byteStreamParser.totalNpcs = 0;
         engine.registerZoomCameraOnMouseScroll();
         isometric.cameraCenterMap();
         break;
@@ -160,7 +160,7 @@ class CoreEvents {
         engine.drawCanvasAfterUpdate = true;
         engine.cursorType.value = CursorType.Basic;
         core.state.status.value = GameStatus.None;
-        game.type.value = null;
+        byteStreamParser.type.value = null;
         break;
       default:
         break;

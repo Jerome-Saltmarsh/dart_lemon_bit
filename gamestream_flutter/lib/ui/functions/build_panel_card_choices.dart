@@ -21,7 +21,7 @@ Widget buildPanelCardChoices() {
                 children: [
                   text(
                     getCardTypeName(cardType),
-                    onPressed: ()=> sendClientRequestChooseCard(cardType),
+                    onPressed: ()=> sendClientRequestDeckAddCard(cardType),
                   ),
 
                 ],

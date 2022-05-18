@@ -4,9 +4,9 @@ import 'package:bleed_common/OrbType.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
-import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:lemon_math/library.dart';
 
 import 'enums.dart';
@@ -429,12 +429,12 @@ class IsometricSpawn {
   }
 
   Effect getEffect(){
-    for(final effect in game.effects){
+    for(final effect in byteStreamParser.effects){
       if (effect.enabled) continue;
       return effect;
     }
     final effect = Effect();
-    game.effects.add(effect);
+    byteStreamParser.effects.add(effect);
     return effect;
   }
 

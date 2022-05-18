@@ -7,11 +7,11 @@ import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/Projectile.dart';
 import 'package:gamestream_flutter/colours.dart';
-import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
 import 'package:gamestream_flutter/modules/isometric/classes.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
@@ -21,8 +21,8 @@ import 'style.dart';
 
 final _screen = engine.screen;
 final _render = isometric.render;
-final _projectiles = game.projectiles;
-final _bulletHoles = game.bulletHoles;
+final _projectiles = byteStreamParser.projectiles;
+final _bulletHoles = byteStreamParser.bulletHoles;
 final _floatingTexts = isometric.floatingTexts;
 
 class GameRender {
@@ -75,8 +75,8 @@ class GameRender {
   }
 
   void renderTeamColours() {
-    final total = game.totalZombies.value;
-    final zombies = game.zombies;
+    final total = byteStreamParser.totalZombies.value;
+    final zombies = byteStreamParser.zombies;
     for (var i = 0; i < total; i++) {
       renderTeamColour(zombies[i]);
     }
@@ -92,8 +92,8 @@ class GameRender {
   }
 
   void renderCollectables() {
-    final total = game.totalCollectables;
-    final collectables = game.collectables;
+    final total = byteStreamParser.totalCollectables;
+    final collectables = byteStreamParser.collectables;
     for (var i = 0; i < total; i++) {
       final collectable = collectables[i];
       switch (collectable.type) {
@@ -160,9 +160,9 @@ class GameRender {
   }
 
   void _renderPlayerNames() {
-    final total = game.totalPlayers.value;
+    final total = byteStreamParser.totalPlayers.value;
     for (var i = 0; i < total; i++) {
-      final player = game.players[i];
+      final player = byteStreamParser.players[i];
       if (!engine.screen.containsV(player)) continue;
       if (player.dead) continue;
       const minDistance = 15;
@@ -221,8 +221,8 @@ class GameRender {
   }
 
   void drawProjectiles(List<Projectile> projectiles) {
-    final total = game.totalProjectiles;
-    final projectiles = game.projectiles;
+    final total = byteStreamParser.totalProjectiles;
+    final projectiles = byteStreamParser.projectiles;
     for (var i = 0; i < total; i++) {
       renderProjectile(projectiles[i]);
     }
@@ -272,14 +272,14 @@ class GameRender {
 
   void drawItems() {
     final items = isometric.items;
-    for (var i = 0; i < game.itemsTotal; i++){
+    for (var i = 0; i < byteStreamParser.itemsTotal; i++){
       isometric.render.renderItem(items[i]);
     }
   }
 
   void drawItemText() {
     final items = isometric.items;
-    final total = game.itemsTotal;
+    final total = byteStreamParser.itemsTotal;
     for (var i = 0; i < total; i++){
       final item = items[i];
       const mouseDist = 100;
@@ -302,7 +302,7 @@ class GameRender {
   }
 
   void drawEffects() {
-    for (final effect in game.effects) {
+    for (final effect in byteStreamParser.effects) {
       if (!effect.enabled) continue;
       if (effect.duration++ >= effect.maxDuration) {
         effect.enabled = false;
@@ -323,9 +323,9 @@ class GameRender {
     }
   }
 
-  void drawRoyalPerimeter() {
-    engine.draw.drawCircleOutline(sides: 50, radius: game.royal.radius, x: game.royal.mapCenter.x, y: game.royal.mapCenter.y, color: Colors.red);
-  }
+  // void drawRoyalPerimeter() {
+  //   engine.draw.drawCircleOutline(sides: 50, radius: byteStreamParser.royal.radius, x: byteStreamParser.royal.mapCenter.x, y: game.royal.mapCenter.y, color: Colors.red);
+  // }
 
   void drawMouseAim2() {
     engine.setPaintColorWhite();
@@ -338,9 +338,9 @@ class GameRender {
   }
 
   void drawPlayerText() {
-    final players = game.players;
+    final players = byteStreamParser.players;
     const charWidth = 4.5;
-    final totalPlayers = game.totalPlayers.value;
+    final totalPlayers = byteStreamParser.totalPlayers.value;
     for (var i = 0; i < totalPlayers; i++) {
       final human = players[i];
       if (human.text.isEmpty) continue;

@@ -5,6 +5,7 @@ enum CardType {
    Weapon_Staff,
    Ability_Bow_Freeze,
    Ability_Bow_Fire,
+   Ability_Bow_Volley,
    Ability_Staff_Explosion,
    Ability_Staff_Heal_10,
    Ability_Staff_Strong_Orb,
@@ -18,12 +19,16 @@ enum CardType {
 const cardTypes = CardType.values;
 
 const cardTypeChoicesBow = [
-  ...cardTypesGeneralPassives,
+  // ...cardTypesGeneralPassives,
   ...cardTypeBowAbilities,
-  ...cardTypeBowPassives,
+  // ...cardTypeBowPassives,
 ];
 
 const cardTypeChoicesStaff = [
+  ...cardTypesGeneralPassives,
+];
+
+const cardTypeChoicesWarrior = [
   ...cardTypesGeneralPassives,
 ];
 
@@ -47,6 +52,7 @@ const cardTypeStaffAbilities = <CardType> [
 const cardTypeBowAbilities = <CardType> [
   // CardType.Ability_Bow_Fire,
   // CardType.Ability_Bow_Freeze,
+  CardType.Ability_Bow_Volley,
 ];
 
 const cardTypeBowPassives = <CardType> [

@@ -5,12 +5,12 @@ import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/init.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/module.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/servers.dart';
 import 'package:gamestream_flutter/shared_preferences.dart';
 import 'package:gamestream_flutter/to_string.dart';
@@ -321,7 +321,7 @@ class _BuildView {
           Container(
             height: 80,
             child: AnimatedTextKit(repeatForever: true, animatedTexts: [
-              RotateAnimatedText("Connecting to ${enumString(game.type.value)} (${enumString(region)})",
+              RotateAnimatedText("Connecting to ${enumString(byteStreamParser.type.value)} (${enumString(region)})",
                   textStyle: TextStyle(color: Colors.white, fontSize: 30)),
             ]),
           ),

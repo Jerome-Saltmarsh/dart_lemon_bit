@@ -5,11 +5,11 @@ import 'package:bleed_common/GameType.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/classes/Authentication.dart';
-import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/servers.dart';
 import 'package:gamestream_flutter/services/authService.dart';
 import 'package:gamestream_flutter/shared_preferences.dart';
@@ -170,17 +170,17 @@ class CoreActions {
     final player = modules.game.state.player;
     player.x = -1;
     player.y = -1;
-    game.totalZombies.value = 0;
-    game.totalPlayers.value = 0;
-    game.totalProjectiles = 0;
-    game.bulletHoleIndex = 0;
-    game.totalCollectables = 0;
-    game.totalNpcs = 0;
+    byteStreamParser.totalZombies.value = 0;
+    byteStreamParser.totalPlayers.value = 0;
+    byteStreamParser.totalProjectiles = 0;
+    byteStreamParser.bulletHoleIndex = 0;
+    byteStreamParser.totalCollectables = 0;
+    byteStreamParser.totalNpcs = 0;
     isometric.next = null;
     isometric.particleEmitters.clear();
     isometric.particles.clear();
 
-    for (final bullet in game.bulletHoles) {
+    for (final bullet in byteStreamParser.bulletHoles) {
       bullet.x = 0;
       bullet.y = 0;
     }
@@ -263,12 +263,12 @@ class CoreActions {
 
   void connectToGame(CharacterSelection character){
     print("connectToSelectedGame()");
-    game.type.value = GameType.RANDOM;
+    byteStreamParser.type.value = GameType.RANDOM;
     connectToWebSocketServer(core.state.region.value, character);
   }
 
   void deselectGameType(){
-    game.type.value = null;
+    byteStreamParser.type.value = null;
   }
 
   void toggleEditMode() {
@@ -296,7 +296,7 @@ class CoreActions {
   }
 
   void exitGame(){
-    game.type.value = null;
+    byteStreamParser.type.value = null;
     clearState();
     webSocket.disconnect();
   }

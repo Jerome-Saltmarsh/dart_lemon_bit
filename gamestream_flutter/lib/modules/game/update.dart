@@ -2,7 +2,7 @@ import 'package:bleed_common/Direction.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
-import 'package:gamestream_flutter/server_response_reader.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 

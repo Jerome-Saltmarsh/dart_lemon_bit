@@ -23,8 +23,9 @@ enum ClientRequest {
   Upgrade,
   Scene,
   Select_Character_Type,
-  Choose_Card,
   Toggle_Objects_Destroyable,
+  Deck_Add_Card,
+  Deck_Select_Card,
 }
 
 const clientRequests = ClientRequest.values;

@@ -59,10 +59,13 @@
 [ ] Select card panel must be more obvious
 [ ] Stun Shot (every 5th shot stuns your enemy)
 [ ] Kill shot (applies 3x damage)
+[ ] (TEST) Round Light Emission
 [ ] Vampire Shot
 [ ] Passive Card - Increased Range
 [ ] Passive Card - Increased Damage
 [ ] FUCK PERFECTIONISM
+[ ] Ability Volley (Fires 5 arrows in a direction)
+[ ] Ability Stun Shot
 [x] Fix Zombies missing hurt audio
 [x] Level up confetti
 [x] Level up audio

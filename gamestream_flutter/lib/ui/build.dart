@@ -3,11 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/assets.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/ui/style.dart';
-import 'package:gamestream_flutter/utils/widget_utils.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 final build = _Build();
@@ -24,7 +21,7 @@ class _Build {
   }
 
   Widget totalZombies(){
-    return WatchBuilder(game.totalZombies, (int zombies){
+    return WatchBuilder(byteStreamParser.totalZombies, (int zombies){
       return text("Zombies: $zombies");
     });
   }

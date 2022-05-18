@@ -15,7 +15,7 @@ class GameRandom extends Game {
   var time = 12 * 60 * 60;
 
   static const maxPlayers = 12;
-  static const maxCreeps = 300;
+  static const maxCreeps = 150;
 
   bool get full => players.length >= maxPlayers;
   bool get empty => players.length <= 0;
@@ -130,6 +130,11 @@ class GameRandom extends Game {
     player.cardChoices.clear();
     player.writeCardChoices();
     player.deck.clear();
+
+    if (player.selection == CharacterSelection.Archer){
+      player.deck.add(CardType.Ability_Bow_Volley);
+    }
+
     player.writeDeck();
   }
 
@@ -151,6 +156,8 @@ class GameRandom extends Game {
         player.equippedType = TechType.Bow;
         player.equippedArmour = SlotType.Body_Blue;
         player.equippedHead = SlotType.Rogue_Hood;
+        player.deck.add(CardType.Ability_Bow_Volley);
+        player.writeDeck();
         break;
     }
   }
@@ -172,7 +179,7 @@ class GameRandom extends Game {
   }
 
   @override
-  void onPlayerChoseCard(Player player, CardType cardType){
+  void onPlayerAddCardToDeck(Player player, CardType cardType){
      player.writePlayerEvent(PlayerEvent.Item_Purchased);
      if (cardType == CardType.Weapon_Sword) {
        player.equippedType = TechType.Sword;
@@ -206,6 +213,11 @@ class GameRandom extends Game {
      } else {
        player.writeCardChoices();
      }
+  }
+
+  @override
+  void onPlayerSelectCardFromDeck(int index) {
+     print("onPlayerSelectCardFromDeck($index)");
   }
 }
 

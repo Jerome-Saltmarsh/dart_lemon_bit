@@ -7,13 +7,13 @@ import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/classes/static_object.dart';
-import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToDst.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToSrc.dart';
 import 'package:gamestream_flutter/modules/isometric/animations.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
@@ -123,18 +123,18 @@ class IsometricRender {
     final screenBottom100 = engine.screen.bottom + 120;
 
     final staticObjects = isometric.staticObjects;
-    final zombies = game.zombies;
-    final players = game.players;
-    final npcs = game.interactableNpcs;
-    final dynamicObjects = game.dynamicObjects;
-    final generatedObjects = game.generatedObjects;
+    final zombies = byteStreamParser.zombies;
+    final players = byteStreamParser.players;
+    final npcs = byteStreamParser.interactableNpcs;
+    final dynamicObjects = byteStreamParser.dynamicObjects;
+    final generatedObjects = byteStreamParser.generatedObjects;
     final structures = isometric.structures;
 
     final totalStaticObjects = staticObjects.length;
-    final totalZombies = game.totalZombies.value;
-    final totalPlayers = game.totalPlayers.value;
-    final totalNpcs = game.totalNpcs;
-    final totalDynamicObjects = game.dynamicObjects.length;
+    final totalZombies = byteStreamParser.totalZombies.value;
+    final totalPlayers = byteStreamParser.totalPlayers.value;
+    final totalNpcs = byteStreamParser.totalNpcs;
+    final totalDynamicObjects = byteStreamParser.dynamicObjects.length;
     final totalStructures = isometric.totalStructures;
     final totalGenerated = generatedObjects.length;
 

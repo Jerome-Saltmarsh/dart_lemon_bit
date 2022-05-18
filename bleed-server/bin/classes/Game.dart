@@ -12,6 +12,7 @@ import '../maths.dart';
 import '../physics.dart';
 import '../utilities.dart';
 import 'AI.dart';
+import 'Ability.dart';
 import 'Character.dart';
 import 'Collectable.dart';
 import 'Collider.dart';
@@ -93,7 +94,11 @@ abstract class Game {
     countDownFramesRemaining = 0;
   }
 
-  void onPlayerChoseCard(Player player, CardType cardType){
+  void onPlayerAddCardToDeck(Player player, CardType cardType){
+
+  }
+
+  void onPlayerSelectCardFromDeck(int index) {
 
   }
 
@@ -644,8 +649,8 @@ extension GameFunctions on Game {
   }
 
   void setCharacterStatePerforming(Character character) {
-    character.performing = character.ability;
-    character.ability = null;
+    // character.performing = character.ability;
+    // character.ability = null;
     setCharacterState(character, CharacterState.Performing);
   }
 
@@ -666,6 +671,7 @@ extension GameFunctions on Game {
       character.state = value;
       character.stateDuration = 0;
       character.animationFrame = 0;
+      character.ability = null;
       return;
     }
 
@@ -678,7 +684,7 @@ extension GameFunctions on Game {
       case CharacterState.Performing:
         character.stateDurationRemaining = 20;
         if (character is Player) {
-          final ability = character.performing;
+          final ability = character.ability;
           if (ability == null) {
             character.stateDurationRemaining = character.equippedAttackDuration;
             break;
@@ -693,6 +699,9 @@ extension GameFunctions on Game {
         break;
       default:
         break;
+    }
+    if (value != CharacterState.Performing) {
+       character.ability = null;
     }
     character.state = value;
     character.stateDuration = 0;
@@ -897,51 +906,52 @@ extension GameFunctions on Game {
   }
 
   void updateCharacterStatePerforming(Character character) {
-    final ability = character.performing;
+    final ability = character.ability;
     if (ability == null) {
       updateCharacterStateAttacking(character);
       return;
     }
-    const castFrame = 3;
-    switch (ability.type) {
-      case AbilityType.Explosion:
-        break;
-      case AbilityType.Blink:
-        if (character.stateDurationRemaining == castFrame) {
-          dispatch(GameEventType.Teleported, character.x, character.y);
-          character.x = character.abilityTarget.x;
-          character.y = character.abilityTarget.y;
-          dispatch(GameEventType.Teleported, character.x, character.y);
-          character.performing = null;
-          character.attackTarget = null;
-        }
-        break;
-      case AbilityType.Fireball:
-        if (character.stateDurationRemaining == castFrame) {
-          // spawnFireball(character);
-          character.performing = null;
-          character.attackTarget = null;
-        }
-        break;
-      case AbilityType.Long_Shot:
-        // if (character.stateDurationRemaining == castFrame) {
-        //   final int damageMultiplier = 3;
-        //   spawnArrow(
-        //         character,
-        //         damage: character.equippedDamage * damageMultiplier
-        //   ).range = ability.range;
-        //   character.attackTarget = null;
-        //   character.performing = null;
-        // }
-        break;
-
-      case AbilityType.Brutal_Strike:
-        break;
-      case AbilityType.Death_Strike:
-        break;
-      default:
-        break;
+    if (character.stateDuration == 3 && ability is AbilityBowVolley) {
+        spawnArrow(character, damage: 5);
+        spawnArrow(character, damage: 5, angle: character.angle + 0.1);
+        spawnArrow(character, damage: 5, angle: character.angle + 0.2);
+        spawnArrow(character, damage: 5, angle: character.angle - 0.1);
+        spawnArrow(character, damage: 5, angle: character.angle - 0.2);
     }
+
+    // switch (ability.type) {
+    //   case AbilityType.Explosion:
+    //     break;
+    //
+    //   case AbilityType.Blink:
+    //     if (character.stateDurationRemaining == castFrame) {
+    //       dispatch(GameEventType.Teleported, character.x, character.y);
+    //       character.x = character.abilityTarget.x;
+    //       character.y = character.abilityTarget.y;
+    //       dispatch(GameEventType.Teleported, character.x, character.y);
+    //       character.performing = null;
+    //       character.attackTarget = null;
+    //     }
+    //     break;
+    //
+    //   case AbilityType.Fireball:
+    //     if (character.stateDurationRemaining == castFrame) {
+    //       // spawnFireball(character);
+    //       character.performing = null;
+    //       character.attackTarget = null;
+    //     }
+    //     break;
+    //
+    //   case AbilityType.Long_Shot:
+    //     break;
+    //
+    //   case AbilityType.Brutal_Strike:
+    //     break;
+    //   case AbilityType.Death_Strike:
+    //     break;
+    //   default:
+    //     break;
+    // }
   }
 
   void updateCharacter(Character character) {

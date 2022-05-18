@@ -685,17 +685,29 @@ extension PlayerProperties on Player {
     }
   }
 
+  List<CardType> getCardOptions(){
+    if (selection == null) return [];
+    switch(selection){
+      case CharacterSelection.Archer:
+        return cardTypeChoicesBow;
+      case CharacterSelection.Warrior:
+        return cardTypeChoicesWarrior;
+      case CharacterSelection.Wizard:
+        return cardTypeChoicesStaff;
+      default:
+        return [];
+    }
+  }
+
   void generatedCardChoices(){
     if (cardChoices.isNotEmpty) return;
 
-    while (cardChoices.length < 3) {
-      if (equippedTypeIsBow) {
-        final cardChoice = randomItem(cardTypeChoicesBow);
+    final options = getCardOptions();
+
+    while (cardChoices.length < 3 && options.length > cardChoices.length) {
+        final cardChoice = randomItem(options);
         if (cardChoices.contains(cardChoice)) continue;
         cardChoices.add(cardChoice);
-        continue;
-      }
-      break;
     }
     writeCardChoices();
   }

@@ -31,7 +31,7 @@ Widget text(dynamic value, {
     String? family,
     TextAlign? align,
 }) {
-  final Widget _text = Text(
+  final _text = Text(
       value.toString(),
       textAlign: align,
       style: TextStyle(

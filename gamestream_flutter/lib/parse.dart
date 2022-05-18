@@ -1,9 +1,7 @@
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/classes/NpcDebug.dart';
-import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/server_response_reader.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
@@ -34,35 +32,35 @@ void parseState() {
         parseGameTime();
         break;
 
-      case ServerResponse.Lobby_CountDown:
-        game.countDownFramesRemaining.value = consumeInt();
-        break;
+      // case ServerResponse.Lobby_CountDown:
+      //   game.countDownFramesRemaining.value = consumeInt();
+      //   break;
 
-      case ServerResponse.NpcsDebug:
-        game.npcDebug.clear();
-        while (!_simiColonConsumed()) {
-          game.npcDebug.add(NpcDebug(
-            x: consumeDouble(),
-            y: consumeDouble(),
-            targetX: consumeDouble(),
-            targetY: consumeDouble(),
-          ));
-        }
-        break;
-
-      case ServerResponse.Waiting_For_More_Players:
-        game.numberOfPlayersNeeded.value = consumeInt();
-        break;
-
-      case ServerResponse.Team_Lives_Remaining:
-        game.teamLivesWest.value = consumeInt();
-        game.teamLivesEast.value = consumeInt();
-        break;
-
-      case ServerResponse.Game_Meta:
-        game.teamSize.value = consumeInt();
-        game.numberOfTeams.value = consumeInt();
-        break;
+      // case ServerResponse.NpcsDebug:
+      //   game.npcDebug.clear();
+      //   while (!_simiColonConsumed()) {
+      //     game.npcDebug.add(NpcDebug(
+      //       x: consumeDouble(),
+      //       y: consumeDouble(),
+      //       targetX: consumeDouble(),
+      //       targetY: consumeDouble(),
+      //     ));
+      //   }
+      //   break;
+      //
+      // case ServerResponse.Waiting_For_More_Players:
+      //   game.numberOfPlayersNeeded.value = consumeInt();
+      //   break;
+      //
+      // case ServerResponse.Team_Lives_Remaining:
+      //   game.teamLivesWest.value = consumeInt();
+      //   game.teamLivesEast.value = consumeInt();
+      //   break;
+      //
+      // case ServerResponse.Game_Meta:
+      //   game.teamSize.value = consumeInt();
+      //   game.numberOfTeams.value = consumeInt();
+      //   break;
 
       case ServerResponse.Version:
         break;
@@ -123,20 +121,20 @@ void parseState() {
         // modules.game.state.player.uuid.value = _consumeString();
         break;
 
-      case ServerResponse.Game_Royal:
-        game.royal.mapCenter = _consumeVector2();
-        game.royal.radius = consumeDouble();
-        break;
-
-      case ServerResponse.Lobby:
-        game.lobby.playerCount.value = consumeInt();
-        game.lobby.players.clear();
-        for (int i = 0; i < game.lobby.playerCount.value; i++) {
-          String name = _consumeString();
-          int team = consumeInt();
-          game.lobby.add(team: team, name: name);
-        }
-        break;
+      // case ServerResponse.Game_Royal:
+      //   game.royal.mapCenter = _consumeVector2();
+      //   game.royal.radius = consumeDouble();
+      //   break;
+      //
+      // case ServerResponse.Lobby:
+      //   game.lobby.playerCount.value = consumeInt();
+      //   game.lobby.players.clear();
+      //   for (int i = 0; i < game.lobby.playerCount.value; i++) {
+      //     String name = _consumeString();
+      //     int team = consumeInt();
+      //     game.lobby.add(team: team, name: name);
+      //   }
+      //   break;
 
       case ServerResponse.Player_Ability:
         _parsePlayerAbility();

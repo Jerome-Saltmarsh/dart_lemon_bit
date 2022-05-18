@@ -10,7 +10,6 @@ import 'package:gamestream_flutter/modules/game/enums.dart';
 import 'package:gamestream_flutter/modules/game/update.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/layouts.dart';
-import 'package:gamestream_flutter/server_response_reader.dart';
 import 'package:gamestream_flutter/ui/functions/build_debug_panel.dart';
 import 'package:gamestream_flutter/ui/functions/build_layout.dart';
 import 'package:gamestream_flutter/ui/functions/build_panel_game_random.dart';
@@ -56,7 +55,7 @@ class GameBuild {
   }
 
   Widget buildLayoutCountDown() {
-    return WatchBuilder(game.countDownFramesRemaining, (int frames){
+    return WatchBuilder(byteStreamParser.countDownFramesRemaining, (int frames){
       final seconds =  frames ~/ 45.0;
       return Center(child: text("Game starts in $seconds", size: FontSize.Large));
     });
@@ -117,11 +116,11 @@ class GameBuild {
           buildPanelWriteMessage(),
           // buildPanelHighlightedStructureType(),
           // buildPanelHighlightedTechTypeUpgrade(),
-          if (game.type.value == GameType.SURVIVORS)
+          if (byteStreamParser.type.value == GameType.SURVIVORS)
             buildPanelPrimary(),
-          if (game.type.value == GameType.SURVIVORS)
+          if (byteStreamParser.type.value == GameType.SURVIVORS)
             buildTextLivesRemaining(),
-          if (game.type.value == GameType.RANDOM)
+          if (byteStreamParser.type.value == GameType.RANDOM)
             buildPanelGameRandom(),
         ]);
   }
@@ -235,7 +234,7 @@ class GameBuild {
     return SingleChildScrollView(
       child: Container(
           constraints: BoxConstraints(maxHeight: 400),
-          child: textBuilder(game.scoreText)),
+          child: textBuilder(byteStreamParser.scoreText)),
     );
   }
 }

@@ -107,10 +107,9 @@ class EditorActions with EditorScope {
       }
       isometric.tiles.add(columnTiles);
     }
-    game.crates.clear();
     isometric.particleEmitters.clear();
     isometric.staticObjects.clear();
-    game.itemsTotal = 0;
+    byteStreamParser.itemsTotal = 0;
     isometric.updateTileRender();
   }
 

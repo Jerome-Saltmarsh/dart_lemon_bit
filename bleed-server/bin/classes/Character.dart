@@ -19,7 +19,6 @@ class Character extends Collider with Team, Health, Velocity, Material {
   late CharacterType type;
   late double _speed;
   Ability? ability = null;
-  Ability? performing = null;
   double angle = 0;
   double accuracy = 0;
   double speedModifier = 0;

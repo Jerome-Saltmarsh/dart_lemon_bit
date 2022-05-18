@@ -11,11 +11,11 @@ import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/classes/static_object.dart';
-import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
 import 'package:gamestream_flutter/modules/game/factories.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:gamestream_flutter/modules/isometric/utilities.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -343,9 +343,24 @@ class IsometricModule {
     applyShade(shader, row, column, Shade.Bright);
     applyShadeRing(shader, row, column, 1, Shade.Bright);
     applyShadeRing(shader, row, column, 2, Shade.Bright);
-    applyShadeRing(shader, row, column, 3, Shade.Medium);
-    applyShadeRing(shader, row, column, 4, Shade.Dark);
-    applyShadeRing(shader, row, column, 5, Shade.Very_Dark);
+    applyShadeRing(shader, row, column, 3, Shade.Bright);
+    applyShadeRing(shader, row, column, 4, Shade.Medium);
+    applyShadeRing(shader, row, column, 5, Shade.Dark);
+    applyShadeRing(shader, row, column, 6, Shade.Very_Dark);
+    // applyShade(shader, row, column + 3, Shade.Bright);
+    // applyShade(shader, row, column - 3, Shade.Bright);
+    // applyShade(shader, row + 1, column + 3, Shade.Bright);
+    // applyShade(shader, row - 1, column + 3, Shade.Bright);
+    // applyShade(shader, row + 1, column - 3, Shade.Bright);
+    // applyShade(shader, row - 1, column - 3, Shade.Bright);
+    //
+    // applyShade(shader, row + 3, column, Shade.Bright);
+    // applyShade(shader, row - 3, column, Shade.Bright);
+    // applyShade(shader, row + 3, column + 1, Shade.Bright);
+    // applyShade(shader, row - 3, column + 1, Shade.Bright);
+    // applyShade(shader, row + 3, column - 1, Shade.Bright);
+    //
+    // applyShade(shader, row - 3, column - 1, Shade.Bright);
   }
 
   void emitLightHighLarge2(List<List<int>> shader, double x, double y) {
@@ -633,10 +648,10 @@ class IsometricModule {
     if (dayTime) return;
     resetDynamicShadesToBakeMap();
 
-    final totalPlayers = game.totalPlayers.value;
-    final totalNpcs = game.totalNpcs;
-    final players = game.players;
-    final npcs = game.interactableNpcs;
+    final totalPlayers = byteStreamParser.totalPlayers.value;
+    final totalNpcs = byteStreamParser.totalNpcs;
+    final players = byteStreamParser.players;
+    final npcs = byteStreamParser.interactableNpcs;
 
     for (var i = 0; i < totalStructures; i++) {
        final structure = structures[i];
@@ -661,7 +676,7 @@ class IsometricModule {
   }
 
   void applyEmissionFromEffects() {
-    for (final effect in game.effects) {
+    for (final effect in byteStreamParser.effects) {
       if (!effect.enabled) continue;
       final percentage = effect.percentage;
       if (percentage < 0.33) {
@@ -708,7 +723,7 @@ class IsometricModule {
   }
 
   void refreshGeneratedObjects() {
-    game.generatedObjects.clear();
+    byteStreamParser.generatedObjects.clear();
     final totalRows = tiles.length;
     final totalColumns = totalRows > 0 ? tiles[0].length : 0;
     for (var rowIndex = 0; rowIndex < totalRows; rowIndex++) {
@@ -717,7 +732,7 @@ class IsometricModule {
         final tile = row[columnIndex];
         var objectType = tileTypeToObjectType[tile];
         if (objectType == null) continue;
-        game.generatedObjects.add(
+        byteStreamParser.generatedObjects.add(
             GeneratedObject(
               x: getTileWorldX(rowIndex, columnIndex),
               y: getTileWorldY(rowIndex, columnIndex) + tileSizeHalf,
@@ -726,7 +741,7 @@ class IsometricModule {
         );
       }
     }
-    sortVertically(game.generatedObjects);
+    sortVertically(byteStreamParser.generatedObjects);
   }
 
   void updateParticles() {
