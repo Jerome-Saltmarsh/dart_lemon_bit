@@ -528,6 +528,10 @@ extension PlayerProperties on Player {
     final zombies = game.zombies;
     for (final zombie in zombies) {
       if (zombie.dead) continue;
+      if (zombie.y < screenTop) continue;
+      if (zombie.x < screenLeft) continue;
+      if (zombie.x > screenRight) continue;
+      if (zombie.y > screenBottom) break;
       final pathIndex = zombie.pathIndex;
       if (pathIndex < 0) continue;
       writeInt(pathIndex + 1);
@@ -540,6 +544,10 @@ extension PlayerProperties on Player {
 
     for (final zombie in zombies) {
       if (zombie.dead) continue;
+      if (zombie.y < screenTop) continue;
+      if (zombie.x < screenLeft) continue;
+      if (zombie.x > screenRight) continue;
+      if (zombie.y > screenBottom) break;
       final aiTarget = zombie.target;
       if (aiTarget is Character) {
         writeByte(1);
