@@ -304,6 +304,23 @@ class Scene {
     return getNodeByXY(x, y).open;
   }
 
+  StaticObject? findNearestStaticObjectByType({
+    required double x,
+    required double y,
+    required ObjectType type
+  }){
+     var distance = 999999999.0;
+     StaticObject? nearest = null;
+     for (final object in objectsStatic ) {
+        if (object.type != type) continue;
+        final objectDistance = object.getDistanceXY(x, y);
+        if (objectDistance > distance) continue;
+        nearest = object;
+        distance = objectDistance;
+     }
+     return nearest;
+  }
+
   Node getRandomNodeByTileType(int type){
      while(true){
         final node = getRandomTileNode();

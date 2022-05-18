@@ -11,6 +11,7 @@ import 'compile.dart';
 import 'engine.dart';
 import 'functions/generateName.dart';
 import 'functions/withinRadius.dart';
+import 'games/game_random.dart';
 import 'games/game_survivors.dart';
 import 'physics.dart';
 
@@ -574,7 +575,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
           final game = player.game;
-          if (game is GameNightSurvivors){
+          if (game is GameRandom){
             game.time += 3600;
           }
           break;
@@ -585,7 +586,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
           final game = player.game;
-          if (game is GameNightSurvivors){
+          if (game is GameRandom){
             game.time -= 3600;
           }
           break;

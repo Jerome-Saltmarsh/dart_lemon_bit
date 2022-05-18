@@ -754,6 +754,8 @@ class IsometricRender {
         return renderRockSmall(value);
       case ObjectType.Flag:
         return renderFlag(value);
+      case ObjectType.Torch:
+        return renderTorch(value);
       default:
         break;
     }

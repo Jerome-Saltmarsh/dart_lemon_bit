@@ -43,12 +43,23 @@ class GameRandom extends Game {
        scene.getNodeByPosition(playerSpawn).obstructed = true;
     }
 
-    // for (var i = 0; i < 20; i++) {
-    //    final node = scene.getRandomNodeByTileType(Tile.Grass);
-    //    objectsStatic.add(
-    //        StaticObject(x: node.x, y: node.y, type: ObjectType.Torch)
-    //    );
-    // }
+    for (var i = 0; i < 40; i++) {
+       final node = scene.getRandomNodeByTileType(Tile.Grass);
+       final nearestTorch = scene.findNearestStaticObjectByType(
+           x: node.x,
+           y: node.y,
+           type: ObjectType.Torch
+       );
+       if (nearestTorch != null) {
+          if (node.getDistance(nearestTorch) < 200) {
+            i--;
+            continue;
+          }
+       }
+       objectsStatic.add(
+           StaticObject(x: node.x, y: node.y, type: ObjectType.Torch)
+       );
+    }
   }
 
   @override
