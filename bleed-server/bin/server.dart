@@ -295,13 +295,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               }
 
               if (player.magic < ability.cost) {
-                error(GameError.InsufficientMana);
-                break;
+                return error(GameError.InsufficientMana);
               }
-
               if (ability.cooldownRemaining > 0) {
-                error(GameError.Cooldown_Remaining);
-                break;
+                return error(GameError.Cooldown_Remaining);
               }
 
               switch (ability.mode) {
@@ -743,6 +740,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
           if (card == CardType.Ability_Bow_Volley){
             player.ability = AbilityBowVolley();
+          }
+          else
+          if (card == CardType.Ability_Bow_Long_Shot){
+            player.ability = AbilityBowLongShot();
           }
 
           break;

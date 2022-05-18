@@ -31,5 +31,15 @@ class AbilityBowVolley extends Ability {
   );
 }
 
+class AbilityBowLongShot extends Ability {
+  AbilityBowLongShot() : super(
+      level: 1,
+      cost: 1,
+      range: 400,
+      cooldown: 100,
+      mode: AbilityMode.Targeted,
+  );
+}
+
 
 

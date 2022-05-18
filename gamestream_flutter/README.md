@@ -65,8 +65,9 @@
 [ ] Passive Card - Increased Range
 [ ] Passive Card - Increased Damage
 [ ] FUCK PERFECTIONISM
-[ ] Ability Volley (Fires 5 arrows in a direction)
 [ ] Ability Stun Shot
+[ ] Ability Cooldown
+[x] Ability Volley (Fires 5 arrows in a direction)
 [x] Fix Zombies missing hurt audio
 [x] Level up confetti
 [x] Level up audio

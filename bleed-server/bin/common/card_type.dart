@@ -6,6 +6,7 @@ enum CardType {
    Ability_Bow_Freeze,
    Ability_Bow_Fire,
    Ability_Bow_Volley,
+   Ability_Bow_Long_Shot,
    Ability_Staff_Explosion,
    Ability_Staff_Heal_10,
    Ability_Staff_Strong_Orb,
@@ -53,6 +54,7 @@ const cardTypeBowAbilities = <CardType> [
   // CardType.Ability_Bow_Fire,
   // CardType.Ability_Bow_Freeze,
   CardType.Ability_Bow_Volley,
+  CardType.Ability_Bow_Long_Shot,
 ];
 
 const cardTypeBowPassives = <CardType> [
@@ -68,6 +70,7 @@ String getCardTypeName(CardType value) {
       CardType.Ability_Bow_Freeze: "Freeze Arrow",
       CardType.Ability_Bow_Fire: "Fire Arrow",
       CardType.Ability_Bow_Volley: "Volley",
+      CardType.Ability_Bow_Long_Shot: "Long Shot",
       CardType.Passive_General_Max_HP_10: "Max hp+10",
       CardType.Passive_General_Critical_Hit: "Critical Hit",
       CardType.Passive_Bow_Run_Speed: "Light Feet",

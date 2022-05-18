@@ -907,28 +907,22 @@ extension GameFunctions on Game {
       updateCharacterStateAttacking(character);
       return;
     }
-    if (character.stateDuration == 5 && ability is AbilityBowVolley) {
+    final stateDuration = character.stateDuration;
+    if (
+      ability is AbilityBowVolley
+          &&
+      const<int>[5, 8, 11].contains(stateDuration
+    )) {
         spawnArrow(character, damage: 5);
         spawnArrow(character, damage: 5, angle: character.angle + 0.1);
         spawnArrow(character, damage: 5, angle: character.angle + 0.2);
         spawnArrow(character, damage: 5, angle: character.angle - 0.1);
         spawnArrow(character, damage: 5, angle: character.angle - 0.2);
     }
-    if (character.stateDuration == 8 && ability is AbilityBowVolley) {
-      spawnArrow(character, damage: 5);
-      spawnArrow(character, damage: 5, angle: character.angle + 0.1);
-      spawnArrow(character, damage: 5, angle: character.angle + 0.2);
-      spawnArrow(character, damage: 5, angle: character.angle - 0.1);
-      spawnArrow(character, damage: 5, angle: character.angle - 0.2);
-    }
-    if (character.stateDuration == 11 && ability is AbilityBowVolley) {
-      spawnArrow(character, damage: 5);
-      spawnArrow(character, damage: 5, angle: character.angle + 0.1);
-      spawnArrow(character, damage: 5, angle: character.angle + 0.2);
-      spawnArrow(character, damage: 5, angle: character.angle - 0.1);
-      spawnArrow(character, damage: 5, angle: character.angle - 0.2);
-    }
 
+    if (ability is AbilityBowLongShot && stateDuration == 5) {
+       spawnArrow(character, damage: 15);
+    }
   }
 
   void updateCharacter(Character character) {
