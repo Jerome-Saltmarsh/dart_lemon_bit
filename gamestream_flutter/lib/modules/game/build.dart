@@ -112,15 +112,9 @@ class GameBuild {
           Positioned(
               left: 8,
               top: 8,
-              child: WatchBuilder(state.debug, (bool debug){
-                return debug ? buildDebugPanel() : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                  ],
-                );
-              })
+              child: visibleBuilder(state.debug, buildDebugPanel())
           ),
-          buildTextBox(),
+          buildPanelWriteMessage(),
           // buildPanelHighlightedStructureType(),
           // buildPanelHighlightedTechTypeUpgrade(),
           if (game.type.value == GameType.SURVIVORS)

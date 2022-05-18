@@ -54,7 +54,7 @@ class GameNightSurvivors extends Game {
        final distance = randomBetween(0, 500);
        final posX = centerX + getAdjacent(angle, distance);
        final posY = centerY + getOpposite(angle, distance);
-       final node = scene.tileNodeAtXY(posX, posY);
+       final node = scene.getNodeByXY(posX, posY);
        if (node.closed) continue;
        if (node.up.closed) continue;
        if (node.upRight.closed) continue;

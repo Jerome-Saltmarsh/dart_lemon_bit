@@ -6,7 +6,7 @@ import 'package:lemon_watch/watch_builder.dart';
 
 import '../../flutterkit.dart';
 
-Widget buildTextBox() {
+Widget buildPanelWriteMessage() {
   return WatchBuilder(modules.game.state.textBoxVisible, (bool visible){
     if (!visible) return blank;
 

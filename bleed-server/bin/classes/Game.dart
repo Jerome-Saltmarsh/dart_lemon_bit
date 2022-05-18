@@ -448,7 +448,7 @@ extension GameFunctions on Game {
     }
 
     if (destroyed && target is Structure) {
-      final node = scene.tileNodeAt(target);
+      final node = scene.getNodeByPosition(target);
       node.open = true;
       node.obstructed = false;
     }
@@ -1258,7 +1258,7 @@ extension GameFunctions on Game {
   }
 
   void npcSetRandomDestination(AI ai, {int radius = 10}) {
-    final node = scene.tileNodeAt(ai);
+    final node = scene.getNodeByPosition(ai);
     if (!node.open) return;
     final minColumn = max(0, node.column - radius);
     final maxColumn = min(scene.numberOfColumns, node.column + radius);
@@ -1271,7 +1271,7 @@ extension GameFunctions on Game {
   }
 
   void npcSetPathTo(AI ai, Position position) {
-    npcSetPathToTileNode(ai, scene.tileNodeAt(position));
+    npcSetPathToTileNode(ai, scene.getNodeByPosition(position));
   }
 
   void npcSetPathToTileNode(AI ai, Node node) {
@@ -1279,7 +1279,7 @@ extension GameFunctions on Game {
     pathFindAI = ai;
     pathFindSearchID++;
     ai.pathIndex = -1;
-    scene.visitNodeFirst(scene.tileNodeAt(ai));
+    scene.visitNodeFirst(scene.getNodeByPosition(ai));
   }
 
   void _updateSpawnPointCollisions() {

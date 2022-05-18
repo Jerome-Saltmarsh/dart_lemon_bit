@@ -545,9 +545,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.gold -= cost.gold;
 
           if (structureType == StructureType.Torch) {
-            player.game.scene.tileNodeAt(player.mouse).obstructed = true;
+            player.game.scene.getNodeByPosition(player.mouse).obstructed = true;
           } else {
-            player.game.scene.tileNodeAt(player.mouse).open = false;
+            player.game.scene.getNodeByPosition(player.mouse).open = false;
           }
           break;
 

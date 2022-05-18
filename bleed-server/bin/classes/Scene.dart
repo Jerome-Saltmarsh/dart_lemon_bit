@@ -121,7 +121,7 @@ class Scene {
 
     for (final env in objectsStatic) {
        snapToGrid(env);
-       tileNodeAt(env).obstructed = true;
+       getNodeByPosition(env).obstructed = true;
     }
 
     for (var i = 0; i < objectsStatic.length; i++) {
@@ -155,7 +155,15 @@ class Scene {
     sortVertically(objectsStatic);
   }
 
+  void addRandomTorch(){
+     while(true){
+     }
+  }
+
+
   int tileAt(double x, double y) {
+
+
     final projectedX = y - x;
     if (projectedX < 0) return tileBoundary;
     final projectedY = x + y;
@@ -290,22 +298,29 @@ class Scene {
   }
 
   bool tileWalkableAt(double x, double y){
-    return tileNodeAtXY(x, y).open;
+    return getNodeByXY(x, y).open;
   }
 
-  Node tileNodeAt(Position position) {
-    return tileNodeAtXY(position.x, position.y);
+  Node getRandomTileNode() {
+    return getNodeByRowColumn(
+        row: randomInt(0, rows),
+        column: randomInt(0, columns)
+    );
   }
 
-  Node tileNodeAtXY(double x, double y) {
-    final projectedX = y - x; // projectedToWorldX(x, y)
-    if (projectedX < 0) return _boundary;
-    final projectedY = x + y; // projectedToWorldY(x, y)
-    if (projectedY < 0) return _boundary;
+  Node getNodeByPosition(Position position) {
+    return getNodeByXY(position.x, position.y);
+  }
+
+  Node getNodeByXY(double x, double y) {
     const tileSize = 48;
-    final row = projectedY ~/ tileSize;
+    return getNodeByRowColumn(row: (x + y) ~/ tileSize, column: (y - x) ~/ tileSize);
+  }
+
+  Node getNodeByRowColumn({required int row, required int column}){
+    if (row < 0) return _boundary;
+    if (column < 0) return _boundary;
     if (row >= numberOfRows) return _boundary;
-    final column = projectedX ~/ tileSize;
     if (column >= numberOfColumns) return _boundary;
     return nodes[row][column];
   }

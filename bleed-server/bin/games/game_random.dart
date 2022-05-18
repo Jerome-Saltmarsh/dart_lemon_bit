@@ -41,13 +41,17 @@ class GameRandom extends Game {
                type: ObjectType.Fireplace
            )
        );
-       scene.tileNodeAt(playerSpawn).obstructed = true;
+       scene.getNodeByPosition(playerSpawn).obstructed = true;
+    }
+
+    for (var i = 0; i < 20; i++) {
+       // scene.spawn
     }
   }
 
   @override
   void update() {
-    // time = (time + 5) % Duration.secondsPerDay;
+    time = (time + 10) % Duration.secondsPerDay;
   }
 
   void spawnCreep(){
