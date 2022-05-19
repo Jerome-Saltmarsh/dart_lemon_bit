@@ -3,7 +3,6 @@
 import 'package:lemon_math/library.dart';
 
 import '../classes/AI.dart';
-import '../classes/Ability.dart';
 import '../classes/Character.dart';
 import '../classes/EnvironmentObject.dart';
 import '../common/card_type.dart';
@@ -24,7 +23,7 @@ class GameRandom extends Game {
   GameRandom() : super(
       generateRandomScene(
         columns: 150,
-        rows: 300,
+        rows: 200,
         seed: random.nextInt(2000),
       ),
       status: GameStatus.In_Progress
@@ -134,8 +133,8 @@ class GameRandom extends Game {
     player.deck.clear();
 
     if (player.selection == CharacterSelection.Archer){
-      player.deck.add(CardAbilityBowLongShot());
-      player.deck.add(CardAbilityBowVolley());
+      // player.deck.add(CardAbilityBowLongShot());
+      // player.deck.add(CardAbilityBowVolley());
     }
 
     player.writeDeck();

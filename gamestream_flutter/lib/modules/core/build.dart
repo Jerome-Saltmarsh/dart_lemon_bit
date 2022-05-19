@@ -8,7 +8,7 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/to_string.dart';
-import 'package:gamestream_flutter/ui/functions/build_layout.dart';
+import 'package:gamestream_flutter/ui/build/build_layout.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_watch/watch_builder.dart';

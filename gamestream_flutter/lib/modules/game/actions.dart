@@ -4,6 +4,7 @@ import 'package:bleed_common/ClientRequest.dart';
 import 'package:bleed_common/Modify_Game.dart';
 import 'package:bleed_common/SlotTypeCategory.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/modules/game/emit_particle.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
@@ -45,7 +46,7 @@ class GameActions {
 
   void emitPixelExplosion(double x, double y, {int amount = 10}) {
     for (var i = 0; i < amount; i++) {
-      modules.game.factories.emitPixel(x: x, y: y);
+      emitParticlePixel(x: x, y: y);
     }
   }
 

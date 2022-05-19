@@ -10,11 +10,11 @@ import 'package:gamestream_flutter/modules/game/enums.dart';
 import 'package:gamestream_flutter/modules/game/update.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/layouts.dart';
-import 'package:gamestream_flutter/ui/functions/build_debug_panel.dart';
-import 'package:gamestream_flutter/ui/functions/build_layout.dart';
-import 'package:gamestream_flutter/ui/functions/build_panel_game_random.dart';
-import 'package:gamestream_flutter/ui/functions/build_panel_primary.dart';
-import 'package:gamestream_flutter/ui/functions/build_text_box.dart';
+import 'package:gamestream_flutter/ui/build/build_debug_panel.dart';
+import 'package:gamestream_flutter/ui/build/build_layout.dart';
+import 'package:gamestream_flutter/ui/build/build_panel_game_random.dart';
+import 'package:gamestream_flutter/ui/build/build_panel_primary.dart';
+import 'package:gamestream_flutter/ui/build/build_text_box.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:golden_ratio/constants.dart';
@@ -111,7 +111,7 @@ class GameBuild {
           Positioned(
               left: 8,
               top: 8,
-              child: visibleBuilder(state.debug, buildDebugPanel())
+              child: visibleBuilder(state.debug, buildPanelDebug())
           ),
           buildPanelWriteMessage(),
           // buildPanelHighlightedStructureType(),

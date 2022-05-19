@@ -436,34 +436,16 @@ extension PlayerProperties on Player {
     writeByte(ServerResponse.Zombies);
     final zombies = game.zombies;
     final length = zombies.length;
-    final lengthMinusOne = length - 1;
-
-    if (length == 0) {
-      writeByte(END);
-      return;
-    }
-    var start = 0;
-    for (start = 0; start < lengthMinusOne; start++){
-      final zombieY = zombies[start].y;
-      if (zombieY > screenTop) {
-        if (zombieY > screenBottom){
-          writeByte(END);
-          return;
-        }
-        break;
-      }
-    }
-
-    var end = start;
-    for (end = start; end < lengthMinusOne; end++) {
-      if (zombies[end].y > screenBottom) break;
-    }
-
-    for(var i = start; i <= end; i++){
+    for (var i = 0; i < length; i++){
       final zombie = zombies[i];
       if (zombie.dead) continue;
+      if (zombie.y < screenTop) continue;
       if (zombie.x < screenLeft) continue;
       if (zombie.x > screenRight) continue;
+      if (zombie.y > screenBottom) {
+        writeByte(END);
+        return;
+      }
       writeCharacter(this, zombie);
     }
     writeByte(END);

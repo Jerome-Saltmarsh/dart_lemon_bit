@@ -4,7 +4,6 @@ import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/game/build.dart';
 import 'package:gamestream_flutter/modules/game/events.dart';
-import 'package:gamestream_flutter/modules/game/factories.dart';
 import 'package:gamestream_flutter/modules/game/map.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/game/render.dart';
@@ -16,7 +15,6 @@ import 'package:lemon_watch/watch.dart';
 class GameModule {
 
   final style = GameStyle();
-  final factories = GameFactories();
   late final GameBuild build;
   late final GameState state;
   late final GameActions actions;

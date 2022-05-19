@@ -12,7 +12,7 @@ import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/classes/static_object.dart';
 import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
-import 'package:gamestream_flutter/modules/game/factories.dart';
+import 'package:gamestream_flutter/modules/game/emit_particle.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:gamestream_flutter/modules/isometric/utilities.dart';
 import 'package:gamestream_flutter/game.dart';
@@ -765,7 +765,7 @@ class IsometricModule {
         if (!particle.active) continue;
         if (!particle.bleeds) continue;
         if (particle.speed < 2.0) continue;
-        spawn.blood(x: particle.x, y: particle.y, z: particle.z, zv: 0, angle: 0, speed: 0);
+        spawn.spawnParticleBlood(x: particle.x, y: particle.y, z: particle.z, zv: 0, angle: 0, speed: 0);
       }
     }
   }
@@ -831,6 +831,6 @@ class IsometricModule {
   }
 
   void addSmokeEmitter(double x, double y){
-    particleEmitters.add(ParticleEmitter(x: x, y: y, rate: 3, emit: emitSmoke));
+    particleEmitters.add(ParticleEmitter(x: x, y: y, rate: 12, emit: emitSmoke));
   }
 }

@@ -60,15 +60,18 @@
 [ ] Select card panel must be more obvious
 [ ] Stun Shot (every 5th shot stuns your enemy)
 [ ] Kill shot (applies 3x damage)
-[ ] (TEST) Round Light Emission
+[ ] (IDEA) Round Light Emission
 [ ] Vampire Shot
 [ ] Passive Card - Increased Range
 [ ] Passive Card - Increased Damage
 [ ] FUCK PERFECTIONISM
 [ ] Ability Stun Shot
-[ ] Ability Cooldown
-[ ] Show selected ability card
-[ ] CRITICAL Fix zombies stop rendering when player at bottom of map 
+[ ] Card Icons
+[ ] Fix Camera spawns in wrong spot on initial spawn
+[ ] CRITICAL Player teleports to top at bottom of map
+[ ] CRITICAL Fix zombies stop rendering when player at bottom of map
+[x] Ability Cooldown
+[x] Show selected ability card
 [x] Ability Volley (Fires 5 arrows in a direction)
 [x] Fix Zombies missing hurt audio
 [x] Level up confetti

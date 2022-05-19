@@ -41,7 +41,7 @@ class IsometricSpawn {
     return instance;
   }
 
-  void _particle({
+  void spawnParticle({
     required int type,
     required double x,
     required double y,
@@ -112,7 +112,7 @@ class IsometricSpawn {
     required double speed
   }) {
     final type = ParticleType.Arm;
-    _particle(
+    spawnParticle(
         type: type,
         x: x,
         y: y,
@@ -130,7 +130,7 @@ class IsometricSpawn {
     );
   }
 
-  void blood({
+  void spawnParticleBlood({
     required double x,
     required double y,
     required double z,
@@ -138,9 +138,8 @@ class IsometricSpawn {
     required double angle,
     required double speed
   }) {
-    const type = ParticleType.Blood;
-    _particle(
-        type: type,
+    spawnParticle(
+        type: ParticleType.Blood,
         x: x,
         y: y,
         z: z,
@@ -167,7 +166,7 @@ class IsometricSpawn {
     required double speed
 }){
     const type = ParticleType.FireYellow;
-    _particle(
+    spawnParticle(
         type: type,
         x: x,
         y: y,
@@ -190,7 +189,7 @@ class IsometricSpawn {
     required double speed
   }) {
     final type = ParticleType.Organ;
-    _particle(
+    spawnParticle(
         type: type,
         x: x,
         y: y,
@@ -211,7 +210,7 @@ class IsometricSpawn {
     required double y,
   }) {
     final type = ParticleType.Shell;
-    _particle(
+    spawnParticle(
       type: type,
       x: x,
       y: y,
@@ -238,7 +237,7 @@ class IsometricSpawn {
     required double speed
   }) {
     for (var i = 0; i < 4; i++) {
-      _particle(
+      spawnParticle(
           type: ParticleType.Smoke,
           x: x,
           y: y,
@@ -256,7 +255,7 @@ class IsometricSpawn {
   }
 
   void rockShard(double x, double y){
-    _particle(
+    spawnParticle(
         type: ParticleType.Rock,
         x: x,
         y: y,
@@ -276,7 +275,7 @@ class IsometricSpawn {
   }
 
   void treeShard(double x, double y){
-    _particle(
+    spawnParticle(
         type: ParticleType.Tree_Shard,
         x: x,
         y: y,
@@ -296,7 +295,7 @@ class IsometricSpawn {
   }
 
   void shardWood(double x, double y){
-    _particle(
+    spawnParticle(
         type: ParticleType.Shard_Wood,
         x: x,
         y: y,
@@ -316,7 +315,7 @@ class IsometricSpawn {
   }
 
   void potShard(double x, double y){
-    _particle(
+    spawnParticle(
         type: ParticleType.Pot_Shard,
         x: x,
         y: y,
@@ -343,7 +342,7 @@ class IsometricSpawn {
     required double angle,
     required double speed
   }) {
-    _particle(
+    spawnParticle(
         type: ParticleType.Shrapnel,
         x: x,
         y: y,
@@ -365,7 +364,7 @@ class IsometricSpawn {
     required double angle,
     required double speed
   }) {
-    _particle(
+    spawnParticle(
         type: ParticleType.Smoke,
         x: x,
         y: y,
@@ -388,7 +387,7 @@ class IsometricSpawn {
     required double angle,
     required double speed
   }) {
-    _particle(
+    spawnParticle(
       type: ParticleType.Zombie_Head,
       x: x,
       y: y,
@@ -413,7 +412,7 @@ class IsometricSpawn {
   required double angle,
   required double speed
   }) {
-    _particle(
+    spawnParticle(
         type: ParticleType.Leg,
         x: x,
         y: y,
@@ -454,7 +453,7 @@ class IsometricSpawn {
   }
 
   void orb(OrbType type, double x, double y) {
-    _particle(
+    spawnParticle(
         type: ParticleType.Orb_Ruby,
         x: x,
         y: y,

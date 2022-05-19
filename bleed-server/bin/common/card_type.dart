@@ -34,9 +34,9 @@ CardGenre getCardTypeGenre(CardType cardType) {
 }
 
 const cardTypeChoicesBow = [
-  // ...cardTypesGeneralPassives,
+  ...cardTypesGeneralPassives,
   ...cardTypeBowAbilities,
-  // ...cardTypeBowPassives,
+  ...cardTypeBowPassives,
 ];
 
 const cardTypeChoicesStaff = [

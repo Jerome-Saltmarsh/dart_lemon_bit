@@ -118,9 +118,9 @@ class IsometricRender {
     final totalParticles = particles.length;
     final screenLeft = _screen.left;
     final screenRight = _screen.right;
-    final screenTop = engine.screen.top;
-    final screenBottom = engine.screen.bottom;
-    final screenBottom100 = engine.screen.bottom + 120;
+    final screenTop = _screen.top;
+    final screenBottom = _screen.bottom;
+    final screenBottom100 = screenBottom + 120;
 
     final staticObjects = isometric.staticObjects;
     final zombies = byteStreamParser.zombies;
@@ -149,7 +149,7 @@ class IsometricRender {
 
     var remainingZombies = indexZombie < totalZombies;
     var remainingPlayers = indexPlayer < totalPlayers;
-    var remainingNpcs = indexPlayer < totalNpcs;
+    var remainingNpcs = indexNpc < totalNpcs;
     var remainingStaticObjects = indexStaticObject < totalStaticObjects;
     var remainingParticles = indexParticle < totalParticles;
     var remainingDynamicObjects = indexDynamicObject < totalDynamicObjects;
@@ -215,6 +215,7 @@ class IsometricRender {
     var particleIsBlood = remainingParticles ? particles[indexParticle].type == ParticleType.Blood : false;
 
     while (true) {
+
       if (remainingPlayers) {
         if (!remainingGenerated || yPlayer < yGenerated) {
           if (!remainingBuildMode || yPlayer < yBuildMode) {
@@ -374,6 +375,7 @@ class IsometricRender {
                     final zombie = zombies[indexZombie];
                     yZombie = zombie.y;
                     if (yZombie > screenBottom100){
+                      print("last zombie");
                       remainingZombies = false;
                       break;
                     }
@@ -455,6 +457,7 @@ class IsometricRender {
               }
               continue;
             }
+            continue;
           }
         }
       }

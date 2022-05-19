@@ -5,7 +5,6 @@ import 'package:gamestream_flutter/classes/DynamicObject.dart';
 import 'package:gamestream_flutter/classes/GeneratedObject.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/ui/functions/player.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
@@ -18,6 +17,7 @@ import 'classes/Projectile.dart';
 import 'classes/static_object.dart';
 import 'modules/isometric/classes.dart';
 import 'modules/isometric/enums.dart';
+import 'ui/build/player.dart';
 
 final byteStreamParser = Game();
 final byteLength = Watch(0);

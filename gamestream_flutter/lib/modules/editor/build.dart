@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
-import 'package:gamestream_flutter/ui/functions/build_layout.dart';
+import 'package:gamestream_flutter/ui/build/build_layout.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:golden_ratio/constants.dart';
