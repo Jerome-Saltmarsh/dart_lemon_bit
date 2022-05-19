@@ -368,6 +368,7 @@ class Game with ByteReader {
         case ServerResponse.Player_Spawned:
           player.x = readDouble();
           player.y = readDouble();
+          isometric.resetLighting();
           cameraCenterOnPlayer();
           break;
 

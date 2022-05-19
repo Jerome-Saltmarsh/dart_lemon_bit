@@ -459,6 +459,7 @@ class IsometricModule {
 
   /// Expensive method
   void resetLighting(){
+    refreshAmbientLight();
     refreshTileSize();
     resetBakeMap();
     resetDynamicMap();
