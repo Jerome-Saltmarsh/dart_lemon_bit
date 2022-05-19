@@ -75,10 +75,22 @@ Widget buildPanelDeck(){
                          child: Stack(
                            children: [
                              Container(
+                               alignment: Alignment.center,
+                               width: 50,
+                               height: 50,
+                               color: colours.green,
+                             ),
+                             Container(
+                                 alignment: Alignment.center,
+                                 width: 50,
+                                 height: 50 * card.cooldownPercentage,
+                                color: colours.red,
+                             ),
+                             Container(
                                  alignment: Alignment.center,
                                  width: 50,
                                  height: 50,
-                                 child: text(remaining)
+                                 child: remaining > 0 ? text(remaining) : null
                              ),
                            ],
                          ),

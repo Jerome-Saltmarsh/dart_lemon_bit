@@ -10,6 +10,10 @@ class DeckCard {
 
    CardGenre get genre => getCardTypeGenre(type);
    String get name => getCardTypeName(type);
+   double get cooldownPercentage {
+      if (cooldownRemaining.value == 0) return 0;
+      return cooldownRemaining.value / cooldown.value;
+   }
 
    DeckCard(this.type){
       cooldownRemaining.onChanged((int remaining) {
