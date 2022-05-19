@@ -128,6 +128,7 @@ class GameRandom extends Game {
     final spawnPoint = getNextSpawnPoint();
     player.x = spawnPoint.x;
     player.y = spawnPoint.y;
+    player.clearCardAbility();
     player.cardChoices.clear();
     player.writeCardChoices();
     player.deck.clear();

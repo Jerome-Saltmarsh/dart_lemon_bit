@@ -133,19 +133,20 @@ class GameActions {
   }
 
   void equipSlot1(){
-    equipSlot(1);
+    // equipSlot(1);
+    sendClientRequestDeckSelectCard(0);
   }
 
   void equipSlot2(){
-    equipSlot(2);
+    sendClientRequestDeckSelectCard(1);
   }
 
   void equipSlot3(){
-    equipSlot(3);
+    sendClientRequestDeckSelectCard(2);
   }
 
   void equipSlot4(){
-    equipSlot(4);
+    sendClientRequestDeckSelectCard(3);
   }
 
   void equipSlot5(){

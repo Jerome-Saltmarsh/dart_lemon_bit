@@ -737,7 +737,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return errorInvalidArg('Invalid deck index $deckIndex');
           }
           final card = player.deck[deckIndex];
-          if (card is CardAbility) {
+          if (card is CardAbility && card.cooldownRemaining <= 0) {
             player.setCardAbility(card);
           }
           break;
