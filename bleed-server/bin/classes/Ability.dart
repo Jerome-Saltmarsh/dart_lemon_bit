@@ -30,7 +30,7 @@ class CardAbilityBowVolley extends CardAbility {
       level: 1,
       cost: 1,
       range: 200,
-      cooldown: 100,
+      cooldown: 30,
       mode: AbilityMode.Directed
   );
 }
@@ -41,7 +41,7 @@ class CardAbilityBowLongShot extends CardAbility {
       level: 1,
       cost: 1,
       range: 400,
-      cooldown: 100,
+      cooldown: 20,
       mode: AbilityMode.Targeted,
   );
 }

@@ -1,4 +1,9 @@
 
+enum CardGenre {
+  Passive,
+  Ability,
+}
+
 enum CardType {
    Weapon_Sword,
    Weapon_Bow,
@@ -18,6 +23,15 @@ enum CardType {
 }
 
 const cardTypes = CardType.values;
+
+CardGenre getCardTypeGenre(CardType cardType) {
+  final genre = const<CardType, CardGenre> {
+    CardType.Ability_Bow_Long_Shot: CardGenre.Ability,
+    CardType.Ability_Bow_Volley: CardGenre.Ability,
+  }[cardType];
+  if(genre == null) throw Exception("$cardType does not have a card genre");
+  return genre;
+}
 
 const cardTypeChoicesBow = [
   // ...cardTypesGeneralPassives,
@@ -48,6 +62,18 @@ const cardTypeStaffAbilities = <CardType> [
   CardType.Ability_Staff_Explosion,
   CardType.Ability_Staff_Heal_10,
   CardType.Ability_Staff_Strong_Orb,
+];
+
+const cardTypeSwordAbilities = <CardType> [
+  CardType.Ability_Staff_Explosion,
+  CardType.Ability_Staff_Heal_10,
+  CardType.Ability_Staff_Strong_Orb,
+];
+
+const cardTypeAbilities = [
+   ...cardTypeBowAbilities,
+   ...cardTypeStaffAbilities,
+   ...cardTypeSwordAbilities,
 ];
 
 const cardTypeBowAbilities = <CardType> [

@@ -406,3 +406,38 @@ Widget buildImage(String filename, {required double width, required double heigh
       BoxDecoration(image: DecorationImage(image: AssetImage(filename)))
   );
 }
+
+Widget buildPainter({
+  required PaintCanvas paint,
+  required ValueNotifier<int> frame,
+  ShouldRepaint? shouldRepaint,
+}){
+  return CustomPaint(
+    painter: CustomPainterPainter(
+        paint,
+        shouldRepaint ?? (CustomPainter oldDelegate) => false,
+        frame
+    ),
+  );
+}
+
+typedef PaintCanvas = void Function(Canvas canvas, Size size);
+typedef ShouldRepaint = bool Function(CustomPainter oldDelegate);
+
+class CustomPainterPainter extends CustomPainter {
+
+  final PaintCanvas paintCanvas;
+  final ShouldRepaint doRepaint;
+
+  CustomPainterPainter(this.paintCanvas, this.doRepaint, ValueNotifier<int> frame) : super(repaint: frame);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    return paintCanvas(canvas, size);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return doRepaint(oldDelegate);
+  }
+}
