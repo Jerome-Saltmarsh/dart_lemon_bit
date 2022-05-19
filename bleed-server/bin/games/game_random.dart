@@ -3,6 +3,7 @@
 import 'package:lemon_math/library.dart';
 
 import '../classes/AI.dart';
+import '../classes/Ability.dart';
 import '../classes/Character.dart';
 import '../classes/EnvironmentObject.dart';
 import '../common/card_type.dart';
@@ -132,8 +133,8 @@ class GameRandom extends Game {
     player.deck.clear();
 
     if (player.selection == CharacterSelection.Archer){
-      player.deck.add(CardType.Ability_Bow_Volley);
-      player.deck.add(CardType.Ability_Bow_Long_Shot);
+      player.deck.add(CardAbilityBowLongShot());
+      player.deck.add(CardAbilityBowVolley());
     }
 
     player.writeDeck();
@@ -157,8 +158,6 @@ class GameRandom extends Game {
         player.equippedType = TechType.Bow;
         player.equippedArmour = SlotType.Body_Blue;
         player.equippedHead = SlotType.Rogue_Hood;
-        player.deck.add(CardType.Ability_Bow_Volley);
-        player.deck.add(CardType.Ability_Bow_Long_Shot);
         player.writeDeck();
         break;
     }
@@ -195,16 +194,7 @@ class GameRandom extends Game {
      if (cardTypesWeapons.contains(cardType)){
        player.setStateChanging();
      } else {
-       player.deck.add(cardType);
-       player.writeDeck();
-
-       if (cardType == CardType.Passive_General_Max_HP_10) {
-         player.maxHealth += 10;
-         player.health += 10;
-       }
-       if (cardType == CardType.Passive_Bow_Run_Speed) {
-         player.speedModifier += 0.5;
-       }
+       player.addCardToDeck(cardType);
      }
 
      player.skillPoints--;
@@ -217,5 +207,7 @@ class GameRandom extends Game {
      }
   }
 }
+
+
 
 

@@ -154,9 +154,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       error(GameError.PlayerNotFound);
     }
 
-    void errorAccountNotFound() {
-      error(GameError.Account_Not_Found);
-    }
+    // void errorAccountNotFound() {
+    //   error(GameError.Account_Not_Found);
+    // }
 
     void errorAccountRequired() {
       error(GameError.Account_Required);
@@ -737,15 +737,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return errorInvalidArg('Invalid deck index $deckIndex');
           }
           final card = player.deck[deckIndex];
-
-          if (card == CardType.Ability_Bow_Volley){
-            player.ability = AbilityBowVolley();
+          if (card is CardAbility) {
+            player.setCardAbility(card);
           }
-          else
-          if (card == CardType.Ability_Bow_Long_Shot){
-            player.ability = AbilityBowLongShot();
-          }
-
           break;
 
         case ClientRequest.Deck_Add_Card:

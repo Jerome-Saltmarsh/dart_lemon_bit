@@ -6,6 +6,7 @@ import '../common/library.dart';
 import '../engine.dart';
 import '../utilities.dart';
 import '../common/card_type.dart';
+import 'Card.dart';
 import 'library.dart';
 
 
@@ -46,7 +47,18 @@ class Player extends Character with ByteWriter {
   Account? account;
 
   final cardChoices = <CardType>[];
-  final deck = <CardType>[];
+  final deck = <Card>[];
+
+  void setCardAbility(CardAbility value){
+    if (ability == value) return;
+    ability = value;
+    writeByte(ServerResponse.Player_Deck_Active_Ability);
+  }
+
+  void clearCardAbility(){
+    ability = null;
+    writeByte(ServerResponse.Player_Deck_Active_Ability_None);
+  }
 
   int numberOfCardsOfType(CardType type){
     return deck.where((card) => card == type).length;
@@ -673,9 +685,24 @@ extension PlayerProperties on Player {
   }
 
   void writeDeck() {
-    print("writeDeck()");
     writeByte(ServerResponse.Player_Deck);
-    writeCardTypes(deck);
+    writeByte(deck.length);
+    for (final card in deck) {
+      writeByte(card.type.index);
+    }
+  }
+
+  void addCardToDeck(CardType type){
+    deck.add(convertCardTypeToCard(type));
+    writeDeck();
+
+    if (type == CardType.Passive_General_Max_HP_10) {
+      maxHealth += 10;
+      health += 10;
+    }
+    if (type == CardType.Passive_Bow_Run_Speed) {
+      speedModifier += 0.5;
+    }
   }
 
   void writeCardTypes(List<CardType> values){

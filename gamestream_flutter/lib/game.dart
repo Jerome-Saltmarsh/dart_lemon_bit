@@ -146,6 +146,15 @@ class Game with ByteReader {
           player.deck.value = readCardTypes();
           break;
 
+        case ServerResponse.Player_Deck_Active_Ability:
+          player.deckActiveCardIndex.value = readByte();
+          break;
+
+
+        case ServerResponse.Player_Deck_Active_Ability_None:
+          player.deckActiveCardIndex.value = -1;
+          break;
+
         case ServerResponse.Card_Choices:
           player.cardChoices.value = readCardTypes();
           break;

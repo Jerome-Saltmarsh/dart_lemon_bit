@@ -1,6 +1,8 @@
 import '../common/AbilityMode.dart';
+import '../common/card_type.dart';
+import 'Card.dart';
 
-abstract class Ability {
+abstract class CardAbility extends Card {
   int level;
   int cost;
   double range;
@@ -9,20 +11,22 @@ abstract class Ability {
   double radius;
   AbilityMode mode;
 
-  Ability({
+  CardAbility({
+    required CardType type,
     required this.level,
     required this.cost,
     required this.range,
     required this.cooldown,
     required this.mode,
     this.radius = 0,
-  });
+  }) :super(type);
 
   void update() {}
 }
 
-class AbilityBowVolley extends Ability {
-  AbilityBowVolley() : super(
+class CardAbilityBowVolley extends CardAbility {
+  CardAbilityBowVolley() : super(
+      type: CardType.Ability_Bow_Volley,
       level: 1,
       cost: 1,
       range: 200,
@@ -31,8 +35,9 @@ class AbilityBowVolley extends Ability {
   );
 }
 
-class AbilityBowLongShot extends Ability {
-  AbilityBowLongShot() : super(
+class CardAbilityBowLongShot extends CardAbility {
+  CardAbilityBowLongShot() : super(
+      type: CardType.Ability_Bow_Long_Shot,
       level: 1,
       cost: 1,
       range: 400,

@@ -4,7 +4,6 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/library.dart';
 
 // variables
 var event = "";
@@ -253,12 +252,6 @@ OrbType consumeOrbType(){
 
 double consumeDouble() {
   return double.parse(_consumeString());
-}
-
-Vector2 _consumeVector2() {
-  final x = _consumeIntUnsafe();
-  final y = consumeDouble();
-  return Vector2(x.toDouble(), y);
 }
 
 bool _simiColonConsumed() {

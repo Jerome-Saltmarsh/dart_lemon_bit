@@ -698,6 +698,11 @@ extension GameFunctions on Game {
     }
     if (character.state == CharacterState.Performing) {
        character.ability = null;
+       if (character is Player){
+         character.clearCardAbility();
+       } else {
+         character.ability = null;
+       }
     }
     character.state = value;
     character.stateDuration = 0;
@@ -909,7 +914,7 @@ extension GameFunctions on Game {
     }
     final stateDuration = character.stateDuration;
     if (
-      ability is AbilityBowVolley
+      ability is CardAbilityBowVolley
           &&
       const<int>[5, 8, 11].contains(stateDuration
     )) {
@@ -920,7 +925,7 @@ extension GameFunctions on Game {
         spawnArrow(character, damage: 5, angle: character.angle - 0.2);
     }
 
-    if (ability is AbilityBowLongShot && stateDuration == 5) {
+    if (ability is CardAbilityBowLongShot && stateDuration == 5) {
        spawnArrow(character, damage: 15);
     }
   }
