@@ -53,6 +53,7 @@ class Player extends Character with ByteWriter {
     if (ability == value) return;
     ability = value;
     writeByte(ServerResponse.Player_Deck_Active_Ability);
+    writeByte(deck.indexOf(value));
   }
 
   void clearCardAbility(){

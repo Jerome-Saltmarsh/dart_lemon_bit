@@ -15,9 +15,18 @@ Widget buildPanelDeck(){
     return buildPanel(
         width: defaultPanelWidth,
         child: Column(
-       children: deck.map((card) => text(getCardTypeName(card), onPressed: (){
-         sendClientRequestDeckSelectCard(deck.indexOf(card));
-       })).toList(),
+        children: deck.map((card) {
+         final cardIndex = deck.indexOf(card);
+         final cardText = text(getCardTypeName(card), onPressed: (){
+           sendClientRequestDeckSelectCard(deck.indexOf(card));
+         });
+         return WatchBuilder(player.deckActiveCardIndex, (int index) {
+           if (index == cardIndex){
+             return border(child: cardText);
+           }
+           return cardText;
+         });
+       }).toList(),
     ));
   });
 }
