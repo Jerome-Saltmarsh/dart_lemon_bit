@@ -150,13 +150,23 @@ class Scene {
          );
        }
     }
+
+    for (final staticObject in objectsStatic) {
+       getNodeByPosition(staticObject).obstructed = true;
+    }
+
+    for (final dynamicObject in objectsDynamic) {
+      getNodeByPosition(dynamicObject).obstructed = true;
+    }
+
     sortVertically(objectsDynamic);
     sortVertically(objectsStatic);
   }
 
-  void addRandomTorch(){
-     // while(true){
-     // }
+  void addObjectStatic(StaticObject value) {
+    objectsStatic.add(value);
+    getNodeByPosition(value).obstructed = true;
+    sortVertically(objectsStatic);
   }
 
   int getTileAtPosition(Position position){

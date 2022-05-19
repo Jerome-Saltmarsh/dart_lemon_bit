@@ -59,6 +59,7 @@ class GameRandom extends Game {
        objectsStatic.add(
            StaticObject(x: node.x, y: node.y, type: ObjectType.Torch)
        );
+       node.obstructed = true;
     }
   }
 
