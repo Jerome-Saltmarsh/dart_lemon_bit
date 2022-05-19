@@ -1,6 +1,7 @@
 
 import 'package:bleed_common/card_type.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:gamestream_flutter/classes/Card.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/send.dart';
@@ -12,14 +13,14 @@ import 'package:lemon_watch/watch_builder.dart';
 import 'player.dart';
 
 Widget buildPanelDeck(){
-  return WatchBuilder(player.deck, (List<CardType> deck){
+  return WatchBuilder(player.deck, (List<DeckCard> deck){
     if (deck.isEmpty) return const SizedBox();
     return buildPanel(
         width: defaultPanelWidth,
         child: Column(
         children: deck.map((card) {
          final cardIndex = deck.indexOf(card);
-         final cardText = text(getCardTypeName(card), onPressed: (){
+         final cardText = text(getCardTypeName(card.type), onPressed: (){
            sendClientRequestDeckSelectCard(deck.indexOf(card));
          });
          return WatchBuilder(player.deckActiveCardIndex, (int index) {

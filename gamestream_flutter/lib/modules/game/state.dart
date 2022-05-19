@@ -1,6 +1,7 @@
 import 'package:bleed_common/card_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/classes/Card.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -95,7 +96,7 @@ class Player {
   final levelHammer = Watch(0);
   final levelBag = Watch(0);
   final cardChoices = Watch<List<CardType>>([]);
-  final deck = Watch<List<CardType>>([]);
+  final deck = Watch<List<DeckCard>>([]);
   final deckActiveCardIndex = Watch<int>(-1);
 
   final canAffordUpgradePickaxe = Watch(false);

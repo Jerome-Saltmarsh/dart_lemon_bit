@@ -56,5 +56,6 @@ class ServerResponse {
   static const Player_Deck = 56;
   static const Player_Deck_Active_Ability = 57;
   static const Player_Deck_Active_Ability_None = 58;
+  static const Player_Deck_Cooldown = 59;
 }
 

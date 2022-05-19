@@ -1,5 +1,6 @@
 import 'package:bleed_common/card_type.dart';
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/classes/Card.dart';
 import 'package:gamestream_flutter/classes/DynamicObject.dart';
 import 'package:gamestream_flutter/classes/GeneratedObject.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
@@ -143,7 +144,7 @@ class Game with ByteReader {
           break;
 
         case ServerResponse.Player_Deck:
-          player.deck.value = readCardTypes();
+          player.deck.value = readCardTypes().map((e) => DeckCard(e)).toList();
           break;
 
         case ServerResponse.Player_Deck_Active_Ability:
