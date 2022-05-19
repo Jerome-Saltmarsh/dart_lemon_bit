@@ -45,23 +45,26 @@ class _Engine {
       _updateAIPaths();
     }
 
-    // if (frame % framesPerSecond == 0){
-    //    for (final game in games) {
-    //       for (final player in game.players){
-    //           player.writeByte(ServerResponse.Player_Deck_Cooldown);
-    //           player.writeByte(player.deck.length);
-    //           for (final card in player.deck) {
-    //             if (card is CardAbility){
-    //                player.writeByte(card.cooldownRemaining);
-    //                player.writeByte(card.cooldown);
-    //             } else {
-    //               player.writeByte(0);
-    //               player.writeByte(0);
-    //             }
-    //           }
-    //       }
-    //    }
-    // }
+    if (frame % framesPerSecond == 0){
+       for (final game in games) {
+          for (final player in game.players){
+              player.writeByte(ServerResponse.Player_Deck_Cooldown);
+              player.writeByte(player.deck.length);
+              for (final card in player.deck) {
+                if (card is CardAbility){
+                  if (card.cooldownRemaining > 0){
+                    card.cooldownRemaining--;
+                  }
+                   player.writeByte(card.cooldownRemaining);
+                   player.writeByte(card.cooldown);
+                } else {
+                  player.writeByte(0);
+                  player.writeByte(0);
+                }
+              }
+          }
+       }
+    }
 
     for (final game in games) {
      game.removeDisconnectedPlayers();

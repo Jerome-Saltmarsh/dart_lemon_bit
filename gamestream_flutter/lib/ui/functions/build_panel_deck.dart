@@ -23,6 +23,7 @@ Widget buildPanelDeck(){
          final cardText = text(getCardTypeName(card.type), onPressed: (){
            sendClientRequestDeckSelectCard(deck.indexOf(card));
          });
+
          return WatchBuilder(player.deckActiveCardIndex, (int index) {
              return Container(
                   padding: padding4,
@@ -32,7 +33,15 @@ Widget buildPanelDeck(){
                  ),
                  width: defaultPanelWidth,
                  height: 50,
-                 child: cardText
+                 child: Row(
+                   children: [
+                     WatchBuilder(card.cooldownRemaining, (int remaining){
+                        // final percentage = remaining / card.cooldown.value;
+                        return text(remaining);
+                     }),
+                     cardText,
+                   ],
+                 )
              );
          });
        }).toList(),

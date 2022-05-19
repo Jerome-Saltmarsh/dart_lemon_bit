@@ -143,6 +143,16 @@ class Game with ByteReader {
           parseDynamicObjects();
           break;
 
+        case ServerResponse.Player_Deck_Cooldown:
+          final length = readByte();
+          assert (length == player.deck.value.length);
+          for (var i = 0; i < length; i++){
+              final card = player.deck.value[i];
+              card.cooldownRemaining.value = readByte();
+              card.cooldown.value = readByte();
+          }
+          break;
+
         case ServerResponse.Player_Deck:
           player.deck.value = readCardTypes().map((e) => DeckCard(e)).toList();
           break;
