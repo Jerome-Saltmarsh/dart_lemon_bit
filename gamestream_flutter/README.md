@@ -68,6 +68,7 @@
 [ ] Ability Stun Shot
 [ ] Ability Cooldown
 [ ] Show selected ability card
+[ ] CRITICAL Fix zombies stop rendering when player at bottom of map 
 [x] Ability Volley (Fires 5 arrows in a direction)
 [x] Fix Zombies missing hurt audio
 [x] Level up confetti
