@@ -116,10 +116,6 @@ void parseState() {
         core.state.status.value = gameStatuses[consumeInt()];
         break;
 
-      case ServerResponse.Cube_Joined:
-        // modules.game.state.player.uuid.value = _consumeString();
-        break;
-
       // case ServerResponse.Game_Royal:
       //   game.royal.mapCenter = _consumeVector2();
       //   game.royal.radius = consumeDouble();

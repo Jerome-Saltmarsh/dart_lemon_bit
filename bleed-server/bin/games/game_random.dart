@@ -90,12 +90,11 @@ class GameRandom extends Game {
 
   @override
   Player spawnPlayer() {
-    final spawnLocation = randomItem(scene.spawnPointPlayers);
       final player = Player(
         game: this,
         weapon: TechType.Unarmed,
-        x: spawnLocation.x,
-        y: spawnLocation.y,
+        x: 0,
+        y: 0,
       );
       revive(player);
       return player;
@@ -131,6 +130,7 @@ class GameRandom extends Game {
     player.cardChoices.clear();
     player.writeCardChoices();
     player.deck.clear();
+    player.writePlayerSpawned();
 
     if (player.selection == CharacterSelection.Archer){
       // player.deck.add(CardAbilityBowLongShot());

@@ -17,20 +17,6 @@ void compileCountDownFramesRemaining(StringBuffer buffer, Game game) {
   _write(buffer, game.countDownFramesRemaining);
 }
 
-void compileGameMeta(StringBuffer buffer, Game game) {
-  _write(buffer, ServerResponse.Game_Meta);
-  _write(buffer, game.teamSize);
-  _write(buffer, game.numberOfTeams);
-}
-
-void compileLobby(StringBuffer buffer, Game game) {
-  _write(buffer, ServerResponse.Lobby);
-  _write(buffer, game.players.length);
-  for (Player player in game.players) {
-    _write(buffer, player.name);
-    _write(buffer, player.team);
-  }
-}
 
 // String compileEnvironmentObjects(List<EnvironmentObject> environmentObjects) {
 //   final buffer = StringBuffer();

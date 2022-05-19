@@ -382,6 +382,12 @@ extension PlayerProperties on Player {
       writePaths();
   }
 
+  void writePlayerSpawned(){
+    writeByte(ServerResponse.Player_Spawned);
+    writeInt(x);
+    writeInt(y);
+  }
+
   void writeAttackTarget(){
     if (aimTarget == null){
       writeByte(ServerResponse.Player_Attack_Target_None);

@@ -194,8 +194,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
           if (game.awaitingPlayers) {
             compileGameStatus(_buffer, game.status);
-            compileLobby(_buffer, game);
-            compileGameMeta(_buffer, game);
             sendAndClearBuffer();
             return;
           }

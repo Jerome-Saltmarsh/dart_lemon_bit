@@ -37,6 +37,7 @@ final _events = modules.game.events;
 var time = DateTime.now();
 
 void cameraCenterOnPlayer(){
+  print("cameraCenterOnPlayer()");
   engine.cameraCenter(_player.x, _player.y);
   _previousPlayerScreenX1 = worldToScreenX(_player.x);
   _previousPlayerScreenY1 = worldToScreenY(_player.y);
@@ -362,6 +363,12 @@ class Game with ByteReader {
 
 
         case ServerResponse.Player_Slots:
+          break;
+
+        case ServerResponse.Player_Spawned:
+          player.x = readDouble();
+          player.y = readDouble();
+          cameraCenterOnPlayer();
           break;
 
         case ServerResponse.End:

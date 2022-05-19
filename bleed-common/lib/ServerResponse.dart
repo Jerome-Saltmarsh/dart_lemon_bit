@@ -34,11 +34,6 @@ class ServerResponse {
   static const Team_Lives_Remaining = 33;
   static const Game_Type = 34;
   static const Game_Status = 35;
-  static const Lobby = 36;
-  static const Cube_Players = 37;
-  static const Cube_Joined = 38;
-  static const Game_Meta = 39;
-  static const Game_Royal = 40;
   static const Subscription_Required = 41;
   static const Lobby_CountDown = 42;
   static const Player_Slots = 44;
@@ -57,5 +52,6 @@ class ServerResponse {
   static const Player_Deck_Active_Ability = 57;
   static const Player_Deck_Active_Ability_None = 58;
   static const Player_Deck_Cooldown = 59;
+  static const Player_Spawned = 60;
 }
 

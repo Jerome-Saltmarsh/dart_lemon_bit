@@ -64,12 +64,14 @@
 [ ] Vampire Shot
 [ ] Passive Card - Increased Range
 [ ] Passive Card - Increased Damage
-[ ] FUCK PERFECTIONISM
+[ ] FUCK PERFECTION
 [ ] Ability Stun Shot
 [ ] Card Icons
-[ ] Fix Camera spawns in wrong spot on initial spawn
-[ ] CRITICAL Player teleports to top at bottom of map
-[ ] CRITICAL Fix zombies stop rendering when player at bottom of map
+[ ] Fix objects spawn on top of each other
+[ ] Fix on respawn fireplaces do not emit light
+[x] Fix Camera spawns in wrong spot on initial spawn
+[x] CRITICAL Player teleports to top at bottom of map
+[x] CRITICAL Fix zombies stop rendering when player at bottom of map
 [x] Ability Cooldown
 [x] Show selected ability card
 [x] Ability Volley (Fires 5 arrows in a direction)
