@@ -9,17 +9,17 @@ Vector2 getTilePosition({required int row, required int column}){
   );
 }
 
-double get mouseUnprojectPositionX => projectedToWorldX(mouseWorldX, mouseWorldY);
+double get mouseGridX => convertWorldToGridX(mouseWorldX, mouseWorldY);
 
-double get mouseUnprojectPositionY =>
-    projectedToWorldY(mouseWorldX, mouseWorldY);
+double get mouseGridY =>
+    convertWorldToGridY(mouseWorldX, mouseWorldY);
 
 int get mouseColumn {
-  return mouseUnprojectPositionX ~/ tileSize;
+  return mouseGridX ~/ tileSize;
 }
 
 int get mouseRow {
-  return mouseUnprojectPositionY ~/ tileSize;
+  return mouseGridY ~/ tileSize;
 }
 
 double shiftHeight(double z) {

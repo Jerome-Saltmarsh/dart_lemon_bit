@@ -32,7 +32,7 @@ class StaticObject extends Vector2 {
   }
 
   void refreshRowAndColumn(){
-    row = getRow(x, y);
-    column = getColumn(x, y);
+    row = convertWorldToRow(x, y);
+    column = convertWorldToColumn(x, y);
   }
 }

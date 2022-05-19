@@ -61,10 +61,10 @@ class IsometricRender {
 
     final screen = engine.screen;
 
-    state.minRow = max(0, getRow(screen.left, screen.top));
-    state.maxRow = min(state.totalRowsInt, getRow(screen.right, screen.bottom));
-    state.minColumn = max(0, getColumn(screen.right, screen.top));
-    state.maxColumn = min(state.totalColumnsInt, getColumn(screen.left, screen.bottom));
+    state.minRow = max(0, convertWorldToRow(screen.left, screen.top));
+    state.maxRow = min(state.totalRowsInt, convertWorldToRow(screen.right, screen.bottom));
+    state.minColumn = max(0, convertWorldToColumn(screen.right, screen.top));
+    state.maxColumn = min(state.totalColumnsInt, convertWorldToColumn(screen.left, screen.bottom));
 
     final minRow = state.minRow;
     final maxRow = state.maxRow;

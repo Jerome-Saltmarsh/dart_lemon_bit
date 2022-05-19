@@ -1,46 +1,44 @@
 import 'constants.dart';
 
 double snapX(double x, double y) {
-  final row = getRow(x, y);
-  final column = getColumn(x, y);
-  return getTileWorldX(row, column);
+  return getTileWorldX(convertWorldToRow(x, y), convertWorldToColumn(x, y));
 }
 
 double snapY(double x, double y) {
-  final row = getRow(x, y);
-  final column = getColumn(x, y);
+  final row = convertWorldToRow(x, y);
+  final column = convertWorldToColumn(x, y);
   return getTileWorldY(row, column) + tileSizeHalf;
 }
 
 double getTileWorldX(int row, int column){
-  return perspectiveProjectX(row * tileSizeHalf, column * tileSizeHalf);
+  return convertGridToWorldX(row * tileSizeHalf, column * tileSizeHalf);
 }
 
 double getTileWorldY(int row, int column){
-  return perspectiveProjectY(row * tileSizeHalf, column * tileSizeHalf);
+  return convertGridToWorldY(row * tileSizeHalf, column * tileSizeHalf);
 }
 
-double perspectiveProjectX(double x, double y) {
-  return -y + x;
+double convertGridToWorldX(double x, double y) {
+  return x - y;
 }
 
-double perspectiveProjectY(double x, double y) {
+double convertGridToWorldY(double x, double y) {
   return x + y;
 }
 
-double projectedToWorldX(double x, double y) {
+double convertWorldToGridX(double x, double y) {
   return y - x;
 }
 
-double projectedToWorldY(double x, double y) {
+double convertWorldToGridY(double x, double y) {
   return x + y;
 }
 
-int getRow(double x, double y) {
+int convertWorldToRow(double x, double y) {
   return (x + y) ~/ tileSize;
 }
 
-int getColumn(double x, double y) {
+int convertWorldToColumn(double x, double y) {
   return (y - x) ~/ tileSize;
 }
 

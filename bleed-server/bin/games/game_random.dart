@@ -23,7 +23,7 @@ class GameRandom extends Game {
   GameRandom() : super(
       generateRandomScene(
         columns: 150,
-        rows: 200,
+        rows: 150,
         seed: random.nextInt(2000),
       ),
       status: GameStatus.In_Progress

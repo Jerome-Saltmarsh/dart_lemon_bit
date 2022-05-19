@@ -12,8 +12,8 @@ final isLocalHost = Uri.base.host == 'localhost'; // TODO move to lemon-engine
 
 Future init() async {
   await loadSharedPreferences();
-  isometric.image = await loadImage('images/atlas.png'); // TODO move to lemon-engine
-  engine.image = isometric.image;
+  // isometric.image = await loadImage('images/atlas.png'); // TODO move to lemon-engine
+  // engine.image = isometric.image;
   initializeEventListeners();
   audio.init();
 

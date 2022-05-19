@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'dart:typed_data';
-import 'dart:ui' as ui;
 
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
@@ -31,9 +30,6 @@ class IsometricModule {
   late final IsometricRender render;
   late final IsometricSpawn spawn;
   late final IsometricEvents events;
-
-  late ui.Image image;
-
   final particleEmitters = <ParticleEmitter>[];
   final paths = Float32List(10000);
   final targets = Float32List(10000);
@@ -201,7 +197,7 @@ class IsometricModule {
   }
 
   void applyShadeDynamicPositionUnchecked(double x, double y, int value) {
-    shadeDynamic(getRow(x,  y), getColumn(x, y), value);
+    shadeDynamic(convertWorldToRow(x,  y), convertWorldToColumn(x, y), value);
   }
 
   void shadeDynamic(int row, int column, int value) {
@@ -254,10 +250,10 @@ class IsometricModule {
   }
 
   void emitLightLow(List<List<int>> shader, double x, double y) {
-    final column = getColumn(x, y);
+    final column = convertWorldToColumn(x, y);
     if (column < 0) return;
     if (column >= shader[0].length) return;
-    final row = getRow(x, y);
+    final row = convertWorldToRow(x, y);
     if (row < 0) return;
     if (row >= shader.length) return;
 
@@ -312,8 +308,8 @@ class IsometricModule {
 
 
   void emitLightMedium(List<List<int>> shader, double x, double y) {
-    final column = getColumn(x, y);
-    final row = getRow(x, y);
+    final column = convertWorldToColumn(x, y);
+    final row = convertWorldToRow(x, y);
     if (outOfBounds(row, column)) return;
 
     applyShade(shader, row, column, Shade.Medium);
@@ -326,8 +322,8 @@ class IsometricModule {
   void emitLightHigh(List<List<int>> shader, Vector2 position) {
     final x = position.x;
     final y = position.y;
-    final column = getColumn(x, y);
-    final row = getRow(x, y);
+    final column = convertWorldToColumn(x, y);
+    final row = convertWorldToRow(x, y);
     if (outOfBounds(row, column)) return;
     applyShade(shader, row, column, Shade.Bright);
     applyShadeRing(shader, row, column, 1, Shade.Bright);
@@ -337,8 +333,8 @@ class IsometricModule {
   }
 
   void emitLightHighLarge(List<List<int>> shader, double x, double y) {
-    final column = getColumn(x, y);
-    final row = getRow(x, y);
+    final column = convertWorldToColumn(x, y);
+    final row = convertWorldToRow(x, y);
     if (outOfBounds(row, column)) return;
     applyShade(shader, row, column, Shade.Bright);
     applyShadeRing(shader, row, column, 1, Shade.Bright);
@@ -364,8 +360,8 @@ class IsometricModule {
   }
 
   void emitLightHighLarge2(List<List<int>> shader, double x, double y) {
-    final column = getColumn(x, y);
-    final row = getRow(x, y);
+    final column = convertWorldToColumn(x, y);
+    final row = convertWorldToRow(x, y);
     if (outOfBounds(row, column)) return;
     applyShade(shader, row, column, Shade.Bright);
     applyShadeRing(shader, row, column, 1, Shade.Bright);
@@ -377,8 +373,8 @@ class IsometricModule {
   }
 
   void emitLightBakeHigh(double x, double y) {
-    final column = getColumn(x, y);
-    final row = getRow(x, y);
+    final column = convertWorldToColumn(x, y);
+    final row = convertWorldToRow(x, y);
     if (outOfBounds(row, column)) return;
     shadeBake(row, column, Shade.Bright);
     bakeShadeRing(row, column, 1, Shade.Bright);
@@ -388,8 +384,8 @@ class IsometricModule {
   }
 
   void emitLightBrightSmall(List<List<int>> shader, double x, double y) {
-    final column = getColumn(x, y);
-    final row = getRow(x, y);
+    final column = convertWorldToColumn(x, y);
+    final row = convertWorldToRow(x, y);
     if (outOfBounds(row, column)) return;
     applyShade(shader, row, column, Shade.Bright);
     applyShadeRing(shader, row, column, 1, Shade.Medium);
@@ -496,10 +492,10 @@ class IsometricModule {
     final columns = tiles.length > 0 ? tiles[0].length : 0;
     totalRows.value = rows;
     totalColumns.value = columns;
-    minRow = max(0, getRow(screen.left, screen.top));
-    maxRow = min(rows, getRow(screen.right, screen.bottom));
-    minColumn = max(0, getColumn(screen.right, screen.top));
-    maxColumn = min(columns, getColumn(screen.left, screen.bottom));
+    minRow = max(0, convertWorldToRow(screen.left, screen.top));
+    maxRow = min(rows, convertWorldToRow(screen.right, screen.bottom));
+    minColumn = max(0, convertWorldToColumn(screen.right, screen.top));
+    maxColumn = min(columns, convertWorldToColumn(screen.left, screen.bottom));
     if (minRow > maxRow){
       this.minRow = maxRow;
     }
@@ -834,3 +830,9 @@ class IsometricModule {
     particleEmitters.add(ParticleEmitter(x: x, y: y, rate: 12, emit: emitSmoke));
   }
 }
+
+
+// double convertWorldToGridX(double x, double y){
+//   return (x + y) ~/ 48.0;
+//   return getTile((x + y) ~/ 48.0, (y - x) ~/ 48.0);
+// }
