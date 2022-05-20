@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/classes/static_object.dart';
+import 'package:gamestream_flutter/classes/game_object.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:intl/intl.dart';
 import 'package:lemon_engine/engine.dart';
@@ -17,7 +17,7 @@ double getMouseRotation() {
 void snapToGrid(Vector2 value){
   value.x = (value.x - value.x % tileSize) + tileSizeHalf;
   value.y = value.y - value.y % tileSize;
-  if (value is StaticObject){
+  if (value is GameObject){
     value.refreshRowAndColumn();
   }
 }

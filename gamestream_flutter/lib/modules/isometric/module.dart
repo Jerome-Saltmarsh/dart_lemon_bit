@@ -9,12 +9,11 @@ import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
-import 'package:gamestream_flutter/classes/static_object.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:gamestream_flutter/modules/isometric/utilities.dart';
-import 'package:gamestream_flutter/game.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -36,7 +35,6 @@ class IsometricModule {
   final particles = <Particle>[];
   final structures = <Structure>[];
   final gemSpawns = <GemSpawn>[];
-  final staticObjects = <StaticObject>[];
   final floatingTexts = <FloatingText>[];
   final dynamic = <Int8List>[];
   final bake = <Int8List>[];
@@ -393,23 +391,19 @@ class IsometricModule {
     applyShadeRing(shader, row, column, 3, Shade.Very_Dark);
   }
 
-  void applyEnvironmentObjectsToBakeMapping(){
-    for (final env in staticObjects){
-      final type = env.type;
-      if (type == ObjectType.Torch){
-        emitLightBakeHigh(env.x, env.y);
+  void applyGameObjectsToBakeMapping(){
+    for (final gameObject in byteStreamParser.gameObjects){
+      final type = gameObject.type;
+      if (type == GameObjectType.Torch){
+        emitLightBakeHigh(gameObject.x, gameObject.y);
         continue;
       }
-      if (type == ObjectType.House01){
-        emitLightMedium(bake, env.x, env.y);
+      if (type == GameObjectType.House){
+        emitLightMedium(bake, gameObject.x, gameObject.y);
         continue;
       }
-      if (type == ObjectType.House02){
-        emitLightMedium(bake, env.x, env.y);
-        continue;
-      }
-      if (type == ObjectType.Fireplace){
-        emitLightHighLarge2(bake, env.x, env.y);
+      if (type == GameObjectType.Fireplace){
+        emitLightHighLarge2(bake, gameObject.x, gameObject.y);
         continue;
       }
     }
@@ -429,7 +423,7 @@ class IsometricModule {
         _baked[column] = ambient;
       }
     }
-    applyEnvironmentObjectsToBakeMapping();
+    applyGameObjectsToBakeMapping();
   }
 
   void resetDynamicMap(){

@@ -4,7 +4,6 @@ import 'classes/library.dart';
 import 'common/library.dart';
 import 'functions/loadScenes.dart';
 import 'games/game_random.dart';
-import 'games/game_survivors.dart';
 import 'language.dart';
 
 final engine = _Engine();
@@ -139,13 +138,6 @@ class _Engine {
       }
     }
     return GameRandom();
-  }
-
-  GameNightSurvivors findGameAfterDark() {
-    for (final game in games) {
-      if (game is GameNightSurvivors && game.awaitingPlayers) return game;
-    }
-    return GameNightSurvivors();
   }
 
   T? findGameAwaitingPlayers<T extends Game>() {

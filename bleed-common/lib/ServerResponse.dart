@@ -18,8 +18,7 @@ class ServerResponse {
   static const Crates = 17;
   static const NpcMessage = 18;
   static const Npcs = 19;
-  static const Static_Objects = 20;
-  static const Dynamic_Objects = 21;
+  static const Game_Objects = 20;
   static const NpcsDebug = 22;
   static const Game_Time = 23;
   static const Scene_Changed = 24;

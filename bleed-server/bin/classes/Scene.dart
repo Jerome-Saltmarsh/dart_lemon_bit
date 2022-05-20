@@ -4,8 +4,7 @@ import '../enums.dart';
 import '../utilities.dart';
 import 'AI.dart';
 import 'Character.dart';
-import 'DynamicObject.dart';
-import 'EnvironmentObject.dart';
+import 'game_object.dart';
 import 'Structure.dart';
 import 'TileNode.dart';
 
@@ -13,8 +12,7 @@ class Scene {
   final List<Structure> structures;
   final List<Character> characters;
   final List<List<int>> tiles;
-  final List<StaticObject> objectsStatic;
-  final List<DynamicObject> objectsDynamic;
+  final List<GameObject> gameObjects;
   final List<Position> spawnPointPlayers;
   final List<Position> spawnPointZombies;
 
@@ -33,8 +31,7 @@ class Scene {
   Scene({
     required this.tiles,
     required this.structures,
-    required this.objectsStatic,
-    required this.objectsDynamic,
+    required this.gameObjects,
     required this.characters,
     required this.spawnPointPlayers,
     required this.spawnPointZombies,
@@ -118,79 +115,84 @@ class Scene {
       }
     }
 
-    for (final env in objectsStatic) {
-       snapToGrid(env);
-       getNodeByPosition(env).obstructed = true;
-    }
+    // for (final env in objectsStatic) {
+    //    snapToGrid(env);
+    //    getNodeByPosition(env).obstructed = true;
+    // }
+    // for (var i = 0; i < objectsStatic.length; i++) {
+    //    final env = objectsStatic[i];
+    //    if (env.type == ObjectType.Rock) {
+    //       objectsStatic.removeAt(i);
+    //       i--;
+    //       objectsDynamic.add(
+    //           GameObject(
+    //               type: GameObjectType.Rock,
+    //               x: env.x,
+    //               y: env.y,
+    //               health: 50
+    //           )
+    //       );
+    //    }
+    //    if (env.type == ObjectType.Tree) {
+    //      objectsStatic.removeAt(i);
+    //      i--;
+    //      objectsDynamic.add(
+    //          GameObject(
+    //              type: GameObjectType.Tree,
+    //              x: env.x,
+    //              y: env.y,
+    //              health: 10
+    //          )
+    //      );
+    //    }
+    // }
+    //
+    // for (final staticObject in objectsStatic) {
+    //    getNodeByPosition(staticObject).obstructed = true;
+    // }
+    //
+    // for (final dynamicObject in objectsDynamic) {
+    //   getNodeByPosition(dynamicObject).obstructed = true;
+    // }
 
-    for (var i = 0; i < objectsStatic.length; i++) {
-       final env = objectsStatic[i];
-       if (env.type == ObjectType.Rock) {
-          objectsStatic.removeAt(i);
-          i--;
-          objectsDynamic.add(
-              DynamicObject(
-                  type: DynamicObjectType.Rock,
-                  x: env.x,
-                  y: env.y,
-                  health: 50
-              )
-          );
-       }
-       if (env.type == ObjectType.Tree) {
-         objectsStatic.removeAt(i);
-         i--;
-         objectsDynamic.add(
-             DynamicObject(
-                 type: DynamicObjectType.Tree,
-                 x: env.x,
-                 y: env.y,
-                 health: 10
-             )
-         );
-       }
-    }
-
-    for (final staticObject in objectsStatic) {
-       getNodeByPosition(staticObject).obstructed = true;
-    }
-
-    for (final dynamicObject in objectsDynamic) {
-      getNodeByPosition(dynamicObject).obstructed = true;
-    }
-
-    sortVertically(objectsDynamic);
-    sortVertically(objectsStatic);
+    sortVertically(gameObjects);
+    // sortVertically(objectsStatic);
   }
 
-  void generateRandomGameObjects({required int type, double density = 0.05}) {
+  void generateRandomGameObjects({required int type, double density = 0.05, int health = 1}) {
     for (final nodeRow in nodes){
        for (final node in nodeRow) {
           if (node.obstructed) continue;
           if (node.closed) continue;
           if (random.nextDouble() > density) continue;
-          addDynamicObject(
-              DynamicObject(
-                type: type,
-                x: getTilePositionX(node.row, node.column),
-                y: getTilePositionY(node.row, node.column),
-                health: 10,
-              )
-          );
+          addGameObjectAtNode(type: type, node: node, health: health);
        }
     }
   }
 
-  void addObjectStatic(StaticObject value) {
-    objectsStatic.add(value);
-    getNodeByPosition(value).obstructed = true;
-    sortVertically(objectsStatic);
+  void addGameObjectAtNode({
+    required int type,
+    required Node node,
+    int health = 1
+  }){
+    addGameObject(
+        GameObject(
+          type: type,
+          x: getTilePositionX(node.row, node.column),
+          y: getTilePositionY(node.row, node.column),
+          health: 10,
+        )
+    );
   }
 
-  void addDynamicObject(DynamicObject value) {
-    objectsDynamic.add(value);
+  void addGameObject(GameObject value) {
+    gameObjects.add(value);
     getNodeByPosition(value).obstructed = true;
-    sortVertically(objectsDynamic);
+    sortGameObjects();
+  }
+
+  void sortGameObjects(){
+    sortVertically(gameObjects);
   }
 
   int getTileAtPosition(Position position){
@@ -338,14 +340,14 @@ class Scene {
     return getNodeByXY(x, y).open;
   }
 
-  StaticObject? findNearestStaticObjectByType({
+  GameObject? findNearestGameObjectByType({
     required double x,
     required double y,
-    required ObjectType type
+    required int type
   }){
      var distance = 999999999.0;
-     StaticObject? nearest = null;
-     for (final object in objectsStatic ) {
+     GameObject? nearest = null;
+     for (final object in gameObjects ) {
         if (object.type != type) continue;
         final objectDistance = object.getDistanceXY(x, y);
         if (objectDistance > distance) continue;

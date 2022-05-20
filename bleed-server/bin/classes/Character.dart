@@ -11,10 +11,6 @@ import 'components.dart';
 
 const piEighth = pi / 8.0;
 
-class GameObject with Team, Position, Health {
-
-}
-
 class Character extends Collider with Team, Health, Velocity, Material {
   late CharacterType type;
   late double _speed;

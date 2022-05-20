@@ -1,12 +1,12 @@
 import 'dart:math';
 
+import 'package:bleed_common/game_object_type.dart';
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/classes/DynamicObject.dart';
+import 'package:gamestream_flutter/classes/game_object.dart';
 import 'package:gamestream_flutter/classes/GeneratedObject.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
-import 'package:gamestream_flutter/classes/static_object.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToDst.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToSrc.dart';
 import 'package:gamestream_flutter/modules/isometric/animations.dart';
@@ -122,24 +122,22 @@ class IsometricRender {
     final screenBottom = _screen.bottom;
     final screenBottom100 = screenBottom + 120;
 
-    final staticObjects = isometric.staticObjects;
     final zombies = byteStreamParser.zombies;
     final players = byteStreamParser.players;
     final npcs = byteStreamParser.interactableNpcs;
-    final dynamicObjects = byteStreamParser.dynamicObjects;
+    final gameObjects = byteStreamParser.gameObjects;
     final generatedObjects = byteStreamParser.generatedObjects;
     final structures = isometric.structures;
 
-    final totalStaticObjects = staticObjects.length;
+    final totalGameObjects = gameObjects.length;
     final totalZombies = byteStreamParser.totalZombies.value;
     final totalPlayers = byteStreamParser.totalPlayers.value;
     final totalNpcs = byteStreamParser.totalNpcs;
-    final totalDynamicObjects = byteStreamParser.dynamicObjects.length;
     final totalStructures = isometric.totalStructures;
     final totalGenerated = generatedObjects.length;
 
     var indexPlayer = 0;
-    var indexStaticObject = 0;
+    var indexGameObject = 0;
     var indexParticle = 0;
     var indexZombie = 0;
     var indexNpc = 0;
@@ -150,19 +148,19 @@ class IsometricRender {
     var remainingZombies = indexZombie < totalZombies;
     var remainingPlayers = indexPlayer < totalPlayers;
     var remainingNpcs = indexNpc < totalNpcs;
-    var remainingStaticObjects = indexStaticObject < totalStaticObjects;
+    var remainingGameObjects = indexGameObject < totalGameObjects;
     var remainingParticles = indexParticle < totalParticles;
-    var remainingDynamicObjects = indexDynamicObject < totalDynamicObjects;
+    // var remainingDynamicObjects = indexDynamicObject < totalDynamicObjects;
     var remainingStructures = indexStructure < totalStructures;
     var remainingBuildMode = modules.game.structureType.value != null;
     var remainingGenerated = indexGenerated < totalGenerated;
 
     var yPlayer = remainingPlayers ? players[0].y : 0;
-    var yStaticObject = remainingStaticObjects ? staticObjects[0].y : 0;
+    var yGameObject = remainingGameObjects ? gameObjects[0].y : 0;
     var yParticle = remainingParticles ? particles[0].y : 0;
     var yZombie = remainingZombies ? zombies[0].y : 0;
     var yNpc = remainingNpcs ? npcs[0].y : 0;
-    var yDynamicObject = remainingDynamicObjects ? dynamicObjects[0].y : 0;
+    // var yDynamicObject = remainingDynamicObjects ? gameObjects[0].y : 0;
     var yStructure = remainingStructures ? structures[0].y : 0;
     var yBuildMode = remainingBuildMode ? mouseWorldY : 0;
     var yGenerated = remainingGenerated ? generatedObjects[0].y : 0;
@@ -199,18 +197,18 @@ class IsometricRender {
       break;
     }
 
-    while (remainingDynamicObjects) {
-      yDynamicObject = dynamicObjects[indexDynamicObject].y;
-      if (yDynamicObject < screenTop) {
-        indexDynamicObject++;
-        remainingDynamicObjects = indexDynamicObject < totalDynamicObjects;
-        continue;
-      }
-      if (yDynamicObject > screenBottom100) {
-        remainingDynamicObjects = false;
-      }
-      break;
-    }
+    // while (remainingDynamicObjects) {
+    //   yDynamicObject = gameObjects[indexDynamicObject].y;
+    //   if (yDynamicObject < screenTop) {
+    //     indexDynamicObject++;
+    //     remainingDynamicObjects = indexDynamicObject < totalDynamicObjects;
+    //     continue;
+    //   }
+    //   if (yDynamicObject > screenBottom100) {
+    //     remainingDynamicObjects = false;
+    //   }
+    //   break;
+    // }
 
     var particleIsBlood = remainingParticles ? particles[indexParticle].type == ParticleType.Blood : false;
 
@@ -219,12 +217,12 @@ class IsometricRender {
       if (remainingPlayers) {
         if (!remainingGenerated || yPlayer < yGenerated) {
           if (!remainingBuildMode || yPlayer < yBuildMode) {
-            if (!remainingStaticObjects || yPlayer < yStaticObject) {
+            if (!remainingGameObjects || yPlayer < yGameObject) {
               if (!remainingParticles ||
                   (yPlayer < yParticle && !particleIsBlood)) {
                 if (!remainingZombies || yPlayer < yZombie) {
                   if (!remainingStructures || yPlayer < yStructure) {
-                    if (!remainingDynamicObjects || yPlayer < yDynamicObject) {
+                    // if (!remainingDynamicObjects || yPlayer < yDynamicObject) {
                       if (!remainingNpcs || yPlayer < yNpc) {
                         renderCharacter(players[indexPlayer]);
                         indexPlayer++;
@@ -246,7 +244,7 @@ class IsometricRender {
                         }
                         continue;
                       }
-                    }
+                    // }
                   }
                 }
               }
@@ -255,28 +253,28 @@ class IsometricRender {
         }
       }
 
-      if (remainingStaticObjects) {
-        if (!remainingGenerated || yStaticObject < yGenerated) {
-          if (!remainingBuildMode || yStaticObject < yBuildMode) {
-            if (!remainingStructures || yStaticObject < yStructure) {
-              if (!remainingParticles || (yStaticObject < yParticle && !particleIsBlood)) {
-                if (!remainingDynamicObjects || yStaticObject < yDynamicObject) {
-                  if (!remainingZombies || yStaticObject < yZombie) {
-                    if (!remainingNpcs || yStaticObject < yNpc) {
-                      renderStaticObject(staticObjects[indexStaticObject]);
-                      indexStaticObject++;
-                      remainingStaticObjects = indexStaticObject < totalStaticObjects;
-                      while (remainingStaticObjects) {
-                        final value = staticObjects[indexStaticObject];
-                        yStaticObject = value.y;
-                        if (yStaticObject > screenBottom100){
-                          remainingStaticObjects = false;
+      if (remainingGameObjects) {
+        if (!remainingGenerated || yGameObject < yGenerated) {
+          if (!remainingBuildMode || yGameObject < yBuildMode) {
+            if (!remainingStructures || yGameObject < yStructure) {
+              if (!remainingParticles || (yGameObject < yParticle && !particleIsBlood)) {
+                // if (!remainingDynamicObjects || yGameObject < yDynamicObject) {
+                  if (!remainingZombies || yGameObject < yZombie) {
+                    if (!remainingNpcs || yGameObject < yNpc) {
+                      renderGameObject(gameObjects[indexGameObject]);
+                      indexGameObject++;
+                      remainingGameObjects = indexGameObject < totalGameObjects;
+                      while (remainingGameObjects) {
+                        final nextGameObject = gameObjects[indexGameObject];
+                        yGameObject = nextGameObject.y;
+                        if (yGameObject > screenBottom100){
+                          remainingGameObjects = false;
                           break;
                         }
-                        final x = value.x;
-                        if (x < screenLeft || x > screenRight || yStaticObject < screenTop) {
-                          indexStaticObject++;
-                          remainingStaticObjects = indexStaticObject < totalStaticObjects;
+                        final x = nextGameObject.x;
+                        if (x < screenLeft || x > screenRight || yGameObject < screenTop) {
+                          indexGameObject++;
+                          remainingGameObjects = indexGameObject < totalGameObjects;
                           continue;
                         }
                         break;
@@ -285,7 +283,7 @@ class IsometricRender {
                     }
                   }
                 }
-              }
+              // }
             }
           }
         }
@@ -325,7 +323,7 @@ class IsometricRender {
           if (!remainingGenerated || yParticle < yGenerated) {
             if (!remainingBuildMode || yParticle < yBuildMode) {
               if (!remainingStructures || yParticle < yStructure) {
-                if (!remainingDynamicObjects || yParticle < yDynamicObject) {
+                // if (!remainingDynamicObjects || yParticle < yDynamicObject) {
                   if (!remainingNpcs || yParticle < yNpc) {
                     renderParticle(particles[indexParticle]);
                     indexParticle++;
@@ -357,7 +355,7 @@ class IsometricRender {
                   }
                 }
               }
-            }
+            // }
           }
         }
       }
@@ -366,7 +364,7 @@ class IsometricRender {
         if (!remainingGenerated || yZombie < yGenerated) {
           if (!remainingBuildMode || yZombie < yBuildMode) {
             if (!remainingStructures || yZombie < yStructure) {
-              if (!remainingDynamicObjects || yZombie < yDynamicObject) {
+              // if (!remainingDynamicObjects || yZombie < yDynamicObject) {
                 if (!remainingNpcs || yZombie < yNpc) {
                   renderZombie(zombies[indexZombie]);
                   indexZombie++;
@@ -392,14 +390,14 @@ class IsometricRender {
               }
             }
           }
-        }
+        // }
       }
 
       if (remainingNpcs) {
         if (!remainingGenerated || yNpc < yGenerated) {
           if (!remainingBuildMode || yNpc < yBuildMode) {
             if (!remainingStructures || yNpc < yStructure) {
-              if (!remainingDynamicObjects || yNpc < yDynamicObject) {
+              // if (!remainingDynamicObjects || yNpc < yDynamicObject) {
                 drawInteractableNpc(npcs[indexNpc]);
                 indexNpc++;
                 remainingNpcs = indexNpc < totalNpcs;
@@ -411,38 +409,38 @@ class IsometricRender {
                 }
                 continue;
               }
-            }
+            // }
           }
         }
       }
 
-      if (remainingDynamicObjects) {
-        if (!remainingGenerated || yDynamicObject < yGenerated) {
-          if (!remainingBuildMode || yDynamicObject < yBuildMode) {
-            if (!remainingStructures || yDynamicObject < yStructure) {
-              renderDynamicObject(dynamicObjects[indexDynamicObject]);
-              indexDynamicObject++;
-              remainingDynamicObjects = indexDynamicObject < totalDynamicObjects;
-
-              while (remainingDynamicObjects) {
-                yDynamicObject = dynamicObjects[indexDynamicObject].y;
-                if (yDynamicObject > screenBottom100){
-                  remainingDynamicObjects = false;
-                  break;
-                }
-                final x = dynamicObjects[indexDynamicObject].x;
-                if (x < screenLeft || x > screenRight) {
-                  indexDynamicObject++;
-                  remainingDynamicObjects = indexDynamicObject < totalDynamicObjects;
-                  continue;
-                }
-                break;
-              }
-              continue;
-            }
-          }
-        }
-      }
+      // if (remainingDynamicObjects) {
+      //   if (!remainingGenerated || yDynamicObject < yGenerated) {
+      //     if (!remainingBuildMode || yDynamicObject < yBuildMode) {
+      //       if (!remainingStructures || yDynamicObject < yStructure) {
+      //         renderGameObject(gameObjects[indexDynamicObject]);
+      //         indexDynamicObject++;
+      //         remainingDynamicObjects = indexDynamicObject < totalDynamicObjects;
+      //
+      //         while (remainingDynamicObjects) {
+      //           yDynamicObject = gameObjects[indexDynamicObject].y;
+      //           if (yDynamicObject > screenBottom100){
+      //             remainingDynamicObjects = false;
+      //             break;
+      //           }
+      //           final x = gameObjects[indexDynamicObject].x;
+      //           if (x < screenLeft || x > screenRight) {
+      //             indexDynamicObject++;
+      //             remainingDynamicObjects = indexDynamicObject < totalDynamicObjects;
+      //             continue;
+      //           }
+      //           break;
+      //         }
+      //         continue;
+      //       }
+      //     }
+      //   }
+      // }
 
       if (remainingStructures) {
         if (!remainingGenerated || yStructure < yGenerated) {
@@ -493,12 +491,13 @@ class IsometricRender {
          continue;
       }
 
+
       if (
           remainingZombies ||
           remainingPlayers ||
           remainingNpcs ||
-          remainingStaticObjects ||
-          remainingDynamicObjects ||
+          remainingGameObjects ||
+          // remainingDynamicObjects ||
           remainingStructures ||
           remainingParticles ||
           remainingGenerated ||
@@ -616,24 +615,6 @@ class IsometricRender {
     );
   }
 
-  void renderDynamicObject(DynamicObject dynamicObject){
-    switch(dynamicObject.type) {
-      case DynamicObjectType.Pot:
-        renderPot(dynamicObject);
-        break;
-      case DynamicObjectType.Rock:
-        renderRockLarge(dynamicObject);
-        break;
-      case DynamicObjectType.Tree:
-        renderTree(dynamicObject);
-        break;
-      case DynamicObjectType.Chest:
-        return renderChest(dynamicObject);
-      case DynamicObjectType.House:
-        return renderHouse(dynamicObject);
-    }
-  }
-
   void renderHouse(Position position){
     engine.renderCustomV2(
         dst: position,
@@ -743,24 +724,32 @@ class IsometricRender {
     );
   }
 
-  void renderStaticObject(StaticObject value) {
-    switch(value.type) {
-      case ObjectType.Fireplace:
+  void renderGameObject(GameObject value) {
+    switch (value.type) {
+      case GameObjectType.Tree:
+        return renderTree(value);
+      case GameObjectType.Rock:
+        return renderRockLarge(value);
+      case GameObjectType.Fireplace:
         return renderFireplace(value);
-      case ObjectType.Long_Grass:
+      case GameObjectType.Grass:
         return renderLongGrass(value);
-      case ObjectType.Grave:
+      case GameObjectType.Grave:
         return renderGrave(value);
-      case ObjectType.Tree_Stump:
+      case GameObjectType.Tree_Stump:
         return renderTreeStump(value);
-      case ObjectType.Rock_Small:
+      case GameObjectType.Rock_Small:
         return renderRockSmall(value);
-      case ObjectType.Flag:
+      case GameObjectType.Flag:
         return renderFlag(value);
-      case ObjectType.Torch:
+      case GameObjectType.Torch:
         return renderTorch(value);
+      case GameObjectType.Chest:
+        return renderChest(value);
+      case GameObjectType.Pot:
+        return renderPot(value);
       default:
-        break;
+        throw Exception("Cannot render GameObject ${value.type}");
     }
   }
 

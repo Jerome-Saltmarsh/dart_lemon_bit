@@ -1,8 +1,6 @@
-import 'package:bleed_common/ObjectType.dart';
 import 'package:bleed_common/SceneJson.dart';
 import 'package:bleed_common/Tile.dart';
 import 'package:bleed_common/constants.dart';
-import 'package:gamestream_flutter/classes/static_object.dart';
 import 'package:gamestream_flutter/modules/isometric/classes.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/game.dart';
@@ -19,7 +17,7 @@ class EditorCompile {
     return {
       "collectables": byteStreamParser.collectables,
       "tiles": compileTiles(isometric.tiles),
-      "environment": compileEnvironmentObjects(state.environmentObjects),
+      // "environment": compileGameObjects(state.environmentObjects),
       'characters': compileCharactersToJson(state.characters),
       sceneFieldNames.startTime: modules.isometric.minutes.value * secondsPerHour,
       sceneFieldNames.secondsPerFrame: state.timeSpeed.value.index,
@@ -61,15 +59,15 @@ class EditorCompile {
     return values;
   }
 
-  List<dynamic> compileEnvironmentObjects(List<StaticObject> values) {
-    return values
-        .map((environmentObject) => {
-      'x': environmentObject.x.toInt(),
-      'y': environmentObject.y.toInt(),
-      'type': parseEnvironmentObjectTypeToString(environmentObject.type)
-    })
-        .toList();
-  }
+  // List<dynamic> compileGameObjects(List<GameObject> values) {
+  //   return values
+  //       .map((gameObject) => {
+  //     'x': gameObject.x.toInt(),
+  //     'y': gameObject.y.toInt(),
+  //     'type': parseEnvironmentObjectTypeToString(gameObject.type)
+  //   })
+  //       .toList();
+  // }
 
 
 

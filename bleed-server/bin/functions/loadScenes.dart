@@ -6,13 +6,11 @@ import 'package:lemon_math/library.dart';
 import 'package:typedef/json.dart';
 
 import '../classes/Character.dart';
-import '../classes/EnvironmentObject.dart';
 import '../classes/Scene.dart';
 import '../common/CharacterType.dart';
 import '../common/SceneJson.dart';
 import '../common/SlotType.dart';
 import '../common/Tile.dart';
-import '../common/ObjectType.dart';
 
 Future<Scene> loadSceneFromFile(String name) async {
   final String dir = Directory.current.path;
@@ -53,22 +51,20 @@ Scene parseJsonToScene(Json json, String name) {
     }
   }
 
-  final List<StaticObject> environment = [];
-
-  if (json.containsKey('environment')) {
-    final List jsonItems = json['environment'];
-    for (dynamic item in jsonItems) {
-      final int x = item['x'];
-      final int y = item['y'];
-      final String typeName = item['type'];
-      final ObjectType type = parseObjectTypeFromString(typeName);
-      environment.add(StaticObject(
-        x: x.toDouble(),
-        y: y.toDouble(),
-        type: type
-      ));
-    }
-  }
+  // if (json.containsKey('environment')) {
+  //   final List jsonItems = json['environment'];
+  //   for (dynamic item in jsonItems) {
+  //     final int x = item['x'];
+  //     final int y = item['y'];
+  //     final String typeName = item['type'];
+  //     final ObjectType type = parseObjectTypeFromString(typeName);
+  //     environment.add(StaticObject(
+  //       x: x.toDouble(),
+  //       y: y.toDouble(),
+  //       type: type
+  //     ));
+  //   }
+  // }
 
   final List compiledTiles = json['tiles'];
   final List<List<int>> tiles = [];
@@ -98,8 +94,7 @@ Scene parseJsonToScene(Json json, String name) {
   final scene = Scene(
     tiles: tiles,
     structures: [],
-    objectsStatic: environment,
-    objectsDynamic: [],
+    gameObjects: [],
     characters: characters,
     spawnPointPlayers: [],
     spawnPointZombies: []

@@ -371,8 +371,7 @@ extension PlayerProperties on Player {
 
     if (!sceneDownloaded){
       writeTiles();
-      writeDynamicObjects();
-      writeStaticObjects();
+      writeGameObjects();
       writeTechTypes();
       writeGameStatus();
       sceneDownloaded = true;
@@ -466,25 +465,13 @@ extension PlayerProperties on Player {
     writeByte(techTree.hammer);
   }
 
-  void writeStaticObjects() {
-    writeByte(ServerResponse.Static_Objects);
-    final staticObjects = scene.objectsStatic;
-    for (final value in staticObjects) {
-       if (dynamicObjectTypes.contains(value)) continue;
-       writeByte(value.type.index);
-       writePosition(value);
-    }
-    writeByte(END);
-  }
-
-  void writeDynamicObjects() {
-    writeByte(ServerResponse.Dynamic_Objects);
-    final dynamicObjects = scene.objectsDynamic;
-    for (final dynamicObject in dynamicObjects) {
-      if (dynamicObject.dead) continue;
-      writeByte(dynamicObject.type);
-      writePosition(dynamicObject);
-      writePositiveInt(dynamicObject.id);
+  void writeGameObjects() {
+    writeByte(ServerResponse.Game_Objects);
+    final gameObjects = game.gameObjects;
+    for (final gameObject in gameObjects) {
+       writeByte(gameObject.type);
+       writePosition(gameObject);
+       writePositiveInt(gameObject.id);
     }
     writeByte(END);
   }
@@ -511,12 +498,12 @@ extension PlayerProperties on Player {
     writeInt(angle * radiansToDegrees);
   }
 
-  void writeDynamicObjectDestroyed(DynamicObject dynamicObject){
+  void writeDynamicObjectDestroyed(GameObject dynamicObject){
     writeByte(ServerResponse.Dynamic_Object_Destroyed);
     writeInt(dynamicObject.id);
   }
 
-  void writeDynamicObjectSpawned(DynamicObject dynamicObject){
+  void writeDynamicObjectSpawned(GameObject dynamicObject){
     writeByte(ServerResponse.Dynamic_Object_Spawned);
     writeByte(dynamicObject.type);
     writePosition(dynamicObject);

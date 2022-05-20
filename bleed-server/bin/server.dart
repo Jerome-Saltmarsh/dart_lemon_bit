@@ -260,7 +260,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               player.attackTarget = aimTarget;
               playerSetAbilityTarget(player, mouseX, mouseY);
 
-              if (aimTarget is DynamicObject) {
+              if (aimTarget is GameObject) {
                  if (aimTarget.isRock && player.equippedType != TechType.Pickaxe) {
                     if (player.techTree.pickaxe > 0){
                       player.equipPickaxe();
@@ -476,7 +476,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           final mouseSnapY = snapY(mouse.x, mouse.y);
 
           if (sphereCaste(
-              colliders: player.game.objectsStatic,
+              colliders: player.game.gameObjects,
               x: mouseSnapX,
               y: mouseSnapY,
               radius: tileSizeHalf
@@ -503,7 +503,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
 
           if (sphereCaste(
-              colliders: player.game.dynamicObjects,
+              colliders: player.game.gameObjects,
               x: mouseSnapX,
               y: mouseSnapY,
               radius: tileSizeHalf
@@ -956,17 +956,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.textDuration = 150;
           break;
 
-        case ClientRequest.Interact:
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
-          if (player.dead) {
-            errorPlayerDead();
-            return;
-          }
-          playerInteract(player);
-          break;
         default:
           break;
       }

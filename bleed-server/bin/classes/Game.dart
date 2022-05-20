@@ -16,8 +16,7 @@ import 'Ability.dart';
 import 'Character.dart';
 import 'Collectable.dart';
 import 'Collider.dart';
-import 'DynamicObject.dart';
-import 'EnvironmentObject.dart';
+import 'game_object.dart';
 import 'InteractableNpc.dart';
 import 'Item.dart';
 import 'Player.dart';
@@ -51,9 +50,7 @@ abstract class Game {
 
   static int _id = 0;
 
-  List<DynamicObject> get dynamicObjects => scene.objectsDynamic;
-
-  List<StaticObject> get objectsStatic => scene.objectsStatic;
+  List<GameObject> get gameObjects => scene.gameObjects;
 
   List<Structure> get structures => scene.structures;
 
@@ -82,10 +79,10 @@ abstract class Game {
     players.forEach((player) => player.writeGameStatus());
   }
 
-  void onStaticObjectsChanged() {
-    sortVertically(objectsStatic);
-    for(final player in players){
-      player.writeStaticObjects();
+  void onGameObjectsChanged() {
+    sortVertically(gameObjects);
+    for (final player in players){
+      player.writeGameObjects();
     }
   }
 
@@ -273,12 +270,13 @@ extension GameFunctions on Game {
         where: (other) => other.alive && !onSameTeam(other, character));
   }
 
-  DynamicObject? getClosestDynamicObject(double x, double y) {
+  GameObject? getClosestGameObject(double x, double y) {
     return findClosestVector2(
-        positions: scene.objectsDynamic,
+        positions: gameObjects,
         x: x,
         y: y,
-        where: (other) => other.collidable);
+        where: (other) => other.collidable
+    );
   }
 
   Collider? getClosestCollider(double x, double y, Character character) {
@@ -286,7 +284,7 @@ extension GameFunctions on Game {
         getClosestEnemy(x: x, y: y, character: character, characters: zombies);
     final player =
         getClosestEnemy(x: x, y: y, character: character, characters: players);
-    final dynamicObject = playersCanAttackDynamicObjects ? getClosestDynamicObject(x, y) : null;
+    final dynamicObject = playersCanAttackDynamicObjects ? getClosestGameObject(x, y) : null;
     final zombieDistance =
         zombie != null ? distanceBetween(x, y, zombie.x, zombie.y) : 99999;
     final playerDistance =
@@ -319,7 +317,7 @@ extension GameFunctions on Game {
       }
     }
     update();
-    updateDynamicObjects();
+    // updateDynamicObjects();
     updateCollectables();
     updateStructures();
     _updateCollisions();
@@ -454,14 +452,14 @@ extension GameFunctions on Game {
       node.obstructed = false;
     }
 
-    if (target is DynamicObject) {
+    if (target is GameObject) {
       switch (target.type) {
-        case DynamicObjectType.Rock:
+        case GameObjectType.Rock:
           if (src is Player) {
             // spawnCollectable(position: target, target: src, type: CollectableType.Stone, amount: damage);
           }
           break;
-        case DynamicObjectType.Tree:
+        case GameObjectType.Tree:
           if (src is Player) {
             // spawnCollectable(position: target, target: src, type: CollectableType.Wood, amount: damage);
           }
@@ -472,13 +470,13 @@ extension GameFunctions on Game {
         target.respawnDuration = 5000;
         notifyPlayersDynamicObjectDestroyed(target);
 
-        if (target.type == DynamicObjectType.Pot) {
+        if (target.type == GameObjectType.Pot) {
           dispatchV2(GameEventType.Object_Destroyed_Pot, target);
-        } else if (target.type == DynamicObjectType.Rock) {
+        } else if (target.type == GameObjectType.Rock) {
           dispatchV2(GameEventType.Object_Destroyed_Rock, target);
-        } else if (target.type == DynamicObjectType.Tree) {
+        } else if (target.type == GameObjectType.Tree) {
           dispatchV2(GameEventType.Object_Destroyed_Tree, target);
-        } else if (target.type == DynamicObjectType.Chest) {
+        } else if (target.type == GameObjectType.Chest) {
           dispatchV2(GameEventType.Object_Destroyed_Chest, target);
           for (var i = 0; i < 3; i++) {
             spawnCollectable(
@@ -590,9 +588,9 @@ extension GameFunctions on Game {
   void _updateCollisions() {
     checkColliderCollision(players, structures);
     checkColliderCollision(zombies, structures);
-    checkColliderCollision(players, scene.objectsStatic);
-    checkColliderCollision(zombies, scene.objectsStatic);
-    checkColliderCollision(players, scene.objectsDynamic);
+    checkColliderCollision(players, gameObjects);
+    checkColliderCollision(zombies, gameObjects);
+    checkColliderCollision(players, gameObjects);
     updateCollisionBetween(zombies);
     updateCollisionBetween(players);
     resolveCollisionBetween(zombies, players, resolveCollisionA);
@@ -760,10 +758,9 @@ extension GameFunctions on Game {
       }
     }
 
-    checkProjectileCollision(scene.objectsStatic);
+    checkProjectileCollision(gameObjects);
     checkProjectileCollision(zombies);
     checkProjectileCollision(players);
-    checkProjectileCollision(dynamicObjects);
   }
 
   void updatePlayer(Player player) {
@@ -1144,7 +1141,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void notifyPlayersDynamicObjectDestroyed(DynamicObject dynamicObject){
+  void notifyPlayersDynamicObjectDestroyed(GameObject dynamicObject){
     for (final player in players) {
       player.writeDynamicObjectDestroyed(dynamicObject);
     }
@@ -1434,8 +1431,9 @@ extension GameFunctions on Game {
       }
       final dynamicObjectHit = physics.raycastHit(
           character: character,
-          colliders: dynamicObjects,
-          range: character.equippedRange);
+          colliders: gameObjects,
+          range: character.equippedRange
+      );
       if (dynamicObjectHit != null) {
         applyHit(
           src: character,
@@ -1470,33 +1468,22 @@ extension GameFunctions on Game {
     collectables.forEach((collectable) => collectable.update());
   }
 
-  void updateDynamicObjects() {
-    final dynamicObjects = scene.objectsDynamic;
-    for (final dynamicObject in dynamicObjects) {
-      if (dynamicObject.respawnDuration <= 0) continue;
-      if (dynamicObject.respawnDuration-- > 1) continue;
-      respawnDynamicObject(dynamicObject, health: 10);
-    }
-  }
+  // void updateDynamicObjects() {
+  //   final dynamicObjects = scene.objectsDynamic;
+  //   for (final dynamicObject in dynamicObjects) {
+  //     if (dynamicObject.respawnDuration <= 0) continue;
+  //     if (dynamicObject.respawnDuration-- > 1) continue;
+  //     respawnDynamicObject(dynamicObject, health: 10);
+  //   }
+  // }
 
-  void respawnDynamicObject(DynamicObject dynamicObject, {required int health}){
+  void respawnDynamicObject(GameObject dynamicObject, {required int health}){
     assert(health > 0);
     for (final player in players) {
       dynamicObject.health = health;
       dynamicObject.collidable = true;
       player.writeDynamicObjectSpawned(dynamicObject);
     }
-  }
-}
-
-void playerInteract(Player player) {
-  for (InteractableNpc npc in player.game.npcs) {
-    npc.onInteractedWith(player);
-    return;
-  }
-  for (StaticObject environmentObject in player.game.scene.objectsStatic) {
-    if (environmentObject.type == ObjectType.House02) {}
-    ;
   }
 }
 

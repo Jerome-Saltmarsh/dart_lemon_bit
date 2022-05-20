@@ -2,10 +2,8 @@
 import 'package:fast_noise/fast_noise.dart';
 import 'package:lemon_math/library.dart';
 
-import 'classes/DynamicObject.dart';
-import 'classes/EnvironmentObject.dart';
+import 'classes/game_object.dart';
 import 'classes/Scene.dart';
-import 'common/Tile.dart';
 import 'common/library.dart';
 import 'enums.dart';
 import 'utilities.dart';
@@ -27,8 +25,7 @@ Scene generateRandomScene({
   );
 
   final tiles = <List<int>>[];
-  final objectsStatic = <StaticObject>[];
-  final objectsDynamic = <DynamicObject>[];
+  final gameObjects = <GameObject> [];
   for (var rowIndex = 0; rowIndex < rows; rowIndex++) {
     final noiseColumn = noiseMap[rowIndex];
     final column = <int>[];
@@ -271,21 +268,20 @@ Scene generateRandomScene({
     spawnCellZombies.add(SpawnCell(row, column));
   }
 
-
-  for (var i = 0; i < objectsStatic.length; i++) {
-    final object = objectsStatic[i];
+  for (var i = 0; i < gameObjects.length; i++) {
+    final object = gameObjects[i];
      for (final playerStarting in spawnCellPlayers) {
        if (object.getDistance(playerStarting) > 100) continue;
-       objectsStatic.removeAt(i);
+       gameObjects.removeAt(i);
        i--;
      }
   }
 
-  for (var i = 0; i < objectsDynamic.length; i++) {
-    final object = objectsDynamic[i];
+  for (var i = 0; i < gameObjects.length; i++) {
+    final object = gameObjects[i];
     for (final playerStarting in spawnCellPlayers) {
       if (object.getDistance(playerStarting) > 100) continue;
-      objectsDynamic.removeAt(i);
+      gameObjects.removeAt(i);
       i--;
     }
   }
@@ -294,29 +290,9 @@ Scene generateRandomScene({
       structures: [],
       tiles: tiles,
       characters: [],
-      objectsStatic: objectsStatic,
-      objectsDynamic: objectsDynamic,
+      gameObjects: gameObjects,
       spawnPointZombies: spawnCellZombies,
       spawnPointPlayers: spawnCellPlayers,
-  );
-}
-
-Scene generateCave({
-  required int rows,
-  required int columns,
-  int seed = 0,
-  int numberOfSpawnPointPlayers = 5,
-  int numberOfSpawnPointZombies = 5,
-}) {
-  final tiles = <List<int>>[];
-  return Scene(
-      tiles: tiles,
-      structures: [],
-      objectsStatic: [],
-      objectsDynamic: [],
-      characters: [],
-      spawnPointPlayers: [],
-      spawnPointZombies: []
   );
 }
 
@@ -347,10 +323,10 @@ void generateRandomTorches(Scene scene, {required int amount, int separation = 2
   for (var i = 0; i < amount; i++) {
     final node = scene.getRandomAvailableNode();
 
-    final nearestTorch = scene.findNearestStaticObjectByType(
+    final nearestTorch = scene.findNearestGameObjectByType(
         x: node.x,
         y: node.y,
-        type: ObjectType.Torch
+        type: GameObjectType.Torch
     );
     if (nearestTorch != null) {
       if (node.getDistance(nearestTorch) < separation) {
@@ -358,6 +334,13 @@ void generateRandomTorches(Scene scene, {required int amount, int separation = 2
         continue;
       }
     }
-    scene.addObjectStatic(StaticObject(x: node.x, y: node.y, type: ObjectType.Torch));
+    scene.addGameObject(
+        GameObject(
+            x: node.x,
+            y: node.y,
+            type: GameObjectType.Rock,
+            health: 1
+        )
+    );
   }
 }

@@ -1,11 +1,10 @@
 import 'package:bleed_common/ItemType.dart';
-import 'package:bleed_common/ObjectType.dart';
 import 'package:bleed_common/SceneJson.dart';
 import 'package:bleed_common/Tile.dart';
 import 'package:bleed_common/constants.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
-import 'package:gamestream_flutter/classes/static_object.dart';
+import 'package:gamestream_flutter/classes/game_object.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/isometric/classes.dart';
@@ -24,19 +23,19 @@ class EditorActions with EditorScope {
   final EditorCompile compile;
   EditorActions(this.compile);
 
-  void addEnvironmentObject () {
-    state.environmentObjects.add(
-        StaticObject(
-          x: mouseWorldX,
-          y: mouseWorldY,
-          type: state.objectType.value,
-        )
-    );
-    if (state.objectType.value == ObjectType.Torch) {
-      isometric.resetLighting();
-    }
-    engine.redrawCanvas();
-  }
+  // void addEnvironmentObject () {
+  //   state.environmentObjects.add(
+  //       StaticObject(
+  //         x: mouseWorldX,
+  //         y: mouseWorldY,
+  //         type: state.objectType.value,
+  //       )
+  //   );
+  //   if (state.objectType.value == ObjectType.Torch) {
+  //     isometric.resetLighting();
+  //   }
+  //   engine.redrawCanvas();
+  // }
 
   void setTile() {
     setTileAtMouse(state.tile.value);
@@ -44,7 +43,7 @@ class EditorActions with EditorScope {
 
   void deleteSelected() {
     if (state.selected.value == null) return;
-    isometric.staticObjects.remove(state.selected.value);
+    byteStreamParser.gameObjects.remove(state.selected.value);
     state.selected.value = null;
     engine.redrawCanvas();
   }
@@ -73,7 +72,7 @@ class EditorActions with EditorScope {
   void moveSelectedToMouse(){
     final selected = state.selected.value;
     if (selected == null) return;
-    if (selected is StaticObject){
+    if (selected is GameObject){
       selected.move(mouseWorldX, mouseWorldY);
     } else{
       selected.x = mouseWorldX;
@@ -108,7 +107,7 @@ class EditorActions with EditorScope {
       isometric.tiles.add(columnTiles);
     }
     isometric.particleEmitters.clear();
-    isometric.staticObjects.clear();
+    byteStreamParser.gameObjects.clear();
     byteStreamParser.itemsTotal = 0;
     isometric.updateTileRender();
   }
@@ -156,13 +155,13 @@ class EditorActions with EditorScope {
     isometric.tiles = mapJsonToTiles(jsonRows);
     isometric.refreshTileSize();
     final jsonEnvironment = mapJson['environment'];
-    state.environmentObjects.clear();
-    for (Json json in jsonEnvironment) {
-      final x = json.getDouble('x');
-      final y = json.getDouble('y');
-      final type = parseObjectTypeFromString(json['type']);
-      state.environmentObjects.add(StaticObject(x: x, y: y, type: type));
-    }
+    // state.environmentObjects.clear();
+    // for (Json json in jsonEnvironment) {
+    //   final x = json.getDouble('x');
+    //   final y = json.getDouble('y');
+    //   final type = parseObjectTypeFromString(json['type']);
+    //   state.environmentObjects.add(StaticObject(x: x, y: y, type: type));
+    // }
 
     isometric.minutes.value = mapJson[sceneFieldNames.startTime] / secondsPerHour;
 

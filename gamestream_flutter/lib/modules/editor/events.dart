@@ -105,7 +105,7 @@ class EditorEvents with EditorScope {
         actions.setTile();
         break;
       case ToolTab.Objects:
-        actions.addEnvironmentObject();
+        // actions.addEnvironmentObject();
         break;
       case ToolTab.All:
         break;

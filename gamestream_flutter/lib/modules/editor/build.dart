@@ -4,6 +4,7 @@ import 'package:bleed_common/library.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
@@ -40,7 +41,8 @@ class EditorBuild {
 
 
   List<Widget> _tabObjects() {
-    return ObjectType.values.map(buildEnvironmentType).toList();
+    // return ObjectType.values.map(buildEnvironmentType).toList();
+    return [];
   }
 
   List<Widget> _tabTiles() {
@@ -57,7 +59,7 @@ class EditorBuild {
   }
 
   List<Widget> _tabAll() {
-    return modules.isometric.staticObjects.map((env) {
+    return byteStreamParser.gameObjects.map((env) {
       return WatchBuilder(editor.state.selected, (Vector2? selected) {
             return button(enumString(env.type), () {
               editor.state.selected.value = env;
@@ -240,16 +242,16 @@ class EditorBuild {
         fillColor: selected ? _highlight : colours.transparent);
   }
 
-  Widget buildEnvironmentType(ObjectType type) {
-    return WatchBuilder(editor.state.objectType, (ObjectType selected) {
-      return button(parseEnvironmentObjectTypeToString(type), () {
-        editor.state.objectType.value = type;
-      },
-          fillColor: type == selected ? colours.purple : colours.transparent,
-          width: 200,
-          alignment: Alignment.centerLeft);
-    });
-  }
+  // Widget buildEnvironmentType(ObjectType type) {
+  //   return WatchBuilder(editor.state.objectType, (ObjectType selected) {
+  //     return button(parseEnvironmentObjectTypeToString(type), () {
+  //       editor.state.objectType.value = type;
+  //     },
+  //         fillColor: type == selected ? colours.purple : colours.transparent,
+  //         width: 200,
+  //         alignment: Alignment.centerLeft);
+  //   });
+  // }
 
   Widget _dialogSaveMap(){
     return buildDialog(

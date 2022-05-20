@@ -2,7 +2,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
-import 'package:gamestream_flutter/classes/static_object.dart';
+import 'package:gamestream_flutter/classes/game_object.dart';
 import 'package:gamestream_flutter/modules/isometric/classes.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -10,7 +10,7 @@ import 'package:lemon_watch/watch.dart';
 import 'enums.dart';
 
 class EditorState {
-  final environmentObjects = <StaticObject>[];
+  final gameObjects = <GameObject>[];
   final waitForPlayersToJoin = Watch(true);
   final numberOfPlayers = Watch(8);
   final teamType = Watch(TeamType.Solo);
@@ -23,7 +23,7 @@ class EditorState {
   final tile = Watch(Tile.Grass);
   final characterType = Watch(CharacterType.Human);
   final itemType = Watch(ItemType.Shotgun);
-  final objectType = Watch(objectTypes.first);
+  final objectType = Watch(GameObjectType.Tree);
   final dialog = Watch(EditorDialog.None);
   final mapNameController = TextEditingController();
   final error = Watch("");

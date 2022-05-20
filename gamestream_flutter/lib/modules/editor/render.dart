@@ -28,7 +28,7 @@ class EditorRender with EditorScope {
   }
 
   void renderStaticObjects() {
-    state.environmentObjects.forEach(isometric.render.renderStaticObject);
+    state.gameObjects.forEach(isometric.render.renderGameObject);
   }
 
   void _characters() {

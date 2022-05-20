@@ -8,7 +8,6 @@ enum ClientRequest {
   Purchase,
   Toggle_Debug,
   Version,
-  Interact,
   Speak,
   Skip_Hour,
   Reverse_Hour,

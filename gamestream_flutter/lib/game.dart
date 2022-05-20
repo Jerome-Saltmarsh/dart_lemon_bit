@@ -1,7 +1,7 @@
 import 'package:bleed_common/card_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/classes/Card.dart';
-import 'package:gamestream_flutter/classes/DynamicObject.dart';
+import 'package:gamestream_flutter/classes/game_object.dart';
 import 'package:gamestream_flutter/classes/GeneratedObject.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -14,7 +14,6 @@ import 'package:lemon_watch/watch.dart';
 import 'classes/Explosion.dart';
 import 'classes/NpcDebug.dart';
 import 'classes/Projectile.dart';
-import 'classes/static_object.dart';
 import 'modules/isometric/classes.dart';
 import 'modules/isometric/enums.dart';
 import 'ui/build/player.dart';
@@ -69,10 +68,10 @@ class Game with ByteReader {
   final zombies = <Character>[];
   final collectables = <Collectable>[];
   final interactableNpcs = <Character>[];
-  final dynamicObjects = <DynamicObject>[];
+  final gameObjects = <GameObject>[];
   final generatedObjects = <GeneratedObject>[];
   final effects = <Effect>[];
-  final torches = <StaticObject>[];
+  final torches = <GameObject>[]; // todo remove
   final projectiles = <Projectile>[];
   final crates = <Vector2>[];
   final bulletHoles = <Vector2>[];
@@ -140,8 +139,8 @@ class Game with ByteReader {
         case ServerResponse.Player_Events:
           _parsePlayerEvents();
           break;
-        case ServerResponse.Dynamic_Objects:
-          parseDynamicObjects();
+        case ServerResponse.Game_Objects:
+          readGameObjects();
           break;
 
         case ServerResponse.Player_Deck_Cooldown:
@@ -173,10 +172,6 @@ class Game with ByteReader {
 
         case ServerResponse.Character_Select_Required:
           parseCharacterSelectRequired();
-          break;
-
-        case ServerResponse.Static_Objects:
-          parseStaticObjects();
           break;
 
         case ServerResponse.Game_Status:
@@ -247,17 +242,17 @@ class Game with ByteReader {
 
         case ServerResponse.Dynamic_Object_Destroyed:
           final id = readInt();
-          dynamicObjects.removeWhere((dynamicObject) => dynamicObject.id == id);
+          gameObjects.removeWhere((dynamicObject) => dynamicObject.id == id);
           break;
 
         case ServerResponse.Dynamic_Object_Spawned:
-          final instance = DynamicObject();
+          final instance = GameObject();
           instance.type = readByte();
           instance.x = readDouble();
           instance.y = readDouble();
           instance.id = readInt();
-          dynamicObjects.add(instance);
-          sortVertically(dynamicObjects);
+          gameObjects.add(instance);
+          sortVertically(gameObjects);
           break;
 
         case ServerResponse.Lives_Remaining:
@@ -549,41 +544,49 @@ class Game with ByteReader {
     _events.onPlayerEvent(readByte());
   }
 
-  void parseStaticObjects() {
-    final staticObjects = isometric.staticObjects;
-    staticObjects.clear();
+  // void parseGameObject() {
+  //   final staticObjects = isometric.staticObjects;
+  //   staticObjects.clear();
+  //   while (true) {
+  //     final typeIndex = readByte();
+  //     if (typeIndex == END) break;
+  //     final x = readDouble();
+  //     final y = readDouble();
+  //     staticObjects.add(
+  //         StaticObject(
+  //             x: x,
+  //             y: y,
+  //             type: objectTypes[typeIndex],
+  //         )
+  //     );
+  //     if (typeIndex == ObjectType.Fireplace.index) {
+  //       isometric.addSmokeEmitter(x, y);
+  //     }
+  //   }
+  //   sortVertically(staticObjects);
+  // }
+
+  void readGameObjects() {
+    gameObjects.clear();
     while (true) {
       final typeIndex = readByte();
       if (typeIndex == END) break;
-      final x = readDouble();
-      final y = readDouble();
-      staticObjects.add(
-          StaticObject(
-              x: x,
-              y: y,
-              type: objectTypes[typeIndex],
-          )
-      );
-      if (typeIndex == ObjectType.Fireplace.index) {
-        isometric.addSmokeEmitter(x, y);
+      final instance = GameObject();
+      instance.type = typeIndex;
+      readPosition(instance);
+      instance.id = readPositiveInt();
+      gameObjects.add(instance);
+      instance.refreshRowAndColumn();
+
+      if (typeIndex == GameObjectType.Fireplace) {
+        isometric.addSmokeEmitter(instance.x, instance.y);
       }
     }
-    sortVertically(staticObjects);
   }
 
-
-  void parseDynamicObjects() {
-    dynamicObjects.clear();
-    while (true) {
-      final typeIndex = readByte();
-      if (typeIndex == END) break;
-      final instance = DynamicObject();
-      instance.type = typeIndex;
-      instance.x = readDouble();
-      instance.y = readDouble();
-      instance.id = readPositiveInt();
-      dynamicObjects.add(instance);
-    }
+  void readPosition(Position position){
+    position.x = readDouble();
+    position.y = readDouble();
   }
 
   void readVector2(Vector2 value){

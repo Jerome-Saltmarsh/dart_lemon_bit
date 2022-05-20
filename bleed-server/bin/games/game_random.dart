@@ -2,12 +2,8 @@
 
 import 'package:lemon_math/library.dart';
 
-import '../classes/AI.dart';
-import '../classes/Character.dart';
-import '../classes/EnvironmentObject.dart';
+import '../classes/library.dart';
 import '../common/card_type.dart';
-import '../classes/Game.dart';
-import '../classes/Player.dart';
 import '../common/library.dart';
 import '../scene_generator.dart';
 
@@ -28,8 +24,8 @@ class GameRandom extends Game {
       ),
       status: GameStatus.In_Progress
   ) {
-    scene.generateRandomGameObjects(type: DynamicObjectType.Tree, density: 0.04);
-    scene.generateRandomGameObjects(type: DynamicObjectType.Rock, density: 0.01);
+    scene.generateRandomGameObjects(type: GameObjectType.Tree, density: 0.04);
+    scene.generateRandomGameObjects(type: GameObjectType.Rock, density: 0.01);
     generateRandomTorches(scene, amount: 40);
 
     for (var i = 0; i < maxCreeps; i++) {
@@ -37,11 +33,12 @@ class GameRandom extends Game {
     }
 
     for (final playerSpawn in scene.spawnPointPlayers){
-       objectsStatic.add(
-           StaticObject(
+       scene.addGameObject(
+           GameObject(
                x: playerSpawn.x,
                y: playerSpawn.y,
-               type: ObjectType.Fireplace
+               type: GameObjectType.Fireplace,
+               health: 1,
            )
        );
        scene.getNodeByPosition(playerSpawn).obstructed = true;
@@ -50,7 +47,8 @@ class GameRandom extends Game {
 
   @override
   void update() {
-    time = (time + 10) % Duration.secondsPerDay;
+    const secondsPerDay = 86400;
+    time = (time + 10) % secondsPerDay;
   }
 
   void spawnCreep(){
