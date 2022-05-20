@@ -67,10 +67,9 @@
 [ ] FUCK PERFECTION
 [ ] Ability Stun Shot
 [ ] Card Icons
-
 [ ] Fix objects spawn on top of each other
-[ ] Fix fireplace spawn location
-[ ] REFACTOR Merge dynamic and static object into one gameobject
+[x] REFACTOR Merge dynamic and static object into one gameobject
+[x] Fix fireplace spawn location
 [x] Fix on respawn fireplaces do not emit light
 [x] Fix Camera spawns in wrong spot on initial spawn
 [x] CRITICAL Player teleports to top at bottom of map

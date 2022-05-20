@@ -356,7 +356,6 @@ class Game with ByteReader {
           _player.skillPoints.value = readByte();
           break;
 
-
         case ServerResponse.Player_Slots:
           break;
 
@@ -365,6 +364,8 @@ class Game with ByteReader {
           player.y = readDouble();
           isometric.resetLighting();
           cameraCenterOnPlayer();
+          engine.zoom = 1.0;
+          engine.targetZoom = 1.0;
           break;
 
         case ServerResponse.End:

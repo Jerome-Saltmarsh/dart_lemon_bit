@@ -200,7 +200,26 @@ Scene generateRandomScene({
   for (var i = 0; i < numberOfSpawnPointPlayers; i++) {
     final row = randomInt(0, rows);
     final column = randomInt(0, columns);
-    if (!isWalkable(tiles[row][column])) {
+
+    var available = true;
+
+    for (var rowCheck = -1; rowCheck <= 1; rowCheck++) {
+      if (!available) break;
+      final rowCheckIndex = row + rowCheck;
+      if (rowCheckIndex < 0) continue;
+      if (rowCheckIndex >= rows) continue;
+      for (var columnCheck = -1; columnCheck <= 1; columnCheck++) {
+        if (!available) break;
+        final columnCheckIndex = column + columnCheck;
+        if (columnCheckIndex < 0) continue;
+        if (columnCheckIndex > columns) continue;
+        if (isWalkable(tiles[rowCheckIndex][columnCheckIndex])) continue;
+        available = false;
+        break;
+      }
+    }
+
+    if (!available){
       i--;
       continue;
     }
@@ -219,13 +238,6 @@ Scene generateRandomScene({
       continue;
     }
     spawnCellPlayers.add(SpawnCell(row, column));
-    // objectsStatic.add(
-    //     StaticObject(
-    //         x: getTilePositionX(row, column),
-    //         y: getTilePositionY(row, column),
-    //         type: ObjectType.Flag
-    //     )
-    // );
   }
 
 
