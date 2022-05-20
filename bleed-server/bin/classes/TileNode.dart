@@ -32,6 +32,13 @@ class Node with Position {
 
   int depth = 0;
 
+  bool get visitable {
+    if (!open) return false;
+    if (obstructed) return false;
+    if (searchId == pathFindSearchID) return false;
+    return true;
+  }
+
   bool get closed => !open;
 
   Node(this.open);

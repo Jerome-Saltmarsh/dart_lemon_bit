@@ -61,6 +61,7 @@
 [ ] Stun Shot (every 5th shot stuns your enemy)
 [ ] Kill shot (applies 3x damage)
 [ ] (IDEA) Round Light Emission
+[ ] (IDEA) Strikes charge up powers instead of cooldown duration (this adds an additional satisfaction to striking)
 [ ] Vampire Shot
 [ ] Passive Card - Increased Range
 [ ] Passive Card - Increased Damage

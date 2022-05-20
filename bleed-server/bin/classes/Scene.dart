@@ -231,7 +231,6 @@ class Scene {
     return tiles[row][column];
   }
 
-
   bool visitDirection(int direction, Node from) {
     if (direction == Direction.UpLeft && !from.up.open && !from.left.open) return false;
     if (direction == Direction.DownLeft && !from.down.open && !from.left.open) return false;
@@ -290,12 +289,7 @@ class Scene {
   }
 
   bool visitNode(Node node, Node previous) {
-    if (!node.open) return false;
-    if (node.obstructed) return false;
-
-    if (node.searchId == pathFindSearchID) {
-      return false;
-    }
+    if (!node.visitable) return false;
 
     if (node.reserveId == pathFindSearchID){
       if (node.reserved != previous){
