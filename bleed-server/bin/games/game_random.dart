@@ -33,15 +33,11 @@ class GameRandom extends Game {
     }
 
     for (final playerSpawn in scene.spawnPointPlayers){
-       scene.addGameObject(
-           GameObject(
-               x: playerSpawn.x,
-               y: playerSpawn.y,
-               type: GameObjectType.Fireplace,
-               health: 1,
-           )
+       scene.addGameObjectAtXY(
+           type: GameObjectType.Fireplace,
+           x: playerSpawn.x,
+           y: playerSpawn.y
        );
-       scene.getNodeByPosition(playerSpawn).obstructed = true;
     }
   }
 

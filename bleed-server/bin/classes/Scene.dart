@@ -180,7 +180,23 @@ class Scene {
           type: type,
           x: getTilePositionX(node.row, node.column),
           y: getTilePositionY(node.row, node.column),
-          health: 10,
+          health: health,
+        )
+    );
+  }
+
+  void addGameObjectAtXY({
+    required int type,
+    required double x,
+    required double y,
+    int health = 1
+  }) {
+    addGameObject(
+        GameObject(
+          type: type,
+          x: x,
+          y: y,
+          health: health,
         )
     );
   }
