@@ -12,7 +12,7 @@ import '../maths.dart';
 import '../physics.dart';
 import '../utilities.dart';
 import 'AI.dart';
-import 'Ability.dart';
+import 'cards.dart';
 import 'Character.dart';
 import 'Collectable.dart';
 import 'Collider.dart';

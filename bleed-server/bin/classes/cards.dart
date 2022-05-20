@@ -47,4 +47,7 @@ class CardAbilityBowLongShot extends CardAbility {
 }
 
 
+class CardPassive extends Card {
+  CardPassive(CardType type) : super(type);
+}
 
