@@ -1586,3 +1586,4 @@ int calculateDamage({
       return 0;
   }
 }
+

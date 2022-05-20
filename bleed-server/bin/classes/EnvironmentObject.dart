@@ -11,7 +11,7 @@ class StaticObject extends Collider {
             radius: const <ObjectType, double>{
                   ObjectType.House01: 40,
                   ObjectType.House02: 40,
-                  ObjectType.Tree01: 7,
+                  ObjectType.Tree: 7,
                   ObjectType.Rock: 14,
                   ObjectType.Torch: 9,
                   ObjectType.Tree_Stump: 7,

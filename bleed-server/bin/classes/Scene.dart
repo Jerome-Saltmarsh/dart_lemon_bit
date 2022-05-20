@@ -137,7 +137,7 @@ class Scene {
               )
           );
        }
-       if (env.type == ObjectType.Tree01) {
+       if (env.type == ObjectType.Tree) {
          objectsStatic.removeAt(i);
          i--;
          objectsDynamic.add(
@@ -163,10 +163,34 @@ class Scene {
     sortVertically(objectsStatic);
   }
 
+  void generateRandomGameObjects({required int type, double density = 0.05}) {
+    for (final nodeRow in nodes){
+       for (final node in nodeRow) {
+          if (node.obstructed) continue;
+          if (node.closed) continue;
+          if (random.nextDouble() > density) continue;
+          addDynamicObject(
+              DynamicObject(
+                type: type,
+                x: getTilePositionX(node.row, node.column),
+                y: getTilePositionY(node.row, node.column),
+                health: 10,
+              )
+          );
+       }
+    }
+  }
+
   void addObjectStatic(StaticObject value) {
     objectsStatic.add(value);
     getNodeByPosition(value).obstructed = true;
     sortVertically(objectsStatic);
+  }
+
+  void addDynamicObject(DynamicObject value) {
+    objectsDynamic.add(value);
+    getNodeByPosition(value).obstructed = true;
+    sortVertically(objectsDynamic);
   }
 
   int getTileAtPosition(Position position){
@@ -337,6 +361,15 @@ class Scene {
         if (getTileAtPosition(node) != type) continue;
         return node;
      }
+  }
+
+  Node getRandomAvailableNode() {
+    while (true) {
+      final node = getRandomTileNode();
+      if (node.closed) continue;
+      if (node.obstructed) continue;
+      return node;
+    }
   }
 
   Node getRandomTileNode() {

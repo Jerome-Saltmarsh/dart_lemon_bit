@@ -5,9 +5,8 @@ import 'package:lemon_math/library.dart';
 import 'classes/DynamicObject.dart';
 import 'classes/EnvironmentObject.dart';
 import 'classes/Scene.dart';
-import 'common/DynamicObjectType.dart';
-import 'common/ObjectType.dart';
 import 'common/Tile.dart';
+import 'common/library.dart';
 import 'enums.dart';
 import 'utilities.dart';
 
@@ -47,31 +46,31 @@ Scene generateRandomScene({
          } else {
            column.add(Tile.Grass);
          }
-         if (random.nextDouble() < 0.05) {
-           objectsStatic.add(
-               StaticObject(
-                   x: getTilePositionX(rowIndex, columnIndex),
-                   y: getTilePositionY(rowIndex, columnIndex),
-                   type: randomItem(const [
-                     ObjectType.Tree01,
-                     ObjectType.Tree01,
-                     ObjectType.Rock,
-                     ObjectType.Tree_Stump,
-                     ObjectType.Long_Grass,
-                   ])
-               )
-           );
-       }
-         else
-         if (random.nextDouble() < 0.001) {
-           objectsDynamic.add(
-               DynamicObject(
-                 type: DynamicObjectType.Chest,
-                   x: getTilePositionX(rowIndex, columnIndex),
-                   y: getTilePositionY(rowIndex, columnIndex),
-                   health: 50
-           ));
-         }
+       //   if (random.nextDouble() < 0.05) {
+       //     objectsStatic.add(
+       //         StaticObject(
+       //             x: getTilePositionX(rowIndex, columnIndex),
+       //             y: getTilePositionY(rowIndex, columnIndex),
+       //             type: randomItem(const [
+       //               ObjectType.Tree01,
+       //               ObjectType.Tree01,
+       //               ObjectType.Rock,
+       //               ObjectType.Tree_Stump,
+       //               ObjectType.Long_Grass,
+       //             ])
+       //         )
+       //     );
+       // }
+       //   else
+       //   if (random.nextDouble() < 0.001) {
+       //     objectsDynamic.add(
+       //         DynamicObject(
+       //           type: DynamicObjectType.Chest,
+       //             x: getTilePositionX(rowIndex, columnIndex),
+       //             y: getTilePositionY(rowIndex, columnIndex),
+       //             health: 50
+       //     ));
+       //   }
        } else if (noise < 0.55) {
          column.add(Tile.Block_Grass);
        } else if (noise < 0.65) {
@@ -223,13 +222,13 @@ Scene generateRandomScene({
       continue;
     }
     spawnCellPlayers.add(SpawnCell(row, column));
-    objectsStatic.add(
-        StaticObject(
-            x: getTilePositionX(row, column),
-            y: getTilePositionY(row, column),
-            type: ObjectType.Flag
-        )
-    );
+    // objectsStatic.add(
+    //     StaticObject(
+    //         x: getTilePositionX(row, column),
+    //         y: getTilePositionY(row, column),
+    //         type: ObjectType.Flag
+    //     )
+    // );
   }
 
 
@@ -343,3 +342,22 @@ class SpawnCell with Position {
   }
 }
 
+
+void generateRandomTorches(Scene scene, {required int amount, int separation = 200}){
+  for (var i = 0; i < amount; i++) {
+    final node = scene.getRandomAvailableNode();
+
+    final nearestTorch = scene.findNearestStaticObjectByType(
+        x: node.x,
+        y: node.y,
+        type: ObjectType.Torch
+    );
+    if (nearestTorch != null) {
+      if (node.getDistance(nearestTorch) < separation) {
+        i--;
+        continue;
+      }
+    }
+    scene.addObjectStatic(StaticObject(x: node.x, y: node.y, type: ObjectType.Torch));
+  }
+}

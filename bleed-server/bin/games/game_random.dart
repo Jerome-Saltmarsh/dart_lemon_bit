@@ -28,6 +28,10 @@ class GameRandom extends Game {
       ),
       status: GameStatus.In_Progress
   ) {
+    scene.generateRandomGameObjects(type: DynamicObjectType.Tree, density: 0.04);
+    scene.generateRandomGameObjects(type: DynamicObjectType.Rock, density: 0.01);
+    generateRandomTorches(scene, amount: 40);
+
     for (var i = 0; i < maxCreeps; i++) {
       spawnCreep();
     }
@@ -41,25 +45,6 @@ class GameRandom extends Game {
            )
        );
        scene.getNodeByPosition(playerSpawn).obstructed = true;
-    }
-
-    for (var i = 0; i < 40; i++) {
-       final node = scene.getRandomNodeByTileType(Tile.Grass);
-       final nearestTorch = scene.findNearestStaticObjectByType(
-           x: node.x,
-           y: node.y,
-           type: ObjectType.Torch
-       );
-       if (nearestTorch != null) {
-          if (node.getDistance(nearestTorch) < 200) {
-            i--;
-            continue;
-          }
-       }
-       objectsStatic.add(
-           StaticObject(x: node.x, y: node.y, type: ObjectType.Torch)
-       );
-       node.obstructed = true;
     }
   }
 

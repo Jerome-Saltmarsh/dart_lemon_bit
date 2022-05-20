@@ -1,6 +1,6 @@
 enum ObjectType {
   House01,
-  Tree01,
+  Tree,
   Rock,
   House02,
   Grave,
@@ -18,7 +18,7 @@ enum ObjectType {
 }
 
 const dynamicObjectTypes = <ObjectType>[
-   ObjectType.Tree01,
+   ObjectType.Tree,
    ObjectType.Rock,
 ];
 
