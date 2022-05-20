@@ -575,7 +575,7 @@ class Game with ByteReader {
       final instance = GameObject();
       instance.type = typeIndex;
       readPosition(instance);
-      instance.id = readPositiveInt();
+      // instance.id = readPositiveInt();
       gameObjects.add(instance);
       instance.refreshRowAndColumn();
 

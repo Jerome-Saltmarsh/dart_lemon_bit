@@ -32,10 +32,10 @@
     [ ] Bazooka
     [ ] Machine gunner
 [ENGINE]
-[x] DynamicObject.Id should be big int
 [ ] Preload audios
-[ ] Refactor Game with ByteReader
 [ ] Refactor (client) Merge Game and GameState
+[x] Refactor Game with ByteReader
+[x] DynamicObject.Id should be big int
 [RELEASE]
 [ ] Every 7 levels travel to the next world difficulty
 [ ] Head Card

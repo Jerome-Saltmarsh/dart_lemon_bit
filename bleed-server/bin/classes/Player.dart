@@ -471,7 +471,7 @@ extension PlayerProperties on Player {
     for (final gameObject in gameObjects) {
        writeByte(gameObject.type);
        writePosition(gameObject);
-       writePositiveInt(gameObject.id);
+       // writePositiveInt(gameObject.id);
     }
     writeByte(END);
   }
