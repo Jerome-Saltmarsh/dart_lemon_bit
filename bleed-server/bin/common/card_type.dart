@@ -19,15 +19,22 @@ enum CardType {
    Passive_General_Critical_Hit,
    Passive_Bow_Run_Speed,
    Passive_Increase_Damage_2,
-   Passive_Bow_Split, // Splits arrows that auto aim at nearby multiple nearby targets
 }
 
 const cardTypes = CardType.values;
 
 CardGenre getCardTypeGenre(CardType cardType) {
   final genre = const<CardType, CardGenre> {
+    CardType.Ability_Staff_Strong_Orb: CardGenre.Ability,
+    CardType.Ability_Staff_Heal_10: CardGenre.Ability,
+    CardType.Ability_Staff_Explosion: CardGenre.Ability,
     CardType.Ability_Bow_Long_Shot: CardGenre.Ability,
+    CardType.Ability_Bow_Freeze: CardGenre.Ability,
     CardType.Ability_Bow_Volley: CardGenre.Ability,
+    CardType.Passive_General_Critical_Hit: CardGenre.Passive,
+    CardType.Passive_Bow_Run_Speed: CardGenre.Passive,
+    CardType.Passive_General_Max_HP_10: CardGenre.Passive,
+    CardType.Passive_Increase_Damage_2: CardGenre.Passive,
   }[cardType];
   if(genre == null) throw Exception("$cardType does not have a card genre");
   return genre;
@@ -85,7 +92,6 @@ const cardTypeBowAbilities = <CardType> [
 
 const cardTypeBowPassives = <CardType> [
   CardType.Passive_Bow_Run_Speed,
-  CardType.Passive_Bow_Split,
 ];
 
 String getCardTypeName(CardType value) {
@@ -100,7 +106,6 @@ String getCardTypeName(CardType value) {
       CardType.Passive_General_Max_HP_10: "Max hp+10",
       CardType.Passive_General_Critical_Hit: "Critical Hit",
       CardType.Passive_Bow_Run_Speed: "Light Feet",
-      CardType.Passive_Bow_Split: "Split Arrow",
    }[value] ?? value.name;
 }
 

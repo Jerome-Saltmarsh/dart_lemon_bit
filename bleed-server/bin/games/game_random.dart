@@ -11,8 +11,10 @@ class GameRandom extends Game {
   var time = 12 * 60 * 60;
 
   static const maxPlayers = 12;
-  static const maxCreeps = 150;
+  static const creepsPerPlayer = 25;
 
+  int get maxCreeps => players.length * creepsPerPlayer;
+  bool get zombiesMax => numberOfAliveZombies >= maxCreeps;
   bool get full => players.length >= maxPlayers;
   bool get empty => players.length <= 0;
 
@@ -65,6 +67,11 @@ class GameRandom extends Game {
       y: spawnLocation.y,
     );
     onPlayerSelectCharacterType(player, selection);
+
+    while (!zombiesMax) {
+      spawnCreep();
+    }
+
     return player;
   }
 
@@ -154,7 +161,7 @@ class GameRandom extends Game {
       src.gainExperience(75);
     }
 
-    if (src is AI) {
+    if (src is AI && !zombiesMax) {
        spawnCreep();
     }
   }

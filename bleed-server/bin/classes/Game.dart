@@ -1395,16 +1395,6 @@ extension GameFunctions on Game {
     if (character.equippedTypeIsBow) {
       dispatchV2(GameEventType.Release_Bow, character);
       spawnArrow(character, damage: damage, target: character.attackTarget);
-
-      if (character is Player){
-        final split = character.numberOfCardsOfType(CardType.Passive_Bow_Split);
-
-        for (var i = 0; i < split; i++) {
-          const offset = pi * 0.0625;
-          spawnArrow(character, damage: damage, angle: character.angle + giveOrTake(offset));
-        }
-      }
-
       return;
     }
     if (character.equippedIsMelee) {

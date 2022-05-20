@@ -47,10 +47,6 @@ Card convertCardTypeToCard(CardType type){
       // TODO: Handle this case.
          break;
       case CardType.Passive_Increase_Damage_2:
-      // TODO: Handle this case.
-         break;
-      case CardType.Passive_Bow_Split:
-      // TODO: Handle this case.
          break;
    }
    throw UnimplementedError('Cannot convert card type $type to card');
