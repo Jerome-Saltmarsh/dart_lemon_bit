@@ -68,9 +68,9 @@
 [ ] Ability Stun Shot
 [ ] Card Icons
 [ ] Fix objects spawn on top of each other
+[ ] Fix on respawn fireplaces do not emit light
 [x] REFACTOR Merge dynamic and static object into one gameobject
 [x] Fix fireplace spawn location
-[x] Fix on respawn fireplaces do not emit light
 [x] Fix Camera spawns in wrong spot on initial spawn
 [x] CRITICAL Player teleports to top at bottom of map
 [x] CRITICAL Fix zombies stop rendering when player at bottom of map

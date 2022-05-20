@@ -26,7 +26,7 @@ class GameRandom extends Game {
   ) {
     scene.generateRandomGameObjects(type: GameObjectType.Tree, density: 0.04);
     scene.generateRandomGameObjects(type: GameObjectType.Rock, density: 0.01);
-    generateRandomTorches(scene, amount: 40);
+    generateRandomSeparatedGameObjects(scene, amount: 40, type: GameObjectType.Torch);
 
     for (var i = 0; i < maxCreeps; i++) {
       spawnCreep();

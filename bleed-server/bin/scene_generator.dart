@@ -331,28 +331,24 @@ class SpawnCell with Position {
 }
 
 
-void generateRandomTorches(Scene scene, {required int amount, int separation = 200}){
+void generateRandomSeparatedGameObjects(Scene scene, {required int type, required int amount, int separation = 200}){
   for (var i = 0; i < amount; i++) {
     final node = scene.getRandomAvailableNode();
 
-    final nearestTorch = scene.findNearestGameObjectByType(
+    final nearest = scene.findNearestGameObjectByType(
         x: node.x,
         y: node.y,
-        type: GameObjectType.Torch
+        type: type
     );
-    if (nearestTorch != null) {
-      if (node.getDistance(nearestTorch) < separation) {
+    if (nearest != null) {
+      if (node.getDistance(nearest) < separation) {
         i--;
         continue;
       }
     }
-    scene.addGameObject(
-        GameObject(
-            x: node.x,
-            y: node.y,
-            type: GameObjectType.Rock,
-            health: 1
-        )
+    scene.addGameObjectAtNode(
+      node: node,
+      type: type,
     );
   }
 }
