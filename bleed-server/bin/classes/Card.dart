@@ -13,7 +13,7 @@ Card convertCardTypeToCard(CardType type){
       return CardPassive(type);
    }
 
-   switch(type){
+   switch(type) {
       case CardType.Weapon_Sword:
          break;
       case CardType.Weapon_Bow:
