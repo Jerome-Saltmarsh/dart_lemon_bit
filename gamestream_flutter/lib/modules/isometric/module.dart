@@ -392,7 +392,7 @@ class IsometricModule {
   }
 
   void applyGameObjectsToBakeMapping(){
-    for (final gameObject in byteStreamParser.gameObjects){
+    for (final gameObject in byteStreamParser.gameObjects) {
       final type = gameObject.type;
       if (type == GameObjectType.Torch){
         emitLightBakeHigh(gameObject.x, gameObject.y);
@@ -402,42 +402,49 @@ class IsometricModule {
         emitLightMedium(bake, gameObject.x, gameObject.y);
         continue;
       }
-      if (type == GameObjectType.Fireplace){
+      if (type == GameObjectType.Fireplace) {
         emitLightHighLarge2(bake, gameObject.x, gameObject.y);
         continue;
       }
     }
   }
 
+  void resetShaderToAmbient(List<Int8List> shader){
+    final ambient = this.ambient.value;
+    final rows = this.totalRows.value;
+    final columns = this.totalColumns.value;
+    final currentRows = shader.isEmpty ? 0 : shader.length;
+    final currentColumns = currentRows > 0 ? shader[0].length : 0;
+
+    if (currentRows != rows || currentColumns != columns){
+      print("clearing shader");
+      shader.clear();
+      for (var rowIndex = 0; rowIndex < rows; rowIndex++) {
+        final newRow = Int8List(columns);
+        shader.add(newRow);
+        for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
+          newRow[columnIndex] = ambient;
+        }
+      }
+    } else {
+      print("resetting shader");
+      for (final row in shader) {
+        for (var i = 0 ; i < columns; i++){
+          row[i] = ambient;
+        }
+      }
+    }
+  }
 
   void resetBakeMap(){
     refreshAmbientLight();
-    final ambient = this.ambient.value;
-    final rows = this.totalRows.value;
-    final columns = this.totalColumns.value;
-    bake.clear();
-    for (var row = 0; row < rows; row++) {
-      final _baked = Int8List(columns);
-      bake.add(_baked);
-      for (var column = 0; column < columns; column++) {
-        _baked[column] = ambient;
-      }
-    }
+    resetShaderToAmbient(bake);
     applyGameObjectsToBakeMapping();
   }
 
+  // TODO Optimize
   void resetDynamicMap(){
-    final rows = this.totalRows.value;
-    final columns = this.totalColumns.value;
-    final ambient = this.ambient.value;
-    dynamic.clear();
-    for (var row = 0; row < rows; row++) {
-      final dynamicRow = Int8List(columns);
-      dynamic.add(dynamicRow);
-      for (var column = 0; column < columns; column++) {
-        dynamicRow[column] = ambient;
-      }
-    }
+    resetShaderToAmbient(dynamic);
   }
 
   // TODO Optimize
@@ -453,7 +460,10 @@ class IsometricModule {
 
   /// Expensive method
   void resetLighting(){
-    refreshAmbientLight();
+    print("resetLighting()");
+    // final currentHour = hours.value;
+    // hours.value = (hours.value + 12) % 24;
+    // hours.value = currentHour;
     refreshTileSize();
     resetBakeMap();
     resetDynamicMap();
@@ -462,6 +472,7 @@ class IsometricModule {
   }
 
   void updateTileRender(){
+    print("updateTileRender()");
     resetTilesSrcDst();
     resetLighting();
   }
@@ -707,6 +718,9 @@ class IsometricModule {
   }
 
   void refreshAmbientLight(){
+    // final hour = hours.value;
+    // hours.value = (hours.value + 12) % 24;
+    // hours.value = hour;
     final phase = Phase.fromHour(hours.value);
     final phaseBrightness = Phase.toShade(phase);
     if (maxAmbientBrightness.value > phaseBrightness) return;

@@ -178,7 +178,6 @@ class Game with ByteReader {
           core.state.status.value = gameStatuses[readByte()];
           break;
 
-
         case ServerResponse.Tiles:
           parseTiles();
           break;

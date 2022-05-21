@@ -120,6 +120,7 @@ class GameRandom extends Game {
 
     if (player.selection == CharacterSelection.Archer){
       player.addCardToDeck(CardType.Ability_Bow_Volley);
+      player.addCardToDeck(CardType.Passive_Bow_Run_Speed);
     }
 
     player.writeDeck();
