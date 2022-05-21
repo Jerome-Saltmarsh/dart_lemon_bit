@@ -71,7 +71,6 @@ class GameRandom extends Game {
     while (!zombiesMax) {
       spawnCreep();
     }
-
     return player;
   }
 
@@ -120,8 +119,7 @@ class GameRandom extends Game {
     player.writePlayerSpawned();
 
     if (player.selection == CharacterSelection.Archer){
-      // player.deck.add(CardAbilityBowLongShot());
-      // player.deck.add(CardAbilityBowVolley());
+      player.addCardToDeck(CardType.Ability_Bow_Volley);
     }
 
     player.writeDeck();

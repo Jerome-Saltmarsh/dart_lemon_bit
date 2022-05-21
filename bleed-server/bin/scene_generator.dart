@@ -212,7 +212,7 @@ Scene generateRandomScene({
         if (!available) break;
         final columnCheckIndex = column + columnCheck;
         if (columnCheckIndex < 0) continue;
-        if (columnCheckIndex > columns) continue;
+        if (columnCheckIndex >= columns) continue;
         if (isWalkable(tiles[rowCheckIndex][columnCheckIndex])) continue;
         available = false;
         break;

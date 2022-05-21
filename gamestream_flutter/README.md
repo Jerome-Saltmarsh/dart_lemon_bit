@@ -70,6 +70,10 @@
 [ ] Ability Stun Shot
 [ ] Fix on respawn fireplaces do not emit light
 [ ] Card Icons
+[ ] Fix Long shot ability
+[ ] Highlighted card description panel
+[ ] Upgrade card level
+[ ] Right click to cancel active ability
 [x] Fix objects spawn on top of each other
 [x] REFACTOR Merge dynamic and static object into one gameobject
 [x] Fix fireplace spawn location

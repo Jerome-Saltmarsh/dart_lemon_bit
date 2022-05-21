@@ -103,7 +103,7 @@ String getCardTypeName(CardType value) {
       CardType.Ability_Bow_Fire: "Fire Arrow",
       CardType.Ability_Bow_Volley: "Volley",
       CardType.Ability_Bow_Long_Shot: "Long Shot",
-      CardType.Passive_General_Max_HP_10: "Breastplate",
+      CardType.Passive_General_Max_HP_10: "Breast Plate",
       CardType.Passive_General_Critical_Hit: "Critical Hit",
       CardType.Passive_Bow_Run_Speed: "Feather Boots",
    }[value] ?? value.name;
