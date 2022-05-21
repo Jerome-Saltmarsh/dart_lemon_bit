@@ -105,7 +105,7 @@ String getCardTypeName(CardType value) {
       CardType.Ability_Bow_Long_Shot: "Long Shot",
       CardType.Passive_General_Max_HP_10: "Max hp+10",
       CardType.Passive_General_Critical_Hit: "Critical Hit",
-      CardType.Passive_Bow_Run_Speed: "Light Feet",
+      CardType.Passive_Bow_Run_Speed: "Feather Boots",
    }[value] ?? value.name;
 }
 

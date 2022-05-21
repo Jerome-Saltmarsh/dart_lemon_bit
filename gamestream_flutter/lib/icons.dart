@@ -11,6 +11,7 @@ class _Icons {
   final empty = buildIcon("slot-empty");
   final bag = buildIcon("bag");
   final bagGray = buildIcon("bag-gray");
+  final boots = buildIcon('boots');
   final armour = _ArmourIcons();
   final swords = _SwordIcons();
   final bows = _BowIcons();
