@@ -12,6 +12,9 @@ class _Icons {
   final bag = buildIcon("bag");
   final bagGray = buildIcon("bag-gray");
   final boots = buildIcon('boots');
+  final arrowSkull = buildIcon('arrow-skull');
+  final crossbow = buildIcon('crossbow');
+  final arrows = buildIcon('arrows');
   final armour = _ArmourIcons();
   final swords = _SwordIcons();
   final bows = _BowIcons();

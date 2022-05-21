@@ -46,6 +46,7 @@
 [ ] Collectable Health
 [ ] Collectable Experience
 [BETA-RELEASE]
+[ ] The Realm of Lost Dreams
 [ ] Power Cards
 [ ] Sword Powers
 [ ] Staff Powers
