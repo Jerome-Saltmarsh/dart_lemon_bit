@@ -57,7 +57,7 @@
 [ ] Fix on respawn fireplaces do not emit light
 [ ] Fix Long shot ability
 [ ] Fix prevent trees spawning on fireplaces
-[ ] Right click to cancel active ability
+[x] Right click to cancel active ability
 [x] Card Icons
 [x] Fix objects spawn on top of each other
 [x] REFACTOR Merge dynamic and static object into one gameobject
