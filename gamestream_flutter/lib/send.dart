@@ -53,6 +53,10 @@ void sendRequestAttack() {
   webSocket.send(ClientRequest.Attack.index);
 }
 
+void sendRequestAttackSecondary() {
+  sendClientRequest(ClientRequest.Attack_Secondary);
+}
+
 void sendRequestConstruct(int value) {
   sendClientRequest(ClientRequest.Construct, value);
 }

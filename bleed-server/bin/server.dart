@@ -180,7 +180,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           return;
         }
 
-        if (clientRequestInt == clientRequestIndexUpdate) {
+        if (clientRequestInt == 0) { // ClientRequest.Update.index
           if (player == null) {
             return;
           }
@@ -862,6 +862,20 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
         case ClientRequest.Attack:
           if (player == null) return;
           if (player.deadOrBusy) return;
+          player.target = null;
+          player.attackTarget = null;
+          player.angle = player.mouseAngle;
+          player.game.setCharacterStatePerforming(player);
+          break;
+
+        case ClientRequest.Attack_Secondary:
+          if (player == null) return;
+          if (player.deadOrBusy) return;
+
+          if (player.ability != null) {
+            player.clearCardAbility();
+            return;
+          }
           player.target = null;
           player.attackTarget = null;
           player.angle = player.mouseAngle;

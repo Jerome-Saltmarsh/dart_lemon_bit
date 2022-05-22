@@ -42,6 +42,7 @@ class GameEvents {
     engine.callbacks.onPanStarted = actions.playerPerform;
     engine.callbacks.onLongLeftClicked = actions.playerRun;
     engine.callbacks.onRightClicked = onMouseRightClick;
+    // engine.callbacks.onLeftClicked = onMouseLeftClick;
     byteStreamParser.type.onChanged(_onGameTypeChanged);
     state.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     state.player.alive.onChanged(_onPlayerAliveChanged);
@@ -84,17 +85,24 @@ class GameEvents {
      }
   }
 
-  void onMouseRightClick(){
-    if (modules.game.structureType.isNotNull) {
-      modules.game.structureType.value = null;
-      return;
-    }
 
-    if (state.player.ability.value != AbilityType.None) {
-      actions.deselectAbility();
-      return;
-    }
-    sendRequestAttack();
+  void onMouseLeftClick() {
+    actions.setCharacterActionPerform();
+  }
+
+
+  void onMouseRightClick(){
+    sendRequestAttackSecondary();
+    // if (modules.game.structureType.isNotNull) {
+    //   modules.game.structureType.value = null;
+    //   return;
+    // }
+    //
+    // if (state.player.ability.value != AbilityType.None) {
+    //   actions.deselectAbility();
+    //   return;
+    // }
+    // sendRequestAttack();
   }
 
   void onPlayerWeaponChanged(int value){

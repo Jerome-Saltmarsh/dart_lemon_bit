@@ -55,6 +55,7 @@ class GameActions {
     _action.value = value;
   }
 
+
   void setCharacterActionRun(){
     setCharacterAction(CharacterAction.Run);
   }

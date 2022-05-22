@@ -37,7 +37,6 @@ class GameUpdate {
       }
     }
 
-
     final direction = getKeyDirection();
     if (direction != null){
       _controller.angle = direction;

@@ -3,6 +3,7 @@ enum ClientRequest {
   Join,
   Join_Custom,
   Attack,
+  Attack_Secondary,
   Revive,
   Equip,
   Purchase,

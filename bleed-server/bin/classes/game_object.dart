@@ -21,6 +21,7 @@ class GameObject extends Collider with Health, Material, Id {
     GameObjectType.Rock: 10,
     GameObjectType.Tree: 7,
     GameObjectType.Grass: 7,
+    GameObjectType.Torch: 7,
   }[type] ?? 10) {
     maxHealth = health;
     this.health = health;

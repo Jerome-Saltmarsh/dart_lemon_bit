@@ -46,34 +46,19 @@
 [ ] Collectable Health
 [ ] Collectable Experience
 [BETA-RELEASE]
-[ ] The Realm of Lost Dreams
-[ ] Power Cards
-[ ] Sword Powers
-[ ] Staff Powers
-[ ] Fix spawn audio
-[ ] Bow Powers
-[ ] Card Images
-[ ] Card Description Panel
-[ ] Discard Card
-[ ] Weapon Slot
-[ ] Armour Slot
-[ ] Helm Slot
-[ ] Select card panel must be more obvious
-[ ] Stun Shot (every 5th shot stuns your enemy)
-[ ] Kill shot (applies 3x damage)
-[ ] (IDEA) Round Light Emission
 [ ] (IDEA) Strikes charge up powers instead of cooldown duration (this adds an additional satisfaction to striking)
-[ ] Vampire Shot
+[ ] Ability Vampire Shot
 [ ] Passive Card - Increased Range
 [ ] Passive Card - Increased Damage
 [ ] FUCK PERFECTION
 [ ] Ability Stun Shot
-[ ] Fix on respawn fireplaces do not emit light
-[ ] Card Icons
-[ ] Fix Long shot ability
 [ ] Highlighted card description panel
 [ ] Upgrade card level
+[ ] Fix on respawn fireplaces do not emit light
+[ ] Fix Long shot ability
+[ ] Fix prevent trees spawning on fireplaces
 [ ] Right click to cancel active ability
+[x] Card Icons
 [x] Fix objects spawn on top of each other
 [x] REFACTOR Merge dynamic and static object into one gameobject
 [x] Fix fireplace spawn location
