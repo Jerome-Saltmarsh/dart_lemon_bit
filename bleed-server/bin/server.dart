@@ -312,20 +312,18 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                     return;
                   }
                 case AbilityMode.Activated:
-                // TODO: Handle this case.
+                  ability.cooldownRemaining = ability.cooldown;
                   break;
                 case AbilityMode.Area:
                 // TODO: Handle this case.
                   break;
                 case AbilityMode.Directed:
-                // TODO: Handle this case.
+                  ability.cooldownRemaining = ability.cooldown;
+                  player.face(player.mouse);
+                  game.setCharacterState(player, CharacterState.Performing);
                   break;
               }
 
-              player.magic -= ability.cost;
-              ability.cooldownRemaining = ability.cooldown;
-              player.face(player.mouse);
-              game.setCharacterState(player, CharacterState.Performing);
               break;
             case CharacterAction.Run:
               player.angle =  args[6] * 0.78539816339; // 0.78539816339 == pi / 4

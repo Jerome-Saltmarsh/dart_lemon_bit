@@ -35,8 +35,10 @@ class GameRandom extends Game {
       );
     }
 
-    scene.generateRandomGameObjects(type: GameObjectType.Tree, density: 0.04);
+    scene.generateRandomGameObjects(type: GameObjectType.Tree, density: 0.03);
     scene.generateRandomGameObjects(type: GameObjectType.Rock, density: 0.01);
+    scene.generateRandomGameObjects(type: GameObjectType.Rock_Small, density: 0.002);
+    scene.generateRandomGameObjects(type: GameObjectType.Grass, density: 0.0025);
     generateRandomSeparatedGameObjects(scene, amount: 40, type: GameObjectType.Torch);
 
     for (var i = 0; i < maxCreeps; i++) {
@@ -122,7 +124,7 @@ class GameRandom extends Game {
 
     if (player.selection == CharacterSelection.Archer){
       player.addCardToDeck(CardType.Ability_Bow_Volley);
-      player.addCardToDeck(CardType.Passive_Bow_Run_Speed);
+      player.addCardToDeck(CardType.Ability_Bow_Long_Shot);
     }
 
     player.writeDeck();

@@ -643,8 +643,6 @@ extension GameFunctions on Game {
   }
 
   void setCharacterStatePerforming(Character character) {
-    // character.performing = character.ability;
-    // character.ability = null;
     setCharacterState(character, CharacterState.Performing);
   }
 
@@ -910,20 +908,25 @@ extension GameFunctions on Game {
       return;
     }
     final stateDuration = character.stateDuration;
+
+    if (stateDuration == 0){
+       ability.cooldownRemaining = ability.cooldown;
+    }
+
     if (
       ability is CardAbilityBowVolley
           &&
       const<int>[5, 8, 11].contains(stateDuration
     )) {
-        spawnArrow(character, damage: 5);
-        spawnArrow(character, damage: 5, angle: character.angle + 0.1);
-        spawnArrow(character, damage: 5, angle: character.angle + 0.2);
-        spawnArrow(character, damage: 5, angle: character.angle - 0.1);
-        spawnArrow(character, damage: 5, angle: character.angle - 0.2);
+        spawnArrow(character, damage: 5, range: ability.range);
+        spawnArrow(character, damage: 5, angle: character.angle + 0.1, range: ability.range);
+        spawnArrow(character, damage: 5, angle: character.angle + 0.2, range: ability.range);
+        spawnArrow(character, damage: 5, angle: character.angle - 0.1, range: ability.range);
+        spawnArrow(character, damage: 5, angle: character.angle - 0.2, range: ability.range);
     }
 
     if (ability is CardAbilityBowLongShot && stateDuration == 5) {
-       spawnArrow(character, damage: 15);
+       spawnArrow(character, damage: 15, range: ability.range);
     }
   }
 
@@ -989,6 +992,7 @@ extension GameFunctions on Game {
 
   Projectile spawnArrow(Position src, {
     required int damage,
+    required double range,
     double accuracy = 0,
     Collider? target,
     double? angle,
@@ -999,7 +1003,7 @@ extension GameFunctions on Game {
         src: src,
         accuracy: accuracy,
         speed: 7,
-        range: src.equippedRange,
+        range: range,
         target: target,
         angle: target != null ? null : angle ?? src.angle,
         projectileType: ProjectileType.Arrow,
@@ -1394,7 +1398,7 @@ extension GameFunctions on Game {
 
     if (character.equippedTypeIsBow) {
       dispatchV2(GameEventType.Release_Bow, character);
-      spawnArrow(character, damage: damage, target: character.attackTarget);
+      spawnArrow(character, damage: damage, target: character.attackTarget, range: character.equippedRange);
       return;
     }
     if (character.equippedIsMelee) {
@@ -1447,7 +1451,7 @@ extension GameFunctions on Game {
         if (zombie.dead) continue;
         if (onSameTeam(structure, zombie)) continue;
         if (!structure.withinRange(zombie)) continue;
-        spawnArrow(structure, target: zombie, damage: 1);
+        spawnArrow(structure, target: zombie, damage: 1, range: structure.radius);
         structure.cooldown = structure.attackRate;
         break;
       }

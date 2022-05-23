@@ -55,8 +55,10 @@
 [ ] Highlighted card description panel
 [ ] Upgrade card level
 [ ] 2 Minute Dev Log
-[ ] Fix on respawn fireplaces do not emit light
-[ ] Fix Long shot ability
+[ ] Fix on respawn fireplaces do not emit
+light
+[ ] Draw Wizard Orb
+[x] Fix Long shot ability
 [x] Fix prevent trees spawning on fireplaces
 [x] Right click to cancel active ability
 [x] Card Icons
