@@ -492,15 +492,15 @@ class IsometricSpawn {
 }
 
 
-void spawnParticleOrbShard(Position position) {
+void spawnParticleOrbShard({required double x, required double y, int duration = 12, double speed = 1.0}) {
      isometric.spawn.spawnParticle(
          type: ParticleType.Orb_Shard,
-         x: position.x,
-         y: position.y,
+         x: x,
+         y: y,
          angle: randomAngle(),
-         speed: 1,
+         speed: speed,
          scaleV: 0.01,
          weight: 0,
-         duration: 12,
+         duration: duration,
      );
 }

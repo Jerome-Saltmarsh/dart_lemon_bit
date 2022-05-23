@@ -721,11 +721,11 @@ extension GameFunctions on Game {
     projectile.active = false;
     if (scene.waterAt(projectile.x, projectile.y)) return;
     switch (projectile.type) {
-      case TechType.Handgun:
+      case ProjectileType.Bullet:
         dispatch(GameEventType.Bullet_Hole, projectile.x, projectile.y);
         break;
-      case TechType.Shotgun:
-        dispatch(GameEventType.Bullet_Hole, projectile.x, projectile.y);
+      case ProjectileType.Orb:
+        dispatch(GameEventType.Blue_Orb_Deactivated, projectile.x, projectile.y);
         break;
       default:
         break;
@@ -856,24 +856,15 @@ extension GameFunctions on Game {
     }
     projectile.owner = null;
     projectile.target = null;
-    dispatch(GameEventType.Arrow_Hit, collider.x, collider.y);
-  }
 
-  // void applyHit2({
-  //   required dynamic src,
-  //   required Collider target,
-  // }){
-  //   if (!target.collidable) return;
-  //   if (target is Character) {
-  //     if (onSameTeam(src, target)) return;
-  //     if (target.dead) return;
-  //   }
-  //   if (target is Health == false) return;
-  //
-  //   if (src is Player) {
-  //      applyDamage(src: src, target: target as Health, amount: src.getDamage());
-  //   }
-  // }
+    if (projectile.type == ProjectileType.Arrow){
+      dispatch(GameEventType.Arrow_Hit, collider.x, collider.y);
+    }
+    if (projectile.type == ProjectileType.Orb){
+      dispatch(GameEventType.Blue_Orb_Deactivated, collider.x, collider.y);
+    }
+
+  }
 
   void applyHit({
     required dynamic src,

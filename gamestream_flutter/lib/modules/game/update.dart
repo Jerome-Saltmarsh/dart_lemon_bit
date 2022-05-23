@@ -55,7 +55,7 @@ class GameUpdate {
     for (var i = 0; i < game.totalProjectiles; i++) {
       final projectile = game.projectiles[i];
       if (projectile.type != ProjectileType.Orb) continue;
-      spawnParticleOrbShard(projectile);
+      spawnParticleOrbShard(x: projectile.x, y: projectile.y);
     }
   }
 

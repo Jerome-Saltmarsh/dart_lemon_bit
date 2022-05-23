@@ -13,6 +13,7 @@ import 'package:bleed_common/StructureType.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
+import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/parse.dart';
 import 'package:gamestream_flutter/send.dart';
@@ -431,6 +432,17 @@ class GameEvents {
 
       case GameEventType.Zombie_Hurt:
         audio.zombieHurt(x, y);
+        break;
+
+      case GameEventType.Blue_Orb_Deactivated:
+        for (var i = 0; i < 8; i++){
+          spawnParticleOrbShard(
+              x: x,
+              y: y,
+              duration: 30,
+              speed: randomBetween(1, 2)
+          );
+        }
         break;
 
     }
