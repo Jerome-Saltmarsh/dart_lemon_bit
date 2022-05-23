@@ -669,7 +669,7 @@ class IsometricRender {
         dstX: x,
         dstY: y,
         srcX: 345,
-        srcY: 25,
+        srcY: 67,
         srcWidth: 8,
         srcHeight: 8,
         scale: scale
