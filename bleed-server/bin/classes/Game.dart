@@ -926,7 +926,7 @@ extension GameFunctions on Game {
     }
 
     if (ability is CardAbilityBowLongShot && stateDuration == 5) {
-       spawnArrow(character, damage: 15, range: ability.range);
+       spawnArrow(character, damage: 15, range: ability.range, target: character.attackTarget);
     }
   }
 
