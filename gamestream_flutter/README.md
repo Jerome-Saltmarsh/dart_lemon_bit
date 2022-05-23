@@ -55,8 +55,8 @@
 [ ] Highlighted card description panel
 [ ] Upgrade card level
 [ ] 2 Minute Dev Log
-[ ] Fix on respawn fireplaces do not emit
 [ ] Draw Wizard Orb
+[x] Fix on respawn fireplaces do not emit
 [x] Footstep Audio
 [x] Fix Long shot ability
 [x] Fix prevent trees spawning on fireplaces

@@ -341,20 +341,6 @@ class IsometricModule {
     applyShadeRing(shader, row, column, 4, Shade.Medium);
     applyShadeRing(shader, row, column, 5, Shade.Dark);
     applyShadeRing(shader, row, column, 6, Shade.Very_Dark);
-    // applyShade(shader, row, column + 3, Shade.Bright);
-    // applyShade(shader, row, column - 3, Shade.Bright);
-    // applyShade(shader, row + 1, column + 3, Shade.Bright);
-    // applyShade(shader, row - 1, column + 3, Shade.Bright);
-    // applyShade(shader, row + 1, column - 3, Shade.Bright);
-    // applyShade(shader, row - 1, column - 3, Shade.Bright);
-    //
-    // applyShade(shader, row + 3, column, Shade.Bright);
-    // applyShade(shader, row - 3, column, Shade.Bright);
-    // applyShade(shader, row + 3, column + 1, Shade.Bright);
-    // applyShade(shader, row - 3, column + 1, Shade.Bright);
-    // applyShade(shader, row + 3, column - 1, Shade.Bright);
-    //
-    // applyShade(shader, row - 3, column - 1, Shade.Bright);
   }
 
   void emitLightHighLarge2(List<List<int>> shader, double x, double y) {
@@ -381,6 +367,18 @@ class IsometricModule {
     bakeShadeRing(row, column, 4, Shade.Very_Dark);
   }
 
+  void emitLightBakeHighLarge(double x, double y) {
+    final column = convertWorldToColumn(x, y);
+    final row = convertWorldToRow(x, y);
+    if (outOfBounds(row, column)) return;
+    shadeBake(row, column, Shade.Bright);
+    bakeShadeRing(row, column, 1, Shade.Bright);
+    bakeShadeRing(row, column, 2, Shade.Bright);
+    bakeShadeRing(row, column, 3, Shade.Medium);
+    bakeShadeRing(row, column, 4, Shade.Dark);
+    bakeShadeRing(row, column, 5, Shade.Very_Dark);
+  }
+
   void emitLightBrightSmall(List<List<int>> shader, double x, double y) {
     final column = convertWorldToColumn(x, y);
     final row = convertWorldToRow(x, y);
@@ -403,7 +401,7 @@ class IsometricModule {
         continue;
       }
       if (type == GameObjectType.Fireplace) {
-        emitLightHighLarge2(bake, gameObject.x, gameObject.y);
+        emitLightBakeHighLarge(gameObject.x, gameObject.y);
         continue;
       }
     }
@@ -713,9 +711,6 @@ class IsometricModule {
   }
 
   void refreshAmbientLight(){
-    // final hour = hours.value;
-    // hours.value = (hours.value + 12) % 24;
-    // hours.value = hour;
     final phase = Phase.fromHour(hours.value);
     final phaseBrightness = Phase.toShade(phase);
     if (maxAmbientBrightness.value > phaseBrightness) return;
