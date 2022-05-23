@@ -26,6 +26,15 @@ class GameRandom extends Game {
       ),
       status: GameStatus.In_Progress
   ) {
+
+
+    for (final playerSpawn in scene.spawnPointPlayers){
+      scene.addGameObjectPosition(
+          type: GameObjectType.Fireplace,
+          position: playerSpawn,
+      );
+    }
+
     scene.generateRandomGameObjects(type: GameObjectType.Tree, density: 0.04);
     scene.generateRandomGameObjects(type: GameObjectType.Rock, density: 0.01);
     generateRandomSeparatedGameObjects(scene, amount: 40, type: GameObjectType.Torch);
@@ -34,13 +43,6 @@ class GameRandom extends Game {
       spawnCreep();
     }
 
-    for (final playerSpawn in scene.spawnPointPlayers){
-       scene.addGameObjectAtXY(
-           type: GameObjectType.Fireplace,
-           x: playerSpawn.x,
-           y: playerSpawn.y
-       );
-    }
   }
 
   @override

@@ -185,6 +185,19 @@ class Scene {
     );
   }
 
+  void addGameObjectPosition({
+    required int type,
+    required Position position,
+    int health = 1
+  }) {
+    addGameObjectAtXY(
+      type: type,
+      x: position.x,
+      y: position.y,
+      health: health,
+    );
+  }
+
   void addGameObjectAtXY({
     required int type,
     required double x,

@@ -54,9 +54,10 @@
 [ ] Ability Stun Shot
 [ ] Highlighted card description panel
 [ ] Upgrade card level
+[ ] 2 Minute Dev Log
 [ ] Fix on respawn fireplaces do not emit light
 [ ] Fix Long shot ability
-[ ] Fix prevent trees spawning on fireplaces
+[x] Fix prevent trees spawning on fireplaces
 [x] Right click to cancel active ability
 [x] Card Icons
 [x] Fix objects spawn on top of each other
