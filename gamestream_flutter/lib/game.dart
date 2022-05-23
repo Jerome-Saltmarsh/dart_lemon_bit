@@ -18,7 +18,7 @@ import 'modules/isometric/classes.dart';
 import 'modules/isometric/enums.dart';
 import 'ui/build/player.dart';
 
-final byteStreamParser = Game();
+final game = Game();
 final byteLength = Watch(0);
 final bufferSize = Watch(0);
 final totalEvents = Watch(0);

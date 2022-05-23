@@ -21,7 +21,7 @@ class _Build {
   }
 
   Widget totalZombies(){
-    return WatchBuilder(byteStreamParser.totalZombies, (int zombies){
+    return WatchBuilder(game.totalZombies, (int zombies){
       return text("Zombies: $zombies");
     });
   }

@@ -122,17 +122,17 @@ class IsometricRender {
     final screenBottom = _screen.bottom;
     final screenBottom100 = screenBottom + 120;
 
-    final zombies = byteStreamParser.zombies;
-    final players = byteStreamParser.players;
-    final npcs = byteStreamParser.interactableNpcs;
-    final gameObjects = byteStreamParser.gameObjects;
-    final generatedObjects = byteStreamParser.generatedObjects;
+    final zombies = game.zombies;
+    final players = game.players;
+    final npcs = game.interactableNpcs;
+    final gameObjects = game.gameObjects;
+    final generatedObjects = game.generatedObjects;
     final structures = isometric.structures;
 
     final totalGameObjects = gameObjects.length;
-    final totalZombies = byteStreamParser.totalZombies.value;
-    final totalPlayers = byteStreamParser.totalPlayers.value;
-    final totalNpcs = byteStreamParser.totalNpcs;
+    final totalZombies = game.totalZombies.value;
+    final totalPlayers = game.totalPlayers.value;
+    final totalNpcs = game.totalNpcs;
     final totalStructures = isometric.totalStructures;
     final totalGenerated = generatedObjects.length;
 
@@ -664,10 +664,24 @@ class IsometricRender {
     );
   }
 
+  void renderOrbShard({required double x, required double y, required double scale}){
+    engine.renderCustom(
+        dstX: x,
+        dstY: y,
+        srcX: 345,
+        srcY: 25,
+        srcWidth: 8,
+        srcHeight: 8,
+        scale: scale
+    );
+  }
+
   void renderParticle(Particle value) {
     switch (value.type) {
       case ParticleType.Smoke:
         return renderSmoke(x: value.x, y: value.renderY, scale: value.renderScale);
+      case ParticleType.Orb_Shard:
+        return renderOrbShard(x: value.x, y: value.renderY, scale: value.renderScale);
       default:
         break;
     }
@@ -678,18 +692,9 @@ class IsometricRender {
     mapParticleToSrc(value);
     engine.renderAtlas();
 
-    if (value.casteShadow) {
-      if (value.z < 0.1) return;
-      mapShadeShadow();
-      engine.mapDst(
-          x: value.x,
-          y: value.y,
-          anchorX: 4.0,
-          anchorY: 4.0,
-          scale: value.z,
-      );
-      engine.renderAtlas();
-    }
+    if (!value.casteShadow) return;
+    if (value.z < 0.1) return;
+    renderShadow(position: value, scale: value.z);
   }
 
   void mapShadeShadow(){
@@ -1256,5 +1261,16 @@ class IsometricRender {
         return;
     }
   }
-}
 
+  void renderShadow({required Position position, required double scale}){
+    mapShadeShadow();
+    engine.mapDst(
+      x: position.x,
+      y: position.y,
+      anchorX: 4.0,
+      anchorY: 4.0,
+      scale: scale,
+    );
+    engine.renderAtlas();
+  }
+}

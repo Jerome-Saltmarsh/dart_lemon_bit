@@ -21,8 +21,8 @@ import 'style.dart';
 
 final _screen = engine.screen;
 final _render = isometric.render;
-final _projectiles = byteStreamParser.projectiles;
-final _bulletHoles = byteStreamParser.bulletHoles;
+final _projectiles = game.projectiles;
+final _bulletHoles = game.bulletHoles;
 final _floatingTexts = isometric.floatingTexts;
 
 class GameRender {
@@ -75,8 +75,8 @@ class GameRender {
   }
 
   void renderTeamColours() {
-    final total = byteStreamParser.totalZombies.value;
-    final zombies = byteStreamParser.zombies;
+    final total = game.totalZombies.value;
+    final zombies = game.zombies;
     for (var i = 0; i < total; i++) {
       renderTeamColour(zombies[i]);
     }
@@ -92,8 +92,8 @@ class GameRender {
   }
 
   void renderCollectables() {
-    final total = byteStreamParser.totalCollectables;
-    final collectables = byteStreamParser.collectables;
+    final total = game.totalCollectables;
+    final collectables = game.collectables;
     for (var i = 0; i < total; i++) {
       final collectable = collectables[i];
       switch (collectable.type) {
@@ -160,9 +160,9 @@ class GameRender {
   }
 
   void _renderPlayerNames() {
-    final total = byteStreamParser.totalPlayers.value;
+    final total = game.totalPlayers.value;
     for (var i = 0; i < total; i++) {
-      final player = byteStreamParser.players[i];
+      final player = game.players[i];
       if (!engine.screen.containsV(player)) continue;
       if (player.dead) continue;
       const minDistance = 15;
@@ -221,8 +221,8 @@ class GameRender {
   }
 
   void drawProjectiles(List<Projectile> projectiles) {
-    final total = byteStreamParser.totalProjectiles;
-    final projectiles = byteStreamParser.projectiles;
+    final total = game.totalProjectiles;
+    final projectiles = game.projectiles;
     for (var i = 0; i < total; i++) {
       renderProjectile(projectiles[i]);
     }
@@ -238,14 +238,14 @@ class GameRender {
         renderArrow(value.x, value.y, value.angle);
         break;
       case ProjectileType.Orb:
-        engine.renderCustomV2(dst: value, srcX: 417, srcY: 26, srcWidth: 8, srcHeight: 8, scale: 1.5);
+        renderOrb(value);
         break;
       default:
         return;
     }
   }
 
-  void drawFireball(double x, double y, double angle) {
+  void renderFireball(double x, double y, double angle) {
     // RSTransform rsTransform = RSTransform.fromComponents(
     //     rotation: angle,
     //     scale: 1,
@@ -262,24 +262,36 @@ class GameRender {
   }
 
   void renderArrow(double x, double y, double angle) {
-    engine.mapSrc(x: atlas.projectiles.arrow.x, y: atlas.projectiles.arrow.y, width: 13, height: 47);
+    engine.mapSrc(x: 2182, y: 1, width: 13, height: 47);
     engine.mapDst(x: x, y: y - 20, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
     engine.renderAtlas();
-    engine.mapSrc(x: atlas.projectiles.arrowShadow.x, y: atlas.projectiles.arrowShadow.y, width: 13, height: 47);
+    engine.mapSrc(x: 2172, y: 1, width: 13, height: 47);
     engine.mapDst(x: x, y: y, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
     engine.renderAtlas();
   }
 
+  void renderOrb(Position position){
+    engine.renderCustom(
+        dstX: position.x,
+        dstY: position.y,
+        srcX: 417,
+        srcY: 26,
+        srcWidth: 8,
+        srcHeight: 8,
+        scale: 1.5
+    );
+  }
+
   void drawItems() {
     final items = isometric.items;
-    for (var i = 0; i < byteStreamParser.itemsTotal; i++){
+    for (var i = 0; i < game.itemsTotal; i++){
       isometric.render.renderItem(items[i]);
     }
   }
 
   void drawItemText() {
     final items = isometric.items;
-    final total = byteStreamParser.itemsTotal;
+    final total = game.itemsTotal;
     for (var i = 0; i < total; i++){
       final item = items[i];
       const mouseDist = 100;
@@ -302,7 +314,7 @@ class GameRender {
   }
 
   void drawEffects() {
-    for (final effect in byteStreamParser.effects) {
+    for (final effect in game.effects) {
       if (!effect.enabled) continue;
       if (effect.duration++ >= effect.maxDuration) {
         effect.enabled = false;
@@ -338,9 +350,9 @@ class GameRender {
   }
 
   void drawPlayerText() {
-    final players = byteStreamParser.players;
+    final players = game.players;
     const charWidth = 4.5;
-    final totalPlayers = byteStreamParser.totalPlayers.value;
+    final totalPlayers = game.totalPlayers.value;
     for (var i = 0; i < totalPlayers; i++) {
       final human = players[i];
       if (human.text.isEmpty) continue;

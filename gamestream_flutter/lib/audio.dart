@@ -45,8 +45,12 @@ class _Audio {
     _playPositioned('object-struck.mp3', x, y);
   }
 
-  void materialStruckWood(double x, double y){
+  void materialStruckWood(double x, double y) {
     _playPositioned('material-struck-wood.mp3', x, y);
+  }
+
+  void footstepGrass(double x, double y) {
+    _playPositioned('step-grass.mp3', x, y, volume: 0.15);
   }
 
   void materialStruckRock(double x, double y){
@@ -245,21 +249,15 @@ class _Audio {
     }
   }
 
-  void _playPositioned(String name, double x, double y) {
+  void _playPositioned(String name, double x, double y, {double volume = 1.0}) {
     if (!soundEnabled.value) return;
-    play(name, volume: _calculateVolume(x, y));
+    play(name, volume: _calculateVolume(x, y) * volume);
   }
 
   void play(String name, {double volume = 1}){
-    // final instance = Element.audio();
-    // instance.attributes = {
-    //   'type' : ' audio/mp3',
-    //   'src' : ' assets/audio/$name',
-    //   'autoplay': '',
-    //   'volume' : volume.toString(),
-    // };
     if (volume.isNaN) return;
-    if (volume <= 0) return;
+    // if (volume <= 0) return;
+    if (volume <= 0.025) return;
       _getAudioPlayer().play(
           'assets/audio/$name',
           isLocal: true,

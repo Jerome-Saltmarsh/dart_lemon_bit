@@ -72,7 +72,7 @@ class _WebSocket {
     }
 
     if (_response is List<int>){
-       byteStreamParser.parse(_response);
+       game.parse(_response);
        return;
     }
 

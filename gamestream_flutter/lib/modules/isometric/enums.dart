@@ -50,6 +50,7 @@ class ParticleType {
   static const Rock = 14;
   static const Tree_Shard = 15;
   static const Shard_Wood = 16;
+  static const Orb_Shard = 17;
 }
 
 enum CameraMode {

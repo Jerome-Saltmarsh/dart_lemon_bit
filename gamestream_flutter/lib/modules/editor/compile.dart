@@ -15,7 +15,7 @@ class EditorCompile {
 
   Json compileGameToJson() {
     return {
-      "collectables": byteStreamParser.collectables,
+      "collectables": game.collectables,
       "tiles": compileTiles(isometric.tiles),
       // "environment": compileGameObjects(state.environmentObjects),
       'characters': compileCharactersToJson(state.characters),

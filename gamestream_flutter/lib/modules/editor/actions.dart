@@ -43,7 +43,7 @@ class EditorActions with EditorScope {
 
   void deleteSelected() {
     if (state.selected.value == null) return;
-    byteStreamParser.gameObjects.remove(state.selected.value);
+    game.gameObjects.remove(state.selected.value);
     state.selected.value = null;
     engine.redrawCanvas();
   }
@@ -107,8 +107,8 @@ class EditorActions with EditorScope {
       isometric.tiles.add(columnTiles);
     }
     isometric.particleEmitters.clear();
-    byteStreamParser.gameObjects.clear();
-    byteStreamParser.itemsTotal = 0;
+    game.gameObjects.clear();
+    game.itemsTotal = 0;
     isometric.updateTileRender();
   }
 

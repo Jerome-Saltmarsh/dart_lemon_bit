@@ -13,7 +13,7 @@ import 'package:lemon_engine/engine.dart';
 
 import 'state.dart';
 
-final _bulletHoles = byteStreamParser.bulletHoles;
+final _bulletHoles = game.bulletHoles;
 final _action = modules.game.state.characterController.action;
 
 class GameActions {
@@ -23,11 +23,11 @@ class GameActions {
   GameActions(this.state);
 
   void spawnBulletHole(double x, double y){
-    final bulletHole = _bulletHoles[byteStreamParser.bulletHoleIndex];
+    final bulletHole = _bulletHoles[game.bulletHoleIndex];
     bulletHole.x = x;
     bulletHole.y = y;
-    byteStreamParser.bulletHoleIndex++;
-    byteStreamParser.bulletHoleIndex %= _bulletHoles.length;
+    game.bulletHoleIndex++;
+    game.bulletHoleIndex %= _bulletHoles.length;
   }
 
   void playerPerform() {

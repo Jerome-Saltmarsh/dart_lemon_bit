@@ -131,7 +131,7 @@ class EditorEvents with EditorScope {
 
   void onEditorKeyDownEvent(RawKeyDownEvent event){
     if (event.logicalKey == LogicalKeyboardKey.keyC) {
-      for (Vector2 position in byteStreamParser.crates) {
+      for (Vector2 position in game.crates) {
         position.x = mouseWorldX;
         position.y = mouseWorldY;
         engine.redrawCanvas();

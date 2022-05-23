@@ -428,12 +428,12 @@ class IsometricSpawn {
   }
 
   Effect getEffect(){
-    for(final effect in byteStreamParser.effects){
+    for(final effect in game.effects){
       if (effect.enabled) continue;
       return effect;
     }
     final effect = Effect();
-    byteStreamParser.effects.add(effect);
+    game.effects.add(effect);
     return effect;
   }
 
@@ -489,4 +489,18 @@ class IsometricSpawn {
   }){
     spawnEffect(x: x, y: y, type: EffectType.FreezeCircle, duration: 45);
   }
+}
+
+
+void spawnParticleOrbShard(Position position) {
+     isometric.spawn.spawnParticle(
+         type: ParticleType.Orb_Shard,
+         x: position.x,
+         y: position.y,
+         angle: randomAngle(),
+         speed: 1,
+         scaleV: 0.01,
+         weight: 0,
+         duration: 12,
+     );
 }

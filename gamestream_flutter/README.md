@@ -56,8 +56,8 @@
 [ ] Upgrade card level
 [ ] 2 Minute Dev Log
 [ ] Fix on respawn fireplaces do not emit
-light
 [ ] Draw Wizard Orb
+[x] Footstep Audio
 [x] Fix Long shot ability
 [x] Fix prevent trees spawning on fireplaces
 [x] Right click to cancel active ability

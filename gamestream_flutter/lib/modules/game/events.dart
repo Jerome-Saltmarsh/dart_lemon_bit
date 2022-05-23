@@ -43,7 +43,7 @@ class GameEvents {
     engine.callbacks.onLongLeftClicked = actions.playerRun;
     engine.callbacks.onRightClicked = onMouseRightClick;
     // engine.callbacks.onLeftClicked = onMouseLeftClick;
-    byteStreamParser.type.onChanged(_onGameTypeChanged);
+    game.type.onChanged(_onGameTypeChanged);
     state.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     state.player.alive.onChanged(_onPlayerAliveChanged);
     state.player.state.onChanged(onPlayerCharacterStateChanged);

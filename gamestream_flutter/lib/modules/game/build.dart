@@ -55,7 +55,7 @@ class GameBuild {
   }
 
   Widget buildLayoutCountDown() {
-    return WatchBuilder(byteStreamParser.countDownFramesRemaining, (int frames){
+    return WatchBuilder(game.countDownFramesRemaining, (int frames){
       final seconds =  frames ~/ 45.0;
       return Center(child: text("Game starts in $seconds", size: FontSize.Large));
     });
@@ -116,11 +116,11 @@ class GameBuild {
           buildPanelWriteMessage(),
           // buildPanelHighlightedStructureType(),
           // buildPanelHighlightedTechTypeUpgrade(),
-          if (byteStreamParser.type.value == GameType.SURVIVORS)
+          if (game.type.value == GameType.SURVIVORS)
             buildPanelPrimary(),
-          if (byteStreamParser.type.value == GameType.SURVIVORS)
+          if (game.type.value == GameType.SURVIVORS)
             buildTextLivesRemaining(),
-          if (byteStreamParser.type.value == GameType.RANDOM)
+          if (game.type.value == GameType.RANDOM)
             buildPanelGameRandom(),
         ]);
   }
@@ -234,7 +234,7 @@ class GameBuild {
     return SingleChildScrollView(
       child: Container(
           constraints: BoxConstraints(maxHeight: 400),
-          child: textBuilder(byteStreamParser.scoreText)),
+          child: textBuilder(game.scoreText)),
     );
   }
 }

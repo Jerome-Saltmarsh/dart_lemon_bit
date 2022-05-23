@@ -121,6 +121,15 @@ class TechType {
     return costs[level];
   }
 
+  static int getDamage(int type){
+     switch(type){
+       case TechType.Staff:
+         return 3;
+       default:
+         return 1;
+     }
+  }
+
   static double getRange(int type) {
     switch (type) {
       case TechType.Unarmed:

@@ -118,9 +118,9 @@ class CoreEvents {
         engine.drawCanvas.value = editor.render.render;
         engine.drawCanvasAfterUpdate = true;
         editor.events.onActivated();
-        byteStreamParser.totalZombies.value = 0;
-        byteStreamParser.totalProjectiles = 0;
-        byteStreamParser.totalNpcs = 0;
+        game.totalZombies.value = 0;
+        game.totalProjectiles = 0;
+        game.totalNpcs = 0;
         engine.registerZoomCameraOnMouseScroll();
         isometric.cameraCenterMap();
         break;
@@ -160,7 +160,7 @@ class CoreEvents {
         engine.drawCanvasAfterUpdate = true;
         engine.cursorType.value = CursorType.Basic;
         core.state.status.value = GameStatus.None;
-        byteStreamParser.type.value = null;
+        game.type.value = null;
         break;
       default:
         break;

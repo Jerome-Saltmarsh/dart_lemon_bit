@@ -50,7 +50,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
 
   bool get deadOrBusy => dead || busy;
 
-  int get equippedDamage => 1;
+  int get equippedDamage => TechType.getDamage(equippedType);
   double get equippedRange => TechType.getRange(equippedType);
   int get equippedAttackDuration => TechType.getDuration(equippedType);
   bool get equippedTypeIsBow => isEquipped(TechType.Bow);

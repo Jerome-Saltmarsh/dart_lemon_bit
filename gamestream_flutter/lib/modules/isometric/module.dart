@@ -392,7 +392,7 @@ class IsometricModule {
   }
 
   void applyGameObjectsToBakeMapping(){
-    for (final gameObject in byteStreamParser.gameObjects) {
+    for (final gameObject in game.gameObjects) {
       final type = gameObject.type;
       if (type == GameObjectType.Torch){
         emitLightBakeHigh(gameObject.x, gameObject.y);
@@ -650,10 +650,10 @@ class IsometricModule {
     if (dayTime) return;
     resetDynamicShadesToBakeMap();
 
-    final totalPlayers = byteStreamParser.totalPlayers.value;
-    final totalNpcs = byteStreamParser.totalNpcs;
-    final players = byteStreamParser.players;
-    final npcs = byteStreamParser.interactableNpcs;
+    final totalPlayers = game.totalPlayers.value;
+    final totalNpcs = game.totalNpcs;
+    final players = game.players;
+    final npcs = game.interactableNpcs;
 
     for (var i = 0; i < totalStructures; i++) {
        final structure = structures[i];
@@ -673,12 +673,18 @@ class IsometricModule {
       emitLightHigh(dynamic, npc);
     }
 
+    for (var i = 0; i < game.totalProjectiles; i++){
+       final projectile = game.projectiles[i];
+       if (projectile.type != ProjectileType.Orb) continue;
+       emitLightHigh(dynamic, projectile);
+    }
+
     // applyEmissionFromProjectiles();
     applyEmissionFromEffects();
   }
 
   void applyEmissionFromEffects() {
-    for (final effect in byteStreamParser.effects) {
+    for (final effect in game.effects) {
       if (!effect.enabled) continue;
       final percentage = effect.percentage;
       if (percentage < 0.33) {
@@ -692,17 +698,6 @@ class IsometricModule {
       emitLightLow(dynamic, effect.x, effect.y);
     }
   }
-
-  // void applyEmissionFromProjectiles() {
-  //   final total = game.totalProjectiles;
-  //   final projectiles = game.projectiles;
-  //   for (var i = 0; i < total; i++) {
-  //     final projectile = projectiles[i];
-  //     if (projectile.type != ProjectileType.Fireball) continue;
-  //     emitLightBrightSmall(dynamic, projectile.x, projectile.y);
-  //   }
-  // }
-
 
   void applyDynamicShadeToTileSrc() {
     final _rowIndex16 = totalColumnsInt * 16;
@@ -728,7 +723,7 @@ class IsometricModule {
   }
 
   void refreshGeneratedObjects() {
-    byteStreamParser.generatedObjects.clear();
+    game.generatedObjects.clear();
     final totalRows = tiles.length;
     final totalColumns = totalRows > 0 ? tiles[0].length : 0;
     for (var rowIndex = 0; rowIndex < totalRows; rowIndex++) {
@@ -737,7 +732,7 @@ class IsometricModule {
         final tile = row[columnIndex];
         var objectType = tileTypeToObjectType[tile];
         if (objectType == null) continue;
-        byteStreamParser.generatedObjects.add(
+        game.generatedObjects.add(
             GeneratedObject(
               x: getTileWorldX(rowIndex, columnIndex),
               y: getTileWorldY(rowIndex, columnIndex) + tileSizeHalf,
@@ -746,7 +741,7 @@ class IsometricModule {
         );
       }
     }
-    sortVertically(byteStreamParser.generatedObjects);
+    sortVertically(game.generatedObjects);
   }
 
   void updateParticles() {

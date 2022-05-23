@@ -1,8 +1,11 @@
 import 'package:bleed_common/Direction.dart';
+import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
+import 'package:gamestream_flutter/audio.dart';
+import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
-import 'package:gamestream_flutter/game.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -25,6 +28,35 @@ class GameUpdate {
     readPlayerInput();
     isometric.updateParticles();
     sendRequestUpdatePlayer();
+    updateProjectiles();
+    updateFootstepAudio();
+  }
+
+  void updateFootstepAudio() {
+    if (engine.frame % 2 == 0) return;
+
+    for (var i = 0; i < game.totalPlayers.value; i++) {
+        final player = game.players[i];
+        if (player.running && player.frame % 2 == 0) {
+          audio.footstepGrass(player.x, player.y);
+        }
+    }
+
+    for (var i = 0; i < game.totalZombies.value; i++) {
+      final zombie = game.zombies[i];
+      if (zombie.running && zombie.frame % 2 == 0) {
+        audio.footstepGrass(zombie.x, zombie.y);
+      }
+    }
+  }
+
+  void updateProjectiles() {
+    // if (engine.frame % 5 != 0) return;
+    for (var i = 0; i < game.totalProjectiles; i++) {
+      final projectile = game.projectiles[i];
+      if (projectile.type != ProjectileType.Orb) continue;
+      spawnParticleOrbShard(projectile);
+    }
   }
 
   void readPlayerInput() {

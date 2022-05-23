@@ -170,17 +170,17 @@ class CoreActions {
     final player = modules.game.state.player;
     player.x = -1;
     player.y = -1;
-    byteStreamParser.totalZombies.value = 0;
-    byteStreamParser.totalPlayers.value = 0;
-    byteStreamParser.totalProjectiles = 0;
-    byteStreamParser.bulletHoleIndex = 0;
-    byteStreamParser.totalCollectables = 0;
-    byteStreamParser.totalNpcs = 0;
+    game.totalZombies.value = 0;
+    game.totalPlayers.value = 0;
+    game.totalProjectiles = 0;
+    game.bulletHoleIndex = 0;
+    game.totalCollectables = 0;
+    game.totalNpcs = 0;
     isometric.next = null;
     isometric.particleEmitters.clear();
     isometric.particles.clear();
 
-    for (final bullet in byteStreamParser.bulletHoles) {
+    for (final bullet in game.bulletHoles) {
       bullet.x = 0;
       bullet.y = 0;
     }
@@ -263,12 +263,12 @@ class CoreActions {
 
   void connectToGame(CharacterSelection character){
     print("connectToSelectedGame()");
-    byteStreamParser.type.value = GameType.RANDOM;
+    game.type.value = GameType.RANDOM;
     connectToWebSocketServer(core.state.region.value, character);
   }
 
   void deselectGameType(){
-    byteStreamParser.type.value = null;
+    game.type.value = null;
   }
 
   void toggleEditMode() {
@@ -296,7 +296,7 @@ class CoreActions {
   }
 
   void exitGame(){
-    byteStreamParser.type.value = null;
+    game.type.value = null;
     clearState();
     webSocket.disconnect();
   }

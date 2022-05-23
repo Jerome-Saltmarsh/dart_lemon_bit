@@ -59,7 +59,7 @@ class EditorBuild {
   }
 
   List<Widget> _tabAll() {
-    return byteStreamParser.gameObjects.map((env) {
+    return game.gameObjects.map((env) {
       return WatchBuilder(editor.state.selected, (Vector2? selected) {
             return button(enumString(env.type), () {
               editor.state.selected.value = env;
