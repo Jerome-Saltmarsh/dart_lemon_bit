@@ -5,6 +5,7 @@ import 'package:lemon_math/library.dart';
 import '../classes/library.dart';
 import '../common/card_type.dart';
 import '../common/library.dart';
+import '../common/weapon_type.dart';
 import '../scene_generator.dart';
 
 class GameRandom extends Game {
@@ -135,17 +136,17 @@ class GameRandom extends Game {
     player.selection = value;
     switch (value) {
       case CharacterSelection.Warrior:
-        player.equippedType = TechType.Sword;
+        player.equippedWeapon = WeaponType.Sword;
         player.equippedArmour = SlotType.Armour_Padded;
         player.equippedHead = SlotType.Steel_Helmet;
         break;
       case CharacterSelection.Wizard:
-        player.equippedType = TechType.Staff;
+        player.equippedWeapon = WeaponType.Staff;
         player.equippedArmour = SlotType.Magic_Robes;
         player.equippedHead = SlotType.Magic_Hat;
         break;
       case CharacterSelection.Archer:
-        player.equippedType = TechType.Bow;
+        player.equippedWeapon = WeaponType.Bow;
         player.equippedArmour = SlotType.Body_Blue;
         player.equippedHead = SlotType.Rogue_Hood;
         player.writeDeck();
@@ -172,21 +173,7 @@ class GameRandom extends Game {
   @override
   void onPlayerAddCardToDeck(Player player, CardType cardType){
      player.writePlayerEvent(PlayerEvent.Item_Purchased);
-     if (cardType == CardType.Weapon_Sword) {
-       player.equippedType = TechType.Sword;
-     }
-     if (cardType == CardType.Weapon_Bow) {
-       player.equippedType = TechType.Bow;
-     }
-     if (cardType == CardType.Weapon_Staff) {
-       player.equippedType = TechType.Staff;
-     }
-     if (cardTypesWeapons.contains(cardType)){
-       player.setStateChanging();
-     } else {
-       player.addCardToDeck(cardType);
-     }
-
+     player.addCardToDeck(cardType);
      player.skillPoints--;
      player.cardChoices.clear();
 

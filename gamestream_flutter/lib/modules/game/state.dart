@@ -1,5 +1,6 @@
 import 'package:bleed_common/card_type.dart';
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/weapon_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/Card.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
@@ -31,7 +32,7 @@ class GameState {
   var panningCamera = false;
 
   GameState(){
-    player.equipped.onChanged((equipped) {
+    player.equippedWeapon.onChanged((equipped) {
        canBuild.value = equipped == TechType.Hammer;
     });
   }
@@ -69,7 +70,7 @@ class Player {
   final abilityTarget = Vector2(0, 0);
   final storeVisible = Watch(false);
   final attackTarget = Vector2(0, 0);
-  final equipped = Watch(TechType.Unarmed);
+  final equippedWeapon = Watch(WeaponType.Unarmed);
   final armour = Watch(TechType.Unarmed);
   final helm = Watch(TechType.Unarmed);
 

@@ -4,6 +4,7 @@ import 'package:lemon_math/library.dart';
 
 import '../common/card_type.dart';
 import '../common/library.dart';
+import '../common/weapon_type.dart';
 import '../engine.dart';
 import '../enums.dart';
 import '../functions.dart';
@@ -1320,9 +1321,9 @@ extension GameFunctions on Game {
       return;
     }
 
-    final equipped = character.equippedType;
+    final equipped = character.equippedWeapon;
 
-    if (SlotType.isSword(equipped)) {
+    if (equipped == WeaponType.Sword) {
       if (stateDuration == 7) {
         dispatchV2(GameEventType.Sword_Woosh, character);
       }
@@ -1383,7 +1384,7 @@ extension GameFunctions on Game {
 
     if (stateDuration != framePerformStrike) return;
 
-    if (character.equippedType == TechType.Staff) {
+    if (character.equippedWeapon == TechType.Staff) {
       spawnProjectileOrb(character, damage: damage);
       return;
     }

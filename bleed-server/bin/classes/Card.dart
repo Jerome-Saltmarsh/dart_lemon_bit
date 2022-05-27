@@ -14,12 +14,6 @@ Card convertCardTypeToCard(CardType type){
    }
 
    switch(type) {
-      case CardType.Weapon_Sword:
-         break;
-      case CardType.Weapon_Bow:
-         break;
-      case CardType.Weapon_Staff:
-         break;
       case CardType.Ability_Bow_Freeze:
          break;
       case CardType.Ability_Bow_Fire:

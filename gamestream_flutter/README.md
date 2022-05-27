@@ -50,12 +50,28 @@
 [ ] Ability Vampire Shot
 [ ] Passive Card - Increased Range
 [ ] Passive Card - Increased Damage
-[ ] FUCK PERFECTION
-[ ] Ability Stun Shot
+[ ] FUCK PERFECT
 [ ] Highlighted card description panel
 [ ] Upgrade card level
 [ ] 2 Minute Dev Log
-[ ] Draw Wizard Orb
+[ ] Tech Demo - Particle Engine
+[ ] Tech Demo - AI
+[ ] Tech Demo - Multiplayer
+[ ] Tech Demo - Character Engine
+[ ] Tech Demo - MYTH Engine goal and overview - MYTHICAL-ENGINE
+[ ] Tech Demo - Dynamic Lighting Engine
+[ ] Check version compatibility
+[ ] MYTH
+[ ] Ability Archer Stun Shot
+[ ] Ability Wizard - Fire Blast
+[ ] Ability Wizard - Scatter Beam
+[ ] A card is either passive or costs 1 - 3 magic
+[ ] Next attack causes double damage
+[ ] Ability Wizard - Explosion
+[ ] All cards can be upgraded 3 times
+[ ] Refactor replace SlotType with HelmType
+[ ] Refactor replace SlotType with ArmourType
+[ ] Refactor replace SlotType with WeaponType
 [x] Fix on respawn fireplaces do not emit
 [x] Footstep Audio
 [x] Fix Long shot ability

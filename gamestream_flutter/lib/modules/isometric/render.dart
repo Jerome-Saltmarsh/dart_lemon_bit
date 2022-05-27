@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:bleed_common/game_object_type.dart';
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/weapon_type.dart';
 import 'package:gamestream_flutter/classes/game_object.dart';
 import 'package:gamestream_flutter/classes/GeneratedObject.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
@@ -848,10 +849,10 @@ class IsometricRender {
     if (shade < Shade.Dark) {
       renderCharacterHealthBar(character);
     }
-    final weapon = character.equipped;
+    final weapon = character.weapon;
     final direction = character.direction;
 
-    if (TechType.isBow(weapon)) {
+    if (weapon == WeaponType.Bow) {
        if (
             direction == Direction.UpLeft
             ||
@@ -872,7 +873,7 @@ class IsometricRender {
        return;
     }
 
-    if (TechType.isMelee(weapon)) {
+    if (WeaponType.isMelee(weapon)) {
       if (
           direction == Direction.Up
           ||
@@ -1066,7 +1067,7 @@ class IsometricRender {
   }
 
   double getTemplateSrcX(Character character, {required double size}){
-    final weapon = character.equipped;
+    final weapon = character.weapon;
     final variation = weapon == SlotType.Shotgun || TechType.isBow(weapon);
 
     switch(character.state) {
@@ -1105,7 +1106,7 @@ class IsometricRender {
         );
 
       case CharacterState.Performing:
-        final weapon = character.equipped;
+        final weapon = character.weapon;
         return animate(
             size: size,
             animation: TechType.isBow(weapon)
@@ -1125,7 +1126,7 @@ class IsometricRender {
   }
 
   int mapEquippedWeaponToSpriteIndex(Character character){
-     switch(character.equipped) {
+     switch(character.weapon) {
        case TechType.Sword:
          return SpriteLayer.Sword_Wooden;
        case TechType.Bow:
@@ -1137,24 +1138,24 @@ class IsometricRender {
        case TechType.Staff:
          return SpriteLayer.Weapon_Handgun;
        default:
-         throw Exception("cannot map ${character.equipped} to sprite index");
+         throw Exception("cannot map ${character.weapon} to sprite index");
      }
   }
 
   void _renderCharacterTemplateWeapon(Character character) {
-    final equipped = character.equipped;
+    final equipped = character.weapon;
     if (equipped == SlotType.Empty) return;
 
-    final row = const [
-      TechType.Hammer,
-      TechType.Axe,
-      TechType.Pickaxe,
-      TechType.Sword,
-      TechType.Sword,
-      TechType.Staff,
+    final renderRow = const [
+      WeaponType.Hammer,
+      WeaponType.Axe,
+      WeaponType.Pickaxe,
+      WeaponType.Sword,
+      WeaponType.Sword,
+      WeaponType.Staff,
     ].indexOf(equipped);
 
-    if (row == -1) {
+    if (renderRow == -1) {
       _renderCharacterPart(character, mapEquippedWeaponToSpriteIndex(character));
       return;
     }
@@ -1167,7 +1168,7 @@ class IsometricRender {
     );
     engine.mapSrc96(
         x: getTemplateSrcX(character, size: 96),
-        y: 2159.0 + (row * 96)
+        y: 2159.0 + (renderRow * 96)
     );
     engine.renderAtlas();
   }

@@ -5,9 +5,9 @@ enum CardGenre {
 }
 
 enum CardType {
-   Weapon_Sword,
-   Weapon_Bow,
-   Weapon_Staff,
+   // Weapon_Sword,
+   // Weapon_Bow,
+   // Weapon_Staff,
    Ability_Bow_Freeze,
    Ability_Bow_Fire,
    Ability_Bow_Volley,
@@ -54,12 +54,6 @@ const cardTypeChoicesWarrior = [
   ...cardTypesGeneralPassives,
 ];
 
-const cardTypesWeapons = <CardType>[
-  CardType.Weapon_Sword, 
-  CardType.Weapon_Bow, 
-  CardType.Weapon_Staff,
-];
-
 const cardTypesGeneralPassives = <CardType> [
   CardType.Passive_General_Max_HP_10,
   CardType.Passive_General_Critical_Hit,
@@ -96,9 +90,6 @@ const cardTypeBowPassives = <CardType> [
 
 String getCardTypeName(CardType value) {
    return const <CardType, String> {
-      CardType.Weapon_Bow: "Bow",
-      CardType.Weapon_Sword: "Sword",
-      CardType.Weapon_Staff: "Staff",
       CardType.Ability_Bow_Freeze: "Freeze Arrow",
       CardType.Ability_Bow_Fire: "Fire Arrow",
       CardType.Ability_Bow_Volley: "Volley",

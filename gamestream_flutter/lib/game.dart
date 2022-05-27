@@ -339,7 +339,7 @@ class Game with ByteReader {
           _player.maxHealth = readDouble();
           _player.magic.value = readDouble();
           _player.maxMagic.value = readDouble();
-          _player.equipped.value = readByte();
+          _player.equippedWeapon.value = readByte();
           _player.armour.value = readByte();
           _player.helm.value = readByte();
           // readSlot(_slots.weapon);
@@ -488,7 +488,7 @@ class Game with ByteReader {
       character.y = readDouble();
       _parseCharacterFrameHealth(character, readByte());
       character.magic = _nextPercentage();
-      character.equipped = readByte();
+      character.weapon = readByte();
       character.armour = readByte();
       character.helm = readByte();
       character.name = readString();
@@ -510,7 +510,7 @@ class Game with ByteReader {
 
   void _readNpc(Character character){
     _readCharacter(character);
-    character.equipped = readByte();
+    character.weapon = readByte();
   }
 
   void _readCharacter(Character character){

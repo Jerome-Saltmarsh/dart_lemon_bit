@@ -1,4 +1,5 @@
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/weapon_type.dart';
 import 'package:lemon_math/library.dart';
 
 import 'mixins.dart';
@@ -13,10 +14,9 @@ class Character extends Vector2 {
   int state;
   int direction;
   int frame;
-  int equipped = TechType.Unarmed;
+  var weapon = WeaponType.Unarmed;
   int armour = TechType.Unarmed;
   int helm = TechType.Unarmed;
-  // int team;
   String name;
   String text;
   bool allie = false;

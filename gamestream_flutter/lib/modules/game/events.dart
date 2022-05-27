@@ -49,7 +49,7 @@ class GameEvents {
     state.player.alive.onChanged(_onPlayerAliveChanged);
     state.player.state.onChanged(onPlayerCharacterStateChanged);
     state.textBoxVisible.onChanged(onTextModeChanged);
-    state.player.equipped.onChanged(onPlayerWeaponChanged);
+    state.player.equippedWeapon.onChanged(onPlayerWeaponChanged);
     state.player.armour.onChanged(onPlayerArmourChanged);
     state.player.helm.onChanged(onPlayerHelmChanged);
     RawKeyboard.instance.addListener(onKeyboardEvent);

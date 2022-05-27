@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
+import '../common/weapon_type.dart';
 import '../functions/withinRadius.dart';
 import 'cards.dart';
 import 'Collider.dart';
@@ -29,8 +30,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
   bool invincible = false;
   final abilityTarget = Vector2(0, 0);
   final techTree = TechTree();
-  /// TechType.dart
-  var equippedType = TechType.Unarmed;
+  var equippedWeapon = WeaponType.Unarmed;
   var equippedArmour = SlotType.Empty;
   var equippedHead = SlotType.Empty;
 
@@ -50,18 +50,18 @@ class Character extends Collider with Team, Health, Velocity, Material {
 
   bool get deadOrBusy => dead || busy;
 
-  int get equippedDamage => TechType.getDamage(equippedType);
-  double get equippedRange => TechType.getRange(equippedType);
-  int get equippedAttackDuration => TechType.getDuration(equippedType);
-  bool get equippedTypeIsBow => isEquipped(TechType.Bow);
-  bool get unarmed => isEquipped(TechType.Unarmed);
-  bool get equippedTypeIsShotgun => isEquipped(TechType.Shotgun);
-  bool get equippedIsMelee => TechType.isMelee(equippedType);
+  int get equippedDamage => WeaponType.getDamage(equippedWeapon);
+  double get equippedRange => WeaponType.getRange(equippedWeapon);
+  int get equippedAttackDuration => 25;
+  bool get equippedTypeIsBow => equippedWeapon == WeaponType.Bow;
+  bool get unarmed => equippedWeapon == WeaponType.Unarmed;
+  bool get equippedTypeIsShotgun => equippedWeapon == WeaponType.Shotgun;
+  bool get equippedIsMelee => WeaponType.isMelee(equippedWeapon);
   bool get equippedIsEmpty => false;
-  int get equippedLevel => getTechTypeLevel(equippedType);
+  int get equippedLevel => 1;
 
-  bool isEquipped(int type) {
-    return equippedType == type;
+  bool isEquipped(WeaponType type) {
+    return equippedWeapon == type;
   }
 
   void reduceEquippedAmount() {

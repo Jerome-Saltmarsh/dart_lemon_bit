@@ -3,6 +3,7 @@ import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
+import '../common/weapon_type.dart';
 import '../engine.dart';
 import '../utilities.dart';
 import '../common/card_type.dart';
@@ -131,17 +132,17 @@ class Player extends Character with ByteWriter {
   }
 
   void equipPickaxe(){
-    equippedType = TechType.Pickaxe;
+    // equippedType = TechType.Pickaxe;
     setStateChanging();
   }
 
   void equipAxe(){
-    equippedType = TechType.Axe;
+    // equippedType = TechType.Axe;
     setStateChanging();
   }
 
   void equipUnarmed(){
-    equippedType = TechType.Unarmed;
+    equippedWeapon = WeaponType.Unarmed;
     setStateChanging();
   }
 
@@ -321,7 +322,7 @@ extension PlayerProperties on Player {
 
   bool get isHuman => type == CharacterType.Human;
 
-  bool get unarmed => equippedType == TechType.Unarmed;
+  bool get unarmed => equippedWeapon == TechType.Unarmed;
 
   void onEquipped(int slotType){
     final healthIncrease = SlotType.getHealth(slotType);
@@ -349,7 +350,7 @@ extension PlayerProperties on Player {
     writeInt(maxHealth); // 2
     writeInt(magic); // 2
     writeInt(maxMagic); // 2
-    writeByte(equippedType); // 3
+    writeByte(equippedWeapon); // 3
     writeByte(SlotType.Armour_Padded); // armour
     writeByte(SlotType.Steel_Helmet); // helm
     writeBool(alive); // 1
@@ -609,7 +610,7 @@ extension PlayerProperties on Player {
   void writePlayer(Player player) {
     writeCharacter(player, player);
     writePercentage(player.magicPercentage);
-    writeByte(player.equippedType);
+    writeByte(player.equippedWeapon);
     writeByte(player.equippedArmour); // armour
     writeByte(player.equippedHead); // helm
     writeString(player.name);
@@ -628,7 +629,7 @@ extension PlayerProperties on Player {
   void writeNpc(Player player, Character npc) {
     if (npc.dead) return;
     writeCharacter(player, npc);
-    writeByte(npc.equippedType);
+    writeByte(npc.equippedWeapon);
   }
 
   void writeCharacter(Player player, Character character) {
