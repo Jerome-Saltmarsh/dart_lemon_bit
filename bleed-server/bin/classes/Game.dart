@@ -794,7 +794,7 @@ extension GameFunctions on Game {
       player.aimTarget = null;
     }
 
-    final target = player.target;
+    final target = player.attackTarget;
     if (target == null) return;
     if (!player.busy) {
       player.face(target);
@@ -803,7 +803,7 @@ extension GameFunctions on Game {
 
     if (target is Collider) {
       if (!target.collidable) {
-        player.target = null;
+        player.attackTarget = null;
         return;
       }
 
@@ -813,7 +813,6 @@ extension GameFunctions on Game {
         if (withinRadius(player, target, ability.range)) {
           player.attackTarget = target;
           setCharacterStatePerforming(player);
-          player.target = null;
           return;
         }
         setCharacterStateRunning(player);
@@ -823,11 +822,10 @@ extension GameFunctions on Game {
       if (withinAttackRadius(player, target)) {
         player.attackTarget = target;
         setCharacterStatePerforming(player);
-        player.target = null;
         return;
       }
     } else if (withinRadius(player, target, player.speed)) {
-      player.target = null;
+      player.attackTarget = null;
       return;
     }
     setCharacterStateRunning(player);

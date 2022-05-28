@@ -44,7 +44,7 @@ class Player extends Character with ByteWriter {
   var sceneDownloaded = false;
   Game game;
   Collider? aimTarget; // the currently highlighted character
-  Position? target;
+  // Position? target;
   Account? account;
 
   final cardChoices = <CardType>[];

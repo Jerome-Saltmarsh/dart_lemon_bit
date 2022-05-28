@@ -251,7 +251,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
           switch (args[1]) {
             case CharacterAction.Idle:
-              if (player.target == null){
+              if (player.attackTarget == null){
                 game.setCharacterState(player, CharacterState.Idle);
               }
               break;
@@ -279,7 +279,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
               if (ability == null) {
                 if (aimTarget != null) {
-                  player.target = aimTarget;
+                  player.attackTarget = aimTarget;
                   if (withinRadius(player, aimTarget, player.equippedRange)){
                     player.face(aimTarget);
                     game.setCharacterStatePerforming(player);
@@ -287,7 +287,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 } else {
                   player.runTarget.x = mouseX;
                   player.runTarget.y = mouseY;
-                  player.target = player.runTarget;
+                  player.attackTarget = player.runTarget;
                 }
                 break;
               }
@@ -302,23 +302,19 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               switch (ability.mode) {
                 case AbilityMode.Targeted:
                   if (aimTarget != null) {
-                    player.target = aimTarget;
                     player.attackTarget = aimTarget;
                     return;
                   } else {
                     player.runTarget.x = mouseX;
                     player.runTarget.y = mouseY;
-                    player.target = player.runTarget;
+                    player.attackTarget = player.runTarget;
                     return;
                   }
                 case AbilityMode.Activated:
                   ability.cooldownRemaining = ability.cooldown;
                   break;
                 case AbilityMode.Area:
-                  ability.cooldownRemaining = ability.cooldown;
-                  player.face(player.mouse);
                   player.attackTarget = Vector2(mouseX, mouseY);
-                  game.setCharacterState(player, CharacterState.Performing);
                   break;
                 case AbilityMode.Directed:
                   ability.cooldownRemaining = ability.cooldown;
@@ -331,7 +327,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             case CharacterAction.Run:
               player.angle =  args[6] * 0.78539816339; // 0.78539816339 == pi / 4
               game.setCharacterStateRunning(player);
-              player.target = null;
+              player.attackTarget = null;
               break;
           }
 
@@ -869,7 +865,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
         case ClientRequest.Attack:
           if (player == null) return;
           if (player.deadOrBusy) return;
-          player.target = null;
           player.attackTarget = null;
           player.angle = player.mouseAngle;
           player.game.setCharacterStatePerforming(player);
@@ -883,7 +878,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             player.clearCardAbility();
             return;
           }
-          player.target = null;
           player.attackTarget = null;
           player.angle = player.mouseAngle;
           player.game.setCharacterStatePerforming(player);
