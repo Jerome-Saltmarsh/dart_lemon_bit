@@ -537,7 +537,7 @@ extension PlayerProperties on Player {
       if (zombie.x < screenLeft) continue;
       if (zombie.x > screenRight) continue;
       if (zombie.y > screenBottom) break;
-      final aiTarget = zombie.target;
+      final aiTarget = zombie.attackTarget;
       if (aiTarget is Character) {
         writeByte(1);
         writePosition(zombie);

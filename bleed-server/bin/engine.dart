@@ -112,7 +112,7 @@ class _Engine {
       final zombies = game.zombies;
       for (final zombie in zombies) {
           if (zombie.deadOrBusy) continue;
-          final target = zombie.target;
+          final target = zombie.attackTarget;
           if (target == null) continue;
           game.npcSetPathTo(zombie, target);
       }

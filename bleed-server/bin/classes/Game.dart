@@ -148,8 +148,8 @@ abstract class Game {
     players.remove(player);
 
     for (final zombie in player.game.zombies) {
-      if (zombie.target != player) continue;
-      zombie.target = null;
+      if (zombie.attackTarget != player) continue;
+      zombie.attackTarget = null;
     }
 
     to.players.add(player);
@@ -446,15 +446,15 @@ extension GameFunctions on Game {
         setCharacterState(target, CharacterState.Hurt);
       }
       if (target is AI) {
-        final targetAITarget = target.target;
+        final targetAITarget = target.attackTarget;
         if (targetAITarget == null) {
-          target.target = src;
+          target.attackTarget = src;
           return;
         }
         final aiTargetDistance = distanceV2(target, targetAITarget);
         final srcTargetDistance = distanceV2(src, target);
         if (srcTargetDistance < aiTargetDistance) {
-          target.target = src;
+          target.attackTarget = src;
         }
       }
       return;
@@ -522,7 +522,7 @@ extension GameFunctions on Game {
     collectables.add(collectable);
   }
 
-  void _characterAttack(Character character, Collider target) {
+  void _characterAttack(Character character, Position target) {
     assert(character.withinAttackRange(target));
     assert(character.alive);
     character.face(target);
@@ -538,7 +538,7 @@ extension GameFunctions on Game {
   void updateAI(AI ai) {
     if (ai.deadOrBusy) return;
 
-    final target = ai.target;
+    final target = ai.attackTarget;
     if (target != null) {
       if (ai.type.isZombie) {
         if (ai.withinAttackRange(target)) {
@@ -631,7 +631,7 @@ extension GameFunctions on Game {
     character.collidable = false;
 
     if (character is AI) {
-      character.target = null;
+      character.attackTarget = null;
       character.pathIndex = -1;
     }
 
@@ -641,8 +641,8 @@ extension GameFunctions on Game {
     }
 
     for (final npc in zombies) {
-      if (npc.target != character) continue;
-      npc.target = null;
+      if (npc.attackTarget != character) continue;
+      npc.attackTarget = null;
     }
 
     for (final projectile in projectiles) {
@@ -1174,14 +1174,17 @@ extension GameFunctions on Game {
     for (final zombie in zombies) {
       if (zombie.dead) continue;
 
-      if (zombie.target == null) {
-        zombie.target = zombie.objective;
+      if (zombie.attackTarget == null) {
+        zombie.attackTarget = zombie.objective;
       }
 
-      final zombieAITarget = zombie.target;
-      if (zombieAITarget != null && zombieAITarget != zombie.objective &&
-          (zombieAITarget.dead || !zombie.withinChaseRange(zombieAITarget))) {
-        zombie.target = zombie.objective;
+      final zombieAITarget = zombie.attackTarget;
+      if (
+          zombieAITarget != null &&
+          zombieAITarget != zombie.objective &&
+          !zombie.withinChaseRange(zombieAITarget)
+      ) {
+        zombie.attackTarget = zombie.objective;
       }
 
       var targetDistance = 9999999.0;
@@ -1205,7 +1208,7 @@ extension GameFunctions on Game {
         setNpcTarget(zombie, player);
         targetDistance = npcDistance;
       }
-      final target = zombie.target;
+      final target = zombie.attackTarget;
       if (target == null) continue;
       if (targetDistance < 100) continue;
       npcSetPathTo(zombie, target);
@@ -1225,7 +1228,7 @@ extension GameFunctions on Game {
         closestDistance = distance2;
       }
       if (closest == null || closestDistance > npc.equippedRange) {
-        npc.target = null;
+        npc.attackTarget = null;
         npc.state = CharacterState.Idle;
         continue;
       }
@@ -1233,11 +1236,13 @@ extension GameFunctions on Game {
     }
   }
 
-  void setNpcTarget(AI ai, Health value) {
-    assert(!onSameTeam(ai, value));
-    assert(value.alive);
+  void setNpcTarget(AI ai, Position value) {
+    if (value is Team){
+      assert(!onSameTeam(ai, value));
+    }
+    // assert(value.alive);
     assert(ai.alive);
-    ai.target = value;
+    ai.attackTarget = value;
   }
 
   void removeDisconnectedPlayers() {
