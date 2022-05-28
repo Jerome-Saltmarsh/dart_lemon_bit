@@ -380,6 +380,7 @@ class IsometricSpawn {
     );
   }
 
+
   void spawnFlame({
     required double x,
     required double y,

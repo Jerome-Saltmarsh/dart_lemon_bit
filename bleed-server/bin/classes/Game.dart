@@ -834,9 +834,9 @@ extension GameFunctions on Game {
     if (ability != null) {
       if (!withinRadius(player, target, ability.range)){
         setCharacterStateRunning(player);
+        return;
       }
       setCharacterStatePerforming(player);
-      player.target = target;
       return;
     }
 
@@ -945,6 +945,7 @@ extension GameFunctions on Game {
         spawnProjectileArrow(character, damage: 5, angle: character.angle + 0.2, range: ability.range);
         spawnProjectileArrow(character, damage: 5, angle: character.angle - 0.1, range: ability.range);
         spawnProjectileArrow(character, damage: 5, angle: character.angle - 0.2, range: ability.range);
+        character.target = null;
     }
 
     if (ability is CardAbilityBowLongShot && stateDuration == 5) {
@@ -954,12 +955,14 @@ extension GameFunctions on Game {
           angle: character.angle,
           range: 9999
       );
+      character.target = null;
     }
 
     if (stateDuration == 10 && ability is CardAbilityExplosion){
       final target = character.target;
       if (target != null) {
         spawnExplosion(src: character, target: target, damage: 5);
+        character.target = null;
       }
     }
   }
