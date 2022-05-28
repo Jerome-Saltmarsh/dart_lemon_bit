@@ -148,8 +148,8 @@ abstract class Game {
     players.remove(player);
 
     for (final zombie in player.game.zombies) {
-      if (zombie.attackTarget != player) continue;
-      zombie.attackTarget = null;
+      if (zombie.target != player) continue;
+      zombie.target = null;
     }
 
     to.players.add(player);
@@ -426,6 +426,16 @@ extension GameFunctions on Game {
         }
       }
 
+      for (final ai in zombies) {
+        if (ai.target != target) continue;
+        ai.target = null;
+      }
+
+      for (final player in players) {
+        if (player.aimTarget != target) continue;
+        player.aimTarget = null;
+      }
+
       onKilled(target, src);
     } else {
       onDamaged(target, src, damage);
@@ -446,15 +456,15 @@ extension GameFunctions on Game {
         setCharacterState(target, CharacterState.Hurt);
       }
       if (target is AI) {
-        final targetAITarget = target.attackTarget;
+        final targetAITarget = target.target;
         if (targetAITarget == null) {
-          target.attackTarget = src;
+          target.target = src;
           return;
         }
         final aiTargetDistance = distanceV2(target, targetAITarget);
         final srcTargetDistance = distanceV2(src, target);
         if (srcTargetDistance < aiTargetDistance) {
-          target.attackTarget = src;
+          target.target = src;
         }
       }
       return;
@@ -527,7 +537,7 @@ extension GameFunctions on Game {
     assert(character.alive);
     character.face(target);
     setCharacterStatePerforming(character);
-    character.attackTarget = target;
+    character.target = target;
   }
 
   void _characterRunAt(Character character, Position target) {
@@ -538,7 +548,7 @@ extension GameFunctions on Game {
   void updateAI(AI ai) {
     if (ai.deadOrBusy) return;
 
-    final target = ai.attackTarget;
+    final target = ai.target;
     if (target != null) {
       if (ai.type.isZombie) {
         if (ai.withinAttackRange(target)) {
@@ -631,7 +641,7 @@ extension GameFunctions on Game {
     character.collidable = false;
 
     if (character is AI) {
-      character.attackTarget = null;
+      character.target = null;
       character.pathIndex = -1;
     }
 
@@ -641,8 +651,8 @@ extension GameFunctions on Game {
     }
 
     for (final npc in zombies) {
-      if (npc.attackTarget != character) continue;
-      npc.attackTarget = null;
+      if (npc.target != character) continue;
+      npc.target = null;
     }
 
     for (final projectile in projectiles) {
@@ -651,8 +661,8 @@ extension GameFunctions on Game {
     }
 
     for (final player in players) {
-      if (player.attackTarget != character) continue;
-      player.attackTarget = null;
+      if (player.target != character) continue;
+      player.target = null;
     }
   }
 
@@ -697,7 +707,7 @@ extension GameFunctions on Game {
           }
           if (character.magic < ability.cost) {
             character.ability = null;
-            character.attackTarget = null;
+            character.target = null;
             break;
           }
           character.magic -= ability.cost;
@@ -789,43 +799,49 @@ extension GameFunctions on Game {
       setCharacterStateIdle(player);
     }
 
-    final aimTarget = player.aimTarget;
-    if (aimTarget is Character && aimTarget.dead) {
-      player.aimTarget = null;
-    }
-
-    final target = player.attackTarget;
+    final target = player.target;
     if (target == null) return;
     if (!player.busy) {
       player.face(target);
     }
 
+    final ability = player.ability;
 
     if (target is Collider) {
       if (!target.collidable) {
-        player.attackTarget = null;
+        player.target = null;
         return;
       }
 
-      final ability = player.ability;
-
       if (ability != null) {
         if (withinRadius(player, target, ability.range)) {
-          player.attackTarget = target;
+          player.target = target;
           setCharacterStatePerforming(player);
           return;
         }
         setCharacterStateRunning(player);
         return;
       }
-
       if (withinAttackRadius(player, target)) {
-        player.attackTarget = target;
+        player.target = target;
         setCharacterStatePerforming(player);
         return;
       }
-    } else if (withinRadius(player, target, player.speed)) {
-      player.attackTarget = null;
+      setCharacterStateRunning(player);
+      return;
+    }
+
+    if (ability != null) {
+      if (!withinRadius(player, target, ability.range)){
+        setCharacterStateRunning(player);
+      }
+      setCharacterStatePerforming(player);
+      player.target = target;
+      return;
+    }
+
+    if (withinRadius(player, target, player.speed)) {
+      player.target = null;
       return;
     }
     setCharacterStateRunning(player);
@@ -941,7 +957,7 @@ extension GameFunctions on Game {
     }
 
     if (stateDuration == 10 && ability is CardAbilityExplosion){
-      final target = character.attackTarget;
+      final target = character.target;
       if (target != null) {
         spawnExplosion(src: character, target: target, damage: 5);
       }
@@ -1002,9 +1018,9 @@ extension GameFunctions on Game {
       accuracy: 0,
       speed: 4.5,
       range: src.equippedRange,
-      target: src.attackTarget,
+      target: src.target,
       projectileType: ProjectileType.Orb,
-      angle: src.attackTarget != null ? null : src.angle,
+      angle: src.target != null ? null : src.angle,
       damage: damage,
     );
   }
@@ -1174,17 +1190,17 @@ extension GameFunctions on Game {
     for (final zombie in zombies) {
       if (zombie.dead) continue;
 
-      if (zombie.attackTarget == null) {
-        zombie.attackTarget = zombie.objective;
+      if (zombie.target == null) {
+        zombie.target = zombie.objective;
       }
 
-      final zombieAITarget = zombie.attackTarget;
+      final zombieAITarget = zombie.target;
       if (
           zombieAITarget != null &&
           zombieAITarget != zombie.objective &&
           !zombie.withinChaseRange(zombieAITarget)
       ) {
-        zombie.attackTarget = zombie.objective;
+        zombie.target = zombie.objective;
       }
 
       var targetDistance = 9999999.0;
@@ -1208,7 +1224,7 @@ extension GameFunctions on Game {
         setNpcTarget(zombie, player);
         targetDistance = npcDistance;
       }
-      final target = zombie.attackTarget;
+      final target = zombie.target;
       if (target == null) continue;
       if (targetDistance < 100) continue;
       npcSetPathTo(zombie, target);
@@ -1228,7 +1244,7 @@ extension GameFunctions on Game {
         closestDistance = distance2;
       }
       if (closest == null || closestDistance > npc.equippedRange) {
-        npc.attackTarget = null;
+        npc.target = null;
         npc.state = CharacterState.Idle;
         continue;
       }
@@ -1242,7 +1258,7 @@ extension GameFunctions on Game {
     }
     // assert(value.alive);
     assert(ai.alive);
-    ai.attackTarget = value;
+    ai.target = value;
   }
 
   void removeDisconnectedPlayers() {
@@ -1341,7 +1357,7 @@ extension GameFunctions on Game {
     final damage = character.equippedDamage;
     if (character.type == CharacterType.Zombie) {
       if (stateDuration != framePerformStrike) return;
-      final attackTarget = character.attackTarget;
+      final attackTarget = character.target;
       if (attackTarget == null) return;
       if (attackTarget is Collider) {
         applyHit(
@@ -1349,7 +1365,7 @@ extension GameFunctions on Game {
           target: attackTarget,
           damage: damage,
         );
-        character.attackTarget = null;
+        character.target = null;
       }
       return;
     }
@@ -1419,23 +1435,25 @@ extension GameFunctions on Game {
 
     if (character.equippedWeapon == WeaponType.Staff) {
       spawnProjectileOrb(character, damage: damage);
+      character.target = null;
       return;
     }
 
     if (character.equippedTypeIsBow) {
       dispatchV2(GameEventType.Release_Bow, character);
-      spawnProjectileArrow(character, damage: damage, target: character.attackTarget, range: character.equippedRange);
+      spawnProjectileArrow(character, damage: damage, target: character.target, range: character.equippedRange);
+      character.target = null;
       return;
     }
     if (character.equippedIsMelee) {
-      final attackTarget = character.attackTarget;
+      final attackTarget = character.target;
       if (attackTarget != null) {
         if (attackTarget is Collider && attackTarget.collidable) {
           applyHit(src: character, target: attackTarget, damage: damage);
+          character.target = null;
           return;
-        } else {
-          character.attackTarget = null;
         }
+         character.target = null;
       }
       final zombieHit = physics.raycastHit(
           character: character,

@@ -10,8 +10,6 @@ import 'Collider.dart';
 import 'Game.dart';
 import 'components.dart';
 
-const piEighth = pi / 8.0;
-
 class Character extends Collider with Team, Health, Velocity, Material {
   late CharacterType type;
   late double _speed;
@@ -19,21 +17,22 @@ class Character extends Collider with Team, Health, Velocity, Material {
   double angle = 0;
   double accuracy = 0;
   double speedModifier = 0;
-  int state = CharacterState.Idle;
-  int stateDurationRemaining = 0;
-  int stateDuration = 0;
-  int animationFrame = 0;
-  int frozenDuration = 0;
+  var state = CharacterState.Idle;
+  var stateDurationRemaining = 0;
+  var stateDuration = 0;
+  var animationFrame = 0;
+  var frozenDuration = 0;
   /// the character that was highlighted as the character began attacking
   /// This forces a hit to occur even if the target goes out of range of the attack
-  Position? attackTarget;
-  bool invincible = false;
+  Position? target;
+  var invincible = false;
   final techTree = TechTree();
   var equippedWeapon = WeaponType.Unarmed;
   var equippedArmour = SlotType.Empty;
   var equippedHead = SlotType.Empty;
 
   // properties
+  static const piEighth = pi / 8.0;
   int get direction => (((angle + piEighth) % pi2) ~/ piQuarter) % 8;
   double get speed => _speed + speedModifier;
 
@@ -144,3 +143,4 @@ class RunSpeed {
    static const Fast = 3.0;
    static const Very_Fast = 4.0;
 }
+

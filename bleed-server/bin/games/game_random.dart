@@ -113,7 +113,7 @@ class GameRandom extends Game {
     player.health = 10;
     player.collidable = true;
     player.skillPoints = 0;
-    player.attackTarget = null;
+    player.target = null;
     final spawnPoint = getNextSpawnPoint();
     player.x = spawnPoint.x;
     player.y = spawnPoint.y;

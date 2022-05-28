@@ -19,7 +19,6 @@ class AI extends Character with Material {
   var _pathIndex = -1;
   var dest = Vector2(-1, -1);
   var idleDuration = 0;
-  // dynamic target;
   var objective;
 
   int get pathIndex => _pathIndex;
@@ -68,8 +67,8 @@ class AI extends Character with Material {
   }
 
   void clearTargetIf(Character value){
-    if (attackTarget != value) return;
-    attackTarget = objective;
+    if (target != value) return;
+    target = objective;
   }
 
   bool withinViewRange(Position target) {
