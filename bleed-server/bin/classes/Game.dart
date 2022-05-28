@@ -198,10 +198,16 @@ abstract class Game {
     }
   }
 
-  void spawnExplosion({required Character src, required Position target}) {
+  void spawnExplosion({
+    required Character src,
+    required Position target,
+    required int damage
+  }) {
     dispatchV2(GameEventType.Explosion, target);
     for (final character in zombies) {
-       if (!onSameTeam(src, target)) continue;
+       if (onSameTeam(src, target)) continue;
+       if (character.getDistance(src) > 50) continue;
+       applyHit(src: src, target: character, damage: damage);
     }
   }
 
@@ -939,7 +945,7 @@ extension GameFunctions on Game {
     if (stateDuration == 10 && ability is CardAbilityExplosion){
       final target = character.attackTarget;
       if (target != null) {
-        spawnExplosion(src: character, target: target);
+        spawnExplosion(src: character, target: target, damage: 5);
       }
     }
   }
