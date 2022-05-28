@@ -12,7 +12,7 @@ class Projectile extends Collider with Active, Velocity {
   late double range;
   late int type; // ProjectileType.dart
   int damage = 0;
-  Collider? target = null;
+  Position? target = null;
   late double speed;
   late bool collideWithEnvironment = false;
   double angle = 0;

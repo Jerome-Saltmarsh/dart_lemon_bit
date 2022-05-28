@@ -376,7 +376,8 @@ class IsometricSpawn {
         weight: 0.5,
         duration: randomInt(150, 200),
         scale: randomBetween(0.6, 1.25),
-        scaleV: 0);
+        scaleV: 0
+    );
   }
 
   void spawnFlame({
@@ -400,9 +401,9 @@ class IsometricSpawn {
         rotation: 0,
         rotationV: 0,
         scale: 1.0,
-        scaleV: 0.005);
+        scaleV: 0.005
+    );
   }
-
 
   void spawnSmoke({
     required double x,

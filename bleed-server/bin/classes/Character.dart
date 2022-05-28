@@ -26,9 +26,8 @@ class Character extends Collider with Team, Health, Velocity, Material {
   int frozenDuration = 0;
   /// the character that was highlighted as the character began attacking
   /// This forces a hit to occur even if the target goes out of range of the attack
-  Collider? attackTarget;
+  Position? attackTarget;
   bool invincible = false;
-  final abilityTarget = Vector2(0, 0);
   final techTree = TechTree();
   var equippedWeapon = WeaponType.Unarmed;
   var equippedArmour = SlotType.Empty;

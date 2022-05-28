@@ -1,5 +1,6 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
+import 'package:lemon_math/functions/vector2.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -258,7 +259,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               final ability = player.ability;
               final aimTarget = player.aimTarget;
               player.attackTarget = aimTarget;
-              playerSetAbilityTarget(player, mouseX, mouseY);
 
               if (aimTarget is GameObject) {
                  if (aimTarget.isRock && player.equippedWeapon != TechType.Pickaxe) {
@@ -317,8 +317,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 case AbilityMode.Area:
                   ability.cooldownRemaining = ability.cooldown;
                   player.face(player.mouse);
-                  player.abilityTarget.x = player.mouse.x;
-                  player.abilityTarget.y = player.mouse.y;
+                  player.attackTarget = Vector2(mouseX, mouseY);
                   game.setCharacterState(player, CharacterState.Performing);
                   break;
                 case AbilityMode.Directed:

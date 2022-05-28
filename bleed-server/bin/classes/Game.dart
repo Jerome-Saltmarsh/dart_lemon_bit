@@ -856,12 +856,12 @@ extension GameFunctions on Game {
     }
   }
 
-  void handleProjectileHit(Projectile projectile, Collider collider) {
+  void handleProjectileHit(Projectile projectile, Position target) {
     projectile.active = false;
-    if (collider is Character) {
+    if (target is Character) {
       applyHit(
           src: projectile.owner,
-          target: collider,
+          target: target,
           damage: projectile.damage,
       );
     }
@@ -869,10 +869,10 @@ extension GameFunctions on Game {
     projectile.target = null;
 
     if (projectile.type == ProjectileType.Arrow){
-      dispatch(GameEventType.Arrow_Hit, collider.x, collider.y);
+      dispatch(GameEventType.Arrow_Hit, target.x, target.y);
     }
     if (projectile.type == ProjectileType.Orb){
-      dispatch(GameEventType.Blue_Orb_Deactivated, collider.x, collider.y);
+      dispatch(GameEventType.Blue_Orb_Deactivated, target.x, target.y);
     }
 
   }
@@ -936,8 +936,11 @@ extension GameFunctions on Game {
       );
     }
 
-    if (ability is CardAbilityExplosion) {
-      spawnExplosion(src: character, target: character.abilityTarget);
+    if (stateDuration == 10 && ability is CardAbilityExplosion){
+      final target = character.attackTarget;
+      if (target != null) {
+        spawnExplosion(src: character, target: target);
+      }
     }
   }
 
@@ -1006,7 +1009,7 @@ extension GameFunctions on Game {
     required int damage,
     required double range,
     double accuracy = 0,
-    Collider? target,
+    Position? target,
     double? angle,
   }) {
     dispatch(GameEventType.Arrow_Fired, src.x, src.y);
@@ -1042,7 +1045,7 @@ extension GameFunctions on Game {
     required int damage,
     double? angle = 0,
     double accuracy = 0,
-    Collider? target,
+    Position? target,
   }) {
     assert (angle != null || target != null);
     assert (angle == null || target == null);
@@ -1331,12 +1334,14 @@ extension GameFunctions on Game {
       if (stateDuration != framePerformStrike) return;
       final attackTarget = character.attackTarget;
       if (attackTarget == null) return;
-      applyHit(
+      if (attackTarget is Collider) {
+        applyHit(
           src: character,
           target: attackTarget,
           damage: damage,
-      );
-      character.attackTarget = null;
+        );
+        character.attackTarget = null;
+      }
       return;
     }
 
@@ -1416,7 +1421,7 @@ extension GameFunctions on Game {
     if (character.equippedIsMelee) {
       final attackTarget = character.attackTarget;
       if (attackTarget != null) {
-        if (attackTarget.collidable) {
+        if (attackTarget is Collider && attackTarget.collidable) {
           applyHit(src: character, target: attackTarget, damage: damage);
           return;
         } else {
@@ -1490,22 +1495,6 @@ extension GameFunctions on Game {
       dynamicObject.collidable = true;
       player.writeDynamicObjectSpawned(dynamicObject);
     }
-  }
-}
-
-void playerSetAbilityTarget(Player player, double x, double y) {
-  final ability = player.ability;
-  if (ability == null) return;
-
-  final distance = getHypotenuse(player.x - x, player.y - y);
-
-  if (distance > ability.range) {
-    double rotation = pi2 - angle2(player.x - x, player.y - y);
-    player.abilityTarget.x = player.x + adj(rotation, ability.range);
-    player.abilityTarget.y = player.y + opp(rotation, ability.range);
-  } else {
-    player.abilityTarget.x = x;
-    player.abilityTarget.y = y;
   }
 }
 
