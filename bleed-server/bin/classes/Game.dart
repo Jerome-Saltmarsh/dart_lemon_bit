@@ -938,8 +938,8 @@ extension GameFunctions on Game {
     if (
       ability is CardAbilityBowVolley
           &&
-      const<int>[5, 8, 11].contains(stateDuration
-    )) {
+      const<int>[5, 8, 11].contains(stateDuration)
+    ) {
         spawnProjectileArrow(character, damage: 5, range: ability.range);
         spawnProjectileArrow(character, damage: 5, angle: character.angle + 0.1, range: ability.range);
         spawnProjectileArrow(character, damage: 5, angle: character.angle + 0.2, range: ability.range);

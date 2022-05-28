@@ -159,7 +159,6 @@ void parseGameTime() {
 
 void _parsePlayerAbility(){
   final player = modules.game.state.player;
-  player.ability.value = _consumeAbilityType();
   player.abilityRange = consumeDouble();
   player.abilityRadius = consumeDouble();
 }

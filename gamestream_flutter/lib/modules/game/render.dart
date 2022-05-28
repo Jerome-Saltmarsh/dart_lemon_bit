@@ -7,11 +7,11 @@ import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/Projectile.dart';
 import 'package:gamestream_flutter/colours.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
-import 'package:gamestream_flutter/modules/isometric/atlas.dart';
 import 'package:gamestream_flutter/modules/isometric/classes.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/ui/build/player.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
@@ -69,6 +69,7 @@ class GameRender {
     if (debug) {
       renderTeamColours();
     }
+
     _render.renderSprites();
     drawEffects();
     drawItems();
@@ -132,24 +133,13 @@ class GameRender {
   }
 
   void drawAbility() {
-    final player = state.player;
-    if (player.ability.value == AbilityType.None) return;
-    // drawMouseAim2();
+    if (player.deckActiveCardIndex.value == -1) return;
     engine.draw.drawCircleOutline(
         sides: 24,
-        radius: player.abilityRange,
+        radius: player.deckActiveCardRange.value,
         x: player.x,
         y: player.y,
         color: Colors.white);
-
-    if (player.abilityRadius != 0){
-      engine.draw.drawCircleOutline(
-          sides: 12,
-          radius: player.abilityRadius,
-          x: mouseWorldX,
-          y: mouseWorldY,
-          color: Colors.white);
-    }
   }
 
   void drawDebugNpcs(List<NpcDebug> values){

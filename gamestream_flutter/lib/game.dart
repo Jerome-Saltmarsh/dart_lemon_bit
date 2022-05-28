@@ -159,8 +159,8 @@ class Game with ByteReader {
 
         case ServerResponse.Player_Deck_Active_Ability:
           player.deckActiveCardIndex.value = readByte();
+          player.deckActiveCardRange.value = readDouble();
           break;
-
 
         case ServerResponse.Player_Deck_Active_Ability_None:
           player.deckActiveCardIndex.value = -1;

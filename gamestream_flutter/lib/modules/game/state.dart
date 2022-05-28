@@ -84,7 +84,7 @@ class Player {
   final message = Watch("");
   final state = Watch(CharacterState.Idle);
   final alive = Watch(true);
-  final ability = Watch(AbilityType.None);
+  // final ability = Watch(AbilityType.None);
   final magic = Watch(0.0);
   final maxMagic = Watch(0.0);
   final wood = Watch(0);
@@ -99,6 +99,7 @@ class Player {
   final cardChoices = Watch<List<CardType>>([]);
   final deck = Watch<List<DeckCard>>([]);
   final deckActiveCardIndex = Watch<int>(-1);
+  final deckActiveCardRange = Watch(0.0);
 
   final canAffordUpgradePickaxe = Watch(false);
   final canAffordUpgradeSword = Watch(false);
