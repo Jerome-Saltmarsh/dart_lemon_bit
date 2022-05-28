@@ -24,6 +24,17 @@ abstract class CardAbility extends Card {
   void update() {}
 }
 
+class CardAbilityExplosion extends CardAbility {
+  CardAbilityExplosion() : super(
+      type: CardType.Ability_Explosion,
+      level: 1,
+      cost: 1,
+      range: 200,
+      cooldown: 40,
+      mode: AbilityMode.Area,
+  );
+}
+
 class CardAbilityBowVolley extends CardAbility {
   CardAbilityBowVolley() : super(
       type: CardType.Ability_Bow_Volley,

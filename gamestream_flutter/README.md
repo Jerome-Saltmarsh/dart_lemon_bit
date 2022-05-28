@@ -71,7 +71,8 @@
 [ ] All cards can be upgraded 3 times
 [ ] Refactor replace SlotType with HelmType
 [ ] Refactor replace SlotType with ArmourType
-[ ] Refactor replace SlotType with WeaponType
+[ ] Pay for gamestream company name
+[x] Refactor replace SlotType with WeaponType
 [x] Fix on respawn fireplaces do not emit
 [x] Footstep Audio
 [x] Fix Long shot ability

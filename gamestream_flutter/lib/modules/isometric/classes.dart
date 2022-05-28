@@ -15,8 +15,8 @@ class Character extends Vector2 {
   int direction;
   int frame;
   var weapon = WeaponType.Unarmed;
-  int armour = TechType.Unarmed;
-  int helm = TechType.Unarmed;
+  var armour = TechType.Unarmed;
+  var helm = TechType.Unarmed;
   String name;
   String text;
   bool allie = false;

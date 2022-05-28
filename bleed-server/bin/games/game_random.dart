@@ -123,9 +123,12 @@ class GameRandom extends Game {
     player.deck.clear();
     player.writePlayerSpawned();
 
-    if (player.selection == CharacterSelection.Archer){
+    if (player.selection == CharacterSelection.Archer) {
       player.addCardToDeck(CardType.Ability_Bow_Volley);
       player.addCardToDeck(CardType.Ability_Bow_Long_Shot);
+    } else
+    if (player.selection == CharacterSelection.Wizard) {
+      player.addCardToDeck(CardType.Ability_Explosion);
     }
 
     player.writeDeck();

@@ -198,6 +198,13 @@ abstract class Game {
     }
   }
 
+  void spawnExplosion({required Character src, required Position target}) {
+    dispatchV2(GameEventType.Explosion, target);
+    for (final character in zombies) {
+       if (!onSameTeam(src, target)) continue;
+    }
+  }
+
   void checkCollisionPlayerItem() {
     var itemLength = items.length;
     for (final player in players) {
@@ -783,7 +790,10 @@ extension GameFunctions on Game {
 
     final target = player.target;
     if (target == null) return;
-    player.face(target);
+    if (!player.busy) {
+      player.face(target);
+    }
+
 
     if (target is Collider) {
       if (!target.collidable) {
@@ -918,7 +928,16 @@ extension GameFunctions on Game {
     }
 
     if (ability is CardAbilityBowLongShot && stateDuration == 5) {
-       spawnProjectileArrow(character, damage: 15, range: ability.range, target: character.attackTarget);
+      spawnProjectileArrow(
+          character,
+          damage: 15,
+          angle: character.angle,
+          range: 9999
+      );
+    }
+
+    if (ability is CardAbilityExplosion) {
+      spawnExplosion(src: character, target: character.abilityTarget);
     }
   }
 

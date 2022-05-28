@@ -315,7 +315,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                   ability.cooldownRemaining = ability.cooldown;
                   break;
                 case AbilityMode.Area:
-                // TODO: Handle this case.
+                  ability.cooldownRemaining = ability.cooldown;
+                  player.face(player.mouse);
+                  player.abilityTarget.x = player.mouse.x;
+                  player.abilityTarget.y = player.mouse.y;
+                  game.setCharacterState(player, CharacterState.Performing);
                   break;
                 case AbilityMode.Directed:
                   ability.cooldownRemaining = ability.cooldown;

@@ -2,7 +2,7 @@ import 'package:bleed_common/card_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/weapon_type.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/classes/Card.dart';
+import 'package:gamestream_flutter/classes/deck_card.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';

@@ -1,6 +1,6 @@
 import 'package:bleed_common/card_type.dart';
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/classes/Card.dart';
+import 'package:gamestream_flutter/classes/deck_card.dart';
 import 'package:gamestream_flutter/classes/game_object.dart';
 import 'package:gamestream_flutter/classes/GeneratedObject.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';

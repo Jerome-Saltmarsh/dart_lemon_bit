@@ -334,7 +334,7 @@ class IsometricSpawn {
     );
   }
 
-  void shrapnel({
+  void spawnShrapnel({
     required double x,
     required double y,
     required double z,
@@ -470,13 +470,13 @@ class IsometricSpawn {
     );
   }
 
-  void explosion(double x, double y) {
+  void spawnExplosion(double x, double y) {
     spawnEffect(x: x, y: y, type: EffectType.Explosion, duration: 30);
     audio.explosion(x, y);
     modules.game.actions.spawnBulletHole(x, y);
     final shrapnelCount = randomInt(4, 10);
     for (var i = 0; i < shrapnelCount; i++) {
-      shrapnel(x: x, y: y, z: 0.3, zv: 1, angle: 1, speed: 1);
+      spawnShrapnel(x: x, y: y, z: 0.3, zv: 1, angle: randomAngle(), speed: 1);
     }
     for (var i = 0; i < shrapnelCount; i++) {
       // fireYellow(x, y);

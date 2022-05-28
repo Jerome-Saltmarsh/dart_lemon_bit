@@ -22,12 +22,12 @@ Card convertCardTypeToCard(CardType type){
          return CardAbilityBowVolley();
       case CardType.Ability_Bow_Long_Shot:
          return CardAbilityBowLongShot();
-      case CardType.Ability_Staff_Explosion:
-         break;
       case CardType.Ability_Staff_Heal_10:
          break;
       case CardType.Ability_Staff_Strong_Orb:
          break;
+      case CardType.Ability_Explosion:
+         return CardAbilityExplosion();
    }
    throw UnimplementedError('Cannot convert card type $type to card');
 }

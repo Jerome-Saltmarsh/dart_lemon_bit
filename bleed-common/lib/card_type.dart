@@ -5,14 +5,11 @@ enum CardGenre {
 }
 
 enum CardType {
-   // Weapon_Sword,
-   // Weapon_Bow,
-   // Weapon_Staff,
    Ability_Bow_Freeze,
    Ability_Bow_Fire,
    Ability_Bow_Volley,
    Ability_Bow_Long_Shot,
-   Ability_Staff_Explosion,
+   Ability_Explosion,
    Ability_Staff_Heal_10,
    Ability_Staff_Strong_Orb,
    Passive_General_Max_HP_10,
@@ -27,7 +24,7 @@ CardGenre getCardTypeGenre(CardType cardType) {
   final genre = const<CardType, CardGenre> {
     CardType.Ability_Staff_Strong_Orb: CardGenre.Ability,
     CardType.Ability_Staff_Heal_10: CardGenre.Ability,
-    CardType.Ability_Staff_Explosion: CardGenre.Ability,
+    CardType.Ability_Explosion: CardGenre.Ability,
     CardType.Ability_Bow_Long_Shot: CardGenre.Ability,
     CardType.Ability_Bow_Freeze: CardGenre.Ability,
     CardType.Ability_Bow_Volley: CardGenre.Ability,
@@ -60,13 +57,13 @@ const cardTypesGeneralPassives = <CardType> [
 ];
 
 const cardTypeStaffAbilities = <CardType> [
-  CardType.Ability_Staff_Explosion,
+  CardType.Ability_Explosion,
   CardType.Ability_Staff_Heal_10,
   CardType.Ability_Staff_Strong_Orb,
 ];
 
 const cardTypeSwordAbilities = <CardType> [
-  CardType.Ability_Staff_Explosion,
+  CardType.Ability_Explosion,
   CardType.Ability_Staff_Heal_10,
   CardType.Ability_Staff_Strong_Orb,
 ];
@@ -97,6 +94,7 @@ String getCardTypeName(CardType value) {
       CardType.Passive_General_Max_HP_10: "Breast Plate",
       CardType.Passive_General_Critical_Hit: "Critical Hit",
       CardType.Passive_Bow_Run_Speed: "Feather Boots",
+      CardType.Ability_Explosion: "Explode",
    }[value] ?? value.name;
 }
 
