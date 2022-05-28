@@ -1,6 +1,5 @@
 
-export 'cards.dart';
-export 'AbilityCharacter.dart';
+export 'card_abilities.dart';
 export 'Character.dart';
 export 'Collectable.dart';
 export 'Collider.dart';

@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/Projectile.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/get_position.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/isometric/classes.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -134,12 +135,22 @@ class GameRender {
 
   void drawAbility() {
     if (player.deckActiveCardIndex.value == -1) return;
+
     engine.draw.drawCircleOutline(
         sides: 24,
         radius: player.deckActiveCardRange.value,
         x: player.x,
         y: player.y,
-        color: Colors.white);
+        color: Colors.white,
+    );
+
+    engine.draw.drawCircleOutline(
+        sides: 24,
+        radius: player.deckActiveCardRadius.value,
+        x: mouseWorldX,
+        y: mouseWorldY,
+        color: Colors.white,
+    );
   }
 
   void drawDebugNpcs(List<NpcDebug> values){

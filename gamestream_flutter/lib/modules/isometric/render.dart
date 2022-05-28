@@ -3,18 +3,18 @@ import 'dart:math';
 import 'package:bleed_common/game_object_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/weapon_type.dart';
-import 'package:gamestream_flutter/classes/game_object.dart';
 import 'package:gamestream_flutter/classes/GeneratedObject.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
+import 'package:gamestream_flutter/classes/game_object.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToDst.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToSrc.dart';
 import 'package:gamestream_flutter/modules/isometric/animations.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
-import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
@@ -1314,3 +1314,5 @@ class IsometricRender {
     engine.renderAtlas();
   }
 }
+
+

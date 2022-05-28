@@ -32,6 +32,7 @@ class CardAbilityExplosion extends CardAbility {
       range: 200,
       cooldown: 40,
       mode: AbilityMode.Area,
+      radius: 75,
   );
 }
 
