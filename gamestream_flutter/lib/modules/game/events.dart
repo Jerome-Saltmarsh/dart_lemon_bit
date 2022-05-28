@@ -12,6 +12,7 @@ import 'package:bleed_common/SlotType.dart';
 import 'package:bleed_common/StructureType.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/audio.dart';
+import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -444,6 +445,7 @@ class GameEvents {
               speed: randomBetween(1, 2)
           );
         }
+        isometric.spawn.spawnEffect(x: x, y: y, type: EffectType.Explosion, duration: 30);
         break;
 
     }

@@ -649,6 +649,23 @@ class IsometricRender {
     );
   }
 
+  void renderFireYellow({
+    required double x,
+    required double y,
+    double scale = 1.0,
+  }){
+    engine.renderCustom(
+        dstX: x,
+        dstY: y,
+        srcX: 145,
+        srcY: 25,
+        srcWidth: 8,
+        srcHeight: 8,
+        scale: scale
+    );
+  }
+
+
   void renderShrapnel({
     required double x,
     required double y,
@@ -701,6 +718,10 @@ class IsometricRender {
         return renderOrbShard(x: value.x, y: value.renderY, scale: value.renderScale);
       case ParticleType.Shrapnel:
         return renderShrapnel(x: value.x, y: value.renderY, scale: value.renderScale);
+      case ParticleType.FireYellow:
+        return renderFireYellow(x: value.x, y: value.renderY, scale: value.renderScale);
+      case ParticleType.Flame:
+        return renderFlame(value);
       default:
         break;
     }

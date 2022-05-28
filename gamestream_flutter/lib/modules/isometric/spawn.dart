@@ -334,6 +334,29 @@ class IsometricSpawn {
     );
   }
 
+  void spawnFireYellow({
+    required double x,
+    required double y,
+    required double z,
+    required double zv,
+    required double angle,
+    required double speed
+  }) {
+    spawnParticle(
+        type: ParticleType.FireYellow,
+        x: x,
+        y: y,
+        z: 0,
+        angle: angle,
+        speed: speed,
+        zv: randomBetween(0.1, 0.4),
+        weight: 0.5,
+        duration: randomInt(150, 200),
+        scale: randomBetween(0.6, 1.25),
+        scaleV: 0);
+  }
+
+
   void spawnShrapnel({
     required double x,
     required double y,
@@ -356,7 +379,32 @@ class IsometricSpawn {
         scaleV: 0);
   }
 
-  void smoke({
+  void spawnFlame({
+    required double x,
+    required double y,
+    required double z,
+    required double zv,
+    required double angle,
+    required double speed
+  }) {
+    spawnParticle(
+        type: ParticleType.Flame,
+        x: x,
+        y: y,
+        z: z,
+        angle: angle,
+        speed: speed,
+        zv: 0.015,
+        weight: 0.0,
+        duration: 120,
+        rotation: 0,
+        rotationV: 0,
+        scale: 1.0,
+        scaleV: 0.005);
+  }
+
+
+  void spawnSmoke({
     required double x,
     required double y,
     required double z,
@@ -473,13 +521,15 @@ class IsometricSpawn {
   void spawnExplosion(double x, double y) {
     spawnEffect(x: x, y: y, type: EffectType.Explosion, duration: 30);
     audio.explosion(x, y);
-    modules.game.actions.spawnBulletHole(x, y);
-    final shrapnelCount = randomInt(4, 10);
+    // modules.game.actions.spawnBulletHole(x, y);
+    const shrapnelCount = 6;
     for (var i = 0; i < shrapnelCount; i++) {
-      spawnShrapnel(x: x, y: y, z: 0.3, zv: 1, angle: randomAngle(), speed: 1);
+      spawnShrapnel(x: x, y: y, z: 0.3, zv: 1 + giveOrTake(0.25), angle: randomAngle(), speed: 1 + giveOrTake(0.25));
+      spawnSmoke(x: x, y: y, z: 0, zv: 0, angle: randomAngle(), speed: 0.5);
+      spawnFlame(x: x, y: y, z: 0, zv: 0, angle: randomAngle(), speed: 0.5);
     }
     for (var i = 0; i < shrapnelCount; i++) {
-      // fireYellow(x, y);
+      spawnFireYellow(x: x, y: y, z: 0.3, zv: 1 + giveOrTake(0.25), angle: randomAngle(), speed: 1 + giveOrTake(0.25));
     }
   }
 
