@@ -21,8 +21,6 @@ final _buffer = StringBuffer();
 final _clientRequestsLength = clientRequests.length;
 var totalConnections = 0;
 
-final clientRequestIndexUpdate = ClientRequest.Update.index;
-
 void clearBuffer() {
   _buffer.clear();
 }

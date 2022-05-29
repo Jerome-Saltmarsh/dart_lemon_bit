@@ -11,6 +11,8 @@ abstract class CardAbility extends Card {
   double radius;
   AbilityMode mode;
 
+  bool get isModeArea => mode == AbilityMode.Area;
+
   CardAbility({
     required CardType type,
     required this.level,

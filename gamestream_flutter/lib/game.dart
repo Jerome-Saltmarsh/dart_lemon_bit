@@ -368,6 +368,10 @@ class Game with ByteReader {
           engine.targetZoom = 1.0;
           break;
 
+        case ServerResponse.Player_Target:
+          readPosition(player.abilityTarget);
+          break;
+
         case ServerResponse.End:
           byteLength.value = index;
           index = 0;
@@ -584,6 +588,7 @@ class Game with ByteReader {
       }
     }
   }
+
 
   void readPosition(Position position){
     position.x = readDouble();

@@ -147,8 +147,8 @@ class GameRender {
     engine.draw.drawCircleOutline(
         sides: 24,
         radius: player.deckActiveCardRadius.value,
-        x: mouseWorldX,
-        y: mouseWorldY,
+        x: player.abilityTarget.x,
+        y: player.abilityTarget.y,
         color: Colors.white,
     );
   }

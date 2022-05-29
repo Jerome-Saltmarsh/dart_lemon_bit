@@ -2,11 +2,11 @@ import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
+import '../common/card_type.dart';
 import '../common/library.dart';
 import '../common/weapon_type.dart';
 import '../engine.dart';
 import '../utilities.dart';
-import '../common/card_type.dart';
 import 'Card.dart';
 import 'library.dart';
 
@@ -369,6 +369,16 @@ extension PlayerProperties on Player {
     writeAttackTarget();
     writeProjectiles();
     writeNpcs(this);
+
+    if (ability != null && ability!.isModeArea) {
+      writeByte(ServerResponse.Player_Target);
+      if (target != null) {
+        writePosition(target!);
+      } else {
+        writePosition(mouse);
+      }
+    }
+
     writeGameTime(game);
     writePlayerZombies();
 
@@ -646,11 +656,6 @@ extension PlayerProperties on Player {
       return;
     }
     writeByte((value * 256).toInt());
-  }
-
-  void writeVector2(Vector2 value){
-    writeInt(value.x);
-    writeInt(value.y);
   }
 
   void writePosition(Position value){

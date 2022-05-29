@@ -76,6 +76,7 @@ class Player {
 
   final equippedLevel = Watch(0);
 
+
   final characterType = Watch(CharacterType.Human);
   final health = Watch(0.0);
   final experience = Watch(0.0);
