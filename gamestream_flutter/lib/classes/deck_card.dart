@@ -4,7 +4,7 @@ import 'package:lemon_watch/watch.dart';
 
 class DeckCard {
    final CardType type;
-   final level = Watch(0);
+   final int level;
    final cooldownRemaining = Watch(0);
    final cooldown = Watch(0);
    final selectable = Watch(true);
@@ -16,10 +16,9 @@ class DeckCard {
       return cooldownRemaining.value / cooldown.value;
    }
 
-   DeckCard(this.type, int level){
+   DeckCard(this.type, this.level){
       cooldownRemaining.onChanged((int remaining) {
           selectable.value = remaining == 0;
       });
-      this.level.value = level;
    }
 }

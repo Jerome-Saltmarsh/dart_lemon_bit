@@ -625,7 +625,7 @@ class Game with ByteReader {
     }
     return cards;
   }
-  
+
 
   Character getNextHighestScore(){
     Character? highestPlayer;

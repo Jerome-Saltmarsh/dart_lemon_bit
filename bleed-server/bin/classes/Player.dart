@@ -677,10 +677,23 @@ extension PlayerProperties on Player {
     }
   }
 
-  void addCardToDeck(CardType type){
-    deck.add(convertCardTypeToCard(type));
-    writeDeck();
+  Card? getCardByType(CardType type){
+    for (final card in deck) {
+      if (card.type != type) continue;
+      return card;
+    }
+    return null;
+  }
 
+  void addCardToDeck(CardType type){
+
+    final card = getCardByType(type);
+    if (card != null){
+      card.level++;
+    } else {
+      deck.add(convertCardTypeToCard(type));
+    }
+    writeDeck();
     if (type == CardType.Passive_General_Max_HP_10) {
       maxHealth += 10;
       health += 10;
