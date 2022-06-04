@@ -129,6 +129,7 @@ class GameRandom extends Game {
     } else
     if (player.selection == CharacterSelection.Wizard) {
       player.addCardToDeck(CardType.Ability_Explosion);
+      player.addCardToDeck(CardType.Ability_Fireball);
     }
 
     player.writeDeck();

@@ -8,7 +8,6 @@ import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/Projectile.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/game.dart';
-import 'package:gamestream_flutter/get_position.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/isometric/classes.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -22,8 +21,6 @@ import 'style.dart';
 
 final _screen = engine.screen;
 final _render = isometric.render;
-final _projectiles = game.projectiles;
-final _bulletHoles = game.bulletHoles;
 final _floatingTexts = isometric.floatingTexts;
 
 class GameRender {
@@ -59,8 +56,8 @@ class GameRender {
     isometric.applyDynamicEmissions();
     isometric.applyDynamicShadeToTileSrc();
     _render.renderTiles();
-    drawProjectiles(_projectiles);
-    drawBulletHoles(_bulletHoles);
+    renderProjectiles();
+    // drawBulletHoles(_bulletHoles);
     drawAbility();
     if (modules.game.structureType.value == null){
       attackTargetCircle();
@@ -221,66 +218,16 @@ class GameRender {
     }
   }
 
-  void drawProjectiles(List<Projectile> projectiles) {
+  void renderProjectiles() {
     final total = game.totalProjectiles;
     final projectiles = game.projectiles;
     for (var i = 0; i < total; i++) {
-      renderProjectile(projectiles[i]);
+      _render.renderProjectile(projectiles[i]);
     }
   }
 
   void mapDstProjectile(Projectile projectile){
     engine.mapDst(x: projectile.x, y: projectile.y, scale: 0.25, anchorX: 16, anchorY: 16);
-  }
-
-  void renderProjectile(Projectile value) {
-    switch (value.type) {
-      case ProjectileType.Arrow:
-        renderArrow(value.x, value.y, value.angle);
-        break;
-      case ProjectileType.Orb:
-        renderOrb(value);
-        break;
-      default:
-        return;
-    }
-  }
-
-  void renderFireball(double x, double y, double angle) {
-    // RSTransform rsTransform = RSTransform.fromComponents(
-    //     rotation: angle,
-    //     scale: 1,
-    //     anchorX: 16,
-    //     anchorY: 16,
-    //     translateX: x,
-    //     translateY: y);
-    // Rect rect = Rect.fromLTWH(atlas.projectiles.fireball.x, atlas.projectiles.fireball.y + (engine.animationFrame * atlas.projectiles.fireball.size),
-    //     atlas.projectiles.fireball.size, atlas.projectiles.fireball.size);
-
-    // TODO use atlas instead
-    // engine.canvas.drawAtlas(isometric.image, [rsTransform],
-    //     [rect], null, null, null, engine.paint);
-  }
-
-  void renderArrow(double x, double y, double angle) {
-    engine.mapSrc(x: 2182, y: 1, width: 13, height: 47);
-    engine.mapDst(x: x, y: y - 20, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
-    engine.renderAtlas();
-    engine.mapSrc(x: 2172, y: 1, width: 13, height: 47);
-    engine.mapDst(x: x, y: y, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
-    engine.renderAtlas();
-  }
-
-  void renderOrb(Position position){
-    engine.renderCustom(
-        dstX: position.x,
-        dstY: position.y,
-        srcX: 417,
-        srcY: 26,
-        srcWidth: 8,
-        srcHeight: 8,
-        scale: 1.5
-    );
   }
 
   void drawItems() {

@@ -965,6 +965,14 @@ extension GameFunctions on Game {
         character.target = null;
       }
     }
+
+    if (stateDuration == 10 && ability is CardAbilityFireball) {
+      final target = character.target;
+      if (target != null) {
+        spawnProjectileArrow(character, damage: 5, range: ability.range);
+        character.target = null;
+      }
+    }
   }
 
   void updateCharacter(Character character) {
@@ -1056,6 +1064,38 @@ extension GameFunctions on Game {
       range: 300,
       target: target,
       projectileType: ProjectileType.Arrow,
+      damage: damage,
+    );
+  }
+
+  Projectile spawnFireball(Position src, {
+    required int damage,
+    required double range,
+    double accuracy = 0,
+    Position? target,
+    double? angle,
+  }) {
+    dispatch(GameEventType.Projectile_Fired_Fireball, src.x, src.y);
+    if (src is Character) {
+      return spawnProjectile(
+        src: src,
+        accuracy: accuracy,
+        speed: 7,
+        range: range,
+        target: target,
+        angle: target != null ? null : angle ?? src.angle,
+        projectileType: ProjectileType.Fireball,
+        damage: damage,
+      );
+    }
+
+    return spawnProjectile(
+      src: src,
+      accuracy: 0,
+      speed: 7,
+      range: range,
+      target: target,
+      projectileType: ProjectileType.Fireball,
       damage: damage,
     );
   }

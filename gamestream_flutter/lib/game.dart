@@ -154,7 +154,7 @@ class Game with ByteReader {
           break;
 
         case ServerResponse.Player_Deck:
-          player.deck.value = readCardTypes().map((e) => DeckCard(e)).toList();
+          player.deck.value = readDeck();
           break;
 
         case ServerResponse.Player_Deck_Active_Ability:
@@ -615,6 +615,17 @@ class Game with ByteReader {
     return cards;
   }
 
+  List<DeckCard> readDeck(){
+    final numberOfCards = readByte();
+    final cards = <DeckCard>[];
+    for (var i = 0; i < numberOfCards; i++) {
+      final type = readByte();
+      final level = readByte();
+      cards.add(DeckCard(cardTypes[type], level));
+    }
+    return cards;
+  }
+  
 
   Character getNextHighestScore(){
     Character? highestPlayer;

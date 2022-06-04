@@ -3,7 +3,6 @@ import '../common/card_type.dart';
 import 'Card.dart';
 
 abstract class CardAbility extends Card {
-  int level;
   int cost;
   double range;
   int cooldownRemaining = 0;
@@ -15,7 +14,6 @@ abstract class CardAbility extends Card {
 
   CardAbility({
     required CardType type,
-    required this.level,
     required this.cost,
     required this.range,
     required this.cooldown,
@@ -29,7 +27,6 @@ abstract class CardAbility extends Card {
 class CardAbilityExplosion extends CardAbility {
   CardAbilityExplosion() : super(
       type: CardType.Ability_Explosion,
-      level: 1,
       cost: 1,
       range: 200,
       cooldown: 40,
@@ -41,7 +38,6 @@ class CardAbilityExplosion extends CardAbility {
 class CardAbilityBowVolley extends CardAbility {
   CardAbilityBowVolley() : super(
       type: CardType.Ability_Bow_Volley,
-      level: 1,
       cost: 1,
       range: 200,
       cooldown: 30,
@@ -52,11 +48,21 @@ class CardAbilityBowVolley extends CardAbility {
 class CardAbilityBowLongShot extends CardAbility {
   CardAbilityBowLongShot() : super(
       type: CardType.Ability_Bow_Long_Shot,
-      level: 1,
       cost: 1,
       range: 400,
       cooldown: 20,
       mode: AbilityMode.Targeted,
+  );
+}
+
+class CardAbilityFireball extends CardAbility {
+
+  CardAbilityFireball() : super(
+    type: CardType.Ability_Fireball,
+    cost: 1,
+    range: 400,
+    cooldown: 20,
+    mode: AbilityMode.Targeted,
   );
 }
 

@@ -6,6 +6,7 @@ import 'package:bleed_common/weapon_type.dart';
 import 'package:gamestream_flutter/classes/GeneratedObject.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
+import 'package:gamestream_flutter/classes/Projectile.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/classes/game_object.dart';
 import 'package:gamestream_flutter/game.dart';
@@ -197,19 +198,6 @@ class IsometricRender {
       }
       break;
     }
-
-    // while (remainingDynamicObjects) {
-    //   yDynamicObject = gameObjects[indexDynamicObject].y;
-    //   if (yDynamicObject < screenTop) {
-    //     indexDynamicObject++;
-    //     remainingDynamicObjects = indexDynamicObject < totalDynamicObjects;
-    //     continue;
-    //   }
-    //   if (yDynamicObject > screenBottom100) {
-    //     remainingDynamicObjects = false;
-    //   }
-    //   break;
-    // }
 
     var particleIsBlood = remainingParticles ? particles[indexParticle].type == ParticleType.Blood : false;
 
@@ -498,7 +486,6 @@ class IsometricRender {
           remainingPlayers ||
           remainingNpcs ||
           remainingGameObjects ||
-          // remainingDynamicObjects ||
           remainingStructures ||
           remainingParticles ||
           remainingGenerated ||
@@ -520,6 +507,54 @@ class IsometricRender {
         renderBlockGrassLevel3(generatedObject);
         break;
     }
+  }
+
+  void renderProjectile(Projectile value) {
+    switch (value.type) {
+      case ProjectileType.Arrow:
+        renderArrow(value.x, value.y, value.angle);
+        break;
+      case ProjectileType.Orb:
+        renderOrb(value);
+        break;
+      case ProjectileType.Fireball:
+        renderFireball(value.x, value.y, value.angle);
+        break;
+      default:
+        return;
+    }
+  }
+
+  void renderFireball(double x, double y, double angle) {
+    engine.renderCustom(
+        dstX: x,
+        dstY: y,
+        srcX: 5669,
+        srcY: ((x + y + engine.animationFrame) % 6) * 23,
+        srcWidth: 18,
+        srcHeight: 23,
+    );
+  }
+
+  void renderArrow(double x, double y, double angle) {
+    engine.mapSrc(x: 2182, y: 1, width: 13, height: 47);
+    engine.mapDst(x: x, y: y - 20, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
+    engine.renderAtlas();
+    engine.mapSrc(x: 2172, y: 1, width: 13, height: 47);
+    engine.mapDst(x: x, y: y, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
+    engine.renderAtlas();
+  }
+
+  void renderOrb(Position position){
+    engine.renderCustom(
+        dstX: position.x,
+        dstY: position.y,
+        srcX: 417,
+        srcY: 26,
+        srcWidth: 8,
+        srcHeight: 8,
+        scale: 1.5
+    );
   }
 
   void renderStructure(Structure structure) {

@@ -10,6 +10,7 @@ enum CardType {
    Ability_Bow_Volley,
    Ability_Bow_Long_Shot,
    Ability_Explosion,
+   Ability_Fireball,
    Ability_Staff_Heal_10,
    Ability_Staff_Strong_Orb,
    Passive_General_Max_HP_10,
@@ -32,6 +33,7 @@ CardGenre getCardTypeGenre(CardType cardType) {
     CardType.Passive_Bow_Run_Speed: CardGenre.Passive,
     CardType.Passive_General_Max_HP_10: CardGenre.Passive,
     CardType.Passive_Increase_Damage_2: CardGenre.Passive,
+    CardType.Ability_Fireball: CardGenre.Ability,
   }[cardType];
   if(genre == null) throw Exception("$cardType does not have a card genre");
   return genre;
@@ -95,6 +97,7 @@ String getCardTypeName(CardType value) {
       CardType.Passive_General_Critical_Hit: "Critical Hit",
       CardType.Passive_Bow_Run_Speed: "Feather Boots",
       CardType.Ability_Explosion: "Explode",
+      CardType.Ability_Fireball: "Fireball",
    }[value] ?? value.name;
 }
 

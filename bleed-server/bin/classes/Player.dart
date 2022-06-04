@@ -673,6 +673,7 @@ extension PlayerProperties on Player {
     writeByte(deck.length);
     for (final card in deck) {
       writeByte(card.type.index);
+      writeByte(card.level);
     }
   }
 

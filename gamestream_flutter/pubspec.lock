@@ -318,7 +318,7 @@ packages:
       path: "C:\\Users\\Jerome\\github\\dart-lemon-byte"
       relative: false
     source: path
-    version: "1.0.5"
+    version: "1.0.6"
   lemon_dispatch:
     dependency: "direct main"
     description:
@@ -332,7 +332,7 @@ packages:
       path: "C:\\Users\\Jerome\\github\\dart-lemon-engine"
       relative: false
     source: path
-    version: "0.3.04"
+    version: "0.3.08"
   lemon_math:
     dependency: transitive
     description:

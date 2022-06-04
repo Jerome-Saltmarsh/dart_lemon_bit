@@ -3,6 +3,7 @@ import '../common/card_type.dart';
 import 'library.dart';
 
 class Card {
+   var level = 1;
    final CardType type;
    Card(this.type);
 }
@@ -28,6 +29,8 @@ Card convertCardTypeToCard(CardType type){
          break;
       case CardType.Ability_Explosion:
          return CardAbilityExplosion();
+      case CardType.Ability_Fireball:
+         return CardAbilityFireball();
    }
    throw UnimplementedError('Cannot convert card type $type to card');
 }
