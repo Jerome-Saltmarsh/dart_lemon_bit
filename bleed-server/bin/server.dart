@@ -290,9 +290,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 break;
               }
 
-              if (player.magic < ability.cost) {
-                return error(GameError.InsufficientMana);
-              }
               if (ability.cooldownRemaining > 0) {
                 return error(GameError.Cooldown_Remaining);
               }
