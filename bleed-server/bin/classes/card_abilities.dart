@@ -60,8 +60,8 @@ class CardAbilityFireball extends CardAbility {
   CardAbilityFireball() : super(
     type: CardType.Ability_Fireball,
     cost: 1,
-    range: 400,
-    cooldown: 20,
+    range: 200,
+    cooldown: 10,
     mode: AbilityMode.Targeted,
   );
 }

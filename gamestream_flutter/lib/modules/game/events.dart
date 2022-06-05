@@ -448,6 +448,10 @@ class GameEvents {
         isometric.spawn.spawnEffect(x: x, y: y, type: EffectType.Explosion, duration: 30);
         break;
 
+      case GameEventType.Projectile_Fired_Fireball:
+        audio.firebolt(x, y);
+        break;
+
     }
   }
 }

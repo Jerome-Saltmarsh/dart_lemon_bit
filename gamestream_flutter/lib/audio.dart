@@ -219,6 +219,10 @@ class _Audio {
     audio._playPositioned('shotgun-shot.mp3', x, y);
   }
 
+  void firebolt(double x, double y) {
+    audio._playPositioned('fire-bolt-3.mp3', x, y);
+  }
+
   void handgunShot(double x, double y) {
     _playRandom(_pistolShot, x, y);
   }

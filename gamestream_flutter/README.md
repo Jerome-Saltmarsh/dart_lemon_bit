@@ -1,6 +1,6 @@
 [TODO]
-[ ] Fix Fireball
 [ ] Ability level determines effectiveness
+[x] Fix Fireball
 [x] Upgrade card level
 [x] Release Youtube video
 [x] Ability Wizard - Explosion
