@@ -935,17 +935,25 @@ extension GameFunctions on Game {
        ability.cooldownRemaining = ability.cooldown;
     }
 
-    if (
-      ability is CardAbilityBowVolley
-          &&
-      const<int>[5, 8, 11].contains(stateDuration)
-    ) {
-        spawnProjectileArrow(character, damage: 5, range: ability.range);
-        spawnProjectileArrow(character, damage: 5, angle: character.angle + 0.1, range: ability.range);
-        spawnProjectileArrow(character, damage: 5, angle: character.angle + 0.2, range: ability.range);
-        spawnProjectileArrow(character, damage: 5, angle: character.angle - 0.1, range: ability.range);
-        spawnProjectileArrow(character, damage: 5, angle: character.angle - 0.2, range: ability.range);
-        character.target = null;
+    // if (
+    //   ability is CardAbilityBowVolley
+    //       &&
+    //   const<int>[5, 8, 11].contains(stateDuration)
+    // ) {
+    //     spawnProjectileArrow(character, damage: 5, range: ability.range);
+    //     spawnProjectileArrow(character, damage: 5, angle: character.angle + 0.1, range: ability.range);
+    //     spawnProjectileArrow(character, damage: 5, angle: character.angle + 0.2, range: ability.range);
+    //     spawnProjectileArrow(character, damage: 5, angle: character.angle - 0.1, range: ability.range);
+    //     spawnProjectileArrow(character, damage: 5, angle: character.angle - 0.2, range: ability.range);
+    //     character.target = null;
+    // }
+
+    if (ability is CardAbilityBowVolley && stateDuration == 5) {
+      final total = 3 + (ability.level * 2);
+      for (var i = 0; i < total; i++) {
+        spawnProjectileArrow(character, damage: 5, range: ability.range, accuracy: 0.2);
+      }
+      character.target = null;
     }
 
     if (ability is CardAbilityBowLongShot && stateDuration == 5) {
@@ -969,7 +977,7 @@ extension GameFunctions on Game {
     if (stateDuration == 10 && ability is CardAbilityFireball) {
       final target = character.target;
       if (target != null) {
-        spawnProjectileArrow(character, damage: 5, range: ability.range);
+        spawnFireball(character, damage: 5, range: ability.range);
         character.target = null;
       }
     }

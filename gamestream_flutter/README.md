@@ -1,5 +1,7 @@
 [TODO]
-[ ] POLISH MYTH
+[ ] Fix Fireball
+[ ] Ability level determines effectiveness
+[x] Upgrade card level
 [x] Release Youtube video
 [x] Ability Wizard - Explosion
 [x] Render Cast Ability Range

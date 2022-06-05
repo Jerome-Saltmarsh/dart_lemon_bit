@@ -525,7 +525,7 @@ class IsometricRender {
     }
   }
 
-  void renderFireball(double x, double y, double angle) {
+  void renderFireball(double x, double y, double rotation) {
     engine.renderCustom(
         dstX: x,
         dstY: y,
@@ -533,6 +533,7 @@ class IsometricRender {
         srcY: ((x + y + engine.animationFrame) % 6) * 23,
         srcWidth: 18,
         srcHeight: 23,
+        rotation: rotation,
     );
   }
 
