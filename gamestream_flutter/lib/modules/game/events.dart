@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:bleed_common/AbilityType.dart';
 import 'package:bleed_common/CharacterState.dart';
 import 'package:bleed_common/CharacterType.dart';
 import 'package:bleed_common/GameError.dart';

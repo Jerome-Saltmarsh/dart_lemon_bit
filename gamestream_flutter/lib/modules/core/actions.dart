@@ -302,7 +302,6 @@ class CoreActions {
 }
 
 void connectToGame(CharacterSelection character){
-  print("connectToSelectedGame()");
   game.type.value = GameType.RANDOM;
   connectToWebSocketServer(core.state.region.value, character);
 }

@@ -2,7 +2,6 @@ import 'package:bleed_common/Character_Selection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/core/actions.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel.dart';
 import 'package:gamestream_flutter/web_socket.dart';
