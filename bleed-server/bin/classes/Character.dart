@@ -74,7 +74,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
     int weapon = TechType.Unarmed,
     double speed = 3.0,
     int team = Teams.none,
-  }) : super(x: x, y: y, radius: 10) {
+  }) : super(x: x, y: y, radius: 7) {
     maxHealth = health;
     this.health = health;
     _speed = speed;

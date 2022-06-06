@@ -142,7 +142,6 @@ class IsometricRender {
     var indexParticle = 0;
     var indexZombie = 0;
     var indexNpc = 0;
-    var indexDynamicObject = 0;
     var indexStructure = 0;
     var indexGenerated = 0;
 
@@ -151,17 +150,16 @@ class IsometricRender {
     var remainingNpcs = indexNpc < totalNpcs;
     var remainingGameObjects = indexGameObject < totalGameObjects;
     var remainingParticles = indexParticle < totalParticles;
-    // var remainingDynamicObjects = indexDynamicObject < totalDynamicObjects;
     var remainingStructures = indexStructure < totalStructures;
     var remainingBuildMode = modules.game.structureType.value != null;
     var remainingGenerated = indexGenerated < totalGenerated;
 
-    var yPlayer = remainingPlayers ? players[0].y : 0;
+    var yPlayer = remainingPlayers ? players[0].y + players[0].z : 0;
+    var zPlayer = remainingPlayers ? players[0].z : 0;
     var yGameObject = remainingGameObjects ? gameObjects[0].y : 0;
     var yParticle = remainingParticles ? particles[0].y : 0;
     var yZombie = remainingZombies ? zombies[0].y : 0;
     var yNpc = remainingNpcs ? npcs[0].y : 0;
-    // var yDynamicObject = remainingDynamicObjects ? gameObjects[0].y : 0;
     var yStructure = remainingStructures ? structures[0].y : 0;
     var yBuildMode = remainingBuildMode ? mouseWorldY : 0;
     var yGenerated = remainingGenerated ? generatedObjects[0].y : 0;
@@ -210,7 +208,6 @@ class IsometricRender {
                   (yPlayer < yParticle && !particleIsBlood)) {
                 if (!remainingZombies || yPlayer < yZombie) {
                   if (!remainingStructures || yPlayer < yStructure) {
-                    // if (!remainingDynamicObjects || yPlayer < yDynamicObject) {
                       if (!remainingNpcs || yPlayer < yNpc) {
                         renderCharacter(players[indexPlayer]);
                         indexPlayer++;
@@ -232,7 +229,6 @@ class IsometricRender {
                         }
                         continue;
                       }
-                    // }
                   }
                 }
               }
@@ -246,7 +242,6 @@ class IsometricRender {
           if (!remainingBuildMode || yGameObject < yBuildMode) {
             if (!remainingStructures || yGameObject < yStructure) {
               if (!remainingParticles || (yGameObject < yParticle && !particleIsBlood)) {
-                // if (!remainingDynamicObjects || yGameObject < yDynamicObject) {
                   if (!remainingZombies || yGameObject < yZombie) {
                     if (!remainingNpcs || yGameObject < yNpc) {
                       renderGameObject(gameObjects[indexGameObject]);
@@ -271,7 +266,6 @@ class IsometricRender {
                     }
                   }
                 }
-              // }
             }
           }
         }
@@ -311,7 +305,6 @@ class IsometricRender {
           if (!remainingGenerated || yParticle < yGenerated) {
             if (!remainingBuildMode || yParticle < yBuildMode) {
               if (!remainingStructures || yParticle < yStructure) {
-                // if (!remainingDynamicObjects || yParticle < yDynamicObject) {
                   if (!remainingNpcs || yParticle < yNpc) {
                     renderParticle(particles[indexParticle]);
                     indexParticle++;
@@ -343,7 +336,6 @@ class IsometricRender {
                   }
                 }
               }
-            // }
           }
         }
       }
@@ -352,7 +344,6 @@ class IsometricRender {
         if (!remainingGenerated || yZombie < yGenerated) {
           if (!remainingBuildMode || yZombie < yBuildMode) {
             if (!remainingStructures || yZombie < yStructure) {
-              // if (!remainingDynamicObjects || yZombie < yDynamicObject) {
                 if (!remainingNpcs || yZombie < yNpc) {
                   renderZombie(zombies[indexZombie]);
                   indexZombie++;
@@ -378,14 +369,12 @@ class IsometricRender {
               }
             }
           }
-        // }
       }
 
       if (remainingNpcs) {
         if (!remainingGenerated || yNpc < yGenerated) {
           if (!remainingBuildMode || yNpc < yBuildMode) {
             if (!remainingStructures || yNpc < yStructure) {
-              // if (!remainingDynamicObjects || yNpc < yDynamicObject) {
                 drawInteractableNpc(npcs[indexNpc]);
                 indexNpc++;
                 remainingNpcs = indexNpc < totalNpcs;
@@ -397,38 +386,9 @@ class IsometricRender {
                 }
                 continue;
               }
-            // }
           }
         }
       }
-
-      // if (remainingDynamicObjects) {
-      //   if (!remainingGenerated || yDynamicObject < yGenerated) {
-      //     if (!remainingBuildMode || yDynamicObject < yBuildMode) {
-      //       if (!remainingStructures || yDynamicObject < yStructure) {
-      //         renderGameObject(gameObjects[indexDynamicObject]);
-      //         indexDynamicObject++;
-      //         remainingDynamicObjects = indexDynamicObject < totalDynamicObjects;
-      //
-      //         while (remainingDynamicObjects) {
-      //           yDynamicObject = gameObjects[indexDynamicObject].y;
-      //           if (yDynamicObject > screenBottom100){
-      //             remainingDynamicObjects = false;
-      //             break;
-      //           }
-      //           final x = gameObjects[indexDynamicObject].x;
-      //           if (x < screenLeft || x > screenRight) {
-      //             indexDynamicObject++;
-      //             remainingDynamicObjects = indexDynamicObject < totalDynamicObjects;
-      //             continue;
-      //           }
-      //           break;
-      //         }
-      //         continue;
-      //       }
-      //     }
-      //   }
-      // }
 
       if (remainingStructures) {
         if (!remainingGenerated || yStructure < yGenerated) {
@@ -504,6 +464,9 @@ class IsometricRender {
         break;
       case GeneratedObjectType.Block_Grass_Level_3:
         renderBlockGrassLevel3(generatedObject);
+        break;
+      case GeneratedObjectType.Stairs_Grass_H:
+        renderStairsGrassH(generatedObject);
         break;
     }
   }
@@ -612,6 +575,21 @@ class IsometricRender {
       dstY: position.y - 100,
       srcX: 5981 ,
       srcY: shade * 100,
+      srcWidth: 48,
+      srcHeight: 100,
+      anchorY: 0.66,
+    );
+  }
+
+  void renderStairsGrassH(Position position){
+    final shade =  isometric.getShadeAt(position);
+    if (shade >= Shade.Pitch_Black) return;
+    engine.renderCustom(
+      dstX: position.x,
+      dstY: position.y,
+      srcX: 5870 ,
+      // srcY: shade * 100,
+      srcY: 0,
       srcWidth: 48,
       srcHeight: 100,
       anchorY: 0.66,
@@ -1094,7 +1072,7 @@ class IsometricRender {
   void _renderCharacterPart(Character character, int layer) {
     engine.mapDst(
         x: character.x,
-        y: character.y,
+        y: character.y - character.z,
         anchorX: 32,
         anchorY: 48,
         scale: 0.75,
@@ -1201,15 +1179,13 @@ class IsometricRender {
 
   int mapEquippedWeaponToSpriteIndex(Character character){
      switch(character.weapon) {
-       case TechType.Sword:
+       case WeaponType.Sword:
          return SpriteLayer.Sword_Wooden;
-       case TechType.Bow:
+       case WeaponType.Bow:
          return SpriteLayer.Bow_Wooden;
-       case TechType.Shotgun:
+       case WeaponType.Shotgun:
          return SpriteLayer.Bow_Wooden;
-       case TechType.Handgun:
-         return SpriteLayer.Weapon_Handgun;
-       case TechType.Staff:
+       case WeaponType.Handgun:
          return SpriteLayer.Weapon_Handgun;
        default:
          throw Exception("cannot map ${character.weapon} to sprite index");
@@ -1218,7 +1194,7 @@ class IsometricRender {
 
   void _renderCharacterTemplateWeapon(Character character) {
     final equipped = character.weapon;
-    if (equipped == SlotType.Empty) return;
+    if (equipped == WeaponType.Unarmed) return;
 
     final renderRow = const [
       WeaponType.Hammer,

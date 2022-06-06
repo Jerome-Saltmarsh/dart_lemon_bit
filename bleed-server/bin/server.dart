@@ -125,6 +125,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       onGameJoined();
     }
 
+    void joinGameFrontLine(){
+      final game = engine.findGameFrontLine();
+      _player = game.spawnPlayer();
+      onGameJoined();
+    }
+
     void errorInvalidArg(String message) {
       reply('$_errorIndex ${GameError.InvalidArguments.index} $message');
     }
@@ -385,11 +391,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               final characterClass = characterSelections[characterClassIndex];
               return joinGameRandom(characterClass);
             case GameType.FRONTLINE:
-              // TODO: Handle this case.
-              break;
+              return joinGameFrontLine();
           }
-
-          break;
 
           // if (characterClassIndex >= gameTypes.length) {
           //   errorInvalidArg('game type index cannot exceed ${gameTypes.length - 1}');

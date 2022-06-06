@@ -493,6 +493,7 @@ class Game with ByteReader {
       readTeamDirectionState(character, teamDirectionState);
       character.x = readDouble();
       character.y = readDouble();
+      character.z = readDouble();
       _parseCharacterFrameHealth(character, readByte());
       character.magic = _nextPercentage();
       character.weapon = readByte();
@@ -524,6 +525,7 @@ class Game with ByteReader {
      _parseCharacterTeamDirectionState(character);
      character.x = readDouble();
      character.y = readDouble();
+     character.z = readDouble();
      _parseCharacterFrameHealth(character, readByte());
   }
 

@@ -1,13 +1,17 @@
 import 'package:lemon_math/library.dart';
 
+import '../common/constants.dart';
 import 'components.dart';
 
 class Collider with Position, Radius {
+  double z = 0;
   double get left => x - radius;
   double get right => x + radius;
   double get top => y - radius;
   double get bottom => y + radius;
   var collidable = true;
+
+  double get tileRowPercentage => ((x + y) / tileSize) % 1.0;
 
   Collider({
     required double x,

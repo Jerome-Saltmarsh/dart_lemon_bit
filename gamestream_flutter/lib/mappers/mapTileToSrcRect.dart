@@ -35,8 +35,12 @@ double mapTileToSrcLeft(int tile) {
       return _rockWall;
     case Tile.Block_Grass_Level_3:
       return _rockWall;
+    case Tile.Stairs_Grass_H:
+      return _rockWall;
     case Tile.Boundary:
       throw Exception("Boundary has no rect");
+    case Tile.Stairs_Grass_H:
+      return _rockWall;
     default:
       throw Exception("Cannot map left");
   }

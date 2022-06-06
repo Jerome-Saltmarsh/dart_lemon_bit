@@ -3,6 +3,7 @@ import 'dart:async';
 import 'classes/library.dart';
 import 'common/library.dart';
 import 'functions/loadScenes.dart';
+import 'games/game_frontline.dart';
 import 'games/game_random.dart';
 import 'language.dart';
 
@@ -34,7 +35,6 @@ class _Engine {
         games.removeAt(i);
         i--;
       }
-
     }
 
     if (frame % framesPerRegen == 0) {
@@ -46,6 +46,7 @@ class _Engine {
 
     if (frame % framesPerSecond == 0){
        for (final game in games) {
+         if (game is GameRandom == false) continue;
           for (final player in game.players){
               player.writeByte(ServerResponse.Player_Deck_Cooldown);
               player.writeByte(player.deck.length);
@@ -140,6 +141,17 @@ class _Engine {
     return GameRandom();
   }
 
+  GameFrontline findGameFrontLine() {
+    for (final game in games) {
+      if (game is GameFrontline) {
+        if (game.full) continue;
+        return game;
+      }
+    }
+    return GameFrontline();
+  }
+
+
   T? findGameAwaitingPlayers<T extends Game>() {
     for (final game in games) {
       if (game is T == false) continue;
@@ -152,27 +164,12 @@ class _Engine {
   // This method is called by the game constructor automatically
   // and should not be called again
   void onGameCreated(Game game) {
-    // compile.game(game);
-    // game.compiledTiles = compileTiles(game.scene.tiles);
-    // game.compiledEnvironmentObjects =
-    //     compileEnvironmentObjects(game.scene.environment);
     games.add(game);
   }
 
   void onPlayerCreated(Player player) {
     player.game.players.add(player);
     player.game.disableCountDown = 0;
-  }
-
-  Player spawnPlayerInTown() {
-    return Player(
-      game: world.town,
-      x: 0,
-      y: 1750,
-      team: Teams.west,
-      health: 10,
-      weapon: SlotType.Empty,
-    );
   }
 }
 

@@ -47,6 +47,7 @@ class Tile {
   static const Block_Grass = 16;
   static const Block_Grass_Level_2 = 17;
   static const Block_Grass_Level_3 = 18;
+  static const Stairs_Grass_H = 19;
 
   static String getName(int value) {
     return tileNames[value] ?? "?";

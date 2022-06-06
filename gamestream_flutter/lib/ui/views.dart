@@ -1,16 +1,19 @@
 
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:bleed_common/library.dart';
 import 'package:bleed_common/version.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/modules/core/actions.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/init.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/module.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/servers.dart';
 import 'package:gamestream_flutter/shared_preferences.dart';
 import 'package:gamestream_flutter/to_string.dart';
@@ -189,9 +192,7 @@ WatchBuilder<WebsiteDialog> buildWatchBuilderDialog() {
         case WebsiteDialog.Games:
           return Column(
             children: [
-              text("FRONTLINE", onPressed: (){
-
-              }),
+              text("FRONTLINE", onPressed: connectToGameFrontLine),
               buildPanelSelectCharacterClass(),
             ],
           );

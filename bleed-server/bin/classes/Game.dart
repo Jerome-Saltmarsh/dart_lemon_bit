@@ -51,6 +51,8 @@ abstract class Game {
 
   static int _id = 0;
 
+  bool get full;
+
   List<GameObject> get gameObjects => scene.gameObjects;
 
   List<Structure> get structures => scene.structures;
@@ -66,6 +68,13 @@ abstract class Game {
   int get numberOfAlivePlayers => countAlive(players);
 
   int get numberOfAliveZombies => countAlive(zombies);
+
+  Position getRandomPlayerSpawnPosition() {
+    if (scene.spawnPointPlayers.isEmpty) {
+      return getSceneCenter();
+    }
+    return randomItem(scene.spawnPointPlayers);
+  }
 
   bool containsPlayerWithName(String name){
      for(final player in players){
@@ -108,7 +117,7 @@ abstract class Game {
     character.state = CharacterState.Idle;
     character.health = character.maxHealth;
     character.collidable = true;
-    final spawnPoint = getNextSpawnPoint();
+    final spawnPoint = getRandomPlayerSpawnPosition();
     character.x = spawnPoint.x;
     character.y = spawnPoint.y;
   }
@@ -128,13 +137,6 @@ abstract class Game {
 
   void onPlayerLevelGained(Player player){
 
-  }
-
-  Position getNextSpawnPoint() {
-    if (scene.spawnPointPlayers.isEmpty){
-      return getSceneCenter();
-    }
-    return randomItem(scene.spawnPointPlayers);
   }
 
   /// Returning true will cause the item to be removed

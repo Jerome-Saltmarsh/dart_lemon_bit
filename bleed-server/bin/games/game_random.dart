@@ -64,12 +64,10 @@ class GameRandom extends Game {
   }
 
   Player playerJoin(CharacterSelection selection){
-    final spawnLocation = randomItem(scene.spawnPointPlayers);
     final player = Player(
       game: this,
       weapon: SlotType.Empty,
-      x: spawnLocation.x,
-      y: spawnLocation.y,
+      position: getRandomPlayerSpawnPosition(),
     );
     onPlayerSelectCharacterType(player, selection);
 
@@ -84,8 +82,7 @@ class GameRandom extends Game {
       final player = Player(
         game: this,
         weapon: TechType.Unarmed,
-        x: 0,
-        y: 0,
+        position: getRandomPlayerSpawnPosition(),
       );
       revive(player);
       return player;
@@ -114,7 +111,7 @@ class GameRandom extends Game {
     player.collidable = true;
     player.skillPoints = 0;
     player.target = null;
-    final spawnPoint = getNextSpawnPoint();
+    final spawnPoint = getRandomPlayerSpawnPosition();
     player.x = spawnPoint.x;
     player.y = spawnPoint.y;
     player.clearCardAbility();

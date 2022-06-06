@@ -19,6 +19,7 @@ Widget buildPanelDebug(){
       buildTotalZombies(),
       buildTotalPlayers(),
       mouseRowColumn(),
+      mouseRowColumnPercentage(),
       buildTotalParticles,
       buildActiveParticles,
       tileAtMouse,
@@ -52,6 +53,13 @@ Widget mouseRowColumn(){
     return text("Mouse Row: $mouseRow, Column: $mouseColumn");
   });
 }
+
+Widget mouseRowColumnPercentage(){
+  return Refresh((){
+    return text("Mouse Row Perc: $mouseRowPercentage(), Column: $mouseColumn");
+  });
+}
+
 
 Widget buildFramesSinceUpdate(){
   return WatchBuilder(framesSinceUpdateReceived, (int frames){

@@ -97,15 +97,14 @@ class Player extends Character with ByteWriter {
   Player({
     required this.game,
     required int weapon,
-    double x = 0,
-    double y = 0,
+    required Position position,
     int team = 0,
     int magic = 10,
     int health = 10,
   }) : super(
             type: CharacterType.Human,
-            x: x,
-            y: y,
+            x: position.x,
+            y: position.y,
             health: health,
             speed: 3.5,
             team: team,
@@ -647,6 +646,7 @@ extension PlayerProperties on Player {
   void writeCharacter(Player player, Character character) {
     writeByte((onSameTeam(player, character) ? 100 : 0) + (character.direction * 10) + character.state); // 1
     writePosition(character);
+    writeInt(character.z);
     writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);
   }
 

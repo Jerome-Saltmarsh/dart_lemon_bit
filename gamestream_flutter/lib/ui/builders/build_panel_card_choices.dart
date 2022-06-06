@@ -9,7 +9,7 @@ import 'package:gamestream_flutter/ui/builders/player.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import 'build_panel_game_random.dart';
+import 'build_hud_random.dart';
 
 Widget buildPanelCardChoices() {
   return WatchBuilder(player.cardChoices, (List<CardType> cardChoices) {

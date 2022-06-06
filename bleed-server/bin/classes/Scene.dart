@@ -170,6 +170,23 @@ class Scene {
     }
   }
 
+  void generateStairs(){
+    for (var row = 0; row < rows; row++) {
+      if (row < 1) continue;
+      if (row > rows - 2) continue;
+      final t = tiles[row];
+      for (var column = 0; column < columns; column++) {
+        if (column < 1) continue;
+        if (column > columns - 2) continue;
+        if (t[column] != Tile.Grass) continue;
+        if (tiles[row - 1][column] != Tile.Block_Grass) continue;
+        t[column] = Tile.Stairs_Grass_H;
+        print("stairs assigned $row $column");
+        return;
+      }
+    }
+  }
+
   void addGameObjectAtNode({
     required int type,
     required Node node,
@@ -359,6 +376,21 @@ class Scene {
     return getTileAtXY(x, y) == Tile.Water;
   }
 
+  double getFloorHeight(double x, double y){
+    final blockHeight = 48.0;
+    final tile = getTileAtXY(x, y);
+    if (tile == Tile.Grass) return 0;
+    if (tile == Tile.Boundary) return 99999;
+    if (tile == Tile.Block_Grass) return blockHeight;
+    if (tile == Tile.Block_Grass_Level_2) return blockHeight + blockHeight;
+    if (tile == Tile.Block_Grass_Level_3) return blockHeight + blockHeight + blockHeight;
+    if (tile == Tile.Water) return -10;
+    if (tile == Tile.Stairs_Grass_H) {
+       return (1.0 - (((x + y) / 48.0) % 1.0)) * blockHeight;
+    }
+    return 0;
+  }
+
   bool tileWalkableAt(double x, double y){
     return getNodeByXY(x, y).open;
   }
@@ -429,20 +461,32 @@ class Scene {
   }
 
   void resolveCharacterTileCollision(Character character) {
+    character.z -= 3.0;
+    final floorHeight = getFloorHeight(character.x, character.y);
+    if (character.z < floorHeight){
+      character.z = floorHeight;
+    }
+
+    final floorHeightTopLeft = getFloorHeight(character.left, character.top);
+    final floorHeightRightBottom = getFloorHeight(character.right, character.bottom);
+    final floorHeightRightTop = getFloorHeight(character.right, character.top);
+    final floorHeightLeftBottom = getFloorHeight(character.left, character.bottom);
+
+    const minHeight = 20;
     const distance = 3;
-    if (!tileWalkableAt(character.left, character.top)) {
+    if (floorHeightTopLeft - floorHeight > minHeight) {
       character.x += distance;
       character.y += distance;
     } else
-    if (!tileWalkableAt(character.right, character.bottom)) {
+    if (floorHeightRightBottom - floorHeight > minHeight) {
       character.x -= distance;
       character.y -= distance;
     }
-    if (!tileWalkableAt(character.right, character.top)) {
+    if (floorHeightRightTop - floorHeight > minHeight) {
       character.x -= distance;
       character.y += distance;
     } else
-    if (!tileWalkableAt(character.left, character.bottom)) {
+    if (floorHeightLeftBottom - floorHeight > minHeight) {
       character.x += distance;
       character.y -= distance;
     }

@@ -9,6 +9,7 @@ class Collectable extends Vector2 with Type {
 }
 
 class Character extends Vector2 {
+  double z = 0;
   bool scoreMeasured = false;
   int score = 0;
   int state;
