@@ -138,6 +138,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           'Invalid number of arguments received. Expected $expected but got ${arguments.length}');
     }
 
+    void errorInsufficientArgs(int expected, List arguments){
+      errorInvalidArg(
+          'Invalid number of arguments received. Expected $expected but got ${arguments.length}');
+    }
+
     void errorIntegerExpected(int index, got) {
       errorInvalidArg(
           'Invalid type at index $index, expected integer but got $got');
@@ -358,15 +363,33 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       switch (clientRequest) {
 
         case ClientRequest.Join:
-          if (arguments.length < 2) {
-            errorArgsExpected(2, arguments);
-            return;
-          }
-          final characterClassIndex = int.tryParse(arguments[1]);
+          if (arguments.length < 2) return errorInsufficientArgs(2, arguments);
 
-          if (characterClassIndex == null){
-            return errorInvalidArg('index required');
+          final gameTypeIndex = int.tryParse(arguments[1]);
+
+          if (!isValidIndex(gameTypeIndex, gameTypes)) return errorInvalidArg('');
+
+          final gameType = gameTypes[gameTypeIndex!];
+
+          switch(gameType){
+            case GameType.RANDOM:
+              if (arguments.length < 3) return errorInsufficientArgs(3, arguments);
+
+              final characterClassIndex = int.tryParse(arguments[2]);
+              if (characterClassIndex == null){
+                return errorInvalidArg('index required');
+              }
+              if (!isValidIndex(characterClassIndex, characterSelections)){
+                return errorInvalidArg('characterClassIndex');
+              }
+              final characterClass = characterSelections[characterClassIndex];
+              return joinGameRandom(characterClass);
+            case GameType.FRONTLINE:
+              // TODO: Handle this case.
+              break;
           }
+
+          break;
 
           // if (characterClassIndex >= gameTypes.length) {
           //   errorInvalidArg('game type index cannot exceed ${gameTypes.length - 1}');
@@ -398,9 +421,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           //   });
           //   return;
           // }
-
-          final characterClass = characterSelections[characterClassIndex];
-          return joinGameRandom(characterClass);
           // switch (characterClass) {
           //   case GameType.RANDOM:
           //     return joinGameRandom();
@@ -972,7 +992,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     });
 }
 
-bool isValidIndex(int index, List values){
+bool isValidIndex(int? index, List values){
+    if (index == null) return false;
    if (values.isEmpty) return false;
    if (index < 0) return false;
    return index < values.length;

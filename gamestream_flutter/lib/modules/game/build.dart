@@ -114,12 +114,6 @@ class GameBuild {
               child: visibleBuilder(state.debug, buildPanelDebug())
           ),
           buildPanelWriteMessage(),
-          // buildPanelHighlightedStructureType(),
-          // buildPanelHighlightedTechTypeUpgrade(),
-          if (game.type.value == GameType.SURVIVORS)
-            buildPanelPrimary(),
-          if (game.type.value == GameType.SURVIVORS)
-            buildTextLivesRemaining(),
           if (game.type.value == GameType.RANDOM)
             buildPanelGameRandom(),
         ]);

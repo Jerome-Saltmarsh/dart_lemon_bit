@@ -20,7 +20,6 @@ List<Widget> spread(List<Widget> children, EdgeInsets margin) {
    return children.map((e) => Container(child: e, margin: margin)).toList();
 }
 
-
 Widget buildPanelGameRandom() {
 
   return Stack(
