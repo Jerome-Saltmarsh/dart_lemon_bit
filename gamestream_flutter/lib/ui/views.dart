@@ -187,7 +187,14 @@ WatchBuilder<WebsiteDialog> buildWatchBuilderDialog() {
           return dialog(child: text("Subscription Required"));
 
         case WebsiteDialog.Games:
-          return buildPanelSelectCharacterClass();
+          return Column(
+            children: [
+              text("FRONTLINE", onPressed: (){
+
+              }),
+              buildPanelSelectCharacterClass(),
+            ],
+          );
 
         case WebsiteDialog.Confirm_Logout:
           return dialog(child: text("Confirm Logout"));

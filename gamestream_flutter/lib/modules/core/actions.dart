@@ -261,12 +261,6 @@ class CoreActions {
     core.state.error.value = null;
   }
 
-  void connectToGame(CharacterSelection character){
-    print("connectToSelectedGame()");
-    game.type.value = GameType.RANDOM;
-    connectToWebSocketServer(core.state.region.value, character);
-  }
-
   void deselectGameType(){
     game.type.value = null;
   }
@@ -305,4 +299,10 @@ class CoreActions {
   void leaveLobby() {
     exitGame();
   }
+}
+
+void connectToGame(CharacterSelection character){
+  print("connectToSelectedGame()");
+  game.type.value = GameType.RANDOM;
+  connectToWebSocketServer(core.state.region.value, character);
 }

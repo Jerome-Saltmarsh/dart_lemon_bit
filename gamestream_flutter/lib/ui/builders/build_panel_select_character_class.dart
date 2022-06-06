@@ -1,6 +1,7 @@
 import 'package:bleed_common/Character_Selection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/modules/core/actions.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel.dart';
@@ -13,12 +14,9 @@ Widget buildPanelSelectCharacterClass() {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
-
-
             text("ARCHER", onPressed: () {
               if (!webSocket.connected) {
-                core.actions.connectToGame(CharacterSelection.Archer);
+                connectToGame(CharacterSelection.Archer);
               } else {
                 sendClientRequestSelectCharacterType(CharacterSelection.Archer);
               }
@@ -26,7 +24,7 @@ Widget buildPanelSelectCharacterClass() {
             width32,
             text("KNIGHT", onPressed: () {
               if (!webSocket.connected) {
-                core.actions.connectToGame(CharacterSelection.Warrior);
+                connectToGame(CharacterSelection.Warrior);
               } else {
                 sendClientRequestSelectCharacterType(
                     CharacterSelection.Warrior);
@@ -35,7 +33,7 @@ Widget buildPanelSelectCharacterClass() {
             width32,
             text("WIZARD", onPressed: () {
               if (!webSocket.connected) {
-                core.actions.connectToGame(CharacterSelection.Wizard);
+                connectToGame(CharacterSelection.Wizard);
               } else {
                 sendClientRequestSelectCharacterType(CharacterSelection.Wizard);
               }
