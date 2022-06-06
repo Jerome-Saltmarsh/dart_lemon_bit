@@ -4,6 +4,7 @@ import 'package:golden_ratio/constants.dart';
 
 final style = _Style();
 
+
 class _Style {
   final buttonWidth = 200.0;
   get buttonHeight => style.buttonWidth * goldenRatio_0381;

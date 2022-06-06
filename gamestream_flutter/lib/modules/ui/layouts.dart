@@ -6,8 +6,8 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/ui/style.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/ui/build.dart';
-import 'package:gamestream_flutter/ui/build/build_layout.dart';
-import 'package:gamestream_flutter/ui/build/build_panel.dart';
+import 'package:gamestream_flutter/ui/builders/build_layout.dart';
+import 'package:gamestream_flutter/ui/builders/build_panel.dart';
 
 class UILayouts {
 

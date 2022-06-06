@@ -15,8 +15,8 @@ import 'package:gamestream_flutter/servers.dart';
 import 'package:gamestream_flutter/shared_preferences.dart';
 import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
-import 'package:gamestream_flutter/ui/build/build_layout.dart';
-import 'package:gamestream_flutter/ui/build/build_panel_select_character_class.dart';
+import 'package:gamestream_flutter/ui/builders/build_layout.dart';
+import 'package:gamestream_flutter/ui/builders/build_panel_select_character_class.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -110,7 +110,7 @@ Widget buildViewConnectionNone() {
           text(version, color: colours.white618, size: FontSize.Small),
         ],
       ),
-      // topRight: website.build.mainMenu(),
+      // topRight: website.builders.mainMenu(),
       bottomLeft: buildMenuDebug(),
       child: buildWatchBuilderDialog(),
   );

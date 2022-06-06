@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:bleed_common/game_object_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/weapon_type.dart';
 import 'package:gamestream_flutter/classes/GeneratedObject.dart';

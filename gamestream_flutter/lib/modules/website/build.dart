@@ -70,7 +70,7 @@ class WebsiteBuild {
   }
 
   Widget dialogCustomMaps() {
-    print("website.build.dialogCustomMaps()");
+    print("website.builders.dialogCustomMaps()");
 
     return FutureBuilder(future: firestoreService.getMapNames(), builder: (context, snapshot){
 

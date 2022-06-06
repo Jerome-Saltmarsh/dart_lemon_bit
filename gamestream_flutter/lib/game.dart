@@ -16,7 +16,7 @@ import 'classes/NpcDebug.dart';
 import 'classes/Projectile.dart';
 import 'modules/isometric/classes.dart';
 import 'modules/isometric/enums.dart';
-import 'ui/build/player.dart';
+import 'ui/builders/player.dart';
 
 final game = Game();
 final byteLength = Watch(0);
