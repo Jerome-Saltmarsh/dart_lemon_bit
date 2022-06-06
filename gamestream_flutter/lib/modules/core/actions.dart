@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:bleed_common/CharacterType.dart';
 import 'package:bleed_common/Character_Selection.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:firestore_client/firestoreService.dart';
@@ -301,7 +302,11 @@ class CoreActions {
   }
 }
 
-void connectToGame(CharacterSelection character){
-  game.type.value = GameType.RANDOM;
-  connectToWebSocketServer(core.state.region.value, character);
+void connectToGameRandom(CharacterSelection characterType){
+  connectToGame(GameType.RANDOM, characterType.index.toString());
+}
+
+void connectToGame(GameType gameType, [String message = ""]){
+  game.type.value = gameType;
+  connectToWebSocketServer(core.state.region.value, message);
 }

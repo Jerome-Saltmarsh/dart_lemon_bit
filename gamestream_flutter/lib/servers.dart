@@ -6,23 +6,23 @@ import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/init.dart';
 import 'package:gamestream_flutter/web_socket.dart';
 
-void connectToWebSocketServer(Region server, CharacterSelection character) {
+void connectToWebSocketServer(Region server, String message) {
   if (server == Region.LocalHost) {
-    _connectLocalHost(character: character);
+    _connectLocalHost(message: message);
     return;
   }
   final httpsConnectionString = getHttpsConnectionString(server, GameType.RANDOM);
   final wsConnectionString = parseHttpToWebSocket(httpsConnectionString);
-  _connectToServer(wsConnectionString, character);
+  _connectToServer(wsConnectionString, message);
 }
 
 
-void _connectLocalHost({int port = 8080, required CharacterSelection character}) {
-  _connectToServer('ws://localhost:$port', character);
+void _connectLocalHost({int port = 8080, required String message}) {
+  _connectToServer('ws://localhost:$port', message);
 }
 
-void _connectToServer(String uri, CharacterSelection characterClass){
-  webSocket.connect(uri: uri, message: '${ClientRequest.Join.index} ${characterClass.index}');
+void _connectToServer(String uri, String message){
+  webSocket.connect(uri: uri, message: '${ClientRequest.Join.index} $message');
 }
 
 final List<Region> selectableServerTypes =

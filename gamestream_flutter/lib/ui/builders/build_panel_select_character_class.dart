@@ -1,4 +1,5 @@
 import 'package:bleed_common/Character_Selection.dart';
+import 'package:bleed_common/library.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/core/actions.dart';
@@ -15,7 +16,7 @@ Widget buildPanelSelectCharacterClass() {
           children: [
             text("ARCHER", onPressed: () {
               if (!webSocket.connected) {
-                connectToGame(CharacterSelection.Archer);
+                connectToGameRandom(CharacterSelection.Archer);
               } else {
                 sendClientRequestSelectCharacterType(CharacterSelection.Archer);
               }
@@ -23,7 +24,7 @@ Widget buildPanelSelectCharacterClass() {
             width32,
             text("KNIGHT", onPressed: () {
               if (!webSocket.connected) {
-                connectToGame(CharacterSelection.Warrior);
+                connectToGameRandom(CharacterSelection.Warrior);
               } else {
                 sendClientRequestSelectCharacterType(
                     CharacterSelection.Warrior);
@@ -32,7 +33,7 @@ Widget buildPanelSelectCharacterClass() {
             width32,
             text("WIZARD", onPressed: () {
               if (!webSocket.connected) {
-                connectToGame(CharacterSelection.Wizard);
+                connectToGameRandom(CharacterSelection.Wizard);
               } else {
                 sendClientRequestSelectCharacterType(CharacterSelection.Wizard);
               }
