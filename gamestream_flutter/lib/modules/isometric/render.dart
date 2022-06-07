@@ -213,7 +213,7 @@ class IsometricRender {
     while (true) {
 
       if (remainingGrid) {
-        if (!remainingPlayers || orderGrid < orderPlayer) {
+        if (!remainingPlayers || orderGrid <= orderPlayer) {
 
           renderGridNode(gridZ, gridRow, gridColumn, grid[gridZ][gridRow][gridColumn]);
             gridZ++;
@@ -1376,7 +1376,6 @@ class IsometricRender {
 
 
   void renderGridNode(int z, int row, int column, int type){
-    print("renderGridNode(z: $z, ($row, $column)");
     switch(type){
       case GridNodeType.Empty:
         return;
