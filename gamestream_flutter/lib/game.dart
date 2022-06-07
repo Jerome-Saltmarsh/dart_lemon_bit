@@ -159,7 +159,6 @@ class Game with ByteReader {
           break;
 
         case ServerResponse.Grid:
-          print("reading grid");
           final totalZ = readInt();
           final totalRows = readInt();
           final totalColumns = readInt();
@@ -169,6 +168,7 @@ class Game with ByteReader {
              grid.add(plain);
              for (var rowIndex = 0; rowIndex < totalRows; rowIndex++) {
                 final row = <int>[];
+                plain.add(row);
                 for (var columnIndex = 0; columnIndex < totalColumns; columnIndex++) {
                     row.add(readByte());
                 }

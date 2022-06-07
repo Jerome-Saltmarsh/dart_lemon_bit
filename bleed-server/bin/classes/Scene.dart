@@ -1,4 +1,5 @@
 import 'package:lemon_math/library.dart';
+import '../common/grid_node_type.dart';
 import '../common/library.dart';
 import '../enums.dart';
 import '../utilities.dart';
@@ -12,16 +13,8 @@ class GridNode {
   final int x;
   final int y;
   final int z;
-  final int type;
+  int type;
   GridNode(this.x, this.y, this.z, this.type);
-}
-
-class GridNodeType {
-  static const Empty = 0;
-  static const Grass = 1;
-  static const Block_Grass = 2;
-  static const Stairs_H = 3;
-  static const Stairs_V = 4;
 }
 
 class Scene {
@@ -67,6 +60,10 @@ class Scene {
            row.add(GridNode(rowIndex, columnIndex, z, z == 0 ? GridNodeType.Grass : GridNodeType.Empty));
         }
       }
+    }
+
+    for (var z = 1; z < 8; z++){
+      grid[z][5][5].type = GridNodeType.Grass;
     }
 
     for (var rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {

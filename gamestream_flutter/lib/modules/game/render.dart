@@ -1,6 +1,7 @@
 
 import 'dart:math';
 
+import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
@@ -52,12 +53,33 @@ class GameRender {
       }
   }
 
+  void renderGridNode(int z, int row, int column, int type){
+     switch(type){
+       case GridNodeType.Empty:
+         return;
+       case GridNodeType.Grass:
+          engine.renderCustom(
+              dstX: getTileWorldX(row, column),
+              dstY: getTileWorldY(row, column) - (z * 24),
+              srcX: 6530,
+              srcWidth: 47,
+              srcHeight: 70
+          );
+         return;
+
+     }
+  }
+
   void render(Canvas canvas, Size size) {
     isometric.applyDynamicEmissions();
     isometric.applyDynamicShadeToTileSrc();
     _render.renderTiles();
     renderProjectiles();
     // drawBulletHoles(_bulletHoles);
+
+
+    renderGrid();
+
     drawAbility();
     if (modules.game.structureType.value == null){
       attackTargetCircle();
@@ -71,6 +93,23 @@ class GameRender {
     _render.renderSprites();
     drawEffects();
     drawItems();
+  }
+
+  void renderGrid() {
+    final grid = game.grid;
+    final totalZ = grid.length;
+    if (totalZ == 0) return;
+    final totalRows = grid[0].length;
+    if (totalRows == 0) return;
+    final totalColumns = grid[0][0].length;
+
+    for (var z = 0; z < totalZ; z++){
+       for (var rowIndex = 0; rowIndex < totalRows; rowIndex++){
+          for (var columnIndex = 0; columnIndex < totalColumns; columnIndex++){
+               renderGridNode(z, rowIndex, columnIndex, grid[z][rowIndex][columnIndex]);
+          }
+       }
+    }
   }
 
   void renderTeamColours() {
