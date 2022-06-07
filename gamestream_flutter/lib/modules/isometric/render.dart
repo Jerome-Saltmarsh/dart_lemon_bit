@@ -1375,20 +1375,36 @@ class IsometricRender {
   }
 
 
-  void renderGridNode(int z, int row, int column, int type){
-    switch(type){
+  void renderGridNode(int z, int row, int column, int type) {
+    switch(type) {
       case GridNodeType.Empty:
         return;
       case GridNodeType.Grass:
-        engine.renderCustom(
+        return engine.renderCustom(
             dstX: getTileWorldX(row, column),
             dstY: getTileWorldY(row, column) - (z * 24),
             srcX: 6530,
             srcWidth: 47,
             srcHeight: 70
         );
-        return;
-
+      case GridNodeType.Bricks:
+        return engine.renderCustom(
+            dstX: getTileWorldX(row, column),
+            dstY: getTileWorldY(row, column) - (z * 24),
+            srcX: 6530,
+            srcWidth: 47,
+            srcHeight: 70
+        );
+      case GridNodeType.Stairs_H:
+        return engine.renderCustom(
+            dstX: getTileWorldX(row, column),
+            dstY: getTileWorldY(row, column) - (z * 24),
+            srcX: 6602,
+            srcWidth: 47,
+            srcHeight: 70
+        );
+      default:
+        throw Exception("Cannot render grid node type $type");
     }
   }
 }

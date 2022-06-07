@@ -53,21 +53,36 @@ class GameRender {
       }
   }
 
-  void renderGridNode(int z, int row, int column, int type){
+  void renderGridNode(int z, int row, int column, int type) {
+    if (type == GridNodeType.Empty) return;
+    final x = getTileWorldX(row, column);
+    final y = getTileWorldY(row, column) - (z * 24);
      switch(type){
-       case GridNodeType.Empty:
-         return;
        case GridNodeType.Grass:
-          engine.renderCustom(
-              dstX: getTileWorldX(row, column),
-              dstY: getTileWorldY(row, column) - (z * 24),
-              srcX: 6530,
-              srcWidth: 47,
-              srcHeight: 70
-          );
-         return;
-
+         return renderBlockBricks(x, y);
+       case GridNodeType.Stairs_H:
+         return renderStairsHorizontal(x, y);
      }
+  }
+
+  void renderBlockBricks(double x, double y){
+    engine.renderCustom(
+        dstX: x,
+        dstY: y,
+        srcX: 6530,
+        srcWidth: 47,
+        srcHeight: 70
+    );
+  }
+
+  void renderStairsHorizontal(double x, double y){
+    engine.renderCustom(
+        dstX: x,
+        dstY: y,
+        srcX: 6602,
+        srcWidth: 47,
+        srcHeight: 70
+    );
   }
 
   void render(Canvas canvas, Size size) {
@@ -93,23 +108,6 @@ class GameRender {
     _render.renderSprites();
     drawEffects();
     drawItems();
-  }
-
-  void renderGrid() {
-    final grid = game.grid;
-    final totalZ = grid.length;
-    if (totalZ == 0) return;
-    final totalRows = grid[0].length;
-    if (totalRows == 0) return;
-    final totalColumns = grid[0][0].length;
-
-    for (var z = 0; z < totalZ; z++){
-       for (var rowIndex = 0; rowIndex < totalRows; rowIndex++){
-          for (var columnIndex = 0; columnIndex < totalColumns; columnIndex++){
-               renderGridNode(z, rowIndex, columnIndex, grid[z][rowIndex][columnIndex]);
-          }
-       }
-    }
   }
 
   void renderTeamColours() {

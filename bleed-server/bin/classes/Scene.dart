@@ -57,14 +57,16 @@ class Scene {
         final row = <GridNode>[];
         layer.add(row);
         for (var columnIndex = 0; columnIndex < 4; columnIndex++) {
-           row.add(GridNode(rowIndex, columnIndex, z, z == 0 ? GridNodeType.Grass : GridNodeType.Empty));
+           row.add(GridNode(rowIndex, columnIndex, z, z == 0 ? GridNodeType.Bricks : GridNodeType.Empty));
         }
       }
     }
 
     for (var z = 1; z < 4; z++){
-      grid[z][2][2].type = GridNodeType.Grass;
+      grid[z][2][2].type = GridNodeType.Bricks;
     }
+
+    grid[0][1][3].type = GridNodeType.Stairs_H;
 
     for (var rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
       final List<Node> nodeRow = [];
