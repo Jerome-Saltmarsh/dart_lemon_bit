@@ -55,6 +55,7 @@ var _previousPlayerScreenY3 = 0.0;
 
 class Game with ByteReader {
 
+  final grid = <List<List<int>>>[];
   final type = Watch<GameType?>(null);
   final countDownFramesRemaining = Watch(0);
   final numberOfPlayersNeeded = Watch(0);
@@ -155,6 +156,24 @@ class Game with ByteReader {
 
         case ServerResponse.Player_Deck:
           player.deck.value = readDeck();
+          break;
+
+        case ServerResponse.Grid:
+          print("reading grid");
+          final totalZ = readInt();
+          final totalRows = readInt();
+          final totalColumns = readInt();
+          grid.clear();
+          for (var z = 0; z < totalZ; z++) {
+             final plain = <List<int>>[];
+             grid.add(plain);
+             for (var rowIndex = 0; rowIndex < totalRows; rowIndex++) {
+                final row = <int>[];
+                for (var columnIndex = 0; columnIndex < totalColumns; columnIndex++) {
+                    row.add(readByte());
+                }
+             }
+          }
           break;
 
         case ServerResponse.Player_Deck_Active_Ability:

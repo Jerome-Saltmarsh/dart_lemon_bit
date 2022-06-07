@@ -53,5 +53,6 @@ class ServerResponse {
   static const Player_Deck_Cooldown = 59;
   static const Player_Spawned = 60;
   static const Player_Target = 61;
+  static const Grid = 62;
 }
 

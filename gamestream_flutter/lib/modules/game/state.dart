@@ -186,3 +186,4 @@ class Player {
   bool get isHuman => characterType.value == CharacterType.Human;
 }
 
+

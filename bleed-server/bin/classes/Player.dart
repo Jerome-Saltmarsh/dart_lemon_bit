@@ -383,6 +383,7 @@ extension PlayerProperties on Player {
 
     if (!sceneDownloaded){
       writeTiles();
+      writeGrid();
       writeGameObjects();
       writeTechTypes();
       writeGameStatus();
@@ -674,6 +675,24 @@ extension PlayerProperties on Player {
     for (final card in deck) {
       writeByte(card.type.index);
       writeByte(card.level);
+    }
+  }
+
+  void writeGrid(){
+    writeByte(ServerResponse.Grid);
+    final grid = game.scene.grid;
+    final totalZ = grid.length;
+    final totalRows = grid[0].length;
+    final totalColumns = grid[0][0].length;
+    writeInt(totalZ);
+    writeInt(totalRows);
+    writeInt(totalColumns);
+    for (var z = 0; z < totalZ; z++){
+      for (var row = 0; row < totalRows; row++){
+        for (var column = 0; column < totalColumns; column++){
+           writeByte(grid[z][row][column].type);
+        }
+      }
     }
   }
 

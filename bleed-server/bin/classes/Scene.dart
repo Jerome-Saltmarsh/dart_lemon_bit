@@ -8,7 +8,24 @@ import 'game_object.dart';
 import 'Structure.dart';
 import 'TileNode.dart';
 
+class GridNode {
+  final int x;
+  final int y;
+  final int z;
+  final int type;
+  GridNode(this.x, this.y, this.z, this.type);
+}
+
+class GridNodeType {
+  static const Empty = 0;
+  static const Grass = 1;
+  static const Block_Grass = 2;
+  static const Stairs_H = 3;
+  static const Stairs_V = 4;
+}
+
 class Scene {
+  final List<List<List<GridNode>>> grid = [];
   final List<Structure> structures;
   final List<Character> characters;
   final List<List<int>> tiles;
@@ -39,6 +56,18 @@ class Scene {
     numberOfRows = tiles.length;
     numberOfColumns = numberOfRows > 0 ? tiles[0].length : 0;
     nodes = [];
+
+    for (var z = 0; z < 8; z++) {
+      final layer = <List<GridNode>>[];
+      grid.add(layer);
+      for (var rowIndex = 0; rowIndex < 8; rowIndex++) {
+        final row = <GridNode>[];
+        layer.add(row);
+        for (var columnIndex = 0; columnIndex < 8; columnIndex++) {
+           row.add(GridNode(rowIndex, columnIndex, z, z == 0 ? GridNodeType.Grass : GridNodeType.Empty));
+        }
+      }
+    }
 
     for (var rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
       final List<Node> nodeRow = [];
@@ -412,7 +441,7 @@ class Scene {
      return nearest;
   }
 
-  Node getRandomNodeByTileType(int type){
+  Node getRandomNodeByTileType(int type) {
      while(true){
         final node = getRandomTileNode();
         if (getTileAtPosition(node) != type) continue;
