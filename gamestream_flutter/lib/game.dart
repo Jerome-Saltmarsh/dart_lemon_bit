@@ -483,6 +483,7 @@ class Game with ByteReader {
       readTeamDirectionState(character, stateInt);
       character.x = readDouble();
       character.y = readDouble();
+      character.z = readDouble();
       _parseCharacterFrameHealth(character, readByte());
       total++;
     }
