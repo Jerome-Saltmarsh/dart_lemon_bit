@@ -214,7 +214,6 @@ class IsometricRender {
 
       if (remainingGrid) {
         if (!remainingPlayers || orderGrid <= orderPlayer) {
-
           renderGridNode(gridZ, gridRow, gridColumn, grid[gridZ][gridRow][gridColumn]);
             gridZ++;
             if (gridZ >= gridTotalZ) {
@@ -1374,7 +1373,6 @@ class IsometricRender {
     engine.renderAtlas();
   }
 
-
   void renderGridNode(int z, int row, int column, int type) {
     switch(type) {
       case GridNodeType.Empty:
@@ -1384,24 +1382,24 @@ class IsometricRender {
             dstX: getTileWorldX(row, column),
             dstY: getTileWorldY(row, column) - (z * 24),
             srcX: 6530,
-            srcWidth: 47,
-            srcHeight: 70
+            srcWidth: 48,
+            srcHeight: 72
         );
       case GridNodeType.Bricks:
         return engine.renderCustom(
             dstX: getTileWorldX(row, column),
             dstY: getTileWorldY(row, column) - (z * 24),
             srcX: 6530,
-            srcWidth: 47,
-            srcHeight: 70
+            srcWidth: 48,
+            srcHeight: 72
         );
       case GridNodeType.Stairs_H:
         return engine.renderCustom(
             dstX: getTileWorldX(row, column),
             dstY: getTileWorldY(row, column) - (z * 24),
             srcX: 6602,
-            srcWidth: 47,
-            srcHeight: 70
+            srcWidth: 48,
+            srcHeight: 72
         );
       default:
         throw Exception("Cannot render grid node type $type");
