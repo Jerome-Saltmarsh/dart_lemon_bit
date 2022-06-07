@@ -50,20 +50,20 @@ class Scene {
     numberOfColumns = numberOfRows > 0 ? tiles[0].length : 0;
     nodes = [];
 
-    for (var z = 0; z < 8; z++) {
+    for (var z = 0; z < 4; z++) {
       final layer = <List<GridNode>>[];
       grid.add(layer);
-      for (var rowIndex = 0; rowIndex < 8; rowIndex++) {
+      for (var rowIndex = 0; rowIndex < 3; rowIndex++) {
         final row = <GridNode>[];
         layer.add(row);
-        for (var columnIndex = 0; columnIndex < 8; columnIndex++) {
+        for (var columnIndex = 0; columnIndex < 4; columnIndex++) {
            row.add(GridNode(rowIndex, columnIndex, z, z == 0 ? GridNodeType.Grass : GridNodeType.Empty));
         }
       }
     }
 
-    for (var z = 1; z < 8; z++){
-      grid[z][5][5].type = GridNodeType.Grass;
+    for (var z = 1; z < 4; z++){
+      grid[z][2][2].type = GridNodeType.Grass;
     }
 
     for (var rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {

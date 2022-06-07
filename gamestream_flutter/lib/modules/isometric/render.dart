@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/weapon_type.dart';
 import 'package:gamestream_flutter/classes/GeneratedObject.dart';
@@ -123,6 +124,7 @@ class IsometricRender {
     final screenBottom = _screen.bottom;
     final screenBottom100 = screenBottom + 120;
 
+    final grid = game.grid;
     final zombies = game.zombies;
     final players = game.players;
     final npcs = game.interactableNpcs;
@@ -136,7 +138,15 @@ class IsometricRender {
     final totalNpcs = game.totalNpcs;
     final totalStructures = isometric.totalStructures;
     final totalGenerated = generatedObjects.length;
+    final gridTotalZ = grid.length;
+    final gridTotalRows = grid[0].length;
+    final gridTotalColumns = grid[0][0].length;
+    final totalGridIndex = gridTotalRows * gridTotalColumns;
 
+    var gridIndex = 0;
+    var gridZ = 0;
+    var gridColumn = 0;
+    var gridRow = 0;
     var indexPlayer = 0;
     var indexGameObject = 0;
     var indexParticle = 0;
@@ -145,6 +155,7 @@ class IsometricRender {
     var indexStructure = 0;
     var indexGenerated = 0;
 
+    var remainingGrid = true;
     var remainingZombies = indexZombie < totalZombies;
     var remainingPlayers = indexPlayer < totalPlayers;
     var remainingNpcs = indexNpc < totalNpcs;
@@ -154,25 +165,26 @@ class IsometricRender {
     var remainingBuildMode = modules.game.structureType.value != null;
     var remainingGenerated = indexGenerated < totalGenerated;
 
-    var yPlayer = remainingPlayers ? players[0].y + players[0].z : 0;
-    var zPlayer = remainingPlayers ? players[0].z : 0;
-    var yGameObject = remainingGameObjects ? gameObjects[0].y : 0;
-    var yParticle = remainingParticles ? particles[0].y : 0;
-    var yZombie = remainingZombies ? zombies[0].y : 0;
-    var yNpc = remainingNpcs ? npcs[0].y : 0;
-    var yStructure = remainingStructures ? structures[0].y : 0;
-    var yBuildMode = remainingBuildMode ? mouseWorldY : 0;
-    var yGenerated = remainingGenerated ? generatedObjects[0].y : 0;
+    var orderGrid = getTileWorldX(gridColumn, gridRow) + (gridZ * tileSizeHalf);
+    var orderPlayer = remainingPlayers ? players[0].y + players[0].z : 0;
+    var orderObject = remainingGameObjects ? gameObjects[0].y : 0;
+    var orderParticle = remainingParticles ? particles[0].y : 0;
+    var orderZombie = remainingZombies ? zombies[0].y : 0;
+    var orderNpc = remainingNpcs ? npcs[0].y : 0;
+    var orderStructure = remainingStructures ? structures[0].y : 0;
+    var orderBuildMode = remainingBuildMode ? mouseWorldY : 0;
+    var orderGenerated = remainingGenerated ? generatedObjects[0].y : 0;
+
 
     while (remainingGenerated) {
       final generatedObject = generatedObjects[indexGenerated];
-      yGenerated = generatedObject.y;
-      if (yGenerated < screenTop){
+      orderGenerated = generatedObject.y;
+      if (orderGenerated < screenTop){
         indexGenerated++;
         remainingGenerated = indexGenerated < totalGenerated;
         continue;
       }
-      if (yGenerated > screenBottom100) {
+      if (orderGenerated > screenBottom100) {
         remainingGenerated = false;
       }
       break;
@@ -184,13 +196,13 @@ class IsometricRender {
         remainingParticles = false;
         break;
       }
-      yParticle = particle.y;
-      if (yParticle < screenTop){
+      orderParticle = particle.y;
+      if (orderParticle < screenTop){
          indexParticle++;
          remainingParticles = indexParticle < totalParticles;
          continue;
       }
-      if (yParticle > screenBottom100){
+      if (orderParticle > screenBottom100){
         remainingParticles = false;
       }
       break;
@@ -200,27 +212,62 @@ class IsometricRender {
 
     while (true) {
 
+      if (remainingGrid) {
+        if (!remainingPlayers || orderGrid < orderPlayer) {
+
+          renderGridNode(gridZ, gridRow, gridColumn, grid[gridZ][gridRow][gridColumn]);
+            gridZ++;
+            if (gridZ >= gridTotalZ) {
+              gridZ = 0;
+              gridIndex++;
+
+              if (gridIndex >= totalGridIndex) {
+                remainingGrid = false;
+                continue;
+              }
+
+              gridRow++;
+              gridColumn--;
+
+              if (gridColumn < 0 || gridRow >= gridTotalRows) {
+                final previousColumn = gridColumn + 1;
+                gridColumn = gridRow;
+                gridRow = previousColumn;
+
+                if (gridColumn >= gridTotalColumns){
+                  remainingGrid = false;
+                  continue;
+                }
+              }
+            }
+            orderGrid = getTileWorldY(gridRow, gridColumn) - (gridZ * 24);
+            continue;
+        }
+      }
+
       if (remainingPlayers) {
-        if (!remainingGenerated || yPlayer < yGenerated) {
-          if (!remainingBuildMode || yPlayer < yBuildMode) {
-            if (!remainingGameObjects || yPlayer < yGameObject) {
-              if (!remainingParticles ||
-                  (yPlayer < yParticle && !particleIsBlood)) {
-                if (!remainingZombies || yPlayer < yZombie) {
-                  if (!remainingStructures || yPlayer < yStructure) {
-                      if (!remainingNpcs || yPlayer < yNpc) {
+        if (!remainingGrid || orderPlayer < orderGrid) {
+          if (!remainingGenerated || orderPlayer < orderGenerated) {
+            if (!remainingBuildMode || orderPlayer < orderBuildMode) {
+              if (!remainingGameObjects || orderPlayer < orderObject) {
+                if (!remainingParticles ||
+                    (orderPlayer < orderParticle && !particleIsBlood)) {
+                  if (!remainingZombies || orderPlayer < orderZombie) {
+                    if (!remainingStructures || orderPlayer < orderStructure) {
+                      if (!remainingNpcs || orderPlayer < orderNpc) {
                         renderCharacter(players[indexPlayer]);
                         indexPlayer++;
                         remainingPlayers = indexPlayer < totalPlayers;
                         while (remainingPlayers) {
                           final player = players[indexPlayer];
-                          yPlayer = player.y;
-                          if (yPlayer > screenBottom100){
+                          orderPlayer = player.y + player.z;
+                          if (orderPlayer > screenBottom100) {
                             remainingPlayers = false;
                             break;
                           }
                           final x = player.x;
-                          if (x < screenLeft || x > screenRight || yPlayer < screenTop) {
+                          if (x < screenLeft || x > screenRight ||
+                              orderPlayer < screenTop) {
                             indexPlayer++;
                             remainingPlayers = indexPlayer < totalPlayers;
                             continue;
@@ -229,6 +276,7 @@ class IsometricRender {
                         }
                         continue;
                       }
+                    }
                   }
                 }
               }
@@ -238,24 +286,24 @@ class IsometricRender {
       }
 
       if (remainingGameObjects) {
-        if (!remainingGenerated || yGameObject < yGenerated) {
-          if (!remainingBuildMode || yGameObject < yBuildMode) {
-            if (!remainingStructures || yGameObject < yStructure) {
-              if (!remainingParticles || (yGameObject < yParticle && !particleIsBlood)) {
-                  if (!remainingZombies || yGameObject < yZombie) {
-                    if (!remainingNpcs || yGameObject < yNpc) {
+        if (!remainingGenerated || orderObject < orderGenerated) {
+          if (!remainingBuildMode || orderObject < orderBuildMode) {
+            if (!remainingStructures || orderObject < orderStructure) {
+              if (!remainingParticles || (orderObject < orderParticle && !particleIsBlood)) {
+                  if (!remainingZombies || orderObject < orderZombie) {
+                    if (!remainingNpcs || orderObject < orderNpc) {
                       renderGameObject(gameObjects[indexGameObject]);
                       indexGameObject++;
                       remainingGameObjects = indexGameObject < totalGameObjects;
                       while (remainingGameObjects) {
                         final nextGameObject = gameObjects[indexGameObject];
-                        yGameObject = nextGameObject.y;
-                        if (yGameObject > screenBottom100){
+                        orderObject = nextGameObject.y;
+                        if (orderObject > screenBottom100){
                           remainingGameObjects = false;
                           break;
                         }
                         final x = nextGameObject.x;
-                        if (x < screenLeft || x > screenRight || yGameObject < screenTop) {
+                        if (x < screenLeft || x > screenRight || orderObject < screenTop) {
                           indexGameObject++;
                           remainingGameObjects = indexGameObject < totalGameObjects;
                           continue;
@@ -284,8 +332,8 @@ class IsometricRender {
               break;
             }
 
-            yParticle = particle.y;
-            if (yParticle > screenBottom100){
+            orderParticle = particle.y;
+            if (orderParticle > screenBottom100){
               remainingParticles = false;
               break;
             }
@@ -301,11 +349,11 @@ class IsometricRender {
           continue;
         }
 
-        if (!remainingZombies || yParticle < yZombie) {
-          if (!remainingGenerated || yParticle < yGenerated) {
-            if (!remainingBuildMode || yParticle < yBuildMode) {
-              if (!remainingStructures || yParticle < yStructure) {
-                  if (!remainingNpcs || yParticle < yNpc) {
+        if (!remainingZombies || orderParticle < orderZombie) {
+          if (!remainingGenerated || orderParticle < orderGenerated) {
+            if (!remainingBuildMode || orderParticle < orderBuildMode) {
+              if (!remainingStructures || orderParticle < orderStructure) {
+                  if (!remainingNpcs || orderParticle < orderNpc) {
                     renderParticle(particles[indexParticle]);
                     indexParticle++;
                     remainingParticles = indexParticle < totalParticles;
@@ -318,8 +366,8 @@ class IsometricRender {
                         break;
                       }
 
-                      yParticle = particle.y;
-                      if (yParticle > screenBottom100){
+                      orderParticle = particle.y;
+                      if (orderParticle > screenBottom100){
                         remainingParticles = false;
                         break;
                       }
@@ -341,23 +389,23 @@ class IsometricRender {
       }
 
       if (remainingZombies) {
-        if (!remainingGenerated || yZombie < yGenerated) {
-          if (!remainingBuildMode || yZombie < yBuildMode) {
-            if (!remainingStructures || yZombie < yStructure) {
-                if (!remainingNpcs || yZombie < yNpc) {
+        if (!remainingGenerated || orderZombie < orderGenerated) {
+          if (!remainingBuildMode || orderZombie < orderBuildMode) {
+            if (!remainingStructures || orderZombie < orderStructure) {
+                if (!remainingNpcs || orderZombie < orderNpc) {
                   renderZombie(zombies[indexZombie]);
                   indexZombie++;
                   remainingZombies = indexZombie < totalZombies;
                   while (remainingZombies) {
                     final zombie = zombies[indexZombie];
-                    yZombie = zombie.y;
-                    if (yZombie > screenBottom100){
+                    orderZombie = zombie.y;
+                    if (orderZombie > screenBottom100){
                       print("last zombie");
                       remainingZombies = false;
                       break;
                     }
                     final x = zombie.x;
-                    if (x < screenLeft || x > screenRight || yZombie < screenTop) {
+                    if (x < screenLeft || x > screenRight || orderZombie < screenTop) {
                       indexZombie++;
                       remainingZombies = indexZombie < totalZombies;
                       continue;
@@ -372,15 +420,15 @@ class IsometricRender {
       }
 
       if (remainingNpcs) {
-        if (!remainingGenerated || yNpc < yGenerated) {
-          if (!remainingBuildMode || yNpc < yBuildMode) {
-            if (!remainingStructures || yNpc < yStructure) {
+        if (!remainingGenerated || orderNpc < orderGenerated) {
+          if (!remainingBuildMode || orderNpc < orderBuildMode) {
+            if (!remainingStructures || orderNpc < orderStructure) {
                 drawInteractableNpc(npcs[indexNpc]);
                 indexNpc++;
                 remainingNpcs = indexNpc < totalNpcs;
                 if (remainingNpcs) {
-                  yNpc = npcs[indexNpc].y;
-                  if (yNpc > screenBottom) {
+                  orderNpc = npcs[indexNpc].y;
+                  if (orderNpc > screenBottom) {
                     remainingNpcs = false;
                   }
                 }
@@ -391,14 +439,14 @@ class IsometricRender {
       }
 
       if (remainingStructures) {
-        if (!remainingGenerated || yStructure < yGenerated) {
-          if (!remainingBuildMode || yStructure < yBuildMode) {
+        if (!remainingGenerated || orderStructure < orderGenerated) {
+          if (!remainingBuildMode || orderStructure < orderBuildMode) {
             renderStructure(structures[indexStructure]);
             indexStructure++;
             remainingStructures = indexStructure < totalStructures;
             if (remainingStructures) {
-              yStructure = structures[indexStructure].y;
-              if (yStructure > screenBottom) {
+              orderStructure = structures[indexStructure].y;
+              if (orderStructure > screenBottom) {
                 remainingStructures = false;
               }
               continue;
@@ -409,7 +457,7 @@ class IsometricRender {
       }
 
       if (remainingBuildMode){
-        if (!remainingGenerated || yBuildMode < yGenerated) {
+        if (!remainingGenerated || orderBuildMode < orderGenerated) {
           renderBuildMode();
           remainingBuildMode = false;
           continue;
@@ -423,8 +471,8 @@ class IsometricRender {
          remainingGenerated = indexGenerated < totalGenerated;
 
          while (remainingGenerated) {
-           yGenerated = generatedObjects[indexGenerated].y;
-           if (yGenerated > screenBottom100){
+           orderGenerated = generatedObjects[indexGenerated].y;
+           if (orderGenerated > screenBottom100){
              remainingGenerated = false;
              break;
            }
@@ -441,6 +489,7 @@ class IsometricRender {
 
 
       if (
+          remainingGrid ||
           remainingZombies ||
           remainingPlayers ||
           remainingNpcs ||
@@ -1323,6 +1372,25 @@ class IsometricRender {
       scale: scale,
     );
     engine.renderAtlas();
+  }
+
+
+  void renderGridNode(int z, int row, int column, int type){
+    print("renderGridNode(z: $z, ($row, $column)");
+    switch(type){
+      case GridNodeType.Empty:
+        return;
+      case GridNodeType.Grass:
+        engine.renderCustom(
+            dstX: getTileWorldX(row, column),
+            dstY: getTileWorldY(row, column) - (z * 24),
+            srcX: 6530,
+            srcWidth: 47,
+            srcHeight: 70
+        );
+        return;
+
+    }
   }
 }
 

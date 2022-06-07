@@ -41,4 +41,3 @@ int convertWorldToRow(double x, double y) {
 int convertWorldToColumn(double x, double y) {
   return (y - x) ~/ tileSize;
 }
-

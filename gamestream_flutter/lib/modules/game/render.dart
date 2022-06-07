@@ -78,7 +78,7 @@ class GameRender {
     // drawBulletHoles(_bulletHoles);
 
 
-    renderGrid();
+    // renderGrid();
 
     drawAbility();
     if (modules.game.structureType.value == null){
