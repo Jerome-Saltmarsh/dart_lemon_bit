@@ -522,7 +522,12 @@ class Scene {
     var tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
     while (tileAtFeet == GridNodeType.Bricks || tileAtFeet == GridNodeType.Grass) {
        character.z += 24 - (character.z % 24);
-      tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
+       tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
+    }
+
+    if (tileAtFeet == GridNodeType.Stairs_North){
+      final heightAtFeet = (1.0 - (((character.x + character.y) / 48.0) % 1.0)) * 24.0;
+      character.z += heightAtFeet - (character.z % heightAtFeet);
     }
     //
     // final floorHeightTopLeft = getFloorHeight(character.left, character.top, character.z);
