@@ -66,7 +66,7 @@ class Scene {
       grid[z][2][2].type = GridNodeType.Bricks;
     }
 
-    grid[0][1][3].type = GridNodeType.Stairs_H;
+    grid[0][1][3].type = GridNodeType.Stairs_East;
 
     for (var rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
       final List<Node> nodeRow = [];

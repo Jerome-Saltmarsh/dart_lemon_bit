@@ -53,18 +53,6 @@ class GameRender {
       }
   }
 
-  void renderGridNode(int z, int row, int column, int type) {
-    if (type == GridNodeType.Empty) return;
-    final x = getTileWorldX(row, column);
-    final y = getTileWorldY(row, column) - (z * 24);
-     switch(type){
-       case GridNodeType.Grass:
-         return renderBlockBricks(x, y);
-       case GridNodeType.Stairs_H:
-         return renderStairsHorizontal(x, y);
-     }
-  }
-
   void renderBlockBricks(double x, double y){
     engine.renderCustom(
         dstX: x,
