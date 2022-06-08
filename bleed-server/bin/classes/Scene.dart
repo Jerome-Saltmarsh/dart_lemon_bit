@@ -533,8 +533,7 @@ class Scene {
     }
 
     if (tileAtFeet == GridNodeType.Stairs_North){
-      final heightAtFeet = (1.0 - (((character.x + character.y) / 48.0) % 1.0)) * 24.0;
-      character.z += heightAtFeet - (character.z % heightAtFeet);
+      character.z = (1.0 - (((character.x + character.y) / 48.0) % 1.0)) * 24.0;
     }
     //
     // final floorHeightTopLeft = getFloorHeight(character.left, character.top, character.z);
