@@ -50,9 +50,9 @@ class Scene {
     numberOfColumns = numberOfRows > 0 ? tiles[0].length : 0;
     nodes = [];
 
-    const gridHeight = 2;
-    const gridRows = 4;
-    const gridColumns = 2;
+    const gridHeight = 5;
+    const gridRows = 10;
+    const gridColumns = 10;
 
     for (var z = 0; z < gridHeight; z++) {
       final layer = <List<GridNode>>[];
@@ -66,11 +66,11 @@ class Scene {
       }
     }
 
-    // for (var z = 1; z < 4; z++){
-    //   grid[z][2][2].type = GridNodeType.Bricks;
-    // }
+    for (var z = 1; z < 4; z++){
+      grid[z][2][2].type = GridNodeType.Bricks;
+    }
 
-    // grid[0][1][3].type = GridNodeType.Stairs_East;
+    grid[0][9][5].type = GridNodeType.Stairs_North;
 
     for (var rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
       final List<Node> nodeRow = [];

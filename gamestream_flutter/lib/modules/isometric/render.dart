@@ -216,8 +216,8 @@ class IsometricRender {
       if (remainingGrid) {
         if (!remainingPlayers || orderGrid <= orderPlayer) {
           renderGridNode(gridZ, gridRow, gridColumn, grid[gridZ][gridRow][gridColumn]);
-            gridZ++;
-            if (gridZ >= gridTotalZ) {
+          gridZ++;
+          if (gridZ >= gridTotalZ) {
               gridZ = 0;
               gridIndex++;
 
@@ -237,9 +237,9 @@ class IsometricRender {
                    gridColumn = gridTotalColumnsMinusOne;
                  }
               }
-            }
-            orderGrid = getTileWorldY(gridRow, gridColumn) - (gridZ * 24);
-            continue;
+          }
+          orderGrid = getTileWorldY(gridRow, gridColumn) - (gridZ * 24);
+          continue;
         }
       }
 
