@@ -166,8 +166,10 @@ class IsometricRender {
     var remainingBuildMode = modules.game.structureType.value != null;
     var remainingGenerated = indexGenerated < totalGenerated;
 
-    var orderGrid = getTileWorldX(gridColumn, gridRow) + (gridZ * tileSizeHalf);
-    var orderPlayer = remainingPlayers ? players[0].y + players[0].z : 0;
+    var orderGrid = getTileWorldY(gridColumn, gridRow) + 24;
+    var orderGridZ = gridZ * 24.0;
+    var orderPlayer = remainingPlayers ? players[0].y : 0;
+    var orderPlayerZ = remainingPlayers ? players[0].z : 0;
     var orderObject = remainingGameObjects ? gameObjects[0].y : 0;
     var orderParticle = remainingParticles ? particles[0].y : 0;
     var orderZombie = remainingZombies ? zombies[0].y : 0;
@@ -214,37 +216,44 @@ class IsometricRender {
     while (true) {
 
       if (remainingGrid) {
-        if (!remainingPlayers || orderGrid <= orderPlayer) {
-          renderGridNode(gridZ, gridRow, gridColumn, grid[gridZ][gridRow][gridColumn]);
+        final gridType = grid[gridZ][gridRow][gridColumn];
+        if (gridType == GridNodeType.Empty
+              ||
+            !remainingPlayers
+              ||
+            orderGrid <= orderPlayer
+            ) {
+          renderGridNode(gridZ, gridRow, gridColumn, gridType);
           gridZ++;
           if (gridZ >= gridTotalZ) {
-              gridZ = 0;
-              gridIndex++;
+            gridZ = 0;
+            orderGridZ = 0;
+            gridIndex++;
 
-              if (gridIndex >= totalGridIndex) {
-                remainingGrid = false;
-                continue;
+            if (gridIndex >= totalGridIndex) {
+              remainingGrid = false;
+              continue;
+            }
+
+            gridRow++;
+            gridColumn--;
+
+            if (gridColumn < 0 || gridRow >= gridTotalRows) {
+              gridColumn = gridRow + gridColumn + 1;
+              gridRow = 0;
+              if (gridColumn >= gridTotalColumns) {
+                gridRow = (gridColumn - gridTotalColumnsMinusOne);
+                gridColumn = gridTotalColumnsMinusOne;
               }
-
-              gridRow++;
-              gridColumn--;
-
-              if (gridColumn < 0 || gridRow >= gridTotalRows) {
-                 gridColumn = gridRow + gridColumn + 1;
-                 gridRow = 0;
-                 if (gridColumn >= gridTotalColumns) {
-                   gridRow = (gridColumn - gridTotalColumnsMinusOne);
-                   gridColumn = gridTotalColumnsMinusOne;
-                 }
-              }
+            }
           }
-          orderGrid = getTileWorldY(gridRow, gridColumn) - (gridZ * 24);
+          orderGrid = getTileWorldY(gridRow, gridColumn);
+          orderGridZ = gridZ * 24.0;
           continue;
         }
       }
 
       if (remainingPlayers) {
-        if (!remainingGrid || orderPlayer < orderGrid) {
           if (!remainingGenerated || orderPlayer < orderGenerated) {
             if (!remainingBuildMode || orderPlayer < orderBuildMode) {
               if (!remainingGameObjects || orderPlayer < orderObject) {
@@ -258,7 +267,8 @@ class IsometricRender {
                         remainingPlayers = indexPlayer < totalPlayers;
                         while (remainingPlayers) {
                           final player = players[indexPlayer];
-                          orderPlayer = player.y + player.z;
+                          orderPlayer = player.y;
+                          orderPlayerZ = player.z;
                           if (orderPlayer > screenBottom100) {
                             remainingPlayers = false;
                             break;
@@ -278,7 +288,6 @@ class IsometricRender {
                   }
                 }
               }
-            }
           }
         }
       }
