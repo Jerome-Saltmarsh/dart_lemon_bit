@@ -70,6 +70,12 @@ class Scene {
       grid[z][2][2].type = GridNodeType.Bricks;
     }
 
+    grid[0][9][9].type = GridNodeType.Grass;
+    grid[0][9][8].type = GridNodeType.Grass;
+    grid[0][9][7].type = GridNodeType.Grass;
+    grid[1][9][9].type = GridNodeType.Grass;
+    grid[1][9][8].type = GridNodeType.Grass;
+    grid[1][9][7].type = GridNodeType.Grass;
     grid[0][9][5].type = GridNodeType.Stairs_North;
 
     for (var rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
@@ -285,6 +291,20 @@ class Scene {
     );
   }
 
+  int getGridBlockTypeAtXYZ(double x, double y, double z){
+    const tileSize = 48;
+    final row = (x + y) ~/ tileSize;
+    final column = (y - x) ~/ tileSize;
+    final height = z ~/ 24.0;
+    if (row < 0) return GridNodeType.Boundary;
+    if (column < 0) return GridNodeType.Boundary;
+    if (height < 0) return GridNodeType.Boundary;
+    if (row >= grid[0].length) return GridNodeType.Boundary;
+    if (column >= grid[0][0].length) return GridNodeType.Boundary;
+    if (height >= grid.length) return GridNodeType.Empty;
+    return grid[height][row][column].type;
+  }
+
   int getTileAtRowColumn({required int row, required int column}){
     if (row < 0) return boundary;
     if (column < 0) return boundary;
@@ -408,20 +428,20 @@ class Scene {
     return getTileAtXY(x, y) == Tile.Water;
   }
 
-  double getFloorHeight(double x, double y){
-    final blockHeight = 48.0;
-    final tile = getTileAtXY(x, y);
-    if (tile == Tile.Grass) return 0;
-    if (tile == Tile.Boundary) return 99999;
-    if (tile == Tile.Block_Grass) return blockHeight;
-    if (tile == Tile.Block_Grass_Level_2) return blockHeight + blockHeight;
-    if (tile == Tile.Block_Grass_Level_3) return blockHeight + blockHeight + blockHeight;
-    if (tile == Tile.Water) return -10;
-    if (tile == Tile.Stairs_Grass_H) {
-       return (1.0 - (((x + y) / 48.0) % 1.0)) * blockHeight;
-    }
-    return 0;
-  }
+  // double getFloorHeight(double x, double y, double z){
+  //   final blockHeight = 48.0;
+  //   final tile = getTileAtXY(x, y);
+  //   if (tile == Tile.Grass) return 0;
+  //   if (tile == Tile.Boundary) return 99999;
+  //   if (tile == Tile.Block_Grass) return blockHeight;
+  //   if (tile == Tile.Block_Grass_Level_2) return blockHeight + blockHeight;
+  //   if (tile == Tile.Block_Grass_Level_3) return blockHeight + blockHeight + blockHeight;
+  //   if (tile == Tile.Water) return -10;
+  //   if (tile == Tile.Stairs_Grass_H) {
+  //      return (1.0 - (((x + y) / 48.0) % 1.0)) * blockHeight;
+  //   }
+  //   return 0;
+  // }
 
   bool tileWalkableAt(double x, double y){
     return getNodeByXY(x, y).open;
@@ -494,34 +514,39 @@ class Scene {
 
   void resolveCharacterTileCollision(Character character) {
     character.z -= 3.0;
-    final floorHeight = getFloorHeight(character.x, character.y);
-    if (character.z < floorHeight){
-      character.z = floorHeight;
+
+    if (character.z < 0) {
+      character.z = 0;
     }
 
-    final floorHeightTopLeft = getFloorHeight(character.left, character.top);
-    final floorHeightRightBottom = getFloorHeight(character.right, character.bottom);
-    final floorHeightRightTop = getFloorHeight(character.right, character.top);
-    final floorHeightLeftBottom = getFloorHeight(character.left, character.bottom);
+    final tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
+    if (tileAtFeet == GridNodeType.Bricks || tileAtFeet == GridNodeType.Grass){
+       character.z = 24.0;
+    }
+    //
+    // final floorHeightTopLeft = getFloorHeight(character.left, character.top, character.z);
+    // final floorHeightRightBottom = getFloorHeight(character.right, character.bottom, character.z);
+    // final floorHeightRightTop = getFloorHeight(character.right, character.top, character.z);
+    // final floorHeightLeftBottom = getFloorHeight(character.left, character.bottom, character.z);
 
-    const minHeight = 20;
-    const distance = 3;
-    if (floorHeightTopLeft - floorHeight > minHeight) {
-      character.x += distance;
-      character.y += distance;
-    } else
-    if (floorHeightRightBottom - floorHeight > minHeight) {
-      character.x -= distance;
-      character.y -= distance;
-    }
-    if (floorHeightRightTop - floorHeight > minHeight) {
-      character.x -= distance;
-      character.y += distance;
-    } else
-    if (floorHeightLeftBottom - floorHeight > minHeight) {
-      character.x += distance;
-      character.y -= distance;
-    }
+    // const minHeight = 20;
+    // const distance = 3;
+    // if (floorHeightTopLeft - floorHeight > minHeight) {
+    //   character.x += distance;
+    //   character.y += distance;
+    // } else
+    // if (floorHeightRightBottom - floorHeight > minHeight) {
+    //   character.x -= distance;
+    //   character.y -= distance;
+    // }
+    // if (floorHeightRightTop - floorHeight > minHeight) {
+    //   character.x -= distance;
+    //   character.y += distance;
+    // } else
+    // if (floorHeightLeftBottom - floorHeight > minHeight) {
+    //   character.x += distance;
+    //   character.y -= distance;
+    // }
   }
 }
 

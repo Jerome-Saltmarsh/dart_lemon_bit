@@ -1385,7 +1385,8 @@ class IsometricRender {
             dstY: getTileWorldY(row, column) - (z * 24),
             srcX: 6601,
             srcWidth: 48,
-            srcHeight: 72
+            srcHeight: 72,
+            anchorY: 0.3334,
         );
       case GridNodeType.Bricks:
         return engine.renderCustom(
@@ -1394,6 +1395,7 @@ class IsometricRender {
             srcX: 6650,
             srcWidth: 48,
             srcHeight: 72,
+            anchorY: 0.3334,
         );
       case GridNodeType.Stairs_North:
         return engine.renderCustom(
@@ -1401,7 +1403,8 @@ class IsometricRender {
             dstY: getTileWorldY(row, column) - (z * 24),
             srcX: 6699,
             srcWidth: 48,
-            srcHeight: 72
+            srcHeight: 72,
+            anchorY: 0.3334,
         );
       case GridNodeType.Stairs_East:
         return engine.renderCustom(
@@ -1409,7 +1412,8 @@ class IsometricRender {
             dstY: getTileWorldY(row, column) - (z * 24),
             srcX: 6748,
             srcWidth: 48,
-            srcHeight: 72
+            srcHeight: 72,
+            anchorY: 0.3334,
         );
       default:
         throw Exception("Cannot render grid node type $type");
