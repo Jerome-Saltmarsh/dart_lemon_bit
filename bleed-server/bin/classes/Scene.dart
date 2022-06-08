@@ -77,6 +77,13 @@ class Scene {
     grid[1][9][8].type = GridNodeType.Grass;
     grid[1][9][7].type = GridNodeType.Grass;
     grid[0][9][5].type = GridNodeType.Stairs_North;
+    grid[1][8][4].type = GridNodeType.Stairs_East;
+    grid[1][8][3].type = GridNodeType.Bricks;
+    grid[1][8][2].type = GridNodeType.Bricks;
+    grid[1][7][2].type = GridNodeType.Bricks;
+    grid[1][7][2].type = GridNodeType.Stairs_South;
+    // grid[2][7][1].type = GridNodeType.Bricks;
+    // grid[2][6][1].type = GridNodeType.Bricks;
 
     for (var rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
       final List<Node> nodeRow = [];

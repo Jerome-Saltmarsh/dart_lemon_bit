@@ -166,7 +166,7 @@ class IsometricRender {
     var remainingBuildMode = modules.game.structureType.value != null;
     var remainingGenerated = indexGenerated < totalGenerated;
 
-    var orderGrid = getTileWorldY(gridColumn, gridRow) + 24;
+    var orderGrid = getTileWorldY(gridColumn, gridRow);
     var orderGridZ = gridZ * 24.0;
     var orderPlayer = remainingPlayers ? players[0].y : 0;
     var orderPlayerZ = remainingPlayers ? players[0].z : 0;
@@ -222,6 +222,8 @@ class IsometricRender {
             !remainingPlayers
               ||
             orderGrid <= orderPlayer
+            //   ||
+            // orderGridZ < orderPlayerZ
             ) {
           renderGridNode(gridZ, gridRow, gridColumn, gridType);
           gridZ++;
@@ -268,7 +270,7 @@ class IsometricRender {
                         while (remainingPlayers) {
                           final player = players[indexPlayer];
                           orderPlayer = player.y;
-                          orderPlayerZ = player.z;
+                          // orderPlayerZ = player.z;
                           if (orderPlayer > screenBottom100) {
                             remainingPlayers = false;
                             break;
@@ -1423,6 +1425,26 @@ class IsometricRender {
             srcWidth: 48,
             srcHeight: 72,
             anchorY: 0.3334,
+        );
+
+      case GridNodeType.Stairs_South:
+        return engine.renderCustom(
+          dstX: getTileWorldX(row, column),
+          dstY: getTileWorldY(row, column) - (z * 24),
+          srcX: 6797,
+          srcWidth: 48,
+          srcHeight: 72,
+          anchorY: 0.3334,
+        );
+
+      case GridNodeType.Stairs_West:
+        return engine.renderCustom(
+          dstX: getTileWorldX(row, column),
+          dstY: getTileWorldY(row, column) - (z * 24),
+          srcX: 6846,
+          srcWidth: 48,
+          srcHeight: 72,
+          anchorY: 0.3334,
         );
       default:
         throw Exception("Cannot render grid node type $type");
