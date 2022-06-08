@@ -50,23 +50,27 @@ class Scene {
     numberOfColumns = numberOfRows > 0 ? tiles[0].length : 0;
     nodes = [];
 
-    for (var z = 0; z < 4; z++) {
+    const gridHeight = 2;
+    const gridRows = 4;
+    const gridColumns = 2;
+
+    for (var z = 0; z < gridHeight; z++) {
       final layer = <List<GridNode>>[];
       grid.add(layer);
-      for (var rowIndex = 0; rowIndex < 3; rowIndex++) {
+      for (var rowIndex = 0; rowIndex < gridRows; rowIndex++) {
         final row = <GridNode>[];
         layer.add(row);
-        for (var columnIndex = 0; columnIndex < 4; columnIndex++) {
+        for (var columnIndex = 0; columnIndex < gridColumns; columnIndex++) {
            row.add(GridNode(rowIndex, columnIndex, z, z == 0 ? GridNodeType.Bricks : GridNodeType.Empty));
         }
       }
     }
 
-    for (var z = 1; z < 4; z++){
-      grid[z][2][2].type = GridNodeType.Bricks;
-    }
+    // for (var z = 1; z < 4; z++){
+    //   grid[z][2][2].type = GridNodeType.Bricks;
+    // }
 
-    grid[0][1][3].type = GridNodeType.Stairs_East;
+    // grid[0][1][3].type = GridNodeType.Stairs_East;
 
     for (var rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
       final List<Node> nodeRow = [];

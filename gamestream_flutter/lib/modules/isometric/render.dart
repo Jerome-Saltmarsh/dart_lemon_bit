@@ -141,6 +141,7 @@ class IsometricRender {
     final gridTotalZ = grid.length;
     final gridTotalRows = grid[0].length;
     final gridTotalColumns = grid[0][0].length;
+    final gridTotalColumnsMinusOne = gridTotalColumns - 1;
     final totalGridIndex = gridTotalRows * gridTotalColumns;
 
     var gridIndex = 0;
@@ -229,14 +230,12 @@ class IsometricRender {
               gridColumn--;
 
               if (gridColumn < 0 || gridRow >= gridTotalRows) {
-                final previousColumn = gridColumn + 1;
-                gridColumn = gridRow;
-                gridRow = previousColumn;
-
-                if (gridColumn >= gridTotalColumns){
-                  remainingGrid = false;
-                  continue;
-                }
+                 gridColumn = gridRow + gridColumn + 1;
+                 gridRow = 0;
+                 if (gridColumn >= gridTotalColumns) {
+                   gridRow = (gridColumn - gridTotalColumnsMinusOne);
+                   gridColumn = gridTotalColumnsMinusOne;
+                 }
               }
             }
             orderGrid = getTileWorldY(gridRow, gridColumn) - (gridZ * 24);
@@ -1374,6 +1373,9 @@ class IsometricRender {
   }
 
   void renderGridNode(int z, int row, int column, int type) {
+    if (type == GridNodeType.Empty) return;
+    // print("render($row, $column)");
+
     switch(type) {
       case GridNodeType.Empty:
         return;
@@ -1381,7 +1383,7 @@ class IsometricRender {
         return engine.renderCustom(
             dstX: getTileWorldX(row, column),
             dstY: getTileWorldY(row, column) - (z * 24),
-            srcX: 6530,
+            srcX: 6601,
             srcWidth: 48,
             srcHeight: 72
         );
