@@ -1373,7 +1373,6 @@ class IsometricRender {
     engine.renderAtlas();
   }
 
-
   void renderGridNode(int z, int row, int column, int type) {
     switch(type) {
       case GridNodeType.Empty:
@@ -1393,7 +1392,6 @@ class IsometricRender {
             srcX: 6650,
             srcWidth: 48,
             srcHeight: 72,
-            scale: 1.03,
         );
       case GridNodeType.Stairs_North:
         return engine.renderCustom(
