@@ -316,6 +316,7 @@ class Game with ByteReader {
         case ServerResponse.Player:
           _player.x = readDouble();
           _player.y = readDouble();
+          _player.z = readDouble();
 
           switch(modules.game.state.cameraMode.value){
             case CameraMode.Chase:

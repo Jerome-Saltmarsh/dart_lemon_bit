@@ -99,7 +99,7 @@ Widget get tileAtMouse {
 Widget get playerPosition {
   final character = modules.game.state.player;
   return Refresh((){
-    return text("Player Position: X: ${character.x}, Y: ${character.y}");
+    return text("Player Position: X: ${character.x}, Y: ${character.y}, Z: ${character.z}");
   });
 }
 

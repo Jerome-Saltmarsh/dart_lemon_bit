@@ -347,6 +347,7 @@ extension PlayerProperties on Player {
     writeByte(ServerResponse.Player);
     writeInt(x);
     writeInt(y);
+    writeInt(z);
     writeInt(health); // 2
     writeInt(maxHealth); // 2
     writeInt(magic); // 2

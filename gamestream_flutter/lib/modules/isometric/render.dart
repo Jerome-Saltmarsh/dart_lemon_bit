@@ -27,33 +27,6 @@ const _framesPerDirectionHuman = 19;
 const _framesPerDirectionZombie = 8;
 final _screen = engine.screen;
 
-class SpriteLayer {
-  static const Shadow = 0;
-  static const Legs_Blue = 1;
-  static const Legs_Swat = 2;
-  static const Staff_Wooden = 3;
-  static const Sword_Wooden = 4;
-  static const Sword_Steel = 5;
-  static const Weapon_Shotgun = 6;
-  static const Weapon_Handgun = 7;
-  static const Bow_Wooden = 8;
-  static const Body_Cyan = 9;
-  static const Body_Blue = 10;
-  static const Body_Swat = 11;
-  static const Head_Plain = 12;
-  static const Head_Steel = 13;
-  static const Head_Rogue = 14;
-  static const Head_Magic = 15;
-  static const Head_Swat = 16;
-}
-
-class RenderList {
-  List<Position> values;
-  var index = 0;
-
-  RenderList(this.values);
-}
-
 class IsometricRender {
 
   final IsometricModule state;
@@ -105,6 +78,10 @@ class IsometricRender {
         engine.renderAtlas();
       }
     }
+  }
+
+  int calculateOrder(Position position) {
+     return convertWorldToRow(position.x, position.y) + convertWorldToColumn(position.x, position.y);
   }
 
   /// While this method is obviously a complete dog's breakfast all readability
@@ -166,9 +143,9 @@ class IsometricRender {
     var remainingBuildMode = modules.game.structureType.value != null;
     var remainingGenerated = indexGenerated < totalGenerated;
 
-    var orderGrid = getTileWorldY(gridColumn, gridRow);
+    var orderGrid = gridColumn + gridRow;
     var orderGridZ = gridZ * 24.0;
-    var orderPlayer = remainingPlayers ? players[0].y : 0;
+    var orderPlayer = remainingPlayers ? calculateOrder(players[0]) : 0;
     var orderPlayerZ = remainingPlayers ? players[0].z : 0;
     var orderObject = remainingGameObjects ? gameObjects[0].y : 0;
     var orderParticle = remainingParticles ? particles[0].y : 0;
@@ -249,7 +226,7 @@ class IsometricRender {
               }
             }
           }
-          orderGrid = getTileWorldY(gridRow, gridColumn);
+          orderGrid = gridRow + gridColumn;
           orderGridZ = gridZ * 24.0;
           continue;
         }
@@ -269,7 +246,7 @@ class IsometricRender {
                         remainingPlayers = indexPlayer < totalPlayers;
                         while (remainingPlayers) {
                           final player = players[indexPlayer];
-                          orderPlayer = player.y;
+                          orderPlayer = calculateOrder(player);
                           // orderPlayerZ = player.z;
                           if (orderPlayer > screenBottom100) {
                             remainingPlayers = false;
@@ -1452,4 +1429,22 @@ class IsometricRender {
   }
 }
 
-
+class SpriteLayer {
+  static const Shadow = 0;
+  static const Legs_Blue = 1;
+  static const Legs_Swat = 2;
+  static const Staff_Wooden = 3;
+  static const Sword_Wooden = 4;
+  static const Sword_Steel = 5;
+  static const Weapon_Shotgun = 6;
+  static const Weapon_Handgun = 7;
+  static const Bow_Wooden = 8;
+  static const Body_Cyan = 9;
+  static const Body_Blue = 10;
+  static const Body_Swat = 11;
+  static const Head_Plain = 12;
+  static const Head_Steel = 13;
+  static const Head_Rogue = 14;
+  static const Head_Magic = 15;
+  static const Head_Swat = 16;
+}

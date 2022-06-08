@@ -10,11 +10,7 @@ import '../scene_generator.dart';
 class GameFrontline extends Game {
 
   GameFrontline() : super(
-    generateRandomScene(
-      columns: 150,
-      rows: 150,
-      seed: random.nextInt(2000),
-    ),
+    generateScenePlain()
   ){
     scene.generateStairs();
   }

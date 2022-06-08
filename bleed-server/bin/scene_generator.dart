@@ -8,6 +8,27 @@ import 'common/library.dart';
 import 'enums.dart';
 import 'utilities.dart';
 
+Scene generateScenePlain({int rows = 50, int columns = 50}){
+  final tiles =  <List<int>>[];
+
+  for (var rowIndex = 0; rowIndex < rows; rowIndex++) {
+    final column = <int>[];
+    tiles.add(column);
+    for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
+       column.add(Tile.Grass);
+    }
+  }
+
+  return Scene(
+      tiles: tiles,
+      structures: [],
+      gameObjects: [],
+      characters: [],
+      spawnPointPlayers: [Vector2(100, 100)],
+      spawnPointZombies: []
+  );
+}
+
 Scene generateRandomScene({
   required int rows,
   required int columns,
