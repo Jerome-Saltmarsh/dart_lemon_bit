@@ -204,21 +204,28 @@ class IsometricRender {
             gridZ < orderPlayerZ
             ) {
           renderGridNode(gridZ, gridRow, gridColumn, gridType);
-          gridZ++;
-          if (gridZ >= gridTotalZ) {
-            gridZ = 0;
-            gridIndex++;
 
-            if (gridIndex >= totalGridIndex) {
-              remainingGrid = false;
-              continue;
-            }
+          gridRow++;
+          gridColumn--;
 
-            gridRow++;
-            gridColumn--;
+          if (gridColumn < 0 || gridRow >= gridTotalRows) {
+            gridZ++;
 
-            if (gridColumn < 0 || gridRow >= gridTotalRows) {
+            if (gridZ >= gridTotalZ) {
+              gridZ = 0;
               gridColumn = gridRow + gridColumn + 1;
+              gridRow = 0;
+              if (gridColumn >= gridTotalColumns) {
+                gridRow = (gridColumn - gridTotalColumnsMinusOne);
+                gridColumn = gridTotalColumnsMinusOne;
+              }
+              if (gridRow >= gridTotalRows){
+                remainingGrid = false;
+                continue;
+              }
+
+            } else {
+              gridColumn = gridRow + gridColumn;
               gridRow = 0;
               if (gridColumn >= gridTotalColumns) {
                 gridRow = (gridColumn - gridTotalColumnsMinusOne);
