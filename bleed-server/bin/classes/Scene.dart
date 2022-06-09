@@ -82,6 +82,7 @@ class Scene {
     grid[1][8][2].type = GridNodeType.Bricks;
     grid[1][7][2].type = GridNodeType.Bricks;
     grid[1][7][2].type = GridNodeType.Stairs_South;
+    grid[1][8][1].type = GridNodeType.Stairs_West;
     // grid[2][7][1].type = GridNodeType.Bricks;
     // grid[2][6][1].type = GridNodeType.Bricks;
 
@@ -542,6 +543,17 @@ class Scene {
       final tilePer = ((((character.x + character.y) / 48.0) % 1.0));
       character.z = (tilePer * 24.0) + (zInt * 24.0);
     }
+    if (tileAtFeet == GridNodeType.Stairs_East){
+      final zInt = character.z ~/ 24.0;
+      final tilePer = ((((character.x - character.y) / 48.0) % 1.0));
+      character.z = (tilePer * 24.0) + (zInt * 24.0);
+    }
+    if (tileAtFeet == GridNodeType.Stairs_West){
+      final zInt = character.z ~/ 24.0;
+      final tilePer = (1.0 - (((character.x - character.y) / 48.0) % 1.0));
+      character.z = (tilePer * 24.0) + (zInt * 24.0);
+    }
+
     //
     // final floorHeightTopLeft = getFloorHeight(character.left, character.top, character.z);
     // final floorHeightRightBottom = getFloorHeight(character.right, character.bottom, character.z);
