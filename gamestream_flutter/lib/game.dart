@@ -1,4 +1,5 @@
 import 'package:bleed_common/card_type.dart';
+import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/classes/deck_card.dart';
 import 'package:gamestream_flutter/classes/game_object.dart';
@@ -57,6 +58,7 @@ class EditState {
   var row = 0;
   var column = 0;
   var z = 0;
+  var type = Watch(GridNodeType.Bricks);
 }
 
 class Game with ByteReader {

@@ -1443,6 +1443,17 @@ class IsometricRender {
       anchorY: 0.3334,
     );
   }
+
+  void renderWireFrameBlue(int row, int column, int z){
+    return engine.renderCustom(
+      dstX: getTileWorldX(row, column),
+      dstY: getTileWorldY(row, column) - (z * 24),
+      srcX: 6944,
+      srcWidth: 48,
+      srcHeight: 72,
+      anchorY: 0.3334,
+    );
+  }
 }
 
 class SpriteLayer {

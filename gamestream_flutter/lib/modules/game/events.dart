@@ -100,7 +100,7 @@ class GameEvents {
         }
 
         if (event.physicalKey == PhysicalKeyboardKey.enter){
-          sendClientRequestSetBlock(game.edit.row, game.edit.column, game.edit.z, GridNodeType.Grass);
+          sendClientRequestSetBlock(game.edit.row, game.edit.column, game.edit.z, game.edit.type.value);
         }
         return;
      }
