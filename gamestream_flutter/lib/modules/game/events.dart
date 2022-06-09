@@ -9,6 +9,7 @@ import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/PlayerEvent.dart';
 import 'package:bleed_common/SlotType.dart';
 import 'package:bleed_common/StructureType.dart';
+import 'package:bleed_common/grid_node_type.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
@@ -38,12 +39,10 @@ class GameEvents {
   GameEvents(this.actions, this.state);
 
   void register(){
-    print("modules.game.events.register()");
     engine.callbacks.onLeftClicked = actions.playerPerform;
     engine.callbacks.onPanStarted = actions.playerPerform;
     engine.callbacks.onLongLeftClicked = actions.playerRun;
     engine.callbacks.onRightClicked = onMouseRightClick;
-    // engine.callbacks.onLeftClicked = onMouseLeftClick;
     game.type.onChanged(_onGameTypeChanged);
     state.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     state.player.alive.onChanged(_onPlayerAliveChanged);
@@ -75,6 +74,21 @@ class GameEvents {
           if (_pressed) return;
           _pressed = true;
           sendRequestConstruct(StructureType.Tower);
+        }
+        if (event.physicalKey == PhysicalKeyboardKey.arrowDown){
+          game.edit.row++;
+        }
+        if (event.physicalKey == PhysicalKeyboardKey.arrowUp){
+          game.edit.row--;
+        }
+        if (event.physicalKey == PhysicalKeyboardKey.arrowLeft){
+          game.edit.column++;
+        }
+        if (event.physicalKey == PhysicalKeyboardKey.arrowRight){
+          game.edit.column--;
+        }
+        if (event.physicalKey == PhysicalKeyboardKey.enter){
+          sendClientRequestSetBlock(game.edit.row, game.edit.column, game.edit.z, GridNodeType.Grass);
         }
         return;
      }

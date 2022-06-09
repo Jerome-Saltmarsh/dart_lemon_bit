@@ -9,7 +9,6 @@ import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/Projectile.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/game.dart';
-import 'package:gamestream_flutter/game_render.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/isometric/classes.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -39,7 +38,6 @@ class GameRender {
       engine.setPaintColorWhite();
       _renderPlayerNames();
       drawPlayerText();
-      // drawItemText();
 
       for (final floatingText in _floatingTexts) {
         if (floatingText.duration <= 0) continue;
@@ -79,10 +77,6 @@ class GameRender {
     isometric.applyDynamicShadeToTileSrc();
     _render.renderTiles();
     renderProjectiles();
-    // drawBulletHoles(_bulletHoles);
-
-
-    // renderGrid();
 
     drawAbility();
     if (modules.game.structureType.value == null){
@@ -95,6 +89,8 @@ class GameRender {
     }
 
     _render.renderSprites();
+
+    isometric.render.renderWireFrame(game.edit.row, game.edit.column, game.edit.z);
     drawEffects();
     drawItems();
   }

@@ -40,9 +40,8 @@ class KeyMap {
   final hourBackwards = LogicalKeyboardKey.arrowLeft;
   final toggleObjectsDestroyable = LogicalKeyboardKey.keyP;
   final teleport = LogicalKeyboardKey.keyG;
-  final spawnZombie = LogicalKeyboardKey.arrowUp;
+  final spawnZombie = LogicalKeyboardKey.keyZ;
   final respawn = LogicalKeyboardKey.keyN;
-  final casteFireball = LogicalKeyboardKey.keyZ;
   final cubeFace0 = LogicalKeyboardKey.keyO;
   final cubeFaceI = LogicalKeyboardKey.keyI;
 }

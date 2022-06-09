@@ -520,6 +520,35 @@ class Scene {
     return !isShootable(getTileAtXY(x, y));
   }
 
+  double getHeightAt(double x, double y, double z){
+    var type = getGridBlockTypeAtXYZ(x, y, z);
+    if (type == GridNodeType.Empty) return (z ~/ 24.0) * 24;
+    if (type == GridNodeType.Boundary) return (z ~/ 24.0) * 24 + 24;
+    if (type == GridNodeType.Bricks) return (z ~/ 24.0) * 24 + 24;
+
+    if (type == GridNodeType.Stairs_North){
+      return (((1.0 - (((x + y) / 48.0) % 1.0))) * 24.0) + ((z ~/ 24.0) * 24.0);
+    }
+    if (type == GridNodeType.Stairs_South){
+      final tilePer = ((x + y) / 48.0) % 1.0;
+      final stairHeight = (tilePer * 24.0) + ((z ~/ 24.0) * 24.0);
+      return stairHeight;
+    }
+    if (type == GridNodeType.Stairs_West){
+      final zInt = z ~/ 24.0;
+      final tilePer = (1.0 - (((x - y) / 48.0) % 1.0));
+      final stairHeight = (tilePer * 24.0) + (zInt * 24.0);
+      return stairHeight;
+    }
+    if (type == GridNodeType.Stairs_East){
+      final zInt = z ~/ 24.0;
+      final tilePer = ((x - y) / 48.0) % 1.0;
+      final stairHeight = (tilePer * 24.0) + (zInt * 24.0);
+      return stairHeight;
+    }
+    return (z ~/ 24.0) * 24 + 24;
+  }
+
   bool getCollisionAt(double x, double y, double z) {
     var type = getGridBlockTypeAtXYZ(x, y, z);
     if (type == GridNodeType.Empty) return false;
@@ -529,9 +558,25 @@ class Scene {
     if (type == GridNodeType.Stairs_North){
       final tilePer = (1.0 - (((x + y) / 48.0) % 1.0));
       final stairHeight = (tilePer * 24.0) + ((z ~/ 24.0) * 24.0);
-      return stairHeight > z + 10;
+      return stairHeight > z;
     }
-
+    if (type == GridNodeType.Stairs_South){
+      final tilePer = ((x + y) / 48.0) % 1.0;
+      final stairHeight = (tilePer * 24.0) + ((z ~/ 24.0) * 24.0);
+      return stairHeight > z;
+    }
+    if (type == GridNodeType.Stairs_West){
+      final zInt = z ~/ 24.0;
+      final tilePer = (1.0 - (((x - y) / 48.0) % 1.0));
+      final stairHeight = (tilePer * 24.0) + (zInt * 24.0);
+      return stairHeight > z;
+    }
+    if (type == GridNodeType.Stairs_East){
+      final zInt = z ~/ 24.0;
+      final tilePer = ((x - y) / 48.0) % 1.0;
+      final stairHeight = (tilePer * 24.0) + (zInt * 24.0);
+      return stairHeight > z;
+    }
     return true;
   }
 
@@ -539,7 +584,7 @@ class Scene {
     character.z -= character.zVelocity;
     character.zVelocity += 0.98;
 
-    if (character.z < 0) {
+    if (character.z <= 0) {
       character.z = 0;
       character.zVelocity = 0;
     }
@@ -576,21 +621,22 @@ class Scene {
     }
 
     const distance = 3;
-    const height = 7;
-    if (getCollisionAt(character.left, character.top, character.z + height)) {
+    final stepHeight = character.z + 10;
+
+    if (getCollisionAt(character.left, character.top, stepHeight)) {
       character.x += distance;
       character.y += distance;
     }
     else
-    if (getCollisionAt(character.right, character.bottom, character.z  + height)) {
+    if (getCollisionAt(character.right, character.bottom, stepHeight)) {
       character.x -= distance;
       character.y -= distance;
     }
-    if (getCollisionAt(character.left, character.bottom, character.z  + height)) {
+    if (getCollisionAt(character.left, character.bottom, stepHeight)) {
       character.x += distance;
       character.y -= distance;
     } else
-    if (getCollisionAt(character.right, character.top, character.z  + height)) {
+    if (getCollisionAt(character.right, character.top, stepHeight)) {
       character.x -= distance;
       character.y += distance;
     }

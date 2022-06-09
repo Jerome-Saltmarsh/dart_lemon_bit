@@ -65,6 +65,10 @@ void sendClientRequestSelectCharacterType(CharacterSelection value) {
   sendClientRequest(ClientRequest.Select_Character_Type, value.index);
 }
 
+void sendClientRequestSetBlock(int row, int column, int z, int type) {
+  sendClientRequest(ClientRequest.Set_Block, '$row $column $z $type');
+}
+
 void sendClientRequestDeckAddCard(CardType value){
   sendClientRequest(ClientRequest.Deck_Add_Card, value.index);
 }

@@ -1,5 +1,6 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
+import 'package:http/http.dart';
 import 'package:lemon_math/functions/vector2.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
@@ -730,6 +731,36 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           // onGameJoined();
           // player?.writeTiles();
           // compileAndSendPlayer();
+          break;
+
+        case ClientRequest.Set_Block:
+          if (player == null) return errorPlayerNotFound();
+          if (arguments.length < 5) return errorArgsExpected(3, arguments);
+          final row = int.tryParse(arguments[1]);
+          if (row == null){
+            return errorInvalidArg('row');
+          }
+          final column = int.tryParse(arguments[2]);
+          if (column == null){
+            return errorInvalidArg('column');
+          }
+          final z = int.tryParse(arguments[3]);
+          if (z == null){
+            return errorInvalidArg('z');
+          }
+          final type = int.tryParse(arguments[4]);
+          if (type == null){
+            return errorInvalidArg('type');
+          }
+          player.game.scene.grid[z][row][column].type = type;
+          player.game.players.forEach((player) {
+               player.writeByte(ServerResponse.Block_Set);
+               player.writeInt(z);
+               player.writeInt(row);
+               player.writeInt(column);
+               player.writeInt(type);
+
+          });
           break;
 
         case ClientRequest.Deck_Select_Card:

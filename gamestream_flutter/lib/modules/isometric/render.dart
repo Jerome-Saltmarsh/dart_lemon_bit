@@ -120,9 +120,7 @@ class IsometricRender {
     final gridTotalRows = grid[0].length;
     final gridTotalColumns = grid[0][0].length;
     final gridTotalColumnsMinusOne = gridTotalColumns - 1;
-    final totalGridIndex = gridTotalRows * gridTotalColumns;
 
-    var gridIndex = 0;
     var gridZ = 0;
     var gridColumn = 0;
     var gridRow = 0;
@@ -1433,6 +1431,17 @@ class IsometricRender {
       default:
         throw Exception("Cannot render grid node type $type");
     }
+  }
+
+  void renderWireFrame(int row, int column, int z){
+    return engine.renderCustom(
+      dstX: getTileWorldX(row, column),
+      dstY: getTileWorldY(row, column) - (z * 24),
+      srcX: 6895,
+      srcWidth: 48,
+      srcHeight: 72,
+      anchorY: 0.3334,
+    );
   }
 }
 

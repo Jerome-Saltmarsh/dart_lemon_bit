@@ -26,6 +26,7 @@ enum ClientRequest {
   Toggle_Objects_Destroyable,
   Deck_Add_Card,
   Deck_Select_Card,
+  Set_Block,
 }
 
 const clientRequests = ClientRequest.values;

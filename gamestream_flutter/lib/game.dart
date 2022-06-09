@@ -53,8 +53,13 @@ var _previousPlayerScreenY2 = 0.0;
 var _previousPlayerScreenX3 = 0.0;
 var _previousPlayerScreenY3 = 0.0;
 
-class Game with ByteReader {
+class EditState {
+  var row = 0;
+  var column = 0;
+  var z = 0;
+}
 
+class Game with ByteReader {
   final grid = <List<List<int>>>[];
   final type = Watch<GameType?>(null);
   final countDownFramesRemaining = Watch(0);
@@ -85,6 +90,8 @@ class Game with ByteReader {
   var bulletHoleIndex = 0;
   var totalProjectiles = 0;
   var itemsTotal = 0;
+  var editMode = false;
+  final edit = EditState();
 
   Game(){
     for (var i = 0; i < 150; i++) {
@@ -392,6 +399,15 @@ class Game with ByteReader {
 
         case ServerResponse.Player_Target:
           readPosition(player.abilityTarget);
+          break;
+
+        case ServerResponse.Block_Set:
+          print('ServerResponse.Block_Set');
+          final z = readInt();
+          final row = readInt();
+          final column = readInt();
+          final type = readInt();
+          grid[z][row][column] = type;
           break;
 
         case ServerResponse.End:
