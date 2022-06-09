@@ -404,12 +404,12 @@ class Game with ByteReader {
           break;
 
         case ServerResponse.Block_Set:
-          print('ServerResponse.Block_Set');
           final z = readInt();
           final row = readInt();
           final column = readInt();
           final type = readInt();
           grid[z][row][column] = type;
+          edit.type.value = grid[edit.z][edit.row][edit.column];
           break;
 
         case ServerResponse.End:

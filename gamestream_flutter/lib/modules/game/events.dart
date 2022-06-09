@@ -69,6 +69,7 @@ class GameEvents {
 
 
   void onKeyboardEvent(RawKeyEvent event){
+    final edit = game.edit;
      if (event is RawKeyDownEvent){
         if (event.physicalKey == PhysicalKeyboardKey.keyT){
           if (_pressed) return;
@@ -77,31 +78,28 @@ class GameEvents {
         }
         if (event.physicalKey == PhysicalKeyboardKey.arrowUp){
           if (keyPressed(LogicalKeyboardKey.shiftLeft)){
-            game.edit.z++;
+            edit.z++;
           } else {
-            game.edit.row--;
+            edit.row--;
           }
         }
         if (event.physicalKey == PhysicalKeyboardKey.arrowRight){
-          game.edit.column--;
+          edit.column--;
         }
         if (event.physicalKey == PhysicalKeyboardKey.arrowDown){
           if (keyPressed(LogicalKeyboardKey.shiftLeft)){
-            game.edit.z--;
-            if (game.edit.z < 0){
-              game.edit.z = 0;
+            edit.z--;
+            if (edit.z < 0){
+              edit.z = 0;
             }
           } else {
-            game.edit.row++;
+            edit.row++;
           }
         }
         if (event.physicalKey == PhysicalKeyboardKey.arrowLeft){
-          game.edit.column++;
+          edit.column++;
         }
-
-        if (event.physicalKey == PhysicalKeyboardKey.enter){
-          sendClientRequestSetBlock(game.edit.row, game.edit.column, game.edit.z, game.edit.type.value);
-        }
+        edit.type.value = game.grid[edit.z][edit.row][edit.column];
         return;
      }
      if (event is RawKeyUpEvent){
