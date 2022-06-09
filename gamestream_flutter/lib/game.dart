@@ -4,6 +4,7 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/classes/deck_card.dart';
 import 'package:gamestream_flutter/classes/game_object.dart';
 import 'package:gamestream_flutter/classes/GeneratedObject.dart';
+import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_byte/byte_reader.dart';
@@ -54,12 +55,7 @@ var _previousPlayerScreenY2 = 0.0;
 var _previousPlayerScreenX3 = 0.0;
 var _previousPlayerScreenY3 = 0.0;
 
-class EditState {
-  var row = 0;
-  var column = 0;
-  var z = 0;
-  var type = Watch(GridNodeType.Bricks);
-}
+
 
 class Game with ByteReader {
   final grid = <List<List<int>>>[];
@@ -92,8 +88,6 @@ class Game with ByteReader {
   var bulletHoleIndex = 0;
   var totalProjectiles = 0;
   var itemsTotal = 0;
-  var editMode = false;
-  final edit = EditState();
 
   Game(){
     for (var i = 0; i < 150; i++) {

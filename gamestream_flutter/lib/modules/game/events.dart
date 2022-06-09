@@ -13,6 +13,7 @@ import 'package:bleed_common/grid_node_type.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
+import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -69,8 +70,10 @@ class GameEvents {
 
 
   void onKeyboardEvent(RawKeyEvent event){
-    final edit = game.edit;
      if (event is RawKeyDownEvent){
+       if (event.physicalKey == PhysicalKeyboardKey.space){
+         modules.isometric.render.lowerTileMode = !modules.isometric.render.lowerTileMode;
+       }
         if (event.physicalKey == PhysicalKeyboardKey.keyT){
           if (_pressed) return;
           _pressed = true;

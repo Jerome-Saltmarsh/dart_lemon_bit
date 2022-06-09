@@ -16,6 +16,7 @@ import 'package:gamestream_flutter/modules/isometric/animations.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
+import 'package:gamestream_flutter/ui/builders/player.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
@@ -29,6 +30,7 @@ final _screen = engine.screen;
 
 class IsometricRender {
 
+  var lowerTileMode = false;
   final IsometricModule state;
   IsometricRender(this.state);
 
@@ -201,7 +203,19 @@ class IsometricRender {
               ||
             gridZ < orderPlayerZ
             ) {
-          renderGridNode(gridZ, gridRow, gridColumn, gridType);
+
+          // if (!lowerTileMode || player.z ~/ 24 >= gridZ - 1) {
+          //   renderGridNode(gridZ, gridRow, gridColumn, gridType);
+          // }
+          if (!lowerTileMode
+              // || gridType == GridNodeType.Empty
+              || player.z ~/ 24 >= gridZ
+              // || (gridZ + 1 < gridTotalZ && grid[gridZ + 1][gridRow][gridColumn] == GridNodeType.Empty)
+          ) {
+            renderGridNode(gridZ, gridRow, gridColumn, gridType);
+          }
+
+
 
           gridRow++;
           gridColumn--;
@@ -1428,6 +1442,16 @@ class IsometricRender {
           srcHeight: 72,
           anchorY: 0.3334,
         );
+
+      case GridNodeType.Water:
+        return engine.renderCustom(
+          dstX: getTileWorldX(row, column),
+          dstY: getTileWorldY(row, column) - (z * 24),
+          srcX: 6993,
+          srcWidth: 48,
+          srcHeight: 72,
+          anchorY: 0.3334,
+        );
       default:
         throw Exception("Cannot render grid node type $type");
     }
@@ -1452,6 +1476,18 @@ class IsometricRender {
       srcWidth: 48,
       srcHeight: 72,
       anchorY: 0.3334,
+    );
+  }
+
+
+  void renderArrowUp(double x, double y){
+    return engine.renderCustom(
+      dstX: x,
+      dstY: y,
+      srcX: 6993,
+      srcWidth: 13,
+      srcHeight: 29,
+      anchorY: 1.0,
     );
   }
 }

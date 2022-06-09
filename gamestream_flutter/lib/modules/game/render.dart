@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/classes/Projectile.dart';
 import 'package:gamestream_flutter/colours.dart';
+import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/isometric/classes.dart';
@@ -90,10 +91,18 @@ class GameRender {
 
     _render.renderSprites();
 
-    for (var z = 0; z < game.edit.z; z++){
-      isometric.render.renderWireFrameBlue(game.edit.row, game.edit.column, z);
+    for (var z = 0; z < edit.z; z++){
+      isometric.render.renderWireFrameBlue(edit.row, edit.column, z);
     }
-    isometric.render.renderWireFrame(game.edit.row, game.edit.column, game.edit.z);
+    isometric.render.renderWireFrame(
+        edit.row,
+        edit.column, edit.z
+    );
+
+    // isometric.render.renderArrowUp(
+    //     getTileWorldX(edit.row, edit.column),
+    //     getTileWorldY(edit.row, edit.column) - ((edit.z) * 24)
+    // );
 
     drawEffects();
     drawItems();

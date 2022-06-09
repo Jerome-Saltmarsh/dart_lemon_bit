@@ -118,7 +118,7 @@ class GameBuild {
           if (game.type.value == GameType.RANDOM)
             buildHudRandom(),
           if (game.type.value == GameType.FRONTLINE)
-            buildHudFrontLine(),
+            buildMapEditor(),
         ]);
   }
 
