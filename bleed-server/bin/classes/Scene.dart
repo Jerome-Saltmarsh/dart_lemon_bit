@@ -520,6 +520,14 @@ class Scene {
     return !isShootable(getTileAtXY(x, y));
   }
 
+  bool getCollisionAt(double x, double y, double z) {
+    var type = getGridBlockTypeAtXYZ(x, y, z);
+    if (type == GridNodeType.Empty) return false;
+    if (type == GridNodeType.Boundary) return true;
+    if (type == GridNodeType.Bricks) return true;
+    return true;
+  }
+
   void resolveCharacterTileCollision(Character character) {
     character.z -= character.zVelocity;
     character.zVelocity += 0.98;
@@ -560,30 +568,24 @@ class Scene {
       character.zVelocity = 0;
     }
 
-    //
-    // final floorHeightTopLeft = getFloorHeight(character.left, character.top, character.z);
-    // final floorHeightRightBottom = getFloorHeight(character.right, character.bottom, character.z);
-    // final floorHeightRightTop = getFloorHeight(character.right, character.top, character.z);
-    // final floorHeightLeftBottom = getFloorHeight(character.left, character.bottom, character.z);
-
-    // const minHeight = 20;
-    // const distance = 3;
-    // if (floorHeightTopLeft - floorHeight > minHeight) {
-    //   character.x += distance;
-    //   character.y += distance;
-    // } else
-    // if (floorHeightRightBottom - floorHeight > minHeight) {
-    //   character.x -= distance;
-    //   character.y -= distance;
-    // }
-    // if (floorHeightRightTop - floorHeight > minHeight) {
-    //   character.x -= distance;
-    //   character.y += distance;
-    // } else
-    // if (floorHeightLeftBottom - floorHeight > minHeight) {
-    //   character.x += distance;
-    //   character.y -= distance;
-    // }
+    const distance = 3;
+    if (getCollisionAt(character.left, character.top, character.z)) {
+      character.x += distance;
+      character.y += distance;
+    }
+    else
+    if (getCollisionAt(character.right, character.bottom, character.z)) {
+      character.x -= distance;
+      character.y -= distance;
+    }
+    if (getCollisionAt(character.left, character.bottom, character.z)) {
+      character.x += distance;
+      character.y -= distance;
+    } else
+    if (getCollisionAt(character.right, character.top, character.z)) {
+      character.x -= distance;
+      character.y += distance;
+    }
   }
 }
 
