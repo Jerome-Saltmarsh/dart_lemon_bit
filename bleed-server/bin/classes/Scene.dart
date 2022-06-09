@@ -526,14 +526,21 @@ class Scene {
       character.z = 0;
     }
 
+
     var tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
     while (tileAtFeet == GridNodeType.Bricks || tileAtFeet == GridNodeType.Grass) {
        character.z += 24 - (character.z % 24);
        tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
     }
-
     if (tileAtFeet == GridNodeType.Stairs_North){
-      character.z = (1.0 - (((character.x + character.y) / 48.0) % 1.0)) * 24.0;
+      final zInt = character.z ~/ 24.0;
+      final tilePer = (1.0 - (((character.x + character.y) / 48.0) % 1.0));
+      character.z = (tilePer * 24.0) + (zInt * 24.0);
+    }
+    if (tileAtFeet == GridNodeType.Stairs_South){
+      final zInt = character.z ~/ 24.0;
+      final tilePer = ((((character.x + character.y) / 48.0) % 1.0));
+      character.z = (tilePer * 24.0) + (zInt * 24.0);
     }
     //
     // final floorHeightTopLeft = getFloorHeight(character.left, character.top, character.z);
