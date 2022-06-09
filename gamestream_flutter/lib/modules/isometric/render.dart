@@ -219,6 +219,7 @@ class IsometricRender {
                 gridRow = (gridColumn - gridTotalColumnsMinusOne);
                 gridColumn = gridTotalColumnsMinusOne;
               }
+
               if (gridRow >= gridTotalRows){
                 remainingGrid = false;
                 continue;
