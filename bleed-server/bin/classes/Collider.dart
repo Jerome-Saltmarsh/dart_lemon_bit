@@ -5,6 +5,7 @@ import 'components.dart';
 
 class Collider with Position, Radius {
   double z = 0;
+  double zVelocity = 0;
   double get left => x - radius;
   double get right => x + radius;
   double get top => y - radius;

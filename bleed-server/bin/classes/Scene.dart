@@ -521,37 +521,43 @@ class Scene {
   }
 
   void resolveCharacterTileCollision(Character character) {
-    character.z -= 3.0;
+    character.z -= character.zVelocity;
+    character.zVelocity += 0.98;
 
     if (character.z < 0) {
       character.z = 0;
+      character.zVelocity = 0;
     }
-
 
     var tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
     while (tileAtFeet == GridNodeType.Bricks || tileAtFeet == GridNodeType.Grass) {
        character.z += 24 - (character.z % 24);
        tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
+       character.zVelocity = 0;
     }
     if (tileAtFeet == GridNodeType.Stairs_North){
       final zInt = character.z ~/ 24.0;
       final tilePer = (1.0 - (((character.x + character.y) / 48.0) % 1.0));
       character.z = (tilePer * 24.0) + (zInt * 24.0);
+      character.zVelocity = 0;
     }
     if (tileAtFeet == GridNodeType.Stairs_South){
       final zInt = character.z ~/ 24.0;
       final tilePer = ((((character.x + character.y) / 48.0) % 1.0));
       character.z = (tilePer * 24.0) + (zInt * 24.0);
+      character.zVelocity = 0;
     }
     if (tileAtFeet == GridNodeType.Stairs_East){
       final zInt = character.z ~/ 24.0;
       final tilePer = ((((character.x - character.y) / 48.0) % 1.0));
       character.z = (tilePer * 24.0) + (zInt * 24.0);
+      character.zVelocity = 0;
     }
     if (tileAtFeet == GridNodeType.Stairs_West){
       final zInt = character.z ~/ 24.0;
       final tilePer = (1.0 - (((character.x - character.y) / 48.0) % 1.0));
       character.z = (tilePer * 24.0) + (zInt * 24.0);
+      character.zVelocity = 0;
     }
 
     //
