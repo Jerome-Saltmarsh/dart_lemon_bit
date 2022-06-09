@@ -91,6 +91,11 @@ class GameRender {
     _render.renderSprites();
 
     isometric.render.renderWireFrame(game.edit.row, game.edit.column, game.edit.z);
+
+    for (var z = 0; z < game.edit.z; z++){
+      isometric.render.renderWireFrame(game.edit.row, game.edit.column, z);
+    }
+
     drawEffects();
     drawItems();
   }

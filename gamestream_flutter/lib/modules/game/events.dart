@@ -75,18 +75,30 @@ class GameEvents {
           _pressed = true;
           sendRequestConstruct(StructureType.Tower);
         }
-        if (event.physicalKey == PhysicalKeyboardKey.arrowDown){
-          game.edit.row++;
-        }
         if (event.physicalKey == PhysicalKeyboardKey.arrowUp){
-          game.edit.row--;
-        }
-        if (event.physicalKey == PhysicalKeyboardKey.arrowLeft){
-          game.edit.column++;
+          if (keyPressed(LogicalKeyboardKey.shiftLeft)){
+            game.edit.z++;
+          } else {
+            game.edit.row--;
+          }
         }
         if (event.physicalKey == PhysicalKeyboardKey.arrowRight){
           game.edit.column--;
         }
+        if (event.physicalKey == PhysicalKeyboardKey.arrowDown){
+          if (keyPressed(LogicalKeyboardKey.shiftLeft)){
+            game.edit.z--;
+            if (game.edit.z < 0){
+              game.edit.z = 0;
+            }
+          } else {
+            game.edit.row++;
+          }
+        }
+        if (event.physicalKey == PhysicalKeyboardKey.arrowLeft){
+          game.edit.column++;
+        }
+
         if (event.physicalKey == PhysicalKeyboardKey.enter){
           sendClientRequestSetBlock(game.edit.row, game.edit.column, game.edit.z, GridNodeType.Grass);
         }
