@@ -9,15 +9,15 @@ import '../scene_generator.dart';
 
 class GameFrontline extends Game {
 
+  var time = 12 * 60 * 60;
+
   GameFrontline() : super(
     generateScenePlain()
-  ){
-    scene.generateStairs();
-  }
+  );
 
   @override
   int getTime() {
-    return 12 * 60 * 60;
+    return time;
   }
 
   @override

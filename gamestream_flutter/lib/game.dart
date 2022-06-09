@@ -1,9 +1,8 @@
 import 'package:bleed_common/card_type.dart';
-import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/classes/GeneratedObject.dart';
 import 'package:gamestream_flutter/classes/deck_card.dart';
 import 'package:gamestream_flutter/classes/game_object.dart';
-import 'package:gamestream_flutter/classes/GeneratedObject.dart';
 import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -31,8 +30,8 @@ final sync = Watch(0.0);
 var durationTotal = 0;
 
 final _player = modules.game.state.player;
-final _hours = modules.isometric.hours;
-final _minutes = modules.isometric.minutes;
+// final _hours = game.hours;
+// final _minutes = modules.isometric.minutes;
 final _events = modules.game.events;
 
 var time = DateTime.now();
@@ -58,6 +57,8 @@ var _previousPlayerScreenY3 = 0.0;
 
 
 class Game with ByteReader {
+  final hours = Watch(0);
+  final minutes = Watch(0);
   final grid = <List<List<int>>>[];
   final type = Watch<GameType?>(null);
   final countDownFramesRemaining = Watch(0);
@@ -312,8 +313,8 @@ class Game with ByteReader {
           break;
 
         case ServerResponse.Game_Time:
-          _hours.value = readByte();
-          _minutes.value = readByte();
+          hours.value = readByte();
+          minutes.value = readByte();
           break;
 
         case ServerResponse.Player:

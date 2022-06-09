@@ -1,9 +1,9 @@
 import 'package:bleed_common/SceneJson.dart';
 import 'package:bleed_common/Tile.dart';
 import 'package:bleed_common/constants.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/isometric/classes.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/game.dart';
 import 'package:lemon_math/library.dart';
 import 'package:typedef/json.dart';
 
@@ -19,7 +19,7 @@ class EditorCompile {
       "tiles": compileTiles(isometric.tiles),
       // "environment": compileGameObjects(state.environmentObjects),
       'characters': compileCharactersToJson(state.characters),
-      sceneFieldNames.startTime: modules.isometric.minutes.value * secondsPerHour,
+      sceneFieldNames.startTime: game.minutes.value * secondsPerHour,
       sceneFieldNames.secondsPerFrame: state.timeSpeed.value.index,
       sceneFieldNames.playerSpawnPoints: compileVector2ListToIntList(state.teamSpawnPoints),
       sceneFieldNames.items: compileItemsToJson(),

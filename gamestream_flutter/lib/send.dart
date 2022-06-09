@@ -77,6 +77,14 @@ void sendClientRequestDeckSelectCard(int index) {
   sendClientRequest(ClientRequest.Deck_Select_Card, index);
 }
 
+void sendClientRequestReverseHour(){
+   sendClientRequest(ClientRequest.Reverse_Hour);
+}
+
+void sendClientRequestSkipHour(){
+  sendClientRequest(ClientRequest.Skip_Hour);
+}
+
 void sendClientRequest(ClientRequest value, [dynamic message]){
   if (message != null){
     return webSocket.send('${value.index} $message');

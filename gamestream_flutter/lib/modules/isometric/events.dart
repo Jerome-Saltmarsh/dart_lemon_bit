@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 
@@ -11,7 +12,7 @@ class IsometricEvents {
     isometric.eventsRegistered = true;
     isometric.subscriptions.onAmbientChanged = isometric.ambient.onChanged(onAmbientChanged);
     isometric.maxAmbientBrightness.onChanged(onMaxAmbientBrightnessChanged);
-    isometric.hours.onChanged(onHourChanged);
+    game.hours.onChanged(onHourChanged);
     isometric.totalColumns.onChanged(onTotalColumnsChanged);
     isometric.totalRows.onChanged(onTotalRowsChanged);
   }

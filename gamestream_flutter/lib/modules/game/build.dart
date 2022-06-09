@@ -11,10 +11,9 @@ import 'package:gamestream_flutter/modules/game/update.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/layouts.dart';
 import 'package:gamestream_flutter/ui/builders/build_debug_panel.dart';
-import 'package:gamestream_flutter/ui/builders/build_hud_frontline.dart';
-import 'package:gamestream_flutter/ui/builders/build_layout.dart';
+import 'package:gamestream_flutter/ui/builders/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/ui/builders/build_hud_random.dart';
-import 'package:gamestream_flutter/ui/builders/build_panel_primary.dart';
+import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/builders/build_text_box.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
@@ -118,7 +117,7 @@ class GameBuild {
           if (game.type.value == GameType.RANDOM)
             buildHudRandom(),
           if (game.type.value == GameType.FRONTLINE)
-            buildMapEditor(),
+            buildHudMapEditor(),
         ]);
   }
 

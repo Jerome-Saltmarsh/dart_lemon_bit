@@ -19,6 +19,10 @@ class _FlutterKitConfiguration {
 
 final _FlutterKitConfiguration flutterKitConfiguration = _FlutterKitConfiguration();
 
+Widget watch<T>(Watch<T> watch, Widget Function(T t) builder){
+  return WatchBuilder(watch, builder);
+}
+
 Widget text(dynamic value, {
     num? size,
     Function? onPressed,
@@ -30,6 +34,7 @@ Widget text(dynamic value, {
     Color? color,
     String? family,
     TextAlign? align,
+    String Function(dynamic t)? format,
 }) {
   final _text = Text(
       value.toString(),

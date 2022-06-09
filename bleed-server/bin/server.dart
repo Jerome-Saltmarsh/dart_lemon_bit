@@ -13,6 +13,7 @@ import 'compile.dart';
 import 'engine.dart';
 import 'functions/generateName.dart';
 import 'functions/withinRadius.dart';
+import 'games/game_frontline.dart';
 import 'games/game_random.dart';
 import 'physics.dart';
 
@@ -580,6 +581,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (game is GameRandom){
             game.time += 3600;
           }
+          if (game is GameFrontline){
+            game.time += 3600;
+          }
           break;
 
         case ClientRequest.Reverse_Hour:
@@ -589,6 +593,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
           final game = player.game;
           if (game is GameRandom){
+            game.time -= 3600;
+          }
+          if (game is GameFrontline){
             game.time -= 3600;
           }
           break;
@@ -992,14 +999,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
         case ClientRequest.Version:
           reply('${ServerResponse.Version} $version');
-          break;
-
-        case ClientRequest.Skip_Hour:
-          // worldTime = (worldTime + secondsPerHour) % secondsPerDay;
-          break;
-
-        case ClientRequest.Reverse_Hour:
-          // worldTime = (worldTime - secondsPerHour) % secondsPerDay;
           break;
 
         case ClientRequest.Speak:

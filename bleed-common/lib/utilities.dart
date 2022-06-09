@@ -11,11 +11,11 @@ double snapY(double x, double y) {
 }
 
 double getTileWorldX(int row, int column){
-  return (row * tileSizeHalf) - (column * tileSizeHalf);
+  return (row - column) * tileSizeHalf;
 }
 
 double getTileWorldY(int row, int column){
-  return (row * tileSizeHalf) + (column * tileSizeHalf);
+  return (row + column) * tileSizeHalf;
 }
 
 double convertGridToWorldX(double x, double y) {

@@ -5,11 +5,11 @@ import 'package:bleed_common/GameType.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/classes/Authentication.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
-import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/servers.dart';
 import 'package:gamestream_flutter/services/authService.dart';
 import 'package:gamestream_flutter/shared_preferences.dart';
@@ -282,8 +282,8 @@ class CoreActions {
 
   void openMapEditor({bool newScene = true}){
     core.state.mode.value = Mode.Editor;
-    modules.isometric.hours.value = 12;
-    modules.isometric.minutes.value = 0;
+    game.hours.value = 12;
+    game.minutes.value = 0;
     if (newScene) {
       editor.actions.newScene();
     }

@@ -41,8 +41,6 @@ class IsometricModule {
   final items = <Item>[];
   final totalColumns = Watch(0);
   final totalRows = Watch(0);
-  final hours = Watch(0);
-  final minutes = Watch(0);
   final ambient = Watch(Shade.Bright);
   final maxAmbientBrightness = Watch(Shade.Bright);
   final nameTextStyle = TextStyle(color: Colors.white);
@@ -83,7 +81,7 @@ class IsometricModule {
   }
 
   int get phase {
-    return Phase.fromHour(hours.value);
+    return Phase.fromHour(game.hours.value);
   }
 
   Vector2 get mapCenter {
@@ -627,16 +625,15 @@ class IsometricModule {
 
   void detractHour(){
     print("isometric.actions.detractHour()");
-    hours.value = (hours.value - 1) % 24;
+    game.hours.value = (game.hours.value - 1) % 24;
   }
 
   void addHour(){
-    hours.value = (hours.value + 1) % 24;
+    game.hours.value = (game.hours.value + 1) % 24;
   }
 
   void setHour(int hour) {
-    // print("isometric.actions.setHour($hour)");
-    minutes.value = hour * secondsPerHour;
+    game.hours.value = hour * secondsPerHour;
   }
 
   void cameraCenterMap(){
@@ -711,7 +708,7 @@ class IsometricModule {
   }
 
   void refreshAmbientLight(){
-    final phase = Phase.fromHour(hours.value);
+    final phase = Phase.fromHour(game.hours.value);
     final phaseBrightness = Phase.toShade(phase);
     if (maxAmbientBrightness.value > phaseBrightness) return;
     ambient.value = phaseBrightness;

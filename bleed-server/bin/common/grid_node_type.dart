@@ -8,4 +8,5 @@ class GridNodeType {
   static const Stairs_South = 6;
   static const Stairs_West = 7;
   static const Water = 8;
+  static const Torch = 9;
 }

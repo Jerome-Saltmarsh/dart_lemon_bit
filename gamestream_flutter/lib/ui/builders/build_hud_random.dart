@@ -8,12 +8,10 @@ import 'package:gamestream_flutter/ui/builders/build_panel_experience.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_select_character_class.dart';
 import 'package:lemon_engine/engine.dart';
+import 'package:lemon_watch/watch_builder.dart';
 
 import 'build_panel_deck.dart';
 import 'build_time.dart';
-import 'package:lemon_watch/watch_builder.dart';
-
-
 import 'player.dart';
 
 List<Widget> spread(List<Widget> children, EdgeInsets margin) {

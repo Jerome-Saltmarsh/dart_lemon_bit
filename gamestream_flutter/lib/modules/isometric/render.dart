@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/classes/Projectile.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/classes/game_object.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/get_position.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToDst.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToSrc.dart';
 import 'package:gamestream_flutter/modules/isometric/animations.dart';
@@ -662,7 +663,7 @@ class IsometricRender {
     );
   }
 
-  void renderTorch(Vector2 position) {
+  void renderTorch(Position position) {
     if (isometric.dayTime){
       engine.renderCustomV2(
           dst: position,
@@ -1452,6 +1453,9 @@ class IsometricRender {
           srcHeight: 72,
           anchorY: 0.3334,
         );
+
+      case GridNodeType.Torch:
+        return renderTorch(getPosition(getTileWorldX(row, column), getTileWorldY(row, column) - (z * 24) + 24));
       default:
         throw Exception("Cannot render grid node type $type");
     }

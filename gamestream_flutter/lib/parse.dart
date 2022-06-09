@@ -1,7 +1,7 @@
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -26,10 +26,6 @@ void parseState() {
   while (_index < eventLength) {
     final _currentServerResponse = consumeInt();
     switch (_currentServerResponse) {
-
-      case ServerResponse.Game_Time:
-        parseGameTime();
-        break;
 
       // case ServerResponse.Lobby_CountDown:
       //   game.countDownFramesRemaining.value = consumeInt();
@@ -154,7 +150,7 @@ void parseState() {
 }
 
 void parseGameTime() {
-  modules.isometric.minutes.value = consumeInt();
+  game.minutes.value = consumeInt();
 }
 
 void _parsePlayerAbility(){

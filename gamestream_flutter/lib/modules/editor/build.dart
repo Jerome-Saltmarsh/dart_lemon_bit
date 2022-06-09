@@ -7,8 +7,8 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/to_string.dart';
-import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
+import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:golden_ratio/constants.dart';
@@ -104,7 +104,7 @@ class EditorBuild {
       Row(
         children: [
           text("Hour "),
-          WatchBuilder(modules.isometric.hours, (int hours){
+          WatchBuilder(game.hours, (int hours){
             return text(hours);
           }),
           width8,
