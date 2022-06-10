@@ -79,12 +79,21 @@ class GameEvents {
         if (event.physicalKey == PhysicalKeyboardKey.arrowUp){
           if (keyPressed(LogicalKeyboardKey.shiftLeft)){
             edit.z++;
+            if (edit.z >= gridTotalZ) {
+              edit.z = gridTotalZ - 1;
+            }
           } else {
             edit.row--;
+            if (edit.row < 0){
+              edit.row = 0;
+            }
           }
         }
         if (event.physicalKey == PhysicalKeyboardKey.arrowRight){
           edit.column--;
+          if (edit.column < 0){
+            edit.column = 0;
+          }
         }
         if (event.physicalKey == PhysicalKeyboardKey.arrowDown){
           if (keyPressed(LogicalKeyboardKey.shiftLeft)){
@@ -93,13 +102,16 @@ class GameEvents {
               edit.z = 0;
             }
           } else {
-            edit.row++;
+            edit.row = min(edit.row + 1, gridTotalRows - 1);
           }
         }
         if (event.physicalKey == PhysicalKeyboardKey.arrowLeft){
           edit.column++;
+          if (edit.column >= gridTotalColumns){
+            edit.column = gridTotalColumns - 1;
+          }
         }
-        // edit.type.value = grid[edit.z][edit.row][edit.column];
+        edit.type.value = grid[edit.z][edit.row][edit.column];
         return;
      }
      if (event is RawKeyUpEvent){

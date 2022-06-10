@@ -399,6 +399,7 @@ class Game with ByteReader {
           final type = readInt();
           grid[z][row][column] = type;
           edit.type.value = grid[edit.z][edit.row][edit.column];
+          gridSetAmbient(isometric.ambient.value);
           break;
 
         case ServerResponse.End:
