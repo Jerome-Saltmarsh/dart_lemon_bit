@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/send.dart';
+import 'package:gamestream_flutter/state/grid.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -85,18 +86,6 @@ Widget _buildTabObjects(){
 Widget _buildTabTiles(){
   return Column(
     children: [
-      Container(
-        width: 200,
-        height: 50,
-        color: Colors.white60,
-        child: text('FILL', onPressed: () {
-          for (var z = 0; z < edit.z; z++){
-            sendClientRequestSetBlock(edit.row, edit.column, z, edit.type.value);
-          }
-
-        }),
-      ),
-      height(8),
       _buildSetType(GridNodeType.Empty, "Empty"),
       _buildSetType(GridNodeType.Bricks, "Bricks"),
       _buildSetType(GridNodeType.Grass, "Grass"),
@@ -117,17 +106,15 @@ Widget _buildSetType(int value, String name) {
       height: 50,
       color: type == value ? Colors.green : Colors.white60,
       child: text(name, onPressed: () {
-        sendClientRequestSetBlock(edit.row, edit.column, edit.z, value);
+        if (grid[edit.z][edit.row][edit.column] == value){
+          for (var z = 0; z < edit.z; z++){
+            sendClientRequestSetBlock(edit.row, edit.column, z, value);
+          }
+        } else {
+          sendClientRequestSetBlock(edit.row, edit.column, edit.z, value);
+        }
+
       }),
     );
   });
-}
-
-Widget _button(String value, {required Color color, required Function action}){
-  return Container(
-    width: 200,
-    height: 50,
-    color: color,
-    child: text(value, onPressed: action),
-  );
 }

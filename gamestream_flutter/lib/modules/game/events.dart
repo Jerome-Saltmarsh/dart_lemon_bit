@@ -71,11 +71,6 @@ class GameEvents {
        if (event.physicalKey == PhysicalKeyboardKey.space){
          modules.isometric.render.lowerTileMode = !modules.isometric.render.lowerTileMode;
        }
-        // if (event.physicalKey == PhysicalKeyboardKey.keyT){
-        //   if (_pressed) return;
-        //   _pressed = true;
-        //   sendRequestConstruct(StructureType.Tower);
-        // }
         if (event.physicalKey == PhysicalKeyboardKey.arrowUp){
           if (keyPressed(LogicalKeyboardKey.shiftLeft)){
             edit.z++;
