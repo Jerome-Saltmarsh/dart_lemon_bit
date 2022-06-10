@@ -52,26 +52,6 @@ class GameRender {
       }
   }
 
-  void renderBlockBricks(double x, double y){
-    engine.renderCustom(
-        dstX: x,
-        dstY: y,
-        srcX: 6530,
-        srcWidth: 47,
-        srcHeight: 70
-    );
-  }
-
-  void renderStairsHorizontal(double x, double y){
-    engine.renderCustom(
-        dstX: x,
-        dstY: y,
-        srcX: 6602,
-        srcWidth: 47,
-        srcHeight: 70
-    );
-  }
-
   void render(Canvas canvas, Size size) {
     isometric.applyDynamicEmissions();
     isometric.applyDynamicShadeToTileSrc();

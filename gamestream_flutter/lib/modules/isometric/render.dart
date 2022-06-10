@@ -17,6 +17,7 @@ import 'package:gamestream_flutter/modules/isometric/animations.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
+import 'package:gamestream_flutter/state/grid.dart';
 import 'package:gamestream_flutter/ui/builders/player.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
@@ -105,7 +106,6 @@ class IsometricRender {
     final screenBottom = _screen.bottom;
     final screenBottom100 = screenBottom + 120;
 
-    final grid = game.grid;
     final zombies = game.zombies;
     final players = game.players;
     final npcs = game.interactableNpcs;
@@ -1382,34 +1382,50 @@ class IsometricRender {
 
   void renderGridNode(int z, int row, int column, int type) {
     if (type == GridNodeType.Empty) return;
-    // print("render($row, $column)");
-
+    final shade = gridLightDynamic[z][row][column];
     switch(type) {
-      case GridNodeType.Empty:
-        return;
+      case GridNodeType.Bricks:
+        return engine.renderCustom(
+          dstX: getTileWorldX(row, column),
+          dstY: getTileWorldY(row, column) - (z * 24),
+          srcX: 7110,
+          srcY: 72.0 * shade,
+          srcWidth: 48,
+          srcHeight: 72,
+          anchorY: 0.3334,
+        );
       case GridNodeType.Grass:
         return engine.renderCustom(
             dstX: getTileWorldX(row, column),
             dstY: getTileWorldY(row, column) - (z * 24),
-            srcX: 6601,
+            srcX: 7158,
             srcWidth: 48,
             srcHeight: 72,
             anchorY: 0.3334,
         );
-      case GridNodeType.Bricks:
+      case GridNodeType.Stairs_South:
         return engine.renderCustom(
-            dstX: getTileWorldX(row, column),
-            dstY: getTileWorldY(row, column) - (z * 24),
-            srcX: 6650,
-            srcWidth: 48,
-            srcHeight: 72,
-            anchorY: 0.3334,
+          dstX: getTileWorldX(row, column),
+          dstY: getTileWorldY(row, column) - (z * 24),
+          srcX: 7254,
+          srcWidth: 48,
+          srcHeight: 72,
+          anchorY: 0.3334,
+        );
+      case GridNodeType.Stairs_West:
+        return engine.renderCustom(
+          dstX: getTileWorldX(row, column),
+          dstY: getTileWorldY(row, column) - (z * 24),
+          srcX: 7302,
+          srcWidth: 48,
+          srcHeight: 72,
+          anchorY: 0.3334,
         );
       case GridNodeType.Stairs_North:
         return engine.renderCustom(
             dstX: getTileWorldX(row, column),
             dstY: getTileWorldY(row, column) - (z * 24),
-            srcX: 6699,
+            srcX: 7351,
             srcWidth: 48,
             srcHeight: 72,
             anchorY: 0.3334,
@@ -1418,32 +1434,11 @@ class IsometricRender {
         return engine.renderCustom(
             dstX: getTileWorldX(row, column),
             dstY: getTileWorldY(row, column) - (z * 24),
-            srcX: 6748,
+            srcX: 7398,
             srcWidth: 48,
             srcHeight: 72,
             anchorY: 0.3334,
         );
-
-      case GridNodeType.Stairs_South:
-        return engine.renderCustom(
-          dstX: getTileWorldX(row, column),
-          dstY: getTileWorldY(row, column) - (z * 24),
-          srcX: 6797,
-          srcWidth: 48,
-          srcHeight: 72,
-          anchorY: 0.3334,
-        );
-
-      case GridNodeType.Stairs_West:
-        return engine.renderCustom(
-          dstX: getTileWorldX(row, column),
-          dstY: getTileWorldY(row, column) - (z * 24),
-          srcX: 6846,
-          srcWidth: 48,
-          srcHeight: 72,
-          anchorY: 0.3334,
-        );
-
       case GridNodeType.Water:
         return engine.renderCustom(
           dstX: getTileWorldX(row, column),

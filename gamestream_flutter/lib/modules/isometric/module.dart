@@ -14,6 +14,7 @@ import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:gamestream_flutter/modules/isometric/utilities.dart';
+import 'package:gamestream_flutter/state/grid.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -41,7 +42,7 @@ class IsometricModule {
   final items = <Item>[];
   final totalColumns = Watch(0);
   final totalRows = Watch(0);
-  final ambient = Watch(Shade.Bright);
+  final ambient = Watch(Shade.Bright, onChanged: gridSetAmbient);
   final maxAmbientBrightness = Watch(Shade.Bright);
   final nameTextStyle = TextStyle(color: Colors.white);
 
@@ -456,10 +457,6 @@ class IsometricModule {
 
   /// Expensive method
   void resetLighting(){
-    print("resetLighting()");
-    // final currentHour = hours.value;
-    // hours.value = (hours.value + 12) % 24;
-    // hours.value = currentHour;
     refreshTileSize();
     resetBakeMap();
     resetDynamicMap();

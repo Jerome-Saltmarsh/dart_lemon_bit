@@ -17,6 +17,7 @@ import 'classes/NpcDebug.dart';
 import 'classes/Projectile.dart';
 import 'modules/isometric/classes.dart';
 import 'modules/isometric/enums.dart';
+import 'state/grid.dart';
 import 'ui/builders/player.dart';
 
 final game = Game();
@@ -54,19 +55,11 @@ var _previousPlayerScreenY2 = 0.0;
 var _previousPlayerScreenX3 = 0.0;
 var _previousPlayerScreenY3 = 0.0;
 
-
-
 class Game with ByteReader {
   final hours = Watch(0);
   final minutes = Watch(0);
-  final grid = <List<List<int>>>[];
   final type = Watch<GameType?>(null);
   final countDownFramesRemaining = Watch(0);
-  final numberOfPlayersNeeded = Watch(0);
-  final teamLivesWest = Watch(-1);
-  final teamLivesEast = Watch(-1);
-  final teamSize = Watch(0);
-  final numberOfTeams = Watch(0);
   final totalZombies = Watch(0);
   final totalPlayers = Watch(0);
   final players = <Character>[];
@@ -178,6 +171,7 @@ class Game with ByteReader {
                 }
              }
           }
+          gridSetAmbient(isometric.ambient.value);
           break;
 
         case ServerResponse.Player_Deck_Active_Ability:

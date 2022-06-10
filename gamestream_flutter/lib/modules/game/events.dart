@@ -19,6 +19,7 @@ import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/parse.dart';
 import 'package:gamestream_flutter/send.dart';
+import 'package:gamestream_flutter/state/grid.dart';
 import 'package:gamestream_flutter/ui/builders/player.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
@@ -101,7 +102,7 @@ class GameEvents {
         if (event.physicalKey == PhysicalKeyboardKey.arrowLeft){
           edit.column++;
         }
-        edit.type.value = game.grid[edit.z][edit.row][edit.column];
+        edit.type.value = grid[edit.z][edit.row][edit.column];
         return;
      }
      if (event is RawKeyUpEvent){
