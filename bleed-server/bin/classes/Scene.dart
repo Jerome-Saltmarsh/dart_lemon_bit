@@ -83,6 +83,7 @@ class Scene {
     grid[1][7][2].type = GridNodeType.Bricks;
     grid[1][7][2].type = GridNodeType.Stairs_South;
     grid[1][8][1].type = GridNodeType.Stairs_West;
+    grid[1][5][3].type = GridNodeType.Torch;
     // grid[2][7][1].type = GridNodeType.Bricks;
     // grid[2][6][1].type = GridNodeType.Bricks;
 

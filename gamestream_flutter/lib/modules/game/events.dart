@@ -66,19 +66,16 @@ class GameEvents {
 
   }
 
-  bool _pressed = false;
-
-
   void onKeyboardEvent(RawKeyEvent event){
      if (event is RawKeyDownEvent){
        if (event.physicalKey == PhysicalKeyboardKey.space){
          modules.isometric.render.lowerTileMode = !modules.isometric.render.lowerTileMode;
        }
-        if (event.physicalKey == PhysicalKeyboardKey.keyT){
-          if (_pressed) return;
-          _pressed = true;
-          sendRequestConstruct(StructureType.Tower);
-        }
+        // if (event.physicalKey == PhysicalKeyboardKey.keyT){
+        //   if (_pressed) return;
+        //   _pressed = true;
+        //   sendRequestConstruct(StructureType.Tower);
+        // }
         if (event.physicalKey == PhysicalKeyboardKey.arrowUp){
           if (keyPressed(LogicalKeyboardKey.shiftLeft)){
             edit.z++;
@@ -102,13 +99,10 @@ class GameEvents {
         if (event.physicalKey == PhysicalKeyboardKey.arrowLeft){
           edit.column++;
         }
-        edit.type.value = grid[edit.z][edit.row][edit.column];
+        // edit.type.value = grid[edit.z][edit.row][edit.column];
         return;
      }
      if (event is RawKeyUpEvent){
-       if (event.physicalKey == PhysicalKeyboardKey.keyT){
-         _pressed = false;
-       }
        return;
      }
   }
