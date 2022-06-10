@@ -26,6 +26,10 @@ class Character extends Vector2 {
   /// percentage between 0 and 1
   double magic = 1;
 
+  int get indexZ => z ~/ 24;
+  int get indexRow => convertWorldToRow(x, y);
+  int get indexColumn => convertWorldToColumn(x, y);
+
   // properties
   bool get dead => state == CharacterState.Dead;
   bool get running => state == CharacterState.Running;

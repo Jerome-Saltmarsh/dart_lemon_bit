@@ -12,6 +12,7 @@ import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/isometric/classes.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
+import 'package:gamestream_flutter/state/grid.dart';
 import 'package:gamestream_flutter/ui/builders/player.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
@@ -66,6 +67,12 @@ class GameRender {
     renderCollectables();
     if (debug) {
       renderTeamColours();
+    }
+
+    gridRefreshDynamicLight();
+
+    for (final player in game.players) {
+       gridEmitDynamic(player.indexZ, player.indexRow, player.indexColumn);
     }
 
     _render.renderSprites();

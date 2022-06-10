@@ -18,6 +18,25 @@ void gridSetAmbient(int ambient){
   _applyBakeMapEmissions();
 }
 
+void gridEmitDynamic(int z, int row, int column){
+  _applyEmission(
+      map: gridLightDynamic,
+      zIndex: z,
+      rowIndex: row,
+      columnIndex: column
+  );
+}
+
+void gridRefreshDynamicLight(){
+  for (var z = 0; z < gridTotalZ; z++) {
+     for (var row = 0; row < gridTotalRows; row++) {
+        for (var column = 0; column < gridTotalColumns; column++) {
+           gridLightDynamic[z][row][column] = gridLightBake[z][row][column];
+        }
+     }
+  }
+}
+
 void _refreshGridMetrics(){
   gridTotalZ = grid.length;
   gridTotalRows = grid[0].length;
@@ -59,9 +78,6 @@ void _applyBakeMapEmissions() {
     for (var rowIndex = 0; rowIndex < gridTotalRows; rowIndex++) {
       for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
         final type = grid[zIndex][rowIndex][columnIndex];
-        // if (zIndex == 1 && rowIndex == 5 && columnIndex == 3){
-        //   print('hello');
-        // }
         if (type != GridNodeType.Torch) continue;
         _applyEmission(
           map: gridLightBake,
@@ -80,7 +96,7 @@ void _applyEmission({
   required int rowIndex,
   required int columnIndex
 }){
-  final radius = Shade.Dark;
+  final radius = Shade.Very_Dark;
   final zMin = max(zIndex - radius, 0);
   final zMax = min(zIndex + radius, gridTotalZ);
   final rowMin = max(rowIndex - radius, 0);
@@ -102,8 +118,8 @@ void _applyEmission({
 }
 
 int _convertDistanceToShade(int distance){
-   if (distance <= 1) return Shade.Bright;
-   if (distance == 2) return Shade.Medium;
-   if (distance == 3) return Shade.Dark;
+   if (distance <= 2) return Shade.Bright;
+   if (distance == 3) return Shade.Medium;
+   if (distance == 4) return Shade.Dark;
    return Shade.Very_Dark;
 }

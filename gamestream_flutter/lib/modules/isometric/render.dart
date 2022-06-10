@@ -216,8 +216,6 @@ class IsometricRender {
             renderGridNode(gridZ, gridRow, gridColumn, gridType);
           }
 
-
-
           gridRow++;
           gridColumn--;
 
@@ -1383,7 +1381,7 @@ class IsometricRender {
 
   void renderGridNode(int z, int row, int column, int type) {
     if (type == GridNodeType.Empty) return;
-    final shade = gridLightBake[z][row][column];
+    final shade = gridLightDynamic[z][row][column];
     switch(type) {
       case GridNodeType.Bricks:
         return engine.renderCustom(
