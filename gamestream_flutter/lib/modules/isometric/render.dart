@@ -1445,9 +1445,18 @@ class IsometricRender {
             anchorY: 0.3334,
         );
       case GridNodeType.Water:
+        final animationFrame = (engine.frame ~/ 15) % 4;
+        var height = 1;
+        if (animationFrame == 1){
+          height = 2;
+        } else
+        if (animationFrame == 3){
+          height = 0;
+        }
+
         return engine.renderCustom(
           dstX: getTileWorldX(row, column),
-          dstY: getTileWorldY(row, column) - (z * 24),
+          dstY: getTileWorldY(row, column) - (z * 24) + height,
           srcX: 7206,
           srcY: 72.0 * shade,
           srcWidth: 48,
