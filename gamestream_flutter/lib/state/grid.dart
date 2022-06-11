@@ -117,7 +117,7 @@ void _applyEmission({
         final currentValue = map[z][row][column];
         var distance = 0;
         if (lightModeRadial.value){
-          distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs();
+          distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
         } else {
           final distanceZ = (z - zIndex).abs();
           final distanceRow = (row - rowIndex).abs();

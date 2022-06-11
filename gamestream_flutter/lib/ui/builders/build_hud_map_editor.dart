@@ -35,9 +35,10 @@ Widget _buildControlLightMode(){
     child: Container(
         height: 50,
         width: 200,
+        alignment: Alignment.centerLeft,
         color: Colors.white60,
         child: watch(lightModeRadial, (bool radial){
-           return text(radial ? 'Radial' : "Area");
+           return text(radial ? 'Radial' : "Square");
         })
     ),
   );
