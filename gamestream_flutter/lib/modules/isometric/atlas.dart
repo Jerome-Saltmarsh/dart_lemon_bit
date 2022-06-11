@@ -1,4 +1,5 @@
 
+import 'package:bleed_common/library.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
@@ -19,11 +20,12 @@ const _healthHeight = 8.0;
 const _healthAnchorY = 50.0;
 
 void renderCharacterHealthBar(Character character){
+  final dstY = character.y - character.z;
   engine.mapSrc(x: _healthX, y: _healthBackgroundY, width: _healthWidth, height: 6);
-  engine.mapDst(x: character.x, y: character.y, anchorX: _healthWidthHalf, anchorY: _healthAnchorY);
+  engine.mapDst(x: character.x, y: dstY, anchorX: _healthWidthHalf, anchorY: _healthAnchorY);
   engine.renderAtlas();
   engine.mapSrc(x: _healthX, y: _healthY, width: _healthWidth * character.health, height: 6);
-  engine.mapDst(x: character.x, y: character.y, anchorX: _healthWidthHalf, anchorY: _healthAnchorY);
+  engine.mapDst(x: character.x, y: dstY, anchorX: _healthWidthHalf, anchorY: _healthAnchorY);
   engine.renderAtlas();
 }
 
