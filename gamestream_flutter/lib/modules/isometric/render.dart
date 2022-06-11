@@ -545,7 +545,7 @@ class IsometricRender {
         dstX: x,
         dstY: y,
         srcX: 5669,
-        srcY: ((x + y + engine.animationFrame) % 6) * 23,
+        srcY: ((x + y + (engine.frame ~/ 5) % 6) * 23),
         srcWidth: 18,
         srcHeight: 23,
         rotation: rotation,
@@ -675,10 +675,11 @@ class IsometricRender {
     engine.renderCustomV2(
         dst: position,
         srcX: 2145,
-        srcY: 70 + (((position.x + position.y + engine.animationFrame) % 6) * 70),
+        srcY: 70 + (((position.x + position.y + (engine.frame ~/ 10)) % 6) * 70),
         srcWidth: 25,
         srcHeight: 70,
         anchorY: 0.66
+
     );
   }
 
@@ -829,7 +830,7 @@ class IsometricRender {
   }){
     engine.mapSrc(
         x: x,
-        y: ((engine.animationFrame % 4) * size),
+        y: ((engine.frame % 4) * size),
         width: size,
         height: size
     );
@@ -872,7 +873,7 @@ class IsometricRender {
     engine.renderCustom(
       dstX: position.x,
       dstY: position.y,
-      srcY: ((position.x + position.y + engine.animationFrame) % 6) * 43,
+      srcY: ((position.x + position.y + engine.frame) % 6) * 43,
       srcX: 6464,
       srcWidth: 46,
       srcHeight: 43,
@@ -883,7 +884,7 @@ class IsometricRender {
     engine.renderCustom(
         dstX: position.x,
         dstY: position.y,
-        srcY: ((position.x + position.y + engine.animationFrame) % 6) * 23,
+        srcY: ((position.x + position.y + engine.frame) % 6) * 23,
         srcX: 5669,
         srcWidth: 18,
         srcHeight: 23,

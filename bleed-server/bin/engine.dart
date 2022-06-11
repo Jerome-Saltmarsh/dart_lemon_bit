@@ -5,6 +5,7 @@ import 'common/library.dart';
 import 'functions/loadScenes.dart';
 import 'games/game_frontline.dart';
 import 'games/game_random.dart';
+import 'io/read_scene_from_file.dart';
 import 'language.dart';
 
 final engine = _Engine();
@@ -141,14 +142,15 @@ class _Engine {
     return GameRandom();
   }
 
-  GameFrontline findGameFrontLine() {
+  Future<GameFrontline> findGameFrontLine() async {
     for (final game in games) {
       if (game is GameFrontline) {
         if (game.full) continue;
         return game;
       }
     }
-    return GameFrontline();
+    final scene = await readSceneFromFile('castle');
+    return GameFrontline(scene);
   }
 
 

@@ -22,6 +22,7 @@ enum ClientRequest {
   Construct,
   Upgrade,
   Scene,
+  Scene_Save,
   Select_Character_Type,
   Toggle_Objects_Destroyable,
   Deck_Add_Card,

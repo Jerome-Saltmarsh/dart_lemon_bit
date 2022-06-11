@@ -4,15 +4,15 @@ import 'package:lemon_math/library.dart';
 
 import '../classes/Game.dart';
 import '../classes/Player.dart';
+import '../classes/Scene.dart';
 import '../common/weapon_type.dart';
-import '../scene_generator.dart';
 
 class GameFrontline extends Game {
 
   var time = 12 * 60 * 60;
 
-  GameFrontline() : super(
-    generateScenePlain()
+  GameFrontline(Scene scene) : super(
+    scene
   );
 
   @override

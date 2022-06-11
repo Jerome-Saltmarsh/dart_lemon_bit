@@ -1,6 +1,6 @@
 import 'package:lemon_math/library.dart';
 
-import '../common/constants.dart';
+import '../common/tile_size.dart';
 import 'components.dart';
 
 class Collider with Position, Radius {

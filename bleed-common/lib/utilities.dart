@@ -1,4 +1,4 @@
-import 'constants.dart';
+import 'tile_size.dart';
 
 double snapX(double x, double y) {
   return getTileWorldX(convertWorldToRow(x, y), convertWorldToColumn(x, y));

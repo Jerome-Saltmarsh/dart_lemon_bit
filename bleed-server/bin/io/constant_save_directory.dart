@@ -1,0 +1,1 @@
+const saveDirectory = 'saved_scenes';

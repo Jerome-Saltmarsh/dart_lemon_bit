@@ -1,6 +1,6 @@
 import 'package:bleed_common/SceneJson.dart';
 import 'package:bleed_common/Tile.dart';
-import 'package:bleed_common/constants.dart';
+import 'package:bleed_common/seconds_per_hour.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/isometric/classes.dart';
 import 'package:gamestream_flutter/modules/modules.dart';

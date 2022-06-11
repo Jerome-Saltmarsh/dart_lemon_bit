@@ -1,7 +1,7 @@
 import 'package:bleed_common/ItemType.dart';
 import 'package:bleed_common/SceneJson.dart';
 import 'package:bleed_common/Tile.dart';
-import 'package:bleed_common/constants.dart';
+import 'package:bleed_common/seconds_per_hour.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/game_object.dart';

@@ -54,9 +54,9 @@ class GameRender {
   }
 
   void render(Canvas canvas, Size size) {
-    isometric.applyDynamicEmissions();
-    isometric.applyDynamicShadeToTileSrc();
-    _render.renderTiles();
+    // isometric.applyDynamicEmissions();
+    // isometric.applyDynamicShadeToTileSrc();
+    // _render.renderTiles();
     renderProjectiles();
 
     drawAbility();

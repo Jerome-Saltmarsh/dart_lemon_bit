@@ -10,15 +10,12 @@ import 'Structure.dart';
 import 'TileNode.dart';
 
 class GridNode {
-  final int x;
-  final int y;
-  final int z;
   int type;
-  GridNode(this.x, this.y, this.z, this.type);
+  GridNode(this.type);
 }
 
 class Scene {
-  final List<List<List<GridNode>>> grid = [];
+  final List<List<List<GridNode>>> grid;
   final List<Structure> structures;
   final List<Character> characters;
   final List<List<int>> tiles;
@@ -35,6 +32,9 @@ class Scene {
 
   static final _boundary = Node(false);
 
+  int get gridHeight => grid.length;
+  int get gridRows => grid[0].length;
+  int get gridColumns => grid[0][0].length;
   int get rows => tiles.length;
   int get columns => rows > 0 ? tiles[0].length : 0;
 
@@ -45,45 +45,46 @@ class Scene {
     required this.characters,
     required this.spawnPointPlayers,
     required this.spawnPointZombies,
+    required this.grid,
   }) {
     numberOfRows = tiles.length;
     numberOfColumns = numberOfRows > 0 ? tiles[0].length : 0;
     nodes = [];
 
-    const gridHeight = 5;
-    const gridRows = 10;
-    const gridColumns = 10;
-
-    for (var z = 0; z < gridHeight; z++) {
-      final layer = <List<GridNode>>[];
-      grid.add(layer);
-      for (var rowIndex = 0; rowIndex < gridRows; rowIndex++) {
-        final row = <GridNode>[];
-        layer.add(row);
-        for (var columnIndex = 0; columnIndex < gridColumns; columnIndex++) {
-           row.add(GridNode(rowIndex, columnIndex, z, z == 0 ? GridNodeType.Bricks : GridNodeType.Empty));
-        }
-      }
-    }
-
-    for (var z = 1; z < 4; z++){
-      grid[z][2][2].type = GridNodeType.Bricks;
-    }
-
-    grid[0][9][9].type = GridNodeType.Grass;
-    grid[0][9][8].type = GridNodeType.Grass;
-    grid[0][9][7].type = GridNodeType.Grass;
-    grid[1][9][9].type = GridNodeType.Grass;
-    grid[1][9][8].type = GridNodeType.Grass;
-    grid[1][9][7].type = GridNodeType.Grass;
-    grid[0][9][5].type = GridNodeType.Stairs_North;
-    grid[1][8][4].type = GridNodeType.Stairs_East;
-    grid[1][8][3].type = GridNodeType.Bricks;
-    grid[1][8][2].type = GridNodeType.Bricks;
-    grid[1][7][2].type = GridNodeType.Bricks;
-    grid[1][7][2].type = GridNodeType.Stairs_South;
-    grid[1][8][1].type = GridNodeType.Stairs_West;
-    grid[1][5][3].type = GridNodeType.Torch;
+    // const gridHeight = 5;
+    // const gridRows = 10;
+    // const gridColumns = 10;
+    //
+    // for (var z = 0; z < gridHeight; z++) {
+    //   final layer = <List<GridNode>>[];
+    //   grid.add(layer);
+    //   for (var rowIndex = 0; rowIndex < gridRows; rowIndex++) {
+    //     final row = <GridNode>[];
+    //     layer.add(row);
+    //     for (var columnIndex = 0; columnIndex < gridColumns; columnIndex++) {
+    //        row.add(GridNode(rowIndex, columnIndex, z, z == 0 ? GridNodeType.Bricks : GridNodeType.Empty));
+    //     }
+    //   }
+    // }
+    //
+    // for (var z = 1; z < 4; z++){
+    //   grid[z][2][2].type = GridNodeType.Bricks;
+    // }
+    //
+    // grid[0][9][9].type = GridNodeType.Grass;
+    // grid[0][9][8].type = GridNodeType.Grass;
+    // grid[0][9][7].type = GridNodeType.Grass;
+    // grid[1][9][9].type = GridNodeType.Grass;
+    // grid[1][9][8].type = GridNodeType.Grass;
+    // grid[1][9][7].type = GridNodeType.Grass;
+    // grid[0][9][5].type = GridNodeType.Stairs_North;
+    // grid[1][8][4].type = GridNodeType.Stairs_East;
+    // grid[1][8][3].type = GridNodeType.Bricks;
+    // grid[1][8][2].type = GridNodeType.Bricks;
+    // grid[1][7][2].type = GridNodeType.Bricks;
+    // grid[1][7][2].type = GridNodeType.Stairs_South;
+    // grid[1][8][1].type = GridNodeType.Stairs_West;
+    // grid[1][5][3].type = GridNodeType.Torch;
     // grid[2][7][1].type = GridNodeType.Bricks;
     // grid[2][6][1].type = GridNodeType.Bricks;
 
@@ -162,48 +163,7 @@ class Scene {
       }
     }
 
-    // for (final env in objectsStatic) {
-    //    snapToGrid(env);
-    //    getNodeByPosition(env).obstructed = true;
-    // }
-    // for (var i = 0; i < objectsStatic.length; i++) {
-    //    final env = objectsStatic[i];
-    //    if (env.type == ObjectType.Rock) {
-    //       objectsStatic.removeAt(i);
-    //       i--;
-    //       objectsDynamic.add(
-    //           GameObject(
-    //               type: GameObjectType.Rock,
-    //               x: env.x,
-    //               y: env.y,
-    //               health: 50
-    //           )
-    //       );
-    //    }
-    //    if (env.type == ObjectType.Tree) {
-    //      objectsStatic.removeAt(i);
-    //      i--;
-    //      objectsDynamic.add(
-    //          GameObject(
-    //              type: GameObjectType.Tree,
-    //              x: env.x,
-    //              y: env.y,
-    //              health: 10
-    //          )
-    //      );
-    //    }
-    // }
-    //
-    // for (final staticObject in objectsStatic) {
-    //    getNodeByPosition(staticObject).obstructed = true;
-    // }
-    //
-    // for (final dynamicObject in objectsDynamic) {
-    //   getNodeByPosition(dynamicObject).obstructed = true;
-    // }
-
     sortVertically(gameObjects);
-    // sortVertically(objectsStatic);
   }
 
   void generateRandomGameObjects({required int type, double density = 0.05, int health = 1}) {

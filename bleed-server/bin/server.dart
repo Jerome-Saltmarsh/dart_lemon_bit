@@ -1,6 +1,5 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
-import 'package:http/http.dart';
 import 'package:lemon_math/functions/vector2.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
@@ -15,6 +14,7 @@ import 'functions/generateName.dart';
 import 'functions/withinRadius.dart';
 import 'games/game_frontline.dart';
 import 'games/game_random.dart';
+import 'io/write_scene_to_file.dart';
 import 'physics.dart';
 
 const _space = " ";
@@ -127,8 +127,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       onGameJoined();
     }
 
-    void joinGameFrontLine(){
-      final game = engine.findGameFrontLine();
+    Future joinGameFrontLine() async {
+      final game = await engine.findGameFrontLine();
       _player = game.spawnPlayer();
       onGameJoined();
     }
@@ -393,7 +393,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               final characterClass = characterSelections[characterClassIndex];
               return joinGameRandom(characterClass);
             case GameType.FRONTLINE:
-              return joinGameFrontLine();
+              joinGameFrontLine();
+              return;
           }
 
           // if (characterClassIndex >= gameTypes.length) {
@@ -579,7 +580,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
           final game = player.game;
           if (game is GameRandom){
-            game.time += 3600;
+            game.time += secondsPerDay;
           }
           if (game is GameFrontline){
             game.time += 3600;
@@ -768,6 +769,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                player.writeInt(type);
 
           });
+          writeSceneToFile(player.scene);
           break;
 
         case ClientRequest.Deck_Select_Card:

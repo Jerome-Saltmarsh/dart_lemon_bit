@@ -102,7 +102,7 @@ void mapParticleToSrc(Particle particle){
 
     case ParticleType.FireYellow:
       final x = atlas.particles.flame.x;
-      final y = atlas.particles.flame.y + ((engine.animationFrame) * 24);
+      final y = atlas.particles.flame.y + ((engine.frame ~/ 5) * 24);
       engine.mapSrc(x: x, y: y, width: 25, height: 24);
       return;
 

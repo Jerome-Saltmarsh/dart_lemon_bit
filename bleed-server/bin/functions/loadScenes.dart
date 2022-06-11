@@ -97,7 +97,8 @@ Scene parseJsonToScene(Json json, String name) {
     gameObjects: [],
     characters: characters,
     spawnPointPlayers: [],
-    spawnPointZombies: []
+    spawnPointZombies: [],
+    grid: [],
   );
 
   if (json.containsKey(sceneFieldNames.startTime)){

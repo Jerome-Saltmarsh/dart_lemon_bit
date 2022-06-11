@@ -6,37 +6,38 @@ import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/state/grid.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import 'player.dart';
 
 
 Widget buildHudMapEditor() {
-  return Stack(
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      // Positioned(
-      //     top: 0,
-      //     right: 0,
-      //     child: Column(
-      //       children: [
-      //          Refresh((){
-      //             return text("Player z: ${player.indexZ}, row: ${player.indexRow}, column: ${player.indexColumn}");
-      //          }),
-      //       ],
-      //     )
-      // ),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // _buildControlPlayerInfo(),
-          // height8,
-          _buildControlTime(),
-          height8,
-          _buildTabTiles(),
-        ],
-      )
+      // _buildControlPlayerInfo(),
+      // height8,
+      // _buildWatchFrame(),
+      
+      _buildControlsSaveLoad(),
+      _buildControlTime(),
+      height8,
+      _buildTabTiles(),
     ],
   );
+}
+
+Widget _buildControlsSaveLoad(){
+  return Row(children: [
+      text("Save"),
+  ],);
+}
+
+Widget _buildWatchFrame(){
+  return Refresh(() {
+     return text("Frame: ${engine.frame}");
+  });
 }
 
 Widget _buildControlPlayerInfo(){

@@ -6,9 +6,10 @@ import 'classes/game_object.dart';
 import 'classes/Scene.dart';
 import 'common/library.dart';
 import 'enums.dart';
+import 'generate/generate_grid_plain.dart';
 import 'utilities.dart';
 
-Scene generateScenePlain({int rows = 50, int columns = 50}){
+Scene generateScenePlain({int rows = 50, int columns = 50, int height = 7}){
   final tiles =  <List<int>>[];
 
   for (var rowIndex = 0; rowIndex < rows; rowIndex++) {
@@ -20,6 +21,7 @@ Scene generateScenePlain({int rows = 50, int columns = 50}){
   }
 
   return Scene(
+      grid: generateGridPlain(height: height, rows: rows, columns: columns),
       tiles: tiles,
       structures: [],
       gameObjects: [],
@@ -320,6 +322,7 @@ Scene generateRandomScene({
   }
 
   return Scene(
+      grid: [],
       structures: [],
       tiles: tiles,
       characters: [],
