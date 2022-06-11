@@ -1,5 +1,6 @@
 
 import 'dart:math';
+import 'package:gamestream_flutter/state/light_mode.dart';
 import 'package:lemon_math/library.dart';
 import 'package:bleed_common/grid_node_type.dart';
 
@@ -107,7 +108,21 @@ void _applyEmission({
     for (var row = rowMin; row < rowMax; row++){
       for (var column = columnMin; column < columnMax; column++) {
         final currentValue = map[z][row][column];
-        final distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs();
+        var distance = 0;
+        if (lightModeRadial.value){
+          distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs();
+        } else {
+          final distanceZ = (z - zIndex).abs();
+          final distanceRow = (row - rowIndex).abs();
+          final distanceColumn = (column - columnIndex).abs();
+          distance = distanceZ;
+          if (distanceRow > distanceZ){
+            distance = distanceRow;
+          }
+          if (distanceColumn > distance){
+            distance = distanceColumn;
+          }
+        }
         final distanceValue = _convertDistanceToShade(distance);
         if (distanceValue >= currentValue) continue;
         map[z][row][column] = distanceValue;

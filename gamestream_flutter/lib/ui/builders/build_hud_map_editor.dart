@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/state/grid.dart';
+import 'package:gamestream_flutter/state/light_mode.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -20,11 +21,25 @@ Widget buildHudMapEditor() {
       // height8,
       // _buildWatchFrame(),
 
-      _buildControlsSaveLoad(),
+      _buildControlLightMode(),
       _buildControlTime(),
       height8,
       _buildTabTiles(),
     ],
+  );
+}
+
+Widget _buildControlLightMode(){
+  return onPressed(
+    callback: () => lightModeRadial.value = !lightModeRadial.value,
+    child: Container(
+        height: 50,
+        width: 200,
+        color: Colors.white60,
+        child: watch(lightModeRadial, (bool radial){
+           return text(radial ? 'Radial' : "Area");
+        })
+    ),
   );
 }
 
