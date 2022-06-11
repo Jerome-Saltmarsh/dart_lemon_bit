@@ -302,6 +302,8 @@ class Scene {
 
   int getGridBlockTypeAtXYZ(double x, double y, double z){
     const tileSize = 48;
+    if (x + y < 0) return GridNodeType.Boundary;
+    if (y - x < 0) return GridNodeType.Boundary;
     final row = (x + y) ~/ tileSize;
     final column = (y - x) ~/ tileSize;
     final height = z ~/ 24.0;

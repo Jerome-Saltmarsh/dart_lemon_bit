@@ -8,40 +8,49 @@ import 'package:gamestream_flutter/state/grid.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
+import 'player.dart';
+
 
 Widget buildHudMapEditor() {
   return Stack(
     children: [
+      // Positioned(
+      //     top: 0,
+      //     right: 0,
+      //     child: Column(
+      //       children: [
+      //          Refresh((){
+      //             return text("Player z: ${player.indexZ}, row: ${player.indexRow}, column: ${player.indexColumn}");
+      //          }),
+      //       ],
+      //     )
+      // ),
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Row(
-          //   children: [
-          //     text("Tiles", onPressed: () => edit.tab.value = EditTab.Tile),
-          //     text("Objects", onPressed: () => edit.tab.value = EditTab.Object),
-          //   ],
-          // ),
-
+          // _buildControlPlayerInfo(),
+          // height8,
           _buildControlTime(),
           height8,
           _buildTabTiles(),
-          // WatchBuilder(edit.tab, (tab){
-          //    switch(tab){
-          //      case EditTab.Tile:
-          //        return _buildTabTiles();
-          //      case EditTab.Object:
-          //        return _buildTabObjects();
-          //      default:
-          //        throw Exception();
-          //    }
-          // }),
         ],
       )
     ],
   );
 }
 
-Container _buildControlTime() {
+Widget _buildControlPlayerInfo(){
+  return Refresh((){
+    return Container(
+        // width: 350,
+        height: 50,
+        alignment: Alignment.centerLeft,
+        color: Colors.white60,
+        child: text("Player z: ${player.indexZ}, row: ${player.indexRow}, column: ${player.indexColumn}, xy:${player.x + player.y}"));
+  });
+}
+
+Widget _buildControlTime() {
   return Container(
           height: 50,
           width: 200,
