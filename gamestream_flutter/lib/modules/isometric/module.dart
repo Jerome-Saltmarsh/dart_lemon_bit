@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
+import 'package:gamestream_flutter/convert/convert_hour_to_ambient.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
@@ -705,10 +706,9 @@ class IsometricModule {
   }
 
   void refreshAmbientLight(){
-    final phase = Phase.fromHour(game.hours.value);
-    final phaseBrightness = Phase.toShade(phase);
-    if (maxAmbientBrightness.value > phaseBrightness) return;
-    ambient.value = phaseBrightness;
+    final shade = convertHourToAmbient(game.hours.value);
+    if (maxAmbientBrightness.value > shade) return;
+    ambient.value = shade;
   }
 
   void refreshGeneratedObjects() {

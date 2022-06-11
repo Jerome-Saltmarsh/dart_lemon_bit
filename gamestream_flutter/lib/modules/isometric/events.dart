@@ -44,6 +44,6 @@ class IsometricEvents {
   }
 
   void onAmbientChanged(int value){
-    isometric.resetLighting();
+    // isometric.resetLighting();
   }
 }
