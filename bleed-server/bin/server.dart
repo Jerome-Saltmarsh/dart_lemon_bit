@@ -587,11 +587,29 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
           break;
 
+        case ClientRequest.Spawn_Zombie:
+          if (player == null) return errorPlayerNotFound();
+          if (arguments.length < 4) return errorInsufficientArgs(4, arguments);
+
+          final z = int.tryParse(arguments[1]);
+          if (z == null) return errorInvalidArg('z');
+          final row = int.tryParse(arguments[2]);
+          if (row == null) return errorInvalidArg('row');
+          final column = int.tryParse(arguments[3]);
+          if (column == null) return errorInvalidArg('column');
+
+          player.game.spawnZombie(
+              x: getTileWorldX(row, column),
+              y: getTileWorldY(row, column),
+              z: z * 24.0,
+              health: 10,
+              team: 0,
+              damage: 1
+          );
+          return;
+
         case ClientRequest.Reverse_Hour:
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
+          if (player == null) return errorPlayerNotFound();
           final game = player.game;
           if (game is GameRandom){
             game.time -= 3600;
@@ -718,9 +736,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               player.game.spawnZombie(
                 x: player.mouse.x,
                 y: player.mouse.y,
+                z: 24.0,
                 damage: 1,
                 health: 5,
                 team: 100,
+
               );
               break;
             case ModifyGame.Remove_Zombie:

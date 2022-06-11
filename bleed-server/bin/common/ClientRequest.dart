@@ -28,6 +28,7 @@ enum ClientRequest {
   Deck_Add_Card,
   Deck_Select_Card,
   Set_Block,
+  Spawn_Zombie,
 }
 
 const clientRequests = ClientRequest.values;

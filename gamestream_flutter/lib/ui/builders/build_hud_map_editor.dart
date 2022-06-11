@@ -122,6 +122,22 @@ Widget _buildTabTiles(){
       _buildSetType(GridNodeType.Stairs_East, "Stairs East"),
       _buildSetType(GridNodeType.Water, "Water"),
       _buildSetType(GridNodeType.Torch, "Torch"),
+      onPressed(
+        callback: () {
+          sendClientRequestSpawnZombie(
+            z: edit.z,
+            row: edit.row,
+            column: edit.column,
+          );
+        },
+        child: Container(
+          width: 200,
+          height: 50,
+          color: Colors.white60,
+          alignment: Alignment.centerLeft,
+          child: text("Zombie"),
+        ),
+      ),
     ],
   );
 }

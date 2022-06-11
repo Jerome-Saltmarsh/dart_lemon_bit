@@ -1136,6 +1136,7 @@ extension GameFunctions on Game {
   AI spawnZombie({
     required double x,
     required double y,
+    required double z,
     required int health,
     required int team,
     required int damage,
@@ -1152,6 +1153,7 @@ extension GameFunctions on Game {
     zombie.collidable = true;
     zombie.x = x;
     zombie.y = y;
+    zombie.z = z;
     zombie.yv = 0;
     zombie.xv = 0;
     zombie.setSpeed(speed);
@@ -1186,6 +1188,7 @@ extension GameFunctions on Game {
     return spawnZombie(
         x: spawnPoint.x,
         y: spawnPoint.y,
+        z: 24.0,
         team: team,
         health: health,
         damage: damage,

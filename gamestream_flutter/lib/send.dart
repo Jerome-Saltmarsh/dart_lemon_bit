@@ -85,6 +85,15 @@ void sendClientRequestSkipHour(){
   sendClientRequest(ClientRequest.Skip_Hour);
 }
 
+
+void sendClientRequestSpawnZombie({
+  required int z,
+  required int row,
+  required int column
+}){
+  sendClientRequest(ClientRequest.Spawn_Zombie, '$z $row $column');
+}
+
 void sendClientRequest(ClientRequest value, [dynamic message]){
   if (message != null){
     return webSocket.send('${value.index} $message');
