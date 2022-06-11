@@ -94,6 +94,10 @@ void sendClientRequestSpawnZombie({
   sendClientRequest(ClientRequest.Spawn_Zombie, '$z $row $column');
 }
 
+void sendClientRequestSetWeapon(int type){
+  sendClientRequest(ClientRequest.Set_Weapon, type);
+}
+
 void sendClientRequest(ClientRequest value, [dynamic message]){
   if (message != null){
     return webSocket.send('${value.index} $message');

@@ -11,8 +11,8 @@ import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
+import 'build_column_set_weapon.dart';
 import 'player.dart';
-
 
 Widget buildHudMapEditor() {
   return Stack(
@@ -20,25 +20,29 @@ Widget buildHudMapEditor() {
       Positioned(
           top: 0,
           left: 0,
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // _buildControlPlayerInfo(),
-          // height8,
-          // _buildWatchFrame(),
-
-          _buildControlLightMode(),
-          _buildControlTime(),
-          height8,
-          _buildTabTiles(),
-        ],
-      ),
+          child: buildPanelEditor(),
       ),
       Positioned(
           top: 0,
           right: 0,
           child: buildPanelMenu()
       ),
+      Positioned(
+          bottom: 0,
+          right: 0,
+          child: buildColumnSetWeapon()),
+    ],
+  );
+}
+
+Widget buildPanelEditor(){
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      _buildControlLightMode(),
+      _buildControlTime(),
+      height8,
+      _buildTabTiles(),
     ],
   );
 }

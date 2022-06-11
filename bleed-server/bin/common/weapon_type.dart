@@ -8,6 +8,20 @@ class WeaponType {
   static const Hammer = 6;
   static const Axe = 7;
   static const Pickaxe = 8;
+  
+  static String getName(int type){
+    return const <int, String> {
+      Unarmed: "Unarmed",
+      Bow: "Bow",
+      Sword: "Sword",
+      Staff: "Staff",
+      Shotgun: "Shotgun",
+      Handgun: "Handgun",
+      Hammer: "Hammer",
+      Axe: "Axe",
+      Pickaxe: "Pickaxe",
+    } [type] ?? "Unknown";
+  }
 
   static int getDamage(int type) {
     return const <int, int> {

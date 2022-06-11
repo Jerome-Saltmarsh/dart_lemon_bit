@@ -619,12 +619,18 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
           break;
 
+        case ClientRequest.Set_Weapon:
+          if (player == null) return errorPlayerNotFound();
+          if (arguments.length < 2)  return errorArgsExpected(2, arguments);
+          final weaponType = int.tryParse(arguments[1]);
+          if (weaponType == null) return errorInvalidArg('weapon');
+          player.equippedWeapon = weaponType;
+          player.setStateChanging();
+          break;
+
         case ClientRequest.Character_Save:
           final account = _account;
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
+          if (player == null) return errorPlayerNotFound();
           if (account == null) {
             errorAccountRequired();
             return;
