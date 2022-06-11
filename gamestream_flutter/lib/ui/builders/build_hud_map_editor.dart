@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/state/grid.dart';
 import 'package:gamestream_flutter/state/light_mode.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
+import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -14,17 +15,30 @@ import 'player.dart';
 
 
 Widget buildHudMapEditor() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
+  return Stack(
     children: [
-      // _buildControlPlayerInfo(),
-      // height8,
-      // _buildWatchFrame(),
+      Positioned(
+          top: 0,
+          left: 0,
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // _buildControlPlayerInfo(),
+          // height8,
+          // _buildWatchFrame(),
 
-      _buildControlLightMode(),
-      _buildControlTime(),
-      height8,
-      _buildTabTiles(),
+          _buildControlLightMode(),
+          _buildControlTime(),
+          height8,
+          _buildTabTiles(),
+        ],
+      ),
+      ),
+      Positioned(
+          top: 0,
+          right: 0,
+          child: buildPanelMenu()
+      ),
     ],
   );
 }
