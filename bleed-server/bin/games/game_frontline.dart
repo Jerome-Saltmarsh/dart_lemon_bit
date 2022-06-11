@@ -22,11 +22,13 @@ class GameFrontline extends Game {
 
   @override
   Player spawnPlayer() {
-    return Player(
+    final player = Player(
         game: this,
         weapon: WeaponType.Shotgun,
         position: randomItem(scene.spawnPointPlayers)
     );
+    player.z = 48.0;
+    return player;
   }
 
   @override

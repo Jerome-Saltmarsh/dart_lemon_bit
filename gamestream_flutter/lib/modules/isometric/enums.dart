@@ -22,9 +22,9 @@ class Phase {
 
   static int toShade(int phase) {
     return const {
-      Early_Morning: Shade.Dark,
-      Morning: Shade.Medium,
-      Day: Shade.Bright,
+      Early_Morning: Shade.Medium,
+      Morning: Shade.Bright,
+      Day: Shade.Very_Bright,
       Early_Evening: Shade.Medium,
       Evening: Shade.Dark,
       Night: Shade.Very_Dark,

@@ -23,6 +23,7 @@ Widget buildHudMapEditor() {
           // ),
 
           _buildControlTime(),
+          height8,
           _buildTabTiles(),
           // WatchBuilder(edit.tab, (tab){
           //    switch(tab){

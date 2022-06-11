@@ -1,7 +1,6 @@
 
 import 'dart:math';
-
-import 'package:bleed_common/Shade.dart';
+import 'package:lemon_math/library.dart';
 import 'package:bleed_common/grid_node_type.dart';
 
 final grid = <List<List<int>>>[];
@@ -96,7 +95,7 @@ void _applyEmission({
   required int rowIndex,
   required int columnIndex
 }){
-  final radius = Shade.Very_Dark;
+  final radius = 5;
   final zMin = max(zIndex - radius, 0);
   final zMax = min(zIndex + radius, gridTotalZ);
   final rowMin = max(rowIndex - radius, 0);
@@ -118,8 +117,5 @@ void _applyEmission({
 }
 
 int _convertDistanceToShade(int distance){
-   if (distance <= 2) return Shade.Bright;
-   if (distance == 3) return Shade.Medium;
-   if (distance == 4) return Shade.Dark;
-   return Shade.Very_Dark;
+   return clamp(distance - 1, 0, 6);
 }
