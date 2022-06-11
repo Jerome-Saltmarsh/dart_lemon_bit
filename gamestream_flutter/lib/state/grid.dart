@@ -11,7 +11,6 @@ var gridTotalRows = 0;
 var gridTotalColumns = 0;
 
 void gridSetAmbient(int ambient) {
-  print("gridSetAmbient($ambient)");
   _refreshGridMetrics();
   _setLightMapValue(gridLightBake, ambient);
   _setLightMapValue(gridLightDynamic, ambient);

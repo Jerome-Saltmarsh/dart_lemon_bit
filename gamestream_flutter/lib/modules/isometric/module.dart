@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/convert/convert_hour_to_ambient.dart';
+import 'package:gamestream_flutter/events/on_ambient_changed.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
@@ -43,7 +44,7 @@ class IsometricModule {
   final items = <Item>[];
   final totalColumns = Watch(0);
   final totalRows = Watch(0);
-  final ambient = Watch(Shade.Bright, onChanged: gridSetAmbient);
+  final ambient = Watch(Shade.Bright, onChanged: onAmbientChanged);
   final maxAmbientBrightness = Watch(Shade.Bright);
   final nameTextStyle = TextStyle(color: Colors.white);
 
@@ -72,18 +73,6 @@ class IsometricModule {
     if (mouseRow >= totalRows.value) return Tile.Boundary;
     if (mouseColumn >= totalColumns.value) return Tile.Boundary;
     return tiles[mouseRow][mouseColumn];
-  }
-
-  int get currentPhaseShade {
-    return Phase.toShade(phase);
-  }
-
-  String get currentAmbientShadeName {
-    return shadeName(currentPhaseShade);
-  }
-
-  int get phase {
-    return Phase.fromHour(game.hours.value);
   }
 
   Vector2 get mapCenter {

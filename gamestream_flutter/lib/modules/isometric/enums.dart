@@ -1,38 +1,5 @@
 import 'package:bleed_common/Shade.dart';
 
-class Phase {
-  static const Early_Morning = 0;
-  static const Morning = 1;
-  static const Day = 2;
-  static const Early_Evening = 3;
-  static const Evening = 4;
-  static const Night = 5;
-  static const MidNight = 6;
-
-  static int fromHour(int hour){
-    if (hour < 2) return MidNight;
-    if (hour < 4) return Night;
-    if (hour < 5) return Early_Morning;
-    if (hour < 6) return Morning;
-    if (hour < 18) return Day;
-    if (hour < 19) return Early_Evening;
-    if (hour < 20) return Evening;
-    return Night;
-  }
-
-  static int toShade(int phase) {
-    return const {
-      Early_Morning: Shade.Medium,
-      Morning: Shade.Bright,
-      Day: Shade.Very_Bright,
-      Early_Evening: Shade.Medium,
-      Evening: Shade.Dark,
-      Night: Shade.Very_Dark,
-      MidNight: Shade.Pitch_Black,
-    }[phase]!;
-  }
-}
-
 class ParticleType {
   static const Smoke = 0;
   static const Zombie_Head = 2;

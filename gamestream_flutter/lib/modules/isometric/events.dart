@@ -26,7 +26,6 @@ class IsometricEvents {
       isometric.ambient.value = maxShade;
       return;
     }
-    isometric.ambient.value = isometric.currentPhaseShade;
   }
 
   void onTotalColumnsChanged(int value){
