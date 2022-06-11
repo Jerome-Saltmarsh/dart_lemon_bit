@@ -19,7 +19,7 @@ Widget buildHudMapEditor() {
       // _buildControlPlayerInfo(),
       // height8,
       // _buildWatchFrame(),
-      
+
       _buildControlsSaveLoad(),
       _buildControlTime(),
       height8,
@@ -118,7 +118,7 @@ Widget _buildSetType(int value, String name) {
       color: type == value ? Colors.green : Colors.white60,
       child: text(name, onPressed: () {
         if (grid[edit.z][edit.row][edit.column] == value){
-          for (var z = 0; z < edit.z; z++){
+          for (var z = 1; z < edit.z; z++){
             sendClientRequestSetBlock(edit.row, edit.column, z, value);
           }
         } else {

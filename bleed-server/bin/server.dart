@@ -580,10 +580,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
           final game = player.game;
           if (game is GameRandom){
-            game.time += secondsPerDay;
+            game.time = (game.time + 3600) % secondsPerDay;
           }
           if (game is GameFrontline){
-            game.time += 3600;
+            game.time = (game.time + 3600) % secondsPerDay;
           }
           break;
 
@@ -597,7 +597,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             game.time -= 3600;
           }
           if (game is GameFrontline){
-            game.time -= 3600;
+            game.time = (game.time - 3600) % secondsPerDay;
           }
           break;
 
