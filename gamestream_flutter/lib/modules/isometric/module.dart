@@ -10,7 +10,7 @@ import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/convert/convert_hour_to_ambient.dart';
-import 'package:gamestream_flutter/events/on_ambient_changed.dart';
+// import 'package:gamestream_flutter/events/on_ambient_changed.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
@@ -21,7 +21,6 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'enums.dart';
 import 'events.dart';
 import 'render.dart';
 import 'subscriptions.dart';
@@ -44,7 +43,6 @@ class IsometricModule {
   final items = <Item>[];
   final totalColumns = Watch(0);
   final totalRows = Watch(0);
-  final ambient = Watch(Shade.Bright, onChanged: onAmbientChanged);
   final maxAmbientBrightness = Watch(Shade.Bright);
   final nameTextStyle = TextStyle(color: Colors.white);
 
@@ -397,7 +395,7 @@ class IsometricModule {
   }
 
   void resetShaderToAmbient(List<Int8List> shader){
-    final ambient = this.ambient.value;
+    // final ambient = this.ambient.value;
     final rows = this.totalRows.value;
     final columns = this.totalColumns.value;
     final currentRows = shader.isEmpty ? 0 : shader.length;
@@ -410,14 +408,14 @@ class IsometricModule {
         final newRow = Int8List(columns);
         shader.add(newRow);
         for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
-          newRow[columnIndex] = ambient;
+          // newRow[columnIndex] = ambient;
         }
       }
     } else {
       print("resetting shader");
       for (final row in shader) {
         for (var i = 0 ; i < columns; i++){
-          row[i] = ambient;
+          // row[i] = ambient;
         }
       }
     }

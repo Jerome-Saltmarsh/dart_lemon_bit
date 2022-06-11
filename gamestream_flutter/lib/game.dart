@@ -15,7 +15,6 @@ import 'package:lemon_watch/watch.dart';
 import 'classes/Explosion.dart';
 import 'classes/NpcDebug.dart';
 import 'classes/Projectile.dart';
-import 'convert/convert_hour_to_ambient.dart';
 import 'events/on_hour_changed.dart';
 import 'modules/isometric/classes.dart';
 import 'modules/isometric/enums.dart';
@@ -173,7 +172,7 @@ class Game with ByteReader {
                 }
              }
           }
-          gridSetAmbient(isometric.ambient.value);
+          refreshLighting();
           break;
 
         case ServerResponse.Player_Deck_Active_Ability:
@@ -384,7 +383,7 @@ class Game with ByteReader {
         case ServerResponse.Player_Spawned:
           player.x = readDouble();
           player.y = readDouble();
-          isometric.resetLighting();
+          // isometric.resetLighting();
           cameraCenterOnPlayer();
           engine.zoom = 1.0;
           engine.targetZoom = 1.0;
@@ -401,7 +400,7 @@ class Game with ByteReader {
           final type = readInt();
           grid[z][row][column] = type;
           edit.type.value = grid[edit.z][edit.row][edit.column];
-          gridSetAmbient(isometric.ambient.value);
+          refreshLighting();
           break;
 
         case ServerResponse.End:

@@ -114,9 +114,9 @@ class EditorBuild {
           width8,
         ],
       ),
-        WatchBuilder(modules.isometric.ambient, (int ambient){
-      return text(shadeName(ambient));
-        }),
+      //   WatchBuilder(modules.isometric.ambient, (int ambient){
+      // return text(shadeName(ambient));
+      //   }),
       Row(children: [
         Container(
           width: _textWidth,

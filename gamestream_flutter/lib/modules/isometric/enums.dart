@@ -1,5 +1,3 @@
-import 'package:bleed_common/Shade.dart';
-
 class ParticleType {
   static const Smoke = 0;
   static const Zombie_Head = 2;

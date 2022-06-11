@@ -10,7 +10,7 @@ class IsometricEvents {
   void register(){
     if (isometric.eventsRegistered) return;
     isometric.eventsRegistered = true;
-    isometric.subscriptions.onAmbientChanged = isometric.ambient.onChanged(onAmbientChanged);
+    // isometric.subscriptions.onAmbientChanged = isometric.ambient.onChanged(onAmbientChanged);
     isometric.maxAmbientBrightness.onChanged(onMaxAmbientBrightnessChanged);
     game.hours.onChanged(onHourChanged);
     isometric.totalColumns.onChanged(onTotalColumnsChanged);
@@ -19,13 +19,13 @@ class IsometricEvents {
 
   void onMaxAmbientBrightnessChanged(int maxShade){
     // print("onShadeMaxChanged($maxShade)");
-    final ambient = isometric.ambient.value;
-    if (maxShade == ambient) return;
-
-    if (maxShade > ambient){
-      isometric.ambient.value = maxShade;
-      return;
-    }
+    // final ambient = ambient.value;
+    // if (maxShade == ambient) return;
+    //
+    // if (maxShade > ambient){
+    //   isometric.ambient.value = maxShade;
+    //   return;
+    // }
   }
 
   void onTotalColumnsChanged(int value){

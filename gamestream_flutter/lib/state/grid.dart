@@ -1,22 +1,18 @@
 
 import 'dart:math';
+import 'package:bleed_common/Shade.dart';
 import 'package:gamestream_flutter/state/light_mode.dart';
 import 'package:lemon_math/library.dart';
 import 'package:bleed_common/grid_node_type.dart';
+import 'package:lemon_watch/watch.dart';
 
+final ambient = Watch(Shade.Bright, onChanged: _onAmbientChanged);
 final grid = <List<List<int>>>[];
 final gridLightBake = <List<List<int>>>[];
 final gridLightDynamic = <List<List<int>>>[];
 var gridTotalZ = 0;
 var gridTotalRows = 0;
 var gridTotalColumns = 0;
-
-void gridSetAmbient(int ambient) {
-  _refreshGridMetrics();
-  _setLightMapValue(gridLightBake, ambient);
-  _setLightMapValue(gridLightDynamic, ambient);
-  _applyBakeMapEmissions();
-}
 
 void gridEmitDynamic(int z, int row, int column){
   _applyEmission(
@@ -25,6 +21,17 @@ void gridEmitDynamic(int z, int row, int column){
       rowIndex: row,
       columnIndex: column
   );
+}
+
+void _onAmbientChanged(int ambient) {
+  refreshLighting();
+}
+
+void refreshLighting(){
+  _refreshGridMetrics();
+  _setLightMapValue(gridLightBake, ambient.value);
+  _setLightMapValue(gridLightDynamic, ambient.value);
+  _applyBakeMapEmissions();
 }
 
 void gridRefreshDynamicLight(){
