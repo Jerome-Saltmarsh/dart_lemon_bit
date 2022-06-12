@@ -1457,7 +1457,7 @@ class IsometricRender {
         return engine.renderCustom(
           dstX: getTileWorldX(row, column),
           dstY: getTileWorldY(row, column) - (z * 24) + height,
-          srcX: 7206,
+          srcX: 7206 + (animationFrame * 48),
           srcY: 72.0 * shade,
           srcWidth: 48,
           srcHeight: 72,
