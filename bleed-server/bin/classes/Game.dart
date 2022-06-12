@@ -737,11 +737,11 @@ extension GameFunctions on Game {
   }
 
   void deactivateProjectile(Projectile projectile) {
-    if (!projectile.active) return;
+    assert (projectile.active);
     projectile.active = false;
-    if (scene.waterAt(projectile.x, projectile.y)) return;
     switch (projectile.type) {
       case ProjectileType.Bullet:
+        if (scene.waterAt(projectile.x, projectile.y)) return;
         dispatch(GameEventType.Bullet_Hole, projectile.x, projectile.y);
         break;
       case ProjectileType.Orb:

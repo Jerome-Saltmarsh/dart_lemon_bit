@@ -170,12 +170,14 @@ Widget _buildSetType(int value, String name) {
       child: text(name, onPressed: () {
         if (grid[edit.z][edit.row][edit.column] == value){
           for (var z = 1; z < edit.z; z++){
-            sendClientRequestSetBlock(edit.row, edit.column, z, value);
+            if (GridNodeType.isStairs(value)){
+              sendClientRequestSetBlock(edit.row, edit.column, z, GridNodeType.Bricks);
+            } else {
+              sendClientRequestSetBlock(edit.row, edit.column, z, value);
+            }
           }
-        } else {
-          sendClientRequestSetBlock(edit.row, edit.column, edit.z, value);
         }
-
+        sendClientRequestSetBlock(edit.row, edit.column, edit.z, value);
       }),
     );
   });

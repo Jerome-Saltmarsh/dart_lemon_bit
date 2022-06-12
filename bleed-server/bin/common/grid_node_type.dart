@@ -10,4 +10,13 @@ class GridNodeType {
   static const Water = 8;
   static const Torch = 9;
   static const Tree = 10;
+  
+  static bool isStairs(int value){
+    return 
+        value == Stairs_North || 
+        value == Stairs_East ||
+        value == Stairs_West || 
+        value == Stairs_South
+    ;
+  }
 }
