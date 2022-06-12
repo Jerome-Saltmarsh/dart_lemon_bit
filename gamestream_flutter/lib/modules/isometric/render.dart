@@ -1017,7 +1017,7 @@ class IsometricRender {
     );
     engine.mapDst(
         x: character.x,
-        y: character.y,
+        y: character.y - character.z,
         anchorX: 32,
         anchorY: 48,
         scale: 0.7
