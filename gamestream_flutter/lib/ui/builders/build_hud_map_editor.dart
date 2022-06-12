@@ -39,6 +39,11 @@ Widget buildPanelEditor(){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      _button("Recenter", (){
+         edit.z = player.indexZ;
+         edit.row = player.indexRow;
+         edit.column = player.indexColumn;
+      }),
       _buildControlLightMode(),
       _buildControlTime(),
       height8,
@@ -141,22 +146,13 @@ Widget buildColumnEditTile(){
       _buildSetType(GridNodeType.Water, "Water"),
       _buildSetType(GridNodeType.Torch, "Torch"),
       _buildSetType(GridNodeType.Tree, "Tree"),
-      onPressed(
-        callback: () {
-          sendClientRequestSpawnZombie(
-            z: edit.z,
-            row: edit.row,
-            column: edit.column,
-          );
-        },
-        child: Container(
-          width: 200,
-          height: 50,
-          color: Colors.white60,
-          alignment: Alignment.centerLeft,
-          child: text("Zombie"),
-        ),
-      ),
+      _button("Zombie", () {
+        sendClientRequestSpawnZombie(
+          z: edit.z,
+          row: edit.row,
+          column: edit.column,
+        );
+      }),
     ],
   );
 }
@@ -182,3 +178,18 @@ Widget _buildSetType(int value, String name) {
     );
   });
 }
+
+Widget _button(String value, Function action){
+  return onPressed(
+    callback: action,
+    child: Container(
+      width: 200,
+      height: 50,
+      padding: const EdgeInsets.only(left: 6),
+      color: Colors.grey,
+      alignment: Alignment.centerLeft,
+      child: text(value),
+    ),
+  );
+}
+
