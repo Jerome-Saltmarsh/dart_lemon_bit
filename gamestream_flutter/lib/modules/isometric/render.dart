@@ -662,15 +662,14 @@ class IsometricRender {
   }
 
   void renderTorch(Position position) {
-    if (isometric.dayTime){
-      engine.renderCustomV2(
+    if (ambient.value == Shade.Very_Bright){
+      return engine.renderCustomV2(
           dst: position,
           srcX: 2145,
           srcWidth: 25,
           srcHeight: 70,
           anchorY: 0.66
       );
-      return;
     }
     engine.renderCustomV2(
         dst: position,
