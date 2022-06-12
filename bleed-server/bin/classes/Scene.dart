@@ -540,6 +540,22 @@ class Scene {
       final stairHeight = (tilePer * 24.0) + (zInt * 24.0);
       return stairHeight > z;
     }
+    if (type == GridNodeType.Tree){
+      const treeRadius = 0.2;
+      final percRow = ((x + y) / 48.0) % 1.0;
+      if ((0.5 - percRow).abs() > treeRadius) return false;
+      final percColumn = ((x - y) / 48.0) % 1.0;
+      if ((0.5 - percColumn).abs() > treeRadius) return false;
+      return true;
+    }
+    if (type == GridNodeType.Torch){
+      const torchRadius = 0.2;
+      final percRow = ((x + y) / 48.0) % 1.0;
+      if ((0.5 - percRow).abs() > torchRadius) return false;
+      final percColumn = ((x - y) / 48.0) % 1.0;
+      if ((0.5 - percColumn).abs() > torchRadius) return false;
+      return true;
+    }
     return true;
   }
 
