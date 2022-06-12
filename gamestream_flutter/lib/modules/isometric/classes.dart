@@ -1,5 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/weapon_type.dart';
+import 'package:gamestream_flutter/state/grid.dart';
 import 'package:lemon_math/library.dart';
 
 import 'mixins.dart';
@@ -8,8 +9,22 @@ class Collectable extends Vector2 with Type {
   Collectable() : super(0, 0);
 }
 
-class Character extends Vector2 {
-  double z = 0;
+
+class Vector3 with Position {
+  int get indexZ => z ~/ 24;
+  int get indexRow => convertWorldToRow(x, y);
+  int get indexColumn => convertWorldToColumn(x, y);
+  int get shade => gridLightDynamic[indexZ][indexRow][indexColumn];
+
+  late double z;
+  Vector3(double x, double y, double z) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+  }
+}
+
+class Character extends Vector3 {
   bool scoreMeasured = false;
   int score = 0;
   int state;
@@ -26,10 +41,6 @@ class Character extends Vector2 {
   /// percentage between 0 and 1
   double magic = 1;
 
-  int get indexZ => z ~/ 24;
-  int get indexRow => convertWorldToRow(x, y);
-  int get indexColumn => convertWorldToColumn(x, y);
-
   // properties
   bool get dead => state == CharacterState.Dead;
   bool get running => state == CharacterState.Running;
@@ -41,8 +52,9 @@ class Character extends Vector2 {
     this.direction = 0,
     double x = 0,
     double y = 0,
+    double z = 0,
     this.frame = 0,
     this.name = "",
     this.text = "",
-  }): super(x, y);
+  }): super(x, y, z);
 }

@@ -647,11 +647,11 @@ class IsometricModule {
       emitLightHighLarge(dynamic, player.x, player.y);
     }
 
-    for (var i = 0; i < totalNpcs; i++){
-      final npc = npcs[i];
-      if (!npc.allie) continue;
-      emitLightHigh(dynamic, npc);
-    }
+    // for (var i = 0; i < totalNpcs; i++){
+    //   final npc = npcs[i];
+    //   if (!npc.allie) continue;
+    //   emitLightHigh(dynamic, npc);
+    // }
 
     for (var i = 0; i < game.totalProjectiles; i++){
        final projectile = game.projectiles[i];

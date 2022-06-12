@@ -934,7 +934,7 @@ class IsometricRender {
   }
 
   void renderZombie(Character character){
-    final shade = state.getShadeAtPosition(character.x, character.y);
+    final shade = character.shade;
     if (shade > Shade.Dark) return;
 
     if (shade < Shade.Dark) {
