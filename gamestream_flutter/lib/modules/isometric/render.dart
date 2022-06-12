@@ -1215,13 +1215,13 @@ class IsometricRender {
         final weapon = character.weapon;
         return animate(
             size: size,
-            animation: TechType.isBow(weapon)
-                ? animations.firingBow
-                : weapon == SlotType.Handgun
-                ? animations.firingHandgun
-                : weapon == SlotType.Shotgun
-                ? animations.firingShotgun
-                : animations.strikingSword,
+            animation: weapon == WeaponType.Bow
+                ? const [5, 8, 6, 10]
+                : weapon == WeaponType.Handgun
+                ? const [8, 9, 8]
+                : weapon == WeaponType.Shotgun
+                ? const [6, 7, 6, 6, 6, 8, 8, 6]
+                : [10, 10, 11, 11],
             character: character,
             framesPerDirection: _framesPerDirectionHuman
         );
