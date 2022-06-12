@@ -771,7 +771,7 @@ extension GameFunctions on Game {
       final projectile = projectiles[i];
       if (!projectile.active) continue;
       if (projectile.collideWithEnvironment) continue;
-      if (scene.projectileCollisionAt(projectile.x, projectile.y)) {
+      if (scene.getCollisionAt(projectile.x, projectile.y, projectile.z)) {
         deactivateProjectile(projectile);
       }
     }
@@ -1114,6 +1114,9 @@ extension GameFunctions on Game {
     projectile.start.y = src.y;
     projectile.x = src.x;
     projectile.y = src.y;
+    if (src is Collider) {
+      projectile.z = src.z + 12.0;
+    }
     projectile.xv = velX(finalAngle + giveOrTake(accuracy), speed);
     projectile.yv = velY(finalAngle + giveOrTake(accuracy), speed);
     projectile.speed = speed;

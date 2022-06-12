@@ -527,13 +527,13 @@ class IsometricRender {
   void renderProjectile(Projectile value) {
     switch (value.type) {
       case ProjectileType.Arrow:
-        renderArrow(value.x, value.y, value.angle);
+        renderArrow(value.x, value.y - value.z, value.angle);
         break;
       case ProjectileType.Orb:
         renderOrb(value);
         break;
       case ProjectileType.Fireball:
-        renderFireball(value.x, value.y, value.angle);
+        renderFireball(value.x, value.y - value.z, value.angle);
         break;
       default:
         return;

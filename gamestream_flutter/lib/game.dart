@@ -130,7 +130,7 @@ class Game with ByteReader {
           _parseNpcs();
           break;
         case ServerResponse.Projectiles:
-          _parseProjectiles();
+          readProjectiles();
           break;
         case ServerResponse.Game_Events:
           _parseGameEvents();
@@ -463,12 +463,13 @@ class Game with ByteReader {
       modules.game.events.onGameEvent(type, x, y, angle);
   }
 
-  void _parseProjectiles(){
+  void readProjectiles(){
     totalProjectiles = readInt();
     for (var i = 0; i < totalProjectiles; i++) {
       final projectile = projectiles[i];
       projectile.x = readDouble();
       projectile.y = readDouble();
+      projectile.z = readDouble();
       projectile.type = readByte();
       projectile.angle = readDouble() * degreesToRadians;
     }

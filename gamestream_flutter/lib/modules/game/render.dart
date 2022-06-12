@@ -54,10 +54,6 @@ class GameRender {
   }
 
   void render(Canvas canvas, Size size) {
-    // isometric.applyDynamicEmissions();
-    // isometric.applyDynamicShadeToTileSrc();
-    // _render.renderTiles();
-    renderProjectiles();
 
     drawAbility();
     if (modules.game.structureType.value == null){
@@ -76,6 +72,7 @@ class GameRender {
     }
 
     _render.renderSprites();
+    renderProjectiles();
 
     for (var z = 0; z < edit.z; z++){
       isometric.render.renderWireFrameBlue(edit.row, edit.column, z);

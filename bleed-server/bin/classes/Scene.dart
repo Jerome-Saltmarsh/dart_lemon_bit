@@ -479,9 +479,9 @@ class Scene {
     return nodes[row][column];
   }
 
-  bool projectileCollisionAt(double x, double y) {
-    return !isShootable(getTileAtXY(x, y));
-  }
+  // bool projectileCollisionAt(double x, double y, double z) {
+  //   return !getCollisionAt(getTileAtXY(x, y));
+  // }
 
   double getHeightAt(double x, double y, double z){
     var type = getGridBlockTypeAtXYZ(x, y, z);

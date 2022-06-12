@@ -609,6 +609,7 @@ extension PlayerProperties on Player {
     if (!projectile.active) return;
     final degrees = getAngle(projectile.xv, projectile.yv) * radiansToDegrees;
     writePosition(projectile);
+    writeInt(projectile.z);
     writeByte(projectile.type);
     writeInt(degrees);
   }
