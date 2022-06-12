@@ -1408,7 +1408,7 @@ class IsometricRender {
         return engine.renderCustom(
           dstX: getTileWorldX(row, column),
           dstY: getTileWorldY(row, column) - (z * 24),
-          srcX: 7254,
+          srcX: 7398,
           srcY: 72.0 * shade,
           srcWidth: 48,
           srcHeight: 72,
@@ -1418,7 +1418,7 @@ class IsometricRender {
         return engine.renderCustom(
           dstX: getTileWorldX(row, column),
           dstY: getTileWorldY(row, column) - (z * 24),
-          srcX: 7302,
+          srcX: 7446,
           srcY: 72.0 * shade,
           srcWidth: 48,
           srcHeight: 72,
@@ -1428,7 +1428,7 @@ class IsometricRender {
         return engine.renderCustom(
             dstX: getTileWorldX(row, column),
             dstY: getTileWorldY(row, column) - (z * 24),
-            srcX: 7351,
+            srcX: 7494,
             srcY: 72.0 * shade,
             srcWidth: 48,
             srcHeight: 72,
@@ -1438,7 +1438,7 @@ class IsometricRender {
         return engine.renderCustom(
             dstX: getTileWorldX(row, column),
             dstY: getTileWorldY(row, column) - (z * 24),
-            srcX: 7398,
+            srcX: 7542,
             srcY: 72.0 * shade,
             srcWidth: 48,
             srcHeight: 72,
@@ -1471,28 +1471,27 @@ class IsometricRender {
     }
   }
 
-  void renderWireFrame(int row, int column, int z){
-    return engine.renderCustom(
-      dstX: getTileWorldX(row, column),
-      dstY: getTileWorldY(row, column) - (z * 24),
-      srcX: 6895,
-      srcWidth: 48,
-      srcHeight: 72,
-      anchorY: 0.3334,
-    );
-  }
-
   void renderWireFrameBlue(int row, int column, int z){
     return engine.renderCustom(
       dstX: getTileWorldX(row, column),
       dstY: getTileWorldY(row, column) - (z * 24),
-      srcX: 6944,
+      srcX: 7590,
       srcWidth: 48,
       srcHeight: 72,
       anchorY: 0.3334,
     );
   }
 
+  void renderWireFrameRed(int row, int column, int z){
+    return engine.renderCustom(
+      dstX: getTileWorldX(row, column),
+      dstY: getTileWorldY(row, column) - (z * 24),
+      srcX: 7638,
+      srcWidth: 48,
+      srcHeight: 72,
+      anchorY: 0.3334,
+    );
+  }
 
   void renderArrowUp(double x, double y){
     return engine.renderCustom(

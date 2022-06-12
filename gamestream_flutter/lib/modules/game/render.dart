@@ -80,7 +80,7 @@ class GameRender {
     for (var z = 0; z < edit.z; z++){
       isometric.render.renderWireFrameBlue(edit.row, edit.column, z);
     }
-    isometric.render.renderWireFrame(
+    isometric.render.renderWireFrameRed(
         edit.row,
         edit.column, edit.z
     );
