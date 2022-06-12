@@ -553,6 +553,11 @@ class Scene {
     }
 
     var tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
+
+    if (tileAtFeet == GridNodeType.Water){
+       // character.set
+    }
+
     while (tileAtFeet == GridNodeType.Bricks || tileAtFeet == GridNodeType.Grass) {
        character.z += 24 - (character.z % 24);
        tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
