@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
@@ -71,7 +73,13 @@ class Player extends Character with ByteWriter {
   late Function sendBufferToClient;
   late Function(GameError error, {String message}) dispatchError;
 
-  double get mouseAngle => this.getAngle(mouse);
+  double get mouseAngle {
+      final adjacent = x - mouse.x;
+      if (adjacent < 0) {
+        return -atan2(adjacent, y - mouse.y - (z * 0.5));
+      }
+      return pi2 - atan2(adjacent, y - mouse.y - (z * 0.5));
+  }
 
   Scene get scene => game.scene;
 

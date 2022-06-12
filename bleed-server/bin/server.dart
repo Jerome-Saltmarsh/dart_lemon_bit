@@ -308,7 +308,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                     return;
                   } else {
                     player.runTarget.x = mouseX;
-                    player.runTarget.y = mouseY;
+                    player.runTarget.y = mouseY + (player.z * 0.5);
                     player.target = player.runTarget;
                     return;
                   }

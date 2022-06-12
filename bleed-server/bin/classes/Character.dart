@@ -104,7 +104,6 @@ class Character extends Collider with Team, Health, Velocity, Material {
   }
 
   void face(Position position) {
-    // if (deadOrBusy) return;
     assert(!deadOrBusy);
     angle = this.getAngle(position);
   }
