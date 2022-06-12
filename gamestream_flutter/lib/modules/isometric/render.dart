@@ -705,6 +705,17 @@ class IsometricRender {
     render(position: position, srcX: 2049, width: 64, height: 81, anchorY: 0.66);
   }
 
+  void renderTreeAt(int z, int row, int column){
+     engine.renderCustom(
+         dstX: getTileWorldX(row, column),
+         dstY: getTileWorldY(row, column) - (z * 24),
+         srcX: 2049,
+         srcY: 81.0 * gridLightDynamic[z][row][column],
+         srcWidth: 64.0,
+         srcHeight: 81.0
+     );
+  }
+
   void renderChest(Position position){
     render(
         position: position,
@@ -1453,7 +1464,6 @@ class IsometricRender {
         if (animationFrame == 3){
           height = 0;
         }
-
         return engine.renderCustom(
           dstX: getTileWorldX(row, column),
           dstY: getTileWorldY(row, column) - (z * 24) + height,
@@ -1466,6 +1476,10 @@ class IsometricRender {
 
       case GridNodeType.Torch:
         return renderTorch(getPosition(getTileWorldX(row, column), getTileWorldY(row, column) - (z * 24) + 24));
+
+      case GridNodeType.Tree:
+        return renderTreeAt(z, row, column);
+        // return renderTree(getPosition(getTileWorldX(row, column), getTileWorldY(row, column) - (z * 24) + 24));
       default:
         throw Exception("Cannot render grid node type $type");
     }

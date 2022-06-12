@@ -12,7 +12,7 @@ class CharacterController {
 }
 
 class KeyMap {
-  final perform = LogicalKeyboardKey.space;
+  // final perform = LogicalKeyboardKey.space;
   final interact = LogicalKeyboardKey.keyA;
   final runUp = LogicalKeyboardKey.keyW;
   final runRight = LogicalKeyboardKey.keyD;

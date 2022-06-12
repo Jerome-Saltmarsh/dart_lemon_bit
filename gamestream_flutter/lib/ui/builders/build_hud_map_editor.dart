@@ -42,7 +42,7 @@ Widget buildPanelEditor(){
       _buildControlLightMode(),
       _buildControlTime(),
       height8,
-      _buildTabTiles(),
+      buildColumnEditTile(),
     ],
   );
 }
@@ -128,7 +128,7 @@ Widget _buildTabObjects(){
   return text('objects');
 }
 
-Widget _buildTabTiles(){
+Widget buildColumnEditTile(){
   return Column(
     children: [
       _buildSetType(GridNodeType.Empty, "Empty"),
@@ -140,6 +140,7 @@ Widget _buildTabTiles(){
       _buildSetType(GridNodeType.Stairs_East, "Stairs East"),
       _buildSetType(GridNodeType.Water, "Water"),
       _buildSetType(GridNodeType.Torch, "Torch"),
+      _buildSetType(GridNodeType.Tree, "Tree"),
       onPressed(
         callback: () {
           sendClientRequestSpawnZombie(
