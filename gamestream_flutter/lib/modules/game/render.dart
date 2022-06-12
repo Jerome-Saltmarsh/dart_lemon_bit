@@ -183,7 +183,7 @@ class GameRender {
       if (player.dead) continue;
       const minDistance = 15;
       if (diffOver(mouseWorldX, player.x, minDistance)) continue;
-      if (diffOver(mouseWorldY, player.y, minDistance)) continue;
+      if (diffOver(mouseWorldY, player.y - player.z, minDistance)) continue;
       renderText(text: player.name, x: player.x, y: player.y + 5 - player.z);
     }
   }
