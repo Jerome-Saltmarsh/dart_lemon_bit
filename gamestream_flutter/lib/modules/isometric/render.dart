@@ -1174,7 +1174,7 @@ class IsometricRender {
 
   double getTemplateSrcX(Character character, {required double size}){
     final weapon = character.weapon;
-    final variation = weapon == SlotType.Shotgun || TechType.isBow(weapon);
+    final variation = weapon == WeaponType.Shotgun || weapon == WeaponType.Bow;
 
     switch(character.state) {
       case CharacterState.Running:
@@ -1238,7 +1238,7 @@ class IsometricRender {
        case WeaponType.Bow:
          return SpriteLayer.Bow_Wooden;
        case WeaponType.Shotgun:
-         return SpriteLayer.Bow_Wooden;
+         return SpriteLayer.Weapon_Shotgun;
        case WeaponType.Handgun:
          return SpriteLayer.Weapon_Handgun;
        default:
