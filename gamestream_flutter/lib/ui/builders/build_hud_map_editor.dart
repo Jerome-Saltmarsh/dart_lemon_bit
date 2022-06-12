@@ -8,7 +8,6 @@ import 'package:gamestream_flutter/state/grid.dart';
 import 'package:gamestream_flutter/state/light_mode.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
-import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import 'build_column_set_weapon.dart';
@@ -67,22 +66,9 @@ Widget _buildControlLightMode(){
   );
 }
 
-Widget _buildControlsSaveLoad(){
-  return Row(children: [
-      text("Save"),
-  ],);
-}
-
-Widget _buildWatchFrame(){
-  return Refresh(() {
-     return text("Frame: ${engine.frame}");
-  });
-}
-
-Widget _buildControlPlayerInfo(){
+Widget _buildContainerPlayerInfo(){
   return Refresh((){
     return Container(
-        // width: 350,
         height: 50,
         alignment: Alignment.centerLeft,
         color: Colors.white60,
