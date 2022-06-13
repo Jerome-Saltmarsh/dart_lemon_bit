@@ -73,7 +73,7 @@ Widget _buildContainerPlayerInfo(){
         height: 50,
         alignment: Alignment.centerLeft,
         color: Colors.grey,
-        child: text("Player zIndex: ${player.indexZ}, row: ${player.indexRow}, column: ${player.indexColumn}, x: ${player.x}, y: ${player.y}, z: ${player.z}"));
+        child: text("Player zIndex: ${player.indexZ}, row: ${player.indexRow}, column: ${player.indexColumn}, x: ${player.x}, y: ${player.y}, z: ${player.z}, renderX: ${player.renderX}, renderY: ${player.renderY}"));
   });
 }
 

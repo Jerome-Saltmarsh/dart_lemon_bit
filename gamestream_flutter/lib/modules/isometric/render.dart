@@ -198,8 +198,7 @@ class IsometricRender {
         final gridType = grid[gridZ][gridRow][gridColumn];
         if (gridType == GridNodeType.Empty
               ||
-            // !remainingPlayers
-            remainingPlayers
+            !remainingPlayers
               ||
             orderGrid <= orderPlayer
               ||
@@ -260,7 +259,7 @@ class IsometricRender {
                           final player = players[indexPlayer];
                           orderPlayer = player.renderOrder;
                           orderPlayerZ = player.indexZ;
-                          if (orderPlayer > screenBottom100) {
+                          if (player.renderY > screenBottom100) {
                             remainingPlayers = false;
                             break;
                           }
@@ -955,13 +954,13 @@ class IsometricRender {
     assert(character.direction < 8);
 
     if (character.dead) return;
-
-    final shade = state.getShadeAtPosition(character.x, character.y);
-    if (shade > Shade.Dark) return;
-
-    if (shade < Shade.Dark) {
-      renderCharacterHealthBar(character);
-    }
+    renderCharacterHealthBar(character);
+    // final shade = state.getShadeAtPosition(character.x, character.y);
+    // if (shade > Shade.Dark) return;
+    //
+    // if (shade < Shade.Dark) {
+    //
+    // }
     final weapon = character.weapon;
     final direction = character.direction;
 
