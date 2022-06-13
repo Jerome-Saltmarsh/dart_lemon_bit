@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
@@ -83,7 +85,9 @@ class Character extends Collider with Team, Health, Velocity, Material {
   }
 
   void applyVelocity() {
-    move(angle, speed);
+    x -= cos(angle) * speed;
+    y -= sin(angle) * speed;
+    // move(angle, speed);
   }
 
   void updateMovement() {

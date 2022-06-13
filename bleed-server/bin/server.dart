@@ -329,6 +329,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               break;
             case CharacterAction.Run:
               player.direction = args[6];
+              print(Direction.getName(args[6]));
               game.setCharacterStateRunning(player);
               player.target = null;
               break;
