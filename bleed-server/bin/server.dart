@@ -153,13 +153,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       error(GameError.PlayerDead);
     }
 
-    void onEvent(dynamic requestD) {
+    void onEvent(dynamic args) {
 
       final player = _player;
 
-      if (requestD is List<int>) {
-        final List<int> args = requestD;
-
+      if (args is List<int>) {
         final clientRequestInt = args[0];
 
         if (clientRequestInt >= clientRequestsLength) {
@@ -294,14 +292,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
         throw Exception("Cannot parse ${clientRequests[clientRequestInt]}");
       }
 
-      if (requestD is String == false){
+      if (args is String == false){
         throw Exception();
       }
 
-      final String requestString = requestD;
+      final String requestString = args;
       final arguments = requestString.split(" ");
-
-
       if (arguments.isEmpty) {
         error(GameError.ClientRequestArgumentsEmpty);
         return;
