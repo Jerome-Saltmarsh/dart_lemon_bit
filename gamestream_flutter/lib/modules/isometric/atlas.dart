@@ -1,8 +1,7 @@
 
+import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
-
-import 'classes.dart';
 
 final atlas = _Atlas();
 

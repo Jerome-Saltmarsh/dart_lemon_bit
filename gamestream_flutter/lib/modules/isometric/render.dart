@@ -11,6 +11,7 @@ import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/classes/game_object.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/get_position.dart';
+import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToDst.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToSrc.dart';
 import 'package:gamestream_flutter/modules/isometric/animations.dart';
@@ -24,7 +25,6 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
 import '../modules.dart';
-import 'classes.dart';
 
 const _framesPerDirectionHuman = 19;
 const _framesPerDirectionZombie = 8;
@@ -535,6 +535,9 @@ class IsometricRender {
       case ProjectileType.Fireball:
         renderFireball(value.x, value.y - value.z, value.angle);
         break;
+      case ProjectileType.Bullet:
+        renderFireball(value.x, value.y - value.z, value.angle);
+        break;
       default:
         return;
     }
@@ -1015,8 +1018,8 @@ class IsometricRender {
         y: 789.0 + (shade * 64.0),
     );
     engine.mapDst(
-        x: character.x,
-        y: character.y - character.z,
+        x: character.renderX,
+        y: character.renderY,
         anchorX: 32,
         anchorY: 48,
         scale: 0.7
@@ -1135,8 +1138,8 @@ class IsometricRender {
 
   void _renderCharacterPart(Character character, int layer) {
     engine.mapDst(
-        x: character.x,
-        y: character.y - character.z,
+        x: character.renderX,
+        y: character.renderY,
         anchorX: 32,
         anchorY: 48,
         scale: 0.75,
@@ -1274,8 +1277,8 @@ class IsometricRender {
       return;
     }
     engine.mapDst(
-      x: character.x,
-      y: character.y - character.z,
+      x: character.renderX,
+      y: character.renderY,
       anchorX: 48,
       anchorY: 61,
       scale: 1.0,

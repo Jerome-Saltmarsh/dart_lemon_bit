@@ -3,6 +3,7 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/weapon_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/deck_card.dart';
+import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -56,11 +57,8 @@ class Slots {
   final slot6 = Slot();
 }
 
-class Player {
+class Player extends Vector3 {
   var score = 0;
-  var x = 0.0;
-  var y = 0.0;
-  var z = 0.0;
   var team = 0;
   var abilityRange = 0.0;
   var abilityRadius = 0.0;
@@ -74,10 +72,7 @@ class Player {
   final equippedWeapon = Watch(WeaponType.Unarmed);
   final armour = Watch(TechType.Unarmed);
   final helm = Watch(TechType.Unarmed);
-
   final equippedLevel = Watch(0);
-
-
   final characterType = Watch(CharacterType.Human);
   final health = Watch(0.0);
   final experience = Watch(0.0);
@@ -134,7 +129,7 @@ class Player {
     throw Exception('getCanAffordWatch error, $type has no watch');
   }
 
-  Player(){
+  Player(): super(0, 0, 0){
     wood.onChanged(_onResourcesChanged);
     gold.onChanged(_onResourcesChanged);
     stone.onChanged(_onResourcesChanged);

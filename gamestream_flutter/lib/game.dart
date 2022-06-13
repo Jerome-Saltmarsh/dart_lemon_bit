@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/classes/GeneratedObject.dart';
 import 'package:gamestream_flutter/classes/deck_card.dart';
 import 'package:gamestream_flutter/classes/game_object.dart';
 import 'package:gamestream_flutter/edit_state.dart';
+import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_byte/byte_reader.dart';
@@ -320,11 +321,11 @@ class Game with ByteReader {
           switch(modules.game.state.cameraMode.value){
             case CameraMode.Chase:
               const cameraFollowSpeed = 0.001;
-              final playerScreenX = worldToScreenX(_player.x);
-              final playerScreenY = worldToScreenY(_player.y);
-              engine.cameraFollow(_player.x, _player.y, cameraFollowSpeed);
-              final playerScreenX2 = worldToScreenX(_player.x);
-              final playerScreenY2 = worldToScreenY(_player.y);
+              final playerScreenX = player.renderX;
+              final playerScreenY = player.renderY;
+              engine.cameraFollow(playerScreenX, playerScreenY, cameraFollowSpeed);
+              final playerScreenX2 = player.renderX;
+              final playerScreenY2 = player.renderY;
               final distanceWorldX = ((playerScreenX2 - playerScreenX) / engine.zoom) * 0.5;
               final distanceWorldY = ((playerScreenY2 - playerScreenY) / engine.zoom) * 0.5;
 
@@ -347,8 +348,8 @@ class Game with ByteReader {
               _previousPlayerScreenY3 = _previousPlayerScreenY2;
               _previousPlayerScreenX2 = _previousPlayerScreenX1;
               _previousPlayerScreenY2 = _previousPlayerScreenY1;
-              _previousPlayerScreenX1 = worldToScreenX(_player.x);
-              _previousPlayerScreenY2 = worldToScreenY(_player.y);
+              _previousPlayerScreenX1 = player.renderX;
+              _previousPlayerScreenY2 = player.renderY;
               break;
             case CameraMode.Locked:
               engine.cameraCenter(_player.x, _player.y);
