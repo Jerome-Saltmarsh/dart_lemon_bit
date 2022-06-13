@@ -27,11 +27,11 @@ double convertGridToWorldY(double x, double y) {
 }
 
 double convertWorldToGridX(double x, double y) {
-  return y - x;
+  return x + y;
 }
 
 double convertWorldToGridY(double x, double y) {
-  return x + y;
+  return y - x;
 }
 
 int convertWorldToRow(double x, double y) {
