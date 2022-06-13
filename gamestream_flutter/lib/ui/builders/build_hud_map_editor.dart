@@ -1,4 +1,5 @@
 import 'package:bleed_common/grid_node_type.dart';
+import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
@@ -38,6 +39,7 @@ Widget buildPanelEditor(){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      _buildContainerMouseInfo(),
       _buildContainerPlayerInfo(),
       _button("Recenter", (){
          edit.z = player.indexZ;
@@ -65,6 +67,17 @@ Widget _buildControlLightMode(){
         })
     ),
   );
+}
+
+Widget _buildContainerMouseInfo(){
+  return Refresh(() {
+     return Container(
+       height: 50,
+       alignment: Alignment.centerLeft,
+       color: Colors.grey,
+       child: text("Mouse XPerc: ${(player.x % tileSize) / tileSize}"),
+     );
+});
 }
 
 Widget _buildContainerPlayerInfo(){

@@ -484,7 +484,10 @@ class Scene {
     if (type == GridNodeType.Bricks) return (z ~/ 24.0) * 24 + 24;
 
     if (type == GridNodeType.Stairs_North){
-      return (((1.0 - (((x + y) / 48.0) % 1.0))) * 24.0) + ((z ~/ 24.0) * 24.0);
+      final percentage = 1 - ((x % tileSize) / tileSize);
+      final stairBottom = ((z ~/ tileHeight) * tileHeight);
+      final stairHeight = (percentage * tileHeight) + stairBottom;
+      return stairHeight;
     }
     if (type == GridNodeType.Stairs_South){
       final tilePer = ((x + y) / 48.0) % 1.0;
@@ -512,28 +515,33 @@ class Scene {
     if (type == GridNodeType.Boundary) return true;
     if (type == GridNodeType.Bricks) return true;
 
-    if (type == GridNodeType.Stairs_North){
-      final tilePer = (1.0 - ((x / 48.0) % 1.0));
-      final stairHeight = (tilePer * 24.0) + ((z ~/ 24.0) * 24.0);
-      return stairHeight > z;
+    if (GridNodeType.isStairs(type)){
+      return getHeightAt(x, y, z) > z;
     }
-    if (type == GridNodeType.Stairs_South){
-      final tilePer = ((x) / 48.0) % 1.0;
-      final stairHeight = (tilePer * 24.0) + ((z ~/ 24.0) * 24.0);
-      return stairHeight > z;
-    }
-    if (type == GridNodeType.Stairs_West){
-      final zInt = z ~/ 24.0;
-      final tilePer = (1.0 - (((y) / 48.0) % 1.0));
-      final stairHeight = (tilePer * 24.0) + (zInt * 24.0);
-      return stairHeight > z;
-    }
-    if (type == GridNodeType.Stairs_East){
-      final zInt = z ~/ 24.0;
-      final tilePer = ((y) / 48.0) % 1.0;
-      final stairHeight = (tilePer * 24.0) + (zInt * 24.0);
-      return stairHeight > z;
-    }
+
+    // if (type == GridNodeType.Stairs_North) {
+    //   final percentage = 1 - ((x % tileSize) / tileSize);
+    //   final stairBottom = ((z ~/ tileHeight) * tileHeight);
+    //   final stairHeight = (percentage * tileHeight) + stairBottom;
+    //   return getHeightAt(x, y, z) > z;
+    // }
+    // if (type == GridNodeType.Stairs_South){
+    //   final tilePer = ((x) / 48.0) % 1.0;
+    //   final stairHeight = (tilePer * 24.0) + ((z ~/ 24.0) * 24.0);
+    //   return stairHeight > z;
+    // }
+    // if (type == GridNodeType.Stairs_West){
+    //   final zInt = z ~/ 24.0;
+    //   final tilePer = (1.0 - (((y) / 48.0) % 1.0));
+    //   final stairHeight = (tilePer * 24.0) + (zInt * 24.0);
+    //   return stairHeight > z;
+    // }
+    // if (type == GridNodeType.Stairs_East){
+    //   final zInt = z ~/ 24.0;
+    //   final tilePer = ((y) / 48.0) % 1.0;
+    //   final stairHeight = (tilePer * 24.0) + (zInt * 24.0);
+    //   return stairHeight > z;
+    // }
     if (type == GridNodeType.Tree){
       const treeRadius = 0.2;
       final percRow = ((x) / 48.0) % 1.0;
@@ -573,33 +581,12 @@ class Scene {
        tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
        character.zVelocity = 0;
     }
-    if (tileAtFeet == GridNodeType.Stairs_North){
-      final zInt = character.z ~/ 24.0;
-      final tilePer = (1.0 - (((character.x + character.y) / 48.0) % 1.0));
-      character.z = (tilePer * 24.0) + (zInt * 24.0);
+    if (GridNodeType.isStairs(tileAtFeet)){
+      character.z = getHeightAt(character.x, character.y, character.z);
       character.zVelocity = 0;
     }
-    if (tileAtFeet == GridNodeType.Stairs_South){
-      final zInt = character.z ~/ 24.0;
-      final tilePer = ((((character.x + character.y) / 48.0) % 1.0));
-      character.z = (tilePer * 24.0) + (zInt * 24.0);
-      character.zVelocity = 0;
-    }
-    if (tileAtFeet == GridNodeType.Stairs_East){
-      final zInt = character.z ~/ 24.0;
-      final tilePer = ((((character.x - character.y) / 48.0) % 1.0));
-      character.z = (tilePer * 24.0) + (zInt * 24.0);
-      character.zVelocity = 0;
-    }
-    if (tileAtFeet == GridNodeType.Stairs_West){
-      final zInt = character.z ~/ 24.0;
-      final tilePer = (1.0 - (((character.x - character.y) / 48.0) % 1.0));
-      character.z = (tilePer * 24.0) + (zInt * 24.0);
-      character.zVelocity = 0;
-    }
-
     const distance = 3;
-    final stepHeight = character.z + 10;
+    final stepHeight = character.z + 15;
 
     if (getCollisionAt(character.left, character.top, stepHeight)) {
       character.x += distance;
