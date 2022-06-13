@@ -328,7 +328,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
               break;
             case CharacterAction.Run:
-              player.angle =  args[6] * piQuarter; // 0.78539816339 == pi / 4
+              player.direction = args[6];
               game.setCharacterStateRunning(player);
               player.target = null;
               break;

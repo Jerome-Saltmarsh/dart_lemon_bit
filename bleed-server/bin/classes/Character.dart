@@ -29,14 +29,15 @@ class Character extends Collider with Team, Health, Velocity, Material {
   var equippedArmour = SlotType.Empty;
   var equippedHead = SlotType.Empty;
 
-  // properties
-  // static const piEighth = pi / 8.0;
-  // int get direction => (((angle + piEighth) % pi2) ~/ piQuarter) % 8;
   int get direction => angle ~/ piQuarter;
   double get speed => _speed + speedModifier;
 
   void setSpeed(double value){
     _speed = value;
+  }
+
+  void set direction(int value){
+    angle =  value * piQuarter;
   }
 
   bool get running => state == CharacterState.Running;
