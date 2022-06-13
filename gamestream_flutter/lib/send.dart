@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/card_type.dart';
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/mouse.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -129,8 +130,8 @@ final _screen = engine.screen;
 Future sendRequestUpdatePlayer() async {
   _updateBuffer[0] = _gameUpdateIndex;
   _updateBuffer[1] = _characterControllerAction.value;
-  writeNumberToByteArray(number: mouseWorldX, list: _updateBuffer, index: 2);
-  writeNumberToByteArray(number: mouseWorldY, list: _updateBuffer, index: 4);
+  writeNumberToByteArray(number: mouseGridX, list: _updateBuffer, index: 2);
+  writeNumberToByteArray(number: mouseGridY, list: _updateBuffer, index: 4);
   if (_characterControllerAction.value == CharacterAction.Run){
     _updateBuffer[6] = _characterController.angle.toInt();
   } else {

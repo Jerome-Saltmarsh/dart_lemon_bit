@@ -33,3 +33,4 @@ enum ClientRequest {
 }
 
 const clientRequests = ClientRequest.values;
+final clientRequestsLength = clientRequests.length;

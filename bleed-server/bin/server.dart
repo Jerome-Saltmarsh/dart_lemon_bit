@@ -1,6 +1,5 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
-import 'package:lemon_math/functions/constants.dart';
 import 'package:lemon_math/functions/vector2.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
@@ -9,7 +8,6 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'classes/library.dart';
 import 'common/card_type.dart';
 import 'common/library.dart';
-import 'compile.dart';
 import 'engine.dart';
 import 'functions/generateName.dart';
 import 'functions/withinRadius.dart';
@@ -18,20 +16,7 @@ import 'games/game_random.dart';
 import 'io/write_scene_to_file.dart';
 import 'physics.dart';
 
-const _space = " ";
-const _errorIndex = ServerResponse.Error;
-final _buffer = StringBuffer();
-final _clientRequestsLength = clientRequests.length;
 var totalConnections = 0;
-
-void clearBuffer() {
-  _buffer.clear();
-}
-
-void write(dynamic value) {
-  _buffer.write(value);
-  _buffer.write(_space);
-}
 
 Future main() async {
   print('gamestream.online server starting');
@@ -86,11 +71,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       sink.add(response);
     }
 
-    void sendAndClearBuffer() {
-      reply(_buffer.toString());
-      clearBuffer();
-    }
-
     void sendBufferToClient(){
      final player = _player;
      if (player == null) return;
@@ -135,7 +115,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     }
 
     void errorInvalidArg(String message) {
-      reply('$_errorIndex ${GameError.InvalidArguments.index} $message');
+      reply('${ServerResponse.Error} ${GameError.InvalidArguments.index} $message');
     }
 
     void errorInsufficientResources(){
@@ -182,7 +162,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
         final clientRequestInt = args[0];
 
-        if (clientRequestInt >= _clientRequestsLength) {
+        if (clientRequestInt >= clientRequestsLength) {
           error(GameError.UnrecognizedClientRequest);
           return;
         }
@@ -199,34 +179,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
           final game = player.game;
 
-          if (game.awaitingPlayers) {
-            compileGameStatus(_buffer, game.status);
-            sendAndClearBuffer();
-            return;
-          }
-
-          if (game.countingDown){
-            compileGameStatus(_buffer, game.status);
-            compileCountDownFramesRemaining(_buffer, game);
-            sendAndClearBuffer();
-            return;
-          }
-
-          if (game.finished) {
-            compileGameStatus(_buffer, game.status);
-            reply(_buffer.toString());
-            return;
-          }
-
           if (player.sceneChanged) {
             player.sceneChanged = false;
-            _buffer.clear();
-            _buffer.write(
-                '${ServerResponse.Scene_Changed} ${player.x.toInt()} ${player.y.toInt()} ');
-            // _buffer.write(game.compiledTiles);
-            // _buffer.write(game.compiledEnvironmentObjects);
             player.sceneDownloaded = false;
-            reply(_buffer.toString());
             return;
           }
 
@@ -344,7 +299,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       }
 
       final String requestString = requestD;
-      final arguments = requestString.split(_space);
+      final arguments = requestString.split(" ");
 
 
       if (arguments.isEmpty) {
@@ -363,7 +318,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
         return;
       }
 
-      if (clientRequestInt >= _clientRequestsLength) {
+      if (clientRequestInt >= clientRequestsLength) {
         error(GameError.UnrecognizedClientRequest);
         return;
       }
