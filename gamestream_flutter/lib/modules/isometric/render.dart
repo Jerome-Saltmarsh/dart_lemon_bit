@@ -12,6 +12,7 @@ import 'package:gamestream_flutter/classes/game_object.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/get_position.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
+import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToDst.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToSrc.dart';
 import 'package:gamestream_flutter/modules/isometric/animations.dart';
@@ -85,7 +86,7 @@ class IsometricRender {
   }
 
 
-  int calculateOrder(Position position) {
+  int calculateOrder(Vector3 position) {
      return convertWorldToRow(position.x, position.y) + convertWorldToColumn(position.x, position.y);
   }
 
@@ -145,10 +146,9 @@ class IsometricRender {
     var remainingBuildMode = modules.game.structureType.value != null;
     var remainingGenerated = indexGenerated < totalGenerated;
 
-
     var orderGrid = gridColumn + gridRow;
-    var orderPlayer = remainingPlayers ? calculateOrder(players[0]) : 0;
-    var orderPlayerZ = remainingPlayers ? players[0].z ~/ 24 : 0;
+    var orderPlayer = remainingPlayers ? players[0].renderOrder : 0;
+    var orderPlayerZ = remainingPlayers ? players[0].indexZ : 0;
     var orderObject = remainingGameObjects ? gameObjects[0].y : 0;
     var orderParticle = remainingParticles ? particles[0].y : 0;
     var orderZombie = remainingZombies ? zombies[0].y : 0;
@@ -264,8 +264,8 @@ class IsometricRender {
                         remainingPlayers = indexPlayer < totalPlayers;
                         while (remainingPlayers) {
                           final player = players[indexPlayer];
-                          orderPlayer = calculateOrder(player);
-                          orderPlayerZ = player.z ~/ 24.0;
+                          orderPlayer = player.renderOrder;
+                          orderPlayerZ = player.indexZ;
                           if (orderPlayer > screenBottom100) {
                             remainingPlayers = false;
                             break;

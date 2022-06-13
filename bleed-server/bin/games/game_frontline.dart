@@ -28,6 +28,8 @@ class GameFrontline extends Game {
         position: randomItem(scene.spawnPointPlayers)
     );
     player.z = 48.0;
+    player.x = 300;
+    player.y = 300;
     return player;
   }
 

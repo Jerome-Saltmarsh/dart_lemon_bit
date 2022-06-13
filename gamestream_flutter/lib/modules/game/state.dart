@@ -107,9 +107,9 @@ class Player extends Vector3 {
   final canAffordUpgradeBag = Watch(false);
   final canAffordPalisade = Watch(false);
 
-  int get indexZ => z ~/ 24;
-  int get indexRow => convertWorldToRow(x, y);
-  int get indexColumn => convertWorldToColumn(x, y);
+  // int get indexZ => z ~/ 24;
+  // int get indexRow => convertWorldToRow(x, y);
+  // int get indexColumn => convertWorldToColumn(x, y);
 
   Watch<bool> getCanAffordWatch(int type){
     switch (type){

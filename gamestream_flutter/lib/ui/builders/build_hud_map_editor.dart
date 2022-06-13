@@ -38,6 +38,7 @@ Widget buildPanelEditor(){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      _buildContainerPlayerInfo(),
       _button("Recenter", (){
          edit.z = player.indexZ;
          edit.row = player.indexRow;
@@ -71,8 +72,8 @@ Widget _buildContainerPlayerInfo(){
     return Container(
         height: 50,
         alignment: Alignment.centerLeft,
-        color: Colors.white60,
-        child: text("Player z: ${player.indexZ}, row: ${player.indexRow}, column: ${player.indexColumn}, xy:${player.x + player.y}"));
+        color: Colors.grey,
+        child: text("Player zIndex: ${player.indexZ}, row: ${player.indexRow}, column: ${player.indexColumn}, x: ${player.x}, y: ${player.y}, z: ${player.z}"));
   });
 }
 

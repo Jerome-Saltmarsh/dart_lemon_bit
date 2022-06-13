@@ -262,17 +262,14 @@ class Scene {
   }
 
   int getGridBlockTypeAtXYZ(double x, double y, double z){
+    if (z < 0) return GridNodeType.Boundary;
     if (x < 0) return GridNodeType.Boundary;
     if (y < 0) return GridNodeType.Boundary;
-    if (x > grid[0].length * tileSize) return GridNodeType.Boundary;
-    final row = (x + y) ~/ tileSize;
-    final column = (y - x) ~/ tileSize;
-    final height = z ~/ 24.0;
-    if (row < 0) return GridNodeType.Boundary;
-    if (column < 0) return GridNodeType.Boundary;
-    if (height < 0) return GridNodeType.Boundary;
+    final row = x ~/ tileSize;
     if (row >= grid[0].length) return GridNodeType.Boundary;
+    final column = (y - x) ~/ tileSize;
     if (column >= grid[0][0].length) return GridNodeType.Boundary;
+    final height = z ~/ 24.0;
     if (height >= grid.length) return GridNodeType.Empty;
     return grid[height][row][column].type;
   }
@@ -516,40 +513,40 @@ class Scene {
     if (type == GridNodeType.Bricks) return true;
 
     if (type == GridNodeType.Stairs_North){
-      final tilePer = (1.0 - (((x + y) / 48.0) % 1.0));
+      final tilePer = (1.0 - ((x / 48.0) % 1.0));
       final stairHeight = (tilePer * 24.0) + ((z ~/ 24.0) * 24.0);
       return stairHeight > z;
     }
     if (type == GridNodeType.Stairs_South){
-      final tilePer = ((x + y) / 48.0) % 1.0;
+      final tilePer = ((x) / 48.0) % 1.0;
       final stairHeight = (tilePer * 24.0) + ((z ~/ 24.0) * 24.0);
       return stairHeight > z;
     }
     if (type == GridNodeType.Stairs_West){
       final zInt = z ~/ 24.0;
-      final tilePer = (1.0 - (((x - y) / 48.0) % 1.0));
+      final tilePer = (1.0 - (((y) / 48.0) % 1.0));
       final stairHeight = (tilePer * 24.0) + (zInt * 24.0);
       return stairHeight > z;
     }
     if (type == GridNodeType.Stairs_East){
       final zInt = z ~/ 24.0;
-      final tilePer = ((x - y) / 48.0) % 1.0;
+      final tilePer = ((y) / 48.0) % 1.0;
       final stairHeight = (tilePer * 24.0) + (zInt * 24.0);
       return stairHeight > z;
     }
     if (type == GridNodeType.Tree){
       const treeRadius = 0.2;
-      final percRow = ((x + y) / 48.0) % 1.0;
+      final percRow = ((x) / 48.0) % 1.0;
       if ((0.5 - percRow).abs() > treeRadius) return false;
-      final percColumn = ((x - y) / 48.0) % 1.0;
+      final percColumn = ((y) / 48.0) % 1.0;
       if ((0.5 - percColumn).abs() > treeRadius) return false;
       return true;
     }
     if (type == GridNodeType.Torch){
       const torchRadius = 0.2;
-      final percRow = ((x + y) / 48.0) % 1.0;
+      final percRow = ((x) / 48.0) % 1.0;
       if ((0.5 - percRow).abs() > torchRadius) return false;
-      final percColumn = ((x - y) / 48.0) % 1.0;
+      final percColumn = ((y) / 48.0) % 1.0;
       if ((0.5 - percColumn).abs() > torchRadius) return false;
       return true;
     }
