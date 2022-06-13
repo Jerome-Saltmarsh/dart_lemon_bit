@@ -11,8 +11,8 @@ class Vector3 with Position {
   int get shade => gridLightDynamic[indexZ][indexRow][indexColumn];
   int get renderOrder => indexRow + indexColumn;
 
-  double get renderX => x - y;
-  double get renderY => y + x - z;
+  double get renderX => (x - y) * 0.5;
+  double get renderY => ((y + x) * 0.5) - z;
 
   Vector3(double x, double y, double z) {
     this.x = x;

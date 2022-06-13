@@ -198,7 +198,8 @@ class IsometricRender {
         final gridType = grid[gridZ][gridRow][gridColumn];
         if (gridType == GridNodeType.Empty
               ||
-            !remainingPlayers
+            // !remainingPlayers
+            remainingPlayers
               ||
             orderGrid <= orderPlayer
               ||
