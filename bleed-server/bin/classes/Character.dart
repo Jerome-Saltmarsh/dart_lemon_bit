@@ -33,7 +33,8 @@ class Character extends Collider with Team, Health, Velocity, Material {
 
   // properties
   static const piEighth = pi / 8.0;
-  int get direction => (((angle + piEighth) % pi2) ~/ piQuarter) % 8;
+  // int get direction => (((angle + piEighth) % pi2) ~/ piQuarter) % 8;
+  int get direction => angle ~/ piEighth;
   double get speed => _speed + speedModifier;
 
   void setSpeed(double value){

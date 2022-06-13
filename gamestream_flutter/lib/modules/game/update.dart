@@ -80,10 +80,10 @@ class GameUpdate {
 
     if (keysPressed.contains(LogicalKeyboardKey.keyW)) {
       if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
-        return Direction.East;
+        return Direction.North;
       }
       if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
-        return Direction.North;
+        return Direction.East;
       }
       return Direction.North_East;
     }
@@ -97,7 +97,6 @@ class GameUpdate {
       }
       return Direction.South_West;
     }
-
     if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
       return Direction.North_West;
     }

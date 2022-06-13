@@ -1,5 +1,6 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
+import 'package:lemon_math/functions/constants.dart';
 import 'package:lemon_math/functions/vector2.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
@@ -327,7 +328,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
               break;
             case CharacterAction.Run:
-              player.angle =  args[6] * 0.78539816339; // 0.78539816339 == pi / 4
+              player.angle =  args[6] * piQuarter; // 0.78539816339 == pi / 4
               game.setCharacterStateRunning(player);
               player.target = null;
               break;
