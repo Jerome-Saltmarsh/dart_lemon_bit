@@ -479,35 +479,28 @@ class Scene {
 
   double getHeightAt(double x, double y, double z){
     var type = getGridBlockTypeAtXYZ(x, y, z);
-    if (type == GridNodeType.Empty) return (z ~/ 24.0) * 24;
-    if (type == GridNodeType.Boundary) return (z ~/ 24.0) * 24 + 24;
-    if (type == GridNodeType.Bricks) return (z ~/ 24.0) * 24 + 24;
+    final bottom = (z ~/ tileHeight) * tileHeight;
+    if (type == GridNodeType.Empty) return bottom;
+    if (type == GridNodeType.Boundary) return bottom;
+    if (type == GridNodeType.Bricks) return bottom;
 
     if (type == GridNodeType.Stairs_North){
       final percentage = 1 - ((x % tileSize) / tileSize);
-      final stairBottom = ((z ~/ tileHeight) * tileHeight);
-      final stairHeight = (percentage * tileHeight) + stairBottom;
-      return stairHeight;
+      return (percentage * tileHeight) + bottom;
     }
     if (type == GridNodeType.Stairs_South){
       final percentage = ((x % tileSize) / tileSize);
-      final stairBottom = ((z ~/ tileHeight) * tileHeight);
-      final stairHeight = (percentage * tileHeight) + stairBottom;
-      return stairHeight;
+      return (percentage * tileHeight) + bottom;
     }
     if (type == GridNodeType.Stairs_West){
       final percentage = ((y % tileSize) / tileSize);
-      final stairBottom = ((z ~/ tileHeight) * tileHeight);
-      final stairHeight = (percentage * tileHeight) + stairBottom;
-      return stairHeight;
+      return (percentage * tileHeight) + bottom;
     }
     if (type == GridNodeType.Stairs_East){
       final percentage = 1 - ((y % tileSize) / tileSize);
-      final stairBottom = ((z ~/ tileHeight) * tileHeight);
-      final stairHeight = (percentage * tileHeight) + stairBottom;
-      return stairHeight;
+      return (percentage * tileHeight) + bottom;
     }
-    return (z ~/ 24.0) * 24 + 24;
+    return bottom + tileHeight;
   }
 
   bool getCollisionAt(double x, double y, double z) {
