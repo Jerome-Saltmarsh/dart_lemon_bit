@@ -1,13 +1,11 @@
-import 'dart:math';
-
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
 import '../common/weapon_type.dart';
 import '../functions/withinRadius.dart';
-import 'card_abilities.dart';
 import 'Collider.dart';
 import 'Game.dart';
+import 'card_abilities.dart';
 import 'components.dart';
 
 class Character extends Collider with Team, Health, Velocity, Material {
@@ -32,9 +30,9 @@ class Character extends Collider with Team, Health, Velocity, Material {
   var equippedHead = SlotType.Empty;
 
   // properties
-  static const piEighth = pi / 8.0;
+  // static const piEighth = pi / 8.0;
   // int get direction => (((angle + piEighth) % pi2) ~/ piQuarter) % 8;
-  int get direction => angle ~/ piEighth;
+  int get direction => angle ~/ piQuarter;
   double get speed => _speed + speedModifier;
 
   void setSpeed(double value){
