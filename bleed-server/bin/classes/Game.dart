@@ -783,6 +783,7 @@ extension GameFunctions on Game {
 
   void updatePlayer(Player player) {
     player.lastUpdateFrame++;
+    print("player direction:  ${Direction.getName(player.direction)}, angle: ${player.angle}");
 
     if (player.textDuration > 0) {
       player.textDuration--;

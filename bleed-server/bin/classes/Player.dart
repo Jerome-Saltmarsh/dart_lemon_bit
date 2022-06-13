@@ -74,14 +74,14 @@ class Player extends Character with ByteWriter {
   late Function(GameError error, {String message}) dispatchError;
 
   double get mouseAngle {
-
       final adjacent = x - mouse.x;
+      final opposite = y - mouse.y - z;
+      print("adjacent: $adjacent, opposite: $opposite");
       if (adjacent < 0) {
-        return -atan2(adjacent, y - mouse.y - (z));
+        return clampAngle(-atan2(adjacent, opposite));
       }
-      return pi2 - atan2(adjacent, y - mouse.y - (z));
+      return clampAngle(pi2 - atan2(adjacent, opposite));
   }
-  // double get mouseAngle => this.getAngle(mouse);
 
   Scene get scene => game.scene;
 

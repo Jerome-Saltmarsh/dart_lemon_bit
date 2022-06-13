@@ -78,7 +78,7 @@ Widget _buildContainerMouseInfo(){
        height: 50,
        alignment: Alignment.centerLeft,
        color: Colors.grey,
-       child: text("Mouse gridX: ${mouseGridX}, gridY: ${mouseGridY}"),
+       child: text("Mouse gridX: ${mouseGridX}, gridY: ${mouseGridY}, Angle: ${mousePlayerAngle}"),
      );
 });
 }

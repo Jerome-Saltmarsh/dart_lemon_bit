@@ -14,7 +14,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
   late CharacterType type;
   late double _speed;
   CardAbility? ability = null;
-  double angle = 0;
+  double _angle = 0;
   double accuracy = 0;
   double speedModifier = 0;
   var state = CharacterState.Idle;
@@ -31,8 +31,14 @@ class Character extends Collider with Team, Health, Velocity, Material {
   var equippedArmour = SlotType.Empty;
   var equippedHead = SlotType.Empty;
 
-  int get direction => angle ~/ piQuarter;
+  int get direction => _angle ~/ piQuarter;
   double get speed => _speed + speedModifier;
+
+  void set angle(double value){
+    _angle = clampAngle(value);
+  }
+
+  double get angle => _angle;
 
   void setSpeed(double value){
     _speed = value;
@@ -86,8 +92,8 @@ class Character extends Collider with Team, Health, Velocity, Material {
 
   void applyVelocity() {
     // TODO remove + pi quarter and fix direction
-    x -= cos(angle + piQuarter) * speed;
-    y -= sin(angle + piQuarter) * speed;
+    x -= cos(_angle + piQuarter) * speed;
+    y -= sin(_angle + piQuarter) * speed;
   }
 
   void updateMovement() {
