@@ -115,7 +115,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
 
   void face(Position position) {
     assert(!deadOrBusy);
-    angle = this.getAngle(position);
+    angle = this.getAngle(position) + piQuarter;
   }
 
   int getTechTypeLevel(int type) {
