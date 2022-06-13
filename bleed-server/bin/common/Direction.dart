@@ -1,18 +1,19 @@
 import 'dart:math';
 
 class Direction {
-  static const North = 0;
-  static const North_East = 1;
-  static const East = 2;
-  static const South_East = 3;
-  static const South = 4;
-  static const South_West = 5;
-  static const West = 6;
-  static const North_West = 7;
+  static const North_East = 0;
+  static const East = 1;
+  static const South_East = 2;
+  static const South = 3;
+  static const South_West = 4;
+  static const West = 5;
+  static const North_West = 6;
+  static const North = 7;
 
+  
   static String getName(int value){
-    assert (value >= North);
-    assert (value <= North_West);
+    assert (value >= 0);
+    assert (value <= 7);
 
     return const <int, String> {
        North: "North",
