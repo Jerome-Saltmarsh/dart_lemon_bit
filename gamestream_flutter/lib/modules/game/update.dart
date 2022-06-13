@@ -80,29 +80,29 @@ class GameUpdate {
 
     if (keysPressed.contains(LogicalKeyboardKey.keyW)) {
       if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
-        return Direction.UpRight;
+        return Direction.East;
       }
       if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
-        return Direction.UpLeft;
+        return Direction.North;
       }
-      return Direction.Up;
+      return Direction.North_East;
     }
 
     if (keysPressed.contains(LogicalKeyboardKey.keyS)) {
       if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
-        return Direction.DownRight;
+        return Direction.South;
       }
       if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
-        return Direction.DownLeft;
+        return Direction.West;
       }
-      return Direction.Down;
+      return Direction.South_West;
     }
 
     if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
-      return Direction.Left;
+      return Direction.North_West;
     }
     if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
-      return Direction.Right;
+      return Direction.South_East;
     }
     return null;
   }

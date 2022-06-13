@@ -1,14 +1,14 @@
 import 'dart:math';
 
 class Direction {
-  static const Up = 0;
-  static const UpRight = 1;
-  static const Right = 2;
-  static const DownRight = 3;
-  static const Down = 4;
-  static const DownLeft = 5;
-  static const Left = 6;
-  static const UpLeft = 7;
+  static const North = 0;
+  static const North_East = 1;
+  static const East = 2;
+  static const South_East = 3;
+  static const South = 4;
+  static const South_West = 5;
+  static const West = 6;
+  static const North_West = 7;
 }
 
 int sanitizeDirectionIndex(int index){

@@ -7,7 +7,6 @@ import 'classes/Scene.dart';
 import 'common/library.dart';
 import 'enums.dart';
 import 'generate/generate_grid_plain.dart';
-import 'utilities.dart';
 
 Scene generateScenePlain({int rows = 50, int columns = 50, int height = 7}){
   final tiles =  <List<int>>[];
@@ -350,7 +349,7 @@ class SpawnCell with Position {
   late final int row;
   late final int column;
   SpawnCell(this.row, this.column) {
-    assign(this, row, column);
+    // assign(this, row, column);
   }
 }
 

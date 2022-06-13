@@ -1,6 +1,5 @@
 import 'package:lemon_math/library.dart';
 
-import '../utilities.dart';
 import 'Scene.dart';
 
 class Node with Position {
@@ -75,8 +74,8 @@ class Node with Position {
   void set(int row, int column){
     this.row = row;
     this.column = column;
-    this.x = getTilePositionX(row, column);
-    this.y = getTilePositionY(row, column);
+    // this.x = getTilePositionX(row, column);
+    // this.y = getTilePositionY(row, column);
   }
 
   void reserveSurroundingNodes(){

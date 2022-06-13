@@ -11,8 +11,8 @@ import '../functions.dart';
 import '../functions/withinRadius.dart';
 import '../maths.dart';
 import '../physics.dart';
-import '../utilities.dart';
 import 'AI.dart';
+import 'Position3.dart';
 import 'card_abilities.dart';
 import 'Character.dart';
 import 'Collectable.dart';
@@ -71,7 +71,7 @@ abstract class Game {
 
   Position getRandomPlayerSpawnPosition() {
     if (scene.spawnPointPlayers.isEmpty) {
-      return getSceneCenter();
+      return Position3();
     }
     return randomItem(scene.spawnPointPlayers);
   }
@@ -270,8 +270,8 @@ extension GameFunctions on Game {
     items.add(Item(type: randomItem(ItemType.orbs), x: x, y: y));
   }
 
-  Vector2 getSceneCenter() =>
-      getTilePosition(scene.numberOfRows ~/ 2, scene.numberOfColumns ~/ 2);
+  // Vector2 getSceneCenter() =>
+  //     getTilePosition(scene.numberOfRows ~/ 2, scene.numberOfColumns ~/ 2);
 
   Character? getClosestEnemy({
     required double x,

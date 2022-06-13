@@ -2,7 +2,6 @@ import 'package:lemon_math/library.dart';
 import '../common/grid_node_type.dart';
 import '../common/library.dart';
 import '../enums.dart';
-import '../utilities.dart';
 import 'AI.dart';
 import 'Character.dart';
 import 'game_object.dart';
@@ -95,8 +94,8 @@ class Scene {
         final node = Node(isWalkable(tileRow[columnIndex]));
         node.row = rowIndex;
         node.column = columnIndex;
-        node.x = getTilePositionX(node.row, node.column);
-        node.y = getTilePositionY(node.row, node.column);
+        // node.x = getTilePositionX(node.row, node.column);
+        // node.y = getTilePositionY(node.row, node.column);
         nodeRow.add(node);
       }
       nodes.add(nodeRow);
@@ -202,8 +201,10 @@ class Scene {
     addGameObject(
         GameObject(
           type: type,
-          x: getTilePositionX(node.row, node.column),
-          y: getTilePositionY(node.row, node.column),
+          x: 0,
+          y: 0,
+          // x: getTilePositionX(node.row, node.column),
+          // y: getTilePositionY(node.row, node.column),
           health: health,
         )
     );
@@ -261,9 +262,9 @@ class Scene {
   }
 
   int getGridBlockTypeAtXYZ(double x, double y, double z){
-    const tileSize = 48;
-    if (x + y < 0) return GridNodeType.Boundary;
-    if (y - x < 0) return GridNodeType.Boundary;
+    if (x < 0) return GridNodeType.Boundary;
+    if (y < 0) return GridNodeType.Boundary;
+    if (x > grid[0].length * tileSize) return GridNodeType.Boundary;
     final row = (x + y) ~/ tileSize;
     final column = (y - x) ~/ tileSize;
     final height = z ~/ 24.0;
@@ -285,10 +286,10 @@ class Scene {
   }
 
   bool visitDirection(int direction, Node from) {
-    if (direction == Direction.UpLeft && !from.up.open && !from.left.open) return false;
-    if (direction == Direction.DownLeft && !from.down.open && !from.left.open) return false;
-    if (direction == Direction.DownRight && !from.down.open && !from.right.open) return false;
-    if (direction == Direction.UpRight && !from.up.open && !from.right.open) return false;
+    if (direction == Direction.North_West && !from.up.open && !from.left.open) return false;
+    if (direction == Direction.South_West && !from.down.open && !from.left.open) return false;
+    if (direction == Direction.South_East && !from.down.open && !from.right.open) return false;
+    if (direction == Direction.North_East && !from.up.open && !from.right.open) return false;
     return visitNode(from.getNodeByDirection(direction), from);
   }
 
@@ -479,10 +480,6 @@ class Scene {
     return nodes[row][column];
   }
 
-  // bool projectileCollisionAt(double x, double y, double z) {
-  //   return !getCollisionAt(getTileAtXY(x, y));
-  // }
-
   double getHeightAt(double x, double y, double z){
     var type = getGridBlockTypeAtXYZ(x, y, z);
     if (type == GridNodeType.Empty) return (z ~/ 24.0) * 24;
@@ -635,17 +632,17 @@ var pathFindSearchID = 0;
 int parseRowsAndColumnsToDirection(int rows, int columns) {
   assert(rows != 0 || columns != 0);
   if (rows > 0) {
-     if (columns < 0) return Direction.DownLeft;
-     if (columns == 0) return Direction.Down;
-     return Direction.DownRight;
+     if (columns < 0) return Direction.South_West;
+     if (columns == 0) return Direction.South;
+     return Direction.South_East;
   }
   if (rows < 0) {
-    if (columns < 0) return Direction.UpLeft;
-    if (columns == 0) return Direction.Up;
-    return Direction.UpRight;
+    if (columns < 0) return Direction.North_West;
+    if (columns == 0) return Direction.North;
+    return Direction.North_East;
   }
-  if (columns < 0) return Direction.Left;
-  return Direction.Right;
+  if (columns < 0) return Direction.West;
+  return Direction.East;
 }
 
 // double getTilePositionX(int row, int column){

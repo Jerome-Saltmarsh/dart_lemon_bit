@@ -1,10 +1,10 @@
 import 'package:lemon_math/library.dart';
 
 import '../common/tile_size.dart';
+import 'Position3.dart';
 import 'components.dart';
 
-class Collider with Position, Radius {
-  double z = 0;
+class Collider extends Position3 with Radius {
   double zVelocity = 0;
   double get left => x - radius;
   double get right => x + radius;

@@ -973,15 +973,15 @@ class IsometricRender {
 
     if (weapon == WeaponType.Bow) {
        if (
-            direction == Direction.UpLeft
+            direction == Direction.North
             ||
-            direction == Direction.Up
+            direction == Direction.North_East
             ||
-            direction == Direction.UpRight
+            direction == Direction.East
             ||
-            direction == Direction.Right
+            direction == Direction.South_East
             ||
-            direction == Direction.DownRight
+            direction == Direction.South
        ){
          _renderCharacterTemplateWeapon(character);
          _renderCharacterTemplate(character);
@@ -994,11 +994,11 @@ class IsometricRender {
 
     if (WeaponType.isMelee(weapon)) {
       if (
-          direction == Direction.Up
+          direction == Direction.North_East
           ||
-          direction == Direction.UpLeft
+          direction == Direction.North
           ||
-          direction == Direction.Left
+          direction == Direction.South_West
       ){
         _renderCharacterTemplateWeapon(character);
         _renderCharacterTemplate(character);
