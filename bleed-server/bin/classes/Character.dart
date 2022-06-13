@@ -85,6 +85,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
   }
 
   void applyVelocity() {
+    // TODO remove + pi quarter and fix direction
     x -= cos(angle + piQuarter) * speed;
     y -= sin(angle + piQuarter) * speed;
   }

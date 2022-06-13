@@ -205,14 +205,7 @@ class IsometricRender {
             gridZ < orderPlayerZ
             ) {
 
-          // if (!lowerTileMode || player.z ~/ 24 >= gridZ - 1) {
-          //   renderGridNode(gridZ, gridRow, gridColumn, gridType);
-          // }
-          if (!lowerTileMode
-              // || gridType == GridNodeType.Empty
-              || player.z ~/ 24 >= gridZ
-              // || (gridZ + 1 < gridTotalZ && grid[gridZ + 1][gridRow][gridColumn] == GridNodeType.Empty)
-          ) {
+          if (!lowerTileMode || player.indexZ >= gridZ) {
             renderGridNode(gridZ, gridRow, gridColumn, gridType);
           }
 
