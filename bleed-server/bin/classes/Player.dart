@@ -116,7 +116,7 @@ class Player extends Character with ByteWriter {
             x: position.x,
             y: position.y,
             health: health,
-            speed: 3.5,
+            speed: 4.25,
             team: team,
             weapon: weapon,
 

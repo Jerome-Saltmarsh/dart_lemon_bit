@@ -74,7 +74,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
     required double y,
     required int health,
     int weapon = TechType.Unarmed,
-    double speed = 3.0,
+    double speed = 5.0,
     int team = Teams.none,
   }) : super(x: x, y: y, radius: 7) {
     maxHealth = health;
@@ -95,7 +95,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
     if (xv.abs() <= minVelocity) return;
     x += xv;
     y += yv;
-    const velocityFriction = 0.88;
+    const velocityFriction = 0.95;
     xv *= velocityFriction;
     yv *= velocityFriction;
   }
