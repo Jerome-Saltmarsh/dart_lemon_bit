@@ -490,20 +490,21 @@ class Scene {
       return stairHeight;
     }
     if (type == GridNodeType.Stairs_South){
-      final tilePer = ((x + y) / 48.0) % 1.0;
-      final stairHeight = (tilePer * 24.0) + ((z ~/ 24.0) * 24.0);
+      final percentage = ((x % tileSize) / tileSize);
+      final stairBottom = ((z ~/ tileHeight) * tileHeight);
+      final stairHeight = (percentage * tileHeight) + stairBottom;
       return stairHeight;
     }
     if (type == GridNodeType.Stairs_West){
-      final zInt = z ~/ 24.0;
-      final tilePer = (1.0 - (((x - y) / 48.0) % 1.0));
-      final stairHeight = (tilePer * 24.0) + (zInt * 24.0);
+      final percentage = ((y % tileSize) / tileSize);
+      final stairBottom = ((z ~/ tileHeight) * tileHeight);
+      final stairHeight = (percentage * tileHeight) + stairBottom;
       return stairHeight;
     }
     if (type == GridNodeType.Stairs_East){
-      final zInt = z ~/ 24.0;
-      final tilePer = ((x - y) / 48.0) % 1.0;
-      final stairHeight = (tilePer * 24.0) + (zInt * 24.0);
+      final percentage = 1 - ((y % tileSize) / tileSize);
+      final stairBottom = ((z ~/ tileHeight) * tileHeight);
+      final stairHeight = (percentage * tileHeight) + stairBottom;
       return stairHeight;
     }
     return (z ~/ 24.0) * 24 + 24;
