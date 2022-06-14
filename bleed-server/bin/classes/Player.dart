@@ -72,9 +72,7 @@ class Player extends Character with ByteWriter {
   late Function(GameError error, {String message}) dispatchError;
 
   double get mouseAngle {
-    final adjacent = y - mouse.y;
-    final opposite = x - mouse.x;
-    return pi2 - getAngle(adjacent, opposite);
+    return getGridAngle(mouse.x, mouse.y);
   }
 
   Scene get scene => game.scene;

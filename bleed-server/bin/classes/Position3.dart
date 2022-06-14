@@ -18,4 +18,8 @@ class Position3 with Position {
      if (y != null) this.y = y;
      if (z != null) this.x = z;
   }
+
+  double getGridAngle(double x, double y){
+    return pi2 - getAngle(this.y - y, this.x - x);
+  }
 }
