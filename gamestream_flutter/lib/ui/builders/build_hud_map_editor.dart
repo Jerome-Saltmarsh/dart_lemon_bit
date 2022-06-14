@@ -46,6 +46,11 @@ Widget buildPanelEditor(){
          edit.row = player.indexRow;
          edit.column = player.indexColumn;
       }),
+      watch(gridShadows, (bool shadowsOn){
+        return _button("Shadows: $shadowsOn", (){
+          gridShadows.value = !gridShadows.value;
+        });
+      }),
       _buildControlLightMode(),
       _buildControlTime(),
       height8,

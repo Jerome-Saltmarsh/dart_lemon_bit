@@ -7,6 +7,9 @@ import 'package:gamestream_flutter/state/light_mode.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
+final gridShadows = Watch(true, onChanged: (bool value){
+  refreshLighting();
+});
 final ambient = Watch(Shade.Bright, onChanged: _onAmbientChanged);
 final grid = <List<List<int>>>[];
 final gridLightBake = <List<List<int>>>[];
@@ -32,7 +35,9 @@ void refreshLighting(){
   _refreshGridMetrics();
   _setLightMapValue(gridLightBake, ambient.value);
   _setLightMapValue(gridLightDynamic, ambient.value);
-  _applyShadows();
+  if (gridShadows.value){
+    _applyShadows();
+  }
   _applyBakeMapEmissions();
 }
 
@@ -46,11 +51,11 @@ void _applyShadows(){
 
            final tile = grid[z][row][column];
 
-           if (tile != GridNodeType.Bricks && tile != GridNodeType.Grass) continue;
+           if (tile != GridNodeType.Bricks && tile != GridNodeType.Grass && !GridNodeType.isStairs(tile)) continue;
 
             var projectionZ = z - 1;
-            var projectionRow = row + 1;
-            var projectionColumn = column;
+            var projectionRow = row;
+            var projectionColumn = column + 1;
 
             while (
                 projectionZ >= 0 &&
@@ -64,9 +69,27 @@ void _applyShadows(){
                 }
               }
               projectionZ--;
-              projectionRow++;
-              // projectionColumn++;
+              projectionColumn++;
             }
+
+           projectionZ = z - 1;
+           projectionRow = row + 1;
+           projectionColumn = column;
+
+           while (
+           projectionZ >= 0 &&
+               projectionRow < gridTotalRows &&
+               projectionColumn < gridTotalColumns
+           ) {
+             final shade = gridLightBake[projectionZ][projectionRow][projectionColumn];
+             if (shade < shadowShade){
+               if (grid[projectionZ + 1][projectionRow][projectionColumn] == GridNodeType.Empty){
+                 gridLightBake[projectionZ][projectionRow][projectionColumn] = shadowShade;
+               }
+             }
+             projectionZ--;
+             projectionRow++;
+           }
 
          }
       }
