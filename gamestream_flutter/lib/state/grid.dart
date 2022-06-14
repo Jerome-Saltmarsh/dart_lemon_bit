@@ -32,7 +32,45 @@ void refreshLighting(){
   _refreshGridMetrics();
   _setLightMapValue(gridLightBake, ambient.value);
   _setLightMapValue(gridLightDynamic, ambient.value);
+  _applyShadows();
   _applyBakeMapEmissions();
+}
+
+void _applyShadows(){
+  final current = ambient.value;
+  final shadowShade = current >= Shade.Pitch_Black ? current : current + 1;
+
+   for (var z = 0; z < gridTotalZ; z++) {
+      for (var row = 0; row < gridTotalRows; row++){
+         for (var column = 0; column < gridTotalColumns; column++){
+
+           final tile = grid[z][row][column];
+
+           if (tile != GridNodeType.Bricks && tile != GridNodeType.Grass) continue;
+
+            var projectionZ = z - 1;
+            var projectionRow = row + 1;
+            var projectionColumn = column;
+
+            while (
+                projectionZ >= 0 &&
+                projectionRow < gridTotalRows &&
+                projectionColumn < gridTotalColumns
+            ) {
+              final shade = gridLightBake[projectionZ][projectionRow][projectionColumn];
+              if (shade < shadowShade){
+                if (grid[projectionZ + 1][projectionRow][projectionColumn] == GridNodeType.Empty){
+                  gridLightBake[projectionZ][projectionRow][projectionColumn] = shadowShade;
+                }
+              }
+              projectionZ--;
+              projectionRow++;
+              // projectionColumn++;
+            }
+
+         }
+      }
+   }
 }
 
 void gridRefreshDynamicLight(){
