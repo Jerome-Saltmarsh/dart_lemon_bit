@@ -45,7 +45,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
   }
 
   void set direction(int value){
-    angle =  value * piQuarter;
+    angle = convertDirectionToAngle(value);
   }
 
   bool get running => state == CharacterState.Running;
@@ -115,7 +115,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
 
   void face(Position position) {
     assert(!deadOrBusy);
-    angle = this.getAngle(position) + piQuarter;
+    angle = this.getAngle(position);
   }
 
   int getTechTypeLevel(int type) {

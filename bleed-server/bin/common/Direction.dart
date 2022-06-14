@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:lemon_math/functions/clamp_angle.dart';
+import 'package:lemon_math/functions/constants.dart';
 
 class Direction {
   static const North = 0;
@@ -29,12 +28,15 @@ class Direction {
   }
 }
 
-int sanitizeDirectionIndex(int index){
-  return index >= 0 ? index % 8 : 8 - (index.abs() % 8);
+int convertAngleToDirection(double angle) {
+  return clampDirection(clampAngle(angle) ~/ piQuarter);
 }
 
-int convertAngleToDirection(double angle) {
-  const piQuarter = pi * 0.25;
-  return clampAngle(angle) ~/ piQuarter;
+double convertDirectionToAngle(int direction){
+   return clampDirection(direction) * piQuarter;
+}
+
+int clampDirection(int index){
+  return index >= 0 ? index % 8 : 8 - (index.abs() % 8);
 }
 

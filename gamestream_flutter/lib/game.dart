@@ -317,6 +317,8 @@ class Game with ByteReader {
           _player.x = readDouble();
           _player.y = readDouble();
           _player.z = readDouble();
+          _player.angle = readDouble() / 100.0;
+          _player.mouseAngle = readDouble() / 100.0;
 
           switch(modules.game.state.cameraMode.value){
             case CameraMode.Chase:

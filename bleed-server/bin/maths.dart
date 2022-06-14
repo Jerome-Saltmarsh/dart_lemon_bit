@@ -62,3 +62,14 @@ double clampMagnitudeY(double x, double y, double value) {
 bool isLeft(double aX, double aY, double bX, double bY, double cX, double cY) {
   return ((bX - aX) * (cY - aY) - (bY - aY) * (cX - aX)) > 0;
 }
+
+// double getGridAngle(double x1, double y1, double x2, double y2){
+//    final x3 = x1 + y1;
+//    final y3 = y1 - x1;
+//    final x4 = x2 + y2;
+//    final y4 = y2 - x2;
+//    final opposite = x3 - x4;
+//    final adjacent = y3 - y4;
+//    final angle = getAngle(adjacent, opposite);
+//    return angle;
+// }

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
@@ -74,13 +72,19 @@ class Player extends Character with ByteWriter {
   late Function(GameError error, {String message}) dispatchError;
 
   double get mouseAngle {
-      final adjacent = x - mouse.x;
-      final opposite = y - mouse.y - z;
-      print("adjacent: $adjacent, opposite: $opposite");
-      if (adjacent < 0) {
-        return clampAngle(-atan2(adjacent, opposite));
-      }
-      return clampAngle(pi2 - atan2(adjacent, opposite));
+
+     // const piEight = pi / 8.0;
+     //  final adjacent = x - mouse.x;
+     //  final opposite = y - mouse.y - z;
+      // if (adjacent < 0) {
+      //   return clampAngle(-atan2(adjacent, opposite) + piEight) ;
+      // }
+      // return clampAngle(pi2 - atan2(adjacent, opposite) + piEight) ;
+    // return getGridAngle(x, y, mouse.x, mouse.y - z);
+    final adjacent = x - mouse.x;
+    final opposite = y - mouse.y;
+    final angle = getAngle(adjacent, opposite);
+    return angle;
   }
 
   Scene get scene => game.scene;
@@ -358,6 +362,8 @@ extension PlayerProperties on Player {
     writeInt(x);
     writeInt(y);
     writeInt(z);
+    writeInt(angle * 100);
+    writeInt(mouseAngle * 100);
     writeInt(health); // 2
     writeInt(maxHealth); // 2
     writeInt(magic); // 2

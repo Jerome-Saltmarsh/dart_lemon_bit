@@ -58,6 +58,8 @@ class Slots {
 }
 
 class Player extends Vector3 {
+  var angle = 0.0;
+  var mouseAngle = 0.0;
   var score = 0;
   var team = 0;
   var abilityRange = 0.0;

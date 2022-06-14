@@ -1,17 +1,14 @@
 import 'package:bleed_common/grid_node_type.dart';
-import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/mouse.dart';
-import 'package:gamestream_flutter/modules/isometric/utilities.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/state/grid.dart';
 import 'package:gamestream_flutter/state/light_mode.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
-import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import 'build_column_set_weapon.dart';
@@ -43,7 +40,7 @@ Widget buildPanelEditor(){
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       _buildContainerMouseInfo(),
-      // _buildContainerPlayerInfo(),
+      _buildContainerPlayerInfo(),
       _button("Recenter", (){
          edit.z = player.indexZ;
          edit.row = player.indexRow;
@@ -78,7 +75,7 @@ Widget _buildContainerMouseInfo(){
        height: 50,
        alignment: Alignment.centerLeft,
        color: Colors.grey,
-       child: text("Mouse gridX: ${mouseGridX}, gridY: ${mouseGridY}, Angle: ${mousePlayerAngle}"),
+       child: text("Mouse gridX: ${mouseGridX.toInt()}, gridY: ${mouseGridY.toInt()}, Angle: ${mousePlayerAngle.toStringAsFixed(1)}"),
      );
 });
 }
@@ -89,7 +86,7 @@ Widget _buildContainerPlayerInfo(){
         height: 50,
         alignment: Alignment.centerLeft,
         color: Colors.grey,
-        child: text("Player zIndex: ${player.indexZ}, row: ${player.indexRow}, column: ${player.indexColumn}, x: ${player.x}, y: ${player.y}, z: ${player.z}, renderX: ${player.renderX}, renderY: ${player.renderY}"));
+        child: text("Player zIndex: ${player.indexZ}, row: ${player.indexRow}, column: ${player.indexColumn}, x: ${player.x}, y: ${player.y}, z: ${player.z}, renderX: ${player.renderX}, renderY: ${player.renderY}, angle: ${player.angle}, mouseAngle: ${player.mouseAngle}",));
   });
 }
 

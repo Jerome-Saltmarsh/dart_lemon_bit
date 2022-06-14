@@ -325,17 +325,17 @@ class Scene {
     final directionIndex = direction;
 
     for (var i = 1; i < 4; i++) {
-      final leftDirection = sanitizeDirectionIndex(directionIndex - i);
+      final leftDirection = clampDirection(directionIndex - i);
       if (visitDirection(leftDirection, node)) {
         return true;
       }
-      final rightDirection = sanitizeDirectionIndex(directionIndex + i);
+      final rightDirection = clampDirection(directionIndex + i);
       if (visitDirection(rightDirection, node)) {
         return true;
       }
     }
 
-    final directionBehind = sanitizeDirectionIndex(directionIndex + 4);
+    final directionBehind = clampDirection(directionIndex + 4);
     return visitDirection(directionBehind, node);
   }
 
@@ -379,17 +379,17 @@ class Scene {
     final directionIndex = direction;
 
     for (var i = 1; i < 4; i++) {
-      final leftDirection = sanitizeDirectionIndex(directionIndex - i);
+      final leftDirection = clampDirection(directionIndex - i);
       if (visitDirection(leftDirection, node)) {
         return true;
       }
-      final rightDirection = sanitizeDirectionIndex(directionIndex + i);
+      final rightDirection = clampDirection(directionIndex + i);
       if (visitDirection(rightDirection, node)) {
         return true;
       }
     }
 
-    final directionBehind = sanitizeDirectionIndex(directionIndex + 4);
+    final directionBehind = clampDirection(directionIndex + 4);
     return visitDirection(directionBehind, node);
   }
 
