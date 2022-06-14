@@ -552,9 +552,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (column == null) return errorInvalidArg('column');
 
           player.game.spawnZombie(
-              x: getTileWorldX(row, column),
-              y: getTileWorldY(row, column),
-              z: z * 24.0,
+              x: row * tileSize + tileSizeHalf,
+              y: column * tileSize + tileSizeHalf,
+              z: z * tileHeight,
               health: 10,
               team: 0,
               damage: 1

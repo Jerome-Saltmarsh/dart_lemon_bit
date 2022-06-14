@@ -390,6 +390,7 @@ class IsometricRender {
           if (!remainingBuildMode || orderZombie < orderBuildMode) {
             if (!remainingStructures || orderZombie < orderStructure) {
                 if (!remainingNpcs || orderZombie < orderNpc) {
+                  assert(indexZombie >= 0);
                   renderZombie(zombies[indexZombie]);
                   indexZombie++;
                   remainingZombies = indexZombie < totalZombies;
@@ -397,7 +398,6 @@ class IsometricRender {
                     final zombie = zombies[indexZombie];
                     orderZombie = zombie.y;
                     if (orderZombie > screenBottom100){
-                      print("last zombie");
                       remainingZombies = false;
                       break;
                     }
