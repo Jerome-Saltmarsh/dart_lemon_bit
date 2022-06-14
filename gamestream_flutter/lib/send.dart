@@ -17,7 +17,7 @@ void sendRequestSpeak(String message){
 }
 
 void sendRequestTeleport(double x, double y){
-  webSocket.send('${ClientRequest.Teleport.index} ${x.toInt()} ${y.toInt()}');
+  sendClientRequest(ClientRequest.Teleport);
 }
 
 void sendRequestSelectAbility(int index) {

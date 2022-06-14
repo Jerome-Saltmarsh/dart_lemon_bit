@@ -394,8 +394,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             errorPlayerNotFound();
             return;
           }
-          player.x = double.parse(arguments[1]);
-          player.y = double.parse(arguments[2]);
+          player.x = player.mouse.x;
+          player.y = player.mouse.y;
           return;
 
         case ClientRequest.Join_Custom:
