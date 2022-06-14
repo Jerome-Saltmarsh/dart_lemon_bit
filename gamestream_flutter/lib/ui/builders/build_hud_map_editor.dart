@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/hud/hud_state.dart';
 import 'package:gamestream_flutter/isometric/mouse.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/state/grid.dart';
@@ -18,9 +19,9 @@ Widget buildHudMapEditor() {
   return Stack(
     children: [
       Positioned(
-          top: 0,
-          left: 0,
-          child: buildPanelEditor(),
+        top: 0,
+        left: 0,
+        child: visibleBuilder(hud.editToolsEnabled, buildPanelEditor()),
       ),
       Positioned(
           top: 0,
@@ -28,9 +29,10 @@ Widget buildHudMapEditor() {
           child: buildPanelMenu()
       ),
       Positioned(
-          bottom: 0,
-          right: 0,
-          child: buildColumnSetWeapon()),
+        bottom: 0,
+        right: 0,
+        child: visibleBuilder(hud.editToolsEnabled, buildColumnSetWeapon()),
+      ),
     ],
   );
 }
@@ -39,8 +41,10 @@ Widget buildPanelEditor(){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      _button("Hide", hud.toggleEditToolsEnabled),
       // _buildContainerMouseInfo(),
       // _buildContainerPlayerInfo(),
+
       _button("Recenter", (){
          edit.z = player.indexZ;
          edit.row = player.indexRow;

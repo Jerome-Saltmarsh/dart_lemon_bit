@@ -955,26 +955,19 @@ class IsometricRender {
 
     if (character.dead) return;
     renderCharacterHealthBar(character);
-    // final shade = state.getShadeAtPosition(character.x, character.y);
-    // if (shade > Shade.Dark) return;
-    //
-    // if (shade < Shade.Dark) {
-    //
-    // }
+
     final weapon = character.weapon;
     final direction = character.direction;
 
-    if (weapon == WeaponType.Bow) {
+    if (weapon == WeaponType.Bow || weapon == WeaponType.Shotgun) {
        if (
+            direction == Direction.North_West
+            ||
             direction == Direction.North
             ||
             direction == Direction.North_East
             ||
             direction == Direction.East
-            ||
-            direction == Direction.South_East
-            ||
-            direction == Direction.South
        ){
          _renderCharacterTemplateWeapon(character);
          _renderCharacterTemplate(character);
