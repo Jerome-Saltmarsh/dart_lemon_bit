@@ -14,7 +14,7 @@ import 'library.dart';
 class Player extends Character with ByteWriter {
   CharacterSelection? selection;
   final mouse = Vector2(0, 0);
-  final runTarget = Vector2(0, 0);
+  final _runTarget = Vector2(0, 0);
   var characterSelectRequired = false;
   var debug = false;
   var score = 0;
@@ -44,11 +44,20 @@ class Player extends Character with ByteWriter {
   var sceneDownloaded = false;
   Game game;
   Collider? aimTarget; // the currently highlighted character
-  // Position? target;
   Account? account;
 
   final cardChoices = <CardType>[];
   final deck = <Card>[];
+
+  void runToMouse(){
+    setRunTarget(mouse.x, mouse.y);
+  }
+
+  void setRunTarget(double x, double y){
+    _runTarget.x = x;
+    _runTarget.y = y;
+    target = _runTarget;
+  }
 
   void setCardAbility(CardAbility value){
     if (ability == value) return;

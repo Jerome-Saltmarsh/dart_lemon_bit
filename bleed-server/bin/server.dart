@@ -244,9 +244,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                     game.setCharacterStatePerforming(player);
                   }
                 } else {
-                  player.runTarget.x = mouseX;
-                  player.runTarget.y = mouseY;
-                  player.target = player.runTarget;
+                  // player.setRunTarget(mouseX, mouseY);
+                  player.runToMouse();
                 }
                 break;
               }
@@ -261,9 +260,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                     player.target = aimTarget;
                     return;
                   } else {
-                    player.runTarget.x = mouseX;
-                    player.runTarget.y = mouseY + (player.z * 0.5);
-                    player.target = player.runTarget;
+                    player.runToMouse();
+                    // player.runTarget.x = mouseX;
+                    // player.runTarget.y = mouseY + (player.z * 0.5);
+                    // player.target = player.runTarget;
+                    // player.setRunTarget(mouseX, mouseY);
                     return;
                   }
                 case AbilityMode.Activated:
