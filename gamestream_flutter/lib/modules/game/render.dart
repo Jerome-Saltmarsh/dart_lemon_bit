@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/classes/Projectile.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/hud/hud_state.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -73,22 +74,22 @@ class GameRender {
 
     _render.renderSprites();
     renderProjectiles();
+    if (hud.editToolsEnabled.value){
+      renderWireframes();
+    }
 
-    for (var z = 0; z < edit.z; z++){
+    drawEffects();
+    drawItems();
+  }
+
+  void renderWireframes() {
+     for (var z = 0; z < edit.z; z++){
       isometric.render.renderWireFrameBlue(edit.row, edit.column, z);
     }
     isometric.render.renderWireFrameRed(
         edit.row,
         edit.column, edit.z
     );
-
-    // isometric.render.renderArrowUp(
-    //     getTileWorldX(edit.row, edit.column),
-    //     getTileWorldY(edit.row, edit.column) - ((edit.z) * 24)
-    // );
-
-    drawEffects();
-    drawItems();
   }
 
   void renderTeamColours() {
