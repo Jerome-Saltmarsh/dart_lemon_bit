@@ -245,7 +245,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                   }
                 } else {
                   player.runTarget.x = mouseX;
-                  player.runTarget.y = mouseY + player.z;
+                  player.runTarget.y = mouseY;
                   player.target = player.runTarget;
                 }
                 break;
