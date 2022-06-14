@@ -31,7 +31,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
   var equippedArmour = SlotType.Empty;
   var equippedHead = SlotType.Empty;
 
-  int get direction => _angle ~/ piQuarter;
+  int get direction => convertAngleToDirection(_angle);
   double get speed => _speed + speedModifier;
 
   void set angle(double value){
@@ -91,9 +91,8 @@ class Character extends Collider with Team, Health, Velocity, Material {
   }
 
   void applyVelocity() {
-    // TODO remove + pi quarter and fix direction
-    x -= cos(_angle + piQuarter) * speed;
-    y -= sin(_angle + piQuarter) * speed;
+    x -= cos(_angle) * speed;
+    y -= sin(_angle) * speed;
   }
 
   void updateMovement() {

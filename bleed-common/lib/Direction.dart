@@ -29,11 +29,11 @@ class Direction {
 }
 
 int convertAngleToDirection(double angle) {
-  return clampDirection(clampAngle(angle) ~/ piQuarter);
+  return clampDirection(clampAngle(angle - piQuarter) ~/ piQuarter);
 }
 
 double convertDirectionToAngle(int direction){
-   return clampDirection(direction) * piQuarter;
+   return (clampDirection(direction) * piQuarter) + piQuarter;
 }
 
 int clampDirection(int index){
