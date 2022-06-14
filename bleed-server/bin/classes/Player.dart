@@ -72,19 +72,9 @@ class Player extends Character with ByteWriter {
   late Function(GameError error, {String message}) dispatchError;
 
   double get mouseAngle {
-
-     // const piEight = pi / 8.0;
-     //  final adjacent = x - mouse.x;
-     //  final opposite = y - mouse.y - z;
-      // if (adjacent < 0) {
-      //   return clampAngle(-atan2(adjacent, opposite) + piEight) ;
-      // }
-      // return clampAngle(pi2 - atan2(adjacent, opposite) + piEight) ;
-    // return getGridAngle(x, y, mouse.x, mouse.y - z);
-    final adjacent = x - mouse.x;
-    final opposite = y - mouse.y;
-    final angle = getAngle(adjacent, opposite);
-    return angle;
+    final adjacent = y - mouse.y;
+    final opposite = x - mouse.x;
+    return pi2 - getAngle(adjacent, opposite);
   }
 
   Scene get scene => game.scene;
