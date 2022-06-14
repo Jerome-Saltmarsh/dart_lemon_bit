@@ -13,10 +13,6 @@ class GameMap {
 
   GameMap(this.state, this.actions){
     keyPressedHandlers = {
-      // state.keyMap.perform: (){
-      //   if (state.textBoxVisible.value) return;
-      //   actions.playerPerform();
-      // },
       state.keyMap.speak: actions.toggleMessageBox,
       state.keyMap.toggleAudio: audio.toggleSoundEnabled,
       state.keyMap.hourForwards: actions.skipHour,

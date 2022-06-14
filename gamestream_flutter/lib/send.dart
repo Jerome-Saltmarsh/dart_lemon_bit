@@ -17,7 +17,6 @@ void sendRequestSpeak(String message){
 }
 
 void sendRequestTeleport(double x, double y){
-  print("sendRequestTeleport($x, $y)");
   webSocket.send('${ClientRequest.Teleport.index} ${x.toInt()} ${y.toInt()}');
 }
 
