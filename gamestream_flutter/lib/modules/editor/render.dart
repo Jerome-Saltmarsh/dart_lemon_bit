@@ -9,8 +9,6 @@ import 'scope.dart';
 class EditorRender with EditorScope {
 
   void render(Canvas canvas, Size size) {
-    print("editor.render()");
-    isometric.render.renderTiles();
     _drawSelectedObject();
     _characters();
     renderStaticObjects();

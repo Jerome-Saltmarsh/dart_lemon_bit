@@ -30,62 +30,14 @@ const _framesPerDirectionZombie = 8;
 final _screen = engine.screen;
 
 class IsometricRender {
-
   var lowerTileMode = false;
   final IsometricModule state;
+
   IsometricRender(this.state);
 
-  void renderTiles() {
-
-    final screen = engine.screen;
-
-    state.minRow = max(0, convertWorldToRow(screen.left, screen.top));
-    state.maxRow = min(state.totalRowsInt, convertWorldToRow(screen.right, screen.bottom));
-    state.minColumn = max(0, convertWorldToColumn(screen.right, screen.top));
-    state.maxColumn = min(state.totalColumnsInt, convertWorldToColumn(screen.left, screen.bottom));
-
-    final minRow = state.minRow;
-    final maxRow = state.maxRow;
-    final minColumn = state.minColumn;
-    final maxColumn = state.maxColumn;
-    final dynamicShade = state.dynamic;
-    final totalColumnsInt4 = state.totalColumnsInt * 4;
-    final tilesSrc = state.tilesSrc;
-    final tilesDst = state.tilesDst;
-
-    final screenLeft = _screen.left;
-    final screenTop = _screen.top;
-    final screenRight = _screen.right;
-    final screenBottom = _screen.bottom;
-
-    for (var rowIndex = minRow; rowIndex < maxRow; rowIndex++){
-      final dynamicRow = dynamicShade[rowIndex];
-      final rowIndexMultiplier = rowIndex * totalColumnsInt4;
-      for (var columnIndex = minColumn; columnIndex < maxColumn; columnIndex++) {
-        final i = rowIndexMultiplier + (columnIndex * 4);
-        final x = tilesDst[i + 2];
-        if (x < screenLeft) break;
-        final y = tilesDst[i + 3];
-        if (y > screenBottom) break;
-        if (x > screenRight) continue;
-        if (y < screenTop) continue;
-
-        engine.mapDstCheap(
-          x: x,
-          y: y,
-        );
-        engine.mapSrc48(
-            x: tilesSrc[i],
-            y: dynamicRow[columnIndex] * 48.0,
-        );
-        engine.renderAtlas();
-      }
-    }
-  }
-
-
   int calculateOrder(Vector3 position) {
-     return convertWorldToRow(position.x, position.y) + convertWorldToColumn(position.x, position.y);
+    return convertWorldToRow(position.x, position.y) +
+        convertWorldToColumn(position.x, position.y);
   }
 
   /// While this method is obviously a complete dog's breakfast all readability
@@ -145,37 +97,33 @@ class IsometricRender {
 
     while (remainingParticles) {
       final particle = particles[indexParticle];
-      if (!particle.active){
+      if (!particle.active) {
         remainingParticles = false;
         break;
       }
       orderParticle = particle.y;
-      if (orderParticle < screenTop){
-         indexParticle++;
-         remainingParticles = indexParticle < totalParticles;
-         continue;
+      if (orderParticle < screenTop) {
+        indexParticle++;
+        remainingParticles = indexParticle < totalParticles;
+        continue;
       }
-      if (orderParticle > screenBottom100){
+      if (orderParticle > screenBottom100) {
         remainingParticles = false;
       }
       break;
     }
 
-    var particleIsBlood = remainingParticles ? particles[indexParticle].type == ParticleType.Blood : false;
+    var particleIsBlood = remainingParticles
+        ? particles[indexParticle].type == ParticleType.Blood
+        : false;
 
     while (true) {
-
       if (remainingGrid) {
         final gridType = grid[gridZ][gridRow][gridColumn];
-        if (gridType == GridNodeType.Empty
-              ||
-            !remainingPlayers
-              ||
-            orderGrid <= orderPlayer
-              ||
-            gridZ < orderPlayerZ
-            ) {
-
+        if (gridType == GridNodeType.Empty ||
+            !remainingPlayers ||
+            orderGrid <= orderPlayer ||
+            gridZ < orderPlayerZ) {
           if (!lowerTileMode || player.indexZ >= gridZ) {
             renderGridNode(gridZ, gridRow, gridColumn, gridType);
           }
@@ -195,11 +143,10 @@ class IsometricRender {
                 gridColumn = gridTotalColumnsMinusOne;
               }
 
-              if (gridRow >= gridTotalRows){
+              if (gridRow >= gridTotalRows) {
                 remainingGrid = false;
                 continue;
               }
-
             } else {
               gridColumn = gridRow + gridColumn;
               gridRow = 0;
@@ -215,64 +162,67 @@ class IsometricRender {
       }
 
       if (remainingPlayers) {
-              if (!remainingGameObjects || orderPlayer < orderObject) {
-                if (!remainingParticles ||
-                    (orderPlayer < orderParticle && !particleIsBlood)) {
-                  if (!remainingZombies || orderPlayer < orderZombie) {
-                      if (!remainingNpcs || orderPlayer < orderNpc) {
-                        renderCharacter(players[indexPlayer]);
-                        indexPlayer++;
-                        remainingPlayers = indexPlayer < totalPlayers;
-                        while (remainingPlayers) {
-                          final player = players[indexPlayer];
-                          orderPlayer = player.renderOrder;
-                          orderPlayerZ = player.indexZ;
-                          if (player.renderY > screenBottom100) {
-                            remainingPlayers = false;
-                            break;
-                          }
-                          final x = player.x;
-                          if (x < screenLeft || x > screenRight ||
-                              orderPlayer < screenTop) {
-                            indexPlayer++;
-                            remainingPlayers = indexPlayer < totalPlayers;
-                            continue;
-                          }
-                          break;
-                        }
-                        continue;
-                      }
-                    }
+        if (!remainingGameObjects || orderPlayer < orderObject) {
+          if (!remainingParticles || (orderPlayer < orderParticle && !particleIsBlood)) {
+            if (!remainingZombies || orderPlayer < orderZombie) {
+              if (!remainingNpcs || orderPlayer < orderNpc) {
+                renderCharacter(players[indexPlayer]);
+                indexPlayer++;
+                remainingPlayers = indexPlayer < totalPlayers;
+                while (remainingPlayers) {
+                  final player = players[indexPlayer];
+                  orderPlayer = player.renderOrder;
+                  orderPlayerZ = player.indexZ;
+                  if (player.renderY > screenBottom100) {
+                    remainingPlayers = false;
+                    break;
+                  }
+                  final x = player.x;
+                  if (x < screenLeft ||
+                      x > screenRight ||
+                      orderPlayer < screenTop) {
+                    indexPlayer++;
+                    remainingPlayers = indexPlayer < totalPlayers;
+                    continue;
+                  }
+                  break;
+                }
+                continue;
+              }
+            }
           }
         }
       }
 
       if (remainingGameObjects) {
-              if (!remainingParticles || (orderObject < orderParticle && !particleIsBlood)) {
-                  if (!remainingZombies || orderObject < orderZombie) {
-                    if (!remainingNpcs || orderObject < orderNpc) {
-                      renderGameObject(gameObjects[indexGameObject]);
-                      indexGameObject++;
-                      remainingGameObjects = indexGameObject < totalGameObjects;
-                      while (remainingGameObjects) {
-                        final nextGameObject = gameObjects[indexGameObject];
-                        orderObject = nextGameObject.y;
-                        if (orderObject > screenBottom100){
-                          remainingGameObjects = false;
-                          break;
-                        }
-                        final x = nextGameObject.x;
-                        if (x < screenLeft || x > screenRight || orderObject < screenTop) {
-                          indexGameObject++;
-                          remainingGameObjects = indexGameObject < totalGameObjects;
-                          continue;
-                        }
-                        break;
-                      }
-                      continue;
-                    }
-                  }
+        if (!remainingParticles ||
+            (orderObject < orderParticle && !particleIsBlood)) {
+          if (!remainingZombies || orderObject < orderZombie) {
+            if (!remainingNpcs || orderObject < orderNpc) {
+              renderGameObject(gameObjects[indexGameObject]);
+              indexGameObject++;
+              remainingGameObjects = indexGameObject < totalGameObjects;
+              while (remainingGameObjects) {
+                final nextGameObject = gameObjects[indexGameObject];
+                orderObject = nextGameObject.y;
+                if (orderObject > screenBottom100) {
+                  remainingGameObjects = false;
+                  break;
                 }
+                final x = nextGameObject.x;
+                if (x < screenLeft ||
+                    x > screenRight ||
+                    orderObject < screenTop) {
+                  indexGameObject++;
+                  remainingGameObjects = indexGameObject < totalGameObjects;
+                  continue;
+                }
+                break;
+              }
+              continue;
+            }
+          }
+        }
       }
 
       if (remainingParticles) {
@@ -289,7 +239,7 @@ class IsometricRender {
             }
 
             orderParticle = particle.y;
-            if (orderParticle > screenBottom100){
+            if (orderParticle > screenBottom100) {
               remainingParticles = false;
               break;
             }
@@ -306,84 +256,82 @@ class IsometricRender {
         }
 
         if (!remainingZombies || orderParticle < orderZombie) {
-                  if (!remainingNpcs || orderParticle < orderNpc) {
-                    renderParticle(particles[indexParticle]);
-                    indexParticle++;
-                    remainingParticles = indexParticle < totalParticles;
+          if (!remainingNpcs || orderParticle < orderNpc) {
+            renderParticle(particles[indexParticle]);
+            indexParticle++;
+            remainingParticles = indexParticle < totalParticles;
 
-                    while (remainingParticles) {
-                      final particle = particles[indexParticle];
+            while (remainingParticles) {
+              final particle = particles[indexParticle];
 
-                      if (!particle.active) {
-                        remainingParticles = false;
-                        break;
-                      }
+              if (!particle.active) {
+                remainingParticles = false;
+                break;
+              }
 
-                      orderParticle = particle.y;
-                      if (orderParticle > screenBottom100){
-                        remainingParticles = false;
-                        break;
-                      }
-                      final x = particle.x;
-                      if (x < screenLeft || x > screenRight) {
-                        indexParticle++;
-                        remainingParticles = indexParticle < totalParticles;
-                        continue;
-                      }
-                      particleIsBlood = particle.type == ParticleType.Blood;
-                      break;
-                    }
-                    continue;
-                  }
-                }
+              orderParticle = particle.y;
+              if (orderParticle > screenBottom100) {
+                remainingParticles = false;
+                break;
+              }
+              final x = particle.x;
+              if (x < screenLeft || x > screenRight) {
+                indexParticle++;
+                remainingParticles = indexParticle < totalParticles;
+                continue;
+              }
+              particleIsBlood = particle.type == ParticleType.Blood;
+              break;
+            }
+            continue;
+          }
+        }
       }
 
       if (remainingZombies) {
-                if (!remainingNpcs || orderZombie < orderNpc) {
-                  assert(indexZombie >= 0);
-                  renderZombie(zombies[indexZombie]);
-                  indexZombie++;
-                  remainingZombies = indexZombie < totalZombies;
-                  while (remainingZombies) {
-                    final zombie = zombies[indexZombie];
-                    orderZombie = zombie.y;
-                    if (orderZombie > screenBottom100){
-                      remainingZombies = false;
-                      break;
-                    }
-                    final x = zombie.x;
-                    if (x < screenLeft || x > screenRight || orderZombie < screenTop) {
-                      indexZombie++;
-                      remainingZombies = indexZombie < totalZombies;
-                      continue;
-                    }
-                    break;
-                  }
-                  continue;
-                }
+        if (!remainingNpcs || orderZombie < orderNpc) {
+          assert(indexZombie >= 0);
+          renderZombie(zombies[indexZombie]);
+          indexZombie++;
+          remainingZombies = indexZombie < totalZombies;
+          while (remainingZombies) {
+            final zombie = zombies[indexZombie];
+            orderZombie = zombie.y;
+            if (orderZombie > screenBottom100) {
+              remainingZombies = false;
+              break;
+            }
+            final x = zombie.x;
+            if (x < screenLeft || x > screenRight || orderZombie < screenTop) {
+              indexZombie++;
+              remainingZombies = indexZombie < totalZombies;
+              continue;
+            }
+            break;
+          }
+          continue;
+        }
       }
 
       if (remainingNpcs) {
-                drawInteractableNpc(npcs[indexNpc]);
-                indexNpc++;
-                remainingNpcs = indexNpc < totalNpcs;
-                if (remainingNpcs) {
-                  orderNpc = npcs[indexNpc].y;
-                  if (orderNpc > screenBottom) {
-                    remainingNpcs = false;
-                  }
-                }
-                continue;
+        drawInteractableNpc(npcs[indexNpc]);
+        indexNpc++;
+        remainingNpcs = indexNpc < totalNpcs;
+        if (remainingNpcs) {
+          orderNpc = npcs[indexNpc].y;
+          if (orderNpc > screenBottom) {
+            remainingNpcs = false;
+          }
+        }
+        continue;
       }
 
-      if (
-          remainingGrid ||
+      if (remainingGrid ||
           remainingZombies ||
           remainingPlayers ||
           remainingNpcs ||
           remainingGameObjects ||
-          remainingParticles
-      ) continue;
+          remainingParticles) continue;
       return;
     }
   }
@@ -409,26 +357,38 @@ class IsometricRender {
 
   void renderFireball(double x, double y, double rotation) {
     engine.renderCustom(
-        dstX: x,
-        dstY: y,
-        srcX: 5669,
-        srcY: ((x + y + (engine.frame ~/ 5) % 6) * 23),
-        srcWidth: 18,
-        srcHeight: 23,
-        rotation: rotation,
+      dstX: x,
+      dstY: y,
+      srcX: 5669,
+      srcY: ((x + y + (engine.frame ~/ 5) % 6) * 23),
+      srcWidth: 18,
+      srcHeight: 23,
+      rotation: rotation,
     );
   }
 
   void renderArrow(double x, double y, double angle) {
     engine.mapSrc(x: 2182, y: 1, width: 13, height: 47);
-    engine.mapDst(x: x, y: y - 20, rotation: angle + piQuarter, anchorX: 6.5, anchorY: 30, scale: 0.5);
+    engine.mapDst(
+        x: x,
+        y: y - 20,
+        rotation: angle + piQuarter,
+        anchorX: 6.5,
+        anchorY: 30,
+        scale: 0.5);
     engine.renderAtlas();
     engine.mapSrc(x: 2172, y: 1, width: 13, height: 47);
-    engine.mapDst(x: x, y: y, rotation: angle + piQuarter, anchorX: 6.5, anchorY: 30, scale: 0.5);
+    engine.mapDst(
+        x: x,
+        y: y,
+        rotation: angle + piQuarter,
+        anchorX: 6.5,
+        anchorY: 30,
+        scale: 0.5);
     engine.renderAtlas();
   }
 
-  void renderOrb(double x, double y){
+  void renderOrb(double x, double y) {
     engine.renderCustom(
         dstX: x,
         dstY: y,
@@ -436,12 +396,11 @@ class IsometricRender {
         srcY: 26,
         srcWidth: 8,
         srcHeight: 8,
-        scale: 1.5
-    );
+        scale: 1.5);
   }
 
   void renderStructure(Structure structure) {
-    switch(structure.type) {
+    switch (structure.type) {
       case StructureType.Tower:
         return renderTower(structure.x, structure.y);
       case StructureType.Palisade:
@@ -453,15 +412,12 @@ class IsometricRender {
     }
   }
 
-  void renderPalisade({
-    required double x,
-    required double y,
-    int shade = Shade.Bright
-  }){
+  void renderPalisade(
+      {required double x, required double y, int shade = Shade.Bright}) {
     engine.renderCustom(
       dstX: x,
       dstY: y,
-      srcX: 1314 ,
+      srcX: 1314,
       srcY: shade * 96,
       srcWidth: 48,
       srcHeight: 96,
@@ -470,16 +426,17 @@ class IsometricRender {
   }
 
   void renderBlockGrass(Position position) {
-    render(position: position, srcX: 5981, width: 48, height: 100, anchorY: 0.66);
+    render(
+        position: position, srcX: 5981, width: 48, height: 100, anchorY: 0.66);
   }
 
-  void renderBlockGrassLevel2(Position position){
-    final shade =  isometric.getShadeAt(position);
+  void renderBlockGrassLevel2(Position position) {
+    final shade = isometric.getShadeAt(position);
     if (shade >= Shade.Pitch_Black) return;
     engine.renderCustom(
       dstX: position.x,
       dstY: position.y - 50,
-      srcX: 5981 ,
+      srcX: 5981,
       srcY: shade * 100,
       srcWidth: 48,
       srcHeight: 100,
@@ -487,13 +444,13 @@ class IsometricRender {
     );
   }
 
-  void renderBlockGrassLevel3(Position position){
-    final shade =  isometric.getShadeAt(position);
+  void renderBlockGrassLevel3(Position position) {
+    final shade = isometric.getShadeAt(position);
     if (shade >= Shade.Pitch_Black) return;
     engine.renderCustom(
       dstX: position.x,
       dstY: position.y - 100,
-      srcX: 5981 ,
+      srcX: 5981,
       srcY: shade * 100,
       srcWidth: 48,
       srcHeight: 100,
@@ -501,13 +458,13 @@ class IsometricRender {
     );
   }
 
-  void renderStairsGrassH(Position position){
-    final shade =  isometric.getShadeAt(position);
+  void renderStairsGrassH(Position position) {
+    final shade = isometric.getShadeAt(position);
     if (shade >= Shade.Pitch_Black) return;
     engine.renderCustom(
       dstX: position.x,
       dstY: position.y,
-      srcX: 5870 ,
+      srcX: 5870,
       // srcY: shade * 100,
       srcY: 0,
       srcWidth: 48,
@@ -524,19 +481,17 @@ class IsometricRender {
         srcY: 0,
         srcWidth: 48,
         srcHeight: 100,
-        anchorY: 0.66
-    );
+        anchorY: 0.66);
   }
 
-  void renderTorchOff(double x, double y ) {
+  void renderTorchOff(double x, double y) {
     return engine.renderCustom(
         dstX: x,
         dstY: y,
         srcX: 2145,
         srcWidth: 25,
         srcHeight: 70,
-        anchorY: 0.33
-    );
+        anchorY: 0.33);
   }
 
   void renderTorchOn(double x, double y) {
@@ -547,24 +502,16 @@ class IsometricRender {
         srcY: 70 + (((x + y + (engine.frame ~/ 10)) % 6) * 70),
         srcWidth: 25,
         srcHeight: 70,
-        anchorY: 0.33
-    );
+        anchorY: 0.33);
   }
 
-  void renderHouse(Position position){
+  void renderHouse(Position position) {
     engine.renderCustomV2(
-        dst: position,
-        srcX: 1748,
-        srcWidth: 150,
-        srcHeight: 150
-    );
+        dst: position, srcX: 1748, srcWidth: 150, srcHeight: 150);
   }
 
   void renderPot(Position position) {
-    engine.mapSrc64(
-        x: 6032,
-        y: isometric.getShadeAt(position) * 64
-    );
+    engine.mapSrc64(x: 6032, y: isometric.getShadeAt(position) * 64);
     engine.mapDst(x: position.x, y: position.y, anchorX: 32, anchorY: 32);
     engine.renderAtlas();
   }
@@ -573,33 +520,31 @@ class IsometricRender {
     render(position: position, srcX: 2049, width: 64, height: 81, anchorY: 0.66);
   }
 
-  void renderTreeAt(int z, int row, int column){
-     engine.renderCustom(
-         dstX: getTileWorldX(row, column),
-         dstY: getTileWorldY(row, column) - (z * 24),
-         srcX: 2049,
-         srcY: 81.0 * gridLightDynamic[z][row][column],
-         srcWidth: 64.0,
-         srcHeight: 81.0
-     );
+  void renderTreeAt(int z, int row, int column) {
+    engine.renderCustom(
+        dstX: getTileWorldX(row, column),
+        dstY: getTileWorldY(row, column) - (z * 24),
+        srcX: 2049,
+        srcY: 81.0 * gridLightDynamic[z][row][column],
+        srcWidth: 64.0,
+        srcHeight: 81.0);
   }
 
-  void renderChest(Position position){
+  void renderChest(Position position) {
     render(
         position: position,
         srcX: 6328,
         width: 50,
         height: 76,
         anchorY: 0.6,
-        scale: 0.75
-    );
+        scale: 0.75);
   }
 
   void renderFireYellow({
     required double x,
     required double y,
     double scale = 1.0,
-  }){
+  }) {
     engine.renderCustom(
         dstX: x,
         dstY: y,
@@ -607,16 +552,14 @@ class IsometricRender {
         srcY: 25,
         srcWidth: 8,
         srcHeight: 8,
-        scale: scale
-    );
+        scale: scale);
   }
-
 
   void renderShrapnel({
     required double x,
     required double y,
     double scale = 1.0,
-  }){
+  }) {
     engine.renderCustom(
         dstX: x,
         dstY: y,
@@ -624,15 +567,14 @@ class IsometricRender {
         srcY: 1,
         srcWidth: 8,
         srcHeight: 8,
-        scale: scale
-    );
+        scale: scale);
   }
 
   void renderSmoke({
     required double x,
     required double y,
-    required double scale
-  }){
+    required double scale,
+  }) {
     engine.renderCustom(
         dstX: x,
         dstY: y,
@@ -640,11 +582,11 @@ class IsometricRender {
         srcY: 0,
         srcWidth: 50,
         srcHeight: 50,
-        scale: scale
-    );
+        scale: scale);
   }
 
-  void renderOrbShard({required double x, required double y, required double scale}){
+  void renderOrbShard(
+      {required double x, required double y, required double scale}) {
     engine.renderCustom(
         dstX: x,
         dstY: y,
@@ -652,20 +594,23 @@ class IsometricRender {
         srcY: 67,
         srcWidth: 8,
         srcHeight: 8,
-        scale: scale
-    );
+        scale: scale);
   }
 
   void renderParticle(Particle value) {
     switch (value.type) {
       case ParticleType.Smoke:
-        return renderSmoke(x: value.x, y: value.renderY, scale: value.renderScale);
+        return renderSmoke(
+            x: value.x, y: value.renderY, scale: value.renderScale);
       case ParticleType.Orb_Shard:
-        return renderOrbShard(x: value.x, y: value.renderY, scale: value.renderScale);
+        return renderOrbShard(
+            x: value.x, y: value.renderY, scale: value.renderScale);
       case ParticleType.Shrapnel:
-        return renderShrapnel(x: value.x, y: value.renderY, scale: value.renderScale);
+        return renderShrapnel(
+            x: value.x, y: value.renderY, scale: value.renderScale);
       case ParticleType.FireYellow:
-        return renderFireYellow(x: value.x, y: value.renderY, scale: value.renderScale);
+        return renderFireYellow(
+            x: value.x, y: value.renderY, scale: value.renderScale);
       case ParticleType.Flame:
         return renderFlame(value);
       default:
@@ -683,36 +628,24 @@ class IsometricRender {
     renderShadow(position: value, scale: value.z);
   }
 
-  void mapShadeShadow(){
+  void mapShadeShadow() {
     engine.mapSrc(x: 1, y: 34, width: 8.0, height: 8.0);
   }
 
   void renderItem(Item item) {
     srcLoopSimple(
-        x: 5939,
-        size: 32,
-        frames: 4,
+      x: 5939,
+      size: 32,
+      frames: 4,
     );
-    engine.mapDst(
-      anchorX: 16,
-      anchorY: 23,
-      x: item.x,
-        y: item.y
-    );
+    engine.mapDst(anchorX: 16, anchorY: 23, x: item.x, y: item.y);
     engine.renderAtlas();
   }
 
-  void srcLoopSimple({
-    required double x,
-    required int frames,
-    required double size
-  }){
+  void srcLoopSimple(
+      {required double x, required int frames, required double size}) {
     engine.mapSrc(
-        x: x,
-        y: ((engine.frame % 4) * size),
-        width: size,
-        height: size
-    );
+        x: x, y: ((engine.frame % 4) * size), width: size, height: size);
   }
 
   void renderGameObject(GameObject value) {
@@ -744,10 +677,10 @@ class IsometricRender {
     }
   }
 
-  void renderRockSmall(Position position){
+  void renderRockSmall(Position position) {
     render(position: position, srcX: 5569, width: 12, height: 14);
   }
-  
+
   void renderFireplace(Position position) {
     engine.renderCustom(
       dstX: position.x,
@@ -759,7 +692,7 @@ class IsometricRender {
     );
   }
 
-  void renderFlame(Position position){
+  void renderFlame(Position position) {
     engine.renderCustom(
         dstX: position.x,
         dstY: position.y,
@@ -767,27 +700,26 @@ class IsometricRender {
         srcX: 5669,
         srcWidth: 18,
         srcHeight: 23,
-        anchorY: 0.9
-    );
+        anchorY: 0.9);
   }
 
   void renderFlag(Position position) {
     render(position: position, srcX: 6437, width: 19, height: 33);
   }
 
-  void renderLongGrass(Position position){
+  void renderLongGrass(Position position) {
     render(position: position, srcX: 5585, width: 19, height: 30);
   }
 
-  void renderRockLarge(Position position){
+  void renderRockLarge(Position position) {
     render(position: position, srcX: 5475, width: 40, height: 43);
   }
 
-  void renderGrave(Position position){
+  void renderGrave(Position position) {
     render(position: position, srcX: 5524, width: 20, height: 41);
   }
 
-  void renderTreeStump(Position position){
+  void renderTreeStump(Position position) {
     render(position: position, srcX: 5549, width: 15, height: 22);
   }
 
@@ -798,8 +730,8 @@ class IsometricRender {
     required double height,
     double anchorY = 0.5,
     double scale = 1.0,
-  }){
-    final shade =  isometric.getShadeAt(position);
+  }) {
+    final shade = isometric.getShadeAt(position);
     if (shade >= Shade.Pitch_Black) return;
     engine.renderCustomV2(
       dst: position,
@@ -812,7 +744,7 @@ class IsometricRender {
     );
   }
 
-  void renderZombie(Character character){
+  void renderZombie(Character character) {
     final shade = character.shade;
     if (shade > Shade.Dark) return;
 
@@ -833,32 +765,23 @@ class IsometricRender {
     final direction = character.direction;
 
     if (weapon == WeaponType.Bow || weapon == WeaponType.Shotgun) {
-       if (
-            direction == Direction.North_West
-            ||
-            direction == Direction.North
-            ||
-            direction == Direction.North_East
-            ||
-            direction == Direction.East
-       ){
-         _renderCharacterTemplateWeapon(character);
-         _renderCharacterTemplate(character);
-       } else {
-         _renderCharacterTemplate(character);
-         _renderCharacterTemplateWeapon(character);
-       }
-       return;
+      if (direction == Direction.North_West ||
+          direction == Direction.North ||
+          direction == Direction.North_East ||
+          direction == Direction.East) {
+        _renderCharacterTemplateWeapon(character);
+        _renderCharacterTemplate(character);
+      } else {
+        _renderCharacterTemplate(character);
+        _renderCharacterTemplateWeapon(character);
+      }
+      return;
     }
 
     if (WeaponType.isMelee(weapon)) {
-      if (
-          direction == Direction.North_East
-          ||
-          direction == Direction.North
-          ||
-          direction == Direction.South_West
-      ){
+      if (direction == Direction.North_East ||
+          direction == Direction.North ||
+          direction == Direction.South_West) {
         _renderCharacterTemplateWeapon(character);
         _renderCharacterTemplate(character);
       } else {
@@ -873,93 +796,82 @@ class IsometricRender {
 
   void _renderZombie(Character character, int shade) {
     engine.mapSrc64(
-        x: mapZombieSrcX(character, shade),
-        y: 789.0 + (shade * 64.0),
+      x: mapZombieSrcX(character, shade),
+      y: 789.0 + (shade * 64.0),
     );
     engine.mapDst(
         x: character.renderX,
         y: character.renderY,
         anchorX: 32,
         anchorY: 48,
-        scale: 0.7
-    );
+        scale: 0.7);
     engine.renderAtlas();
   }
 
-  double mapZombieSrcX(Character character, int shade){
-    switch(character.state){
-
+  double mapZombieSrcX(Character character, int shade) {
+    switch (character.state) {
       case CharacterState.Running:
         const frames = [3, 4, 5, 6];
         return loop4(
             animation: frames,
             character: character,
-            framesPerDirection: _framesPerDirectionZombie
-        );
+            framesPerDirection: _framesPerDirectionZombie);
 
       case CharacterState.Idle:
         return single(
             frame: 1,
             direction: character.direction,
-            framesPerDirection: _framesPerDirectionZombie
-        );
+            framesPerDirection: _framesPerDirectionZombie);
 
       case CharacterState.Hurt:
         return single(
             frame: 2,
             direction: character.direction,
-            framesPerDirection: _framesPerDirectionZombie
-        );
+            framesPerDirection: _framesPerDirectionZombie);
 
       case CharacterState.Performing:
         return animate(
             animation: animations.zombie.striking,
             character: character,
-            framesPerDirection:
-            _framesPerDirectionZombie
-        );
+            framesPerDirection: _framesPerDirectionZombie);
       default:
         throw Exception("Render zombie invalid state ${character.state}");
     }
   }
 
-  double single({
-    required int frame,
-    required num direction,
-    required int framesPerDirection,
-    num size = 64.0
-  }){
+  double single(
+      {required int frame,
+      required num direction,
+      required int framesPerDirection,
+      num size = 64.0}) {
     return ((direction * framesPerDirection) + (frame - 1)) * size.toDouble();
   }
 
-  double loop({
-    required List<int> animation,
-    required Character character,
-    required int framesPerDirection,
-    double size = 64.0
-  }){
+  double loop(
+      {required List<int> animation,
+      required Character character,
+      required int framesPerDirection,
+      double size = 64.0}) {
     // TODO Optimize length call
     final animationFrame = character.frame % animation.length;
     final frame = animation[animationFrame] - 1;
     return (character.direction * framesPerDirection * size) + (frame * size);
   }
 
-  double loop4({
-    required List<int> animation,
-    required Character character,
-    required int framesPerDirection,
-    double size = 64
-  }){
-    return (character.direction * framesPerDirection * size) + ((animation[character.frame % 4] - 1) * size);
+  double loop4(
+      {required List<int> animation,
+      required Character character,
+      required int framesPerDirection,
+      double size = 64}) {
+    return (character.direction * framesPerDirection * size) +
+        ((animation[character.frame % 4] - 1) * size);
   }
 
-
-  double animate({
-        required List<int> animation,
-        required Character character,
-        required int framesPerDirection,
-        double size = 64.0
-      }){
+  double animate(
+      {required List<int> animation,
+      required Character character,
+      required int framesPerDirection,
+      double size = 64.0}) {
     final animationFrame = min(character.frame, animation.length - 1);
     final frame = animation[animationFrame] - 1;
     return (character.direction * framesPerDirection * size) + (frame * size);
@@ -972,14 +884,14 @@ class IsometricRender {
     _renderCharacterPartHead(character);
   }
 
-  void _renderCharacterSwat(Character character){
+  void _renderCharacterSwat(Character character) {
     _renderCharacterShadow(character);
     _renderCharacterPart(character, SpriteLayer.Legs_Swat);
     _renderCharacterPart(character, SpriteLayer.Body_Swat);
     _renderCharacterPart(character, SpriteLayer.Head_Swat);
   }
 
-  void _renderCharacterShadow(Character character){
+  void _renderCharacterShadow(Character character) {
     _renderCharacterPart(character, SpriteLayer.Shadow);
   }
 
@@ -997,21 +909,19 @@ class IsometricRender {
 
   void _renderCharacterPart(Character character, int layer) {
     engine.mapDst(
-        x: character.renderX,
-        y: character.renderY,
-        anchorX: 32,
-        anchorY: 48,
-        scale: 0.75,
+      x: character.renderX,
+      y: character.renderY,
+      anchorX: 32,
+      anchorY: 48,
+      scale: 0.75,
     );
     engine.mapSrc64(
-        x: getTemplateSrcX(character, size: 64),
-        y: 1051.0 + (layer * 64)
-    );
+        x: getTemplateSrcX(character, size: 64), y: 1051.0 + (layer * 64));
     engine.renderAtlas();
   }
 
-  int getSpriteIndexHead(Character character){
-    switch(character.helm){
+  int getSpriteIndexHead(Character character) {
+    switch (character.helm) {
       case SlotType.Empty:
         return SpriteLayer.Head_Plain;
       case SlotType.Steel_Helmet:
@@ -1025,8 +935,8 @@ class IsometricRender {
     }
   }
 
-  int getSpriteIndexBody(Character character){
-    switch(character.armour){
+  int getSpriteIndexBody(Character character) {
+    switch (character.armour) {
       case SlotType.Empty:
         return SpriteLayer.Body_Cyan;
       case SlotType.Body_Blue:
@@ -1040,15 +950,15 @@ class IsometricRender {
     }
   }
 
-  int getSpriteIndexLegs(Character character){
+  int getSpriteIndexLegs(Character character) {
     return SpriteLayer.Legs_Blue;
   }
 
-  double getTemplateSrcX(Character character, {required double size}){
+  double getTemplateSrcX(Character character, {required double size}) {
     final weapon = character.weapon;
     final variation = weapon == WeaponType.Shotgun || weapon == WeaponType.Bow;
 
-    switch(character.state) {
+    switch (character.state) {
       case CharacterState.Running:
         const frames1 = [12, 13, 14, 15];
         const frames2 = [16, 17, 18, 19];
@@ -1056,32 +966,28 @@ class IsometricRender {
             size: size,
             animation: variation ? frames2 : frames1,
             character: character,
-            framesPerDirection: _framesPerDirectionHuman
-        );
+            framesPerDirection: _framesPerDirectionHuman);
 
       case CharacterState.Idle:
         return single(
             size: size,
             frame: variation ? 1 : 2,
             direction: character.direction,
-            framesPerDirection: _framesPerDirectionHuman
-        );
+            framesPerDirection: _framesPerDirectionHuman);
 
       case CharacterState.Hurt:
         return single(
             size: size,
             frame: 3,
             direction: character.direction,
-            framesPerDirection: _framesPerDirectionHuman
-        );
+            framesPerDirection: _framesPerDirectionHuman);
 
       case CharacterState.Changing:
         return single(
             size: size,
             frame: 4,
             direction: character.direction,
-            framesPerDirection: _framesPerDirectionHuman
-        );
+            framesPerDirection: _framesPerDirectionHuman);
 
       case CharacterState.Performing:
         final weapon = character.weapon;
@@ -1090,32 +996,32 @@ class IsometricRender {
             animation: weapon == WeaponType.Bow
                 ? const [5, 8, 6, 10]
                 : weapon == WeaponType.Handgun
-                ? const [8, 9, 8]
-                : weapon == WeaponType.Shotgun
-                ? const [6, 7, 6, 6, 6, 8, 8, 6]
-                : [10, 10, 11, 11],
+                    ? const [8, 9, 8]
+                    : weapon == WeaponType.Shotgun
+                        ? const [6, 7, 6, 6, 6, 8, 8, 6]
+                        : [10, 10, 11, 11],
             character: character,
-            framesPerDirection: _framesPerDirectionHuman
-        );
+            framesPerDirection: _framesPerDirectionHuman);
 
       default:
-        throw Exception("getCharacterSrcX cannot get body x for state ${character.state}");
+        throw Exception(
+            "getCharacterSrcX cannot get body x for state ${character.state}");
     }
   }
 
-  int mapEquippedWeaponToSpriteIndex(Character character){
-     switch(character.weapon) {
-       case WeaponType.Sword:
-         return SpriteLayer.Sword_Wooden;
-       case WeaponType.Bow:
-         return SpriteLayer.Bow_Wooden;
-       case WeaponType.Shotgun:
-         return SpriteLayer.Weapon_Shotgun;
-       case WeaponType.Handgun:
-         return SpriteLayer.Weapon_Handgun;
-       default:
-         throw Exception("cannot map ${character.weapon} to sprite index");
-     }
+  int mapEquippedWeaponToSpriteIndex(Character character) {
+    switch (character.weapon) {
+      case WeaponType.Sword:
+        return SpriteLayer.Sword_Wooden;
+      case WeaponType.Bow:
+        return SpriteLayer.Bow_Wooden;
+      case WeaponType.Shotgun:
+        return SpriteLayer.Weapon_Shotgun;
+      case WeaponType.Handgun:
+        return SpriteLayer.Weapon_Handgun;
+      default:
+        throw Exception("cannot map ${character.weapon} to sprite index");
+    }
   }
 
   void _renderCharacterTemplateWeapon(Character character) {
@@ -1132,7 +1038,8 @@ class IsometricRender {
     ].indexOf(equipped);
 
     if (renderRow == -1) {
-      _renderCharacterPart(character, mapEquippedWeaponToSpriteIndex(character));
+      _renderCharacterPart(
+          character, mapEquippedWeaponToSpriteIndex(character));
       return;
     }
     engine.mapDst(
@@ -1143,9 +1050,7 @@ class IsometricRender {
       scale: 1.0,
     );
     engine.mapSrc96(
-        x: getTemplateSrcX(character, size: 96),
-        y: 2159.0 + (renderRow * 96)
-    );
+        x: getTemplateSrcX(character, size: 96), y: 2159.0 + (renderRow * 96));
     engine.renderAtlas();
   }
 
@@ -1153,40 +1058,41 @@ class IsometricRender {
     renderCharacter(npc);
     if (diffOver(npc.x, mouseWorldX, 50)) return;
     if (diffOver(npc.y, mouseWorldY, 50)) return;
-    engine.renderText(npc.name, npc.x - 4.5 * npc.name.length, npc.y, style: state.nameTextStyle);
+    engine.renderText(npc.name, npc.x - 4.5 * npc.name.length, npc.y,
+        style: state.nameTextStyle);
   }
 
-  void renderCircle36V2(Position position){
+  void renderCircle36V2(Position position) {
     renderCircle36(position.x, position.y);
   }
 
-  void renderCircle36(double x, double y){
+  void renderCircle36(double x, double y) {
     engine.render(dstX: x, dstY: y, srcX: 2420, srcY: 57, srcSize: 37);
   }
 
-  void renderIconWood(Vector2 position){
+  void renderIconWood(Vector2 position) {
     engine.renderCustom(
-        dstX: position.x,
-        dstY: position.y,
-        srcX: 6189,
-        srcWidth: 26,
-        srcHeight: 37,
-        anchorY: 0.66,
+      dstX: position.x,
+      dstY: position.y,
+      srcX: 6189,
+      srcWidth: 26,
+      srcHeight: 37,
+      anchorY: 0.66,
     );
   }
 
-  void renderIconStone(Vector2 position){
+  void renderIconStone(Vector2 position) {
     engine.renderCustom(
-        dstX: position.x,
-        dstY: position.y,
-        srcX: 6216,
-        srcWidth: 26,
-        srcHeight: 36,
-        anchorY: 0.66,
+      dstX: position.x,
+      dstY: position.y,
+      srcX: 6216,
+      srcWidth: 26,
+      srcHeight: 36,
+      anchorY: 0.66,
     );
   }
 
-  void renderIconCoin(Vector2 position){
+  void renderIconCoin(Vector2 position) {
     engine.renderCustomV2(
       dst: position,
       srcX: 6245,
@@ -1196,7 +1102,7 @@ class IsometricRender {
     );
   }
 
-  void renderIconGold(Vector2 position){
+  void renderIconGold(Vector2 position) {
     engine.renderCustomV2(
       dst: position,
       srcX: 6273,
@@ -1206,7 +1112,7 @@ class IsometricRender {
     );
   }
 
-  void renderIconExperience(Vector2 position){
+  void renderIconExperience(Vector2 position) {
     engine.renderCustomV2(
       dst: position,
       srcX: 6304,
@@ -1239,7 +1145,7 @@ class IsometricRender {
     }
   }
 
-  void renderShadow({required Position position, required double scale}){
+  void renderShadow({required Position position, required double scale}) {
     mapShadeShadow();
     engine.mapDst(
       x: position.x,
@@ -1251,14 +1157,13 @@ class IsometricRender {
     engine.renderAtlas();
   }
 
-
   void renderGridNode(int z, int row, int column, int type) {
     if (type == GridNodeType.Empty) return;
 
     final dstX = getTileWorldX(row, column);
     final dstY = getTileWorldY(row, column) - (z * 24);
     final shade = gridLightDynamic[z][row][column];
-    switch(type) {
+    switch (type) {
       case GridNodeType.Bricks:
         return engine.renderCustom(
           dstX: dstX,
@@ -1271,13 +1176,13 @@ class IsometricRender {
         );
       case GridNodeType.Grass:
         return engine.renderCustom(
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 7158,
-            srcY: 72.0 * shade,
-            srcWidth: 48,
-            srcHeight: 72,
-            anchorY: 0.3334,
+          dstX: dstX,
+          dstY: dstY,
+          srcX: 7158,
+          srcY: 72.0 * shade,
+          srcWidth: 48,
+          srcHeight: 72,
+          anchorY: 0.3334,
         );
       case GridNodeType.Stairs_South:
         return engine.renderCustom(
@@ -1301,31 +1206,30 @@ class IsometricRender {
         );
       case GridNodeType.Stairs_North:
         return engine.renderCustom(
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 7494,
-            srcY: 72.0 * shade,
-            srcWidth: 48,
-            srcHeight: 72,
-            anchorY: 0.3334,
+          dstX: dstX,
+          dstY: dstY,
+          srcX: 7494,
+          srcY: 72.0 * shade,
+          srcWidth: 48,
+          srcHeight: 72,
+          anchorY: 0.3334,
         );
       case GridNodeType.Stairs_East:
         return engine.renderCustom(
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 7542,
-            srcY: 72.0 * shade,
-            srcWidth: 48,
-            srcHeight: 72,
-            anchorY: 0.3334,
+          dstX: dstX,
+          dstY: dstY,
+          srcX: 7542,
+          srcY: 72.0 * shade,
+          srcWidth: 48,
+          srcHeight: 72,
+          anchorY: 0.3334,
         );
       case GridNodeType.Water:
         final animationFrame = (engine.frame ~/ 15) % 4;
         var height = 1;
-        if (animationFrame == 1){
+        if (animationFrame == 1) {
           height = 2;
-        } else
-        if (animationFrame == 3){
+        } else if (animationFrame == 3) {
           height = 0;
         }
         return engine.renderCustom(
@@ -1339,7 +1243,7 @@ class IsometricRender {
         );
 
       case GridNodeType.Torch:
-        if (ambient.value <= Shade.Very_Bright){
+        if (ambient.value <= Shade.Very_Bright) {
           return renderTorchOff(dstX, dstY);
         }
         return renderTorchOn(dstX, dstY);
@@ -1362,7 +1266,7 @@ class IsometricRender {
     }
   }
 
-  void renderWireFrameBlue(int row, int column, int z){
+  void renderWireFrameBlue(int row, int column, int z) {
     return engine.renderCustom(
       dstX: getTileWorldX(row, column),
       dstY: getTileWorldY(row, column) - (z * 24),
@@ -1373,7 +1277,7 @@ class IsometricRender {
     );
   }
 
-  void renderWireFrameRed(int row, int column, int z){
+  void renderWireFrameRed(int row, int column, int z) {
     return engine.renderCustom(
       dstX: getTileWorldX(row, column),
       dstY: getTileWorldY(row, column) - (z * 24),
@@ -1384,7 +1288,7 @@ class IsometricRender {
     );
   }
 
-  void renderArrowUp(double x, double y){
+  void renderArrowUp(double x, double y) {
     return engine.renderCustom(
       dstX: x,
       dstY: y,
