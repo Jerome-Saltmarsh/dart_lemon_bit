@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:bleed_common/Shade.dart';
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/isometric/state/time.dart';
 import 'package:gamestream_flutter/state/light_mode.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -44,7 +45,7 @@ void refreshLighting(){
 
 void gridApplyShadows(){
   if (ambient.value > Shade.Very_Bright) return;
-  final hour = game.hours.value;
+  final hour = hours.value;
   if (hour < 11) return _applyShadowsMorning();
   if (hour < 13) return _applyShadowsAfternoon();
   if (hour < 15) return _applyShadowsEvening();

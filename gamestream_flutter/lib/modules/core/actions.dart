@@ -6,6 +6,7 @@ import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/classes/Authentication.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/isometric/state/time.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -282,8 +283,8 @@ class CoreActions {
 
   void openMapEditor({bool newScene = true}){
     core.state.mode.value = Mode.Editor;
-    game.hours.value = 12;
-    game.minutes.value = 0;
+    hours.value = 12;
+    minutes.value = 0;
   }
 
   void exitGame(){

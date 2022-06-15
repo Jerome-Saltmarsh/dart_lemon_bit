@@ -5,6 +5,8 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 
+import 'isometric/state/time.dart';
+
 // variables
 var event = "";
 var _index = 0;
@@ -150,7 +152,7 @@ void parseState() {
 }
 
 void parseGameTime() {
-  game.minutes.value = consumeInt();
+  minutes.value = consumeInt();
 }
 
 void _parsePlayerAbility(){

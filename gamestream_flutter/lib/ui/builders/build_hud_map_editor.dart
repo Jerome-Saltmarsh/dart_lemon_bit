@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/mouse.dart';
 import 'package:gamestream_flutter/isometric/state/edit_tools_enabled.dart';
+import 'package:gamestream_flutter/isometric/state/time.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/state/grid.dart';
 import 'package:gamestream_flutter/state/light_mode.dart';
@@ -105,9 +106,9 @@ Widget _buildControlTime() {
           child: Row(
             children: [
               text("Time: "),
-              watch(game.hours, (num hour) => text(padZero(hour))),
+              watch(hours, (num hour) => text(padZero(hour))),
               text(":"),
-              watch(game.minutes, (num hour) => text(padZero(hour))),
+              watch(minutes, (num hour) => text(padZero(hour))),
               Expanded(child: Container()),
               onPressed(
                 child: Container(

@@ -12,6 +12,7 @@ import 'package:gamestream_flutter/convert/convert_hour_to_ambient.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/mouse.dart';
+import 'package:gamestream_flutter/isometric/state/time.dart';
 import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
@@ -469,15 +470,15 @@ class IsometricModule {
 
   void detractHour(){
     print("isometric.actions.detractHour()");
-    game.hours.value = (game.hours.value - 1) % 24;
+    hours.value = (hours.value - 1) % 24;
   }
 
   void addHour(){
-    game.hours.value = (game.hours.value + 1) % 24;
+    hours.value = (hours.value + 1) % 24;
   }
 
   void setHour(int hour) {
-    game.hours.value = hour * secondsPerHour;
+    hours.value = hour * secondsPerHour;
   }
 
   void cameraCenterMap(){
@@ -515,7 +516,7 @@ class IsometricModule {
   }
 
   void refreshAmbientLight(){
-    final shade = convertHourToAmbient(game.hours.value);
+    final shade = convertHourToAmbient(hours.value);
     if (maxAmbientBrightness.value > shade) return;
     ambient.value = shade;
   }

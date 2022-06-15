@@ -16,6 +16,7 @@ import 'classes/Explosion.dart';
 import 'classes/NpcDebug.dart';
 import 'classes/Projectile.dart';
 import 'events/on_hour_changed.dart';
+import 'isometric/state/time.dart';
 import 'modules/isometric/classes.dart';
 import 'modules/isometric/enums.dart';
 import 'state/grid.dart';
@@ -57,8 +58,6 @@ var _previousPlayerScreenX3 = 0.0;
 var _previousPlayerScreenY3 = 0.0;
 
 class Game with ByteReader {
-  final hours = Watch(0, onChanged: onHourChanged);
-  final minutes = Watch(0);
   final type = Watch<GameType?>(null);
   final countDownFramesRemaining = Watch(0);
   final totalZombies = Watch(0);
