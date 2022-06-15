@@ -773,7 +773,7 @@ extension PlayerProperties on Player {
     return 5;
   }
 
-  void writeCooldowns(){
+  void writeDeckCooldown(){
     writeByte(ServerResponse.Player_Deck_Cooldown);
     writeByte(deck.length);
     for (final card in deck) {

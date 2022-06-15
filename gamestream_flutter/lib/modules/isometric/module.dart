@@ -662,27 +662,27 @@ class IsometricModule {
     ambient.value = shade;
   }
 
-  void refreshGeneratedObjects() {
-    game.generatedObjects.clear();
-    final totalRows = tiles.length;
-    final totalColumns = totalRows > 0 ? tiles[0].length : 0;
-    for (var rowIndex = 0; rowIndex < totalRows; rowIndex++) {
-      final row = tiles[rowIndex];
-      for (var columnIndex = 0; columnIndex < totalColumns; columnIndex++){
-        final tile = row[columnIndex];
-        var objectType = tileTypeToObjectType[tile];
-        if (objectType == null) continue;
-        game.generatedObjects.add(
-            GeneratedObject(
-              x: getTileWorldX(rowIndex, columnIndex),
-              y: getTileWorldY(rowIndex, columnIndex) + tileSizeHalf,
-              type: objectType,
-            )
-        );
-      }
-    }
-    sortVertically(game.generatedObjects);
-  }
+  // void refreshGeneratedObjects() {
+  //   game.generatedObjects.clear();
+  //   final totalRows = tiles.length;
+  //   final totalColumns = totalRows > 0 ? tiles[0].length : 0;
+  //   for (var rowIndex = 0; rowIndex < totalRows; rowIndex++) {
+  //     final row = tiles[rowIndex];
+  //     for (var columnIndex = 0; columnIndex < totalColumns; columnIndex++){
+  //       final tile = row[columnIndex];
+  //       var objectType = tileTypeToObjectType[tile];
+  //       if (objectType == null) continue;
+  //       game.generatedObjects.add(
+  //           GeneratedObject(
+  //             x: getTileWorldX(rowIndex, columnIndex),
+  //             y: getTileWorldY(rowIndex, columnIndex) + tileSizeHalf,
+  //             type: objectType,
+  //           )
+  //       );
+  //     }
+  //   }
+  //   sortVertically(game.generatedObjects);
+  // }
 
   void updateParticles() {
 

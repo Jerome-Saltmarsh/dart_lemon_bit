@@ -1,6 +1,5 @@
 import 'package:bleed_common/card_type.dart';
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/classes/GeneratedObject.dart';
 import 'package:gamestream_flutter/classes/deck_card.dart';
 import 'package:gamestream_flutter/classes/game_object.dart';
 import 'package:gamestream_flutter/edit_state.dart';
@@ -69,7 +68,7 @@ class Game with ByteReader {
   final collectables = <Collectable>[];
   final interactableNpcs = <Character>[];
   final gameObjects = <GameObject>[];
-  final generatedObjects = <GeneratedObject>[];
+  // final generatedObjects = <GeneratedObject>[];
   final effects = <Effect>[];
   final torches = <GameObject>[]; // todo remove
   final projectiles = <Projectile>[];
@@ -440,7 +439,7 @@ class Game with ByteReader {
       }
       tiles.add(column);
     }
-    isometric.refreshGeneratedObjects();
+    // isometric.refreshGeneratedObjects();
     isometric.updateTileRender();
   }
 

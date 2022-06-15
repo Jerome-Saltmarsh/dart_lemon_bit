@@ -278,7 +278,7 @@ abstract class Game {
 
   void writePlayerCooldowns(){
     for (final player in players){
-      player.writeCooldowns();
+      player.writeDeckCooldown();
     }
   }
 }
