@@ -69,7 +69,7 @@ void _renderCharacterTemplateWeapon(Character character) {
 
   if (renderRow == -1) {
     _renderCharacterPart(
-        character, mapEquippedWeaponToSpriteIndex(character));
+        character, _mapEquippedWeaponToSpriteIndex(character));
     return;
   }
   engine.mapDst(
@@ -80,7 +80,7 @@ void _renderCharacterTemplateWeapon(Character character) {
     scale: 1.0,
   );
   engine.mapSrc96(
-      x: getTemplateSrcX(character, size: 96), y: 2159.0 + (renderRow * 96));
+      x: _getTemplateSrcX(character, size: 96), y: 2159.0 + (renderRow * 96));
   engine.renderAtlas();
 }
 
@@ -90,17 +90,16 @@ void _renderCharacterShadow(Character character) {
 }
 
 void _renderCharacterPartHead(Character character) {
-  _renderCharacterPart(character, getSpriteIndexHead(character));
+  _renderCharacterPart(character, _getSpriteIndexHead(character));
 }
 
 void _renderCharacterPartBody(Character character) {
-  _renderCharacterPart(character, getSpriteIndexBody(character));
+  _renderCharacterPart(character, _getSpriteIndexBody(character));
 }
 
 void _renderCharacterPartLegs(Character character) {
-  _renderCharacterPart(character, getSpriteIndexLegs(character));
+  _renderCharacterPart(character, SpriteLayer.Legs_Blue);
 }
-
 
 void _renderCharacterPart(Character character, int layer) {
   engine.mapDst(
@@ -111,11 +110,11 @@ void _renderCharacterPart(Character character, int layer) {
     scale: 0.75,
   );
   engine.mapSrc64(
-      x: getTemplateSrcX(character, size: 64), y: 1051.0 + (layer * 64));
+      x: _getTemplateSrcX(character, size: 64), y: 1051.0 + (layer * 64));
   engine.renderAtlas();
 }
 
-double getTemplateSrcX(Character character, {required double size}) {
+double _getTemplateSrcX(Character character, {required double size}) {
   const _framesPerDirectionHuman = 19;
   final weapon = character.weapon;
   final variation = weapon == WeaponType.Shotgun || weapon == WeaponType.Bow;
@@ -171,7 +170,7 @@ double getTemplateSrcX(Character character, {required double size}) {
   }
 }
 
-int getSpriteIndexBody(Character character) {
+int _getSpriteIndexBody(Character character) {
   switch (character.armour) {
     case SlotType.Empty:
       return SpriteLayer.Body_Cyan;
@@ -186,7 +185,7 @@ int getSpriteIndexBody(Character character) {
   }
 }
 
-int mapEquippedWeaponToSpriteIndex(Character character) {
+int _mapEquippedWeaponToSpriteIndex(Character character) {
   switch (character.weapon) {
     case WeaponType.Sword:
       return SpriteLayer.Sword_Wooden;
@@ -201,7 +200,7 @@ int mapEquippedWeaponToSpriteIndex(Character character) {
   }
 }
 
-int getSpriteIndexHead(Character character) {
+int _getSpriteIndexHead(Character character) {
   switch (character.helm) {
     case SlotType.Empty:
       return SpriteLayer.Head_Plain;
@@ -214,8 +213,4 @@ int getSpriteIndexHead(Character character) {
     default:
       throw Exception("cannot render head ${character.helm}");
   }
-}
-
-int getSpriteIndexLegs(Character character) {
-  return SpriteLayer.Legs_Blue;
 }
