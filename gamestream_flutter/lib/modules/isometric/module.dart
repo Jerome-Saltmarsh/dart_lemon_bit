@@ -394,44 +394,6 @@ class IsometricModule {
     }
   }
 
-  void resetShaderToAmbient(List<Int8List> shader){
-    // final ambient = this.ambient.value;
-    final rows = this.totalRows.value;
-    final columns = this.totalColumns.value;
-    final currentRows = shader.isEmpty ? 0 : shader.length;
-    final currentColumns = currentRows > 0 ? shader[0].length : 0;
-
-    if (currentRows != rows || currentColumns != columns){
-      print("clearing shader");
-      shader.clear();
-      for (var rowIndex = 0; rowIndex < rows; rowIndex++) {
-        final newRow = Int8List(columns);
-        shader.add(newRow);
-        for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
-          // newRow[columnIndex] = ambient;
-        }
-      }
-    } else {
-      print("resetting shader");
-      for (final row in shader) {
-        for (var i = 0 ; i < columns; i++){
-          // row[i] = ambient;
-        }
-      }
-    }
-  }
-
-  void resetBakeMap(){
-    refreshAmbientLight();
-    resetShaderToAmbient(bake);
-    applyGameObjectsToBakeMapping();
-  }
-
-  // TODO Optimize
-  void resetDynamicMap(){
-    resetShaderToAmbient(dynamic);
-  }
-
   // TODO Optimize
   void resetDynamicShadesToBakeMap() {
     for (var row = minRow; row < maxRow; row++) {
@@ -443,19 +405,9 @@ class IsometricModule {
     }
   }
 
-  /// Expensive method
-  void resetLighting(){
-    refreshTileSize();
-    resetBakeMap();
-    resetDynamicMap();
-    resetDynamicShadesToBakeMap();
-    applyDynamicShadeToTileSrc();
-  }
-
   void updateTileRender(){
     print("updateTileRender()");
     resetTilesSrcDst();
-    resetLighting();
   }
 
   /// Expensive
@@ -591,7 +543,6 @@ class IsometricModule {
   void _refreshMapTiles(){
     refreshTileSize();
     resetTilesSrcDst();
-    resetLighting();
   }
 
   void addColumn() {
