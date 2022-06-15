@@ -161,10 +161,6 @@ void _parsePlayerAbility(){
   player.abilityRadius = consumeDouble();
 }
 
-AbilityType _consumeAbilityType() {
-  return abilities[consumeInt()];
-}
-
 void _parseGameJoined() {
   print("parseGameJoined()");
   final player = modules.game.state.player;

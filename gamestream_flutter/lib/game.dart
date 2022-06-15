@@ -15,7 +15,6 @@ import 'package:lemon_watch/watch.dart';
 import 'classes/Explosion.dart';
 import 'classes/NpcDebug.dart';
 import 'classes/Projectile.dart';
-import 'events/on_hour_changed.dart';
 import 'isometric/state/time.dart';
 import 'modules/isometric/classes.dart';
 import 'modules/isometric/enums.dart';

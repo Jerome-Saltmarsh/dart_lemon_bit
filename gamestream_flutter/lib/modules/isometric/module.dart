@@ -11,9 +11,8 @@ import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/convert/convert_hour_to_ambient.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
-import 'package:gamestream_flutter/isometric/mouse.dart';
+import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/isometric/state/time.dart';
-import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:gamestream_flutter/modules/isometric/utilities.dart';
@@ -436,10 +435,6 @@ class IsometricModule {
     if (minColumn > maxColumn){
       this.minColumn = maxColumn;
     }
-  }
-
-  bool _isBridgeOrWater(int tile){
-    return tile != Tile.Water && tile != Tile.Bridge;
   }
 
   void addRow(){

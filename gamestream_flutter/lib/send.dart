@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/card_type.dart';
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/isometric/mouse.dart';
+import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 

@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';
-import 'package:gamestream_flutter/isometric/mouse.dart';
+import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/builders/build_row_tech_type.dart';
 import 'package:gamestream_flutter/ui/builders/build_time.dart';

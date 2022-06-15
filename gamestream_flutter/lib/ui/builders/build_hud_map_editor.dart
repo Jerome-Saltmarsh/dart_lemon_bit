@@ -2,8 +2,7 @@ import 'package:bleed_common/grid_node_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/game.dart';
-import 'package:gamestream_flutter/isometric/mouse.dart';
+import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/isometric/state/edit_tools_enabled.dart';
 import 'package:gamestream_flutter/isometric/state/time.dart';
 import 'package:gamestream_flutter/send.dart';
@@ -135,10 +134,6 @@ Widget _buildControlTime() {
             ],
           ),
         );
-}
-
-Widget _buildTabObjects(){
-  return text('objects');
 }
 
 Widget buildColumnEditTile(){

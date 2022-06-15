@@ -26,7 +26,6 @@ import 'state.dart';
 import 'style.dart';
 
 final _screen = engine.screen;
-final _render = isometric.render;
 final _floatingTexts = isometric.floatingTexts;
 
 class GameRender {
