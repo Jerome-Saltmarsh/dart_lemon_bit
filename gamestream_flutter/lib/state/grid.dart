@@ -38,35 +38,36 @@ void refreshLighting(){
   _setLightMapValue(gridLightBake, ambient.value);
   _setLightMapValue(gridLightDynamic, ambient.value);
   if (gridShadows.value){
-    _applyShadows();
+    gridApplyShadows();
   }
   _applyBakeMapEmissions();
 }
 
-void _applyShadows(){
+void gridApplyShadows(){
+  if (ambient.value > Shade.Very_Bright) return;
   final hour = game.hours.value;
-  if (hour < 6) return;
-  if (hour < 9) return _applyShadowsMorning();
-  if (hour < 15) return _applyShadowsAfternoon();
-  if (hour < 18) return _applyShadowsEvening();
+  if (hour < 11) return _applyShadowsMorning();
+  if (hour < 13) return _applyShadowsAfternoon();
+  if (hour < 15) return _applyShadowsEvening();
 }
 
 void _applyShadowsMorning() {
-  _applyShadowAt(directionZ: -1, directionRow: -1, directionColumn: 1);
+  _applyShadowAt(directionZ: -1, directionRow: 0, directionColumn: 1, maxDistance: 1);
 }
 
 void _applyShadowsAfternoon() {
-  _applyShadowAt(directionZ: -1, directionRow: 0, directionColumn: 0);
+  _applyShadowAt(directionZ: -1, directionRow: 1, directionColumn: 0, maxDistance: 1);
 }
 
 void _applyShadowsEvening() {
-  _applyShadowAt(directionZ: -1, directionRow: 1, directionColumn: -1);
+  _applyShadowAt(directionZ: -1, directionRow: 0, directionColumn: -1, maxDistance: 1);
 }
 
 void _applyShadowAt({
   required int directionZ,
   required int directionRow,
   required int directionColumn,
+  required int maxDistance,
 }){
   final current = ambient.value;
   final shadowShade = current >= Shade.Pitch_Black ? current : current + 1;
@@ -79,6 +80,7 @@ void _applyShadowAt({
         var projectionZ = z + directionZ;
         var projectionRow = row + directionRow;
         var projectionColumn = column + directionColumn;
+        var distance = 0;
         while (
             projectionZ >= 0 &&
             projectionRow >= 0 &&
@@ -94,8 +96,11 @@ void _applyShadowAt({
             }
           }
           projectionZ += directionZ;
-          projectionRow += directionRow;
-          projectionColumn += directionColumn;
+          distance++;
+          // if (distance < maxDistance){
+            projectionRow += directionRow;
+            projectionColumn += directionColumn;
+          // }
         }
       }
     }
@@ -153,7 +158,7 @@ void _applyBakeMapEmissions() {
     for (var rowIndex = 0; rowIndex < gridTotalRows; rowIndex++) {
       for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
         final type = grid[zIndex][rowIndex][columnIndex];
-        if (type != GridNodeType.Torch) continue;
+        if (type != GridNodeType.Torch && type != GridNodeType.Player_Spawn) continue;
         if (gridLightBake[zIndex][rowIndex][columnIndex] <= Shade.Very_Bright) continue;
         _applyEmission(
           map: gridLightBake,

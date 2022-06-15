@@ -38,13 +38,12 @@ Widget buildHudMapEditor() {
 }
 
 Widget buildPanelEditor(){
-  return Column(
+  return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      _button("Hide", hud.toggleEditToolsEnabled),
       // _buildContainerMouseInfo(),
       // _buildContainerPlayerInfo(),
-
+      buildColumnEditTile(),
       _button("Recenter", (){
          edit.z = player.indexZ;
          edit.row = player.indexRow;
@@ -58,7 +57,6 @@ Widget buildPanelEditor(){
       _buildControlLightMode(),
       _buildControlTime(),
       height8,
-      buildColumnEditTile(),
     ],
   );
 }
@@ -70,7 +68,7 @@ Widget _buildControlLightMode(){
         height: 50,
         width: 200,
         alignment: Alignment.centerLeft,
-        color: Colors.white60,
+        color: Colors.grey,
         child: watch(lightModeRadial, (bool radial){
            return text(radial ? 'Radial' : "Square");
         })
@@ -103,7 +101,7 @@ Widget _buildControlTime() {
   return Container(
           height: 50,
           width: 200,
-          color: Colors.white60,
+          color: Colors.grey,
           child: Row(
             children: [
               text("Time: "),
@@ -169,34 +167,19 @@ Widget buildColumnEditTile(){
 
 Widget _buildSetType(int value, String name) {
   return WatchBuilder(edit.type, (int type) {
-    return Container(
-      width: 200,
-      height: 50,
-      color: type == value ? Colors.green : Colors.white60,
-      child: text(name, onPressed: () {
-        if (grid[edit.z][edit.row][edit.column] == value){
-          for (var z = 1; z < edit.z; z++){
-            if (GridNodeType.isStairs(value)){
-              sendClientRequestSetBlock(edit.row, edit.column, z, GridNodeType.Bricks);
-            } else {
-              sendClientRequestSetBlock(edit.row, edit.column, z, value);
-            }
-          }
-        }
-        sendClientRequestSetBlock(edit.row, edit.column, edit.z, value);
-      }),
+        return _button(name, () => edit.setBlockType(value),color: type == value ? Colors.green : Colors.grey
     );
   });
 }
 
-Widget _button(String value, Function action){
+Widget _button(String value, Function action, {Color? color}){
   return onPressed(
     callback: action,
     child: Container(
       width: 200,
       height: 50,
       padding: const EdgeInsets.only(left: 6),
-      color: Colors.grey,
+      color: color ?? Colors.grey,
       alignment: Alignment.centerLeft,
       child: text(value),
     ),
