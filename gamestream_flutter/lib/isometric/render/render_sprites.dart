@@ -7,7 +7,6 @@ import 'package:gamestream_flutter/isometric/state/particles.dart';
 import 'package:gamestream_flutter/isometric/state/player.dart';
 import 'package:gamestream_flutter/isometric/state/players.dart';
 import 'package:gamestream_flutter/isometric/state/zombies.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'render_character.dart';
@@ -18,7 +17,7 @@ import 'render_zombie.dart';
 
 void renderSprites() {
   engine.setPaintColorWhite();
-  isometric.sortParticles();
+  sortParticles();
   final _screen = engine.screen;
   final totalParticles = particles.length;
   final screenLeft = _screen.left;

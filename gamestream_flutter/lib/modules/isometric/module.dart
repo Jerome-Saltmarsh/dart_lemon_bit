@@ -13,7 +13,6 @@ import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/state/grid.dart';
 import 'package:gamestream_flutter/isometric/state/particle_emitters.dart';
 import 'package:gamestream_flutter/isometric/state/particles.dart';
-import 'package:gamestream_flutter/isometric/state/time.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:lemon_engine/engine.dart';
@@ -81,25 +80,6 @@ class IsometricModule {
 
   // METHODS
 
-  void sortParticles(){
-    insertionSort(
-      particles,
-      compare: compareParticles,
-    );
-  }
-
-  int compareParticles(Particle a, Particle b) {
-    if (!a.active) {
-      if (!b.active){
-        return 0;
-      }
-      return 1;
-    }
-    if (!b.active) {
-      return -1;
-    }
-    return a.y > b.y ? 1 : -1;
-  }
 
   bool tileIsWalkable(Vector3 position){
     final tile = position.tile;
@@ -124,19 +104,6 @@ class IsometricModule {
     if (row >= shader.length) return;
 
     applyShade(shader, row, column, Shade.Medium);
-  }
-
-  void detractHour(){
-    print("isometric.actions.detractHour()");
-    hours.value = (hours.value - 1) % 24;
-  }
-
-  void addHour(){
-    hours.value = (hours.value + 1) % 24;
-  }
-
-  void setHour(int hour) {
-    hours.value = hour * secondsPerHour;
   }
 
   void cameraCenterMap(){
