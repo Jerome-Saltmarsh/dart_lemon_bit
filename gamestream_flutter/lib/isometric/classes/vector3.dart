@@ -1,5 +1,5 @@
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/state/grid.dart';
+import 'package:gamestream_flutter/isometric/state/grid.dart';
 import 'package:lemon_math/library.dart';
 
 class Vector3 with Position {

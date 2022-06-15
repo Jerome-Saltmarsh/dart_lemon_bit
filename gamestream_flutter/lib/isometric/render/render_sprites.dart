@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:gamestream_flutter/isometric/state/lower_tile_mode.dart';
 import 'package:gamestream_flutter/isometric/state/particles.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/state/grid.dart';
+import 'package:gamestream_flutter/isometric/state/grid.dart';
 import 'package:gamestream_flutter/ui/builders/player.dart';
 import 'package:lemon_engine/engine.dart';
 

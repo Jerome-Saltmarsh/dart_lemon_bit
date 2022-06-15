@@ -1,5 +1,5 @@
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/state/grid.dart';
+import 'package:gamestream_flutter/isometric/state/grid.dart';
 import 'package:lemon_engine/engine.dart';
 
 void renderTreeAt(int z, int row, int column) {

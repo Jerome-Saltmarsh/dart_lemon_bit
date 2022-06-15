@@ -2,7 +2,7 @@ import 'package:bleed_common/grid_node_type.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'state/grid.dart';
+import 'isometric/state/grid.dart';
 
 final edit = EditState();
 

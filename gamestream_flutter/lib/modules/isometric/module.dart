@@ -10,11 +10,12 @@ import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
+import 'package:gamestream_flutter/isometric/state/particle_emitters.dart';
 import 'package:gamestream_flutter/isometric/state/particles.dart';
 import 'package:gamestream_flutter/isometric/state/time.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
-import 'package:gamestream_flutter/state/grid.dart';
+import 'package:gamestream_flutter/isometric/state/grid.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -25,7 +26,6 @@ import 'render.dart';
 class IsometricModule {
   late final IsometricRender render;
   late final IsometricSpawn spawn;
-  final particleEmitters = <ParticleEmitter>[];
   final paths = Float32List(10000);
   final targets = Float32List(10000);
   final structures = <Structure>[];
@@ -39,7 +39,7 @@ class IsometricModule {
   final maxAmbientBrightness = Watch(Shade.Bright);
   final nameTextStyle = TextStyle(color: Colors.white);
 
-  var eventsRegistered = false;
+  // var eventsRegistered = false;
   var tiles = <List<int>>[];
   var tilesDst = Float32List(0);
   var tilesSrc = Float32List(0);

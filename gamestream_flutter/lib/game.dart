@@ -18,7 +18,7 @@ import 'classes/Projectile.dart';
 import 'isometric/state/time.dart';
 import 'modules/isometric/classes.dart';
 import 'modules/isometric/enums.dart';
-import 'state/grid.dart';
+import 'isometric/state/grid.dart';
 import 'ui/builders/player.dart';
 
 final game = Game();
