@@ -284,9 +284,6 @@ class CoreActions {
     core.state.mode.value = Mode.Editor;
     game.hours.value = 12;
     game.minutes.value = 0;
-    if (newScene) {
-      editor.actions.newScene();
-    }
   }
 
   void exitGame(){

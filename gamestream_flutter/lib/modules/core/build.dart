@@ -47,9 +47,6 @@ class CoreBuild {
         return _layoutOperationStatus(operationStatus);
       }
       return WatchBuilder(core.state.mode, (Mode mode) {
-        if (mode == Mode.Editor) {
-          return editor.build.buildEditorUI();
-        }
         return watchAccount(buildAccount);
       });
     });
