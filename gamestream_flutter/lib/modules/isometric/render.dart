@@ -1,9 +1,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
-import 'package:gamestream_flutter/classes/Projectile.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
-import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/render/render_character.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -17,80 +15,12 @@ class IsometricRender {
 
   IsometricRender(this.state);
 
-  int calculateOrder(Vector3 position) {
-    return convertWorldToRow(position.x, position.y) +
-        convertWorldToColumn(position.x, position.y);
-  }
-
   /// While this method is obviously a complete dog's breakfast all readability
   /// has been sacrificed for sheer speed of execution.
   ///
   /// WARNING: Be very careful modifying anything in this code. If something
   /// doesn't make any sense or doesn't seem to belong or do anything look
   /// harder
-
-  void renderProjectile(Projectile value) {
-    switch (value.type) {
-      case ProjectileType.Arrow:
-        renderArrow(value.renderX, value.renderY, value.angle);
-        break;
-      case ProjectileType.Orb:
-        renderOrb(value.renderX, value.renderY);
-        break;
-      case ProjectileType.Fireball:
-        renderFireball(value.renderX, value.renderY, value.angle);
-        break;
-      case ProjectileType.Bullet:
-        renderFireball(value.renderX, value.renderY, value.angle);
-        break;
-      default:
-        return;
-    }
-  }
-
-  void renderFireball(double x, double y, double rotation) {
-    engine.renderCustom(
-      dstX: x,
-      dstY: y,
-      srcX: 5669,
-      srcY: ((x + y + (engine.frame ~/ 5) % 6) * 23),
-      srcWidth: 18,
-      srcHeight: 23,
-      rotation: rotation,
-    );
-  }
-
-  void renderArrow(double x, double y, double angle) {
-    engine.mapSrc(x: 2182, y: 1, width: 13, height: 47);
-    engine.mapDst(
-        x: x,
-        y: y - 20,
-        rotation: angle + piQuarter,
-        anchorX: 6.5,
-        anchorY: 30,
-        scale: 0.5);
-    engine.renderAtlas();
-    engine.mapSrc(x: 2172, y: 1, width: 13, height: 47);
-    engine.mapDst(
-        x: x,
-        y: y,
-        rotation: angle + piQuarter,
-        anchorX: 6.5,
-        anchorY: 30,
-        scale: 0.5);
-    engine.renderAtlas();
-  }
-
-  void renderOrb(double x, double y) {
-    engine.renderCustom(
-        dstX: x,
-        dstY: y,
-        srcX: 417,
-        srcY: 26,
-        srcWidth: 8,
-        srcHeight: 8,
-        scale: 1.5);
-  }
 
   void renderStructure(Structure structure) {
     switch (structure.type) {

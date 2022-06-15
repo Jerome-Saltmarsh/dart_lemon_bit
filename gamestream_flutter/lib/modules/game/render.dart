@@ -11,6 +11,7 @@ import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/hud/hud_state.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
+import 'package:gamestream_flutter/isometric/render/render_projectile.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -242,7 +243,7 @@ class GameRender {
     final total = game.totalProjectiles;
     final projectiles = game.projectiles;
     for (var i = 0; i < total; i++) {
-      _render.renderProjectile(projectiles[i]);
+      renderProjectile(projectiles[i]);
     }
   }
 
