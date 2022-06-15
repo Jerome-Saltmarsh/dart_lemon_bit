@@ -4,6 +4,8 @@ import 'package:gamestream_flutter/classes/deck_card.dart';
 import 'package:gamestream_flutter/classes/game_object.dart';
 import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
+import 'package:gamestream_flutter/isometric/classes/collectable.dart';
+import 'package:gamestream_flutter/isometric/state/players.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_byte/byte_reader.dart';
@@ -15,10 +17,9 @@ import 'package:lemon_watch/watch.dart';
 import 'classes/Explosion.dart';
 import 'classes/NpcDebug.dart';
 import 'isometric/classes/projectile.dart';
-import 'isometric/state/time.dart';
-import 'modules/isometric/classes.dart';
-import 'modules/isometric/enums.dart';
 import 'isometric/state/grid.dart';
+import 'isometric/state/time.dart';
+import 'modules/isometric/enums.dart';
 import 'ui/builders/player.dart';
 
 final game = Game();
@@ -60,8 +61,6 @@ class Game with ByteReader {
   final type = Watch<GameType?>(null);
   final countDownFramesRemaining = Watch(0);
   final totalZombies = Watch(0);
-  final totalPlayers = Watch(0);
-  final players = <Character>[];
   final zombies = <Character>[];
   final collectables = <Collectable>[];
   final interactableNpcs = <Character>[];
@@ -529,7 +528,7 @@ class Game with ByteReader {
       character.text = readString();
       total++;
     }
-    totalPlayers.value = total;
+    totalPlayers = total;
     updateScoreText();
   }
 
@@ -658,8 +657,7 @@ class Game with ByteReader {
 
   Character getNextHighestScore(){
     Character? highestPlayer;
-    final numberOfPlayers = totalPlayers.value;
-    for(var i = 0; i < numberOfPlayers; i++){
+    for(var i = 0; i < totalPlayers; i++){
       final player = players[i];
       if (player.scoreMeasured) continue;
       if (highestPlayer == null){
@@ -678,16 +676,15 @@ class Game with ByteReader {
 
   void updateScoreText(){
     scoreBuilder.clear();
-    final totalNumberOfPlayers = totalPlayers.value;
-    if (totalNumberOfPlayers <= 0) return;
+    if (totalPlayers <= 0) return;
     scoreBuilder.write("SCORE\n");
 
-    for (var i = 0; i < totalNumberOfPlayers; i++) {
+    for (var i = 0; i < totalPlayers; i++) {
       final player = players[i];
       player.scoreMeasured = false;
     }
 
-    for (var i = 0; i < totalNumberOfPlayers; i++) {
+    for (var i = 0; i < totalPlayers; i++) {
       final player = getNextHighestScore();
       scoreBuilder.write('${i + 1}. ${player.name} ${player.score}\n');
     }

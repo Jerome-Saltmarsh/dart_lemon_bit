@@ -2,6 +2,7 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/isometric/state/players.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
@@ -34,8 +35,8 @@ class GameUpdate {
   void updateFootstepAudio() {
     if (engine.frame % 2 == 0) return;
 
-    for (var i = 0; i < game.totalPlayers.value; i++) {
-        final player = game.players[i];
+    for (var i = 0; i < totalPlayers; i++) {
+        final player = players[i];
         if (player.running && player.frame % 2 == 0) {
           audio.footstepGrass(player.x, player.y);
         }

@@ -14,6 +14,7 @@ import 'package:gamestream_flutter/isometric/render/render_grid_node.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectile.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/state/edit_tools_enabled.dart';
+import 'package:gamestream_flutter/isometric/state/players.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/isometric/state/grid.dart';
@@ -70,7 +71,7 @@ class GameRender {
 
     gridRefreshDynamicLight();
 
-    for (final player in game.players) {
+    for (final player in players) {
        gridEmitDynamic(player.indexZ, player.indexRow, player.indexColumn);
     }
 
@@ -179,9 +180,9 @@ class GameRender {
   }
 
   void _renderPlayerNames() {
-    final total = game.totalPlayers.value;
+    final total = totalPlayers;
     for (var i = 0; i < total; i++) {
-      final player = game.players[i];
+      final player = players[i];
       if (!engine.screen.containsV(player)) continue;
       if (player.dead) continue;
       const minDistance = 15;
@@ -318,9 +319,7 @@ class GameRender {
   }
 
   void drawPlayerText() {
-    final players = game.players;
     const charWidth = 4.5;
-    final totalPlayers = game.totalPlayers.value;
     for (var i = 0; i < totalPlayers; i++) {
       final human = players[i];
       if (human.text.isEmpty) continue;

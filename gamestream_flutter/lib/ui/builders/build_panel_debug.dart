@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/state/particles.dart';
+import 'package:gamestream_flutter/isometric/state/players.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/builders/build_row_tech_type.dart';
@@ -18,7 +19,7 @@ Widget buildPanelDebug(){
       buildVersion(),
       buildTime(),
       buildTotalZombies(),
-      buildTotalPlayers(),
+      // buildTotalPlayers(),
       mouseRowColumn(),
       mouseRowColumnPercentage(),
       buildTotalParticles,
@@ -42,11 +43,11 @@ Widget buildTotalZombies() {
   });
 }
 
-Widget buildTotalPlayers() {
-  return WatchBuilder(game.totalPlayers, (int value) {
-    return text('Players: $value');
-  });
-}
+// Widget buildTotalPlayers() {
+//   return WatchBuilder(totalPlayers, (int value) {
+//     return text('Players: $value');
+//   });
+// }
 
 Widget mouseRowColumn(){
   return Refresh((){

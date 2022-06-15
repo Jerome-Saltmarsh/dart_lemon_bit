@@ -3,6 +3,7 @@ import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:gamestream_flutter/isometric/state/lower_tile_mode.dart';
 import 'package:gamestream_flutter/isometric/state/particles.dart';
+import 'package:gamestream_flutter/isometric/state/players.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/isometric/state/grid.dart';
 import 'package:gamestream_flutter/ui/builders/player.dart';
@@ -26,13 +27,11 @@ void renderSprites() {
   final screenBottom100 = screenBottom + 120;
 
   final zombies = game.zombies;
-  final players = game.players;
   final npcs = game.interactableNpcs;
   final gameObjects = game.gameObjects;
 
   final totalGameObjects = gameObjects.length;
   final totalZombies = game.totalZombies.value;
-  final totalPlayers = game.totalPlayers.value;
   final totalNpcs = game.totalNpcs;
   final gridTotalZ = grid.length;
   final gridTotalRows = grid[0].length;
