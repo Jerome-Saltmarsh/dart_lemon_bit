@@ -166,7 +166,6 @@ class Game with ByteReader {
 
         case ServerResponse.Tiles:
           throw Exception("No longer ServerResponse.Tiles");
-          break;
 
         case ServerResponse.Debug_Mode:
           modules.game.state.debug.value = readBool();

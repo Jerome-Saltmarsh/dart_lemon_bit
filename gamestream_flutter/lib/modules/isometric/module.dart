@@ -31,8 +31,8 @@ class IsometricModule {
   final structures = <Structure>[];
   final gemSpawns = <GemSpawn>[];
   final floatingTexts = <FloatingText>[];
-  final dynamic = <Int8List>[];
-  final bake = <Int8List>[];
+  // final dynamic = <Int8List>[];
+  // final bake = <Int8List>[];
   final items = <Item>[];
   // final totalColumns = Watch(0);
   // final totalRows = Watch(0);
@@ -106,18 +106,6 @@ class IsometricModule {
     return tile == GridNodeType.Bricks;
   }
 
-  void applyShadeDynamicPositionUnchecked(double x, double y, int value) {
-    shadeDynamic(convertWorldToRow(x,  y), convertWorldToColumn(x, y), value);
-  }
-
-  void shadeDynamic(int row, int column, int value) {
-    applyShade(dynamic, row, column, value);
-  }
-
-  void shadeBake(int row, int column, int value) {
-    applyShade(bake, row, column, value);
-  }
-
   void applyShade(List<List<int>> shader, int row, int column, int value) {
     applyShadeAtRow(shader[row], column, value);
   }
@@ -136,17 +124,6 @@ class IsometricModule {
     if (row >= shader.length) return;
 
     applyShade(shader, row, column, Shade.Medium);
-  }
-
-  // TODO Optimize
-  void resetDynamicShadesToBakeMap() {
-    for (var row = minRow; row < maxRow; row++) {
-      final dynamicRow = dynamic[row];
-      final bakeRow = bake[row];
-      for (var column = minColumn; column < maxColumn; column++) {
-        dynamicRow[column] = bakeRow[column];
-      }
-    }
   }
 
   void detractHour(){
@@ -177,7 +154,6 @@ class IsometricModule {
       if (percentage < 0.66) {
         break;
       }
-      emitLightLow(dynamic, effect.x, effect.y);
     }
   }
 
