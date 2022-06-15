@@ -91,7 +91,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       if (account != null) {
         player.name = account.publicName;
       } else {
-        while(true){
+        while (true) {
           final randomName = generateRandomName();
           if (game.containsPlayerWithName(randomName)) continue;
           player.name = randomName;

@@ -13,7 +13,6 @@ final engine = _Engine();
 class _Engine {
   static const framesPerSecond = 45;
   static const framesPerRegen = 30 * 10;
-  static const framesPerUpdateAIPath = 30;
   final games = <Game>[];
   final scenes = _Scenes();
   late final world;
@@ -39,31 +38,20 @@ class _Engine {
     }
 
     if (frame % framesPerRegen == 0) {
-      regenCharacters();
+      for (final game in games) {
+        game.regenCharacters();
+      }
     }
-    if (frame % framesPerUpdateAIPath == 0) {
-      _updateAIPaths();
+    if (frame % 30 == 0) {
+      for (final game in games) {
+        game.updateAIPath();
+      }
     }
 
     if (frame % framesPerSecond == 0){
        for (final game in games) {
          if (game is GameRandom == false) continue;
-          for (final player in game.players){
-              player.writeByte(ServerResponse.Player_Deck_Cooldown);
-              player.writeByte(player.deck.length);
-              for (final card in player.deck) {
-                if (card is CardAbility){
-                  if (card.cooldownRemaining > 0){
-                    card.cooldownRemaining--;
-                  }
-                   player.writeByte(card.cooldownRemaining);
-                   player.writeByte(card.cooldown);
-                } else {
-                  player.writeByte(0);
-                  player.writeByte(0);
-                }
-              }
-          }
+         game.writePlayerCooldowns();
        }
     }
 
@@ -105,29 +93,6 @@ class _Engine {
         player.writePlayerGame();
         player.writeByte(ServerResponse.End);
         player.sendBufferToClient();
-      }
-    }
-  }
-
-  void _updateAIPaths() {
-    for (final game in games) {
-      final zombies = game.zombies;
-      for (final zombie in zombies) {
-          if (zombie.deadOrBusy) continue;
-          final target = zombie.target;
-          if (target == null) continue;
-          game.npcSetPathTo(zombie, target);
-      }
-    }
-  }
-
-  void regenCharacters(){
-    for (final game in games) {
-      final players = game.players;
-      for (final player in players) {
-        if (player.dead) continue;
-        player.health++;
-        player.magic++;
       }
     }
   }

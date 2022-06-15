@@ -76,6 +76,23 @@ abstract class Game {
     return randomItem(scene.spawnPointPlayers);
   }
 
+  void updateAIPath(){
+    for (final zombie in zombies) {
+      if (zombie.deadOrBusy) continue;
+      final target = zombie.target;
+      if (target == null) continue;
+      npcSetPathTo(zombie, target);
+    }
+  }
+
+  void regenCharacters() {
+    for (final player in players) {
+      if (player.dead) continue;
+      player.health++;
+      player.magic++;
+    }
+  }
+
   bool containsPlayerWithName(String name){
      for(final player in players){
        if (player.name == name) return true;
@@ -257,6 +274,12 @@ abstract class Game {
 
   void onPlayerSelectCharacterType(Player player, CharacterSelection value){
 
+  }
+
+  void writePlayerCooldowns(){
+    for (final player in players){
+      player.writeCooldowns();
+    }
   }
 }
 

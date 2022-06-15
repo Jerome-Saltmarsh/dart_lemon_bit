@@ -772,6 +772,23 @@ extension PlayerProperties on Player {
   int getDamage(){
     return 5;
   }
+
+  void writeCooldowns(){
+    writeByte(ServerResponse.Player_Deck_Cooldown);
+    writeByte(deck.length);
+    for (final card in deck) {
+      if (card is CardAbility){
+        if (card.cooldownRemaining > 0){
+          card.cooldownRemaining--;
+        }
+        writeByte(card.cooldownRemaining);
+        writeByte(card.cooldown);
+      } else {
+        writeByte(0);
+        writeByte(0);
+      }
+    }
+  }
 }
 
 int getExperienceForLevel(int level){
