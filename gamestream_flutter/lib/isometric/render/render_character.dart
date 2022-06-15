@@ -1,6 +1,5 @@
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/weapon_type.dart';
-import 'package:gamestream_flutter/modules/isometric/render.dart';
 import 'package:lemon_engine/engine.dart';
 
 import '../classes/character.dart';
@@ -86,7 +85,7 @@ void _renderCharacterTemplateWeapon(Character character) {
 
 
 void _renderCharacterShadow(Character character) {
-  _renderCharacterPart(character, SpriteLayer.Shadow);
+  _renderCharacterPart(character, _SpriteLayer.Shadow);
 }
 
 void _renderCharacterPartHead(Character character) {
@@ -98,7 +97,7 @@ void _renderCharacterPartBody(Character character) {
 }
 
 void _renderCharacterPartLegs(Character character) {
-  _renderCharacterPart(character, SpriteLayer.Legs_Blue);
+  _renderCharacterPart(character, _SpriteLayer.Legs_Blue);
 }
 
 void _renderCharacterPart(Character character, int layer) {
@@ -173,13 +172,13 @@ double _getTemplateSrcX(Character character, {required double size}) {
 int _getSpriteIndexBody(Character character) {
   switch (character.armour) {
     case SlotType.Empty:
-      return SpriteLayer.Body_Cyan;
+      return _SpriteLayer.Body_Cyan;
     case SlotType.Body_Blue:
-      return SpriteLayer.Body_Blue;
+      return _SpriteLayer.Body_Blue;
     case SlotType.Armour_Padded:
-      return SpriteLayer.Body_Blue;
+      return _SpriteLayer.Body_Blue;
     case SlotType.Magic_Robes:
-      return SpriteLayer.Body_Blue;
+      return _SpriteLayer.Body_Blue;
     default:
       throw Exception("cannot render body ${character.armour}");
   }
@@ -188,13 +187,13 @@ int _getSpriteIndexBody(Character character) {
 int _mapEquippedWeaponToSpriteIndex(Character character) {
   switch (character.weapon) {
     case WeaponType.Sword:
-      return SpriteLayer.Sword_Wooden;
+      return _SpriteLayer.Sword_Wooden;
     case WeaponType.Bow:
-      return SpriteLayer.Bow_Wooden;
+      return _SpriteLayer.Bow_Wooden;
     case WeaponType.Shotgun:
-      return SpriteLayer.Weapon_Shotgun;
+      return _SpriteLayer.Weapon_Shotgun;
     case WeaponType.Handgun:
-      return SpriteLayer.Weapon_Handgun;
+      return _SpriteLayer.Weapon_Handgun;
     default:
       throw Exception("cannot map ${character.weapon} to sprite index");
   }
@@ -203,14 +202,34 @@ int _mapEquippedWeaponToSpriteIndex(Character character) {
 int _getSpriteIndexHead(Character character) {
   switch (character.helm) {
     case SlotType.Empty:
-      return SpriteLayer.Head_Plain;
+      return _SpriteLayer.Head_Plain;
     case SlotType.Steel_Helmet:
-      return SpriteLayer.Head_Steel;
+      return _SpriteLayer.Head_Steel;
     case SlotType.Magic_Hat:
-      return SpriteLayer.Head_Magic;
+      return _SpriteLayer.Head_Magic;
     case SlotType.Rogue_Hood:
-      return SpriteLayer.Head_Rogue;
+      return _SpriteLayer.Head_Rogue;
     default:
       throw Exception("cannot render head ${character.helm}");
   }
+}
+
+class _SpriteLayer {
+  static const Shadow = 0;
+  static const Legs_Blue = 1;
+  static const Legs_Swat = 2;
+  static const Staff_Wooden = 3;
+  static const Sword_Wooden = 4;
+  static const Sword_Steel = 5;
+  static const Weapon_Shotgun = 6;
+  static const Weapon_Handgun = 7;
+  static const Bow_Wooden = 8;
+  static const Body_Cyan = 9;
+  static const Body_Blue = 10;
+  static const Body_Swat = 11;
+  static const Head_Plain = 12;
+  static const Head_Steel = 13;
+  static const Head_Rogue = 14;
+  static const Head_Magic = 15;
+  static const Head_Swat = 16;
 }

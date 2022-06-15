@@ -221,57 +221,7 @@ class IsometricRender {
     engine.render(dstX: x, dstY: y, srcX: 2420, srcY: 57, srcSize: 37);
   }
 
-  void renderIconWood(Vector2 position) {
-    engine.renderCustom(
-      dstX: position.x,
-      dstY: position.y,
-      srcX: 6189,
-      srcWidth: 26,
-      srcHeight: 37,
-      anchorY: 0.66,
-    );
-  }
 
-  void renderIconStone(Vector2 position) {
-    engine.renderCustom(
-      dstX: position.x,
-      dstY: position.y,
-      srcX: 6216,
-      srcWidth: 26,
-      srcHeight: 36,
-      anchorY: 0.66,
-    );
-  }
-
-  void renderIconCoin(Vector2 position) {
-    engine.renderCustomV2(
-      dst: position,
-      srcX: 6245,
-      srcWidth: 25,
-      srcHeight: 32,
-      anchorY: 0.66,
-    );
-  }
-
-  void renderIconGold(Vector2 position) {
-    engine.renderCustomV2(
-      dst: position,
-      srcX: 6273,
-      srcWidth: 26,
-      srcHeight: 32,
-      anchorY: 0.66,
-    );
-  }
-
-  void renderIconExperience(Vector2 position) {
-    engine.renderCustomV2(
-      dst: position,
-      srcX: 6304,
-      srcWidth: 17,
-      srcHeight: 26,
-      anchorY: 0.66,
-    );
-  }
 
   final _mouseSnap = Vector2(0, 0);
 
@@ -286,9 +236,9 @@ class IsometricRender {
 
     switch (modules.game.structureType.value) {
       case StructureType.Tower:
-        return isometric.render.renderTower(x, y);
+        // return isometric.render.renderTower(x, y);
       case StructureType.Palisade:
-        return isometric.render.renderPalisade(x: x, y: y);
+        // return isometric.render.renderPalisade(x: x, y: y);
       // case StructureType.Torch:
       //   return isometric.render.renderTorch(_mouseSnap);
       default:
@@ -308,22 +258,3 @@ class IsometricRender {
   }
 }
 
-class SpriteLayer {
-  static const Shadow = 0;
-  static const Legs_Blue = 1;
-  static const Legs_Swat = 2;
-  static const Staff_Wooden = 3;
-  static const Sword_Wooden = 4;
-  static const Sword_Steel = 5;
-  static const Weapon_Shotgun = 6;
-  static const Weapon_Handgun = 7;
-  static const Bow_Wooden = 8;
-  static const Body_Cyan = 9;
-  static const Body_Blue = 10;
-  static const Body_Swat = 11;
-  static const Head_Plain = 12;
-  static const Head_Steel = 13;
-  static const Head_Rogue = 14;
-  static const Head_Magic = 15;
-  static const Head_Swat = 16;
-}

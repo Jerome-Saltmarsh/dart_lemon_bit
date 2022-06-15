@@ -2,22 +2,26 @@ import 'dart:math';
 
 import 'package:bleed_common/Projectile_Type.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
+import 'package:gamestream_flutter/isometric/state/projectiles.dart';
 import 'package:lemon_engine/engine.dart';
 
-void renderProjectile(Projectile value) {
+
+void renderProjectiles() {
+  for (var i = 0; i < totalProjectiles; i++) {
+    _renderProjectile(projectiles[i]);
+  }
+}
+
+void _renderProjectile(Projectile value) {
   switch (value.type) {
     case ProjectileType.Arrow:
-      renderArrow(value.renderX, value.renderY, value.angle);
-      break;
+      return renderArrow(value.renderX, value.renderY, value.angle);
     case ProjectileType.Orb:
-      renderOrb(value.renderX, value.renderY);
-      break;
+      return renderOrb(value.renderX, value.renderY);
     case ProjectileType.Fireball:
-      renderFireball(value.renderX, value.renderY, value.angle);
-      break;
+      return renderFireball(value.renderX, value.renderY, value.angle);
     case ProjectileType.Bullet:
-      renderFireball(value.renderX, value.renderY, value.angle);
-      break;
+      return renderFireball(value.renderX, value.renderY, value.angle);
     default:
       return;
   }

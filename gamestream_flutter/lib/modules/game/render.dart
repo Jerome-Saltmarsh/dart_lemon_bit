@@ -3,22 +3,20 @@ import 'dart:math';
 
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/classes/explosion.dart';
-import 'package:gamestream_flutter/isometric/classes/npc_debug.dart';
 import 'package:gamestream_flutter/colours.dart';
-import 'package:gamestream_flutter/isometric/state/collectbles.dart';
-import 'package:gamestream_flutter/isometric/state/edit_state.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
-import 'package:gamestream_flutter/isometric/classes/projectile.dart';
+import 'package:gamestream_flutter/isometric/classes/explosion.dart';
+import 'package:gamestream_flutter/isometric/classes/npc_debug.dart';
 import 'package:gamestream_flutter/isometric/render/render_grid_node.dart';
-import 'package:gamestream_flutter/isometric/render/render_projectile.dart';
+import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
+import 'package:gamestream_flutter/isometric/state/collectbles.dart';
+import 'package:gamestream_flutter/isometric/state/edit_state.dart';
 import 'package:gamestream_flutter/isometric/state/edit_tools_enabled.dart';
 import 'package:gamestream_flutter/isometric/state/grid.dart';
 import 'package:gamestream_flutter/isometric/state/player.dart';
 import 'package:gamestream_flutter/isometric/state/players.dart';
-import 'package:gamestream_flutter/isometric/state/projectiles.dart';
 import 'package:gamestream_flutter/isometric/state/zombies.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -85,7 +83,6 @@ class GameRender {
     }
 
     drawEffects();
-    drawItems();
   }
 
   void renderWireframes() {
@@ -118,16 +115,16 @@ class GameRender {
       final collectable = collectables[i];
       switch (collectable.type) {
         case CollectableType.Wood:
-          isometric.render.renderIconWood(collectable);
+          // isometric.render.renderIconWood(collectable);
           continue;
         case CollectableType.Stone:
-          isometric.render.renderIconStone(collectable);
+          // isometric.render.renderIconStone(collectable);
           continue;
         case CollectableType.Experience:
-          isometric.render.renderIconExperience(collectable);
+          // isometric.render.renderIconExperience(collectable);
           continue;
         case CollectableType.Gold:
-          isometric.render.renderIconGold(collectable);
+          // isometric.render.renderIconGold(collectable);
           continue;
       }
     }
@@ -235,23 +232,6 @@ class GameRender {
           srcY: 1,
           srcSize: 4,
       );
-    }
-  }
-
-  void renderProjectiles() {
-    for (var i = 0; i < totalProjectiles; i++) {
-      renderProjectile(projectiles[i]);
-    }
-  }
-
-  void mapDstProjectile(Projectile projectile){
-    engine.mapDst(x: projectile.x, y: projectile.y, scale: 0.25, anchorX: 16, anchorY: 16);
-  }
-
-  void drawItems() {
-    final items = isometric.items;
-    for (var i = 0; i < game.itemsTotal; i++){
-      isometric.render.renderItem(items[i]);
     }
   }
 

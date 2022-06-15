@@ -23,7 +23,6 @@ import 'render.dart';
 
 
 class IsometricModule {
-  late final IsometricRender render;
   late final IsometricSpawn spawn;
   final paths = Float32List(10000);
   final targets = Float32List(10000);
@@ -67,7 +66,6 @@ class IsometricModule {
 
   IsometricModule(){
     spawn = IsometricSpawn(this);
-    render = IsometricRender(this);
 
     for(var i = 0; i < 300; i++){
       particles.add(Particle());
@@ -214,9 +212,3 @@ class IsometricModule {
     particleEmitters.add(ParticleEmitter(x: x, y: y, rate: 12, emit: emitSmoke));
   }
 }
-
-
-// double convertWorldToGridX(double x, double y){
-//   return (x + y) ~/ 48.0;
-//   return getTile((x + y) ~/ 48.0, (y - x) ~/ 48.0);
-// }
