@@ -350,50 +350,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               return;
           }
 
-          // if (characterClassIndex >= gameTypes.length) {
-          //   errorInvalidArg('game type index cannot exceed ${gameTypes.length - 1}');
-          //   return;
-          // }
-          // if (characterClassIndex < 0) {
-          //   errorInvalidArg('game type must be greater than 0');
-          //   return;
-          // }
-
-          // if (arguments.length > 2) {
-          //   final userId = arguments[2];
-          //
-          //   firestoreService.findUserById(userId).then((account){
-          //      if (account == null) {
-          //        return errorAccountNotFound();
-          //      }
-          //      _account = account;
-          //      final gameType = gameTypes[characterClassIndex];
-          //
-          //      switch (gameType) {
-          //        case GameType.RANDOM:
-          //          return joinGameRandom();
-          //        case GameType.SURVIVORS:
-          //          return joinGameSurvivors();
-          //        default:
-          //          break;
-          //      }
-          //   });
-          //   return;
-          // }
-          // switch (characterClass) {
-          //   case GameType.RANDOM:
-          //     return joinGameRandom();
-          //   case GameType.SURVIVORS:
-          //     return joinGameSurvivors();
-          //   default:
-          //     throw Exception("Cannot join ${characterClass}");
-          // }
-
         case ClientRequest.Teleport:
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
+          if (player == null) return errorPlayerNotFound();
           player.x = player.mouse.x;
           player.y = player.mouse.y;
           return;
@@ -403,11 +361,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             errorArgsExpected(3, arguments);
             return;
           }
-          // final mapId = arguments[1];
-          // engine.findOrCreateCustomGame(mapId).then((value){
-          //   _player = value.playerJoin();
-          //   onGameJoined();
-          // });
           break;
 
         case ClientRequest.Construct:

@@ -627,43 +627,6 @@ class IsometricModule {
     engine.cameraCenter(center.x, center.y);
   }
 
-  void applyDynamicEmissions() {
-    if (dayTime) return;
-    resetDynamicShadesToBakeMap();
-
-    final totalPlayers = game.totalPlayers.value;
-    final totalNpcs = game.totalNpcs;
-    final players = game.players;
-    final npcs = game.interactableNpcs;
-
-    for (var i = 0; i < totalStructures; i++) {
-       final structure = structures[i];
-       if (structure.type != StructureType.Torch) continue;
-       emitLightHigh(dynamic, structure);
-    }
-
-    for (var i = 0; i < totalPlayers; i++){
-      final player = players[i];
-      if (!player.allie) continue;
-      emitLightHighLarge(dynamic, player.x, player.y);
-    }
-
-    // for (var i = 0; i < totalNpcs; i++){
-    //   final npc = npcs[i];
-    //   if (!npc.allie) continue;
-    //   emitLightHigh(dynamic, npc);
-    // }
-
-    for (var i = 0; i < game.totalProjectiles; i++){
-       final projectile = game.projectiles[i];
-       if (projectile.type != ProjectileType.Orb) continue;
-       emitLightHigh(dynamic, projectile);
-    }
-
-    // applyEmissionFromProjectiles();
-    applyEmissionFromEffects();
-  }
-
   void applyEmissionFromEffects() {
     for (final effect in game.effects) {
       if (!effect.enabled) continue;

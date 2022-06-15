@@ -520,16 +520,16 @@ class IsometricRender {
   void renderProjectile(Projectile value) {
     switch (value.type) {
       case ProjectileType.Arrow:
-        renderArrow(value.x, value.y - value.z, value.angle);
+        renderArrow(value.renderX, value.renderY, value.angle);
         break;
       case ProjectileType.Orb:
-        renderOrb(value);
+        renderOrb(value.renderX, value.renderY);
         break;
       case ProjectileType.Fireball:
-        renderFireball(value.x, value.y - value.z, value.angle);
+        renderFireball(value.renderX, value.renderY, value.angle);
         break;
       case ProjectileType.Bullet:
-        renderFireball(value.x, value.y - value.z, value.angle);
+        renderFireball(value.renderX, value.renderY, value.angle);
         break;
       default:
         return;
@@ -557,10 +557,10 @@ class IsometricRender {
     engine.renderAtlas();
   }
 
-  void renderOrb(Position position){
+  void renderOrb(double x, double y){
     engine.renderCustom(
-        dstX: position.x,
-        dstY: position.y,
+        dstX: x,
+        dstY: y,
         srcX: 417,
         srcY: 26,
         srcWidth: 8,
