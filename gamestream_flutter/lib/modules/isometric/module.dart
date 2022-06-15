@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:bleed_common/grid_node_type.dart';
@@ -9,10 +8,9 @@ import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
-import 'package:gamestream_flutter/convert/convert_hour_to_ambient.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
-import 'package:gamestream_flutter/isometric/utils/mouse.dart';
+import 'package:gamestream_flutter/isometric/state/particles.dart';
 import 'package:gamestream_flutter/isometric/state/time.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
@@ -22,17 +20,14 @@ import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'render.dart';
-import 'subscriptions.dart';
 
 
 class IsometricModule {
-  final subscriptions = IsometricSubscriptions();
   late final IsometricRender render;
   late final IsometricSpawn spawn;
   final particleEmitters = <ParticleEmitter>[];
   final paths = Float32List(10000);
   final targets = Float32List(10000);
-  final particles = <Particle>[];
   final structures = <Structure>[];
   final gemSpawns = <GemSpawn>[];
   final floatingTexts = <FloatingText>[];

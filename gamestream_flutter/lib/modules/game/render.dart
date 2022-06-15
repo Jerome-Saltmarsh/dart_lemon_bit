@@ -228,7 +228,6 @@ class GameRender {
     for (final bulletHole in bulletHoles) {
       if (bulletHole.x == 0) return;
       if (!engine.screen.contains(bulletHole.x, bulletHole.y)) continue;
-      // if (isometric.inDarkness(bulletHole.x, bulletHole.y)) continue;
       engine.render(
           dstX: bulletHole.x,
           dstY: bulletHole.y,

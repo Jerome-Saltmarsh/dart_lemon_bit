@@ -6,6 +6,7 @@ import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/classes/Authentication.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/isometric/state/particles.dart';
 import 'package:gamestream_flutter/isometric/state/time.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/state.dart';
@@ -179,7 +180,7 @@ class CoreActions {
     game.totalNpcs = 0;
     isometric.next = null;
     isometric.particleEmitters.clear();
-    isometric.particles.clear();
+    particles.clear();
 
     for (final bullet in game.bulletHoles) {
       bullet.x = 0;

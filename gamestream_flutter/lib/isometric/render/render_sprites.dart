@@ -2,6 +2,7 @@ import 'package:bleed_common/grid_node_type.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:gamestream_flutter/isometric/state/lower_tile_mode.dart';
+import 'package:gamestream_flutter/isometric/state/particles.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/state/grid.dart';
 import 'package:gamestream_flutter/ui/builders/player.dart';
@@ -17,7 +18,6 @@ void renderSprites() {
   engine.setPaintColorWhite();
   isometric.sortParticles();
   final _screen = engine.screen;
-  final particles = isometric.particles;
   final totalParticles = particles.length;
   final screenLeft = _screen.left;
   final screenRight = _screen.right;

@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 
+import 'isometric/state/particles.dart';
 import 'isometric/state/time.dart';
 
 // variables
@@ -81,7 +82,7 @@ void parseState() {
         Future.delayed(Duration(milliseconds: 150), () {
           engine.cameraCenter(x, y);
         });
-        isometric.particles.clear();
+        particles.clear();
         isometric.next = null;
         break;
 
@@ -168,7 +169,6 @@ void _parseGameJoined() {
   player.x = consumeDouble();
   player.y = consumeDouble();
 
-  final particles = modules.isometric.particles;
   for(final particle in particles) {
     particle.duration = 0;
   }

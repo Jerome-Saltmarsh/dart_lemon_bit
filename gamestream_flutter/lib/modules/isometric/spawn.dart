@@ -10,15 +10,11 @@ import 'package:gamestream_flutter/modules/isometric/module.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_math/library.dart';
 
-final particles = isometric.particles;
-
 class IsometricSpawn {
 
   final IsometricModule state;
   late final particles;
-  IsometricSpawn(this.state){
-    particles = state.particles;
-  }
+  IsometricSpawn(this.state);
 
   int get bodyPartDuration => randomInt(120, 200);
 

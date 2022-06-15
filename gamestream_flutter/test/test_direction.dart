@@ -6,7 +6,6 @@ import 'package:test/test.dart';
 
 void main() {
   test('clampAngle', () {
-    const pi2 = pi + pi;
     const piQ = pi * 0.25;
     // assert(clampAngle(-0.25) == pi2 - 0.25);
     // assert(clampAngle(0.25) == 0.25);

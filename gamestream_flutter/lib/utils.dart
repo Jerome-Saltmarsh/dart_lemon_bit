@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/classes/game_object.dart';
-import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:intl/intl.dart';
 import 'package:lemon_engine/engine.dart';
