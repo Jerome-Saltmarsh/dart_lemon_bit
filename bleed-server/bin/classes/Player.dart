@@ -393,7 +393,6 @@ extension PlayerProperties on Player {
     writePlayerZombies();
 
     if (!sceneDownloaded){
-      writeTiles();
       writeGrid();
       writeGameObjects();
       writeTechTypes();
@@ -498,20 +497,6 @@ extension PlayerProperties on Player {
        // writePositiveInt(gameObject.id);
     }
     writeByte(END);
-  }
-
-  void writeTiles() {
-    final tiles = scene.tiles;
-    final rows = scene.rows;
-    final columns = scene.columns;
-    writeByte(ServerResponse.Tiles);
-    writeInt(rows);
-    writeInt(columns);
-    for (var x = 0; x < rows; x++) {
-      for (var y = 0; y < columns; y++) {
-        writeByte(tiles[x][y]);
-      }
-    }
   }
 
   void writeGameEvent(int type, double x, double y, double angle){

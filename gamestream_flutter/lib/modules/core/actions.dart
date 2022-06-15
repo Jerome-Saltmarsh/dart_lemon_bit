@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:bleed_common/Character_Selection.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:firestore_client/firestoreService.dart';
@@ -29,6 +27,7 @@ import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'exceptions.dart';
+
 
 class CoreActions {
 
@@ -194,9 +193,6 @@ class CoreActions {
     }
 
     engine.zoom = 1;
-    isometric.tiles.clear();
-    isometric.tilesDst = Float32List(0);
-    isometric.tilesSrc = Float32List(0);
     isometric.totalStructures = 0;
     engine.redrawCanvas();
   }

@@ -165,7 +165,7 @@ class Game with ByteReader {
           break;
 
         case ServerResponse.Tiles:
-          parseTiles();
+          throw Exception("No longer ServerResponse.Tiles");
           break;
 
         case ServerResponse.Debug_Mode:
@@ -379,22 +379,6 @@ class Game with ByteReader {
 
   void parseCharacterSelectRequired() {
     player.selectCharacterRequired.value = readBool();
-  }
-
-  void parseTiles() {
-    print("parse.tiles()");
-    final isometric = modules.isometric;
-    final rows = readInt();
-    final columns = readInt();
-    final tiles = isometric.tiles;
-    tiles.clear();
-    for (var row = 0; row < rows; row++) {
-      final List<int> column = [];
-      for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
-        column.add(readByte());
-      }
-      tiles.add(column);
-    }
   }
 
   void updateSync() {

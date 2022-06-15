@@ -39,10 +39,6 @@ class IsometricModule {
   final maxAmbientBrightness = Watch(Shade.Bright);
   final nameTextStyle = TextStyle(color: Colors.white);
 
-  // var eventsRegistered = false;
-  var tiles = <List<int>>[];
-  var tilesDst = Float32List(0);
-  var tilesSrc = Float32List(0);
   var targetsTotal = 0;
   var totalRowsInt = 0;
   var totalStructures = 0;
@@ -150,32 +146,6 @@ class IsometricModule {
       for (var column = minColumn; column < maxColumn; column++) {
         dynamicRow[column] = bakeRow[column];
       }
-    }
-  }
-
-  void addRow(){
-    final List<int> row = [];
-    final rows = tiles[0].length;
-    for(var i = 0; i < rows; i++){
-      row.add(Tile.Grass);
-    }
-    tiles.add(row);
-  }
-
-  void removeRow(){
-    tiles.removeLast();
-  }
-
-
-  void addColumn() {
-    for (final row in tiles) {
-      row.add(Tile.Grass);
-    }
-  }
-
-  void removeColumn() {
-    for (var i = 0; i < tiles.length; i++) {
-      tiles[i].removeLast();
     }
   }
 
