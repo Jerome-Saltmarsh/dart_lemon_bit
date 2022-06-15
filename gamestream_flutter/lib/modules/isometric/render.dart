@@ -576,8 +576,8 @@ class IsometricRender {
         return renderTower(structure.x, structure.y);
       case StructureType.Palisade:
         return renderPalisade(x: structure.x, y: structure.y);
-      case StructureType.Torch:
-        return renderTorch(structure);
+      // case StructureType.Torch:
+      //   return renderTorch(structure);
       case StructureType.House:
         return renderHouse(structure);
     }
@@ -658,24 +658,26 @@ class IsometricRender {
     );
   }
 
-  void renderTorch(Position position) {
-    if (ambient.value == Shade.Very_Bright){
-      return engine.renderCustomV2(
-          dst: position,
-          srcX: 2145,
-          srcWidth: 25,
-          srcHeight: 70,
-          anchorY: 0.66
-      );
-    }
-    engine.renderCustomV2(
-        dst: position,
+  void renderTorchOff(double x, double y ) {
+    return engine.renderCustom(
+        dstX: x,
+        dstY: y,
         srcX: 2145,
-        srcY: 70 + (((position.x + position.y + (engine.frame ~/ 10)) % 6) * 70),
         srcWidth: 25,
         srcHeight: 70,
-        anchorY: 0.66
+        anchorY: 0.33
+    );
+  }
 
+  void renderTorchOn(double x, double y) {
+    engine.renderCustom(
+        dstX: x,
+        dstY: y,
+        srcX: 2145,
+        srcY: 70 + (((x + y + (engine.frame ~/ 10)) % 6) * 70),
+        srcWidth: 25,
+        srcHeight: 70,
+        anchorY: 0.33
     );
   }
 
@@ -861,8 +863,8 @@ class IsometricRender {
         return renderRockSmall(value);
       case GameObjectType.Flag:
         return renderFlag(value);
-      case GameObjectType.Torch:
-        return renderTorch(value);
+      // case GameObjectType.Torch:
+      //   return renderTorch(value);
       case GameObjectType.Chest:
         return renderChest(value);
       case GameObjectType.Pot:
@@ -1360,8 +1362,8 @@ class IsometricRender {
         return isometric.render.renderTower(x, y);
       case StructureType.Palisade:
         return isometric.render.renderPalisade(x: x, y: y);
-      case StructureType.Torch:
-        return isometric.render.renderTorch(_mouseSnap);
+      // case StructureType.Torch:
+      //   return isometric.render.renderTorch(_mouseSnap);
       default:
         return;
     }
@@ -1385,7 +1387,6 @@ class IsometricRender {
 
     final dstX = getTileWorldX(row, column);
     final dstY = getTileWorldY(row, column) - (z * 24);
-
     final shade = gridLightDynamic[z][row][column];
     switch(type) {
       case GridNodeType.Bricks:
@@ -1457,7 +1458,6 @@ class IsometricRender {
         if (animationFrame == 3){
           height = 0;
         }
-
         return engine.renderCustom(
           dstX: dstX,
           dstY: dstY + height,
@@ -1469,7 +1469,10 @@ class IsometricRender {
         );
 
       case GridNodeType.Torch:
-        return renderTorch(getPosition(dstX, dstY + 24));
+        if (ambient.value <= Shade.Very_Bright){
+          return renderTorchOff(dstX, dstY);
+        }
+        return renderTorchOn(dstX, dstY);
 
       case GridNodeType.Tree:
         return renderTreeAt(z, row, column);

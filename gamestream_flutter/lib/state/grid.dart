@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:bleed_common/Shade.dart';
 import 'package:bleed_common/grid_node_type.dart';
+import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/state/light_mode.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -42,78 +44,46 @@ void refreshLighting(){
 }
 
 void _applyShadows(){
-  final current = ambient.value;
-  final shadowShade = current >= Shade.Pitch_Black ? current : current + 1;
-
-   for (var z = 0; z < gridTotalZ; z++) {
-      for (var row = 0; row < gridTotalRows; row++){
-         for (var column = 0; column < gridTotalColumns; column++){
-
-           final tile = grid[z][row][column];
-
-           if (tile != GridNodeType.Bricks && tile != GridNodeType.Grass && !GridNodeType.isStairs(tile)) continue;
-
-            var projectionZ = z - 1;
-            var projectionRow = row;
-            var projectionColumn = column + 1;
-
-            while (
-                projectionZ >= 0 &&
-                projectionRow < gridTotalRows &&
-                projectionColumn < gridTotalColumns
-            ) {
-              final shade = gridLightBake[projectionZ][projectionRow][projectionColumn];
-              if (shade < shadowShade){
-                if (grid[projectionZ + 1][projectionRow][projectionColumn] == GridNodeType.Empty){
-                  gridLightBake[projectionZ][projectionRow][projectionColumn] = shadowShade;
-                }
-              }
-              projectionZ--;
-              projectionColumn++;
-            }
-
-           projectionZ = z - 1;
-           projectionRow = row + 1;
-           projectionColumn = column;
-
-           while (
-           projectionZ >= 0 &&
-               projectionRow < gridTotalRows &&
-               projectionColumn < gridTotalColumns
-           ) {
-             final shade = gridLightBake[projectionZ][projectionRow][projectionColumn];
-             if (shade < shadowShade){
-               if (grid[projectionZ + 1][projectionRow][projectionColumn] == GridNodeType.Empty){
-                 gridLightBake[projectionZ][projectionRow][projectionColumn] = shadowShade;
-               }
-             }
-             projectionZ--;
-             projectionRow++;
-           }
-
-         }
-      }
-   }
+  final hour = game.hours.value;
+  if (hour < 6) return;
+  if (hour < 9) return _applyShadowsMorning();
+  if (hour < 15) return _applyShadowsAfternoon();
+  if (hour < 18) return _applyShadowsEvening();
 }
 
 void _applyShadowsMorning() {
+  _applyShadowAt(directionZ: -1, directionRow: -1, directionColumn: 1);
+}
+
+void _applyShadowsAfternoon() {
+  _applyShadowAt(directionZ: -1, directionRow: 0, directionColumn: 0);
+}
+
+void _applyShadowsEvening() {
+  _applyShadowAt(directionZ: -1, directionRow: 1, directionColumn: -1);
+}
+
+void _applyShadowAt({
+  required int directionZ,
+  required int directionRow,
+  required int directionColumn,
+}){
   final current = ambient.value;
   final shadowShade = current >= Shade.Pitch_Black ? current : current + 1;
 
   for (var z = 0; z < gridTotalZ; z++) {
     for (var row = 0; row < gridTotalRows; row++){
       for (var column = 0; column < gridTotalColumns; column++){
-
         final tile = grid[z][row][column];
-
         if (tile != GridNodeType.Bricks && tile != GridNodeType.Grass && !GridNodeType.isStairs(tile)) continue;
-
-        var projectionZ = z - 1;
-        var projectionRow = row;
-        var projectionColumn = column + 1;
-
+        var projectionZ = z + directionZ;
+        var projectionRow = row + directionRow;
+        var projectionColumn = column + directionColumn;
         while (
-        projectionZ >= 0 &&
+            projectionZ >= 0 &&
+            projectionRow >= 0 &&
+            projectionColumn >= 0 &&
+            projectionZ < gridTotalZ &&
             projectionRow < gridTotalRows &&
             projectionColumn < gridTotalColumns
         ) {
@@ -123,29 +93,10 @@ void _applyShadowsMorning() {
               gridLightBake[projectionZ][projectionRow][projectionColumn] = shadowShade;
             }
           }
-          projectionZ--;
-          projectionColumn++;
+          projectionZ += directionZ;
+          projectionRow += directionRow;
+          projectionColumn += directionColumn;
         }
-
-        projectionZ = z - 1;
-        projectionRow = row + 1;
-        projectionColumn = column;
-
-        while (
-        projectionZ >= 0 &&
-            projectionRow < gridTotalRows &&
-            projectionColumn < gridTotalColumns
-        ) {
-          final shade = gridLightBake[projectionZ][projectionRow][projectionColumn];
-          if (shade < shadowShade){
-            if (grid[projectionZ + 1][projectionRow][projectionColumn] == GridNodeType.Empty){
-              gridLightBake[projectionZ][projectionRow][projectionColumn] = shadowShade;
-            }
-          }
-          projectionZ--;
-          projectionRow++;
-        }
-
       }
     }
   }
@@ -203,6 +154,7 @@ void _applyBakeMapEmissions() {
       for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
         final type = grid[zIndex][rowIndex][columnIndex];
         if (type != GridNodeType.Torch) continue;
+        if (gridLightBake[zIndex][rowIndex][columnIndex] <= Shade.Very_Bright) continue;
         _applyEmission(
           map: gridLightBake,
           zIndex: zIndex,
