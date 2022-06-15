@@ -1,11 +1,8 @@
-import 'dart:math';
-
 import 'package:bleed_common/Projectile_Type.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/state/projectiles.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
-
 
 void renderProjectiles() {
   for (var i = 0; i < totalProjectiles; i++) {

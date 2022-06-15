@@ -1,5 +1,4 @@
 import 'package:bleed_common/library.dart';
-import 'package:bleed_common/weapon_type.dart';
 import 'package:lemon_math/library.dart';
 
 import 'vector3.dart';

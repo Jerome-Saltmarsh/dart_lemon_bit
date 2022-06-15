@@ -6,8 +6,6 @@ import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:gamestream_flutter/isometric/state/particles.dart';
 import 'package:lemon_math/library.dart';
 
-import '../modules.dart';
-
 void emitParticlePixel({
   required double x,
   required double y

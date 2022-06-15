@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:intl/intl.dart';
+import 'package:lemon_engine/canvas.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:universal_html/html.dart';
@@ -22,7 +23,7 @@ void snapToGrid(Vector2 value){
 }
 
 void drawLine(double x1, double y1, double x2, double y2) {
-  engine.canvas.drawLine(offset(x1, y1), offset(x2, y2), engine.paint);
+  canvas.drawLine(offset(x1, y1), offset(x2, y2), engine.paint);
 }
 
 Offset offset(double x, double y) {

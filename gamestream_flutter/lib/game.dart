@@ -1,4 +1,3 @@
-import 'package:bleed_common/card_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/actions/initialize_isometric_game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';

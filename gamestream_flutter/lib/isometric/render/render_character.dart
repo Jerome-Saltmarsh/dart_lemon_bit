@@ -1,6 +1,4 @@
 import 'package:bleed_common/library.dart';
-import 'package:bleed_common/weapon_type.dart';
-import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 
 import '../classes/character.dart';

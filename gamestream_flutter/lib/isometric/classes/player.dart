@@ -1,6 +1,4 @@
-import 'package:bleed_common/card_type.dart';
 import 'package:bleed_common/library.dart';
-import 'package:bleed_common/weapon_type.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:lemon_watch/watch.dart';
 import 'vector3.dart';
