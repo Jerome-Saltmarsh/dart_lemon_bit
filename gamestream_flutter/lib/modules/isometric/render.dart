@@ -54,46 +54,46 @@ class IsometricRender {
   }
 
   void renderBlockGrassLevel2(Position position) {
-    final shade = isometric.getShadeAt(position);
-    if (shade >= Shade.Pitch_Black) return;
-    engine.renderCustom(
-      dstX: position.x,
-      dstY: position.y - 50,
-      srcX: 5981,
-      srcY: shade * 100,
-      srcWidth: 48,
-      srcHeight: 100,
-      anchorY: 0.66,
-    );
+    // final shade = isometric.getShadeAt(position);
+    // if (shade >= Shade.Pitch_Black) return;
+    // engine.renderCustom(
+    //   dstX: position.x,
+    //   dstY: position.y - 50,
+    //   srcX: 5981,
+    //   srcY: shade * 100,
+    //   srcWidth: 48,
+    //   srcHeight: 100,
+    //   anchorY: 0.66,
+    // );
   }
 
   void renderBlockGrassLevel3(Position position) {
-    final shade = isometric.getShadeAt(position);
-    if (shade >= Shade.Pitch_Black) return;
-    engine.renderCustom(
-      dstX: position.x,
-      dstY: position.y - 100,
-      srcX: 5981,
-      srcY: shade * 100,
-      srcWidth: 48,
-      srcHeight: 100,
-      anchorY: 0.66,
-    );
+    // final shade = isometric.getShadeAt(position);
+    // if (shade >= Shade.Pitch_Black) return;
+    // engine.renderCustom(
+    //   dstX: position.x,
+    //   dstY: position.y - 100,
+    //   srcX: 5981,
+    //   srcY: shade * 100,
+    //   srcWidth: 48,
+    //   srcHeight: 100,
+    //   anchorY: 0.66,
+    // );
   }
 
   void renderStairsGrassH(Position position) {
-    final shade = isometric.getShadeAt(position);
-    if (shade >= Shade.Pitch_Black) return;
-    engine.renderCustom(
-      dstX: position.x,
-      dstY: position.y,
-      srcX: 5870,
-      // srcY: shade * 100,
-      srcY: 0,
-      srcWidth: 48,
-      srcHeight: 100,
-      anchorY: 0.66,
-    );
+    // final shade = isometric.getShadeAt(position);
+    // if (shade >= Shade.Pitch_Black) return;
+    // engine.renderCustom(
+    //   dstX: position.x,
+    //   dstY: position.y,
+    //   srcX: 5870,
+    //   // srcY: shade * 100,
+    //   srcY: 0,
+    //   srcWidth: 48,
+    //   srcHeight: 100,
+    //   anchorY: 0.66,
+    // );
   }
 
   void renderTower(double x, double y) {
@@ -113,9 +113,9 @@ class IsometricRender {
   }
 
   void renderPot(Position position) {
-    engine.mapSrc64(x: 6032, y: isometric.getShadeAt(position) * 64);
-    engine.mapDst(x: position.x, y: position.y, anchorX: 32, anchorY: 32);
-    engine.renderAtlas();
+    // engine.mapSrc64(x: 6032, y: isometric.getShadeAt(position) * 64);
+    // engine.mapDst(x: position.x, y: position.y, anchorX: 32, anchorY: 32);
+    // engine.renderAtlas();
   }
 
   void renderTree(Position position) {
@@ -192,17 +192,17 @@ class IsometricRender {
     double anchorY = 0.5,
     double scale = 1.0,
   }) {
-    final shade = isometric.getShadeAt(position);
-    if (shade >= Shade.Pitch_Black) return;
-    engine.renderCustomV2(
-      dst: position,
-      srcX: srcX,
-      srcY: shade * height,
-      srcWidth: width,
-      srcHeight: height,
-      anchorY: anchorY,
-      scale: scale,
-    );
+    // final shade = isometric.getShadeAt(position);
+    // if (shade >= Shade.Pitch_Black) return;
+    // engine.renderCustomV2(
+    //   dst: position,
+    //   srcX: srcX,
+    //   srcY: shade * height,
+    //   srcWidth: width,
+    //   srcHeight: height,
+    //   anchorY: anchorY,
+    //   scale: scale,
+    // );
   }
 
   void drawInteractableNpc(Character npc) {

@@ -134,13 +134,13 @@ class GameRender {
   }
 
   void attackTargetCircle() {
-    final attackTarget = state.player.attackTarget;
-    final x = attackTarget.x;
-    final y = attackTarget.y;
-    if (x == 0 && y == 0) return;
-    final shade = isometric.getShadeAtPosition(x, y);
-    if (shade >= Shade.Very_Dark) return;
-    drawCircle36(x, y);
+    // final attackTarget = state.player.attackTarget;
+    // final x = attackTarget.x;
+    // final y = attackTarget.y;
+    // if (x == 0 && y == 0) return;
+    // final shade = isometric.getShadeAtPosition(x, y);
+    // if (shade >= Shade.Very_Dark) return;
+    // drawCircle36(x, y);
   }
 
   void drawCircle36V2(Position vector2){
@@ -228,7 +228,7 @@ class GameRender {
     for (final bulletHole in bulletHoles) {
       if (bulletHole.x == 0) return;
       if (!engine.screen.contains(bulletHole.x, bulletHole.y)) continue;
-      if (isometric.inDarkness(bulletHole.x, bulletHole.y)) continue;
+      // if (isometric.inDarkness(bulletHole.x, bulletHole.y)) continue;
       engine.render(
           dstX: bulletHole.x,
           dstY: bulletHole.y,

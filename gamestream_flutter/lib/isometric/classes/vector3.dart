@@ -10,6 +10,7 @@ class Vector3 with Position {
   int get indexColumn => y ~/ tileSize;
   int get shade => gridLightDynamic[indexZ][indexRow][indexColumn];
   int get renderOrder => indexRow + indexColumn;
+  int get tile => grid[indexZ][indexRow][indexColumn];
 
   double get renderX => (x - y) * 0.5;
   double get renderY => ((y + x) * 0.5) - z;

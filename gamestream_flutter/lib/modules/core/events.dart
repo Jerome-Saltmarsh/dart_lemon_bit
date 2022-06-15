@@ -107,7 +107,6 @@ class CoreEvents {
         engine.drawForeground.value = modules.game.render.renderForeground;
         engine.update = modules.game.update.update;
         engine.drawCanvasAfterUpdate = true;
-        modules.isometric.events.register();
         modules.game.events.register();
         engine.registerZoomCameraOnMouseScroll();
         engine.keyPressedHandlers = modules.game.map.keyPressedHandlers;
