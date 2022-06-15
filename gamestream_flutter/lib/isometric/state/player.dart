@@ -1,3 +1,3 @@
-import 'package:gamestream_flutter/modules/game/state.dart';
+import 'package:gamestream_flutter/isometric/classes/player.dart';
 
 final player = Player();
