@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/isometric/state/edit_state.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/isometric/state/floating_texts.dart';
 import 'package:gamestream_flutter/isometric/state/grid.dart';
 import 'package:gamestream_flutter/isometric/state/lower_tile_mode.dart';
 import 'package:gamestream_flutter/isometric/state/player.dart';
@@ -142,7 +143,7 @@ class GameEvents {
       case PlayerEvent.Level_Up:
         modules.game.actions.emitPixelExplosion(player.x, player.y, amount: 20);
         audio.buff(player.x, player.y);
-        isometric.spawnFloatingText(player.x, player.y, 'LEVEL UP');
+        spawnFloatingText(player.x, player.y, 'LEVEL UP');
         break;
       case PlayerEvent.Skill_Upgraded:
         audio.unlock(player.x, player.y);

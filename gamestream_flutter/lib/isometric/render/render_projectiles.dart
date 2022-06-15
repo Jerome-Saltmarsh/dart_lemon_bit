@@ -4,6 +4,7 @@ import 'package:bleed_common/Projectile_Type.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/state/projectiles.dart';
 import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/render.dart';
 
 
 void renderProjectiles() {
@@ -28,7 +29,7 @@ void _renderProjectile(Projectile value) {
 }
 
 void renderFireball(double x, double y, double rotation) {
-  engine.renderCustom(
+  render(
     dstX: x,
     dstY: y,
     srcX: 5669,
@@ -40,34 +41,34 @@ void renderFireball(double x, double y, double rotation) {
 }
 
 void renderArrow(double x, double y, double angle) {
-  const piQuarter = pi / 4.0;
-  engine.mapSrc(x: 2182, y: 1, width: 13, height: 47);
-  engine.mapDst(
-      x: x,
-      y: y - 20,
-      rotation: angle + piQuarter,
-      anchorX: 6.5,
-      anchorY: 30,
-      scale: 0.5);
-  engine.renderAtlas();
-  engine.mapSrc(x: 2172, y: 1, width: 13, height: 47);
-  engine.mapDst(
-      x: x,
-      y: y,
-      rotation: angle + piQuarter,
-      anchorX: 6.5,
-      anchorY: 30,
-      scale: 0.5);
-  engine.renderAtlas();
+  // const piQuarter = pi / 4.0;
+  // engine.mapSrc(x: 2182, y: 1, width: 13, height: 47);
+  // engine.mapDst(
+  //     x: x,
+  //     y: y - 20,
+  //     rotation: angle + piQuarter,
+  //     anchorX: 6.5,
+  //     anchorY: 30,
+  //     scale: 0.5);
+  // engine.renderAtlas();
+  // engine.mapSrc(x: 2172, y: 1, width: 13, height: 47);
+  // engine.mapDst(
+  //     x: x,
+  //     y: y,
+  //     rotation: angle + piQuarter,
+  //     anchorX: 6.5,
+  //     anchorY: 30,
+  //     scale: 0.5);
+  // engine.renderAtlas();
 }
 
 void renderOrb(double x, double y) {
-  engine.renderCustom(
-      dstX: x,
-      dstY: y,
-      srcX: 417,
-      srcY: 26,
-      srcWidth: 8,
-      srcHeight: 8,
-      scale: 1.5);
+  // engine.renderCustom(
+  //     dstX: x,
+  //     dstY: y,
+  //     srcX: 417,
+  //     srcY: 26,
+  //     srcWidth: 8,
+  //     srcHeight: 8,
+  //     scale: 1.5);
 }

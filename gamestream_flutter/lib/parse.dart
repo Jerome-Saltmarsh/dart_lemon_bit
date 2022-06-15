@@ -84,7 +84,6 @@ void parseState() {
           engine.cameraCenter(x, y);
         });
         particles.clear();
-        isometric.next = null;
         break;
 
       case ServerResponse.NpcMessage:

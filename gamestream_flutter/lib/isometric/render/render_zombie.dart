@@ -2,6 +2,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/render.dart';
 
 import 'render_character_health_bar.dart';
 import 'src_utils.dart';
@@ -17,17 +18,28 @@ void renderZombie(Character character) {
 }
 
 void _renderZombie(Character character, int shade) {
-  engine.mapSrc64(
-    x: mapZombieSrcX(character, shade),
-    y: 789.0 + (shade * 64.0),
+  // engine.mapSrc64(
+  //   x: mapZombieSrcX(character, shade),
+  //   y: 789.0 + (shade * 64.0),
+  // );
+  // engine.mapDst(
+  //     x: character.renderX,
+  //     y: character.renderY,
+  //     anchorX: 32,
+  //     anchorY: 48,
+  //     scale: 0.7);
+  // engine.renderAtlas();
+
+  render(
+      dstX: character.renderX,
+      dstY: character.renderY,
+      srcX: mapZombieSrcX(character, shade),
+      srcY: 789.0 + (shade * 64.0),
+      srcWidth: 64,
+      srcHeight: 64,
+      anchorY: 0.66,
+      scale: 0.7,
   );
-  engine.mapDst(
-      x: character.renderX,
-      y: character.renderY,
-      anchorX: 32,
-      anchorY: 48,
-      scale: 0.7);
-  engine.renderAtlas();
 }
 
 double mapZombieSrcX(Character character, int shade) {

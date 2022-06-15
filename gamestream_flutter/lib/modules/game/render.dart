@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/classes/npc_debug.dart';
+import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_grid_node.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
@@ -28,7 +29,6 @@ import 'state.dart';
 import 'style.dart';
 
 final _screen = engine.screen;
-final _floatingTexts = isometric.floatingTexts;
 
 class GameRender {
 
@@ -44,18 +44,7 @@ class GameRender {
       engine.setPaintColorWhite();
       _renderPlayerNames();
       drawPlayerText();
-
-      for (final floatingText in _floatingTexts) {
-        if (floatingText.duration <= 0) continue;
-        floatingText.duration--;
-        renderText(
-            text: floatingText.value,
-            x: floatingText.x,
-            y: floatingText.y
-        );
-        floatingText.y -= 1;
-        floatingText.x += floatingText.xv;
-      }
+      renderFloatingTexts();
   }
 
   void render(Canvas canvas, Size size) {
@@ -145,7 +134,7 @@ class GameRender {
   }
 
   void drawCircle36(double x, double y){
-    engine.render(dstX: x, dstY: y, srcX: 2420, srcY: 57, srcSize: 37);
+    // engine.render(dstX: x, dstY: y, srcX: 2420, srcY: 57, srcSize: 37);
   }
 
   void drawAbility() {
@@ -225,13 +214,13 @@ class GameRender {
     for (final bulletHole in bulletHoles) {
       if (bulletHole.x == 0) return;
       if (!engine.screen.contains(bulletHole.x, bulletHole.y)) continue;
-      engine.render(
-          dstX: bulletHole.x,
-          dstY: bulletHole.y,
-          srcX: 1,
-          srcY: 1,
-          srcSize: 4,
-      );
+      // render(
+      //     dstX: bulletHole.x,
+      //     dstY: bulletHole.y,
+      //     srcX: 1,
+      //     srcY: 1,
+      //     srcSize: 4,
+      // );
     }
   }
 
@@ -251,12 +240,6 @@ class GameRender {
         }
       }
     }
-  }
-
-  void renderText({required String text, required double x, required double y}){
-    if (!_screen.contains(x, y)) return;
-    const charWidth = 4.5;
-    engine.writeText(text, x - charWidth * text.length, y);
   }
 
   void drawEffects() {

@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
+import 'package:gamestream_flutter/isometric/state/particles.dart';
 import 'package:lemon_math/library.dart';
 
 import '../modules.dart';
@@ -13,7 +14,7 @@ void emitParticlePixel({
 }) {
   const initialVelocityMin = 0.15;
   const initialVelocityMax = 0.25;
-  final particle = isometric.spawn.getAvailableParticle();
+  final particle = getParticleInstance();
   particle.x = x;
   particle.y = y;
   particle.type = ParticleType.Pixel;

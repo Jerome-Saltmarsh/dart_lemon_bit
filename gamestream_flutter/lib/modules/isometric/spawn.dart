@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
+import 'package:gamestream_flutter/isometric/state/particles.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_math/library.dart';
@@ -17,24 +18,6 @@ class IsometricSpawn {
   IsometricSpawn(this.state);
 
   int get bodyPartDuration => randomInt(120, 200);
-
-  Particle getAvailableParticle() {
-    final value = state.next;
-    if (value != null){
-      state.next = value.next;
-      value.next = null;
-      return value;
-    }
-
-    for(final particle in particles) {
-      if (particle.active) continue;
-      return particle;
-    }
-
-    final instance = Particle();
-    particles.add(instance);
-    return instance;
-  }
 
   void spawnParticle({
     required int type,
@@ -70,7 +53,7 @@ class IsometricSpawn {
       ParticleType.Orb_Ruby: 24.0,
       ParticleType.Pot_Shard: 16.0,
     };
-    final particle = getAvailableParticle();
+    final particle = getParticleInstance();
     particle.size = mapTypeToSize[type] ?? 0;
     particle.type = type;
     particle.casteShadow = castShadow;

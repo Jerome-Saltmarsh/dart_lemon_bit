@@ -1,6 +1,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/weapon_type.dart';
 import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/render.dart';
 
 import '../classes/character.dart';
 import 'render_character_health_bar.dart';
@@ -68,19 +69,20 @@ void _renderCharacterTemplateWeapon(Character character) {
 
   if (renderRow == -1) {
     _renderCharacterPart(
-        character, _mapEquippedWeaponToSpriteIndex(character));
+        character,
+        _mapEquippedWeaponToSpriteIndex(character)
+    );
     return;
   }
-  engine.mapDst(
-    x: character.renderX,
-    y: character.renderY,
-    anchorX: 48,
-    anchorY: 61,
-    scale: 1.0,
+
+  render(
+      dstX: character.renderX,
+      dstY: character.renderY,
+      srcX: _getTemplateSrcX(character, size: 96),
+      srcY: 2159.0 + (renderRow * 96),
+      srcWidth: 96,
+      srcHeight: 96
   );
-  engine.mapSrc96(
-      x: _getTemplateSrcX(character, size: 96), y: 2159.0 + (renderRow * 96));
-  engine.renderAtlas();
 }
 
 
@@ -101,16 +103,17 @@ void _renderCharacterPartLegs(Character character) {
 }
 
 void _renderCharacterPart(Character character, int layer) {
-  engine.mapDst(
-    x: character.renderX,
-    y: character.renderY,
-    anchorX: 32,
-    anchorY: 48,
-    scale: 0.75,
+  render(
+      dstX: character.renderX,
+      dstY: character.renderY,
+      srcX: _getTemplateSrcX(character, size: 64),
+      srcY: 1051.0 + (layer * 64),
+      srcWidth: 64.0,
+      srcHeight: 64.0,
+      scale: 0.75,
+      // anchorX: 0.5,
+      anchorY: 0.66,
   );
-  engine.mapSrc64(
-      x: _getTemplateSrcX(character, size: 64), y: 1051.0 + (layer * 64));
-  engine.renderAtlas();
 }
 
 double _getTemplateSrcX(Character character, {required double size}) {

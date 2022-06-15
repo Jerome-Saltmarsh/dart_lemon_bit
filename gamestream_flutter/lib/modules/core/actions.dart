@@ -183,7 +183,6 @@ class CoreActions {
     game.bulletHoleIndex = 0;
     totalCollectables = 0;
     game.totalNpcs = 0;
-    isometric.next = null;
     particleEmitters.clear();
     particles.clear();
 

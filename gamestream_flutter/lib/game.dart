@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
 import 'package:gamestream_flutter/isometric/state/collectbles.dart';
 import 'package:gamestream_flutter/isometric/state/edit_state.dart';
+import 'package:gamestream_flutter/isometric/state/floating_texts.dart';
 import 'package:gamestream_flutter/isometric/state/players.dart';
 import 'package:gamestream_flutter/isometric/state/projectiles.dart';
 import 'package:gamestream_flutter/isometric/state/zombies.dart';
@@ -220,7 +221,7 @@ class Game with ByteReader {
           final x = readDouble();
           final y = readDouble() - 5;
           final amount = readInt();
-          isometric.spawnFloatingText(x, y, amount.toString());
+          spawnFloatingText(x, y, amount.toString());
           break;
 
         case ServerResponse.Dynamic_Object_Destroyed:

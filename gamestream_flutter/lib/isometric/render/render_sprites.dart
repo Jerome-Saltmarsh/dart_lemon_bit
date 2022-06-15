@@ -192,7 +192,8 @@ void renderSprites() {
 
     if (remainingParticles) {
       if (particleIsBlood) {
-        renderParticle(particles[indexParticle]);
+        // renderParticle(particles[indexParticle]);
+        particles[indexParticle].render();
         indexParticle++;
         remainingParticles = indexParticle < totalParticles;
         while (remainingParticles) {

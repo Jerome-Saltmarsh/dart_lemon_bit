@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/classes/floating_text.dart';
 import 'package:gamestream_flutter/isometric/classes/item.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/classes/structure.dart';
@@ -16,11 +15,7 @@ import 'package:gamestream_flutter/isometric/state/particles.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
-
-import 'render.dart';
-
 
 class IsometricModule {
   late final IsometricSpawn spawn;
@@ -28,12 +23,7 @@ class IsometricModule {
   final targets = Float32List(10000);
   final structures = <Structure>[];
   final gemSpawns = <GemSpawn>[];
-  final floatingTexts = <FloatingText>[];
-  // final dynamic = <Int8List>[];
-  // final bake = <Int8List>[];
   final items = <Item>[];
-  // final totalColumns = Watch(0);
-  // final totalRows = Watch(0);
   final maxAmbientBrightness = Watch(Shade.Bright);
   final nameTextStyle = TextStyle(color: Colors.white);
 
@@ -44,8 +34,6 @@ class IsometricModule {
   var maxRow = 0;
   var minColumn = 0;
   var maxColumn = 0;
-
-  Particle? next;
 
   // PROPERTIES
 
@@ -127,7 +115,7 @@ class IsometricModule {
     for (final emitter in particleEmitters) {
       if (emitter.next-- > 0) continue;
       emitter.next = emitter.rate;
-      final particle = spawn.getAvailableParticle();
+      final particle = getParticleInstance();
       particle.x = emitter.x;
       particle.y = emitter.y;
       emitter.emit(particle);
@@ -187,25 +175,6 @@ class IsometricModule {
       return;
     }
     next = particle;
-  }
-
-  void spawnFloatingText(double x, double y, String text) {
-    final floatingText = _getFloatingText();
-    floatingText.duration = 50;
-    floatingText.x = x;
-    floatingText.y = y;
-    floatingText.xv = giveOrTake(0.2);
-    floatingText.value = text;
-  }
-
-  FloatingText _getFloatingText(){
-    for (final floatingText in floatingTexts) {
-      if (floatingText.duration > 0) continue;
-      return floatingText;
-    }
-    final instance = FloatingText();
-    floatingTexts.add(instance);
-    return instance;
   }
 
   void addSmokeEmitter(double x, double y){

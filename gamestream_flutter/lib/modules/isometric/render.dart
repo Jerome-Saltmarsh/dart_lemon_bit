@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/isometric/render/render_character.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/render.dart';
 import 'package:lemon_math/library.dart';
 
 import '../modules.dart';
@@ -37,20 +38,20 @@ class IsometricRender {
 
   void renderPalisade(
       {required double x, required double y, int shade = Shade.Bright}) {
-    engine.renderCustom(
-      dstX: x,
-      dstY: y,
-      srcX: 1314,
-      srcY: shade * 96,
-      srcWidth: 48,
-      srcHeight: 96,
-      anchorY: 0.66,
-    );
+    // engine.renderCustom(
+    //   dstX: x,
+    //   dstY: y,
+    //   srcX: 1314,
+    //   srcY: shade * 96,
+    //   srcWidth: 48,
+    //   srcHeight: 96,
+    //   anchorY: 0.66,
+    // );
   }
 
   void renderBlockGrass(Position position) {
-    render(
-        position: position, srcX: 5981, width: 48, height: 100, anchorY: 0.66);
+    // render(
+    //     position: position, srcX: 5981, width: 48, height: 100, anchorY: 0.66);
   }
 
   void renderBlockGrassLevel2(Position position) {
@@ -97,19 +98,19 @@ class IsometricRender {
   }
 
   void renderTower(double x, double y) {
-    engine.renderCustom(
-        dstX: x,
-        dstY: y,
-        srcX: 6125,
-        srcY: 0,
-        srcWidth: 48,
-        srcHeight: 100,
-        anchorY: 0.66);
+    // engine.renderCustom(
+    //     dstX: x,
+    //     dstY: y,
+    //     srcX: 6125,
+    //     srcY: 0,
+    //     srcWidth: 48,
+    //     srcHeight: 100,
+    //     anchorY: 0.66);
   }
 
   void renderHouse(Position position) {
-    engine.renderCustomV2(
-        dst: position, srcX: 1748, srcWidth: 150, srcHeight: 150);
+    // engine.renderCustomV2(
+    //     dst: position, srcX: 1748, srcWidth: 150, srcHeight: 150);
   }
 
   void renderPot(Position position) {
@@ -119,42 +120,36 @@ class IsometricRender {
   }
 
   void renderTree(Position position) {
-    render(position: position, srcX: 2049, width: 64, height: 81, anchorY: 0.66);
+    // render(position: position, srcX: 2049, width: 64, height: 81, anchorY: 0.66);
   }
 
   void renderChest(Position position) {
-    render(
-        position: position,
-        srcX: 6328,
-        width: 50,
-        height: 76,
-        anchorY: 0.6,
-        scale: 0.75);
+    // render(
+    //     position: position,
+    //     srcX: 6328,
+    //     width: 50,
+    //     height: 76,
+    //     anchorY: 0.6,
+    //     scale: 0.75);
   }
 
   void renderItem(Item item) {
-    srcLoopSimple(
-      x: 5939,
-      size: 32,
-      frames: 4,
-    );
-    engine.mapDst(anchorX: 16, anchorY: 23, x: item.x, y: item.y);
-    engine.renderAtlas();
-  }
-
-  void srcLoopSimple(
-      {required double x, required int frames, required double size}) {
-    engine.mapSrc(
-        x: x, y: ((engine.frame % 4) * size), width: size, height: size);
+    // srcLoopSimple(
+    //   x: 5939,
+    //   size: 32,
+    //   frames: 4,
+    // );
+    // engine.mapDst(anchorX: 16, anchorY: 23, x: item.x, y: item.y);
+    // engine.renderAtlas();
   }
 
 
   void renderRockSmall(Position position) {
-    render(position: position, srcX: 5569, width: 12, height: 14);
+    // render(position: position, srcX: 5569, width: 12, height: 14);
   }
 
   void renderFireplace(Position position) {
-    engine.renderCustom(
+    render(
       dstX: position.x,
       dstY: position.y,
       srcY: ((position.x + position.y + engine.frame) % 6) * 43,
@@ -165,44 +160,23 @@ class IsometricRender {
   }
 
   void renderFlag(Position position) {
-    render(position: position, srcX: 6437, width: 19, height: 33);
+    // render(position: position, srcX: 6437, width: 19, height: 33);
   }
 
   void renderLongGrass(Position position) {
-    render(position: position, srcX: 5585, width: 19, height: 30);
+    // render(position: position, srcX: 5585, width: 19, height: 30);
   }
 
   void renderRockLarge(Position position) {
-    render(position: position, srcX: 5475, width: 40, height: 43);
+    // render(position: position, srcX: 5475, width: 40, height: 43);
   }
 
   void renderGrave(Position position) {
-    render(position: position, srcX: 5524, width: 20, height: 41);
+    // render(position: position, srcX: 5524, width: 20, height: 41);
   }
 
   void renderTreeStump(Position position) {
-    render(position: position, srcX: 5549, width: 15, height: 22);
-  }
-
-  void render({
-    required Position position,
-    required double srcX,
-    required double width,
-    required double height,
-    double anchorY = 0.5,
-    double scale = 1.0,
-  }) {
-    // final shade = isometric.getShadeAt(position);
-    // if (shade >= Shade.Pitch_Black) return;
-    // engine.renderCustomV2(
-    //   dst: position,
-    //   srcX: srcX,
-    //   srcY: shade * height,
-    //   srcWidth: width,
-    //   srcHeight: height,
-    //   anchorY: anchorY,
-    //   scale: scale,
-    // );
+    // render(position: position, srcX: 5549, width: 15, height: 22);
   }
 
   void drawInteractableNpc(Character npc) {
@@ -218,7 +192,7 @@ class IsometricRender {
   }
 
   void renderCircle36(double x, double y) {
-    engine.render(dstX: x, dstY: y, srcX: 2420, srcY: 57, srcSize: 37);
+    // engine.render(dstX: x, dstY: y, srcX: 2420, srcY: 57, srcSize: 37);
   }
 
 
@@ -247,10 +221,11 @@ class IsometricRender {
   }
 
   void renderArrowUp(double x, double y) {
-    return engine.renderCustom(
+    return render(
       dstX: x,
       dstY: y,
       srcX: 6993,
+      srcY: 0,
       srcWidth: 13,
       srcHeight: 29,
       anchorY: 1.0,

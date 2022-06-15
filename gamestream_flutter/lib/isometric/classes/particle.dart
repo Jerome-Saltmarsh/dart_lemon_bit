@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
+import 'package:gamestream_flutter/isometric/render/render_particle.dart';
 import 'package:lemon_math/library.dart';
 
 class Particle extends Vector3 {
@@ -81,6 +82,23 @@ class Particle extends Vector3 {
     }
     if (z <= 0) {
       z = 0;
+    }
+  }
+
+  void render(){
+    switch (type) {
+      case ParticleType.Smoke:
+        return renderSmoke(x: renderX, y: renderY, scale: renderScale);
+      case ParticleType.Orb_Shard:
+        return renderOrbShard(x: renderX, y: renderY, scale: renderScale);
+      case ParticleType.Shrapnel:
+        return renderShrapnel(x: renderX, y: renderY, scale: renderScale);
+      case ParticleType.FireYellow:
+        return renderFireYellow(x: renderX, y: renderY, scale: renderScale);
+      case ParticleType.Flame:
+        // return renderFlame(value);
+      default:
+        break;
     }
   }
 }

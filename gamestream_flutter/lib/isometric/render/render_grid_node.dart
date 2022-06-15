@@ -2,6 +2,7 @@ import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/state/grid.dart';
 import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/render.dart';
 
 import 'render_torch.dart';
 import 'render_tree.dart';
@@ -14,7 +15,7 @@ void renderGridNode(int z, int row, int column, int type) {
   final shade = gridLightDynamic[z][row][column];
   switch (type) {
     case GridNodeType.Bricks:
-      return engine.renderCustom(
+      return render(
         dstX: dstX,
         dstY: dstY,
         srcX: 7110,
@@ -24,17 +25,18 @@ void renderGridNode(int z, int row, int column, int type) {
         anchorY: 0.3334,
       );
     case GridNodeType.Grass:
-      return engine.renderCustom(
+      return render(
         dstX: dstX,
         dstY: dstY,
         srcX: 7158,
         srcY: 72.0 * shade,
         srcWidth: 48,
         srcHeight: 72,
+        anchorX: 0.5,
         anchorY: 0.3334,
       );
     case GridNodeType.Stairs_South:
-      return engine.renderCustom(
+      return render(
         dstX: dstX,
         dstY: dstY,
         srcX: 7398,
@@ -44,7 +46,7 @@ void renderGridNode(int z, int row, int column, int type) {
         anchorY: 0.3334,
       );
     case GridNodeType.Stairs_West:
-      return engine.renderCustom(
+      return render(
         dstX: dstX,
         dstY: dstY,
         srcX: 7446,
@@ -54,7 +56,7 @@ void renderGridNode(int z, int row, int column, int type) {
         anchorY: 0.3334,
       );
     case GridNodeType.Stairs_North:
-      return engine.renderCustom(
+      return render(
         dstX: dstX,
         dstY: dstY,
         srcX: 7494,
@@ -64,7 +66,7 @@ void renderGridNode(int z, int row, int column, int type) {
         anchorY: 0.3334,
       );
     case GridNodeType.Stairs_East:
-      return engine.renderCustom(
+      return render(
         dstX: dstX,
         dstY: dstY,
         srcX: 7542,
@@ -81,7 +83,7 @@ void renderGridNode(int z, int row, int column, int type) {
       } else if (animationFrame == 3) {
         height = 0;
       }
-      return engine.renderCustom(
+      return render(
         dstX: dstX,
         dstY: dstY + height,
         srcX: 7206 + (animationFrame * 48),
@@ -101,7 +103,7 @@ void renderGridNode(int z, int row, int column, int type) {
       return renderTreeAt(z, row, column);
 
     case GridNodeType.Player_Spawn:
-      return engine.renderCustom(
+      return render(
         dstX: dstX,
         dstY: dstY,
         srcX: 7686,
@@ -116,10 +118,11 @@ void renderGridNode(int z, int row, int column, int type) {
 }
 
 void renderWireFrameBlue(int row, int column, int z) {
-  return engine.renderCustom(
+  return render(
     dstX: getTileWorldX(row, column),
     dstY: getTileWorldY(row, column) - (z * 24),
     srcX: 7590,
+    srcY: 0,
     srcWidth: 48,
     srcHeight: 72,
     anchorY: 0.3334,
@@ -127,10 +130,11 @@ void renderWireFrameBlue(int row, int column, int z) {
 }
 
 void renderWireFrameRed(int row, int column, int z) {
-  return engine.renderCustom(
+  return render(
     dstX: getTileWorldX(row, column),
     dstY: getTileWorldY(row, column) - (z * 24),
     srcX: 7638,
+    srcY: 0,
     srcWidth: 48,
     srcHeight: 72,
     anchorY: 0.3334,
