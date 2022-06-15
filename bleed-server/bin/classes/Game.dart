@@ -12,7 +12,6 @@ import '../functions/withinRadius.dart';
 import '../maths.dart';
 import '../physics.dart';
 import 'AI.dart';
-import 'Position3.dart';
 import 'card_abilities.dart';
 import 'Character.dart';
 import 'Collectable.dart';
@@ -27,6 +26,7 @@ import 'SpawnPoint.dart';
 import 'Structure.dart';
 import 'TileNode.dart';
 import 'components.dart';
+import 'grid_index.dart';
 
 abstract class Game {
   final items = <Item>[];
@@ -69,9 +69,9 @@ abstract class Game {
 
   int get numberOfAliveZombies => countAlive(zombies);
 
-  Position getRandomPlayerSpawnPosition() {
+  GridIndex getRandomPlayerSpawnPosition() {
     if (scene.spawnPointPlayers.isEmpty) {
-      return Position3();
+      return GridIndex().set(plain: 1, row: 5, column: 5);
     }
     return randomItem(scene.spawnPointPlayers);
   }

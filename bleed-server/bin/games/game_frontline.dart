@@ -1,10 +1,9 @@
 
 
-import 'package:lemon_math/library.dart';
-
 import '../classes/Game.dart';
 import '../classes/Player.dart';
 import '../classes/Scene.dart';
+import '../common/grid_node_type.dart';
 import '../common/weapon_type.dart';
 
 class GameFrontline extends Game {
@@ -25,11 +24,20 @@ class GameFrontline extends Game {
     final player = Player(
         game: this,
         weapon: WeaponType.Shotgun,
-        position: randomItem(scene.spawnPointPlayers)
     );
-    player.z = 48.0;
-    player.x = 300;
-    player.y = 300;
+
+    for (var z = 0; z < scene.gridHeight; z++) {
+       for (var r = 0; r < scene.gridRows; r++){
+          for (var c = 0; c < scene.columns; c++){
+              if (scene.grid[z][r][c].type != GridNodeType.Player_Spawn) continue;
+              player.indexZ = z;
+              player.indexRow = r;
+              player.indexColumn = c;
+              break;
+          }
+       }
+    }
+
     return player;
   }
 

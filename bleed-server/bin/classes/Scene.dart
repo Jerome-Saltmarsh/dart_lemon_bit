@@ -7,6 +7,7 @@ import 'Character.dart';
 import 'game_object.dart';
 import 'Structure.dart';
 import 'TileNode.dart';
+import 'grid_index.dart';
 
 class GridNode {
   int type;
@@ -19,7 +20,7 @@ class Scene {
   final List<Character> characters;
   final List<List<int>> tiles;
   final List<GameObject> gameObjects;
-  final List<Position> spawnPointPlayers;
+  final List<GridIndex> spawnPointPlayers;
   final List<Position> spawnPointZombies;
 
   late final List<List<Node>> nodes;
@@ -50,43 +51,6 @@ class Scene {
     numberOfColumns = numberOfRows > 0 ? tiles[0].length : 0;
     nodes = [];
 
-    // const gridHeight = 5;
-    // const gridRows = 10;
-    // const gridColumns = 10;
-    //
-    // for (var z = 0; z < gridHeight; z++) {
-    //   final layer = <List<GridNode>>[];
-    //   grid.add(layer);
-    //   for (var rowIndex = 0; rowIndex < gridRows; rowIndex++) {
-    //     final row = <GridNode>[];
-    //     layer.add(row);
-    //     for (var columnIndex = 0; columnIndex < gridColumns; columnIndex++) {
-    //        row.add(GridNode(rowIndex, columnIndex, z, z == 0 ? GridNodeType.Bricks : GridNodeType.Empty));
-    //     }
-    //   }
-    // }
-    //
-    // for (var z = 1; z < 4; z++){
-    //   grid[z][2][2].type = GridNodeType.Bricks;
-    // }
-    //
-    // grid[0][9][9].type = GridNodeType.Grass;
-    // grid[0][9][8].type = GridNodeType.Grass;
-    // grid[0][9][7].type = GridNodeType.Grass;
-    // grid[1][9][9].type = GridNodeType.Grass;
-    // grid[1][9][8].type = GridNodeType.Grass;
-    // grid[1][9][7].type = GridNodeType.Grass;
-    // grid[0][9][5].type = GridNodeType.Stairs_North;
-    // grid[1][8][4].type = GridNodeType.Stairs_East;
-    // grid[1][8][3].type = GridNodeType.Bricks;
-    // grid[1][8][2].type = GridNodeType.Bricks;
-    // grid[1][7][2].type = GridNodeType.Bricks;
-    // grid[1][7][2].type = GridNodeType.Stairs_South;
-    // grid[1][8][1].type = GridNodeType.Stairs_West;
-    // grid[1][5][3].type = GridNodeType.Torch;
-    // grid[2][7][1].type = GridNodeType.Bricks;
-    // grid[2][6][1].type = GridNodeType.Bricks;
-
     for (var rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
       final List<Node> nodeRow = [];
       final tileRow = tiles[rowIndex];
@@ -94,8 +58,6 @@ class Scene {
         final node = Node(isWalkable(tileRow[columnIndex]));
         node.row = rowIndex;
         node.column = columnIndex;
-        // node.x = getTilePositionX(node.row, node.column);
-        // node.y = getTilePositionY(node.row, node.column);
         nodeRow.add(node);
       }
       nodes.add(nodeRow);
@@ -163,6 +125,24 @@ class Scene {
     }
 
     sortVertically(gameObjects);
+  }
+
+  List<GridNode> findNodesByType(int type){
+    final values = <GridNode>[];
+    final height = gridHeight;
+    final rows = gridRows;
+    final columns = gridColumns;
+    for (var z = 0; z < height; z++) {
+      final plain = grid[z];
+      for (var r = 0; r < rows; r++) {
+        final row = plain[r];
+        for (var c = 0; c < columns; c++) {
+          if (row[c].type != type) continue;
+          values.add(row[c]);
+        }
+      }
+    }
+    return values;
   }
 
   void generateRandomGameObjects({required int type, double density = 0.05, int health = 1}) {
@@ -513,29 +493,6 @@ class Scene {
       return getHeightAt(x, y, z) > z;
     }
 
-    // if (type == GridNodeType.Stairs_North) {
-    //   final percentage = 1 - ((x % tileSize) / tileSize);
-    //   final stairBottom = ((z ~/ tileHeight) * tileHeight);
-    //   final stairHeight = (percentage * tileHeight) + stairBottom;
-    //   return getHeightAt(x, y, z) > z;
-    // }
-    // if (type == GridNodeType.Stairs_South){
-    //   final tilePer = ((x) / 48.0) % 1.0;
-    //   final stairHeight = (tilePer * 24.0) + ((z ~/ 24.0) * 24.0);
-    //   return stairHeight > z;
-    // }
-    // if (type == GridNodeType.Stairs_West){
-    //   final zInt = z ~/ 24.0;
-    //   final tilePer = (1.0 - (((y) / 48.0) % 1.0));
-    //   final stairHeight = (tilePer * 24.0) + (zInt * 24.0);
-    //   return stairHeight > z;
-    // }
-    // if (type == GridNodeType.Stairs_East){
-    //   final zInt = z ~/ 24.0;
-    //   final tilePer = ((y) / 48.0) % 1.0;
-    //   final stairHeight = (tilePer * 24.0) + (zInt * 24.0);
-    //   return stairHeight > z;
-    // }
     if (type == GridNodeType.Tree){
       const treeRadius = 0.2;
       final percRow = ((x) / 48.0) % 1.0;
@@ -552,6 +509,9 @@ class Scene {
       if ((0.5 - percColumn).abs() > torchRadius) return false;
       return true;
     }
+
+    if (type == GridNodeType.Player_Spawn) return false;
+
     return true;
   }
 

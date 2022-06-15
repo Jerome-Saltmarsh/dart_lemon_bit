@@ -32,7 +32,7 @@ Scene convertJsonToScene(Json json) {
     structures: [],
     gameObjects: [],
     characters: [],
-    spawnPointPlayers: [Vector2(0, 100)],
+    spawnPointPlayers: [],
     spawnPointZombies: [Vector2(0, 200)],
   );
 }

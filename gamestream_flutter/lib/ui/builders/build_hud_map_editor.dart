@@ -155,6 +155,7 @@ Widget buildColumnEditTile(){
       _buildSetType(GridNodeType.Water, "Water"),
       _buildSetType(GridNodeType.Torch, "Torch"),
       _buildSetType(GridNodeType.Tree, "Tree"),
+      _buildSetType(GridNodeType.Player_Spawn, "Player Spawn"),
       _button("Zombie", () {
         sendClientRequestSpawnZombie(
           z: edit.z,

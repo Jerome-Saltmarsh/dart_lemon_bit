@@ -10,6 +10,7 @@ class GridNodeType {
   static const Water = 8;
   static const Torch = 9;
   static const Tree = 10;
+  static const Player_Spawn = 11;
   
   static bool isStairs(int value){
     return 

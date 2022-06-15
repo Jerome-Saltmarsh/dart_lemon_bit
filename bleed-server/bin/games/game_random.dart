@@ -28,14 +28,6 @@ class GameRandom extends Game {
       status: GameStatus.In_Progress
   ) {
 
-
-    for (final playerSpawn in scene.spawnPointPlayers){
-      scene.addGameObjectPosition(
-          type: GameObjectType.Fireplace,
-          position: playerSpawn,
-      );
-    }
-
     scene.generateRandomGameObjects(type: GameObjectType.Tree, density: 0.03);
     scene.generateRandomGameObjects(type: GameObjectType.Rock, density: 0.01);
     scene.generateRandomGameObjects(type: GameObjectType.Rock_Small, density: 0.002);
@@ -67,7 +59,7 @@ class GameRandom extends Game {
     final player = Player(
       game: this,
       weapon: SlotType.Empty,
-      position: getRandomPlayerSpawnPosition(),
+      // position: getRandomPlayerSpawnPosition(),
     );
     onPlayerSelectCharacterType(player, selection);
 
@@ -82,7 +74,6 @@ class GameRandom extends Game {
       final player = Player(
         game: this,
         weapon: TechType.Unarmed,
-        position: getRandomPlayerSpawnPosition(),
       );
       revive(player);
       return player;
@@ -112,8 +103,8 @@ class GameRandom extends Game {
     player.skillPoints = 0;
     player.target = null;
     final spawnPoint = getRandomPlayerSpawnPosition();
-    player.x = spawnPoint.x;
-    player.y = spawnPoint.y;
+    player.x = spawnPoint.row * tileSize;
+    player.y = spawnPoint.column * tileSize;
     player.clearCardAbility();
     player.cardChoices.clear();
     player.writeCardChoices();

@@ -108,14 +108,13 @@ class Player extends Character with ByteWriter {
   Player({
     required this.game,
     required int weapon,
-    required Position position,
     int team = 0,
     int magic = 10,
     int health = 10,
   }) : super(
             type: CharacterType.Human,
-            x: position.x,
-            y: position.y,
+            x: 0,
+            y: 0,
             health: health,
             speed: 4.25,
             team: team,

@@ -13,6 +13,18 @@ class Position3 with Position {
   double get percentageColumn => (y % tileSize) / tileSize;
   double get percentageZ => (z % tileHeight) / tileHeight;
 
+  void set indexZ(int value){
+    z = value * tileSizeHalf;
+  }
+
+  void set indexRow(int value){
+    x = value * tileSize;
+  }
+
+  void set indexColumn(int value){
+    y = value * tileSize;
+  }
+
   void set({double? x, double? y, double? z}){
      if (x != null) this.x = x;
      if (y != null) this.y = y;
