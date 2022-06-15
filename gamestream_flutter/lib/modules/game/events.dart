@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/isometric/state/lower_tile_mode.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -62,7 +63,7 @@ class GameEvents {
   void onKeyboardEvent(RawKeyEvent event){
      if (event is RawKeyDownEvent){
        if (event.physicalKey == PhysicalKeyboardKey.space){
-         modules.isometric.render.lowerTileMode = !modules.isometric.render.lowerTileMode;
+         lowerTileMode = !lowerTileMode;
        }
         if (event.physicalKey == PhysicalKeyboardKey.arrowUp){
           if (keyPressed(LogicalKeyboardKey.shiftLeft)){

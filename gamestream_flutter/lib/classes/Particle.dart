@@ -1,11 +1,11 @@
 import 'dart:math';
 
+import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToDst.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:lemon_math/library.dart';
 
-class Particle extends Vector2 {
-  double z = 0;
+class Particle extends Vector3 {
   double xv = 0;
   double yv = 0;
   double zv = 0;
@@ -36,7 +36,7 @@ class Particle extends Vector2 {
      return false;
   }
 
-  Particle():super(0,0);
+  Particle():super(0, 0, 0);
 
   double get speed => sqrt(xv * xv + yv * yv);
 

@@ -11,6 +11,7 @@ import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/hud/hud_state.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
+import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/state/grid.dart';
@@ -72,7 +73,7 @@ class GameRender {
        gridEmitDynamic(player.indexZ, player.indexRow, player.indexColumn);
     }
 
-    _render.renderSprites();
+    renderSprites();
     renderProjectiles();
     if (hud.editToolsEnabled.value){
       renderWireframes();

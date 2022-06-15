@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/convert/convert_hour_to_ambient.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/mouse.dart';
 import 'package:gamestream_flutter/mappers/mapTileToSrcRect.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
@@ -156,7 +157,7 @@ class IsometricModule {
     return getShadeAtPosition(x, y) >= Shade.Very_Dark;
   }
 
-  bool tileIsWalkable(Vector2 position){
+  bool tileIsWalkable(Vector3 position){
     final tile = getTileAt(position.x, position.y);
     if (tile == Tile.Boundary) return false;
     if (tile == Tile.Water) return false;

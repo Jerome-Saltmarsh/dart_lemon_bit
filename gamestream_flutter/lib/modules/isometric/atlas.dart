@@ -1,6 +1,4 @@
 
-import 'package:gamestream_flutter/isometric/classes/character.dart';
-import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
 final atlas = _Atlas();
@@ -8,23 +6,6 @@ final atlas = _Atlas();
 const _shadesX = 1.0;
 const _shadesY = 1.0;
 const _pixelSize = 8.0;
-
-const _healthX = 2400.0;
-const _healthY = 0.0;
-const _healthBackgroundY = _healthY + _healthHeight;
-const _healthWidth = 40.0;
-const _healthWidthHalf = _healthWidth * 0.5;
-const _healthHeight = 8.0;
-const _healthAnchorY = 50.0;
-
-void renderCharacterHealthBar(Character character){
-  engine.mapSrc(x: _healthX, y: _healthBackgroundY, width: _healthWidth, height: 6);
-  engine.mapDst(x: character.renderX, y: character.renderY, anchorX: _healthWidthHalf, anchorY: _healthAnchorY);
-  engine.renderAtlas();
-  engine.mapSrc(x: _healthX, y: _healthY, width: _healthWidth * character.health, height: 6);
-  engine.mapDst(x: character.renderX, y: character.renderY, anchorX: _healthWidthHalf, anchorY: _healthAnchorY);
-  engine.renderAtlas();
-}
 
 class _Atlas {
   final shadow = Vector2(1, 34);
