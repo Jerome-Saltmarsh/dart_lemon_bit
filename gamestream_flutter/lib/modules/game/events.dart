@@ -5,6 +5,7 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
+import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/state/grid.dart';
@@ -38,7 +39,7 @@ class GameEvents {
     engine.callbacks.onPanStarted = actions.playerPerform;
     engine.callbacks.onLongLeftClicked = actions.playerRun;
     engine.callbacks.onRightClicked = onMouseRightClick;
-    game.type.onChanged(_onGameTypeChanged);
+    gameType.onChanged(_onGameTypeChanged);
     player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     player.alive.onChanged(_onPlayerAliveChanged);
     player.state.onChanged(onPlayerCharacterStateChanged);

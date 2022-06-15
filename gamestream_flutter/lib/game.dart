@@ -55,8 +55,8 @@ var _previousPlayerScreenY2 = 0.0;
 var _previousPlayerScreenX3 = 0.0;
 var _previousPlayerScreenY3 = 0.0;
 
+
 class Game with ByteReader {
-  final type = Watch<GameType?>(null);
   final countDownFramesRemaining = Watch(0);
   final collectables = <Collectable>[];
   final interactableNpcs = <Character>[];

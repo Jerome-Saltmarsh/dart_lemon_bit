@@ -5,6 +5,7 @@ import 'package:bleed_common/GameType.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/classes/Authentication.dart';
+import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/state/particle_emitters.dart';
 import 'package:gamestream_flutter/isometric/state/particles.dart';
@@ -267,7 +268,7 @@ class CoreActions {
   }
 
   void deselectGameType(){
-    game.type.value = null;
+    gameType.value = null;
   }
 
   void toggleEditMode() {
@@ -292,7 +293,7 @@ class CoreActions {
   }
 
   void exitGame(){
-    game.type.value = null;
+    gameType.value = null;
     clearState();
     webSocket.disconnect();
   }
@@ -311,7 +312,7 @@ void connectToGameRandom(CharacterSelection characterType){
   connectToGame(GameType.RANDOM, characterType.index.toString());
 }
 
-void connectToGame(GameType gameType, [String message = ""]){
-  game.type.value = gameType;
-  connectToWebSocketServer(core.state.region.value, '${gameType.index} $message');
+void connectToGame(GameType type, [String message = ""]){
+  gameType.value = type;
+  connectToWebSocketServer(core.state.region.value, '${type.index} $message');
 }

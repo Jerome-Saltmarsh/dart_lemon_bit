@@ -5,8 +5,8 @@ import 'package:bleed_common/version.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
+import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/core/actions.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/init.dart';
@@ -328,7 +328,7 @@ class _BuildView {
           Container(
             height: 80,
             child: AnimatedTextKit(repeatForever: true, animatedTexts: [
-              RotateAnimatedText("Connecting to ${enumString(game.type.value)} (${enumString(region)})",
+              RotateAnimatedText("Connecting to ${enumString(gameType.value)} (${enumString(region)})",
                   textStyle: TextStyle(color: Colors.white, fontSize: 30)),
             ]),
           ),

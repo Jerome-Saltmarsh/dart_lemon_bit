@@ -2,6 +2,7 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/colours.dart';
+import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/icons.dart';
@@ -115,9 +116,9 @@ class GameBuild {
               child: visibleBuilder(state.debug, buildPanelDebug())
           ),
           buildPanelWriteMessage(),
-          if (game.type.value == GameType.RANDOM)
+          if (gameType.value == GameType.RANDOM)
             buildHudRandom(),
-          if (game.type.value == GameType.FRONTLINE)
+          if (gameType.value == GameType.FRONTLINE)
             buildHudMapEditor(),
         ]);
   }
