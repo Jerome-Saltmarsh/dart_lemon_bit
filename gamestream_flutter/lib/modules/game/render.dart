@@ -3,8 +3,8 @@ import 'dart:math';
 
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/classes/Explosion.dart';
-import 'package:gamestream_flutter/classes/NpcDebug.dart';
+import 'package:gamestream_flutter/isometric/classes/explosion.dart';
+import 'package:gamestream_flutter/isometric/classes/npc_debug.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/isometric/state/collectbles.dart';
 import 'package:gamestream_flutter/isometric/state/edit_state.dart';

@@ -1,6 +1,6 @@
 
 
-import 'package:gamestream_flutter/classes/Particle.dart';
+import 'package:gamestream_flutter/isometric/classes/particle.dart';
 
 typedef Particle GetParticle();
 

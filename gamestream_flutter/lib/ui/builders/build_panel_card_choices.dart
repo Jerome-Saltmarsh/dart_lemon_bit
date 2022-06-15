@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/state/player.dart';
-import 'package:gamestream_flutter/mappers/mapCardTypeToIcon.dart';
+import 'package:gamestream_flutter/isometric/ui/build_card_type_icon.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel.dart';
 import 'package:golden_ratio/constants.dart';
@@ -41,7 +41,7 @@ Widget buildPanelCardChoices() {
                             color: colours.white10,
                             shape: BoxShape.circle
                         ),
-                        child: mapCardTypeToIcon(cardType)),
+                        child: buildCardTypeIcon(cardType)),
                     height6,
                     FittedBox(child: text(getCardTypeGenre(cardType).name, color: colours.white60)),
                   ],

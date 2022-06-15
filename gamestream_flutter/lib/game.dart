@@ -1,7 +1,7 @@
 import 'package:bleed_common/card_type.dart';
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/classes/deck_card.dart';
-import 'package:gamestream_flutter/classes/game_object.dart';
+import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
+import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/state/collectbles.dart';
 import 'package:gamestream_flutter/isometric/state/edit_state.dart';
 import 'package:gamestream_flutter/isometric/actions/initialize_isometric_game_state.dart';
@@ -17,8 +17,8 @@ import 'package:lemon_engine/enums.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'classes/Explosion.dart';
-import 'classes/NpcDebug.dart';
+import 'isometric/classes/explosion.dart';
+import 'isometric/classes/npc_debug.dart';
 import 'isometric/state/grid.dart';
 import 'isometric/state/player.dart';
 import 'isometric/state/time.dart';

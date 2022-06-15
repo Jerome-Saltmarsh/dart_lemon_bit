@@ -2,11 +2,11 @@
 import 'package:bleed_common/card_type.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/classes/deck_card.dart';
+import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/state/player.dart';
-import 'package:gamestream_flutter/mappers/mapCardTypeToIcon.dart';
+import 'package:gamestream_flutter/isometric/ui/build_card_type_icon.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel.dart';
@@ -53,7 +53,7 @@ Widget buildPanelDeck(){
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(color: colours.white10, shape: BoxShape.circle),
-                        child: mapCardTypeToIcon(card.type)),
+                        child: buildCardTypeIcon(card.type)),
                     text(card.name, color: colours.white85),
                   ],
                 )),
@@ -96,7 +96,7 @@ Widget buildPanelDeck(){
                                   width: 50,
                                   height: 50,
                                   alignment: Alignment.center,
-                                  child: mapCardTypeToIcon(card.type)),
+                                  child: buildCardTypeIcon(card.type)),
                               if (remaining > 0)
                                 Container(
                                   width: 50,

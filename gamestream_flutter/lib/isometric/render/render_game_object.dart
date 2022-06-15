@@ -1,4 +1,4 @@
-import 'package:gamestream_flutter/classes/game_object.dart';
+import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 
 void renderGameObject(GameObject value) {
   // switch (value.type) {

@@ -1,9 +1,8 @@
 
 import 'dart:math';
 
-import 'package:gamestream_flutter/classes/Particle.dart';
+import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
-import 'package:gamestream_flutter/mappers/mapParticleToSrc.dart';
 import 'package:lemon_math/library.dart';
 
 import '../modules.dart';
@@ -37,7 +36,7 @@ void emitMyst(Particle particle) {
   const velocity = 0.1;
   const range = 50;
   particle.type = ParticleType.Myst;
-  particle.duration = mystDuration;
+  particle.duration = 500;
   particle.x += giveOrTake(range);
   particle.y += giveOrTake(range);
   particle.z = 0.5;

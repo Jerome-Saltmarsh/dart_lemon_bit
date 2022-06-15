@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/audio.dart';
-import 'package:gamestream_flutter/classes/Explosion.dart';
+import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/isometric/state/edit_state.dart';
 import 'package:gamestream_flutter/game.dart';

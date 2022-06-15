@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
-import 'package:gamestream_flutter/mappers/mapParticleToDst.dart';
 import 'package:lemon_math/library.dart';
 
 class Particle extends Vector3 {
@@ -21,7 +20,6 @@ class Particle extends Vector3 {
   int hue = 0;
   bool casteShadow = false;
   double size = 0;
-  bool customRotation = false;
 
   Particle? next;
 
@@ -40,8 +38,7 @@ class Particle extends Vector3 {
 
   double get speed => sqrt(xv * xv + yv * yv);
 
-  double get renderScale => (1.0 + (z * zToScaleRatio)) * scale;
-  double get renderY => y - (z * zToHeightRatio);
+  double get renderScale => (1.0 + (z * 0.4)) * scale;
 
   void setAngle({required double value, required double speed}){
     xv = getAdjacent(value, speed);

@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:bleed_common/OrbType.dart';
 import 'package:gamestream_flutter/audio.dart';
-import 'package:gamestream_flutter/classes/Explosion.dart';
-import 'package:gamestream_flutter/classes/Particle.dart';
+import 'package:gamestream_flutter/isometric/classes/explosion.dart';
+import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
@@ -53,7 +53,6 @@ class IsometricSpawn {
     bounciness = 0.5,
     double airFriction = 0.98,
     bool castShadow = false,
-    bool customRotation = true
   }) {
     assert(duration > 0);
     const mapTypeToSize = <int, double> {
@@ -72,7 +71,6 @@ class IsometricSpawn {
       ParticleType.Pot_Shard: 16.0,
     };
     final particle = getAvailableParticle();
-    particle.customRotation = customRotation;
     particle.size = mapTypeToSize[type] ?? 0;
     particle.type = type;
     particle.casteShadow = castShadow;
@@ -265,7 +263,6 @@ class IsometricSpawn {
         rotation: randomAngle(),
         castShadow: true,
         bounciness: 0.35,
-        customRotation: false
     );
   }
 
@@ -285,7 +282,6 @@ class IsometricSpawn {
         rotation: randomAngle(),
         castShadow: true,
         bounciness: 0.35,
-        customRotation: false
     );
   }
 
@@ -305,7 +301,6 @@ class IsometricSpawn {
         rotation: randomAngle(),
         castShadow: true,
         bounciness: 0.35,
-        customRotation: false
     );
   }
 
@@ -325,7 +320,6 @@ class IsometricSpawn {
         rotation: randomAngle(),
         castShadow: true,
         bounciness: 0.35,
-        customRotation: false
     );
   }
 

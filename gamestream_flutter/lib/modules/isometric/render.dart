@@ -1,6 +1,6 @@
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/classes/Item.dart';
-import 'package:gamestream_flutter/classes/Structure.dart';
+import 'package:gamestream_flutter/isometric/classes/item.dart';
+import 'package:gamestream_flutter/isometric/classes/structure.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/render/render_character.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
