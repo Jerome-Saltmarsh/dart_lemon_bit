@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:bleed_common/Projectile_Type.dart';
-import 'package:gamestream_flutter/classes/Projectile.dart';
+import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:lemon_engine/engine.dart';
 
 void renderProjectile(Projectile value) {

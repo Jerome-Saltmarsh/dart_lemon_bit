@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/FloatingText.dart';
 import 'package:gamestream_flutter/classes/Item.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
-import 'package:gamestream_flutter/classes/ParticleEmitter.dart';
+import 'package:gamestream_flutter/isometric/classes/particle_emitter.dart';
 import 'package:gamestream_flutter/classes/Structure.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';

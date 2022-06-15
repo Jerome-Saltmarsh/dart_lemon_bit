@@ -5,7 +5,7 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
-import 'package:gamestream_flutter/classes/Projectile.dart';
+import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/game.dart';

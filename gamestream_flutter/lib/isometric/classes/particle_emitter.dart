@@ -5,10 +5,10 @@ import 'package:gamestream_flutter/classes/Particle.dart';
 typedef Particle GetParticle();
 
 class ParticleEmitter {
-  double x = 0;
-  double y = 0;
+  var x = 0.0;
+  var y = 0.0;
+  var next = 0;
   int rate;
-  int next = 0;
   Function(Particle particle) emit;
 
   ParticleEmitter({
