@@ -1098,8 +1098,8 @@ extension GameFunctions on Game {
     required double range,
     required int projectileType,
     required int damage,
-    double? angle = 0,
     double accuracy = 0,
+    double? angle = 0,
     Position? target,
   }) {
     assert (angle != null || target != null);
@@ -1116,10 +1116,9 @@ extension GameFunctions on Game {
     projectile.x = src.x;
     projectile.y = src.y;
     if (src is Collider) {
-      projectile.z = src.z + 12.0;
+      projectile.z = src.z + 6.0;
     }
-    projectile.xv = velX(finalAngle + giveOrTake(accuracy), speed);
-    projectile.yv = velY(finalAngle + giveOrTake(accuracy), speed);
+    projectile.setVelocity(finalAngle + giveOrTake(accuracy) - piHalf, speed);
     projectile.speed = speed;
     projectile.owner = src;
     projectile.range = range;

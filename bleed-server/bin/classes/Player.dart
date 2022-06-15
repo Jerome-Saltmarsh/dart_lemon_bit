@@ -620,11 +620,10 @@ extension PlayerProperties on Player {
 
   void writeProjectile(Projectile projectile){
     if (!projectile.active) return;
-    final degrees = getAngle(projectile.xv, projectile.yv) * radiansToDegrees;
     writePosition(projectile);
     writeInt(projectile.z);
     writeByte(projectile.type);
-    writeInt(degrees);
+    writeInt(projectile.angleVelocity * radiansToDegrees);
   }
 
   void writeDamageApplied(Position target, int amount) {

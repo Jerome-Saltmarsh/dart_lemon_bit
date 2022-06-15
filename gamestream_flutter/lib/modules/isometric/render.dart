@@ -15,6 +15,7 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToDst.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToSrc.dart';
+import 'package:gamestream_flutter/maths.dart';
 import 'package:gamestream_flutter/modules/isometric/animations.dart';
 import 'package:gamestream_flutter/modules/isometric/atlas.dart';
 import 'package:gamestream_flutter/modules/isometric/enums.dart';
@@ -550,10 +551,10 @@ class IsometricRender {
 
   void renderArrow(double x, double y, double angle) {
     engine.mapSrc(x: 2182, y: 1, width: 13, height: 47);
-    engine.mapDst(x: x, y: y - 20, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
+    engine.mapDst(x: x, y: y - 20, rotation: angle + piQuarter, anchorX: 6.5, anchorY: 30, scale: 0.5);
     engine.renderAtlas();
     engine.mapSrc(x: 2172, y: 1, width: 13, height: 47);
-    engine.mapDst(x: x, y: y, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
+    engine.mapDst(x: x, y: y, rotation: angle + piQuarter, anchorX: 6.5, anchorY: 30, scale: 0.5);
     engine.renderAtlas();
   }
 

@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'package:lemon_math/functions/angle.dart';
 
 import '../common/MaterialType.dart';
 import '../maths.dart';
@@ -30,9 +30,8 @@ mixin Health {
 mixin Velocity {
   var xv = 0.0;
   var yv = 0.0;
-  var zv = 0.0;
 
-  double get angleVelocity => atan2(xv, yv);
+  double get angleVelocity => getAngle(xv, yv);
 
   void applyFriction(double amount){
     xv *= amount;
