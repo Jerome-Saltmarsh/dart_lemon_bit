@@ -22,7 +22,6 @@ Widget buildPanelDebug(){
       mouseRowColumnPercentage(),
       buildTotalParticles,
       buildActiveParticles,
-      tileAtMouse,
       mousePositionWorld,
       mousePositionGrid,
       mousePositionScreen,
@@ -87,12 +86,6 @@ Widget get playerScreen {
 Widget get buildActiveParticles {
   return Refresh((){
     return text("Active Particles: ${isometric.totalActiveParticles}");
-  });
-}
-
-Widget get tileAtMouse {
-  return Refresh((){
-    return text("Tile: ${isometric.tileAtMouse}");
   });
 }
 

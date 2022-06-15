@@ -10,9 +10,6 @@ class IsometricEvents {
   void register(){
     if (isometric.eventsRegistered) return;
     isometric.eventsRegistered = true;
-    hours.onChanged(onHourChanged);
-    isometric.totalColumns.onChanged(onTotalColumnsChanged);
-    isometric.totalRows.onChanged(onTotalRowsChanged);
   }
 
   void onTotalColumnsChanged(int value){
@@ -24,9 +21,9 @@ class IsometricEvents {
     isometric.totalRowsInt = value;
   }
 
-  void onHourChanged(int hour){
-    isometric.refreshAmbientLight();
-  }
+  // void onHourChanged(int hour){
+  //   isometric.refreshAmbientLight();
+  // }
 
   void onAmbientChanged(int value){
     // isometric.resetLighting();

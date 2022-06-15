@@ -426,8 +426,6 @@ class Game with ByteReader {
     final columns = readInt();
     final tiles = isometric.tiles;
     tiles.clear();
-    isometric.totalRows.value = rows;
-    isometric.totalColumns.value = columns;
     isometric.totalRowsInt = rows;
     isometric.totalColumnsInt = columns;
     for (var row = 0; row < rows; row++) {

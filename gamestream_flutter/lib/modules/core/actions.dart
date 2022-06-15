@@ -191,7 +191,6 @@ class CoreActions {
     isometric.tilesDst = Float32List(0);
     isometric.tilesSrc = Float32List(0);
     isometric.totalStructures = 0;
-    isometric.refreshTileSize();
     engine.redrawCanvas();
   }
 

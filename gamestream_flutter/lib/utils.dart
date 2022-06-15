@@ -29,10 +29,6 @@ Offset offset(double x, double y) {
   return Offset(x, y);
 }
 
-void setTileAtMouse(int tile) {
-  isometric.setTile(row: mouseRow, column: mouseColumn, tile: tile);
-}
-
 void copy(String value){
   // FlutterClipboard.copy(value);
 }

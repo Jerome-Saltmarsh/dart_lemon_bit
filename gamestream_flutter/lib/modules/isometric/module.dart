@@ -41,8 +41,8 @@ class IsometricModule {
   final dynamic = <Int8List>[];
   final bake = <Int8List>[];
   final items = <Item>[];
-  final totalColumns = Watch(0);
-  final totalRows = Watch(0);
+  // final totalColumns = Watch(0);
+  // final totalRows = Watch(0);
   final maxAmbientBrightness = Watch(Shade.Bright);
   final nameTextStyle = TextStyle(color: Colors.white);
 
@@ -65,19 +65,6 @@ class IsometricModule {
 
   bool get dayTime => ambient.value == Shade.Bright;
 
-  int get tileAtMouse {
-    if (mouseRow < 0) return Tile.Boundary;
-    if (mouseColumn < 0) return Tile.Boundary;
-    if (mouseRow >= totalRows.value) return Tile.Boundary;
-    if (mouseColumn >= totalColumns.value) return Tile.Boundary;
-    return tiles[mouseRow][mouseColumn];
-  }
-
-  Vector2 get mapCenter {
-    final row = totalRows.value ~/ 2;
-    final column = totalColumns.value ~/ 2;
-    return getTilePosition(row: row, column: column);
-  }
 
   int get totalActiveParticles {
     var totalParticles = 0;
@@ -88,8 +75,6 @@ class IsometricModule {
     }
     return totalParticles;
   }
-
-  bool get boundaryAtMouse => tileAtMouse == Tile.Boundary;
 
   // CONSTRUCTOR
 
@@ -405,38 +390,6 @@ class IsometricModule {
     }
   }
 
-  /// Expensive
-  void setTile({
-    required int row,
-    required int column,
-    required int tile,
-  }) {
-    if (row < 0) return;
-    if (column < 0) return;
-    if (row >= totalRows.value) return;
-    if (column >= totalColumns.value) return;
-    if (tiles[row][column] == tile) return;
-    tiles[row][column] = tile;
-  }
-
-  void refreshTileSize(){
-    final screen = engine.screen;
-    final rows = tiles.length;
-    final columns = tiles.length > 0 ? tiles[0].length : 0;
-    totalRows.value = rows;
-    totalColumns.value = columns;
-    minRow = max(0, convertWorldToRow(screen.left, screen.top));
-    maxRow = min(rows, convertWorldToRow(screen.right, screen.bottom));
-    minColumn = max(0, convertWorldToColumn(screen.right, screen.top));
-    maxColumn = min(columns, convertWorldToColumn(screen.left, screen.bottom));
-    if (minRow > maxRow){
-      this.minRow = maxRow;
-    }
-    if (minColumn > maxColumn){
-      this.minColumn = maxColumn;
-    }
-  }
-
   void addRow(){
     final List<int> row = [];
     final rows = tiles[0].length;
@@ -477,8 +430,8 @@ class IsometricModule {
   }
 
   void cameraCenterMap(){
-    final center = mapCenter;
-    engine.cameraCenter(center.x, center.y);
+    // final center = mapCenter;
+    // engine.cameraCenter(center.x, center.y);
   }
 
   void applyEmissionFromEffects() {
@@ -510,11 +463,11 @@ class IsometricModule {
     }
   }
 
-  void refreshAmbientLight(){
-    final shade = convertHourToAmbient(hours.value);
-    if (maxAmbientBrightness.value > shade) return;
-    ambient.value = shade;
-  }
+  // void refreshAmbientLight(){
+  //   final shade = convertHourToAmbient(hours.value);
+  //   if (maxAmbientBrightness.value > shade) return;
+  //   ambient.value = shade;
+  // }
 
   // void refreshGeneratedObjects() {
   //   game.generatedObjects.clear();
