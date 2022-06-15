@@ -488,30 +488,19 @@ class Scene {
     if (type == GridNodeType.Empty) return false;
     if (type == GridNodeType.Boundary) return true;
     if (type == GridNodeType.Bricks) return true;
+    if (type == GridNodeType.Player_Spawn) return false;
 
     if (GridNodeType.isStairs(type)){
       return getHeightAt(x, y, z) > z;
     }
-
-    if (type == GridNodeType.Tree){
+    if (type == GridNodeType.Tree || type == GridNodeType.Torch){
       const treeRadius = 0.2;
-      final percRow = ((x) / 48.0) % 1.0;
+      final percRow = (x / 48.0) % 1.0;
       if ((0.5 - percRow).abs() > treeRadius) return false;
-      final percColumn = ((y) / 48.0) % 1.0;
+      final percColumn = (y / 48.0) % 1.0;
       if ((0.5 - percColumn).abs() > treeRadius) return false;
       return true;
     }
-    if (type == GridNodeType.Torch){
-      const torchRadius = 0.2;
-      final percRow = ((x) / 48.0) % 1.0;
-      if ((0.5 - percRow).abs() > torchRadius) return false;
-      final percColumn = ((y) / 48.0) % 1.0;
-      if ((0.5 - percColumn).abs() > torchRadius) return false;
-      return true;
-    }
-
-    if (type == GridNodeType.Player_Spawn) return false;
-
     return true;
   }
 
@@ -525,10 +514,6 @@ class Scene {
     }
 
     var tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
-
-    if (tileAtFeet == GridNodeType.Water){
-       // character.set
-    }
 
     while (tileAtFeet == GridNodeType.Bricks || tileAtFeet == GridNodeType.Grass) {
        character.z += 24 - (character.z % 24);
