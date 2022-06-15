@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';
-import 'package:gamestream_flutter/hud/hud_state.dart';
 import 'package:gamestream_flutter/isometric/mouse.dart';
+import 'package:gamestream_flutter/isometric/state/edit_tools_enabled.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/state/grid.dart';
 import 'package:gamestream_flutter/state/light_mode.dart';
@@ -21,7 +21,7 @@ Widget buildHudMapEditor() {
       Positioned(
         top: 0,
         left: 0,
-        child: visibleBuilder(hud.editToolsEnabled, buildPanelEditor()),
+        child: visibleBuilder(editToolsEnabled, buildPanelEditor()),
       ),
       Positioned(
           top: 0,
@@ -31,7 +31,7 @@ Widget buildHudMapEditor() {
       Positioned(
         bottom: 0,
         right: 0,
-        child: visibleBuilder(hud.editToolsEnabled, buildColumnSetWeapon()),
+        child: visibleBuilder(editToolsEnabled, buildColumnSetWeapon()),
       ),
     ],
   );

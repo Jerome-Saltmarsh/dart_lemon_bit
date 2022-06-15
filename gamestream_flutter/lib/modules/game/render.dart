@@ -9,11 +9,11 @@ import 'package:gamestream_flutter/classes/Projectile.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/game.dart';
-import 'package:gamestream_flutter/hud/hud_state.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/render/render_grid_node.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectile.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
+import 'package:gamestream_flutter/isometric/state/edit_tools_enabled.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/state/grid.dart';
@@ -77,7 +77,7 @@ class GameRender {
 
     renderSprites();
     renderProjectiles();
-    if (hud.editToolsEnabled.value){
+    if (editToolsEnabled.value){
       renderWireframes();
     }
 

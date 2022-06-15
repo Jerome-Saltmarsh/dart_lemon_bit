@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/hud/hud_state.dart';
 import 'package:gamestream_flutter/icons.dart';
+import 'package:gamestream_flutter/isometric/state/edit_tools_enabled.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel.dart';
 import 'package:lemon_engine/engine.dart';
@@ -29,8 +29,8 @@ Widget buildPanelMenu() {
             }),
           ),
           onPressed(
-            callback: hud.toggleEditToolsEnabled,
-            child: WatchBuilder(hud.editToolsEnabled, (bool editToolsEnabled) {
+            callback: toggleEditToolsEnabled,
+            child: WatchBuilder(editToolsEnabled, (bool editToolsEnabled) {
               return editToolsEnabled
                   ? Tooltip(
                   child: icons.symbols.soundEnabled,
