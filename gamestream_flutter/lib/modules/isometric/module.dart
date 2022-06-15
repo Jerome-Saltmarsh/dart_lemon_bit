@@ -405,11 +405,6 @@ class IsometricModule {
     }
   }
 
-  void updateTileRender(){
-    print("updateTileRender()");
-    resetTilesSrcDst();
-  }
-
   /// Expensive
   void setTile({
     required int row,
@@ -422,7 +417,6 @@ class IsometricModule {
     if (column >= totalColumns.value) return;
     if (tiles[row][column] == tile) return;
     tiles[row][column] = tile;
-    resetTilesSrcDst();
   }
 
   void refreshTileSize(){
@@ -447,84 +441,6 @@ class IsometricModule {
     return tile != Tile.Water && tile != Tile.Bridge;
   }
 
-  void resetTilesSrcDst() {
-    const tileSize = 48.0;
-    final rows = tiles.length;
-    final columns = rows > 0 ? tiles[0].length : 0;
-    final List<double> tileLeft = [];
-    for (var rowIndex = 0; rowIndex < rows; rowIndex++) {
-      final row = tiles[rowIndex];
-      for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
-        final tile = row[columnIndex];
-        final tileAboveLeft = rowIndex > 0 && _isBridgeOrWater(tiles[rowIndex - 1][columnIndex]);
-        final tileAboveRight = columnIndex > 0 && _isBridgeOrWater(row[columnIndex - 1]);
-        final tileAbove = rowIndex > 0 &&
-            columnIndex > 0 &&
-            _isBridgeOrWater(tiles[rowIndex - 1][columnIndex - 1]);
-
-        if (tile == Tile.Water) {
-          if (!tileAboveLeft && !tileAboveRight) {
-            if (tileAbove) {
-              tileLeft.add(waterCorner4);
-            } else {
-              tileLeft.add(mapTileToSrcLeft(tile));
-            }
-          } else if (tileAboveLeft) {
-            if (tileAboveRight) {
-              tileLeft.add(waterCorner3);
-            } else {
-              if (tileAbove) {
-                tileLeft.add(waterHor);
-              } else {
-                tileLeft.add(waterCorner1);
-              }
-            }
-          } else {
-            if (tileAbove) {
-              tileLeft.add(waterVer);
-            } else {
-              tileLeft.add(waterCorner2);
-            }
-          }
-        } else {
-          tileLeft.add(mapTileToSrcLeft(tile));
-        }
-      }
-    }
-
-    final tileLeftLength = tileLeft.length;
-    final total = tileLeftLength * 4;
-    late Float32List tilesDst;
-    late Float32List tilesSrc;
-    if (this.tilesDst.length != total) {
-      tilesDst = Float32List(total);
-      tilesSrc = Float32List(total);
-    } else {
-      tilesDst = this.tilesDst;
-      tilesSrc = this.tilesSrc;
-    }
-
-    for (var i = 0; i < tileLeftLength; ++i) {
-      final index0 = i * 4;
-      final index1 = index0 + 1;
-      final index2 = index0 + 2;
-      final index3 = index0 + 3;
-      final row = i ~/ columns;
-      final column = i % columns;
-      tilesDst[index0] = 1;
-      tilesDst[index1] = 0;
-      const tileSizeHalf = tileSize / 2;
-      tilesDst[index2] = getTileWorldX(row, column) - tileSizeHalf;
-      tilesDst[index3] = getTileWorldY(row, column);
-      tilesSrc[index0] = 4543 + tileLeft[i];
-      tilesSrc[index1] = 1;
-      tilesSrc[index2] = tilesSrc[index0] + tileSize;
-      tilesSrc[index3] = tilesSrc[index1] + tileSize;
-    }
-    this.tilesDst = tilesDst;
-    this.tilesSrc = tilesSrc;
-  }
-
   void addRow(){
     final List<int> row = [];
     final rows = tiles[0].length;
@@ -532,31 +448,23 @@ class IsometricModule {
       row.add(Tile.Grass);
     }
     tiles.add(row);
-    _refreshMapTiles();
   }
 
   void removeRow(){
     tiles.removeLast();
-    _refreshMapTiles();
   }
 
-  void _refreshMapTiles(){
-    refreshTileSize();
-    resetTilesSrcDst();
-  }
 
   void addColumn() {
     for (final row in tiles) {
       row.add(Tile.Grass);
     }
-    _refreshMapTiles();
   }
 
   void removeColumn() {
     for (var i = 0; i < tiles.length; i++) {
       tiles[i].removeLast();
     }
-    _refreshMapTiles();
   }
 
   void detractHour(){

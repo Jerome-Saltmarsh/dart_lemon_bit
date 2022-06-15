@@ -439,8 +439,6 @@ class Game with ByteReader {
       }
       tiles.add(column);
     }
-    // isometric.refreshGeneratedObjects();
-    isometric.updateTileRender();
   }
 
   void updateSync() {
