@@ -1,6 +1,6 @@
 import 'package:bleed_common/Shade.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
-import 'package:gamestream_flutter/modules/isometric/enums.dart';
+import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 

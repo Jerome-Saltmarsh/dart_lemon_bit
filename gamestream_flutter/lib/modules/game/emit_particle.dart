@@ -2,8 +2,8 @@
 import 'dart:math';
 
 import 'package:gamestream_flutter/classes/Particle.dart';
+import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToSrc.dart';
-import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:lemon_math/library.dart';
 
 import '../modules.dart';

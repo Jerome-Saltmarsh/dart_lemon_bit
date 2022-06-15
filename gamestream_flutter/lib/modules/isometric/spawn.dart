@@ -5,11 +5,10 @@ import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/Particle.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_math/library.dart';
-
-import 'enums.dart';
 
 final particles = isometric.particles;
 

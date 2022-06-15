@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
+import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:gamestream_flutter/mappers/mapParticleToDst.dart';
-import 'package:gamestream_flutter/modules/isometric/enums.dart';
 import 'package:lemon_math/library.dart';
 
 class Particle extends Vector3 {

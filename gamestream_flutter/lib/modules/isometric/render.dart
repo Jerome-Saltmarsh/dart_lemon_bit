@@ -296,28 +296,6 @@ class IsometricRender {
     }
   }
 
-  void renderWireFrameBlue(int row, int column, int z) {
-    return engine.renderCustom(
-      dstX: getTileWorldX(row, column),
-      dstY: getTileWorldY(row, column) - (z * 24),
-      srcX: 7590,
-      srcWidth: 48,
-      srcHeight: 72,
-      anchorY: 0.3334,
-    );
-  }
-
-  void renderWireFrameRed(int row, int column, int z) {
-    return engine.renderCustom(
-      dstX: getTileWorldX(row, column),
-      dstY: getTileWorldY(row, column) - (z * 24),
-      srcX: 7638,
-      srcWidth: 48,
-      srcHeight: 72,
-      anchorY: 0.3334,
-    );
-  }
-
   void renderArrowUp(double x, double y) {
     return engine.renderCustom(
       dstX: x,

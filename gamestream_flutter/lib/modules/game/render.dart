@@ -11,6 +11,7 @@ import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/hud/hud_state.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
+import 'package:gamestream_flutter/isometric/render/render_grid_node.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectile.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
@@ -86,9 +87,9 @@ class GameRender {
 
   void renderWireframes() {
      for (var z = 0; z < edit.z; z++){
-      isometric.render.renderWireFrameBlue(edit.row, edit.column, z);
+       renderWireFrameBlue(edit.row, edit.column, z);
     }
-    isometric.render.renderWireFrameRed(
+    renderWireFrameRed(
         edit.row,
         edit.column, edit.z
     );
