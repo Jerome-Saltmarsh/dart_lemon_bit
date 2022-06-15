@@ -6,6 +6,7 @@ import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'isometric/state/particles.dart';
+import 'isometric/state/player.dart';
 import 'isometric/state/time.dart';
 
 // variables
@@ -75,8 +76,8 @@ void parseState() {
       case ServerResponse.Scene_Changed:
         final x = consumeDouble();
         final y = consumeDouble();
-        modules.game.state.player.x = x;
-        modules.game.state.player.y = y;
+        player.x = x;
+        player.y = y;
         engine.cameraCenter(x, y);
 
         Future.delayed(Duration(milliseconds: 150), () {
@@ -92,7 +93,7 @@ void parseState() {
           message += _consumeString();
           message += " ";
         }
-        modules.game.state.player.message.value = message.trim();
+        player.message.value = message.trim();
         break;
 
       // case ServerResponse.Debug_Mode:
@@ -157,14 +158,11 @@ void parseGameTime() {
 }
 
 void _parsePlayerAbility(){
-  final player = modules.game.state.player;
   player.abilityRange = consumeDouble();
   player.abilityRadius = consumeDouble();
 }
 
 void _parseGameJoined() {
-  print("parseGameJoined()");
-  final player = modules.game.state.player;
   player.team = consumeInt();
   player.x = consumeDouble();
   player.y = consumeDouble();

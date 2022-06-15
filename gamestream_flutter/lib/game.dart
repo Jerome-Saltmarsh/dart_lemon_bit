@@ -18,9 +18,9 @@ import 'classes/Explosion.dart';
 import 'classes/NpcDebug.dart';
 import 'isometric/classes/projectile.dart';
 import 'isometric/state/grid.dart';
+import 'isometric/state/player.dart';
 import 'isometric/state/time.dart';
 import 'modules/isometric/enums.dart';
-import 'ui/builders/player.dart';
 
 final game = Game();
 final byteLength = Watch(0);
@@ -32,18 +32,14 @@ final averageUpdate = Watch(0.0);
 final sync = Watch(0.0);
 var durationTotal = 0;
 
-final _player = modules.game.state.player;
-// final _hours = game.hours;
-// final _minutes = modules.isometric.minutes;
 final _events = modules.game.events;
 
 var time = DateTime.now();
 
 void cameraCenterOnPlayer(){
-  print("cameraCenterOnPlayer()");
-  engine.cameraCenter(_player.x, _player.y);
-  _previousPlayerScreenX1 = worldToScreenX(_player.x);
-  _previousPlayerScreenY1 = worldToScreenY(_player.y);
+  engine.cameraCenter(player.x, player.y);
+  _previousPlayerScreenX1 = worldToScreenX(player.x);
+  _previousPlayerScreenY1 = worldToScreenY(player.y);
   _previousPlayerScreenX2 = _previousPlayerScreenX1;
   _previousPlayerScreenY2 = _previousPlayerScreenY1;
   _previousPlayerScreenX3 = _previousPlayerScreenX1;
@@ -205,13 +201,13 @@ class Game with ByteReader {
           break;
 
         case ServerResponse.Player_Attack_Target:
-          _player.attackTarget.x = readDouble();
-          _player.attackTarget.y = readDouble();
+          player.attackTarget.x = readDouble();
+          player.attackTarget.y = readDouble();
           engine.cursorType.value = CursorType.Click;
           break;
         case ServerResponse.Player_Attack_Target_None:
-          _player.attackTarget.x = 0;
-          _player.attackTarget.y = 0;
+          player.attackTarget.x = 0;
+          player.attackTarget.y = 0;
           engine.cursorType.value = CursorType.Basic;
           break;
         case ServerResponse.Collectables:
@@ -243,11 +239,11 @@ class Game with ByteReader {
           break;
 
         case ServerResponse.Tech_Types:
-          _player.levelPickaxe.value = readByte();
-          _player.levelSword.value = readByte();
-          _player.levelBow.value = readByte();
-          _player.levelAxe.value = readByte();
-          _player.levelHammer.value = readByte();
+          player.levelPickaxe.value = readByte();
+          player.levelSword.value = readByte();
+          player.levelBow.value = readByte();
+          player.levelAxe.value = readByte();
+          player.levelHammer.value = readByte();
           break;
 
         case ServerResponse.Damage_Applied:
@@ -310,11 +306,11 @@ class Game with ByteReader {
           break;
 
         case ServerResponse.Player:
-          _player.x = readDouble();
-          _player.y = readDouble();
-          _player.z = readDouble();
-          _player.angle = readDouble() / 100.0;
-          _player.mouseAngle = readDouble() / 100.0;
+          player.x = readDouble();
+          player.y = readDouble();
+          player.z = readDouble();
+          player.angle = readDouble() / 100.0;
+          player.mouseAngle = readDouble() / 100.0;
 
           switch(modules.game.state.cameraMode.value){
             case CameraMode.Chase:
@@ -350,30 +346,27 @@ class Game with ByteReader {
               _previousPlayerScreenY2 = player.renderY;
               break;
             case CameraMode.Locked:
-              engine.cameraCenter(_player.x, _player.y);
+              engine.cameraCenter(player.x, player.y);
               break;
             case CameraMode.Free:
               break;
           }
 
-          _player.health.value = readDouble();
-          _player.maxHealth = readDouble();
-          _player.magic.value = readDouble();
-          _player.maxMagic.value = readDouble();
-          _player.equippedWeapon.value = readByte();
-          _player.armour.value = readByte();
-          _player.helm.value = readByte();
-          // readSlot(_slots.weapon);
-          // _slots.armour.type.value = nextByte();
-          // _slots.helm.type.value = nextByte();
-          _player.alive.value = readBool();
-          _player.storeVisible.value = readBool();
-          _player.wood.value = readInt();
-          _player.stone.value = readInt();
-          _player.gold.value = readInt();
-          _player.experience.value = readPercentage();
-          _player.level.value = readByte();
-          _player.skillPoints.value = readByte();
+          player.health.value = readDouble();
+          player.maxHealth = readDouble();
+          player.magic.value = readDouble();
+          player.maxMagic.value = readDouble();
+          player.equippedWeapon.value = readByte();
+          player.armour.value = readByte();
+          player.helm.value = readByte();
+          player.alive.value = readBool();
+          player.storeVisible.value = readBool();
+          player.wood.value = readInt();
+          player.stone.value = readInt();
+          player.gold.value = readInt();
+          player.experience.value = readPercentage();
+          player.level.value = readByte();
+          player.skillPoints.value = readByte();
           break;
 
         case ServerResponse.Player_Slots:
@@ -382,7 +375,6 @@ class Game with ByteReader {
         case ServerResponse.Player_Spawned:
           player.x = readDouble();
           player.y = readDouble();
-          // isometric.resetLighting();
           cameraCenterOnPlayer();
           engine.zoom = 1.0;
           engine.targetZoom = 1.0;
@@ -415,7 +407,7 @@ class Game with ByteReader {
   }
 
   void parseCharacterSelectRequired() {
-    modules.game.state.player.selectCharacterRequired.value = readBool();
+    player.selectCharacterRequired.value = readBool();
   }
 
   void parseTiles() {

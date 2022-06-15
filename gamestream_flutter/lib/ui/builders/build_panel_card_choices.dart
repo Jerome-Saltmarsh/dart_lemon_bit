@@ -2,10 +2,10 @@ import 'package:bleed_common/card_type.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/isometric/state/player.dart';
 import 'package:gamestream_flutter/mappers/mapCardTypeToIcon.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel.dart';
-import 'package:gamestream_flutter/ui/builders/player.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_watch/watch_builder.dart';
 

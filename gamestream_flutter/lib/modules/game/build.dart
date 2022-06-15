@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/icons.dart';
+import 'package:gamestream_flutter/isometric/state/player.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/game/enums.dart';
 import 'package:gamestream_flutter/modules/game/update.dart';
@@ -67,8 +68,8 @@ class GameBuild {
         goldenRatio_0381 *
         goldenRatio_0381;
 
-    return WatchBuilder(state.player.magic, (double magic) {
-      final maxMagic = state.player.maxMagic.value;
+    return WatchBuilder(player.magic, (double magic) {
+      final maxMagic = player.maxMagic.value;
       if (maxMagic <= 0) return empty;
       final percentage = magic / maxMagic;
       return Container(
@@ -93,7 +94,7 @@ class GameBuild {
               width: width,
               height: height,
               alignment: Alignment.center,
-              child: text('${magic.toInt()} / ${state.player.maxMagic.value}'),
+              child: text('${magic.toInt()} / ${player.maxMagic.value}'),
             ),
           ],
         ),

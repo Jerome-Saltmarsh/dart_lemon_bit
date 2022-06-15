@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/icons.dart';
+import 'package:gamestream_flutter/isometric/state/player.dart';
 import 'package:gamestream_flutter/modules/game/build.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
-
-import 'player.dart';
 
 
 final state = modules.game.state;
@@ -26,7 +25,7 @@ Widget buildRowTechType(int type, Watch<int> levelWatch) {
 
     return Container(
       key: key,
-      child: WatchBuilder(state.player.equippedWeapon, (int equipped) {
+      child: WatchBuilder(player.equippedWeapon, (int equipped) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,7 +35,7 @@ Widget buildRowTechType(int type, Watch<int> levelWatch) {
                 callback: unlocked ? () {
                   Server.equip(type);
                 } : null,
-                child: WatchBuilder(state.player.equippedWeapon, (int equipped) {
+                child: WatchBuilder(player.equippedWeapon, (int equipped) {
                   return Container(
                     padding: padding6,
                     decoration: BoxDecoration(

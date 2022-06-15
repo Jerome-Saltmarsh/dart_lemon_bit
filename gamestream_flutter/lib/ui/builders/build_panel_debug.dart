@@ -4,13 +4,13 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/state/particles.dart';
-import 'package:gamestream_flutter/isometric/state/players.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/ui/builders/build_row_tech_type.dart';
 import 'package:gamestream_flutter/ui/builders/build_time.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
+
+import '../../isometric/state/player.dart';
 
 Widget buildPanelDebug(){
   return Column(
@@ -81,7 +81,7 @@ Widget get buildTotalParticles {
 
 Widget get playerScreen {
   return Refresh(() {
-    return text("Player Screen: x: ${worldToScreenX(state.player.x).toInt()}, y: ${worldToScreenY(state.player.y).toInt()}");
+    return text("Player Screen: x: ${worldToScreenX(player.x).toInt()}, y: ${worldToScreenY(player.y).toInt()}");
   });
 }
 
@@ -92,9 +92,8 @@ Widget get buildActiveParticles {
 }
 
 Widget get playerPosition {
-  final character = modules.game.state.player;
   return Refresh((){
-    return text("Player Position: X: ${character.x}, Y: ${character.y}, Z: ${character.z}");
+    return text("Player Position: X: ${player.x}, Y: ${player.y}, Z: ${player.z}");
   });
 }
 

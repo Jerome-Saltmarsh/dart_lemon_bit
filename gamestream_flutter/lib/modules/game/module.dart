@@ -1,6 +1,7 @@
 
 import 'package:bleed_common/StructureType.dart';
 import 'package:gamestream_flutter/audio.dart';
+import 'package:gamestream_flutter/isometric/state/player.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/game/build.dart';
 import 'package:gamestream_flutter/modules/game/events.dart';
@@ -48,25 +49,25 @@ class GameModule {
 
   void enterBuildModeTower() {
     final cost = StructureType.getCost(StructureType.Tower);
-    if (cost.wood > state.player.wood.value) return audio.error();
-    if (cost.gold > state.player.gold.value) return audio.error();
-    if (cost.stone > state.player.stone.value) return audio.error();
+    if (cost.wood > player.wood.value) return audio.error();
+    if (cost.gold > player.gold.value) return audio.error();
+    if (cost.stone > player.stone.value) return audio.error();
      structureType.value = StructureType.Tower;
   }
 
   void enterBuildModePalisade() {
     final cost = StructureType.getCost(StructureType.Palisade);
-    if (cost.wood > state.player.wood.value) return audio.error();
-    if (cost.gold > state.player.gold.value) return audio.error();
-    if (cost.stone > state.player.stone.value) return audio.error();
+    if (cost.wood > player.wood.value) return audio.error();
+    if (cost.gold > player.gold.value) return audio.error();
+    if (cost.stone > player.stone.value) return audio.error();
      structureType.value = StructureType.Palisade;
   }
 
   void enterBuildModeTorch() {
     final cost = StructureType.getCost(StructureType.Torch);
-    if (cost.wood > state.player.wood.value) return audio.error();
-    if (cost.gold > state.player.gold.value) return audio.error();
-    if (cost.stone > state.player.stone.value) return audio.error();
+    if (cost.wood > player.wood.value) return audio.error();
+    if (cost.gold > player.gold.value) return audio.error();
+    if (cost.stone > player.stone.value) return audio.error();
     structureType.value = StructureType.Torch;
   }
 }

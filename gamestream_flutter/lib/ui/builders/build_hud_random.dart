@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/isometric/state/player.dart';
 import 'package:gamestream_flutter/ui/builders/build_health_bar.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_card_choices.dart';
@@ -12,7 +13,6 @@ import 'package:lemon_watch/watch_builder.dart';
 
 import 'build_panel_deck.dart';
 import 'build_time.dart';
-import 'player.dart';
 
 List<Widget> spread(List<Widget> children, EdgeInsets margin) {
    return children.map((e) => Container(child: e, margin: margin)).toList();

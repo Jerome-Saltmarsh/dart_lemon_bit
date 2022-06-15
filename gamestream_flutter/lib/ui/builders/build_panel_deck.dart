@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/deck_card.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/isometric/state/player.dart';
 import 'package:gamestream_flutter/mappers/mapCardTypeToIcon.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/styles.dart';
@@ -12,8 +13,6 @@ import 'package:gamestream_flutter/ui/builders/build_panel.dart';
 import 'package:gamestream_flutter/ui/builders/styles.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_watch/watch_builder.dart';
-
-import 'player.dart';
 
 Widget buildPanelDeck(){
   return WatchBuilder(player.deck, (List<DeckCard> deck){

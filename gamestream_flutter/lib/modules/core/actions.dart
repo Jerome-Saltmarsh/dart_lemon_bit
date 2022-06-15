@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/classes/Authentication.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/state/particle_emitters.dart';
 import 'package:gamestream_flutter/isometric/state/particles.dart';
+import 'package:gamestream_flutter/isometric/state/player.dart';
 import 'package:gamestream_flutter/isometric/state/players.dart';
 import 'package:gamestream_flutter/isometric/state/time.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
@@ -171,7 +172,6 @@ class CoreActions {
   }
 
   void clearState() {
-    final player = modules.game.state.player;
     player.x = -1;
     player.y = -1;
     game.totalZombies.value = 0;

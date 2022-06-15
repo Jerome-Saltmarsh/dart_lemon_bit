@@ -2,18 +2,18 @@ import 'package:bleed_common/grid_node_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/isometric/state/edit_tools_enabled.dart';
-import 'package:gamestream_flutter/isometric/state/time.dart';
-import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/isometric/state/grid.dart';
 import 'package:gamestream_flutter/isometric/state/light_mode.dart';
+import 'package:gamestream_flutter/isometric/state/player.dart';
+import 'package:gamestream_flutter/isometric/state/time.dart';
+import 'package:gamestream_flutter/isometric/utils/mouse.dart';
+import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import 'build_column_set_weapon.dart';
-import 'player.dart';
 
 Widget buildHudMapEditor() {
   return Stack(

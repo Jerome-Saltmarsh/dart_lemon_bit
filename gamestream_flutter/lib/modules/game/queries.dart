@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/isometric/state/player.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
@@ -8,10 +9,10 @@ class GameQueries {
   GameQueries(this.state);
 
   double getAngleBetweenMouseAndPlayer(){
-    return getAngleBetween(state.player.x, state.player.y, mouseWorldX, mouseWorldY);
+    return getAngleBetween(player.x, player.y, mouseWorldX, mouseWorldY);
   }
 
   double getDistanceBetweenMouseAndPlayer(){
-    return distanceBetween(mouseWorldX, mouseWorldY, state.player.x, state.player.y);
+    return distanceBetween(mouseWorldX, mouseWorldY, player.x, player.y);
   }
 }

@@ -5,20 +5,20 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
-import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
+import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/render/render_grid_node.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectile.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/state/edit_tools_enabled.dart';
+import 'package:gamestream_flutter/isometric/state/grid.dart';
+import 'package:gamestream_flutter/isometric/state/player.dart';
 import 'package:gamestream_flutter/isometric/state/players.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/isometric/state/grid.dart';
-import 'package:gamestream_flutter/ui/builders/player.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
@@ -312,10 +312,10 @@ class GameRender {
     engine.setPaintColorWhite();
     double angle = queries.getAngleBetweenMouseAndPlayer();
     double mouseDistance = queries.getDistanceBetweenMouseAndPlayer();
-    double d = min(mouseDistance, modules.game.state.player.attackRange);
+    double d = min(mouseDistance, player.attackRange);
     double vX = getAdjacent(angle, d);
     double vY = getOpposite(angle, d);
-    drawLine(modules.game.state.player.x, modules.game.state.player.y, modules.game.state.player.x + vX, modules.game.state.player.y + vY);
+    drawLine(player.x, player.y, player.x + vX, player.y + vY);
   }
 
   void drawPlayerText() {
