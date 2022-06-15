@@ -18,8 +18,6 @@ Widget buildPanelDebug(){
     children: [
       buildVersion(),
       buildTime(),
-      buildTotalZombies(),
-      // buildTotalPlayers(),
       mouseRowColumn(),
       mouseRowColumnPercentage(),
       buildTotalParticles,
@@ -36,18 +34,6 @@ Widget buildPanelDebug(){
     ],
   );
 }
-
-Widget buildTotalZombies() {
-  return WatchBuilder(game.totalZombies, (int value) {
-    return text('Zombies: $value');
-  });
-}
-
-// Widget buildTotalPlayers() {
-//   return WatchBuilder(totalPlayers, (int value) {
-//     return text('Players: $value');
-//   });
-// }
 
 Widget mouseRowColumn(){
   return Refresh((){

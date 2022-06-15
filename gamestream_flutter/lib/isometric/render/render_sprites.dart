@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/isometric/state/lower_tile_mode.dart';
 import 'package:gamestream_flutter/isometric/state/particles.dart';
 import 'package:gamestream_flutter/isometric/state/player.dart';
 import 'package:gamestream_flutter/isometric/state/players.dart';
+import 'package:gamestream_flutter/isometric/state/zombies.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -26,12 +27,10 @@ void renderSprites() {
   final screenBottom = _screen.bottom;
   final screenBottom100 = screenBottom + 120;
 
-  final zombies = game.zombies;
   final npcs = game.interactableNpcs;
   final gameObjects = game.gameObjects;
 
   final totalGameObjects = gameObjects.length;
-  final totalZombies = game.totalZombies.value;
   final totalNpcs = game.totalNpcs;
   final gridTotalZ = grid.length;
   final gridTotalRows = grid[0].length;

@@ -11,6 +11,7 @@ import 'package:gamestream_flutter/isometric/state/particles.dart';
 import 'package:gamestream_flutter/isometric/state/player.dart';
 import 'package:gamestream_flutter/isometric/state/players.dart';
 import 'package:gamestream_flutter/isometric/state/time.dart';
+import 'package:gamestream_flutter/isometric/state/zombies.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -174,7 +175,7 @@ class CoreActions {
   void clearState() {
     player.x = -1;
     player.y = -1;
-    game.totalZombies.value = 0;
+    totalZombies = 0;
     totalPlayers = 0;
     game.totalProjectiles = 0;
     game.bulletHoleIndex = 0;

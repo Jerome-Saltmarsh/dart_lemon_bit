@@ -23,7 +23,7 @@ final widgets = _Widgets();
 final buttons = _Buttons();
 
 class _Widgets {
-  final Widget totalZombies = build.totalZombies();
+  // final Widget totalZombies = build.totalZombies();
   final Widget timeZone = build.timeZone();
 
   final textUpgrade = button(

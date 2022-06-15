@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/collectable.dart';
 import 'package:gamestream_flutter/isometric/state/players.dart';
+import 'package:gamestream_flutter/isometric/state/zombies.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_byte/byte_reader.dart';
@@ -56,12 +57,9 @@ var _previousPlayerScreenY3 = 0.0;
 class Game with ByteReader {
   final type = Watch<GameType?>(null);
   final countDownFramesRemaining = Watch(0);
-  final totalZombies = Watch(0);
-  final zombies = <Character>[];
   final collectables = <Collectable>[];
   final interactableNpcs = <Character>[];
   final gameObjects = <GameObject>[];
-  // final generatedObjects = <GeneratedObject>[];
   final effects = <Effect>[];
   final torches = <GameObject>[]; // todo remove
   final projectiles = <Projectile>[];
@@ -471,19 +469,18 @@ class Game with ByteReader {
   }
 
   void _parseZombies() {
-    var total = 0;
+    totalZombies = 0;
     while (true) {
       final stateInt = readByte();
       if (stateInt == END) break;
-      final character = zombies[total];
+      final character = zombies[totalZombies];
       readTeamDirectionState(character, stateInt);
       character.x = readDouble();
       character.y = readDouble();
       character.z = readDouble();
       _parseCharacterFrameHealth(character, readByte());
-      total++;
+      totalZombies++;
     }
-    totalZombies.value = total;
   }
 
   void _parseItems(){

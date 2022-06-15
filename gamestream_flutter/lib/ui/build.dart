@@ -20,11 +20,11 @@ class _Build {
     return text(DateTime.now().timeZoneName);
   }
 
-  Widget totalZombies(){
-    return WatchBuilder(game.totalZombies, (int zombies){
-      return text("Zombies: $zombies");
-    });
-  }
+  // Widget totalZombies(){
+  //   return WatchBuilder(game.totalZombies, (int zombies){
+  //     return text("Zombies: $zombies");
+  //   });
+  // }
 
   // Widget buildPageSelectGame(){
   //   return Center(

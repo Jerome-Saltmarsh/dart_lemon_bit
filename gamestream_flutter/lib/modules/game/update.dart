@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/state/players.dart';
+import 'package:gamestream_flutter/isometric/state/zombies.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
@@ -42,8 +43,8 @@ class GameUpdate {
         }
     }
 
-    for (var i = 0; i < game.totalZombies.value; i++) {
-      final zombie = game.zombies[i];
+    for (var i = 0; i < totalZombies; i++) {
+      final zombie = zombies[i];
       if (zombie.running && zombie.frame % 2 == 0) {
         audio.footstepGrass(zombie.x, zombie.y);
       }
