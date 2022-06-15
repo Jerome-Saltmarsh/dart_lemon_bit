@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/classes/Authentication.dart';
+import 'package:gamestream_flutter/control/classes/authentication.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

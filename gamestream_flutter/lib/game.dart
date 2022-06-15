@@ -1,11 +1,12 @@
 import 'package:bleed_common/card_type.dart';
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
-import 'package:gamestream_flutter/isometric/classes/game_object.dart';
-import 'package:gamestream_flutter/isometric/state/collectbles.dart';
-import 'package:gamestream_flutter/isometric/state/edit_state.dart';
 import 'package:gamestream_flutter/isometric/actions/initialize_isometric_game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
+import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
+import 'package:gamestream_flutter/isometric/classes/game_object.dart';
+import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
+import 'package:gamestream_flutter/isometric/state/collectbles.dart';
+import 'package:gamestream_flutter/isometric/state/edit_state.dart';
 import 'package:gamestream_flutter/isometric/state/players.dart';
 import 'package:gamestream_flutter/isometric/state/projectiles.dart';
 import 'package:gamestream_flutter/isometric/state/zombies.dart';
@@ -22,7 +23,6 @@ import 'isometric/classes/npc_debug.dart';
 import 'isometric/state/grid.dart';
 import 'isometric/state/player.dart';
 import 'isometric/state/time.dart';
-import 'modules/isometric/enums.dart';
 
 final game = Game();
 final byteLength = Watch(0);
