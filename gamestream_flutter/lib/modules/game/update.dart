@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/state/players.dart';
+import 'package:gamestream_flutter/isometric/state/projectiles.dart';
 import 'package:gamestream_flutter/isometric/state/zombies.dart';
 import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -52,9 +53,8 @@ class GameUpdate {
   }
 
   void updateProjectiles() {
-    // if (engine.frame % 5 != 0) return;
-    for (var i = 0; i < game.totalProjectiles; i++) {
-      final projectile = game.projectiles[i];
+    for (var i = 0; i < totalProjectiles; i++) {
+      final projectile = projectiles[i];
       if (projectile.type != ProjectileType.Orb) continue;
       spawnParticleOrbShard(x: projectile.x, y: projectile.y);
     }

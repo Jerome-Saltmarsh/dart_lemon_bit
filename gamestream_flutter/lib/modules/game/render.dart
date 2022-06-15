@@ -17,6 +17,7 @@ import 'package:gamestream_flutter/isometric/state/edit_tools_enabled.dart';
 import 'package:gamestream_flutter/isometric/state/grid.dart';
 import 'package:gamestream_flutter/isometric/state/player.dart';
 import 'package:gamestream_flutter/isometric/state/players.dart';
+import 'package:gamestream_flutter/isometric/state/projectiles.dart';
 import 'package:gamestream_flutter/isometric/state/zombies.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -239,9 +240,7 @@ class GameRender {
   }
 
   void renderProjectiles() {
-    final total = game.totalProjectiles;
-    final projectiles = game.projectiles;
-    for (var i = 0; i < total; i++) {
+    for (var i = 0; i < totalProjectiles; i++) {
       renderProjectile(projectiles[i]);
     }
   }

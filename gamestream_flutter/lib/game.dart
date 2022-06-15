@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/edit_state.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/collectable.dart';
 import 'package:gamestream_flutter/isometric/state/players.dart';
+import 'package:gamestream_flutter/isometric/state/projectiles.dart';
 import 'package:gamestream_flutter/isometric/state/zombies.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -61,8 +62,6 @@ class Game with ByteReader {
   final interactableNpcs = <Character>[];
   final gameObjects = <GameObject>[];
   final effects = <Effect>[];
-  final torches = <GameObject>[]; // todo remove
-  final projectiles = <Projectile>[];
   final crates = <Vector2>[];
   final bulletHoles = <Vector2>[];
   final npcDebug = <NpcDebug>[];
@@ -72,7 +71,6 @@ class Game with ByteReader {
   var totalNpcs = 0;
   var totalCollectables = 0;
   var bulletHoleIndex = 0;
-  var totalProjectiles = 0;
   var itemsTotal = 0;
 
   Game(){
