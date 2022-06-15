@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/classes/Authentication.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/isometric/state/collectbles.dart';
 import 'package:gamestream_flutter/isometric/state/particle_emitters.dart';
 import 'package:gamestream_flutter/isometric/state/particles.dart';
 import 'package:gamestream_flutter/isometric/state/player.dart';
@@ -181,7 +182,7 @@ class CoreActions {
     totalPlayers = 0;
     totalProjectiles = 0;
     game.bulletHoleIndex = 0;
-    game.totalCollectables = 0;
+    totalCollectables = 0;
     game.totalNpcs = 0;
     isometric.next = null;
     particleEmitters.clear();

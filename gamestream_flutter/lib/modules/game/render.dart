@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/classes/NpcDebug.dart';
 import 'package:gamestream_flutter/colours.dart';
-import 'package:gamestream_flutter/edit_state.dart';
+import 'package:gamestream_flutter/isometric/state/collectbles.dart';
+import 'package:gamestream_flutter/isometric/state/edit_state.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
@@ -113,9 +114,7 @@ class GameRender {
   }
 
   void renderCollectables() {
-    final total = game.totalCollectables;
-    final collectables = game.collectables;
-    for (var i = 0; i < total; i++) {
+    for (var i = 0; i < totalCollectables; i++) {
       final collectable = collectables[i];
       switch (collectable.type) {
         case CollectableType.Wood:

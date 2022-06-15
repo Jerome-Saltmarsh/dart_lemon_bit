@@ -2,7 +2,7 @@ import 'package:bleed_common/grid_node_type.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'isometric/state/grid.dart';
+import 'grid.dart';
 
 final edit = EditState();
 
@@ -11,7 +11,6 @@ class EditState {
   var column = 0;
   var z = 0;
   final type = Watch(GridNodeType.Bricks);
-  final tab = Watch(EditTab.Tile);
 
   void setBlockType(int value){
     if (grid[z][row][column] != value){
@@ -25,9 +24,4 @@ class EditState {
       }
     }
   }
-}
-
-enum EditTab {
-  Tile,
-  Object,
 }

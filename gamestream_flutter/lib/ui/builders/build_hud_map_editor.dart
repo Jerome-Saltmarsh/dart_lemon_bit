@@ -1,6 +1,6 @@
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/edit_state.dart';
+import 'package:gamestream_flutter/isometric/state/edit_state.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/state/edit_tools_enabled.dart';
 import 'package:gamestream_flutter/isometric/state/grid.dart';

@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/audio.dart';
 import 'package:gamestream_flutter/classes/Explosion.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
-import 'package:gamestream_flutter/edit_state.dart';
+import 'package:gamestream_flutter/isometric/state/edit_state.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/state/grid.dart';
 import 'package:gamestream_flutter/isometric/state/lower_tile_mode.dart';

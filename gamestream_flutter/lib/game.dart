@@ -2,10 +2,10 @@ import 'package:bleed_common/card_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/classes/deck_card.dart';
 import 'package:gamestream_flutter/classes/game_object.dart';
-import 'package:gamestream_flutter/edit_state.dart';
+import 'package:gamestream_flutter/isometric/state/collectbles.dart';
+import 'package:gamestream_flutter/isometric/state/edit_state.dart';
 import 'package:gamestream_flutter/isometric/actions/initialize_isometric_game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
-import 'package:gamestream_flutter/isometric/classes/collectable.dart';
 import 'package:gamestream_flutter/isometric/state/players.dart';
 import 'package:gamestream_flutter/isometric/state/projectiles.dart';
 import 'package:gamestream_flutter/isometric/state/zombies.dart';
@@ -19,7 +19,6 @@ import 'package:lemon_watch/watch.dart';
 
 import 'classes/Explosion.dart';
 import 'classes/NpcDebug.dart';
-import 'isometric/classes/projectile.dart';
 import 'isometric/state/grid.dart';
 import 'isometric/state/player.dart';
 import 'isometric/state/time.dart';
@@ -58,7 +57,6 @@ var _previousPlayerScreenY3 = 0.0;
 
 
 class Game with ByteReader {
-  final collectables = <Collectable>[];
   final interactableNpcs = <Character>[];
   final gameObjects = <GameObject>[];
   final effects = <Effect>[];
@@ -68,37 +66,15 @@ class Game with ByteReader {
   final scoreText = Watch("");
   var customGameName = "";
   var totalNpcs = 0;
-  var totalCollectables = 0;
   var bulletHoleIndex = 0;
   var itemsTotal = 0;
 
   Game(){
     initializeIsometricGameState();
-    // for (var i = 0; i < 150; i++) {
-    //   players.add(Character());
-    // }
-    // for (var i = 0; i < 50; i++) {
-    //   interactableNpcs.add(Character());
-    // }
-    // for (var i = 0; i < 2000; i++) {
-    //   zombies.add(Character());
-    // }
-    // for (var i = 0; i < 50; i++) {
-    //   bulletHoles.add(Vector2(0, 0));
-    // }
-    // for (var i = 0; i < 200; i++) {
-    //   projectiles.add(Projectile());
-    // }
-    // for (var i = 0; i < 500; i++) {
-    //   collectables.add(Collectable());
-    // }
   }
 
 
   void parse(List<int> values) {
-    // if (modules.game.state.debugPanelVisible.value){
-    //   updateSync();
-    // }
     framesSinceUpdateReceived.value = 0;
     index = 0;
     bufferSize.value = values.length;
@@ -207,16 +183,15 @@ class Game with ByteReader {
           engine.cursorType.value = CursorType.Basic;
           break;
         case ServerResponse.Collectables:
-          var total = 0;
+          var totalCollectables = 0;
           var type = readByte();
           while (type != END) {
-            final collectable = collectables[total];
+            final collectable = collectables[totalCollectables];
             collectable.type = type;
             readVector2(collectable);
-            total++;
+            totalCollectables++;
             type = readByte();
           }
-          totalCollectables = total;
           break;
           
         case ServerResponse.Structures:
