@@ -2,9 +2,7 @@ import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
-import '../common/card_type.dart';
 import '../common/library.dart';
-import '../common/weapon_type.dart';
 import '../engine.dart';
 import '../utilities.dart';
 import 'Card.dart';

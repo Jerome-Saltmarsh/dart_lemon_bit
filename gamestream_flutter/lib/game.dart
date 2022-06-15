@@ -3,6 +3,7 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/classes/deck_card.dart';
 import 'package:gamestream_flutter/classes/game_object.dart';
 import 'package:gamestream_flutter/edit_state.dart';
+import 'package:gamestream_flutter/isometric/actions/initialize_isometric_game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/collectable.dart';
 import 'package:gamestream_flutter/isometric/state/players.dart';
@@ -57,12 +58,10 @@ var _previousPlayerScreenY3 = 0.0;
 
 
 class Game with ByteReader {
-  final countDownFramesRemaining = Watch(0);
   final collectables = <Collectable>[];
   final interactableNpcs = <Character>[];
   final gameObjects = <GameObject>[];
   final effects = <Effect>[];
-  final crates = <Vector2>[];
   final bulletHoles = <Vector2>[];
   final npcDebug = <NpcDebug>[];
   final scoreBuilder = StringBuffer();
@@ -74,24 +73,25 @@ class Game with ByteReader {
   var itemsTotal = 0;
 
   Game(){
-    for (var i = 0; i < 150; i++) {
-      players.add(Character());
-    }
-    for (var i = 0; i < 50; i++) {
-      interactableNpcs.add(Character());
-    }
-    for (var i = 0; i < 2000; i++) {
-      zombies.add(Character());
-    }
-    for (var i = 0; i < 50; i++) {
-      bulletHoles.add(Vector2(0, 0));
-    }
-    for (var i = 0; i < 200; i++) {
-      projectiles.add(Projectile());
-    }
-    for (var i = 0; i < 500; i++) {
-      collectables.add(Collectable());
-    }
+    initializeIsometricGameState();
+    // for (var i = 0; i < 150; i++) {
+    //   players.add(Character());
+    // }
+    // for (var i = 0; i < 50; i++) {
+    //   interactableNpcs.add(Character());
+    // }
+    // for (var i = 0; i < 2000; i++) {
+    //   zombies.add(Character());
+    // }
+    // for (var i = 0; i < 50; i++) {
+    //   bulletHoles.add(Vector2(0, 0));
+    // }
+    // for (var i = 0; i < 200; i++) {
+    //   projectiles.add(Projectile());
+    // }
+    // for (var i = 0; i < 500; i++) {
+    //   collectables.add(Collectable());
+    // }
   }
 
 

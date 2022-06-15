@@ -17,7 +17,6 @@ import 'package:gamestream_flutter/ui/builders/build_hud_random.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_debug.dart';
 import 'package:gamestream_flutter/ui/builders/build_text_box.dart';
-import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
@@ -43,7 +42,7 @@ class GameBuild {
     return WatchBuilder(core.state.status, (GameStatus gameStatus) {
       switch (gameStatus) {
         case GameStatus.Counting_Down:
-          return buildLayoutCountDown();
+          throw Exception("No builder for GameStatus.Counting_Down");
         case GameStatus.Awaiting_Players:
           return buildLayoutWaitingForPlayers();
         case GameStatus.In_Progress:
@@ -53,13 +52,6 @@ class GameBuild {
         default:
           return empty;
       }
-    });
-  }
-
-  Widget buildLayoutCountDown() {
-    return WatchBuilder(game.countDownFramesRemaining, (int frames){
-      final seconds =  frames ~/ 45.0;
-      return Center(child: text("Game starts in $seconds", size: FontSize.Large));
     });
   }
 

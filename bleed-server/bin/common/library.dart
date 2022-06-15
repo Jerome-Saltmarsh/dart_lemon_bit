@@ -41,3 +41,5 @@ export 'Projectile_Type.dart';
 export 'seconds_per_day.dart';
 export 'seconds_per_hour.dart';
 export 'tile_size.dart';
+export 'card_type.dart';
+export 'weapon_type.dart';
