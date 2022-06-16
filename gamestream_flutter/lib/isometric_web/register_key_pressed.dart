@@ -1,0 +1,53 @@
+import 'package:flutter/services.dart';
+import 'package:gamestream_flutter/client_request_sender.dart';
+import 'package:gamestream_flutter/isometric/message_box.dart';
+import 'package:lemon_engine/engine.dart';
+
+final keys = KeyMap();
+
+void registerIsometricWebKeyPressedHandler(){
+  engine.keyPressedHandlers = {
+    keys.speak: messageBoxToggle,
+    keys.teleport: sendRequestTeleport,
+    // keys.equip1: actions.equipSlot1,
+    // keys.equip2: actions.equipSlot2,
+    // keys.equip3: actions.equipSlot3,
+    // keys.equip4: actions.equipSlot4,
+    // keys.equip5: actions.equipSlot5,
+    // keys.equip6: actions.equipSlot6,
+  };
+}
+
+class KeyMap {
+  final interact = LogicalKeyboardKey.keyA;
+  final runUp = LogicalKeyboardKey.keyW;
+  final runRight = LogicalKeyboardKey.keyD;
+  final runDown = LogicalKeyboardKey.keyS;
+  final runLeft = LogicalKeyboardKey.keyA;
+  final throwGrenade = LogicalKeyboardKey.keyG;
+  final equip1 = LogicalKeyboardKey.digit1;
+  final equip2 = LogicalKeyboardKey.digit2;
+  final equip3 = LogicalKeyboardKey.digit3;
+  final equip4 = LogicalKeyboardKey.digit4;
+  final equip5 = LogicalKeyboardKey.digit5;
+  final equip6 = LogicalKeyboardKey.digit6;
+  final debug = LogicalKeyboardKey.keyZ;
+  final equip1B = LogicalKeyboardKey.keyQ;
+  final equip2B = LogicalKeyboardKey.keyE;
+  final equip3B = LogicalKeyboardKey.keyF;
+  final equip4B = LogicalKeyboardKey.keyC;
+  final speakLetsGo = LogicalKeyboardKey.digit9;
+  final speakLetsGreeting = LogicalKeyboardKey.digit8;
+  final waitASecond = LogicalKeyboardKey.digit0;
+  final speak = LogicalKeyboardKey.enter;
+  final toggleLantern = LogicalKeyboardKey.keyL;
+  final toggleAudio = LogicalKeyboardKey.keyM;
+  final hourForwards = LogicalKeyboardKey.arrowRight;
+  final hourBackwards = LogicalKeyboardKey.arrowLeft;
+  final toggleObjectsDestroyable = LogicalKeyboardKey.keyP;
+  final teleport = LogicalKeyboardKey.keyG;
+  final spawnZombie = LogicalKeyboardKey.keyZ;
+  final respawn = LogicalKeyboardKey.keyN;
+  final cubeFace0 = LogicalKeyboardKey.keyO;
+  final cubeFaceI = LogicalKeyboardKey.keyI;
+}

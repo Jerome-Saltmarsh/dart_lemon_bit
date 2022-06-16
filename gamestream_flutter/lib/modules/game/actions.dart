@@ -3,6 +3,7 @@ import 'package:bleed_common/CharacterAction.dart';
 import 'package:bleed_common/ClientRequest.dart';
 import 'package:bleed_common/Modify_Game.dart';
 import 'package:bleed_common/SlotTypeCategory.dart';
+import 'package:gamestream_flutter/isometric/message_box.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
@@ -31,22 +32,6 @@ class GameActions {
     for (var i = 0; i < amount; i++) {
       emitParticlePixel(x: x, y: y);
     }
-  }
-
-  void teleportToMouse() {
-    sendRequestTeleport();
-  }
-
-  void toggleMessageBox() {
-    state.textBoxVisible.value = !state.textBoxVisible.value;
-  }
-
-  void skipHour(){
-    webSocket.send(ClientRequest.Skip_Hour.index.toString());
-  }
-
-  void reverseHour(){
-    webSocket.send(ClientRequest.Reverse_Hour.index.toString());
   }
 
   void toggleObjectsDestroyable(){
@@ -83,18 +68,10 @@ class GameActions {
     // webSocket.send('${ClientRequest.DeselectAbility.index} $session');
   }
 
-  void showTextBox(){
-    state.textBoxVisible.value = true;
-  }
-
-  void hideTextBox(){
-    state.textBoxVisible.value = false;
-  }
-
   void sendAndCloseTextBox(){
     print("sendAndCloseTextBox()");
     sendRequestSpeak(state.textEditingControllerMessage.text);
-    hideTextBox();
+    messageBoxHide();
   }
 
   void sellSlotItem(int index){

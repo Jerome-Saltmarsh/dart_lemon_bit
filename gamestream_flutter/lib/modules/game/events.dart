@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/message_box.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/lower_tile_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
@@ -40,7 +41,7 @@ class GameEvents {
     player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     player.alive.onChanged(_onPlayerAliveChanged);
     player.state.onChanged(onPlayerCharacterStateChanged);
-    state.textBoxVisible.onChanged(onTextModeChanged);
+    textBoxVisible.onChanged(onTextModeChanged);
     player.equippedWeapon.onChanged(onPlayerWeaponChanged);
     player.armour.onChanged(onPlayerArmourChanged);
     player.helm.onChanged(onPlayerHelmChanged);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/isometric/message_box.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:lemon_engine/engine.dart';
@@ -7,7 +8,7 @@ import 'package:lemon_watch/watch_builder.dart';
 import '../../flutterkit.dart';
 
 Widget buildPanelWriteMessage() {
-  return WatchBuilder(modules.game.state.textBoxVisible, (bool visible){
+  return WatchBuilder(textBoxVisible, (bool visible){
     if (!visible) return blank;
 
     return Positioned(
@@ -51,7 +52,7 @@ Widget buildPanelWriteMessage() {
                     children: [
                       onPressed(callback: modules.game.actions.sendAndCloseTextBox, child: border(child: text("Send")), hint: "(Press Enter)"),
                       width16,
-                      onPressed(callback: modules.game.actions.hideTextBox, child: text("Cancel", decoration: TextDecoration.underline), hint: ("(Press Escape")),
+                      onPressed(callback: messageBoxHide, child: text("Cancel", decoration: TextDecoration.underline), hint: ("(Press Escape")),
                     ],
                   ),
                 )

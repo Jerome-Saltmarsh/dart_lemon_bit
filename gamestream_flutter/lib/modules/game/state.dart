@@ -9,12 +9,10 @@ import 'enums.dart';
 
 class GameState {
   final textEditingControllerMessage = TextEditingController();
-  final keyMap = KeyMap();
   final textFieldMessage = FocusNode();
   final debug = Watch(false);
   final storeTab = Watch(storeTabs[0]);
   final lives = Watch(0);
-  final textBoxVisible = Watch(false);
   final highlightStructureType = Watch<int?>(null);
   final highlightedTechType = Watch<int?>(null);
   final highlightedTechTypeUpgrade = Watch<int?>(null);
