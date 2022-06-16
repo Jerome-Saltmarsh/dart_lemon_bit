@@ -74,12 +74,14 @@ void _renderCharacterTemplateWeapon(Character character) {
   }
 
   render(
-      dstX: character.renderX,
-      dstY: character.renderY,
+      dstX: character.renderX - 24,
+      dstY: character.renderY + 6,
       srcX: _getTemplateSrcX(character, size: 96),
       srcY: 2159.0 + (renderRow * 96),
       srcWidth: 96,
-      srcHeight: 96
+      srcHeight: 96,
+      anchorX: 0.5,
+      anchorY: 0.66,
   );
 }
 
@@ -109,7 +111,6 @@ void _renderCharacterPart(Character character, int layer) {
       srcWidth: 64.0,
       srcHeight: 64.0,
       scale: 0.75,
-      // anchorX: 0.5,
       anchorY: 0.66,
   );
 }

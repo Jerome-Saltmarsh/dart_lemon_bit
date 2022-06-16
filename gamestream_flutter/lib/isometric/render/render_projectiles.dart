@@ -64,12 +64,13 @@ void renderArrow(double x, double y, double angle) {
 }
 
 void renderOrb(double x, double y) {
-  // engine.renderCustom(
-  //     dstX: x,
-  //     dstY: y,
-  //     srcX: 417,
-  //     srcY: 26,
-  //     srcWidth: 8,
-  //     srcHeight: 8,
-  //     scale: 1.5);
+  render(
+      dstX: x,
+      dstY: y,
+      srcX: 417,
+      srcY: 26,
+      srcWidth: 8,
+      srcHeight: 8,
+      scale: 1.5
+  );
 }
