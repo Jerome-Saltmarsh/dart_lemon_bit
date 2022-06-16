@@ -6,6 +6,7 @@ import '../common/library.dart';
 import '../functions/withinRadius.dart';
 import 'Collider.dart';
 import 'Game.dart';
+import 'Position3.dart';
 import 'card_abilities.dart';
 import 'components.dart';
 
@@ -23,7 +24,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
   var frozenDuration = 0;
   /// the character that was highlighted as the character began attacking
   /// This forces a hit to occur even if the target goes out of range of the attack
-  Position? target;
+  Position3? target;
   var invincible = false;
   final techTree = TechTree();
   var equippedWeapon = WeaponType.Unarmed;

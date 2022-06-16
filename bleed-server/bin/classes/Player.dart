@@ -6,13 +6,14 @@ import '../common/library.dart';
 import '../engine.dart';
 import '../utilities.dart';
 import 'Card.dart';
+import 'Position3.dart';
 import 'library.dart';
 
 
 class Player extends Character with ByteWriter {
   CharacterSelection? selection;
   final mouse = Vector2(0, 0);
-  final _runTarget = Vector2(0, 0);
+  final _runTarget = Position3();
   var characterSelectRequired = false;
   var debug = false;
   var score = 0;
@@ -492,11 +493,12 @@ extension PlayerProperties on Player {
     writeByte(END);
   }
 
-  void writeGameEvent(int type, double x, double y, double angle){
+  void writeGameEvent(int type, double x, double z, double y, double angle){
     writeByte(ServerResponse.Game_Events);
     writeByte(type);
     writeInt(x);
     writeInt(y);
+    writeInt(z);
     writeInt(angle * radiansToDegrees);
   }
 

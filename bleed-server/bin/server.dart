@@ -1,10 +1,10 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
-import 'package:lemon_math/functions/vector2.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+import 'classes/Position3.dart';
 import 'classes/library.dart';
 import 'common/library.dart';
 import 'engine.dart';
@@ -270,7 +270,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                   ability.cooldownRemaining = ability.cooldown;
                   break;
                 case AbilityMode.Area:
-                  player.target = Vector2(mouseX, mouseY);
+                  player.target = Position3().set(x: mouseX, y: mouseY, z: player.z);
                   break;
                 case AbilityMode.Directed:
                   ability.cooldownRemaining = ability.cooldown;

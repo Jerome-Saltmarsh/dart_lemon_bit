@@ -382,8 +382,9 @@ class ServerResponseReader with ByteReader {
       final type = readByte();
       final x = readDouble();
       final y = readDouble();
+      final z = readDouble();
       final angle = readDouble() * degreesToRadians;
-      onGameEvent(type, x, y, angle);
+      onGameEvent(type, x, y, z, angle);
   }
 
   void readProjectiles(){

@@ -25,10 +25,11 @@ class Position3 with Position {
     y = value * tileSize;
   }
 
-  void set({double? x, double? y, double? z}){
+  Position3 set({double? x, double? y, double? z}){
      if (x != null) this.x = x;
      if (y != null) this.y = y;
      if (z != null) this.x = z;
+     return this;
   }
 
   double getGridAngle(double x, double y){

@@ -3,6 +3,7 @@ import 'package:lemon_math/library.dart';
 
 import '../maths.dart';
 import 'Collider.dart';
+import 'Position3.dart';
 import 'components.dart';
 
 
@@ -12,7 +13,7 @@ class Projectile extends Collider with Active, Velocity {
   late double range;
   late int type; // ProjectileType.dart
   int damage = 0;
-  Position? target = null;
+  Position3? target = null;
   late double speed;
   late bool collideWithEnvironment = false;
   double angle = 0;

@@ -6,7 +6,7 @@ import 'package:lemon_math/library.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 
-void onGameEvent(int type, double x, double y, double angle) {
+void onGameEvent(int type, double x, double y, double z, double angle) {
   switch (type) {
     case GameEventType.Handgun_Fired:
       audio.handgunShot(x, y);
@@ -202,7 +202,7 @@ void onGameEvent(int type, double x, double y, double angle) {
         spawnParticleOrbShard(
             x: x,
             y: y,
-            z: 0,
+            z: z,
             duration: 30,
             speed: randomBetween(1, 2)
         );

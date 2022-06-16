@@ -10,6 +10,7 @@ import '../functions/withinRadius.dart';
 import '../maths.dart';
 import '../physics.dart';
 import 'AI.dart';
+import 'Position3.dart';
 import 'card_abilities.dart';
 import 'Character.dart';
 import 'Collectable.dart';
@@ -555,7 +556,7 @@ extension GameFunctions on Game {
     collectables.add(collectable);
   }
 
-  void _characterAttack(Character character, Position target) {
+  void _characterAttack(Character character, Position3 target) {
     assert(character.withinAttackRange(target));
     assert(character.alive);
     character.face(target);
@@ -763,10 +764,10 @@ extension GameFunctions on Game {
     switch (projectile.type) {
       case ProjectileType.Bullet:
         if (scene.waterAt(projectile.x, projectile.y)) return;
-        dispatch(GameEventType.Bullet_Hole, projectile.x, projectile.y);
+        dispatch(GameEventType.Bullet_Hole, projectile.x, projectile.y, projectile.z);
         break;
       case ProjectileType.Orb:
-        dispatch(GameEventType.Blue_Orb_Deactivated, projectile.x, projectile.y);
+        dispatch(GameEventType.Blue_Orb_Deactivated, projectile.x, projectile.y, projectile.z);
         break;
       default:
         break;
@@ -894,7 +895,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void handleProjectileHit(Projectile projectile, Position target) {
+  void handleProjectileHit(Projectile projectile, Position3 target) {
     projectile.active = false;
     if (target is Character) {
       applyHit(
@@ -907,10 +908,10 @@ extension GameFunctions on Game {
     projectile.target = null;
 
     if (projectile.type == ProjectileType.Arrow){
-      dispatch(GameEventType.Arrow_Hit, target.x, target.y);
+      dispatch(GameEventType.Arrow_Hit, target.x, target.y, target.z);
     }
     if (projectile.type == ProjectileType.Orb){
-      dispatch(GameEventType.Blue_Orb_Deactivated, target.x, target.y);
+      dispatch(GameEventType.Blue_Orb_Deactivated, target.x, target.y, target.z);
     }
 
   }
@@ -1049,14 +1050,14 @@ extension GameFunctions on Game {
     );
   }
 
-  Projectile spawnProjectileArrow(Position src, {
+  Projectile spawnProjectileArrow(Position3 src, {
     required int damage,
     required double range,
     double accuracy = 0,
-    Position? target,
+    Position3? target,
     double? angle,
   }) {
-    dispatch(GameEventType.Arrow_Fired, src.x, src.y);
+    dispatch(GameEventType.Arrow_Fired, src.x, src.y, src.y);
     if (src is Character) {
       return spawnProjectile(
         src: src,
@@ -1081,14 +1082,14 @@ extension GameFunctions on Game {
     );
   }
 
-  Projectile spawnFireball(Position src, {
+  Projectile spawnFireball(Position3 src, {
     required int damage,
     required double range,
     double accuracy = 0,
-    Position? target,
+    Position3? target,
     double? angle,
   }) {
-    dispatch(GameEventType.Projectile_Fired_Fireball, src.x, src.y);
+    dispatch(GameEventType.Projectile_Fired_Fireball, src.x, src.y, src.y);
     if (src is Character) {
       return spawnProjectile(
         src: src,
@@ -1114,14 +1115,14 @@ extension GameFunctions on Game {
   }
 
   Projectile spawnProjectile({
-    required Position src,
+    required Position3 src,
     required double speed,
     required double range,
     required int projectileType,
     required int damage,
     double accuracy = 0,
     double? angle = 0,
-    Position? target,
+    Position3? target,
   }) {
     assert (angle != null || target != null);
     assert (angle == null || target == null);
@@ -1235,9 +1236,9 @@ extension GameFunctions on Game {
   }
 
   /// GameEventType
-  void dispatch(int type, double x, double y, [double angle = 0]) {
+  void dispatch(int type, double x, double y, double z, [double angle = 0]) {
     for (final player in players) {
-      player.writeGameEvent(type, x, y, angle);
+      player.writeGameEvent(type, x, y, z, angle);
     }
   }
 
@@ -1313,7 +1314,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void setNpcTarget(AI ai, Position value) {
+  void setNpcTarget(AI ai, Position3 value) {
     if (value is Team){
       assert(!onSameTeam(ai, value));
     }
