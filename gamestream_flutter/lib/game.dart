@@ -194,19 +194,7 @@ class Game with ByteReader {
           break;
           
         case ServerResponse.Structures:
-          final structures = isometric.structures;
-          var total = 0;
-          var type = readByte();
-          while (type != END) {
-             final structure = structures[total];
-             structure.x = readDouble();
-             structure.y = readDouble();
-             structure.type = type;
-             total++;
-             type = readByte();
-          }
-          isometric.totalStructures = total;
-          break;
+          throw Exception("No longer supported ${ServerResponse.Structures}");
 
         case ServerResponse.Tech_Types:
           player.levelPickaxe.value = readByte();

@@ -5,11 +5,9 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/classes/item.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
-import 'package:gamestream_flutter/isometric/classes/structure.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/particle_emitter.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
-import 'package:gamestream_flutter/isometric/state/grid.dart';
 import 'package:gamestream_flutter/isometric/state/particle_emitters.dart';
 import 'package:gamestream_flutter/isometric/state/particles.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
@@ -21,24 +19,12 @@ class IsometricModule {
   late final IsometricSpawn spawn;
   final paths = Float32List(10000);
   final targets = Float32List(10000);
-  final structures = <Structure>[];
-  final gemSpawns = <GemSpawn>[];
   final items = <Item>[];
   final maxAmbientBrightness = Watch(Shade.Bright);
   final nameTextStyle = TextStyle(color: Colors.white);
 
   var targetsTotal = 0;
-  var totalRowsInt = 0;
   var totalStructures = 0;
-  var minRow = 0;
-  var maxRow = 0;
-  var minColumn = 0;
-  var maxColumn = 0;
-
-  // PROPERTIES
-
-  bool get dayTime => ambient.value == Shade.Bright;
-
 
   int get totalActiveParticles {
     var totalParticles = 0;
@@ -58,9 +44,6 @@ class IsometricModule {
     for(var i = 0; i < 300; i++){
       particles.add(Particle());
       items.add(Item(type: ItemType.Armour_Plated, x: 0, y: 0));
-    }
-    for (var i = 0; i < 1000; i++) {
-      structures.add(Structure());
     }
   }
 

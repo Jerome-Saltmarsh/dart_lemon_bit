@@ -373,7 +373,7 @@ extension PlayerProperties on Player {
     writePercentage(experiencePercentage);
     writeByte(level);
     writeByte(skillPoints);
-    writeStructures();
+    // writeStructures();
     writeCollectables();
     writePlayers();
     writeAttackTarget();
