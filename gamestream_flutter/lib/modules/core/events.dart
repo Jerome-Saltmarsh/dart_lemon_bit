@@ -3,7 +3,7 @@
 import 'package:bleed_common/ClientRequest.dart';
 import 'package:bleed_common/GameStatus.dart';
 import 'package:firestore_client/firestoreService.dart';
-import 'package:gamestream_flutter/audio.dart';
+import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/state.dart';

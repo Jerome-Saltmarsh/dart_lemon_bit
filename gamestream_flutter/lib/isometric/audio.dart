@@ -2,7 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
-import 'cache.dart';
+import '../cache.dart';
 
 // interface
 final audio = _Audio();

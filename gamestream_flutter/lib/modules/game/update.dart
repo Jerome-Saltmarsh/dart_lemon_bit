@@ -1,6 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/audio.dart';
+import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/state/players.dart';
 import 'package:gamestream_flutter/isometric/state/projectiles.dart';

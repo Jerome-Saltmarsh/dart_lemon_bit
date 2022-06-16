@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
-import '../common/weapon_type.dart';
 import '../functions/withinRadius.dart';
 import 'Collider.dart';
 import 'Game.dart';

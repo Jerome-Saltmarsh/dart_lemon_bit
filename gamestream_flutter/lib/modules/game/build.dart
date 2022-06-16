@@ -1,6 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/audio.dart';
+import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/flutterkit.dart';

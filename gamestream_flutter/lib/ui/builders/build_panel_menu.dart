@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/audio.dart';
+import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/isometric/state/edit_tools_enabled.dart';

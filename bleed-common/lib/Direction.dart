@@ -1,7 +1,7 @@
 import 'dart:math';
 
+import 'package:lemon_math/constants/pi_quarter.dart';
 import 'package:lemon_math/functions/clamp_angle.dart';
-import 'package:lemon_math/functions/constants.dart';
 
 class Direction {
   static const North = 0;

@@ -1,6 +1,6 @@
 
 import 'package:bleed_common/StructureType.dart';
-import 'package:gamestream_flutter/audio.dart';
+import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/state/player.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/game/build.dart';

@@ -1,6 +1,6 @@
 
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/audio.dart';
+import 'package:gamestream_flutter/isometric/audio.dart';
 
 import 'actions.dart';
 import 'state.dart';

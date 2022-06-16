@@ -4,6 +4,8 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
+import 'package:gamestream_flutter/isometric/events/on_game_event.dart';
+import 'package:gamestream_flutter/isometric/events/on_player_event.dart';
 import 'package:gamestream_flutter/isometric/state/collectbles.dart';
 import 'package:gamestream_flutter/isometric/state/edit_state.dart';
 import 'package:gamestream_flutter/isometric/state/floating_texts.dart';
@@ -64,7 +66,6 @@ class Game with ByteReader {
   final npcDebug = <NpcDebug>[];
   final scoreBuilder = StringBuffer();
   final scoreText = Watch("");
-  var customGameName = "";
   var totalNpcs = 0;
   var bulletHoleIndex = 0;
   var itemsTotal = 0;
@@ -72,7 +73,6 @@ class Game with ByteReader {
   Game(){
     initializeIsometricGameState();
   }
-
 
   void parse(List<int> values) {
     framesSinceUpdateReceived.value = 0;
@@ -98,10 +98,10 @@ class Game with ByteReader {
           readProjectiles();
           break;
         case ServerResponse.Game_Events:
-          _parseGameEvents();
+          readGameEvents();
           break;
         case ServerResponse.Player_Events:
-          _parsePlayerEvents();
+          readPlayerEvents();
           break;
         case ServerResponse.Game_Objects:
           readGameObjects();
@@ -394,12 +394,12 @@ class Game with ByteReader {
     sync.value = duration.inMilliseconds / averageUpdate.value;
   }
 
-  void _parseGameEvents(){
+  void readGameEvents(){
       final type = readByte();
       final x = readDouble();
       final y = readDouble();
       final angle = readDouble() * degreesToRadians;
-      modules.game.events.onGameEvent(type, x, y, angle);
+      onGameEvent(type, x, y, angle);
   }
 
   void readProjectiles(){
@@ -518,8 +518,8 @@ class Game with ByteReader {
     return readByte() / 100.0;
   }
 
-  void _parsePlayerEvents() {
-    _events.onPlayerEvent(readByte());
+  void readPlayerEvents() {
+    onPlayerEvent(readByte());
   }
 
   // void parseGameObject() {

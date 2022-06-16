@@ -3,9 +3,7 @@
 import 'package:lemon_math/library.dart';
 
 import '../classes/library.dart';
-import '../common/card_type.dart';
 import '../common/library.dart';
-import '../common/weapon_type.dart';
 import '../scene_generator.dart';
 
 class GameRandom extends Game {

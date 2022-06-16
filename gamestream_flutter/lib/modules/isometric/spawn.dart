@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:bleed_common/OrbType.dart';
-import 'package:gamestream_flutter/audio.dart';
+import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';

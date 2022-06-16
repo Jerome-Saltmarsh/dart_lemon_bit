@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bleed_common/Projectile_Type.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/state/projectiles.dart';
@@ -38,25 +40,27 @@ void renderFireball(double x, double y, double rotation) {
 }
 
 void renderArrow(double x, double y, double angle) {
-  // const piQuarter = pi / 4.0;
-  // engine.mapSrc(x: 2182, y: 1, width: 13, height: 47);
-  // engine.mapDst(
-  //     x: x,
-  //     y: y - 20,
-  //     rotation: angle + piQuarter,
-  //     anchorX: 6.5,
-  //     anchorY: 30,
-  //     scale: 0.5);
-  // engine.renderAtlas();
-  // engine.mapSrc(x: 2172, y: 1, width: 13, height: 47);
-  // engine.mapDst(
-  //     x: x,
-  //     y: y,
-  //     rotation: angle + piQuarter,
-  //     anchorX: 6.5,
-  //     anchorY: 30,
-  //     scale: 0.5);
-  // engine.renderAtlas();
+  const piQuarter = pi / 4.0;
+  render(
+      dstX: x,
+      dstY: y + 10,
+      srcX: 2172,
+      srcY: 0,
+      srcWidth: 13,
+      srcHeight: 47,
+      rotation: angle + piQuarter,
+      scale: 0.5
+  );
+  render(
+      dstX: x,
+      dstY: y,
+      srcX: 2182,
+      srcY: 0,
+      srcWidth: 13,
+      srcHeight: 47,
+      rotation: angle + piQuarter,
+      scale: 0.5
+  );
 }
 
 void renderOrb(double x, double y) {

@@ -6,7 +6,6 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'classes/library.dart';
-import 'common/card_type.dart';
 import 'common/library.dart';
 import 'engine.dart';
 import 'functions/generateName.dart';

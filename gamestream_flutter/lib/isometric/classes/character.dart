@@ -1,5 +1,5 @@
 import 'package:bleed_common/library.dart';
-import 'package:lemon_math/library.dart';
+import 'package:lemon_math/constants/pi_quarter.dart';
 
 import 'vector3.dart';
 

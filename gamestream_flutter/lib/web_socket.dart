@@ -1,5 +1,4 @@
 import 'package:gamestream_flutter/game.dart';
-import 'package:gamestream_flutter/parse.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -76,11 +75,11 @@ class _WebSocket {
        return;
     }
 
-    if (_response is String){
-      event = _response;
-      parseState();
-      return;
-    }
+    // if (_response is String){
+    //   event = _response;
+    //   parseState();
+    //   return;
+    // }
 
 
     throw Exception("cannot parse response: $_response");

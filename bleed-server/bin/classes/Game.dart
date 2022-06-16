@@ -2,9 +2,7 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
-import '../common/card_type.dart';
 import '../common/library.dart';
-import '../common/weapon_type.dart';
 import '../engine.dart';
 import '../enums.dart';
 import '../functions.dart';
