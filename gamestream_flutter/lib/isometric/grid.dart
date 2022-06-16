@@ -19,6 +19,7 @@ final gridLightDynamic = <List<List<int>>>[];
 var gridTotalZ = 0;
 var gridTotalRows = 0;
 var gridTotalColumns = 0;
+var gridTotalColumnsMinusOne = gridTotalColumns - 1;
 
 void gridEmitDynamic(int z, int row, int column){
   _applyEmission(

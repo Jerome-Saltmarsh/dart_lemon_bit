@@ -10,8 +10,8 @@ import 'render_tree.dart';
 void renderGridNode(int z, int row, int column, int type) {
   if (type == GridNodeType.Empty) return;
 
-  final dstX = getTileWorldX(row, column);
-  final dstY = getTileWorldY(row, column) - (z * 24);
+  final dstX = (row - column) * tileSizeHalf;
+  final dstY = ((row + column) * tileSizeHalf) - (z * 24);
   final shade = gridLightDynamic[z][row][column];
   switch (type) {
     case GridNodeType.Bricks:
