@@ -380,14 +380,7 @@ extension PlayerProperties on Player {
     writeProjectiles();
     writeNpcs(this);
 
-    if (ability != null && ability!.isModeArea) {
-      writeByte(ServerResponse.Player_Target);
-      if (target != null) {
-        writePosition(target!);
-      } else {
-        writePosition(mouse);
-      }
-    }
+    writePlayerTarget();
 
     writeGameTime(game);
     writePlayerZombies();
@@ -771,6 +764,13 @@ extension PlayerProperties on Player {
         writeByte(0);
       }
     }
+  }
+
+  void writePlayerTarget() {
+    if (ability == null) return;
+    if (ability!.isModeArea) return;
+    writeByte(ServerResponse.Player_Target);
+    writePosition(target != null ? target! : mouse);
   }
 }
 
