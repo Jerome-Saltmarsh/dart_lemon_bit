@@ -7,6 +7,8 @@ import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
+import 'effects.dart';
+
 final gridShadows = Watch(true, onChanged: (bool value){
   refreshLighting();
 });
@@ -217,4 +219,17 @@ void _applyEmission({
 
 int _convertDistanceToShade(int distance){
    return clamp(distance - 1, 0, 6);
+}
+
+void applyEmissionFromEffects() {
+  for (final effect in effects) {
+    if (!effect.enabled) continue;
+    final percentage = effect.percentage;
+    if (percentage < 0.33) {
+      break;
+    }
+    if (percentage < 0.66) {
+      break;
+    }
+  }
 }

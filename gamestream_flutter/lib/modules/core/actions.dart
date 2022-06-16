@@ -192,7 +192,6 @@ class CoreActions {
     }
 
     engine.zoom = 1;
-    isometric.totalStructures = 0;
     engine.redrawCanvas();
   }
 

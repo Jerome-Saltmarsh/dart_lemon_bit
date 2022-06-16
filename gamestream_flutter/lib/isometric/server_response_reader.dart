@@ -20,9 +20,10 @@ import 'package:lemon_engine/enums.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'classes/explosion.dart';
+import 'ai.dart';
 import 'classes/npc_debug.dart';
 import 'grid.dart';
+import 'items.dart';
 import 'particle_emitters.dart';
 import 'player.dart';
 import 'time.dart';
@@ -60,7 +61,6 @@ var _previousPlayerScreenY3 = 0.0;
 class ServerResponseReader with ByteReader {
   final interactableNpcs = <Character>[];
   final gameObjects = <GameObject>[];
-  final effects = <Effect>[];
   final bulletHoles = <Vector2>[];
   final npcDebug = <NpcDebug>[];
   final scoreBuilder = StringBuffer();
@@ -85,7 +85,7 @@ class ServerResponseReader with ByteReader {
           _parseZombies();
           break;
         case ServerResponse.Items:
-          _parseItems();
+          readerItems();
           break;
         case ServerResponse.Players:
           _parsePlayers();
@@ -231,7 +231,6 @@ class ServerResponseReader with ByteReader {
 
         case ServerResponse.Paths:
           modules.game.state.debug.value = true;
-          final paths = modules.isometric.paths;
           var index = 0;
           while (true) {
             final pathIndex = readInt();
@@ -244,7 +243,6 @@ class ServerResponseReader with ByteReader {
               index += 2;
             }
           }
-          final targets = modules.isometric.targets;
           var i = 0;
 
           while(readByte() != 0) {
@@ -254,7 +252,6 @@ class ServerResponseReader with ByteReader {
              targets[i + 3] = readDouble();
              i += 4;
           }
-          modules.isometric.targetsTotal = i;
           break;
 
         case ServerResponse.Game_Time:
@@ -426,8 +423,7 @@ class ServerResponseReader with ByteReader {
     }
   }
 
-  void _parseItems(){
-    final items = isometric.items;
+  void readerItems(){
     itemsTotal = 0;
     while (true) {
       final itemTypeIndex = readByte();

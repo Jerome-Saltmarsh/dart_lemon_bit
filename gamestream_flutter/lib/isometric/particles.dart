@@ -3,13 +3,14 @@ import 'dart:math';
 
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
+
+import 'effects.dart';
 
 final particles = <Particle>[];
 
@@ -456,16 +457,6 @@ void spawnParticleLegZombie({
       rotation: giveOrTake(pi),
       rotationV: giveOrTake(0.25),
       scale: 0.75);
-}
-
-Effect getEffect(){
-  for(final effect in serverResponseReader.effects){
-    if (effect.enabled) continue;
-    return effect;
-  }
-  final effect = Effect();
-  serverResponseReader.effects.add(effect);
-  return effect;
 }
 
 void spawnEffect({

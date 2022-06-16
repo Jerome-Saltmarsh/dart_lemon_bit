@@ -4,9 +4,8 @@ import 'dart:math';
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
-import 'package:gamestream_flutter/isometric/server_response_reader.dart';
+import 'package:gamestream_flutter/isometric/ai.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
-import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/classes/npc_debug.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
@@ -20,7 +19,6 @@ import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
@@ -66,8 +64,6 @@ class GameRender {
     if (editToolsEnabled.value){
       renderWireframes();
     }
-
-    drawEffects();
   }
 
   void renderWireframes() {
@@ -179,7 +175,6 @@ class GameRender {
     engine.paint.strokeWidth = 4.0;
 
     var index = 0;
-    final paths = modules.isometric.paths;
     while(true){
       final length = paths[index];
       if (length == 250) break;
@@ -199,9 +194,8 @@ class GameRender {
     }
 
     engine.setPaintColor(colours.yellow);
-    final targets = modules.isometric.targets;
-    final targetsTotal = modules.isometric.targetsTotal * 4;
-    for (var i = 0; i < targetsTotal; i += 4){
+    final totalLines = targetsTotal * 4;
+    for (var i = 0; i < totalLines; i += 4){
       drawLine(targets[i], targets[i + 1], targets[i + 2], targets[i + 3]);
     }
   }
@@ -219,50 +213,6 @@ class GameRender {
       // );
     }
   }
-
-  void drawItemText() {
-    final items = isometric.items;
-    final total = serverResponseReader.itemsTotal;
-    for (var i = 0; i < total; i++){
-      final item = items[i];
-      const mouseDist = 100;
-      if ((mouseWorldX - item.x).abs() < mouseDist){
-        if((mouseWorldY - item.y).abs() < mouseDist){
-          renderText(
-              text: ItemType.names[item.type] ?? "?",
-              x: item.x,
-              y: item.y
-          );
-        }
-      }
-    }
-  }
-
-  void drawEffects() {
-    for (final effect in serverResponseReader.effects) {
-      if (!effect.enabled) continue;
-      if (effect.duration++ >= effect.maxDuration) {
-        effect.enabled = false;
-        break;
-      }
-
-      if (effect.type == EffectType.FreezeCircle) {
-        final percentage = effect.duration / effect.maxDuration;
-        engine.draw.drawCircleOutline(
-            sides: 16,
-            radius: SpellRadius.Freeze_Ring * percentage,
-            x: effect.x,
-            y: effect.y,
-            width: 10,
-            color: colours.blue.withOpacity(1.0 - percentage)
-        );
-      }
-    }
-  }
-
-  // void drawRoyalPerimeter() {
-  //   engine.draw.drawCircleOutline(sides: 50, radius: byteStreamParser.royal.radius, x: byteStreamParser.royal.mapCenter.x, y: game.royal.mapCenter.y, color: Colors.red);
-  // }
 
   void drawMouseAim2() {
     engine.setPaintColorWhite();
