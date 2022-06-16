@@ -202,6 +202,7 @@ void onGameEvent(int type, double x, double y, double angle) {
         spawnParticleOrbShard(
             x: x,
             y: y,
+            z: 0,
             duration: 30,
             speed: randomBetween(1, 2)
         );

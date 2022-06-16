@@ -515,11 +515,18 @@ void freezeCircle({
 }
 
 
-void spawnParticleOrbShard({required double x, required double y, int duration = 12, double speed = 1.0}) {
+void spawnParticleOrbShard({
+  required double x,
+  required double y,
+  required double z,
+  int duration = 12,
+  double speed = 1.0,
+}) {
   spawnParticle(
     type: ParticleType.Orb_Shard,
     x: x,
     y: y,
+    z: z,
     angle: randomAngle(),
     speed: speed,
     scaleV: 0.01,
@@ -532,9 +539,9 @@ void spawnParticle({
   required int type,
   required double x,
   required double y,
+  required double z,
   required double angle,
   required double speed,
-  double z = 0,
   double zv = 0,
   double weight = 1,
   int duration = 100,

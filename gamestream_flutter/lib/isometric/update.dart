@@ -21,7 +21,7 @@ void updateProjectiles() {
   for (var i = 0; i < totalProjectiles; i++) {
     final projectile = projectiles[i];
     if (projectile.type != ProjectileType.Orb) continue;
-    spawnParticleOrbShard(x: projectile.x, y: projectile.y);
+    spawnParticleOrbShard(x: projectile.x, y: projectile.y, z: projectile.z);
   }
 }
 
