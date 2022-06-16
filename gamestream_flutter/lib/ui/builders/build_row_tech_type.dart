@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/modules/game/build.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/send.dart';
+import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';

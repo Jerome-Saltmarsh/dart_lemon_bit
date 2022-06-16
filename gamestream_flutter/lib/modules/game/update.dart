@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/update.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/send.dart';
+import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -32,14 +32,14 @@ class GameUpdate {
     // if (hud.textBoxFocused) return;
 
     if (_mouseLeftDown.value) {
-      _gameActions.setCharacterActionPerform();
+      setCharacterActionPerform();
       return;
     }
 
     final direction = getKeyDirection();
-    if (direction != null){
-      characterController.angle = direction;
-      _gameActions.setCharacterActionRun();
+    if (direction != null) {
+      characterDirection = direction;
+      setCharacterActionRun();
     }
   }
 

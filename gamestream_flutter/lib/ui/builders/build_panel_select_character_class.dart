@@ -3,7 +3,7 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/core/actions.dart';
-import 'package:gamestream_flutter/send.dart';
+import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel.dart';
 import 'package:gamestream_flutter/web_socket.dart';
 

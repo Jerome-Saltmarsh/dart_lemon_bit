@@ -12,7 +12,7 @@ import 'package:gamestream_flutter/isometric/lower_tile_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/send.dart';
+import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
@@ -106,11 +106,9 @@ class GameEvents {
      }
   }
 
-
   void onMouseLeftClick() {
-    actions.setCharacterActionPerform();
+    setCharacterActionPerform();
   }
-
 
   void onMouseRightClick(){
     sendRequestAttackSecondary();

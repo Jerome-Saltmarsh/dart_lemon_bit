@@ -69,19 +69,9 @@ class _WebSocket {
     if (connecting) {
       connection.value = Connection.Connected;
     }
-
-    if (_response is List<int>){
-       serverResponseReader.parse(_response);
-       return;
+    if (_response is List<int>) {
+       return serverResponseReader.readBytes(_response);
     }
-
-    // if (_response is String){
-    //   event = _response;
-    //   parseState();
-    //   return;
-    // }
-
-
     throw Exception("cannot parse response: $_response");
 
   }

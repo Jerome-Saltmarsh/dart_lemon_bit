@@ -16,7 +16,7 @@ void sendRequestSpeak(String message){
   webSocket.send('${ClientRequest.Speak.index} $message');
 }
 
-void sendRequestTeleport(double x, double y){
+void sendRequestTeleport(){
   sendClientRequest(ClientRequest.Teleport);
 }
 
@@ -122,16 +122,15 @@ class Server {
   }
 }
 
-final _characterControllerAction = characterController.action;
 final _screen = engine.screen;
 
 Future sendRequestUpdatePlayer() async {
   _updateBuffer[0] = _gameUpdateIndex;
-  _updateBuffer[1] = _characterControllerAction.value;
+  _updateBuffer[1] = characterAction;
   writeNumberToByteArray(number: mouseGridX, list: _updateBuffer, index: 2);
   writeNumberToByteArray(number: mouseGridY, list: _updateBuffer, index: 4);
-  if (_characterControllerAction.value == CharacterAction.Run){
-    _updateBuffer[6] = characterController.angle.toInt();
+  if (characterAction == CharacterAction.Run){
+    _updateBuffer[6] = characterDirection.toInt();
   } else {
     _updateBuffer[6] = 0;
   }
@@ -142,7 +141,7 @@ Future sendRequestUpdatePlayer() async {
   writeNumberToByteArray(number: _screen.bottom, list: _updateBuffer, index: 13);
 
   webSocket.sink.add(_updateBuffer);
-  _characterControllerAction.value = CharacterAction.Idle;
+  characterAction = CharacterAction.Idle;
 }
 
 void sendRequestTogglePaths() {

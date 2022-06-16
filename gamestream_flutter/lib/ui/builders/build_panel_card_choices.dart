@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/build_card_type_icon.dart';
-import 'package:gamestream_flutter/send.dart';
+import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_watch/watch_builder.dart';

@@ -1,13 +1,8 @@
 import 'package:bleed_common/library.dart';
-import 'package:lemon_watch/watch.dart';
 
-final characterController = CharacterController();
-
-class CharacterController {
-  final action = Watch(CharacterAction.Idle);
-  var ability = AbilityType.None;
-  var angle = 0;
-}
+var characterAction = CharacterAction.Idle;
+var characterAbility = AbilityType.None;
+var characterDirection = 0;
 
 void playerPerform() {
   setCharacterAction(CharacterAction.Perform);
@@ -17,9 +12,15 @@ void playerRun() {
   setCharacterAction(CharacterAction.Run);
 }
 
-void setCharacterAction(int value){
-  if (value < characterController.action.value) return;
-  characterController.action.value = value;
+void setCharacterActionRun(){
+  setCharacterAction(CharacterAction.Run);
 }
 
+void setCharacterActionPerform(){
+  setCharacterAction(CharacterAction.Perform);
+}
 
+void setCharacterAction(int value){
+  if (value < characterAction) return;
+  characterAction = value;
+}

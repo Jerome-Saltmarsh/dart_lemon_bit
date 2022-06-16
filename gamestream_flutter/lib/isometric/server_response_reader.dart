@@ -73,7 +73,7 @@ class ServerResponseReader with ByteReader {
     initializeIsometricGameState();
   }
 
-  void parse(List<int> values) {
+  void readBytes(List<int> values) {
     framesSinceUpdateReceived.value = 0;
     index = 0;
     bufferSize.value = values.length;

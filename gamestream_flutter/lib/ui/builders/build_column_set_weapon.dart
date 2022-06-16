@@ -3,7 +3,7 @@ import 'package:bleed_common/weapon_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
-import 'package:gamestream_flutter/send.dart';
+import 'package:gamestream_flutter/client_request_sender.dart';
 
 
 Widget buildColumnSetWeapon(){

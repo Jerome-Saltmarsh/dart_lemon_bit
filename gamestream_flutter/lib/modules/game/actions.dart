@@ -3,13 +3,11 @@ import 'package:bleed_common/CharacterAction.dart';
 import 'package:bleed_common/ClientRequest.dart';
 import 'package:bleed_common/Modify_Game.dart';
 import 'package:bleed_common/SlotTypeCategory.dart';
-import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
-import 'package:gamestream_flutter/send.dart';
+import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:gamestream_flutter/web_socket.dart';
-import 'package:lemon_engine/engine.dart';
 
 import 'state.dart';
 
@@ -35,16 +33,8 @@ class GameActions {
     }
   }
 
-  void setCharacterActionRun(){
-    setCharacterAction(CharacterAction.Run);
-  }
-
-  void setCharacterActionPerform(){
-    setCharacterAction(CharacterAction.Perform);
-  }
-
   void teleportToMouse() {
-    sendRequestTeleport(mouseWorldX, mouseWorldY);
+    sendRequestTeleport();
   }
 
   void toggleMessageBox() {
