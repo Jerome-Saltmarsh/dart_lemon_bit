@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
@@ -121,8 +122,7 @@ class Server {
   }
 }
 
-final _characterController = modules.game.state.characterController;
-final _characterControllerAction = _characterController.action;
+final _characterControllerAction = characterController.action;
 final _screen = engine.screen;
 
 Future sendRequestUpdatePlayer() async {
@@ -131,7 +131,7 @@ Future sendRequestUpdatePlayer() async {
   writeNumberToByteArray(number: mouseGridX, list: _updateBuffer, index: 2);
   writeNumberToByteArray(number: mouseGridY, list: _updateBuffer, index: 4);
   if (_characterControllerAction.value == CharacterAction.Run){
-    _updateBuffer[6] = _characterController.angle.toInt();
+    _updateBuffer[6] = characterController.angle.toInt();
   } else {
     _updateBuffer[6] = 0;
   }

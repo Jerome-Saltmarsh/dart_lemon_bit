@@ -3,10 +3,10 @@ import 'package:bleed_common/CharacterAction.dart';
 import 'package:bleed_common/ClientRequest.dart';
 import 'package:bleed_common/Modify_Game.dart';
 import 'package:bleed_common/SlotTypeCategory.dart';
+import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/web_socket.dart';
 import 'package:lemon_engine/engine.dart';
@@ -14,7 +14,6 @@ import 'package:lemon_engine/engine.dart';
 import 'state.dart';
 
 final _bulletHoles = serverResponseReader.bulletHoles;
-final _action = modules.game.state.characterController.action;
 
 class GameActions {
 
@@ -30,25 +29,11 @@ class GameActions {
     serverResponseReader.bulletHoleIndex %= _bulletHoles.length;
   }
 
-  void playerPerform() {
-    setCharacterAction(CharacterAction.Perform);
-  }
-
-  void playerRun() {
-    setCharacterAction(CharacterAction.Run);
-  }
-
   void emitPixelExplosion(double x, double y, {int amount = 10}) {
     for (var i = 0; i < amount; i++) {
       emitParticlePixel(x: x, y: y);
     }
   }
-
-  void setCharacterAction(int value){
-    if (value < _action.value) return;
-    _action.value = value;
-  }
-
 
   void setCharacterActionRun(){
     setCharacterAction(CharacterAction.Run);

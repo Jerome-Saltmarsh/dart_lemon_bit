@@ -5,6 +5,7 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
+import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/lower_tile_mode.dart';
@@ -31,9 +32,9 @@ class GameEvents {
   GameEvents(this.actions, this.state);
 
   void register(){
-    engine.callbacks.onLeftClicked = actions.playerPerform;
-    engine.callbacks.onPanStarted = actions.playerPerform;
-    engine.callbacks.onLongLeftClicked = actions.playerRun;
+    engine.callbacks.onLeftClicked = playerPerform;
+    engine.callbacks.onPanStarted = playerPerform;
+    engine.callbacks.onLongLeftClicked = playerRun;
     engine.callbacks.onRightClicked = onMouseRightClick;
     gameType.onChanged(_onGameTypeChanged);
     player.characterType.onChanged(_onPlayerCharacterTypeChanged);

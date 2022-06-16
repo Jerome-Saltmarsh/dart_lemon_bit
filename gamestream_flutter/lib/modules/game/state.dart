@@ -9,7 +9,6 @@ import 'enums.dart';
 
 class GameState {
   final textEditingControllerMessage = TextEditingController();
-  final characterController = CharacterController();
   final keyMap = KeyMap();
   final textFieldMessage = FocusNode();
   final debug = Watch(false);

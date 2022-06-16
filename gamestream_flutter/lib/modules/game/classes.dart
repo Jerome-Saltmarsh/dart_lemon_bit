@@ -1,18 +1,8 @@
 
-import 'package:bleed_common/AbilityType.dart';
-import 'package:bleed_common/CharacterAction.dart';
 import 'package:flutter/services.dart';
-import 'package:lemon_watch/watch.dart';
 
-
-class CharacterController {
-  final action = Watch(CharacterAction.Idle);
-  var ability = AbilityType.None;
-  var angle = 0;
-}
 
 class KeyMap {
-  // final perform = LogicalKeyboardKey.space;
   final interact = LogicalKeyboardKey.keyA;
   final runUp = LogicalKeyboardKey.keyW;
   final runRight = LogicalKeyboardKey.keyD;

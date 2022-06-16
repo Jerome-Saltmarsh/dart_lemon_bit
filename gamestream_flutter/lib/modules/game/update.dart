@@ -1,5 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
+import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/update.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -9,7 +10,6 @@ import 'package:lemon_watch/watch.dart';
 
 import 'state.dart';
 
-final _controller = modules.game.state.characterController;
 final _gameActions = modules.game.actions;
 final _mouseLeftDown = engine.mouseLeftDown;
 final totalUpdates = Watch(0);
@@ -38,7 +38,7 @@ class GameUpdate {
 
     final direction = getKeyDirection();
     if (direction != null){
-      _controller.angle = direction;
+      characterController.angle = direction;
       _gameActions.setCharacterActionRun();
     }
   }
