@@ -50,9 +50,7 @@ class GameRender {
   void render(Canvas canvas, Size size) {
 
     drawAbility();
-    if (modules.game.structureType.value == null){
-      attackTargetCircle();
-    }
+    attackTargetCircle();
     drawPaths();
     renderCollectables();
     if (debug) {

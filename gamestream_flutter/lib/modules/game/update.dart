@@ -63,11 +63,9 @@ class GameUpdate {
   void readPlayerInput() {
     // if (hud.textBoxFocused) return;
 
-    if (modules.game.structureType.value == null){
-      if (_mouseLeftDown.value) {
-        _gameActions.setCharacterActionPerform();
-        return;
-      }
+    if (_mouseLeftDown.value) {
+      _gameActions.setCharacterActionPerform();
+      return;
     }
 
     final direction = getKeyDirection();

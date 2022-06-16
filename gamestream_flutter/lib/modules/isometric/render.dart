@@ -4,12 +4,9 @@ import 'package:gamestream_flutter/isometric/classes/structure.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/render/render_character.dart';
 import 'package:gamestream_flutter/modules/isometric/module.dart';
-import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 import 'package:lemon_math/library.dart';
-
-import '../modules.dart';
 
 class IsometricRender {
   final IsometricModule state;
@@ -198,27 +195,6 @@ class IsometricRender {
 
 
   final _mouseSnap = Vector2(0, 0);
-
-  void renderBuildMode() {
-    final value = modules.game.structureType.value;
-    if (value == null) return;
-
-    final x = getMouseSnapX();
-    final y = getMouseSnapY();
-    _mouseSnap.x = x;
-    _mouseSnap.y = y;
-
-    switch (modules.game.structureType.value) {
-      case StructureType.Tower:
-        // return isometric.render.renderTower(x, y);
-      case StructureType.Palisade:
-        // return isometric.render.renderPalisade(x: x, y: y);
-      // case StructureType.Torch:
-      //   return isometric.render.renderTorch(_mouseSnap);
-      default:
-        return;
-    }
-  }
 
   void renderArrowUp(double x, double y) {
     return render(

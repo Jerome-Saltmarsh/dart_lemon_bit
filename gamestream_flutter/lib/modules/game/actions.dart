@@ -31,12 +31,6 @@ class GameActions {
   }
 
   void playerPerform() {
-    final structureType = modules.game.structureType.value;
-    if (structureType != null) {
-      sendRequestConstruct(structureType);
-      modules.game.structureType.value = null;
-      return;
-    }
     setCharacterAction(CharacterAction.Perform);
   }
 

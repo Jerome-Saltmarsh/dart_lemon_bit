@@ -5,10 +5,8 @@ import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 
 import 'build_panel.dart';
 import 'build_panel_resources.dart';
-import 'build_panel_structures.dart';
 import 'build_panel_tech.dart';
 import 'build_time.dart';
-
 
 Widget buildPanelPrimary() {
   return Positioned(
@@ -26,8 +24,6 @@ Widget buildPanelPrimary() {
           buildPanelResources(),
           height6,
           buildPanelTech(),
-          height6,
-          buildPanelStructures(),
         ],
       ));
 }
