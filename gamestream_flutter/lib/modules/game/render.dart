@@ -4,21 +4,21 @@ import 'dart:math';
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/classes/npc_debug.dart';
+import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_grid_node.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
-import 'package:gamestream_flutter/isometric/state/collectbles.dart';
-import 'package:gamestream_flutter/isometric/state/edit_state.dart';
-import 'package:gamestream_flutter/isometric/state/edit_tools_enabled.dart';
-import 'package:gamestream_flutter/isometric/state/grid.dart';
-import 'package:gamestream_flutter/isometric/state/player.dart';
-import 'package:gamestream_flutter/isometric/state/players.dart';
-import 'package:gamestream_flutter/isometric/state/zombies.dart';
+import 'package:gamestream_flutter/isometric/collectables.dart';
+import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/edit_tools_enabled.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/players.dart';
+import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -222,7 +222,7 @@ class GameRender {
 
   void drawItemText() {
     final items = isometric.items;
-    final total = game.itemsTotal;
+    final total = serverResponseReader.itemsTotal;
     for (var i = 0; i < total; i++){
       final item = items[i];
       const mouseDist = 100;
@@ -239,7 +239,7 @@ class GameRender {
   }
 
   void drawEffects() {
-    for (final effect in game.effects) {
+    for (final effect in serverResponseReader.effects) {
       if (!effect.enabled) continue;
       if (effect.duration++ >= effect.maxDuration) {
         effect.enabled = false;

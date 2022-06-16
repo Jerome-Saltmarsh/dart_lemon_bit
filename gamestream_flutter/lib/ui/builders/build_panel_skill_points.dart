@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/isometric/state/player.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 

@@ -1,6 +1,7 @@
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/isometric/state/grid.dart';
+
+import '../grid.dart';
 
 void onHourChanged(int hour) {
     ambient.value = _convertHourToAmbient(hour);

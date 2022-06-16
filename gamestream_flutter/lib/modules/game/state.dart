@@ -1,7 +1,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
-import 'package:gamestream_flutter/isometric/state/player.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'classes.dart';

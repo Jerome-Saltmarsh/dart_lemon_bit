@@ -3,7 +3,7 @@ import 'package:bleed_common/CharacterAction.dart';
 import 'package:bleed_common/ClientRequest.dart';
 import 'package:bleed_common/Modify_Game.dart';
 import 'package:bleed_common/SlotTypeCategory.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -13,7 +13,7 @@ import 'package:lemon_engine/engine.dart';
 
 import 'state.dart';
 
-final _bulletHoles = game.bulletHoles;
+final _bulletHoles = serverResponseReader.bulletHoles;
 final _action = modules.game.state.characterController.action;
 
 class GameActions {
@@ -23,11 +23,11 @@ class GameActions {
   GameActions(this.state);
 
   void spawnBulletHole(double x, double y){
-    final bulletHole = _bulletHoles[game.bulletHoleIndex];
+    final bulletHole = _bulletHoles[serverResponseReader.bulletHoleIndex];
     bulletHole.x = x;
     bulletHole.y = y;
-    game.bulletHoleIndex++;
-    game.bulletHoleIndex %= _bulletHoles.length;
+    serverResponseReader.bulletHoleIndex++;
+    serverResponseReader.bulletHoleIndex %= _bulletHoles.length;
   }
 
   void playerPerform() {

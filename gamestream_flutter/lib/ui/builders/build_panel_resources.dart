@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/icons.dart';
-import 'package:gamestream_flutter/isometric/state/player.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/ui/builders/styles.dart';
 
 

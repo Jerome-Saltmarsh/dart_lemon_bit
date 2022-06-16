@@ -1,14 +1,14 @@
 import 'package:bleed_common/grid_node_type.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
-import 'package:gamestream_flutter/isometric/state/grid.dart';
-import 'package:gamestream_flutter/isometric/state/lower_tile_mode.dart';
-import 'package:gamestream_flutter/isometric/state/particles.dart';
-import 'package:gamestream_flutter/isometric/state/player.dart';
-import 'package:gamestream_flutter/isometric/state/players.dart';
-import 'package:gamestream_flutter/isometric/state/zombies.dart';
+import 'package:gamestream_flutter/isometric/lower_tile_mode.dart';
+import 'package:gamestream_flutter/isometric/particles.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/players.dart';
+import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:lemon_engine/engine.dart';
 
+import '../grid.dart';
 import 'render_character.dart';
 import 'render_game_object.dart';
 import 'render_grid_node.dart';
@@ -26,11 +26,11 @@ void renderSprites() {
   final screenBottom = _screen.bottom;
   final screenBottom100 = screenBottom + 120;
 
-  final npcs = game.interactableNpcs;
-  final gameObjects = game.gameObjects;
+  final npcs = serverResponseReader.interactableNpcs;
+  final gameObjects = serverResponseReader.gameObjects;
 
   final totalGameObjects = gameObjects.length;
-  final totalNpcs = game.totalNpcs;
+  final totalNpcs = serverResponseReader.totalNpcs;
   final gridTotalZ = grid.length;
   final gridTotalRows = grid[0].length;
   final gridTotalColumns = grid[0][0].length;

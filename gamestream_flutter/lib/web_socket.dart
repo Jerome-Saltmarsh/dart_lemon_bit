@@ -1,4 +1,4 @@
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -71,7 +71,7 @@ class _WebSocket {
     }
 
     if (_response is List<int>){
-       game.parse(_response);
+       serverResponseReader.parse(_response);
        return;
     }
 

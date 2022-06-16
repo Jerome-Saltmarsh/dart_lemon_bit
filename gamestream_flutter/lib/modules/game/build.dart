@@ -4,10 +4,10 @@ import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
-import 'package:gamestream_flutter/isometric/state/player.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/game/enums.dart';
 import 'package:gamestream_flutter/modules/game/update.dart';
@@ -224,7 +224,7 @@ class GameBuild {
     return SingleChildScrollView(
       child: Container(
           constraints: BoxConstraints(maxHeight: 400),
-          child: textBuilder(game.scoreText)),
+          child: textBuilder(serverResponseReader.scoreText)),
     );
   }
 }

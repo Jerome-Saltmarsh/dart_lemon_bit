@@ -8,7 +8,7 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:universal_html/html.dart';
 
-import 'isometric/state/player.dart';
+import 'isometric/player.dart';
 
 double getMouseRotation() {
   return getAngleBetween(player.x, player.y, mouseWorldX, mouseWorldY);

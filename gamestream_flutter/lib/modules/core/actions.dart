@@ -4,15 +4,14 @@ import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/control/classes/authentication.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
-import 'package:gamestream_flutter/game.dart';
-import 'package:gamestream_flutter/isometric/state/collectbles.dart';
-import 'package:gamestream_flutter/isometric/state/particle_emitters.dart';
-import 'package:gamestream_flutter/isometric/state/particles.dart';
-import 'package:gamestream_flutter/isometric/state/player.dart';
-import 'package:gamestream_flutter/isometric/state/players.dart';
-import 'package:gamestream_flutter/isometric/state/projectiles.dart';
-import 'package:gamestream_flutter/isometric/state/time.dart';
-import 'package:gamestream_flutter/isometric/state/zombies.dart';
+import 'package:gamestream_flutter/isometric/server_response_reader.dart';
+import 'package:gamestream_flutter/isometric/collectables.dart';
+import 'package:gamestream_flutter/isometric/particles.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/players.dart';
+import 'package:gamestream_flutter/isometric/projectiles.dart';
+import 'package:gamestream_flutter/isometric/time.dart';
+import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -26,6 +25,7 @@ import 'package:gamestream_flutter/web_socket.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 
+import '../../isometric/particle_emitters.dart';
 import 'exceptions.dart';
 
 
@@ -180,13 +180,13 @@ class CoreActions {
     totalZombies = 0;
     totalPlayers = 0;
     totalProjectiles = 0;
-    game.bulletHoleIndex = 0;
+    serverResponseReader.bulletHoleIndex = 0;
     totalCollectables = 0;
-    game.totalNpcs = 0;
+    serverResponseReader.totalNpcs = 0;
     particleEmitters.clear();
     particles.clear();
 
-    for (final bullet in game.bulletHoles) {
+    for (final bullet in serverResponseReader.bulletHoles) {
       bullet.x = 0;
       bullet.y = 0;
     }

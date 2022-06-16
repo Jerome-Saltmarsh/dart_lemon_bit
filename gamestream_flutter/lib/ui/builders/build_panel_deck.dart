@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/isometric/state/player.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/build_card_type_icon.dart';
 import 'package:gamestream_flutter/send.dart';
 import 'package:gamestream_flutter/styles.dart';

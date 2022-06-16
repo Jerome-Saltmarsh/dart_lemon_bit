@@ -1,4 +1,4 @@
-import 'package:gamestream_flutter/isometric/state/floating_texts.dart';
+import 'package:gamestream_flutter/isometric/floating_texts.dart';
 import 'package:lemon_engine/engine.dart';
 
 void renderFloatingTexts() {

@@ -2,14 +2,14 @@ import 'package:bleed_common/version.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/game.dart';
-import 'package:gamestream_flutter/isometric/state/particles.dart';
+import 'package:gamestream_flutter/isometric/server_response_reader.dart';
+import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/ui/builders/build_time.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import '../../isometric/state/player.dart';
+import '../../isometric/player.dart';
 
 Widget buildPanelDebug(){
   return Column(

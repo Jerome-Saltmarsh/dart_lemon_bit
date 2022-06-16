@@ -2,7 +2,7 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/isometric/state/player.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/ui/builders/build_cost.dart';
 import 'package:gamestream_flutter/ui/builders/build_row_tech_type.dart';

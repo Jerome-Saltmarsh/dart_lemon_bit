@@ -3,15 +3,15 @@ import 'package:gamestream_flutter/isometric/actions/initialize_isometric_game_s
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
+import 'package:gamestream_flutter/isometric/collectables.dart';
+import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event.dart';
-import 'package:gamestream_flutter/isometric/state/collectbles.dart';
-import 'package:gamestream_flutter/isometric/state/edit_state.dart';
-import 'package:gamestream_flutter/isometric/state/floating_texts.dart';
-import 'package:gamestream_flutter/isometric/state/players.dart';
-import 'package:gamestream_flutter/isometric/state/projectiles.dart';
-import 'package:gamestream_flutter/isometric/state/zombies.dart';
+import 'package:gamestream_flutter/isometric/floating_texts.dart';
+import 'package:gamestream_flutter/isometric/players.dart';
+import 'package:gamestream_flutter/isometric/projectiles.dart';
+import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_byte/byte_reader.dart';
@@ -20,13 +20,14 @@ import 'package:lemon_engine/enums.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'isometric/classes/explosion.dart';
-import 'isometric/classes/npc_debug.dart';
-import 'isometric/state/grid.dart';
-import 'isometric/state/player.dart';
-import 'isometric/state/time.dart';
+import 'classes/explosion.dart';
+import 'classes/npc_debug.dart';
+import 'grid.dart';
+import 'particle_emitters.dart';
+import 'player.dart';
+import 'time.dart';
 
-final game = Game();
+final serverResponseReader = ServerResponseReader();
 final byteLength = Watch(0);
 final bufferSize = Watch(0);
 final totalEvents = Watch(0);
@@ -56,7 +57,7 @@ var _previousPlayerScreenX3 = 0.0;
 var _previousPlayerScreenY3 = 0.0;
 
 
-class Game with ByteReader {
+class ServerResponseReader with ByteReader {
   final interactableNpcs = <Character>[];
   final gameObjects = <GameObject>[];
   final effects = <Effect>[];
@@ -68,7 +69,7 @@ class Game with ByteReader {
   var bulletHoleIndex = 0;
   var itemsTotal = 0;
 
-  Game(){
+  ServerResponseReader(){
     initializeIsometricGameState();
   }
 
@@ -543,7 +544,7 @@ class Game with ByteReader {
       instance.refreshRowAndColumn();
 
       if (typeIndex == GameObjectType.Fireplace) {
-        isometric.addSmokeEmitter(instance.x, instance.y);
+        addSmokeEmitter(instance.x, instance.y);
       }
     }
   }

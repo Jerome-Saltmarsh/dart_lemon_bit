@@ -4,11 +4,8 @@ import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/classes/item.dart';
-import 'package:gamestream_flutter/game.dart';
-import 'package:gamestream_flutter/isometric/classes/particle_emitter.dart';
+import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
-import 'package:gamestream_flutter/isometric/state/particle_emitters.dart';
-import 'package:gamestream_flutter/modules/game/emit_particle.dart';
 import 'package:lemon_watch/watch.dart';
 
 class IsometricModule {
@@ -43,7 +40,7 @@ class IsometricModule {
   }
 
   void applyEmissionFromEffects() {
-    for (final effect in game.effects) {
+    for (final effect in serverResponseReader.effects) {
       if (!effect.enabled) continue;
       final percentage = effect.percentage;
       if (percentage < 0.33) {
@@ -53,9 +50,5 @@ class IsometricModule {
         break;
       }
     }
-  }
-
-  void addSmokeEmitter(double x, double y){
-    particleEmitters.add(ParticleEmitter(x: x, y: y, rate: 12, emit: emitSmoke));
   }
 }

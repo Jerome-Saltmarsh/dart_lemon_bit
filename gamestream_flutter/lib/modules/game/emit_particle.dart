@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
-import 'package:gamestream_flutter/isometric/state/particles.dart';
+import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:lemon_math/library.dart';
 
 void emitParticlePixel({
@@ -52,18 +52,3 @@ void emitMyst(Particle particle) {
   particle.casteShadow = false;
 }
 
-void emitSmoke(Particle particle) {
-  particle.type = ParticleType.Smoke;
-  particle.duration = randomBetween(100, 150).toInt();
-  particle.z = 1;
-  particle.weight = 0;
-  particle.scale = 0.15;
-  particle.scaleV = 0.001;
-  particle.rotation = 0;
-  particle.rotationVelocity = 0;
-  particle.bounciness = 0;
-  particle.xv = randomBetween(0, -pi * 0.1);
-  particle.yv = randomBetween(0, pi * 0.1);
-  particle.zv = 0.025;
-  particle.airFriction = 0.99;
-}

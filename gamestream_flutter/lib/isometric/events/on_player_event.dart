@@ -1,7 +1,7 @@
 import 'package:bleed_common/PlayerEvent.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
-import 'package:gamestream_flutter/isometric/state/floating_texts.dart';
-import 'package:gamestream_flutter/isometric/state/player.dart';
+import 'package:gamestream_flutter/isometric/floating_texts.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 

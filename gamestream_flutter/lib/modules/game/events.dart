@@ -5,11 +5,10 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
-import 'package:gamestream_flutter/isometric/state/edit_state.dart';
-import 'package:gamestream_flutter/game.dart';
-import 'package:gamestream_flutter/isometric/state/grid.dart';
-import 'package:gamestream_flutter/isometric/state/lower_tile_mode.dart';
-import 'package:gamestream_flutter/isometric/state/player.dart';
+import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/server_response_reader.dart';
+import 'package:gamestream_flutter/isometric/lower_tile_mode.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/send.dart';
@@ -17,6 +16,7 @@ import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
 
+import '../../isometric/grid.dart';
 import 'state.dart';
 
 

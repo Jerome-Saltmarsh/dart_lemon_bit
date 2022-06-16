@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/isometric/state/player.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/ui/builders/build_health_bar.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_card_choices.dart';
