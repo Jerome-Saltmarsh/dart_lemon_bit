@@ -15,8 +15,8 @@ final renderOrderZombie = RenderOrder(renderNextZombie, updateNextZombie, "Zombi
 final renderOrderParticle = RenderOrder(renderNextParticle, updateNextParticle, "Particle");
 
 final renderOrder = <RenderOrder> [
-  renderOrderGrid,
   renderOrderPlayer,
+  renderOrderGrid,
   renderOrderParticle,
   renderOrderZombie,
 ];
@@ -194,16 +194,9 @@ void updateNextParticle(int index){
 }
 
 RenderOrder getNextRenderOrder(){
-  final firstIndex = getFirstIndex();
-  var furthest = renderOrder[firstIndex];
-  for (var i = firstIndex + 1; i < renderOrderLength; i++){
-    if (!renderOrder[i].remaining) continue;
-    final r = renderOrder[i];
-    if (r.order == furthest.order){
-      if (r.orderZ > furthest.orderZ) continue;
-    }
-    if (r.order > furthest.order) continue;
-    furthest = r;
+  var furthest = renderOrder[0];
+  for (var i = 1; i < renderOrderLength; i++){
+    furthest = compare(furthest, renderOrder[i]);
   }
   return furthest;
 }
@@ -217,9 +210,13 @@ int getFirstIndex(){
 }
 
 RenderOrder compare(RenderOrder a, RenderOrder b){
-  if (a.order == b.order){
-    if (a.orderZ > b.orderZ) return b;
-  }
+  // if (a.order == b.order){
+  //   if (a.orderZ > b.orderZ) return b;
+  // }
+  if (!a.remaining) return b;
+  if (!b.remaining) return a;
+
   if (a.order > b.order) return b;
+  if (a.orderZ > b.orderZ) return b;
   return a;
 }
