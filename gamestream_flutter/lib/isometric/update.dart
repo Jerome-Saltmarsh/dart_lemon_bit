@@ -1,7 +1,6 @@
 
 import 'package:bleed_common/Projectile_Type.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
-import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'state/particle_emitters.dart';

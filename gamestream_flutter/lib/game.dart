@@ -36,8 +36,6 @@ final averageUpdate = Watch(0.0);
 final sync = Watch(0.0);
 var durationTotal = 0;
 
-final _events = modules.game.events;
-
 var time = DateTime.now();
 
 void cameraCenterOnPlayer(){

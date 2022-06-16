@@ -4,18 +4,14 @@ import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/classes/item.dart';
-import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/particle_emitter.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/state/particle_emitters.dart';
-import 'package:gamestream_flutter/isometric/state/particles.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
-import 'package:gamestream_flutter/modules/isometric/spawn.dart';
 import 'package:lemon_watch/watch.dart';
 
 class IsometricModule {
-  late final IsometricSpawn spawn;
   final paths = Float32List(10000);
   final targets = Float32List(10000);
   final items = <Item>[];
@@ -25,23 +21,10 @@ class IsometricModule {
   var targetsTotal = 0;
   var totalStructures = 0;
 
-  int get totalActiveParticles {
-    var totalParticles = 0;
-    final length = particles.length;
-    for (var i = 0; i < length; i++) {
-      if (!particles[i].active) continue;
-      totalParticles++;
-    }
-    return totalParticles;
-  }
-
   // CONSTRUCTOR
 
   IsometricModule(){
-    spawn = IsometricSpawn(this);
-
     for(var i = 0; i < 300; i++){
-      particles.add(Particle());
       items.add(Item(type: ItemType.Armour_Plated, x: 0, y: 0));
     }
   }

@@ -28,8 +28,6 @@ import 'package:lemon_math/library.dart';
 import 'state.dart';
 import 'style.dart';
 
-final _screen = engine.screen;
-
 class GameRender {
 
   final GameQueries queries;

@@ -1,33 +1,31 @@
 import 'dart:math';
 
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/state/particles.dart';
 import 'package:lemon_math/library.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
-import 'package:gamestream_flutter/modules/isometric/spawn.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 
 void onGameEvent(int type, double x, double y, double angle) {
-  final _spawn = isometric.spawn;
   switch (type) {
     case GameEventType.Handgun_Fired:
       audio.handgunShot(x, y);
       const distance = 12.0;
       final xForward = getAdjacent(angle, distance);
       final yForward = getOpposite(angle, distance);
-      _spawn.shell(x: x + xForward, y: y + yForward);
+      spawnParticleShell(x: x + xForward, y: y + yForward);
       break;
     case GameEventType.Shotgun_Fired:
       audio.shotgunShot(x, y);
-      _spawn.shell(x: x, y: y);
+      spawnParticleShell(x: x, y: y);
       break;
     case GameEventType.SniperRifle_Fired:
       audio.sniperShot(x, y);
-      _spawn.shell(x: x, y: y);
+      spawnParticleShell(x: x, y: y);
       break;
     case GameEventType.MachineGun_Fired:
       audio.assaultRifleShot(x, y);
-      isometric.spawn.shell(x: x, y: y);
+      spawnParticleShell(x: x, y: y);
       break;
     case GameEventType.Player_Hit:
       if (randomBool()) {
@@ -35,12 +33,12 @@ void onGameEvent(int type, double x, double y, double angle) {
       }
       break;
     case GameEventType.Zombie_Killed:
-      _spawn.headZombie(x: x, y: y, z: 0.5, angle: angle, speed: 4.0);
-      _spawn.arm(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
-      _spawn.arm(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
-      _spawn.legZombie(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
-      _spawn.legZombie(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
-      _spawn.organ(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5), zv: 0.1);
+      spawnParticleHeadZombie(x: x, y: y, z: 0.5, angle: angle, speed: 4.0);
+      spawnParticleArm(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
+      spawnParticleArm(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
+      spawnParticleLegZombie(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
+      spawnParticleLegZombie(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
+      spawnParticleOrgan(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5), zv: 0.1);
       audio.zombieDeath(x, y);
       break;
 
@@ -57,11 +55,11 @@ void onGameEvent(int type, double x, double y, double angle) {
       // actions.emitPixelExplosion(x, y);
       break;
     case GameEventType.Explosion:
-      _spawn.spawnExplosion(x, y);
+      spawnExplosion(x, y);
       break;
 
     case GameEventType.FreezeCircle:
-      _spawn.freezeCircle(x: x, y: y,);
+      freezeCircle(x: x, y: y,);
       break;
     case GameEventType.Teleported:
       // actions.emitPixelExplosion(x, y);
@@ -124,7 +122,7 @@ void onGameEvent(int type, double x, double y, double angle) {
 
     case GameEventType.Object_Destroyed_Pot:
       for (var i = 0; i < 8; i++) {
-        isometric.spawn.potShard(x, y);
+        spawnParticlePotShard(x, y);
       }
       audio.potBreaking(x, y);
       break;
@@ -132,35 +130,35 @@ void onGameEvent(int type, double x, double y, double angle) {
 
     case GameEventType.Object_Destroyed_Rock:
       for (var i = 0; i < 8; i++) {
-        isometric.spawn.rockShard(x, y);
+        spawnParticleRockShard(x, y);
       }
       audio.rockBreaking(x, y);
       break;
 
     case GameEventType.Object_Destroyed_Tree:
       for (var i = 0; i < 8; i++) {
-        isometric.spawn.treeShard(x, y);
+        spawnParticleTreeShard(x, y);
       }
       audio.treeBreaking(x, y);
       break;
 
     case GameEventType.Object_Destroyed_Chest:
       for (var i = 0; i < 8; i++) {
-        isometric.spawn.shardWood(x, y);
+        spawnParticleShardWood(x, y);
       }
       audio.crateDestroyed(x, y);
       break;
 
     case GameEventType.Material_Struck_Wood:
       for (var i = 0; i < 8; i++) {
-        isometric.spawn.treeShard(x, y);
+        spawnParticleTreeShard(x, y);
       }
       audio.materialStruckWood(x, y);
       break;
 
     case GameEventType.Material_Struck_Rock:
       for (var i = 0; i < 8; i++) {
-        isometric.spawn.rockShard(x, y);
+        spawnParticleRockShard(x, y);
       }
       audio.materialStruckRock(x, y);
       break;
@@ -169,7 +167,7 @@ void onGameEvent(int type, double x, double y, double angle) {
       audio.materialStruckFlesh(x, y);
       final total = randomInt(2, 5);
       for (var i = 0; i < total; i++) {
-        _spawn.spawnParticleBlood(
+        spawnParticleBlood(
           x: x,
           y: y,
           z: 0.3,
@@ -179,7 +177,7 @@ void onGameEvent(int type, double x, double y, double angle) {
         );
       }
       for (var i = 0; i < 1; i++) {
-        _spawn.spawnParticleBlood(
+        spawnParticleBlood(
           x: x,
           y: y,
           z: 0.3,
@@ -208,7 +206,7 @@ void onGameEvent(int type, double x, double y, double angle) {
             speed: randomBetween(1, 2)
         );
       }
-      isometric.spawn.spawnEffect(x: x, y: y, type: EffectType.Explosion, duration: 30);
+      spawnEffect(x: x, y: y, type: EffectType.Explosion, duration: 30);
       break;
 
     case GameEventType.Projectile_Fired_Fireball:

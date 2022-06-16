@@ -5,7 +5,6 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/state/particles.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/builders/build_time.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -73,7 +72,7 @@ Widget get playerScreen {
 
 Widget get buildActiveParticles {
   return Refresh((){
-    return text("Active Particles: ${isometric.totalActiveParticles}");
+    return text("Active Particles: ${totalActiveParticles}");
   });
 }
 
