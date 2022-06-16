@@ -15,16 +15,12 @@ final renderOrderZombie = RenderOrder(renderNextZombie, updateNextZombie, "Zombi
 final renderOrderParticle = RenderOrder(renderNextParticle, updateNextParticle, "Particle");
 
 final renderOrder = <RenderOrder> [
-  renderOrderPlayer,
   renderOrderGrid,
+  renderOrderPlayer,
   renderOrderParticle,
   renderOrderZombie,
 ];
 
-final indexRenderOrderGrid = renderOrder.indexOf(renderOrderGrid);
-final indexRenderOrderPlayer = renderOrder.indexOf(renderOrderPlayer);
-final indexRenderOrderParticle = renderOrder.indexOf(renderOrderParticle);
-final indexRenderOrderZombie = renderOrder.indexOf(renderOrderZombie);
 final renderOrderLength = renderOrder.length;
 
 var gridZ = 0;
@@ -68,7 +64,7 @@ void renderSprites() {
   renderOrderZombie.total = totalZombies;
   renderOrderParticle.total = totalActiveParticles;
 
-  for(final order in renderOrder){
+  for (final order in renderOrder) {
     order.updateRemaining();
   }
 
@@ -103,6 +99,19 @@ class RenderOrder {
   final Function(int index) renderFunction;
   final Function(int index) updateFunction;
 
+  @override
+  String toString(){
+    return "$name: name, order: $order, orderZ: $orderZ, index: $index";
+  }
+
+  RenderOrder compare(RenderOrder that){
+    if (!remaining) return that;
+    if (!that.remaining) return this;
+
+    if (order <= that.order) return this;
+    if (orderZ < that.orderZ) return this;
+    return that;
+  }
 
   void updateRemaining(){
     remaining = index < total;
@@ -133,7 +142,6 @@ void renderNextZombie(int index){
 
 void renderNextPlayer(int index) {
   renderCharacter(players[index]);
-  // print("player index: $totalIndex");
 }
 
 void renderNextParticle(int index){
@@ -196,27 +204,11 @@ void updateNextParticle(int index){
 RenderOrder getNextRenderOrder(){
   var furthest = renderOrder[0];
   for (var i = 1; i < renderOrderLength; i++){
-    furthest = compare(furthest, renderOrder[i]);
+    furthest =  furthest.compare(renderOrder[i]);
   }
-  return furthest;
-}
-
-int getFirstIndex(){
-   if (renderOrderGrid.remaining) return indexRenderOrderGrid;
-   if (renderOrderPlayer.remaining) return indexRenderOrderPlayer;
-   if (renderOrderZombie.remaining) return indexRenderOrderZombie;
-   if (renderOrderParticle.remaining) return indexRenderOrderParticle;
-   throw Exception();
-}
-
-RenderOrder compare(RenderOrder a, RenderOrder b){
-  // if (a.order == b.order){
-  //   if (a.orderZ > b.orderZ) return b;
+  // if (furthest == renderOrderPlayer){
+  //   print(renderOrderPlayer.toString());
+  //   print(renderOrderGrid.toString());
   // }
-  if (!a.remaining) return b;
-  if (!b.remaining) return a;
-
-  if (a.order > b.order) return b;
-  if (a.orderZ > b.orderZ) return b;
-  return a;
+  return furthest;
 }
