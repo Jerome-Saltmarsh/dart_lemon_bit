@@ -1,5 +1,4 @@
 import 'package:bleed_common/grid_node_type.dart';
-import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:gamestream_flutter/isometric/lower_tile_mode.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
@@ -10,55 +9,62 @@ import 'package:lemon_engine/engine.dart';
 
 import '../grid.dart';
 import 'render_character.dart';
-import 'render_game_object.dart';
 import 'render_grid_node.dart';
 import 'render_particle.dart';
 import 'render_zombie.dart';
 
+var gridZ = 0;
+var gridColumn = 0;
+var gridRow = 0;
+var indexPlayer = 0;
+var indexGameObject = 0;
+var indexParticle = 0;
+var indexZombie = 0;
+
+var remainingGrid = false;
+var remainingZombies = false;
+var remainingPlayers = false;
+var remainingParticles = false;
+
+var orderGrid = 0;
+var orderPlayer = 0;
+var orderPlayerZ = 0;
+var orderParticle = 0.0;
+var orderParticleZ = 0;
+var orderZombie = 0.0;
+
 void renderSprites() {
-  engine.setPaintColorWhite();
-  sortParticles();
-  final _screen = engine.screen;
   final totalParticles = particles.length;
-  final screenLeft = _screen.left;
-  final screenRight = _screen.right;
-  final screenTop = _screen.top;
-  final screenBottom = _screen.bottom;
+  final screenLeft = engine.screen.left;
+  final screenRight = engine.screen.right;
+  final screenTop = engine.screen.top;
+  final screenBottom = engine.screen.bottom;
   final screenBottom100 = screenBottom + 120;
-
-  final npcs = serverResponseReader.interactableNpcs;
-  final gameObjects = serverResponseReader.gameObjects;
-
-  final totalGameObjects = gameObjects.length;
-  final totalNpcs = serverResponseReader.totalNpcs;
-  final gridTotalZ = grid.length;
-  final gridTotalRows = grid[0].length;
-  final gridTotalColumns = grid[0][0].length;
   final gridTotalColumnsMinusOne = gridTotalColumns - 1;
 
-  var gridZ = 0;
-  var gridColumn = 0;
-  var gridRow = 0;
-  var indexPlayer = 0;
-  var indexGameObject = 0;
-  var indexParticle = 0;
-  var indexZombie = 0;
-  var indexNpc = 0;
+  gridZ = 0;
+  gridColumn = 0;
+  gridRow = 0;
+  indexPlayer = 0;
+  indexParticle = 0;
+  indexZombie = 0;
 
-  var remainingGrid = true;
-  var remainingZombies = indexZombie < totalZombies;
-  var remainingPlayers = indexPlayer < totalPlayers;
-  var remainingNpcs = indexNpc < totalNpcs;
-  var remainingGameObjects = indexGameObject < totalGameObjects;
-  var remainingParticles = indexParticle < totalParticles;
+  remainingGrid = true;
+  remainingZombies = indexZombie < totalZombies;
+  remainingPlayers = indexPlayer < totalPlayers;
+  remainingParticles = indexParticle < totalParticles;
 
-  var orderGrid = gridColumn + gridRow;
-  var orderPlayer = remainingPlayers ? players[0].renderOrder : 0;
-  var orderPlayerZ = remainingPlayers ? players[0].indexZ : 0;
-  var orderObject = remainingGameObjects ? gameObjects[0].y : 0;
-  var orderParticle = remainingParticles ? particles[0].y : 0;
-  var orderZombie = remainingZombies ? zombies[0].y : 0;
-  var orderNpc = remainingNpcs ? npcs[0].y : 0;
+  orderGrid = gridColumn + gridRow;
+  orderPlayer = remainingPlayers ? players[0].renderOrder : 0;
+  orderPlayerZ = remainingPlayers ? players[0].indexZ : 0;
+  orderParticle = remainingParticles ? particles[0].renderOrderD : 0;
+  orderParticleZ = remainingParticles ? particles[0].indexZ : 0;
+  orderZombie = remainingZombies ? zombies[0].y : 0;
+
+  engine.setPaintColorWhite();
+  if (remainingParticles) {
+    sortParticles();
+  }
 
   while (remainingParticles) {
     final particle = particles[indexParticle];
@@ -85,10 +91,12 @@ void renderSprites() {
   while (true) {
     if (remainingGrid) {
       final gridType = grid[gridZ][gridRow][gridColumn];
-      if (gridType == GridNodeType.Empty ||
-          !remainingPlayers ||
-          orderGrid <= orderPlayer ||
-          gridZ < orderPlayerZ) {
+      if (
+      gridType == GridNodeType.Empty ||
+      !remainingPlayers ||
+      orderGrid <= orderPlayer ||
+      gridZ < orderPlayerZ
+      ) {
         if (!lowerTileMode || player.indexZ >= gridZ) {
           renderGridNode(gridZ, gridRow, gridColumn, gridType);
         }
@@ -127,72 +135,65 @@ void renderSprites() {
     }
 
     if (remainingPlayers) {
-      if (!remainingGameObjects || orderPlayer < orderObject) {
-        if (!remainingParticles || (orderPlayer < orderParticle && !particleIsBlood)) {
-          if (!remainingZombies || orderPlayer < orderZombie) {
-            if (!remainingNpcs || orderPlayer < orderNpc) {
-              renderCharacter(players[indexPlayer]);
+      if (!remainingParticles || (orderPlayer < orderParticle && !particleIsBlood)) {
+        if (!remainingZombies || orderPlayer < orderZombie) {
+          renderCharacter(players[indexPlayer]);
+          indexPlayer++;
+          remainingPlayers = indexPlayer < totalPlayers;
+          while (remainingPlayers) {
+            final player = players[indexPlayer];
+            orderPlayer = player.renderOrder;
+            orderPlayerZ = player.indexZ;
+            if (player.renderY > screenBottom100) {
+              remainingPlayers = false;
+              break;
+            }
+            final x = player.x;
+            if (x < screenLeft || x > screenRight || orderPlayer < screenTop) {
               indexPlayer++;
               remainingPlayers = indexPlayer < totalPlayers;
-              while (remainingPlayers) {
-                final player = players[indexPlayer];
-                orderPlayer = player.renderOrder;
-                orderPlayerZ = player.indexZ;
-                if (player.renderY > screenBottom100) {
-                  remainingPlayers = false;
-                  break;
-                }
-                final x = player.x;
-                if (x < screenLeft ||
-                    x > screenRight ||
-                    orderPlayer < screenTop) {
-                  indexPlayer++;
-                  remainingPlayers = indexPlayer < totalPlayers;
-                  continue;
-                }
-                break;
-              }
               continue;
             }
+            break;
           }
+          continue;
         }
       }
     }
 
-    if (remainingGameObjects) {
-      if (!remainingParticles ||
-          (orderObject < orderParticle && !particleIsBlood)) {
-        if (!remainingZombies || orderObject < orderZombie) {
-          if (!remainingNpcs || orderObject < orderNpc) {
-            renderGameObject(gameObjects[indexGameObject]);
-            indexGameObject++;
-            remainingGameObjects = indexGameObject < totalGameObjects;
-            while (remainingGameObjects) {
-              final nextGameObject = gameObjects[indexGameObject];
-              orderObject = nextGameObject.y;
-              if (orderObject > screenBottom100) {
-                remainingGameObjects = false;
-                break;
-              }
-              final x = nextGameObject.x;
-              if (x < screenLeft ||
-                  x > screenRight ||
-                  orderObject < screenTop) {
-                indexGameObject++;
-                remainingGameObjects = indexGameObject < totalGameObjects;
-                continue;
-              }
-              break;
-            }
-            continue;
-          }
-        }
-      }
-    }
+    // if (remainingGameObjects) {
+    //   if (!remainingParticles ||
+    //       (orderObject < orderParticle && !particleIsBlood)) {
+    //     if (!remainingZombies || orderObject < orderZombie) {
+    //       if (!remainingNpcs || orderObject < orderNpc) {
+    //         renderGameObject(gameObjects[indexGameObject]);
+    //         indexGameObject++;
+    //         remainingGameObjects = indexGameObject < totalGameObjects;
+    //         while (remainingGameObjects) {
+    //           final nextGameObject = gameObjects[indexGameObject];
+    //           orderObject = nextGameObject.y;
+    //           if (orderObject > screenBottom100) {
+    //             remainingGameObjects = false;
+    //             break;
+    //           }
+    //           final x = nextGameObject.x;
+    //           if (x < screenLeft ||
+    //               x > screenRight ||
+    //               orderObject < screenTop) {
+    //             indexGameObject++;
+    //             remainingGameObjects = indexGameObject < totalGameObjects;
+    //             continue;
+    //           }
+    //           break;
+    //         }
+    //         continue;
+    //       }
+    //     }
+    //   }
+    // }
 
     if (remainingParticles) {
       if (particleIsBlood) {
-        // renderParticle(particles[indexParticle]);
         particles[indexParticle].render();
         indexParticle++;
         remainingParticles = indexParticle < totalParticles;
@@ -222,7 +223,6 @@ void renderSprites() {
       }
 
       if (!remainingZombies || orderParticle < orderZombie) {
-        if (!remainingNpcs || orderParticle < orderNpc) {
           renderParticle(particles[indexParticle]);
           indexParticle++;
           remainingParticles = indexParticle < totalParticles;
@@ -251,43 +251,26 @@ void renderSprites() {
           }
           continue;
         }
-      }
     }
 
     if (remainingZombies) {
-      if (!remainingNpcs || orderZombie < orderNpc) {
-        assert(indexZombie >= 0);
-        renderZombie(zombies[indexZombie]);
-        indexZombie++;
-        remainingZombies = indexZombie < totalZombies;
-        while (remainingZombies) {
-          final zombie = zombies[indexZombie];
-          orderZombie = zombie.y;
-          if (orderZombie > screenBottom100) {
-            remainingZombies = false;
-            break;
-          }
-          final x = zombie.x;
-          if (x < screenLeft || x > screenRight || orderZombie < screenTop) {
-            indexZombie++;
-            remainingZombies = indexZombie < totalZombies;
-            continue;
-          }
+      renderZombie(zombies[indexZombie]);
+      indexZombie++;
+      remainingZombies = indexZombie < totalZombies;
+      while (remainingZombies) {
+        final zombie = zombies[indexZombie];
+        orderZombie = zombie.y;
+        if (orderZombie > screenBottom100) {
+          remainingZombies = false;
           break;
         }
-        continue;
-      }
-    }
-
-    if (remainingNpcs) {
-      // drawInteractableNpc(npcs[indexNpc]);
-      indexNpc++;
-      remainingNpcs = indexNpc < totalNpcs;
-      if (remainingNpcs) {
-        orderNpc = npcs[indexNpc].y;
-        if (orderNpc > screenBottom) {
-          remainingNpcs = false;
+        final x = zombie.x;
+        if (x < screenLeft || x > screenRight || orderZombie < screenTop) {
+          indexZombie++;
+          remainingZombies = indexZombie < totalZombies;
+          continue;
         }
+        break;
       }
       continue;
     }
@@ -295,9 +278,8 @@ void renderSprites() {
     if (remainingGrid ||
         remainingZombies ||
         remainingPlayers ||
-        remainingNpcs ||
-        remainingGameObjects ||
         remainingParticles) continue;
     return;
   }
 }
+

@@ -32,7 +32,10 @@ int _compareParticles(Particle a, Particle b) {
   if (!b.active) {
     return -1;
   }
-  return a.y > b.y ? 1 : -1;
+  if (a.z == b.z){
+    return a.renderOrderD > b.renderOrderD ? 1 : -1;
+  }
+  return a.z > b.z ? 1 : -1;
 }
 
 Particle? next;
