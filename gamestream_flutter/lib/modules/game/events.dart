@@ -41,7 +41,7 @@ class GameEvents {
     player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     player.alive.onChanged(_onPlayerAliveChanged);
     player.state.onChanged(onPlayerCharacterStateChanged);
-    textBoxVisible.onChanged(onTextModeChanged);
+    messageBoxVisible.onChanged(onTextModeChanged);
     player.equippedWeapon.onChanged(onPlayerWeaponChanged);
     player.armour.onChanged(onPlayerArmourChanged);
     player.helm.onChanged(onPlayerHelmChanged);

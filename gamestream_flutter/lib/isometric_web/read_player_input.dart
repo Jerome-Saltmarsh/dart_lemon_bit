@@ -1,0 +1,53 @@
+import 'package:bleed_common/library.dart';
+import 'package:flutter/services.dart';
+import 'package:gamestream_flutter/isometric/character_controller.dart';
+import 'package:gamestream_flutter/isometric/message_box.dart';
+import 'package:lemon_engine/engine.dart';
+
+void readPlayerInput() {
+
+  if (messageBoxVisible.value) return;
+
+  if (engine.mouseLeftDown.value) {
+    setCharacterActionPerform();
+    return;
+  }
+
+  final direction = getKeyDirection();
+  if (direction != null) {
+    characterDirection = direction;
+    setCharacterActionRun();
+  }
+}
+
+int? getKeyDirection() {
+  final keysPressed = keyboardInstance.keysPressed;
+
+  if (keysPressed.contains(LogicalKeyboardKey.keyW)) {
+    if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
+      return Direction.North_East;
+    }
+    if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
+      return Direction.North_West;
+    }
+    return Direction.North;
+  }
+
+  if (keysPressed.contains(LogicalKeyboardKey.keyS)) {
+    if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
+      return Direction.South_East;
+    }
+    if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
+      return Direction.South_West;
+    }
+    return Direction.South;
+  }
+  if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
+    return Direction.West;
+  }
+  if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
+    return Direction.East;
+  }
+  return null;
+}
+

@@ -1,15 +1,15 @@
 import 'package:lemon_watch/watch.dart';
 
-final textBoxVisible = Watch(false);
+final messageBoxVisible = Watch(false);
 
 void messageBoxToggle(){
-  textBoxVisible.value = !textBoxVisible.value;
+  messageBoxVisible.value = !messageBoxVisible.value;
 }
 
 void messageBoxShow(){
-  textBoxVisible.value = true;
+  messageBoxVisible.value = true;
 }
 
 void messageBoxHide(){
-  textBoxVisible.value = false;
+  messageBoxVisible.value = false;
 }

@@ -8,7 +8,7 @@ import 'package:lemon_watch/watch_builder.dart';
 import '../../flutterkit.dart';
 
 Widget buildPanelWriteMessage() {
-  return WatchBuilder(textBoxVisible, (bool visible){
+  return WatchBuilder(messageBoxVisible, (bool visible){
     if (!visible) return blank;
 
     return Positioned(
