@@ -40,6 +40,7 @@ void renderFireball(double x, double y, double rotation) {
 }
 
 void renderArrow(double x, double y, double angle) {
+  print('render arrow');
   const piQuarter = pi / 4.0;
   render(
       dstX: x,

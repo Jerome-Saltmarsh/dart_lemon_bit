@@ -39,7 +39,7 @@ class Particle extends Vector3 {
 
   double get speed => sqrt(xv * xv + yv * yv);
 
-  double get renderScale => (1.0 + (z * 0.4)) * scale;
+  double get renderScale => (1.0) * scale;
 
   void setAngle({required double value, required double speed}){
     xv = getAdjacent(value, speed);

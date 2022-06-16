@@ -16,19 +16,8 @@ void renderZombie(Character character) {
   _renderZombie(character, shade);
 }
 
-void _renderZombie(Character character, int shade) {
-  // engine.mapSrc64(
-  //   x: mapZombieSrcX(character, shade),
-  //   y: 789.0 + (shade * 64.0),
-  // );
-  // engine.mapDst(
-  //     x: character.renderX,
-  //     y: character.renderY,
-  //     anchorX: 32,
-  //     anchorY: 48,
-  //     scale: 0.7);
-  // engine.renderAtlas();
 
+void _renderZombie(Character character, int shade) {
   render(
       dstX: character.renderX,
       dstY: character.renderY,

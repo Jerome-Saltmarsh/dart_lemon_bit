@@ -12,7 +12,8 @@ void renderParticle(Particle value) {
           x: value.renderX, y: value.renderY, scale: value.renderScale);
     case ParticleType.Orb_Shard:
       return renderOrbShard(
-          x: value.renderX, y: value.renderY, scale: value.renderScale);
+          x: value.renderX, y: value.renderY, scale: value.renderScale
+      );
     case ParticleType.Shrapnel:
       return renderShrapnel(
           x: value.renderX, y: value.renderY, scale: value.renderScale);

@@ -72,7 +72,8 @@ class GameRender {
     }
     renderWireFrameRed(
         edit.row,
-        edit.column, edit.z
+        edit.column,
+        edit.z
     );
   }
 
