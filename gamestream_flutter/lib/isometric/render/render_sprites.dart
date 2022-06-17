@@ -113,10 +113,6 @@ class RenderOrder<T> {
     return that;
   }
 
-  // void updateRemaining(){
-  //   remaining = _index < total;
-  // }
-
   void set index(int value){
     _index = value;
     remaining = _index < total;
@@ -132,9 +128,8 @@ class RenderOrder<T> {
   }
 
   void render() {
-    if (!remaining){
-       throw Exception("cannot render $name has none remaining");
-    }
+    assert(remaining);
+
     renderFunction(_index);
     index = (_index + 1);
     if (remaining) {

@@ -9,19 +9,11 @@ import 'src_utils.dart';
 void renderZombie(Character character) {
   final shade = character.shade;
   if (shade > Shade.Dark) return;
-
-  if (shade < Shade.Dark) {
-    renderCharacterHealthBar(character);
-  }
-  _renderZombie(character, shade);
-}
-
-
-void _renderZombie(Character character, int shade) {
+  if (shade < Shade.Dark) renderCharacterHealthBar(character);
   render(
       dstX: character.renderX,
       dstY: character.renderY,
-      srcX: mapZombieSrcX(character, shade),
+      srcX: _getZombieSrcX(character, shade),
       srcY: 789.0 + (shade * 64.0),
       srcWidth: 64,
       srcHeight: 64,
@@ -30,33 +22,34 @@ void _renderZombie(Character character, int shade) {
   );
 }
 
-double mapZombieSrcX(Character character, int shade) {
-  const _framesPerDirectionZombie = 8;
+double _getZombieSrcX(Character character, int shade) {
+  const framesPerDirection = 8;
   switch (character.state) {
     case CharacterState.Running:
       const frames = [3, 4, 5, 6];
       return loop4(
           animation: frames,
           character: character,
-          framesPerDirection: _framesPerDirectionZombie);
-
+          framesPerDirection: framesPerDirection
+      );
     case CharacterState.Idle:
       return single(
           frame: 1,
           direction: character.direction,
-          framesPerDirection: _framesPerDirectionZombie);
-
+          framesPerDirection: framesPerDirection
+      );
     case CharacterState.Hurt:
       return single(
           frame: 2,
           direction: character.direction,
-          framesPerDirection: _framesPerDirectionZombie);
-
+          framesPerDirection: framesPerDirection,
+      );
     case CharacterState.Performing:
       return animate(
           animation: const [7, 7, 8, 8],
           character: character,
-          framesPerDirection: _framesPerDirectionZombie);
+          framesPerDirection: framesPerDirection,
+      );
     default:
       throw Exception("Render zombie invalid state ${character.state}");
   }

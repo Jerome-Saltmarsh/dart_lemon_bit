@@ -1,5 +1,4 @@
 
-import 'package:bleed_common/CharacterAction.dart';
 import 'package:bleed_common/ClientRequest.dart';
 import 'package:bleed_common/Modify_Game.dart';
 import 'package:bleed_common/SlotTypeCategory.dart';

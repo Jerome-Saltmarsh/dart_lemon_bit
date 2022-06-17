@@ -4,7 +4,6 @@ import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'classes.dart';
 import 'enums.dart';
 
 class GameState {

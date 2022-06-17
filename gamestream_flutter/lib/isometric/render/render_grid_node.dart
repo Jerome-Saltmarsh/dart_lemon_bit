@@ -9,7 +9,6 @@ import 'render_tree.dart';
 
 void renderGridNode(int z, int row, int column, int type) {
   assert (type != GridNodeType.Empty);
-  // if (type == GridNodeType.Empty) return;
 
   final dstX = (row - column) * tileSizeHalf;
   final dstY = ((row + column) * tileSizeHalf) - (z * 24);
