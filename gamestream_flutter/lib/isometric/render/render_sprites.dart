@@ -101,7 +101,7 @@ class RenderOrder<T> {
 
   @override
   String toString(){
-    return "$name: name, order: $order, orderZ: $orderZ, index: $_index";
+    return "$name: name, order: $order, orderZ: $orderZ, index: $_index, total: $total";
   }
 
   RenderOrder compare(RenderOrder that){
@@ -145,7 +145,11 @@ void renderNextGridNode(int index) {
 }
 
 void renderNextZombie(int index){
+   // final zombie = zombies[index];
+   // print("x: ${zombie.x}, y: ${zombie.y}, z: ${zombie.z}");
    renderZombie(zombies[index]);
+   // print("$index: $totalIndex");
+   // print(renderOrderZombie.toString());
 }
 
 void renderNextPlayer(int index) {
@@ -202,14 +206,14 @@ void updateNextPlayer(int index) {
 
 void updateNextZombie(int index){
   final zombie = zombies[index];
-  renderOrderPlayer.order = zombie.renderOrder;
-  renderOrderPlayer.orderZ = zombie.indexZ;
+  renderOrderZombie.order = zombie.renderOrder;
+  renderOrderZombie.orderZ = zombie.indexZ;
 }
 
 void updateNextParticle(int index){
   final particle = particles[index];
-  renderOrderPlayer.order = particle.renderOrder;
-  renderOrderPlayer.orderZ = particle.indexZ;
+  renderOrderParticle.order = particle.renderOrder;
+  renderOrderParticle.orderZ = particle.indexZ;
 }
 
 RenderOrder getNextRenderOrder(){

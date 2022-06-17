@@ -347,7 +347,7 @@ extension GameFunctions on Game {
     frame++;
     if (frame % 15 == 0) {
       updateInteractableNpcTargets();
-      updateZombieTargets();
+      // updateZombieTargets();
       if (players.isEmpty) {
         disableCountDown++;
       } else {

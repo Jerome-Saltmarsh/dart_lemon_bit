@@ -461,13 +461,13 @@ extension PlayerProperties on Player {
     for (var i = 0; i < length; i++){
       final zombie = zombies[i];
       if (zombie.dead) continue;
-      if (zombie.y < screenTop) continue;
-      if (zombie.x < screenLeft) continue;
-      if (zombie.x > screenRight) continue;
-      if (zombie.y > screenBottom) {
-        writeByte(END);
-        return;
-      }
+      // if (zombie.y < screenTop) continue;
+      // if (zombie.x < screenLeft) continue;
+      // if (zombie.x > screenRight) continue;
+      // if (zombie.y > screenBottom) {
+      //   writeByte(END);
+      //   return;
+      // }
       writeCharacter(this, zombie);
     }
     writeByte(END);
