@@ -55,19 +55,14 @@ void renderSprites() {
     if (!particles[i].active) break;
     totalActiveParticles++;
   }
-
+  renderOrderGrid.total = gridVolume;
+  renderOrderPlayer.total = totalPlayers;
+  renderOrderZombie.total = totalZombies;
+  renderOrderParticle.total = totalActiveParticles;
   renderOrderGrid.index = 0;
   renderOrderZombie.index = 0;
   renderOrderParticle.index = 0;
   renderOrderPlayer.index = 0;
-  renderOrderGrid.total = gridTotalZ * gridTotalRows * gridTotalColumns;
-  renderOrderPlayer.total = totalPlayers;
-  renderOrderZombie.total = totalZombies;
-  renderOrderParticle.total = totalActiveParticles;
-
-  for (final order in renderOrder) {
-    order.updateRemaining();
-  }
 
   if (renderOrderPlayer.remaining) {
     updateNextPlayer(0);
@@ -75,6 +70,10 @@ void renderSprites() {
   if (renderOrderGrid.remaining){
     renderOrderGrid.order = 0;
     renderOrderGrid.orderZ = 0;
+    gridType = grid[gridZ][gridType][gridColumn];
+    if (gridType == GridNodeType.Empty){
+      updateNextGrid(0);
+    }
   }
   if (renderOrderParticle.remaining){
     updateNextParticle(0);
@@ -91,7 +90,7 @@ void renderSprites() {
 }
 
 class RenderOrder<T> {
-  var index = 0;
+  var _index = 0;
   var total = 0;
   var order = 0;
   var orderZ = 0;
@@ -102,7 +101,7 @@ class RenderOrder<T> {
 
   @override
   String toString(){
-    return "$name: name, order: $order, orderZ: $orderZ, index: $index";
+    return "$name: name, order: $order, orderZ: $orderZ, index: $_index";
   }
 
   RenderOrder compare(RenderOrder that){
@@ -114,19 +113,32 @@ class RenderOrder<T> {
     return that;
   }
 
-  void updateRemaining(){
-    remaining = index < total;
+  // void updateRemaining(){
+  //   remaining = _index < total;
+  // }
+
+  void set index(int value){
+    _index = value;
+    remaining = _index < total;
+    if (!remaining){
+      updateAnyRemaining();
+    }
   }
 
   RenderOrder(this.renderFunction, this.updateFunction, this.name);
 
+  void indexNext(){
+      index = _index + 1;
+  }
+
   void render() {
-    assert(remaining);
-    renderFunction(index);
-    index++;
-    remaining = index < total;
+    if (!remaining){
+       throw Exception("cannot render $name has none remaining");
+    }
+    renderFunction(_index);
+    index = (_index + 1);
     if (remaining) {
-      updateFunction(index);
+      updateFunction(_index);
     } else {
       updateAnyRemaining();
     }
@@ -150,6 +162,17 @@ void renderNextParticle(int index){
 }
 
 void updateNextGrid(int index){
+  nextGrid();
+  while (gridType == GridNodeType.Empty){
+    renderOrderGrid.indexNext();
+    if (!renderOrderGrid.remaining) return;
+    nextGrid();
+  }
+  renderOrderGrid.order = gridRow + gridColumn;
+  renderOrderGrid.orderZ = gridZ;
+}
+
+void nextGrid(){
   gridRow++;
   gridColumn--;
 
@@ -173,15 +196,7 @@ void updateNextGrid(int index){
       }
     }
   }
-
   gridType = grid[gridZ][gridRow][gridColumn];
-  if (gridType == GridNodeType.Empty) {
-    renderOrderGrid.order = -255;
-    renderOrderGrid.orderZ = -255;
-  } else {
-    renderOrderGrid.order = gridRow + gridColumn;
-    renderOrderGrid.orderZ = gridZ;
-  }
 }
 
 void updateNextPlayer(int index) {
@@ -207,5 +222,6 @@ RenderOrder getNextRenderOrder(){
   for (var i = 1; i < renderOrderLength; i++){
     furthest =  furthest.compare(renderOrder[i]);
   }
+  assert (furthest.remaining);
   return furthest;
 }

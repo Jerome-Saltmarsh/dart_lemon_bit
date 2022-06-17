@@ -21,6 +21,8 @@ var gridTotalRows = 0;
 var gridTotalColumns = 0;
 var gridTotalColumnsMinusOne = gridTotalColumns - 1;
 
+int get gridVolume => gridTotalZ * gridTotalRows * gridTotalColumns;
+
 void gridEmitDynamic(int z, int row, int column){
   _applyEmission(
       map: gridLightDynamic,
