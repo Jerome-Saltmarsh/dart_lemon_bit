@@ -35,31 +35,9 @@ var totalIndex = 0;
 
 void renderSprites() {
   gridTotalColumnsMinusOne = gridTotalColumns - 1;
-
-  sortParticles();
-  gridZ = 0;
-  gridColumn = 0;
-  gridRow = 0;
-  gridType = 0;
-
-  // renderOrderGrid.total = gridVolume;
-  // renderOrderPlayer.total = totalPlayers;
-  // renderOrderZombie.total = totalZombies;
-  // renderOrderParticle.total = totalActiveParticles;
-  // renderOrderGrid.index = 0;
-  // renderOrderZombie.index = 0;
-  // renderOrderParticle.index = 0;
-  // renderOrderPlayer.index = 0;
-
   for (final order in renderOrder){
       order.reset();
   }
-
-  if (renderOrderGrid.remaining){
-    renderOrderGrid.order = 0;
-    renderOrderGrid.orderZ = 0;
-  }
-
   updateAnyRemaining();
   totalIndex = 0;
   while (anyRemaining) {
@@ -127,6 +105,12 @@ class RenderOrderParticle extends RenderOrder {
     }
     return totalActive;
   }
+
+  @override
+  void reset() {
+    sortParticles();
+    super.reset();
+  }
 }
 
 class RenderOrderPlayer extends RenderOrder {
@@ -170,6 +154,17 @@ class RenderOrderGrid extends RenderOrder {
   int getTotal() {
     return gridTotalZ * gridTotalRows * gridTotalColumns;
   }
+
+  @override
+  void reset() {
+    order = 0;
+    orderZ = 0;
+    gridZ = 0;
+    gridColumn = 0;
+    gridRow = 0;
+    gridType = 0;
+    super.reset();
+  }
 }
 
 abstract class RenderOrder {
@@ -190,6 +185,7 @@ abstract class RenderOrder {
       updateFunction(0);
     }
   }
+
 
   // double get renderY => ((order) * tileSizeHalf) - (orderZ * tileHeight);
 
