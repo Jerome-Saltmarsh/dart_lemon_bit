@@ -2,6 +2,7 @@ import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
+import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_zombie.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:lemon_engine/engine.dart';
@@ -15,6 +16,7 @@ final renderOrderGrid = RenderOrderGrid();
 final renderOrderPlayer = RenderOrderPlayer();
 final renderOrderZombie = RenderOrderZombie();
 final renderOrderParticle = RenderOrderParticle();
+final renderOrderProjectiles = RenderOrderProjectiles();
 
 final renderOrder = <RenderOrder> [
   renderOrderGrid,
@@ -24,26 +26,14 @@ final renderOrder = <RenderOrder> [
 ];
 const renderOrderLength = 4;
 var renderOrderFirst = renderOrder.first;
-
-
 var gridZ = 0;
 var gridColumn = 0;
 var gridRow = 0;
 var gridType = 0;
-
 var anyRemaining = false;
 var totalIndex = 0;
 
-void updateAnyRemaining(){
-  anyRemaining =
-      renderOrderGrid.remaining ||
-      renderOrderZombie.remaining ||
-      renderOrderPlayer.remaining ||
-      renderOrderParticle.remaining;
-}
-
 void renderSprites() {
-  final totalParticles = particles.length;
   gridTotalColumnsMinusOne = gridTotalColumns - 1;
 
   sortParticles();
@@ -52,37 +42,24 @@ void renderSprites() {
   gridRow = 0;
   gridType = 0;
 
-  var totalActiveParticles = 0;
-  for (var i = 0; i < totalParticles; i++){
-    if (!particles[i].active) break;
-    totalActiveParticles++;
-  }
-  renderOrderGrid.total = gridVolume;
-  renderOrderPlayer.total = totalPlayers;
-  renderOrderZombie.total = totalZombies;
-  renderOrderParticle.total = totalActiveParticles;
-  renderOrderGrid.index = 0;
-  renderOrderZombie.index = 0;
-  renderOrderParticle.index = 0;
-  renderOrderPlayer.index = 0;
+  // renderOrderGrid.total = gridVolume;
+  // renderOrderPlayer.total = totalPlayers;
+  // renderOrderZombie.total = totalZombies;
+  // renderOrderParticle.total = totalActiveParticles;
+  // renderOrderGrid.index = 0;
+  // renderOrderZombie.index = 0;
+  // renderOrderParticle.index = 0;
+  // renderOrderPlayer.index = 0;
 
-  if (renderOrderPlayer.remaining) {
-    renderOrderPlayer.updateFunction(0);
+  for (final order in renderOrder){
+      order.reset();
   }
+
   if (renderOrderGrid.remaining){
     renderOrderGrid.order = 0;
     renderOrderGrid.orderZ = 0;
-    gridType = grid[gridZ][gridType][gridColumn];
-    if (gridType == GridNodeType.Empty){
-      renderOrderGrid.updateFunction(0);
-    }
   }
-  if (renderOrderParticle.remaining){
-    renderOrderPlayer.updateFunction(0);
-  }
-  if (renderOrderZombie.remaining){
-    renderOrderZombie.updateFunction(0);
-  }
+
   updateAnyRemaining();
   totalIndex = 0;
   while (anyRemaining) {
@@ -103,6 +80,28 @@ class RenderOrderZombie extends RenderOrder {
     renderOrderZombie.order = zombie.renderOrder;
     renderOrderZombie.orderZ = zombie.indexZ;
   }
+
+  @override
+  int getTotal() {
+    return totalZombies;
+  }
+}
+
+class RenderOrderProjectiles extends RenderOrder {
+  @override
+  void renderFunction(int index) {
+    // TODO: implement renderFunction
+  }
+
+  @override
+  void updateFunction(int index) {
+    // TODO: implement updateFunction
+  }
+
+  @override
+  int getTotal() {
+    return totalProjectiles;
+  }
 }
 
 class RenderOrderParticle extends RenderOrder {
@@ -117,6 +116,17 @@ class RenderOrderParticle extends RenderOrder {
     renderOrderParticle.order = particle.renderOrder;
     renderOrderParticle.orderZ = particle.indexZ;
   }
+
+  @override
+  int getTotal() {
+    final particleLength = particles.length;
+    var totalActive = 0;
+    for (var i = 0; i < particleLength; i++){
+      if (!particles[i].active) break;
+      totalActive++;
+    }
+    return totalActive;
+  }
 }
 
 class RenderOrderPlayer extends RenderOrder {
@@ -130,6 +140,11 @@ class RenderOrderPlayer extends RenderOrder {
     final player = players[index];
     renderOrderPlayer.order = player.renderOrder;
     renderOrderPlayer.orderZ = player.indexZ;
+  }
+
+  @override
+  int getTotal() {
+    return totalPlayers;
   }
 }
 
@@ -150,6 +165,11 @@ class RenderOrderGrid extends RenderOrder {
     renderOrderGrid.order = ((gridRow + gridColumn) * tileSize) + tileSizeHalf;
     renderOrderGrid.orderZ = gridZ;
   }
+
+  @override
+  int getTotal() {
+    return gridTotalZ * gridTotalRows * gridTotalColumns;
+  }
 }
 
 abstract class RenderOrder {
@@ -161,8 +181,17 @@ abstract class RenderOrder {
 
   void renderFunction(int index);
   void updateFunction(int index);
+  int getTotal();
 
-  double get renderY => ((order) * tileSizeHalf) - (orderZ * tileHeight);
+  void reset(){
+    total = getTotal();
+    index = 0;
+    if (remaining){
+      updateFunction(0);
+    }
+  }
+
+  // double get renderY => ((order) * tileSizeHalf) - (orderZ * tileHeight);
 
   @override
   String toString(){
@@ -222,7 +251,6 @@ void nextGrid(){
         gridRow = (gridColumn - gridTotalColumnsMinusOne);
         gridColumn = gridTotalColumnsMinusOne;
       }
-
       final dstY = ((gridRow + gridColumn) * tileSizeHalf) - (gridZ * 24);
       if (dstY > engine.screen.bottom + 50) {
         renderOrderGrid.end();
@@ -241,10 +269,20 @@ void nextGrid(){
 }
 
 RenderOrder getNextRenderOrder(){
+  assert (anyRemaining);
   var furthest = renderOrderFirst;
   for (var i = 1; i < renderOrderLength; i++){
     furthest =  furthest.compare(renderOrder[i]);
   }
   assert (furthest.remaining);
   return furthest;
+}
+
+void updateAnyRemaining(){
+  for (final order in renderOrder){
+    if (!order.remaining) continue;
+    anyRemaining = true;
+    return;
+  }
+  anyRemaining = false;
 }
