@@ -33,7 +33,7 @@ int _compareParticles(Particle a, Particle b) {
     return -1;
   }
   if (a.z == b.z){
-    return a.renderOrderD > b.renderOrderD ? 1 : -1;
+    return a.renderOrder > b.renderOrder ? 1 : -1;
   }
   return a.z > b.z ? 1 : -1;
 }

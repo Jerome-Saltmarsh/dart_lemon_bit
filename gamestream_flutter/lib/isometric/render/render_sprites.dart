@@ -147,7 +147,7 @@ class RenderOrderGrid extends RenderOrder {
       if (!renderOrderGrid.remaining) return;
       nextGrid();
     }
-    renderOrderGrid.order = gridRow + gridColumn;
+    renderOrderGrid.order = ((gridRow + gridColumn) * tileSize) + tileSizeHalf;
     renderOrderGrid.orderZ = gridZ;
   }
 }
@@ -155,7 +155,7 @@ class RenderOrderGrid extends RenderOrder {
 abstract class RenderOrder {
   var _index = 0;
   var total = 0;
-  var order = 0;
+  var order = 0.0;
   var orderZ = 0;
   var remaining = true;
 
