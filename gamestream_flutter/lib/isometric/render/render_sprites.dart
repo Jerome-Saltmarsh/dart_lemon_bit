@@ -145,6 +145,7 @@ class RenderOrderGrid extends RenderOrder {
   var gridType = 0;
   var maxColumnRow = 0;
   var gridTotalColumnsMinusOne = 0;
+  late List<List<int>> plain;
 
   @override
   void renderFunction() {
@@ -173,6 +174,7 @@ class RenderOrderGrid extends RenderOrder {
     order = 0;
     orderZ = 0;
     gridZ = 0;
+    plain = grid[gridZ];
     gridColumn = 0;
     gridRow = 0;
     gridType = 0;
@@ -191,12 +193,10 @@ class RenderOrderGrid extends RenderOrder {
         if (gridZ >= gridTotalZ) return;
         gridRow = 0;
         gridColumn = 0;
+        plain = grid[gridZ];
       }
     }
-    assert(gridZ < gridTotalZ);
-    assert(gridRow < gridTotalRows);
-    assert(gridColumn < gridTotalColumns);
-    gridType = grid[gridZ][gridRow][gridColumn];
+    gridType = plain[gridRow][gridColumn];
   }
 
   void shiftIndexDown(){
