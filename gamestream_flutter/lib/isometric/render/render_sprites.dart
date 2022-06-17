@@ -1,8 +1,10 @@
 import 'package:bleed_common/grid_node_type.dart';
+import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/render/render_zombie.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
+import 'package:lemon_engine/engine.dart';
 
 import '../grid.dart';
 import 'render_character.dart';
@@ -89,7 +91,11 @@ void renderSprites() {
   }
 }
 
-class RenderOrder<T> {
+// class RenderOrderGrid extends RenderOrder {
+//
+// }
+
+class RenderOrder {
   var _index = 0;
   var total = 0;
   var order = 0;
@@ -98,6 +104,8 @@ class RenderOrder<T> {
   final String name;
   final Function(int index) renderFunction;
   final Function(int index) updateFunction;
+
+  double get renderY => ((order) * tileSizeHalf) - (orderZ * tileHeight);
 
   @override
   String toString(){
@@ -119,6 +127,10 @@ class RenderOrder<T> {
     if (!remaining){
       updateAnyRemaining();
     }
+  }
+
+  void end(){
+     index = total;
   }
 
   RenderOrder(this.renderFunction, this.updateFunction, this.name);
@@ -145,11 +157,7 @@ void renderNextGridNode(int index) {
 }
 
 void renderNextZombie(int index){
-   // final zombie = zombies[index];
-   // print("x: ${zombie.x}, y: ${zombie.y}, z: ${zombie.z}");
    renderZombie(zombies[index]);
-   // print("$index: $totalIndex");
-   // print(renderOrderZombie.toString());
 }
 
 void renderNextPlayer(int index) {
@@ -185,6 +193,12 @@ void nextGrid(){
       if (gridColumn >= gridTotalColumns) {
         gridRow = (gridColumn - gridTotalColumnsMinusOne);
         gridColumn = gridTotalColumnsMinusOne;
+      }
+
+      final dstY = ((gridRow + gridColumn) * tileSizeHalf) - (gridZ * 24);
+      if (dstY > engine.screen.bottom + 50) {
+        renderOrderGrid.end();
+        return;
       }
     } else {
       gridColumn = gridRow + gridColumn;
