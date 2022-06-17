@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/isometric/render/render_zombie.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:lemon_engine/engine.dart';
 
+import '../classes/particle.dart';
 import '../grid.dart';
 import 'render_character.dart';
 import 'render_grid_node.dart';
@@ -79,14 +80,16 @@ class RenderOrderProjectiles extends RenderOrder {
 }
 
 class RenderOrderParticle extends RenderOrder {
+  late Particle particle;
+
   @override
   void renderFunction() {
-    renderParticle(particles[_index]);
+    renderParticle(particle);
   }
 
   @override
   void updateFunction() {
-    final particle = particles[_index];
+    particle = particles[_index];
     order = particle.renderOrder;
     orderZ = particle.indexZ;
   }
@@ -110,14 +113,16 @@ class RenderOrderParticle extends RenderOrder {
 }
 
 class RenderOrderPlayer extends RenderOrder {
+  late Character player;
+
   @override
   void renderFunction() {
-    renderCharacter(players[_index]);
+    renderCharacter(player);
   }
 
   @override
   void updateFunction() {
-    final player = players[_index];
+    player = players[_index];
     order = player.renderOrder;
     orderZ = player.indexZ;
   }
