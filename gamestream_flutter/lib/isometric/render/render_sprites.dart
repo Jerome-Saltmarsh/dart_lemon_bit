@@ -12,17 +12,12 @@ import 'render_character.dart';
 import 'render_grid_node.dart';
 import 'render_particle.dart';
 
-final renderOrderGrid = RenderOrderGrid();
-final renderOrderPlayer = RenderOrderPlayer();
-final renderOrderZombie = RenderOrderZombie();
-final renderOrderParticle = RenderOrderParticle();
-final renderOrderProjectiles = RenderOrderProjectiles();
 
 final renderOrder = <RenderOrder> [
-  renderOrderGrid,
-  renderOrderPlayer,
-  renderOrderParticle,
-  renderOrderZombie,
+  RenderOrderGrid(),
+  RenderOrderPlayer(),
+  RenderOrderZombie(),
+  RenderOrderParticle(),
 ];
 const renderOrderLength = 4;
 var renderOrderFirst = renderOrder.first;
@@ -51,8 +46,8 @@ class RenderOrderZombie extends RenderOrder {
   @override
   void updateFunction(int index) {
     final zombie = zombies[index];
-    renderOrderZombie.order = zombie.renderOrder;
-    renderOrderZombie.orderZ = zombie.indexZ;
+    order = zombie.renderOrder;
+    orderZ = zombie.indexZ;
   }
 
   @override
@@ -87,8 +82,8 @@ class RenderOrderParticle extends RenderOrder {
   @override
   void updateFunction(int index) {
     final particle = particles[index];
-    renderOrderParticle.order = particle.renderOrder;
-    renderOrderParticle.orderZ = particle.indexZ;
+    order = particle.renderOrder;
+    orderZ = particle.indexZ;
   }
 
   @override
@@ -118,8 +113,8 @@ class RenderOrderPlayer extends RenderOrder {
   @override
   void updateFunction(int index) {
     final player = players[index];
-    renderOrderPlayer.order = player.renderOrder;
-    renderOrderPlayer.orderZ = player.indexZ;
+    order = player.renderOrder;
+    orderZ = player.indexZ;
   }
 
   @override
@@ -143,12 +138,12 @@ class RenderOrderGrid extends RenderOrder {
   void updateFunction(int index) {
     nextGrid();
     while (gridType == GridNodeType.Empty){
-      renderOrderGrid.indexNext();
-      if (!renderOrderGrid.remaining) return;
+      indexNext();
+      if (!remaining) return;
       nextGrid();
     }
-    renderOrderGrid.order = ((gridRow + gridColumn) * tileSize) + tileSizeHalf;
-    renderOrderGrid.orderZ = gridZ;
+    order = ((gridRow + gridColumn) * tileSize) + tileSizeHalf;
+    orderZ = gridZ;
   }
 
   @override
@@ -184,8 +179,7 @@ class RenderOrderGrid extends RenderOrder {
         }
         final dstY = ((gridRow + gridColumn) * tileSizeHalf) - (gridZ * 24);
         if (dstY > engine.screen.bottom + 50) {
-          renderOrderGrid.end();
-          return;
+          return end();
         }
       } else {
         gridColumn = gridRow + gridColumn;
