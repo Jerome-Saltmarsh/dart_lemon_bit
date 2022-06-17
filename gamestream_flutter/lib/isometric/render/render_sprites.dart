@@ -1,5 +1,6 @@
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/tile_size.dart';
+import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
@@ -19,6 +20,8 @@ final renderOrder = <RenderOrder> [
   RenderOrderZombie(),
   RenderOrderParticle(),
 ];
+
+// renderOrderLength gets called a lot during rendering so use a const and update it manually if need be
 const renderOrderLength = 4;
 var renderOrderFirst = renderOrder.first;
 var anyRemaining = false;
@@ -38,14 +41,16 @@ void renderSprites() {
 }
 
 class RenderOrderZombie extends RenderOrder {
+  late Character zombie;
+
   @override
-  void renderFunction(int index) {
-    renderZombie(zombies[index]);
+  void renderFunction() {
+    renderZombie(zombie);
   }
 
   @override
-  void updateFunction(int index) {
-    final zombie = zombies[index];
+  void updateFunction() {
+    zombie = zombies[_index];
     order = zombie.renderOrder;
     orderZ = zombie.indexZ;
   }
@@ -58,12 +63,12 @@ class RenderOrderZombie extends RenderOrder {
 
 class RenderOrderProjectiles extends RenderOrder {
   @override
-  void renderFunction(int index) {
+  void renderFunction() {
     // TODO: implement renderFunction
   }
 
   @override
-  void updateFunction(int index) {
+  void updateFunction() {
     // TODO: implement updateFunction
   }
 
@@ -75,13 +80,13 @@ class RenderOrderProjectiles extends RenderOrder {
 
 class RenderOrderParticle extends RenderOrder {
   @override
-  void renderFunction(int index) {
-    renderParticle(particles[index]);
+  void renderFunction() {
+    renderParticle(particles[_index]);
   }
 
   @override
-  void updateFunction(int index) {
-    final particle = particles[index];
+  void updateFunction() {
+    final particle = particles[_index];
     order = particle.renderOrder;
     orderZ = particle.indexZ;
   }
@@ -106,13 +111,13 @@ class RenderOrderParticle extends RenderOrder {
 
 class RenderOrderPlayer extends RenderOrder {
   @override
-  void renderFunction(int index) {
-    renderCharacter(players[index]);
+  void renderFunction() {
+    renderCharacter(players[_index]);
   }
 
   @override
-  void updateFunction(int index) {
-    final player = players[index];
+  void updateFunction() {
+    final player = players[_index];
     order = player.renderOrder;
     orderZ = player.indexZ;
   }
@@ -130,12 +135,12 @@ class RenderOrderGrid extends RenderOrder {
   var gridType = 0;
 
   @override
-  void renderFunction(int index) {
+  void renderFunction() {
     renderGridNode(gridZ, gridRow, gridColumn, gridType);
   }
 
   @override
-  void updateFunction(int index) {
+  void updateFunction() {
     nextGrid();
     while (gridType == GridNodeType.Empty){
       indexNext();
@@ -202,15 +207,15 @@ abstract class RenderOrder {
   var orderZ = 0;
   var remaining = true;
 
-  void renderFunction(int index);
-  void updateFunction(int index);
+  void renderFunction();
+  void updateFunction();
   int getTotal();
 
   void reset(){
     total = getTotal();
     index = 0;
     if (remaining){
-      updateFunction(0);
+      updateFunction();
     }
   }
 
@@ -248,11 +253,10 @@ abstract class RenderOrder {
 
   void render() {
     assert(remaining);
-
-    renderFunction(_index);
+    renderFunction();
     index = (_index + 1);
     if (remaining) {
-      updateFunction(_index);
+      updateFunction();
     } else {
       updateAnyRemaining();
     }
