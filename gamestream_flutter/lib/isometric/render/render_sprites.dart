@@ -26,10 +26,6 @@ final renderOrder = <RenderOrder> [
 ];
 const renderOrderLength = 4;
 var renderOrderFirst = renderOrder.first;
-var gridZ = 0;
-var gridColumn = 0;
-var gridRow = 0;
-var gridType = 0;
 var anyRemaining = false;
 var totalIndex = 0;
 
@@ -133,6 +129,11 @@ class RenderOrderPlayer extends RenderOrder {
 }
 
 class RenderOrderGrid extends RenderOrder {
+  var gridZ = 0;
+  var gridColumn = 0;
+  var gridRow = 0;
+  var gridType = 0;
+
   @override
   void renderFunction(int index) {
     renderGridNode(gridZ, gridRow, gridColumn, gridType);
@@ -165,6 +166,39 @@ class RenderOrderGrid extends RenderOrder {
     gridType = 0;
     super.reset();
   }
+
+  void nextGrid(){
+    gridRow++;
+    gridColumn--;
+
+    if (gridColumn < 0 || gridRow >= gridTotalRows) {
+      gridZ++;
+
+      if (gridZ >= gridTotalZ) {
+        gridZ = 0;
+        gridColumn = gridRow + gridColumn + 1;
+        gridRow = 0;
+        if (gridColumn >= gridTotalColumns) {
+          gridRow = (gridColumn - gridTotalColumnsMinusOne);
+          gridColumn = gridTotalColumnsMinusOne;
+        }
+        final dstY = ((gridRow + gridColumn) * tileSizeHalf) - (gridZ * 24);
+        if (dstY > engine.screen.bottom + 50) {
+          renderOrderGrid.end();
+          return;
+        }
+      } else {
+        gridColumn = gridRow + gridColumn;
+        gridRow = 0;
+        if (gridColumn >= gridTotalColumns) {
+          gridRow = (gridColumn - gridTotalColumnsMinusOne);
+          gridColumn = gridTotalColumnsMinusOne;
+        }
+      }
+    }
+    gridType = grid[gridZ][gridRow][gridColumn];
+  }
+
 }
 
 abstract class RenderOrder {
@@ -185,7 +219,6 @@ abstract class RenderOrder {
       updateFunction(0);
     }
   }
-
 
   // double get renderY => ((order) * tileSizeHalf) - (orderZ * tileHeight);
 
@@ -230,38 +263,6 @@ abstract class RenderOrder {
       updateAnyRemaining();
     }
   }
-}
-
-void nextGrid(){
-  gridRow++;
-  gridColumn--;
-
-  if (gridColumn < 0 || gridRow >= gridTotalRows) {
-    gridZ++;
-
-    if (gridZ >= gridTotalZ) {
-      gridZ = 0;
-      gridColumn = gridRow + gridColumn + 1;
-      gridRow = 0;
-      if (gridColumn >= gridTotalColumns) {
-        gridRow = (gridColumn - gridTotalColumnsMinusOne);
-        gridColumn = gridTotalColumnsMinusOne;
-      }
-      final dstY = ((gridRow + gridColumn) * tileSizeHalf) - (gridZ * 24);
-      if (dstY > engine.screen.bottom + 50) {
-        renderOrderGrid.end();
-        return;
-      }
-    } else {
-      gridColumn = gridRow + gridColumn;
-      gridRow = 0;
-      if (gridColumn >= gridTotalColumns) {
-        gridRow = (gridColumn - gridTotalColumnsMinusOne);
-        gridColumn = gridTotalColumnsMinusOne;
-      }
-    }
-  }
-  gridType = grid[gridZ][gridRow][gridColumn];
 }
 
 RenderOrder getNextRenderOrder(){
