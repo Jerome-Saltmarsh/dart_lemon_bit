@@ -20,8 +20,9 @@ final renderOrder = <RenderOrder> [
   renderOrderParticle,
   renderOrderZombie,
 ];
+const renderOrderLength = 4;
+var renderOrderFirst = renderOrder.first;
 
-final renderOrderLength = renderOrder.length;
 
 var gridZ = 0;
 var gridColumn = 0;
@@ -89,7 +90,7 @@ void renderSprites() {
   }
 }
 
-class RenderOrder {
+class RenderOrder<T> {
   var index = 0;
   var total = 0;
   var order = 0;
@@ -202,13 +203,9 @@ void updateNextParticle(int index){
 }
 
 RenderOrder getNextRenderOrder(){
-  var furthest = renderOrder[0];
+  var furthest = renderOrderFirst;
   for (var i = 1; i < renderOrderLength; i++){
     furthest =  furthest.compare(renderOrder[i]);
   }
-  // if (furthest == renderOrderPlayer){
-  //   print(renderOrderPlayer.toString());
-  //   print(renderOrderGrid.toString());
-  // }
   return furthest;
 }
