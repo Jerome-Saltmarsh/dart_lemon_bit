@@ -8,7 +8,6 @@ import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_zombie.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
-import 'package:lemon_engine/engine.dart';
 
 import '../classes/particle.dart';
 import '../grid.dart';
@@ -32,7 +31,6 @@ var anyRemaining = false;
 var totalIndex = 0;
 
 void renderSprites() {
-  gridTotalColumnsMinusOne = gridTotalColumns - 1;
   for (final order in renderOrder){
       order.reset();
   }
@@ -145,6 +143,8 @@ class RenderOrderGrid extends RenderOrder {
   var gridColumn = 0;
   var gridRow = 0;
   var gridType = 0;
+  var maxColumnRow = 0;
+  var gridTotalColumnsMinusOne = 0;
 
   @override
   void renderFunction() {
@@ -153,11 +153,11 @@ class RenderOrderGrid extends RenderOrder {
 
   @override
   void updateFunction() {
-    nextGrid();
+    nextGridNode();
     while (gridType == GridNodeType.Empty){
       index = _index + 1;
       if (!remaining) return;
-      nextGrid();
+      nextGridNode();
     }
     order = ((gridRow + gridColumn) * tileSize) + tileSizeHalf;
     orderZ = gridZ;
@@ -176,41 +176,39 @@ class RenderOrderGrid extends RenderOrder {
     gridColumn = 0;
     gridRow = 0;
     gridType = 0;
+    maxColumnRow = gridTotalRows + gridTotalColumns;
+    gridTotalColumnsMinusOne = gridTotalColumns - 1;
     super.reset();
   }
 
-  void nextGrid(){
+  void nextGridNode(){
     gridRow++;
     gridColumn--;
-
     if (gridColumn < 0 || gridRow >= gridTotalRows) {
-      gridZ++;
-
-      if (gridZ >= gridTotalZ) {
-        gridZ = 0;
-        gridColumn = gridRow + gridColumn + 1;
+      shiftIndexDown();
+      if (gridRow >= gridTotalRows || gridColumn >= gridTotalColumns){
+        gridZ++;
+        if (gridZ >= gridTotalZ) return;
         gridRow = 0;
-        if (gridColumn >= gridTotalColumns) {
-          gridRow = (gridColumn - gridTotalColumnsMinusOne);
-          gridColumn = gridTotalColumnsMinusOne;
-        }
-        final dstY = ((gridRow + gridColumn) * tileSizeHalf) - (gridZ * 24);
-        if (dstY > engine.screen.bottom + 50) {
-          return end();
-        }
-      } else {
-        gridColumn = gridRow + gridColumn;
-        gridRow = 0;
-        if (gridColumn >= gridTotalColumns) {
-          gridRow = (gridColumn - gridTotalColumnsMinusOne);
-          gridColumn = gridTotalColumnsMinusOne;
-        }
+        gridColumn = 0;
       }
     }
+    assert(gridZ < gridTotalZ);
+    assert(gridRow < gridTotalRows);
+    assert(gridColumn < gridTotalColumns);
     gridType = grid[gridZ][gridRow][gridColumn];
   }
 
+  void shiftIndexDown(){
+    gridColumn = gridRow + gridColumn + 1;
+    gridRow = 0;
+    if (gridColumn < gridTotalColumns) return;
+    gridRow = gridColumn - gridTotalColumnsMinusOne;
+    gridColumn = gridTotalColumnsMinusOne;
+  }
 }
+
+
 
 abstract class RenderOrder {
   var _index = 0;

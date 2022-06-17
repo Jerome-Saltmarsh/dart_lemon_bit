@@ -10,7 +10,6 @@ import 'package:gamestream_flutter/isometric/classes/npc_debug.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_grid_node.dart';
-import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/collectables.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
@@ -44,7 +43,6 @@ class GameRender {
   }
 
   void render(Canvas canvas, Size size) {
-
     drawAbility();
     attackTargetCircle();
     drawPaths();

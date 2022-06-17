@@ -19,7 +19,6 @@ final gridLightDynamic = <List<List<int>>>[];
 var gridTotalZ = 0;
 var gridTotalRows = 0;
 var gridTotalColumns = 0;
-var gridTotalColumnsMinusOne = gridTotalColumns - 1;
 
 int get gridVolume => gridTotalZ * gridTotalRows * gridTotalColumns;
 
@@ -33,6 +32,10 @@ void gridEmitDynamic(int z, int row, int column){
 }
 
 void _onAmbientChanged(int ambient) {
+  refreshLighting();
+}
+
+void onGridChanged(){
   refreshLighting();
 }
 
@@ -55,21 +58,21 @@ void gridApplyShadows(){
   // if (hour < 15) return _applyShadowsEvening();
 }
 
-void _applyShadowsMorning() {
-  _applyShadowAt(directionZ: -1, directionRow: 0, directionColumn: 1, maxDistance: 1);
-}
-
-void _applyShadowsAfternoon() {
-  _applyShadowAt(directionZ: -1, directionRow: 1, directionColumn: 0, maxDistance: 1);
-}
+// void _applyShadowsMorning() {
+//   _applyShadowAt(directionZ: -1, directionRow: 0, directionColumn: 1, maxDistance: 1);
+// }
+//
+// void _applyShadowsAfternoon() {
+//   _applyShadowAt(directionZ: -1, directionRow: 1, directionColumn: 0, maxDistance: 1);
+// }
 
 void _applyShadowsMidAfternoon() {
   _applyShadowAt(directionZ: -1, directionRow: 0, directionColumn: 0, maxDistance: 1);
 }
 
-void _applyShadowsEvening() {
-  _applyShadowAt(directionZ: -1, directionRow: 0, directionColumn: -1, maxDistance: 1);
-}
+// void _applyShadowsEvening() {
+//   _applyShadowAt(directionZ: -1, directionRow: 0, directionColumn: -1, maxDistance: 1);
+// }
 
 void _applyShadowAt({
   required int directionZ,
@@ -88,7 +91,6 @@ void _applyShadowAt({
         var projectionZ = z + directionZ;
         var projectionRow = row + directionRow;
         var projectionColumn = column + directionColumn;
-        var distance = 0;
         while (
             projectionZ >= 0 &&
             projectionRow >= 0 &&
@@ -104,11 +106,8 @@ void _applyShadowAt({
             }
           }
           projectionZ += directionZ;
-          distance++;
-          // if (distance < maxDistance){
-            projectionRow += directionRow;
-            projectionColumn += directionColumn;
-          // }
+          projectionRow += directionRow;
+          projectionColumn += directionColumn;
         }
       }
     }

@@ -44,7 +44,7 @@ class _Engine {
     }
     if (frame % 30 == 0) {
       for (final game in games) {
-        game.updateAIPath();
+        // game.updateAIPath();
       }
     }
 

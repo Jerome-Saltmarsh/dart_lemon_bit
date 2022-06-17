@@ -136,7 +136,7 @@ class ServerResponseReader with ByteReader {
                 }
              }
           }
-          refreshLighting();
+          onGridChanged();
           break;
 
         case ServerResponse.Player_Deck_Active_Ability:
@@ -345,7 +345,7 @@ class ServerResponseReader with ByteReader {
           final type = readInt();
           grid[z][row][column] = type;
           edit.type.value = grid[edit.z][edit.row][edit.column];
-          refreshLighting();
+          onGridChanged();
           break;
 
         case ServerResponse.End:

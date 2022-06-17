@@ -1137,9 +1137,7 @@ extension GameFunctions on Game {
     projectile.start.y = src.y;
     projectile.x = src.x;
     projectile.y = src.y;
-    if (src is Collider) {
-      projectile.z = src.z + 6.0;
-    }
+    projectile.z = src.z + 6.0;
     projectile.setVelocity(finalAngle + giveOrTake(accuracy) - piHalf, speed);
     projectile.speed = speed;
     projectile.owner = src;
