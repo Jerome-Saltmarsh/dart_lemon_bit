@@ -2,17 +2,10 @@ import 'dart:math';
 
 import 'package:bleed_common/Projectile_Type.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
-import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 
-void renderProjectiles() {
-  for (var i = 0; i < totalProjectiles; i++) {
-    _renderProjectile(projectiles[i]);
-  }
-}
-
-void _renderProjectile(Projectile value) {
+void renderProjectile(Projectile value) {
   switch (value.type) {
     case ProjectileType.Arrow:
       return renderArrow(value.renderX, value.renderY, value.angle);
@@ -40,7 +33,6 @@ void renderFireball(double x, double y, double rotation) {
 }
 
 void renderArrow(double x, double y, double angle) {
-  print('render arrow');
   const piQuarter = pi / 4.0;
   render(
       dstX: x,

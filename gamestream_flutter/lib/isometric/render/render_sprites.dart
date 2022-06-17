@@ -1,9 +1,11 @@
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
+import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
+import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_zombie.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:lemon_engine/engine.dart';
@@ -20,10 +22,11 @@ final renderOrder = <RenderOrder> [
   RenderOrderPlayer(),
   RenderOrderZombie(),
   RenderOrderParticle(),
+  RenderOrderProjectiles(),
 ];
 
 // renderOrderLength gets called a lot during rendering so use a const and update it manually if need be
-const renderOrderLength = 4;
+const renderOrderLength = 5;
 var renderOrderFirst = renderOrder.first;
 var anyRemaining = false;
 var totalIndex = 0;
@@ -63,14 +66,18 @@ class RenderOrderZombie extends RenderOrder {
 }
 
 class RenderOrderProjectiles extends RenderOrder {
+  late Projectile projectile;
+
   @override
   void renderFunction() {
-    // TODO: implement renderFunction
+    renderProjectile(projectile);
   }
 
   @override
   void updateFunction() {
-    // TODO: implement updateFunction
+     projectile = projectiles[_index];
+     order = projectile.renderOrder;
+     orderZ = projectile.indexZ;
   }
 
   @override
@@ -148,7 +155,7 @@ class RenderOrderGrid extends RenderOrder {
   void updateFunction() {
     nextGrid();
     while (gridType == GridNodeType.Empty){
-      indexNext();
+      index = _index + 1;
       if (!remaining) return;
       nextGrid();
     }
@@ -234,7 +241,6 @@ abstract class RenderOrder {
   RenderOrder compare(RenderOrder that){
     if (!remaining) return that;
     if (!that.remaining) return this;
-
     if (order <= that.order) return this;
     if (orderZ < that.orderZ) return this;
     return that;
@@ -250,10 +256,6 @@ abstract class RenderOrder {
 
   void end(){
      index = total;
-  }
-
-  void indexNext(){
-      index = _index + 1;
   }
 
   void render() {

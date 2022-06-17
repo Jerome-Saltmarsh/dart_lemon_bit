@@ -60,7 +60,6 @@ class GameRender {
     }
 
     renderSprites();
-    renderProjectiles();
     if (editToolsEnabled.value){
       renderWireframes();
     }
