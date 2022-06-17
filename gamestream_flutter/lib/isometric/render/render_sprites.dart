@@ -11,10 +11,10 @@ import 'render_character.dart';
 import 'render_grid_node.dart';
 import 'render_particle.dart';
 
-final renderOrderGrid = RenderOrder(renderNextGridNode, updateNextGrid, "Grid");
-final renderOrderPlayer = RenderOrder(renderNextPlayer, updateNextPlayer, "Player");
-final renderOrderZombie = RenderOrder(renderNextZombie, updateNextZombie, "Zombie");
-final renderOrderParticle = RenderOrder(renderNextParticle, updateNextParticle, "Particle");
+final renderOrderGrid = RenderOrderGrid();
+final renderOrderPlayer = RenderOrderPlayer();
+final renderOrderZombie = RenderOrderZombie();
+final renderOrderParticle = RenderOrderParticle();
 
 final renderOrder = <RenderOrder> [
   renderOrderGrid,
@@ -67,21 +67,21 @@ void renderSprites() {
   renderOrderPlayer.index = 0;
 
   if (renderOrderPlayer.remaining) {
-    updateNextPlayer(0);
+    renderOrderPlayer.updateFunction(0);
   }
   if (renderOrderGrid.remaining){
     renderOrderGrid.order = 0;
     renderOrderGrid.orderZ = 0;
     gridType = grid[gridZ][gridType][gridColumn];
     if (gridType == GridNodeType.Empty){
-      updateNextGrid(0);
+      renderOrderGrid.updateFunction(0);
     }
   }
   if (renderOrderParticle.remaining){
-    updateNextParticle(0);
+    renderOrderPlayer.updateFunction(0);
   }
   if (renderOrderZombie.remaining){
-    updateNextZombie(0);
+    renderOrderZombie.updateFunction(0);
   }
   updateAnyRemaining();
   totalIndex = 0;
@@ -91,25 +91,82 @@ void renderSprites() {
   }
 }
 
-// class RenderOrderGrid extends RenderOrder {
-//
-// }
+class RenderOrderZombie extends RenderOrder {
+  @override
+  void renderFunction(int index) {
+    renderZombie(zombies[index]);
+  }
 
-class RenderOrder {
+  @override
+  void updateFunction(int index) {
+    final zombie = zombies[index];
+    renderOrderZombie.order = zombie.renderOrder;
+    renderOrderZombie.orderZ = zombie.indexZ;
+  }
+}
+
+class RenderOrderParticle extends RenderOrder {
+  @override
+  void renderFunction(int index) {
+    renderParticle(particles[index]);
+  }
+
+  @override
+  void updateFunction(int index) {
+    final particle = particles[index];
+    renderOrderParticle.order = particle.renderOrder;
+    renderOrderParticle.orderZ = particle.indexZ;
+  }
+}
+
+class RenderOrderPlayer extends RenderOrder {
+  @override
+  void renderFunction(int index) {
+    renderCharacter(players[index]);
+  }
+
+  @override
+  void updateFunction(int index) {
+    final player = players[index];
+    renderOrderPlayer.order = player.renderOrder;
+    renderOrderPlayer.orderZ = player.indexZ;
+  }
+}
+
+class RenderOrderGrid extends RenderOrder {
+  @override
+  void renderFunction(int index) {
+    renderGridNode(gridZ, gridRow, gridColumn, gridType);
+  }
+
+  @override
+  void updateFunction(int index) {
+    nextGrid();
+    while (gridType == GridNodeType.Empty){
+      renderOrderGrid.indexNext();
+      if (!renderOrderGrid.remaining) return;
+      nextGrid();
+    }
+    renderOrderGrid.order = gridRow + gridColumn;
+    renderOrderGrid.orderZ = gridZ;
+  }
+}
+
+abstract class RenderOrder {
   var _index = 0;
   var total = 0;
   var order = 0;
   var orderZ = 0;
   var remaining = true;
-  final String name;
-  final Function(int index) renderFunction;
-  final Function(int index) updateFunction;
+
+  void renderFunction(int index);
+  void updateFunction(int index);
 
   double get renderY => ((order) * tileSizeHalf) - (orderZ * tileHeight);
 
   @override
   String toString(){
-    return "$name: name, order: $order, orderZ: $orderZ, index: $_index, total: $total";
+    return "$order: $order, orderZ: $orderZ, index: $_index, total: $total";
   }
 
   RenderOrder compare(RenderOrder that){
@@ -133,8 +190,6 @@ class RenderOrder {
      index = total;
   }
 
-  RenderOrder(this.renderFunction, this.updateFunction, this.name);
-
   void indexNext(){
       index = _index + 1;
   }
@@ -150,33 +205,6 @@ class RenderOrder {
       updateAnyRemaining();
     }
   }
-}
-
-void renderNextGridNode(int index) {
-  renderGridNode(gridZ, gridRow, gridColumn, gridType);
-}
-
-void renderNextZombie(int index){
-   renderZombie(zombies[index]);
-}
-
-void renderNextPlayer(int index) {
-  renderCharacter(players[index]);
-}
-
-void renderNextParticle(int index){
-  renderParticle(particles[index]);
-}
-
-void updateNextGrid(int index){
-  nextGrid();
-  while (gridType == GridNodeType.Empty){
-    renderOrderGrid.indexNext();
-    if (!renderOrderGrid.remaining) return;
-    nextGrid();
-  }
-  renderOrderGrid.order = gridRow + gridColumn;
-  renderOrderGrid.orderZ = gridZ;
 }
 
 void nextGrid(){
@@ -210,24 +238,6 @@ void nextGrid(){
     }
   }
   gridType = grid[gridZ][gridRow][gridColumn];
-}
-
-void updateNextPlayer(int index) {
-   final player = players[index];
-   renderOrderPlayer.order = player.renderOrder;
-   renderOrderPlayer.orderZ = player.indexZ;
-}
-
-void updateNextZombie(int index){
-  final zombie = zombies[index];
-  renderOrderZombie.order = zombie.renderOrder;
-  renderOrderZombie.orderZ = zombie.indexZ;
-}
-
-void updateNextParticle(int index){
-  final particle = particles[index];
-  renderOrderParticle.order = particle.renderOrder;
-  renderOrderParticle.orderZ = particle.indexZ;
 }
 
 RenderOrder getNextRenderOrder(){

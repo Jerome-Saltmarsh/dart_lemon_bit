@@ -11,8 +11,6 @@ void renderGridNode(int z, int row, int column, int type) {
   assert (type != GridNodeType.Empty);
   final dstX = (row - column) * tileSizeHalf;
   final dstY = ((row + column) * tileSizeHalf) - (z * 24);
-  // if (dstY < engine.screen.top) return;
-  // assert (dstY < engine.screen.bottom);
 
   final shade = gridLightDynamic[z][row][column];
   switch (type) {
