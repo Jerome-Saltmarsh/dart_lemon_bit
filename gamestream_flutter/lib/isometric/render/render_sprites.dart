@@ -185,7 +185,7 @@ class RenderOrderGrid extends RenderOrder {
     gridTotalColumnsMinusOne = gridTotalColumns - 1;
 
     final left = engine.screen.left;
-    final bottom = engine.screen.bottom - 100;
+    final bottom = engine.screen.bottom + (gridTotalZ * tileHeight);
     final screenBottomColumn = convertWorldToColumn(left, bottom);
     final screenBottomRow = convertWorldToRow(left, bottom);
     final screenBottomTotal = screenBottomRow + screenBottomColumn;
