@@ -6,7 +6,7 @@ void renderTreeAt(int z, int row, int column) {
   render(
       dstX: getTileWorldX(row, column),
       dstY: getTileWorldY(row, column) - (z * 24),
-      srcX: 2049,
+      srcX: 7830,
       srcY: 81.0 * gridLightDynamic[z][row][column],
       srcWidth: 64.0,
       srcHeight: 81.0

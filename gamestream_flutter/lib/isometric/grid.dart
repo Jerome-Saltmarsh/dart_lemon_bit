@@ -109,9 +109,9 @@ void _applyShadowAt({
         ) {
           final shade = gridLightBake[projectionZ][projectionRow][projectionColumn];
           if (shade < shadowShade){
-            // if (grid[projectionZ + 1][projectionRow][projectionColumn] == GridNodeType.Empty){
+            if (grid[projectionZ + 1][projectionRow][projectionColumn] == GridNodeType.Empty){
               gridLightBake[projectionZ][projectionRow][projectionColumn] = shadowShade;
-            // }
+            }
           }
           projectionZ += directionZ;
           projectionRow += directionRow;

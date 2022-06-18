@@ -1,18 +1,15 @@
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
-import 'package:gamestream_flutter/isometric/render/render_pixel.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 
 import 'render_torch.dart';
-import 'render_tree.dart';
 
 void renderGridNode(int z, int row, int column, int type) {
   assert (type != GridNodeType.Empty);
   final dstX = (row - column) * tileSizeHalf;
   final dstY = ((row + column) * tileSizeHalf) - (z * 24);
-
   final shade = gridLightDynamic[z][row][column];
   switch (type) {
     case GridNodeType.Bricks:
@@ -101,7 +98,25 @@ void renderGridNode(int z, int row, int column, int type) {
       return renderTorchOn(dstX, dstY);
 
     case GridNodeType.Tree:
-      return renderTreeAt(z, row, column);
+      return render(
+          dstX: dstX,
+          dstY: dstY,
+          srcX: 7830,
+          srcY: 81.0 * shade,
+          srcWidth: 48.0,
+          srcHeight: 72.0,
+          anchorY: 0.3334,
+      );
+    case GridNodeType.Tree_Top:
+      return render(
+          dstX: dstX,
+          dstY: dstY,
+          srcX: 7878,
+          srcY: 81.0 * shade,
+          srcWidth: 48.0,
+          srcHeight: 72.0,
+          anchorY: 0.3334,
+      );
 
     case GridNodeType.Player_Spawn:
       return render(
@@ -118,6 +133,17 @@ void renderGridNode(int z, int row, int column, int type) {
         dstX: dstX,
         dstY: dstY,
         srcX: 7734,
+        srcY: 72.0 * shade,
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorX: 0.5,
+        anchorY: 0.3334,
+      );
+    case GridNodeType.Wooden_Wall_Row:
+      return render(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: 7782,
         srcY: 72.0 * shade,
         srcWidth: 48,
         srcHeight: 72,
