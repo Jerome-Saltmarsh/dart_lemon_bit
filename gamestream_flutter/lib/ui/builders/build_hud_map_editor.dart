@@ -142,6 +142,7 @@ Widget buildColumnEditTile(){
       _buildSetType(GridNodeType.Empty, "Empty"),
       _buildSetType(GridNodeType.Bricks, "Bricks"),
       _buildSetType(GridNodeType.Grass, "Grass"),
+      _buildSetType(GridNodeType.Grass_Long, "Long Grass"),
       _buildSetType(GridNodeType.Stairs_North, "Stairs North"),
       _buildSetType(GridNodeType.Stairs_West, "Stairs West"),
       _buildSetType(GridNodeType.Stairs_South, "Stairs South"),

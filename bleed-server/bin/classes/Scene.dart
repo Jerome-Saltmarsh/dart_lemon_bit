@@ -515,7 +515,7 @@ class Scene {
 
     var tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
 
-    while (tileAtFeet == GridNodeType.Bricks || tileAtFeet == GridNodeType.Grass) {
+    while (tileAtFeet == GridNodeType.Bricks || tileAtFeet == GridNodeType.Grass || tileAtFeet == GridNodeType.Grass_Long) {
        character.z += 24 - (character.z % 24);
        tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
        character.zVelocity = 0;

@@ -13,11 +13,6 @@ void renderGridNode(int z, int row, int column, int type) {
   final dstX = (row - column) * tileSizeHalf;
   final dstY = ((row + column) * tileSizeHalf) - (z * 24);
 
-  if (type == GridNodeType.Water){
-    renderPixelRed(dstX, dstY);
-  }
-
-
   final shade = gridLightDynamic[z][row][column];
   switch (type) {
     case GridNodeType.Bricks:
@@ -116,6 +111,17 @@ void renderGridNode(int z, int row, int column, int type) {
         srcY: 72.0 * shade,
         srcWidth: 48,
         srcHeight: 72,
+        anchorY: 0.3334,
+      );
+    case GridNodeType.Grass_Long:
+      return render(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: 7734,
+        srcY: 72.0 * shade,
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorX: 0.5,
         anchorY: 0.3334,
       );
     default:

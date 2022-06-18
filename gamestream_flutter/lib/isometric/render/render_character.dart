@@ -16,6 +16,7 @@ void renderCharacter(Character character) {
   assert(character.direction >= 0);
   assert(character.direction < 8);
 
+
   // renderPixelRed(character.renderX, character.renderY);
   // final f = (engine.frame % 360) * degreesToRadians;
   // // renderCircle32(character.renderX, character.renderY, rotation: f);
