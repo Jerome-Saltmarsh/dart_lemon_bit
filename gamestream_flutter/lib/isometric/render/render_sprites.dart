@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:bleed_common/grid_node_type.dart';
+import 'package:bleed_common/library.dart';
 import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
@@ -8,6 +11,7 @@ import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_zombie.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
+import 'package:lemon_engine/engine.dart';
 
 import '../classes/particle.dart';
 import '../grid.dart';
@@ -178,8 +182,14 @@ class RenderOrderGrid extends RenderOrder {
     gridColumn = 0;
     gridRow = 0;
     gridType = 0;
-    maxColumnRow = gridTotalRows + gridTotalColumns;
     gridTotalColumnsMinusOne = gridTotalColumns - 1;
+
+    final left = engine.screen.left;
+    final bottom = engine.screen.bottom - 100;
+    final screenBottomColumn = convertWorldToColumn(left, bottom);
+    final screenBottomRow = convertWorldToRow(left, bottom);
+    final screenBottomTotal = screenBottomRow + screenBottomColumn;
+    maxColumnRow = min(gridTotalRows + gridTotalColumns, screenBottomTotal);
     super.reset();
   }
 
@@ -188,9 +198,14 @@ class RenderOrderGrid extends RenderOrder {
     gridColumn--;
     if (gridColumn < 0 || gridRow >= gridTotalRows) {
       shiftIndexDown();
-      if (gridRow >= gridTotalRows || gridColumn >= gridTotalColumns){
+
+
+      if (gridColumn + gridRow >= maxColumnRow || gridRow >= gridTotalRows || gridColumn >= gridTotalColumns){
         gridZ++;
-        if (gridZ >= gridTotalZ) return;
+        if (gridZ >= gridTotalZ) {
+          end();
+          return;
+        }
         gridRow = 0;
         gridColumn = 0;
         plain = grid[gridZ];

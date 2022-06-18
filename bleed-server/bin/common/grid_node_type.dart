@@ -11,7 +11,6 @@ class GridNodeType {
   static const Torch = 9;
   static const Tree = 10;
   static const Player_Spawn = 11;
-  static const Empty_Final = 12;
 
   static bool isStairs(int value){
     return 
