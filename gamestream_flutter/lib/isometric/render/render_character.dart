@@ -1,4 +1,11 @@
+import 'dart:math';
+
 import 'package:bleed_common/library.dart';
+
+import 'package:lemon_math/library.dart';
+import 'package:gamestream_flutter/isometric/render/render_circle.dart';
+import 'package:gamestream_flutter/isometric/render/render_pixel.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 
 import '../classes/character.dart';
@@ -8,6 +15,16 @@ import 'src_utils.dart';
 void renderCharacter(Character character) {
   assert(character.direction >= 0);
   assert(character.direction < 8);
+
+  // renderPixelRed(character.renderX, character.renderY);
+  // final f = (engine.frame % 360) * degreesToRadians;
+  // // renderCircle32(character.renderX, character.renderY, rotation: f);
+  // renderCircle32(character.renderX, character.renderY, rotation: 0);
+  // renderCircle32(character.renderX, character.renderY, rotation: piQuarter);
+  // renderCircle32(character.renderX, character.renderY, rotation: piHalf);
+  // renderCircle32(character.renderX, character.renderY, rotation: piQuarter * 3);
+  // renderCircle32(character.renderX, character.renderY, rotation: pi);
+  // renderCircle(x: character.renderX, y: character.renderY, size: 8);
 
   if (character.dead) return;
   renderCharacterHealthBar(character);
@@ -74,8 +91,8 @@ void _renderCharacterTemplateWeapon(Character character) {
   }
 
   render(
-      dstX: character.renderX - 24,
-      dstY: character.renderY + 6,
+      dstX: character.renderX,
+      dstY: character.renderY,
       srcX: _getTemplateSrcX(character, size: 96),
       srcY: 2159.0 + (renderRow * 96),
       srcWidth: 96,
@@ -111,12 +128,13 @@ void _renderCharacterPart(Character character, int layer) {
       srcWidth: 64.0,
       srcHeight: 64.0,
       scale: 0.75,
-      anchorY: 0.66,
+      anchorX: 0.5,
+      anchorY: 0.75,
   );
 }
 
 double _getTemplateSrcX(Character character, {required double size}) {
-  const _framesPerDirectionHuman = 19;
+  const framesPerDirection = 19;
   final weapon = character.weapon;
   final variation = weapon == WeaponType.Shotgun || weapon == WeaponType.Bow;
 
@@ -128,28 +146,30 @@ double _getTemplateSrcX(Character character, {required double size}) {
           size: size,
           animation: variation ? frames2 : frames1,
           character: character,
-          framesPerDirection: _framesPerDirectionHuman);
+          framesPerDirection: framesPerDirection
+      );
 
     case CharacterState.Idle:
       return single(
           size: size,
           frame: variation ? 1 : 2,
           direction: character.direction,
-          framesPerDirection: _framesPerDirectionHuman);
+          framesPerDirection: framesPerDirection
+      );
 
     case CharacterState.Hurt:
       return single(
           size: size,
           frame: 3,
           direction: character.direction,
-          framesPerDirection: _framesPerDirectionHuman);
+          framesPerDirection: framesPerDirection);
 
     case CharacterState.Changing:
       return single(
           size: size,
           frame: 4,
           direction: character.direction,
-          framesPerDirection: _framesPerDirectionHuman);
+          framesPerDirection: framesPerDirection);
 
     case CharacterState.Performing:
       final weapon = character.weapon;
@@ -161,9 +181,9 @@ double _getTemplateSrcX(Character character, {required double size}) {
               ? const [8, 9, 8]
               : weapon == WeaponType.Shotgun
               ? const [6, 7, 6, 6, 6, 8, 8, 6]
-              : [10, 10, 11, 11],
+              : const [10, 10, 11, 11],
           character: character,
-          framesPerDirection: _framesPerDirectionHuman);
+          framesPerDirection: framesPerDirection);
 
     default:
       throw Exception(

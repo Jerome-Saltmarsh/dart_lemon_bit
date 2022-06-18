@@ -21,7 +21,7 @@ void renderProjectile(Projectile value) {
 }
 
 void renderFireball(double x, double y, double rotation) {
-  render(
+  renderR(
     dstX: x,
     dstY: y,
     srcX: 5669,
@@ -34,23 +34,25 @@ void renderFireball(double x, double y, double rotation) {
 
 void renderArrow(double x, double y, double angle) {
   const piQuarter = pi / 4.0;
-  render(
+
+  // shadow
+  renderR(
       dstX: x,
       dstY: y + 10,
       srcX: 2172,
       srcY: 0,
-      srcWidth: 13,
-      srcHeight: 47,
+      srcWidth: 9,
+      srcHeight: 43,
       rotation: angle + piQuarter,
       scale: 0.5
   );
-  render(
+  renderR(
       dstX: x,
       dstY: y,
       srcX: 2182,
       srcY: 0,
-      srcWidth: 13,
-      srcHeight: 47,
+      srcWidth: 9,
+      srcHeight: 44,
       rotation: angle + piQuarter,
       scale: 0.5
   );

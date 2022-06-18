@@ -1057,7 +1057,7 @@ extension GameFunctions on Game {
     Position3? target,
     double? angle,
   }) {
-    dispatch(GameEventType.Arrow_Fired, src.x, src.y, src.y);
+    dispatch(GameEventType.Arrow_Fired, src.x, src.y, src.z);
     if (src is Character) {
       return spawnProjectile(
         src: src,
@@ -1137,7 +1137,7 @@ extension GameFunctions on Game {
     projectile.start.y = src.y;
     projectile.x = src.x;
     projectile.y = src.y;
-    projectile.z = src.z + 6.0;
+    projectile.z = src.z;
     projectile.setVelocity(finalAngle + giveOrTake(accuracy) - piHalf, speed);
     projectile.speed = speed;
     projectile.owner = src;
