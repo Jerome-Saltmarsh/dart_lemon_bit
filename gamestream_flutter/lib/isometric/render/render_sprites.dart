@@ -150,6 +150,7 @@ class RenderOrderGrid extends RenderOrder {
   var maxColumnRow = 0;
   var minColumnRow = 0;
   var gridTotalColumnsMinusOne = 0;
+  var maxRow = 0;
   late List<List<int>> plain;
 
   @override
@@ -200,19 +201,24 @@ class RenderOrderGrid extends RenderOrder {
       gridRow = gridColumn - gridTotalColumnsMinusOne;
       gridColumn = gridTotalColumnsMinusOne;
     }
+    recalculateMaxRow();
 
     super.reset();
   }
+
+  void recalculateMaxRow() {
+    final worldY = getTileWorldY(gridRow, gridColumn);
+    maxRow = convertWorldToRow(engine.screen.right - 100, worldY);
+  }
+
 
   void nextGridNode(){
     gridRow++;
     gridColumn--;
 
-    final worldY = getTileWorldY(gridRow, gridColumn);
-    final screenRightRow = convertWorldToRow(engine.screen.right, worldY);
-
-    if (gridColumn < 0 || gridRow >= gridTotalRows || gridRow >= screenRightRow) {
-
+    if (gridColumn < 0 || gridRow >= gridTotalRows || gridRow >= maxRow) {
+      final worldY = getTileWorldY(gridRow, gridColumn);
+      maxRow = convertWorldToRow(engine.screen.right, worldY);
       shiftIndexDown();
       final screenLeftColumn = convertWorldToColumn(engine.screen.left - tileSize, worldY);
 
