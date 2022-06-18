@@ -74,6 +74,14 @@ void _applyShadowsMidAfternoon() {
 //   _applyShadowAt(directionZ: -1, directionRow: 0, directionColumn: -1, maxDistance: 1);
 // }
 
+bool castesShadow(int type){
+  return
+      const [GridNodeType.Tree, GridNodeType.Bricks, GridNodeType.Grass].contains(type)
+          ||
+      GridNodeType.isStairs(type)
+  ;
+}
+
 void _applyShadowAt({
   required int directionZ,
   required int directionRow,
@@ -87,7 +95,7 @@ void _applyShadowAt({
     for (var row = 0; row < gridTotalRows; row++){
       for (var column = 0; column < gridTotalColumns; column++){
         final tile = grid[z][row][column];
-        if (tile != GridNodeType.Bricks && tile != GridNodeType.Grass && !GridNodeType.isStairs(tile)) continue;
+        if (!castesShadow(tile)) continue;
         var projectionZ = z + directionZ;
         var projectionRow = row + directionRow;
         var projectionColumn = column + directionColumn;
@@ -101,9 +109,9 @@ void _applyShadowAt({
         ) {
           final shade = gridLightBake[projectionZ][projectionRow][projectionColumn];
           if (shade < shadowShade){
-            if (grid[projectionZ + 1][projectionRow][projectionColumn] == GridNodeType.Empty){
+            // if (grid[projectionZ + 1][projectionRow][projectionColumn] == GridNodeType.Empty){
               gridLightBake[projectionZ][projectionRow][projectionColumn] = shadowShade;
-            }
+            // }
           }
           projectionZ += directionZ;
           projectionRow += directionRow;
