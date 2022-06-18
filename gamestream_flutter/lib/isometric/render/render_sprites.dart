@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
-import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';

@@ -9,11 +9,13 @@ class GridNodeType {
   static const Stairs_West = 7;
   static const Water = 8;
   static const Torch = 9;
-  static const Tree = 10;
-  static const Tree_Top = 11;
+  static const Tree_Bottom_Pine = 10;
+  static const Tree_Top_Pine = 11;
   static const Player_Spawn = 12;
   static const Grass_Long = 13;
   static const Wooden_Wall_Row = 14;
+  static const Tree_Bottom_Oak = 15;
+  static const Tree_Top_Oak = 16;
 
   static bool isStairs(int value){
     return 

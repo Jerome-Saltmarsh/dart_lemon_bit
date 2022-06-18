@@ -97,25 +97,25 @@ void renderGridNode(int z, int row, int column, int type) {
       }
       return renderTorchOn(dstX, dstY);
 
-    case GridNodeType.Tree:
+    case GridNodeType.Tree_Bottom_Pine:
       return render(
           dstX: dstX,
           dstY: dstY,
-          srcX: 7830,
+          srcX: 1478,
           srcY: 81.0 * shade,
-          srcWidth: 48.0,
-          srcHeight: 72.0,
-          anchorY: 0.3334,
+          srcWidth: 62.0,
+          srcHeight: 68.0,
+          anchorY: 0.6,
       );
-    case GridNodeType.Tree_Top:
+    case GridNodeType.Tree_Top_Pine:
       return render(
           dstX: dstX,
           dstY: dstY,
-          srcX: 7878,
+          srcX: 1478 + 62,
           srcY: 81.0 * shade,
-          srcWidth: 48.0,
-          srcHeight: 72.0,
-          anchorY: 0.3334,
+          srcWidth: 62.0,
+          srcHeight: 68.0,
+          anchorY: 0.33,
       );
 
     case GridNodeType.Player_Spawn:

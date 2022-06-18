@@ -493,7 +493,7 @@ class Scene {
     if (GridNodeType.isStairs(type)){
       return getHeightAt(x, y, z) > z;
     }
-    if (type == GridNodeType.Tree || type == GridNodeType.Torch){
+    if (type == GridNodeType.Tree_Bottom_Pine || type == GridNodeType.Torch){
       const treeRadius = 0.2;
       final percRow = (x / 48.0) % 1.0;
       if ((0.5 - percRow).abs() > treeRadius) return false;

@@ -76,7 +76,7 @@ void _applyShadowsMidAfternoon() {
 
 bool castesShadow(int type){
   return
-      const [GridNodeType.Tree, GridNodeType.Bricks, GridNodeType.Grass].contains(type)
+      const [GridNodeType.Tree_Top_Pine, GridNodeType.Bricks, GridNodeType.Grass].contains(type)
           ||
       GridNodeType.isStairs(type)
   ;

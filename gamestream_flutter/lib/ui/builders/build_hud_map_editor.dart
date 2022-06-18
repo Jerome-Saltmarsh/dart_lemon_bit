@@ -149,8 +149,8 @@ Widget buildColumnEditTile(){
       _buildSetType(GridNodeType.Stairs_East, "Stairs East"),
       _buildSetType(GridNodeType.Water, "Water"),
       _buildSetType(GridNodeType.Torch, "Torch"),
-      _buildSetType(GridNodeType.Tree, "Tree"),
-      _buildSetType(GridNodeType.Tree_Top, "Tree Top"),
+      _buildSetType(GridNodeType.Tree_Top_Pine, "Tree Top Pine"),
+      _buildSetType(GridNodeType.Tree_Bottom_Pine, "Tree Bottom Top"),
       _buildSetType(GridNodeType.Player_Spawn, "Player Spawn"),
       _buildSetType(GridNodeType.Wooden_Wall_Row, "Wooden Wall Row"),
       _button("Zombie", () {
