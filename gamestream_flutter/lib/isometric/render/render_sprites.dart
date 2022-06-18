@@ -208,9 +208,8 @@ class RenderOrderGrid extends RenderOrder {
 
   void recalculateMaxRow() {
     final worldY = getTileWorldY(gridRow, gridColumn);
-    maxRow = convertWorldToRow(engine.screen.right - 100, worldY);
+    maxRow = convertWorldToRow(engine.screen.right + tileSize, worldY);
   }
-
 
   void nextGridNode(){
     gridRow++;
@@ -218,7 +217,7 @@ class RenderOrderGrid extends RenderOrder {
 
     if (gridColumn < 0 || gridRow >= gridTotalRows || gridRow >= maxRow) {
       final worldY = getTileWorldY(gridRow, gridColumn);
-      maxRow = convertWorldToRow(engine.screen.right, worldY);
+      maxRow = convertWorldToRow(engine.screen.right + tileSize, worldY);
       shiftIndexDown();
       final screenLeftColumn = convertWorldToColumn(engine.screen.left - tileSize, worldY);
 
