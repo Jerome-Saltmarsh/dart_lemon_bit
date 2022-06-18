@@ -148,6 +148,7 @@ class RenderOrderGrid extends RenderOrder {
   var gridRow = 0;
   var gridType = 0;
   var maxColumnRow = 0;
+  var minColumnRow = 0;
   var gridTotalColumnsMinusOne = 0;
   late List<List<int>> plain;
 
@@ -179,17 +180,27 @@ class RenderOrderGrid extends RenderOrder {
     orderZ = 0;
     gridZ = 0;
     plain = grid[gridZ];
-    gridColumn = 0;
-    gridRow = 0;
     gridType = 0;
     gridTotalColumnsMinusOne = gridTotalColumns - 1;
-
     final left = engine.screen.left;
     final bottom = engine.screen.bottom + (gridTotalZ * tileHeight);
+    final top = engine.screen.top;
     final screenBottomColumn = convertWorldToColumn(left, bottom);
     final screenBottomRow = convertWorldToRow(left, bottom);
     final screenBottomTotal = screenBottomRow + screenBottomColumn;
+    final screenTopColumn = convertWorldToColumn(left, top);
+    final screenTopRow = convertWorldToRow(left, top);
+    minColumnRow = max(screenTopRow + screenTopColumn, 0);
     maxColumnRow = min(gridTotalRows + gridTotalColumns, screenBottomTotal);
+
+    if (minColumnRow < gridTotalColumnsMinusOne){
+      gridRow = 0;
+      gridColumn = minColumnRow;
+    } else {
+      gridRow = gridColumn - gridTotalColumnsMinusOne;
+      gridColumn = gridTotalColumnsMinusOne;
+    }
+
     super.reset();
   }
 
