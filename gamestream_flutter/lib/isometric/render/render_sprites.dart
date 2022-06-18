@@ -196,16 +196,17 @@ class RenderOrderGrid extends RenderOrder {
   void nextGridNode(){
     gridRow++;
     gridColumn--;
-    if (gridColumn < 0 || gridRow >= gridTotalRows) {
+
+    final worldY = getTileWorldY(gridRow, gridColumn);
+    final screenRightRow = convertWorldToRow(engine.screen.right, worldY);
+
+    if (gridColumn < 0 || gridRow >= gridTotalRows || gridRow >= screenRightRow) {
 
       shiftIndexDown();
+      final screenLeftColumn = convertWorldToColumn(engine.screen.left, worldY);
 
-      final worldX = engine.screen.left;
-      final worldY = getTileWorldY(gridRow, gridColumn);
-      final screenColumn = convertWorldToColumn(worldX, worldY);
-
-      if (screenColumn < gridColumn){
-        final amount = gridColumn - screenColumn;
+      if (screenLeftColumn < gridColumn){
+        final amount = gridColumn - screenLeftColumn;
         gridRow += amount;
         gridColumn-= amount;
       }
