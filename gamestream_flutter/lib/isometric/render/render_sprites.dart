@@ -197,8 +197,18 @@ class RenderOrderGrid extends RenderOrder {
     gridRow++;
     gridColumn--;
     if (gridColumn < 0 || gridRow >= gridTotalRows) {
+
       shiftIndexDown();
 
+      final worldX = engine.screen.left;
+      final worldY = getTileWorldY(gridRow, gridColumn);
+      final screenColumn = convertWorldToColumn(worldX, worldY);
+
+      if (screenColumn < gridColumn){
+        final amount = gridColumn - screenColumn;
+        gridRow += amount;
+        gridColumn-= amount;
+      }
 
       if (gridColumn + gridRow >= maxColumnRow || gridRow >= gridTotalRows || gridColumn >= gridTotalColumns){
         gridZ++;
