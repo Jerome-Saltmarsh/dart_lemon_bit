@@ -203,7 +203,7 @@ class RenderOrderGrid extends RenderOrder {
     if (gridColumn < 0 || gridRow >= gridTotalRows || gridRow >= screenRightRow) {
 
       shiftIndexDown();
-      final screenLeftColumn = convertWorldToColumn(engine.screen.left, worldY);
+      final screenLeftColumn = convertWorldToColumn(engine.screen.left - tileSize, worldY);
 
       if (screenLeftColumn < gridColumn){
         final amount = gridColumn - screenLeftColumn;
