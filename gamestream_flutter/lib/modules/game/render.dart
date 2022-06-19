@@ -60,22 +60,30 @@ class GameRender {
     }
 
     renderSprites();
-    // renderMouseWireFrame();
+    renderMouseWireFrame();
     if (playModeEdit){
       renderWireframes();
     }
   }
 
   void renderMouseWireFrame(){
-
      var targetZ = 0;
      var row = convertWorldToRow(mouseWorldX, mouseWorldY);
      var column = convertWorldToColumn(mouseWorldX, mouseWorldY);
+
+     if (row < 0) return;
+     if (column < 0) return;
+     if (row >= gridTotalRows) return;
+     if (column >= gridTotalColumns) return;
+
      var targetRow = row;
      var targetColumn =  column;
      for (var z = 0; z < gridTotalZ; z += 2){
-        row ++;
-        column ++;
+        row++;
+        column++;
+        if (row >= gridTotalRows) break;
+        if (column >= gridTotalColumns) break;
+        if (z >= gridTotalZ) break;
         if (grid[z][row][column] == GridNodeType.Empty) continue;
         targetZ = z;
         targetRow = row;
