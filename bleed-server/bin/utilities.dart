@@ -66,15 +66,4 @@ int calculateTime({int minute = 0, int hour = 0}){
   return secondsPerMinute * minutesPerHour * hour + minute;
 }
 
-void snapToGrid(Position value){
-  value.x = snapX(value.x, value.y);
-  value.y = snapY(value.x, value.y);
-}
 
-// double snapX(double x){
-//   return  (x - x % tileSize) + halfTileSize;
-// }
-//
-// double snapY(double y){
-//   return y - y % tileSize;
-// }

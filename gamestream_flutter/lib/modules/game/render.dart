@@ -17,7 +17,7 @@ import 'package:gamestream_flutter/isometric/collectables.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
-import 'package:gamestream_flutter/isometric/utils/mouse.dart';
+import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -67,29 +67,22 @@ class GameRender {
   }
 
   void renderMouseWireFrame(){
-     var targetZ = 0;
-     var row = convertWorldToRow(mouseWorldX, mouseWorldY);
-     var column = convertWorldToColumn(mouseWorldX, mouseWorldY);
-
-     if (row < 0) return;
-     if (column < 0) return;
-     if (row >= gridTotalRows) return;
-     if (column >= gridTotalColumns) return;
-
-     var targetRow = row;
-     var targetColumn =  column;
-     for (var z = 0; z < gridTotalZ; z += 2){
-        row++;
-        column++;
+     var z = gridTotalZ - 1;
+     while (z >= 0){
+       final row = convertWorldToRow(mouseWorldX, mouseWorldY, z * tileHeight);
+       final column = convertWorldToColumn(mouseWorldX, mouseWorldY, z * tileHeight);
+        if (row < 0) break;
+        if (column < 0) break;
         if (row >= gridTotalRows) break;
         if (column >= gridTotalColumns) break;
         if (z >= gridTotalZ) break;
-        if (grid[z][row][column] == GridNodeType.Empty) continue;
-        targetZ = z;
-        targetRow = row;
-        targetColumn = column;
+        if (grid[z][row][column] == GridNodeType.Empty) {
+          z--;
+          continue;
+        }
+       renderWireFrameBlue(row, column, z);
+       return;
      }
-     renderWireFrameBlue(targetRow, targetColumn, targetZ);
   }
 
   void renderWireframes() {

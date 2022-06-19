@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_zombie.dart';
+import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -185,11 +186,11 @@ class RenderOrderGrid extends RenderOrder {
     final left = engine.screen.left;
     final bottom = engine.screen.bottom + (gridTotalZ * tileHeight);
     final top = engine.screen.top;
-    final screenBottomColumn = convertWorldToColumn(left, bottom);
-    final screenBottomRow = convertWorldToRow(left, bottom);
+    final screenBottomColumn = convertWorldToColumn(left, bottom, 0);
+    final screenBottomRow = convertWorldToRow(left, bottom, 0);
     final screenBottomTotal = screenBottomRow + screenBottomColumn;
-    final screenTopColumn = convertWorldToColumn(left, top);
-    final screenTopRow = convertWorldToRow(left, top);
+    final screenTopColumn = convertWorldToColumn(left, top, 0);
+    final screenTopRow = convertWorldToRow(left, top, 0);
     minColumnRow = max(screenTopRow + screenTopColumn, 0);
     maxColumnRow = min(gridTotalRows + gridTotalColumns, screenBottomTotal);
 
@@ -207,7 +208,7 @@ class RenderOrderGrid extends RenderOrder {
 
   void recalculateMaxRow() {
     final worldY = getTileWorldY(gridRow, gridColumn);
-    maxRow = convertWorldToRow(engine.screen.right + tileSize, worldY);
+    maxRow = convertWorldToRow(engine.screen.right + tileSize, worldY, 0);
   }
 
   void nextGridNode(){
@@ -216,9 +217,9 @@ class RenderOrderGrid extends RenderOrder {
 
     if (gridColumn < 0 || gridRow >= gridTotalRows || gridRow >= maxRow) {
       final worldY = getTileWorldY(gridRow, gridColumn);
-      maxRow = convertWorldToRow(engine.screen.right + tileSize, worldY);
+      maxRow = convertWorldToRow(engine.screen.right + tileSize, worldY, 0);
       shiftIndexDown();
-      final screenLeftColumn = convertWorldToColumn(engine.screen.left - tileSize, worldY);
+      final screenLeftColumn = convertWorldToColumn(engine.screen.left - tileSize, worldY, 0);
 
       if (screenLeftColumn < gridColumn){
         final amount = gridColumn - screenLeftColumn;

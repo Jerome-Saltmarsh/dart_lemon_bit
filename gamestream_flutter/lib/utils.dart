@@ -42,9 +42,6 @@ void refreshPage(){
   document.window!.location.href = document.domain!;
 }
 
-double getMouseSnapX() => snapX(mouseWorldX, mouseWorldY);
-double getMouseSnapY() => snapY(mouseWorldX, mouseWorldY);
-
 final _dateFormat = DateFormat(DateFormat.YEAR_MONTH_DAY);
 
 String formatDate(DateTime value){

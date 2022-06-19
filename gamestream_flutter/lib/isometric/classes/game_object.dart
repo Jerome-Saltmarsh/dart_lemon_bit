@@ -1,4 +1,4 @@
-import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:lemon_math/library.dart';
 
 class GameObject extends Vector2 {
@@ -17,7 +17,7 @@ class GameObject extends Vector2 {
   }
 
   void refreshRowAndColumn(){
-    row = convertWorldToRow(x, y);
-    column = convertWorldToColumn(x, y);
+    row = convertWorldToRow(x, y, 0);
+    column = convertWorldToColumn(x, y, 0);
   }
 }
