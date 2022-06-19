@@ -493,7 +493,13 @@ extension PlayerProperties on Player {
     writeByte(END);
   }
 
-  void writeGameEvent(int type, double x, double z, double y, double angle){
+  void writeGameEvent({
+    required int type,
+    required double x,
+    required double y,
+    required double z,
+    required double angle,
+  }){
     writeByte(ServerResponse.Game_Events);
     writeByte(type);
     writeInt(x);

@@ -15,9 +15,18 @@ class Vector3 with Position {
   double get renderX => (x - y) * 0.5;
   double get renderY => ((y + x) * 0.5) - z;
 
+  bool get outOfBounds {
+    return x < 0 || x > gridRowLength || y < 0 || y > gridColumnLength;
+  }
+
   Vector3(double x, double y, double z) {
     this.x = x;
     this.y = y;
     this.z = z;
+  }
+
+  @override
+  String toString(){
+    return 'x: ${x.toInt()}, y: ${y.toInt()}, z: ${z.toInt()}';
   }
 }

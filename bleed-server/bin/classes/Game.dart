@@ -218,7 +218,7 @@ abstract class Game {
 
   void spawnExplosion({
     required Character src,
-    required Position target,
+    required Position3 target,
     required int damage
   }) {
     dispatchV2(GameEventType.Explosion, target);
@@ -417,20 +417,20 @@ extension GameFunctions on Game {
     if (target is Material) {
       switch ((target as Material).material) {
         case MaterialType.Rock:
-          dispatchV2(GameEventType.Material_Struck_Rock, target as Position);
+          dispatchV2(GameEventType.Material_Struck_Rock, target as Position3);
           break;
         case MaterialType.Wood:
-          dispatchV2(GameEventType.Material_Struck_Wood, target as Position);
+          dispatchV2(GameEventType.Material_Struck_Wood, target as Position3);
           break;
         case MaterialType.Plant:
-          dispatchV2(GameEventType.Material_Struck_Plant, target as Position);
+          dispatchV2(GameEventType.Material_Struck_Plant, target as Position3);
           break;
         case MaterialType.Flesh:
           dispatchV2(GameEventType.Material_Struck_Flesh,
-              target as Position, angle: radiansV2(src, target as Position));
+              target as Position3, angle: radiansV2(src, target as Position3));
           break;
         case MaterialType.Metal:
-          dispatchV2(GameEventType.Material_Struck_Metal, target as Position);
+          dispatchV2(GameEventType.Material_Struck_Metal, target as Position3);
           break;
       }
     }
@@ -1229,14 +1229,14 @@ extension GameFunctions on Game {
   }
 
   /// GameEventType
-  void dispatchV2(int type, Position position, {double angle = 0}) {
-    dispatch(type, position.x, position.y, angle);
+  void dispatchV2(int type, Position3 position, {double angle = 0}) {
+    dispatch(type, position.x, position.y, position.z, angle);
   }
 
   /// GameEventType
   void dispatch(int type, double x, double y, double z, [double angle = 0]) {
     for (final player in players) {
-      player.writeGameEvent(type, x, y, z, angle);
+      player.writeGameEvent(type: type, x: x, y: y, z: z, angle: angle);
     }
   }
 

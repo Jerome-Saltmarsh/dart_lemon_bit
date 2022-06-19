@@ -33,12 +33,13 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       }
       break;
     case GameEventType.Zombie_Killed:
-      spawnParticleHeadZombie(x: x, y: y, z: 0.5, angle: angle, speed: 4.0);
-      spawnParticleArm(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
-      spawnParticleArm(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
-      spawnParticleLegZombie(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
-      spawnParticleLegZombie(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
-      spawnParticleOrgan(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5), zv: 0.1);
+      final zPos = z + tileSizeHalf;
+      spawnParticleHeadZombie(x: x, y: y, z: zPos, angle: angle, speed: 4.0);
+      spawnParticleArm(x: x, y: y, z: zPos, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
+      spawnParticleArm(x: x, y: y, z: zPos, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
+      spawnParticleLegZombie(x: x, y: y, z: zPos, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
+      spawnParticleLegZombie(x: x, y: y, z: zPos, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
+      spawnParticleOrgan(x: x, y: y, z: zPos, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5), zv: 0.1);
       audio.zombieDeath(x, y);
       break;
 
@@ -165,12 +166,13 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
 
     case GameEventType.Material_Struck_Flesh:
       audio.materialStruckFlesh(x, y);
+      print('GameEventType.Material_Struck_Flesh: z: $z');
       final total = randomInt(2, 5);
       for (var i = 0; i < total; i++) {
         spawnParticleBlood(
           x: x,
           y: y,
-          z: 0.3,
+          z: z,
           angle: angle + giveOrTake(0.2),
           speed: 4.0 + giveOrTake(2),
           zv: 0.07 + giveOrTake(0.01),
@@ -180,7 +182,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
         spawnParticleBlood(
           x: x,
           y: y,
-          z: 0.3,
+          z: z,
           angle: angle + giveOrTake(0.2) + pi,
           speed: 1.0 + giveOrTake(1),
           zv: 0.07 + giveOrTake(0.01),

@@ -1,8 +1,8 @@
 
 import 'dart:math';
 
-import 'package:bleed_common/Shade.dart';
 import 'package:bleed_common/grid_node_type.dart';
+import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -20,6 +20,9 @@ var gridTotalZ = 0;
 var gridTotalRows = 0;
 var gridTotalColumns = 0;
 
+var gridRowLength = 0.0;
+var gridColumnLength = 0.0;
+
 int get gridVolume => gridTotalZ * gridTotalRows * gridTotalColumns;
 
 void gridEmitDynamic(int z, int row, int column){
@@ -36,11 +39,11 @@ void _onAmbientChanged(int ambient) {
 }
 
 void onGridChanged(){
+  _refreshGridMetrics();
   refreshLighting();
 }
 
 void refreshLighting(){
-  _refreshGridMetrics();
   _setLightMapValue(gridLightBake, ambient.value);
   _setLightMapValue(gridLightDynamic, ambient.value);
   if (gridShadows.value){
@@ -136,6 +139,9 @@ void _refreshGridMetrics(){
   gridTotalZ = grid.length;
   gridTotalRows = grid[0].length;
   gridTotalColumns = grid[0][0].length;
+
+  gridRowLength = gridTotalRows * tileSize;
+  gridColumnLength = gridTotalColumns * tileSize;
 }
 
 void _setLightMapValue(List<List<List<int>>> map, int value){

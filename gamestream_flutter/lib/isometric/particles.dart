@@ -6,6 +6,7 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
+import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
@@ -78,8 +79,10 @@ void _updateParticle(Particle particle){
   final bounce = particle.zv < 0 && !airBorn;
   particle.updateMotion();
 
+  if (particle.outOfBounds) return _deactivateParticle(particle);
+
   if (bounce) {
-    if (particle.type == GridNodeType.Bricks){
+    if (particle.type == GridNodeType.Water){
       _deactivateParticle(particle);
       return;
     }

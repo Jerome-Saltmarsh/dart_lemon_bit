@@ -1,4 +1,3 @@
-import 'package:bleed_common/Shade.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:lemon_engine/engine.dart';
@@ -10,6 +9,16 @@ void renderParticle(Particle value) {
     case ParticleType.Smoke:
       return renderSmoke(
           x: value.renderX, y: value.renderY, scale: value.renderScale);
+    case ParticleType.Blood:
+      print ('blood: $value');
+      return render(
+          dstX: value.renderX,
+          dstY: value.renderY,
+          srcX: 89,
+          srcY: 25,
+          srcWidth: 8,
+          srcHeight: 8
+      );
     case ParticleType.Orb_Shard:
       return renderOrbShard(
           x: value.renderX, y: value.renderY, scale: value.renderScale
@@ -25,16 +34,11 @@ void renderParticle(Particle value) {
     default:
       break;
   }
-
-  final shade = value.shade;
-  if (shade >= Shade.Very_Dark) return;
-  // mapParticleToDst(value);
-  // mapParticleToSrc(value);
-  // engine.renderAtlas();
-
-  if (!value.casteShadow) return;
-  if (value.z < 0.1) return;
-  renderShadow(position: value, scale: value.z);
+  // final shade = value.shade;
+  // if (shade >= Shade.Very_Dark) return;
+  // if (!value.casteShadow) return;
+  // if (value.z < 0.1) return;
+  // renderShadow(position: value, scale: value.z);
 }
 
 void renderSmoke({
