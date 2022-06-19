@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
@@ -80,7 +82,7 @@ class Player extends Character with ByteWriter {
   late Function(GameError error, {String message}) dispatchError;
 
   double get mouseAngle {
-    return getGridAngle(mouse.x, mouse.y);
+    return getAngleBetween(x, y, mouse.x, mouse.y);
   }
 
   Scene get scene => game.scene;

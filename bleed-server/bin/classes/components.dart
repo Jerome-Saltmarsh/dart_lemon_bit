@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:lemon_math/functions/adjacent.dart';
 import 'package:lemon_math/functions/opposite.dart';
 
@@ -31,8 +33,8 @@ mixin Velocity {
   var angle = 0.0;
   var speed = 0.0;
 
-  double get xv => getAdjacent(angle, speed);
-  double get yv => getOpposite(angle, speed);
+  double get xv => getAdjacent(angle + pi, speed);
+  double get yv => getOpposite(angle + pi, speed);
 
   void applyFriction(double amount){
     speed *= amount;

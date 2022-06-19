@@ -30,7 +30,6 @@ class Player extends Vector3 {
   final message = Watch("");
   final state = Watch(CharacterState.Idle);
   final alive = Watch(true);
-  // final ability = Watch(AbilityType.None);
   final magic = Watch(0.0);
   final maxMagic = Watch(0.0);
   final wood = Watch(0);

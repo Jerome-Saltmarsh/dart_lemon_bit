@@ -37,12 +37,13 @@ Widget buildHudMapEditor() {
   );
 }
 
+
 Widget buildPanelEditor(){
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       // _buildContainerMouseInfo(),
-      // _buildContainerPlayerInfo(),
+      _buildContainerPlayerInfo(),
       buildColumnEditTile(),
       _button("Recenter", (){
          edit.z = player.indexZ;

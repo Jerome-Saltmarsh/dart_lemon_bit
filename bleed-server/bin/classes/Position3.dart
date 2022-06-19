@@ -32,7 +32,7 @@ class Position3 with Position {
      return this;
   }
 
-  double getGridAngle(double x, double y){
-    return pi2 - getAngle(this.y - y, this.x - x);
-  }
+  // double getGridAngle(double x, double y) {
+  //   return pi2 - getAngle(this.y - y, this.x - x);
+  // }
 }
