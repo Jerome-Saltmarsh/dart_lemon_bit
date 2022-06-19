@@ -45,6 +45,26 @@ void renderParticle(Particle value) {
           srcHeight: 64
       );
 
+    case ParticleType.Zombie_Head:
+      return render(
+          dstX: value.renderX,
+          dstY: value.renderY,
+          srcX: 4030.0 + (64 * convertAngleToDirection(value.rotation)),
+          srcY: value.shade * 64,
+          srcWidth: 64,
+          srcHeight: 64
+      );
+
+    case ParticleType.Leg:
+      return render(
+          dstX: value.renderX,
+          dstY: value.renderY,
+          srcX: 2491.0 + (64 * convertAngleToDirection(value.rotation)),
+          srcY: value.shade * 64,
+          srcWidth: 64,
+          srcHeight: 64
+      );
+
     default:
       break;
   }
