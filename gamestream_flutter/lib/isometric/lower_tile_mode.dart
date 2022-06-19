@@ -1,1 +1,1 @@
-var lowerTileMode = false;
+var lowerTileMode = true;

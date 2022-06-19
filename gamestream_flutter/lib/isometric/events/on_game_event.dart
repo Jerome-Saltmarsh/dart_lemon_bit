@@ -174,7 +174,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
           z: z,
           angle: angle + giveOrTake(0.2),
           speed: 4.0 + giveOrTake(2),
-          zv: 0.07 + giveOrTake(0.01),
+          zv: 3,
         );
       }
       // for (var i = 0; i < 1; i++) {

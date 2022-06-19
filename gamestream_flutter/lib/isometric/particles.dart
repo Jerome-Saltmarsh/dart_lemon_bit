@@ -74,14 +74,21 @@ void updateParticles() {
 }
 
 void _updateParticle(Particle particle){
-  final airBorn = particle.z > 0.01;
+  final tile = particle.tile;
+  final airBorn = tile == GridNodeType.Empty;;
+
   final bounce = particle.zv < 0 && !airBorn;
   particle.updateMotion();
+
+  if (!airBorn){
+    particle.z = (particle.indexZ + 1) * tileHeight;
+    particle.applyFloorFriction();
+  }
 
   if (particle.outOfBounds) return _deactivateParticle(particle);
 
   if (bounce) {
-    if (particle.type == GridNodeType.Water){
+    if (tile == GridNodeType.Water){
       _deactivateParticle(particle);
       return;
     }
@@ -90,15 +97,8 @@ void _updateParticle(Particle particle){
     } else {
       particle.zv = 0;
     }
-
   } else if (airBorn) {
     particle.applyAirFriction();
-  } else {
-    particle.applyFloorFriction();
-    // if (!tileIsWalkable(particle)){
-    //   _deactivateParticle(particle);
-    //   return;
-    // }
   }
   particle.applyLimits();
   if (particle.duration-- <= 0) {
@@ -160,7 +160,7 @@ void spawnParticleBlood({
     zv: zv,
     angle: angle,
     speed: speed,
-    weight: 0.5,
+    weight: 6,
     duration: randomInt(120, 200),
     rotation: 0,
     rotationV: 0,
