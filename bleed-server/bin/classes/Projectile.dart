@@ -1,7 +1,6 @@
 
 import 'package:lemon_math/library.dart';
 
-import '../maths.dart';
 import 'Collider.dart';
 import 'Position3.dart';
 import 'components.dart';
@@ -14,9 +13,10 @@ class Projectile extends Collider with Active, Velocity {
   late int type; // ProjectileType.dart
   int damage = 0;
   Position3? target = null;
-  late double speed;
   late bool collideWithEnvironment = false;
-  double angle = 0;
+
+
+
 
   Projectile() : super(x: 0, y: 0, radius: 5);
 
@@ -30,12 +30,6 @@ class Projectile extends Collider with Active, Velocity {
 
   void setVelocityTowards(Position position){
     angle = this.getAngle(position);
-    xv = adj(angle, speed);
-    yv = opp(angle, speed);
   }
 }
 
-void setProjectileAngle(Projectile projectile, double angle){
-  projectile.xv = velX(angle, projectile.speed);
-  projectile.yv = velY(angle, projectile.speed);
-}

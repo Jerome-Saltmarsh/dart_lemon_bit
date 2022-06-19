@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
@@ -12,11 +10,9 @@ import 'components.dart';
 
 class Character extends Collider with Team, Health, Velocity, Material {
   late CharacterType type;
-  late double _speed;
+  late double walkingSpeed;
   CardAbility? ability = null;
-  double _angle = 0;
   double accuracy = 0;
-  double speedModifier = 0;
   var state = CharacterState.Idle;
   var stateDurationRemaining = 0;
   var stateDuration = 0;
@@ -31,18 +27,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
   var equippedArmour = SlotType.Empty;
   var equippedHead = SlotType.Empty;
 
-  int get direction => convertAngleToDirection(_angle);
-  double get speed => _speed + speedModifier;
-
-  void set angle(double value){
-    _angle = clampAngle(value);
-  }
-
-  double get angle => _angle;
-
-  void setSpeed(double value){
-    _speed = value;
-  }
+  int get direction => convertAngleToDirection(angle);
 
   void set direction(int value){
     angle = convertDirectionToAngle(value);
@@ -85,24 +70,22 @@ class Character extends Collider with Team, Health, Velocity, Material {
   }) : super(x: x, y: y, radius: 7) {
     maxHealth = health;
     this.health = health;
-    _speed = speed;
+    walkingSpeed = speed;
     this.team = team;
     this.material = MaterialType.Flesh;
   }
 
   void applyVelocity() {
-    x -= cos(_angle) * speed;
-    y -= sin(_angle) * speed;
+     if (speed > walkingSpeed) return;
+     speed = walkingSpeed;
   }
 
   void updateMovement() {
     const minVelocity = 0.005;
-    if (xv.abs() <= minVelocity) return;
+    if (speed <= minVelocity) return;
     x += xv;
     y += yv;
-    const velocityFriction = 0.95;
-    xv *= velocityFriction;
-    yv *= velocityFriction;
+    speed *= 0.75; // friction
   }
 
   bool withinAttackRange(Position target){

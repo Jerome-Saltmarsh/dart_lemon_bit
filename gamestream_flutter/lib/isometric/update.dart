@@ -16,7 +16,6 @@ void updateIsometric(){
   updateFootstepAudio();
 }
 
-
 void updateProjectiles() {
   for (var i = 0; i < totalProjectiles; i++) {
     final projectile = projectiles[i];

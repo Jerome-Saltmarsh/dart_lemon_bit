@@ -606,7 +606,7 @@ extension PlayerProperties on Player {
     writePosition(projectile);
     writeInt(projectile.z);
     writeByte(projectile.type);
-    writeInt(projectile.angleVelocity * radiansToDegrees);
+    writeAngle(projectile.angle);
   }
 
   void writeDamageApplied(Position target, int amount) {
@@ -714,9 +714,6 @@ extension PlayerProperties on Player {
       maxHealth += 10;
       health += 10;
     }
-    if (type == CardType.Passive_Bow_Run_Speed) {
-      speedModifier += 0.5;
-    }
   }
 
   void writeCardTypes(List<CardType> values){
@@ -779,6 +776,10 @@ extension PlayerProperties on Player {
     if (ability!.isModeArea) return;
     writeByte(ServerResponse.Player_Target);
     writePosition(target != null ? target! : mouse);
+  }
+
+  void writeAngle(double radians){
+    writeInt(radians * radiansToDegrees);
   }
 }
 

@@ -6,22 +6,20 @@ import 'package:gamestream_flutter/isometric/render/render_particle.dart';
 import 'package:lemon_math/library.dart';
 
 class Particle extends Vector3 {
-  double xv = 0;
-  double yv = 0;
-  double zv = 0;
-  double weight = 0;
-  int duration = 0;
-  double rotation = 0;
-  double rotationVelocity = 0;
-  double scale = 0;
-  double scaleV = 0;
-  int type = ParticleType.Zombie_Head;
-  double bounciness = 0;
-  double airFriction = 0.98;
-  int hue = 0;
-  bool casteShadow = false;
-  // double size = 0;
-
+  var xv = 0.0;
+  var yv = 0.0;
+  var zv = 0.0;
+  var weight = 0.0;
+  var duration = 0;
+  var rotation = 0.0;
+  var rotationVelocity = 0.0;
+  var scale = 0.0;
+  var scaleV = 0.0;
+  var type = 0;
+  var bounciness = 0.0;
+  var airFriction = 0.98;
+  var hue = 0;
+  var casteShadow = false;
   Particle? next;
 
   bool get active => duration > 0;
@@ -47,14 +45,13 @@ class Particle extends Vector3 {
   }
 
   void updateMotion(){
-    z += zv;
     x += xv;
     y += yv;
+    z += zv;
     if (z < 0){
       z = 0;
     }
     rotation = clampAngle(rotation + rotationVelocity);
-
     scale += scaleV;
     if (scale < 0){
       scale = 0;

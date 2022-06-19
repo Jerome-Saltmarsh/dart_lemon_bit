@@ -1,7 +1,7 @@
-import 'package:lemon_math/functions/angle.dart';
+import 'package:lemon_math/functions/adjacent.dart';
+import 'package:lemon_math/functions/opposite.dart';
 
 import '../common/MaterialType.dart';
-import '../maths.dart';
 import '../utilities.dart';
 
 mixin Owner <T> {
@@ -28,24 +28,18 @@ mixin Health {
 }
 
 mixin Velocity {
-  var xv = 0.0;
-  var yv = 0.0;
+  var angle = 0.0;
+  var speed = 0.0;
 
-  double get angleVelocity => getAngle(xv, yv);
+  double get xv => getAdjacent(angle, speed);
+  double get yv => getOpposite(angle, speed);
 
   void applyFriction(double amount){
-    xv *= amount;
-    yv *= amount;
+    speed *= amount;
   }
 
   void accelerate(double rotation, double acceleration) {
-    xv += adj(rotation, acceleration);
-    yv += opp(rotation, acceleration);
-  }
-
-  void setVelocity(double rotation, double speed){
-    xv = adj(rotation, speed);
-    yv = opp(rotation, speed);
+    speed += acceleration;
   }
 }
 

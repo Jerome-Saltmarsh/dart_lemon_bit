@@ -261,8 +261,8 @@ abstract class Game {
         if (_distance > combinedRadius) continue;
         final overlap = combinedRadius - _distance;
         final r = radiansV2(a, b);
-        a.x -= adj(r, overlap);
-        a.y -= opp(r, overlap);
+        a.x -= getAdjacent(r, overlap);
+        a.y -= getOpposite(r, overlap);
         a.onCollisionWith(b);
         b.onCollisionWith(a);
       }
@@ -378,8 +378,8 @@ extension GameFunctions on Game {
   /// calculates if there is a wall between two objects
   bool isVisibleBetween(Position a, Position b) {
     final angle = radiansV2(a, b);
-    final vX = adj(angle, 48);
-    final vY = opp(angle, 48);
+    final vX = getAdjacent(angle, 48);
+    final vY = getOpposite(angle, 48);
     final jumps = distanceV2(a, b) ~/ 48;
     var x = a.x + vX;
     var y = a.y + vY;
@@ -552,7 +552,8 @@ extension GameFunctions on Game {
     collectable.target = target;
     collectable.x = position.x;
     collectable.y = position.y;
-    collectable.setVelocity(randomAngle(), 3.0);
+    collectable.angle = randomAngle();
+    collectable.speed = 3.0;
     collectables.add(collectable);
   }
 
@@ -1011,6 +1012,10 @@ extension GameFunctions on Game {
     scene.resolveCharacterTileCollision(character);
 
     switch (character.state) {
+      case CharacterAction.Idle:
+        character.speed *= 0.75;
+        break;
+
       case CharacterState.Running:
         character.applyVelocity();
         break;
@@ -1138,7 +1143,7 @@ extension GameFunctions on Game {
     projectile.x = src.x;
     projectile.y = src.y;
     projectile.z = src.z;
-    projectile.setVelocity(finalAngle + giveOrTake(accuracy) - piHalf, speed);
+    projectile.angle = finalAngle + giveOrTake(accuracy);
     projectile.speed = speed;
     projectile.owner = src;
     projectile.range = range;
@@ -1177,9 +1182,7 @@ extension GameFunctions on Game {
     zombie.x = x;
     zombie.y = y;
     zombie.z = z;
-    zombie.yv = 0;
-    zombie.xv = 0;
-    zombie.setSpeed(speed);
+    zombie.walkingSpeed = speed;
     return zombie;
   }
 
