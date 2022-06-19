@@ -1,6 +1,5 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -17,7 +16,6 @@ class GameState {
   final highlightedTechTypeUpgrade = Watch<int?>(null);
   final panelTypeKey = <int, GlobalKey> {};
   final canBuild = Watch(false);
-  final cameraMode = Watch(CameraMode.Chase);
   final playerTextStyle = TextStyle(color: Colors.white);
   final storeColumnKey = GlobalKey();
   final keyPanelStructure = GlobalKey();

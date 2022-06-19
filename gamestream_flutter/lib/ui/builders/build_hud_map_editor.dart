@@ -2,7 +2,6 @@ import 'package:bleed_common/grid_node_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/isometric/edit_tools_enabled.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
@@ -21,7 +20,7 @@ Widget buildHudMapEditor() {
       Positioned(
         top: 0,
         left: 0,
-        child: visibleBuilder(editToolsEnabled, buildPanelEditor()),
+        child: buildPanelEditor(),
       ),
       Positioned(
           top: 0,
@@ -31,7 +30,7 @@ Widget buildHudMapEditor() {
       Positioned(
         bottom: 0,
         right: 0,
-        child: visibleBuilder(editToolsEnabled, buildColumnSetWeapon()),
+        child: buildColumnSetWeapon(),
       ),
     ],
   );

@@ -8,12 +8,12 @@ import 'package:gamestream_flutter/isometric/ai.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/npc_debug.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
+import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_grid_node.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/collectables.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
-import 'package:gamestream_flutter/isometric/edit_tools_enabled.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
@@ -58,7 +58,7 @@ class GameRender {
     }
 
     renderSprites();
-    if (editToolsEnabled.value){
+    if (playModeEdit){
       renderWireframes();
     }
   }

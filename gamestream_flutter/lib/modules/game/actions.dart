@@ -4,7 +4,6 @@ import 'package:bleed_common/Modify_Game.dart';
 import 'package:bleed_common/SlotTypeCategory.dart';
 import 'package:gamestream_flutter/isometric/message_box.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
-import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
 import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:gamestream_flutter/web_socket.dart';
@@ -102,10 +101,6 @@ class GameActions {
 
   void equipSlot6(){
     equipSlot(6);
-  }
-
-  void nextCameraMode(){
-    state.cameraMode.value = cameraModes[(state.cameraMode.value.index + 1) % cameraModes.length];
   }
 
   /// valid between 1 and 6 inclusive

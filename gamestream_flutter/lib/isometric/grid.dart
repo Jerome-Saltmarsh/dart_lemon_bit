@@ -78,11 +78,16 @@ void _applyShadowsMidAfternoon() {
 // }
 
 bool castesShadow(int type){
-  return
-      const [GridNodeType.Tree_Top_Pine, GridNodeType.Bricks, GridNodeType.Grass].contains(type)
-          ||
-      GridNodeType.isStairs(type)
-  ;
+  return const [
+        GridNodeType.Tree_Top_Pine,
+        GridNodeType.Bricks,
+        GridNodeType.Grass,
+        GridNodeType.Grass_Long,
+        GridNodeType.Stairs_South,
+        GridNodeType.Stairs_West,
+        GridNodeType.Stairs_East,
+        GridNodeType.Stairs_North,
+  ].contains(type);
 }
 
 void _applyShadowAt({

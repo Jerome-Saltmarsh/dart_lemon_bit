@@ -4,9 +4,10 @@ import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/icons.dart';
-import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
+import 'package:gamestream_flutter/isometric/camera_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/game/enums.dart';
@@ -14,9 +15,11 @@ import 'package:gamestream_flutter/modules/game/update.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/layouts.dart';
 import 'package:gamestream_flutter/ui/builders/build_hud_map_editor.dart';
+import 'package:gamestream_flutter/ui/builders/build_hud_play_mode.dart';
 import 'package:gamestream_flutter/ui/builders/build_hud_random.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_debug.dart';
+import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:gamestream_flutter/ui/builders/build_text_box.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:golden_ratio/constants.dart';
@@ -111,7 +114,14 @@ class GameBuild {
           if (gameType.value == GameType.RANDOM)
             buildHudRandom(),
           if (gameType.value == GameType.FRONTLINE)
-            buildHudMapEditor(),
+            watch(playMode, (PlayMode value){
+               if (value == PlayMode.Play){
+                 return buildHudPlayMode();
+               } else {
+                 return buildHudMapEditor();
+               }
+            }),
+
         ]);
   }
 
@@ -207,8 +217,8 @@ class GameBuild {
   }
 
   Widget buildButtonToggleCameraMode(){
-    return WatchBuilder(modules.game.state.cameraMode, (CameraMode mode){
-       return button(mode.name, modules.game.actions.nextCameraMode);
+    return WatchBuilder(cameraModeWatch, (CameraMode mode){
+       return button(mode.name, cameraModeNext);
     });
   }
 

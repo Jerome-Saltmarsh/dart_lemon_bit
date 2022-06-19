@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/collectables.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
-import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
+import 'package:gamestream_flutter/isometric/camera_mode.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
@@ -266,7 +266,7 @@ class ServerResponseReader with ByteReader {
           player.angle = readDouble() / 100.0;
           player.mouseAngle = readDouble() / 100.0;
 
-          switch(modules.game.state.cameraMode.value){
+          switch (cameraMode){
             case CameraMode.Chase:
               const cameraFollowSpeed = 0.001;
               final playerScreenX = player.renderX;
