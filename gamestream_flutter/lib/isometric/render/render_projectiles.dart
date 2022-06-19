@@ -43,7 +43,7 @@ void renderArrow(double x, double y, double angle) {
       srcY: 0,
       srcWidth: 9,
       srcHeight: 43,
-      rotation: angle + piQuarter,
+      rotation: angle - piQuarter,
       scale: 0.5
   );
   renderR(
@@ -53,7 +53,7 @@ void renderArrow(double x, double y, double angle) {
       srcY: 0,
       srcWidth: 9,
       srcHeight: 44,
-      rotation: angle + piQuarter,
+      rotation: angle - piQuarter,
       scale: 0.5
   );
 }
