@@ -43,7 +43,7 @@ Widget buildPanelEditor(){
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       // _buildContainerMouseInfo(),
-      _buildContainerPlayerInfo(),
+      // _buildContainerPlayerInfo(),
       buildColumnEditTile(),
       _button("Recenter", (){
          edit.z = player.indexZ;
