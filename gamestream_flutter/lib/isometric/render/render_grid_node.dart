@@ -155,7 +155,11 @@ void renderGridNode(int z, int row, int column, int type) {
   }
 }
 
-void renderWireFrameBlue(int row, int column, int z) {
+void renderWireFrameBlue(
+  int z,
+  int row,
+  int column,
+) {
   return render(
     dstX: getTileWorldX(row, column),
     dstY: getTileWorldY(row, column) - (z * tileHeight),

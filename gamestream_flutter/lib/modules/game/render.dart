@@ -18,6 +18,7 @@ import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
+import 'package:gamestream_flutter/isometric/utils/mouse_raycast.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -67,27 +68,12 @@ class GameRender {
   }
 
   void renderMouseWireFrame(){
-     var z = gridTotalZ - 1;
-     while (z >= 0){
-       final row = convertWorldToRow(mouseWorldX, mouseWorldY, z * tileHeight);
-       final column = convertWorldToColumn(mouseWorldX, mouseWorldY, z * tileHeight);
-        if (row < 0) break;
-        if (column < 0) break;
-        if (row >= gridTotalRows) break;
-        if (column >= gridTotalColumns) break;
-        if (z >= gridTotalZ) break;
-        if (grid[z][row][column] == GridNodeType.Empty) {
-          z--;
-          continue;
-        }
-       renderWireFrameBlue(row, column, z);
-       return;
-     }
+    mouseRaycast(renderWireFrameBlue);
   }
 
   void renderWireframes() {
      for (var z = 0; z < edit.z; z++){
-       renderWireFrameBlue(edit.row, edit.column, z);
+       renderWireFrameBlue(z, edit.row, edit.column);
     }
     renderWireFrameRed(
         edit.row,
