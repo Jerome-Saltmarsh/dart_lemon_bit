@@ -44,10 +44,11 @@ Widget buildPanelEditor(){
       // _buildContainerMouseInfo(),
       // _buildContainerPlayerInfo(),
       buildColumnEditTile(),
+      buildColumnEdit(),
       _button("Recenter", (){
-         edit.z = player.indexZ;
-         edit.row = player.indexRow;
-         edit.column = player.indexColumn;
+         edit.z.value = player.indexZ;
+         edit.row.value = player.indexRow;
+         edit.column.value = player.indexColumn;
       }),
       watch(gridShadows, (bool shadowsOn){
         return _button("Shadows: $shadowsOn", (){
@@ -155,9 +156,9 @@ Widget buildColumnEditTile(){
       _buildSetType(GridNodeType.Wooden_Wall_Row, "Wooden Wall Row"),
       _button("Zombie", () {
         sendClientRequestSpawnZombie(
-          z: edit.z,
-          row: edit.row,
-          column: edit.column,
+          z: edit.z.value,
+          row: edit.row.value,
+          column: edit.column.value,
         );
       }),
     ],
@@ -185,3 +186,38 @@ Widget _button(String value, Function action, {Color? color}){
   );
 }
 
+Widget buildColumnEdit(){
+  return Column(
+      children: [
+        onPressed(
+          callback: editZIncrease,
+          child: Container(
+              alignment: Alignment.center,
+              child: text("+"),
+              width: 50,
+              height: 50,
+              color: Colors.grey,
+          ),
+        ),
+        watch(edit.z, (int z){
+           return Container(
+             alignment: Alignment.center,
+             child: text('Z:$z'),
+             width: 50,
+             height: 50,
+             color: Colors.grey,
+           );
+        }),
+        onPressed(
+          callback: editZDecrease,
+          child: Container(
+            alignment: Alignment.center,
+            child: text("-"),
+            width: 50,
+            height: 50,
+            color: Colors.grey,
+          ),
+        ),
+      ],
+  );
+}

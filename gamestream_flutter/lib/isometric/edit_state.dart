@@ -7,26 +7,36 @@ import 'grid.dart';
 final edit = EditState();
 
 class EditState {
-  var row = 0;
-  var column = 0;
-  var z = 0;
+  var row = Watch(0);
+  var column = Watch(0);
+  var z = Watch(0);
 
   final type = Watch(GridNodeType.Bricks);
 
   void refreshType(){
-    type.value = grid[z][row][column];
+    type.value = grid[z.value][row.value][column.value];
   }
 
   void setBlockType(int value){
-    if (grid[z][row][column] != value){
-      return sendClientRequestSetBlock(row, column, z, value);
+    if (grid[z.value][row.value][column.value] != value){
+      return sendClientRequestSetBlock(row.value, column.value, z.value, value);
     }
-    for (var z = 1; z < edit.z; z++){
+    for (var z = 1; z < z; z++){
       if (GridNodeType.isStairs(value)){
-        sendClientRequestSetBlock(row, column, z, GridNodeType.Bricks);
+        sendClientRequestSetBlock(row.value, column.value, z, GridNodeType.Bricks);
       } else {
-        sendClientRequestSetBlock(row, column, z, value);
+        sendClientRequestSetBlock(row.value, column.value, z, value);
       }
     }
   }
+}
+
+void editZIncrease(){
+   if (edit.z.value >= gridTotalZ) return;
+   edit.z.value++;
+}
+
+void editZDecrease(){
+  if (edit.z.value <= 0) return;
+  edit.z.value--;
 }

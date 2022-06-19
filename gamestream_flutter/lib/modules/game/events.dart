@@ -60,40 +60,40 @@ class GameEvents {
        }
         if (event.physicalKey == PhysicalKeyboardKey.arrowUp){
           if (keyPressed(LogicalKeyboardKey.shiftLeft)){
-            edit.z++;
-            if (edit.z >= gridTotalZ) {
-              edit.z = gridTotalZ - 1;
+            edit.z.value++;
+            if (edit.z.value >= gridTotalZ) {
+              edit.z.value = gridTotalZ - 1;
             }
           } else {
-            edit.row--;
-            if (edit.row < 0){
-              edit.row = 0;
+            edit.row.value--;
+            if (edit.row.value < 0){
+              edit.row.value = 0;
             }
           }
         }
         if (event.physicalKey == PhysicalKeyboardKey.arrowRight){
-          edit.column--;
-          if (edit.column < 0){
-            edit.column = 0;
+          edit.column.value--;
+          if (edit.column.value < 0){
+            edit.column.value = 0;
           }
         }
         if (event.physicalKey == PhysicalKeyboardKey.arrowDown){
           if (keyPressed(LogicalKeyboardKey.shiftLeft)){
-            edit.z--;
-            if (edit.z < 0){
-              edit.z = 0;
+            edit.z.value--;
+            if (edit.z.value < 0){
+              edit.z.value = 0;
             }
           } else {
-            edit.row = min(edit.row + 1, gridTotalRows - 1);
+            edit.row.value = min(edit.row.value + 1, gridTotalRows - 1);
           }
         }
         if (event.physicalKey == PhysicalKeyboardKey.arrowLeft){
-          edit.column++;
-          if (edit.column >= gridTotalColumns){
-            edit.column = gridTotalColumns - 1;
+          edit.column.value++;
+          if (edit.column.value >= gridTotalColumns){
+            edit.column.value = gridTotalColumns - 1;
           }
         }
-        edit.type.value = grid[edit.z][edit.row][edit.column];
+        edit.type.value = grid[edit.z.value][edit.row.value][edit.column.value];
         return;
      }
      if (event is RawKeyUpEvent){

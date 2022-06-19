@@ -1,7 +1,6 @@
 
 import 'dart:math';
 
-import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
@@ -17,7 +16,6 @@ import 'package:gamestream_flutter/isometric/collectables.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
-import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse_raycast.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
@@ -72,13 +70,13 @@ class GameRender {
   }
 
   void renderWireframes() {
-     for (var z = 0; z < edit.z; z++){
-       renderWireFrameBlue(z, edit.row, edit.column);
+     for (var z = 0; z < edit.z.value; z++){
+       renderWireFrameBlue(z, edit.row.value, edit.column.value);
     }
     renderWireFrameRed(
-        edit.row,
-        edit.column,
-        edit.z
+        edit.row.value,
+        edit.column.value,
+        edit.z.value
     );
   }
 

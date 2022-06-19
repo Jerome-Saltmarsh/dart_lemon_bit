@@ -8,9 +8,9 @@ void onMouseLeftClicked(){
 
   if (playModeEdit){
     mouseRaycast((int z, int row, int column){
-      edit.row = row;
-      edit.column = column;
-      edit.z = z;
+      edit.row.value = row;
+      edit.column.value = column;
+      edit.z.value = z;
     });
     edit.refreshType();
   }
