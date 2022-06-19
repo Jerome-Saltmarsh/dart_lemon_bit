@@ -5,7 +5,6 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
-import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/message_box.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
@@ -33,9 +32,6 @@ class GameEvents {
   GameEvents(this.actions, this.state);
 
   void register(){
-    engine.callbacks.onLeftClicked = playerPerform;
-    engine.callbacks.onPanStarted = playerPerform;
-    engine.callbacks.onLongLeftClicked = playerRun;
     engine.callbacks.onRightClicked = onMouseRightClick;
     gameType.onChanged(_onGameTypeChanged);
     player.characterType.onChanged(_onPlayerCharacterTypeChanged);
@@ -56,7 +52,6 @@ class GameEvents {
   void deregister(){
     RawKeyboard.instance.removeListener(onKeyboardEvent);
     updateTimer?.cancel();
-
   }
 
   void onKeyboardEvent(RawKeyEvent event){
@@ -107,22 +102,8 @@ class GameEvents {
      }
   }
 
-  void onMouseLeftClick() {
-    setCharacterActionPerform();
-  }
-
   void onMouseRightClick(){
     sendRequestAttackSecondary();
-    // if (modules.game.structureType.isNotNull) {
-    //   modules.game.structureType.value = null;
-    //   return;
-    // }
-    //
-    // if (state.player.ability.value != AbilityType.None) {
-    //   actions.deselectAbility();
-    //   return;
-    // }
-    // sendRequestAttack();
   }
 
   void onPlayerWeaponChanged(int value){

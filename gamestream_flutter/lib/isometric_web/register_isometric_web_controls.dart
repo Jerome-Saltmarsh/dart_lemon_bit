@@ -1,21 +1,17 @@
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:gamestream_flutter/isometric/message_box.dart';
+import 'package:gamestream_flutter/isometric_web/on_mouse_left_clicked.dart';
 import 'package:lemon_engine/engine.dart';
 
 final keys = KeyMap();
 
-void registerIsometricWebKeyPressedHandler(){
+void registerIsometricWebControls(){
   engine.keyPressedHandlers = {
     keys.speak: messageBoxToggle,
     keys.teleport: sendRequestTeleport,
-    // keys.equip1: actions.equipSlot1,
-    // keys.equip2: actions.equipSlot2,
-    // keys.equip3: actions.equipSlot3,
-    // keys.equip4: actions.equipSlot4,
-    // keys.equip5: actions.equipSlot5,
-    // keys.equip6: actions.equipSlot6,
   };
+  engine.callbacks.onLeftClicked = onMouseLeftClicked;
 }
 
 class KeyMap {

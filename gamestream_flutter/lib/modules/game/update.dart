@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/update.dart';
 import 'package:gamestream_flutter/isometric_web/read_player_input.dart';
@@ -18,8 +19,11 @@ class GameUpdate {
     totalUpdates.value++;
     framesSinceUpdateReceived.value++;
     updateIsometric();
-    readPlayerInput();
+
+    if (playModePlay){
+      readPlayerInput();
+    }
+
     sendRequestUpdatePlayer();
   }
-
 }
