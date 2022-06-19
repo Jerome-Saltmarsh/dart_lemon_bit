@@ -1,6 +1,7 @@
 
 import 'dart:math';
 
+import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
@@ -16,6 +17,7 @@ import 'package:gamestream_flutter/isometric/collectables.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
+import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -58,9 +60,28 @@ class GameRender {
     }
 
     renderSprites();
+    // renderMouseWireFrame();
     if (playModeEdit){
       renderWireframes();
     }
+  }
+
+  void renderMouseWireFrame(){
+
+     var targetZ = 0;
+     var row = convertWorldToRow(mouseWorldX, mouseWorldY);
+     var column = convertWorldToColumn(mouseWorldX, mouseWorldY);
+     var targetRow = row;
+     var targetColumn =  column;
+     for (var z = 0; z < gridTotalZ; z += 2){
+        row ++;
+        column ++;
+        if (grid[z][row][column] == GridNodeType.Empty) continue;
+        targetZ = z;
+        targetRow = row;
+        targetColumn = column;
+     }
+     renderWireFrameBlue(targetRow, targetColumn, targetZ);
   }
 
   void renderWireframes() {

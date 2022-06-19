@@ -344,7 +344,7 @@ class ServerResponseReader with ByteReader {
           final column = readInt();
           final type = readInt();
           grid[z][row][column] = type;
-          edit.type.value = grid[edit.z][edit.row][edit.column];
+          edit.refreshType();
           onGridChanged();
           break;
 

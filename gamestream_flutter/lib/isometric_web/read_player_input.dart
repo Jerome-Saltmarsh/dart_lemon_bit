@@ -2,9 +2,17 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/isometric/message_box.dart';
+import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:lemon_engine/engine.dart';
 
 void readPlayerInput() {
+
+  if (playModeEdit) {
+    if (engine.mouseRightDown.value) {
+      engine.panCamera();
+    }
+    return;
+  }
 
   if (messageBoxVisible.value) return;
 
@@ -13,14 +21,14 @@ void readPlayerInput() {
     return;
   }
 
-  final direction = getKeyDirection();
+  final direction = _getKeyDirection();
   if (direction != null) {
     characterDirection = direction;
     setCharacterActionRun();
   }
 }
 
-int? getKeyDirection() {
+int? _getKeyDirection() {
   final keysPressed = keyboardInstance.keysPressed;
 
   if (keysPressed.contains(LogicalKeyboardKey.keyW)) {

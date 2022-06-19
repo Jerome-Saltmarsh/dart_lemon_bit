@@ -158,7 +158,7 @@ void renderGridNode(int z, int row, int column, int type) {
 void renderWireFrameBlue(int row, int column, int z) {
   return render(
     dstX: getTileWorldX(row, column),
-    dstY: getTileWorldY(row, column) - (z * 24),
+    dstY: getTileWorldY(row, column) - (z * tileHeight),
     srcX: 7590,
     srcY: 0,
     srcWidth: 48,
@@ -170,7 +170,7 @@ void renderWireFrameBlue(int row, int column, int z) {
 void renderWireFrameRed(int row, int column, int z) {
   return render(
     dstX: getTileWorldX(row, column),
-    dstY: getTileWorldY(row, column) - (z * 24),
+    dstY: getTileWorldY(row, column) - (z * tileHeight),
     srcX: 7638,
     srcY: 0,
     srcWidth: 48,

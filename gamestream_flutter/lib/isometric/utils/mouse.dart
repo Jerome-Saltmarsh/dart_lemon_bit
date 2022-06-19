@@ -7,14 +7,6 @@ import 'package:lemon_math/library.dart';
 double get mouseGridX => convertWorldToGridX(mouseWorldX, mouseWorldY) + player.z;
 double get mouseGridY => convertWorldToGridY(mouseWorldX, mouseWorldY) + player.z;
 
-// int getGridRowAt(double x, double y, double z) {
-//   return (y - z - x) ~/ tileSize;;
-// }
-//
-// void getTileAtMouse(){
-//
-// }
-
 double get mousePlayerAngle {
    final adjacent = player.x - mouseGridX;
    final opposite = player.y - mouseGridY - player.z;

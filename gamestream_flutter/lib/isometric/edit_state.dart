@@ -10,17 +10,22 @@ class EditState {
   var row = 0;
   var column = 0;
   var z = 0;
+
   final type = Watch(GridNodeType.Bricks);
+
+  void refreshType(){
+    type.value = grid[z][row][column];
+  }
 
   void setBlockType(int value){
     if (grid[z][row][column] != value){
-      return sendClientRequestSetBlock(edit.row, edit.column, edit.z, value);
+      return sendClientRequestSetBlock(row, column, z, value);
     }
     for (var z = 1; z < edit.z; z++){
       if (GridNodeType.isStairs(value)){
-        sendClientRequestSetBlock(edit.row, edit.column, z, GridNodeType.Bricks);
+        sendClientRequestSetBlock(row, column, z, GridNodeType.Bricks);
       } else {
-        sendClientRequestSetBlock(edit.row, edit.column, z, value);
+        sendClientRequestSetBlock(row, column, z, value);
       }
     }
   }

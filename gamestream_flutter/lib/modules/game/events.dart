@@ -32,7 +32,6 @@ class GameEvents {
   GameEvents(this.actions, this.state);
 
   void register(){
-    engine.callbacks.onRightClicked = onMouseRightClick;
     gameType.onChanged(_onGameTypeChanged);
     player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     player.alive.onChanged(_onPlayerAliveChanged);
@@ -100,10 +99,6 @@ class GameEvents {
      if (event is RawKeyUpEvent){
        return;
      }
-  }
-
-  void onMouseRightClick(){
-    sendRequestAttackSecondary();
   }
 
   void onPlayerWeaponChanged(int value){
