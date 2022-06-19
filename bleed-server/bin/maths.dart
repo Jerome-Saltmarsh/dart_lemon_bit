@@ -15,29 +15,8 @@ double radiansBetween2(Position a, double x, double y) {
 }
 
 double radiansBetween(double x1, double y1, double x2, double y2) {
-  return radians(x1 - x2, y1 - y2);
+  return atan2(y2 - y1, x2 - x1);
 }
-
-// double velX(double rotation, double speed) {
-//   return cos(rotation) * speed;
-// }
-//
-// double velY(double rotation, double speed) {
-//   return sin(rotation) * speed;
-// }
-
-double radians(double x, double y) {
-  if (x < 0) return -atan2(x, y);
-  return pi2 - atan2(x, y);
-}
-
-// double adj(double rotation, num magnitude) {
-//   return cos(rotation) * magnitude;
-// }
-//
-// double opp(double rotation, num magnitude) {
-//   return sin(rotation) * magnitude;
-// }
 
 double normalize(double x, double y) {
   return 1.0 / getHypotenuse(x, y);

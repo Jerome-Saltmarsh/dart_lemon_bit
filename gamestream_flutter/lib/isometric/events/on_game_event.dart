@@ -177,16 +177,16 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
           zv: 0.07 + giveOrTake(0.01),
         );
       }
-      for (var i = 0; i < 1; i++) {
-        spawnParticleBlood(
-          x: x,
-          y: y,
-          z: z,
-          angle: angle + giveOrTake(0.2) + pi,
-          speed: 1.0 + giveOrTake(1),
-          zv: 0.07 + giveOrTake(0.01),
-        );
-      }
+      // for (var i = 0; i < 1; i++) {
+      //   spawnParticleBlood(
+      //     x: x,
+      //     y: y,
+      //     z: z,
+      //     angle: angle + giveOrTake(0.2) + pi,
+      //     speed: 1.0 + giveOrTake(1),
+      //     zv: 0.07 + giveOrTake(0.01),
+      //   );
+      // }
 
       break;
 
