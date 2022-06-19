@@ -8,9 +8,11 @@ void renderParticle(Particle value) {
   switch (value.type) {
     case ParticleType.Smoke:
       return renderSmoke(
-          x: value.renderX, y: value.renderY, scale: value.renderScale);
+          x: value.renderX,
+          y: value.renderY,
+          scale: value.renderScale
+      );
     case ParticleType.Blood:
-      print ('blood: $value');
       return render(
           dstX: value.renderX,
           dstY: value.renderY,

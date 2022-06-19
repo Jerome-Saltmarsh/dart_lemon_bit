@@ -5,11 +5,10 @@ import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
+import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
-import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
-import 'package:gamestream_flutter/isometric/classes/particle.dart';
 
 import 'effects.dart';
 
@@ -161,7 +160,7 @@ void spawnParticleBlood({
     zv: zv,
     angle: angle,
     speed: speed,
-    weight: 0.16,
+    weight: 0.5,
     duration: randomInt(120, 200),
     rotation: 0,
     rotationV: 0,
@@ -560,23 +559,7 @@ void spawnParticle({
   bool castShadow = false,
 }) {
   assert(duration > 0);
-  const mapTypeToSize = <int, double> {
-    ParticleType.Zombie_Head: 64.0,
-    ParticleType.Blood: 8.0,
-    ParticleType.Myst: 64.0,
-    ParticleType.Smoke: 32.0,
-    ParticleType.Shrapnel: 32.0,
-    ParticleType.Shell: 32.0,
-    ParticleType.Organ: 64,
-    ParticleType.FireYellow: 32.0,
-    ParticleType.Arm: 64,
-    ParticleType.Leg: 64,
-    ParticleType.Pixel: 8,
-    ParticleType.Orb_Ruby: 24.0,
-    ParticleType.Pot_Shard: 16.0,
-  };
   final particle = getParticleInstance();
-  particle.size = mapTypeToSize[type] ?? 0;
   particle.type = type;
   particle.casteShadow = castShadow;
   particle.x = x;

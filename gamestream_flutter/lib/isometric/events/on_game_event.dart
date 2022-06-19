@@ -166,7 +166,6 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
 
     case GameEventType.Material_Struck_Flesh:
       audio.materialStruckFlesh(x, y);
-      print('GameEventType.Material_Struck_Flesh: z: $z');
       final total = randomInt(2, 5);
       for (var i = 0; i < total; i++) {
         spawnParticleBlood(

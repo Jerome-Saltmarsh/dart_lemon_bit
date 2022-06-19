@@ -20,7 +20,7 @@ class Particle extends Vector3 {
   double airFriction = 0.98;
   int hue = 0;
   bool casteShadow = false;
-  double size = 0;
+  // double size = 0;
 
   Particle? next;
 
