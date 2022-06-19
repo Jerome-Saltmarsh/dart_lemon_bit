@@ -1,3 +1,4 @@
+import 'package:bleed_common/Direction.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:lemon_engine/engine.dart';
@@ -33,6 +34,17 @@ void renderParticle(Particle value) {
           x: value.renderX, y: value.renderY, scale: value.renderScale);
     case ParticleType.Flame:
       return renderFlame(value);
+
+    case ParticleType.Arm:
+      return render(
+          dstX: value.renderX,
+          dstY: value.renderY,
+          srcX: 3004.0 + (64 * convertAngleToDirection(value.rotation)),
+          srcY: value.shade * 64,
+          srcWidth: 64,
+          srcHeight: 64
+      );
+
     default:
       break;
   }
