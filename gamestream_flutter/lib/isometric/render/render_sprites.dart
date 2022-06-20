@@ -157,24 +157,59 @@ class RenderOrderGrid extends RenderOrder {
   var playerZ = 0;
   var playerRow = 0;
   var playerColumn = 0;
+  var playerRenderRow = 0;
+  var playerRenderColumn = 0;
+  var playerUnderRoof = false;
+  var playerImperceptible = false;
 
   @override
   void renderFunction() {
 
-    var grounded = true;
-    for (var z = playerZ; z < gridZ; z++){
-       if (grid[z][gridRow][gridColumn] == GridNodeType.Empty){
-         grounded = false;
-         break;
-       }
+    // var grounded = true;
+    // for (var z = playerZ; z < gridZ; z++){
+    //    if (grid[z][gridRow][gridColumn] == GridNodeType.Empty){
+    //      grounded = false;
+    //      break;
+    //    }
+    // }
+
+    // if (gridZ > playerZ + 1 &&
+    //     gridRow > playerRow &&
+    //     gridColumn > playerColumn &&
+    //     gridRow <= playerRow + 7 &&
+    //     gridColumn <= playerColumn + 7
+    // ) return;
+
+    // final renderRow = (gridRow - (gridZ / 2));
+    // final renderColumn = (gridColumn - (gridZ / 2));
+    //
+    // if (playerZ < gridZ  &&
+    //     renderRow >= playerRenderRow &&
+    //     renderColumn >= playerRenderColumn
+    // ) return;
+    //
+    if (playerImperceptible){
+
+      // if (gridZ > playerZ + 1 && (playerColumn < gridColumn || playerRow < gridRow)) return;
+      if (gridZ > playerZ){
+        final renderRow = getRenderRow(gridRow, gridZ);
+        final renderColumn = getRenderRow(gridColumn, gridZ);
+        final renderRowDistance = (renderRow - playerRenderRow).abs();
+        final renderColumnDistance = (renderColumn - playerRenderColumn).abs();
+        final distance = sqrt(renderRowDistance * renderRowDistance + renderColumnDistance * renderColumnDistance);
+
+        if (distance < 7){
+          if (gridZ > playerZ + 2) return;
+          if (renderRow == playerRenderRow && renderColumn == playerRenderColumn) return;
+          if (renderRow == playerRenderRow && renderColumn == playerRenderColumn - 1) return;
+          if (renderRow == playerRenderRow && renderColumn == playerRenderColumn + 1) return;
+          if (renderRow == playerRenderRow - 1 && renderColumn == playerRenderColumn) return;
+          if (renderRow == playerRenderRow + 1 && renderColumn == playerRenderColumn) return;
+        }
+      }
     }
 
-    if (gridZ > playerZ + 1 &&
-        gridRow > playerRow &&
-        gridColumn > playerColumn &&
-        gridRow <= playerRow + 7 &&
-        gridColumn <= playerColumn + 7
-    ) return;
+
     renderGridNode(gridZ, gridRow, gridColumn, gridType);
   }
 
@@ -206,6 +241,30 @@ class RenderOrderGrid extends RenderOrder {
     playerZ = player.indexZ;
     playerRow = player.indexRow;
     playerColumn = player.indexColumn;
+    playerRenderRow = playerRow - (player.indexZ ~/ 2);
+    playerRenderColumn = playerColumn - (player.indexZ ~/ 2);
+    playerUnderRoof = false;
+
+    for (var z = playerZ + 1; z < gridTotalZ; z++){
+       if (grid[z][playerRow][playerColumn] != GridNodeType.Empty) {
+         playerUnderRoof = true;
+         break;
+       }
+    }
+
+    playerImperceptible = false;
+    var row = playerRow;
+    var column = playerColumn;
+    for (var z = playerZ + 1; z < gridTotalZ; z += 2){
+      row++;
+      column++;
+      final type = grid[z][row][column];
+      if (type != GridNodeType.Empty && type != GridNodeType.Tree_Top_Pine) {
+        playerImperceptible = true;
+        break;
+      }
+    }
+
     final left = engine.screen.left;
     final bottom = engine.screen.bottom + (gridTotalZ * tileHeight);
     final top = engine.screen.top;
@@ -350,4 +409,12 @@ void updateAnyRemaining(){
     return;
   }
   anyRemaining = false;
+}
+
+int getRenderRow(int row, int z){
+  return row - (z ~/ 2);
+}
+
+int getRenderColumn(int column, int z){
+  return column - (z ~/ 2);
 }
