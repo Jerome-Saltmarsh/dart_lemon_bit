@@ -8,7 +8,7 @@ import 'package:lemon_engine/engine.dart';
 void readPlayerInput() {
 
   if (playModeEdit) {
-    if (engine.mouseRightDown.value || keyPressed(LogicalKeyboardKey.shiftLeft)) {
+    if (engine.mouseRightDown.value || keyPressed(LogicalKeyboardKey.space)) {
       engine.panCamera();
     }
     return;

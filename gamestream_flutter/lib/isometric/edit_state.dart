@@ -21,11 +21,11 @@ class EditState {
     if (grid[z.value][row.value][column.value] != value){
       return sendClientRequestSetBlock(row.value, column.value, z.value, value);
     }
-    for (var z = 1; z < z; z++){
+    for (var zIndex = 1; zIndex < z.value; zIndex++){
       if (GridNodeType.isStairs(value)){
-        sendClientRequestSetBlock(row.value, column.value, z, GridNodeType.Bricks);
+        sendClientRequestSetBlock(row.value, column.value, zIndex, GridNodeType.Bricks);
       } else {
-        sendClientRequestSetBlock(row.value, column.value, z, value);
+        sendClientRequestSetBlock(row.value, column.value, zIndex, value);
       }
     }
   }

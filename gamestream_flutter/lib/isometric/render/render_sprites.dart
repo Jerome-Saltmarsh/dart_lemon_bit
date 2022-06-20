@@ -5,6 +5,7 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
@@ -153,15 +154,34 @@ class RenderOrderGrid extends RenderOrder {
   var maxRow = 0;
   late List<List<int>> plain;
 
+  var playerZ = 0;
+  var playerRow = 0;
+  var playerColumn = 0;
+
   @override
   void renderFunction() {
+
+    var grounded = true;
+    for (var z = playerZ; z < gridZ; z++){
+       if (grid[z][gridRow][gridColumn] == GridNodeType.Empty){
+         grounded = false;
+         break;
+       }
+    }
+
+    if (gridZ > playerZ + 1 &&
+        gridRow > playerRow &&
+        gridColumn > playerColumn &&
+        gridRow <= playerRow + 7 &&
+        gridColumn <= playerColumn + 7
+    ) return;
     renderGridNode(gridZ, gridRow, gridColumn, gridType);
   }
 
   @override
   void updateFunction() {
     nextGridNode();
-    while (gridType == GridNodeType.Empty){
+    while (gridType == GridNodeType.Empty) {
       index = _index + 1;
       if (!remaining) return;
       nextGridNode();
@@ -183,6 +203,9 @@ class RenderOrderGrid extends RenderOrder {
     plain = grid[gridZ];
     gridType = 0;
     gridTotalColumnsMinusOne = gridTotalColumns - 1;
+    playerZ = player.indexZ;
+    playerRow = player.indexRow;
+    playerColumn = player.indexColumn;
     final left = engine.screen.left;
     final bottom = engine.screen.bottom + (gridTotalZ * tileHeight);
     final top = engine.screen.top;
