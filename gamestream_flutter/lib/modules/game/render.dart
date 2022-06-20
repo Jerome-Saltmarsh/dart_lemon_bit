@@ -234,8 +234,8 @@ class GameRender {
       final human = players[i];
       if (human.text.isEmpty) continue;
       final width = charWidth * human.text.length;
-      final left = human.x - width;
-      final y = human.y - 70;
+      final left = human.renderX - width;
+      final y = human.renderY - 70;
       engine.renderText(human.text, left, y, style: state.playerTextStyle);
     }
   }

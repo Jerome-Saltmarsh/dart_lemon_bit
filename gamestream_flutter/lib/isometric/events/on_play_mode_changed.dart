@@ -6,8 +6,13 @@ import 'package:gamestream_flutter/isometric/play_mode.dart';
 void onPlayModeChanged(PlayMode playMode){
    switch(playMode){
      case PlayMode.Play:
-       return cameraModeSetChase();
+       cameraModeSetChase();
+       return;
      case PlayMode.Edit:
-       return cameraModeSetFree();
+       cameraModeSetFree();
+       return;
+     case PlayMode.Debug:
+       cameraModeSetChase();
+       return;
    }
 }
