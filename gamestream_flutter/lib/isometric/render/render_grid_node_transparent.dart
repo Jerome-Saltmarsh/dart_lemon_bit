@@ -6,7 +6,11 @@ import 'package:lemon_engine/render.dart';
 
 import 'render_torch.dart';
 
-void renderGridNode(int z, int row, int column, int type) {
+
+void renderGridNodeTransparent(int z, int row, int column, int type) {
+  const srcTop = 433.0;
+  const srcLeft = 7110.0;
+
   assert (type != GridNodeType.Empty);
   final dstX = (row - column) * tileSizeHalf;
   final dstY = ((row + column) * tileSizeHalf) - (z * tileHeight);
@@ -16,8 +20,8 @@ void renderGridNode(int z, int row, int column, int type) {
       return render(
         dstX: dstX,
         dstY: dstY,
-        srcX: 7110,
-        srcY: 72.0 * shade,
+        srcX: srcLeft,
+        srcY: srcTop + (72.0 * shade),
         srcWidth: 48,
         srcHeight: 72,
         anchorY: 0.3334,
@@ -27,7 +31,7 @@ void renderGridNode(int z, int row, int column, int type) {
         dstX: dstX,
         dstY: dstY,
         srcX: 7158,
-        srcY: 72.0 * shade,
+        srcY: srcTop + 72.0 * shade,
         srcWidth: 48,
         srcHeight: 72,
         anchorX: 0.5,
@@ -38,7 +42,7 @@ void renderGridNode(int z, int row, int column, int type) {
         dstX: dstX,
         dstY: dstY,
         srcX: 7398,
-        srcY: 72.0 * shade,
+        srcY: srcTop + 72.0 * shade,
         srcWidth: 48,
         srcHeight: 72,
         anchorY: 0.3334,
@@ -48,7 +52,7 @@ void renderGridNode(int z, int row, int column, int type) {
         dstX: dstX,
         dstY: dstY,
         srcX: 7446,
-        srcY: 72.0 * shade,
+        srcY: srcTop + 72.0 * shade,
         srcWidth: 48,
         srcHeight: 72,
         anchorY: 0.3334,
@@ -58,7 +62,7 @@ void renderGridNode(int z, int row, int column, int type) {
         dstX: dstX,
         dstY: dstY,
         srcX: 7494,
-        srcY: 72.0 * shade,
+        srcY: srcTop + 72.0 * shade,
         srcWidth: 48,
         srcHeight: 72,
         anchorY: 0.3334,
@@ -68,7 +72,7 @@ void renderGridNode(int z, int row, int column, int type) {
         dstX: dstX,
         dstY: dstY,
         srcX: 7542,
-        srcY: 72.0 * shade,
+        srcY: srcTop + 72.0 * shade,
         srcWidth: 48,
         srcHeight: 72,
         anchorY: 0.3334,
@@ -85,7 +89,7 @@ void renderGridNode(int z, int row, int column, int type) {
         dstX: dstX,
         dstY: dstY + height,
         srcX: 7206 + (animationFrame * 48),
-        srcY: 72.0 * shade,
+        srcY: srcTop + 72.0 * shade,
         srcWidth: 48,
         srcHeight: 72,
         anchorY: 0.3334,
@@ -101,7 +105,7 @@ void renderGridNode(int z, int row, int column, int type) {
       return render(
         dstX: dstX,
         dstY: dstY,
-        srcX: 1478,
+        srcX: 1603,
         srcY: 68.0 * shade,
         srcWidth: 62.0,
         srcHeight: 68.0,
@@ -111,7 +115,7 @@ void renderGridNode(int z, int row, int column, int type) {
       return render(
         dstX: dstX,
         dstY: dstY,
-        srcX: 1478 + 62,
+        srcX: 1603 + 62,
         srcY: 68.0 * shade,
         srcWidth: 62.0,
         srcHeight: 68.0,
@@ -123,7 +127,7 @@ void renderGridNode(int z, int row, int column, int type) {
         dstX: dstX,
         dstY: dstY,
         srcX: 7686,
-        srcY: 72.0 * shade,
+        srcY: srcTop + 72.0 * shade,
         srcWidth: 48,
         srcHeight: 72,
         anchorY: 0.3334,
@@ -133,7 +137,7 @@ void renderGridNode(int z, int row, int column, int type) {
         dstX: dstX,
         dstY: dstY,
         srcX: 7734,
-        srcY: 72.0 * shade,
+        srcY: srcTop + 72.0 * shade,
         srcWidth: 48,
         srcHeight: 72,
         anchorX: 0.5,
@@ -144,7 +148,7 @@ void renderGridNode(int z, int row, int column, int type) {
         dstX: dstX,
         dstY: dstY,
         srcX: 7782,
-        srcY: 72.0 * shade,
+        srcY: srcTop + 72.0 * shade,
         srcWidth: 48,
         srcHeight: 72,
         anchorX: 0.5,
@@ -154,4 +158,3 @@ void renderGridNode(int z, int row, int column, int type) {
       throw Exception("Cannot render grid node type $type");
   }
 }
-

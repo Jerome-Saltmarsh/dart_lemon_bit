@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
+import 'package:gamestream_flutter/isometric/render/render_grid_node_transparent.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_zombie.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
@@ -152,6 +153,7 @@ class RenderOrderGrid extends RenderOrder {
   var minColumnRow = 0;
   var gridTotalColumnsMinusOne = 0;
   var maxRow = 0;
+  var gridZHalf = 0;
   late List<List<int>> plain;
 
   var playerZ = 0;
@@ -164,51 +166,29 @@ class RenderOrderGrid extends RenderOrder {
 
   @override
   void renderFunction() {
-
-    // var grounded = true;
-    // for (var z = playerZ; z < gridZ; z++){
-    //    if (grid[z][gridRow][gridColumn] == GridNodeType.Empty){
-    //      grounded = false;
-    //      break;
-    //    }
-    // }
-
-    // if (gridZ > playerZ + 1 &&
-    //     gridRow > playerRow &&
-    //     gridColumn > playerColumn &&
-    //     gridRow <= playerRow + 7 &&
-    //     gridColumn <= playerColumn + 7
-    // ) return;
-
-    // final renderRow = (gridRow - (gridZ / 2));
-    // final renderColumn = (gridColumn - (gridZ / 2));
-    //
-    // if (playerZ < gridZ  &&
-    //     renderRow >= playerRenderRow &&
-    //     renderColumn >= playerRenderColumn
-    // ) return;
-    //
-    if (playerImperceptible){
-
-      // if (gridZ > playerZ + 1 && (playerColumn < gridColumn || playerRow < gridRow)) return;
-      if (gridZ > playerZ){
-        final renderRow = getRenderRow(gridRow, gridZ);
-        final renderColumn = getRenderRow(gridColumn, gridZ);
+    if (playerImperceptible) {
+      if (gridZ > playerZ) {
+        final renderRow = gridRow - gridZHalf;
+        final renderColumn = gridColumn - gridZHalf;
         final renderRowDistance = (renderRow - playerRenderRow).abs();
         final renderColumnDistance = (renderColumn - playerRenderColumn).abs();
-        final distance = sqrt(renderRowDistance * renderRowDistance + renderColumnDistance * renderColumnDistance);
-
-        if (distance < 7){
+        const radius = 7;
+        if (renderRowDistance < radius && renderColumnDistance < radius){
           if (gridZ > playerZ + 2) return;
-          if (renderRow == playerRenderRow && renderColumn == playerRenderColumn) return;
-          if (renderRow == playerRenderRow && renderColumn == playerRenderColumn - 1) return;
-          if (renderRow == playerRenderRow && renderColumn == playerRenderColumn + 1) return;
-          if (renderRow == playerRenderRow - 1 && renderColumn == playerRenderColumn) return;
-          if (renderRow == playerRenderRow + 1 && renderColumn == playerRenderColumn) return;
+          if (
+           (renderRow == playerRenderRow && renderColumn == playerRenderColumn) ||
+           (renderRow == playerRenderRow && renderColumn == playerRenderColumn - 1) ||
+           (renderRow == playerRenderRow && renderColumn == playerRenderColumn + 1) ||
+           (renderRow == playerRenderRow - 1 && renderColumn == playerRenderColumn) ||
+           (renderRow == playerRenderRow + 1 && renderColumn == playerRenderColumn) ||
+           (renderRow == playerRenderRow + 1 && renderColumn == playerRenderColumn + 1) ||
+           (renderRow == playerRenderRow - 1 && renderColumn == playerRenderColumn - 1)
+          ){
+            return renderGridNodeTransparent(gridZ, gridRow, gridColumn, gridType);
+          }
         }
       }
     }
-
 
     renderGridNode(gridZ, gridRow, gridColumn, gridType);
   }
@@ -235,6 +215,7 @@ class RenderOrderGrid extends RenderOrder {
     order = 0;
     orderZ = 0;
     gridZ = 0;
+    gridZHalf = 0;
     plain = grid[gridZ];
     gridType = 0;
     gridTotalColumnsMinusOne = gridTotalColumns - 1;
@@ -311,6 +292,7 @@ class RenderOrderGrid extends RenderOrder {
 
       if (gridColumn + gridRow >= maxColumnRow || gridRow >= gridTotalRows || gridColumn >= gridTotalColumns){
         gridZ++;
+        gridZHalf =  gridZ ~/ 2;
         if (gridZ >= gridTotalZ) {
           end();
           return;

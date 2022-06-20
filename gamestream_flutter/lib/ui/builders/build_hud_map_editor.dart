@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
-import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:lemon_watch/watch_builder.dart';
