@@ -1,6 +1,7 @@
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 
@@ -9,7 +10,10 @@ import 'render_torch.dart';
 void renderGridNode(int z, int row, int column, int type) {
   assert (type != GridNodeType.Empty);
   final dstX = (row - column) * tileSizeHalf;
-  final dstY = ((row + column) * tileSizeHalf) - (z * 24);
+  final dstY = ((row + column) * tileSizeHalf) - (z * tileHeight);
+
+  if (z >= player.z + 1 && dstY > mouseWorldY) return;
+
   final shade = gridLightDynamic[z][row][column];
   switch (type) {
     case GridNodeType.Bricks:

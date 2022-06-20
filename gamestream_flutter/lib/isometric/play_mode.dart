@@ -5,18 +5,18 @@ final playMode = Watch(PlayMode.Play, onChanged: onPlayModeChanged);
 
 bool get playModeEdit => playMode.value == PlayMode.Edit;
 bool get playModePlay => playMode.value == PlayMode.Play;
+bool get playModeDebug => playMode.value == PlayMode.Debug;
 
 enum PlayMode {
     Play,
     Edit,
+    Debug,
 }
 
-void playModeToggle(){
-    if (playModePlay) {
-        playModeSetEdit();
-    } else {
-        playModeSetPlay();
-    }
+const playModes = PlayMode.values;
+
+void playModeToggle() {
+    playMode.value = playModes[(playMode.value.index + 1) % playModes.length];
 }
 
 void playModeSetPlay(){
@@ -25,4 +25,8 @@ void playModeSetPlay(){
 
 void playModeSetEdit(){
     playMode.value = PlayMode.Edit;
+}
+
+void playModeSetDebug(){
+    playMode.value = PlayMode.Debug;
 }

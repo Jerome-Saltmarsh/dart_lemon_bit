@@ -9,7 +9,6 @@ import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
-import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import 'build_column_set_weapon.dart';
@@ -21,11 +20,6 @@ Widget buildHudMapEditor() {
         top: 0,
         left: 0,
         child: buildPanelEditor(),
-      ),
-      Positioned(
-          top: 0,
-          right: 0,
-          child: buildPanelMenu()
       ),
       Positioned(
         bottom: 0,
@@ -41,8 +35,6 @@ Widget buildPanelEditor(){
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      // _buildContainerMouseInfo(),
-      // _buildContainerPlayerInfo(),
       buildColumnEditTile(),
       buildColumnEdit(),
       _button("Recenter", (){
@@ -75,27 +67,6 @@ Widget _buildControlLightMode(){
         })
     ),
   );
-}
-
-Widget _buildContainerMouseInfo(){
-  return Refresh(() {
-     return Container(
-       height: 50,
-       alignment: Alignment.centerLeft,
-       color: Colors.grey,
-       child: text("Mouse gridX: ${mouseGridX.toInt()}, gridY: ${mouseGridY.toInt()}, Angle: ${mousePlayerAngle.toStringAsFixed(1)}"),
-     );
-});
-}
-
-Widget _buildContainerPlayerInfo(){
-  return Refresh((){
-    return Container(
-        height: 50,
-        alignment: Alignment.centerLeft,
-        color: Colors.grey,
-        child: text("Player zIndex: ${player.indexZ}, row: ${player.indexRow}, column: ${player.indexColumn}, x: ${player.x}, y: ${player.y}, z: ${player.z}, renderX: ${player.renderX}, renderY: ${player.renderY}, angle: ${player.angle}, mouseAngle: ${player.mouseAngle}",));
-  });
 }
 
 Widget _buildControlTime() {

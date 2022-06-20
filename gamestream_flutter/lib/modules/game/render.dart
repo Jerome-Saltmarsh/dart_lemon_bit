@@ -59,9 +59,9 @@ class GameRender {
     }
 
     renderSprites();
-    renderMouseWireFrame();
     if (playModeEdit){
-      renderWireframes();
+      renderEditWireFrames();
+      renderMouseWireFrame();
     }
   }
 
@@ -69,7 +69,7 @@ class GameRender {
     mouseRaycast(renderWireFrameBlue);
   }
 
-  void renderWireframes() {
+  void renderEditWireFrames() {
      for (var z = 0; z < edit.z.value; z++){
        renderWireFrameBlue(z, edit.row.value, edit.column.value);
     }

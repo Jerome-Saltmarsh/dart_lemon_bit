@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/isometric/camera_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/ui/build_watch_play_mode.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/game/enums.dart';
 import 'package:gamestream_flutter/modules/game/update.dart';
@@ -19,6 +20,7 @@ import 'package:gamestream_flutter/ui/builders/build_hud_play_mode.dart';
 import 'package:gamestream_flutter/ui/builders/build_hud_random.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_debug.dart';
+import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:gamestream_flutter/ui/builders/build_text_box.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:golden_ratio/constants.dart';
@@ -105,22 +107,15 @@ class GameBuild {
     return buildLayout(
         children: [
           Positioned(
-              left: 8,
-              top: 8,
-              child: visibleBuilder(state.debug, buildPanelDebug())
+              right: 0,
+              top: 0,
+              child: buildPanelMenu()
           ),
           buildPanelWriteMessage(),
           if (gameType.value == GameType.RANDOM)
             buildHudRandom(),
           if (gameType.value == GameType.FRONTLINE)
-            watch(playMode, (PlayMode value){
-               if (value == PlayMode.Play){
-                 return buildHudPlayMode();
-               } else {
-                 return buildHudMapEditor();
-               }
-            }),
-
+            buildWatchPlayMode(),
         ]);
   }
 
