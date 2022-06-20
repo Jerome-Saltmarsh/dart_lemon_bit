@@ -135,7 +135,7 @@ class RenderOrderPlayer extends RenderOrder {
   void updateFunction() {
     player = players[_index];
     order = player.renderOrder;
-    orderZ = player.indexZ;
+    orderZ = (player.z + 12.0) ~/ tileSizeHalf;
   }
 
   @override
