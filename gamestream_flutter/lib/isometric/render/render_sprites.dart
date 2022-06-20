@@ -163,11 +163,12 @@ class RenderOrderGrid extends RenderOrder {
   var playerRenderColumn = 0;
   var playerUnderRoof = false;
   var playerImperceptible = false;
+  var gridZGreaterThanPlayerZ = false;
 
   @override
   void renderFunction() {
     if (playerImperceptible) {
-      if (gridZ > playerZ) {
+      if (gridZGreaterThanPlayerZ) {
         final renderRow = gridRow - gridZHalf;
         final renderColumn = gridColumn - gridZHalf;
         final renderRowDistance = (renderRow - playerRenderRow).abs();
@@ -225,6 +226,7 @@ class RenderOrderGrid extends RenderOrder {
     playerRenderRow = playerRow - (player.indexZ ~/ 2);
     playerRenderColumn = playerColumn - (player.indexZ ~/ 2);
     playerUnderRoof = false;
+    gridZGreaterThanPlayerZ = false;
 
     for (var z = playerZ + 1; z < gridTotalZ; z++){
        if (grid[z][playerRow][playerColumn] != GridNodeType.Empty) {
@@ -293,6 +295,7 @@ class RenderOrderGrid extends RenderOrder {
       if (gridColumn + gridRow >= maxColumnRow || gridRow >= gridTotalRows || gridColumn >= gridTotalColumns){
         gridZ++;
         gridZHalf =  gridZ ~/ 2;
+        gridZGreaterThanPlayerZ = gridZ > playerZ;
         if (gridZ >= gridTotalZ) {
           end();
           return;
