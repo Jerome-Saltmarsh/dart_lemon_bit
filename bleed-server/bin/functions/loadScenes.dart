@@ -95,7 +95,6 @@ Scene parseJsonToScene(Json json, String name) {
     gameObjects: [],
     characters: characters,
     spawnPointPlayers: [],
-    spawnPointZombies: [],
     grid: [],
   );
 

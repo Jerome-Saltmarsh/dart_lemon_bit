@@ -5,7 +5,6 @@ import 'AI.dart';
 import 'Character.dart';
 import 'enemy_spawn.dart';
 import 'game_object.dart';
-import 'Structure.dart';
 import 'TileNode.dart';
 import 'grid_index.dart';
 
@@ -19,12 +18,7 @@ class Scene {
   final List<Character> characters;
   final List<GameObject> gameObjects;
   final List<GridIndex> spawnPointPlayers;
-  final List<Position> spawnPointZombies;
   final List<EnemySpawn> enemySpawners = [];
-
-  // late final List<List<Node>> nodes;
-  // late final int numberOfRows;
-  // late final int numberOfColumns;
 
   int? startHour;
   int? secondsPerFrames;
@@ -39,7 +33,6 @@ class Scene {
     required this.gameObjects,
     required this.characters,
     required this.spawnPointPlayers,
-    required this.spawnPointZombies,
     required this.grid,
   }) {
     sortVertically(gameObjects);

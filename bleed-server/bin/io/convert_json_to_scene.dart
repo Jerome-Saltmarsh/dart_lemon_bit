@@ -1,9 +1,7 @@
 
-import 'package:lemon_math/functions/vector2.dart';
 import 'package:typedef/json.dart';
 
 import '../classes/library.dart';
-import '../scene/generate_tiles_plain.dart';
 
 Scene convertJsonToScene(Json json) {
   final height = json.getInt('grid-z');
@@ -31,6 +29,5 @@ Scene convertJsonToScene(Json json) {
     gameObjects: [],
     characters: [],
     spawnPointPlayers: [],
-    spawnPointZombies: [Vector2(0, 200)],
   );
 }

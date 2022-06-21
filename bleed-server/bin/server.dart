@@ -13,7 +13,6 @@ import 'functions/withinRadius.dart';
 import 'games/game_frontline.dart';
 import 'games/game_random.dart';
 import 'io/write_scene_to_file.dart';
-import 'physics.dart';
 
 var totalConnections = 0;
 

@@ -24,7 +24,6 @@ Scene generateScenePlain({int rows = 50, int columns = 50, int height = 7}){
       gameObjects: [],
       characters: [],
       spawnPointPlayers: [],
-      spawnPointZombies: []
   );
 }
 
@@ -322,7 +321,6 @@ Scene generateRandomScene({
       grid: [],
       characters: [],
       gameObjects: gameObjects,
-      spawnPointZombies: spawnCellZombies,
       spawnPointPlayers: [],
   );
 }

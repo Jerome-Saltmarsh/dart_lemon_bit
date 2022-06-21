@@ -21,7 +21,6 @@ import 'Player.dart';
 import 'Projectile.dart';
 import 'Scene.dart';
 import 'SpawnPoint.dart';
-import 'Structure.dart';
 import 'TileNode.dart';
 import 'components.dart';
 import 'grid_index.dart';
@@ -1156,26 +1155,6 @@ extension GameFunctions on Game {
     );
     zombies.add(zombie);
     return zombie;
-  }
-
-  AI spawnRandomZombie({
-    int health = 10,
-    int damage = 1,
-    int experience = 1,
-    int team = Teams.none,
-    double speed = RunSpeed.Regular,
-  }) {
-    if (scene.spawnPointZombies.isEmpty) throw ZombieSpawnPointsEmptyException();
-    final spawnPoint = randomItem(scene.spawnPointZombies);
-    return spawnZombie(
-        x: spawnPoint.x,
-        y: spawnPoint.y,
-        z: 24.0,
-        team: team,
-        health: health,
-        damage: damage,
-        speed: speed,
-    );
   }
 
   int get zombieCount {

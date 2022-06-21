@@ -24,24 +24,12 @@ class GameRandom extends Game {
         seed: random.nextInt(2000),
       ),
       status: GameStatus.In_Progress
-  ) {
-
-    // generateRandomSeparatedGameObjects(scene, amount: 40, type: GameObjectType.Torch);
-
-    for (var i = 0; i < maxCreeps; i++) {
-      spawnCreep();
-    }
-
-  }
+  );
 
   @override
   void update() {
     const secondsPerDay = 86400;
     time = (time + 10) % secondsPerDay;
-  }
-
-  void spawnCreep(){
-    spawnRandomZombie(health: 5, speed: randomBetween(RunSpeed.Slow, RunSpeed.Very_Fast));
   }
 
   @override
@@ -58,7 +46,7 @@ class GameRandom extends Game {
     onPlayerSelectCharacterType(player, selection);
 
     while (!zombiesMax) {
-      spawnCreep();
+
     }
     return player;
   }
@@ -152,7 +140,7 @@ class GameRandom extends Game {
     }
 
     if (src is AI && !zombiesMax) {
-       spawnCreep();
+
     }
   }
 
