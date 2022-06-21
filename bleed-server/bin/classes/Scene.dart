@@ -13,7 +13,7 @@ class Scene {
   final List<List<List<GridNode>>> grid;
   final List<Character> characters;
   final List<GameObject> gameObjects;
-  final List<EnemySpawn> enemySpawns = [];
+  final List<EnemySpawn> enemySpawns;
 
   int? startHour;
   int? secondsPerFrames;
@@ -26,6 +26,7 @@ class Scene {
     required this.gameObjects,
     required this.characters,
     required this.grid,
+    required this.enemySpawns,
   }) {
     sortVertically(gameObjects);
   }

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'classes/library.dart';
 import 'common/library.dart';
 import 'constants/frames_per_second.dart';
-import 'functions/loadScenes.dart';
 import 'games/game_frontline.dart';
 import 'io/read_scene_from_file.dart';
 import 'language.dart';
@@ -140,15 +139,15 @@ class _Scenes {
   late Scene royal;
   late Scene skirmish;
 
-  Future load() async {
-    print("loadScenes()");
-    town = await loadSceneFromFile('town');
-    tavern = await loadSceneFromFile('tavern');
-    cave = await loadSceneFromFile('cave');
-    wildernessWest01 = await loadSceneFromFile('wilderness-west-01');
-    wildernessNorth01 = await loadSceneFromFile('wilderness-north-01');
-    wildernessEast = await loadSceneFromFile('wilderness-east');
-    // royal = await loadSceneFromFireStore('royal');
-    skirmish = await loadSceneFromFireStore('skirmish');
-  }
+  // Future load() async {
+  //   print("loadScenes()");
+  //   town = await loadSceneFromFile('town');
+  //   tavern = await loadSceneFromFile('tavern');
+  //   cave = await loadSceneFromFile('cave');
+  //   wildernessWest01 = await loadSceneFromFile('wilderness-west-01');
+  //   wildernessNorth01 = await loadSceneFromFile('wilderness-north-01');
+  //   wildernessEast = await loadSceneFromFile('wilderness-east');
+  //   // royal = await loadSceneFromFireStore('royal');
+  //   skirmish = await loadSceneFromFireStore('skirmish');
+  // }
 }

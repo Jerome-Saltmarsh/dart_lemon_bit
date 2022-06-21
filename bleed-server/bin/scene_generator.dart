@@ -6,25 +6,24 @@ import 'classes/game_object.dart';
 import 'classes/Scene.dart';
 import 'common/library.dart';
 import 'enums.dart';
-import 'generate/generate_grid_plain.dart';
 
-Scene generateScenePlain({int rows = 50, int columns = 50, int height = 7}){
-  final tiles =  <List<int>>[];
-
-  for (var rowIndex = 0; rowIndex < rows; rowIndex++) {
-    final column = <int>[];
-    tiles.add(column);
-    for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
-       column.add(Tile.Grass);
-    }
-  }
-
-  return Scene(
-      grid: generateGridPlain(height: height, rows: rows, columns: columns),
-      gameObjects: [],
-      characters: [],
-  );
-}
+// Scene generateScenePlain({int rows = 50, int columns = 50, int height = 7}){
+//   final tiles =  <List<int>>[];
+//
+//   for (var rowIndex = 0; rowIndex < rows; rowIndex++) {
+//     final column = <int>[];
+//     tiles.add(column);
+//     for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
+//        column.add(Tile.Grass);
+//     }
+//   }
+//
+//   return Scene(
+//       grid: generateGridPlain(height: height, rows: rows, columns: columns),
+//       gameObjects: [],
+//       characters: [],
+//   );
+// }
 
 Scene generateRandomScene({
   required int rows,
@@ -320,6 +319,7 @@ Scene generateRandomScene({
       grid: [],
       characters: [],
       gameObjects: gameObjects,
+     enemySpawns: [],
   );
 }
 

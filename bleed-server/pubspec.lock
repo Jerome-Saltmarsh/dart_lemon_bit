@@ -161,7 +161,7 @@ packages:
       name: typedef
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.5"
+    version: "1.0.8"
   uuid:
     dependency: "direct main"
     description:

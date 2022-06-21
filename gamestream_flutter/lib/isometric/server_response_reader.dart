@@ -280,6 +280,7 @@ class ServerResponseReader with ByteReader {
               // final distanceWorldX2 = ((playerScreenX2 - _previousPlayerScreenX2) / engine.zoom) * 0.5;
               // final distanceWorldY2 = ((playerScreenY2 - _previousPlayerScreenY2) / engine.zoom) * 0.5;
               //
+
               // engine.camera.x += distanceWorldX2 * 0.4;
               // engine.camera.y += distanceWorldY2 * 0.4;
 

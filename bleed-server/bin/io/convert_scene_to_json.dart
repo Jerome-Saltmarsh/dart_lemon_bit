@@ -5,6 +5,7 @@ import 'package:typedef/json.dart';
 
 import '../classes/Scene.dart';
 import '../classes/grid_node.dart';
+import 'convert_enemy_spawn_to_json.dart';
 
 String convertSceneToJson(Scene scene){
    final json = Json();
@@ -12,15 +13,7 @@ String convertSceneToJson(Scene scene){
    json['grid-rows'] = scene.gridRows;
    json['grid-columns'] = scene.gridColumns;
    json['grid'] = flattenGrid(scene.grid);
-   final enemySpawnsJson = <Json>[];
-   for (final enemySpawn in scene.enemySpawns){
-      final enemySpawnJson = Json();
-      enemySpawnJson['z'] = enemySpawn.z;
-      enemySpawnJson['row'] = enemySpawn.row;
-      enemySpawnJson['column'] = enemySpawn.column;
-      enemySpawnsJson.add(enemySpawnJson);
-   }
-   json['enemy-spawners'] = enemySpawnsJson;
+   json['enemy-spawns'] = scene.enemySpawns.map(convertEnemySpawnToJson).toList();
    return jsonEncode(json);
 }
 

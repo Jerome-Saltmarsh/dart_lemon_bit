@@ -13,5 +13,5 @@ dependencies:
   shelf_router: ^1.1.2
   uuid: ^3.0.4
   http: ^0.13.4
-  typedef: ^1.0.3
+  typedef: ^1.0.8
   fast_noise: ^1.0.1
