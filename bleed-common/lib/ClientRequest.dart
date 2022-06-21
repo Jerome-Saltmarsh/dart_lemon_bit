@@ -30,6 +30,7 @@ enum ClientRequest {
   Set_Block,
   Spawn_Zombie,
   Set_Weapon,
+  Set_Armour,
 }
 
 const clientRequests = ClientRequest.values;
