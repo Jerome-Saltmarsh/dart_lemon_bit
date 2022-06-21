@@ -1,6 +1,6 @@
 import '../common/CharacterType.dart';
 import 'Player.dart';
-import 'AI.dart';
+import 'ai.dart';
 
 class InteractableNpc extends AI {
   final String name;

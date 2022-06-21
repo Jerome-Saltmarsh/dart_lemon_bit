@@ -1,7 +1,7 @@
 
 import 'package:lemon_math/library.dart';
 
-import 'Collider.dart';
+import 'collider.dart';
 import 'Position3.dart';
 import 'components.dart';
 

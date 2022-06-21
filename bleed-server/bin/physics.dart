@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
-import 'classes/Character.dart';
-import 'classes/Collider.dart';
+import 'classes/character.dart';
+import 'classes/collider.dart';
 import 'typedefs.dart';
 
 final physics = _Physics();

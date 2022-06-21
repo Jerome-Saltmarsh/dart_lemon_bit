@@ -1,6 +1,6 @@
 import '../common/tile_size.dart';
 import '../constants/frames_per_second.dart';
-import 'Game.dart';
+import 'game.dart';
 
 class EnemySpawn {
   final int z;

@@ -1,5 +1,5 @@
 
-import 'Collider.dart';
+import 'collider.dart';
 
 class Item extends Collider {
   int type;

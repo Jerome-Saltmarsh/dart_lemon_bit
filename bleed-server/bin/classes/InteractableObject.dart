@@ -1,4 +1,4 @@
-import 'Collider.dart';
+import 'collider.dart';
 import 'Player.dart';
 
 class InteractableObject extends Collider {

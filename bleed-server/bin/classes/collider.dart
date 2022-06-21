@@ -1,6 +1,5 @@
 import 'package:lemon_math/library.dart';
 
-import '../common/tile_size.dart';
 import 'Position3.dart';
 import 'components.dart';
 
@@ -11,8 +10,6 @@ class Collider extends Position3 with Radius {
   double get top => y - radius;
   double get bottom => y + radius;
   var collidable = true;
-
-  double get tileRowPercentage => ((x + y) / tileSize) % 1.0;
 
   Collider({
     required double x,

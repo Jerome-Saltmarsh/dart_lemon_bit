@@ -2,7 +2,7 @@
 
 import 'package:lemon_math/library.dart';
 import '../common/StructureType.dart';
-import 'Collider.dart';
+import 'collider.dart';
 import 'Player.dart';
 import 'components.dart';
 

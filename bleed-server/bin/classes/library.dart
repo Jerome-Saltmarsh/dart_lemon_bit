@@ -1,11 +1,12 @@
 
 export 'card_abilities.dart';
-export 'Character.dart';
-export 'Collectable.dart';
-export 'Collider.dart';
+export 'card.dart';
+export 'character.dart';
+export 'collectable.dart';
+export 'collider.dart';
 export 'components.dart';
 export 'game_object.dart';
-export 'Game.dart';
+export 'game.dart';
 export 'InteractableNpc.dart';
 export 'InteractableObject.dart';
 export 'Item.dart';
@@ -16,4 +17,4 @@ export 'Scene.dart';
 export 'SpawnPoint.dart';
 export 'Structure.dart';
 export 'TileNode.dart';
-export 'AI.dart';
+export 'ai.dart';

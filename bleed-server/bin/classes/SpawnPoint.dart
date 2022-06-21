@@ -1,6 +1,6 @@
 import 'package:lemon_math/library.dart';
 
-import 'Game.dart';
+import 'game.dart';
 
 class SpawnPoint with Position {
   final Game game;

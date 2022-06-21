@@ -1,4 +1,4 @@
-import 'classes/Game.dart';
+import 'classes/game.dart';
 import 'classes/Player.dart';
 import 'common/GameStatus.dart';
 import 'common/ServerResponse.dart';

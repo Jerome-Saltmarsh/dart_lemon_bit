@@ -2,7 +2,7 @@
 
 import '../common/game_object_type.dart';
 import '../common/MaterialType.dart';
-import 'Collider.dart';
+import 'collider.dart';
 import 'components.dart';
 
 class GameObject extends Collider with Health, Material, Id {

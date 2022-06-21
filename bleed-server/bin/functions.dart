@@ -1,6 +1,6 @@
 import 'package:lemon_math/library.dart';
 
-import 'classes/Collider.dart';
+import 'classes/collider.dart';
 
 void updateCollisionBetween(List<Collider> gameObjects) {
   final numberOfGameObjects = gameObjects.length;

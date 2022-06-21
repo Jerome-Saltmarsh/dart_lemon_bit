@@ -2,8 +2,8 @@ import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
 import '../functions/withinRadius.dart';
-import 'Collider.dart';
-import 'Game.dart';
+import 'collider.dart';
+import 'game.dart';
 import 'Position3.dart';
 import 'card_abilities.dart';
 import 'components.dart';

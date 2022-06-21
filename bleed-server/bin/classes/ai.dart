@@ -4,9 +4,9 @@ import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
 import '../functions/withinRadius.dart';
-import 'Collider.dart';
+import 'collider.dart';
 import 'components.dart';
-import 'Character.dart';
+import 'character.dart';
 import 'enemy_spawn.dart';
 
 class AI extends Character with Material {

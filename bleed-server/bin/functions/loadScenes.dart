@@ -5,7 +5,7 @@
 // import 'package:lemon_math/library.dart';
 // import 'package:typedef/json.dart';
 //
-// import '../classes/Character.dart';
+// import '../classes/character.dart';
 // import '../classes/Scene.dart';
 // import '../common/CharacterType.dart';
 // import '../common/SceneJson.dart';

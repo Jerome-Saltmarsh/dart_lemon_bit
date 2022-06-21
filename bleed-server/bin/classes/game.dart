@@ -9,12 +9,12 @@ import '../functions.dart';
 import '../functions/withinRadius.dart';
 import '../maths.dart';
 import '../physics.dart';
-import 'AI.dart';
+import 'ai.dart';
 import 'Position3.dart';
 import 'card_abilities.dart';
-import 'Character.dart';
-import 'Collectable.dart';
-import 'Collider.dart';
+import 'character.dart';
+import 'collectable.dart';
+import 'collider.dart';
 import 'game_object.dart';
 import 'InteractableNpc.dart';
 import 'Item.dart';
@@ -377,7 +377,7 @@ extension GameFunctions on Game {
   void updateInProgress() {
     frame++;
     if (frame % 15 == 0) {
-      updateInteractableNpcTargets();
+      // updateInteractableNpcTargets();
       updateZombieTargets();
       if (players.isEmpty) {
         disableCountDown++;
@@ -396,7 +396,7 @@ extension GameFunctions on Game {
     _updatePlayersAndNpcs();
     _updateProjectiles();
     _updateProjectiles(); // called twice to fix collision detection
-    _updateSpawnPointCollisions();
+    // _updateSpawnPointCollisions();
     _updateItems();
     _updateCharacterFrames();
     sortGameObjects();
@@ -583,7 +583,7 @@ extension GameFunctions on Game {
     setCharacterState(character, CharacterState.Running);
   }
 
-  void updateAI(AI ai) {
+  void updateAICharacterState(AI ai) {
     if (ai.deadOrBusy) return;
 
     final target = ai.target;
@@ -1002,7 +1002,7 @@ extension GameFunctions on Game {
     if (character.dead) return;
 
     if (character is AI) {
-      updateAI(character);
+      updateAICharacterState(character);
     }
     character.updateMovement();
 
@@ -1237,7 +1237,6 @@ extension GameFunctions on Game {
       final zombieAITarget = zombie.target;
       if (
           zombieAITarget != null &&
-          zombieAITarget != zombie.objective &&
           !zombie.withinChaseRange(zombieAITarget)
       ) {
         zombie.target = zombie.objective;
@@ -1327,7 +1326,7 @@ extension GameFunctions on Game {
     // npcSetPathToTileNode(ai, randomTile);
   }
 
-  void npcSetPathTo(AI ai, Position position) {
+  void npcSetPathTo(AI ai, Position3 position) {
     // npcSetPathToTileNode(ai, scene.getNodeByPosition(position));
   }
 
@@ -1339,28 +1338,28 @@ extension GameFunctions on Game {
     // scene.visitNodeFirst(scene.getNodeByPosition(ai));
   }
 
-  void _updateSpawnPointCollisions() {
-    if (spawnPoints.isEmpty) return;
-    for (var i = 0; i < players.length; i++) {
-      final player = players[i];
-      for (final spawnPoint in spawnPoints) {
-        const collisionRadius = 20;
-        if (diffOver(player.x, spawnPoint.x, collisionRadius)) continue;
-        if (diffOver(player.y, spawnPoint.y, collisionRadius)) continue;
-        for (final point in spawnPoint.game.spawnPoints) {
-          if (point.game != this) continue;
-          changeGame(player, spawnPoint.game);
-          final xDiff = spawnPoint.x - player.x;
-          final yDiff = spawnPoint.y - player.y;
-          player.x = point.x + xDiff * 1.25;
-          player.y = point.y + yDiff * 1.25;
-          i--;
-          break;
-        }
-        break;
-      }
-    }
-  }
+  // void _updateSpawnPointCollisions() {
+  //   if (spawnPoints.isEmpty) return;
+  //   for (var i = 0; i < players.length; i++) {
+  //     final player = players[i];
+  //     for (final spawnPoint in spawnPoints) {
+  //       const collisionRadius = 20;
+  //       if (diffOver(player.x, spawnPoint.x, collisionRadius)) continue;
+  //       if (diffOver(player.y, spawnPoint.y, collisionRadius)) continue;
+  //       for (final point in spawnPoint.game.spawnPoints) {
+  //         if (point.game != this) continue;
+  //         changeGame(player, spawnPoint.game);
+  //         final xDiff = spawnPoint.x - player.x;
+  //         final yDiff = spawnPoint.y - player.y;
+  //         player.x = point.x + xDiff * 1.25;
+  //         player.y = point.y + yDiff * 1.25;
+  //         i--;
+  //         break;
+  //       }
+  //       break;
+  //     }
+  //   }
+  // }
 
   void _updateCharacterFrames() {
     const characterFramesChange = 6;

@@ -1,8 +1,8 @@
 import 'package:lemon_math/library.dart';
 import '../common/grid_node_type.dart';
 import '../common/library.dart';
-import 'AI.dart';
-import 'Character.dart';
+import 'ai.dart';
+import 'character.dart';
 import 'enemy_spawn.dart';
 import 'game_object.dart';
 import 'TileNode.dart';
@@ -299,9 +299,8 @@ class Scene {
   bool getCollisionAt(double x, double y, double z) {
     var type = getGridBlockTypeAtXYZ(x, y, z);
     if (type == GridNodeType.Empty) return false;
-    if (type == GridNodeType.Boundary) return true;
-    if (type == GridNodeType.Bricks) return true;
     if (type == GridNodeType.Player_Spawn) return false;
+    if (type == GridNodeType.Enemy_Spawn) return false;
 
     if (GridNodeType.isStairs(type)){
       return getHeightAt(x, y, z) > z;

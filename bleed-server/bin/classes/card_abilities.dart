@@ -1,6 +1,6 @@
 import '../common/AbilityMode.dart';
 import '../common/card_type.dart';
-import 'Card.dart';
+import 'card.dart';
 
 abstract class CardAbility extends Card {
   int cooldownRemaining = 0;

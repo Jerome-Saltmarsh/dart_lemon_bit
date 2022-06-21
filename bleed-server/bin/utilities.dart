@@ -1,6 +1,6 @@
 import 'package:lemon_math/library.dart';
 
-import 'classes/Character.dart';
+import 'classes/character.dart';
 
 double clamp(double value, double min, double max) {
   if (value < min) return min;

@@ -4,9 +4,9 @@ import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
+import '../convert/convert_card_type_to_card.dart';
 import '../engine.dart';
 import '../utilities.dart';
-import 'Card.dart';
 import 'Position3.dart';
 import 'library.dart';
 

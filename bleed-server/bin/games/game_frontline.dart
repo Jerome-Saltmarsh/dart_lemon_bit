@@ -1,6 +1,6 @@
 
 
-import '../classes/Game.dart';
+import '../classes/game.dart';
 import '../classes/Player.dart';
 import '../classes/Scene.dart';
 import '../common/weapon_type.dart';
