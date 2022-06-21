@@ -11,7 +11,6 @@ import 'engine.dart';
 import 'functions/generateName.dart';
 import 'functions/withinRadius.dart';
 import 'games/game_frontline.dart';
-import 'games/game_random.dart';
 import 'io/write_scene_to_file.dart';
 
 var totalConnections = 0;
@@ -98,12 +97,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       }
       game.onPlayerJoined(player);
       player.writeGameStatus();
-    }
-
-    void joinGameRandom(CharacterSelection characterClass) {
-      final game = engine.findRandomGame();
-      _player = game.playerJoin(characterClass);
-      onGameJoined();
     }
 
     Future joinGameFrontLine() async {
@@ -332,17 +325,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
           switch(gameType){
             case GameType.RANDOM:
-              if (arguments.length < 3) return errorInsufficientArgs(3, arguments);
-
-              final characterClassIndex = int.tryParse(arguments[2]);
-              if (characterClassIndex == null){
-                return errorInvalidArg('index required');
-              }
-              if (!isValidIndex(characterClassIndex, characterSelections)){
-                return errorInvalidArg('characterClassIndex');
-              }
-              final characterClass = characterSelections[characterClassIndex];
-              return joinGameRandom(characterClass);
+              throw Exception("Not supported");
             case GameType.FRONTLINE:
               joinGameFrontLine();
               return;
@@ -396,9 +379,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
           final game = player.game;
-          if (game is GameRandom){
-            game.time = (game.time + 3600) % secondsPerDay;
-          }
           if (game is GameFrontline){
             game.time = (game.time + 3600) % secondsPerDay;
           }
@@ -428,9 +408,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
         case ClientRequest.Reverse_Hour:
           if (player == null) return errorPlayerNotFound();
           final game = player.game;
-          if (game is GameRandom){
-            game.time -= 3600;
-          }
           if (game is GameFrontline){
             game.time = (game.time - 3600) % secondsPerDay;
           }

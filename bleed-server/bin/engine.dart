@@ -4,7 +4,6 @@ import 'classes/library.dart';
 import 'common/library.dart';
 import 'functions/loadScenes.dart';
 import 'games/game_frontline.dart';
-import 'games/game_random.dart';
 import 'io/read_scene_from_file.dart';
 import 'language.dart';
 
@@ -42,18 +41,19 @@ class _Engine {
         game.regenCharacters();
       }
     }
-    if (frame % 30 == 0) {
-      for (final game in games) {
-        // game.updateAIPath();
-      }
-    }
 
-    if (frame % framesPerSecond == 0){
-       for (final game in games) {
-         if (game is GameRandom == false) continue;
-         game.writePlayerCooldowns();
-       }
-    }
+    // if (frame % 30 == 0) {
+    //   for (final game in games) {
+    //     game.updateAIPath();
+    //   }
+    // }
+
+    // if (frame % framesPerSecond == 0){
+    //    for (final game in games) {
+    //      if (game is GameRandom == false) continue;
+    //      game.writePlayerCooldowns();
+    //    }
+    // }
 
     for (final game in games) {
      game.removeDisconnectedPlayers();
@@ -95,16 +95,6 @@ class _Engine {
         player.sendBufferToClient();
       }
     }
-  }
-
-  GameRandom findRandomGame() {
-    for (final game in games) {
-      if (game is GameRandom) {
-        if (game.full) continue;
-        return game;
-      }
-    }
-    return GameRandom();
   }
 
   Future<GameFrontline> findGameFrontLine() async {
