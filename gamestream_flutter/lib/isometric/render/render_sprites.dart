@@ -269,7 +269,6 @@ class RenderOrderGrid extends RenderOrder {
       gridColumn = gridTotalColumnsMinusOne;
     }
     recalculateMaxRow();
-
     super.reset();
   }
 
@@ -308,7 +307,6 @@ class RenderOrderGrid extends RenderOrder {
         plain = grid[gridZ];
       }
     }
-    // validate();
     gridType = plain[gridRow][gridColumn];
   }
 

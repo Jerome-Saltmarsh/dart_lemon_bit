@@ -10,6 +10,7 @@ bool get playModeDebug => playMode.value == PlayMode.Debug;
 enum PlayMode {
     Play,
     Edit,
+    Character,
     Debug,
 }
 
@@ -17,16 +18,4 @@ const playModes = PlayMode.values;
 
 void playModeToggle() {
     playMode.value = playModes[(playMode.value.index + 1) % playModes.length];
-}
-
-void playModeSetPlay(){
-    playMode.value = PlayMode.Play;
-}
-
-void playModeSetEdit(){
-    playMode.value = PlayMode.Edit;
-}
-
-void playModeSetDebug(){
-    playMode.value = PlayMode.Debug;
 }

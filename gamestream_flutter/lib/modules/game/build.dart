@@ -111,7 +111,11 @@ class GameBuild {
           if (gameType.value == GameType.RANDOM)
             buildHudRandom(),
           if (gameType.value == GameType.FRONTLINE)
-            buildWatchPlayMode(),
+            Positioned(
+              top: 0,
+              left: 0,
+              child: buildWatchPlayMode(),
+            ),
         ]);
   }
 

@@ -6,19 +6,13 @@ import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:lemon_engine/engine.dart';
 
 Widget buildHudDebug(){
-   return Stack(
-      children: [
-         Positioned(
-             top: 0,
-             left: 0,
-             child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                _buildContainerMouseInfo(),
-                _buildContainerPlayerInfo(),
-             ],))
-      ],
+   return Column(
+     crossAxisAlignment: CrossAxisAlignment.start,
+     mainAxisAlignment: MainAxisAlignment.start,
+     children: [
+       _buildContainerMouseInfo(),
+       _buildContainerPlayerInfo(),
+     ],
    );
 }
 

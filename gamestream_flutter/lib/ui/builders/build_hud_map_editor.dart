@@ -10,27 +10,7 @@ import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import 'build_column_set_weapon.dart';
-
-Widget buildHudMapEditor() {
-  return Stack(
-    children: [
-      Positioned(
-        top: 0,
-        left: 0,
-        child: buildPanelEditor(),
-      ),
-      Positioned(
-        bottom: 0,
-        right: 0,
-        child: buildColumnSetWeapon(),
-      ),
-    ],
-  );
-}
-
-
-Widget buildPanelEditor(){
+Widget buildHudMapEditor(){
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
