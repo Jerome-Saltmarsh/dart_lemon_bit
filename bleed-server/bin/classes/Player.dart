@@ -432,17 +432,6 @@ extension PlayerProperties on Player {
     writeByte(END);
   }
 
-  void writeStructures() {
-    writeByte(ServerResponse.Structures);
-    final structures = game.structures;
-    for (final structure in structures){
-      if (structure.dead) continue;
-      writeByte(structure.type);
-      writePosition(structure);
-    }
-    writeByte(END);
-  }
-
   void writeCollectables() {
     writeByte(ServerResponse.Collectables);
     final collectables = game.collectables;

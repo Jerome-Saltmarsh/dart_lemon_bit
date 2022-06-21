@@ -53,8 +53,6 @@ abstract class Game {
 
   List<GameObject> get gameObjects => scene.gameObjects;
 
-  List<Structure> get structures => scene.structures;
-
   bool get countingDown => status == GameStatus.Counting_Down;
 
   bool get inProgress => status == GameStatus.In_Progress;
@@ -360,7 +358,6 @@ extension GameFunctions on Game {
 
     update();
     updateCollectables();
-    updateStructures();
     _updateCollisions();
     _updatePlayersAndNpcs();
     _updateProjectiles();
@@ -612,8 +609,6 @@ extension GameFunctions on Game {
   }
 
   void _updateCollisions() {
-    checkColliderCollision(players, structures);
-    checkColliderCollision(zombies, structures);
     checkColliderCollision(players, gameObjects);
     checkColliderCollision(zombies, gameObjects);
     checkColliderCollision(players, gameObjects);
@@ -630,7 +625,6 @@ extension GameFunctions on Game {
     sortVertically(npcs);
     sortVertically(items);
     sortVertically(projectiles);
-    sortVertically(structures);
   }
 
   void setCharacterStateRunning(Character character) {
@@ -1233,16 +1227,6 @@ extension GameFunctions on Game {
 
       var targetDistance = 9999999.0;
 
-      for (final structure in structures) {
-        if (structure.dead) continue;
-        if (onSameTeam(structure, zombie)) continue;
-        if (!zombie.withinViewRange(structure)) continue;
-        final npcDistance = zombie.getDistance(structure);
-        if (npcDistance >= targetDistance) continue;
-        setNpcTarget(zombie, structure);
-        targetDistance = npcDistance;
-      }
-
       for (final player in players) {
         if (player.dead) continue;
         if (onSameTeam(player, zombie)) continue;
@@ -1508,25 +1492,6 @@ extension GameFunctions on Game {
         );
       }
       return;
-    }
-  }
-
-  void updateStructures() {
-    for (final structure in structures) {
-      if (!structure.isTower) continue;
-      if (structure.dead) continue;
-      if (structure.cooldown > 0) {
-        structure.cooldown--;
-        continue;
-      }
-      for (final zombie in zombies) {
-        if (zombie.dead) continue;
-        if (onSameTeam(structure, zombie)) continue;
-        if (!structure.withinRange(zombie)) continue;
-        spawnProjectileArrow(structure, target: zombie, damage: 1, range: structure.radius);
-        structure.cooldown = structure.attackRate;
-        break;
-      }
     }
   }
 

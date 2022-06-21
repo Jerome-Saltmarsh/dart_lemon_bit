@@ -16,7 +16,6 @@ class GridNode {
 
 class Scene {
   final List<List<List<GridNode>>> grid;
-  final List<Structure> structures;
   final List<Character> characters;
   final List<GameObject> gameObjects;
   final List<GridIndex> spawnPointPlayers;
@@ -37,7 +36,6 @@ class Scene {
   int get gridColumns => grid[0][0].length;
 
   Scene({
-    required this.structures,
     required this.gameObjects,
     required this.characters,
     required this.spawnPointPlayers,

@@ -191,9 +191,6 @@ class ServerResponseReader with ByteReader {
             type = readByte();
           }
           break;
-          
-        case ServerResponse.Structures:
-          throw Exception("No longer supported ${ServerResponse.Structures}");
 
         case ServerResponse.Tech_Types:
           player.levelPickaxe.value = readByte();

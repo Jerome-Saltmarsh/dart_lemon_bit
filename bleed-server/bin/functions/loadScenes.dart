@@ -92,7 +92,6 @@ Scene parseJsonToScene(Json json, String name) {
   }
 
   final scene = Scene(
-    structures: [],
     gameObjects: [],
     characters: characters,
     spawnPointPlayers: [],
