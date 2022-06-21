@@ -1,6 +1,7 @@
 
 import 'package:typedef/json.dart';
 
+import '../classes/grid_node.dart';
 import '../classes/library.dart';
 
 Scene convertJsonToScene(Json json) {

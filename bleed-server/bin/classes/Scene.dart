@@ -7,11 +7,7 @@ import 'enemy_spawn.dart';
 import 'game_object.dart';
 import 'TileNode.dart';
 import 'grid_index.dart';
-
-class GridNode {
-  int type;
-  GridNode(this.type);
-}
+import 'grid_node.dart';
 
 class Scene {
   final List<List<List<GridNode>>> grid;
@@ -21,7 +17,6 @@ class Scene {
 
   int? startHour;
   int? secondsPerFrames;
-
 
   int get gridHeight => grid.length;
   int get gridRows => grid[0].length;

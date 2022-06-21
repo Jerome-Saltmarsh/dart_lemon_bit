@@ -1,4 +1,4 @@
-import '../classes/Scene.dart';
+import '../classes/grid_node.dart';
 import '../common/grid_node_type.dart';
 
 List<List<List<GridNode>>> generateGridPlain({int rows = 50, int columns = 50, int height = 7}) {
