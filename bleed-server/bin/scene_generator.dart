@@ -21,7 +21,6 @@ Scene generateScenePlain({int rows = 50, int columns = 50, int height = 7}){
 
   return Scene(
       grid: generateGridPlain(height: height, rows: rows, columns: columns),
-      tiles: tiles,
       structures: [],
       gameObjects: [],
       characters: [],
@@ -323,7 +322,6 @@ Scene generateRandomScene({
   return Scene(
       grid: [],
       structures: [],
-      tiles: tiles,
       characters: [],
       gameObjects: gameObjects,
       spawnPointZombies: spawnCellZombies,
@@ -354,24 +352,24 @@ class SpawnCell with Position {
 }
 
 
-void generateRandomSeparatedGameObjects(Scene scene, {required int type, required int amount, int separation = 200}){
-  for (var i = 0; i < amount; i++) {
-    final node = scene.getRandomAvailableNode();
-
-    final nearest = scene.findNearestGameObjectByType(
-        x: node.x,
-        y: node.y,
-        type: type
-    );
-    if (nearest != null) {
-      if (node.getDistance(nearest) < separation) {
-        i--;
-        continue;
-      }
-    }
-    scene.addGameObjectAtNode(
-      node: node,
-      type: type,
-    );
-  }
-}
+// void generateRandomSeparatedGameObjects(Scene scene, {required int type, required int amount, int separation = 200}){
+//   for (var i = 0; i < amount; i++) {
+//     final node = scene.getRandomAvailableNode();
+//
+//     final nearest = scene.findNearestGameObjectByType(
+//         x: node.x,
+//         y: node.y,
+//         type: type
+//     );
+//     if (nearest != null) {
+//       if (node.getDistance(nearest) < separation) {
+//         i--;
+//         continue;
+//       }
+//     }
+//     scene.addGameObjectAtNode(
+//       node: node,
+//       type: type,
+//     );
+//   }
+// }

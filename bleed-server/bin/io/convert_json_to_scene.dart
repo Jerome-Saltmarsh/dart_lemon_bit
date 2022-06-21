@@ -28,7 +28,6 @@ Scene convertJsonToScene(Json json) {
   }
   return Scene(
     grid: grid,
-    tiles: generateTilesPlain(50, 50),
     structures: [],
     gameObjects: [],
     characters: [],

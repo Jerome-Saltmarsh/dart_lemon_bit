@@ -1,10 +1,9 @@
 import 'package:lemon_math/library.dart';
 import '../common/grid_node_type.dart';
 import '../common/library.dart';
-import '../enums.dart';
 import 'AI.dart';
 import 'Character.dart';
-import 'Game.dart';
+import 'enemy_spawn.dart';
 import 'game_object.dart';
 import 'Structure.dart';
 import 'TileNode.dart';
@@ -15,47 +14,18 @@ class GridNode {
   GridNode(this.type);
 }
 
-class EnemySpawn {
-  final int z;
-  final int row;
-  final int column;
-  final int framesPerSpawn;
-  var framesUntilSpawn = 0;
-
-  EnemySpawn({
-    required this.z,
-    required this.row,
-    required this.column,
-    required this.framesPerSpawn,
-  });
-
-  void update(Game game){
-     if (framesUntilSpawn-- > 0) return;
-     framesUntilSpawn = framesPerSpawn;
-     game.spawnZombie(
-       x: row * tileSize,
-       y: column * tileSize,
-       z: 24.0,
-       team: 0,
-       health: 10,
-       damage: 1,
-     );
-  }
-}
-
 class Scene {
   final List<List<List<GridNode>>> grid;
   final List<Structure> structures;
   final List<Character> characters;
-  final List<List<int>> tiles;
   final List<GameObject> gameObjects;
   final List<GridIndex> spawnPointPlayers;
   final List<Position> spawnPointZombies;
   final List<EnemySpawn> enemySpawners = [];
 
-  late final List<List<Node>> nodes;
-  late final int numberOfRows;
-  late final int numberOfColumns;
+  // late final List<List<Node>> nodes;
+  // late final int numberOfRows;
+  // late final int numberOfColumns;
 
   int? startHour;
   int? secondsPerFrames;
@@ -65,11 +35,8 @@ class Scene {
   int get gridHeight => grid.length;
   int get gridRows => grid[0].length;
   int get gridColumns => grid[0][0].length;
-  int get rows => tiles.length;
-  int get columns => rows > 0 ? tiles[0].length : 0;
 
   Scene({
-    required this.tiles,
     required this.structures,
     required this.gameObjects,
     required this.characters,
@@ -77,83 +44,6 @@ class Scene {
     required this.spawnPointZombies,
     required this.grid,
   }) {
-    numberOfRows = tiles.length;
-    numberOfColumns = numberOfRows > 0 ? tiles[0].length : 0;
-    nodes = [];
-
-    for (var rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
-      final List<Node> nodeRow = [];
-      final tileRow = tiles[rowIndex];
-      for (var columnIndex = 0; columnIndex < numberOfColumns; columnIndex++) {
-        final node = Node(isWalkable(tileRow[columnIndex]));
-        node.row = rowIndex;
-        node.column = columnIndex;
-        nodeRow.add(node);
-      }
-      nodes.add(nodeRow);
-    }
-
-    for (var rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
-      final tileNodeRow = nodes[rowIndex];
-      final canUp = rowIndex > 0;
-      final canDown = rowIndex < numberOfRows - 1;
-      for (var columnIndex = 0; columnIndex < numberOfColumns; columnIndex++) {
-        final tileNode = tileNodeRow[columnIndex];
-        final canLeft = columnIndex > 0;
-        final canRight = columnIndex < numberOfColumns - 1;
-
-        if (canUp) {
-          tileNode.up = nodes[rowIndex - 1][columnIndex];
-          if (canLeft) {
-            tileNode.upLeft = nodes[rowIndex - 1][columnIndex - 1];
-          } else {
-            tileNode.upLeft = _boundary;
-          }
-          if (canRight) {
-            tileNode.upRight = nodes[rowIndex - 1][columnIndex + 1];
-          } else {
-            tileNode.upRight = _boundary;
-          }
-        } else {
-          tileNode.up = _boundary;
-          tileNode.upRight = _boundary;
-          tileNode.upLeft = _boundary;
-        }
-
-        if (canDown) {
-          tileNode.down = nodes[rowIndex + 1][columnIndex];
-
-          if (canRight) {
-            tileNode.downRight = nodes[rowIndex + 1][columnIndex + 1];
-          } else {
-            tileNode.downRight = _boundary;
-          }
-
-          if (canLeft) {
-            tileNode.downLeft = nodes[rowIndex + 1][columnIndex - 1];
-          } else {
-            tileNode.downLeft = _boundary;
-          }
-        } else {
-          tileNode.down = _boundary;
-          tileNode.downRight = _boundary;
-          tileNode.downLeft = _boundary;
-        }
-
-        if (canLeft) {
-          tileNode.left = tileNodeRow[columnIndex - 1];
-        } else {
-          tileNode.left = _boundary;
-        }
-
-        if (canRight) {
-          tileNode.right = tileNodeRow[columnIndex + 1];
-        } else {
-          tileNode.right = _boundary;
-        }
-      }
-    }
-
     sortVertically(gameObjects);
   }
 
@@ -173,34 +63,6 @@ class Scene {
       }
     }
     return values;
-  }
-
-  void generateRandomGameObjects({required int type, double density = 0.05, int health = 1}) {
-    for (final nodeRow in nodes){
-       for (final node in nodeRow) {
-          if (node.obstructed) continue;
-          if (node.closed) continue;
-          if (random.nextDouble() > density) continue;
-          addGameObjectAtNode(type: type, node: node, health: health);
-       }
-    }
-  }
-
-  void generateStairs(){
-    for (var row = 0; row < rows; row++) {
-      if (row < 1) continue;
-      if (row > rows - 2) continue;
-      final t = tiles[row];
-      for (var column = 0; column < columns; column++) {
-        if (column < 1) continue;
-        if (column > columns - 2) continue;
-        if (t[column] != Tile.Grass) continue;
-        if (tiles[row - 1][column] != Tile.Block_Grass) continue;
-        t[column] = Tile.Stairs_Grass_H;
-        print("stairs assigned $row $column");
-        return;
-      }
-    }
   }
 
   void addGameObjectAtNode({
@@ -251,24 +113,11 @@ class Scene {
 
   void addGameObject(GameObject value) {
     gameObjects.add(value);
-    getNodeByPosition(value).obstructed = true;
     sortGameObjects();
   }
 
   void sortGameObjects(){
     sortVertically(gameObjects);
-  }
-
-  int getTileAtPosition(Position position){
-    return getTileAtXY(position.x, position.y);
-  }
-
-  int getTileAtXY(double x, double y) {
-    const tileSize = 48;
-    return getTileAtRowColumn(
-        row: (x + y) ~/ tileSize,
-        column: (y - x) ~/ tileSize
-    );
   }
 
   int getGridBlockTypeAtXYZ(double x, double y, double z){
@@ -282,14 +131,6 @@ class Scene {
     final height = z ~/ tileSizeHalf;
     if (height >= grid.length) return GridNodeType.Empty;
     return grid[height][row][column].type;
-  }
-
-  int getTileAtRowColumn({required int row, required int column}){
-    if (row < 0) return boundary;
-    if (column < 0) return boundary;
-    if (row >= numberOfRows) return boundary;
-    if (column >= numberOfColumns) return boundary;
-    return tiles[row][column];
   }
 
   bool visitDirection(int direction, Node from) {
@@ -403,28 +244,9 @@ class Scene {
     return visitDirection(directionBehind, node);
   }
 
-  bool waterAt(double x, double y) {
-    return getTileAtXY(x, y) == Tile.Water;
-  }
-
-  // double getFloorHeight(double x, double y, double z){
-  //   final blockHeight = 48.0;
-  //   final tile = getTileAtXY(x, y);
-  //   if (tile == Tile.Grass) return 0;
-  //   if (tile == Tile.Boundary) return 99999;
-  //   if (tile == Tile.Block_Grass) return blockHeight;
-  //   if (tile == Tile.Block_Grass_Level_2) return blockHeight + blockHeight;
-  //   if (tile == Tile.Block_Grass_Level_3) return blockHeight + blockHeight + blockHeight;
-  //   if (tile == Tile.Water) return -10;
-  //   if (tile == Tile.Stairs_Grass_H) {
-  //      return (1.0 - (((x + y) / 48.0) % 1.0)) * blockHeight;
-  //   }
-  //   return 0;
+  // bool tileWalkableAt(double x, double y){
+  //   return getNodeByXY(x, y).open;
   // }
-
-  bool tileWalkableAt(double x, double y){
-    return getNodeByXY(x, y).open;
-  }
 
   GameObject? findNearestGameObjectByType({
     required double x,
@@ -441,50 +263,6 @@ class Scene {
         distance = objectDistance;
      }
      return nearest;
-  }
-
-  Node getRandomNodeByTileType(int type) {
-     while(true){
-        final node = getRandomTileNode();
-        if (getTileAtPosition(node) != type) continue;
-        return node;
-     }
-  }
-
-  Node getRandomAvailableNode() {
-    while (true) {
-      final node = getRandomTileNode();
-      if (node.closed) continue;
-      if (node.obstructed) continue;
-      return node;
-    }
-  }
-
-  Node getRandomTileNode() {
-    return getNodeByRowColumn(
-        row: randomInt(0, rows),
-        column: randomInt(0, columns)
-    );
-  }
-
-  Node getNodeByPosition(Position position) {
-    return getNodeByXY(position.x, position.y);
-  }
-
-  Node getNodeByXY(double x, double y) {
-    const tileSize = 48;
-    return getNodeByRowColumn(
-        row: (x + y) ~/ tileSize,
-        column: (y - x) ~/ tileSize
-    );
-  }
-
-  Node getNodeByRowColumn({required int row, required int column}){
-    if (row < 0) return _boundary;
-    if (column < 0) return _boundary;
-    if (row >= numberOfRows) return _boundary;
-    if (column >= numberOfColumns) return _boundary;
-    return nodes[row][column];
   }
 
   double getHeightAt(double x, double y, double z){

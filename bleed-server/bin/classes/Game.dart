@@ -4,7 +4,6 @@ import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
 import '../engine.dart';
-import '../enums.dart';
 import '../functions.dart';
 import '../functions/withinRadius.dart';
 import '../maths.dart';
@@ -378,25 +377,6 @@ extension GameFunctions on Game {
     }
   }
 
-  /// TODO Optimize
-  /// calculates if there is a wall between two objects
-  bool isVisibleBetween(Position a, Position b) {
-    final angle = radiansV2(a, b);
-    final vX = getAdjacent(angle, 48);
-    final vY = getOpposite(angle, 48);
-    final jumps = distanceV2(a, b) ~/ 48;
-    var x = a.x + vX;
-    var y = a.y + vY;
-    for (var i = 0; i < jumps; i++) {
-      if (!isShootable(scene.getTileAtXY(x, y))) {
-        return false;
-      }
-      x += vX;
-      y += vY;
-    }
-    return true;
-  }
-
   void applyDamage({
     required dynamic src,
     required Health target,
@@ -498,12 +478,6 @@ extension GameFunctions on Game {
       return;
     }
 
-    if (destroyed && target is Structure) {
-      final node = scene.getNodeByPosition(target);
-      node.open = true;
-      node.obstructed = false;
-    }
-
     if (target is GameObject) {
       switch (target.type) {
         case GameObjectType.Rock:
@@ -593,7 +567,6 @@ extension GameFunctions on Game {
       } else {
         // not zombie
         if (!ai.withinAttackRange(target)) return;
-        if (!isVisibleBetween(ai, target)) return;
         _characterAttack(ai, target);
         return;
       }
@@ -768,7 +741,6 @@ extension GameFunctions on Game {
     projectile.active = false;
     switch (projectile.type) {
       case ProjectileType.Bullet:
-        if (scene.waterAt(projectile.x, projectile.y)) return;
         dispatch(GameEventType.Bullet_Hole, projectile.x, projectile.y, projectile.z);
         break;
       case ProjectileType.Orb:
@@ -1029,20 +1001,6 @@ extension GameFunctions on Game {
         break;
     }
     character.stateDuration++;
-  }
-
-  void updateCharacterTileCollision(Character character) {
-    const tileCollisionResolve = 3;
-    if (!scene.tileWalkableAt(character.left, character.y)) {
-      character.x += tileCollisionResolve;
-    } else if (!scene.tileWalkableAt(character.right, character.y)) {
-      character.x -= tileCollisionResolve;
-    }
-    if (!scene.tileWalkableAt(character.x, character.top)) {
-      character.y += tileCollisionResolve;
-    } else if (!scene.tileWalkableAt(character.x, character.bottom)) {
-      character.y -= tileCollisionResolve;
-    }
   }
 
   Projectile spawnProjectileOrb(Character src, {required int damage}) {
@@ -1355,20 +1313,20 @@ extension GameFunctions on Game {
   }
 
   void npcSetRandomDestination(AI ai, {int radius = 10}) {
-    final node = scene.getNodeByPosition(ai);
-    if (!node.open) return;
-    final minColumn = max(0, node.column - radius);
-    final maxColumn = min(scene.numberOfColumns, node.column + radius);
-    final minRow = max(0, node.row - radius);
-    final maxRow = min(scene.numberOfRows, node.row + radius);
-    final randomColumn = randomInt(minColumn, maxColumn);
-    final randomRow = randomInt(minRow, maxRow);
-    final randomTile = scene.nodes[randomRow][randomColumn];
-    npcSetPathToTileNode(ai, randomTile);
+    // final node = scene.getNodeByPosition(ai);
+    // if (!node.open) return;
+    // final minColumn = max(0, node.column - radius);
+    // final maxColumn = min(scene.numberOfColumns, node.column + radius);
+    // final minRow = max(0, node.row - radius);
+    // final maxRow = min(scene.numberOfRows, node.row + radius);
+    // final randomColumn = randomInt(minColumn, maxColumn);
+    // final randomRow = randomInt(minRow, maxRow);
+    // final randomTile = scene.nodes[randomRow][randomColumn];
+    // npcSetPathToTileNode(ai, randomTile);
   }
 
   void npcSetPathTo(AI ai, Position position) {
-    npcSetPathToTileNode(ai, scene.getNodeByPosition(position));
+    // npcSetPathToTileNode(ai, scene.getNodeByPosition(position));
   }
 
   void npcSetPathToTileNode(AI ai, Node node) {
@@ -1376,7 +1334,7 @@ extension GameFunctions on Game {
     pathFindAI = ai;
     pathFindSearchID++;
     ai.pathIndex = -1;
-    scene.visitNodeFirst(scene.getNodeByPosition(ai));
+    // scene.visitNodeFirst(scene.getNodeByPosition(ai));
   }
 
   void _updateSpawnPointCollisions() {

@@ -26,11 +26,7 @@ class GameRandom extends Game {
       status: GameStatus.In_Progress
   ) {
 
-    scene.generateRandomGameObjects(type: GameObjectType.Tree, density: 0.03);
-    scene.generateRandomGameObjects(type: GameObjectType.Rock, density: 0.01);
-    scene.generateRandomGameObjects(type: GameObjectType.Rock_Small, density: 0.002);
-    scene.generateRandomGameObjects(type: GameObjectType.Grass, density: 0.0025);
-    generateRandomSeparatedGameObjects(scene, amount: 40, type: GameObjectType.Torch);
+    // generateRandomSeparatedGameObjects(scene, amount: 40, type: GameObjectType.Torch);
 
     for (var i = 0; i < maxCreeps; i++) {
       spawnCreep();

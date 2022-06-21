@@ -28,7 +28,7 @@ class GameFrontline extends Game {
 
     for (var z = 0; z < scene.gridHeight; z++) {
        for (var r = 0; r < scene.gridRows; r++){
-          for (var c = 0; c < scene.columns; c++){
+          for (var c = 0; c < scene.gridColumns; c++){
               if (scene.grid[z][r][c].type != GridNodeType.Player_Spawn) continue;
               player.indexZ = z;
               player.indexRow = r;
