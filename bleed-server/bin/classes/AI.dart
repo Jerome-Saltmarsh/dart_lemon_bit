@@ -7,6 +7,7 @@ import '../functions/withinRadius.dart';
 import 'Collider.dart';
 import 'components.dart';
 import 'Character.dart';
+import 'enemy_spawn.dart';
 
 class AI extends Character with Material {
   static const viewRange = 200.0;
@@ -20,6 +21,8 @@ class AI extends Character with Material {
   var dest = Vector2(-1, -1);
   var idleDuration = 0;
   var objective;
+
+  EnemySpawn? enemySpawn;
 
   int get pathIndex => _pathIndex;
 

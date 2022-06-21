@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'classes/library.dart';
 import 'common/library.dart';
+import 'constants/frames_per_second.dart';
 import 'functions/loadScenes.dart';
 import 'games/game_frontline.dart';
 import 'io/read_scene_from_file.dart';
@@ -10,8 +11,6 @@ import 'language.dart';
 final engine = _Engine();
 
 class _Engine {
-  static const framesPerSecond = 45;
-  static const framesPerRegen = 30 * 10;
   final games = <Game>[];
   final scenes = _Scenes();
   late final world;
@@ -36,6 +35,7 @@ class _Engine {
       }
     }
 
+    const framesPerRegen = framesPerSecond * 10;
     if (frame % framesPerRegen == 0) {
       for (final game in games) {
         game.regenCharacters();

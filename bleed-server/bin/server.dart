@@ -5,7 +5,9 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'classes/Position3.dart';
+import 'classes/enemy_spawn.dart';
 import 'classes/library.dart';
+import 'common/grid_node_type.dart';
 import 'common/library.dart';
 import 'engine.dart';
 import 'functions/generateName.dart';
@@ -580,7 +582,18 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (type == null){
             return errorInvalidArg('type');
           }
-          player.game.scene.grid[z][row][column].type = type;
+          final scene = player.game.scene;
+          final previousType = scene.grid[z][row][column].type;
+
+          if (previousType == GridNodeType.Enemy_Spawn){
+            scene.enemySpawns.removeWhere((enemySpawn) =>
+                enemySpawn.z == z &&
+                enemySpawn.row == row &&
+                enemySpawn.column == column
+            );
+          };
+
+          scene.grid[z][row][column].type = type;
           player.game.players.forEach((player) {
                player.writeByte(ServerResponse.Block_Set);
                player.writeInt(z);
@@ -589,7 +602,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                player.writeInt(type);
 
           });
-          writeSceneToFile(player.scene);
+
+          if (type == GridNodeType.Enemy_Spawn){
+             scene.enemySpawns.add(EnemySpawn(z: z, row: row, column: column));
+          }
+
+          writeSceneToFile(scene);
           break;
 
         case ClientRequest.Deck_Select_Card:

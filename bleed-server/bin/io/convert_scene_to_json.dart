@@ -12,6 +12,15 @@ String convertSceneToJson(Scene scene){
    json['grid-rows'] = scene.gridRows;
    json['grid-columns'] = scene.gridColumns;
    json['grid'] = flattenGrid(scene.grid);
+   final enemySpawnsJson = <Json>[];
+   for (final enemySpawn in scene.enemySpawns){
+      final enemySpawnJson = Json();
+      enemySpawnJson['z'] = enemySpawn.z;
+      enemySpawnJson['row'] = enemySpawn.row;
+      enemySpawnJson['column'] = enemySpawn.column;
+      enemySpawnsJson.add(enemySpawnJson);
+   }
+   json['enemy-spawners'] = enemySpawnsJson;
    return jsonEncode(json);
 }
 

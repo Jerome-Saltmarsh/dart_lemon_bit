@@ -13,7 +13,7 @@ class Scene {
   final List<List<List<GridNode>>> grid;
   final List<Character> characters;
   final List<GameObject> gameObjects;
-  final List<EnemySpawn> enemySpawners = [];
+  final List<EnemySpawn> enemySpawns = [];
 
   int? startHour;
   int? secondsPerFrames;

@@ -1,0 +1,1 @@
+const framesPerSecond = 45;

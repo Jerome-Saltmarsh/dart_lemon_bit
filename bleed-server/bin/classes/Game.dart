@@ -350,7 +350,7 @@ extension GameFunctions on Game {
       }
     }
 
-    for (final enemySpawner in scene.enemySpawners) {
+    for (final enemySpawner in scene.enemySpawns) {
        enemySpawner.update(this);
     }
 
@@ -416,6 +416,10 @@ extension GameFunctions on Game {
 
 
     if (destroyed) {
+      if (target is AI){
+         target.enemySpawn?.count--;
+      }
+
       if (target is Collider) {
         (target as Collider).collidable = false;
       }
