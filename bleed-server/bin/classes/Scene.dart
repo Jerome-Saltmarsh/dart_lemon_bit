@@ -11,16 +11,15 @@ import 'grid_node.dart';
 
 class Scene {
   final List<List<List<GridNode>>> grid;
+  var gridHeight = 0;
+  var gridRows = 0;
+  var gridColumns = 0;
   final List<Character> characters;
   final List<GameObject> gameObjects;
   final List<EnemySpawn> enemySpawns;
 
   int? startHour;
   int? secondsPerFrames;
-
-  int get gridHeight => grid.length;
-  int get gridRows => grid[0].length;
-  int get gridColumns => grid[0][0].length;
 
   Scene({
     required this.gameObjects,
@@ -29,6 +28,13 @@ class Scene {
     required this.enemySpawns,
   }) {
     sortVertically(gameObjects);
+    refreshGridMetrics();
+  }
+
+  void refreshGridMetrics(){
+    gridHeight = grid.length;
+    gridRows = grid[0].length;
+    gridColumns = grid[0][0].length;
   }
 
   GridIndex? findGridByType(int type){
