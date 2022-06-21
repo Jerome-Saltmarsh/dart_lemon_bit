@@ -419,8 +419,17 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (player == null) return errorPlayerNotFound();
           if (arguments.length < 2)  return errorArgsExpected(2, arguments);
           final weaponType = int.tryParse(arguments[1]);
-          if (weaponType == null) return errorInvalidArg('weapon');
+          if (weaponType == null) return errorInvalidArg('weapon type');
           player.equippedWeapon = weaponType;
+          player.setStateChanging();
+          break;
+
+        case ClientRequest.Set_Armour:
+          if (player == null) return errorPlayerNotFound();
+          if (arguments.length < 2)  return errorArgsExpected(2, arguments);
+          final armourType = int.tryParse(arguments[1]);
+          if (armourType == null) return errorInvalidArg('armour type');
+          player.equippedArmour = armourType;
           player.setStateChanging();
           break;
 
