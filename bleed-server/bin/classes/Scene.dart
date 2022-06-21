@@ -4,6 +4,7 @@ import '../common/library.dart';
 import '../enums.dart';
 import 'AI.dart';
 import 'Character.dart';
+import 'Game.dart';
 import 'game_object.dart';
 import 'Structure.dart';
 import 'TileNode.dart';
@@ -14,6 +15,34 @@ class GridNode {
   GridNode(this.type);
 }
 
+class EnemySpawn {
+  final int z;
+  final int row;
+  final int column;
+  final int framesPerSpawn;
+  var framesUntilSpawn = 0;
+
+  EnemySpawn({
+    required this.z,
+    required this.row,
+    required this.column,
+    required this.framesPerSpawn,
+  });
+
+  void update(Game game){
+     if (framesUntilSpawn-- > 0) return;
+     framesUntilSpawn = framesPerSpawn;
+     game.spawnZombie(
+       x: row * tileSize,
+       y: column * tileSize,
+       z: 24.0,
+       team: 0,
+       health: 10,
+       damage: 1,
+     );
+  }
+}
+
 class Scene {
   final List<List<List<GridNode>>> grid;
   final List<Structure> structures;
@@ -22,6 +51,7 @@ class Scene {
   final List<GameObject> gameObjects;
   final List<GridIndex> spawnPointPlayers;
   final List<Position> spawnPointZombies;
+  final List<EnemySpawn> enemySpawners = [];
 
   late final List<List<Node>> nodes;
   late final int numberOfRows;

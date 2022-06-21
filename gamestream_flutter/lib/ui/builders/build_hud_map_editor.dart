@@ -49,6 +49,22 @@ Widget buildPanelEditor(){
       _buildControlLightMode(),
       _buildControlTime(),
       height8,
+      watch(edit.type, (int type){
+         if (type != GridNodeType.Enemy_Spawn) return const SizedBox();
+         return Container(
+           color: Colors.grey,
+           padding: EdgeInsets.all(8),
+           child: Column(
+             mainAxisAlignment: MainAxisAlignment.start,
+             crossAxisAlignment: CrossAxisAlignment.start,
+             children: [
+                 text("ENEMY SPAWN"),
+                 text("Amount"),
+                 text("Health"),
+             ],
+           ),
+         );
+      }),
     ],
   );
 }
@@ -124,6 +140,7 @@ Widget buildColumnEditTile(){
       _buildSetType(GridNodeType.Tree_Bottom_Pine, "Tree Bottom Top"),
       _buildSetType(GridNodeType.Player_Spawn, "Player Spawn"),
       _buildSetType(GridNodeType.Wooden_Wall_Row, "Wooden Wall Row"),
+      _buildSetType(GridNodeType.Enemy_Spawn, "Enemy Spawn"),
       _button("Zombie", () {
         sendClientRequestSpawnZombie(
           z: edit.z.value,

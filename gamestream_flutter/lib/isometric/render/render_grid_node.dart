@@ -150,6 +150,16 @@ void renderGridNode(int z, int row, int column, int type) {
         anchorX: 0.5,
         anchorY: 0.3334,
       );
+    case GridNodeType.Enemy_Spawn:
+      return render(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: 7686,
+        srcY: 72.0 * shade,
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorY: 0.3334,
+      );
     default:
       throw Exception("Cannot render grid node type $type");
   }

@@ -354,8 +354,12 @@ extension GameFunctions on Game {
         disableCountDown = 0;
       }
     }
+
+    for (final enemySpawner in scene.enemySpawners) {
+       enemySpawner.update(this);
+    }
+
     update();
-    // updateDynamicObjects();
     updateCollectables();
     updateStructures();
     _updateCollisions();

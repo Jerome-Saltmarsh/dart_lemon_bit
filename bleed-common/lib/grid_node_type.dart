@@ -16,6 +16,7 @@ class GridNodeType {
   static const Wooden_Wall_Row = 14;
   static const Tree_Bottom_Oak = 15;
   static const Tree_Top_Oak = 16;
+  static const Enemy_Spawn = 17;
 
   static bool isStairs(int value){
     return 
