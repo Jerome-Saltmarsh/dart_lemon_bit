@@ -8,5 +8,6 @@ Json convertEnemySpawnToJson(EnemySpawn enemySpawn){
   json['z'] = enemySpawn.z;
   json['row'] = enemySpawn.row;
   json['column'] = enemySpawn.column;
+  json['max'] = enemySpawn.max;
   return json;
 }

@@ -55,44 +55,7 @@ class _Engine {
     // }
 
     for (final game in games) {
-     game.removeDisconnectedPlayers();
-      switch(game.status) {
-
-        case GameStatus.In_Progress:
-          game.updateInProgress();
-          break;
-
-        case GameStatus.Awaiting_Players:
-          for (int i = 0; i < game.players.length; i++) {
-            final player = game.players[i];
-            player.lastUpdateFrame++;
-            if (player.lastUpdateFrame > 100) {
-              game.players.removeAt(i);
-              i--;
-            }
-          }
-          break;
-
-        case GameStatus.Counting_Down:
-          game.countDownFramesRemaining--;
-          if (game.countDownFramesRemaining <= 0) {
-            game.setGameStatus(GameStatus.In_Progress);
-            game.onGameStarted();
-          }
-          break;
-
-        default:
-          break;
-      }
-    }
-
-    for (final game in games) {
-      final players = game.players;
-      for (final player in players) {
-        player.writePlayerGame();
-        player.writeByte(ServerResponse.End);
-        player.sendBufferToClient();
-      }
+      game.updateStatus();
     }
   }
 

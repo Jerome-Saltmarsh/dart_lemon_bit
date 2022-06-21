@@ -8,6 +8,7 @@ class EnemySpawn {
   final int column;
   final int framesPerSpawn;
   var framesUntilSpawn = 0;
+  var max;
   var count = 0;
 
   EnemySpawn({
@@ -15,17 +16,18 @@ class EnemySpawn {
     required this.row,
     required this.column,
     this.framesPerSpawn = framesPerSecond * 5,
+    this.max = 5,
   });
 
   void update(Game game){
-    if (count >= 3) return;
+    if (count >= max) return;
     if (framesUntilSpawn-- > 0) return;
     framesUntilSpawn = framesPerSpawn;
     count++;
     game.spawnZombie(
-      x: row * tileSize,
-      y: column * tileSize,
-      z: 24.0,
+      x: row * tileSize + tileSizeHalf,
+      y: column * tileSize + tileSizeHalf,
+      z: z * tileHeight,
       team: 0,
       health: 10,
       damage: 1,

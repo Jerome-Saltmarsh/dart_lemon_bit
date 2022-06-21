@@ -64,6 +64,42 @@ abstract class Game {
 
   int get numberOfAliveZombies => countAlive(zombies);
 
+  void updateStatus(){
+    removeDisconnectedPlayers();
+    switch (status) {
+
+      case GameStatus.In_Progress:
+        updateInProgress();
+        break;
+
+      case GameStatus.Awaiting_Players:
+        for (int i = 0; i < players.length; i++) {
+          final player = players[i];
+          player.lastUpdateFrame++;
+          if (player.lastUpdateFrame > 100) {
+            players.removeAt(i);
+            i--;
+          }
+        }
+        break;
+
+      case GameStatus.Counting_Down:
+        countDownFramesRemaining--;
+        if (countDownFramesRemaining <= 0) {
+          setGameStatus(GameStatus.In_Progress);
+          onGameStarted();
+        }
+        break;
+
+      default:
+        break;
+    }
+
+    for (final player in players) {
+      player.writeAndSendResponse();
+    }
+  }
+
   void updateAIPath(){
     for (final zombie in zombies) {
       if (zombie.deadOrBusy) continue;

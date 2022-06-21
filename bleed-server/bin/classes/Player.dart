@@ -405,6 +405,12 @@ extension PlayerProperties on Player {
     writeInt(y);
   }
 
+  void writeAndSendResponse(){
+    writePlayerGame();
+    writeByte(ServerResponse.End);
+    sendBufferToClient();
+  }
+
   void writeAttackTarget(){
     if (aimTarget == null){
       writeByte(ServerResponse.Player_Attack_Target_None);

@@ -7,7 +7,7 @@ import '../classes/Scene.dart';
 import '../classes/grid_node.dart';
 import 'convert_enemy_spawn_to_json.dart';
 
-String convertSceneToJson(Scene scene){
+String convertSceneToString(Scene scene){
    final json = Json();
    json['grid-z'] = scene.gridHeight;
    json['grid-rows'] = scene.gridRows;
