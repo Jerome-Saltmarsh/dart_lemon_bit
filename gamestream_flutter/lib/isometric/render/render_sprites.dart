@@ -241,6 +241,8 @@ class RenderOrderGrid extends RenderOrder {
     for (var z = playerZ + 1; z < gridTotalZ; z += 2){
       row++;
       column++;
+      if (row >= gridTotalRows) break;
+      if (column >= gridTotalColumns) break;
       final type = grid[z][row][column];
       if (type != GridNodeType.Empty && type != GridNodeType.Tree_Top_Pine) {
         playerImperceptible = true;
@@ -305,7 +307,15 @@ class RenderOrderGrid extends RenderOrder {
         plain = grid[gridZ];
       }
     }
+    validate();
     gridType = plain[gridRow][gridColumn];
+  }
+
+  void validate(){
+    assert(gridRow < gridTotalRows);
+    assert(gridColumn < gridTotalColumns);
+    assert(gridRow >= 0);
+    assert(gridColumn >= 0);
   }
 
   void shiftIndexDown(){

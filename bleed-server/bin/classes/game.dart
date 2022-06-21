@@ -595,30 +595,26 @@ extension GameFunctions on Game {
         }
         const runAtTargetDistance = 100;
         if ((ai.getDistance(target) < runAtTargetDistance)) {
-          _characterRunAt(ai, target);
-          return;
+          return _characterRunAt(ai, target);
         }
 
       } else {
         // not zombie
         if (!ai.withinAttackRange(target)) return;
-        _characterAttack(ai, target);
-        return;
+        return _characterAttack(ai, target);
       }
     }
 
     if (ai.pathIndex >= 0) {
-      if (ai.arrivedAtDest) {
-        ai.nextPath();
-        return;
-      }
+      if (ai.arrivedAtDest) return ai.nextPath();
       // @on npc going to path
       ai.face(ai.dest);
       ai.state = CharacterState.Running;
       return;
-    } else if (ai.idleDuration++ > 120) {
+    }
+
+    if (ai.idleDuration++ > 120) {
       ai.idleDuration = 0;
-      // wander mode
       if (ai.objective == null) {
         npcSetRandomDestination(ai);
       }

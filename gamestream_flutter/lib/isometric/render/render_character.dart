@@ -11,19 +11,10 @@ void renderCharacter(Character character) {
   assert(character.direction >= 0);
   assert(character.direction < 8);
 
-
-  // renderPixelRed(character.renderX, character.renderY);
-  // final f = (engine.frame % 360) * degreesToRadians;
-  // // renderCircle32(character.renderX, character.renderY, rotation: f);
-  // renderCircle32(character.renderX, character.renderY, rotation: 0);
-  // renderCircle32(character.renderX, character.renderY, rotation: piQuarter);
-  // renderCircle32(character.renderX, character.renderY, rotation: piHalf);
-  // renderCircle32(character.renderX, character.renderY, rotation: piQuarter * 3);
-  // renderCircle32(character.renderX, character.renderY, rotation: pi);
-  // renderCircle(x: character.renderX, y: character.renderY, size: 8);
-
   if (character.dead) return;
-  renderCharacterHealthBar(character);
+  if (character.shade <= Shade.Medium){
+    renderCharacterHealthBar(character);
+  }
 
   final weapon = character.weapon;
   final direction = character.direction;
