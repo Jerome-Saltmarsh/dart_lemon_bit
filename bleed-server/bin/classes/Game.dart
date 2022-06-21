@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
+import '../common/grid_node_type.dart';
 import '../common/library.dart';
 import '../engine.dart';
 import '../functions.dart';
@@ -23,7 +24,6 @@ import 'Scene.dart';
 import 'SpawnPoint.dart';
 import 'TileNode.dart';
 import 'components.dart';
-import 'grid_index.dart';
 
 abstract class Game {
   final items = <Item>[];
@@ -63,13 +63,6 @@ abstract class Game {
   int get numberOfAlivePlayers => countAlive(players);
 
   int get numberOfAliveZombies => countAlive(zombies);
-
-  GridIndex getRandomPlayerSpawnPosition() {
-    if (scene.spawnPointPlayers.isEmpty) {
-      return GridIndex().set(plain: 1, row: 5, column: 5);
-    }
-    return randomItem(scene.spawnPointPlayers);
-  }
 
   void updateAIPath(){
     for (final zombie in zombies) {
@@ -125,13 +118,19 @@ abstract class Game {
 
   }
 
+  void movePlayerToSpawn(Player player){
+    final spawnPoint = scene.findGridByType(GridNodeType.Player_Spawn);
+    if (spawnPoint == null) throw Exception("revive exception: No GridNodeType.Player_Spawn found");
+    player.x = spawnPoint.x;
+    player.y = spawnPoint.y;
+    player.z = spawnPoint.z;
+  }
+
   void revive(Player character) {
     character.state = CharacterState.Idle;
     character.health = character.maxHealth;
     character.collidable = true;
-    final spawnPoint = getRandomPlayerSpawnPosition();
-    character.x = spawnPoint.x;
-    character.y = spawnPoint.y;
+    movePlayerToSpawn(character);
   }
 
   /// In seconds

@@ -23,7 +23,6 @@ Scene generateScenePlain({int rows = 50, int columns = 50, int height = 7}){
       grid: generateGridPlain(height: height, rows: rows, columns: columns),
       gameObjects: [],
       characters: [],
-      spawnPointPlayers: [],
   );
 }
 
@@ -321,7 +320,6 @@ Scene generateRandomScene({
       grid: [],
       characters: [],
       gameObjects: gameObjects,
-      spawnPointPlayers: [],
   );
 }
 

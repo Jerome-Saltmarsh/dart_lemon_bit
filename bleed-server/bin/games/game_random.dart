@@ -3,6 +3,7 @@
 import 'package:lemon_math/library.dart';
 
 import '../classes/library.dart';
+import '../common/grid_node_type.dart';
 import '../common/library.dart';
 import '../scene_generator.dart';
 
@@ -84,9 +85,11 @@ class GameRandom extends Game {
     player.collidable = true;
     player.skillPoints = 0;
     player.target = null;
-    final spawnPoint = getRandomPlayerSpawnPosition();
-    player.x = spawnPoint.row * tileSize;
-    player.y = spawnPoint.column * tileSize;
+    final spawnPoint = scene.findGridByType(GridNodeType.Player_Spawn);
+    if (spawnPoint == null) throw Exception("revive exception: No GridNodeType.Player_Spawn found");
+    player.x = spawnPoint.x;
+    player.y = spawnPoint.y;
+    player.z = spawnPoint.z;
     player.clearCardAbility();
     player.cardChoices.clear();
     player.writeCardChoices();

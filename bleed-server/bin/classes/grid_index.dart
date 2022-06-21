@@ -1,6 +1,8 @@
 
 import '../common/library.dart';
 
+final gridIndex = GridIndex();
+
 class GridIndex {
    var plain = 0;
    var row = 0;

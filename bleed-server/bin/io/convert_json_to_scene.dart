@@ -28,6 +28,5 @@ Scene convertJsonToScene(Json json) {
     grid: grid,
     gameObjects: [],
     characters: [],
-    spawnPointPlayers: [],
   );
 }
