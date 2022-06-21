@@ -294,20 +294,21 @@ class RenderOrderGrid extends RenderOrder {
         gridColumn-= amount;
       }
 
-      if (gridColumn + gridRow >= maxColumnRow || gridRow >= gridTotalRows || gridColumn >= gridTotalColumns){
+      if (
+          gridColumn >= maxColumnRow - gridRow ||
+          gridColumn >= gridTotalColumns ||
+          gridRow >= gridTotalRows
+      ) {
         gridZ++;
         gridZHalf =  gridZ ~/ 2;
         gridZGreaterThanPlayerZ = gridZ > playerZ;
-        if (gridZ >= gridTotalZ) {
-          end();
-          return;
-        }
+        if (gridZ >= gridTotalZ) return end();
         gridRow = 0;
         gridColumn = 0;
         plain = grid[gridZ];
       }
     }
-    validate();
+    // validate();
     gridType = plain[gridRow][gridColumn];
   }
 
