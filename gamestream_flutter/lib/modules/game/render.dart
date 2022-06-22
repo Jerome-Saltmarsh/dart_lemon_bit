@@ -55,17 +55,16 @@ class GameRender {
     gridRefreshDynamicLight();
 
     var shade = ambient.value - 1;
-
     if (shade < Shade.Bright){
       shade = Shade.Bright;
     }
-
     if (shade > Shade.Medium) {
       shade = Shade.Medium;
     }
-
-    for (final player in players) {
-       gridEmitDynamic(player.indexZ, player.indexRow, player.indexColumn, maxBrightness: shade);
+    for (var i = 0; i < totalPlayers; i++) {
+      final player = players[i];
+      gridEmitDynamic(player.indexZ, player.indexRow, player.indexColumn,
+          maxBrightness: shade);
     }
 
     renderSprites();
