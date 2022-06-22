@@ -142,6 +142,13 @@ void _applyShadowAt({
 //   }
 // }
 
+bool gridIsUnderSomething(int z, int row, int column){
+  for (var zIndex = z + 1; zIndex < gridTotalZ; zIndex++){
+    if (grid[zIndex][row][column] != GridNodeType.Empty) return false;
+  }
+  return true;
+}
+
 void _refreshGridMetrics(){
   gridTotalZ = grid.length;
   gridTotalRows = grid[0].length;

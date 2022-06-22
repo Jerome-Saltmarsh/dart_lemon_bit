@@ -239,16 +239,8 @@ class RenderOrderGrid extends RenderOrder {
     playerColumn = player.indexColumn;
     playerRenderRow = playerRow - (player.indexZ ~/ 2);
     playerRenderColumn = playerColumn - (player.indexZ ~/ 2);
-    playerUnderRoof = false;
+    playerUnderRoof = gridIsUnderSomething(playerZ, playerRow, playerColumn);
     gridZGreaterThanPlayerZ = false;
-
-    for (var z = playerZ + 1; z < gridTotalZ; z++){
-       if (grid[z][playerRow][playerColumn] != GridNodeType.Empty) {
-         playerUnderRoof = true;
-         break;
-       }
-    }
-
     playerImperceptible = false;
     var row = playerRow;
     var column = playerColumn;
@@ -283,13 +275,12 @@ class RenderOrderGrid extends RenderOrder {
       gridColumn = gridTotalColumnsMinusOne;
     }
     recalculateMaxRow();
-
-    gridRefreshDynamicLight();
+    refreshDynamicLightGrid();
 
     super.reset();
   }
 
-  void gridRefreshDynamicLight(){
+  void refreshDynamicLightGrid(){
     for (var z = 0; z < gridTotalZ; z++) {
       final dynamicPlain = gridLightDynamic[z];
       final bakePlain = gridLightBake[z];
