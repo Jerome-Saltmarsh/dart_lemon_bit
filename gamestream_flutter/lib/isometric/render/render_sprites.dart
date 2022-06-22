@@ -4,6 +4,8 @@ import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
+import 'package:gamestream_flutter/isometric/lighting/apply_player_emissions.dart';
+import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
@@ -88,6 +90,12 @@ class RenderOrderProjectiles extends RenderOrder {
   int getTotal() {
     return totalProjectiles;
   }
+
+  @override
+  void reset() {
+    applyProjectileEmissions();
+    super.reset();
+  }
 }
 
 class RenderOrderParticle extends RenderOrder {
@@ -141,6 +149,12 @@ class RenderOrderPlayer extends RenderOrder {
   @override
   int getTotal() {
     return totalPlayers;
+  }
+
+  @override
+  void reset() {
+    applyPlayerEmissions();
+    super.reset();
   }
 }
 
@@ -269,6 +283,9 @@ class RenderOrderGrid extends RenderOrder {
       gridColumn = gridTotalColumnsMinusOne;
     }
     recalculateMaxRow();
+
+    gridRefreshDynamicLight();
+
     super.reset();
   }
 

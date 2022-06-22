@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/npc_debug.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_player_emissions.dart';
+import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
@@ -52,9 +53,6 @@ class GameRender {
     // if (debug) {
     //   renderTeamColours();
     // }
-
-    gridRefreshDynamicLight();
-    applyPlayerEmissions();
 
     renderSprites();
     if (playModeEdit){

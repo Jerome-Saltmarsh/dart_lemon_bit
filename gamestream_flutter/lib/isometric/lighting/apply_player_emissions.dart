@@ -2,17 +2,17 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 
+import 'apply_vector_emission.dart';
+
 void applyPlayerEmissions() {
-  var shade = ambient.value - 1;
-  if (shade < Shade.Bright){
-    shade = Shade.Bright;
+  var maxBrightness = ambient.value - 1;
+  if (maxBrightness < Shade.Bright) {
+    maxBrightness = Shade.Bright;
   }
-  if (shade > Shade.Medium) {
-    shade = Shade.Medium;
+  if (maxBrightness > Shade.Medium) {
+    maxBrightness = Shade.Medium;
   }
   for (var i = 0; i < totalPlayers; i++) {
-    final player = players[i];
-    gridEmitDynamic(player.indexZ, player.indexRow, player.indexColumn,
-        maxBrightness: shade);
+    applyVector3Emission(players[i], maxBrightness: maxBrightness);
   }
 }
