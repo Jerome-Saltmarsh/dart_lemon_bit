@@ -291,7 +291,6 @@ class RenderOrderGrid extends RenderOrder {
         getTileWorldY(gridRow, gridColumn),
         0,
     );
-
     if (maxRow > gridTotalRows) {
       maxRow = gridTotalRows;
     }
@@ -303,15 +302,9 @@ class RenderOrderGrid extends RenderOrder {
 
     if (gridColumn < 0 || gridRow >= maxRow) {
       shiftIndexDown();
+      recalculateMaxRow();
       final worldY = getTileWorldY(gridRow, gridColumn);
-      maxRow = convertWorldToRow(screenRight, worldY, 0);
-      if (maxRow > gridTotalRows) {
-        maxRow = gridTotalRows;
-      }
       var screenLeftColumn = convertWorldToColumn(screenLeft, worldY, 0);
-      if (screenLeftColumn >= gridTotalColumns) {
-        screenLeftColumn = gridTotalColumnsMinusOne;
-      }
       if (screenLeftColumn < gridColumn) {
         final amount = gridColumn - screenLeftColumn;
         gridRow += amount;
@@ -331,8 +324,9 @@ class RenderOrderGrid extends RenderOrder {
         plain = grid[gridZ];
       }
     }
-    assert(gridRow >= 0);
-    assert(gridColumn >= 0);
+    assert (gridRow >= 0);
+    assert (gridColumn >= 0);
+    assert (gridZ < gridTotalZ);
     gridType = plain[gridRow][gridColumn];
   }
 
