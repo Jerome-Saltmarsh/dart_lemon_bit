@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/isometric/players.dart';
 
 import 'apply_vector_emission.dart';
 
+
 void applyPlayerEmissions() {
   var maxBrightness = ambient.value - 1;
   if (maxBrightness < Shade.Bright) {

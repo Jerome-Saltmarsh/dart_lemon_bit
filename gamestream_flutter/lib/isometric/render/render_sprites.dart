@@ -4,8 +4,10 @@ import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
+import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_player_emissions.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
+import 'package:gamestream_flutter/isometric/lighting/apply_vector_emission.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
@@ -100,6 +102,7 @@ class RenderOrderProjectiles extends RenderOrder {
 
 class RenderOrderParticle extends RenderOrder {
   late Particle particle;
+  var totalActive = 0;
 
   @override
   void renderFunction() {
@@ -114,19 +117,20 @@ class RenderOrderParticle extends RenderOrder {
   }
 
   @override
-  int getTotal() {
-    final particleLength = particles.length;
-    var totalActive = 0;
-    for (var i = 0; i < particleLength; i++){
-      if (!particles[i].active) break;
-      totalActive++;
-    }
-    return totalActive;
-  }
+  int getTotal() => totalActive;
 
   @override
   void reset() {
     sortParticles();
+    totalActive = totalActiveParticles;
+
+    for (var i = 0; i < totalActive; i++){
+       final particle = particles[i];
+       if (particle.type == ParticleType.Orb_Shard){
+          applyVector3Emission(particle, maxBrightness: Shade.Very_Bright);
+       }
+    }
+
     super.reset();
   }
 }
