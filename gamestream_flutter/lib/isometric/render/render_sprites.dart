@@ -302,12 +302,12 @@ class RenderOrderGrid extends RenderOrder {
     gridColumn--;
 
     if (gridColumn < 0 || gridRow >= maxRow) {
+      shiftIndexDown();
       final worldY = getTileWorldY(gridRow, gridColumn);
       maxRow = convertWorldToRow(screenRight, worldY, 0);
       if (maxRow > gridTotalRows) {
         maxRow = gridTotalRows;
       }
-      shiftIndexDown();
       var screenLeftColumn = convertWorldToColumn(screenLeft, worldY, 0);
       if (screenLeftColumn >= gridTotalColumns) {
         screenLeftColumn = gridTotalColumnsMinusOne;
