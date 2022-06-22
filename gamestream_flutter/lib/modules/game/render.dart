@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/isometric/ai.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/npc_debug.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
+import 'package:gamestream_flutter/isometric/lighting/apply_player_emissions.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
@@ -46,26 +47,14 @@ class GameRender {
   void render(Canvas canvas, Size size) {
     drawAbility();
     attackTargetCircle();
-    drawPaths();
-    renderCollectables();
-    if (debug) {
-      renderTeamColours();
-    }
+    // drawPaths();
+    // renderCollectables();
+    // if (debug) {
+    //   renderTeamColours();
+    // }
 
     gridRefreshDynamicLight();
-
-    var shade = ambient.value - 1;
-    if (shade < Shade.Bright){
-      shade = Shade.Bright;
-    }
-    if (shade > Shade.Medium) {
-      shade = Shade.Medium;
-    }
-    for (var i = 0; i < totalPlayers; i++) {
-      final player = players[i];
-      gridEmitDynamic(player.indexZ, player.indexRow, player.indexColumn,
-          maxBrightness: shade);
-    }
+    applyPlayerEmissions();
 
     renderSprites();
     if (playModeEdit){
