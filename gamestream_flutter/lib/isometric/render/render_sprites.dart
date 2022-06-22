@@ -305,7 +305,7 @@ class RenderOrderGrid extends RenderOrder {
       recalculateMaxRow();
       final worldY = getTileWorldY(gridRow, gridColumn);
       var screenLeftColumn = convertWorldToColumn(screenLeft, worldY, 0);
-      if (screenLeftColumn < gridColumn) {
+      if (screenLeftColumn > 0 && screenLeftColumn < gridColumn) {
         final amount = gridColumn - screenLeftColumn;
         gridRow += amount;
         gridColumn -= amount;
