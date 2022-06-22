@@ -285,23 +285,24 @@ class RenderOrderGrid extends RenderOrder {
       final worldY = getTileWorldY(gridRow, gridColumn);
       maxRow = convertWorldToRow(engine.screen.right + tileSize, worldY, 0);
       shiftIndexDown();
-      final screenLeftColumn = convertWorldToColumn(engine.screen.left - tileSize, worldY, 0);
-
-      if (screenLeftColumn < gridColumn){
+      var screenLeftColumn = convertWorldToColumn(engine.screen.left - tileSize, worldY, 0);
+      if (screenLeftColumn >= gridTotalColumns) {
+        screenLeftColumn = gridTotalColumnsMinusOne;
+      }
+      if (screenLeftColumn < gridColumn) {
         final amount = gridColumn - screenLeftColumn;
         gridRow += amount;
-        gridColumn-= amount;
+        gridColumn -= amount;
       }
-
       if (
           gridColumn >= maxColumnRow - gridRow ||
           gridColumn >= gridTotalColumns ||
           gridRow >= gridTotalRows
       ) {
         gridZ++;
+        if (gridZ >= gridTotalZ) return end();
         gridZHalf =  gridZ ~/ 2;
         gridZGreaterThanPlayerZ = gridZ > playerZ;
-        if (gridZ >= gridTotalZ) return end();
         gridRow = 0;
         gridColumn = 0;
         plain = grid[gridZ];
