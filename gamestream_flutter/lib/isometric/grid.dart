@@ -149,6 +149,18 @@ bool gridIsUnderSomething(int z, int row, int column){
   return true;
 }
 
+bool gridIsPerceptible(int zIndex, int row, int column){
+  for (var z = zIndex + 1; z < gridTotalZ; z += 2){
+    row++;
+    column++;
+    if (row >= gridTotalRows) break;
+    if (column >= gridTotalColumns) break;
+    final type = grid[z][row][column];
+    if (type != GridNodeType.Empty && type != GridNodeType.Tree_Top_Pine) return false;
+  }
+  return true;
+}
+
 void _refreshGridMetrics(){
   gridTotalZ = grid.length;
   gridTotalRows = grid[0].length;

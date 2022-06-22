@@ -241,20 +241,7 @@ class RenderOrderGrid extends RenderOrder {
     playerRenderColumn = playerColumn - (player.indexZ ~/ 2);
     playerUnderRoof = gridIsUnderSomething(playerZ, playerRow, playerColumn);
     gridZGreaterThanPlayerZ = false;
-    playerImperceptible = false;
-    var row = playerRow;
-    var column = playerColumn;
-    for (var z = playerZ + 1; z < gridTotalZ; z += 2){
-      row++;
-      column++;
-      if (row >= gridTotalRows) break;
-      if (column >= gridTotalColumns) break;
-      final type = grid[z][row][column];
-      if (type != GridNodeType.Empty && type != GridNodeType.Tree_Top_Pine) {
-        playerImperceptible = true;
-        break;
-      }
-    }
+    playerImperceptible = !gridIsPerceptible(playerZ, playerRow, playerColumn);
 
     final left = engine.screen.left;
     final bottom = engine.screen.bottom + (gridTotalZ * tileHeight);
