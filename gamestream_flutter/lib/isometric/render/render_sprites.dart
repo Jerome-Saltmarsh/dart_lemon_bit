@@ -5,6 +5,7 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
+import 'package:gamestream_flutter/isometric/lighting/apply_particle_emissions.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_player_emissions.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_vector_emission.dart';
@@ -123,14 +124,9 @@ class RenderOrderParticle extends RenderOrder {
   void reset() {
     sortParticles();
     totalActive = totalActiveParticles;
-
     for (var i = 0; i < totalActive; i++){
-       final particle = particles[i];
-       if (particle.type == ParticleType.Orb_Shard){
-          applyVector3Emission(particle, maxBrightness: Shade.Very_Bright);
-       }
+       applyParticleEmission(particles[i]);
     }
-
     super.reset();
   }
 }
@@ -291,6 +287,20 @@ class RenderOrderGrid extends RenderOrder {
     gridRefreshDynamicLight();
 
     super.reset();
+  }
+
+  void gridRefreshDynamicLight(){
+    for (var z = 0; z < gridTotalZ; z++) {
+      final dynamicPlain = gridLightDynamic[z];
+      final bakePlain = gridLightBake[z];
+      for (var rowIndex = 0; rowIndex < gridTotalRows; rowIndex++) {
+        final dynamicRow = dynamicPlain[rowIndex];
+        final bakeRow = bakePlain[rowIndex];
+        for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
+          dynamicRow[columnIndex] = bakeRow[columnIndex];
+        }
+      }
+    }
   }
 
   void recalculateMaxRow() {

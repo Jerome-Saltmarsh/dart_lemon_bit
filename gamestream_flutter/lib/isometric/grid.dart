@@ -25,13 +25,14 @@ var gridColumnLength = 0.0;
 
 int get gridVolume => gridTotalZ * gridTotalRows * gridTotalColumns;
 
-void gridEmitDynamic(int z, int row, int column, {required int maxBrightness}){
+void gridEmitDynamic(int z, int row, int column, {required int maxBrightness, int radius = 5}){
   _applyEmission(
       map: gridLightDynamic,
       zIndex: z,
       rowIndex: row,
       columnIndex: column,
-      maxBrightness: maxBrightness
+      maxBrightness: maxBrightness,
+      radius: radius,
   );
 }
 
@@ -131,15 +132,15 @@ void _applyShadowAt({
   }
 }
 
-void gridRefreshDynamicLight(){
-  for (var z = 0; z < gridTotalZ; z++) {
-     for (var row = 0; row < gridTotalRows; row++) {
-        for (var column = 0; column < gridTotalColumns; column++) {
-           gridLightDynamic[z][row][column] = gridLightBake[z][row][column];
-        }
-     }
-  }
-}
+// void gridRefreshDynamicLight(){
+//   for (var z = 0; z < gridTotalZ; z++) {
+//      for (var row = 0; row < gridTotalRows; row++) {
+//         for (var column = 0; column < gridTotalColumns; column++) {
+//            gridLightDynamic[z][row][column] = gridLightBake[z][row][column];
+//         }
+//      }
+//   }
+// }
 
 void _refreshGridMetrics(){
   gridTotalZ = grid.length;
@@ -205,8 +206,8 @@ void _applyEmission({
   required int rowIndex,
   required int columnIndex,
   required int maxBrightness,
+  int radius = 5,
 }){
-  final radius = 5;
   final zMin = max(zIndex - radius, 0);
   final zMax = min(zIndex + radius, gridTotalZ);
   final rowMin = max(rowIndex - radius, 0);
