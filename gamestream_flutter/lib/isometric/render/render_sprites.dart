@@ -286,17 +286,27 @@ class RenderOrderGrid extends RenderOrder {
   }
 
   void recalculateMaxRow() {
-    final worldY = getTileWorldY(gridRow, gridColumn);
-    maxRow = convertWorldToRow(engine.screen.right + tileSize, worldY, 0);
+    maxRow = convertWorldToRow(
+        screenRight,
+        getTileWorldY(gridRow, gridColumn),
+        0,
+    );
+
+    if (maxRow > gridTotalRows) {
+      maxRow = gridTotalRows;
+    }
   }
 
   void nextGridNode(){
     gridRow++;
     gridColumn--;
 
-    if (gridColumn < 0 || gridRow >= gridTotalRows || gridRow >= maxRow) {
+    if (gridColumn < 0 || gridRow >= maxRow) {
       final worldY = getTileWorldY(gridRow, gridColumn);
       maxRow = convertWorldToRow(screenRight, worldY, 0);
+      if (maxRow > gridTotalRows) {
+        maxRow = gridTotalRows;
+      }
       shiftIndexDown();
       var screenLeftColumn = convertWorldToColumn(screenLeft, worldY, 0);
       if (screenLeftColumn >= gridTotalColumns) {
