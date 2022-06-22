@@ -177,6 +177,9 @@ class RenderOrderGrid extends RenderOrder {
   var playerImperceptible = false;
   var gridZGreaterThanPlayerZ = false;
 
+  var screenRight = engine.screen.right + tileSize;
+  var screenLeft = engine.screen.left - tileSize;
+
   @override
   void renderFunction() {
     if (playerImperceptible) {
@@ -243,9 +246,10 @@ class RenderOrderGrid extends RenderOrder {
     gridZGreaterThanPlayerZ = false;
     playerImperceptible = !gridIsPerceptible(playerZ, playerRow, playerColumn);
 
-    final screenLeft = engine.screen.left;
     final screenBottom = engine.screen.bottom + (gridTotalZ * tileHeight);
     final screenTop = engine.screen.top;
+    screenRight = engine.screen.right + tileSize;
+    screenLeft = engine.screen.left - tileSize;
     final screenBottomColumn = convertWorldToColumn(screenLeft, screenBottom, 0);
     final screenBottomRow = convertWorldToRow(screenLeft, screenBottom, 0);
     final screenBottomTotal = screenBottomRow + screenBottomColumn;
@@ -292,9 +296,9 @@ class RenderOrderGrid extends RenderOrder {
 
     if (gridColumn < 0 || gridRow >= gridTotalRows || gridRow >= maxRow) {
       final worldY = getTileWorldY(gridRow, gridColumn);
-      maxRow = convertWorldToRow(engine.screen.right + tileSize, worldY, 0);
+      maxRow = convertWorldToRow(screenRight, worldY, 0);
       shiftIndexDown();
-      var screenLeftColumn = convertWorldToColumn(engine.screen.left - tileSize, worldY, 0);
+      var screenLeftColumn = convertWorldToColumn(screenLeft, worldY, 0);
       if (screenLeftColumn >= gridTotalColumns) {
         screenLeftColumn = gridTotalColumnsMinusOne;
       }
