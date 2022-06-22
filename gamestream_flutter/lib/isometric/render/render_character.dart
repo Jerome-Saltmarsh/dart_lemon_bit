@@ -1,6 +1,7 @@
 
 import 'package:bleed_common/armour_type.dart';
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/color_pitch_black.dart';
 
 import 'package:lemon_engine/render.dart';
 
@@ -118,6 +119,7 @@ void _renderCharacterPart(Character character, int layer) {
       scale: 0.75,
       anchorX: 0.5,
       anchorY: 0.75,
+      color: colorShades[character.shade],
   );
 }
 

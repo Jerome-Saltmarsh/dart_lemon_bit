@@ -36,6 +36,7 @@ dependencies:
   circular_countdown_timer: ^0.2.1
   bleed_common:
     path: C:\Users\Jerome\github\bleed\bleed-common
+  flutter_colorpicker: ^1.0.3
 
 dev_dependencies:
   test: ^1.16.0
