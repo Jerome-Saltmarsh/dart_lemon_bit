@@ -1,5 +1,6 @@
 
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:lemon_engine/render.dart';
 
@@ -8,21 +9,21 @@ import 'src_utils.dart';
 
 void renderZombie(Character character) {
   final shade = character.shade;
-  if (shade > Shade.Dark) return;
   if (shade < Shade.Dark) renderCharacterHealthBar(character);
   render(
       dstX: character.renderX,
       dstY: character.renderY,
-      srcX: _getZombieSrcX(character, shade),
-      srcY: 789.0 + (shade * 64.0),
+      srcX: _getZombieSrcX(character),
+      srcY: 789.0,
       srcWidth: 64,
       srcHeight: 64,
       anchorY: 0.66,
       scale: 0.7,
+      color: colorShades[shade],
   );
 }
 
-double _getZombieSrcX(Character character, int shade) {
+double _getZombieSrcX(Character character) {
   const framesPerDirection = 8;
   switch (character.state) {
     case CharacterState.Running:

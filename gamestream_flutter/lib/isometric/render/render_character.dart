@@ -109,6 +109,7 @@ void _renderCharacterPartLegs(Character character) {
 }
 
 void _renderCharacterPart(Character character, int layer) {
+
   render(
       dstX: character.renderX,
       dstY: character.renderY,

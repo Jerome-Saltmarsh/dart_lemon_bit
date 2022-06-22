@@ -307,6 +307,8 @@ class RenderOrderGrid extends RenderOrder {
         plain = grid[gridZ];
       }
     }
+    assert(gridRow >= 0);
+    assert(gridColumn >= 0);
     gridType = plain[gridRow][gridColumn];
   }
 

@@ -188,13 +188,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_colorpicker:
-    dependency: "direct main"
-    description:
-      name: flutter_colorpicker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.3"
   flutter_facebook_auth:
     dependency: "direct main"
     description:
@@ -339,7 +332,7 @@ packages:
       path: "C:\\Users\\Jerome\\github\\dart-lemon-engine"
       relative: false
     source: path
-    version: "0.3.16"
+    version: "0.3.17"
   lemon_math:
     dependency: transitive
     description:

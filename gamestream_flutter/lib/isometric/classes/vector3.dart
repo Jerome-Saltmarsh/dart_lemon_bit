@@ -1,4 +1,5 @@
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:lemon_math/library.dart';
 
@@ -10,10 +11,12 @@ class Vector3 with Position {
   int get indexColumn => y ~/ tileSize;
   double get renderOrder => x + y;
   int get tile => grid[indexZ][indexRow][indexColumn];
-  int get shade => gridLightDynamic[indexZ][indexRow][indexColumn];
+  int get shade => gridLightDynamic[indexZ > 0 ? indexZ - 1 : 0][indexRow][indexColumn];
+
 
   double get renderX => (x - y) * 0.5;
   double get renderY => ((y + x) * 0.5) - z;
+  int get renderColor => colorShades[shade];
 
   bool get outOfBounds {
     return z < 0 || x < 0 || x > gridRowLength || y < 0 || y > gridColumnLength;
