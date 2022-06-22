@@ -25,12 +25,13 @@ var gridColumnLength = 0.0;
 
 int get gridVolume => gridTotalZ * gridTotalRows * gridTotalColumns;
 
-void gridEmitDynamic(int z, int row, int column){
+void gridEmitDynamic(int z, int row, int column, {required int maxBrightness}){
   _applyEmission(
       map: gridLightDynamic,
       zIndex: z,
       rowIndex: row,
-      columnIndex: column
+      columnIndex: column,
+      maxBrightness: maxBrightness
   );
 }
 
@@ -190,7 +191,8 @@ void _applyBakeMapEmissions() {
           map: gridLightBake,
           zIndex: zIndex,
           rowIndex: rowIndex,
-          columnIndex: columnIndex
+          columnIndex: columnIndex,
+          maxBrightness: Shade.Very_Bright,
         );
       }
     }
@@ -201,7 +203,8 @@ void _applyEmission({
   required List<List<List<int>>> map,
   required int zIndex,
   required int rowIndex,
-  required int columnIndex
+  required int columnIndex,
+  required int maxBrightness,
 }){
   final radius = 5;
   final zMin = max(zIndex - radius, 0);
@@ -230,7 +233,7 @@ void _applyEmission({
             distance = distanceColumn;
           }
         }
-        final distanceValue = _convertDistanceToShade(distance);
+        final distanceValue = _convertDistanceToShade(distance, maxBrightness: maxBrightness);
         if (distanceValue >= currentValue) continue;
         map[z][row][column] = distanceValue;
       }
@@ -238,8 +241,8 @@ void _applyEmission({
   }
 }
 
-int _convertDistanceToShade(int distance){
-   return clamp(distance - 1, 0, 6);
+int _convertDistanceToShade(int distance, {int maxBrightness = Shade.Very_Bright}){
+   return clamp(distance - 1, maxBrightness, 6);
 }
 
 void applyEmissionFromEffects() {

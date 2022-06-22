@@ -55,7 +55,7 @@ class GameRender {
     gridRefreshDynamicLight();
 
     for (final player in players) {
-       gridEmitDynamic(player.indexZ, player.indexRow, player.indexColumn);
+       gridEmitDynamic(player.indexZ, player.indexRow, player.indexColumn, maxBrightness: Shade.Bright);
     }
 
     renderSprites();

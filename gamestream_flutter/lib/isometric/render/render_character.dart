@@ -1,4 +1,5 @@
 
+import 'package:bleed_common/armour_type.dart';
 import 'package:bleed_common/library.dart';
 
 import 'package:lemon_engine/render.dart';
@@ -180,14 +181,14 @@ double _getTemplateSrcX(Character character, {required double size}) {
 
 int _getSpriteIndexBody(Character character) {
   switch (character.armour) {
-    case SlotType.Empty:
+    case ArmourType.shirtCyan:
       return _SpriteLayer.Body_Cyan;
-    case SlotType.Body_Blue:
+    case ArmourType.shirtRed:
       return _SpriteLayer.Body_Blue;
-    case SlotType.Armour_Padded:
-      return _SpriteLayer.Body_Blue;
-    case SlotType.Magic_Robes:
-      return _SpriteLayer.Body_Blue;
+    case ArmourType.rogueHood:
+      return _SpriteLayer.Body_Swat;
+    case ArmourType.wizardsRobes:
+      return _SpriteLayer.Body_Cyan;
     default:
       throw Exception("cannot render body ${character.armour}");
   }
