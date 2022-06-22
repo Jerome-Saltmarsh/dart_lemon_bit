@@ -4,11 +4,9 @@ import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
-import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_particle_emissions.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_player_emissions.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
-import 'package:gamestream_flutter/isometric/lighting/apply_vector_emission.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
@@ -190,12 +188,14 @@ class RenderOrderGrid extends RenderOrder {
         const radius = 7;
         if (renderRowDistance < radius && renderColumnDistance < radius){
           if (gridZ > playerZ + 2) return;
+          final renderRowMatch = renderRow == playerRenderRow;
+          final renderColumnMatch = renderColumn == playerRenderColumn;
           if (
-           (renderRow == playerRenderRow && renderColumn == playerRenderColumn) ||
-           (renderRow == playerRenderRow && renderColumn == playerRenderColumn - 1) ||
-           (renderRow == playerRenderRow && renderColumn == playerRenderColumn + 1) ||
-           (renderRow == playerRenderRow - 1 && renderColumn == playerRenderColumn) ||
-           (renderRow == playerRenderRow + 1 && renderColumn == playerRenderColumn) ||
+           (renderRowMatch && renderColumnMatch) ||
+           (renderRowMatch && renderColumn == playerRenderColumn - 1) ||
+           (renderRowMatch && renderColumn == playerRenderColumn + 1) ||
+           (renderRow == playerRenderRow - 1 && renderColumnMatch) ||
+           (renderRow == playerRenderRow + 1 && renderColumnMatch) ||
            (renderRow == playerRenderRow + 1 && renderColumn == playerRenderColumn + 1) ||
            (renderRow == playerRenderRow - 1 && renderColumn == playerRenderColumn - 1)
           ){
@@ -243,14 +243,14 @@ class RenderOrderGrid extends RenderOrder {
     gridZGreaterThanPlayerZ = false;
     playerImperceptible = !gridIsPerceptible(playerZ, playerRow, playerColumn);
 
-    final left = engine.screen.left;
-    final bottom = engine.screen.bottom + (gridTotalZ * tileHeight);
-    final top = engine.screen.top;
-    final screenBottomColumn = convertWorldToColumn(left, bottom, 0);
-    final screenBottomRow = convertWorldToRow(left, bottom, 0);
+    final screenLeft = engine.screen.left;
+    final screenBottom = engine.screen.bottom + (gridTotalZ * tileHeight);
+    final screenTop = engine.screen.top;
+    final screenBottomColumn = convertWorldToColumn(screenLeft, screenBottom, 0);
+    final screenBottomRow = convertWorldToRow(screenLeft, screenBottom, 0);
     final screenBottomTotal = screenBottomRow + screenBottomColumn;
-    final screenTopColumn = convertWorldToColumn(left, top, 0);
-    final screenTopRow = convertWorldToRow(left, top, 0);
+    final screenTopColumn = convertWorldToColumn(screenLeft, screenTop, 0);
+    final screenTopRow = convertWorldToRow(screenLeft, screenTop, 0);
     minColumnRow = max(screenTopRow + screenTopColumn, 0);
     maxColumnRow = min(gridTotalRows + gridTotalColumns, screenBottomTotal);
 
@@ -322,13 +322,6 @@ class RenderOrderGrid extends RenderOrder {
     gridType = plain[gridRow][gridColumn];
   }
 
-  void validate(){
-    assert(gridRow < gridTotalRows);
-    assert(gridColumn < gridTotalColumns);
-    assert(gridRow >= 0);
-    assert(gridColumn >= 0);
-  }
-
   void shiftIndexDown(){
     gridColumn = gridRow + gridColumn + 1;
     gridRow = 0;
@@ -337,8 +330,6 @@ class RenderOrderGrid extends RenderOrder {
     gridColumn = gridTotalColumnsMinusOne;
   }
 }
-
-
 
 abstract class RenderOrder {
   var _index = 0;
@@ -358,8 +349,6 @@ abstract class RenderOrder {
       updateFunction();
     }
   }
-
-  // double get renderY => ((order) * tileSizeHalf) - (orderZ * tileHeight);
 
   @override
   String toString(){
