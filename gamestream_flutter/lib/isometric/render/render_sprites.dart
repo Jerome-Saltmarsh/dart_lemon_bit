@@ -250,21 +250,29 @@ class RenderOrderGrid extends RenderOrder {
     final screenTop = engine.screen.top;
     screenRight = engine.screen.right + tileSize;
     screenLeft = engine.screen.left - tileSize;
-    final screenBottomColumn = convertWorldToColumn(screenLeft, screenBottom, 0);
-    final screenBottomRow = convertWorldToRow(screenLeft, screenBottom, 0);
-    final screenBottomTotal = screenBottomRow + screenBottomColumn;
-    final screenTopColumn = convertWorldToColumn(screenLeft, screenTop, 0);
-    final screenTopRow = convertWorldToRow(screenLeft, screenTop, 0);
-    minColumnRow = max(screenTopRow + screenTopColumn, 0);
-    maxColumnRow = min(gridTotalRows + gridTotalColumns, screenBottomTotal);
+    final screenBottomLeftColumn = convertWorldToColumn(screenLeft, screenBottom, 0);
+    final screenBottomLeftRow = convertWorldToRow(screenLeft, screenBottom, 0);
+    final screenBottomLeftTotal = screenBottomLeftRow + screenBottomLeftColumn;
+    final screenTopLeftColumn = convertWorldToColumn(screenLeft, screenTop, 0);
+    final screenTopLeftRow = convertWorldToRow(screenLeft, screenTop, 0);
+    minColumnRow = max(screenTopLeftRow + screenTopLeftColumn, 0);
+    maxColumnRow = min(gridTotalRows + gridTotalColumns, screenBottomLeftTotal);
 
     if (minColumnRow < gridTotalColumnsMinusOne){
       gridRow = 0;
       gridColumn = minColumnRow;
     } else {
-      gridRow = gridColumn - gridTotalColumnsMinusOne;
-      gridColumn = gridTotalColumnsMinusOne;
+      gridRow = screenTopLeftRow;
+      gridColumn = screenTopLeftColumn;
+      if (gridColumn >= gridTotalColumns) {
+        gridRow = gridColumn - gridTotalColumnsMinusOne;
+        gridColumn = gridTotalColumnsMinusOne;
+      }
     }
+    assert(gridRow >= 0);
+    assert(gridColumn >= 0);
+    assert(gridRow < gridTotalColumns);
+    assert(gridColumn < gridTotalColumns);
     recalculateMaxRow();
     refreshDynamicLightGrid();
 
@@ -307,8 +315,10 @@ class RenderOrderGrid extends RenderOrder {
       var screenLeftColumn = convertWorldToColumn(screenLeft, worldY, 0);
       if (screenLeftColumn > 0 && screenLeftColumn < gridColumn) {
         final amount = gridColumn - screenLeftColumn;
+        assert (amount > 0);
         gridRow += amount;
         gridColumn -= amount;
+        assert (gridRow >= 0);
       }
       if (
           gridColumn >= maxColumnRow - gridRow ||
@@ -324,11 +334,15 @@ class RenderOrderGrid extends RenderOrder {
         plain = grid[gridZ];
       }
     }
+    if (gridRow < 0){
+      print("gridRow: $gridRow, gridColumn: $gridColumn");
+    }
     assert (gridRow >= 0);
     assert (gridColumn >= 0);
     assert (gridZ < gridTotalZ);
     gridType = plain[gridRow][gridColumn];
   }
+
 
   void shiftIndexDown(){
     gridColumn = gridRow + gridColumn + 1;
