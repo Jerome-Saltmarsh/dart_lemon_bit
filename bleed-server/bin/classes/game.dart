@@ -1203,9 +1203,6 @@ extension GameFunctions on Game {
 
   /// GameEventType
   void dispatchV2(int type, Position3 position, {double angle = 0}) {
-    if (type == GameEventType.Material_Struck_Flesh){
-      print("dispatchV2 angle: $angle");
-    }
     dispatch(type, position.x, position.y, position.z, angle);
   }
 

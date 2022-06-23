@@ -30,4 +30,9 @@ class GameFrontline extends Game {
 
   @override
   bool get full => false;
+
+  @override
+  void onPlayerDeath(Player player) {
+    revive(player);
+  }
 }
