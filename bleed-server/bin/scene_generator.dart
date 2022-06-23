@@ -3,7 +3,7 @@ import 'package:fast_noise/fast_noise.dart';
 import 'package:lemon_math/library.dart';
 
 import 'classes/game_object.dart';
-import 'classes/Scene.dart';
+import 'classes/scene.dart';
 import 'common/library.dart';
 import 'enums.dart';
 

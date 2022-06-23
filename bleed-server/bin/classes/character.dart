@@ -4,7 +4,7 @@ import '../common/library.dart';
 import '../functions/withinRadius.dart';
 import 'collider.dart';
 import 'game.dart';
-import 'Position3.dart';
+import 'position3.dart';
 import 'card_abilities.dart';
 import 'components.dart';
 

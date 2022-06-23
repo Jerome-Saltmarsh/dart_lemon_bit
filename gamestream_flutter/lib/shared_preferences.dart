@@ -32,7 +32,6 @@ class _Storage {
   }
 
   Authentication recallAuthorization() {
-    print("recallAuthorization()");
     final userId = get<String>(_keys.userId);
     final email = get<String>(_keys.userEmail);
     final displayName = get<String>(_keys.userName);
@@ -52,8 +51,6 @@ class _Storage {
   }
 
   void put(String key, dynamic value){
-    print("storage.put({key: '$key', value: '$value'})");
-
     if (key.isEmpty) throw Exception("key is empty");
 
     if (value == null){

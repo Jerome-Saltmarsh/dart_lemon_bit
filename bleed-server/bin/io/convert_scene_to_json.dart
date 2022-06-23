@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:typedef/json.dart';
 
-import '../classes/Scene.dart';
+import '../classes/scene.dart';
 import '../classes/grid_node.dart';
 import 'convert_enemy_spawn_to_json.dart';
 

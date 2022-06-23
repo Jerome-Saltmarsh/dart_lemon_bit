@@ -1,8 +1,8 @@
 
 
 import '../classes/game.dart';
-import '../classes/Player.dart';
-import '../classes/Scene.dart';
+import '../classes/player.dart';
+import '../classes/scene.dart';
 import '../common/weapon_type.dart';
 
 class GameFrontline extends Game {
@@ -14,9 +14,7 @@ class GameFrontline extends Game {
   );
 
   @override
-  int getTime() {
-    return time;
-  }
+  int getTime() => time;
 
   @override
   Player spawnPlayer() {

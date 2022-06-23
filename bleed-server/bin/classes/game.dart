@@ -10,19 +10,19 @@ import '../functions/withinRadius.dart';
 import '../maths.dart';
 import '../physics.dart';
 import 'ai.dart';
-import 'Position3.dart';
+import 'position3.dart';
 import 'card_abilities.dart';
 import 'character.dart';
 import 'collectable.dart';
 import 'collider.dart';
 import 'game_object.dart';
-import 'InteractableNpc.dart';
-import 'Item.dart';
-import 'Player.dart';
-import 'Projectile.dart';
-import 'Scene.dart';
-import 'SpawnPoint.dart';
-import 'TileNode.dart';
+import 'interactable_npc.dart';
+import 'item.dart';
+import 'player.dart';
+import 'projectile.dart';
+import 'scene.dart';
+import 'spawn_point.dart';
+import 'tile_node.dart';
 import 'components.dart';
 
 abstract class Game {

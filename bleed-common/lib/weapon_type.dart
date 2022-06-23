@@ -8,9 +8,21 @@ class WeaponType {
   static const Hammer = 6;
   static const Axe = 7;
   static const Pickaxe = 8;
-  
-  static String getName(int type){
-    return const <int, String> {
+
+  static const values = [
+    Unarmed,
+    Sword,
+    Bow,
+    Staff,
+    Shotgun,
+    Handgun,
+    Hammer,
+    Axe,
+    Pickaxe,
+  ];
+
+  static String getName(int type) {
+    return const <int, String>{
       Unarmed: "Unarmed",
       Bow: "Bow",
       Sword: "Sword",
@@ -24,7 +36,7 @@ class WeaponType {
   }
 
   static int getDamage(int type) {
-    return const <int, int> {
+    return const <int, int>{
       Unarmed: 1,
       Bow: 1,
       Sword: 1,
@@ -34,7 +46,7 @@ class WeaponType {
   }
 
   static double getRange(int type) {
-    return const <int, double> {
+    return const <int, double>{
       Unarmed: 20,
       Bow: 250,
       Sword: 30,
@@ -42,7 +54,7 @@ class WeaponType {
     } [type] ?? 0;
   }
 
-  static bool isMelee(int type){
+  static bool isMelee(int type) {
     return const <int>[Sword, Unarmed].contains(type);
   }
 }

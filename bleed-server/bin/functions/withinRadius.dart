@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:lemon_math/library.dart';
 
 import '../classes/collider.dart';
-import '../classes/Player.dart';
+import '../classes/player.dart';
 
 bool withinRadius(Position a, Position b, num radius){
   return withinDistance(a, b.x, b.y, radius);

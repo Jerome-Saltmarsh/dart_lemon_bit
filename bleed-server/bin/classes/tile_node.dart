@@ -1,8 +1,8 @@
-import 'package:lemon_math/library.dart';
+import 'package:lemon_math/library.dart' as tile_node;
 
-import 'Scene.dart';
+import 'scene.dart';
 
-class Node with Position {
+class Node with tile_node.Position {
   /// row - 1
   late Node up;
   /// row - 1, column + 1

@@ -1,6 +1,6 @@
 import 'package:lemon_math/library.dart';
 
-import 'Position3.dart';
+import 'position3.dart';
 import 'components.dart';
 
 class Collider extends Position3 with Radius {

@@ -11,7 +11,7 @@ Widget buildHudCharacterEditor(){
    return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-     children: [
+      children: [
        Row(children: _Tab.values.map((tab) => onPressed(
           callback: () => _tab.value = tab,
          child: Container(
@@ -29,6 +29,8 @@ Widget buildHudCharacterEditor(){
                return _buildTabWeapons();
              case _Tab.Armour:
                 return _buildTabArmour();
+             case _Tab.Head:
+                return _buildTabHead();
              default:
                 return text("not available");
           }
@@ -44,17 +46,22 @@ Widget _buildTabArmour(){
 }
 
 Widget _buildTabWeapons(){
+   return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+     children: [
+       Column(
+          children: WeaponType.values.map(_buildWeaponButton).toList(),
+       ),
+        width6,
+        text("Damage: 0"),
+     ],
+   );
+}
+
+Widget _buildTabHead(){
    return Column(
       children: [
-         _buildWeaponButton(WeaponType.Unarmed),
-         _buildWeaponButton(WeaponType.Hammer),
-         _buildWeaponButton(WeaponType.Handgun),
-         _buildWeaponButton(WeaponType.Pickaxe),
-         _buildWeaponButton(WeaponType.Axe),
-         _buildWeaponButton(WeaponType.Sword),
-         _buildWeaponButton(WeaponType.Staff),
-         _buildWeaponButton(WeaponType.Shotgun),
-         _buildWeaponButton(WeaponType.Bow),
+
       ],
    );
 }
@@ -90,8 +97,6 @@ Widget _buildSelectArmourType(int type){
       );
    });
 }
-
-
 
 enum _Tab {
    Weapon,

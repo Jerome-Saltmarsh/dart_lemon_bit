@@ -6,7 +6,7 @@
 // import 'package:typedef/json.dart';
 //
 // import '../classes/character.dart';
-// import '../classes/Scene.dart';
+// import '../classes/scene.dart';
 // import '../common/CharacterType.dart';
 // import '../common/SceneJson.dart';
 // import '../common/SlotType.dart';

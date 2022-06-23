@@ -4,7 +4,7 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'classes/Position3.dart';
+import 'classes/position3.dart';
 import 'classes/enemy_spawn.dart';
 import 'classes/library.dart';
 import 'common/grid_node_type.dart';

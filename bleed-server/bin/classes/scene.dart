@@ -5,7 +5,7 @@ import 'ai.dart';
 import 'character.dart';
 import 'enemy_spawn.dart';
 import 'game_object.dart';
-import 'TileNode.dart';
+import 'tile_node.dart';
 import 'grid_index.dart';
 import 'grid_node.dart';
 

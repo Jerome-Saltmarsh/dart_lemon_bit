@@ -3,7 +3,7 @@
 import 'package:lemon_math/library.dart';
 import '../common/StructureType.dart';
 import 'collider.dart';
-import 'Player.dart';
+import 'player.dart';
 import 'components.dart';
 
 class Structure extends Collider with Team, Health, Owner<Player?>, Type<int> {
