@@ -258,17 +258,26 @@ class RenderOrderGrid extends RenderOrder {
     minColumnRow = max(screenTopLeftRow + screenTopLeftColumn, 0);
     maxColumnRow = min(gridTotalRows + gridTotalColumns, screenBottomLeftTotal);
 
-    if (minColumnRow < gridTotalColumnsMinusOne){
+    gridRow = screenTopLeftRow;
+    gridColumn = screenTopLeftColumn;
+
+    if (gridRow < 0) {
+      gridColumn += gridRow;
       gridRow = 0;
-      gridColumn = minColumnRow;
-    } else {
-      gridRow = screenTopLeftRow;
-      gridColumn = screenTopLeftColumn;
-      if (gridColumn >= gridTotalColumns) {
-        gridRow = gridColumn - gridTotalColumnsMinusOne;
-        gridColumn = gridTotalColumnsMinusOne;
-      }
     }
+    if (gridColumn < 0){
+      gridRow += gridColumn;
+      gridColumn = 0;
+    }
+    if (gridColumn >= gridTotalColumns) {
+      gridRow = gridColumn - gridTotalColumnsMinusOne;
+      gridColumn = gridTotalColumnsMinusOne;
+    }
+    if (gridRow < 0 || gridColumn < 0){
+      gridRow = 0;
+      gridColumn = 0;
+    }
+
     assert(gridRow >= 0);
     assert(gridColumn >= 0);
     assert(gridRow < gridTotalColumns);
@@ -435,3 +444,4 @@ int getRenderRow(int row, int z){
 int getRenderColumn(int column, int z){
   return column - (z ~/ 2);
 }
+
