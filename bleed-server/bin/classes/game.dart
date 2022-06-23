@@ -1477,7 +1477,7 @@ extension GameFunctions on Game {
         }
          character.target = null;
       }
-      final zombieHit = physics.raycastHit(
+      final zombieHit = raycastHit(
           character: character,
           colliders: zombies,
           range: character.equippedRange);
@@ -1489,7 +1489,7 @@ extension GameFunctions on Game {
         );
         return;
       }
-      final dynamicObjectHit = physics.raycastHit(
+      final dynamicObjectHit = raycastHit(
           character: character,
           colliders: gameObjects,
           range: character.equippedRange

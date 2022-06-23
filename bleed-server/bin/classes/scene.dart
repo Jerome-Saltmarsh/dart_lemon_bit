@@ -37,6 +37,19 @@ class Scene {
     gridColumns = grid[0][0].length;
   }
 
+  bool findByType(int type, void Function(int z, int row, int column) callback) {
+     for (var z = 0; z < gridHeight; z++){
+        for (var row = 0; row < gridRows; row++){
+           for (var column = 0; column < gridColumns; column++){
+              if (grid[z][row][column] != type) continue;
+              callback(z, row, column);
+              return true;
+           }
+        }
+     }
+     return false;
+  }
+
   GridIndex? findGridByType(int type){
       for (var z = 0; z < gridHeight; z++) {
          for (var row = 0; row < gridRows; row++){
@@ -80,8 +93,6 @@ class Scene {
           type: type,
           x: 0,
           y: 0,
-          // x: getTilePositionX(node.row, node.column),
-          // y: getTilePositionY(node.row, node.column),
           health: health,
         )
     );

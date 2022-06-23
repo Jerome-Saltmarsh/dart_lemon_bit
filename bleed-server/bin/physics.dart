@@ -6,31 +6,27 @@ import 'classes/character.dart';
 import 'classes/collider.dart';
 import 'typedefs.dart';
 
-final physics = _Physics();
-
-class _Physics {
-  I? raycastHit<I extends Collider>({
-    required Character character,
-    required List<I> colliders,
-    required double range,
-    double angleRange = pi * 0.5,
-  }) {
-    double targetDistance = 99999999;
-    I? target;
-    for (var collider in colliders) {
-      if (!collider.collidable) continue;
-      final distance = character.getDistance(collider);
-      if (distance > range) continue;
-      final angle = character.getAngle(collider);
-      final angleDiff = calculateAngleDifference(angle, character.angle);
-      if (angleDiff > angleRange) continue;
-      if (distance < targetDistance) {
-        target = collider;
-        targetDistance = distance;
-      }
+I? raycastHit<I extends Collider>({
+  required Character character,
+  required List<I> colliders,
+  required double range,
+  double angleRange = pi * 0.5,
+}) {
+  double targetDistance = 99999999;
+  I? target;
+  for (var collider in colliders) {
+    if (!collider.collidable) continue;
+    final distance = character.getDistance(collider);
+    if (distance > range) continue;
+    final angle = character.getAngle(collider);
+    final angleDiff = calculateAngleDifference(angle, character.angle);
+    if (angleDiff > angleRange) continue;
+    if (distance < targetDistance) {
+      target = collider;
+      targetDistance = distance;
     }
-    return target;
   }
+  return target;
 }
 
 List<T> sphereCastAll<T extends Position>({

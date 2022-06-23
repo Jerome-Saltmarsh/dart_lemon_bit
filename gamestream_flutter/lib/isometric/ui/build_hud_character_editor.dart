@@ -1,10 +1,12 @@
 
 import 'package:bleed_common/armour_type.dart';
+import 'package:bleed_common/head_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/ui/build_container.dart';
 import 'package:lemon_watch/watch.dart';
 
 Widget buildHudCharacterEditor(){
@@ -60,10 +62,12 @@ Widget _buildTabWeapons(){
 
 Widget _buildTabHead(){
    return Column(
-      children: [
-
-      ],
+      children: HeadType.values.map(_buildButtonHead).toList(),
    );
+}
+
+Widget _buildButtonHead(int headType){
+   return container(child: text(HeadType.getName(headType)));
 }
 
 Widget _buildWeaponButton(int weapon){

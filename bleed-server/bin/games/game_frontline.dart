@@ -11,7 +11,10 @@ class GameFrontline extends Game {
 
   GameFrontline(Scene scene) : super(
     scene
-  );
+  ) {
+
+
+  }
 
   @override
   int getTime() => time;
