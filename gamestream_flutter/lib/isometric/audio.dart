@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
@@ -50,7 +51,7 @@ class _Audio {
   }
 
   void footstepGrass(double x, double y) {
-    _playPositioned('step-grass.mp3', x, y, volume: 0.15);
+    _playPositioned('step-grass.mp3', x, y, volume: 0.1);
   }
 
   void materialStruckRock(double x, double y){
@@ -184,6 +185,7 @@ class _Audio {
   }
 
   void footstep(double x, double y) {
+    print("footstep()");
     _playPositioned('footstep.mp3', x, y);
   }
 
@@ -420,7 +422,7 @@ AudioPlayer _getAudioPlayer() {
 }
 
 double _calculateVolume(double x, double y) {
-  final distance = distanceBetween(x, y, screenCenterWorldX, screenCenterWorldY);
+  final distance = distanceBetween(x, y, player.x, player.y);
   final v = 1.0 / ((distance * _audioDistanceFade) + 1);
   return v * v;
 }
