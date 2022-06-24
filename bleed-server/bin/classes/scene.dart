@@ -38,11 +38,13 @@ class Scene {
   }
 
   bool findByType(int type, void Function(int z, int row, int column) callback) {
-     for (var z = 0; z < gridHeight; z++){
-        for (var row = 0; row < gridRows; row++){
-           for (var column = 0; column < gridColumns; column++){
-              if (grid[z][row][column] != type) continue;
-              callback(z, row, column);
+     for (var zI = 0; zI < gridHeight; zI++){
+       final z = grid[zI];
+        for (var rowI = 0; rowI < gridRows; rowI++){
+          final row = z[rowI];
+           for (var columnI = 0; columnI < gridColumns; columnI++){
+              if (row[columnI].type != type) continue;
+              callback(zI, rowI, columnI);
               return true;
            }
         }

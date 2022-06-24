@@ -2,6 +2,7 @@
 
 import '../classes/library.dart';
 import '../common/armour_type.dart';
+import '../common/grid_node_type.dart';
 import '../common/head_type.dart';
 import '../common/pants_type.dart';
 import '../common/weapon_type.dart';
@@ -29,7 +30,12 @@ class GameFrontline extends Game {
     bell.equippedHead = HeadType.Blonde;
     bell.equippedArmour = ArmourType.shirtBlue;
     bell.equippedPants = PantsType.green;
-
+    scene.findByType(GridNodeType.Player_Spawn, (int z, int row, int column){
+       bell.indexZ = z;
+       bell.indexRow = row;
+       bell.indexColumn = column + 1;
+    });
+    // moveCharacterToSpawn(bell);
     npcs.add(bell);
   }
 
@@ -42,7 +48,7 @@ class GameFrontline extends Game {
         game: this,
         weapon: WeaponType.Shotgun,
     );
-    movePlayerToSpawn(player);
+    moveCharacterToSpawn(player);
     return player;
   }
 

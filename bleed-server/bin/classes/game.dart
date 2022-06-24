@@ -154,19 +154,20 @@ abstract class Game {
 
   }
 
-  void movePlayerToSpawn(Player player){
+  void moveCharacterToSpawn(Character character){
     final spawnPoint = scene.findGridByType(GridNodeType.Player_Spawn);
     if (spawnPoint == null) throw Exception("revive exception: No GridNodeType.Player_Spawn found");
-    player.x = spawnPoint.x;
-    player.y = spawnPoint.y;
-    player.z = spawnPoint.z;
+    print("spawnPoint: z: ${spawnPoint.plain}, row: ${spawnPoint.row}, column: ${spawnPoint.column}");
+    character.x = spawnPoint.x;
+    character.y = spawnPoint.y;
+    character.z = spawnPoint.z + tileHeight;
   }
 
   void revive(Player character) {
     character.state = CharacterState.Idle;
     character.health = character.maxHealth;
     character.collidable = true;
-    movePlayerToSpawn(character);
+    moveCharacterToSpawn(character);
   }
 
   /// In seconds
