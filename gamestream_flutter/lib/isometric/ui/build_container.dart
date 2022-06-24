@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 
-Widget container({required Widget child, Color? color, Function? onClicked}){
+Widget container({required Widget child, Color? color, Function? action}){
   final con = Container(
     padding: const EdgeInsets.only(left: 8),
     alignment: Alignment.centerLeft,
@@ -11,6 +11,6 @@ Widget container({required Widget child, Color? color, Function? onClicked}){
     color: color ?? Colors.grey,
     child: child,
   );
-  if (onClicked == null) return con;
-  return onPressed(child: con, callback: onClicked);
+  if (action == null) return con;
+  return onPressed(child: con, callback: action);
 }

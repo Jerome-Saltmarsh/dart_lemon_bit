@@ -9,6 +9,9 @@ import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/build_container.dart';
 import 'package:lemon_watch/watch.dart';
 
+const green = Colors.green;
+const grey = Colors.grey;
+
 Widget buildHudCharacterEditor(){
    return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -20,7 +23,7 @@ Widget buildHudCharacterEditor(){
              width: 150,
              height: 50,
              padding: const EdgeInsets.only(left: 6),
-             color: Colors.grey,
+             color: grey,
              alignment: Alignment.centerLeft,
              child: text(tab.name)),
        )).toList()),
@@ -67,9 +70,13 @@ Widget _buildTabHead(){
 }
 
 Widget _buildButtonHead(int headType){
-   return container(child: text(HeadType.getName(headType), onPressed: (){
-      sendClientRequestSetHeadType(headType);
-   }));
+   return watch(player.headType, (int playerHeadType){
+      return container(
+          child: text(HeadType.getName(headType)),
+          action: () => sendClientRequestSetHeadType(headType),
+          color: headType == playerHeadType ? green : grey,
+      );
+   });
 }
 
 Widget _buildWeaponButton(int weapon){
