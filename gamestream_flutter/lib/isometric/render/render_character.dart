@@ -233,7 +233,6 @@ enum SpriteLayer {
   Shotgun,
   Handgun,
   Bow_Wooden,
-  Template,
   Shirt_Cyan,
   Shirt_Blue,
   Swat_Vest,
