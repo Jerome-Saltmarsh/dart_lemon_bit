@@ -405,21 +405,28 @@ class ServerResponseReader with ByteReader {
   void readNpcs() {
     totalNpcs = readInt();
     for (var i = 0; i < totalNpcs; i++){
-      _readNpc(npcs[i]);
+      readNpc(npcs[i]);
     }
   }
 
-  void _readNpc(Character character){
-    _readCharacter(character);
-    character.weapon = readByte();
+  void readNpc(Character character){
+    readCharacter(character);
+    readCharacterEquipment(character);
   }
 
-  void _readCharacter(Character character){
+  void readCharacter(Character character){
      _parseCharacterTeamDirectionState(character);
      character.x = readDouble();
      character.y = readDouble();
      character.z = readDouble();
      _parseCharacterFrameHealth(character, readByte());
+  }
+
+  void readCharacterEquipment(Character character){
+    character.weapon = readByte();
+    character.armour = readByte();
+    character.helm = readByte();
+    character.pants = readByte();
   }
 
   void _parseCharacterFrameHealth(Character character, int byte){

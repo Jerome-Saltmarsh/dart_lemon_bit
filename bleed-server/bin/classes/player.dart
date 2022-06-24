@@ -616,10 +616,7 @@ extension PlayerProperties on Player {
   void writePlayer(Player player) {
     writeCharacter(player, player);
     writePercentage(player.magicPercentage);
-    writeByte(player.equippedWeapon);
-    writeByte(player.equippedArmour); // armour
-    writeByte(player.equippedHead); // helm
-    writeByte(player.equippedPants); // helm
+    writeCharacterEquipment(player);
     writeString(player.name);
     writeInt(player.score);
   }
@@ -636,7 +633,7 @@ extension PlayerProperties on Player {
   void writeNpc(Player player, Character npc) {
     if (npc.dead) return;
     writeCharacter(player, npc);
-    writeByte(npc.equippedWeapon);
+    writeCharacterEquipment(npc);
   }
 
   void writeCharacter(Player player, Character character) {
@@ -644,6 +641,13 @@ extension PlayerProperties on Player {
     writePosition(character);
     writeInt(character.z);
     writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);
+  }
+
+  void writeCharacterEquipment(Character character) {
+    writeByte(character.equippedWeapon);
+    writeByte(character.equippedArmour); // armour
+    writeByte(character.equippedHead); // helm
+    writeByte(character.equippedPants); // helm
   }
 
   void writePercentage(double value){

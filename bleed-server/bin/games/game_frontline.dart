@@ -1,6 +1,9 @@
 
 
 import '../classes/library.dart';
+import '../common/armour_type.dart';
+import '../common/head_type.dart';
+import '../common/pants_type.dart';
 import '../common/weapon_type.dart';
 
 class GameFrontline extends Game {
@@ -11,7 +14,7 @@ class GameFrontline extends Game {
     scene
   ) {
 
-    npcs.add(InteractableNpc(
+    final bell = InteractableNpc(
       name: "Bell",
       onInteractedWith: (player) {
 
@@ -21,7 +24,13 @@ class GameFrontline extends Game {
       weapon: 0,
       team: 1,
       health: 10,
-    ));
+    );
+
+    bell.equippedHead = HeadType.Blonde;
+    bell.equippedArmour = ArmourType.shirtBlue;
+    bell.equippedPants = PantsType.green;
+
+    npcs.add(bell);
   }
 
   @override
