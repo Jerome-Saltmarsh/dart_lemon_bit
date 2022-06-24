@@ -3,6 +3,7 @@ import 'package:lemon_math/library.dart';
 import '../common/armour_type.dart';
 import '../common/head_type.dart';
 import '../common/library.dart';
+import '../common/pants_type.dart';
 import '../functions/withinRadius.dart';
 import 'collider.dart';
 import 'game.dart';
@@ -28,6 +29,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
   var equippedWeapon = WeaponType.Unarmed;
   var equippedArmour = ArmourType.shirtCyan;
   var equippedHead = HeadType.None;
+  var equippedPants = PantsType.brown;
 
   int get direction => convertAngleToDirection(angle);
 

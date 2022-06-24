@@ -367,6 +367,7 @@ extension PlayerProperties on Player {
     writeByte(equippedWeapon); // 3
     writeByte(equippedArmour); // armour
     writeByte(equippedHead); // helm
+    writeByte(equippedPants); // helm
     writeBool(alive); // 1
     writeBool(storeVisible); // 1
     writeInt(wood);
@@ -617,6 +618,7 @@ extension PlayerProperties on Player {
     writePercentage(player.magicPercentage);
     writeByte(player.equippedWeapon);
     writeByte(player.equippedArmour); // armour
+    writeByte(player.equippedHead); // helm
     writeByte(player.equippedHead); // helm
     writeString(player.name);
     writeInt(player.score);

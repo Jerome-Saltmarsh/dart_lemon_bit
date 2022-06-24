@@ -1,5 +1,7 @@
 import 'package:bleed_common/armour_type.dart';
+import 'package:bleed_common/head_type.dart';
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/pants_type.dart';
 import 'package:lemon_math/constants/pi_quarter.dart';
 
 import 'vector3.dart';
@@ -12,7 +14,8 @@ class Character extends Vector3 {
   int frame;
   var weapon = WeaponType.Unarmed;
   var armour = ArmourType.shirtCyan;
-  var helm = WeaponType.Unarmed;
+  var helm = HeadType.None;
+  var pants = PantsType.brown;
   String name;
   String text;
   bool allie = false;

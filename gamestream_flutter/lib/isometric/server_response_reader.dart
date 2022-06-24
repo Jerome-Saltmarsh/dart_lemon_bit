@@ -65,16 +65,16 @@ class ServerResponseReader with ByteReader {
       final response = readByte();
       switch (response){
         case ServerResponse.Zombies:
-          _parseZombies();
+          readZombies();
           break;
         case ServerResponse.Items:
           readerItems();
           break;
         case ServerResponse.Players:
-          _parsePlayers();
+          readPlayers();
           break;
         case ServerResponse.Npcs:
-          _parseNpcs();
+          readNpcs();
           break;
         case ServerResponse.Projectiles:
           readProjectiles();
@@ -252,6 +252,7 @@ class ServerResponseReader with ByteReader {
           player.weaponType.value = readByte();
           player.armourType.value = readByte();
           player.headType.value = readByte();
+          player.pantsType.value = readByte();
           player.alive.value = readBool();
           player.storeVisible.value = readBool();
           player.wood.value = readInt();
@@ -349,7 +350,7 @@ class ServerResponseReader with ByteReader {
     character.state = byte % 10;
   }
 
-  void _parseZombies() {
+  void readZombies() {
     totalZombies = 0;
     while (true) {
       final stateInt = readByte();
@@ -377,7 +378,7 @@ class ServerResponseReader with ByteReader {
     }
   }
 
-  void _parsePlayers() {
+  void readPlayers() {
     var total = 0;
     while (true) {
       final teamDirectionState = readByte();
@@ -392,6 +393,7 @@ class ServerResponseReader with ByteReader {
       character.weapon = readByte();
       character.armour = readByte();
       character.helm = readByte();
+      character.pants = readByte();
       character.name = readString();
       character.score = readInt();
       character.text = readString();
@@ -401,7 +403,7 @@ class ServerResponseReader with ByteReader {
     updateScoreText();
   }
 
-  void _parseNpcs() {
+  void readNpcs() {
     totalNpcs = readInt();
     final npcs = interactableNpcs;
     for (var i = 0; i < totalNpcs; i++){
