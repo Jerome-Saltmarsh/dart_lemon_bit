@@ -365,8 +365,8 @@ extension PlayerProperties on Player {
     writeInt(magic); // 2
     writeInt(maxMagic); // 2
     writeByte(equippedWeapon); // 3
-    writeByte(SlotType.Armour_Padded); // armour
-    writeByte(SlotType.Steel_Helmet); // helm
+    writeByte(equippedArmour); // armour
+    writeByte(equippedHead); // helm
     writeBool(alive); // 1
     writeBool(storeVisible); // 1
     writeInt(wood);

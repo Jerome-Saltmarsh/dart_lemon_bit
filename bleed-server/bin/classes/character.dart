@@ -1,5 +1,7 @@
 import 'package:lemon_math/library.dart';
 
+import '../common/armour_type.dart';
+import '../common/head_type.dart';
 import '../common/library.dart';
 import '../functions/withinRadius.dart';
 import 'collider.dart';
@@ -24,8 +26,8 @@ class Character extends Collider with Team, Health, Velocity, Material {
   var invincible = false;
   final techTree = TechTree();
   var equippedWeapon = WeaponType.Unarmed;
-  var equippedArmour = SlotType.Empty;
-  var equippedHead = SlotType.Empty;
+  var equippedArmour = ArmourType.shirtCyan;
+  var equippedHead = HeadType.None;
 
   int get direction => convertAngleToDirection(angle);
 

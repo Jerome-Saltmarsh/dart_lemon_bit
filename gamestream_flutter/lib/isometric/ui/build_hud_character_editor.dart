@@ -71,6 +71,7 @@ Widget _buildTabHead(){
 
 Widget _buildButtonHead(int headType) {
    return watch(player.headType, (int playerHeadType){
+     print("headType: $headType, playerHeadType: $playerHeadType");
       return container(
           child: text(HeadType.getName(headType)),
           action: () => sendClientRequestSetHeadType(headType),
