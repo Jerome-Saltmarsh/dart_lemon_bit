@@ -20,7 +20,8 @@ void renderParticle(Particle value) {
           srcX: 89,
           srcY: 25,
           srcWidth: 8,
-          srcHeight: 8
+          srcHeight: 8,
+          color: value.renderColor
       );
     case ParticleType.Orb_Shard:
       return renderOrbShard(
@@ -40,9 +41,10 @@ void renderParticle(Particle value) {
           dstX: value.renderX,
           dstY: value.renderY,
           srcX: 3004.0 + (64 * convertAngleToDirection(value.rotation)),
-          srcY: value.shade * 64,
+          srcY: 0,
           srcWidth: 64,
-          srcHeight: 64
+          srcHeight: 64,
+          color: value.renderColor
       );
 
     case ParticleType.Zombie_Head:
@@ -50,9 +52,10 @@ void renderParticle(Particle value) {
           dstX: value.renderX,
           dstY: value.renderY,
           srcX: 4030.0 + (64 * convertAngleToDirection(value.rotation)),
-          srcY: value.shade * 64,
+          srcY: 0,
           srcWidth: 64,
-          srcHeight: 64
+          srcHeight: 64,
+          color: value.renderColor
       );
 
     case ParticleType.Leg:
@@ -60,9 +63,10 @@ void renderParticle(Particle value) {
           dstX: value.renderX,
           dstY: value.renderY,
           srcX: 2491.0 + (64 * convertAngleToDirection(value.rotation)),
-          srcY: value.shade * 64,
+          srcY: 0,
           srcWidth: 64,
-          srcHeight: 64
+          srcHeight: 64,
+          color: value.renderColor
       );
 
     default:
