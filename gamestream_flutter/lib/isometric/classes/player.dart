@@ -24,7 +24,7 @@ class Player extends Vector3 {
   final weaponType = Watch(WeaponType.Unarmed);
   final armourType = Watch(ArmourType.tunicPadded);
   final headType = Watch(HeadType.None);
-  final pantsType = Watch(PantsType.brown);
+  final pantsType = Watch(PantsType.white);
   final equippedLevel = Watch(0);
   final characterType = Watch(CharacterType.Human);
   final health = Watch(0.0);

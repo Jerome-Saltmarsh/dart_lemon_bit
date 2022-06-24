@@ -29,7 +29,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
   var equippedWeapon = WeaponType.Unarmed;
   var equippedArmour = ArmourType.shirtCyan;
   var equippedHead = HeadType.None;
-  var equippedPants = PantsType.brown;
+  var equippedPants = PantsType.white;
 
   int get direction => convertAngleToDirection(angle);
 

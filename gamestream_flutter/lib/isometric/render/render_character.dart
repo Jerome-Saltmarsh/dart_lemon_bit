@@ -54,10 +54,11 @@ void renderCharacter(Character character) {
 }
 
 void _renderCharacterTemplate(Character character) {
+  final color = colorShades[character.shade];
   _renderCharacterShadow(character);
-  _renderCharacterPartLegs(character);
-  _renderCharacterPartBody(character);
-  _renderCharacterPartHead(character);
+  _renderCharacterPartLegs(character, color);
+  _renderCharacterPartBody(character, color);
+  _renderCharacterPartHead(character, color);
 }
 
 void _renderCharacterTemplateWeapon(Character character) {
@@ -76,7 +77,8 @@ void _renderCharacterTemplateWeapon(Character character) {
   if (renderRow == -1) {
     _renderCharacterPart(
         character,
-        _mapWeaponTypeToSpriteLayer(character.weapon)
+        _mapWeaponTypeToSpriteLayer(character.weapon),
+        colorShades[character.shade]
     );
     return;
   }
@@ -93,22 +95,22 @@ void _renderCharacterTemplateWeapon(Character character) {
 }
 
 void _renderCharacterShadow(Character character) {
-  _renderCharacterPart(character, SpriteLayer.Shadow);
+  _renderCharacterPart(character, SpriteLayer.Shadow, 0);
 }
 
-void _renderCharacterPartHead(Character character) {
-  _renderCharacterPart(character, _mapHeadTypeToSpriteLayer(character.helm));
+void _renderCharacterPartHead(Character character, int color) {
+  _renderCharacterPart(character, _mapHeadTypeToSpriteLayer(character.helm), color);
 }
 
-void _renderCharacterPartBody(Character character) {
-  _renderCharacterPart(character, _mapArmourTypeToSpriteLayer(character.armour));
+void _renderCharacterPartBody(Character character, int color) {
+  _renderCharacterPart(character, _mapArmourTypeToSpriteLayer(character.armour), color);
 }
 
-void _renderCharacterPartLegs(Character character) {
-  _renderCharacterPart(character, _mapLegTypeToSpriteLayer(character.pants));
+void _renderCharacterPartLegs(Character character, int color) {
+  _renderCharacterPart(character, _mapLegTypeToSpriteLayer(character.pants), color);
 }
 
-void _renderCharacterPart(Character character, SpriteLayer layer) {
+void _renderCharacterPart(Character character, SpriteLayer layer, int color) {
   render(
       dstX: character.renderX,
       dstY: character.renderY,
@@ -119,7 +121,7 @@ void _renderCharacterPart(Character character, SpriteLayer layer) {
       scale: 0.75,
       anchorX: 0.5,
       anchorY: 0.75,
-      color: colorShades[character.shade],
+      color: color,
   );
 }
 
@@ -187,6 +189,8 @@ SpriteLayer _mapLegTypeToSpriteLayer(int legType){
        return SpriteLayer.Pants_Brown;
      case PantsType.blue:
        return SpriteLayer.Pants_Blue;
+     case PantsType.white:
+       return SpriteLayer.Pants_White;
      default:
        return SpriteLayer.Pants_Blue;
    }
@@ -238,6 +242,7 @@ SpriteLayer _mapHeadTypeToSpriteLayer(int headType) {
 enum SpriteLayer {
   Shadow,
   Pants_Blue,
+  Pants_White,
   Pants_Brown,
   Pants_Swat,
   Staff_Wooden,

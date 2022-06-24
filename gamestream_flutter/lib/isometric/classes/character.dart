@@ -15,7 +15,7 @@ class Character extends Vector3 {
   var weapon = WeaponType.Unarmed;
   var armour = ArmourType.shirtCyan;
   var helm = HeadType.None;
-  var pants = PantsType.brown;
+  var pants = PantsType.white;
   String name;
   String text;
   bool allie = false;

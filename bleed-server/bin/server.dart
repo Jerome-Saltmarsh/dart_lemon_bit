@@ -442,6 +442,15 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.setStateChanging();
           break;
 
+        case ClientRequest.Set_Pants_Type:
+          if (player == null) return errorPlayerNotFound();
+          if (arguments.length < 2)  return errorArgsExpected(2, arguments);
+          final type = int.tryParse(arguments[1]);
+          if (type == null) return errorInvalidArg('invalid head type $type');
+          player.equippedPants = type;
+          player.setStateChanging();
+          break;
+
         case ClientRequest.Character_Save:
           final account = _account;
           if (player == null) return errorPlayerNotFound();

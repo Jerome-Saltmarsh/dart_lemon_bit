@@ -2,6 +2,7 @@
 import 'package:bleed_common/armour_type.dart';
 import 'package:bleed_common/head_type.dart';
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/pants_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
@@ -37,6 +38,8 @@ Widget buildHudCharacterEditor(){
                 return _buildTabArmour();
              case _Tab.Head:
                 return _buildTabHead();
+            case _Tab.Pants:
+                return _buildTabPants();
              default:
                 return text("not available");
           }
@@ -70,6 +73,12 @@ Widget _buildTabHead(){
    );
 }
 
+Widget _buildTabPants(){
+  return Column(
+    children: PantsType.values.map(_buildButtonPants).toList(),
+  );
+}
+
 Widget _buildButtonHead(int headType) {
    return watch(player.headType, (int playerHeadType){
      print("headType: $headType, playerHeadType: $playerHeadType");
@@ -79,6 +88,16 @@ Widget _buildButtonHead(int headType) {
           color: headType == playerHeadType ? green : grey,
       );
    });
+}
+
+Widget _buildButtonPants(int pantsType) {
+  return watch(player.pantsType, (int playerPantsType){
+    return container(
+      child: text(PantsType.getName(pantsType)),
+      action: () => sendClientRequestSetPantsType(pantsType),
+      color: pantsType == playerPantsType ? green : grey,
+    );
+  });
 }
 
 Widget _buildWeaponButton(int weapon){
@@ -117,4 +136,5 @@ enum _Tab {
    Weapon,
    Armour,
    Head,
+   Pants,
 }
