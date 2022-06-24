@@ -1,3 +1,5 @@
+import 'package:bleed_common/armour_type.dart';
+import 'package:bleed_common/head_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:lemon_watch/watch.dart';
@@ -18,9 +20,9 @@ class Player extends Vector3 {
   final abilityTarget = Vector2(0, 0);
   final storeVisible = Watch(false);
   final attackTarget = Vector2(0, 0);
-  final equippedWeapon = Watch(WeaponType.Unarmed);
-  final armour = Watch(TechType.Unarmed);
-  final helm = Watch(TechType.Unarmed);
+  final weaponType = Watch(WeaponType.Unarmed);
+  final armourType = Watch(ArmourType.tunicPadded);
+  final headType = Watch(HeadType.None);
   final equippedLevel = Watch(0);
   final characterType = Watch(CharacterType.Human);
   final health = Watch(0.0);

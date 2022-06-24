@@ -214,9 +214,9 @@ SpriteLayer _mapHeadTypeToSpriteLayer(int headType) {
       return SpriteLayer.Head_Plain;
     case HeadType.Steel_Helm:
       return SpriteLayer.Steel_Helm;
-    case SlotType.Magic_Hat:
+    case HeadType.Wizards_Hat:
       return SpriteLayer.Hat_Wizard;
-    case SlotType.Rogue_Hood:
+    case HeadType.Rogues_Hood:
       return SpriteLayer.Rogues_Hood;
     default:
       throw Exception("cannot render head ${headType}");

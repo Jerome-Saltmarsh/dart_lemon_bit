@@ -102,6 +102,10 @@ void sendClientRequestSetArmour(int type){
   sendClientRequest(ClientRequest.Set_Armour, type);
 }
 
+void sendClientRequestSetHeadType(int type){
+  sendClientRequest(ClientRequest.Set_Head_Type, type);
+}
+
 void sendClientRequest(ClientRequest value, [dynamic message]){
   if (message != null){
     return webSocket.send('${value.index} $message');

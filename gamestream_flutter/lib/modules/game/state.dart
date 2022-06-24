@@ -22,7 +22,7 @@ class GameState {
   var panningCamera = false;
 
   GameState(){
-    player.equippedWeapon.onChanged((equipped) {
+    player.weaponType.onChanged((equipped) {
        canBuild.value = equipped == TechType.Hammer;
     });
   }

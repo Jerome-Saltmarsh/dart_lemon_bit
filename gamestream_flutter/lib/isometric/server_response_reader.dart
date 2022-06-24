@@ -308,9 +308,9 @@ class ServerResponseReader with ByteReader {
           player.maxHealth = readDouble();
           player.magic.value = readDouble();
           player.maxMagic.value = readDouble();
-          player.equippedWeapon.value = readByte();
-          player.armour.value = readByte();
-          player.helm.value = readByte();
+          player.weaponType.value = readByte();
+          player.armourType.value = readByte();
+          player.headType.value = readByte();
           player.alive.value = readBool();
           player.storeVisible.value = readBool();
           player.wood.value = readInt();

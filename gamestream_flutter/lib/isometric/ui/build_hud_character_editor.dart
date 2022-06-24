@@ -67,11 +67,13 @@ Widget _buildTabHead(){
 }
 
 Widget _buildButtonHead(int headType){
-   return container(child: text(HeadType.getName(headType)));
+   return container(child: text(HeadType.getName(headType), onPressed: (){
+      sendClientRequestSetHeadType(headType);
+   }));
 }
 
 Widget _buildWeaponButton(int weapon){
-   return watch(player.equippedWeapon, (int equipped){
+   return watch(player.weaponType, (int equipped){
       return onPressed(
          callback: () => sendClientRequestSetWeapon(weapon),
          child: Container(
@@ -87,7 +89,7 @@ Widget _buildWeaponButton(int weapon){
 }
 
 Widget _buildSelectArmourType(int type){
-   return watch(player.armour, (int equipped){
+   return watch(player.armourType, (int equipped){
       return onPressed(
          callback: () => sendClientRequestSetArmour(type),
          child: Container(

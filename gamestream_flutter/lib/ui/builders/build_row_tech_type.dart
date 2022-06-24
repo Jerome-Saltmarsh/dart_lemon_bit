@@ -25,7 +25,7 @@ Widget buildRowTechType(int type, Watch<int> levelWatch) {
 
     return Container(
       key: key,
-      child: WatchBuilder(player.equippedWeapon, (int equipped) {
+      child: WatchBuilder(player.weaponType, (int equipped) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -35,7 +35,7 @@ Widget buildRowTechType(int type, Watch<int> levelWatch) {
                 callback: unlocked ? () {
                   Server.equip(type);
                 } : null,
-                child: WatchBuilder(player.equippedWeapon, (int equipped) {
+                child: WatchBuilder(player.weaponType, (int equipped) {
                   return Container(
                     padding: padding6,
                     decoration: BoxDecoration(
