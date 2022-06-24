@@ -86,7 +86,7 @@ void _renderCharacterTemplateWeapon(Character character) {
       dstX: character.renderX,
       dstY: character.renderY,
       srcX: _getTemplateSrcX(character, size: 96),
-      srcY: 2159.0 + (renderRow * 96),
+      srcY: 2491.0 + (renderRow * 96),
       srcWidth: 96,
       srcHeight: 96,
       anchorX: 0.5,
@@ -191,6 +191,10 @@ SpriteLayer _mapLegTypeToSpriteLayer(int legType){
        return SpriteLayer.Pants_Blue;
      case PantsType.white:
        return SpriteLayer.Pants_White;
+     case PantsType.green:
+       return SpriteLayer.Pants_Green;
+     case PantsType.red:
+       return SpriteLayer.Pants_Red;
      default:
        return SpriteLayer.Pants_Blue;
    }
@@ -242,8 +246,10 @@ SpriteLayer _mapHeadTypeToSpriteLayer(int headType) {
 enum SpriteLayer {
   Shadow,
   Pants_Blue,
-  Pants_White,
   Pants_Brown,
+  Pants_Green,
+  Pants_Red,
+  Pants_White,
   Pants_Swat,
   Staff_Wooden,
   Sword_Wooden,
