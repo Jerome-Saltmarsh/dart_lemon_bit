@@ -48,7 +48,7 @@ class GameFrontline extends Game {
         game: this,
         weapon: WeaponType.Shotgun,
     );
-    moveCharacterToSpawn(player);
+    moveCharacterToGridNode(player, GridNodeType.Player_Spawn);
     return player;
   }
 
