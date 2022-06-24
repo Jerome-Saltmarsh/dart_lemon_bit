@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_particle_emissions.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_player_emissions.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
+import 'package:gamestream_flutter/isometric/npcs.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
@@ -31,10 +32,11 @@ final renderOrder = <RenderOrder> [
   RenderOrderZombie(),
   RenderOrderParticle(),
   RenderOrderProjectiles(),
+  RenderOrderNpcs(),
 ];
 
 // renderOrderLength gets called a lot during rendering so use a const and update it manually if need be
-const renderOrderLength = 5;
+const renderOrderLength = 6;
 var renderOrderFirst = renderOrder.first;
 var anyRemaining = false;
 var totalIndex = 0;
@@ -69,6 +71,33 @@ class RenderOrderZombie extends RenderOrder {
   @override
   int getTotal() {
     return totalZombies;
+  }
+}
+
+class RenderOrderNpcs extends RenderOrder {
+  late Character npc;
+
+  @override
+  void renderFunction() {
+    renderCharacter(npc);
+  }
+
+  @override
+  void updateFunction() {
+    npc = npcs[_index];
+    order = npc.renderOrder;
+    orderZ = (npc.z + 12.0) ~/ tileSizeHalf;
+  }
+
+  @override
+  int getTotal() {
+    return totalNpcs;
+  }
+
+  @override
+  void reset() {
+    // applyPlayerEmissions();
+    super.reset();
   }
 }
 
@@ -420,12 +449,12 @@ abstract class RenderOrder {
 
 RenderOrder getNextRenderOrder(){
   assert (anyRemaining);
-  var furthest = renderOrderFirst;
+  var next = renderOrderFirst;
   for (var i = 1; i < renderOrderLength; i++){
-    furthest =  furthest.compare(renderOrder[i]);
+    next =  next.compare(renderOrder[i]);
   }
-  assert (furthest.remaining);
-  return furthest;
+  assert(next.remaining);
+  return next;
 }
 
 void updateAnyRemaining(){

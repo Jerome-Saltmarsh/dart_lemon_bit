@@ -1,8 +1,6 @@
 
 
-import '../classes/game.dart';
-import '../classes/player.dart';
-import '../classes/scene.dart';
+import '../classes/library.dart';
 import '../common/weapon_type.dart';
 
 class GameFrontline extends Game {
@@ -13,7 +11,17 @@ class GameFrontline extends Game {
     scene
   ) {
 
+    npcs.add(InteractableNpc(
+      name: "Bell",
+      onInteractedWith: (player) {
 
+      },
+      x: 300,
+      y: 300,
+      weapon: 0,
+      team: 1,
+      health: 10,
+    ));
   }
 
   @override

@@ -4,6 +4,7 @@ import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/control/classes/authentication.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
+import 'package:gamestream_flutter/isometric/npcs.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/collectables.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
@@ -180,9 +181,9 @@ class CoreActions {
     totalZombies = 0;
     totalPlayers = 0;
     totalProjectiles = 0;
+    totalNpcs = 0;
     serverResponseReader.bulletHoleIndex = 0;
     totalCollectables = 0;
-    serverResponseReader.totalNpcs = 0;
     particleEmitters.clear();
     particles.clear();
 

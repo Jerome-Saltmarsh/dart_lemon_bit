@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
+import 'package:gamestream_flutter/isometric/npcs.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
@@ -42,13 +43,11 @@ var time = DateTime.now();
 
 
 class ServerResponseReader with ByteReader {
-  final interactableNpcs = <Character>[];
   final gameObjects = <GameObject>[];
   final bulletHoles = <Vector2>[];
   final npcDebug = <NpcDebug>[];
   final scoreBuilder = StringBuffer();
   final scoreText = Watch("");
-  var totalNpcs = 0;
   var bulletHoleIndex = 0;
   var itemsTotal = 0;
 
@@ -405,7 +404,6 @@ class ServerResponseReader with ByteReader {
 
   void readNpcs() {
     totalNpcs = readInt();
-    final npcs = interactableNpcs;
     for (var i = 0; i < totalNpcs; i++){
       _readNpc(npcs[i]);
     }
