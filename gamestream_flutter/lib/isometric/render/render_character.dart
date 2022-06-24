@@ -238,6 +238,8 @@ SpriteLayer _mapHeadTypeToSpriteLayer(int headType) {
       return SpriteLayer.Hat_Wizard;
     case HeadType.Rogues_Hood:
       return SpriteLayer.Rogues_Hood;
+    case HeadType.Blonde:
+      return SpriteLayer.Head_Blonde;
     default:
       throw Exception("cannot render head ${headType}");
   }
@@ -261,6 +263,7 @@ enum SpriteLayer {
   Shirt_Blue,
   Swat_Vest,
   Tunic_Padded,
+  Head_Blonde,
   Head_Plain,
   Steel_Helm,
   Rogues_Hood,
