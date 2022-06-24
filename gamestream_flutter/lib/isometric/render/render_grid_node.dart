@@ -2,6 +2,7 @@ import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
+import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 
@@ -145,6 +146,7 @@ void renderGridNode(int z, int row, int column, int type) {
         anchorY: 0.3334,
       );
     case GridNodeType.Enemy_Spawn:
+      if (!playModeEdit) return;
       return render(
         dstX: dstX,
         dstY: dstY,

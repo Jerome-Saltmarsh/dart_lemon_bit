@@ -51,24 +51,6 @@ class Scene {
      return false;
   }
 
-  List<GridNode> findNodesByType(int type){
-    final values = <GridNode>[];
-    final height = gridHeight;
-    final rows = gridRows;
-    final columns = gridColumns;
-    for (var z = 0; z < height; z++) {
-      final plain = grid[z];
-      for (var r = 0; r < rows; r++) {
-        final row = plain[r];
-        for (var c = 0; c < columns; c++) {
-          if (row[c].type != type) continue;
-          values.add(row[c]);
-        }
-      }
-    }
-    return values;
-  }
-
   void addGameObjectAtNode({
     required int type,
     required Node node,

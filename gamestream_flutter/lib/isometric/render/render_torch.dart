@@ -1,5 +1,5 @@
 
-import 'package:lemon_engine/engine.dart';
+import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:lemon_engine/render.dart';
 
 void renderTorchOff(double x, double y) {
@@ -19,7 +19,7 @@ void renderTorchOn(double x, double y) {
       dstX: x,
       dstY: y,
       srcX: 2145,
-      srcY: 70 + (((x + y + (engine.frame ~/ 10)) % 6) * 70),
+      srcY: 70 + (((x + y + (animationFrameTorch)) % 6) * 70),
       srcWidth: 25,
       srcHeight: 70,
       anchorY: 0.33
