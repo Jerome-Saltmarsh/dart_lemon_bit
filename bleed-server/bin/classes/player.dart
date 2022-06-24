@@ -619,7 +619,7 @@ extension PlayerProperties on Player {
     writeByte(player.equippedWeapon);
     writeByte(player.equippedArmour); // armour
     writeByte(player.equippedHead); // helm
-    writeByte(player.equippedHead); // helm
+    writeByte(player.equippedPants); // helm
     writeString(player.name);
     writeInt(player.score);
   }

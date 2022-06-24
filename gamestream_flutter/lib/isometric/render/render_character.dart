@@ -56,7 +56,7 @@ void renderCharacter(Character character) {
 void _renderCharacterTemplate(Character character) {
   final color = colorShades[character.shade];
   _renderCharacterShadow(character);
-  _renderCharacterPartLegs(character, color);
+  _renderCharacterPartPants(character, color);
   _renderCharacterPartBody(character, color);
   _renderCharacterPartHead(character, color);
 }
@@ -106,7 +106,7 @@ void _renderCharacterPartBody(Character character, int color) {
   _renderCharacterPart(character, _mapArmourTypeToSpriteLayer(character.armour), color);
 }
 
-void _renderCharacterPartLegs(Character character, int color) {
+void _renderCharacterPartPants(Character character, int color) {
   _renderCharacterPart(character, _mapLegTypeToSpriteLayer(character.pants), color);
 }
 
@@ -184,7 +184,7 @@ double _getTemplateSrcX(Character character, {required double size}) {
 }
 
 SpriteLayer _mapLegTypeToSpriteLayer(int legType){
-   switch(legType){
+   switch (legType) {
      case PantsType.brown:
        return SpriteLayer.Pants_Brown;
      case PantsType.blue:
