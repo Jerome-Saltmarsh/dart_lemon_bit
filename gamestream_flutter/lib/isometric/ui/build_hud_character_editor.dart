@@ -62,7 +62,9 @@ Widget _buildTabWeapons(){
           children: WeaponType.values.map(_buildWeaponButton).toList(),
        ),
         width6,
-        text("Damage: 0"),
+        watch(player.weaponDamage, (damage){
+         return text("Damage: $damage");
+        })
      ],
    );
 }
