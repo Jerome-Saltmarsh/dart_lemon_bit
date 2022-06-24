@@ -63,7 +63,10 @@ Widget _buildTabWeapons(){
        ),
         width6,
         watch(player.weaponDamage, (damage){
-         return text("Damage: $damage");
+         return container(
+             child: text("Damage: $damage"),
+             action: sendClientRequestUpgradeWeaponDamage,
+         );
         })
      ],
    );

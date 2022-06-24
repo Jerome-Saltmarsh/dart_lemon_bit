@@ -1436,7 +1436,6 @@ extension GameFunctions on Game {
         if (character.equippedIsEmpty) {
           return;
         }
-        character.reduceEquippedAmount();
         spawnProjectile(
             src: character,
             accuracy: 0,
@@ -1456,7 +1455,6 @@ extension GameFunctions on Game {
           return;
         }
         dispatchV2(GameEventType.Shotgun_Fired, character);
-        character.reduceEquippedAmount();
         final totalBullets = 4;
         for (int i = 0; i < totalBullets; i++) {
           spawnProjectile(

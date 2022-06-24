@@ -110,6 +110,10 @@ void sendClientRequestSetPantsType(int type){
   sendClientRequest(ClientRequest.Set_Pants_Type, type);
 }
 
+void sendClientRequestUpgradeWeaponDamage(){
+  sendClientRequest(ClientRequest.Upgrade_Weapon_Damage);
+}
+
 void sendClientRequest(ClientRequest value, [dynamic message]){
   if (message != null){
     return webSocket.send('${value.index} $message');

@@ -447,6 +447,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.setStateChanging();
           break;
 
+        case ClientRequest.Upgrade_Weapon_Damage:
+          if (player == null) return errorPlayerNotFound();
+          player.equippedWeapon.damage++;
+          break;
+
         case ClientRequest.Character_Save:
           final account = _account;
           if (player == null) return errorPlayerNotFound();

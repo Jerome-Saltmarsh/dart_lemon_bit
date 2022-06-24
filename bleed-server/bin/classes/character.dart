@@ -49,20 +49,12 @@ class Character extends Collider with Team, Health, Velocity, Material {
   int get equippedDamage => equippedWeapon.damage;
   double get equippedRange => WeaponType.getRange(equippedWeapon.type);
   int get equippedAttackDuration => 25;
-  bool get equippedTypeIsBow => equippedWeapon == WeaponType.Bow;
-  bool get unarmed => equippedWeapon == WeaponType.Unarmed;
-  bool get equippedTypeIsShotgun => equippedWeapon == WeaponType.Shotgun;
+  bool get equippedTypeIsBow => equippedWeapon.type == WeaponType.Bow;
+  bool get unarmed => equippedWeapon.type == WeaponType.Unarmed;
+  bool get equippedTypeIsShotgun => equippedWeapon.type == WeaponType.Shotgun;
   bool get equippedIsMelee => WeaponType.isMelee(equippedWeapon.type);
   bool get equippedIsEmpty => false;
   int get equippedLevel => 1;
-
-  bool isEquipped(WeaponType type) {
-    return equippedWeapon == type;
-  }
-
-  void reduceEquippedAmount() {
-
-  }
 
   Character({
     required this.type,
