@@ -10,6 +10,7 @@ import 'game.dart';
 import 'position3.dart';
 import 'card_abilities.dart';
 import 'components.dart';
+import 'weapon.dart';
 
 class Character extends Collider with Team, Health, Velocity, Material {
   late CharacterType type;
@@ -26,7 +27,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
   Position3? target;
   var invincible = false;
   final techTree = TechTree();
-  var equippedWeapon = WeaponType.Unarmed;
+  Weapon equippedWeapon;
   var equippedArmour = ArmourType.shirtCyan;
   var equippedHead = HeadType.None;
   var equippedPants = PantsType.white;
@@ -45,13 +46,13 @@ class Character extends Collider with Team, Health, Velocity, Material {
 
   bool get deadOrBusy => dead || busy;
 
-  int get equippedDamage => WeaponType.getDamage(equippedWeapon);
-  double get equippedRange => WeaponType.getRange(equippedWeapon);
+  int get equippedDamage => equippedWeapon.damage;
+  double get equippedRange => WeaponType.getRange(equippedWeapon.type);
   int get equippedAttackDuration => 25;
   bool get equippedTypeIsBow => equippedWeapon == WeaponType.Bow;
   bool get unarmed => equippedWeapon == WeaponType.Unarmed;
   bool get equippedTypeIsShotgun => equippedWeapon == WeaponType.Shotgun;
-  bool get equippedIsMelee => WeaponType.isMelee(equippedWeapon);
+  bool get equippedIsMelee => WeaponType.isMelee(equippedWeapon.type);
   bool get equippedIsEmpty => false;
   int get equippedLevel => 1;
 
@@ -68,7 +69,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
     required double x,
     required double y,
     required int health,
-    int weapon = WeaponType.Unarmed,
+    required this.equippedWeapon,
     double speed = 5.0,
     int team = Teams.none,
     this.equippedArmour = ArmourType.tunicPadded,

@@ -339,6 +339,19 @@ extension GameFunctions on Game {
         where: (other) => other.alive && !onSameTeam(other, character));
   }
 
+  Character? getClosestNpc({
+    required double x,
+    required double y,
+    required Character character,
+    required List<Character> characters,
+  }) {
+    return findClosestVector2(
+        positions: npcs,
+        x: x,
+        y: y,
+        where: (other) => other.alive && onSameTeam(other, character));
+  }
+
   GameObject? getClosestGameObject(double x, double y) {
     return findClosestVector2(
         positions: gameObjects,
@@ -349,13 +362,23 @@ extension GameFunctions on Game {
   }
 
   Collider? getClosestCollider(double x, double y, Character character) {
-    final zombie =
-        getClosestEnemy(x: x, y: y, character: character, characters: zombies);
-    final player =
-        getClosestEnemy(x: x, y: y, character: character, characters: players);
+    final zombie = getClosestEnemy(
+        x: x,
+        y: y,
+        character: character,
+        characters: zombies
+    );
+    final player = getClosestEnemy(
+        x: x,
+        y: y,
+        character: character,
+        characters: players
+    );
+
+    // final npc = getClosestNpc(x: x, y: y, character: character, characters: npcs);
+
     final dynamicObject = playersCanAttackDynamicObjects ? getClosestGameObject(x, y) : null;
-    final zombieDistance =
-        zombie != null ? distanceBetween(x, y, zombie.x, zombie.y) : 99999;
+    final zombieDistance = zombie != null ? distanceBetween(x, y, zombie.x, zombie.y) : 99999;
     final playerDistance =
         player != null ? distanceBetween(x, y, player.x, player.y) : 99999;
     final dynamicDistance = dynamicObject != null
@@ -810,7 +833,6 @@ extension GameFunctions on Game {
 
   void updatePlayer(Player player) {
     player.lastUpdateFrame++;
-    // print("player direction:  ${Direction.getName(player.direction)}, angle: ${player.angle}");
 
     if (player.textDuration > 0) {
       player.textDuration--;

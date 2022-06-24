@@ -1,6 +1,7 @@
 
 
 import '../classes/library.dart';
+import '../classes/weapon.dart';
 import '../common/armour_type.dart';
 import '../common/grid_node_type.dart';
 import '../common/head_type.dart';
@@ -46,7 +47,7 @@ class GameFrontline extends Game {
   Player spawnPlayer() {
     final player = Player(
         game: this,
-        weapon: WeaponType.Shotgun,
+        weapon: Weapon(type: WeaponType.Unarmed, damage: 1),
     );
     moveCharacterToGridNode(player, GridNodeType.Player_Spawn);
     return player;

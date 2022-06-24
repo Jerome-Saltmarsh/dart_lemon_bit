@@ -9,6 +9,7 @@ import '../engine.dart';
 import '../utilities.dart';
 import 'position3.dart';
 import 'library.dart';
+import 'weapon.dart';
 
 
 class Player extends Character with ByteWriter {
@@ -107,7 +108,7 @@ class Player extends Character with ByteWriter {
 
   Player({
     required this.game,
-    required int weapon,
+    required Weapon weapon,
     int team = 0,
     int magic = 10,
     int health = 10,
@@ -118,7 +119,7 @@ class Player extends Character with ByteWriter {
             health: health,
             speed: 4.25,
             team: team,
-            weapon: weapon,
+            equippedWeapon: weapon,
 
   ){
     maxMagic = magic;
@@ -153,7 +154,7 @@ class Player extends Character with ByteWriter {
   }
 
   void equipUnarmed(){
-    equippedWeapon = WeaponType.Unarmed;
+    equippedWeapon = Weapon(type: WeaponType.Unarmed, damage: 1);
     setStateChanging();
   }
 
@@ -364,7 +365,7 @@ extension PlayerProperties on Player {
     writeInt(maxHealth); // 2
     writeInt(magic); // 2
     writeInt(maxMagic); // 2
-    writeByte(equippedWeapon); // 3
+    writeByte(equippedWeapon.type); // 3
     writeByte(equippedArmour); // armour
     writeByte(equippedHead); // helm
     writeByte(equippedPants); // helm
@@ -644,7 +645,7 @@ extension PlayerProperties on Player {
   }
 
   void writeCharacterEquipment(Character character) {
-    writeByte(character.equippedWeapon);
+    writeByte(character.equippedWeapon.type);
     writeByte(character.equippedArmour); // armour
     writeByte(character.equippedHead); // helm
     writeByte(character.equippedPants); // helm

@@ -7,6 +7,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'classes/position3.dart';
 import 'classes/enemy_spawn.dart';
 import 'classes/library.dart';
+import 'classes/weapon.dart';
 import 'common/grid_node_type.dart';
 import 'common/library.dart';
 import 'engine.dart';
@@ -237,7 +238,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                     game.setCharacterStatePerforming(player);
                   }
                 } else {
-                  // player.setRunTarget(mouseX, mouseY);
                   player.runToMouse();
                 }
                 break;
@@ -254,10 +254,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                     return;
                   } else {
                     player.runToMouse();
-                    // player.runTarget.x = mouseX;
-                    // player.runTarget.y = mouseY + (player.z * 0.5);
-                    // player.target = player.runTarget;
-                    // player.setRunTarget(mouseX, mouseY);
                     return;
                   }
                 case AbilityMode.Activated:
@@ -420,7 +416,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (arguments.length < 2)  return errorArgsExpected(2, arguments);
           final weaponType = int.tryParse(arguments[1]);
           if (weaponType == null) return errorInvalidArg('weapon type');
-          player.equippedWeapon = weaponType;
+          player.equippedWeapon = Weapon(type: weaponType, damage: 1);
           player.setStateChanging();
           break;
 
@@ -734,48 +730,48 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.gold -= cost.gold;
           player.stone -= cost.stone;
 
-          switch (techType) {
-            case TechType.Pickaxe:
-              player.techTree.pickaxe++;
-              if (player.techTree.pickaxe == 1) {
-                 player.equippedWeapon = TechType.Pickaxe;
-                 player.setStateChanging();
-              }
-              player.writePlayerEvent(PlayerEvent.Item_Purchased);
-              break;
-            case TechType.Bow:
-              player.techTree.bow++;
-              if (player.techTree.bow == 1) {
-                player.equippedWeapon = TechType.Bow;
-                player.setStateChanging();
-              }
-              player.writePlayerEvent(PlayerEvent.Item_Purchased);
-              break;
-            case TechType.Sword:
-              player.techTree.sword++;
-              if (player.techTree.sword == 1) {
-                player.equippedWeapon = TechType.Sword;
-                player.setStateChanging();
-              }
-              player.writePlayerEvent(PlayerEvent.Item_Purchased);
-              break;
-            case TechType.Axe:
-              player.techTree.axe++;
-              if (player.techTree.axe == 1) {
-                player.equippedWeapon = TechType.Axe;
-                player.setStateChanging();
-              }
-              player.writePlayerEvent(PlayerEvent.Item_Purchased);
-              break;
-            case TechType.Hammer:
-              player.techTree.hammer++;
-              if (player.techTree.hammer == 1) {
-                player.equippedWeapon = TechType.Hammer;
-                player.setStateChanging();
-              }
-              player.writePlayerEvent(PlayerEvent.Item_Purchased);
-              break;
-          }
+          // switch (techType) {
+          //   case TechType.Pickaxe:
+          //     player.techTree.pickaxe++;
+          //     if (player.techTree.pickaxe == 1) {
+          //        player.equippedWeapon = TechType.Pickaxe;
+          //        player.setStateChanging();
+          //     }
+          //     player.writePlayerEvent(PlayerEvent.Item_Purchased);
+          //     break;
+          //   case TechType.Bow:
+          //     player.techTree.bow++;
+          //     if (player.techTree.bow == 1) {
+          //       player.equippedWeapon = TechType.Bow;
+          //       player.setStateChanging();
+          //     }
+          //     player.writePlayerEvent(PlayerEvent.Item_Purchased);
+          //     break;
+          //   case TechType.Sword:
+          //     player.techTree.sword++;
+          //     if (player.techTree.sword == 1) {
+          //       player.equippedWeapon = TechType.Sword;
+          //       player.setStateChanging();
+          //     }
+          //     player.writePlayerEvent(PlayerEvent.Item_Purchased);
+          //     break;
+          //   case TechType.Axe:
+          //     player.techTree.axe++;
+          //     if (player.techTree.axe == 1) {
+          //       player.equippedWeapon = TechType.Axe;
+          //       player.setStateChanging();
+          //     }
+          //     player.writePlayerEvent(PlayerEvent.Item_Purchased);
+          //     break;
+          //   case TechType.Hammer:
+          //     player.techTree.hammer++;
+          //     if (player.techTree.hammer == 1) {
+          //       player.equippedWeapon = TechType.Hammer;
+          //       player.setStateChanging();
+          //     }
+          //     player.writePlayerEvent(PlayerEvent.Item_Purchased);
+          //     break;
+          // }
           player.writeTechTypes();
           break;
 
@@ -815,8 +811,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (!TechType.isValid(techType)){
             return errorInvalidArg('Invalid tech type: got $techType');
           }
-          player.equippedWeapon = techType;
-          player.setStateChanging();
+          // player.equippedWeapon = techType;
+          // player.setStateChanging();
           return;
 
         case ClientRequest.Purchase:

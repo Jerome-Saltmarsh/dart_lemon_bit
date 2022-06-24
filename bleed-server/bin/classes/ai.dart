@@ -8,6 +8,7 @@ import 'collider.dart';
 import 'components.dart';
 import 'character.dart';
 import 'enemy_spawn.dart';
+import 'weapon.dart';
 
 class AI extends Character with Material {
   static const viewRange = 200.0;
@@ -65,7 +66,7 @@ class AI extends Character with Material {
     int team = 0,
     int weapon = WeaponType.Unarmed,
     double speed = 3.0,
-  }): super(x: x, y: y, type: type, health: health, team: team, weapon: weapon, speed: speed) {
+  }): super(x: x, y: y, type: type, health: health, team: team, equippedWeapon: Weapon(), speed: speed) {
     this.material = MaterialType.Flesh;
   }
 
