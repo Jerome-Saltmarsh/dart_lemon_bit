@@ -2,6 +2,7 @@
 import 'package:bleed_common/armour_type.dart';
 import 'package:bleed_common/head_type.dart';
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/pants_type.dart';
 import 'package:gamestream_flutter/color_pitch_black.dart';
 
 import 'package:lemon_engine/render.dart';
@@ -104,7 +105,7 @@ void _renderCharacterPartBody(Character character) {
 }
 
 void _renderCharacterPartLegs(Character character) {
-  _renderCharacterPart(character, SpriteLayer.Pants_Blue);
+  _renderCharacterPart(character, _mapLegTypeToSpriteLayer(character.pants));
 }
 
 void _renderCharacterPart(Character character, SpriteLayer layer) {
@@ -180,6 +181,17 @@ double _getTemplateSrcX(Character character, {required double size}) {
   }
 }
 
+SpriteLayer _mapLegTypeToSpriteLayer(int legType){
+   switch(legType){
+     case PantsType.brown:
+       return SpriteLayer.Pants_Brown;
+     case PantsType.blue:
+       return SpriteLayer.Pants_Blue;
+     default:
+       return SpriteLayer.Pants_Blue;
+   }
+}
+
 SpriteLayer _mapArmourTypeToSpriteLayer(int armourType) {
   switch (armourType) {
     case ArmourType.shirtCyan:
@@ -226,6 +238,7 @@ SpriteLayer _mapHeadTypeToSpriteLayer(int headType) {
 enum SpriteLayer {
   Shadow,
   Pants_Blue,
+  Pants_Brown,
   Pants_Swat,
   Staff_Wooden,
   Sword_Wooden,
