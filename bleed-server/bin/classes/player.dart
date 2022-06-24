@@ -365,7 +365,8 @@ extension PlayerProperties on Player {
     writeInt(maxHealth); // 2
     writeInt(magic); // 2
     writeInt(maxMagic); // 2
-    writeByte(equippedWeapon.type); // 3
+    writeByte(equippedWeapon.type);
+    writeByte(equippedWeapon.damage);
     writeByte(equippedArmour); // armour
     writeByte(equippedHead); // helm
     writeByte(equippedPants); // helm

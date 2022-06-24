@@ -22,6 +22,7 @@ class Player extends Vector3 {
   final storeVisible = Watch(false);
   final attackTarget = Vector2(0, 0);
   final weaponType = Watch(WeaponType.Unarmed);
+  final weaponDamage = Watch(0);
   final armourType = Watch(ArmourType.tunicPadded);
   final headType = Watch(HeadType.None);
   final pantsType = Watch(PantsType.white);
