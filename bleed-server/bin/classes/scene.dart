@@ -6,7 +6,6 @@ import 'character.dart';
 import 'enemy_spawn.dart';
 import 'game_object.dart';
 import 'tile_node.dart';
-import 'grid_index.dart';
 import 'grid_node.dart';
 
 class Scene {
@@ -50,21 +49,6 @@ class Scene {
         }
      }
      return false;
-  }
-
-  GridIndex? findGridByType(int type){
-      for (var z = 0; z < gridHeight; z++) {
-         for (var row = 0; row < gridRows; row++){
-            for (var column = 0; column < gridColumns; column++){
-               if (grid[z][row][column].type != type) continue;
-               gridIndex.plain = z;
-               gridIndex.row = row;
-               gridIndex.column = column;
-               return gridIndex;
-            }
-         }
-      }
-      return null;
   }
 
   List<GridNode> findNodesByType(int type){
