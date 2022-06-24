@@ -1,6 +1,4 @@
 
-import 'package:bleed_common/Projectile_Type.dart';
-import 'package:bleed_common/Shade.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 
 class Projectile extends Vector3 {

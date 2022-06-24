@@ -1,5 +1,6 @@
 
 import 'package:bleed_common/armour_type.dart';
+import 'package:bleed_common/head_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/color_pitch_black.dart';
 
@@ -74,11 +75,10 @@ void _renderCharacterTemplateWeapon(Character character) {
   if (renderRow == -1) {
     _renderCharacterPart(
         character,
-        _mapEquippedWeaponToSpriteIndex(character)
+        _mapWeaponTypeToSpriteLayer(character.weapon)
     );
     return;
   }
-
   render(
       dstX: character.renderX,
       dstY: character.renderY,
@@ -91,30 +91,28 @@ void _renderCharacterTemplateWeapon(Character character) {
   );
 }
 
-
 void _renderCharacterShadow(Character character) {
-  _renderCharacterPart(character, _SpriteLayer.Shadow);
+  _renderCharacterPart(character, SpriteLayer.Shadow);
 }
 
 void _renderCharacterPartHead(Character character) {
-  _renderCharacterPart(character, _getSpriteIndexHead(character));
+  _renderCharacterPart(character, _mapHeadTypeToSpriteLayer(character.helm));
 }
 
 void _renderCharacterPartBody(Character character) {
-  _renderCharacterPart(character, _getSpriteIndexBody(character));
+  _renderCharacterPart(character, _mapArmourTypeToSpriteLayer(character.armour));
 }
 
 void _renderCharacterPartLegs(Character character) {
-  _renderCharacterPart(character, _SpriteLayer.Legs_Blue);
+  _renderCharacterPart(character, SpriteLayer.Pants_Blue);
 }
 
-void _renderCharacterPart(Character character, int layer) {
-
+void _renderCharacterPart(Character character, SpriteLayer layer) {
   render(
       dstX: character.renderX,
       dstY: character.renderY,
       srcX: _getTemplateSrcX(character, size: 64),
-      srcY: 1051.0 + (layer * 64),
+      srcY: 1051.0 + (layer.index * 64),
       srcWidth: 64.0,
       srcHeight: 64.0,
       scale: 0.75,
@@ -182,67 +180,67 @@ double _getTemplateSrcX(Character character, {required double size}) {
   }
 }
 
-int _getSpriteIndexBody(Character character) {
-  switch (character.armour) {
+SpriteLayer _mapArmourTypeToSpriteLayer(int armourType) {
+  switch (armourType) {
     case ArmourType.shirtCyan:
-      return _SpriteLayer.Body_Cyan;
-    case ArmourType.shirtRed:
-      return _SpriteLayer.Body_Blue;
-    case ArmourType.rogueHood:
-      return _SpriteLayer.Body_Swat;
-    case ArmourType.wizardsRobes:
-      return _SpriteLayer.Body_Cyan;
+      return SpriteLayer.Shirt_Cyan;
+    case ArmourType.shirtBlue:
+      return SpriteLayer.Shirt_Blue;
+    case ArmourType.tunicPadded:
+      return SpriteLayer.Tunic_Padded;
     default:
-      throw Exception("cannot render body ${character.armour}");
+      throw Exception("cannot render body $armourType");
   }
 }
 
-int _mapEquippedWeaponToSpriteIndex(Character character) {
-  switch (character.weapon) {
+SpriteLayer _mapWeaponTypeToSpriteLayer(int weaponType) {
+  switch (weaponType) {
     case WeaponType.Sword:
-      return _SpriteLayer.Sword_Wooden;
+      return SpriteLayer.Sword_Wooden;
     case WeaponType.Bow:
-      return _SpriteLayer.Bow_Wooden;
+      return SpriteLayer.Bow_Wooden;
     case WeaponType.Shotgun:
-      return _SpriteLayer.Weapon_Shotgun;
+      return SpriteLayer.Shotgun;
     case WeaponType.Handgun:
-      return _SpriteLayer.Weapon_Handgun;
+      return SpriteLayer.Handgun;
     default:
-      throw Exception("cannot map ${character.weapon} to sprite index");
+      throw Exception("cannot map ${weaponType} to sprite index");
   }
 }
 
-int _getSpriteIndexHead(Character character) {
-  switch (character.helm) {
-    case SlotType.Empty:
-      return _SpriteLayer.Head_Plain;
-    case SlotType.Steel_Helmet:
-      return _SpriteLayer.Head_Steel;
+SpriteLayer _mapHeadTypeToSpriteLayer(int headType) {
+  switch (headType) {
+    case HeadType.None:
+      return SpriteLayer.Head_Plain;
+    case HeadType.Steel_Helm:
+      return SpriteLayer.Steel_Helm;
     case SlotType.Magic_Hat:
-      return _SpriteLayer.Head_Magic;
+      return SpriteLayer.Hat_Wizard;
     case SlotType.Rogue_Hood:
-      return _SpriteLayer.Head_Rogue;
+      return SpriteLayer.Rogues_Hood;
     default:
-      throw Exception("cannot render head ${character.helm}");
+      throw Exception("cannot render head ${headType}");
   }
 }
 
-class _SpriteLayer {
-  static const Shadow = 0;
-  static const Legs_Blue = 1;
-  static const Legs_Swat = 2;
-  static const Staff_Wooden = 3;
-  static const Sword_Wooden = 4;
-  static const Sword_Steel = 5;
-  static const Weapon_Shotgun = 6;
-  static const Weapon_Handgun = 7;
-  static const Bow_Wooden = 8;
-  static const Body_Cyan = 9;
-  static const Body_Blue = 10;
-  static const Body_Swat = 11;
-  static const Head_Plain = 12;
-  static const Head_Steel = 13;
-  static const Head_Rogue = 14;
-  static const Head_Magic = 15;
-  static const Head_Swat = 16;
+enum SpriteLayer {
+  Shadow,
+  Pants_Blue,
+  Pants_Swat,
+  Staff_Wooden,
+  Sword_Wooden,
+  Sword_Steel,
+  Shotgun,
+  Handgun,
+  Bow_Wooden,
+  Template,
+  Shirt_Cyan,
+  Shirt_Blue,
+  Swat_Vest,
+  Tunic_Padded,
+  Head_Plain,
+  Steel_Helm,
+  Rogues_Hood,
+  Hat_Wizard,
+  Swat_Helm,
 }
