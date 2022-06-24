@@ -11,24 +11,25 @@ import 'package:lemon_watch/watch.dart';
 
 const green = Colors.green;
 const grey = Colors.grey;
+const greyDark = Colors.blueGrey;
+final activeTab = Watch(_Tab.Weapon);
 
 Widget buildHudCharacterEditor(){
    return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-       Row(children: _Tab.values.map((tab) => onPressed(
-          callback: () => _tab.value = tab,
-         child: Container(
-             width: 150,
-             height: 50,
-             padding: const EdgeInsets.only(left: 6),
-             color: grey,
-             alignment: Alignment.centerLeft,
-             child: text(tab.name)),
-       )).toList()),
+       Row(children: _Tab.values.map((tab) {
+         return watch(activeTab, (active){
+            return container(
+              child: text(tab.name),
+              action: () => activeTab.value = tab,
+              color: tab == activeTab.value ? greyDark : grey,
+            );
+         });
+       }).toList()),
        height6,
-       watch(_tab, (tab){
+       watch(activeTab, (tab){
           switch (tab){
              case _Tab.Weapon:
                return _buildTabWeapons();
@@ -117,5 +118,3 @@ enum _Tab {
    Armour,
    Head,
 }
-
-final _tab = Watch(_Tab.Weapon);
