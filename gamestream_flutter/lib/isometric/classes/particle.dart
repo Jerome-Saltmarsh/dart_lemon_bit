@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bleed_common/Direction.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:gamestream_flutter/isometric/render/render_particle.dart';
@@ -23,6 +24,8 @@ class Particle extends Vector3 {
   Particle? next;
 
   bool get active => duration > 0;
+
+  int get direction => convertAngleToDirection(rotation);
 
   bool get bleeds {
      if (type == ParticleType.Blood) return false;

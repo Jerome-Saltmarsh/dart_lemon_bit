@@ -1,5 +1,6 @@
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
@@ -74,17 +75,10 @@ void renderGridNode(int z, int row, int column, int type) {
         anchorY: 0.3334,
       );
     case GridNodeType.Water:
-      final animationFrame = (engine.frame ~/ 15) % 4;
-      var height = 1;
-      if (animationFrame == 1) {
-        height = 2;
-      } else if (animationFrame == 3) {
-        height = 0;
-      }
       return render(
         dstX: dstX,
-        dstY: dstY + height,
-        srcX: 7206 + (animationFrame * 48),
+        dstY: dstY + animationFrameWaterHeight,
+        srcX: 7206 + animationFrameWaterSrcX,
         srcY: 72.0 * shade,
         srcWidth: 48,
         srcHeight: 72,

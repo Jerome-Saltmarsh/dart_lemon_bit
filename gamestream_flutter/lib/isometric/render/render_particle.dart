@@ -1,4 +1,3 @@
-import 'package:bleed_common/Direction.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:lemon_engine/engine.dart';
@@ -40,7 +39,7 @@ void renderParticle(Particle value) {
       return render(
           dstX: value.renderX,
           dstY: value.renderY,
-          srcX: 3004.0 + (64 * convertAngleToDirection(value.rotation)),
+          srcX: 3004.0 + (64 * value.direction),
           srcY: 0,
           srcWidth: 64,
           srcHeight: 64,
@@ -51,7 +50,7 @@ void renderParticle(Particle value) {
       return render(
           dstX: value.renderX,
           dstY: value.renderY,
-          srcX: 4030.0 + (64 * convertAngleToDirection(value.rotation)),
+          srcX: 4030.0 + (64 * value.direction),
           srcY: 0,
           srcWidth: 64,
           srcHeight: 64,
@@ -62,7 +61,7 @@ void renderParticle(Particle value) {
       return render(
           dstX: value.renderX,
           dstY: value.renderY,
-          srcX: 2491.0 + (64 * convertAngleToDirection(value.rotation)),
+          srcX: 2491.0 + (64 * value.direction),
           srcY: 0,
           srcWidth: 64,
           srcHeight: 64,
@@ -72,11 +71,6 @@ void renderParticle(Particle value) {
     default:
       break;
   }
-  // final shade = value.shade;
-  // if (shade >= Shade.Very_Dark) return;
-  // if (!value.casteShadow) return;
-  // if (value.z < 0.1) return;
-  // renderShadow(position: value, scale: value.z);
 }
 
 void renderSmoke({
