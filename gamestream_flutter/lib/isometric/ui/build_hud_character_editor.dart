@@ -64,9 +64,9 @@ Widget _buildTabWeapons(){
      children: [
         buildWatchPlayerStoreItems(),
         width6,
-        buildColumnPlayerWeapons(),
+        buildWatchWeaponInformation(),
         width6,
-        _buildWatchWeaponInformation(),
+        buildColumnPlayerWeapons(),
      ],
    );
 }
@@ -80,14 +80,13 @@ Widget buildWatchPlayerStoreItems() {
   });
 }
 
-Widget _buildWatchWeaponInformation(){
+Widget buildWatchWeaponInformation(){
    return watch(weaponInformation, (Weapon? weapon){
-     if (weapon == null) return const SizedBox();
       return Container(
          color: grey,
          width: 200,
          padding: const EdgeInsets.all(6),
-         child: Column(
+         child: weapon == null ? null : Column(
              crossAxisAlignment: CrossAxisAlignment.start,
              children: [
                text(weapon.name),
@@ -139,21 +138,39 @@ Widget buildColumnPlayerWeapons() {
 }
 
 Widget _buildButtonEquipWeapon(Weapon weapon){
-  return watch(player.weapon, (Weapon equippedWeapon){
-    return container(
-      color: weapon.uuid == equippedWeapon.uuid ? green : grey,
-      child: text(WeaponType.getName(weapon.type)),
-      action: (){
-        sendClientRequestEquipWeapon(player.weapons.value.indexOf(weapon));
-      },
-    );
-  });
+  return MouseRegion(
+    onEnter: (event){
+      weaponInformation.value = weapon;
+    },
+    onExit: (event){
+      if (weaponInformation.value != weapon) return;
+      weaponInformation.value = null;
+    },
+    child: watch(player.weapon, (Weapon equippedWeapon){
+      return container(
+        color: weapon.uuid == equippedWeapon.uuid ? green : grey,
+        child: text(WeaponType.getName(weapon.type)),
+        action: (){
+          sendClientRequestEquipWeapon(player.weapons.value.indexOf(weapon));
+        },
+      );
+    }),
+  );
 }
 
 Widget _buildButtonPurchaseWeapon(Weapon weapon) {
-  return container(
-      child: text(weapon.name),
-      action: () => sendClientRequestPurchaseWeapon(weapon.type),
+  return MouseRegion(
+    onEnter: (event){
+      weaponInformation.value = weapon;
+    },
+    onExit: (event){
+       if (weaponInformation.value != weapon) return;
+       weaponInformation.value = null;
+    },
+    child: container(
+        child: text(weapon.name),
+        action: () => sendClientRequestPurchaseWeapon(weapon.type),
+    ),
   );
 }
 
