@@ -1,13 +1,14 @@
+import 'package:gamestream_flutter/isometric/events/on_inventory_visible_changed.dart';
 import 'package:lemon_watch/watch.dart';
 
-final watchInventoryVisible = Watch(false);
+final inventoryVisible = Watch(false, onChanged: onInventoryVisibleChanged);
 
-void actionToggleInventoryVisible() => watchInventoryVisible.value = !watchInventoryVisible.value;
+void toggleInventoryVisible() => inventoryVisible.value = !inventoryVisible.value;
 
 void actionShowInventory(){
-  watchInventoryVisible.value = true;
+  inventoryVisible.value = true;
 }
 
 void actionHideInventory(){
-  watchInventoryVisible.value = false;
+  inventoryVisible.value = false;
 }

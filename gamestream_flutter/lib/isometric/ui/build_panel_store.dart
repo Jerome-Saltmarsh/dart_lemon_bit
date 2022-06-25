@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/player_store.dart';
 import 'package:gamestream_flutter/isometric/ui/build_container.dart';
-import 'package:gamestream_flutter/isometric/ui/watch_inventory_visible.dart';
 import 'package:lemon_watch/watch.dart';
 
 import '../classes/weapon.dart';
@@ -21,7 +21,7 @@ final activeTab = Watch(_Tab.Weapon);
 final weaponInformation = Watch<Weapon?>(null);
 
 Widget buildPanelStore(){
-  return watch(player.storeItems, (List<Weapon> weapons){
+  return watch(storeItems, (List<Weapon> weapons){
       if (weapons.isEmpty) return SizedBox();
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -84,7 +84,7 @@ Widget _buildTabWeapons(){
 }
 
 Widget buildWatchPlayerStoreItems() {
-  return watch(player.storeItems, (List<Weapon> weapons){
+  return watch(storeItems, (List<Weapon> weapons){
       if (weapons.isEmpty) return const SizedBox();
       return Column(
         children: weapons.map(_buildButtonPurchaseWeapon).toList(),

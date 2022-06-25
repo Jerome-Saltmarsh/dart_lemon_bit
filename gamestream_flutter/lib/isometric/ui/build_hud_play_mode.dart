@@ -15,7 +15,7 @@ Widget buildHudPlayMode() {
 }
 
 Widget buildWatchInventoryVisible(){
-  return watch(watchInventoryVisible, (bool inventoryVisible){
+  return watch(inventoryVisible, (bool inventoryVisible){
     if (!inventoryVisible) return const SizedBox();
 
     return Container(

@@ -28,6 +28,7 @@ import 'grid.dart';
 import 'items.dart';
 import 'particle_emitters.dart';
 import 'player.dart';
+import 'player_store.dart';
 import 'time.dart';
 
 final serverResponseReader = ServerResponseReader();
@@ -185,7 +186,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readStoreItems() {
-    player.storeItems.value = readWeapons();
+    storeItems.value = readWeapons();
   }
 
   void readBlockSet() {

@@ -36,8 +36,8 @@ Widget buildPanelMenu() {
             }),
           ),
           onPressed(
-            callback: actionToggleInventoryVisible,
-            child: WatchBuilder(watchInventoryVisible, (bool inventoryVisible) {
+            callback: toggleInventoryVisible,
+            child: WatchBuilder(inventoryVisible, (bool inventoryVisible) {
               if (inventoryVisible){
                 return icons.bag;
               }
