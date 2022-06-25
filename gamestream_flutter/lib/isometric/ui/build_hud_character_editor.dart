@@ -83,7 +83,6 @@ Widget _buildTabPants(){
 
 Widget _buildButtonHead(int headType) {
    return watch(player.headType, (int playerHeadType){
-     print("headType: $headType, playerHeadType: $playerHeadType");
       return container(
           child: text(HeadType.getName(headType)),
           action: () => sendClientRequestSetHeadType(headType),
@@ -123,24 +122,19 @@ Widget _buildButtonEquipWeapon(Weapon weapon){
 }
 
 Widget _buildButtonPurchaseWeapon(int weapon) {
-  return container(child: text(WeaponType.getName(weapon)),
-    action: () => sendClientRequestPurchaseWeapon(weapon)
+  return container(
+      child: text(WeaponType.getName(weapon)),
+      action: () => sendClientRequestPurchaseWeapon(weapon),
   );
 }
 
-Widget _buildSelectArmourType(int type){
+Widget _buildSelectArmourType(int type) {
    return watch(player.armourType, (int equipped){
-      return onPressed(
-         callback: () => sendClientRequestSetArmour(type),
-         child: Container(
-            padding: const EdgeInsets.only(left: 8),
-            alignment: Alignment.centerLeft,
-            width: 200,
-            height: 50,
-            color: equipped == type ? Colors.green : Colors.grey,
-            child: text(ArmourType.getName(type)),
-         ),
-      );
+     return container(
+         child: text(ArmourType.getName(type)),
+         action: () => sendClientRequestSetArmour(type),
+         color: equipped == type ? green : grey,
+     );
    });
 }
 
