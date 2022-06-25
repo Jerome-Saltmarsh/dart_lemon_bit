@@ -17,6 +17,8 @@ const grey = Colors.grey;
 const greyDark = Colors.blueGrey;
 final activeTab = Watch(_Tab.Weapon);
 
+final weaponInformation = Watch<Weapon?>(null);
+
 Widget buildHudCharacterEditor(){
    return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -60,13 +62,40 @@ Widget _buildTabWeapons(){
    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
      children: [
-       Column(
-          children: WeaponType.values.map(_buildButtonPurchaseWeapon).toList(),
-       ),
+        buildWatchPlayerStoreItems(),
         width6,
         buildColumnPlayerWeapons(),
+        width6,
+        _buildWatchWeaponInformation(),
      ],
    );
+}
+
+Widget buildWatchPlayerStoreItems() {
+  return watch(player.storeItems, (List<Weapon> weapons){
+      if (weapons.isEmpty) return const SizedBox();
+      return Column(
+        children: weapons.map(_buildButtonPurchaseWeapon).toList(),
+      );
+  });
+}
+
+Widget _buildWatchWeaponInformation(){
+   return watch(weaponInformation, (Weapon? weapon){
+     if (weapon == null) return const SizedBox();
+      return Container(
+         color: grey,
+         width: 200,
+         padding: const EdgeInsets.all(6),
+         child: Column(
+             crossAxisAlignment: CrossAxisAlignment.start,
+             children: [
+               text(weapon.name),
+               text('Damage: ${weapon.damage}'),
+             ],
+         ),
+      );
+   });
 }
 
 Widget _buildTabHead(){
@@ -121,10 +150,10 @@ Widget _buildButtonEquipWeapon(Weapon weapon){
   });
 }
 
-Widget _buildButtonPurchaseWeapon(int weapon) {
+Widget _buildButtonPurchaseWeapon(Weapon weapon) {
   return container(
-      child: text(WeaponType.getName(weapon)),
-      action: () => sendClientRequestPurchaseWeapon(weapon),
+      child: text(weapon.name),
+      action: () => sendClientRequestPurchaseWeapon(weapon.type),
   );
 }
 

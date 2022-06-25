@@ -48,6 +48,7 @@ class Player extends Character with ByteWriter {
   Account? account;
 
   final weapons = <Weapon>[];
+  var storeItems = <Weapon>[];
 
   final cardChoices = <CardType>[];
   final deck = <Card>[];
@@ -777,14 +778,16 @@ extension PlayerProperties on Player {
     }
   }
 
-  void writeWeapons(){
+  void writePlayerWeapons(){
      writeByte(ServerResponse.Player_Weapons);
-     writeByte(weapons.length);
-     for (final weapon in weapons) {
-        writeByte(weapon.type);
-        writeByte(weapon.damage);
-        writeString(weapon.uuid);
-     }
+     writeInt(weapons.length);
+     weapons.forEach(writeWeapon);
+  }
+
+  void writeWeapon(Weapon weapon){
+    writeByte(weapon.type);
+    writeInt(weapon.damage);
+    writeString(weapon.uuid);
   }
 
   void writeEquippedWeapon(){
@@ -803,6 +806,12 @@ extension PlayerProperties on Player {
 
   void writeAngle(double radians){
     writeInt(radians * radiansToDegrees);
+  }
+
+  void writeStoreItems(){
+     writeByte(ServerResponse.Store_Items);
+     writeInt(storeItems.length);
+     storeItems.forEach(writeWeapon);
   }
 }
 

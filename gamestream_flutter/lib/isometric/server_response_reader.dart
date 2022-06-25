@@ -281,21 +281,7 @@ class ServerResponseReader with ByteReader {
           break;
 
         case ServerResponse.Player_Weapons:
-          final weapons = <Weapon>[];
-          final total = readByte();
-          for (var i = 0; i < total; i++){
-             final type = readByte();
-             final damage = readByte();
-             final uuid = readString();
-             weapons.add(
-                Weapon(
-                   type: type,
-                   damage: damage,
-                   uuid: uuid,
-                )
-             );
-          }
-          player.weapons.value = weapons;
+          player.weapons.value = readWeapons();
           break;
 
         case ServerResponse.Player_Equipped_Weapon:
@@ -319,6 +305,10 @@ class ServerResponseReader with ByteReader {
           onGridChanged();
           break;
 
+        case ServerResponse.Store_Items:
+          player.storeItems.value = readWeapons();
+          break;
+
         case ServerResponse.End:
           byteLength.value = index;
           index = 0;
@@ -333,6 +323,24 @@ class ServerResponseReader with ByteReader {
 
   void parseCharacterSelectRequired() {
     player.selectCharacterRequired.value = readBool();
+  }
+
+  List<Weapon> readWeapons() {
+    final weapons = <Weapon>[];
+    final total = readInt();
+    for (var i = 0; i < total; i++){
+      final type = readByte();
+      final damage = readInt();
+      final uuid = readString();
+      weapons.add(
+          Weapon(
+            type: type,
+            damage: damage,
+            uuid: uuid,
+          )
+      );
+    }
+    return weapons;
   }
 
   void updateSync() {

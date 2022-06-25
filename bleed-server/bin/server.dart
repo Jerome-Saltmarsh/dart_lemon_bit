@@ -462,7 +462,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                damage: 1,
             )
           );
-          player.writeWeapons();
+          player.writePlayerWeapons();
           break;
 
         case ClientRequest.Equip_Weapon:

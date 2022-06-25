@@ -56,5 +56,6 @@ class ServerResponse {
   static const Block_Set = 63;
   static const Player_Weapons = 64;
   static const Player_Equipped_Weapon = 65;
+  static const Store_Items = 66;
 }
 

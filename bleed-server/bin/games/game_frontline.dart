@@ -36,7 +36,6 @@ class GameFrontline extends Game {
        bell.indexRow = row;
        bell.indexColumn = column + 1;
     });
-    // moveCharacterToSpawn(bell);
     npcs.add(bell);
   }
 
@@ -50,6 +49,14 @@ class GameFrontline extends Game {
         weapon: Weapon(type: WeaponType.Unarmed, damage: 1),
     );
     moveCharacterToGridNode(player, GridNodeType.Player_Spawn);
+
+    player.storeItems = [
+        Weapon(type: WeaponType.Shotgun, damage: 1),
+        Weapon(type: WeaponType.Sword, damage: 1),
+        Weapon(type: WeaponType.Axe, damage: 1),
+    ];
+    player.writeStoreItems();
+
     return player;
   }
 
