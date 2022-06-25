@@ -122,20 +122,10 @@ Widget _buildButtonEquipWeapon(Weapon weapon){
   });
 }
 
-Widget _buildButtonPurchaseWeapon(int weapon){
-   return watch(player.weaponType, (int equipped){
-      return onPressed(
-         callback: () => sendClientRequestPurchaseWeapon(weapon),
-         child: Container(
-            padding: const EdgeInsets.only(left: 8),
-            alignment: Alignment.centerLeft,
-            width: 200,
-            height: 50,
-            color: equipped == weapon ? Colors.green : Colors.grey,
-            child: text(WeaponType.getName(weapon)),
-         ),
-      );
-   });
+Widget _buildButtonPurchaseWeapon(int weapon) {
+  return container(child: text(WeaponType.getName(weapon)),
+    action: () => sendClientRequestPurchaseWeapon(weapon)
+  );
 }
 
 Widget _buildSelectArmourType(int type){
