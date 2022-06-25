@@ -349,7 +349,7 @@ extension GameFunctions on Game {
         positions: npcs,
         x: x,
         y: y,
-        where: (other) => other.alive && onSameTeam(other, character));
+        where: (other) => other.alive);
   }
 
   GameObject? getClosestGameObject(double x, double y) {
@@ -361,7 +361,7 @@ extension GameFunctions on Game {
     );
   }
 
-  Collider? getClosestCollider(double x, double y, Character character) {
+  Collider? getClosestCollider(double x, double y, Character character, {double? minDistance}) {
     Collider? closestCollider = null;
     var closestDistance = 99999.0;
     final closestZombie = getClosestEnemy(
@@ -395,6 +395,8 @@ extension GameFunctions on Game {
            closestDistance = npcDistance;
         }
     }
+    if (minDistance != null && closestDistance > minDistance) return null;
+
     return closestCollider;
   }
 

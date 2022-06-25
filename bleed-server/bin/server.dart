@@ -192,18 +192,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          player.aimTarget = null;
-          final closestCollider = game.getClosestCollider(mouseX, mouseY, player);
-          if (closestCollider != null) {
-            if (withinDistance(
-                closestCollider,
-                mouseX,
-                mouseY,
-                35.0, // cursor radius
-            )) {
-              player.aimTarget = closestCollider;
-            }
-          }
+          player.aimTarget = game.getClosestCollider(mouseX, mouseY, player, minDistance: 35);
           switch (args[1]) {
             case CharacterAction.Idle:
               if (player.target == null){

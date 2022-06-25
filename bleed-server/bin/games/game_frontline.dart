@@ -47,6 +47,7 @@ class GameFrontline extends Game {
     final player = Player(
         game: this,
         weapon: Weapon(type: WeaponType.Unarmed, damage: 1),
+        team: 1,
     );
     moveCharacterToGridNode(player, GridNodeType.Player_Spawn);
 
