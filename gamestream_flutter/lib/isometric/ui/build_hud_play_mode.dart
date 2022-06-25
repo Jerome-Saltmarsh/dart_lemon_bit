@@ -2,21 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_inventory.dart';
 import 'package:gamestream_flutter/isometric/ui/watch_inventory_visible.dart';
+import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 
 Widget buildHudPlayMode() {
-    return Container(
-      width: 500,
-      height: 500,
-      child: Stack(
-        children: [
-              Positioned(
-                  right: 0,
-                  top: 100,
-                  child:  buildWatchInventoryVisible()
-              ),
-        ],
-      ),
-    );
+  return Stack(
+    children: [
+      Positioned(top: 0, right: 0, child: buildPanelMenu()),
+      Positioned(top: 50, right: 0, child: buildWatchInventoryVisible()),
+    ]
+  );
 }
 
 Widget buildWatchInventoryVisible(){

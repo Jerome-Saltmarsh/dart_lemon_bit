@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/camera_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
+import 'package:gamestream_flutter/isometric/ui/build_hud.dart';
 import 'package:gamestream_flutter/isometric/ui/build_watch_play_mode.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/game/enums.dart';
@@ -46,7 +47,7 @@ class GameBuild {
         case GameStatus.Awaiting_Players:
           return buildLayoutWaitingForPlayers();
         case GameStatus.In_Progress:
-          return buildLayoutInProgress();
+          return buildHud();
         case GameStatus.Finished:
           return buildDialogGameFinished();
         default:
@@ -98,38 +99,6 @@ class GameBuild {
   Widget respawnButton(){
     return button("Respawn", actions.respawn);
   }
-
-  Widget buildLayoutInProgress(){
-    return buildLayout(
-        children: [
-          Positioned(
-              right: 0,
-              top: 0,
-              child: buildPanelMenu()
-          ),
-          buildPanelWriteMessage(),
-          if (gameType.value == GameType.RANDOM)
-            buildHudRandom(),
-          if (gameType.value == GameType.FRONTLINE)
-            Positioned(
-              top: 0,
-              left: 0,
-              child: buildWatchPlayMode(),
-            ),
-        ]);
-  }
-
-  Widget buildTextLivesRemaining(){
-    return Positioned(
-      right: 20,
-      bottom: 20,
-      child: WatchBuilder(modules.game.state.lives, (int lives){
-         return text('Lives: $lives');
-      }),
-    );
-  }
-
-  Widget buildButtonExit() => button("Exit", core.actions.disconnect);
 
   Widget panel({required Widget child, Alignment? alignment, EdgeInsets? padding, double? width}){
     return Container(

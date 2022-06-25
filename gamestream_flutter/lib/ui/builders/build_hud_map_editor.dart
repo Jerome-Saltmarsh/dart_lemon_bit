@@ -8,18 +8,28 @@ import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
+import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 Widget buildHudMapEditor(){
+  return Stack(
+    children: [
+      Positioned(top: 0, right: 0, child: buildPanelMenu()),
+      Positioned(top: 0, left: 0, child: buildEditTools()),
+    ],
+  );
+}
+
+Widget buildEditTools(){
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       buildColumnEditTile(),
       buildColumnEdit(),
       _button("Recenter", (){
-         edit.z.value = player.indexZ;
-         edit.row.value = player.indexRow;
-         edit.column.value = player.indexColumn;
+        edit.z.value = player.indexZ;
+        edit.row.value = player.indexRow;
+        edit.column.value = player.indexColumn;
       }),
       watch(gridShadows, (bool shadowsOn){
         return _button("Shadows: $shadowsOn", (){
@@ -30,20 +40,20 @@ Widget buildHudMapEditor(){
       _buildControlTime(),
       height8,
       watch(edit.type, (int type){
-         if (type != GridNodeType.Enemy_Spawn) return const SizedBox();
-         return Container(
-           color: Colors.grey,
-           padding: EdgeInsets.all(8),
-           child: Column(
-             mainAxisAlignment: MainAxisAlignment.start,
-             crossAxisAlignment: CrossAxisAlignment.start,
-             children: [
-                 text("ENEMY SPAWN"),
-                 text("Amount"),
-                 text("Health"),
-             ],
-           ),
-         );
+        if (type != GridNodeType.Enemy_Spawn) return const SizedBox();
+        return Container(
+          color: Colors.grey,
+          padding: EdgeInsets.all(8),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              text("ENEMY SPAWN"),
+              text("Amount"),
+              text("Health"),
+            ],
+          ),
+        );
       }),
     ],
   );
