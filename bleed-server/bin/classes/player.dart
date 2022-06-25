@@ -53,6 +53,12 @@ class Player extends Character with ByteWriter {
   final cardChoices = <CardType>[];
   final deck = <Card>[];
 
+  void closeStore(){
+    if (storeItems.isEmpty) return;
+    storeItems = [];
+    writeStoreItems();
+  }
+
   void runToMouse(){
     setRunTarget(mouse.x, mouse.y);
   }
