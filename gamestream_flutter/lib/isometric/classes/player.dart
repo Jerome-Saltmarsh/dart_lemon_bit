@@ -62,7 +62,7 @@ class Player extends Vector3 {
   final canAffordPalisade = Watch(false);
 
   final weapons = Watch(<Weapon>[]);
-  final weapon = Watch(
+  final weapon = Watch<Weapon>(
       Weapon(
         type: WeaponType.Unarmed,
         damage: 1,

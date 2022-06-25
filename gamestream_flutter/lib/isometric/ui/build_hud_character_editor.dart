@@ -102,7 +102,7 @@ Widget _buildButtonPants(int pantsType) {
   });
 }
 
-Widget buildColumnPlayerWeapons(){
+Widget buildColumnPlayerWeapons() {
    return watch(player.weapons, (List<Weapon> weapons){
       return Column(
         children: weapons.map(_buildButtonEquipWeapon).toList(),
@@ -111,12 +111,15 @@ Widget buildColumnPlayerWeapons(){
 }
 
 Widget _buildButtonEquipWeapon(Weapon weapon){
-  return container(
+  return watch(player.weapon, (Weapon equippedWeapon){
+    return container(
+      color: weapon.uuid == equippedWeapon.uuid ? green : grey,
       child: text(WeaponType.getName(weapon.type)),
       action: (){
         sendClientRequestEquipWeapon(player.weapons.value.indexOf(weapon));
       },
-  );
+    );
+  });
 }
 
 Widget _buildButtonPurchaseWeapon(int weapon){
