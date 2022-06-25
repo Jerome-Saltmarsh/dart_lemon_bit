@@ -203,7 +203,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               final ability = player.ability;
               final aimTarget = player.aimTarget;
               player.target = aimTarget;
-              player.closeStore();
 
               if (aimTarget is InteractableNpc){
                 if (withinRadius(player, aimTarget, 100)){
@@ -215,6 +214,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                   break;
                 }
                 player.runToMouse();
+                player.closeStore();
+              } else {
+                player.closeStore();
               }
 
               // if (aimTarget is GameObject) {
