@@ -9,7 +9,7 @@ Widget buildHudPlayMode() {
   return Stack(
     children: [
       Positioned(top: 0, right: 0, child: buildPanelMenu()),
-      Positioned(top: 0, left: 0, child: buildPanelStore()),
+      Positioned(top: 50, left: 0, child: buildPanelStore()),
       Positioned(top: 50, right: 0, child: buildWatchInventoryVisible()),
       buildPanelWriteMessage(),
     ]

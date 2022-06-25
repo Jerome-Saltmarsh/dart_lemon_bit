@@ -362,39 +362,40 @@ extension GameFunctions on Game {
   }
 
   Collider? getClosestCollider(double x, double y, Character character) {
-    final zombie = getClosestEnemy(
+    Collider? closestCollider = null;
+    var closestDistance = 99999.0;
+    final closestZombie = getClosestEnemy(
         x: x,
         y: y,
         character: character,
         characters: zombies
     );
-    final player = getClosestEnemy(
+    if (closestZombie != null) {
+      closestCollider = closestZombie;
+      closestDistance = distanceBetween(x, y, closestZombie.x, closestZombie.y);
+    }
+    final closestPlayer = getClosestEnemy(
         x: x,
         y: y,
         character: character,
         characters: players
     );
-
-    // final npc = getClosestNpc(x: x, y: y, character: character, characters: npcs);
-
-    final dynamicObject = playersCanAttackDynamicObjects ? getClosestGameObject(x, y) : null;
-    final zombieDistance = zombie != null ? distanceBetween(x, y, zombie.x, zombie.y) : 99999;
-    final playerDistance =
-        player != null ? distanceBetween(x, y, player.x, player.y) : 99999;
-    final dynamicDistance = dynamicObject != null
-        ? distanceBetween(x, y, dynamicObject.x, dynamicObject.y)
-        : 99999;
-
-    if (zombieDistance < playerDistance) {
-      if (zombieDistance < dynamicDistance) {
-        return zombie;
+    if (closestPlayer != null){
+      final playerDistance = distanceBetween(x, y, closestPlayer.x, closestPlayer.y);
+      if (playerDistance < closestDistance) {
+         closestCollider = closestPlayer;
+         closestDistance = playerDistance;
       }
-      return dynamicObject;
     }
-    if (playerDistance < dynamicDistance) {
-      return player;
+    final closestNpc = getClosestNpc(x: x, y: y, character: character, characters: npcs);
+    if (closestNpc != null){
+        final npcDistance = distanceBetween(x, y, closestNpc.x, closestNpc.y);
+        if (npcDistance < closestDistance) {
+           closestCollider = closestNpc;
+           closestDistance = npcDistance;
+        }
     }
-    return dynamicObject;
+    return closestCollider;
   }
 
   void updateInProgress() {
