@@ -57,6 +57,9 @@ class GameFrontline extends Game {
     ];
     player.writeStoreItems();
 
+    player.weapons.add(Weapon(type: WeaponType.Sword, damage: 2));
+    player.weapons.add(Weapon(type: WeaponType.Bow, damage: 2));
+    player.writePlayerWeapons();
     return player;
   }
 

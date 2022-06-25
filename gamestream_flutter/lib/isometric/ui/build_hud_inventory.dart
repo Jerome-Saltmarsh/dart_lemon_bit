@@ -130,11 +130,16 @@ Widget _buildButtonPants(int pantsType) {
 }
 
 Widget buildColumnPlayerWeapons() {
-   return watch(player.weapons, (List<Weapon> weapons){
-      return Column(
-        children: weapons.map(_buildButtonEquipWeapon).toList(),
-      );
-   });
+   return Column(
+     children: [
+       container(child: text("Inventory")),
+       watch(player.weapons, (List<Weapon> weapons){
+          return Column(
+            children: weapons.map(_buildButtonEquipWeapon).toList(),
+          );
+       }),
+     ],
+   );
 }
 
 Widget _buildButtonEquipWeapon(Weapon weapon){
