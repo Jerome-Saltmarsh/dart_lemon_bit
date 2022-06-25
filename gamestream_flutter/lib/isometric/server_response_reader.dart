@@ -88,7 +88,6 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Game_Objects:
           readGameObjects();
           break;
-
         case ServerResponse.Player_Deck_Cooldown:
           final length = readByte();
           assert (length == player.deck.value.length);
@@ -104,22 +103,7 @@ class ServerResponseReader with ByteReader {
           break;
 
         case ServerResponse.Grid:
-          final totalZ = readInt();
-          final totalRows = readInt();
-          final totalColumns = readInt();
-          grid.clear();
-          for (var z = 0; z < totalZ; z++) {
-             final plain = <List<int>>[];
-             grid.add(plain);
-             for (var rowIndex = 0; rowIndex < totalRows; rowIndex++) {
-                final row = <int>[];
-                plain.add(row);
-                for (var columnIndex = 0; columnIndex < totalColumns; columnIndex++) {
-                    row.add(readByte());
-                }
-             }
-          }
-          onGridChanged();
+          readGrid();
           break;
 
         case ServerResponse.Player_Deck_Active_Ability:
@@ -210,28 +194,7 @@ class ServerResponseReader with ByteReader {
           break;
 
         case ServerResponse.Paths:
-          modules.game.state.debug.value = true;
-          var index = 0;
-          while (true) {
-            final pathIndex = readInt();
-            paths[index] = pathIndex.toDouble();
-            index++;
-            if (pathIndex == 250) break;
-            for (var i = 0; i < pathIndex; i++) {
-              paths[index] = readDouble();
-              paths[index + 1] = readDouble();
-              index += 2;
-            }
-          }
-          var i = 0;
-
-          while(readByte() != 0) {
-             targets[i] = readDouble();
-             targets[i + 1] = readDouble();
-             targets[i + 2] = readDouble();
-             targets[i + 3] = readDouble();
-             i += 4;
-          }
+          readPaths();
           break;
 
         case ServerResponse.Game_Time:
@@ -240,29 +203,7 @@ class ServerResponseReader with ByteReader {
           break;
 
         case ServerResponse.Player:
-          player.x = readDouble();
-          player.y = readDouble();
-          player.z = readDouble();
-          player.angle = readDouble() / 100.0;
-          player.mouseAngle = readDouble() / 100.0;
-          player.health.value = readDouble();
-          player.maxHealth = readDouble();
-          player.magic.value = readDouble();
-          player.maxMagic.value = readDouble();
-          player.weaponType.value = readByte();
-          player.weaponDamage.value = readByte();
-          player.armourType.value = readByte();
-          player.headType.value = readByte();
-          player.pantsType.value = readByte();
-          player.alive.value = readBool();
-          player.storeVisible.value = readBool();
-          player.wood.value = readInt();
-          player.stone.value = readInt();
-          player.gold.value = readInt();
-          player.experience.value = readPercentage();
-          player.level.value = readByte();
-          player.skillPoints.value = readByte();
-          updateCameraMode();
+          readPlayer();
           break;
 
         case ServerResponse.Player_Slots:
@@ -312,6 +253,76 @@ class ServerResponseReader with ByteReader {
           throw Exception("Cannot parse $response");
       }
     }
+  }
+
+  void readGrid() {
+    final totalZ = readInt();
+    final totalRows = readInt();
+    final totalColumns = readInt();
+    grid.clear();
+    for (var z = 0; z < totalZ; z++) {
+       final plain = <List<int>>[];
+       grid.add(plain);
+       for (var rowIndex = 0; rowIndex < totalRows; rowIndex++) {
+          final row = <int>[];
+          plain.add(row);
+          for (var columnIndex = 0; columnIndex < totalColumns; columnIndex++) {
+              row.add(readByte());
+          }
+       }
+    }
+    onGridChanged();
+  }
+
+  void readPaths() {
+    modules.game.state.debug.value = true;
+    var index = 0;
+    while (true) {
+      final pathIndex = readInt();
+      paths[index] = pathIndex.toDouble();
+      index++;
+      if (pathIndex == 250) break;
+      for (var i = 0; i < pathIndex; i++) {
+        paths[index] = readDouble();
+        paths[index + 1] = readDouble();
+        index += 2;
+      }
+    }
+    var i = 0;
+
+    while(readByte() != 0) {
+       targets[i] = readDouble();
+       targets[i + 1] = readDouble();
+       targets[i + 2] = readDouble();
+       targets[i + 3] = readDouble();
+       i += 4;
+    }
+  }
+
+  void readPlayer() {
+    player.x = readDouble();
+    player.y = readDouble();
+    player.z = readDouble();
+    player.angle = readDouble() / 100.0;
+    player.mouseAngle = readDouble() / 100.0;
+    player.health.value = readDouble();
+    player.maxHealth = readDouble();
+    player.magic.value = readDouble();
+    player.maxMagic.value = readDouble();
+    player.weaponType.value = readByte();
+    player.weaponDamage.value = readByte();
+    player.armourType.value = readByte();
+    player.headType.value = readByte();
+    player.pantsType.value = readByte();
+    player.alive.value = readBool();
+    player.storeVisible.value = readBool();
+    player.wood.value = readInt();
+    player.stone.value = readInt();
+    player.gold.value = readInt();
+    player.experience.value = readPercentage();
+    player.level.value = readByte();
+    player.skillPoints.value = readByte();
+    updateCameraMode();
   }
 
   void parseCharacterSelectRequired() {
