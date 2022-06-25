@@ -865,6 +865,9 @@ extension GameFunctions on Game {
       if (target is InteractableNpc){
         player.face(target);
         if (withinRadius(player, target, 100)){
+          if (!target.deadOrBusy){
+            target.face(player);
+          }
           target.onInteractedWith(player);
           player.target = null;
           setCharacterStateIdle(player);
