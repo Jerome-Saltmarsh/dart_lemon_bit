@@ -36,6 +36,7 @@ enum ClientRequest {
   Upgrade_Weapon_Damage,
   Purchase_Weapon,
   Equip_Weapon,
+  Store_Close,
 }
 
 const clientRequests = ClientRequest.values;

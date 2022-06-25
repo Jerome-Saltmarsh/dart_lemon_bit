@@ -85,6 +85,10 @@ void sendClientRequestSkipHour(){
   sendClientRequest(ClientRequest.Skip_Hour);
 }
 
+void sendClientRequestStoreClose(){
+  sendClientRequest(ClientRequest.Store_Close);
+}
+
 
 void sendClientRequestSpawnZombie({
   required int z,

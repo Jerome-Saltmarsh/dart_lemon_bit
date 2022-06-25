@@ -465,6 +465,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.writePlayerWeapons();
           break;
 
+        case ClientRequest.Store_Close:
+          if (player == null) return errorPlayerNotFound();
+          player.storeItems = [];
+          player.writeStoreItems();
+          break;
+
         case ClientRequest.Equip_Weapon:
           if (player == null) return errorPlayerNotFound();
           if (player.deadOrBusy) return;

@@ -19,37 +19,52 @@ final activeTab = Watch(_Tab.Weapon);
 
 final weaponInformation = Watch<Weapon?>(null);
 
-Widget buildHudInventory(){
-   return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-       Row(children: _Tab.values.map((tab) {
-         return watch(activeTab, (active){
-            return container(
-              child: text(tab.name),
-              action: () => activeTab.value = tab,
-              color: tab == activeTab.value ? greyDark : grey,
-            );
-         });
-       }).toList()),
-       height6,
-       watch(activeTab, (tab){
-          switch (tab){
-             case _Tab.Weapon:
-               return _buildTabWeapons();
-             case _Tab.Armour:
+Widget buildPanelStore(){
+
+  return watch(player.storeItems, (List<Weapon> weapons){
+      if (weapons.isEmpty) return SizedBox();
+
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              container(child: "PURCHASE"),
+              container(child: SizedBox()),
+              container(child: SizedBox()),
+              container(child: "CLOSE", action: sendClientRequestStoreClose),
+            ],
+          ),
+          height6,
+          Row(children: _Tab.values.map((tab) {
+            return watch(activeTab, (active){
+              return container(
+                child: text(tab.name),
+                action: () => activeTab.value = tab,
+                color: tab == activeTab.value ? greyDark : grey,
+              );
+            });
+          }).toList()),
+          height6,
+          watch(activeTab, (tab){
+            switch (tab){
+              case _Tab.Weapon:
+                return _buildTabWeapons();
+              case _Tab.Armour:
                 return _buildTabArmour();
-             case _Tab.Head:
+              case _Tab.Head:
                 return _buildTabHead();
-            case _Tab.Pants:
+              case _Tab.Pants:
                 return _buildTabPants();
-             default:
+              default:
                 return text("not available");
-          }
-       })
-     ],
-   );
+            }
+          })
+        ],
+      );
+  });
 }
 
 Widget _buildTabArmour(){
@@ -65,8 +80,6 @@ Widget _buildTabWeapons(){
         buildWatchPlayerStoreItems(),
         width6,
         buildWatchWeaponInformation(),
-        width6,
-        buildColumnPlayerWeapons(),
      ],
    );
 }
