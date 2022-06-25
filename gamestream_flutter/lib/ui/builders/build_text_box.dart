@@ -10,7 +10,6 @@ import '../../flutterkit.dart';
 Widget buildPanelWriteMessage() {
   return WatchBuilder(messageBoxVisible, (bool visible){
     if (!visible) return blank;
-
     return Positioned(
         bottom: 100,
         child: Container(

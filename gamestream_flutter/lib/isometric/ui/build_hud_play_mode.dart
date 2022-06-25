@@ -3,6 +3,7 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
 import 'package:gamestream_flutter/isometric/ui/watch_inventory_visible.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
+import 'package:gamestream_flutter/ui/builders/build_text_box.dart';
 
 Widget buildHudPlayMode() {
   return Stack(
@@ -10,6 +11,7 @@ Widget buildHudPlayMode() {
       Positioned(top: 0, right: 0, child: buildPanelMenu()),
       Positioned(top: 0, left: 0, child: buildPanelStore()),
       Positioned(top: 50, right: 0, child: buildWatchInventoryVisible()),
+      buildPanelWriteMessage(),
     ]
   );
 }
