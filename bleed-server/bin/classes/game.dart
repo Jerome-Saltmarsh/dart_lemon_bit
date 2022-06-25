@@ -862,6 +862,18 @@ extension GameFunctions on Game {
         return;
       }
 
+      if (target is InteractableNpc){
+        player.face(target);
+        if (withinRadius(player, target, 100)){
+          target.onInteractedWith(player);
+          player.target = null;
+          setCharacterStateIdle(player);
+          return;
+        }
+        setCharacterStateRunning(player);
+        return;
+      }
+
       if (ability != null) {
         if (withinRadius(player, target, ability.range)) {
           player.target = target;

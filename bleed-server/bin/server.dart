@@ -205,7 +205,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               player.target = aimTarget;
 
               if (aimTarget is InteractableNpc){
-                if (withinRadius(player, aimTarget, 50)){
+                if (withinRadius(player, aimTarget, 100)){
                   player.face(aimTarget);
                   aimTarget.onInteractedWith(player);
                   break;
