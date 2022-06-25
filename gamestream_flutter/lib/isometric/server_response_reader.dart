@@ -89,169 +89,233 @@ class ServerResponseReader with ByteReader {
           readGameObjects();
           break;
         case ServerResponse.Player_Deck_Cooldown:
-          final length = readByte();
-          assert (length == player.deck.value.length);
-          for (var i = 0; i < length; i++){
-              final card = player.deck.value[i];
-              card.cooldownRemaining.value = readByte();
-              card.cooldown.value = readByte();
-          }
+          readPlayerDeckCooldown();
           break;
-
         case ServerResponse.Player_Deck:
-          player.deck.value = readDeck();
+          readPlayerDeck();
           break;
-
         case ServerResponse.Grid:
           readGrid();
           break;
-
         case ServerResponse.Player_Deck_Active_Ability:
-          player.deckActiveCardIndex.value = readByte();
-          player.deckActiveCardRange.value = readDouble();
-          player.deckActiveCardRadius.value = readDouble();
-          engine.cursorType.value = CursorType.Click;
+          readPlayerDeckActiveAbility();
           break;
-
         case ServerResponse.Player_Deck_Active_Ability_None:
-          player.deckActiveCardIndex.value = -1;
-          engine.cursorType.value = CursorType.Basic;
+          readPlayerDeckActiveAbilityNone();
           break;
-
         case ServerResponse.Card_Choices:
-          player.cardChoices.value = readCardTypes();
+          readCardChoices();
           break;
-
         case ServerResponse.Character_Select_Required:
-          parseCharacterSelectRequired();
+          readCharacterSelectRequired();
           break;
-
         case ServerResponse.Game_Status:
-          core.state.status.value = gameStatuses[readByte()];
+          readGameStatus();
           break;
-
         case ServerResponse.Tiles:
           throw Exception("No longer ServerResponse.Tiles");
-
         case ServerResponse.Debug_Mode:
-          modules.game.state.debug.value = readBool();
+          readDebugMode();
           break;
-
         case ServerResponse.Player_Attack_Target:
-          player.attackTarget.x = readDouble();
-          player.attackTarget.y = readDouble();
-          engine.cursorType.value = CursorType.Click;
+          readPlayerAttackTarget();
           break;
         case ServerResponse.Player_Attack_Target_None:
-          player.attackTarget.x = 0;
-          player.attackTarget.y = 0;
-          engine.cursorType.value = CursorType.Basic;
+          readPlayerAttackTargetNone();
           break;
         case ServerResponse.Collectables:
-          var totalCollectables = 0;
-          var type = readByte();
-          while (type != END) {
-            final collectable = collectables[totalCollectables];
-            collectable.type = type;
-            readVector2(collectable);
-            totalCollectables++;
-            type = readByte();
-          }
+          readCollectables();
           break;
-
         case ServerResponse.Tech_Types:
-          player.levelPickaxe.value = readByte();
-          player.levelSword.value = readByte();
-          player.levelBow.value = readByte();
-          player.levelAxe.value = readByte();
-          player.levelHammer.value = readByte();
+          readTechTypes();
           break;
-
         case ServerResponse.Damage_Applied:
-          final x = readDouble();
-          final y = readDouble() - 5;
-          final amount = readInt();
-          spawnFloatingText(x, y, amount.toString());
+          readDamageApplied();
           break;
-
         case ServerResponse.Dynamic_Object_Destroyed:
-          final id = readInt();
-          gameObjects.removeWhere((dynamicObject) => dynamicObject.id == id);
+          readDynamicObjectDestroyed();
           break;
-
         case ServerResponse.Dynamic_Object_Spawned:
-          final instance = GameObject();
-          instance.type = readByte();
-          instance.x = readDouble();
-          instance.y = readDouble();
-          instance.id = readInt();
-          gameObjects.add(instance);
-          sortVertically(gameObjects);
+          readDynamicObjectSpawned();
           break;
-
         case ServerResponse.Lives_Remaining:
-          modules.game.state.lives.value = readByte();
+          readLivesRemaining();
           break;
-
         case ServerResponse.Paths:
           readPaths();
           break;
-
         case ServerResponse.Game_Time:
-          hours.value = readByte();
-          minutes.value = readByte();
+          readGameTime();
           break;
-
         case ServerResponse.Player:
           readPlayer();
           break;
-
         case ServerResponse.Player_Slots:
           break;
-
         case ServerResponse.Player_Spawned:
-          player.x = readDouble();
-          player.y = readDouble();
-          cameraCenterOnPlayer();
-          engine.zoom = 1.0;
-          engine.targetZoom = 1.0;
+          readPlayerSpawned();
           break;
-
         case ServerResponse.Player_Target:
-          readPosition(player.abilityTarget);
+          readPlayerTarget();
           break;
-
         case ServerResponse.Player_Weapons:
-          player.weapons.value = readWeapons();
+          readPlayerWeapons();
           break;
-
         case ServerResponse.Player_Equipped_Weapon:
-          player.weapon.value = readWeapon();
+          readPlayerEquippedWeapon();
           break;
-
         case ServerResponse.Block_Set:
-          final z = readInt();
-          final row = readInt();
-          final column = readInt();
-          final type = readInt();
-          grid[z][row][column] = type;
-          edit.refreshType();
-          onGridChanged();
+          readBlockSet();
           break;
-
         case ServerResponse.Store_Items:
-          player.storeItems.value = readWeapons();
+          readStoreItems();
           break;
-
         case ServerResponse.End:
-          byteLength.value = index;
-          index = 0;
-          engine.redrawCanvas();
-          return;
-
+          return readEnd();
         default:
           throw Exception("Cannot parse $response");
       }
+    }
+  }
+
+  void readEnd() {
+    byteLength.value = index;
+    index = 0;
+    engine.redrawCanvas();
+  }
+
+  void readStoreItems() {
+    player.storeItems.value = readWeapons();
+  }
+
+  void readBlockSet() {
+    final z = readInt();
+    final row = readInt();
+    final column = readInt();
+    final type = readInt();
+    grid[z][row][column] = type;
+    edit.refreshType();
+    onGridChanged();
+  }
+
+  void readPlayerEquippedWeapon() {
+    player.weapon.value = readWeapon();
+  }
+
+  void readPlayerWeapons() {
+    player.weapons.value = readWeapons();
+  }
+
+  void readPlayerTarget() {
+    readPosition(player.abilityTarget);
+  }
+
+  void readPlayerSpawned() {
+    player.x = readDouble();
+    player.y = readDouble();
+    cameraCenterOnPlayer();
+    engine.zoom = 1.0;
+    engine.targetZoom = 1.0;
+  }
+
+  void readGameTime() {
+    hours.value = readByte();
+    minutes.value = readByte();
+  }
+
+  void readLivesRemaining() {
+    modules.game.state.lives.value = readByte();
+  }
+
+  void readDynamicObjectSpawned() {
+    final instance = GameObject();
+    instance.type = readByte();
+    instance.x = readDouble();
+    instance.y = readDouble();
+    instance.id = readInt();
+    gameObjects.add(instance);
+    sortVertically(gameObjects);
+  }
+
+  void readDynamicObjectDestroyed() {
+    final id = readInt();
+    gameObjects.removeWhere((dynamicObject) => dynamicObject.id == id);
+  }
+
+  void readDamageApplied() {
+    final x = readDouble();
+    final y = readDouble() - 5;
+    final amount = readInt();
+    spawnFloatingText(x, y, amount.toString());
+  }
+
+  void readTechTypes() {
+    player.levelPickaxe.value = readByte();
+    player.levelSword.value = readByte();
+    player.levelBow.value = readByte();
+    player.levelAxe.value = readByte();
+    player.levelHammer.value = readByte();
+  }
+
+  void readCollectables() {
+    var totalCollectables = 0;
+    var type = readByte();
+    while (type != END) {
+      final collectable = collectables[totalCollectables];
+      collectable.type = type;
+      readVector2(collectable);
+      totalCollectables++;
+      type = readByte();
+    }
+  }
+
+  void readPlayerAttackTargetNone() {
+    player.attackTarget.x = 0;
+    player.attackTarget.y = 0;
+    engine.cursorType.value = CursorType.Basic;
+  }
+
+  void readPlayerAttackTarget() {
+    player.attackTarget.x = readDouble();
+    player.attackTarget.y = readDouble();
+    engine.cursorType.value = CursorType.Click;
+  }
+
+  void readDebugMode() {
+    modules.game.state.debug.value = readBool();
+  }
+
+  void readGameStatus() {
+    core.state.status.value = gameStatuses[readByte()];
+  }
+
+  void readCardChoices() {
+    player.cardChoices.value = readCardTypes();
+  }
+
+  void readPlayerDeckActiveAbilityNone() {
+    player.deckActiveCardIndex.value = -1;
+    engine.cursorType.value = CursorType.Basic;
+  }
+
+  void readPlayerDeckActiveAbility() {
+    player.deckActiveCardIndex.value = readByte();
+    player.deckActiveCardRange.value = readDouble();
+    player.deckActiveCardRadius.value = readDouble();
+    engine.cursorType.value = CursorType.Click;
+  }
+
+  void readPlayerDeck() {
+    player.deck.value = readDeck();
+  }
+
+  void readPlayerDeckCooldown() {
+    final length = readByte();
+    assert (length == player.deck.value.length);
+    for (var i = 0; i < length; i++){
+        final card = player.deck.value[i];
+        card.cooldownRemaining.value = readByte();
+        card.cooldown.value = readByte();
     }
   }
 
@@ -325,7 +389,7 @@ class ServerResponseReader with ByteReader {
     updateCameraMode();
   }
 
-  void parseCharacterSelectRequired() {
+  void readCharacterSelectRequired() {
     player.selectCharacterRequired.value = readBool();
   }
 
