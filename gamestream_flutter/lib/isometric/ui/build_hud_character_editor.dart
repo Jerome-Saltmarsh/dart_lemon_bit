@@ -19,7 +19,7 @@ final activeTab = Watch(_Tab.Weapon);
 
 final weaponInformation = Watch<Weapon?>(null);
 
-Widget buildHudCharacterEditor(){
+Widget buildHudInventory(){
    return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -10,7 +10,6 @@ bool get playModeDebug => playMode.value == PlayMode.Debug;
 enum PlayMode {
     Play,
     Edit,
-    Character,
     Debug,
 }
 

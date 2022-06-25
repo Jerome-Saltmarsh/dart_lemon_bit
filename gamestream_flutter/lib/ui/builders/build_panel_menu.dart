@@ -3,6 +3,7 @@ import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/isometric/ui/watch_inventory_visible.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel.dart';
 import 'package:lemon_engine/engine.dart';
@@ -10,7 +11,7 @@ import 'package:lemon_watch/watch_builder.dart';
 
 Widget buildPanelMenu() {
   return buildPanel(
-      width: 200,
+      width: 300,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -31,13 +32,16 @@ Widget buildPanelMenu() {
           onPressed(
             callback: playModeToggle,
             child: WatchBuilder(playMode, (PlayMode mode) {
-              return mode == PlayMode.Edit
-                  ? Tooltip(
-                  child: icons.symbols.soundEnabled,
-                  message: 'Disabled Edit Tools')
-                  : Tooltip(
-                  child: icons.symbols.soundDisabled,
-                  message: 'Enable Edit Tools');
+              return text(mode.name);
+            }),
+          ),
+          onPressed(
+            callback: actionToggleInventoryVisible,
+            child: WatchBuilder(watchInventoryVisible, (bool inventoryVisible) {
+              if (inventoryVisible){
+                return icons.bag;
+              }
+              return icons.bagGray;
             }),
           ),
           onPressed(

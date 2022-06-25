@@ -14,8 +14,5 @@ void onPlayModeChanged(PlayMode playMode){
      case PlayMode.Debug:
        cameraModeSetChase();
        return;
-     case PlayMode.Character:
-       cameraModeSetChase();
-       return;
    }
 }
