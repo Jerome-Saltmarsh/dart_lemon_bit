@@ -465,6 +465,17 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.writeWeapons();
           break;
 
+        case ClientRequest.Equip_Weapon:
+          if (player == null) return errorPlayerNotFound();
+          if (player.deadOrBusy) return;
+          final index = int.tryParse(arguments[1]);
+          if (index == null || index < 0 || index >= player.weapons.length) {
+            return errorInvalidArg('invalid weapon index $index');
+          }
+          player.equippedWeapon = player.weapons[index];
+          player.setStateChanging();
+          break;
+
         case ClientRequest.Character_Save:
           final account = _account;
           if (player == null) return errorPlayerNotFound();

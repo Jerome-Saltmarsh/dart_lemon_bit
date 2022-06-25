@@ -118,6 +118,11 @@ void sendClientRequestUpgradeWeaponDamage(){
   sendClientRequest(ClientRequest.Upgrade_Weapon_Damage);
 }
 
+void sendClientRequestEquipWeapon(int index){
+  assert (index >= 0);
+  sendClientRequest(ClientRequest.Equip_Weapon, index);
+}
+
 void sendClientRequest(ClientRequest value, [dynamic message]){
   if (message != null){
     return webSocket.send('${value.index} $message');

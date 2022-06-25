@@ -65,12 +65,6 @@ Widget _buildTabWeapons(){
        ),
         width6,
         buildColumnPlayerWeapons(),
-        // watch(player.weaponDamage, (damage){
-        //  return container(
-        //      child: text("Damage: $damage"),
-        //      action: sendClientRequestUpgradeWeaponDamage,
-        //  );
-        // })
      ],
    );
 }
@@ -117,7 +111,12 @@ Widget buildColumnPlayerWeapons(){
 }
 
 Widget _buildButtonEquipWeapon(Weapon weapon){
-  return container(child: text(WeaponType.getName(weapon.type)));
+  return container(
+      child: text(WeaponType.getName(weapon.type)),
+      action: (){
+        sendClientRequestEquipWeapon(player.weapons.value.indexOf(weapon));
+      },
+  );
 }
 
 Widget _buildButtonPurchaseWeapon(int weapon){
