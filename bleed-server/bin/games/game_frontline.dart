@@ -19,7 +19,11 @@ class GameFrontline extends Game {
     final bell = InteractableNpc(
       name: "Bell",
       onInteractedWith: (player) {
-
+          player.storeItems = [
+             Weapon(type: WeaponType.Bow, damage: 5),
+             Weapon(type: WeaponType.Sword, damage: 5),
+          ];
+          player.writeStoreItems();
       },
       x: 300,
       y: 300,
