@@ -54,5 +54,6 @@ class ServerResponse {
   static const Player_Target = 61;
   static const Grid = 62;
   static const Block_Set = 63;
+  static const Player_Weapons = 64;
 }
 

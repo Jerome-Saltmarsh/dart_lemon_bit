@@ -3,6 +3,7 @@ import 'package:bleed_common/head_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/pants_type.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
+import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:lemon_watch/watch.dart';
 import 'vector3.dart';
 import 'package:lemon_math/library.dart';
@@ -59,6 +60,8 @@ class Player extends Vector3 {
   final canAffordUpgradeHammer = Watch(false);
   final canAffordUpgradeBag = Watch(false);
   final canAffordPalisade = Watch(false);
+
+  final weapons = Watch(<Weapon>[]);
 
   // int get indexZ => z ~/ 24;
   // int get indexRow => convertWorldToRow(x, y);

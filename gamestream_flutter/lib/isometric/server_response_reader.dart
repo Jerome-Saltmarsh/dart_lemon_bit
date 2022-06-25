@@ -3,6 +3,7 @@ import 'package:gamestream_flutter/isometric/actions/initialize_isometric_game_s
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
+import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/collectables.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event.dart';
@@ -277,6 +278,22 @@ class ServerResponseReader with ByteReader {
 
         case ServerResponse.Player_Target:
           readPosition(player.abilityTarget);
+          break;
+
+        case ServerResponse.Player_Weapons:
+          final weapons = <Weapon>[];
+          final total = readByte();
+          for (var i = 0; i < total; i++){
+             final type = readByte();
+             final damage = readByte();
+             weapons.add(
+                Weapon(
+                   type: type,
+                   damage: damage,
+                )
+             );
+          }
+          player.weapons.value = weapons;
           break;
 
         case ServerResponse.Block_Set:

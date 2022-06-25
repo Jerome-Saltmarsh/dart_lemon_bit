@@ -98,6 +98,10 @@ void sendClientRequestSetWeapon(int type){
   sendClientRequest(ClientRequest.Set_Weapon, type);
 }
 
+void sendClientRequestPurchaseWeapon(int type){
+  sendClientRequest(ClientRequest.Purchase_Weapon, type);
+}
+
 void sendClientRequestSetArmour(int type){
   sendClientRequest(ClientRequest.Set_Armour, type);
 }

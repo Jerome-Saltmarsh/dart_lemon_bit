@@ -452,6 +452,19 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.equippedWeapon.damage++;
           break;
 
+        case ClientRequest.Purchase_Weapon:
+          if (player == null) return errorPlayerNotFound();
+          final type = int.tryParse(arguments[1]);
+          if (type == null) return errorInvalidArg('invalid weapon type $type');
+          player.weapons.add(
+            Weapon(
+               type: type,
+               damage: 1,
+            )
+          );
+          player.writeWeapons();
+          break;
+
         case ClientRequest.Character_Save:
           final account = _account;
           if (player == null) return errorPlayerNotFound();

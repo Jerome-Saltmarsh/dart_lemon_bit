@@ -47,6 +47,8 @@ class Player extends Character with ByteWriter {
   Collider? aimTarget; // the currently highlighted character
   Account? account;
 
+  final weapons = <Weapon>[];
+
   final cardChoices = <CardType>[];
   final deck = <Card>[];
 
@@ -773,6 +775,15 @@ extension PlayerProperties on Player {
         writeByte(0);
       }
     }
+  }
+
+  void writeWeapons(){
+     writeByte(ServerResponse.Player_Weapons);
+     writeByte(weapons.length);
+     for (final weapon in weapons) {
+        writeByte(weapon.type);
+        writeByte(weapon.damage);
+     }
   }
 
   void writePlayerTarget() {

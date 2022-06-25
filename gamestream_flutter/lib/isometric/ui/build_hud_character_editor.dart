@@ -10,6 +10,8 @@ import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/build_container.dart';
 import 'package:lemon_watch/watch.dart';
 
+import '../classes/weapon.dart';
+
 const green = Colors.green;
 const grey = Colors.grey;
 const greyDark = Colors.blueGrey;
@@ -59,15 +61,16 @@ Widget _buildTabWeapons(){
       crossAxisAlignment: CrossAxisAlignment.start,
      children: [
        Column(
-          children: WeaponType.values.map(_buildWeaponButton).toList(),
+          children: WeaponType.values.map(_buildButtonPurchaseWeapon).toList(),
        ),
         width6,
-        watch(player.weaponDamage, (damage){
-         return container(
-             child: text("Damage: $damage"),
-             action: sendClientRequestUpgradeWeaponDamage,
-         );
-        })
+        buildColumnPlayerWeapons(),
+        // watch(player.weaponDamage, (damage){
+        //  return container(
+        //      child: text("Damage: $damage"),
+        //      action: sendClientRequestUpgradeWeaponDamage,
+        //  );
+        // })
      ],
    );
 }
@@ -105,10 +108,22 @@ Widget _buildButtonPants(int pantsType) {
   });
 }
 
-Widget _buildWeaponButton(int weapon){
+Widget buildColumnPlayerWeapons(){
+   return watch(player.weapons, (List<Weapon> weapons){
+      return Column(
+        children: weapons.map(_buildButtonEquipWeapon).toList(),
+      );
+   });
+}
+
+Widget _buildButtonEquipWeapon(Weapon weapon){
+  return container(child: text(WeaponType.getName(weapon.type)));
+}
+
+Widget _buildButtonPurchaseWeapon(int weapon){
    return watch(player.weaponType, (int equipped){
       return onPressed(
-         callback: () => sendClientRequestSetWeapon(weapon),
+         callback: () => sendClientRequestPurchaseWeapon(weapon),
          child: Container(
             padding: const EdgeInsets.only(left: 8),
             alignment: Alignment.centerLeft,
