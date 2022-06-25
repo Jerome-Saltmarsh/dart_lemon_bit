@@ -285,14 +285,7 @@ class ServerResponseReader with ByteReader {
           break;
 
         case ServerResponse.Player_Equipped_Weapon:
-          final type = readByte();
-          final damage = readInt();
-          final uuid = readString();
-          player.weapon.value = Weapon(
-              type: type,
-              damage: damage,
-              uuid: uuid
-          );
+          player.weapon.value = readWeapon();
           break;
 
         case ServerResponse.Block_Set:
@@ -329,18 +322,20 @@ class ServerResponseReader with ByteReader {
     final weapons = <Weapon>[];
     final total = readInt();
     for (var i = 0; i < total; i++){
-      final type = readByte();
-      final damage = readInt();
-      final uuid = readString();
-      weapons.add(
-          Weapon(
-            type: type,
-            damage: damage,
-            uuid: uuid,
-          )
-      );
+      weapons.add(readWeapon());
     }
     return weapons;
+  }
+
+  Weapon readWeapon(){
+    final type = readByte();
+    final damage = readInt();
+    final uuid = readString();
+    return Weapon(
+      type: type,
+      damage: damage,
+      uuid: uuid,
+    );
   }
 
   void updateSync() {
