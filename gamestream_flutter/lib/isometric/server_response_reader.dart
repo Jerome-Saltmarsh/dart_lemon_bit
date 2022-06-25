@@ -286,14 +286,27 @@ class ServerResponseReader with ByteReader {
           for (var i = 0; i < total; i++){
              final type = readByte();
              final damage = readByte();
+             final uuid = readString();
              weapons.add(
                 Weapon(
                    type: type,
                    damage: damage,
+                   uuid: uuid,
                 )
              );
           }
           player.weapons.value = weapons;
+          break;
+
+        case ServerResponse.Player_Equipped_Weapon:
+          final type = readByte();
+          final damage = readInt();
+          final uuid = readString();
+          player.weapon.value = Weapon(
+              type: type,
+              damage: damage,
+              uuid: uuid
+          );
           break;
 
         case ServerResponse.Block_Set:

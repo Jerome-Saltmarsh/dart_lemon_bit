@@ -783,7 +783,15 @@ extension PlayerProperties on Player {
      for (final weapon in weapons) {
         writeByte(weapon.type);
         writeByte(weapon.damage);
+        writeString(weapon.uuid);
      }
+  }
+
+  void writeEquippedWeapon(){
+    writeByte(ServerResponse.Player_Equipped_Weapon);
+    writeByte(equippedWeapon.type);
+    writeInt(equippedWeapon.damage);
+    writeString(equippedWeapon.uuid);
   }
 
   void writePlayerTarget() {

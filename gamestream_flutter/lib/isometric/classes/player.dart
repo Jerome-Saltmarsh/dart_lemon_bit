@@ -62,6 +62,13 @@ class Player extends Vector3 {
   final canAffordPalisade = Watch(false);
 
   final weapons = Watch(<Weapon>[]);
+  final weapon = Watch(
+      Weapon(
+        type: WeaponType.Unarmed,
+        damage: 1,
+        uuid: "-1",
+      )
+  );
 
   // int get indexZ => z ~/ 24;
   // int get indexRow => convertWorldToRow(x, y);

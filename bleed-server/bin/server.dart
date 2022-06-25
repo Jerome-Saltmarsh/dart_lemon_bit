@@ -474,6 +474,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
           player.equippedWeapon = player.weapons[index];
           player.setStateChanging();
+          player.writeEquippedWeapon();
           break;
 
         case ClientRequest.Character_Save:
