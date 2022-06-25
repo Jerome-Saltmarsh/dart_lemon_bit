@@ -16,7 +16,8 @@ import 'functions/withinRadius.dart';
 import 'games/game_frontline.dart';
 import 'io/write_scene_to_file.dart';
 
-var totalConnections = 0;
+var connectionsCurrent = 0;
+var connectionsTotal = 0;
 
 Future main() async {
   print('gamestream.online server starting');
@@ -47,22 +48,23 @@ void startWebsocketServer(){
 }
 
 void buildWebSocketHandler(WebSocketChannel webSocket) {
-    totalConnections++;
-    print("New connection established. Total Connections $totalConnections");
+    connectionsCurrent++;
+    connectionsTotal++;
+    print("New Connection. Current Connections: $connectionsCurrent, Total Connections: $connectionsTotal");
     final sink = webSocket.sink;
     final started = DateTime.now();
     Player? _player;
     Account? _account;
 
     sink.done.then((value){
-      totalConnections--;
-      print("Connection Lost. Total Connections $totalConnections");
+      connectionsCurrent--;
+      print("Connection Lost. Current Connections: $connectionsCurrent, Total Connections: $connectionsTotal");
       final duration = started.difference(DateTime.now());
-      print("Duration ${duration.inMinutes} minutes ${duration.inSeconds % 60} seconds");
-      final closeReason = webSocket.closeReason;
-      final closeCode = webSocket.closeCode;
-      print("Close Reason: $closeReason");
-      print("Close Code: $closeCode");
+      print("Connection Duration ${duration.inMinutes} minutes ${duration.inSeconds % 60} seconds");
+      // final closeReason = webSocket.closeReason;
+      // final closeCode = webSocket.closeCode;
+      // print("Close Reason: $closeReason");
+      // print("Close Code: $closeCode");
       _player = null;
       _account = null;
     });
