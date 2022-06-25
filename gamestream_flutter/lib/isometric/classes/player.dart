@@ -4,6 +4,7 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/pants_type.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
+import 'package:gamestream_flutter/isometric/events/on_store_items_changed.dart';
 import 'package:lemon_watch/watch.dart';
 import 'vector3.dart';
 import 'package:lemon_math/library.dart';
@@ -62,7 +63,7 @@ class Player extends Vector3 {
   final canAffordPalisade = Watch(false);
 
   final weapons = Watch(<Weapon>[]);
-  final storeItems = Watch(<Weapon>[]);
+  final storeItems = Watch(<Weapon>[], onChanged: onPlayerStoreItemsChanged);
   final weapon = Watch<Weapon>(
       Weapon(
         type: WeaponType.Unarmed,
