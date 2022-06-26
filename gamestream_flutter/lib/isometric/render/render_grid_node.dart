@@ -1,5 +1,6 @@
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
@@ -55,6 +56,7 @@ void renderGridNode(int z, int row, int column, int type) {
           srcWidth: 48,
           srcHeight: 72,
           anchorY: 0.3334,
+          color: colorShades[shade],
         );
       }
       return;

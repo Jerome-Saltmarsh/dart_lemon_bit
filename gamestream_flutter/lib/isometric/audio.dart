@@ -9,6 +9,15 @@ final audio = _Audio();
 
 class _Audio {
 
+  void rainStart(){
+    if (audioPlayerRain.state == PlayerState.PLAYING) return;
+    audioPlayerRain.play('assets/audio/rain.mp3', isLocal: true, volume: 1.0);
+  }
+
+  void rainStop(){
+    audioPlayerRain.stop();
+  }
+
   var trackIndex = 0;
 
   _Audio(){
@@ -71,6 +80,7 @@ class _Audio {
 
   void stopMusic(){
     _musicPlayer.stop();
+    rainStop();
   }
 
   void toggleSoundEnabled(){
@@ -249,6 +259,9 @@ class _Audio {
   }
 
   void init() {
+
+    audioPlayerRain.setReleaseMode(ReleaseMode.LOOP);
+
     for (int i = 0; i < _totalAudioPlayers; i++) {
       _audioPlayers.add(AudioPlayer(mode: PlayerMode.LOW_LATENCY));
     }
@@ -407,6 +420,8 @@ const _knifeStrikes = [
 void _playRandom(List<String> values, double x, double y) {
   audio._playPositioned(randomItem(values), x, y);
 }
+
+final audioPlayerRain = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
 
 AudioPlayer _getAudioPlayer() {
   if (_audioPlayers.isEmpty) {

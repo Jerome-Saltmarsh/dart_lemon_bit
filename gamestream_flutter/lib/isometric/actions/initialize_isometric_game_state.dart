@@ -8,7 +8,10 @@ import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
 
+import '../audio.dart';
+
 void initializeIsometricGameState(){
+  audio.init();
   for (var i = 0; i < 150; i++) {
     players.add(Character());
   }

@@ -15,8 +15,6 @@ Future init() async {
   // isometric.image = await loadImage('images/atlas.png'); // TODO move to lemon-engine
   // engine.image = isometric.image;
   initializeEventListeners();
-  audio.init();
-
 
   if (isLocalHost) {
     print("Environment: Localhost");

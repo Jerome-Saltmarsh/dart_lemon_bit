@@ -5,6 +5,7 @@ import 'package:bleed_common/GameStatus.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
+import 'package:gamestream_flutter/isometric/render/weather.dart';
 import 'package:gamestream_flutter/isometric_web/register_isometric_web_controls.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/state.dart';
@@ -36,6 +37,7 @@ class CoreEvents {
   void _onGameStatusChanged(GameStatus value){
     print('events.onGameStatusChanged(value: $value)');
     audio.stopMusic();
+    rainingStop();
 
     switch(value) {
       case GameStatus.In_Progress:
