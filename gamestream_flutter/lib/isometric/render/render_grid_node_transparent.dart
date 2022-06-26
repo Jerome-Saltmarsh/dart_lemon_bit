@@ -39,17 +39,20 @@ void renderGridNodeTransparent(int z, int row, int column, int type) {
         anchorX: 0.5,
         anchorY: 0.3334,
       );
-    case GridNodeType.Rain:
-      return render(
-        dstX: dstX,
-        dstY: dstY - tileHeight,
-        srcX: 6788,
-        srcY: 72.0 * animationFrameRain,
-        srcWidth: 48,
-        srcHeight: 72,
-        anchorY: 0.3334,
-        color: colorShades[shade],
-      );
+    case GridNodeType.Rain_Falling:
+      return;
+    case GridNodeType.Rain_Landing:
+      return;
+      // return render(
+      //   dstX: dstX,
+      //   dstY: dstY - tileHeight,
+      //   srcX: 6788,
+      //   srcY: 72.0 * animationFrameRain,
+      //   srcWidth: 48,
+      //   srcHeight: 72,
+      //   anchorY: 0.3334,
+      //   color: colorShades[shade],
+      // );
     case GridNodeType.Stairs_South:
       return render(
         dstX: dstX,

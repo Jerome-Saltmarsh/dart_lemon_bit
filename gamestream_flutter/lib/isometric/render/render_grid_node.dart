@@ -47,18 +47,6 @@ void renderGridNode(int z, int row, int column, int type) {
         anchorX: 0.5,
         anchorY: 0.3334,
       );
-      if (raining){
-        render(
-          dstX: dstX,
-          dstY: dstY - tileHeight,
-          srcX: 6788,
-          srcY: 72.0 * animationFrameRain,
-          srcWidth: 48,
-          srcHeight: 72,
-          anchorY: 0.3334,
-          color: colorShades[shade],
-        );
-      }
       return;
     case GridNodeType.Grass_Long:
       return render(
@@ -71,11 +59,22 @@ void renderGridNode(int z, int row, int column, int type) {
         anchorX: 0.5,
         anchorY: 0.3334,
       );
-    case GridNodeType.Rain:
+    case GridNodeType.Rain_Landing:
       return render(
         dstX: dstX,
-        dstY: dstY - tileHeight,
-        srcX: 6788,
+        dstY: dstY,
+        srcX: 6592,
+        srcY: 72.0 * animationFrameRain,
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorY: 0.3334,
+        color: colorShades[shade],
+      );
+    case GridNodeType.Rain_Falling:
+      return render(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: 6544,
         srcY: 72.0 * animationFrameRain,
         srcWidth: 48,
         srcHeight: 72,

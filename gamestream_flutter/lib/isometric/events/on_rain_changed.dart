@@ -10,8 +10,13 @@ void onRainChanged(bool raining) {
       for (var column = 0; column < gridTotalColumns; column++) {
         for (var z = gridTotalZ - 1; z >= 0; z--) {
           final type = grid[z][row][column];
-          if (type != GridNodeType.Empty) break;
-          grid[z][row][column] = GridNodeType.Rain;
+          if (type != GridNodeType.Empty) {
+            if (z + 1 < gridTotalZ){
+              grid[z + 1][row][column] = GridNodeType.Rain_Landing;
+            }
+            break;
+          }
+          grid[z][row][column] = GridNodeType.Rain_Falling;
         }
       }
     }
@@ -19,7 +24,8 @@ void onRainChanged(bool raining) {
     for (var z = gridTotalZ - 1; z >= 0; z--) {
       for (var row = 0; row < gridTotalRows; row++) {
         for (var column = 0; column < gridTotalColumns; column++) {
-           if (grid[z][row][column] != GridNodeType.Rain) continue;
+          final type = grid[z][row][column];
+           if (type != GridNodeType.Rain_Falling || type != GridNodeType.Rain_Landing) continue;
            grid[z][row][column] = GridNodeType.Empty;
         }
       }
