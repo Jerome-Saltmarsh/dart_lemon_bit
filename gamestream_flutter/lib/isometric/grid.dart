@@ -301,9 +301,13 @@ void gridRainOn(){
           if (z + 1 < gridTotalZ){
             grid[z + 1][row][column] = GridNodeType.Rain_Landing;
           }
+          if (z + 2 < gridTotalZ){
+            grid[z + 2][row][column] = GridNodeType.Rain_Falling;
+          }
           break;
         }
-        grid[z][row][column] = GridNodeType.Rain_Falling;
+
+        // grid[z][row][column] = GridNodeType.Rain_Falling;
       }
     }
   }
