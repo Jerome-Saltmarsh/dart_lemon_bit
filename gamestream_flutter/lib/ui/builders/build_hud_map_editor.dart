@@ -5,8 +5,10 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/render/weather.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/client_request_sender.dart';
+import 'package:gamestream_flutter/isometric/ui/build_container.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -31,6 +33,9 @@ Widget buildEditTools(){
         edit.row.value = player.indexRow;
         edit.column.value = player.indexColumn;
       }),
+      container(child: watch(rainingWatch, (bool isRaining){
+         return text("Raining: $isRaining");
+      }), action: toggleRaining),
       watch(gridShadows, (bool shadowsOn){
         return _button("Shadows: $shadowsOn", (){
           gridShadows.value = !gridShadows.value;

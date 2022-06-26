@@ -3,6 +3,7 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/isometric/render/weather.dart';
 import 'package:lemon_engine/render.dart';
 
 import 'render_torch.dart';
@@ -35,7 +36,6 @@ void renderGridNode(int z, int row, int column, int type) {
         anchorY: 0.3334,
       );
     case GridNodeType.Grass:
-
       render(
         dstX: dstX,
         dstY: dstY,
@@ -46,20 +46,17 @@ void renderGridNode(int z, int row, int column, int type) {
         anchorX: 0.5,
         anchorY: 0.3334,
       );
-
-
-      // if (z == gridTotalZ - 1 || grid[z + 1][row][column] == GridNodeType.Empty){
-      // render(
-      //   dstX: dstX,
-      //   dstY: dstY - tileHeight,
-      //   srcX: 6788,
-      //   srcY: 72.0 * animationFrameRain,
-      //   srcWidth: 48,
-      //   srcHeight: 72,
-      //   anchorY: 0.3334,
-      // );
-      // }
-
+      if (raining){
+        render(
+          dstX: dstX,
+          dstY: dstY - tileHeight,
+          srcX: 6788,
+          srcY: 72.0 * animationFrameRain,
+          srcWidth: 48,
+          srcHeight: 72,
+          anchorY: 0.3334,
+        );
+      }
       return;
     case GridNodeType.Grass_Long:
       return render(
