@@ -14,6 +14,7 @@ import 'effects.dart';
 
 final particles = <Particle>[];
 var totalActiveParticles = 0;
+var totalParticles = 0;
 
 void sortParticles(){
   insertionSort(
@@ -21,7 +22,7 @@ void sortParticles(){
     compare: _compareParticlesActive,
   );
   totalActiveParticles = 0;
-  final totalParticles = particles.length;
+  totalParticles = particles.length;
   for (; totalActiveParticles < totalParticles; totalActiveParticles++){
       if (!particles[totalActiveParticles].active) break;
   }
@@ -572,6 +573,8 @@ void spawnParticle({
 }
 
 Particle getParticleInstance() {
-  return particles[totalActiveParticles + 1];
+  final particle = particles[totalActiveParticles + 1];
+  assert (!particle.active);
+  return particle;
 }
 

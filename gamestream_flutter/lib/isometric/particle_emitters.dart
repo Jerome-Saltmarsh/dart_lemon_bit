@@ -16,6 +16,7 @@ void updateParticleEmitters(){
     final particle = getParticleInstance();
     particle.x = emitter.x;
     particle.y = emitter.y;
+    particle.z = emitter.z;
     emitter.emit(particle);
   }
 }
@@ -38,16 +39,15 @@ void gsAPIParticleEmittersActionAddSmokeEmitter(int z, int row, int column){
 
 void emitSmoke(Particle particle) {
   particle.type = ParticleType.Smoke;
-  particle.duration = randomBetween(100, 150).toInt();
-  particle.z = 1;
+  particle.duration = randomBetween(150, 200).toInt();
   particle.weight = 0;
   particle.scale = 0.15;
-  particle.scaleV = 0.001;
+  particle.scaleV = 0.002;
   particle.rotation = 0;
   particle.rotationVelocity = 0;
   particle.bounciness = 0;
   particle.xv = randomBetween(0, -pi * 0.1);
   particle.yv = randomBetween(0, pi * 0.1);
-  particle.zv = 0.025;
+  particle.zv = 0.25;
   particle.airFriction = 0.99;
 }
