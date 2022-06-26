@@ -54,11 +54,15 @@ void onGridChanged(){
      apiGridActionRainOn();
   }
 
+  refreshParticleEmitters();
+}
 
+void refreshParticleEmitters() {
+  particleEmitters.clear();
   gridForEachOfType(
       GridNodeType.Fireplace,
       (z, row, column, type) {
-        gsAPIParticleEmittersActionAddSmokeEmitter(z, row, column);
+        globalParticleEmittersActionAddSmokeEmitter(z, row, column);
       }
   );
 }

@@ -74,7 +74,11 @@ void updateParticles() {
 void _updateParticle(Particle particle){
   if (!particle.active) return;
   final tile = particle.tile;
-  final airBorn = tile == GridNodeType.Empty;;
+  final airBorn =
+      tile == GridNodeType.Empty        ||
+      tile == GridNodeType.Rain_Landing ||
+      tile == GridNodeType.Rain_Falling ||
+      tile == GridNodeType.Fireplace    ;
 
   final bounce = particle.zv < 0 && !airBorn;
   particle.updateMotion();

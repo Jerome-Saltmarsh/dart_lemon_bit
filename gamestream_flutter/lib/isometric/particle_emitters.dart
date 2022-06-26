@@ -25,7 +25,7 @@ void isometricParticleEmittersActionAddSmokeEmitter(double x, double y){
   // particleEmitters.add(ParticleEmitter(x: x, y: y, rate: 12, emit: emitSmoke));
 }
 
-void gsAPIParticleEmittersActionAddSmokeEmitter(int z, int row, int column){
+void globalParticleEmittersActionAddSmokeEmitter(int z, int row, int column){
   particleEmitters.add(
       ParticleEmitter(
           z: z,
