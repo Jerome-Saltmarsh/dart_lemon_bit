@@ -1,13 +1,10 @@
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/color_pitch_black.dart';
-import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 
 import 'render_torch.dart';
-
 
 void renderGridNodeTransparent(int z, int row, int column, int type) {
   const srcTop = 433.0;

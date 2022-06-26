@@ -46,32 +46,34 @@ int _compareParticlesActive(Particle a, Particle b) {
   return 1;
 }
 
-Particle? next;
+// Particle? next;
 
 void updateParticles() {
 
-  for (final particle in particles) {
-    if (!particle.active) break;
-    _updateParticle(particle);
+  for (var i = 0; i < totalActiveParticles; i++) {
+    _updateParticle(particles[i]);
   }
 
-  if (engine.frame % 6 != 0) return;
-  for (final particle in particles) {
-    if (!particle.active) break;
-    if (!particle.bleeds) continue;
-    if (particle.speed < 2.0) continue;
-    spawnParticleBlood(
+  if (engine.frame % 6 == 0) {
+    for (var i = 0; i < totalActiveParticles; i++) {
+      final particle = particles[i];
+      if (!particle.active) break;
+      if (!particle.bleeds) continue;
+      if (particle.speed < 2.0) continue;
+      spawnParticleBlood(
         x: particle.x,
         y: particle.y,
         z: particle.z,
         zv: 0,
         angle: 0,
         speed: 0,
-    );
+      );
+    }
   }
 }
 
 void _updateParticle(Particle particle){
+  if (!particle.active) return;
   final tile = particle.tile;
   final airBorn = tile == GridNodeType.Empty;;
 
@@ -83,12 +85,11 @@ void _updateParticle(Particle particle){
     particle.applyFloorFriction();
   }
 
-  if (particle.outOfBounds) return _deactivateParticle(particle);
+  if (particle.outOfBounds) return particle.deactivate();
 
   if (bounce) {
     if (tile == GridNodeType.Water){
-      _deactivateParticle(particle);
-      return;
+      return particle.deactivate();
     }
     if (particle.zv < -0.1){
       particle.zv = -particle.zv * particle.bounciness;
@@ -99,19 +100,7 @@ void _updateParticle(Particle particle){
     particle.applyAirFriction();
   }
   particle.applyLimits();
-  if (particle.duration-- <= 0) {
-    _deactivateParticle(particle);
-  }
-}
-
-void _deactivateParticle(Particle particle) {
-  particle.duration = -1;
-  if (next != null) {
-    next = particle;
-    particle.next = next;
-    return;
-  }
-  next = particle;
+  particle.duration--;
 }
 
 int get bodyPartDuration => randomInt(120, 200);
@@ -558,6 +547,7 @@ void spawnParticle({
 }) {
   assert(duration > 0);
   final particle = getParticleInstance();
+  assert(!particle.active);
   particle.type = type;
   particle.casteShadow = castShadow;
   particle.x = x;
@@ -584,20 +574,6 @@ void spawnParticle({
 }
 
 Particle getParticleInstance() {
-  final value = next;
-  if (value != null) {
-    next = value.next;
-    value.next = null;
-    return value;
-  }
-
-  for (final particle in particles) {
-    if (particle.active) continue;
-    return particle;
-  }
-
-  final instance = Particle();
-  particles.add(instance);
-  return instance;
+  return particles[totalActiveParticles + 1];
 }
 

@@ -21,11 +21,14 @@ class Particle extends Vector3 {
   var airFriction = 0.98;
   var hue = 0;
   var casteShadow = false;
-  Particle? next;
 
   bool get active => duration > 0;
 
   int get direction => convertAngleToDirection(rotation);
+
+  void deactivate(){
+    duration = -1;
+  }
 
   bool get bleeds {
      if (type == ParticleType.Blood) return false;
