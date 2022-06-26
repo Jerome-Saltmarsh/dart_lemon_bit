@@ -24,6 +24,8 @@ mixin Health {
 
   int get health => _health;
 
+  double get healthPercentage => health / maxHealth;
+
   set health(int value) {
     _health = clampInt(value, 0, maxHealth);
   }

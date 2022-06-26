@@ -433,16 +433,17 @@ extension PlayerProperties on Player {
     writePosition(mouseTarget);
 
     if (mouseTarget is Npc) {
-      writeByte(ServerResponse.Player_Attack_Target_Name);
-      writeString(mouseTarget.name);
-      return;
+      return writePlayerAttackTargetName(mouseTarget.name, mouseTarget.healthPercentage);
     }
-
     if (mouseTarget is AI) {
-      writeByte(ServerResponse.Player_Attack_Target_Name);
-      writeString("Zombie");
-      return;
+      return writePlayerAttackTargetName("Zombie", mouseTarget.healthPercentage);
     }
+  }
+
+  void writePlayerAttackTargetName(String name, double health){
+    writeByte(ServerResponse.Player_Attack_Target_Name);
+    writeString(name);
+    writePercentage(health);
   }
 
   void writeProjectiles(){

@@ -18,7 +18,7 @@ void renderCharacter(Character character) {
 
   if (character.dead) return;
   // if (character.shade <= Shade.Medium){
-  //   renderCharacterHealthBar(character);
+    renderCharacterHealthBar(character);
   // }
 
   final weapon = character.weapon;

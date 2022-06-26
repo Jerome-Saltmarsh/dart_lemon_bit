@@ -56,6 +56,12 @@ class GameRender {
       renderEditWireFrames();
       renderMouseWireFrame();
     }
+
+    final mouseTargetName = player.mouseTargetName.value;
+
+    if (mouseTargetName != null){
+       renderText(text: mouseTargetName, x: player.attackTarget.renderX, y: player.attackTarget.renderY - 80);
+    }
   }
 
   void renderMouseWireFrame(){

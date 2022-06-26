@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/build_container.dart';
@@ -25,10 +26,38 @@ Widget buildHudPlayMode() {
 Widget buildWatchMouseTargetName(){
    return watch(player.mouseTargetName, (String? name){
       if (name == null) return SizedBox();
+
       return Container(
-          alignment: Alignment.center,
-          width: engine.screen.width,
-          child: container(child: name));
+        alignment: Alignment.center,
+        width: engine.screen.width,
+        child: Container(
+           color: colours.redDark1,
+           height: 50,
+           width: 100,
+           alignment: Alignment.centerLeft,
+           child: Stack(
+             children: [
+               watch(player.mouseTargetHealth, (double health){
+                  return Container(
+                    height: 50,
+                    width: 100 * health,
+                    color: Colors.red,
+                  );
+               }),
+               Container(
+                   width: 100,
+                   height: 50,
+                   alignment: Alignment.center,
+                   padding: const EdgeInsets.only(left: 6),
+                   child: text(name)),
+             ],
+           ),
+        ),
+      );
+      // return Container(
+      //     alignment: Alignment.center,
+      //     width: engine.screen.width,
+      //     child: container(child: name));
    });
 }
 

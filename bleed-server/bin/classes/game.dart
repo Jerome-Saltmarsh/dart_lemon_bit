@@ -371,6 +371,7 @@ extension GameFunctions on Game {
         characters: zombies
     );
     if (closestZombie != null) {
+      assert(closestZombie.alive);
       closestCollider = closestZombie;
       closestDistance = distanceBetween(x, y, closestZombie.x, closestZombie.y);
     }
@@ -381,6 +382,7 @@ extension GameFunctions on Game {
         characters: players
     );
     if (closestPlayer != null){
+      assert(closestPlayer.alive);
       final playerDistance = distanceBetween(x, y, closestPlayer.x, closestPlayer.y);
       if (playerDistance < closestDistance) {
          closestCollider = closestPlayer;
@@ -863,7 +865,6 @@ extension GameFunctions on Game {
       }
 
       if (target is Npc){
-        player.face(target);
         if (withinRadius(player, target, 100)){
           if (!target.deadOrBusy){
             target.face(player);

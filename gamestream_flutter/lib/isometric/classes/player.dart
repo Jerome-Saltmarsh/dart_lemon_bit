@@ -21,8 +21,9 @@ class Player extends Vector3 {
   final selectCharacterRequired = Watch(false);
   final abilityTarget = Vector2(0, 0);
   final storeVisible = Watch(false);
-  final attackTarget = Vector2(0, 0);
+  final attackTarget = Vector3(0, 0, 0);
   final mouseTargetName = Watch<String?>(null);
+  final mouseTargetHealth = Watch(0.0);
   final weaponType = Watch(WeaponType.Unarmed);
   final weaponDamage = Watch(0);
   final armourType = Watch(ArmourType.tunicPadded);
