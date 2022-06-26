@@ -4,13 +4,14 @@ import 'dart:math';
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
+import 'package:gamestream_flutter/isometric/render/weather.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'effects.dart';
 
 final gridShadows = Watch(true, onChanged: (bool value){
-  refreshLighting();
+  refreshGridLighting();
 });
 final ambient = Watch(Shade.Bright, onChanged: _onAmbientChanged);
 final grid = <List<List<int>>>[];
@@ -37,15 +38,20 @@ void gridEmitDynamic(int z, int row, int column, {required int maxBrightness, in
 }
 
 void _onAmbientChanged(int ambient) {
-  refreshLighting();
+  refreshGridLighting();
 }
 
 void onGridChanged(){
-  _refreshGridMetrics();
-  refreshLighting();
+  refreshGridMetrics();
+  refreshGridLighting();
+
+  if (raining) {
+     gridRainOff();
+     gridRainOn();
+  }
 }
 
-void refreshLighting(){
+void refreshGridLighting(){
   _setLightMapValue(gridLightBake, ambient.value);
   _setLightMapValue(gridLightDynamic, ambient.value);
   if (gridShadows.value){
@@ -119,7 +125,7 @@ void _applyShadowAt({
         ) {
           final shade = gridLightBake[projectionZ][projectionRow][projectionColumn];
           if (shade < shadowShade){
-            if (grid[projectionZ + 1][projectionRow][projectionColumn] == GridNodeType.Empty){
+            if (isEmpty(grid[projectionZ + 1][projectionRow][projectionColumn])){
               gridLightBake[projectionZ][projectionRow][projectionColumn] = shadowShade;
             }
           }
@@ -130,6 +136,10 @@ void _applyShadowAt({
       }
     }
   }
+}
+
+bool isEmpty(int type){
+  return type == GridNodeType.Empty || type == GridNodeType.Rain_Falling || type == GridNodeType.Rain_Landing;
 }
 
 // void gridRefreshDynamicLight(){
@@ -165,7 +175,7 @@ bool gridIsPerceptible(int zIndex, int row, int column){
   return true;
 }
 
-void _refreshGridMetrics(){
+void refreshGridMetrics(){
   gridTotalZ = grid.length;
   gridTotalRows = grid[0].length;
   gridTotalColumns = grid[0][0].length;
@@ -278,6 +288,35 @@ void applyEmissionFromEffects() {
     }
     if (percentage < 0.66) {
       break;
+    }
+  }
+}
+
+void gridRainOn(){
+  for (var row = 0; row < gridTotalRows; row++) {
+    for (var column = 0; column < gridTotalColumns; column++) {
+      for (var z = gridTotalZ - 1; z >= 0; z--) {
+        final type = grid[z][row][column];
+        if (type != GridNodeType.Empty) {
+          if (z + 1 < gridTotalZ){
+            grid[z + 1][row][column] = GridNodeType.Rain_Landing;
+          }
+          break;
+        }
+        grid[z][row][column] = GridNodeType.Rain_Falling;
+      }
+    }
+  }
+}
+
+void gridRainOff(){
+  for (var z = gridTotalZ - 1; z >= 0; z--) {
+    for (var row = 0; row < gridTotalRows; row++) {
+      for (var column = 0; column < gridTotalColumns; column++) {
+        final type = grid[z][row][column];
+        if (type != GridNodeType.Rain_Falling || type != GridNodeType.Rain_Landing) continue;
+        grid[z][row][column] = GridNodeType.Empty;
+      }
     }
   }
 }
