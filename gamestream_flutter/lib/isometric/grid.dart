@@ -11,8 +11,9 @@ import 'package:lemon_watch/watch.dart';
 import 'effects.dart';
 
 final gridShadows = Watch(true, onChanged: (bool value){
-  refreshGridLighting();
+  apiGridActionRefreshLighting();
 });
+
 final ambient = Watch(Shade.Bright, onChanged: _onAmbientChanged);
 final grid = <List<List<int>>>[];
 final gridLightBake = <List<List<int>>>[];
@@ -24,7 +25,7 @@ var gridTotalColumns = 0;
 var gridRowLength = 0.0;
 var gridColumnLength = 0.0;
 
-int get gridVolume => gridTotalZ * gridTotalRows * gridTotalColumns;
+void apiGridActionToggleShadows () => gridShadows.value = !gridShadows.value;
 
 void gridEmitDynamic(int z, int row, int column, {required int maxBrightness, int radius = 5}){
   _applyEmission(
@@ -38,12 +39,12 @@ void gridEmitDynamic(int z, int row, int column, {required int maxBrightness, in
 }
 
 void _onAmbientChanged(int ambient) {
-  refreshGridLighting();
+  apiGridActionRefreshLighting();
 }
 
 void onGridChanged(){
   refreshGridMetrics();
-  refreshGridLighting();
+  apiGridActionRefreshLighting();
 
   if (raining) {
      gridRainOff();
@@ -51,51 +52,22 @@ void onGridChanged(){
   }
 }
 
-void refreshGridLighting(){
+void apiGridActionRefreshLighting(){
   _setLightMapValue(gridLightBake, ambient.value);
   _setLightMapValue(gridLightDynamic, ambient.value);
   if (gridShadows.value){
-    gridApplyShadows();
+    _applyShadows();
   }
   _applyBakeMapEmissions();
 }
 
-void gridApplyShadows(){
+void _applyShadows(){
   if (ambient.value > Shade.Very_Bright) return;
-  // final hour = hours.value;
   _applyShadowsMidAfternoon();
-  // if (hour < 11) return _applyShadowsMorning();
-  // if (hour < 13) return _applyShadowsAfternoon();
-  // if (hour < 15) return _applyShadowsEvening();
 }
-
-// void _applyShadowsMorning() {
-//   _applyShadowAt(directionZ: -1, directionRow: 0, directionColumn: 1, maxDistance: 1);
-// }
-//
-// void _applyShadowsAfternoon() {
-//   _applyShadowAt(directionZ: -1, directionRow: 1, directionColumn: 0, maxDistance: 1);
-// }
 
 void _applyShadowsMidAfternoon() {
   _applyShadowAt(directionZ: -1, directionRow: 0, directionColumn: 0, maxDistance: 1);
-}
-
-// void _applyShadowsEvening() {
-//   _applyShadowAt(directionZ: -1, directionRow: 0, directionColumn: -1, maxDistance: 1);
-// }
-
-bool castesShadow(int type){
-  return const [
-        GridNodeType.Tree_Top_Pine,
-        GridNodeType.Bricks,
-        GridNodeType.Grass,
-        GridNodeType.Grass_Long,
-        GridNodeType.Stairs_South,
-        GridNodeType.Stairs_West,
-        GridNodeType.Stairs_East,
-        GridNodeType.Stairs_North,
-  ].contains(type);
 }
 
 void _applyShadowAt({
@@ -111,7 +83,7 @@ void _applyShadowAt({
     for (var row = 0; row < gridTotalRows; row++){
       for (var column = 0; column < gridTotalColumns; column++){
         final tile = grid[z][row][column];
-        if (!castesShadow(tile)) continue;
+        if (!_castesShadow(tile)) continue;
         var projectionZ = z + directionZ;
         var projectionRow = row + directionRow;
         var projectionColumn = column + directionColumn;
@@ -136,6 +108,19 @@ void _applyShadowAt({
       }
     }
   }
+}
+
+bool _castesShadow(int type){
+  return const [
+        GridNodeType.Tree_Top_Pine,
+        GridNodeType.Bricks,
+        GridNodeType.Grass,
+        GridNodeType.Grass_Long,
+        GridNodeType.Stairs_South,
+        GridNodeType.Stairs_West,
+        GridNodeType.Stairs_East,
+        GridNodeType.Stairs_North,
+  ].contains(type);
 }
 
 bool isEmpty(int type){

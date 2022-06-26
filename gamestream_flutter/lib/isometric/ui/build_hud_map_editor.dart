@@ -38,9 +38,7 @@ Widget buildEditTools(){
          return text("Raining: $isRaining");
       }), action: toggleRaining),
       watch(gridShadows, (bool shadowsOn){
-        return _button("Shadows: $shadowsOn", (){
-          gridShadows.value = !gridShadows.value;
-        });
+        return container(child: "Shadows: $shadowsOn", action: apiGridActionToggleShadows);
       }),
       _buildControlLightMode(),
       _buildControlTime(),
@@ -124,7 +122,7 @@ Widget buildColumnEditTile(){
     height: engine.screen.height,
     child: SingleChildScrollView(
       child: Column(
-        children: GridNodeType.values.map(_buildSetType).toList(),
+        children: GridNodeType.values.map(buildButtonSelectGridNodeType).toList(),
       ),
     ),
   );
@@ -140,7 +138,7 @@ Widget buildButtonSpawnZombie(){
   });
 }
 
-Widget _buildSetType(int value) {
+Widget buildButtonSelectGridNodeType(int value) {
   return WatchBuilder(edit.type, (int type) {
         return container(
             child: GridNodeType.getName(value),
