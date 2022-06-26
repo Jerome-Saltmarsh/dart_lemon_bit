@@ -297,7 +297,7 @@ void gridRainOn(){
     for (var column = 0; column < gridTotalColumns; column++) {
       for (var z = gridTotalZ - 1; z >= 0; z--) {
         final type = grid[z][row][column];
-        if (type != GridNodeType.Empty) {
+        if (!isEmpty(type)) {
           if (z + 1 < gridTotalZ){
             grid[z + 1][row][column] = GridNodeType.Rain_Landing;
           }
@@ -305,9 +305,14 @@ void gridRainOn(){
             grid[z + 2][row][column] = GridNodeType.Rain_Falling;
           }
           break;
+        } else {
+          if (column - 1 > 0 && !isEmpty(grid[z][row][column - 1])){
+            grid[z][row][column] = GridNodeType.Rain_Falling;
+          } else
+          if (row - 1 > 0 && !isEmpty(grid[z][row - 1][column])){
+            grid[z][row][column] = GridNodeType.Rain_Falling;
+          }
         }
-
-        // grid[z][row][column] = GridNodeType.Rain_Falling;
       }
     }
   }
