@@ -1,5 +1,7 @@
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/color_pitch_black.dart';
+import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
@@ -36,6 +38,17 @@ void renderGridNodeTransparent(int z, int row, int column, int type) {
         srcHeight: 72,
         anchorX: 0.5,
         anchorY: 0.3334,
+      );
+    case GridNodeType.Rain:
+      return render(
+        dstX: dstX,
+        dstY: dstY - tileHeight,
+        srcX: 6788,
+        srcY: 72.0 * animationFrameRain,
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorY: 0.3334,
+        color: colorShades[shade],
       );
     case GridNodeType.Stairs_South:
       return render(

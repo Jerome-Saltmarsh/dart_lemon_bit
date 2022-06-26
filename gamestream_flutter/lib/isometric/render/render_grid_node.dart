@@ -71,6 +71,17 @@ void renderGridNode(int z, int row, int column, int type) {
         anchorX: 0.5,
         anchorY: 0.3334,
       );
+    case GridNodeType.Rain:
+      return render(
+        dstX: dstX,
+        dstY: dstY - tileHeight,
+        srcX: 6788,
+        srcY: 72.0 * animationFrameRain,
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorY: 0.3334,
+        color: colorShades[shade],
+      );
     case GridNodeType.Stairs_South:
       return render(
         dstX: dstX,
@@ -112,7 +123,7 @@ void renderGridNode(int z, int row, int column, int type) {
         anchorY: 0.3334,
       );
     case GridNodeType.Water:
-      return render(
+      render(
         dstX: dstX,
         dstY: dstY + animationFrameWaterHeight,
         srcX: 7206 + animationFrameWaterSrcX,
@@ -121,6 +132,20 @@ void renderGridNode(int z, int row, int column, int type) {
         srcHeight: 72,
         anchorY: 0.3334,
       );
+
+      if (raining){
+        render(
+          dstX: dstX,
+          dstY: dstY - tileHeight,
+          srcX: 6788,
+          srcY: 72.0 * animationFrameRain,
+          srcWidth: 48,
+          srcHeight: 72,
+          anchorY: 0.3334,
+          color: colorShades[shade],
+        );
+      }
+      return;
     case GridNodeType.Torch:
       if (ambient.value <= Shade.Very_Bright) {
         return renderTorchOff(dstX, dstY);
