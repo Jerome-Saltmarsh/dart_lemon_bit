@@ -17,6 +17,18 @@ class Vector3 with Position {
   double get renderY => ((y + x) * 0.5) - z;
   int get renderColor => colorShades[shade];
 
+  void set indexZ(int value){
+    z = value * tileSizeHalf;
+  }
+
+  void set indexRow(int value){
+    x = value * tileSize;
+  }
+
+  void set indexColumn(int value){
+    y = value * tileSize;
+  }
+
   bool get outOfBounds {
     return z < 0 || x < 0 || x > gridRowLength || y < 0 || y > gridColumnLength;
   }

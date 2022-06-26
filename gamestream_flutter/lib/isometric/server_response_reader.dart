@@ -603,7 +603,7 @@ class ServerResponseReader with ByteReader {
       instance.refreshRowAndColumn();
 
       if (typeIndex == GameObjectType.Fireplace) {
-        addSmokeEmitter(instance.x, instance.y);
+        isometricParticleEmittersActionAddSmokeEmitter(instance.x, instance.y);
       }
     }
   }

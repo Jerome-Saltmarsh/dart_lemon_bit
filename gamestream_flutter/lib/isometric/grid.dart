@@ -6,6 +6,7 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_off.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_on.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
+import 'package:gamestream_flutter/isometric/particle_emitters.dart';
 import 'package:gamestream_flutter/isometric/render/weather.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -52,7 +53,28 @@ void onGridChanged(){
      apiGridActionRainOff();
      apiGridActionRainOn();
   }
+
+
+  gridForEachOfType(
+      GridNodeType.Fireplace,
+      (z, row, column, type) {
+        gsAPIParticleEmittersActionAddSmokeEmitter(z, row, column);
+      }
+  );
 }
+
+void gridForEachOfType(int type, Function(int z, int row, int column, int type) handler) {
+    for (var zIndex = 0; zIndex < gridTotalZ; zIndex++){
+      for (var rowIndex = 0; rowIndex < gridTotalRows; rowIndex++){
+        for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++){
+          final t = grid[zIndex][rowIndex][columnIndex];
+          if (t != type) continue;
+          handler(zIndex, rowIndex, columnIndex, t);
+        }
+      }
+    }
+  }
+
 
 void apiGridActionRefreshLighting(){
   _setLightMapValue(gridLightBake, ambient.value);

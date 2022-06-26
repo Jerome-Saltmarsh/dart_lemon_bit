@@ -1,21 +1,25 @@
 
 
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
+import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 
 typedef Particle GetParticle();
 
-class ParticleEmitter {
-  var x = 0.0;
-  var y = 0.0;
+class ParticleEmitter extends Vector3 {
   var next = 0;
   int rate;
   Function(Particle particle) emit;
 
   ParticleEmitter({
-    required this.x,
-    required this.y,
     required this.rate,
-    required this.emit
-  });
+    required this.emit,
+    required int z,
+    required int row,
+    required int column
+  }) : super(0, 0, 0) {
+    indexZ = z;
+    indexRow = row;
+    indexColumn = column;
+  }
 }
 

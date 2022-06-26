@@ -20,8 +20,20 @@ void updateParticleEmitters(){
   }
 }
 
-void addSmokeEmitter(double x, double y){
-  particleEmitters.add(ParticleEmitter(x: x, y: y, rate: 12, emit: emitSmoke));
+void isometricParticleEmittersActionAddSmokeEmitter(double x, double y){
+  // particleEmitters.add(ParticleEmitter(x: x, y: y, rate: 12, emit: emitSmoke));
+}
+
+void gsAPIParticleEmittersActionAddSmokeEmitter(int z, int row, int column){
+  particleEmitters.add(
+      ParticleEmitter(
+          z: z,
+          row: row,
+          column: column,
+          rate: 12,
+          emit: emitSmoke,
+      )
+  );
 }
 
 void emitSmoke(Particle particle) {
