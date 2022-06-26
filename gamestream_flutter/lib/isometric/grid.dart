@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/grid/actions/rain_off.dart';
+import 'package:gamestream_flutter/isometric/grid/actions/rain_on.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:gamestream_flutter/isometric/render/weather.dart';
 import 'package:lemon_math/library.dart';
@@ -47,8 +49,8 @@ void onGridChanged(){
   apiGridActionRefreshLighting();
 
   if (raining) {
-     gridRainOff();
-     gridRainOn();
+     apiGridActionRainOff();
+     apiGridActionRainOn();
   }
 }
 
@@ -273,44 +275,6 @@ void applyEmissionFromEffects() {
     }
     if (percentage < 0.66) {
       break;
-    }
-  }
-}
-
-void gridRainOn(){
-  for (var row = 0; row < gridTotalRows; row++) {
-    for (var column = 0; column < gridTotalColumns; column++) {
-      for (var z = gridTotalZ - 1; z >= 0; z--) {
-        final type = grid[z][row][column];
-        if (!isEmpty(type)) {
-          if (z + 1 < gridTotalZ){
-            grid[z + 1][row][column] = GridNodeType.Rain_Landing;
-          }
-          if (z + 2 < gridTotalZ){
-            grid[z + 2][row][column] = GridNodeType.Rain_Falling;
-          }
-          break;
-        } else {
-          if (column == 0 || !isEmpty(grid[z][row][column - 1])){
-            grid[z][row][column] = GridNodeType.Rain_Falling;
-          } else
-          if (row == 0 || !isEmpty(grid[z][row - 1][column])){
-            grid[z][row][column] = GridNodeType.Rain_Falling;
-          }
-        }
-      }
-    }
-  }
-}
-
-void gridRainOff(){
-  for (var z = gridTotalZ - 1; z >= 0; z--) {
-    for (var row = 0; row < gridTotalRows; row++) {
-      for (var column = 0; column < gridTotalColumns; column++) {
-        final type = grid[z][row][column];
-        if (type != GridNodeType.Rain_Falling || type != GridNodeType.Rain_Landing) continue;
-        grid[z][row][column] = GridNodeType.Empty;
-      }
     }
   }
 }
