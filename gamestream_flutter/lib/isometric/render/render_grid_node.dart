@@ -146,7 +146,7 @@ void renderGridNode(int z, int row, int column, int type) {
       }
       return;
     case GridNodeType.Torch:
-      if (ambient.value <= Shade.Very_Bright) {
+      if (gridLightBake[z][row][column] <= Shade.Very_Bright) {
         return renderTorchOff(dstX, dstY);
       }
       return renderTorchOn(dstX, dstY);
@@ -200,6 +200,16 @@ void renderGridNode(int z, int row, int column, int type) {
         dstY: dstY,
         srcX: 7686,
         srcY: 72.0 * shade,
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorY: 0.3334,
+      );
+    case GridNodeType.Fireplace:
+      return render(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: 6469,
+        srcY: (((row + column + (animationFrameTorch)) % 6) * 72),
         srcWidth: 48,
         srcHeight: 72,
         anchorY: 0.3334,
