@@ -7,10 +7,15 @@ import 'package:lemon_math/library.dart';
 void renderParticle(Particle value) {
   switch (value.type) {
     case ParticleType.Smoke:
-      return renderSmoke(
-          x: value.renderX,
-          y: value.renderY,
-          scale: value.renderScale
+      return render(
+          dstX: value.renderX,
+          dstY: value.renderY,
+          srcX: 5612,
+          srcY: 0,
+          srcWidth: 50,
+          srcHeight: 50,
+          scale: value.scale,
+          color: value.renderColor,
       );
     case ParticleType.Blood:
       return render(
