@@ -2,12 +2,12 @@ import '../common/CharacterType.dart';
 import 'player.dart';
 import 'ai.dart';
 
-class InteractableNpc extends AI {
+class Npc extends AI {
   final String name;
 
   Function(Player player) onInteractedWith;
 
-  InteractableNpc({
+  Npc({
       required this.name,
       required this.onInteractedWith,
       required double x,

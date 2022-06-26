@@ -7,7 +7,7 @@ export 'collider.dart';
 export 'components.dart';
 export 'game_object.dart';
 export 'game.dart';
-export 'interactable_npc.dart';
+export 'npc.dart';
 export 'item.dart';
 export 'player.dart';
 export 'projectile.dart';

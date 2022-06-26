@@ -8,6 +8,7 @@ var animationFrameWaterHeight = 0;
 var animationFrameWaterSrcX = 0.0;
 var animationFrameTorch = 0;
 var animationFrameGrass = 0;
+var animationFrameRain = 0;
 
 void updateAnimationFrame(){
   final frame = engine.frame;
@@ -15,6 +16,7 @@ void updateAnimationFrame(){
   _updateWaterFrame();
   animationFrameTorch = frame ~/ 10;
   animationFrameGrass = (frame ~/ 40) % 4;
+  animationFrameRain = (frame ~/ 8) % 6;
 
   if (animationFrameGrass == 3){
     animationFrameGrass = 1;

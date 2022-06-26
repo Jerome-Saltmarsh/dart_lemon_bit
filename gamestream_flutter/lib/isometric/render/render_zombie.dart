@@ -8,8 +8,8 @@ import 'render_character_health_bar.dart';
 import 'src_utils.dart';
 
 void renderZombie(Character character) {
-  final shade = character.shade;
-  if (shade < Shade.Dark) renderCharacterHealthBar(character);
+  // final shade = character.shade;
+  // if (shade < Shade.Dark) renderCharacterHealthBar(character);
   render(
       dstX: character.renderX,
       dstY: character.renderY,
@@ -19,7 +19,7 @@ void renderZombie(Character character) {
       srcHeight: 64,
       anchorY: 0.66,
       scale: 0.7,
-      color: colorShades[shade],
+      color: character.renderColor,
   );
 }
 

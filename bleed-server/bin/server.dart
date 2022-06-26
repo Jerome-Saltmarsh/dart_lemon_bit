@@ -204,7 +204,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               final aimTarget = player.aimTarget;
               player.target = aimTarget;
 
-              if (aimTarget is InteractableNpc){
+              if (aimTarget is Npc){
                 if (withinRadius(player, aimTarget, 100)){
                   if (!aimTarget.deadOrBusy){
                     aimTarget.face(player);
@@ -218,23 +218,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               } else {
                 player.closeStore();
               }
-
-              // if (aimTarget is GameObject) {
-              //    if (aimTarget.isRock && player.equippedWeapon != TechType.Pickaxe) {
-              //       if (player.techTree.pickaxe > 0){
-              //         player.equipPickaxe();
-              //       } else if (!player.unarmed) {
-              //         player.equipUnarmed();
-              //       }
-              //    } else
-              //    if (aimTarget.isTree && player.equippedWeapon != TechType.Axe) {
-              //      if (player.techTree.axe > 0){
-              //        player.equipAxe();
-              //      } else if (!player.unarmed) {
-              //        player.equipUnarmed();
-              //      }
-              //    }
-              // }
 
               if (ability == null) {
                 if (aimTarget != null) {

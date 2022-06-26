@@ -16,7 +16,7 @@ class GameFrontline extends Game {
     scene
   ) {
 
-    final bell = InteractableNpc(
+    final bell = Npc(
       name: "Bell",
       onInteractedWith: (player) {
           player.storeItems = [

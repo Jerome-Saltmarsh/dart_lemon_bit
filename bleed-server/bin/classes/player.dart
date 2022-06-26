@@ -423,13 +423,19 @@ extension PlayerProperties on Player {
     sendBufferToClient();
   }
 
-  void writeAttackTarget(){
-    if (aimTarget == null){
+  void writeAttackTarget() {
+    final mouseTarget = aimTarget;
+    if (mouseTarget == null) {
       writeByte(ServerResponse.Player_Attack_Target_None);
       return;
     }
     writeByte(ServerResponse.Player_Attack_Target);
-    writePosition(aimTarget!);
+    writePosition(mouseTarget);
+
+    if (mouseTarget is Npc) {
+      writeByte(ServerResponse.Player_Attack_Target_Name);
+      writeString(mouseTarget.name);
+    }
   }
 
   void writeProjectiles(){

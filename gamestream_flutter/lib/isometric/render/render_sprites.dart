@@ -353,10 +353,8 @@ class RenderOrderGrid extends RenderOrder {
       var screenLeftColumn = convertWorldToColumn(screenLeft, worldY, 0);
       if (screenLeftColumn > 0 && screenLeftColumn < gridColumn) {
         final amount = gridColumn - screenLeftColumn;
-        assert (amount > 0);
         gridRow += amount;
         gridColumn -= amount;
-        assert (gridRow >= 0);
       }
       if (
           gridColumn >= maxColumnRow - gridRow ||
@@ -372,12 +370,6 @@ class RenderOrderGrid extends RenderOrder {
         plain = grid[gridZ];
       }
     }
-    if (gridRow < 0){
-      print("gridRow: $gridRow, gridColumn: $gridColumn");
-    }
-    assert (gridRow >= 0);
-    assert (gridColumn >= 0);
-    assert (gridZ < gridTotalZ);
     gridType = plain[gridRow][gridColumn];
   }
 

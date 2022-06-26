@@ -16,7 +16,7 @@ import 'character.dart';
 import 'collectable.dart';
 import 'collider.dart';
 import 'game_object.dart';
-import 'interactable_npc.dart';
+import 'npc.dart';
 import 'item.dart';
 import 'player.dart';
 import 'projectile.dart';
@@ -28,7 +28,7 @@ import 'components.dart';
 abstract class Game {
   final items = <Item>[];
   final zombies = <AI>[];
-  final npcs = <InteractableNpc>[];
+  final npcs = <Npc>[];
   final players = <Player>[];
   final projectiles = <Projectile>[];
   final collectables = <Collectable>[];
@@ -235,7 +235,7 @@ abstract class Game {
           weapon: SlotType.Empty,
         ));
       } else {
-        npcs.add(InteractableNpc(
+        npcs.add(Npc(
           name: "Bob",
           onInteractedWith: (Player player) {},
           x: character.x,
@@ -862,7 +862,7 @@ extension GameFunctions on Game {
         return;
       }
 
-      if (target is InteractableNpc){
+      if (target is Npc){
         player.face(target);
         if (withinRadius(player, target, 100)){
           if (!target.deadOrBusy){

@@ -121,6 +121,9 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Player_Attack_Target:
           readPlayerAttackTarget();
           break;
+        case ServerResponse.Player_Attack_Target_Name:
+          player.mouseTargetName.value = readString();
+          break;
         case ServerResponse.Player_Attack_Target_None:
           readPlayerAttackTargetNone();
           break;
@@ -273,6 +276,7 @@ class ServerResponseReader with ByteReader {
   void readPlayerAttackTargetNone() {
     player.attackTarget.x = 0;
     player.attackTarget.y = 0;
+    player.mouseTargetName.value = null;
     engine.cursorType.value = CursorType.Basic;
   }
 
