@@ -51,13 +51,13 @@ Particle? next;
 void updateParticles() {
 
   for (final particle in particles) {
-    if (!particle.active) continue;
+    if (!particle.active) break;
     _updateParticle(particle);
   }
 
   if (engine.frame % 6 != 0) return;
   for (final particle in particles) {
-    if (!particle.active) continue;
+    if (!particle.active) break;
     if (!particle.bleeds) continue;
     if (particle.speed < 2.0) continue;
     spawnParticleBlood(
