@@ -4,6 +4,7 @@ import '../common/library.dart';
 import 'ai.dart';
 import 'character.dart';
 import 'enemy_spawn.dart';
+import 'game.dart';
 import 'game_object.dart';
 import 'tile_node.dart';
 import 'grid_node.dart';
@@ -295,7 +296,7 @@ class Scene {
     return true;
   }
 
-  void resolveCharacterTileCollision(Character character) {
+  void resolveCharacterTileCollision(Character character, Game game) {
     character.z -= character.zVelocity;
     character.zVelocity += 0.98;
 
@@ -305,6 +306,11 @@ class Scene {
     }
 
     var tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
+
+    if (tileAtFeet == GridNodeType.Water) {
+       game.setCharacterStateDead(character);
+       return;
+    }
 
     while (tileAtFeet == GridNodeType.Bricks || tileAtFeet == GridNodeType.Grass || tileAtFeet == GridNodeType.Grass_Long) {
        character.z += 24 - (character.z % 24);

@@ -46,8 +46,6 @@ int _compareParticlesActive(Particle a, Particle b) {
   return 1;
 }
 
-// Particle? next;
-
 void updateParticles() {
 
   for (var i = 0; i < totalActiveParticles; i++) {

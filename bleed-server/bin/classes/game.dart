@@ -1054,7 +1054,7 @@ extension GameFunctions on Game {
       }
     }
 
-    scene.resolveCharacterTileCollision(character);
+    scene.resolveCharacterTileCollision(character, this);
 
     switch (character.state) {
       case CharacterAction.Idle:
