@@ -466,9 +466,14 @@ class ServerResponseReader with ByteReader {
 
   void readZombies() {
     totalZombies = 0;
+    var zombiesLength = zombies.length;
     while (true) {
       final stateInt = readByte();
       if (stateInt == END) break;
+      if (totalZombies >= zombiesLength){
+         zombies.add(Character());
+         zombiesLength++;
+      }
       final character = zombies[totalZombies];
       readTeamDirectionState(character, stateInt);
       character.x = readDouble();
