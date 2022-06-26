@@ -13,42 +13,40 @@ import 'package:lemon_math/library.dart';
 import 'effects.dart';
 
 final particles = <Particle>[];
-
+var totalActiveParticles = 0;
 
 void sortParticles(){
   insertionSort(
     particles,
+    compare: _compareParticlesActive,
+  );
+  totalActiveParticles = 0;
+  final totalParticles = particles.length;
+  for (; totalActiveParticles < totalParticles; totalActiveParticles++){
+      if (!particles[totalActiveParticles].active) break;
+  }
+  if (totalActiveParticles == 0) return;
+  insertionSort(
+    particles,
     compare: _compareParticles,
+    end: totalActiveParticles,
   );
 }
 
 int _compareParticles(Particle a, Particle b) {
-  if (!a.active) {
-    if (!b.active){
-      return 0;
-    }
-    return 1;
-  }
-  if (!b.active) {
-    return -1;
-  }
   if (a.z == b.z){
     return a.renderOrder > b.renderOrder ? 1 : -1;
   }
   return a.z > b.z ? 1 : -1;
 }
 
-Particle? next;
-
-int get totalActiveParticles {
-  var totalParticles = 0;
-  final length = particles.length;
-  for (var i = 0; i < length; i++) {
-    if (!particles[i].active) continue;
-    totalParticles++;
-  }
-  return totalParticles;
+int _compareParticlesActive(Particle a, Particle b) {
+  if (a.active == b.active) return 0;
+  if (a.active) return -1;
+  return 1;
 }
+
+Particle? next;
 
 void updateParticles() {
 
