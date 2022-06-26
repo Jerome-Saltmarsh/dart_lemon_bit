@@ -14,18 +14,67 @@ class GridNodeType {
   static const Player_Spawn = 12;
   static const Grass_Long = 13;
   static const Wooden_Wall_Row = 14;
-  static const Tree_Bottom_Oak = 15;
-  static const Tree_Top_Oak = 16;
+  static const Tree_Bottom = 15;
+  static const Tree_Top = 16;
   static const Enemy_Spawn = 17;
   static const Rain_Falling = 18;
   static const Rain_Landing = 19;
+  static const Fireplace = 20;
 
-  static bool isStairs(int value){
-    return 
-        value == Stairs_North || 
-        value == Stairs_East ||
-        value == Stairs_West || 
-        value == Stairs_South
+  static const values = [
+    Empty,
+    Boundary,
+    Grass,
+    Bricks,
+    Stairs_North,
+    Stairs_East,
+    Stairs_South,
+    Stairs_West,
+    Water,
+    Torch,
+    Tree_Bottom_Pine,
+    Tree_Top_Pine,
+    Player_Spawn,
+    Grass_Long,
+    Tree_Bottom,
+    Tree_Top,
+    Enemy_Spawn,
+    Rain_Falling,
+    Rain_Landing,
+    Fireplace,
+  ];
+  
+  static String getName(int type){
+     return const {
+       Empty: 'Empty',
+       Boundary: 'Boundary',
+       Grass: 'Grass',
+       Bricks: 'Bricks',
+       Stairs_North: 'Stairs_North',
+       Stairs_East: 'Stairs_East',
+       Stairs_South: 'Stairs_South',
+       Stairs_West: 'Stairs_West',
+       Water: 'Water',
+       Torch: 'Torch',
+       Tree_Bottom_Pine: 'Tree_Bottom_Pine',
+       Tree_Top_Pine: 'Tree_Top_Pine',
+       Player_Spawn: 'Player_Spawn',
+       Grass_Long: 'Grass_Long',
+       Tree_Bottom: 'Tree_Bottom',
+       Tree_Top: 'Tree_Top',
+       Enemy_Spawn: 'Enemy_Spawn',
+       Rain_Falling: 'Rain_Falling',
+       Rain_Landing: 'Rain_Landing',
+       Fireplace: 'Fireplace',
+     }[type] ?? "unknown($type)";
+  }
+
+  static bool isStairs(int value) {
+    return
+      value == Stairs_North ||
+          value == Stairs_East ||
+          value == Stairs_West ||
+          value == Stairs_South
     ;
   }
 }

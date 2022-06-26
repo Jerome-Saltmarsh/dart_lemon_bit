@@ -11,6 +11,7 @@ import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:gamestream_flutter/isometric/ui/build_container.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 Widget buildHudMapEditor(){
@@ -119,37 +120,34 @@ Widget _buildControlTime() {
 }
 
 Widget buildColumnEditTile(){
-  return Column(
-    children: [
-      _buildSetType(GridNodeType.Empty, "Empty"),
-      _buildSetType(GridNodeType.Bricks, "Bricks"),
-      _buildSetType(GridNodeType.Grass, "Grass"),
-      _buildSetType(GridNodeType.Grass_Long, "Long Grass"),
-      _buildSetType(GridNodeType.Stairs_North, "Stairs North"),
-      _buildSetType(GridNodeType.Stairs_West, "Stairs West"),
-      _buildSetType(GridNodeType.Stairs_South, "Stairs South"),
-      _buildSetType(GridNodeType.Stairs_East, "Stairs East"),
-      _buildSetType(GridNodeType.Water, "Water"),
-      _buildSetType(GridNodeType.Torch, "Torch"),
-      _buildSetType(GridNodeType.Tree_Top_Pine, "Tree Top Pine"),
-      _buildSetType(GridNodeType.Tree_Bottom_Pine, "Tree Bottom Top"),
-      _buildSetType(GridNodeType.Player_Spawn, "Player Spawn"),
-      _buildSetType(GridNodeType.Wooden_Wall_Row, "Wooden Wall Row"),
-      _buildSetType(GridNodeType.Enemy_Spawn, "Enemy Spawn"),
-      _button("Zombie", () {
-        sendClientRequestSpawnZombie(
-          z: edit.z.value,
-          row: edit.row.value,
-          column: edit.column.value,
-        );
-      }),
-    ],
+  return Container(
+    height: engine.screen.height,
+    child: SingleChildScrollView(
+      child: Column(
+        children: GridNodeType.values.map(_buildSetType).toList(),
+      ),
+    ),
   );
 }
 
-Widget _buildSetType(int value, String name) {
+Widget buildButtonSpawnZombie(){
+  return _button("Zombie", () {
+    sendClientRequestSpawnZombie(
+      z: edit.z.value,
+      row: edit.row.value,
+      column: edit.column.value,
+    );
+  });
+}
+
+Widget _buildSetType(int value) {
   return WatchBuilder(edit.type, (int type) {
-        return _button(name, () => edit.setBlockType(value),color: type == value ? Colors.green : Colors.grey
+        return container(
+            child: GridNodeType.getName(value),
+            action: () => edit.setBlockType(value),color:
+              type == value
+              ? Colors.green
+              : Colors.grey
     );
   });
 }
