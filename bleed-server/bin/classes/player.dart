@@ -435,6 +435,13 @@ extension PlayerProperties on Player {
     if (mouseTarget is Npc) {
       writeByte(ServerResponse.Player_Attack_Target_Name);
       writeString(mouseTarget.name);
+      return;
+    }
+
+    if (mouseTarget is AI) {
+      writeByte(ServerResponse.Player_Attack_Target_Name);
+      writeString("Zombie");
+      return;
     }
   }
 

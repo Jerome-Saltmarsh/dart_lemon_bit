@@ -1,10 +1,8 @@
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:lemon_engine/render.dart';
 
-import 'render_character_health_bar.dart';
 import 'src_utils.dart';
 
 void renderZombie(Character character) {
