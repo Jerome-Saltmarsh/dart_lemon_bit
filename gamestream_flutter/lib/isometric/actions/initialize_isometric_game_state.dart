@@ -21,10 +21,9 @@ void initializeIsometricGameState(){
   for (var i = 0; i < 200; i++) {
     projectiles.add(Projectile());
   }
-
-  for(var i = 0; i < 300; i++){
-    particles.add(Particle());
-  }
+  // for(var i = 0; i < 300; i++){
+  //   particles.add(Particle());
+  // }
   for (var i = 0; i < 200; i++) {
     npcs.add(Character());
   }

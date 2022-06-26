@@ -577,6 +577,11 @@ void spawnParticle({
 }
 
 Particle getParticleInstance() {
+  if (totalActiveParticles >= totalParticles){
+     final instance = Particle();
+     particles.add(instance);
+     return instance;
+  }
   final particle = particles[totalActiveParticles + 1];
   assert (!particle.active);
   return particle;
