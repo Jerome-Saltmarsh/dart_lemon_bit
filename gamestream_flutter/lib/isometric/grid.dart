@@ -306,10 +306,10 @@ void gridRainOn(){
           }
           break;
         } else {
-          if (column - 1 > 0 && !isEmpty(grid[z][row][column - 1])){
+          if (column == 0 || !isEmpty(grid[z][row][column - 1])){
             grid[z][row][column] = GridNodeType.Rain_Falling;
           } else
-          if (row - 1 > 0 && !isEmpty(grid[z][row - 1][column])){
+          if (row == 0 || !isEmpty(grid[z][row - 1][column])){
             grid[z][row][column] = GridNodeType.Rain_Falling;
           }
         }
