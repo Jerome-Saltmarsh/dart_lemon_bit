@@ -39,6 +39,19 @@ void renderGridNode(int z, int row, int column, int type) {
       );
       return;
     case GridNodeType.Grass_Long:
+      if (wind.value == Wind.Gentle){
+        return render(
+          dstX: dstX,
+          dstY: dstY,
+          srcX: 5678 + ((((row - column) + animationFrameGrass) % 4) * 48),
+          srcY: 72.0 * shade,
+          srcWidth: 48,
+          srcHeight: 72,
+          anchorX: 0.5,
+          anchorY: 0.3334,
+        );
+      }
+
       return render(
         dstX: dstX,
         dstY: dstY,
@@ -122,18 +135,18 @@ void renderGridNode(int z, int row, int column, int type) {
         anchorY: 0.3334,
       );
 
-      if (raining){
-        render(
-          dstX: dstX,
-          dstY: dstY - tileHeight,
-          srcX: 6788,
-          srcY: 72.0 * animationFrameRain,
-          srcWidth: 48,
-          srcHeight: 72,
-          anchorY: 0.3334,
-          color: colorShades[shade],
-        );
-      }
+      // if (raining){
+      //   render(
+      //     dstX: dstX,
+      //     dstY: dstY - tileHeight,
+      //     srcX: 6788,
+      //     srcY: 72.0 * animationFrameRain,
+      //     srcWidth: 48,
+      //     srcHeight: 72,
+      //     anchorY: 0.3334,
+      //     color: colorShades[shade],
+      //   );
+      // }
       return;
     case GridNodeType.Torch:
       if (ambient.value <= Shade.Very_Bright) {
