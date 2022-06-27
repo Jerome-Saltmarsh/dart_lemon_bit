@@ -3,6 +3,7 @@ import 'package:gamestream_flutter/isometric/actions/initialize_isometric_game_s
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
+import 'package:gamestream_flutter/isometric/classes/player.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/collectables.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
@@ -503,9 +504,14 @@ class ServerResponseReader with ByteReader {
 
   void readPlayers() {
     var total = 0;
+    var playerLength = players.length;
     while (true) {
       final teamDirectionState = readByte();
       if (teamDirectionState == END) break;
+      if (total >= playerLength){
+         players.add(Character());
+         playerLength = players.length;
+      }
       final character = players[total];
       readTeamDirectionState(character, teamDirectionState);
       character.x = readDouble();
