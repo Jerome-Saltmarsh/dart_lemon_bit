@@ -10,12 +10,16 @@ final audio = _Audio();
 class _Audio {
 
   void windStrongStart(){
-    if (audioPlayerWind.state == PlayerState.PLAYING) return;
+    windStop();
     audioPlayerWind.play('assets/audio/wind-strong.mp3', isLocal: true, volume: 1.0);
   }
 
-  void windStrongStop(){
-    print("windStrongStop()");
+  void windGentleStart(){
+    windStop();
+    audioPlayerWind.play('assets/audio/wind-gentle.mp3', isLocal: true, volume: 1.0);
+  }
+
+  void windStop(){
     audioPlayerWind.stop();
   }
 

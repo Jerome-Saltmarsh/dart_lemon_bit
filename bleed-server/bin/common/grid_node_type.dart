@@ -20,7 +20,7 @@ class GridNodeType {
   static const Rain_Falling = 18;
   static const Rain_Landing = 19;
   static const Fireplace = 20;
-
+  
   static const values = [
     Empty,
     Boundary,
@@ -67,6 +67,10 @@ class GridNodeType {
        Rain_Landing: 'Rain_Landing',
        Fireplace: 'Fireplace',
      }[type] ?? "unknown($type)";
+  }
+  
+  static bool isRain(int value){
+    return value == Rain_Falling || value == Rain_Landing;
   }
 
   static bool isStairs(int value) {

@@ -1,9 +1,7 @@
-import 'package:gamestream_flutter/isometric/audio.dart';
+import 'package:gamestream_flutter/isometric/events/on_wind_changed.dart';
 import 'package:lemon_watch/watch.dart';
 
-final wind = Watch(Wind.None, onChanged: (value){
-  value == Wind.None ? audio.windStrongStop() : audio.windStrongStart();
-});
+final wind = Watch(Wind.Calm, onChanged: onWindChanged);
 
 set windIndex(int value){
   assert(value >= 0);
@@ -19,7 +17,7 @@ void toggleWind(){
 }
 
 enum Wind {
-  None,
-  Weak,
+  Calm,
+  Gentle,
   Strong,
 }

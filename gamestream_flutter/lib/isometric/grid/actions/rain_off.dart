@@ -8,7 +8,7 @@ void apiGridActionRainOff(){
     for (var row = 0; row < gridTotalRows; row++) {
       for (var column = 0; column < gridTotalColumns; column++) {
         final type = grid[z][row][column];
-        if (type != GridNodeType.Rain_Falling || type != GridNodeType.Rain_Landing) continue;
+        if (!GridNodeType.isRain(type)) continue;
         grid[z][row][column] = GridNodeType.Empty;
       }
     }
