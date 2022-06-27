@@ -316,9 +316,15 @@ void applyEmissionFromEffects() {
   }
 }
 
-void actionLighteningFlash(){
+void actionScheduleLightning() {
+   runAction(duration: randomBetween(100, 2000).toInt(), action: actionLightningFlash);
+}
+
+void actionLightningFlash() {
+  if (!raining) return;
   audio.lightning();
-    if (ambient.value == Shade.Very_Bright) return;
-    ambient.value = Shade.Very_Bright;
-    runAction(duration: 8, action: refreshAmbient);
+  if (ambient.value == Shade.Very_Bright) return;
+  ambient.value = Shade.Very_Bright;
+  runAction(duration: 8, action: refreshAmbient);
+  actionScheduleLightning();
 }

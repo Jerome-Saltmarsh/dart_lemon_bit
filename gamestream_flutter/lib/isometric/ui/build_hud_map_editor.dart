@@ -29,7 +29,7 @@ Widget buildEditTools(){
     children: [
       buildColumnEditTile(),
       buildColumnEdit(),
-      container(child: "Lightning", action: actionLighteningFlash),
+      container(child: "Lightning", action: actionLightningFlash),
       container(child: "Recenter", action: (){
         edit.z.value = player.indexZ;
         edit.row.value = player.indexRow;
