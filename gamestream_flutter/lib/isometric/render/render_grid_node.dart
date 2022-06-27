@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/render/weather.dart';
 import 'package:lemon_engine/render.dart';
 
+import '../grid/state/wind.dart';
 import 'render_torch.dart';
 
 void renderGridNode(int z, int row, int column, int type) {
@@ -38,7 +39,7 @@ void renderGridNode(int z, int row, int column, int type) {
       );
       return;
     case GridNodeType.Grass_Long:
-      final f = ((row - column) + animationFrameGrass) % 4;
+      final f = wind.value == Wind.Calm ? 0 : ((row - column) + animationFrameGrass) % 4;
       return render(
         dstX: dstX,
         dstY: dstY,
