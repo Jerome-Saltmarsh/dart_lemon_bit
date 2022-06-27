@@ -165,8 +165,9 @@ void renderGridNode(int z, int row, int column, int type) {
         anchorY: 0.6,
       );
     case GridNodeType.Tree_Top_Pine:
+      animationFrameTreePosition = treeAnimation[(row - column + animationFrame) % treeAnimation.length] * windAmbient.value;
       return render(
-        dstX: dstX,
+        dstX: dstX + (animationFrameTreePosition * 0.5),
         dstY: dstY,
         srcX: 1478 + 62,
         srcY: 68.0 * shade,

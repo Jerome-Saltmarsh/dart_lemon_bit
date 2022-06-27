@@ -10,7 +10,11 @@ var animationFrameWaterSrcX = 0.0;
 var animationFrameTorch = 0;
 var animationFrameGrass = 0;
 var animationFrameRain = 0;
+var animationFrameTreePosition = 0;
 var rainPosition = 0.0;
+
+const treeStrength = 0.5;
+const treeAnimation = [0, 1, 2, 1, 0, -1, -2, -1];
 
 void updateAnimationFrame(){
   final frame = engine.frame;
@@ -18,6 +22,8 @@ void updateAnimationFrame(){
   _updateWaterFrame();
   animationFrameTorch = frame ~/ 10;
   animationFrameRain = (frame ~/ 4) % 6;
+
+  // animationFrameTreePosition = treeAnimation[animationFrame % treeAnimation.length] * windAmbient.value;
 
   if (windAmbient.value == Wind.Calm){
     animationFrameGrass = 0;
