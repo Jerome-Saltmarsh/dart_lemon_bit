@@ -30,94 +30,120 @@ Widget buildEditTools(){
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       buildColumnEditTile(),
-      buildColumnEdit(),
-      container(child: "Lightning", action: actionLightningFlash),
-      container(child: "Recenter", action: (){
-        edit.z.value = player.indexZ;
-        edit.row.value = player.indexRow;
-        edit.column.value = player.indexColumn;
-      }),
-      watch(rainingWatch, (bool isRaining){
-        return container(child: 'Rain', action: toggleRaining, color: isRaining ? green : grey);
-      }),
-      watch(gridShadows, (bool shadowsOn){
-        return container(child: 'Shadows', action: apiGridActionToggleShadows, color: shadowsOn ? green : grey);
-      }),
-      _buildControlLightMode(),
-      _buildControlTime(),
-      height8,
-      watch(edit.type, (int type){
-        if (type != GridNodeType.Enemy_Spawn) return const SizedBox();
-        return Container(
-          color: Colors.grey,
-          padding: EdgeInsets.all(8),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              text("ENEMY SPAWN"),
-              text("Amount"),
-              text("Health"),
-            ],
-          ),
-        );
-      }),
+      buildColumnSettings(),
+      // buildColumnEdit(),
+      // buildWatchEnemySpawn(),
     ],
   );
 }
 
-Widget _buildControlLightMode(){
-  return onPressed(
-    callback: () => lightModeRadial.value = !lightModeRadial.value,
-    child: Container(
-        height: 50,
-        width: 200,
-        alignment: Alignment.centerLeft,
-        color: Colors.grey,
-        child: watch(lightModeRadial, (bool radial){
-           return text(radial ? 'Radial' : "Square");
-        })
-    ),
-  );
+Column buildColumnSettings() {
+  return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildToggleRain(),
+            buildButtonRecenter(),
+            buildToggleLightMode(),
+            buildControlTime(),
+          ],
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildButtonLighning(),
+            buildToggleShadows(),
+          ],
+        )
+      ],
+    );
 }
 
-Widget _buildControlTime() {
-  return Container(
-          height: 50,
-          width: 200,
-          color: Colors.grey,
-          child: Row(
-            children: [
-              text("Time: "),
-              watch(hours, (num hour) => text(padZero(hour))),
-              text(":"),
-              watch(minutes, (num hour) => text(padZero(hour))),
-              Expanded(child: Container()),
-              onPressed(
-                child: Container(
-                  width: 30,
-                  height: 30,
-                  color: Colors.black26,
-                  alignment: Alignment.center,
-                  child: text("-"),
-                ),
-                callback: sendClientRequestReverseHour
-              ),
-              width2,
-              onPressed(
-                  child: Container(
-                    width: 30,
-                    height: 30,
-                    color: Colors.black26,
-                    alignment: Alignment.center,
-                    child: text("+"),
-                  ),
-                  callback: sendClientRequestSkipHour
-              ),
-              width4,
-            ],
+Widget buildWatchEnemySpawn() {
+  return watch(edit.type, (int type){
+          if (type != GridNodeType.Enemy_Spawn) return const SizedBox();
+          return Container(
+            color: Colors.grey,
+            padding: EdgeInsets.all(8),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                text("ENEMY SPAWN"),
+                text("Amount"),
+                text("Health"),
+              ],
+            ),
+          );
+        });
+}
+
+Widget buildToggleShadows() {
+  return watch(gridShadows, (bool shadowsOn){
+          return container(child: 'Shadows', action: apiGridActionToggleShadows, color: shadowsOn ? greyDark : grey);
+        });
+}
+
+Widget buildToggleRain() {
+  return watch(rainingWatch, (bool isRaining){
+          return container(child: 'Rain', action: toggleRaining, color: isRaining ? greyDark : grey);
+        });
+}
+
+Widget buildButtonRecenter() {
+  return container(child: "Recenter", action: (){
+          edit.z.value = player.indexZ;
+          edit.row.value = player.indexRow;
+          edit.column.value = player.indexColumn;
+        });
+}
+
+Widget buildButtonLighning() => container(child: "Lightning", action: actionLightningFlash);
+
+Widget buildToggleLightMode(){
+  return watch(lightModeRadial, (bool radial){
+     return container(
+         child: radial ? "Radial" : "Square",
+         action: toggleLightMode,
+     );
+  });
+}
+
+Widget buildControlTime() {
+  return container(child: Row(
+    children: [
+      text("Time: "),
+      watch(hours, (num hour) => text(padZero(hour))),
+      text(":"),
+      watch(minutes, (num hour) => text(padZero(hour))),
+      Expanded(child: Container()),
+      onPressed(
+          child: Container(
+            width: 30,
+            height: 30,
+            color: Colors.black26,
+            alignment: Alignment.center,
+            child: text("-"),
           ),
-        );
+          callback: sendClientRequestReverseHour
+      ),
+      width2,
+      onPressed(
+          child: Container(
+            width: 30,
+            height: 30,
+            color: Colors.black26,
+            alignment: Alignment.center,
+            child: text("+"),
+          ),
+          callback: sendClientRequestSkipHour
+      ),
+      width4,
+    ],
+  ));
 }
 
 Widget buildColumnEditTile(){
