@@ -28,7 +28,7 @@ void updateAnimationFrame(){
     // }
   }
 
-  rainPosition = (animationFrameRain * wind.value.index * 2.5);
+  rainPosition = (animationFrameRain * wind.value * 2.5);
 
 }
 

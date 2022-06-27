@@ -7,19 +7,15 @@ final wind = Watch(Wind.Calm, onChanged: onWindChanged);
 
 set windIndex(int value){
   assert(value >= 0);
-  wind.value = windValues[value % windValues.length];
+  wind.value = value % 3;
 }
-
-int get windIndex => wind.value.index;
-
-final windValues = Wind.values;
 
 void toggleWind(){
-  windIndex++;
+  wind.value = (wind.value + 1) % 3;
 }
 
-enum Wind {
-  Calm,
-  Gentle,
-  Strong,
+class Wind {
+  static const Calm = 0;
+  static const Gentle = 1;
+  static const Strong = 2;
 }

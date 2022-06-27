@@ -23,6 +23,7 @@ final gridShadows = Watch(true, onChanged: (bool value){
 
 final ambient = Watch(Shade.Bright, onChanged: _onAmbientChanged);
 final grid = <List<List<int>>>[];
+final gridWind = <List<List<int>>>[];
 final gridLightBake = <List<List<int>>>[];
 final gridLightDynamic = <List<List<int>>>[];
 var gridTotalZ = 0;
