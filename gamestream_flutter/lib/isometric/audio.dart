@@ -73,7 +73,7 @@ class _Audio {
   }
 
   void footstepGrass(double x, double y) {
-    _playPositioned('step-grass.mp3', x, y, volume: 0.15);
+    // _playPositioned('step-grass.mp3', x, y, volume: 0.15);
   }
 
   void materialStruckRock(double x, double y){
@@ -207,11 +207,6 @@ class _Audio {
     _playPositioned('mag-in-02.mp3', x, y);
   }
 
-  void footstep(double x, double y) {
-    print("footstep()");
-    _playPositioned('footstep.mp3', x, y);
-  }
-
   void dryShot2(double x, double y) {
     _playPositioned('dry-shot-02.mp3', x, y);
   }
@@ -280,6 +275,7 @@ class _Audio {
 
     audioPlayerRain.setReleaseMode(ReleaseMode.LOOP);
     audioPlayerWind.setReleaseMode(ReleaseMode.LOOP);
+    audioPlayerFootsteps.setReleaseMode(ReleaseMode.LOOP);
 
     for (int i = 0; i < _totalAudioPlayers; i++) {
       _audioPlayers.add(AudioPlayer(mode: PlayerMode.LOW_LATENCY));
@@ -442,6 +438,7 @@ void _playRandom(List<String> values, double x, double y) {
 
 final audioPlayerRain = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
 final audioPlayerWind = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
+final audioPlayerFootsteps = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
 
 AudioPlayer _getAudioPlayer() {
   if (_audioPlayers.isEmpty) {
