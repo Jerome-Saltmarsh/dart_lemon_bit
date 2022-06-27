@@ -19,7 +19,7 @@ void updateAnimationFrame(){
   animationFrameTorch = frame ~/ 10;
   animationFrameRain = (frame ~/ 4) % 6;
 
-  if (wind.value == Wind.Calm){
+  if (windAmbient.value == Wind.Calm){
     animationFrameGrass = 0;
   } else {
     animationFrameGrass = (frame ~/ 15) % 4;
@@ -28,7 +28,7 @@ void updateAnimationFrame(){
     // }
   }
 
-  rainPosition = (animationFrameRain * wind.value * 2.5);
+  rainPosition = (animationFrameRain * windAmbient.value * 2.5);
 
 }
 

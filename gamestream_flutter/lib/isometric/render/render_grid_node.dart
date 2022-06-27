@@ -8,6 +8,7 @@ import 'package:lemon_engine/render.dart';
 
 import '../grid/state/wind.dart';
 import 'render_torch.dart';
+import 'weather.dart';
 
 void renderGridNode(int z, int row, int column, int type) {
   final dstX = (row - column) * tileSizeHalf;
@@ -38,7 +39,7 @@ void renderGridNode(int z, int row, int column, int type) {
       );
       return;
     case GridNodeType.Grass_Long:
-      if (wind.value == Wind.Gentle){
+      if (windAmbient.value == Wind.Gentle){
         return render(
           dstX: dstX,
           dstY: dstY,
@@ -134,18 +135,18 @@ void renderGridNode(int z, int row, int column, int type) {
         anchorY: 0.3334,
       );
 
-      // if (raining){
-      //   render(
-      //     dstX: dstX,
-      //     dstY: dstY - tileHeight,
-      //     srcX: 6788,
-      //     srcY: 72.0 * animationFrameRain,
-      //     srcWidth: 48,
-      //     srcHeight: 72,
-      //     anchorY: 0.3334,
-      //     color: colorShades[shade],
-      //   );
-      // }
+      if (raining){
+        render(
+          dstX: dstX,
+          dstY: dstY - tileHeight,
+          srcX: 6788,
+          srcY: 72.0 * animationFrameRain,
+          srcWidth: 48,
+          srcHeight: 72,
+          anchorY: 0.3334,
+          color: colorShades[shade],
+        );
+      }
       return;
     case GridNodeType.Torch:
       if (ambient.value <= Shade.Very_Bright) {

@@ -33,6 +33,11 @@ var gridTotalColumns = 0;
 var gridRowLength = 0.0;
 var gridColumnLength = 0.0;
 
+
+void resetGridWind(){
+
+}
+
 void apiGridActionToggleShadows () => gridShadows.value = !gridShadows.value;
 
 void refreshAmbient(){

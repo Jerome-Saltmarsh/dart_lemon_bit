@@ -65,7 +65,7 @@ Column buildColumnSettings() {
 }
 
 Widget buildControlWind(){
-   return watch(wind, (int value){
+   return watch(windAmbient, (int value){
      return container(child: "Wind: $value", action: toggleWind);
    });
 }
