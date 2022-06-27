@@ -524,6 +524,9 @@ class ServerResponseReader with ByteReader {
 
   void readNpcs() {
     totalNpcs = readInt();
+    while (totalNpcs >= npcs.length){
+      npcs.add(Character());
+    }
     for (var i = 0; i < totalNpcs; i++){
       readNpc(npcs[i]);
     }
