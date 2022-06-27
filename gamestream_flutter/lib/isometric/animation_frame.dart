@@ -16,7 +16,7 @@ void updateAnimationFrame(){
   _updateWaterFrame();
   animationFrameTorch = frame ~/ 10;
   animationFrameGrass = (frame ~/ 40) % 4;
-  animationFrameRain = (frame ~/ 8) % 6;
+  animationFrameRain = (frame ~/ 4) % 6;
 
   if (animationFrameGrass == 3){
     animationFrameGrass = 1;

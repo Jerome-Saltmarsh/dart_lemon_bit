@@ -146,7 +146,7 @@ void renderGridNode(int z, int row, int column, int type) {
       }
       return;
     case GridNodeType.Torch:
-      if (gridLightBake[z][row][column] <= Shade.Very_Bright) {
+      if (ambient.value <= Shade.Very_Bright) {
         return renderTorchOff(dstX, dstY);
       }
       return renderTorchOn(dstX, dstY);
