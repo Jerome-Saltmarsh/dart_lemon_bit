@@ -1,9 +1,8 @@
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/isometric/actions/initialize_isometric_game_state.dart';
+import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
-import 'package:gamestream_flutter/isometric/classes/player.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/collectables.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
@@ -56,7 +55,7 @@ class ServerResponseReader with ByteReader {
   var itemsTotal = 0;
 
   ServerResponseReader(){
-    initializeIsometricGameState();
+    audio.init();
   }
 
   void readBytes(List<int> values) {
