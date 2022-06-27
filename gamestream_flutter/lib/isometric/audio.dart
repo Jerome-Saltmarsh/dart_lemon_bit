@@ -9,6 +9,16 @@ final audio = _Audio();
 
 class _Audio {
 
+  void windStrongStart(){
+    if (audioPlayerWind.state == PlayerState.PLAYING) return;
+    audioPlayerWind.play('assets/audio/wind-strong.mp3', isLocal: true, volume: 1.0);
+  }
+
+  void windStrongStop(){
+    print("windStrongStop()");
+    audioPlayerWind.stop();
+  }
+
   void rainStart(){
     if (audioPlayerRain.state == PlayerState.PLAYING) return;
     audioPlayerRain.play('assets/audio/rain.mp3', isLocal: true, volume: 1.0);
@@ -265,6 +275,7 @@ class _Audio {
   void init() {
 
     audioPlayerRain.setReleaseMode(ReleaseMode.LOOP);
+    audioPlayerWind.setReleaseMode(ReleaseMode.LOOP);
 
     for (int i = 0; i < _totalAudioPlayers; i++) {
       _audioPlayers.add(AudioPlayer(mode: PlayerMode.LOW_LATENCY));
@@ -426,6 +437,7 @@ void _playRandom(List<String> values, double x, double y) {
 }
 
 final audioPlayerRain = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
+final audioPlayerWind = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
 
 AudioPlayer _getAudioPlayer() {
   if (_audioPlayers.isEmpty) {

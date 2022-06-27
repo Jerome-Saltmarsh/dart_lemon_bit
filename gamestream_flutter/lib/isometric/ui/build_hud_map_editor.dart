@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
+import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/weather.dart';
@@ -54,12 +55,19 @@ Column buildColumnSettings() {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildButtonLighning(),
+            buildButtonLightning(),
             buildToggleShadows(),
+            buildControlWind(),
           ],
         )
       ],
     );
+}
+
+Widget buildControlWind(){
+   return watch(wind, (Wind value){
+     return container(child: value.name, action: toggleWind);
+   });
 }
 
 Widget buildWatchEnemySpawn() {
@@ -101,7 +109,7 @@ Widget buildButtonRecenter() {
         });
 }
 
-Widget buildButtonLighning() => container(child: "Lightning", action: actionLightningFlash);
+Widget buildButtonLightning() => container(child: "Lightning", action: actionLightningFlash);
 
 Widget buildToggleLightMode(){
   return watch(lightModeRadial, (bool radial){
