@@ -258,6 +258,10 @@ class _Audio {
     audio._playPositioned('magical-swoosh-18.mp3', x, y);
   }
 
+  void lightning(){
+    play('lightning.mp3');
+  }
+
   void init() {
 
     audioPlayerRain.setReleaseMode(ReleaseMode.LOOP);

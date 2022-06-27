@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_off.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_on.dart';
@@ -316,6 +317,7 @@ void applyEmissionFromEffects() {
 }
 
 void actionLighteningFlash(){
+  audio.lightning();
     if (ambient.value == Shade.Very_Bright) return;
     ambient.value = Shade.Very_Bright;
     runAction(duration: 8, action: refreshAmbient);
