@@ -33,10 +33,10 @@ class Vector3 with Position {
     return z < 0 || x < 0 || x > gridRowLength || y < 0 || y > gridColumnLength;
   }
 
-  Vector3(double x, double y, double z) {
-    this.x = x;
-    this.y = y;
-    this.z = z;
+  Vector3() {
+    this.x = 0;
+    this.y = 0;
+    this.z = 0;
   }
 
   @override

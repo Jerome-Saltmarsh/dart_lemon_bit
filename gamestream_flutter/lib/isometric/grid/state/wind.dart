@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/events/on_wind_changed.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:lemon_watch/watch.dart';
@@ -48,4 +49,8 @@ class Wind {
   static const Calm = 0;
   static const Gentle = 1;
   static const Strong = 2;
+}
+
+class WindParticle extends Vector3 {
+
 }

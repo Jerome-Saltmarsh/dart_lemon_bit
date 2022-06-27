@@ -1,5 +1,4 @@
 
-import 'package:bleed_common/CharacterState.dart';
 import 'package:bleed_common/Projectile_Type.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
@@ -37,7 +36,6 @@ void applyCharacterToWind(Character character){
         if (z > 0){
           gridWind[z - 1][character.indexRow][character.indexColumn]++;
         }
-
    }
 }
 

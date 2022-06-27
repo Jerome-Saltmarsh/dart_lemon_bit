@@ -39,8 +39,6 @@ class Particle extends Vector3 {
      return false;
   }
 
-  Particle():super(0, 0, 0);
-
   double get speed => sqrt(xv * xv + yv * yv);
 
   double get renderScale => scale;

@@ -17,7 +17,7 @@ class ParticleEmitter extends Vector3 {
     required int z,
     required int row,
     required int column
-  }) : super(0, 0, 0) {
+  }) {
     indexZ = z;
     indexRow = row;
     indexColumn = column;

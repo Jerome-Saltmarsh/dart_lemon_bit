@@ -34,11 +34,8 @@ class Character extends Vector3 {
   Character({
     this.state = 0,
     this.direction = 0,
-    double x = 0,
-    double y = 0,
-    double z = 0,
     this.frame = 0,
     this.name = "",
     this.text = "",
-  }): super(x, y, z);
+  });
 }

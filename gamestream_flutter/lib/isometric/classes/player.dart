@@ -21,7 +21,7 @@ class Player extends Vector3 {
   final selectCharacterRequired = Watch(false);
   final abilityTarget = Vector2(0, 0);
   final storeVisible = Watch(false);
-  final attackTarget = Vector3(0, 0, 0);
+  final attackTarget = Vector3();
   final mouseTargetName = Watch<String?>(null);
   final mouseTargetHealth = Watch(0.0);
   final weaponType = Watch(WeaponType.Unarmed);
@@ -94,7 +94,7 @@ class Player extends Vector3 {
     throw Exception('getCanAffordWatch error, $type has no watch');
   }
 
-  Player(): super(0, 0, 0){
+  Player() {
     wood.onChanged(_onResourcesChanged);
     gold.onChanged(_onResourcesChanged);
     stone.onChanged(_onResourcesChanged);
