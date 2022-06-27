@@ -39,11 +39,10 @@ void renderGridNode(int z, int row, int column, int type) {
       );
       return;
     case GridNodeType.Grass_Long:
-      final f = wind.value == Wind.Calm ? 0 : ((row - column) + animationFrameGrass) % 4;
       return render(
         dstX: dstX,
         dstY: dstY,
-        srcX: 5877 + (f * 48),
+        srcX: 5877 + (windIsCalm ? 0 : (((row - column) + animationFrameGrass) % 4) * 48),
         srcY: 72.0 * shade,
         srcWidth: 48,
         srcHeight: 72,

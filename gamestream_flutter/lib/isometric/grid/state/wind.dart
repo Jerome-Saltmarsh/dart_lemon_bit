@@ -1,6 +1,8 @@
 import 'package:gamestream_flutter/isometric/events/on_wind_changed.dart';
 import 'package:lemon_watch/watch.dart';
 
+var windIsCalm = true;
+
 final wind = Watch(Wind.Calm, onChanged: onWindChanged);
 
 set windIndex(int value){

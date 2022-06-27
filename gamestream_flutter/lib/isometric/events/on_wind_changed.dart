@@ -2,6 +2,7 @@ import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 
 void onWindChanged(Wind value) {
+  windIsCalm = value == Wind.Calm;
   switch (value) {
     case Wind.Calm:
       audio.windStop();
