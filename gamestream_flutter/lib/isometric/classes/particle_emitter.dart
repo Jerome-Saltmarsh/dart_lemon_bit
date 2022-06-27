@@ -1,5 +1,6 @@
 
 
+import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 
@@ -20,6 +21,7 @@ class ParticleEmitter extends Vector3 {
     indexZ = z;
     indexRow = row;
     indexColumn = column;
+    y += tileHeightHalf;
   }
 }
 

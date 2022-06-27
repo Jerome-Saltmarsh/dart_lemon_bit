@@ -234,7 +234,7 @@ void _applyBakeMapEmissions() {
     for (var rowIndex = 0; rowIndex < gridTotalRows; rowIndex++) {
       for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
         final type = grid[zIndex][rowIndex][columnIndex];
-        if (type != GridNodeType.Torch && type != GridNodeType.Player_Spawn) continue;
+        if (!const [GridNodeType.Torch, GridNodeType.Player_Spawn, GridNodeType.Fireplace].contains(type)) continue;
         if (gridLightBake[zIndex][rowIndex][columnIndex] <= Shade.Very_Bright) continue;
         _applyEmission(
           map: gridLightBake,
@@ -247,6 +247,7 @@ void _applyBakeMapEmissions() {
     }
   }
 }
+
 
 void _applyEmission({
   required List<List<List<int>>> map,
