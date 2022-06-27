@@ -22,10 +22,10 @@ void updateAnimationFrame(){
   if (wind.value == Wind.Calm){
     animationFrameGrass = 0;
   } else {
-    animationFrameGrass = (frame ~/ 40) % 4;
-    if (animationFrameGrass == 3){
-      animationFrameGrass = 1;
-    }
+    animationFrameGrass = (frame ~/ 15) % 4;
+    // if (animationFrameGrass == 3){
+    //   animationFrameGrass = 1;
+    // }
   }
 
   rainPosition = (animationFrameRain * wind.value.index * 2.5);
