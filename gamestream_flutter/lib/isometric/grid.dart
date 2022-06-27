@@ -3,11 +3,14 @@ import 'dart:math';
 
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/events/on_hour_changed.dart';
+import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_off.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_on.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:gamestream_flutter/isometric/particle_emitters.dart';
 import 'package:gamestream_flutter/isometric/render/weather.dart';
+import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -306,4 +309,14 @@ void applyEmissionFromEffects() {
       break;
     }
   }
+}
+
+void actionLighteningFlash(){
+    if (ambient.value == Shade.Very_Bright) return;
+    ambient.value = Shade.Very_Bright;
+    runAction(duration: 8, action: refreshAmbient);
+}
+
+void refreshAmbient(){
+  ambient.value = convertHourToAmbient(hours.value);
 }

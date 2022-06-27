@@ -29,7 +29,8 @@ Widget buildEditTools(){
     children: [
       buildColumnEditTile(),
       buildColumnEdit(),
-      _button("Recenter", (){
+      container(child: "Lightning", action: actionLighteningFlash),
+      container(child: "Recenter", action: (){
         edit.z.value = player.indexZ;
         edit.row.value = player.indexRow;
         edit.column.value = player.indexColumn;

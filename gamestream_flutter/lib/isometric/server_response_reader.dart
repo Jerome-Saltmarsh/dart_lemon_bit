@@ -44,7 +44,6 @@ var durationTotal = 0;
 
 var time = DateTime.now();
 
-
 class ServerResponseReader with ByteReader {
   final gameObjects = <GameObject>[];
   final bulletHoles = <Vector2>[];

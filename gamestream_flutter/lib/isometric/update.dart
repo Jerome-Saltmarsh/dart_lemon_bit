@@ -1,6 +1,7 @@
 
 import 'package:bleed_common/Projectile_Type.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
+import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'animation_frame.dart';
@@ -11,6 +12,7 @@ import 'projectiles.dart';
 import 'zombies.dart';
 
 void updateIsometric(){
+  updateGameActions();
   updateAnimationFrame();
   updateParticleEmitters();
   updateParticles();

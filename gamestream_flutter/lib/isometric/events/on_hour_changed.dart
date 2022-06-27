@@ -4,10 +4,10 @@ import 'package:bleed_common/library.dart';
 import '../grid.dart';
 
 void onHourChanged(int hour) {
-    ambient.value = _convertHourToAmbient(hour);
+    ambient.value = convertHourToAmbient(hour);
 }
 
-int _convertHourToAmbient(int hour){
+int convertHourToAmbient(int hour){
     if (hour < 2) return Shade.Pitch_Black;
     if (hour < 3) return Shade.Very_Dark;
     if (hour < 4) return Shade.Dark;
