@@ -63,7 +63,7 @@ void renderGridNode(int z, int row, int column, int type) {
             anchorX: 0.5,
             anchorY: 0.3334,
           );
-        case Wind.Strong:
+         default:
           return render(
             dstX: dstX,
             dstY: dstY,
@@ -74,8 +74,6 @@ void renderGridNode(int z, int row, int column, int type) {
             anchorX: 0.5,
             anchorY: 0.3334,
           );
-        default:
-          throw Exception("Invalid wind value $wind");
       }
 
     case GridNodeType.Rain_Landing:

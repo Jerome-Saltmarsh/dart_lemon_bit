@@ -16,7 +16,7 @@ void toggleWind(){
   windAmbient.value = (windAmbient.value + 1) % 3;
 }
 
-void gridWindReset(){
+void gridWindResetToAmbient(){
   _ensureGridCorrectMetrics();
   final ambientValue = windAmbient.value;
   gridForEachNode((z, row, column){

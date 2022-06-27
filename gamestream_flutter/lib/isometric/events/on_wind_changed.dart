@@ -3,7 +3,7 @@ import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 
 void onWindChanged(int value) {
   windIsCalm = value == Wind.Calm;
-  gridWindReset();
+  gridWindResetToAmbient();
   switch (value) {
     case Wind.Calm:
       audio.windStop();

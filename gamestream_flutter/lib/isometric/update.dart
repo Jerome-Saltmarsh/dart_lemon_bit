@@ -1,7 +1,10 @@
 
+import 'package:bleed_common/CharacterState.dart';
 import 'package:bleed_common/Projectile_Type.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
+import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
+import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'animation_frame.dart';
@@ -18,6 +21,24 @@ void updateIsometric(){
   updateParticles();
   updateProjectiles();
   updateFootstepAudio();
+
+  gridWindResetToAmbient();
+  applyObjectsToWind();
+
+}
+
+void applyObjectsToWind(){
+  foreachPlayer(applyCharacterToWind);
+}
+
+void applyCharacterToWind(Character character){
+   if (character.running || character.performing){
+      final z = character.indexZ;
+        if (z > 0){
+          gridWind[z - 1][character.indexRow][character.indexColumn]++;
+        }
+
+   }
 }
 
 void updateProjectiles() {

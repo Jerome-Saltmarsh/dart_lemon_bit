@@ -57,7 +57,7 @@ void _onAmbientChanged(int ambient) {
 
 void onGridChanged(){
   refreshGridMetrics();
-  gridWindReset();
+  gridWindResetToAmbient();
   apiGridActionRefreshLighting();
 
   if (raining) {
