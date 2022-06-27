@@ -69,7 +69,7 @@ class _Audio {
   }
 
   void footstepGrass(double x, double y) {
-    _playPositioned('step-grass.mp3', x, y, volume: 0.1);
+    _playPositioned('step-grass.mp3', x, y, volume: 0.15);
   }
 
   void materialStruckRock(double x, double y){

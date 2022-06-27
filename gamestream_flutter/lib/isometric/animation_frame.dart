@@ -1,5 +1,6 @@
 
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:lemon_engine/engine.dart';
 
 var animationFrame = 0;
@@ -15,12 +16,17 @@ void updateAnimationFrame(){
   animationFrame = frame ~/ 15;
   _updateWaterFrame();
   animationFrameTorch = frame ~/ 10;
-  animationFrameGrass = (frame ~/ 40) % 4;
   animationFrameRain = (frame ~/ 4) % 6;
 
-  if (animationFrameGrass == 3){
-    animationFrameGrass = 1;
+  if (wind.value == Wind.None){
+    animationFrameGrass = 0;
+  } else {
+    animationFrameGrass = (frame ~/ 40) % 4;
+    if (animationFrameGrass == 3){
+      animationFrameGrass = 1;
+    }
   }
+
 }
 
 void _updateWaterFrame() {
