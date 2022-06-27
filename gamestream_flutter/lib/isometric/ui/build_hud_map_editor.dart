@@ -91,7 +91,7 @@ Widget buildWatchEnemySpawn() {
 
 Widget buildToggleShadows() {
   return watch(gridShadows, (bool shadowsOn){
-          return container(child: 'Shadows', action: apiGridActionToggleShadows, color: shadowsOn ? greyDark : grey);
+          return container(child: 'Shadows', action: toggleShadows, color: shadowsOn ? greyDark : grey);
         });
 }
 

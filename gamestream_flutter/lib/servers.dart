@@ -15,7 +15,6 @@ void connectToWebSocketServer(Region server, String message) {
   _connectToServer(wsConnectionString, message);
 }
 
-
 void _connectLocalHost({int port = 8080, required String message}) {
   _connectToServer('ws://localhost:$port', message);
 }

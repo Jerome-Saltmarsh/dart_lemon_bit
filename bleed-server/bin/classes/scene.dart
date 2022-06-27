@@ -37,6 +37,24 @@ class Scene {
     gridColumns = grid[0][0].length;
   }
 
+  void gridForeach({
+    required bool Function(int type) where,
+    required Function(int z, int row, int column, int type) apply,
+}){
+    for (var zIndex = 0; zIndex < gridHeight; zIndex++) {
+      final zValues = grid[zIndex];
+      for (var rowIndex = 0; rowIndex < gridRows; rowIndex++) {
+        final rowValues = zValues[rowIndex];
+        for (var columnIndex = 0; columnIndex < gridColumns; columnIndex++) {
+          final t = rowValues[columnIndex];
+          if (!where(t.type)) continue;
+          apply(zIndex, rowIndex, columnIndex, t.type);
+        }
+      }
+    }
+  }
+
+
   bool findByType(int type, void Function(int z, int row, int column) callback) {
      for (var zI = 0; zI < gridHeight; zI++){
        final z = grid[zI];
@@ -373,3 +391,14 @@ int parseRowsAndColumnsToDirection(int rows, int columns) {
 //   return (row * halfTileSize) + (column * halfTileSize) + halfTileSize;
 // }
 //
+
+void repairScene(Scene scene){
+  scene.gridForeach(
+      where: ((type) => type == GridNodeType.Tree_Bottom_Pine),
+      apply: (int z, int row, int column, int type){
+          if (z + 1 < tileHeight){
+            scene.grid[z + 1][row][column].type = GridNodeType.Tree_Top_Pine;
+          }
+      }
+  );
+}

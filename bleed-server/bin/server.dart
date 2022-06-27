@@ -655,7 +655,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (type == GridNodeType.Enemy_Spawn){
              scene.enemySpawns.add(EnemySpawn(z: z, row: row, column: column));
           }
-
           writeSceneToFile(scene);
           break;
 

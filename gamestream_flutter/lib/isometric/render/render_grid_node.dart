@@ -39,29 +39,45 @@ void renderGridNode(int z, int row, int column, int type) {
       );
       return;
     case GridNodeType.Grass_Long:
-      if (windAmbient.value == Wind.Gentle){
-        return render(
-          dstX: dstX,
-          dstY: dstY,
-          srcX: 5678 + ((((row - column) + animationFrameGrass) % 4) * 48),
-          srcY: 72.0 * shade,
-          srcWidth: 48,
-          srcHeight: 72,
-          anchorX: 0.5,
-          anchorY: 0.3334,
-        );
+      final wind = gridWind[z][row][column];
+      switch (wind){
+        case Wind.Calm:
+          return render(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 5678,
+            srcY: 72.0 * shade,
+            srcWidth: 48,
+            srcHeight: 72,
+            anchorX: 0.5,
+            anchorY: 0.3334,
+          );
+        case Wind.Gentle:
+          return render(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 5678 + ((((row - column) + animationFrameGrass) % 4) * 48),
+            srcY: 72.0 * shade,
+            srcWidth: 48,
+            srcHeight: 72,
+            anchorX: 0.5,
+            anchorY: 0.3334,
+          );
+        case Wind.Strong:
+          return render(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 5877 + ((((row - column) + animationFrameGrass) % 4) * 48),
+            srcY: 72.0 * shade,
+            srcWidth: 48,
+            srcHeight: 72,
+            anchorX: 0.5,
+            anchorY: 0.3334,
+          );
+        default:
+          throw Exception("Invalid wind value $wind");
       }
 
-      return render(
-        dstX: dstX,
-        dstY: dstY,
-        srcX: 5877 + (windIsCalm ? 0 : (((row - column) + animationFrameGrass) % 4) * 48),
-        srcY: 72.0 * shade,
-        srcWidth: 48,
-        srcHeight: 72,
-        anchorX: 0.5,
-        anchorY: 0.3334,
-      );
     case GridNodeType.Rain_Landing:
       return render(
         dstX: dstX,

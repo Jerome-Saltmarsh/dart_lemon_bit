@@ -1,4 +1,3 @@
-
 import 'dart:math';
 
 import 'package:bleed_common/grid_node_type.dart';
@@ -7,6 +6,7 @@ import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_off.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_on.dart';
+import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:gamestream_flutter/isometric/particle_emitters.dart';
 import 'package:gamestream_flutter/isometric/render/weather.dart';
@@ -22,8 +22,8 @@ final gridShadows = Watch(true, onChanged: (bool value){
 });
 
 final ambient = Watch(Shade.Bright, onChanged: _onAmbientChanged);
+
 final grid = <List<List<int>>>[];
-final gridWind = <List<List<int>>>[];
 final gridLightBake = <List<List<int>>>[];
 final gridLightDynamic = <List<List<int>>>[];
 var gridTotalZ = 0;
@@ -34,11 +34,7 @@ var gridRowLength = 0.0;
 var gridColumnLength = 0.0;
 
 
-void resetGridWind(){
-
-}
-
-void apiGridActionToggleShadows () => gridShadows.value = !gridShadows.value;
+void toggleShadows () => gridShadows.value = !gridShadows.value;
 
 void refreshAmbient(){
   ambient.value = convertHourToAmbient(hours.value);
@@ -61,6 +57,7 @@ void _onAmbientChanged(int ambient) {
 
 void onGridChanged(){
   refreshGridMetrics();
+  gridWindReset();
   apiGridActionRefreshLighting();
 
   if (raining) {
@@ -112,6 +109,17 @@ void gridForEach({
     }
   }
 }
+
+void gridForEachNode(Function(int z, int row, int column) apply) {
+  for (var zIndex = 0; zIndex < gridTotalZ; zIndex++) {
+    for (var rowIndex = 0; rowIndex < gridTotalRows; rowIndex++) {
+      for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
+        apply(zIndex, rowIndex, columnIndex);
+      }
+    }
+  }
+}
+
 
 void apiGridActionRefreshLighting(){
   _setLightMapValue(gridLightBake, ambient.value);
