@@ -24,6 +24,7 @@ import 'package:lemon_watch/watch.dart';
 import 'ai.dart';
 import 'camera.dart';
 import 'classes/npc_debug.dart';
+import 'classes/projectile.dart';
 import 'grid.dart';
 import 'items.dart';
 import 'particle_emitters.dart';
@@ -444,6 +445,9 @@ class ServerResponseReader with ByteReader {
 
   void readProjectiles(){
     totalProjectiles = readInt();
+    while (totalProjectiles >= projectiles.length){
+       projectiles.add(Projectile());
+    }
     for (var i = 0; i < totalProjectiles; i++) {
       final projectile = projectiles[i];
       projectile.x = readDouble();
