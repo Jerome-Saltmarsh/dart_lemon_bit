@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/isometric/events/on_hour_changed.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_off.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_on.dart';
@@ -15,6 +14,7 @@ import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'effects.dart';
+import 'grid/convert/convert_hour_to_ambient.dart';
 
 final gridShadows = Watch(true, onChanged: (bool value){
   apiGridActionRefreshLighting();
@@ -32,6 +32,10 @@ var gridRowLength = 0.0;
 var gridColumnLength = 0.0;
 
 void apiGridActionToggleShadows () => gridShadows.value = !gridShadows.value;
+
+void refreshAmbient(){
+  ambient.value = convertHourToAmbient(hours.value);
+}
 
 void gridEmitDynamic(int z, int row, int column, {required int maxBrightness, int radius = 5}){
   _applyEmission(
@@ -315,8 +319,4 @@ void actionLighteningFlash(){
     if (ambient.value == Shade.Very_Bright) return;
     ambient.value = Shade.Very_Bright;
     runAction(duration: 8, action: refreshAmbient);
-}
-
-void refreshAmbient(){
-  ambient.value = convertHourToAmbient(hours.value);
 }
