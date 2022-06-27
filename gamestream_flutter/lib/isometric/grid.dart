@@ -69,9 +69,11 @@ void refreshParticleEmitters() {
 
 void gridForEachOfType(int type, Function(int z, int row, int column, int type) handler) {
     for (var zIndex = 0; zIndex < gridTotalZ; zIndex++){
+      final zValues = grid[zIndex];
       for (var rowIndex = 0; rowIndex < gridTotalRows; rowIndex++){
+        final rowValues = zValues[rowIndex];
         for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++){
-          final t = grid[zIndex][rowIndex][columnIndex];
+          final t = rowValues[columnIndex];
           if (t != type) continue;
           handler(zIndex, rowIndex, columnIndex, t);
         }
