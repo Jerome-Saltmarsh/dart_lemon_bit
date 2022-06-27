@@ -61,8 +61,8 @@ void renderGridNode(int z, int row, int column, int type) {
       );
     case GridNodeType.Rain_Falling:
       return render(
-        dstX: dstX,
-        dstY: dstY,
+        dstX: dstX - rainPosition,
+        dstY: dstY + animationFrameRain,
         srcX: 6544,
         srcY: 72.0 * animationFrameRain,
         srcWidth: 48,

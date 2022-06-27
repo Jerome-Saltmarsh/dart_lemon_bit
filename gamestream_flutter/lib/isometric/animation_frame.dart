@@ -10,6 +10,7 @@ var animationFrameWaterSrcX = 0.0;
 var animationFrameTorch = 0;
 var animationFrameGrass = 0;
 var animationFrameRain = 0;
+var rainPosition = 0.0;
 
 void updateAnimationFrame(){
   final frame = engine.frame;
@@ -26,6 +27,8 @@ void updateAnimationFrame(){
       animationFrameGrass = 1;
     }
   }
+
+  rainPosition = (animationFrameRain * wind.value.index * 2.5);
 
 }
 
