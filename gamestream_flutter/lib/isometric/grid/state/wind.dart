@@ -85,24 +85,8 @@ void updateWindParticles(){
   applyGridLine(windLine - 4, 1);
   applyGridLine(windLine - 5, 1);
   applyGridLine(windLine - 6, 1);
-
-  // var windLineRow = 0;
-   // var windLineColumn = 0;
-   // if (windLine < gridTotalRows){
-   //   windLineColumn = 0;
-   //   windLineRow = gridTotalRows - windLine - 1;
-   // } else {
-   //   windLineRow = 0;
-   //   windLineColumn = windLine - gridTotalRows + 1;
-   // }
-   //
-   // while (windLineRow < gridTotalRows && windLineColumn < gridTotalColumns){
-   //     for (var windLineZ = 0; windLineZ < gridTotalZ; windLineZ++){
-   //       gridWind[windLineZ][windLineRow][windLineColumn]++;
-   //     }
-   //     windLineRow++;
-   //     windLineColumn++;
-   // }
+  applyGridLine(windLine - 7, 1);
+  applyGridLine(windLine - 8, 1);
 }
 
 void applyGridLine(int index, int strength){

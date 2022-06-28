@@ -332,11 +332,9 @@ class RenderOrderGrid extends RenderOrder {
   }
 
   void recalculateMaxRow() {
-    maxRow = convertWorldToRow(
-        screenRight,
-        getTileWorldY(gridRow, gridColumn),
-        0,
-    );
+
+    maxRow = (screenRight + (gridRow + gridColumn) * tileSizeHalf) ~/ tileSize;
+
     if (maxRow > gridTotalRows) {
       maxRow = gridTotalRows;
     }
