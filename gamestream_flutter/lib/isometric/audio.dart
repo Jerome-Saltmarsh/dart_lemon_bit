@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/render/weather.dart';
 import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
 import 'package:lemon_math/library.dart';
 
@@ -11,7 +12,13 @@ final audio = _Audio();
 
 class _Audio {
 
-  var windVolume = 0.0;
+  var volumeWind = 0.0;
+  var volumeRain = 0.0;
+
+  void update(){
+    updateWindVolume();
+    updateRainVolume();
+  }
 
   updateWindVolume(){
       final windLineDistance = (screenCenterRenderX - windLineRenderX).abs();
@@ -20,11 +27,18 @@ class _Audio {
       if (windLineRenderX - 250 <= screenCenterRenderX){
         target += windLineDistanceVolume;
       }
-      final diff = target - windVolume;
-      windVolume += (diff * 0.05);
+      final diff = target - volumeWind;
+      volumeWind += (diff * 0.05);
 
-      if (windVolume > 1.0) windVolume = 1.0;
-      audioPlayerWind.setVolume(windVolume);
+      if (volumeWind > 1.0) volumeWind = 1.0;
+      audioPlayerWind.setVolume(volumeWind);
+  }
+
+  void updateRainVolume(){
+      final targetVolume = raining ? 1.0 : 0.0;
+      final diff = targetVolume - volumeRain;
+      volumeRain += (diff * 0.05);
+      audioPlayerRain.setVolume(volumeRain);
   }
 
   double get windVolumeAmbientTarget {
@@ -33,26 +47,13 @@ class _Audio {
      return 1.0;
   }
 
-  double get sideWindDistance {
-    return 0.0;
-  }
-
-  void rainStart(){
-    if (audioPlayerRain.state == PlayerState.PLAYING) return;
-    audioPlayerRain.play('assets/audio/rain.mp3', isLocal: true, volume: 1.0);
-  }
-
-  void rainStop(){
-    audioPlayerRain.stop();
-  }
-
   var trackIndex = 0;
 
   _Audio(){
-    _musicPlayer.setReleaseMode(ReleaseMode.LOOP);
-    _musicPlayer.onPlayerCompletion.listen((event) {
-       playRandomSong();
-    });
+    // _musicPlayer.setReleaseMode(ReleaseMode.LOOP);
+    // _musicPlayer.onPlayerCompletion.listen((event) {
+    //    playRandomSong();
+    // });
   }
 
   final tracks = [
@@ -108,7 +109,6 @@ class _Audio {
 
   void stopMusic(){
     _musicPlayer.stop();
-    rainStop();
   }
 
   void toggleSoundEnabled(){
@@ -286,13 +286,12 @@ class _Audio {
   }
 
   void init() {
-
     audioPlayerRain.setReleaseMode(ReleaseMode.LOOP);
     audioPlayerWind.setReleaseMode(ReleaseMode.LOOP);
     audioPlayerFootsteps.setReleaseMode(ReleaseMode.LOOP);
 
-    audioPlayerWind.play('assets/audio/wind.mp3', isLocal: true, volume: 1.0);
-    audioPlayerWind.setVolume(0);
+    audioPlayerWind.play('assets/audio/wind.mp3', isLocal: true, volume: 0.0);
+    audioPlayerRain.play('assets/audio/rain.mp3', isLocal: true, volume: 0.0);
 
     for (int i = 0; i < _totalAudioPlayers; i++) {
       _audioPlayers.add(AudioPlayer(mode: PlayerMode.LOW_LATENCY));

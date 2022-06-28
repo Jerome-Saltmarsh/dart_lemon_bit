@@ -3,8 +3,6 @@ import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/events/on_wind_changed.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
-import 'package:gamestream_flutter/isometric/utils/convert.dart';
-import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:lemon_math/library.dart';
 
@@ -58,7 +56,7 @@ class Wind {
 
 final windParticles = <WindParticle>[
   // WindParticle(),
-  WindParticle(),
+  // WindParticle(),
 ];
 
 
@@ -68,9 +66,9 @@ var windLine = 0;
 var move = true;
 
 void updateWindParticles(){
-   for (final windParticle in windParticles){
-      windParticle.update();
-   }
+   // for (final windParticle in windParticles){
+   //    windParticle.update();
+   // }
    updateWindLine();
 }
 

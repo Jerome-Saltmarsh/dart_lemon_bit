@@ -29,7 +29,7 @@ void updateIsometric(){
 void applyObjectsToWind(){
   foreachPlayer(applyCharacterToWind);
   updateWindParticles();
-  audio.updateWindVolume();
+  audio.update();
 }
 
 void applyCharacterToWind(Character character){
