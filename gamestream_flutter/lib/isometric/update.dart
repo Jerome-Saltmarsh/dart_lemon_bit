@@ -28,6 +28,7 @@ void updateIsometric(){
 
 void applyObjectsToWind(){
   foreachPlayer(applyCharacterToWind);
+  updateWindParticles();
 }
 
 void applyCharacterToWind(Character character){

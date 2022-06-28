@@ -2,11 +2,13 @@ import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/events/on_wind_changed.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:lemon_watch/watch.dart';
+import 'package:lemon_math/library.dart';
 
 final gridWind = <List<List<int>>>[];
 var windIsCalm = true;
 
 final windAmbient = Watch(Wind.Calm, onChanged: onWindChanged);
+
 
 set windIndex(int value){
   assert(value >= 0);
@@ -51,6 +53,112 @@ class Wind {
   static const Strong = 2;
 }
 
+final windParticles = <WindParticle>[
+  // WindParticle(),
+  WindParticle(),
+];
+
+
+var windLine = 0;
+
+
+var move = true;
+
+void updateWindParticles(){
+   for (final windParticle in windParticles){
+      windParticle.update();
+   }
+
+   move = !move;
+   if (move){
+     windLine++;
+   }
+
+   if (windLine >= gridTotalColumns + gridTotalRows) {
+     windLine = 0;
+   }
+
+  applyGridLine(windLine, 2);
+  applyGridLine(windLine - 1, 2);
+  applyGridLine(windLine - 2, 2);
+  applyGridLine(windLine - 3, 2);
+  applyGridLine(windLine - 4, 1);
+  applyGridLine(windLine - 5, 1);
+  applyGridLine(windLine - 6, 1);
+
+  // var windLineRow = 0;
+   // var windLineColumn = 0;
+   // if (windLine < gridTotalRows){
+   //   windLineColumn = 0;
+   //   windLineRow = gridTotalRows - windLine - 1;
+   // } else {
+   //   windLineRow = 0;
+   //   windLineColumn = windLine - gridTotalRows + 1;
+   // }
+   //
+   // while (windLineRow < gridTotalRows && windLineColumn < gridTotalColumns){
+   //     for (var windLineZ = 0; windLineZ < gridTotalZ; windLineZ++){
+   //       gridWind[windLineZ][windLineRow][windLineColumn]++;
+   //     }
+   //     windLineRow++;
+   //     windLineColumn++;
+   // }
+}
+
+void applyGridLine(int index, int strength){
+  if (index < 0) return;
+  var windLineRow = 0;
+  var windLineColumn = 0;
+  if (index < gridTotalRows){
+    windLineColumn = 0;
+    windLineRow = gridTotalRows - index - 1;
+  } else {
+    windLineRow = 0;
+    windLineColumn = index - gridTotalRows + 1;
+  }
+  while (windLineRow < gridTotalRows && windLineColumn < gridTotalColumns){
+      for (var windLineZ = 0; windLineZ < gridTotalZ; windLineZ++){
+        gridWind[windLineZ][windLineRow][windLineColumn] += strength;
+      }
+      windLineRow++;
+      windLineColumn++;
+  }
+}
+
 class WindParticle extends Vector3 {
 
+  var enabled = true;
+  var speed = 6;
+
+  void update(){
+    // if (!enabled) return;
+    x -= speed;
+    y += speed;
+
+    if (x < 0 || y >= gridColumnLength) {
+
+      final i = randomInt(0, gridTotalRows + gridTotalColumns);
+      if (i < gridTotalRows){
+        indexRow = i;
+        indexColumn = 1;
+      } else {
+        indexRow = gridTotalRows - 1;
+        indexColumn = (i - gridTotalColumns);
+      }
+    }
+
+    gridWind[1][indexRow][indexColumn]++;
+
+    for (var z = 0; z < 3; z++){
+       for (var r = 0; r < 3; r++) {
+         for (var c = 0; c < 3; c++){
+
+         }
+       }
+    }
+  }
+
+  WindParticle() {
+    indexZ = 1;
+  }
 }

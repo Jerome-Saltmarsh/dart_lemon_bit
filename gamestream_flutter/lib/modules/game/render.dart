@@ -7,7 +7,9 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/isometric/ai.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/npc_debug.dart';
+import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/collectables.dart';
@@ -61,6 +63,10 @@ class GameRender {
 
     if (mouseTargetName != null){
        renderText(text: mouseTargetName, x: player.attackTarget.renderX, y: player.attackTarget.renderY - 80);
+    }
+    
+    for (final windParticle in windParticles){
+      renderCircle(x: windParticle.renderX, y: windParticle.renderY, size: 32);
     }
   }
 
