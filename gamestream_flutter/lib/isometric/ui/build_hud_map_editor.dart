@@ -56,6 +56,7 @@ Column buildColumnSettings() {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildButtonLightning(),
+            buildButtonBreeze(),
             buildToggleShadows(),
             buildControlWind(),
           ],
@@ -110,6 +111,7 @@ Widget buildButtonRecenter() {
 }
 
 Widget buildButtonLightning() => container(child: "Lightning", action: actionLightningFlash);
+Widget buildButtonBreeze() => container(child: "Breeze", action: actionBreeze);
 
 Widget buildToggleLightMode(){
   return watch(lightModeRadial, (bool radial){

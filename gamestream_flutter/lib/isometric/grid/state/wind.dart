@@ -1,5 +1,6 @@
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/events/on_wind_changed.dart';
+import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:lemon_math/library.dart';
@@ -68,25 +69,32 @@ void updateWindParticles(){
    for (final windParticle in windParticles){
       windParticle.update();
    }
+   updateWindLine();
+}
 
-   move = !move;
-   if (move){
-     windLine++;
-   }
+void updateWindLine() {
+  move = !move;
+  if (move){
+    windLine++;
+  }
 
-   if (windLine >= gridTotalColumns + gridTotalRows) {
-     windLine = 0;
-   }
+  if (windLine >= gridTotalColumns + gridTotalRows) {
+    windLine = 0;
+  }
 
-  applyGridLine(windLine, 2);
-  applyGridLine(windLine - 1, 2);
-  applyGridLine(windLine - 2, 2);
+  applyGridLine(windLine, 1);
+  applyGridLine(windLine - 1, 1);
+  applyGridLine(windLine - 2, 1);
   applyGridLine(windLine - 3, 2);
-  applyGridLine(windLine - 4, 1);
-  applyGridLine(windLine - 5, 1);
-  applyGridLine(windLine - 6, 1);
+  applyGridLine(windLine - 4, 2);
+  applyGridLine(windLine - 5, 2);
+  applyGridLine(windLine - 6, 2);
   applyGridLine(windLine - 7, 1);
   applyGridLine(windLine - 8, 1);
+  applyGridLine(windLine - 9, 1);
+  applyGridLine(windLine - 10, 1);
+  applyGridLine(windLine - 11, 1);
+  applyGridLine(windLine - 12, 1);
 }
 
 void applyGridLine(int index, int strength){
@@ -145,4 +153,14 @@ class WindParticle extends Vector3 {
   WindParticle() {
     indexZ = 1;
   }
+}
+
+void actionBreeze() {
+  windAmbient.value++;
+  runAction(duration: 120, action: endBreeze);
+}
+
+void endBreeze(){
+  if (windAmbient.value <= Wind.Calm) return;
+  windAmbient.value--;
 }
