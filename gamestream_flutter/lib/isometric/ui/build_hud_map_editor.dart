@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/render/weather.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/client_request_sender.dart';
@@ -24,8 +25,23 @@ Widget buildHudMapEditor(){
     children: [
       Positioned(top: 0, right: 0, child: buildPanelMenu()),
       Positioned(top: 0, left: 0, child: buildEditTools()),
+      Positioned(right: 0, bottom: 0, child: buildPanelEditView()),
     ],
   );
+}
+
+Widget buildPanelEditView(){
+  return Column(children: [
+     text("+", onPressed: () {
+       maxZRender.value++;
+     }),
+     watch(maxZRender, (int max){
+        return text(max);
+     }),
+     text("-", onPressed: (){
+       maxZRender.value--;
+     }),
+  ]);
 }
 
 Widget buildEditTools(){

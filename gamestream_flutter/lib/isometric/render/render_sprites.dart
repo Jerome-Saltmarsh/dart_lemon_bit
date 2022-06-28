@@ -1,6 +1,5 @@
 import 'dart:math';
-
-
+import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
@@ -43,8 +42,10 @@ var renderOrderFirst = renderOrder.first;
 var anyRemaining = false;
 var totalIndex = 0;
 
+final maxZRender = Watch<int>(gridTotalZ, clamp: (int value){
+  return clamp<int>(value, 0, gridTotalZ - 1);
+});
 
-final maxZRender = Watch(99);
 
 void renderSprites() {
   for (final order in renderOrder){
@@ -468,4 +469,5 @@ int getRenderRow(int row, int z){
 int getRenderColumn(int column, int z){
   return column - (z ~/ 2);
 }
+
 
