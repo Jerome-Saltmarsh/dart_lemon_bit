@@ -2,8 +2,6 @@ import 'dart:math';
 
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/isometric/audio.dart';
-import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_off.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_on.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
@@ -345,17 +343,4 @@ void applyEmissionFromEffects() {
       break;
     }
   }
-}
-
-void actionScheduleLightning() {
-   runAction(duration: randomBetween(100, 2000).toInt(), action: actionLightningFlash);
-}
-
-void actionLightningFlash() {
-  if (!raining) return;
-  audio.lightning();
-  if (ambient.value == Shade.Very_Bright) return;
-  ambient.value = Shade.Very_Bright;
-  runAction(duration: 8, action: refreshAmbient);
-  actionScheduleLightning();
 }

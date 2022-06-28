@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/isometric/render/weather.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:gamestream_flutter/isometric/ui/build_container.dart';
+import 'package:gamestream_flutter/isometric/weather/lightning.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:lemon_engine/engine.dart';
@@ -110,7 +111,14 @@ Widget buildButtonRecenter() {
         });
 }
 
-Widget buildButtonLightning() => container(child: "Lightning", action: actionLightningFlash);
+Widget buildButtonLightning() => watch(weatherLightning, (bool lightningOn){
+  return container(
+    child: "Lightning",
+    action: weatherLightningToggle,
+    color: lightningOn ? greyDark : grey,
+  );
+});
+
 Widget buildButtonBreeze() => container(child: "Breeze", action: actionBreeze);
 
 Widget buildToggleLightMode(){
