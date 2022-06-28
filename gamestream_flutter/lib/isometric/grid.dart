@@ -12,7 +12,6 @@ import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'effects.dart';
 import 'grid/convert/convert_hour_to_ambient.dart';
 
 final gridShadows = Watch(true, onChanged: (bool value){
@@ -194,16 +193,6 @@ bool isEmpty(int type){
   return type == GridNodeType.Empty || type == GridNodeType.Rain_Falling || type == GridNodeType.Rain_Landing;
 }
 
-// void gridRefreshDynamicLight(){
-//   for (var z = 0; z < gridTotalZ; z++) {
-//      for (var row = 0; row < gridTotalRows; row++) {
-//         for (var column = 0; column < gridTotalColumns; column++) {
-//            gridLightDynamic[z][row][column] = gridLightBake[z][row][column];
-//         }
-//      }
-//   }
-// }
-
 bool gridIsUnderSomething(int z, int row, int column){
   for (var zIndex = z + 1; zIndex < gridTotalZ; zIndex++){
     if (grid[zIndex][row][column] != GridNodeType.Empty) return false;
@@ -332,15 +321,3 @@ int _convertDistanceToShade(int distance, {int maxBrightness = Shade.Very_Bright
    return clamp(distance - 1, maxBrightness, 6);
 }
 
-void applyEmissionFromEffects() {
-  for (final effect in effects) {
-    if (!effect.enabled) continue;
-    final percentage = effect.percentage;
-    if (percentage < 0.33) {
-      break;
-    }
-    if (percentage < 0.66) {
-      break;
-    }
-  }
-}

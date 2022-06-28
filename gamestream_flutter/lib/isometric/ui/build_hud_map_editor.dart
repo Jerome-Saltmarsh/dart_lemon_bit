@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/isometric/render/weather.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:gamestream_flutter/isometric/ui/build_container.dart';
+import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 import 'package:gamestream_flutter/isometric/weather/lightning.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
@@ -116,7 +117,13 @@ Widget buildButtonLightning() => watch(weatherLightning, (bool lightningOn){
   );
 });
 
-Widget buildButtonBreeze() => container(child: "Breeze", action: actionBreeze);
+Widget buildButtonBreeze() => watch(weatherBreeze, (bool weatherBreezeOn){
+  return container(
+      child: "Breeze",
+      action: weatherBreezeToggle,
+      color: weatherBreezeOn ? greyDark : grey,
+  );
+});
 
 Widget buildToggleLightMode(){
   return watch(lightModeRadial, (bool radial){

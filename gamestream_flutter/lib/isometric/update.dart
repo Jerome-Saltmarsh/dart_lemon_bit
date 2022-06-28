@@ -11,6 +11,7 @@ import 'particle_emitters.dart';
 import 'particles.dart';
 import 'players.dart';
 import 'projectiles.dart';
+import 'weather/breeze.dart';
 import 'weather/lightning.dart';
 import 'zombies.dart';
 
@@ -29,7 +30,7 @@ void updateIsometric(){
 
 void applyObjectsToWind(){
   foreachPlayer(applyCharacterToWind);
-  updateWindParticles();
+  updateWindLine();
   audio.update();
   weatherUpdateLightning();
 }
