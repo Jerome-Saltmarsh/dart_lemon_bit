@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:lemon_math/library.dart';
 
@@ -9,18 +10,36 @@ final audio = _Audio();
 
 class _Audio {
 
+  var windVolume = 0.0;
+
+
+  updateWind(){
+      final target = windVolumeTarget;
+      final diff = target - windVolume;
+      windVolume += (diff * 0.05);
+      audioPlayerWind.setVolume(windVolume);
+  }
+
+  double get windVolumeTarget {
+     if (windAmbient.value <= Wind.Calm) return 0;
+     if (windAmbient.value <= Wind.Gentle) return 0.5;
+     return 1.0;
+  }
+
   void windStrongStart(){
-    windStop();
-    audioPlayerWind.play('assets/audio/wind-strong.mp3', isLocal: true, volume: 1.0);
+    // windStop();
+    // audioPlayerWind.play('assets/audio/wind-strong.mp3', isLocal: true, volume: 1.0);
+    // audioPlayerWind.play('assets/audio/wind.mp3', isLocal: true, volume: 1.0);
   }
 
   void windGentleStart(){
-    windStop();
-    audioPlayerWind.play('assets/audio/wind-gentle.mp3', isLocal: true, volume: 1.0);
+    // windStop();
+    // audioPlayerWind.play('assets/audio/wind-gentle.mp3', isLocal: true, volume: 1.0);
   }
 
   void windStop(){
-    audioPlayerWind.stop();
+    // audioPlayerWind.stop();
+    // audio
   }
 
   void rainStart(){
@@ -276,6 +295,9 @@ class _Audio {
     audioPlayerRain.setReleaseMode(ReleaseMode.LOOP);
     audioPlayerWind.setReleaseMode(ReleaseMode.LOOP);
     audioPlayerFootsteps.setReleaseMode(ReleaseMode.LOOP);
+
+    audioPlayerWind.play('assets/audio/wind.mp3', isLocal: true, volume: 1.0);
+    audioPlayerWind.setVolume(0);
 
     for (int i = 0; i < _totalAudioPlayers; i++) {
       _audioPlayers.add(AudioPlayer(mode: PlayerMode.LOW_LATENCY));
