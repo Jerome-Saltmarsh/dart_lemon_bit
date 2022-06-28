@@ -628,6 +628,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return errorInvalidArg('z');
           }
           final type = int.tryParse(arguments[4]);
+          if (type == GridNodeType.Boundary) {
+            throw Exception("Cannot set grid block boundary");
+          }
           if (type == null){
             return errorInvalidArg('type');
           }

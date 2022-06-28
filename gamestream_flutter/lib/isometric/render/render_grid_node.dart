@@ -27,7 +27,7 @@ void renderGridNode(int z, int row, int column, int type) {
         anchorY: 0.3334,
       );
     case GridNodeType.Grass:
-      render(
+      return render(
         dstX: dstX,
         dstY: dstY,
         srcX: 7158 ,
@@ -37,7 +37,18 @@ void renderGridNode(int z, int row, int column, int type) {
         anchorX: 0.5,
         anchorY: 0.3334,
       );
-      return;
+
+    case GridNodeType.Wood:
+      return render(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: 7590 ,
+        srcY: 72.0 * shade,
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorX: 0.5,
+        anchorY: 0.3334,
+      );
     case GridNodeType.Grass_Long:
       final wind = gridWind[z][row][column];
       switch (wind){

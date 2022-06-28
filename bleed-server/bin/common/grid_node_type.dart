@@ -20,7 +20,8 @@ class GridNodeType {
   static const Rain_Falling = 18;
   static const Rain_Landing = 19;
   static const Fireplace = 20;
-  
+  static const Wood = 21;
+
   static const values = [
     Empty,
     Boundary,
@@ -42,6 +43,7 @@ class GridNodeType {
     Rain_Falling,
     Rain_Landing,
     Fireplace,
+    Wood,
   ];
   
   static String getName(int type){
@@ -66,6 +68,7 @@ class GridNodeType {
        Rain_Falling: 'Rain_Falling',
        Rain_Landing: 'Rain_Landing',
        Fireplace: 'Fireplace',
+       Wood: "Wood",
      }[type] ?? "unknown($type)";
   }
   

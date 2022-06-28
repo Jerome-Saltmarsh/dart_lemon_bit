@@ -1,5 +1,7 @@
 import 'dart:math';
 
+
+import 'package:lemon_watch/watch.dart';
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
@@ -40,6 +42,9 @@ const renderOrderLength = 6;
 var renderOrderFirst = renderOrder.first;
 var anyRemaining = false;
 var totalIndex = 0;
+
+
+final maxZRender = Watch(99);
 
 void renderSprites() {
   for (final order in renderOrder){
@@ -360,7 +365,7 @@ class RenderOrderGrid extends RenderOrder {
           gridRow >= gridTotalRows
       ) {
         gridZ++;
-        if (gridZ >= gridTotalZ) return end();
+        if (gridZ >= gridTotalZ || gridZ > maxZRender.value) return end();
         gridZHalf =  gridZ ~/ 2;
         gridZGreaterThanPlayerZ = gridZ > playerZ;
         gridRow = 0;
