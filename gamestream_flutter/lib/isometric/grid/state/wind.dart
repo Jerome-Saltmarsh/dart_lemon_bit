@@ -6,7 +6,6 @@ import 'package:lemon_watch/watch.dart';
 import 'package:lemon_math/library.dart';
 
 final gridWind = <List<List<int>>>[];
-var windIsCalm = true;
 
 final windAmbient = Watch(Wind.Calm, onChanged: onWindChanged);
 
