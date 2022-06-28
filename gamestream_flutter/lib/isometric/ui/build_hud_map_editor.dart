@@ -32,36 +32,33 @@ Widget buildEditTools(){
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       buildColumnEditTile(),
+      buildColumnWeather(),
       buildColumnSettings(),
-      // buildColumnEdit(),
-      // buildWatchEnemySpawn(),
     ],
   );
 }
 
-Column buildColumnSettings() {
+Column buildColumnSettings(){
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      buildToggleShadows(),
+      buildToggleLightMode(),
+    ],
+  );
+}
+
+Column buildColumnWeather() {
   return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildToggleRain(),
-            buildButtonRecenter(),
-            buildToggleLightMode(),
-            buildControlTime(),
-          ],
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildButtonLightning(),
-            buildButtonBreeze(),
-            buildToggleShadows(),
-            buildControlWind(),
-          ],
-        )
+        buildToggleRain(),
+        buildControlTime(),
+        buildButtonLightning(),
+        buildButtonBreeze(),
+        buildControlWind(),
       ],
     );
 }
