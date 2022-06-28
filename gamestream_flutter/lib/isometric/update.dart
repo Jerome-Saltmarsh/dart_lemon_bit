@@ -2,6 +2,7 @@
 import 'package:bleed_common/Projectile_Type.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
+import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:lemon_engine/engine.dart';
@@ -30,17 +31,34 @@ void updateIsometric(){
 
 void applyObjectsToWind(){
   foreachPlayer(applyCharacterToWind);
+
+  for (var i = 0; i < totalProjectiles; i++){
+     applyWindFromProjectile(projectiles[i]);
+  }
+
   updateWindLine();
   audio.update();
   weatherUpdateLightning();
 }
 
+void applyWindFromProjectile(Projectile projectile){
+    final z = projectile.indexZ;
+    final row = projectile.indexRow;
+    final column = projectile.indexColumn;
+
+    gridWind[z][row][column]++;
+    if (z > 0){
+      gridWind[z - 1][row][column]++;
+    }
+}
+
 void applyCharacterToWind(Character character){
    if (character.running || character.performing){
       final z = character.indexZ;
-        if (z > 0){
+      gridWind[z][character.indexRow][character.indexColumn]++;
+      if (z > 0){
           gridWind[z - 1][character.indexRow][character.indexColumn]++;
-        }
+      }
    }
 }
 
