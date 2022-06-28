@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
 import 'package:lemon_math/library.dart';
 
 import '../cache.dart';
@@ -13,16 +14,27 @@ class _Audio {
   var windVolume = 0.0;
 
   updateWindVolume(){
-      final target = windVolumeAmbientTarget;
+      final windLineDistance = (screenCenterRenderX - windLineRenderX).abs();
+      final windLineDistanceVolume = convertDistanceToVolume(windLineDistance);
+      var target = windVolumeAmbientTarget;
+      if (windLineRenderX - 200 <= screenCenterRenderX){
+        target += windLineDistanceVolume;
+      }
       final diff = target - windVolume;
       windVolume += (diff * 0.05);
+
+      if (windVolume > 1.0) windVolume = 1.0;
       audioPlayerWind.setVolume(windVolume);
   }
 
   double get windVolumeAmbientTarget {
-     if (windAmbient.value <= Wind.Calm) return 0;
+     if (windAmbient.value <= Wind.Calm) return 0.1;
      if (windAmbient.value <= Wind.Gentle) return 0.5;
      return 1.0;
+  }
+
+  double get sideWindDistance {
+    return 0.0;
   }
 
   void rainStart(){
@@ -458,7 +470,10 @@ AudioPlayer _getAudioPlayer() {
 }
 
 double _calculateVolume(double x, double y) {
-  final distance = distanceBetween(x, y, player.x, player.y);
+  return convertDistanceToVolume(distanceBetween(x, y, player.x, player.y));
+}
+
+double convertDistanceToVolume(double distance){
   final v = 1.0 / ((distance * _audioDistanceFade) + 1);
   return v * v;
 }

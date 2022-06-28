@@ -1,7 +1,10 @@
+import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/events/on_wind_changed.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
+import 'package:gamestream_flutter/isometric/utils/convert.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:lemon_math/library.dart';
 
@@ -76,6 +79,7 @@ void updateWindLine() {
   if (move){
     windLine++;
   }
+  
 
   if (windLine >= gridTotalColumns + gridTotalRows) {
     windLine = 0;
@@ -94,6 +98,19 @@ void updateWindLine() {
   applyGridLine(windLine - 10, 1);
   applyGridLine(windLine - 11, 1);
   applyGridLine(windLine - 12, 1);
+}
+
+double get windLineRenderX {
+  var windLineColumn = 0;
+  var windLineRow = 0;
+  if (windLine < gridTotalRows){
+    windLineColumn = 0;
+    windLineRow = gridTotalRows - windLine - 1;
+  } else {
+    windLineRow = 0;
+    windLineColumn = windLine - gridTotalRows + 1;
+  }
+  return (windLineRow - windLineColumn) * tileSizeHalf;
 }
 
 void applyGridLine(int index, int strength){
