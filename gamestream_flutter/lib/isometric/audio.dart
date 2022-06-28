@@ -17,7 +17,7 @@ class _Audio {
       final windLineDistance = (screenCenterRenderX - windLineRenderX).abs();
       final windLineDistanceVolume = convertDistanceToVolume(windLineDistance);
       var target = windVolumeAmbientTarget;
-      if (windLineRenderX - 200 <= screenCenterRenderX){
+      if (windLineRenderX - 250 <= screenCenterRenderX){
         target += windLineDistanceVolume;
       }
       final diff = target - windVolume;
