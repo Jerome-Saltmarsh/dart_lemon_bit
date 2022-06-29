@@ -22,6 +22,7 @@ import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/render.dart';
 import 'package:lemon_math/library.dart';
 
 import 'state.dart';
@@ -44,7 +45,7 @@ class GameRender {
       renderFloatingTexts();
   }
 
-  void render(Canvas canvas, Size size) {
+  void renderGame(Canvas canvas, Size size) {
     drawAbility();
     attackTargetCircle();
     // drawPaths();
@@ -68,6 +69,7 @@ class GameRender {
     for (final windParticle in windParticles){
       renderCircle(x: windParticle.renderX, y: windParticle.renderY, size: 32);
     }
+
   }
 
   void renderMouseWireFrame(){

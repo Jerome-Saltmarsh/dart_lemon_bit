@@ -1,6 +1,8 @@
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:lemon_engine/render.dart';
+import 'package:lemon_watch/watch.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
@@ -62,8 +64,30 @@ Column buildColumnSettings(){
     children: [
       buildToggleShadows(),
       buildToggleLightMode(),
+      buildColumnEditBlendMode(),
     ],
   );
+}
+
+final blend = Watch(renderBlendMode, onChanged: setRenderBlendMode);
+
+Widget buildColumnEditBlendMode(){
+  return watch(blend, (activeBlendMode){
+    return Container(
+      height: 300,
+      child: SingleChildScrollView(
+        child: Column(
+          children: BlendMode.values.map((e) {
+              return container(
+                  child: e.name,
+                  action: () => blend(e),
+                  color: e == activeBlendMode ? green : grey,
+              );
+          }).toList(),
+        ),
+      ),
+    );
+  });
 }
 
 Column buildColumnWeather() {

@@ -41,7 +41,7 @@ class CoreEvents {
 
     switch(value) {
       case GameStatus.In_Progress:
-        engine.drawCanvas.value = modules.game.render.render;
+        engine.drawCanvas.value = modules.game.render.renderGame;
         engine.drawCanvasAfterUpdate = false;
         engine.fullScreenEnter();
         break;
@@ -106,7 +106,7 @@ class CoreEvents {
         break;
 
       case Mode.Player:
-        engine.drawCanvas.value = modules.game.render.render;
+        engine.drawCanvas.value = modules.game.render.renderGame;
         engine.drawForeground.value = modules.game.render.renderForeground;
         engine.update = modules.game.update.update;
         engine.drawCanvasAfterUpdate = true;

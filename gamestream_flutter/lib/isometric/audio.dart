@@ -56,7 +56,8 @@ class _Audio {
   final audioLoops = <AudioLoop>[
     AudioLoop(name: 'assets/audio/wind.mp3', getTargetVolume: getVolumeTargetWind),
     AudioLoop(name: 'assets/audio/rain2.mp3', getTargetVolume: getVolumeTargetRain),
-    AudioLoop(name: 'assets/audio/sounds/insects.mp3', getTargetVolume: getVolumeTargetInsects),
+    AudioLoop(name: 'assets/audio/sounds/crickets.mp3', getTargetVolume: getVolumeTargetCrickets),
+    AudioLoop(name: 'assets/audio/sounds/day-wildlife.mp3', getTargetVolume: getVolumeTargetDayWildlife),
   ];
 
   void update(){
@@ -479,9 +480,15 @@ double getVolumeTargetWind() {
 
 double getVolumeTargetRain() => raining ? 1 : 0;
 
-double getVolumeTargetInsects() {
+double getVolumeTargetCrickets() {
    final hour = hours.value;
    if (hour >= 5 && hour < 7) return 1.0;
    if (hour >= 17 && hour < 19) return 1.0;
    return 0;
+}
+
+double getVolumeTargetDayWildlife() {
+  final hour = hours.value;
+  if (hour >= 10 && hour < 15) return 0.1;
+  return 0;
 }
