@@ -36,37 +36,14 @@ class _Audio {
   var volumeRain = 0.0;
 
   final audioSources = <AudioSource>[
-    AudioSource(name: 'assets/audio/wind.mp3', getTargetVolume: getWindVolumeTarget)
+    AudioSource(name: 'assets/audio/wind.mp3', getTargetVolume: getVolumeTargetWind),
+    AudioSource(name: 'assets/audio/rain.mp3', getTargetVolume: getVolumeTargetRain),
   ];
 
   void update(){
-    // updateWindVolume();
-    updateRainVolume();
-
     for (final audioSource in audioSources){
       audioSource.update();
     }
-  }
-
-  // updateWindVolume(){
-  //     final windLineDistance = (screenCenterRenderX - windLineRenderX).abs();
-  //     final windLineDistanceVolume = convertDistanceToVolume(windLineDistance);
-  //     var target = windVolumeAmbientTarget;
-  //     if (windLineRenderX - 250 <= screenCenterRenderX){
-  //       target += windLineDistanceVolume;
-  //     }
-  //     final diff = target - volumeWind;
-  //     // volumeWind += (diff * 0.05);
-  //
-  //     // if (volumeWind > 1.0) volumeWind = 1.0;
-  //     // audioPlayerWind.setVolume(volumeWind);
-  // }
-
-  void updateRainVolume(){
-      final targetVolume = raining ? 1.0 : 0.0;
-      final diff = targetVolume - volumeRain;
-      volumeRain += (diff * 0.05);
-      audioPlayerRain.setVolume(volumeRain);
   }
 
   double get windVolumeAmbientTarget {
@@ -76,13 +53,6 @@ class _Audio {
   }
 
   var trackIndex = 0;
-
-  _Audio(){
-    // _musicPlayer.setReleaseMode(ReleaseMode.LOOP);
-    // _musicPlayer.onPlayerCompletion.listen((event) {
-    //    playRandomSong();
-    // });
-  }
 
   final tracks = [
     'song01',
@@ -314,12 +284,7 @@ class _Audio {
   }
 
   void init() {
-    audioPlayerRain.setReleaseMode(ReleaseMode.LOOP);
-    // audioPlayerWind.setReleaseMode(ReleaseMode.LOOP);
     audioPlayerFootsteps.setReleaseMode(ReleaseMode.LOOP);
-
-    // audioPlayerWind.play('assets/audio/wind.mp3', isLocal: true, volume: 0.0);
-    audioPlayerRain.play('assets/audio/rain.mp3', isLocal: true, volume: 0.0);
 
     for (int i = 0; i < _totalAudioPlayers; i++) {
       _audioPlayers.add(AudioPlayer(mode: PlayerMode.LOW_LATENCY));
@@ -480,8 +445,6 @@ void _playRandom(List<String> values, double x, double y) {
   audio._playPositioned(randomItem(values), x, y);
 }
 
-final audioPlayerRain = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
-// final audioPlayerWind = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
 final audioPlayerFootsteps = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
 
 AudioPlayer _getAudioPlayer() {
@@ -506,7 +469,7 @@ double convertDistanceToVolume(double distance){
 }
 
 
-double getWindVolumeTarget() {
+double getVolumeTargetWind() {
   final windLineDistance = (screenCenterRenderX - windLineRenderX).abs();
   final windLineDistanceVolume = convertDistanceToVolume(windLineDistance);
   var target = 0.0;
@@ -517,3 +480,5 @@ double getWindVolumeTarget() {
   if (windAmbient.value <= Wind.Gentle) return target + 0.5;
   return 1.0;
 }
+
+double getVolumeTargetRain() => raining ? 1 : 0;
