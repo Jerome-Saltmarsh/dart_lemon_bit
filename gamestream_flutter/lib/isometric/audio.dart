@@ -1,4 +1,4 @@
-import 'package:audioplayers/audioplayers.dart';
+// import 'package:audioplayers/audioplayers.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/weather.dart';
@@ -6,26 +6,43 @@ import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 import 'package:lemon_math/library.dart';
-
+import 'package:just_audio/just_audio.dart';
+import 'package:audio_session/audio_session.dart';
 import '../cache.dart';
 
 final audio = _Audio();
 
-class AudioSource {
+class AudioSrc {
   final String name;
   var volume = 0.0;
   double Function() getTargetVolume;
   final audioPlayer = AudioPlayer();
+  late Duration duration;
 
-  AudioSource({required this.name, required this.getTargetVolume}){
-    audioPlayer.setReleaseMode(ReleaseMode.loop);
-    audioPlayer.play(UrlSource(name), volume: 1.0, mode: PlayerMode.lowLatency);
+  AudioSrc({required this.name, required this.getTargetVolume}) {
+    // audioPlayer.setReleaseMode(ReleaseMode.loop);
+    // audioPlayer.play(UrlSource(name), volume: 1.0, mode: PlayerMode.lowLatency);
+    load();
+  }
+
+  void load() async {
+    final d = await audioPlayer.setUrl(name);
+    audioPlayer.play();
+    audioPlayer.positionStream.listen(onPositionChanged);
+    if (d == null) throw Exception("could not get duration for $name");
+    duration = d;
+  }
+
+  void onPositionChanged(Duration duration){
+     if (duration.inSeconds < this.duration.inSeconds) return;
+     audioPlayer.seek(const Duration());
   }
 
   void update(){
     final change = (getTargetVolume() - volume) * 0.05;
     volume = clamp(volume + change, 0, 1.0);
     audioPlayer.setVolume(volume);
+    audioPlayer.setLoopMode(LoopMode.one);
   }
 }
 
@@ -34,10 +51,10 @@ class _Audio {
   var volumeWind = 0.0;
   var volumeRain = 0.0;
 
-  final audioSources = <AudioSource>[
-    AudioSource(name: 'assets/audio/wind.mp3', getTargetVolume: getVolumeTargetWind),
-    AudioSource(name: 'assets/audio/rain2.mp3', getTargetVolume: getVolumeTargetRain),
-    AudioSource(name: 'assets/audio/sounds/insects.mp3', getTargetVolume: getVolumeTargetInsects),
+  final audioSources = <AudioSrc>[
+    AudioSrc(name: 'assets/audio/wind.mp3', getTargetVolume: getVolumeTargetWind),
+    AudioSrc(name: 'assets/audio/rain2.mp3', getTargetVolume: getVolumeTargetRain),
+    AudioSrc(name: 'assets/audio/sounds/insects.mp3', getTargetVolume: getVolumeTargetInsects),
   ];
 
   void update(){
