@@ -23,7 +23,7 @@ class AudioLoop {
   }
 
   void load() async {
-    final d = await audioPlayer.setUrl(name);
+    final d = await audioPlayer.setUrl('assets/audio/sounds/$name.mp3');
     audioPlayer.play();
     audioPlayer.positionStream.listen(onPositionChanged);
     if (d == null) throw Exception("could not get duration for $name");
@@ -54,10 +54,10 @@ class _Audio {
   final audioThunder = AudioPlayer()..setUrl('assets/audio/thunder.mp3');
 
   final audioLoops = <AudioLoop>[
-    AudioLoop(name: 'assets/audio/wind.mp3', getTargetVolume: getVolumeTargetWind),
-    AudioLoop(name: 'assets/audio/rain2.mp3', getTargetVolume: getVolumeTargetRain),
-    AudioLoop(name: 'assets/audio/sounds/crickets.mp3', getTargetVolume: getVolumeTargetCrickets),
-    AudioLoop(name: 'assets/audio/sounds/day-wildlife.mp3', getTargetVolume: getVolumeTargetDayWildlife),
+    AudioLoop(name: 'wind', getTargetVolume: getVolumeTargetWind),
+    AudioLoop(name: 'rain', getTargetVolume: getVolumeTargetRain),
+    AudioLoop(name: 'crickets', getTargetVolume: getVolumeTargetCrickets),
+    AudioLoop(name: 'day-ambience', getTargetVolume: getVolumeTargetDayAmbience),
   ];
 
   void update(){
@@ -487,7 +487,7 @@ double getVolumeTargetCrickets() {
    return 0;
 }
 
-double getVolumeTargetDayWildlife() {
+double getVolumeTargetDayAmbience() {
   final hour = hours.value;
   if (hour >= 10 && hour < 15) return 0.1;
   return 0;
