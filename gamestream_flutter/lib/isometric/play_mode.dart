@@ -11,6 +11,7 @@ enum PlayMode {
     Play,
     Edit,
     Debug,
+    Audio,
 }
 
 const playModes = PlayMode.values;
