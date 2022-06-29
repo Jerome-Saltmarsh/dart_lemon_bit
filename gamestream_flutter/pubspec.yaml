@@ -52,4 +52,5 @@ flutter:
     - images/
     - audio/
     - audio/music/
+    - audio/sounds/
     - images/icons/

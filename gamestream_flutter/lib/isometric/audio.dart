@@ -2,6 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/weather.dart';
+import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 import 'package:lemon_math/library.dart';
@@ -17,8 +18,6 @@ class AudioSource {
   final audioPlayer = AudioPlayer();
 
   AudioSource({required this.name, required this.getTargetVolume}){
-    // audioPlayer.setReleaseMode(ReleaseMode.LOOP);
-    // audioPlayer.play(name, isLocal: true, volume: 0.0);
     audioPlayer.setReleaseMode(ReleaseMode.loop);
     audioPlayer.play(UrlSource(name), volume: 1.0, mode: PlayerMode.lowLatency);
   }
@@ -38,6 +37,7 @@ class _Audio {
   final audioSources = <AudioSource>[
     AudioSource(name: 'assets/audio/wind.mp3', getTargetVolume: getVolumeTargetWind),
     AudioSource(name: 'assets/audio/rain2.mp3', getTargetVolume: getVolumeTargetRain),
+    AudioSource(name: 'assets/audio/sounds/insects.mp3', getTargetVolume: getVolumeTargetInsects),
   ];
 
   void update(){
@@ -468,3 +468,10 @@ double getVolumeTargetWind() {
 }
 
 double getVolumeTargetRain() => raining ? 1 : 0;
+
+double getVolumeTargetInsects() {
+   final hour = hours.value;
+   if (hour >= 5 && hour < 7) return 1.0;
+   if (hour >= 17 && hour < 19) return 1.0;
+   return 0;
+}
