@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 
-Widget container({required dynamic child, Color? color, Function? action}){
+Widget container({required dynamic child, Color? color, Function? action, Alignment alignment = Alignment.centerLeft}){
   final con = Container(
     padding: const EdgeInsets.only(left: 8),
-    alignment: Alignment.centerLeft,
+    alignment: alignment,
     width: 200,
     height: 50,
     color: color ?? Colors.grey,

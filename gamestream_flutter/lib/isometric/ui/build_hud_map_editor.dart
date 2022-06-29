@@ -32,15 +32,15 @@ Widget buildHudMapEditor(){
 
 Widget buildPanelEditView(){
   return Column(children: [
-     text("+", onPressed: () {
+     container(child: "+", action: () {
        maxZRender.value++;
-     }),
-     watch(maxZRender, (int max){
-        return text(max);
-     }),
-     text("-", onPressed: (){
-       maxZRender.value--;
-     }),
+     }, alignment: Alignment.center),
+     container(child: watch(maxZRender, (int max){
+       return text('MaxZRender: $max');
+     }), alignment: Alignment.center),
+    container(child: "-", action: () {
+      maxZRender.value--;
+    }, alignment: Alignment.center),
   ]);
 }
 

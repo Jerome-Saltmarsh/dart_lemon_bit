@@ -43,7 +43,7 @@ var anyRemaining = false;
 var totalIndex = 0;
 
 final maxZRender = Watch<int>(gridTotalZ, clamp: (int value){
-  return clamp<int>(value, 0, gridTotalZ - 1);
+  return clamp<int>(value, 0, max(grid.length - 1, 0));
 });
 
 
