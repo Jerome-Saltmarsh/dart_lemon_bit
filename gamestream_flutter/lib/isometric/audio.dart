@@ -14,11 +14,13 @@ class AudioSource {
   final String name;
   var volume = 0.0;
   double Function() getTargetVolume;
-  final audioPlayer = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
+  final audioPlayer = AudioPlayer();
 
   AudioSource({required this.name, required this.getTargetVolume}){
-    audioPlayer.setReleaseMode(ReleaseMode.LOOP);
-    audioPlayer.play(name, isLocal: true, volume: 0.0);
+    // audioPlayer.setReleaseMode(ReleaseMode.LOOP);
+    // audioPlayer.play(name, isLocal: true, volume: 0.0);
+    audioPlayer.setReleaseMode(ReleaseMode.loop);
+    audioPlayer.play(UrlSource(name), volume: 1.0, mode: PlayerMode.lowLatency);
   }
 
   void update(){
@@ -28,8 +30,6 @@ class AudioSource {
   }
 }
 
-
-
 class _Audio {
 
   var volumeWind = 0.0;
@@ -37,7 +37,7 @@ class _Audio {
 
   final audioSources = <AudioSource>[
     AudioSource(name: 'assets/audio/wind.mp3', getTargetVolume: getVolumeTargetWind),
-    AudioSource(name: 'assets/audio/rain.mp3', getTargetVolume: getVolumeTargetRain),
+    AudioSource(name: 'assets/audio/rain2.mp3', getTargetVolume: getVolumeTargetRain),
   ];
 
   void update(){
@@ -284,10 +284,10 @@ class _Audio {
   }
 
   void init() {
-    audioPlayerFootsteps.setReleaseMode(ReleaseMode.LOOP);
+    // audioPlayerFootsteps.setReleaseMode(ReleaseMode.LOOP);
 
     for (int i = 0; i < _totalAudioPlayers; i++) {
-      _audioPlayers.add(AudioPlayer(mode: PlayerMode.LOW_LATENCY));
+      // _audioPlayers.add(AudioPlayer(mode: PlayerMode.LOW_LATENCY));
     }
   }
 
@@ -300,20 +300,20 @@ class _Audio {
     if (volume.isNaN) return;
     // if (volume <= 0) return;
     if (volume <= 0.025) return;
-      _getAudioPlayer().play(
-          'assets/audio/$name',
-          isLocal: true,
-          volume: volume
-      );
+      // _getAudioPlayer().play(
+      //     'assets/audio/$name',
+      //     isLocal: true,
+      //     volume: volume
+      // );
   }
 
   void _playMusic(String name){
     _musicPlayer.stop();
     if (!musicEnabled.value) return;
-    _musicPlayer.play(
-        'assets/audio/music/$name.mp3',
-        isLocal: true,
-    );
+    // _musicPlayer.play(
+    //     'assets/audio/music/$name.mp3',
+    //     isLocal: true,
+    // );
   }
 
 
@@ -443,20 +443,6 @@ const _knifeStrikes = [
 
 void _playRandom(List<String> values, double x, double y) {
   audio._playPositioned(randomItem(values), x, y);
-}
-
-final audioPlayerFootsteps = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
-
-AudioPlayer _getAudioPlayer() {
-  if (_audioPlayers.isEmpty) {
-    for (var i = 0; i < _totalAudioPlayers; i++) {
-      _audioPlayers.add(AudioPlayer(mode: PlayerMode.LOW_LATENCY));
-    }
-    _index = 0;
-  }
-
-  _index = (_index + 1) % _audioPlayers.length;
-  return _audioPlayers[_index];
 }
 
 double _calculateVolume(double x, double y) {

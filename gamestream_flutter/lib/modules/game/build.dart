@@ -179,10 +179,6 @@ class GameBuild {
     });
   }
 
-  Widget buildButtonSkipTrack(){
-    return button("Next", audio.nextSong);
-  }
-
   Widget buildButtonFullScreen(){
     return button("Fullscreen", engine.fullscreenToggle);
   }

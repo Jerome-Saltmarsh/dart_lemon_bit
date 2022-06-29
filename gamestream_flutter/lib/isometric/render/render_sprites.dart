@@ -48,6 +48,8 @@ final maxZRender = Watch<int>(gridTotalZ, clamp: (int value){
 
 
 void renderSprites() {
+  if (grid.isEmpty) return;
+
   for (final order in renderOrder){
       order.reset();
   }

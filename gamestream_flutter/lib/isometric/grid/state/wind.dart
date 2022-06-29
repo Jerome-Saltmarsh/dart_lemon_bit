@@ -28,9 +28,13 @@ void gridWindResetToAmbient(){
 
 void _ensureGridCorrectMetrics(){
   if (gridWind.length == gridTotalZ &&
+      gridWind.isNotEmpty &&
+      gridWind[0].isNotEmpty &&
       gridWind[0].length == gridTotalRows &&
+      gridWind[0][0].isNotEmpty &&
       gridWind[0][0].length == gridTotalColumns
   ) return;
+
   gridWind.clear();
   final value = windAmbient.value;
   for (var indexZ = 0; indexZ < gridTotalZ; indexZ++){
