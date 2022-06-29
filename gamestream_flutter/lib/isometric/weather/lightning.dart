@@ -16,7 +16,7 @@ void weatherUpdateLightning(){
     if (!lightningOn) return;
     if (nextLightning-- > 0) return;
     actionLightningFlash();
-    nextLightning = randomInt(200, 2000);
+    nextLightning = randomInt(200, 1500);
 }
 
 void actionLightningFlash() {

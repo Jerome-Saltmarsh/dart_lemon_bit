@@ -85,7 +85,7 @@ class RenderOrderNpcs extends RenderOrder {
 
   @override
   void renderFunction() {
-    renderCharacter(npc);
+    renderCharacter(npc, renderHealthBar: false);
   }
 
   @override

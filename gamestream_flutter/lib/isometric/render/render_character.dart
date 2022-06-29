@@ -12,14 +12,16 @@ import 'render_character_health_bar.dart';
 import 'src_utils.dart';
 
 
-void renderCharacter(Character character) {
+void renderCharacter(Character character, {bool renderHealthBar = true}) {
   assert(character.direction >= 0);
   assert(character.direction < 8);
 
   if (character.dead) return;
-  // if (character.shade <= Shade.Medium){
+
+  if (renderHealthBar){
     renderCharacterHealthBar(character);
-  // }
+  }
+
 
   final weapon = character.weapon;
   final direction = character.direction;

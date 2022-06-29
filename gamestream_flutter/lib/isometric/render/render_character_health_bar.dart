@@ -8,6 +8,7 @@ void renderCharacterHealthBar(Character character){
   const srcHeight = 8.0;
   const marginY = 45;
   const srcWidthHalf = srcWidth * 0.5;
+  final color = character.renderColor;
 
   render(
       dstX: character.renderX - srcWidthHalf,
@@ -17,6 +18,7 @@ void renderCharacterHealthBar(Character character){
       srcWidth: srcWidth,
       srcHeight: srcHeight,
       anchorX: 0,
+      color: color,
   );
 
   render(
@@ -27,5 +29,6 @@ void renderCharacterHealthBar(Character character){
       srcWidth: srcWidth * character.health,
       srcHeight: srcHeight,
       anchorX: 0,
+      color: color,
   );
 }
