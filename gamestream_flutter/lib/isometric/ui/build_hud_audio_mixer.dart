@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
+import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 
 import '../../flutterkit.dart';
@@ -25,5 +26,11 @@ Widget buildSounds() =>
   );
 
 Widget buildAudioLoop(AudioLoop audioLoop){
-  return container(child: text('${audioLoop.name}: ${audioLoop.volume}'));
+  return Stack(
+    children: [
+      container(child: audioLoop.name, color: grey),
+      container(child: "", width: 50 * audioLoop.volume, color: greyDark),
+      container(child: audioLoop.name, color: Colors.transparent),
+    ],
+  );
 }
