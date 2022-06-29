@@ -53,10 +53,6 @@ class ServerResponseReader with ByteReader {
   var bulletHoleIndex = 0;
   var itemsTotal = 0;
 
-  ServerResponseReader(){
-    audio.init();
-  }
-
   void readBytes(List<int> values) {
     framesSinceUpdateReceived.value = 0;
     index = 0;

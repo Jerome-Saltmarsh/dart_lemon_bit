@@ -1,4 +1,3 @@
-// import 'package:audioplayers/audioplayers.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/weather.dart';
@@ -7,7 +6,6 @@ import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 import 'package:lemon_math/library.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:audio_session/audio_session.dart';
 import '../cache.dart';
 
 final audio = _Audio();
@@ -18,10 +16,9 @@ class AudioSrc {
   double Function() getTargetVolume;
   final audioPlayer = AudioPlayer();
   late Duration duration;
+  var durationInSeconds = 0;
 
   AudioSrc({required this.name, required this.getTargetVolume}) {
-    // audioPlayer.setReleaseMode(ReleaseMode.loop);
-    // audioPlayer.play(UrlSource(name), volume: 1.0, mode: PlayerMode.lowLatency);
     load();
   }
 
@@ -30,26 +27,28 @@ class AudioSrc {
     audioPlayer.play();
     audioPlayer.positionStream.listen(onPositionChanged);
     if (d == null) throw Exception("could not get duration for $name");
+    durationInSeconds = d.inSeconds;
     duration = d;
+    audioPlayer.setLoopMode(LoopMode.one);
   }
 
   void onPositionChanged(Duration duration){
-     if (duration.inSeconds < this.duration.inSeconds) return;
-     audioPlayer.seek(const Duration());
+     if (duration.inSeconds < durationInSeconds) return;
+     restart();
+  }
+
+  void restart(){
+    audioPlayer.seek(const Duration());
   }
 
   void update(){
     final change = (getTargetVolume() - volume) * 0.05;
     volume = clamp(volume + change, 0, 1.0);
     audioPlayer.setVolume(volume);
-    audioPlayer.setLoopMode(LoopMode.one);
   }
 }
 
 class _Audio {
-
-  var volumeWind = 0.0;
-  var volumeRain = 0.0;
 
   final audioSources = <AudioSrc>[
     AudioSrc(name: 'assets/audio/wind.mp3', getTargetVolume: getVolumeTargetWind),
@@ -300,14 +299,6 @@ class _Audio {
     play('lightning.mp3');
   }
 
-  void init() {
-    // audioPlayerFootsteps.setReleaseMode(ReleaseMode.LOOP);
-
-    for (int i = 0; i < _totalAudioPlayers; i++) {
-      // _audioPlayers.add(AudioPlayer(mode: PlayerMode.LOW_LATENCY));
-    }
-  }
-
   void _playPositioned(String name, double x, double y, {double volume = 1.0}) {
     if (!soundEnabled.value) return;
     play(name, volume: _calculateVolume(x, y) * volume);
@@ -392,9 +383,6 @@ class _Audio {
 }
 
 // abstraction
-int _index = 0;
-
-final _audioPlayers = <AudioPlayer>[];
 final _musicPlayer = AudioPlayer();
 const _audioDistanceFade = 0.0065;
 const _totalAudioPlayers = 200;
