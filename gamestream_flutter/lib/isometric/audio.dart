@@ -10,7 +10,7 @@ import '../cache.dart';
 
 final audio = _Audio();
 
-class AudioSrc {
+class AudioLoop {
   final String name;
   var volume = 0.0;
   double Function() getTargetVolume;
@@ -18,7 +18,7 @@ class AudioSrc {
   late Duration duration;
   var durationInSeconds = 0;
 
-  AudioSrc({required this.name, required this.getTargetVolume}) {
+  AudioLoop({required this.name, required this.getTargetVolume}) {
     load();
   }
 
@@ -50,14 +50,17 @@ class AudioSrc {
 
 class _Audio {
 
-  final audioSources = <AudioSrc>[
-    AudioSrc(name: 'assets/audio/wind.mp3', getTargetVolume: getVolumeTargetWind),
-    AudioSrc(name: 'assets/audio/rain2.mp3', getTargetVolume: getVolumeTargetRain),
-    AudioSrc(name: 'assets/audio/sounds/insects.mp3', getTargetVolume: getVolumeTargetInsects),
+  final audioSourceThunder = AudioSource.uri(Uri.parse('assets/audio/thunder.mp3'));
+  final audioThunder = AudioPlayer()..setUrl('assets/audio/thunder.mp3');
+
+  final audioLoops = <AudioLoop>[
+    AudioLoop(name: 'assets/audio/wind.mp3', getTargetVolume: getVolumeTargetWind),
+    AudioLoop(name: 'assets/audio/rain2.mp3', getTargetVolume: getVolumeTargetRain),
+    AudioLoop(name: 'assets/audio/sounds/insects.mp3', getTargetVolume: getVolumeTargetInsects),
   ];
 
   void update(){
-    for (final audioSource in audioSources){
+    for (final audioSource in audioLoops){
       audioSource.update();
     }
   }
@@ -296,7 +299,10 @@ class _Audio {
   }
 
   void lightning(){
-    play('lightning.mp3');
+    audioThunder.setAudioSource(audioSourceThunder);
+    audioThunder.seek(const Duration());
+    audioThunder.play();
+
   }
 
   void _playPositioned(String name, double x, double y, {double volume = 1.0}) {
@@ -384,8 +390,6 @@ class _Audio {
 
 // abstraction
 final _musicPlayer = AudioPlayer();
-const _audioDistanceFade = 0.0065;
-const _totalAudioPlayers = 200;
 
 const _zombieHits = [
   'zombie-hit-01.mp3',
@@ -455,7 +459,8 @@ double _calculateVolume(double x, double y) {
 }
 
 double convertDistanceToVolume(double distance){
-  final v = 1.0 / ((distance * _audioDistanceFade) + 1);
+  const distanceFade = 0.0065;
+  final v = 1.0 / ((distance * distanceFade) + 1);
   return v * v;
 }
 
