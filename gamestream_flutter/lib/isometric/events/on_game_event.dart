@@ -1,4 +1,5 @@
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:lemon_math/library.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
@@ -6,6 +7,9 @@ import 'package:gamestream_flutter/isometric/audio.dart';
 
 void onGameEvent(int type, double x, double y, double z, double angle) {
   switch (type) {
+    case GameEventType.Footstep:
+      audioSingleFootstepGrass(0.1);
+      break;
     case GameEventType.Handgun_Fired:
       audio.handgunShot(x, y);
       const distance = 12.0;

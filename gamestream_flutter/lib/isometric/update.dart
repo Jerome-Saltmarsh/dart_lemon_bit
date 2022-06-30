@@ -26,7 +26,7 @@ void updateIsometric(){
   updateParticleEmitters();
   updateParticles();
   updateProjectiles();
-  updateFootstepAudio();
+  // updateFootstepAudio();
   updateRandomAudio();
   gridWindResetToAmbient();
   applyObjectsToWind();
@@ -86,7 +86,7 @@ void updateFootstepAudio() {
           audio.footstepGrass(player.x, player.y);
           break;
         case GridNodeType.Grass_Long:
-          audioSingleGrassLongFootstep(0.075);
+          audioSingleFootstepGrassLong(0.075);
           break;
         case GridNodeType.Bricks:
           audioSingleFootstepStone(0.075);

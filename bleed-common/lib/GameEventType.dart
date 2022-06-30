@@ -42,4 +42,5 @@ class GameEventType {
   static const Zombie_Hurt = 52;
   static const Blue_Orb_Deactivated = 53;
   static const Projectile_Fired_Fireball = 54;
+  static const Footstep = 55;
 }

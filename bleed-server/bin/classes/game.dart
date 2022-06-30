@@ -1047,6 +1047,12 @@ extension GameFunctions on Game {
       character.frozenDuration--;
     }
 
+    if (character.running){
+       if (character.stateDuration % 10 == 0){
+           dispatch(GameEventType.Footstep, character.x, character.y, 0);
+       }
+    }
+
     if (character.stateDurationRemaining > 0) {
       character.stateDurationRemaining--;
       if (character.stateDurationRemaining == 0) {

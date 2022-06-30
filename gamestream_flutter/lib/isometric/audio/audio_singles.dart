@@ -5,7 +5,7 @@ final audioSingleWindChime = AudioSingle('wind-chime');
 final audioSingleGong = AudioSingle('gong');
 final audioSingleCreepyWind = AudioSingle('creepy-wind');
 final audioSingleThunder = AudioSingle('thunder');
-final audioSingleGrassFootstep = AudioSingle('footstep-grass-8');
-final audioSingleGrassLongFootstep = AudioSingle('footstep-grass-7');
+final audioSingleFootstepGrass = AudioSingle('footstep-grass-8');
+final audioSingleFootstepGrassLong = AudioSingle('footstep-grass-7');
 final audioSingleFootstepStone = AudioSingle('footstep-stone');
 
