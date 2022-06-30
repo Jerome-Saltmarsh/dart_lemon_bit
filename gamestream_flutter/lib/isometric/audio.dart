@@ -51,6 +51,7 @@ class AudioLoop {
 final audioSingleOwl = AudioSingle('owl-1');
 final audioSingleWindChime = AudioSingle('wind-chime');
 final audioSingleGong = AudioSingle('gong');
+final audioSingleCreepyWind = AudioSingle('creepy-wind');
 
 class AudioSingle {
   final String name;
@@ -60,6 +61,10 @@ class AudioSingle {
   AudioSingle(this.name){
     source = AudioSource.uri(Uri.parse('assets/audio/sounds/$name.mp3'));
     player.setAudioSource(source);
+  }
+
+  void call(double volume){
+     play(volume: volume);
   }
 
   void play({double volume = 1.0}) async {

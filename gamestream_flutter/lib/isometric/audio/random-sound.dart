@@ -17,7 +17,11 @@ void updateRandomMusic(){
 }
 
 void playRandomMusic(){
+   final hour = hours.value;
 
+   if (hour < 4){
+     audioSingleCreepyWind(1.0);
+   }
 }
 
 void updateRandomAmbientSounds(){
@@ -31,13 +35,13 @@ void playRandomAmbientSound(){
 
   if (hour < 3){
     if (randomBool()){
-      return audioSingleOwl.play(volume: 0.05);
+      return audioSingleOwl(0.05);
     }
   }
   if (hour > 12 && hour < 16) {
     if (randomBool()){
-      return audioSingleGong.play(volume: 0.1);
+      return audioSingleGong(0.05);
     }
-    return audioSingleWindChime.play(volume: 0.3);
+    return audioSingleWindChime(0.3);
   }
 }
