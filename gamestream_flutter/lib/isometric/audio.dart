@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/isometric/audio/audio_single.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/weather.dart';
@@ -10,86 +11,16 @@ import '../cache.dart';
 
 final audio = _Audio();
 
-class AudioLoop {
-  final String name;
-  var volume = 0.0;
-  double Function() getTargetVolume;
-  final audioPlayer = AudioPlayer();
-  late Duration duration;
-  var durationInSeconds = 0;
-
-  AudioLoop({required this.name, required this.getTargetVolume}) {
-    load();
-  }
-
-  void load() async {
-    final d = await audioPlayer.setUrl('assets/audio/sounds/$name.mp3');
-    audioPlayer.play();
-    audioPlayer.positionStream.listen(onPositionChanged);
-    if (d == null) throw Exception("could not get duration for $name");
-    durationInSeconds = d.inSeconds;
-    duration = d;
-    audioPlayer.setLoopMode(LoopMode.one);
-  }
-
-  void onPositionChanged(Duration duration){
-     if (duration.inSeconds < durationInSeconds) return;
-     restart();
-  }
-
-  void restart(){
-    audioPlayer.seek(const Duration());
-  }
-
-  void update(){
-    final change = (getTargetVolume() - volume) * 0.05;
-    volume = clamp(volume + change, 0, 1.0);
-    audioPlayer.setVolume(volume);
-  }
-}
-
 final audioSingleOwl = AudioSingle('owl-1');
 final audioSingleWindChime = AudioSingle('wind-chime');
 final audioSingleGong = AudioSingle('gong');
 final audioSingleCreepyWind = AudioSingle('creepy-wind');
 final audioSingleThunder = AudioSingle('thunder');
+final audioSingleGrassFootstep = AudioSingle('footstep-grass-8');
 
-class AudioSingle {
-  final String name;
-  late AudioSource source;
-  final player = AudioPlayer();
-
-  AudioSingle(this.name){
-    source = AudioSource.uri(Uri.parse('assets/audio/sounds/$name.mp3'));
-    player.setAudioSource(source);
-  }
-
-  void call(double volume){
-     play(volume: volume);
-  }
-
-  void play({double volume = 1.0}) async {
-    await player.setVolume(volume);
-    await player.setAudioSource(source);
-    await player.seek(const Duration());
-    await player.play();
-  }
-}
 
 class _Audio {
 
-  final audioLoops = <AudioLoop>[
-    AudioLoop(name: 'wind', getTargetVolume: getVolumeTargetWind),
-    AudioLoop(name: 'rain', getTargetVolume: getVolumeTargetRain),
-    AudioLoop(name: 'crickets', getTargetVolume: getVolumeTargetCrickets),
-    AudioLoop(name: 'day-ambience', getTargetVolume: getVolumeTargetDayAmbience),
-  ];
-
-  void update(){
-    for (final audioSource in audioLoops){
-      audioSource.update();
-    }
-  }
 
   double get windVolumeAmbientTarget {
      if (windAmbient.value <= Wind.Calm) return 0.1;
@@ -132,6 +63,7 @@ class _Audio {
 
   void footstepGrass(double x, double y) {
     // _playPositioned('step-grass.mp3', x, y, volume: 0.15);
+    audioSingleGrassFootstep(1.0);
   }
 
   void materialStruckRock(double x, double y){

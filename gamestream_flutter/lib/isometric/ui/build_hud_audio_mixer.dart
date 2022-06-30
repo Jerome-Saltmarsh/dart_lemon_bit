@@ -1,10 +1,11 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/audio.dart';
+import 'package:gamestream_flutter/isometric/audio/audio_loop.dart';
 import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 
 import '../../flutterkit.dart';
+import '../audio/audio_loops.dart';
 import 'build_container.dart';
 
 Widget buildHudAudioMix(){
@@ -21,7 +22,7 @@ Widget buildHudAudioMix(){
 Widget buildSounds() =>
   Refresh(() =>
       Column(
-        children: audio.audioLoops.map(buildAudioLoop).toList(),
+        children: audioLoops.map(buildAudioLoop).toList(),
       )
   );
 

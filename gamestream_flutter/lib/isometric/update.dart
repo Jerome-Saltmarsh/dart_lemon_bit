@@ -8,7 +8,8 @@ import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'animation_frame.dart';
-import 'audio/random-sound.dart';
+import 'audio/audio_loops.dart';
+import 'audio/audio_random.dart';
 import 'particle_emitters.dart';
 import 'particles.dart';
 import 'players.dart';
@@ -38,7 +39,7 @@ void applyObjectsToWind(){
   }
 
   updateWindLine();
-  audio.update();
+  updateAudioLoops();
   weatherUpdateLightning();
 }
 
