@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 
 import '../render/weather.dart';
 import 'audio_loop.dart';
+import 'convert_distance_to_volume.dart';
 
 final audioLoops = <AudioLoop> [
   AudioLoop(name: 'wind', getTargetVolume: getVolumeTargetWind),
@@ -71,6 +72,6 @@ double getVolumeTargetFire(){
       nearestFlame = distance;
     }
   });
-
-  return convertDistanceToVolume(nearestFlame * 36);
+  final distance = nearestFlame * tileSize;
+  return convertDistanceToVolume(distance);
 }

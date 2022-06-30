@@ -1,13 +1,10 @@
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
-import 'package:gamestream_flutter/isometric/render/weather.dart';
-import 'package:gamestream_flutter/isometric/time.dart';
-import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
-import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 import 'package:lemon_math/library.dart';
 import 'package:just_audio/just_audio.dart';
 import '../cache.dart';
 import 'audio/audio_singles.dart';
+import 'audio/convert_distance_to_volume.dart';
 
 final audio = _Audio();
 
@@ -400,10 +397,5 @@ double _calculateVolume(double x, double y) {
   return convertDistanceToVolume(distanceBetween(x, y, player.x, player.y));
 }
 
-double convertDistanceToVolume(double distance){
-  const distanceFade = 0.0065;
-  final v = 1.0 / ((distance * distanceFade) + 1);
-  return v * v;
-}
 
 
