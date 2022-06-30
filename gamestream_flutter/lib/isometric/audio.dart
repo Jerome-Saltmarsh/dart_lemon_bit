@@ -48,6 +48,26 @@ class AudioLoop {
   }
 }
 
+final audioSingleOwl = AudioSingle('owl-1');
+
+class AudioSingle {
+  final String name;
+  late AudioSource source;
+  final player = AudioPlayer();
+
+  AudioSingle(this.name){
+    source = AudioSource.uri(Uri.parse('assets/audio/sounds/$name.mp3'));
+    player.setAudioSource(source);
+  }
+
+  void play({required double volume}) async {
+    await player.setVolume(volume);
+    await player.setAudioSource(source);
+    await player.seek(const Duration());
+    await player.play();
+  }
+}
+
 class _Audio {
 
   final audioSourceThunder = AudioSource.uri(Uri.parse('assets/audio/thunder.mp3'));

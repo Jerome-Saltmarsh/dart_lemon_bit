@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'animation_frame.dart';
+import 'audio/random-sound.dart';
 import 'particle_emitters.dart';
 import 'particles.dart';
 import 'players.dart';
@@ -23,7 +24,7 @@ void updateIsometric(){
   updateParticles();
   updateProjectiles();
   updateFootstepAudio();
-
+  updateRandomAmbientSounds();
   gridWindResetToAmbient();
   applyObjectsToWind();
 
