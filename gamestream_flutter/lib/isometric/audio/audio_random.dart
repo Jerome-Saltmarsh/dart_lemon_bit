@@ -6,20 +6,21 @@ import 'audio_single.dart';
 var nextRandomSound = 0;
 var nextRandomMusic = 0;
 
-
 final musicNight = [
-  AudioSingle(name: 'creepy-5', volume: 0.2),
   AudioSingle(name: 'creepy-whistle', volume: 0.1),
   AudioSingle(name: 'creepy-wind', volume: 0.1),
+  AudioSingle(name: 'night-track', volume: 1.0),
 ];
 
 final soundsNight = [
-  AudioSingle(name: 'owl-1', volume: 0.2),
+  AudioSingle(name: 'owl-1', volume: 0.15),
+  AudioSingle(name: 'wolf-howl', volume: 0.1),
+  AudioSingle(name: 'creepy-5', volume: 0.2),
 ];
 
 final soundsDay = [
-  AudioSingle(name: 'gong', volume: 0.2),
-  AudioSingle(name: 'wind-chime', volume: 0.2)
+  AudioSingle(name: 'gong', volume: 0.08),
+  AudioSingle(name: 'wind-chime', volume: 0.25)
 ];
 
 
