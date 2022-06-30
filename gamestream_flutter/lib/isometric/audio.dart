@@ -1,4 +1,3 @@
-import 'package:gamestream_flutter/isometric/audio/audio_single.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/weather.dart';
@@ -8,16 +7,9 @@ import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 import 'package:lemon_math/library.dart';
 import 'package:just_audio/just_audio.dart';
 import '../cache.dart';
+import 'audio/audio_singles.dart';
 
 final audio = _Audio();
-
-final audioSingleOwl = AudioSingle('owl-1');
-final audioSingleWindChime = AudioSingle('wind-chime');
-final audioSingleGong = AudioSingle('gong');
-final audioSingleCreepyWind = AudioSingle('creepy-wind');
-final audioSingleThunder = AudioSingle('thunder');
-final audioSingleGrassFootstep = AudioSingle('footstep-grass-8');
-
 
 class _Audio {
 

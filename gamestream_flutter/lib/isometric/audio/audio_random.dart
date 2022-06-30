@@ -1,6 +1,7 @@
-import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:lemon_math/library.dart';
+
+import 'audio_singles.dart';
 
 var nextRandomSound = 0;
 var nextRandomMusic = 0;
@@ -20,7 +21,7 @@ void playRandomMusic(){
    final hour = hours.value;
 
    if (hour < 4){
-     audioSingleCreepyWind(0.2);
+     audioSingleCreepyWind(0.1);
    }
 }
 
