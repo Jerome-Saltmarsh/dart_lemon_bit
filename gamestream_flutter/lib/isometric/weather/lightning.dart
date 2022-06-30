@@ -24,7 +24,7 @@ void weatherUpdateLightning(){
 }
 
 void actionLightningFlash() {
-  audio.lightning();
+  audioSingleThunder(1.0);
   if (ambient.value == Shade.Very_Bright) return;
   ambient.value = Shade.Very_Bright;
   runAction(duration: 8, action: refreshAmbient);

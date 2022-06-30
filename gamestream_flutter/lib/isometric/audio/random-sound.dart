@@ -20,7 +20,7 @@ void playRandomMusic(){
    final hour = hours.value;
 
    if (hour < 4){
-     audioSingleCreepyWind(1.0);
+     audioSingleCreepyWind(0.2);
    }
 }
 

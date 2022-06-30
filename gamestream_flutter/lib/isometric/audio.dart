@@ -52,6 +52,7 @@ final audioSingleOwl = AudioSingle('owl-1');
 final audioSingleWindChime = AudioSingle('wind-chime');
 final audioSingleGong = AudioSingle('gong');
 final audioSingleCreepyWind = AudioSingle('creepy-wind');
+final audioSingleThunder = AudioSingle('thunder');
 
 class AudioSingle {
   final String name;
@@ -76,9 +77,6 @@ class AudioSingle {
 }
 
 class _Audio {
-
-  final audioSourceThunder = AudioSource.uri(Uri.parse('assets/audio/thunder.mp3'));
-  final audioThunder = AudioPlayer()..setUrl('assets/audio/thunder.mp3');
 
   final audioLoops = <AudioLoop>[
     AudioLoop(name: 'wind', getTargetVolume: getVolumeTargetWind),
@@ -326,13 +324,6 @@ class _Audio {
     audio._playPositioned('magical-swoosh-18.mp3', x, y);
   }
 
-  void lightning(){
-    audioThunder.setAudioSource(audioSourceThunder);
-    audioThunder.seek(const Duration());
-    audioThunder.play();
-
-  }
-
   void _playPositioned(String name, double x, double y, {double volume = 1.0}) {
     if (!soundEnabled.value) return;
     play(name, volume: _calculateVolume(x, y) * volume);
@@ -518,4 +509,8 @@ double getVolumeTargetDayAmbience() {
   final hour = hours.value;
   if (hour >= 10 && hour < 15) return 0.1;
   return 0;
+}
+
+double getFootstepVolume(){
+  return 1.0;
 }
