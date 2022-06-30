@@ -11,6 +11,7 @@ import 'package:gamestream_flutter/isometric/floating_texts.dart';
 import 'package:gamestream_flutter/isometric/npcs.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
+import 'package:gamestream_flutter/isometric/render/weather.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -170,6 +171,9 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Store_Items:
           readStoreItems();
           break;
+        case ServerResponse.Raining:
+          readRaining();
+          break;
         case ServerResponse.End:
           return readEnd();
         default:
@@ -177,6 +181,12 @@ class ServerResponseReader with ByteReader {
       }
     }
   }
+
+  void readRaining() {
+    rainingWatch.value = readBool();
+    print("readRaining(${rainingWatch.value})");
+  }
+
 
   void readEnd() {
     byteLength.value = index;
@@ -578,28 +588,6 @@ class ServerResponseReader with ByteReader {
   void readPlayerEvents() {
     onPlayerEvent(readByte());
   }
-
-  // void parseGameObject() {
-  //   final staticObjects = isometric.staticObjects;
-  //   staticObjects.clear();
-  //   while (true) {
-  //     final typeIndex = readByte();
-  //     if (typeIndex == END) break;
-  //     final x = readDouble();
-  //     final y = readDouble();
-  //     staticObjects.add(
-  //         StaticObject(
-  //             x: x,
-  //             y: y,
-  //             type: objectTypes[typeIndex],
-  //         )
-  //     );
-  //     if (typeIndex == ObjectType.Fireplace.index) {
-  //       isometric.addSmokeEmitter(x, y);
-  //     }
-  //   }
-  //   sortVertically(staticObjects);
-  // }
 
   void readGameObjects() {
     gameObjects.clear();

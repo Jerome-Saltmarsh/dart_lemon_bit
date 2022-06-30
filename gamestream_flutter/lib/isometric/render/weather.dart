@@ -8,11 +8,3 @@ var rainingWatch = Watch(false, onChanged: (value){
   raining = value;
   onRainChanged(value);
 });
-
-void toggleRaining(){
-   rainingWatch.value = !rainingWatch.value;
-}
-
-void rainingStop(){
-   rainingWatch.value = false;
-}

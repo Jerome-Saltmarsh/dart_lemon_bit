@@ -40,11 +40,25 @@ abstract class Game {
   var countDownFramesRemaining = 45 * 5;
   var disableCountDown = 0;
   late GameStatus status;
-  // final GameType gameType;
   final String id = (_id++).toString();
   final Scene scene;
 
   var playersCanAttackDynamicObjects = false;
+  var _raining = false;
+
+  set raining(bool value) {
+     if (_raining == value) return;
+     _raining = value;
+     for (final player in players) {
+        player.writeRaining();
+     }
+  }
+
+  void toggleRain(){
+     raining = !raining;
+  }
+
+  bool get raining => _raining;
 
   static int _id = 0;
 

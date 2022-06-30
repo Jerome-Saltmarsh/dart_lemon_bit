@@ -127,6 +127,10 @@ void sendClientRequestEquipWeapon(int index){
   sendClientRequest(ClientRequest.Equip_Weapon, index);
 }
 
+void sendClientRequestToggleRain(){
+  sendClientRequest(ClientRequest.Toggle_Rain);
+}
+
 void sendClientRequest(ClientRequest value, [dynamic message]){
   if (message != null){
     return webSocket.send('${value.index} $message');

@@ -11,7 +11,7 @@ var nextRandomMusic = 0;
 final musicNight = [
   AudioSingle(name: 'creepy-whistle', volume: 0.1),
   AudioSingle(name: 'creepy-wind', volume: 0.1),
-  AudioSingle(name: 'night-track', volume: 1.0),
+  AudioSingle(name: 'spooky-tribal', volume: 1.0),
 ];
 
 final soundsNight = [

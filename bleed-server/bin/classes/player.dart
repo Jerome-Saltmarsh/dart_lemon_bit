@@ -387,28 +387,30 @@ extension PlayerProperties on Player {
     writePercentage(experiencePercentage);
     writeByte(level);
     writeByte(skillPoints);
-    // writeStructures();
     writeCollectables();
     writePlayers();
     writeAttackTarget();
     writeProjectiles();
     writeNpcs(this);
-
     writePlayerTarget();
-
     writeGameTime(game);
     writePlayerZombies();
 
     if (!sceneDownloaded){
-      writeGrid();
-      writeGameObjects();
-      writeTechTypes();
-      writeGameStatus();
-      sceneDownloaded = true;
+      downloadScene();
     }
 
     if (debug)
       writePaths();
+  }
+
+  void downloadScene(){
+    writeGrid();
+    writeRaining();
+    writeGameObjects();
+    writeTechTypes();
+    writeGameStatus();
+    sceneDownloaded = true;
   }
 
   void writePlayerSpawned(){
@@ -673,6 +675,11 @@ extension PlayerProperties on Player {
     writeByte(character.equippedArmour); // armour
     writeByte(character.equippedHead); // helm
     writeByte(character.equippedPants); // helm
+  }
+
+  void writeRaining(){
+     writeByte(ServerResponse.Raining);
+     writeBool(game.raining);
   }
 
   void writePercentage(double value){

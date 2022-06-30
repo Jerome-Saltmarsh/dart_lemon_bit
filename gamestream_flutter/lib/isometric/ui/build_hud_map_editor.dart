@@ -137,7 +137,7 @@ Widget buildToggleShadows() {
 
 Widget buildToggleRain() {
   return watch(rainingWatch, (bool isRaining){
-          return container(child: 'Rain', action: toggleRaining, color: isRaining ? greyDark : grey);
+          return container(child: 'Rain', action: sendClientRequestToggleRain, color: isRaining ? greyDark : grey);
         });
 }
 
