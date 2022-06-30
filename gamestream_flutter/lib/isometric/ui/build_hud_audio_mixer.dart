@@ -30,7 +30,7 @@ Widget buildAudioLoop(AudioLoop audioLoop){
   return Stack(
     children: [
       container(child: audioLoop.name, color: grey),
-      container(child: "", width: 50 * audioLoop.volume, color: greyDark),
+      container(child: "", width: 200 * audioLoop.volume, color: greyDark),
       container(child: audioLoop.name, color: Colors.transparent),
     ],
   );
