@@ -37,6 +37,19 @@ class Vector3 with Position {
     return z < 0 || x < 0 || x > gridRowLength || y < 0 || y > gridColumnLength;
   }
 
+  int getGridDistance(int z, int row, int column){
+    var distance = (z - indexZ).abs();
+    final distanceRow = (row - indexRow).abs();
+    final distanceColumn = (column - indexColumn).abs();
+    if (distanceRow > distance){
+      distance = distanceRow;
+    }
+    if (distanceColumn > distance){
+      return distanceColumn;
+    }
+    return distance;
+  }
+
   Vector3() {
     this.x = 0;
     this.y = 0;

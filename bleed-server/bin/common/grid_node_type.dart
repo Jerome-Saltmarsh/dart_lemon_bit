@@ -72,6 +72,10 @@ class GridNodeType {
      }[type] ?? "unknown($type)";
   }
   
+  static bool isFire(int value) {
+    return value == Fireplace || value == Torch; 
+  }
+  
   static bool isRain(int value){
     return value == Rain_Falling || value == Rain_Landing;
   }

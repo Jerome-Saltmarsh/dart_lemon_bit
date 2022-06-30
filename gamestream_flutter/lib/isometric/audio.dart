@@ -407,37 +407,3 @@ double convertDistanceToVolume(double distance){
 }
 
 
-double getVolumeTargetWind() {
-  final windLineDistance = (screenCenterRenderX - windLineRenderX).abs();
-  final windLineDistanceVolume = convertDistanceToVolume(windLineDistance);
-  var target = 0.0;
-  if (windLineRenderX - 250 <= screenCenterRenderX) {
-    target += windLineDistanceVolume;
-  }
-  if (windAmbient.value <= Wind.Calm) {
-    if (hours.value < 6) return target;
-    if (hours.value < 18) return target + 0.1;
-    return target;
-  }
-  if (windAmbient.value <= Wind.Gentle) return target + 0.5;
-  return 1.0;
-}
-
-double getVolumeTargetRain() => raining ? 0.6 : 0;
-
-double getVolumeTargetCrickets() {
-   final hour = hours.value;
-   if (hour >= 5 && hour < 7) return 1.0;
-   if (hour >= 17 && hour < 19) return 1.0;
-   return 0;
-}
-
-double getVolumeTargetDayAmbience() {
-  final hour = hours.value;
-  if (hour >= 10 && hour < 15) return 0.1;
-  return 0;
-}
-
-double getFootstepVolume(){
-  return 1.0;
-}
