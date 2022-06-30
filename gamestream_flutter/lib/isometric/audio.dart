@@ -54,7 +54,7 @@ class _Audio {
   }
 
   void footstepGrass(double x, double y) {
-    audioSingleFootstepGrass(0.03);
+    audioSingleFootstepGrass(0.0055);
   }
 
   void materialStruckRock(double x, double y){
@@ -414,7 +414,11 @@ double getVolumeTargetWind() {
   if (windLineRenderX - 250 <= screenCenterRenderX) {
     target += windLineDistanceVolume;
   }
-  if (windAmbient.value <= Wind.Calm) return target + 0.1;
+  if (windAmbient.value <= Wind.Calm) {
+    if (hours.value < 6) return target;
+    if (hours.value < 18) return target + 0.1;
+    return target;
+  }
   if (windAmbient.value <= Wind.Gentle) return target + 0.5;
   return 1.0;
 }

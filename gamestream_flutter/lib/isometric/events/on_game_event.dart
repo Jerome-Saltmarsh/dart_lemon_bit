@@ -8,7 +8,7 @@ import 'package:gamestream_flutter/isometric/audio.dart';
 void onGameEvent(int type, double x, double y, double z, double angle) {
   switch (type) {
     case GameEventType.Footstep:
-      audioSingleFootstepGrass(0.05);
+      audioSingleFootstepGrass(0.03);
       break;
     case GameEventType.Handgun_Fired:
       audio.handgunShot(x, y);
