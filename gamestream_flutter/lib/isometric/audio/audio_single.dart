@@ -5,10 +5,11 @@ class AudioSingle {
   final String name;
   late AudioSource source;
   final players = <AudioPlayer>[];
+  late double volume;
 
   String get url => 'assets/audio/sounds/$name.mp3';
 
-  AudioSingle(this.name){
+  AudioSingle({required this.name, required this.volume}){
     source = AudioSource.uri(Uri.parse(url));
   }
 
@@ -16,10 +17,13 @@ class AudioSingle {
     play(volume: volume);
   }
 
-  void play({double volume = 1.0}) async {
+  void play({double? volume}) async {
+    if (volume != null){
+      this.volume = volume;
+    }
     final player = getAudioPlayer;
     assert (!player.playing);
-    await player.setVolume(volume);
+    await player.setVolume(this.volume);
     if (player.audioSource == null) throw Exception("no audio source");
     await player.seek(const Duration());
     await player.play();

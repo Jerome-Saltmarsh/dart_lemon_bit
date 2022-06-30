@@ -1,10 +1,27 @@
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:lemon_math/library.dart';
 
-import 'audio_singles.dart';
+import 'audio_single.dart';
 
 var nextRandomSound = 0;
 var nextRandomMusic = 0;
+
+
+final musicNight = [
+  AudioSingle(name: 'creepy-5', volume: 0.2),
+  AudioSingle(name: 'creepy-whistle', volume: 0.1),
+  AudioSingle(name: 'creepy-wind', volume: 0.1),
+];
+
+final soundsNight = [
+  AudioSingle(name: 'owl-1', volume: 0.2),
+];
+
+final soundsDay = [
+  AudioSingle(name: 'gong', volume: 0.2),
+  AudioSingle(name: 'wind-chime', volume: 0.2)
+];
+
 
 void updateRandomAudio(){
   updateRandomMusic();
@@ -20,10 +37,7 @@ void updateRandomMusic(){
 void playRandomMusic(){
    final hour = hours.value;
    if (hour < 4){
-     if (randomBool()){
-       return audioSingleCreepyWhistle(0.2);
-     }
-     return audioSingleCreepyWind(0.1);
+     playRandom(musicNight);
    }
 }
 
@@ -37,14 +51,13 @@ void playRandomAmbientSound(){
   final hour = hours.value;
 
   if (hour < 3){
-    if (randomBool()){
-      return audioSingleOwl(0.05);
-    }
+    return playRandom(soundsNight);
   }
   if (hour > 12 && hour < 16) {
-    if (randomBool()){
-      return audioSingleGong(0.05);
-    }
-    return audioSingleWindChime(0.3);
+    return playRandom(soundsDay);
   }
+}
+
+void playRandom(List<AudioSingle> items){
+  randomItem(items).play();
 }

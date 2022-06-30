@@ -1,12 +1,7 @@
 import 'audio_single.dart';
 
-final audioSingleOwl = AudioSingle('owl-1');
-final audioSingleWindChime = AudioSingle('wind-chime');
-final audioSingleGong = AudioSingle('gong');
-final audioSingleCreepyWind = AudioSingle('creepy-wind');
-final audioSingleCreepyWhistle = AudioSingle('creepy-whistle');
-final audioSingleThunder = AudioSingle('thunder');
-final audioSingleFootstepGrass = AudioSingle('footstep-grass-8');
-final audioSingleFootstepGrassLong = AudioSingle('footstep-grass-7');
-final audioSingleFootstepStone = AudioSingle('footstep-stone');
+final audioSingleThunder = AudioSingle(name: 'thunder', volume: 0.5);
+final audioSingleFootstepGrass = AudioSingle(name: 'footstep-grass-8', volume: 0.05);
+final audioSingleFootstepGrassLong = AudioSingle(name: 'footstep-grass-7', volume: 0.05);
+final audioSingleFootstepStone = AudioSingle(name: 'footstep-stone', volume: 0.05);
 

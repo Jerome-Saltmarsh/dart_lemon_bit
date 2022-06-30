@@ -54,7 +54,7 @@ class _Audio {
   }
 
   void footstepGrass(double x, double y) {
-    audioSingleFootstepGrass(0.075);
+    audioSingleFootstepGrass(0.03);
   }
 
   void materialStruckRock(double x, double y){
