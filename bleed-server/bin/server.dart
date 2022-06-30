@@ -154,11 +154,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       final player = _player;
 
       if (args is List<int>) {
+
         final clientRequestInt = args[0];
 
         if (clientRequestInt >= clientRequestsLength) {
-          error(GameError.UnrecognizedClientRequest);
-          return;
+          return error(GameError.UnrecognizedClientRequest);
         }
 
         if (clientRequestInt == 0) { // ClientRequest.Update.index
@@ -300,27 +300,31 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       }
 
       final clientRequest = clientRequests[clientRequestInt];
+
+      if (clientRequest == ClientRequest.Join) {
+        if (arguments.length < 2) return errorInsufficientArgs(2, arguments);
+
+        final gameTypeIndex = int.tryParse(arguments[1]);
+
+        if (!isValidIndex(gameTypeIndex, gameTypes)) return errorInvalidArg('');
+
+        final gameType = gameTypes[gameTypeIndex!];
+
+        switch(gameType){
+          case GameType.RANDOM:
+            throw Exception("Not supported");
+          case GameType.FRONTLINE:
+            joinGameFrontLine();
+            return;
+        }
+      }
+
+      if (player == null) return errorPlayerNotFound();
+      final game = player.game;
+
       switch (clientRequest) {
 
-        case ClientRequest.Join:
-          if (arguments.length < 2) return errorInsufficientArgs(2, arguments);
-
-          final gameTypeIndex = int.tryParse(arguments[1]);
-
-          if (!isValidIndex(gameTypeIndex, gameTypes)) return errorInvalidArg('');
-
-          final gameType = gameTypes[gameTypeIndex!];
-
-          switch(gameType){
-            case GameType.RANDOM:
-              throw Exception("Not supported");
-            case GameType.FRONTLINE:
-              joinGameFrontLine();
-              return;
-          }
-
         case ClientRequest.Teleport:
-          if (player == null) return errorPlayerNotFound();
           player.x = player.mouse.x;
           player.y = player.mouse.y;
           return;
@@ -336,10 +340,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           throw Exception();
 
         case ClientRequest.Character_Load:
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
           final account = _account;
           if (account == null) {
             errorAccountRequired();
@@ -353,27 +353,16 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Toggle_Objects_Destroyable:
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
-          final game = player.game;
           game.playersCanAttackDynamicObjects = !game.playersCanAttackDynamicObjects;
           break;
 
         case ClientRequest.Skip_Hour:
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
-          final game = player.game;
           if (game is GameFrontline){
             game.time = (game.time + 3600) % secondsPerDay;
           }
           break;
 
         case ClientRequest.Spawn_Zombie:
-          if (player == null) return errorPlayerNotFound();
           if (arguments.length < 4) return errorInsufficientArgs(4, arguments);
 
           final z = int.tryParse(arguments[1]);
@@ -383,7 +372,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           final column = int.tryParse(arguments[3]);
           if (column == null) return errorInvalidArg('column');
 
-          player.game.spawnZombie(
+          game.spawnZombie(
               x: row * tileSize + tileSizeHalf,
               y: column * tileSize + tileSizeHalf,
               z: z * tileHeight,
@@ -394,15 +383,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           return;
 
         case ClientRequest.Reverse_Hour:
-          if (player == null) return errorPlayerNotFound();
-          final game = player.game;
           if (game is GameFrontline){
             game.time = (game.time - 3600) % secondsPerDay;
           }
           break;
 
         case ClientRequest.Set_Weapon:
-          if (player == null) return errorPlayerNotFound();
           if (arguments.length < 2)  return errorArgsExpected(2, arguments);
           final weaponType = int.tryParse(arguments[1]);
           if (weaponType == null) return errorInvalidArg('weapon type');
@@ -411,7 +397,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Set_Armour:
-          if (player == null) return errorPlayerNotFound();
           if (arguments.length < 2)  return errorArgsExpected(2, arguments);
           final armourType = int.tryParse(arguments[1]);
           if (armourType == null) return errorInvalidArg('armour type');
@@ -420,7 +405,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Set_Head_Type:
-          if (player == null) return errorPlayerNotFound();
           if (arguments.length < 2)  return errorArgsExpected(2, arguments);
           final type = int.tryParse(arguments[1]);
           if (type == null) return errorInvalidArg('invalid head type $type');
@@ -429,7 +413,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Set_Pants_Type:
-          if (player == null) return errorPlayerNotFound();
           if (arguments.length < 2)  return errorArgsExpected(2, arguments);
           final type = int.tryParse(arguments[1]);
           if (type == null) return errorInvalidArg('invalid head type $type');
@@ -438,12 +421,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Upgrade_Weapon_Damage:
-          if (player == null) return errorPlayerNotFound();
           player.equippedWeapon.damage++;
           break;
 
         case ClientRequest.Purchase_Weapon:
-          if (player == null) return errorPlayerNotFound();
           final type = int.tryParse(arguments[1]);
           if (type == null) return errorInvalidArg('invalid weapon type $type');
           player.weapons.add(
@@ -456,23 +437,19 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Store_Close:
-          if (player == null) return errorPlayerNotFound();
           player.storeItems = [];
           player.writeStoreItems();
           break;
 
         case ClientRequest.Weather_Toggle_Rain:
-          if (player == null) return errorPlayerNotFound();
           player.game.toggleRain();
           break;
 
         case ClientRequest.Weather_Toggle_Breeze:
-          if (player == null) return errorPlayerNotFound();
           player.game.toggleBreeze();
           break;
 
         case ClientRequest.Equip_Weapon:
-          if (player == null) return errorPlayerNotFound();
           if (player.deadOrBusy) return;
           final index = int.tryParse(arguments[1]);
           if (index == null || index < 0 || index >= player.weapons.length) {
@@ -485,7 +462,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
         case ClientRequest.Character_Save:
           final account = _account;
-          if (player == null) return errorPlayerNotFound();
           if (account == null) {
             errorAccountRequired();
             return;
@@ -499,10 +475,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Revive:
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
           if (player.alive) {
             error(GameError.PlayerStillAlive);
             return;
@@ -511,58 +483,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           return;
 
         case ClientRequest.Unequip_Slot:
-
-          // final player = _player;
-          // if (player == null) {
-          //   return errorPlayerNotFound();
-          // }
-          //
-          // final slotTypeCategoryIndex = int.tryParse(arguments[1]);
-          // if (slotTypeCategoryIndex == null){
-          //   return errorIntegerExpected(1, arguments[1]);
-          // }
-          // if (slotTypeCategoryIndex < 0 || slotTypeCategoryIndex >= slotTypeCategories.length) {
-          //   return errorInvalidArg('inventory index out of bounds: $slotTypeCategoryIndex');
-          // }
-          //
-          // final slotTypeCategory = slotTypeCategories[slotTypeCategoryIndex];
-          // player.unequip(slotTypeCategory);
           break;
 
         case ClientRequest.Equip_Slot:
-          // if (arguments.length != 2) {
-          //   return errorArgsExpected(2, arguments);
-          // }
-          //
-          // if (player == null) {
-          //   return errorPlayerNotFound();
-          // }
-          //
-          // final inventoryIndex = int.tryParse(arguments[1]);
-          // if (inventoryIndex == null){
-          //   return errorIntegerExpected(1, arguments[1]);
-          // }
-          // if (inventoryIndex < 1 || inventoryIndex > 6) {
-          //   return errorInvalidArg('inventory index out of bounds');
-          // }
-          //
-          // player.useSlot(inventoryIndex);
           break;
 
         case ClientRequest.Sell_Slot:
-          // final player = _player;
-          // if (player == null) {
-          //   return errorPlayerNotFound();
-          // }
-          //
-          // final inventoryIndex = int.tryParse(arguments[1]);
-          // if (inventoryIndex == null){
-          //   return errorIntegerExpected(1, arguments[1]);
-          // }
-          // if (inventoryIndex < 1 || inventoryIndex > 6) {
-          //   return errorInvalidArg('inventory index out of bounds');
-          // }
-          // player.sellSlot(inventoryIndex);
           break;
 
         case ClientRequest.Modify_Game:
@@ -571,12 +497,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             errorArgsExpected(2, arguments);
             return;
           }
-
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
-
           final modifyGameIndex = int.tryParse(arguments[1]);
           if (modifyGameIndex == null){
             errorIntegerExpected(1, arguments[1]);
@@ -623,7 +543,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Set_Block:
-          if (player == null) return errorPlayerNotFound();
           if (arguments.length < 5) return errorArgsExpected(3, arguments);
           final row = int.tryParse(arguments[1]);
           if (row == null){
@@ -672,7 +591,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Deck_Select_Card:
-          if (player == null) return errorPlayerNotFound();
           if (player.dead) return errorPlayerDead();
           if (arguments.length != 2) return errorArgsExpected(2, arguments);
           final deckIndex = int.tryParse(arguments[1]);
@@ -695,9 +613,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Deck_Add_Card:
-          if (player == null) {
-            return errorPlayerNotFound();
-          }
           if (player.cardChoices.isEmpty){
             return error(GameError.Choose_Card, message: "card choices empty");
           }
@@ -719,12 +634,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Select_Character_Type:
-          if (player == null) {
-            return errorPlayerNotFound();
-          }
-          // if (!player.characterSelectRequired){
-          //   return error(GameError.Character_Select_Not_Required);
-          // }
           if (arguments.length != 2) {
             return errorArgsExpected(2, arguments);
           }
@@ -741,9 +650,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Upgrade:
-          if (player == null) {
-            return errorPlayerNotFound();
-          }
           if (player.deadOrBusy) return;
           if (arguments.length != 2) {
             return errorArgsExpected(2, arguments);
@@ -767,54 +673,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.wood -= cost.wood;
           player.gold -= cost.gold;
           player.stone -= cost.stone;
-
-          // switch (techType) {
-          //   case TechType.Pickaxe:
-          //     player.techTree.pickaxe++;
-          //     if (player.techTree.pickaxe == 1) {
-          //        player.equippedWeapon = TechType.Pickaxe;
-          //        player.setStateChanging();
-          //     }
-          //     player.writePlayerEvent(PlayerEvent.Item_Purchased);
-          //     break;
-          //   case TechType.Bow:
-          //     player.techTree.bow++;
-          //     if (player.techTree.bow == 1) {
-          //       player.equippedWeapon = TechType.Bow;
-          //       player.setStateChanging();
-          //     }
-          //     player.writePlayerEvent(PlayerEvent.Item_Purchased);
-          //     break;
-          //   case TechType.Sword:
-          //     player.techTree.sword++;
-          //     if (player.techTree.sword == 1) {
-          //       player.equippedWeapon = TechType.Sword;
-          //       player.setStateChanging();
-          //     }
-          //     player.writePlayerEvent(PlayerEvent.Item_Purchased);
-          //     break;
-          //   case TechType.Axe:
-          //     player.techTree.axe++;
-          //     if (player.techTree.axe == 1) {
-          //       player.equippedWeapon = TechType.Axe;
-          //       player.setStateChanging();
-          //     }
-          //     player.writePlayerEvent(PlayerEvent.Item_Purchased);
-          //     break;
-          //   case TechType.Hammer:
-          //     player.techTree.hammer++;
-          //     if (player.techTree.hammer == 1) {
-          //       player.equippedWeapon = TechType.Hammer;
-          //       player.setStateChanging();
-          //     }
-          //     player.writePlayerEvent(PlayerEvent.Item_Purchased);
-          //     break;
-          // }
           player.writeTechTypes();
           break;
 
         case ClientRequest.Attack:
-          if (player == null) return;
           if (player.deadOrBusy) return;
           player.target = null;
           player.angle = player.mouseAngle;
@@ -822,7 +684,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Attack_Secondary:
-          if (player == null) return;
           if (player.deadOrBusy) return;
 
           if (player.ability != null) {
@@ -835,9 +696,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Equip:
-          if (player == null) {
-            return errorPlayerNotFound();
-          }
           if (player.deadOrBusy) return;
           if (arguments.length != 2) {
             return errorArgsExpected(2, arguments);
@@ -854,47 +712,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           return;
 
         case ClientRequest.Purchase:
-          // if (arguments.length < 2) {
-          //   return error(GameError.InvalidArguments,
-          //       message:
-          //       "ClientRequest.Purchase Error: Expected 2 args but got ${arguments.length}");
-          // }
-          //
-          // if (player == null) {
-          //   return errorPlayerNotFound();
-          // }
-          //
-          // if (player.dead){
-          //   return errorPlayerDead();
-          // }
-          //
-          // if (player.busy){
-          //   return errorPlayerBusy();
-          // }
-          //
-          // final slotItemIndexString = arguments[1];
-          // final slotItemIndex = int.tryParse(slotItemIndexString);
-          // if (slotItemIndex == null){
-          //   return error(GameError.InvalidArguments,
-          //       message:
-          //       "ClientRequest.Purchase Error: could not parse argument 2 to int");
-          // }
-          //
-          // if (slotItemIndex < 0){
-          //   return error(GameError.InvalidArguments,
-          //       message:
-          //       "$slotItemIndex is not a valid slot type index");
-          // }
-          // if (!player.slots.emptySlotAvailable) return;
-          // final slotType = slotItemIndex;
-          // player.acquire(slotType);
           return;
 
         case ClientRequest.Toggle_Debug:
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
           player.toggleDebug();
           break;
 
@@ -903,11 +723,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Speak:
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
-
           player.text = arguments
               .sublist(1, arguments.length)
               .fold("", (previousValue, element) => '$previousValue $element');
