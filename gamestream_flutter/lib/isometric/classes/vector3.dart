@@ -1,3 +1,4 @@
+import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
@@ -12,6 +13,7 @@ class Vector3 with Position {
   int get indexColumn => y ~/ tileSize;
   double get renderOrder => x + y;
   int get tile => grid[indexZ][indexRow][indexColumn];
+  int get tileBelow => indexZ == 0 ? GridNodeType.Boundary : grid[indexZ - 1][indexRow][indexColumn];
   int get shade => gridLightDynamic[z >= tileSizeHalf ? indexZ - 1 : 0][indexRow][indexColumn];
   int get wind => gridWind[z >= tileSizeHalf ? indexZ - 1 : 0][indexRow][indexColumn];
 

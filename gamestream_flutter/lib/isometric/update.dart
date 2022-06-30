@@ -1,5 +1,6 @@
 
 import 'package:bleed_common/Projectile_Type.dart';
+import 'package:bleed_common/grid_node_type.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
@@ -10,6 +11,7 @@ import 'package:lemon_engine/engine.dart';
 import 'animation_frame.dart';
 import 'audio/audio_loops.dart';
 import 'audio/audio_random.dart';
+import 'audio/audio_singles.dart';
 import 'particle_emitters.dart';
 import 'particles.dart';
 import 'players.dart';
@@ -78,7 +80,18 @@ void updateFootstepAudio() {
   for (var i = 0; i < totalPlayers; i++) {
     final player = players[i];
     if (player.running && player.frame % 2 == 0) {
-      audio.footstepGrass(player.x, player.y);
+
+      switch(player.tileBelow){
+        case GridNodeType.Grass:
+          audio.footstepGrass(player.x, player.y);
+          break;
+        case GridNodeType.Grass_Long:
+          audioSingleGrassLongFootstep(0.075);
+          break;
+        case GridNodeType.Bricks:
+          audioSingleFootstepStone(0.075);
+          break;
+      }
     }
   }
 
