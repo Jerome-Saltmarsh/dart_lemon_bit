@@ -24,7 +24,7 @@ void updateIsometric(){
   updateParticles();
   updateProjectiles();
   updateFootstepAudio();
-  updateRandomAmbientSounds();
+  updateRandomAudio();
   gridWindResetToAmbient();
   applyObjectsToWind();
 

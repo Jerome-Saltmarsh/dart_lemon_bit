@@ -49,6 +49,8 @@ class AudioLoop {
 }
 
 final audioSingleOwl = AudioSingle('owl-1');
+final audioSingleWindChime = AudioSingle('wind-chime');
+final audioSingleGong = AudioSingle('gong');
 
 class AudioSingle {
   final String name;
@@ -60,7 +62,7 @@ class AudioSingle {
     player.setAudioSource(source);
   }
 
-  void play({required double volume}) async {
+  void play({double volume = 1.0}) async {
     await player.setVolume(volume);
     await player.setAudioSource(source);
     await player.seek(const Duration());
