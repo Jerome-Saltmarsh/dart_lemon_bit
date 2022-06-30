@@ -127,8 +127,12 @@ void sendClientRequestEquipWeapon(int index){
   sendClientRequest(ClientRequest.Equip_Weapon, index);
 }
 
-void sendClientRequestToggleRain(){
-  sendClientRequest(ClientRequest.Toggle_Rain);
+void sendClientRequestWeatherToggleRain(){
+  sendClientRequest(ClientRequest.Weather_Toggle_Rain);
+}
+
+void sendClientRequestWeatherToggleBreeze(){
+  sendClientRequest(ClientRequest.Weather_Toggle_Breeze);
 }
 
 void sendClientRequest(ClientRequest value, [dynamic message]){

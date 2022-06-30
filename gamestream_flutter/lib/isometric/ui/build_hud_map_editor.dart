@@ -137,7 +137,7 @@ Widget buildToggleShadows() {
 
 Widget buildToggleRain() {
   return watch(rainingWatch, (bool isRaining){
-          return container(child: 'Rain', action: sendClientRequestToggleRain, color: isRaining ? greyDark : grey);
+          return container(child: 'Rain', action: sendClientRequestWeatherToggleRain, color: isRaining ? greyDark : grey);
         });
 }
 
@@ -160,7 +160,7 @@ Widget buildButtonLightning() => watch(weatherLightning, (bool lightningOn){
 Widget buildButtonBreeze() => watch(weatherBreeze, (bool weatherBreezeOn){
   return container(
       child: "Breeze",
-      action: weatherBreezeToggle,
+      action: sendClientRequestWeatherToggleBreeze,
       color: weatherBreezeOn ? greyDark : grey,
   );
 });

@@ -44,21 +44,33 @@ abstract class Game {
   final Scene scene;
 
   var playersCanAttackDynamicObjects = false;
+
+  // WEATHER
   var _raining = false;
+  var _breezy = false;
 
   set raining(bool value) {
      if (_raining == value) return;
      _raining = value;
-     for (final player in players) {
-        player.writeRaining();
-     }
+     playersWriteWeather();
+  }
+
+  set breezy(bool value){
+     if(_breezy == value) return;
+     _breezy = value;
+     playersWriteWeather();
   }
 
   void toggleRain(){
      raining = !raining;
   }
 
+  void toggleBreeze(){
+    breezy = !breezy;
+  }
+
   bool get raining => _raining;
+  bool get breezy => _breezy;
 
   static int _id = 0;
 
@@ -320,9 +332,15 @@ abstract class Game {
 
   }
 
-  void writePlayerCooldowns(){
+  void playersWriteDeckCooldown(){
     for (final player in players){
       player.writeDeckCooldown();
+    }
+  }
+
+  void playersWriteWeather() {
+    for (final player in players) {
+      player.writeWeather();
     }
   }
 }

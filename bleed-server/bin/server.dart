@@ -461,9 +461,14 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.writeStoreItems();
           break;
 
-        case ClientRequest.Toggle_Rain:
+        case ClientRequest.Weather_Toggle_Rain:
           if (player == null) return errorPlayerNotFound();
           player.game.toggleRain();
+          break;
+
+        case ClientRequest.Weather_Toggle_Breeze:
+          if (player == null) return errorPlayerNotFound();
+          player.game.toggleBreeze();
           break;
 
         case ClientRequest.Equip_Weapon:

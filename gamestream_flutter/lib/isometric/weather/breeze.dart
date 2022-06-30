@@ -8,8 +8,6 @@ final weatherBreeze = Watch(false);
 var windLine = 0;
 var move = true;
 
-void weatherBreezeToggle() => weatherBreeze.value = !weatherBreeze.value;
-
 void updateWindLine() {
   if (!weatherBreeze.value) return;
 

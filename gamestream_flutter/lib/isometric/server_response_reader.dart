@@ -31,6 +31,7 @@ import 'particle_emitters.dart';
 import 'player.dart';
 import 'player_store.dart';
 import 'time.dart';
+import 'weather/breeze.dart';
 
 final serverResponseReader = ServerResponseReader();
 final byteLength = Watch(0);
@@ -171,8 +172,8 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Store_Items:
           readStoreItems();
           break;
-        case ServerResponse.Raining:
-          readRaining();
+        case ServerResponse.Weather:
+          readWeather();
           break;
         case ServerResponse.End:
           return readEnd();
@@ -182,11 +183,10 @@ class ServerResponseReader with ByteReader {
     }
   }
 
-  void readRaining() {
+  void readWeather() {
     rainingWatch.value = readBool();
-    print("readRaining(${rainingWatch.value})");
+    weatherBreeze.value = readBool();
   }
-
 
   void readEnd() {
     byteLength.value = index;

@@ -58,6 +58,6 @@ class ServerResponse {
   static const Player_Equipped_Weapon = 65;
   static const Store_Items = 66;
   static const Player_Attack_Target_Name = 77;
-  static const Raining = 78;
+  static const Weather = 78;
 }
 

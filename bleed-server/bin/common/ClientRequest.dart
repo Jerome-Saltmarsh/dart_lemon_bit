@@ -37,7 +37,8 @@ enum ClientRequest {
   Purchase_Weapon,
   Equip_Weapon,
   Store_Close,
-  Toggle_Rain,
+  Weather_Toggle_Rain,
+  Weather_Toggle_Breeze,
 }
 
 const clientRequests = ClientRequest.values;

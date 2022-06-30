@@ -406,7 +406,7 @@ extension PlayerProperties on Player {
 
   void downloadScene(){
     writeGrid();
-    writeRaining();
+    writeWeather();
     writeGameObjects();
     writeTechTypes();
     writeGameStatus();
@@ -677,9 +677,10 @@ extension PlayerProperties on Player {
     writeByte(character.equippedPants); // helm
   }
 
-  void writeRaining(){
-     writeByte(ServerResponse.Raining);
+  void writeWeather(){
+     writeByte(ServerResponse.Weather);
      writeBool(game.raining);
+     writeBool(game.breezy);
   }
 
   void writePercentage(double value){
