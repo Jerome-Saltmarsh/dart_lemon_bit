@@ -52,7 +52,7 @@ Widget buildEditTools(){
     children: [
       buildColumnEditTile(),
       buildColumnWeather(),
-      buildColumnSettings(),
+      // buildColumnSettings(),
     ],
   );
 }
@@ -64,7 +64,7 @@ Column buildColumnSettings(){
     children: [
       buildToggleShadows(),
       buildToggleLightMode(),
-      buildColumnEditBlendMode(),
+      // buildColumnEditBlendMode(),
     ],
   );
 }

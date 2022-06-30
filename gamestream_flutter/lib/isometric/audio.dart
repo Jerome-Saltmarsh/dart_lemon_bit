@@ -423,7 +423,7 @@ double getVolumeTargetWind() {
   return 1.0;
 }
 
-double getVolumeTargetRain() => raining ? 1 : 0;
+double getVolumeTargetRain() => raining ? 0.6 : 0;
 
 double getVolumeTargetCrickets() {
    final hour = hours.value;
