@@ -14,14 +14,16 @@ void updateRandomAudio(){
 void updateRandomMusic(){
   if (nextRandomMusic-- > 0) return;
   playRandomMusic();
-  nextRandomMusic = randomInt(200, 1000);
+  nextRandomMusic = randomInt(600, 1500);
 }
 
 void playRandomMusic(){
    final hour = hours.value;
-
    if (hour < 4){
-     audioSingleCreepyWind(0.1);
+     if (randomBool()){
+       return audioSingleCreepyWhistle(0.2);
+     }
+     return audioSingleCreepyWind(0.1);
    }
 }
 
