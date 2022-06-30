@@ -1,3 +1,5 @@
+import 'package:bleed_common/Shade.dart';
+import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:lemon_math/library.dart';
 
@@ -32,12 +34,11 @@ void updateRandomAudio(){
 void updateRandomMusic(){
   if (nextRandomMusic-- > 0) return;
   playRandomMusic();
-  nextRandomMusic = randomInt(600, 1500);
+  nextRandomMusic = randomInt(800, 2000);
 }
 
 void playRandomMusic(){
-   final hour = hours.value;
-   if (hour < 4){
+   if (ambient.value == Shade.Pitch_Black) {
      playRandom(musicNight);
    }
 }

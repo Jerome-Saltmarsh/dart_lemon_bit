@@ -1,6 +1,5 @@
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
@@ -43,18 +42,18 @@ double getVolumeTargetWind() {
   return 1.0;
 }
 
-double getVolumeTargetRain() => raining ? 0.6 : 0;
+double getVolumeTargetRain() => raining ? 0.4 : 0;
 
 double getVolumeTargetCrickets() {
   final hour = hours.value;
-  if (hour >= 5 && hour < 7) return 1.0;
-  if (hour >= 17 && hour < 19) return 1.0;
+  const max = 0.8;
+  if (hour >= 5 && hour < 7) return max;
+  if (hour >= 17 && hour < 19) return max;
   return 0;
 }
 
 double getVolumeTargetDayAmbience() {
-  final hour = hours.value;
-  if (hour >= 10 && hour < 15) return 0.1;
+  if (ambient.value == Shade.Very_Bright) return 0.2;
   return 0;
 }
 
