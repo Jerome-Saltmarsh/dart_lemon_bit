@@ -12,10 +12,14 @@ import '../common/pants_type.dart';
 
 class GameFrontline extends Game {
 
+  var minutesPassingPerSecond = 1;
   var time = 12 * 60 * 60;
 
-  var nextRain = 300;
-  var rainDuration = 300;
+  var nextRain = randomInt(400, 10000);
+  var durationRain = 300;
+
+  var nextLightning = randomInt(400, 10000);
+  var durationLightning = 300;
 
   void setTime(int value){
       time = value % secondsPerDay;
@@ -57,18 +61,45 @@ class GameFrontline extends Game {
 
   @override
   void update(){
-    if (timePassing) {
-        setTime(time + 1);
+    updateTimePassing();
+  }
 
-        if (raining){
-           if (rainDuration-- <= 0){
-              raining = false;
-              nextRain = randomInt(500, 1000);
-           }
-        } else if (nextRain-- <= 0){
-           raining = true;
-           rainDuration = 500;
-        }
+  void updateTimePassing(){
+    if (!timePassing) return;
+    setTime(time + minutesPassingPerSecond);
+    updateRain();
+    updateLightning();
+  }
+
+  void updateRain(){
+    if (raining) {
+      durationRain -= minutesPassingPerSecond;
+      if (durationRain <= 0){
+        raining = false;
+        nextRain = randomInt(2000, 10000);
+      }
+      return;
+    }
+    nextRain -= minutesPassingPerSecond;
+    if (nextRain  <= 0){
+      raining = true;
+      durationRain = randomInt(1000, 2000);
+    }
+  }
+
+  void updateLightning(){
+    if (lightning) {
+      durationLightning -= minutesPassingPerSecond;
+      if (durationLightning <= 0){
+        lightning = false;
+        nextLightning = randomInt(2000, 10000);
+      }
+      return;
+    }
+    nextLightning -= minutesPassingPerSecond;
+    if (nextLightning  <= 0){
+      lightning = true;
+      durationLightning = randomInt(1000, 2000);
     }
   }
 

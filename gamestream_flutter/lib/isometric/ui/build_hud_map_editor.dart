@@ -96,9 +96,9 @@ Column buildColumnWeather() {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        buildToggleRain(),
         buildControlTime(),
         buildButtonTimePassing(),
+        buildToggleRain(),
         buildButtonLightning(),
         buildButtonBreeze(),
         buildControlWind(),

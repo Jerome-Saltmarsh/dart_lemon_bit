@@ -51,7 +51,7 @@ abstract class Game {
   var _breezy = false;
   var _lightning = false;
   var _wind = 0;
-  var _timePassing = false;
+  var _timePassing = true;
 
   set wind(int value){
     if (_wind == value) return;
