@@ -55,8 +55,8 @@ abstract class Game {
 
   set wind(int value){
     if (_wind == value) return;
-     assert (value >= Wind.Calm);
-     assert (value <= Wind.Strong);
+    if (value < Wind.Calm) return;
+    if (value > Wind.Strong) return;
      _wind = value;
     playersWriteWeather();
   }

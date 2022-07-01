@@ -9,6 +9,7 @@ import '../common/grid_node_type.dart';
 import '../common/head_type.dart';
 import '../common/library.dart';
 import '../common/pants_type.dart';
+import '../common/wind.dart';
 
 class GameFrontline extends Game {
 
@@ -23,6 +24,9 @@ class GameFrontline extends Game {
 
   var nextBreeze = randomInt(500, 1000);
   var durationBreeze = 500;
+
+  var nextWindChange = randomInt(500, 1000);
+
 
   void setTime(int value){
       time = value % secondsPerDay;
@@ -73,6 +77,7 @@ class GameFrontline extends Game {
     updateRain();
     updateLightning();
     updateBreeze();
+    updateWind();
   }
 
   void updateRain(){
@@ -120,6 +125,18 @@ class GameFrontline extends Game {
     if (nextBreeze  <= 0){
       breezy = true;
       durationBreeze = randomInt(1000, 2000);
+    }
+  }
+
+  void updateWind(){
+    nextWindChange -= minutesPassingPerSecond;
+    if (nextWindChange <= 0) {
+      nextWindChange = randomInt(1000, 2000);
+      if (randomBool()){
+        wind--;
+      } else {
+        wind++;
+      }
     }
   }
 
