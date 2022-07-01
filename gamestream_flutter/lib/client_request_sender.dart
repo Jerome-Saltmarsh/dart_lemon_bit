@@ -135,6 +135,11 @@ void sendClientRequestWeatherToggleBreeze(){
   sendClientRequest(ClientRequest.Weather_Toggle_Breeze);
 }
 
+void sendClientRequestWeatherToggleWind(){
+  sendClientRequest(ClientRequest.Weather_Toggle_Wind);
+}
+
+
 void sendClientRequest(ClientRequest value, [dynamic message]){
   if (message != null){
     return webSocket.send('${value.index} $message');

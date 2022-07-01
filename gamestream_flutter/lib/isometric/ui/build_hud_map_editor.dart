@@ -106,7 +106,7 @@ Column buildColumnWeather() {
 
 Widget buildControlWind(){
    return watch(windAmbient, (int value){
-     return container(child: "Wind: $value", action: toggleWind);
+     return container(child: "Wind: $value", action: sendClientRequestWeatherToggleWind);
    });
 }
 

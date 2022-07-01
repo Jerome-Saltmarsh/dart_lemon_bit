@@ -449,6 +449,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.game.toggleBreeze();
           break;
 
+        case ClientRequest.Weather_Toggle_Wind:
+          player.game.toggleWind();
+          break;
+
         case ClientRequest.Equip_Weapon:
           if (player.deadOrBusy) return;
           final index = int.tryParse(arguments[1]);

@@ -39,6 +39,7 @@ enum ClientRequest {
   Store_Close,
   Weather_Toggle_Rain,
   Weather_Toggle_Breeze,
+  Weather_Toggle_Wind,
 }
 
 const clientRequests = ClientRequest.values;

@@ -4,6 +4,7 @@ import 'package:lemon_math/library.dart';
 
 import '../common/grid_node_type.dart';
 import '../common/library.dart';
+import '../common/wind.dart';
 import '../engine.dart';
 import '../functions.dart';
 import '../functions/withinRadius.dart';
@@ -48,6 +49,15 @@ abstract class Game {
   // WEATHER
   var _raining = false;
   var _breezy = false;
+  var _wind = 0;
+
+  set wind(int value){
+    if (_wind == value) return;
+     assert (value >= Wind.Calm);
+     assert (value <= Wind.Strong);
+     _wind = value;
+    playersWriteWeather();
+  }
 
   set raining(bool value) {
      if (_raining == value) return;
@@ -69,8 +79,13 @@ abstract class Game {
     breezy = !breezy;
   }
 
+  void toggleWind(){
+    wind = (_wind + 1) % 3;
+  }
+
   bool get raining => _raining;
   bool get breezy => _breezy;
+  int get wind => _wind;
 
   static int _id = 0;
 

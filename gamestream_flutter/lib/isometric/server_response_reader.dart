@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
+import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/npcs.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
@@ -186,6 +187,7 @@ class ServerResponseReader with ByteReader {
   void readWeather() {
     rainingWatch.value = readBool();
     weatherBreeze.value = readBool();
+    windAmbient.value = readByte();
   }
 
   void readEnd() {
