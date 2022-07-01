@@ -52,7 +52,7 @@ class _Audio {
   }
 
   void footstepGrass(double x, double y) {
-    audioSingleFootstepGrass(0.0055);
+    audioSingleFootstepGrass8(0.0055);
   }
 
   void materialStruckRock(double x, double y){
@@ -395,7 +395,7 @@ void _playRandom(List<String> values, double x, double y) {
 }
 
 double _calculateVolume(double x, double y) {
-  return convertDistanceToVolume(distanceBetween(x, y, player.x, player.y));
+  return convertDistanceToVolume(distanceBetween(x, y, player.x, player.y), maxDistance: 300);
 }
 
 

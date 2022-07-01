@@ -31,7 +31,7 @@ void updateAudioLoops(){
 
 double getVolumeTargetWind() {
   final windLineDistance = (screenCenterRenderX - windLineRenderX).abs();
-  final windLineDistanceVolume = convertDistanceToVolume(windLineDistance);
+  final windLineDistanceVolume = convertDistanceToVolume(windLineDistance, maxDistance: 300);
   var target = 0.0;
   if (windLineRenderX - 250 <= screenCenterRenderX) {
     target += windLineDistanceVolume;
@@ -75,7 +75,7 @@ double getVolumeTargetFire(){
     }
   });
   final distance = nearestFlame * tileSize;
-  return convertDistanceToVolume(distance);
+  return convertDistanceToVolume(distance, maxDistance: 200);
 }
 
 double getVolumeTargetDistanceThunder(){

@@ -1,6 +1,8 @@
+import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
 import 'package:gamestream_flutter/isometric/audio/convert_distance_to_volume.dart';
+import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:lemon_math/library.dart';
@@ -10,11 +12,23 @@ import 'package:gamestream_flutter/isometric/audio.dart';
 void onGameEvent(int type, double x, double y, double z, double angle) {
   switch (type) {
     case GameEventType.Footstep:
-    final distanceFromPlayer = player.distance3(x, y, z);
-      audioSingleFootstepGrass.play(
-        volume: convertDistanceToVolume(distanceFromPlayer, maxDistance: 200) * 0.1
+      final distanceFromPlayer = player.distance3(x, y, z);
+      final tile = getGridTypeAtXYZ(x, y, z - 2);
+      final volume = convertDistanceToVolume(
+          distanceFromPlayer,
+          maxDistance: 200
       );
-      break;
+
+      if (GridNodeType.isStone(tile)) {
+        return audioSingleFootstepStone(volume * 0.3);
+      }
+
+      if (randomBool()){
+        return audioSingleFootstepGrass8(volume * 0.1);
+      }
+      return audioSingleFootstepGrass7(volume * 0.1);
+
+
     case GameEventType.Handgun_Fired:
       audio.handgunShot(x, y);
       const distance = 12.0;
@@ -42,11 +56,37 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
     case GameEventType.Zombie_Killed:
       final zPos = z + tileSizeHalf;
       spawnParticleHeadZombie(x: x, y: y, z: zPos, angle: angle, speed: 4.0);
-      spawnParticleArm(x: x, y: y, z: zPos, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
-      spawnParticleArm(x: x, y: y, z: zPos, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
-      spawnParticleLegZombie(x: x, y: y, z: zPos, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
-      spawnParticleLegZombie(x: x, y: y, z: zPos, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
-      spawnParticleOrgan(x: x, y: y, z: zPos, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5), zv: 0.1);
+      spawnParticleArm(
+          x: x,
+          y: y,
+          z: zPos,
+          angle: angle + giveOrTake(0.5),
+          speed: 4.0 + giveOrTake(0.5));
+      spawnParticleArm(
+          x: x,
+          y: y,
+          z: zPos,
+          angle: angle + giveOrTake(0.5),
+          speed: 4.0 + giveOrTake(0.5));
+      spawnParticleLegZombie(
+          x: x,
+          y: y,
+          z: zPos,
+          angle: angle + giveOrTake(0.5),
+          speed: 4.0 + giveOrTake(0.5));
+      spawnParticleLegZombie(
+          x: x,
+          y: y,
+          z: zPos,
+          angle: angle + giveOrTake(0.5),
+          speed: 4.0 + giveOrTake(0.5));
+      spawnParticleOrgan(
+          x: x,
+          y: y,
+          z: zPos,
+          angle: angle + giveOrTake(0.5),
+          speed: 4.0 + giveOrTake(0.5),
+          zv: 0.1);
       audio.zombieDeath(x, y);
       break;
 
@@ -67,7 +107,10 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       break;
 
     case GameEventType.FreezeCircle:
-      freezeCircle(x: x, y: y,);
+      freezeCircle(
+        x: x,
+        y: y,
+      );
       break;
     case GameEventType.Teleported:
       // actions.emitPixelExplosion(x, y);
@@ -134,7 +177,6 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       }
       audio.potBreaking(x, y);
       break;
-
 
     case GameEventType.Object_Destroyed_Rock:
       for (var i = 0; i < 8; i++) {
@@ -206,14 +248,9 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       break;
 
     case GameEventType.Blue_Orb_Deactivated:
-      for (var i = 0; i < 8; i++){
+      for (var i = 0; i < 8; i++) {
         spawnParticleOrbShard(
-            x: x,
-            y: y,
-            z: z,
-            duration: 30,
-            speed: randomBetween(1, 2)
-        );
+            x: x, y: y, z: z, duration: 30, speed: randomBetween(1, 2));
       }
       spawnEffect(x: x, y: y, type: EffectType.Explosion, duration: 30);
       break;
@@ -221,6 +258,5 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
     case GameEventType.Projectile_Fired_Fireball:
       audio.firebolt(x, y);
       break;
-
   }
 }

@@ -1119,7 +1119,7 @@ extension GameFunctions on Game {
 
     if (character.running){
        if (character.stateDuration % 10 == 0){
-           dispatch(GameEventType.Footstep, character.x, character.y, 0);
+           dispatch(GameEventType.Footstep, character.x, character.y, character.z);
        }
     }
 

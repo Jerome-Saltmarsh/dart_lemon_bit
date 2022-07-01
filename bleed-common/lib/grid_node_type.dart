@@ -21,6 +21,17 @@ class GridNodeType {
   static const Rain_Landing = 19;
   static const Fireplace = 20;
   static const Wood = 21;
+  
+  
+  static isStone(int type){
+    return const [
+        Bricks,
+        Stairs_North,
+        Stairs_East,
+        Stairs_South,
+        Stairs_West,
+    ].contains(type);
+  }
 
   static const values = [
     Empty,

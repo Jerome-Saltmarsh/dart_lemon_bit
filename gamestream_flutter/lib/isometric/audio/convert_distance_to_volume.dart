@@ -1,5 +1,5 @@
 
-double convertDistanceToVolume(double distance, {double maxDistance = 200}){
+double convertDistanceToVolume(double distance, {required double maxDistance}){
   // const distanceFade = 0.0065;
   // final v = 1.0 / ((distance * distanceFade) + 1);
   // return v * v;

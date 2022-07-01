@@ -321,3 +321,19 @@ int _convertDistanceToShade(int distance, {int maxBrightness = Shade.Very_Bright
    return clamp(distance - 1, maxBrightness, 6);
 }
 
+
+int getGridTypeAtXYZ(double x, double y, double z){
+   final plain = z ~/ tileSizeHalf;
+   final row = x ~/ tileSize;
+   final column = y ~/ tileSize;
+
+   if (plain < 0) return GridNodeType.Boundary;
+   if (row < 0) return GridNodeType.Boundary;
+   if (column < 0) return GridNodeType.Boundary;
+
+   if (plain >= gridTotalZ) return GridNodeType.Boundary;
+   if (row >= gridTotalRows) return GridNodeType.Boundary;
+   if (column >= gridTotalColumns) return GridNodeType.Boundary;
+
+   return grid[plain][row][column];
+}
