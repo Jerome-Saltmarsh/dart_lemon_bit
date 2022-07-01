@@ -208,13 +208,7 @@ class Connection {
     final clientRequest = clientRequests[clientRequestInt];
 
     if (clientRequest == ClientRequest.Join) {
-      return handleClientRequestJoin(
-          arguments,
-          errorInsufficientArgs,
-          errorInvalidArg,
-          joinGameEditor,
-          joinGameFrontLine
-      );
+      return handleClientRequestJoin(arguments);
     }
 
     if (player == null) return errorPlayerNotFound();
@@ -716,4 +710,24 @@ class Connection {
     error(GameError.PlayerDead);
   }
 
+  void handleClientRequestJoin(List<String> arguments,) {
+    if (arguments.length < 2) return errorInsufficientArgs(2, arguments);
+
+    final gameTypeIndex = int.tryParse(arguments[1]);
+
+    if (!isValidIndex(gameTypeIndex, gameTypes)) return errorInvalidArg('invalid game type index $gameTypeIndex');
+
+    final gameType = gameTypes[gameTypeIndex!];
+
+    switch (gameType) {
+      case GameType.EDITOR:
+        joinGameEditor();
+        return;
+      case GameType.FRONTLINE:
+        joinGameFrontLine();
+        return;
+      default:
+        throw Exception("Invalid Game Type: $gameType");
+    }
+  }
 }
