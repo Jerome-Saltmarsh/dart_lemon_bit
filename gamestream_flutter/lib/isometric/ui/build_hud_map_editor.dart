@@ -223,7 +223,7 @@ Widget buildColumnEditTile(){
     height: engine.screen.height,
     child: SingleChildScrollView(
       child: Column(
-        children: GridNodeType.values.map(buildButtonSelectGridNodeType).toList(),
+        children: selectableTiles.map(buildButtonSelectGridNodeType).toList(),
       ),
     ),
   );
@@ -300,3 +300,20 @@ Widget buildColumnEdit(){
       ],
   );
 }
+
+
+const selectableTiles = [
+   GridNodeType.Stairs_East,
+    GridNodeType.Stairs_West,
+    GridNodeType.Stairs_West,
+    GridNodeType.Stairs_North,
+    GridNodeType.Bricks,
+    GridNodeType.Grass,
+    GridNodeType.Grass_Long,
+    GridNodeType.Torch,
+    GridNodeType.Fireplace,
+    GridNodeType.Wood,
+    GridNodeType.Water,
+    // GridNodeType.,
+
+];

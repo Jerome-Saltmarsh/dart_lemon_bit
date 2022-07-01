@@ -114,7 +114,7 @@ void renderGridNodeTransparent(int z, int row, int column, int type) {
       }
       return renderTorchOn(dstX, dstY);
 
-    case GridNodeType.Tree_Bottom_Pine:
+    case GridNodeType.Tree_Bottom:
       return render(
         dstX: dstX,
         dstY: dstY,
@@ -124,7 +124,7 @@ void renderGridNodeTransparent(int z, int row, int column, int type) {
         srcHeight: 68.0,
         anchorY: 0.6,
       );
-    case GridNodeType.Tree_Top_Pine:
+    case GridNodeType.Tree_Top:
       return render(
         dstX: dstX,
         dstY: dstY,

@@ -178,7 +178,6 @@ void _applyShadowAt({
 
 bool _castesShadow(int type){
   return const [
-        GridNodeType.Tree_Top_Pine,
         GridNodeType.Bricks,
         GridNodeType.Grass,
         GridNodeType.Grass_Long,
@@ -208,7 +207,7 @@ bool gridIsPerceptible(int zIndex, int row, int column){
     if (column >= gridTotalColumns) break;
     final type = grid[z][row][column];
     if (type != GridNodeType.Empty &&
-        type != GridNodeType.Tree_Top_Pine &&
+        type != GridNodeType.Tree_Top &&
         type != GridNodeType.Rain_Falling &&
         type != GridNodeType.Rain_Landing
     ) return false;

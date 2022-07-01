@@ -303,7 +303,7 @@ class Scene {
     if (GridNodeType.isStairs(type)){
       return getHeightAt(x, y, z) > z;
     }
-    if (type == GridNodeType.Tree_Bottom_Pine || type == GridNodeType.Torch){
+    if (type == GridNodeType.Tree_Bottom || type == GridNodeType.Torch){
       const treeRadius = 0.2;
       final percRow = (x / 48.0) % 1.0;
       if ((0.5 - percRow).abs() > treeRadius) return false;
@@ -394,10 +394,10 @@ int parseRowsAndColumnsToDirection(int rows, int columns) {
 
 void repairScene(Scene scene){
   scene.gridForeach(
-      where: ((type) => type == GridNodeType.Tree_Bottom_Pine),
+      where: ((type) => type == GridNodeType.Tree_Bottom),
       apply: (int z, int row, int column, int type){
           if (z + 1 < tileHeight){
-            scene.grid[z + 1][row][column].type = GridNodeType.Tree_Top_Pine;
+            scene.grid[z + 1][row][column].type = GridNodeType.Tree_Top;
           }
       }
   );
