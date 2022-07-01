@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/color_pitch_black.dart';
@@ -59,5 +61,13 @@ class Vector3 with Position {
   @override
   String toString(){
     return 'x: ${x.toInt()}, y: ${y.toInt()}, z: ${z.toInt()}';
+  }
+
+  double distance3(double x, double y, double z){
+    return sqrt(_sq(this.x - x) + _sq(this.y - y) + _sq(this.z - z));
+  }
+
+  double _sq(double value){
+    return value * value;
   }
 }

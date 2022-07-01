@@ -21,6 +21,7 @@ class AudioSingle {
     if (volume != null){
       this.volume = volume;
     }
+    if (volume == 0) return;
     final player = getAudioPlayer;
     assert (!player.playing);
     await player.setVolume(this.volume);
