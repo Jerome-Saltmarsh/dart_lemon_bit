@@ -9,6 +9,7 @@ import '../common/grid_node_type.dart';
 import '../common/head_type.dart';
 import '../common/library.dart';
 import '../common/pants_type.dart';
+import '../common/wind.dart';
 
 class GameFrontline extends Game {
 
@@ -131,6 +132,15 @@ class GameFrontline extends Game {
     nextWindChange -= minutesPassingPerSecond;
     if (nextWindChange <= 0) {
       nextWindChange = randomInt(3000, 6000);
+
+      if (wind == Wind.Calm) {
+        wind++;
+        return;
+      }
+      if (wind == Wind.Strong){
+        wind--;
+        return;
+      }
       if (randomBool()){
         wind--;
       } else {

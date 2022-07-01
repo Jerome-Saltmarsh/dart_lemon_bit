@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
+import 'package:gamestream_flutter/isometric/weather/lightning.dart';
 
 import '../render/weather.dart';
 import 'audio_loop.dart';
@@ -18,6 +19,7 @@ final audioLoops = <AudioLoop> [
   AudioLoop(name: 'crickets', getTargetVolume: getVolumeTargetCrickets),
   AudioLoop(name: 'day-ambience', getTargetVolume: getVolumeTargetDayAmbience),
   AudioLoop(name: 'fire', getTargetVolume: getVolumeTargetFire),
+  AudioLoop(name: 'distant-thunder', getTargetVolume: getVolumeTargetDistanceThunder),
 ];
 
 void updateAudioLoops(){
@@ -74,4 +76,9 @@ double getVolumeTargetFire(){
   });
   final distance = nearestFlame * tileSize;
   return convertDistanceToVolume(distance);
+}
+
+double getVolumeTargetDistanceThunder(){
+   if (lightningOn) return 1.0;
+   return 0;
 }
