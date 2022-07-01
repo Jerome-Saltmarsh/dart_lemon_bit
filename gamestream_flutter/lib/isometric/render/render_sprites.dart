@@ -219,6 +219,8 @@ class RenderOrderGrid extends RenderOrder {
   var screenTop = engine.screen.top - tileSize;
   var screenBottom = engine.screen.bottom + tileSize;
 
+  var dstY = 0.0;
+
   @override
   void renderFunction() {
     if (playerImperceptible) {
@@ -247,7 +249,7 @@ class RenderOrderGrid extends RenderOrder {
       }
     }
 
-    renderGridNode(gridZ, gridRow, gridColumn, gridType);
+    renderGridNode(gridZ, gridRow, gridColumn, gridType, dstY);
   }
 
   @override
@@ -380,7 +382,7 @@ class RenderOrderGrid extends RenderOrder {
           plain = grid[gridZ];
         }
 
-        final dstY = ((gridRow + gridColumn) * tileSizeHalf) - (gridZ * tileHeight);
+        dstY = ((gridRow + gridColumn) * tileSizeHalf) - (gridZ * tileHeight);
         if (dstY > screenTop && dstY < screenBottom) break;
       }
     }
