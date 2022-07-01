@@ -12,7 +12,6 @@ import '../functions/generateName.dart';
 import '../functions/withinRadius.dart';
 import '../games/game_frontline.dart';
 import '../io/write_scene_to_file.dart';
-import '../server.dart';
 
 class Connection {
   final started = DateTime.now();
@@ -730,4 +729,11 @@ class Connection {
         throw Exception("Invalid Game Type: $gameType");
     }
   }
+}
+
+bool isValidIndex(int? index, List values){
+  if (index == null) return false;
+  if (values.isEmpty) return false;
+  if (index < 0) return false;
+  return index < values.length;
 }
