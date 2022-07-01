@@ -51,6 +51,7 @@ abstract class Game {
   var _breezy = false;
   var _lightning = false;
   var _wind = 0;
+  var _timePassing = false;
 
   set wind(int value){
     if (_wind == value) return;
@@ -78,6 +79,12 @@ abstract class Game {
     playersWriteWeather();
   }
 
+  set timePassing(bool value) {
+    if(_timePassing == value) return;
+    _timePassing = value;
+    playersWriteWeather();
+  }
+
   void toggleRain(){
      raining = !raining;
   }
@@ -94,9 +101,14 @@ abstract class Game {
     lightning = !lightning;
   }
 
+  void toggleTimePassing(){
+    timePassing = !timePassing;
+  }
+
   bool get lightning => _lightning;
   bool get raining => _raining;
   bool get breezy => _breezy;
+  bool get timePassing => _timePassing;
   int get wind => _wind;
 
   static int _id = 0;

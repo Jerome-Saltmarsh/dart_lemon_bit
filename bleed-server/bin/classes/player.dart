@@ -682,6 +682,7 @@ extension PlayerProperties on Player {
      writeBool(game.raining);
      writeBool(game.breezy);
      writeBool(game.lightning);
+     writeBool(game.timePassing);
      writeByte(game.wind);
   }
 

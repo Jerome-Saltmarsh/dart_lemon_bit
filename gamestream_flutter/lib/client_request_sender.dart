@@ -143,6 +143,9 @@ void sendClientRequestWeatherToggleLightning(){
   sendClientRequest(ClientRequest.Weather_Toggle_Lightning);
 }
 
+void sendClientRequestWeatherToggleTimePassing(){
+  sendClientRequest(ClientRequest.Weather_Toggle_Time_Passing);
+}
 
 void sendClientRequest(ClientRequest value, [dynamic message]){
   if (message != null){

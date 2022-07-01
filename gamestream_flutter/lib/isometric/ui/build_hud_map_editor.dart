@@ -1,6 +1,7 @@
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:lemon_engine/render.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
@@ -97,6 +98,7 @@ Column buildColumnWeather() {
       children: [
         buildToggleRain(),
         buildControlTime(),
+        buildButtonTimePassing(),
         buildButtonLightning(),
         buildButtonBreeze(),
         buildControlWind(),
@@ -154,6 +156,14 @@ Widget buildButtonLightning() => watch(weatherLightning, (bool lightningOn){
     child: "Lightning",
     action: sendClientRequestWeatherToggleLightning,
     color: lightningOn ? greyDark : grey,
+  );
+});
+
+Widget buildButtonTimePassing() => watch(watchTimePassing, (bool timePassing){
+  return container(
+    child: "Time Passing",
+    action: sendClientRequestWeatherToggleTimePassing,
+    color: timePassing ? greyDark : grey,
   );
 });
 

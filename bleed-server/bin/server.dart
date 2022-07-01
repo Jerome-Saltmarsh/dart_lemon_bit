@@ -457,6 +457,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           game.toggleLightning();
           break;
 
+        case ClientRequest.Weather_Toggle_Time_Passing:
+          game.toggleTimePassing();
+          break;
+
         case ClientRequest.Equip_Weapon:
           if (player.deadOrBusy) return;
           final index = int.tryParse(arguments[1]);
