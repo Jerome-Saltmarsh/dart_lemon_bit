@@ -1,4 +1,3 @@
-import 'package:bleed_common/GameType.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/assets.dart';
 import 'package:gamestream_flutter/colours.dart';
@@ -6,11 +5,6 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 
 final build = _Build();
-
-const selectableGameTypes = [
-  GameType.RANDOM,
-  // GameType.SURVIVORS,
-];
 
 class _Build {
 

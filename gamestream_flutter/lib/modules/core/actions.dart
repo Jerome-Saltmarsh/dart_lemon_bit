@@ -1,4 +1,3 @@
-import 'package:bleed_common/Character_Selection.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/services.dart';
@@ -304,8 +303,8 @@ void connectToGameFrontLine(){
   connectToGame(GameType.FRONTLINE);
 }
 
-void connectToGameRandom(CharacterSelection characterType){
-  connectToGame(GameType.RANDOM, characterType.index.toString());
+void connectToGameEditor(){
+  connectToGame(GameType.EDITOR);
 }
 
 void connectToGame(GameType type, [String message = ""]){

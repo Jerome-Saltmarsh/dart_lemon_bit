@@ -301,9 +301,9 @@ Widget buildColumnEdit(){
   );
 }
 
-
 const selectableTiles = [
-   GridNodeType.Stairs_East,
+    GridNodeType.Empty,
+    GridNodeType.Stairs_East,
     GridNodeType.Stairs_West,
     GridNodeType.Stairs_West,
     GridNodeType.Stairs_North,

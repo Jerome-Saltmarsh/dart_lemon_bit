@@ -1,13 +1,10 @@
 
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:bleed_common/library.dart';
-import 'package:bleed_common/version.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/modules/core/actions.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/init.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -17,12 +14,13 @@ import 'package:gamestream_flutter/servers.dart';
 import 'package:gamestream_flutter/shared_preferences.dart';
 import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
-import 'package:gamestream_flutter/ui/builders/build_panel_select_character_class.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
+import 'package:gamestream_flutter/website/build/build_column_games.dart';
+import 'package:gamestream_flutter/website/build_layout_website.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -92,30 +90,11 @@ WatchBuilder<Connection> buildWatchConnection(Account? account) {
       case Connection.Connected:
         return modules.game.build.buildUIGame();
       case Connection.None:
-        return buildViewConnectionNone();
+        return buildPageWebsite();
       default:
         return _views.connection;
     }
   });
-}
-
-Widget buildViewConnectionNone() {
-  return buildLayout(
-      padding: 16,
-      expand: true,
-      topLeft: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          WatchBuilder(core.state.region, (Region region){
-            return text(region.name, onPressed: modules.website.actions.showDialogChangeRegion);
-          }),
-          text(version, color: colours.white618, size: FontSize.Small),
-        ],
-      ),
-      // topRight: website.builders.mainMenu(),
-      bottomLeft: buildMenuDebug(),
-      child: buildWatchBuilderDialog(),
-  );
 }
 
 Positioned buildLoginSuggestionBox() {
@@ -189,12 +168,7 @@ WatchBuilder<WebsiteDialog> buildWatchBuilderDialog() {
           return dialog(child: text("Subscription Required"));
 
         case WebsiteDialog.Games:
-          return Column(
-            children: [
-              text("FRONTLINE", onPressed: connectToGameFrontLine),
-              buildPanelSelectCharacterClass(),
-            ],
-          );
+          return buildColumnGames();
 
         case WebsiteDialog.Confirm_Logout:
           return dialog(child: text("Confirm Logout"));

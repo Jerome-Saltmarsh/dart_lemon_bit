@@ -10,7 +10,7 @@ void connectToWebSocketServer(Region server, String message) {
     _connectLocalHost(message: message);
     return;
   }
-  final httpsConnectionString = getHttpsConnectionString(server, GameType.RANDOM);
+  final httpsConnectionString = getHttpsConnectionString(server, GameType.FRONTLINE);
   final wsConnectionString = parseHttpToWebSocket(httpsConnectionString);
   _connectToServer(wsConnectionString, message);
 }

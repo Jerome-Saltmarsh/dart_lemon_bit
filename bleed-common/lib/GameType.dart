@@ -1,11 +1,11 @@
 enum GameType {
-    RANDOM,
     FRONTLINE,
+    EDITOR,
 }
 
 const gameTypes = GameType.values;
 
 const gameTypeNames = {
-    GameType.RANDOM: "PLAY",
     GameType.FRONTLINE: "FRONTLINE",
+    GameType.EDITOR: "MAP EDITOR",
 };
