@@ -216,6 +216,8 @@ class RenderOrderGrid extends RenderOrder {
 
   var screenRight = engine.screen.right + tileSize;
   var screenLeft = engine.screen.left - tileSize;
+  var screenTop = engine.screen.top - tileSize;
+  var screenBottom = engine.screen.bottom + tileSize;
 
   @override
   void renderFunction() {
@@ -283,10 +285,10 @@ class RenderOrderGrid extends RenderOrder {
     gridZGreaterThanPlayerZ = false;
     playerImperceptible = !gridIsPerceptible(playerZ, playerRow, playerColumn);
 
-    final screenBottom = engine.screen.bottom + (gridTotalZ * tileHeight);
-    final screenTop = engine.screen.top;
     screenRight = engine.screen.right + tileSize;
     screenLeft = engine.screen.left - tileSize;
+    screenTop = engine.screen.top;
+    screenBottom = engine.screen.bottom + (gridTotalZ * tileHeight);
     final screenBottomLeftColumn = convertWorldToColumn(screenLeft, screenBottom, 0);
     final screenBottomLeftRow = convertWorldToRow(screenLeft, screenBottom, 0);
     final screenBottomLeftTotal = screenBottomLeftRow + screenBottomLeftColumn;
@@ -353,27 +355,33 @@ class RenderOrderGrid extends RenderOrder {
     gridColumn--;
 
     if (gridColumn < 0 || gridRow >= maxRow) {
-      shiftIndexDown();
-      recalculateMaxRow();
-      final worldY = getTileWorldY(gridRow, gridColumn);
-      var screenLeftColumn = convertWorldToColumn(screenLeft, worldY, 0);
-      if (screenLeftColumn > 0 && screenLeftColumn < gridColumn) {
-        final amount = gridColumn - screenLeftColumn;
-        gridRow += amount;
-        gridColumn -= amount;
-      }
-      if (
-          gridColumn >= maxColumnRow - gridRow ||
-          gridColumn >= gridTotalColumns ||
-          gridRow >= gridTotalRows
-      ) {
-        gridZ++;
-        if (gridZ >= gridTotalZ || gridZ > maxZRender.value) return end();
-        gridZHalf =  gridZ ~/ 2;
-        gridZGreaterThanPlayerZ = gridZ > playerZ;
-        gridRow = 0;
-        gridColumn = 0;
-        plain = grid[gridZ];
+
+      while (true) {
+        shiftIndexDown();
+        recalculateMaxRow();
+        final worldY = getTileWorldY(gridRow, gridColumn);
+        var screenLeftColumn = convertWorldToColumn(screenLeft, worldY, 0);
+        if (screenLeftColumn > 0 && screenLeftColumn < gridColumn) {
+          final amount = gridColumn - screenLeftColumn;
+          gridRow += amount;
+          gridColumn -= amount;
+        }
+        if (
+        gridColumn >= maxColumnRow - gridRow ||
+            gridColumn >= gridTotalColumns ||
+            gridRow >= gridTotalRows
+        ) {
+          gridZ++;
+          if (gridZ >= gridTotalZ || gridZ > maxZRender.value) return end();
+          gridZHalf =  gridZ ~/ 2;
+          gridZGreaterThanPlayerZ = gridZ > playerZ;
+          gridRow = 0;
+          gridColumn = 0;
+          plain = grid[gridZ];
+        }
+
+        final dstY = ((gridRow + gridColumn) * tileSizeHalf) - (gridZ * tileHeight);
+        if (dstY > screenTop && dstY < screenBottom) break;
       }
     }
     gridType = plain[gridRow][gridColumn];
