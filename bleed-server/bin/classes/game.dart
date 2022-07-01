@@ -488,7 +488,6 @@ extension GameFunctions on Game {
     for (final enemySpawner in scene.enemySpawns) {
        enemySpawner.update(this);
     }
-
     update();
     updateCollectables();
     _updateCollisions();

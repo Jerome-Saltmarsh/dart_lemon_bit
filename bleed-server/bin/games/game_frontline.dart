@@ -5,12 +5,16 @@ import '../classes/weapon.dart';
 import '../common/armour_type.dart';
 import '../common/grid_node_type.dart';
 import '../common/head_type.dart';
+import '../common/library.dart';
 import '../common/pants_type.dart';
-import '../common/weapon_type.dart';
 
 class GameFrontline extends Game {
 
   var time = 12 * 60 * 60;
+
+  void setTime(int value){
+      time = value % secondsPerDay;
+  }
 
   GameFrontline(Scene scene) : super(
     scene
@@ -45,6 +49,13 @@ class GameFrontline extends Game {
 
   @override
   int getTime() => time;
+
+  @override
+  void update(){
+    if (timePassing) {
+        setTime(time + 1);
+    }
+  }
 
   @override
   Player spawnPlayer() {
