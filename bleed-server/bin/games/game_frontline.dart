@@ -9,11 +9,10 @@ import '../common/grid_node_type.dart';
 import '../common/head_type.dart';
 import '../common/library.dart';
 import '../common/pants_type.dart';
-import '../common/wind.dart';
 
 class GameFrontline extends Game {
 
-  var minutesPassingPerSecond = 1;
+  var minutesPassingPerSecond = 5;
   var time = 12 * 60 * 60;
 
   var nextRain = randomInt(400, 10000);
@@ -85,14 +84,14 @@ class GameFrontline extends Game {
       durationRain -= minutesPassingPerSecond;
       if (durationRain <= 0){
         raining = false;
-        nextRain = randomInt(2000, 10000);
+        nextRain = randomInt(2000, 20000);
       }
       return;
     }
     nextRain -= minutesPassingPerSecond;
     if (nextRain  <= 0){
       raining = true;
-      durationRain = randomInt(1000, 2000);
+      durationRain = randomInt(2000, 8000);
     }
   }
 
@@ -101,14 +100,14 @@ class GameFrontline extends Game {
       durationLightning -= minutesPassingPerSecond;
       if (durationLightning <= 0){
         lightning = false;
-        nextLightning = randomInt(2000, 10000);
+        nextLightning = randomInt(10000, 20000);
       }
       return;
     }
     nextLightning -= minutesPassingPerSecond;
     if (nextLightning  <= 0){
       lightning = true;
-      durationLightning = randomInt(1000, 2000);
+      durationLightning = randomInt(3000, 6000);
     }
   }
 
@@ -124,14 +123,14 @@ class GameFrontline extends Game {
     nextBreeze -= minutesPassingPerSecond;
     if (nextBreeze  <= 0){
       breezy = true;
-      durationBreeze = randomInt(1000, 2000);
+      durationBreeze = randomInt(3000, 10000);
     }
   }
 
   void updateWind(){
     nextWindChange -= minutesPassingPerSecond;
     if (nextWindChange <= 0) {
-      nextWindChange = randomInt(1000, 2000);
+      nextWindChange = randomInt(3000, 6000);
       if (randomBool()){
         wind--;
       } else {
