@@ -21,6 +21,9 @@ class GameFrontline extends Game {
   var nextLightning = randomInt(400, 10000);
   var durationLightning = 300;
 
+  var nextBreeze = randomInt(500, 1000);
+  var durationBreeze = 500;
+
   void setTime(int value){
       time = value % secondsPerDay;
   }
@@ -69,6 +72,7 @@ class GameFrontline extends Game {
     setTime(time + minutesPassingPerSecond);
     updateRain();
     updateLightning();
+    updateBreeze();
   }
 
   void updateRain(){
@@ -100,6 +104,22 @@ class GameFrontline extends Game {
     if (nextLightning  <= 0){
       lightning = true;
       durationLightning = randomInt(1000, 2000);
+    }
+  }
+
+  void updateBreeze(){
+    if (breezy) {
+      durationBreeze -= minutesPassingPerSecond;
+      if (durationBreeze <= 0){
+        breezy = false;
+        nextBreeze = randomInt(2000, 10000);
+      }
+      return;
+    }
+    nextBreeze -= minutesPassingPerSecond;
+    if (nextBreeze  <= 0){
+      breezy = true;
+      durationBreeze = randomInt(1000, 2000);
     }
   }
 
