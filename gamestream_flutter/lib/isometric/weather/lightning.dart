@@ -13,8 +13,6 @@ final weatherLightning = Watch(false, onChanged: (bool lightningOn){
 });
 var nextLightning = 0;
 
-void weatherLightningToggle() => weatherLightning.value = !weatherLightning.value;
-
 bool get lightningOn => weatherLightning.value;
 
 void weatherUpdateLightning(){

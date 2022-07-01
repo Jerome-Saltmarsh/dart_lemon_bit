@@ -139,6 +139,10 @@ void sendClientRequestWeatherToggleWind(){
   sendClientRequest(ClientRequest.Weather_Toggle_Wind);
 }
 
+void sendClientRequestWeatherToggleLightning(){
+  sendClientRequest(ClientRequest.Weather_Toggle_Lightning);
+}
+
 
 void sendClientRequest(ClientRequest value, [dynamic message]){
   if (message != null){

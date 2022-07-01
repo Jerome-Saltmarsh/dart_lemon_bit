@@ -442,15 +442,19 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Weather_Toggle_Rain:
-          player.game.toggleRain();
+          game.toggleRain();
           break;
 
         case ClientRequest.Weather_Toggle_Breeze:
-          player.game.toggleBreeze();
+          game.toggleBreeze();
           break;
 
         case ClientRequest.Weather_Toggle_Wind:
-          player.game.toggleWind();
+          game.toggleWind();
+          break;
+
+        case ClientRequest.Weather_Toggle_Lightning:
+          game.toggleLightning();
           break;
 
         case ClientRequest.Equip_Weapon:
