@@ -204,6 +204,7 @@ class RenderOrderGrid extends RenderOrder {
   var maxRow = 0;
   var gridZHalf = 0;
   late List<List<int>> plain;
+  late List<List<int>> shadePlain;
 
   var playerZ = 0;
   var playerRow = 0;
@@ -249,7 +250,14 @@ class RenderOrderGrid extends RenderOrder {
       }
     }
 
-    renderGridNode(gridZ, gridRow, gridColumn, gridType, dstY);
+    renderGridNode(
+        gridZ,
+        gridRow,
+        gridColumn,
+        gridType,
+        dstY,
+        shadePlain[gridRow][gridColumn],
+    );
   }
 
   @override
@@ -276,6 +284,7 @@ class RenderOrderGrid extends RenderOrder {
     gridZ = 0;
     gridZHalf = 0;
     plain = grid[gridZ];
+    shadePlain = gridLightDynamic[gridZ];
     gridType = 0;
     gridTotalColumnsMinusOne = gridTotalColumns - 1;
     playerZ = player.indexZ;
@@ -380,6 +389,7 @@ class RenderOrderGrid extends RenderOrder {
           gridRow = 0;
           gridColumn = 0;
           plain = grid[gridZ];
+          shadePlain = gridLightDynamic[gridZ];
         }
 
         dstY = ((gridRow + gridColumn) * tileSizeHalf) - (gridZ * tileHeight);

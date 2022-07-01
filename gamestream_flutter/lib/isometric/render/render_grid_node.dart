@@ -11,9 +11,8 @@ import '../grid/state/wind.dart';
 import 'render_torch.dart';
 import 'weather.dart';
 
-void renderGridNode(int z, int row, int column, int type, double dstY) {
+void renderGridNode(int z, int row, int column, int type, double dstY, int shade) {
   final dstX = (row - column) * tileSizeHalf;
-  final shade = gridLightDynamic[z][row][column];
   switch (type) {
 
     case GridNodeType.Bricks:
