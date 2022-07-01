@@ -1,5 +1,7 @@
 
 
+import 'package:lemon_math/library.dart';
+
 import '../classes/library.dart';
 import '../classes/weapon.dart';
 import '../common/armour_type.dart';
@@ -11,6 +13,9 @@ import '../common/pants_type.dart';
 class GameFrontline extends Game {
 
   var time = 12 * 60 * 60;
+
+  var nextRain = 300;
+  var rainDuration = 300;
 
   void setTime(int value){
       time = value % secondsPerDay;
@@ -54,6 +59,16 @@ class GameFrontline extends Game {
   void update(){
     if (timePassing) {
         setTime(time + 1);
+
+        if (raining){
+           if (rainDuration-- <= 0){
+              raining = false;
+              nextRain = randomInt(500, 1000);
+           }
+        } else if (nextRain-- <= 0){
+           raining = true;
+           rainDuration = 500;
+        }
     }
   }
 

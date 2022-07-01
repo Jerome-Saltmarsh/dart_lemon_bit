@@ -21,8 +21,11 @@ final soundsNight = [
 ];
 
 final soundsDay = [
-  AudioSingle(name: 'gong', volume: 0.08),
-  AudioSingle(name: 'wind-chime', volume: 0.25)
+  AudioSingle(name: 'wind-chime', volume: 0.25),
+];
+
+final soundsLateAfternoon = [
+  AudioSingle(name: 'gong', volume: 0.25),
 ];
 
 
@@ -52,11 +55,16 @@ void updateRandomAmbientSounds(){
 void playRandomAmbientSound(){
   final hour = hours.value;
 
-  if (hour < 3){
+  final shade = ambient.value;
+
+  if (shade == Shade.Pitch_Black || shade == Shade.Very_Dark){
     return playRandom(soundsNight);
   }
-  if (hour > 12 && hour < 16) {
+  if (shade == Shade.Very_Bright) {
     return playRandom(soundsDay);
+  }
+  if (hour > 15 && hour < 18) {
+    return playRandom(soundsLateAfternoon);
   }
 }
 
