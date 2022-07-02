@@ -523,13 +523,13 @@ class Connection {
   }
 
   Future joinGameFrontLine() async {
-    final game = await engine.findGameFrontLine();
-    joinGame(game);
+    joinGame(await engine.findGameDarkAgeOfficial());
   }
 
   Future joinGameEditor() async {
     final game = await engine.findGameEditor();
     joinGame(game);
+    game.owner = _player;
   }
 
   void joinGame(Game game){

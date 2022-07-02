@@ -57,10 +57,11 @@ class _Engine {
     }
   }
 
-  Future<GameDarkAge> findGameFrontLine() async {
+  Future<GameDarkAge> findGameDarkAgeOfficial() async {
     for (final game in games) {
       if (game is GameDarkAge) {
         if (game.full) continue;
+        if (game.owner != null) continue;
         return game;
       }
     }

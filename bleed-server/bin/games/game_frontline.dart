@@ -13,6 +13,8 @@ import '../common/wind.dart';
 
 class GameDarkAge extends Game {
 
+  Player? owner;
+
   var minutesPassingPerSecond = 5;
   var time = 12 * 60 * 60;
 
