@@ -32,6 +32,7 @@ enum ClientRequest {
   Custom_Game_Names,
   Editor_Load_Game,
   Editor_Set_Scene_Name,
+  Time_Set_Hour,
 }
 
 const clientRequests = ClientRequest.values;

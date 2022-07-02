@@ -35,6 +35,11 @@ class GameDarkAge extends Game {
       time = value % secondsPerDay;
   }
 
+  @override
+  void setHourMinutes(int hour, int minutes){
+      time = (hour * secondsPerHour) + (minutes * secondsPerMinute);
+  }
+
   GameDarkAge(Scene scene) : super(
     scene
   ) {

@@ -54,6 +54,10 @@ abstract class Game {
   var _wind = 0;
   var _timePassing = true;
 
+  void setHourMinutes(int hour, int minutes){
+
+  }
+
   set wind(int value){
     if (_wind == value) return;
     if (value < Wind.Calm) return;
@@ -385,18 +389,10 @@ abstract class Game {
   }
 }
 
-const secondsPerMinute = 60;
-const minutesPerHour = 60;
-const hoursPerDay = 24;
-const secondsPerFrame = 5;
-
 extension GameFunctions on Game {
   void spawnRandomOrb(double x, double y) {
     items.add(Item(type: randomItem(ItemType.orbs), x: x, y: y));
   }
-
-  // Vector2 getSceneCenter() =>
-  //     getTilePosition(scene.numberOfRows ~/ 2, scene.numberOfColumns ~/ 2);
 
   Character? getClosestEnemy({
     required double x,

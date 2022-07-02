@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:lemon_engine/render.dart';
+import 'package:lemon_engine/screen.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
@@ -29,7 +30,23 @@ Widget buildHudMapEditor(){
       Positioned(top: 0, right: 0, child: buildPanelMenu()),
       Positioned(top: 0, left: 0, child: buildEditTools()),
       Positioned(right: 0, bottom: 0, child: buildPanelEditView()),
+      Positioned(top: 6, right: 0, child: buildRowSaveLoad()),
     ],
+  );
+}
+
+Widget buildRowSaveLoad(){
+  return Container(
+      width: screen.width,
+      alignment: Alignment.center,
+      child: Row(
+         mainAxisAlignment: MainAxisAlignment.center,
+         children: [
+            container(child: "Play", width: 100, alignment: Alignment.center),
+            container(child: "Save", width: 100, alignment: Alignment.center),
+            container(child: "Load", width: 100, alignment: Alignment.center),
+         ],
+      ),
   );
 }
 
@@ -184,7 +201,65 @@ Widget buildToggleLightMode(){
   });
 }
 
-Widget buildControlTime() {
+Widget buildControlTime(){
+  const totalWidth = 300.0;
+  const buttonWidth = totalWidth / 24.0;
+  final buttons = watch(hours, (int hours){
+     final buttons1 = <Widget>[];
+     final buttons2 = <Widget>[];
+
+     for (var i = 0; i <= hours; i++){
+        buttons1.add(
+          container(
+            width: buttonWidth,
+            color: greyDark,
+            action: () => sendClientRequestTimeSetHour(i),
+          ),
+        );
+     }
+     for (var i = hours + 1; i < 24; i++){
+       buttons2.add(
+         container(
+           width: buttonWidth,
+           color: grey,
+           action: () => sendClientRequestTimeSetHour(i),
+         ),
+       );
+     }
+
+     return Row(
+       children: [
+         ...buttons1,
+         ...buttons2,
+       ],
+     );
+  });
+
+  final timeText = Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      text("Time: "),
+      watch(hours, (num hour) => text(padZero(hour))),
+      text(":"),
+      watch(minutes, (num hour) => text(padZero(hour))),
+    ],
+  );
+  return Column(
+    children: [
+      Container(
+          color: brownLight,
+          width: totalWidth,
+          alignment: Alignment.center,
+          height: 50,
+          child: timeText
+      ),
+      buttons,
+    ],
+  );
+}
+
+Widget buildControlTime2() {
   return container(child: Row(
     children: [
       text("Time: "),

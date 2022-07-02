@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 
 Widget container({
-  required dynamic child,
+  dynamic child,
   Color? color,
   Function? action,
   Alignment alignment = Alignment.centerLeft,
@@ -16,7 +16,8 @@ Widget container({
     width: width,
     height: height,
     color: color ?? Colors.grey,
-    child: child is Widget ? child : text(child),
+    child: child == null
+        ? null : child is Widget ? child : text(child),
   );
   if (action == null) return con;
   return onPressed(child: con, callback: action);

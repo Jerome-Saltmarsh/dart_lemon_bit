@@ -115,6 +115,12 @@ void sendClientRequestEditorSetSceneName(String name){
   sendClientRequest(ClientRequest.Editor_Set_Scene_Name, name);
 }
 
+void sendClientRequestTimeSetHour(int hour){
+  assert(hour >= 0);
+  assert(hour <= 24);
+  sendClientRequest(ClientRequest.Time_Set_Hour, hour);
+}
+
 Future sendClientRequestUpdate() async {
   const updateIndex = 0;
   updateBuffer[0] = updateIndex;

@@ -408,6 +408,12 @@ class Connection {
           joinGameEditor(name: arguments[1]);
           break;
 
+      case ClientRequest.Time_Set_Hour:
+          final hour = int.tryParse(arguments[1]);
+          if (hour == null) return errorInvalidArg('hour required');
+          player.game.setHourMinutes(hour, 0);
+          break;
+
       case ClientRequest.Editor_Set_Scene_Name:
           if (!player.ownsGame) {
              throw Exception("Player must be owner to set name");
