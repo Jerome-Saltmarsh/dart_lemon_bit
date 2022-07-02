@@ -93,9 +93,13 @@ Widget buildControlsWeather() {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         buildControlTime(),
+        width4,
         buildToggleRain(),
+        width4,
         buildButtonLightning(),
+        width4,
         buildButtonBreeze(),
+        width4,
         buildControlWind(),
       ],
     );
@@ -188,19 +192,25 @@ Widget buildControlTime(){
 
      for (var i = 0; i <= hours; i++){
         buttons1.add(
-          container(
-            width: buttonWidth,
-            color: greyDark,
-            action: () => sendClientRequestTimeSetHour(i),
+          Tooltip(
+            message: i.toString(),
+            child: container(
+              width: buttonWidth,
+              color: greyDark,
+              action: () => sendClientRequestTimeSetHour(i),
+            ),
           ),
         );
      }
      for (var i = hours + 1; i < 24; i++){
        buttons2.add(
-         container(
-           width: buttonWidth,
-           color: grey,
-           action: () => sendClientRequestTimeSetHour(i),
+         Tooltip(
+           message: i.toString(),
+           child: container(
+             width: buttonWidth,
+             color: grey,
+             action: () => sendClientRequestTimeSetHour(i),
+           ),
          ),
        );
      }
