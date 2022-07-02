@@ -40,7 +40,7 @@ Widget buildControlsEnvironment(){
        child: Row(
          mainAxisAlignment: MainAxisAlignment.center,
          children: [
-           buildControlTime(),
+           buildControlsWeather(),
          ],
        ),
    );

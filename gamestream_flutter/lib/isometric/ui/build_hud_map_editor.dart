@@ -53,8 +53,6 @@ Widget buildEditTools(){
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       buildColumnEditTile(),
-      buildColumnWeather(),
-      // buildColumnSettings(),
     ],
   );
 }
@@ -92,12 +90,12 @@ Widget buildColumnEditBlendMode(){
   });
 }
 
-Column buildColumnWeather() {
-  return Column(
+Widget buildControlsWeather() {
+  return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        buildButtonTimePassing(),
+        buildControlTime(),
         buildToggleRain(),
         buildButtonLightning(),
         buildButtonBreeze(),
