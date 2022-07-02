@@ -37,6 +37,11 @@ Widget buildControlsEnvironment(){
    return Container(
        width: screen.width,
        alignment: Alignment.center,
-       child: buildControlTime(),
+       child: Row(
+         mainAxisAlignment: MainAxisAlignment.center,
+         children: [
+           buildControlTime(),
+         ],
+       ),
    );
 }

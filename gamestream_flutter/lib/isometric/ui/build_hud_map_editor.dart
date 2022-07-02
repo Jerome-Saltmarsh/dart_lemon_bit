@@ -236,13 +236,29 @@ Widget buildControlTime(){
             color: brownLight,
             width: totalWidth,
             alignment: Alignment.center,
+            padding: const EdgeInsets.all(8),
             height: 50,
-            child: timeText
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                timeText,
+                buildToggleTimePassing(),
+              ],
+            )
         ),
         buttons,
       ],
     ),
   );
+}
+
+Widget buildToggleTimePassing(){
+   return watch(watchTimePassing, (bool timePassing){
+       return text(
+           timePassing ? "Pause" : "Resume",
+           onPressed: sendClientRequestWeatherToggleTimePassing
+       );
+   });
 }
 
 Widget buildColumnEditTile(){
