@@ -1395,31 +1395,30 @@ extension GameFunctions on Game {
     if (value is Team){
       assert(!onSameTeam(ai, value));
     }
-    // assert(value.alive);
     assert(ai.alive);
     ai.target = value;
+  }
+
+  bool disconnectPlayer(Player player){
+    if (!players.remove(player)) return false;
+    for (final npc in zombies) {
+      npc.clearTargetIf(player);
+    }
+    onPlayerDisconnected(player);
+    if (status == GameStatus.Awaiting_Players) {
+      cancelCountDown();
+    }
+    return true;
   }
 
   void removeDisconnectedPlayers() {
     var playerLength = players.length;
     for (var i = 0; i < playerLength; i++) {
       final player = players[i];
-
       if (player.lastUpdateFrame++ < 100) continue;
-
-      for (final npc in zombies) {
-        npc.clearTargetIf(player);
-      }
-      players.removeAt(i);
+      if (!disconnectPlayer(player)) continue;
       i--;
       playerLength--;
-
-      if (status == GameStatus.Awaiting_Players) {
-        cancelCountDown();
-      }
-      if (status == GameStatus.In_Progress) {
-        onPlayerDisconnected(player);
-      }
     }
   }
 

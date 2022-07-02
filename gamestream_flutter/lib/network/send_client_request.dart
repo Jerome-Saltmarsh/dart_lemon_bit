@@ -107,6 +107,10 @@ void sendClientRequestCustomGameNames(){
   sendClientRequest(ClientRequest.Custom_Game_Names);
 }
 
+void sendClientRequestEditorLoadGame(String name){
+  sendClientRequest(ClientRequest.Editor_Load_Game, name);
+}
+
 Future sendClientRequestUpdate() async {
   const updateIndex = 0;
   updateBuffer[0] = updateIndex;

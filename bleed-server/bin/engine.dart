@@ -63,7 +63,7 @@ class _Engine {
     return GameDarkAge(scene);
   }
 
-  Future<GameDarkAge> findGameEditor() async {
+  Future<GameDarkAge> findGameEditorNew() async {
     final game = GameDarkAge(Scene(
       name: generateUUID(),
       gameObjects: [],
@@ -77,6 +77,10 @@ class _Engine {
     ));
     game.timePassing = false;
     return game;
+  }
+
+  Future<GameDarkAge> findGameEditorByName(String name) async {
+    return GameDarkAge(await readSceneFromFile(name));
   }
 
   T? findGameAwaitingPlayers<T extends Game>() {

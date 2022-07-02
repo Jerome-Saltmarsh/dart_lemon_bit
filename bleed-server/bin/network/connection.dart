@@ -404,6 +404,10 @@ class Connection {
           });
           break;
 
+      case ClientRequest.Editor_Load_Game:
+          joinGameEditor(name: arguments[1]);
+          break;
+
       default:
         break;
     }
@@ -544,13 +548,20 @@ class Connection {
     joinGame(await engine.findGameDarkAgeOfficial());
   }
 
-  Future joinGameEditor() async {
-    final game = await engine.findGameEditor();
+  Future joinGameEditor({String? name}) async {
+    final game = name == null
+        ? await engine.findGameEditorNew()
+        : await engine.findGameEditorByName(name);
     joinGame(game);
     game.owner = _player;
   }
 
   void joinGame(Game game){
+
+    final current = _player;
+    if (current != null){
+      current.game.disconnectPlayer(current);
+    }
     _player = game.spawnPlayer();
     onGameJoined();
   }

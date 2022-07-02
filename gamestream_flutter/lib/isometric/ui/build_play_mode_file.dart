@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/io/custom_game_names.dart';
+import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 
 import 'build_container.dart';
@@ -23,9 +24,10 @@ Widget buildColumnLoadFile(){
    });
 }
 
-Widget buildButtonLoadGame(String gameName){
+Widget buildButtonLoadGame(String gameName) {
   return container(
     child: gameName,
+    action: () => sendClientRequestEditorLoadGame(gameName),
   );
 }
 
