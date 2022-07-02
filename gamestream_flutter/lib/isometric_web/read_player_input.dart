@@ -1,8 +1,10 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/character_controller.dart';
+import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/message_box.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
 
 void readPlayerInput() {
@@ -10,6 +12,9 @@ void readPlayerInput() {
   if (playModeEdit) {
     if (keyPressed(LogicalKeyboardKey.space)) {
       engine.panCamera();
+    }
+    if (keyPressed(LogicalKeyboardKey.delete)) {
+      edit.deleteBlock();
     }
     if (engine.mouseRightDown.value){
       setPlayModePlay();

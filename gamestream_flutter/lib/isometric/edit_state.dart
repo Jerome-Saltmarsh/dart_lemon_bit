@@ -17,9 +17,17 @@ class EditState {
     type.value = grid[z.value][row.value][column.value];
   }
 
+  void deleteBlock(){
+    setCurrentBlock(GridNodeType.Empty);
+  }
+
+  void setCurrentBlock(int value){
+    return sendClientRequestSetBlock(row.value, column.value, z.value, value);
+  }
+
   void setBlockType(int value){
     if (grid[z.value][row.value][column.value] != value){
-      return sendClientRequestSetBlock(row.value, column.value, z.value, value);
+      return setCurrentBlock(value);
     }
     for (var zIndex = 1; zIndex < z.value; zIndex++){
       if (GridNodeType.isStairs(value)){
