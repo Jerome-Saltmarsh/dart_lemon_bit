@@ -176,7 +176,13 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
       if (ambient.value <= Shade.Very_Bright) {
         return renderTorchOff(dstX, dstY);
       }
-      return renderTorchOn(dstX, dstY);
+
+      final wind = gridWind[z][row][column];
+
+      if (wind == Wind.Calm){
+        return renderTorchOn(dstX, dstY);
+      }
+      return renderTorchOnWindy(dstX, dstY);
 
     case GridNodeType.Tree_Bottom:
       return render(
