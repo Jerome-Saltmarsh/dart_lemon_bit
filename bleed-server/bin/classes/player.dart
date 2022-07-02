@@ -53,6 +53,8 @@ class Player extends Character with ByteWriter {
   final cardChoices = <CardType>[];
   final deck = <Card>[];
 
+  bool get ownsGame => game.owner == this;
+
   void closeStore(){
     if (storeItems.isEmpty) return;
     storeItems = [];

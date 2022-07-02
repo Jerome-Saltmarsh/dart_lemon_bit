@@ -408,6 +408,20 @@ class Connection {
           joinGameEditor(name: arguments[1]);
           break;
 
+      case ClientRequest.Editor_Set_Scene_Name:
+          if (!player.ownsGame) {
+             throw Exception("Player must be owner to set name");
+          }
+          var name = "";
+          for (var i = 1; i < arguments.length; i++){
+             name += arguments[i];
+          }
+          final scene = player.game.scene;
+          scene.name = name;
+          writeSceneToFile(scene);
+          player.writeSceneMetaData();
+          break;
+
       default:
         break;
     }
