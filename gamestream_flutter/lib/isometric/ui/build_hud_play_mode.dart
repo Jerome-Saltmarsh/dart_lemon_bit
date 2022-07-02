@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_button_toggle_inventory.dart';
+import 'package:gamestream_flutter/isometric/ui/buttons/build_toggle_play_edit.dart';
 import 'package:gamestream_flutter/isometric/ui/watch_inventory_visible.dart';
+import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:gamestream_flutter/ui/builders/build_text_box.dart';
 import 'package:lemon_engine/engine.dart';
@@ -19,6 +22,14 @@ Widget buildHudPlayMode() {
       Positioned(bottom: 50, left: 0, child: buildWatchMouseTargetName()),
       Positioned(bottom: 8, right: 8, child: buildButtonToggleInventory()),
       buildPanelWriteMessage(),
+
+      watch(sceneMetaDataPlayerIsOwner, (bool playerIsOwner){
+         if (!playerIsOwner) return const SizedBox();
+         return Positioned(
+            top: 6,
+            child: buildTogglePlayEdit()
+         );
+      }),
     ]
   );
 }

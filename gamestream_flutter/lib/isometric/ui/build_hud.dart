@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/ui/build_tabs_player_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/build_watch_play_mode.dart';
+import 'package:gamestream_flutter/isometric/ui/buttons/build_toggle_play_edit.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:lemon_engine/screen.dart';
 
@@ -14,12 +15,9 @@ Widget buildHud() {
       visibleBuilder(
           sceneMetaDataPlayerIsOwner,
           Positioned(
-              bottom: 6,
+              top: 6,
               left: 0,
-              child: Container(
-                  width: screen.width,
-                  child: buildTabsPlayMode()
-              )
+              child: buildTogglePlayEdit()
           )
       ),
     ],

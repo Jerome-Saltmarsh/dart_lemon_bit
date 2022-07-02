@@ -1,6 +1,7 @@
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/ui/buttons/build_toggle_play_edit.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:lemon_engine/render.dart';
 import 'package:lemon_engine/screen.dart';
@@ -30,25 +31,10 @@ Widget buildHudMapEditor(){
       Positioned(top: 0, right: 0, child: buildPanelMenu()),
       Positioned(top: 0, left: 0, child: buildEditTools()),
       Positioned(right: 0, bottom: 0, child: buildPanelEditView()),
-      Positioned(top: 6, right: 0, child: buildRowSaveLoad()),
     ],
   );
 }
 
-Widget buildRowSaveLoad(){
-  return Container(
-      width: screen.width,
-      alignment: Alignment.center,
-      child: Row(
-         mainAxisAlignment: MainAxisAlignment.center,
-         children: [
-            container(child: "Play", width: 100, alignment: Alignment.center),
-            container(child: "Save", width: 100, alignment: Alignment.center),
-            container(child: "Load", width: 100, alignment: Alignment.center),
-         ],
-      ),
-  );
-}
 
 Widget buildPanelEditView(){
   return Column(children: [

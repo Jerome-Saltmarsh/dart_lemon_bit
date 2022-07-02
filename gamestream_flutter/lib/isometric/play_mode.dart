@@ -8,6 +8,7 @@ bool get playModePlay => playMode.value == PlayMode.Play;
 bool get playModeDebug => playMode.value == PlayMode.Debug;
 
 void setPlayModePlay() => playMode.value = PlayMode.Play;
+void setPlayModeEdit() => playMode.value = PlayMode.Edit;
 
 enum PlayMode {
     Play,
