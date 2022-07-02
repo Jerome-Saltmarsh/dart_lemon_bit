@@ -36,14 +36,6 @@ void sendRequestJoinGame(GameType type) {
   }
 }
 
-void sendRequestCharacterSave(){
-  webSocket.send(ClientRequest.Character_Save.index);
-}
-
-void sendRequestCharacterLoad(){
-  webSocket.send(ClientRequest.Character_Load.index);
-}
-
 void sendRequestJoinCustomGame({required String mapName, required String playerId}) {
   print("sendRequestJoinCustomGame()");
   webSocket.send('${ClientRequest.Join_Custom.index} $playerId $mapName');
@@ -55,10 +47,6 @@ void sendRequestAttack() {
 
 void sendRequestAttackSecondary() {
   sendClientRequest(ClientRequest.Attack_Secondary);
-}
-
-void sendRequestConstruct(int value) {
-  sendClientRequest(ClientRequest.Construct, value);
 }
 
 void sendClientRequestSelectCharacterType(CharacterSelection value) {

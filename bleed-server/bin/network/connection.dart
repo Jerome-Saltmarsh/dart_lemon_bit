@@ -57,9 +57,9 @@ class Connection {
 
   void onData(dynamic args) {
     if (args is List<int>) {
-      return onDataByteArray(args);
+      return handleClientRequestUpdate(args);
     }
-    if (args is String){
+    if (args is String) {
       return onDataStringArray(args.split(" "));
     }
     throw Exception("Invalid arg type");
@@ -71,29 +71,23 @@ class Connection {
       return;
     }
 
-    final player = _player;
-
     final clientRequestInt = int.tryParse(arguments[0]);
-    if (clientRequestInt == null) {
-      error(GameError.ClientRequestRequired);
-      return;
-    }
 
-    if (clientRequestInt < 0) {
-      error(GameError.UnrecognizedClientRequest);
-      return;
-    }
+    if (clientRequestInt == null)
+      return error(GameError.ClientRequestRequired);
 
-    if (clientRequestInt >= clientRequestsLength) {
-      error(GameError.UnrecognizedClientRequest);
-      return;
-    }
+    if (clientRequestInt < 0)
+      return error(GameError.UnrecognizedClientRequest);
+
+    if (clientRequestInt >= clientRequestsLength)
+      return error(GameError.UnrecognizedClientRequest);
 
     final clientRequest = clientRequests[clientRequestInt];
 
-    if (clientRequest == ClientRequest.Join) {
+    if (clientRequest == ClientRequest.Join)
       return handleClientRequestJoin(arguments);
-    }
+
+    final player = _player;
 
     if (player == null) return errorPlayerNotFound();
     final game = player.game;
@@ -101,8 +95,7 @@ class Connection {
     switch (clientRequest) {
 
       case ClientRequest.Teleport:
-        player.x = player.mouse.x;
-        player.y = player.mouse.y;
+        handleClientRequestTeleport(player);
         return;
 
       case ClientRequest.Join_Custom:
@@ -110,22 +103,6 @@ class Connection {
           errorArgsExpected(3, arguments);
           return;
         }
-        break;
-
-      case ClientRequest.Construct:
-        throw Exception();
-
-      case ClientRequest.Character_Load:
-        final account = _account;
-        if (account == null) {
-          errorAccountRequired();
-          return;
-        }
-        firestoreService.loadCharacter(account).then((response){
-          player.x = double.parse(response['x']);
-          player.y = double.parse(response['y']);
-        });
-
         break;
 
       case ClientRequest.Toggle_Objects_Destroyable:
@@ -246,20 +223,6 @@ class Connection {
         player.equippedWeapon = player.weapons[index];
         player.setStateChanging();
         player.writeEquippedWeapon();
-        break;
-
-      case ClientRequest.Character_Save:
-        final account = _account;
-        if (account == null) {
-          errorAccountRequired();
-          return;
-        }
-
-        firestoreService.saveCharacter(
-          account: account,
-          x: player.x,
-          y: player.y,
-        );
         break;
 
       case ClientRequest.Revive:
@@ -522,124 +485,114 @@ class Connection {
     }
   }
 
-  void onDataByteArray(List<int> args) {
-
+  void handleClientRequestUpdate(List<int> args) {
     final player = _player;
-    final clientRequestInt = args[0];
 
-    if (clientRequestInt >= clientRequestsLength) {
-      return error(GameError.UnrecognizedClientRequest);
-    }
-
-    if (clientRequestInt == 0) { // ClientRequest.Update.index
-      if (player == null) {
-        return;
-      }
-
-      if (player.lastUpdateFrame == 0){
-        return;
-      }
-      player.lastUpdateFrame = 0;
-
-      final game = player.game;
-
-      if (player.sceneChanged) {
-        player.sceneChanged = false;
-        player.sceneDownloaded = false;
-        return;
-      }
-
-      final mouseX = readNumberFromByteArray(args, index: 2).toDouble();
-      final mouseY = readNumberFromByteArray(args, index: 4).toDouble();
-      player.mouse.x = mouseX;
-      player.mouse.y = mouseY;
-      player.screenLeft = readNumberFromByteArray(args, index: 7).toDouble();
-      player.screenTop = readNumberFromByteArray(args, index: 9).toDouble();
-      player.screenRight = readNumberFromByteArray(args, index: 11).toDouble();
-      player.screenBottom = readNumberFromByteArray(args, index: 13).toDouble();
-
-      if (player.deadOrBusy) {
-        return;
-      }
-
-      player.aimTarget = game.getClosestCollider(mouseX, mouseY, player, minDistance: 35);
-      switch (args[1]) {
-        case CharacterAction.Idle:
-          if (player.target == null){
-            game.setCharacterState(player, CharacterState.Idle);
-          }
-          break;
-        case CharacterAction.Perform:
-          final ability = player.ability;
-          final aimTarget = player.aimTarget;
-          player.target = aimTarget;
-
-          if (aimTarget is Npc){
-            if (withinRadius(player, aimTarget, 100)){
-              if (!aimTarget.deadOrBusy){
-                aimTarget.face(player);
-              }
-              player.face(aimTarget);
-              aimTarget.onInteractedWith(player);
-              break;
-            }
-            player.runToMouse();
-            player.closeStore();
-          } else {
-            player.closeStore();
-          }
-
-          if (ability == null) {
-            if (aimTarget != null) {
-              player.target = aimTarget;
-              if (withinRadius(player, aimTarget, player.equippedRange)){
-                player.face(aimTarget);
-                game.setCharacterStatePerforming(player);
-              }
-            } else {
-              player.runToMouse();
-            }
-            break;
-          }
-
-          if (ability.cooldownRemaining > 0) {
-            return error(GameError.Cooldown_Remaining);
-          }
-
-          switch (ability.mode) {
-            case AbilityMode.Targeted:
-              if (aimTarget != null) {
-                player.target = aimTarget;
-                return;
-              } else {
-                player.runToMouse();
-                return;
-              }
-            case AbilityMode.Activated:
-              ability.cooldownRemaining = ability.cooldown;
-              break;
-            case AbilityMode.Area:
-              player.target = Position3().set(x: mouseX, y: mouseY, z: player.z);
-              break;
-            case AbilityMode.Directed:
-              ability.cooldownRemaining = ability.cooldown;
-              player.face(player.mouse);
-              game.setCharacterState(player, CharacterState.Performing);
-              break;
-          }
-
-          break;
-        case CharacterAction.Run:
-          player.direction = args[6];
-          game.setCharacterStateRunning(player);
-          player.target = null;
-          player.closeStore();
-          break;
-      }
-
+    if (player == null) {
       return;
     }
-    throw Exception("Cannot parse ${clientRequests[clientRequestInt]}");
+    if (player.lastUpdateFrame == 0){
+      return;
+    }
+    player.lastUpdateFrame = 0;
+
+    final game = player.game;
+
+    if (player.sceneChanged) {
+      player.sceneChanged = false;
+      player.sceneDownloaded = false;
+      return;
+    }
+
+    final mouseX = readNumberFromByteArray(args, index: 2).toDouble();
+    final mouseY = readNumberFromByteArray(args, index: 4).toDouble();
+    player.mouse.x = mouseX;
+    player.mouse.y = mouseY;
+    player.screenLeft = readNumberFromByteArray(args, index: 7).toDouble();
+    player.screenTop = readNumberFromByteArray(args, index: 9).toDouble();
+    player.screenRight = readNumberFromByteArray(args, index: 11).toDouble();
+    player.screenBottom = readNumberFromByteArray(args, index: 13).toDouble();
+
+    if (player.deadOrBusy) {
+      return;
+    }
+
+    player.aimTarget = game.getClosestCollider(mouseX, mouseY, player, minDistance: 35);
+    switch (args[1]) {
+      case CharacterAction.Idle:
+        if (player.target == null){
+          game.setCharacterState(player, CharacterState.Idle);
+        }
+        break;
+      case CharacterAction.Perform:
+        final ability = player.ability;
+        final aimTarget = player.aimTarget;
+        player.target = aimTarget;
+
+        if (aimTarget is Npc){
+          if (withinRadius(player, aimTarget, 100)){
+            if (!aimTarget.deadOrBusy){
+              aimTarget.face(player);
+            }
+            player.face(aimTarget);
+            aimTarget.onInteractedWith(player);
+            break;
+          }
+          player.runToMouse();
+          player.closeStore();
+        } else {
+          player.closeStore();
+        }
+
+        if (ability == null) {
+          if (aimTarget != null) {
+            player.target = aimTarget;
+            if (withinRadius(player, aimTarget, player.equippedRange)){
+              player.face(aimTarget);
+              game.setCharacterStatePerforming(player);
+            }
+          } else {
+            player.runToMouse();
+          }
+          break;
+        }
+
+        if (ability.cooldownRemaining > 0) {
+          return error(GameError.Cooldown_Remaining);
+        }
+
+        switch (ability.mode) {
+          case AbilityMode.Targeted:
+            if (aimTarget != null) {
+              player.target = aimTarget;
+              return;
+            } else {
+              player.runToMouse();
+              return;
+            }
+          case AbilityMode.Activated:
+            ability.cooldownRemaining = ability.cooldown;
+            break;
+          case AbilityMode.Area:
+            player.target = Position3().set(x: mouseX, y: mouseY, z: player.z);
+            break;
+          case AbilityMode.Directed:
+            ability.cooldownRemaining = ability.cooldown;
+            player.face(player.mouse);
+            game.setCharacterState(player, CharacterState.Performing);
+            break;
+        }
+
+        break;
+      case CharacterAction.Run:
+        player.direction = args[6];
+        game.setCharacterStateRunning(player);
+        player.target = null;
+        player.closeStore();
+        break;
+    }
+
+    return;
   }
 
   void onGameJoined(){
@@ -733,5 +686,10 @@ class Connection {
       default:
         throw Exception("Invalid Game Type: $gameType");
     }
+  }
+
+  void handleClientRequestTeleport(Player player) {
+    player.x = player.mouse.x;
+    player.y = player.mouse.y;
   }
 }
