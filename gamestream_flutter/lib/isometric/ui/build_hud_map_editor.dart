@@ -1,12 +1,7 @@
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/edit_state.dart';
-import 'package:gamestream_flutter/isometric/ui/buttons/build_toggle_play_edit.dart';
-import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
-import 'package:lemon_engine/render.dart';
-import 'package:lemon_engine/screen.dart';
-import 'package:lemon_watch/watch.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
@@ -14,13 +9,16 @@ import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/render/weather.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/isometric/ui/build_container.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 import 'package:gamestream_flutter/isometric/weather/lightning.dart';
+import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
+import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/render.dart';
+import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import 'colors.dart';
@@ -99,7 +97,6 @@ Column buildColumnWeather() {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        buildControlTime(),
         buildButtonTimePassing(),
         buildToggleRain(),
         buildButtonLightning(),
@@ -231,52 +228,21 @@ Widget buildControlTime(){
       watch(minutes, (num hour) => text(padZero(hour))),
     ],
   );
-  return Column(
-    children: [
-      Container(
-          color: brownLight,
-          width: totalWidth,
-          alignment: Alignment.center,
-          height: 50,
-          child: timeText
-      ),
-      buttons,
-    ],
+  return Container(
+    width: totalWidth,
+    child: Column(
+      children: [
+        Container(
+            color: brownLight,
+            width: totalWidth,
+            alignment: Alignment.center,
+            height: 50,
+            child: timeText
+        ),
+        buttons,
+      ],
+    ),
   );
-}
-
-Widget buildControlTime2() {
-  return container(child: Row(
-    children: [
-      text("Time: "),
-      watch(hours, (num hour) => text(padZero(hour))),
-      text(":"),
-      watch(minutes, (num hour) => text(padZero(hour))),
-      Expanded(child: Container()),
-      onPressed(
-          child: Container(
-            width: 30,
-            height: 30,
-            color: Colors.black26,
-            alignment: Alignment.center,
-            child: text("-"),
-          ),
-          callback: sendClientRequestReverseHour
-      ),
-      width2,
-      onPressed(
-          child: Container(
-            width: 30,
-            height: 30,
-            color: Colors.black26,
-            alignment: Alignment.center,
-            child: text("+"),
-          ),
-          callback: sendClientRequestSkipHour
-      ),
-      width4,
-    ],
-  ));
 }
 
 Widget buildColumnEditTile(){

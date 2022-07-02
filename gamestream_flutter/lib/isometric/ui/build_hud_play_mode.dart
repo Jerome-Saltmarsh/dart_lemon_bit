@@ -22,14 +22,6 @@ Widget buildHudPlayMode() {
       Positioned(bottom: 50, left: 0, child: buildWatchMouseTargetName()),
       Positioned(bottom: 8, right: 8, child: buildButtonToggleInventory()),
       buildPanelWriteMessage(),
-
-      watch(sceneMetaDataPlayerIsOwner, (bool playerIsOwner){
-         if (!playerIsOwner) return const SizedBox();
-         return Positioned(
-            top: 6,
-            child: buildTogglePlayEdit()
-         );
-      }),
     ]
   );
 }
