@@ -31,15 +31,6 @@ Widget buildPanelMenu() {
             }),
           ),
           onPressed(
-            callback: toggleInventoryVisible,
-            child: WatchBuilder(inventoryVisible, (bool inventoryVisible) {
-              if (inventoryVisible){
-                return icons.bag;
-              }
-              return icons.bagGray;
-            }),
-          ),
-          onPressed(
             callback: audio.toggleSoundEnabled,
             child: WatchBuilder(audio.soundEnabled, (bool soundEnabled) {
               return soundEnabled
