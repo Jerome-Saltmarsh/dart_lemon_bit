@@ -1,11 +1,9 @@
 
 import 'package:bleed_common/ClientRequest.dart';
-import 'package:bleed_common/Modify_Game.dart';
-import 'package:bleed_common/SlotTypeCategory.dart';
+import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:gamestream_flutter/isometric/message_box.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/modules/game/emit_particle.dart';
-import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:gamestream_flutter/web_socket.dart';
 
 import 'state.dart';
@@ -30,10 +28,6 @@ class GameActions {
     for (var i = 0; i < amount; i++) {
       emitParticlePixel(x: x, y: y);
     }
-  }
-
-  void toggleObjectsDestroyable(){
-    webSocket.send(ClientRequest.Toggle_Objects_Destroyable.index.toString());
   }
 
   void selectAbility1() {
@@ -72,76 +66,9 @@ class GameActions {
     messageBoxHide();
   }
 
-  void sellSlotItem(int index){
-    print("game.actions.sellSlotItem($index)");
-    _verifyValidSlotIndex(index);
-    sendClientRequest(ClientRequest.Sell_Slot, index);
-  }
-
-  void equipSlot1(){
-    // equipSlot(1);
-    sendClientRequestDeckSelectCard(0);
-  }
-
-  void equipSlot2(){
-    sendClientRequestDeckSelectCard(1);
-  }
-
-  void equipSlot3(){
-    sendClientRequestDeckSelectCard(2);
-  }
-
-  void equipSlot4(){
-    sendClientRequestDeckSelectCard(3);
-  }
-
-  void equipSlot5(){
-    equipSlot(5);
-  }
-
-  void equipSlot6(){
-    equipSlot(6);
-  }
-
-  /// valid between 1 and 6 inclusive
-  void equipSlot(int index){
-    _verifyValidSlotIndex(index);
-    sendClientRequest(ClientRequest.Equip_Slot, index);
-  }
-
-  void unequipWeapon(){
-    unequip(SlotTypeCategory.Weapon);
-  }
-
-  void unequipArmour(){
-    unequip(SlotTypeCategory.Armour);
-  }
-
-  void unequipHelm(){
-    unequip(SlotTypeCategory.Helm);
-  }
-
-  void unequip(SlotTypeCategory value){
-    print("game.actions.unequip(${value.name})");
-    sendClientRequest(ClientRequest.Unequip_Slot, value.index);
-  }
-
-  void _verifyValidSlotIndex(int index){
-      if (index <= 0 || index > 6)
-        throw Exception("Slot item index must between 1 and 6 inclusive. (received $index)");
-  }
-
   void toggleDebugMode() {
     print("game.actions.enableDebugNpc()");
     sendRequestTogglePaths();
-  }
-
-  spawnZombie(){
-    modifyGame(ModifyGame.Spawn_Zombie);
-  }
-
-  modifyGame(ModifyGame request){
-    sendClientRequest(ClientRequest.Modify_Game, request.index);
   }
 
   void sendClientRequest(ClientRequest request, dynamic value){

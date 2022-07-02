@@ -65,7 +65,7 @@ class Connection {
     throw Exception("Invalid arg type");
   }
 
-  void onDataStringArray(List<String> arguments){
+  void onDataStringArray(List<String> arguments) {
     if (arguments.isEmpty) {
       error(GameError.ClientRequestArgumentsEmpty);
       return;
@@ -98,20 +98,9 @@ class Connection {
         handleClientRequestTeleport(player);
         return;
 
-      case ClientRequest.Join_Custom:
-        if (arguments.length < 3) {
-          errorArgsExpected(3, arguments);
-          return;
-        }
-        break;
-
-      case ClientRequest.Toggle_Objects_Destroyable:
-        game.playersCanAttackDynamicObjects = !game.playersCanAttackDynamicObjects;
-        break;
-
       case ClientRequest.Skip_Hour:
         if (game is GameFrontline){
-          game.time = (game.time + 3600) % secondsPerDay;
+          game.time = (game.time + secondsPerHour) % secondsPerDay;
         }
         break;
 
@@ -232,66 +221,6 @@ class Connection {
         }
         player.game.revive(player);
         return;
-
-      case ClientRequest.Unequip_Slot:
-        break;
-
-      case ClientRequest.Equip_Slot:
-        break;
-
-      case ClientRequest.Sell_Slot:
-        break;
-
-      case ClientRequest.Modify_Game:
-
-        if (arguments.length != 2) {
-          errorArgsExpected(2, arguments);
-          return;
-        }
-        final modifyGameIndex = int.tryParse(arguments[1]);
-        if (modifyGameIndex == null){
-          errorIntegerExpected(1, arguments[1]);
-          return;
-        }
-        if (modifyGameIndex < 0){
-          errorInvalidArg('gameModificationIndex: $modifyGameIndex cannot be negative');
-          return;
-        }
-        if (modifyGameIndex >= gameModifications.length){
-          errorInvalidArg('gameModificationIndex: $modifyGameIndex not a valid index');
-          return;
-        }
-
-        final modifyGame = gameModifications[modifyGameIndex];
-        switch(modifyGame){
-          case ModifyGame.Spawn_Zombie:
-            player.game.spawnZombie(
-              x: player.mouse.x,
-              y: player.mouse.y,
-              z: 24.0,
-              damage: 1,
-              health: 5,
-              team: 100,
-
-            );
-            break;
-          case ModifyGame.Remove_Zombie:
-          // TODO: Handle this case.
-            break;
-          case ModifyGame.Hour_Increase:
-          // worldTime += secondsPerHour;
-            break;
-          case ModifyGame.Hour_Decrease:
-          // worldTime -= secondsPerHour;
-            break;
-        }
-        break;
-
-      case ClientRequest.Scene:
-      // onGameJoined();
-      // player?.writeTiles();
-      // compileAndSendPlayer();
-        break;
 
       case ClientRequest.Set_Block:
         if (arguments.length < 5) return errorArgsExpected(3, arguments);

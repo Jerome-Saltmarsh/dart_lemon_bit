@@ -1,15 +1,13 @@
 
 
-import 'package:bleed_common/ClientRequest.dart';
 import 'package:bleed_common/GameStatus.dart';
 import 'package:firestore_client/firestoreService.dart';
-import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
+import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric_web/register_isometric_web_controls.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/client_request_sender.dart';
 import 'package:gamestream_flutter/shared_preferences.dart';
 import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/web_socket.dart';
@@ -130,7 +128,6 @@ class CoreEvents {
     switch (connection) {
 
       case Connection.Connected:
-        sendClientRequest(ClientRequest.Scene);
         core.state.mode.value = Mode.Player;
         // if (game.type.value == GameType.Custom){
         //   final account = core.state.account.value;
