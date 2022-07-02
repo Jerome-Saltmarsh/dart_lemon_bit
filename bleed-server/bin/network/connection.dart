@@ -557,9 +557,8 @@ class Connection {
   }
 
   void joinGame(Game game){
-
     final current = _player;
-    if (current != null){
+    if (current != null) {
       current.game.disconnectPlayer(current);
     }
     _player = game.spawnPlayer();

@@ -15,7 +15,6 @@ import '../functions/generateUUID.dart';
 class GameDarkAge extends Game {
 
   var fileName = generateUUID();
-  Player? owner;
 
   var minutesPassingPerSecond = 5;
   var time = 12 * 60 * 60;

@@ -410,6 +410,9 @@ extension PlayerProperties on Player {
     writeGameObjects();
     writeTechTypes();
     writeGameStatus();
+    writePlayerIsOwner();
+
+
     sceneDownloaded = true;
   }
 
@@ -844,7 +847,13 @@ extension PlayerProperties on Player {
      writeInt(storeItems.length);
      storeItems.forEach(writeWeapon);
   }
+
+  void writePlayerIsOwner() {
+    writeByte(ServerResponse.Player_Is_Owner);
+    writeBool(game.owner == this);
+  }
 }
+
 
 int getExperienceForLevel(int level){
   return (((level -1) * (level - 1))) * 100;

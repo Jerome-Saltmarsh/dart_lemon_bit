@@ -27,6 +27,7 @@ import 'tile_node.dart';
 import 'components.dart';
 
 abstract class Game {
+  Player? owner;
   final items = <Item>[];
   final zombies = <AI>[];
   final npcs = <Npc>[];
