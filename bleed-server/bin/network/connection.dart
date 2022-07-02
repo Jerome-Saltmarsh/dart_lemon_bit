@@ -12,6 +12,7 @@ import '../functions/generateName.dart';
 import '../functions/withinRadius.dart';
 import '../games/game_frontline.dart';
 import '../io/write_scene_to_file.dart';
+import '../utilities/is_valid_index.dart';
 
 class Connection {
   final started = DateTime.now();
@@ -55,138 +56,22 @@ class Connection {
   }
 
   void onData(dynamic args) {
-
-    final player = _player;
-
     if (args is List<int>) {
-
-      final clientRequestInt = args[0];
-
-      if (clientRequestInt >= clientRequestsLength) {
-        return error(GameError.UnrecognizedClientRequest);
-      }
-
-      if (clientRequestInt == 0) { // ClientRequest.Update.index
-        if (player == null) {
-          return;
-        }
-
-        if (player.lastUpdateFrame == 0){
-          return;
-        }
-        player.lastUpdateFrame = 0;
-
-        final game = player.game;
-
-        if (player.sceneChanged) {
-          player.sceneChanged = false;
-          player.sceneDownloaded = false;
-          return;
-        }
-
-        final mouseX = readNumberFromByteArray(args, index: 2).toDouble();
-        final mouseY = readNumberFromByteArray(args, index: 4).toDouble();
-        player.mouse.x = mouseX;
-        player.mouse.y = mouseY;
-        player.screenLeft = readNumberFromByteArray(args, index: 7).toDouble();
-        player.screenTop = readNumberFromByteArray(args, index: 9).toDouble();
-        player.screenRight = readNumberFromByteArray(args, index: 11).toDouble();
-        player.screenBottom = readNumberFromByteArray(args, index: 13).toDouble();
-
-        if (player.deadOrBusy) {
-          return;
-        }
-
-        player.aimTarget = game.getClosestCollider(mouseX, mouseY, player, minDistance: 35);
-        switch (args[1]) {
-          case CharacterAction.Idle:
-            if (player.target == null){
-              game.setCharacterState(player, CharacterState.Idle);
-            }
-            break;
-          case CharacterAction.Perform:
-            final ability = player.ability;
-            final aimTarget = player.aimTarget;
-            player.target = aimTarget;
-
-            if (aimTarget is Npc){
-              if (withinRadius(player, aimTarget, 100)){
-                if (!aimTarget.deadOrBusy){
-                  aimTarget.face(player);
-                }
-                player.face(aimTarget);
-                aimTarget.onInteractedWith(player);
-                break;
-              }
-              player.runToMouse();
-              player.closeStore();
-            } else {
-              player.closeStore();
-            }
-
-            if (ability == null) {
-              if (aimTarget != null) {
-                player.target = aimTarget;
-                if (withinRadius(player, aimTarget, player.equippedRange)){
-                  player.face(aimTarget);
-                  game.setCharacterStatePerforming(player);
-                }
-              } else {
-                player.runToMouse();
-              }
-              break;
-            }
-
-            if (ability.cooldownRemaining > 0) {
-              return error(GameError.Cooldown_Remaining);
-            }
-
-            switch (ability.mode) {
-              case AbilityMode.Targeted:
-                if (aimTarget != null) {
-                  player.target = aimTarget;
-                  return;
-                } else {
-                  player.runToMouse();
-                  return;
-                }
-              case AbilityMode.Activated:
-                ability.cooldownRemaining = ability.cooldown;
-                break;
-              case AbilityMode.Area:
-                player.target = Position3().set(x: mouseX, y: mouseY, z: player.z);
-                break;
-              case AbilityMode.Directed:
-                ability.cooldownRemaining = ability.cooldown;
-                player.face(player.mouse);
-                game.setCharacterState(player, CharacterState.Performing);
-                break;
-            }
-
-            break;
-          case CharacterAction.Run:
-            player.direction = args[6];
-            game.setCharacterStateRunning(player);
-            player.target = null;
-            player.closeStore();
-            break;
-        }
-
-        return;
-      }
-      throw Exception("Cannot parse ${clientRequests[clientRequestInt]}");
+      return onDataByteArray(args);
     }
-
-    if (args is String == false){
-      throw Exception();
+    if (args is String){
+      return onDataStringArray(args.split(" "));
     }
+    throw Exception("Invalid arg type");
+  }
 
-    final String requestString = args;
-    final arguments = requestString.split(" ");
+  void onDataStringArray(List<String> arguments){
     if (arguments.isEmpty) {
       error(GameError.ClientRequestArgumentsEmpty);
       return;
     }
+
+    final player = _player;
 
     final clientRequestInt = int.tryParse(arguments[0]);
     if (clientRequestInt == null) {
@@ -637,6 +522,126 @@ class Connection {
     }
   }
 
+  void onDataByteArray(List<int> args) {
+
+    final player = _player;
+    final clientRequestInt = args[0];
+
+    if (clientRequestInt >= clientRequestsLength) {
+      return error(GameError.UnrecognizedClientRequest);
+    }
+
+    if (clientRequestInt == 0) { // ClientRequest.Update.index
+      if (player == null) {
+        return;
+      }
+
+      if (player.lastUpdateFrame == 0){
+        return;
+      }
+      player.lastUpdateFrame = 0;
+
+      final game = player.game;
+
+      if (player.sceneChanged) {
+        player.sceneChanged = false;
+        player.sceneDownloaded = false;
+        return;
+      }
+
+      final mouseX = readNumberFromByteArray(args, index: 2).toDouble();
+      final mouseY = readNumberFromByteArray(args, index: 4).toDouble();
+      player.mouse.x = mouseX;
+      player.mouse.y = mouseY;
+      player.screenLeft = readNumberFromByteArray(args, index: 7).toDouble();
+      player.screenTop = readNumberFromByteArray(args, index: 9).toDouble();
+      player.screenRight = readNumberFromByteArray(args, index: 11).toDouble();
+      player.screenBottom = readNumberFromByteArray(args, index: 13).toDouble();
+
+      if (player.deadOrBusy) {
+        return;
+      }
+
+      player.aimTarget = game.getClosestCollider(mouseX, mouseY, player, minDistance: 35);
+      switch (args[1]) {
+        case CharacterAction.Idle:
+          if (player.target == null){
+            game.setCharacterState(player, CharacterState.Idle);
+          }
+          break;
+        case CharacterAction.Perform:
+          final ability = player.ability;
+          final aimTarget = player.aimTarget;
+          player.target = aimTarget;
+
+          if (aimTarget is Npc){
+            if (withinRadius(player, aimTarget, 100)){
+              if (!aimTarget.deadOrBusy){
+                aimTarget.face(player);
+              }
+              player.face(aimTarget);
+              aimTarget.onInteractedWith(player);
+              break;
+            }
+            player.runToMouse();
+            player.closeStore();
+          } else {
+            player.closeStore();
+          }
+
+          if (ability == null) {
+            if (aimTarget != null) {
+              player.target = aimTarget;
+              if (withinRadius(player, aimTarget, player.equippedRange)){
+                player.face(aimTarget);
+                game.setCharacterStatePerforming(player);
+              }
+            } else {
+              player.runToMouse();
+            }
+            break;
+          }
+
+          if (ability.cooldownRemaining > 0) {
+            return error(GameError.Cooldown_Remaining);
+          }
+
+          switch (ability.mode) {
+            case AbilityMode.Targeted:
+              if (aimTarget != null) {
+                player.target = aimTarget;
+                return;
+              } else {
+                player.runToMouse();
+                return;
+              }
+            case AbilityMode.Activated:
+              ability.cooldownRemaining = ability.cooldown;
+              break;
+            case AbilityMode.Area:
+              player.target = Position3().set(x: mouseX, y: mouseY, z: player.z);
+              break;
+            case AbilityMode.Directed:
+              ability.cooldownRemaining = ability.cooldown;
+              player.face(player.mouse);
+              game.setCharacterState(player, CharacterState.Performing);
+              break;
+          }
+
+          break;
+        case CharacterAction.Run:
+          player.direction = args[6];
+          game.setCharacterStateRunning(player);
+          player.target = null;
+          player.closeStore();
+          break;
+      }
+
+      return;
+    }
+    throw Exception("Cannot parse ${clientRequests[clientRequestInt]}");
+  }
+
   void onGameJoined(){
     final player = _player;
     if (player == null) return;
@@ -729,11 +734,4 @@ class Connection {
         throw Exception("Invalid Game Type: $gameType");
     }
   }
-}
-
-bool isValidIndex(int? index, List values){
-  if (index == null) return false;
-  if (values.isEmpty) return false;
-  if (index < 0) return false;
-  return index < values.length;
 }

@@ -4,8 +4,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'connection.dart';
 
-List<Connection> connections = [];
-var connectionsCurrent = 0;
+final connections = <Connection>[];
 var connectionsTotal = 0;
 
 void startWebsocketServer(){
@@ -13,7 +12,6 @@ void startWebsocketServer(){
   var handler = webSocketHandler(
     onConnection,
     protocols: ['gamestream.online'],
-    // pingInterval: Duration(hours: 1),
   );
 
   shelf_io.serve(handler, '0.0.0.0', 8080).then((server) {
@@ -24,12 +22,15 @@ void startWebsocketServer(){
   });
 }
 
-
 void onConnection(WebSocketChannel webSocketChannel) {
   final connection = Connection(webSocketChannel);
   connections.add(connection);
-  connection.onDone = () => connections.remove(connection);
-  connectionsCurrent++;
+  connection.onDone = () => onConnectionDone(connection);
   connectionsTotal++;
-  print("New Connection. Current Connections: $connectionsCurrent, Total Connections: $connectionsTotal");
+  print("Connection Added. Current Connections: ${connections.length}, Total Connections: $connectionsTotal");
+}
+
+void onConnectionDone(Connection connection){
+  connections.remove(connection);
+  print("Connection Done. Current Connections: ${connections.length}, Total Connections: $connectionsTotal");
 }
