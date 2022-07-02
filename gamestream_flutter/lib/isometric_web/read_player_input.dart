@@ -11,6 +11,9 @@ void readPlayerInput() {
     if (engine.mouseRightDown.value || keyPressed(LogicalKeyboardKey.space)) {
       engine.panCamera();
     }
+    if (_getKeyDirection() != null) {
+       setPlayModePlay();
+    }
     return;
   }
 

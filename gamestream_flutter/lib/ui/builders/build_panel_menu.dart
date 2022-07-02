@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/icons.dart';
-import 'package:gamestream_flutter/isometric/ui/watch_inventory_visible.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
-
 
 
 Widget buildPanelMenu() {
