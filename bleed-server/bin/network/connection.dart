@@ -503,7 +503,7 @@ class Connection {
 
   void onGameJoined(){
     final player = _player;
-    if (player == null) return;
+    if (player == null) throw Exception("onGameJoinedException: player is null");
     player.sendBufferToClient = sendBufferToClient;
     player.dispatchError = error;
     final account = _account;
@@ -524,12 +524,15 @@ class Connection {
 
   Future joinGameFrontLine() async {
     final game = await engine.findGameFrontLine();
-    _player = game.spawnPlayer();
-    onGameJoined();
+    joinGame(game);
   }
 
   Future joinGameEditor() async {
-    final game = await engine.findGameFrontLine();
+    final game = await engine.findGameEditor();
+    joinGame(game);
+  }
+
+  void joinGame(Game game){
     _player = game.spawnPlayer();
     onGameJoined();
   }
@@ -585,13 +588,14 @@ class Connection {
     switch (gameType) {
       case GameType.Editor:
         joinGameEditor();
-        return;
+        break;
       case GameType.Dark_Age:
         joinGameFrontLine();
-        return;
+        break;
       default:
         throw Exception("Invalid Game Type: $gameType");
     }
+
   }
 
   void handleClientRequestTeleport(Player player) {

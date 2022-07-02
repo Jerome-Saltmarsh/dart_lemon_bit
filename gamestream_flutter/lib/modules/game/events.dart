@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/client_request_sender.dart';
+import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';

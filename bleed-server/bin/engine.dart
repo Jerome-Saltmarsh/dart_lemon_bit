@@ -4,6 +4,7 @@ import 'classes/library.dart';
 import 'constants/frames_per_second.dart';
 import 'games/game_frontline.dart';
 import 'io/read_scene_from_file.dart';
+import 'isometric/generate_empty_grid.dart';
 import 'language.dart';
 
 final engine = _Engine();
@@ -67,6 +68,20 @@ class _Engine {
     return GameDarkAge(scene);
   }
 
+  Future<GameDarkAge> findGameEditor() async {
+    final game = GameDarkAge(Scene(
+      gameObjects: [],
+      characters: [],
+      enemySpawns: [],
+      grid: generateEmptyGrid(
+        zHeight: 8,
+        rows: 50,
+        columns: 50,
+      ),
+    ));
+    games.add(game);
+    return game;
+  }
 
   T? findGameAwaitingPlayers<T extends Game>() {
     for (final game in games) {

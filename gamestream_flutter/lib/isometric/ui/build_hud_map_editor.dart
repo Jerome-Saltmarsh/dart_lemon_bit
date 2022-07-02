@@ -12,7 +12,7 @@ import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/render/weather.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
-import 'package:gamestream_flutter/client_request_sender.dart';
+import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/isometric/ui/build_container.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 import 'package:gamestream_flutter/isometric/weather/lightning.dart';

@@ -4,7 +4,7 @@ import 'package:bleed_common/head_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/pants_type.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/client_request_sender.dart';
+import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/player_store.dart';

@@ -25,7 +25,7 @@ import 'package:golden_ratio/constants.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../styles.dart';
-import '../web_socket.dart';
+import '../network/web_socket.dart';
 import 'build.dart';
 
 final nameController = TextEditingController();

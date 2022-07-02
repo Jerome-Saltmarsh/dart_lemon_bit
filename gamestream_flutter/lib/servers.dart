@@ -3,7 +3,7 @@ import 'package:bleed_common/ClientRequest.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/init.dart';
-import 'package:gamestream_flutter/web_socket.dart';
+import 'package:gamestream_flutter/network/web_socket.dart';
 
 void connectToWebSocketServer(Region server, String message) {
   if (server == Region.LocalHost) {

@@ -1,5 +1,5 @@
 import 'package:bleed_common/grid_node_type.dart';
-import 'package:gamestream_flutter/client_request_sender.dart';
+import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'grid.dart';
