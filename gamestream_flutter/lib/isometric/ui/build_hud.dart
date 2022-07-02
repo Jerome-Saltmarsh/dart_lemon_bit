@@ -13,6 +13,14 @@ Widget buildHud() {
     children: [
       buildWatchPlayMode(),
       visibleBuilder(
+        sceneMetaDataPlayerIsOwner,
+        Positioned(
+            left: 0,
+            top: 0,
+            child: buildColumnEditTile(),
+        ),
+      ),
+      visibleBuilder(
           sceneMetaDataPlayerIsOwner,
           Positioned(
               top: 6,

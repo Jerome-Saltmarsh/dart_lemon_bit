@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
+import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/render/weather.dart';
@@ -27,7 +28,7 @@ import 'colors.dart';
 Widget buildHudMapEditor(){
   return Stack(
     children: [
-      Positioned(top: 0, right: 0, child: buildPanelMenu()),
+      // Positioned(top: 0, right: 0, child: buildPanelMenu()),
       Positioned(top: 0, left: 0, child: buildColumnEditTile()),
       Positioned(right: 0, child: Container(
           height: screen.height,
@@ -291,7 +292,17 @@ Widget buildButtonSelectGridNodeType(int value) {
   return WatchBuilder(edit.type, (int type) {
         return container(
             child: GridNodeType.getName(value),
-            action: () => edit.setBlockType(value),color:
+            action: () {
+              if (playModePlay){
+                setPlayModeEdit();
+                edit.column.value = player.indexColumn;
+                edit.row.value = player.indexRow;
+                edit.z.value = player.indexZ;
+                return;
+              }
+              edit.setBlockType(value);
+            },
+            color:
               type == value
               ? Colors.green
               : Colors.grey
