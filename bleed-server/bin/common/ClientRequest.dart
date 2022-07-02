@@ -31,6 +31,7 @@ enum ClientRequest {
   Weather_Toggle_Time_Passing,
   Custom_Game_Names,
   Editor_Load_Game,
+  Editor_Set_Scene_Name,
 }
 
 const clientRequests = ClientRequest.values;

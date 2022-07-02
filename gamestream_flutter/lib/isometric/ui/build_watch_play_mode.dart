@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/isometric/ui/build_hud_debug.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/build_play_mode_file.dart';
+import 'package:gamestream_flutter/isometric/ui/build_stack_save.dart';
 
 Widget buildWatchPlayMode(){
    return watch(playMode, (PlayMode playMode){
@@ -21,7 +22,8 @@ Widget buildWatchPlayMode(){
           return buildHudAudioMix();
         case PlayMode.File:
           return buildPlayModeFile();
-
+        case PlayMode.Save:
+          return buildStackSave();
       }
    });
 }

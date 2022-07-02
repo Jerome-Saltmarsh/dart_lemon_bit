@@ -14,7 +14,7 @@ import 'package:gamestream_flutter/isometric/npcs.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/weather.dart';
-import 'package:gamestream_flutter/isometric/watches/player_is_watch.dart';
+import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric/weather/lightning.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
@@ -183,8 +183,8 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Custom_Game_Names:
           readCustomGameNames();
           break;
-        case ServerResponse.Player_Is_Owner:
-          readPlayerIsOwner();
+        case ServerResponse.Scene_Meta_Data:
+          readSceneMetaData();
           break;
         case ServerResponse.End:
           return readEnd();
@@ -194,8 +194,9 @@ class ServerResponseReader with ByteReader {
     }
   }
 
-  void readPlayerIsOwner() {
-    playerIsOwner.value = readBool();
+  void readSceneMetaData() {
+    sceneMetaDataPlayerIsOwner.value = readBool();
+    sceneMetaDataSceneName.value = readString();
   }
 
   void readCustomGameNames() {

@@ -13,6 +13,7 @@ enum PlayMode {
     Debug,
     Audio,
     File,
+    Save,
 }
 
 const playModes = PlayMode.values;

@@ -19,7 +19,9 @@ Widget buildButtonPlayMode(PlayMode value){
     return container(
       child: value.name,
       action: () => playMode.value = value,
-      color: value == activePlayMode ? greyDark : grey
+      color: value == activePlayMode ? greyDark : grey,
+      width: 100,
+      alignment: Alignment.center
     );
   });
 }

@@ -111,6 +111,10 @@ void sendClientRequestEditorLoadGame(String name){
   sendClientRequest(ClientRequest.Editor_Load_Game, name);
 }
 
+void sendClientRequestEditorSetSceneName(String name){
+  sendClientRequest(ClientRequest.Editor_Set_Scene_Name, name);
+}
+
 Future sendClientRequestUpdate() async {
   const updateIndex = 0;
   updateBuffer[0] = updateIndex;

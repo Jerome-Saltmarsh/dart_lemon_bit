@@ -410,7 +410,7 @@ extension PlayerProperties on Player {
     writeGameObjects();
     writeTechTypes();
     writeGameStatus();
-    writePlayerIsOwner();
+    writeSceneMetaData();
 
 
     sceneDownloaded = true;
@@ -848,9 +848,10 @@ extension PlayerProperties on Player {
      storeItems.forEach(writeWeapon);
   }
 
-  void writePlayerIsOwner() {
-    writeByte(ServerResponse.Player_Is_Owner);
+  void writeSceneMetaData() {
+    writeByte(ServerResponse.Scene_Meta_Data);
     writeBool(game.owner == this);
+    writeString(game.scene.name);
   }
 }
 

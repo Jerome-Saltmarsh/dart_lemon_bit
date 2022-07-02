@@ -65,7 +65,7 @@ class _Engine {
 
   Future<GameDarkAge> findGameEditorNew() async {
     final game = GameDarkAge(Scene(
-      name: generateUUID(),
+      name: '',
       gameObjects: [],
       characters: [],
       enemySpawns: [],

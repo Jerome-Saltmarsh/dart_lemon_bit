@@ -60,6 +60,6 @@ class ServerResponse {
   static const Player_Attack_Target_Name = 77;
   static const Weather = 78;
   static const Custom_Game_Names = 79;
-  static const Player_Is_Owner = 80;
+  static const Scene_Meta_Data = 80;
 }
 
