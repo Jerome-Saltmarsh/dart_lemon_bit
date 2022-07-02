@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'classes/library.dart';
 import 'constants/frames_per_second.dart';
+import 'functions/generateUUID.dart';
 import 'games/game_dark_age.dart';
 import 'io/read_scene_from_file.dart';
 import 'isometric/generate_empty_grid.dart';
@@ -64,6 +65,7 @@ class _Engine {
 
   Future<GameDarkAge> findGameEditor() async {
     final game = GameDarkAge(Scene(
+      name: generateUUID(),
       gameObjects: [],
       characters: [],
       enemySpawns: [],

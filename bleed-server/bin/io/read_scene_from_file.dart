@@ -11,5 +11,5 @@ Future<Scene> readSceneFromFile(String sceneName) async {
   final file = File('$dir/$saveDirectory/$sceneName.json');
   final text = await file.readAsString();
   final json = jsonDecode(text);
-  return convertJsonToScene(json);
+  return convertJsonToScene(json, sceneName);
 }

@@ -7,7 +7,7 @@ import 'convert_scene_to_json.dart';
 
 void writeSceneToFile(Scene scene) {
   writeStringToFile(
-    fileName: 'castle.json',
+    fileName: '${scene.name}.json',
     directory: saveDirectory,
     contents: convertSceneToString(scene),
   );

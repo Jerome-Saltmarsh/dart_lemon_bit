@@ -10,9 +10,11 @@ import '../common/head_type.dart';
 import '../common/library.dart';
 import '../common/pants_type.dart';
 import '../common/wind.dart';
+import '../functions/generateUUID.dart';
 
 class GameDarkAge extends Game {
 
+  var fileName = generateUUID();
   Player? owner;
 
   var minutesPassingPerSecond = 5;

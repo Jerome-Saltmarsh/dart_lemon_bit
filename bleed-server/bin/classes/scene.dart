@@ -14,6 +14,7 @@ class Scene {
   var gridHeight = 0;
   var gridRows = 0;
   var gridColumns = 0;
+  var name = "";
   final List<Character> characters;
   final List<GameObject> gameObjects;
   final List<EnemySpawn> enemySpawns;
@@ -22,6 +23,7 @@ class Scene {
   int? secondsPerFrames;
 
   Scene({
+    required this.name,
     required this.gameObjects,
     required this.characters,
     required this.grid,

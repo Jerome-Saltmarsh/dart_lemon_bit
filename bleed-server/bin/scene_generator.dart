@@ -316,6 +316,7 @@ Scene generateRandomScene({
   }
 
   return Scene(
+      name: "",
       grid: [],
       characters: [],
       gameObjects: gameObjects,
