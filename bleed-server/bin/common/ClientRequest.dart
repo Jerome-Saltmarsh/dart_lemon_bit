@@ -29,6 +29,7 @@ enum ClientRequest {
   Weather_Toggle_Wind,
   Weather_Toggle_Lightning,
   Weather_Toggle_Time_Passing,
+  Custom_Game_Names,
 }
 
 const clientRequests = ClientRequest.values;

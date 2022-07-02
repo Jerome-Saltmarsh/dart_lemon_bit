@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/isometric/events/on_game_event.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
+import 'package:gamestream_flutter/isometric/io/custom_game_names.dart';
 import 'package:gamestream_flutter/isometric/npcs.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
@@ -178,12 +179,24 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Weather:
           readWeather();
           break;
+        case ServerResponse.Custom_Game_Names:
+          readCustomGameNames();
+          break;
         case ServerResponse.End:
           return readEnd();
         default:
           throw Exception("Cannot parse $response");
       }
     }
+  }
+
+  void readCustomGameNames() {
+    final length = readInt();
+    final list = <String>[];
+    for (var i = 0; i < length; i++) {
+      list.add(readString());
+    }
+    customGameNames.value = list;
   }
 
   void readWeather() {

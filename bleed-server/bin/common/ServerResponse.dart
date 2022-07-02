@@ -59,5 +59,6 @@ class ServerResponse {
   static const Store_Items = 66;
   static const Player_Attack_Target_Name = 77;
   static const Weather = 78;
+  static const Custom_Game_Names = 79;
 }
 

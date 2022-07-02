@@ -103,6 +103,10 @@ void sendClientRequestWeatherToggleTimePassing(){
   sendClientRequest(ClientRequest.Weather_Toggle_Time_Passing);
 }
 
+void sendClientRequestCustomGameNames(){
+  sendClientRequest(ClientRequest.Custom_Game_Names);
+}
+
 Future sendClientRequestUpdate() async {
   const updateIndex = 0;
   updateBuffer[0] = updateIndex;
