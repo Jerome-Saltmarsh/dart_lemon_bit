@@ -303,10 +303,10 @@ Widget buildColumnEdit(){
 
 const selectableTiles = [
     GridNodeType.Empty,
-    GridNodeType.Stairs_East,
-    GridNodeType.Stairs_West,
-    GridNodeType.Stairs_West,
     GridNodeType.Stairs_North,
+    GridNodeType.Stairs_East,
+    GridNodeType.Stairs_South,
+    GridNodeType.Stairs_West,
     GridNodeType.Bricks,
     GridNodeType.Grass,
     GridNodeType.Grass_Long,
