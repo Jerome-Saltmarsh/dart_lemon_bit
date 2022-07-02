@@ -3,6 +3,7 @@ import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/build_watch_play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_toggle_play_edit.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
+import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:lemon_engine/screen.dart';
 
 import '../../flutterkit.dart';
@@ -12,6 +13,7 @@ Widget buildHud() {
   return Stack(
     children: [
       buildWatchPlayMode(),
+      Positioned(top: 0, right: 0, child: buildPanelMenu()),
       visibleBuilder(
         sceneMetaDataPlayerIsOwner,
         Positioned(
