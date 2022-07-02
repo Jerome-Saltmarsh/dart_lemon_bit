@@ -18,6 +18,7 @@ import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
+import 'package:lemon_engine/screen.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -27,15 +28,20 @@ Widget buildHudMapEditor(){
   return Stack(
     children: [
       Positioned(top: 0, right: 0, child: buildPanelMenu()),
-      Positioned(top: 0, left: 0, child: buildEditTools()),
-      Positioned(right: 0, bottom: 0, child: buildPanelEditView()),
+      Positioned(top: 0, left: 0, child: buildColumnEditTile()),
+      Positioned(right: 0, child: Container(
+          height: screen.height,
+          alignment: Alignment.center,
+          child: buildPanelMaxZRender())),
     ],
   );
 }
 
 
-Widget buildPanelEditView(){
-  return Column(children: [
+Widget buildPanelMaxZRender(){
+  return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
      container(child: "+", action: () {
        maxZRender.value++;
      }, alignment: Alignment.center),
@@ -46,15 +52,6 @@ Widget buildPanelEditView(){
       maxZRender.value--;
     }, alignment: Alignment.center),
   ]);
-}
-
-Widget buildEditTools(){
-  return Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      buildColumnEditTile(),
-    ],
-  );
 }
 
 Column buildColumnSettings(){

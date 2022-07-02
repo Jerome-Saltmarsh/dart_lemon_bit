@@ -13,18 +13,20 @@ Widget buildTogglePlayEdit(){
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          if (mode == PlayMode.Edit)
           container(
               child: "Play",
               width: 100,
               alignment: Alignment.center,
-              color: mode == PlayMode.Play ? greyDark : grey,
+              color: grey,
               action: setPlayModePlay,
           ),
+          if (mode == PlayMode.Play)
           container(
               child: "Edit",
               width: 100,
               alignment: Alignment.center,
-              color: mode == PlayMode.Edit ? greyDark : grey,
+              color: grey,
               action: setPlayModeEdit,
           ),
         ],
