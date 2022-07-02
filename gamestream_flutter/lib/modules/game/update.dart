@@ -22,6 +22,6 @@ class GameUpdate {
 
       readPlayerInput();
 
-    sendRequestUpdatePlayer();
+    sendClientRequestUpdate();
   }
 }

@@ -299,12 +299,12 @@ class CoreActions {
   }
 }
 
-void connectToGameFrontLine(){
-  connectToGame(GameType.FRONTLINE);
+void connectToGameDarkAge(){
+  connectToGame(GameType.Dark_Age);
 }
 
 void connectToGameEditor(){
-  connectToGame(GameType.EDITOR);
+  connectToGame(GameType.Editor);
 }
 
 void connectToGame(GameType type, [String message = ""]){

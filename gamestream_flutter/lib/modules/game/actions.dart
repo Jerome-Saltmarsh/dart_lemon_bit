@@ -30,22 +30,6 @@ class GameActions {
     }
   }
 
-  void selectAbility1() {
-    sendRequestSelectAbility(1);
-  }
-
-  void selectAbility2() {
-    sendRequestSelectAbility(2);
-  }
-
-  void selectAbility3() {
-    sendRequestSelectAbility(3);
-  }
-
-  void selectAbility4() {
-    sendRequestSelectAbility(4);
-  }
-
   void purchaseSlotType(int slotType) {
     webSocket.send('${ClientRequest.Purchase.index} $slotType');
   }
@@ -68,7 +52,7 @@ class GameActions {
 
   void toggleDebugMode() {
     print("game.actions.enableDebugNpc()");
-    sendRequestTogglePaths();
+    sendClientRequestTogglePaths();
   }
 
   void sendClientRequest(ClientRequest request, dynamic value){

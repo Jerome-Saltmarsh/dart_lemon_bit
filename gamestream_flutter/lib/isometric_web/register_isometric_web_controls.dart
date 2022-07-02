@@ -12,7 +12,7 @@ void registerIsometricWebControls(){
   print("registerIsometricWebControls()");
   engine.keyPressedHandlers = {
     keys.speak: messageBoxToggle,
-    keys.teleport: sendRequestTeleport,
+    keys.teleport: sendClientRequestTeleport,
   };
   onLeftClicked = onMouseLeftClicked;
   engine.callbacks.onRightClicked = onMouseRightClicked;

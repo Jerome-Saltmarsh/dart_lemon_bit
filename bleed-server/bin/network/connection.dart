@@ -99,7 +99,7 @@ class Connection {
         return;
 
       case ClientRequest.Skip_Hour:
-        if (game is GameFrontline){
+        if (game is GameDarkAge){
           game.time = (game.time + secondsPerHour) % secondsPerDay;
         }
         break;
@@ -125,7 +125,7 @@ class Connection {
         return;
 
       case ClientRequest.Reverse_Hour:
-        if (game is GameFrontline){
+        if (game is GameDarkAge){
           game.time = (game.time - 3600) % secondsPerDay;
         }
         break;
@@ -313,22 +313,6 @@ class Connection {
         player.game.onPlayerAddCardToDeck(player, cardType);
         break;
 
-      case ClientRequest.Select_Character_Type:
-        if (arguments.length != 2) {
-          return errorArgsExpected(2, arguments);
-        }
-        final characterSelectIndex = int.tryParse(arguments[1]);
-        if (characterSelectIndex == null){
-          return errorInvalidArg('character select integer required: got ${arguments[1]}');
-        }
-        if (!isValidIndex(characterSelectIndex, characterSelections)){
-          return errorInvalidArg('invalid character selection index');
-        }
-        final selection = characterSelections[characterSelectIndex];
-        player.game.onPlayerSelectCharacterType(player, selection);
-        player.game.revive(player);
-        break;
-
       case ClientRequest.Upgrade:
         if (player.deadOrBusy) return;
         if (arguments.length != 2) {
@@ -357,13 +341,6 @@ class Connection {
         break;
 
       case ClientRequest.Attack:
-        if (player.deadOrBusy) return;
-        player.target = null;
-        player.angle = player.mouseAngle;
-        player.game.setCharacterStatePerforming(player);
-        break;
-
-      case ClientRequest.Attack_Secondary:
         if (player.deadOrBusy) return;
 
         if (player.ability != null) {
@@ -606,10 +583,10 @@ class Connection {
     final gameType = gameTypes[gameTypeIndex!];
 
     switch (gameType) {
-      case GameType.EDITOR:
+      case GameType.Editor:
         joinGameEditor();
         return;
-      case GameType.FRONTLINE:
+      case GameType.Dark_Age:
         joinGameFrontLine();
         return;
       default:

@@ -1,11 +1,11 @@
 enum GameType {
-    FRONTLINE,
-    EDITOR,
+    Dark_Age,
+    Editor,
 }
 
 const gameTypes = GameType.values;
 
 const gameTypeNames = {
-    GameType.FRONTLINE: "FRONTLINE",
-    GameType.EDITOR: "MAP EDITOR",
+    GameType.Dark_Age: "DARK AGE",
+    GameType.Editor: "MAP EDITOR",
 };

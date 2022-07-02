@@ -56,15 +56,15 @@ class _Engine {
     }
   }
 
-  Future<GameFrontline> findGameFrontLine() async {
+  Future<GameDarkAge> findGameFrontLine() async {
     for (final game in games) {
-      if (game is GameFrontline) {
+      if (game is GameDarkAge) {
         if (game.full) continue;
         return game;
       }
     }
     final scene = await readSceneFromFile('castle');
-    return GameFrontline(scene);
+    return GameDarkAge(scene);
   }
 
 

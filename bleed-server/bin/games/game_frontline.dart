@@ -11,7 +11,7 @@ import '../common/library.dart';
 import '../common/pants_type.dart';
 import '../common/wind.dart';
 
-class GameFrontline extends Game {
+class GameDarkAge extends Game {
 
   var minutesPassingPerSecond = 5;
   var time = 12 * 60 * 60;
@@ -32,7 +32,7 @@ class GameFrontline extends Game {
       time = value % secondsPerDay;
   }
 
-  GameFrontline(Scene scene) : super(
+  GameDarkAge(Scene scene) : super(
     scene
   ) {
 
