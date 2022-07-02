@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'classes/library.dart';
 import 'constants/frames_per_second.dart';
-import 'games/game_frontline.dart';
+import 'games/game_dark_age.dart';
 import 'io/read_scene_from_file.dart';
 import 'isometric/generate_empty_grid.dart';
 import 'language.dart';
@@ -45,13 +45,6 @@ class _Engine {
       }
     }
 
-    // if (frame % framesPerSecond == 0){
-    //    for (final game in games) {
-    //      if (game is GameRandom == false) continue;
-    //      game.writePlayerCooldowns();
-    //    }
-    // }
-
     for (final game in games) {
       game.updateStatus();
     }
@@ -80,7 +73,7 @@ class _Engine {
         columns: 50,
       ),
     ));
-    games.add(game);
+    game.timePassing = false;
     return game;
   }
 

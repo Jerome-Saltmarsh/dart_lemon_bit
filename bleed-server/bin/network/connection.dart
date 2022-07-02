@@ -10,7 +10,7 @@ import '../common/library.dart';
 import '../engine.dart';
 import '../functions/generateName.dart';
 import '../functions/withinRadius.dart';
-import '../games/game_frontline.dart';
+import '../games/game_dark_age.dart';
 import '../io/write_scene_to_file.dart';
 import '../utilities/is_valid_index.dart';
 
@@ -223,6 +223,13 @@ class Connection {
         return;
 
       case ClientRequest.Set_Block:
+
+        if (game is GameDarkAge) {
+          if (game.owner != _player) return;
+        } else {
+          return;
+        }
+
         if (arguments.length < 5) return errorArgsExpected(3, arguments);
         final row = int.tryParse(arguments[1]);
         if (row == null){
@@ -522,7 +529,7 @@ class Connection {
     player.writeGameStatus();
   }
 
-  Future joinGameFrontLine() async {
+  Future joinGameDarkAge() async {
     joinGame(await engine.findGameDarkAgeOfficial());
   }
 
@@ -590,7 +597,7 @@ class Connection {
         joinGameEditor();
         break;
       case GameType.Dark_Age:
-        joinGameFrontLine();
+        joinGameDarkAge();
         break;
       default:
         throw Exception("Invalid Game Type: $gameType");

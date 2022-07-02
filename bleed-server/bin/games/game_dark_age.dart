@@ -158,6 +158,11 @@ class GameDarkAge extends Game {
         weapon: Weapon(type: WeaponType.Unarmed, damage: 1),
         team: 1,
     );
+
+    player.indexZ = 1;
+    player.indexColumn = 2;
+    player.indexRow = 2;
+
     moveCharacterToGridNode(player, GridNodeType.Player_Spawn);
 
     player.storeItems = [

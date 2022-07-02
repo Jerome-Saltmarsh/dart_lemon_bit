@@ -12,7 +12,6 @@ enum ClientRequest {
   Reverse_Hour,
   Teleport,
   Upgrade,
-  Scene_Save,
   Deck_Add_Card,
   Deck_Select_Card,
   Set_Block,
