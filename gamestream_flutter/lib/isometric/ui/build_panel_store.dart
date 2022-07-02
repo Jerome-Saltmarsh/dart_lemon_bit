@@ -12,10 +12,8 @@ import 'package:gamestream_flutter/isometric/ui/build_container.dart';
 import 'package:lemon_watch/watch.dart';
 
 import '../classes/weapon.dart';
+import 'colors.dart';
 
-const green = Colors.green;
-const grey = Colors.grey;
-const greyDark = Colors.blueGrey;
 final activeTab = Watch(_Tab.Weapon);
 
 final weaponInformation = Watch<Weapon?>(null);

@@ -21,7 +21,7 @@ import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import 'build_panel_store.dart';
+import 'colors.dart';
 
 Widget buildHudMapEditor(){
   return Stack(
