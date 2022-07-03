@@ -1,5 +1,6 @@
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
+import 'package:gamestream_flutter/isometric/queries/set_grid_type.dart';
 
 void apiGridActionRainOn(){
   for (var row = 0; row < gridTotalRows; row++) {
@@ -7,12 +8,8 @@ void apiGridActionRainOn(){
       for (var z = gridTotalZ - 1; z >= 0; z--) {
         final type = grid[z][row][column];
         if (!isEmpty(type)) {
-          if (z + 1 < gridTotalZ){
-            grid[z + 1][row][column] = GridNodeType.Rain_Landing;
-          }
-          if (z + 2 < gridTotalZ){
-            grid[z + 2][row][column] = GridNodeType.Rain_Falling;
-          }
+          setGridType(z + 1, row, column, GridNodeType.Rain_Landing);
+          setGridType(z + 2, row, column, GridNodeType.Rain_Falling);
           break;
         } else {
           if (column == 0 || !isEmpty(grid[z][row][column - 1])){

@@ -337,3 +337,4 @@ int getGridTypeAtXYZ(double x, double y, double z){
 
    return grid[plain][row][column];
 }
+
