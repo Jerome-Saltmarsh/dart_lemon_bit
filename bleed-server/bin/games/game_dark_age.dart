@@ -4,6 +4,7 @@ import 'package:lemon_math/library.dart';
 
 import '../classes/library.dart';
 import '../classes/weapon.dart';
+import '../common/Rain.dart';
 import '../common/armour_type.dart';
 import '../common/grid_node_type.dart';
 import '../common/head_type.dart';
@@ -19,8 +20,7 @@ class GameDarkAge extends Game {
   var minutesPassingPerSecond = 5;
   var time = 12 * 60 * 60;
 
-  var nextRain = randomInt(400, 10000);
-  var durationRain = 300;
+  var durationRain = randomInt(1000, 3000);
 
   var nextLightning = randomInt(400, 10000);
   var durationLightning = 300;
@@ -89,19 +89,19 @@ class GameDarkAge extends Game {
   }
 
   void updateRain(){
-    // if (raining) {
-    //   durationRain -= minutesPassingPerSecond;
-    //   if (durationRain <= 0){
-    //     raining = false;
-    //     nextRain = randomInt(2000, 20000);
-    //   }
-    //   return;
-    // }
-    // nextRain -= minutesPassingPerSecond;
-    // if (nextRain  <= 0){
-    //   raining = true;
-    //   durationRain = randomInt(2000, 8000);
-    // }
+    if (durationRain-- > 0) return;
+    durationRain = randomInt(1000, 3000);
+     switch (raining) {
+       case Rain.None:
+         raining = Rain.Light;
+         break;
+       case Rain.Light:
+         raining = randomBool() ? Rain.None : Rain.Heavy;
+         break;
+       case Rain.Heavy:
+         raining = Rain.Light;
+         break;
+     }
   }
 
   void updateLightning(){
