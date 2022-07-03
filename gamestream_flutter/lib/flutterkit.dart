@@ -117,7 +117,7 @@ Widget button(dynamic value, Function onPressed, {
 }) {
   final Widget _button = pressed(
       callback: onPressed,
-      child: mouseOver(builder: (BuildContext context, bool mouseOver) {
+      child: onMouseOver(builder: (BuildContext context, bool mouseOver) {
         return border(
             margin: margin,
             radius: borderRadius,

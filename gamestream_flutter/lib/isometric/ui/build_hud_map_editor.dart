@@ -18,6 +18,7 @@ import 'package:gamestream_flutter/isometric/weather/lightning.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
+import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 import 'package:lemon_engine/screen.dart';
@@ -117,12 +118,16 @@ Widget buildControlWind(){
       final active = wind.index >= i;
       final value = windValues[i];
       list.add(
-          container(
-              width: segmentWidth,
-              height: 50,
-              color: active ? greyDark : grey,
-              action: () => sendClientRequestWeatherSetWind(value),
-              toolTip: value.name
+          onMouseOver(
+            builder: (context, mouseOver) {
+              return container(
+                  width: segmentWidth,
+                  height: 50,
+                  color: mouseOver ? greyDarkDark : active ? greyDark : grey,
+                  action: () => sendClientRequestWeatherSetWind(value),
+                  toolTip: value.name,
+              );
+            }
           )
       );
     }

@@ -10,8 +10,10 @@ Widget container({
   double width = 200,
   double height = 50,
   String? toolTip,
+  Decoration? decoration,
 }){
   Widget con = Container(
+    decoration: decoration,
     padding: const EdgeInsets.only(left: 8),
     alignment: alignment,
     width: width,
