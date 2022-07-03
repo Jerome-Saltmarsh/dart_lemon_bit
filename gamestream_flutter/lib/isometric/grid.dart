@@ -8,7 +8,7 @@ import 'package:gamestream_flutter/isometric/grid/actions/rain_on.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:gamestream_flutter/isometric/particle_emitters.dart';
-import 'package:gamestream_flutter/isometric/render/weather.dart';
+import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -58,7 +58,7 @@ void onGridChanged(){
   gridWindResetToAmbient();
   apiGridActionRefreshLighting();
 
-  if (rainingWatch.value != Rain.None) {
+  if (rain.value != Rain.None) {
      apiGridActionRainOff();
      apiGridActionRainOn();
   }

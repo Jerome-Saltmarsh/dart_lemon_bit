@@ -10,7 +10,7 @@ import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 import 'package:gamestream_flutter/isometric/weather/lightning.dart';
 
-import '../render/weather.dart';
+import '../watches/rain.dart';
 import 'audio_loop.dart';
 import 'convert_distance_to_volume.dart';
 
@@ -47,7 +47,7 @@ double getVolumeTargetWind() {
 }
 
 double getVolumeTargetRain() {
-   switch(rainingWatch.value){
+   switch(rain.value){
      case Rain.None:
        return 0;
      case Rain.Light:

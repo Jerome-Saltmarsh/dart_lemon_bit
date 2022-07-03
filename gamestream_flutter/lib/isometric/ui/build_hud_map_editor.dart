@@ -9,7 +9,7 @@ import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
-import 'package:gamestream_flutter/isometric/render/weather.dart';
+import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
@@ -143,7 +143,7 @@ Widget buildToggleRain() {
   final segments = rainValues.length;
   final segmentWidth = totalWidth / segments;
 
-  return watch(rainingWatch, (Rain rain) {
+  return watch(rain, (Rain rain) {
     final list = <Widget>[];
     for (var i = 0; i < segments; i++) {
       final active = rain.index >= i;
