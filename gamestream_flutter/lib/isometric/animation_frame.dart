@@ -30,7 +30,7 @@ void updateAnimationFrame(){
     animationFrameGrass = (frame ~/ 15) % 4;
   }
 
-  rainPosition = (animationFrameRain * windAmbient.value * 2.5);
+  rainPosition = (animationFrameRain * windAmbient.value.index * 2.5);
 
 }
 

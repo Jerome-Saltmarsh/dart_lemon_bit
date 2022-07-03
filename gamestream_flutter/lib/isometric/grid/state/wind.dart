@@ -11,9 +11,9 @@ final windAmbient = Watch(Wind.Calm, onChanged: onWindChanged);
 
 void gridWindResetToAmbient(){
   _ensureGridCorrectMetrics();
-  final ambientValue = windAmbient.value;
+  final ambientIndex = windAmbient.value.index;
   gridForEachNode((z, row, column){
-    gridWind[z][row][column] = ambientValue;
+    gridWind[z][row][column] = ambientIndex;
   });
 }
 
@@ -27,7 +27,7 @@ void _ensureGridCorrectMetrics(){
   ) return;
 
   gridWind.clear();
-  final value = windAmbient.value;
+  final value = windAmbient.value.index;
   for (var indexZ = 0; indexZ < gridTotalZ; indexZ++){
     final z = <List<int>>[];
     gridWind.add(z);

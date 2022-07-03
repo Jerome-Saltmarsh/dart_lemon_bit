@@ -1,5 +1,6 @@
 import 'package:bleed_common/Rain.dart';
 import 'package:bleed_common/grid_node_type.dart';
+import 'package:bleed_common/wind.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
@@ -107,11 +108,11 @@ Widget buildControlsWeather() {
 }
 
 Widget buildControlWind(){
-   return watch(windAmbient, (int value){
+   return watch(windAmbient, (Wind value){
      return Column(
        children: [
          container(
-             child: "Wind: $value",
+             child: "Wind: ${value.name}",
              color: brownLight,
          ),
          container(action: sendClientRequestWeatherToggleWind),

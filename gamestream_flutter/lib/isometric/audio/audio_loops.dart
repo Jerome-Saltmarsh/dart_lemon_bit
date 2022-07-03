@@ -37,12 +37,13 @@ double getVolumeTargetWind() {
   if (windLineRenderX - 250 <= screenCenterRenderX) {
     target += windLineDistanceVolume;
   }
-  if (windAmbient.value <= Wind.Calm) {
+  final index = windAmbient.value.index;
+  if (index <= windIndexCalm) {
     if (hours.value < 6) return target;
     if (hours.value < 18) return target + 0.1;
     return target;
   }
-  if (windAmbient.value <= Wind.Gentle) return target + 0.5;
+  if (index <= windIndexGentle) return target + 0.5;
   return 1.0;
 }
 

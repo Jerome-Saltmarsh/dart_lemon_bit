@@ -51,7 +51,7 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
     case GridNodeType.Grass_Long:
       final wind = gridWind[z][row][column];
       switch (wind){
-        case Wind.Calm:
+        case windIndexCalm:
           return render(
             dstX: dstX,
             dstY: dstY,
@@ -62,7 +62,7 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
             anchorX: 0.5,
             anchorY: 0.3334,
           );
-        case Wind.Gentle:
+        case windIndexGentle:
           return render(
             dstX: dstX,
             dstY: dstY,

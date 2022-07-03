@@ -1,5 +1,3 @@
-import 'package:bleed_common/wind.dart';
-import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:lemon_math/library.dart';
 import 'package:just_audio/just_audio.dart';
@@ -10,13 +8,6 @@ import 'audio/convert_distance_to_volume.dart';
 final audio = _Audio();
 
 class _Audio {
-
-
-  double get windVolumeAmbientTarget {
-     if (windAmbient.value <= Wind.Calm) return 0.1;
-     if (windAmbient.value <= Wind.Gentle) return 0.5;
-     return 1.0;
-  }
 
   var trackIndex = 0;
 
