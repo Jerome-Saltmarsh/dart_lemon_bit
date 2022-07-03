@@ -108,7 +108,15 @@ Widget buildControlsWeather() {
 
 Widget buildControlWind(){
    return watch(windAmbient, (int value){
-     return container(child: "Wind: $value", action: sendClientRequestWeatherToggleWind);
+     return Column(
+       children: [
+         container(
+             child: "Wind: $value",
+             color: brownLight,
+         ),
+         container(action: sendClientRequestWeatherToggleWind),
+       ],
+     );
    });
 }
 
@@ -205,10 +213,17 @@ Widget buildButtonTimePassing() => watch(watchTimePassing, (bool timePassing){
 });
 
 Widget buildButtonBreeze() => watch(weatherBreeze, (bool weatherBreezeOn){
-  return container(
-      child: "Breeze",
-      action: sendClientRequestWeatherToggleBreeze,
-      color: weatherBreezeOn ? greyDark : grey,
+  return Column(
+    children: [
+      container(
+        child: "Breeze",
+        color: brownLight,
+      ),
+      container(
+          action: sendClientRequestWeatherToggleBreeze,
+          color: weatherBreezeOn ? greyDark : grey,
+      ),
+    ],
   );
 });
 
