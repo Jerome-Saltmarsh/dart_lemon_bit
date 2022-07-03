@@ -262,6 +262,8 @@ class Connection {
           );
         };
 
+        if (previousType == type) return;
+        scene.dirty = true;
         scene.grid[z][row][column].type = type;
         player.game.players.forEach((player) {
           player.writeByte(ServerResponse.Block_Set);
@@ -275,7 +277,7 @@ class Connection {
         if (type == GridNodeType.Enemy_Spawn){
           scene.enemySpawns.add(EnemySpawn(z: z, row: row, column: column));
         }
-        writeSceneToFile(scene);
+        // writeSceneToFile(scene);
         break;
 
       case ClientRequest.Deck_Select_Card:

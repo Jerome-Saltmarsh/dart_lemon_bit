@@ -15,6 +15,7 @@ class Scene {
   var gridRows = 0;
   var gridColumns = 0;
   var name = "";
+  var dirty = false;
   final List<Character> characters;
   final List<GameObject> gameObjects;
   final List<EnemySpawn> enemySpawns;

@@ -8,6 +8,7 @@ import '../common/wind.dart';
 import '../engine.dart';
 import '../functions.dart';
 import '../functions/withinRadius.dart';
+import '../io/write_scene_to_file.dart';
 import '../maths.dart';
 import '../physics.dart';
 import 'ai.dart';
@@ -1402,6 +1403,9 @@ extension GameFunctions on Game {
       npc.clearTargetIf(player);
     }
     onPlayerDisconnected(player);
+    if (player.scene.dirty && player.ownsGame && player.scene.name.isNotEmpty) {
+       writeSceneToFile(scene);
+    }
     if (status == GameStatus.Awaiting_Players) {
       cancelCountDown();
     }
