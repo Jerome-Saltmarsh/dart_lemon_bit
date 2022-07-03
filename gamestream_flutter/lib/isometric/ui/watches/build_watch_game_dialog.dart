@@ -11,13 +11,16 @@ Widget buildWatchGameDialog(){
 
      return Positioned(
        top: 200,
-       child: Row(
-         mainAxisAlignment: MainAxisAlignment.center,
-         children: [
-           Container(
-               width: screen.width,
-               child: buildGameDialog(gameDialog)),
-         ],
+       child: Container(
+         width: screen.width,
+         child: Row(
+           mainAxisAlignment: MainAxisAlignment.center,
+           children: [
+             Container(
+                 width: 400,
+                 child: buildGameDialog(gameDialog)),
+           ],
+         ),
        ),
      );
   });
