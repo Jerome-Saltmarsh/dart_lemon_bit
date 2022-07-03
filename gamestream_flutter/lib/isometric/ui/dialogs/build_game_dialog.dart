@@ -11,7 +11,7 @@ import 'package:gamestream_flutter/isometric/ui/watches/build_watch_custom_game_
 Widget buildGameDialog(GameDialog gameDialog){
   switch(gameDialog){
     case GameDialog.Scene_Load:
-      return buildWatchCustomGameNames();
+      return buildGameDialogSceneLoad();
     case GameDialog.Scene_Save:
       return buildGameDialogSceneSave();
     case GameDialog.Debug:

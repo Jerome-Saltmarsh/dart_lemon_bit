@@ -5,11 +5,9 @@ import 'package:gamestream_flutter/isometric/ui/buttons/build_button_editor_load
 
 Widget buildWatchCustomGameNames(){
   return watch(customGameNames, (List<String> gameNames){
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: gameNames.map(buildButtonEditorLoadGame).toList(),
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: gameNames.map(buildButtonEditorLoadGame).toList(),
     );
   });
 }

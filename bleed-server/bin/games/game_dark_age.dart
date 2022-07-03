@@ -171,13 +171,6 @@ class GameDarkAge extends Game {
 
     moveCharacterToGridNode(player, GridNodeType.Player_Spawn);
 
-    player.storeItems = [
-        Weapon(type: WeaponType.Shotgun, damage: 1),
-        Weapon(type: WeaponType.Sword, damage: 1),
-        Weapon(type: WeaponType.Axe, damage: 1),
-    ];
-    player.writeStoreItems();
-
     player.weapons.add(Weapon(type: WeaponType.Sword, damage: 2));
     player.weapons.add(Weapon(type: WeaponType.Bow, damage: 2));
     player.writePlayerWeapons();
