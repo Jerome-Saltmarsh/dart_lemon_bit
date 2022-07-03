@@ -25,7 +25,6 @@ class GameDarkAge extends Game {
   var nextLightning = randomInt(400, 10000);
   var durationLightning = 300;
 
-  var nextBreeze = randomInt(500, 1000);
   var durationBreeze = 500;
 
   var nextWindChange = randomInt(500, 1000);
@@ -121,19 +120,10 @@ class GameDarkAge extends Game {
   }
 
   void updateBreeze(){
-    if (breezy) {
-      durationBreeze -= minutesPassingPerSecond;
-      if (durationBreeze <= 0){
-        breezy = false;
-        nextBreeze = randomInt(2000, 10000);
-      }
-      return;
-    }
-    nextBreeze -= minutesPassingPerSecond;
-    if (nextBreeze  <= 0){
-      breezy = true;
-      durationBreeze = randomInt(3000, 10000);
-    }
+    durationBreeze -= minutesPassingPerSecond;
+    if (durationBreeze > 0) return;
+    durationBreeze = randomInt(2000, 5000);
+    breezy = !breezy;
   }
 
   void updateWind(){

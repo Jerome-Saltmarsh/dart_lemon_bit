@@ -20,16 +20,16 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
           maxDistance: 200
       ) * 0.1;
 
+      if (raining.value){
+        if (getGridTypeAtXYZ(x, y, z + 2) == GridNodeType.Rain_Landing) {
+          audioSingleFootstepMud6(volume);
+        }
+      }
+
       if (GridNodeType.isStone(tile)) {
         return audioSingleFootstepStone(volume);
       }
 
-      if (raining.value){
-        final tileAbove = getGridTypeAtXYZ(x, y, z + 2);
-        if (tileAbove == GridNodeType.Rain_Landing) {
-          return audioSingleFootstepMud6(volume);
-        }
-      }
 
       if (randomBool()){
         return audioSingleFootstepGrass8(volume);
