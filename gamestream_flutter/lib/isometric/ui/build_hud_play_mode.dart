@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_button_toggle_inventory.dart';
-import 'package:gamestream_flutter/isometric/ui/watch_inventory_visible.dart';
+import 'package:gamestream_flutter/isometric/watches/inventory_visible.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:gamestream_flutter/ui/builders/build_text_box.dart';
 import 'package:lemon_engine/engine.dart';
