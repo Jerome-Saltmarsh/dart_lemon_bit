@@ -11,7 +11,7 @@ final keys = KeyMap();
 void registerIsometricWebControls(){
   print("registerIsometricWebControls()");
   engine.keyPressedHandlers = {
-    keys.speak: messageBoxToggle,
+    // keys.speak: messageBoxToggle,
     keys.teleport: sendClientRequestTeleport,
   };
   onLeftClicked = onMouseLeftClicked;
