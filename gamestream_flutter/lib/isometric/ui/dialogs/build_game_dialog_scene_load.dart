@@ -1,10 +1,13 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/load_selected_scene_name.dart';
 import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_custom_game_names.dart';
+import 'package:gamestream_flutter/isometric/watches/selected_scene_name.dart';
 
 Widget buildGameDialogSceneLoad(){
   const width = 350.0;
@@ -17,7 +20,7 @@ Widget buildGameDialogSceneLoad(){
          child: Row(
            mainAxisAlignment: MainAxisAlignment.end,
            children: [
-             text("Close", onPressed: actionGameDialogClose),
+             text("x", onPressed: actionGameDialogClose),
            ],
          ),
        ),
@@ -34,14 +37,25 @@ Widget buildGameDialogSceneLoad(){
          padding: EdgeInsets.all(6),
          color: brownDark,
          child: Row(
-           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
            children: [
-             text("Load", onPressed: loadSelectedSceneName),
-             text("Delete"),
-             text("Rename"),
+             buildButtonLoadSelectedSceneName(),
+             // text("Delete"),
+             // text("Rename"),
            ],
          ),
        )
      ],
    );
 }
+
+Widget buildButtonLoadSelectedSceneName() =>
+    watch(selectedSceneName, (t) {
+      return text(
+          "Load",
+          onPressed: t == null ? null : loadSelectedSceneName,
+          color: t == null ? Colors.white60 : Colors.white
+
+      );
+    });
+
