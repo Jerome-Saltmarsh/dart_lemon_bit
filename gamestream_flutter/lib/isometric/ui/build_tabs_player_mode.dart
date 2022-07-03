@@ -2,10 +2,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/isometric/ui/build_container.dart';
+import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 
 import '../play_mode.dart';
-import 'colors.dart';
+import 'constants/colors.dart';
 
 Widget buildTabsPlayMode(){
    return Row(

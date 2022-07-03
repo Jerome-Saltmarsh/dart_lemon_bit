@@ -5,8 +5,8 @@ import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 
 import '../../flutterkit.dart';
 import '../audio/audio_loops.dart';
-import 'build_container.dart';
-import 'colors.dart';
+import 'widgets/build_container.dart';
+import 'constants/colors.dart';
 
 Widget buildHudAudioMix(){
    return Stack(

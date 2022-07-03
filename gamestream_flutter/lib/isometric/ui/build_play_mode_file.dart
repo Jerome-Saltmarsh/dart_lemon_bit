@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/isometric/io/custom_game_names.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 
-import 'build_container.dart';
+import 'widgets/build_container.dart';
 
 Widget buildPlayModeFile(){
 

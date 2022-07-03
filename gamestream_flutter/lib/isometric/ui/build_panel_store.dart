@@ -8,11 +8,11 @@ import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/player_store.dart';
-import 'package:gamestream_flutter/isometric/ui/build_container.dart';
+import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:lemon_watch/watch.dart';
 
 import '../classes/weapon.dart';
-import 'colors.dart';
+import 'constants/colors.dart';
 
 final activeTab = Watch(_Tab.Weapon);
 
