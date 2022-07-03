@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/isometric/state/src_x_.dart';
 import 'package:lemon_engine/render.dart';
 
 import '../grid/state/wind.dart';
@@ -85,22 +86,23 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
           );
       }
 
-    case GridNodeType.Rain_Landing:
+    case GridNodeType.Rain_Falling:
       return render(
-        dstX: dstX,
-        dstY: dstY,
-        srcX: 6739,
+        dstX: dstX - rainPosition,
+        dstY: dstY + animationFrameRain,
+        srcX: srcXRainFalling,
         srcY: 72.0 * animationFrameRain,
         srcWidth: 48,
         srcHeight: 72,
         anchorY: 0.3334,
         color: colorShades[shade],
       );
-    case GridNodeType.Rain_Falling:
+
+    case GridNodeType.Rain_Landing:
       return render(
-        dstX: dstX - rainPosition,
-        dstY: dstY + animationFrameRain,
-        srcX: 6640,
+        dstX: dstX,
+        dstY: dstY,
+        srcX: srcXRainLanding,
         srcY: 72.0 * animationFrameRain,
         srcWidth: 48,
         srcHeight: 72,
