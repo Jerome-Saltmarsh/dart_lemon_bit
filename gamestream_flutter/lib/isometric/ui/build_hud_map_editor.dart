@@ -182,10 +182,17 @@ Widget buildButtonRecenter() {
 }
 
 Widget buildButtonLightning() => watch(weatherLightning, (bool lightningOn){
-  return container(
-    child: "Lightning",
-    action: sendClientRequestWeatherToggleLightning,
-    color: lightningOn ? greyDark : grey,
+  return Column(
+    children: [
+      container(
+        child: "Lightning",
+        color: brownLight,
+      ),
+      container(
+        action: sendClientRequestWeatherToggleLightning,
+        color: lightningOn ? greyDark : grey,
+      ),
+    ],
   );
 });
 

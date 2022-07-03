@@ -159,24 +159,11 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
         srcHeight: 72,
         anchorY: 0.3334,
       );
-      // if (raining != Rain.None){
-      //   render(
-      //     dstX: dstX,
-      //     dstY: dstY - tileHeight,
-      //     srcX: 6788,
-      //     srcY: 72.0 * animationFrameRain,
-      //     srcWidth: 48,
-      //     srcHeight: 72,
-      //     anchorY: 0.3334,
-      //     color: colorShades[shade],
-      //   );
-      // }
       return;
     case GridNodeType.Torch:
       if (ambient.value <= Shade.Very_Bright) {
         return renderTorchOff(dstX, dstY);
       }
-
       final wind = gridWind[z][row][column];
 
       if (wind == Wind.Calm){
