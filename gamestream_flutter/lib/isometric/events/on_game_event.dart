@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/isometric/audio/convert_distance_to_volume.da
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/watches/raining.dart';
 import 'package:lemon_math/library.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
@@ -17,16 +18,23 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       final volume = convertDistanceToVolume(
           distanceFromPlayer,
           maxDistance: 200
-      );
+      ) * 0.1;
 
       if (GridNodeType.isStone(tile)) {
-        return audioSingleFootstepStone(volume * 0.3);
+        return audioSingleFootstepStone(volume);
+      }
+
+      if (raining.value){
+        final tileAbove = getGridTypeAtXYZ(x, y, z + 2);
+        if (tileAbove == GridNodeType.Rain_Landing) {
+          return audioSingleFootstepMud6(volume);
+        }
       }
 
       if (randomBool()){
-        return audioSingleFootstepGrass8(volume * 0.1);
+        return audioSingleFootstepGrass8(volume);
       }
-      return audioSingleFootstepGrass7(volume * 0.1);
+      return audioSingleFootstepGrass7(volume);
 
 
     case GameEventType.Handgun_Fired:
