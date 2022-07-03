@@ -1,3 +1,4 @@
+import 'package:bleed_common/Rain.dart';
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
@@ -137,9 +138,39 @@ Widget buildToggleShadows() {
 }
 
 Widget buildToggleRain() {
-  return watch(rainingWatch, (bool isRaining){
-          return container(child: 'Rain', action: sendClientRequestWeatherToggleRain, color: isRaining ? greyDark : grey);
-        });
+
+  const totalWidth = 200.0;
+  final segments = rainValues.length;
+  final segmentWidth = totalWidth / segments;
+
+  return watch(rainingWatch, (Rain rain) {
+    final list = <Widget>[];
+    for (var i = 0; i < segments; i++) {
+      final active = rain.index >= i;
+      final value = rainValues[i];
+      list.add(
+          container(
+              width: segmentWidth,
+              height: 50,
+              color: active ? greyDark : grey,
+              action: () => sendClientRequestWeatherSetRain(value),
+              toolTip: value.name
+          )
+      );
+    }
+    return Column(
+      children: [
+        container(
+          child: 'Rain: ${rain.name}',
+          width: totalWidth,
+          color: brownLight,
+        ),
+        Row(
+          children: list,
+        ),
+      ],
+    );
+  });
 }
 
 Widget buildButtonRecenter() {

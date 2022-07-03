@@ -1,3 +1,4 @@
+import 'package:bleed_common/Rain.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
@@ -209,11 +210,15 @@ class ServerResponseReader with ByteReader {
   }
 
   void readWeather() {
-    rainingWatch.value = readBool();
+    rainingWatch.value = readRain();
     weatherBreeze.value = readBool();
     weatherLightning.value = readBool();
     watchTimePassing.value = readBool();
     windAmbient.value = readByte();
+  }
+
+  Rain readRain(){
+     return rainValues[readByte()];
   }
 
   void readEnd() {

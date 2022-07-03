@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
-import 'package:gamestream_flutter/isometric/message_box.dart';
 import 'package:gamestream_flutter/isometric_web/on_mouse_left_clicked.dart';
 import 'package:gamestream_flutter/isometric_web/on_mouse_right_clicked.dart';
 import 'package:lemon_engine/callbacks.dart';

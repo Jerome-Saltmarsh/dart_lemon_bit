@@ -1,3 +1,4 @@
+import 'package:bleed_common/Rain.dart';
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/wind.dart';
@@ -45,7 +46,16 @@ double getVolumeTargetWind() {
   return 1.0;
 }
 
-double getVolumeTargetRain() => raining ? 0.4 : 0;
+double getVolumeTargetRain() {
+   switch(rainingWatch.value){
+     case Rain.None:
+       return 0;
+     case Rain.Light:
+       return 0.5;
+     case Rain.Heavy:
+       return 1.0;
+   }
+}
 
 double getVolumeTargetCrickets() {
   final hour = hours.value;

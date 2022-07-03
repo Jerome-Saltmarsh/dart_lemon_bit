@@ -89,19 +89,19 @@ class GameDarkAge extends Game {
   }
 
   void updateRain(){
-    if (raining) {
-      durationRain -= minutesPassingPerSecond;
-      if (durationRain <= 0){
-        raining = false;
-        nextRain = randomInt(2000, 20000);
-      }
-      return;
-    }
-    nextRain -= minutesPassingPerSecond;
-    if (nextRain  <= 0){
-      raining = true;
-      durationRain = randomInt(2000, 8000);
-    }
+    // if (raining) {
+    //   durationRain -= minutesPassingPerSecond;
+    //   if (durationRain <= 0){
+    //     raining = false;
+    //     nextRain = randomInt(2000, 20000);
+    //   }
+    //   return;
+    // }
+    // nextRain -= minutesPassingPerSecond;
+    // if (nextRain  <= 0){
+    //   raining = true;
+    //   durationRain = randomInt(2000, 8000);
+    // }
   }
 
   void updateLightning(){

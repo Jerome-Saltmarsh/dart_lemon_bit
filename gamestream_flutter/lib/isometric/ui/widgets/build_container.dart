@@ -8,9 +8,10 @@ Widget container({
   Function? action,
   Alignment alignment = Alignment.centerLeft,
   double width = 200,
-  double height = 50
+  double height = 50,
+  String? toolTip,
 }){
-  final con = Container(
+  Widget con = Container(
     padding: const EdgeInsets.only(left: 8),
     alignment: alignment,
     width: width,
@@ -19,6 +20,14 @@ Widget container({
     child: child == null
         ? null : child is Widget ? child : text(child),
   );
+
+  if (toolTip != null){
+    con = Tooltip(
+      message: toolTip,
+      child: con,
+    );
+  }
+
   if (action == null) return con;
   return onPressed(child: con, callback: action);
 }

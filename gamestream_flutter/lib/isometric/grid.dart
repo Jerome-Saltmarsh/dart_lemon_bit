@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bleed_common/Rain.dart';
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_off.dart';
@@ -57,7 +58,7 @@ void onGridChanged(){
   gridWindResetToAmbient();
   apiGridActionRefreshLighting();
 
-  if (raining) {
+  if (rainingWatch.value != Rain.None) {
      apiGridActionRainOff();
      apiGridActionRainOn();
   }

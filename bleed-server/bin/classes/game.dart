@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
+import '../common/Rain.dart';
 import '../common/grid_node_type.dart';
 import '../common/library.dart';
 import '../common/wind.dart';
@@ -49,7 +50,7 @@ abstract class Game {
   var playersCanAttackDynamicObjects = false;
 
   // WEATHER
-  var _raining = false;
+  var _raining = Rain.None;
   var _breezy = false;
   var _lightning = false;
   var _wind = 0;
@@ -67,7 +68,7 @@ abstract class Game {
     playersWriteWeather();
   }
 
-  set raining(bool value) {
+  set raining(Rain value) {
      if (_raining == value) return;
      _raining = value;
      playersWriteWeather();
@@ -91,10 +92,6 @@ abstract class Game {
     playersWriteWeather();
   }
 
-  void toggleRain(){
-     raining = !raining;
-  }
-
   void toggleBreeze(){
     breezy = !breezy;
   }
@@ -112,7 +109,7 @@ abstract class Game {
   }
 
   bool get lightning => _lightning;
-  bool get raining => _raining;
+  Rain get raining => _raining;
   bool get breezy => _breezy;
   bool get timePassing => _timePassing;
   int get wind => _wind;

@@ -24,7 +24,7 @@ enum ClientRequest {
   Purchase_Weapon,
   Equip_Weapon,
   Store_Close,
-  Weather_Toggle_Rain,
+  Weather_Set_Rain,
   Weather_Toggle_Breeze,
   Weather_Toggle_Wind,
   Weather_Toggle_Lightning,

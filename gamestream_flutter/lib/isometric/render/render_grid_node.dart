@@ -9,7 +9,6 @@ import 'package:lemon_engine/render.dart';
 
 import '../grid/state/wind.dart';
 import 'render_torch.dart';
-import 'weather.dart';
 
 void renderGridNode(int z, int row, int column, int type, double dstY, int shade) {
   final dstX = (row - column) * tileSizeHalf;
@@ -90,7 +89,7 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
       return render(
         dstX: dstX,
         dstY: dstY,
-        srcX: 6592,
+        srcX: 6739,
         srcY: 72.0 * animationFrameRain,
         srcWidth: 48,
         srcHeight: 72,
@@ -101,7 +100,7 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
       return render(
         dstX: dstX - rainPosition,
         dstY: dstY + animationFrameRain,
-        srcX: 6544,
+        srcX: 6640,
         srcY: 72.0 * animationFrameRain,
         srcWidth: 48,
         srcHeight: 72,
@@ -158,19 +157,18 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
         srcHeight: 72,
         anchorY: 0.3334,
       );
-
-      if (raining){
-        render(
-          dstX: dstX,
-          dstY: dstY - tileHeight,
-          srcX: 6788,
-          srcY: 72.0 * animationFrameRain,
-          srcWidth: 48,
-          srcHeight: 72,
-          anchorY: 0.3334,
-          color: colorShades[shade],
-        );
-      }
+      // if (raining != Rain.None){
+      //   render(
+      //     dstX: dstX,
+      //     dstY: dstY - tileHeight,
+      //     srcX: 6788,
+      //     srcY: 72.0 * animationFrameRain,
+      //     srcWidth: 48,
+      //     srcHeight: 72,
+      //     anchorY: 0.3334,
+      //     color: colorShades[shade],
+      //   );
+      // }
       return;
     case GridNodeType.Torch:
       if (ambient.value <= Shade.Very_Bright) {

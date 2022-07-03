@@ -5,6 +5,7 @@ import '../classes/enemy_spawn.dart';
 import '../classes/library.dart';
 import '../classes/position3.dart';
 import '../classes/weapon.dart';
+import '../common/Rain.dart';
 import '../common/grid_node_type.dart';
 import '../common/library.dart';
 import '../engine.dart';
@@ -184,8 +185,12 @@ class Connection {
         player.writeStoreItems();
         break;
 
-      case ClientRequest.Weather_Toggle_Rain:
-        game.toggleRain();
+      case ClientRequest.Weather_Set_Rain:
+        final rainIndex = int.tryParse(arguments[1]);
+        if (rainIndex == null || !isValidIndex(rainIndex, rainValues))
+           return errorInvalidArg('invalid rain index: $rainIndex');
+
+        player.game.raining = rainValues[rainIndex];
         break;
 
       case ClientRequest.Weather_Toggle_Breeze:
