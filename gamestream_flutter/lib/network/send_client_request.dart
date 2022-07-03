@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/Rain.dart';
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/wind.dart';
 import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:lemon_engine/screen.dart';
@@ -92,8 +93,8 @@ void sendClientRequestWeatherToggleBreeze(){
   sendClientRequest(ClientRequest.Weather_Toggle_Breeze);
 }
 
-void sendClientRequestWeatherToggleWind(){
-  sendClientRequest(ClientRequest.Weather_Toggle_Wind);
+void sendClientRequestWeatherSetWind(Wind wind){
+  sendClientRequest(ClientRequest.Weather_Set_Wind, wind.index);
 }
 
 void sendClientRequestWeatherToggleLightning(){

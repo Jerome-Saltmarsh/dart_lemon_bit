@@ -8,6 +8,7 @@ import '../classes/weapon.dart';
 import '../common/Rain.dart';
 import '../common/grid_node_type.dart';
 import '../common/library.dart';
+import '../common/wind.dart';
 import '../engine.dart';
 import '../functions/generateName.dart';
 import '../functions/withinRadius.dart';
@@ -197,8 +198,12 @@ class Connection {
         game.toggleBreeze();
         break;
 
-      case ClientRequest.Weather_Toggle_Wind:
-        game.toggleWind();
+      case ClientRequest.Weather_Set_Wind:
+        final index = int.tryParse(arguments[1]);
+        if (index == null || !isValidIndex(index, windValues))
+          return errorInvalidArg('invalid rain index: $index');
+
+        player.game.wind = index;
         break;
 
       case ClientRequest.Weather_Toggle_Lightning:

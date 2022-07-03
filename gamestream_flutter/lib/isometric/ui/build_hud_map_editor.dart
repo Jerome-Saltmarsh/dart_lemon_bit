@@ -108,17 +108,37 @@ Widget buildControlsWeather() {
 }
 
 Widget buildControlWind(){
-   return watch(windAmbient, (Wind value){
-     return Column(
-       children: [
-         container(
-             child: "Wind: ${value.name}",
-             color: brownLight,
-         ),
-         container(action: sendClientRequestWeatherToggleWind),
-       ],
-     );
-   });
+  const totalWidth = 200.0;
+  final segments = windValues.length;
+  final segmentWidth = totalWidth / segments;
+  return watch(windAmbient, (Wind wind) {
+    final list = <Widget>[];
+    for (var i = 0; i < segments; i++) {
+      final active = wind.index >= i;
+      final value = windValues[i];
+      list.add(
+          container(
+              width: segmentWidth,
+              height: 50,
+              color: active ? greyDark : grey,
+              action: () => sendClientRequestWeatherSetWind(value),
+              toolTip: value.name
+          )
+      );
+    }
+    return Column(
+      children: [
+        container(
+          child: 'Wind: ${wind.name}',
+          width: totalWidth,
+          color: brownLight,
+        ),
+        Row(
+          children: list,
+        ),
+      ],
+    );
+  });
 }
 
 Widget buildWatchEnemySpawn() {
