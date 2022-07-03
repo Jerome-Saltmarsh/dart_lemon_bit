@@ -269,7 +269,6 @@ class RenderOrderGrid extends RenderOrder {
       nextGridNode();
     }
     order = ((gridRow + gridColumn) * tileSize) + tileSizeHalf;
-    orderZ = gridZ;
   }
 
   @override
@@ -282,6 +281,7 @@ class RenderOrderGrid extends RenderOrder {
     order = 0;
     orderZ = 0;
     gridZ = 0;
+    orderZ = 0;
     gridZHalf = 0;
     plain = grid[gridZ];
     shadePlain = gridLightDynamic[gridZ];
@@ -383,6 +383,7 @@ class RenderOrderGrid extends RenderOrder {
             gridRow >= gridTotalRows
         ) {
           gridZ++;
+          orderZ = gridZ;
           if (gridZ >= gridTotalZ || gridZ > maxZRender.value) return end();
           gridZHalf =  gridZ ~/ 2;
           gridZGreaterThanPlayerZ = gridZ > playerZ;

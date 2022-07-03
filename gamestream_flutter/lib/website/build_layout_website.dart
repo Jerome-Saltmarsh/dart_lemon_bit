@@ -31,6 +31,11 @@ Widget buildPageWebsite() {
           child: buildMenuDebug() ?? const SizedBox(),
       ),
       Positioned(
+        bottom: pad,
+        right: pad,
+        child: text("Created by Jerome Saltmarsh", color: colours.white618, size: FontSize.Small),
+      ),
+      Positioned(
           top: 0,
           left: 0,
           child: Container(
