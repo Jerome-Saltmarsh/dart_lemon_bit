@@ -18,6 +18,7 @@ class Structure extends Collider with Team, Health, Owner<Player?>, Type<int> {
   Structure({
     required double x,
     required double y,
+    required double z,
     required int team,
     required int health,
     required int type,
@@ -25,7 +26,7 @@ class Structure extends Collider with Team, Health, Owner<Player?>, Type<int> {
     this.attackDamage = 0,
     this.attackRange = 200.0,
     Player? owner,
-  }) : super(x: x, y: y, radius: 25) {
+  }) : super(x: x, y: y, z: z, radius: 25) {
     this.team = team;
     this.owner = owner;
     this.maxHealth = health;

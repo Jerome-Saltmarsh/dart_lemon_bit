@@ -285,27 +285,6 @@ abstract class Game {
         this.status = GameStatus.In_Progress
       }) {
     engine.onGameCreated(this);
-
-    for (final character in scene.characters) {
-      if (character.type == CharacterType.Zombie) {
-        zombies.add(AI(
-          type: CharacterType.Zombie,
-          x: character.x,
-          y: character.y,
-          health: 100,
-          weapon: SlotType.Empty,
-        ));
-      } else {
-        npcs.add(Npc(
-          name: "Bob",
-          onInteractedWith: (Player player) {},
-          x: character.x,
-          y: character.y,
-          health: 100,
-          weapon: SlotType.Empty,
-        ));
-      }
-    }
   }
 
   void spawnExplosion({
@@ -381,9 +360,6 @@ abstract class Game {
 }
 
 extension GameFunctions on Game {
-  void spawnRandomOrb(double x, double y) {
-    items.add(Item(type: randomItem(ItemType.orbs), x: x, y: y));
-  }
 
   Character? getClosestEnemy({
     required double x,
@@ -1290,6 +1266,7 @@ extension GameFunctions on Game {
       type: CharacterType.Zombie,
       x: 0,
       y: 0,
+      z: 0,
       health: 10,
       weapon: SlotType.Empty,
     );

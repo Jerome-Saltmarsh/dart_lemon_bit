@@ -16,8 +16,9 @@ class GameObject extends Collider with Health, Material, Id {
     required this.type,
     required double x,
     required double y,
+    required double z,
     required int health,
-  }) : super(x: x, y: y, radius: const<int, double> {
+  }) : super(x: x, y: y, z: z, radius: const<int, double> {
     GameObjectType.Rock: 10,
     GameObjectType.Tree: 7,
     GameObjectType.Grass: 7,

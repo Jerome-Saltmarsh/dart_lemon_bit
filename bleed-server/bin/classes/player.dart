@@ -126,6 +126,7 @@ class Player extends Character with ByteWriter {
             type: CharacterType.Human,
             x: 0,
             y: 0,
+            z: 0,
             health: health,
             speed: 4.25,
             team: team,

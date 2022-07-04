@@ -10,7 +10,8 @@ class Item extends Collider {
     required this.type,
     required double x,
     required double y,
+    required double z,
     bool this.timed = false
-  }) : super(x: x, y: y, radius: 20);
+  }) : super(x: x, y: y, z: z, radius: 20);
 }
 

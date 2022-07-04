@@ -6,6 +6,8 @@ import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_d
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:lemon_engine/screen.dart';
 
+import 'watches/build_watch_debug_visible.dart';
+
 
 Widget buildHud() {
   return Stack(
@@ -14,6 +16,7 @@ Widget buildHud() {
       buildWatchPlayMode(),
       buildTopRightMenu(),
       buildWatchSceneMetaDataPlayerIsOwner(),
+      buildWatchDebugVisible(),
     ],
   );
 }

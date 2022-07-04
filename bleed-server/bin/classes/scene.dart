@@ -5,6 +5,7 @@ import 'character.dart';
 import 'enemy_spawn.dart';
 import 'game.dart';
 import 'game_object.dart';
+import 'position3.dart';
 import 'tile_node.dart';
 import 'grid_node.dart';
 
@@ -82,6 +83,7 @@ class Scene {
           type: type,
           x: 0,
           y: 0,
+          z: 0,
           health: health,
         )
     );
@@ -89,13 +91,14 @@ class Scene {
 
   void addGameObjectPosition({
     required int type,
-    required Position position,
+    required Position3 position,
     int health = 1
   }) {
     addGameObjectAtXY(
       type: type,
       x: position.x,
       y: position.y,
+      z: position.z,
       health: health,
     );
   }
@@ -104,6 +107,7 @@ class Scene {
     required int type,
     required double x,
     required double y,
+    required double z,
     int health = 1
   }) {
     addGameObject(
@@ -111,6 +115,7 @@ class Scene {
           type: type,
           x: x,
           y: y,
+          z: z,
           health: health,
         )
     );

@@ -4,10 +4,18 @@ import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/message_box.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
 import 'package:gamestream_flutter/isometric_web/register_isometric_web_controls.dart';
 import 'package:lemon_engine/engine.dart';
 
 void readPlayerInput() {
+
+  if (keyPressed(LogicalKeyboardKey.keyO)) {
+    debugVisible.value = true;
+  }
+  if (keyPressed(LogicalKeyboardKey.keyP)) {
+    debugVisible.value = false;
+  }
 
   if (playModeEdit) {
     if (keyPressed(LogicalKeyboardKey.space)) {

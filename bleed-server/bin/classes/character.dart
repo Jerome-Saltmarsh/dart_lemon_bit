@@ -57,6 +57,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
     required this.type,
     required double x,
     required double y,
+    required double z,
     required int health,
     required this.equippedWeapon,
     double speed = 5.0,
@@ -64,7 +65,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
     this.equippedArmour = ArmourType.tunicPadded,
     this.equippedHead = HeadType.None,
 
-  }) : super(x: x, y: y, radius: 7) {
+  }) : super(x: x, y: y, z: z, radius: 7) {
     maxHealth = health;
     this.health = health;
     walkingSpeed = speed;

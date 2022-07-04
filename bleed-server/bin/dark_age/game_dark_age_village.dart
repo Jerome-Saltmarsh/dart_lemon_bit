@@ -5,9 +5,13 @@ import 'game_dark_age.dart';
 import 'dark_age_scenes.dart';
 
 class GameDarkAgeVillage extends GameDarkAge {
+
+  late Npc npcBell;
+  late Npc npcGarry;
+
   GameDarkAgeVillage() : super(darkAgeScenes.village) {
 
-    final bell = Npc(
+    npcBell = Npc(
       name: "Bell",
       onInteractedWith: (player) {
         player.storeItems = [
@@ -16,21 +20,35 @@ class GameDarkAgeVillage extends GameDarkAge {
         ];
         player.writeStoreItems();
       },
-      x: 300,
-      y: 300,
+      x: 1150,
+      y: 700,
+      z: 24.0,
       weapon: 0,
       team: 1,
       health: 10,
     );
 
-    bell.equippedHead = HeadType.Blonde;
-    bell.equippedArmour = ArmourType.shirtBlue;
-    bell.equippedPants = PantsType.green;
-    scene.findByType(GridNodeType.Player_Spawn, (int z, int row, int column){
-      bell.indexZ = z;
-      bell.indexRow = row;
-      bell.indexColumn = column + 1;
-    });
-    npcs.add(bell);
+    npcBell.equippedHead = HeadType.Blonde;
+    npcBell.equippedArmour = ArmourType.shirtBlue;
+    npcBell.equippedPants = PantsType.green;
+    npcs.add(npcBell);
+
+    npcGarry = Npc(
+      name: "Garry",
+      onInteractedWith: (player) {
+
+      },
+      x: 800,
+      y: 900,
+      z: 24.0,
+      weapon: 0,
+      team: 1,
+      health: 10,
+    );
+
+    npcGarry.equippedHead = HeadType.Steel_Helm;
+    npcGarry.equippedArmour = ArmourType.shirtCyan;
+    npcGarry.equippedPants = PantsType.red;
+    npcs.add(npcGarry);
   }
 }

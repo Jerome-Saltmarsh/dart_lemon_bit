@@ -18,7 +18,7 @@ class Projectile extends Collider with Active, Velocity {
 
 
 
-  Projectile() : super(x: 0, y: 0, radius: 5);
+  Projectile() : super(x: 0, y: 0, z: 0, radius: 5);
 
   bool get overRange {
     return distanceTravelled > range;

@@ -14,10 +14,12 @@ class Collider extends Position3 with Radius {
   Collider({
     required double x,
     required double y,
+    required double z,
     required double radius
   }) {
     this.x = x;
     this.y = y;
+    this.z = z;
     this.radius = radius;
   }
 
