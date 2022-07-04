@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:lemon_engine/screen.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:bleed_common/library.dart';
@@ -282,6 +283,7 @@ class RenderOrderGrid extends RenderOrder {
     gridZ = 0;
     orderZ = 0;
     gridZHalf = 0;
+    dstY = 0;
     plain = grid[gridZ];
     shadePlain = gridLightDynamic[gridZ];
     gridType = 0;
@@ -295,10 +297,10 @@ class RenderOrderGrid extends RenderOrder {
     gridZGreaterThanPlayerZ = false;
     playerImperceptible = !gridIsPerceptible(playerZ, playerRow, playerColumn);
 
-    screenRight = engine.screen.right + tileSize;
-    screenLeft = engine.screen.left - tileSize;
-    screenTop = engine.screen.top;
-    screenBottom = engine.screen.bottom + (gridTotalZ * tileHeight);
+    screenRight = screen.right + tileSize;
+    screenLeft = screen.left - tileSize;
+    screenTop = screen.top;
+    screenBottom = screen.bottom + (gridTotalZ * tileHeight);
     final screenBottomLeftColumn = convertWorldToColumn(screenLeft, screenBottom, 0);
     final screenBottomLeftRow = convertWorldToRow(screenLeft, screenBottom, 0);
     final screenBottomLeftTotal = screenBottomLeftRow + screenBottomLeftColumn;
