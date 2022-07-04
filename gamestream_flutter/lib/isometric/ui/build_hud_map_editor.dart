@@ -456,4 +456,5 @@ const selectableTiles = [
     GridNodeType.Water,
     GridNodeType.Tree_Top,
     GridNodeType.Tree_Bottom,
+    GridNodeType.Player_Spawn,
 ];
