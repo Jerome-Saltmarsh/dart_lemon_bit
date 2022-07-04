@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/isometric/actions/action_editor_paint.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/enums/edit_tool.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
@@ -28,7 +29,7 @@ void onMouseClickedEditMode(){
       mouseRaycast(edit.selectBlock);
       break;
     case EditTool.Paint:
-      sendClientRequestSetBlock(getMouseRow(edit.z.value), getMouseColumn(edit.z.value), edit.z.value, edit.type.value);
+      actionEditorPaint();
       break;
   }
 }
