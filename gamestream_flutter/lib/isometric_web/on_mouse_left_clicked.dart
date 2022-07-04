@@ -28,7 +28,7 @@ void onMouseClickedEditMode(){
       mouseRaycast(edit.selectBlock);
       break;
     case EditTool.Paint:
-      sendClientRequestSetBlock(mouseRow0, mouseColumn0, edit.z.value, edit.type.value);
+      sendClientRequestSetBlock(getMouseRow(edit.z.value), getMouseColumn(edit.z.value), edit.z.value, edit.type.value);
       break;
   }
 }

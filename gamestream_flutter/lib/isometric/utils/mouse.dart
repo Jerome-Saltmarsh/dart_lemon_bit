@@ -25,21 +25,12 @@ int get mouseRow {
   return mouseGridY ~/ tileSize;
 }
 
-int get mouseColumn0 {
-  return mouseGridXStandard ~/ tileSize;
-}
-
-int get mouseRow0 {
-  return mouseGridYStandard ~/ tileSize;
-}
-
-
 int getMouseRow (int z){
-  return (convertWorldToGridY(mouseWorldX, mouseWorldY) + (z * tileHeight)) ~/ tileSize;
+  return (convertWorldToGridX(mouseWorldX, mouseWorldY) + (z * tileHeight)) ~/ tileSize;
 }
 
 int getMouseColumn (int z) {
-  return (convertWorldToGridX(mouseWorldX, mouseWorldY) + (z * tileHeight)) ~/ tileSize;
+  return (convertWorldToGridY(mouseWorldX, mouseWorldY) + (z * tileHeight)) ~/ tileSize;
 }
 
 double get mouseRowPercentage {
