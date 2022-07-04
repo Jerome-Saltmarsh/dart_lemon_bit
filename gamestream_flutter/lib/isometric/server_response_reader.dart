@@ -372,6 +372,7 @@ class ServerResponseReader with ByteReader {
 
   void readGrid() {
     final totalZ = readInt();
+    gridTotalZWatch.value = totalZ;
     final totalRows = readInt();
     final totalColumns = readInt();
     grid.clear();

@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 
 void onPlayModeChanged(PlayMode playMode){
-   switch(playMode){
+   switch (playMode){
      case PlayMode.Play:
        cameraModeSetChase();
        edit.type.value = GridNodeType.Boundary;

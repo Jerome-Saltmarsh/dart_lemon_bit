@@ -23,6 +23,7 @@ final grid = <List<List<int>>>[];
 final gridLightBake = <List<List<int>>>[];
 final gridLightDynamic = <List<List<int>>>[];
 var gridTotalZ = 0;
+final gridTotalZWatch = Watch(0);
 var gridTotalRows = 0;
 var gridTotalColumns = 0;
 
