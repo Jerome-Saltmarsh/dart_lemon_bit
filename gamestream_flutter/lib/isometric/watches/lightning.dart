@@ -17,7 +17,7 @@ var nextLightning = 0;
 bool get lightningOn => lightning.value != Lightning.Off;
 
 void weatherUpdateLightning(){
-    if (!lightningOn) return;
+    if (lightning.value != Lightning.On) return;
     if (nextLightning-- > 0) return;
     actionLightningFlash();
     nextLightning = randomInt(200, 1500);
