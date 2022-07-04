@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:bleed_common/Lightning.dart';
 import 'package:bleed_common/Rain.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/wind.dart';
@@ -97,8 +98,8 @@ void sendClientRequestWeatherSetWind(Wind wind){
   sendClientRequest(ClientRequest.Weather_Set_Wind, wind.index);
 }
 
-void sendClientRequestWeatherToggleLightning(){
-  sendClientRequest(ClientRequest.Weather_Toggle_Lightning);
+void sendClientRequestWeatherSetLightning(Lightning value){
+  sendClientRequest(ClientRequest.Weather_Set_Lightning, value.index);
 }
 
 void sendClientRequestWeatherToggleTimePassing(){

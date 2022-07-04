@@ -1,3 +1,4 @@
+import 'package:bleed_common/Lightning.dart';
 import 'package:bleed_common/Rain.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/wind.dart';
@@ -17,7 +18,7 @@ import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
-import 'package:gamestream_flutter/isometric/weather/lightning.dart';
+import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/game/state.dart';
@@ -213,7 +214,7 @@ class ServerResponseReader with ByteReader {
   void readWeather() {
     rain.value = readRain();
     weatherBreeze.value = readBool();
-    weatherLightning.value = readBool();
+    lightning.value = readLightning();
     watchTimePassing.value = readBool();
     windAmbient.value = readWind();
   }
@@ -224,6 +225,10 @@ class ServerResponseReader with ByteReader {
 
   Wind readWind(){
     return windValues[readByte()];
+  }
+
+  Lightning readLightning(){
+    return lightningValues[readByte()];
   }
 
   void readEnd() {

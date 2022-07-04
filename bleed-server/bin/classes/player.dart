@@ -686,7 +686,7 @@ extension PlayerProperties on Player {
      writeByte(ServerResponse.Weather);
      writeByte(game.raining.index);
      writeBool(game.breezy);
-     writeBool(game.lightning);
+     writeByte(game.lightning.index);
      writeBool(game.timePassing);
      writeByte(game.wind);
   }

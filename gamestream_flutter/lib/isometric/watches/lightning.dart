@@ -1,3 +1,4 @@
+import 'package:bleed_common/Lightning.dart';
 import 'package:bleed_common/Shade.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:lemon_math/library.dart';
@@ -6,14 +7,14 @@ import 'package:lemon_watch/watch.dart';
 
 import '../audio/audio_singles.dart';
 
-final weatherLightning = Watch(false, onChanged: (bool lightningOn){
-   if (lightningOn){
+final lightning = Watch(Lightning.Off, onChanged: (Lightning value){
+   if (value != Lightning.Off){
      nextLightning = 0;
    }
 });
 var nextLightning = 0;
 
-bool get lightningOn => weatherLightning.value;
+bool get lightningOn => lightning.value != Lightning.Off;
 
 void weatherUpdateLightning(){
     if (!lightningOn) return;

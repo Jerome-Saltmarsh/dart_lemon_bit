@@ -5,6 +5,7 @@ import '../classes/enemy_spawn.dart';
 import '../classes/library.dart';
 import '../classes/position3.dart';
 import '../classes/weapon.dart';
+import '../common/Lightning.dart';
 import '../common/Rain.dart';
 import '../common/grid_node_type.dart';
 import '../common/library.dart';
@@ -206,8 +207,11 @@ class Connection {
         player.game.wind = index;
         break;
 
-      case ClientRequest.Weather_Toggle_Lightning:
-        game.toggleLightning();
+      case ClientRequest.Weather_Set_Lightning:
+        final index = int.tryParse(arguments[1]);
+        if (index == null || !isValidIndex(index, lightningValues))
+          return errorInvalidArg('invalid lightning index: $index');
+        player.game.lightning = lightningValues[index];
         break;
 
       case ClientRequest.Weather_Toggle_Time_Passing:

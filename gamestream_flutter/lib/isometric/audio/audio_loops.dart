@@ -8,7 +8,7 @@ import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
-import 'package:gamestream_flutter/isometric/weather/lightning.dart';
+import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 
 import '../watches/rain.dart';
 import 'audio_loop.dart';

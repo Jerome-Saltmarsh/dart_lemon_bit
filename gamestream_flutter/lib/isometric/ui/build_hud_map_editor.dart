@@ -1,3 +1,4 @@
+import 'package:bleed_common/Lightning.dart';
 import 'package:bleed_common/Rain.dart';
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/wind.dart';
@@ -14,7 +15,7 @@ import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
-import 'package:gamestream_flutter/isometric/weather/lightning.dart';
+import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
@@ -215,20 +216,40 @@ Widget buildButtonRecenter() {
         });
 }
 
-Widget buildButtonLightning() => watch(weatherLightning, (bool lightningOn){
-  return Column(
-    children: [
-      container(
-        child: "Lightning",
-        color: brownLight,
-      ),
-      container(
-        action: sendClientRequestWeatherToggleLightning,
-        color: lightningOn ? greyDark : grey,
-      ),
-    ],
-  );
-});
+Widget buildButtonLightning() {
+  const totalWidth = 200.0;
+  final segments = lightningValues.length;
+  final segmentWidth = totalWidth / segments;
+
+  return watch(lightning, (Lightning lightning) {
+    final list = <Widget>[];
+    for (var i = 0; i < segments; i++) {
+      final active = lightning.index >= i;
+      final value = lightningValues[i];
+      list.add(
+          container(
+              width: segmentWidth,
+              height: 50,
+              color: active ? greyDark : grey,
+              action: () => sendClientRequestWeatherSetLightning(value),
+              toolTip: value.name
+          )
+      );
+    }
+    return Column(
+      children: [
+        container(
+          child: 'Lightning: ${lightning.name}',
+          width: totalWidth,
+          color: brownLight,
+        ),
+        Row(
+          children: list,
+        ),
+      ],
+    );
+  });
+}
 
 Widget buildButtonTimePassing() => watch(watchTimePassing, (bool timePassing){
   return container(

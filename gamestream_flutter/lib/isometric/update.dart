@@ -13,7 +13,7 @@ import 'particles.dart';
 import 'players.dart';
 import 'projectiles.dart';
 import 'weather/breeze.dart';
-import 'weather/lightning.dart';
+import 'watches/lightning.dart';
 
 void updateIsometric(){
   updateGameActions();

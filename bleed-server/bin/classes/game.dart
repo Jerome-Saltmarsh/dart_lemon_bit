@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
+import '../common/Lightning.dart';
 import '../common/Rain.dart';
 import '../common/grid_node_type.dart';
 import '../common/library.dart';
@@ -52,7 +53,7 @@ abstract class Game {
   // WEATHER
   var _raining = Rain.None;
   var _breezy = false;
-  var _lightning = false;
+  var _lightning = Lightning.Off;
   var _wind = 0;
   var _timePassing = true;
 
@@ -80,7 +81,7 @@ abstract class Game {
      playersWriteWeather();
   }
 
-  set lightning(bool value){
+  set lightning(Lightning value){
     if(_lightning == value) return;
     _lightning = value;
     playersWriteWeather();
@@ -100,15 +101,11 @@ abstract class Game {
     wind = (_wind + 1) % 3;
   }
 
-  void toggleLightning(){
-    lightning = !lightning;
-  }
-
   void toggleTimePassing(){
     timePassing = !timePassing;
   }
 
-  bool get lightning => _lightning;
+  Lightning get lightning => _lightning;
   Rain get raining => _raining;
   bool get breezy => _breezy;
   bool get timePassing => _timePassing;
