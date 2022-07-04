@@ -1,4 +1,5 @@
 import 'package:bleed_common/grid_node_type.dart';
+import 'package:gamestream_flutter/isometric/queries/get_grid_type.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -21,7 +22,7 @@ class EditState {
   }
 
   void refreshType(){
-    type.value = grid[z.value][row.value][column.value];
+    type.value = gridGetType(z.value, row.value, column.value);
   }
 
   void deleteBlock(){
