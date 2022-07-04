@@ -26,6 +26,32 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
         anchorY: 0.3334,
       );
     case GridNodeType.Grass:
+      final wind = gridWind[z][row][column];
+      switch(wind){
+        case windIndexCalm:
+          return render(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 5267,
+            srcY: 72.0 * shade,
+            srcWidth: 48,
+            srcHeight: 72,
+            anchorX: 0.5,
+            anchorY: 0.3334,
+          );
+        default:
+          return render(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 5267 + ((((row - column) + animationFrameGrassShort) % 6) * 48),
+            srcY: 72.0 * shade,
+            srcWidth: 48,
+            srcHeight: 72,
+            anchorX: 0.5,
+            anchorY: 0.3334,
+          );
+      }
+
       return render(
         dstX: dstX,
         dstY: dstY,

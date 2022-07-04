@@ -10,6 +10,7 @@ var animationFrameWaterHeight = 0;
 var animationFrameWaterSrcX = 0.0;
 var animationFrameTorch = 0;
 var animationFrameGrass = 0;
+var animationFrameGrassShort = 0;
 var animationFrameRain = 0;
 var animationFrameTreePosition = 0;
 var rainPosition = 0.0;
@@ -26,8 +27,14 @@ void updateAnimationFrame(){
 
   if (windAmbient.value == Wind.Calm){
     animationFrameGrass = 0;
+    animationFrameGrassShort = 0;
   } else {
     animationFrameGrass = (frame ~/ 15) % 4;
+    if (windAmbient.value == Wind.Gentle){
+      animationFrameGrassShort = frame ~/ 35;
+    } else{
+      animationFrameGrassShort = frame ~/ 10;
+    }
   }
 
   rainPosition = (animationFrameRain * windAmbient.value.index * 2.5);
