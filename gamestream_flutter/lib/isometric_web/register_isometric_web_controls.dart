@@ -5,6 +5,8 @@ import 'package:gamestream_flutter/isometric_web/on_mouse_right_clicked.dart';
 import 'package:lemon_engine/callbacks.dart';
 import 'package:lemon_engine/engine.dart';
 
+import 'on_mouse_drag.dart';
+
 final keys = KeyMap();
 
 void registerIsometricWebControls(){
@@ -14,6 +16,7 @@ void registerIsometricWebControls(){
     keys.teleport: sendClientRequestTeleport,
   };
   onLeftClicked = onMouseLeftClicked;
+  engine.callbacks.onMouseDragging = onMouseDrag;
   engine.callbacks.onRightClicked = onMouseRightClicked;
 }
 

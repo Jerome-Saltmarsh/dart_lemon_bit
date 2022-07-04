@@ -286,7 +286,6 @@ class Connection {
         if (type == GridNodeType.Enemy_Spawn){
           scene.enemySpawns.add(EnemySpawn(z: z, row: row, column: column));
         }
-        // writeSceneToFile(scene);
         break;
 
       case ClientRequest.Deck_Select_Card:
