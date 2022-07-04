@@ -1,8 +1,5 @@
 
-import 'package:bleed_common/armour_type.dart';
-import 'package:bleed_common/head_type.dart';
 import 'package:bleed_common/library.dart';
-import 'package:bleed_common/pants_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/flutterkit.dart';

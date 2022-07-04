@@ -1,4 +1,4 @@
-import 'package:bleed_common/Lightning.dart';
+import 'package:bleed_common/lightning.dart';
 import 'package:bleed_common/Shade.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:lemon_math/library.dart';

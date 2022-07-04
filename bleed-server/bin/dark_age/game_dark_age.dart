@@ -3,15 +3,7 @@
 import 'package:lemon_math/library.dart';
 
 import '../classes/library.dart';
-import '../classes/weapon.dart';
-import '../common/Lightning.dart';
-import '../common/Rain.dart';
-import '../common/armour_type.dart';
-import '../common/grid_node_type.dart';
-import '../common/head_type.dart';
 import '../common/library.dart';
-import '../common/pants_type.dart';
-import '../common/wind.dart';
 
 class GameDarkAge extends Game {
 
@@ -22,6 +14,7 @@ class GameDarkAge extends Game {
   var durationBreeze = 500;
   var durationWind = randomInt(500, 1000);
 
+  GameDarkAge(Scene scene) : super(scene);
 
   void setTime(int value){
       time = value % secondsPerDay;
@@ -30,37 +23,6 @@ class GameDarkAge extends Game {
   @override
   void setHourMinutes(int hour, int minutes){
       time = (hour * secondsPerHour) + (minutes * secondsPerMinute);
-  }
-
-  GameDarkAge(Scene scene) : super(
-    scene
-  ) {
-
-    final bell = Npc(
-      name: "Bell",
-      onInteractedWith: (player) {
-          player.storeItems = [
-             Weapon(type: WeaponType.Bow, damage: 5),
-             Weapon(type: WeaponType.Sword, damage: 5),
-          ];
-          player.writeStoreItems();
-      },
-      x: 300,
-      y: 300,
-      weapon: 0,
-      team: 1,
-      health: 10,
-    );
-
-    bell.equippedHead = HeadType.Blonde;
-    bell.equippedArmour = ArmourType.shirtBlue;
-    bell.equippedPants = PantsType.green;
-    scene.findByType(GridNodeType.Player_Spawn, (int z, int row, int column){
-       bell.indexZ = z;
-       bell.indexRow = row;
-       bell.indexColumn = column + 1;
-    });
-    npcs.add(bell);
   }
 
   @override

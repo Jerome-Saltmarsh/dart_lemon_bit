@@ -9,7 +9,6 @@ import '../engine.dart';
 import '../utilities.dart';
 import 'position3.dart';
 import 'library.dart';
-import 'weapon.dart';
 
 
 class Player extends Character with ByteWriter {

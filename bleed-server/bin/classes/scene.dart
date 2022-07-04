@@ -1,5 +1,4 @@
 import 'package:lemon_math/library.dart';
-import '../common/grid_node_type.dart';
 import '../common/library.dart';
 import 'ai.dart';
 import 'character.dart';

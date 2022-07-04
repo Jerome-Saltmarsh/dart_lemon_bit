@@ -16,3 +16,4 @@ export 'spawn_point.dart';
 export 'structure.dart';
 export 'tile_node.dart';
 export 'ai.dart';
+export 'weapon.dart';

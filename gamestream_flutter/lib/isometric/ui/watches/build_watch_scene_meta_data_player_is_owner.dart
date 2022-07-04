@@ -4,7 +4,6 @@ import 'package:gamestream_flutter/isometric/ui/build_hud.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_button_show_dialog_load_scene.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_tab.dart';
-import 'package:gamestream_flutter/isometric/ui/watches/build_watch_object_selected.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:lemon_engine/screen.dart';
 

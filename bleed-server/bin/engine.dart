@@ -2,16 +2,16 @@ import 'dart:async';
 
 import 'classes/library.dart';
 import 'constants/frames_per_second.dart';
-import 'dark_age_scenes/dark_age_scenes.dart';
-import 'dark_age_scenes/game_dark_age_castle.dart';
-import 'games/game_dark_age.dart';
+import 'dark_age/dark_age_scenes.dart';
+import 'dark_age/game_dark_age.dart';
+import 'dark_age/game_dark_age_village.dart';
 import 'io/read_scene_from_file.dart';
 import 'language.dart';
 import 'scene/generate_empty_scene.dart';
 
-final engine = _Engine();
+final engine = Engine();
 
-class _Engine {
+class Engine {
   final games = <Game>[];
   var frame = 0;
 
@@ -61,7 +61,7 @@ class _Engine {
         return game;
       }
     }
-    return GameDarkAgeCastle();
+    return GameDarkAgeVillage();
   }
 
   Future<GameDarkAge> findGameEditorNew() async {

@@ -1,4 +1,4 @@
-import 'package:bleed_common/Rain.dart';
+import 'package:bleed_common/rain.dart';
 import 'package:gamestream_flutter/isometric/state/src_x_.dart';
 
 import '../watches/raining.dart';

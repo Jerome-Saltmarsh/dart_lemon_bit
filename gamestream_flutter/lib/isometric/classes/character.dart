@@ -1,7 +1,4 @@
-import 'package:bleed_common/armour_type.dart';
-import 'package:bleed_common/head_type.dart';
 import 'package:bleed_common/library.dart';
-import 'package:bleed_common/pants_type.dart';
 import 'package:lemon_math/constants/pi_quarter.dart';
 
 import 'vector3.dart';

@@ -1,9 +1,6 @@
 import 'package:lemon_math/library.dart';
 
-import '../common/armour_type.dart';
-import '../common/head_type.dart';
 import '../common/library.dart';
-import '../common/pants_type.dart';
 import '../functions/withinRadius.dart';
 import 'collider.dart';
 import 'game.dart';

@@ -1,7 +1,4 @@
-import 'package:bleed_common/armour_type.dart';
-import 'package:bleed_common/head_type.dart';
 import 'package:bleed_common/library.dart';
-import 'package:bleed_common/pants_type.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:lemon_watch/watch.dart';

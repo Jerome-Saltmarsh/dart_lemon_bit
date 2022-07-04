@@ -1,8 +1,5 @@
 
-import 'package:bleed_common/armour_type.dart';
-import 'package:bleed_common/head_type.dart';
 import 'package:bleed_common/library.dart';
-import 'package:bleed_common/pants_type.dart';
 import 'package:gamestream_flutter/color_pitch_black.dart';
 
 import 'package:lemon_engine/render.dart';
