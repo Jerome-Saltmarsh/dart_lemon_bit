@@ -20,9 +20,7 @@ import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
-import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
-import 'package:lemon_engine/screen.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -31,16 +29,13 @@ import 'constants/colors.dart';
 Widget buildHudMapEditor(){
   return Stack(
     children: [
-      // Positioned(top: 0, right: 0, child: buildPanelMenu()),
-      Positioned(top: 0, left: 0, child: buildColumnEditTile()),
-      Positioned(right: 0, child: Container(
-          height: screen.height,
-          alignment: Alignment.center,
-          child: buildPanelMaxZRender())),
+      // Positioned(right: 0, child: Container(
+      //     height: screen.height,
+      //     alignment: Alignment.center,
+      //     child: buildPanelMaxZRender())),
     ],
   );
 }
-
 
 Widget buildPanelMaxZRender(){
   return Column(
@@ -366,16 +361,6 @@ Widget buildToggleTimePassing(){
    });
 }
 
-Widget buildColumnEditTile(){
-  return Container(
-    height: engine.screen.height,
-    child: SingleChildScrollView(
-      child: Column(
-        children: selectableTiles.map(buildButtonSelectGridNodeType).toList(),
-      ),
-    ),
-  );
-}
 
 Widget buildButtonSpawnZombie(){
   return _button("Zombie", () {
@@ -472,6 +457,6 @@ const selectableTiles = [
     GridNodeType.Fireplace,
     GridNodeType.Wood,
     GridNodeType.Water,
-    // GridNodeType.,
-
+    GridNodeType.Tree_Top,
+    GridNodeType.Tree_Bottom,
 ];

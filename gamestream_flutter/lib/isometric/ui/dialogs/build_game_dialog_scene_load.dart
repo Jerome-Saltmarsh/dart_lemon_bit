@@ -30,7 +30,17 @@ Widget buildButtonLoadSelectedSceneName() =>
           "Load",
           onPressed: t == null ? null : loadSelectedSceneName,
           color: t == null ? Colors.white60 : Colors.white
-
       );
     });
+
+Widget buildButtonDeleteSelectedSceneName() =>
+    watch(selectedSceneName, (t) {
+      return text(
+          "Delete",
+          onPressed: t == null ? null : loadSelectedSceneName,
+          color: t == null ? Colors.white60 : Colors.white
+      );
+    });
+
+
 

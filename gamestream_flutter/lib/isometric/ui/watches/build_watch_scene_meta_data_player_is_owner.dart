@@ -3,6 +3,8 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_button_show_dialog_load_scene.dart';
+import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_tab.dart';
+import 'package:gamestream_flutter/isometric/ui/watches/build_watch_object_selected.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:lemon_engine/screen.dart';
 
@@ -17,8 +19,18 @@ Widget buildWatchSceneMetaDataPlayerIsOwner() {
         Positioned(
           left: 0,
           top: 0,
-          child: buildColumnEditTile(),
+          child: buildWatchEditorTab(),
         ),
+        Positioned(
+            right: 0,
+            top: 50,
+            child: buildPanelMaxZRender(),
+        ),
+        // Positioned(
+        //   right: 0,
+        //   top: screen.height / 2,
+        //   child: buildWatchEditorSelectedObject(),
+        // ),
         Positioned(
             top: 6,
             left: 0,

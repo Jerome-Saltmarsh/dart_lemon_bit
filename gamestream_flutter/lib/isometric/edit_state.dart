@@ -13,6 +13,13 @@ class EditState {
 
   final type = Watch(GridNodeType.Bricks);
 
+  void selectBlock(int z, int row, int column){
+    this.row.value = row;
+    this.column.value = column;
+    this.z.value = z;
+    refreshType();
+  }
+
   void refreshType(){
     type.value = grid[z.value][row.value][column.value];
   }

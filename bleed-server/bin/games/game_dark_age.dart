@@ -12,20 +12,15 @@ import '../common/head_type.dart';
 import '../common/library.dart';
 import '../common/pants_type.dart';
 import '../common/wind.dart';
-import '../functions/generateUUID.dart';
 
 class GameDarkAge extends Game {
 
-  var fileName = generateUUID();
-
   var minutesPassingPerSecond = 5;
   var time = 12 * 60 * 60;
-
   var durationRain = randomInt(1000, 3000);
   var durationLightning = 300;
   var durationBreeze = 500;
-
-  var nextWindChange = randomInt(500, 1000);
+  var durationWind = randomInt(500, 1000);
 
 
   void setTime(int value){
@@ -125,9 +120,9 @@ class GameDarkAge extends Game {
   }
 
   void updateWind(){
-    nextWindChange -= minutesPassingPerSecond;
-    if (nextWindChange <= 0) {
-      nextWindChange = randomInt(3000, 6000);
+    durationWind -= minutesPassingPerSecond;
+    if (durationWind <= 0) {
+      durationWind = randomInt(3000, 6000);
 
       if (wind == Wind.Calm) {
         wind++;

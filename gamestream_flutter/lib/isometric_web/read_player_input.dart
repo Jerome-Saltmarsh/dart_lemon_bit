@@ -25,6 +25,11 @@ void readPlayerInput() {
     return;
   }
 
+  if (keyPressed(LogicalKeyboardKey.space)) {
+     setPlayModeEdit();
+     return;
+  }
+
   if (keyPressed(keys.speak)){
     messageBoxShow();
   }

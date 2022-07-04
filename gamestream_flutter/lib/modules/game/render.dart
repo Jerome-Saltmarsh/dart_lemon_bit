@@ -18,6 +18,7 @@ import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/render/render_wireframe.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse_raycast.dart';
+import 'package:gamestream_flutter/isometric/watches/editor_selected_object.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -54,9 +55,15 @@ class GameRender {
     // }
 
     renderSprites();
+
     if (playModeEdit){
       renderEditWireFrames();
       renderMouseWireFrame();
+
+      final editorObject = editorSelectedObject.value;
+      if (editorObject != null){
+        renderCircle32(editorObject.renderX, editorObject.renderY);
+      }
     }
 
     final mouseTargetName = player.mouseTargetName.value;

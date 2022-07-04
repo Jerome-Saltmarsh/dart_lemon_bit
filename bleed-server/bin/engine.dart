@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'classes/library.dart';
 import 'constants/frames_per_second.dart';
+import 'dark_age_scenes/dark_age_scenes.dart';
+import 'dark_age_scenes/game_dark_age_castle.dart';
 import 'games/game_dark_age.dart';
 import 'io/read_scene_from_file.dart';
-import 'isometric/generate_empty_grid.dart';
 import 'language.dart';
+import 'scene/generate_empty_scene.dart';
 
 final engine = _Engine();
 
@@ -14,6 +16,7 @@ class _Engine {
   var frame = 0;
 
   Future init() async {
+    await darkAgeScenes.load();
     periodic(fixedUpdate, ms: 1000 ~/ framesPerSecond);
   }
 
@@ -58,22 +61,11 @@ class _Engine {
         return game;
       }
     }
-    final scene = await readSceneFromFile('castle');
-    return GameDarkAge(scene);
+    return GameDarkAgeCastle();
   }
 
   Future<GameDarkAge> findGameEditorNew() async {
-    final game = GameDarkAge(Scene(
-      name: '',
-      gameObjects: [],
-      characters: [],
-      enemySpawns: [],
-      grid: generateEmptyGrid(
-        zHeight: 8,
-        rows: 50,
-        columns: 50,
-      ),
-    ));
+    final game = GameDarkAge(generateEmptyScene());
     game.timePassing = false;
     return game;
   }

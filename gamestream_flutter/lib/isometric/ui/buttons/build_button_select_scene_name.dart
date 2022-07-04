@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/watches/selected_scene_name.dart';
 
-Widget buildButtonEditorLoadGame(String gameName) {
+Widget buildButtonSelectSceneName(String gameName) {
 
   return watch(selectedSceneName, (selectedSceneName) {
     return container(
