@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:gamestream_flutter/isometric/lighting/apply_emissions_npcs.dart';
 import 'package:lemon_engine/screen.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -104,7 +105,7 @@ class RenderOrderNpcs extends RenderOrder {
 
   @override
   void reset() {
-    // applyPlayerEmissions();
+    applyEmissionsNpcs();
     super.reset();
   }
 }
