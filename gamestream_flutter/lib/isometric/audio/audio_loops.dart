@@ -18,6 +18,7 @@ final audioLoops = <AudioLoop> [
   AudioLoop(name: 'day-ambience', getTargetVolume: getVolumeTargetDayAmbience),
   AudioLoop(name: 'fire', getTargetVolume: getVolumeTargetFire),
   AudioLoop(name: 'distant-thunder', getTargetVolume: getVolumeTargetDistanceThunder),
+  AudioLoop(name: 'heart-beat', getTargetVolume: getVolumeHeartBeat),
 ];
 
 void updateAudioLoops(){
@@ -89,4 +90,8 @@ double getVolumeTargetFire(){
 double getVolumeTargetDistanceThunder(){
    if (lightningOn) return 1.0;
    return 0;
+}
+
+double getVolumeHeartBeat(){
+   return 1.0 - player.health.value / player.maxHealth;
 }
