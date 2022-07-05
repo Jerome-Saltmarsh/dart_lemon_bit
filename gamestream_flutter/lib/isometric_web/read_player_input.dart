@@ -27,6 +27,9 @@ void readPlayerInput() {
     if (keyPressed(LogicalKeyboardKey.keyF)) {
       actionEditSetShortcutType();
     }
+    if (keyPressed(LogicalKeyboardKey.keyR)) {
+      edit.paintType.value = edit.type.value;
+    }
     if (engine.mouseRightDown.value){
       setPlayModePlay();
     }

@@ -10,6 +10,7 @@ import '../io/write_scene_to_file.dart';
 import '../maths.dart';
 import '../physics.dart';
 import 'ai.dart';
+import 'enemy_spawn.dart';
 import 'position3.dart';
 import 'card_abilities.dart';
 import 'character.dart';
@@ -1591,15 +1592,6 @@ extension GameFunctions on Game {
     collectables.forEach((collectable) => collectable.update());
   }
 
-  // void updateDynamicObjects() {
-  //   final dynamicObjects = scene.objectsDynamic;
-  //   for (final dynamicObject in dynamicObjects) {
-  //     if (dynamicObject.respawnDuration <= 0) continue;
-  //     if (dynamicObject.respawnDuration-- > 1) continue;
-  //     respawnDynamicObject(dynamicObject, health: 10);
-  //   }
-  // }
-
   void respawnDynamicObject(GameObject dynamicObject, {required int health}){
     assert(health > 0);
     for (final player in players) {
@@ -1607,6 +1599,47 @@ extension GameFunctions on Game {
       dynamicObject.collidable = true;
       player.writeDynamicObjectSpawned(dynamicObject);
     }
+  }
+
+  void addEnemySpawn({required int z, required int row, required int column}){
+    scene.enemySpawns.add(
+        EnemySpawn(
+          z: z,
+          row: row,
+          column: column,
+          framesPerSpawn: 30,
+        )
+    );
+  }
+
+  Npc addNpc({
+    required String name,
+    required double x,
+    required double y,
+    required double z,
+    required Function(Player player) onInteractedWith,
+    int weapon = WeaponType.Unarmed,
+    int head = HeadType.None,
+    int armour = ArmourType.shirtCyan,
+    int pants = PantsType.brown,
+    int team = 1,
+    int health = 10,
+  }){
+    final npc = Npc(
+      name: name,
+      onInteractedWith: onInteractedWith,
+      x: x,
+      y: y,
+      z: z,
+      weapon: weapon,
+      team: team,
+      health: health,
+    );
+    npc.equippedHead = head;
+    npc.equippedArmour = armour;
+    npc.equippedPants = pants;
+    npcs.add(npc);
+    return npc;
   }
 }
 

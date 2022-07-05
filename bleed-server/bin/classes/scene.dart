@@ -352,7 +352,12 @@ class Scene {
        return;
     }
 
-    while (tileAtFeet == GridNodeType.Bricks || tileAtFeet == GridNodeType.Grass || tileAtFeet == GridNodeType.Grass_Long) {
+    while (
+          tileAtFeet == GridNodeType.Bricks ||
+          tileAtFeet == GridNodeType.Grass ||
+          tileAtFeet == GridNodeType.Grass_Long ||
+          tileAtFeet == GridNodeType.Wood
+    ) {
        character.z += 24 - (character.z % 24);
        tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
        character.zVelocity = 0;
