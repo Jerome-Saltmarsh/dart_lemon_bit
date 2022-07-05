@@ -64,10 +64,19 @@ class AI extends Character with Material {
     required double z,
     required CharacterType type,
     required int health,
+    required Weapon weapon,
     int team = 0,
-    int weapon = WeaponType.Unarmed,
     double speed = 3.0,
-  }): super(x: x, y: y, z: z, type: type, health: health, team: team, equippedWeapon: Weapon(), speed: speed) {
+  }): super(
+      x: x,
+      y: y,
+      z: z,
+      type: type,
+      health: health,
+      team: team,
+      equippedWeapon: weapon,
+      speed: speed
+  ) {
     this.material = MaterialType.Flesh;
   }
 

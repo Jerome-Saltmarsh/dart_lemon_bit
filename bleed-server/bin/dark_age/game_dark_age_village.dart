@@ -1,5 +1,4 @@
 
-import '../classes/enemy_spawn.dart';
 import '../classes/library.dart';
 import '../common/library.dart';
 import 'game_dark_age.dart';
@@ -19,6 +18,7 @@ class GameDarkAgeVillage extends GameDarkAge {
         armour: ArmourType.shirtBlue,
         pants: PantsType.brown,
         onInteractedWith: (player) {
+          player.health = player.maxHealth;
           player.setStoreItems([
             Weapon(type: WeaponType.Bow, damage: 5),
             Weapon(type: WeaponType.Sword, damage: 5),
@@ -39,6 +39,21 @@ class GameDarkAgeVillage extends GameDarkAge {
             Weapon(type: WeaponType.Handgun, damage: 5),
             Weapon(type: WeaponType.Shotgun, damage: 5),
           ]);
+        }
+    );
+
+    addNpc(
+        name: "Guard",
+        x: 1460,
+        y: 630,
+        z: 24.0,
+        head: HeadType.Rogues_Hood,
+        armour: ArmourType.shirtBlue,
+        pants: PantsType.green,
+        weaponType: WeaponType.Bow,
+        weaponDamage: 3,
+        onInteractedWith: (player) {
+
         }
     );
 

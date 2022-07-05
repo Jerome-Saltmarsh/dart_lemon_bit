@@ -1,6 +1,7 @@
 import '../common/CharacterType.dart';
 import 'player.dart';
 import 'ai.dart';
+import 'weapon.dart';
 
 class Npc extends AI {
   final String name;
@@ -14,7 +15,7 @@ class Npc extends AI {
       required double y,
       required double z,
       required int health,
-      required int weapon,
+      required Weapon weapon,
       int team = 1,
   })
       : super(

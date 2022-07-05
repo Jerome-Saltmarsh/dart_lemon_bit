@@ -25,6 +25,7 @@ import 'scene.dart';
 import 'spawn_point.dart';
 import 'tile_node.dart';
 import 'components.dart';
+import 'weapon.dart';
 
 abstract class Game {
   Player? owner;
@@ -1269,7 +1270,7 @@ extension GameFunctions on Game {
       y: 0,
       z: 0,
       health: 10,
-      weapon: SlotType.Empty,
+      weapon: Weapon(type: WeaponType.Unarmed),
     );
     zombies.add(zombie);
     return zombie;
@@ -1618,7 +1619,8 @@ extension GameFunctions on Game {
     required double y,
     required double z,
     required Function(Player player) onInteractedWith,
-    int weapon = WeaponType.Unarmed,
+    int weaponType = WeaponType.Unarmed,
+    int weaponDamage = 1,
     int head = HeadType.None,
     int armour = ArmourType.shirtCyan,
     int pants = PantsType.brown,
@@ -1631,7 +1633,7 @@ extension GameFunctions on Game {
       x: x,
       y: y,
       z: z,
-      weapon: weapon,
+      weapon: Weapon(type: weaponType, damage: weaponDamage),
       team: team,
       health: health,
     );
