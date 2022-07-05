@@ -58,17 +58,6 @@ class Engine {
     }
   }
 
-  Future<GameDarkAge> findGameDarkAgeOfficial() async {
-    for (final game in games) {
-      if (game is GameDarkAge) {
-        if (game.full) continue;
-        if (game.owner != null) continue;
-        return game;
-      }
-    }
-    return GameDarkAgeVillage();
-  }
-
   Future<GameDarkAge> findGameEditorNew() async {
     final game = GameDarkAge(generateEmptyScene());
     game.timePassing = false;
@@ -108,5 +97,17 @@ class Engine {
       }
     }
     return GameDarkAgeCastle();
+  }
+
+
+  GameDarkAge findGameDarkAgeVillage() {
+    for (final game in games) {
+      if (game is GameDarkAgeVillage) {
+        if (game.full) continue;
+        if (game.owner != null) continue;
+        return game;
+      }
+    }
+    return GameDarkAgeVillage();
   }
 }

@@ -56,12 +56,9 @@ class GameDarkAgeVillage extends GameDarkAge {
         final player = players[i];
         if (player.indexRow != 19) continue;
         if (player.indexColumn != 49) continue;
-        final castle = engine.findGameDarkAgeCastle();
-        removePlayer(player);
-        castle.players.add(player);
-        player.sceneDownloaded = false;
-        player.game = castle;
-        // castle.onPlayerJoined(player)
+        player.changeGame(engine.findGameDarkAgeCastle());
+        player.x = 1420;
+        player.y = 90;
      }
   }
 }

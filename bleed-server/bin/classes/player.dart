@@ -227,6 +227,13 @@ class Player extends Character with ByteWriter {
       scene.enemySpawns.add(EnemySpawn(z: z, row: row, column: column));
     }
   }
+
+  void changeGame(Game to){
+    game.removePlayer(this);
+    to.players.add(this);
+    sceneDownloaded = false;
+    game = to;
+  }
 }
 
 class Slot {
