@@ -1,41 +1,30 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
-import 'package:gamestream_flutter/isometric/audio/convert_distance_to_volume.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
-import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/watches/raining.dart';
 import 'package:lemon_math/library.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 
 void onGameEvent(int type, double x, double y, double z, double angle) {
-  final distanceFromPlayer = player.distance3(x, y, z);
 
   switch (type) {
     case GameEventType.Footstep:
       final tile = getGridTypeAtXYZ(x, y, z - 2);
-      final volume = convertDistanceToVolume(
-          distanceFromPlayer,
-          maxDistance: 200
-      ) * 0.1;
 
       if (raining.value){
         if (getGridTypeAtXYZ(x, y, z + 2) == GridNodeType.Rain_Landing) {
-          audioSingleFootstepMud6(volume);
+          audioSingleFootstepMud6.playXYZ(x: x, y: y, z: z);
         }
       }
-
       if (GridNodeType.isStone(tile)) {
-        return audioSingleFootstepStone(volume);
+        return audioSingleFootstepStone.playXYZ(x: x, y: y, z: z);
       }
-
-
       if (randomBool()){
-        return audioSingleFootstepGrass8(volume);
+        return audioSingleFootstepGrass8.playXYZ(x: x, y: y, z: z);
       }
-      return audioSingleFootstepGrass7(volume);
-
+      return audioSingleFootstepGrass7.playXYZ(x: x, y: y, z: z);
 
     case GameEventType.Handgun_Fired:
       audio.handgunShot(x, y);
