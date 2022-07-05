@@ -19,11 +19,10 @@ class GameDarkAgeVillage extends GameDarkAge {
         armour: ArmourType.shirtBlue,
         pants: PantsType.brown,
         onInteractedWith: (player) {
-          player.storeItems = [
+          player.setStoreItems([
             Weapon(type: WeaponType.Bow, damage: 5),
             Weapon(type: WeaponType.Sword, damage: 5),
-          ];
-          player.writeStoreItems();
+          ]);
         }
     );
 
@@ -36,11 +35,10 @@ class GameDarkAgeVillage extends GameDarkAge {
         armour: ArmourType.shirtCyan,
         pants: PantsType.red,
         onInteractedWith: (player) {
-          player.storeItems = [
+          player.setStoreItems([
             Weapon(type: WeaponType.Handgun, damage: 5),
             Weapon(type: WeaponType.Shotgun, damage: 5),
-          ];
-          player.writeStoreItems();
+          ]);
         }
     );
 

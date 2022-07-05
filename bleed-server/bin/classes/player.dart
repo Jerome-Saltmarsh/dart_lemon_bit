@@ -55,6 +55,11 @@ class Player extends Character with ByteWriter {
 
   bool get ownsGame => game.owner == this;
 
+  void setStoreItems(List<Weapon> values){
+    this.storeItems = values;
+    writeStoreItems();
+  }
+
   void closeStore(){
     if (storeItems.isEmpty) return;
     storeItems = [];
