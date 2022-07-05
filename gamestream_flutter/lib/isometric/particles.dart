@@ -118,7 +118,7 @@ void spawnParticleArm({
   required double angle,
   required double speed
 }) {
-  final type = ParticleType.Arm;
+  final type = ParticleType.Zombie_Arm;
   spawnParticle(
     type: type,
     x: x,
@@ -195,7 +195,7 @@ void spawnParticleOrgan({
   required double angle,
   required double speed
 }) {
-  final type = ParticleType.Organ;
+  final type = ParticleType.Zombie_Torso;
   spawnParticle(
       type: type,
       x: x,
@@ -204,7 +204,7 @@ void spawnParticleOrgan({
       angle: angle,
       speed: speed,
       zv: randomBetween(0.04, 0.06),
-      weight: 0.35,
+      weight: 6,
       duration: bodyPartDuration,
       rotation: giveOrTake(pi),
       rotationV: giveOrTake(0.25),
@@ -425,7 +425,7 @@ void spawnParticleHeadZombie({
       angle: angle,
       speed: speed,
       zv: 0.06,
-      weight: 0.3,
+      weight: 6,
       duration: bodyPartDuration,
       rotation: 0,
       rotationV: 0.05,
@@ -443,14 +443,14 @@ void spawnParticleLegZombie({
   required double speed
 }) {
   spawnParticle(
-      type: ParticleType.Leg,
+      type: ParticleType.Zombie_leg,
       x: x,
       y: y,
       z: z,
       angle: angle,
       speed: speed,
       zv: randomBetween(0, 0.03),
-      weight: 0.35,
+      weight: 6,
       duration: bodyPartDuration,
       rotation: giveOrTake(pi),
       rotationV: giveOrTake(0.25),

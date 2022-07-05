@@ -33,9 +33,9 @@ class Particle extends Vector3 {
   bool get bleeds {
      if (type == ParticleType.Blood) return false;
      if (type == ParticleType.Zombie_Head) return true;
-     if (type == ParticleType.Organ) return true;
-     if (type == ParticleType.Arm) return true;
-     if (type == ParticleType.Leg) return true;
+     if (type == ParticleType.Zombie_Torso) return true;
+     if (type == ParticleType.Zombie_Arm) return true;
+     if (type == ParticleType.Zombie_leg) return true;
      return false;
   }
 

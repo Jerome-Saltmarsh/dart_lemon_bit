@@ -40,7 +40,7 @@ void renderParticle(Particle value) {
     case ParticleType.Flame:
       return renderFlame(value);
 
-    case ParticleType.Arm:
+    case ParticleType.Zombie_Arm:
       return render(
           dstX: value.renderX,
           dstY: value.renderY,
@@ -62,7 +62,18 @@ void renderParticle(Particle value) {
           color: value.renderColor
       );
 
-    case ParticleType.Leg:
+    case ParticleType.Zombie_leg:
+      return render(
+          dstX: value.renderX,
+          dstY: value.renderY,
+          srcX: 4030.0 + (64 * 2),
+          srcY: 64.0 * value.direction,
+          srcWidth: 64,
+          srcHeight: 64,
+          color: value.renderColor
+      );
+
+    case ParticleType.Zombie_Torso:
       return render(
           dstX: value.renderX,
           dstY: value.renderY,

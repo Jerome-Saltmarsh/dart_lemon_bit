@@ -2,9 +2,9 @@ class ParticleType {
   static const Smoke = 0;
   static const Zombie_Head = 2;
   static const Shell = 3;
-  static const Arm = 4;
-  static const Leg = 5;
-  static const Organ = 6;
+  static const Zombie_Arm = 4;
+  static const Zombie_leg = 5;
+  static const Zombie_Torso = 6;
   static const Blood = 7;
   static const Shrapnel = 8;
   static const FireYellow = 9;
