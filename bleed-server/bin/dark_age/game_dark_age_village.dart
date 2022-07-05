@@ -1,14 +1,13 @@
 
 import '../classes/library.dart';
 import '../common/library.dart';
+import '../engine.dart';
 import 'game_dark_age.dart';
 import 'dark_age_scenes.dart';
 
 class GameDarkAgeVillage extends GameDarkAge {
 
-
   GameDarkAgeVillage() : super(darkAgeScenes.village) {
-
     addNpc(
         name: "Bell",
         x: 1150,
@@ -49,5 +48,20 @@ class GameDarkAgeVillage extends GameDarkAge {
 
     addEnemySpawn(z: 1, row: 40, column: 5);
     addEnemySpawn(z: 1, row: 40, column: 35);
+  }
+
+  @override
+  void updateInternal(){
+     for (var i = 0; i < players.length; i++) {
+        final player = players[i];
+        if (player.indexRow != 19) continue;
+        if (player.indexColumn != 49) continue;
+        final castle = engine.findGameDarkAgeCastle();
+        removePlayer(player);
+        castle.players.add(player);
+        player.sceneDownloaded = false;
+        player.game = castle;
+        // castle.onPlayerJoined(player)
+     }
   }
 }

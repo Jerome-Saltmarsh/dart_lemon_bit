@@ -55,6 +55,8 @@ abstract class Game {
   var _wind = 0;
   var _timePassing = true;
 
+  bool get hasOwner => owner != null;
+
   void setHourMinutes(int hour, int minutes){
 
   }
@@ -1366,7 +1368,7 @@ extension GameFunctions on Game {
     ai.target = value;
   }
 
-  bool disconnectPlayer(Player player){
+  bool removePlayer(Player player){
     if (!players.remove(player)) return false;
     for (final npc in zombies) {
       npc.clearTargetIf(player);
@@ -1386,7 +1388,7 @@ extension GameFunctions on Game {
     for (var i = 0; i < playerLength; i++) {
       final player = players[i];
       if (player.lastUpdateFrame++ < 100) continue;
-      if (!disconnectPlayer(player)) continue;
+      if (!removePlayer(player)) continue;
       i--;
       playerLength--;
     }

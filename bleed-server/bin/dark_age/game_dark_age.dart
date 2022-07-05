@@ -31,6 +31,11 @@ class GameDarkAge extends Game {
   @override
   void update(){
     updateTimePassing();
+    updateInternal();
+  }
+
+  void updateInternal(){
+
   }
 
   void updateTimePassing(){

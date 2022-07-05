@@ -4,6 +4,7 @@ import 'classes/library.dart';
 import 'constants/frames_per_second.dart';
 import 'dark_age/dark_age_scenes.dart';
 import 'dark_age/game_dark_age.dart';
+import 'dark_age/game_dark_age_castle.dart';
 import 'dark_age/game_dark_age_village.dart';
 import 'io/read_scene_from_file.dart';
 import 'language.dart';
@@ -48,8 +49,12 @@ class Engine {
       }
     }
 
-    for (final game in games) {
-      game.updateStatus();
+    // for (final game in games) {
+    //   game.updateStatus();
+    // }
+
+    for (var i = 0; i < games.length; i++){
+      games[i].updateStatus();
     }
   }
 
@@ -92,5 +97,16 @@ class Engine {
   void onPlayerCreated(Player player) {
     player.game.players.add(player);
     player.game.disableCountDown = 0;
+  }
+
+  GameDarkAgeCastle findGameDarkAgeCastle() {
+    for (final game in games) {
+      if (game is GameDarkAgeCastle) {
+        if (game.full) continue;
+        if (game.hasOwner) continue;
+        return game;
+      }
+    }
+    return GameDarkAgeCastle();
   }
 }
