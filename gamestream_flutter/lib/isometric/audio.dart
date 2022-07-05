@@ -148,10 +148,6 @@ class _Audio {
     _playRandom(_pistolShot, x, y);
   }
 
-  void changeCloths(double x, double y){
-    audio._playPositioned('change-cloths.mp3', x, y);
-  }
-
   void drawSword(double x, double y){
     audio._playPositioned('draw-sword.mp3', x, y);
   }

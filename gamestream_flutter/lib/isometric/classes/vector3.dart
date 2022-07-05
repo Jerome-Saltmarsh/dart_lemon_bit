@@ -15,6 +15,7 @@ class Vector3 with Position {
   double get renderOrder => x + y;
   int get tile => grid[indexZ][indexRow][indexColumn];
   int get tileBelow => indexZ == 0 ? GridNodeType.Boundary : grid[indexZ - 1][indexRow][indexColumn];
+  int get tileAbove => indexZ < gridTotalZ - 1 ? GridNodeType.Boundary : grid[indexZ + 1][indexRow][indexColumn];
   int get shade => gridLightDynamic[z >= tileSizeHalf ? indexZ - 1 : 0][indexRow][indexColumn];
   int get wind => gridWind[z >= tileSizeHalf ? indexZ - 1 : 0][indexRow][indexColumn];
 

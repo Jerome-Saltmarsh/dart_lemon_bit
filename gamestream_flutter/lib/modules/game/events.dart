@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
+import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
@@ -37,7 +38,6 @@ class GameEvents {
     player.alive.onChanged(_onPlayerAliveChanged);
     player.state.onChanged(onPlayerCharacterStateChanged);
     messageBoxVisible.onChanged(onTextModeChanged);
-    player.weaponType.onChanged(onPlayerWeaponChanged);
     player.armourType.onChanged(onPlayerArmourChanged);
     player.headType.onChanged(onPlayerHelmChanged);
     RawKeyboard.instance.addListener(onKeyboardEvent);
@@ -101,20 +101,12 @@ class GameEvents {
      }
   }
 
-  void onPlayerWeaponChanged(int value){
-    if (SlotType.isMetal(value)) {
-      audio.drawSword(screenCenterWorldX, screenCenterWorldY);
-    } else {
-      audio.changeCloths(screenCenterWorldX, screenCenterWorldY);
-    }
-  }
-
   void onPlayerArmourChanged(int armour){
-    audio.changeCloths(screenCenterWorldX, screenCenterWorldY);
+    audioSingleChanging.play();
   }
 
   void onPlayerHelmChanged(int value){
-    audio.changeCloths(screenCenterWorldX, screenCenterWorldY);
+    audioSingleChanging.play();
   }
 
   void onTextModeChanged(bool textMode) {
