@@ -7,6 +7,7 @@ import '../common/library.dart';
 import '../convert/convert_card_type_to_card.dart';
 import '../engine.dart';
 import '../utilities.dart';
+import 'enemy_spawn.dart';
 import 'position3.dart';
 import 'library.dart';
 
@@ -192,6 +193,34 @@ class Player extends Character with ByteWriter {
         skillPoints++;
         game.onPlayerLevelGained(this);
       }
+  }
+
+  void setBlock(int z, int row, int column, int type) {
+    final previousType = scene.grid[z][row][column].type;
+
+    if (previousType == GridNodeType.Enemy_Spawn){
+      scene.enemySpawns.removeWhere((enemySpawn) =>
+      enemySpawn.z == z &&
+          enemySpawn.row == row &&
+          enemySpawn.column == column
+      );
+    };
+
+    if (previousType == type) return;
+    scene.dirty = true;
+    scene.grid[z][row][column].type = type;
+    game.players.forEach((player) {
+      player.writeByte(ServerResponse.Block_Set);
+      player.writeInt(z);
+      player.writeInt(row);
+      player.writeInt(column);
+      player.writeInt(type);
+
+    });
+
+    if (type == GridNodeType.Enemy_Spawn){
+      scene.enemySpawns.add(EnemySpawn(z: z, row: row, column: column));
+    }
   }
 }
 

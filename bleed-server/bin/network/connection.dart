@@ -1,7 +1,6 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import '../classes/enemy_spawn.dart';
 import '../classes/library.dart';
 import '../classes/position3.dart';
 import '../common/library.dart';
@@ -260,32 +259,7 @@ class Connection {
         if (type == null){
           return errorInvalidArg('type');
         }
-        final scene = player.game.scene;
-        final previousType = scene.grid[z][row][column].type;
-
-        if (previousType == GridNodeType.Enemy_Spawn){
-          scene.enemySpawns.removeWhere((enemySpawn) =>
-          enemySpawn.z == z &&
-              enemySpawn.row == row &&
-              enemySpawn.column == column
-          );
-        };
-
-        if (previousType == type) return;
-        scene.dirty = true;
-        scene.grid[z][row][column].type = type;
-        player.game.players.forEach((player) {
-          player.writeByte(ServerResponse.Block_Set);
-          player.writeInt(z);
-          player.writeInt(row);
-          player.writeInt(column);
-          player.writeInt(type);
-
-        });
-
-        if (type == GridNodeType.Enemy_Spawn){
-          scene.enemySpawns.add(EnemySpawn(z: z, row: row, column: column));
-        }
+        player.setBlock(z, row, column, type);
         break;
 
       case ClientRequest.Deck_Select_Card:
