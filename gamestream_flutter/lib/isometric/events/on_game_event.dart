@@ -95,6 +95,9 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       break;
     case GameEventType.Zombie_Strike:
       randomItem(audioSingleZombieBits).playXYZ(x, y, z);
+      if (randomBool()){
+        randomItem(audioSingleZombieTalking).playXYZ(x, y, z);
+      }
       break;
     case GameEventType.Player_Death:
       // actions.emitPixelExplosion(x, y);
