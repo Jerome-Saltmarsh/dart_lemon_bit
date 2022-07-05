@@ -148,10 +148,6 @@ class _Audio {
     _playRandom(_pistolShot, x, y);
   }
 
-  void drawSword(double x, double y){
-    audio._playPositioned('draw-sword.mp3', x, y);
-  }
-
   void medkit(double x, double y) {
     audio._playPositioned('medkit.mp3', x, y);
   }

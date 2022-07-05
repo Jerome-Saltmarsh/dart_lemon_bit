@@ -20,7 +20,7 @@ class AudioSingle {
     source = AudioSource.uri(Uri.parse(url));
   }
 
-  void call(double volume){
+  void call([double volume = 1.0]){
     play(volume: volume);
   }
 
