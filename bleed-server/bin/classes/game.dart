@@ -905,7 +905,7 @@ extension GameFunctions on Game {
           if (!target.deadOrBusy){
             target.face(player);
           }
-          target.onInteractedWith(player);
+          target.onInteractedWith?.call(player);
           player.target = null;
           setCharacterStateIdle(player);
           return;
@@ -1618,7 +1618,7 @@ extension GameFunctions on Game {
     required double x,
     required double y,
     required double z,
-    required Function(Player player) onInteractedWith,
+    Function(Player player)? onInteractedWith,
     int weaponType = WeaponType.Unarmed,
     int weaponDamage = 1,
     int head = HeadType.None,

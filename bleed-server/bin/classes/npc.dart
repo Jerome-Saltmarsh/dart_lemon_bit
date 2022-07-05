@@ -6,7 +6,7 @@ import 'weapon.dart';
 class Npc extends AI {
   final String name;
 
-  Function(Player player) onInteractedWith;
+  Function(Player player)? onInteractedWith;
 
   Npc({
       required this.name,

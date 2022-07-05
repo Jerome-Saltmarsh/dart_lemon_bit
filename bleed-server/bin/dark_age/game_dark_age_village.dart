@@ -42,20 +42,9 @@ class GameDarkAgeVillage extends GameDarkAge {
         }
     );
 
-    addNpc(
-        name: "Guard",
-        x: 1460,
-        y: 630,
-        z: 24.0,
-        head: HeadType.Rogues_Hood,
-        armour: ArmourType.shirtBlue,
-        pants: PantsType.green,
-        weaponType: WeaponType.Bow,
-        weaponDamage: 3,
-        onInteractedWith: (player) {
-
-        }
-    );
+    addNpcGuardBow(x: 1460, y: 630);
+    addNpcGuardBow(x: 520, y: 1000);
+    addNpcGuardBow(x: 985, y: 1500);
 
     addEnemySpawn(z: 1, row: 40, column: 5);
     addEnemySpawn(z: 1, row: 40, column: 35);

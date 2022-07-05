@@ -129,4 +129,18 @@ class GameDarkAge extends Game {
   void onPlayerDeath(Player player) {
     revive(player);
   }
+
+  void addNpcGuardBow({required double x, required double y, double z = 24}){
+    addNpc(
+      name: "Guard",
+      x: x,
+      y: y,
+      z: z,
+      head: HeadType.Rogues_Hood,
+      armour: ArmourType.shirtBlue,
+      pants: PantsType.green,
+      weaponType: WeaponType.Bow,
+      weaponDamage: 3,
+    );
+  }
 }

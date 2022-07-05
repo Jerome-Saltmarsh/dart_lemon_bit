@@ -472,7 +472,7 @@ class Connection {
               aimTarget.face(player);
             }
             player.face(aimTarget);
-            aimTarget.onInteractedWith(player);
+            aimTarget.onInteractedWith?.call(player);
             break;
           }
           player.runToMouse();
