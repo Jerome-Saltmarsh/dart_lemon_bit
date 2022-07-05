@@ -24,7 +24,7 @@ class AudioSingle {
     play(volume: volume);
   }
 
-  void playXYZ({required double x, required double y, required double z}){
+  void playXYZ(double x, double y, double z){
     final distanceFromPlayer = player.distance3(x, y, z);
     final distanceVolume = convertDistanceToVolume(
         distanceFromPlayer,

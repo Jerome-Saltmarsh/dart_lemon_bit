@@ -15,16 +15,16 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
 
       if (raining.value){
         if (getGridTypeAtXYZ(x, y, z + 2) == GridNodeType.Rain_Landing) {
-          audioSingleFootstepMud6.playXYZ(x: x, y: y, z: z);
+          audioSingleFootstepMud6.playXYZ(x, y, z);
         }
       }
       if (GridNodeType.isStone(tile)) {
-        return audioSingleFootstepStone.playXYZ(x: x, y: y, z: z);
+        return audioSingleFootstepStone.playXYZ(x, y, z);
       }
       if (randomBool()){
-        return audioSingleFootstepGrass8.playXYZ(x: x, y: y, z: z);
+        return audioSingleFootstepGrass8.playXYZ(x, y, z);
       }
-      return audioSingleFootstepGrass7.playXYZ(x: x, y: y, z: z);
+      return audioSingleFootstepGrass7.playXYZ(x, y, z);
 
     case GameEventType.Handgun_Fired:
       audio.handgunShot(x, y);
@@ -83,7 +83,9 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
           angle: angle + giveOrTake(0.5),
           speed: 4.0 + giveOrTake(0.5),
           zv: 0.1);
-      audio.zombieDeath(x, y);
+      
+      randomItem(audioSingleZombieDeaths).playXYZ(x, y, z);
+      
       break;
 
     case GameEventType.Zombie_Target_Acquired:
@@ -118,9 +120,9 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       audio.arrowImpact(x, y);
       break;
     case GameEventType.Draw_Bow:
-      return audioSingleBowDraw.playXYZ(x: x, y: y, z: z);
+      return audioSingleBowDraw.playXYZ(x, y, z);
     case GameEventType.Release_Bow:
-      return audioSingleBowRelease.playXYZ(x: x, y: y, z: z);
+      return audioSingleBowRelease.playXYZ(x, y, z);
     case GameEventType.Sword_Woosh:
       audio.swordWoosh(x, y);
       break;
@@ -205,7 +207,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       break;
 
     case GameEventType.Material_Struck_Flesh:
-      audioSingleBloodyPunches.playXYZ(x: x, y: y, z: z);
+      audioSingleBloodyPunches.playXYZ(x, y, z);
       final total = randomInt(2, 5);
       for (var i = 0; i < total; i++) {
         spawnParticleBlood(
@@ -234,7 +236,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       break;
 
     case GameEventType.Zombie_Hurt:
-      audioSingleZombieHurt.playXYZ(x: x, y: y, z: z);
+      audioSingleZombieHurt.playXYZ(x, y, z);
       break;
 
     case GameEventType.Blue_Orb_Deactivated:

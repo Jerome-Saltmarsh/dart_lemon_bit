@@ -5,8 +5,13 @@ final audioSingleFootstepGrass8 = AudioSingle(name: 'footstep-grass-8', volume: 
 final audioSingleFootstepGrass7 = AudioSingle(name: 'footstep-grass-7', volume: 0.05, maxDistance: 200);
 final audioSingleFootstepMud6 = AudioSingle(name: 'mud-footstep-6', volume: 0.05, maxDistance: 200);
 final audioSingleFootstepStone = AudioSingle(name: 'footstep-stone', volume: 0.05, maxDistance: 250);
-final audioSingleBowDraw = AudioSingle(name: 'bow-draw', volume: 0.05, maxDistance: 200);
-final audioSingleBowRelease = AudioSingle(name: 'bow-release', volume: 0.05, maxDistance: 250);
+final audioSingleBowDraw = AudioSingle(name: 'bow-draw', volume: 0.5, maxDistance: 200);
+final audioSingleBowRelease = AudioSingle(name: 'bow-release', volume: 0.5, maxDistance: 250);
 final audioSingleBloodyPunches = AudioSingle(name: 'bloody-punches-1', volume: 0.5, maxDistance: 400);
 final audioSingleZombieHurt = AudioSingle(name: 'zombie-hurt-1', volume: 0.5, maxDistance: 400);
+final audioSingleZombieDeaths = [
+  AudioSingle(name: 'zombie-death-02', volume: 1, maxDistance: 400),
+  AudioSingle(name: 'zombie-death-09', volume: 1, maxDistance: 400),
+  AudioSingle(name: 'zombie-death-15', volume: 1, maxDistance: 400),
+];
 
