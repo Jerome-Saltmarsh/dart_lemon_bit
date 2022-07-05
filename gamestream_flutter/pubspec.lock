@@ -413,10 +413,10 @@ packages:
   lemon_engine:
     dependency: "direct main"
     description:
-      path: "C:\\Users\\Jerome\\github\\dart-lemon-engine"
+      path: "C:\\Users\\Jerome\\github\\bleed\\dart-lemon-engine"
       relative: false
     source: path
-    version: "0.3.19"
+    version: "0.3.20"
   lemon_math:
     dependency: transitive
     description:

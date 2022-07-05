@@ -1,0 +1,17 @@
+name: lemon_engine
+description: A simple loop and render library
+version: 0.3.20
+homepage: https://github.com/Jerome-Saltmarsh/dart-lemon-engine
+
+environment:
+  sdk: '>=2.14.3 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  lemon_watch:
+      path: C:\Users\Jerome\github\dart-lemon-watch
+  lemon_math:
+      path: C:\Users\Jerome\github\dart-lemon-math
+  universal_html: ^2.0.8
+

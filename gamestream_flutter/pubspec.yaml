@@ -19,7 +19,7 @@ dependencies:
   lemon_byte:
     path: C:\Users\Jerome\github\dart-lemon-byte
   lemon_engine:
-    path: C:\Users\Jerome\github\dart-lemon-engine
+    path: C:\Users\Jerome\github\bleed\dart-lemon-engine
   firestore_client:
     path: C:\Users\Jerome\github\bleed\firestore-client
   flame_audio: ^1.2.0
