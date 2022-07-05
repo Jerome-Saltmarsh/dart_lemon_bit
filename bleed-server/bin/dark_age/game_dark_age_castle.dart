@@ -8,13 +8,15 @@ class GameDarkAgeCastle extends GameDarkAge {
 
   @override
   void updateInternal(){
-    for (var i = 0; i < players.length; i++) {
+    var playerLength = players.length;
+    for (var i = 0; i < playerLength; i++) {
       final player = players[i];
       if (player.indexRow != 27) continue;
       if (player.indexColumn != 0) continue;
       player.changeGame(engine.findGameDarkAgeVillage());
       player.x = 960;
       player.y = 2320;
+      i--;
     }
   }
 }
