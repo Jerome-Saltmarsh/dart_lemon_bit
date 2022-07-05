@@ -2,7 +2,6 @@ import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:lemon_math/library.dart';
 import 'package:just_audio/just_audio.dart';
 import '../lemon_cache/cache.dart';
-import 'audio/audio_singles.dart';
 import 'audio/convert_distance_to_volume.dart';
 
 final audio = _Audio();
@@ -29,14 +28,6 @@ class _Audio {
 
   void materialStruckRock(double x, double y){
     _playPositioned('material-struck-stone.mp3', x, y);
-  }
-
-  void materialStruckFlesh(double x, double y){
-   if (random.nextBool()){
-     _playPositioned('bloody-punches-1.mp3', x, y);
-   } else {
-     bloodyImpact(x, y);
-   }
   }
 
   void materialStruckMetal(double x, double y){
@@ -89,24 +80,6 @@ class _Audio {
 
   void arrowImpact(double x, double y) {
     _playPositioned("arrow-impact.mp3", x, y);
-  }
-
-  void drawBow(double x, double y, double z) {
-    final distanceFromPlayer = player.distance3(x, y, z);
-    final volume = convertDistanceToVolume(
-        distanceFromPlayer,
-        maxDistance: 200
-    );
-    audioSingleBowDraw(volume);
-  }
-
-  void releaseBow(double x, double y, double z) {
-    final distanceFromPlayer = player.distance3(x, y, z);
-    final volume = convertDistanceToVolume(
-        distanceFromPlayer,
-        maxDistance: 200
-    );
-    audioSingleBowRelease(volume);
   }
 
   void swordWoosh(double x, double y) {

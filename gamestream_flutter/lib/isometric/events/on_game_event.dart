@@ -109,7 +109,6 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       );
       break;
     case GameEventType.Teleported:
-      // actions.emitPixelExplosion(x, y);
       audio.magicalSwoosh(x, y);
       break;
     case GameEventType.Blue_Orb_Fired:
@@ -119,19 +118,15 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       audio.arrowImpact(x, y);
       break;
     case GameEventType.Draw_Bow:
-      audio.drawBow(x, y, z);
-      break;
+      return audioSingleBowDraw.playXYZ(x: x, y: y, z: z);
     case GameEventType.Release_Bow:
-      audio.releaseBow(x, y, z);
-      break;
+      return audioSingleBowRelease.playXYZ(x: x, y: y, z: z);
     case GameEventType.Sword_Woosh:
       audio.swordWoosh(x, y);
       break;
     case GameEventType.Objective_Reached:
-      // actions.emitPixelExplosion(x, y);
       break;
     case GameEventType.EnemyTargeted:
-      // actions.emitPixelExplosion(x, y);
       break;
     case GameEventType.Arrow_Fired:
       audio.arrowFlyingPast6(x, y);
@@ -239,7 +234,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       break;
 
     case GameEventType.Zombie_Hurt:
-      audio.zombieHurt(x, y);
+      audioSingleZombieHurt.playXYZ(x: x, y: y, z: z);
       break;
 
     case GameEventType.Blue_Orb_Deactivated:
