@@ -76,10 +76,6 @@ class _Audio {
     _playPositioned("arrow-impact.mp3", x, y);
   }
 
-  void swordWoosh(double x, double y) {
-    _playPositioned('sword-woosh.mp3', x, y);
-  }
-
   void bloodyImpact(double x, double y) {
     _playPositioned('bloody-impact.mp3', x, y);
   }

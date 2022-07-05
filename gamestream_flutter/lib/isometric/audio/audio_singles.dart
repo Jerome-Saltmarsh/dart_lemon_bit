@@ -19,5 +19,6 @@ final audioSingleMaleHello = AudioSingle(name: 'male-hello-1', volume: 0.5, maxD
 final audioSingleChanging = AudioSingle(name: 'change-cloths', volume: 0.5, maxDistance: 150);
 final audioSingleDrawSword = AudioSingle(name: 'draw-sword', volume: 0.5, maxDistance: 250);
 final audioSingleClickSound = AudioSingle(name: 'click-sound-8', volume: 0.5, maxDistance: 250);
-final audioSingleArmSwing = AudioSingle(name: 'arm-swing-11', volume: 0.5, maxDistance: 250);
+final audioSingleSwingArm = AudioSingle(name: 'swing-arm-11', volume: 0.4, maxDistance: 250);
+final audioSingleSwingSword = AudioSingle(name: 'swing-sword', volume: 0.4, maxDistance: 250);
 

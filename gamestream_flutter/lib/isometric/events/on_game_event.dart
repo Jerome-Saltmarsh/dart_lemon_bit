@@ -124,10 +124,9 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
     case GameEventType.Release_Bow:
       return audioSingleBowRelease.playXYZ(x, y, z);
     case GameEventType.Sword_Woosh:
-      audio.swordWoosh(x, y);
-      break;
+      return audioSingleSwingSword.playXYZ(x, y, z);
     case GameEventType.Arm_Swing:
-      return audioSingleArmSwing.playXYZ(x, y, z);
+      return audioSingleSwingArm.playXYZ(x, y, z);
     case GameEventType.Objective_Reached:
       break;
     case GameEventType.EnemyTargeted:
