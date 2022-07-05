@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
@@ -38,8 +37,6 @@ class GameEvents {
     player.alive.onChanged(_onPlayerAliveChanged);
     player.state.onChanged(onPlayerCharacterStateChanged);
     messageBoxVisible.onChanged(onTextModeChanged);
-    player.armourType.onChanged(onPlayerArmourChanged);
-    player.headType.onChanged(onPlayerHelmChanged);
     RawKeyboard.instance.addListener(onKeyboardEvent);
     sub(_onGameError);
 
@@ -99,14 +96,6 @@ class GameEvents {
      if (event is RawKeyUpEvent){
        return;
      }
-  }
-
-  void onPlayerArmourChanged(int armour){
-    audioSingleChanging.play();
-  }
-
-  void onPlayerHelmChanged(int value){
-    audioSingleChanging.play();
   }
 
   void onTextModeChanged(bool textMode) {
@@ -170,7 +159,6 @@ class GameEvents {
   }
 
   void _onPlayerCharacterTypeChanged(CharacterType characterType){
-    print("events.onCharacterTypeChanged($characterType)");
     if (characterType == CharacterType.Human){
       engine.cursorType.value = CursorType.Precise;
     }else{
@@ -179,10 +167,8 @@ class GameEvents {
   }
 
   void _onGameTypeChanged(GameType? type) {
-    print('events.onGameTypeChanged($type)');
     engine.camera.x = 0;
     engine.camera.y = 0;
     engine.zoom = 1;
   }
-
 }

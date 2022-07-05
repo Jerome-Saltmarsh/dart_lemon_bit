@@ -1,6 +1,8 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
+import 'package:gamestream_flutter/isometric/events/on_changed_player_armour.dart';
+import 'package:gamestream_flutter/isometric/events/on_changed_player_head.dart';
 import 'package:lemon_watch/watch.dart';
 import '../events/on_changed_player_weapon.dart';
 import 'vector3.dart';
@@ -22,10 +24,10 @@ class Player extends Vector3 {
   final attackTarget = Vector3();
   final mouseTargetName = Watch<String?>(null);
   final mouseTargetHealth = Watch(0.0);
-  final weaponType = Watch(WeaponType.Unarmed, onChanged: onChangedPlayerWeapon);
   final weaponDamage = Watch(0);
-  final armourType = Watch(ArmourType.tunicPadded);
-  final headType = Watch(HeadType.None);
+  final weaponType = Watch(WeaponType.Unarmed, onChanged: onChangedPlayerWeapon);
+  final armourType = Watch(ArmourType.tunicPadded, onChanged: onChangedPlayerArmour);
+  final headType = Watch(HeadType.None, onChanged: onChangedPlayerHead);
   final pantsType = Watch(PantsType.white);
   final equippedLevel = Watch(0);
   final characterType = Watch(CharacterType.Human);
