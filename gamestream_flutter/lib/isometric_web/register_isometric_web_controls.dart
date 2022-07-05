@@ -5,12 +5,13 @@ import 'package:gamestream_flutter/isometric_web/on_mouse_right_clicked.dart';
 import 'package:lemon_engine/callbacks.dart';
 import 'package:lemon_engine/engine.dart';
 
+import 'on_keyboard_event.dart';
 import 'on_mouse_drag.dart';
 
 final keys = KeyMap();
 
-void registerIsometricWebControls(){
-  print("registerIsometricWebControls()");
+void isometricWebControlsRegister(){
+  print("isometricWebControlsRegister()");
   engine.keyPressedHandlers = {
     // keys.speak: messageBoxToggle,
     keys.teleport: sendClientRequestTeleport,
@@ -18,6 +19,12 @@ void registerIsometricWebControls(){
   onLeftClicked = onMouseLeftClicked;
   engine.callbacks.onMouseDragging = onMouseDrag;
   engine.callbacks.onRightClicked = onMouseRightClicked;
+  RawKeyboard.instance.addListener(onKeyboardEvent);
+}
+
+void isometricWebControlsDeregister(){
+  print("isometricWebControlsDeregister()");
+  RawKeyboard.instance.removeListener(onKeyboardEvent);
 }
 
 class KeyMap {

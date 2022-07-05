@@ -85,6 +85,7 @@ class CoreEvents {
     engine.update = null;
     engine.keyPressedHandlers = {};
     modules.game.events.deregister();
+    isometricWebControlsDeregister();
 
     switch(mode){
 
@@ -101,7 +102,7 @@ class CoreEvents {
         engine.drawCanvasAfterUpdate = true;
         modules.game.events.register();
         engine.registerZoomCameraOnMouseScroll();
-        registerIsometricWebControls();
+        isometricWebControlsRegister();
         break;
 
       case Mode.Editor:
