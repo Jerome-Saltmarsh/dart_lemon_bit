@@ -101,13 +101,16 @@ class _Audio {
         distanceFromPlayer,
         maxDistance: 200
     );
-
-    print("drawBow(volume: $volume, distance: $distanceFromPlayer)");
-    audioSingleDrawBow(volume);
+    audioSingleBowDraw(volume);
   }
 
-  void releaseBow(double x, double y) {
-    _playPositioned('release-bow.mp3', x, y);
+  void releaseBow(double x, double y, double z) {
+    final distanceFromPlayer = player.distance3(x, y, z);
+    final volume = convertDistanceToVolume(
+        distanceFromPlayer,
+        maxDistance: 200
+    );
+    audioSingleBowRelease(volume);
   }
 
   void swordWoosh(double x, double y) {

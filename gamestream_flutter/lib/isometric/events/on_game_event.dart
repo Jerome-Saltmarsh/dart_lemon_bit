@@ -133,7 +133,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       audio.drawBow(x, y, z);
       break;
     case GameEventType.Release_Bow:
-      audio.releaseBow(x, y);
+      audio.releaseBow(x, y, z);
       break;
     case GameEventType.Sword_Woosh:
       audio.swordWoosh(x, y);
