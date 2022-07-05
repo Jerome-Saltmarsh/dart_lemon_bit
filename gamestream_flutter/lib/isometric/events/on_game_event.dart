@@ -92,10 +92,9 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       audio.zombieTargetAcquired(x, y);
       break;
     case GameEventType.Bullet_Hole:
-      // actions.spawnBulletHole(x.toDouble(), y.toDouble());
       break;
     case GameEventType.Zombie_Strike:
-      audio.zombieBite(x, y);
+      randomItem(audioSingleZombieBits).playXYZ(x, y, z);
       break;
     case GameEventType.Player_Death:
       // actions.emitPixelExplosion(x, y);

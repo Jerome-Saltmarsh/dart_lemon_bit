@@ -21,4 +21,8 @@ final audioSingleDrawSword = AudioSingle(name: 'draw-sword', volume: 0.5, maxDis
 final audioSingleClickSound = AudioSingle(name: 'click-sound-8', volume: 0.5, maxDistance: 250);
 final audioSingleSwingArm = AudioSingle(name: 'swing-arm-11', volume: 0.4, maxDistance: 250);
 final audioSingleSwingSword = AudioSingle(name: 'swing-sword', volume: 0.4, maxDistance: 250);
+final audioSingleZombieBits = [
+  AudioSingle(name: 'zombie-bite-04', volume: 0.4, maxDistance: 250),
+  AudioSingle(name: 'zombie-bite-05', volume: 0.4, maxDistance: 250),
+];
 

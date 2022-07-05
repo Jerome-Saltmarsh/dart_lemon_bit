@@ -1022,6 +1022,10 @@ extension GameFunctions on Game {
         }
       }
 
+      if (src is Character && src.type == CharacterType.Zombie){
+        dispatchV2(GameEventType.Zombie_Strike, src);
+      }
+
       applyDamage(src: src, target: health, amount: damage);
     }
   }
