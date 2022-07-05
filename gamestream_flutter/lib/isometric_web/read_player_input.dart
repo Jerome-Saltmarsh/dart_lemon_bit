@@ -24,6 +24,9 @@ void readPlayerInput() {
     if (keyPressed(LogicalKeyboardKey.delete)) {
       edit.deleteBlock();
     }
+    if (keyPressed(LogicalKeyboardKey.keyF)) {
+      actionEditSetShortcutType();
+    }
     if (engine.mouseRightDown.value){
       setPlayModePlay();
     }

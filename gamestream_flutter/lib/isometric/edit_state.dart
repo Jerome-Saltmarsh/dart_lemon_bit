@@ -13,6 +13,7 @@ class EditState {
   var z = Watch(0);
 
   final type = Watch(GridNodeType.Bricks);
+  final shortcutType = Watch(GridNodeType.Bricks);
 
   void selectBlock(int z, int row, int column){
     this.row.value = row;
@@ -29,10 +30,6 @@ class EditState {
     setCurrentBlock(GridNodeType.Empty);
   }
 
-  void setCurrentBlock(int value){
-    return sendClientRequestSetBlock(row.value, column.value, z.value, value);
-  }
-
   void setBlockType(int value){
     if (grid[z.value][row.value][column.value] != value){
       return setCurrentBlock(value);
@@ -45,6 +42,15 @@ class EditState {
       }
     }
   }
+
+  void setCurrentBlock(int value){
+    shortcutType.value = value;
+    return sendClientRequestSetBlock(row.value, column.value, z.value, value);
+  }
+}
+
+void actionEditSetShortcutType(){
+   edit.setCurrentBlock(edit.shortcutType.value);
 }
 
 void editZIncrease(){
