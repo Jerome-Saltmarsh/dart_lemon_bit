@@ -44,8 +44,8 @@ void renderParticle(Particle value) {
       return render(
           dstX: value.renderX,
           dstY: value.renderY,
-          srcX: 3004.0 + (64 * value.direction),
-          srcY: 0,
+          srcX: 4030.0,
+          srcY: 64.0 * value.direction,
           srcWidth: 64,
           srcHeight: 64,
           color: value.renderColor
@@ -55,8 +55,8 @@ void renderParticle(Particle value) {
       return render(
           dstX: value.renderX,
           dstY: value.renderY,
-          srcX: 4030.0 + (64 * value.direction),
-          srcY: 0,
+          srcX: 4030.0 + 64,
+          srcY: 64.0 * value.direction,
           srcWidth: 64,
           srcHeight: 64,
           color: value.renderColor
@@ -66,8 +66,8 @@ void renderParticle(Particle value) {
       return render(
           dstX: value.renderX,
           dstY: value.renderY,
-          srcX: 2491.0 + (64 * value.direction),
-          srcY: 0,
+          srcX: 4030.0 + (64 * 3),
+          srcY: 64.0 * value.direction,
           srcWidth: 64,
           srcHeight: 64,
           color: value.renderColor
