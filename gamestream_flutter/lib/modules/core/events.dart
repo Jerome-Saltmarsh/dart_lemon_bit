@@ -32,7 +32,6 @@ class CoreEvents {
 
   void _onGameStatusChanged(GameStatus value){
     print('events.onGameStatusChanged(value: $value)');
-    audio.stopMusic();
 
     switch(value) {
       case GameStatus.In_Progress:

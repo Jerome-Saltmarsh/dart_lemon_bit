@@ -10,9 +10,10 @@ import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 
 void onGameEvent(int type, double x, double y, double z, double angle) {
+  final distanceFromPlayer = player.distance3(x, y, z);
+
   switch (type) {
     case GameEventType.Footstep:
-      final distanceFromPlayer = player.distance3(x, y, z);
       final tile = getGridTypeAtXYZ(x, y, z - 2);
       final volume = convertDistanceToVolume(
           distanceFromPlayer,
@@ -48,7 +49,6 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       spawnParticleShell(x: x, y: y);
       break;
     case GameEventType.SniperRifle_Fired:
-      audio.sniperShot(x, y);
       spawnParticleShell(x: x, y: y);
       break;
     case GameEventType.MachineGun_Fired:
@@ -130,7 +130,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       audio.arrowImpact(x, y);
       break;
     case GameEventType.Draw_Bow:
-      audio.drawBow(x, y);
+      audio.drawBow(x, y, z);
       break;
     case GameEventType.Release_Bow:
       audio.releaseBow(x, y);

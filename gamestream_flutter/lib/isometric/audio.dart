@@ -9,15 +9,6 @@ final audio = _Audio();
 
 class _Audio {
 
-  var trackIndex = 0;
-
-  final tracks = [
-    'song01',
-    'song02',
-    'song03',
-    'song04',
-  ];
-
   final soundEnabled = Cache(key: 'audio-enabled', value: true);
   final musicEnabled = Cache(key: 'music-enabled', value: true, onChanged: (bool value){
     print("music enabled: $value");
@@ -27,12 +18,6 @@ class _Audio {
        _musicPlayer.setVolume(0);
      }
   });
-
-
-  void playRandomSong(){
-    trackIndex = randomInt(0, tracks.length) % tracks.length;
-    _playMusic(tracks[trackIndex]);
-  }
 
   void objectStruck(double x, double y) {
     _playPositioned('object-struck.mp3', x, y);
@@ -62,26 +47,12 @@ class _Audio {
      objectStruck(x, y);
   }
 
-  void stopMusic(){
-    _musicPlayer.stop();
-  }
-
   void toggleSoundEnabled(){
     soundEnabled.value = !soundEnabled.value;
   }
 
-  void nextSong(){
-     trackIndex++;
-     trackIndex %= tracks.length;
-     _playMusic(tracks[trackIndex]);
-  }
-
   void toggleEnabledMusic(){
     musicEnabled.value = !musicEnabled.value;
-  }
-
-  void sniperShot(double x, double y) {
-    _playPositioned('sniper-shot-04.mp3', x, y);
   }
 
   void winSound2() {
@@ -124,8 +95,15 @@ class _Audio {
     _playPositioned("arrow-impact.mp3", x, y);
   }
 
-  void drawBow(double x, double y) {
-    _playPositioned("draw-bow.mp3", x, y);
+  void drawBow(double x, double y, double z) {
+    final distanceFromPlayer = player.distance3(x, y, z);
+    final volume = convertDistanceToVolume(
+        distanceFromPlayer,
+        maxDistance: 200
+    );
+
+    print("drawBow(volume: $volume, distance: $distanceFromPlayer)");
+    audioSingleDrawBow(volume);
   }
 
   void releaseBow(double x, double y) {
@@ -250,15 +228,6 @@ class _Audio {
       //     isLocal: true,
       //     volume: volume
       // );
-  }
-
-  void _playMusic(String name){
-    _musicPlayer.stop();
-    if (!musicEnabled.value) return;
-    // _musicPlayer.play(
-    //     'assets/audio/music/$name.mp3',
-    //     isLocal: true,
-    // );
   }
 
 

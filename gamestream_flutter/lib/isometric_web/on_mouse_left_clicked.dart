@@ -3,10 +3,8 @@ import 'package:gamestream_flutter/isometric/actions/action_editor_paint_mouse.d
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/enums/edit_tool.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
-import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse_raycast.dart';
 import 'package:gamestream_flutter/isometric/watches/edit_tool.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 
 void onMouseLeftClicked(){
   if (playModeEdit) {
