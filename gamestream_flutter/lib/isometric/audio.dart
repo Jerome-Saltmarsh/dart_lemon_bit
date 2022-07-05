@@ -27,10 +27,6 @@ class _Audio {
     _playPositioned('material-struck-wood.mp3', x, y);
   }
 
-  void footstepGrass(double x, double y) {
-    audioSingleFootstepGrass8(0.0055);
-  }
-
   void materialStruckRock(double x, double y){
     _playPositioned('material-struck-stone.mp3', x, y);
   }

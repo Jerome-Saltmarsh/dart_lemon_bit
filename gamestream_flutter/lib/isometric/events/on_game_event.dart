@@ -210,7 +210,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       break;
 
     case GameEventType.Material_Struck_Flesh:
-      audio.materialStruckFlesh(x, y);
+      audioSingleBloodyPunches.playXYZ(x: x, y: y, z: z);
       final total = randomInt(2, 5);
       for (var i = 0; i < total; i++) {
         spawnParticleBlood(
@@ -232,7 +232,6 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       //     zv: 0.07 + giveOrTake(0.01),
       //   );
       // }
-
       break;
 
     case GameEventType.Material_Struck_Metal:
