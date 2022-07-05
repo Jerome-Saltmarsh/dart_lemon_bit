@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/collectables.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
@@ -388,6 +389,7 @@ class ServerResponseReader with ByteReader {
        }
     }
     onGridChanged();
+    onChangedScene();
   }
 
   void readPaths() {
