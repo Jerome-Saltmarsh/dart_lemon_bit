@@ -1,5 +1,5 @@
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/color_pitch_black.dart';
+import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';

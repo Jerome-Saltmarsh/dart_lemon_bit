@@ -1480,15 +1480,18 @@ extension GameFunctions on Game {
       return;
     }
 
-    final equipped = character.equippedWeapon;
-
-    if (equipped == WeaponType.Sword) {
+    final weaponType = character.equippedWeapon.type;
+    if (weaponType == WeaponType.Sword) {
       if (stateDuration == 7) {
         dispatchV2(GameEventType.Sword_Woosh, character);
       }
     }
-
-    if (equipped == SlotType.Handgun) {
+    if (weaponType == WeaponType.Unarmed) {
+      if (stateDuration == 7) {
+        dispatchV2(GameEventType.Arm_Swing, character);
+      }
+    }
+    if (weaponType == SlotType.Handgun) {
       if (stateDuration == 1) {
         if (character.equippedIsEmpty) {
           dispatchV2(GameEventType.Clip_Empty, character);

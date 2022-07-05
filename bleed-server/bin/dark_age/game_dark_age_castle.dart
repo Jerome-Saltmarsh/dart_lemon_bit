@@ -17,6 +17,7 @@ class GameDarkAgeCastle extends GameDarkAge {
       player.x = 960;
       player.y = 2320;
       i--;
+      playerLength--;
     }
   }
 }

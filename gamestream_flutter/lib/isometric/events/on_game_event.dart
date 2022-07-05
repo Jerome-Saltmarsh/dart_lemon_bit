@@ -126,6 +126,8 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
     case GameEventType.Sword_Woosh:
       audio.swordWoosh(x, y);
       break;
+    case GameEventType.Arm_Swing:
+      return audioSingleArmSwing.playXYZ(x, y, z);
     case GameEventType.Objective_Reached:
       break;
     case GameEventType.EnemyTargeted:

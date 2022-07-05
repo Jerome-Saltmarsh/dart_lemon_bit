@@ -43,4 +43,5 @@ class GameEventType {
   static const Blue_Orb_Deactivated = 53;
   static const Projectile_Fired_Fireball = 54;
   static const Footstep = 55;
+  static const Arm_Swing = 56;
 }
