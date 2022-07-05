@@ -160,7 +160,7 @@ Widget _buildButtonEquipWeapon(Weapon weapon){
     },
     child: watch(player.weapon, (Weapon equippedWeapon){
       return container(
-        color: weapon.uuid == equippedWeapon.uuid ? green : grey,
+        color: weapon.uuid == equippedWeapon.uuid ? brownDark : brownLight,
         child: text(WeaponType.getName(weapon.type)),
         action: (){
           sendClientRequestEquipWeapon(player.weapons.value.indexOf(weapon));

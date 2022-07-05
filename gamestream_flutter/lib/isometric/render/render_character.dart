@@ -20,10 +20,10 @@ void renderCharacter(Character character, {bool renderHealthBar = true}) {
   }
 
 
-  final weapon = character.weapon;
+  final weaponType = character.weapon;
   final direction = character.direction;
 
-  if (weapon == WeaponType.Bow || weapon == WeaponType.Shotgun) {
+  if (weaponType == WeaponType.Bow || weaponType == WeaponType.Shotgun) {
     if (direction == Direction.North_West ||
         direction == Direction.North ||
         direction == Direction.North_East ||
@@ -37,9 +37,11 @@ void renderCharacter(Character character, {bool renderHealthBar = true}) {
     return;
   }
 
-  if (WeaponType.isMelee(weapon)) {
+  if (WeaponType.isMelee(weaponType)) {
     if (direction == Direction.North_East ||
         direction == Direction.North ||
+        direction == Direction.North_West ||
+        direction == Direction.West ||
         direction == Direction.South_West) {
       _renderCharacterTemplateWeapon(character);
       _renderCharacterTemplate(character);
