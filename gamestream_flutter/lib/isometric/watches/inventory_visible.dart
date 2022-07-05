@@ -3,8 +3,6 @@ import 'package:lemon_watch/watch.dart';
 
 final inventoryVisible = Watch(false, onChanged: onInventoryVisibleChanged);
 
-void toggleInventoryVisible() => inventoryVisible.value = !inventoryVisible.value;
-
 void actionShowInventory(){
   inventoryVisible.value = true;
 }

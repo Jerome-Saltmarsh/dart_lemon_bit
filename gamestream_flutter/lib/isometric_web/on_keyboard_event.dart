@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/services.dart';
+import 'package:gamestream_flutter/isometric/actions/action_toggle_inventory.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/lower_tile_mode.dart';
@@ -33,6 +34,11 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
       }
     }
   }
+
+  if (key == PhysicalKeyboardKey.keyI){
+    actionToggleInventoryVisible();
+  }
+
   if (key == PhysicalKeyboardKey.arrowRight){
     edit.column.value--;
     if (edit.column.value < 0){
