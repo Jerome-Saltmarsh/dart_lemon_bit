@@ -15,3 +15,5 @@ final audioSingleZombieDeaths = [
   AudioSingle(name: 'zombie-death-15', volume: 1, maxDistance: 400),
 ];
 
+final audioSingleMaleHello = AudioSingle(name: 'male-hello-1', volume: 0.5, maxDistance: 400);
+

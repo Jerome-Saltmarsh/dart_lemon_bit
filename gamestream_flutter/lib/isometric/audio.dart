@@ -1,6 +1,5 @@
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:lemon_math/library.dart';
-import 'package:just_audio/just_audio.dart';
 import '../lemon_cache/cache.dart';
 import 'audio/convert_distance_to_volume.dart';
 
@@ -11,11 +10,6 @@ class _Audio {
   final soundEnabled = Cache(key: 'audio-enabled', value: true);
   final musicEnabled = Cache(key: 'music-enabled', value: true, onChanged: (bool value){
     print("music enabled: $value");
-     if (value){
-       _musicPlayer.setVolume(1.0);
-     } else {
-       _musicPlayer.setVolume(0);
-     }
   });
 
   void objectStruck(double x, double y) {
@@ -138,18 +132,6 @@ class _Audio {
     _playRandom(_zombieTalking, x, y);
   }
 
-  void zombieDeath(double x, double y) {
-    _playRandom(_zombieDeath, x, y);
-  }
-
-  void zombieHurt(double x, double y){
-    _playRandom(_zombieHurt, x, y);
-  }
-
-  void playAudioZombieHit(double x, double y) {
-    _playRandom(_zombieHits, x, y);
-  }
-
   void humanHurt(double x, double y) {
     _playRandom(_humanHurt, x, y);
   }
@@ -260,29 +242,9 @@ class _Audio {
   }
 }
 
-// abstraction
-final _musicPlayer = AudioPlayer();
-
-const _zombieHits = [
-  'zombie-hit-01.mp3',
-  'zombie-hit-02.mp3',
-  'zombie-hit-03.mp3',
-  'zombie-hit-05.mp3'
-];
-
 const _humanHurt = [
   'male-hurt-01.mp3',
   'male-hurt-02.wav',
-];
-
-const _zombieDeath = [
-  'zombie-death-02.mp3',
-  'zombie-death-09.mp3',
-  'zombie-death-15.mp3',
-];
-
-const _zombieHurt = [
-  'zombie-hurt-1.mp3',
 ];
 
 const _zombieTalking = [

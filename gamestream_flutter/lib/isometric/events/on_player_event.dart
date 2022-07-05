@@ -1,5 +1,6 @@
 import 'package:bleed_common/PlayerEvent.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
+import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -47,6 +48,9 @@ void onPlayerEvent(int event) {
       break;
     case PlayerEvent.Collect_Gold:
       audio.coins(screenCenterWorldX, screenCenterWorldY);
+      break;
+    case PlayerEvent.Hello_Male_01:
+      audioSingleMaleHello.play();
       break;
   }
 }

@@ -35,6 +35,7 @@ class GameDarkAgeVillage extends GameDarkAge {
         armour: ArmourType.shirtCyan,
         pants: PantsType.red,
         onInteractedWith: (player) {
+          player.writePlayerEvent(PlayerEvent.Hello_Male_01);
           player.setStoreItems([
             Weapon(type: WeaponType.Handgun, damage: 5),
             Weapon(type: WeaponType.Shotgun, damage: 5),
