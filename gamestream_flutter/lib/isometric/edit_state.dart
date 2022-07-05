@@ -10,7 +10,7 @@ final edit = EditState();
 class EditState {
   var row = Watch(0);
   var column = Watch(0);
-  var z = Watch(0);
+  var z = Watch(1);
 
   final type = Watch(GridNodeType.Bricks);
   final shortcutType = Watch(GridNodeType.Bricks);

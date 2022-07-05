@@ -34,6 +34,21 @@ class Scene {
     refreshGridMetrics();
   }
 
+  int getGridType(int z, int row, int column){
+     if (outOfBounds(z, row, column)) return GridNodeType.Boundary;
+     return grid[z][row][column].type;
+  }
+
+  bool outOfBounds(int z, int row, int column){
+     if (z < 0) return true;
+     if (row < 0) return true;
+     if (column < 0) return true;
+     if (z >= gridHeight) return true;
+     if (row >= gridRows) return true;
+     if (column >= gridColumns) return true;
+     return false;
+  }
+
   void refreshGridMetrics(){
     gridHeight = grid.length;
     gridRows = grid[0].length;

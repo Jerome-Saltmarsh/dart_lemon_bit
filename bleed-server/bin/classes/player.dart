@@ -196,7 +196,8 @@ class Player extends Character with ByteWriter {
   }
 
   void setBlock(int z, int row, int column, int type) {
-    final previousType = scene.grid[z][row][column].type;
+    if (scene.outOfBounds(z, row, column)) return;
+    final previousType = scene.getGridType(z, row, column);
 
     if (previousType == GridNodeType.Enemy_Spawn){
       scene.enemySpawns.removeWhere((enemySpawn) =>
@@ -215,7 +216,6 @@ class Player extends Character with ByteWriter {
       player.writeInt(row);
       player.writeInt(column);
       player.writeInt(type);
-
     });
 
     if (type == GridNodeType.Enemy_Spawn){
