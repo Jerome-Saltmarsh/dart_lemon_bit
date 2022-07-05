@@ -11,6 +11,7 @@ import 'package:gamestream_flutter/shared_preferences.dart';
 import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/network/web_socket.dart';
 import 'package:lemon_dispatch/instance.dart';
+import 'package:lemon_engine/actions.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
 
@@ -36,7 +37,7 @@ class CoreEvents {
       case GameStatus.In_Progress:
         engine.drawCanvas.value = modules.game.render.renderGame;
         engine.drawCanvasAfterUpdate = false;
-        engine.fullScreenEnter();
+        fullScreenEnter();
         break;
       default:
         engine.fullScreenExit();

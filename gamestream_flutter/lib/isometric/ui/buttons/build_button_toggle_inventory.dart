@@ -8,6 +8,7 @@ import '../../actions/action_toggle_inventory.dart';
 
 Widget buildButtonToggleInventory() {
   return onPressed(
+    hint: "Inventory (I)",
     callback: actionToggleInventoryVisible,
     child: WatchBuilder(inventoryVisible, (bool inventoryVisible) {
       if (inventoryVisible){
