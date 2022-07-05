@@ -6,21 +6,16 @@ import 'package:golden_ratio/constants.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 
-Widget buildHealthBar() {
+Widget buildControlPlayerExperience() {
   final width = 200.0;
   final height = width *
       goldenRatio_0381 *
       goldenRatio_0381;
 
-
   return Tooltip(
-    message: 'Health',
-    child: WatchBuilder(player.health, (double health) {
+    message: 'Experience',
+    child: WatchBuilder(player.experience, (double percentage) {
 
-      final maxHealth = player.maxHealth;
-      if (maxHealth <= 0) return empty;
-
-      final percentage = health / maxHealth;
       return Container(
         width: width,
         height: height,
@@ -29,12 +24,12 @@ Widget buildHealthBar() {
           alignment: Alignment.centerLeft,
           children: [
             Container(
-              color: colours.redDarkest,
+              color: colours.brownLight,
               width: width,
               height: height,
             ),
             Container(
-              color: colours.red,
+              color: colours.yellow,
               width: width * percentage,
               height: height,
             ),
@@ -43,7 +38,9 @@ Widget buildHealthBar() {
               width: width,
               height: height,
               alignment: Alignment.center,
-              child: text('${health.toInt()} | ${player.maxHealth}'),
+              child: WatchBuilder(player.level, (int level){
+                return text('Level $level');
+              }),
             ),
           ],
         ),
