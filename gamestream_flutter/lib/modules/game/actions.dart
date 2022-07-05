@@ -58,8 +58,4 @@ class GameActions {
   void sendClientRequest(ClientRequest request, dynamic value){
     webSocket.send('${request.index} $value');
   }
-
-  void respawn() {
-    webSocket.sink.add(ClientRequest.Revive.index);
-  }
 }

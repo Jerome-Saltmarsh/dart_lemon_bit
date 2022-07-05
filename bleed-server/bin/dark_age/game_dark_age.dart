@@ -142,7 +142,7 @@ class GameDarkAge extends Game {
 
   @override
   void onPlayerDeath(Player player) {
-    revive(player);
+    // revive(player);
   }
 
   void addNpcGuardBow({required double x, required double y, double z = 24}){

@@ -121,6 +121,10 @@ void sendClientRequestTimeSetHour(int hour){
   sendClientRequest(ClientRequest.Time_Set_Hour, hour);
 }
 
+void sendClientRequestRespawn(){
+ sendClientRequest(ClientRequest.Revive);
+}
+
 Future sendClientRequestUpdate() async {
   const updateIndex = 0;
   updateBuffer[0] = updateIndex;

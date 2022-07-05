@@ -7,6 +7,3 @@ void actionShowInventory(){
   inventoryVisible.value = true;
 }
 
-void actionHideInventory(){
-  inventoryVisible.value = false;
-}

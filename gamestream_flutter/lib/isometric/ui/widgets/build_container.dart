@@ -7,8 +7,8 @@ Widget container({
   Color? color,
   Function? action,
   Alignment alignment = Alignment.centerLeft,
-  double width = 200,
-  double height = 50,
+  num width = 200,
+  num height = 50,
   String? toolTip,
   Decoration? decoration,
 }){
@@ -16,8 +16,8 @@ Widget container({
     decoration: decoration,
     padding: const EdgeInsets.only(left: 8),
     alignment: alignment,
-    width: width,
-    height: height,
+    width: width.toDouble(),
+    height: height.toDouble(),
     color: color ?? Colors.grey,
     child: child == null
         ? null : child is Widget ? child : text(child),

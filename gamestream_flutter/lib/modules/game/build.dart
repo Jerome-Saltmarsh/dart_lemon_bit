@@ -90,10 +90,6 @@ class GameBuild {
     });
   }
 
-  Widget respawnButton(){
-    return button("Respawn", actions.respawn);
-  }
-
   Widget panel({required Widget child, Alignment? alignment, EdgeInsets? padding, double? width}){
     return Container(
         color: colours.brownLight,

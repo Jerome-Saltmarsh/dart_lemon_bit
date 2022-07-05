@@ -1,6 +1,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
+import 'package:gamestream_flutter/isometric/events/on_changed_player_alive.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_armour.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_head.dart';
 import 'package:lemon_watch/watch.dart';
@@ -37,7 +38,7 @@ class Player extends Vector3 {
   final skillPoints = Watch(0);
   final message = Watch("");
   final state = Watch(CharacterState.Idle);
-  final alive = Watch(true);
+  final alive = Watch(true, onChanged: onChangedPlayerAlive);
   final magic = Watch(0.0);
   final maxMagic = Watch(0.0);
   final wood = Watch(0);
