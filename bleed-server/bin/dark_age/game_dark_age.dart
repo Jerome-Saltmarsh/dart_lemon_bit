@@ -42,6 +42,16 @@ class GameDarkAge extends Game {
     updateWind();
   }
 
+  @override
+  void onKilled(dynamic target, dynamic src){
+       if (src is Player){
+         if (target is AI){
+            src.gainExperience(1);
+         }
+       }
+  }
+
+
   void updateRain(){
     if (durationRain-- > 0) return;
     durationRain = randomInt(1000, 3000);

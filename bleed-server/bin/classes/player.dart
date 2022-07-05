@@ -891,8 +891,7 @@ extension PlayerProperties on Player {
   }
 }
 
-
 int getExperienceForLevel(int level){
-  return (((level -1) * (level - 1))) * 100;
+  return (((level - 1) * (level - 1))) * 6;
 }
 
