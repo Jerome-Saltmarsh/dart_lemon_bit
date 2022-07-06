@@ -132,10 +132,6 @@ class _Audio {
     _playRandom(_humanHurt, x, y);
   }
 
-  void shotgunShot(double x, double y) {
-    audio._playPositioned('shotgun-shot.mp3', x, y);
-  }
-
   void firebolt(double x, double y) {
     audio._playPositioned('fire-bolt-3.mp3', x, y);
   }

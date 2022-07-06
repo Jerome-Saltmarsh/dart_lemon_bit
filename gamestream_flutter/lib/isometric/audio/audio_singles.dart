@@ -8,6 +8,7 @@ final audioSingleFootstepStone = AudioSingle(name: 'footstep-stone', volume: 0.0
 final audioSingleBowDraw = AudioSingle(name: 'bow-draw', volume: 0.5, maxDistance: 200);
 final audioSingleBowRelease = AudioSingle(name: 'bow-release', volume: 0.5, maxDistance: 250);
 final audioSingleBloodyPunches = AudioSingle(name: 'bloody-punches-1', volume: 0.5, maxDistance: 400);
+final audioSingleShotgunShot = AudioSingle(name: 'shotgun-shot', volume: 0.5, maxDistance: 400);
 final audioSingleZombieHurt = AudioSingle(name: 'zombie-hurt-1', volume: 0.5, maxDistance: 400);
 final audioSingleZombieDeaths = [
   AudioSingle(name: 'zombie-death-02', volume: 1, maxDistance: 400),

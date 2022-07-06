@@ -34,7 +34,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       spawnParticleShell(x: x + xForward, y: y + yForward);
       break;
     case GameEventType.Shotgun_Fired:
-      audio.shotgunShot(x, y);
+      audioSingleShotgunShot.playXYZ(x, y, z);
       spawnParticleShell(x: x, y: y);
       break;
     case GameEventType.SniperRifle_Fired:
