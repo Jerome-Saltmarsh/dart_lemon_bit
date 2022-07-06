@@ -25,7 +25,6 @@ export 'SceneJson.dart';
 export 'ServerResponse.dart';
 export 'Shade.dart';
 export 'SkillCost.dart';
-export 'SlotType.dart';
 export 'SlotTypeCategory.dart';
 export 'StructureType.dart';
 export 'TeamSize.dart';

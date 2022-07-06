@@ -19,7 +19,6 @@ import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
-import 'package:gamestream_flutter/modules/game/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_engine/engine.dart';
@@ -613,11 +612,6 @@ class ServerResponseReader with ByteReader {
     final health = (byte - frame) / 240.0;
     character.frame = frame;
     character.health = health;
-  }
-
-  void readSlot(Slot slot) {
-     slot.type.value = readSlotType();
-     slot.amount.value = readInt();
   }
 
   int readSlotType(){

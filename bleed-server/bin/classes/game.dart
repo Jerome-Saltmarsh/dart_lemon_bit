@@ -1516,7 +1516,7 @@ extension GameFunctions on Game {
         dispatchV2(GameEventType.Arm_Swing, character);
       }
     }
-    if (weaponType == SlotType.Handgun) {
+    if (weaponType == WeaponType.Handgun) {
       if (stateDuration == 1) {
         if (character.equippedIsEmpty) {
           dispatchV2(GameEventType.Clip_Empty, character);

@@ -5,7 +5,6 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
-import 'package:gamestream_flutter/modules/game/build.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:lemon_watch/watch.dart';
@@ -52,9 +51,9 @@ Widget buildRowTechType(int type, Watch<int> levelWatch) {
                           width: 32,
                           height: 32,
                           alignment: Alignment.center,
-                          child: unlocked
-                              ? techTypeIcons[type]
-                              : techTypeIconsGray[type],
+                          // child: unlocked
+                          //     ? techTypeIcons[type]
+                          //     : techTypeIconsGray[type],
                         ),
                         width16,
                         Column(

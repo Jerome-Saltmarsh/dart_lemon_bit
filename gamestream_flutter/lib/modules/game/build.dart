@@ -112,10 +112,6 @@ class GameBuild {
     }
   }
 
-  Widget getSlotTypeImage(int value){
-    return _slotTypeImages[value] ?? icons.unknown;
-  }
-
   Widget mousePosition() {
     return Refresh((){
       return text("Mouse Screen: x: ${engine.mousePosition.x}, y: ${engine.mousePosition.y}");
@@ -189,51 +185,5 @@ class GameBuild {
   }
 }
 
-final _slotTypeImages = <int, Widget> {
-  SlotType.Empty: icons.empty,
-  SlotType.Sword_Short : icons.sword,
-  SlotType.Sword_Wooden : icons.swords.wooden,
-  SlotType.Golden_Necklace : icons.trinkets.goldenNecklace,
-  SlotType.Sword_Long : icons.swords.iron,
-  SlotType.Bow_Wooden : icons.bows.wooden,
-  SlotType.Bow_Green : icons.bows.green,
-  SlotType.Bow_Gold : icons.bows.gold,
-  SlotType.Staff_Wooden : icons.staffs.wooden,
-  SlotType.Staff_Blue : icons.staffs.blue,
-  SlotType.Staff_Golden : icons.staffs.golden,
-  SlotType.Spell_Tome_Fireball : icons.books.red,
-  SlotType.Spell_Tome_Ice_Ring : icons.books.blue,
-  SlotType.Spell_Tome_Split_Arrow : icons.books.blue,
-  SlotType.Body_Blue : icons.armour.standard,
-  SlotType.Steel_Helmet : icons.heads.steel,
-  SlotType.Magic_Hat : icons.heads.magic,
-  SlotType.Rogue_Hood : icons.heads.rogue,
-  SlotType.Potion_Red : icons.potions.red,
-  SlotType.Potion_Blue : icons.potions.blue,
-  SlotType.Armour_Padded : icons.armour.padded,
-  SlotType.Magic_Robes : icons.armour.magic,
-  SlotType.Handgun : icons.firearms.handgun,
-  SlotType.Shotgun : icons.firearms.shotgun,
-  SlotType.Pickaxe : icons.swords.pickaxe,
-};
 
-final techTypeIcons = <int, Widget> {
-  TechType.Unarmed: icons.unknown,
-  TechType.Sword: icons.swords.wooden,
-  TechType.Bow: icons.bows.wooden,
-  TechType.Pickaxe: icons.swords.pickaxe,
-  TechType.Axe: icons.swords.axe,
-  TechType.Hammer: icons.swords.hammer,
-  TechType.Bag: icons.bag,
-};
-
-final techTypeIconsGray = <int, Widget> {
-  TechType.Unarmed: icons.unknown,
-  TechType.Sword: icons.swords.woodenGray,
-  TechType.Bow: icons.bows.woodenGray,
-  TechType.Pickaxe: icons.swords.pickaxeGray,
-  TechType.Axe: icons.swords.axeGray,
-  TechType.Hammer: icons.swords.hammerGray,
-  TechType.Bag: icons.bagGray,
-};
 

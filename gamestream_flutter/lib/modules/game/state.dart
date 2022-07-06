@@ -28,23 +28,6 @@ class GameState {
   }
 }
 
-class Slot {
-  final type = Watch(SlotType.Empty);
-  final amount = Watch(0);
-}
-
-class Slots {
-  final weapon = Slot();
-  final armour = Slot();
-  final helm = Slot();
-
-  final slot1 = Slot();
-  final slot2 = Slot();
-  final slot3 = Slot();
-  final slot4 = Slot();
-  final slot5 = Slot();
-  final slot6 = Slot();
-}
 
 
 
