@@ -92,7 +92,8 @@ void _renderCharacterTemplateWeapon(Character character) {
       srcWidth: 96,
       srcHeight: 96,
       anchorX: 0.5,
-      anchorY: 0.66,
+      anchorY: 0.75,
+      scale: 0.75,
   );
 }
 
