@@ -68,7 +68,7 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
           return render(
             dstX: dstX,
             dstY: dstY,
-            srcX: 5678,
+            srcX: 4856,
             srcY: 72.0 * shade,
             srcWidth: 48,
             srcHeight: 72,
@@ -79,7 +79,7 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
           return render(
             dstX: dstX,
             dstY: dstY,
-            srcX: 5678 + ((((row - column) + animationFrameGrass) % 4) * 48),
+            srcX: 4856 + ((((row - column) + animationFrameGrass) % 4) * 48),
             srcY: 72.0 * shade,
             srcWidth: 48,
             srcHeight: 72,
@@ -90,7 +90,7 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
           return render(
             dstX: dstX,
             dstY: dstY,
-            srcX: 5877 + ((((row - column) + animationFrameGrass) % 4) * 48),
+            srcX: 5048 + ((((row - column) + animationFrameGrass) % 4) * 48),
             srcY: 72.0 * shade,
             srcWidth: 48,
             srcHeight: 72,

@@ -319,8 +319,9 @@ class Scene {
   bool getCollisionAt(double x, double y, double z) {
     var type = getGridBlockTypeAtXYZ(x, y, z);
     if (type == GridNodeType.Empty) return false;
-    if (type == GridNodeType.Player_Spawn) return false;
-    if (type == GridNodeType.Enemy_Spawn) return false;
+    // if (type == GridNodeType.Player_Spawn) return false;
+    // if (type == GridNodeType.Enemy_Spawn) return false;
+    if (GridNodeType.isSolid(type)) return true;
 
     if (GridNodeType.isStairs(type)){
       return getHeightAt(x, y, z) > z;
@@ -333,7 +334,7 @@ class Scene {
       if ((0.5 - percColumn).abs() > treeRadius) return false;
       return true;
     }
-    return true;
+    return false;
   }
 
   void resolveCharacterTileCollision(Character character, Game game) {
@@ -352,12 +353,7 @@ class Scene {
        return;
     }
 
-    while (
-          tileAtFeet == GridNodeType.Bricks ||
-          tileAtFeet == GridNodeType.Grass ||
-          tileAtFeet == GridNodeType.Grass_Long ||
-          tileAtFeet == GridNodeType.Wood
-    ) {
+    while (GridNodeType.isSolid(tileAtFeet)) {
        character.z += 24 - (character.z % 24);
        tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
        character.zVelocity = 0;

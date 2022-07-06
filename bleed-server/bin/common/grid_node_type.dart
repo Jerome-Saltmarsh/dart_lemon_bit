@@ -19,7 +19,13 @@ class GridNodeType {
   static const Rain_Landing = 19;
   static const Fireplace = 20;
   static const Wood = 21;
-  
+
+  static isSolid(int type){
+    if (type == GridNodeType.Bricks) return true;
+    if (type == GridNodeType.Grass) return true;
+    if (type == GridNodeType.Wood) return true;
+    return false;
+  }
   
   static isStone(int type){
     return const [
