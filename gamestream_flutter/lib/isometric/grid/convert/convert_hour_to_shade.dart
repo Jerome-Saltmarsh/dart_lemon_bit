@@ -1,6 +1,6 @@
 import 'package:bleed_common/Shade.dart';
 
-int convertHourToAmbient(int hour){
+int convertHourToShade(int hour){
   if (hour < 2) return Shade.Pitch_Black;
   if (hour < 3) return Shade.Very_Dark;
   if (hour < 5) return Shade.Dark;

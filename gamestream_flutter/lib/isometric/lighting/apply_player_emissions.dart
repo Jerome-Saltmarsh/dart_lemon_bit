@@ -1,6 +1,6 @@
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
+import 'package:gamestream_flutter/isometric/watches/ambient.dart';
 
 import 'apply_vector_emission.dart';
 

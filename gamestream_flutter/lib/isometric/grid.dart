@@ -11,13 +11,12 @@ import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'grid/convert/convert_hour_to_ambient.dart';
+import 'grid/convert/convert_hour_to_shade.dart';
+import 'watches/ambient.dart';
 
 final gridShadows = Watch(true, onChanged: (bool value){
   apiGridActionRefreshLighting();
 });
-
-final ambient = Watch(Shade.Bright, onChanged: _onAmbientChanged);
 
 final grid = <List<List<int>>>[];
 final gridLightBake = <List<List<int>>>[];
@@ -33,8 +32,8 @@ var gridColumnLength = 0.0;
 
 void toggleShadows () => gridShadows.value = !gridShadows.value;
 
-void refreshAmbient(){
-  ambient.value = convertHourToAmbient(hours.value);
+void actionSetAmbientShadeToHour(){
+  ambient.value = convertHourToShade(hours.value);
 }
 
 void gridEmitDynamic(int z, int row, int column, {required int maxBrightness, int radius = 5}){
@@ -48,7 +47,7 @@ void gridEmitDynamic(int z, int row, int column, {required int maxBrightness, in
   );
 }
 
-void _onAmbientChanged(int ambient) {
+void onAmbientChanged(int ambient) {
   apiGridActionRefreshLighting();
 }
 
