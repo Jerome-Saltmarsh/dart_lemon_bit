@@ -36,12 +36,12 @@ class Engine {
       }
     }
 
-    const framesPerRegen = framesPerSecond * 10;
-    if (frame % framesPerRegen == 0) {
-      for (final game in games) {
-        game.regenCharacters();
-      }
-    }
+    // const framesPerRegen = framesPerSecond * 10;
+    // if (frame % framesPerRegen == 0) {
+    //   for (final game in games) {
+    //     game.regenCharacters();
+    //   }
+    // }
 
     if (frame % 30 == 0) {
       for (final game in games) {

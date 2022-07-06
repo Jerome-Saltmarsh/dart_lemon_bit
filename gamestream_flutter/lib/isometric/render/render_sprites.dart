@@ -1,5 +1,7 @@
 import 'dart:math';
+import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emissions_npcs.dart';
+import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:lemon_engine/screen.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -88,6 +90,7 @@ class RenderOrderNpcs extends RenderOrder {
 
   @override
   void renderFunction() {
+    renderTotalIndex(npc);
     renderCharacter(npc, renderHealthBar: false);
   }
 
@@ -172,6 +175,7 @@ class RenderOrderPlayer extends RenderOrder {
 
   @override
   void renderFunction() {
+    renderTotalIndex(player);
     renderCharacter(player);
   }
 
@@ -495,4 +499,6 @@ int getRenderColumn(int column, int z){
   return column - (z ~/ 2);
 }
 
-
+void renderTotalIndex(Vector3 position){
+  renderText(text: totalIndex.toString(), x: position.renderX, y: position.renderY - 100);
+}

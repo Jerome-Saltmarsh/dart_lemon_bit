@@ -720,11 +720,11 @@ extension GameFunctions on Game {
   }
 
   void sortGameObjects() {
-    sortVertically(zombies);
-    sortVertically(players);
-    sortVertically(npcs);
-    sortVertically(items);
-    sortVertically(projectiles);
+    sortSum(zombies);
+    sortSum(players);
+    sortSum(npcs);
+    sortSum(items);
+    sortSum(projectiles);
   }
 
   void setCharacterStateRunning(Character character) {
