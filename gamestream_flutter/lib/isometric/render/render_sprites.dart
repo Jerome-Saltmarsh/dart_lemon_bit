@@ -51,16 +51,14 @@ final maxZRender = Watch<int>(gridTotalZ, clamp: (int value){
 
 
 void renderSprites() {
-  if (grid.isEmpty) return;
-
   for (final order in renderOrder){
       order.reset();
   }
   updateAnyRemaining();
-  totalIndex = 0;
+  // totalIndex = 0;
   while (anyRemaining) {
     getNextRenderOrder().render();
-    totalIndex++;
+    // totalIndex++;
   }
 }
 
@@ -90,7 +88,6 @@ class RenderOrderNpcs extends RenderOrder {
 
   @override
   void renderFunction() {
-    renderTotalIndex(npc);
     renderCharacter(npc, renderHealthBar: false);
   }
 
@@ -175,7 +172,6 @@ class RenderOrderPlayer extends RenderOrder {
 
   @override
   void renderFunction() {
-    renderTotalIndex(player);
     renderCharacter(player);
   }
 
