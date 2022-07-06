@@ -47,10 +47,6 @@ void gridEmitDynamic(int z, int row, int column, {required int maxBrightness, in
   );
 }
 
-void onAmbientShadeChanged(int ambient) {
-  apiGridActionRefreshLighting();
-}
-
 void onGridChanged(){
   refreshGridMetrics();
   gridWindResetToAmbient();
