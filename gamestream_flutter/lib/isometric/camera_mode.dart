@@ -1,11 +1,7 @@
 import 'package:gamestream_flutter/isometric/events/on_camera_mode_changed.dart';
 import 'package:lemon_watch/watch.dart';
 
-enum CameraMode {
-  Chase,
-  Locked,
-  Free,
-}
+import 'enums/camera_mode.dart';
 
 const cameraModes = CameraMode.values;
 final cameraModeWatch = Watch(CameraMode.Chase, onChanged: onCameraModeChanged);

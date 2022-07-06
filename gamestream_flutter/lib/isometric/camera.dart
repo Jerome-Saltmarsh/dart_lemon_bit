@@ -1,6 +1,7 @@
 import 'package:lemon_engine/engine.dart';
 
 import 'camera_mode.dart';
+import 'enums/camera_mode.dart';
 import 'player.dart';
 
 void updateCameraMode() {

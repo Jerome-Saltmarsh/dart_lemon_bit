@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
+import 'package:gamestream_flutter/isometric/update/update_lightning.dart';
 
 import 'animation_frame.dart';
 import 'audio/audio_loops.dart';
@@ -13,7 +14,6 @@ import 'particles.dart';
 import 'players.dart';
 import 'projectiles.dart';
 import 'weather/breeze.dart';
-import 'watches/lightning.dart';
 
 void updateIsometric(){
   updateGameActions();
@@ -21,7 +21,6 @@ void updateIsometric(){
   updateParticleEmitters();
   updateParticles();
   updateProjectiles();
-  // updateFootstepAudio();
   updateRandomAudio();
   gridWindResetToAmbient();
   applyObjectsToWind();
@@ -37,7 +36,7 @@ void applyObjectsToWind(){
 
   updateWindLine();
   updateAudioLoops();
-  weatherUpdateLightning();
+  updateLightning();
 }
 
 void applyWindFromProjectile(Projectile projectile){

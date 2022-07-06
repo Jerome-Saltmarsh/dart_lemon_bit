@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/camera_mode.dart';
+import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud.dart';
