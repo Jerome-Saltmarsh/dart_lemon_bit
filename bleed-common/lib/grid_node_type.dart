@@ -24,6 +24,7 @@ class GridNodeType {
     if (type == GridNodeType.Bricks) return true;
     if (type == GridNodeType.Grass) return true;
     if (type == GridNodeType.Wood) return true;
+    if (type == GridNodeType.Boundary) return true;
     return false;
   }
   
