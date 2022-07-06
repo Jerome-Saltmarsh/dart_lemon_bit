@@ -3,7 +3,7 @@ import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 
-import '../watches/ambient.dart';
+import '../watches/ambient_shade.dart';
 import 'render_torch.dart';
 
 void renderGridNodeTransparent(int z, int row, int column, int type) {
@@ -109,7 +109,7 @@ void renderGridNodeTransparent(int z, int row, int column, int type) {
       );
 
     case GridNodeType.Torch:
-      if (ambient.value <= Shade.Very_Bright) {
+      if (ambientShade.value <= Shade.Very_Bright) {
         return renderTorchOff(dstX, dstY);
       }
       return renderTorchOn(dstX, dstY);

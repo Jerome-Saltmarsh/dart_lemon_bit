@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:lemon_watch/watch.dart';
 
 import '../audio/audio_singles.dart';
-import 'ambient.dart';
+import 'ambient_shade.dart';
 
 final lightning = Watch(Lightning.Off, onChanged: (Lightning value){
    if (value != Lightning.Off){
@@ -26,7 +26,7 @@ void weatherUpdateLightning(){
 
 void actionLightningFlash() {
   audioSingleThunder(1.0);
-  if (ambient.value == Shade.Very_Bright) return;
-  ambient.value = Shade.Very_Bright;
+  if (ambientShade.value == Shade.Very_Bright) return;
+  ambientShade.value = Shade.Very_Bright;
   runAction(duration: 8, action: actionSetAmbientShadeToHour);
 }

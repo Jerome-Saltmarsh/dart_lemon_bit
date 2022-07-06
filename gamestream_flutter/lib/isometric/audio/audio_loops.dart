@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
-import 'package:gamestream_flutter/isometric/watches/ambient.dart';
+import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 
@@ -66,7 +66,7 @@ double getVolumeTargetCrickets() {
 }
 
 double getVolumeTargetDayAmbience() {
-  if (ambient.value == Shade.Very_Bright) return 0.2;
+  if (ambientShade.value == Shade.Very_Bright) return 0.2;
   return 0;
 }
 
@@ -76,7 +76,7 @@ double getFootstepVolume(){
 
 double getVolumeTargetFire(){
   var nearestFlame = 99999;
-  final isDay = ambient.value == Shade.Very_Bright;
+  final isDay = ambientShade.value == Shade.Very_Bright;
   gridForEach(where: GridNodeType.isFire, apply: (z, row, column, type){
     if (isDay && type == GridNodeType.Torch) return;;
     var distance = player.getGridDistance(z, row, column);

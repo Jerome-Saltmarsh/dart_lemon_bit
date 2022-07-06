@@ -1,6 +1,6 @@
 import 'package:bleed_common/Shade.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
-import 'package:gamestream_flutter/isometric/watches/ambient.dart';
+import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
 import 'package:lemon_math/library.dart';
 
 import 'audio_single.dart';
@@ -41,7 +41,7 @@ void updateRandomMusic(){
 }
 
 void playRandomMusic(){
-   if (ambient.value == Shade.Pitch_Black) {
+   if (ambientShade.value == Shade.Pitch_Black) {
      playRandom(musicNight);
    }
 }
@@ -55,7 +55,7 @@ void updateRandomAmbientSounds(){
 void playRandomAmbientSound(){
   final hour = hours.value;
 
-  final shade = ambient.value;
+  final shade = ambientShade.value;
 
   if (shade == Shade.Pitch_Black || shade == Shade.Very_Dark){
     return playRandom(soundsNight);

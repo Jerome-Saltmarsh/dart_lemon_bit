@@ -1,12 +1,12 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
-import 'package:gamestream_flutter/isometric/watches/ambient.dart';
+import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
 
 import 'apply_vector_emission.dart';
 
 
 void applyPlayerEmissions() {
-  var maxBrightness = ambient.value - 1;
+  var maxBrightness = ambientShade.value - 1;
   if (maxBrightness < Shade.Bright) {
     maxBrightness = Shade.Bright;
   }

@@ -12,7 +12,7 @@ import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'grid/convert/convert_hour_to_shade.dart';
-import 'watches/ambient.dart';
+import 'watches/ambient_shade.dart';
 
 final gridShadows = Watch(true, onChanged: (bool value){
   apiGridActionRefreshLighting();
@@ -33,7 +33,7 @@ var gridColumnLength = 0.0;
 void toggleShadows () => gridShadows.value = !gridShadows.value;
 
 void actionSetAmbientShadeToHour(){
-  ambient.value = convertHourToShade(hours.value);
+  ambientShade.value = convertHourToShade(hours.value);
 }
 
 void gridEmitDynamic(int z, int row, int column, {required int maxBrightness, int radius = 5}){
@@ -47,7 +47,7 @@ void gridEmitDynamic(int z, int row, int column, {required int maxBrightness, in
   );
 }
 
-void onAmbientChanged(int ambient) {
+void onAmbientShadeChanged(int ambient) {
   apiGridActionRefreshLighting();
 }
 
@@ -118,8 +118,8 @@ void gridForEachNode(Function(int z, int row, int column) apply) {
 
 
 void apiGridActionRefreshLighting(){
-  _setLightMapValue(gridLightBake, ambient.value);
-  _setLightMapValue(gridLightDynamic, ambient.value);
+  _setLightMapValue(gridLightBake, ambientShade.value);
+  _setLightMapValue(gridLightDynamic, ambientShade.value);
   if (gridShadows.value){
     _applyShadows();
   }
@@ -127,7 +127,7 @@ void apiGridActionRefreshLighting(){
 }
 
 void _applyShadows(){
-  if (ambient.value > Shade.Very_Bright) return;
+  if (ambientShade.value > Shade.Very_Bright) return;
   _applyShadowsMidAfternoon();
 }
 
@@ -141,7 +141,7 @@ void _applyShadowAt({
   required int directionColumn,
   required int maxDistance,
 }){
-  final current = ambient.value;
+  final current = ambientShade.value;
   final shadowShade = current >= Shade.Pitch_Black ? current : current + 1;
 
   for (var z = 0; z < gridTotalZ; z++) {
