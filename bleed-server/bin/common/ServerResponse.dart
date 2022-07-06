@@ -4,7 +4,6 @@ class ServerResponse {
   static const Error = 2;
   static const Projectiles = 3;
   static const Zombies = 4;
-  static const Tiles = 5;
   static const Game_Events = 6;
   static const Grenades = 7;
   static const Game_Joined = 9;
@@ -61,5 +60,6 @@ class ServerResponse {
   static const Weather = 78;
   static const Custom_Game_Names = 79;
   static const Scene_Meta_Data = 80;
+  static const Player_Designed = 81;
 }
 

@@ -5,13 +5,14 @@ import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_button_toggle_inventory.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_health.dart';
+import 'package:gamestream_flutter/isometric/ui/watches/build_watch_player_designed.dart';
 import 'package:gamestream_flutter/isometric/watches/inventory_visible.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_experience.dart';
 import 'package:gamestream_flutter/ui/builders/build_text_box.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/screen.dart';
 
-Widget buildHudPlayMode() {
+Widget buildStackPlayMode() {
   return Stack(
     children: [
       Positioned(top: 50, left: 0, child: buildPanelStore()),
@@ -19,6 +20,7 @@ Widget buildHudPlayMode() {
       Positioned(top: 50, left: 0, child: buildPanelStore()),
       Positioned(bottom: 50, left: 0, child: buildWatchMouseTargetName()),
       Positioned(bottom: 8, right: 8, child: buildButtonToggleInventory()),
+      buildWatchPlayerDesigned(),
       Positioned(bottom: 8, child: Container(
         width: screen.width,
         child: Row(

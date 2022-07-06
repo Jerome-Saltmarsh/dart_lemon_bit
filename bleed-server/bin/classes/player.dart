@@ -11,8 +11,8 @@ import 'enemy_spawn.dart';
 import 'position3.dart';
 import 'library.dart';
 
-
 class Player extends Character with ByteWriter {
+  var designed = false;
   CharacterSelection? selection;
   final mouse = Vector2(0, 0);
   final _runTarget = Position3();
@@ -290,8 +290,7 @@ extension PlayerProperties on Player {
     writeTechTypes();
     writeGameStatus();
     writeSceneMetaData();
-
-
+    writePlayerDesigned();
     sceneDownloaded = true;
   }
 
@@ -731,6 +730,11 @@ extension PlayerProperties on Player {
     writeByte(ServerResponse.Scene_Meta_Data);
     writeBool(game.owner == this);
     writeString(game.scene.name);
+  }
+
+  void writePlayerDesigned(){
+    writeByte(ServerResponse.Player_Designed);
+    writeBool(designed);
   }
 }
 

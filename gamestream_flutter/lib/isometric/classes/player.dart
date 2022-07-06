@@ -33,6 +33,7 @@ class Player extends Vector3 {
   final equippedLevel = Watch(0);
   final characterType = Watch(CharacterType.Human);
   final health = Watch(0.0);
+  final designed = Watch(false);
   final experience = Watch(0.0);
   final level = Watch(1);
   final skillPoints = Watch(0);
@@ -72,10 +73,6 @@ class Player extends Vector3 {
         uuid: "-1",
       )
   );
-
-  // int get indexZ => z ~/ 24;
-  // int get indexRow => convertWorldToRow(x, y);
-  // int get indexColumn => convertWorldToColumn(x, y);
 
   Watch<bool> getCanAffordWatch(int type){
     switch (type){

@@ -67,6 +67,8 @@ class ServerResponseReader with ByteReader {
     while (true) {
       final response = readByte();
       switch (response){
+        case ServerResponse.End:
+          return readEnd();
         case ServerResponse.Zombies:
           readZombies();
           break;
@@ -115,8 +117,6 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Game_Status:
           readGameStatus();
           break;
-        case ServerResponse.Tiles:
-          throw Exception("No longer ServerResponse.Tiles");
         case ServerResponse.Debug_Mode:
           readDebugMode();
           break;
@@ -186,12 +186,17 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Scene_Meta_Data:
           readSceneMetaData();
           break;
-        case ServerResponse.End:
-          return readEnd();
+        case ServerResponse.Player_Designed:
+          readPlayerDesigned();
+          break;
         default:
           throw Exception("Cannot parse $response");
       }
     }
+  }
+
+  void readPlayerDesigned() {
+    player.designed.value = readBool();
   }
 
   void readSceneMetaData() {

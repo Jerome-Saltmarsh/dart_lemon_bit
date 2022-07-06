@@ -1,6 +1,7 @@
 
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/isometric/enums/equipment_type.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
@@ -11,7 +12,7 @@ import 'package:lemon_watch/watch.dart';
 import '../classes/weapon.dart';
 import 'constants/colors.dart';
 
-final activeTab = Watch(_Tab.Weapon);
+final storeEquipmentType = Watch(EquipmentType.Weapon);
 
 final weaponInformation = Watch<Weapon?>(null);
 
@@ -32,26 +33,26 @@ Widget buildPanelStore(){
             ],
           ),
           height6,
-          Row(children: _Tab.values.map((tab) {
-            return watch(activeTab, (active){
+          Row(children: EquipmentType.values.map((tab) {
+            return watch(storeEquipmentType, (active){
               return container(
                 child: text(tab.name),
-                action: () => activeTab.value = tab,
-                color: tab == activeTab.value ? greyDark : grey,
+                action: () => storeEquipmentType.value = tab,
+                color: tab == storeEquipmentType.value ? greyDark : grey,
               );
             });
           }).toList()),
           height6,
-          watch(activeTab, (tab){
+          watch(storeEquipmentType, (tab){
             switch (tab){
-              case _Tab.Weapon:
-                return _buildTabWeapons();
-              case _Tab.Armour:
-                return _buildTabArmour();
-              case _Tab.Head:
-                return _buildTabHead();
-              case _Tab.Pants:
-                return _buildTabPants();
+              case EquipmentType.Weapon:
+                return buildColumnSelectPlayerWeapon();
+              case EquipmentType.Armour:
+                return buildColumnSelectPlayerArmour();
+              case EquipmentType.Head:
+                return buildColumnSelectPlayerHead();
+              case EquipmentType.Pants:
+                return buildColumnSelectPlayerPants();
               default:
                 return text("not available");
             }
@@ -61,13 +62,13 @@ Widget buildPanelStore(){
   });
 }
 
-Widget _buildTabArmour(){
+Widget buildColumnSelectPlayerArmour(){
    return Column(
       children: ArmourType.values.map(_buildSelectArmourType).toList(),
    );
 }
 
-Widget _buildTabWeapons(){
+Widget buildColumnSelectPlayerWeapon(){
    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
      children: [
@@ -104,24 +105,24 @@ Widget buildWatchWeaponInformation(){
    });
 }
 
-Widget _buildTabHead(){
+Widget buildColumnSelectPlayerHead(){
    return Column(
-      children: HeadType.values.map(_buildButtonHead).toList(),
+      children: HeadType.values.map(buildButtonSelectPlayerHead).toList(),
    );
 }
 
-Widget _buildTabPants(){
+Widget buildColumnSelectPlayerPants(){
   return Column(
     children: PantsType.values.map(_buildButtonPants).toList(),
   );
 }
 
-Widget _buildButtonHead(int headType) {
+Widget buildButtonSelectPlayerHead(int headType) {
    return watch(player.headType, (int playerHeadType){
       return container(
           child: text(HeadType.getName(headType)),
           action: () => sendClientRequestSetHeadType(headType),
-          color: headType == playerHeadType ? green : grey,
+          color: headType == playerHeadType ? greyDark : grey,
       );
    });
 }
@@ -196,9 +197,3 @@ Widget _buildSelectArmourType(int type) {
    });
 }
 
-enum _Tab {
-   Weapon,
-   Armour,
-   Head,
-   Pants,
-}

@@ -448,7 +448,7 @@ class Connection {
     player.screenRight = readNumberFromByteArray(args, index: 11).toDouble();
     player.screenBottom = readNumberFromByteArray(args, index: 13).toDouble();
 
-    if (player.deadOrBusy) {
+    if (player.deadOrBusy || !player.designed) {
       return;
     }
 
