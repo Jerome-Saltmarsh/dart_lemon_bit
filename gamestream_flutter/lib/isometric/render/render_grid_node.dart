@@ -3,6 +3,7 @@ import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
+import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
 import 'package:lemon_engine/render.dart';
 
 import '../grid/state/wind.dart';
@@ -175,7 +176,7 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
       );
       return;
     case GridNodeType.Torch:
-      if (ambientShade.value <= Shade.Very_Bright) {
+      if (!torchesIgnited.value) {
         return renderTorchOff(dstX, dstY);
       }
       final wind = gridWind[z][row][column];
