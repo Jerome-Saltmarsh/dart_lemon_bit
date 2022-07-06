@@ -9,5 +9,6 @@ EnemySpawn convertJsonToEnemySpawn(dynamic json){
       z: j.getInt('z'),
       row: j.getInt('row'),
       column: j.getInt('column'),
+      health: 3,
   );
 }

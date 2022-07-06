@@ -46,8 +46,8 @@ class GameDarkAgeVillage extends GameDarkAge {
     addNpcGuardBow(x: 520, y: 1000);
     addNpcGuardBow(x: 985, y: 1500);
 
-    addEnemySpawn(z: 1, row: 40, column: 5);
-    addEnemySpawn(z: 1, row: 40, column: 35);
+    addEnemySpawn(z: 1, row: 40, column: 5, health: 3);
+    addEnemySpawn(z: 1, row: 40, column: 35, health: 3);
   }
 
   @override

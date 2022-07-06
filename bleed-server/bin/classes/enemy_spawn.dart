@@ -7,6 +7,7 @@ class EnemySpawn {
   final int row;
   final int column;
   final int framesPerSpawn;
+  final int health;
   var framesUntilSpawn = 0;
   var max;
   var count = 0;
@@ -15,6 +16,7 @@ class EnemySpawn {
     required this.z,
     required this.row,
     required this.column,
+    required this.health,
     this.framesPerSpawn = framesPerSecond * 5,
     this.max = 5,
   });

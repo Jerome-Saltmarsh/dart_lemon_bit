@@ -224,7 +224,7 @@ class Player extends Character with ByteWriter {
     });
 
     if (type == GridNodeType.Enemy_Spawn){
-      scene.enemySpawns.add(EnemySpawn(z: z, row: row, column: column));
+      scene.enemySpawns.add(EnemySpawn(z: z, row: row, column: column, health: 5));
     }
   }
 

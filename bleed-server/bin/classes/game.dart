@@ -1203,6 +1203,22 @@ extension GameFunctions on Game {
     );
   }
 
+  Projectile spawnProjectileBullet({
+    required Character src,
+    double accuracy = 0,
+    double speed = 12,
+  }){
+    return spawnProjectile(
+      src: src,
+      accuracy: 0,
+      angle: src.angle,
+      speed: speed,
+      range: src.equippedRange,
+      projectileType: ProjectileType.Bullet,
+      damage: src.equippedWeapon.damage,
+    );
+  }
+
   Projectile spawnProjectile({
     required Position3 src,
     required double speed,
@@ -1514,14 +1530,10 @@ extension GameFunctions on Game {
         if (character.equippedIsEmpty) {
           return;
         }
-        spawnProjectile(
+        spawnProjectileBullet(
             src: character,
             accuracy: 0,
             speed: 12.0,
-          angle: character.angle,
-            range: character.equippedRange,
-            projectileType: ProjectileType.Bullet,
-            damage: equippedDamage,
         );
         return;
       }
@@ -1536,14 +1548,10 @@ extension GameFunctions on Game {
         dispatchV2(GameEventType.Shotgun_Fired, character);
         final totalBullets = 4;
         for (int i = 0; i < totalBullets; i++) {
-          spawnProjectile(
-              src: character,
-              accuracy: 0.1,
-              angle: character.angle,
-              speed: 12.0,
-              range: character.equippedRange,
-              projectileType: ProjectileType.Bullet,
-              damage: equippedDamage,
+          spawnProjectileBullet(
+            src: character,
+            accuracy: 0,
+            speed: 12.0,
           );
         }
       }
@@ -1618,13 +1626,14 @@ extension GameFunctions on Game {
     }
   }
 
-  void addEnemySpawn({required int z, required int row, required int column}){
+  void addEnemySpawn({required int z, required int row, required int column, required int health}){
     scene.enemySpawns.add(
         EnemySpawn(
           z: z,
           row: row,
           column: column,
           framesPerSpawn: 30,
+          health: health,
         )
     );
   }
