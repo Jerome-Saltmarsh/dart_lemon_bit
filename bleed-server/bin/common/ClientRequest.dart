@@ -4,7 +4,6 @@ enum ClientRequest {
   Attack,
   Revive,
   Equip,
-  Purchase,
   Toggle_Debug,
   Version,
   Speak,

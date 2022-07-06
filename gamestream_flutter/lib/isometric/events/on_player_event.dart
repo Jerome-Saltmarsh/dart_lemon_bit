@@ -20,7 +20,7 @@ void onPlayerEvent(int event) {
       audio.buff11(player.x, player.y);
       break;
     case PlayerEvent.Item_Purchased:
-      audio.winSound2();
+      audioSingleItemUnlock();
       break;
     case PlayerEvent.Ammo_Acquired:
       audio.itemAcquired(screenCenterWorldX, screenCenterWorldY);

@@ -30,10 +30,6 @@ class GameActions {
     }
   }
 
-  void purchaseSlotType(int slotType) {
-    webSocket.send('${ClientRequest.Purchase.index} $slotType');
-  }
-
   void playerEquip(int index) {
     print("game.actions.playerEquip(index: $index)");
     // webSocket.send('${ClientRequest.Equip.index} $session ${index - 1}');

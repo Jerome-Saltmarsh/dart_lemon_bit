@@ -174,6 +174,7 @@ class Connection {
             )
         );
         player.writePlayerWeapons();
+        player.writePlayerEvent(PlayerEvent.Item_Purchased);
         break;
 
       case ClientRequest.Store_Close:
@@ -363,9 +364,6 @@ class Connection {
         }
         // player.equippedWeapon = techType;
         // player.setStateChanging();
-        return;
-
-      case ClientRequest.Purchase:
         return;
 
       case ClientRequest.Toggle_Debug:
