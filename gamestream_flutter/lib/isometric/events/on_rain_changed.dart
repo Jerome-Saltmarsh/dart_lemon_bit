@@ -1,6 +1,7 @@
 import 'package:bleed_common/rain.dart';
-import 'package:gamestream_flutter/isometric/state/src_x_.dart';
 
+import '../variables/src_x_rain_falling.dart';
+import '../variables/src_x_rain_landing.dart';
 import '../watches/raining.dart';
 
 void onRainChanged(Rain value) {

@@ -1,7 +1,7 @@
 import 'package:bleed_common/lightning.dart';
+import 'package:gamestream_flutter/isometric/variables/next_lightning.dart';
 import 'package:lemon_watch/watch.dart';
 
-import '../state/next_lightning.dart';
 
 final lightning = Watch(Lightning.Off, onChanged: (Lightning value){
    if (value != Lightning.Off){
