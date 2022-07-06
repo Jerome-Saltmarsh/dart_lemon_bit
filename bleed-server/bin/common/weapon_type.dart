@@ -35,23 +35,13 @@ class WeaponType {
     } [type] ?? "Unknown";
   }
 
-  static int getDamage(int type) {
-    return const <int, int>{
-      Unarmed: 1,
-      Bow: 1,
-      Sword: 1,
-      Staff: 1,
-      Shotgun: 1,
-    } [type] ?? 0;
-  }
-
   static double getRange(int type) {
-    return const <int, double>{
+    return const <int, double> {
       Unarmed: 20,
       Bow: 250,
       Sword: 30,
       Staff: 180,
-      Shotgun: 180,
+      Shotgun: 220,
       Handgun: 180,
     } [type] ?? 0;
   }

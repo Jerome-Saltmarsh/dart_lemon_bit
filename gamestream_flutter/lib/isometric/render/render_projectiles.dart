@@ -15,8 +15,6 @@ void renderProjectile(Projectile value) {
     case ProjectileType.Fireball:
       return renderFireball(value.renderX, value.renderY, value.angle);
     case ProjectileType.Bullet:
-      print("render bullet:");
-      renderCircle32(value.renderX, value.renderY);
       return renderFireball(value.renderX, value.renderY, value.angle);
     default:
       return;

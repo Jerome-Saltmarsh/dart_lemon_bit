@@ -790,6 +790,9 @@ extension GameFunctions on Game {
     if (character.busy) return;
 
     switch (value) {
+      case CharacterState.Idle:
+        character.target = null;
+        break;
       case CharacterState.Changing:
         character.stateDurationRemaining = 10;
         break;
@@ -883,6 +886,8 @@ extension GameFunctions on Game {
         player.text = "";
       }
     }
+
+    if (player.dead) return;
 
     if (player.lastUpdateFrame > 10) {
       setCharacterStateIdle(player);
@@ -1468,7 +1473,7 @@ extension GameFunctions on Game {
   void updateCharacterStateAttacking(Character character) {
     const framePerformStrike = 10;
     final stateDuration = character.stateDuration;
-    final damage = character.equippedDamage;
+    final equippedDamage = character.equippedDamage;
     if (character.type == CharacterType.Zombie) {
       if (stateDuration != framePerformStrike) return;
       final attackTarget = character.target;
@@ -1477,7 +1482,7 @@ extension GameFunctions on Game {
         applyHit(
           src: character,
           target: attackTarget,
-          damage: damage,
+          damage: equippedDamage,
         );
         character.target = null;
       }
@@ -1516,7 +1521,7 @@ extension GameFunctions on Game {
           angle: character.angle,
             range: character.equippedRange,
             projectileType: ProjectileType.Bullet,
-            damage: damage,
+            damage: equippedDamage,
         );
         return;
       }
@@ -1534,12 +1539,11 @@ extension GameFunctions on Game {
           spawnProjectile(
               src: character,
               accuracy: 0.1,
-              // speed: 12.0,
               angle: character.angle,
-              speed: 1.0,
+              speed: 12.0,
               range: character.equippedRange,
               projectileType: ProjectileType.Bullet,
-              damage: damage,
+              damage: equippedDamage,
           );
         }
       }
@@ -1552,14 +1556,14 @@ extension GameFunctions on Game {
     if (stateDuration != framePerformStrike) return;
 
     if (character.equippedWeapon == WeaponType.Staff) {
-      spawnProjectileOrb(character, damage: damage);
+      spawnProjectileOrb(character, damage: equippedDamage);
       character.target = null;
       return;
     }
 
     if (character.equippedTypeIsBow) {
       dispatchV2(GameEventType.Release_Bow, character);
-      spawnProjectileArrow(character, damage: damage, target: character.target, range: character.equippedRange);
+      spawnProjectileArrow(character, damage: equippedDamage, target: character.target, range: character.equippedRange);
       character.target = null;
       return;
     }
@@ -1567,7 +1571,7 @@ extension GameFunctions on Game {
       final attackTarget = character.target;
       if (attackTarget != null) {
         if (attackTarget is Collider && attackTarget.collidable) {
-          applyHit(src: character, target: attackTarget, damage: damage);
+          applyHit(src: character, target: attackTarget, damage: equippedDamage);
           character.target = null;
           return;
         }
@@ -1581,7 +1585,7 @@ extension GameFunctions on Game {
         applyHit(
           src: character,
           target: zombieHit,
-          damage: damage,
+          damage: equippedDamage,
         );
         return;
       }
@@ -1594,7 +1598,7 @@ extension GameFunctions on Game {
         applyHit(
           src: character,
           target: dynamicObjectHit,
-          damage: damage,
+          damage: equippedDamage,
         );
       }
       return;
