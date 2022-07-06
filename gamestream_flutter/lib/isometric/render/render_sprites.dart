@@ -95,7 +95,7 @@ class RenderOrderNpcs extends RenderOrder {
   void updateFunction() {
     npc = npcs[_index];
     order = npc.renderOrder;
-    orderZ = (npc.z + 12.0) ~/ tileSizeHalf;
+    orderZ = npc.indexZ;
   }
 
   @override
@@ -179,7 +179,7 @@ class RenderOrderPlayer extends RenderOrder {
   void updateFunction() {
     player = players[_index];
     order = player.renderOrder;
-    orderZ = (player.z + 12.0) ~/ tileSizeHalf;
+    orderZ = player.indexZ;
   }
 
   @override
