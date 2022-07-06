@@ -1,5 +1,6 @@
 import 'package:bleed_common/lightning.dart';
 import 'package:bleed_common/Shade.dart';
+import 'package:gamestream_flutter/isometric/events/on_action_finished_lightning_flash.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:lemon_math/library.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
@@ -28,5 +29,5 @@ void actionLightningFlash() {
   audioSingleThunder(1.0);
   if (ambientShade.value == Shade.Very_Bright) return;
   ambientShade.value = Shade.Very_Bright;
-  runAction(duration: 8, action: actionSetAmbientShadeToHour);
+  runAction(duration: 8, action: onActionFinishedLightningFlash);
 }
