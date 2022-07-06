@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:bleed_common/Projectile_Type.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
+import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 
@@ -14,6 +15,8 @@ void renderProjectile(Projectile value) {
     case ProjectileType.Fireball:
       return renderFireball(value.renderX, value.renderY, value.angle);
     case ProjectileType.Bullet:
+      print("render bullet:");
+      renderCircle32(value.renderX, value.renderY);
       return renderFireball(value.renderX, value.renderY, value.angle);
     default:
       return;

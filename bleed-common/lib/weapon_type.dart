@@ -51,6 +51,8 @@ class WeaponType {
       Bow: 250,
       Sword: 30,
       Staff: 180,
+      Shotgun: 180,
+      Handgun: 180,
     } [type] ?? 0;
   }
 

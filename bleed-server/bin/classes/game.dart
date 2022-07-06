@@ -1513,6 +1513,7 @@ extension GameFunctions on Game {
             src: character,
             accuracy: 0,
             speed: 12.0,
+          angle: character.angle,
             range: character.equippedRange,
             projectileType: ProjectileType.Bullet,
             damage: damage,
@@ -1533,7 +1534,9 @@ extension GameFunctions on Game {
           spawnProjectile(
               src: character,
               accuracy: 0.1,
-              speed: 12.0,
+              // speed: 12.0,
+              angle: character.angle,
+              speed: 1.0,
               range: character.equippedRange,
               projectileType: ProjectileType.Bullet,
               damage: damage,
