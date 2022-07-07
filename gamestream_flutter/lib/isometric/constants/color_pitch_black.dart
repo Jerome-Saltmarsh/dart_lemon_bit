@@ -11,3 +11,21 @@ final colorShades = <int> [
   colorPitchBlack.withOpacity(0.95).value, // very dark
   colorPitchBlack.withOpacity(1.0).value, // pitchBlack
 ];
+
+final colorShadesColors = <Color> [
+  colorPitchBlack.withOpacity(0), // very bright
+  colorPitchBlack.withOpacity(0.35), // bright
+  colorPitchBlack.withOpacity(0.65), // medium
+  colorPitchBlack.withOpacity(0.85),  // dark
+  colorPitchBlack.withOpacity(0.95), // very dark
+  colorPitchBlack.withOpacity(1.0), // pitchBlack
+];
+
+final colorShadesOpacity = <double> [
+  0, // very bright
+  0.35, // bright
+  0.65, // medium
+  0.85,
+  0.95,
+  1.0,
+];

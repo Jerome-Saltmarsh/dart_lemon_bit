@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
+import 'package:gamestream_flutter/isometric/ui/columns/build_column_select_complexion.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/enums/player_design_tab.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
@@ -47,6 +48,8 @@ Widget buildStackPlayerDesign() {
       Positioned(top: 150, left: 50, child: Builder(
         builder: (context) {
             switch (activePlayerDesignTabValue){
+              case PlayerDesignTab.Complexion:
+                return buildColumnSelectComplexion();
               case PlayerDesignTab.Head:
                 return buildColumnSelectPlayerHead();
               case PlayerDesignTab.Body:

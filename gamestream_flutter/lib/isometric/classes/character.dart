@@ -4,18 +4,19 @@ import 'package:lemon_math/constants/pi_quarter.dart';
 import 'vector3.dart';
 
 class Character extends Vector3 {
-  bool scoreMeasured = false;
-  int score = 0;
-  int state;
-  int direction;
-  int frame;
+  var scoreMeasured = false;
+  var score = 0;
+  var state = 0;
+  var direction = 0;
+  var frame = 0;
+  var complexion = 0;
   var weapon = WeaponType.Unarmed;
   var armour = ArmourType.shirtCyan;
   var helm = HeadType.None;
   var pants = PantsType.white;
-  String name;
-  String text;
-  bool allie = false;
+  var name = "";
+  var text = "";
+  var allie = false;
   /// percentage between 0 and 1
   double health = 1;
   /// percentage between 0 and 1
@@ -27,12 +28,4 @@ class Character extends Vector3 {
   bool get performing => state == CharacterState.Performing;
   bool get alive => !dead;
   double get angle => direction * piQuarter;
-
-  Character({
-    this.state = 0,
-    this.direction = 0,
-    this.frame = 0,
-    this.name = "",
-    this.text = "",
-  });
 }

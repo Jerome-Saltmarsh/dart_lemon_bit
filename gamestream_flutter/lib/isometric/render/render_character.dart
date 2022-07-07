@@ -1,6 +1,8 @@
 
 import 'package:bleed_common/library.dart';
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
+import 'package:gamestream_flutter/isometric/constants/complexions.dart';
 
 import 'package:lemon_engine/render.dart';
 
@@ -19,9 +21,9 @@ void renderCharacter(Character character, {bool renderHealthBar = true}) {
     renderCharacterHealthBar(character);
   }
 
-
   final weaponType = character.weapon;
   final direction = character.direction;
+  final shade = character.shade;
 
   if (weaponType == WeaponType.Bow || weaponType == WeaponType.Shotgun) {
     if (direction == Direction.North_West ||
@@ -29,9 +31,9 @@ void renderCharacter(Character character, {bool renderHealthBar = true}) {
         direction == Direction.North_East ||
         direction == Direction.East) {
       _renderCharacterTemplateWeapon(character);
-      _renderCharacterTemplate(character);
+      _renderCharacterTemplate(character, shade);
     } else {
-      _renderCharacterTemplate(character);
+      _renderCharacterTemplate(character, shade);
       _renderCharacterTemplateWeapon(character);
     }
     return;
@@ -44,23 +46,22 @@ void renderCharacter(Character character, {bool renderHealthBar = true}) {
         direction == Direction.West ||
         direction == Direction.South_West) {
       _renderCharacterTemplateWeapon(character);
-      _renderCharacterTemplate(character);
+      _renderCharacterTemplate(character, shade);
     } else {
-      _renderCharacterTemplate(character);
+      _renderCharacterTemplate(character, shade);
       _renderCharacterTemplateWeapon(character);
     }
     return;
   }
-  _renderCharacterTemplate(character);
+  _renderCharacterTemplate(character, shade);
   _renderCharacterTemplateWeapon(character);
 }
 
-void _renderCharacterTemplate(Character character) {
-  final color = colorShades[character.shade];
+void _renderCharacterTemplate(Character character, int shade) {
   _renderCharacterShadow(character);
-  _renderCharacterPartPants(character, color);
-  _renderCharacterPartBody(character, color);
-  _renderCharacterPartHead(character, color);
+  _renderCharacterPartPants(character, shade);
+  _renderCharacterPartBody(character, shade);
+  _renderCharacterPartHead(character, shade);
 }
 
 void _renderCharacterTemplateWeapon(Character character) {
