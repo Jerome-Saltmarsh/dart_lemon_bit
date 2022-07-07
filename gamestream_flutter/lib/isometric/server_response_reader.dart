@@ -425,6 +425,7 @@ class ServerResponseReader with ByteReader {
     player.x = readDouble();
     player.y = readDouble();
     player.z = readDouble();
+    player.state.value = readByte();
     player.angle = readDouble() / 100.0;
     player.mouseAngle = readDouble() / 100.0;
     player.health.value = readDouble();

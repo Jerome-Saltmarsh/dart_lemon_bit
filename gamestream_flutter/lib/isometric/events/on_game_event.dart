@@ -93,6 +93,9 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       break;
     case GameEventType.Bullet_Hole:
       break;
+    case GameEventType.Character_Changing:
+      audioSingleChanging.playXYZ(x, y, z);
+      break;
     case GameEventType.Zombie_Strike:
       randomItem(audioSingleZombieBits).playXYZ(x, y, z);
       if (randomBool()){

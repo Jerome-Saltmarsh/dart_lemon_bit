@@ -6,6 +6,6 @@ void onChangedPlayerWeapon(int value) {
   if (WeaponType.isMetal(value)) {
     audioSingleDrawSword.play();
   } else {
-    audioSingleChanging.play();
+    // audioSingleChanging.play();
   }
 }

@@ -44,4 +44,5 @@ class GameEventType {
   static const Projectile_Fired_Fireball = 54;
   static const Footstep = 55;
   static const Arm_Swing = 56;
+  static const Character_Changing = 57;
 }

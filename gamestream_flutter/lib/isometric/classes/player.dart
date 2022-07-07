@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/isometric/events/on_changed_player_alive.dart
 import 'package:gamestream_flutter/isometric/events/on_changed_player_armour.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_head.dart';
 import 'package:lemon_watch/watch.dart';
+import '../events/on_changed_player_state.dart';
 import '../events/on_changed_player_weapon.dart';
 import 'vector3.dart';
 import 'package:lemon_math/library.dart';
@@ -38,7 +39,7 @@ class Player extends Vector3 {
   final level = Watch(1);
   final skillPoints = Watch(0);
   final message = Watch("");
-  final state = Watch(CharacterState.Idle);
+  final state = Watch(CharacterState.Idle, onChanged: onChangedPlayerState);
   final alive = Watch(true, onChanged: onChangedPlayerAlive);
   final magic = Watch(0.0);
   final maxMagic = Watch(0.0);

@@ -176,8 +176,12 @@ class Player extends Character with ByteWriter {
   }
 
   void setStateChanging(){
-    writePlayerEvent(PlayerEvent.Item_Equipped);
+    dispatchGameEvent(GameEventType.Character_Changing);
     game.setCharacterState(this, CharacterState.Changing);
+  }
+
+  void dispatchGameEvent(int type){
+    game.dispatchV2(GameEventType.Character_Changing, this);
   }
 
   void setCharacterSelectionRequired(bool value){
@@ -247,6 +251,7 @@ extension PlayerProperties on Player {
     writeInt(x);
     writeInt(y);
     writeInt(z);
+    writeByte(state);
     writeInt(angle * 100);
     writeInt(mouseAngle * 100);
     writeInt(health); // 2
