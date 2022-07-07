@@ -14,8 +14,8 @@ class GameDarkAgeCastle extends GameDarkAge {
       if (player.indexRow != 27) continue;
       if (player.indexColumn != 0) continue;
       player.changeGame(engine.findGameDarkAgeVillage());
-      player.x = 960;
-      player.y = 2320;
+      player.x = 1150;
+      player.y = 910;
       i--;
       playerLength--;
     }

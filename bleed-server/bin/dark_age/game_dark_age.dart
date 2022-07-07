@@ -126,10 +126,12 @@ class GameDarkAge extends Game {
     );
 
     player.indexZ = 1;
-    player.indexColumn = 2;
-    player.indexRow = 2;
+    player.indexColumn = 19;
+    player.indexRow = 23;
+    player.x += giveOrTake(5);
+    player.y += giveOrTake(5);
 
-    moveCharacterToGridNode(player, GridNodeType.Player_Spawn);
+    // moveCharacterToGridNode(player, GridNodeType.Player_Spawn);
 
     player.weapons.add(Weapon(type: WeaponType.Sword, damage: 2));
     player.weapons.add(Weapon(type: WeaponType.Bow, damage: 2));
