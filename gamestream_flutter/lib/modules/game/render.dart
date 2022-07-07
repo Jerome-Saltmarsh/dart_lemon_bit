@@ -68,7 +68,7 @@ class GameRender {
 
     final mouseTargetName = player.mouseTargetName.value;
 
-    if (mouseTargetName != null){
+    if (mouseTargetName != null && mouseTargetName != "Zombie"){
        renderText(text: mouseTargetName, x: player.attackTarget.renderX, y: player.attackTarget.renderY - 80);
     }
     
