@@ -11,6 +11,7 @@ Widget container({
   num height = 50,
   String? toolTip,
   Decoration? decoration,
+  EdgeInsets? margin,
 }){
   Widget con = Container(
     decoration: decoration,
@@ -19,6 +20,7 @@ Widget container({
     width: width.toDouble(),
     height: height.toDouble(),
     color: color ?? Colors.grey,
+    margin: margin,
     child: child == null
         ? null : child is Widget ? child : text(child),
   );

@@ -46,7 +46,7 @@ Widget buildPanelStore(){
           watch(storeEquipmentType, (tab){
             switch (tab){
               case EquipmentType.Weapon:
-                return buildColumnSelectPlayerWeapon();
+                return buildStoreTabWeapons();
               case EquipmentType.Armour:
                 return buildColumnSelectPlayerArmour();
               case EquipmentType.Head:
@@ -68,7 +68,7 @@ Widget buildColumnSelectPlayerArmour(){
    );
 }
 
-Widget buildColumnSelectPlayerWeapon(){
+Widget buildStoreTabWeapons(){
    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
      children: [
