@@ -268,6 +268,11 @@ class Connection {
 
         break;
 
+      case ClientRequest.Submit_Player_Design:
+        player.designed = true;
+        player.writePlayerDesigned();
+        break;
+
       case ClientRequest.Deck_Select_Card:
         if (player.dead) return errorPlayerDead();
         if (arguments.length != 2) return errorArgsExpected(2, arguments);
