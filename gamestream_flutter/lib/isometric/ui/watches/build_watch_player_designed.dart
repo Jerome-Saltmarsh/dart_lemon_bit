@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_player_design
 
 Widget buildWatchPlayerDesigned(){
   return watch(player.designed, (bool designed){
-    if (designed) return const SizedBox();
+    if (designed) return Stack(children: [],);
     return buildStackPlayerDesign();
   });
 }
