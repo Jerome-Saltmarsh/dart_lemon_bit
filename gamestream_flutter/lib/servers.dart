@@ -29,6 +29,7 @@ final List<Region> selectableServerTypes =
 
 class ServerUri {
   static const Sydney = "https://gamestream-ws-osbmaezptq-ts.a.run.app";
+  static const Singapore = "https://gamestream-ws-2-osbmaezptq-as.a.run.app";
 }
 
 String parseHttpToWebSocket(String url) {
@@ -39,6 +40,8 @@ String getHttpsConnectionString(Region server, GameType gameType) {
   switch (server) {
     case Region.Australia:
           return ServerUri.Sydney;
+    case Region.Singapore:
+      return ServerUri.Singapore;
     default:
       return ServerUri.Sydney;
   }

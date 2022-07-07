@@ -19,6 +19,10 @@ class GridNodeType {
   static const Rain_Landing = 19;
   static const Fireplace = 20;
   static const Wood = 21;
+  static const Grass_Slope_North = 22;
+  static const Grass_Slope_East = 23;
+  static const Grass_Slope_South = 24;
+  static const Grass_Slope_West = 25;
 
   static isSolid(int type){
     if (type == GridNodeType.Bricks) return true;

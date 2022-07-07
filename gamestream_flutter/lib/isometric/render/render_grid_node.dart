@@ -51,6 +51,52 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
           );
       }
 
+    case GridNodeType.Grass_Slope_West:
+      return render(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: 7781 ,
+        srcY: 72.0 * shade,
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorX: 0.5,
+        anchorY: 0.3334,
+      );
+
+    case GridNodeType.Grass_Slope_South:
+      return render(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: 7829 ,
+        srcY: 72.0 * shade,
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorX: 0.5,
+        anchorY: 0.3334,
+      );
+    case GridNodeType.Grass_Slope_East:
+      return render(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: 7877 ,
+        srcY: 72.0 * shade,
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorX: 0.5,
+        anchorY: 0.3334,
+      );
+    case GridNodeType.Grass_Slope_North:
+      return render(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: 7925 ,
+        srcY: 72.0 * shade,
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorX: 0.5,
+        anchorY: 0.3334,
+      );
+
     case GridNodeType.Wood:
       return render(
         dstX: dstX,

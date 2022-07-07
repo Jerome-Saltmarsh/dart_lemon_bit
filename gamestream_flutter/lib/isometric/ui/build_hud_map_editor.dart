@@ -457,4 +457,8 @@ const selectableTiles = [
     GridNodeType.Tree_Top,
     GridNodeType.Tree_Bottom,
     GridNodeType.Player_Spawn,
+    GridNodeType.Grass_Slope_North,
+    GridNodeType.Grass_Slope_East,
+    GridNodeType.Grass_Slope_South,
+    GridNodeType.Grass_Slope_West,
 ];

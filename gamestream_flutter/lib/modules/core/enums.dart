@@ -21,6 +21,7 @@ enum Mode {
 
 enum Region {
   Australia,
+  Singapore,
   Brazil,
   Germany,
   South_Korea,
