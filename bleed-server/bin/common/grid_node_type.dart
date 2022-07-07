@@ -42,6 +42,23 @@ class GridNodeType {
     ].contains(type);
   }
 
+  static bool isSlopeNorth(int type){
+    return type == Stairs_North || type == Grass_Slope_North;
+  }
+
+  static bool isSlopeEast(int type){
+    return type == Stairs_East || type == Grass_Slope_East;
+  }
+
+  static bool isSlopeSouth(int type){
+    return type == Stairs_South || type == Grass_Slope_South;
+  }
+
+  static bool isSlopeWest(int type){
+    return type == Stairs_West || type == Grass_Slope_West;
+  }
+
+
   static const values = [
     Empty,
     Boundary,
@@ -85,6 +102,10 @@ class GridNodeType {
        Rain_Landing: 'Rain Landing',
        Fireplace: 'Fireplace',
        Wood: "Wood",
+       Grass_Slope_North: "Grass Slope North",
+       Grass_Slope_East: "Grass Slope East",
+       Grass_Slope_South: "Grass Slope South",
+       Grass_Slope_West: "Grass Slope West",
      }[type] ?? "unknown($type)";
   }
   
@@ -101,7 +122,11 @@ class GridNodeType {
       value == Stairs_North ||
           value == Stairs_East ||
           value == Stairs_West ||
-          value == Stairs_South
+          value == Stairs_South ||
+          value == Grass_Slope_North ||
+          value == Grass_Slope_East ||
+          value == Grass_Slope_South ||
+          value == Grass_Slope_West
     ;
   }
 }

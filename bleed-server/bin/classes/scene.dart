@@ -297,19 +297,19 @@ class Scene {
     if (type == GridNodeType.Boundary) return bottom;
     if (type == GridNodeType.Bricks) return bottom;
 
-    if (type == GridNodeType.Stairs_North){
+    if (GridNodeType.isSlopeNorth(type)){
       final percentage = 1 - ((x % tileSize) / tileSize);
       return (percentage * tileHeight) + bottom;
     }
-    if (type == GridNodeType.Stairs_South){
+    if (GridNodeType.isSlopeSouth(type)){
       final percentage = ((x % tileSize) / tileSize);
       return (percentage * tileHeight) + bottom;
     }
-    if (type == GridNodeType.Stairs_West){
+    if (GridNodeType.isSlopeWest(type)){
       final percentage = ((y % tileSize) / tileSize);
       return (percentage * tileHeight) + bottom;
     }
-    if (type == GridNodeType.Stairs_East){
+    if (GridNodeType.isSlopeEast(type)){
       final percentage = 1 - ((y % tileSize) / tileSize);
       return (percentage * tileHeight) + bottom;
     }
