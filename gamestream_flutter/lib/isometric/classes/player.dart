@@ -3,6 +3,7 @@ import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_alive.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_armour.dart';
+import 'package:gamestream_flutter/isometric/events/on_changed_player_designed.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_head.dart';
 import 'package:lemon_watch/watch.dart';
 import '../events/on_changed_player_state.dart';
@@ -34,7 +35,7 @@ class Player extends Vector3 {
   final equippedLevel = Watch(0);
   final characterType = Watch(CharacterType.Human);
   final health = Watch(0.0);
-  final designed = Watch(false);
+  final designed = Watch(true, onChanged: onChangedPlayerDesigned);
   final experience = Watch(0.0);
   final level = Watch(1);
   final skillPoints = Watch(0);
