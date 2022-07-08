@@ -30,10 +30,6 @@ class AI extends Character with Material {
 
   bool get pathSet => _pathIndex >= 0;
 
-  void updateAI(Game game) {
-
-  }
-
   void stopPath(){
     if (deadOrBusy) return;
     _pathIndex = -1;

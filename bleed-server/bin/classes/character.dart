@@ -94,18 +94,16 @@ class Character extends Collider with Team, Health, Velocity, Material {
 
   void updateCharacter(Game game){
     if (dead) return;
-
-    customUpdateCharacter(game);
-    // if (this is AI) {
-    //   updateAI(this);
-    //   updateAICharacterState(character);
-    // }
+    game.scene.resolveCharacterTileCollision(this, game);
+    if (!busy){
+      customUpdateCharacter(game);
+    }
     updateMovement();
+    updateCharacterState(game);
 
-    // if (frozenDuration > 0) {
-    //   character.frozenDuration--;
-    // }
+  }
 
+  void updateCharacterState(Game game){
     if (running) {
       if (stateDuration % 10 == 0) {
         game.dispatch(GameEventType.Footstep, x, y, z);
@@ -116,8 +114,6 @@ class Character extends Collider with Team, Health, Velocity, Material {
         setCharacterStateIdle();
       }
     }
-
-    game.scene.resolveCharacterTileCollision(this, game);
 
     switch (state) {
       case CharacterAction.Idle:
