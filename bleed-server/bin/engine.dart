@@ -49,10 +49,6 @@ class Engine {
       }
     }
 
-    // for (final game in games) {
-    //   game.updateStatus();
-    // }
-
     for (var i = 0; i < games.length; i++){
       games[i].updateStatus();
     }

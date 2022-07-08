@@ -76,6 +76,55 @@ class Character extends Collider with Team, Health, Velocity, Material {
      speed = walkingSpeed;
   }
 
+  void customUpdateCharacter(Game game){
+
+  }
+
+  void updateCharacter(Game game){
+    if (dead) return;
+
+    customUpdateCharacter(game);
+    // if (this is AI) {
+    //   updateAI(this);
+    //   updateAICharacterState(character);
+    // }
+    updateMovement();
+
+    // if (frozenDuration > 0) {
+    //   character.frozenDuration--;
+    // }
+
+    if (running){
+      if (stateDuration % 10 == 0){
+        game.dispatch(GameEventType.Footstep, x, y, z);
+      }
+    }
+
+    if (stateDurationRemaining > 0) {
+      stateDurationRemaining--;
+      if (stateDurationRemaining == 0) {
+        game.setCharacterState(this, CharacterState.Idle);
+      }
+    }
+
+    game.scene.resolveCharacterTileCollision(this, game);
+
+    switch (state) {
+      case CharacterAction.Idle:
+        speed *= 0.75;
+        break;
+
+      case CharacterState.Running:
+        applyVelocity();
+        break;
+
+      case CharacterState.Performing:
+        game.updateCharacterStatePerforming(this);
+        break;
+    }
+    stateDuration++;
+  }
+
   void updateMovement() {
     const minVelocity = 0.005;
     if (speed <= minVelocity) return;
@@ -84,7 +133,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
     speed *= 0.75; // friction
   }
 
-  bool withinAttackRange(Position target){
+  bool withinAttackRange(Position3 target){
     if (target is Collider){
       return withinRadius(this, target, equippedRange + (target.radius * 0.5));
     }

@@ -2,10 +2,10 @@
 
 import '../common/library.dart';
 import 'ai.dart';
+import 'game.dart';
 import 'weapon.dart';
 
 class Zombie extends AI {
-
   Zombie({
     required double x,
     required double y,
@@ -20,4 +20,39 @@ class Zombie extends AI {
       weapon: Weapon(type: WeaponType.Unarmed, damage: damage),
   );
 
+
+  @override
+  void customUpdateCharacter(Game game) {
+    if (deadOrBusy) return;
+    // updateAI(game);
+
+    final target = this.target;
+    if (target != null) {
+        if (withinAttackRange(target)) {
+          game.characterAttack(this, target);
+          return;
+        }
+        const runAtTargetDistance = 100;
+        if ((getDistance(target) < runAtTargetDistance)) {
+          return game.characterRunAt(this, target);
+        }
+    }
+
+    if (pathIndex >= 0) {
+      if (arrivedAtDest) return nextPath();
+      // @on npc going to path
+      face(dest);
+      state = CharacterState.Running;
+      return;
+    }
+
+    if (idleDuration++ > 120) {
+      idleDuration = 0;
+      if (objective == null) {
+        game.npcSetRandomDestination(this);
+      }
+    }
+
+    state = CharacterState.Idle;
+  }
 }

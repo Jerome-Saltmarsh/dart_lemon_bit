@@ -31,7 +31,7 @@ import 'zombie.dart';
 abstract class Game {
   Player? owner;
   final items = <Item>[];
-  final zombies = <AI>[];
+  final zombies = <Zombie>[];
   final npcs = <Npc>[];
   final players = <Player>[];
   final projectiles = <Projectile>[];
@@ -245,8 +245,6 @@ abstract class Game {
   void onPlayerDeath(Player player) {}
 
   void onNpcObjectivesCompleted(Character npc) {}
-
-  void updateNpcBehavior(Character npc) {}
 
   void onPlayerLevelGained(Player player){
 
@@ -463,7 +461,6 @@ extension GameFunctions on Game {
     _updatePlayersAndNpcs();
     _updateProjectiles();
     _updateProjectiles(); // called twice to fix collision detection
-    // _updateSpawnPointCollisions();
     _updateItems();
     _updateCharacterFrames();
     sortGameObjects();
@@ -637,7 +634,7 @@ extension GameFunctions on Game {
     collectables.add(collectable);
   }
 
-  void _characterAttack(Character character, Position3 target) {
+  void characterAttack(Character character, Position3 target) {
     assert(character.withinAttackRange(target));
     assert(character.alive);
     character.face(target);
@@ -645,7 +642,7 @@ extension GameFunctions on Game {
     character.target = target;
   }
 
-  void _characterRunAt(Character character, Position target) {
+  void characterRunAt(Character character, Position target) {
     character.face(target);
     setCharacterState(character, CharacterState.Running);
   }
@@ -657,18 +654,18 @@ extension GameFunctions on Game {
     if (target != null) {
       if (ai is Zombie) {
         if (ai.withinAttackRange(target)) {
-          _characterAttack(ai, target);
+          characterAttack(ai, target);
           return;
         }
         const runAtTargetDistance = 100;
         if ((ai.getDistance(target) < runAtTargetDistance)) {
-          return _characterRunAt(ai, target);
+          return characterRunAt(ai, target);
         }
 
       } else {
         // not zombie
         if (!ai.withinAttackRange(target)) return;
-        return _characterAttack(ai, target);
+        return characterAttack(ai, target);
       }
     }
 
@@ -1089,45 +1086,7 @@ extension GameFunctions on Game {
 
   void updateCharacter(Character character) {
     if (character.dead) return;
-
-    if (character is AI) {
-      updateAICharacterState(character);
-    }
-    character.updateMovement();
-
-    if (character.frozenDuration > 0) {
-      character.frozenDuration--;
-    }
-
-    if (character.running){
-       if (character.stateDuration % 10 == 0){
-           dispatch(GameEventType.Footstep, character.x, character.y, character.z);
-       }
-    }
-
-    if (character.stateDurationRemaining > 0) {
-      character.stateDurationRemaining--;
-      if (character.stateDurationRemaining == 0) {
-        setCharacterState(character, CharacterState.Idle);
-      }
-    }
-
-    scene.resolveCharacterTileCollision(character, this);
-
-    switch (character.state) {
-      case CharacterAction.Idle:
-        character.speed *= 0.75;
-        break;
-
-      case CharacterState.Running:
-        character.applyVelocity();
-        break;
-
-      case CharacterState.Performing:
-        updateCharacterStatePerforming(character);
-        break;
-    }
-    character.stateDuration++;
+    character.updateCharacter(this);
   }
 
   Projectile spawnProjectileOrb(Character src, {required int damage}) {

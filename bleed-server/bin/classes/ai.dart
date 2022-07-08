@@ -8,6 +8,7 @@ import 'collider.dart';
 import 'components.dart';
 import 'character.dart';
 import 'enemy_spawn.dart';
+import 'game.dart';
 import 'weapon.dart';
 
 class AI extends Character with Material {
@@ -28,6 +29,10 @@ class AI extends Character with Material {
   int get pathIndex => _pathIndex;
 
   bool get pathSet => _pathIndex >= 0;
+
+  void updateAI(Game game) {
+
+  }
 
   void stopPath(){
     if (deadOrBusy) return;
