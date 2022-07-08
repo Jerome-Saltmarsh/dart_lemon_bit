@@ -25,6 +25,7 @@ class AI extends Character with Material {
   var spawnX = 0.0;
   var spawnY = 0.0;
   var objective;
+  var wanderRadius = 0.0;
   EnemySpawn? enemySpawn;
 
   bool get arrivedAtDest {
@@ -42,6 +43,7 @@ class AI extends Character with Material {
     required Weapon weapon,
     int team = 0,
     double speed = 3.0,
+    this.wanderRadius = 0,
   }): super(
       x: x,
       y: y,
@@ -94,6 +96,8 @@ class AI extends Character with Material {
     }
     state = CharacterState.Idle;
 
+    applyBehaviorWander();
+
     customUpdateAI(game);
   }
 
@@ -107,12 +111,12 @@ class AI extends Character with Material {
   }
 
   void applyBehaviorWander(){
+    if (wanderRadius <= 0) return;
     if (target != null) return;
     if (!characterStateIdle) return;
     if (stateDuration < 300) return;
-    const radius = 150;
-    destX = spawnX + giveOrTake(radius);
-    destY = spawnY + giveOrTake(radius);
+    destX = spawnX + giveOrTake(wanderRadius);
+    destY = spawnY + giveOrTake(wanderRadius);
   }
 
   void clearTargetIf(Character value){

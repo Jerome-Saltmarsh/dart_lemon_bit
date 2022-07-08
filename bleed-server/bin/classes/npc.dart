@@ -1,3 +1,4 @@
+import 'game.dart';
 import 'player.dart';
 import 'ai.dart';
 import 'weapon.dart';
@@ -16,6 +17,7 @@ class Npc extends AI {
       required int health,
       required Weapon weapon,
       int team = 1,
+      double wanderRadius = 0,
   })
       : super(
             x: x,
@@ -24,5 +26,11 @@ class Npc extends AI {
             health: health,
             weapon: weapon,
             team: team,
+            wanderRadius: wanderRadius,
   );
+
+  @override
+  void customUpdateAI(Game game) {
+    applyBehaviorWander();
+  }
 }

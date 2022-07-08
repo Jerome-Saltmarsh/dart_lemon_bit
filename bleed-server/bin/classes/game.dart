@@ -1114,9 +1114,10 @@ extension GameFunctions on Game {
     required int damage,
     double speed = RunSpeed.Regular,
     List<Vector2>? objectives,
+    double wanderRadius = 100.0,
   }) {
     assert(team >= 0 && team <= 256);
-    final zombie = _getAvailableZombie();
+    final zombie = getZombieInstance();
     zombie.team = team;
     zombie.state = CharacterState.Idle;
     zombie.stateDurationRemaining = 0;
@@ -1130,10 +1131,11 @@ extension GameFunctions on Game {
     zombie.spawnY = y;
     zombie.clearDest();
     zombie.movementSpeed = speed;
+    zombie.wanderRadius = wanderRadius;
     return zombie;
   }
 
-  AI _getAvailableZombie() {
+  AI getZombieInstance() {
     for (final zombie in zombies) {
       if (zombie.alive) continue;
       return zombie;
@@ -1497,6 +1499,7 @@ extension GameFunctions on Game {
     int pants = PantsType.brown,
     int team = 1,
     int health = 10,
+    double wanderRadius = 0,
   }){
     final npc = Npc(
       name: name,
@@ -1507,6 +1510,7 @@ extension GameFunctions on Game {
       weapon: Weapon(type: weaponType, damage: weaponDamage),
       team: team,
       health: health,
+      wanderRadius:  wanderRadius,
     );
     npc.equippedHead = head;
     npc.equippedArmour = armour;
