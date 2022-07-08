@@ -22,6 +22,8 @@ class AI extends Character with Material {
   var pathIndex = 0;
   var destX = 0.0;
   var destY = 0.0;
+  var spawnX = 0.0;
+  var spawnY = 0.0;
   var objective;
   EnemySpawn? enemySpawn;
 
@@ -51,6 +53,8 @@ class AI extends Character with Material {
   ) {
     this.material = MaterialType.Flesh;
     clearDest();
+    spawnX = x;
+    spawnY = y;
   }
 
   void clearDest(){
@@ -106,10 +110,9 @@ class AI extends Character with Material {
     if (target != null) return;
     if (!characterStateIdle) return;
     if (stateDuration < 300) return;
-    if (enemySpawn == null) return;
     const radius = 150;
-    destX = enemySpawn!.x + giveOrTake(radius);
-    destY = enemySpawn!.y + giveOrTake(radius);
+    destX = spawnX + giveOrTake(radius);
+    destY = spawnY + giveOrTake(radius);
   }
 
   void clearTargetIf(Character value){
