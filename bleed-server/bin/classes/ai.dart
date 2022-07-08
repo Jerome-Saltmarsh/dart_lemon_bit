@@ -57,6 +57,16 @@ class AI extends Character with Material {
     destY = y;
   }
 
+  void applyBehaviorWander(){
+    if (target != null) return;
+    if (!characterStateIdle) return;
+    if (stateDuration < 300) return;
+    if (enemySpawn == null) return;
+    const radius = 150;
+    destX = enemySpawn!.x + giveOrTake(radius);
+    destY = enemySpawn!.y + giveOrTake(radius);
+  }
+
   void clearTargetIf(Character value){
     if (target != value) return;
     target = objective;

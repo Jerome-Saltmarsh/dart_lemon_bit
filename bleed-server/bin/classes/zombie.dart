@@ -36,14 +36,9 @@ class Zombie extends AI {
         if ((getDistance(target) < runAtTargetDistance)) {
           return runAt(target);
         }
-    } else if (characterStateIdle){
-      if (stateDuration == 100){
-        if (enemySpawn != null){
-          destX = enemySpawn!.x + giveOrTake(50);
-          destY = enemySpawn!.y + giveOrTake(50);
-        }
-      }
     }
+
+    applyBehaviorWander();
 
     if (!arrivedAtDest){
       faceDestination();
