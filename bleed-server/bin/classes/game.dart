@@ -743,62 +743,6 @@ extension GameFunctions on Game {
     }
   }
 
-  // void setCharacterState(Character character, int value) {
-  //   assert(value >= 0);
-  //   assert(value <= 5);
-  //   if (character.dead) return;
-  //   if (character.state == value) return;
-  //
-  //   if (value == CharacterState.Dead) {
-  //     setCharacterStateDead(character);
-  //     return;
-  //   }
-  //
-  //   if (value == CharacterState.Hurt) {
-  //     const duration = 10;
-  //     character.stateDurationRemaining = duration;
-  //     character.state = value;
-  //     character.stateDuration = 0;
-  //     character.animationFrame = 0;
-  //     character.ability = null;
-  //     return;
-  //   }
-  //
-  //   if (character.busy) return;
-  //
-  //   switch (value) {
-  //     case CharacterState.Idle:
-  //       character.target = null;
-  //       break;
-  //     case CharacterState.Changing:
-  //       character.stateDurationRemaining = 10;
-  //       break;
-  //     case CharacterState.Performing:
-  //       character.stateDurationRemaining = 20;
-  //       if (character is Player) {
-  //         final ability = character.ability;
-  //         if (ability == null) {
-  //           character.stateDurationRemaining = character.equippedAttackDuration;
-  //           break;
-  //         }
-  //       }
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  //   if (character.state == CharacterState.Performing) {
-  //      character.ability = null;
-  //      if (character is Player){
-  //        character.clearCardAbility();
-  //      } else {
-  //        character.ability = null;
-  //      }
-  //   }
-  //   character.state = value;
-  //   character.stateDuration = 0;
-  //   character.animationFrame = 0;
-  // }
-
   void changeCharacterHealth(Character character, int amount) {
     if (character.dead) return;
     character.health += amount;

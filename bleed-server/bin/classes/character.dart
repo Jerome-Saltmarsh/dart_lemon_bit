@@ -144,7 +144,12 @@ class Character extends Collider with Team, Health, Velocity, Material {
   }
 
   void setCharacterStateHurt(){
-    setCharacterState(value: CharacterState.Hurt, duration: 0);
+    if (dead) return;
+    stateDurationRemaining = 10;
+    state = CharacterState.Hurt;
+    stateDuration = 0;
+    animationFrame = 0;
+    ability = null;
   }
 
   void setCharacterStateIdle(){
@@ -157,27 +162,12 @@ class Character extends Collider with Team, Health, Velocity, Material {
   }
 
   void setCharacterState({required int value, required int duration}) {
-    assert(value >= 0);
-    assert(value <= 5);
-    if (dead) return;
+    assert (value >= 0);
+    assert (value <= 5);
+    assert (value != CharacterState.Dead); // use game.setCharacterStateDead
+    assert (value != CharacterState.Hurt); // use character.setCharacterStateHurt
     if (state == value) return;
-
-    if (value == CharacterState.Dead) {
-      state = CharacterState.Dead;
-      return;
-    }
-
-    if (value == CharacterState.Hurt) {
-      const duration = 10;
-      stateDurationRemaining = duration;
-      state = value;
-      stateDuration = 0;
-      animationFrame = 0;
-      ability = null;
-      return;
-    }
-
-    if (busy) return;
+    if (deadOrBusy) return;
 
     switch (value) {
       case CharacterState.Idle:
