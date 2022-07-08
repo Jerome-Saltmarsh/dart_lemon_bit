@@ -23,7 +23,7 @@ class Zombie extends AI {
   );
 
   @override
-  void customUpdateCharacter(Game game) {
+  void customUpdateAI(Game game) {
     if (deadOrBusy) return;
 
     final target = this.target;

@@ -8,6 +8,7 @@ import 'collider.dart';
 import 'components.dart';
 import 'character.dart';
 import 'enemy_spawn.dart';
+import 'game.dart';
 import 'weapon.dart';
 
 class AI extends Character with Material {
@@ -55,6 +56,15 @@ class AI extends Character with Material {
   void clearDest(){
     destX = x;
     destY = y;
+  }
+
+  @override
+  void customUpdateCharacter(Game game){
+    customUpdateAI(game);
+  }
+
+  void customUpdateAI(Game game){
+
   }
 
   void applyBehaviorWander(){
