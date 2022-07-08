@@ -12,6 +12,9 @@ class EnemySpawn {
   var max;
   var count = 0;
 
+  double get x => row * tileSize;
+  double get y => column * tileSize;
+
   EnemySpawn({
     required this.z,
     required this.row,

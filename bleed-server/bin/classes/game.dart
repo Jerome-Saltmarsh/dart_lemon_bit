@@ -675,6 +675,7 @@ extension GameFunctions on Game {
   void setCharacterStateDead(Character character) {
     if (character.state == CharacterState.Dead) return;
     character.state = CharacterState.Dead;
+    character.onCharacterStateChanged();
     character.collidable = false;
 
     if (character is AI) {
@@ -1125,6 +1126,7 @@ extension GameFunctions on Game {
     zombie.x = x;
     zombie.y = y;
     zombie.z = z;
+    zombie.clearDest();
     zombie.movementSpeed = speed;
     return zombie;
   }

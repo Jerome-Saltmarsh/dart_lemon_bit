@@ -38,20 +38,31 @@ class Zombie extends AI {
         }
     } else if (characterStateIdle){
       if (stateDuration == 100){
-        setCharacterStateRunning();
-        stateDurationRemaining = 25;
-        angle = randomAngle();
+        if (enemySpawn != null){
+          destX = enemySpawn!.x + giveOrTake(50);
+          destY = enemySpawn!.y + giveOrTake(50);
+        }
       }
     }
 
-    if (pathIndex >= 0) {
-      if (arrivedAtDest) return nextPath();
-      // @on npc going to path
-      face(dest);
-      state = CharacterState.Running;
+    if (!arrivedAtDest){
+      faceDestination();
+      setCharacterStateRunning();
       return;
     }
-
+    if (pathIndex > 0){
+       pathIndex--;
+       destX = pathX[pathIndex];
+       destY = pathY[pathIndex];
+       faceDestination();
+       setCharacterStateRunning();
+       return;
+    }
     state = CharacterState.Idle;
+  }
+
+  void faceDestination() {
+    if (deadOrBusy) return;
+    angle = getAngleBetween(x, y, destX, destY);
   }
 }

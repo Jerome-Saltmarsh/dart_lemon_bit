@@ -137,9 +137,8 @@ class Character extends Collider with Team, Health, Velocity, Material {
     if (dead) return;
     stateDurationRemaining = 10;
     state = CharacterState.Hurt;
-    stateDuration = 0;
-    animationFrame = 0;
     ability = null;
+    onCharacterStateChanged();
   }
 
   void setCharacterStateIdle(){
@@ -147,11 +146,6 @@ class Character extends Collider with Team, Health, Velocity, Material {
     if (characterStateIdle) return;
     setCharacterState(value: CharacterState.Idle, duration: 0);
     target = null;
-  }
-
-  void onCharacterStateChanged(){
-    stateDuration = 0;
-    animationFrame = 0;
   }
 
   void setCharacterState({required int value, required int duration}) {
@@ -163,6 +157,10 @@ class Character extends Collider with Team, Health, Velocity, Material {
     if (deadOrBusy) return;
     stateDurationRemaining = duration;
     state = value;
+    onCharacterStateChanged();
+  }
+
+  void onCharacterStateChanged(){
     stateDuration = 0;
     animationFrame = 0;
   }

@@ -18,42 +18,16 @@ class AI extends Character with Material {
 
   final pathX = Float32List(maxAIPathLength);
   final pathY = Float32List(maxAIPathLength);
-  var _pathIndex = -1;
-  var dest = Vector2(-1, -1);
+  var pathIndex = 0;
+  var destX = 0.0;
+  var destY = 0.0;
   var objective;
-
   EnemySpawn? enemySpawn;
-
-  int get pathIndex => _pathIndex;
-
-  bool get pathSet => _pathIndex >= 0;
-
-  void stopPath(){
-    if (deadOrBusy) return;
-    _pathIndex = -1;
-    state = CharacterState.Idle;
-  }
-
-  set pathIndex(int value){
-    _pathIndex = value;
-    if (value < 0) {
-      if (alive) {
-        state = CharacterState.Idle;
-      }
-      return;
-    }
-    dest.x = pathX[value];
-    dest.y = pathY[value];
-  }
-
-  void nextPath(){
-    pathIndex = _pathIndex - 1;
-  }
 
   bool get arrivedAtDest {
     const radius = 15;
-    if ((x - dest.x).abs() > radius) return false;
-    if ((y - dest.y).abs() > radius) return false;
+    if ((x - destX).abs() > radius) return false;
+    if ((y - destY).abs() > radius) return false;
     return true;
   }
 
@@ -75,6 +49,12 @@ class AI extends Character with Material {
       speed: speed
   ) {
     this.material = MaterialType.Flesh;
+    clearDest();
+  }
+
+  void clearDest(){
+    destX = x;
+    destY = y;
   }
 
   void clearTargetIf(Character value){
@@ -94,11 +74,9 @@ class AI extends Character with Material {
 
   @override
   void onCollisionWith(Collider other){
-    if (_pathIndex < 0) return;
+    if (pathIndex < 0) return;
     if (other is AI) {
       rotateAround(other, 0.2);
     }
-    if (!other.withinBounds(dest)) return;
-    nextPath();
   }
 }
