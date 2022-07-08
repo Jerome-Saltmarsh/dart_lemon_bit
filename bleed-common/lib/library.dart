@@ -5,7 +5,6 @@ export 'AbilityMode.dart';
 export 'AbilityType.dart';
 export 'CharacterAction.dart';
 export 'CharacterState.dart';
-export 'CharacterType.dart';
 export 'ClientRequest.dart';
 export 'CollectableType.dart';
 export 'compile_util.dart';

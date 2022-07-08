@@ -11,7 +11,6 @@ import 'package:gamestream_flutter/modules/game/actions.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/enums.dart';
 
 import 'state.dart';
 
@@ -28,7 +27,6 @@ class GameEvents {
 
   void register(){
     gameType.onChanged(_onGameTypeChanged);
-    player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     player.alive.onChanged(_onPlayerAliveChanged);
     player.state.onChanged(onPlayerCharacterStateChanged);
     messageBoxVisible.onChanged(onTextModeChanged);
@@ -100,14 +98,6 @@ class GameEvents {
         break;
       default:
         break;
-    }
-  }
-
-  void _onPlayerCharacterTypeChanged(CharacterType characterType){
-    if (characterType == CharacterType.Human){
-      engine.cursorType.value = CursorType.Precise;
-    }else{
-      engine.cursorType.value = CursorType.Basic;
     }
   }
 

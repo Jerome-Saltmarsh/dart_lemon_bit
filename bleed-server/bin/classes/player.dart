@@ -129,7 +129,6 @@ class Player extends Character with ByteWriter {
     int magic = 10,
     int health = 10,
   }) : super(
-            type: CharacterType.Human,
             x: 0,
             y: 0,
             z: 0,
@@ -243,7 +242,6 @@ class Player extends Character with ByteWriter {
 
 extension PlayerProperties on Player {
 
-  bool get isHuman => type == CharacterType.Human;
   bool get unarmed => equippedWeapon == TechType.Unarmed;
 
   void writePlayerGame() {

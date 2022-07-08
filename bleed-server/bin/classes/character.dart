@@ -10,7 +10,6 @@ import 'components.dart';
 import 'weapon.dart';
 
 class Character extends Collider with Team, Health, Velocity, Material {
-  late CharacterType type;
   late double walkingSpeed;
   CardAbility? ability = null;
   double accuracy = 0;
@@ -54,7 +53,6 @@ class Character extends Collider with Team, Health, Velocity, Material {
   int get equippedLevel => 1;
 
   Character({
-    required this.type,
     required double x,
     required double y,
     required double z,

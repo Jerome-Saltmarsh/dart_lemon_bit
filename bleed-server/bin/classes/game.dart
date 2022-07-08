@@ -26,6 +26,7 @@ import 'spawn_point.dart';
 import 'tile_node.dart';
 import 'components.dart';
 import 'weapon.dart';
+import 'zombie.dart';
 
 abstract class Game {
   Player? owner;
@@ -526,7 +527,7 @@ extension GameFunctions on Game {
         (target as Collider).collidable = false;
       }
       if (target is Character) {
-        if (target.dead && target.type.isZombie) {
+        if (target.dead && target is Zombie) {
           dispatchV2(
             GameEventType.Zombie_Killed,
             target,
@@ -551,7 +552,7 @@ extension GameFunctions on Game {
     }
 
     if (target is Character) {
-      final isZombie = target.type.isZombie;
+      final isZombie = target is Zombie;
 
       if (destroyed) {
         setCharacterStateDead(target);
@@ -654,7 +655,7 @@ extension GameFunctions on Game {
 
     final target = ai.target;
     if (target != null) {
-      if (ai.type.isZombie) {
+      if (ai is Zombie) {
         if (ai.withinAttackRange(target)) {
           _characterAttack(ai, target);
           return;
@@ -1031,7 +1032,7 @@ extension GameFunctions on Game {
         }
       }
 
-      if (src is Character && src.type == CharacterType.Zombie){
+      if (src is Character && src is Zombie){
         dispatchV2(GameEventType.Zombie_Strike, src);
       }
 
@@ -1295,13 +1296,12 @@ extension GameFunctions on Game {
       if (zombie.alive) continue;
       return zombie;
     }
-    final zombie = AI(
-      type: CharacterType.Zombie,
+    final zombie = Zombie(
       x: 0,
       y: 0,
       z: 0,
       health: 10,
-      weapon: Weapon(type: WeaponType.Unarmed),
+      damage: 1,
     );
     zombies.add(zombie);
     return zombie;
@@ -1494,7 +1494,7 @@ extension GameFunctions on Game {
     const framePerformStrike = 10;
     final stateDuration = character.stateDuration;
     final equippedDamage = character.equippedDamage;
-    if (character.type == CharacterType.Zombie) {
+    if (character is Zombie) {
       if (stateDuration != framePerformStrike) return;
       final attackTarget = character.target;
       if (attackTarget == null) return;

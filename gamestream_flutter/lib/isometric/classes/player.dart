@@ -31,7 +31,6 @@ class Player extends Vector3 {
   final headType = Watch(HeadType.None);
   final pantsType = Watch(PantsType.white);
   final equippedLevel = Watch(0);
-  final characterType = Watch(CharacterType.Human);
   final health = Watch(0.0);
   final designed = Watch(true, onChanged: onChangedPlayerDesigned);
   final experience = Watch(0.0);
@@ -146,5 +145,4 @@ class Player extends Vector3 {
 
   // Properties
   bool get dead => !alive.value;
-  bool get isHuman => characterType.value == CharacterType.Human;
 }

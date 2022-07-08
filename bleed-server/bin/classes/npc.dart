@@ -1,4 +1,3 @@
-import '../common/CharacterType.dart';
 import 'player.dart';
 import 'ai.dart';
 import 'weapon.dart';
@@ -19,7 +18,6 @@ class Npc extends AI {
       int team = 1,
   })
       : super(
-            type: CharacterType.Human,
             x: x,
             y: y,
             z: z,
