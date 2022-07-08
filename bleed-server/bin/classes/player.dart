@@ -161,22 +161,23 @@ class Player extends Character with ByteWriter {
 
   void equipPickaxe(){
     // equippedType = TechType.Pickaxe;
-    setStateChanging();
+    setCharacterStateChanging();
   }
 
   void equipAxe(){
     // equippedType = TechType.Axe;
-    setStateChanging();
+    setCharacterStateChanging();
   }
 
   void equipUnarmed(){
     equippedWeapon = Weapon(type: WeaponType.Unarmed, damage: 1);
-    setStateChanging();
+    setCharacterStateChanging();
   }
 
-  void setStateChanging(){
+  void setCharacterStateChanging(){
+    if (deadOrBusy) return;
     dispatchGameEvent(GameEventType.Character_Changing);
-    game.setCharacterState(this, CharacterState.Changing);
+    setCharacterState(value: CharacterState.Changing, duration: 30);
   }
 
   void dispatchGameEvent(int type){

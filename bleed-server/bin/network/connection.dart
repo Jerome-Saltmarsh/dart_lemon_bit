@@ -133,7 +133,7 @@ class Connection {
         final weaponType = int.tryParse(arguments[1]);
         if (weaponType == null) return errorInvalidArg('weapon type');
         player.equippedWeapon = Weapon(type: weaponType, damage: 1);
-        player.setStateChanging();
+        player.setCharacterStateChanging();
         break;
 
       case ClientRequest.Set_Armour:
@@ -141,7 +141,7 @@ class Connection {
         final armourType = int.tryParse(arguments[1]);
         if (armourType == null) return errorInvalidArg('armour type');
         player.equippedArmour = armourType;
-        player.setStateChanging();
+        player.setCharacterStateChanging();
         break;
 
       case ClientRequest.Set_Head_Type:
@@ -149,7 +149,7 @@ class Connection {
         final type = int.tryParse(arguments[1]);
         if (type == null) return errorInvalidArg('invalid head type $type');
         player.equippedHead = type;
-        player.setStateChanging();
+        player.setCharacterStateChanging();
         break;
 
       case ClientRequest.Set_Pants_Type:
@@ -157,7 +157,7 @@ class Connection {
         final type = int.tryParse(arguments[1]);
         if (type == null) return errorInvalidArg('invalid head type $type');
         player.equippedPants = type;
-        player.setStateChanging();
+        player.setCharacterStateChanging();
         break;
 
       case ClientRequest.Upgrade_Weapon_Damage:
@@ -220,7 +220,7 @@ class Connection {
           return errorInvalidArg('invalid weapon index $index');
         }
         player.equippedWeapon = player.weapons[index];
-        player.setStateChanging();
+        player.setCharacterStateChanging();
         player.writeEquippedWeapon();
         break;
 
@@ -352,7 +352,7 @@ class Connection {
         }
         player.target = null;
         player.angle = player.mouseAngle;
-        player.game.setCharacterStatePerforming(player);
+        player.setCharacterStatePerforming(duration: 30);
         break;
 
       case ClientRequest.Equip:
@@ -461,7 +461,7 @@ class Connection {
     switch (args[1]) {
       case CharacterAction.Idle:
         if (player.target == null){
-          game.setCharacterState(player, CharacterState.Idle);
+          player.setCharacterStateIdle();
         }
         break;
       case CharacterAction.Perform:
@@ -489,7 +489,7 @@ class Connection {
             player.target = aimTarget;
             if (withinRadius(player, aimTarget, player.equippedRange)){
               player.face(aimTarget);
-              game.setCharacterStatePerforming(player);
+              player.setCharacterStatePerforming(duration: player.equippedAttackDuration);
             }
           } else {
             player.runToMouse();
@@ -519,14 +519,14 @@ class Connection {
           case AbilityMode.Directed:
             ability.cooldownRemaining = ability.cooldown;
             player.face(player.mouse);
-            game.setCharacterState(player, CharacterState.Performing);
+            player.setCharacterStatePerforming(duration: 30);
             break;
         }
 
         break;
       case CharacterAction.Run:
         player.direction = args[6];
-        game.setCharacterStateRunning(player);
+        player.setCharacterStateRunning();
         player.target = null;
         player.closeStore();
         break;

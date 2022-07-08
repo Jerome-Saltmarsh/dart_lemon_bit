@@ -20,7 +20,6 @@ class Zombie extends AI {
       weapon: Weapon(type: WeaponType.Unarmed, damage: damage),
   );
 
-
   @override
   void customUpdateCharacter(Game game) {
     if (deadOrBusy) return;
@@ -29,12 +28,12 @@ class Zombie extends AI {
     final target = this.target;
     if (target != null) {
         if (withinAttackRange(target)) {
-          game.characterAttack(this, target);
+          attackTarget(target);
           return;
         }
         const runAtTargetDistance = 100;
         if ((getDistance(target) < runAtTargetDistance)) {
-          return game.characterRunAt(this, target);
+          return runAt(target);
         }
     }
 

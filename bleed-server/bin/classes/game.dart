@@ -560,7 +560,7 @@ extension GameFunctions on Game {
           GameEventType.Zombie_Hurt,
           target,
         );
-        setCharacterState(target, CharacterState.Hurt);
+        target.setCharacterStateHurt();
       }
       if (target is AI) {
         final targetAITarget = target.target;
@@ -634,19 +634,6 @@ extension GameFunctions on Game {
     collectables.add(collectable);
   }
 
-  void characterAttack(Character character, Position3 target) {
-    assert(character.withinAttackRange(target));
-    assert(character.alive);
-    character.face(target);
-    setCharacterStatePerforming(character);
-    character.target = target;
-  }
-
-  void characterRunAt(Character character, Position target) {
-    character.face(target);
-    setCharacterState(character, CharacterState.Running);
-  }
-
   void updateAICharacterState(AI ai) {
     if (ai.deadOrBusy) return;
 
@@ -654,18 +641,18 @@ extension GameFunctions on Game {
     if (target != null) {
       if (ai is Zombie) {
         if (ai.withinAttackRange(target)) {
-          characterAttack(ai, target);
+          ai.attackTarget(target);
           return;
         }
         const runAtTargetDistance = 100;
         if ((ai.getDistance(target) < runAtTargetDistance)) {
-          return characterRunAt(ai, target);
+          return ai.runAt(target);
         }
 
       } else {
         // not zombie
         if (!ai.withinAttackRange(target)) return;
-        return characterAttack(ai, target);
+        return ai.attackTarget(target);
       }
     }
 
@@ -725,10 +712,6 @@ extension GameFunctions on Game {
     sortSum(projectiles);
   }
 
-  void setCharacterStateRunning(Character character) {
-    setCharacterState(character, CharacterState.Running);
-  }
-
   void setCharacterStateDead(Character character) {
     if (character.state == CharacterState.Dead) return;
     character.state = CharacterState.Dead;
@@ -760,69 +743,61 @@ extension GameFunctions on Game {
     }
   }
 
-  void setCharacterStatePerforming(Character character) {
-    setCharacterState(character, CharacterState.Performing);
-  }
-
-  void setCharacterState(Character character, int value) {
-    assert(value >= 0);
-    assert(value <= 5);
-    if (character.dead) return;
-    if (character.state == value) return;
-
-    if (value == CharacterState.Dead) {
-      setCharacterStateDead(character);
-      return;
-    }
-
-    if (value == CharacterState.Hurt) {
-      const duration = 10;
-      character.stateDurationRemaining = duration;
-      character.state = value;
-      character.stateDuration = 0;
-      character.animationFrame = 0;
-      character.ability = null;
-      return;
-    }
-
-    if (character.busy) return;
-
-    switch (value) {
-      case CharacterState.Idle:
-        character.target = null;
-        break;
-      case CharacterState.Changing:
-        character.stateDurationRemaining = 10;
-        break;
-      case CharacterState.Performing:
-        character.stateDurationRemaining = 20;
-        if (character is Player) {
-          final ability = character.ability;
-          if (ability == null) {
-            character.stateDurationRemaining = character.equippedAttackDuration;
-            break;
-          }
-        }
-        break;
-      default:
-        break;
-    }
-    if (character.state == CharacterState.Performing) {
-       character.ability = null;
-       if (character is Player){
-         character.clearCardAbility();
-       } else {
-         character.ability = null;
-       }
-    }
-    character.state = value;
-    character.stateDuration = 0;
-    character.animationFrame = 0;
-  }
-
-  void setCharacterStateIdle(Character character) {
-    setCharacterState(character, CharacterState.Idle);
-  }
+  // void setCharacterState(Character character, int value) {
+  //   assert(value >= 0);
+  //   assert(value <= 5);
+  //   if (character.dead) return;
+  //   if (character.state == value) return;
+  //
+  //   if (value == CharacterState.Dead) {
+  //     setCharacterStateDead(character);
+  //     return;
+  //   }
+  //
+  //   if (value == CharacterState.Hurt) {
+  //     const duration = 10;
+  //     character.stateDurationRemaining = duration;
+  //     character.state = value;
+  //     character.stateDuration = 0;
+  //     character.animationFrame = 0;
+  //     character.ability = null;
+  //     return;
+  //   }
+  //
+  //   if (character.busy) return;
+  //
+  //   switch (value) {
+  //     case CharacterState.Idle:
+  //       character.target = null;
+  //       break;
+  //     case CharacterState.Changing:
+  //       character.stateDurationRemaining = 10;
+  //       break;
+  //     case CharacterState.Performing:
+  //       character.stateDurationRemaining = 20;
+  //       if (character is Player) {
+  //         final ability = character.ability;
+  //         if (ability == null) {
+  //           character.stateDurationRemaining = character.equippedAttackDuration;
+  //           break;
+  //         }
+  //       }
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   if (character.state == CharacterState.Performing) {
+  //      character.ability = null;
+  //      if (character is Player){
+  //        character.clearCardAbility();
+  //      } else {
+  //        character.ability = null;
+  //      }
+  //   }
+  //   character.state = value;
+  //   character.stateDuration = 0;
+  //   character.animationFrame = 0;
+  // }
 
   void changeCharacterHealth(Character character, int amount) {
     if (character.dead) return;
@@ -892,7 +867,7 @@ extension GameFunctions on Game {
     if (player.dead) return;
 
     if (player.lastUpdateFrame > 10) {
-      setCharacterStateIdle(player);
+      player.setCharacterStateIdle();
     }
 
     final target = player.target;
@@ -916,37 +891,37 @@ extension GameFunctions on Game {
           }
           target.onInteractedWith?.call(player);
           player.target = null;
-          setCharacterStateIdle(player);
+          player.setCharacterStateIdle();
           return;
         }
-        setCharacterStateRunning(player);
+        player.setCharacterStateRunning();
         return;
       }
 
       if (ability != null) {
         if (withinRadius(player, target, ability.range)) {
           player.target = target;
-          setCharacterStatePerforming(player);
+          player.setCharacterStatePerforming(duration: ability.duration);
           return;
         }
-        setCharacterStateRunning(player);
+        player.setCharacterStateRunning();
         return;
       }
       if (withinAttackRadius(player, target)) {
         player.target = target;
-        setCharacterStatePerforming(player);
+        player.attackTarget(target);
         return;
       }
-      setCharacterStateRunning(player);
+      player.setCharacterStateRunning();
       return;
     }
 
     if (ability != null) {
       if (!withinRadius(player, target, ability.range)){
-        setCharacterStateRunning(player);
+        player.setCharacterStateRunning();
         return;
       }
-      setCharacterStatePerforming(player);
+      player.setCharacterStatePerforming(duration: ability.duration);
       return;
     }
 
@@ -954,7 +929,7 @@ extension GameFunctions on Game {
       player.target = null;
       return;
     }
-    setCharacterStateRunning(player);
+    player.setCharacterStateRunning();
   }
 
   void checkProjectileCollision(List<Collider> colliders) {

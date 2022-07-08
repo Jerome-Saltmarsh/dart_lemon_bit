@@ -10,6 +10,7 @@ abstract class CardAbility extends Card {
   double get range;
   int get damage;
   double get radius => 0;
+  int get duration => 30;
 
   bool get isModeArea => mode == AbilityMode.Area;
 

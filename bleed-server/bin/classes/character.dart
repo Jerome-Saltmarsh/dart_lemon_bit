@@ -80,6 +80,18 @@ class Character extends Collider with Team, Health, Velocity, Material {
 
   }
 
+  void attackTarget(Position3 target) {
+    if (deadOrBusy) return;
+    face(target);
+    setCharacterStatePerforming(duration: equippedAttackDuration);
+    this.target = target;
+  }
+
+  void runAt(Position target) {
+    face(target);
+    setCharacterStateRunning();
+  }
+
   void updateCharacter(Game game){
     if (dead) return;
 
@@ -94,16 +106,14 @@ class Character extends Collider with Team, Health, Velocity, Material {
     //   character.frozenDuration--;
     // }
 
-    if (running){
-      if (stateDuration % 10 == 0){
+    if (running) {
+      if (stateDuration % 10 == 0) {
         game.dispatch(GameEventType.Footstep, x, y, z);
       }
-    }
-
-    if (stateDurationRemaining > 0) {
+    } else if (stateDurationRemaining > 0) {
       stateDurationRemaining--;
       if (stateDurationRemaining == 0) {
-        game.setCharacterState(this, CharacterState.Idle);
+        setCharacterStateIdle();
       }
     }
 
@@ -123,6 +133,68 @@ class Character extends Collider with Team, Health, Velocity, Material {
         break;
     }
     stateDuration++;
+  }
+
+  void setCharacterStatePerforming({required int duration}){
+    setCharacterState(value: CharacterState.Performing, duration: duration);
+  }
+
+  void setCharacterStateRunning(){
+    setCharacterState(value: CharacterState.Running, duration: 0);
+  }
+
+  void setCharacterStateHurt(){
+    setCharacterState(value: CharacterState.Hurt, duration: 0);
+  }
+
+  void setCharacterStateIdle(){
+    setCharacterState(value: CharacterState.Idle, duration: 0);
+  }
+
+  void onCharacterStateChanged(){
+    stateDuration = 0;
+    animationFrame = 0;
+  }
+
+  void setCharacterState({required int value, required int duration}) {
+    assert(value >= 0);
+    assert(value <= 5);
+    if (dead) return;
+    if (state == value) return;
+
+    if (value == CharacterState.Dead) {
+      state = CharacterState.Dead;
+      return;
+    }
+
+    if (value == CharacterState.Hurt) {
+      const duration = 10;
+      stateDurationRemaining = duration;
+      state = value;
+      stateDuration = 0;
+      animationFrame = 0;
+      ability = null;
+      return;
+    }
+
+    if (busy) return;
+
+    switch (value) {
+      case CharacterState.Idle:
+        target = null;
+        break;
+      case CharacterState.Changing:
+        stateDurationRemaining = 10;
+        break;
+      case CharacterState.Performing:
+        stateDurationRemaining = 20;
+        break;
+      default:
+        break;
+    }
+    state = value;
+    stateDuration = 0;
+    animationFrame = 0;
   }
 
   void updateMovement() {
