@@ -1,5 +1,7 @@
 
 
+import 'package:lemon_math/library.dart';
+
 import '../common/library.dart';
 import 'ai.dart';
 import 'game.dart';
@@ -34,6 +36,12 @@ class Zombie extends AI {
         if ((getDistance(target) < runAtTargetDistance)) {
           return runAt(target);
         }
+    } else if (characterStateIdle){
+      if (stateDuration == 100){
+        setCharacterStateRunning();
+        stateDurationRemaining = 25;
+        angle = randomAngle();
+      }
     }
 
     if (pathIndex >= 0) {
@@ -42,13 +50,6 @@ class Zombie extends AI {
       face(dest);
       state = CharacterState.Running;
       return;
-    }
-
-    if (idleDuration++ > 120) {
-      idleDuration = 0;
-      if (objective == null) {
-        game.npcSetRandomDestination(this);
-      }
     }
 
     state = CharacterState.Idle;

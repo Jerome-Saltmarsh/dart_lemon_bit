@@ -10,7 +10,7 @@ import 'components.dart';
 import 'weapon.dart';
 
 class Character extends Collider with Team, Health, Velocity, Material {
-  late double walkingSpeed;
+  late double movementSpeed;
   CardAbility? ability = null;
   double accuracy = 0;
   var state = CharacterState.Idle;
@@ -37,6 +37,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
   bool get running => state == CharacterState.Running;
 
   bool get idling => state == CharacterState.Idle;
+  bool get characterStateIdle => state == CharacterState.Idle;
 
   bool get busy => stateDurationRemaining > 0;
 
@@ -66,14 +67,14 @@ class Character extends Collider with Team, Health, Velocity, Material {
   }) : super(x: x, y: y, z: z, radius: 7) {
     maxHealth = health;
     this.health = health;
-    walkingSpeed = speed;
+    movementSpeed = speed;
     this.team = team;
     this.material = MaterialType.Flesh;
   }
 
   void applyVelocity() {
-     if (speed > walkingSpeed) return;
-     speed = walkingSpeed;
+     if (speed > movementSpeed) return;
+     speed = movementSpeed;
   }
 
   void customUpdateCharacter(Game game){
@@ -104,26 +105,19 @@ class Character extends Collider with Team, Health, Velocity, Material {
   }
 
   void updateCharacterState(Game game){
-    if (running) {
-      if (stateDuration % 10 == 0) {
-        game.dispatch(GameEventType.Footstep, x, y, z);
-      }
-    } else if (stateDurationRemaining > 0) {
-      stateDurationRemaining--;
-      if (stateDurationRemaining == 0) {
+    if (stateDurationRemaining > 0 && stateDurationRemaining-- == 0) {
         setCharacterStateIdle();
-      }
     }
-
     switch (state) {
       case CharacterAction.Idle:
         speed *= 0.75;
         break;
-
       case CharacterState.Running:
         applyVelocity();
+        if (stateDuration % 10 == 0) {
+          game.dispatch(GameEventType.Footstep, x, y, z);
+        }
         break;
-
       case CharacterState.Performing:
         game.updateCharacterStatePerforming(this);
         break;
@@ -149,7 +143,10 @@ class Character extends Collider with Team, Health, Velocity, Material {
   }
 
   void setCharacterStateIdle(){
+    if (deadOrBusy) return;
+    if (characterStateIdle) return;
     setCharacterState(value: CharacterState.Idle, duration: 0);
+    target = null;
   }
 
   void onCharacterStateChanged(){
@@ -164,20 +161,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
     assert (value != CharacterState.Hurt); // use character.setCharacterStateHurt
     if (state == value) return;
     if (deadOrBusy) return;
-
-    switch (value) {
-      case CharacterState.Idle:
-        target = null;
-        break;
-      case CharacterState.Changing:
-        stateDurationRemaining = 10;
-        break;
-      case CharacterState.Performing:
-        stateDurationRemaining = 20;
-        break;
-      default:
-        break;
-    }
+    stateDurationRemaining = duration;
     state = value;
     stateDuration = 0;
     animationFrame = 0;

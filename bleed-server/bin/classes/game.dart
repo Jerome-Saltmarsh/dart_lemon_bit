@@ -634,46 +634,6 @@ extension GameFunctions on Game {
     collectables.add(collectable);
   }
 
-  void updateAICharacterState(AI ai) {
-    if (ai.deadOrBusy) return;
-
-    final target = ai.target;
-    if (target != null) {
-      if (ai is Zombie) {
-        if (ai.withinAttackRange(target)) {
-          ai.attackTarget(target);
-          return;
-        }
-        const runAtTargetDistance = 100;
-        if ((ai.getDistance(target) < runAtTargetDistance)) {
-          return ai.runAt(target);
-        }
-
-      } else {
-        // not zombie
-        if (!ai.withinAttackRange(target)) return;
-        return ai.attackTarget(target);
-      }
-    }
-
-    if (ai.pathIndex >= 0) {
-      if (ai.arrivedAtDest) return ai.nextPath();
-      // @on npc going to path
-      ai.face(ai.dest);
-      ai.state = CharacterState.Running;
-      return;
-    }
-
-    if (ai.idleDuration++ > 120) {
-      ai.idleDuration = 0;
-      if (ai.objective == null) {
-        npcSetRandomDestination(ai);
-      }
-    }
-
-    ai.state = CharacterState.Idle;
-  }
-
   void _updatePlayersAndNpcs() {
     final playersLength = players.length;
     for (var i = 0; i < playersLength; i++) {
@@ -1165,7 +1125,7 @@ extension GameFunctions on Game {
     zombie.x = x;
     zombie.y = y;
     zombie.z = z;
-    zombie.walkingSpeed = speed;
+    zombie.movementSpeed = speed;
     return zombie;
   }
 
