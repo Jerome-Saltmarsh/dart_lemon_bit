@@ -210,7 +210,7 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
         anchorY: 0.3334,
       );
     case GridNodeType.Water:
-      render(
+      return render(
         dstX: dstX,
         dstY: dstY + animationFrameWaterHeight,
         srcX: 7206 + animationFrameWaterSrcX,
@@ -219,7 +219,16 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
         srcHeight: 72,
         anchorY: 0.3334,
       );
-      return;
+    case GridNodeType.Water_Flowing:
+      return render(
+        dstX: dstX,
+        dstY: dstY + animationFrameWaterHeight,
+        srcX: 8096 + animationFrameWaterSrcX,
+        srcY: 72.0 * shade,
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorY: 0.3334,
+      );
     case GridNodeType.Torch:
       if (!torchesIgnited.value) {
         return renderTorchOff(dstX, dstY);

@@ -41,7 +41,9 @@ class AudioSingle {
     await player.setVolume(playVolume);
     if (player.audioSource == null) throw Exception("no audio source");
     await player.seek(const Duration());
-    await player.play();
+    await player.play().catchError((error){
+      print("failed to play $name");
+    });
     await player.seek(const Duration());
   }
 

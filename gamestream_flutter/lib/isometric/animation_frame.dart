@@ -7,6 +7,7 @@ var animationFrame = 0;
 var animationFrameWater = 0;
 var animationFrameWaterHeight = 0;
 var animationFrameWaterSrcX = 0.0;
+var animationFrameWaterFlowingSrcX = 0.0;
 var animationFrameTorch = 0;
 var animationFrameGrass = 0;
 var animationFrameGrassShort = 0;

@@ -454,6 +454,7 @@ const selectableTiles = [
     GridNodeType.Fireplace,
     GridNodeType.Wood,
     GridNodeType.Water,
+    GridNodeType.Water_Flowing,
     GridNodeType.Tree_Top,
     GridNodeType.Tree_Bottom,
     GridNodeType.Player_Spawn,

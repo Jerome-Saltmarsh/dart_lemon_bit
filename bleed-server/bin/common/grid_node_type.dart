@@ -23,6 +23,7 @@ class GridNodeType {
   static const Grass_Slope_East = 23;
   static const Grass_Slope_South = 24;
   static const Grass_Slope_West = 25;
+  static const Water_Flowing = 26;
 
   static isSolid(int type){
     if (type == GridNodeType.Bricks) return true;
