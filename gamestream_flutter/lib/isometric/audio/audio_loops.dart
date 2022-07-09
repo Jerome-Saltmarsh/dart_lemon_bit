@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 
+import '../queries/grid_foreach_nearby.dart';
 import '../watches/rain.dart';
 import 'audio_loop.dart';
 import 'convert_distance_to_volume.dart';
@@ -20,6 +21,7 @@ final audioLoops = <AudioLoop> [
   AudioLoop(name: 'fire', getTargetVolume: getVolumeTargetFire),
   AudioLoop(name: 'distant-thunder', getTargetVolume: getVolumeTargetDistanceThunder),
   AudioLoop(name: 'heart-beat', getTargetVolume: getVolumeHeartBeat),
+  AudioLoop(name: 'stream', getTargetVolume: getVolumeStream),
 ];
 
 void updateAudioLoops(){
@@ -95,4 +97,11 @@ double getVolumeTargetDistanceThunder(){
 
 double getVolumeHeartBeat(){
    return 1.0 - player.health.value / player.maxHealth;
+}
+
+double getVolumeStream(){
+  const r = 7;
+  const maxDistance = r * tileSize;
+  final distance = getClosestByType(radius: r, type: GridNodeType.Water_Flowing) * tileSize;
+  return convertDistanceToVolume(distance, maxDistance: maxDistance) * 0.5;
 }
