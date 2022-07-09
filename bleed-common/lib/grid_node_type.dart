@@ -93,6 +93,7 @@ class GridNodeType {
        Stairs_South: 'Stairs South',
        Stairs_West: 'Stairs West',
        Water: 'Water',
+       Water_Flowing: 'Flowing Water',
        Torch: 'Torch',
        Tree_Bottom: 'Tree Bottom',
        Tree_Top: 'Tree Top',
@@ -110,24 +111,21 @@ class GridNodeType {
      }[type] ?? "unknown($type)";
   }
   
-  static bool isFire(int value) {
-    return value == Fireplace || value == Torch; 
-  }
-  
-  static bool isRain(int value){
-    return value == Rain_Falling || value == Rain_Landing;
-  }
+  static bool isFire(int value) =>
+     value == Fireplace           ||
+     value == Torch               ;
 
-  static bool isStairs(int value) {
-    return
-      value == Stairs_North ||
-          value == Stairs_East ||
-          value == Stairs_West ||
-          value == Stairs_South ||
-          value == Grass_Slope_North ||
-          value == Grass_Slope_East ||
-          value == Grass_Slope_South ||
-          value == Grass_Slope_West
-    ;
-  }
+  static bool isRain(int value) =>
+      value == Rain_Falling       ||
+      value == Rain_Landing       ;
+
+  static bool isStairs(int value) =>
+      value == Stairs_North       ||
+      value == Stairs_East        ||
+      value == Stairs_West        ||
+      value == Stairs_South       ||
+      value == Grass_Slope_North  ||
+      value == Grass_Slope_East   ||
+      value == Grass_Slope_South  ||
+      value == Grass_Slope_West   ;
 }

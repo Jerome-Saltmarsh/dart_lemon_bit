@@ -577,6 +577,9 @@ class Connection {
         : await engine.findGameEditorByName(name);
     joinGame(game);
     game.owner = _player;
+    if (_player != null) {
+      _player!.designed = true;
+    }
   }
 
   void joinGame(Game game){
