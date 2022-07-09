@@ -42,7 +42,8 @@ void renderCharacter(Character character, {bool renderHealthBar = true}) {
         direction == Direction.North ||
         direction == Direction.North_West ||
         direction == Direction.West ||
-        direction == Direction.South_West) {
+        direction == Direction.South_West
+    ) {
       _renderCharacterTemplateWeapon(character);
       _renderCharacterTemplate(character, color);
     } else {

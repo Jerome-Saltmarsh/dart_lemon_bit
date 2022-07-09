@@ -49,7 +49,7 @@ double getVolumeTargetWind() {
 }
 
 double getVolumeTargetRain() {
-   switch(rain.value){
+   switch (rain.value){
      case Rain.None:
        return 0;
      case Rain.Light:
@@ -73,7 +73,7 @@ double getVolumeTargetDayAmbience() {
 }
 
 double getVolumeTargetFire(){
-  const r = 7;
+  const r = 4;
   const maxDistance = r * tileSize;
   var closest = getClosestByType(radius: r, type: GridNodeType.Fireplace) * tileSize;
   if (torchesIgnited.value) {
@@ -82,7 +82,7 @@ double getVolumeTargetFire(){
          closest = closestTorch;
       }
   }
-  return convertDistanceToVolume(closest, maxDistance: maxDistance) * 0.75;
+  return convertDistanceToVolume(closest, maxDistance: maxDistance) * 1.0;
 }
 
 double getVolumeTargetDistanceThunder(){

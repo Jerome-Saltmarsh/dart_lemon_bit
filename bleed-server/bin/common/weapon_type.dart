@@ -47,7 +47,12 @@ class WeaponType {
   }
 
   static bool isMelee(int type) {
-    return const <int>[Sword, Unarmed].contains(type);
+    return type == Sword ||
+           type == Staff ||
+           type == Pickaxe ||
+           type == Hammer ||
+           type == Axe ;
+
   }
   
   static bool isMetal(int type){
