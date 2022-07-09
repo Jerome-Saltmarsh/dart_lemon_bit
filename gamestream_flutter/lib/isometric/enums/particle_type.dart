@@ -17,4 +17,6 @@ class ParticleType {
   static const Shard_Wood = 16;
   static const Orb_Shard = 17;
   static const Flame = 18;
+  static const Leaf = 19;
+
 }

@@ -83,6 +83,16 @@ void renderParticle(Particle value) {
           srcHeight: 64,
           color: value.renderColor
       );
+    case ParticleType.Leaf:
+      return render(
+          dstX: value.renderX,
+          dstY: value.renderY,
+          srcX: 281.0,
+          srcY: 25,
+          srcWidth: 8,
+          srcHeight: 8,
+          color: value.renderColor
+      );
 
     default:
       break;

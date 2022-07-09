@@ -3,18 +3,21 @@ import 'dart:async';
 import 'classes/library.dart';
 import 'constants/frames_per_second.dart';
 import 'dark_age/dark_age_scenes.dart';
+import 'dark_age/dark_age_universe.dart';
 import 'dark_age/game_dark_age.dart';
 import 'dark_age/game_dark_age_castle.dart';
+import 'dark_age/game_dark_age_editor.dart';
 import 'dark_age/game_dark_age_village.dart';
 import 'io/read_scene_from_file.dart';
 import 'language.dart';
-import 'scene/generate_empty_scene.dart';
 
 final engine = Engine();
+
 
 class Engine {
   final games = <Game>[];
   var frame = 0;
+  final officialUniverse = DarkAgeUniverse();
 
   Future init() async {
     await darkAgeScenes.load();
@@ -22,6 +25,7 @@ class Engine {
   }
 
   void fixedUpdate(Timer timer) {
+    officialUniverse.update();
     frame++;
 
     if (frame % 5 == 0) {
@@ -36,13 +40,6 @@ class Engine {
       }
     }
 
-    // const framesPerRegen = framesPerSecond * 10;
-    // if (frame % framesPerRegen == 0) {
-    //   for (final game in games) {
-    //     game.regenCharacters();
-    //   }
-    // }
-
     if (frame % 30 == 0) {
       for (final game in games) {
         game.updateAIPath();
@@ -55,13 +52,11 @@ class Engine {
   }
 
   Future<GameDarkAge> findGameEditorNew() async {
-    final game = GameDarkAge(generateEmptyScene());
-    game.timePassing = false;
-    return game;
+    return GameDarkAgeEditor();
   }
 
   Future<GameDarkAge> findGameEditorByName(String name) async {
-    return GameDarkAge(await readSceneFromFile(name));
+    return GameDarkAge(await readSceneFromFile(name), officialUniverse);
   }
 
   T? findGameAwaitingPlayers<T extends Game>() {
@@ -99,8 +94,6 @@ class Engine {
   GameDarkAge findGameDarkAgeVillage() {
     for (final game in games) {
       if (game is GameDarkAgeVillage) {
-        if (game.full) continue;
-        if (game.owner != null) continue;
         return game;
       }
     }

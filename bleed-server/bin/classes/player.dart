@@ -5,6 +5,7 @@ import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
 import '../convert/convert_card_type_to_card.dart';
+import '../dark_age/game_dark_age.dart';
 import '../engine.dart';
 import '../utilities.dart';
 import 'enemy_spawn.dart';
@@ -562,13 +563,15 @@ extension PlayerProperties on Player {
     writeByte(character.equippedPants); // helm
   }
 
-  void writeWeather(){
-     writeByte(ServerResponse.Weather);
-     writeByte(game.raining.index);
-     writeBool(game.breezy);
-     writeByte(game.lightning.index);
-     writeBool(game.timePassing);
-     writeByte(game.wind);
+  void writeWeather() {
+    if (game is GameDarkAge == false) return;
+    final universe = (game as GameDarkAge).universe;
+    writeByte(ServerResponse.Weather);
+    writeByte(universe.raining.index);
+    writeBool(universe.breezy);
+    writeByte(universe.lightning.index);
+    writeBool(universe.timePassing);
+    writeByte(universe.wind);
   }
 
   void writePercentage(double value){

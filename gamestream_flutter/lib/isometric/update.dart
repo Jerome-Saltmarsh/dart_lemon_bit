@@ -24,6 +24,7 @@ void updateIsometric(){
   updateRandomAudio();
   gridWindResetToAmbient();
   applyObjectsToWind();
+  // updateGenerateLeaves();
 
 }
 

@@ -49,68 +49,19 @@ abstract class Game {
 
   var playersCanAttackDynamicObjects = false;
 
-  // WEATHER
-  var _raining = Rain.None;
-  var _breezy = false;
-  var _lightning = Lightning.Off;
-  var _wind = 0;
-  var _timePassing = true;
-
   bool get hasOwner => owner != null;
+
+  Game(this.scene, {
+    this.shadeMax = Shade.Bright,
+    this.status = GameStatus.In_Progress
+  }) {
+    engine.onGameCreated(this);
+  }
+
 
   void setHourMinutes(int hour, int minutes){
 
   }
-
-  set wind(int value){
-    if (_wind == value) return;
-    if (value < windIndexCalm) return;
-    if (value > windIndexStrong) return;
-     _wind = value;
-    playersWriteWeather();
-  }
-
-  set raining(Rain value) {
-     if (_raining == value) return;
-     _raining = value;
-     playersWriteWeather();
-  }
-
-  set breezy(bool value){
-     if(_breezy == value) return;
-     _breezy = value;
-     playersWriteWeather();
-  }
-
-  set lightning(Lightning value){
-    if(_lightning == value) return;
-    _lightning = value;
-    playersWriteWeather();
-  }
-
-  set timePassing(bool value) {
-    if(_timePassing == value) return;
-    _timePassing = value;
-    playersWriteWeather();
-  }
-
-  void toggleBreeze(){
-    breezy = !breezy;
-  }
-
-  void toggleWind(){
-    wind = (_wind + 1) % 3;
-  }
-
-  void toggleTimePassing(){
-    timePassing = !timePassing;
-  }
-
-  Lightning get lightning => _lightning;
-  Rain get raining => _raining;
-  bool get breezy => _breezy;
-  bool get timePassing => _timePassing;
-  int get wind => _wind;
 
   static int _id = 0;
 
@@ -282,13 +233,6 @@ abstract class Game {
   void update() {}
 
   void onPlayerDisconnected(Player player) {}
-
-  Game(this.scene, {
-        this.shadeMax = Shade.Bright,
-        this.status = GameStatus.In_Progress
-      }) {
-    engine.onGameCreated(this);
-  }
 
   void spawnExplosion({
     required Character src,

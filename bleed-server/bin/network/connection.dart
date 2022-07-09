@@ -97,9 +97,9 @@ class Connection {
         return;
 
       case ClientRequest.Skip_Hour:
-        if (game is GameDarkAge){
-          game.time = (game.time + secondsPerHour) % secondsPerDay;
-        }
+        if (game is GameDarkAge == false) return;
+        final universe = (game as GameDarkAge).universe;
+        universe.time = (universe.time + secondsPerHour) % secondsPerDay;
         break;
 
       case ClientRequest.Spawn_Zombie:
@@ -123,9 +123,9 @@ class Connection {
         return;
 
       case ClientRequest.Reverse_Hour:
-        if (game is GameDarkAge){
-          game.time = (game.time - 3600) % secondsPerDay;
-        }
+        if (game is GameDarkAge == false) return;
+        final universe = (game as GameDarkAge).universe;
+        universe.time = (universe.time - 3600) % secondsPerDay;
         break;
 
       case ClientRequest.Set_Weapon:
@@ -183,34 +183,45 @@ class Connection {
         break;
 
       case ClientRequest.Weather_Set_Rain:
+        if (game is GameDarkAge == false) return;
+        final universe = (game as GameDarkAge).universe;
         final rainIndex = int.tryParse(arguments[1]);
         if (rainIndex == null || !isValidIndex(rainIndex, rainValues))
            return errorInvalidArg('invalid rain index: $rainIndex');
 
-        player.game.raining = rainValues[rainIndex];
+        universe.raining = rainValues[rainIndex];
         break;
 
       case ClientRequest.Weather_Toggle_Breeze:
-        game.toggleBreeze();
+        if (game is GameDarkAge == false) return;
+        final universe = (game as GameDarkAge).universe;
+        universe.toggleBreeze();
         break;
 
       case ClientRequest.Weather_Set_Wind:
+        if (game is GameDarkAge == false) return;
+        final universe = (game as GameDarkAge).universe;
         final index = int.tryParse(arguments[1]);
         if (index == null || !isValidIndex(index, windValues))
           return errorInvalidArg('invalid rain index: $index');
 
-        player.game.wind = index;
+        universe.wind = index;
         break;
 
       case ClientRequest.Weather_Set_Lightning:
+        if (game is GameDarkAge == false) return;
+        final universe = (game as GameDarkAge).universe;
+
         final index = int.tryParse(arguments[1]);
         if (index == null || !isValidIndex(index, lightningValues))
           return errorInvalidArg('invalid lightning index: $index');
-        player.game.lightning = lightningValues[index];
+        universe.lightning = lightningValues[index];
         break;
 
       case ClientRequest.Weather_Toggle_Time_Passing:
-        game.toggleTimePassing();
+        if (game is GameDarkAge == false) return;
+        final universe = (game as GameDarkAge).universe;
+        universe.toggleTimePassing();
         break;
 
       case ClientRequest.Equip_Weapon:

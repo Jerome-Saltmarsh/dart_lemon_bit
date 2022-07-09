@@ -164,6 +164,33 @@ void spawnParticleBlood({
   );
 }
 
+void spawnParticleLeaf({
+  required double x,
+  required double y,
+  required double z,
+  required double zv,
+  required double angle,
+  required double speed
+}) {
+  spawnParticle(
+    type: ParticleType.Leaf,
+    x: x,
+    y: y,
+    z: z,
+    zv: zv,
+    angle: angle,
+    speed: speed,
+    weight: 1,
+    duration: randomInt(120, 200),
+    rotation: 0,
+    rotationV: 0,
+    scale: 0.6,
+    scaleV: 0,
+    bounciness: 0,
+    castShadow: true,
+  );
+}
+
 void spawnParticleFireYellow({
   required double x,
   required double y,

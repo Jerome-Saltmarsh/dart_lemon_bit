@@ -1,10 +1,10 @@
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
 import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
+import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 
@@ -72,22 +72,17 @@ double getVolumeTargetDayAmbience() {
   return 0;
 }
 
-double getFootstepVolume(){
-  return 1.0;
-}
-
 double getVolumeTargetFire(){
-  var nearestFlame = 99999;
-  final isDay = ambientShade.value == Shade.Very_Bright;
-  gridForEach(where: GridNodeType.isFire, apply: (z, row, column, type){
-    if (isDay && type == GridNodeType.Torch) return;;
-    var distance = player.getGridDistance(z, row, column);
-    if (distance < nearestFlame) {
-      nearestFlame = distance;
-    }
-  });
-  final distance = nearestFlame * tileSize;
-  return convertDistanceToVolume(distance, maxDistance: 200);
+  const r = 7;
+  const maxDistance = r * tileSize;
+  var closest = getClosestByType(radius: r, type: GridNodeType.Fireplace) * tileSize;
+  if (torchesIgnited.value) {
+      final closestTorch = getClosestByType(radius: r, type: GridNodeType.Torch) * tileSize;
+      if (closestTorch < closest) {
+         closest = closestTorch;
+      }
+  }
+  return convertDistanceToVolume(closest, maxDistance: maxDistance) * 0.75;
 }
 
 double getVolumeTargetDistanceThunder(){

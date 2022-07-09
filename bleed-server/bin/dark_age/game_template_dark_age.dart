@@ -1,20 +1,15 @@
 
 
 import 'package:lemon_math/library.dart';
-
 import '../classes/library.dart';
 import '../common/library.dart';
 import 'dark_age_universe.dart';
 
-class GameDarkAge extends Game {
-  final DarkAgeUniverse universe;
-  var minutesPassingPerSecond = 5;
-  var durationRain = randomInt(1000, 3000);
-  var durationLightning = 300;
-  var durationBreeze = 500;
-  var durationWind = randomInt(500, 1000);
+abstract class GameDarkAgeTemplate extends Game {
+  late DarkAgeUniverse universe;
 
-  GameDarkAge(Scene scene, this.universe) : super(scene);
+  GameDarkAgeTemplate(Scene scene) : super(scene);
+
 
   @override
   void setHourMinutes(int hour, int minutes){
@@ -35,19 +30,19 @@ class GameDarkAge extends Game {
 
   @override
   void onKilled(dynamic target, dynamic src){
-       if (src is Player){
-         if (target is AI){
-            src.gainExperience(1);
-         }
-       }
+    if (src is Player){
+      if (target is AI){
+        src.gainExperience(1);
+      }
+    }
   }
 
   @override
   Player spawnPlayer() {
     final player = Player(
-        game: this,
-        weapon: Weapon(type: WeaponType.Unarmed, damage: 1),
-        team: 1,
+      game: this,
+      weapon: Weapon(type: WeaponType.Unarmed, damage: 1),
+      team: 1,
     );
 
     player.indexZ = 1;

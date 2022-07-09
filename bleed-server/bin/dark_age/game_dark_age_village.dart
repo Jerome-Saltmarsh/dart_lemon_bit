@@ -7,7 +7,7 @@ import 'dark_age_scenes.dart';
 
 class GameDarkAgeVillage extends GameDarkAge {
 
-  GameDarkAgeVillage() : super(darkAgeScenes.village) {
+  GameDarkAgeVillage() : super(darkAgeScenes.village, engine.officialUniverse) {
     addNpc(
         name: "Bell",
         x: 1150,
@@ -35,6 +35,7 @@ class GameDarkAgeVillage extends GameDarkAge {
         head: HeadType.Steel_Helm,
         armour: ArmourType.shirtCyan,
         pants: PantsType.red,
+        weaponType: WeaponType.Axe,
         onInteractedWith: (player) {
           player.writePlayerEvent(PlayerEvent.Hello_Male_01);
           player.setStoreItems([
