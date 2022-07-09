@@ -209,6 +209,16 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
         srcHeight: 72,
         anchorY: 0.3334,
       );
+    case GridNodeType.Brick_Top:
+      return render(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: 8621,
+        srcY: 72.0 * shade,
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorY: 0.3334,
+      );
     case GridNodeType.Water:
       return render(
         dstX: dstX,

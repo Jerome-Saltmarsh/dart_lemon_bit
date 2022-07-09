@@ -319,9 +319,11 @@ class Scene {
   bool getCollisionAt(double x, double y, double z) {
     var type = getGridBlockTypeAtXYZ(x, y, z);
     if (type == GridNodeType.Empty) return false;
-    // if (type == GridNodeType.Player_Spawn) return false;
-    // if (type == GridNodeType.Enemy_Spawn) return false;
     if (GridNodeType.isSolid(type)) return true;
+
+    if (type == GridNodeType.Brick_Top){
+       return y % tileHeight > tileHeightHalf;
+    }
 
     if (GridNodeType.isStairs(type)){
       return getHeightAt(x, y, z) > z;
@@ -362,8 +364,15 @@ class Scene {
       character.z = getHeightAt(character.x, character.y, character.z);
       character.zVelocity = 0;
     }
+
+    if (tileAtFeet == GridNodeType.Brick_Top){
+      character.z += 24 - (character.z % 24);
+      tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
+      character.zVelocity = 0;
+    }
+
     const distance = 3;
-    final stepHeight = character.z + 15;
+    final stepHeight = character.z + tileHeightHalf;
 
     if (getCollisionAt(character.left, character.top, stepHeight)) {
       character.x += distance;

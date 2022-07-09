@@ -441,13 +441,14 @@ Widget buildColumnEdit(){
   );
 }
 
-const selectableTiles = [
+const editorSelectableGridTypes = [
     GridNodeType.Empty,
     GridNodeType.Stairs_North,
     GridNodeType.Stairs_East,
     GridNodeType.Stairs_South,
     GridNodeType.Stairs_West,
     GridNodeType.Bricks,
+    GridNodeType.Brick_Top,
     GridNodeType.Grass,
     GridNodeType.Grass_Long,
     GridNodeType.Torch,

@@ -45,7 +45,7 @@ Widget buildColumnSelectGridNodeType(){
     height: screen.height - 160,
     child: SingleChildScrollView(
       child: Column(
-        children: selectableTiles.map(buildButtonSelectGridNodeType).toList(),
+        children: editorSelectableGridTypes.map(buildButtonSelectGridNodeType).toList(),
       ),
     ),
   );
