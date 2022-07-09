@@ -80,7 +80,7 @@ void _renderCharacterTemplateWeapon(Character character) {
     _renderCharacterPart(
         character,
         _mapWeaponTypeToSpriteLayer(character.weapon),
-        colorShades[character.shade]
+        character.renderColor
     );
     return;
   }
@@ -93,7 +93,8 @@ void _renderCharacterTemplateWeapon(Character character) {
       srcHeight: 96,
       anchorX: 0.5,
       anchorY: 0.75,
-      scale: 0.75,
+      scale: 0.8,
+      color: character.renderColor,
   );
 }
 
