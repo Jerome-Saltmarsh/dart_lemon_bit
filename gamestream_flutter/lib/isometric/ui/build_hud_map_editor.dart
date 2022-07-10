@@ -455,6 +455,7 @@ const editorSelectableGridTypes = [
     GridNodeType.Fireplace,
     GridNodeType.Wood,
     GridNodeType.Wood_Half_Row_1,
+    GridNodeType.Wood_Half_Row_2,
     GridNodeType.Wood_Half_Column_1,
     GridNodeType.Wood_Corner_Bottom,
     GridNodeType.Water,

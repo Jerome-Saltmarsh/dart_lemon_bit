@@ -94,6 +94,10 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
       return renderBlockSrcX(8621);
     case GridNodeType.Wood_Half_Row_1:
       return renderBlockSrcX(8887);
+    case GridNodeType.Wood_Half_Row_2:
+      _dstX += 16;
+      _dstY -= 16;
+      return renderBlockSrcX(8887);
     case GridNodeType.Wood_Half_Column_1:
       return renderBlockSrcX(8935);
     case GridNodeType.Wood_Corner_Bottom:
