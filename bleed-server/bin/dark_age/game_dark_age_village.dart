@@ -10,8 +10,8 @@ class GameDarkAgeVillage extends GameDarkAge {
   GameDarkAgeVillage() : super(darkAgeScenes.village, engine.officialUniverse) {
     addNpc(
         name: "Bell",
-        x: 1150,
-        y: 700,
+        x: 840,
+        y: 645,
         z: 24.0,
         wanderRadius: 10,
         head: HeadType.Blonde,
@@ -28,8 +28,8 @@ class GameDarkAgeVillage extends GameDarkAge {
 
     addNpc(
         name: "Garry",
-        x: 810,
-        y: 710,
+        x: 1250,
+        y: 1020,
         z: 24.0,
         wanderRadius: 50,
         head: HeadType.Steel_Helm,
@@ -42,6 +42,20 @@ class GameDarkAgeVillage extends GameDarkAge {
             Weapon(type: WeaponType.Handgun, damage: 5),
             Weapon(type: WeaponType.Shotgun, damage: 5),
           ]);
+        }
+    );
+
+    addNpc(
+        name: "Jenkins",
+        x: 980,
+        y: 835,
+        z: 24.0,
+        head: HeadType.None,
+        armour: ArmourType.shirtBlue,
+        pants: PantsType.brown,
+        weaponType: WeaponType.Unarmed,
+        onInteractedWith: (player) {
+
         }
     );
 
