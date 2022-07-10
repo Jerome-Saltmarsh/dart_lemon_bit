@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
 import 'package:lemon_engine/actions/render_atlas.dart';
 import 'package:lemon_engine/render.dart';
 
-import '../grid.dart';
 import '../grid/state/wind.dart';
 import '../variables/src_x_rain_falling.dart';
 import '../variables/src_x_rain_landing.dart';
@@ -20,7 +19,6 @@ var _shade = 0;
 void renderGridNode(int z, int row, int column, int type, double dstY, int shade) {
   _dstX = (row - column) * tileSizeHalf;
   _dstY = dstY;
-  // _shade = gridLightDynamic[z][row][column];
   _shade = shade;
 
   switch (type) {
@@ -28,8 +26,7 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
     case GridNodeType.Bricks:
       return renderBlockSrcX(7110);
     case GridNodeType.Grass:
-      final wind = gridWind[z][row][column];
-      switch(wind){
+      switch(gridWind[z][row][column]){
         case windIndexCalm:
           return renderBlockSrcX(5267);
         default:
@@ -167,17 +164,6 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
         srcHeight: 72,
         anchorY: 0.3334,
       );
-    case GridNodeType.Wooden_Wall_Row:
-      return render(
-        dstX: _dstX,
-        dstY: dstY,
-        srcX: 7782,
-        srcY: 72.0 * shade,
-        srcWidth: 48,
-        srcHeight: 72,
-        anchorX: 0.5,
-        anchorY: 0.3334,
-      );
     case GridNodeType.Enemy_Spawn:
       if (!playModeEdit) return;
       return render(
@@ -201,6 +187,7 @@ void renderBlockSrcX(double srcX){
   const spriteHeight = 72.0;
   const spriteWidthHalf = 24.0;
   const spriteHeightHalf = 36.0;
+  const spriteHeightThird = 24.0;
 
   final srcY = _shade * spriteHeight;
 
@@ -210,7 +197,7 @@ void renderBlockSrcX(double srcX){
 
   bufferIndex++;
 
-  src[bufferIndex] = srcY; // srcY
+  src[bufferIndex] = srcY;
   dst[bufferIndex] = 0;
 
   bufferIndex++;
@@ -221,7 +208,7 @@ void renderBlockSrcX(double srcX){
   bufferIndex++;
 
   src[bufferIndex] = srcY + spriteHeight;
-  dst[bufferIndex] = _dstY - spriteHeightHalf;
+  dst[bufferIndex] = _dstY - spriteHeightThird;
 
   bufferIndex++;
   renderIndex++;
@@ -229,7 +216,6 @@ void renderBlockSrcX(double srcX){
   if (bufferIndex < buffers) return;
   bufferIndex = 0;
   renderIndex = 0;
-
   renderAtlas();
 }
 
