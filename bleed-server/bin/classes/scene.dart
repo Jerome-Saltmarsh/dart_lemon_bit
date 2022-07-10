@@ -349,6 +349,14 @@ class Scene {
       if ((0.5 - percColumn).abs() > treeRadius) return false;
       return true;
     }
+    if (type == GridNodeType.Fireplace){
+      const treeRadius = 0.8;
+      final percRow = (x / 48.0) % 1.0;
+      if ((0.5 - percRow).abs() > treeRadius) return false;
+      final percColumn = (y / 48.0) % 1.0;
+      if ((0.5 - percColumn).abs() > treeRadius) return false;
+      return true;
+    }
     return false;
   }
 
