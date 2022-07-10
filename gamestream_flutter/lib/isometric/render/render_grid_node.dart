@@ -60,8 +60,16 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
       }
 
     case GridNodeType.Rain_Falling:
-      _dstY += animationFrameRain;
-      return renderBlockSrcX(srcXRainFalling);
+      return render(
+        dstX: _dstX - rainPosition,
+        dstY: dstY + animationFrameRain,
+        srcX: srcXRainFalling,
+        srcY: 72.0 * animationFrameRain,
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorY: 0.3334,
+        color: colorShades[shade],
+      );
 
     case GridNodeType.Rain_Landing:
       return render(
@@ -186,7 +194,6 @@ void renderBlockSrcX(double srcX){
   const spriteWidth = 48.0;
   const spriteHeight = 72.0;
   const spriteWidthHalf = 24.0;
-  const spriteHeightHalf = 36.0;
   const spriteHeightThird = 24.0;
 
   final srcY = _shade * spriteHeight;
