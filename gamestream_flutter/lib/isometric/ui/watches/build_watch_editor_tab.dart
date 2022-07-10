@@ -42,7 +42,7 @@ Widget buildColumnEditorTab(EditorTab editorTab){
 
 Widget buildColumnSelectGridNodeType(){
   return Container(
-    height: screen.height - 160,
+    height: screen.height - 200,
     child: SingleChildScrollView(
       child: Column(
         children: editorSelectableGridTypes.map(buildButtonSelectGridNodeType).toList(),

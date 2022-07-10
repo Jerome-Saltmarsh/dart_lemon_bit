@@ -6,6 +6,7 @@ final gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);
 enum GameDialog {
   Scene_Load,
   Scene_Save,
+  Canvas_Size,
   Debug,
   Audio_Mixer,
 }

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_button_show_dialog_load_scene.dart';
+import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_edit_z.dart';
 import 'package:gamestream_flutter/isometric/ui/tabs/build_tab_edit_tool.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_tab.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
+import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:lemon_engine/screen.dart';
 
 import '../buttons/build_button_show_dialog_save_scene.dart';
+import '../widgets/build_container.dart';
 
 Widget buildWatchSceneMetaDataPlayerIsOwner() {
   return watch(sceneMetaDataPlayerIsOwner, (bool playerIsOwner) {
@@ -18,7 +22,7 @@ Widget buildWatchSceneMetaDataPlayerIsOwner() {
       children: [
         Positioned(
           left: 0,
-          top: 0,
+          bottom: 6,
           child: buildWatchEditorTab(),
         ),
         // Positioned(
@@ -41,26 +45,51 @@ Widget buildWatchSceneMetaDataPlayerIsOwner() {
         //   top: screen.height / 2,
         //   child: buildWatchEditorSelectedObject(),
         // ),
-        Positioned(
-            top: 6,
-            left: 0,
-            child: Container(
-              width: screen.width,
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  buildButtonShowDialogLoadScene(),
-                  width4,
-                  buildButtonShowDialogSaveScene(),
-                ],
-              ),
-            )),
+        // Positioned(
+        //     top: 6,
+        //     left: 0,
+        //     child: Container(
+        //       width: screen.width,
+        //       alignment: Alignment.center,
+        //       child: Row(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: [
+        //           buildButtonShowDialogLoadScene(),
+        //           width4,
+        //           buildButtonShowDialogSaveScene(),
+        //           width4,
+        //         ],
+        //       ),
+        //     )),
         Positioned(
             bottom: 6,
             left: 0,
             child: buildControlsEnvironment()
         ),
+        Positioned(
+          left: 0,
+          top: 0,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              onMouseOver(
+                  builder: (context, over) {
+                    if (over){
+                      return Column(
+                        children: [
+                          container(child: "File", color: brownLight),
+                          container(child: "Save", color: brownLight, action: actionGameDialogShowSceneSave),
+                          container(child: "Load", color: brownLight, action: actionGameDialogShowSceneLoad),
+                        ],
+                      );
+                    }
+                    return container(child: "File", color: brownLight);
+                  }
+              ),
+              container(child: "Canvas"),
+            ],
+          ),
+        )
       ],
     );
   });

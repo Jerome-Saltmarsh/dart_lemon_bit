@@ -82,6 +82,8 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
         anchorY: 0.3334,
         color: colorShades[shade],
       );
+    case GridNodeType.Roof_Tile_North:
+      return renderBlockSrcX(9415);
     case GridNodeType.Stairs_South:
       return renderBlockSrcX(7398);
     case GridNodeType.Stairs_West:

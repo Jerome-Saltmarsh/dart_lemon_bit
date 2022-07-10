@@ -29,6 +29,7 @@ class GridNodeType {
   static const Wood_Corner_Bottom = 30;
   static const Wood_Half_Row_2 = 31;
   static const Wood_Half_Column_2 = 32;
+  static const Roof_Tile_North = 33;
 
   static isSolid(int type){
     if (type == GridNodeType.Bricks) return true;
