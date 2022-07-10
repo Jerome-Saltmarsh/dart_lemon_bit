@@ -337,6 +337,10 @@ class Scene {
       return (x % tileSize) > tileSizeHalf;
     }
 
+    if (type == GridNodeType.Wood_Half_Column_2){
+      return (x % tileSize) <= tileSizeHalf;
+    }
+
     if (type == GridNodeType.Wood_Corner_Bottom){
       return (y % tileSize) > tileSizeHalf ||  (x % tileSize) > tileSizeHalf;
     }
