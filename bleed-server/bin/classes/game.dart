@@ -92,8 +92,8 @@ abstract class Game {
       case GameStatus.Awaiting_Players:
         for (int i = 0; i < players.length; i++) {
           final player = players[i];
-          player.lastUpdateFrame++;
-          if (player.lastUpdateFrame > 100) {
+          player.framesSinceClientRequest++;
+          if (player.framesSinceClientRequest > 100) {
             players.removeAt(i);
             i--;
           }
@@ -700,7 +700,7 @@ extension GameFunctions on Game {
   }
 
   void updatePlayer(Player player) {
-    player.lastUpdateFrame++;
+    player.framesSinceClientRequest++;
 
     if (player.textDuration > 0) {
       player.textDuration--;
@@ -715,7 +715,7 @@ extension GameFunctions on Game {
 
     if (player.dead) return;
 
-    if (player.lastUpdateFrame > 10) {
+    if (player.framesSinceClientRequest > 10) {
       player.setCharacterStateIdle();
     }
 
@@ -1204,10 +1204,11 @@ extension GameFunctions on Game {
     var playerLength = players.length;
     for (var i = 0; i < playerLength; i++) {
       final player = players[i];
-      if (player.lastUpdateFrame++ < 100) continue;
+      if (player.framesSinceClientRequest++ < 100) continue;
       if (!removePlayer(player)) continue;
       i--;
       playerLength--;
+      print("removed disconnected");
     }
   }
 

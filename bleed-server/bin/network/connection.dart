@@ -439,13 +439,8 @@ class Connection {
   void handleClientRequestUpdate(List<int> args) {
     final player = _player;
 
-    if (player == null) {
-      return;
-    }
-    if (player.lastUpdateFrame == 0){
-      return;
-    }
-    player.lastUpdateFrame = 0;
+    if (player == null) return errorPlayerNotFound();
+    player.framesSinceClientRequest = 0;
 
     final game = player.game;
 

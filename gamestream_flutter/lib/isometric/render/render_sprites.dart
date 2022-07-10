@@ -250,7 +250,6 @@ class RenderOrderGrid extends RenderOrder {
         }
       }
     }
-
     renderGridNode(
         gridZ,
         gridRow,

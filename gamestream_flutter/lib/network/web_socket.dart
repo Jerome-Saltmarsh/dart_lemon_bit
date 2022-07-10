@@ -72,6 +72,9 @@ class _WebSocket {
     if (_response is List<int>) {
        return serverResponseReader.readBytes(_response);
     }
+    if (_response is String){
+      print(_response);
+    }
     throw Exception("cannot parse response: $_response");
 
   }

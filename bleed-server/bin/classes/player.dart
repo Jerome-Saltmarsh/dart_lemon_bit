@@ -22,7 +22,7 @@ class Player extends Character with ByteWriter {
   var score = 0;
   var sceneChanged = false;
   var characterState = CharacterState.Idle;
-  var lastUpdateFrame = 0;
+  var framesSinceClientRequest = 0;
   var pointsRecord = 0;
   var textDuration = 0;
   var experience = 0;
