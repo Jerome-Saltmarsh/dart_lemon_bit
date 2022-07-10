@@ -57,7 +57,7 @@ class Engine {
   }
 
   Future<GameDarkAge> findGameEditorByName(String name) async {
-    return GameDarkAge(await readSceneFromFile(name), officialUniverse);
+    return GameDarkAgeEditor(scene: await readSceneFromFile(name));
   }
 
   T? findGameAwaitingPlayers<T extends Game>() {
