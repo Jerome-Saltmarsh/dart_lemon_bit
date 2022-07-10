@@ -6,6 +6,7 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 import 'canvas.dart';
 import 'enums.dart';
+import 'state/paint.dart';
 
 void _defaultDrawCanvasForeground(Canvas canvas, Size size) {
   // do nothing
@@ -64,7 +65,7 @@ class _GameState extends State<Game> {
 
   Future _internalInit() async {
     engine.disableRightClickContextMenu();
-    engine.paint.isAntiAlias = false;
+    paint.isAntiAlias = false;
     await widget.init();
     engine.initialized.value = true;
   }

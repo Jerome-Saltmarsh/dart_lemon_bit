@@ -2,7 +2,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
-import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/actions/render_atlas.dart';
 
 var bufferIndex = 0;
 var renderIndex = 0;
@@ -58,7 +58,7 @@ void renderR({
   bufferIndex = 0;
   renderIndex = 0;
 
-  engine.renderAtlas();
+  renderAtlas();
 }
 
 
@@ -103,5 +103,5 @@ void render({
   bufferIndex = 0;
   renderIndex = 0;
 
-  engine.renderAtlas();
+  renderAtlas();
 }

@@ -10,6 +10,7 @@ import 'package:lemon_engine/callbacks.dart';
 import 'package:lemon_engine/draw.dart';
 import 'package:lemon_engine/enums.dart';
 import 'package:lemon_engine/events.dart';
+import 'package:lemon_engine/state/atlas.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:universal_html/html.dart';
@@ -17,6 +18,7 @@ import 'package:universal_html/html.dart';
 import 'actions.dart';
 import 'canvas.dart';
 import 'render.dart';
+import 'state/paint.dart';
 
 final _camera = engine.camera;
 final engine = _Engine();
@@ -27,7 +29,6 @@ class _Engine {
   final draw = LemonEngineDraw();
   late final LemonEngineEvents events;
   var scrollSensitivity = 0.0005;
-  late ui.Image atlas;
   var cameraSmoothFollow = true;
   var zoomSensitivity = 0.1;
   var targetZoom = 1.0;
@@ -63,12 +64,7 @@ class _Engine {
   final drawForeground = Watch<DrawCanvas?>(null);
   Function? update;
 
-  var paint = Paint()
-    ..color = Colors.white
-    ..strokeCap = StrokeCap.round
-    ..style = PaintingStyle.fill
-    ..isAntiAlias = false
-    ..strokeWidth = 1;
+
   var textPainter = TextPainter(
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr
@@ -167,10 +163,6 @@ class _Engine {
     textPainter.text = TextSpan(style: style ?? const TextStyle(), text: text);
     textPainter.layout();
     textPainter.paint(other ?? canvas, Offset(x, y));
-  }
-
-  void renderAtlas(){
-    canvas.drawRawAtlas(atlas, dst, src, colors, renderBlendMode, null, paint);
   }
 
   /// If there are draw jobs remaining in the buffer

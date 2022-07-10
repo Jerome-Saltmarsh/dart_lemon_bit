@@ -23,6 +23,7 @@ import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_math/library.dart';
 
 import 'state.dart';
@@ -189,7 +190,7 @@ class GameRender {
   void drawPaths() {
     if (!state.debug.value) return;
     engine.setPaintColor(colours.blue);
-    engine.paint.strokeWidth = 4.0;
+    paint.strokeWidth = 4.0;
 
     var index = 0;
     while(true){

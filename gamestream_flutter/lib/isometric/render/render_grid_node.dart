@@ -3,7 +3,7 @@ import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
-import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/actions/render_atlas.dart';
 import 'package:lemon_engine/render.dart';
 
 import '../grid/state/wind.dart';
@@ -363,6 +363,6 @@ void renderBlock({
   bufferIndex = 0;
   renderIndex = 0;
 
-  engine.renderAtlas();
+  renderAtlas();
 }
 
