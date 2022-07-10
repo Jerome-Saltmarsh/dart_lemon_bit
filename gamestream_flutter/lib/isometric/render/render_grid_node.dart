@@ -3,6 +3,7 @@ import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 
 import '../grid/state/wind.dart';
@@ -326,14 +327,42 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
   }
 }
 
-void renderBlock({required double dstX, required double dstY, required double srcX, required int shade}){
-  return render(
-    dstX: dstX,
-    dstY: dstY,
-    srcX: srcX,
-    srcY: 72.0 * shade,
-    srcWidth: 48,
-    srcHeight: 72,
-    anchorY: 0.3334,
-  );
+void renderBlock({
+  required double dstX,
+  required double dstY,
+  required double srcX,
+  required int shade
+}){
+
+  const spriteWidth = 48.0;
+  const spriteHeight = 72.0;
+  const spriteWidthHalf = 24.0;
+  const spriteHeightHalf = 36.0;
+
+  final srcY = shade * spriteHeight;
+
+  src[bufferIndex] = srcX;
+  dst[bufferIndex] = 1;
+  bufferIndex++;
+
+  src[bufferIndex] = srcY;
+  dst[bufferIndex] = 0;
+  bufferIndex++;
+
+  src[bufferIndex] = srcX + spriteWidth;
+  dst[bufferIndex] = dstX - spriteWidthHalf;
+
+  bufferIndex++;
+  src[bufferIndex] = srcY + spriteHeight;
+  dst[bufferIndex] = dstY - spriteHeightHalf;
+
+  bufferIndex++;
+  renderIndex++;
+
+  if (bufferIndex < buffers) return;
+  bufferIndex = 0;
+  renderIndex = 0;
+
+  engine.renderAtlas();
 }
+
