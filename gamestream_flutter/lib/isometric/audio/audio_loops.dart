@@ -98,5 +98,5 @@ double getVolumeStream(){
   const r = 7;
   const maxDistance = r * tileSize;
   final distance = getClosestByType(radius: r, type: GridNodeType.Water_Flowing) * tileSize;
-  return convertDistanceToVolume(distance, maxDistance: maxDistance) * 0.5;
+  return convertDistanceToVolume(distance, maxDistance: maxDistance) * 0.4;
 }

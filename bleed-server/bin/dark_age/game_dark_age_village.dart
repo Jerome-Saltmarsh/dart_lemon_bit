@@ -28,8 +28,8 @@ class GameDarkAgeVillage extends GameDarkAge {
 
     addNpc(
         name: "Garry",
-        x: 800,
-        y: 900,
+        x: 810,
+        y: 710,
         z: 24.0,
         wanderRadius: 50,
         head: HeadType.Steel_Helm,
