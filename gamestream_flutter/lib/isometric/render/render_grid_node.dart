@@ -219,6 +219,12 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
         srcHeight: 72,
         anchorY: 0.3334,
       );
+    case GridNodeType.Wood_Half_Row_1:
+      return renderBlock(dstX: dstX, dstY: dstY, srcX: 8887, shade: shade);
+    case GridNodeType.Wood_Half_Column_1:
+      return renderBlock(dstX: dstX, dstY: dstY, srcX: 8935, shade: shade);
+    case GridNodeType.Wood_Corner_Bottom:
+      return renderBlock(dstX: dstX, dstY: dstY, srcX: 8983, shade: shade);
     case GridNodeType.Water:
       return render(
         dstX: dstX,
@@ -320,3 +326,14 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
   }
 }
 
+void renderBlock({required double dstX, required double dstY, required double srcX, required int shade}){
+  return render(
+    dstX: dstX,
+    dstY: dstY,
+    srcX: srcX,
+    srcY: 72.0 * shade,
+    srcWidth: 48,
+    srcHeight: 72,
+    anchorY: 0.3334,
+  );
+}

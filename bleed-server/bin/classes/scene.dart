@@ -325,6 +325,19 @@ class Scene {
        return y % tileHeight > tileHeightHalf;
     }
 
+    if (type == GridNodeType.Wood_Half_Row_1){
+      return (y % tileSize) > tileSizeHalf;
+    }
+
+    if (type == GridNodeType.Wood_Half_Column_1){
+      return (x % tileSize) > tileSizeHalf;
+    }
+
+    if (type == GridNodeType.Wood_Corner_Bottom){
+      return (y % tileSize) > tileSizeHalf ||  (x % tileSize) > tileSizeHalf;
+    }
+
+
     if (GridNodeType.isStairs(type)){
       return getHeightAt(x, y, z) > z;
     }

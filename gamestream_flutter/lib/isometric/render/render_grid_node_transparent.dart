@@ -168,6 +168,6 @@ void renderGridNodeTransparent(int z, int row, int column, int type) {
         anchorY: 0.3334,
       );
     default:
-      throw Exception("Cannot render grid node type $type");
+      // throw Exception("Cannot render grid node type $type");
   }
 }

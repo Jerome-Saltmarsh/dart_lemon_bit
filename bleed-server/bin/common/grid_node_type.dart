@@ -25,6 +25,9 @@ class GridNodeType {
   static const Grass_Slope_West = 25;
   static const Water_Flowing = 26;
   static const Brick_Top = 27;
+  static const Wood_Half_Row_1 = 28;
+  static const Wood_Half_Column_1 = 29;
+  static const Wood_Corner_Bottom = 30;
 
   static isSolid(int type){
     if (type == GridNodeType.Bricks) return true;
@@ -59,7 +62,6 @@ class GridNodeType {
   static bool isSlopeWest(int type){
     return type == Stairs_West || type == Grass_Slope_West;
   }
-
 
   static const values = [
     Empty,
@@ -108,6 +110,9 @@ class GridNodeType {
        Rain_Landing: 'Rain Landing',
        Fireplace: 'Fireplace',
        Wood: "Wood",
+       Wood_Half_Row_1: "Wood Half Row 1",
+       Wood_Half_Column_1: "Wood Half Column 1",
+       Wood_Corner_Bottom: "Wood Corner Bottom",
        Grass_Slope_North: "Grass Slope North",
        Grass_Slope_East: "Grass Slope East",
        Grass_Slope_South: "Grass Slope South",
