@@ -385,8 +385,8 @@ Widget buildButtonSelectGridNodeType(int value) {
             },
             color:
               type == value
-              ? Colors.green
-              : Colors.grey
+              ? greyDark
+              : grey
     );
   });
 }

@@ -14,9 +14,10 @@ Widget buildWatchEditorTab(){
      return Column(
        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: EditorTab.values.map(buildButtonSelectEditorTab).toList(),
-          ),
+          // Row(
+          //   children: EditorTab.values.map(buildButtonSelectEditorTab).toList(),
+          // ),
+          container(child: "Type", color: brownLight),
           buildColumnSelectGridNodeType()
         ],
      );
