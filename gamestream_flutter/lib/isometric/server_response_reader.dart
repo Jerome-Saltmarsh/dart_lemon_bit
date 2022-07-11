@@ -174,6 +174,9 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Store_Items:
           readStoreItems();
           break;
+        case ServerResponse.Npc_Talk:
+          readNpcTalk();
+          break;
         case ServerResponse.Weather:
           readWeather();
           break;
@@ -190,6 +193,10 @@ class ServerResponseReader with ByteReader {
           throw Exception("Cannot parse $response");
       }
     }
+  }
+
+  void readNpcTalk() {
+    player.npcTalk.value = readString();
   }
 
   void readPlayerDesigned() {

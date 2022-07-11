@@ -61,5 +61,6 @@ class ServerResponse {
   static const Scene_Meta_Data = 80;
   static const Player_Designed = 81;
   static const Player_Debug = 82;
+  static const Npc_Talk = 83;
 }
 

@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_button_toggle_inventory.dart';
+import 'package:gamestream_flutter/isometric/ui/controls/build_control_npc_talk.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_health.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_player_designed.dart';
 import 'package:gamestream_flutter/isometric/watches/inventory_visible.dart';
@@ -15,9 +16,9 @@ import 'package:lemon_engine/screen.dart';
 Widget buildStackPlayMode() {
   return Stack(
     children: [
-      Positioned(top: 50, left: 0, child: buildPanelStore()),
       Positioned(top: 50, right: 0, child: buildWatchInventoryVisible()),
       Positioned(top: 50, left: 0, child: buildPanelStore()),
+      Positioned(bottom: 50, left: 0, child: watch(player.npcTalk, buildControlNpcTalk)),
       Positioned(bottom: 50, left: 0, child: buildWatchMouseTargetName()),
       Positioned(bottom: 8, right: 8, child: buildButtonToggleInventory()),
       buildWatchPlayerDesigned(),

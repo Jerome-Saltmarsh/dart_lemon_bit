@@ -28,7 +28,6 @@ Widget buildPanelStore(){
             children: [
               container(child: "PURCHASE"),
               container(child: SizedBox()),
-              container(child: SizedBox()),
               container(child: "CLOSE", action: sendClientRequestStoreClose),
             ],
           ),

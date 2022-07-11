@@ -723,6 +723,11 @@ extension PlayerProperties on Player {
      storeItems.forEach(writeWeapon);
   }
 
+  void writeNpcTalk(String text){
+    writeByte(ServerResponse.Npc_Talk);
+    writeString(text);
+  }
+
   void writeSceneMetaData() {
     writeByte(ServerResponse.Scene_Meta_Data);
     writeBool(game.owner == this);

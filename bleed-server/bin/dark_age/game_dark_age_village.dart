@@ -55,7 +55,7 @@ class GameDarkAgeVillage extends GameDarkAge {
         pants: PantsType.brown,
         weaponType: WeaponType.Unarmed,
         onInteractedWith: (player) {
-
+            player.writeNpcTalk("Greetings Traveller");
         }
     );
 
