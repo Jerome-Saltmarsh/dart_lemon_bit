@@ -341,6 +341,10 @@ extension PlayerProperties on Player {
     final players = game.players;
     for (final otherPlayer in players) {
       if (otherPlayer.dead) continue;
+      if (otherPlayer.renderY < screenTop) continue;
+      if (otherPlayer.renderX < screenLeft) continue;
+      if (otherPlayer.renderX > screenRight) continue;
+      if (otherPlayer.renderY > screenBottom) break;
       writePlayer(otherPlayer);
       writeString(otherPlayer.text);
     }
