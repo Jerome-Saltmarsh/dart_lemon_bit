@@ -70,8 +70,11 @@ void updateParticles() {
   }
 }
 
+
 void _updateParticle(Particle particle){
   if (!particle.active) return;
+  if (particle.outOfBounds) return particle.deactivate();
+
   final tile = particle.tile;
   final airBorn =
       tile == GridNodeType.Empty        ||

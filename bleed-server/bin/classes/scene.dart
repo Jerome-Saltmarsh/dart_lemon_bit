@@ -344,6 +344,15 @@ class Scene {
     if (type == GridNodeType.Wood_Corner_Bottom){
       return (y % tileSize) > tileSizeHalf ||  (x % tileSize) > tileSizeHalf;
     }
+    if (type == GridNodeType.Wood_Corner_Top){
+      return (y % tileSize) < tileSizeHalf ||  (x % tileSize) < tileSizeHalf;
+    }
+    if (type == GridNodeType.Wood_Corner_Left){
+      return (y % tileSize) > tileSizeHalf ||  (x % tileSize) < tileSizeHalf;
+    }
+    if (type == GridNodeType.Wood_Corner_Right){
+      return (y % tileSize) < tileSizeHalf ||  (x % tileSize) > tileSizeHalf;
+    }
 
 
     if (GridNodeType.isStairs(type)){

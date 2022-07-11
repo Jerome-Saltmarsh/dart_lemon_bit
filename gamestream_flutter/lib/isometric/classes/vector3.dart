@@ -14,6 +14,7 @@ class Vector3 with Position {
   int get indexColumn => y ~/ tileSize;
   double get renderOrder => x + y;
   int get tile => grid[indexZ][indexRow][indexColumn];
+  int get tileSafe => getGridTypeAtXYZ(x, y, z);
   int get tileBelow => indexZ == 0 ? GridNodeType.Boundary : grid[indexZ - 1][indexRow][indexColumn];
   int get tileAbove => indexZ < gridTotalZ - 1 ? GridNodeType.Boundary : grid[indexZ + 1][indexRow][indexColumn];
   int get shade => gridLightDynamic[z >= tileSizeHalf ? indexZ - 1 : 0][indexRow][indexColumn];
@@ -35,9 +36,13 @@ class Vector3 with Position {
     y = value * tileSize;
   }
 
-  bool get outOfBounds {
-    return z < 0 || x < 0 || x > gridRowLength || y < 0 || y > gridColumnLength;
-  }
+  bool get outOfBounds =>
+     z < 0 ||
+     x < 0 ||
+     x > gridRowLength ||
+     y < 0 ||
+     y > gridColumnLength ||
+     z >= tileHeight ;
 
   int getGridDistance(int z, int row, int column){
     var distance = (z - indexZ).abs();

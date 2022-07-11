@@ -26,7 +26,7 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
     case GridNodeType.Bricks:
       return renderBlockSrcX(7110);
     case GridNodeType.Grass:
-      switch(gridWind[z][row][column]){
+      switch (gridWind[z][row][column]) {
         case windIndexCalm:
           return renderBlockSrcX(5267);
         default:
@@ -46,11 +46,10 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
       return renderBlockSrcX(7925);
 
     case GridNodeType.Wood:
-      return renderBlockSrcX(7590);
+      return renderBlockSrcX(8887);
 
     case GridNodeType.Grass_Long:
-      final wind = gridWind[z][row][column];
-      switch (wind){
+      switch (gridWind[z][row][column]) {
         case windIndexCalm:
           return renderBlockSrcX(4856);
         case windIndexGentle:
@@ -95,19 +94,25 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
     case GridNodeType.Brick_Top:
       return renderBlockSrcX(8621);
     case GridNodeType.Wood_Half_Row_1:
-      return renderBlockSrcX(8887);
+      return renderBlockSrcX(8935);
     case GridNodeType.Wood_Half_Row_2:
       _dstX += 16;
       _dstY -= 16;
-      return renderBlockSrcX(8887);
-    case GridNodeType.Wood_Half_Column_1:
       return renderBlockSrcX(8935);
+    case GridNodeType.Wood_Half_Column_1:
+      return renderBlockSrcX(8983);
     case GridNodeType.Wood_Half_Column_2:
       _dstX -= 16;
       _dstY -= 16;
-      return renderBlockSrcX(8935);
-    case GridNodeType.Wood_Corner_Bottom:
       return renderBlockSrcX(8983);
+    case GridNodeType.Wood_Corner_Bottom:
+      return renderBlockSrcX(9175);
+    case GridNodeType.Wood_Corner_Left:
+      return renderBlockSrcX(9031);
+    case GridNodeType.Wood_Corner_Top:
+      return renderBlockSrcX(9079);
+    case GridNodeType.Wood_Corner_Right:
+      return renderBlockSrcX(9127);
     case GridNodeType.Water:
       return render(
         dstX: _dstX,

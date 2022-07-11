@@ -70,6 +70,10 @@ void sendClientRequestSetHeadType(int type){
   sendClientRequest(ClientRequest.Set_Head_Type, type);
 }
 
+void sendClientRequestSetCanvasSize(int z, int rows, int columns){
+  sendClientRequest(ClientRequest.Set_Head_Type, '$z $rows $columns');
+}
+
 void sendClientRequestSetPantsType(int type){
   sendClientRequest(ClientRequest.Set_Pants_Type, type);
 }
