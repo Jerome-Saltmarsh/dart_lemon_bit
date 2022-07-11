@@ -5,10 +5,13 @@ import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:lemon_engine/engine.dart';
 
+import '../server_response_reader.dart';
+import 'widgets/build_container.dart';
+
 Widget buildHudDebug() {
   return Stack(
     children: [
-      Positioned(top: 0, right: 0, child: buildPanelMenu()),
+      // Positioned(top: 0, right: 0, child: buildPanelMenu()),
       Positioned(
           top: 0,
           left: 0,
@@ -18,6 +21,12 @@ Widget buildHudDebug() {
             children: [
               _buildContainerMouseInfo(),
               _buildContainerPlayerInfo(),
+              Row(
+                children: [
+                  buildControlBytes(),
+                  buildControlBufferSize(),
+                ],
+              ),
             ],
           )),
     ],
@@ -47,3 +56,6 @@ Widget _buildContainerPlayerInfo() {
         ));
   });
 }
+
+Widget buildControlBytes() => watch(byteLength, (int bytes) => container(child: 'Bytes: $bytes'));
+Widget buildControlBufferSize() => watch(bufferSize, (int bufferSize) => container(child: 'Buffer: $bufferSize'));
