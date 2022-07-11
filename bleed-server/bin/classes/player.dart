@@ -363,17 +363,12 @@ extension PlayerProperties on Player {
   void writePlayerZombies() {
     writeByte(ServerResponse.Zombies);
     final zombies = game.zombies;
-    final length = zombies.length;
-    for (var i = 0; i < length; i++){
-      final zombie = zombies[i];
+    for (final zombie in zombies){
       if (zombie.dead) continue;
-      // if (zombie.y < screenTop) continue;
-      // if (zombie.x < screenLeft) continue;
-      // if (zombie.x > screenRight) continue;
-      // if (zombie.y > screenBottom) {
-      //   writeByte(END);
-      //   return;
-      // }
+      if (zombie.renderY < screenTop) continue;
+      if (zombie.renderX < screenLeft) continue;
+      if (zombie.renderX > screenRight) continue;
+      if (zombie.renderY > screenBottom) break;
       writeCharacter(this, zombie);
     }
     writeByte(END);

@@ -13,6 +13,9 @@ class Position3 with Position {
   double get percentageColumn => (y % tileSize) / tileSize;
   double get percentageZ => (z % tileHeight) / tileHeight;
 
+  double get renderX => (x - y) * 0.5;
+  double get renderY => ((y + x) * 0.5) - z;
+
   void set indexZ(int value){
     z = value * tileSizeHalf;
   }
