@@ -421,30 +421,26 @@ class ServerResponseReader with ByteReader {
     }
   }
 
+  void readPlayerDebug(){
+    player.state.value = readByte();
+    player.angle = readDouble() / 100.0;
+    player.mouseAngle = readDouble() / 100.0;
+  }
+
   void readPlayer() {
     player.x = readDouble();
     player.y = readDouble();
     player.z = readDouble();
-    player.state.value = readByte();
-    player.angle = readDouble() / 100.0;
-    player.mouseAngle = readDouble() / 100.0;
     player.health.value = readDouble();
     player.maxHealth = readDouble();
-    player.magic.value = readDouble();
-    player.maxMagic.value = readDouble();
     player.weaponType.value = readByte();
     player.weaponDamage.value = readByte();
     player.armourType.value = readByte();
     player.headType.value = readByte();
     player.pantsType.value = readByte();
     player.alive.value = readBool();
-    player.storeVisible.value = readBool();
-    player.wood.value = readInt();
-    player.stone.value = readInt();
-    player.gold.value = readInt();
     player.experience.value = readPercentage();
     player.level.value = readByte();
-    player.skillPoints.value = readByte();
     updateCameraMode();
   }
 

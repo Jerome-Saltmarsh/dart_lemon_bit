@@ -246,31 +246,27 @@ extension PlayerProperties on Player {
 
   bool get unarmed => equippedWeapon == TechType.Unarmed;
 
+  void writePlayerDebug(){
+    writeByte(state);
+    writeInt(angle * 100);
+    writeInt(mouseAngle * 100);
+  }
+
   void writePlayerGame() {
     writeByte(ServerResponse.Player);
     writeInt(x);
     writeInt(y);
     writeInt(z);
-    writeByte(state);
-    writeInt(angle * 100);
-    writeInt(mouseAngle * 100);
     writeInt(health); // 2
     writeInt(maxHealth); // 2
-    writeInt(magic); // 2
-    writeInt(maxMagic); // 2
     writeByte(equippedWeapon.type);
     writeByte(equippedWeapon.damage);
     writeByte(equippedArmour); // armour
     writeByte(equippedHead); // helm
     writeByte(equippedPants); // helm
     writeBool(alive); // 1
-    writeBool(storeVisible); // 1
-    writeInt(wood);
-    writeInt(stone);
-    writeInt(gold);
     writePercentage(experiencePercentage);
     writeByte(level);
-    writeByte(skillPoints);
     writeCollectables();
     writePlayers();
     writeAttackTarget();
