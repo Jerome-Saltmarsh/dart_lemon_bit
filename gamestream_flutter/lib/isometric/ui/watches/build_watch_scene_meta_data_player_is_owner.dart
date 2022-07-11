@@ -9,6 +9,8 @@ import 'package:gamestream_flutter/isometric/ui/controls/build_control_edit_z.da
 import 'package:gamestream_flutter/isometric/ui/tabs/build_tab_edit_tool.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_tab.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
+import 'package:gamestream_flutter/modules/core/actions.dart';
+import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
 
 import '../widgets/build_container.dart';
@@ -54,9 +56,13 @@ Row buildTopLeftMenu() {
                     return Column(
                       children: [
                         container(child: "File", color: brownLight),
-                        container(child: "New", color: brownLight),
+                        container(child: "New", color: brownLight, action: (){
+                          core.actions.exitGame();
+                          connectToGameEditor();
+                        }),
                         container(child: "Save", color: brownLight, action: actionGameDialogShowSceneSave, hoverColor: brownDark),
                         container(child: "Load", color: brownLight, action: actionGameDialogShowSceneLoad, hoverColor: brownDark),
+                        container(child: "Exit", color: brownLight, action: core.actions.exitGame, hoverColor: brownDark),
                       ],
                     );
                   }
