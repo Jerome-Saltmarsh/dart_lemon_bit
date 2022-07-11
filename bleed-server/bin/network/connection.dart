@@ -8,8 +8,10 @@ import '../dark_age/game_dark_age.dart';
 import '../engine.dart';
 import '../functions/generateName.dart';
 import '../functions/withinRadius.dart';
+import '../generate/generate_grid_plain.dart';
 import '../io/save_directory.dart';
 import '../io/write_scene_to_file.dart';
+import '../isometric/generate_grid_z.dart';
 import '../utilities/is_valid_index.dart';
 
 class Connection {
@@ -282,6 +284,11 @@ class Connection {
       case ClientRequest.Submit_Player_Design:
         player.designed = true;
         player.writePlayerDesigned();
+        break;
+
+      case ClientRequest.Editor_Set_Canvas_Size:
+        game.scene.grid.add(generateGridZ(game.scene.gridRows, game.scene.gridColumns));
+        game.onGridChanged();
         break;
 
       case ClientRequest.Deck_Select_Card:

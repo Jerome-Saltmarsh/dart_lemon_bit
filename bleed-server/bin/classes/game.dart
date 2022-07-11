@@ -58,6 +58,12 @@ abstract class Game {
     engine.onGameCreated(this);
   }
 
+  void onGridChanged(){
+    scene.refreshGridMetrics();
+    for (final player in players){
+      player.writeGrid();
+    }
+  }
 
   void setHourMinutes(int hour, int minutes){
 

@@ -354,7 +354,6 @@ class Scene {
       return (y % tileSize) < tileSizeHalf ||  (x % tileSize) > tileSizeHalf;
     }
 
-
     if (GridNodeType.isStairs(type)){
       return getHeightAt(x, y, z) > z;
     }

@@ -71,7 +71,7 @@ void sendClientRequestSetHeadType(int type){
 }
 
 void sendClientRequestSetCanvasSize(int z, int rows, int columns){
-  sendClientRequest(ClientRequest.Set_Head_Type, '$z $rows $columns');
+  sendClientRequest(ClientRequest.Editor_Set_Canvas_Size, '$z $rows $columns');
 }
 
 void sendClientRequestSetPantsType(int type){
