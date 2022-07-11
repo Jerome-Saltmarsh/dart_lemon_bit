@@ -37,12 +37,12 @@ class Vector3 with Position {
   }
 
   bool get outOfBounds =>
-     z < 0 ||
-     x < 0 ||
-     x > gridRowLength ||
-     y < 0 ||
+     z < 0                ||
+     x < 0                ||
+     y < 0                ||
+     x > gridRowLength    ||
      y > gridColumnLength ||
-     z >= tileHeight ;
+     z >= gridZLength     ;
 
   int getGridDistance(int z, int row, int column){
     var distance = (z - indexZ).abs();
