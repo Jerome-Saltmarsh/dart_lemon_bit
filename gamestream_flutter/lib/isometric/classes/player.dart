@@ -20,6 +20,7 @@ class Player extends Vector3 {
   var tile = Tile.Grass;
   var attackRange = 0.0;
   var npcTalk = Watch<String?>(null);
+  var npcTalkOptions = Watch<List<String>>([]);
   final selectCharacterRequired = Watch(false);
   final abilityTarget = Vector2(0, 0);
   final storeVisible = Watch(false);

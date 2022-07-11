@@ -197,6 +197,12 @@ class ServerResponseReader with ByteReader {
 
   void readNpcTalk() {
     player.npcTalk.value = readString();
+    final totalOptions = readByte();
+    final options = <String>[];
+    for (var i = 0; i < totalOptions; i++) {
+       options.add(readString());
+    }
+    player.npcTalkOptions.value = options;
   }
 
   void readPlayerDesigned() {

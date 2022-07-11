@@ -1,6 +1,7 @@
 
 import '../classes/library.dart';
 import '../common/library.dart';
+import '../common/quest.dart';
 import '../engine.dart';
 import 'game_dark_age.dart';
 import 'dark_age_scenes.dart';
@@ -55,7 +56,16 @@ class GameDarkAgeVillage extends GameDarkAge {
         pants: PantsType.brown,
         weaponType: WeaponType.Unarmed,
         onInteractedWith: (player) {
-            player.writeNpcTalk("Greetings Traveller");
+            if (!player.questsCompleted.contains(Quest.Jenkins_Meet)){
+              player.questsCompleted.add(Quest.Jenkins_Meet);
+              player.writeNpcTalk(
+                  text: "Greetings Traveller, I don't recall having seen your face prior.",
+                  options: {
+                    'Who are you?': () {},
+                    'Where am I?': () {},
+                  },
+              );
+            }
         }
     );
 

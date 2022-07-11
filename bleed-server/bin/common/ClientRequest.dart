@@ -34,6 +34,7 @@ enum ClientRequest {
   Time_Set_Hour,
   Submit_Player_Design,
   Editor_Set_Canvas_Size,
+  Npc_Talk_Select_Option,
 }
 
 const clientRequests = ClientRequest.values;

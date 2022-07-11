@@ -4,6 +4,7 @@ import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
+import '../common/quest.dart';
 import '../convert/convert_card_type_to_card.dart';
 import '../dark_age/game_dark_age.dart';
 import '../engine.dart';
@@ -53,6 +54,11 @@ class Player extends Character with ByteWriter {
 
   final cardChoices = <CardType>[];
   final deck = <Card>[];
+
+  final questsInProgress = <Quest>[];
+  final questsCompleted = <Quest>[];
+
+  var options = <String, Function> {};
 
   bool get ownsGame => game.owner == this;
 
@@ -723,9 +729,14 @@ extension PlayerProperties on Player {
      storeItems.forEach(writeWeapon);
   }
 
-  void writeNpcTalk(String text){
+  void writeNpcTalk({required String text, required Map<String, Function> options}){
+    this.options = options;
     writeByte(ServerResponse.Npc_Talk);
     writeString(text);
+    writeByte(options.length);
+    for (final option in options.keys){
+       writeString(option);
+    }
   }
 
   void writeSceneMetaData() {
