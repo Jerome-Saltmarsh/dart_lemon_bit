@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/message_box.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
 import 'package:gamestream_flutter/isometric_web/register_isometric_web_controls.dart';
 import 'package:lemon_engine/engine.dart';
@@ -31,6 +32,11 @@ void readPlayerInput() {
     }
     if (keyPressed(LogicalKeyboardKey.keyR)) {
       edit.paintType.value = edit.type.value;
+    }
+    if (keyPressed(LogicalKeyboardKey.keyQ)) {
+      edit.z.value = player.indexZ;
+      edit.row.value = player.indexRow;
+      edit.column.value = player.indexColumn;
     }
     if (engine.mouseRightDown.value){
       setPlayModePlay();
