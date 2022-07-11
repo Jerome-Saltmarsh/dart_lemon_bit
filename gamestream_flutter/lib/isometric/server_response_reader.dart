@@ -133,9 +133,6 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Collectables:
           readCollectables();
           break;
-        case ServerResponse.Tech_Types:
-          readTechTypes();
-          break;
         case ServerResponse.Damage_Applied:
           readDamageApplied();
           break;

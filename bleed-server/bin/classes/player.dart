@@ -274,7 +274,7 @@ extension PlayerProperties on Player {
     writeNpcs(this);
     writePlayerTarget();
     writeGameTime(game);
-    writePlayerZombies();
+    writeZombies();
 
     if (!sceneDownloaded){
       downloadScene();
@@ -288,7 +288,6 @@ extension PlayerProperties on Player {
     writeGrid();
     writeWeather();
     writeGameObjects();
-    writeTechTypes();
     writeGameStatus();
     writeSceneMetaData();
     writePlayerDesigned();
@@ -360,7 +359,7 @@ extension PlayerProperties on Player {
   }
 
 
-  void writePlayerZombies() {
+  void writeZombies() {
     writeByte(ServerResponse.Zombies);
     final zombies = game.zombies;
     for (final zombie in zombies){
@@ -372,15 +371,6 @@ extension PlayerProperties on Player {
       writeCharacter(this, zombie);
     }
     writeByte(END);
-  }
-
-  void writeTechTypes() {
-    writeByte(ServerResponse.Tech_Types);
-    writeByte(techTree.pickaxe);
-    writeByte(techTree.sword);
-    writeByte(techTree.bow);
-    writeByte(techTree.axe);
-    writeByte(techTree.hammer);
   }
 
   void writeGameObjects() {

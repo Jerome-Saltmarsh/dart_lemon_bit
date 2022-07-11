@@ -4,7 +4,6 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 
 import '../watches/ambient_shade.dart';
-import 'render_grid_node.dart';
 import 'render_torch.dart';
 
 void renderGridNodeTransparent(int z, int row, int column, int type) {

@@ -8,7 +8,6 @@ import '../dark_age/game_dark_age.dart';
 import '../engine.dart';
 import '../functions/generateName.dart';
 import '../functions/withinRadius.dart';
-import '../generate/generate_grid_plain.dart';
 import '../io/save_directory.dart';
 import '../io/write_scene_to_file.dart';
 import '../isometric/generate_grid_z.dart';
@@ -358,7 +357,6 @@ class Connection {
         player.wood -= cost.wood;
         player.gold -= cost.gold;
         player.stone -= cost.stone;
-        player.writeTechTypes();
         break;
 
       case ClientRequest.Attack:

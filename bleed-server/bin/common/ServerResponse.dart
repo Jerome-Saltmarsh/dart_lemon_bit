@@ -38,7 +38,6 @@ class ServerResponse {
   static const Debug_Mode = 45;
   static const Gem_Spawns = 46;
   static const End = 47;
-  static const Tech_Types = 49;
   static const Damage_Applied = 50;
   static const Dynamic_Object_Destroyed = 51;
   static const Dynamic_Object_Spawned = 52;
