@@ -385,7 +385,7 @@ class RenderOrderGrid extends RenderOrder {
         ) {
           gridZ++;
           orderZ = gridZ;
-          if (gridZ >= gridTotalZ || gridZ > maxZRender.value) return end();
+          if (gridZ >= gridTotalZ) return end();
           gridZHalf =  gridZ ~/ 2;
           gridZGreaterThanPlayerZ = gridZ > playerZ;
           gridRow = 0;

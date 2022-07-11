@@ -17,6 +17,8 @@ var _dstY = 0.0;
 var _shade = 0;
 
 void renderGridNode(int z, int row, int column, int type, double dstY, int shade) {
+  assert(type != GridNodeType.Empty);
+
   _dstX = (row - column) * tileSizeHalf;
   _dstY = dstY;
   _shade = shade;
