@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/isometric/actions/action_show_game_dialog_canvas_size.dart';
 import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
@@ -66,7 +67,34 @@ Row buildTopLeftMenu() {
                   return container(child: "File", color: brownLight);
                 }
             ),
-            container(child: "Canvas", color: brownLight),
+            onMouseOver(
+              builder: (context, over) {
+                if (over){
+                  return Column(
+                    children: [
+                      container(child: "Edit", color: brownLight),
+                      container(child: "Canvas Size", color: brownLight, action: actionGameDialogEditCanvasSizeShow),
+                    ],
+                  );
+                }
+
+                return container(child: "Edit", color: brownLight);
+              }
+            ),
+            onMouseOver(
+              builder: (context, over) {
+                if (over){
+                  return Column(
+                    children: [
+                      container(child: "View", color: brownLight),
+                      container(child: "Weather", color: brownLight),
+                      container(child: "Grid", color: brownLight),
+                    ],
+                  );
+                }
+                return container(child: "View", color: brownLight);
+              }
+            ),
           ],
         );
 }
