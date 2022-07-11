@@ -59,7 +59,7 @@ Row buildTopLeftMenu() {
                         container(child: "New", color: brownLight, action: (){
                           core.actions.exitGame();
                           connectToGameEditor();
-                        }),
+                        }, hoverColor: brownDark),
                         container(child: "Save", color: brownLight, action: actionGameDialogShowSceneSave, hoverColor: brownDark),
                         container(child: "Load", color: brownLight, action: actionGameDialogShowSceneLoad, hoverColor: brownDark),
                         container(child: "Exit", color: brownLight, action: core.actions.exitGame, hoverColor: brownDark),
@@ -75,7 +75,7 @@ Row buildTopLeftMenu() {
                   return Column(
                     children: [
                       container(child: "Edit", color: brownLight),
-                      container(child: "Canvas Size", color: brownLight, action: actionGameDialogEditCanvasSizeShow),
+                      container(child: "Canvas Size", color: brownLight, hoverColor: brownDark, action: actionGameDialogEditCanvasSizeShow),
                     ],
                   );
                 }
@@ -89,8 +89,8 @@ Row buildTopLeftMenu() {
                   return Column(
                     children: [
                       container(child: "View", color: brownLight),
-                      container(child: "Weather", color: brownLight, action: edit.actionToggleControlsVisibleWeather),
-                      container(child: "Grid", color: brownLight),
+                      container(child: "Weather", color: brownLight, hoverColor: brownDark, action: edit.actionToggleControlsVisibleWeather),
+                      container(child: "Grid", color: brownLight, hoverColor: brownDark),
                     ],
                   );
                 }

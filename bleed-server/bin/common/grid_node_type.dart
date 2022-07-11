@@ -121,6 +121,7 @@ class GridNodeType {
        Grass_Slope_East: "Grass Slope East",
        Grass_Slope_South: "Grass Slope South",
        Grass_Slope_West: "Grass Slope West",
+       Roof_Tile_North: "Roof Tile North",
      }[type] ?? "unknown($type)";
   }
   
