@@ -55,8 +55,8 @@ Row buildTopLeftMenu() {
                       children: [
                         container(child: "File", color: brownLight),
                         container(child: "New", color: brownLight),
-                        container(child: "Save", color: brownLight, action: actionGameDialogShowSceneSave),
-                        container(child: "Load", color: brownLight, action: actionGameDialogShowSceneLoad),
+                        container(child: "Save", color: brownLight, action: actionGameDialogShowSceneSave, hoverColor: brownDark),
+                        container(child: "Load", color: brownLight, action: actionGameDialogShowSceneLoad, hoverColor: brownDark),
                       ],
                     );
                   }

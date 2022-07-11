@@ -1,10 +1,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/utils/widget_utils.dart';
 
 Widget container({
   dynamic child,
   Color? color,
+  Color? hoverColor,
   Function? action,
   Alignment alignment = Alignment.centerLeft,
   num width = 200,
@@ -13,17 +15,36 @@ Widget container({
   Decoration? decoration,
   EdgeInsets? margin,
 }){
-  Widget con = Container(
-    decoration: decoration,
-    padding: const EdgeInsets.only(left: 8),
-    alignment: alignment,
-    width: width.toDouble(),
-    height: height.toDouble(),
-    color: color ?? Colors.grey,
-    margin: margin,
-    child: child == null
-        ? null : child is Widget ? child : text(child),
-  );
+  late Widget con;
+  if (hoverColor != null){
+    con = onMouseOver(
+      builder: (context, mouseOver) {
+        return Container(
+          decoration: decoration,
+          padding: const EdgeInsets.only(left: 8),
+          alignment: alignment,
+          width: width.toDouble(),
+          height: height.toDouble(),
+          color: mouseOver ? hoverColor : color ?? Colors.grey,
+          margin: margin,
+          child: child == null
+              ? null : child is Widget ? child : text(child),
+        );
+      }
+    );
+  } else {
+    con = Container(
+      decoration: decoration,
+      padding: const EdgeInsets.only(left: 8),
+      alignment: alignment,
+      width: width.toDouble(),
+      height: height.toDouble(),
+      color: color ?? Colors.grey,
+      margin: margin,
+      child: child == null
+          ? null : child is Widget ? child : text(child),
+    );
+  }
 
   if (toolTip != null){
     con = Tooltip(
