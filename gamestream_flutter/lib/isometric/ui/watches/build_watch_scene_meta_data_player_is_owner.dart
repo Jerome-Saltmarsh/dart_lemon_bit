@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_show_game_dialog_canvas_size.dart';
+import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
@@ -27,11 +28,6 @@ Widget buildWatchSceneMetaDataPlayerIsOwner() {
           right: 0,
           top: 50,
           child: buildControlEditZ(),
-        ),
-        Positioned(
-          right: 50,
-          top: 50,
-          child: buildTabEditTool(),
         ),
         Positioned(
             bottom: 6,
@@ -87,7 +83,7 @@ Row buildTopLeftMenu() {
                   return Column(
                     children: [
                       container(child: "View", color: brownLight),
-                      container(child: "Weather", color: brownLight),
+                      container(child: "Weather", color: brownLight, action: edit.actionToggleControlsVisibleWeather),
                       container(child: "Grid", color: brownLight),
                     ],
                   );

@@ -13,6 +13,11 @@ class EditState {
   var z = Watch(1);
   final type = Watch(GridNodeType.Bricks);
   final paintType = Watch(GridNodeType.Bricks);
+  final controlsVisibleWeather = Watch(true);
+
+  void actionToggleControlsVisibleWeather(){
+    controlsVisibleWeather.value = !controlsVisibleWeather.value;
+  }
 
   void selectBlock(int z, int row, int column){
     this.row.value = row;

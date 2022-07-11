@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_game_dialog.dart';
@@ -31,14 +33,17 @@ Positioned buildTopRightMenu() =>
     Positioned(top: 0, right: 0, child: buildPanelMenu());
 
 Widget buildControlsEnvironment() {
-  return Container(
-    width: screen.width,
-    alignment: Alignment.center,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        buildControlsWeather(),
-      ],
-    ),
+  return visibleBuilder(
+      edit.controlsVisibleWeather,
+      Container(
+        width: screen.width,
+        alignment: Alignment.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            buildControlsWeather(),
+          ],
+        ),
+      ),
   );
 }
