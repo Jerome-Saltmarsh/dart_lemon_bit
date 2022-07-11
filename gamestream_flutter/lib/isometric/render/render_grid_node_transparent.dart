@@ -4,6 +4,7 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 
 import '../watches/ambient_shade.dart';
+import 'render_grid_node.dart';
 import 'render_torch.dart';
 
 void renderGridNodeTransparent(int z, int row, int column, int type) {
@@ -157,6 +158,14 @@ void renderGridNodeTransparent(int z, int row, int column, int type) {
         anchorY: 0.3334,
       );
     default:
-      // throw Exception("Cannot render grid node type $type");
+      return render(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: srcLeft,
+        srcY: srcTop + (72.0 * shade),
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorY: 0.3334,
+      );
   }
 }
