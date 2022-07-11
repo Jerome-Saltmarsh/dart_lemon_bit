@@ -516,12 +516,17 @@ extension PlayerProperties on Player {
   }
 
   void writeNpcs(Player player){
-    final npcs = player.game.npcs;
     writeByte(ServerResponse.Npcs);
-    writeTotalAlive(npcs);
-    for(final npc in npcs) {
-      writeNpc(player, npc);
+    final npcs = game.npcs;
+    for (final npc in npcs){
+      if (npc.dead) continue;
+      if (npc.renderY < screenTop) continue;
+      if (npc.renderX < screenLeft) continue;
+      if (npc.renderX > screenRight) continue;
+      if (npc.renderY > screenBottom) break;
+      writeNpc(this, npc);
     }
+    writeByte(END);
   }
 
   void writeNpc(Player player, Character npc) {

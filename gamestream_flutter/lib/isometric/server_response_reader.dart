@@ -577,12 +577,23 @@ class ServerResponseReader with ByteReader {
   }
 
   void readNpcs() {
-    totalNpcs = readInt();
-    while (totalNpcs >= npcs.length){
-      npcs.add(Character());
-    }
-    for (var i = 0; i < totalNpcs; i++){
-      readNpc(npcs[i]);
+    totalNpcs = 0;
+    var npcLength = npcs.length;
+    while (true) {
+      final stateInt = readByte();
+      if (stateInt == END) break;
+      if (totalNpcs >= npcLength){
+        npcs.add(Character());
+        npcLength++;
+      }
+      final npc = npcs[totalNpcs];
+      readTeamDirectionState(npc, stateInt);
+      npc.x = readDouble();
+      npc.y = readDouble();
+      npc.z = readDouble();
+      _parseCharacterFrameHealth(npc, readByte());
+      readCharacterEquipment(npc);
+      totalNpcs++;
     }
   }
 
