@@ -123,6 +123,9 @@ void sendClientRequestSubmitPlayerDesign(){
   sendClientRequest(ClientRequest.Submit_Player_Design);
 }
 
+void sendClientRequestNpcSelectTopic(int index) =>
+   sendClientRequest(ClientRequest.Npc_Talk_Select_Option, index);
+
 void sendClientRequestTimeSetHour(int hour){
   assert(hour >= 0);
   assert(hour <= 24);

@@ -290,6 +290,20 @@ class Connection {
         game.onGridChanged();
         break;
 
+      case ClientRequest.Npc_Talk_Select_Option:
+        if (player.dead) return errorPlayerDead();
+        if (arguments.length != 2) return errorArgsExpected(2, arguments);
+        final index = int.tryParse(arguments[1]);
+        if (index == null) {
+          return errorInvalidArg('int required: got ${arguments[1]}');
+        }
+        if (index < 0 || index >= player.options.length){
+          return errorInvalidArg('invalid player option');
+        }
+        final action = player.options.values.toList()[index];
+        action.call();
+        break;
+
       case ClientRequest.Deck_Select_Card:
         if (player.dead) return errorPlayerDead();
         if (arguments.length != 2) return errorArgsExpected(2, arguments);

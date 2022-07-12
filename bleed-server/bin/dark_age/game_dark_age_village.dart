@@ -56,17 +56,21 @@ class GameDarkAgeVillage extends GameDarkAge {
         pants: PantsType.brown,
         weaponType: WeaponType.Unarmed,
         onInteractedWith: (player) {
-            if (!player.questsCompleted.contains(Quest.Jenkins_Meet)){
+            // if (!player.questsCompleted.contains(Quest.Jenkins_Meet)){
               player.questsCompleted.add(Quest.Jenkins_Meet);
               player.writeNpcTalk(
                   text: "Greetings Traveller, I don't recall having seen your face prior.",
                   options: {
-                    'Who are you?': () {},
-                    'Where am I?': () {},
+                    'Who are you?': () {
+                        player.writeNpcTalk(text: "My name is Jenkins", options: {});
+                    },
+                    'Where am I?': () {
+                      player.writeNpcTalk(text: "You are in the village", options: {});
+                    },
                   },
               );
             }
-        }
+        // }
     );
 
     addNpcGuardBow(x: 1460, y: 630);
