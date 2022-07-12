@@ -1,4 +1,3 @@
-
 import '../classes/library.dart';
 import '../common/library.dart';
 import '../common/quest.dart';
@@ -7,7 +6,6 @@ import 'game_dark_age.dart';
 import 'dark_age_scenes.dart';
 
 class GameDarkAgeVillage extends GameDarkAge {
-
   GameDarkAgeVillage() : super(darkAgeScenes.village, engine.officialUniverse) {
     addNpc(
         name: "Bell",
@@ -24,8 +22,7 @@ class GameDarkAgeVillage extends GameDarkAge {
             Weapon(type: WeaponType.Bow, damage: 5),
             Weapon(type: WeaponType.Sword, damage: 5),
           ]);
-        }
-    );
+        });
 
     addNpc(
         name: "Garry",
@@ -43,8 +40,7 @@ class GameDarkAgeVillage extends GameDarkAge {
             Weapon(type: WeaponType.Handgun, damage: 5),
             Weapon(type: WeaponType.Shotgun, damage: 5),
           ]);
-        }
-    );
+        });
 
     addNpc(
         name: "Jenkins",
@@ -55,21 +51,33 @@ class GameDarkAgeVillage extends GameDarkAge {
         armour: ArmourType.shirtBlue,
         pants: PantsType.brown,
         weaponType: WeaponType.Unarmed,
-        onInteractedWith: (player) {
-              player.questsCompleted.add(Quest.Jenkins_Meet);
-              player.writeNpcTalk(
-                  text: "Greetings Traveller, I don't recall having seen your face prior.",
-                  options: {
-                    'Who are you?': () {
-                        player.writeNpcTalk(text: "My name is Jenkins", options: {});
+        onInteractedWith: (Player player) {
+          if (!player.questsCompleted.contains(Quest.Jenkins_Meet)) {
+            player.writeNpcTalk(
+              text: "Greetings Traveller, I don't recall having seen your face prior.",
+              options: {
+                'Who are you?': () {
+                  player.writeNpcTalk(
+                    text: "The name's Jenkins. I'm a patron of this here Inn. I owe money to a local bandit. I'm afraid he's going to kill me if I don't pay him back soon",
+                    options: {
+                       "Good Luck With That": player.stopInteractingWithNpc,
+                       "How can I help?": (){
+
+                       },
                     },
-                    'Where am I?': () {
-                      player.writeNpcTalk(text: "You are in the village", options: {});
-                    },
-                  },
-              );
-            }
-    );
+                  );
+                },
+              },
+            );
+          } else {
+            player.writeNpcTalk(
+              text: "Hello again",
+              options: {
+                'Who are you?': () {},
+              },
+            );
+          }
+        });
 
     addNpcGuardBow(x: 1460, y: 630);
     addNpcGuardBow(x: 520, y: 1000);
@@ -80,14 +88,14 @@ class GameDarkAgeVillage extends GameDarkAge {
   }
 
   @override
-  void updateInternal(){
-     for (var i = 0; i < players.length; i++) {
-        final player = players[i];
-        if (player.indexRow != 19) continue;
-        if (player.indexColumn != 49) continue;
-        player.changeGame(engine.findGameDarkAgeCastle());
-        player.x = 1420;
-        player.y = 90;
-     }
+  void updateInternal() {
+    for (var i = 0; i < players.length; i++) {
+      final player = players[i];
+      if (player.indexRow != 19) continue;
+      if (player.indexColumn != 49) continue;
+      player.changeGame(engine.findGameDarkAgeCastle());
+      player.x = 1420;
+      player.y = 90;
+    }
   }
 }

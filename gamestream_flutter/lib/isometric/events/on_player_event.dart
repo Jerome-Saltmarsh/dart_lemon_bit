@@ -10,6 +10,7 @@ void onPlayerEvent(int event) {
   switch (event) {
     case PlayerEvent.Interaction_Finished:
       player.npcTalk.value = null;
+      player.npcTalkOptions.value = [];
       break;
     case PlayerEvent.Level_Up:
       modules.game.actions.emitPixelExplosion(player.x, player.y, amount: 20);

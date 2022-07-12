@@ -51,8 +51,8 @@ class GameDarkAge extends Game {
     );
 
     player.indexZ = 1;
-    player.indexColumn = 19;
-    player.indexRow = 23;
+    player.indexRow = 16;
+    player.indexColumn = 21;
     player.x += giveOrTake(5);
     player.y += giveOrTake(5);
     // moveCharacterToGridNode(player, GridNodeType.Player_Spawn);

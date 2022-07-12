@@ -64,9 +64,14 @@ class Player extends Character with ByteWriter {
   bool get ownsGame => game.owner == this;
 
   void stopInteractingWithNpc(){
-    if (!interactingWithNpc) return;
-    closeStore();
-    closeDialog();
+    if (!wdsinteractingWithNpc) return;
+    if (storeItems.isNotEmpty) {
+      storeItems = [];
+      writeStoreItems();
+    }
+    if (options.isNotEmpty) {
+      options.clear();
+    }
     interactingWithNpc = false;
     writePlayerEvent(PlayerEvent.Interaction_Finished);
   }
@@ -74,18 +79,6 @@ class Player extends Character with ByteWriter {
   void setStoreItems(List<Weapon> values){
     this.storeItems = values;
     writeStoreItems();
-  }
-
-  void closeStore(){
-    if (storeItems.isEmpty) return;
-    storeItems = [];
-    writeStoreItems();
-  }
-
-  void closeDialog(){
-    if (options.isEmpty) return;
-    options.clear();
-    writeNpcTalk(text: "", options: {});
   }
 
   void runToMouse(){
@@ -753,13 +746,10 @@ extension PlayerProperties on Player {
 
   void writeNpcTalk({required String text, required Map<String, Function> options}){
     if (text.isNotEmpty || options.isNotEmpty){
-      this.interactingWithNpc = true;
+      interactingWithNpc = true;
     }
     this.options = options;
-
-    if (options.isNotEmpty){
-      // options.add(MapEntry("Goodbye",  stopInteractingWithNpc,))
-          // o
+    if (interactingWithNpc){
       options['Goodbye'] = stopInteractingWithNpc;
     }
 
