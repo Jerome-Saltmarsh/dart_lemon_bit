@@ -14,6 +14,7 @@ Widget container({
   String? toolTip,
   Decoration? decoration,
   EdgeInsets? margin,
+  EdgeInsets? padding,
 }){
   late Widget con;
   if (hoverColor != null){
@@ -21,7 +22,7 @@ Widget container({
       builder: (context, mouseOver) {
         return Container(
           decoration: decoration,
-          padding: const EdgeInsets.only(left: 8),
+          padding: padding ?? const EdgeInsets.only(left: 8),
           alignment: alignment,
           width: width.toDouble(),
           height: height.toDouble(),
@@ -35,7 +36,7 @@ Widget container({
   } else {
     con = Container(
       decoration: decoration,
-      padding: const EdgeInsets.only(left: 8),
+      padding: padding ?? const EdgeInsets.only(left: 8),
       alignment: alignment,
       width: width.toDouble(),
       height: height.toDouble(),

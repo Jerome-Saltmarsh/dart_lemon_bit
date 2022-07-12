@@ -50,11 +50,11 @@ double getVolumeTargetWind() {
 
 double getVolumeTargetRain() {
    if (rain.value == Rain.None) return 0.0;
-   const r = 10;
+   const r = 7;
    const maxDistance = r * tileSize;
    final distance = getClosestByType(radius: r, type: GridNodeType.Rain_Landing) * tileSize;
-   final v = convertDistanceToVolume(distance, maxDistance: maxDistance) * 0.4;
-   return v * (rain.value == Rain.Light ? 0.5 : 1.0);
+   final v = convertDistanceToVolume(distance, maxDistance: maxDistance);
+   return v * (rain.value == Rain.Light ? 0.5 : 1.0) * 0.5;
 }
 
 double getVolumeTargetCrickets() {
@@ -96,5 +96,5 @@ double getVolumeStream(){
   const r = 7;
   const maxDistance = r * tileSize;
   final distance = getClosestByType(radius: r, type: GridNodeType.Water_Flowing) * tileSize;
-  return convertDistanceToVolume(distance, maxDistance: maxDistance) * 0.4;
+  return convertDistanceToVolume(distance, maxDistance: maxDistance) * 0.3;
 }
