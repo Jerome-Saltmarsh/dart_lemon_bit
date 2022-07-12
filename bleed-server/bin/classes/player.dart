@@ -63,16 +63,22 @@ class Player extends Character with ByteWriter {
 
   bool get ownsGame => game.owner == this;
 
+  bool questToDo(Quest quest) => !questCompleted(quest) && !questInProgress(quest);
   bool questInProgress(Quest quest) => questsInProgress.contains(quest);
   bool questCompleted(Quest quest) => questsCompleted.contains(quest);
 
-  void completeQuest(Quest quest){
-    questsCompleted.add(quest);
-  }
 
   void beginQuest(Quest quest){
+    assert (!questsInProgress.contains(quest));
     assert (!questsCompleted.contains(quest));
     questsInProgress.add(quest);
+  }
+
+  void completeQuest(Quest quest){
+    assert (questsInProgress.contains(quest));
+    assert (!questsCompleted.contains(quest));
+    questsInProgress.remove(quest);
+    questsCompleted.add(quest);
   }
 
   void endInteraction(){
