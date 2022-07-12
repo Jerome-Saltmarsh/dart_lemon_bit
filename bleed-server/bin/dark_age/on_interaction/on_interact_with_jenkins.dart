@@ -1,7 +1,7 @@
 import '../../classes/player.dart';
 import '../../common/quest.dart';
 
-void onInteractionWithJenkins(Player player) {
+void onInteractWithJenkins(Player player) {
 
   if (player.questToDo(Quest.Jenkins_Retrieve_Stolen_Scroll))
     return toDoJenkinsRetrieveStolenScroll(player);

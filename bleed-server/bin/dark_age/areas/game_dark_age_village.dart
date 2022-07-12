@@ -4,7 +4,8 @@ import '../../common/library.dart';
 import '../../engine.dart';
 import '../game_dark_age.dart';
 import '../dark_age_scenes.dart';
-import '../on_interaction/on_interaction_with_jenkins.dart';
+import '../on_interaction/on_interact_with_jenkins.dart';
+import '../on_interaction/on_interact_with_julia.dart';
 
 class GameDarkAgeVillage extends GameDarkAge {
   GameDarkAgeVillage() : super(darkAgeScenes.village, engine.officialUniverse) {
@@ -52,7 +53,19 @@ class GameDarkAgeVillage extends GameDarkAge {
         armour: ArmourType.shirtBlue,
         pants: PantsType.white,
         weaponType: WeaponType.Staff,
-        onInteractedWith: onInteractionWithJenkins,
+        onInteractedWith: onInteractWithJenkins,
+    );
+
+    addNpc(
+      name: "Julia",
+      x: 760,
+      y: 870,
+      z: 120.0,
+      head: HeadType.Blonde,
+      armour: ArmourType.tunicPadded,
+      pants: PantsType.brown,
+      weaponType: WeaponType.Unarmed,
+      onInteractedWith: onInteractWithJulia,
     );
 
     addNpcGuardBow(x: 1460, y: 630);
