@@ -14,7 +14,7 @@ import 'position3.dart';
 import 'library.dart';
 
 class Player extends Character with ByteWriter {
-  var designed = false;
+  var designed = true;
   CharacterSelection? selection;
   final mouse = Vector2(0, 0);
   final _runTarget = Position3();
@@ -330,13 +330,6 @@ extension PlayerProperties on Player {
     writeGameStatus();
     writeSceneMetaData();
     writePlayerDesigned();
-
-    options.clear();
-    writeNpcTalk(text: "", options: {});
-
-    storeItems = [];
-    writeStoreItems();
-
     sceneDownloaded = true;
   }
 

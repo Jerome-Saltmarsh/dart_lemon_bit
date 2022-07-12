@@ -74,4 +74,16 @@ class GameDarkAgeVillage extends GameDarkAge {
       player.y = 90;
     }
   }
+
+  @override
+  void onPlayerJoined(Player player) {
+     player.interactingWithNpc = true;
+     player.interact(
+         message: "Welcome to Dark-Age!",
+         responses: {
+            "Tutorial": player.endInteraction,
+            "Play": player.endInteraction,
+        }
+     );
+  }
 }
