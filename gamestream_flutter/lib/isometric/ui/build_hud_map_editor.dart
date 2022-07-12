@@ -381,7 +381,7 @@ Widget buildButtonSelectGridNodeType(int value) {
                 edit.z.value = player.indexZ;
                 return;
               }
-              edit.setBlockType(value);
+              edit.set(value);
             },
             color:
               type == value

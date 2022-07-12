@@ -30,13 +30,20 @@ class EditState {
     type.value = gridGetType(z.value, row.value, column.value);
   }
 
-  void deleteBlock(){
-      setCurrentBlock(z.value > 0 ? GridNodeType.Empty : GridNodeType.Grass);
+  void delete(){
+    set(z.value > 0 ? GridNodeType.Empty : GridNodeType.Grass);
   }
 
-  void setBlockType(int value){
+  void paint(){
+    set(edit.paintType.value);
+  }
+
+  void set(int value){
+    if (value != GridNodeType.Empty) {
+      paintType.value = value;
+    }
     if (grid[z.value][row.value][column.value] != value){
-      return setCurrentBlock(value);
+      return sendClientRequestSetBlock(row.value, column.value, z.value, value);
     }
     for (var zIndex = 1; zIndex < z.value; zIndex++){
       if (GridNodeType.isStairs(value)){
@@ -46,18 +53,8 @@ class EditState {
       }
     }
   }
-
-  void setCurrentBlock(int value){
-    if (value != GridNodeType.Empty) {
-      paintType.value = value;
-    }
-    return sendClientRequestSetBlock(row.value, column.value, z.value, value);
-  }
 }
 
-void actionEditSetShortcutType(){
-   edit.setCurrentBlock(edit.paintType.value);
-}
 
 void editZIncrease(){
    if (edit.z.value >= gridTotalZ) return;
