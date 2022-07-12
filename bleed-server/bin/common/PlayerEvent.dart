@@ -17,4 +17,5 @@ class PlayerEvent {
   static const Collect_Experience = 15;
   static const Collect_Gold = 16;
   static const Hello_Male_01 = 17;
+  static const Interaction_Finished = 17;
 }

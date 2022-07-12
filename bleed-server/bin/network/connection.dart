@@ -504,9 +504,10 @@ class Connection {
             break;
           }
           player.runToMouse();
-          player.closeStore();
-        } else {
-          player.closeStore();
+        }
+
+        if (player.interactingWithNpc){
+          return player.stopInteractingWithNpc();
         }
 
         if (ability == null) {
@@ -553,7 +554,10 @@ class Connection {
         player.direction = args[6];
         player.setCharacterStateRunning();
         player.target = null;
-        player.closeStore();
+
+        if (player.interactingWithNpc){
+          return player.stopInteractingWithNpc();
+        }
         break;
     }
 

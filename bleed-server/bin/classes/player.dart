@@ -59,8 +59,17 @@ class Player extends Character with ByteWriter {
   final questsCompleted = <Quest>[];
 
   var options = <String, Function> {};
+  var interactingWithNpc = false;
 
   bool get ownsGame => game.owner == this;
+
+  void stopInteractingWithNpc(){
+    if (!interactingWithNpc) return;
+    closeStore();
+    closeDialog();
+    interactingWithNpc = false;
+    writePlayerEvent(PlayerEvent.Interaction_Finished);
+  }
 
   void setStoreItems(List<Weapon> values){
     this.storeItems = values;
@@ -71,6 +80,12 @@ class Player extends Character with ByteWriter {
     if (storeItems.isEmpty) return;
     storeItems = [];
     writeStoreItems();
+  }
+
+  void closeDialog(){
+    if (options.isEmpty) return;
+    options.clear();
+    writeNpcTalk(text: "", options: {});
   }
 
   void runToMouse(){
@@ -297,6 +312,13 @@ extension PlayerProperties on Player {
     writeGameStatus();
     writeSceneMetaData();
     writePlayerDesigned();
+
+    options.clear();
+    writeNpcTalk(text: "", options: {});
+
+    storeItems = [];
+    writeStoreItems();
+
     sceneDownloaded = true;
   }
 
@@ -730,6 +752,9 @@ extension PlayerProperties on Player {
   }
 
   void writeNpcTalk({required String text, required Map<String, Function> options}){
+    if (text.isNotEmpty || options.isNotEmpty){
+      this.interactingWithNpc = true;
+    }
     this.options = options;
     writeByte(ServerResponse.Npc_Talk);
     writeString(text);

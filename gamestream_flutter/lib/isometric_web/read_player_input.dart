@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
 import 'package:gamestream_flutter/isometric_web/register_isometric_web_controls.dart';
+import 'package:gamestream_flutter/utils/string_utils.dart';
 import 'package:lemon_engine/engine.dart';
 
 import '../isometric/watches/scene_meta_data.dart';
