@@ -19,6 +19,7 @@ Widget buildStackPlayMode() {
       Positioned(top: 50, right: 0, child: buildWatchInventoryVisible()),
       Positioned(top: 50, left: 0, child: buildPanelStore()),
       Positioned(bottom: 50, left: 0, child: watch(player.npcTalk, buildControlNpcTalk)),
+      Positioned(bottom: 200, left: 0, child: watch(player.npcTalkOptions, buildControlNpcTopics)),
       Positioned(bottom: 50, left: 0, child: buildWatchMouseTargetName()),
       Positioned(bottom: 8, right: 8, child: buildButtonToggleInventory()),
       buildWatchPlayerDesigned(),

@@ -7,3 +7,8 @@ import '../widgets/nothing.dart';
 
 Widget buildControlNpcTalk(String? value) =>
     isNullOrEmpty(value) ? nothing : text(value);
+
+Widget buildControlNpcTopics(List<String> topics) =>
+  Column(
+    children: topics.map(text).toList(),
+  );
