@@ -744,6 +744,11 @@ extension GameFunctions on Game {
           if (!target.deadOrBusy){
             target.face(player);
           }
+          final onInteractedWith = target.onInteractedWith;
+          if (onInteractedWith != null) {
+            onInteractedWith(player);
+            player.interactingWithNpc = true;
+          }
           target.onInteractedWith?.call(player);
           player.target = null;
           player.setCharacterStateIdle();

@@ -99,6 +99,9 @@ class Player extends Character with ByteWriter {
   }
 
   void setStoreItems(List<Weapon> values){
+    if (values.isNotEmpty){
+      interactingWithNpc = true;
+    }
     this.storeItems = values;
     writeStoreItems();
   }
@@ -767,7 +770,6 @@ extension PlayerProperties on Player {
   }
 
   void writeNpcTalk({required String text, Map<String, Function>? options}){
-    interactingWithNpc = true;
     this.options = options ?? {'goodbye' : endInteraction};
     writeByte(ServerResponse.Npc_Talk);
     writeString(text);

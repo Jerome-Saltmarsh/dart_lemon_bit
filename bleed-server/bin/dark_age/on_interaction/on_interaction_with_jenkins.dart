@@ -68,7 +68,6 @@ void inProgressJenkinsRetrieveStolenScroll(Player player) {
   );
 }
 
-
 void questToDoJenkinsDeliverScroll(Player player) =>
     player.interact(
         message: "Could you please deliver the scroll to the college for me?",
