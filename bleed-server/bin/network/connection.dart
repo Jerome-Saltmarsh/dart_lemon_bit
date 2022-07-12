@@ -273,11 +273,6 @@ class Connection {
           return errorInvalidArg('type');
         }
         player.setBlock(z, row, column, type);
-
-        if (type == GridNodeType.Tree_Bottom){
-          player.setBlock(z + 1, row, column, GridNodeType.Tree_Top);
-        }
-
         break;
 
       case ClientRequest.Submit_Player_Design:

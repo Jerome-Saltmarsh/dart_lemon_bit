@@ -1,9 +1,10 @@
-import '../classes/library.dart';
-import '../common/library.dart';
-import '../engine.dart';
-import 'game_dark_age.dart';
-import 'dark_age_scenes.dart';
-import 'on_interaction/on_interaction_with_jenkins.dart';
+
+import '../../classes/library.dart';
+import '../../common/library.dart';
+import '../../engine.dart';
+import '../game_dark_age.dart';
+import '../dark_age_scenes.dart';
+import '../on_interaction/on_interaction_with_jenkins.dart';
 
 class GameDarkAgeVillage extends GameDarkAge {
   GameDarkAgeVillage() : super(darkAgeScenes.village, engine.officialUniverse) {

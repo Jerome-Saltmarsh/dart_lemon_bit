@@ -15,6 +15,8 @@ class EditState {
   final paintType = Watch(GridNodeType.Bricks);
   final controlsVisibleWeather = Watch(true);
 
+  int get currentType => gridGetType(z.value, row.value, column.value);
+
   void actionToggleControlsVisibleWeather(){
     controlsVisibleWeather.value = !controlsVisibleWeather.value;
   }
@@ -42,9 +44,19 @@ class EditState {
     if (value != GridNodeType.Empty) {
       paintType.value = value;
     }
-    if (grid[z.value][row.value][column.value] != value){
+
+    if (value == GridNodeType.Tree_Bottom || value == GridNodeType.Tree_Top){
+      if (currentType == GridNodeType.Empty){
+        sendClientRequestSetBlock(row.value, column.value, z.value + 1, GridNodeType.Tree_Top);
+        sendClientRequestSetBlock(row.value, column.value, z.value, GridNodeType.Tree_Bottom);
+        return;
+      }
+    }
+
+    if (currentType != value){
       return sendClientRequestSetBlock(row.value, column.value, z.value, value);
     }
+
     for (var zIndex = 1; zIndex < z.value; zIndex++){
       if (GridNodeType.isStairs(value)){
         sendClientRequestSetBlock(row.value, column.value, zIndex, GridNodeType.Bricks);
@@ -54,7 +66,6 @@ class EditState {
     }
   }
 }
-
 
 void editZIncrease(){
    if (edit.z.value >= gridTotalZ) return;
