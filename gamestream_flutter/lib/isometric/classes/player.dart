@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_alive.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_designed.dart';
 import 'package:lemon_watch/watch.dart';
+import '../events/on_changed_npc_talk.dart';
 import '../events/on_changed_player_state.dart';
 import '../events/on_changed_player_weapon.dart';
 import 'vector3.dart';
@@ -19,7 +20,7 @@ class Player extends Vector3 {
   var maxHealth = 0.0;
   var tile = Tile.Grass;
   var attackRange = 0.0;
-  var npcTalk = Watch<String?>(null);
+  var npcTalk = Watch<String?>(null, onChanged: onChangedNpcTalk);
   var npcTalkOptions = Watch<List<String>>([]);
   final selectCharacterRequired = Watch(false);
   final abilityTarget = Vector2(0, 0);
