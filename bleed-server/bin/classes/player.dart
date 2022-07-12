@@ -756,6 +756,13 @@ extension PlayerProperties on Player {
       this.interactingWithNpc = true;
     }
     this.options = options;
+
+    if (options.isNotEmpty){
+      // options.add(MapEntry("Goodbye",  stopInteractingWithNpc,))
+          // o
+      options['Goodbye'] = stopInteractingWithNpc;
+    }
+
     writeByte(ServerResponse.Npc_Talk);
     writeString(text);
     writeByte(options.length);

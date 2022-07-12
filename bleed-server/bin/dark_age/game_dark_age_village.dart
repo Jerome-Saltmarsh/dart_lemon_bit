@@ -56,7 +56,6 @@ class GameDarkAgeVillage extends GameDarkAge {
         pants: PantsType.brown,
         weaponType: WeaponType.Unarmed,
         onInteractedWith: (player) {
-            // if (!player.questsCompleted.contains(Quest.Jenkins_Meet)){
               player.questsCompleted.add(Quest.Jenkins_Meet);
               player.writeNpcTalk(
                   text: "Greetings Traveller, I don't recall having seen your face prior.",
@@ -70,7 +69,6 @@ class GameDarkAgeVillage extends GameDarkAge {
                   },
               );
             }
-        // }
     );
 
     addNpcGuardBow(x: 1460, y: 630);

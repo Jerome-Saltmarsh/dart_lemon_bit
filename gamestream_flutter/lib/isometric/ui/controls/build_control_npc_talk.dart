@@ -24,6 +24,7 @@ Widget buildControlNpcTopics(List<String> topics) =>
           margin: const EdgeInsets.only(top: 6),
           child: text(value, color: white80),
           color: brownLight,
+          width: 300,
           hoverColor: brownDark,
           action: () {
             sendClientRequestNpcSelectTopic(topics.indexOf(value));
