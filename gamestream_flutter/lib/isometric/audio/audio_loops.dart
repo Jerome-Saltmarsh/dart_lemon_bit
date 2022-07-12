@@ -49,14 +49,12 @@ double getVolumeTargetWind() {
 }
 
 double getVolumeTargetRain() {
-   switch (rain.value){
-     case Rain.None:
-       return 0;
-     case Rain.Light:
-       return 0.5;
-     case Rain.Heavy:
-       return 1.0;
-   }
+   if (rain.value == Rain.None) return 0.0;
+   const r = 10;
+   const maxDistance = r * tileSize;
+   final distance = getClosestByType(radius: r, type: GridNodeType.Rain_Landing) * tileSize;
+   final v = convertDistanceToVolume(distance, maxDistance: maxDistance) * 0.4;
+   return v * (rain.value == Rain.Light ? 0.5 : 1.0);
 }
 
 double getVolumeTargetCrickets() {
