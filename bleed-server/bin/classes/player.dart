@@ -63,6 +63,9 @@ class Player extends Character with ByteWriter {
 
   bool get ownsGame => game.owner == this;
 
+  bool questInProgress(Quest quest) => questsInProgress.contains(quest);
+  bool questCompleted(Quest quest) => questsCompleted.contains(quest);
+
   void stopInteractingWithNpc(){
     if (!interactingWithNpc) return;
     if (storeItems.isNotEmpty) {

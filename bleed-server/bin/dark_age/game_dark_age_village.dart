@@ -4,6 +4,7 @@ import '../common/quest.dart';
 import '../engine.dart';
 import 'game_dark_age.dart';
 import 'dark_age_scenes.dart';
+import 'on_interaction/on_interaction_with_jenkins.dart';
 
 class GameDarkAgeVillage extends GameDarkAge {
   GameDarkAgeVillage() : super(darkAgeScenes.village, engine.officialUniverse) {
@@ -47,35 +48,12 @@ class GameDarkAgeVillage extends GameDarkAge {
         x: 980,
         y: 835,
         z: 24.0,
-        head: HeadType.None,
+        head: HeadType.Wizards_Hat,
         armour: ArmourType.shirtBlue,
-        pants: PantsType.brown,
-        weaponType: WeaponType.Unarmed,
-        onInteractedWith: (Player player) {
-          if (!player.questsCompleted.contains(Quest.Jenkins_Meet)) {
-            player.writeNpcTalk(
-              text: "I don't know what to do!",
-              options: {
-                'What happened?': () {
-                  player.writeNpcTalk(
-                    text: "I was on my way to the college to deliver a scroll containing crucial information when a group of bandits appeared and robbed me of all my possessions",
-                    options: {
-                       "Let me help you": player.stopInteractingWithNpc,
-                       "Sorry I'm busy": player.stopInteractingWithNpc,
-                    },
-                  );
-                },
-              },
-            );
-          } else {
-            player.writeNpcTalk(
-              text: "Hello again",
-              options: {
-                'Who are you?': () {},
-              },
-            );
-          }
-        });
+        pants: PantsType.white,
+        weaponType: WeaponType.Staff,
+        onInteractedWith: onInteractionWithJenkins,
+    );
 
     addNpcGuardBow(x: 1460, y: 630);
     addNpcGuardBow(x: 520, y: 1000);
