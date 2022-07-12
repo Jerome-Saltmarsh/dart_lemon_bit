@@ -64,7 +64,7 @@ class Player extends Character with ByteWriter {
   bool get ownsGame => game.owner == this;
 
   void stopInteractingWithNpc(){
-    if (!wdsinteractingWithNpc) return;
+    if (!interactingWithNpc) return;
     if (storeItems.isNotEmpty) {
       storeItems = [];
       writeStoreItems();

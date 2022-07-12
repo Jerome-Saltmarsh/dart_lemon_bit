@@ -54,16 +54,14 @@ class GameDarkAgeVillage extends GameDarkAge {
         onInteractedWith: (Player player) {
           if (!player.questsCompleted.contains(Quest.Jenkins_Meet)) {
             player.writeNpcTalk(
-              text: "Greetings Traveller, I don't recall having seen your face prior.",
+              text: "I don't know what to do!",
               options: {
-                'Who are you?': () {
+                'What happened?': () {
                   player.writeNpcTalk(
-                    text: "The name's Jenkins. I'm a patron of this here Inn. I owe money to a local bandit. I'm afraid he's going to kill me if I don't pay him back soon",
+                    text: "I was on my way to the college to deliver a scroll containing crucial information when a group of bandits appeared and robbed me of all my possessions",
                     options: {
-                       "Good Luck With That": player.stopInteractingWithNpc,
-                       "How can I help?": (){
-
-                       },
+                       "Let me help you": player.stopInteractingWithNpc,
+                       "Sorry I'm busy": player.stopInteractingWithNpc,
                     },
                   );
                 },

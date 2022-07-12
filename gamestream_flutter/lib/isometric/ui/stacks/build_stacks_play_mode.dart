@@ -24,16 +24,12 @@ Widget buildStackPlayMode() {
         width: screen.width,
         height: screen.height,
         alignment: Alignment.center,
-        child: Container(
-          width: 600,
-          height: 600 * goldenRatio_0618,
-          // color: brownLight,
-          child: Column(
-            children: [
-              watch(player.npcTalk, buildControlNpcTalk),
-              watch(player.npcTalkOptions, buildControlNpcTopics)
-            ],
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            watch(player.npcTalk, buildControlNpcTalk),
+            watch(player.npcTalkOptions, buildControlNpcTopics)
+          ],
         ),
       )),
       // Positioned(bottom: 50, left: 0, child: watch(player.npcTalk, buildControlNpcTalk)),

@@ -35,6 +35,7 @@ Widget text(dynamic value, {
     String? family,
     TextAlign? align,
     String Function(dynamic t)? format,
+    double height = 1.0,
 }) {
   final _text = Text(
       value.toString(),
@@ -46,6 +47,7 @@ Widget text(dynamic value, {
           fontWeight: bold ? FontWeight.bold : weight,
           fontFamily: family,
           fontStyle: italic ? FontStyle.italic : FontStyle.normal,
+          height: height
       )
   );
 
