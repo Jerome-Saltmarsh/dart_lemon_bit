@@ -27,7 +27,7 @@ Widget buildControlNpcTopics(List<String> topics) =>
     children: topics.map((String value) {
       return container(
           margin: const EdgeInsets.only(top: 6),
-          child: text(value, color: white80),
+          child: text(value, color: white80, align: TextAlign.center),
           color: brownLight,
           hoverColor: brownDark,
           width: _width,

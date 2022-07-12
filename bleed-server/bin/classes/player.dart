@@ -66,7 +66,16 @@ class Player extends Character with ByteWriter {
   bool questInProgress(Quest quest) => questsInProgress.contains(quest);
   bool questCompleted(Quest quest) => questsCompleted.contains(quest);
 
-  void stopInteractingWithNpc(){
+  void completeQuest(Quest quest){
+    questsCompleted.add(quest);
+  }
+
+  void beginQuest(Quest quest){
+    assert (!questsCompleted.contains(quest));
+    questsInProgress.add(quest);
+  }
+
+  void endInteraction(){
     if (!interactingWithNpc) return;
     if (storeItems.isNotEmpty) {
       storeItems = [];
@@ -77,6 +86,10 @@ class Player extends Character with ByteWriter {
     }
     interactingWithNpc = false;
     writePlayerEvent(PlayerEvent.Interaction_Finished);
+  }
+
+  void interact({required String message, Map<String, Function>? responses}){
+    writeNpcTalk(text: message, options: responses);
   }
 
   void setStoreItems(List<Weapon> values){
@@ -747,19 +760,13 @@ extension PlayerProperties on Player {
      storeItems.forEach(writeWeapon);
   }
 
-  void writeNpcTalk({required String text, required Map<String, Function> options}){
-    if (text.isNotEmpty || options.isNotEmpty){
-      interactingWithNpc = true;
-    }
-    this.options = options;
-    if (interactingWithNpc){
-      options['Goodbye'] = stopInteractingWithNpc;
-    }
-
+  void writeNpcTalk({required String text, Map<String, Function>? options}){
+    interactingWithNpc = true;
+    this.options = options ?? {'goodbye' : endInteraction};
     writeByte(ServerResponse.Npc_Talk);
     writeString(text);
-    writeByte(options.length);
-    for (final option in options.keys){
+    writeByte(this.options.length);
+    for (final option in this.options.keys){
        writeString(option);
     }
   }

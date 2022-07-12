@@ -507,7 +507,7 @@ class Connection {
         }
 
         if (player.interactingWithNpc){
-          return player.stopInteractingWithNpc();
+          return player.endInteraction();
         }
 
         if (ability == null) {
@@ -556,7 +556,7 @@ class Connection {
         player.target = null;
 
         if (player.interactingWithNpc){
-          return player.stopInteractingWithNpc();
+          return player.endInteraction();
         }
         break;
     }
