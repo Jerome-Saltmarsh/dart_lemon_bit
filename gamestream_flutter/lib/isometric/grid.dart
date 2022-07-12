@@ -175,12 +175,15 @@ void _applyShadowAt({
 bool _castesShadow(int type){
   return const [
         GridNodeType.Bricks,
+        GridNodeType.Brick_Top,
         GridNodeType.Grass,
         GridNodeType.Grass_Long,
         GridNodeType.Stairs_South,
         GridNodeType.Stairs_West,
         GridNodeType.Stairs_East,
         GridNodeType.Stairs_North,
+        GridNodeType.Roof_Tile_South,
+        GridNodeType.Roof_Tile_North,
   ].contains(type);
 }
 
