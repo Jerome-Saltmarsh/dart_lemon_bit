@@ -1,6 +1,6 @@
 
-import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
+import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 
 void actionGameDialogEditCanvasSizeShow(){
-  gameDialog.value = GameDialog.Canvas_Size;
+  editorDialog.value = EditorDialog.Canvas_Size;
 }

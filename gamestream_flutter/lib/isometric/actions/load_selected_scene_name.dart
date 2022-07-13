@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
+import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/watches/selected_scene_name.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 

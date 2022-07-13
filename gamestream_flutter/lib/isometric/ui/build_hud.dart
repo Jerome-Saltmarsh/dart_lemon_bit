@@ -14,7 +14,7 @@ import 'watches/build_watch_player_alive.dart';
 Widget buildHud() {
   return Stack(
     children: [
-      buildWatchGameDialog(),
+      buildWatchEditorDialog(),
       Container(
         width: screen.width,
         height: screen.height,

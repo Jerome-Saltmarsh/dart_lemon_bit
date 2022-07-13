@@ -2,7 +2,6 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
-import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/isometric/message_box.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
@@ -55,7 +54,7 @@ void readPlayerInput() {
     }
   }
 
-  onKeyPressed(LogicalKeyboardKey.keyT, actionGameDialogShowQuests);
+  // onKeyPressed(LogicalKeyboardKey.keyT, actionGameDialogShowQuests);
 
   if (keyPressed(keys.speak)){
     messageBoxShow();

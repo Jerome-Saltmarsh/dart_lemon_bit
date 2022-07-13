@@ -1,14 +1,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
+import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_button_game_dialog_close.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
-import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog.dart';
+import 'package:gamestream_flutter/isometric/ui/dialogs/build_editor_dialog.dart';
 import 'package:lemon_engine/screen.dart';
 
-Widget buildWatchGameDialog(){
-  return watch(gameDialog, (GameDialog? gameDialog){
+Widget buildWatchEditorDialog(){
+  return watch(editorDialog, (EditorDialog? gameDialog){
      if (gameDialog == null) return const SizedBox();
 
      return Container(
@@ -29,9 +29,29 @@ Widget buildWatchGameDialog(){
                  ],
                ),
                height8,
-               buildGameDialog(gameDialog),
+               buildEditorDialog(gameDialog),
              ],
            )),
      );
   });
+}
+
+Widget buildDialog({required Widget child, double width = 350, double height = 400}){
+  return Container(
+      width: width,
+      height: height,
+      color: brownDark,
+      padding: const EdgeInsets.all(6),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              buildButtonGameDialogClose(),
+            ],
+          ),
+          height8,
+          child,
+        ],
+      ));
 }
