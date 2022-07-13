@@ -21,7 +21,6 @@ class Player extends Character with ByteWriter {
   var characterSelectRequired = false;
   var debug = false;
   var score = 0;
-  var sceneChanged = false;
   var characterState = CharacterState.Idle;
   var framesSinceClientRequest = 0;
   var pointsRecord = 0;

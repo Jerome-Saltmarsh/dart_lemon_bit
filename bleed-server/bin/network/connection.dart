@@ -450,15 +450,9 @@ class Connection {
 
     if (player == null) return errorPlayerNotFound();
     player.framesSinceClientRequest = 0;
+    if (!player.sceneDownloaded) return;
 
     final game = player.game;
-
-    if (player.sceneChanged) {
-      player.sceneChanged = false;
-      player.sceneDownloaded = false;
-      return;
-    }
-
     final mouseX = readNumberFromByteArray(args, index: 2).toDouble();
     final mouseY = readNumberFromByteArray(args, index: 4).toDouble();
     player.mouse.x = mouseX;

@@ -225,7 +225,7 @@ abstract class Game {
     to.players.add(player);
     player.game = to;
     to.disableCountDown = 0;
-    player.sceneChanged = true;
+    player.sceneDownloaded = false;
   }
 
   int countAlive(List<Character> characters) {
