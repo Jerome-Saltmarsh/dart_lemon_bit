@@ -23,10 +23,8 @@ Widget buildGameDialogMap(){
       child: Column(
         children: [
           gameDialogTab,
-          text("Map"),
           buildCanvas(paint: (Canvas canvas, Size size) {
               canvas.drawImage(mapAtlas, Offset(0, 0), paint);
-              // canvas.draw
           }, frame: f)
         ],
       ),

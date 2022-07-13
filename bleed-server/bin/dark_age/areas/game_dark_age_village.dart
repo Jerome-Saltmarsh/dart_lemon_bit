@@ -77,11 +77,19 @@ class GameDarkAgeVillage extends GameDarkAge {
   void updateInternal() {
     for (var i = 0; i < players.length; i++) {
       final player = players[i];
-      if (player.indexRow != 19) continue;
-      if (player.indexColumn != 49) continue;
-      player.changeGame(engine.findGameDarkAgeCastle());
-      player.x = 1420;
-      player.y = 90;
+      final row = player.indexRow;
+      final column = player.indexColumn;
+
+      if (row == 19 && column == 49) {
+        player.changeGame(engine.findGameDarkAgeCastle());
+        player.indexColumn = 2;
+        continue;
+      }
+      if (row == 49 && (column == 7 || column == 8)) {
+        player.changeGame(engine.findGameForest());
+        player.indexRow = 2;
+        continue;
+      }
     }
   }
 

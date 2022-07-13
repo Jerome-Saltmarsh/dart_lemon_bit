@@ -1192,6 +1192,18 @@ extension GameFunctions on Game {
     ai.target = value;
   }
 
+  void removeDisconnectedPlayers() {
+    var playerLength = players.length;
+    for (var i = 0; i < playerLength; i++) {
+      final player = players[i];
+      if (player.framesSinceClientRequest++ < 150) continue;
+      if (!removePlayer(player)) continue;
+      i--;
+      playerLength--;
+      print("Removed disconnected player");
+    }
+  }
+
   bool removePlayer(Player player){
     if (!players.remove(player)) return false;
     for (final npc in zombies) {
@@ -1205,18 +1217,6 @@ extension GameFunctions on Game {
       cancelCountDown();
     }
     return true;
-  }
-
-  void removeDisconnectedPlayers() {
-    var playerLength = players.length;
-    for (var i = 0; i < playerLength; i++) {
-      final player = players[i];
-      if (player.framesSinceClientRequest++ < 100) continue;
-      if (!removePlayer(player)) continue;
-      i--;
-      playerLength--;
-      print("removed disconnected");
-    }
   }
 
   void npcSetRandomDestination(AI ai, {int radius = 10}) {

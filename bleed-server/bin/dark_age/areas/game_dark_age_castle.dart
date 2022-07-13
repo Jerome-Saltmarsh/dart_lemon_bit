@@ -1,10 +1,10 @@
 
 import '../../engine.dart';
-import '../game_dark_age.dart';
 import '../dark_age_scenes.dart';
+import 'dark_age_area.dart';
 
-class GameDarkAgeCastle extends GameDarkAge {
-  GameDarkAgeCastle() : super(darkAgeScenes.castle, engine.officialUniverse);
+class GameDarkAgeCastle extends DarkAgeArea {
+  GameDarkAgeCastle() : super(darkAgeScenes.castle);
 
   @override
   void updateInternal(){
