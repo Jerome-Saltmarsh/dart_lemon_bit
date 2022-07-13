@@ -2,6 +2,7 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/quest.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
+import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_alive.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_designed.dart';
 import 'package:lemon_watch/watch.dart';
@@ -12,6 +13,7 @@ import 'vector3.dart';
 import 'package:lemon_math/library.dart';
 
 class Player extends Vector3 {
+  var gameDialog = Watch<GameDialog?>(null);
   var angle = 0.0;
   var mouseAngle = 0.0;
   var score = 0;
@@ -25,7 +27,6 @@ class Player extends Vector3 {
   var npcTalkOptions = Watch<List<String>>([]);
   final selectCharacterRequired = Watch(false);
   final abilityTarget = Vector2(0, 0);
-  final storeVisible = Watch(false);
   final attackTarget = Vector3();
   final mouseTargetName = Watch<String?>(null);
   final mouseTargetHealth = Watch(0.0);
@@ -96,11 +97,11 @@ class Player extends Vector3 {
     throw Exception('getCanAffordWatch error, $type has no watch');
   }
 
-  Player() {
-    wood.onChanged(_onResourcesChanged);
-    gold.onChanged(_onResourcesChanged);
-    stone.onChanged(_onResourcesChanged);
-  }
+  // Player() {
+  //   wood.onChanged(_onResourcesChanged);
+  //   gold.onChanged(_onResourcesChanged);
+  //   stone.onChanged(_onResourcesChanged);
+  // }
 
   void _onResourcesChanged(int value){
     _updateCanAffords();

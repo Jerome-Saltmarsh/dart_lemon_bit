@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
+import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_data_player_is_owner.dart';
@@ -15,6 +17,7 @@ Widget buildHud() {
   return Stack(
     children: [
       buildWatchEditorDialog(),
+      watch(player.gameDialog, buildGameDialog),
       Container(
         width: screen.width,
         height: screen.height,
