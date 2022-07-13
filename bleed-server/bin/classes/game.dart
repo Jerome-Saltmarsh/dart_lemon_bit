@@ -324,6 +324,7 @@ extension GameFunctions on Game {
         positions: characters,
         x: x,
         y: y,
+        z: character.z,
         where: (other) => other.alive && !onSameTeam(other, character));
   }
 
@@ -337,16 +338,8 @@ extension GameFunctions on Game {
         positions: npcs,
         x: x,
         y: y,
+        z: character.z,
         where: (other) => other.alive);
-  }
-
-  GameObject? getClosestGameObject(double x, double y) {
-    return findClosestVector2(
-        positions: gameObjects,
-        x: x,
-        y: y,
-        where: (other) => other.collidable
-    );
   }
 
   Collider? getClosestCollider(double x, double y, Character character, {double? minDistance}) {

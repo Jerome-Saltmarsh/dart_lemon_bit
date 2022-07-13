@@ -4,6 +4,8 @@ import 'package:lemon_math/library.dart';
 
 import 'classes/character.dart';
 import 'classes/collider.dart';
+import 'classes/position3.dart';
+import 'maths/get_distance_v3.dart';
 import 'typedefs.dart';
 
 I? raycastHit<I extends Collider>({
@@ -71,9 +73,10 @@ T? sphereCaste<T extends Collider>({
   return closest;
 }
 
-T? findClosestVector2<T extends Position>({
+T? findClosestVector2<T extends Position3>({
   required double x,
   required double y,
+  required double z,
   required List<T> positions,
   required bool Function(T t) where,
 }) {
@@ -83,7 +86,7 @@ T? findClosestVector2<T extends Position>({
 
   for (final position in positions) {
     if (!where(position)) continue;
-    final colliderDistance = distanceBetween(position.x, position.y, x, y);
+    final colliderDistance = getDistanceV3(position.x, position.y, position.z, x, y, z);
     if (colliderDistance >= closestDistance) continue;
     closest = position;
     closestDistance = colliderDistance;
