@@ -67,11 +67,11 @@ class Player extends Character with ByteWriter {
   bool questInProgress(Quest quest) => questsInProgress.contains(quest);
   bool questCompleted(Quest quest) => questsCompleted.contains(quest);
 
-
   void beginQuest(Quest quest){
     assert (!questsInProgress.contains(quest));
     assert (!questsCompleted.contains(quest));
     questsInProgress.add(quest);
+    writePlayerQuests();
   }
 
   void completeQuest(Quest quest){
@@ -79,6 +79,7 @@ class Player extends Character with ByteWriter {
     assert (!questsCompleted.contains(quest));
     questsInProgress.remove(quest);
     questsCompleted.add(quest);
+    writePlayerQuests();
   }
 
   void endInteraction(){
@@ -217,7 +218,7 @@ class Player extends Character with ByteWriter {
   void setCharacterStateChanging(){
     if (deadOrBusy) return;
     dispatchGameEvent(GameEventType.Character_Changing);
-    setCharacterState(value: CharacterState.Changing, duration: 30);
+    setCharacterState(value: CharacterState.Changing, duration: 20);
   }
 
   void dispatchGameEvent(int type){
@@ -781,6 +782,18 @@ extension PlayerProperties on Player {
   void writePlayerDesigned(){
     writeByte(ServerResponse.Player_Designed);
     writeBool(designed);
+  }
+
+  void writePlayerQuests(){
+    writeByte(ServerResponse.Player_Quests);
+    writeByte(questsInProgress.length);
+    for (final quest in questsInProgress){
+       writeByte(quest.index);
+    }
+    writeByte(questsCompleted.length);
+    for (final quest in questsCompleted){
+      writeByte(quest.index);
+    }
   }
 }
 

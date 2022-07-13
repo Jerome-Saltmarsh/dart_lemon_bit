@@ -1,4 +1,5 @@
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/quest.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_alive.dart';
@@ -58,6 +59,8 @@ class Player extends Vector3 {
   final deckActiveCardIndex = Watch(-1);
   final deckActiveCardRange = Watch(0.0);
   final deckActiveCardRadius = Watch(0.0);
+  final questsInProgress = Watch<List<Quest>>([]);
+  final questsCompleted = Watch<List<Quest>>([]);
 
   final canAffordUpgradePickaxe = Watch(false);
   final canAffordUpgradeSword = Watch(false);
@@ -66,7 +69,6 @@ class Player extends Vector3 {
   final canAffordUpgradeHammer = Watch(false);
   final canAffordUpgradeBag = Watch(false);
   final canAffordPalisade = Watch(false);
-
   final weapons = Watch(<Weapon>[]);
   final weapon = Watch<Weapon>(
       Weapon(

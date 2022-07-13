@@ -1,4 +1,5 @@
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/quest.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
@@ -177,6 +178,9 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Npc_Talk:
           readNpcTalk();
           break;
+        case ServerResponse.Player_Quests:
+          readPlayerQuests();
+          break;
         case ServerResponse.Weather:
           readWeather();
           break;
@@ -193,6 +197,11 @@ class ServerResponseReader with ByteReader {
           throw Exception("Cannot parse $response");
       }
     }
+  }
+
+  void readPlayerQuests() {
+    player.questsInProgress.value = readQuests();
+    player.questsCompleted.value = readQuests();
   }
 
   void readNpcTalk() {
@@ -702,6 +711,15 @@ class ServerResponseReader with ByteReader {
       cards.add(DeckCard(cardTypes[type], level));
     }
     return cards;
+  }
+
+  List<Quest> readQuests(){
+    final total = readInt();
+    final values = <Quest>[];
+    for (var i = 0; i < total; i++){
+      values.add(quests[readByte()]);
+    }
+    return values;
   }
 
 

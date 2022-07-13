@@ -4,8 +4,10 @@ import '../../common/library.dart';
 import '../../engine.dart';
 import '../game_dark_age.dart';
 import '../dark_age_scenes.dart';
+import '../on_interaction/on_interact_with_garry.dart';
 import '../on_interaction/on_interact_with_jenkins.dart';
 import '../on_interaction/on_interact_with_julia.dart';
+import '../on_interaction/on_interact_with_tutorial.dart';
 
 class GameDarkAgeVillage extends GameDarkAge {
   GameDarkAgeVillage() : super(darkAgeScenes.village, engine.officialUniverse) {
@@ -36,13 +38,8 @@ class GameDarkAgeVillage extends GameDarkAge {
         armour: ArmourType.shirtCyan,
         pants: PantsType.red,
         weaponType: WeaponType.Axe,
-        onInteractedWith: (player) {
-          player.writePlayerEvent(PlayerEvent.Hello_Male_01);
-          player.setStoreItems([
-            Weapon(type: WeaponType.Handgun, damage: 5),
-            Weapon(type: WeaponType.Shotgun, damage: 5),
-          ]);
-        });
+        onInteractedWith: onInteractWithGarry,
+    );
 
     addNpc(
         name: "Jenkins",
@@ -94,7 +91,7 @@ class GameDarkAgeVillage extends GameDarkAge {
      player.interact(
          message: "Welcome to Dark-Age!",
          responses: {
-            "Tutorial": player.endInteraction,
+            "Tutorial": () => onInteractWithTutorial(player),
             "Play": player.endInteraction,
         }
      );

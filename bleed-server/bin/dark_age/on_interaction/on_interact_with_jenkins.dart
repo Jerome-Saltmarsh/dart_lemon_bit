@@ -31,7 +31,6 @@ void toDoJenkinsRetrieveStolenScroll(Player player) {
               player.interact(
                   message: "Would you really? Thank you so much! The bandits hideout is in the old forest directly south east of this village. Its dangerous so make sure you are properly equipped before you go there. If you manage to recover the scroll please bring it directly back to me",
                   responses: {
-                    "Where can I get some equipment": player.endInteraction,
                     "I better get going": player.endInteraction,
                   }
               );

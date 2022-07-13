@@ -258,6 +258,10 @@ class _Engine {
 
 final keyboardInstance = RawKeyboard.instance;
 
+void onKeyPressed(LogicalKeyboardKey key, Function action){
+    if (keyPressed(key)) action.call();
+}
+
 // global utilities
 bool keyPressed(LogicalKeyboardKey key) {
   return keyboardInstance.keysPressed.contains(key);

@@ -9,6 +9,7 @@ enum GameDialog {
   Canvas_Size,
   Debug,
   Audio_Mixer,
+  Quests,
 }
 
 void actionGameDialogShowSceneLoad(){
@@ -21,4 +22,9 @@ void actionGameDialogShowSceneSave(){
 
 void actionGameDialogClose(){
   gameDialog.value = null;
+}
+
+
+void actionGameDialogShowQuests(){
+  gameDialog.value = GameDialog.Quests;
 }

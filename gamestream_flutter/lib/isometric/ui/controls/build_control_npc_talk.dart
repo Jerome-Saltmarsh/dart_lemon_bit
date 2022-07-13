@@ -14,7 +14,7 @@ Widget buildControlNpcTalk(String? value) =>
   (value == null || value.isEmpty)
     ? nothing
     : container(
-          child: SingleChildScrollView(child: text(value = value.replaceAll(".", "\n\n"), color: white80, height: 2.2)),
+          child: SingleChildScrollView(child: text(value = value.replaceAll(". ", "\n\n"), color: white80, height: 2.2)),
           color: brownLight,
           width: _width,
           height: _width * goldenRatio_0618,
