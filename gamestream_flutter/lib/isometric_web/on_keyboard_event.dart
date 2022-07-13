@@ -8,6 +8,8 @@ import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:lemon_engine/engine.dart';
 
+import '../isometric/actions/action_game_dialog_show_map.dart';
+
 void onKeyboardEvent(RawKeyEvent event){
   if (event is RawKeyDownEvent){
     return onRawKeyDownEvent(event);
@@ -26,6 +28,10 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
 
   if (key == PhysicalKeyboardKey.keyT){
     return actionGameDialogShowQuests();
+  }
+
+  if (key == PhysicalKeyboardKey.keyM){
+    return actionGameDialogShowMap();
   }
 
   if (playModeEdit) {

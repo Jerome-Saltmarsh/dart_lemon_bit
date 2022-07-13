@@ -3,6 +3,7 @@ import 'package:bleed_common/quest.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
+import 'package:gamestream_flutter/isometric/events/on_changed_game_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_alive.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_designed.dart';
 import 'package:gamestream_flutter/isometric/events/on_quests_in_progress_changed.dart';
@@ -14,7 +15,7 @@ import 'vector3.dart';
 import 'package:lemon_math/library.dart';
 
 class Player extends Vector3 {
-  var gameDialog = Watch<GameDialog?>(null);
+  var gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);
   var angle = 0.0;
   var mouseAngle = 0.0;
   var score = 0;
