@@ -1440,9 +1440,9 @@ extension GameFunctions on Game {
 
   Npc addNpc({
     required String name,
-    required double x,
-    required double y,
-    required double z,
+    required int row,
+    required int column,
+    required int z,
     Function(Player player)? onInteractedWith,
     int weaponType = WeaponType.Unarmed,
     int weaponDamage = 1,
@@ -1456,9 +1456,9 @@ extension GameFunctions on Game {
     final npc = Npc(
       name: name,
       onInteractedWith: onInteractedWith,
-      x: x,
-      y: y,
-      z: z,
+      x: 0,
+      y: 0,
+      z: 0,
       weapon: Weapon(type: weaponType, damage: weaponDamage),
       team: team,
       health: health,
@@ -1467,6 +1467,12 @@ extension GameFunctions on Game {
     npc.equippedHead = head;
     npc.equippedArmour = armour;
     npc.equippedPants = pants;
+    npc.indexRow = row;
+    npc.indexColumn = column;
+    npc.indexZ = z;
+    npc.spawnX = npc.x;
+    npc.spawnY = npc.y;
+    npc.clearDest();
     npcs.add(npc);
     return npc;
   }

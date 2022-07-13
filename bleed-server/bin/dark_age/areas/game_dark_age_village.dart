@@ -2,21 +2,21 @@
 import '../../classes/library.dart';
 import '../../common/library.dart';
 import '../../engine.dart';
-import '../game_dark_age.dart';
 import '../dark_age_scenes.dart';
 import '../on_interaction/on_interact_with_garry.dart';
 import '../on_interaction/on_interact_with_jenkins.dart';
 import '../on_interaction/on_interact_with_julia.dart';
 import '../on_interaction/on_interact_with_tutorial.dart';
+import 'dark_age_area.dart';
 
-class GameDarkAgeVillage extends GameDarkAge {
-  GameDarkAgeVillage() : super(darkAgeScenes.village, engine.officialUniverse) {
+class GameDarkAgeVillage extends DarkAgeArea {
+  GameDarkAgeVillage() : super(darkAgeScenes.village) {
     addNpc(
         name: "Bell",
-        x: 840,
-        y: 645,
-        z: 24.0,
-        wanderRadius: 10,
+        row: 17,
+        column: 13,
+        z: 1,
+        wanderRadius: 0,
         head: HeadType.Blonde,
         armour: ArmourType.shirtBlue,
         pants: PantsType.brown,
@@ -30,9 +30,9 @@ class GameDarkAgeVillage extends GameDarkAge {
 
     addNpc(
         name: "Garry",
-        x: 1250,
-        y: 1020,
-        z: 24.0,
+        row: 25,
+        column: 20,
+        z: 1,
         wanderRadius: 50,
         head: HeadType.Steel_Helm,
         armour: ArmourType.shirtCyan,
@@ -43,9 +43,9 @@ class GameDarkAgeVillage extends GameDarkAge {
 
     addNpc(
         name: "Jenkins",
-        x: 980,
-        y: 835,
-        z: 24.0,
+        row: 20,
+        column: 17,
+        z: 1,
         head: HeadType.Wizards_Hat,
         armour: ArmourType.shirtBlue,
         pants: PantsType.white,
@@ -55,9 +55,9 @@ class GameDarkAgeVillage extends GameDarkAge {
 
     addNpc(
       name: "Julia",
-      x: 760,
-      y: 870,
-      z: 120.0,
+      row: 16,
+      column: 17,
+      z: 5,
       head: HeadType.Blonde,
       armour: ArmourType.tunicPadded,
       pants: PantsType.brown,
@@ -65,9 +65,9 @@ class GameDarkAgeVillage extends GameDarkAge {
       onInteractedWith: onInteractWithJulia,
     );
 
-    addNpcGuardBow(x: 1460, y: 630);
-    addNpcGuardBow(x: 520, y: 1000);
-    addNpcGuardBow(x: 985, y: 1500);
+    addNpcGuardBow(row: 10, column: 20);
+    addNpcGuardBow(row: 20, column: 31);
+    addNpcGuardBow(row: 30, column: 12);
 
     addEnemySpawn(z: 1, row: 40, column: 5, health: 3);
     addEnemySpawn(z: 1, row: 40, column: 35, health: 3);

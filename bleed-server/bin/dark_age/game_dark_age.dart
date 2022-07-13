@@ -70,12 +70,12 @@ class GameDarkAge extends Game {
     // revive(player);
   }
 
-  void addNpcGuardBow({required double x, required double y, double z = 24}){
+  void addNpcGuardBow({required int row, required int column, int z = 1}){
     addNpc(
       name: "Guard",
-      x: x,
-      y: y,
-      z: z,
+      row: row,
+      column: column,
+      z: 1,
       head: HeadType.Rogues_Hood,
       armour: ArmourType.shirtBlue,
       pants: PantsType.green,
