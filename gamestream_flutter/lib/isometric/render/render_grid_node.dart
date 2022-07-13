@@ -15,10 +15,9 @@ import 'render_torch.dart';
 var _dstX = 0.0;
 var _dstY = 0.0;
 var _shade = 0;
+var transparent = false;
 
 void renderGridNode(int z, int row, int column, int type, double dstY, int shade) {
-  assert(type != GridNodeType.Empty);
-
   _dstX = (row - column) * tileSizeHalf;
   _dstY = dstY;
   _shade = shade;
@@ -215,7 +214,11 @@ void renderBlockSrcX(double srcX){
   const spriteWidthHalf = 24.0;
   const spriteHeightThird = 24.0;
 
-  final srcY = _shade * spriteHeight;
+  var srcY = _shade * spriteHeight;
+
+  if (transparent){
+    srcY += 432;
+  }
 
   src[bufferIndex] = srcX;
   dst[bufferIndex] = 1;

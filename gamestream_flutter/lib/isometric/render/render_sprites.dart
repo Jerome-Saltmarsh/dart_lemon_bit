@@ -16,7 +16,6 @@ import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
-import 'package:gamestream_flutter/isometric/render/render_grid_node_transparent.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_zombie.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
@@ -225,6 +224,7 @@ class RenderOrderGrid extends RenderOrder {
 
   @override
   void renderFunction() {
+    transparent = false;
     if (playerImperceptible) {
       if (gridZGreaterThanPlayerZ) {
         final renderRow = gridRow - gridZHalf;
@@ -245,7 +245,7 @@ class RenderOrderGrid extends RenderOrder {
            (renderRow == playerRenderRow + 1 && renderColumn == playerRenderColumn + 1) ||
            (renderRow == playerRenderRow - 1 && renderColumn == playerRenderColumn - 1)
           ){
-            return renderGridNodeTransparent(gridZ, gridRow, gridColumn, gridType);
+            transparent = true;
           }
         }
       }
