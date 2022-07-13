@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:gamestream_flutter/isometric/map_atlas.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/shared_preferences.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
+import 'package:lemon_engine/load_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -11,9 +13,8 @@ final isLocalHost = Uri.base.host == 'localhost'; // TODO move to lemon-engine
 
 Future init() async {
   await loadSharedPreferences();
-  // isometric.image = await loadImage('images/atlas.png'); // TODO move to lemon-engine
-  // engine.image = isometric.image;
   initializeEventListeners();
+  mapAtlas = await loadImage('images/map-atlas.png');
 
   if (isLocalHost) {
     print("Environment: Localhost");

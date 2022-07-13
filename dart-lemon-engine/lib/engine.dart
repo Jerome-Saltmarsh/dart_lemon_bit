@@ -1,8 +1,6 @@
 library lemon_engine;
 
 import 'dart:async';
-import 'dart:ui' as ui;
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +15,7 @@ import 'package:universal_html/html.dart';
 
 import 'actions.dart';
 import 'canvas.dart';
+import 'load_image.dart';
 import 'render.dart';
 import 'state/paint.dart';
 
@@ -283,15 +282,15 @@ double worldToScreenY(double y) {
   return engine.zoom * (y - _camera.y);
 }
 
-Future<ui.Image> loadImage(String url) async {
-  final ByteData data = await rootBundle.load(url);
-  final Uint8List img = Uint8List.view(data.buffer);
-  final Completer<ui.Image> completer = new Completer();
-  ui.decodeImageFromList(img, (ui.Image img) {
-    return completer.complete(img);
-  });
-  return completer.future;
-}
+// Future<ui.Image> loadImage(String url) async {
+//   final ByteData data = await rootBundle.load(url);
+//   final Uint8List img = Uint8List.view(data.buffer);
+//   final Completer<ui.Image> completer = new Completer();
+//   ui.decodeImageFromList(img, (ui.Image img) {
+//     return completer.complete(img);
+//   });
+//   return completer.future;
+// }
 
 double distanceFromMouse(double x, double y) {
   return distanceBetween(mouseWorldX, mouseWorldY, x, y);

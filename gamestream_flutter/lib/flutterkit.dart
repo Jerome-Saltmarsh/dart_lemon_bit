@@ -414,7 +414,7 @@ Widget buildImage(String filename, {required double width, required double heigh
   );
 }
 
-Widget buildPainter({
+Widget buildCanvas({
   required PaintCanvas paint,
   required ValueNotifier<int> frame,
   ShouldRepaint? shouldRepaint,

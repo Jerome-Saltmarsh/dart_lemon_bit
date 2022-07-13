@@ -3,9 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/screen.dart';
+import 'package:lemon_engine/state/paint.dart';
 
 import '../../../flutterkit.dart';
 import 'build_game_dialog_quests.dart';
+
+final f = ValueNotifier<int>(0);
 
 Widget buildGameDialogMap(){
   return Container(
@@ -20,6 +23,10 @@ Widget buildGameDialogMap(){
         children: [
           gameDialogTab,
           text("Map"),
+          buildCanvas(paint: (Canvas canvas, Size size) {
+              canvas.drawCircle(Offset(0, 0), 30, paint);
+              // canvas.draw
+          }, frame: f)
         ],
       ),
     ),
