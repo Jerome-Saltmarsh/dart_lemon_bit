@@ -21,11 +21,11 @@ class Position3 with Position {
   }
 
   void set indexRow(int value){
-    x = value * tileSize;
+    x = value * tileSize + tileSizeHalf;
   }
 
   void set indexColumn(int value){
-    y = value * tileSize;
+    y = value * tileSize + tileSizeHalf;
   }
 
   Position3 set({double? x, double? y, double? z}){

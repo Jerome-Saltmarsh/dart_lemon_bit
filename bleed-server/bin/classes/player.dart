@@ -3,6 +3,7 @@ import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
+import '../common/flag.dart';
 import '../common/library.dart';
 import '../common/quest.dart';
 import '../convert/convert_card_type_to_card.dart';
@@ -56,6 +57,7 @@ class Player extends Character with ByteWriter {
 
   final questsInProgress = <Quest>[];
   final questsCompleted = <Quest>[];
+  final flags = <Flag>[];
 
   var options = <String, Function> {};
   var interactingWithNpc = false;
@@ -65,6 +67,13 @@ class Player extends Character with ByteWriter {
   bool questToDo(Quest quest) => !questCompleted(quest) && !questInProgress(quest);
   bool questInProgress(Quest quest) => questsInProgress.contains(quest);
   bool questCompleted(Quest quest) => questsCompleted.contains(quest);
+  bool flag(Flag flag) {
+    if (flagged(flag)) return false;
+    flags.add(flag);
+    return true;
+  }
+  bool flagged(Flag flag) => flags.contains(flag);
+
 
   void beginQuest(Quest quest){
     assert (!questsInProgress.contains(quest));
