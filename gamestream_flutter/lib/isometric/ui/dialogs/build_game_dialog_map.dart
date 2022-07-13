@@ -1,5 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:gamestream_flutter/isometric/map_atlas.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/screen.dart';
@@ -24,7 +25,7 @@ Widget buildGameDialogMap(){
           gameDialogTab,
           text("Map"),
           buildCanvas(paint: (Canvas canvas, Size size) {
-              canvas.drawCircle(Offset(0, 0), 30, paint);
+              canvas.drawImage(mapAtlas, Offset(0, 0), paint);
               // canvas.draw
           }, frame: f)
         ],
