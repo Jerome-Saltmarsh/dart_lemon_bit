@@ -715,10 +715,6 @@ extension GameFunctions on Game {
       }
     }
 
-    if (!player.designed) {
-       player.angle = (player.angle + 0.05) % pi2;
-    }
-
     if (player.dead) return;
 
     if (player.framesSinceClientRequest > 10) {

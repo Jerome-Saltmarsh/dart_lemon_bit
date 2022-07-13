@@ -275,11 +275,6 @@ class Connection {
         player.setBlock(z, row, column, type);
         break;
 
-      case ClientRequest.Submit_Player_Design:
-        player.designed = true;
-        player.writePlayerDesigned();
-        break;
-
       case ClientRequest.Editor_Set_Canvas_Size:
         game.scene.grid.add(generateGridZ(game.scene.gridRows, game.scene.gridColumns));
         game.onGridChanged();
@@ -473,7 +468,7 @@ class Connection {
     player.screenRight = readNumberFromByteArray(args, index: 11).toDouble();
     player.screenBottom = readNumberFromByteArray(args, index: 13).toDouble();
 
-    if (player.deadOrBusy || !player.designed) {
+    if (player.deadOrBusy) {
       return;
     }
 
@@ -590,9 +585,6 @@ class Connection {
         : await engine.findGameEditorByName(name);
     joinGame(game);
     game.owner = _player;
-    if (_player != null) {
-      _player!.designed = true;
-    }
   }
 
   void joinGame(Game game){

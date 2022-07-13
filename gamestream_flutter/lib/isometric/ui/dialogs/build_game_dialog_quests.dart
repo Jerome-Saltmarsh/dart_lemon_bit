@@ -64,9 +64,9 @@ Widget buildGameDialogQuests(){
   });
 }
 
-
 Widget buildButtonCloseGameDialog() =>
   container(
+    toolTip: "(Press T)",
     child: text("x"),
     alignment: Alignment.center,
     action: actionCloseGameDialog,

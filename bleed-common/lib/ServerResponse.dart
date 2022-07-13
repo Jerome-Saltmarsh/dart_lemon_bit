@@ -59,7 +59,6 @@ class ServerResponse {
   static const Weather = 78;
   static const Custom_Game_Names = 79;
   static const Scene_Meta_Data = 80;
-  static const Player_Designed = 81;
   static const Player_Debug = 82;
   static const Npc_Talk = 83;
   static const Player_Quests = 84;

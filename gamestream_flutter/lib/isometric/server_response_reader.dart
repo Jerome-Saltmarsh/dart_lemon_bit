@@ -190,9 +190,6 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Scene_Meta_Data:
           readSceneMetaData();
           break;
-        case ServerResponse.Player_Designed:
-          readPlayerDesigned();
-          break;
         default:
           throw Exception("Cannot parse $response");
       }

@@ -28,19 +28,6 @@ class Engine {
     officialUniverse.update();
     frame++;
 
-    if (frame % 5 == 0) {
-      // games.removeWhere((game) => game.finished);
-
-      for (var i = 0; i < games.length; i++) {
-        final game = games[i];
-        if (game.disableCountDown < 15) continue;
-        assert(game.players.isEmpty);
-        print("Empty Players game removed");
-        games.removeAt(i);
-        i--;
-      }
-    }
-
     if (frame % 30 == 0) {
       for (final game in games) {
         game.updateAIPath();
