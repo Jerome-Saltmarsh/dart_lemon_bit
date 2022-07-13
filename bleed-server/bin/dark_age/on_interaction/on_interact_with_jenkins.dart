@@ -32,6 +32,9 @@ void toDoJenkinsRetrieveStolenScroll(Player player) {
                   message: "Would you really? Thank you so much! The bandits hideout is in the old forest directly south east of this village. Its dangerous so make sure you are properly equipped before you go there. If you manage to recover the scroll please bring it directly back to me",
                   responses: {
                     "I better get going": player.endInteraction,
+                    "Got any hints?": (){
+                       player.interact(message: "Their leader called himself Roy, claimed he was the most revered thief in all Spire");
+                    },
                   }
               );
             },

@@ -17,7 +17,7 @@ class GameDarkAgeForest extends DarkAgeArea {
        onInteractedWith: (Player player){
            if (player.flag(Flag.Encountered_Roy)) {
                return player.interact(
-                   message: "Who might you be? Don't you know its dangerous wandering around these woods? There could be thieves and who knows what else lurking about.",
+                   message: "Aye who might you be? Don't you know its dangerous wandering about these woods? Could be thieves and who knows what else lurking about.",
                    responses: {
                       "I'm lost": (){},
                       if (player.questInProgress(Quest.Jenkins_Retrieve_Stolen_Scroll))
