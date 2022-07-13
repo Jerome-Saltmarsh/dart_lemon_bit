@@ -9,11 +9,19 @@ import 'package:lemon_watch/watch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 
-final activeQuestTab = Watch(QuestTab.Current);
+final activeQuestTabWatch = Watch(QuestTab.Current, onChanged: (value){
+   if (value == QuestTab.Current){
+      activeQuests.value = player.questsInProgress.value;
+   }else{
+      activeQuests.value = player.questsCompleted.value;
+   }
+});
+
+final activeQuests = Watch<List<Quest>>(player.questsInProgress.value);
+final inProgress = watch(player.questsInProgress, buildColumnQuests);
 
 Widget buildGameDialogQuests(){
-
-  return watch(activeQuestTab, (activeQuestTabValue){
+  return watch(activeQuestTabWatch, (QuestTab activeQuestTabValue){
     return Container(
       width: screen.width,
       height: screen.height,
@@ -30,33 +38,23 @@ Widget buildGameDialogQuests(){
                 Row(
                   children: [
                     container(child:"Quests"),
-                    container(child:"Inventory"),
-                    container(child:"Map"),
+                    // container(child:"Inventory"),
+                    // container(child:"Map"),
                   ],
                 ),
                 buildButtonCloseGameDialog(),
               ],
             ),
-            Row(
-              children: QuestTab.values.map((questTab) =>
-                  container(
-                    child: questTab.name,
-                    action: () => activeQuestTab.value = questTab,
-                    color: questTab == activeQuestTabValue ? brownDark : brownLight,
-                  )
-              ).toList(),
-            ),
             Container(
               padding: const EdgeInsets.all(16),
               alignment: Alignment.topLeft,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-               children: [
-                 if (activeQuestTabValue == QuestTab.Current)
-                   watch(player.questsInProgress, buildColumnQuests),
-                 if (activeQuestTabValue == QuestTab.Done)
-                   watch(player.questsCompleted, buildColumnQuests),
-               ],
+              child: SingleChildScrollView(
+                child: Column(
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                 children: [
+                   inProgress,
+                 ],
+                ),
               ),
             )   
           ],
@@ -65,6 +63,7 @@ Widget buildGameDialogQuests(){
     );
   });
 }
+
 
 Widget buildButtonCloseGameDialog() =>
   container(
@@ -78,11 +77,9 @@ void actionCloseGameDialog(){
 }
 
 Widget buildColumnQuests(List<Quest> quests) =>
-  SingleChildScrollView(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: quests.map(buildQuest).toList(),
-    ),
+  Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: quests.isEmpty ? [text("No active quests")] : quests.map(buildQuest).toList(),
   );
 
 Widget buildQuest(Quest quest) =>

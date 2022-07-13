@@ -26,7 +26,7 @@ void toDoJenkinsRetrieveStolenScroll(Player player) {
         player.interact(
           message: "I was on my way to the college to deliver a very important scroll when a group of bandits robbed me of all my possessions",
           responses: {
-            "Let me help you": () {
+            "Let me help you (New Quest)": () {
               player.beginQuest(Quest.Jenkins_Retrieve_Stolen_Scroll);
               player.interact(
                   message: "Would you really? Thank you so much! The bandits hideout is in the old forest directly south east of this village. Its dangerous so make sure you are properly equipped before you go there. If you manage to recover the scroll please bring it directly back to me",
