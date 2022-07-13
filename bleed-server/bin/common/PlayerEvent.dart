@@ -18,4 +18,6 @@ class PlayerEvent {
   static const Collect_Gold = 16;
   static const Hello_Male_01 = 17;
   static const Interaction_Finished = 17;
+  static const Quest_Started = 18;
+  static const Quest_Completed = 19;
 }

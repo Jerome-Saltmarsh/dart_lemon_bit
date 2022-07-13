@@ -72,6 +72,7 @@ class Player extends Character with ByteWriter {
     assert (!questsCompleted.contains(quest));
     questsInProgress.add(quest);
     writePlayerQuests();
+    writePlayerEvent(PlayerEvent.Quest_Started);
   }
 
   void completeQuest(Quest quest){
@@ -80,6 +81,7 @@ class Player extends Character with ByteWriter {
     questsInProgress.remove(quest);
     questsCompleted.add(quest);
     writePlayerQuests();
+    writePlayerEvent(PlayerEvent.Quest_Completed);
   }
 
   void endInteraction(){
@@ -790,7 +792,7 @@ extension PlayerProperties on Player {
     for (final quest in questsInProgress){
        writeByte(quest.index);
     }
-    writeByte(questsCompleted.length);
+    writeInt(questsCompleted.length);
     for (final quest in questsCompleted){
       writeByte(quest.index);
     }

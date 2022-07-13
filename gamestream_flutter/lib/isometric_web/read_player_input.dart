@@ -1,6 +1,5 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
 import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/message_box.dart';

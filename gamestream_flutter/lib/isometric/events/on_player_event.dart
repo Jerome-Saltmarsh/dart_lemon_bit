@@ -1,6 +1,8 @@
 import 'package:bleed_common/PlayerEvent.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
+import 'package:gamestream_flutter/isometric/events/on_player_event_quest_completed.dart';
+import 'package:gamestream_flutter/isometric/events/on_player_event_quest_started.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -8,6 +10,10 @@ import 'package:lemon_engine/engine.dart';
 
 void onPlayerEvent(int event) {
   switch (event) {
+    case PlayerEvent.Quest_Started:
+      return onPlayerEventQuestStarted();
+    case PlayerEvent.Quest_Completed:
+      return onPlayerEventQuestCompleted();
     case PlayerEvent.Interaction_Finished:
       player.npcTalk.value = null;
       player.npcTalkOptions.value = [];

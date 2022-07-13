@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_alive.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_designed.dart';
+import 'package:gamestream_flutter/isometric/events/on_quests_in_progress_changed.dart';
 import 'package:lemon_watch/watch.dart';
 import '../events/on_changed_npc_talk.dart';
 import '../events/on_changed_player_state.dart';
@@ -60,7 +61,7 @@ class Player extends Vector3 {
   final deckActiveCardIndex = Watch(-1);
   final deckActiveCardRange = Watch(0.0);
   final deckActiveCardRadius = Watch(0.0);
-  final questsInProgress = Watch<List<Quest>>([]);
+  final questsInProgress = Watch<List<Quest>>([], onChanged: onQuestsInProgressChanged);
   final questsCompleted = Watch<List<Quest>>([]);
 
   final canAffordUpgradePickaxe = Watch(false);
@@ -95,25 +96,6 @@ class Player extends Vector3 {
         return canAffordUpgradeBag;
     }
     throw Exception('getCanAffordWatch error, $type has no watch');
-  }
-
-  // Player() {
-  //   wood.onChanged(_onResourcesChanged);
-  //   gold.onChanged(_onResourcesChanged);
-  //   stone.onChanged(_onResourcesChanged);
-  // }
-
-  void _onResourcesChanged(int value){
-    _updateCanAffords();
-  }
-
-  void _updateCanAffords() {
-    canAffordUpgradePickaxe.value = canAfford(TechType.Pickaxe);
-    canAffordUpgradeSword.value = canAfford(TechType.Sword);
-    canAffordUpgradeBow.value = canAfford(TechType.Bow);
-    canAffordUpgradeAxe.value = canAfford(TechType.Axe);
-    canAffordUpgradeHammer.value = canAfford(TechType.Hammer);
-    canAffordUpgradeBag.value = canAfford(TechType.Bag);
   }
 
   bool canAfford(int type) {
