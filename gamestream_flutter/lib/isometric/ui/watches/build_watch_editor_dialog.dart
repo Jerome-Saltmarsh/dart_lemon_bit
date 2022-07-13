@@ -8,8 +8,8 @@ import 'package:gamestream_flutter/isometric/ui/dialogs/build_editor_dialog.dart
 import 'package:lemon_engine/screen.dart';
 
 Widget buildWatchEditorDialog(){
-  return watch(editorDialog, (EditorDialog? gameDialog){
-     if (gameDialog == null) return const SizedBox();
+  return watch(editorDialog, (EditorDialog? activeEditorDialog){
+     if (activeEditorDialog == null) return const SizedBox();
 
      return Container(
        width: screen.width,
@@ -29,7 +29,7 @@ Widget buildWatchEditorDialog(){
                  ],
                ),
                height8,
-               buildEditorDialog(gameDialog),
+               buildEditorDialog(activeEditorDialog),
              ],
            )),
      );

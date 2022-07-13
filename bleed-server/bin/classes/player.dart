@@ -786,7 +786,7 @@ extension PlayerProperties on Player {
 
   void writePlayerQuests(){
     writeByte(ServerResponse.Player_Quests);
-    writeByte(questsInProgress.length);
+    writeInt(questsInProgress.length);
     for (final quest in questsInProgress){
        writeByte(quest.index);
     }
