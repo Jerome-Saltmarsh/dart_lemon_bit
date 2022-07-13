@@ -8,6 +8,7 @@ import '../functions.dart';
 import '../functions/withinRadius.dart';
 import '../io/write_scene_to_file.dart';
 import '../maths.dart';
+import '../maths/get_distance_v3.dart';
 import '../physics.dart';
 import 'ai.dart';
 import 'enemy_spawn.dart';
@@ -344,6 +345,7 @@ extension GameFunctions on Game {
 
   Collider? getClosestCollider(double x, double y, Character character, {double? minDistance}) {
     Collider? closestCollider = null;
+    final z = character.z;
     var closestDistance = 99999.0;
     final closestZombie = getClosestEnemy(
         x: x,
@@ -354,7 +356,7 @@ extension GameFunctions on Game {
     if (closestZombie != null) {
       assert(closestZombie.alive);
       closestCollider = closestZombie;
-      closestDistance = distanceBetween(x, y, closestZombie.x, closestZombie.y);
+      closestDistance = getDistanceV3(x, y, z, closestZombie.x, closestZombie.y, closestZombie.z);
     }
     final closestPlayer = getClosestEnemy(
         x: x,
@@ -363,8 +365,8 @@ extension GameFunctions on Game {
         characters: players
     );
     if (closestPlayer != null){
-      assert(closestPlayer.alive);
-      final playerDistance = distanceBetween(x, y, closestPlayer.x, closestPlayer.y);
+      assert (closestPlayer.alive);
+      final playerDistance = getDistanceV3(x, y, z, closestPlayer.x, closestPlayer.y, closestPlayer.z);
       if (playerDistance < closestDistance) {
          closestCollider = closestPlayer;
          closestDistance = playerDistance;
@@ -372,7 +374,7 @@ extension GameFunctions on Game {
     }
     final closestNpc = getClosestNpc(x: x, y: y, character: character, characters: npcs);
     if (closestNpc != null){
-        final npcDistance = distanceBetween(x, y, closestNpc.x, closestNpc.y);
+        final npcDistance = getDistanceV3(x, y, z, closestNpc.x, closestNpc.y, closestNpc.z);
         if (npcDistance < closestDistance) {
            closestCollider = closestNpc;
            closestDistance = npcDistance;
