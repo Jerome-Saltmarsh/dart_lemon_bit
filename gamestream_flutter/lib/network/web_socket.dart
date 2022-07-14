@@ -1,5 +1,4 @@
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
-import 'package:gamestream_flutter/isometric/watches/server_error.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';

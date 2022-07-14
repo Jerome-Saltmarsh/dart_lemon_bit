@@ -19,6 +19,7 @@ final gridShadows = Watch(true, onChanged: (bool value){
 });
 
 final grid = <List<List<int>>>[];
+final gridVisible = <List<List<bool>>>[];
 final gridLightBake = <List<List<int>>>[];
 final gridLightDynamic = <List<List<int>>>[];
 var gridTotalZ = 0;

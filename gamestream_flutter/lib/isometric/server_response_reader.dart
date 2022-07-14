@@ -396,18 +396,22 @@ class ServerResponseReader with ByteReader {
     gridTotalZWatch.value = totalZ;
     final totalRows = readInt();
     final totalColumns = readInt();
-    grid.clear();
-    for (var z = 0; z < totalZ; z++) {
-       final plain = <List<int>>[];
-       grid.add(plain);
-       for (var rowIndex = 0; rowIndex < totalRows; rowIndex++) {
+
+    if (gridTotalZ != totalZ || gridTotalRows != totalRows || gridTotalColumns != totalColumns){
+      grid.clear();
+      for (var z = 0; z < totalZ; z++) {
+        final plain = <List<int>>[];
+        grid.add(plain);
+        for (var rowIndex = 0; rowIndex < totalRows; rowIndex++) {
           final row = <int>[];
           plain.add(row);
           for (var columnIndex = 0; columnIndex < totalColumns; columnIndex++) {
-              row.add(readByte());
+            row.add(readByte());
           }
-       }
+        }
+      }
     }
+
     onGridChanged();
     onChangedScene();
   }
