@@ -320,7 +320,7 @@ extension PlayerProperties on Player {
     writePlayers();
     writeAttackTarget();
     writeProjectiles();
-    writeNpcs(this);
+    writeNpcs();
     writePlayerTarget();
     writeGameTime(game);
     writeZombies();
@@ -420,6 +420,7 @@ extension PlayerProperties on Player {
       if (zombie.renderX < screenLeft) continue;
       if (zombie.renderX > screenRight) continue;
       if (zombie.renderY > screenBottom) break;
+      if ((z - zombie.z).abs() > tileSize) continue;
       writeCharacter(this, zombie);
     }
     writeByte(END);
@@ -567,7 +568,7 @@ extension PlayerProperties on Player {
     writeInt(player.score);
   }
 
-  void writeNpcs(Player player){
+  void writeNpcs(){
     writeByte(ServerResponse.Npcs);
     final npcs = game.npcs;
     for (final npc in npcs){
@@ -576,6 +577,7 @@ extension PlayerProperties on Player {
       if (npc.renderX < screenLeft) continue;
       if (npc.renderX > screenRight) continue;
       if (npc.renderY > screenBottom) break;
+      if ((npc.z - z).abs() > tileSize) continue;
       writeNpc(this, npc);
     }
     writeByte(END);

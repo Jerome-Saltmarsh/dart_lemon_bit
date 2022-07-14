@@ -2,13 +2,13 @@
 import '../../classes/player.dart';
 import '../../classes/weapon.dart';
 import '../../common/PlayerEvent.dart';
-import '../../common/quest.dart';
+import '../../common/flag.dart';
 import '../../common/weapon_type.dart';
 
 void onInteractWithGarry(Player player) {
   player.writePlayerEvent(PlayerEvent.Hello_Male_01);
 
-  if (player.questToDo(Quest.Garry_Acquire_Weapon)){
+  if (!player.flagged(Flag.Acquire_Weapon_From_Garry)){
     return player.interact(
         message: "Hello. It appears I acquired too much loot on my last quest. Would you mind holding onto one of these for me?",
         responses: {
@@ -16,22 +16,19 @@ void onInteractWithGarry(Player player) {
              player.setCharacterStateChanging();
              player.equippedWeapon = Weapon(type: WeaponType.Staff, damage: 1);
              player.endInteraction();
-             player.beginQuest(Quest.Garry_Acquire_Weapon);
-             player.completeQuest(Quest.Garry_Acquire_Weapon);
+             player.flags.add(Flag.Acquire_Weapon_From_Garry);
            },
            "Sword": () {
              player.setCharacterStateChanging();
              player.equippedWeapon = Weapon(type: WeaponType.Sword, damage: 1);
              player.endInteraction();
-             player.beginQuest(Quest.Garry_Acquire_Weapon);
-             player.completeQuest(Quest.Garry_Acquire_Weapon);
+             player.flags.add(Flag.Acquire_Weapon_From_Garry);
             },
           "Bow": () {
             player.setCharacterStateChanging();
             player.equippedWeapon = Weapon(type: WeaponType.Bow, damage: 1);
             player.endInteraction();
-            player.beginQuest(Quest.Garry_Acquire_Weapon);
-            player.completeQuest(Quest.Garry_Acquire_Weapon);
+            player.flags.add(Flag.Acquire_Weapon_From_Garry);
           }
         }
     );
