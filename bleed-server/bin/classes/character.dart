@@ -106,8 +106,11 @@ class Character extends Collider with Team, Health, Velocity, Material {
   }
 
   void updateCharacterState(Game game){
-    if (stateDurationRemaining > 0 && stateDurationRemaining-- == 0) {
-        setCharacterStateIdle();
+    if (stateDurationRemaining > 0) {
+        stateDurationRemaining--;
+        if (stateDurationRemaining == 0) {
+          return setCharacterStateIdle();
+        }
     }
     switch (state) {
       case CharacterAction.Idle:

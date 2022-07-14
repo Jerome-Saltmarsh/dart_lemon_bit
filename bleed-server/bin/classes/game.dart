@@ -866,8 +866,7 @@ extension GameFunctions on Game {
   void updateCharacterStatePerforming(Character character) {
     final ability = character.ability;
     if (ability == null) {
-      updateCharacterStateAttacking(character);
-      return;
+      return updateCharacterStateAttacking(character);
     }
     final stateDuration = character.stateDuration;
 
