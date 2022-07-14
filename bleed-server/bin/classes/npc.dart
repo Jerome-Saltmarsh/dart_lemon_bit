@@ -1,4 +1,3 @@
-import 'game.dart';
 import 'player.dart';
 import 'ai.dart';
 import 'weapon.dart';
@@ -28,9 +27,4 @@ class Npc extends AI {
             team: team,
             wanderRadius: wanderRadius,
   );
-
-  @override
-  void customUpdateAI(Game game) {
-    applyBehaviorWander();
-  }
 }

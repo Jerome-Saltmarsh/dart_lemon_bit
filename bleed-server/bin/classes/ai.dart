@@ -96,7 +96,7 @@ class AI extends Character with Material {
     }
     state = CharacterState.Idle;
 
-    applyBehaviorWander();
+    applyBehaviorWander(game);
 
     customUpdateAI(game);
   }
@@ -110,13 +110,17 @@ class AI extends Character with Material {
 
   }
 
-  void applyBehaviorWander(){
+  void applyBehaviorWander(Game game){
     if (wanderRadius <= 0) return;
     if (target != null) return;
     if (!characterStateIdle) return;
     if (stateDuration < wanderPause) return;
     destX = spawnX + giveOrTake(wanderRadius);
     destY = spawnY + giveOrTake(wanderRadius);
+    if (game.scene.getCollisionAt(destX, destY, z + tileHeightHalf)) {
+       clearDest();
+       return;
+    }
     wanderPause = randomInt(300, 500);
   }
 
