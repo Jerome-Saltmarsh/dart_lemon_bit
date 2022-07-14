@@ -8,6 +8,7 @@ import '../functions.dart';
 import '../functions/withinRadius.dart';
 import '../io/write_scene_to_file.dart';
 import '../maths.dart';
+import '../maths/get_distance_between_v3.dart';
 import '../maths/get_distance_v3.dart';
 import '../physics.dart';
 import 'ai.dart';
@@ -388,7 +389,7 @@ extension GameFunctions on Game {
   void updateInProgress() {
     frame++;
     if (frame % 15 == 0) {
-      // updateInteractableNpcTargets();
+      updateInteractableNpcTargets();
       updateZombieTargets();
       if (players.isEmpty) {
         disableCountDown++;
@@ -1162,12 +1163,12 @@ extension GameFunctions on Game {
       Character? closest;
       var closestDistance = 99999.0;
       for (final zombie in zombies) {
-        if (!zombie.alive) continue;
+        if (zombie.dead) continue;
         if (onSameTeam(npc, zombie)) continue;
-        var distance2 = distanceV2(zombie, npc);
-        if (distance2 > closestDistance) continue;
+        var distance = getDistanceBetweenV3(zombie, npc);
+        if (distance > closestDistance) continue;
         closest = zombie;
-        closestDistance = distance2;
+        closestDistance = distance;
       }
       if (closest == null || closestDistance > npc.equippedRange) {
         npc.target = null;

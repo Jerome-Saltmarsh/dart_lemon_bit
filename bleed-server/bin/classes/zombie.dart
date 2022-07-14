@@ -22,6 +22,6 @@ class Zombie extends AI {
 
   @override
   void customUpdateAI(Game game) {
-    // applyBehaviorWander();
+
   }
 }
