@@ -51,7 +51,7 @@ class Connection {
   }
 
   void error(GameError error, {String message = ""}) {
-    reply('${ServerResponse.Error} ${error.index} $message');
+    reply('Server Error ${error.name}: $message');
   }
 
   void onData(dynamic args) {
@@ -462,9 +462,7 @@ class Connection {
     player.screenRight = readNumberFromByteArray(args, index: 11).toDouble();
     player.screenBottom = readNumberFromByteArray(args, index: 13).toDouble();
 
-    if (player.deadOrBusy) {
-      return;
-    }
+    if (player.deadOrBusy) return;
 
     player.aimTarget = game.getClosestCollider(mouseX, mouseY, player, minDistance: 35);
     switch (args[1]) {

@@ -12,7 +12,6 @@ import '../events/on_changed_npc_talk.dart';
 import '../events/on_changed_player_state.dart';
 import '../events/on_changed_player_weapon.dart';
 import 'vector3.dart';
-import 'package:lemon_math/library.dart';
 
 class Player extends Vector3 {
   var gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);

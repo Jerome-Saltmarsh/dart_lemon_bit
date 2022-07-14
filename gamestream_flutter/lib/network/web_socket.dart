@@ -1,4 +1,6 @@
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
+import 'package:gamestream_flutter/isometric/watches/server_error.dart';
+import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -73,10 +75,10 @@ class _WebSocket {
        return serverResponseReader.readBytes(_response);
     }
     if (_response is String){
-      print(_response);
+      core.state.error.value = _response;
+      return;
     }
     throw Exception("cannot parse response: $_response");
-
   }
 
   void _onError(Object error, StackTrace stackTrace) {
