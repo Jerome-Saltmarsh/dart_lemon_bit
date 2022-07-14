@@ -38,7 +38,10 @@ void onInteractWithGarry(Player player) {
   }
 
   player.interact(
-      message: "Its so much fun going out into the wilderness and looking for treasure!",
-      responses: {"It is!": player.endInteraction}
+      message: "Its so much fun going out into the wilderness to kill monsters and find treasure!",
+      responses: {
+        "It really is!": player.endInteraction,
+        "I prefer board games": player.endInteraction,
+      }
   );
 }

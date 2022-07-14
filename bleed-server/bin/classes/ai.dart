@@ -114,9 +114,10 @@ class AI extends Character with Material {
     if (wanderRadius <= 0) return;
     if (target != null) return;
     if (!characterStateIdle) return;
-    if (stateDuration < 300) return;
+    if (stateDuration < wanderPause) return;
     destX = spawnX + giveOrTake(wanderRadius);
     destY = spawnY + giveOrTake(wanderRadius);
+    wanderPause = randomInt(300, 500);
   }
 
   void clearTargetIf(Character value){
