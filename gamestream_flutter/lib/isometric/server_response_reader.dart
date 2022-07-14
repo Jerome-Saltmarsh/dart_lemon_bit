@@ -3,6 +3,7 @@ import 'package:bleed_common/quest.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
+import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/collectables.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
@@ -278,7 +279,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readPlayerTarget() {
-    readPosition(player.abilityTarget);
+    readVector3(player.abilityTarget);
   }
 
   void readPlayerSpawned() {
@@ -348,8 +349,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readPlayerAttackTarget() {
-    player.attackTarget.x = readDouble();
-    player.attackTarget.y = readDouble();
+    readVector3(player.attackTarget);
     engine.cursorType.value = CursorType.Click;
   }
 
@@ -677,6 +677,12 @@ class ServerResponseReader with ByteReader {
   void readPosition(Position position){
     position.x = readDouble();
     position.y = readDouble();
+  }
+
+  void readVector3(Vector3 value){
+    value.x = readDouble();
+    value.y = readDouble();
+    value.z = readDouble();
   }
 
   void readVector2(Vector2 value){

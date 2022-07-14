@@ -361,7 +361,7 @@ extension PlayerProperties on Player {
       return;
     }
     writeByte(ServerResponse.Player_Attack_Target);
-    writePosition(mouseTarget);
+    writePosition3(mouseTarget);
 
     if (mouseTarget is Npc) {
       return writePlayerAttackTargetName(mouseTarget.name, mouseTarget.healthPercentage);
@@ -625,6 +625,12 @@ extension PlayerProperties on Player {
     writeInt(value.y);
   }
 
+  void writePosition3(Position3 value){
+    writeInt(value.x);
+    writeInt(value.y);
+    writeInt(value.z);
+  }
+
   void writeCardChoices() {
     writeByte(ServerResponse.Card_Choices);
     writeCardTypes(cardChoices);
@@ -759,6 +765,12 @@ extension PlayerProperties on Player {
     if (ability!.isModeArea) return;
     writeByte(ServerResponse.Player_Target);
     writePosition(target != null ? target! : mouse);
+
+    if (target != null){
+      writeInt(target!.z);
+    } else{
+      writeInt(z);
+    }
   }
 
   void writeAngle(double radians){

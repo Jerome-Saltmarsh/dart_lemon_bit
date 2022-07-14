@@ -7,18 +7,15 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/isometric/ai.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/npc_debug.dart';
-import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
-import 'package:gamestream_flutter/isometric/play_mode.dart';
-import 'package:gamestream_flutter/isometric/render/render_circle.dart';
-import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
-import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/collectables.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
+import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
+import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/render/render_wireframe.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse_raycast.dart';
-import 'package:gamestream_flutter/isometric/watches/editor_selected_object.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -49,34 +46,18 @@ class GameRender {
   void renderGame(Canvas canvas, Size size) {
     drawAbility();
     attackTargetCircle();
-    // drawPaths();
-    // renderCollectables();
-    // if (debug) {
-    //   renderTeamColours();
-    // }
-
     renderSprites();
 
     if (playModeEdit){
       renderEditWireFrames();
       renderMouseWireFrame();
-
-      final editorObject = editorSelectedObject.value;
-      if (editorObject != null){
-        renderCircle32(editorObject.renderX, editorObject.renderY);
-      }
     }
 
     final mouseTargetName = player.mouseTargetName.value;
 
     if (mouseTargetName != null && mouseTargetName != "Zombie"){
-       renderText(text: mouseTargetName, x: player.attackTarget.renderX, y: player.attackTarget.renderY - 80);
+       renderText(text: mouseTargetName, x: player.attackTarget.renderX, y: player.attackTarget.renderY - 55);
     }
-    
-    for (final windParticle in windParticles){
-      renderCircle(x: windParticle.renderX, y: windParticle.renderY, size: 32);
-    }
-
   }
 
   void renderMouseWireFrame(){
