@@ -392,19 +392,16 @@ class Scene {
        return;
     }
 
-    while (GridNodeType.isSolid(tileAtFeet)) {
+    if (GridNodeType.isSolid(tileAtFeet)) {
        character.z += 24 - (character.z % 24);
-       tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
        character.zVelocity = 0;
-    }
+    } else
     if (GridNodeType.isStairs(tileAtFeet)){
       character.z = getHeightAt(character.x, character.y, character.z);
       character.zVelocity = 0;
-    }
-
+    } else
     if (tileAtFeet == GridNodeType.Brick_Top){
       character.z += 24 - (character.z % 24);
-      tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
       character.zVelocity = 0;
     }
 
