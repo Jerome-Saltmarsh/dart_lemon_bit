@@ -5,6 +5,7 @@ import 'package:lemon_math/library.dart';
 import 'classes/character.dart';
 import 'classes/collider.dart';
 import 'classes/position3.dart';
+import 'maths/get_distance_between_v3.dart';
 import 'maths/get_distance_v3.dart';
 import 'typedefs.dart';
 
@@ -18,7 +19,8 @@ I? raycastHit<I extends Collider>({
   I? target;
   for (var collider in colliders) {
     if (!collider.collidable) continue;
-    final distance = character.getDistance(collider);
+    if (collider == character) continue;
+    final distance =  getDistanceBetweenV3(character, collider);
     if (distance > range) continue;
     final angle = character.getAngle(collider);
     final angleDiff = calculateAngleDifference(angle, character.angle);

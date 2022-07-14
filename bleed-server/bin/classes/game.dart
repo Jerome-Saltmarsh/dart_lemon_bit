@@ -1382,7 +1382,8 @@ extension GameFunctions on Game {
       final zombieHit = raycastHit(
           character: character,
           colliders: zombies,
-          range: character.equippedRange);
+          range: character.equippedRange
+      );
       if (zombieHit != null) {
         applyHit(
           src: character,
