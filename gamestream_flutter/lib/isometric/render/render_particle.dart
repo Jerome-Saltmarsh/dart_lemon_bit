@@ -21,22 +21,27 @@ void renderParticle(Particle value) {
       return render(
           dstX: value.renderX,
           dstY: value.renderY,
-          srcX: 89,
-          srcY: 25,
+          srcX: 184,
+          srcY: 0,
           srcWidth: 8,
           srcHeight: 8,
           color: value.renderColor
       );
     case ParticleType.Orb_Shard:
       return renderOrbShard(
-          x: value.renderX, y: value.renderY, scale: value.renderScale
+          x: value.renderX,
+          y: value.renderY,
+          scale: value.scale,
       );
     case ParticleType.Shrapnel:
       return renderShrapnel(
-          x: value.renderX, y: value.renderY, scale: value.renderScale);
+          x: value.renderX,
+          y: value.renderY,
+          scale: value.scale,
+      );
     case ParticleType.FireYellow:
       return renderFireYellow(
-          x: value.renderX, y: value.renderY, scale: value.renderScale);
+          x: value.renderX, y: value.renderY, scale: value.scale);
     case ParticleType.Flame:
       return renderFlame(value);
 
@@ -122,8 +127,8 @@ void renderOrbShard({
   render(
       dstX: x,
       dstY: y,
-      srcX: 345,
-      srcY: 67,
+      srcX: 616,
+      srcY: 0,
       srcWidth: 8,
       srcHeight: 8,
       scale: scale
