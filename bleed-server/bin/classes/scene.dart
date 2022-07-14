@@ -150,11 +150,11 @@ class Scene {
     if (x < 0) return GridNodeType.Boundary;
     if (y < 0) return GridNodeType.Boundary;
     final row = x ~/ tileSize;
-    if (row >= grid[0].length) return GridNodeType.Boundary;
+    if (row >= gridRows) return GridNodeType.Boundary;
     final column = y ~/ tileSize;
-    if (column >= grid[0][0].length) return GridNodeType.Boundary;
+    if (column >= gridColumns) return GridNodeType.Boundary;
     final height = z ~/ tileSizeHalf;
-    if (height >= grid.length) return GridNodeType.Empty;
+    if (height >= gridHeight) return GridNodeType.Empty;
     return grid[height][row][column].type;
   }
 
