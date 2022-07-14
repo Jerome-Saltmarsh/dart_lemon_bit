@@ -48,6 +48,7 @@ class Character extends Collider with Team, Health, Velocity, Material {
   double get equippedRange => WeaponType.getRange(equippedWeapon.type);
   int get equippedAttackDuration => 25;
   bool get equippedTypeIsBow => equippedWeapon.type == WeaponType.Bow;
+  bool get equippedTypeIsStaff => equippedWeapon.type == WeaponType.Staff;
   bool get unarmed => equippedWeapon.type == WeaponType.Unarmed;
   bool get equippedTypeIsShotgun => equippedWeapon.type == WeaponType.Shotgun;
   bool get equippedIsMelee => WeaponType.isMelee(equippedWeapon.type);

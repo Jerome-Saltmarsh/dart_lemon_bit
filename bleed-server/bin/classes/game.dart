@@ -1357,7 +1357,7 @@ extension GameFunctions on Game {
 
     if (stateDuration != framePerformStrike) return;
 
-    if (character.equippedWeapon == WeaponType.Staff) {
+    if (character.equippedTypeIsStaff){
       spawnProjectileOrb(character, damage: equippedDamage);
       character.target = null;
       return;

@@ -119,8 +119,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       audio.magicalSwoosh(x, y);
       break;
     case GameEventType.Blue_Orb_Fired:
-      audio.sciFiBlaster1(x, y);
-      break;
+      return audioSingleSciFiBlaster.playXYZ(x, y, z);
     case GameEventType.Arrow_Hit:
       audio.arrowImpact(x, y);
       break;

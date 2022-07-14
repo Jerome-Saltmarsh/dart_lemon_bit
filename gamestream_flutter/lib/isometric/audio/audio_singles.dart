@@ -10,6 +10,7 @@ final audioSingleNotificationSound10 = AudioSingle(name: 'notification-sound-10'
 final audioSingleNotificationSound12 = AudioSingle(name: 'notification-sound-12', volume: 0.5, maxDistance: 200);
 final audioSingleBowRelease = AudioSingle(name: 'bow-release', volume: 0.5, maxDistance: 250);
 final audioSingleBloodyPunches = AudioSingle(name: 'bloody-punches-1', volume: 0.5, maxDistance: 400);
+final audioSingleSciFiBlaster = AudioSingle(name: 'sci-fi-blaster-1', volume: 0.5, maxDistance: 400);
 final audioSingleShotgunShot = AudioSingle(name: 'shotgun-shot', volume: 0.5, maxDistance: 400);
 final audioSingleItemUnlock = AudioSingle(name: 'unlock', volume: 0.5, maxDistance: 400);
 final audioSingleZombieHurt = AudioSingle(name: 'zombie-hurt-1', volume: 0.5, maxDistance: 400);
