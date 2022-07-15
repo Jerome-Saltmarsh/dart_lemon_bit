@@ -7,6 +7,7 @@ import 'dark_age_area.dart';
 class GameDarkAgeFarm extends DarkAgeArea {
   GameDarkAgeFarm() : super(darkAgeScenes.farm, mapX: 1, mapY: 0) {
       addEnemySpawn(z: 1, row: 34, column: 30, health: 5, max: 5, wanderRadius: 300);
+      addEnemySpawn(z: 1, row: 12, column: 9, health: 5, max: 10, wanderRadius: 300);
   }
 
 

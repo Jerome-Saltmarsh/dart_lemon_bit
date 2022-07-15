@@ -1,3 +1,5 @@
+import 'package:lemon_math/library.dart';
+
 import '../common/tile_size.dart';
 import '../constants/frames_per_second.dart';
 import 'game.dart';
@@ -31,9 +33,10 @@ class EnemySpawn {
     if (framesUntilSpawn-- > 0) return;
     framesUntilSpawn = framesPerSpawn;
     count++;
+
     game.spawnZombie(
-      x: row * tileSize + tileSizeHalf,
-      y: column * tileSize + tileSizeHalf,
+      x: row * tileSize + tileSizeHalf + giveOrTake(wanderRadius),
+      y: column * tileSize + tileSizeHalf + giveOrTake(wanderRadius),
       z: z * tileHeight,
       team: 0,
       health: 10,
