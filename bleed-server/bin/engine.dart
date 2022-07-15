@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'classes/library.dart';
 import 'constants/frames_per_second.dart';
+import 'dark_age/areas/game_dark_age_farm.dart';
 import 'dark_age/areas/game_dark_age_forest.dart';
 import 'dark_age/areas/game_dark_age_village.dart';
 import 'dark_age/dark_age_scenes.dart';
@@ -94,5 +95,14 @@ class Engine {
       }
     }
     return GameDarkAgeForest();
+  }
+
+  GameDarkAgeFarm findGameFarm() {
+    for (final game in games) {
+      if (game is GameDarkAgeFarm) {
+        return game;
+      }
+    }
+    return GameDarkAgeFarm();
   }
 }

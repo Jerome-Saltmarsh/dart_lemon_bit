@@ -90,6 +90,11 @@ class GameDarkAgeVillage extends DarkAgeArea {
         player.indexRow = 1;
         continue;
       }
+      if (row == 0 && (column == 9 || column == 8)) {
+        player.changeGame(engine.findGameFarm());
+        player.indexRow = 49;
+        continue;
+      }
     }
   }
 

@@ -3,6 +3,7 @@
 import 'package:bleed_common/GameStatus.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
+import 'package:gamestream_flutter/isometric/events/on_connection_done.dart';
 import 'package:gamestream_flutter/isometric_web/register_isometric_web_controls.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/state.dart';
@@ -143,6 +144,7 @@ class CoreEvents {
         break;
 
       case Connection.Done:
+        onConnectionDone();
         engine.update = null;
         core.state.mode.value = Mode.Website;
         engine.fullScreenExit();
