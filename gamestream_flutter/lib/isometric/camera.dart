@@ -8,7 +8,7 @@ import 'player.dart';
 void updateCameraMode() {
   switch (cameraMode){
     case CameraMode.Chase:
-      engine.cameraFollow(player.renderX, player.renderY, 0.0005);
+      engine.cameraFollow(player.renderX, player.renderY, 0.00075);
       break;
     case CameraMode.Locked:
       engine.cameraFollow(player.renderX, player.renderY, 1.0);
@@ -19,9 +19,6 @@ void updateCameraMode() {
 }
 
 void cameraCenterOnPlayer(){
-  cameraSetPosition(player.renderX, player.renderY);
+  engine.cameraCenter(player.renderX, player.renderY);
 }
 
-void cameraSetPosition(double x, double y){
-  engine.cameraCenter(x, y);
-}
