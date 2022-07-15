@@ -1,8 +1,11 @@
 import 'package:bleed_common/grid_node_type.dart';
+import 'package:gamestream_flutter/isometric/editor/events/on_editor_column_changed.dart';
+import 'package:gamestream_flutter/isometric/editor/events/on_editor_z_changed.dart';
 import 'package:gamestream_flutter/isometric/queries/get_grid_type.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_watch/watch.dart';
 
+import 'editor/events/on_editor_row_changed.dart';
 import 'grid.dart';
 
 final edit = EditState();
@@ -12,17 +15,19 @@ class EditState {
     if (value < 0) return 0;
     if (value >= gridTotalRows) return gridTotalRows - 1;
     return value;
-  });
+  }, onChanged: onEditorRowChanged);
   var column = Watch(0, clamp: (int value){
     if (value < 0) return 0;
     if (value >= gridTotalColumns) return gridTotalColumns - 1;
     return value;
-  });
+  },
+  onChanged: onEditorColumnChanged
+  );
   var z = Watch(1, clamp: (int value){
     if (value < 0) return 0;
     if (value >= gridTotalZ) return gridTotalZ - 1;
     return value;
-  });
+  }, onChanged: onEditorZChanged);
   final type = Watch(GridNodeType.Bricks);
   final paintType = Watch(GridNodeType.Bricks);
   final controlsVisibleWeather = Watch(true);
@@ -37,7 +42,6 @@ class EditState {
     this.row.value = row;
     this.column.value = column;
     this.z.value = z;
-    refreshType();
   }
 
   void refreshType(){
