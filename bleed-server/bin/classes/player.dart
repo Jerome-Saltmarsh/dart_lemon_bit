@@ -15,6 +15,7 @@ import 'enemy_spawn.dart';
 import 'position3.dart';
 import 'library.dart';
 
+
 class Player extends Character with ByteWriter {
   CharacterSelection? selection;
   final mouse = Vector2(0, 0);
@@ -61,6 +62,7 @@ class Player extends Character with ByteWriter {
 
   var options = <String, Function> {};
   var interactingWithNpc = false;
+  var npcName = "";
 
   var mapX = 0;
   var mapY = 0;
@@ -86,6 +88,12 @@ class Player extends Character with ByteWriter {
     writePlayerEvent(PlayerEvent.Quest_Started);
   }
 
+  void setInteractingNpcName(String value){
+     this.npcName = value;
+     writeByte(ServerResponse.Interacting_Npc_Name);
+     writeString(value);
+  }
+
   void completeQuest(Quest quest){
     assert (questsInProgress.contains(quest));
     assert (!questsCompleted.contains(quest));
@@ -105,6 +113,7 @@ class Player extends Character with ByteWriter {
       options.clear();
     }
     interactingWithNpc = false;
+    npcName = "";
     writePlayerEvent(PlayerEvent.Interaction_Finished);
   }
 

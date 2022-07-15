@@ -195,10 +195,17 @@ class ServerResponseReader with ByteReader {
           player.mapX.value = readByte();
           player.mapY.value = readByte();
           break;
+        case ServerResponse.Interacting_Npc_Name:
+          readInteractingNpcName();
+          break;
         default:
           throw Exception("Cannot parse $response");
       }
     }
+  }
+
+  void readInteractingNpcName() {
+    player.interactingNpcName.value = readString();
   }
 
   void readPlayerQuests() {

@@ -472,4 +472,5 @@ const editorSelectableGridTypes = [
     GridNodeType.Grass_Slope_West,
     GridNodeType.Roof_Tile_North,
     GridNodeType.Roof_Tile_South,
+    GridNodeType.Soil,
 ];

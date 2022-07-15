@@ -740,8 +740,9 @@ extension GameFunctions on Game {
           if (onInteractedWith != null) {
             onInteractedWith(player);
             player.interactingWithNpc = true;
+            player.setInteractingNpcName(target.name);
+            onInteractedWith(player);
           }
-          target.onInteractedWith?.call(player);
           player.target = null;
           player.setCharacterStateIdle();
           return;

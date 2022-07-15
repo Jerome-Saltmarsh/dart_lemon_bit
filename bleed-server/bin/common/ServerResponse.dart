@@ -62,5 +62,6 @@ class ServerResponse {
   static const Npc_Talk = 83;
   static const Player_Quests = 84;
   static const Map_Coordinate = 85;
+  static const Interacting_Npc_Name = 86;
 }
 
