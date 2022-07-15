@@ -50,6 +50,7 @@ class GridNodeType {
         Stairs_East,
         Stairs_South,
         Stairs_West,
+        Brick_Top,
     ].contains(type);
   }
 

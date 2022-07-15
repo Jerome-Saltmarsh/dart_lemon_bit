@@ -1128,16 +1128,17 @@ extension GameFunctions on Game {
     for (final zombie in zombies) {
       if (zombie.dead) continue;
 
-      if (zombie.target == null) {
-        zombie.target = zombie.objective;
-      }
+      // if (zombie.target == null) {
+      //   zombie.target = zombie.objective;
+      // }
 
       final zombieAITarget = zombie.target;
       if (
           zombieAITarget != null &&
           !zombie.withinChaseRange(zombieAITarget)
       ) {
-        zombie.target = zombie.objective;
+        zombie.target = null;
+        zombie.clearDest();
       }
 
       var targetDistance = 9999999.0;
