@@ -1,6 +1,9 @@
 
+import 'package:lemon_math/library.dart';
+
 import '../../classes/library.dart';
 import '../../common/flag.dart';
+import '../../common/library.dart';
 import '../../common/quest.dart';
 import '../../engine.dart';
 import '../dark_age_scenes.dart';
@@ -16,6 +19,7 @@ class GameDarkAgeForest extends DarkAgeArea {
        row: 21,
        column: 38,
        z: 1,
+       wanderRadius: 2,
        onInteractedWith: (Player player){
            if (player.flag(Flag.Encountered_Roy)) {
                return player.interact(
@@ -33,6 +37,42 @@ class GameDarkAgeForest extends DarkAgeArea {
                );
            }
        }
+    );
+
+    addNpc(
+        name: "Bandit",
+        row: 20,
+        column: 35,
+        z: 1,
+        weaponType: WeaponType.Bow,
+        head: randomItem(HeadType.values),
+        armour: randomItem(ArmourType.values),
+        pants: randomItem(PantsType.values),
+        wanderRadius: 1,
+    );
+
+    addNpc(
+      name: "Bandit",
+      row: 20,
+      column: 43,
+      z: 1,
+      weaponType: WeaponType.Sword,
+      head: randomItem(HeadType.values),
+      armour: randomItem(ArmourType.values),
+      pants: randomItem(PantsType.values),
+      wanderRadius: 2,
+    );
+
+    addNpc(
+      name: "Bandit",
+      row: 23,
+      column: 36,
+      z: 1,
+      weaponType: WeaponType.Axe,
+      head: randomItem(HeadType.values),
+      armour: randomItem(ArmourType.values),
+      pants: randomItem(PantsType.values),
+      wanderRadius: 2,
     );
   }
 
