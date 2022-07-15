@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
@@ -6,7 +5,6 @@ import 'package:gamestream_flutter/isometric/actions/action_toggle_inventory.dar
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/editor/editor.dart';
-import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
@@ -47,8 +45,15 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     if (key == PhysicalKeyboardKey.keyY){
       editor.actions.elevate();
     }
+    if (key == PhysicalKeyboardKey.keyH){
+      editor.actions.lower();
+    }
+    if (key == PhysicalKeyboardKey.keyB){
+      editor.actions.clear();
+    }
+
     if (key == PhysicalKeyboardKey.arrowUp){
-      if (keyPressed(LogicalKeyboardKey.shiftLeft)){
+      if (shiftLeftDown){
         edit.z.value++;
       } else {
         edit.row.value--;
@@ -58,16 +63,16 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
       edit.column.value--;
     }
     if (key == PhysicalKeyboardKey.arrowDown){
-      if (keyPressed(LogicalKeyboardKey.shiftLeft)){
+      if (shiftLeftDown){
         edit.z.value--;
       } else {
-        edit.row.value = min(edit.row.value + 1, gridTotalRows - 1);
+        edit.row.value++;
       }
     }
     if (key == PhysicalKeyboardKey.arrowLeft){
       edit.column.value++;
     }
-    edit.type.value = grid[edit.z.value][edit.row.value][edit.column.value];
   }
 }
 
+bool get shiftLeftDown => keyPressed(LogicalKeyboardKey.shiftLeft);

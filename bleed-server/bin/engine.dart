@@ -7,7 +7,7 @@ import 'dark_age/areas/game_dark_age_village.dart';
 import 'dark_age/dark_age_scenes.dart';
 import 'dark_age/dark_age_universe.dart';
 import 'dark_age/game_dark_age.dart';
-import 'dark_age/areas/game_dark_age_castle.dart';
+import 'dark_age/areas/game_dark_age_college.dart';
 import 'dark_age/game_dark_age_editor.dart';
 import 'io/read_scene_from_file.dart';
 import 'language.dart';
@@ -69,13 +69,13 @@ class Engine {
     player.game.disableCountDown = 0;
   }
 
-  GameDarkAgeCastle findGameDarkAgeCastle() {
+  GameDarkAgeCollege findGameDarkAgeCastle() {
     for (final game in games) {
-      if (game is GameDarkAgeCastle) {
+      if (game is GameDarkAgeCollege) {
         return game;
       }
     }
-    return GameDarkAgeCastle();
+    return GameDarkAgeCollege();
   }
 
   GameDarkAge findGameDarkAgeVillage() {

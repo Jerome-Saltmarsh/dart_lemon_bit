@@ -82,7 +82,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
 
       if (row == 19 && column == 49) {
         player.changeGame(engine.findGameDarkAgeCastle());
-        player.indexColumn = 2;
+        player.indexColumn = 1;
         continue;
       }
       if (row == 49 && (column == 7 || column == 8)) {

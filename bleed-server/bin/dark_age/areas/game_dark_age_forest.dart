@@ -29,9 +29,11 @@ class GameDarkAgeForest extends DarkAgeArea {
                       if (player.questInProgress(Quest.Jenkins_Retrieve_Stolen_Scroll))
                         "I'm searching for the thieves that stole the old man's scroll": (){
                             player.completeQuest(Quest.Jenkins_Retrieve_Stolen_Scroll);
+                            player.beginQuest(Quest.Jenkins_Return_Stole_Scroll_To_Jenkins);
                             player.interact(
                                 message: "This worthless old piece of paper you mean? Its covered in all these old symbols but it doesn't make any sense to me. Here take it.",
                             );
+
                         },
                    }
                );

@@ -9,8 +9,14 @@ void onInteractWithJenkins(Player player) {
   if (player.questInProgress(Quest.Jenkins_Retrieve_Stolen_Scroll))
     return inProgressJenkinsRetrieveStolenScroll(player);
 
-  if (player.questToDo(Quest.Jenkins_Deliver_Stolen_Scroll))
-    return questToDoJenkinsDeliverScroll(player);
+  if (player.questInProgress(Quest.Jenkins_Return_Stole_Scroll_To_Jenkins)) {
+    player.completeQuest(Quest.Jenkins_Return_Stole_Scroll_To_Jenkins);
+    player.beginQuest(Quest.Jenkins_Deliver_Stolen_Scroll);
+    return player.interact(
+      message: "Fantastic you have recovered the scroll! I have another favour to ask of you. That scroll needs to be delivered to the College is Westhorn, considering you capabilities would you be so kind as to deliver it for me?",
+    );
+  }
+
 
   if (player.questInProgress(Quest.Jenkins_Deliver_Stolen_Scroll))
     return inProgressJenkinsDeliverScroll(player);
