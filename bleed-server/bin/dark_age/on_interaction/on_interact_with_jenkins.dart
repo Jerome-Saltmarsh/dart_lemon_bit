@@ -11,14 +11,14 @@ void onInteractWithJenkins(Player player) {
 
   if (player.questInProgress(Quest.Jenkins_Return_Stole_Scroll_To_Jenkins)) {
     player.completeQuest(Quest.Jenkins_Return_Stole_Scroll_To_Jenkins);
-    player.beginQuest(Quest.Jenkins_Deliver_Stolen_Scroll);
+    player.beginQuest(Quest.Jenkins_Deliver_Scroll_To_College);
     return player.interact(
       message: "Fantastic you have recovered the scroll! I have another favour to ask of you. That scroll needs to be delivered to the College is Westhorn, considering you capabilities would you be so kind as to deliver it for me?",
     );
   }
 
 
-  if (player.questInProgress(Quest.Jenkins_Deliver_Stolen_Scroll))
+  if (player.questInProgress(Quest.Jenkins_Deliver_Scroll_To_College))
     return inProgressJenkinsDeliverScroll(player);
 
   return interactionJenkinsAllQuestsCompleted(player);
@@ -32,7 +32,7 @@ void toDoJenkinsRetrieveStolenScroll(Player player) {
         player.interact(
           message: "I was on my way to the college to deliver a very important scroll when a group of bandits robbed me of all my possessions",
           responses: {
-            "Let me help you (New Quest)": () {
+            "Let me help you (QUEST)": () {
               player.beginQuest(Quest.Jenkins_Retrieve_Stolen_Scroll);
               player.interact(
                   message: "Would you really? Thank you so much! The bandits hideout is in the old forest directly south east of this village. Its dangerous so make sure you are properly equipped before you go there. If you manage to recover the scroll please bring it directly back to me",
@@ -86,7 +86,7 @@ void questToDoJenkinsDeliverScroll(Player player) =>
     );
 
 void beginQuestJenkinsDeliverScroll(Player player){
-  player.beginQuest(Quest.Jenkins_Deliver_Stolen_Scroll);
+  player.beginQuest(Quest.Jenkins_Deliver_Scroll_To_College);
   player.interact(
     message: "Thank you stranger for all of your kindness. The college is south west of here. Please deliver it as quickly as possible",
     responses: {

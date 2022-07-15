@@ -16,9 +16,9 @@ class GameDarkAgeCollege extends DarkAgeArea {
       onInteractedWith: (Player player){
 
         player.interact(message: "Salutations", responses: {
-           if (player.questInProgress(Quest.Jenkins_Deliver_Stolen_Scroll))
+           if (player.questInProgress(Quest.Jenkins_Deliver_Scroll_To_College))
              "I was asked to deliver this (QUEST)": (){
-                player.completeQuest(Quest.Jenkins_Deliver_Stolen_Scroll);
+                player.completeQuest(Quest.Jenkins_Deliver_Scroll_To_College);
                 player.interact(
                     message: "Whats this?! These symbols... could it be! How fascinating, who would have thought? I will need to do some tests, you there, I required 5 mushrooms for my very important research, bring them at once",
                 );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
@@ -7,6 +9,7 @@ import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_data_player_is_owner.dart';
+import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:lemon_engine/screen.dart';
 
@@ -28,6 +31,19 @@ Widget buildHud() {
       buildTopRightMenu(),
       buildWatchSceneMetaDataPlayerIsOwner(),
       buildWatchDebugVisible(),
+      visibleBuilder(
+          player.questAdded,
+          Container(
+            width: screen.width,
+            alignment: Alignment.topCenter,
+            child: container(
+                child: "QUEST UPDATED",
+                alignment: Alignment.center,
+                color: green,
+                width: 200,
+                margin: EdgeInsets.only(top: 16),
+                action: actionGameDialogShowQuests),
+          ))
     ],
   );
 }

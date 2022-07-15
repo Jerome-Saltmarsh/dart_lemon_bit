@@ -15,6 +15,7 @@ import '../events/on_changed_player_weapon.dart';
 import 'vector3.dart';
 
 class Player extends Vector3 {
+  final questAdded = Watch(false);
   var gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);
   var angle = 0.0;
   var mouseAngle = 0.0;
