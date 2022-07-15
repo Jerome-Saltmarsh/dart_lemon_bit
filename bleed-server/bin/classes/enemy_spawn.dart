@@ -11,6 +11,7 @@ class EnemySpawn {
   var framesUntilSpawn = 0;
   var max;
   var count = 0;
+  var wanderRadius = 300.0;
 
   double get x => row * tileSize;
   double get y => column * tileSize;
@@ -22,6 +23,7 @@ class EnemySpawn {
     required this.health,
     this.framesPerSpawn = framesPerSecond * 5,
     this.max = 5,
+    this.wanderRadius = 300,
   });
 
   void update(Game game){
@@ -36,6 +38,7 @@ class EnemySpawn {
       team: 0,
       health: 10,
       damage: 1,
+      wanderRadius: wanderRadius,
     ).enemySpawn = this;
   }
 }

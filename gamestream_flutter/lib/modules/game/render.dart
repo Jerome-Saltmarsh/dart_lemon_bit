@@ -40,7 +40,7 @@ class GameRender {
       engine.setPaintColorWhite();
       _renderPlayerNames();
       drawPlayerText();
-      renderFloatingTexts();
+      // renderFloatingTexts();
   }
 
   void renderGame(Canvas canvas, Size size) {

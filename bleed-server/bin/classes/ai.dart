@@ -64,6 +64,9 @@ class AI extends Character with Material {
     destY = y;
   }
 
+  bool getCollisionInDirection({required Game game, required double angle, required double distance}){
+    return game.scene.getCollisionAt(x + getAdjacent(angle, distance), y + getOpposite(angle, distance), z + tileSizeHalf);
+  }
 
   @override
   void customUpdateCharacter(Game game){
@@ -81,9 +84,25 @@ class AI extends Character with Material {
       }
     }
 
-    if (!arrivedAtDest){
-      faceDestination();
-      setCharacterStateRunning();
+    if (!arrivedAtDest) {
+      final destAngle = getDestinationAngle();
+      final r = radius + 2;
+
+      if (!getCollisionInDirection(game: game, angle: destAngle, distance: r)){
+        faceDestination();
+        setCharacterStateRunning();
+        return;
+      }
+      if (!getCollisionInDirection(game: game, angle: destAngle - piHalf, distance: r)){
+        angle = destAngle - piHalf;
+        setCharacterStateRunning();
+        return;
+      }
+      if (!getCollisionInDirection(game: game, angle: destAngle + piHalf, distance: r)){
+        angle = destAngle + piHalf;
+        setCharacterStateRunning();
+        return;
+      }
       return;
     }
 
@@ -105,6 +124,10 @@ class AI extends Character with Material {
   void faceDestination() {
     if (deadOrBusy) return;
     angle = getAngleBetween(x, y, destX, destY);
+  }
+
+  double getDestinationAngle(){
+    return getAngleBetween(x, y, destX, destY);
   }
 
   void customUpdateAI(Game game){

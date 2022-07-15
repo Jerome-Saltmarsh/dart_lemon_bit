@@ -3,9 +3,11 @@ import 'dart:math';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
 import 'package:gamestream_flutter/isometric/actions/action_toggle_inventory.dart';
+import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
 
 import '../isometric/actions/action_game_dialog_show_map.dart';
@@ -22,19 +24,25 @@ void onKeyboardEvent(RawKeyEvent event){
 void onRawKeyDownEvent(RawKeyDownEvent event){
   final key = event.physicalKey;
 
-  if (key == PhysicalKeyboardKey.keyI){
-    return actionToggleInventoryVisible();
-  }
-
-  if (key == PhysicalKeyboardKey.keyT){
-    return actionGameDialogShowQuests();
-  }
-
-  if (key == PhysicalKeyboardKey.keyM){
-    return actionGameDialogShowMap();
+  if (playModePlay) {
+    if (key == PhysicalKeyboardKey.keyG) {
+      sendClientRequestTeleport();
+    }
+    if (key == PhysicalKeyboardKey.keyI){
+      return actionToggleInventoryVisible();
+    }
+    if (key == PhysicalKeyboardKey.keyT){
+      return actionGameDialogShowQuests();
+    }
+    if (key == PhysicalKeyboardKey.keyM){
+      return actionGameDialogShowMap();
+    }
   }
 
   if (playModeEdit) {
+    if (key == PhysicalKeyboardKey.keyG){
+      cameraSetPositionGrid(edit.row.value, edit.column.value, edit.z.value);
+    }
     if (key == PhysicalKeyboardKey.arrowUp){
       if (keyPressed(LogicalKeyboardKey.shiftLeft)){
         edit.z.value++;

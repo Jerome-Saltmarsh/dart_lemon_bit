@@ -41,6 +41,9 @@ class Connection {
   }
 
   void reply(String response) {
+    if (response == "2"){
+      throw Exception();
+    }
     sink.add(response);
   }
 

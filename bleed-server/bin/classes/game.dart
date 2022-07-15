@@ -1243,29 +1243,6 @@ extension GameFunctions on Game {
     // scene.visitNodeFirst(scene.getNodeByPosition(ai));
   }
 
-  // void _updateSpawnPointCollisions() {
-  //   if (spawnPoints.isEmpty) return;
-  //   for (var i = 0; i < players.length; i++) {
-  //     final player = players[i];
-  //     for (final spawnPoint in spawnPoints) {
-  //       const collisionRadius = 20;
-  //       if (diffOver(player.x, spawnPoint.x, collisionRadius)) continue;
-  //       if (diffOver(player.y, spawnPoint.y, collisionRadius)) continue;
-  //       for (final point in spawnPoint.game.spawnPoints) {
-  //         if (point.game != this) continue;
-  //         changeGame(player, spawnPoint.game);
-  //         final xDiff = spawnPoint.x - player.x;
-  //         final yDiff = spawnPoint.y - player.y;
-  //         player.x = point.x + xDiff * 1.25;
-  //         player.y = point.y + yDiff * 1.25;
-  //         i--;
-  //         break;
-  //       }
-  //       break;
-  //     }
-  //   }
-  // }
-
   void _updateCharacterFrames() {
     const characterFramesChange = 6;
     if (engine.frame % characterFramesChange != 0) return;

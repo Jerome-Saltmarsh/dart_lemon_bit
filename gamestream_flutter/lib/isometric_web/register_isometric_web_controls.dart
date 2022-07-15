@@ -12,10 +12,6 @@ final keys = KeyMap();
 
 void isometricWebControlsRegister(){
   print("isometricWebControlsRegister()");
-  engine.keyPressedHandlers = {
-    // keys.speak: messageBoxToggle,
-    keys.teleport: sendClientRequestTeleport,
-  };
   onLeftClicked = onMouseLeftClicked;
   engine.callbacks.onMouseDragging = onMouseDrag;
   engine.callbacks.onRightClicked = onMouseRightClicked;

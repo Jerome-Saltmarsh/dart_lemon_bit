@@ -14,7 +14,6 @@ import 'language.dart';
 
 final engine = Engine();
 
-
 class Engine {
   final games = <Game>[];
   var frame = 0;
@@ -29,14 +28,16 @@ class Engine {
     officialUniverse.update();
     frame++;
 
-    if (frame % 30 == 0) {
-      for (final game in games) {
-        game.updateAIPath();
-      }
-    }
-
-    for (var i = 0; i < games.length; i++){
+    // updateAIPathfinding();
+    for (var i = 0; i < games.length; i++) {
       games[i].updateStatus();
+    }
+  }
+
+  void updateAIPathfinding() {
+    if (frame % 30 != 0) return;
+    for (final game in games) {
+      game.updateAIPath();
     }
   }
 
