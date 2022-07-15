@@ -185,6 +185,9 @@ class CoreActions {
     totalCollectables = 0;
     particleEmitters.clear();
     particles.clear();
+    player.gameDialog.value = null;
+    player.npcTalkOptions.value = [];
+    player.npcTalk.value = null;
 
     for (final bullet in serverResponseReader.bulletHoles) {
       bullet.x = 0;

@@ -1,7 +1,6 @@
 class ServerResponse {
   static const Player = 0;
   static const Players = 1;
-  static const Error = 2;
   static const Projectiles = 3;
   static const Zombies = 4;
   static const Game_Events = 6;

@@ -591,10 +591,6 @@ class Connection {
     onGameJoined();
   }
 
-  void errorInvalidArg(String message) {
-    reply('${ServerResponse.Error} ${GameError.InvalidArguments.index} $message');
-  }
-
   void errorInsufficientResources(){
     error(GameError.Insufficient_Resources);
   }
@@ -614,13 +610,13 @@ class Connection {
         'Invalid type at index $index, expected integer but got $got');
   }
 
+  void errorInvalidArg(String message) {
+    error(GameError.InvalidArguments, message: message);
+  }
+
   void errorPlayerNotFound() {
     error(GameError.PlayerNotFound);
   }
-
-  // void errorAccountNotFound() {
-  //   error(GameError.Account_Not_Found);
-  // }
 
   void errorAccountRequired() {
     error(GameError.Account_Required);
