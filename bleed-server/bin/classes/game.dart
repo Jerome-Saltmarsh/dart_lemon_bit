@@ -1422,7 +1422,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void addEnemySpawn({required int z, required int row, required int column, required int health}){
+  void addEnemySpawn({required int z, required int row, required int column, required int health, int max = 5}){
     scene.enemySpawns.add(
         EnemySpawn(
           z: z,
@@ -1430,6 +1430,7 @@ extension GameFunctions on Game {
           column: column,
           framesPerSpawn: 30,
           health: health,
+          max: max,
         )
     );
   }

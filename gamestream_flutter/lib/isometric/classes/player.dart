@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_game_dialog.dart';
+import 'package:gamestream_flutter/isometric/events/on_changed_map_x.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_alive.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_designed.dart';
 import 'package:gamestream_flutter/isometric/events/on_quests_in_progress_changed.dart';
@@ -24,6 +25,8 @@ class Player extends Vector3 {
   var maxHealth = 0.0;
   var tile = Tile.Grass;
   var attackRange = 0.0;
+  final mapX = Watch(0, onChanged: onChangedMapX);
+  final mapY = Watch(0, onChanged: onChangedMapY);
   var npcTalk = Watch<String?>(null, onChanged: onChangedNpcTalk);
   var npcTalkOptions = Watch<List<String>>([]);
   final selectCharacterRequired = Watch(false);

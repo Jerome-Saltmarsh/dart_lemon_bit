@@ -4,7 +4,7 @@ import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';
 
 class GameDarkAgeCastle extends DarkAgeArea {
-  GameDarkAgeCastle() : super(darkAgeScenes.castle);
+  GameDarkAgeCastle() : super(darkAgeScenes.castle, mapX: 0, mapY: 1);
 
   @override
   void updateInternal(){

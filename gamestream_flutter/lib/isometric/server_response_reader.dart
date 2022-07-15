@@ -191,6 +191,10 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Scene_Meta_Data:
           readSceneMetaData();
           break;
+        case ServerResponse.Map_Coordinate:
+          player.mapX.value = readByte();
+          player.mapY.value = readByte();
+          break;
         default:
           throw Exception("Cannot parse $response");
       }

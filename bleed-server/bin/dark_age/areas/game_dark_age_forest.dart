@@ -7,7 +7,7 @@ import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';
 
 class GameDarkAgeForest extends DarkAgeArea {
-  GameDarkAgeForest() : super(darkAgeScenes.forest){
+  GameDarkAgeForest() : super(darkAgeScenes.forest, mapX: 1, mapY: 0){
 
     addNpc(
        name: "Roy",
@@ -19,10 +19,13 @@ class GameDarkAgeForest extends DarkAgeArea {
                return player.interact(
                    message: "Aye who might you be? Don't you know its dangerous wandering about these woods? Could be thieves and who knows what else lurking about.",
                    responses: {
-                      "I'm lost": (){},
+                      "I'm lost": player.endInteraction,
                       if (player.questInProgress(Quest.Jenkins_Retrieve_Stolen_Scroll))
                         "I'm searching for the thieves that stole the old man's scroll": (){
-
+                            player.completeQuest(Quest.Jenkins_Retrieve_Stolen_Scroll);
+                            player.interact(
+                                message: "This worthless old piece of paper you mean? Its covered in all these old symbols but it doesn't make any sense to me. Here take it.",
+                            );
                         },
                    }
                );

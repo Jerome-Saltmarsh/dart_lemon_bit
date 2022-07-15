@@ -10,7 +10,7 @@ import '../on_interaction/on_interact_with_tutorial.dart';
 import 'dark_age_area.dart';
 
 class GameDarkAgeVillage extends DarkAgeArea {
-  GameDarkAgeVillage() : super(darkAgeScenes.village) {
+  GameDarkAgeVillage() : super(darkAgeScenes.village, mapX: 0, mapY: 0) {
     addNpc(
         name: "Bell",
         row: 17,
@@ -69,7 +69,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
     addNpcGuardBow(row: 20, column: 31);
     addNpcGuardBow(row: 30, column: 12);
 
-    addEnemySpawn(z: 1, row: 40, column: 5, health: 3);
+    addEnemySpawn(z: 1, row: 43, column: 8, health: 3, max: 2);
     addEnemySpawn(z: 1, row: 40, column: 35, health: 3);
   }
 

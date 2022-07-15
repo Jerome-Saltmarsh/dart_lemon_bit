@@ -7,6 +7,7 @@ import '../common/flag.dart';
 import '../common/library.dart';
 import '../common/quest.dart';
 import '../convert/convert_card_type_to_card.dart';
+import '../dark_age/areas/dark_age_area.dart';
 import '../dark_age/game_dark_age.dart';
 import '../engine.dart';
 import '../utilities.dart';
@@ -60,6 +61,9 @@ class Player extends Character with ByteWriter {
 
   var options = <String, Function> {};
   var interactingWithNpc = false;
+
+  var mapX = 0;
+  var mapY = 0;
 
   bool get ownsGame => game.owner == this;
 
@@ -339,6 +343,7 @@ extension PlayerProperties on Player {
     writeGameObjects();
     writeGameStatus();
     writeSceneMetaData();
+    writeMapCoordinate();
     sceneDownloaded = true;
   }
 
@@ -811,6 +816,14 @@ extension PlayerProperties on Player {
     for (final quest in questsCompleted){
       writeByte(quest.index);
     }
+  }
+
+  void writeMapCoordinate() {
+    if (game is DarkAgeArea == false) return;
+    final area = game as DarkAgeArea;
+    writeByte(ServerResponse.Map_Coordinate);
+    writeByte(area.mapX);
+    writeByte(area.mapY);
   }
 }
 
