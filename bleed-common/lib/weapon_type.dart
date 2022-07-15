@@ -51,7 +51,8 @@ class WeaponType {
            type == Staff ||
            type == Pickaxe ||
            type == Hammer ||
-           type == Axe ;
+           type == Axe ||
+           type == Unarmed ;
 
   }
   
