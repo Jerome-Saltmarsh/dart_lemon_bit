@@ -25,11 +25,11 @@ Widget buildWatchSceneMetaDataPlayerIsOwner() {
           bottom: 6,
           child: buildWatchEditorTab(),
         ),
-        Positioned(
-          right: 0,
-          top: 50,
-          child: buildControlEditZ(),
-        ),
+        // Positioned(
+        //   right: 0,
+        //   top: 50,
+        //   child: buildControlEditZ(),
+        // ),
         Positioned(
             bottom: 6,
             left: 0,

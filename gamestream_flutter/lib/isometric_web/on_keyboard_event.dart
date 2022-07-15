@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/isometric/queries/set_grid_type.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -42,6 +43,13 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
   if (playModeEdit) {
     if (key == PhysicalKeyboardKey.keyG){
       cameraSetPositionGrid(edit.row.value, edit.column.value, edit.z.value);
+    }
+    if (key == PhysicalKeyboardKey.keyY){
+      final r = edit.row.value;
+      final c = edit.column.value;
+      for (var z = gridTotalZ - 2; z >= 0; z--) {
+        setGridType(z + 1, r, c, grid[z][r][c]);
+      }
     }
     if (key == PhysicalKeyboardKey.arrowUp){
       if (keyPressed(LogicalKeyboardKey.shiftLeft)){
