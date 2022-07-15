@@ -31,9 +31,9 @@ final audioSingleZombieBits = [
   AudioSingle(name: 'zombie-bite-05', volume: 0.4, maxDistance: 250),
 ];
 final audioSingleZombieTalking = [
-  AudioSingle(name: 'zombie-talking-03', volume: 0.4, maxDistance: 250),
-  AudioSingle(name: 'zombie-talking-04', volume: 0.4, maxDistance: 250),
-  AudioSingle(name: 'zombie-talking-05', volume: 0.4, maxDistance: 250),
+  AudioSingle(name: 'zombie-talking-03', volume: 0.4, maxDistance: 350),
+  AudioSingle(name: 'zombie-talking-04', volume: 0.4, maxDistance: 350),
+  AudioSingle(name: 'zombie-talking-05', volume: 0.4, maxDistance: 350),
 ];
 
 

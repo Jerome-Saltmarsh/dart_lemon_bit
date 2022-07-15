@@ -3,13 +3,13 @@ import 'dart:math';
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
+import '../common/maths.dart';
 import '../engine.dart';
 import '../functions.dart';
 import '../functions/withinRadius.dart';
 import '../io/write_scene_to_file.dart';
 import '../maths.dart';
 import '../maths/get_distance_between_v3.dart';
-import '../maths/get_distance_v3.dart';
 import '../physics.dart';
 import 'ai.dart';
 import 'enemy_spawn.dart';

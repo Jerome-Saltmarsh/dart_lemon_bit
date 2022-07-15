@@ -72,6 +72,10 @@ class Vector3 with Position {
     return sqrt(_sq(this.x - x) + _sq(this.y - y) + _sq(this.z - z));
   }
 
+  double distanceFrom(Vector3 that){
+    return distance3(that.x, that.y, that.z);
+  }
+
   double _sq(double value){
     return value * value;
   }

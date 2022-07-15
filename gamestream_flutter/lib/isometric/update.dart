@@ -13,6 +13,7 @@ import 'particle_emitters.dart';
 import 'particles.dart';
 import 'players.dart';
 import 'projectiles.dart';
+import 'update/update_zombie_growls.dart';
 import 'weather/breeze.dart';
 
 void updateIsometric(){
@@ -24,6 +25,7 @@ void updateIsometric(){
   updateRandomAudio();
   gridWindResetToAmbient();
   applyObjectsToWind();
+  updateZombieGrowls();
   // updateGenerateLeaves();
 
 }
