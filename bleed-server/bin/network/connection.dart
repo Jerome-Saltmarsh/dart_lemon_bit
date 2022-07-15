@@ -554,6 +554,7 @@ class Connection {
     if (player == null) throw Exception("onGameJoinedException: player is null");
     player.sendBufferToClient = sendBufferToClient;
     player.dispatchError = error;
+    player.sceneDownloaded = false;
     final account = _account;
     final game = player.game;
     if (account != null) {
