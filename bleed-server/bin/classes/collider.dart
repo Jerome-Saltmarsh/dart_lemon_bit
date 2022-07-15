@@ -32,4 +32,8 @@ class Collider extends Position3 with Radius {
   double getOverlap(Collider collider){
     return (radius + collider.radius) - getDistance(collider);
   }
+
+  void onStruck(dynamic src){
+
+  }
 }

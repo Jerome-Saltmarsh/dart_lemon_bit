@@ -57,13 +57,13 @@ class EditState {
       return sendClientRequestSetBlock(row.value, column.value, z.value, value);
     }
 
-    for (var zIndex = 1; zIndex < z.value; zIndex++){
-      if (GridNodeType.isStairs(value)){
-        sendClientRequestSetBlock(row.value, column.value, zIndex, GridNodeType.Bricks);
-      } else {
-        sendClientRequestSetBlock(row.value, column.value, zIndex, value);
-      }
-    }
+    // for (var zIndex = 1; zIndex < z.value; zIndex++){
+    //   if (GridNodeType.isStairs(value)){
+    //     sendClientRequestSetBlock(row.value, column.value, zIndex, GridNodeType.Bricks);
+    //   } else {
+    //     sendClientRequestSetBlock(row.value, column.value, zIndex, value);
+    //   }
+    // }
   }
 }
 

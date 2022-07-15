@@ -859,6 +859,13 @@ extension GameFunctions on Game {
       if (src is Character && src is Zombie){
         dispatchV2(GameEventType.Zombie_Strike, src);
       }
+      target.onStruck(src);
+
+      if (target is AI) {
+         if (target.target == null) {
+            target.target = target;
+         }
+      }
 
       applyDamage(src: src, target: health, amount: damage);
     }
@@ -1128,14 +1135,10 @@ extension GameFunctions on Game {
     for (final zombie in zombies) {
       if (zombie.dead) continue;
 
-      // if (zombie.target == null) {
-      //   zombie.target = zombie.objective;
-      // }
-
-      final zombieAITarget = zombie.target;
+      var target = zombie.target;
       if (
-          zombieAITarget != null &&
-          !zombie.withinChaseRange(zombieAITarget)
+          target != null &&
+          !zombie.withinChaseRange(target)
       ) {
         zombie.target = null;
         zombie.clearDest();
@@ -1152,7 +1155,7 @@ extension GameFunctions on Game {
         setNpcTarget(zombie, player);
         targetDistance = npcDistance;
       }
-      final target = zombie.target;
+      target = zombie.target;
       if (target == null) continue;
       if (targetDistance < 100) continue;
       npcSetPathTo(zombie, target);

@@ -64,6 +64,7 @@ class AI extends Character with Material {
     destY = y;
   }
 
+
   @override
   void customUpdateCharacter(Game game){
     if (deadOrBusy) return;
