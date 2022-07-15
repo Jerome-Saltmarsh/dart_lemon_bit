@@ -7,10 +7,9 @@ import 'game.dart';
 import 'game_object.dart';
 import 'position3.dart';
 import 'tile_node.dart';
-import 'grid_node.dart';
 
 class Scene {
-  final List<List<List<GridNode>>> grid;
+  final List<List<List<int>>> grid;
   var gridHeight = 0;
   var gridRows = 0;
   var gridColumns = 0;
@@ -36,7 +35,7 @@ class Scene {
 
   int getGridType(int z, int row, int column){
      if (outOfBounds(z, row, column)) return GridNodeType.Boundary;
-     return grid[z][row][column].type;
+     return grid[z][row][column];
   }
 
   bool outOfBounds(int z, int row, int column){
@@ -65,8 +64,8 @@ class Scene {
         final rowValues = zValues[rowIndex];
         for (var columnIndex = 0; columnIndex < gridColumns; columnIndex++) {
           final t = rowValues[columnIndex];
-          if (!where(t.type)) continue;
-          apply(zIndex, rowIndex, columnIndex, t.type);
+          if (!where(t)) continue;
+          apply(zIndex, rowIndex, columnIndex, t);
         }
       }
     }
@@ -79,7 +78,7 @@ class Scene {
         for (var rowI = 0; rowI < gridRows; rowI++){
           final row = z[rowI];
            for (var columnI = 0; columnI < gridColumns; columnI++){
-              if (row[columnI].type != type) continue;
+              if (row[columnI] != type) continue;
               callback(zI, rowI, columnI);
               return true;
            }
@@ -155,7 +154,7 @@ class Scene {
     if (column >= gridColumns) return GridNodeType.Boundary;
     final height = z ~/ tileSizeHalf;
     if (height >= gridHeight) return GridNodeType.Empty;
-    return grid[height][row][column].type;
+    return grid[height][row][column];
   }
 
   bool visitDirection(int direction, Node from) {
@@ -463,7 +462,7 @@ void repairScene(Scene scene){
       where: ((type) => type == GridNodeType.Tree_Bottom),
       apply: (int z, int row, int column, int type){
           if (z + 1 < tileHeight){
-            scene.grid[z + 1][row][column].type = GridNodeType.Tree_Top;
+            scene.grid[z + 1][row][column] = GridNodeType.Tree_Top;
           }
       }
   );

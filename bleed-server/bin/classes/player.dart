@@ -281,7 +281,7 @@ class Player extends Character with ByteWriter {
 
     if (previousType == type) return;
     scene.dirty = true;
-    scene.grid[z][row][column].type = type;
+    scene.grid[z][row][column] = type;
     game.players.forEach((player) {
       player.writeByte(ServerResponse.Block_Set);
       player.writeInt(z);
@@ -671,9 +671,11 @@ extension PlayerProperties on Player {
     writeInt(totalRows);
     writeInt(totalColumns);
     for (var z = 0; z < totalZ; z++){
+      final plain = grid[z];
       for (var row = 0; row < totalRows; row++){
+        final r = plain[row];
         for (var column = 0; column < totalColumns; column++){
-           writeByte(grid[z][row][column].type);
+           writeByte(r[column]);
         }
       }
     }

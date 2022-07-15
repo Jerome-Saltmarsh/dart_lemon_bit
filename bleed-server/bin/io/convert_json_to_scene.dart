@@ -2,7 +2,6 @@
 import 'package:typedef/json.dart';
 
 import '../classes/enemy_spawn.dart';
-import '../classes/grid_node.dart';
 import '../classes/library.dart';
 import 'convert_json_to_enemy_spawn.dart';
 
@@ -27,17 +26,17 @@ Scene convertJsonToScene(Json json, String name) {
 }
 
 
-List<List<List<GridNode>>> convertFlatGridToGrid(List<dynamic> flatGrid, int height, int rows, int columns){
-  final List<List<List<GridNode>>> grid = [];
+List<List<List<int>>> convertFlatGridToGrid(List<dynamic> flatGrid, int height, int rows, int columns){
+  final List<List<List<int>>> grid = [];
   var index = 0;
   for (var zIndex = 0; zIndex < height; zIndex++){
-    final plain = <List<GridNode>>[];
+    final plain = <List<int>>[];
     grid.add(plain);
     for (var rowIndex = 0; rowIndex < rows; rowIndex++){
-      final row = <GridNode>[];
+      final row = <int>[];
       plain.add(row);
       for (var columnIndex = 0; columnIndex < columns; columnIndex++){
-        row.add(GridNode(flatGrid[index]));
+        row.add(flatGrid[index]);
         index++;
       }
     }

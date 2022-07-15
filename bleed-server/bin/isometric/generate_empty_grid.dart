@@ -1,21 +1,20 @@
 
-import '../classes/grid_node.dart';
 import '../common/grid_node_type.dart';
 
-List<List<List<GridNode>>> generateEmptyGrid({
+List<List<List<int>>> generateEmptyGrid({
   required int zHeight,
   required int rows,
   required int columns,
 }){
-  final grid = <List<List<GridNode>>>[];
+  final grid = <List<List<int>>>[];
   for (var z = 0; z < zHeight; z++) {
-     final plain = <List<GridNode>>[];
+     final plain = <List<int>>[];
      grid.add(plain);
      for (var row = 0; row < rows; row++){
-         final r = <GridNode>[];
+         final r = <int>[];
          plain.add(r);
          for (var column = 0; column < columns; column++){
-            r.add(GridNode(z == 0 ? GridNodeType.Grass : GridNodeType.Empty));
+            r.add(z == 0 ? GridNodeType.Grass : GridNodeType.Empty);
          }
      }
   }
