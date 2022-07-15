@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_que
 import 'package:gamestream_flutter/isometric/actions/action_toggle_inventory.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/editor/editor.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/queries/set_grid_type.dart';
@@ -45,46 +46,27 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
       cameraSetPositionGrid(edit.row.value, edit.column.value, edit.z.value);
     }
     if (key == PhysicalKeyboardKey.keyY){
-      final r = edit.row.value;
-      final c = edit.column.value;
-      for (var z = gridTotalZ - 2; z >= 0; z--) {
-        setGridType(z + 1, r, c, grid[z][r][c]);
-      }
+      editor.actions.elevate();
     }
     if (key == PhysicalKeyboardKey.arrowUp){
       if (keyPressed(LogicalKeyboardKey.shiftLeft)){
         edit.z.value++;
-        if (edit.z.value >= gridTotalZ) {
-          edit.z.value = gridTotalZ - 1;
-        }
       } else {
         edit.row.value--;
-        if (edit.row.value < 0){
-          edit.row.value = 0;
-        }
       }
     }
     if (key == PhysicalKeyboardKey.arrowRight){
       edit.column.value--;
-      if (edit.column.value < 0){
-        edit.column.value = 0;
-      }
     }
     if (key == PhysicalKeyboardKey.arrowDown){
       if (keyPressed(LogicalKeyboardKey.shiftLeft)){
         edit.z.value--;
-        if (edit.z.value < 0){
-          edit.z.value = 0;
-        }
       } else {
         edit.row.value = min(edit.row.value + 1, gridTotalRows - 1);
       }
     }
     if (key == PhysicalKeyboardKey.arrowLeft){
       edit.column.value++;
-      if (edit.column.value >= gridTotalColumns){
-        edit.column.value = gridTotalColumns - 1;
-      }
     }
     edit.type.value = grid[edit.z.value][edit.row.value][edit.column.value];
   }

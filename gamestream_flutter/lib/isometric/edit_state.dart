@@ -8,9 +8,21 @@ import 'grid.dart';
 final edit = EditState();
 
 class EditState {
-  var row = Watch(0);
-  var column = Watch(0);
-  var z = Watch(1);
+  var row = Watch(0, clamp: (int value){
+    if (value < 0) return 0;
+    if (value >= gridTotalRows) return gridTotalRows - 1;
+    return value;
+  });
+  var column = Watch(0, clamp: (int value){
+    if (value < 0) return 0;
+    if (value >= gridTotalColumns) return gridTotalColumns - 1;
+    return value;
+  });
+  var z = Watch(1, clamp: (int value){
+    if (value < 0) return 0;
+    if (value >= gridTotalZ) return gridTotalZ - 1;
+    return value;
+  });
   final type = Watch(GridNodeType.Bricks);
   final paintType = Watch(GridNodeType.Bricks);
   final controlsVisibleWeather = Watch(true);
