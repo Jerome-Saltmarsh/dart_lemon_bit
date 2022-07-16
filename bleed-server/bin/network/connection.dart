@@ -41,9 +41,6 @@ class Connection {
   }
 
   void reply(String response) {
-    if (response == "2"){
-      throw Exception();
-    }
     sink.add(response);
   }
 
@@ -488,7 +485,7 @@ class Connection {
             aimTarget.onInteractedWith?.call(player);
             break;
           }
-          player.runToMouse();
+          return player.runToMouse();
         }
 
         if (player.interactingWithNpc){
