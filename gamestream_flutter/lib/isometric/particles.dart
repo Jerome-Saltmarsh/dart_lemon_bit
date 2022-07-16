@@ -82,6 +82,11 @@ void _updateParticle(Particle particle){
       tile == GridNodeType.Rain_Falling ||
       tile == GridNodeType.Fireplace    ;
 
+  if (!airBorn) {
+    particle.deactivate();
+    return;
+  }
+
   final bounce = particle.zv < 0 && !airBorn;
   particle.updateMotion();
 
