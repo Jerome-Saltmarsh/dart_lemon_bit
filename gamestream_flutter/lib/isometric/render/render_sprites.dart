@@ -355,7 +355,7 @@ class RenderOrderGrid extends RenderOrder {
     assert(gridColumn >= 0);
     assert(gridRow < gridTotalColumns);
     assert(gridColumn < gridTotalColumns);
-    recalculateMaxRow();
+    // recalculateMaxRow();
     refreshDynamicLightGrid();
 
     super.reset();
@@ -383,17 +383,9 @@ class RenderOrderGrid extends RenderOrder {
     }
   }
 
-  void recalculateMaxRow() {
-
-    maxRow = (screenRight + (gridRow + gridColumn) * tileSizeHalf) ~/ tileSize;
-
-    if (maxRow > gridTotalRows) {
-      maxRow = gridTotalRows;
-    }
-  }
-
   void onZChanged(){
     minColumn = convertWorldToColumnSafe(screenRight, screenTop, gridZ * tileSize);
+    maxRow = convertWorldToRowSafe(screenRight, screenBottom, gridZ * tileSize);
   }
 
   void nextGridNode(){
@@ -404,7 +396,7 @@ class RenderOrderGrid extends RenderOrder {
 
       while (true) {
         shiftIndexDown();
-        recalculateMaxRow();
+        // recalculateMaxRow();
         final worldY = getTileWorldY(gridRow, gridColumn);
         var screenLeftColumn = convertWorldToColumn(screenLeft, worldY, 0);
         if (screenLeftColumn > 0 && screenLeftColumn < gridColumn) {
