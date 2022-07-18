@@ -217,6 +217,7 @@ class RenderOrderGrid extends RenderOrder {
   var maxColumnRow = 0;
   var minColumnRow = 0;
   var screenTopLeftRow = 0;
+  var screenBottomRightRow = 0;
   var gridTotalColumnsMinusOne = 0;
   var maxRow = 0;
   var gridZHalf = 0;
@@ -322,9 +323,11 @@ class RenderOrderGrid extends RenderOrder {
     final screenBottomLeftRow = convertWorldToRow(screenLeft, screenBottom, 0);
     final screenBottomLeftTotal = screenBottomLeftRow + screenBottomLeftColumn;
     var screenTopLeftColumn = convertWorldToColumn(screenLeft, screenTop, 0);
+    screenBottomRightRow = clamp(convertWorldToRow(screenRight, screenBottom, 0), 0, gridTotalRows - 1);
     screenTopLeftRow = convertWorldToRow(screenLeft, screenTop, 0);
     minColumnRow = max(screenTopLeftRow + screenTopLeftColumn, 0);
     maxColumnRow = min(gridTotalRows + gridTotalColumns, screenBottomLeftTotal);
+
 
     if (screenTopLeftRow < 0){
       screenTopLeftColumn += screenTopLeftRow;
@@ -346,23 +349,6 @@ class RenderOrderGrid extends RenderOrder {
     gridRow = screenTopLeftRow;
     gridColumn = screenTopLeftColumn;
 
-    // if (gridRow < 0) {
-    //   gridColumn += gridRow;
-    //   gridRow = 0;
-    // }
-    // if (gridColumn < 0){
-    //   gridRow += gridColumn;
-    //   gridColumn = 0;
-    // }
-    // if (gridColumn >= gridTotalColumns) {
-    //   gridRow = gridColumn - gridTotalColumnsMinusOne;
-    //   gridColumn = gridTotalColumnsMinusOne;
-    // }
-    // if (gridRow < 0 || gridColumn < 0){
-    //   gridRow = 0;
-    //   gridColumn = 0;
-    // }
-
     assert(gridRow >= 0);
     assert(gridColumn >= 0);
     assert(gridRow < gridTotalColumns);
@@ -377,7 +363,7 @@ class RenderOrderGrid extends RenderOrder {
     for (var z = 0; z < gridTotalZ; z++) {
       final dynamicPlain = gridLightDynamic[z];
       final bakePlain = gridLightBake[z];
-      for (var rowIndex = screenTopLeftRow; rowIndex < gridTotalRows; rowIndex++) {
+      for (var rowIndex = screenTopLeftRow; rowIndex < screenBottomRightRow; rowIndex++) {
         final dynamicRow = dynamicPlain[rowIndex];
         final bakeRow = bakePlain[rowIndex];
         for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
