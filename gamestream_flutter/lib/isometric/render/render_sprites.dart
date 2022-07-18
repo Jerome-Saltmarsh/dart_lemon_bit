@@ -216,6 +216,7 @@ class RenderOrderGrid extends RenderOrder {
   var gridType = 0;
   var maxColumnRow = 0;
   var minColumnRow = 0;
+  var screenTopLeftRow = 0;
   var gridTotalColumnsMinusOne = 0;
   var maxRow = 0;
   var gridZHalf = 0;
@@ -320,30 +321,47 @@ class RenderOrderGrid extends RenderOrder {
     final screenBottomLeftColumn = convertWorldToColumn(screenLeft, screenBottom, 0);
     final screenBottomLeftRow = convertWorldToRow(screenLeft, screenBottom, 0);
     final screenBottomLeftTotal = screenBottomLeftRow + screenBottomLeftColumn;
-    final screenTopLeftColumn = convertWorldToColumn(screenLeft, screenTop, 0);
-    final screenTopLeftRow = convertWorldToRow(screenLeft, screenTop, 0);
+    var screenTopLeftColumn = convertWorldToColumn(screenLeft, screenTop, 0);
+    screenTopLeftRow = convertWorldToRow(screenLeft, screenTop, 0);
     minColumnRow = max(screenTopLeftRow + screenTopLeftColumn, 0);
     maxColumnRow = min(gridTotalRows + gridTotalColumns, screenBottomLeftTotal);
+
+    if (screenTopLeftRow < 0){
+      screenTopLeftColumn += screenTopLeftRow;
+      screenTopLeftRow = 0;
+    }
+    if (screenTopLeftColumn < 0){
+      screenTopLeftRow += screenTopLeftColumn;
+      screenTopLeftColumn = 0;
+    }
+    if (screenTopLeftColumn >= gridTotalColumns){
+      screenTopLeftRow = screenTopLeftColumn - gridTotalColumnsMinusOne;
+      screenTopLeftColumn = gridTotalColumnsMinusOne;
+    }
+    if (screenTopLeftRow < 0 || screenTopLeftColumn < 0){
+      screenTopLeftRow = 0;
+      screenTopLeftColumn = 0;
+    }
 
     gridRow = screenTopLeftRow;
     gridColumn = screenTopLeftColumn;
 
-    if (gridRow < 0) {
-      gridColumn += gridRow;
-      gridRow = 0;
-    }
-    if (gridColumn < 0){
-      gridRow += gridColumn;
-      gridColumn = 0;
-    }
-    if (gridColumn >= gridTotalColumns) {
-      gridRow = gridColumn - gridTotalColumnsMinusOne;
-      gridColumn = gridTotalColumnsMinusOne;
-    }
-    if (gridRow < 0 || gridColumn < 0){
-      gridRow = 0;
-      gridColumn = 0;
-    }
+    // if (gridRow < 0) {
+    //   gridColumn += gridRow;
+    //   gridRow = 0;
+    // }
+    // if (gridColumn < 0){
+    //   gridRow += gridColumn;
+    //   gridColumn = 0;
+    // }
+    // if (gridColumn >= gridTotalColumns) {
+    //   gridRow = gridColumn - gridTotalColumnsMinusOne;
+    //   gridColumn = gridTotalColumnsMinusOne;
+    // }
+    // if (gridRow < 0 || gridColumn < 0){
+    //   gridRow = 0;
+    //   gridColumn = 0;
+    // }
 
     assert(gridRow >= 0);
     assert(gridColumn >= 0);
@@ -359,10 +377,11 @@ class RenderOrderGrid extends RenderOrder {
     for (var z = 0; z < gridTotalZ; z++) {
       final dynamicPlain = gridLightDynamic[z];
       final bakePlain = gridLightBake[z];
-      for (var rowIndex = 0; rowIndex < gridTotalRows; rowIndex++) {
+      for (var rowIndex = screenTopLeftRow; rowIndex < gridTotalRows; rowIndex++) {
         final dynamicRow = dynamicPlain[rowIndex];
         final bakeRow = bakePlain[rowIndex];
         for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
+          if (columnIndex + rowIndex > maxColumnRow) break;
           dynamicRow[columnIndex] = bakeRow[columnIndex];
         }
       }
