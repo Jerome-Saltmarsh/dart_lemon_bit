@@ -219,7 +219,6 @@ class RenderOrderGrid extends RenderOrder {
   var screenTopLeftRow = 0;
   var screenBottomRightRow = 0;
   var gridTotalColumnsMinusOne = 0;
-  var maxRow = 0;
   var gridZHalf = 0;
   late List<List<int>> plain;
   late List<List<int>> shadePlain;
@@ -238,6 +237,7 @@ class RenderOrderGrid extends RenderOrder {
   var screenTop = engine.screen.top - tileSize;
   var screenBottom = engine.screen.bottom + tileSize;
 
+  var maxRow = 0;
   var minColumn = 0;
   var dstY = 0.0;
 
@@ -386,6 +386,8 @@ class RenderOrderGrid extends RenderOrder {
   void onZChanged(){
     minColumn = convertWorldToColumnSafe(screenRight, screenTop, gridZ * tileSize);
     maxRow = convertWorldToRowSafe(screenRight, screenBottom, gridZ * tileSize);
+    plain = grid[gridZ];
+    shadePlain = gridLightDynamic[gridZ];
   }
 
   void nextGridNode(){
@@ -396,7 +398,6 @@ class RenderOrderGrid extends RenderOrder {
 
       while (true) {
         shiftIndexDown();
-        // recalculateMaxRow();
         final worldY = getTileWorldY(gridRow, gridColumn);
         var screenLeftColumn = convertWorldToColumn(screenLeft, worldY, 0);
         if (screenLeftColumn > 0 && screenLeftColumn < gridColumn) {
@@ -405,20 +406,18 @@ class RenderOrderGrid extends RenderOrder {
           gridColumn -= amount;
         }
         if (
-        gridColumn >= maxColumnRow - gridRow ||
+            gridColumn >= maxColumnRow - gridRow ||
             gridColumn >= gridTotalColumns ||
-            gridRow >= gridTotalRows
+            gridRow >= maxRow
         ) {
           gridZ++;
+          if (gridZ >= gridTotalZ) return end();
           onZChanged();
           orderZ = gridZ;
-          if (gridZ >= gridTotalZ) return end();
           gridZHalf =  gridZ ~/ 2;
           gridZGreaterThanPlayerZ = gridZ > playerZ;
           gridRow = 0;
           gridColumn = 0;
-          plain = grid[gridZ];
-          shadePlain = gridLightDynamic[gridZ];
         }
 
         dstY = ((gridRow + gridColumn) * tileSizeHalf) - (gridZ * tileHeight);
