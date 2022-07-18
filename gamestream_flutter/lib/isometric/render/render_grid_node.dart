@@ -156,7 +156,7 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
         dstY: dstY,
         srcX: 1699,
         srcY: 74.0 * shade,
-        srcWidth: 74.0,
+        srcWidth: 62.0,
         srcHeight: 74.0,
         anchorY: 0.45,
       );
