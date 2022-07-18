@@ -1353,6 +1353,15 @@ extension GameFunctions on Game {
       return;
     }
     if (character.equippedIsMelee) {
+      spawnProjectile(
+          src: character,
+          speed: 2,
+          range: character.equippedRange,
+          projectileType: ProjectileType.Wave,
+          damage: 1,
+          angle: character.angle,
+      );
+
       final attackTarget = character.target;
       if (attackTarget != null) {
         if (attackTarget is Collider && attackTarget.collidable) {
@@ -1375,18 +1384,18 @@ extension GameFunctions on Game {
         );
         return;
       }
-      final dynamicObjectHit = raycastHit(
-          character: character,
-          colliders: gameObjects,
-          range: character.equippedRange
-      );
-      if (dynamicObjectHit != null) {
-        applyHit(
-          src: character,
-          target: dynamicObjectHit,
-          damage: equippedDamage,
-        );
-      }
+      // final dynamicObjectHit = raycastHit(
+      //     character: character,
+      //     colliders: gameObjects,
+      //     range: character.equippedRange
+      // );
+      // if (dynamicObjectHit != null) {
+      //   applyHit(
+      //     src: character,
+      //     target: dynamicObjectHit,
+      //     damage: equippedDamage,
+      //   );
+      // }
       return;
     }
   }
