@@ -41,6 +41,7 @@ final renderOrder = <RenderOrder> [
 // renderOrderLength gets called a lot during rendering so use a const and update it manually if need be
 const renderOrderLength = 6;
 var renderOrderFirst = renderOrder.first;
+var totalRemaining = 0;
 var anyRemaining = false;
 var totalIndex = 0;
 
@@ -50,14 +51,31 @@ final maxZRender = Watch<int>(gridTotalZ, clamp: (int value){
 
 
 void renderSprites() {
+  var remaining = false;
+  totalRemaining = 0;
   for (final order in renderOrder){
       order.reset();
+      if (order.remaining){
+        totalRemaining++;
+      }
   }
-  updateAnyRemaining();
-  // totalIndex = 0;
-  while (anyRemaining) {
-    getNextRenderOrder().render();
-    // totalIndex++;
+  remaining = totalRemaining > 0;
+
+  while (remaining) {
+    final next = getNextRenderOrder();
+
+    if (!next.remaining) return;
+
+    if (totalRemaining == 1){
+      while (next.remaining){
+        next.render();
+      }
+      return;
+    }
+
+    if (next.render()) continue;
+    totalRemaining--;
+    remaining = totalRemaining > 0;
   }
 }
 
@@ -424,7 +442,8 @@ abstract class RenderOrder {
 
   void reset(){
     total = getTotal();
-    index = 0;
+    _index = 0;
+    remaining = total > 0;
     if (remaining){
       updateFunction();
     }
@@ -455,25 +474,25 @@ abstract class RenderOrder {
      index = total;
   }
 
-  void render() {
+  bool render() {
     assert(remaining);
     renderFunction();
-    index = (_index + 1);
+    _index = (_index + 1);
+    remaining = _index < total;
     if (remaining) {
       updateFunction();
+      return true;
     } else {
-      updateAnyRemaining();
+      return false;
     }
   }
 }
 
 RenderOrder getNextRenderOrder(){
-  assert (anyRemaining);
   var next = renderOrderFirst;
   for (var i = 1; i < renderOrderLength; i++){
     next =  next.compare(renderOrder[i]);
   }
-  assert(next.remaining);
   return next;
 }
 
