@@ -80,6 +80,7 @@ void _updateParticle(Particle particle){
       tile == GridNodeType.Empty        ||
       tile == GridNodeType.Rain_Landing ||
       tile == GridNodeType.Rain_Falling ||
+      tile == GridNodeType.Grass_Long ||
       tile == GridNodeType.Fireplace    ;
 
   if (!airBorn) {

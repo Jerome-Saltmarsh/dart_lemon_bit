@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/isometric_web/register_isometric_web_controls
 import 'package:lemon_engine/engine.dart';
 
 import '../isometric/watches/scene_meta_data.dart';
+import '../network/send_client_request.dart';
 
 void readPlayerInput() {
 
@@ -47,6 +48,8 @@ void readPlayerInput() {
     return;
   }
 
+  // PLAY MODE
+
   if (sceneMetaDataPlayerIsOwner.value) {
     if (keyPressed(LogicalKeyboardKey.space)) {
       setPlayModeEdit();
@@ -61,7 +64,11 @@ void readPlayerInput() {
   if (messageBoxVisible.value) return;
 
   if (engine.mouseLeftDown.value) {
-    setCharacterActionPerform();
+    if (keyPressed(LogicalKeyboardKey.shiftLeft)){
+      sendClientRequestAttack();
+    } else {
+      setCharacterActionPerform();
+    }
     return;
   }
 
