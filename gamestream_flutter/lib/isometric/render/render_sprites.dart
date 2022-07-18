@@ -360,14 +360,21 @@ class RenderOrderGrid extends RenderOrder {
   }
 
   void refreshDynamicLightGrid(){
+    final bottom = screen.bottom + tileHeight;
     for (var z = 0; z < gridTotalZ; z++) {
       final dynamicPlain = gridLightDynamic[z];
       final bakePlain = gridLightBake[z];
-      for (var rowIndex = screenTopLeftRow; rowIndex < screenBottomRightRow; rowIndex++) {
+      final zLength = z * tileSize;
+      final minRow = convertWorldToRowSafe(screenLeft, screenTop, zLength);
+      final maxRow = convertWorldToRowSafe(screenRight, bottom, zLength);
+      final minColumn = convertWorldToColumnSafe(screenRight, screenTop, zLength);
+      final maxColumn = convertWorldToColumnSafe(screenLeft, bottom, zLength);
+      final max = maxRow + maxColumn;
+      for (var rowIndex = minRow; rowIndex <= maxRow; rowIndex++) {
         final dynamicRow = dynamicPlain[rowIndex];
         final bakeRow = bakePlain[rowIndex];
-        for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
-          if (columnIndex + rowIndex > maxColumnRow) break;
+        for (var columnIndex = minColumn; columnIndex <= maxColumn; columnIndex++) {
+          if (columnIndex + rowIndex > max) break;
           dynamicRow[columnIndex] = bakeRow[columnIndex];
         }
       }

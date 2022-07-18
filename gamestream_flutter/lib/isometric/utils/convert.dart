@@ -1,5 +1,7 @@
 
+import 'package:lemon_math/library.dart';
 import 'package:bleed_common/tile_size.dart';
+import 'package:gamestream_flutter/isometric/grid.dart';
 
 double convertGridToWorldX(double x, double y) {
   return x - y;
@@ -24,3 +26,12 @@ int convertWorldToRow(double x, double y, double z) {
 int convertWorldToColumn(double x, double y, double z) {
   return (y - x + z) ~/ tileSize;
 }
+
+int convertWorldToRowSafe(double x, double y, double z) {
+  return clamp(convertWorldToRow(x, y, z), 0, gridTotalRows - 1);
+}
+
+int convertWorldToColumnSafe(double x, double y, double z) {
+  return clamp(convertWorldToColumn(x, y, z), 0, gridTotalColumns - 1);
+}
+
