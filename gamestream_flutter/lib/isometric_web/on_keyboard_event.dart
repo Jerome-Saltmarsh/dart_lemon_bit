@@ -51,6 +51,9 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     if (key == PhysicalKeyboardKey.keyB){
       editor.actions.clear();
     }
+    if (key == PhysicalKeyboardKey.keyE){
+      edit.fill();
+    }
 
     if (key == PhysicalKeyboardKey.arrowUp){
       if (shiftLeftDown){

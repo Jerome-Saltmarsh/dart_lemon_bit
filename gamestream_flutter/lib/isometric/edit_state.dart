@@ -38,6 +38,12 @@ class EditState {
     controlsVisibleWeather.value = !controlsVisibleWeather.value;
   }
 
+  void fill(){
+    for (var zIndex = 0; zIndex <= z.value; zIndex++){
+      sendClientRequestSetBlock(row.value, column.value, zIndex, paintType.value);
+    }
+  }
+
   void selectBlock(int z, int row, int column){
     this.row.value = row;
     this.column.value = column;
