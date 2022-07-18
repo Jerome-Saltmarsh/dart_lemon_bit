@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
 import 'package:lemon_engine/actions/render_atlas.dart';
 import 'package:lemon_engine/render.dart';
+import 'package:lemon_engine/screen.dart';
 
 import '../grid/state/wind.dart';
 import '../variables/src_x_rain_falling.dart';
@@ -21,6 +22,11 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
   _dstX = (row - column) * tileSizeHalf;
   _dstY = dstY;
   _shade = shade;
+
+  if (_dstX < screen.left) return;
+  if (_dstX > screen.right) return;
+  if (_dstY < screen.top) return;
+  if (_dstY > screen.bottom) return;
 
   switch (type) {
 

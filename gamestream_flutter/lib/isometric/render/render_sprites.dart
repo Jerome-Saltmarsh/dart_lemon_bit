@@ -359,6 +359,10 @@ class RenderOrderGrid extends RenderOrder {
     super.reset();
   }
 
+  void onZChanged(){
+
+  }
+
   void refreshDynamicLightGrid(){
     final bottom = screen.bottom + tileHeight;
     for (var z = 0; z < gridTotalZ; z++) {
