@@ -238,6 +238,7 @@ class RenderOrderGrid extends RenderOrder {
   var screenTop = engine.screen.top - tileSize;
   var screenBottom = engine.screen.bottom + tileSize;
 
+  var minColumn = 0;
   var dstY = 0.0;
 
   @override
@@ -268,10 +269,6 @@ class RenderOrderGrid extends RenderOrder {
         }
       }
     }
-
-    if (dstY < screen.top) return;
-    if (dstY > screen.bottom) return;
-
     renderGridNode(
         gridZ,
         gridRow,
@@ -303,6 +300,7 @@ class RenderOrderGrid extends RenderOrder {
     order = 0;
     orderZ = 0;
     gridZ = 0;
+    onZChanged();
     orderZ = 0;
     gridZHalf = 0;
     dstY = 0;
@@ -363,10 +361,6 @@ class RenderOrderGrid extends RenderOrder {
     super.reset();
   }
 
-  void onZChanged(){
-
-  }
-
   void refreshDynamicLightGrid(){
     final bottom = screen.bottom + tileHeight;
     for (var z = 0; z < gridTotalZ; z++) {
@@ -398,11 +392,15 @@ class RenderOrderGrid extends RenderOrder {
     }
   }
 
+  void onZChanged(){
+    minColumn = convertWorldToColumnSafe(screenRight, screenTop, gridZ * tileSize);
+  }
+
   void nextGridNode(){
     gridRow++;
     gridColumn--;
 
-    if (gridColumn < 0 || gridRow >= maxRow) {
+    if (gridColumn < minColumn || gridRow >= maxRow) {
 
       while (true) {
         shiftIndexDown();
@@ -420,6 +418,7 @@ class RenderOrderGrid extends RenderOrder {
             gridRow >= gridTotalRows
         ) {
           gridZ++;
+          onZChanged();
           orderZ = gridZ;
           if (gridZ >= gridTotalZ) return end();
           gridZHalf =  gridZ ~/ 2;
