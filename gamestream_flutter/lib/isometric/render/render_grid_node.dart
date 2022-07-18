@@ -19,12 +19,9 @@ var _shade = 0;
 var transparent = false;
 
 void renderGridNode(int z, int row, int column, int type, double dstY, int shade) {
-  if (dstY < screen.top) return;
-  if (dstY > screen.bottom) return;
   _dstX = (row - column) * tileSizeHalf;
   if (_dstX < screen.left) return;
   if (_dstX > screen.right) return;
-
   _dstY = dstY;
   _shade = shade;
 

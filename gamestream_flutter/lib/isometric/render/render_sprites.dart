@@ -268,6 +268,10 @@ class RenderOrderGrid extends RenderOrder {
         }
       }
     }
+
+    if (dstY < screen.top) return;
+    if (dstY > screen.bottom) return;
+
     renderGridNode(
         gridZ,
         gridRow,
