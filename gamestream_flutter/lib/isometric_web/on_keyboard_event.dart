@@ -48,7 +48,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     if (key == PhysicalKeyboardKey.keyH){
       editor.actions.lower();
     }
-    if (key == PhysicalKeyboardKey.keyB){
+    if (key == PhysicalKeyboardKey.keyN){
       editor.actions.clear();
     }
     if (key == PhysicalKeyboardKey.keyE){
