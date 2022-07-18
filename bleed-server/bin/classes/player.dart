@@ -50,6 +50,8 @@ class Player extends Character with ByteWriter {
   Collider? aimTarget; // the currently highlighted character
   Account? account;
 
+  var questZombieKillsRemaining = 2;
+
   final weapons = <Weapon>[];
   var storeItems = <Weapon>[];
 
