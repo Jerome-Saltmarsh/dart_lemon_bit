@@ -42,7 +42,6 @@ final renderOrder = <RenderOrder> [
 const renderOrderLength = 6;
 var renderOrderFirst = renderOrder.first;
 var totalRemaining = 0;
-var anyRemaining = false;
 var totalIndex = 0;
 
 final maxZRender = Watch<int>(gridTotalZ, clamp: (int value){
@@ -465,9 +464,6 @@ abstract class RenderOrder {
   void set index(int value){
     _index = value;
     remaining = _index < total;
-    if (!remaining){
-      updateAnyRemaining();
-    }
   }
 
   void end(){
@@ -494,15 +490,6 @@ RenderOrder getNextRenderOrder(){
     next =  next.compare(renderOrder[i]);
   }
   return next;
-}
-
-void updateAnyRemaining(){
-  for (final order in renderOrder){
-    if (!order.remaining) continue;
-    anyRemaining = true;
-    return;
-  }
-  anyRemaining = false;
 }
 
 int getRenderRow(int row, int z){
