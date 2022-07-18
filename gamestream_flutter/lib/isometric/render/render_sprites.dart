@@ -48,7 +48,6 @@ final maxZRender = Watch<int>(gridTotalZ, clamp: (int value){
   return clamp<int>(value, 0, max(grid.length - 1, 0));
 });
 
-
 void renderSprites() {
   var remaining = false;
   totalRemaining = 0;
