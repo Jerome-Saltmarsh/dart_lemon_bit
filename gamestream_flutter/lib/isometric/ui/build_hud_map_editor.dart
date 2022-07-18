@@ -473,4 +473,6 @@ const editorSelectableGridTypes = [
     GridNodeType.Roof_Tile_North,
     GridNodeType.Roof_Tile_South,
     GridNodeType.Soil,
+    GridNodeType.Roof_Hay_South,
+    GridNodeType.Roof_Hay_North,
 ];

@@ -204,7 +204,10 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
         srcHeight: 72,
         anchorY: 0.3334,
       );
-
+    case GridNodeType.Roof_Hay_North:
+      return renderBlockSrcX(9552);
+    case GridNodeType.Roof_Hay_South:
+      return renderBlockSrcX(9600);
     default:
       throw Exception("Cannot render grid node type $type");
   }

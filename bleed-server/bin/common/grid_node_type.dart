@@ -35,6 +35,8 @@ class GridNodeType {
   static const Wood_Corner_Right = 36;
   static const Roof_Tile_South = 37;
   static const Soil = 38;
+  static const Roof_Hay_North = 39;
+  static const Roof_Hay_South = 40;
 
   static isSolid(int type){
     if (type == GridNodeType.Bricks) return true;
@@ -134,6 +136,8 @@ class GridNodeType {
        Roof_Tile_North: "Roof Tile North",
        Roof_Tile_South: "Roof Tile South",
        Soil: "Soil",
+       Roof_Hay_North: "Roof Hay North",
+       Roof_Hay_South: "Roof Hay South",
      }[type] ?? "unknown($type)";
   }
   
