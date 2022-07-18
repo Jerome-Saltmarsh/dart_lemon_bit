@@ -10,6 +10,7 @@ import 'tile_node.dart';
 
 class Scene {
   final List<List<List<int>>> grid;
+
   var gridHeight = 0;
   var gridRows = 0;
   var gridColumns = 0;
