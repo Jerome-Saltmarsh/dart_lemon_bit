@@ -154,11 +154,11 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
       return render(
         dstX: _dstX,
         dstY: dstY,
-        srcX: 1478,
-        srcY: 68.0 * shade,
-        srcWidth: 62.0,
-        srcHeight: 68.0,
-        anchorY: 0.6,
+        srcX: 1699,
+        srcY: 74.0 * shade,
+        srcWidth: 74.0,
+        srcHeight: 74.0,
+        anchorY: 0.45,
       );
     case GridNodeType.Tree_Top:
       final wind = gridWind[z][row][column];

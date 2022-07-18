@@ -164,6 +164,10 @@ void _applyShadowAt({
               gridLightBake[projectionZ][projectionRow][projectionColumn] = shadowShade;
             }
           }
+          // final type = grid[projectionZ][projectionRow][projectionColumn];
+          // if (type == GridNodeType.Tree_Bottom){
+          //   gridLightBake[projectionZ - 1][projectionRow][projectionColumn] = shadowShade;
+          // }
           projectionZ += directionZ;
           projectionRow += directionRow;
           projectionColumn += directionColumn;
@@ -178,13 +182,13 @@ bool _castesShadow(int type){
         GridNodeType.Bricks,
         GridNodeType.Brick_Top,
         GridNodeType.Grass,
-        GridNodeType.Grass_Long,
         GridNodeType.Stairs_South,
         GridNodeType.Stairs_West,
         GridNodeType.Stairs_East,
         GridNodeType.Stairs_North,
         GridNodeType.Roof_Tile_South,
         GridNodeType.Roof_Tile_North,
+        GridNodeType.Tree_Top,
   ].contains(type);
 }
 

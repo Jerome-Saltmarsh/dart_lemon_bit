@@ -17,6 +17,7 @@ var rainPosition = 0.0;
 
 const treeStrength = 0.5;
 const treeAnimation = [0, 1, 2, 1, 0, -1, -2, -1];
+final treeAnimationLength = treeAnimation.length;
 
 void updateAnimationFrame(){
   final frame = engine.frame;

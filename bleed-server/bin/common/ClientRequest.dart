@@ -10,7 +10,6 @@ enum ClientRequest {
   Skip_Hour,
   Reverse_Hour,
   Teleport,
-  Upgrade,
   Deck_Add_Card,
   Deck_Select_Card,
   Set_Block,

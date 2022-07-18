@@ -337,32 +337,6 @@ class Connection {
         player.game.onPlayerAddCardToDeck(player, cardType);
         break;
 
-      case ClientRequest.Upgrade:
-        if (player.deadOrBusy) return;
-        if (arguments.length != 2) {
-          return errorArgsExpected(2, arguments);
-        }
-        final techType = int.tryParse(arguments[1]);
-        if (techType == null) {
-          return errorInvalidArg('tech type integer required: got ${arguments[1]}');
-        }
-        if (!TechType.isValid(techType)) {
-          return errorInvalidArg('invalid tech type index $techType');
-        }
-        final cost = TechType.getCost(
-            techType,
-            player.getTechTypeLevel(techType)
-        );
-        if (cost == null) return;
-        if (cost.wood > player.wood) return errorInsufficientResources();
-        if (cost.gold > player.gold) return errorInsufficientResources();
-        if (cost.stone > player.stone) return errorInsufficientResources();
-
-        player.wood -= cost.wood;
-        player.gold -= cost.gold;
-        player.stone -= cost.stone;
-        break;
-
       case ClientRequest.Attack:
         if (player.deadOrBusy) return;
 
