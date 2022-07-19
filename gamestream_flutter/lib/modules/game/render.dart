@@ -28,8 +28,6 @@ import 'package:lemon_math/library.dart';
 import 'state.dart';
 import 'style.dart';
 
-var a = 0.0;
-
 class GameRender {
 
   final GameQueries queries;
@@ -62,65 +60,6 @@ class GameRender {
     if (mouseTargetName != null && mouseTargetName != "Zombie"){
        renderText(text: mouseTargetName, x: player.attackTarget.renderX, y: player.attackTarget.renderY - 55);
     }
-
-
-    // final adj = getAdjacent(0, 16);
-    // final opp = getOpposite(0, 100);
-
-    // sohcahtoa
-
-    // s(angle) = opp / hyp
-
-    // s(angle) * h = opp
-
-    renderRotated(
-      dstX: 0,
-      dstY: 200,
-      srcX: 1332,
-      srcY: 0,
-      srcWidth: 32,
-      srcHeight: 32,
-      rotation: a,
-    );
-    a += 0.1;
-    // renderRotated(
-    //   dstX: 0,
-    //   dstY: 200,
-    //   srcX: 1332,
-    //   srcY: 0,
-    //   srcWidth: 32,
-    //   srcHeight: 32,
-    //   rotation: piQuarter,
-    // );
-    // renderRotated(
-    //   dstX: 0,
-    //   dstY: 200,
-    //   srcX: 1332,
-    //   srcY: 0,
-    //   srcWidth: 32,
-    //   srcHeight: 32,
-    //   rotation: piHalf,
-    // );
-    // renderRotated(
-    //   dstX: 0,
-    //   dstY: 200,
-    //   srcX: 1332,
-    //   srcY: 0,
-    //   srcWidth: 32,
-    //   srcHeight: 32,
-    //   rotation: pi,
-    // );
-    // renderRotated(
-    //   dstX: 0,
-    //   dstY: 200,
-    //   srcX: 1332,
-    //   srcY: 0,
-    //   srcWidth: 32,
-    //   srcHeight: 32,
-    //   rotation: pi + piHalf,
-    // );
-    render(dstX: 0, dstY: 200, srcX: 144, srcY: 0, srcWidth: 8, srcHeight: 8);
-    // RSTransform.fromComponents(rotation: rotation, scale: scale, anchorX: anchorX, anchorY: anchorY, translateX: translateX, translateY: translateY)
   }
 
   void renderMouseWireFrame(){
