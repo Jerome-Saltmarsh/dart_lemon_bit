@@ -1355,8 +1355,8 @@ extension GameFunctions on Game {
     if (character.equippedIsMelee) {
       spawnProjectile(
           src: character,
-          speed: 2,
-          range: character.equippedRange,
+          speed: 3,
+          range: character.equippedRange * 2,
           projectileType: ProjectileType.Wave,
           damage: 1,
           angle: character.angle,
