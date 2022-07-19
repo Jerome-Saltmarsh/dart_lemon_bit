@@ -1,6 +1,7 @@
 import 'package:bleed_common/PlayerEvent.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
+import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_completed.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_started.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
@@ -10,6 +11,8 @@ import 'package:lemon_engine/engine.dart';
 
 void onPlayerEvent(int event) {
   switch (event) {
+    case PlayerEvent.Scene_Changed:
+      return cameraCenterOnPlayer();
     case PlayerEvent.Quest_Started:
       return onPlayerEventQuestStarted();
     case PlayerEvent.Quest_Completed:

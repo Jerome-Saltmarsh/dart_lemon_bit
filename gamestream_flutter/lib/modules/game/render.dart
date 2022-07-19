@@ -18,10 +18,8 @@ import 'package:gamestream_flutter/isometric/render/render_wireframe.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse_raycast.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
-import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/render.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_math/library.dart';
 

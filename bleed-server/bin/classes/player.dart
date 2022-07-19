@@ -358,6 +358,7 @@ extension PlayerProperties on Player {
     writeGameStatus();
     writeSceneMetaData();
     writeMapCoordinate();
+    writePlayerEvent(PlayerEvent.Scene_Changed);
     sceneDownloaded = true;
   }
 

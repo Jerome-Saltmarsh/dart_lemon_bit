@@ -20,4 +20,5 @@ class PlayerEvent {
   static const Interaction_Finished = 17;
   static const Quest_Started = 18;
   static const Quest_Completed = 19;
+  static const Scene_Changed = 20;
 }

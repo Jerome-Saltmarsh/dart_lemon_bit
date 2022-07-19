@@ -2,11 +2,11 @@
 import 'package:gamestream_flutter/isometric/camera.dart';
 
 void onChangedMapX(int value){
-   cameraCenterOnPlayer();
+   // cameraCenterOnPlayer();
    // engine.camera.x -= 100;
    // engine.camera.y -= 100;
 }
 
 void onChangedMapY(int value){
-  cameraCenterOnPlayer();
+  // cameraCenterOnPlayer();
 }
