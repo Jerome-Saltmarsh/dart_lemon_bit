@@ -1,0 +1,50 @@
+import 'dart:math';
+import 'package:lemon_math/library.dart';
+import 'package:lemon_engine/actions/render_atlas.dart';
+import 'package:lemon_engine/render.dart';
+
+void renderRotated({
+  required double dstX,
+  required double dstY,
+  required double srcX,
+  required double srcY,
+  required double srcWidth,
+  required double srcHeight,
+  required double rotation,
+  double scale = 1.0,
+  double anchorX = 0.5,
+  double anchorY = 0.5,
+}){
+
+  final angle = rotation + piQuarter;
+
+  final c = cos(rotation);
+  final s = sin(rotation);
+
+  final adj = getAdjacent(angle, srcWidth * scale * anchorX);
+  final opp = getOpposite(angle, srcHeight * scale * anchorY);
+
+  src[bufferIndex] = srcX;
+  dst[bufferIndex] = c;
+  bufferIndex++;
+
+  src[bufferIndex] = srcY;
+  dst[bufferIndex] = s;
+  bufferIndex++;
+
+  src[bufferIndex] = srcX + srcWidth;
+  dst[bufferIndex] = dstX - adj;
+
+  bufferIndex++;
+  src[bufferIndex] = srcY + srcHeight;
+  dst[bufferIndex] = dstY - opp;
+
+  bufferIndex++;
+  renderIndex++;
+
+  if (bufferIndex < buffers) return;
+  bufferIndex = 0;
+  renderIndex = 0;
+
+  renderAtlas();
+}

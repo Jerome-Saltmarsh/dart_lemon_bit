@@ -33,8 +33,14 @@ void renderR({
   double anchorY = 0.5,
 }){
 
-  final scos = cos(rotation) * scale;
-  final ssin = sin(rotation) * scale;
+  final double scos = cos(rotation) * scale;
+  final double ssin = sin(rotation) * scale;
+  final double tx = dstX + -scos * anchorX + ssin * anchorY;
+  final double ty = dstY + -ssin * anchorX - scos * anchorY;
+
+
+  // final scos = cos(rotation) * scale;
+  // final ssin = sin(rotation) * scale;
 
   src[bufferIndex] = srcX;
   dst[bufferIndex] = scos;
@@ -45,11 +51,11 @@ void renderR({
   bufferIndex++;
 
   src[bufferIndex] = srcX + srcWidth;
-  dst[bufferIndex] = dstX - (srcWidth * anchorX * scale);
+  dst[bufferIndex] = tx;
 
   bufferIndex++;
   src[bufferIndex] = srcY + srcHeight;
-  dst[bufferIndex] = dstY - (srcHeight * anchorY * scale);
+  dst[bufferIndex] = ty;
 
   bufferIndex++;
   renderIndex++;
