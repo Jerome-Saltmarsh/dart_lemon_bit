@@ -14,6 +14,7 @@ void renderRotated({
   double scale = 1.0,
   double anchorX = 0.5,
   double anchorY = 0.5,
+  int color = 0,
 }){
 
   final angle = rotation + piQuarter;
@@ -31,6 +32,7 @@ void renderRotated({
 
   src[bufferIndex] = srcX;
   dst[bufferIndex] = c;
+  colors[renderIndex] = color;
   bufferIndex++;
 
   src[bufferIndex] = srcY;

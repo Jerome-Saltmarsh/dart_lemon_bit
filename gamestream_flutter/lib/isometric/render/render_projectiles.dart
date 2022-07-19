@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:bleed_common/Projectile_Type.dart';
+import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:lemon_engine/engine.dart';
@@ -17,15 +18,16 @@ void renderProjectile(Projectile value) {
     case ProjectileType.Bullet:
       return renderFireball(value.renderX, value.renderY, value.angle);
     case ProjectileType.Wave:
-      render(dstX: value.renderX, dstY: value.renderY, srcX: 144, srcY: 0, srcWidth: 8, srcHeight: 8);
+      // render(dstX: value.renderX, dstY: value.renderY, srcX: 144, srcY: 0, srcWidth: 8, srcHeight: 8);
       return renderRotated(
         dstX: value.renderX,
         dstY: value.renderY,
         srcX: 1332,
-        srcY: 0,
+        srcY: (animationFrame % 3) * 32,
         srcWidth: 32,
         srcHeight: 32,
         rotation: value.angle - piQuarter,
+        color: value.renderColor,
       );
     default:
       return;
@@ -56,7 +58,7 @@ void renderArrow(double x, double y, double angle) {
       rotation: angle,
       scale: 0.5
   );
-  renderR(
+  renderRotated(
       dstX: x,
       dstY: y,
       srcX: 2182,
