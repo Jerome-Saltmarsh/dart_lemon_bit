@@ -17,6 +17,7 @@ void renderProjectile(Projectile value) {
     case ProjectileType.Bullet:
       return renderFireball(value.renderX, value.renderY, value.angle);
     case ProjectileType.Wave:
+      render(dstX: value.renderX, dstY: value.renderY, srcX: 144, srcY: 0, srcWidth: 8, srcHeight: 8);
       return renderRotated(
         dstX: value.renderX,
         dstY: value.renderY,
