@@ -28,6 +28,8 @@ import 'package:lemon_math/library.dart';
 import 'state.dart';
 import 'style.dart';
 
+var a = 0.0;
+
 class GameRender {
 
   final GameQueries queries;
@@ -78,26 +80,27 @@ class GameRender {
       srcY: 0,
       srcWidth: 32,
       srcHeight: 32,
-      rotation: 0,
+      rotation: a,
     );
-    renderRotated(
-      dstX: 0,
-      dstY: 200,
-      srcX: 1332,
-      srcY: 0,
-      srcWidth: 32,
-      srcHeight: 32,
-      rotation: piQuarter,
-    );
-    renderRotated(
-      dstX: 0,
-      dstY: 200,
-      srcX: 1332,
-      srcY: 0,
-      srcWidth: 32,
-      srcHeight: 32,
-      rotation: piHalf,
-    );
+    a += 0.1;
+    // renderRotated(
+    //   dstX: 0,
+    //   dstY: 200,
+    //   srcX: 1332,
+    //   srcY: 0,
+    //   srcWidth: 32,
+    //   srcHeight: 32,
+    //   rotation: piQuarter,
+    // );
+    // renderRotated(
+    //   dstX: 0,
+    //   dstY: 200,
+    //   srcX: 1332,
+    //   srcY: 0,
+    //   srcWidth: 32,
+    //   srcHeight: 32,
+    //   rotation: piHalf,
+    // );
     // renderRotated(
     //   dstX: 0,
     //   dstY: 200,

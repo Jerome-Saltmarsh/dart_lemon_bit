@@ -23,7 +23,7 @@ void renderProjectile(Projectile value) {
         srcY: 0,
         srcWidth: 32,
         srcHeight: 32,
-        rotation: value.angle,
+        rotation: value.angle - (pi * 0.25),
       );
     default:
       return;

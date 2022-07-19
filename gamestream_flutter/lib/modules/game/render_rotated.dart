@@ -21,8 +21,13 @@ void renderRotated({
   final c = cos(rotation);
   final s = sin(rotation);
 
-  final adj = getAdjacent(angle, srcWidth * scale * anchorX);
-  final opp = getOpposite(angle, srcHeight * scale * anchorY);
+  final srcWidthHalf = srcWidth * 0.5;
+  final srcHeightHalf = srcHeight * 0.5;
+
+  final d = sqrt((srcWidthHalf * srcWidthHalf) + (srcHeightHalf * srcHeightHalf));
+
+  final adj = getAdjacent(angle, d);
+  final opp = getOpposite(angle, d);
 
   src[bufferIndex] = srcX;
   dst[bufferIndex] = c;
