@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:bleed_common/Projectile_Type.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
+import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 
@@ -16,14 +17,14 @@ void renderProjectile(Projectile value) {
     case ProjectileType.Bullet:
       return renderFireball(value.renderX, value.renderY, value.angle);
     case ProjectileType.Wave:
-      return renderR(
+      return renderRotated(
         dstX: value.renderX,
         dstY: value.renderY,
         srcX: 1332,
         srcY: 0,
         srcWidth: 32,
         srcHeight: 32,
-        rotation: value.angle - (pi * 0.25),
+        rotation: value.angle,
       );
     default:
       return;
@@ -31,7 +32,7 @@ void renderProjectile(Projectile value) {
 }
 
 void renderFireball(double x, double y, double rotation) {
-  renderR(
+  renderRotated(
     dstX: x,
     dstY: y,
     srcX: 5669,
@@ -43,17 +44,14 @@ void renderFireball(double x, double y, double rotation) {
 }
 
 void renderArrow(double x, double y, double angle) {
-  const piQuarter = pi / 4.0;
-
-  // shadow
-  renderR(
+  renderRotated(
       dstX: x,
       dstY: y + 10,
       srcX: 2172,
       srcY: 0,
       srcWidth: 9,
       srcHeight: 43,
-      rotation: angle - piQuarter,
+      rotation: angle,
       scale: 0.5
   );
   renderR(
@@ -63,7 +61,7 @@ void renderArrow(double x, double y, double angle) {
       srcY: 0,
       srcWidth: 9,
       srcHeight: 44,
-      rotation: angle - piQuarter,
+      rotation: angle,
       scale: 0.5
   );
 }

@@ -18,8 +18,8 @@ void renderRotated({
 
   final angle = rotation + piQuarter;
 
-  final c = cos(rotation);
-  final s = sin(rotation);
+  final c = cos(rotation - piQuarter);
+  final s = sin(rotation  - piQuarter);
 
   final srcWidthHalf = srcWidth * 0.5;
   final srcHeightHalf = srcHeight * 0.5;
