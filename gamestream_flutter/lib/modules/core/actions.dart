@@ -10,7 +10,6 @@ import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
-import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/state.dart';
@@ -269,11 +268,6 @@ class CoreActions {
     gameType.value = null;
   }
 
-  void toggleEditMode() {
-    final mode = core.state.mode;
-    mode.value = mode.value == Mode.Player ? Mode.Editor : Mode.Player;
-  }
-
   void setModePlay() {
     print("actions.setModePlay()");
     core.state.mode.value = core.state.mode.value = Mode.Player;
@@ -282,12 +276,6 @@ class CoreActions {
   void setModeWebsite() {
     print("actions.setModePlay()");
     core.state.mode.value = core.state.mode.value = Mode.Website;
-  }
-
-  void openMapEditor({bool newScene = true}){
-    core.state.mode.value = Mode.Editor;
-    hours.value = 12;
-    minutes.value = 0;
   }
 
   void exitGame(){

@@ -222,7 +222,6 @@ Widget? buildMenuDebug() {
               buttons.loginTestUser02,
               buttons.loginTestUser03,
               buttons.spawnRandomUser,
-              buttons.editor,
               button("Show Dialog - Welcome", website.actions.showDialogWelcome),
             ],
             border(child: "Debug")

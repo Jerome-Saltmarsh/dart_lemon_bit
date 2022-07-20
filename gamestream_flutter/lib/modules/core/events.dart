@@ -106,17 +106,6 @@ class CoreEvents {
         engine.registerZoomCameraOnMouseScroll();
         isometricWebControlsRegister();
         break;
-
-      case Mode.Editor:
-        // modules.isometric.events.register();
-        // engine.drawCanvas.value = editor.render.render;
-        // engine.drawCanvasAfterUpdate = true;
-        // game.totalZombies.value = 0;
-        // game.totalProjectiles = 0;
-        // game.totalNpcs = 0;
-        // engine.registerZoomCameraOnMouseScroll();
-        // isometric.cameraCenterMap();
-        break;
     }
 
     engine.redrawCanvas();

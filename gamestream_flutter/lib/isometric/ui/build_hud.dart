@@ -31,21 +31,25 @@ Widget buildHud() {
       buildTopRightMenu(),
       buildWatchSceneMetaDataPlayerIsOwner(),
       buildWatchDebugVisible(),
-      visibleBuilder(
-          player.questAdded,
-          Container(
-            width: screen.width,
-            alignment: Alignment.topCenter,
-            child: container(
-                child: "QUEST UPDATED",
-                alignment: Alignment.center,
-                color: green,
-                width: 200,
-                margin: EdgeInsets.only(top: 16),
-                action: actionGameDialogShowQuests),
-          ))
+      buildControlQuestUpdated()
     ],
   );
+}
+
+Widget buildControlQuestUpdated() {
+  return visibleBuilder(
+        player.questAdded,
+        Container(
+          width: screen.width,
+          alignment: Alignment.topCenter,
+          child: container(
+              child: "QUEST UPDATED",
+              alignment: Alignment.center,
+              color: green,
+              width: 200,
+              margin: EdgeInsets.only(top: 16),
+              action: actionGameDialogShowQuests),
+        ));
 }
 
 Positioned buildTopRightMenu() =>

@@ -176,9 +176,6 @@ class _Buttons {
 
 
   final Widget exit = button('Exit', core.actions.exitGame);
-  final Widget edit = button("Edit", core.actions.toggleEditMode);
-  final Widget editor = button("Editor", core.actions.openMapEditor);
-  final Widget register = button("Register", core.actions.openMapEditor);
   final Widget changeCharacter = button("Change Hero", () {
     // sendClientRequest(ClientRequest.Reset_Character_Type);
   });

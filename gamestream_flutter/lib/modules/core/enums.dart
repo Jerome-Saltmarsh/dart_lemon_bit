@@ -16,7 +16,6 @@ enum OperationStatus {
 enum Mode {
   Website,
   Player,
-  Editor,
 }
 
 enum Region {
