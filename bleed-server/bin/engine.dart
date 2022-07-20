@@ -30,10 +30,22 @@ class Engine {
     officialUniverse.update();
     frame++;
 
+    if (frame % 1000 == 0)
+      removeEmptyGames();
+
     // updateAIPathfinding();
-    for (var i = 0; i < games.length; i++) {
-      games[i].updateStatus();
+
+    for (final game in games){
+      game.updateStatus();
     }
+  }
+
+  void removeEmptyGames(){
+     for (var i = 0; i < games.length; i++){
+       if (games[i].players.isNotEmpty) continue;
+       games.removeAt(i);
+       i--;
+     }
   }
 
   void updateAIPathfinding() {

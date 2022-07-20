@@ -5,6 +5,7 @@ import '../classes/library.dart';
 import '../classes/position3.dart';
 import '../common/library.dart';
 import '../dark_age/game_dark_age.dart';
+import '../dark_age/game_dark_age_editor.dart';
 import '../engine.dart';
 import '../functions/generateName.dart';
 import '../functions/withinRadius.dart';
@@ -245,12 +246,7 @@ class Connection {
         return;
 
       case ClientRequest.Set_Block:
-
-        if (game is GameDarkAge) {
-          if (game.owner != _player) return;
-        } else {
-          return;
-        }
+        if (game is GameDarkAgeEditor == false) return;
 
         if (arguments.length < 5) return errorArgsExpected(3, arguments);
         final row = int.tryParse(arguments[1]);
@@ -401,7 +397,7 @@ class Connection {
           break;
 
       case ClientRequest.Editor_Set_Scene_Name:
-          if (!player.ownsGame) {
+          if (game is GameDarkAgeEditor == false) {
              throw Exception("Player must be owner to set name");
           }
           var name = "";
@@ -551,7 +547,6 @@ class Connection {
         ? await engine.findGameEditorNew()
         : await engine.findGameEditorByName(name);
     joinGame(game);
-    game.owner = _player;
   }
 
   void joinGame(Game game){

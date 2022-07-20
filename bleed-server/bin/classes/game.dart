@@ -30,7 +30,6 @@ import 'weapon.dart';
 import 'zombie.dart';
 
 abstract class Game {
-  Player? owner;
   final items = <Item>[];
   final zombies = <Zombie>[];
   final npcs = <Npc>[];
@@ -41,8 +40,6 @@ abstract class Game {
   final Scene scene;
 
   var playersCanAttackDynamicObjects = false;
-
-  bool get hasOwner => owner != null;
 
   Game(this.scene) {
     engine.onGameCreated(this);
@@ -1144,7 +1141,7 @@ extension GameFunctions on Game {
       npc.clearTargetIf(player);
     }
     onPlayerDisconnected(player);
-    if (player.scene.dirty && player.ownsGame && player.scene.name.isNotEmpty) {
+    if (player.scene.dirty && player.scene.name.isNotEmpty) {
        writeSceneToFile(scene);
     }
     return true;

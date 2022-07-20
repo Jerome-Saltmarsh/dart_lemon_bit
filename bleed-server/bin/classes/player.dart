@@ -9,6 +9,7 @@ import '../common/quest.dart';
 import '../convert/convert_card_type_to_card.dart';
 import '../dark_age/areas/dark_age_area.dart';
 import '../dark_age/game_dark_age.dart';
+import '../dark_age/game_dark_age_editor.dart';
 import '../utilities.dart';
 import 'enemy_spawn.dart';
 import 'position3.dart';
@@ -67,8 +68,6 @@ class Player extends Character with ByteWriter {
 
   var mapX = 0;
   var mapY = 0;
-
-  bool get ownsGame => game.owner == this;
 
   bool questToDo(Quest quest) => !questCompleted(quest) && !questInProgress(quest);
   bool questInProgress(Quest quest) => questsInProgress.contains(quest);
@@ -818,7 +817,7 @@ extension PlayerProperties on Player {
 
   void writeSceneMetaData() {
     writeByte(ServerResponse.Scene_Meta_Data);
-    writeBool(game.owner == this);
+    writeBool((game is GameDarkAgeEditor));
     writeString(game.scene.name);
   }
 
