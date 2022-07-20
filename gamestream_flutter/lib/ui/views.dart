@@ -24,6 +24,7 @@ import 'package:gamestream_flutter/website/build_layout_website.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
+import '../isometric/ui/build_hud.dart';
 import '../styles.dart';
 import '../network/web_socket.dart';
 import 'build.dart';
@@ -88,7 +89,7 @@ WatchBuilder<Connection> buildWatchConnection(Account? account) {
       case Connection.Connecting:
         return ui.layouts.buildLayoutLoading();
       case Connection.Connected:
-        return modules.game.build.buildUIGame();
+        return buildHud();
       case Connection.None:
         return buildPageWebsite();
       default:

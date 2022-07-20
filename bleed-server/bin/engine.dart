@@ -51,24 +51,10 @@ class Engine {
     return GameDarkAgeEditor(scene: await readSceneFromFile(name));
   }
 
-  T? findGameAwaitingPlayers<T extends Game>() {
-    for (final game in games) {
-      if (game is T == false) continue;
-      if (!game.awaitingPlayers) continue;
-      return game as T;
-    }
-    return null;
-  }
-
   // This method is called by the game constructor automatically
   // and should not be called again
   void onGameCreated(Game game) {
     games.add(game);
-  }
-
-  void onPlayerCreated(Player player) {
-    player.game.players.add(player);
-    player.game.disableCountDown = 0;
   }
 
   GameDarkAgeCollege findGameDarkAgeCastle() {

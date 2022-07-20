@@ -34,21 +34,21 @@ class GameBuild {
 
   Widget buildUIGame() {
     print("buildUIGame()");
-
-    return WatchBuilder(core.state.status, (GameStatus gameStatus) {
-      switch (gameStatus) {
-        case GameStatus.Counting_Down:
-          throw Exception("No builder for GameStatus.Counting_Down");
-        case GameStatus.Awaiting_Players:
-          return buildLayoutWaitingForPlayers();
-        case GameStatus.In_Progress:
-          return buildHud();
-        case GameStatus.Finished:
-          return buildDialogGameFinished();
-        default:
-          return empty;
-      }
-    });
+    return buildHud();
+    // return WatchBuilder(core.state.status, (GameStatus gameStatus) {
+    //   switch (gameStatus) {
+    //     case GameStatus.Counting_Down:
+    //       throw Exception("No builder for GameStatus.Counting_Down");
+    //     case GameStatus.Awaiting_Players:
+    //       return buildLayoutWaitingForPlayers();
+    //     case GameStatus.In_Progress:
+    //       return buildHud();
+    //     case GameStatus.Finished:
+    //       return buildDialogGameFinished();
+    //     default:
+    //       return empty;
+    //   }
+    // });
   }
 
   Widget buildMagicBar() {

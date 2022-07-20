@@ -9,7 +9,6 @@ import '../common/quest.dart';
 import '../convert/convert_card_type_to_card.dart';
 import '../dark_age/areas/dark_age_area.dart';
 import '../dark_age/game_dark_age.dart';
-import '../engine.dart';
 import '../utilities.dart';
 import 'enemy_spawn.dart';
 import 'position3.dart';
@@ -208,7 +207,7 @@ class Player extends Character with ByteWriter {
   ){
     maxMagic = magic;
     _magic = maxMagic;
-    engine.onPlayerCreated(this);
+    game.players.add(this);
   }
 
   void writeLivesRemaining(int lives){
@@ -217,8 +216,8 @@ class Player extends Character with ByteWriter {
   }
 
   void writeGameStatus(){
-    writeByte(ServerResponse.Game_Status);
-    writeByte(game.status.index);
+    // writeByte(ServerResponse.Game_Status);
+    // writeByte(game.status.index);
   }
 
   void toggleDebug(){

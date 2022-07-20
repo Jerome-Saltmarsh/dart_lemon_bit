@@ -14,7 +14,6 @@ class GameDarkAgeCollege extends DarkAgeArea {
       column: 30,
       z: 1,
       onInteractedWith: (Player player){
-
         player.interact(message: "Salutations", responses: {
            if (player.questInProgress(Quest.Jenkins_Deliver_Scroll_To_College))
              "I was asked to deliver this (QUEST)": (){
@@ -28,7 +27,6 @@ class GameDarkAgeCollege extends DarkAgeArea {
              },
              "Never mind": player.endInteraction
         });
-
       }
     );
   }

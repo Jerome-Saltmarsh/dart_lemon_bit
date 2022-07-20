@@ -24,7 +24,6 @@ import 'item.dart';
 import 'player.dart';
 import 'projectile.dart';
 import 'scene.dart';
-import 'spawn_point.dart';
 import 'tile_node.dart';
 import 'components.dart';
 import 'weapon.dart';
@@ -38,25 +37,14 @@ abstract class Game {
   final players = <Player>[];
   final projectiles = <Projectile>[];
   final collectables = <Collectable>[];
-  var spawnPoints = <SpawnPoint>[];
-  var shadeMax = Shade.Bright;
   var frame = 0;
-  var teamSize = 1;
-  var numberOfTeams = 2;
-  var countDownFramesRemaining = 45 * 5;
-  var disableCountDown = 0;
-  late GameStatus status;
-  final String id = (_id++).toString();
   final Scene scene;
 
   var playersCanAttackDynamicObjects = false;
 
   bool get hasOwner => owner != null;
 
-  Game(this.scene, {
-    this.shadeMax = Shade.Bright,
-    this.status = GameStatus.In_Progress
-  }) {
+  Game(this.scene) {
     engine.onGameCreated(this);
   }
 
@@ -71,19 +59,9 @@ abstract class Game {
 
   }
 
-  static int _id = 0;
-
   bool get full;
 
   List<GameObject> get gameObjects => scene.gameObjects;
-
-  bool get countingDown => status == GameStatus.Counting_Down;
-
-  bool get inProgress => status == GameStatus.In_Progress;
-
-  bool get finished => status == GameStatus.Finished;
-
-  bool get awaitingPlayers => status == GameStatus.Awaiting_Players;
 
   int get numberOfAlivePlayers => countAlive(players);
 
@@ -91,34 +69,7 @@ abstract class Game {
 
   void updateStatus(){
     removeDisconnectedPlayers();
-    switch (status) {
-
-      case GameStatus.In_Progress:
-        updateInProgress();
-        break;
-
-      case GameStatus.Awaiting_Players:
-        for (int i = 0; i < players.length; i++) {
-          final player = players[i];
-          player.framesSinceClientRequest++;
-          if (player.framesSinceClientRequest > 100) {
-            players.removeAt(i);
-            i--;
-          }
-        }
-        break;
-
-      case GameStatus.Counting_Down:
-        countDownFramesRemaining--;
-        if (countDownFramesRemaining <= 0) {
-          setGameStatus(GameStatus.In_Progress);
-          onGameStarted();
-        }
-        break;
-
-      default:
-        break;
-    }
+    updateInProgress();
 
     for (final player in players) {
       player.writeAndSendResponse();
@@ -149,22 +100,11 @@ abstract class Game {
      return false;
   }
 
-  void setGameStatus(GameStatus value){
-    if (status == value) return;
-    status = value;
-    players.forEach((player) => player.writeGameStatus());
-  }
-
   void onGameObjectsChanged() {
     sortVertically(gameObjects);
     for (final player in players){
       player.writeGameObjects();
     }
-  }
-
-  void cancelCountDown() {
-    status = GameStatus.Awaiting_Players;
-    countDownFramesRemaining = 0;
   }
 
   void onPlayerAddCardToDeck(Player player, CardType cardType){
@@ -226,7 +166,6 @@ abstract class Game {
 
     to.players.add(player);
     player.game = to;
-    to.disableCountDown = 0;
     player.sceneDownloaded = false;
   }
 
@@ -391,11 +330,6 @@ extension GameFunctions on Game {
     if (frame % 15 == 0) {
       updateInteractableNpcTargets();
       updateZombieTargets();
-      if (players.isEmpty) {
-        disableCountDown++;
-      } else {
-        disableCountDown = 0;
-      }
     }
 
     for (final enemySpawner in scene.enemySpawns) {
@@ -1212,9 +1146,6 @@ extension GameFunctions on Game {
     onPlayerDisconnected(player);
     if (player.scene.dirty && player.ownsGame && player.scene.name.isNotEmpty) {
        writeSceneToFile(scene);
-    }
-    if (status == GameStatus.Awaiting_Players) {
-      cancelCountDown();
     }
     return true;
   }
