@@ -250,22 +250,10 @@ class RenderOrderGrid extends RenderOrder {
         final renderColumn = gridColumn - gridZHalf;
         final renderRowDistance = (renderRow - playerRenderRow).abs();
         final renderColumnDistance = (renderColumn - playerRenderColumn).abs();
-        const radius = 7;
-        if (renderRowDistance < radius && renderColumnDistance < radius){
-          if (gridZ > playerZ + 1) return;
-          final renderRowMatch = renderRow == playerRenderRow;
-          final renderColumnMatch = renderColumn == playerRenderColumn;
-          if (
-           (renderRowMatch && renderColumnMatch) ||
-           (renderRowMatch && renderColumn == playerRenderColumn - 1) ||
-           (renderRowMatch && renderColumn == playerRenderColumn + 1) ||
-           (renderRow == playerRenderRow - 1 && renderColumnMatch) ||
-           (renderRow == playerRenderRow + 1 && renderColumnMatch) ||
-           (renderRow == playerRenderRow + 1 && renderColumn == playerRenderColumn + 1) ||
-           (renderRow == playerRenderRow - 1 && renderColumn == playerRenderColumn - 1)
-          ){
-            transparent = true;
-          }
+        if (gridZ > playerZ + 1 && renderRowDistance <= 5 && renderColumnDistance <= 5) return;
+
+        if (gridZ > playerZ && renderRowDistance <= 2 && renderColumnDistance <= 2) {
+          transparent = true;
         }
       }
     }
