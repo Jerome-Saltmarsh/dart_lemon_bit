@@ -345,6 +345,30 @@ class Connection {
         player.setCharacterStatePerforming(duration: 30);
         break;
 
+      case ClientRequest.Attack_Basic:
+        if (player.deadOrBusy) return;
+
+        if (player.ability != null) {
+          player.clearCardAbility();
+          return;
+        }
+        player.target = null;
+        player.setCharacterStatePerforming(duration: 30);
+        break;
+
+      case ClientRequest.Caste:
+        if (player.deadOrBusy) return;
+        player.ability = CardAbilityFireball();
+        player.angle = player.mouseAngle;
+        player.setCharacterStatePerforming(duration: 30);
+        break;
+
+      case ClientRequest.Caste_Basic:
+        if (player.deadOrBusy) return;
+        player.ability = CardAbilityFireball();
+        player.setCharacterStatePerforming(duration: 30);
+        break;
+
       case ClientRequest.Equip:
         if (player.deadOrBusy) return;
         if (arguments.length != 2) {
@@ -437,6 +461,7 @@ class Connection {
     player.aimTarget = game.getClosestCollider(mouseX, mouseY, player, minDistance: 35);
     switch (args[1]) {
       case CharacterAction.Idle:
+        player.direction = args[6];
         if (player.target == null){
           player.setCharacterStateIdle();
         }

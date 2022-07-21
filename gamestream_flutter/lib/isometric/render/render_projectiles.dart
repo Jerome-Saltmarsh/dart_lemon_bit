@@ -10,10 +10,12 @@ import 'package:lemon_engine/render.dart';
 void renderProjectile(Projectile value) {
   switch (value.type) {
     case ProjectileType.Arrow:
+      render(dstX: value.renderX, dstY: value.renderY, srcX: 144, srcY: 0, srcWidth: 8, srcHeight: 8);
       return renderArrow(value.renderX, value.renderY, value.angle);
     case ProjectileType.Orb:
       return renderOrb(value.renderX, value.renderY);
     case ProjectileType.Fireball:
+      render(dstX: value.renderX, dstY: value.renderY, srcX: 144, srcY: 0, srcWidth: 8, srcHeight: 8);
       return renderFireball(value.renderX, value.renderY, value.angle);
     case ProjectileType.Bullet:
       return renderFireball(value.renderX, value.renderY, value.angle);
@@ -39,8 +41,8 @@ void renderFireball(double x, double y, double rotation) {
   renderRotated(
     dstX: x,
     dstY: y,
-    srcX: 5669,
-    srcY: ((x + y + (engine.frame ~/ 5) % 6) * 23),
+    srcX: 5580,
+    srcY: ((animationFrame) % 6) * 23,
     srcWidth: 18,
     srcHeight: 23,
     rotation: rotation,

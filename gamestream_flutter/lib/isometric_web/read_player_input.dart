@@ -75,7 +75,9 @@ void readPlayerInput() {
   final direction = _getKeyDirection();
   if (direction != null) {
     characterDirection = direction;
-    setCharacterActionRun();
+    if (!keyPressed(LogicalKeyboardKey.shiftLeft)){
+      setCharacterActionRun();
+    }
   }
 }
 

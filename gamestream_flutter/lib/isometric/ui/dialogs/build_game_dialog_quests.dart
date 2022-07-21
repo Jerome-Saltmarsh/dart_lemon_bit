@@ -1,6 +1,5 @@
 
 import 'package:bleed_common/quest.dart';
-import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
@@ -10,27 +9,10 @@ import 'package:lemon_watch/watch.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 
+import 'game_dialog_tab.dart';
+
 final activeQuests = Watch<List<Quest>>(player.questsInProgress.value);
 final inProgress = watch(player.questsInProgress, buildColumnQuests);
-
-final gameDialogTab = watch(player.gameDialog, (GameDialog? gameDialog){
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Row(
-        children: GameDialog.values.map((e) =>
-            container(
-                child: e.name,
-                action: ()=> player.gameDialog.value = e,
-                color: gameDialog == e ? brownDark : brownLight,
-                hoverColor: brownDark,
-            ),
-        ).toList(),
-      ),
-      buildButtonCloseGameDialog(),
-    ],
-  );
-});
 
 Widget buildGameDialogQuests(){
   return Container(

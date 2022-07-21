@@ -22,6 +22,18 @@ void sendClientRequestAttack() {
   sendClientRequest(ClientRequest.Attack);
 }
 
+void sendClientRequestAttackBasic() {
+  sendClientRequest(ClientRequest.Attack_Basic);
+}
+
+void sendClientRequestCaste() {
+  sendClientRequest(ClientRequest.Caste);
+}
+
+void sendClientRequestCasteBasic() {
+  sendClientRequest(ClientRequest.Caste_Basic);
+}
+
 void sendClientRequestSetBlock(int row, int column, int z, int type) {
   sendClientRequest(ClientRequest.Set_Block, '$row $column $z $type');
 }
@@ -142,11 +154,7 @@ Future sendClientRequestUpdate() async {
   updateBuffer[1] = characterAction;
   writeNumberToByteArray(number: mouseGridX, list: updateBuffer, index: 2);
   writeNumberToByteArray(number: mouseGridY, list: updateBuffer, index: 4);
-  if (characterAction == CharacterAction.Run){
-    updateBuffer[6] = characterDirection.toInt();
-  } else {
-    updateBuffer[6] = 0;
-  }
+  updateBuffer[6] = characterDirection;
   writeNumberToByteArray(number: screen.left, list: updateBuffer, index: 7);
   writeNumberToByteArray(number: screen.top, list: updateBuffer, index: 9);
   writeNumberToByteArray(number: screen.right, list: updateBuffer, index: 11);

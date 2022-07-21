@@ -36,6 +36,12 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     if (key == PhysicalKeyboardKey.keyM){
       return actionGameDialogShowMap();
     }
+    if (key == PhysicalKeyboardKey.keyJ){
+      sendClientRequestAttackBasic();
+    }
+    if (key == PhysicalKeyboardKey.keyK){
+      sendClientRequestCasteBasic();
+    }
   }
 
   if (playModeEdit) {

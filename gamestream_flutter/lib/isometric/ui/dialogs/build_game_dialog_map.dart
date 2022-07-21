@@ -7,7 +7,7 @@ import 'package:lemon_engine/screen.dart';
 import 'package:lemon_engine/state/paint.dart';
 
 import '../../../flutterkit.dart';
-import 'build_game_dialog_quests.dart';
+import 'game_dialog_tab.dart';
 
 final f = ValueNotifier<int>(0);
 

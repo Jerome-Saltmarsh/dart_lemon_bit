@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:math';
 
 import 'package:lemon_math/library.dart';
@@ -855,11 +856,7 @@ extension GameFunctions on Game {
     }
 
     if (stateDuration == 10 && ability is CardAbilityFireball) {
-      final target = character.target;
-      if (target != null) {
-        spawnFireball(character, damage: ability.damage, range: ability.range);
-        character.target = null;
-      }
+      spawnFireball(character, damage: ability.damage, range: ability.range);
     }
   }
 
@@ -882,7 +879,8 @@ extension GameFunctions on Game {
     );
   }
 
-  Projectile spawnProjectileArrow(Position3 src, {
+  Projectile spawnProjectileArrow(
+    Character src, {
     required int damage,
     required double range,
     double accuracy = 0,
@@ -890,57 +888,31 @@ extension GameFunctions on Game {
     double? angle,
   }) {
     dispatch(GameEventType.Arrow_Fired, src.x, src.y, src.z);
-    if (src is Character) {
-      return spawnProjectile(
-        src: src,
-        accuracy: accuracy,
-        speed: 7,
-        range: range,
-        target: target,
-        angle: target != null ? null : angle ?? src.angle,
-        projectileType: ProjectileType.Arrow,
-        damage: damage,
-      );
-    }
-
     return spawnProjectile(
       src: src,
-      accuracy: 0,
+      accuracy: accuracy,
       speed: 7,
-      range: 300,
+      range: range,
       target: target,
+      angle: target != null ? null : angle ?? src.angle,
       projectileType: ProjectileType.Arrow,
       damage: damage,
     );
   }
 
-  Projectile spawnFireball(Position3 src, {
+  Projectile spawnFireball(Character src, {
     required int damage,
     required double range,
-    double accuracy = 0,
-    Position3? target,
     double? angle,
   }) {
     dispatch(GameEventType.Projectile_Fired_Fireball, src.x, src.y, src.y);
-    if (src is Character) {
-      return spawnProjectile(
-        src: src,
-        accuracy: accuracy,
-        speed: 7,
-        range: range,
-        target: target,
-        angle: target != null ? null : angle ?? src.angle,
-        projectileType: ProjectileType.Fireball,
-        damage: damage,
-      );
-    }
-
     return spawnProjectile(
       src: src,
       accuracy: 0,
       speed: 7,
       range: range,
-      target: target,
+      target: src.target,
+      angle: angle,
       projectileType: ProjectileType.Fireball,
       damage: damage,
     );
@@ -963,7 +935,7 @@ extension GameFunctions on Game {
   }
 
   Projectile spawnProjectile({
-    required Position3 src,
+    required Character src,
     required double speed,
     required double range,
     required int projectileType,
@@ -972,11 +944,15 @@ extension GameFunctions on Game {
     double? angle = 0,
     Position3? target,
   }) {
-    assert (angle != null || target != null);
-    assert (angle == null || target == null);
-
     final projectile = getAvailableProjectile();
-    final finalAngle = angle ?? src.getAngle(target!);
+    var finalAngle = angle;
+    if (finalAngle == null){
+      if (target != null){
+        finalAngle = src.getAngle(target!);
+      } else {
+        finalAngle = src.angle;
+      }
+    }
     projectile.damage = damage;
     projectile.collidable = true;
     projectile.active = true;
@@ -985,7 +961,7 @@ extension GameFunctions on Game {
     projectile.start.y = src.y;
     projectile.x = src.x;
     projectile.y = src.y;
-    projectile.z = src.z;
+    projectile.z = src.z + tileHeightHalf;
     projectile.angle = finalAngle + giveOrTake(accuracy);
     projectile.speed = speed;
     projectile.owner = src;
