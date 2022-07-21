@@ -1,6 +1,7 @@
 import 'package:lemon_math/library.dart';
 
 import 'classes/collider.dart';
+import 'common/library.dart';
 
 void updateCollisionBetween(List<Collider> gameObjects) {
   final numberOfGameObjects = gameObjects.length;
@@ -15,6 +16,7 @@ void updateCollisionBetween(List<Collider> gameObjects) {
       if (gameObjectJ.top > gameObjectIBottom) break;
       if (gameObjectJ.left > gameObjectI.right) continue;
       if (gameObjectJ.bottom < gameObjectI.top) continue;
+      if ((gameObjectJ.z - gameObjectI.z).abs() > tileHeight) continue;
       resolveCollisionA(gameObjectI, gameObjectJ);
     }
   }
@@ -77,6 +79,7 @@ void resolveCollisionBetween(
       if (a.top > b.bottom) continue;
       if (a.right < b.left) continue;
       if (a.left > b.right) continue;
+      if ((a.z - b.z).abs() > tileHeight) continue;
       onCollision(a, b);
     }
   }

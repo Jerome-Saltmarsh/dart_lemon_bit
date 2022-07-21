@@ -226,6 +226,7 @@ abstract class Game {
       for (var i = 0; i < totalColliders; i++) {
         final b = collidersB[i];
         if (!b.collidable) continue;
+        if ((a.z - b.z).abs() > tileSize) continue;
         final combinedRadius = aRadius + b.radius;
         final _distance = distanceV2(a, b);
         if (_distance > combinedRadius) continue;
@@ -539,13 +540,14 @@ extension GameFunctions on Game {
   }
 
   void _updateCollisions() {
-    checkColliderCollision(players, gameObjects);
-    checkColliderCollision(zombies, gameObjects);
-    checkColliderCollision(players, gameObjects);
+    // checkColliderCollision(players, gameObjects);
+    // checkColliderCollision(zombies, gameObjects);
+    // checkColliderCollision(players, gameObjects);
     updateCollisionBetween(zombies);
     updateCollisionBetween(players);
     resolveCollisionBetween(zombies, players, resolveCollisionA);
     resolveCollisionBetween(players, npcs, resolveCollisionB);
+    resolveCollisionBetween(npcs, zombies, resolveCollisionB);
     checkCollisionPlayerItem();
   }
 
