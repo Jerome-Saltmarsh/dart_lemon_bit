@@ -43,10 +43,20 @@ class Collider extends Position3 with Radius {
     return distanceFromXYZ(value.x, value.y, value.z);
   }
 
+  double distanceFromPos2(Position value) {
+    return distanceFromXY(value.x, value.y);
+  }
+
   double distanceFromXYZ(double x, double y, double z) {
     final a = this.x - x;
     final b = this.y - y;
     final c = this.z - z;
     return sqrt((a * a) + (b * b) + (c * c));
+  }
+
+  double distanceFromXY(double x, double y) {
+    final a = this.x - x;
+    final b = this.y - y;
+    return sqrt((a * a) + (b * b));
   }
 }

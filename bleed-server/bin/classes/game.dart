@@ -721,8 +721,10 @@ extension GameFunctions on Game {
       return;
     }
 
-    if (withinRadius(player, target, player.speed)) {
+
+    if (player.distanceFromPos2(target) <= player.speed) {
       player.target = null;
+      player.setCharacterStateIdle();
       return;
     }
     player.setCharacterStateRunning();
