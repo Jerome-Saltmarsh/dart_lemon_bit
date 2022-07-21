@@ -4,21 +4,20 @@ import 'package:bleed_common/Projectile_Type.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
-import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 
 void renderProjectile(Projectile value) {
   switch (value.type) {
     case ProjectileType.Arrow:
-      render(dstX: value.renderX, dstY: value.renderY, srcX: 144, srcY: 0, srcWidth: 8, srcHeight: 8);
+      renderPixelRed(value.renderX, value.renderY);
       return renderArrow(value.renderX, value.renderY, value.angle);
     case ProjectileType.Orb:
       return renderOrb(value.renderX, value.renderY);
     case ProjectileType.Fireball:
-      render(dstX: value.renderX, dstY: value.renderY, srcX: 144, srcY: 0, srcWidth: 8, srcHeight: 8);
-      return renderFireball(value.renderX, value.renderY, value.angle);
+      renderPixelRed(value.renderX, value.renderY);
+      return renderFireball(value.renderX, value.renderY, value.angle - piQuarter);
     case ProjectileType.Bullet:
-      return renderFireball(value.renderX, value.renderY, value.angle);
+      return renderPixelRed(value.renderX, value.renderY);
     case ProjectileType.Wave:
       // render(dstX: value.renderX, dstY: value.renderY, srcX: 144, srcY: 0, srcWidth: 8, srcHeight: 8);
       return renderRotated(
@@ -36,6 +35,10 @@ void renderProjectile(Projectile value) {
   }
 }
 const piQuarter = pi * 0.25;
+
+void renderPixelRed(double x, double y){
+  return render(dstX: x, dstY: y, srcX: 144, srcY: 0, srcWidth: 8, srcHeight: 8);
+}
 
 void renderFireball(double x, double y, double rotation) {
   renderRotated(
