@@ -635,6 +635,8 @@ extension GameFunctions on Game {
   void updatePlayer(Player player) {
     player.framesSinceClientRequest++;
 
+    // print("type in front: ${GridNodeType.getName(player.getGridTypeInDirection(game: this, angle: 0, distance: player.radius + 2))}");
+
     if (player.textDuration > 0) {
       player.textDuration--;
       if (player.textDuration == 0) {

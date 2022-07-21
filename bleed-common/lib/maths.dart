@@ -1,6 +1,10 @@
 
 import 'dart:math';
 
+double getDistanceXY(double x1, double y1, double x2, double y2){
+  return sqrt(squareDifference(x1, x2) + squareDifference(y1, y2));
+}
+
 double getDistanceV3(double x1, double y1, double z1, double x2, double y2, double z2){
   return sqrt(
       squareDifference(x1, x2)

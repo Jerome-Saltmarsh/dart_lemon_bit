@@ -1,5 +1,6 @@
 import 'package:lemon_math/library.dart';
 import '../common/library.dart';
+import '../common/maths.dart';
 import 'ai.dart';
 import 'character.dart';
 import 'enemy_spawn.dart';

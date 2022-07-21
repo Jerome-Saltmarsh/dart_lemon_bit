@@ -9,6 +9,7 @@ import 'components.dart';
 import 'character.dart';
 import 'enemy_spawn.dart';
 import 'game.dart';
+import 'player.dart';
 import 'weapon.dart';
 
 class AI extends Character with Material {
@@ -64,24 +65,23 @@ class AI extends Character with Material {
     destY = y;
   }
 
-  bool getCollisionInDirection({required Game game, required double angle, required double distance}){
-    return game.scene.getCollisionAt(x + getAdjacent(angle, distance), y + getOpposite(angle, distance), z + tileSizeHalf);
-  }
-
   @override
   void customUpdateCharacter(Game game){
-    if (deadOrBusy) return;
+    assert (!deadOrBusy);
 
     final target = this.target;
     if (target != null) {
       if (withinAttackRange(target)) {
-        attackTarget(target);
-        return;
+        return attackTarget(target);
       }
-      const runAtTargetDistance = 100;
-      if ((getDistance(target) < runAtTargetDistance)) {
-        return runAt(target);
+      if ((getDistance(target) < 300)) {
+        destX = target.x;
+        destY = target.y;
       }
+    }
+
+    if (target == Player){
+
     }
 
     if (!arrivedAtDest) {
@@ -89,41 +89,30 @@ class AI extends Character with Material {
       final r = radius + 2;
 
       if (!getCollisionInDirection(game: game, angle: destAngle, distance: r)){
-        faceDestination();
-        setCharacterStateRunning();
-        return;
-      }
+        angle = getDestinationAngle();
+      } else
       if (!getCollisionInDirection(game: game, angle: destAngle - piHalf, distance: r)){
         angle = destAngle - piHalf;
-        setCharacterStateRunning();
-        return;
-      }
+        print("running left to avoid");
+      } else
       if (!getCollisionInDirection(game: game, angle: destAngle + piHalf, distance: r)){
         angle = destAngle + piHalf;
-        setCharacterStateRunning();
-        return;
+        print("running right to avoid");
       }
-      return;
+      return setCharacterStateRunning();
     }
 
     if (pathIndex > 0){
       pathIndex--;
       destX = pathX[pathIndex];
       destY = pathY[pathIndex];
-      faceDestination();
+      angle = getDestinationAngle();
       setCharacterStateRunning();
       return;
     }
     state = CharacterState.Idle;
-
     applyBehaviorWander(game);
-
     customUpdateAI(game);
-  }
-
-  void faceDestination() {
-    if (deadOrBusy) return;
-    angle = getAngleBetween(x, y, destX, destY);
   }
 
   double getDestinationAngle(){

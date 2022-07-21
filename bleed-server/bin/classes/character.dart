@@ -95,15 +95,22 @@ class Character extends Collider with Team, Health, Velocity, Material {
     setCharacterStateRunning();
   }
 
+  bool getCollisionInDirection({required Game game, required double angle, required double distance}){
+    return game.scene.getCollisionAt(x + getAdjacent(angle, distance), y + getOpposite(angle, distance), z + tileHeightHalf);
+  }
+
+  int getGridTypeInDirection({required Game game, required double angle, required double distance}){
+    return game.scene.getGridBlockTypeAtXYZ(x + getAdjacent(angle, distance), y + getOpposite(angle, distance), z + tileHeightHalf);
+  }
+
   void updateCharacter(Game game){
     if (dead) return;
-    game.scene.resolveCharacterTileCollision(this, game);
     if (!busy){
       customUpdateCharacter(game);
     }
-    updateMovement();
+    updateMovement(game);
     updateCharacterState(game);
-
+    game.scene.resolveCharacterTileCollision(this, game);
   }
 
   void updateCharacterState(Game game){
@@ -170,11 +177,26 @@ class Character extends Collider with Team, Health, Velocity, Material {
     animationFrame = 0;
   }
 
-  void updateMovement() {
+  void updateMovement(Game game) {
     const minVelocity = 0.005;
     if (speed <= minVelocity) return;
+
     x += xv;
     y += yv;
+
+    final type = getGridTypeInDirection(game: game, angle: angle, distance: radius);
+    if (type == GridNodeType.Tree_Bottom || type == GridNodeType.Torch) {
+      final nodeCenterX = indexRow * tileSize + tileSizeHalf;
+      final nodeCenterY = indexColumn * tileSize + tileSizeHalf;
+      final dis = getDistanceXY(nodeCenterX, nodeCenterY);
+      const treeRadius = 5;
+      final overlap = dis - treeRadius - radius;
+      if (overlap < 0) {
+        x -= getAdjacent(angle, overlap);
+        y -= getOpposite(angle, overlap);
+      }
+    }
+
     speed *= 0.75; // friction
   }
 
