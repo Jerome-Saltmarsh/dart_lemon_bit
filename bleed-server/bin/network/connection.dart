@@ -455,7 +455,7 @@ class Connection {
             aimTarget.onInteractedWith?.call(player);
             break;
           }
-          return player.runToMouse();
+          return;
         }
 
         if (player.interactingWithNpc){

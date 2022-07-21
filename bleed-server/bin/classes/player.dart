@@ -130,13 +130,13 @@ class Player extends Character with ByteWriter {
   }
 
   void runToMouse(){
-    if (interactingWithNpc){
-      endInteraction();
-    }
     setRunTarget(mouse.x, mouse.y);
   }
 
   void setRunTarget(double x, double y){
+    if (interactingWithNpc){
+      endInteraction();
+    }
     _runTarget.x = x;
     _runTarget.y = y;
     target = _runTarget;

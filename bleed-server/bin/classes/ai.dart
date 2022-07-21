@@ -93,11 +93,9 @@ class AI extends Character with Material {
       } else
       if (!getCollisionInDirection(game: game, angle: destAngle - piHalf, distance: r)){
         angle = destAngle - piHalf;
-        print("running left to avoid");
       } else
       if (!getCollisionInDirection(game: game, angle: destAngle + piHalf, distance: r)){
         angle = destAngle + piHalf;
-        print("running right to avoid");
       }
       return setCharacterStateRunning();
     }
