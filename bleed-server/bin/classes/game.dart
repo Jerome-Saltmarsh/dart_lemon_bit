@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:math';
 
 import 'package:lemon_math/library.dart';
@@ -13,22 +12,34 @@ import '../maths.dart';
 import '../maths/get_distance_between_v3.dart';
 import '../physics.dart';
 import 'ai.dart';
-import 'enemy_spawn.dart';
-import 'position3.dart';
 import 'card_abilities.dart';
 import 'character.dart';
 import 'collectable.dart';
 import 'collider.dart';
+import 'components.dart';
+import 'enemy_spawn.dart';
 import 'game_object.dart';
-import 'npc.dart';
 import 'item.dart';
+import 'npc.dart';
 import 'player.dart';
+import 'position3.dart';
 import 'projectile.dart';
 import 'scene.dart';
 import 'tile_node.dart';
-import 'components.dart';
 import 'weapon.dart';
 import 'zombie.dart';
+
+// Magic Might Nimble
+
+// Bow, Blade, Staff
+
+// Element Fire, Electricity, Grass,
+
+// Combinations of element and skills unlock abilities
+
+// Fire improves Health
+
+// Water improves
 
 abstract class Game {
   final items = <Item>[];
@@ -861,6 +872,8 @@ extension GameFunctions on Game {
 
     if (stateDuration == 10 && ability is CardAbilityFireball) {
       spawnFireball(character, damage: ability.damage, range: ability.range);
+      spawnFireball(character, damage: ability.damage, range: ability.range, angle: character.angle + piQuarter);
+      spawnFireball(character, damage: ability.damage, range: ability.range, angle: character.angle - piQuarter);
     }
   }
 

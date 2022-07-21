@@ -5,4 +5,6 @@ class ProjectileType {
    static const Fireball = 2;
    static const Bullet = 3;
    static const Wave = 4;
+   static const Electric_Ball = 5;
+   static const Ice_Ball = 5;
 }

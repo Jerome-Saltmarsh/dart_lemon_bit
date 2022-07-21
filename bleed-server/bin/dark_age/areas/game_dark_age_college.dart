@@ -18,7 +18,7 @@ class GameDarkAgeCollege extends DarkAgeArea {
            if (player.questInProgress(Quest.Jenkins_Deliver_Scroll_To_College))
              "I was asked to deliver this (QUEST)": () {
                 player.completeQuest(Quest.Jenkins_Deliver_Scroll_To_College);
-                player.beginQuest(Quest.Rufius_Dark_Fortress_Lost_Treasure);
+                player.beginQuest(Quest.Rufus_Dark_Fortress_Lost_Treasure);
                 player.interact(
                     message: "Whats this?! How Intriguing! This a scroll written in the ancient language. According to this there is a hidden chamber deep within the Dark Castle containing an ancient power",
                 );

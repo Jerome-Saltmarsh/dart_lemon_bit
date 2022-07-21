@@ -500,9 +500,9 @@ class Connection {
           break;
         }
 
-        if (ability.cooldownRemaining > 0) {
-          return error(GameError.Cooldown_Remaining);
-        }
+        // if (ability.cooldownRemaining > 0) {
+        //   return error(GameError.Cooldown_Remaining);
+        // }
 
         switch (ability.mode) {
           case AbilityMode.Targeted:
