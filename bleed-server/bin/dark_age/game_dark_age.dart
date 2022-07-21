@@ -4,6 +4,8 @@ import 'package:lemon_math/library.dart';
 
 import '../classes/library.dart';
 import '../common/library.dart';
+import '../engine.dart';
+import 'areas/game_dark_age_village.dart';
 import 'dark_age_universe.dart';
 
 class GameDarkAge extends Game {
@@ -19,6 +21,16 @@ class GameDarkAge extends Game {
   @override
   void setHourMinutes(int hour, int minutes){
     universe.time = (hour * secondsPerHour) + (minutes * secondsPerMinute);
+  }
+
+  @override
+  void onPlayerRevived(Player player){
+      changeGame(player, engine.findGameDarkAgeVillage());
+      player.indexZ = 1;
+      player.indexRow = 25;
+      player.indexColumn = 17;
+      player.x += giveOrTake(5);
+      player.y += giveOrTake(5);
   }
 
   @override
@@ -65,11 +77,6 @@ class GameDarkAge extends Game {
 
   @override
   bool get full => false;
-
-  @override
-  void onPlayerDeath(Player player) {
-    // revive(player);
-  }
 
   void addNpcGuardBow({required int row, required int column, int z = 1}){
     addNpc(

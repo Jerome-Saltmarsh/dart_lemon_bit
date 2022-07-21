@@ -132,7 +132,11 @@ abstract class Game {
     character.state = CharacterState.Idle;
     character.health = character.maxHealth;
     character.collidable = true;
-    moveCharacterToGridNode(character, GridNodeType.Player_Spawn);
+    onPlayerRevived(character);
+  }
+
+  void onPlayerRevived(Player player){
+
   }
 
   /// In seconds
