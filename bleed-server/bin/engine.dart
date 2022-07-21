@@ -5,6 +5,7 @@ import 'constants/frames_per_second.dart';
 import 'dark_age/areas/game_dark_age_dark_fortress.dart';
 import 'dark_age/areas/game_dark_age_farm.dart';
 import 'dark_age/areas/game_dark_age_forest.dart';
+import 'dark_age/areas/game_dark_age_fortress_dungeon.dart';
 import 'dark_age/areas/game_dark_age_village.dart';
 import 'dark_age/dark_age_scenes.dart';
 import 'dark_age/dark_age_universe.dart';
@@ -84,6 +85,15 @@ class Engine {
       }
     }
     return GameDarkAgeVillage();
+  }
+
+  GameDarkAge findGameDarkAgeFortressDungeon() {
+    for (final game in games) {
+      if (game is GameDarkAgeFortressDungeon) {
+        return game;
+      }
+    }
+    return GameDarkAgeFortressDungeon();
   }
 
   GameDarkAge findGameDarkDarkFortress() {
