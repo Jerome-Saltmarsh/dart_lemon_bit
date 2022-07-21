@@ -30,7 +30,7 @@ class Projectile extends Collider with Active, Velocity {
 
   void setVelocityTowards(Position3 position){
     angle = this.getAngle(position);
-    z += (z - position.z) * 0.1;
+    z += (position.z - z) * 0.05;
   }
 }
 
