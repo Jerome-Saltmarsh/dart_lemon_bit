@@ -43,6 +43,10 @@ abstract class Game {
 
   Game(this.scene) {
     engine.onGameCreated(this);
+
+    for (final enemySpawn in scene.enemySpawns){
+      enemySpawn.init(this);
+    }
   }
 
   void onGridChanged(){
@@ -1350,17 +1354,17 @@ extension GameFunctions on Game {
     required int health, int max = 5,
     double wanderRadius = 200,
   }){
-    scene.enemySpawns.add(
-        EnemySpawn(
-          z: z,
-          row: row,
-          column: column,
-          framesPerSpawn: 30,
-          health: health,
-          max: max,
-          wanderRadius: wanderRadius,
-        )
+    final instance =         EnemySpawn(
+      z: z,
+      row: row,
+      column: column,
+      framesPerSpawn: 30,
+      health: health,
+      max: max,
+      wanderRadius: wanderRadius,
     );
+    scene.enemySpawns.add(instance);
+    instance.init(this);
   }
 
   Npc addNpc({

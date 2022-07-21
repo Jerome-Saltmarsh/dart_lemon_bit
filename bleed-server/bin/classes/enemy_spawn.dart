@@ -26,14 +26,25 @@ class EnemySpawn {
     this.framesPerSpawn = framesPerSecond * 5,
     this.max = 5,
     this.wanderRadius = 300,
-  });
+  }) {
+    framesUntilSpawn = framesPerSpawn;
+  }
 
   void update(Game game){
     if (count >= max) return;
     if (framesUntilSpawn-- > 0) return;
     framesUntilSpawn = framesPerSpawn;
-    count++;
+    spawn(game);
+  }
 
+  void init(Game game){
+     for (var i = 0; i < max; i++){
+       spawn(game);
+     }
+  }
+
+  void spawn(Game game){
+    count++;
     game.spawnZombie(
       x: row * tileSize + tileSizeHalf + giveOrTake(wanderRadius),
       y: column * tileSize + tileSizeHalf + giveOrTake(wanderRadius),
