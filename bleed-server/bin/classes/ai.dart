@@ -10,6 +10,7 @@ import 'character.dart';
 import 'enemy_spawn.dart';
 import 'game.dart';
 import 'player.dart';
+import 'position3.dart';
 import 'weapon.dart';
 
 class AI extends Character with Material {
@@ -140,12 +141,12 @@ class AI extends Character with Material {
     target = objective;
   }
 
-  bool withinViewRange(Position target) {
+  bool withinViewRange(Position3 target) {
     if (target == objective) return true;
     return withinRadius(this, target, viewRange);
   }
 
-  bool withinChaseRange(Position target) {
+  bool withinChaseRange(Position3 target) {
     if (target == objective) return true;
     return withinRadius(this, target, chaseRange);
   }

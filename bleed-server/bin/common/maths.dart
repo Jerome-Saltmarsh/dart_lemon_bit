@@ -1,6 +1,11 @@
 
 import 'dart:math';
 
+
+double getMagnitudeV3(num x, num y, num z){
+  return sqrt((x * x) + (y * y) + (z * z));
+}
+
 double getDistanceXY(double x1, double y1, double x2, double y2){
   return sqrt(squareDifference(x1, x2) + squareDifference(y1, y2));
 }

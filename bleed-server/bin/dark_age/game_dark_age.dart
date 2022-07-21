@@ -5,7 +5,6 @@ import 'package:lemon_math/library.dart';
 import '../classes/library.dart';
 import '../common/library.dart';
 import '../engine.dart';
-import 'areas/game_dark_age_village.dart';
 import 'dark_age_universe.dart';
 
 class GameDarkAge extends Game {

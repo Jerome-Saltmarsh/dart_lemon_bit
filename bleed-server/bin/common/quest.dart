@@ -5,6 +5,7 @@ enum Quest {
   Jenkins_Deliver_Scroll_To_College,
   Garry_Kill_Farm_Zombies,
   Garry_Return_To_Garry,
+  Rufius_Dark_Fortress_Lost_Treasure,
 }
 
 const quests = Quest.values;

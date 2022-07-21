@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:lemon_math/library.dart';
 
 import 'position3.dart';
@@ -35,5 +37,16 @@ class Collider extends Position3 with Radius {
 
   void onStruck(dynamic src){
 
+  }
+
+  double distanceFromPos3(Position3 value) {
+    return distanceFromXYZ(value.x, value.y, value.z);
+  }
+
+  double distanceFromXYZ(double x, double y, double z) {
+    final a = this.x - x;
+    final b = this.y - y;
+    final c = this.z - z;
+    return sqrt((a * a) + (b * b) + (c * c));
   }
 }

@@ -1,23 +1,27 @@
 
 import 'dart:math';
 
-import 'package:lemon_math/library.dart';
 
 import '../classes/collider.dart';
 import '../classes/player.dart';
+import '../classes/position3.dart';
+import '../common/maths.dart';
 
-bool withinRadius(Position a, Position b, num radius){
-  return withinDistance(a, b.x, b.y, radius);
+bool withinRadius(Position3 a, Position3 b, num radius){
+  return withinDistance(a, b.x, b.y, b.z, radius);
 }
 
-bool withinDistance(Position positioned, double x, double y, num radius){
+bool withinDistance(Position3 positioned, double x, double y, double z, num radius){
   final xDiff = (positioned.x - x).abs();
   if (xDiff > radius) return false;
 
   final yDiff = (positioned.y - y).abs();
   if (yDiff > radius) return false;
 
-  return magnitude(xDiff, yDiff) <= radius;
+  final zDiff = (positioned.z - z).abs();
+  if (zDiff > radius) return false;
+
+  return getMagnitudeV3(xDiff, yDiff, zDiff) <= radius;
 }
 
 double magnitude(num adjacent, num opposite){
