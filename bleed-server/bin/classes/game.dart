@@ -29,18 +29,6 @@ import 'tile_node.dart';
 import 'weapon.dart';
 import 'zombie.dart';
 
-// Magic Might Nimble
-
-// Bow, Blade, Staff
-
-// Element Fire, Electricity, Grass,
-
-// Combinations of element and skills unlock abilities
-
-// Fire improves Health
-
-// Water improves
-
 abstract class Game {
   final items = <Item>[];
   final zombies = <Zombie>[];
@@ -850,6 +838,7 @@ extension GameFunctions on Game {
         spawnProjectileArrow(character, damage: ability.damage, range: ability.range, accuracy: 0.2);
       }
       character.target = null;
+      character.ability = null;
     }
 
     if (ability is CardAbilityBowLongShot && stateDuration == 5) {
@@ -860,6 +849,7 @@ extension GameFunctions on Game {
           range: 9999
       );
       character.target = null;
+      character.ability = null;
     }
 
     if (stateDuration == 10 && ability is CardAbilityExplosion){
@@ -868,13 +858,16 @@ extension GameFunctions on Game {
         spawnExplosion(src: character, target: target, damage: ability.damage);
         character.target = null;
       }
+      character.ability = null;
     }
 
     if (stateDuration == 10 && ability is CardAbilityFireball) {
       spawnFireball(character, damage: ability.damage, range: ability.range);
-      spawnFireball(character, damage: ability.damage, range: ability.range, angle: character.angle + piQuarter);
-      spawnFireball(character, damage: ability.damage, range: ability.range, angle: character.angle - piQuarter);
+      spawnFireball(character, damage: ability.damage, range: ability.range, angle: character.angle + piEighth);
+      spawnFireball(character, damage: ability.damage, range: ability.range, angle: character.angle - piEighth);
+      character.ability = null;
     }
+
   }
 
   void updateCharacter(Character character) {
