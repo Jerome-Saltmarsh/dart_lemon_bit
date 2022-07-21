@@ -7,8 +7,9 @@ import 'dark_age_area.dart';
 class GameDarkAgeDarkFortress extends DarkAgeArea {
   GameDarkAgeDarkFortress() : super(darkAgeScenes.darkFortress, mapX: 0, mapY: 0) {
     addEnemySpawn(z: 1, row: 14, column: 28, health: 5, max: 5, wanderRadius: 100);
+    addEnemySpawn(z: 6, row: 15, column: 21, health: 5, max: 1, wanderRadius: 50);
+    addEnemySpawn(z: 6, row: 24, column: 21, health: 5, max: 1, wanderRadius: 50);
   }
-
 
   @override
   void updateInternal() {
