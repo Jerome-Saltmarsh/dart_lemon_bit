@@ -316,12 +316,12 @@ void spawnParticleRockShard(double x, double y){
   );
 }
 
-void spawnParticleTreeShard(double x, double y){
+void spawnParticleTreeShard(double x, double y, double z){
   spawnParticle(
     type: ParticleType.Tree_Shard,
     x: x,
     y: y,
-    z: randomBetween(0.0, 0.2),
+    z: z,
     angle: randomAngle(),
     speed: randomBetween(0.5, 1.25),
     zv: randomBetween(0.1, 0.2),

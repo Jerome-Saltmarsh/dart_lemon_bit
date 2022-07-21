@@ -247,7 +247,7 @@ class Player extends Character with ByteWriter {
   }
 
   void dispatchGameEvent(int type){
-    game.dispatchV2(GameEventType.Character_Changing, this);
+    game.dispatchV3(GameEventType.Character_Changing, this);
   }
 
   void setCharacterSelectionRequired(bool value){

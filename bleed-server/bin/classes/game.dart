@@ -192,7 +192,7 @@ abstract class Game {
     required Position3 target,
     required int damage
   }) {
-    dispatchV2(GameEventType.Explosion, target);
+    dispatchV3(GameEventType.Explosion, target);
     for (final character in zombies) {
        if (onSameTeam(src, target)) continue;
        if (character.getDistance(src) > 50) continue;
@@ -383,20 +383,20 @@ extension GameFunctions on Game {
     if (target is Material) {
       switch ((target as Material).material) {
         case MaterialType.Rock:
-          dispatchV2(GameEventType.Material_Struck_Rock, target as Position3);
+          dispatchV3(GameEventType.Material_Struck_Rock, target as Position3);
           break;
         case MaterialType.Wood:
-          dispatchV2(GameEventType.Material_Struck_Wood, target as Position3);
+          dispatchV3(GameEventType.Material_Struck_Wood, target as Position3);
           break;
         case MaterialType.Plant:
-          dispatchV2(GameEventType.Material_Struck_Plant, target as Position3);
+          dispatchV3(GameEventType.Material_Struck_Plant, target as Position3);
           break;
         case MaterialType.Flesh:
-          dispatchV2(GameEventType.Material_Struck_Flesh,
+          dispatchV3(GameEventType.Material_Struck_Flesh,
               target as Position3, angle: radiansV2(src, target as Position3));
           break;
         case MaterialType.Metal:
-          dispatchV2(GameEventType.Material_Struck_Metal, target as Position3);
+          dispatchV3(GameEventType.Material_Struck_Metal, target as Position3);
           break;
       }
     }
@@ -412,7 +412,7 @@ extension GameFunctions on Game {
       }
       if (target is Character) {
         if (target.dead && target is Zombie) {
-          dispatchV2(
+          dispatchV3(
             GameEventType.Zombie_Killed,
             target,
             angle: radiansV2(src, target),
@@ -443,7 +443,7 @@ extension GameFunctions on Game {
         return;
       }
       if (isZombie && randomBool()) {
-        dispatchV2(
+        dispatchV3(
           GameEventType.Zombie_Hurt,
           target,
         );
@@ -483,13 +483,13 @@ extension GameFunctions on Game {
         notifyPlayersDynamicObjectDestroyed(target);
 
         if (target.type == GameObjectType.Pot) {
-          dispatchV2(GameEventType.Object_Destroyed_Pot, target);
+          dispatchV3(GameEventType.Object_Destroyed_Pot, target);
         } else if (target.type == GameObjectType.Rock) {
-          dispatchV2(GameEventType.Object_Destroyed_Rock, target);
+          dispatchV3(GameEventType.Object_Destroyed_Rock, target);
         } else if (target.type == GameObjectType.Tree) {
-          dispatchV2(GameEventType.Object_Destroyed_Tree, target);
+          dispatchV3(GameEventType.Object_Destroyed_Tree, target);
         } else if (target.type == GameObjectType.Chest) {
-          dispatchV2(GameEventType.Object_Destroyed_Chest, target);
+          dispatchV3(GameEventType.Object_Destroyed_Chest, target);
           for (var i = 0; i < 3; i++) {
             spawnCollectable(
                 position: target,
@@ -572,7 +572,7 @@ extension GameFunctions on Game {
     }
 
     if (character is Player) {
-      dispatchV2(GameEventType.Player_Death, character);
+      dispatchV3(GameEventType.Player_Death, character);
       onPlayerDeath(character);
     }
 
@@ -634,6 +634,10 @@ extension GameFunctions on Game {
       if (!projectile.active) continue;
       if (projectile.collideWithEnvironment) continue;
       if (scene.getCollisionAt(projectile.x, projectile.y, projectile.z)) {
+        var type = scene.getGridBlockTypeAtXYZ(projectile.x, projectile.y, projectile.z);
+        if (type == GridNodeType.Tree_Bottom){
+          dispatch(GameEventType.Material_Struck_Wood, projectile.x, projectile.y, projectile.z);
+        }
         deactivateProjectile(projectile);
       }
     }
@@ -804,7 +808,7 @@ extension GameFunctions on Game {
       }
 
       if (src is Character && src is Zombie){
-        dispatchV2(GameEventType.Zombie_Strike, src);
+        dispatchV3(GameEventType.Zombie_Strike, src);
       }
       target.onStruck(src);
 
@@ -866,7 +870,7 @@ extension GameFunctions on Game {
   }
 
   Projectile spawnProjectileOrb(Character src, {required int damage}) {
-    dispatchV2(GameEventType.Blue_Orb_Fired, src);
+    dispatchV3(GameEventType.Blue_Orb_Fired, src);
     return spawnProjectile(
       src: src,
       accuracy: 0,
@@ -905,7 +909,7 @@ extension GameFunctions on Game {
     required double range,
     double? angle,
   }) {
-    dispatch(GameEventType.Projectile_Fired_Fireball, src.x, src.y, src.y);
+    dispatchV3(GameEventType.Projectile_Fired_Fireball, src);
     return spawnProjectile(
       src: src,
       accuracy: 0,
@@ -948,7 +952,7 @@ extension GameFunctions on Game {
     var finalAngle = angle;
     if (finalAngle == null){
       if (target != null){
-        finalAngle = src.getAngle(target!);
+        finalAngle = src.getAngle(target);
       } else {
         finalAngle = src.angle;
       }
@@ -1036,7 +1040,7 @@ extension GameFunctions on Game {
   }
 
   /// GameEventType
-  void dispatchV2(int type, Position3 position, {double angle = 0}) {
+  void dispatchV3(int type, Position3 position, {double angle = 0}) {
     dispatch(type, position.x, position.y, position.z, angle);
   }
 
@@ -1203,21 +1207,21 @@ extension GameFunctions on Game {
     final weaponType = character.equippedWeapon.type;
     if (weaponType == WeaponType.Sword) {
       if (stateDuration == 7) {
-        dispatchV2(GameEventType.Sword_Woosh, character);
+        dispatchV3(GameEventType.Sword_Woosh, character);
       }
     }
     if (weaponType == WeaponType.Unarmed) {
       if (stateDuration == 7) {
-        dispatchV2(GameEventType.Arm_Swing, character);
+        dispatchV3(GameEventType.Arm_Swing, character);
       }
     }
     if (weaponType == WeaponType.Handgun) {
       if (stateDuration == 1) {
         if (character.equippedIsEmpty) {
-          dispatchV2(GameEventType.Clip_Empty, character);
+          dispatchV3(GameEventType.Clip_Empty, character);
           return;
         }
-        dispatchV2(GameEventType.Handgun_Fired, character,
+        dispatchV3(GameEventType.Handgun_Fired, character,
             angle: character.angle);
         return;
       }
@@ -1237,10 +1241,10 @@ extension GameFunctions on Game {
     if (character.equippedTypeIsShotgun) {
       if (stateDuration == 1) {
         if (character.equippedIsEmpty) {
-          dispatchV2(GameEventType.Ammo_Acquired, character);
+          dispatchV3(GameEventType.Ammo_Acquired, character);
           return;
         }
-        dispatchV2(GameEventType.Shotgun_Fired, character);
+        dispatchV3(GameEventType.Shotgun_Fired, character);
         final totalBullets = 4;
         for (int i = 0; i < totalBullets; i++) {
           spawnProjectileBullet(
@@ -1253,7 +1257,7 @@ extension GameFunctions on Game {
     }
 
     if (character.equippedTypeIsBow && stateDuration == 1) {
-      dispatchV2(GameEventType.Draw_Bow, character);
+      dispatchV3(GameEventType.Draw_Bow, character);
     }
 
     if (stateDuration != framePerformStrike) return;
@@ -1265,7 +1269,7 @@ extension GameFunctions on Game {
     }
 
     if (character.equippedTypeIsBow) {
-      dispatchV2(GameEventType.Release_Bow, character);
+      dispatchV3(GameEventType.Release_Bow, character);
       spawnProjectileArrow(character, damage: equippedDamage, target: character.target, range: character.equippedRange);
       character.target = null;
       return;

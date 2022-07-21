@@ -1,6 +1,7 @@
 import 'audio_single.dart';
 
 final audioSingleThunder = AudioSingle(name: 'thunder', volume: 0.5, maxDistance: 100);
+final audioSingleFireball = AudioSingle(name: 'fire-bolt-14', volume: 0.5, maxDistance: 200);
 final audioSingleFootstepGrass8 = AudioSingle(name: 'footstep-grass-8', volume: 0.05, maxDistance: 200);
 final audioSingleFootstepGrass7 = AudioSingle(name: 'footstep-grass-7', volume: 0.05, maxDistance: 200);
 final audioSingleFootstepMud6 = AudioSingle(name: 'mud-footstep-6', volume: 0.05, maxDistance: 200);

@@ -185,23 +185,21 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
 
     case GameEventType.Object_Destroyed_Tree:
       for (var i = 0; i < 8; i++) {
-        spawnParticleTreeShard(x, y);
+        spawnParticleTreeShard(x, y, z);
       }
-      audio.treeBreaking(x, y);
       break;
 
     case GameEventType.Object_Destroyed_Chest:
       for (var i = 0; i < 8; i++) {
-        spawnParticleShardWood(x, y);
+        spawnParticleTreeShard(x, y, z);
       }
       audio.crateDestroyed(x, y);
       break;
 
     case GameEventType.Material_Struck_Wood:
       for (var i = 0; i < 8; i++) {
-        spawnParticleTreeShard(x, y);
+        // spawnParticleTreeShard(x, y, z);
       }
-      audio.materialStruckWood(x, y);
       break;
 
     case GameEventType.Material_Struck_Rock:
@@ -253,7 +251,6 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       break;
 
     case GameEventType.Projectile_Fired_Fireball:
-      audio.firebolt(x, y);
-      break;
+      return audioSingleFireball.playXYZ(x, y, z);
   }
 }
