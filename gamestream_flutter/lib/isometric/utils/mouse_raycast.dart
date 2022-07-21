@@ -22,3 +22,22 @@ void mouseRaycast(Function(int z, int row, int column) callback){
     return;
   }
 }
+
+void raycastXYZ(double x, double y, double z, Function(int z, int row, int column) callback){
+  var zIndex = gridTotalZ - 1;
+  while (zIndex >= 0){
+    final row = convertWorldToRow(x, y, z);
+    final column = convertWorldToColumn(x, y, z);
+    if (row < 0) break;
+    if (column < 0) break;
+    if (row >= gridTotalRows) break;
+    if (column >= gridTotalColumns) break;
+    if (zIndex >= gridTotalZ) break;
+    if (grid[zIndex][row][column] == GridNodeType.Empty) {
+      zIndex--;
+      continue;
+    }
+    callback(zIndex, row, column);
+    return;
+  }
+}

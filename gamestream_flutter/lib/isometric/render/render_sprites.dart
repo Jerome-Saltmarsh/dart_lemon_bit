@@ -252,7 +252,7 @@ class RenderOrderGrid extends RenderOrder {
         final renderColumnDistance = (renderColumn - playerRenderColumn).abs();
         const radius = 7;
         if (renderRowDistance < radius && renderColumnDistance < radius){
-          if (gridZ > playerZ + 2) return;
+          if (gridZ > playerZ + 1) return;
           final renderRowMatch = renderRow == playerRenderRow;
           final renderColumnMatch = renderColumn == playerRenderColumn;
           if (
@@ -315,7 +315,18 @@ class RenderOrderGrid extends RenderOrder {
     playerRenderColumn = playerColumn - (player.indexZ ~/ 2);
     playerUnderRoof = gridIsUnderSomething(playerZ, playerRow, playerColumn);
     gridZGreaterThanPlayerZ = false;
-    playerImperceptible = !gridIsPerceptible(playerZ, playerRow, playerColumn);
+
+    playerImperceptible =
+        !gridIsPerceptible(playerZ, playerRow, playerColumn)
+          ||
+        !gridIsPerceptible(playerZ + 1, playerRow, playerColumn)
+          ||
+        !gridIsPerceptible(playerZ, playerRow + 1, playerColumn + 1)
+          ||
+        !gridIsPerceptible(playerZ, playerRow - 1, playerColumn)
+          ||
+        !gridIsPerceptible(playerZ, playerRow , playerColumn - 1)
+    ;
 
     screenRight = screen.right + tileSize;
     screenLeft = screen.left - tileSize;
