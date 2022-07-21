@@ -142,7 +142,7 @@ class Player extends Character with ByteWriter {
     target = _runTarget;
   }
 
-  void setCardAbility(CardAbility value){
+  void setCardAbility(Power value){
     if (ability == value) return;
     ability = value;
     writeByte(ServerResponse.Player_Deck_Active_Ability);
@@ -750,7 +750,7 @@ extension PlayerProperties on Player {
     writeByte(ServerResponse.Player_Deck_Cooldown);
     writeByte(deck.length);
     for (final card in deck) {
-      if (card is CardAbility){
+      if (card is Power){
         if (card.cooldownRemaining > 0){
           card.cooldownRemaining--;
         }

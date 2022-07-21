@@ -307,7 +307,7 @@ class Connection {
           return;
         }
 
-        if (card is CardAbility && card.cooldownRemaining <= 0) {
+        if (card is Power && card.cooldownRemaining <= 0) {
           player.setCardAbility(card);
         }
         break;
@@ -358,14 +358,14 @@ class Connection {
 
       case ClientRequest.Caste:
         if (player.deadOrBusy) return;
-        player.ability = CardAbilityFireball();
+        player.ability = PowerFireball();
         player.angle = player.mouseAngle;
         player.setCharacterStatePerforming(duration: 30);
         break;
 
       case ClientRequest.Caste_Basic:
         if (player.deadOrBusy) return;
-        player.ability = CardAbilityFireball();
+        player.ability = PowerFireball();
         player.setCharacterStatePerforming(duration: 30);
         break;
 

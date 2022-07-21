@@ -5,13 +5,13 @@ import '../functions/withinRadius.dart';
 import 'collider.dart';
 import 'game.dart';
 import 'position3.dart';
-import 'card_abilities.dart';
+import 'power.dart';
 import 'components.dart';
 import 'weapon.dart';
 
 class Character extends Collider with Team, Health, Velocity, Material {
   late double movementSpeed;
-  CardAbility? ability = null;
+  Power? ability = null;
   double accuracy = 0;
   var state = CharacterState.Idle;
   var stateDurationRemaining = 0;

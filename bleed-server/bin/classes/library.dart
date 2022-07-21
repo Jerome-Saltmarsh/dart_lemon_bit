@@ -1,5 +1,5 @@
 
-export 'card_abilities.dart';
+export 'power.dart';
 export 'card.dart';
 export 'character.dart';
 export 'collectable.dart';

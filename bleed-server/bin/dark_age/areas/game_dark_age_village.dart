@@ -113,5 +113,10 @@ class GameDarkAgeVillage extends DarkAgeArea {
             "Play": player.endInteraction,
         }
      );
+     player.deck.addAll([
+       PowerFireball(),
+       PowerLongShot(),
+     ]);
+     player.writeDeck();
   }
 }

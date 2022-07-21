@@ -12,7 +12,7 @@ import '../maths.dart';
 import '../maths/get_distance_between_v3.dart';
 import '../physics.dart';
 import 'ai.dart';
-import 'card_abilities.dart';
+import 'power.dart';
 import 'character.dart';
 import 'collectable.dart';
 import 'collider.dart';
@@ -38,8 +38,6 @@ abstract class Game {
   final collectables = <Collectable>[];
   var frame = 0;
   final Scene scene;
-
-  var playersCanAttackDynamicObjects = false;
 
   Game(this.scene) {
     engine.onGameCreated(this);
@@ -841,7 +839,7 @@ extension GameFunctions on Game {
       character.ability = null;
     }
 
-    if (ability is CardAbilityBowLongShot && stateDuration == 5) {
+    if (ability is PowerLongShot && stateDuration == 5) {
       spawnProjectileArrow(
           character,
           damage: ability.damage,
@@ -861,7 +859,7 @@ extension GameFunctions on Game {
       character.ability = null;
     }
 
-    if (stateDuration == 10 && ability is CardAbilityFireball) {
+    if (stateDuration == 10 && ability is PowerFireball) {
       spawnFireball(character, damage: ability.damage, range: ability.range);
       spawnFireball(character, damage: ability.damage, range: ability.range, angle: character.angle + piEighth);
       spawnFireball(character, damage: ability.damage, range: ability.range, angle: character.angle - piEighth);
@@ -957,7 +955,7 @@ extension GameFunctions on Game {
     final projectile = getAvailableProjectile();
     var finalAngle = angle;
     if (finalAngle == null){
-      if (target != null){
+      if (target != null && target is Collider){
         finalAngle = src.getAngle(target);
       } else {
         finalAngle = src.angle;
@@ -966,7 +964,9 @@ extension GameFunctions on Game {
     projectile.damage = damage;
     projectile.collidable = true;
     projectile.active = true;
-    projectile.target = target;
+    if (target is Collider){
+      projectile.target = target;
+    }
     projectile.start.x = src.x;
     projectile.start.y = src.y;
     projectile.x = src.x;

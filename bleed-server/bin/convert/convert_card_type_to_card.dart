@@ -15,7 +15,7 @@ Card convertCardTypeToCard(CardType type){
     case CardType.Ability_Bow_Volley:
       return CardAbilityBowVolley();
     case CardType.Ability_Bow_Long_Shot:
-      return CardAbilityBowLongShot();
+      return PowerLongShot();
     case CardType.Ability_Staff_Heal_10:
       break;
     case CardType.Ability_Staff_Strong_Orb:
@@ -23,7 +23,7 @@ Card convertCardTypeToCard(CardType type){
     case CardType.Ability_Explosion:
       return CardAbilityExplosion();
     case CardType.Ability_Fireball:
-      return CardAbilityFireball();
+      return PowerFireball();
   }
   throw UnimplementedError('Cannot convert card type $type to card');
 }

@@ -2,7 +2,7 @@ import '../common/AbilityMode.dart';
 import '../common/card_type.dart';
 import 'card.dart';
 
-abstract class CardAbility extends Card {
+abstract class Power extends Card {
   int cooldownRemaining = 0;
   int cooldown;
   AbilityMode mode;
@@ -14,7 +14,7 @@ abstract class CardAbility extends Card {
 
   bool get isModeArea => mode == AbilityMode.Area;
 
-  CardAbility({
+  Power({
     required CardType type,
     required this.cooldown,
     required this.mode,
@@ -24,7 +24,7 @@ abstract class CardAbility extends Card {
 }
 
 
-class CardAbilityExplosion extends CardAbility {
+class CardAbilityExplosion extends Power {
 
   @override
   double get range => 200;
@@ -42,7 +42,7 @@ class CardAbilityExplosion extends CardAbility {
   );
 }
 
-class CardAbilityBowVolley extends CardAbility {
+class CardAbilityBowVolley extends Power {
 
   @override
   int get damage => 3;
@@ -57,7 +57,7 @@ class CardAbilityBowVolley extends CardAbility {
   );
 }
 
-class CardAbilityBowLongShot extends CardAbility {
+class PowerLongShot extends Power {
 
   @override
   double get range => 300;
@@ -65,14 +65,14 @@ class CardAbilityBowLongShot extends CardAbility {
   @override
   int get damage => 10 + (level * 5);
 
-  CardAbilityBowLongShot() : super(
+  PowerLongShot() : super(
       type: CardType.Ability_Bow_Long_Shot,
       cooldown: 20,
       mode: AbilityMode.Targeted,
   );
 }
 
-class CardAbilityFireball extends CardAbility {
+class PowerFireball extends Power {
 
   @override
   double get range => 200;
@@ -80,7 +80,7 @@ class CardAbilityFireball extends CardAbility {
   @override
   int get damage => 3;
 
-  CardAbilityFireball() : super(
+  PowerFireball() : super(
     type: CardType.Ability_Fireball,
     cooldown: 10,
     mode: AbilityMode.Targeted,
