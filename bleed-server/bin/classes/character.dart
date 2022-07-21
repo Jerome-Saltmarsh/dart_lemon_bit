@@ -83,6 +83,10 @@ class Character extends Collider with Team, Health, Velocity, Material {
 
   }
 
+  void clearAbility(){
+    ability = null;
+  }
+
   void attackTarget(Position3 target) {
     if (deadOrBusy) return;
     face(target);

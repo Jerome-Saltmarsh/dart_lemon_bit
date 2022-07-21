@@ -136,7 +136,7 @@ void spawnParticleArm({
     angle: angle,
     speed: speed,
     zv: randomBetween(0.04, 0.06),
-    weight: 0.25,
+    weight: 6,
     duration: bodyPartDuration,
     rotation: giveOrTake(pi),
     rotationV: giveOrTake(0.25),

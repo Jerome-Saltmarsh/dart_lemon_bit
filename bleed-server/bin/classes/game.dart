@@ -647,8 +647,6 @@ extension GameFunctions on Game {
   void updatePlayer(Player player) {
     player.framesSinceClientRequest++;
 
-    // print("type in front: ${GridNodeType.getName(player.getGridTypeInDirection(game: this, angle: 0, distance: player.radius + 2))}");
-
     if (player.textDuration > 0) {
       player.textDuration--;
       if (player.textDuration == 0) {
@@ -850,6 +848,8 @@ extension GameFunctions on Game {
       character.ability = null;
     }
 
+    ability.onActivated(character, this);
+
     if (stateDuration == 10 && ability is CardAbilityExplosion){
       final target = character.target;
       if (target != null) {
@@ -858,14 +858,6 @@ extension GameFunctions on Game {
       }
       character.ability = null;
     }
-
-    if (stateDuration == 10 && ability is PowerFireball) {
-      spawnFireball(character, damage: ability.damage, range: ability.range);
-      spawnFireball(character, damage: ability.damage, range: ability.range, angle: character.angle + piEighth);
-      spawnFireball(character, damage: ability.damage, range: ability.range, angle: character.angle - piEighth);
-      character.ability = null;
-    }
-
   }
 
   void updateCharacter(Character character) {
@@ -908,7 +900,7 @@ extension GameFunctions on Game {
     );
   }
 
-  Projectile spawnFireball(Character src, {
+  Projectile spawnProjectileFireball(Character src, {
     required int damage,
     required double range,
     double? angle,

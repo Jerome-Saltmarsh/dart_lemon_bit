@@ -11,6 +11,7 @@ enum CardType {
    Ability_Bow_Long_Shot,
    Ability_Explosion,
    Ability_Fireball,
+   Power_Stun_Strike,
    Ability_Staff_Heal_10,
    Ability_Staff_Strong_Orb,
    Passive_General_Max_HP_10,

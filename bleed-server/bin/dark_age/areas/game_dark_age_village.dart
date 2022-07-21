@@ -116,6 +116,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
      player.deck.addAll([
        PowerFireball(),
        PowerLongShot(),
+       PowerStunStrike(),
      ]);
      player.writeDeck();
   }

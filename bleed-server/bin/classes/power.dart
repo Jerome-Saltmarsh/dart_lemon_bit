@@ -1,6 +1,11 @@
+import 'package:lemon_math/library.dart';
+
 import '../common/AbilityMode.dart';
 import '../common/card_type.dart';
+import '../common/library.dart';
 import 'card.dart';
+import 'character.dart';
+import 'game.dart';
 
 abstract class Power extends Card {
   int cooldownRemaining = 0;
@@ -21,6 +26,10 @@ abstract class Power extends Card {
   }) :super(type);
 
   void update() {}
+
+  void onActivated(Character src, Game game){
+
+  }
 }
 
 
@@ -85,6 +94,26 @@ class PowerFireball extends Power {
     cooldown: 10,
     mode: AbilityMode.Targeted,
   );
+
+  @override
+  void onActivated(Character src, Game game) {
+    if (src.stateDuration != 10) return;
+    final piSixteenth = piEighth * 0.5;
+    game.spawnProjectileFireball(src, damage: damage, range: range);
+    game.spawnProjectileFireball(src, damage: damage, range: range, angle: src.angle + piSixteenth);
+    game.spawnProjectileFireball(src, damage: damage, range: range, angle: src.angle - piSixteenth);
+    src.clearAbility();
+  }
+}
+
+class PowerStunStrike extends Power {
+  PowerStunStrike() : super(type: CardType.Power_Stun_Strike, cooldown: 100, mode: AbilityMode.Targeted);
+
+  int get damage => 5;
+
+  @override
+  double get range => 100;
+
 }
 
 
