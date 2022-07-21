@@ -74,6 +74,7 @@ Row buildTopLeftMenu() {
                     children: [
                       container(child: "Edit", color: brownLight),
                       container(child: "Canvas Size", color: brownLight, hoverColor: brownDark, action: actionGameDialogEditCanvasSizeShow),
+                      container(child: "Floor Bricks", color: brownLight, hoverColor: brownDark, action: edit.paintFloorBricks),
                     ],
                   );
                 }

@@ -7,6 +7,7 @@ import 'package:lemon_watch/watch.dart';
 
 import 'editor/events/on_editor_row_changed.dart';
 import 'grid.dart';
+import 'player.dart';
 
 final edit = EditState();
 
@@ -42,6 +43,26 @@ class EditState {
     for (var zIndex = 0; zIndex <= z.value; zIndex++){
       sendClientRequestSetBlock(row.value, column.value, zIndex, paintType.value);
     }
+  }
+
+  void paintPlayerBlock(){
+    sendClientRequestSetBlock(player.indexRow, player.indexColumn, player.indexZ, paintType.value);
+  }
+
+  void paintTorch(){
+    sendClientRequestSetBlock(row.value, column.value, z.value, GridNodeType.Torch);
+  }
+
+  void paintBricks(){
+    sendClientRequestSetBlock(row.value, column.value, z.value, GridNodeType.Bricks);
+  }
+
+  void paintFloorBricks(){
+     for (var row = 0; row < gridTotalRows; row++){
+        for (var column = 0; column < gridTotalColumns; column++){
+          sendClientRequestSetBlock(row, column, 0, GridNodeType.Bricks);
+        }
+     }
   }
 
   void selectBlock(int z, int row, int column){

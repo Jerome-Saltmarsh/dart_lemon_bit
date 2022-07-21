@@ -12,7 +12,6 @@ import '../maths.dart';
 import '../maths/get_distance_between_v3.dart';
 import '../physics.dart';
 import 'ai.dart';
-import 'power.dart';
 import 'character.dart';
 import 'collectable.dart';
 import 'collider.dart';

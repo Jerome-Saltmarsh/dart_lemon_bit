@@ -21,7 +21,9 @@ class DarkAgeUniverse {
 
    var time = 12 * 60 * 60;
 
-   Lightning get lightning => _lightning;
+   DarkAgeUniverse();
+
+  Lightning get lightning => _lightning;
    Rain get raining => _raining;
    bool get breezy => _breezy;
    bool get timePassing => _timePassing;

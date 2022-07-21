@@ -24,7 +24,7 @@ class GameDarkAgeDarkFortress extends DarkAgeArea {
         continue;
       }
 
-      if (column == 17 && (row == 19 || row == 18)) {
+      if (player.indexZ == 8 && column == 16 && (row == 18 || row == 18)) {
         player.changeGame(engine.findGameDarkAgeFortressDungeon());
         continue;
       }

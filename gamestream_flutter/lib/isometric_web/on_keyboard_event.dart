@@ -6,10 +6,12 @@ import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/editor/editor.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
 
 import '../isometric/actions/action_game_dialog_show_map.dart';
+import '../isometric/watches/scene_meta_data.dart';
 
 void onKeyboardEvent(RawKeyEvent event){
   if (event is RawKeyDownEvent){
@@ -42,6 +44,12 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     if (key == PhysicalKeyboardKey.keyK){
       sendClientRequestCasteBasic();
     }
+
+    if (sceneMetaDataPlayerIsOwner.value){
+      if (key == PhysicalKeyboardKey.keyX){
+         edit.paintPlayerBlock();
+      }
+    }
   }
 
   if (playModeEdit) {
@@ -54,13 +62,19 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     if (key == PhysicalKeyboardKey.keyH){
       editor.actions.lower();
     }
-    if (key == PhysicalKeyboardKey.keyN){
+    if (key == PhysicalKeyboardKey.keyC){
       editor.actions.clear();
     }
     if (key == PhysicalKeyboardKey.keyE){
       edit.fill();
     }
+    if (key == PhysicalKeyboardKey.digit1){
+      edit.paintTorch();
+    }
 
+    if (key == PhysicalKeyboardKey.digit2){
+      edit.paintBricks();
+    }
     if (key == PhysicalKeyboardKey.arrowUp){
       if (shiftLeftDown){
         edit.z.value++;

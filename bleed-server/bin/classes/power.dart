@@ -1,7 +1,5 @@
 import 'package:lemon_math/library.dart';
 
-import '../common/AbilityMode.dart';
-import '../common/card_type.dart';
 import '../common/library.dart';
 import 'card.dart';
 import 'character.dart';
