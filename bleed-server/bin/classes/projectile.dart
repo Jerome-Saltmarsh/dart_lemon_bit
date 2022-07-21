@@ -28,8 +28,9 @@ class Projectile extends Collider with Active, Velocity {
     return getDistance(start);
   }
 
-  void setVelocityTowards(Position position){
+  void setVelocityTowards(Position3 position){
     angle = this.getAngle(position);
+    z += (z - position.z) * 0.1;
   }
 }
 

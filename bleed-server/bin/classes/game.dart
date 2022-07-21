@@ -639,7 +639,7 @@ extension GameFunctions on Game {
       }
     }
 
-    checkProjectileCollision(gameObjects);
+    // checkProjectileCollision(gameObjects);
     checkProjectileCollision(zombies);
     checkProjectileCollision(players);
   }
@@ -822,42 +822,10 @@ extension GameFunctions on Game {
     if (ability == null) {
       return updateCharacterStateAttacking(character);
     }
-    final stateDuration = character.stateDuration;
-
-    if (stateDuration == 0){
+    if (character.stateDuration == 0){
        ability.cooldownRemaining = ability.cooldown;
     }
-
-    if (ability is CardAbilityBowVolley && stateDuration == 5) {
-      final total = 3 + (ability.level * 2);
-      for (var i = 0; i < total; i++) {
-        spawnProjectileArrow(character, damage: ability.damage, range: ability.range, accuracy: 0.2);
-      }
-      character.target = null;
-      character.ability = null;
-    }
-
-    if (ability is PowerLongShot && stateDuration == 5) {
-      spawnProjectileArrow(
-          character,
-          damage: ability.damage,
-          angle: character.angle,
-          range: 9999
-      );
-      character.target = null;
-      character.ability = null;
-    }
-
     ability.onActivated(character, this);
-
-    if (stateDuration == 10 && ability is CardAbilityExplosion){
-      final target = character.target;
-      if (target != null) {
-        spawnExplosion(src: character, target: target, damage: ability.damage);
-        character.target = null;
-      }
-      character.ability = null;
-    }
   }
 
   void updateCharacter(Character character) {

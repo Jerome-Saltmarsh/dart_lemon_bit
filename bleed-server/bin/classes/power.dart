@@ -114,6 +114,10 @@ class PowerStunStrike extends Power {
   @override
   double get range => 100;
 
+  @override
+  void onActivated(Character src, Game game) {
+    src.clearAbility();
+  }
 }
 
 
