@@ -26,8 +26,6 @@ void updateIsometric(){
   gridWindResetToAmbient();
   applyObjectsToWind();
   updateZombieGrowls();
-  // updateGenerateLeaves();
-
 }
 
 void applyObjectsToWind(){

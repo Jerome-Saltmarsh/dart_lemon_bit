@@ -15,6 +15,9 @@ void applyProjectileEmission(Projectile projectile) {
   if (projectile.type == ProjectileType.Orb) {
     return applyVector3Emission(projectile, maxBrightness: Shade.Very_Bright);
   }
+  if (projectile.type == ProjectileType.Fireball) {
+    return applyVector3Emission(projectile, maxBrightness: Shade.Very_Bright);
+  }
   if (projectile.type == ProjectileType.Arrow) {
     return applyVector3Emission(projectile, maxBrightness: Shade.Medium);
   }

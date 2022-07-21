@@ -913,7 +913,7 @@ extension GameFunctions on Game {
     return spawnProjectile(
       src: src,
       accuracy: 0,
-      speed: 7,
+      speed: 5,
       range: range,
       target: src.target,
       angle: angle,
