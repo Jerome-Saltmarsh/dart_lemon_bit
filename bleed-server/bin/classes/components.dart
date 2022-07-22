@@ -4,7 +4,6 @@ import 'package:lemon_math/functions/adjacent.dart';
 import 'package:lemon_math/functions/opposite.dart';
 
 import '../common/MaterialType.dart';
-import '../utilities.dart';
 
 mixin Owner <T> {
   late T owner;
@@ -12,23 +11,6 @@ mixin Owner <T> {
 
 mixin Team {
   var team = 0;
-}
-
-mixin Health {
-  var _health = 1;
-  var maxHealth = 1;
-
-  bool get dead => _health <= 0;
-
-  bool get alive => _health > 0;
-
-  int get health => _health;
-
-  double get healthPercentage => health / maxHealth;
-
-  set health(int value) {
-    _health = clampInt(value, 0, maxHealth);
-  }
 }
 
 mixin Velocity {

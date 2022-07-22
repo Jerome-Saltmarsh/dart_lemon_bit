@@ -3,6 +3,7 @@ import 'package:lemon_math/library.dart';
 import '../common/character_type.dart';
 import '../common/library.dart';
 import '../functions/withinRadius.dart';
+import '../utilities.dart';
 import 'collider.dart';
 import 'game.dart';
 import 'player.dart';
@@ -11,7 +12,21 @@ import 'power.dart';
 import 'components.dart';
 import 'weapon.dart';
 
-abstract class Character extends Collider with Team, Health, Velocity, Material {
+abstract class Character extends Collider with Team, Velocity, Material {
+  var _health = 1;
+  var maxHealth = 1;
+
+  bool get dead => _health <= 0;
+
+  bool get alive => _health > 0;
+
+  int get health => _health;
+
+  double get healthPercentage => health / maxHealth;
+
+  set health(int value) {
+    _health = clampInt(value, 0, maxHealth);
+  }
   var type = CharacterType.Template;
   late double movementSpeed;
   Power? ability = null;

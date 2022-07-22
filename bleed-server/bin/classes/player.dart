@@ -554,15 +554,6 @@ extension PlayerProperties on Player {
     writeInt(total);
   }
 
-  void writeTotalAlive(List<Health> values){
-    var total = 0;
-    for (final gameObject in values) {
-      if (gameObject.dead) continue;
-      total++;
-    }
-    writeInt(total);
-  }
-
   void writeProjectile(Projectile projectile){
     if (!projectile.active) return;
     writePosition(projectile);

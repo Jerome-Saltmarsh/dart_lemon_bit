@@ -238,7 +238,7 @@ extension GameFunctions on Game {
 
   void applyDamage({
     required dynamic src,
-    required Health target,
+    required Character target,
     required int amount,
   }) {
     if (target.dead) return;
@@ -249,34 +249,29 @@ extension GameFunctions on Game {
     //   src.writeDamageApplied(target as Position, damage);
     // }
 
-    if (target is Velocity && target is Position) {
-      final velocity = target as Velocity;
       const forceMultiplier = 3.0;
-      velocity.accelerate(radiansV2(src, target as Position), damage / target.maxHealth * forceMultiplier);
-    }
+      target.accelerate(radiansV2(src, target), damage / target.maxHealth * forceMultiplier);
 
     final destroyed = target.dead;
 
-    if (target is Material) {
-      switch ((target as Material).material) {
+      switch (target.material) {
         case MaterialType.Rock:
-          dispatchV3(GameEventType.Material_Struck_Rock, target as Position3);
+          dispatchV3(GameEventType.Material_Struck_Rock, target);
           break;
         case MaterialType.Wood:
-          dispatchV3(GameEventType.Material_Struck_Wood, target as Position3);
+          dispatchV3(GameEventType.Material_Struck_Wood, target);
           break;
         case MaterialType.Plant:
-          dispatchV3(GameEventType.Material_Struck_Plant, target as Position3);
+          dispatchV3(GameEventType.Material_Struck_Plant, target);
           break;
         case MaterialType.Flesh:
           dispatchV3(GameEventType.Material_Struck_Flesh,
-              target as Position3, angle: radiansV2(src, target as Position3));
+              target, angle: radiansV2(src, target));
           break;
         case MaterialType.Metal:
-          dispatchV3(GameEventType.Material_Struck_Metal, target as Position3);
+          dispatchV3(GameEventType.Material_Struck_Metal, target);
           break;
       }
-    }
 
 
     if (destroyed) {
@@ -284,17 +279,14 @@ extension GameFunctions on Game {
          target.enemySpawn?.count--;
       }
 
-      if (target is Collider) {
-        (target as Collider).collidable = false;
-      }
-      if (target is Character) {
-        if (target.dead && target is Zombie) {
-          dispatchV3(
-            GameEventType.Zombie_Killed,
-            target,
-            angle: radiansV2(src, target),
-          );
-        }
+      target.collidable = false;
+
+      if (target.dead && target is Zombie) {
+        dispatchV3(
+          GameEventType.Zombie_Killed,
+          target,
+          angle: radiansV2(src, target),
+        );
       }
 
       for (final ai in characters) {
@@ -584,7 +576,6 @@ extension GameFunctions on Game {
     if (projectile.type == ProjectileType.Orb){
       dispatch(GameEventType.Blue_Orb_Deactivated, target.x, target.y, target.z);
     }
-
   }
 
   void applyHit({
@@ -598,13 +589,12 @@ extension GameFunctions on Game {
       if (target.dead) return;
     }
 
-    if (target is Health) {
-      final health = target as Health;
-      if (src is Character && src is Zombie) {
-        dispatchV3(GameEventType.Zombie_Strike, src);
-      }
-      target.onStruckBy(src);
-      applyDamage(src: src, target: health, amount: damage);
+    if (src is Zombie) {
+      dispatchV3(GameEventType.Zombie_Strike, src);
+    }
+    target.onStruckBy(src);
+    if (target is Character){
+      applyDamage(src: src, target: target, amount: damage);
     }
   }
 
