@@ -220,24 +220,6 @@ extension GameFunctions on Game {
         z: character.z,
         where: (other) => other.alive && other != character && other.distanceFromXY(x, y) < 100,
     );
-
-    // Collider? closestCollider = null;
-    // final z = character.z;
-    // var closestDistance = 99999.0;
-    // final closestCharacter = getClosestEnemy(
-    //     x: x,
-    //     y: y,
-    //     character: character,
-    //     characters: characters
-    // );
-    // if (closestCharacter != null) {
-    //   assert(closestCharacter.alive);
-    //   closestCollider = closestCharacter;
-    //   closestDistance = getDistanceV3(x, y, z, closestCharacter.x, closestCharacter.y, closestCharacter.z);
-    // }
-    // if (minDistance != null && closestDistance > minDistance) return null;
-    //
-    // return closestCollider;
   }
 
   void updateInProgress() {
@@ -251,12 +233,12 @@ extension GameFunctions on Game {
        enemySpawner.update(this);
     }
     update();
-    updateCollectables();
+    // updateCollectables();
     _updateCollisions();
     _updatePlayersAndNpcs();
     _updateProjectiles();
     _updateProjectiles(); // called twice to fix collision detection
-    _updateItems();
+    // _updateItems();
     _updateCharacterFrames();
     sortGameObjects();
   }
@@ -444,7 +426,6 @@ extension GameFunctions on Game {
 
   void sortGameObjects() {
     sortSum(characters);
-    // sortSum(npcs);
     sortSum(items);
     sortSum(projectiles);
   }
@@ -454,7 +435,6 @@ extension GameFunctions on Game {
     character.state = CharacterState.Dead;
     character.onCharacterStateChanged();
     character.collidable = false;
-
     character.onDeath();
 
     for (final character in characters) {
@@ -465,11 +445,6 @@ extension GameFunctions on Game {
     for (final projectile in projectiles) {
       if (projectile.target != character) continue;
       projectile.target = null;
-    }
-
-    for (final player in players) {
-      if (player.target != character) continue;
-      player.target = null;
     }
   }
 
