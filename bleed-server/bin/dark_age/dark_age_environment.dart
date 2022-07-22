@@ -35,7 +35,9 @@ class DarkAgeEnvironment {
 
    final DarkAgeTime time;
 
-   DarkAgeEnvironment(this.time, {this.maxShade = Shade.Very_Bright});
+   DarkAgeEnvironment(this.time, {this.maxShade = Shade.Very_Bright}){
+     shade = maxShade;
+   }
 
   Lightning get lightning => _lightning;
    Rain get raining => _raining;

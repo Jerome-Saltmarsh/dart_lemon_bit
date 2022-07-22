@@ -1,4 +1,6 @@
 
+import 'package:lemon_math/library.dart';
+
 import '../../classes/library.dart';
 import '../../engine.dart';
 import '../dark_age_scenes.dart';
@@ -26,6 +28,10 @@ class GameDarkAgeDarkFortress extends DarkAgeArea {
 
       if (player.indexZ == 8 && column == 16 && (row == 18 || row == 18)) {
         player.changeGame(engine.findGameDarkAgeFortressDungeon());
+        player.indexZ = 1;
+        player.indexRow = 1;
+        player.indexColumn = 27;
+        player.y += giveOrTake(5);
         continue;
       }
     }
