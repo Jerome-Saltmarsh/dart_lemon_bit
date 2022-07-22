@@ -139,16 +139,8 @@ abstract class Game {
   void changeGame(Player player, Game to) {
     if (player.game == to) return;
 
-    players.remove(player);
 
-    for (final zombie in player.game.characters) {
-      if (zombie.target != player) continue;
-      zombie.target = null;
-    }
-
-    to.players.add(player);
-    player.game = to;
-    player.sceneDownloaded = false;
+    player.changeGame(to);
   }
 
   int countAlive(List<Character> characters) {

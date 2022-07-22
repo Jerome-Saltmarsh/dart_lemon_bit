@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:lemon_engine/engine.dart';
@@ -26,6 +27,7 @@ Widget buildHudDebug() {
                   buildControlBufferSize(),
                 ],
               ),
+              Refresh(() => text('characters: $totalCharacters')),
             ],
           )),
     ],

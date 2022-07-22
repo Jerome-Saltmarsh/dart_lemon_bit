@@ -96,6 +96,10 @@ abstract class Character extends Collider with Team, Health, Velocity, Material 
     ability = null;
   }
 
+  void clearTarget(){
+    target = null;
+  }
+
   void attackTarget(Position3 target) {
     if (deadOrBusy) return;
     face(target);

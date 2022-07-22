@@ -303,6 +303,10 @@ class Player extends Character with ByteWriter {
 
   void changeGame(Game to){
     game.removePlayer(this);
+    for (final character in game.characters) {
+      if (character.target != this) continue;
+      character.clearTarget();
+    }
     to.players.add(this);
     to.characters.add(this);
     sceneDownloaded = false;
@@ -311,7 +315,6 @@ class Player extends Character with ByteWriter {
 
   @override
   void write(Player player) {
-
     player.writePlayer(this);
   }
 }
