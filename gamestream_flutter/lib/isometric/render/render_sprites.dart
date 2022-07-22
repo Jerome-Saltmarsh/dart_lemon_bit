@@ -105,32 +105,11 @@ class RenderOrderCharacters extends RenderOrder {
   int getTotal() {
     return totalCharacters;
   }
-}
-
-class RenderOrderNpcs extends RenderOrder {
-  late Character npc;
-
-  @override
-  void renderFunction() {
-    renderCharacterTemplate(npc, renderHealthBar: false);
-  }
-
-  @override
-  void updateFunction() {
-    npc = npcs[_index];
-    order = npc.renderOrder;
-    orderZ = npc.indexZ;
-  }
-
-  @override
-  int getTotal() {
-    return totalNpcs;
-  }
 
   @override
   void reset() {
-    applyEmissionsNpcs();
     super.reset();
+    applyEmissionsCharacters();
   }
 }
 

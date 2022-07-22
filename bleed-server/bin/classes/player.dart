@@ -304,6 +304,7 @@ class Player extends Character with ByteWriter {
   void changeGame(Game to){
     game.removePlayer(this);
     to.players.add(this);
+    to.characters.add(this);
     sceneDownloaded = false;
     game = to;
   }
