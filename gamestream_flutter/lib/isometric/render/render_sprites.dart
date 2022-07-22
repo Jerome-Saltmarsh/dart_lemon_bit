@@ -3,6 +3,7 @@ import 'package:bleed_common/character_type.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emissions_npcs.dart';
+import 'package:gamestream_flutter/isometric/queries/is_imperceptible.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:lemon_engine/screen.dart';
@@ -81,6 +82,13 @@ class RenderOrderCharacters extends RenderOrder {
 
   @override
   void renderFunction() {
+
+    if (character.indexZ > player.indexZ){
+       if (isImperceptible(character.indexZ, character.indexRow, character.indexColumn)){
+         return;
+       }
+    }
+
     switch(character.type){
       case CharacterType.Template:
         return renderCharacterTemplate(character);
@@ -213,6 +221,7 @@ class RenderOrderGrid extends RenderOrder {
   var playerZ = 0;
   var playerRow = 0;
   var playerColumn = 0;
+  var playerColumnRow = 0;
   var playerRenderRow = 0;
   var playerRenderColumn = 0;
   var playerUnderRoof = false;
@@ -238,11 +247,16 @@ class RenderOrderGrid extends RenderOrder {
         final renderRowDistance = (renderRow - playerRenderRow).abs();
         final renderColumnDistance = (renderColumn - playerRenderColumn).abs();
 
-
-        if (gridZ > playerZ + 1 && renderRowDistance <= 5 && renderColumnDistance <= 5) return;
+        if (gridZ > playerZ + 1 && renderRowDistance <= 5 && renderColumnDistance <= 5) {
+          // if (gridRow + gridColumn > playerColumnRow){
+            return;
+          // }
+        }
 
         if (gridZ > playerZ && renderRowDistance <= 2 && renderColumnDistance <= 2) {
-          transparent = true;
+          if (gridRow + gridColumn >= playerColumnRow){
+            transparent = true;
+          }
         }
       }
     }
@@ -288,6 +302,7 @@ class RenderOrderGrid extends RenderOrder {
     playerZ = player.indexZ;
     playerRow = player.indexRow;
     playerColumn = player.indexColumn;
+    playerColumnRow = playerRow + playerColumn;
     playerRenderRow = playerRow - (player.indexZ ~/ 2);
     playerRenderColumn = playerColumn - (player.indexZ ~/ 2);
     playerUnderRoof = gridIsUnderSomething(playerZ, playerRow, playerColumn);

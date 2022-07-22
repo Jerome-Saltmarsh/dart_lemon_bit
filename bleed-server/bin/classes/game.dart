@@ -219,7 +219,7 @@ extension GameFunctions on Game {
         x: x,
         y: y,
         z: character.z,
-        where: (other) => other.alive && other != character && other.distanceFromXY(x, y) < 100,
+        where: (other) => other.alive && other != character && other.distanceFromXYZ(x, y, character.z) < 100,
     );
   }
 
