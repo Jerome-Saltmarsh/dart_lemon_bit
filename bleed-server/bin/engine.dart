@@ -3,6 +3,7 @@ import 'dart:async';
 import 'classes/library.dart';
 import 'common/library.dart';
 import 'constants/frames_per_second.dart';
+import 'dark_age/areas/area_tavern_cellar.dart';
 import 'dark_age/areas/game_dark_age_dark_fortress.dart';
 import 'dark_age/areas/game_dark_age_farm.dart';
 import 'dark_age/areas/game_dark_age_forest.dart';
@@ -93,6 +94,15 @@ class Engine {
       }
     }
     return GameDarkAgeVillage();
+  }
+
+  GameDarkAge findAreaTavernCellar() {
+    for (final game in games) {
+      if (game is AreaTavernCellar) {
+        return game;
+      }
+    }
+    return AreaTavernCellar();
   }
 
   GameDarkAge findGameDarkAgeFortressDungeon() {

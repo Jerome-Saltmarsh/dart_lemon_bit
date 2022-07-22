@@ -1,4 +1,6 @@
 
+import 'package:lemon_math/functions/give_or_take.dart';
+
 import '../../classes/library.dart';
 import '../../common/library.dart';
 import '../../engine.dart';
@@ -71,6 +73,17 @@ class GameDarkAgeVillage extends DarkAgeArea {
 
     addEnemySpawn(z: 1, row: 43, column: 8, health: 3, max: 2);
     addEnemySpawn(z: 1, row: 40, column: 35, health: 3);
+  }
+
+  @override
+  void checkPlayerPosition(Player player, int z, int row, int column) {
+    if (z == 0 && row == 20 && column == 13) {
+      changeGame(player, engine.findAreaTavernCellar());
+      player.indexZ = 1;
+      player.indexRow = 13;
+      player.indexColumn = 25;
+      player.x += giveOrTake(5);
+    }
   }
 
   @override

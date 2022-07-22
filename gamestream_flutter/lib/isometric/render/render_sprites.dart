@@ -250,6 +250,8 @@ class RenderOrderGrid extends RenderOrder {
         final renderColumn = gridColumn - gridZHalf;
         final renderRowDistance = (renderRow - playerRenderRow).abs();
         final renderColumnDistance = (renderColumn - playerRenderColumn).abs();
+
+
         if (gridZ > playerZ + 1 && renderRowDistance <= 5 && renderColumnDistance <= 5) return;
 
         if (gridZ > playerZ && renderRowDistance <= 2 && renderColumnDistance <= 2) {
