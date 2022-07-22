@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:lemon_math/library.dart';
 
 import 'position3.dart';
-import 'components.dart';
 
-class Collider extends Position3 with Radius {
+class Collider extends Position3 {
+  var radius = 0.0;
   double zVelocity = 0;
   double get left => x - radius;
   double get right => x + radius;
@@ -27,15 +27,11 @@ class Collider extends Position3 with Radius {
 
   void onCollisionWith(Collider other){ }
 
-  bool withinBounds(Vector2 position) {
-    return getDistance(position) <= radius;
-  }
-
   double getOverlap(Collider collider){
     return (radius + collider.radius) - getDistance(collider);
   }
 
-  void onStruck(dynamic src){
+  void onStruckBy(dynamic src){
 
   }
 

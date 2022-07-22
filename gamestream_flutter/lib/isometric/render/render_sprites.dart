@@ -14,7 +14,6 @@ import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_particle_emissions.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_player_emissions.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
-import 'package:gamestream_flutter/isometric/npcs.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';

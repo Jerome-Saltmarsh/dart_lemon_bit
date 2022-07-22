@@ -650,26 +650,10 @@ extension GameFunctions on Game {
 
     if (target is Health) {
       final health = target as Health;
-
-      if (src is Player) {
-        const chancePerCard = 0.075;
-        final critical = src.numberOfCardsOfType(CardType.Passive_General_Critical_Hit) * chancePerCard;
-        if (random.nextDouble() < critical) {
-          damage += damage;
-        }
-      }
-
-      if (src is Character && src is Zombie){
+      if (src is Character && src is Zombie) {
         dispatchV3(GameEventType.Zombie_Strike, src);
       }
-      target.onStruck(src);
-
-      if (target is AI) {
-         if (target.target == null) {
-            target.target = target;
-         }
-      }
-
+      target.onStruckBy(src);
       applyDamage(src: src, target: health, amount: damage);
     }
   }

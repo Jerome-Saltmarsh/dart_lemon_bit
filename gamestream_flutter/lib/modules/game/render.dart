@@ -13,6 +13,7 @@ import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
+import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/render/render_wireframe.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse_raycast.dart';
@@ -58,6 +59,8 @@ class GameRender {
     if (mouseTargetName != null && mouseTargetName != "Zombie"){
        renderText(text: mouseTargetName, x: player.attackTarget.renderX, y: player.attackTarget.renderY - 55);
     }
+
+    renderPixelRed(player.target.renderX, player.target.renderY);
   }
 
   void renderMouseWireFrame(){

@@ -357,6 +357,11 @@ extension PlayerProperties on Player {
     writeGameTime(game);
     writeCharacters();
 
+    if (target != null){
+      writeByte(ServerResponse.Player_Target);
+      writePosition3(target!);
+    }
+
     if (!sceneDownloaded){
       downloadScene();
     }
@@ -602,7 +607,6 @@ extension PlayerProperties on Player {
     writePercentage(player.magicPercentage);
     writeCharacterEquipment(player);
     writeString(player.name);
-    writeInt(player.score);
     writeString(player.text);
   }
 

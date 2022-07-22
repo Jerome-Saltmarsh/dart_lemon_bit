@@ -73,6 +73,13 @@ abstract class AI extends Character with Material {
     clearDest();
   }
 
+  @override
+  void onStruckBy(src) {
+    if (target == null) {
+      target = src;
+    }
+  }
+
   void clearPath() {
     pathIndex = -1;
   }

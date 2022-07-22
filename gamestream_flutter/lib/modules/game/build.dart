@@ -171,14 +171,6 @@ class GameBuild {
   Widget buildButtonFullScreen(){
     return button("Fullscreen", engine.fullscreenToggle);
   }
-
-  Widget buildScoreBoard(){
-    return SingleChildScrollView(
-      child: Container(
-          constraints: BoxConstraints(maxHeight: 400),
-          child: textBuilder(serverResponseReader.scoreText)),
-    );
-  }
 }
 
 

@@ -7,7 +7,6 @@ import 'vector3.dart';
 class Character extends Vector3 {
   var type = CharacterType.Template;
   var scoreMeasured = false;
-  var score = 0;
   var state = 0;
   var direction = 0;
   var frame = 0;

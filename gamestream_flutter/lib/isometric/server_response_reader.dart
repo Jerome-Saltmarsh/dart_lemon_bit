@@ -16,7 +16,6 @@ import 'package:gamestream_flutter/isometric/floating_texts.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/io/custom_game_names.dart';
 import 'package:gamestream_flutter/isometric/npcs.dart';
-import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
@@ -58,8 +57,6 @@ class ServerResponseReader with ByteReader {
   final gameObjects = <GameObject>[];
   final bulletHoles = <Vector2>[];
   final npcDebug = <NpcDebug>[];
-  final scoreBuilder = StringBuffer();
-  final scoreText = Watch("");
   var bulletHoleIndex = 0;
   var itemsTotal = 0;
 
@@ -168,9 +165,9 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Player_Spawned:
           readPlayerSpawned();
           break;
-        case ServerResponse.Player_Target:
-          readPlayerTarget();
-          break;
+        // case ServerResponse.Player_Target:
+        //   readPlayerTarget();
+        //   break;
         case ServerResponse.Player_Weapons:
           readPlayerWeapons();
           break;
@@ -179,6 +176,9 @@ class ServerResponseReader with ByteReader {
           break;
         case ServerResponse.Block_Set:
           readBlockSet();
+          break;
+        case ServerResponse.Player_Target:
+          readVector3(player.target);
           break;
         case ServerResponse.Store_Items:
           readStoreItems();
@@ -248,7 +248,6 @@ class ServerResponseReader with ByteReader {
     character.helm = readByte();
     character.pants = readByte();
     character.name = readString();
-    character.score = readInt();
     character.text = readString();
     totalCharacters++;
   }
@@ -606,36 +605,6 @@ class ServerResponseReader with ByteReader {
     }
   }
 
-  void readPlayers() {
-    var total = 0;
-    var playerLength = players.length;
-    while (true) {
-      final teamDirectionState = readByte();
-      if (teamDirectionState == END) break;
-      if (total >= playerLength){
-         players.add(Character());
-         playerLength = players.length;
-      }
-      final character = players[total];
-      readTeamDirectionState(character, teamDirectionState);
-      character.x = readDouble();
-      character.y = readDouble();
-      character.z = readDouble();
-      _parseCharacterFrameHealth(character, readByte());
-      character.magic = _nextPercentage();
-      character.weapon = readByte();
-      character.armour = readByte();
-      character.helm = readByte();
-      character.pants = readByte();
-      character.name = readString();
-      character.score = readInt();
-      character.text = readString();
-      total++;
-    }
-    totalPlayers = total;
-    // updateScoreText();
-  }
-
   void readNpcs() {
     totalNpcs = 0;
     var npcLength = npcs.length;
@@ -764,42 +733,5 @@ class ServerResponseReader with ByteReader {
       values.add(quests[readByte()]);
     }
     return values;
-  }
-
-
-  Character getNextHighestScore(){
-    Character? highestPlayer;
-    for(var i = 0; i < totalPlayers; i++){
-      final player = players[i];
-      if (player.scoreMeasured) continue;
-      if (highestPlayer == null){
-        highestPlayer = player;
-        continue;
-      }
-      if (player.score < highestPlayer.score) continue;
-      highestPlayer = player;
-    }
-    if (highestPlayer == null){
-      throw Exception("Could not find highest player");
-    }
-    highestPlayer.scoreMeasured = true;
-    return highestPlayer;
-  }
-
-  void updateScoreText(){
-    scoreBuilder.clear();
-    if (totalPlayers <= 0) return;
-    scoreBuilder.write("SCORE\n");
-
-    for (var i = 0; i < totalPlayers; i++) {
-      final player = players[i];
-      player.scoreMeasured = false;
-    }
-
-    for (var i = 0; i < totalPlayers; i++) {
-      final player = getNextHighestScore();
-      scoreBuilder.write('${i + 1}. ${player.name} ${player.score}\n');
-    }
-    scoreText.value = scoreBuilder.toString();
   }
 }
