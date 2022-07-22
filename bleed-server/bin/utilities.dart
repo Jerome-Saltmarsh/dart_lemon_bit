@@ -20,10 +20,6 @@ void setAngle(Character character, double value) {
   character.angle = value;
 }
 
-double getShotAngle(Character character) {
-  return character.angle + giveOrTake(character.accuracy * 0.5);
-}
-
 void faceAimDirection(Character character) {
   setAngle(character, character.angle);
 }

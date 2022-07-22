@@ -15,7 +15,6 @@ abstract class Character extends Collider with Team, Health, Velocity, Material 
   var type = CharacterType.Template;
   late double movementSpeed;
   Power? ability = null;
-  double accuracy = 0;
   var state = CharacterState.Idle;
   var stateDurationRemaining = 0;
   var stateDuration = 0;
@@ -26,30 +25,17 @@ abstract class Character extends Collider with Team, Health, Velocity, Material 
   /// This forces a hit to occur even if the target goes out of range of the attack
   Position3? target;
   var invincible = false;
-  final techTree = TechTree();
   Weapon equippedWeapon;
   var equippedArmour = ArmourType.shirtCyan;
   var equippedHead = HeadType.None;
   var equippedPants = PantsType.white;
 
-  int get direction => convertAngleToDirection(angle);
-
-  void set direction(int value){
-    angle = convertDirectionToAngle(value);
-  }
-
+  void set direction(int value) => angle = convertDirectionToAngle(value);
   bool get running => state == CharacterState.Running;
-
   bool get idling => state == CharacterState.Idle;
   bool get characterStateIdle => state == CharacterState.Idle;
-
   bool get busy => stateDurationRemaining > 0;
-
   bool get deadOrBusy => dead || busy;
-
-  int get equippedDamage => equippedWeapon.damage;
-  double get equippedRange => WeaponType.getRange(equippedWeapon.type);
-  int get equippedAttackDuration => 25;
   bool get equippedTypeIsBow => equippedWeapon.type == WeaponType.Bow;
   bool get equippedTypeIsStaff => equippedWeapon.type == WeaponType.Staff;
   bool get unarmed => equippedWeapon.type == WeaponType.Unarmed;
@@ -57,6 +43,10 @@ abstract class Character extends Collider with Team, Health, Velocity, Material 
   bool get equippedIsMelee => WeaponType.isMelee(equippedWeapon.type);
   bool get equippedIsEmpty => false;
   int get equippedLevel => 1;
+  int get equippedAttackDuration => 25;
+  int get equippedDamage => equippedWeapon.damage;
+  int get direction => convertAngleToDirection(angle);
+  double get equippedRange => WeaponType.getRange(equippedWeapon.type);
 
   void write(Player player);
 
@@ -104,18 +94,11 @@ abstract class Character extends Collider with Team, Health, Velocity, Material 
     target = null;
   }
 
-
-
   void attackTarget(Position3 target) {
     if (deadOrBusy) return;
     face(target);
     setCharacterStatePerforming(duration: equippedAttackDuration);
     this.target = target;
-  }
-
-  void runAt(Position target) {
-    face(target);
-    setCharacterStateRunning();
   }
 
   bool getCollisionInDirection({required Game game, required double angle, required double distance}){
