@@ -1,8 +1,6 @@
 class ServerResponse {
   static const Player = 0;
-  static const Players = 1;
   static const Projectiles = 3;
-  static const Zombies = 4;
   static const Game_Events = 6;
   static const Grenades = 7;
   static const Game_Joined = 9;
@@ -66,5 +64,6 @@ class ServerResponse {
   static const Character_Rat = 87;
   static const Character_Zombie = 88;
   static const Character_Template = 89;
+  static const Character_Player = 90;
 }
 

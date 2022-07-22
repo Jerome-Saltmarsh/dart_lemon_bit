@@ -23,7 +23,6 @@ import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
-import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_engine/engine.dart';
@@ -83,20 +82,14 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Character_Template:
           readCharacterTemplate();
           break;
+        case ServerResponse.Character_Player:
+          readCharacterPlayer();
+          break;
         case ServerResponse.End:
           return readEnd();
-        case ServerResponse.Zombies:
-          readZombies();
-          break;
         case ServerResponse.Items:
           readerItems();
           break;
-        case ServerResponse.Players:
-          readPlayers();
-          break;
-        // case ServerResponse.Npcs:
-        //   readNpcs();
-        //   break;
         case ServerResponse.Projectiles:
           readProjectiles();
           break;
@@ -237,6 +230,26 @@ class ServerResponseReader with ByteReader {
     character.type = CharacterType.Template;
     readCharacter(character);
     readCharacterEquipment(character);
+    totalCharacters++;
+  }
+
+  void readCharacterPlayer(){
+    final character = getCharacterInstance();
+    final teamDirectionState = readByte();
+    character.type = CharacterType.Template;
+    readTeamDirectionState(character, teamDirectionState);
+    character.x = readDouble();
+    character.y = readDouble();
+    character.z = readDouble();
+    _parseCharacterFrameHealth(character, readByte());
+    character.magic = _nextPercentage();
+    character.weapon = readByte();
+    character.armour = readByte();
+    character.helm = readByte();
+    character.pants = readByte();
+    character.name = readString();
+    character.score = readInt();
+    character.text = readString();
     totalCharacters++;
   }
 
@@ -580,26 +593,6 @@ class ServerResponseReader with ByteReader {
     character.state = byte % 10;
   }
 
-  void readZombies() {
-    totalZombies = 0;
-    var zombiesLength = zombies.length;
-    while (true) {
-      final stateInt = readByte();
-      if (stateInt == END) break;
-      if (totalZombies >= zombiesLength){
-         zombies.add(Character());
-         zombiesLength++;
-      }
-      final character = zombies[totalZombies];
-      readTeamDirectionState(character, stateInt);
-      character.x = readDouble();
-      character.y = readDouble();
-      character.z = readDouble();
-      _parseCharacterFrameHealth(character, readByte());
-      totalZombies++;
-    }
-  }
-
   void readerItems(){
     itemsTotal = 0;
     while (true) {
@@ -640,7 +633,7 @@ class ServerResponseReader with ByteReader {
       total++;
     }
     totalPlayers = total;
-    updateScoreText();
+    // updateScoreText();
   }
 
   void readNpcs() {

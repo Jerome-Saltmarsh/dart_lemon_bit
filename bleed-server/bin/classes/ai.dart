@@ -67,6 +67,11 @@ abstract class AI extends Character with Material {
   }
 
   @override
+  void onPlayerRemoved(Player player) {
+    clearTargetIf(player);
+  }
+
+  @override
   void customUpdateCharacter(Game game){
     assert (!deadOrBusy);
 

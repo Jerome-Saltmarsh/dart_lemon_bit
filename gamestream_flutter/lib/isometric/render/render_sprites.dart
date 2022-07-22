@@ -33,7 +33,7 @@ import 'render_particle.dart';
 
 final renderOrder = <RenderOrder> [
   RenderOrderGrid(),
-  RenderOrderPlayer(),
+  // RenderOrderPlayer(),
   RenderOrderParticle(),
   RenderOrderProjectiles(),
   // RenderOrderNpcs(),
@@ -41,7 +41,7 @@ final renderOrder = <RenderOrder> [
 ];
 
 // renderOrderLength gets called a lot during rendering so use a const and update it manually if need be
-const renderOrderLength = 5;
+const renderOrderLength = 4;
 var renderOrderFirst = renderOrder.first;
 var totalRemaining = 0;
 var totalIndex = 0;

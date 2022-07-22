@@ -28,15 +28,13 @@ import 'weapon.dart';
 import 'zombie.dart';
 
 abstract class Game {
-  final items = <Item>[];
-  // final zombies = <Zombie>[];
-  // final npcs = <Npc>[];
-  final players = <Player>[];
-  final projectiles = <Projectile>[];
-  final collectables = <Collectable>[];
-  final characters = <AI>[];
   var frame = 0;
   final Scene scene;
+  final players = <Player>[];
+  final characters = <Character>[];
+  final projectiles = <Projectile>[];
+  final items = <Item>[];
+  final collectables = <Collectable>[];
 
   Game(this.scene) {
     engine.onGameCreated(this);
@@ -61,7 +59,7 @@ abstract class Game {
 
   List<GameObject> get gameObjects => scene.gameObjects;
 
-  int get numberOfAlivePlayers => countAlive(players);
+  // int get numberOfAlivePlayers => countAlive(players);
 
   // int get numberOfAliveZombies => countAlive(zombies);
 
@@ -69,22 +67,18 @@ abstract class Game {
     removeDisconnectedPlayers();
     updateInProgress();
 
-    for (final player in players) {
-      player.writeAndSendResponse();
-    }
-  }
-
-  void regenCharacters() {
-    for (final player in players) {
-      if (player.dead) continue;
-      player.health++;
-      player.magic++;
+    for (final player in characters) {
+      if (player is Player){
+        player.writeAndSendResponse();
+      }
     }
   }
 
   bool containsPlayerWithName(String name){
-     for(final player in players){
-       if (player.name == name) return true;
+     for(final character in characters){
+       if (character is Player) {
+         if (character.name == name) return true;
+       }
      }
      return false;
   }
@@ -173,24 +167,6 @@ abstract class Game {
   void update() {}
 
   void onPlayerDisconnected(Player player) {}
-
-  void checkCollisionPlayerItem() {
-    var itemLength = items.length;
-    for (final player in players) {
-      if (player.dead) continue;
-      for (var i = 0; i < itemLength; i++) {
-        final item = items[i];
-        if (item.top > player.bottom) break;
-        if (item.bottom < player.top) continue;
-        if (item.right < player.left) continue;
-        if (item.left > player.right) continue;
-        if (!onPlayerItemCollision(player, item)) continue;
-        items.removeAt(i);
-        i--;
-        itemLength--;
-      }
-    }
-  }
 
   void checkColliderCollision(
       List<Collider> collidersA, List<Collider> collidersB) {
@@ -454,7 +430,6 @@ extension GameFunctions on Game {
 
       if (destroyed) {
         target.respawnDuration = 5000;
-        notifyPlayersDynamicObjectDestroyed(target);
 
         if (target.type == GameObjectType.Pot) {
           dispatchV3(GameEventType.Object_Destroyed_Pot, target);
@@ -496,40 +471,21 @@ extension GameFunctions on Game {
   }
 
   void _updatePlayersAndNpcs() {
-    final playersLength = players.length;
-    for (var i = 0; i < playersLength; i++) {
-      final player = players[i];
-      updatePlayer(player);
-      updateCharacter(player);
-    }
-
     for (var i = 0; i < characters.length; i++){
-      updateCharacter(characters[i]);
+      final character = characters[i];
+      updateCharacter(character);
+      if (character is Player) {
+        updatePlayer(character);
+      }
     }
-
-    // final zombiesLength = zombies.length;
-    // for (var i = 0; i < zombiesLength; i++) {
-    //   updateCharacter(zombies[i]);
-    // }
-    //
-    // final npcsLength = npcs.length;
-    // for (var i = 0; i < npcsLength; i++) {
-    //   updateCharacter(npcs[i]);
-    // }
   }
 
   void _updateCollisions() {
-    updateCollisionBetween(players);
     updateCollisionBetween(characters);
-    resolveCollisionBetween(characters, players, resolveCollisionA);
-    // resolveCollisionBetween(players, npcs, resolveCollisionB);
-    // resolveCollisionBetween(npcs, characters, resolveCollisionB);
-    checkCollisionPlayerItem();
   }
 
   void sortGameObjects() {
     sortSum(characters);
-    sortSum(players);
     // sortSum(npcs);
     sortSum(items);
     sortSum(projectiles);
@@ -618,7 +574,6 @@ extension GameFunctions on Game {
     }
 
     checkProjectileCollision(characters);
-    checkProjectileCollision(players);
   }
 
   void updatePlayer(Player player) {
@@ -985,15 +940,11 @@ extension GameFunctions on Game {
     }
   }
 
-  void notifyPlayersDynamicObjectDestroyed(GameObject dynamicObject){
-    for (final player in players) {
-      player.writeDynamicObjectDestroyed(dynamicObject);
-    }
-  }
-
   void updateAITargets() {
     for (final character in characters) {
       if (character.dead) continue;
+      if (character is AI == false) continue;
+      final ai = character as AI;
 
       var target = character.target;
       if (
@@ -1006,13 +957,14 @@ extension GameFunctions on Game {
 
       var targetDistance = 9999999.0;
 
-      for (final player in players) {
-        if (player.dead) continue;
-        if (onSameTeam(player, character)) continue;
-        if (!character.withinViewRange(player)) continue;
-        final npcDistance = character.getDistance(player);
+      for (final other in characters) {
+        if (other.dead) continue;
+        if (other == character) continue;
+        if (onSameTeam(other, character)) continue;
+        if (!character.withinViewRange(other)) continue;
+        final npcDistance = character.getDistance(other);
         if (npcDistance >= targetDistance) continue;
-        setNpcTarget(character, player);
+        setNpcTarget(character, other);
         targetDistance = npcDistance;
       }
       target = character.target;
@@ -1044,8 +996,9 @@ extension GameFunctions on Game {
 
   bool removePlayer(Player player){
     if (!players.remove(player)) return false;
-    for (final npc in characters) {
-      npc.clearTargetIf(player);
+    characters.remove(player);
+    for (final character in characters) {
+      character.onPlayerRemoved(player);
     }
     onPlayerDisconnected(player);
     if (player.scene.dirty && player.scene.name.isNotEmpty) {
@@ -1082,8 +1035,6 @@ extension GameFunctions on Game {
   void _updateCharacterFrames() {
     const characterFramesChange = 6;
     if (engine.frame % characterFramesChange != 0) return;
-    updateFrames(players);
-    // updateFrames(npcs);
     updateFrames(characters);
   }
 

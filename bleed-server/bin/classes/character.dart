@@ -88,6 +88,10 @@ abstract class Character extends Collider with Team, Health, Velocity, Material 
 
   }
 
+  void onPlayerRemoved(Player player) {
+
+  }
+
   void clearAbility(){
     ability = null;
   }

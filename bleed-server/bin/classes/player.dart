@@ -209,6 +209,7 @@ class Player extends Character with ByteWriter {
     maxMagic = magic;
     _magic = maxMagic;
     game.players.add(this);
+    game.characters.add(this);
   }
 
   void writeLivesRemaining(int lives){
@@ -309,6 +310,7 @@ class Player extends Character with ByteWriter {
 
   @override
   void write(Player player) {
+
     player.writePlayer(this);
   }
 }
@@ -340,21 +342,16 @@ extension PlayerProperties on Player {
     writePercentage(experiencePercentage);
     writeByte(level);
     writeCollectables();
-    writePlayers();
+    // writePlayers();
     writeAttackTarget();
     writeProjectiles();
-    // writeNpcs();
     writePlayerTarget();
     writeGameTime(game);
-    // writeZombies();
     writeCharacters();
 
     if (!sceneDownloaded){
       downloadScene();
     }
-
-    if (debug)
-      writePaths();
   }
 
   void writeCharacters(){
@@ -421,21 +418,21 @@ extension PlayerProperties on Player {
     writeTotalActive(projectiles);
     projectiles.forEach(writeProjectile);
   }
-
-  void writePlayers(){
-    writeByte(ServerResponse.Players);
-    final players = game.players;
-    for (final otherPlayer in players) {
-      if (otherPlayer.dead) continue;
-      if (otherPlayer.renderY < screenTop) continue;
-      if (otherPlayer.renderX < screenLeft) continue;
-      if (otherPlayer.renderX > screenRight) continue;
-      if (otherPlayer.renderY > screenBottom) break;
-      writePlayer(otherPlayer);
-      writeString(otherPlayer.text);
-    }
-    writeByte(END);
-  }
+  //
+  // void writePlayers(){
+  //   writeByte(ServerResponse.Players);
+  //   final players = game.players;
+  //   for (final otherPlayer in players) {
+  //     if (otherPlayer.dead) continue;
+  //     if (otherPlayer.renderY < screenTop) continue;
+  //     if (otherPlayer.renderX < screenLeft) continue;
+  //     if (otherPlayer.renderX > screenRight) continue;
+  //     if (otherPlayer.renderY > screenBottom) break;
+  //     writePlayer(otherPlayer);
+  //     writeString(otherPlayer.text);
+  //   }
+  //   writeByte(END);
+  // }
 
   void writeCollectables() {
     writeByte(ServerResponse.Collectables);
@@ -496,41 +493,40 @@ extension PlayerProperties on Player {
     writeInt(dynamicObject.id);
   }
 
-
-  void writePaths() {
-    writeByte(ServerResponse.Paths);
-    final zombies = game.characters;
-    for (final zombie in zombies) {
-      if (zombie.dead) continue;
-      if (zombie.y < screenTop) continue;
-      if (zombie.x < screenLeft) continue;
-      if (zombie.x > screenRight) continue;
-      if (zombie.y > screenBottom) break;
-      final pathIndex = zombie.pathIndex;
-      if (pathIndex < 0) continue;
-      writeInt(pathIndex + 1);
-      for (var i = pathIndex; i >= 0; i--) {
-        writeInt(zombie.pathX[i]);
-        writeInt(zombie.pathY[i]);
-      }
-    }
-    writeInt(250);
-
-    for (final zombie in zombies) {
-      if (zombie.dead) continue;
-      if (zombie.y < screenTop) continue;
-      if (zombie.x < screenLeft) continue;
-      if (zombie.x > screenRight) continue;
-      if (zombie.y > screenBottom) break;
-      final aiTarget = zombie.target;
-      if (aiTarget is Character) {
-        writeByte(1);
-        writePosition(zombie);
-        writePosition(aiTarget);
-      }
-    }
-    writeByte(0);
-  }
+  // void writePaths() {
+  //   writeByte(ServerResponse.Paths);
+  //   final characters = game.characters;
+  //   for (final character in characters) {
+  //     if (character.dead) continue;
+  //     if (character.y < screenTop) continue;
+  //     if (character.x < screenLeft) continue;
+  //     if (character.x > screenRight) continue;
+  //     if (character.y > screenBottom) break;
+  //     final pathIndex = character.pathIndex;
+  //     if (pathIndex < 0) continue;
+  //     writeInt(pathIndex + 1);
+  //     for (var i = pathIndex; i >= 0; i--) {
+  //       writeInt(character.pathX[i]);
+  //       writeInt(character.pathY[i]);
+  //     }
+  //   }
+  //   writeInt(250);
+  //
+  //   for (final zombie in character) {
+  //     if (zombie.dead) continue;
+  //     if (zombie.y < screenTop) continue;
+  //     if (zombie.x < screenLeft) continue;
+  //     if (zombie.x > screenRight) continue;
+  //     if (zombie.y > screenBottom) break;
+  //     final aiTarget = zombie.target;
+  //     if (aiTarget is Character) {
+  //       writeByte(1);
+  //       writePosition(zombie);
+  //       writePosition(aiTarget);
+  //     }
+  //   }
+  //   writeByte(0);
+  // }
 
   void writeItems(Player player){
     writeByte(ServerResponse.Items);
@@ -593,27 +589,14 @@ extension PlayerProperties on Player {
   }
 
   void writePlayer(Player player) {
+    writeByte(ServerResponse.Character_Player);
     writeCharacter(player, player);
     writePercentage(player.magicPercentage);
     writeCharacterEquipment(player);
     writeString(player.name);
     writeInt(player.score);
+    writeString(player.text);
   }
-
-  // void writeNpcs(){
-  //   writeByte(ServerResponse.Npcs);
-  //   final npcs = game.npcs;
-  //   for (final npc in npcs){
-  //     if (npc.dead) continue;
-  //     if (npc.renderY < screenTop) continue;
-  //     if (npc.renderX < screenLeft) continue;
-  //     if (npc.renderX > screenRight) continue;
-  //     if (npc.renderY > screenBottom) break;
-  //     if ((npc.z - z).abs() > tileSize) continue;
-  //     writeNpc(this, npc);
-  //   }
-  //   writeByte(END);
-  // }
 
   void writeNpc(Player player, Character npc) {
     writeByte(ServerResponse.Character_Template);
