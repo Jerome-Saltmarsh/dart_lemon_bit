@@ -1,6 +1,5 @@
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/isometric/player.dart';
 
 import 'package:lemon_engine/render.dart';
 

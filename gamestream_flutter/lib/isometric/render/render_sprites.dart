@@ -3,7 +3,6 @@ import 'package:bleed_common/character_type.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emissions_npcs.dart';
-import 'package:gamestream_flutter/isometric/queries/is_imperceptible.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:lemon_engine/screen.dart';
@@ -75,24 +74,24 @@ void renderSprites() {
   }
 }
 
+bool shouldRender(Vector3 v){
+  if (!playerImperceptible) return true;
+  if (v.indexZ <= player.indexZ) return true;
+  final halfZ = v.indexZ / 2;
+  final renderRow = v.indexRow - halfZ;
+  final renderColumn = v.indexColumn - halfZ;
+  final renderRowDistance = (renderRow - playerRenderRow).abs();
+  final renderColumnDistance = (renderColumn - playerRenderColumn).abs();
+  return renderRowDistance >= 5 || renderColumnDistance >= 5;
+}
+
 class RenderOrderCharacters extends RenderOrder {
   late Character character;
 
   @override
   void renderFunction() {
 
-    if (playerImperceptible) {
-      if (gridZGreaterThanPlayerZ) {
-        final halfZ = character.indexZ / 2;
-        final renderRow = character.indexRow - halfZ;
-        final renderColumn = character.indexColumn - halfZ;
-        final renderRowDistance = (renderRow - playerRenderRow).abs();
-        final renderColumnDistance = (renderColumn - playerRenderColumn).abs();
-        if (character.indexZ > playerZ + 1 && renderRowDistance <= 5 && renderColumnDistance <= 5) {
-          return;
-        }
-      }
-    }
+    if (!shouldRender(character)) return;
 
     switch(character.type){
       case CharacterType.Template:
@@ -130,6 +129,7 @@ class RenderOrderProjectiles extends RenderOrder {
 
   @override
   void renderFunction() {
+    if (!shouldRender(projectile)) return;
     renderProjectile(projectile);
   }
 
@@ -158,6 +158,7 @@ class RenderOrderParticle extends RenderOrder {
 
   @override
   void renderFunction() {
+    if (!shouldRender(particle)) return;
     renderParticle(particle);
   }
 
