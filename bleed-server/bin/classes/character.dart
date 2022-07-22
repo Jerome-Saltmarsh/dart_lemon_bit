@@ -92,6 +92,10 @@ abstract class Character extends Collider with Team, Health, Velocity, Material 
 
   }
 
+  void onDeath(){
+
+  }
+
   void clearAbility(){
     ability = null;
   }
@@ -99,6 +103,8 @@ abstract class Character extends Collider with Team, Health, Velocity, Material 
   void clearTarget(){
     target = null;
   }
+
+
 
   void attackTarget(Position3 target) {
     if (deadOrBusy) return;

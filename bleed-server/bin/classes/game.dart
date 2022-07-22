@@ -455,19 +455,11 @@ extension GameFunctions on Game {
     character.onCharacterStateChanged();
     character.collidable = false;
 
-    if (character is AI) {
-      character.target = null;
-      character.pathIndex = -1;
-    }
+    character.onDeath();
 
-    if (character is Player) {
-      dispatchV3(GameEventType.Player_Death, character);
-      onPlayerDeath(character);
-    }
-
-    for (final npc in characters) {
-      if (npc.target != character) continue;
-      npc.target = null;
+    for (final character in characters) {
+      if (character.target != character) continue;
+      character.clearTarget();
     }
 
     for (final projectile in projectiles) {

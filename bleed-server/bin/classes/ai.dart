@@ -61,15 +61,27 @@ abstract class AI extends Character with Material {
     spawnY = y;
   }
 
+  @override
+  void onPlayerRemoved(Player player) {
+    clearTargetIf(player);
+  }
+
+  @override
+  void onDeath(){
+    clearTarget();
+    clearPath();
+    clearDest();
+  }
+
+  void clearPath() {
+    pathIndex = -1;
+  }
+
   void clearDest(){
     destX = x;
     destY = y;
   }
 
-  @override
-  void onPlayerRemoved(Player player) {
-    clearTargetIf(player);
-  }
 
   @override
   void customUpdateCharacter(Game game){
