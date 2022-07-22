@@ -21,6 +21,7 @@ import 'npc.dart';
 import 'player.dart';
 import 'position3.dart';
 import 'projectile.dart';
+import 'rat.dart';
 import 'scene.dart';
 import 'tile_node.dart';
 import 'weapon.dart';
@@ -790,7 +791,7 @@ extension GameFunctions on Game {
     return projectile;
   }
 
-  AI spawnZombie({
+  Zombie spawnZombie({
     required double x,
     required double y,
     required double z,
@@ -820,7 +821,7 @@ extension GameFunctions on Game {
     return zombie;
   }
 
-  AI getZombieInstance() {
+  Zombie getZombieInstance() {
     for (final character in characters) {
       if (character.alive) continue;
       if (character is Zombie)
@@ -835,6 +836,23 @@ extension GameFunctions on Game {
     );
     characters.add(zombie);
     return zombie;
+  }
+
+  Rat getInstanceRat() {
+    for (final character in characters) {
+      if (character.alive) continue;
+      if (character is Rat)
+        return character;
+    }
+    final instance = Rat(
+      z: 0,
+      row: 0,
+      column: 0,
+      health: 10,
+      damage: 1,
+    );
+    characters.add(instance);
+    return instance;
   }
 
   /// GameEventType
