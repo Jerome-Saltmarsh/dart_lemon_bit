@@ -13,12 +13,14 @@ class Rat extends AI {
     required int column,
     int health = 3,
     int damage = 1,
+    int team = 10,
   }) : super(
       x: 0,
       y: 0,
       z: 0,
       health: health,
       weapon: Weapon(type: WeaponType.Unarmed, damage: damage),
+      team: team
   ) {
     indexZ = z;
     indexRow = row;
