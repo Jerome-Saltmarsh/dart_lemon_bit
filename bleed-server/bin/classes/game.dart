@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
-import '../common/maths.dart';
 import '../engine.dart';
 import '../functions.dart';
 import '../functions/withinRadius.dart';
@@ -67,18 +66,14 @@ abstract class Game {
     removeDisconnectedPlayers();
     updateInProgress();
 
-    for (final player in characters) {
-      if (player is Player){
-        player.writeAndSendResponse();
-      }
+    for (final player in players) {
+      player.writeAndSendResponse();
     }
   }
 
   bool containsPlayerWithName(String name){
-     for(final character in characters){
-       if (character is Player) {
+     for(final character in players){
          if (character.name == name) return true;
-       }
      }
      return false;
   }
@@ -241,45 +236,30 @@ extension GameFunctions on Game {
   }
 
   Collider? getClosestCollider(double x, double y, Character character, {double? minDistance}) {
-    Collider? closestCollider = null;
-    final z = character.z;
-    var closestDistance = 99999.0;
-    final closestZombie = getClosestEnemy(
+    return getClosestEnemy(
         x: x,
         y: y,
         character: character,
         characters: characters
     );
-    if (closestZombie != null) {
-      assert(closestZombie.alive);
-      closestCollider = closestZombie;
-      closestDistance = getDistanceV3(x, y, z, closestZombie.x, closestZombie.y, closestZombie.z);
-    }
-    final closestPlayer = getClosestEnemy(
-        x: x,
-        y: y,
-        character: character,
-        characters: players
-    );
-    if (closestPlayer != null){
-      assert (closestPlayer.alive);
-      final playerDistance = getDistanceV3(x, y, z, closestPlayer.x, closestPlayer.y, closestPlayer.z);
-      if (playerDistance < closestDistance) {
-         closestCollider = closestPlayer;
-         closestDistance = playerDistance;
-      }
-    }
-    // final closestNpc = getClosestNpc(x: x, y: y, character: character, characters: npcs);
-    // if (closestNpc != null){
-    //     final npcDistance = getDistanceV3(x, y, z, closestNpc.x, closestNpc.y, closestNpc.z);
-    //     if (npcDistance < closestDistance) {
-    //        closestCollider = closestNpc;
-    //        closestDistance = npcDistance;
-    //     }
-    // }
-    if (minDistance != null && closestDistance > minDistance) return null;
 
-    return closestCollider;
+    // Collider? closestCollider = null;
+    // final z = character.z;
+    // var closestDistance = 99999.0;
+    // final closestCharacter = getClosestEnemy(
+    //     x: x,
+    //     y: y,
+    //     character: character,
+    //     characters: characters
+    // );
+    // if (closestCharacter != null) {
+    //   assert(closestCharacter.alive);
+    //   closestCollider = closestCharacter;
+    //   closestDistance = getDistanceV3(x, y, z, closestCharacter.x, closestCharacter.y, closestCharacter.z);
+    // }
+    // if (minDistance != null && closestDistance > minDistance) return null;
+    //
+    // return closestCollider;
   }
 
   void updateInProgress() {

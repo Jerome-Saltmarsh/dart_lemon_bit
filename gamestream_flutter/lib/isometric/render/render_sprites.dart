@@ -33,10 +33,8 @@ import 'render_particle.dart';
 
 final renderOrder = <RenderOrder> [
   RenderOrderGrid(),
-  // RenderOrderPlayer(),
   RenderOrderParticle(),
   RenderOrderProjectiles(),
-  // RenderOrderNpcs(),
   RenderOrderCharacters(),
 ];
 
