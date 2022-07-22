@@ -77,6 +77,9 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Character_Rat:
           readCharacterRat();
           break;
+        case ServerResponse.Character_Zombie:
+          readCharacterZombie();
+          break;
         case ServerResponse.End:
           return readEnd();
         case ServerResponse.Zombies:
@@ -215,6 +218,13 @@ class ServerResponseReader with ByteReader {
   void readCharacterRat() {
     final character = getCharacterInstance();
     character.type = CharacterType.Rat;
+    readCharacter(character);
+    totalCharacters++;
+  }
+
+  void readCharacterZombie() {
+    final character = getCharacterInstance();
+    character.type = CharacterType.Zombie;
     readCharacter(character);
     totalCharacters++;
   }

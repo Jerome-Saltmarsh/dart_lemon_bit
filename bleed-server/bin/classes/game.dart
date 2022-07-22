@@ -30,12 +30,12 @@ import 'zombie.dart';
 
 abstract class Game {
   final items = <Item>[];
-  final zombies = <Zombie>[];
+  // final zombies = <Zombie>[];
   final npcs = <Npc>[];
   final players = <Player>[];
   final projectiles = <Projectile>[];
   final collectables = <Collectable>[];
-  final characters = <Character>[];
+  final characters = <AI>[];
   var frame = 0;
   final Scene scene;
 
@@ -64,7 +64,7 @@ abstract class Game {
 
   int get numberOfAlivePlayers => countAlive(players);
 
-  int get numberOfAliveZombies => countAlive(zombies);
+  // int get numberOfAliveZombies => countAlive(zombies);
 
   void updateStatus(){
     removeDisconnectedPlayers();
@@ -72,15 +72,6 @@ abstract class Game {
 
     for (final player in players) {
       player.writeAndSendResponse();
-    }
-  }
-
-  void updateAIPath(){
-    for (final zombie in zombies) {
-      if (zombie.deadOrBusy) continue;
-      final target = zombie.target;
-      if (target == null) continue;
-      npcSetPathTo(zombie, target);
     }
   }
 
@@ -162,7 +153,7 @@ abstract class Game {
 
     players.remove(player);
 
-    for (final zombie in player.game.zombies) {
+    for (final zombie in player.game.characters) {
       if (zombie.target != player) continue;
       zombie.target = null;
     }
@@ -183,19 +174,6 @@ abstract class Game {
   void update() {}
 
   void onPlayerDisconnected(Player player) {}
-
-  void spawnExplosion({
-    required Character src,
-    required Position3 target,
-    required int damage
-  }) {
-    dispatchV3(GameEventType.Explosion, target);
-    for (final character in zombies) {
-       if (onSameTeam(src, target)) continue;
-       if (character.getDistance(src) > 50) continue;
-       applyHit(src: src, target: character, damage: damage);
-    }
-  }
 
   void checkCollisionPlayerItem() {
     var itemLength = items.length;
@@ -295,7 +273,7 @@ extension GameFunctions on Game {
         x: x,
         y: y,
         character: character,
-        characters: zombies
+        characters: characters
     );
     if (closestZombie != null) {
       assert(closestZombie.alive);
@@ -333,7 +311,7 @@ extension GameFunctions on Game {
     frame++;
     if (frame % 15 == 0) {
       updateInteractableNpcTargets();
-      updateZombieTargets();
+      updateAITargets();
     }
 
     for (final enemySpawner in scene.enemySpawns) {
@@ -417,7 +395,7 @@ extension GameFunctions on Game {
         }
       }
 
-      for (final ai in zombies) {
+      for (final ai in characters) {
         if (ai.target != target) continue;
         ai.target = null;
       }
@@ -530,10 +508,10 @@ extension GameFunctions on Game {
       updateCharacter(characters[i]);
     }
 
-    final zombiesLength = zombies.length;
-    for (var i = 0; i < zombiesLength; i++) {
-      updateCharacter(zombies[i]);
-    }
+    // final zombiesLength = zombies.length;
+    // for (var i = 0; i < zombiesLength; i++) {
+    //   updateCharacter(zombies[i]);
+    // }
 
     final npcsLength = npcs.length;
     for (var i = 0; i < npcsLength; i++) {
@@ -542,19 +520,16 @@ extension GameFunctions on Game {
   }
 
   void _updateCollisions() {
-    // checkColliderCollision(players, gameObjects);
-    // checkColliderCollision(zombies, gameObjects);
-    // checkColliderCollision(players, gameObjects);
-    updateCollisionBetween(zombies);
     updateCollisionBetween(players);
-    resolveCollisionBetween(zombies, players, resolveCollisionA);
+    updateCollisionBetween(characters);
+    resolveCollisionBetween(characters, players, resolveCollisionA);
     resolveCollisionBetween(players, npcs, resolveCollisionB);
-    resolveCollisionBetween(npcs, zombies, resolveCollisionB);
+    resolveCollisionBetween(npcs, characters, resolveCollisionB);
     checkCollisionPlayerItem();
   }
 
   void sortGameObjects() {
-    sortSum(zombies);
+    sortSum(characters);
     sortSum(players);
     sortSum(npcs);
     sortSum(items);
@@ -577,7 +552,7 @@ extension GameFunctions on Game {
       onPlayerDeath(character);
     }
 
-    for (final npc in zombies) {
+    for (final npc in characters) {
       if (npc.target != character) continue;
       npc.target = null;
     }
@@ -643,8 +618,7 @@ extension GameFunctions on Game {
       }
     }
 
-    // checkProjectileCollision(gameObjects);
-    checkProjectileCollision(zombies);
+    checkProjectileCollision(characters);
     checkProjectileCollision(players);
   }
 
@@ -984,9 +958,10 @@ extension GameFunctions on Game {
   }
 
   AI getZombieInstance() {
-    for (final zombie in zombies) {
-      if (zombie.alive) continue;
-      return zombie;
+    for (final character in characters) {
+      if (character.alive) continue;
+      if (character is Zombie)
+        return character;
     }
     final zombie = Zombie(
       x: 0,
@@ -995,17 +970,8 @@ extension GameFunctions on Game {
       health: 10,
       damage: 1,
     );
-    zombies.add(zombie);
+    characters.add(zombie);
     return zombie;
-  }
-
-  int get zombieCount {
-    var count = 0;
-    for (final zombie in zombies) {
-      if (!zombie.alive) continue;
-      count++;
-    }
-    return count;
   }
 
   /// GameEventType
@@ -1026,8 +992,8 @@ extension GameFunctions on Game {
     }
   }
 
-  void updateZombieTargets() {
-    for (final zombie in zombies) {
+  void updateAITargets() {
+    for (final zombie in characters) {
       if (zombie.dead) continue;
 
       var target = zombie.target;
@@ -1061,7 +1027,7 @@ extension GameFunctions on Game {
     for (final npc in npcs) {
       Character? closest;
       var closestDistance = 99999.0;
-      for (final zombie in zombies) {
+      for (final zombie in characters) {
         if (zombie.dead) continue;
         if (onSameTeam(npc, zombie)) continue;
         var distance = getDistanceBetweenV3(zombie, npc);
@@ -1100,7 +1066,7 @@ extension GameFunctions on Game {
 
   bool removePlayer(Player player){
     if (!players.remove(player)) return false;
-    for (final npc in zombies) {
+    for (final npc in characters) {
       npc.clearTargetIf(player);
     }
     onPlayerDisconnected(player);
@@ -1139,8 +1105,8 @@ extension GameFunctions on Game {
     const characterFramesChange = 6;
     if (engine.frame % characterFramesChange != 0) return;
     updateFrames(players);
-    updateFrames(zombies);
     updateFrames(npcs);
+    updateFrames(characters);
   }
 
   void _updateItems() {
@@ -1264,7 +1230,7 @@ extension GameFunctions on Game {
       }
       final zombieHit = raycastHit(
           character: character,
-          colliders: zombies,
+          colliders: characters,
           range: character.equippedRange
       );
       if (zombieHit != null) {

@@ -57,13 +57,6 @@ class Engine {
     }
   }
 
-  void updateAIPathfinding() {
-    if (frame % 30 != 0) return;
-    for (final game in games) {
-      game.updateAIPath();
-    }
-  }
-
   Future<GameDarkAge> findGameEditorNew() async {
     return GameDarkAgeEditor();
   }

@@ -346,7 +346,7 @@ extension PlayerProperties on Player {
     writeNpcs();
     writePlayerTarget();
     writeGameTime(game);
-    writeZombies();
+    // writeZombies();
     writeCharacters();
 
     if (!sceneDownloaded){
@@ -358,7 +358,13 @@ extension PlayerProperties on Player {
   }
 
   void writeCharacters(){
-    for (final character in game.characters) {
+    final characters = game.characters;
+    for (final character in characters) {
+      if (character.dead) continue;
+      if (character.renderY < screenTop) continue;
+      if (character.renderX < screenLeft) continue;
+      if (character.renderX > screenRight) continue;
+      if (character.renderY > screenBottom) return;
       character.write(this);
     }
   }
@@ -443,28 +449,23 @@ extension PlayerProperties on Player {
   }
 
 
-  void writeZombies() {
-    writeByte(ServerResponse.Zombies);
-    final zombies = game.zombies;
-    for (final zombie in zombies){
-      if (zombie.dead) continue;
-      if (zombie.renderY < screenTop) continue;
-      if (zombie.renderX < screenLeft) continue;
-      if (zombie.renderX > screenRight) continue;
-      if (zombie.renderY > screenBottom) break;
-      if ((z - zombie.z).abs() > tileSize) continue;
-      writeCharacter(this, zombie);
-    }
-    writeByte(END);
-  }
+  // void writeZombies() {
+  //   writeByte(ServerResponse.Zombies);
+  //   final zombies = game.zombies;
+  //   for (final zombie in zombies){
+  //     if (zombie.dead) continue;
+  //     if (zombie.renderY < screenTop) continue;
+  //     if (zombie.renderX < screenLeft) continue;
+  //     if (zombie.renderX > screenRight) continue;
+  //     if (zombie.renderY > screenBottom) break;
+  //     if ((z - zombie.z).abs() > tileSize) continue;
+  //     writeCharacter(this, zombie);
+  //   }
+  //   writeByte(END);
+  // }
 
   void writeZombie(Zombie zombie){
-    if (zombie.dead) return;
-    if (zombie.renderY < screenTop) return;
-    if (zombie.renderX < screenLeft) return;
-    if (zombie.renderX > screenRight) return;
-    if (zombie.renderY > screenBottom) return;
-    if ((z - zombie.z).abs() > tileSize) return;
+    writeByte(ServerResponse.Character_Zombie);
     writeCharacter(this, zombie);
   }
 
@@ -514,7 +515,7 @@ extension PlayerProperties on Player {
 
   void writePaths() {
     writeByte(ServerResponse.Paths);
-    final zombies = game.zombies;
+    final zombies = game.characters;
     for (final zombie in zombies) {
       if (zombie.dead) continue;
       if (zombie.y < screenTop) continue;
