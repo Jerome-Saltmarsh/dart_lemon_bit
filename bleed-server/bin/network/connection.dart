@@ -461,6 +461,7 @@ class Connection {
     player.aimTarget = game.getClosestCollider(mouseX, mouseY, player, minDistance: 35);
     switch (args[1]) {
       case CharacterAction.Idle:
+        if (player.target != null) break;
         player.direction = args[6];
         if (player.target == null){
           player.setCharacterStateIdle();
