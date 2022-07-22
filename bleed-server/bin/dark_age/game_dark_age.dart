@@ -19,7 +19,7 @@ class GameDarkAge extends Game {
 
   @override
   void setHourMinutes(int hour, int minutes){
-    universe.time = (hour * secondsPerHour) + (minutes * secondsPerMinute);
+    universe.time.time = (hour * secondsPerHour) + (minutes * secondsPerMinute);
   }
 
   @override
@@ -33,7 +33,7 @@ class GameDarkAge extends Game {
   }
 
   @override
-  int getTime() => universe.time;
+  int getTime() => universe.time.time;
 
   @override
   void update(){

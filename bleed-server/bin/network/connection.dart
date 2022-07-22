@@ -101,7 +101,7 @@ class Connection {
       case ClientRequest.Skip_Hour:
         if (game is GameDarkAge == false) return;
         final universe = (game as GameDarkAge).universe;
-        universe.time = (universe.time + secondsPerHour) % secondsPerDay;
+        universe.time.time = (universe.time.time + secondsPerHour) % secondsPerDay;
         break;
 
       case ClientRequest.Spawn_Zombie:
@@ -127,7 +127,7 @@ class Connection {
       case ClientRequest.Reverse_Hour:
         if (game is GameDarkAge == false) return;
         final universe = (game as GameDarkAge).universe;
-        universe.time = (universe.time - 3600) % secondsPerDay;
+        universe.time.time = (universe.time.time - 3600) % secondsPerDay;
         break;
 
       case ClientRequest.Set_Weapon:

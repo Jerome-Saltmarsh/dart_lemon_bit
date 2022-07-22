@@ -7,8 +7,22 @@ import '../engine.dart';
 import 'game_dark_age.dart';
 import 'package:lemon_math/library.dart';
 
+
+class DarkAgeTime {
+  var minutesPassingPerSecond = 5;
+  var time = 12 * 60 * 60;
+  var timePassing = true;
+
+  void update(){
+    setTime(time + minutesPassingPerSecond);
+  }
+
+  void setTime(int value) {
+    time = value % secondsPerDay;
+  }
+}
+
 class DarkAgeUniverse {
-   var minutesPassingPerSecond = 5;
    var durationRain = randomInt(1000, 3000);
    var durationLightning = 300;
    var durationBreeze = 500;
@@ -17,16 +31,16 @@ class DarkAgeUniverse {
    var _breezy = false;
    var _lightning = Lightning.Off;
    var _wind = 0;
-   var _timePassing = true;
 
-   var time = 12 * 60 * 60;
+   final DarkAgeTime time;
 
-   DarkAgeUniverse();
+
+   DarkAgeUniverse(this.time);
 
   Lightning get lightning => _lightning;
    Rain get raining => _raining;
    bool get breezy => _breezy;
-   bool get timePassing => _timePassing;
+   bool get timePassing => time.timePassing;
    int get wind => _wind;
 
    set wind(int value){
@@ -56,8 +70,8 @@ class DarkAgeUniverse {
    }
 
    set timePassing(bool value) {
-      if(_timePassing == value) return;
-      _timePassing = value;
+      if(timePassing == value) return;
+      time.timePassing = value;
       onChangedWeather();
    }
 
@@ -74,12 +88,11 @@ class DarkAgeUniverse {
    }
 
    void setTime(int value) {
-      time = value % secondsPerDay;
+      time.time = value % secondsPerDay;
    }
 
    void update(){
       if (!timePassing) return;
-      setTime(time + minutesPassingPerSecond);
       updateRain();
       updateLightning();
       updateBreeze();
@@ -119,14 +132,14 @@ class DarkAgeUniverse {
    }
 
    void updateBreeze(){
-      durationBreeze -= minutesPassingPerSecond;
+      durationBreeze -= time.minutesPassingPerSecond;
       if (durationBreeze > 0) return;
       durationBreeze = randomInt(2000, 5000);
       breezy = !breezy;
    }
 
    void updateWind(){
-      durationWind -= minutesPassingPerSecond;
+      durationWind -= time.minutesPassingPerSecond;
       if (durationWind <= 0) {
          durationWind = randomInt(3000, 6000);
 

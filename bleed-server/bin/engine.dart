@@ -20,15 +20,22 @@ final engine = Engine();
 class Engine {
   final games = <Game>[];
   var frame = 0;
-  final officialUniverse = DarkAgeUniverse();
+  late DarkAgeTime officialTime;
+  late DarkAgeUniverse officialUniverse;
+  late DarkAgeUniverse environmentUnderground;
 
   Future init() async {
+    officialTime = DarkAgeTime();
+    officialUniverse = DarkAgeUniverse(officialTime);
+    environmentUnderground = DarkAgeUniverse(officialTime);
+
     await darkAgeScenes.load();
     periodic(fixedUpdate, ms: 1000 ~/ framesPerSecond);
   }
 
   void fixedUpdate(Timer timer) {
     officialUniverse.update();
+    officialTime.update();
     frame++;
 
     removeEmptyGames();
