@@ -36,12 +36,12 @@ final renderOrder = <RenderOrder> [
   RenderOrderPlayer(),
   RenderOrderParticle(),
   RenderOrderProjectiles(),
-  RenderOrderNpcs(),
+  // RenderOrderNpcs(),
   RenderOrderCharacters(),
 ];
 
 // renderOrderLength gets called a lot during rendering so use a const and update it manually if need be
-const renderOrderLength = 6;
+const renderOrderLength = 5;
 var renderOrderFirst = renderOrder.first;
 var totalRemaining = 0;
 var totalIndex = 0;

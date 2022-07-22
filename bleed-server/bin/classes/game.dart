@@ -9,7 +9,6 @@ import '../functions.dart';
 import '../functions/withinRadius.dart';
 import '../io/write_scene_to_file.dart';
 import '../maths.dart';
-import '../maths/get_distance_between_v3.dart';
 import '../physics.dart';
 import 'ai.dart';
 import 'character.dart';
@@ -31,7 +30,7 @@ import 'zombie.dart';
 abstract class Game {
   final items = <Item>[];
   // final zombies = <Zombie>[];
-  final npcs = <Npc>[];
+  // final npcs = <Npc>[];
   final players = <Player>[];
   final projectiles = <Projectile>[];
   final collectables = <Collectable>[];
@@ -258,7 +257,7 @@ extension GameFunctions on Game {
     required List<Character> characters,
   }) {
     return findClosestVector2(
-        positions: npcs,
+        positions: characters,
         x: x,
         y: y,
         z: character.z,
@@ -294,14 +293,14 @@ extension GameFunctions on Game {
          closestDistance = playerDistance;
       }
     }
-    final closestNpc = getClosestNpc(x: x, y: y, character: character, characters: npcs);
-    if (closestNpc != null){
-        final npcDistance = getDistanceV3(x, y, z, closestNpc.x, closestNpc.y, closestNpc.z);
-        if (npcDistance < closestDistance) {
-           closestCollider = closestNpc;
-           closestDistance = npcDistance;
-        }
-    }
+    // final closestNpc = getClosestNpc(x: x, y: y, character: character, characters: npcs);
+    // if (closestNpc != null){
+    //     final npcDistance = getDistanceV3(x, y, z, closestNpc.x, closestNpc.y, closestNpc.z);
+    //     if (npcDistance < closestDistance) {
+    //        closestCollider = closestNpc;
+    //        closestDistance = npcDistance;
+    //     }
+    // }
     if (minDistance != null && closestDistance > minDistance) return null;
 
     return closestCollider;
@@ -310,7 +309,7 @@ extension GameFunctions on Game {
   void updateInProgress() {
     frame++;
     if (frame % 15 == 0) {
-      updateInteractableNpcTargets();
+      // updateInteractableNpcTargets();
       updateAITargets();
     }
 
@@ -512,26 +511,26 @@ extension GameFunctions on Game {
     // for (var i = 0; i < zombiesLength; i++) {
     //   updateCharacter(zombies[i]);
     // }
-
-    final npcsLength = npcs.length;
-    for (var i = 0; i < npcsLength; i++) {
-      updateCharacter(npcs[i]);
-    }
+    //
+    // final npcsLength = npcs.length;
+    // for (var i = 0; i < npcsLength; i++) {
+    //   updateCharacter(npcs[i]);
+    // }
   }
 
   void _updateCollisions() {
     updateCollisionBetween(players);
     updateCollisionBetween(characters);
     resolveCollisionBetween(characters, players, resolveCollisionA);
-    resolveCollisionBetween(players, npcs, resolveCollisionB);
-    resolveCollisionBetween(npcs, characters, resolveCollisionB);
+    // resolveCollisionBetween(players, npcs, resolveCollisionB);
+    // resolveCollisionBetween(npcs, characters, resolveCollisionB);
     checkCollisionPlayerItem();
   }
 
   void sortGameObjects() {
     sortSum(characters);
     sortSum(players);
-    sortSum(npcs);
+    // sortSum(npcs);
     sortSum(items);
     sortSum(projectiles);
   }
@@ -993,54 +992,33 @@ extension GameFunctions on Game {
   }
 
   void updateAITargets() {
-    for (final zombie in characters) {
-      if (zombie.dead) continue;
+    for (final character in characters) {
+      if (character.dead) continue;
 
-      var target = zombie.target;
+      var target = character.target;
       if (
           target != null &&
-          !zombie.withinChaseRange(target)
+          !character.withinChaseRange(target)
       ) {
-        zombie.target = null;
-        zombie.clearDest();
+        character.target = null;
+        character.clearDest();
       }
 
       var targetDistance = 9999999.0;
 
       for (final player in players) {
         if (player.dead) continue;
-        if (onSameTeam(player, zombie)) continue;
-        if (!zombie.withinViewRange(player)) continue;
-        final npcDistance = zombie.getDistance(player);
+        if (onSameTeam(player, character)) continue;
+        if (!character.withinViewRange(player)) continue;
+        final npcDistance = character.getDistance(player);
         if (npcDistance >= targetDistance) continue;
-        setNpcTarget(zombie, player);
+        setNpcTarget(character, player);
         targetDistance = npcDistance;
       }
-      target = zombie.target;
+      target = character.target;
       if (target == null) continue;
       if (targetDistance < 100) continue;
-      npcSetPathTo(zombie, target);
-    }
-  }
-
-  void updateInteractableNpcTargets() {
-    for (final npc in npcs) {
-      Character? closest;
-      var closestDistance = 99999.0;
-      for (final zombie in characters) {
-        if (zombie.dead) continue;
-        if (onSameTeam(npc, zombie)) continue;
-        var distance = getDistanceBetweenV3(zombie, npc);
-        if (distance > closestDistance) continue;
-        closest = zombie;
-        closestDistance = distance;
-      }
-      if (closest == null || closestDistance > npc.equippedRange) {
-        npc.target = null;
-        npc.state = CharacterState.Idle;
-        continue;
-      }
-      setNpcTarget(npc, closest);
+      npcSetPathTo(character, target);
     }
   }
 
@@ -1105,7 +1083,7 @@ extension GameFunctions on Game {
     const characterFramesChange = 6;
     if (engine.frame % characterFramesChange != 0) return;
     updateFrames(players);
-    updateFrames(npcs);
+    // updateFrames(npcs);
     updateFrames(characters);
   }
 
@@ -1325,7 +1303,7 @@ extension GameFunctions on Game {
     npc.spawnX = npc.x;
     npc.spawnY = npc.y;
     npc.clearDest();
-    npcs.add(npc);
+    characters.add(npc);
     return npc;
   }
 }

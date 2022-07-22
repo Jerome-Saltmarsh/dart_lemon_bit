@@ -1,3 +1,4 @@
+import '../common/character_type.dart';
 import 'player.dart';
 import 'ai.dart';
 import 'weapon.dart';
@@ -26,7 +27,9 @@ class Npc extends AI {
             weapon: weapon,
             team: team,
             wanderRadius: wanderRadius,
-  );
+  ) {
+    type = CharacterType.Template;
+  }
 
   @override
   void write(Player player) {

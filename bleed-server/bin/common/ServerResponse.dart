@@ -15,7 +15,7 @@ class ServerResponse {
   static const Version = 16;
   static const Crates = 17;
   static const NpcMessage = 18;
-  static const Npcs = 19;
+  // static const Npcs = 19;
   static const Game_Objects = 20;
   static const NpcsDebug = 22;
   static const Game_Time = 23;
@@ -65,5 +65,6 @@ class ServerResponse {
   static const Interacting_Npc_Name = 86;
   static const Character_Rat = 87;
   static const Character_Zombie = 88;
+  static const Character_Template = 89;
 }
 

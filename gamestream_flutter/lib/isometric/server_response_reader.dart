@@ -80,6 +80,9 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Character_Zombie:
           readCharacterZombie();
           break;
+        case ServerResponse.Character_Template:
+          readCharacterTemplate();
+          break;
         case ServerResponse.End:
           return readEnd();
         case ServerResponse.Zombies:
@@ -91,9 +94,9 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Players:
           readPlayers();
           break;
-        case ServerResponse.Npcs:
-          readNpcs();
-          break;
+        // case ServerResponse.Npcs:
+        //   readNpcs();
+        //   break;
         case ServerResponse.Projectiles:
           readProjectiles();
           break;
@@ -226,6 +229,14 @@ class ServerResponseReader with ByteReader {
     final character = getCharacterInstance();
     character.type = CharacterType.Zombie;
     readCharacter(character);
+    totalCharacters++;
+  }
+
+  void readCharacterTemplate() {
+    final character = getCharacterInstance();
+    character.type = CharacterType.Template;
+    readCharacter(character);
+    readCharacterEquipment(character);
     totalCharacters++;
   }
 
