@@ -22,7 +22,6 @@ import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_zombie.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
-import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:lemon_engine/engine.dart';
 
 import '../classes/particle.dart';
@@ -35,7 +34,6 @@ import 'render_particle.dart';
 final renderOrder = <RenderOrder> [
   RenderOrderGrid(),
   RenderOrderPlayer(),
-  RenderOrderZombie(),
   RenderOrderParticle(),
   RenderOrderProjectiles(),
   RenderOrderNpcs(),
@@ -43,7 +41,7 @@ final renderOrder = <RenderOrder> [
 ];
 
 // renderOrderLength gets called a lot during rendering so use a const and update it manually if need be
-const renderOrderLength = 7;
+const renderOrderLength = 6;
 var renderOrderFirst = renderOrder.first;
 var totalRemaining = 0;
 var totalIndex = 0;
@@ -78,27 +76,6 @@ void renderSprites() {
     if (next.render()) continue;
     totalRemaining--;
     remaining = totalRemaining > 0;
-  }
-}
-
-class RenderOrderZombie extends RenderOrder {
-  late Character zombie;
-
-  @override
-  void renderFunction() {
-    renderCharacterZombie(zombie);
-  }
-
-  @override
-  void updateFunction() {
-    zombie = zombies[_index];
-    order = zombie.renderOrder;
-    orderZ = zombie.indexZ;
-  }
-
-  @override
-  int getTotal() {
-    return totalZombies;
   }
 }
 
