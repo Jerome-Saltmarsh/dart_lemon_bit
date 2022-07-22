@@ -14,6 +14,8 @@ import '../utilities.dart';
 import 'enemy_spawn.dart';
 import 'position3.dart';
 import 'library.dart';
+import 'rat.dart';
+import 'zombie.dart';
 
 
 class Player extends Character with ByteWriter {
@@ -304,6 +306,11 @@ class Player extends Character with ByteWriter {
     sceneDownloaded = false;
     game = to;
   }
+
+  @override
+  void write(Player player) {
+    player.writePlayer(this);
+  }
 }
 
 
@@ -340,6 +347,7 @@ extension PlayerProperties on Player {
     writePlayerTarget();
     writeGameTime(game);
     writeZombies();
+    writeCharacters();
 
     if (!sceneDownloaded){
       downloadScene();
@@ -347,6 +355,12 @@ extension PlayerProperties on Player {
 
     if (debug)
       writePaths();
+  }
+
+  void writeCharacters(){
+    for (final character in game.characters) {
+      character.write(this);
+    }
   }
 
   void downloadScene(){
@@ -442,6 +456,21 @@ extension PlayerProperties on Player {
       writeCharacter(this, zombie);
     }
     writeByte(END);
+  }
+
+  void writeZombie(Zombie zombie){
+    if (zombie.dead) return;
+    if (zombie.renderY < screenTop) return;
+    if (zombie.renderX < screenLeft) return;
+    if (zombie.renderX > screenRight) return;
+    if (zombie.renderY > screenBottom) return;
+    if ((z - zombie.z).abs() > tileSize) return;
+    writeCharacter(this, zombie);
+  }
+
+  void writeRat(Rat rat){
+    writeByte(ServerResponse.Character_Rat);
+    writeCharacter(this, rat);
   }
 
   void writeGameObjects() {

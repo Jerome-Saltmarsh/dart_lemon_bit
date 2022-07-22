@@ -35,6 +35,7 @@ abstract class Game {
   final players = <Player>[];
   final projectiles = <Projectile>[];
   final collectables = <Collectable>[];
+  final characters = <Character>[];
   var frame = 0;
   final Scene scene;
 

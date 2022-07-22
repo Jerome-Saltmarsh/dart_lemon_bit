@@ -3,6 +3,7 @@
 import '../common/library.dart';
 import 'ai.dart';
 import 'game.dart';
+import 'player.dart';
 import 'weapon.dart';
 
 class Zombie extends AI {
@@ -23,5 +24,10 @@ class Zombie extends AI {
   @override
   void customUpdateAI(Game game) {
 
+  }
+
+  @override
+  void write(Player player) {
+    player.writeZombie(this);
   }
 }

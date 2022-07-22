@@ -2,6 +2,7 @@
 import 'package:lemon_math/functions/give_or_take.dart';
 
 import '../../classes/library.dart';
+import '../../classes/rat.dart';
 import '../../common/library.dart';
 import '../../engine.dart';
 import '../dark_age_scenes.dart';
@@ -73,6 +74,8 @@ class GameDarkAgeVillage extends DarkAgeArea {
 
     addEnemySpawn(z: 1, row: 43, column: 8, health: 3, max: 2);
     addEnemySpawn(z: 1, row: 40, column: 35, health: 3);
+
+    characters.add(Rat(z: 1, row: 30, column: 30));
   }
 
   @override

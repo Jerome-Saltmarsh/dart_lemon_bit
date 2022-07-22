@@ -27,4 +27,9 @@ class Npc extends AI {
             team: team,
             wanderRadius: wanderRadius,
   );
+
+  @override
+  void write(Player player) {
+    player.writeNpc(player, this);
+  }
 }

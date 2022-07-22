@@ -1,5 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/quest.dart';
+import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
@@ -65,11 +66,21 @@ class ServerResponseReader with ByteReader {
   void readBytes(List<int> values) {
     framesSinceUpdateReceived.value = 0;
     index = 0;
+    totalCharacters = 0;
     bufferSize.value = values.length;
     this.values = values;
+
     while (true) {
       final response = readByte();
       switch (response){
+        case ServerResponse.Character_Rat:
+          if (characters.length <= totalCharacters){
+            characters.add(Character());
+          }
+          final character = characters[totalCharacters];
+          readCharacter(character);
+          totalCharacters++;
+          break;
         case ServerResponse.End:
           return readEnd();
         case ServerResponse.Zombies:

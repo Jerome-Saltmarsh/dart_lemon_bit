@@ -13,7 +13,7 @@ import 'player.dart';
 import 'position3.dart';
 import 'weapon.dart';
 
-class AI extends Character with Material {
+abstract class AI extends Character with Material {
   static const viewRange = 200.0;
   static const chaseRange = 500.0;
   static const maxAIPathLength = 80;

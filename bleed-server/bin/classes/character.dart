@@ -1,15 +1,18 @@
 import 'package:lemon_math/library.dart';
 
+import '../common/character_type.dart';
 import '../common/library.dart';
 import '../functions/withinRadius.dart';
 import 'collider.dart';
 import 'game.dart';
+import 'player.dart';
 import 'position3.dart';
 import 'power.dart';
 import 'components.dart';
 import 'weapon.dart';
 
-class Character extends Collider with Team, Health, Velocity, Material {
+abstract class Character extends Collider with Team, Health, Velocity, Material {
+  var type = CharacterType.Template;
   late double movementSpeed;
   Power? ability = null;
   double accuracy = 0;
@@ -54,6 +57,8 @@ class Character extends Collider with Team, Health, Velocity, Material {
   bool get equippedIsMelee => WeaponType.isMelee(equippedWeapon.type);
   bool get equippedIsEmpty => false;
   int get equippedLevel => 1;
+
+  void write(Player player);
 
   Character({
     required double x,
