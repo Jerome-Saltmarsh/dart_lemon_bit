@@ -7,9 +7,9 @@ double single({
       required int frame,
       required num direction,
       required int framesPerDirection,
-      num size = 64.0
+      double size = 64.0
 }) {
-  return ((direction * framesPerDirection) + (frame - 1)) * size.toDouble();
+  return ((direction * framesPerDirection) + (frame - 1)) * size;
 }
 
 double loop({

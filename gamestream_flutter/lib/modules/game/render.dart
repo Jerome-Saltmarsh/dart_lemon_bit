@@ -59,8 +59,7 @@ class GameRender {
     if (mouseTargetName != null && mouseTargetName != "Zombie"){
        renderText(text: mouseTargetName, x: player.attackTarget.renderX, y: player.attackTarget.renderY - 55);
     }
-
-    renderPixelRed(player.target.renderX, player.target.renderY);
+    // renderPixelRed(player.target.renderX, player.target.renderY);
   }
 
   void renderMouseWireFrame(){
