@@ -374,6 +374,7 @@ extension GameFunctions on Game {
 
   void setCharacterStateDead(Character character) {
     if (character.state == CharacterState.Dead) return;
+    character.health = 0;
     character.state = CharacterState.Dead;
     character.onCharacterStateChanged();
     character.collidable = false;
@@ -576,6 +577,7 @@ extension GameFunctions on Game {
     if (projectile.type == ProjectileType.Orb){
       dispatch(GameEventType.Blue_Orb_Deactivated, target.x, target.y, target.z);
     }
+
   }
 
   void applyHit({
