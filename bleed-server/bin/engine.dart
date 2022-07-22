@@ -21,12 +21,12 @@ class Engine {
   final games = <Game>[];
   var frame = 0;
   late DarkAgeTime officialTime;
-  late DarkAgeUniverse officialUniverse;
+  late DarkAgeUniverse environmentAboveGround;
   late DarkAgeUniverse environmentUnderground;
 
   Future init() async {
     officialTime = DarkAgeTime();
-    officialUniverse = DarkAgeUniverse(officialTime);
+    environmentAboveGround = DarkAgeUniverse(officialTime);
     environmentUnderground = DarkAgeUniverse(officialTime);
 
     await darkAgeScenes.load();
@@ -34,7 +34,7 @@ class Engine {
   }
 
   void fixedUpdate(Timer timer) {
-    officialUniverse.update();
+    environmentAboveGround.update();
     officialTime.update();
     frame++;
 
