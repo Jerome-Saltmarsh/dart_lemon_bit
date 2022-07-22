@@ -25,6 +25,8 @@ class Rat extends AI {
     indexColumn = column;
     spawnX = x;
     spawnY = y;
+    destX = x;
+    destY = y;
   }
 
   @override
