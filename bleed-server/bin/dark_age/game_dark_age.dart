@@ -5,21 +5,21 @@ import 'package:lemon_math/library.dart';
 import '../classes/library.dart';
 import '../common/library.dart';
 import '../engine.dart';
-import 'dark_age_universe.dart';
+import 'dark_age_environment.dart';
 
 class GameDarkAge extends Game {
-  final DarkAgeUniverse universe;
+  final DarkAgeEnvironment environment;
   var minutesPassingPerSecond = 5;
   var durationRain = randomInt(1000, 3000);
   var durationLightning = 300;
   var durationBreeze = 500;
   var durationWind = randomInt(500, 1000);
 
-  GameDarkAge(Scene scene, this.universe) : super(scene);
+  GameDarkAge(Scene scene, this.environment) : super(scene);
 
   @override
   void setHourMinutes(int hour, int minutes){
-    universe.time.time = (hour * secondsPerHour) + (minutes * secondsPerMinute);
+    environment.time.time = (hour * secondsPerHour) + (minutes * secondsPerMinute);
   }
 
   @override
@@ -33,7 +33,7 @@ class GameDarkAge extends Game {
   }
 
   @override
-  int getTime() => universe.time.time;
+  int getTime() => environment.time.time;
 
   @override
   void update(){

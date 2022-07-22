@@ -1,5 +1,4 @@
-import 'package:gamestream_flutter/isometric/events/on_hour_changed.dart';
 import 'package:lemon_watch/watch.dart';
 
-final hours = Watch(0, onChanged: onHourChanged);
+final hours = Watch(0);
 final minutes = Watch(0);

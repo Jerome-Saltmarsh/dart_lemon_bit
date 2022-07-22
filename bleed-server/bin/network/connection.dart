@@ -100,7 +100,7 @@ class Connection {
 
       case ClientRequest.Skip_Hour:
         if (game is GameDarkAge == false) return;
-        final universe = (game as GameDarkAge).universe;
+        final universe = (game as GameDarkAge).environment;
         universe.time.time = (universe.time.time + secondsPerHour) % secondsPerDay;
         break;
 
@@ -126,7 +126,7 @@ class Connection {
 
       case ClientRequest.Reverse_Hour:
         if (game is GameDarkAge == false) return;
-        final universe = (game as GameDarkAge).universe;
+        final universe = (game as GameDarkAge).environment;
         universe.time.time = (universe.time.time - 3600) % secondsPerDay;
         break;
 
@@ -186,7 +186,7 @@ class Connection {
 
       case ClientRequest.Weather_Set_Rain:
         if (game is GameDarkAge == false) return;
-        final universe = (game as GameDarkAge).universe;
+        final universe = (game as GameDarkAge).environment;
         final rainIndex = int.tryParse(arguments[1]);
         if (rainIndex == null || !isValidIndex(rainIndex, rainValues))
            return errorInvalidArg('invalid rain index: $rainIndex');
@@ -196,13 +196,13 @@ class Connection {
 
       case ClientRequest.Weather_Toggle_Breeze:
         if (game is GameDarkAge == false) return;
-        final universe = (game as GameDarkAge).universe;
+        final universe = (game as GameDarkAge).environment;
         universe.toggleBreeze();
         break;
 
       case ClientRequest.Weather_Set_Wind:
         if (game is GameDarkAge == false) return;
-        final universe = (game as GameDarkAge).universe;
+        final universe = (game as GameDarkAge).environment;
         final index = int.tryParse(arguments[1]);
         if (index == null || !isValidIndex(index, windValues))
           return errorInvalidArg('invalid rain index: $index');
@@ -212,7 +212,7 @@ class Connection {
 
       case ClientRequest.Weather_Set_Lightning:
         if (game is GameDarkAge == false) return;
-        final universe = (game as GameDarkAge).universe;
+        final universe = (game as GameDarkAge).environment;
 
         final index = int.tryParse(arguments[1]);
         if (index == null || !isValidIndex(index, lightningValues))
@@ -222,8 +222,8 @@ class Connection {
 
       case ClientRequest.Weather_Toggle_Time_Passing:
         if (game is GameDarkAge == false) return;
-        final universe = (game as GameDarkAge).universe;
-        universe.toggleTimePassing();
+        final environment = (game as GameDarkAge).environment;
+        environment.toggleTimePassing();
         break;
 
       case ClientRequest.Equip_Weapon:

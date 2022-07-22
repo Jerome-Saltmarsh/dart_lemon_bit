@@ -16,8 +16,8 @@ import 'package:gamestream_flutter/isometric/io/custom_game_names.dart';
 import 'package:gamestream_flutter/isometric/npcs.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
+import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
-import 'package:gamestream_flutter/isometric/watches/scene.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
@@ -248,6 +248,7 @@ class ServerResponseReader with ByteReader {
     lightning.value = readLightning();
     watchTimePassing.value = readBool();
     windAmbient.value = readWind();
+    ambientShade.value = readByte();
   }
 
   Rain readRain(){

@@ -623,13 +623,14 @@ extension PlayerProperties on Player {
 
   void writeWeather() {
     if (game is GameDarkAge == false) return;
-    final universe = (game as GameDarkAge).universe;
+    final environment = (game as GameDarkAge).environment;
     writeByte(ServerResponse.Weather);
-    writeByte(universe.raining.index);
-    writeBool(universe.breezy);
-    writeByte(universe.lightning.index);
-    writeBool(universe.timePassing);
-    writeByte(universe.wind);
+    writeByte(environment.raining.index);
+    writeBool(environment.breezy);
+    writeByte(environment.lightning.index);
+    writeBool(environment.timePassing);
+    writeByte(environment.wind);
+    writeByte(environment.shade);
   }
 
   void writePercentage(double value){

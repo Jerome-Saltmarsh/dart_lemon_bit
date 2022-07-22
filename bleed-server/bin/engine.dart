@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'classes/library.dart';
+import 'common/library.dart';
 import 'constants/frames_per_second.dart';
 import 'dark_age/areas/game_dark_age_dark_fortress.dart';
 import 'dark_age/areas/game_dark_age_farm.dart';
@@ -8,7 +9,7 @@ import 'dark_age/areas/game_dark_age_forest.dart';
 import 'dark_age/areas/game_dark_age_fortress_dungeon.dart';
 import 'dark_age/areas/game_dark_age_village.dart';
 import 'dark_age/dark_age_scenes.dart';
-import 'dark_age/dark_age_universe.dart';
+import 'dark_age/dark_age_environment.dart';
 import 'dark_age/game_dark_age.dart';
 import 'dark_age/areas/game_dark_age_college.dart';
 import 'dark_age/game_dark_age_editor.dart';
@@ -21,13 +22,13 @@ class Engine {
   final games = <Game>[];
   var frame = 0;
   late DarkAgeTime officialTime;
-  late DarkAgeUniverse environmentAboveGround;
-  late DarkAgeUniverse environmentUnderground;
+  late DarkAgeEnvironment environmentAboveGround;
+  late DarkAgeEnvironment environmentUnderground;
 
   Future init() async {
     officialTime = DarkAgeTime();
-    environmentAboveGround = DarkAgeUniverse(officialTime);
-    environmentUnderground = DarkAgeUniverse(officialTime);
+    environmentAboveGround = DarkAgeEnvironment(officialTime);
+    environmentUnderground = DarkAgeEnvironment(officialTime, maxShade: Shade.Pitch_Black);
 
     await darkAgeScenes.load();
     periodic(fixedUpdate, ms: 1000 ~/ framesPerSecond);

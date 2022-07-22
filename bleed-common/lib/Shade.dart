@@ -5,6 +5,20 @@ class Shade {
   static const Dark = 3;
   static const Very_Dark = 4;
   static const Pitch_Black = 5;
+  
+  static int fromHour(int hour){
+      if (hour < 2) return Pitch_Black;
+      if (hour < 3) return Very_Dark;
+      if (hour < 5) return Dark;
+      if (hour < 7) return Medium;
+      if (hour < 9) return Bright;
+      if (hour < 16) return Very_Bright;
+      if (hour < 18) return Bright;
+      if (hour < 20) return Medium;
+      if (hour < 21) return Dark;
+      if (hour < 23) return Very_Dark;
+      return Pitch_Black;
+  }
 }
 
 const Pitch_Black = Shade.Pitch_Black;

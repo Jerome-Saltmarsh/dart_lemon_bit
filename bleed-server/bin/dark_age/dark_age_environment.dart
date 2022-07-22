@@ -1,8 +1,5 @@
 
-import '../common/lightning.dart';
-import '../common/rain.dart';
-import '../common/seconds_per_day.dart';
-import '../common/wind.dart';
+import '../common/library.dart';
 import '../engine.dart';
 import 'game_dark_age.dart';
 import 'package:lemon_math/library.dart';
@@ -20,9 +17,11 @@ class DarkAgeTime {
   void setTime(int value) {
     time = value % secondsPerDay;
   }
+
+  int get hour => time ~/ secondsPerHour;
 }
 
-class DarkAgeUniverse {
+class DarkAgeEnvironment {
    var durationRain = randomInt(1000, 3000);
    var durationLightning = 300;
    var durationBreeze = 500;
@@ -31,17 +30,26 @@ class DarkAgeUniverse {
    var _breezy = false;
    var _lightning = Lightning.Off;
    var _wind = 0;
+   var _shade = Shade.Bright;
+   var maxShade = Shade.Very_Bright;
 
    final DarkAgeTime time;
 
-
-   DarkAgeUniverse(this.time);
+   DarkAgeEnvironment(this.time, {this.maxShade = Shade.Very_Bright});
 
   Lightning get lightning => _lightning;
    Rain get raining => _raining;
    bool get breezy => _breezy;
    bool get timePassing => time.timePassing;
    int get wind => _wind;
+   int get shade => _shade;
+
+   set shade(int value){
+     final clampedValue = clamp(value, maxShade, Shade.Pitch_Black);
+     if (_shade == clampedValue) return;
+     _shade = clampedValue;
+     onChangedWeather();
+   }
 
    set wind(int value){
       if (_wind == value) return;
@@ -70,7 +78,7 @@ class DarkAgeUniverse {
    }
 
    set timePassing(bool value) {
-      if(timePassing == value) return;
+      if (timePassing == value) return;
       time.timePassing = value;
       onChangedWeather();
    }
@@ -87,16 +95,17 @@ class DarkAgeUniverse {
       timePassing = !timePassing;
    }
 
-   void setTime(int value) {
-      time.time = value % secondsPerDay;
-   }
-
    void update(){
       if (!timePassing) return;
       updateRain();
       updateLightning();
       updateBreeze();
       updateWind();
+      updateShade();
+   }
+
+   void updateShade() {
+     shade = Shade.fromHour(time.hour);
    }
 
    void updateRain(){
@@ -163,7 +172,7 @@ class DarkAgeUniverse {
       for (final game in engine.games){
          if (game is GameDarkAge == false) continue;
          final gameDarkAge = game as GameDarkAge;
-         if (this != gameDarkAge.universe) continue;
+         if (this != gameDarkAge.environment) continue;
          gameDarkAge.playersWriteWeather();
       }
    }
