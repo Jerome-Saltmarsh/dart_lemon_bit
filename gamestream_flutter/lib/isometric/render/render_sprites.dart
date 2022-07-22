@@ -1,6 +1,9 @@
 import 'dart:math';
+import 'package:bleed_common/character_type.dart';
+import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emissions_npcs.dart';
+import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:lemon_engine/screen.dart';
 import 'package:lemon_math/library.dart';
@@ -17,14 +20,14 @@ import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
-import 'package:gamestream_flutter/isometric/render/render_zombie.dart';
+import 'package:gamestream_flutter/isometric/render/render_character_zombie.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:lemon_engine/engine.dart';
 
 import '../classes/particle.dart';
 import '../grid.dart';
-import 'render_character.dart';
+import 'render_character_template.dart';
 import 'render_grid_node.dart';
 import 'render_particle.dart';
 
@@ -36,10 +39,11 @@ final renderOrder = <RenderOrder> [
   RenderOrderParticle(),
   RenderOrderProjectiles(),
   RenderOrderNpcs(),
+  RenderOrderCharacters(),
 ];
 
 // renderOrderLength gets called a lot during rendering so use a const and update it manually if need be
-const renderOrderLength = 6;
+const renderOrderLength = 7;
 var renderOrderFirst = renderOrder.first;
 var totalRemaining = 0;
 var totalIndex = 0;
@@ -82,7 +86,7 @@ class RenderOrderZombie extends RenderOrder {
 
   @override
   void renderFunction() {
-    renderZombie(zombie);
+    renderCharacterZombie(zombie);
   }
 
   @override
@@ -98,12 +102,42 @@ class RenderOrderZombie extends RenderOrder {
   }
 }
 
+class RenderOrderCharacters extends RenderOrder {
+  late Character character;
+
+  @override
+  void renderFunction() {
+    switch(character.type){
+      case CharacterType.Template:
+        return renderCharacterTemplate(character);
+      case CharacterType.Rat:
+        return renderCharacterRat(character);
+      case CharacterType.Zombie:
+        return renderCharacterZombie(character);
+      default:
+        throw Exception("Cannot render character type: ${character.type}");
+    }
+  }
+
+  @override
+  void updateFunction() {
+    character = characters[_index];
+    order = character.renderOrder;
+    orderZ = character.indexZ;
+  }
+
+  @override
+  int getTotal() {
+    return totalCharacters;
+  }
+}
+
 class RenderOrderNpcs extends RenderOrder {
   late Character npc;
 
   @override
   void renderFunction() {
-    renderCharacter(npc, renderHealthBar: false);
+    renderCharacterTemplate(npc, renderHealthBar: false);
   }
 
   @override
@@ -187,7 +221,7 @@ class RenderOrderPlayer extends RenderOrder {
 
   @override
   void renderFunction() {
-    renderCharacter(player);
+    renderCharacterTemplate(player);
   }
 
   @override

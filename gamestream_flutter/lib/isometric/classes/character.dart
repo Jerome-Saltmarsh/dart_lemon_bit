@@ -1,9 +1,11 @@
+import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:lemon_math/constants/pi_quarter.dart';
 
 import 'vector3.dart';
 
 class Character extends Vector3 {
+  var type = CharacterType.Template;
   var scoreMeasured = false;
   var score = 0;
   var state = 0;

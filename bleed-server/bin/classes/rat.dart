@@ -1,11 +1,11 @@
 
 import '../common/library.dart';
 import '../common/weapon_type.dart';
-import 'character.dart';
+import 'ai.dart';
 import 'player.dart';
 import 'weapon.dart';
 
-class Rat extends Character {
+class Rat extends AI {
 
   Rat({
     required int z,
@@ -18,11 +18,13 @@ class Rat extends Character {
       y: 0,
       z: 0,
       health: health,
-      equippedWeapon: Weapon(type: WeaponType.Unarmed, damage: damage),
+      weapon: Weapon(type: WeaponType.Unarmed, damage: damage),
   ) {
     indexZ = z;
     indexRow = row;
     indexColumn = column;
+    spawnX = x;
+    spawnY = y;
   }
 
   @override

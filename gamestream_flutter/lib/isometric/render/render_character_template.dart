@@ -8,7 +8,7 @@ import 'render_character_health_bar.dart';
 import 'src_utils.dart';
 
 
-void renderCharacter(Character character, {bool renderHealthBar = true}) {
+void renderCharacterTemplate(Character character, {bool renderHealthBar = true}) {
   assert(character.direction >= 0);
   assert(character.direction < 8);
 

@@ -526,6 +526,10 @@ extension GameFunctions on Game {
       updateCharacter(player);
     }
 
+    for (var i = 0; i < characters.length; i++){
+      updateCharacter(characters[i]);
+    }
+
     final zombiesLength = zombies.length;
     for (var i = 0; i < zombiesLength; i++) {
       updateCharacter(zombies[i]);
@@ -829,7 +833,6 @@ extension GameFunctions on Game {
   }
 
   void updateCharacter(Character character) {
-    if (character.dead) return;
     character.updateCharacter(this);
   }
 

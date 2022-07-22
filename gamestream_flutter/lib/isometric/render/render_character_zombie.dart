@@ -6,7 +6,7 @@ import 'package:lemon_engine/render.dart';
 import 'render_character_health_bar.dart';
 import 'src_utils.dart';
 
-void renderZombie(Character character) {
+void renderCharacterZombie(Character character) {
   final shade = character.shade;
   if (shade < Shade.Dark) renderCharacterHealthBar(character);
   render(

@@ -1,3 +1,4 @@
+import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/quest.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
@@ -74,12 +75,7 @@ class ServerResponseReader with ByteReader {
       final response = readByte();
       switch (response){
         case ServerResponse.Character_Rat:
-          if (characters.length <= totalCharacters){
-            characters.add(Character());
-          }
-          final character = characters[totalCharacters];
-          readCharacter(character);
-          totalCharacters++;
+          readCharacterRat();
           break;
         case ServerResponse.End:
           return readEnd();
@@ -214,6 +210,13 @@ class ServerResponseReader with ByteReader {
           throw Exception("Cannot parse $response at index: $index");
       }
     }
+  }
+
+  void readCharacterRat() {
+    final character = getCharacterInstance();
+    character.type = CharacterType.Rat;
+    readCharacter(character);
+    totalCharacters++;
   }
 
   void readInteractingNpcName() {
