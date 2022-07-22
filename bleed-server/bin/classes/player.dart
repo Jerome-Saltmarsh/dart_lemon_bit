@@ -382,7 +382,6 @@ extension PlayerProperties on Player {
   void downloadScene(){
     writeGrid();
     writeWeather();
-    writeGameObjects();
     writeGameStatus();
     writeSceneMetaData();
     writeMapCoordinate();
@@ -469,16 +468,6 @@ extension PlayerProperties on Player {
     writeCharacter(this, rat);
   }
 
-  void writeGameObjects() {
-    writeByte(ServerResponse.Game_Objects);
-    final gameObjects = game.gameObjects;
-    for (final gameObject in gameObjects) {
-       writeByte(gameObject.type);
-       writePosition(gameObject);
-    }
-    writeByte(END);
-  }
-
   void writeGameEvent({
     required int type,
     required double x,
@@ -492,18 +481,6 @@ extension PlayerProperties on Player {
     writeInt(y);
     writeInt(z);
     writeInt(angle * radiansToDegrees);
-  }
-
-  void writeDynamicObjectDestroyed(GameObject dynamicObject){
-    writeByte(ServerResponse.Dynamic_Object_Destroyed);
-    writeInt(dynamicObject.id);
-  }
-
-  void writeDynamicObjectSpawned(GameObject dynamicObject){
-    writeByte(ServerResponse.Dynamic_Object_Spawned);
-    writeByte(dynamicObject.type);
-    writePosition(dynamicObject);
-    writeInt(dynamicObject.id);
   }
 
   // void writePaths() {

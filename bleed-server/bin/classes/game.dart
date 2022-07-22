@@ -15,7 +15,6 @@ import 'collectable.dart';
 import 'collider.dart';
 import 'components.dart';
 import 'enemy_spawn.dart';
-import 'game_object.dart';
 import 'item.dart';
 import 'npc.dart';
 import 'player.dart';
@@ -57,12 +56,6 @@ abstract class Game {
 
   bool get full;
 
-  List<GameObject> get gameObjects => scene.gameObjects;
-
-  // int get numberOfAlivePlayers => countAlive(players);
-
-  // int get numberOfAliveZombies => countAlive(zombies);
-
   void updateStatus(){
     removeDisconnectedPlayers();
     updateInProgress();
@@ -77,13 +70,6 @@ abstract class Game {
          if (character.name == name) return true;
      }
      return false;
-  }
-
-  void onGameObjectsChanged() {
-    sortVertically(gameObjects);
-    for (final player in players){
-      player.writeGameObjects();
-    }
   }
 
   void onPlayerAddCardToDeck(Player player, CardType cardType){
@@ -259,9 +245,9 @@ extension GameFunctions on Game {
     final damage = min(amount, target.health);
     target.health -= damage;
 
-    if (src is Player && target is Position) {
-      src.writeDamageApplied(target as Position, damage);
-    }
+    // if (src is Player && target is Position) {
+    //   src.writeDamageApplied(target as Position, damage);
+    // }
 
     if (target is Velocity && target is Position) {
       final velocity = target as Velocity;
@@ -313,7 +299,7 @@ extension GameFunctions on Game {
 
       for (final ai in characters) {
         if (ai.target != target) continue;
-        ai.target = null;
+        ai.clearTarget();
       }
 
       for (final player in players) {
@@ -353,43 +339,6 @@ extension GameFunctions on Game {
         }
       }
       return;
-    }
-
-    if (target is GameObject) {
-      switch (target.type) {
-        case GameObjectType.Rock:
-          if (src is Player) {
-            // spawnCollectable(position: target, target: src, type: CollectableType.Stone, amount: damage);
-          }
-          break;
-        case GameObjectType.Tree:
-          if (src is Player) {
-            // spawnCollectable(position: target, target: src, type: CollectableType.Wood, amount: damage);
-          }
-          break;
-      }
-
-      if (destroyed) {
-        target.respawnDuration = 5000;
-
-        if (target.type == GameObjectType.Pot) {
-          dispatchV3(GameEventType.Object_Destroyed_Pot, target);
-        } else if (target.type == GameObjectType.Rock) {
-          dispatchV3(GameEventType.Object_Destroyed_Rock, target);
-        } else if (target.type == GameObjectType.Tree) {
-          dispatchV3(GameEventType.Object_Destroyed_Tree, target);
-        } else if (target.type == GameObjectType.Chest) {
-          dispatchV3(GameEventType.Object_Destroyed_Chest, target);
-          for (var i = 0; i < 3; i++) {
-            spawnCollectable(
-                position: target,
-                target: src,
-                type: CollectableType.Gold,
-                amount: 1
-            );
-          }
-        }
-      }
     }
   }
 
@@ -965,16 +914,6 @@ extension GameFunctions on Game {
     updateFrames(characters);
   }
 
-  void _updateItems() {
-    var itemsLength = items.length;
-    for (var i = 0; i < itemsLength; i++) {
-      final item = items[i];
-      if (item.duration-- > 0) continue;
-      items.removeAt(i);
-      itemsLength--;
-    }
-  }
-
   /// This represents a standard attack from the character, no powers
   void updateCharacterStateAttacking(Character character) {
     const framePerformStrike = 10;
@@ -1115,15 +1054,6 @@ extension GameFunctions on Game {
 
   void updateCollectables() {
     collectables.forEach((collectable) => collectable.update());
-  }
-
-  void respawnDynamicObject(GameObject dynamicObject, {required int health}){
-    assert(health > 0);
-    for (final player in players) {
-      dynamicObject.health = health;
-      dynamicObject.collidable = true;
-      player.writeDynamicObjectSpawned(dynamicObject);
-    }
   }
 
   void addEnemySpawn({

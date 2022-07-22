@@ -1,11 +1,8 @@
-import 'package:lemon_math/library.dart';
 import '../common/library.dart';
 import 'ai.dart';
 import 'character.dart';
 import 'enemy_spawn.dart';
 import 'game.dart';
-import 'game_object.dart';
-import 'position3.dart';
 import 'tile_node.dart';
 
 class Scene {
@@ -17,7 +14,6 @@ class Scene {
   var name = "";
   var dirty = false;
   final List<Character> characters;
-  final List<GameObject> gameObjects;
   final List<EnemySpawn> enemySpawns;
 
   int? startHour;
@@ -25,12 +21,10 @@ class Scene {
 
   Scene({
     required this.name,
-    required this.gameObjects,
     required this.characters,
     required this.grid,
     required this.enemySpawns,
   }) {
-    sortVertically(gameObjects);
     refreshGridMetrics();
   }
 
@@ -86,63 +80,6 @@ class Scene {
         }
      }
      return false;
-  }
-
-  void addGameObjectAtNode({
-    required int type,
-    required Node node,
-    int health = 1
-  }){
-    addGameObject(
-        GameObject(
-          type: type,
-          x: 0,
-          y: 0,
-          z: 0,
-          health: health,
-        )
-    );
-  }
-
-  void addGameObjectPosition({
-    required int type,
-    required Position3 position,
-    int health = 1
-  }) {
-    addGameObjectAtXY(
-      type: type,
-      x: position.x,
-      y: position.y,
-      z: position.z,
-      health: health,
-    );
-  }
-
-  void addGameObjectAtXY({
-    required int type,
-    required double x,
-    required double y,
-    required double z,
-    int health = 1
-  }) {
-    addGameObject(
-        GameObject(
-          type: type,
-          x: x,
-          y: y,
-          z: z,
-          health: health,
-        )
-    );
-  }
-
-  void addGameObject(GameObject value) {
-    gameObjects.add(value);
-    sortGameObjects();
-  }
-
-  void sortGameObjects(){
-    sortVertically(gameObjects);
   }
 
   int getGridBlockTypeAtXYZ(double x, double y, double z){
@@ -269,27 +206,6 @@ class Scene {
     return visitDirection(directionBehind, node);
   }
 
-  // bool tileWalkableAt(double x, double y){
-  //   return getNodeByXY(x, y).open;
-  // }
-
-  GameObject? findNearestGameObjectByType({
-    required double x,
-    required double y,
-    required int type
-  }){
-     var distance = 999999999.0;
-     GameObject? nearest = null;
-     for (final object in gameObjects ) {
-        if (object.type != type) continue;
-        final objectDistance = object.getDistanceXY(x, y);
-        if (objectDistance > distance) continue;
-        nearest = object;
-        distance = objectDistance;
-     }
-     return nearest;
-  }
-
   double getHeightAt(double x, double y, double z){
     var type = getGridBlockTypeAtXYZ(x, y, z);
     final bottom = (z ~/ tileHeight) * tileHeight;
@@ -387,7 +303,7 @@ class Scene {
 
     var tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
 
-    if (tileAtFeet == GridNodeType.Water) {
+    if (GridNodeType.isWater(tileAtFeet)) {
        game.setCharacterStateDead(character);
        return;
     }

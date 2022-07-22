@@ -74,6 +74,10 @@ class GridNodeType {
     return type == Stairs_West || type == Grass_Slope_West;
   }
 
+  static bool isWater(int type) {
+    return type == Water || type == Water_Flowing;
+  }
+
   static const values = [
     Empty,
     Boundary,

@@ -1,5 +1,3 @@
-import 'package:lemon_math/library.dart';
-
 import 'classes/character.dart';
 
 double clamp(double value, double min, double max) {

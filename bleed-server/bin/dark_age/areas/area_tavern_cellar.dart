@@ -2,7 +2,6 @@
 
 import 'package:lemon_math/library.dart';
 
-import '../../classes/game.dart';
 import '../../classes/player.dart';
 import '../../classes/rat.dart';
 import '../../engine.dart';

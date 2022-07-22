@@ -2,7 +2,6 @@
 import 'package:lemon_math/library.dart';
 import '../common/library.dart';
 import 'player.dart';
-import 'structure.dart';
 import 'components.dart';
 
 class Collectable with
@@ -27,13 +26,6 @@ class Collectable with
 
     if (target is Player) {
       _playerCollect(target as Player);
-    }
-    else
-    if (target is Structure){
-      final owner = (target as Structure).owner;
-      if (owner != null){
-        _playerCollect(owner);
-      }
     }
   }
 

@@ -19,7 +19,6 @@ Scene convertJsonToScene(Json json, String name) {
   return Scene(
     name: name,
     grid: convertFlatGridToGrid(json['grid'], height, rows, columns),
-    gameObjects: [],
     characters: [],
     enemySpawns:enemySpawns,
   );

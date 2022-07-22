@@ -2,7 +2,6 @@
 import 'package:fast_noise/fast_noise.dart';
 import 'package:lemon_math/library.dart';
 
-import 'classes/game_object.dart';
 import 'classes/scene.dart';
 import 'common/library.dart';
 import 'enums.dart';
@@ -42,7 +41,6 @@ Scene generateRandomScene({
   );
 
   final tiles = <List<int>>[];
-  final gameObjects = <GameObject> [];
   for (var rowIndex = 0; rowIndex < rows; rowIndex++) {
     final noiseColumn = noiseMap[rowIndex];
     final column = <int>[];
@@ -297,29 +295,10 @@ Scene generateRandomScene({
     spawnCellZombies.add(SpawnCell(row, column));
   }
 
-  for (var i = 0; i < gameObjects.length; i++) {
-    final object = gameObjects[i];
-     for (final playerStarting in spawnCellPlayers) {
-       if (object.getDistance(playerStarting) > 100) continue;
-       gameObjects.removeAt(i);
-       i--;
-     }
-  }
-
-  for (var i = 0; i < gameObjects.length; i++) {
-    final object = gameObjects[i];
-    for (final playerStarting in spawnCellPlayers) {
-      if (object.getDistance(playerStarting) > 100) continue;
-      gameObjects.removeAt(i);
-      i--;
-    }
-  }
-
   return Scene(
       name: "",
       grid: [],
       characters: [],
-      gameObjects: gameObjects,
      enemySpawns: [],
   );
 }
