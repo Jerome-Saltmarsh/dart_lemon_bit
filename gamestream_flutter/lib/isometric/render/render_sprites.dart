@@ -13,11 +13,9 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_particle_emissions.dart';
-import 'package:gamestream_flutter/isometric/lighting/apply_player_emissions.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
-import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_zombie.dart';
@@ -83,10 +81,17 @@ class RenderOrderCharacters extends RenderOrder {
   @override
   void renderFunction() {
 
-    if (character.indexZ > player.indexZ){
-       if (isImperceptible(character.indexZ, character.indexRow, character.indexColumn)){
-         return;
-       }
+    if (playerImperceptible) {
+      if (gridZGreaterThanPlayerZ) {
+        final halfZ = character.indexZ / 2;
+        final renderRow = character.indexRow - halfZ;
+        final renderColumn = character.indexColumn - halfZ;
+        final renderRowDistance = (renderRow - playerRenderRow).abs();
+        final renderColumnDistance = (renderColumn - playerRenderColumn).abs();
+        if (character.indexZ > playerZ + 1 && renderRowDistance <= 5 && renderColumnDistance <= 5) {
+          return;
+        }
+      }
     }
 
     switch(character.type){
@@ -177,32 +182,14 @@ class RenderOrderParticle extends RenderOrder {
   }
 }
 
-class RenderOrderPlayer extends RenderOrder {
-  late Character player;
 
-  @override
-  void renderFunction() {
-    renderCharacterTemplate(player);
-  }
-
-  @override
-  void updateFunction() {
-    player = players[_index];
-    order = player.renderOrder;
-    orderZ = player.indexZ;
-  }
-
-  @override
-  int getTotal() {
-    return totalPlayers;
-  }
-
-  @override
-  void reset() {
-    applyPlayerEmissions();
-    super.reset();
-  }
-}
+var playerImperceptible = false;
+var gridZGreaterThanPlayerZ = false;
+var playerRenderRow = 0;
+var playerRenderColumn = 0;
+var playerZ = 0;
+var playerRow = 0;
+var playerColumn = 0;
 
 class RenderOrderGrid extends RenderOrder {
   var gridZ = 0;
@@ -218,15 +205,8 @@ class RenderOrderGrid extends RenderOrder {
   late List<List<int>> plain;
   late List<List<int>> shadePlain;
 
-  var playerZ = 0;
-  var playerRow = 0;
-  var playerColumn = 0;
   var playerColumnRow = 0;
-  var playerRenderRow = 0;
-  var playerRenderColumn = 0;
   var playerUnderRoof = false;
-  var playerImperceptible = false;
-  var gridZGreaterThanPlayerZ = false;
 
   var screenRight = engine.screen.right + tileSize;
   var screenLeft = engine.screen.left - tileSize;
@@ -253,7 +233,7 @@ class RenderOrderGrid extends RenderOrder {
           // }
         }
 
-        if (gridZ > playerZ && renderRowDistance <= 2 && renderColumnDistance <= 2) {
+        if (gridZ > playerZ && renderRowDistance < 2 && renderColumnDistance < 2) {
           if (gridRow + gridColumn >= playerColumnRow){
             transparent = true;
           }
