@@ -211,7 +211,6 @@ extension GameFunctions on Game {
     required double x,
     required double y,
     required Character character,
-    required List<Character> characters,
   }) {
     return findClosestVector2(
         positions: characters,
@@ -221,26 +220,13 @@ extension GameFunctions on Game {
         where: (other) => other.alive && !onSameTeam(other, character));
   }
 
-  Character? getClosestNpc({
-    required double x,
-    required double y,
-    required Character character,
-    required List<Character> characters,
-  }) {
-    return findClosestVector2(
+  Collider? getClosestCollider(double x, double y, Character character, {double? minDistance}) {
+    return findClosestVector2<Character>(
         positions: characters,
         x: x,
         y: y,
         z: character.z,
-        where: (other) => other.alive);
-  }
-
-  Collider? getClosestCollider(double x, double y, Character character, {double? minDistance}) {
-    return getClosestEnemy(
-        x: x,
-        y: y,
-        character: character,
-        characters: characters
+        where: (other) => other.alive && other != character && other.distanceFromXY(x, y) < 100,
     );
 
     // Collider? closestCollider = null;
