@@ -1,4 +1,5 @@
 
+import 'package:bleed_common/map_tiles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/isometric/map_atlas.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
@@ -58,14 +59,6 @@ final mapTiles = <MapTile>[
    MapTile(1, 0, MapTiles.Forest),
    MapTile(0, 1, MapTiles.College),
 ];
-
-class MapTiles {
-  static const Active = 0;
-  static const Village = 1;
-  static const Forest = 2;
-  static const College = 3;
-  static const Dark_Castle = 4;
-}
 
 class MapTile {
   int x;

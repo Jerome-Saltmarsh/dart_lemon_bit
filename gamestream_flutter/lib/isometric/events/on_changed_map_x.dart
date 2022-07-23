@@ -1,10 +1,10 @@
 
-void onChangedMapX(int value){
-   // cameraCenterOnPlayer();
-   // engine.camera.x -= 100;
-   // engine.camera.y -= 100;
-}
+import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog_map.dart';
 
-void onChangedMapY(int value){
-  // cameraCenterOnPlayer();
+void onMapTileChanged(int value){
+   for (final tile in mapTiles) {
+     if (tile.srcIndex != value) continue;
+     mapTileActive.x = tile.x;
+     mapTileActive.y = tile.y;
+   }
 }

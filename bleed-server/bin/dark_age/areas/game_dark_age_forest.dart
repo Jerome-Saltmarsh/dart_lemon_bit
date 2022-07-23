@@ -4,13 +4,14 @@ import 'package:lemon_math/library.dart';
 import '../../classes/library.dart';
 import '../../common/flag.dart';
 import '../../common/library.dart';
+import '../../common/map_tiles.dart';
 import '../../common/quest.dart';
 import '../../engine.dart';
 import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';
 
 class GameDarkAgeForest extends DarkAgeArea {
-  GameDarkAgeForest() : super(darkAgeScenes.forest, mapX: 1, mapY: 0) {
+  GameDarkAgeForest() : super(darkAgeScenes.forest, mapTile: MapTiles.Forest) {
 
     addEnemySpawn(z: 1, row: 8, column: 16, health: 5, max: 3);
 

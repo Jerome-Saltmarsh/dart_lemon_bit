@@ -1,11 +1,12 @@
 
 import '../../classes/player.dart';
+import '../../common/map_tiles.dart';
 import '../../engine.dart';
 import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';
 
 class GameDarkAgeFortressDungeon extends DarkAgeAreaUnderground {
-  GameDarkAgeFortressDungeon() : super(darkAgeScenes.darkFortressDungeon) {
+  GameDarkAgeFortressDungeon() : super(darkAgeScenes.darkFortressDungeon, mapTile: MapTiles.Dark_Castle) {
 
   }
 

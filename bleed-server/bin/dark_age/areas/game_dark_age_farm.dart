@@ -1,12 +1,13 @@
 
 import '../../classes/library.dart';
+import '../../common/map_tiles.dart';
 import '../../common/quest.dart';
 import '../../engine.dart';
 import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';
 
 class GameDarkAgeFarm extends DarkAgeArea {
-  GameDarkAgeFarm() : super(darkAgeScenes.farm, mapX: 1, mapY: 0) {
+  GameDarkAgeFarm() : super(darkAgeScenes.farm, mapTile: MapTiles.Farm) {
       addEnemySpawn(z: 1, row: 34, column: 30, health: 5, max: 5, wanderRadius: 300);
       addEnemySpawn(z: 1, row: 12, column: 9, health: 5, max: 10, wanderRadius: 300);
   }

@@ -815,8 +815,7 @@ extension PlayerProperties on Player {
     if (game is DarkAgeArea == false) return;
     final area = game as DarkAgeArea;
     writeByte(ServerResponse.Map_Coordinate);
-    writeByte(area.mapX);
-    writeByte(area.mapY);
+    writeByte(area.mapTile);
   }
 }
 

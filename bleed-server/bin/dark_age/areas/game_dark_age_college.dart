@@ -1,13 +1,14 @@
 
 import '../../classes/game.dart';
 import '../../classes/player.dart';
+import '../../common/map_tiles.dart';
 import '../../common/quest.dart';
 import '../../engine.dart';
 import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';
 
 class GameDarkAgeCollege extends DarkAgeArea {
-  GameDarkAgeCollege() : super(darkAgeScenes.castle, mapX: 0, mapY: 1) {
+  GameDarkAgeCollege() : super(darkAgeScenes.castle, mapTile: MapTiles.College) {
     addNpc(
       name: "Professor Rufius",
       row: 15,

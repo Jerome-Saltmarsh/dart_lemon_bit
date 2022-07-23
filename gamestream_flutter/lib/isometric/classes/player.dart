@@ -26,8 +26,7 @@ class Player extends Vector3 {
   var maxHealth = 0.0;
   var tile = Tile.Grass;
   var attackRange = 0.0;
-  final mapX = Watch(0, onChanged: onChangedMapX);
-  final mapY = Watch(0, onChanged: onChangedMapY);
+  final mapTile = Watch(0, onChanged: onMapTileChanged);
   var interactingNpcName = Watch<String?>(null, onChanged: onChangedNpcTalk);
   var npcTalk = Watch<String?>(null, onChanged: onChangedNpcTalk);
   var npcTalkOptions = Watch<List<String>>([]);

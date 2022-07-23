@@ -4,6 +4,7 @@ import 'package:lemon_math/functions/give_or_take.dart';
 import '../../classes/library.dart';
 import '../../classes/rat.dart';
 import '../../common/library.dart';
+import '../../common/map_tiles.dart';
 import '../../engine.dart';
 import '../dark_age_scenes.dart';
 import '../on_interaction/on_interact_with_garry.dart';
@@ -13,7 +14,7 @@ import '../on_interaction/on_interact_with_tutorial.dart';
 import 'dark_age_area.dart';
 
 class GameDarkAgeVillage extends DarkAgeArea {
-  GameDarkAgeVillage() : super(darkAgeScenes.village, mapX: 0, mapY: 0) {
+  GameDarkAgeVillage() : super(darkAgeScenes.village, mapTile: MapTiles.Village) {
     addNpc(
         name: "Bell",
         row: 17,

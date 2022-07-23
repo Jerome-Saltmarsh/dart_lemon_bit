@@ -196,8 +196,7 @@ class ServerResponseReader with ByteReader {
           readSceneMetaData();
           break;
         case ServerResponse.Map_Coordinate:
-          player.mapX.value = readByte();
-          player.mapY.value = readByte();
+          player.mapTile.value = readByte();
           break;
         case ServerResponse.Interacting_Npc_Name:
           readInteractingNpcName();
