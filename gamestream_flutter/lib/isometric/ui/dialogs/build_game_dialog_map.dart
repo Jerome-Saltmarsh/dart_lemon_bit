@@ -51,12 +51,19 @@ void renderCanvasMap(Canvas canvas, Size size){
 
 
 final mapTiles = <MapTile>[
-   MapTile(0, 0, 0),
-   MapTile(1, 0, 1),
+   MapTile(0, 0, MapTiles.Village), //
+   MapTile(1, 0, MapTiles.Forest),
+   MapTile(0, 1, MapTiles.College),
 ];
 
-class MapTile {
+class MapTiles {
+  static const Village = 0;
+  static const Forest = 1;
+  static const College = 2;
+  static const Dark_Castle = 3;
+}
 
+class MapTile {
   final int x;
   final int y;
   final int srcIndex;
