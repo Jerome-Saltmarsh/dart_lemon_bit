@@ -12,6 +12,8 @@ import 'game_dialog_tab.dart';
 
 final canvasFrameMap = ValueNotifier<int>(0);
 
+const mapTileSize = 64.0;
+
 Widget buildGameDialogMap(){
   return Container(
     width: screen.width,
@@ -32,26 +34,35 @@ Widget buildGameDialogMap(){
 }
 
 void renderCanvasMap(Canvas canvas, Size size){
-  canvasRenderAtlas(
-    canvas: canvas,
-    atlas: mapAtlas,
-    srcX: 0,
-    srcY: 0,
-    srcWidth: 64,
-    srcHeight: 64,
-    dstX: 50,
-    dstY: 50,
-  );
+
+  for (final mapTile in mapTiles){
+    canvasRenderAtlas(
+      canvas: canvas,
+      atlas: mapAtlas,
+      srcX: mapTileSize * mapTile.srcIndex,
+      srcY: 0,
+      srcWidth: mapTileSize,
+      srcHeight: mapTileSize,
+      dstX: mapTile.renderX,
+      dstY: mapTile.renderY,
+    );
+  }
 }
 
 
-final mapTiles = <MapTile> [];
+final mapTiles = <MapTile>[
+   MapTile(0, 0, 0),
+   MapTile(1, 0, 1),
+];
 
 class MapTile {
+
   final int x;
   final int y;
-  late Offset offset;
-  MapTile(this.x, this.y) {
-    offset = Offset(x * 10, y * 10);
-  }
+  final int srcIndex;
+
+  double get renderX => ((x * mapTileSize) - (y * mapTileSize)) * 0.5;
+  double get renderY => ((x * mapTileSize) + (y * mapTileSize)) * 0.5;
+
+  MapTile(this.x, this.y, this.srcIndex);
 }
