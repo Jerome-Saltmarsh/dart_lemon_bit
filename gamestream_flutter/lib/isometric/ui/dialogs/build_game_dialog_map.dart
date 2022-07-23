@@ -5,13 +5,10 @@ import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/render_single_atlas.dart';
 import 'package:lemon_engine/screen.dart';
-import 'package:lemon_engine/state/paint.dart';
-import 'dart:ui' as ui;
 import '../../../flutterkit.dart';
 import 'game_dialog_tab.dart';
 
 final canvasFrameMap = ValueNotifier<int>(0);
-
 const mapTileSize = 64.0;
 
 Widget buildGameDialogMap(){
@@ -26,6 +23,7 @@ Widget buildGameDialogMap(){
       child: Column(
         children: [
           gameDialogTab,
+          height64,
           buildCanvas(paint: renderCanvasMap, frame: canvasFrameMap)
         ],
       ),
@@ -34,38 +32,44 @@ Widget buildGameDialogMap(){
 }
 
 void renderCanvasMap(Canvas canvas, Size size){
-
   for (final mapTile in mapTiles){
-    canvasRenderAtlas(
-      canvas: canvas,
-      atlas: mapAtlas,
-      srcX: mapTileSize * mapTile.srcIndex,
-      srcY: 0,
-      srcWidth: mapTileSize,
-      srcHeight: mapTileSize,
-      dstX: mapTile.renderX,
-      dstY: mapTile.renderY,
-    );
+     renderMapTile(canvas, mapTile);
   }
+  renderMapTile(canvas, mapTileActive);
 }
 
+void renderMapTile(Canvas canvas, MapTile value){
+  canvasRenderAtlas(
+    canvas: canvas,
+    atlas: mapAtlas,
+    srcX: mapTileSize * value.srcIndex,
+    srcY: 0,
+    srcWidth: mapTileSize,
+    srcHeight: mapTileSize,
+    dstX: value.renderX,
+    dstY: value.renderY,
+  );
+}
+
+final mapTileActive = MapTile(0, 0, MapTiles.Active);
 
 final mapTiles = <MapTile>[
-   MapTile(0, 0, MapTiles.Village), //
+   MapTile(0, 0, MapTiles.Village),
    MapTile(1, 0, MapTiles.Forest),
    MapTile(0, 1, MapTiles.College),
 ];
 
 class MapTiles {
-  static const Village = 0;
-  static const Forest = 1;
-  static const College = 2;
-  static const Dark_Castle = 3;
+  static const Active = 0;
+  static const Village = 1;
+  static const Forest = 2;
+  static const College = 3;
+  static const Dark_Castle = 4;
 }
 
 class MapTile {
-  final int x;
-  final int y;
+  int x;
+  int y;
   final int srcIndex;
 
   double get renderX => ((x * mapTileSize) - (y * mapTileSize)) * 0.5;
