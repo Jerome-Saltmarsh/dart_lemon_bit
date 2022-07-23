@@ -160,7 +160,6 @@ class GameRender {
     final total = totalPlayers;
     for (var i = 0; i < total; i++) {
       final player = players[i];
-      if (!engine.screen.containsV(player)) continue;
       if (player.dead) continue;
       const minDistance = 15;
       if (diffOver(mouseWorldX, player.x, minDistance)) continue;

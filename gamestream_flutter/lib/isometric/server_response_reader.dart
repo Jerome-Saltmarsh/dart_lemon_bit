@@ -96,9 +96,6 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Player_Events:
           readPlayerEvents();
           break;
-        case ServerResponse.Game_Objects:
-          readGameObjects();
-          break;
         case ServerResponse.Player_Deck_Cooldown:
           readPlayerDeckCooldown();
           break;
