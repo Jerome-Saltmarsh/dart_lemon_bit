@@ -367,9 +367,29 @@ extension GameFunctions on Game {
   }
 
   void sortGameObjects() {
-    sortSum(characters);
-    sortSum(items);
-    sortSum(projectiles);
+    sort(characters);
+    sort(items);
+    sort(projectiles);
+  }
+
+  void sort(List<Position3> items){
+      var start = 0;
+      var end = items.length;
+      for (var pos = start + 1; pos < end; pos++) {
+        var min = start;
+        var max = pos;
+        var element = items[pos];
+        while (min < max) {
+          var mid = min + ((max - min) >> 1);
+          if (element.order <= items[mid].order) {
+            max = mid;
+          } else {
+            min = mid + 1;
+          }
+        }
+        items.setRange(min + 1, pos + 1, items, min);
+        items[min] = element;
+    }
   }
 
   void setCharacterStateDead(Character character) {
@@ -1178,4 +1198,3 @@ int calculateDamage({
       return 0;
   }
 }
-

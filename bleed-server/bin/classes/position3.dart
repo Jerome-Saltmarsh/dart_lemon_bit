@@ -15,6 +15,7 @@ class Position3 with Position {
 
   double get renderX => (x - y) * 0.5;
   double get renderY => ((y + x) * 0.5) - z;
+  double get order => (y + x);
 
   void set indexZ(int value){
     z = value * tileSizeHalf;

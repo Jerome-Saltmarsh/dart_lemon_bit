@@ -24,8 +24,15 @@ Widget buildGameDialogMap(){
       child: Column(
         children: [
           gameDialogTab,
-          height64,
-          buildCanvas(paint: renderCanvasMap, frame: canvasFrameMap)
+          Container(
+            height: screen.height * goldenRatio_0618 - 50,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                buildCanvas(paint: renderCanvasMap, frame: canvasFrameMap),
+              ],
+            ),
+          )
         ],
       ),
     ),
@@ -33,6 +40,7 @@ Widget buildGameDialogMap(){
 }
 
 void renderCanvasMap(Canvas canvas, Size size){
+  canvas.scale(1.5);
   for (final mapTile in mapTiles){
      renderMapTile(canvas, mapTile);
   }
@@ -55,11 +63,15 @@ void renderMapTile(Canvas canvas, MapTile value){
 final mapTileActive = MapTile(0, 0, MapTiles.Active);
 
 final mapTiles = <MapTile>[
+   MapTile(0, -1, MapTiles.Water),
+   MapTile(-1, -1, MapTiles.Water),
+   MapTile(-2, 0, MapTiles.Water),
+   MapTile(0, -1, MapTiles.Water),
    MapTile(0, 0, MapTiles.Village),
    MapTile(1, 0, MapTiles.Forest),
    MapTile(0, 1, MapTiles.College),
    MapTile(-1, 0, MapTiles.Farm),
-   MapTile(0, -1, MapTiles.Dark_Castle),
+   // MapTile(0, -1, MapTiles.Dark_Castle),
 ];
 
 class MapTile {
