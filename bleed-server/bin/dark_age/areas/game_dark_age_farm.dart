@@ -13,21 +13,6 @@ class GameDarkAgeFarm extends DarkAgeArea {
   }
 
   @override
-  void updateInternal() {
-    for (var i = 0; i < players.length; i++) {
-      final player = players[i];
-      final row = player.indexRow;
-      final column = player.indexColumn;
-
-      if (row == 49 && (column == 9 || column == 8)) {
-        player.changeGame(engine.findGameDarkAgeVillage());
-        player.indexRow = 1;
-        continue;
-      }
-    }
-  }
-
-  @override
   void onKilled(dynamic target, dynamic src){
      if (src is Player){
         if (src.questInProgress(Quest.Garry_Kill_Farm_Zombies)){

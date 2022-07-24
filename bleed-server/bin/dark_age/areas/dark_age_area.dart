@@ -29,6 +29,12 @@ class DarkAgeArea extends GameDarkAge {
          player.indexRow = 48;
          continue;
        }
+       if (player.indexRow == 49){
+         if (row >= engine.map.length) continue;
+         player.changeGame(engine.map[row + 1][column]);
+         player.indexRow = 1;
+         continue;
+       }
      }
   }
 }
