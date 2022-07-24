@@ -4,6 +4,7 @@ import 'classes/library.dart';
 import 'common/library.dart';
 import 'constants/frames_per_second.dart';
 import 'dark_age/areas/area_tavern_cellar.dart';
+import 'dark_age/areas/dark_age_area.dart';
 import 'dark_age/areas/game_dark_age_dark_fortress.dart';
 import 'dark_age/areas/game_dark_age_farm.dart';
 import 'dark_age/areas/game_dark_age_forest.dart';
@@ -26,12 +27,36 @@ class Engine {
   late DarkAgeEnvironment environmentAboveGround;
   late DarkAgeEnvironment environmentUnderground;
 
+  final map = <List<DarkAgeArea>>[];
+
   Future init() async {
     officialTime = DarkAgeTime();
     environmentAboveGround = DarkAgeEnvironment(officialTime);
     environmentUnderground = DarkAgeEnvironment(officialTime, maxShade: Shade.Pitch_Black);
-
     await darkAgeScenes.load();
+
+    final mapRow1 = <DarkAgeArea>[
+      GameDarkAgeFarm(),
+    ];
+    final mapRow2 = <DarkAgeArea>[
+      GameDarkAgeVillage(),
+    ];
+    final mapRow3 = <DarkAgeArea>[
+      GameDarkAgeForest(),
+    ];
+    map.add(mapRow1);
+    map.add(mapRow2);
+    map.add(mapRow3);
+
+    for (var row = 0; row < map.length; row++){
+      final r = map[row];
+       for (var column = 0; column < r.length; column++){
+          final area = map[row][column];
+          area.row = row;
+          area.column = column;
+       }
+    }
+
     periodic(fixedUpdate, ms: 1000 ~/ framesPerSecond);
   }
 
@@ -40,7 +65,7 @@ class Engine {
     officialTime.update();
     frame++;
 
-    removeEmptyGames();
+    // removeEmptyGames();
     // updateAIPathfinding();
 
     for (var i = 0; i < games.length; i++){
@@ -48,14 +73,14 @@ class Engine {
     }
   }
 
-  void removeEmptyGames() {
-    if (frame % 1000 != 0) return;
-    for (var i = 0; i < games.length; i++) {
-      if (games[i].players.isNotEmpty) continue;
-      games.removeAt(i);
-      i--;
-    }
-  }
+  // void removeEmptyGames() {
+  //   if (frame % 1000 != 0) return;
+  //   for (var i = 0; i < games.length; i++) {
+  //     if (games[i].players.isNotEmpty) continue;
+  //     games.removeAt(i);
+  //     i--;
+  //   }
+  // }
 
   Future<GameDarkAge> findGameEditorNew() async {
     return GameDarkAgeEditor();

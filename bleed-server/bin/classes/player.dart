@@ -306,6 +306,7 @@ class Player extends Character with ByteWriter {
   }
 
   void changeGame(Game to){
+    if (game == to) return;
     game.removePlayer(this);
     for (final character in game.characters) {
       if (character.target != this) continue;

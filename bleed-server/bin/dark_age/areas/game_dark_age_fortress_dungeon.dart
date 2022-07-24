@@ -13,7 +13,7 @@ class GameDarkAgeFortressDungeon extends DarkAgeAreaUnderground {
   @override
   void checkPlayerPosition(Player player, int z, int row, int column) {
     if (z == 2 && row == 0 && (column == 27 || column == 26)) {
-      changeGame(player, engine.findGameDarkDarkFortress());
+      player.changeGame(engine.findGameDarkDarkFortress());
     }
   }
 }

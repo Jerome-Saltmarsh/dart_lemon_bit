@@ -50,6 +50,11 @@ abstract class Game {
     }
   }
 
+  void removeFromEngine(){
+    print("removeFromEngine()");
+    engine.games.remove(this);
+  }
+
   void setHourMinutes(int hour, int minutes){
 
   }
@@ -121,13 +126,6 @@ abstract class Game {
   /// Returning true will cause the item to be removed
   bool onPlayerItemCollision(Player player, Item item) {
     return true;
-  }
-
-  void changeGame(Player player, Game to) {
-    if (player.game == to) return;
-
-
-    player.changeGame(to);
   }
 
   int countAlive(List<Character> characters) {

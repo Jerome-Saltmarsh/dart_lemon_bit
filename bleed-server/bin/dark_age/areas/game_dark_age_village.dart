@@ -83,7 +83,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
   @override
   void checkPlayerPosition(Player player, int z, int row, int column) {
     if (z == 0 && row == 20 && column == 13) {
-      changeGame(player, engine.findAreaTavernCellar());
+      player.changeGame(engine.findAreaTavernCellar());
       player.indexZ = 1;
       player.indexRow = 13;
       player.indexColumn = 25;
@@ -93,32 +93,32 @@ class GameDarkAgeVillage extends DarkAgeArea {
 
   @override
   void updateInternal() {
-    for (var i = 0; i < players.length; i++) {
-      final player = players[i];
-      final row = player.indexRow;
-      final column = player.indexColumn;
-
-      if (row == 19 && column == 49) {
-        player.changeGame(engine.findGameDarkAgeCastle());
-        player.indexColumn = 1;
-        continue;
-      }
-      if (row == 49 && (column == 7 || column == 8)) {
-        player.changeGame(engine.findGameForest());
-        player.indexRow = 1;
-        continue;
-      }
-      if (row == 0 && (column == 9 || column == 8)) {
-        player.changeGame(engine.findGameFarm());
-        player.indexRow = 48;
-        continue;
-      }
-      if (column == 0 && (row == 6 || row == 7)) {
-        player.changeGame(engine.findGameDarkDarkFortress());
-        player.indexColumn = 48;
-        continue;
-      }
-    }
+    // for (var i = 0; i < players.length; i++) {
+    //   final player = players[i];
+    //   final row = player.indexRow;
+    //   final column = player.indexColumn;
+    //
+    //   if (row == 19 && column == 49) {
+    //     player.changeGame(engine.findGameDarkAgeCastle());
+    //     player.indexColumn = 1;
+    //     continue;
+    //   }
+    //   if (row == 49 && (column == 7 || column == 8)) {
+    //     player.changeGame(engine.findGameForest());
+    //     player.indexRow = 1;
+    //     continue;
+    //   }
+    //   if (row == 0 && (column == 9 || column == 8)) {
+    //     player.changeGame(engine.findGameFarm());
+    //     player.indexRow = 48;
+    //     continue;
+    //   }
+    //   if (column == 0 && (row == 6 || row == 7)) {
+    //     player.changeGame(engine.findGameDarkDarkFortress());
+    //     player.indexColumn = 48;
+    //     continue;
+    //   }
+    // }
   }
 
   @override
