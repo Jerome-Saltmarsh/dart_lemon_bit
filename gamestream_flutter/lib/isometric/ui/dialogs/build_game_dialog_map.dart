@@ -69,8 +69,8 @@ final mapTiles = <MapTile>[
    MapTile(0, -1, MapTiles.Water),
    MapTile(0, 0, MapTiles.Village),
    MapTile(1, 0, MapTiles.Forest),
-   MapTile(0, 1, MapTiles.College),
    MapTile(-1, 0, MapTiles.Farm),
+   MapTile(0, 1, MapTiles.FarmA),
    // MapTile(0, -1, MapTiles.Dark_Castle),
 ];
 

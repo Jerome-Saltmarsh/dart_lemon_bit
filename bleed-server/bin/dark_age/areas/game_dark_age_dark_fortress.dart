@@ -2,13 +2,12 @@
 import 'package:lemon_math/library.dart';
 
 import '../../classes/library.dart';
-import '../../common/map_tiles.dart';
 import '../../engine.dart';
 import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';
 
 class GameDarkAgeDarkFortress extends DarkAgeArea {
-  GameDarkAgeDarkFortress() : super(darkAgeScenes.darkFortress, mapTile: MapTiles.Dark_Castle) {
+  GameDarkAgeDarkFortress() : super(darkAgeScenes.darkFortress, mapTile: -1) {
     addEnemySpawn(z: 1, row: 14, column: 28, health: 5, max: 5, wanderRadius: 100);
     addEnemySpawn(z: 6, row: 15, column: 21, health: 5, max: 1, wanderRadius: 50);
     addEnemySpawn(z: 6, row: 24, column: 21, health: 5, max: 1, wanderRadius: 50);

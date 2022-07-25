@@ -2,7 +2,6 @@
 import '../../classes/library.dart';
 import '../../common/map_tiles.dart';
 import '../../common/quest.dart';
-import '../../engine.dart';
 import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';
 
