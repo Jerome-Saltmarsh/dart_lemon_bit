@@ -7,8 +7,8 @@ import '../game_dark_age.dart';
 class DarkAgeArea extends GameDarkAge {
   var row = 0;
   var column = 0;
-
   var mapTile = 0;
+
   DarkAgeArea(Scene scene, {required this.mapTile})
       : super(scene, engine.environmentAboveGround);
 
@@ -33,6 +33,12 @@ class DarkAgeArea extends GameDarkAge {
          if (row >= engine.map.length) continue;
          player.changeGame(engine.map[row + 1][column]);
          player.indexRow = 1;
+         continue;
+       }
+       if (player.indexColumn == 49){
+         if (column >= engine.map[row].length) continue;
+         player.changeGame(engine.map[row][column + 1]);
+         player.indexColumn = 1;
          continue;
        }
      }

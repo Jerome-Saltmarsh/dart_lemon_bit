@@ -6,17 +6,5 @@ class MapTiles {
   static const College = 34;
   static const Farm = 5;
   static const Dark_Castle = 6;
-
+  static const FarmA = 7;
 }
-
-// Regions
-
-// Farms
-// Forest
-// Mountains
-// Desert
-// Plains
-// Lake
-// City
-// Evil Fortress
-// Village
