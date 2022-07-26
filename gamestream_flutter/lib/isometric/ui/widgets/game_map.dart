@@ -95,7 +95,13 @@ class GameMapWidget extends StatelessWidget {
   }
 
   void snapCameraToTarget() {
-    cameraCenter(mapTileActive.renderX, mapTileActive.renderY);
+    final playerPerX = player.x / (tileSize * gridTotalRows);
+    final playerPerY = player.y / (tileSize * gridTotalColumns);
+    final playerX = (mapTileActive.x + playerPerX);
+    final playerY = (mapTileActive.y + playerPerY);
+    final renderX = ((playerX * mapTileSize) - (playerY * mapTileSize)) * 0.5;
+    final renderY = (((playerX * mapTileSize) + (playerY * mapTileSize)) * 0.5) - mapTileSizeHalf;
+    cameraCenter(renderX, renderY);
     cameraX = cameraXTarget;
     cameraY = cameraYTarget;
   }
