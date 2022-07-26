@@ -6,6 +6,7 @@ import 'constants/frames_per_second.dart';
 import 'dark_age/areas/area-empty.dart';
 import 'dark_age/areas/area-farm-a.dart';
 import 'dark_age/areas/area-farm-b.dart';
+import 'dark_age/areas/area-forest-3.dart';
 import 'dark_age/areas/area-forest-b.dart';
 import 'dark_age/areas/area-mountain-shrine.dart';
 import 'dark_age/areas/area-mountains-1.dart';
@@ -69,9 +70,13 @@ class Engine {
       AreaMountains2(),
       AreaPlains2()
     ];
+    final mapRow4 = <DarkAgeArea>[
+      AreaForest3(),
+    ];
     map.add(mapRow1);
     map.add(mapRow2);
     map.add(mapRow3);
+    map.add(mapRow4);
 
     for (var row = 0; row < map.length; row++){
       final r = map[row];

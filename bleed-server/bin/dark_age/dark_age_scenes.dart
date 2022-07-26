@@ -23,6 +23,7 @@ class DarkAgeScenes {
   late Scene plains_2;
   late Scene plains_3;
   late Scene forestB;
+  late Scene forest3;
   late Scene mountains_1;
   late Scene mountains_2;
   late Scene empty;
@@ -37,6 +38,7 @@ class DarkAgeScenes {
       castle = await loadScene('castle');
       forest = await loadScene('forest');
       forestB = await loadScene('forest-b');
+      forest3 = await loadScene('forest-3');
       darkFortress = await loadScene('dark-fortress');
       darkFortressDungeon = await loadScene('dark-fortress-dungeon');
       tavernCellar = await loadScene('tavern-cellar');
