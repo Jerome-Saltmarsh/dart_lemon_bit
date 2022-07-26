@@ -3,8 +3,10 @@ import 'dart:async';
 import 'classes/library.dart';
 import 'common/library.dart';
 import 'constants/frames_per_second.dart';
+import 'dark_age/areas/area-empty.dart';
 import 'dark_age/areas/area-farm-a.dart';
 import 'dark_age/areas/area-farm-b.dart';
+import 'dark_age/areas/area-forest-b.dart';
 import 'dark_age/areas/area-mountain-shrine.dart';
 import 'dark_age/areas/area-plains-1.dart';
 import 'dark_age/areas/area-town.dart';
@@ -42,18 +44,21 @@ class Engine {
     await darkAgeScenes.load();
 
     final mapRow1 = <DarkAgeArea>[
+      AreaEmpty(),
       GameDarkAgeFarm(),
       AreaFarmB(),
       AreaMountainShrine(),
       AreaTown(),
     ];
     final mapRow2 = <DarkAgeArea>[
+      AreaEmpty(),
       GameDarkAgeVillage(),
       AreaFarmA(),
       AreaLake(),
       AreaPlains1(),
     ];
     final mapRow3 = <DarkAgeArea>[
+      AreaForestB(),
       GameDarkAgeForest(),
     ];
     map.add(mapRow1);

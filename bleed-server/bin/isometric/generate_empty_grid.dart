@@ -6,6 +6,10 @@ List<List<List<int>>> generateEmptyGrid({
   required int rows,
   required int columns,
 }){
+  assert(zHeight > 0);
+  assert(rows > 0);
+  assert(columns > 0);
+
   final grid = <List<List<int>>>[];
   for (var z = 0; z < zHeight; z++) {
      final plain = <List<int>>[];

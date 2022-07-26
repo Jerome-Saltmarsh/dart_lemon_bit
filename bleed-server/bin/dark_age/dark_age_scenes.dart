@@ -1,6 +1,7 @@
 
 import '../classes/library.dart';
 import '../io/load_scene.dart';
+import '../isometric/generate_empty_grid.dart';
 
 final darkAgeScenes = DarkAgeScenes();
 
@@ -19,6 +20,8 @@ class DarkAgeScenes {
   late Scene lake;
   late Scene town;
   late Scene plains1;
+  late Scene forestB;
+  late Scene empty;
 
   Future load() async {
       print('Loading dark age scenes');
@@ -35,6 +38,18 @@ class DarkAgeScenes {
       lake = await loadScene('lake');
       town = await loadScene('town');
       plains1 = await loadScene('plains-1');
+      forestB = await loadScene('forest-b');
+      empty = Scene(
+          name: 'empty',
+          characters: [],
+          enemySpawns: [],
+          grid: generateEmptyGrid(
+              zHeight: 1,
+              rows: 10,
+              columns: 10
+          ),
+      );
       print("Loading dark age scenes finished");
+
   }
 }

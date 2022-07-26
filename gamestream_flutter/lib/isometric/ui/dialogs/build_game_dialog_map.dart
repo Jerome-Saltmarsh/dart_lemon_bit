@@ -79,6 +79,7 @@ final mapTiles = <MapTile> [
    MapTile(0, 2, MapTiles.Lake),
    MapTile(0, 3, MapTiles.Plains_1),
    MapTile(1, 0, MapTiles.Forest),
+   MapTile(1, -1, MapTiles.ForestB),
 ];
 
 class MapTile {
