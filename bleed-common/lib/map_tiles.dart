@@ -13,4 +13,5 @@ class MapTiles {
   static const Plains_1 = 11;
   static const ForestB = 12;
   static const Mountains_1 = 13;
+  static const Mountains_2 = 14;
 }
