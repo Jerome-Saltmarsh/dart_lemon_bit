@@ -15,6 +15,8 @@ class GameMapWidget extends StatelessWidget {
   final double width;
   final double height;
 
+  var clipRect = Rect.fromLTWH(0, 0, 0, 0);
+
   GameMapWidget({required this.width, required this.height, this.clipRRect});
 
   @override
@@ -29,7 +31,11 @@ class GameMapWidget extends StatelessWidget {
   void renderCanvasMap(Canvas canvas, Size size) {
     screenCenterX = size.width * 0.5;
     screenCenterY = size.height * 0.5;
-    canvas.clipRect(Rect.fromLTWH(0, 0, size.width, size.height));
+
+    if (clipRect.width != size.width || clipRect.height != size.height){
+       clipRect = Rect.fromLTWH(0, 0, size.width, size.height);
+    }
+    canvas.clipRect(clipRect);
     // canvas.drawRect(Rect.fromLTWH(0, 0, 100, 100), paint);
     if (clipRRect != null){
       // canvas.clipRRect(RRect.fromRectXY(Rect.fromLTWH(0, 0, size.width, size.height), size.width * 0.5, size.height * 0.5));
