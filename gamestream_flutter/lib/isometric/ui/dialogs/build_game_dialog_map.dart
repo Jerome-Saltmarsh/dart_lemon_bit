@@ -57,6 +57,7 @@ Widget buildGameDialogMap(){
 void renderCanvasMap(Canvas canvas, Size size){
   mapScreenCenterX = size.width * 0.5;
   mapScreenCenterY = size.height * 0.5;
+  canvas.clipRect(Rect.fromLTWH(0, 0, size.width, size.height));
   canvas.scale(mapZoom);
   canvas.translate(-mapCameraX, -mapCameraY);
   // canvas.clipRRect(RRect.fromLTRBAndCorners(0, 0, 100, 100));
@@ -64,9 +65,8 @@ void renderCanvasMap(Canvas canvas, Size size){
      renderMapTile(canvas, mapTile);
   }
   renderMapTile(canvas, mapTileActive);
-  canvas.drawRect(Rect.fromLTWH(0, 0, 100, 100), paint);
+  // canvas.drawRect(Rect.fromLTWH(0, 0, 100, 100), paint);
   mapCameraCenter(mapTileActive.renderX, mapTileActive.renderY);
-  // print("size.width: ${size.width}, size.height: ${size.height}");
 }
 
 void mapCameraCenter(double x, double y){
