@@ -17,6 +17,7 @@ class GameMapWidget extends StatelessWidget {
   final double height;
 
   var clipRect = Rect.fromLTWH(0, 0, 0, 0);
+  var init = false;
 
   GameMapWidget({required this.width, required this.height, this.clipRRect});
 
@@ -32,6 +33,11 @@ class GameMapWidget extends StatelessWidget {
   void renderCanvasMap(Canvas canvas, Size size) {
     screenCenterX = size.width * 0.5;
     screenCenterY = size.height * 0.5;
+
+    if (!init){
+      init = true;
+      snapCameraToTarget();
+    }
 
     const s = 0.05;
     cameraX += (cameraXTarget - cameraX) * s;
@@ -54,6 +60,12 @@ class GameMapWidget extends StatelessWidget {
     }
     renderMapTile(canvas, mapTileActive);
     cameraCenter(mapTileActive.renderX, mapTileActive.renderY);
+  }
+
+  void snapCameraToTarget() {
+    cameraCenter(mapTileActive.renderX, mapTileActive.renderY);
+    cameraX = cameraXTarget;
+    cameraY = cameraYTarget;
   }
 
   void cameraCenter(double x, double y){
