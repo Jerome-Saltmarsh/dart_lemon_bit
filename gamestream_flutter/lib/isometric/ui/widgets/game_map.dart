@@ -33,7 +33,7 @@ class GameMapWidget extends StatelessWidget {
     // canvas.clipRRect(RRect.fromRectXY(Rect.fromLTWH(0, 0, size.width, size.height), size.width * 0.5, size.height * 0.5));
     canvas.scale(zoom);
     canvas.translate(-cameraX, -cameraY);
-    canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
+    // canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
     // canvas.clipRRect(RRect.fromLTRBAndCorners(0, 0, 100, 100));
     for (final mapTile in mapTiles){
       renderMapTile(canvas, mapTile);

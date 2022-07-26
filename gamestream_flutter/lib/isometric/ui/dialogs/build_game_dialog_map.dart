@@ -34,7 +34,7 @@ Widget buildGameDialogMap(){
       child: Column(
         children: [
           gameDialogTab,
-          GameMapWidget(100, 100),
+          GameMapWidget(screen.width * goldenRatio_0618, screen.height * goldenRatio_0618 - 50),
           // Listener(
           //   onPointerSignal: (PointerSignalEvent pointerSignalEvent) {
           //     if (pointerSignalEvent is PointerScrollEvent) {
