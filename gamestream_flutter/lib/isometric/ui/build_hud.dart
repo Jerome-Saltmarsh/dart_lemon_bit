@@ -6,10 +6,12 @@ import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog.dart';
+import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog_map.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_data_player_is_owner.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
+import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:lemon_engine/screen.dart';
 
@@ -29,6 +31,7 @@ Widget buildHud() {
       ),
       buildWatchPlayMode(),
       buildTopRightMenu(),
+      Positioned(left: 0, top: 0, child: GameMapWidget(100, 100)),
       buildWatchSceneMetaDataPlayerIsOwner(),
       buildWatchDebugVisible(),
       buildControlQuestUpdated()

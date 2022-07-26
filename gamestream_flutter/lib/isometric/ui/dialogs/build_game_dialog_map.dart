@@ -1,12 +1,13 @@
 
 import 'package:bleed_common/map_tiles.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:gamestream_flutter/isometric/map_atlas.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
+import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/render_single_atlas.dart';
 import 'package:lemon_engine/screen.dart';
-import 'package:lemon_engine/state/paint.dart';
 import '../../../flutterkit.dart';
 import 'game_dialog_tab.dart';
 
@@ -33,24 +34,45 @@ Widget buildGameDialogMap(){
       child: Column(
         children: [
           gameDialogTab,
-          GestureDetector(
-            onPanStart: (event) {
-
-            },
-            onPanUpdate: (event){
-              print("onPanUpdate()");
-              mapCameraX += event.delta.dx;
-              mapCameraY += event.delta.dy;
-            },
-            child: SizedBox(
-              height: screen.height * goldenRatio_0618 - 50,
-              width: screen.width * goldenRatio_0618,
-              child: buildCanvas(paint: renderCanvasMap, frame: canvasFrameMap),
-            ),
-          )
+          GameMapWidget(100, 100),
+          // Listener(
+          //   onPointerSignal: (PointerSignalEvent pointerSignalEvent) {
+          //     if (pointerSignalEvent is PointerScrollEvent) {
+          //       const speed = 0.02;
+          //       if (pointerSignalEvent.scrollDelta.dy > 0){
+          //         mapZoom -= speed;
+          //       } else {
+          //         mapZoom += speed;
+          //       }
+          //
+          //     }
+          //   },
+          //   child: GestureDetector(
+          //     onPanStart: (event) {
+          //
+          //     },
+          //     onPanUpdate: (event){
+          //       print("onPanUpdate()");
+          //       mapCameraX += event.delta.dx;
+          //       mapCameraY += event.delta.dy;
+          //     },
+          //     child: buildGameMap(
+          //       screen.height * goldenRatio_0618 - 50,
+          //       screen.width * goldenRatio_0618,
+          //     ),
+          //   ),
+          // )
         ],
       ),
     ),
+  );
+}
+
+Widget buildGameMap(double width, double height){
+  return SizedBox(
+    height: width,
+    width: height,
+    child: buildCanvas(paint: renderCanvasMap, frame: canvasFrameMap),
   );
 }
 
@@ -84,7 +106,6 @@ void renderMapTile(Canvas canvas, MapTile value){
     srcHeight: mapTileSize,
     dstX: value.renderX,
     dstY: value.renderY,
-    cullRect: Rect.fromLTWH(0, 0, 50, 50),
   );
 }
 
