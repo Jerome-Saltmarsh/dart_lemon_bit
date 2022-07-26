@@ -6,13 +6,22 @@ import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/render_single_atlas.dart';
 import 'package:lemon_engine/screen.dart';
+import 'package:lemon_engine/state/paint.dart';
 import '../../../flutterkit.dart';
 import 'game_dialog_tab.dart';
 
 final canvasFrameMap = ValueNotifier<int>(0);
 const mapTileSize = 64.0;
 
+var mapZoom = 1.0;
+var mapCameraX = 0.0;
+var mapCameraY = 0.0;
+var mapScreenCenterX = 0.0;
+var mapScreenCenterY = 0.0;
+
 Widget buildGameDialogMap(){
+  mapScreenCenterX = screen.width / 2;
+  mapScreenCenterY = screen.height / 2;
   return Container(
     width: screen.width,
     height: screen.height,
@@ -24,13 +33,19 @@ Widget buildGameDialogMap(){
       child: Column(
         children: [
           gameDialogTab,
-          Container(
-            height: screen.height * goldenRatio_0618 - 50,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                buildCanvas(paint: renderCanvasMap, frame: canvasFrameMap),
-              ],
+          GestureDetector(
+            onPanStart: (event) {
+
+            },
+            onPanUpdate: (event){
+              print("onPanUpdate()");
+              mapCameraX += event.delta.dx;
+              mapCameraY += event.delta.dy;
+            },
+            child: SizedBox(
+              height: screen.height * goldenRatio_0618 - 50,
+              width: screen.width * goldenRatio_0618,
+              child: buildCanvas(paint: renderCanvasMap, frame: canvasFrameMap),
             ),
           )
         ],
@@ -40,11 +55,21 @@ Widget buildGameDialogMap(){
 }
 
 void renderCanvasMap(Canvas canvas, Size size){
-  canvas.scale(1.5);
+  canvas.scale(mapZoom);
+  canvas.translate(-mapCameraX, -mapCameraY);
+  // canvas.clipRRect(RRect.fromLTRBAndCorners(0, 0, 100, 100));
   for (final mapTile in mapTiles){
      renderMapTile(canvas, mapTile);
   }
   renderMapTile(canvas, mapTileActive);
+  canvas.drawRect(Rect.fromLTWH(0, 0, 100, 100), paint);
+  // mapCameraCenter(mapTileActive.renderX, mapTileActive.renderY);
+  // print("size.width: ${size.width}, size.height: ${size.height}");
+}
+
+void mapCameraCenter(double x, double y){
+  mapCameraX = x - (mapScreenCenterX / mapZoom);
+  mapCameraY = y - (mapScreenCenterY / mapZoom);
 }
 
 void renderMapTile(Canvas canvas, MapTile value){
@@ -57,6 +82,7 @@ void renderMapTile(Canvas canvas, MapTile value){
     srcHeight: mapTileSize,
     dstX: value.renderX,
     dstY: value.renderY,
+    cullRect: Rect.fromLTWH(0, 0, 50, 50),
   );
 }
 

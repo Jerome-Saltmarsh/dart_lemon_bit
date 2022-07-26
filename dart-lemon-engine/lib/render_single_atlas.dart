@@ -25,6 +25,7 @@ void canvasRenderAtlas({
   double anchorX = 0.5,
   double anchorY = 0.5,
   double scale = 1.0,
+  Rect? cullRect,
   // int color = 1,
 }){
   // _colors[0] = color;
@@ -36,5 +37,5 @@ void canvasRenderAtlas({
   _dst[1] = _sin0 * scale; // scale
   _dst[2] = dstX - (srcWidth * anchorX * scale);
   _dst[3] = dstY - (srcHeight * anchorY * scale); // scale
-  canvas.drawRawAtlas(atlas, _dst, _src, null, null, null, paint);
+  canvas.drawRawAtlas(atlas, _dst, _src, null, null, cullRect, paint);
 }
