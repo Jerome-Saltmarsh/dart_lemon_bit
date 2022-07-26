@@ -7,4 +7,5 @@ class MapTiles {
   static const Farm = 5;
   static const FarmA = 6;
   static const FarmB = 7;
+  static const Mountain_Shrine = 8;
 }

@@ -15,6 +15,7 @@ class DarkAgeScenes {
   late Scene tavernCellar;
   late Scene farmA;
   late Scene farmB;
+  late Scene mountainShrine;
 
   Future load() async {
       print('Loading dark age scenes');
@@ -27,6 +28,7 @@ class DarkAgeScenes {
       darkFortress = await loadScene('dark-fortress');
       darkFortressDungeon = await loadScene('dark-fortress-dungeon');
       tavernCellar = await loadScene('tavern-cellar');
+      mountainShrine = await loadScene('mountain-shrine');
       print("Loading dark age scenes finished");
   }
 }
