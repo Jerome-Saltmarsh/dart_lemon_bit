@@ -25,11 +25,12 @@ class GameMapWidget extends StatelessWidget {
     );
   }
 
-  void renderCanvasMap(Canvas canvas, Size size){
+  void renderCanvasMap(Canvas canvas, Size size) {
     screenCenterX = size.width * 0.5;
     screenCenterY = size.height * 0.5;
-    canvas.drawRect(Rect.fromLTWH(0, 0, 100, 100), paint);
+    // canvas.drawRect(Rect.fromLTWH(0, 0, 100, 100), paint);
     canvas.clipRect(Rect.fromLTWH(0, 0, size.width, size.height));
+    // canvas.clipRRect(RRect.fromRectXY(Rect.fromLTWH(0, 0, size.width, size.height), size.width * 0.5, size.height * 0.5));
     canvas.scale(zoom);
     canvas.translate(-cameraX, -cameraY);
     canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);

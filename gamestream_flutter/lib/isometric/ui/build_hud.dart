@@ -31,7 +31,7 @@ Widget buildHud() {
       ),
       buildWatchPlayMode(),
       buildTopRightMenu(),
-      Positioned(left: 0, top: 0, child: GameMapWidget(100, 100)),
+      Positioned(left: 0, top: 0, child: GameMapWidget(133, 133)),
       buildWatchSceneMetaDataPlayerIsOwner(),
       buildWatchDebugVisible(),
       buildControlQuestUpdated()
