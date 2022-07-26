@@ -6,6 +6,7 @@ import 'constants/frames_per_second.dart';
 import 'dark_age/areas/area-farm-a.dart';
 import 'dark_age/areas/area-farm-b.dart';
 import 'dark_age/areas/area-mountain-shrine.dart';
+import 'dark_age/areas/area_lake.dart';
 import 'dark_age/areas/area_tavern_cellar.dart';
 import 'dark_age/areas/dark_age_area.dart';
 import 'dark_age/areas/game_dark_age_dark_fortress.dart';
@@ -41,11 +42,12 @@ class Engine {
     final mapRow1 = <DarkAgeArea>[
       GameDarkAgeFarm(),
       AreaFarmB(),
+      AreaMountainShrine(),
     ];
     final mapRow2 = <DarkAgeArea>[
       GameDarkAgeVillage(),
       AreaFarmA(),
-      AreaMountainShrine(),
+      AreaLake(),
     ];
     final mapRow3 = <DarkAgeArea>[
       GameDarkAgeForest(),

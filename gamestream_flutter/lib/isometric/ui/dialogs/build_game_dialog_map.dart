@@ -73,7 +73,7 @@ final mapTiles = <MapTile>[
    MapTile(0, 1, MapTiles.FarmA),
    MapTile(-1, 1, MapTiles.FarmB),
    MapTile(-1, 2, MapTiles.Mountain_Shrine),
-   // MapTile(0, -1, MapTiles.Dark_Castle),
+   MapTile(0, 2, MapTiles.Lake),
 ];
 
 class MapTile {
