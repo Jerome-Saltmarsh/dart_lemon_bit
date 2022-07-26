@@ -27,6 +27,8 @@ class DarkAgeScenes {
   late Scene plains_3;
   late Scene mountains_1;
   late Scene mountains_2;
+  late Scene mountains_3;
+  late Scene mountains_4;
   late Scene empty;
   late Scene outpost_1;
 
@@ -52,6 +54,8 @@ class DarkAgeScenes {
       plains_3 = await loadScene('plains-3');
       mountains_1 = await loadScene('mountains-1');
       mountains_2 = await loadScene('mountains-2');
+      mountains_3 = await loadScene('mountains-3');
+      mountains_4 = await loadScene('mountains-4');
       outpost_1 = await loadScene('outpost-1');
       empty = Scene(
           name: 'empty',
