@@ -80,6 +80,7 @@ final mapTiles = <MapTile> [
    MapTile(0, 1, MapTiles.FarmA),
    MapTile(0, 2, MapTiles.Lake),
    MapTile(0, 3, MapTiles.Plains_1),
+   MapTile(0, 4, MapTiles.Plains_3),
    MapTile(1, -2, MapTiles.Water),
    MapTile(1, -1, MapTiles.ForestB),
    MapTile(1, 0, MapTiles.Forest),

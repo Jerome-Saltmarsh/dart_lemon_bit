@@ -12,6 +12,7 @@ import 'dark_age/areas/area-mountains-1.dart';
 import 'dark_age/areas/area-mountains-2.dart';
 import 'dark_age/areas/area-plains-1.dart';
 import 'dark_age/areas/area-plains-2.dart';
+import 'dark_age/areas/area-plains-3.dart';
 import 'dark_age/areas/area-town.dart';
 import 'dark_age/areas/area_lake.dart';
 import 'dark_age/areas/area_tavern_cellar.dart';
@@ -59,6 +60,7 @@ class Engine {
       AreaFarmA(),
       AreaLake(),
       AreaPlains1(),
+      AreaPlains3(),
     ];
     final mapRow3 = <DarkAgeArea>[
       AreaForestB(),
