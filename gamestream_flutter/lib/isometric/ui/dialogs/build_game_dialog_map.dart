@@ -85,6 +85,7 @@ final mapTiles = <MapTile> [
    MapTile(1, 0, MapTiles.Forest),
    MapTile(1, 1, MapTiles.Mountains_1),
    MapTile(1, 2, MapTiles.Mountains_2),
+   MapTile(1, 3, MapTiles.Plains_2),
 
 ];
 

@@ -11,6 +11,7 @@ import 'dark_age/areas/area-mountain-shrine.dart';
 import 'dark_age/areas/area-mountains-1.dart';
 import 'dark_age/areas/area-mountains-2.dart';
 import 'dark_age/areas/area-plains-1.dart';
+import 'dark_age/areas/area-plains-2.dart';
 import 'dark_age/areas/area-town.dart';
 import 'dark_age/areas/area_lake.dart';
 import 'dark_age/areas/area_tavern_cellar.dart';
@@ -64,6 +65,7 @@ class Engine {
       GameDarkAgeForest(),
       AreaMountains1(),
       AreaMountains2(),
+      AreaPlains2()
     ];
     map.add(mapRow1);
     map.add(mapRow2);
