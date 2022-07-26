@@ -26,7 +26,9 @@ Widget buildPanelMenu() {
   );
 }
 
-Widget buildButtonShowMap() => text("Map", onPressed: actionGameDialogShowMap);
+Widget buildButtonShowMap() => Tooltip(
+    message: ("(M)"),
+    child: text("Map", onPressed: actionGameDialogShowMap));
 
 Widget buildButtonToggleFullscreen() {
   return onPressed(

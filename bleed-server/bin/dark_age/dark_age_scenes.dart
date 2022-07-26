@@ -14,10 +14,12 @@ class DarkAgeScenes {
   late Scene darkFortressDungeon;
   late Scene tavernCellar;
   late Scene farmA;
+  late Scene farmB;
 
-  Future load() async{
+  Future load() async {
       print('Loading dark age scenes');
       farmA = await loadScene('farm-a');
+      farmB = await loadScene('farm-b');
       village = await loadScene('village');
       castle = await loadScene('castle');
       forest = await loadScene('forest');

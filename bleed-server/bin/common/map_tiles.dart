@@ -6,4 +6,5 @@ class MapTiles {
   static const College = 4;
   static const Farm = 5;
   static const FarmA = 6;
+  static const FarmB = 7;
 }
