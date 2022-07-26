@@ -10,4 +10,5 @@ class MapTiles {
   static const Mountain_Shrine = 8;
   static const Lake = 9;
   static const Town = 10;
+  static const Plains_1 = 11;
 }
