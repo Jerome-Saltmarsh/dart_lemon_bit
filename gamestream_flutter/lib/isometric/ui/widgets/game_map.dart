@@ -1,7 +1,12 @@
 
+import 'package:bleed_common/library.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/isometric/classes/vector3.dart';
+import 'package:gamestream_flutter/isometric/grid.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog_map.dart';
+import 'package:lemon_engine/state/paint.dart';
 
 class GameMapWidget extends StatelessWidget {
   var screenCenterX = 0.0;
@@ -34,7 +39,7 @@ class GameMapWidget extends StatelessWidget {
     screenCenterX = size.width * 0.5;
     screenCenterY = size.height * 0.5;
 
-    if (!init){
+    if (!init) {
       init = true;
       snapCameraToTarget();
     }
@@ -59,6 +64,26 @@ class GameMapWidget extends StatelessWidget {
       renderMapTile(canvas, mapTile);
     }
     renderMapTile(canvas, mapTileActive);
+
+    final playerPerX = player.x / (tileSize * gridTotalRows);
+    final playerPerY = player.y / (tileSize * gridTotalColumns);
+
+    final playerX = (mapTileActive.x + playerPerX);
+    final playerY = (mapTileActive.y + playerPerY);
+
+    final renderX = ((playerX * mapTileSize) - (playerY * mapTileSize)) * 0.5;
+    final renderY = ((playerX * mapTileSize) + (playerY * mapTileSize)) * 0.5;
+
+    canvas.drawRect(
+        Rect.fromLTWH(
+            renderX,
+            renderY - (mapTileSize * 0.5),
+            5,
+            5
+        ),
+        paint,
+    );
+
     cameraCenter(mapTileActive.renderX, mapTileActive.renderY);
   }
 
