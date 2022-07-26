@@ -67,7 +67,7 @@ class GameMapWidget extends StatelessWidget {
     }
     renderMapTile(canvas, mapTileActive);
     renderPlayerDot(canvas);
-    cameraCenter(mapTileActive.renderX, mapTileActive.renderY);
+    // cameraCenter(mapTileActive.renderX, mapTileActive.renderY);
   }
 
   void renderPlayerDot(Canvas canvas) {
@@ -78,7 +78,9 @@ class GameMapWidget extends StatelessWidget {
     final playerY = (mapTileActive.y + playerPerY);
 
     final renderX = ((playerX * mapTileSize) - (playerY * mapTileSize)) * 0.5;
-    final renderY = ((playerX * mapTileSize) + (playerY * mapTileSize)) * 0.5;
+    final renderY = (((playerX * mapTileSize) + (playerY * mapTileSize)) * 0.5) - mapTileSizeHalf;
+
+    cameraCenter(renderX, renderY);
 
     canvasRenderAtlas(
       canvas: canvas,
@@ -88,7 +90,7 @@ class GameMapWidget extends StatelessWidget {
       srcWidth: 8,
       srcHeight: 8,
       dstX: renderX,
-      dstY: renderY - (mapTileSize * 0.5),
+      dstY: renderY,
     );
   }
 

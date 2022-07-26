@@ -12,6 +12,7 @@ import 'game_dialog_tab.dart';
 
 final canvasFrameMap = ValueNotifier<int>(0);
 const mapTileSize = 64.0;
+const mapTileSizeHalf = mapTileSize / 2;
 
 var mapZoom = 1.0;
 var mapCameraX = 0.0;
