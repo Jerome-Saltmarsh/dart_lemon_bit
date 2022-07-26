@@ -62,7 +62,7 @@ void renderMapTile(Canvas canvas, MapTile value){
 
 final mapTileActive = MapTile(0, 0, MapTiles.Active);
 
-final mapTiles = <MapTile>[
+final mapTiles = <MapTile> [
    MapTile(0, -1, MapTiles.Water),
    MapTile(-1, -1, MapTiles.Water),
    MapTile(-2, 0, MapTiles.Water),
@@ -73,6 +73,7 @@ final mapTiles = <MapTile>[
    MapTile(0, 1, MapTiles.FarmA),
    MapTile(-1, 1, MapTiles.FarmB),
    MapTile(-1, 2, MapTiles.Mountain_Shrine),
+   MapTile(-1, 3, MapTiles.Town),
    MapTile(0, 2, MapTiles.Lake),
 ];
 

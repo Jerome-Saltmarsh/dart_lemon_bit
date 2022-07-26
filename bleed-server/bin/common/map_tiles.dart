@@ -9,4 +9,5 @@ class MapTiles {
   static const FarmB = 7;
   static const Mountain_Shrine = 8;
   static const Lake = 9;
+  static const Town = 10;
 }
