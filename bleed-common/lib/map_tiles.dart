@@ -16,4 +16,5 @@ class MapTiles {
   static const Mountains_2 = 14;
   static const Plains_2 = 15;
   static const Plains_3 = 16;
+  static const Outpost_1 = 17;
 }

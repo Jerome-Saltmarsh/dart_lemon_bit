@@ -26,6 +26,7 @@ class DarkAgeScenes {
   late Scene mountains_1;
   late Scene mountains_2;
   late Scene empty;
+  late Scene outpost_1;
 
   Future load() async {
       print('Loading dark age scenes');
@@ -47,6 +48,7 @@ class DarkAgeScenes {
       plains_3 = await loadScene('plains-3');
       mountains_1 = await loadScene('mountains-1');
       mountains_2 = await loadScene('mountains-2');
+      outpost_1 = await loadScene('outpost-1');
       empty = Scene(
           name: 'empty',
           characters: [],
@@ -58,6 +60,5 @@ class DarkAgeScenes {
           ),
       );
       print("Loading dark age scenes finished");
-
   }
 }
