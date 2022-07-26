@@ -10,10 +10,12 @@ class GameMapWidget extends StatelessWidget {
   var cameraX = 0.0;
   var cameraY = 0.0;
 
+  final RRect? clipRRect;
+
   final double width;
   final double height;
 
-  GameMapWidget(this.width, this.height);
+  GameMapWidget({required this.width, required this.height, this.clipRRect});
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +29,13 @@ class GameMapWidget extends StatelessWidget {
   void renderCanvasMap(Canvas canvas, Size size) {
     screenCenterX = size.width * 0.5;
     screenCenterY = size.height * 0.5;
-    // canvas.drawRect(Rect.fromLTWH(0, 0, 100, 100), paint);
     canvas.clipRect(Rect.fromLTWH(0, 0, size.width, size.height));
-    // canvas.clipRRect(RRect.fromRectXY(Rect.fromLTWH(0, 0, size.width, size.height), size.width * 0.5, size.height * 0.5));
+    // canvas.drawRect(Rect.fromLTWH(0, 0, 100, 100), paint);
+    if (clipRRect != null){
+      // canvas.clipRRect(RRect.fromRectXY(Rect.fromLTWH(0, 0, size.width, size.height), size.width * 0.5, size.height * 0.5));
+      canvas.clipRRect(clipRRect!);
+    }
+
     canvas.scale(zoom);
     canvas.translate(-cameraX, -cameraY);
     // canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);

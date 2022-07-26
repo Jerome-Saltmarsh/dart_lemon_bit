@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_map.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
+import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog.dart';
-import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog_map.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_data_player_is_owner.dart';
@@ -32,9 +31,18 @@ Widget buildHud() {
       ),
       buildWatchPlayMode(),
       buildTopRightMenu(),
-      Positioned(left: 0, top: 0, child: onPressed(
-          callback: actionGameDialogShowMap,
-          child: GameMapWidget(133, 133))),
+      Positioned(
+          left: 0,
+          top: 0,
+          child: onPressed(
+            callback: actionGameDialogShowMap,
+            child: Container(
+              padding: EdgeInsets.all(4),
+              color: brownLight,
+              child: GameMapWidget(width: 133, height: 133)
+            ),
+          ),
+      ),
       buildWatchSceneMetaDataPlayerIsOwner(),
       buildWatchDebugVisible(),
       buildControlQuestUpdated()

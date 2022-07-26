@@ -1,7 +1,6 @@
 
 import 'package:bleed_common/map_tiles.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:gamestream_flutter/isometric/map_atlas.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
@@ -34,7 +33,7 @@ Widget buildGameDialogMap(){
       child: Column(
         children: [
           gameDialogTab,
-          GameMapWidget(screen.width * goldenRatio_0618, screen.height * goldenRatio_0618 - 50),
+          GameMapWidget(width: screen.width * goldenRatio_0618, height: screen.height * goldenRatio_0618 - 50),
           // Listener(
           //   onPointerSignal: (PointerSignalEvent pointerSignalEvent) {
           //     if (pointerSignalEvent is PointerScrollEvent) {
