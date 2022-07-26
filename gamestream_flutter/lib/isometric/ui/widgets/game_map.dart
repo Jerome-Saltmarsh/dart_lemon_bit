@@ -2,11 +2,13 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog_map.dart';
+import 'package:lemon_engine/render_single_atlas.dart';
 import 'package:lemon_engine/state/paint.dart';
+
+import '../../map_atlas.dart';
 
 class GameMapWidget extends StatelessWidget {
   var screenCenterX = 0.0;
@@ -64,7 +66,11 @@ class GameMapWidget extends StatelessWidget {
       renderMapTile(canvas, mapTile);
     }
     renderMapTile(canvas, mapTileActive);
+    renderPlayerDot(canvas);
+    cameraCenter(mapTileActive.renderX, mapTileActive.renderY);
+  }
 
+  void renderPlayerDot(Canvas canvas) {
     final playerPerX = player.x / (tileSize * gridTotalRows);
     final playerPerY = player.y / (tileSize * gridTotalColumns);
 
@@ -74,17 +80,16 @@ class GameMapWidget extends StatelessWidget {
     final renderX = ((playerX * mapTileSize) - (playerY * mapTileSize)) * 0.5;
     final renderY = ((playerX * mapTileSize) + (playerY * mapTileSize)) * 0.5;
 
-    canvas.drawRect(
-        Rect.fromLTWH(
-            renderX,
-            renderY - (mapTileSize * 0.5),
-            5,
-            5
-        ),
-        paint,
+    canvasRenderAtlas(
+      canvas: canvas,
+      atlas: mapAtlas,
+      srcX: 92,
+      srcY: 28,
+      srcWidth: 8,
+      srcHeight: 8,
+      dstX: renderX,
+      dstY: renderY - (mapTileSize * 0.5),
     );
-
-    cameraCenter(mapTileActive.renderX, mapTileActive.renderY);
   }
 
   void snapCameraToTarget() {
