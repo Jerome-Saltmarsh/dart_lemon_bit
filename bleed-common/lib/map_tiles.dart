@@ -22,4 +22,6 @@ class MapTiles {
   static const Mountains_3 = 20;
   static const Mountains_4 = 21;
   static const Plains_4 = 22;
+  static const Shrine_1 = 23;
+
 }
