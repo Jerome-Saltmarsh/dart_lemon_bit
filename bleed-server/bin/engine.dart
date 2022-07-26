@@ -17,6 +17,7 @@ import 'dark_age/areas/area-mountains-4.dart';
 import 'dark_age/areas/area-plains-1.dart';
 import 'dark_age/areas/area-plains-2.dart';
 import 'dark_age/areas/area-plains-3.dart';
+import 'dark_age/areas/area-plains-4.dart';
 import 'dark_age/areas/area-town.dart';
 import 'dark_age/areas/area_lake.dart';
 import 'dark_age/areas/area_tavern_cellar.dart';
@@ -78,6 +79,7 @@ class Engine {
       AreaForest4(),
       AreaMountains3(),
       AreaMountains4(),
+      AreaPlains4(),
     ];
     map.add(mapRow1);
     map.add(mapRow2);
