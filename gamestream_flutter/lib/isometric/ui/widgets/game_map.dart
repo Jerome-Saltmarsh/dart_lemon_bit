@@ -2,7 +2,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog_map.dart';
-import 'package:lemon_engine/state/paint.dart';
 
 class GameMapWidget extends StatelessWidget {
   var screenCenterX = 0.0;

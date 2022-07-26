@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_map.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
@@ -31,7 +32,9 @@ Widget buildHud() {
       ),
       buildWatchPlayMode(),
       buildTopRightMenu(),
-      Positioned(left: 0, top: 0, child: GameMapWidget(133, 133)),
+      Positioned(left: 0, top: 0, child: onPressed(
+          callback: actionGameDialogShowMap,
+          child: GameMapWidget(133, 133))),
       buildWatchSceneMetaDataPlayerIsOwner(),
       buildWatchDebugVisible(),
       buildControlQuestUpdated()
