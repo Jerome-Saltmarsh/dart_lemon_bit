@@ -9,9 +9,10 @@ class GameMapWidget extends StatelessWidget {
   var zoom = 1.0;
   var cameraX = 0.0;
   var cameraY = 0.0;
+  var cameraXTarget = 0.0;
+  var cameraYTarget = 0.0;
 
   final RRect? clipRRect;
-
   final double width;
   final double height;
 
@@ -32,13 +33,15 @@ class GameMapWidget extends StatelessWidget {
     screenCenterX = size.width * 0.5;
     screenCenterY = size.height * 0.5;
 
-    if (clipRect.width != size.width || clipRect.height != size.height){
+    const s = 0.05;
+    cameraX += (cameraXTarget - cameraX) * s;
+    cameraY += (cameraYTarget - cameraY) * s;
+
+    if (clipRect.width != size.width || clipRect.height != size.height) {
        clipRect = Rect.fromLTWH(0, 0, size.width, size.height);
     }
     canvas.clipRect(clipRect);
-    // canvas.drawRect(Rect.fromLTWH(0, 0, 100, 100), paint);
     if (clipRRect != null){
-      // canvas.clipRRect(RRect.fromRectXY(Rect.fromLTWH(0, 0, size.width, size.height), size.width * 0.5, size.height * 0.5));
       canvas.clipRRect(clipRRect!);
     }
 
@@ -54,7 +57,7 @@ class GameMapWidget extends StatelessWidget {
   }
 
   void cameraCenter(double x, double y){
-    cameraX = x - (screenCenterX / zoom);
-    cameraY = y - (screenCenterY / zoom);
+    cameraXTarget = x - (screenCenterX / zoom);
+    cameraYTarget = y - (screenCenterY / zoom);
   }
 }
