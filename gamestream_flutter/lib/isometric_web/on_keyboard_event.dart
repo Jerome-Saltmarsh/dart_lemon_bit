@@ -24,6 +24,10 @@ void onKeyboardEvent(RawKeyEvent event){
 void onRawKeyDownEvent(RawKeyDownEvent event){
   final key = event.physicalKey;
 
+  if (key == PhysicalKeyboardKey.digit0) {
+    sceneMetaDataPlayerIsOwner.value = !sceneMetaDataPlayerIsOwner.value;
+  }
+
   if (playModePlay) {
     if (key == PhysicalKeyboardKey.keyG) {
       sendClientRequestTeleport();

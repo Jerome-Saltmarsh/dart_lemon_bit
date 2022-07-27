@@ -56,21 +56,17 @@ class AudioSingle {
      for (final player in players) {
        if (player.playing) continue;
        player.seek(null);
-       // print("recycled: $name");
        return player;
      }
 
      final newPlayer = AudioPlayer();
-     // print("spawned: $name");
      newPlayer.setAudioSource(source);
      newPlayer.processingStateStream.listen((event) {
         if (event == ProcessingState.completed){
           newPlayer.pause();
-          // print("completed: $name");
         }
      });
      players.add(newPlayer);
      return newPlayer;
   }
-
 }

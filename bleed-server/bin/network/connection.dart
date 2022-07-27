@@ -1,4 +1,5 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
+import 'package:bleed_server/system.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../classes/library.dart';
@@ -246,7 +247,7 @@ class Connection {
         return;
 
       case ClientRequest.Set_Block:
-        if (game is GameDarkAgeEditor == false) return;
+        if (!isLocalMachine && game is GameDarkAgeEditor == false) return;
 
         if (arguments.length < 5) return errorArgsExpected(3, arguments);
         final row = int.tryParse(arguments[1]);
