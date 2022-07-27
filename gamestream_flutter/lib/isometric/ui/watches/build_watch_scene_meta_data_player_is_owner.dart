@@ -6,8 +6,8 @@ import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
+import 'package:gamestream_flutter/isometric/ui/stacks/build_stacks_play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_tab.dart';
-import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/modules/core/actions.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
@@ -15,6 +15,10 @@ import 'package:gamestream_flutter/utils/widget_utils.dart';
 import '../widgets/build_container.dart';
 
 Widget buildPlayMode(PlayMode playMode) {
+  if (playMode == PlayMode.Play){
+    return buildStackPlayMode();
+  }
+
   final edit = playMode == PlayMode.Edit;
     return Stack(
       children: [

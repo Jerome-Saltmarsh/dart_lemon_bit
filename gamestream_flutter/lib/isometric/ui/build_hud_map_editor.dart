@@ -23,17 +23,6 @@ import 'package:lemon_watch/watch_builder.dart';
 
 import 'constants/colors.dart';
 
-Widget buildHudMapEditor(){
-  return Stack(
-    children: [
-      // Positioned(right: 0, child: Container(
-      //     height: screen.height,
-      //     alignment: Alignment.center,
-      //     child: buildPanelMaxZRender())),
-    ],
-  );
-}
-
 Widget buildPanelMaxZRender(){
   return Column(
       mainAxisAlignment: MainAxisAlignment.center,

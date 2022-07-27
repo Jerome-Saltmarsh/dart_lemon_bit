@@ -3,27 +3,45 @@ import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_map
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/icons.dart';
+import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
+import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
+import '../../colours.dart';
 import 'build_time.dart';
 
 Widget buildPanelMenu() {
   return buildPanel(
-      width: 300,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          buildButtonTogglePlayMode(),
+          width8,
           buildTime(),
-          buildButtonShowMap(),
+          width8,
           buildButtonToggleFullscreen(),
-          // buildButtonToggleAudio(),
+          width8,
           buildButtonExit(),
         ],
     )
   );
+}
+
+Widget buildButtonTogglePlayMode() {
+  return watch(sceneMetaDataPlayerIsOwner, (isOwner){
+            return watch(playMode, (mode) {
+              return container(
+                  child: mode == PlayMode.Play ? "EDIT" : "PLAY",
+                  action: actionPlayModeToggle,
+                  color: green,
+                  alignment: Alignment.center,
+                  width: 100);
+            });
+          });
 }
 
 Widget buildButtonShowMap() => Tooltip(

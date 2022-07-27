@@ -23,7 +23,7 @@ void onKeyboardEvent(RawKeyEvent event){
 void onRawKeyDownEvent(RawKeyDownEvent event){
   final key = event.physicalKey;
 
-  if (key == PhysicalKeyboardKey.space)
+  if (key == PhysicalKeyboardKey.tab)
     return actionPlayModeToggle();
 
   if (playModePlay) {

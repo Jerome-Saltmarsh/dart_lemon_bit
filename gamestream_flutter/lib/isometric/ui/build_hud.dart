@@ -8,7 +8,6 @@ import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog.dart';
-import 'package:gamestream_flutter/isometric/ui/watches/build_watch_play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_player_alive.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_data_player_is_owner.dart';
@@ -30,7 +29,6 @@ Widget buildHud() {
         alignment: Alignment.center,
         child: buildWatchPlayerAlive(),
       ),
-      buildWatchPlayMode(),
       buildTopRightMenu(),
       buildMiniMap(),
       watch(playMode, buildPlayMode),
