@@ -41,7 +41,7 @@ void readPlayerInput() {
 
   // PLAY MODE
 
-  if (sceneMetaDataPlayerIsOwner.value) {
+  if (sceneMetaDataMapEditable.value) {
     if (keyPressed(LogicalKeyboardKey.space)) {
       setPlayModeEdit();
       return;

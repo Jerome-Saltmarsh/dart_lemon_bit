@@ -1,5 +1,6 @@
 
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
+import 'package:bleed_server/system.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
@@ -796,7 +797,7 @@ extension PlayerProperties on Player {
 
   void writeSceneMetaData() {
     writeByte(ServerResponse.Scene_Meta_Data);
-    writeBool((game is GameDarkAgeEditor));
+    writeBool((game is GameDarkAgeEditor || isLocalMachine));
     writeString(game.scene.name);
   }
 

@@ -272,7 +272,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readSceneMetaData() {
-    sceneMetaDataPlayerIsOwner.value = readBool();
+    sceneMetaDataMapEditable.value = readBool();
     sceneMetaDataSceneName.value = readString();
   }
 
