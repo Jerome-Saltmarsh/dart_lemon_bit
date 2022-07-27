@@ -154,6 +154,15 @@ class Engine {
     return GameDarkAgeVillage();
   }
 
+  GameDarkAge findGameDarkAge() {
+    for (final game in games) {
+      if (game is GameDarkAgeFarm) {
+        return game;
+      }
+    }
+    throw Exception("Could not find game dark age");
+  }
+
   GameDarkAge findAreaTavernCellar() {
     for (final game in games) {
       if (game is AreaTavernCellar) {

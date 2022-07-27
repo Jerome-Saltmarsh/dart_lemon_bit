@@ -24,10 +24,10 @@ class GameDarkAge extends Game {
 
   @override
   void onPlayerRevived(Player player){
-      player.changeGame(engine.findGameDarkAgeVillage());
-      player.indexZ = 1;
-      player.indexRow = 25;
-      player.indexColumn = 17;
+      player.changeGame(engine.findGameDarkAge());
+      player.indexZ = 4;
+      player.indexRow = 14;
+      player.indexColumn = 19;
       player.x += giveOrTake(5);
       player.y += giveOrTake(5);
   }

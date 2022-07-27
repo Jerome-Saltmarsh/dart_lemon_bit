@@ -562,7 +562,7 @@ class Connection {
   }
 
   Future joinGameDarkAge() async {
-    joinGame(engine.findGameDarkAgeVillage());
+    joinGame(engine.findGameDarkAge());
   }
 
   Future joinGameEditor({String? name}) async {
