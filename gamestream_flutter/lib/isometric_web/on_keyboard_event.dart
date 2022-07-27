@@ -47,12 +47,6 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     if (key == PhysicalKeyboardKey.keyK){
       sendClientRequestCasteBasic();
     }
-
-    if (sceneMetaDataPlayerIsOwner.value){
-      if (key == PhysicalKeyboardKey.keyX){
-         edit.paintPlayerBlock();
-      }
-    }
   }
 
   if (playModeEdit) {
@@ -72,11 +66,19 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
       edit.fill();
     }
     if (key == PhysicalKeyboardKey.digit1){
-      edit.paintTorch();
+      edit.delete();
     }
-
     if (key == PhysicalKeyboardKey.digit2){
+      edit.paintGrass();
+    }
+    if (key == PhysicalKeyboardKey.digit3){
+      edit.paintWater();
+    }
+    if (key == PhysicalKeyboardKey.digit4){
       edit.paintBricks();
+    }
+    if (key == PhysicalKeyboardKey.digit5){
+      edit.paintTorch();
     }
     if (key == PhysicalKeyboardKey.arrowUp){
       if (shiftLeftDown){

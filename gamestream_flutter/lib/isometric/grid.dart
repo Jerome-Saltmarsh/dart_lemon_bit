@@ -272,6 +272,7 @@ void _applyBakeMapEmissions() {
           rowIndex: rowIndex,
           columnIndex: columnIndex,
           maxBrightness: Shade.Very_Bright,
+          radius: 7,
         );
       }
     }
@@ -321,8 +322,13 @@ void _applyEmission({
   }
 }
 
+
 int _convertDistanceToShade(int distance, {int maxBrightness = Shade.Very_Bright}){
-   return clamp(distance - 1, maxBrightness, 6);
+   if (distance > Shade.Pitch_Black + 2) {
+     return Shade.Pitch_Black;
+   }
+   return clamp(distance - 1, maxBrightness, Shade.Very_Dark);
+   // return clamp(distance - 1, maxBrightness, Shade.Pitch_Black);
 }
 
 

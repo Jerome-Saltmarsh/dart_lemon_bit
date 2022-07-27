@@ -16,6 +16,6 @@ void onClickedButtonGridNodeType(int type){
   }
   edit.type.value = type;
   if (editTool.value == EditTool.Select){
-    edit.set(type);
+    edit.paint(type);
   }
 }

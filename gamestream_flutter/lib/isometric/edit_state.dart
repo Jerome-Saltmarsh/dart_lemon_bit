@@ -7,7 +7,6 @@ import 'package:lemon_watch/watch.dart';
 
 import 'editor/events/on_editor_row_changed.dart';
 import 'grid.dart';
-import 'player.dart';
 
 final edit = EditState();
 
@@ -45,16 +44,20 @@ class EditState {
     }
   }
 
-  void paintPlayerBlock(){
-    sendClientRequestSetBlock(player.indexRow, player.indexColumn, player.indexZ, paintType.value);
-  }
-
   void paintTorch(){
-    sendClientRequestSetBlock(row.value, column.value, z.value, GridNodeType.Torch);
+    paint(GridNodeType.Torch);
   }
 
   void paintBricks(){
-    sendClientRequestSetBlock(row.value, column.value, z.value, GridNodeType.Bricks);
+    paint(GridNodeType.Bricks);
+  }
+
+  void paintGrass(){
+    paint(GridNodeType.Grass);
+  }
+
+  void paintWater(){
+    paint(GridNodeType.Water);
   }
 
   void paintFloorBricks(){
@@ -76,15 +79,12 @@ class EditState {
   }
 
   void delete(){
-    set(z.value > 0 ? GridNodeType.Empty : GridNodeType.Grass);
+    paint(z.value > 0 ? GridNodeType.Empty : GridNodeType.Grass);
   }
 
-  void paint(){
-    set(edit.paintType.value);
-  }
 
-  void set(int value){
-    if (value != GridNodeType.Empty) {
+  void paint([int? value]){
+    if (value != null && value != GridNodeType.Empty) {
       paintType.value = value;
     }
 
@@ -97,7 +97,7 @@ class EditState {
     }
 
     if (currentType != value){
-      return sendClientRequestSetBlock(row.value, column.value, z.value, value);
+      return sendClientRequestSetBlock(row.value, column.value, z.value, value ?? paintType.value);
     }
 
     // for (var zIndex = 1; zIndex < z.value; zIndex++){

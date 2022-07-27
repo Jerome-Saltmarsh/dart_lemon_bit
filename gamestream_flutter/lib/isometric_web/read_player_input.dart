@@ -32,7 +32,7 @@ void readPlayerInput() {
       edit.paint();
     }
     if (keyPressed(LogicalKeyboardKey.keyR)) {
-      edit.paintType.value = edit.type.value;
+      edit.type.value = edit.type.value;
     }
     if (keyPressed(LogicalKeyboardKey.keyQ)) {
       edit.z.value = player.indexZ;

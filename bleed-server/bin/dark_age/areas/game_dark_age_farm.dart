@@ -15,7 +15,7 @@ class GameDarkAgeFarm extends DarkAgeArea {
         column: 18,
         z: 3,
         onInteractedWith: (player){
-           player.interact(message: 'hello there');
+           player.interact(message: "I've been seeing more and more monsters in the wilderness lately");
         }
     );
   }

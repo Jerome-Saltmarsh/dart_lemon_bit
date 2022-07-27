@@ -72,6 +72,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
     addNpcGuardBow(row: 10, column: 20);
     addNpcGuardBow(row: 20, column: 31);
     addNpcGuardBow(row: 30, column: 12);
+    addNpcGuardBow(row: 30, column: 20);
 
     addEnemySpawn(z: 1, row: 43, column: 8, health: 3, max: 2);
     addEnemySpawn(z: 1, row: 40, column: 35, health: 3);
