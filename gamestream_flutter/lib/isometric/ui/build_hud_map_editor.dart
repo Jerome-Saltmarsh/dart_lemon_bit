@@ -325,10 +325,10 @@ Widget buildControlTime(){
             padding: const EdgeInsets.all(8),
             height: 50,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 timeText,
-                buildToggleTimePassing(),
+                // buildToggleTimePassing(),
               ],
             )
         ),

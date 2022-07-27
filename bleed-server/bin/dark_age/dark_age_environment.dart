@@ -11,6 +11,7 @@ class DarkAgeTime {
   var timePassing = true;
 
   void update(){
+    if (!timePassing) return;
     setTime(time + minutesPassingPerSecond);
   }
 

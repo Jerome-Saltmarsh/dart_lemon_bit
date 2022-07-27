@@ -115,8 +115,8 @@ void sendClientRequestWeatherSetLightning(Lightning value){
   sendClientRequest(ClientRequest.Weather_Set_Lightning, value.index);
 }
 
-void sendClientRequestWeatherToggleTimePassing(){
-  sendClientRequest(ClientRequest.Weather_Toggle_Time_Passing);
+void sendClientRequestWeatherToggleTimePassing([bool? value]){
+  sendClientRequest(ClientRequest.Weather_Toggle_Time_Passing, value);
 }
 
 void sendClientRequestCustomGameNames(){

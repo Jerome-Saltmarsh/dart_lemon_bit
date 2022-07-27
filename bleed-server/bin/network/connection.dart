@@ -224,6 +224,12 @@ class Connection {
       case ClientRequest.Weather_Toggle_Time_Passing:
         if (game is GameDarkAge == false) return;
         final environment = (game as GameDarkAge).environment;
+
+        if (arguments.length > 0){
+           final val = arguments[1];
+           environment.timePassing = val == 'true';
+           return;
+        }
         environment.toggleTimePassing();
         break;
 

@@ -3,15 +3,18 @@
 import 'package:gamestream_flutter/isometric/camera_mode.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/network/send_client_request.dart';
 
-void onPlayModeChanged(Mode playMode){
-   switch (playMode){
+void onModeChanged(Mode mode){
+   switch (mode){
      case Mode.Play:
        cameraModeSetChase();
+       sendClientRequestWeatherToggleTimePassing(true);
        return;
      case Mode.Edit:
        cameraModeSetFree();
        edit.selectPlayerBlock();
+       sendClientRequestWeatherToggleTimePassing(false);
        return;
    }
 }
