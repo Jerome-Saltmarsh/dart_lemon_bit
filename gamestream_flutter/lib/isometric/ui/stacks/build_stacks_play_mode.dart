@@ -13,7 +13,7 @@ import 'package:gamestream_flutter/ui/builders/build_text_box.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/screen.dart';
 
-Widget buildStackPlayMode() {
+Widget buildStackPlay() {
   return Stack(
     children: [
       Positioned(top: 50, right: 0, child: buildWatchInventoryVisible()),

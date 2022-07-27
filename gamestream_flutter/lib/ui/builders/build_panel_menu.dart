@@ -36,7 +36,7 @@ Widget buildButtonTogglePlayMode() {
     return watch(playMode, (mode) {
       return container(
           toolTip: "(Tab)",
-          child: mode == PlayMode.Play ? "EDIT" : "PLAY",
+          child: mode == Mode.Play ? "EDIT" : "PLAY",
           action: actionPlayModeToggle,
           color: green,
           alignment: Alignment.center,

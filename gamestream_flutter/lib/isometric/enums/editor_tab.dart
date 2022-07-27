@@ -1,4 +1,0 @@
-enum EditorTab {
-  Grid,
-  Objects,
-}

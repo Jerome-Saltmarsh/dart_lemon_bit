@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_show_game_dialog_canvas_size.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
@@ -14,34 +13,30 @@ import 'package:gamestream_flutter/utils/widget_utils.dart';
 
 import '../widgets/build_container.dart';
 
-Widget buildPlayMode(PlayMode playMode) {
-  if (playMode == PlayMode.Play){
-    return buildStackPlayMode();
-  }
+Widget buildPlayMode(Mode mode) {
+  return mode == Mode.Play ? buildStackPlay() : buildStackEdit();
+}
 
-  final edit = playMode == PlayMode.Edit;
-    return Stack(
-      children: [
-        if (edit)
-        Positioned(
-          left: 0,
+Stack buildStackEdit() {
+  return Stack(
+    children: [
+      Positioned(
+        left: 0,
+        bottom: 6,
+        child: buildWatchEditorTab(),
+      ),
+      Positioned(
           bottom: 6,
-          child: buildWatchEditorTab(),
-        ),
-        if (edit)
-        Positioned(
-            bottom: 6,
-            left: 0,
-            child: buildControlsEnvironment()
-        ),
-        if (edit)
-        Positioned(
           left: 0,
-          top: 0,
-          child: buildTopLeftMenu(),
-        )
-      ],
-    );
+          child: buildControlsEnvironment()
+      ),
+      Positioned(
+        left: 0,
+        top: 0,
+        child: buildTopLeftMenu(),
+      )
+    ],
+  );
 }
 
 Row buildTopLeftMenu() {

@@ -14,7 +14,7 @@ Widget buildTabsPlayMode(){
    );
 }
 
-Widget buildButtonPlayMode(PlayMode value){
+Widget buildButtonPlayMode(Mode value){
   return watch(playMode, (activePlayMode){
     return container(
       child: value.name,
