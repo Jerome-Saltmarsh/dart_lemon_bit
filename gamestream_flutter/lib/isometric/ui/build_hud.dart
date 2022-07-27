@@ -32,13 +32,13 @@ Widget buildHud() {
       buildWatchPlayMode(),
       buildTopRightMenu(),
       Positioned(
-          left: 0,
-          top: 0,
+          left: 6,
+          top: 6,
           child: onPressed(
             callback: actionGameDialogShowMap,
             child: Container(
-              padding: EdgeInsets.all(4),
-              color: brownLight,
+              padding: const EdgeInsets.all(4),
+              color: brownDark,
               child: GameMapWidget(width: 133, height: 133)
             ),
           ),

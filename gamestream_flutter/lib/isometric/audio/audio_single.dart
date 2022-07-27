@@ -42,7 +42,6 @@ class AudioSingle {
     final playVolume = this.volume * volume;
     if (playVolume <= 0) return;
     final player = getAudioPlayer;
-    assert (!player.playing);
     await player.setVolume(playVolume);
     if (player.audioSource == null) throw Exception("no audio source");
     await player.seek(const Duration());
@@ -54,12 +53,18 @@ class AudioSingle {
 
   AudioPlayer get getAudioPlayer {
      for (final player in players) {
-       if (player.playing) continue;
+       if (player.processingState != ProcessingState.ready) continue;
        return player;
      }
      final newPlayer = AudioPlayer();
      newPlayer.setAudioSource(source);
      players.add(newPlayer);
+
+     newPlayer.playbackEventStream.listen((event) {
+     }, onError: (error){
+        print("$name playbackEventStream.onError()");
+        print(error);
+     });
      return newPlayer;
   }
 }

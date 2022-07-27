@@ -10,10 +10,13 @@ class AudioLoop {
   var durationInSeconds = 0;
 
   AudioLoop({required this.name, required this.getTargetVolume}) {
-    load();
+    load().catchError((error){
+       print("an error occurred loading $name");
+       print(error);
+    });
   }
 
-  void load() async {
+  Future load() async {
     final d = await audioPlayer.setUrl('assets/audio/sounds/$name.mp3');
     audioPlayer.play();
     audioPlayer.positionStream.listen(onPositionChanged);

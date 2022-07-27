@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog_map.dart';
 import 'package:lemon_engine/render_single_atlas.dart';
-import 'package:lemon_engine/state/paint.dart';
 
 import '../../map_atlas.dart';
 
