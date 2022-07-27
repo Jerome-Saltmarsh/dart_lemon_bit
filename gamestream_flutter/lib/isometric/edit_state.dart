@@ -7,6 +7,7 @@ import 'package:lemon_watch/watch.dart';
 
 import 'editor/events/on_editor_row_changed.dart';
 import 'grid.dart';
+import 'player.dart';
 
 final edit = EditState();
 
@@ -72,6 +73,12 @@ class EditState {
     this.row.value = row;
     this.column.value = column;
     this.z.value = z;
+  }
+
+  void selectPlayerBlock(){
+    row.value = player.indexRow;
+    column.value = player.indexColumn;
+    z.value = player.indexZ;
   }
 
   void refreshType(){

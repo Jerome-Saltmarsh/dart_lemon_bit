@@ -23,82 +23,66 @@ void onKeyboardEvent(RawKeyEvent event){
 void onRawKeyDownEvent(RawKeyDownEvent event){
   final key = event.physicalKey;
 
-  if (key == PhysicalKeyboardKey.digit0) {
-    actionPlayModeToggle();
-  }
+  if (key == PhysicalKeyboardKey.space)
+    return actionPlayModeToggle();
 
   if (playModePlay) {
-    if (key == PhysicalKeyboardKey.keyG) {
-      sendClientRequestTeleport();
-    }
-    if (key == PhysicalKeyboardKey.keyI){
+    if (key == PhysicalKeyboardKey.keyG)
+      return sendClientRequestTeleport();
+    if (key == PhysicalKeyboardKey.keyI)
       return actionToggleInventoryVisible();
-    }
-    if (key == PhysicalKeyboardKey.keyT){
+    if (key == PhysicalKeyboardKey.keyT)
       return actionGameDialogShowQuests();
-    }
-    if (key == PhysicalKeyboardKey.keyM){
+    if (key == PhysicalKeyboardKey.keyM)
       return actionGameDialogShowMap();
-    }
-    if (key == PhysicalKeyboardKey.keyJ){
-      sendClientRequestAttackBasic();
-    }
-    if (key == PhysicalKeyboardKey.keyK){
-      sendClientRequestCasteBasic();
-    }
+    if (key == PhysicalKeyboardKey.keyJ)
+      return sendClientRequestAttackBasic();
+    if (key == PhysicalKeyboardKey.keyK)
+      return sendClientRequestCasteBasic();
   }
 
-  if (playModeEdit) {
-    if (key == PhysicalKeyboardKey.keyG){
-      cameraSetPositionGrid(edit.row.value, edit.column.value, edit.z.value);
+  // EDIT MODE
+  if (key == PhysicalKeyboardKey.keyF) return edit.paint();
+  if (key == PhysicalKeyboardKey.keyG) {
+    cameraSetPositionGrid(edit.row.value, edit.column.value, edit.z.value);
+  }
+  if (key == PhysicalKeyboardKey.keyY)
+    return editor.actions.elevate();
+  if (key == PhysicalKeyboardKey.keyH)
+    return editor.actions.lower();
+  if (key == PhysicalKeyboardKey.keyC)
+    return editor.actions.clear();
+  if (key == PhysicalKeyboardKey.keyE)
+    return edit.fill();
+  if (key == PhysicalKeyboardKey.digit1)
+    return edit.delete();
+  if (key == PhysicalKeyboardKey.digit2)
+    return edit.paintGrass();
+  if (key == PhysicalKeyboardKey.digit3)
+    return edit.paintWater();
+  if (key == PhysicalKeyboardKey.digit4)
+    return edit.paintBricks();
+  if (key == PhysicalKeyboardKey.digit5)
+    return edit.paintTorch();
+  if (key == PhysicalKeyboardKey.arrowUp) {
+    if (shiftLeftDown) {
+      edit.z.value++;
+    } else {
+      edit.row.value--;
     }
-    if (key == PhysicalKeyboardKey.keyY){
-      editor.actions.elevate();
+  }
+  if (key == PhysicalKeyboardKey.arrowRight) {
+    edit.column.value--;
+  }
+  if (key == PhysicalKeyboardKey.arrowDown) {
+    if (shiftLeftDown) {
+      edit.z.value--;
+    } else {
+      edit.row.value++;
     }
-    if (key == PhysicalKeyboardKey.keyH){
-      editor.actions.lower();
-    }
-    if (key == PhysicalKeyboardKey.keyC){
-      editor.actions.clear();
-    }
-    if (key == PhysicalKeyboardKey.keyE){
-      edit.fill();
-    }
-    if (key == PhysicalKeyboardKey.digit1){
-      edit.delete();
-    }
-    if (key == PhysicalKeyboardKey.digit2){
-      edit.paintGrass();
-    }
-    if (key == PhysicalKeyboardKey.digit3){
-      edit.paintWater();
-    }
-    if (key == PhysicalKeyboardKey.digit4){
-      edit.paintBricks();
-    }
-    if (key == PhysicalKeyboardKey.digit5){
-      edit.paintTorch();
-    }
-    if (key == PhysicalKeyboardKey.arrowUp){
-      if (shiftLeftDown){
-        edit.z.value++;
-      } else {
-        edit.row.value--;
-      }
-    }
-    if (key == PhysicalKeyboardKey.arrowRight){
-      edit.column.value--;
-    }
-    if (key == PhysicalKeyboardKey.arrowDown){
-      if (shiftLeftDown){
-        edit.z.value--;
-      } else {
-        edit.row.value++;
-      }
-    }
-    if (key == PhysicalKeyboardKey.arrowLeft){
-      edit.column.value++;
-    }
+  }
+  if (key == PhysicalKeyboardKey.arrowLeft) {
+    edit.column.value++;
   }
 }
 

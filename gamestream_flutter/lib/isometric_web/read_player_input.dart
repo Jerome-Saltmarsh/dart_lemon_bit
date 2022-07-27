@@ -28,16 +28,8 @@ void readPlayerInput() {
     if (keyPressed(LogicalKeyboardKey.delete)) {
       edit.delete();
     }
-    if (keyPressed(LogicalKeyboardKey.keyF)) {
-      edit.paint();
-    }
     if (keyPressed(LogicalKeyboardKey.keyR)) {
       edit.type.value = edit.type.value;
-    }
-    if (keyPressed(LogicalKeyboardKey.keyQ)) {
-      edit.z.value = player.indexZ;
-      edit.row.value = player.indexRow;
-      edit.column.value = player.indexColumn;
     }
     if (engine.mouseRightDown.value){
       setPlayModePlay();
