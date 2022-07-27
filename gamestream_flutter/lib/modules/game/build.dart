@@ -28,25 +28,6 @@ class GameBuild {
 
   GameBuild(this.state, this.actions);
 
-  Widget buildUIGame() {
-    print("buildUIGame()");
-    return buildHud();
-    // return WatchBuilder(core.state.status, (GameStatus gameStatus) {
-    //   switch (gameStatus) {
-    //     case GameStatus.Counting_Down:
-    //       throw Exception("No builder for GameStatus.Counting_Down");
-    //     case GameStatus.Awaiting_Players:
-    //       return buildLayoutWaitingForPlayers();
-    //     case GameStatus.In_Progress:
-    //       return buildHud();
-    //     case GameStatus.Finished:
-    //       return buildDialogGameFinished();
-    //     default:
-    //       return empty;
-    //   }
-    // });
-  }
-
   Widget buildMagicBar() {
     final width = 280.0;
     final height = width *
