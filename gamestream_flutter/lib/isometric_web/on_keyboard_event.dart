@@ -10,7 +10,6 @@ import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
 
 import '../isometric/actions/action_game_dialog_show_map.dart';
-import '../isometric/watches/scene_meta_data.dart';
 
 void onKeyboardEvent(RawKeyEvent event){
   if (event is RawKeyDownEvent){
@@ -25,7 +24,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
   final key = event.physicalKey;
 
   if (key == PhysicalKeyboardKey.digit0) {
-    sceneMetaDataPlayerIsOwner.value = !sceneMetaDataPlayerIsOwner.value;
+    actionPlayModeToggle();
   }
 
   if (playModePlay) {

@@ -11,7 +11,7 @@ Widget buildTogglePlayEdit(){
       width: 100,
       alignment: Alignment.center,
       color: grey,
-      action: playModeToggle,
+      action: actionPlayModeToggle,
     );
   });
 

@@ -9,7 +9,7 @@ bool get playModePlay => playMode.value == PlayMode.Play;
 void setPlayModePlay() => playMode.value = PlayMode.Play;
 void setPlayModeEdit() => playMode.value = PlayMode.Edit;
 
-void playModeToggle(){
+void actionPlayModeToggle(){
     playModePlay ? setPlayModeEdit() : setPlayModePlay();
 }
 
