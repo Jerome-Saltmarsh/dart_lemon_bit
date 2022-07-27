@@ -44,27 +44,33 @@ class AudioSingle {
     final player = getAudioPlayer;
     await player.setVolume(playVolume);
     if (player.audioSource == null) throw Exception("no audio source");
-    await player.seek(const Duration());
-    await player.play().catchError((error){
-      print("failed to play $name");
-    });
-    await player.seek(const Duration());
+    await player.seek(null);
+    if (!player.playing){
+      await player.play().catchError((error){
+        print("failed to play $name");
+      });
+    }
   }
 
   AudioPlayer get getAudioPlayer {
      for (final player in players) {
-       if (player.processingState != ProcessingState.ready) continue;
+       if (player.playing) continue;
+       player.seek(null);
+       // print("recycled: $name");
        return player;
      }
-     final newPlayer = AudioPlayer();
-     newPlayer.setAudioSource(source);
-     players.add(newPlayer);
 
-     newPlayer.playbackEventStream.listen((event) {
-     }, onError: (error){
-        print("$name playbackEventStream.onError()");
-        print(error);
+     final newPlayer = AudioPlayer();
+     // print("spawned: $name");
+     newPlayer.setAudioSource(source);
+     newPlayer.processingStateStream.listen((event) {
+        if (event == ProcessingState.completed){
+          newPlayer.pause();
+          // print("completed: $name");
+        }
      });
+     players.add(newPlayer);
      return newPlayer;
   }
+
 }
