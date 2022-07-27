@@ -7,8 +7,17 @@ import 'dark_age_area.dart';
 
 class GameDarkAgeFarm extends DarkAgeArea {
   GameDarkAgeFarm() : super(darkAgeScenes.farm, mapTile: MapTiles.Farm) {
-      addEnemySpawn(z: 1, row: 34, column: 30, health: 5, max: 5, wanderRadius: 300);
-      addEnemySpawn(z: 1, row: 12, column: 9, health: 5, max: 10, wanderRadius: 300);
+      // addEnemySpawn(z: 1, row: 34, column: 30, health: 5, max: 5, wanderRadius: 300);
+      // addEnemySpawn(z: 1, row: 12, column: 9, health: 5, max: 10, wanderRadius: 300);
+    addNpc(
+        name: "Magellan",
+        row: 27,
+        column: 18,
+        z: 3,
+        onInteractedWith: (player){
+           player.interact(message: 'hello there');
+        }
+    );
   }
 
   @override

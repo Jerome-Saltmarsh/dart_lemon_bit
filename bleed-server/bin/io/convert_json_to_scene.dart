@@ -11,10 +11,10 @@ Scene convertJsonToScene(Json json, String name) {
   final columns = json.getInt('grid-columns');
   var enemySpawns = <EnemySpawn>[];
 
-  if (json.containsKey('enemy-spawns')){
-     final enemySpawnsJson = json.getList('enemy-spawns');
-     enemySpawns = enemySpawnsJson.map(convertJsonToEnemySpawn).toList();
-  }
+  // if (json.containsKey('enemy-spawns')){
+  //    final enemySpawnsJson = json.getList('enemy-spawns');
+  //    enemySpawns = enemySpawnsJson.map(convertJsonToEnemySpawn).toList();
+  // }
 
   return Scene(
     name: name,
