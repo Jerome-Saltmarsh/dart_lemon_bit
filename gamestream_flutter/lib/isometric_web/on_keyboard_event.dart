@@ -65,6 +65,8 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     return edit.paintBricks();
   if (key == PhysicalKeyboardKey.digit5)
     return edit.paintTorch();
+  if (key == PhysicalKeyboardKey.digit6)
+    return edit.paintTree();
   if (key == PhysicalKeyboardKey.arrowUp) {
     if (shiftLeftDown) {
       edit.z.value++;

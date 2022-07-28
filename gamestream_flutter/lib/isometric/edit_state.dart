@@ -49,6 +49,11 @@ class EditState {
     paint(GridNodeType.Torch);
   }
 
+  void paintTree(){
+    sendClientRequestSetBlock(row.value, column.value, z.value, GridNodeType.Tree_Bottom);
+    sendClientRequestSetBlock(row.value, column.value, z.value + 1, GridNodeType.Tree_Top);
+  }
+
   void paintBricks(){
     paint(GridNodeType.Bricks);
   }
@@ -86,7 +91,7 @@ class EditState {
   }
 
   void delete(){
-    paint(z.value > 0 ? GridNodeType.Empty : GridNodeType.Grass);
+    sendClientRequestSetBlock(row.value, column.value, z.value, GridNodeType.Empty);
   }
 
   void selectPaintType(){
@@ -100,12 +105,6 @@ class EditState {
 
     if (value != null) {
       paintType.value = value;
-    }
-
-    if (value == GridNodeType.Tree_Bottom){
-        sendClientRequestSetBlock(row.value, column.value, z.value + 1, GridNodeType.Tree_Top);
-        sendClientRequestSetBlock(row.value, column.value, z.value, GridNodeType.Tree_Bottom);
-        return;
     }
 
     if (currentType != paintType.value){
