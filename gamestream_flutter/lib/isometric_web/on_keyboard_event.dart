@@ -39,6 +39,8 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
       return sendClientRequestAttackBasic();
     if (key == PhysicalKeyboardKey.keyK)
       return sendClientRequestCasteBasic();
+    if (key == PhysicalKeyboardKey.digit6)
+      return edit.paintTreeAtPlayer();
   }
 
   // EDIT MODE

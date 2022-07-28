@@ -54,6 +54,11 @@ class EditState {
     sendClientRequestSetBlock(row.value, column.value, z.value + 1, GridNodeType.Tree_Top);
   }
 
+  void paintTreeAtPlayer(){
+    sendClientRequestSetBlock(player.indexRow, player.indexColumn, player.indexZ, GridNodeType.Tree_Bottom);
+    sendClientRequestSetBlock(player.indexRow, player.indexColumn, player.indexZ + 1, GridNodeType.Tree_Top);
+  }
+
   void paintBricks(){
     paint(GridNodeType.Bricks);
   }
