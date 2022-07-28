@@ -1,7 +1,7 @@
-import 'package:gamestream_flutter/isometric/events/on_mode_changed.dart';
+import 'package:gamestream_flutter/isometric/events/on_changed_mode.dart';
 import 'package:lemon_watch/watch.dart';
 
-final playMode = Watch(Mode.Play, onChanged: onModeChanged);
+final playMode = Watch(Mode.Play, onChanged: onChangedMode);
 
 bool get playModeEdit => playMode.value == Mode.Edit;
 bool get modeIsPlay => playMode.value == Mode.Play;

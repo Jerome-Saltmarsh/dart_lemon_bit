@@ -35,33 +35,6 @@ Widget buildGameDialogMap(){
         children: [
           gameDialogTab,
           GameMapWidget(width: screen.width * goldenRatio_0618, height: screen.height * goldenRatio_0618 - 50),
-          // Listener(
-          //   onPointerSignal: (PointerSignalEvent pointerSignalEvent) {
-          //     if (pointerSignalEvent is PointerScrollEvent) {
-          //       const speed = 0.02;
-          //       if (pointerSignalEvent.scrollDelta.dy > 0){
-          //         mapZoom -= speed;
-          //       } else {
-          //         mapZoom += speed;
-          //       }
-          //
-          //     }
-          //   },
-          //   child: GestureDetector(
-          //     onPanStart: (event) {
-          //
-          //     },
-          //     onPanUpdate: (event){
-          //       print("onPanUpdate()");
-          //       mapCameraX += event.delta.dx;
-          //       mapCameraY += event.delta.dy;
-          //     },
-          //     child: buildGameMap(
-          //       screen.height * goldenRatio_0618 - 50,
-          //       screen.width * goldenRatio_0618,
-          //     ),
-          //   ),
-          // )
         ],
       ),
     ),
@@ -147,6 +120,8 @@ final mapTiles = <MapTile> [
    MapTile(2, 1, MapTiles.Mountains_3),
    MapTile(2, 2, MapTiles.Mountains_4),
    MapTile(2, 3, MapTiles.Plains_4),
+   MapTile(3, -2, MapTiles.Water),
+   MapTile(3, -1, MapTiles.Water),
 ];
 
 

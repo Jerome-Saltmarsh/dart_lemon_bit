@@ -1,14 +1,14 @@
 import 'package:bleed_common/wind.dart';
 
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
-import 'package:gamestream_flutter/isometric/events/on_wind_changed.dart';
+import 'package:gamestream_flutter/isometric/events/on_changed_wind.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:lemon_math/library.dart';
 
 final gridWind = <List<List<int>>>[];
 
-final windAmbient = Watch(Wind.Calm, onChanged: onWindChanged);
+final windAmbient = Watch(Wind.Calm, onChanged: onChangedWind);
 
 void gridWindResetToAmbient(){
   _ensureGridCorrectMetrics();

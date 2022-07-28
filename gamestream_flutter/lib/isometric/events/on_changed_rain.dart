@@ -4,7 +4,7 @@ import '../variables/src_x_rain_falling.dart';
 import '../variables/src_x_rain_landing.dart';
 import '../watches/raining.dart';
 
-void onRainChanged(Rain value) {
+void onChangedRain(Rain value) {
   raining.value = value != Rain.None;
 
   switch (value) {
