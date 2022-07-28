@@ -20,6 +20,7 @@ class GameDarkAge extends Game {
   @override
   void setHourMinutes(int hour, int minutes){
     environment.time.time = (hour * secondsPerHour) + (minutes * secondsPerMinute);
+    environment.updateShade();
     playersWriteWeather();
   }
 
