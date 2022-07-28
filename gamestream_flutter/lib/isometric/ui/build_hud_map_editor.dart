@@ -363,7 +363,7 @@ Widget buildButtonSelectGridNodeType(int value) {
         return container(
             child: GridNodeType.getName(value),
             action: () {
-              if (playModePlay){
+              if (modeIsPlay){
                 setPlayModeEdit();
                 edit.column.value = player.indexColumn;
                 edit.row.value = player.indexRow;

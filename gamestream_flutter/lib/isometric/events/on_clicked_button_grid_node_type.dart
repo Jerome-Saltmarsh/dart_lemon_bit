@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/isometric/watches/edit_tool.dart';
 import '../play_mode.dart';
 
 void onClickedButtonGridNodeType(int type){
-  if (playModePlay){
+  if (modeIsPlay){
     setPlayModeEdit();
     edit.column.value = player.indexColumn;
     edit.row.value = player.indexRow;

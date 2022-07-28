@@ -47,6 +47,14 @@ class GridNodeType {
     return false;
   }
   
+  static isGrassSlope(int type){
+    if (type == GridNodeType.Grass_Slope_North) return true;
+    if (type == GridNodeType.Grass_Slope_East) return true;
+    if (type == GridNodeType.Grass_Slope_South) return true;
+    if (type == GridNodeType.Grass_Slope_West) return true;
+    return false;
+  }
+  
   static isStone(int type){
     return const [
         Bricks,

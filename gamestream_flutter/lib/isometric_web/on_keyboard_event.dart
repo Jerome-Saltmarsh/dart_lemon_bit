@@ -26,7 +26,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
   if (key == PhysicalKeyboardKey.tab)
     return actionPlayModeToggle();
 
-  if (playModePlay) {
+  if (modeIsPlay) {
     if (key == PhysicalKeyboardKey.keyG)
       return sendClientRequestTeleport();
     if (key == PhysicalKeyboardKey.keyI)
@@ -43,6 +43,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
 
   // EDIT MODE
   if (key == PhysicalKeyboardKey.keyF) return edit.paint();
+  if (key == PhysicalKeyboardKey.keyR) return edit.selectPaintType();
   if (key == PhysicalKeyboardKey.keyG) {
     cameraSetPositionGrid(edit.row.value, edit.column.value, edit.z.value);
   }

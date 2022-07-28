@@ -1,5 +1,8 @@
 
+import 'package:bleed_common/grid_node_type.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 
 import '../build_hud_map_editor.dart';
@@ -9,7 +12,7 @@ Widget buildWatchEditorTab(){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      container(child: "Type", color: brownLight),
+      watch(edit.type, (int type) => container(child: "${GridNodeType.getName(type)}", color: brownLight)),
       buildColumnSelectGridNodeType()
     ],
   );

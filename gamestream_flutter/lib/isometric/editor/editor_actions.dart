@@ -35,7 +35,7 @@ class EditorActions {
     for (var z = 1 ; z < gridTotalZ; z++) {
       sendClientRequestSetBlock(r, c, z, GridNodeType.Empty);
     }
-    sendClientRequestSetBlock(r, c, 0, GridNodeType.Grass);
+    sendClientRequestSetBlock(r, c, 0, edit.paintType.value);
   }
 }
 

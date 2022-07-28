@@ -89,31 +89,34 @@ class EditState {
     paint(z.value > 0 ? GridNodeType.Empty : GridNodeType.Grass);
   }
 
+  void selectPaintType(){
+     paintType.value = currentType;
+  }
 
   void paint([int? value]){
-    if (value != null && value != GridNodeType.Empty) {
+    if (value == GridNodeType.Empty){
+       return delete();
+    }
+
+    if (value != null) {
       paintType.value = value;
     }
 
-    if (value == GridNodeType.Tree_Bottom || value == GridNodeType.Tree_Top){
-      if (currentType == GridNodeType.Empty){
+    if (value == GridNodeType.Tree_Bottom){
         sendClientRequestSetBlock(row.value, column.value, z.value + 1, GridNodeType.Tree_Top);
         sendClientRequestSetBlock(row.value, column.value, z.value, GridNodeType.Tree_Bottom);
         return;
+    }
+
+    if (currentType != paintType.value){
+      return sendClientRequestSetBlock(row.value, column.value, z.value, paintType.value);
+    }
+
+    if (GridNodeType.isGrassSlope(currentType)){
+      for (var zIndex = 0; zIndex < z.value; zIndex++){
+        sendClientRequestSetBlock(row.value, column.value, zIndex, GridNodeType.Grass);
       }
     }
-
-    if (currentType != value){
-      return sendClientRequestSetBlock(row.value, column.value, z.value, value ?? paintType.value);
-    }
-
-    // for (var zIndex = 1; zIndex < z.value; zIndex++){
-    //   if (GridNodeType.isStairs(value)){
-    //     sendClientRequestSetBlock(row.value, column.value, zIndex, GridNodeType.Bricks);
-    //   } else {
-    //     sendClientRequestSetBlock(row.value, column.value, zIndex, value);
-    //   }
-    // }
   }
 }
 

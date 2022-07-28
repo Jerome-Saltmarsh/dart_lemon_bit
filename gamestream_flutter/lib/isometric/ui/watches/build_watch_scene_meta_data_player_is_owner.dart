@@ -1,4 +1,6 @@
+import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_show_game_dialog_canvas_size.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
@@ -23,7 +25,17 @@ Stack buildStackEdit() {
       Positioned(
         left: 0,
         bottom: 6,
-        child: buildWatchEditorTab(),
+        child: Column(
+          children: [
+            Column(
+              children: [
+                container(child: "Paint", color: brownLight, toolTip: "Press F to paint. Press R to copy selected type"),
+                watch(edit.paintType, buildPaintType),
+              ],
+            ),
+            buildWatchEditorTab(),
+          ],
+        ),
       ),
       Positioned(
           bottom: 6,
@@ -38,6 +50,9 @@ Stack buildStackEdit() {
     ],
   );
 }
+
+Widget buildPaintType(int type) =>
+  container(child: GridNodeType.getName(type));
 
 Row buildTopLeftMenu() {
   return Row(
