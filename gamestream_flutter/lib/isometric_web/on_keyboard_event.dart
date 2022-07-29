@@ -51,6 +51,8 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
   }
   if (key == PhysicalKeyboardKey.keyY)
     return editor.actions.elevate();
+  if (key == PhysicalKeyboardKey.keyU)
+    return editor.actions.raise();
   if (key == PhysicalKeyboardKey.keyH)
     return editor.actions.lower();
   if (key == PhysicalKeyboardKey.keyC)

@@ -45,6 +45,11 @@ class EditState {
     }
   }
 
+  void paintIfEmpty(int row, int column, int z, int type){
+    if (!GridNodeType.isRainOrEmpty(grid[z][row][column])) return;
+    sendClientRequestSetBlock(row, column, z, type);
+  }
+
   void paintTorch(){
     paint(GridNodeType.Torch);
   }

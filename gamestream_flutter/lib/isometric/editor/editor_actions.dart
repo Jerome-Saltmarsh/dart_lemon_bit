@@ -20,6 +20,24 @@ class EditorActions {
     }
   }
 
+  void raise(){
+      if (GridNodeType.isRainOrEmpty(edit.currentType) || GridNodeType.isGrassSlope(edit.currentType)){
+         edit.paintGrass();
+      }
+      if (edit.row.value > 0){
+          edit.paintIfEmpty(edit.row.value -1, edit.column.value, edit.z.value, GridNodeType.Grass_Slope_South);
+      }
+      if (edit.row.value < gridTotalRows - 1){
+        edit.paintIfEmpty(edit.row.value + 1, edit.column.value, edit.z.value, GridNodeType.Grass_Slope_North);
+      }
+      if (edit.column.value > 0){
+        edit.paintIfEmpty(edit.row.value, edit.column.value - 1, edit.z.value, GridNodeType.Grass_Slope_West);
+      }
+      if (edit.column.value < gridTotalColumns - 1){
+        edit.paintIfEmpty(edit.row.value, edit.column.value + 1, edit.z.value, GridNodeType.Grass_Slope_East);
+      }
+  }
+
   void lower(){
     final r = edit.row.value;
     final c = edit.column.value;
