@@ -21,7 +21,9 @@ class EditorActions {
   }
 
   void raise(){
-      if (GridNodeType.isRainOrEmpty(edit.currentType) || GridNodeType.isGrassSlope(edit.currentType)){
+      if (GridNodeType.isRainOrEmpty(edit.currentType) ||
+          GridNodeType.isGrassSlope(edit.currentType) ||
+          edit.currentType == GridNodeType.Grass_Long){
          edit.paintGrass();
       }
       if (edit.row.value > 0){

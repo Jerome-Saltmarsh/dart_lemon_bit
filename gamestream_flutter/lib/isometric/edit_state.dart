@@ -46,7 +46,8 @@ class EditState {
   }
 
   void paintIfEmpty(int row, int column, int z, int type){
-    if (!GridNodeType.isRainOrEmpty(grid[z][row][column])) return;
+    final t = grid[z][row][column];
+    if (!GridNodeType.isRainOrEmpty(t) && t != GridNodeType.Grass_Long) return;
     sendClientRequestSetBlock(row, column, z, type);
   }
 
