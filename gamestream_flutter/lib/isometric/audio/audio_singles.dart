@@ -15,6 +15,7 @@ final audioSingleSciFiBlaster = AudioSingle(name: 'sci-fi-blaster-1', volume: 0.
 final audioSingleShotgunShot = AudioSingle(name: 'shotgun-shot', volume: 0.5, maxDistance: 400);
 final audioSingleItemUnlock = AudioSingle(name: 'unlock', volume: 0.5, maxDistance: 400);
 final audioSingleZombieHurt = AudioSingle(name: 'zombie-hurt-1', volume: 0.5, maxDistance: 400);
+final audioSingleSplash = AudioSingle(name: 'splash', volume: 0.5, maxDistance: 400);
 final audioSingleZombieDeaths = [
   AudioSingle(name: 'zombie-death-02', volume: 1, maxDistance: 400),
   AudioSingle(name: 'zombie-death-09', volume: 1, maxDistance: 400),

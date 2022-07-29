@@ -45,4 +45,5 @@ class GameEventType {
   static const Footstep = 55;
   static const Arm_Swing = 56;
   static const Character_Changing = 57;
+  static const Splash = 58;
 }

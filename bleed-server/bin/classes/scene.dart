@@ -304,6 +304,7 @@ class Scene {
     var tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
 
     if (GridNodeType.isWater(tileAtFeet)) {
+       game.dispatchV3(GameEventType.Splash, character);
        game.setCharacterStateDead(character);
        return;
     }

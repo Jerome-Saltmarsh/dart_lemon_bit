@@ -8,8 +8,9 @@ import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 
 void onGameEvent(int type, double x, double y, double z, double angle) {
-
   switch (type) {
+    case GameEventType.Splash:
+      return audioSingleSplash.playXYZ(x, y, z);
     case GameEventType.Footstep:
       final tile = getGridTypeAtXYZ(x, y, z - 2);
 
