@@ -139,6 +139,8 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
         srcHeight: 72,
         anchorY: 0.3334,
       );
+    case GridNodeType.Stone:
+      return renderBlockSrcX(9831);
     case GridNodeType.Torch:
       if (!torchesIgnited.value) {
         return renderTorchOff(_dstX, dstY);

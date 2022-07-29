@@ -37,6 +37,7 @@ class GridNodeType {
   static const Soil = 38;
   static const Roof_Hay_North = 39;
   static const Roof_Hay_South = 40;
+  static const Stone = 41;
 
   static isSolid(int type){
     if (type == GridNodeType.Bricks) return true;
@@ -44,6 +45,7 @@ class GridNodeType {
     if (type == GridNodeType.Wood) return true;
     if (type == GridNodeType.Soil) return true;
     if (type == GridNodeType.Boundary) return true;
+    if (type == GridNodeType.Stone) return true;
     return false;
   }
   
@@ -63,6 +65,7 @@ class GridNodeType {
         Stairs_South,
         Stairs_West,
         Brick_Top,
+        Stone,
     ].contains(type);
   }
 
@@ -150,6 +153,7 @@ class GridNodeType {
        Soil: "Soil",
        Roof_Hay_North: "Roof Hay North",
        Roof_Hay_South: "Roof Hay South",
+       Stone: "Stone",
      }[type] ?? "unknown($type)";
   }
   

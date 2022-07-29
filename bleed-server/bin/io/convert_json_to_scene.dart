@@ -3,18 +3,12 @@ import 'package:typedef/json.dart';
 
 import '../classes/enemy_spawn.dart';
 import '../classes/library.dart';
-import 'convert_json_to_enemy_spawn.dart';
 
 Scene convertJsonToScene(Json json, String name) {
   final height = json.getInt('grid-z');
   final rows = json.getInt('grid-rows');
   final columns = json.getInt('grid-columns');
   var enemySpawns = <EnemySpawn>[];
-
-  // if (json.containsKey('enemy-spawns')){
-  //    final enemySpawnsJson = json.getList('enemy-spawns');
-  //    enemySpawns = enemySpawnsJson.map(convertJsonToEnemySpawn).toList();
-  // }
 
   return Scene(
     name: name,
