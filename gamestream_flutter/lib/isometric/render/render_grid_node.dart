@@ -154,11 +154,11 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
       return render(
         dstX: _dstX,
         dstY: dstY,
-        srcX: 1699,
+        srcX: 1478,
         srcY: 74.0 * shade,
         srcWidth: 62.0,
         srcHeight: 74.0,
-        anchorY: 0.45,
+        anchorY: 0.5,
       );
     case GridNodeType.Tree_Top:
       final wind = gridWind[z][row][column];
@@ -166,11 +166,11 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
       return render(
         dstX: _dstX + (animationFrameTreePosition * 0.5),
         dstY: dstY,
-        srcX: 1478 + 62,
-        srcY: 68.0 * shade,
+        srcX: 1540,
+        srcY: 74.0 * shade,
         srcWidth: 62.0,
-        srcHeight: 68.0,
-        anchorY: 0.33,
+        srcHeight: 74.0,
+        anchorY: 0.5,
       );
 
     case GridNodeType.Fireplace:
