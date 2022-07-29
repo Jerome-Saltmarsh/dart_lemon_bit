@@ -102,7 +102,25 @@ class EditState {
   }
 
   void delete(){
+    deleteIfTree();
     sendClientRequestSetBlock(row.value, column.value, z.value, GridNodeType.Empty);
+  }
+
+  void deleteIfTree(){
+    if (currentType == GridNodeType.Tree_Bottom){
+      if (z.value < gridTotalZ - 1){
+        if (grid[z.value + 1][row.value][column.value] == GridNodeType.Tree_Top){
+          sendClientRequestSetBlock(row.value, column.value, z.value + 1, GridNodeType.Empty);
+        }
+      }
+    }
+    if (currentType == GridNodeType.Tree_Top){
+      if (z.value > 0){
+        if (grid[z.value - 1][row.value][column.value] == GridNodeType.Tree_Bottom){
+          sendClientRequestSetBlock(row.value, column.value, z.value - 1, GridNodeType.Empty);
+        }
+      }
+    }
   }
 
   void selectPaintType(){
@@ -117,6 +135,8 @@ class EditState {
     if (value != null) {
       paintType.value = value;
     }
+
+    deleteIfTree();
 
     if (currentType != paintType.value){
       return sendClientRequestSetBlock(row.value, column.value, z.value, paintType.value);
