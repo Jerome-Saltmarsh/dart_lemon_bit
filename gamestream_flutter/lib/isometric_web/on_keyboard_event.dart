@@ -26,6 +26,13 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
   if (key == PhysicalKeyboardKey.tab)
     return actionPlayModeToggle();
 
+  if (key == PhysicalKeyboardKey.digit5)
+    return edit.paintTorch();
+  if (key == PhysicalKeyboardKey.digit6)
+    return edit.paintTree();
+  if (key == PhysicalKeyboardKey.digit7)
+    return edit.paintLongGrass();
+
   if (modeIsPlay) {
     if (key == PhysicalKeyboardKey.keyG)
       return sendClientRequestTeleport();
@@ -39,10 +46,6 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
       return sendClientRequestAttackBasic();
     if (key == PhysicalKeyboardKey.keyK)
       return sendClientRequestCasteBasic();
-    if (key == PhysicalKeyboardKey.digit6)
-      return edit.paintTreeAtPlayer();
-    if (key == PhysicalKeyboardKey.digit7)
-      return edit.paintAtPlayerLongGrass();
   }
 
   // EDIT MODE
@@ -69,12 +72,6 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     return edit.paintWater();
   if (key == PhysicalKeyboardKey.digit4)
     return edit.paintBricks();
-  if (key == PhysicalKeyboardKey.digit5)
-    return edit.paintTorch();
-  if (key == PhysicalKeyboardKey.digit6)
-    return edit.paintTree();
-  if (key == PhysicalKeyboardKey.digit7)
-    return edit.paintLongGrass();
   if (key == PhysicalKeyboardKey.arrowUp) {
     if (shiftLeftDown) {
       edit.z.value++;

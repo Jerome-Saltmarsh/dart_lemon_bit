@@ -1,6 +1,7 @@
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_editor_column_changed.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_editor_z_changed.dart';
+import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/queries/get_grid_type.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_watch/watch.dart';
@@ -56,17 +57,15 @@ class EditState {
   }
 
   void paintTree(){
+    if (modeIsPlay){
+      selectPlayer();
+    }
     sendClientRequestSetBlock(row.value, column.value, z.value, GridNodeType.Tree_Bottom);
     sendClientRequestSetBlock(row.value, column.value, z.value + 1, GridNodeType.Tree_Top);
   }
 
   void paintLongGrass(){
     paint(GridNodeType.Grass_Long);
-  }
-
-  void paintTreeAtPlayer(){
-    sendClientRequestSetBlock(player.indexRow, player.indexColumn, player.indexZ, GridNodeType.Tree_Bottom);
-    sendClientRequestSetBlock(player.indexRow, player.indexColumn, player.indexZ + 1, GridNodeType.Tree_Top);
   }
 
   void paintAtPlayerLongGrass(){
@@ -135,7 +134,18 @@ class EditState {
      paintType.value = currentType;
   }
 
+  void selectPlayer(){
+    z.value = player.indexZ;
+    row.value = player.indexRow;
+    column.value = player.indexColumn;
+  }
+
   void paint([int? value]){
+
+    if (modeIsPlay){
+      selectPlayer();
+    }
+
     if (value == GridNodeType.Empty){
        return delete();
     }
