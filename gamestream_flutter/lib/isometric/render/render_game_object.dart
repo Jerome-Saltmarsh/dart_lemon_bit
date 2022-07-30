@@ -6,7 +6,7 @@ void renderGameObject(GameObject value) {
      dstX: value.renderX,
      dstY: value.renderY,
      srcX: 1664,
-     srcY: 0,
+     srcY: value.shade * 16,
      srcWidth: 16,
      srcHeight: 16,
   );
