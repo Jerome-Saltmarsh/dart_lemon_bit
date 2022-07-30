@@ -23,4 +23,14 @@ void renderGameObject(GameObject value) {
       srcWidth: 16,
       srcHeight: 16,
     );
+
+  if (value.type == GameObjectType.Stick)
+    return render(
+      dstX: value.renderX,
+      dstY: value.renderY,
+      srcX: 1696,
+      srcY: value.shade * 16,
+      srcWidth: 16,
+      srcHeight: 16,
+    );
 }

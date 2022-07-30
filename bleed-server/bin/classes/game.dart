@@ -348,6 +348,7 @@ extension GameFunctions on Game {
   void sortGameObjects() {
     sort(characters);
     sort(projectiles);
+    sort(gameObjects);
   }
 
   void sort(List<Position3> items){

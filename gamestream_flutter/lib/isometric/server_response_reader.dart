@@ -89,6 +89,12 @@ class ServerResponseReader with ByteReader {
           readVector3(gameObject);
           totalGameObjects++;
           break;
+        case ServerResponse.GameObject_Stick:
+          final gameObject = getInstanceGameObject();
+          gameObject.type = GameObjectType.Stick;
+          readVector3(gameObject);
+          totalGameObjects++;
+          break;
         case ServerResponse.GameObject_Flower:
           final gameObject = getInstanceGameObject();
           gameObject.type = GameObjectType.Flower;

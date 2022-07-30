@@ -42,3 +42,18 @@ class GameObjectFlower extends GameObject {
     player.writePosition3(this);
   }
 }
+
+
+class GameObjectStick extends GameObject {
+  GameObjectStick({
+    required double x,
+    required double y,
+    required double z,
+  }) : super(x: x, y: y, z: z, radius: 10);
+
+  @override
+  void write(Player player) {
+    player.writeByte(ServerResponse.GameObject_Stick);
+    player.writePosition3(this);
+  }
+}
