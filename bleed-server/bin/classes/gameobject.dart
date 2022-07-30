@@ -27,3 +27,18 @@ class GameObjectRock extends GameObject {
       player.writePosition3(this);
   }
 }
+
+
+class GameObjectFlower extends GameObject {
+  GameObjectFlower({
+    required double x,
+    required double y,
+    required double z,
+  }) : super(x: x, y: y, z: z, radius: 10);
+
+  @override
+  void write(Player player) {
+    player.writeByte(ServerResponse.GameObject_Flower);
+    player.writePosition3(this);
+  }
+}

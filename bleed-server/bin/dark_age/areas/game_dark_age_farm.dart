@@ -19,6 +19,7 @@ class GameDarkAgeFarm extends DarkAgeArea {
     );
     
     gameObjects.add(GameObjectRock(x: 1125, y: 874, z: 72));
+    gameObjects.add(GameObjectFlower(x: 1125, y: 774, z: 72));
   }
 
   @override

@@ -62,5 +62,6 @@ class ServerResponse {
   static const Character_Template = 89;
   static const Character_Player = 90;
   static const GameObject_Rock = 91;
+  static const GameObject_Flower = 92;
 }
 
