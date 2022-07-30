@@ -1,4 +1,5 @@
 
+import '../../classes/gameobject.dart';
 import '../../classes/library.dart';
 import '../../common/map_tiles.dart';
 import '../../common/quest.dart';
@@ -7,8 +8,6 @@ import 'dark_age_area.dart';
 
 class GameDarkAgeFarm extends DarkAgeArea {
   GameDarkAgeFarm() : super(darkAgeScenes.farm, mapTile: MapTiles.Farm) {
-      // addEnemySpawn(z: 1, row: 34, column: 30, health: 5, max: 5, wanderRadius: 300);
-      // addEnemySpawn(z: 1, row: 12, column: 9, health: 5, max: 10, wanderRadius: 300);
     addNpc(
         name: "Magellan",
         row: 27,
@@ -18,6 +17,8 @@ class GameDarkAgeFarm extends DarkAgeArea {
            player.interact(message: "I've been seeing more and more monsters in the wilderness lately");
         }
     );
+    
+    gameObjects.add(GameObjectRock(x: 1125, y: 874, z: 72));
   }
 
   @override

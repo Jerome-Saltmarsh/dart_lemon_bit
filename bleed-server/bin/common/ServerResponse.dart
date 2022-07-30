@@ -34,8 +34,6 @@ class ServerResponse {
   static const Gem_Spawns = 46;
   static const End = 47;
   static const Damage_Applied = 50;
-  static const Dynamic_Object_Destroyed = 51;
-  static const Dynamic_Object_Spawned = 52;
   static const Lives_Remaining = 53;
   static const Character_Select_Required = 54;
   static const Card_Choices = 55;
@@ -63,5 +61,6 @@ class ServerResponse {
   static const Character_Zombie = 88;
   static const Character_Template = 89;
   static const Character_Player = 90;
+  static const GameObject_Rock = 91;
 }
 

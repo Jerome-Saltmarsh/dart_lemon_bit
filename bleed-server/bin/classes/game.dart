@@ -11,10 +11,10 @@ import '../maths.dart';
 import '../physics.dart';
 import 'ai.dart';
 import 'character.dart';
-import 'collectable.dart';
 import 'collider.dart';
 import 'components.dart';
 import 'enemy_spawn.dart';
+import 'gameobject.dart';
 import 'item.dart';
 import 'npc.dart';
 import 'player.dart';
@@ -32,8 +32,7 @@ abstract class Game {
   final players = <Player>[];
   final characters = <Character>[];
   final projectiles = <Projectile>[];
-  final items = <Item>[];
-  final collectables = <Collectable>[];
+  final gameObjects = <GameObject>[];
 
   Game(this.scene) {
     engine.onGameCreated(this);
@@ -332,24 +331,6 @@ extension GameFunctions on Game {
     }
   }
 
-  void spawnCollectable({
-    required Position position,
-    required Position target,
-    required int type,
-    required int amount,
-  }){
-    if (amount <= 0) return;
-    final collectable = Collectable();
-    collectable.type = type;
-    collectable.amount = amount;
-    collectable.target = target;
-    collectable.x = position.x;
-    collectable.y = position.y;
-    collectable.angle = randomAngle();
-    collectable.speed = 3.0;
-    collectables.add(collectable);
-  }
-
   void _updatePlayersAndNpcs() {
     for (var i = 0; i < characters.length; i++){
       final character = characters[i];
@@ -366,7 +347,6 @@ extension GameFunctions on Game {
 
   void sortGameObjects() {
     sort(characters);
-    sort(items);
     sort(projectiles);
   }
 
@@ -1060,10 +1040,6 @@ extension GameFunctions on Game {
       // }
       return;
     }
-  }
-
-  void updateCollectables() {
-    collectables.forEach((collectable) => collectable.update());
   }
 
   void addEnemySpawn({

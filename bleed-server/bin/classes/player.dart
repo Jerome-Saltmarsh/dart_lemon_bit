@@ -351,13 +351,12 @@ extension PlayerProperties on Player {
     writeBool(alive); // 1
     writePercentage(experiencePercentage);
     writeByte(level);
-    writeCollectables();
-    // writePlayers();
     writeAttackTarget();
     writeProjectiles();
     writePlayerTarget();
     writeGameTime(game);
     writeCharacters();
+    writeGameObjects();
 
     if (target != null){
       writeByte(ServerResponse.Player_Target);
@@ -366,6 +365,17 @@ extension PlayerProperties on Player {
 
     if (!sceneDownloaded){
       downloadScene();
+    }
+  }
+
+  void writeGameObjects(){
+    final gameObjects = game.gameObjects;
+    for (final gameObject in gameObjects){
+      if (gameObject.renderY < screenTop) continue;
+      if (gameObject.renderX < screenLeft) continue;
+      if (gameObject.renderX > screenRight) continue;
+      if (gameObject.renderY > screenBottom) continue;
+      gameObject.write(this);
     }
   }
 
@@ -448,18 +458,6 @@ extension PlayerProperties on Player {
   //   writeByte(END);
   // }
 
-  void writeCollectables() {
-    writeByte(ServerResponse.Collectables);
-    final collectables = game.collectables;
-    for (final collectable in collectables) {
-      if (collectable.inactive) continue;
-      writeByte(collectable.type);
-      writePosition(collectable);
-    }
-    writeByte(END);
-  }
-
-
   void writeZombie(Zombie zombie){
     writeByte(ServerResponse.Character_Zombie);
     writeCharacter(this, zombie);
@@ -483,56 +481,6 @@ extension PlayerProperties on Player {
     writeInt(y);
     writeInt(z);
     writeInt(angle * radiansToDegrees);
-  }
-
-  // void writePaths() {
-  //   writeByte(ServerResponse.Paths);
-  //   final characters = game.characters;
-  //   for (final character in characters) {
-  //     if (character.dead) continue;
-  //     if (character.y < screenTop) continue;
-  //     if (character.x < screenLeft) continue;
-  //     if (character.x > screenRight) continue;
-  //     if (character.y > screenBottom) break;
-  //     final pathIndex = character.pathIndex;
-  //     if (pathIndex < 0) continue;
-  //     writeInt(pathIndex + 1);
-  //     for (var i = pathIndex; i >= 0; i--) {
-  //       writeInt(character.pathX[i]);
-  //       writeInt(character.pathY[i]);
-  //     }
-  //   }
-  //   writeInt(250);
-  //
-  //   for (final zombie in character) {
-  //     if (zombie.dead) continue;
-  //     if (zombie.y < screenTop) continue;
-  //     if (zombie.x < screenLeft) continue;
-  //     if (zombie.x > screenRight) continue;
-  //     if (zombie.y > screenBottom) break;
-  //     final aiTarget = zombie.target;
-  //     if (aiTarget is Character) {
-  //       writeByte(1);
-  //       writePosition(zombie);
-  //       writePosition(aiTarget);
-  //     }
-  //   }
-  //   writeByte(0);
-  // }
-
-  void writeItems(Player player){
-    writeByte(ServerResponse.Items);
-    final items = player.game.items;
-    for(final item in items){
-      if (!item.collidable) continue;
-      if (item.left < player.screenLeft) continue;
-      if (item.right > player.screenRight) continue;
-      if (item.top < player.screenTop) continue;
-      if (item.bottom > player.screenBottom) break;
-      writeByte(item.type);
-      writePosition(item);
-    }
-    writeByte(END);
   }
 
   void writePlayerEvent(int value){

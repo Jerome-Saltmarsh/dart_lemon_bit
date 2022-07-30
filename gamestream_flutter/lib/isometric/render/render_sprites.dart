@@ -1,10 +1,13 @@
 import 'dart:math';
 import 'package:bleed_common/character_type.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
+import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
+import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emissions_npcs.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
+import 'package:gamestream_flutter/isometric/render/render_game_object.dart';
 import 'package:lemon_engine/screen.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -33,10 +36,11 @@ final renderOrder = <RenderOrder> [
   RenderOrderParticle(),
   RenderOrderProjectiles(),
   RenderOrderCharacters(),
+  RenderOrderGameObjects(),
 ];
 
 // renderOrderLength gets called a lot during rendering so use a const and update it manually if need be
-const renderOrderLength = 4;
+const renderOrderLength = 5;
 var renderOrderFirst = renderOrder.first;
 var totalRemaining = 0;
 var totalIndex = 0;
@@ -121,6 +125,27 @@ class RenderOrderCharacters extends RenderOrder {
   void reset() {
     super.reset();
     applyEmissionsCharacters();
+  }
+}
+
+class RenderOrderGameObjects extends RenderOrder {
+
+  late GameObject gameObject;
+
+  @override
+  int getTotal() => totalGameObjects;
+
+  @override
+  void renderFunction() {
+    if (!shouldRender(gameObject)) return;
+    renderGameObject(gameObject);
+  }
+
+  @override
+  void updateFunction() {
+    gameObject = gameObjects[_index];
+    order = gameObject.renderOrder;
+    orderZ = gameObject.indexZ;
   }
 }
 

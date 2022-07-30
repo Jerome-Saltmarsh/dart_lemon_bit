@@ -641,7 +641,6 @@ class Connection {
       default:
         throw Exception("Invalid Game Type: $gameType");
     }
-
   }
 
   void handleClientRequestTeleport(Player player) {

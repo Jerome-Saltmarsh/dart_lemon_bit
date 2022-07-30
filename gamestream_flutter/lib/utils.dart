@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:intl/intl.dart';
 import 'package:lemon_engine/canvas.dart';
 import 'package:lemon_engine/engine.dart';
@@ -17,9 +16,6 @@ double getMouseRotation() {
 void snapToGrid(Vector2 value){
   value.x = (value.x - value.x % tileSize) + tileSizeHalf;
   value.y = value.y - value.y % tileSize;
-  if (value is GameObject){
-    value.refreshRowAndColumn();
-  }
 }
 
 void drawLine(double x1, double y1, double x2, double y2) {

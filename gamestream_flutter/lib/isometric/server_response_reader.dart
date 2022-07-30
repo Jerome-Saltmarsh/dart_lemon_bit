@@ -13,6 +13,7 @@ import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
+import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/io/custom_game_names.dart';
 import 'package:gamestream_flutter/isometric/npcs.dart';
@@ -35,7 +36,6 @@ import 'classes/npc_debug.dart';
 import 'classes/projectile.dart';
 import 'grid.dart';
 import 'items.dart';
-import 'particle_emitters.dart';
 import 'player.dart';
 import 'player_store.dart';
 import 'time.dart';
@@ -64,6 +64,7 @@ class ServerResponseReader with ByteReader {
     framesSinceUpdateReceived.value = 0;
     index = 0;
     totalCharacters = 0;
+    totalGameObjects = 0;
     bufferSize.value = values.length;
     this.values = values;
 
@@ -81,6 +82,12 @@ class ServerResponseReader with ByteReader {
           break;
         case ServerResponse.Character_Player:
           readCharacterPlayer();
+          break;
+        case ServerResponse.GameObject_Rock:
+          final gameObject = getInstanceGameObject();
+          gameObject.type = GameObjectType.Rock;
+          readVector3(gameObject);
+          totalGameObjects++;
           break;
         case ServerResponse.End:
           return readEnd();
@@ -138,12 +145,6 @@ class ServerResponseReader with ByteReader {
           break;
         case ServerResponse.Damage_Applied:
           readDamageApplied();
-          break;
-        case ServerResponse.Dynamic_Object_Destroyed:
-          readDynamicObjectDestroyed();
-          break;
-        case ServerResponse.Dynamic_Object_Spawned:
-          readDynamicObjectSpawned();
           break;
         case ServerResponse.Lives_Remaining:
           readLivesRemaining();
@@ -353,21 +354,6 @@ class ServerResponseReader with ByteReader {
 
   void readLivesRemaining() {
     modules.game.state.lives.value = readByte();
-  }
-
-  void readDynamicObjectSpawned() {
-    final instance = GameObject();
-    instance.type = readByte();
-    instance.x = readDouble();
-    instance.y = readDouble();
-    instance.id = readInt();
-    gameObjects.add(instance);
-    sortVertically(gameObjects);
-  }
-
-  void readDynamicObjectDestroyed() {
-    final id = readInt();
-    gameObjects.removeWhere((dynamicObject) => dynamicObject.id == id);
   }
 
   void readDamageApplied() {
@@ -660,25 +646,6 @@ class ServerResponseReader with ByteReader {
   void readPlayerEvents() {
     onPlayerEvent(readByte());
   }
-
-  void readGameObjects() {
-    gameObjects.clear();
-    while (true) {
-      final typeIndex = readByte();
-      if (typeIndex == END) break;
-      final instance = GameObject();
-      instance.type = typeIndex;
-      readPosition(instance);
-      // instance.id = readPositiveInt();
-      gameObjects.add(instance);
-      instance.refreshRowAndColumn();
-
-      if (typeIndex == GameObjectType.Fireplace) {
-        isometricParticleEmittersActionAddSmokeEmitter(instance.x, instance.y);
-      }
-    }
-  }
-
 
   void readPosition(Position position){
     position.x = readDouble();
