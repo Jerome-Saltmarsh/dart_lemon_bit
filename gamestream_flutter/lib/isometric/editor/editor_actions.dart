@@ -24,6 +24,7 @@ class EditorActions {
     edit.selectPlayerIfPlayerMode();
       if (GridNodeType.isRainOrEmpty(edit.currentType) ||
           GridNodeType.isGrassSlope(edit.currentType) ||
+          GridNodeType.isTree(edit.currentType) ||
           edit.currentType == GridNodeType.Grass_Long){
          edit.paintGrass();
       }

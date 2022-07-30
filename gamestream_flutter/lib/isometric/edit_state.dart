@@ -58,8 +58,22 @@ class EditState {
 
   void paintTree(){
     selectPlayerIfPlayerMode();
-    sendClientRequestSetBlock(row.value, column.value, z.value, GridNodeType.Tree_Bottom);
-    sendClientRequestSetBlock(row.value, column.value, z.value + 1, GridNodeType.Tree_Top);
+    var zz = z.value;
+    if (GridNodeType.isSolid(currentType)){
+        for (var i = 0; i < gridTotalZ - 1; i++){
+           if (GridNodeType.isSolid(grid[i][row.value][column.value])) continue;
+           zz = i;
+           break;
+        }
+    } else {
+      for (var i = zz - 1; i >= 0; i--){
+        if (!GridNodeType.isSolid(grid[i][row.value][column.value])) continue;
+        zz = i + 1;
+        break;
+      }
+    }
+    sendClientRequestSetBlock(row.value, column.value, zz, GridNodeType.Tree_Bottom);
+    sendClientRequestSetBlock(row.value, column.value, zz + 1, GridNodeType.Tree_Top);
   }
 
   void selectPlayerIfPlayerMode(){

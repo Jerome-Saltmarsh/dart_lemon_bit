@@ -170,6 +170,10 @@ class GridNodeType {
       value == Rain_Landing       ||
       value == Empty;
 
+  static bool isTree(int value) =>
+     value == Tree_Top            ||
+     value == Tree_Bottom         ;
+
   static bool isStairs(int value) =>
       value == Stairs_North       ||
       value == Stairs_East        ||
