@@ -41,6 +41,8 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
       return sendClientRequestCasteBasic();
     if (key == PhysicalKeyboardKey.digit6)
       return edit.paintTreeAtPlayer();
+    if (key == PhysicalKeyboardKey.digit7)
+      return edit.paintAtPlayerLongGrass();
   }
 
   // EDIT MODE
@@ -71,6 +73,8 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     return edit.paintTorch();
   if (key == PhysicalKeyboardKey.digit6)
     return edit.paintTree();
+  if (key == PhysicalKeyboardKey.digit7)
+    return edit.paintLongGrass();
   if (key == PhysicalKeyboardKey.arrowUp) {
     if (shiftLeftDown) {
       edit.z.value++;

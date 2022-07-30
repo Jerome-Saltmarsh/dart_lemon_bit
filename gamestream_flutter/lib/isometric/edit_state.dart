@@ -60,9 +60,17 @@ class EditState {
     sendClientRequestSetBlock(row.value, column.value, z.value + 1, GridNodeType.Tree_Top);
   }
 
+  void paintLongGrass(){
+    paint(GridNodeType.Grass_Long);
+  }
+
   void paintTreeAtPlayer(){
     sendClientRequestSetBlock(player.indexRow, player.indexColumn, player.indexZ, GridNodeType.Tree_Bottom);
     sendClientRequestSetBlock(player.indexRow, player.indexColumn, player.indexZ + 1, GridNodeType.Tree_Top);
+  }
+
+  void paintAtPlayerLongGrass(){
+    sendClientRequestSetBlock(player.indexRow, player.indexColumn, player.indexZ, GridNodeType.Grass_Long);
   }
 
   void paintBricks(){
