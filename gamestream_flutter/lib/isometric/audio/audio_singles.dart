@@ -23,6 +23,7 @@ final audioSingleZombieDeaths = [
 ];
 
 final audioSingleMaleHello = AudioSingle(name: 'male-hello-1', volume: 0.5, maxDistance: 400);
+final audioSingleRooster = AudioSingle(name: 'rooster', volume: 0.5, maxDistance: 400);
 final audioSingleChanging = AudioSingle(name: 'change-cloths', volume: 0.5, maxDistance: 80);
 final audioSingleDrawSword = AudioSingle(name: 'draw-sword', volume: 0.5, maxDistance: 250);
 final audioSingleClickSound = AudioSingle(name: 'click-sound-8', volume: 0.5, maxDistance: 250);

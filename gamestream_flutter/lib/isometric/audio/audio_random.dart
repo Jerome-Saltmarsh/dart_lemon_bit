@@ -1,4 +1,5 @@
 import 'package:bleed_common/Shade.dart';
+import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
 import 'package:lemon_math/library.dart';
@@ -60,6 +61,10 @@ void playRandomAmbientSound(){
   if (shade == Shade.Pitch_Black || shade == Shade.Very_Dark){
     return playRandom(soundsNight);
   }
+  if (hour == 6 || hour == 7){
+    return audioSingleRooster.play(volume: 0.3);
+  }
+
   if (shade == Shade.Very_Bright) {
     return playRandom(soundsDay);
   }
