@@ -21,6 +21,7 @@ class EditorActions {
   }
 
   void raise(){
+    edit.selectPlayerIfPlayerMode();
       if (GridNodeType.isRainOrEmpty(edit.currentType) ||
           GridNodeType.isGrassSlope(edit.currentType) ||
           edit.currentType == GridNodeType.Grass_Long){

@@ -57,11 +57,13 @@ class EditState {
   }
 
   void paintTree(){
-    if (modeIsPlay){
-      selectPlayer();
-    }
+    selectPlayerIfPlayerMode();
     sendClientRequestSetBlock(row.value, column.value, z.value, GridNodeType.Tree_Bottom);
     sendClientRequestSetBlock(row.value, column.value, z.value + 1, GridNodeType.Tree_Top);
+  }
+
+  void selectPlayerIfPlayerMode(){
+    if (modeIsPlay) selectPlayer();
   }
 
   void paintLongGrass(){

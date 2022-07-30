@@ -32,6 +32,8 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     return edit.paintTree();
   if (key == PhysicalKeyboardKey.digit7)
     return edit.paintLongGrass();
+  if (key == PhysicalKeyboardKey.keyU)
+    return editor.actions.raise();
 
   if (modeIsPlay) {
     if (key == PhysicalKeyboardKey.keyG)
@@ -56,8 +58,6 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
   }
   if (key == PhysicalKeyboardKey.keyY)
     return editor.actions.elevate();
-  if (key == PhysicalKeyboardKey.keyU)
-    return editor.actions.raise();
   if (key == PhysicalKeyboardKey.keyH)
     return editor.actions.lower();
   if (key == PhysicalKeyboardKey.keyC)
