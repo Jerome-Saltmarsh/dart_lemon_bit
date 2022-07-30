@@ -7,7 +7,6 @@ import 'package:lemon_engine/canvas.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_math/library.dart';
-import 'package:universal_html/html.dart';
 
 import 'isometric/player.dart';
 
@@ -37,10 +36,6 @@ void copy(String value){
 
 void openLink(String value, {bool newTab = true}){
   // html.window.open(value, 'new tab');
-}
-
-void refreshPage(){
-  document.window!.location.href = document.domain!;
 }
 
 final _dateFormat = DateFormat(DateFormat.YEAR_MONTH_DAY);
