@@ -270,6 +270,10 @@ class Scene {
       return (y % tileSize) < tileSizeHalf ||  (x % tileSize) > tileSizeHalf;
     }
 
+    if (type == GridNodeType.Grass_Slope_Top) {
+
+    }
+
     if (GridNodeType.isStairs(type)){
       return getHeightAt(x, y, z) > z;
     }

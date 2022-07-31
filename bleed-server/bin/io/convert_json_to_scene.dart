@@ -18,7 +18,6 @@ Scene convertJsonToScene(Json json, String name) {
   );
 }
 
-
 List<List<List<int>>> convertFlatGridToGrid(List<dynamic> flatGrid, int height, int rows, int columns){
   final List<List<List<int>>> grid = [];
   var index = 0;
