@@ -274,7 +274,7 @@ class RenderOrderGrid extends RenderOrder {
   @override
   void updateFunction() {
     nextGridNode();
-    while (node.type == GridNodeType.Empty) {
+    while (!node.renderable) {
       index = _index + 1;
       if (!remaining) return;
       nextGridNode();

@@ -31,6 +31,7 @@ abstract class Node {
 
   int get type;
   bool get isEmpty => false;
+  bool get renderable => true;
 
   static final boundary = NodeBoundary();
   static final empty = NodeEmpty();
@@ -102,6 +103,9 @@ class NodeEmpty extends Node {
   void handleRender() {
 
   }
+
+  @override
+  bool get renderable => true;
 
   @override
   int get type => GridNodeType.Empty;
