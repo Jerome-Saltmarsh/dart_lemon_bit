@@ -391,18 +391,8 @@ class GridNodeRoofTileStairsEast extends GridNodeBasic {
   double get srcX => 7542;
 }
 
-class GridNodeBrickTop extends GridNodeBasic {
-  GridNodeBrickTop(int row, int column, int z) : super(row: row, column: column, z: z);
-
-  @override
-  int get type => GridNodeType.Brick_Top;
-
-  @override
-  double get srcX => 8621;
-}
-
-class GidNodeTypeWoodHalfRow1 extends GridNodeBasic {
-  GidNodeTypeWoodHalfRow1(int row, int column, int z) : super(row: row, column: column, z: z);
+class NodeWoodHalfRow1 extends GridNodeBasic {
+  NodeWoodHalfRow1(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
   int get type => GridNodeType.Wood_Half_Row_1;
@@ -411,8 +401,8 @@ class GidNodeTypeWoodHalfRow1 extends GridNodeBasic {
   double get srcX => 8935;
 }
 
-class GidNodeTypeWoodHalfRow2 extends GridNodeBasic {
-  GidNodeTypeWoodHalfRow2(int row, int column, int z) : super(row: row, column: column, z: z);
+class NodeWoodHalfRow2 extends GridNodeBasic {
+  NodeWoodHalfRow2(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
   int get type => GridNodeType.Wood_Half_Row_1;
@@ -431,8 +421,8 @@ class GidNodeTypeWoodHalfColumn1 extends GridNodeBasic {
   double get srcX => 8983;
 }
 
-class GidNodeTypeWoodHalfColumn2 extends GridNodeBasic {
-  GidNodeTypeWoodHalfColumn2(int row, int column, int z) : super(row: row, column: column, z: z);
+class NodeWoodHalfColumn2 extends GridNodeBasic {
+  NodeWoodHalfColumn2(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
   int get type => GridNodeType.Wood_Half_Column_2;
@@ -675,4 +665,34 @@ class NodeStairsWest extends GridNodeBasic {
 
   @override
   double get srcX => 7446;
+}
+
+class NodeBrickTop extends GridNodeBasic {
+  NodeBrickTop(int row, int column, int z) : super(row: row, column: column, z: z);
+
+  @override
+  int get type => GridNodeType.Brick_Top;
+
+  @override
+  double get srcX => 8621;
+}
+
+class NodeTileNorth extends GridNodeBasic {
+  NodeTileNorth(int row, int column, int z) : super(row: row, column: column, z: z);
+
+  @override
+  int get type => GridNodeType.Roof_Tile_North;
+
+  @override
+  double get srcX => 9415;
+}
+
+class NodeTileSouth extends GridNodeBasic {
+  NodeTileSouth(int row, int column, int z) : super(row: row, column: column, z: z);
+
+  @override
+  int get type => GridNodeType.Roof_Tile_South;
+
+  @override
+  double get srcX => 9463;
 }

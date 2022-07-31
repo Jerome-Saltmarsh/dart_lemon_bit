@@ -72,13 +72,19 @@ Node generateNode(int z, int row, int column, int type){
     case GridNodeType.Stairs_West:
       return NodeStairsWest(row, column, z);
     case GridNodeType.Wood_Half_Column_1:
-      return GidNodeTypeWoodHalfColumn2(row, column, z);
+      return NodeWoodHalfColumn2(row, column, z);
     case GridNodeType.Wood_Half_Column_2:
-      return GidNodeTypeWoodHalfColumn2(row, column, z);
+      return NodeWoodHalfColumn2(row, column, z);
     case GridNodeType.Wood_Half_Row_1:
-      return GidNodeTypeWoodHalfRow1(row, column, z);
+      return NodeWoodHalfRow1(row, column, z);
     case GridNodeType.Wood_Half_Row_2:
-      return GidNodeTypeWoodHalfRow2(row, column, z);
+      return NodeWoodHalfRow2(row, column, z);
+    case GridNodeType.Brick_Top:
+      return NodeBrickTop(row, column, z);
+    case GridNodeType.Roof_Tile_North:
+      return NodeTileNorth(row, column, z);
+    case GridNodeType.Roof_Tile_South:
+      return NodeTileSouth(row, column, z);
     default:
       throw Exception("Cannot build grid node type $type (${GridNodeType.getName(type)}");
   }
