@@ -32,6 +32,7 @@ abstract class Node {
   int get type;
   bool get isEmpty => false;
   bool get renderable => true;
+  bool get blocksPerception => true;
 
   static final boundary = NodeBoundary();
   static final empty = NodeEmpty();
@@ -87,6 +88,8 @@ abstract class Node {
 class NodeBoundary extends Node {
   NodeBoundary() : super(0, 0, 0);
 
+
+
   @override
   void handleRender() {
      throw Exception("Cannot render boundary");
@@ -94,6 +97,9 @@ class NodeBoundary extends Node {
 
   @override
   int get type => GridNodeType.Boundary;
+
+  @override
+  bool get blocksPerception => false;
 }
 
 class NodeEmpty extends Node {
@@ -103,6 +109,9 @@ class NodeEmpty extends Node {
   void handleRender() {
 
   }
+
+  @override
+  bool get blocksPerception => false;
 
   @override
   bool get renderable => true;
@@ -249,6 +258,9 @@ class NodeGrassLong extends Node {
   }
 
   @override
+  bool get blocksPerception => false;
+
+  @override
   void handleRender() {
     switch (wind) {
       case windIndexCalm:
@@ -266,6 +278,9 @@ class NodeGrassLong extends Node {
 
 class NodeRainFalling extends Node {
   NodeRainFalling(int row, int column, int z) : super(row, column, z);
+
+  @override
+  bool get blocksPerception => false;
 
   @override
   void handleRender() {
@@ -290,6 +305,9 @@ class NodeRainFalling extends Node {
 class NodeRainLanding extends Node {
 
   NodeRainLanding(int row, int column, int z) : super(row, column, z);
+
+  @override
+  bool get blocksPerception => false;
 
   @override
   void handleRender() {
@@ -540,6 +558,9 @@ class NodeTreeBottom extends Node {
   NodeTreeBottom(int row, int column, int z) : super(row, column, z);
 
   @override
+  bool get blocksPerception => false;
+
+  @override
   void handleRender() {
     return render(
       dstX: dstX,
@@ -562,6 +583,9 @@ class NodeTreeTop extends Node {
   NodeTreeTop(int row, int column, int z) : super(row, column, z) {
     rowMinusColumn = row - column;
   }
+
+  @override
+  bool get blocksPerception => false;
 
   @override
   void handleRender() {

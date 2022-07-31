@@ -218,12 +218,7 @@ bool gridIsPerceptible(int zIndex, int row, int column){
     column++;
     if (row >= gridTotalRows) break;
     if (column >= gridTotalColumns) break;
-    final type = grid[z][row][column];
-    if (type != GridNodeType.Empty &&
-        type != GridNodeType.Tree_Top &&
-        type != GridNodeType.Rain_Falling &&
-        type != GridNodeType.Rain_Landing
-    ) return false;
+    if (grid[z][row][column].blocksPerception) return false;
   }
   return true;
 }
