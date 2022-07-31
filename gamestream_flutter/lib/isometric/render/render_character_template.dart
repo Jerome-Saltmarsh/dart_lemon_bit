@@ -1,6 +1,5 @@
 
 import 'package:bleed_common/library.dart';
-
 import 'package:lemon_engine/render.dart';
 
 import '../classes/character.dart';

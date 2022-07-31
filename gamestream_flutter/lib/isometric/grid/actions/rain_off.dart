@@ -1,6 +1,7 @@
 
 
 import 'package:bleed_common/grid_node_type.dart';
+import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 
 void apiGridActionRainOff(){
@@ -12,5 +13,5 @@ void apiGridActionRainOff(){
 
 
 void assignEmpty(int z, int row, int column, int type){
-  grid[z][row][column] = GridNodeType.Empty;
+  grid[z][row][column] = Node.empty;
 }

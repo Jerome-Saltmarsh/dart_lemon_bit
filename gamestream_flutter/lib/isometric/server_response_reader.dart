@@ -12,6 +12,7 @@ import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event.dart';
+import 'package:gamestream_flutter/isometric/factories/generate_grid_node.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
@@ -19,9 +20,9 @@ import 'package:gamestream_flutter/isometric/io/custom_game_names.dart';
 import 'package:gamestream_flutter/isometric/npcs.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
+import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
-import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_byte/byte_reader.dart';
@@ -32,6 +33,7 @@ import 'package:lemon_watch/watch.dart';
 
 import 'ai.dart';
 import 'camera.dart';
+import 'classes/node.dart';
 import 'classes/npc_debug.dart';
 import 'classes/projectile.dart';
 import 'grid.dart';
@@ -334,7 +336,7 @@ class ServerResponseReader with ByteReader {
     final row = readInt();
     final column = readInt();
     final type = readInt();
-    grid[z][row][column] = type;
+    grid[z][row][column] = generateNode(z, row, column, type);
     edit.refreshType();
     onGridChanged();
   }
@@ -452,13 +454,14 @@ class ServerResponseReader with ByteReader {
     final totalColumns = readInt();
     grid.clear();
     for (var z = 0; z < totalZ; z++) {
-      final plain = <List<int>>[];
+      final plain = <List<Node>>[];
       grid.add(plain);
       for (var rowIndex = 0; rowIndex < totalRows; rowIndex++) {
-        final row = <int>[];
+        final row = <Node>[];
         plain.add(row);
         for (var columnIndex = 0; columnIndex < totalColumns; columnIndex++) {
-          row.add(readByte());
+          final type = readByte();
+          row.add(generateNode(z, rowIndex, columnIndex, type));
         }
       }
     }

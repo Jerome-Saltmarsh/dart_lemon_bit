@@ -1,13 +1,14 @@
 import 'dart:math';
 
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_off.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_on.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:gamestream_flutter/isometric/particle_emitters.dart';
-import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
+import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -18,10 +19,9 @@ final gridShadows = Watch(true, onChanged: (bool value){
   apiGridActionRefreshLighting();
 });
 
-final grid = <List<List<int>>>[];
-final gridVisible = <List<List<bool>>>[];
-final gridLightBake = <List<List<int>>>[];
-final gridLightDynamic = <List<List<int>>>[];
+final grid = <List<List<Node>>>[];
+// final gridLightBake = <List<List<int>>>[];
+// final gridLightDynamic = <List<List<int>>>[];
 var gridTotalZ = 0;
 final gridTotalZWatch = Watch(0);
 var gridTotalRows = 0;
@@ -39,8 +39,7 @@ void actionSetAmbientShadeToHour(){
 }
 
 void gridEmitDynamic(int z, int row, int column, {required int maxBrightness, int radius = 5}){
-  _applyEmission(
-      map: gridLightDynamic,
+  applyEmissionDynamic(
       zIndex: z,
       rowIndex: row,
       columnIndex: column,
@@ -81,7 +80,7 @@ void gridForEachOfType(
       for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
         final t = rowValues[columnIndex];
         if (t != type) continue;
-        handler(zIndex, rowIndex, columnIndex, t);
+        handler(zIndex, rowIndex, columnIndex, t.type);
       }
     }
   }
@@ -96,7 +95,7 @@ void gridForEach({
     for (var rowIndex = 0; rowIndex < gridTotalRows; rowIndex++) {
       final rowValues = zValues[rowIndex];
       for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
-        final t = rowValues[columnIndex];
+        final t = rowValues[columnIndex].type;
         if (!where(t)) continue;
         apply(zIndex, rowIndex, columnIndex, t);
       }
@@ -114,10 +113,7 @@ void gridForEachNode(Function(int z, int row, int column) apply) {
   }
 }
 
-
 void apiGridActionRefreshLighting(){
-  _setLightMapValue(gridLightBake, ambientShade.value);
-  _setLightMapValue(gridLightDynamic, ambientShade.value);
   if (gridShadows.value){
     _applyShadows();
   }
@@ -146,7 +142,7 @@ void _applyShadowAt({
     for (var row = 0; row < gridTotalRows; row++){
       for (var column = 0; column < gridTotalColumns; column++){
         final tile = grid[z][row][column];
-        if (!_castesShadow(tile)) continue;
+        if (!_castesShadow(tile.type)) continue;
         var projectionZ = z + directionZ;
         var projectionRow = row + directionRow;
         var projectionColumn = column + directionColumn;
@@ -158,10 +154,10 @@ void _applyShadowAt({
             projectionRow < gridTotalRows &&
             projectionColumn < gridTotalColumns
         ) {
-          final shade = gridLightBake[projectionZ][projectionRow][projectionColumn];
+          final shade = grid[projectionZ][projectionRow][projectionColumn].bake;
           if (shade < shadowShade){
-            if (isEmpty(grid[projectionZ + 1][projectionRow][projectionColumn])){
-              gridLightBake[projectionZ][projectionRow][projectionColumn] = shadowShade;
+            if (grid[projectionZ + 1][projectionRow][projectionColumn].isEmpty){
+              grid[projectionZ][projectionRow][projectionColumn].bake = shadowShade;
             }
           }
           // final type = grid[projectionZ][projectionRow][projectionColumn];
@@ -191,9 +187,9 @@ bool _castesShadow(int type){
   ].contains(type);
 }
 
-bool isEmpty(int type){
-  return type == GridNodeType.Empty || type == GridNodeType.Rain_Falling || type == GridNodeType.Rain_Landing;
-}
+// bool isEmpty(int type){
+//   return type == GridNodeType.Empty || type == GridNodeType.Rain_Falling || type == GridNodeType.Rain_Landing;
+// }
 
 bool gridIsUnderSomething(int z, int row, int column){
   for (var zIndex = z + 1; zIndex < gridTotalZ; zIndex++){
@@ -228,45 +224,14 @@ void refreshGridMetrics(){
   gridZLength = gridTotalZ * tileHeight;
 }
 
-void _setLightMapValue(List<List<List<int>>> map, int value){
-  if (
-      map.length != gridTotalZ ||
-      map[0].length != gridTotalRows ||
-      map[0][0].length != gridTotalColumns
-  ){
-    map.clear();
-    for (var zIndex = 0; zIndex < gridTotalZ; zIndex++) {
-      final plain = <List<int>>[];
-      map.add(plain);
-      for (var rowIndex = 0; rowIndex < gridTotalRows; rowIndex++) {
-        final row = <int> [];
-        plain.add(row);
-        for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
-          row.add(value);
-        }
-      }
-    }
-    return;
-  }
-
-  for (var zIndex = 0; zIndex < gridTotalZ; zIndex++) {
-    for (var rowIndex = 0; rowIndex < gridTotalRows; rowIndex++) {
-      for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
-        map[zIndex][rowIndex][columnIndex] = value;
-      }
-    }
-  }
-}
-
 void _applyBakeMapEmissions() {
   for (var zIndex = 0; zIndex < gridTotalZ; zIndex++) {
     for (var rowIndex = 0; rowIndex < gridTotalRows; rowIndex++) {
       for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
         final type = grid[zIndex][rowIndex][columnIndex];
         if (!const [GridNodeType.Torch, GridNodeType.Player_Spawn, GridNodeType.Fireplace].contains(type)) continue;
-        if (gridLightBake[zIndex][rowIndex][columnIndex] <= Shade.Very_Bright) continue;
-        _applyEmission(
-          map: gridLightBake,
+        if (type.shade <= Shade.Very_Bright) continue;
+        applyEmissionBake(
           zIndex: zIndex,
           rowIndex: rowIndex,
           columnIndex: columnIndex,
@@ -278,9 +243,7 @@ void _applyBakeMapEmissions() {
   }
 }
 
-
-void _applyEmission({
-  required List<List<List<int>>> map,
+void applyEmissionBake({
   required int zIndex,
   required int rowIndex,
   required int columnIndex,
@@ -297,7 +260,8 @@ void _applyEmission({
   for (var z = zMin; z < zMax; z++){
     for (var row = rowMin; row < rowMax; row++){
       for (var column = columnMin; column < columnMax; column++) {
-        final currentValue = map[z][row][column];
+        final gridNode = grid[z][row][column];
+        final currentValue = gridNode.bake;
         var distance = 0;
         if (lightModeRadial.value){
           distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
@@ -315,12 +279,54 @@ void _applyEmission({
         }
         final distanceValue = _convertDistanceToShade(distance, maxBrightness: maxBrightness);
         if (distanceValue >= currentValue) continue;
-        map[z][row][column] = distanceValue;
+        gridNode.bake = distanceValue;
       }
     }
   }
 }
 
+
+void applyEmissionDynamic({
+  required int zIndex,
+  required int rowIndex,
+  required int columnIndex,
+  required int maxBrightness,
+  int radius = 5,
+}){
+  final zMin = max(zIndex - radius, 0);
+  final zMax = min(zIndex + radius, gridTotalZ);
+  final rowMin = max(rowIndex - radius, 0);
+  final rowMax = min(rowIndex + radius, gridTotalRows);
+  final columnMin = max(columnIndex - radius, 0);
+  final columnMax = min(columnIndex + radius, gridTotalColumns);
+
+  for (var z = zMin; z < zMax; z++){
+    for (var row = rowMin; row < rowMax; row++){
+      for (var column = columnMin; column < columnMax; column++) {
+        final gridNode = grid[z][row][column];
+        final currentValue = gridNode.shade;
+        var distance = 0;
+        if (lightModeRadial.value){
+          distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
+        } else {
+          final distanceZ = (z - zIndex).abs();
+          final distanceRow = (row - rowIndex).abs();
+          final distanceColumn = (column - columnIndex).abs();
+          distance = distanceZ;
+          if (distanceRow > distanceZ){
+            distance = distanceRow;
+          }
+          if (distanceColumn > distance){
+            distance = distanceColumn;
+          }
+        }
+        final distanceValue = _convertDistanceToShade(distance, maxBrightness: maxBrightness);
+        if (distanceValue >= currentValue) continue;
+        gridNode.shade = distanceValue;
+      }
+    }
+  }
+}
 
 int _convertDistanceToShade(int distance, {int maxBrightness = Shade.Very_Bright}){
    if (distance > Shade.Pitch_Black + 2) {
@@ -331,19 +337,16 @@ int _convertDistanceToShade(int distance, {int maxBrightness = Shade.Very_Bright
 }
 
 
-int getGridTypeAtXYZ(double x, double y, double z){
+Node getGridTypeAtXYZ(double x, double y, double z){
    final plain = z ~/ tileSizeHalf;
+   if (plain < 0) return Node.boundary;
+   if (plain >= gridTotalZ) return Node.boundary;
    final row = x ~/ tileSize;
+   if (row < 0) return Node.boundary;
+   if (row >= gridTotalRows) return Node.boundary;
    final column = y ~/ tileSize;
-
-   if (plain < 0) return GridNodeType.Boundary;
-   if (row < 0) return GridNodeType.Boundary;
-   if (column < 0) return GridNodeType.Boundary;
-
-   if (plain >= gridTotalZ) return GridNodeType.Boundary;
-   if (row >= gridTotalRows) return GridNodeType.Boundary;
-   if (column >= gridTotalColumns) return GridNodeType.Boundary;
-
+   if (column < 0) return Node.boundary;
+   if (column >= gridTotalColumns) return Node.boundary;
    return grid[plain][row][column];
 }
 

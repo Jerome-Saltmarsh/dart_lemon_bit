@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/isometric/events/on_changed_player_alive.dart
 import 'package:gamestream_flutter/isometric/events/on_changed_player_designed.dart';
 import 'package:gamestream_flutter/isometric/events/on_quests_in_progress_changed.dart';
 import 'package:lemon_watch/watch.dart';
+
 import '../events/on_changed_npc_talk.dart';
 import '../events/on_changed_player_state.dart';
 import '../events/on_changed_player_weapon.dart';
@@ -24,7 +25,6 @@ class Player extends Vector3 {
   var abilityRange = 0.0;
   var abilityRadius = 0.0;
   var maxHealth = 0.0;
-  var tile = Tile.Grass;
   var attackRange = 0.0;
   final mapTile = Watch(0, onChanged: onMapTileChanged);
   var interactingNpcName = Watch<String?>(null, onChanged: onChangedNpcTalk);

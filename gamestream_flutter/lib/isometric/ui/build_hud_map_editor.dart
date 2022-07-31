@@ -1,6 +1,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
@@ -8,11 +9,11 @@ import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
-import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
-import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 import 'package:gamestream_flutter/isometric/watches/lightning.dart';
+import 'package:gamestream_flutter/isometric/watches/rain.dart';
+import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
@@ -126,25 +127,6 @@ Widget buildControlWind(){
       ],
     );
   });
-}
-
-Widget buildWatchEnemySpawn() {
-  return watch(edit.type, (int type){
-          if (type != GridNodeType.Enemy_Spawn) return const SizedBox();
-          return Container(
-            color: Colors.grey,
-            padding: EdgeInsets.all(8),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                text("ENEMY SPAWN"),
-                text("Amount"),
-                text("Health"),
-              ],
-            ),
-          );
-        });
 }
 
 Widget buildToggleShadows() {
@@ -359,7 +341,7 @@ Widget buildButtonSpawnZombie(){
 }
 
 Widget buildButtonSelectGridNodeType(int value) {
-  return WatchBuilder(edit.type, (int type) {
+  return WatchBuilder(edit.type, (Node type) {
         return container(
             child: GridNodeType.getName(value),
             action: () {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/control/classes/authentication.dart';
 import 'package:gamestream_flutter/colours.dart';
+import 'package:gamestream_flutter/control/classes/authentication.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/modules/modules.dart';

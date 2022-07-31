@@ -1,6 +1,6 @@
 
-import 'package:lemon_math/library.dart';
 import 'package:gamestream_flutter/isometric/classes/floating_text.dart';
+import 'package:lemon_math/library.dart';
 
 final floatingTexts = <FloatingText>[];
 

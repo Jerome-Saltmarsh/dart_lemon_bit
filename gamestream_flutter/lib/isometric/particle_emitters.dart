@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/classes/particle_emitter.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:lemon_math/library.dart';
+
 import 'particles.dart';
 
 final particleEmitters = <ParticleEmitter>[];

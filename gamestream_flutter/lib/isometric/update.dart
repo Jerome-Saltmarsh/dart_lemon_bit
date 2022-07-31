@@ -41,23 +41,20 @@ void applyObjectsToWind(){
 }
 
 void applyWindFromProjectile(Projectile projectile){
-    final z = projectile.indexZ;
-    final row = projectile.indexRow;
-    final column = projectile.indexColumn;
-
-    gridWind[z][row][column]++;
-    if (z > 0){
-      gridWind[z - 1][row][column]++;
-    }
+    // final z = projectile.indexZ;
+    // final row = projectile.indexRow;
+    // final column = projectile.indexColumn;
+    projectile.tile.wind++;
+    projectile.tileAbove.wind++;
+    // if (z > 0){
+      // gridWind[z - 1][row][column]++;
+    // }
 }
 
 void applyCharacterToWind(Character character){
-   if (character.running || character.performing){
-      final z = character.indexZ;
-      gridWind[z][character.indexRow][character.indexColumn]++;
-      if (z > 0){
-          gridWind[z - 1][character.indexRow][character.indexColumn]++;
-      }
+   if (character.running || character.performing) {
+     character.tile.wind++;
+     character.tileAbove.wind++;
    }
 }
 

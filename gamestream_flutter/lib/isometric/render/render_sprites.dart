@@ -1,28 +1,30 @@
 import 'dart:math';
+
 import 'package:bleed_common/character_type.dart';
+import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
+import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
+import 'package:gamestream_flutter/isometric/classes/node.dart';
+import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emissions_npcs.dart';
-import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
-import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
-import 'package:gamestream_flutter/isometric/render/render_game_object.dart';
-import 'package:lemon_engine/screen.dart';
-import 'package:lemon_math/library.dart';
-import 'package:lemon_watch/watch.dart';
-import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/isometric/classes/character.dart';
-import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_particle_emissions.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
-import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
+import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_zombie.dart';
+import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
+import 'package:gamestream_flutter/isometric/render/render_game_object.dart';
+import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/screen.dart';
+import 'package:lemon_math/library.dart';
+import 'package:lemon_watch/watch.dart';
 
 import '../classes/particle.dart';
 import '../grid.dart';
@@ -221,15 +223,14 @@ class RenderOrderGrid extends RenderOrder {
   var gridZ = 0;
   var gridColumn = 0;
   var gridRow = 0;
-  var gridType = 0;
+  late Node gridType;
   var maxColumnRow = 0;
   var minColumnRow = 0;
   var screenTopLeftRow = 0;
   var screenBottomRightRow = 0;
   var gridTotalColumnsMinusOne = 0;
   var gridZHalf = 0;
-  late List<List<int>> plain;
-  late List<List<int>> shadePlain;
+  late List<List<Node>> plain;
 
   var playerColumnRow = 0;
   var playerUnderRoof = false;
@@ -266,14 +267,16 @@ class RenderOrderGrid extends RenderOrder {
         }
       }
     }
-    renderGridNode(
-        gridZ,
-        gridRow,
-        gridColumn,
-        gridType,
-        dstY,
-        shadePlain[gridRow][gridColumn],
-    );
+
+    gridType.performRender();
+    // renderGridNode(
+    //     gridZ,
+    //     gridRow,
+    //     gridColumn,
+    //     gridType,
+    //     dstY,
+    //     shadePlain[gridRow][gridColumn],
+    // );
   }
 
   @override
@@ -302,8 +305,6 @@ class RenderOrderGrid extends RenderOrder {
     gridZHalf = 0;
     dstY = 0;
     plain = grid[gridZ];
-    shadePlain = gridLightDynamic[gridZ];
-    gridType = 0;
     gridTotalColumnsMinusOne = gridTotalColumns - 1;
     playerZ = player.indexZ;
     playerRow = player.indexRow;
@@ -362,41 +363,15 @@ class RenderOrderGrid extends RenderOrder {
 
     assert(gridRow >= 0);
     assert(gridColumn >= 0);
-    assert(gridRow < gridTotalColumns);
+    assert(gridRow < gridTotalRows);
     assert(gridColumn < gridTotalColumns);
-    // recalculateMaxRow();
-    refreshDynamicLightGrid();
-
     super.reset();
-  }
-
-  void refreshDynamicLightGrid(){
-    final bottom = screen.bottom + tileHeight;
-    for (var z = 0; z < gridTotalZ; z++) {
-      final dynamicPlain = gridLightDynamic[z];
-      final bakePlain = gridLightBake[z];
-      final zLength = z * tileSize;
-      final minRow = convertWorldToRowSafe(screenLeft, screenTop, zLength);
-      final maxRow = convertWorldToRowSafe(screenRight, bottom, zLength);
-      final minColumn = convertWorldToColumnSafe(screenRight, screenTop, zLength);
-      final maxColumn = convertWorldToColumnSafe(screenLeft, bottom, zLength);
-      final max = maxRow + maxColumn;
-      for (var rowIndex = minRow; rowIndex <= maxRow; rowIndex++) {
-        final dynamicRow = dynamicPlain[rowIndex];
-        final bakeRow = bakePlain[rowIndex];
-        for (var columnIndex = minColumn; columnIndex <= maxColumn; columnIndex++) {
-          if (columnIndex + rowIndex > max) break;
-          dynamicRow[columnIndex] = bakeRow[columnIndex];
-        }
-      }
-    }
   }
 
   void onZChanged(){
     minColumn = convertWorldToColumnSafe(screenRight, screenTop, gridZ * tileSize);
     maxRow = convertWorldToRowSafe(screenRight, screenBottom, gridZ * tileSize);
     plain = grid[gridZ];
-    shadePlain = gridLightDynamic[gridZ];
   }
 
   void nextGridNode(){

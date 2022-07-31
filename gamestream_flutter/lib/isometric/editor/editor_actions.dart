@@ -13,18 +13,18 @@ class EditorActions {
   }
 
   void elevate(){
-    final r = edit.row.value;
-    final c = edit.column.value;
+    // final r = edit.row.value;
+    // final c = edit.column.value;
     for (var z = gridTotalZ - 2; z >= 0; z--) {
-      sendClientRequestSetBlock(r, c, z + 1, grid[z][r][c]);
+      // sendClientRequestSetBlock(r, c, z + 1, grid[z][r][c]);
     }
   }
 
   void raise(){
     edit.selectPlayerIfPlayerMode();
-      if (GridNodeType.isRainOrEmpty(edit.currentType) ||
-          GridNodeType.isGrassSlope(edit.currentType) ||
-          GridNodeType.isTree(edit.currentType) ||
+      if (GridNodeType.isRainOrEmpty(edit.currentType.type) ||
+          GridNodeType.isGrassSlope(edit.currentType.type) ||
+          GridNodeType.isTree(edit.currentType.type) ||
           edit.currentType == GridNodeType.Grass_Long){
          edit.paintGrass();
       }
@@ -43,12 +43,12 @@ class EditorActions {
   }
 
   void lower(){
-    final r = edit.row.value;
-    final c = edit.column.value;
-    for (var z = 1 ; z < gridTotalZ; z++) {
-      sendClientRequestSetBlock(r, c, z, grid[z + 1][r][c]);
-    }
-    sendClientRequestSetBlock(r, c, gridTotalZ -1, GridNodeType.Empty);
+    // final r = edit.row.value;
+    // final c = edit.column.value;
+    // for (var z = 1 ; z < gridTotalZ; z++) {
+    //   sendClientRequestSetBlock(r, c, z, grid[z + 1][r][c]);
+    // }
+    // sendClientRequestSetBlock(r, c, gridTotalZ -1, GridNodeType.Empty);
   }
 
   void clear(){

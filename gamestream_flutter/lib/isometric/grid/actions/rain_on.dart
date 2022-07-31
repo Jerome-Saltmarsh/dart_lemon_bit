@@ -7,17 +7,17 @@ void apiGridActionRainOn(){
     for (var column = 0; column < gridTotalColumns; column++) {
       for (var z = gridTotalZ - 1; z >= 0; z--) {
         final type = grid[z][row][column];
-        if (!isEmpty(type)) {
+        if (!type.isEmpty) {
           if (type == GridNodeType.Torch) break;
           if (type == GridNodeType.Tree_Top) break;
           setGridType(z + 1, row, column, GridNodeType.Rain_Landing);
           setGridType(z + 2, row, column, GridNodeType.Rain_Falling);
           break;
         } else {
-          if (column == 0 || !isEmpty(grid[z][row][column - 1])){
+          if (column == 0 || !grid[z][row][column - 1].isEmpty){
             setGridType(z, row, column, GridNodeType.Rain_Falling);
           } else
-          if (row == 0 || !isEmpty(grid[z][row - 1][column])){
+          if (row == 0 || !grid[z][row - 1][column].isEmpty){
             setGridType(z, row, column, GridNodeType.Rain_Falling);
           }
         }

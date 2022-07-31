@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
-import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:lemon_math/library.dart';
 
 class Vector3 with Position {
@@ -13,12 +13,12 @@ class Vector3 with Position {
   int get indexRow => x ~/ tileSize;
   int get indexColumn => y ~/ tileSize;
   double get renderOrder => x + y;
-  int get tile => grid[indexZ][indexRow][indexColumn];
-  int get tileSafe => getGridTypeAtXYZ(x, y, z);
-  int get tileBelow => indexZ == 0 ? GridNodeType.Boundary : grid[indexZ - 1][indexRow][indexColumn];
-  int get tileAbove => indexZ < gridTotalZ - 1 ? GridNodeType.Boundary : grid[indexZ + 1][indexRow][indexColumn];
-  int get shade => gridLightDynamic[z >= tileSizeHalf ? indexZ - 1 : 0][indexRow][indexColumn];
-  int get wind => gridWind[z >= tileSizeHalf ? indexZ - 1 : 0][indexRow][indexColumn];
+  Node get tile => grid[indexZ][indexRow][indexColumn];
+  Node get tileSafe => getGridTypeAtXYZ(x, y, z);
+  Node get tileBelow => indexZ == 0 ? Node.boundary : grid[indexZ - 1][indexRow][indexColumn];
+  Node get tileAbove => indexZ < gridTotalZ - 1 ? Node.boundary : grid[indexZ + 1][indexRow][indexColumn];
+  int get shade => tile.shade;
+  int get wind => tile.wind;
 
   double get renderX => (x - y) * 0.5;
   double get renderY => ((y + x) * 0.5) - z;

@@ -26,8 +26,8 @@ import 'package:lemon_engine/actions.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../isometric/ui/build_hud.dart';
-import '../styles.dart';
 import '../network/web_socket.dart';
+import '../styles.dart';
 import 'build.dart';
 
 final nameController = TextEditingController();

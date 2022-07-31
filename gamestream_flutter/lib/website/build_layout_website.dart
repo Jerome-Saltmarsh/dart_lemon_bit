@@ -7,7 +7,6 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:lemon_engine/engine.dart';
-
 import 'package:lemon_watch/watch_builder.dart';
 
 const pad = 6.0;

@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/isometric/factories/generate_grid_node.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 
 void setGridType(int z, int row, int column, int type){
@@ -14,5 +15,5 @@ void setGridType(int z, int row, int column, int type){
     return;
   if (column >= gridTotalColumns)
     return;
-  grid[z][row][column] = type;
+  grid[z][row][column] = generateNode(z, row, column, type);
 }
