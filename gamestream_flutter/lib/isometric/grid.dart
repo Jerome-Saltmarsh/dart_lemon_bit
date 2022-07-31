@@ -117,6 +117,7 @@ void apiGridActionRefreshLighting(){
   if (gridShadows.value){
     _applyShadows();
   }
+
   _applyBakeMapEmissions();
 }
 
@@ -228,9 +229,8 @@ void _applyBakeMapEmissions() {
   for (var zIndex = 0; zIndex < gridTotalZ; zIndex++) {
     for (var rowIndex = 0; rowIndex < gridTotalRows; rowIndex++) {
       for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
-        final type = grid[zIndex][rowIndex][columnIndex];
-        if (!const [GridNodeType.Torch, GridNodeType.Player_Spawn, GridNodeType.Fireplace].contains(type)) continue;
-        if (type.shade <= Shade.Very_Bright) continue;
+        final node = grid[zIndex][rowIndex][columnIndex];
+        if (!const [GridNodeType.Torch, GridNodeType.Fireplace].contains(node.type)) continue;
         applyEmissionBake(
           zIndex: zIndex,
           rowIndex: rowIndex,
@@ -285,7 +285,6 @@ void applyEmissionBake({
   }
 }
 
-
 void applyEmissionDynamic({
   required int zIndex,
   required int rowIndex,
@@ -303,8 +302,8 @@ void applyEmissionDynamic({
   for (var z = zMin; z < zMax; z++){
     for (var row = rowMin; row < rowMax; row++){
       for (var column = columnMin; column < columnMax; column++) {
-        final gridNode = grid[z][row][column];
-        final currentValue = gridNode.shade;
+        final node = grid[z][row][column];
+        final currentValue = node.shade;
         var distance = 0;
         if (lightModeRadial.value){
           distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
@@ -322,7 +321,7 @@ void applyEmissionDynamic({
         }
         final distanceValue = _convertDistanceToShade(distance, maxBrightness: maxBrightness);
         if (distanceValue >= currentValue) continue;
-        gridNode.shade = distanceValue;
+        node.shade = distanceValue;
       }
     }
   }
