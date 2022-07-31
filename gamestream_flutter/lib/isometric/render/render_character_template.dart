@@ -1,5 +1,6 @@
 
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:lemon_engine/render.dart';
 
 import '../classes/character.dart';
@@ -19,7 +20,7 @@ void renderCharacterTemplate(Character character, {bool renderHealthBar = true})
 
   final weaponType = character.weapon;
   final direction = character.direction;
-  final color = character.renderColor;
+  final color = colorShades[character.tileBelow.shade];
 
   if (weaponType == WeaponType.Bow || weaponType == WeaponType.Shotgun) {
     if (direction == Direction.North_West ||
