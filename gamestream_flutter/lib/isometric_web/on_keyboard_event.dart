@@ -34,6 +34,8 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     return edit.paintLongGrass();
   if (key == PhysicalKeyboardKey.keyU)
     return editor.actions.raise();
+  if (key == PhysicalKeyboardKey.keyX)
+    return edit.paintMouse();
 
   if (modeIsPlay) {
     if (key == PhysicalKeyboardKey.keyG)
@@ -46,8 +48,6 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
       return actionGameDialogShowMap();
     if (key == PhysicalKeyboardKey.keyJ)
       return sendClientRequestAttackBasic();
-    if (key == PhysicalKeyboardKey.keyK)
-      return sendClientRequestCasteBasic();
   }
 
   // EDIT MODE

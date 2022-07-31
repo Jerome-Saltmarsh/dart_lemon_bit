@@ -38,6 +38,10 @@ class GridNodeType {
   static const Roof_Hay_North = 39;
   static const Roof_Hay_South = 40;
   static const Stone = 41;
+  static const Grass_Slope_Top = 42;
+  static const Grass_Slope_Right = 43;
+  static const Grass_Slope_Bottom = 44;
+  static const Grass_Slope_Left = 45;
 
   static isSolid(int type){
     if (type == GridNodeType.Bricks) return true;
@@ -54,6 +58,10 @@ class GridNodeType {
     if (type == GridNodeType.Grass_Slope_East) return true;
     if (type == GridNodeType.Grass_Slope_South) return true;
     if (type == GridNodeType.Grass_Slope_West) return true;
+    if (type == GridNodeType.Grass_Slope_Top) return true;
+    if (type == GridNodeType.Grass_Slope_Right) return true;
+    if (type == GridNodeType.Grass_Slope_Bottom) return true;
+    if (type == GridNodeType.Grass_Slope_Left) return true;
     return false;
   }
   
@@ -154,6 +162,10 @@ class GridNodeType {
        Roof_Hay_North: "Roof Hay North",
        Roof_Hay_South: "Roof Hay South",
        Stone: "Stone",
+       Grass_Slope_Top: "Grass Slope Top",
+       Grass_Slope_Right: "Grass Slope Right",
+       Grass_Slope_Bottom: "Grass Slope Bottom",
+       Grass_Slope_Left: "Grass Slope Left",
      }[type] ?? "unknown($type)";
   }
   

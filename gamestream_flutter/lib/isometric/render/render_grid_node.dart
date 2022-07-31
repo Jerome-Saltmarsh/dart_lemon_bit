@@ -48,6 +48,18 @@ void renderGridNode(int z, int row, int column, int type, double dstY, int shade
     case GridNodeType.Grass_Slope_North:
       return renderBlockSrcX(7925);
 
+    case GridNodeType.Grass_Slope_Top:
+      return renderBlockSrcX(8536);
+
+    case GridNodeType.Grass_Slope_Right:
+      return renderBlockSrcX(8488);
+
+    case GridNodeType.Grass_Slope_Bottom:
+      return renderBlockSrcX(8440);
+
+    case GridNodeType.Grass_Slope_Left:
+      return renderBlockSrcX(8392);
+
     case GridNodeType.Grass_Long:
       switch (gridWind[z][row][column]) {
         case windIndexCalm:

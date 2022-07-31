@@ -9,10 +9,12 @@ import 'package:lemon_watch/watch.dart';
 import 'editor/events/on_editor_row_changed.dart';
 import 'grid.dart';
 import 'player.dart';
+import 'utils/mouse_raycast.dart';
 
 final edit = EditState();
 
 class EditState {
+
   var row = Watch(0, clamp: (int value){
     if (value < 0) return 0;
     if (value >= gridTotalRows) return gridTotalRows - 1;
@@ -52,8 +54,17 @@ class EditState {
     sendClientRequestSetBlock(row, column, z, type);
   }
 
+  void paintMouse(){
+      selectMouse();
+      paint(selectPlayerIfPlay: false);
+  }
+
+  void selectMouse(){
+    mouseRaycast(selectBlock);
+  }
+
   void paintTorch(){
-    paint(GridNodeType.Torch);
+    paint(value: GridNodeType.Torch);
   }
 
   void paintTree(){
@@ -81,7 +92,7 @@ class EditState {
   }
 
   void paintLongGrass(){
-    paint(GridNodeType.Grass_Long);
+    paint(value: GridNodeType.Grass_Long);
   }
 
   void paintAtPlayerLongGrass(){
@@ -89,15 +100,15 @@ class EditState {
   }
 
   void paintBricks(){
-    paint(GridNodeType.Bricks);
+    paint(value: GridNodeType.Bricks);
   }
 
   void paintGrass(){
-    paint(GridNodeType.Grass);
+    paint(value: GridNodeType.Grass);
   }
 
   void paintWater(){
-    paint(GridNodeType.Water);
+    paint(value: GridNodeType.Water);
   }
 
   void paintFloorBricks(){
@@ -156,9 +167,9 @@ class EditState {
     column.value = player.indexColumn;
   }
 
-  void paint([int? value]){
+  void paint({int? value, bool selectPlayerIfPlay = true}){
 
-    if (modeIsPlay){
+    if (modeIsPlay && selectPlayerIfPlay){
       selectPlayer();
     }
 

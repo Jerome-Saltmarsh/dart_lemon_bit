@@ -370,7 +370,7 @@ Widget buildButtonSelectGridNodeType(int value) {
                 edit.z.value = player.indexZ;
                 return;
               }
-              edit.paint(value);
+              edit.paint(value: value);
             },
             color:
               type == value
@@ -465,4 +465,8 @@ const editorSelectableGridTypes = [
     GridNodeType.Roof_Hay_South,
     GridNodeType.Roof_Hay_North,
     GridNodeType.Stone,
+    GridNodeType.Grass_Slope_Top,
+    GridNodeType.Grass_Slope_Right,
+    GridNodeType.Grass_Slope_Bottom,
+    GridNodeType.Grass_Slope_Left,
 ];
