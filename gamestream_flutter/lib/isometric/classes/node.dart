@@ -21,9 +21,12 @@ abstract class Node {
   var dstX = 0.0;
   var dstY = 0.0;
 
+  late double order;
+
   Node(int row, int column, int z) {
      dstX = (row - column) * tileSizeHalf;
      dstY = ((row + column) * tileSizeHalf) - (z * tileHeight);
+     order = ((row + column) * tileSize) + tileSizeHalf;;
   }
 
   int get type;

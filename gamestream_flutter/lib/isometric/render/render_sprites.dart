@@ -223,7 +223,7 @@ class RenderOrderGrid extends RenderOrder {
   var gridZ = 0;
   var gridColumn = 0;
   var gridRow = 0;
-  late Node gridType;
+  late Node node;
   var maxColumnRow = 0;
   var minColumnRow = 0;
   var screenTopLeftRow = 0;
@@ -268,18 +268,18 @@ class RenderOrderGrid extends RenderOrder {
       }
     }
 
-    gridType.performRender();
+    node.performRender();
   }
 
   @override
   void updateFunction() {
     nextGridNode();
-    while (gridType == GridNodeType.Empty) {
+    while (node.type == GridNodeType.Empty) {
       index = _index + 1;
       if (!remaining) return;
       nextGridNode();
     }
-    order = ((gridRow + gridColumn) * tileSize) + tileSizeHalf;
+    order = node.order;
   }
 
   @override
@@ -353,7 +353,7 @@ class RenderOrderGrid extends RenderOrder {
     gridRow = screenTopLeftRow;
     gridColumn = screenTopLeftColumn;
 
-    gridType = grid[gridZ][gridRow][gridColumn];
+    node = grid[gridZ][gridRow][gridColumn];
 
     assert(gridRow >= 0);
     assert(gridColumn >= 0);
@@ -402,7 +402,7 @@ class RenderOrderGrid extends RenderOrder {
         if (dstY > screenTop && dstY < screenBottom) break;
       }
     }
-    gridType = plain[gridRow][gridColumn];
+    node = plain[gridRow][gridColumn];
   }
 
 
