@@ -269,14 +269,6 @@ class RenderOrderGrid extends RenderOrder {
     }
 
     gridType.performRender();
-    // renderGridNode(
-    //     gridZ,
-    //     gridRow,
-    //     gridColumn,
-    //     gridType,
-    //     dstY,
-    //     shadePlain[gridRow][gridColumn],
-    // );
   }
 
   @override
@@ -360,6 +352,8 @@ class RenderOrderGrid extends RenderOrder {
 
     gridRow = screenTopLeftRow;
     gridColumn = screenTopLeftColumn;
+
+    gridType = grid[gridZ][gridRow][gridColumn];
 
     assert(gridRow >= 0);
     assert(gridColumn >= 0);
