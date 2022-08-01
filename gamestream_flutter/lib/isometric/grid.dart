@@ -20,8 +20,6 @@ final gridShadows = Watch(true, onChanged: (bool value){
 });
 
 final grid = <List<List<Node>>>[];
-// final gridLightBake = <List<List<int>>>[];
-// final gridLightDynamic = <List<List<int>>>[];
 var gridTotalZ = 0;
 final gridTotalZWatch = Watch(0);
 var gridTotalRows = 0;
@@ -43,7 +41,7 @@ void onGridChanged(){
   gridWindResetToAmbient();
 
   if (rain.value != Rain.None) {
-     apiGridActionRainOff();
+     // apiGridActionRainOff();
      apiGridActionRainOn();
   }
 
