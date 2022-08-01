@@ -41,13 +41,13 @@ void actionSetAmbientShadeToHour(){
 void onGridChanged(){
   refreshGridMetrics();
   gridWindResetToAmbient();
-  refreshLighting();
 
   if (rain.value != Rain.None) {
      apiGridActionRainOff();
      apiGridActionRainOn();
   }
 
+  refreshLighting();
   refreshParticleEmitters();
 }
 
