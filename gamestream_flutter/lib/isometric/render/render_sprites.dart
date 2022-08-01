@@ -231,6 +231,7 @@ class RenderOrderGrid extends RenderOrder {
   var gridTotalColumnsMinusOne = 0;
   var gridZHalf = 0;
   late List<List<Node>> plain;
+  var totalRendered = 0;
 
   var playerColumnRow = 0;
   var playerUnderRoof = false;
@@ -269,6 +270,7 @@ class RenderOrderGrid extends RenderOrder {
     }
 
     node.performRender();
+    totalRendered++;
   }
 
   @override
@@ -279,6 +281,7 @@ class RenderOrderGrid extends RenderOrder {
       if (!remaining) return;
       nextGridNode();
     }
+
     order = node.order;
   }
 
@@ -359,6 +362,7 @@ class RenderOrderGrid extends RenderOrder {
     assert(gridColumn >= 0);
     assert(gridRow < gridTotalRows);
     assert(gridColumn < gridTotalColumns);
+    refreshDynamicLightGrid();
     super.reset();
   }
 
@@ -413,6 +417,26 @@ class RenderOrderGrid extends RenderOrder {
     gridRow = gridColumn - gridTotalColumnsMinusOne;
     gridColumn = gridTotalColumnsMinusOne;
   }
+
+    void refreshDynamicLightGrid(){
+        final bottom = screen.bottom + tileHeight;
+        for (var z = 0; z < gridTotalZ; z++) {
+          final zPlain = grid[z];
+          final zLength = z * tileSize;
+          final minRow = convertWorldToRowSafe(screenLeft, screenTop, zLength);
+          final maxRow = convertWorldToRowSafe(screenRight, bottom, zLength);
+          final minColumn = convertWorldToColumnSafe(screenRight, screenTop, zLength);
+          final maxColumn = convertWorldToColumnSafe(screenLeft, bottom, zLength);
+          final max = maxRow + maxColumn;
+          for (var rowIndex = minRow; rowIndex <= maxRow; rowIndex++) {
+            final dynamicRow = zPlain[rowIndex];
+            for (var columnIndex = minColumn; columnIndex <= maxColumn; columnIndex++) {
+              if (columnIndex + rowIndex > max) break;
+              dynamicRow[columnIndex].resetShadeToBake();
+            }
+          }
+        }
+      }
 }
 
 abstract class RenderOrder {
@@ -425,6 +449,8 @@ abstract class RenderOrder {
   void renderFunction();
   void updateFunction();
   int getTotal();
+
+  int get index => _index;
 
   void reset(){
     total = getTotal();

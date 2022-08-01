@@ -34,12 +34,15 @@ abstract class Node {
   bool get renderable => true;
   bool get blocksPerception => true;
 
+  void resetShadeToBake(){
+    shade = bake;
+  }
+
   static final boundary = NodeBoundary();
   static final empty = NodeEmpty();
 
   void performRender(){
     handleRender();
-    shade = bake;
   }
 
   void handleRender();

@@ -14,11 +14,8 @@ void applyEmissionsCharacters() {
     maxBrightness = Shade.Medium;
   }
   for (var i = 0; i < totalCharacters; i++) {
-    if (i >= characters.length) {
-      return;
-    }
     final character = characters[i];
     if (!character.allie) continue;
-    applyVector3Emission(characters[i], maxBrightness: maxBrightness);
+    applyVector3Emission(character, maxBrightness: maxBrightness);
   }
 }

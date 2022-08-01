@@ -38,16 +38,6 @@ void actionSetAmbientShadeToHour(){
   ambientShade.value = convertHourToShade(hours.value);
 }
 
-void gridEmitDynamic(int z, int row, int column, {required int maxBrightness, int radius = 5}){
-  applyEmissionDynamic(
-      zIndex: z,
-      rowIndex: row,
-      columnIndex: column,
-      maxBrightness: maxBrightness,
-      radius: radius,
-  );
-}
-
 void onGridChanged(){
   refreshGridMetrics();
   gridWindResetToAmbient();
