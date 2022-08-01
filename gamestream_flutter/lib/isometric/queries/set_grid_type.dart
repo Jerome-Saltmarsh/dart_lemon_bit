@@ -15,5 +15,10 @@ void setGridType(int z, int row, int column, int type){
     return;
   if (column >= gridTotalColumns)
     return;
-  grid[z][row][column] = generateNode(z, row, column, type);
+
+  final current = grid[z][row][column];
+  final next = generateNode(z, row, column, type);
+  next.shade = current.shade;
+  next.bake = current.bake;
+  grid[z][row][column] = next;
 }

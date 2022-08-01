@@ -409,7 +409,6 @@ class RenderOrderGrid extends RenderOrder {
     node = plain[gridRow][gridColumn];
   }
 
-
   void shiftIndexDown(){
     gridColumn = gridRow + gridColumn + 1;
     gridRow = 0;

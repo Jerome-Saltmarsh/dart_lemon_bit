@@ -16,7 +16,7 @@ import 'grid/convert/convert_hour_to_shade.dart';
 import 'watches/ambient_shade.dart';
 
 final gridShadows = Watch(true, onChanged: (bool value){
-  apiGridActionRefreshLighting();
+  refreshLighting();
 });
 
 final grid = <List<List<Node>>>[];
@@ -41,7 +41,7 @@ void actionSetAmbientShadeToHour(){
 void onGridChanged(){
   refreshGridMetrics();
   gridWindResetToAmbient();
-  apiGridActionRefreshLighting();
+  refreshLighting();
 
   if (rain.value != Rain.None) {
      apiGridActionRainOff();
@@ -115,13 +115,12 @@ void resetGridToAmbient(){
   }
 }
 
-void apiGridActionRefreshLighting(){
+void refreshLighting(){
   resetGridToAmbient();
   if (gridShadows.value){
     _applyShadows();
   }
-
-  _applyBakeMapEmissions();
+  applyBakeMapEmissions();
 }
 
 void _applyShadows(){
@@ -191,10 +190,6 @@ bool _castesShadow(int type){
   ].contains(type);
 }
 
-// bool isEmpty(int type){
-//   return type == GridNodeType.Empty || type == GridNodeType.Rain_Falling || type == GridNodeType.Rain_Landing;
-// }
-
 bool gridIsUnderSomething(int z, int row, int column){
   for (var zIndex = z + 1; zIndex < gridTotalZ; zIndex++){
     if (grid[zIndex][row][column] != GridNodeType.Empty) return false;
@@ -223,7 +218,7 @@ void refreshGridMetrics(){
   gridZLength = gridTotalZ * tileHeight;
 }
 
-void _applyBakeMapEmissions() {
+void applyBakeMapEmissions() {
   for (var zIndex = 0; zIndex < gridTotalZ; zIndex++) {
     for (var rowIndex = 0; rowIndex < gridTotalRows; rowIndex++) {
       for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
