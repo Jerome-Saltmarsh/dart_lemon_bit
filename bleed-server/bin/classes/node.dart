@@ -504,7 +504,12 @@ class NodeWoodCornerLeft extends Node {
 class NodeGrassEdgeTop extends NodeSlope {
   @override
   double getHeightAt(double x, double y, double z) {
-    return z;
+    final percentageX = ((x % tileSize) / tileSize);
+    final percentageY = ((y % tileSize) / tileSize);
+    final total = percentageX + percentageY;
+    final bottom = (z ~/ tileHeight) * tileHeight;
+    if (total > 1) return bottom + tileHeight;
+    return bottom + (total * tileHeight);
   }
 
   @override
