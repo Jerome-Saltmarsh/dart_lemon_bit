@@ -671,7 +671,7 @@ class NodeStairsEast extends GridNodeBasic {
   int get type => GridNodeType.Stairs_East;
 
   @override
-  double get srcX => 7494;
+  double get srcX => 7542;
 }
 
 class NodeStairsSouth extends GridNodeBasic {
