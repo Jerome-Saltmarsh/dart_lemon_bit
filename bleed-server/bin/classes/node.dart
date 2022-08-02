@@ -424,14 +424,17 @@ class NodeGrassSlopeBottom extends NodeSlope {
   }
 }
 
-class NodeGrassSlopeLeft extends Node {
-  @override
-  bool getCollision(double x, double y, double z) {
-    return false;
-  }
+class NodeGrassSlopeLeft extends NodeSlope {
 
   @override
-  void resolveCharacterCollision(Character character, Game game) {
+  double getHeightAt(double x, double y, double z) {
+    final bottom = (z ~/ tileHeight) * tileHeight;
+    final percX = ((x % tileSize) / tileSize);
+    final percY = ((y % tileSize) / tileSize);
+
+    final tX = (percX - percY);
+    if (tX < 0) return bottom;
+    return bottom + (tileHeight * tX);
   }
 
   @override
