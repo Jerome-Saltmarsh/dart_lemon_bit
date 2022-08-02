@@ -13,9 +13,9 @@ Node generateNode(int type){
     case GridNodeType.Water_Flowing:
       return Node.waterFlowing;
     case GridNodeType.Grass:
-      return NodeGrass();
+      return Node.grass;
     case GridNodeType.Bricks:
-      return NodeBricks();
+      return Node.bricks;
     case GridNodeType.Stairs_North:
       return NodeStairsNorth();
     case GridNodeType.Stairs_East:
@@ -29,13 +29,13 @@ Node generateNode(int type){
     case GridNodeType.Tree_Bottom:
       return NodeTreeBottom();
     case GridNodeType.Tree_Top:
-      return NodeTreeTop();
+      return Node.treeTop;
     case GridNodeType.Grass_Long:
       return NodeGrassLong();
     case GridNodeType.Fireplace:
       return NodeFireplace();
     case GridNodeType.Wood:
-      return NodeWood();
+      return Node.wood;
     case GridNodeType.Grass_Slope_North:
       return NodeGrassSlopeNorth();
     case GridNodeType.Grass_Slope_East:
@@ -67,13 +67,13 @@ Node generateNode(int type){
     case GridNodeType.Roof_Tile_South:
       return NodeRoofTileSouth();
     case GridNodeType.Soil:
-      return NodeSoil();
+      return Node.soil;
     case GridNodeType.Roof_Hay_North:
       return NodeRoofHayNorth();
     case GridNodeType.Roof_Hay_South:
       return NodeRoofHaySouth();
     case GridNodeType.Stone:
-      return NodeStone();
+      return Node.stone;
     case GridNodeType.Grass_Slope_Top:
       return NodeGrassSlopeTop();
     case GridNodeType.Grass_Slope_Right:

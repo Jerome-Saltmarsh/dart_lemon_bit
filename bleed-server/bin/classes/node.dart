@@ -11,6 +11,12 @@ abstract class Node {
   int get type;
 
   static final Node boundary = NodeBoundary();
+  static final Node grass = NodeGrass();
+  static final Node bricks = NodeBricks();
+  static final Node wood = NodeWood();
+  static final Node soil = NodeSoil();
+  static final Node stone = NodeStone();
+  static final Node treeTop = NodeTreeTop();
   static final Node empty = NodeEmpty();
   static final Node water = NodeWater();
   static final Node waterFlowing = NodeWaterFlowing();
