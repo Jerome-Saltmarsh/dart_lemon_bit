@@ -519,7 +519,12 @@ class NodeGrassEdgeTop extends NodeSlope {
 class NodeGrassEdgeRight extends NodeSlope {
   @override
   double getHeightAt(double x, double y, double z) {
-    return z;
+    final bottom = (z ~/ tileHeight) * tileHeight;
+    final percX = ((x % tileSize) / tileSize);
+    final percY = ((y % tileSize) / tileSize);
+    final tX = (percX - percY);
+    if (tX < 0) return bottom + tileHeight;
+    return bottom + ((1 - tX) * tileHeight);
   }
 
   @override
@@ -545,7 +550,13 @@ class NodeGrassEdgeBottom extends NodeSlope {
 class NodeGrassEdgeLeft extends NodeSlope {
   @override
   double getHeightAt(double x, double y, double z) {
-    return z;
+    final bottom = (z ~/ tileHeight) * tileHeight;
+    final percX = ((x % tileSize) / tileSize);
+    final percY = ((y % tileSize) / tileSize);
+    final tX = (percX - percY);
+    if (tX > 0) return bottom + tileHeight;
+    final perc = 1 + tX;
+    return bottom + (perc * tileHeight);
   }
 
   @override
