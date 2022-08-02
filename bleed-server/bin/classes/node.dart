@@ -5,10 +5,10 @@ import 'character.dart';
 import 'game.dart';
 
 abstract class Node {
+  int get type;
   bool getCollision(double x, double y, double z);
   void resolveCharacterCollision(Character character, Game game);
 
-  int get type;
 
   static final Node boundary = NodeBoundary();
   static final Node grass = NodeGrass();
@@ -22,7 +22,7 @@ abstract class Node {
   static final Node waterFlowing = NodeWaterFlowing();
 }
 
-class NodeEmpty extends Node {
+abstract class NodeNoneCollidable extends Node {
   @override
   bool getCollision(double x, double y, double z) => false;
 
@@ -30,7 +30,9 @@ class NodeEmpty extends Node {
   void resolveCharacterCollision(Character character, Game game) {
 
   }
+}
 
+class NodeEmpty extends NodeNoneCollidable {
   @override
   int get type => GridNodeType.Empty;
 }
@@ -190,7 +192,7 @@ abstract class NodeRadial extends Node {
 
   @override
   void resolveCharacterCollision(Character character, Game game) {
-    // TODO: implement resolveCharacterCollision
+
   }
 }
 
@@ -230,17 +232,9 @@ class NodeTreeTop extends Node {
   }
 }
 
-class NodeGrassLong extends Node {
+class NodeGrassLong extends NodeNoneCollidable {
   @override
   int get type => GridNodeType.Grass_Long;
-
-  @override
-  bool getCollision(double x, double y, double z) => false;
-
-  @override
-  void resolveCharacterCollision(Character character, Game game) {
-
-  }
 }
 
 class NodeWood extends NodeSolid {
@@ -278,6 +272,9 @@ class NodeGrassSlopeWest extends NodeSlopeWest {
 
 class NodeBrickTop extends Node {
   @override
+  int get type => GridNodeType.Brick_Top;
+
+  @override
   bool getCollision(double x, double y, double z) {
     return y % tileHeight > tileHeightHalf;
   }
@@ -287,12 +284,12 @@ class NodeBrickTop extends Node {
       character.z += tileHeight - (character.z % tileHeight);
       character.zVelocity = 0;
   }
-
-  @override
-  int get type => GridNodeType.Brick_Top;
 }
 
 class NodeWoodHalfRow1 extends Node {
+  @override
+  int get type => GridNodeType.Wood_Half_Row_1;
+
   @override
   bool getCollision(double x, double y, double z) {
     return (y % tileSize) > tileSizeHalf;
@@ -300,14 +297,14 @@ class NodeWoodHalfRow1 extends Node {
 
   @override
   void resolveCharacterCollision(Character character, Game game) {
-    // TODO: implement resolveCharacterCollision
-  }
 
-  @override
-  int get type => GridNodeType.Wood_Half_Row_1;
+  }
 }
 
 class NodeWoodHalfRow2 extends Node {
+  @override
+  int get type => GridNodeType.Wood_Half_Row_2;
+
   @override
   bool getCollision(double x, double y, double z) {
     return (y % tileSize) < tileSizeHalf;
@@ -315,14 +312,13 @@ class NodeWoodHalfRow2 extends Node {
 
   @override
   void resolveCharacterCollision(Character character, Game game) {
-    // TODO: implement resolveCharacterCollision
   }
-
-  @override
-  int get type => GridNodeType.Wood_Half_Row_2;
 }
 
 class NodeWoodHalfColumn1 extends Node {
+  @override
+  int get type => GridNodeType.Wood_Half_Column_1;
+
   @override
   bool getCollision(double x, double y, double z) {
     return (x % tileSize) > tileSizeHalf;
@@ -330,15 +326,14 @@ class NodeWoodHalfColumn1 extends Node {
 
   @override
   void resolveCharacterCollision(Character character, Game game) {
-    // TODO: implement resolveCharacterCollision
   }
-
-  @override
-  int get type => GridNodeType.Wood_Half_Column_1;
 }
 
 
 class NodeWoodHalfColumn2 extends Node {
+  @override
+  int get type => GridNodeType.Wood_Half_Column_2;
+
   @override
   bool getCollision(double x, double y, double z) {
     return (x % tileSize) < tileSizeHalf;
@@ -346,11 +341,7 @@ class NodeWoodHalfColumn2 extends Node {
 
   @override
   void resolveCharacterCollision(Character character, Game game) {
-    // TODO: implement resolveCharacterCollision
   }
-
-  @override
-  int get type => GridNodeType.Wood_Half_Column_2;
 }
 
 class NodeRoofTileNorth extends NodeSlopeNorth {
@@ -390,40 +381,23 @@ class NodeGrassSlopeTop extends NodeSlope {
 
   @override
   double getGradient(double x, double y) {
-    return x;
+      final total = x + y;
+      if (total < 1) return 0;
+      return total - 1.0;
   }
-
-  // @override
-  // double getHeightAt(double x, double y, double z) {
-  //   final bottom = (z ~/ tileHeight) * tileHeight;
-  //   final percentageX = ((x % tileSize) / tileSize);
-  //   final percentageY = ((y % tileSize) / tileSize);
-  //   final total = percentageX + percentageY;
-  //   if (total < 1) return bottom;
-  //   final perc = total - 1.0;
-  //   return bottom + (tileHeight * perc);
-  // }
 }
 
 class NodeGrassSlopeRight extends NodeSlope {
 
   @override
-  double getGradient(double x, double y) {
-    return x;
-  }
-  //
-  // @override
-  // double getHeightAt(double x, double y, double z) {
-  //   final bottom = (z ~/ tileHeight) * tileHeight;
-  //   final percX = ((x % tileSize) / tileSize);
-  //   final percY = ((y % tileSize) / tileSize);
-  //   final tX = (percY - percX);
-  //   if (tX < 0) return bottom;
-  //   return bottom + (tileHeight * tX);
-  // }
+  int get type => GridNodeType.Grass_Slope_Right;
 
   @override
-  int get type => GridNodeType.Grass_Slope_Right;
+  double getGradient(double x, double y) {
+      final ratio = (y - x);
+      if (ratio < 0) return 0;
+      return ratio;
+  }
 }
 
 class NodeGrassSlopeBottom extends NodeSlope {
@@ -433,39 +407,22 @@ class NodeGrassSlopeBottom extends NodeSlope {
 
   @override
   double getGradient(double x, double y) {
-    return x;
+      final total = x + y;
+      if (total > 1) return 0;
+      return 1.0 - total;
   }
-
-  // @override
-  // double getHeightAt(double x, double y, double z) {
-  //   final bottom = (z ~/ tileHeight) * tileHeight;
-  //   final percentageX = ((x % tileSize) / tileSize);
-  //   final percentageY = ((y % tileSize) / tileSize);
-  //   final total = percentageX + percentageY;
-  //   if (total > 1) return bottom;
-  //   final perc = 1.0 - total;
-  //   return bottom + (tileHeight * perc);
-  // }
 }
 
 class NodeGrassSlopeLeft extends NodeSlope {
-  // @override
-  // double getHeightAt(double x, double y, double z) {
-  //   final bottom = (z ~/ tileHeight) * tileHeight;
-  //   final percX = ((x % tileSize) / tileSize);
-  //   final percY = ((y % tileSize) / tileSize);
-  //   final tX = (percX - percY);
-  //   if (tX < 0) return bottom;
-  //   return bottom + (tileHeight * tX);
-  // }
+  @override
+  int get type => GridNodeType.Grass_Slope_Left;
 
   @override
   double getGradient(double x, double y) {
-    return x;
+      final tX = (x - y);
+      if (tX < 0) return 0;
+      return tX;
   }
-
-  @override
-  int get type => GridNodeType.Grass_Slope_Left;
 }
 
 class NodeWoodCornerTop extends Node {
@@ -529,18 +486,10 @@ class NodeGrassEdgeTop extends NodeSlope {
 
   @override
   double getGradient(double x, double y) {
-    return x;
+      final total = x + y;
+      if (total > 1) return 1;
+      return total;
   }
-
-  // @override
-  // double getHeightAt(double x, double y, double z) {
-  //   final percentageX = ((x % tileSize) / tileSize);
-  //   final percentageY = ((y % tileSize) / tileSize);
-  //   final total = percentageX + percentageY;
-  //   final bottom = (z ~/ tileHeight) * tileHeight;
-  //   if (total > 1) return bottom + tileHeight;
-  //   return bottom + (total * tileHeight);
-  // }
 
   @override
   int get type => GridNodeType.Grass_Edge_Top;
@@ -550,18 +499,10 @@ class NodeGrassEdgeRight extends NodeSlope {
 
   @override
   double getGradient(double x, double y) {
-    return x;
+      final tX = (x - y);
+      if (tX < 0) return 1;
+      return 1 - tX;
   }
-
-  // @override
-  // double getHeightAt(double x, double y, double z) {
-  //   final bottom = (z ~/ tileHeight) * tileHeight;
-  //   final percX = ((x % tileSize) / tileSize);
-  //   final percY = ((y % tileSize) / tileSize);
-  //   final tX = (percX - percY);
-  //   if (tX < 0) return bottom + tileHeight;
-  //   return bottom + ((1 - tX) * tileHeight);
-  // }
 
   @override
   int get type => GridNodeType.Grass_Edge_Right;
@@ -571,19 +512,10 @@ class NodeGrassEdgeBottom extends NodeSlope {
 
   @override
   double getGradient(double x, double y) {
-    return x;
+      final total = x + y;
+      if (total < 1) return 1;
+      return 1 - (total - 1);
   }
-
-  // @override
-  // double getHeightAt(double x, double y, double z) {
-  //   final percentageX = ((x % tileSize) / tileSize);
-  //   final percentageY = ((y % tileSize) / tileSize);
-  //   final total = percentageX + percentageY;
-  //   final bottom = (z ~/ tileHeight) * tileHeight;
-  //   if (total < 1) return bottom + tileHeight;
-  //   final perc = 1 - (total - 1);
-  //   return bottom + (tileHeight * perc);
-  // }
 
   @override
   int get type => GridNodeType.Grass_Edge_Bottom;
@@ -593,19 +525,10 @@ class NodeGrassEdgeLeft extends NodeSlope {
 
   @override
   double getGradient(double x, double y) {
-    return x;
+      final tX = (x - y);
+      if (tX > 0) return 1;
+      return 1 + tX;
   }
-
-  // @override
-  // double getHeightAt(double x, double y, double z) {
-  //   final bottom = (z ~/ tileHeight) * tileHeight;
-  //   final percX = ((x % tileSize) / tileSize);
-  //   final percY = ((y % tileSize) / tileSize);
-  //   final tX = (percX - percY);
-  //   if (tX > 0) return bottom + tileHeight;
-  //   final perc = 1 + tX;
-  //   return bottom + (perc * tileHeight);
-  // }
 
   @override
   int get type => GridNodeType.Grass_Edge_Left;
