@@ -215,7 +215,6 @@ class Scene {
 
   bool getCollisionAt(double x, double y, double z) {
     return getNodeXYZ(x, y, z).getCollision(x, y, z);
-
   }
 
   void resolveCharacterTileCollision(Character character, Game game) {
