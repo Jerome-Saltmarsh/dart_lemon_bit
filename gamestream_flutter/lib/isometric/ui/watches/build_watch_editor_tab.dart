@@ -13,7 +13,7 @@ Widget buildWatchEditorTab(){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      watch(edit.type, (Node type) => container(child: "${GridNodeType.getName(type.type)}", color: brownLight)),
+      watch(edit.selected, (Node type) => container(child: "${GridNodeType.getName(type.type)}", color: brownLight)),
       buildColumnSelectGridNodeType()
     ],
   );

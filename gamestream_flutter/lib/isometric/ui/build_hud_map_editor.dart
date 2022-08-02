@@ -341,7 +341,7 @@ Widget buildButtonSpawnZombie(){
 }
 
 Widget buildButtonSelectGridNodeType(int value) {
-  return WatchBuilder(edit.type, (Node type) {
+  return WatchBuilder(edit.selected, (Node type) {
         return container(
             child: GridNodeType.getName(value),
             action: () {

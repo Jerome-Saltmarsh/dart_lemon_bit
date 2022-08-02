@@ -22,10 +22,10 @@ class EditorActions {
 
   void raise(){
     edit.selectPlayerIfPlayerMode();
-      if (GridNodeType.isRainOrEmpty(edit.currentType.type) ||
-          GridNodeType.isGrassSlope(edit.currentType.type) ||
-          GridNodeType.isTree(edit.currentType.type) ||
-          edit.currentType == GridNodeType.Grass_Long){
+      if (GridNodeType.isRainOrEmpty(edit.selectedType) ||
+          GridNodeType.isGrassSlope(edit.selectedType) ||
+          GridNodeType.isTree(edit.selectedType) ||
+          edit.selectedType == GridNodeType.Grass_Long){
          edit.paintGrass();
       }
       if (edit.row.value > 0){

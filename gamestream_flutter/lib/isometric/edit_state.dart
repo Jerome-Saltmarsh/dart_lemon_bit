@@ -2,7 +2,6 @@ import 'package:bleed_common/grid_node_type.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_editor_column_changed.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_editor_z_changed.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
-import 'package:gamestream_flutter/isometric/queries/get_grid_type.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -16,8 +15,8 @@ final edit = EditState();
 
 class EditState {
 
-  void refreshType([int? val]){
-    type.value = grid[z.value][row.value][column.value];
+  void refreshSelected([int? val]){
+    selected.value = grid[z.value][row.value][column.value];
   }
 
   var row = Watch(0, clamp: (int value){
@@ -37,11 +36,11 @@ class EditState {
     if (value >= gridTotalZ) return gridTotalZ - 1;
     return value;
   }, onChanged: onEditorZChanged);
-  final type = Watch<Node>(Node.boundary);
+  final selected = Watch<Node>(Node.boundary);
   final paintType = Watch(GridNodeType.Bricks);
   final controlsVisibleWeather = Watch(true);
 
-  Node get currentType => gridGetType(z.value, row.value, column.value);
+  int get selectedType => selected.value.type;
 
   void actionToggleControlsVisibleWeather(){
     controlsVisibleWeather.value = !controlsVisibleWeather.value;
@@ -142,14 +141,14 @@ class EditState {
   }
 
   void deleteIfTree(){
-    if (currentType == GridNodeType.Tree_Bottom){
+    if (selectedType == GridNodeType.Tree_Bottom){
       if (z.value < gridTotalZ - 1){
         if (grid[z.value + 1][row.value][column.value] == GridNodeType.Tree_Top){
           sendClientRequestSetBlock(row.value, column.value, z.value + 1, GridNodeType.Empty);
         }
       }
     }
-    if (currentType == GridNodeType.Tree_Top){
+    if (selectedType == GridNodeType.Tree_Top){
       if (z.value > 0){
         if (grid[z.value - 1][row.value][column.value] == GridNodeType.Tree_Bottom){
           sendClientRequestSetBlock(row.value, column.value, z.value - 1, GridNodeType.Empty);
@@ -159,7 +158,7 @@ class EditState {
   }
 
   void selectPaintType(){
-     paintType.value = currentType.type;
+     paintType.value = selectedType;
   }
 
   void selectPlayer(){
@@ -184,11 +183,11 @@ class EditState {
 
     deleteIfTree();
 
-    if (currentType != paintType.value){
+    if (selectedType != paintType.value){
       return sendClientRequestSetBlock(row.value, column.value, z.value, paintType.value);
     }
 
-    if (GridNodeType.isGrassSlope(currentType.type)){
+    if (GridNodeType.isGrassSlope(selectedType)){
       for (var zIndex = 0; zIndex < z.value; zIndex++){
         sendClientRequestSetBlock(row.value, column.value, zIndex, GridNodeType.Grass);
       }

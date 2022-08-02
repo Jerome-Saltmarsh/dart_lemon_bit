@@ -15,7 +15,7 @@ void onClickedButtonGridNodeType(int type){
     edit.z.value = player.indexZ;
     return;
   }
-  edit.type.value = generateNode(edit.z.value, edit.row.value, edit.column.value, type);
+  edit.selected.value = generateNode(edit.z.value, edit.row.value, edit.column.value, type);
   if (editTool.value == EditTool.Select){
     edit.paint(value: type);
   }

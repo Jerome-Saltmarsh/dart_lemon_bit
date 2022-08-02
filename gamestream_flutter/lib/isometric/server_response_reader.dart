@@ -337,7 +337,7 @@ class ServerResponseReader with ByteReader {
     final column = readInt();
     final type = readInt();
     grid[z][row][column] = generateNode(z, row, column, type);
-    edit.refreshType();
+    edit.refreshSelected();
     onGridChanged();
   }
 
