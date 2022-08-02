@@ -67,7 +67,7 @@ void gridForEachOfType(
       final rowValues = zValues[rowIndex];
       for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
         final t = rowValues[columnIndex];
-        if (t != type) continue;
+        if (t.type != type) continue;
         handler(zIndex, rowIndex, columnIndex, t.type);
       }
     }
