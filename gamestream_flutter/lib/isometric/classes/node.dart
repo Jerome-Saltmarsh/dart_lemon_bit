@@ -1,5 +1,5 @@
 
-
+import 'package:lemon_math/library.dart';
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/tile_size.dart';
 import 'package:bleed_common/wind.dart';
@@ -17,9 +17,15 @@ import '../variables/src_x_rain_falling.dart';
 abstract class Node {
   var bake = 0;
   var shade = 0;
-  var wind = 0;
+  var _wind = 0;
   var dstX = 0.0;
   var dstY = 0.0;
+
+  set wind (int value){
+     _wind = clamp(value, 0, windIndexStrong);
+  }
+
+  int get wind => _wind;
 
   late double order;
 
