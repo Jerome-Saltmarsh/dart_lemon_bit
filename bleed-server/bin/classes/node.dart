@@ -3,7 +3,6 @@
 import '../common/library.dart';
 import 'character.dart';
 import 'game.dart';
-import 'tile_node.dart';
 
 abstract class Node {
   bool getCollision(double x, double y, double z);

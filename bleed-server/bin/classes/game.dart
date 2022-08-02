@@ -300,7 +300,6 @@ extension GameFunctions on Game {
       onDamaged(target, src, damage);
     }
 
-    if (target is Character) {
       final isZombie = target is Zombie;
 
       if (destroyed) {
@@ -326,8 +325,6 @@ extension GameFunctions on Game {
           target.target = src;
         }
       }
-      return;
-    }
   }
 
   void _updatePlayersAndNpcs() {

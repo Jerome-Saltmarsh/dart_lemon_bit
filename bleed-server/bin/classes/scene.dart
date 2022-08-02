@@ -216,68 +216,6 @@ class Scene {
   bool getCollisionAt(double x, double y, double z) {
     return getNodeXYZ(x, y, z).getCollision(x, y, z);
 
-    var type = getNodeXYZ(x, y, z).type;
-    if (type == GridNodeType.Empty) return false;
-    if (GridNodeType.isSolid(type)) return true;
-
-    if (type == GridNodeType.Brick_Top){
-       return y % tileHeight > tileHeightHalf;
-    }
-
-    if (type == GridNodeType.Wood_Half_Row_1){
-      return (y % tileSize) > tileSizeHalf;
-    }
-
-    if (type == GridNodeType.Wood_Half_Row_2){
-      return (y % tileSize) <= tileSizeHalf;
-    }
-
-    if (type == GridNodeType.Wood_Half_Column_1){
-      return (x % tileSize) > tileSizeHalf;
-    }
-
-    if (type == GridNodeType.Wood_Half_Column_2){
-      return (x % tileSize) <= tileSizeHalf;
-    }
-
-    if (type == GridNodeType.Wood_Corner_Bottom){
-      return (y % tileSize) > tileSizeHalf ||  (x % tileSize) > tileSizeHalf;
-    }
-    if (type == GridNodeType.Wood_Corner_Top){
-
-      return (y % tileSize) < tileSizeHalf ||  (x % tileSize) < tileSizeHalf;
-    }
-    if (type == GridNodeType.Wood_Corner_Left){
-      return (y % tileSize) > tileSizeHalf ||  (x % tileSize) < tileSizeHalf;
-    }
-    if (type == GridNodeType.Wood_Corner_Right){
-      return (y % tileSize) < tileSizeHalf ||  (x % tileSize) > tileSizeHalf;
-    }
-
-    if (type == GridNodeType.Grass_Slope_Top) {
-
-    }
-
-    if (GridNodeType.isStairs(type)){
-      return getHeightAt(x, y, z) > z;
-    }
-    if (type == GridNodeType.Tree_Bottom || type == GridNodeType.Torch){
-      const treeRadius = 0.2;
-      final percRow = (x / 48.0) % 1.0;
-      if ((0.5 - percRow).abs() > treeRadius) return false;
-      final percColumn = (y / 48.0) % 1.0;
-      if ((0.5 - percColumn).abs() > treeRadius) return false;
-      return true;
-    }
-    if (type == GridNodeType.Fireplace){
-      const treeRadius = 0.8;
-      final percRow = (x / 48.0) % 1.0;
-      if ((0.5 - percRow).abs() > treeRadius) return false;
-      final percColumn = (y / 48.0) % 1.0;
-      if ((0.5 - percColumn).abs() > treeRadius) return false;
-      return true;
-    }
-    return false;
   }
 
   void resolveCharacterTileCollision(Character character, Game game) {
@@ -289,29 +227,8 @@ class Scene {
       character.zVelocity = 0;
     }
 
-    // var tileAtFeet = getNodeXYZ(character.x, character.y, character.z).type;
     var nodeAtFeet = getNodeXYZ(character.x, character.y, character.z);
     nodeAtFeet.resolveCharacterCollision(character, game);
-
-
-    // if (GridNodeType.isWater(tileAtFeet)) {
-    //    game.dispatchV3(GameEventType.Splash, character);
-    //    game.setCharacterStateDead(character);
-    //    return;
-    // }
-
-    // if (GridNodeType.isSolid(tileAtFeet)) {
-    //    character.z += 24 - (character.z % 24);
-    //    character.zVelocity = 0;
-    // } else
-    // if (GridNodeType.isStairs(tileAtFeet)){
-    //   character.z = getHeightAt(character.x, character.y, character.z);
-    //   character.zVelocity = 0;
-    // } else
-    // if (tileAtFeet == GridNodeType.Brick_Top){
-    //   character.z += 24 - (character.z % 24);
-    //   character.zVelocity = 0;
-    // }
 
     const distance = 3;
     final stepHeight = character.z + tileHeightHalf;
