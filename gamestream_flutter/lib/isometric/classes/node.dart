@@ -36,6 +36,7 @@ abstract class Node {
   }
 
   int get type;
+  String get name => GridNodeType.getName(type);
   bool get isEmpty => false;
   bool get renderable => true;
   bool get blocksPerception => true;

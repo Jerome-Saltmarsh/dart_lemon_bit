@@ -2,6 +2,7 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_show_game_dialog_canvas_size.dart';
+import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
@@ -29,10 +30,21 @@ Stack buildStackEdit() {
           children: [
             Column(
               children: [
-                container(child: "Paint", color: brownLight, toolTip: "Press F to paint. Press R to copy selected type"),
-                watch(edit.paintType, buildPaintType),
+                container(child: "Selected", color: brownLight),
+                container(
+                   child: Row(
+                     children: [
+                       container(child: "-", width: 50),
+                       watch(edit.z, (t) {
+                         return container(child: 'Z: $t', width: 92);
+                       }),
+                       container(child: "+", width: 50),
+                     ],
+                   )
+                ),
               ],
             ),
+            buildControlPaint(),
             buildWatchEditorTab(),
           ],
         ),
@@ -49,6 +61,15 @@ Stack buildStackEdit() {
       )
     ],
   );
+}
+
+Column buildControlPaint() {
+  return Column(
+            children: [
+              container(child: "Paint", color: brownLight, toolTip: "Press F to paint. Press R to copy selected type"),
+              watch(edit.paintType, buildPaintType),
+            ],
+          );
 }
 
 Widget buildPaintType(int type) =>

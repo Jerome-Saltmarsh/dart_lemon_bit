@@ -224,11 +224,6 @@ class Scene {
     character.z -= character.zVelocity;
     character.zVelocity += 0.98;
 
-    if (character.z <= 0) {
-      character.z = 0;
-      character.zVelocity = 0;
-    }
-
     var nodeAtFeet = getNodeXYZ(character.x, character.y, character.z);
     nodeAtFeet.resolveCharacterCollision(character, game);
 

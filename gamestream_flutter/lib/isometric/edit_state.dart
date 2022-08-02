@@ -16,6 +16,10 @@ final edit = EditState();
 
 class EditState {
 
+  void refreshType([int? val]){
+    type.value = grid[z.value][row.value][column.value];
+  }
+
   var row = Watch(0, clamp: (int value){
     if (value < 0) return 0;
     if (value >= gridTotalRows) return gridTotalRows - 1;
@@ -130,10 +134,6 @@ class EditState {
     row.value = player.indexRow;
     column.value = player.indexColumn;
     z.value = player.indexZ;
-  }
-
-  void refreshType(){
-    // type.value = gridGetType(z.value, row.value, column.value);
   }
 
   void delete(){
