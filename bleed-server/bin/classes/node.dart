@@ -291,7 +291,7 @@ class NodeBrickTop extends Node {
 class NodeWoodHalfRow1 extends Node {
   @override
   bool getCollision(double x, double y, double z) {
-    return (y % tileSize) < tileSizeHalf;
+    return (y % tileSize) > tileSizeHalf;
   }
 
   @override
@@ -306,7 +306,7 @@ class NodeWoodHalfRow1 extends Node {
 class NodeWoodHalfRow2 extends Node {
   @override
   bool getCollision(double x, double y, double z) {
-    return (y % tileSize) > tileSizeHalf;
+    return (y % tileSize) < tileSizeHalf;
   }
 
   @override
