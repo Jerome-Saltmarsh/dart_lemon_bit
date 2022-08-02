@@ -695,3 +695,43 @@ class NodeTileSouth extends GridNodeBasic {
   @override
   double get srcX => 9463;
 }
+
+class NodeGrassEdgeTop extends GridNodeBasic {
+  NodeGrassEdgeTop(int row, int column, int z) : super(row: row, column: column, z: z);
+
+  @override
+  double get srcX => 10042;
+
+  @override
+  int get type => GridNodeType.Grass_Edge_Top;
+}
+
+class NodeGrassEdgeRight extends GridNodeBasic {
+  NodeGrassEdgeRight(int row, int column, int z) : super(row: row, column: column, z: z);
+
+  @override
+  double get srcX => 9994;
+
+  @override
+  int get type => GridNodeType.Grass_Edge_Right;
+}
+
+class NodeGrassEdgeBottom extends GridNodeBasic {
+  NodeGrassEdgeBottom(int row, int column, int z) : super(row: row, column: column, z: z);
+
+  @override
+  double get srcX => 9946;
+
+  @override
+  int get type => GridNodeType.Grass_Edge_Bottom;
+}
+
+class NodeGrassEdgeLeft extends GridNodeBasic {
+  NodeGrassEdgeLeft(int row, int column, int z) : super(row: row, column: column, z: z);
+
+  @override
+  double get srcX => 9898;
+
+  @override
+  int get type => GridNodeType.Grass_Edge_Left;
+}

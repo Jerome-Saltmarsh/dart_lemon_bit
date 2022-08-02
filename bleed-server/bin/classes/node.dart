@@ -500,3 +500,43 @@ class NodeWoodCornerLeft extends Node {
   int get type => GridNodeType.Wood_Corner_Left;
 }
 
+
+class NodeGrassEdgeTop extends NodeSlope {
+  @override
+  double getHeightAt(double x, double y, double z) {
+    return z;
+  }
+
+  @override
+  int get type => GridNodeType.Grass_Edge_Top;
+}
+
+class NodeGrassEdgeRight extends NodeSlope {
+  @override
+  double getHeightAt(double x, double y, double z) {
+    return z;
+  }
+
+  @override
+  int get type => GridNodeType.Grass_Edge_Right;
+}
+
+class NodeGrassEdgeBottom extends NodeSlope {
+  @override
+  double getHeightAt(double x, double y, double z) {
+    return z;
+  }
+
+  @override
+  int get type => GridNodeType.Grass_Edge_Bottom;
+}
+
+class NodeGrassEdgeLeft extends NodeSlope {
+  @override
+  double getHeightAt(double x, double y, double z) {
+    return z;
+  }
+
+  @override
+  int get type => GridNodeType.Grass_Edge_Left;
+}

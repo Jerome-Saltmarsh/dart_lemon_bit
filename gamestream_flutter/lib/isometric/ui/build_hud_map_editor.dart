@@ -451,4 +451,8 @@ const editorSelectableGridTypes = [
     GridNodeType.Grass_Slope_Right,
     GridNodeType.Grass_Slope_Bottom,
     GridNodeType.Grass_Slope_Left,
+    GridNodeType.Grass_Edge_Top,
+    GridNodeType.Grass_Edge_Right,
+    GridNodeType.Grass_Edge_Bottom,
+    GridNodeType.Grass_Edge_Left,
 ];
