@@ -16,6 +16,9 @@ class Scene {
   final List<Character> characters;
   final List<EnemySpawn> enemySpawns;
 
+  double get gridRowLength => gridRows * tileSize;
+  double get gridColumnLength => gridColumns * tileSize;
+
   int? startHour;
   int? secondsPerFrames;
 

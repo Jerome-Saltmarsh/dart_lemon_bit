@@ -43,7 +43,18 @@ class NodeBoundary extends Node {
 
   @override
   void resolveCharacterCollision(Character character, Game game) {
-    // push the character back into the world
+    if (character.x < 0){
+      character.x = 0;
+    }
+    if (character.y < 0){
+      character.y = 0;
+    }
+    if (character.x > game.scene.gridRowLength) {
+      character.x = game.scene.gridRowLength;
+    }
+    if (character.y > game.scene.gridColumnLength) {
+      character.y = game.scene.gridColumnLength;
+    }
   }
 
   @override
