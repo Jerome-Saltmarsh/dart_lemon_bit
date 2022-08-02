@@ -88,9 +88,6 @@ void _updateParticle(Particle particle){
     return;
   }
 
-  final bounce = particle.zv < 0 && !airBorn;
-  particle.updateMotion();
-
   if (!airBorn){
     particle.z = (particle.indexZ + 1) * tileHeight;
     particle.applyFloorFriction();
@@ -99,6 +96,8 @@ void _updateParticle(Particle particle){
     particle.xv -= wind;
     particle.yv += wind;
   }
+  final bounce = particle.zv < 0 && !airBorn;
+  particle.updateMotion();
 
   if (particle.outOfBounds) return particle.deactivate();
 
