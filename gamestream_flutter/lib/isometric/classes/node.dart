@@ -435,8 +435,8 @@ class NodeWoodHalfRow2 extends GridNodeBasic {
   double get srcX => 8935;
 }
 
-class GidNodeTypeWoodHalfColumn1 extends GridNodeBasic {
-  GidNodeTypeWoodHalfColumn1(int row, int column, int z) : super(row: row, column: column, z: z);
+class NodeWoodHalfColumn1 extends GridNodeBasic {
+  NodeWoodHalfColumn1(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
   int get type => GridNodeType.Wood_Half_Column_1;

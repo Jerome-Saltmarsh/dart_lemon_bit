@@ -72,7 +72,7 @@ Node generateNode(int z, int row, int column, int type){
     case GridNodeType.Stairs_West:
       return NodeStairsWest(row, column, z);
     case GridNodeType.Wood_Half_Column_1:
-      return NodeWoodHalfColumn2(row, column, z);
+      return NodeWoodHalfColumn1(row, column, z);
     case GridNodeType.Wood_Half_Column_2:
       return NodeWoodHalfColumn2(row, column, z);
     case GridNodeType.Wood_Half_Row_1:
