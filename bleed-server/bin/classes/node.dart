@@ -379,18 +379,22 @@ class NodeStone extends NodeSolid {
   int get type => GridNodeType.Stone;
 }
 
-class NodeGrassSlopeTop extends Node {
-  @override
-  bool getCollision(double x, double y, double z) {
-    return false;
-  }
+class NodeGrassSlopeTop extends NodeSlope {
 
-  @override
-  void resolveCharacterCollision(Character character, Game game) {
-  }
 
   @override
   int get type => GridNodeType.Grass_Slope_Top;
+
+  @override
+  double getHeightAt(double x, double y, double z) {
+    final bottom = (z ~/ tileHeight) * tileHeight;
+    final percentageX = ((x % tileSize) / tileSize);
+    final percentageY = ((y % tileSize) / tileSize);
+    final total = percentageX + percentageY;
+    if (total < 1) return bottom;
+    final perc = total - 1.0;
+    return bottom + (tileHeight * perc);
+  }
 }
 
 class NodeGrassSlopeRight extends NodeSlope {
