@@ -378,46 +378,6 @@ class NodeRoofHaySouth extends GridNodeBasic {
   double get srcX => 9463;
 }
 
-class GridNodeRoofTileStairsSouth extends GridNodeBasic {
-  GridNodeRoofTileStairsSouth(int row, int column, int z) : super(row: row, column: column, z: z);
-
-  @override
-  int get type => GridNodeType.Stairs_South;
-
-  @override
-  double get srcX => 7398;
-}
-
-class GridNodeRoofTileStairsWest extends GridNodeBasic {
-  GridNodeRoofTileStairsWest(int row, int column, int z) : super(row: row, column: column, z: z);
-
-  @override
-  int get type => GridNodeType.Stairs_West;
-
-  @override
-  double get srcX => 7446;
-}
-
-class GridNodeRoofTileStairsNorth extends GridNodeBasic {
-  GridNodeRoofTileStairsNorth(int row, int column, int z) : super(row: row, column: column, z: z);
-
-  @override
-  int get type => GridNodeType.Stairs_North;
-
-  @override
-  double get srcX => 7494;
-}
-
-class GridNodeRoofTileStairsEast extends GridNodeBasic {
-  GridNodeRoofTileStairsEast(int row, int column, int z) : super(row: row, column: column, z: z);
-
-  @override
-  int get type => GridNodeType.Stairs_East;
-
-  @override
-  double get srcX => 7542;
-}
-
 class NodeWoodHalfRow1 extends GridNodeBasic {
   NodeWoodHalfRow1(int row, int column, int z) : super(row: row, column: column, z: z);
 
@@ -683,7 +643,7 @@ class NodeStairsEast extends GridNodeBasic {
   int get type => GridNodeType.Stairs_East;
 
   @override
-  double get srcX => 7494;
+  double get srcX => 7542;
 }
 
 class NodeStairsSouth extends GridNodeBasic {
