@@ -273,11 +273,11 @@ class NodeGrassLong extends Node {
   void handleRender() {
     switch (wind) {
       case windIndexCalm:
-        return renderBlockSrcX(4856);
+        return renderSrcX(4856);
       case windIndexGentle:
-        return renderBlockSrcX(4856 + ((((rowMinusColumn) + animationFrameGrass) % 4) * 48));
+        return renderSrcX(4856 + ((((rowMinusColumn) + animationFrameGrass) % 4) * 48));
       default:
-        return renderBlockSrcX(5048 + ((((rowMinusColumn) + animationFrameGrass) % 4) * 48));
+        return renderSrcX(5048 + ((((rowMinusColumn) + animationFrameGrass) % 4) * 48));
     }
   }
   @override
