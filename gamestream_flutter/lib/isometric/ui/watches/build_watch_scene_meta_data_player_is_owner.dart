@@ -33,11 +33,11 @@ Stack buildStackEdit() {
                 container(
                    child: Row(
                      children: [
-                       container(child: "-", width: 50),
+                       container(child: "-", width: 50, action: ()=> edit.z.value--, toolTip: "Shift + Down Arrow"),
                        watch(edit.z, (t) {
                          return container(child: 'Z: $t', width: 92);
                        }),
-                       container(child: "+", width: 50),
+                       container(child: "+", width: 50, action: ()=> edit.z.value++, toolTip: "Shift + Up Arrow"),
                      ],
                    )
                 ),
