@@ -3,10 +3,10 @@ import 'ai.dart';
 import 'character.dart';
 import 'enemy_spawn.dart';
 import 'game.dart';
-import 'tile_node.dart';
+import 'node.dart';
 
 class Scene {
-  final List<List<List<int>>> grid;
+  final List<List<List<Node>>> grid;
 
   var gridHeight = 0;
   var gridRows = 0;
@@ -30,7 +30,7 @@ class Scene {
 
   int getGridType(int z, int row, int column){
      if (outOfBounds(z, row, column)) return GridNodeType.Boundary;
-     return grid[z][row][column];
+     return grid[z][row][column].type;
   }
 
   bool outOfBounds(int z, int row, int column){
@@ -49,24 +49,6 @@ class Scene {
     gridColumns = grid[0][0].length;
   }
 
-  void gridForeach({
-    required bool Function(int type) where,
-    required Function(int z, int row, int column, int type) apply,
-}){
-    for (var zIndex = 0; zIndex < gridHeight; zIndex++) {
-      final zValues = grid[zIndex];
-      for (var rowIndex = 0; rowIndex < gridRows; rowIndex++) {
-        final rowValues = zValues[rowIndex];
-        for (var columnIndex = 0; columnIndex < gridColumns; columnIndex++) {
-          final t = rowValues[columnIndex];
-          if (!where(t)) continue;
-          apply(zIndex, rowIndex, columnIndex, t);
-        }
-      }
-    }
-  }
-
-
   bool findByType(int type, void Function(int z, int row, int column) callback) {
      for (var zI = 0; zI < gridHeight; zI++){
        final z = grid[zI];
@@ -82,136 +64,135 @@ class Scene {
      return false;
   }
 
-  int getGridBlockTypeAtXYZ(double x, double y, double z){
-    if (z < 0) return GridNodeType.Boundary;
-    if (x < 0) return GridNodeType.Boundary;
-    if (y < 0) return GridNodeType.Boundary;
+  Node getNodeXYZ(double x, double y, double z){
+    if (z < 0) return Node.boundary;
+    if (x < 0) return Node.boundary;
+    if (y < 0) return Node.boundary;
     final row = x ~/ tileSize;
-    if (row >= gridRows) return GridNodeType.Boundary;
+    if (row >= gridRows) return Node.boundary;
     final column = y ~/ tileSize;
-    if (column >= gridColumns) return GridNodeType.Boundary;
+    if (column >= gridColumns) return Node.boundary;
     final height = z ~/ tileSizeHalf;
-    if (height >= gridHeight) return GridNodeType.Empty;
+    if (height >= gridHeight) return Node.boundary;
     return grid[height][row][column];
   }
 
-  bool visitDirection(int direction, Node from) {
-    if (direction == Direction.North_West && !from.up.open && !from.left.open) return false;
-    if (direction == Direction.South_West && !from.down.open && !from.left.open) return false;
-    if (direction == Direction.South_East && !from.down.open && !from.right.open) return false;
-    if (direction == Direction.North_East && !from.up.open && !from.right.open) return false;
-    return visitNode(from.getNodeByDirection(direction), from);
-  }
+  // bool visitDirection(int direction, Node from) {
+  //   if (direction == Direction.North_West && !from.up.open && !from.left.open) return false;
+  //   if (direction == Direction.South_West && !from.down.open && !from.left.open) return false;
+  //   if (direction == Direction.South_East && !from.down.open && !from.right.open) return false;
+  //   if (direction == Direction.North_East && !from.up.open && !from.right.open) return false;
+  //   return visitNode(from.getNodeByDirection(direction), from);
+  // }
 
-  bool visitNodeFirst(Node node){
-    node.depth = 0;
-    node.previous = null;
-    node.searchId = pathFindSearchID;
+  // bool visitNodeFirst(Node node){
+  //   node.depth = 0;
+  //   node.previous = null;
+  //   node.searchId = pathFindSearchID;
+  //
+  //   if (!node.open) {
+  //     return false;
+  //   }
+  //
+  //   if (node.depth == 50 || node == pathFindDestination) {
+  //     var current = node.previous;
+  //     final pathX = pathFindAI.pathX;
+  //     final pathY = pathFindAI.pathY;
+  //     var index = 0;
+  //     while (current != null) {
+  //       pathX[index] = current.x;
+  //       pathY[index] = current.y;
+  //       current = current.previous;
+  //       index++;
+  //     }
+  //     pathFindAI.pathIndex = index - 2;
+  //     return true;
+  //   }
+  //
+  //   final direction = parseRowsAndColumnsToDirection(
+  //     pathFindDestination.row - node.row,
+  //     pathFindDestination.column - node.column,
+  //   );
+  //   node.reserveSurroundingNodes();
+  //
+  //   if (visitDirection(direction, node)) return true;
+  //
+  //   final directionIndex = direction;
+  //
+  //   for (var i = 1; i < 4; i++) {
+  //     final leftDirection = clampDirection(directionIndex - i);
+  //     if (visitDirection(leftDirection, node)) {
+  //       return true;
+  //     }
+  //     final rightDirection = clampDirection(directionIndex + i);
+  //     if (visitDirection(rightDirection, node)) {
+  //       return true;
+  //     }
+  //   }
+  //
+  //   final directionBehind = clampDirection(directionIndex + 4);
+  //   return visitDirection(directionBehind, node);
+  // }
 
-    if (!node.open) {
-      return false;
-    }
-
-    if (node.depth == 50 || node == pathFindDestination) {
-      var current = node.previous;
-      final pathX = pathFindAI.pathX;
-      final pathY = pathFindAI.pathY;
-      var index = 0;
-      while (current != null) {
-        pathX[index] = current.x;
-        pathY[index] = current.y;
-        current = current.previous;
-        index++;
-      }
-      pathFindAI.pathIndex = index - 2;
-      return true;
-    }
-
-    final direction = parseRowsAndColumnsToDirection(
-      pathFindDestination.row - node.row,
-      pathFindDestination.column - node.column,
-    );
-    node.reserveSurroundingNodes();
-
-    if (visitDirection(direction, node)) return true;
-
-    final directionIndex = direction;
-
-    for (var i = 1; i < 4; i++) {
-      final leftDirection = clampDirection(directionIndex - i);
-      if (visitDirection(leftDirection, node)) {
-        return true;
-      }
-      final rightDirection = clampDirection(directionIndex + i);
-      if (visitDirection(rightDirection, node)) {
-        return true;
-      }
-    }
-
-    final directionBehind = clampDirection(directionIndex + 4);
-    return visitDirection(directionBehind, node);
-  }
-
-  bool visitNode(Node node, Node previous) {
-    if (!node.visitable) return false;
-
-    if (node.reserveId == pathFindSearchID){
-      if (node.reserved != previous){
-        return visitNode(node, node.reserved!);
-      }
-    }
-
-    node.depth = previous.depth + 1;
-
-    node.previous = previous;
-    node.searchId = pathFindSearchID;
-
-    if (node.depth == 60 || node == pathFindDestination) {
-      var current = node.previous;
-      final pathX = pathFindAI.pathX;
-      final pathY = pathFindAI.pathY;
-      var index = 0;
-      while (current != null) {
-        pathX[index] = current.x;
-        pathY[index] = current.y;
-        current = current.previous;
-        index++;
-      }
-      pathFindAI.pathIndex = index - 2;
-      return true;
-    }
-
-    final direction = parseRowsAndColumnsToDirection(
-      pathFindDestination.row - node.row,
-      pathFindDestination.column - node.column,
-    );
-    node.reserveSurroundingNodes();
-
-    if (visitDirection(direction, node)) return true;
-
-    final directionIndex = direction;
-
-    for (var i = 1; i < 4; i++) {
-      final leftDirection = clampDirection(directionIndex - i);
-      if (visitDirection(leftDirection, node)) {
-        return true;
-      }
-      final rightDirection = clampDirection(directionIndex + i);
-      if (visitDirection(rightDirection, node)) {
-        return true;
-      }
-    }
-
-    final directionBehind = clampDirection(directionIndex + 4);
-    return visitDirection(directionBehind, node);
-  }
+  // bool visitNode(Node node, Node previous) {
+  //   if (!node.visitable) return false;
+  //
+  //   if (node.reserveId == pathFindSearchID){
+  //     if (node.reserved != previous){
+  //       return visitNode(node, node.reserved!);
+  //     }
+  //   }
+  //
+  //   node.depth = previous.depth + 1;
+  //
+  //   node.previous = previous;
+  //   node.searchId = pathFindSearchID;
+  //
+  //   if (node.depth == 60 || node == pathFindDestination) {
+  //     var current = node.previous;
+  //     final pathX = pathFindAI.pathX;
+  //     final pathY = pathFindAI.pathY;
+  //     var index = 0;
+  //     while (current != null) {
+  //       pathX[index] = current.x;
+  //       pathY[index] = current.y;
+  //       current = current.previous;
+  //       index++;
+  //     }
+  //     pathFindAI.pathIndex = index - 2;
+  //     return true;
+  //   }
+  //
+  //   final direction = parseRowsAndColumnsToDirection(
+  //     pathFindDestination.row - node.row,
+  //     pathFindDestination.column - node.column,
+  //   );
+  //   node.reserveSurroundingNodes();
+  //
+  //   if (visitDirection(direction, node)) return true;
+  //
+  //   final directionIndex = direction;
+  //
+  //   for (var i = 1; i < 4; i++) {
+  //     final leftDirection = clampDirection(directionIndex - i);
+  //     if (visitDirection(leftDirection, node)) {
+  //       return true;
+  //     }
+  //     final rightDirection = clampDirection(directionIndex + i);
+  //     if (visitDirection(rightDirection, node)) {
+  //       return true;
+  //     }
+  //   }
+  //
+  //   final directionBehind = clampDirection(directionIndex + 4);
+  //   return visitDirection(directionBehind, node);
+  // }
 
   double getHeightAt(double x, double y, double z){
-    var type = getGridBlockTypeAtXYZ(x, y, z);
+    var type = getNodeXYZ(x, y, z).type;
     final bottom = (z ~/ tileHeight) * tileHeight;
     if (type == GridNodeType.Empty) return bottom;
     if (type == GridNodeType.Boundary) return bottom;
-    if (type == GridNodeType.Bricks) return bottom;
 
     if (GridNodeType.isSlopeNorth(type)){
       final percentage = 1 - ((x % tileSize) / tileSize);
@@ -233,7 +214,9 @@ class Scene {
   }
 
   bool getCollisionAt(double x, double y, double z) {
-    var type = getGridBlockTypeAtXYZ(x, y, z);
+    return getNodeXYZ(x, y, z).getCollision(x, y, z);
+
+    var type = getNodeXYZ(x, y, z).type;
     if (type == GridNodeType.Empty) return false;
     if (GridNodeType.isSolid(type)) return true;
 
@@ -261,6 +244,7 @@ class Scene {
       return (y % tileSize) > tileSizeHalf ||  (x % tileSize) > tileSizeHalf;
     }
     if (type == GridNodeType.Wood_Corner_Top){
+
       return (y % tileSize) < tileSizeHalf ||  (x % tileSize) < tileSizeHalf;
     }
     if (type == GridNodeType.Wood_Corner_Left){
@@ -305,26 +289,29 @@ class Scene {
       character.zVelocity = 0;
     }
 
-    var tileAtFeet = getGridBlockTypeAtXYZ(character.x, character.y, character.z);
+    // var tileAtFeet = getNodeXYZ(character.x, character.y, character.z).type;
+    var nodeAtFeet = getNodeXYZ(character.x, character.y, character.z);
+    nodeAtFeet.resolveCharacterCollision(character, game);
 
-    if (GridNodeType.isWater(tileAtFeet)) {
-       game.dispatchV3(GameEventType.Splash, character);
-       game.setCharacterStateDead(character);
-       return;
-    }
 
-    if (GridNodeType.isSolid(tileAtFeet)) {
-       character.z += 24 - (character.z % 24);
-       character.zVelocity = 0;
-    } else
-    if (GridNodeType.isStairs(tileAtFeet)){
-      character.z = getHeightAt(character.x, character.y, character.z);
-      character.zVelocity = 0;
-    } else
-    if (tileAtFeet == GridNodeType.Brick_Top){
-      character.z += 24 - (character.z % 24);
-      character.zVelocity = 0;
-    }
+    // if (GridNodeType.isWater(tileAtFeet)) {
+    //    game.dispatchV3(GameEventType.Splash, character);
+    //    game.setCharacterStateDead(character);
+    //    return;
+    // }
+
+    // if (GridNodeType.isSolid(tileAtFeet)) {
+    //    character.z += 24 - (character.z % 24);
+    //    character.zVelocity = 0;
+    // } else
+    // if (GridNodeType.isStairs(tileAtFeet)){
+    //   character.z = getHeightAt(character.x, character.y, character.z);
+    //   character.zVelocity = 0;
+    // } else
+    // if (tileAtFeet == GridNodeType.Brick_Top){
+    //   character.z += 24 - (character.z % 24);
+    //   character.zVelocity = 0;
+    // }
 
     const distance = 3;
     final stepHeight = character.z + tileHeightHalf;
@@ -379,13 +366,3 @@ int parseRowsAndColumnsToDirection(int rows, int columns) {
 // }
 //
 
-void repairScene(Scene scene){
-  scene.gridForeach(
-      where: ((type) => type == GridNodeType.Tree_Bottom),
-      apply: (int z, int row, int column, int type){
-          if (z + 1 < tileHeight){
-            scene.grid[z + 1][row][column] = GridNodeType.Tree_Top;
-          }
-      }
-  );
-}

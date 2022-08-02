@@ -11,12 +11,12 @@ import '../convert/convert_card_type_to_card.dart';
 import '../dark_age/areas/dark_age_area.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
+import '../factories/generate_node.dart';
 import '../utilities.dart';
-import 'enemy_spawn.dart';
 import 'position3.dart';
-import 'library.dart';
 import 'rat.dart';
 import 'zombie.dart';
+import 'library.dart';
 
 
 class Player extends Character with ByteWriter {
@@ -282,17 +282,9 @@ class Player extends Character with ByteWriter {
     if (scene.outOfBounds(z, row, column)) return;
     final previousType = scene.getGridType(z, row, column);
 
-    if (previousType == GridNodeType.Enemy_Spawn){
-      scene.enemySpawns.removeWhere((enemySpawn) =>
-      enemySpawn.z == z &&
-          enemySpawn.row == row &&
-          enemySpawn.column == column
-      );
-    };
-
     if (previousType == type) return;
     scene.dirty = true;
-    scene.grid[z][row][column] = type;
+    scene.grid[z][row][column] = generateNode(type);
     game.players.forEach((player) {
       player.writeByte(ServerResponse.Block_Set);
       player.writeInt(z);
@@ -300,10 +292,6 @@ class Player extends Character with ByteWriter {
       player.writeInt(column);
       player.writeInt(type);
     });
-
-    if (type == GridNodeType.Enemy_Spawn){
-      scene.enemySpawns.add(EnemySpawn(z: z, row: row, column: column, health: 5));
-    }
   }
 
   void changeGame(Game to){
@@ -607,7 +595,7 @@ extension PlayerProperties on Player {
       for (var row = 0; row < totalRows; row++){
         final r = plain[row];
         for (var column = 0; column < totalColumns; column++){
-           writeByte(r[column]);
+           writeByte(r[column].type);
         }
       }
     }

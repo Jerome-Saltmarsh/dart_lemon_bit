@@ -121,7 +121,7 @@ abstract class Character extends Collider with Team, Velocity, Material {
   }
 
   int getGridTypeInDirection({required Game game, required double angle, required double distance}){
-    return game.scene.getGridBlockTypeAtXYZ(x + getAdjacent(angle, distance), y + getOpposite(angle, distance), z + tileHeightHalf);
+    return game.scene.getNodeXYZ(x + getAdjacent(angle, distance), y + getOpposite(angle, distance), z + tileHeightHalf).type;
   }
 
   void updateCharacter(Game game){

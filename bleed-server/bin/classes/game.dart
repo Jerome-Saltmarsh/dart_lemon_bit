@@ -22,7 +22,6 @@ import 'position3.dart';
 import 'projectile.dart';
 import 'rat.dart';
 import 'scene.dart';
-import 'tile_node.dart';
 import 'weapon.dart';
 import 'zombie.dart';
 
@@ -432,7 +431,7 @@ extension GameFunctions on Game {
       if (!projectile.active) continue;
       if (projectile.collideWithEnvironment) continue;
       if (scene.getCollisionAt(projectile.x, projectile.y, projectile.z)) {
-        var type = scene.getGridBlockTypeAtXYZ(projectile.x, projectile.y, projectile.z);
+        var type = scene.getNodeXYZ(projectile.x, projectile.y, projectile.z).type;
         if (type == GridNodeType.Tree_Bottom){
           dispatch(GameEventType.Material_Struck_Wood, projectile.x, projectile.y, projectile.z);
         }
@@ -891,13 +890,13 @@ extension GameFunctions on Game {
     // npcSetPathToTileNode(ai, scene.getNodeByPosition(position));
   }
 
-  void npcSetPathToTileNode(AI ai, Node node) {
-    pathFindDestination = node;
-    pathFindAI = ai;
-    pathFindSearchID++;
-    ai.pathIndex = -1;
-    // scene.visitNodeFirst(scene.getNodeByPosition(ai));
-  }
+  // void npcSetPathToTileNode(AI ai, Node node) {
+  //   pathFindDestination = node;
+  //   pathFindAI = ai;
+  //   pathFindSearchID++;
+  //   ai.pathIndex = -1;
+  //   // scene.visitNodeFirst(scene.getNodeByPosition(ai));
+  // }
 
   void _updateCharacterFrames() {
     const characterFramesChange = 6;

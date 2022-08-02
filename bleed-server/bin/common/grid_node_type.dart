@@ -11,9 +11,8 @@ class GridNodeType {
   static const Torch = 9;
   static const Tree_Bottom = 10;
   static const Tree_Top = 11;
-  static const Player_Spawn = 12;
   static const Grass_Long = 13;
-  static const Enemy_Spawn = 17;
+  // static const Enemy_Spawn = 17;
   static const Rain_Falling = 18;
   static const Rain_Landing = 19;
   static const Fireplace = 20;
@@ -112,9 +111,8 @@ class GridNodeType {
     Torch,
     Tree_Bottom,
     Tree_Top,
-    Player_Spawn,
     Grass_Long,
-    Enemy_Spawn,
+    // Enemy_Spawn,
     Rain_Falling,
     Rain_Landing,
     Fireplace,
@@ -137,9 +135,8 @@ class GridNodeType {
        Torch: 'Torch',
        Tree_Bottom: 'Tree Bottom',
        Tree_Top: 'Tree Top',
-       Player_Spawn: 'Player Spawn',
        Grass_Long: 'Grass Long',
-       Enemy_Spawn: 'Enemy Spawn',
+       // Enemy_Spawn: 'Enemy Spawn',
        Rain_Falling: 'Rain Falling',
        Rain_Landing: 'Rain Landing',
        Fireplace: 'Fireplace',

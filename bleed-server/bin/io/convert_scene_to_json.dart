@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:typedef/json.dart';
 
+import '../classes/node.dart';
 import '../classes/scene.dart';
 import 'convert_enemy_spawn_to_json.dart';
 
@@ -16,7 +17,7 @@ String convertSceneToString(Scene scene){
    return jsonEncode(json);
 }
 
-List<int> flattenGrid(List<List<List<int>>> grid) {
+List<int> flattenGrid(List<List<List<Node>>> grid) {
   final height = grid.length;
   final rows = grid[0].length;
   final columns = grid[0][0].length;
@@ -24,7 +25,7 @@ List<int> flattenGrid(List<List<List<int>>> grid) {
   for (var z = 0; z < height; z++){
     for (var row = 0; row < rows; row++){
       for (var column = 0; column < columns; column++){
-        flattened.add(grid[z][row][column]);
+        flattened.add(grid[z][row][column].type);
       }
     }
   }
