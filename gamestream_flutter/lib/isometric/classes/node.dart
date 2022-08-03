@@ -155,7 +155,7 @@ class NodeBricks extends GridNodeBasic {
   int get type => GridNodeType.Bricks;
 
   @override
-  double get srcX => 7110;
+  double get srcX => 7104;
 }
 
 class NodeGrass extends Node {
