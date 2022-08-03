@@ -81,8 +81,6 @@ class EditState {
     if (left.isGrass && right.isEmpty) {
       type = GridNodeType.Grass_Slope_West;
     }
-
-
     if (left.isGrassSlopeSouth && below.isGrassSlopeWest){
       type = GridNodeType.Grass_Slope_Top;
     }
@@ -96,13 +94,24 @@ class EditState {
       type = GridNodeType.Grass_Slope_Left;
     }
 
-    if (left.isGrassSlopeNorth && below.isGrassSlopeEast){
+    if (above.isGrassSlopeWest && right.isGrassSlopeSouth){
       type = GridNodeType.Grass_Edge_Top;
     }
     if (right.isGrassSlopeNorth && below.isGrassSlopeWest){
       type = GridNodeType.Grass_Edge_Right;
     }
+    if (left.isGrassSlopeNorth && below.isGrassSlopeEast){
+      type = GridNodeType.Grass_Edge_Bottom;
+    }
+    if (above.isGrassSlopeEast && left.isGrassSlopeSouth){
+      type = GridNodeType.Grass_Edge_Left;
+    }
 
+    if (type != GridNodeType.Grass){
+      if (edit.selectedType == type){
+        type = GridNodeType.Grass;
+      }
+    }
     sendClientRequestSetBlock(row, column, z, type);
   }
 
