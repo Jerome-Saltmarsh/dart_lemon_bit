@@ -230,7 +230,6 @@ class RenderOrderGrid extends RenderOrder {
   var screenBottomRightRow = 0;
   var gridTotalColumnsMinusOne = 0;
   var gridZHalf = 0;
-  late List<List<Node>> plain;
   var totalRendered = 0;
 
   var playerColumnRow = 0;
@@ -299,7 +298,6 @@ class RenderOrderGrid extends RenderOrder {
     orderZ = 0;
     gridZHalf = 0;
     dstY = 0;
-    plain = grid[gridZ];
     gridTotalColumnsMinusOne = gridTotalColumns - 1;
     playerZ = player.indexZ;
     playerRow = player.indexRow;
@@ -369,7 +367,6 @@ class RenderOrderGrid extends RenderOrder {
   void onZChanged(){
     minColumn = convertWorldToColumnSafe(screenRight, screenTop, gridZ * tileSize);
     maxRow = convertWorldToRowSafe(screenRight, screenBottom, gridZ * tileSize);
-    plain = grid[gridZ];
   }
 
   void nextGridNode(){
@@ -406,7 +403,7 @@ class RenderOrderGrid extends RenderOrder {
         if (dstY > screenTop && dstY < screenBottom) break;
       }
     }
-    node = plain[gridRow][gridColumn];
+    node = grid[gridZ][gridRow][gridColumn];
   }
 
   void shiftIndexDown(){
