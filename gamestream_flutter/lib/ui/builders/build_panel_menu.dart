@@ -35,7 +35,7 @@ Widget buildButtonTogglePlayMode() {
     if (!isOwner) return const SizedBox();
     return watch(playMode, (mode) {
       return container(
-          toolTip: "(Tab)",
+          toolTip: "Tab",
           child: mode == Mode.Play ? "EDIT" : "PLAY",
           action: actionPlayModeToggle,
           color: green,

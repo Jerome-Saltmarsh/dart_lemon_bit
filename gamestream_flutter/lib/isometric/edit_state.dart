@@ -1,4 +1,5 @@
 import 'package:bleed_common/grid_node_type.dart';
+import 'package:gamestream_flutter/isometric/classes/node_extensions.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_editor_column_changed.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_editor_z_changed.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
@@ -53,8 +54,45 @@ class EditState {
   }
 
   void paintIfEmpty(int row, int column, int z, int type){
-    final t = grid[z][row][column];
-    // if (!GridNodeType.isRainOrEmpty(t) && t != GridNodeType.Grass_Long) return;
+    if (outOfBounds(z, row, column)) return;
+    // if (!GridNodeType.isRainOrEmpty(selectedType) && selectedType != GridNodeType.Grass_Long) return;
+    sendClientRequestSetBlock(row, column, z, type);
+  }
+
+  void paintSlope(int row, int column, int z){
+    if (outOfBounds(z, row, column)) return;
+    // final current = getNode(z, row, column);
+
+    final above = getNode(z, row - 1, column);
+    final below = getNode(z, row + 1, column);
+    final left = getNode(z, row, column + 1);
+    final right = getNode(z, row, column - 1);
+    var type = GridNodeType.Grass;
+
+    if (above.isGrass && below.isEmpty){
+       type = GridNodeType.Grass_Slope_North;
+    }
+    if (right.isGrass && left.isEmpty){
+      type = GridNodeType.Grass_Slope_East;
+    }
+    if (above.isGrass && below.isEmpty){
+      type = GridNodeType.Grass_Slope_North;
+    }
+    if (left.isGrass && right.isEmpty) {
+      type = GridNodeType.Grass_Slope_South;
+    }
+    if (above.isGrassSlopeEast && right.isGrassSlopeNorth){
+      type = GridNodeType.Grass_Slope_Bottom;
+    }
+    if (above.isGrassSlopeWest && left.isGrassSlopeNorth){
+      type = GridNodeType.Grass_Slope_Right;
+    }
+
+
+    if (right.isGrassSlopeNorth && below.isGrassSlopeWest){
+      type = GridNodeType.Grass_Edge_Right;
+    }
+
     sendClientRequestSetBlock(row, column, z, type);
   }
 

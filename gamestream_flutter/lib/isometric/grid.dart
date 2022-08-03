@@ -29,6 +29,21 @@ var gridColumnLength = 0.0;
 var gridZLength = 0.0;
 
 
+bool outOfBounds(int z, int row, int column){
+   if (z < 0) return true;
+   if (z >= gridTotalZ) return true;
+   if (row < 0) return true;
+   if (row >= gridTotalRows) return true;
+   if (column < 0) return true;
+   if (column >= gridTotalColumns) return true;
+   return false;
+}
+
+Node getNode(int z, int row, int column) {
+  if (outOfBounds(z, row, column)) return Node.boundary;
+  return grid[z][row][column];
+}
+
 void toggleShadows () => gridShadows.value = !gridShadows.value;
 
 void actionSetAmbientShadeToHour(){

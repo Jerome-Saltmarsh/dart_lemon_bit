@@ -8,6 +8,11 @@ import 'package:gamestream_flutter/isometric/grid.dart';
 import '../../network/send_client_request.dart';
 
 class EditorActions {
+
+  int get row => edit.row.value;
+  int get column => edit.column.value;
+  int get z => edit.z.value;
+
   void increaseCanvasSizeZ(){
     sendClientRequestSetCanvasSize(gridTotalZ + 1, gridTotalRows, gridTotalColumns);
   }
@@ -22,24 +27,21 @@ class EditorActions {
 
   void raise(){
     edit.selectPlayerIfPlayerMode();
-      if (GridNodeType.isRainOrEmpty(edit.selectedType) ||
-          GridNodeType.isGrassSlope(edit.selectedType) ||
-          GridNodeType.isTree(edit.selectedType) ||
-          edit.selectedType == GridNodeType.Grass_Long){
-         edit.paintGrass();
-      }
-      if (edit.row.value > 0){
-          edit.paintIfEmpty(edit.row.value -1, edit.column.value, edit.z.value, GridNodeType.Grass_Slope_South);
-      }
-      if (edit.row.value < gridTotalRows - 1){
-        edit.paintIfEmpty(edit.row.value + 1, edit.column.value, edit.z.value, GridNodeType.Grass_Slope_North);
-      }
-      if (edit.column.value > 0){
-        edit.paintIfEmpty(edit.row.value, edit.column.value - 1, edit.z.value, GridNodeType.Grass_Slope_West);
-      }
-      if (edit.column.value < gridTotalColumns - 1){
-        edit.paintIfEmpty(edit.row.value, edit.column.value + 1, edit.z.value, GridNodeType.Grass_Slope_East);
-      }
+      // if (GridNodeType.isRainOrEmpty(edit.selectedType) ||
+      //     GridNodeType.isGrassSlope(edit.selectedType) ||
+      //     GridNodeType.isTree(edit.selectedType) ||
+      //     edit.selectedType == GridNodeType.Grass_Long){
+      //    edit.paintGrass();
+      // }
+      edit.paintSlope(row, column, z);
+        // edit.paintIfEmpty(row - 1, column, z, GridNodeType.Grass_Slope_South);
+        // edit.paintIfEmpty(row - 1, column - 1, z, GridNodeType.Grass_Slope_Top);
+        // edit.paintIfEmpty(row + 1, column, z, GridNodeType.Grass_Slope_North);
+        // edit.paintIfEmpty(row - 1, column + 1, z, GridNodeType.Grass_Slope_Left);
+        // edit.paintIfEmpty(row, column - 1, z, GridNodeType.Grass_Slope_West);
+        // edit.paintIfEmpty(row + 1, column + 1, z, GridNodeType.Grass_Slope_Bottom);
+        // edit.paintIfEmpty(row, column + 1, z, GridNodeType.Grass_Slope_East);
+        // edit.paintIfEmpty(row + 1, column - 1, z, GridNodeType.Grass_Slope_Right);
   }
 
   void lower(){
@@ -52,12 +54,10 @@ class EditorActions {
   }
 
   void clear(){
-    final r = edit.row.value;
-    final c = edit.column.value;
     for (var z = 1 ; z < gridTotalZ; z++) {
-      sendClientRequestSetBlock(r, c, z, GridNodeType.Empty);
+      sendClientRequestSetBlock(row, column, z, GridNodeType.Empty);
     }
-    sendClientRequestSetBlock(r, c, 0, edit.paintType.value);
+    sendClientRequestSetBlock(row, column, 0, edit.paintType.value);
   }
 }
 
