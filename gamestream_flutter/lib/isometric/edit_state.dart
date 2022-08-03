@@ -224,8 +224,7 @@ class EditState {
     column.value = player.indexColumn;
   }
 
-  void paint({int? value, bool selectPlayerIfPlay = true}){
-
+  void paint({int? value, bool selectPlayerIfPlay = true}) {
     if (modeIsPlay && selectPlayerIfPlay){
       selectPlayer();
     }
@@ -239,16 +238,7 @@ class EditState {
     }
 
     deleteIfTree();
-
-    if (selectedType != paintType.value){
-      return sendClientRequestSetBlock(row.value, column.value, z.value, paintType.value);
-    }
-
-    if (GridNodeType.isGrassSlope(selectedType)){
-      for (var zIndex = 0; zIndex < z.value; zIndex++){
-        sendClientRequestSetBlock(row.value, column.value, zIndex, GridNodeType.Grass);
-      }
-    }
+    return sendClientRequestSetBlock(row.value, column.value, z.value, paintType.value);
   }
 }
 
