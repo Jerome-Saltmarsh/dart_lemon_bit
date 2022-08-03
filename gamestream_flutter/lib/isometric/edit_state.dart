@@ -75,20 +75,30 @@ class EditState {
     if (left.isEmpty && right.isGrass) {
       type = GridNodeType.Grass_Slope_East;
     }
+    if (below.isGrass && above.isEmpty){
+      type = GridNodeType.Grass_Slope_South;
+    }
     if (left.isGrass && right.isEmpty) {
       type = GridNodeType.Grass_Slope_West;
     }
-    if (above.isGrassSlopeEast && right.isGrassSlopeNorth){
-      type = GridNodeType.Grass_Slope_Bottom;
+
+
+    if (left.isGrassSlopeSouth && below.isGrassSlopeWest){
+      type = GridNodeType.Grass_Slope_Top;
     }
     if (above.isGrassSlopeWest && left.isGrassSlopeNorth){
       type = GridNodeType.Grass_Slope_Right;
+    }
+    if (above.isGrassSlopeEast && right.isGrassSlopeNorth){
+      type = GridNodeType.Grass_Slope_Bottom;
     }
     if (right.isGrassSlopeSouth && below.isGrassSlopeEast){
       type = GridNodeType.Grass_Slope_Left;
     }
 
-
+    if (left.isGrassSlopeNorth && below.isGrassSlopeEast){
+      type = GridNodeType.Grass_Edge_Top;
+    }
     if (right.isGrassSlopeNorth && below.isGrassSlopeWest){
       type = GridNodeType.Grass_Edge_Right;
     }
