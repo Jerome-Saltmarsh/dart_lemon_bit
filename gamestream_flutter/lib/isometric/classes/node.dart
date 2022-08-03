@@ -168,8 +168,9 @@ class NodeGrass extends Node {
 
   @override
   void handleRender() {
-    if (wind == windIndexCalm) return renderSrcX(5267);
-    return renderSrcX(5267 + ((((rowMinusColumn) + animationFrameGrassShort) % 6) * 48));
+    renderSrcX(7158);
+    // if (wind == windIndexCalm) return renderSrcX(5267);
+    // return renderSrcX(5267 + ((((rowMinusColumn) + animationFrameGrassShort) % 6) * 48));
   }
   @override
   int get type => GridNodeType.Grass;
