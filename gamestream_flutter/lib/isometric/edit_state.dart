@@ -87,6 +87,9 @@ class EditState {
     if (above.isGrassSlopeWest && left.isGrassSlopeNorth){
       type = GridNodeType.Grass_Slope_Right;
     }
+    if (right.isGrassSlopeSouth && below.isGrassSlopeEast){
+      type = GridNodeType.Grass_Slope_Left;
+    }
 
 
     if (right.isGrassSlopeNorth && below.isGrassSlopeWest){
