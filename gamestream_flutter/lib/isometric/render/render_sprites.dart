@@ -230,7 +230,6 @@ class RenderOrderGrid extends RenderOrder {
   var screenBottomRightRow = 0;
   var gridTotalColumnsMinusOne = 0;
   var gridZHalf = 0;
-  var totalRendered = 0;
 
   var playerColumnRow = 0;
   var playerUnderRoof = false;
@@ -269,7 +268,6 @@ class RenderOrderGrid extends RenderOrder {
     }
 
     node.performRender();
-    totalRendered++;
   }
 
   @override
@@ -370,12 +368,14 @@ class RenderOrderGrid extends RenderOrder {
   }
 
   void nextGridNode(){
-    gridRow++;
-    gridColumn--;
+    gridZ++;
 
-    if (gridColumn < minColumn || gridRow >= maxRow) {
+    if (gridZ >= gridTotalZ) {
+      gridRow++;
+      gridColumn--;
+      gridZ = 0;
 
-      while (true) {
+      if (gridColumn < minColumn || gridRow >= maxRow) {
         shiftIndexDown();
         final worldY = getTileWorldY(gridRow, gridColumn);
         var screenLeftColumn = convertWorldToColumn(screenLeft, worldY, 0);
@@ -384,26 +384,38 @@ class RenderOrderGrid extends RenderOrder {
           gridRow += amount;
           gridColumn -= amount;
         }
-        if (
-            gridColumn >= maxColumnRow - gridRow ||
-            gridColumn >= gridTotalColumns ||
-            gridRow >= maxRow
-        ) {
-          gridZ++;
-          if (gridZ >= gridTotalZ) return end();
-          onZChanged();
-          orderZ = gridZ;
-          gridZHalf =  gridZ ~/ 2;
-          gridZGreaterThanPlayerZ = gridZ > playerZ;
-          gridRow = 0;
-          gridColumn = 0;
-        }
+        // if (
+        //     gridColumn >= maxColumnRow - gridRow ||
+        //     gridColumn >= gridTotalColumns ||
+        //     gridRow >= maxRow
+        // ) {
+        //   gridZ++;
+        //   if (gridZ >= gridTotalZ) return end();
+        //   onZChanged();
+        //   orderZ = gridZ;
+        //   gridZHalf =  gridZ ~/ 2;
+        //   gridRow = 0;
+        //   gridColumn = 0;
+        // }
 
         dstY = ((gridRow + gridColumn) * tileSizeHalf) - (gridZ * tileHeight);
-        if (dstY > screenTop && dstY < screenBottom) break;
+        if (dstY > screenTop && dstY < screenBottom) return;
       }
     }
+
+    assert (gridZ >= 0);
+    assert (gridZ < gridTotalZ);
+
+    if (gridRow >= gridTotalRows || gridColumn >= gridTotalColumns) {
+      remaining = false;
+      return;
+    }
+
     node = grid[gridZ][gridRow][gridColumn];
+    orderZ = gridZ;
+    order = node.order;
+    gridZHalf =  gridZ ~/ 2;
+    gridZGreaterThanPlayerZ = gridZ > playerZ;
   }
 
   void shiftIndexDown(){
@@ -477,6 +489,7 @@ abstract class RenderOrder {
 
   void end(){
      index = total;
+     remaining = false;
   }
 
   bool render() {
@@ -487,9 +500,8 @@ abstract class RenderOrder {
     if (remaining) {
       updateFunction();
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 }
 

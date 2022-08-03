@@ -32,7 +32,7 @@ abstract class Node {
   Node(int row, int column, int z) {
      dstX = (row - column) * tileSizeHalf;
      dstY = ((row + column) * tileSizeHalf) - (z * tileHeight);
-     order = ((row + column) * tileSize) + tileSizeHalf;;
+     order = ((row + column) * tileSize);
   }
 
   int get type;
