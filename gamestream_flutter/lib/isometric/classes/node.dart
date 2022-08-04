@@ -1,4 +1,5 @@
 
+import 'package:lemon_engine/screen.dart';
 import 'package:lemon_math/library.dart';
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/tile_size.dart';
@@ -38,6 +39,7 @@ abstract class Node {
   int get type;
   String get name => GridNodeType.getName(type);
   bool get isEmpty => false;
+  bool get isRainable => false;
   bool get renderable => true;
   bool get blocksPerception => true;
 
@@ -49,6 +51,10 @@ abstract class Node {
   static final empty = NodeEmpty();
 
   void performRender(){
+    if (dstX < screen.left) return;
+    if (dstX > screen.right) return;
+    if (dstY < screen.top) return;
+    if (dstY > screen.bottom) return;
     handleRender();
   }
 
@@ -156,6 +162,9 @@ class NodeBricks extends GridNodeBasic {
 
   @override
   double get srcX => 7104;
+
+  @override
+  bool get isRainable => true;
 }
 
 class NodeGrass extends Node {
@@ -174,6 +183,10 @@ class NodeGrass extends Node {
   }
   @override
   int get type => GridNodeType.Grass;
+
+  @override
+  bool get isRainable => true;
+
 }
 
 class NodeGrassSlopeNorth extends GridNodeBasic {
