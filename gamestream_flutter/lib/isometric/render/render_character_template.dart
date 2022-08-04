@@ -1,5 +1,6 @@
 
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/classes/node_extensions.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:lemon_engine/render.dart';
 
@@ -56,8 +57,10 @@ void renderCharacterTemplate(Character character, {bool renderHealthBar = true})
 }
 
 void _renderCharacterTemplate(Character character, int color) {
-  _renderCharacterShadow(character);
-  _renderCharacterPartPants(character, color);
+  if (!character.tile.isGrassLong){
+    _renderCharacterShadow(character);
+    _renderCharacterPartPants(character, color);
+  }
   _renderCharacterPartBody(character, color);
   _renderCharacterPartHead(character, color);
 }

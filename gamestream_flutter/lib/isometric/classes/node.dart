@@ -285,6 +285,8 @@ class NodeGrassLong extends Node {
 
   @override
   void handleRender() {
+    return renderSrcX(10118);
+
     switch (wind) {
       case windIndexCalm:
         return renderSrcX(4856);
