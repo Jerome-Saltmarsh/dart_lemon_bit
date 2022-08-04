@@ -186,7 +186,6 @@ class NodeGrass extends Node {
 
   @override
   bool get isRainable => true;
-
 }
 
 class NodeGrassSlopeNorth extends GridNodeBasic {
@@ -496,6 +495,9 @@ class NodeWater extends Node {
   }
   @override
   int get type => GridNodeType.Water;
+
+  @override
+  bool get isRainable => true;
 }
 
 class NodeWaterFlowing extends Node {
@@ -515,6 +517,9 @@ class NodeWaterFlowing extends Node {
   }
   @override
   int get type => GridNodeType.Water_Flowing;
+
+  @override
+  bool get isRainable => true;
 }
 
 class NodeStone extends GridNodeBasic {

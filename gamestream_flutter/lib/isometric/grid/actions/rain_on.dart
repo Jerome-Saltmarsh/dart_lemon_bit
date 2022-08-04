@@ -6,10 +6,9 @@ void apiGridActionRainOn(){
   for (var row = 0; row < gridTotalRows; row++) {
     for (var column = 0; column < gridTotalColumns; column++) {
       for (var z = gridTotalZ - 1; z >= 0; z--) {
-        final type = grid[z][row][column];
-        if (!type.isEmpty) {
-          if (type == GridNodeType.Torch) break;
-          if (type == GridNodeType.Tree_Top) break;
+        final node = grid[z][row][column];
+        if (!node.isEmpty) {
+          if (!node.isRainable) break;
           setGridType(z + 1, row, column, GridNodeType.Rain_Landing);
           setGridType(z + 2, row, column, GridNodeType.Rain_Falling);
           break;
