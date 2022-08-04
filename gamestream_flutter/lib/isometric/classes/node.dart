@@ -370,6 +370,9 @@ class NodeSoil extends GridNodeBasic {
 
   @override
   double get srcX => 8320;
+
+  @override
+  bool get isRainable => true;
 }
 
 class NodeRoofHayNorth extends GridNodeBasic {

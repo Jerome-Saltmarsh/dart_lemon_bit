@@ -39,7 +39,6 @@ void updateAnimationFrame(){
   }
 
   rainPosition = (animationFrameRain * windAmbient.value.index * 2.5);
-
 }
 
 void _updateWaterFrame() {
