@@ -8,9 +8,9 @@ import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:gamestream_flutter/isometric/particle_emitters.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
-import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
+import 'convert/convert_distance_to_shade.dart';
 import 'grid/convert/convert_hour_to_shade.dart';
 import 'watches/ambient_shade.dart';
 
@@ -282,7 +282,7 @@ void applyEmissionBake({
             distance = distanceColumn;
           }
         }
-        final distanceValue = _convertDistanceToShade(distance, maxBrightness: maxBrightness);
+        final distanceValue = convertDistanceToShade(distance, maxBrightness: maxBrightness);
         if (distanceValue >= currentValue) continue;
         gridNode.bake = distanceValue;
       }
@@ -295,8 +295,8 @@ void applyEmissionDynamic({
   required int rowIndex,
   required int columnIndex,
   required int maxBrightness,
-  int radius = 5,
 }){
+  final radius = Shade.Pitch_Black - maxBrightness;
   final zMin = max(zIndex - radius, 0);
   final zMax = min(zIndex + radius, gridTotalZ);
   final rowMin = max(rowIndex - radius, 0);
@@ -308,7 +308,6 @@ void applyEmissionDynamic({
     for (var row = rowMin; row < rowMax; row++){
       for (var column = columnMin; column < columnMax; column++) {
         final node = grid[z][row][column];
-        final currentValue = node.shade;
         var distance = 0;
         if (lightModeRadial.value){
           distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
@@ -324,22 +323,11 @@ void applyEmissionDynamic({
             distance = distanceColumn;
           }
         }
-        final distanceValue = _convertDistanceToShade(distance, maxBrightness: maxBrightness);
-        if (distanceValue >= currentValue) continue;
-        node.shade = distanceValue;
+        node.applyLight(convertDistanceToShade(distance, maxBrightness: maxBrightness));
       }
     }
   }
 }
-
-int _convertDistanceToShade(int distance, {int maxBrightness = Shade.Very_Bright}){
-   if (distance > Shade.Pitch_Black + 2) {
-     return Shade.Pitch_Black;
-   }
-   return clamp(distance - 1, maxBrightness, Shade.Very_Dark);
-   // return clamp(distance - 1, maxBrightness, Shade.Pitch_Black);
-}
-
 
 Node getGridTypeAtXYZ(double x, double y, double z){
    final plain = z ~/ tileSizeHalf;

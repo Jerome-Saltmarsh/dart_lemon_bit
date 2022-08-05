@@ -1,4 +1,5 @@
 
+import 'package:bleed_common/Shade.dart';
 import 'package:lemon_engine/screen.dart';
 import 'package:lemon_math/library.dart';
 import 'package:bleed_common/grid_node_type.dart';
@@ -24,6 +25,13 @@ abstract class Node {
 
   set wind (int value){
      _wind = clamp(value, 0, windIndexStrong);
+  }
+
+  void applyLight(int value){
+    assert (value >= 0);
+    assert (value <= Shade.Pitch_Black);
+    if (shade <= value) return;
+    shade = value;
   }
 
   int get wind => _wind;
