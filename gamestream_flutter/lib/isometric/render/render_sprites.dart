@@ -313,7 +313,6 @@ class RenderOrderGrid extends RenderOrder {
     minZ = 0;
     order = 0;
     orderZ = 0;
-    swap = true;
 
     z = 0;
     calculateLimits();
@@ -389,8 +388,8 @@ class RenderOrderGrid extends RenderOrder {
   }
 
   void calculateLimits() {
-    minColumn = convertWorldToColumnSafe(screenRight, screenTop, 0);
-    maxRow = convertWorldToRowSafe(screenRight, screenBottom, 0);
+    minColumn = convertWorldToColumnSafe(screen.right, screenTop, 0);
+    maxRow = convertWorldToRowSafe(screen.right, screenBottom, 0);
 
     assert(minColumn >= 0);
     assert(maxRow >= 0);
@@ -468,16 +467,9 @@ class RenderOrderGrid extends RenderOrder {
     }
   }
 
-  var swap = true;
-
   void shiftIndexDown(){
-    row = initialRow + shiftIndex;
-    column = initialColumn + shiftIndex;
-    if (swap){
-      shiftIndex++;
-      column--;
-    }
-    swap = !swap;
+    column = row + column + 1;
+    row = 0;
     if (column < gridTotalColumns) return;
     row = column - gridTotalColumnsMinusOne;
     column = gridTotalColumnsMinusOne;
