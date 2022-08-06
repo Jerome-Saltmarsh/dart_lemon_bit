@@ -245,10 +245,10 @@ class RenderOrderGrid extends RenderOrder {
   var playerColumnRow = 0;
   var playerUnderRoof = false;
 
-  var screenRight = engine.screen.right + tileSize;
-  var screenLeft = engine.screen.left - tileSize;
-  var screenTop = engine.screen.top - tileSize;
-  var screenBottom = engine.screen.bottom + tileSize;
+  var screenRight = screen.right + tileSize;
+  var screenLeft = screen.left - tileSize;
+  var screenTop = screen.top - tileSize;
+  var screenBottom = screen.bottom + tileSize;
 
   var maxRow = 0;
   var maxZ = 0;
@@ -376,6 +376,7 @@ class RenderOrderGrid extends RenderOrder {
     initialColumn = column;
     shiftIndex = 0;
     calculateMinMaxZ();
+    trim();
     node = grid[z][row][column];
 
     assert(row >= 0);
@@ -425,16 +426,15 @@ class RenderOrderGrid extends RenderOrder {
     if (z >= maxZ) {
       row++;
       column--;
-
       if (column < minColumn || row >= maxRow) {
         shiftIndexDown();
         calculateMinMaxZ();
-        //
-        // final maxYPos = convertRowColumnZToY(row, column, maxZ);
-        // if (maxYPos < screen.top - tileSize){
-        //   throw Exception();
-        // }
         if (!remaining) return;
+
+        while (renderX < screenLeft){
+           row++;
+           column--;
+        }
       }
       z = minZ;
     }
@@ -453,17 +453,10 @@ class RenderOrderGrid extends RenderOrder {
     order = node.order;
     gridZHalf =  z ~/ 2;
     gridZGreaterThanPlayerZ = z > playerZ;
-
-    // final dstY = node.dstY;
-    // final sTop = screen.top - tileSize;
-    // if (dstY < sTop){
-    //   final maxYPos = convertRowColumnZToY(row, column, z);
-    //   if (maxYPos < sTop){
-    //     throw Exception();
-    //   }
-    //    throw Exception();
-    // }
   }
+
+  double get renderX => convertRowColumnToX(row, column);
+  double get renderY => convertRowColumnZToY(row, column, z);
 
   void shiftIndexDown(){
     column = row + column + 1;
@@ -471,16 +464,22 @@ class RenderOrderGrid extends RenderOrder {
     if (column < gridTotalColumns) return;
     row = column - gridTotalColumnsMinusOne;
     column = gridTotalColumnsMinusOne;
+    trim();
+  }
 
+  void trim(){
+    final offscreen = countLeftOffscreen;
+    if (offscreen <= 0) return;
+    column -= offscreen;
+    row += offscreen;
+    assert(countLeftOffscreen <= 0);
+  }
+
+  int get countLeftOffscreen {
     final x = convertRowColumnToX(row, column);
-
-    if (screen.left < x) return;
-
+    if (screen.left < x) return 0;
     final diff = screen.left - x;
-    final tiles = diff ~/ tileSize;
-
-    column -= tiles;
-    row += tiles;
+    return diff ~/ tileSize;
   }
 
     void refreshDynamicLightGrid(){
