@@ -288,7 +288,7 @@ class RenderOrderGrid extends RenderOrder {
   @override
   void updateFunction() {
     nextGridNode();
-    while (!node.renderable) {
+    while (!node.renderable || !nodeVisible) {
       index = _index + 1;
       if (!remaining) return;
       nextGridNode();
@@ -297,11 +297,18 @@ class RenderOrderGrid extends RenderOrder {
     order = node.order;
   }
 
+  bool get nodeVisible {
+     if (node.dstX < screenLeft) return false;
+     if (node.dstX > screenRight) return false;
+     if (node.dstY < screenTop) return false;
+     if (node.dstY > screenBottom) return false;
+     return true;
+  }
+
   @override
   int getTotal() {
     return gridTotalZ * gridTotalRows * gridTotalColumns;
   }
-
 
   @override
   void reset() {

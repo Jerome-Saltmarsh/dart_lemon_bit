@@ -60,27 +60,27 @@ abstract class Node {
   static final empty = NodeEmpty();
 
   void performRender(){
-    if (dstX < screen.left - tileSize) {
-      offscreenNodes++;
-      offscreenNodesLeft++;
-      return;
-    }
-    if (dstX > screen.right + tileSize) {
-      offscreenNodes++;
-      offscreenNodesRight++;
-      return;
-    }
-    if (dstY < screen.top - tileSize) {
-      offscreenNodes++;
-      offscreenNodesTop++;
-      return;
-    }
-    if (dstY > screen.bottom + tileSize) {
-      offscreenNodes++;
-      offscreenNodesBottom++;
-      return;
-    }
-    onscreenNodes++;
+    // if (dstX < screen.left - tileSize) {
+    //   offscreenNodes++;
+    //   offscreenNodesLeft++;
+    //   return;
+    // }
+    // if (dstX > screen.right + tileSize) {
+    //   offscreenNodes++;
+    //   offscreenNodesRight++;
+    //   return;
+    // }
+    // if (dstY < screen.top - tileSize) {
+    //   offscreenNodes++;
+    //   offscreenNodesTop++;
+    //   return;
+    // }
+    // if (dstY > screen.bottom + tileSize) {
+    //   offscreenNodes++;
+    //   offscreenNodesBottom++;
+    //   return;
+    // }
+    // onscreenNodes++;
     handleRender();
   }
 
