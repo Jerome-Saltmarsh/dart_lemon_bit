@@ -61,14 +61,14 @@ void playRandomAmbientSound(){
   if (shade == Shade.Pitch_Black || shade == Shade.Very_Dark){
     return playRandom(soundsNight);
   }
-  if (hour == 6 || hour == 7){
+  if (hour == 6){
     return audioSingleRooster.play(volume: 0.3);
   }
 
-  if (shade == Shade.Very_Bright) {
+  if (hour > 9 && hour < 15) {
     return playRandom(soundsDay);
   }
-  if (hour > 15 && hour < 18) {
+  if (hour >= 15 && hour < 18) {
     return playRandom(soundsLateAfternoon);
   }
 }

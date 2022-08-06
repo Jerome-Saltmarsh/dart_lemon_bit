@@ -254,7 +254,6 @@ class RenderOrderGrid extends RenderOrder {
   var maxZ = 0;
   var minZ = 0;
   var minColumn = 0;
-  var dstY = 0.0;
 
   @override
   void renderFunction() {
@@ -302,7 +301,7 @@ class RenderOrderGrid extends RenderOrder {
 
   @override
   void reset() {
-    // print("onscreen: $onscreenNodes, off-top: $offscreenNodesTop, off-right: $offscreenNodesRight, off-bottom: $offscreenNodesBottom, off-left: $offscreenNodesLeft");
+    print("onscreen: $onscreenNodes, off-top: $offscreenNodesTop, off-right: $offscreenNodesRight, off-bottom: $offscreenNodesBottom, off-left: $offscreenNodesLeft");
     gridTotalZMinusOne = gridTotalZ - 1;
     offscreenNodes = 0;
     offscreenNodesTop = 0;
@@ -388,8 +387,8 @@ class RenderOrderGrid extends RenderOrder {
   }
 
   void calculateLimits() {
-    minColumn = convertWorldToColumnSafe(screen.right, screenTop, 0);
-    maxRow = convertWorldToRowSafe(screen.right, screenBottom, 0);
+    minColumn = convertWorldToColumnSafe(screen.right - tileSizeHalf, screenTop, 0);
+    maxRow = convertWorldToRowSafe(screen.right - tileSizeHalf, screenBottom, 0);
 
     assert(minColumn >= 0);
     assert(maxRow >= 0);
@@ -472,6 +471,16 @@ class RenderOrderGrid extends RenderOrder {
     if (column < gridTotalColumns) return;
     row = column - gridTotalColumnsMinusOne;
     column = gridTotalColumnsMinusOne;
+
+    final x = convertRowColumnToX(row, column);
+
+    if (screen.left < x) return;
+
+    final diff = screen.left - x;
+    final tiles = diff ~/ tileSize;
+
+    column -= tiles;
+    row += tiles;
   }
 
     void refreshDynamicLightGrid(){
