@@ -378,24 +378,16 @@ class RenderOrderGrid extends RenderOrder {
     maxRow = convertWorldToRowSafe(screenRight, screenBottom, z * tileSize);
   }
 
-
-
   // given a grid coordinate row / column workout the maximum z before it goes above the top of the screen.
   // otherwise use totalZ;
   // calculate the world position Y at row / column, then workout its distance from the top of the screen;
   void calculateMaxZ(){
     final bottom = convertRowColumnToY(row, column);
-    final top = convertRowColumnZToY(row, column, gridTotalZMinusOne);
-    final maxTop = max(top, screen.top);
-
-    final distance =  bottom - maxTop;
+    final distance =  bottom - screen.top;
     maxZ = distance ~/ tileHeight;
-    maxZ = distance ~/ tileHeight;
-
     if (maxZ > gridTotalZMinusOne){
       maxZ = gridTotalZMinusOne;
     }
-
     assert(maxZ >= 0);
   }
 
