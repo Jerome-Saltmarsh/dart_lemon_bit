@@ -302,7 +302,7 @@ class RenderOrderGrid extends RenderOrder {
 
   @override
   void reset() {
-    print("onscreen: $onscreenNodes, off-top: $offscreenNodesTop, off-right: $offscreenNodesRight, off-bottom: $offscreenNodesBottom, off-left: $offscreenNodesLeft");
+    // print("onscreen: $onscreenNodes, off-top: $offscreenNodesTop, off-right: $offscreenNodesRight, off-bottom: $offscreenNodesBottom, off-left: $offscreenNodesLeft");
     gridTotalZMinusOne = gridTotalZ - 1;
     offscreenNodes = 0;
     offscreenNodesTop = 0;
@@ -342,7 +342,7 @@ class RenderOrderGrid extends RenderOrder {
 
     screenRight = screen.right + tileSize;
     screenLeft = screen.left - tileSize;
-    screenTop = screen.top;
+    screenTop = screen.top - tileSize;
     screenBottom = screen.bottom;
     final screenBottomLeftColumn = convertWorldToColumn(screenLeft, screenBottom, 0);
     final screenBottomLeftRow = convertWorldToRow(screenLeft, screenBottom, 0);
@@ -403,7 +403,7 @@ class RenderOrderGrid extends RenderOrder {
   void calculateMinMaxZ(){
     final bottom = convertRowColumnToY(row, column);
     final distance =  bottom - screen.top;
-    maxZ = (distance ~/ tileHeight) - 1;
+    maxZ = (distance ~/ tileHeight);
     if (maxZ > gridTotalZMinusOne){
       maxZ = gridTotalZMinusOne;
     }
@@ -430,12 +430,11 @@ class RenderOrderGrid extends RenderOrder {
       if (column < minColumn || row >= maxRow) {
         shiftIndexDown();
         calculateMinMaxZ();
-
-        final maxYPos = convertRowColumnZToY(row, column, maxZ);
-        if (maxYPos < screen.top - tileSize){
-          throw Exception();
-        }
-
+        //
+        // final maxYPos = convertRowColumnZToY(row, column, maxZ);
+        // if (maxYPos < screen.top - tileSize){
+        //   throw Exception();
+        // }
         if (!remaining) return;
       }
       z = minZ;
@@ -456,15 +455,15 @@ class RenderOrderGrid extends RenderOrder {
     gridZHalf =  z ~/ 2;
     gridZGreaterThanPlayerZ = z > playerZ;
 
-    final dstY = node.dstY;
-    final sTop = screen.top - tileSize;
-    if (dstY < sTop){
-      final maxYPos = convertRowColumnZToY(row, column, z);
-      if (maxYPos < sTop){
-        throw Exception();
-      }
-       throw Exception();
-    }
+    // final dstY = node.dstY;
+    // final sTop = screen.top - tileSize;
+    // if (dstY < sTop){
+    //   final maxYPos = convertRowColumnZToY(row, column, z);
+    //   if (maxYPos < sTop){
+    //     throw Exception();
+    //   }
+    //    throw Exception();
+    // }
   }
 
   void shiftIndexDown(){
