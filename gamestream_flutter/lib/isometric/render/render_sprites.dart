@@ -245,6 +245,7 @@ class RenderOrderGrid extends RenderOrder {
 
   var maxRow = 0;
   var maxZ = 0;
+  var minZ = 0;
   var minColumn = 0;
   var dstY = 0.0;
 
@@ -294,7 +295,7 @@ class RenderOrderGrid extends RenderOrder {
 
   @override
   void reset() {
-    // print("onscreen: $onscreenNodes, offscreen: $offscreenNodes");
+    print("onscreen: $onscreenNodes, offscreen: $offscreenNodes");
 
     gridTotalZMinusOne = gridTotalZ - 1;
     offscreenNodes = 0;
@@ -389,7 +390,22 @@ class RenderOrderGrid extends RenderOrder {
       maxZ = gridTotalZMinusOne;
     }
     assert(maxZ >= 0);
+    calculateMinZ();
+
+    if (bottom > screen.bottom) {
+      final top = convertRowColumnZToY(row, column, gridTotalZMinusOne);
+      if (top > screen.bottom){
+        return end();
+      }
+    } else {
+      minZ = 0;
+    }
   }
+
+  void calculateMinZ(){
+
+  }
+
 
   void nextGridNode(){
     z++;
@@ -397,11 +413,17 @@ class RenderOrderGrid extends RenderOrder {
     if (z >= maxZ) {
       row++;
       column--;
-      z = 0;
+      z = minZ;
 
       if (column < minColumn || row >= maxRow) {
         shiftIndexDown();
         calculateMaxZ();
+
+        // check if maxZ is 0 then exit
+        // if (maxZ == 0) {
+        //   return end();
+        // }
+
         final worldY = getTileWorldY(row, column);
         var screenLeftColumn = convertWorldToColumn(screenLeft, worldY, 0);
         if (screenLeftColumn > 0 && screenLeftColumn < column) {
