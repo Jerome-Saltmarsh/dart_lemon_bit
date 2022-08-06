@@ -255,6 +255,9 @@ class RenderOrderGrid extends RenderOrder {
   var minZ = 0;
   var minColumn = 0;
 
+  double get renderX => convertRowColumnToX(row, column);
+  double get renderY => convertRowColumnZToY(row, column, z);
+
   @override
   void renderFunction() {
     transparent = false;
@@ -299,9 +302,10 @@ class RenderOrderGrid extends RenderOrder {
     return gridTotalZ * gridTotalRows * gridTotalColumns;
   }
 
+
   @override
   void reset() {
-    print("onscreen: $onscreenNodes, off-top: $offscreenNodesTop, off-right: $offscreenNodesRight, off-bottom: $offscreenNodesBottom, off-left: $offscreenNodesLeft");
+    // print("onscreen: $onscreenNodes, off-top: $offscreenNodesTop, off-right: $offscreenNodesRight, off-bottom: $offscreenNodesBottom, off-left: $offscreenNodesLeft");
     gridTotalZMinusOne = gridTotalZ - 1;
     offscreenNodes = 0;
     offscreenNodesTop = 0;
@@ -388,13 +392,16 @@ class RenderOrderGrid extends RenderOrder {
   }
 
   void calculateLimits() {
-    minColumn = convertWorldToColumnSafe(screen.right - tileSizeHalf, screenTop, 0);
-    maxRow = convertWorldToRowSafe(screen.right - tileSizeHalf, screenBottom, 0);
-
+    minColumn = convertWorldToColumnSafe(screenRight, screenTop, 0);
+    maxRow = convertWorldToRowSafe(screenRight, screenBottom, 0);
     assert(minColumn >= 0);
     assert(maxRow >= 0);
     assert(minColumn < gridTotalColumns);
     assert(maxRow < gridTotalRows);
+  }
+
+  void refreshMaxRow(){
+
   }
 
   // given a grid coordinate row / column workout the maximum z before it goes above the top of the screen.
@@ -426,11 +433,11 @@ class RenderOrderGrid extends RenderOrder {
     if (z >= maxZ) {
       row++;
       column--;
-      if (column < minColumn || row >= maxRow) {
+      if (column < minColumn || row > maxRow) {
         shiftIndexDown();
+        if (!remaining) return;
         calculateMinMaxZ();
         if (!remaining) return;
-
         while (renderX < screenLeft){
            row++;
            column--;
@@ -455,8 +462,14 @@ class RenderOrderGrid extends RenderOrder {
     gridZGreaterThanPlayerZ = z > playerZ;
   }
 
-  double get renderX => convertRowColumnToX(row, column);
-  double get renderY => convertRowColumnZToY(row, column, z);
+  void checkValidity() {
+    assert (z >= 0);
+    assert (z < gridTotalZ);
+    assert (row >= 0);
+    assert (row < gridTotalRows);
+    assert (column >= 0);
+    assert (column < gridTotalColumns);
+  }
 
   void shiftIndexDown(){
     column = row + column + 1;
@@ -465,6 +478,16 @@ class RenderOrderGrid extends RenderOrder {
     row = column - gridTotalColumnsMinusOne;
     column = gridTotalColumnsMinusOne;
     trim();
+
+    if (row >= gridTotalRows){
+       remaining = false;
+    }
+    //
+    //
+    // assert (row >= 0);
+    // assert (row < gridTotalRows);
+    // assert (column >= 0);
+    // assert (column < gridTotalColumns);
   }
 
   void trim(){
