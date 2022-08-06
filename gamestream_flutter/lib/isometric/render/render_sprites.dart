@@ -21,7 +21,6 @@ import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_game_object.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
-import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/screen.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -282,7 +281,9 @@ class RenderOrderGrid extends RenderOrder {
       }
     }
 
-    node.performRender();
+    assert (node.renderable);
+    assert (nodeVisible);
+    node.handleRender();
   }
 
   @override

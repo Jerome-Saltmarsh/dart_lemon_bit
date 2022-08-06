@@ -1,7 +1,5 @@
 
 import 'package:bleed_common/Shade.dart';
-import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
-import 'package:lemon_engine/screen.dart';
 import 'package:lemon_math/library.dart';
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/tile_size.dart';
@@ -59,30 +57,30 @@ abstract class Node {
   static final boundary = NodeBoundary();
   static final empty = NodeEmpty();
 
-  void performRender(){
-    // if (dstX < screen.left - tileSize) {
-    //   offscreenNodes++;
-    //   offscreenNodesLeft++;
-    //   return;
-    // }
-    // if (dstX > screen.right + tileSize) {
-    //   offscreenNodes++;
-    //   offscreenNodesRight++;
-    //   return;
-    // }
-    // if (dstY < screen.top - tileSize) {
-    //   offscreenNodes++;
-    //   offscreenNodesTop++;
-    //   return;
-    // }
-    // if (dstY > screen.bottom + tileSize) {
-    //   offscreenNodes++;
-    //   offscreenNodesBottom++;
-    //   return;
-    // }
-    // onscreenNodes++;
-    handleRender();
-  }
+  // void performRender(){
+  //   // if (dstX < screen.left - tileSize) {
+  //   //   offscreenNodes++;
+  //   //   offscreenNodesLeft++;
+  //   //   return;
+  //   // }
+  //   // if (dstX > screen.right + tileSize) {
+  //   //   offscreenNodes++;
+  //   //   offscreenNodesRight++;
+  //   //   return;
+  //   // }
+  //   // if (dstY < screen.top - tileSize) {
+  //   //   offscreenNodes++;
+  //   //   offscreenNodesTop++;
+  //   //   return;
+  //   // }
+  //   // if (dstY > screen.bottom + tileSize) {
+  //   //   offscreenNodes++;
+  //   //   offscreenNodesBottom++;
+  //   //   return;
+  //   // }
+  //   // onscreenNodes++;
+  //   handleRender();
+  // }
 
   void handleRender();
 
