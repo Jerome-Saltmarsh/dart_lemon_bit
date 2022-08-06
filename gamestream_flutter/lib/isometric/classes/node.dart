@@ -60,20 +60,24 @@ abstract class Node {
   static final empty = NodeEmpty();
 
   void performRender(){
-    if (dstX < screen.left) {
+    if (dstX < screen.left - tileSize) {
       offscreenNodes++;
+      offscreenNodesLeft++;
       return;
     }
-    if (dstX > screen.right) {
+    if (dstX > screen.right + tileSize) {
       offscreenNodes++;
+      offscreenNodesRight++;
       return;
     }
-    if (dstY < screen.top) {
+    if (dstY < screen.top - tileSize) {
       offscreenNodes++;
+      offscreenNodesTop++;
       return;
     }
-    if (dstY > screen.bottom) {
+    if (dstY > screen.bottom + tileSize) {
       offscreenNodes++;
+      offscreenNodesBottom++;
       return;
     }
     onscreenNodes++;
@@ -126,12 +130,13 @@ abstract class Node {
 class NodeBoundary extends Node {
   NodeBoundary() : super(0, 0, 0);
 
-
-
   @override
   void handleRender() {
      throw Exception("Cannot render boundary");
   }
+
+  @override
+  bool get renderable => false;
 
   @override
   int get type => GridNodeType.Boundary;
@@ -152,7 +157,7 @@ class NodeEmpty extends Node {
   bool get blocksPerception => false;
 
   @override
-  bool get renderable => true;
+  bool get renderable => false;
 
   @override
   int get type => GridNodeType.Empty;

@@ -220,12 +220,19 @@ var playerRow = 0;
 var playerColumn = 0;
 
 var offscreenNodes = 0;
+var offscreenNodesTop = 0;
+var offscreenNodesRight = 0;
+var offscreenNodesBottom = 0;
+var offscreenNodesLeft = 0;
 var onscreenNodes = 0;
 
 class RenderOrderGrid extends RenderOrder {
   var z = 0;
   var column = 0;
   var row = 0;
+  var initialRow = 0;
+  var initialColumn = 0;
+  var shiftIndex = 0;
   late Node node;
   var maxColumnRow = 0;
   var minColumnRow = 0;
@@ -295,20 +302,23 @@ class RenderOrderGrid extends RenderOrder {
 
   @override
   void reset() {
-    print("onscreen: $onscreenNodes, offscreen: $offscreenNodes");
-
+    print("onscreen: $onscreenNodes, off-top: $offscreenNodesTop, off-right: $offscreenNodesRight, off-bottom: $offscreenNodesBottom, off-left: $offscreenNodesLeft");
     gridTotalZMinusOne = gridTotalZ - 1;
     offscreenNodes = 0;
+    offscreenNodesTop = 0;
+    offscreenNodesRight = 0;
+    offscreenNodesBottom = 0;
+    offscreenNodesLeft = 0;
     onscreenNodes = 0;
     minZ = 0;
     order = 0;
     orderZ = 0;
+    swap = true;
 
     z = 0;
     calculateLimits();
     orderZ = 0;
     gridZHalf = 0;
-    dstY = 0;
     gridTotalColumnsMinusOne = gridTotalColumns - 1;
     playerZ = player.indexZ;
     playerRow = player.indexRow;
@@ -334,7 +344,7 @@ class RenderOrderGrid extends RenderOrder {
     screenRight = screen.right + tileSize;
     screenLeft = screen.left - tileSize;
     screenTop = screen.top;
-    screenBottom = screen.bottom + (gridTotalZ * tileHeight);
+    screenBottom = screen.bottom;
     final screenBottomLeftColumn = convertWorldToColumn(screenLeft, screenBottom, 0);
     final screenBottomLeftRow = convertWorldToRow(screenLeft, screenBottom, 0);
     final screenBottomLeftTotal = screenBottomLeftRow + screenBottomLeftColumn;
@@ -364,7 +374,10 @@ class RenderOrderGrid extends RenderOrder {
 
     row = screenTopLeftRow;
     column = screenTopLeftColumn;
-    calculateMaxZ();
+    initialRow = row;
+    initialColumn = column;
+    shiftIndex = 0;
+    calculateMinMaxZ();
     node = grid[z][row][column];
 
     assert(row >= 0);
@@ -376,22 +389,28 @@ class RenderOrderGrid extends RenderOrder {
   }
 
   void calculateLimits() {
-    minColumn = convertWorldToColumnSafe(screenRight, screenTop, z * tileSize);
-    maxRow = convertWorldToRowSafe(screenRight, screenBottom, z * tileSize);
+    minColumn = convertWorldToColumnSafe(screenRight, screenTop, 0);
+    maxRow = convertWorldToRowSafe(screenRight, screenBottom, 0);
+
+    assert(minColumn >= 0);
+    assert(maxRow >= 0);
+    assert(minColumn < gridTotalColumns);
+    assert(maxRow < gridTotalRows);
   }
 
   // given a grid coordinate row / column workout the maximum z before it goes above the top of the screen.
   // otherwise use totalZ;
   // calculate the world position Y at row / column, then workout its distance from the top of the screen;
-  void calculateMaxZ(){
+  void calculateMinMaxZ(){
     final bottom = convertRowColumnToY(row, column);
     final distance =  bottom - screen.top;
-    maxZ = distance ~/ tileHeight;
+    maxZ = (distance ~/ tileHeight) - 1;
     if (maxZ > gridTotalZMinusOne){
       maxZ = gridTotalZMinusOne;
     }
-    assert(maxZ >= 0);
-    calculateMinZ();
+    if (maxZ < 0){
+      maxZ = 0;
+    }
 
     if (bottom > screen.bottom) {
       final diff = bottom - screen.bottom;
@@ -402,59 +421,63 @@ class RenderOrderGrid extends RenderOrder {
     }
   }
 
-  void calculateMinZ(){
-
-  }
-
-
   void nextGridNode(){
     z++;
 
     if (z >= maxZ) {
       row++;
       column--;
-      z = minZ;
 
       if (column < minColumn || row >= maxRow) {
         shiftIndexDown();
-        calculateMaxZ();
+        calculateMinMaxZ();
 
-        // check if maxZ is 0 then exit
-        // if (maxZ == 0) {
-        //   return end();
-        // }
-
-        final worldY = getTileWorldY(row, column);
-        var screenLeftColumn = convertWorldToColumn(screenLeft, worldY, 0);
-        if (screenLeftColumn > 0 && screenLeftColumn < column) {
-          final amount = column - screenLeftColumn;
-          row += amount;
-          column -= amount;
+        final maxYPos = convertRowColumnZToY(row, column, maxZ);
+        if (maxYPos < screen.top - tileSize){
+          throw Exception();
         }
 
-        dstY = ((row + column) * tileSizeHalf) - (z * tileHeight);
-        if (dstY > screenTop && dstY < screenBottom) return;
+        if (!remaining) return;
       }
+      z = minZ;
     }
 
     assert (z >= 0);
     assert (z < gridTotalZ);
-
-    if (row >= gridTotalRows || column >= gridTotalColumns) {
-      remaining = false;
-      return;
-    }
-
+    assert (row >= 0);
+    assert (row < gridTotalRows);
+    assert (column >= 0);
+    assert (column < gridTotalColumns);
     node = grid[z][row][column];
+
+    if (!node.renderable) return;
+
     orderZ = z;
     order = node.order;
     gridZHalf =  z ~/ 2;
     gridZGreaterThanPlayerZ = z > playerZ;
+
+    final dstY = node.dstY;
+    final sTop = screen.top - tileSize;
+    if (dstY < sTop){
+      final maxYPos = convertRowColumnZToY(row, column, z);
+      if (maxYPos < sTop){
+        throw Exception();
+      }
+       throw Exception();
+    }
   }
 
+  var swap = true;
+
   void shiftIndexDown(){
-    column = row + column + 1;
-    row = 0;
+    row = initialRow + shiftIndex;
+    column = initialColumn + shiftIndex;
+    if (swap){
+      shiftIndex++;
+      column--;
+    }
+    swap = !swap;
     if (column < gridTotalColumns) return;
     row = column - gridTotalColumnsMinusOne;
     column = gridTotalColumnsMinusOne;
