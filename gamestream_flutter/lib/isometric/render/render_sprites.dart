@@ -300,9 +300,10 @@ class RenderOrderGrid extends RenderOrder {
     gridTotalZMinusOne = gridTotalZ - 1;
     offscreenNodes = 0;
     onscreenNodes = 0;
-
+    minZ = 0;
     order = 0;
     orderZ = 0;
+
     z = 0;
     calculateLimits();
     orderZ = 0;
@@ -393,12 +394,11 @@ class RenderOrderGrid extends RenderOrder {
     calculateMinZ();
 
     if (bottom > screen.bottom) {
-      final top = convertRowColumnZToY(row, column, gridTotalZMinusOne);
-      if (top > screen.bottom){
+      final diff = bottom - screen.bottom;
+      minZ = diff ~/ tileHeight;
+      if (minZ >= gridTotalZ){
         return end();
       }
-    } else {
-      minZ = 0;
     }
   }
 
