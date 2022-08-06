@@ -312,7 +312,6 @@ class RenderOrderGrid extends RenderOrder {
 
   @override
   void reset() {
-    // print("onscreen: $onscreenNodes, off-top: $offscreenNodesTop, off-right: $offscreenNodesRight, off-bottom: $offscreenNodesBottom, off-left: $offscreenNodesLeft");
     gridTotalZMinusOne = gridTotalZ - 1;
     offscreenNodes = 0;
     offscreenNodesTop = 0;
@@ -440,7 +439,7 @@ class RenderOrderGrid extends RenderOrder {
     if (z >= maxZ) {
       row++;
       column--;
-      if (column < minColumn || row > maxRow) {
+      if (node.dstX > screenRight || column < minColumn || row > maxRow) {
         shiftIndexDown();
         if (!remaining) return;
         calculateMinMaxZ();
@@ -489,12 +488,6 @@ class RenderOrderGrid extends RenderOrder {
     if (row >= gridTotalRows){
        remaining = false;
     }
-    //
-    //
-    // assert (row >= 0);
-    // assert (row < gridTotalRows);
-    // assert (column >= 0);
-    // assert (column < gridTotalColumns);
   }
 
   void trim(){
