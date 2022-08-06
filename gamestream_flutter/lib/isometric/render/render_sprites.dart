@@ -219,16 +219,20 @@ var playerZ = 0;
 var playerRow = 0;
 var playerColumn = 0;
 
+var offscreenNodes = 0;
+var onscreenNodes = 0;
+
 class RenderOrderGrid extends RenderOrder {
-  var gridZ = 0;
-  var gridColumn = 0;
-  var gridRow = 0;
+  var z = 0;
+  var column = 0;
+  var row = 0;
   late Node node;
   var maxColumnRow = 0;
   var minColumnRow = 0;
   var screenTopLeftRow = 0;
   var screenBottomRightRow = 0;
   var gridTotalColumnsMinusOne = 0;
+  var gridTotalZMinusOne = 0;
   var gridZHalf = 0;
 
   var playerColumnRow = 0;
@@ -240,6 +244,7 @@ class RenderOrderGrid extends RenderOrder {
   var screenBottom = engine.screen.bottom + tileSize;
 
   var maxRow = 0;
+  var maxZ = 0;
   var minColumn = 0;
   var dstY = 0.0;
 
@@ -248,19 +253,19 @@ class RenderOrderGrid extends RenderOrder {
     transparent = false;
     if (playerImperceptible) {
       if (gridZGreaterThanPlayerZ) {
-        final renderRow = gridRow - gridZHalf;
-        final renderColumn = gridColumn - gridZHalf;
+        final renderRow = row - gridZHalf;
+        final renderColumn = column - gridZHalf;
         final renderRowDistance = (renderRow - playerRenderRow).abs();
         final renderColumnDistance = (renderColumn - playerRenderColumn).abs();
 
-        if (gridZ > playerZ + 1 && renderRowDistance <= 5 && renderColumnDistance <= 5) {
+        if (z > playerZ + 1 && renderRowDistance <= 5 && renderColumnDistance <= 5) {
           // if (gridRow + gridColumn > playerColumnRow){
             return;
           // }
         }
 
-        if (gridZ > playerZ && renderRowDistance < 2 && renderColumnDistance < 2) {
-          if (gridRow + gridColumn >= playerColumnRow){
+        if (z > playerZ && renderRowDistance < 2 && renderColumnDistance < 2) {
+          if (row + column >= playerColumnRow){
             transparent = true;
           }
         }
@@ -289,10 +294,16 @@ class RenderOrderGrid extends RenderOrder {
 
   @override
   void reset() {
+    // print("onscreen: $onscreenNodes, offscreen: $offscreenNodes");
+
+    gridTotalZMinusOne = gridTotalZ - 1;
+    offscreenNodes = 0;
+    onscreenNodes = 0;
+
     order = 0;
     orderZ = 0;
-    gridZ = 0;
-    onZChanged();
+    z = 0;
+    calculateLimits();
     orderZ = 0;
     gridZHalf = 0;
     dstY = 0;
@@ -349,81 +360,90 @@ class RenderOrderGrid extends RenderOrder {
       screenTopLeftColumn = 0;
     }
 
-    gridRow = screenTopLeftRow;
-    gridColumn = screenTopLeftColumn;
+    row = screenTopLeftRow;
+    column = screenTopLeftColumn;
+    calculateMaxZ();
+    node = grid[z][row][column];
 
-    node = grid[gridZ][gridRow][gridColumn];
-
-    assert(gridRow >= 0);
-    assert(gridColumn >= 0);
-    assert(gridRow < gridTotalRows);
-    assert(gridColumn < gridTotalColumns);
+    assert(row >= 0);
+    assert(column >= 0);
+    assert(row < gridTotalRows);
+    assert(column < gridTotalColumns);
     refreshDynamicLightGrid();
     super.reset();
   }
 
-  void onZChanged(){
-    minColumn = convertWorldToColumnSafe(screenRight, screenTop, gridZ * tileSize);
-    maxRow = convertWorldToRowSafe(screenRight, screenBottom, gridZ * tileSize);
+  void calculateLimits() {
+    minColumn = convertWorldToColumnSafe(screenRight, screenTop, z * tileSize);
+    maxRow = convertWorldToRowSafe(screenRight, screenBottom, z * tileSize);
+  }
+
+
+
+  // given a grid coordinate row / column workout the maximum z before it goes above the top of the screen.
+  // otherwise use totalZ;
+  // calculate the world position Y at row / column, then workout its distance from the top of the screen;
+  void calculateMaxZ(){
+    final bottom = convertRowColumnToY(row, column);
+    final top = convertRowColumnZToY(row, column, gridTotalZMinusOne);
+    final maxTop = max(top, screen.top);
+
+    final distance =  bottom - maxTop;
+    maxZ = distance ~/ tileHeight;
+    maxZ = distance ~/ tileHeight;
+
+    if (maxZ > gridTotalZMinusOne){
+      maxZ = gridTotalZMinusOne;
+    }
+
+    assert(maxZ >= 0);
   }
 
   void nextGridNode(){
-    gridZ++;
+    z++;
 
-    if (gridZ >= gridTotalZ) {
-      gridRow++;
-      gridColumn--;
-      gridZ = 0;
+    if (z >= maxZ) {
+      row++;
+      column--;
+      z = 0;
 
-      if (gridColumn < minColumn || gridRow >= maxRow) {
+      if (column < minColumn || row >= maxRow) {
         shiftIndexDown();
-        final worldY = getTileWorldY(gridRow, gridColumn);
+        calculateMaxZ();
+        final worldY = getTileWorldY(row, column);
         var screenLeftColumn = convertWorldToColumn(screenLeft, worldY, 0);
-        if (screenLeftColumn > 0 && screenLeftColumn < gridColumn) {
-          final amount = gridColumn - screenLeftColumn;
-          gridRow += amount;
-          gridColumn -= amount;
+        if (screenLeftColumn > 0 && screenLeftColumn < column) {
+          final amount = column - screenLeftColumn;
+          row += amount;
+          column -= amount;
         }
-        // if (
-        //     gridColumn >= maxColumnRow - gridRow ||
-        //     gridColumn >= gridTotalColumns ||
-        //     gridRow >= maxRow
-        // ) {
-        //   gridZ++;
-        //   if (gridZ >= gridTotalZ) return end();
-        //   onZChanged();
-        //   orderZ = gridZ;
-        //   gridZHalf =  gridZ ~/ 2;
-        //   gridRow = 0;
-        //   gridColumn = 0;
-        // }
 
-        dstY = ((gridRow + gridColumn) * tileSizeHalf) - (gridZ * tileHeight);
+        dstY = ((row + column) * tileSizeHalf) - (z * tileHeight);
         if (dstY > screenTop && dstY < screenBottom) return;
       }
     }
 
-    assert (gridZ >= 0);
-    assert (gridZ < gridTotalZ);
+    assert (z >= 0);
+    assert (z < gridTotalZ);
 
-    if (gridRow >= gridTotalRows || gridColumn >= gridTotalColumns) {
+    if (row >= gridTotalRows || column >= gridTotalColumns) {
       remaining = false;
       return;
     }
 
-    node = grid[gridZ][gridRow][gridColumn];
-    orderZ = gridZ;
+    node = grid[z][row][column];
+    orderZ = z;
     order = node.order;
-    gridZHalf =  gridZ ~/ 2;
-    gridZGreaterThanPlayerZ = gridZ > playerZ;
+    gridZHalf =  z ~/ 2;
+    gridZGreaterThanPlayerZ = z > playerZ;
   }
 
   void shiftIndexDown(){
-    gridColumn = gridRow + gridColumn + 1;
-    gridRow = 0;
-    if (gridColumn < gridTotalColumns) return;
-    gridRow = gridColumn - gridTotalColumnsMinusOne;
-    gridColumn = gridTotalColumnsMinusOne;
+    column = row + column + 1;
+    row = 0;
+    if (column < gridTotalColumns) return;
+    row = column - gridTotalColumnsMinusOne;
+    column = gridTotalColumnsMinusOne;
   }
 
     void refreshDynamicLightGrid(){

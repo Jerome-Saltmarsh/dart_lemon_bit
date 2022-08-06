@@ -1,5 +1,6 @@
 
 import 'package:bleed_common/Shade.dart';
+import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:lemon_engine/screen.dart';
 import 'package:lemon_math/library.dart';
 import 'package:bleed_common/grid_node_type.dart';
@@ -59,10 +60,23 @@ abstract class Node {
   static final empty = NodeEmpty();
 
   void performRender(){
-    if (dstX < screen.left) return;
-    if (dstX > screen.right) return;
-    if (dstY < screen.top) return;
-    if (dstY > screen.bottom) return;
+    if (dstX < screen.left) {
+      offscreenNodes++;
+      return;
+    }
+    if (dstX > screen.right) {
+      offscreenNodes++;
+      return;
+    }
+    if (dstY < screen.top) {
+      offscreenNodes++;
+      return;
+    }
+    if (dstY > screen.bottom) {
+      offscreenNodes++;
+      return;
+    }
+    onscreenNodes++;
     handleRender();
   }
 
