@@ -389,7 +389,7 @@ class RenderOrderGrid extends RenderOrder {
     shiftIndex = 0;
     calculateMinMaxZ();
     trim();
-    node = grid[z][row][column];
+    assignNode();
 
     assert(row >= 0);
     assert(column >= 0);
@@ -450,13 +450,7 @@ class RenderOrderGrid extends RenderOrder {
       z = minZ;
     }
 
-    assert (z >= 0);
-    assert (z < gridTotalZ);
-    assert (row >= 0);
-    assert (row < gridTotalRows);
-    assert (column >= 0);
-    assert (column < gridTotalColumns);
-    node = grid[z][row][column];
+    assignNode();
 
     if (!node.renderable) return;
 
@@ -464,6 +458,16 @@ class RenderOrderGrid extends RenderOrder {
     order = node.order;
     gridZHalf =  z ~/ 2;
     gridZGreaterThanPlayerZ = z > playerZ;
+  }
+
+  void assignNode() {
+    assert (z >= 0);
+    assert (z < gridTotalZ);
+    assert (row >= 0);
+    assert (row < gridTotalRows);
+    assert (column >= 0);
+    assert (column < gridTotalColumns);
+    node = grid[z][row][column];
   }
 
   void shiftIndexDown(){

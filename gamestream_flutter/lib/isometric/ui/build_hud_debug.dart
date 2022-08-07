@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -25,9 +26,11 @@ Widget buildHudDebug() {
                 children: [
                   buildControlBytes(),
                   buildControlBufferSize(),
+
                 ],
               ),
               Refresh(() => text('characters: $totalCharacters')),
+              Refresh(() => text('Onscreen: $onscreenNodes, off-left: $offscreenNodesLeft, off-top: $offscreenNodesTop, off-right: $offscreenNodesRight, off-bottom: $offscreenNodesBottom')),
             ],
           )),
     ],
