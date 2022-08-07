@@ -289,6 +289,7 @@ class RenderOrderGrid extends RenderOrder {
   @override
   void updateFunction() {
     nextGridNode();
+    // TODO Optimize
     while (!node.renderable || !nodeVisible) {
       index = _index + 1;
       if (!remaining) return;
@@ -407,10 +408,6 @@ class RenderOrderGrid extends RenderOrder {
     assert(maxRow < gridTotalRows);
   }
 
-  void refreshMaxRow(){
-
-  }
-
   // given a grid coordinate row / column workout the maximum z before it goes above the top of the screen.
   // otherwise use totalZ;
   // calculate the world position Y at row / column, then workout its distance from the top of the screen;
@@ -467,15 +464,6 @@ class RenderOrderGrid extends RenderOrder {
     order = node.order;
     gridZHalf =  z ~/ 2;
     gridZGreaterThanPlayerZ = z > playerZ;
-  }
-
-  void checkValidity() {
-    assert (z >= 0);
-    assert (z < gridTotalZ);
-    assert (row >= 0);
-    assert (row < gridTotalRows);
-    assert (column >= 0);
-    assert (column < gridTotalColumns);
   }
 
   void shiftIndexDown(){

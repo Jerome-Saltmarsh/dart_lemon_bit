@@ -21,19 +21,15 @@ Scene convertJsonToScene(Json json, String name) {
 }
 
 List<List<List<Node>>> convertFlatGridToGrid(List<dynamic> flatGrid, int height, int rows, int columns){
-  final List<List<List<Node>>> grid = [];
   var index = 0;
-  for (var zIndex = 0; zIndex < height; zIndex++){
-    final plain = <List<Node>>[];
-    grid.add(plain);
-    for (var rowIndex = 0; rowIndex < rows; rowIndex++){
-      final row = <Node>[];
-      plain.add(row);
-      for (var columnIndex = 0; columnIndex < columns; columnIndex++){
-        row.add(generateNode(flatGrid[index]));
+  final List<List<List<Node>>> grid = List.generate(height, (zIndex) {
+    return List.generate(rows, (rowIndex){
+      return List.generate(columns, (columnIndex){
+        final node = generateNode(flatGrid[index]);
         index++;
-      }
-    }
-  }
+        return node;
+      });
+    });
+  });
   return grid;
 }
