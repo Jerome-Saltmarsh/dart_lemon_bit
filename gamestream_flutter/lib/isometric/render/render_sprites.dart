@@ -434,7 +434,7 @@ class RenderOrderGrid extends RenderOrder {
   void nextGridNode(){
     z++;
 
-    if (z >= maxZ) {
+    if (z > maxZ) {
       row++;
       column--;
       if (node.dstX > screenRight || column < minColumn || row > maxRow) {
