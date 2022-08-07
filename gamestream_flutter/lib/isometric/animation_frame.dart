@@ -25,19 +25,18 @@ void updateAnimationFrame(){
   _updateWaterFrame();
   animationFrameTorch = frame ~/ 10;
   animationFrameRain = (frame ~/ 4) % 6;
-
-  if (windAmbient.value == Wind.Calm){
-    animationFrameGrass = 0;
-    animationFrameGrassShort = 0;
-  } else {
-    animationFrameGrass = (frame ~/ 15) % 4;
-    if (windAmbient.value == Wind.Gentle){
-      animationFrameGrassShort = frame ~/ 35;
-    } else{
-      animationFrameGrassShort = frame ~/ 10;
-    }
-  }
-
+  animationFrameGrass = (frame ~/ 15) % 6;
+  // if (windAmbient.value == Wind.Calm){
+  //   animationFrameGrass = 0;
+  //   animationFrameGrassShort = 0;
+  // } else {
+  //
+  //   if (windAmbient.value == Wind.Gentle){
+  //     animationFrameGrassShort = frame ~/ 35;
+  //   } else{
+  //     animationFrameGrassShort = frame ~/ 10;
+  //   }
+  // }
   rainPosition = (animationFrameRain * windAmbient.value.index * 2.5);
 }
 
