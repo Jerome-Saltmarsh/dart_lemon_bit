@@ -409,11 +409,6 @@ class RenderOrderGrid extends RenderOrder {
     calculateMinMaxZ();
     trim();
     assignNode();
-
-    assert(row >= 0);
-    assert(column >= 0);
-    assert(row < gridTotalRows);
-    assert(column < gridTotalColumns);
     refreshDynamicLightGrid();
     super.reset();
   }

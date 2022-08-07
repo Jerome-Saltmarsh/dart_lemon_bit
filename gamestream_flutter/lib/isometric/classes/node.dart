@@ -152,6 +152,11 @@ class NodeEmpty extends Node {
   }
 
   @override
+  void resetShadeToBake(){
+
+  }
+
+  @override
   bool get blocksPerception => false;
 
   @override
