@@ -231,8 +231,6 @@ class RenderOrderGrid extends RenderOrder {
   var row = 0;
   var shiftIndex = 0;
   late Node node;
-  var maxColumnRow = 0;
-  var minColumnRow = 0;
   var screenTopLeftRow = 0;
   var screenBottomRightRow = 0;
   var gridTotalColumnsMinusOne = 0;
@@ -249,6 +247,8 @@ class RenderOrderGrid extends RenderOrder {
 
   var maxZ = 0;
   var minZ = 0;
+  var minColumn = 0;
+  var maxRow = 0;
 
   double get renderX => convertRowColumnToX(row, column);
   double get renderY => convertRowColumnZToY(row, column, z);
@@ -369,15 +369,9 @@ class RenderOrderGrid extends RenderOrder {
     screenLeft = screen.left - tileSize;
     screenTop = screen.top - tileSize;
     screenBottom = screen.bottom;
-    final screenBottomLeftColumn = convertWorldToColumn(screenLeft, screenBottom, 0);
-    final screenBottomLeftRow = convertWorldToRow(screenLeft, screenBottom, 0);
-    final screenBottomLeftTotal = screenBottomLeftRow + screenBottomLeftColumn;
     var screenTopLeftColumn = convertWorldToColumn(screenLeft, screenTop, 0);
     screenBottomRightRow = clamp(convertWorldToRow(screenRight, screenBottom, 0), 0, gridTotalRows - 1);
     screenTopLeftRow = convertWorldToRow(screenLeft, screenTop, 0);
-    minColumnRow = max(screenTopLeftRow + screenTopLeftColumn, 0);
-    maxColumnRow = min(gridTotalRows + gridTotalColumns, screenBottomLeftTotal);
-
 
     if (screenTopLeftRow < 0){
       screenTopLeftColumn += screenTopLeftRow;
@@ -404,6 +398,7 @@ class RenderOrderGrid extends RenderOrder {
     trimTop();
     trimLeft();
     assignNode();
+    calculateMinColumnMaxRow();
 
     refreshDynamicLightGrid();
     super.reset();
@@ -440,20 +435,30 @@ class RenderOrderGrid extends RenderOrder {
     }
   }
 
+  void calculateMinColumnMaxRow(){
+     minColumn = convertWorldToColumnSafe(screenRight, renderY, 0);
+     maxRow = convertWorldToRowSafe(screenRight, renderY, 0);
+  }
+
   void nextGridNode(){
     z++;
+
+    if (node.renderable && node.dstX > screenRight) {
+      assert (node.dstX <= screenRight);
+    }
 
     if (z > maxZ) {
       row++;
       column--;
-      if (node.dstX > screenRight || column < 0 || row >= gridTotalRows) {
+      if (column < minColumn || row > maxRow) {
         shiftIndexDown();
+        calculateMinColumnMaxRow();
         if (!remaining) return;
         calculateMinMaxZ();
         if (!remaining) return;
         trimLeft();
 
-        z = minZ;
+        // z = minZ;
         // assignNode();
         //
         // if (node.renderable){
@@ -462,6 +467,10 @@ class RenderOrderGrid extends RenderOrder {
         //   assert (node.dstY >= screenTop);
         //   assert (node.dstY <= screenBottom);
         // }
+
+        if (node.renderable && node.dstX > screenRight) {
+          assert (node.dstX <= screenRight);
+        }
       }
       z = minZ;
     }
@@ -469,6 +478,11 @@ class RenderOrderGrid extends RenderOrder {
     assignNode();
 
     if (!node.renderable) return;
+
+    if (node.renderable && node.dstX > screenRight) {
+      assert (node.dstX <= screenRight);
+    }
+
 
     orderZ = z;
     order = node.order;
