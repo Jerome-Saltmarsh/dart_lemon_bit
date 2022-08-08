@@ -94,6 +94,8 @@ Node generateNode(int type){
       return NodeGrassEdgeBottom();
     case GridNodeType.Grass_Edge_Left:
       return NodeGrassEdgeLeft();
+    case GridNodeType.Bau_Haus:
+      return NodeBauHaus();
     default:
       print("Warning: Cannot generate node for type $type (${GridNodeType.getName(type)})");
       return Node.empty;

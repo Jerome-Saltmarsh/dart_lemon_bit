@@ -544,3 +544,8 @@ class NodeGrassEdgeLeft extends NodeSlope {
   @override
   int get type => GridNodeType.Grass_Edge_Left;
 }
+
+class NodeBauHaus extends NodeSolid {
+  @override
+  int get type => GridNodeType.Bau_Haus;
+}

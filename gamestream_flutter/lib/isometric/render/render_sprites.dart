@@ -252,7 +252,7 @@ class RenderOrderGrid extends RenderOrder {
   var minColumn = 0;
   var maxRow = 0;
 
-  double get renderX => convertRowColumnToX(row, column);
+  double get renderX => (row - column) * tileSizeHalf;
   double get renderY => convertRowColumnZToY(row, column, z);
 
   @override
@@ -449,12 +449,14 @@ class RenderOrderGrid extends RenderOrder {
      maxRow = convertWorldToRowSafe(screen.right, y, 0);
   }
 
+
+  // TODO render the entire width across because they all share the same render order
   void nextGridNode(){
     z++;
     if (z > maxZ) {
       row++;
       column--;
-      if (column < minColumn || row > maxRow) {
+      if (column < 0 || row >= gridTotalRows || renderX > screenRight) {
         shiftIndexDown();
         calculateMinColumnMaxRow();
         if (!remaining) return;

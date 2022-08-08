@@ -44,6 +44,7 @@ class GridNodeType {
   static const Grass_Edge_Right = 47;
   static const Grass_Edge_Bottom = 48;
   static const Grass_Edge_Left = 49;
+  static const Bau_Haus = 50;
 
 
   static isSolid(int type){
@@ -171,6 +172,7 @@ class GridNodeType {
        Grass_Edge_Right: "Grass Edge Right",
        Grass_Edge_Bottom: "Grass Edge Bottom",
        Grass_Edge_Left: "Grass Edge Left",
+       Bau_Haus: "Bau Haus",
      }[type] ?? "unknown($type)";
   }
   

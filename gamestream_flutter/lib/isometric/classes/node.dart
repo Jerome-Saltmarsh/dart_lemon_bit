@@ -789,3 +789,13 @@ class NodeGrassEdgeLeft extends GridNodeBasic {
   @override
   int get type => GridNodeType.Grass_Edge_Left;
 }
+
+class NodeBauHaus extends GridNodeBasic {
+  NodeBauHaus(int row, int column, int z) : super(row: row, column: column, z: z);
+
+  @override
+  double get srcX => 10544;
+
+  @override
+  int get type => GridNodeType.Bau_Haus;
+}
