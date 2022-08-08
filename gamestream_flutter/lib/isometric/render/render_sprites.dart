@@ -229,8 +229,6 @@ class RenderOrderGrid extends RenderOrder {
   var z = 0;
   var column = 0;
   var row = 0;
-  var initialRow = 0;
-  var initialColumn = 0;
   var shiftIndex = 0;
   late Node node;
   var maxColumnRow = 0;
@@ -403,14 +401,24 @@ class RenderOrderGrid extends RenderOrder {
 
     row = screenTopLeftRow;
     column = screenTopLeftColumn;
-    initialRow = row;
-    initialColumn = column;
     shiftIndex = 0;
     calculateMinMaxZ();
-    trim();
     assignNode();
+    trimTop();
+    trimLeft();
+    assignNode();
+
     refreshDynamicLightGrid();
     super.reset();
+  }
+
+  void trimTop() {
+    while (node.dstY < screen.top){
+      shiftIndexDown();
+      calculateMinMaxZ();
+      assignNode();
+    }
+    assert(node.dstY >= screen.top);
   }
 
   void calculateLimits() {
@@ -490,14 +498,14 @@ class RenderOrderGrid extends RenderOrder {
     if (column < gridTotalColumns) return;
     row = column - gridTotalColumnsMinusOne;
     column = gridTotalColumnsMinusOne;
-    trim();
+    trimLeft();
 
     if (row >= gridTotalRows){
        remaining = false;
     }
   }
 
-  void trim(){
+  void trimLeft(){
     final offscreen = countLeftOffscreen;
     if (offscreen <= 0) return;
     column -= offscreen;
