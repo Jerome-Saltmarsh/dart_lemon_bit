@@ -444,9 +444,8 @@ class RenderOrderGrid extends RenderOrder {
       maxZ = 0;
     }
 
-    if (bottom > screen.bottom) {
-      final diff = bottom - screen.bottom;
-      minZ = diff ~/ tileHeight;
+    while (convertRowColumnZToY(row, column, minZ) > screenBottom){
+      minZ++;
       if (minZ >= gridTotalZ){
         return end();
       }
@@ -465,6 +464,20 @@ class RenderOrderGrid extends RenderOrder {
         calculateMinMaxZ();
         if (!remaining) return;
         trimLeft();
+
+        z = minZ;
+        assignNode();
+
+        if (node.renderable){
+          assert (node.dstX >= screenLeft);
+          assert (node.dstX < screenRight);
+          assert (node.dstY >= screenTop);
+
+          if (node.dstY > screenBottom){
+            assert (node.dstY <= screenBottom);
+          }
+
+        }
       }
       z = minZ;
     }
