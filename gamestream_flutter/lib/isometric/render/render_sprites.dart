@@ -280,8 +280,8 @@ class RenderOrderGrid extends RenderOrder {
     }
 
     assert (node.renderable);
-    assert(node.dstY >= screenTop);
-    assert(node.dstX >= screenLeft);
+    assert (node.dstY >= screenTop);
+    assert (node.dstX >= screenLeft);
 
     // if (node.dstX < screenLeft) {
     //   offscreenNodesLeft++;
@@ -308,8 +308,8 @@ class RenderOrderGrid extends RenderOrder {
     nextGridNode();
     // TODO Optimize
     while (!node.renderable) {
-      index = _index + 1;
-      if (!remaining) return;
+      index = _index + 1; // TODO Optimize
+      if (!remaining) return; // TODO Optimize
       nextGridNode();
     }
 
@@ -459,15 +459,12 @@ class RenderOrderGrid extends RenderOrder {
     if (z > maxZ) {
       row++;
       column--;
-      if (node.dstX > screenRight || column < minColumn || row > maxRow) {
+      if (node.dstX > screenRight || column < 0 || row >= gridTotalRows) {
         shiftIndexDown();
         if (!remaining) return;
         calculateMinMaxZ();
         if (!remaining) return;
-        while (renderX < screenLeft){
-           row++;
-           column--;
-        }
+        trimLeft();
       }
       z = minZ;
     }
@@ -498,7 +495,6 @@ class RenderOrderGrid extends RenderOrder {
     if (column < gridTotalColumns) return;
     row = column - gridTotalColumnsMinusOne;
     column = gridTotalColumnsMinusOne;
-    trimLeft();
 
     if (row >= gridTotalRows){
        remaining = false;
@@ -511,6 +507,11 @@ class RenderOrderGrid extends RenderOrder {
     column -= offscreen;
     row += offscreen;
     assert(countLeftOffscreen <= 0);
+
+    while (renderX < screenLeft){
+      row++;
+      column--;
+    }
   }
 
   int get countLeftOffscreen {
