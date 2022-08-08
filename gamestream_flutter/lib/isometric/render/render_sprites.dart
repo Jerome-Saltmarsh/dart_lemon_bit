@@ -231,6 +231,8 @@ class RenderOrderGrid extends RenderOrder {
   var row = 0;
   var shiftIndex = 0;
   late Node node;
+  var maxColumnRow = 0;
+  var minColumnRow = 0;
   var screenTopLeftRow = 0;
   var screenBottomRightRow = 0;
   var gridTotalColumnsMinusOne = 0;
@@ -369,9 +371,15 @@ class RenderOrderGrid extends RenderOrder {
     screenLeft = screen.left - tileSize;
     screenTop = screen.top - tileSize;
     screenBottom = screen.bottom;
+    final screenBottomLeftColumn = convertWorldToColumn(screenLeft, screenBottom, 0);
+    final screenBottomLeftRow = convertWorldToRow(screenLeft, screenBottom, 0);
+    final screenBottomLeftTotal = screenBottomLeftRow + screenBottomLeftColumn;
     var screenTopLeftColumn = convertWorldToColumn(screenLeft, screenTop, 0);
     screenBottomRightRow = clamp(convertWorldToRow(screenRight, screenBottom, 0), 0, gridTotalRows - 1);
     screenTopLeftRow = convertWorldToRow(screenLeft, screenTop, 0);
+    minColumnRow = max(screenTopLeftRow + screenTopLeftColumn, 0);
+    maxColumnRow = min(gridTotalRows + gridTotalColumns, screenBottomLeftTotal);
+
 
     if (screenTopLeftRow < 0){
       screenTopLeftColumn += screenTopLeftRow;
@@ -407,9 +415,9 @@ class RenderOrderGrid extends RenderOrder {
   void trimTop() {
     while (node.dstY < screen.top){
       shiftIndexDown();
-      calculateMinMaxZ();
       assignNode();
     }
+    calculateMinMaxZ();
     assert(node.dstY >= screen.top);
   }
 
@@ -436,17 +444,13 @@ class RenderOrderGrid extends RenderOrder {
   }
 
   void calculateMinColumnMaxRow(){
-     minColumn = convertWorldToColumnSafe(screenRight, renderY, 0);
-     maxRow = convertWorldToRowSafe(screenRight, renderY, 0);
+    final y = renderY;
+     minColumn = convertWorldToColumnSafe(screen.right, y, 0);
+     maxRow = convertWorldToRowSafe(screen.right, y, 0);
   }
 
   void nextGridNode(){
     z++;
-
-    if (node.renderable && node.dstX > screenRight) {
-      assert (node.dstX <= screenRight);
-    }
-
     if (z > maxZ) {
       row++;
       column--;
@@ -457,33 +461,11 @@ class RenderOrderGrid extends RenderOrder {
         calculateMinMaxZ();
         if (!remaining) return;
         trimLeft();
-
-        // z = minZ;
-        // assignNode();
-        //
-        // if (node.renderable){
-        //   assert (node.dstX >= screenLeft);
-        //   assert (node.dstX < screenRight);
-        //   assert (node.dstY >= screenTop);
-        //   assert (node.dstY <= screenBottom);
-        // }
-
-        if (node.renderable && node.dstX > screenRight) {
-          assert (node.dstX <= screenRight);
-        }
       }
       z = minZ;
     }
 
     assignNode();
-
-    if (!node.renderable) return;
-
-    if (node.renderable && node.dstX > screenRight) {
-      assert (node.dstX <= screenRight);
-    }
-
-
     orderZ = z;
     order = node.order;
     gridZHalf =  z ~/ 2;
