@@ -247,10 +247,8 @@ class RenderOrderGrid extends RenderOrder {
   var screenTop = screen.top - tileSize;
   var screenBottom = screen.bottom + tileSize;
 
-  var maxRow = 0;
   var maxZ = 0;
   var minZ = 0;
-  var minColumn = 0;
 
   double get renderX => convertRowColumnToX(row, column);
   double get renderY => convertRowColumnZToY(row, column, z);
@@ -282,6 +280,7 @@ class RenderOrderGrid extends RenderOrder {
     assert (node.renderable);
     assert (node.dstY >= screenTop);
     assert (node.dstX >= screenLeft);
+    assert (node.dstY <= screenBottom);
 
     // if (node.dstX < screenLeft) {
     //   offscreenNodesLeft++;
@@ -291,10 +290,10 @@ class RenderOrderGrid extends RenderOrder {
     //   offscreenNodesTop++;
     //   return;
     // }
-    if (node.dstY > screenBottom) {
-      offscreenNodesBottom++;
-      return;
-    }
+    // if (node.dstY > screenBottom) {
+    //   offscreenNodesBottom++;
+    //   return;
+    // }
     if (node.dstX > screenRight) {
       offscreenNodesRight++;
       return;
@@ -341,9 +340,7 @@ class RenderOrderGrid extends RenderOrder {
     minZ = 0;
     order = 0;
     orderZ = 0;
-
     z = 0;
-    calculateLimits();
     orderZ = 0;
     gridZHalf = 0;
     gridTotalColumnsMinusOne = gridTotalColumns - 1;
@@ -421,15 +418,6 @@ class RenderOrderGrid extends RenderOrder {
     assert(node.dstY >= screen.top);
   }
 
-  void calculateLimits() {
-    minColumn = convertWorldToColumnSafe(screenRight, screenTop, 0);
-    maxRow = convertWorldToRowSafe(screenRight, screenBottom, 0);
-    assert(minColumn >= 0);
-    assert(maxRow >= 0);
-    assert(minColumn < gridTotalColumns);
-    assert(maxRow < gridTotalRows);
-  }
-
   // given a grid coordinate row / column workout the maximum z before it goes above the top of the screen.
   // otherwise use totalZ;
   // calculate the world position Y at row / column, then workout its distance from the top of the screen;
@@ -466,18 +454,14 @@ class RenderOrderGrid extends RenderOrder {
         trimLeft();
 
         z = minZ;
-        assignNode();
-
-        if (node.renderable){
-          assert (node.dstX >= screenLeft);
-          assert (node.dstX < screenRight);
-          assert (node.dstY >= screenTop);
-
-          if (node.dstY > screenBottom){
-            assert (node.dstY <= screenBottom);
-          }
-
-        }
+        // assignNode();
+        //
+        // if (node.renderable){
+        //   assert (node.dstX >= screenLeft);
+        //   assert (node.dstX < screenRight);
+        //   assert (node.dstY >= screenTop);
+        //   assert (node.dstY <= screenBottom);
+        // }
       }
       z = minZ;
     }
