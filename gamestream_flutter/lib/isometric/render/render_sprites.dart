@@ -280,23 +280,23 @@ class RenderOrderGrid extends RenderOrder {
     }
 
     assert (node.renderable);
-    // assert (nodeVisible);
+    assert(node.dstY >= screenTop);
+    assert(node.dstX >= screenLeft);
+
     // if (node.dstX < screenLeft) {
     //   offscreenNodesLeft++;
     //   return;
     // }
-    assert(node.dstX >= screenLeft);
-
-    if (node.dstX > screenRight) {
-      offscreenNodesRight++;
-      return;
-    }
-    if (node.dstY < screenTop) {
-      offscreenNodesTop++;
-      return;
-    }
+    // if (node.dstY < screenTop) {
+    //   offscreenNodesTop++;
+    //   return;
+    // }
     if (node.dstY > screenBottom) {
       offscreenNodesBottom++;
+      return;
+    }
+    if (node.dstX > screenRight) {
+      offscreenNodesRight++;
       return;
     }
     onscreenNodes++;
