@@ -198,6 +198,8 @@ bool _castesShadow(int type){
         GridNodeType.Stairs_North,
         GridNodeType.Roof_Tile_South,
         GridNodeType.Roof_Tile_North,
+        GridNodeType.Bau_Haus_Roof_South,
+        GridNodeType.Bau_Haus_Roof_North,
   ].contains(type);
 }
 

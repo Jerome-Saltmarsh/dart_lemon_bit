@@ -102,6 +102,8 @@ Node generateNode(int type){
       return NodeBauHausRoofSouth();
     case GridNodeType.Bau_Haus_Window:
       return NodeBauHausWindow();
+    case GridNodeType.Bau_Haus_Plain:
+      return NodeBauHausPlain();
     default:
       print("Warning: Cannot generate node for type $type (${GridNodeType.getName(type)})");
       return Node.empty;

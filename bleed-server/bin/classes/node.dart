@@ -560,7 +560,12 @@ class NodeBauHausRoofSouth extends NodeSlopeSouth {
   int get type => GridNodeType.Bau_Haus_Roof_South;
 }
 
-class NodeBauHausWindow extends NodeSoil {
+class NodeBauHausWindow extends NodeSolid {
   @override
   int get type => GridNodeType.Bau_Haus_Window;
+}
+
+class NodeBauHausPlain extends NodeSolid {
+  @override
+  int get type => GridNodeType.Bau_Haus_Plain;
 }
