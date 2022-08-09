@@ -47,6 +47,7 @@ class GridNodeType {
   static const Bau_Haus = 50;
   static const Bau_Haus_Roof_North = 51;
   static const Bau_Haus_Roof_South = 52;
+  static const Bau_Haus_Window = 53;
 
 
   static isSolid(int type){

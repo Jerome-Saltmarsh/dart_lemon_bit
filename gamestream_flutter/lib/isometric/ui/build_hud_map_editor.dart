@@ -458,4 +458,5 @@ const editorSelectableGridTypes = [
     GridNodeType.Bau_Haus,
     GridNodeType.Bau_Haus_Roof_North,
     GridNodeType.Bau_Haus_Roof_South,
+    GridNodeType.Bau_Haus_Window,
 ];
