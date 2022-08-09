@@ -229,6 +229,7 @@ class RenderOrderGrid extends RenderOrder {
   var z = 0;
   var column = 0;
   var row = 0;
+  var rowsMax = 0;
   var shiftIndex = 0;
   late Node node;
   var maxColumnRow = 0;
@@ -276,25 +277,28 @@ class RenderOrderGrid extends RenderOrder {
       }
     }
 
-    while (column > 0 && row < gridTotalRows - 1 && renderX < screenRight){
+    while (column > 0 && row < rowsMax && renderX < screenRight){
       row++;
       column--;
       assignNode();
 
       if (!node.renderable) continue;
 
-      if (node.dstX < screenLeft) {
-        offscreenNodesLeft++;
-        continue;
-      }
-      if (node.dstY < screenTop) {
-        offscreenNodesTop++;
-        return;
-      }
-      if (node.dstY > screenBottom) {
-        offscreenNodesBottom++;
-        return;
-      }
+      assert (node.dstX >= screenLeft);
+      assert (node.dstY >= screenTop);
+      assert (node.dstY <= screenBottom);
+      // if (node.dstX < screenLeft) {
+      //   offscreenNodesLeft++;
+      //   continue;
+      // }
+      // if (node.dstY < screenTop) {
+      //   offscreenNodesTop++;
+      //   return;
+      // }
+      // if (node.dstY > screenBottom) {
+      //   offscreenNodesBottom++;
+      //   return;
+      // }
       if (node.dstX > screenRight) {
         offscreenNodesRight++;
         return;
@@ -329,6 +333,7 @@ class RenderOrderGrid extends RenderOrder {
 
   @override
   void reset() {
+    rowsMax = gridTotalRows - 1;
     gridTotalZMinusOne = gridTotalZ - 1;
     offscreenNodes = 0;
     offscreenNodesTop = 0;
