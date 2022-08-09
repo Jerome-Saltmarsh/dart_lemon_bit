@@ -277,12 +277,13 @@ class RenderOrderGrid extends RenderOrder {
       }
     }
 
-    while (column > 0 && row < rowsMax && renderX < screenRight){
+    while (column > 0 && row < rowsMax){
       row++;
       column--;
       assignNode();
 
       if (!node.renderable) continue;
+      if (node.dstX > screenRight) return;
 
       assert (node.dstX >= screenLeft);
       assert (node.dstY >= screenTop);
@@ -299,10 +300,6 @@ class RenderOrderGrid extends RenderOrder {
       //   offscreenNodesBottom++;
       //   return;
       // }
-      if (node.dstX > screenRight) {
-        offscreenNodesRight++;
-        return;
-      }
       onscreenNodes++;
       node.handleRender();
     }
