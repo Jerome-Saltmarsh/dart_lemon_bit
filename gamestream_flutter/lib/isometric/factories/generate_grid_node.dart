@@ -95,6 +95,10 @@ Node generateNode(int z, int row, int column, int type){
       return NodeGrassEdgeLeft(row, column, z);
     case GridNodeType.Bau_Haus:
       return NodeBauHaus(row, column, z);
+    case GridNodeType.Bau_Haus_Roof_North:
+      return NodeBauHausRoofNorth(row, column, z);
+    case GridNodeType.Bau_Haus_Roof_South:
+      return NodeBauHausRoofSouth(row, column, z);
     default:
       throw Exception("Cannot build grid node type $type (${GridNodeType.getName(type)}");
   }

@@ -796,3 +796,23 @@ class NodeBauHaus extends GridNodeBasic {
   @override
   int get type => GridNodeType.Bau_Haus;
 }
+
+class NodeBauHausRoofNorth extends GridNodeBasic {
+  NodeBauHausRoofNorth(int row, int column, int z) : super(row: row, column: column, z: z);
+
+  @override
+  double get srcX => 10640;
+
+  @override
+  int get type => GridNodeType.Bau_Haus_Roof_North;
+}
+
+class NodeBauHausRoofSouth extends GridNodeBasic {
+  NodeBauHausRoofSouth(int row, int column, int z) : super(row: row, column: column, z: z);
+
+  @override
+  double get srcX => 10592;
+
+  @override
+  int get type => GridNodeType.Bau_Haus_Roof_South;
+}
