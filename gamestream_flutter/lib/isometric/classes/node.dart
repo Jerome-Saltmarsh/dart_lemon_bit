@@ -35,12 +35,9 @@ abstract class Node {
 
   int get wind => _wind;
 
-  late double order;
-
   Node(int row, int column, int z) {
      dstX = (row - column) * tileSizeHalf;
      dstY = ((row + column) * tileSizeHalf) - (z * tileHeight);
-     order = ((row + column) * tileSize);
   }
 
   int get type;

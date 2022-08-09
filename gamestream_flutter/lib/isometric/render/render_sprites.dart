@@ -305,14 +305,7 @@ class RenderOrderGrid extends RenderOrder {
   @override
   void updateFunction() {
     nextGridNode();
-    // TODO Optimize
-    while (!node.renderable) {
-      index = _index + 1; // TODO Optimize
-      if (!remaining) return; // TODO Optimize
-      nextGridNode();
-    }
-
-    order = node.order;
+    order = ((row + column) * tileSize);
     orderZ = z;
     gridZHalf =  z ~/ 2;
     gridZGreaterThanPlayerZ = z > playerZ;
@@ -443,46 +436,34 @@ class RenderOrderGrid extends RenderOrder {
     }
   }
 
-  // TODO render the entire width across because they all share the same render order
   void nextGridNode(){
-    row++;
-    column--;
-
-    if (column < 0 || row >= gridTotalRows || renderX > screenRight) {
-      z++;
-      if (z > maxZ) {
-        z = 0;
-        shiftIndexDown();
-        if (!remaining) return;
-        calculateMinMaxZ();
-        if (!remaining) return;
-        trimLeft();
-
-        while (renderY > screenBottom){
-          z++;
-          if (z > maxZ) {
-            remaining = false;
-            return;
-          }
-        }
-      } else {
-        row = startRow;
-        column = startColumn;
-      }
+    while (column > 0 && row < gridTotalRows && renderX < screenRight){
+      row++;
+      column--;
+      assignNode();
+      renderFunction();
     }
-    assignNode();
 
-    // if (node.renderable){
-    //   assert (node.dstY >= screenTop);
-    //   assert (node.dstY <= screenBottom);
-    //   assert (node.dstX >= screenLeft);
-    //   // assert (node.dstX <= screenRight);
-    //
-    //   if (node.dstX > screenRight) {
-    //      final rX = renderX;
-    //      assert(rX == renderX);
-    //   }
-    // }
+    z++;
+    if (z > maxZ) {
+      z = 0;
+      shiftIndexDown();
+      if (!remaining) return;
+      calculateMinMaxZ();
+      if (!remaining) return;
+      trimLeft();
+
+      while (renderY > screenBottom) {
+        z++;
+        if (z > maxZ) {
+          remaining = false;
+          return;
+        }
+      }
+    } else {
+      row = startRow;
+      column = startColumn;
+    }
   }
 
   void assignNode() {
@@ -588,7 +569,7 @@ abstract class RenderOrder {
   RenderOrder compare(RenderOrder that){
     if (!remaining) return that;
     if (!that.remaining) return this;
-    if (order <= that.order) return this;
+    if (order < that.order) return this;
     if (orderZ < that.orderZ) return this;
     return that;
   }
