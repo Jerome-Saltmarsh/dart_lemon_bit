@@ -232,8 +232,6 @@ class RenderOrderGrid extends RenderOrder {
   var rowsMax = 0;
   var shiftIndex = 0;
   late Node node;
-  var maxColumnRow = 0;
-  var minColumnRow = 0;
   var screenTopLeftRow = 0;
   var screenBottomRightRow = 0;
   var gridTotalColumnsMinusOne = 0;
@@ -243,10 +241,10 @@ class RenderOrderGrid extends RenderOrder {
   var playerColumnRow = 0;
   var playerUnderRoof = false;
 
-  var screenRight = screen.right + tileSize;
-  var screenLeft = screen.left - tileSize;
   var screenTop = screen.top - tileSize;
+  var screenRight = screen.right + tileSize;
   var screenBottom = screen.bottom + tileSize;
+  var screenLeft = screen.left - tileSize;
 
   var maxZ = 0;
   var minZ = 0;
@@ -284,7 +282,6 @@ class RenderOrderGrid extends RenderOrder {
 
       if (!node.renderable) continue;
       if (node.dstX > screenRight) return;
-
       assert (node.dstX >= screenLeft);
       assert (node.dstY >= screenTop);
       assert (node.dstY <= screenBottom);
@@ -313,14 +310,6 @@ class RenderOrderGrid extends RenderOrder {
     orderZ = z;
     gridZHalf =  z ~/ 2;
     gridZGreaterThanPlayerZ = z > playerZ;
-  }
-
-  bool get nodeVisible {
-     if (node.dstX < screenLeft) return false;
-     if (node.dstX > screenRight) return false;
-     if (node.dstY < screenTop) return false;
-     if (node.dstY > screenBottom) return false;
-     return true;
   }
 
   @override
@@ -371,15 +360,9 @@ class RenderOrderGrid extends RenderOrder {
     screenLeft = screen.left - tileSize;
     screenTop = screen.top - tileSize;
     screenBottom = screen.bottom;
-    final screenBottomLeftColumn = convertWorldToColumn(screenLeft, screenBottom, 0);
-    final screenBottomLeftRow = convertWorldToRow(screenLeft, screenBottom, 0);
-    final screenBottomLeftTotal = screenBottomLeftRow + screenBottomLeftColumn;
     var screenTopLeftColumn = convertWorldToColumn(screenLeft, screenTop, 0);
     screenBottomRightRow = clamp(convertWorldToRow(screenRight, screenBottom, 0), 0, gridTotalRows - 1);
     screenTopLeftRow = convertWorldToRow(screenLeft, screenTop, 0);
-    minColumnRow = max(screenTopLeftRow + screenTopLeftColumn, 0);
-    maxColumnRow = min(gridTotalRows + gridTotalColumns, screenBottomLeftTotal);
-
 
     if (screenTopLeftRow < 0){
       screenTopLeftColumn += screenTopLeftRow;
@@ -517,14 +500,13 @@ class RenderOrderGrid extends RenderOrder {
   }
 
     void refreshDynamicLightGrid(){
-        final bottom = screen.bottom + tileHeight;
         for (var z = 0; z < gridTotalZ; z++) {
           final zPlain = grid[z];
           final zLength = z * tileSize;
           final minRow = convertWorldToRowSafe(screenLeft, screenTop, zLength);
-          final maxRow = convertWorldToRowSafe(screenRight, bottom, zLength);
+          final maxRow = convertWorldToRowSafe(screenRight, screenBottom, zLength);
           final minColumn = convertWorldToColumnSafe(screenRight, screenTop, zLength);
-          final maxColumn = convertWorldToColumnSafe(screenLeft, bottom, zLength);
+          final maxColumn = convertWorldToColumnSafe(screenLeft, screenBottom, zLength);
           final max = maxRow + maxColumn;
           for (var rowIndex = minRow; rowIndex <= maxRow; rowIndex++) {
             final dynamicRow = zPlain[rowIndex];
