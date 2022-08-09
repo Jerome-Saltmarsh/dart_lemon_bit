@@ -67,7 +67,14 @@ void refreshParticleEmitters() {
   gridForEachOfType(
       GridNodeType.Fireplace,
       (z, row, column, type) {
-        globalParticleEmittersActionAddSmokeEmitter(z, row, column);
+        addSmokeEmitter(z, row, column);
+      }
+  );
+
+  gridForEachOfType(
+      GridNodeType.Chimney,
+          (z, row, column, type) {
+        addSmokeEmitter(z + 1, row, column);
       }
   );
 }

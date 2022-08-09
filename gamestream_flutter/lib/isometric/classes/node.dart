@@ -1,5 +1,6 @@
 
 import 'package:bleed_common/Shade.dart';
+import 'package:gamestream_flutter/isometric/particle_emitters.dart';
 import 'package:lemon_math/library.dart';
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/tile_size.dart';
@@ -839,7 +840,9 @@ class NodeBauHausPlain extends GridNodeBasic {
 }
 
 class NodeBauHausChimney extends GridNodeBasic {
-  NodeBauHausChimney(int row, int column, int z) : super(row: row, column: column, z: z);
+  NodeBauHausChimney(int row, int column, int z) : super(row: row, column: column, z: z) {
+    addSmokeEmitter(z + 1, row, column);
+  }
 
   @override
   double get srcX => 10787;
