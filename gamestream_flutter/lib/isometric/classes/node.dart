@@ -837,3 +837,13 @@ class NodeBauHausPlain extends GridNodeBasic {
   @override
   int get type => GridNodeType.Bau_Haus_Plain;
 }
+
+class NodeBauHausChimney extends GridNodeBasic {
+  NodeBauHausChimney(int row, int column, int z) : super(row: row, column: column, z: z);
+
+  @override
+  double get srcX => 10787;
+
+  @override
+  int get type => GridNodeType.Chimney;
+}

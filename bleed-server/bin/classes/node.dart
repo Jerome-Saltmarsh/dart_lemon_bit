@@ -569,3 +569,8 @@ class NodeBauHausPlain extends NodeSolid {
   @override
   int get type => GridNodeType.Bau_Haus_Plain;
 }
+
+class NodeChimney extends NodeSolid {
+  @override
+  int get type => GridNodeType.Chimney;
+}
