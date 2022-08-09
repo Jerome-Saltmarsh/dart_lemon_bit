@@ -28,8 +28,8 @@ final List<Region> selectableServerTypes =
     ).toList();
 
 class ServerUri {
-  static const Sydney = "https://gamestream-ws-osbmaezptq-ts.a.run.app";
-  static const Singapore = "https://gamestream-ws-singapore-osbmaezptq-as.a.run.app";
+  static const Sydney = "https://gamestream-ws-australia-osbmaezptq-ts.a.run.app";
+  static const Singapore = "https://gamestream-ws-singapore-3-osbmaezptq-as.a.run.app";
 }
 
 String parseHttpToWebSocket(String url) {

@@ -11,7 +11,6 @@ import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'convert/convert_distance_to_shade.dart';
-import 'grid/convert/convert_hour_to_shade.dart';
 import 'watches/ambient_shade.dart';
 
 final gridShadows = Watch(true, onChanged: (bool value){
@@ -47,7 +46,7 @@ Node getNode(int z, int row, int column) {
 void toggleShadows () => gridShadows.value = !gridShadows.value;
 
 void actionSetAmbientShadeToHour(){
-  ambientShade.value = convertHourToShade(hours.value);
+  ambientShade.value = Shade.fromHour(hours.value);
 }
 
 void onGridChanged(){
