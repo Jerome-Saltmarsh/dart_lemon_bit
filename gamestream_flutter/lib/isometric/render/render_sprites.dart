@@ -277,27 +277,27 @@ class RenderOrderGrid extends RenderOrder {
       }
     }
 
-    assert (node.renderable);
-    assert (node.dstY >= screenTop);
-    assert (node.dstY <= screenBottom);
-    assert (node.dstX >= screenLeft);
-    assert (node.dstX <= screenRight);
-    // if (node.dstX < screenLeft) {
-    //   offscreenNodesLeft++;
-    //   return;
-    // }
-    // if (node.dstY < screenTop) {
-    //   offscreenNodesTop++;
-    //   return;
-    // }
-    // if (node.dstY > screenBottom) {
-    //   offscreenNodesBottom++;
-    //   return;
-    // }
-    // if (node.dstX > screenRight) {
-    //   offscreenNodesRight++;
-    //   return;
-    // }
+    // assert (node.renderable);
+    // assert (node.dstY >= screenTop);
+    // assert (node.dstY <= screenBottom);
+    // assert (node.dstX >= screenLeft);
+    // assert (node.dstX <= screenRight);
+    if (node.dstX < screenLeft) {
+      offscreenNodesLeft++;
+      return;
+    }
+    if (node.dstY < screenTop) {
+      offscreenNodesTop++;
+      return;
+    }
+    if (node.dstY > screenBottom) {
+      offscreenNodesBottom++;
+      return;
+    }
+    if (node.dstX > screenRight) {
+      offscreenNodesRight++;
+      return;
+    }
     onscreenNodes++;
     node.handleRender();
   }
@@ -313,6 +313,9 @@ class RenderOrderGrid extends RenderOrder {
     }
 
     order = node.order;
+    orderZ = z;
+    gridZHalf =  z ~/ 2;
+    gridZGreaterThanPlayerZ = z > playerZ;
   }
 
   bool get nodeVisible {
@@ -404,17 +407,17 @@ class RenderOrderGrid extends RenderOrder {
     trimTop();
     trimLeft();
     assignNode();
-
     refreshDynamicLightGrid();
     super.reset();
   }
 
   void trimTop() {
-    while (node.dstY < screen.top){
+    while (renderY < screen.top){
       shiftIndexDown();
-      assignNode();
     }
+    assignNode();
     calculateMinMaxZ();
+    setStart();
     assert(node.dstY >= screen.top);
   }
 
@@ -442,25 +445,44 @@ class RenderOrderGrid extends RenderOrder {
 
   // TODO render the entire width across because they all share the same render order
   void nextGridNode(){
-    z++;
-    if (z > maxZ) {
-      row++;
-      column--;
-      if (column < 0 || row >= gridTotalRows || renderX > screenRight) {
+    row++;
+    column--;
+
+    if (column < 0 || row >= gridTotalRows || renderX > screenRight) {
+      z++;
+      if (z > maxZ) {
+        z = 0;
         shiftIndexDown();
         if (!remaining) return;
         calculateMinMaxZ();
         if (!remaining) return;
         trimLeft();
-      }
-      z = minZ;
-    }
 
+        while (renderY > screenBottom){
+          z++;
+          if (z > maxZ) {
+            remaining = false;
+            return;
+          }
+        }
+      } else {
+        row = startRow;
+        column = startColumn;
+      }
+    }
     assignNode();
-    orderZ = z;
-    order = node.order;
-    gridZHalf =  z ~/ 2;
-    gridZGreaterThanPlayerZ = z > playerZ;
+
+    // if (node.renderable){
+    //   assert (node.dstY >= screenTop);
+    //   assert (node.dstY <= screenBottom);
+    //   assert (node.dstX >= screenLeft);
+    //   // assert (node.dstX <= screenRight);
+    //
+    //   if (node.dstX > screenRight) {
+    //      final rX = renderX;
+    //      assert(rX == renderX);
+    //   }
+    // }
   }
 
   void assignNode() {
@@ -476,13 +498,17 @@ class RenderOrderGrid extends RenderOrder {
   void shiftIndexDown(){
     column = row + column + 1;
     row = 0;
-    if (column < gridTotalColumns) return;
+    if (column < gridTotalColumns) {
+      return setStart();
+    }
     row = column - gridTotalColumnsMinusOne;
     column = gridTotalColumnsMinusOne;
 
     if (row >= gridTotalRows){
        remaining = false;
+       return;
     }
+    setStart();
   }
 
   void trimLeft(){
@@ -490,11 +516,16 @@ class RenderOrderGrid extends RenderOrder {
     if (offscreen <= 0) return;
     column -= offscreen;
     row += offscreen;
-    // assert(countLeftOffscreen <= 0);
     while (renderX < screenLeft){
       row++;
       column--;
     }
+    setStart();
+  }
+
+  void setStart(){
+    startRow = row;
+    startColumn = column;
   }
 
   int get countLeftOffscreen {
@@ -531,6 +562,8 @@ abstract class RenderOrder {
   var order = 0.0;
   var orderZ = 0;
   var remaining = true;
+  var startRow = 0;
+  var startColumn = 0;
 
   void renderFunction();
   void updateFunction();
