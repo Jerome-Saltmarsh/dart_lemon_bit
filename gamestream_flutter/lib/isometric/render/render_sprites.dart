@@ -278,29 +278,32 @@ class RenderOrderGrid extends RenderOrder {
       }
     }
 
-    // assert (node.renderable);
-    // assert (node.dstY >= screenTop);
-    // assert (node.dstY <= screenBottom);
-    // assert (node.dstX >= screenLeft);
-    // assert (node.dstX <= screenRight);
-    // if (node.dstX < screenLeft) {
-    //   offscreenNodesLeft++;
-    //   return;
-    // }
-    // if (node.dstY < screenTop) {
-    //   offscreenNodesTop++;
-    //   return;
-    // }
-    // if (node.dstY > screenBottom) {
-    //   offscreenNodesBottom++;
-    //   return;
-    // }
-    // if (node.dstX > screenRight) {
-    //   offscreenNodesRight++;
-    //   return;
-    // }
-    onscreenNodes++;
-    node.handleRender();
+    while (column > 0 && row < gridTotalRows && renderX < screenRight){
+      row++;
+      column--;
+      assignNode();
+
+      if (!node.renderable) continue;
+
+      if (node.dstX < screenLeft) {
+        offscreenNodesLeft++;
+        continue;
+      }
+      if (node.dstY < screenTop) {
+        offscreenNodesTop++;
+        return;
+      }
+      if (node.dstY > screenBottom) {
+        offscreenNodesBottom++;
+        return;
+      }
+      if (node.dstX > screenRight) {
+        offscreenNodesRight++;
+        return;
+      }
+      onscreenNodes++;
+      node.handleRender();
+    }
   }
 
   @override
@@ -440,13 +443,6 @@ class RenderOrderGrid extends RenderOrder {
   }
 
   void nextGridNode(){
-    while (column > 0 && row < gridTotalRows && renderX < screenRight){
-      row++;
-      column--;
-      assignNode();
-      renderFunction();
-    }
-
     z++;
     if (z > maxZ) {
       z = 0;
