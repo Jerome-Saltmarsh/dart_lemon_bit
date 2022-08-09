@@ -265,9 +265,7 @@ class RenderOrderGrid extends RenderOrder {
         final renderColumnDistance = (renderColumn - playerRenderColumn).abs();
 
         if (z > playerZ + 1 && renderRowDistance <= 5 && renderColumnDistance <= 5) {
-          // if (gridRow + gridColumn > playerColumnRow){
             return;
-          // }
         }
 
         if (z > playerZ && renderRowDistance < 2 && renderColumnDistance < 2) {
@@ -278,7 +276,7 @@ class RenderOrderGrid extends RenderOrder {
       }
     }
 
-    while (column > 0 && row < gridTotalRows && renderX < screenRight){
+    while (column > 0 && row < gridTotalRows - 1 && renderX < screenRight){
       row++;
       column--;
       assignNode();
