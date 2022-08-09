@@ -249,6 +249,7 @@ class RenderOrderGrid extends RenderOrder {
 
   var maxZ = 0;
   var minZ = 0;
+  late List<List<Node>> zPlain;
 
   double get renderX => (row - column) * tileSizeHalf;
   double get renderY => convertRowColumnZToY(row, column, z);
@@ -282,28 +283,29 @@ class RenderOrderGrid extends RenderOrder {
     // assert (node.dstY <= screenBottom);
     // assert (node.dstX >= screenLeft);
     // assert (node.dstX <= screenRight);
-    if (node.dstX < screenLeft) {
-      offscreenNodesLeft++;
-      return;
-    }
-    if (node.dstY < screenTop) {
-      offscreenNodesTop++;
-      return;
-    }
-    if (node.dstY > screenBottom) {
-      offscreenNodesBottom++;
-      return;
-    }
-    if (node.dstX > screenRight) {
-      offscreenNodesRight++;
-      return;
-    }
+    // if (node.dstX < screenLeft) {
+    //   offscreenNodesLeft++;
+    //   return;
+    // }
+    // if (node.dstY < screenTop) {
+    //   offscreenNodesTop++;
+    //   return;
+    // }
+    // if (node.dstY > screenBottom) {
+    //   offscreenNodesBottom++;
+    //   return;
+    // }
+    // if (node.dstX > screenRight) {
+    //   offscreenNodesRight++;
+    //   return;
+    // }
     onscreenNodes++;
     node.handleRender();
   }
 
   @override
   void updateFunction() {
+    zPlain = grid[z];
     nextGridNode();
     order = ((row + column) * tileSize);
     orderZ = z;
@@ -337,6 +339,7 @@ class RenderOrderGrid extends RenderOrder {
     order = 0;
     orderZ = 0;
     z = 0;
+    zPlain = grid[z];
     orderZ = 0;
     gridZHalf = 0;
     gridTotalColumnsMinusOne = gridTotalColumns - 1;
@@ -464,6 +467,7 @@ class RenderOrderGrid extends RenderOrder {
       row = startRow;
       column = startColumn;
     }
+    zPlain = grid[z];
   }
 
   void assignNode() {
@@ -473,7 +477,7 @@ class RenderOrderGrid extends RenderOrder {
     assert (row < gridTotalRows);
     assert (column >= 0);
     assert (column < gridTotalColumns);
-    node = grid[z][row][column];
+    node = zPlain[row][column];
   }
 
   void shiftIndexDown(){
