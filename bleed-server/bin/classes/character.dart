@@ -45,7 +45,6 @@ abstract class Character extends Collider with Team, Velocity, Material {
   var equippedHead = HeadType.None;
   var equippedPants = PantsType.white;
 
-  void set direction(int value) => angle = convertDirectionToAngle(value);
   bool get running => state == CharacterState.Running;
   bool get idling => state == CharacterState.Idle;
   bool get characterStateIdle => state == CharacterState.Idle;
@@ -60,7 +59,6 @@ abstract class Character extends Collider with Team, Velocity, Material {
   int get equippedLevel => 1;
   int get equippedAttackDuration => 25;
   int get equippedDamage => equippedWeapon.damage;
-  int get direction => convertAngleToDirection(angle);
   double get equippedRange => WeaponType.getRange(equippedWeapon.type);
 
   void write(Player player);

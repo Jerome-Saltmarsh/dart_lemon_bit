@@ -43,5 +43,7 @@ void renderGameObject(GameObject value) {
       srcY: 718,
       srcWidth: 64,
       srcHeight: 64,
+      scale: 0.25,
+      color: value.renderColor,
     );
 }

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:lemon_math/functions/adjacent.dart';
 import 'package:lemon_math/functions/opposite.dart';
 
+import '../common/Direction.dart';
 import '../common/MaterialType.dart';
 
 mixin Owner <T> {
@@ -16,6 +17,9 @@ mixin Team {
 mixin Velocity {
   var angle = 0.0;
   var speed = 0.0;
+
+  void set direction(int value) => angle = convertDirectionToAngle(value);
+  int get direction => convertAngleToDirection(angle);
 
   double get xv => getAdjacent(angle + pi, speed);
   double get yv => getOpposite(angle + pi, speed);

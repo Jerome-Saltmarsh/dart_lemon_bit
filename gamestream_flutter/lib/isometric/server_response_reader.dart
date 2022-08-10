@@ -103,10 +103,7 @@ class ServerResponseReader with ByteReader {
           totalGameObjects++;
           break;
         case ServerResponse.GameObject_Butterfly:
-          final gameObject = getInstanceGameObject();
-          gameObject.type = GameObjectType.Butterfly;
-          readVector3(gameObject);
-          totalGameObjects++;
+          readGameObjectButterfly();
           break;
         case ServerResponse.End:
           return readEnd();
@@ -225,6 +222,14 @@ class ServerResponseReader with ByteReader {
           throw Exception("Cannot parse $response at index: $index");
       }
     }
+  }
+
+  void readGameObjectButterfly() {
+    final gameObject = getInstanceGameObject();
+    gameObject.type = GameObjectType.Butterfly;
+    readVector3(gameObject);
+    gameObject.direction = readByte();
+    totalGameObjects++;
   }
 
   void readCharacterRat() {

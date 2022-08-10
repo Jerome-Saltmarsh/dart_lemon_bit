@@ -1,7 +1,10 @@
 
 
+import 'package:lemon_math/library.dart';
+
 import '../common/library.dart';
 import 'library.dart';
+import 'position3.dart';
 
 abstract class GameObject extends Collider {
   GameObject({
@@ -62,21 +65,49 @@ class GameObjectStick extends GameObject {
   }
 }
 
-class GameObjectButterfly extends GameObject {
+class GameObjectButterfly extends GameObject with Velocity {
+
+  Position3 target = Position3();
+  var spawnX = 0.0;
+  var spawnY = 0.0;
+  var spawnZ = 0.0;
+
   GameObjectButterfly({
     required double x,
     required double y,
     required double z,
-  }) : super(x: x, y: y, z: z, radius: 10);
+  }) : super(x: x, y: y, z: z, radius: 10) {
+    target.x = x;
+    target.y = y;
+    target.z = z;
+    spawnX = x;
+    spawnY = y;
+    spawnZ = z;
+    speed = 1;
+    assignNewTarget();
+  }
 
   @override
   void write(Player player) {
     player.writeByte(ServerResponse.GameObject_Butterfly);
     player.writePosition3(this);
+    player.writeByte(direction);
   }
 
   @override
   void update() {
      x += 0.01;
+     if (distanceFromPos3(target) < 5){
+       assignNewTarget();
+     }
+     angle = this.getAngle(target);
+     x += xv;
+     y += yv;
+  }
+
+  void assignNewTarget(){
+    const radius = 100;
+    target.x = spawnX + giveOrTake(radius);
+    target.y = spawnY + giveOrTake(radius);
   }
 }
