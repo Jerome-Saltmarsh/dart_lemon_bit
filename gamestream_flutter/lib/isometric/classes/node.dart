@@ -155,6 +155,11 @@ class NodeEmpty extends Node {
     // do nothing
   }
 
+  set wind (int value){
+    // do nothing
+    // print("ignored");
+  }
+
   @override
   void hide(){
     // do nothing
