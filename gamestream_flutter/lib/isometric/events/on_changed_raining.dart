@@ -5,6 +5,6 @@ import '../grid/actions/rain_off.dart';
 import '../grid/actions/rain_on.dart';
 
 void onChangedRaining(bool raining){
-  raining ? apiGridActionRainOn() : apiGridActionRainOff();
+  raining ? rainOn() : rainOff();
   refreshLighting();
 }

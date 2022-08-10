@@ -55,7 +55,7 @@ void onGridChanged(){
 
   if (rain.value != Rain.None) {
      // apiGridActionRainOff();
-     apiGridActionRainOn();
+     rainOn();
   }
 
   refreshLighting();
