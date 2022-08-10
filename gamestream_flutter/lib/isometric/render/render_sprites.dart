@@ -78,16 +78,16 @@ void renderSprites() {
   }
 }
 
-bool shouldRender(Vector3 v){
-  if (!playerImperceptible) return true;
-  if (v.indexZ <= player.indexZ) return true;
-  final halfZ = v.indexZ / 2;
-  final renderRow = v.indexRow - halfZ;
-  final renderColumn = v.indexColumn - halfZ;
-  final renderRowDistance = (renderRow - playerRenderRow).abs();
-  final renderColumnDistance = (renderColumn - playerRenderColumn).abs();
-  return renderRowDistance >= 5 || renderColumnDistance >= 5;
-}
+// bool shouldRender(Vector3 v){
+//   if (!playerImperceptible) return true;
+//   if (v.indexZ <= player.indexZ) return true;
+//   final halfZ = v.indexZ / 2;
+//   final renderRow = v.indexRow - halfZ;
+//   final renderColumn = v.indexColumn - halfZ;
+//   final renderRowDistance = (renderRow - playerRenderRow).abs();
+//   final renderColumnDistance = (renderColumn - playerRenderColumn).abs();
+//   return renderRowDistance >= 5 || renderColumnDistance >= 5;
+// }
 
 class RenderOrderCharacters extends RenderOrder {
   late Character character;
@@ -96,7 +96,6 @@ class RenderOrderCharacters extends RenderOrder {
   void renderFunction() {
 
     if (!character.tile.visible) return;
-    // if (!shouldRender(character)) return;
 
     switch(character.type){
       case CharacterType.Template:
@@ -138,7 +137,7 @@ class RenderOrderGameObjects extends RenderOrder {
 
   @override
   void renderFunction() {
-    if (!shouldRender(gameObject)) return;
+    if (!gameObject.tile.visible) return;
     renderGameObject(gameObject);
   }
 
@@ -155,7 +154,7 @@ class RenderOrderProjectiles extends RenderOrder {
 
   @override
   void renderFunction() {
-    if (!shouldRender(projectile)) return;
+    if (!projectile.tile.visible) return;
     renderProjectile(projectile);
   }
 
@@ -184,7 +183,7 @@ class RenderOrderParticle extends RenderOrder {
 
   @override
   void renderFunction() {
-    if (!shouldRender(particle)) return;
+    if (!particle.tile.visible) return;
     renderParticle(particle);
   }
 

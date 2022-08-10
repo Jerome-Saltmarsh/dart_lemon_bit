@@ -129,7 +129,9 @@ abstract class Node {
 }
 
 class NodeBoundary extends Node {
-  NodeBoundary() : super(0, 0, 0);
+  NodeBoundary() : super(0, 0, 0) {
+    visible = false;
+  }
 
   @override
   void handleRender() {
