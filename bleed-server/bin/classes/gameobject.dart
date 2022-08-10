@@ -84,7 +84,7 @@ class GameObjectButterfly extends GameObject with Velocity {
     spawnX = x;
     spawnY = y;
     spawnZ = z;
-    speed = 1;
+    speed = 1.5;
     assignNewTarget();
   }
 

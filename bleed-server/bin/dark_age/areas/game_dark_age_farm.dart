@@ -24,6 +24,7 @@ class GameDarkAgeFarm extends DarkAgeArea {
     gameObjects.add(GameObjectButterfly(x: 1125, y: 1000, z: 80));
     gameObjects.add(GameObjectButterfly(x: 600, y: 980, z: 124));
     gameObjects.add(GameObjectButterfly(x: 500, y: 800, z: 100));
+    gameObjects.add(GameObjectButterfly(x: 925, y: 1250, z: 80));
   }
 
   @override

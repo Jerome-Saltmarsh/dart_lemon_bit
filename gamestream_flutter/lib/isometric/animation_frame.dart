@@ -9,6 +9,7 @@ var animationFrameWaterHeight = 0;
 var animationFrameWaterSrcX = 0.0;
 var animationFrameWaterFlowingSrcX = 0.0;
 var animationFrameTorch = 0;
+var animationFrame8 = 0;
 var animationFrameGrass = 0;
 var animationFrameGrassShort = 0;
 var animationFrameRain = 0;
@@ -24,6 +25,7 @@ void updateAnimationFrame(){
   animationFrame = frame ~/ 15;
   _updateWaterFrame();
   animationFrameTorch = frame ~/ 10;
+  animationFrame8 = frame ~/ 8;
   animationFrameRain = (frame ~/ 4) % 6;
   animationFrameGrass = animationFrame % 6;
   // if (windAmbient.value == Wind.Calm){
