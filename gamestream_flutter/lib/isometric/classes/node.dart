@@ -13,7 +13,6 @@ import 'package:lemon_engine/actions/render_atlas.dart';
 import 'package:lemon_engine/render.dart';
 
 import '../constants/color_pitch_black.dart';
-import '../render/render_grid_node.dart';
 import '../variables/src_x_rain_falling.dart';
 
 abstract class Node {
@@ -90,14 +89,14 @@ abstract class Node {
   void renderSrcX(double srcX){
     const spriteWidth = 48.0;
     const spriteHeight = 72.0;
-    const spriteWidthHalf = 24.0;
+    const spriteWidthHalf = spriteWidth * 0.5;
     const spriteHeightThird = 24.0;
 
     var srcY = shade * spriteHeight;
 
-    if (transparent){
-      srcY += 432;
-    }
+    // if (transparent){
+    //   srcY += 432;
+    // }
 
     src[bufferIndex] = srcX;
     dst[bufferIndex] = 1;
@@ -628,11 +627,13 @@ class NodeTreeTop extends Node {
 
   @override
   void handleRender() {
+
+
     animationFrameTreePosition = treeAnimation[(rowMinusColumn + animationFrame) % treeAnimation.length] * wind;
     return render(
       dstX: dstX + (animationFrameTreePosition * 0.5),
       dstY: dstY,
-      srcX: 1540,
+      srcX: 1541,
       srcY: 74.0 * shade,
       srcWidth: 62.0,
       srcHeight: 74.0,
@@ -804,7 +805,7 @@ class NodeBauHaus extends GridNodeBasic {
   NodeBauHaus(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  double get srcX => 10544;
+  double get srcX => 10545;
 
   @override
   int get type => GridNodeType.Bau_Haus;
@@ -814,7 +815,7 @@ class NodeBauHausRoofNorth extends GridNodeBasic {
   NodeBauHausRoofNorth(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  double get srcX => 10640;
+  double get srcX => 10641;
 
   @override
   int get type => GridNodeType.Bau_Haus_Roof_North;
@@ -824,7 +825,7 @@ class NodeBauHausRoofSouth extends GridNodeBasic {
   NodeBauHausRoofSouth(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  double get srcX => 10592;
+  double get srcX => 10593;
 
   @override
   int get type => GridNodeType.Bau_Haus_Roof_South;
