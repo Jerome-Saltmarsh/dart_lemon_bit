@@ -395,14 +395,20 @@ class RenderOrderGrid extends RenderOrder {
     refreshDynamicLightGrid();
 
     if (playerImperceptible){
-       revealAbove(playerZ + 1, playerRow, playerColumn);
-       revealAbove(playerZ + 1, playerRow + 1, playerColumn);
-       revealAbove(playerZ + 1, playerRow, playerColumn + 1);
-       revealAbove(playerZ + 1, playerRow + 1, playerColumn + 1);
+       // revealAbove(playerZ + 1, playerRow, playerColumn);
+       // revealAbove(playerZ + 1, playerRow + 1, playerColumn);
+       // revealAbove(playerZ + 1, playerRow, playerColumn + 1);
+       // revealAbove(playerZ + 1, playerRow + 1, playerColumn + 1);
 
-       for (var r = playerRow - 3; r < playerRow + 3; r++){
-          for (var c = playerColumn - 3; c < playerColumn + 3; c++) {
-            revealRaycast(playerZ + 1, r, c);
+      final d = 3;
+       for (var r = playerRow - d; r < playerRow + d; r++){
+          for (var c = playerColumn - d; c < playerColumn + d; c++) {
+            if (r < playerRow || c < playerColumn){
+              revealRaycast(playerZ + 2, r, c);
+            } else {
+              revealRaycast(playerZ + 1, r, c);
+              revealRaycast(playerZ + 2, r, c);
+            }
           }
        }
     }
@@ -411,11 +417,11 @@ class RenderOrderGrid extends RenderOrder {
   }
 
   void revealRaycast(int z, int row, int column){
-    for (; z <= gridTotalZ; z += 2){
+    for (; z < gridTotalZ; z += 2){
       row++;
       column++;
-      if (row >= gridTotalRows) break;
-      if (column >= gridTotalColumns) break;
+      if (row >= gridTotalRows) return;
+      if (column >= gridTotalColumns) return;
       getNode(z, row, column).visible = false;
       getNode(z + 1, row, column).visible = false;
     }
