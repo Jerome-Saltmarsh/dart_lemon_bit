@@ -25,7 +25,7 @@ void updateAnimationFrame(){
   _updateWaterFrame();
   animationFrameTorch = frame ~/ 10;
   animationFrameRain = (frame ~/ 4) % 6;
-  animationFrameGrass = (frame ~/ 15) % 6;
+  animationFrameGrass = animationFrame % 6;
   // if (windAmbient.value == Wind.Calm){
   //   animationFrameGrass = 0;
   //   animationFrameGrassShort = 0;
