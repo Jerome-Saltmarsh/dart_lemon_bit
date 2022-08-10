@@ -1,5 +1,6 @@
 
 import 'package:bleed_common/Shade.dart';
+import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/particle_emitters.dart';
 import 'package:lemon_math/library.dart';
 import 'package:bleed_common/grid_node_type.dart';
@@ -617,9 +618,11 @@ class NodeTreeBottom extends Node {
 class NodeTreeTop extends Node {
 
   late int rowMinusColumn;
+  late Node bottom;
 
   NodeTreeTop(int row, int column, int z) : super(row, column, z) {
     rowMinusColumn = row - column;
+    bottom = Node.empty;
   }
 
   @override
@@ -627,14 +630,12 @@ class NodeTreeTop extends Node {
 
   @override
   void handleRender() {
-
-
     animationFrameTreePosition = treeAnimation[(rowMinusColumn + animationFrame) % treeAnimation.length] * wind;
     return render(
       dstX: dstX + (animationFrameTreePosition * 0.5),
       dstY: dstY,
       srcX: 1541,
-      srcY: 74.0 * shade,
+      srcY: 74.0 * bottom.shade,
       srcWidth: 62.0,
       srcHeight: 74.0,
       anchorY: 0.5,

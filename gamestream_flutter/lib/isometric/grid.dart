@@ -58,6 +58,29 @@ void onGridChanged(){
      rainOn();
   }
 
+  for (final plain in grid){
+    for (final row in plain){
+      for (final node in row){
+         if (node is NodeTreeTop){
+
+         }
+      }
+    }
+  }
+
+  for (var z = 0; z < gridTotalZ; z++){
+    for (var row = 0; row < gridTotalRows; row++){
+       for (var column = 0; column < gridTotalColumns; column++){
+           final node = getNode(z, row, column);
+           if (node is NodeTreeTop){
+             node.bottom = getNode(z - 1, row, column);
+           }
+       }
+    }
+  }
+
+
+
   refreshLighting();
   refreshParticleEmitters();
 }
