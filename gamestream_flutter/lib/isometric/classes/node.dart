@@ -24,6 +24,10 @@ abstract class Node {
   var dstY = 0.0;
   var visible = true;
 
+  void hide(){
+    visible = false;
+  }
+
   set wind (int value){
      _wind = clamp(value, 0, windIndexStrong);
   }
@@ -147,12 +151,17 @@ class NodeEmpty extends Node {
 
   @override
   void handleRender() {
+    // do nothing
+  }
 
+  @override
+  void hide(){
+    // do nothing
   }
 
   @override
   void resetShadeToBake(){
-
+    // do nothing
   }
 
   @override

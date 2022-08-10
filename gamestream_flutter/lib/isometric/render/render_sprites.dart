@@ -95,7 +95,8 @@ class RenderOrderCharacters extends RenderOrder {
   @override
   void renderFunction() {
 
-    if (!shouldRender(character)) return;
+    if (!character.tile.visible) return;
+    // if (!shouldRender(character)) return;
 
     switch(character.type){
       case CharacterType.Template:
@@ -422,14 +423,14 @@ class RenderOrderGrid extends RenderOrder {
       column++;
       if (row >= gridTotalRows) return;
       if (column >= gridTotalColumns) return;
-      getNode(z, row, column).visible = false;
-      getNode(z + 1, row, column).visible = false;
+      getNode(z, row, column).hide();
+      getNode(z + 1, row, column).hide();
     }
   }
 
   void revealAbove(int z, int row, int column){
     for (; z < gridTotalZ; z++){
-      grid[z][row][column].visible = false;
+      grid[z][row][column].hide();
     }
   }
 
