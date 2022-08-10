@@ -51,6 +51,7 @@ abstract class Node {
   bool get isRainable => false;
   bool get renderable => true;
   bool get blocksPerception => true;
+  bool get isShadable => true;
 
   void resetShadeToBake(){
     shade = bake;
@@ -58,31 +59,6 @@ abstract class Node {
 
   static final boundary = NodeBoundary();
   static final empty = NodeEmpty();
-
-  // void performRender(){
-  //   // if (dstX < screen.left - tileSize) {
-  //   //   offscreenNodes++;
-  //   //   offscreenNodesLeft++;
-  //   //   return;
-  //   // }
-  //   // if (dstX > screen.right + tileSize) {
-  //   //   offscreenNodes++;
-  //   //   offscreenNodesRight++;
-  //   //   return;
-  //   // }
-  //   // if (dstY < screen.top - tileSize) {
-  //   //   offscreenNodes++;
-  //   //   offscreenNodesTop++;
-  //   //   return;
-  //   // }
-  //   // if (dstY > screen.bottom + tileSize) {
-  //   //   offscreenNodes++;
-  //   //   offscreenNodesBottom++;
-  //   //   return;
-  //   // }
-  //   // onscreenNodes++;
-  //   handleRender();
-  // }
 
   void handleRender();
 
@@ -93,10 +69,6 @@ abstract class Node {
     const spriteHeightThird = 24.0;
 
     var srcY = shade * spriteHeight;
-
-    // if (transparent){
-    //   srcY += 432;
-    // }
 
     src[bufferIndex] = srcX;
     dst[bufferIndex] = 1;
@@ -145,6 +117,9 @@ class NodeBoundary extends Node {
 
   @override
   bool get blocksPerception => false;
+
+  @override
+  bool get isShadable => false;
 }
 
 class NodeEmpty extends Node {
@@ -159,6 +134,9 @@ class NodeEmpty extends Node {
     // do nothing
     // print("ignored");
   }
+
+  @override
+  bool get isShadable => false;
 
   @override
   void hide(){
@@ -368,6 +346,7 @@ class NodeRainFalling extends Node {
 
   @override
   bool get isEmpty => true;
+
 }
 
 class NodeRainLanding extends Node {

@@ -296,8 +296,9 @@ void applyEmissionBake({
   for (var z = zMin; z < zMax; z++){
     for (var row = rowMin; row < rowMax; row++){
       for (var column = columnMin; column < columnMax; column++) {
-        final gridNode = grid[z][row][column];
-        final currentValue = gridNode.bake;
+        final node = grid[z][row][column];
+        if (!node.isShadable) continue;
+        final currentValue = node.bake;
         var distance = 0;
         if (lightModeRadial.value){
           distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
@@ -315,7 +316,7 @@ void applyEmissionBake({
         }
         final distanceValue = convertDistanceToShade(distance, maxBrightness: maxBrightness);
         if (distanceValue >= currentValue) continue;
-        gridNode.bake = distanceValue;
+        node.bake = distanceValue;
       }
     }
   }
@@ -336,9 +337,12 @@ void applyEmissionDynamic({
   final columnMax = min(columnIndex + radius, gridTotalColumns);
 
   for (var z = zMin; z < zMax; z++){
+    final plain = grid[z];
     for (var row = rowMin; row < rowMax; row++){
+      final r = plain[row];
       for (var column = columnMin; column < columnMax; column++) {
-        final node = grid[z][row][column];
+        final node = r[column];
+        if (!node.isShadable) continue;
         var distance = 0;
         if (lightModeRadial.value){
           distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
