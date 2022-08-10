@@ -14,7 +14,7 @@ class Vector3 with Position {
   int get indexColumn => y ~/ tileSize;
   double get renderOrder => x + y;
   Node get tile => grid[indexZ][indexRow][indexColumn];
-  Node get tileSafe => getGridTypeAtXYZ(x, y, z);
+  Node get tileSafe => getNodeXYZ(x, y, z);
   Node get tileBelow => indexZ == 0 ? Node.boundary : grid[indexZ - 1][indexRow][indexColumn];
   Node get tileAbove => indexZ < gridTotalZ - 1 ? Node.boundary : grid[indexZ + 1][indexRow][indexColumn];
   int get shade => tileBelow.shade;

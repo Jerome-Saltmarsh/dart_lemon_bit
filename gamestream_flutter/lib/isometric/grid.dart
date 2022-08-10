@@ -38,6 +38,19 @@ bool outOfBounds(int z, int row, int column){
    return false;
 }
 
+Node getNodeXYZ(double x, double y, double z){
+  final plain = z ~/ tileSizeHalf;
+  if (plain < 0) return Node.boundary;
+  if (plain >= gridTotalZ) return Node.empty;
+  final row = x ~/ tileSize;
+  if (row < 0) return Node.boundary;
+  if (row >= gridTotalRows) return Node.boundary;
+  final column = y ~/ tileSize;
+  if (column < 0) return Node.boundary;
+  if (column >= gridTotalColumns) return Node.boundary;
+  return grid[plain][row][column];
+}
+
 Node getNode(int z, int row, int column) {
   if (outOfBounds(z, row, column)) return Node.boundary;
   return grid[z][row][column];
@@ -54,21 +67,16 @@ void onGridChanged(){
   gridWindResetToAmbient();
 
   if (rain.value != Rain.None) {
-     // apiGridActionRainOff();
      rainOn();
   }
 
-  for (final plain in grid){
-    for (final row in plain){
-      for (final node in row){
-         if (node is NodeTreeTop){
+  connectNodeTrees();
+  refreshLighting();
+  refreshParticleEmitters();
+}
 
-         }
-      }
-    }
-  }
-
-  for (var z = 0; z < gridTotalZ; z++){
+void connectNodeTrees() {
+   for (var z = 0; z < gridTotalZ; z++){
     for (var row = 0; row < gridTotalRows; row++){
        for (var column = 0; column < gridTotalColumns; column++){
            final node = getNode(z, row, column);
@@ -78,11 +86,6 @@ void onGridChanged(){
        }
     }
   }
-
-
-
-  refreshLighting();
-  refreshParticleEmitters();
 }
 
 void refreshParticleEmitters() {
@@ -363,17 +366,3 @@ void applyEmissionDynamic({
     }
   }
 }
-
-Node getGridTypeAtXYZ(double x, double y, double z){
-   final plain = z ~/ tileSizeHalf;
-   if (plain < 0) return Node.boundary;
-   if (plain >= gridTotalZ) return Node.boundary;
-   final row = x ~/ tileSize;
-   if (row < 0) return Node.boundary;
-   if (row >= gridTotalRows) return Node.boundary;
-   final column = y ~/ tileSize;
-   if (column < 0) return Node.boundary;
-   if (column >= gridTotalColumns) return Node.boundary;
-   return grid[plain][row][column];
-}
-

@@ -12,10 +12,10 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
     case GameEventType.Splash:
       return audioSingleSplash.playXYZ(x, y, z);
     case GameEventType.Footstep:
-      final tile = getGridTypeAtXYZ(x, y, z - 2);
+      final tile = getNodeXYZ(x, y, z - 2);
 
       if (raining.value){
-        if (getGridTypeAtXYZ(x, y, z + 2) == GridNodeType.Rain_Landing) {
+        if (getNodeXYZ(x, y, z + 2) == GridNodeType.Rain_Landing) {
           audioSingleFootstepMud6.playXYZ(x, y, z);
         }
       }
