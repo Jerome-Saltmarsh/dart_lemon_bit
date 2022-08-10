@@ -1,4 +1,5 @@
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:lemon_engine/render.dart';
 
@@ -38,9 +39,9 @@ void renderGameObject(GameObject value) {
     return render(
       dstX: value.renderX,
       dstY: value.renderY,
-      srcX: 1680,
-      srcY: value.shade * 16,
-      srcWidth: 16,
-      srcHeight: 16,
+      srcX: (animationFrame % 2) * 64,
+      srcY: 718,
+      srcWidth: 64,
+      srcHeight: 64,
     );
 }
