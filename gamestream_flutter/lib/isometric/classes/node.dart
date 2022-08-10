@@ -22,6 +22,7 @@ abstract class Node {
   var _wind = 0;
   var dstX = 0.0;
   var dstY = 0.0;
+  var visible = true;
 
   set wind (int value){
      _wind = clamp(value, 0, windIndexStrong);

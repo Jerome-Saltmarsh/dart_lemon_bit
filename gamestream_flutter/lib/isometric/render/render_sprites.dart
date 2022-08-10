@@ -28,7 +28,6 @@ import 'package:lemon_watch/watch.dart';
 import '../classes/particle.dart';
 import '../grid.dart';
 import 'render_character_template.dart';
-import 'render_grid_node.dart';
 import 'render_particle.dart';
 
 
@@ -255,25 +254,25 @@ class RenderOrderGrid extends RenderOrder {
 
   @override
   void renderFunction() {
-    transparent = false;
-    if (playerImperceptible) {
-      if (gridZGreaterThanPlayerZ) {
-        final renderRow = row - gridZHalf;
-        final renderColumn = column - gridZHalf;
-        final renderRowDistance = (renderRow - playerRenderRow).abs();
-        final renderColumnDistance = (renderColumn - playerRenderColumn).abs();
-
-        if (z > playerZ + 1 && renderRowDistance <= 5 && renderColumnDistance <= 5) {
-            return;
-        }
-
-        if (z > playerZ && renderRowDistance < 2 && renderColumnDistance < 2) {
-          if (row + column >= playerColumnRow){
-            transparent = true;
-          }
-        }
-      }
-    }
+    // transparent = false;
+    // if (playerImperceptible) {
+    //   if (gridZGreaterThanPlayerZ) {
+    //     final renderRow = row - gridZHalf;
+    //     final renderColumn = column - gridZHalf;
+    //     final renderRowDistance = (renderRow - playerRenderRow).abs();
+    //     final renderColumnDistance = (renderColumn - playerRenderColumn).abs();
+    //
+    //     if (z > playerZ + 1 && renderRowDistance <= 5 && renderColumnDistance <= 5) {
+    //         return;
+    //     }
+    //
+    //     if (z > playerZ && renderRowDistance < 2 && renderColumnDistance < 2) {
+    //       if (row + column >= playerColumnRow){
+    //         transparent = true;
+    //       }
+    //     }
+    //   }
+    // }
 
     while (column > 0 && row < rowsMax){
       row++;
@@ -298,7 +297,11 @@ class RenderOrderGrid extends RenderOrder {
       //   return;
       // }
       onscreenNodes++;
-      node.handleRender();
+      if (node.visible) {
+        node.handleRender();
+      } else {
+        node.visible = true;
+      }
     }
   }
 
@@ -390,7 +393,38 @@ class RenderOrderGrid extends RenderOrder {
     trimLeft();
     assignNode();
     refreshDynamicLightGrid();
+
+    if (playerImperceptible){
+       revealAbove(playerZ + 1, playerRow, playerColumn);
+       revealAbove(playerZ + 1, playerRow + 1, playerColumn);
+       revealAbove(playerZ + 1, playerRow, playerColumn + 1);
+       revealAbove(playerZ + 1, playerRow + 1, playerColumn + 1);
+
+       for (var r = playerRow - 3; r < playerRow + 3; r++){
+          for (var c = playerColumn - 3; c < playerColumn + 3; c++) {
+            revealRaycast(playerZ + 1, r, c);
+          }
+       }
+    }
+
     super.reset();
+  }
+
+  void revealRaycast(int z, int row, int column){
+    for (; z <= gridTotalZ; z += 2){
+      row++;
+      column++;
+      if (row >= gridTotalRows) break;
+      if (column >= gridTotalColumns) break;
+      getNode(z, row, column).visible = false;
+      getNode(z + 1, row, column).visible = false;
+    }
+  }
+
+  void revealAbove(int z, int row, int column){
+    for (; z < gridTotalZ; z++){
+      grid[z][row][column].visible = false;
+    }
   }
 
   void trimTop() {
@@ -507,12 +541,13 @@ class RenderOrderGrid extends RenderOrder {
           final maxRow = convertWorldToRowSafe(screenRight, screenBottom, zLength);
           final minColumn = convertWorldToColumnSafe(screenRight, screenTop, zLength);
           final maxColumn = convertWorldToColumnSafe(screenLeft, screenBottom, zLength);
-          final max = maxRow + maxColumn;
           for (var rowIndex = minRow; rowIndex <= maxRow; rowIndex++) {
             final dynamicRow = zPlain[rowIndex];
             for (var columnIndex = minColumn; columnIndex <= maxColumn; columnIndex++) {
-              if (columnIndex + rowIndex > max) break;
-              dynamicRow[columnIndex].resetShadeToBake();
+              final node = dynamicRow[columnIndex];
+              if (node.dstY > screenBottom) break;
+              if (node.dstX > screenRight) continue;
+              node.resetShadeToBake();
             }
           }
         }
