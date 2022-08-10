@@ -71,6 +71,7 @@ class GameObjectButterfly extends GameObject with Velocity {
   var spawnX = 0.0;
   var spawnY = 0.0;
   var spawnZ = 0.0;
+  var pause = 0;
 
   GameObjectButterfly({
     required double x,
@@ -96,9 +97,15 @@ class GameObjectButterfly extends GameObject with Velocity {
 
   @override
   void update() {
-     x += 0.01;
+    if (pause > 0) {
+       pause--;
+       return;
+    }
+
      if (distanceFromPos3(target) < 5){
        assignNewTarget();
+       pause = 100;
+       return;
      }
      angle = this.getAngle(target);
      x += xv;

@@ -39,7 +39,7 @@ void renderGameObject(GameObject value) {
     return render(
       dstX: value.renderX,
       dstY: value.renderY,
-      srcX: (animationFrame % 2) * 64,
+      srcX: (animationFrame % 2) * 64 + (value.direction * 2 * 64),
       srcY: 718,
       srcWidth: 64,
       srcHeight: 64,
