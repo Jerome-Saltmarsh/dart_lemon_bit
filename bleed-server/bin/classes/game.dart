@@ -212,6 +212,10 @@ extension GameFunctions on Game {
       updateAITargets();
     }
 
+    for (final gameObject in gameObjects){
+      gameObject.update();
+    }
+
     for (final enemySpawner in scene.enemySpawns) {
        enemySpawner.update(this);
     }

@@ -102,6 +102,12 @@ class ServerResponseReader with ByteReader {
           readVector3(gameObject);
           totalGameObjects++;
           break;
+        case ServerResponse.GameObject_Butterfly:
+          final gameObject = getInstanceGameObject();
+          gameObject.type = GameObjectType.Butterfly;
+          readVector3(gameObject);
+          totalGameObjects++;
+          break;
         case ServerResponse.End:
           return readEnd();
         case ServerResponse.Items:

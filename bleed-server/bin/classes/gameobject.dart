@@ -12,6 +12,10 @@ abstract class GameObject extends Collider {
   }) : super(x: x, y: y, z: z, radius: radius);
 
   void write(Player player);
+
+  void update(){
+
+  }
 }
 
 class GameObjectRock extends GameObject {
@@ -55,5 +59,24 @@ class GameObjectStick extends GameObject {
   void write(Player player) {
     player.writeByte(ServerResponse.GameObject_Stick);
     player.writePosition3(this);
+  }
+}
+
+class GameObjectButterfly extends GameObject {
+  GameObjectButterfly({
+    required double x,
+    required double y,
+    required double z,
+  }) : super(x: x, y: y, z: z, radius: 10);
+
+  @override
+  void write(Player player) {
+    player.writeByte(ServerResponse.GameObject_Butterfly);
+    player.writePosition3(this);
+  }
+
+  @override
+  void update() {
+     x += 0.01;
   }
 }
