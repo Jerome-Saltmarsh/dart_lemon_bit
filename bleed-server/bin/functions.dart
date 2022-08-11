@@ -41,10 +41,14 @@ void resolveCollisionA(Collider a, Collider b) {
   final yDiffNormalized = yDiff * ratio;
   final targetX = xDiffNormalized * halfOverlap;
   final targetY = yDiffNormalized * halfOverlap;
-  a.x += targetX;
-  a.y += targetY;
-  b.x -= targetX;
-  b.y -= targetY;
+  if (a.movable){
+    a.x += targetX;
+    a.y += targetY;
+  }
+  if (b.movable){
+    b.x -= targetX;
+    b.y -= targetY;
+  }
 }
 
 void resolveCollisionB(Collider a, Collider b) {

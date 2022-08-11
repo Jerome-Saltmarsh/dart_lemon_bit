@@ -202,7 +202,7 @@ class GameObjectCrystal extends GameObject {
     required double x,
     required double y,
     required double z,
-  }) : super(x: x, y: y, z: z, radius: 10);
+  }) : super(x: x, y: y, z: z, radius: 15);
 
   @override
   void write(Player player) {

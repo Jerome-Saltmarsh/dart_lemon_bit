@@ -32,7 +32,7 @@ class GameDarkAgeFarm extends DarkAgeArea {
     gameObjects.add(GameObjectChicken(x: 1455, y: 945, z: 72));
     gameObjects.add(GameObjectChicken(x: 1600, y: 600, z: 74));
     gameObjects.add(GameObjectChicken(x: 2115, y: 835, z: 48));
-    gameObjects.add(GameObjectCrystal(x: 650, y: 940, z: 120));
+    gameObjects.add(GameObjectCrystal(x: 650, y: 940, z: 120)..movable = false);
   }
 
   @override

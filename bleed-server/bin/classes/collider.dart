@@ -12,6 +12,7 @@ class Collider extends Position3 {
   double get top => y - radius;
   double get bottom => y + radius;
   var collidable = true;
+  var movable = true;
 
   Collider({
     required double x,
