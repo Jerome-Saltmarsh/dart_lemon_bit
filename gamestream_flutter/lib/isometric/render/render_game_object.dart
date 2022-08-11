@@ -36,6 +36,17 @@ void renderGameObject(GameObject value) {
       srcHeight: 16,
     );
 
+  if (value.type == GameObjectType.Crystal)
+    return render(
+      dstX: value.renderX,
+      dstY: value.renderY,
+      srcX: 1712,
+      srcY: 0,
+      srcWidth: 22,
+      srcHeight: 45,
+      anchorY: 0.66
+    );
+
   if (value.type == GameObjectType.Butterfly)
     return render(
       dstX: value.renderX,

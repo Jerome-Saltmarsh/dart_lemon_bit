@@ -196,3 +196,17 @@ class GameObjectChicken extends GameObjectAnimal {
     y += yv;
   }
 }
+
+class GameObjectCrystal extends GameObject {
+  GameObjectCrystal({
+    required double x,
+    required double y,
+    required double z,
+  }) : super(x: x, y: y, z: z, radius: 10);
+
+  @override
+  void write(Player player) {
+    player.writeByte(ServerResponse.GameObject_Crystal);
+    player.writePosition3(this);
+  }
+}

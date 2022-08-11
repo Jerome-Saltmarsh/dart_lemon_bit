@@ -66,5 +66,6 @@ class ServerResponse {
   static const GameObject_Stick = 93;
   static const GameObject_Butterfly = 94;
   static const GameObject_Chicken = 95;
+  static const GameObject_Crystal = 96;
 }
 
