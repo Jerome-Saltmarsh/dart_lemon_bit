@@ -65,9 +65,31 @@ class GameObjectStick extends GameObject {
   }
 }
 
-class GameObjectButterfly extends GameObject with Velocity {
+abstract class GameObjectAnimal extends GameObject with Velocity {
+  final target = Position3();
+  var spawnX = 0.0;
+  var spawnY = 0.0;
+  var spawnZ = 0.0;
 
-  Position3 target = Position3();
+  GameObjectAnimal({
+    required double x, required double y, required double z,
+  }) : super(x: x, y: y, z: z, radius: 5) {
+    target.x = x;
+    target.y = y;
+    target.z = z;
+    spawnX = x;
+    spawnY = y;
+    spawnZ = z;
+  }
+
+  void assignNewTarget({double radius = 100}){
+    target.x = spawnX + giveOrTake(radius);
+    target.y = spawnY + giveOrTake(radius);
+  }
+}
+
+class GameObjectButterfly extends GameObject with Velocity {
+  final target = Position3();
   var spawnX = 0.0;
   var spawnY = 0.0;
   var spawnZ = 0.0;
@@ -119,19 +141,22 @@ class GameObjectButterfly extends GameObject with Velocity {
   }
 }
 
-class GameObjectChicken extends GameObject with Velocity {
+class GameObjectChicken extends GameObjectAnimal {
   static const Idle = 0;
   static const Walking = 1;
   static const Pecking = 2;
   static const Sitting = 3;
 
+  var pause = 0;
   var state = Idle;
 
   GameObjectChicken({
     required double x,
     required double y,
     required double z,
-  }) : super(x: x, y: y, z: z, radius: 10);
+  }) : super(x: x, y: y, z: z) {
+    speed = 1.5;
+  }
 
   @override
   void write(Player player) {
@@ -139,5 +164,24 @@ class GameObjectChicken extends GameObject with Velocity {
       player.writePosition3(this);
       player.writeByte(state);
       player.writeByte(direction);
+  }
+
+  @override
+  void update(){
+    if (pause > 0) {
+      pause--;
+      return;
+    }
+
+    if (distanceFromPos3(target) < 5){
+      assignNewTarget();
+      pause = 100;
+      state = Idle;
+      return;
+    }
+    state = Walking;
+    angle = this.getAngle(target);
+    x += xv;
+    y += yv;
   }
 }
