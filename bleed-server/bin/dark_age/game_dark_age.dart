@@ -9,11 +9,9 @@ import 'dark_age_environment.dart';
 
 class GameDarkAge extends Game {
   final DarkAgeEnvironment environment;
-  var minutesPassingPerSecond = 5;
-  var durationRain = randomInt(1000, 3000);
-  var durationLightning = 300;
-  var durationBreeze = 500;
-  var durationWind = randomInt(500, 1000);
+
+  @override
+  bool get full => false;
 
   GameDarkAge(Scene scene, this.environment) : super(scene);
 
@@ -84,9 +82,6 @@ class GameDarkAge extends Game {
     player.writePlayerWeapons();
     return player;
   }
-
-  @override
-  bool get full => false;
 
   void addNpcGuardBow({required int row, required int column, int z = 1}){
     addNpc(
