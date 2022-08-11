@@ -151,7 +151,7 @@ class GameObjectChicken extends GameObjectAnimal {
     required double y,
     required double z,
   }) : super(x: x, y: y, z: z) {
-    speed = 1.5;
+    speed = 1.2;
   }
 
   @override
