@@ -105,6 +105,9 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.GameObject_Butterfly:
           readGameObjectButterfly();
           break;
+        case ServerResponse.GameObject_Chicken:
+          readGameObjectChicken();
+          break;
         case ServerResponse.End:
           return readEnd();
         case ServerResponse.Items:
@@ -228,6 +231,15 @@ class ServerResponseReader with ByteReader {
     final gameObject = getInstanceGameObject();
     gameObject.type = GameObjectType.Butterfly;
     readVector3(gameObject);
+    gameObject.direction = readByte();
+    totalGameObjects++;
+  }
+
+  void readGameObjectChicken(){
+    final gameObject = getInstanceGameObject();
+    gameObject.type = GameObjectType.Chicken;
+    readVector3(gameObject);
+    gameObject.state = readByte();
     gameObject.direction = readByte();
     totalGameObjects++;
   }

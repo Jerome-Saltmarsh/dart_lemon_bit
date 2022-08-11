@@ -46,4 +46,20 @@ void renderGameObject(GameObject value) {
       scale: 0.25,
       color: value.renderColor,
     );
+
+  if (value.type == GameObjectType.Chicken)
+    return renderGameObjectChicken(value);
+}
+
+void renderGameObjectChicken(GameObject value) {
+  render(
+    dstX: value.renderX,
+    dstY: value.renderY,
+    srcX: 0,
+    srcY: 928,
+    srcWidth: 64,
+    srcHeight: 64,
+    scale: 1,
+    color: value.renderColor,
+  );
 }

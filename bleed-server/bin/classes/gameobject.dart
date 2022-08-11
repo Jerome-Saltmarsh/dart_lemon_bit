@@ -118,3 +118,26 @@ class GameObjectButterfly extends GameObject with Velocity {
     target.y = spawnY + giveOrTake(radius);
   }
 }
+
+class GameObjectChicken extends GameObject with Velocity {
+  static const Idle = 0;
+  static const Walking = 1;
+  static const Pecking = 2;
+  static const Sitting = 3;
+
+  var state = Idle;
+
+  GameObjectChicken({
+    required double x,
+    required double y,
+    required double z,
+  }) : super(x: x, y: y, z: z, radius: 10);
+
+  @override
+  void write(Player player) {
+      player.writeByte(ServerResponse.GameObject_Chicken);
+      player.writePosition3(this);
+      player.writeByte(state);
+      player.writeByte(direction);
+  }
+}
