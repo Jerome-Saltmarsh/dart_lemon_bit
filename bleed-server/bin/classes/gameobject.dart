@@ -142,13 +142,9 @@ class GameObjectButterfly extends GameObject with Velocity {
 }
 
 class GameObjectChicken extends GameObjectAnimal {
-  static const Idle = 0;
-  static const Walking = 1;
-  static const Pecking = 2;
-  static const Sitting = 3;
 
   var pause = 0;
-  var state = Idle;
+  var state = CharacterState.Idle;
 
   GameObjectChicken({
     required double x,
@@ -176,10 +172,10 @@ class GameObjectChicken extends GameObjectAnimal {
     if (distanceFromPos3(target) < 5){
       assignNewTarget();
       pause = 100;
-      state = Idle;
+      state = CharacterState.Idle;
       return;
     }
-    state = Walking;
+    state = CharacterState.Running;
     angle = this.getAngle(target);
     x += xv;
     y += yv;

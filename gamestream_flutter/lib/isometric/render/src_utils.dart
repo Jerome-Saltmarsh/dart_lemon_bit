@@ -12,6 +12,19 @@ double single({
   return ((direction * framesPerDirection) + (frame - 1)) * size;
 }
 
+
+double getSrc({
+  required List<int> animation,
+  required int direction,
+  required int frame,
+  required int framesPerDirection,
+  double size = 64.0
+}) {
+  final animationFrame = frame % animation.length;
+  final playFrame = animation[animationFrame] - 1;
+  return (direction * framesPerDirection * size) + (playFrame * size);
+}
+
 double loop({
       required List<int> animation,
       required Character character,

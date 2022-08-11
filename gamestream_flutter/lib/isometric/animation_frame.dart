@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:lemon_engine/engine.dart';
 
 var animationFrame = 0;
+var frameChicken = 0;
 var animationFrameWater = 0;
 var animationFrameWaterHeight = 0;
 var animationFrameWaterSrcX = 0.0;
@@ -28,6 +29,7 @@ void updateAnimationFrame(){
   animationFrame8 = frame ~/ 8;
   animationFrameRain = (frame ~/ 4) % 6;
   animationFrameGrass = animationFrame % 6;
+  frameChicken = animationFrame % 2;
   // if (windAmbient.value == Wind.Calm){
   //   animationFrameGrass = 0;
   //   animationFrameGrassShort = 0;

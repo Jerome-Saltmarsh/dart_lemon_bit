@@ -1,6 +1,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
+import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 import 'package:lemon_engine/render.dart';
 
 void renderGameObject(GameObject value) {
@@ -52,14 +53,27 @@ void renderGameObject(GameObject value) {
 }
 
 void renderGameObjectChicken(GameObject value) {
+
+  const framesPerDirection = 7;
+  var srcX = value.direction * (framesPerDirection * 64.0);
+
+  if (value.state == CharacterState.Running){
+    srcX = getSrc(
+        animation: const [3, 4, 5, 6],
+        direction: value.direction,
+        frame: frameChicken,
+        framesPerDirection: framesPerDirection,
+    );
+  }
+
   render(
     dstX: value.renderX,
     dstY: value.renderY,
-    srcX: 0,
+    srcX: srcX,
     srcY: 928,
     srcWidth: 64,
     srcHeight: 64,
-    scale: 1,
+    scale: 0.66,
     color: value.renderColor,
   );
 }
