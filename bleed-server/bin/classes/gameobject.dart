@@ -26,7 +26,9 @@ class GameObjectRock extends GameObject {
     required double x,
     required double y,
     required double z,
-  }) : super(x: x, y: y, z: z, radius: 10);
+  }) : super(x: x, y: y, z: z, radius: 10){
+    collidable = false;
+  }
 
   @override
   void write(Player player) {
@@ -41,7 +43,9 @@ class GameObjectFlower extends GameObject {
     required double x,
     required double y,
     required double z,
-  }) : super(x: x, y: y, z: z, radius: 10);
+  }) : super(x: x, y: y, z: z, radius: 10) {
+    collidable = false;
+  }
 
   @override
   void write(Player player) {
@@ -56,7 +60,9 @@ class GameObjectStick extends GameObject {
     required double x,
     required double y,
     required double z,
-  }) : super(x: x, y: y, z: z, radius: 10);
+  }) : super(x: x, y: y, z: z, radius: 10) {
+    collidable = false;
+  }
 
   @override
   void write(Player player) {
@@ -107,6 +113,7 @@ class GameObjectButterfly extends GameObject with Velocity {
     spawnY = y;
     spawnZ = z;
     speed = 1.5;
+    collidable = false;
     assignNewTarget();
   }
 
@@ -151,7 +158,7 @@ class GameObjectChicken extends GameObjectAnimal {
     required double y,
     required double z,
   }) : super(x: x, y: y, z: z) {
-    speed = 1.2;
+    speed = 1.0;
   }
 
   @override

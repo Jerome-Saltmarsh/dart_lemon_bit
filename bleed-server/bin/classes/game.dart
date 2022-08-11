@@ -343,6 +343,7 @@ extension GameFunctions on Game {
 
   void _updateCollisions() {
     updateCollisionBetween(characters);
+    resolveCollisionBetween(characters, gameObjects, resolveCollisionA);
   }
 
   void sortGameObjects() {
