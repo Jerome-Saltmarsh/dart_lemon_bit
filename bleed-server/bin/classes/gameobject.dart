@@ -166,13 +166,21 @@ class GameObjectChicken extends GameObjectAnimal {
   void update(){
     if (pause > 0) {
       pause--;
+      if (pause <= 0){
+        if (randomBool()){
+           state = CharacterState.Performing;
+           pause = 100;
+        } else {
+          assignNewTarget();
+          angle = this.getAngle(target);
+        }
+      }
       return;
     }
 
     if (distanceFromPos3(target) < 5){
-      assignNewTarget();
-      pause = 100;
       state = CharacterState.Idle;
+      pause = 100;
       return;
     }
     state = CharacterState.Running;
