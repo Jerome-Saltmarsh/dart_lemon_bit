@@ -15,10 +15,6 @@ abstract class GameObject extends Collider {
   }) : super(x: x, y: y, z: z, radius: radius);
 
   void write(Player player);
-
-  void update(){
-
-  }
 }
 
 class GameObjectRock extends GameObject {
@@ -71,6 +67,10 @@ class GameObjectStick extends GameObject {
   }
 }
 
+abstract class Updatable {
+  void update(Game game);
+}
+
 abstract class GameObjectAnimal extends GameObject with Velocity {
   final target = Position3();
   var spawnX = 0.0;
@@ -94,7 +94,7 @@ abstract class GameObjectAnimal extends GameObject with Velocity {
   }
 }
 
-class GameObjectButterfly extends GameObject with Velocity {
+class GameObjectButterfly extends GameObject with Velocity implements Updatable {
   final target = Position3();
   var spawnX = 0.0;
   var spawnY = 0.0;
@@ -125,7 +125,7 @@ class GameObjectButterfly extends GameObject with Velocity {
   }
 
   @override
-  void update() {
+  void update(Game game) {
     if (pause > 0) {
        pause--;
        return;
@@ -148,7 +148,7 @@ class GameObjectButterfly extends GameObject with Velocity {
   }
 }
 
-class GameObjectChicken extends GameObjectAnimal {
+class GameObjectChicken extends GameObjectAnimal implements Updatable {
 
   var pause = 0;
   var state = CharacterState.Idle;
@@ -170,7 +170,14 @@ class GameObjectChicken extends GameObjectAnimal {
   }
 
   @override
-  void update(){
+  void update(Game game){
+    const timeHourSix = 6 * secondsPerHour;
+    const timeHourSeventeen = 17 * secondsPerHour;
+    if (game.getTime() < timeHourSix || game.getTime() > timeHourSeventeen){
+       state = CharacterState.Sitting;
+       return;
+    }
+
     if (pause > 0) {
       pause--;
       if (pause <= 0){

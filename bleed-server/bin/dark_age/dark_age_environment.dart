@@ -6,20 +6,22 @@ import 'package:lemon_math/library.dart';
 
 
 class DarkAgeTime {
-  var minutesPassingPerSecond = 5;
+  var secondsPerFrame = 2;
+  /// In seconds
   var time = 12 * 60 * 60;
-  var timePassing = true;
+  var enabled = true;
+
+  int get hour => time ~/ secondsPerHour;
 
   void update(){
-    if (!timePassing) return;
-    setTime(time + minutesPassingPerSecond);
+    if (!enabled) return;
+    setTime(time + secondsPerFrame);
   }
 
   void setTime(int value) {
     time = value % secondsPerDay;
   }
 
-  int get hour => time ~/ secondsPerHour;
 }
 
 class DarkAgeEnvironment {
@@ -43,7 +45,7 @@ class DarkAgeEnvironment {
   Lightning get lightning => _lightning;
    Rain get raining => _raining;
    bool get breezy => _breezy;
-   bool get timePassing => time.timePassing;
+   bool get timePassing => time.enabled;
    int get wind => _wind;
    int get shade => _shade;
 
@@ -82,7 +84,7 @@ class DarkAgeEnvironment {
 
    set timePassing(bool value) {
       if (timePassing == value) return;
-      time.timePassing = value;
+      time.enabled = value;
       onChangedWeather();
    }
 
@@ -144,14 +146,14 @@ class DarkAgeEnvironment {
    }
 
    void updateBreeze(){
-      durationBreeze -= time.minutesPassingPerSecond;
+      durationBreeze -= time.secondsPerFrame;
       if (durationBreeze > 0) return;
       durationBreeze = randomInt(2000, 5000);
       breezy = !breezy;
    }
 
    void updateWind(){
-      durationWind -= time.minutesPassingPerSecond;
+      durationWind -= time.secondsPerFrame;
       if (durationWind <= 0) {
          durationWind = randomInt(3000, 6000);
 

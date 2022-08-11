@@ -84,6 +84,14 @@ void renderGameObjectChicken(GameObject value) {
       framesPerDirection: framesPerDirection,
     );
   }
+  if (value.state == CharacterState.Sitting){
+    srcX = getSrc(
+      animation: const [7],
+      direction: value.direction,
+      frame: frameChicken,
+      framesPerDirection: framesPerDirection,
+    );
+  }
 
   render(
     dstX: value.renderX,

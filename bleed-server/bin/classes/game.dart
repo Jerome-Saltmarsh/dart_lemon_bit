@@ -213,7 +213,9 @@ extension GameFunctions on Game {
     }
 
     for (final gameObject in gameObjects){
-      gameObject.update();
+      if (gameObject is Updatable) {
+        (gameObject as Updatable).update(this);
+      }
     }
 
     for (final enemySpawner in scene.enemySpawns) {
