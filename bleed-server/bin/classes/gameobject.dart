@@ -100,6 +100,7 @@ class GameObjectButterfly extends GameObject with Velocity implements Updatable 
   var spawnY = 0.0;
   var spawnZ = 0.0;
   var pause = 0;
+  var visible = true;
 
   GameObjectButterfly({
     required double x,
@@ -119,6 +120,7 @@ class GameObjectButterfly extends GameObject with Velocity implements Updatable 
 
   @override
   void write(Player player) {
+    if (!visible) return;
     player.writeByte(ServerResponse.GameObject_Butterfly);
     player.writePosition3(this);
     player.writeByte(direction);
@@ -126,6 +128,17 @@ class GameObjectButterfly extends GameObject with Velocity implements Updatable 
 
   @override
   void update(Game game) {
+
+
+    const timeHourSix = 6 * secondsPerHour;
+    const timeHourSeventeen = 17 * secondsPerHour;
+    if (game.getTime() < timeHourSix || game.getTime() > timeHourSeventeen){
+      visible = false;
+      return;
+    } else {
+      visible = true;
+    }
+
     if (pause > 0) {
        pause--;
        return;
