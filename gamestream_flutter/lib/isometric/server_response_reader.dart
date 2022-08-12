@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/quest.dart';
@@ -62,7 +64,7 @@ class ServerResponseReader with ByteReader {
   var bulletHoleIndex = 0;
   var itemsTotal = 0;
 
-  void readBytes(List<int> values) {
+  void readBytes(Uint8List values) {
     framesSinceUpdateReceived.value = 0;
     index = 0;
     totalCharacters = 0;

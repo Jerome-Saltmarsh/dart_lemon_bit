@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_watch/watch.dart';
@@ -70,7 +72,8 @@ class _WebSocket {
     if (connecting) {
       connection.value = Connection.Connected;
     }
-    if (_response is List<int>) {
+    
+    if (_response is Uint8List) {
        return serverResponseReader.readBytes(_response);
     }
     if (_response is String){

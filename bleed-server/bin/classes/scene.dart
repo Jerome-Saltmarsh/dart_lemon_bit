@@ -227,6 +227,10 @@ class Scene {
     var nodeAtFeet = getNodeXYZ(character.x, character.y, character.z);
     nodeAtFeet.resolveCharacterCollision(character, game);
 
+    if (character.z < -100){
+       game.setCharacterStateDead(character);
+    }
+
     const distance = 3;
     final stepHeight = character.z + tileHeightHalf;
 
