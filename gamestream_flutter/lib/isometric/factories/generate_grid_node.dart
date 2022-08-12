@@ -107,5 +107,7 @@ Node generateNode(int z, int row, int column, int type){
       return NodeBauHausChimney(row, column, z);
     default:
       throw Exception("Cannot build grid node type $type (${GridNodeType.getName(type)}");
+      // print("Cannot build grid node type $type (${GridNodeType.getName(type)}");
+      // return Node.empty;
   }
 }

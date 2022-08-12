@@ -590,15 +590,28 @@ extension PlayerProperties on Player {
     writeInt(totalZ);
     writeInt(totalRows);
     writeInt(totalColumns);
+    var previousType = grid[0][0][0].type;
+    var count = 0;
     for (var z = 0; z < totalZ; z++){
       final plain = grid[z];
       for (var row = 0; row < totalRows; row++){
         final r = plain[row];
-        for (var column = 0; column < totalColumns; column++){
-           writeByte(r[column].type);
+        for (var column = 0; column < totalColumns; column++) {
+          final type = r[column].type;
+          if (type == previousType){
+            count++;
+          } else {
+            writeByte(previousType);
+            writePositiveInt(count);
+            previousType = type;
+            count = 1;
+          }
         }
       }
     }
+
+    writeByte(previousType);
+    writePositiveInt(count);
   }
 
   Card? getCardByType(CardType type){

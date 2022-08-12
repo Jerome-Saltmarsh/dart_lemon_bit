@@ -33,6 +33,7 @@ import 'package:lemon_watch/watch.dart';
 
 import 'ai.dart';
 import 'camera.dart';
+import 'classes/node.dart';
 import 'classes/npc_debug.dart';
 import 'classes/projectile.dart';
 import 'grid.dart';
@@ -476,17 +477,44 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGrid() {
-    final totalZ = readInt();
-    gridTotalZWatch.value = totalZ;
-    final totalRows = readInt();
-    final totalColumns = readInt();
-    grid = List.generate(totalZ, (indexZ) =>
-      List.generate(totalRows, (indexRow) =>
-        List.generate(totalColumns, (indexColumn) =>
-            generateNode(indexZ, indexRow, indexColumn, readByte())
+    gridTotalZ = readInt();
+    gridTotalZWatch.value = gridTotalZ;
+    gridTotalRows = readInt();
+    gridTotalColumns = readInt();
+
+    grid = List.generate(gridTotalZ, (indexZ) =>
+        List.generate(gridTotalRows, (indexRow) =>
+            List.generate(gridTotalColumns, (indexColumn) => Node.empty)
         )
-      )
     );
+
+    final grandTotal = gridTotalZ * gridTotalRows * gridTotalColumns;
+    var total = 0;
+
+    var currentZ = 0;
+    var currentRow = 0;
+    var currentColumn = 0;
+
+    while (total < grandTotal) {
+      var type = readByte();
+      var count = readPositiveInt();
+      total += count;
+
+      while (count > 0) {
+        count--;
+        grid[currentZ][currentRow][currentColumn] = generateNode(currentZ, currentRow, currentColumn, type);
+        currentColumn++;
+        if (currentColumn >= gridTotalColumns) {
+          currentColumn = 0;
+          currentRow++;
+          if (currentRow >= gridTotalRows) {
+            currentRow = 0;
+            currentZ++;
+          }
+        }
+      }
+    }
+    assert(total == grandTotal);
     onGridChanged();
     onChangedScene();
   }
