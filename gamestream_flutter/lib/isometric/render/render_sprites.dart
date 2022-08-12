@@ -210,7 +210,6 @@ class RenderOrderParticle extends RenderOrder {
 
 
 var playerImperceptible = false;
-var gridZGreaterThanPlayerZ = false;
 var playerRenderRow = 0;
 var playerRenderColumn = 0;
 var playerZ = 0;
@@ -235,7 +234,6 @@ class RenderOrderGrid extends RenderOrder {
   var screenBottomRightRow = 0;
   var gridTotalColumnsMinusOne = 0;
   var gridTotalZMinusOne = 0;
-  var gridZHalf = 0;
 
   var playerColumnRow = 0;
   var playerUnderRoof = false;
@@ -311,8 +309,6 @@ class RenderOrderGrid extends RenderOrder {
     nextGridNode();
     order = ((row + column) * tileSize);
     orderZ = z;
-    gridZHalf =  z ~/ 2;
-    gridZGreaterThanPlayerZ = z > playerZ;
   }
 
   @override
@@ -336,7 +332,6 @@ class RenderOrderGrid extends RenderOrder {
     z = 0;
     zPlain = grid[z];
     orderZ = 0;
-    gridZHalf = 0;
     gridTotalColumnsMinusOne = gridTotalColumns - 1;
     playerZ = player.indexZ;
     playerRow = player.indexRow;
@@ -345,7 +340,6 @@ class RenderOrderGrid extends RenderOrder {
     playerRenderRow = playerRow - (player.indexZ ~/ 2);
     playerRenderColumn = playerColumn - (player.indexZ ~/ 2);
     playerUnderRoof = gridIsUnderSomething(playerZ, playerRow, playerColumn);
-    gridZGreaterThanPlayerZ = false;
 
     playerImperceptible =
         !gridIsPerceptible(playerZ, playerRow, playerColumn)
