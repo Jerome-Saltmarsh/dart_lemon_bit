@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
+import '../constants/frames_per_second.dart';
 import '../functions/withinRadius.dart';
 import 'collider.dart';
 import 'components.dart';
@@ -26,8 +27,10 @@ abstract class AI extends Character with Material {
   var destY = 0.0;
   var spawnX = 0.0;
   var spawnY = 0.0;
+  var spawnZ = 0.0;
   var objective;
   var wanderRadius = 0.0;
+  var respawn = 0;
   EnemySpawn? enemySpawn;
 
   bool get arrivedAtDest {
@@ -59,6 +62,7 @@ abstract class AI extends Character with Material {
     clearDest();
     spawnX = x;
     spawnY = y;
+    spawnZ = z;
   }
 
   @override
@@ -71,6 +75,9 @@ abstract class AI extends Character with Material {
     clearTarget();
     clearPath();
     clearDest();
+    const framesPerMinute = framesPerSecond * secondsPerMinute;
+    const respawnDuration = framesPerMinute * 1;
+    respawn = respawnDuration;
   }
 
   @override

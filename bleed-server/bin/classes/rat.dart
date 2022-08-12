@@ -1,11 +1,11 @@
 
 import '../common/library.dart';
-import '../common/weapon_type.dart';
 import 'ai.dart';
 import 'player.dart';
 import 'weapon.dart';
 
 class Rat extends AI {
+
 
   Rat({
     required int z,
@@ -27,6 +27,7 @@ class Rat extends AI {
     indexColumn = column;
     spawnX = x;
     spawnY = y;
+    spawnZ = this.z;
     destX = x;
     destY = y;
   }

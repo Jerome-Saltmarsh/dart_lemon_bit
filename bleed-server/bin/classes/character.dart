@@ -247,3 +247,9 @@ class RunSpeed {
    static const Very_Fast = 4.0;
 }
 
+
+mixin Respawnable {
+  var respawn = 0;
+
+
+}

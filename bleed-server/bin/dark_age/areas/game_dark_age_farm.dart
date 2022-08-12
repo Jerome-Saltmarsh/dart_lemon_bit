@@ -15,7 +15,8 @@ class GameDarkAgeFarm extends DarkAgeArea {
         z: 3,
         onInteractedWith: (player){
            player.interact(message: "I've been seeing more and more monsters in the wilderness lately");
-        }
+        },
+        wanderRadius: 80,
     );
     
     gameObjects.add(GameObjectRock(x: 1125, y: 874, z: 72));

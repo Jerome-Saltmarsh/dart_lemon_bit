@@ -614,6 +614,19 @@ extension GameFunctions on Game {
   }
 
   void updateCharacter(Character character) {
+    if (character.dead){
+      if (character is AI){
+        if (character.respawn-- <= 0){
+           character.x = character.spawnX;
+           character.y = character.spawnY;
+           character.z = character.spawnZ;
+           character.collidable = true;
+           character.health = character.maxHealth;
+           character.state = CharacterState.Idle;
+        }
+      }
+      return;
+    }
     character.updateCharacter(this);
   }
 
