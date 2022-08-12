@@ -63,7 +63,7 @@ packages:
       name: lemon_byte
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.10"
+    version: "1.0.11"
   lemon_math:
     dependency: "direct main"
     description:
