@@ -29,7 +29,7 @@ class _Engine {
   late final LemonEngineEvents events;
   var scrollSensitivity = 0.0005;
   var cameraSmoothFollow = true;
-  var zoomSensitivity = 0.1;
+  var zoomSensitivity = 0.175;
   var targetZoom = 1.0;
 
   final Map<LogicalKeyboardKey, int> keyboardState = {};

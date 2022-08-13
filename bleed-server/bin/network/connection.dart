@@ -283,6 +283,46 @@ class Connection {
         game.onGridChanged();
         break;
 
+      case ClientRequest.Canvas_Modify_Size:
+        if (arguments.length != 4) return errorArgsExpected(4, arguments);
+        final dimension = int.tryParse(arguments[1]);
+        final add = int.tryParse(arguments[2]);
+        final start = int.tryParse(arguments[3]);
+        if (dimension == null) return;
+        if (add == null) return;
+        if (start == null) return;
+
+        final grid = player.scene.grid;
+        final columns = grid[0][0].length;
+        /// Dimensions Z: 0, Row: 1, Column: 2
+        /// Add: 1, Remove: 0
+        if (dimension == 1){
+           if (add == 1){
+             if (start == 1){
+               var type = GridNodeType.Grass;
+                  for (final z in grid){
+                    z.insert(
+                        0,
+                        generateGridRow(columns, type: type)
+                    );
+                    type = GridNodeType.Empty;
+                  }
+             } else { // End
+               var type = GridNodeType.Grass;
+               for (final z in grid){
+                 z.add(
+                     generateGridRow(columns, type: type)
+                 );
+                 type = GridNodeType.Empty;
+               }
+             }
+           } else { // Remove
+
+           }
+        }
+        game.onGridChanged();
+        break;
+
       case ClientRequest.Npc_Talk_Select_Option:
         if (player.dead) return errorPlayerDead();
         if (arguments.length != 2) return errorArgsExpected(2, arguments);

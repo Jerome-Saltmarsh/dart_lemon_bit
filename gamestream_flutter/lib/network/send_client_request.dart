@@ -86,6 +86,17 @@ void sendClientRequestSetCanvasSize(int z, int rows, int columns){
   sendClientRequest(ClientRequest.Editor_Set_Canvas_Size, '$z $rows $columns');
 }
 
+/// dimension: 0 == Z; 1 == Row; 2 == Column;
+/// add: true means add; false means remove;
+/// start: true means insert at the beginning; false means add to the end
+void sendClientRequestCanvasModifySize({
+  required int dimension,
+  required bool add,
+  required bool start,
+}) {
+  sendClientRequest(ClientRequest.Canvas_Modify_Size, '$dimension ${add ? 1 : 0} ${start ? 1 : 0}');
+}
+
 void sendClientRequestSetPantsType(int type){
   sendClientRequest(ClientRequest.Set_Pants_Type, type);
 }

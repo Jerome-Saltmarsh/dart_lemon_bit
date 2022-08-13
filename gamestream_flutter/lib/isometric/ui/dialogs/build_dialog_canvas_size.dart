@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/editor/editor.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
+import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:golden_ratio/constants.dart';
 
 Widget buildDialogCanvasSize(){
@@ -28,26 +29,46 @@ Widget buildDialogCanvasSize(){
                 child: "-",
                 width: 50,
                 alignment: Alignment.center,
-                action: editor.actions.increaseCanvasSizeZ
+                action: () =>
+                  sendClientRequestCanvasModifySize(
+                      dimension: 1,
+                      add: false,
+                      start: true
+                  )
               ),
               container(
                   child: "+",
                   width: 50,
                   alignment: Alignment.center,
-                  action: editor.actions.increaseCanvasSizeZ
+                  action: () =>
+                      sendClientRequestCanvasModifySize(
+                          dimension: 1,
+                          add: true,
+                          start: true
+                      )
               ),
               Refresh(() => text("Rows: $gridTotalRows")),
               container(
                   child: "-",
                   width: 50,
                   alignment: Alignment.center,
-                  action: editor.actions.increaseCanvasSizeZ
+                  action: () =>
+                      sendClientRequestCanvasModifySize(
+                          dimension: 1,
+                          add: false,
+                          start: false
+                      )
               ),
               container(
                   child: "+",
                   width: 50,
                   alignment: Alignment.center,
-                  action: editor.actions.increaseCanvasSizeZ
+                  action: () =>
+                      sendClientRequestCanvasModifySize(
+                          dimension: 1,
+                          add: true,
+                          start: false
+                      )
               ),
             ],
           ),
