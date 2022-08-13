@@ -19,7 +19,6 @@ final gridShadows = Watch(true, onChanged: (bool value){
 
 var grid = <List<List<Node>>>[];
 var gridTotalZ = 0;
-final gridTotalZWatch = Watch(0);
 var gridTotalRows = 0;
 var gridTotalColumns = 0;
 

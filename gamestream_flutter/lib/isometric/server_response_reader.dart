@@ -480,7 +480,6 @@ class ServerResponseReader with ByteReader {
 
   void readGrid() {
     gridTotalZ = readInt();
-    gridTotalZWatch.value = gridTotalZ;
     gridTotalRows = readInt();
     gridTotalColumns = readInt();
 

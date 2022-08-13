@@ -10,14 +10,45 @@ Widget buildDialogCanvasSize(){
   return Container(
       width: 400,
       height: 400 * goldenRatio_0618,
+      padding: const EdgeInsets.all(6),
       child: Column(
         children: [
           text("Canvas Size"),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              watch(gridTotalZWatch, (t) => text("Z: ${t}")),
+              Refresh(() => text("Z: $gridTotalZ")),
               buildButtonIncreaseGridSizeZ(),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              container(
+                child: "-",
+                width: 50,
+                alignment: Alignment.center,
+                action: editor.actions.increaseCanvasSizeZ
+              ),
+              container(
+                  child: "+",
+                  width: 50,
+                  alignment: Alignment.center,
+                  action: editor.actions.increaseCanvasSizeZ
+              ),
+              Refresh(() => text("Rows: $gridTotalRows")),
+              container(
+                  child: "-",
+                  width: 50,
+                  alignment: Alignment.center,
+                  action: editor.actions.increaseCanvasSizeZ
+              ),
+              container(
+                  child: "+",
+                  width: 50,
+                  alignment: Alignment.center,
+                  action: editor.actions.increaseCanvasSizeZ
+              ),
             ],
           ),
         ],
