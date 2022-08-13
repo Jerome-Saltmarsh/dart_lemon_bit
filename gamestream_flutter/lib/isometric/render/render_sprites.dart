@@ -78,17 +78,6 @@ void renderSprites() {
   }
 }
 
-// bool shouldRender(Vector3 v){
-//   if (!playerImperceptible) return true;
-//   if (v.indexZ <= player.indexZ) return true;
-//   final halfZ = v.indexZ / 2;
-//   final renderRow = v.indexRow - halfZ;
-//   final renderColumn = v.indexColumn - halfZ;
-//   final renderRowDistance = (renderRow - playerRenderRow).abs();
-//   final renderColumnDistance = (renderColumn - playerRenderColumn).abs();
-//   return renderRowDistance >= 5 || renderColumnDistance >= 5;
-// }
-
 class RenderOrderCharacters extends RenderOrder {
   late Character character;
 
@@ -252,30 +241,11 @@ class RenderOrderGrid extends RenderOrder {
 
   @override
   void renderFunction() {
-    // transparent = false;
-    // if (playerImperceptible) {
-    //   if (gridZGreaterThanPlayerZ) {
-    //     final renderRow = row - gridZHalf;
-    //     final renderColumn = column - gridZHalf;
-    //     final renderRowDistance = (renderRow - playerRenderRow).abs();
-    //     final renderColumnDistance = (renderColumn - playerRenderColumn).abs();
-    //
-    //     if (z > playerZ + 1 && renderRowDistance <= 5 && renderColumnDistance <= 5) {
-    //         return;
-    //     }
-    //
-    //     if (z > playerZ && renderRowDistance < 2 && renderColumnDistance < 2) {
-    //       if (row + column >= playerColumnRow){
-    //         transparent = true;
-    //       }
-    //     }
-    //   }
-    // }
 
     while (column > 0 && row < rowsMax){
+      assignNode();
       row++;
       column--;
-      assignNode();
 
       if (!node.renderable) continue;
       if (node.dstX > screenRight) return;
@@ -406,9 +376,12 @@ class RenderOrderGrid extends RenderOrder {
           }
        }
     }
-
-    super.reset();
+    // super.reset();
+    total = getTotal();
+    _index = 0;
+    remaining = total > 0;
   }
+
 
   void revealRaycast(int z, int row, int column){
     for (; z < gridTotalZ; z += 2){
