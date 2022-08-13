@@ -39,15 +39,15 @@ class GameDarkAge extends Game {
   void update(){
     updateInternal();
 
-    for (var i = 0; i < players.length; i++) {
-      final player = players[i];
-      checkPlayerPosition(player, player.indexZ, player.indexRow, player.indexColumn);
-    }
+    // for (var i = 0; i < players.length; i++) {
+    //   final player = players[i];
+    //   checkPlayerPosition(player, player.indexZ, player.indexRow, player.indexColumn);
+    // }
   }
 
-  void checkPlayerPosition(Player player, int z, int row, int column){
-
-  }
+  // void checkPlayerPosition(Player player, int z, int row, int column){
+  //
+  // }
 
   void updateInternal(){
 
