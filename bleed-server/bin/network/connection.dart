@@ -8,6 +8,7 @@ import '../common/library.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
 import '../engine.dart';
+import '../factories/generate_node.dart';
 import '../functions/generateName.dart';
 import '../functions/withinRadius.dart';
 import '../io/save_directory.dart';
@@ -328,6 +329,30 @@ class Connection {
               }
            }
         }
+
+        // Dimension Column == 2;
+        if (dimension == 2){
+          if (add == 1){
+            if (start == 1){
+              var type = GridNodeType.Grass;
+               for (final z in grid){
+                  for (final row in z){
+                     row.insert(0, generateNode(type));
+                  }
+                  type = GridNodeType.Empty;
+               }
+            } else {
+              var type = GridNodeType.Grass;
+              for (final z in grid){
+                for (final row in z){
+                  row.add(generateNode(type));
+                }
+                type = GridNodeType.Empty;
+              }
+            }
+          }
+        }
+
         game.onGridChanged();
         break;
 

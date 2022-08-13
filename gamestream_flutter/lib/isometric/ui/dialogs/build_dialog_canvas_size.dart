@@ -72,6 +72,56 @@ Widget buildDialogCanvasSize(){
               ),
             ],
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              container(
+                  child: "-",
+                  width: 50,
+                  alignment: Alignment.center,
+                  action: () =>
+                      sendClientRequestCanvasModifySize(
+                          dimension: 2,
+                          add: false,
+                          start: true
+                      )
+              ),
+              container(
+                  child: "+",
+                  width: 50,
+                  alignment: Alignment.center,
+                  action: () =>
+                      sendClientRequestCanvasModifySize(
+                          dimension: 2,
+                          add: true,
+                          start: true
+                      )
+              ),
+              Refresh(() => text("Columns: $gridTotalColumns")),
+              container(
+                  child: "-",
+                  width: 50,
+                  alignment: Alignment.center,
+                  action: () =>
+                      sendClientRequestCanvasModifySize(
+                          dimension: 2,
+                          add: false,
+                          start: false
+                      )
+              ),
+              container(
+                  child: "+",
+                  width: 50,
+                  alignment: Alignment.center,
+                  action: () =>
+                      sendClientRequestCanvasModifySize(
+                          dimension: 2,
+                          add: true,
+                          start: false
+                      )
+              ),
+            ],
+          )
         ],
       ),
   );
