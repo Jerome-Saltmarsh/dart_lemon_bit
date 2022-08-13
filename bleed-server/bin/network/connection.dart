@@ -296,8 +296,8 @@ class Connection {
         final columns = grid[0][0].length;
         /// Dimensions Z: 0, Row: 1, Column: 2
         /// Add: 1, Remove: 0
-        if (dimension == 1){
-           if (add == 1){
+        if (dimension == 1) {
+           if (add == 1) {
              if (start == 1){
                var type = GridNodeType.Grass;
                   for (final z in grid){
@@ -317,7 +317,15 @@ class Connection {
                }
              }
            } else { // Remove
-
+              if (start == 1){
+                for (final z in grid){
+                  z.removeAt(0);
+                }
+              } else {
+                for (final z in grid){
+                  z.removeLast();
+                }
+              }
            }
         }
         game.onGridChanged();
