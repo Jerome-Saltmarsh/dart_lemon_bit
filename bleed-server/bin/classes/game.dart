@@ -623,7 +623,7 @@ extension GameFunctions on Game {
            character.z = character.spawnZ;
            character.collidable = true;
            character.health = character.maxHealth;
-           character.state = CharacterState.Idle;
+           character.setCharacterStateSpawning();
         }
       }
       return;

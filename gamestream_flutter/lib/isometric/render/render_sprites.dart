@@ -86,6 +86,16 @@ class RenderOrderCharacters extends RenderOrder {
 
     if (!character.tile.visible) return;
 
+    if (character.spawning) {
+      if (character.frame % 3 != 0) return;
+      return spawnParticleOrbShard(
+        x: character.x,
+        y: character.y,
+        z: character.z,
+        speed: 1.5,
+      );
+    }
+
     switch(character.type){
       case CharacterType.Template:
         return renderCharacterTemplate(character);

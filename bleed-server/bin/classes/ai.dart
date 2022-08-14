@@ -112,10 +112,6 @@ abstract class AI extends Character with Material {
       }
     }
 
-    if (target == Player){
-
-    }
-
     if (!arrivedAtDest) {
       final destAngle = getDestinationAngle();
       final r = radius + 2;

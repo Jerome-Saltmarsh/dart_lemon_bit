@@ -17,18 +17,6 @@ void renderCharacterTemplate(Character character, {bool renderHealthBar = true})
 
   if (character.dead) return;
 
-  if (character.spawning) {
-    if (character.frame % 3 == 0){
-      spawnParticleOrbShard(
-          x: character.x,
-          y: character.y,
-          z: character.z,
-          speed: 1.5,
-      );
-    }
-    return renderCircle32(character.renderX, character.renderY, scale: character.frame / 99);
-  }
-
   if (renderHealthBar){
     renderCharacterHealthBar(character);
   }
