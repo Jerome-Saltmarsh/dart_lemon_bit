@@ -6,11 +6,9 @@ import 'vector3.dart';
 
 class Character extends Vector3 {
   var type = CharacterType.Template;
-  var scoreMeasured = false;
   var state = 0;
   var direction = 0;
   var frame = 0;
-  var complexion = 0;
   var weapon = WeaponType.Unarmed;
   var armour = ArmourType.shirtCyan;
   var helm = HeadType.None;
@@ -19,12 +17,12 @@ class Character extends Vector3 {
   var text = "";
   var allie = false;
   /// percentage between 0 and 1
-  double health = 1;
+  var health = 1.0;
   /// percentage between 0 and 1
-  double magic = 1;
+  var magic = 1.0;
 
-  // properties
   bool get dead => state == CharacterState.Dead;
+  bool get spawning => state == CharacterState.Spawning;
   bool get running => state == CharacterState.Running;
   bool get performing => state == CharacterState.Performing;
   bool get alive => !dead;

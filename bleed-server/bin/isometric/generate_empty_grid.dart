@@ -1,7 +1,7 @@
 
 import '../classes/node.dart';
 
-List<List<List<Node>>> generateEmptyGrid({
+List<List<List<Node>>> generate_grid_empty({
   required int zHeight,
   required int rows,
   required int columns,

@@ -1,7 +1,7 @@
 
 import '../classes/node.dart';
 import '../common/grid_node_type.dart';
-import '../factories/generate_node.dart';
+import 'generate_node.dart';
 
 List<List<Node>> generateGridZ(
     int rows,

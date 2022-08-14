@@ -8,7 +8,7 @@ import '../common/library.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
 import '../engine.dart';
-import '../factories/generate_node.dart';
+import '../isometric/generate_node.dart';
 import '../functions/generateName.dart';
 import '../functions/withinRadius.dart';
 import '../io/save_directory.dart';

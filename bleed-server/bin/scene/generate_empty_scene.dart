@@ -7,7 +7,7 @@ Scene generateEmptyScene(){
     name: '',
     characters: [],
     enemySpawns: [],
-    grid: generateEmptyGrid(
+    grid: generate_grid_empty(
       zHeight: 8,
       rows: 50,
       columns: 50,

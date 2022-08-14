@@ -1,15 +1,14 @@
 
 import 'package:lemon_engine/render.dart';
 
-void renderCircle32(double x, double y, { double rotation = 0, double scale = 1.0}){
-  renderR(
+void renderCircle32(double x, double y, { double scale = 1.0}){
+  render(
       dstX: x,
       dstY: y,
-      srcX: 519,
+      srcX: 858,
       srcY: 0,
       srcWidth: 32,
       srcHeight: 32,
-      rotation: rotation,
       scale:  scale,
   );
 }

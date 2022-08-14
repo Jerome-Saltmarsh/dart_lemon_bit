@@ -64,7 +64,7 @@ class DarkAgeScenes {
           name: 'empty',
           characters: [],
           enemySpawns: [],
-          grid: generateEmptyGrid(
+          grid: generate_grid_empty(
               zHeight: 1,
               rows: 10,
               columns: 10

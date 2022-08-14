@@ -1,4 +1,6 @@
 
+import 'package:lemon_math/library.dart';
+
 import '../../classes/gameobject.dart';
 import '../../classes/library.dart';
 import '../../common/map_tiles.dart';
@@ -33,14 +35,17 @@ class GameDarkAgeFarm extends DarkAgeArea {
     gameObjects.add(GameObjectChicken(x: 1455, y: 945, z: 72));
     gameObjects.add(GameObjectChicken(x: 1600, y: 600, z: 74));
     gameObjects.add(GameObjectChicken(x: 2115, y: 835, z: 48));
-    gameObjects.add(GameObjectCrystal(x: 650, y: 940, z: 120)..movable = false);
+    gameObjects.add(GameObjectCrystal(x: 740, y: 1030, z: 120)..movable = false);
   }
 
   @override
   void onPlayerJoined(Player player) {
-    player.indexZ = 4;
-    player.indexRow = 14;
-    player.indexColumn = 19;
+    player.indexZ = 5;
+    player.indexRow = 15;
+    player.indexColumn = 21;
+    const radius = 30.0;
+    player.x += giveOrTake(radius);
+    player.y += giveOrTake(radius);
   }
 
   @override

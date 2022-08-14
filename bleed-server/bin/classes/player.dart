@@ -11,7 +11,7 @@ import '../convert/convert_card_type_to_card.dart';
 import '../dark_age/areas/dark_age_area.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
-import '../factories/generate_node.dart';
+import '../isometric/generate_node.dart';
 import '../utilities.dart';
 import 'position3.dart';
 import 'rat.dart';

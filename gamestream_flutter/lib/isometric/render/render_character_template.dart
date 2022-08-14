@@ -2,6 +2,8 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/node_extensions.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
+import 'package:gamestream_flutter/isometric/particles.dart';
+import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:lemon_engine/render.dart';
 
 import '../classes/character.dart';
@@ -14,6 +16,18 @@ void renderCharacterTemplate(Character character, {bool renderHealthBar = true})
   assert(character.direction < 8);
 
   if (character.dead) return;
+
+  if (character.spawning) {
+    if (character.frame % 3 == 0){
+      spawnParticleOrbShard(
+          x: character.x,
+          y: character.y,
+          z: character.z,
+          speed: 1.5,
+      );
+    }
+    return renderCircle32(character.renderX, character.renderY, scale: character.frame / 99);
+  }
 
   if (renderHealthBar){
     renderCharacterHealthBar(character);

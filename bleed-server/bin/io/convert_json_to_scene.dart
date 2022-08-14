@@ -4,7 +4,7 @@ import 'package:typedef/json.dart';
 import '../classes/enemy_spawn.dart';
 import '../classes/library.dart';
 import '../classes/node.dart';
-import '../factories/generate_node.dart';
+import '../isometric/generate_node.dart';
 
 Scene convertJsonToScene(Json json, String name) {
   final height = json.getInt('grid-z');

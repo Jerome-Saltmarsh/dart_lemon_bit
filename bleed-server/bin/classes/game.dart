@@ -97,7 +97,7 @@ abstract class Game {
   }
 
   void revive(Player character) {
-    character.state = CharacterState.Idle;
+    character.setCharacterStateSpawning();
     character.health = character.maxHealth;
     character.collidable = true;
     onPlayerRevived(character);
