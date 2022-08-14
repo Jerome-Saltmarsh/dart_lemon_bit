@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_show_game_dialog_canvas_size.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
+import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
@@ -29,20 +30,13 @@ Stack buildStackEdit() {
           children: [
             Column(
               children: [
-                container(child: "Selected", color: brownLight),
-                container(
-                   child: Row(
-                     children: [
-                       container(child: "-", width: 50, action: ()=> edit.z.value--, toolTip: "Shift + Down Arrow"),
-                       watch(edit.z, (t) {
-                         return container(child: 'Z: $t', width: 92);
-                       }),
-                       container(child: "+", width: 50, action: ()=> edit.z.value++, toolTip: "Shift + Up Arrow"),
-                     ],
-                   )
-                ),
+                text("Objects"),
+                // Column(
+                //   children: gameObjects.map((e) => text(e.)),
+                // )
               ],
             ),
+            buildColumnSelected(),
             buildControlPaint(),
             buildWatchEditorTab(),
           ],
@@ -60,6 +54,25 @@ Stack buildStackEdit() {
       )
     ],
   );
+}
+
+Column buildColumnSelected() {
+  return Column(
+            children: [
+              container(child: "Selected", color: brownLight),
+              container(
+                 child: Row(
+                   children: [
+                     container(child: "-", width: 50, action: ()=> edit.z.value--, toolTip: "Shift + Down Arrow"),
+                     watch(edit.z, (t) {
+                       return container(child: 'Z: $t', width: 92);
+                     }),
+                     container(child: "+", width: 50, action: ()=> edit.z.value++, toolTip: "Shift + Up Arrow"),
+                   ],
+                 )
+              ),
+            ],
+          );
 }
 
 Column buildControlPaint() {
