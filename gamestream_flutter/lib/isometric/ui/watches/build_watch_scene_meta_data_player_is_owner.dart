@@ -28,14 +28,14 @@ Stack buildStackEdit() {
         bottom: 6,
         child: Column(
           children: [
-            Column(
-              children: [
-                text("Objects"),
-                // Column(
-                //   children: gameObjects.map((e) => text(e.)),
-                // )
-              ],
-            ),
+            // Column(
+            //   children: [
+            //     text("Objects"),
+            //     // Column(
+            //     //   children: gameObjects.map((e) => text(e.)),
+            //     // )
+            //   ],
+            // ),
             buildColumnSelected(),
             buildControlPaint(),
             buildWatchEditorTab(),
