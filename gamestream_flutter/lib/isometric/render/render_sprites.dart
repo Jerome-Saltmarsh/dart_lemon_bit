@@ -287,7 +287,7 @@ class RenderOrderGrid extends RenderOrder {
   void updateFunction() {
     zPlain = grid[z];
     nextGridNode();
-    order = ((row + column) * tileSize);
+    order = ((row + column) * tileSize) + tileSizeHalf;
     orderZ = z;
   }
 
