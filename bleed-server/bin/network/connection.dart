@@ -556,8 +556,9 @@ class Connection {
         if (z == null) return errorInvalidArg('z is null (4)');
         if (type == null) return errorInvalidArg('z is null (5)');
         player.game.scene.gameObjects.add(
-          GameObjectFlower(x: x, y: y, z: z),
+          GameObjectStatic(x: x, y: y, z: z, type: type),
         );
+        player.scene.dirty = true;
         break;
     }
 

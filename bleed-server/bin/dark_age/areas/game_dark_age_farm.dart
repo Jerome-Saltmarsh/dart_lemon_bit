@@ -1,7 +1,6 @@
 
 import 'package:lemon_math/library.dart';
 
-import '../../classes/gameobject.dart';
 import '../../classes/library.dart';
 import '../../common/map_tiles.dart';
 import '../../common/quest.dart';

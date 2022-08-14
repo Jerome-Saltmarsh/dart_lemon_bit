@@ -19,61 +19,32 @@ abstract class GameObject extends Collider {
   int get type;
 }
 
-class GameObjectRock extends GameObject {
-  GameObjectRock({
+class GameObjectStatic extends GameObject {
+  final int type;
+  GameObjectStatic({
     required double x,
     required double y,
     required double z,
-  }) : super(x: x, y: y, z: z, radius: 10){
-    collidable = false;
-  }
-
-  @override
-  void write(Player player) {
-      player.writeByte(ServerResponse.GameObject_Rock);
-      player.writePosition3(this);
-  }
-
-  @override
-  int get type => GameObjectType.Rock;
-}
-
-class GameObjectFlower extends GameObject {
-  GameObjectFlower({
-    required double x,
-    required double y,
-    required double z,
+    required this.type,
   }) : super(x: x, y: y, z: z, radius: 10) {
     collidable = false;
+
+    switch (type) {
+      case GameObjectType.Crystal:
+        collidable = true;
+        movable = false;
+        break;
+      default:
+        break;
+    }
   }
 
   @override
   void write(Player player) {
-    player.writeByte(ServerResponse.GameObject_Flower);
+    player.writeByte(ServerResponse.GameObject_Static);
     player.writePosition3(this);
+    player.writeByte(type);
   }
-
-  @override
-  int get type => GameObjectType.Flower;
-}
-
-class GameObjectStick extends GameObject {
-  GameObjectStick({
-    required double x,
-    required double y,
-    required double z,
-  }) : super(x: x, y: y, z: z, radius: 10) {
-    collidable = false;
-  }
-
-  @override
-  void write(Player player) {
-    player.writeByte(ServerResponse.GameObject_Stick);
-    player.writePosition3(this);
-  }
-
-  @override
-  int get type => GameObjectType.Stick;
 }
 
 abstract class Updatable {
@@ -228,23 +199,4 @@ class GameObjectChicken extends GameObjectAnimal implements Updatable {
 
   @override
   int get type => GameObjectType.Chicken;
-}
-
-class GameObjectCrystal extends GameObject {
-  GameObjectCrystal({
-    required double x,
-    required double y,
-    required double z,
-  }) : super(x: x, y: y, z: z, radius: 15) {
-    movable = false;
-  }
-
-  @override
-  void write(Player player) {
-    player.writeByte(ServerResponse.GameObject_Crystal);
-    player.writePosition3(this);
-  }
-
-  @override
-  int get type => GameObjectType.Crystal;
 }

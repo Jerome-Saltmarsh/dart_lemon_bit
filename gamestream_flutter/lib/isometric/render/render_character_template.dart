@@ -2,8 +2,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/node_extensions.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
-import 'package:gamestream_flutter/isometric/particles.dart';
-import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:lemon_engine/render.dart';
 
 import '../classes/character.dart';

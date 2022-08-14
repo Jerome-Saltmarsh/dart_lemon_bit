@@ -87,28 +87,10 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Character_Player:
           readCharacterPlayer();
           break;
-        case ServerResponse.GameObject_Rock:
+        case ServerResponse.GameObject_Static:
           final gameObject = getInstanceGameObject();
-          gameObject.type = GameObjectType.Rock;
           readVector3(gameObject);
-          totalGameObjects++;
-          break;
-        case ServerResponse.GameObject_Stick:
-          final gameObject = getInstanceGameObject();
-          gameObject.type = GameObjectType.Stick;
-          readVector3(gameObject);
-          totalGameObjects++;
-          break;
-        case ServerResponse.GameObject_Crystal:
-          final gameObject = getInstanceGameObject();
-          gameObject.type = GameObjectType.Crystal;
-          readVector3(gameObject);
-          totalGameObjects++;
-          break;
-        case ServerResponse.GameObject_Flower:
-          final gameObject = getInstanceGameObject();
-          gameObject.type = GameObjectType.Flower;
-          readVector3(gameObject);
+          gameObject.type = readByte();
           totalGameObjects++;
           break;
         case ServerResponse.GameObject_Butterfly:

@@ -157,19 +157,27 @@ Row buildTopLeftMenu() {
             buildMenu(
                 text: "Insert",
                 children: [
-                  container(child: "Flower", color: brownLight, action: (){
-                    sendClientRequestAddGameObject(
-                      x: edit.posX,
-                      y: edit.posY,
-                      z: edit.posZ,
-                      type: GameObjectType.Flower,
-                    );
-                  }),
-                  container(child: "Rock", color: brownLight),
+                  buildButtonAddGameObject(GameObjectType.Rock),
+                  buildButtonAddGameObject(GameObjectType.Flower),
+                  buildButtonAddGameObject(GameObjectType.Stick),
                 ],
             )
           ],
         );
+}
+
+Widget buildButtonAddGameObject(int type) {
+  return container(
+      child: GameObjectType.getName(type),
+      color: brownLight,
+      action: (){
+        sendClientRequestAddGameObject(
+          x: edit.posX,
+          y: edit.posY,
+          z: edit.posZ,
+          type: type,
+        );
+      });
 }
 
 Widget buildMenu({required String text, required List<Widget> children}){
@@ -188,3 +196,4 @@ Widget buildMenu({required String text, required List<Widget> children}){
       }
   );
 }
+

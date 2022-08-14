@@ -17,13 +17,13 @@ final edit = EditState();
 
 class EditState {
 
+  double get posX => row.value * tileSize + tileSizeHalf;
+  double get posY => column.value * tileSize + tileSizeHalf;
+  double get posZ => z.value * tileHeight;
+
   void refreshSelected([int? val]){
     selected.value = grid[z.value][row.value][column.value];
   }
-
-  double get posX => row.value * tileSize;
-  double get posY => column.value * tileSize;
-  double get posZ => z.value * tileHeight;
 
   var row = Watch(0, clamp: (int value){
     if (value < 0) return 0;

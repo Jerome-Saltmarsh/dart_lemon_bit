@@ -31,16 +31,32 @@ GameObject convertJsonToGameObject(dynamic json){
     final z = json.getDouble('z');
     switch (type){
       case GameObjectType.Flower:
-        return GameObjectFlower(
+        return GameObjectStatic(
           x: x,
           y: y,
           z: z,
+          type: type,
         );
       case GameObjectType.Crystal:
-        return GameObjectCrystal(
+        return GameObjectStatic(
           x: x,
           y: y,
           z: z,
+          type: type,
+        );
+      case GameObjectType.Stick:
+        return GameObjectStatic(
+          x: x,
+          y: y,
+          z: z,
+          type: type,
+        );
+      case GameObjectType.Rock:
+        return GameObjectStatic(
+          x: x,
+          y: y,
+          z: z,
+          type: type,
         );
       case GameObjectType.Chicken:
         return GameObjectChicken(
@@ -50,18 +66,6 @@ GameObject convertJsonToGameObject(dynamic json){
         );
       case GameObjectType.Butterfly:
         return GameObjectButterfly(
-          x: x,
-          y: y,
-          z: z,
-        );
-      case GameObjectType.Stick:
-        return GameObjectStick(
-          x: x,
-          y: y,
-          z: z,
-        );
-      case GameObjectType.Rock:
-        return GameObjectRock(
           x: x,
           y: y,
           z: z,
