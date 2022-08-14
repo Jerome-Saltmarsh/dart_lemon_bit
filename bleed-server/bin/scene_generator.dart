@@ -298,8 +298,8 @@ Scene generateRandomScene({
   return Scene(
       name: "",
       grid: [],
-      characters: [],
      enemySpawns: [],
+    gameObjects: [],
   );
 }
 

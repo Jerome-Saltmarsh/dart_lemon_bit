@@ -31,7 +31,8 @@ abstract class Game {
   final players = <Player>[];
   final characters = <Character>[];
   final projectiles = <Projectile>[];
-  final gameObjects = <GameObject>[];
+
+  List<GameObject> get gameObjects => scene.gameObjects;
 
   Game(this.scene) {
     engine.onGameCreated(this);

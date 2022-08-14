@@ -1,11 +1,9 @@
 
-import 'package:lemon_math/functions/give_or_take.dart';
 
 import '../../classes/library.dart';
 import '../../classes/rat.dart';
 import '../../common/library.dart';
 import '../../common/map_tiles.dart';
-import '../../engine.dart';
 import '../dark_age_scenes.dart';
 import '../on_interaction/on_interact_with_garry.dart';
 import '../on_interaction/on_interact_with_jenkins.dart';
@@ -79,17 +77,6 @@ class GameDarkAgeVillage extends DarkAgeArea {
 
     characters.add(Rat(z: 1, row: 30, column: 30)..wanderRadius = 100);
     characters.add(Rat(z: 1, row: 7, column: 47)..wanderRadius = 100);
-  }
-
-  @override
-  void checkPlayerPosition(Player player, int z, int row, int column) {
-    if (z == 0 && row == 20 && column == 13) {
-      player.changeGame(engine.findAreaTavernCellar());
-      player.indexZ = 1;
-      player.indexRow = 13;
-      player.indexColumn = 25;
-      player.x += giveOrTake(5);
-    }
   }
 
   @override

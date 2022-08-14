@@ -62,8 +62,8 @@ class DarkAgeScenes {
       shrine_1 = await loadScene('shrine-1');
       empty = Scene(
           name: 'empty',
-          characters: [],
           enemySpawns: [],
+          gameObjects: [],
           grid: generate_grid_empty(
               zHeight: 1,
               rows: 10,

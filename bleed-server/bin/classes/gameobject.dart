@@ -15,6 +15,8 @@ abstract class GameObject extends Collider {
   }) : super(x: x, y: y, z: z, radius: radius);
 
   void write(Player player);
+
+  int get type;
 }
 
 class GameObjectRock extends GameObject {
@@ -31,6 +33,9 @@ class GameObjectRock extends GameObject {
       player.writeByte(ServerResponse.GameObject_Rock);
       player.writePosition3(this);
   }
+
+  @override
+  int get type => GameObjectType.Rock;
 }
 
 
@@ -48,6 +53,9 @@ class GameObjectFlower extends GameObject {
     player.writeByte(ServerResponse.GameObject_Flower);
     player.writePosition3(this);
   }
+
+  @override
+  int get type => GameObjectType.Flower;
 }
 
 
@@ -65,6 +73,9 @@ class GameObjectStick extends GameObject {
     player.writeByte(ServerResponse.GameObject_Stick);
     player.writePosition3(this);
   }
+
+  @override
+  int get type => GameObjectType.Stick;
 }
 
 abstract class Updatable {
@@ -128,8 +139,6 @@ class GameObjectButterfly extends GameObject with Velocity implements Updatable 
 
   @override
   void update(Game game) {
-
-
     const timeHourSix = 6 * secondsPerHour;
     const timeHourSeventeen = 17 * secondsPerHour;
     if (game.getTime() < timeHourSix || game.getTime() > timeHourSeventeen){
@@ -159,6 +168,9 @@ class GameObjectButterfly extends GameObject with Velocity implements Updatable 
     target.x = spawnX + giveOrTake(radius);
     target.y = spawnY + giveOrTake(radius);
   }
+
+  @override
+  int get type => GameObjectType.Butterfly;
 }
 
 class GameObjectChicken extends GameObjectAnimal implements Updatable {
@@ -215,6 +227,9 @@ class GameObjectChicken extends GameObjectAnimal implements Updatable {
     x += xv;
     y += yv;
   }
+
+  @override
+  int get type => GameObjectType.Chicken;
 }
 
 class GameObjectCrystal extends GameObject {
@@ -229,4 +244,7 @@ class GameObjectCrystal extends GameObject {
     player.writeByte(ServerResponse.GameObject_Crystal);
     player.writePosition3(this);
   }
+
+  @override
+  int get type => GameObjectType.Crystal;
 }
