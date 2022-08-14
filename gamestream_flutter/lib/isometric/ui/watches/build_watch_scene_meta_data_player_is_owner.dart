@@ -2,10 +2,12 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_show_game_dialog_canvas_size.dart';
+import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stacks_play_mode.dart';
@@ -13,6 +15,7 @@ import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_tab.d
 import 'package:gamestream_flutter/modules/core/actions.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
+import 'package:lemon_engine/engine.dart';
 
 import '../widgets/build_container.dart';
 
@@ -28,14 +31,27 @@ Stack buildStackEdit() {
         bottom: 6,
         child: Column(
           children: [
-            // Column(
-            //   children: [
-            //     text("Objects"),
-            //     // Column(
-            //     //   children: gameObjects.map((e) => text(e.)),
-            //     // )
-            //   ],
-            // ),
+            Column(
+              children: [
+                text("Objects"),
+                Container(
+                  height: 150,
+                  child: Refresh((){
+                    return SingleChildScrollView(
+                      child: Column(
+                        children: gameObjects.map((gameObject){
+                          return container(
+                              child: GameObjectType.getName(gameObject.type),
+                              action: () =>
+                              engine.cameraCenter(gameObject.renderX, gameObject.renderY)
+                          );
+                        }).toList(),
+                      ),
+                    );
+                  }),
+                ),
+              ],
+            ),
             buildColumnSelected(),
             buildControlPaint(),
             buildWatchEditorTab(),

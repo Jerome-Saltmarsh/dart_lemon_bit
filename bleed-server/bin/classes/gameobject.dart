@@ -38,7 +38,6 @@ class GameObjectRock extends GameObject {
   int get type => GameObjectType.Rock;
 }
 
-
 class GameObjectFlower extends GameObject {
   GameObjectFlower({
     required double x,
@@ -57,7 +56,6 @@ class GameObjectFlower extends GameObject {
   @override
   int get type => GameObjectType.Flower;
 }
-
 
 class GameObjectStick extends GameObject {
   GameObjectStick({
@@ -237,7 +235,9 @@ class GameObjectCrystal extends GameObject {
     required double x,
     required double y,
     required double z,
-  }) : super(x: x, y: y, z: z, radius: 15);
+  }) : super(x: x, y: y, z: z, radius: 15) {
+    movable = false;
+  }
 
   @override
   void write(Player player) {
