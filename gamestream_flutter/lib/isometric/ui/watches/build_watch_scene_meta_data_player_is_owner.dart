@@ -2,18 +2,17 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_show_game_dialog_canvas_size.dart';
-import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
-import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stacks_play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_tab.dart';
 import 'package:gamestream_flutter/modules/core/actions.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
+import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -155,6 +154,37 @@ Row buildTopLeftMenu() {
                 return container(child: "View", color: brownLight);
               }
             ),
+            buildMenu(
+                text: "Insert",
+                children: [
+                  container(child: "Flower", color: brownLight, action: (){
+                    sendClientRequestAddGameObject(
+                      x: edit.posX,
+                      y: edit.posY,
+                      z: edit.posZ,
+                      type: GameObjectType.Flower,
+                    );
+                  }),
+                  container(child: "Rock", color: brownLight),
+                ],
+            )
           ],
         );
+}
+
+Widget buildMenu({required String text, required List<Widget> children}){
+  final child = container(child: text, color: brownLight);
+  return onMouseOver(
+      builder: (context, over) {
+        if (over){
+          return Column(
+            children: [
+              child,
+              ...children,
+            ],
+          );
+        }
+        return child;
+      }
+  );
 }

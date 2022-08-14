@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/scene_edit_request.dart';
 import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:lemon_engine/screen.dart';
@@ -157,6 +158,18 @@ void sendClientRequestTimeSetHour(int hour){
 
 void sendClientRequestRespawn(){
  sendClientRequest(ClientRequest.Revive);
+}
+
+void sendClientRequestAddGameObject({
+  required double x,
+  required double y,
+  required double z,
+  required int type,
+}) {
+  sendClientRequest(
+      ClientRequest.Scene_Edit,
+      "${SceneEditRequest.Add_GameObject.index} $x $y $z $type",
+  );
 }
 
 Future sendClientRequestUpdate() async {

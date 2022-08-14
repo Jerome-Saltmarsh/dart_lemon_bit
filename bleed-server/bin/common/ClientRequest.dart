@@ -38,6 +38,7 @@ enum ClientRequest {
   Editor_Set_Canvas_Size,
   Canvas_Modify_Size,
   Npc_Talk_Select_Option,
+  Scene_Edit,
 }
 
 const clientRequests = ClientRequest.values;

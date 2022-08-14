@@ -2,9 +2,11 @@ import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../classes/position3.dart';
 import '../common/library.dart';
+import '../common/scene_edit_request.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
 import '../engine.dart';
@@ -254,121 +256,21 @@ class Connection {
         return;
 
       case ClientRequest.Set_Block:
-        if (!isLocalMachine && game is GameDarkAgeEditor == false) return;
-
-        if (arguments.length < 5) return errorArgsExpected(3, arguments);
-        final row = int.tryParse(arguments[1]);
-        if (row == null){
-          return errorInvalidArg('row');
-        }
-        final column = int.tryParse(arguments[2]);
-        if (column == null){
-          return errorInvalidArg('column');
-        }
-        final z = int.tryParse(arguments[3]);
-        if (z == null){
-          return errorInvalidArg('z');
-        }
-        final type = int.tryParse(arguments[4]);
-        if (type == GridNodeType.Boundary) {
-          throw Exception("Cannot set grid block boundary");
-        }
-        if (type == null){
-          return errorInvalidArg('type');
-        }
-        player.setBlock(z, row, column, type);
-        break;
+        return handleSetBlock(game, arguments, player);
 
       case ClientRequest.Editor_Set_Canvas_Size:
         game.scene.grid.add(generateGridZ(game.scene.gridRows, game.scene.gridColumns));
         game.onGridChanged();
         break;
 
+      case ClientRequest.Scene_Edit:
+        return handleSceneEdit(arguments);
+
       case ClientRequest.Canvas_Modify_Size:
-        if (arguments.length != 4) return errorArgsExpected(4, arguments);
-        final dimension = int.tryParse(arguments[1]);
-        final add = int.tryParse(arguments[2]);
-        final start = int.tryParse(arguments[3]);
-        if (dimension == null) return;
-        if (add == null) return;
-        if (start == null) return;
-
-        final grid = player.scene.grid;
-        final columns = grid[0][0].length;
-        /// Dimensions Z: 0, Row: 1, Column: 2
-        /// Add: 1, Remove: 0
-        if (dimension == 1) {
-           if (add == 1) {
-             if (start == 1){
-               var type = GridNodeType.Grass;
-                  for (final z in grid){
-                    z.insert(
-                        0,
-                        generateGridRow(columns, type: type)
-                    );
-                    type = GridNodeType.Empty;
-                  }
-             } else { // End
-               var type = GridNodeType.Grass;
-               for (final z in grid){
-                 z.add(
-                     generateGridRow(columns, type: type)
-                 );
-                 type = GridNodeType.Empty;
-               }
-             }
-           } else { // Remove
-              if (start == 1){
-                for (final z in grid){
-                  z.removeAt(0);
-                }
-              } else {
-                for (final z in grid){
-                  z.removeLast();
-                }
-              }
-           }
-        }
-
-        // Dimension Column == 2;
-        if (dimension == 2){
-          if (add == 1){
-            if (start == 1){
-              var type = GridNodeType.Grass;
-               for (final z in grid){
-                  for (final row in z){
-                     row.insert(0, generateNode(type));
-                  }
-                  type = GridNodeType.Empty;
-               }
-            } else {
-              var type = GridNodeType.Grass;
-              for (final z in grid){
-                for (final row in z){
-                  row.add(generateNode(type));
-                }
-                type = GridNodeType.Empty;
-              }
-            }
-          }
-        }
-
-        game.onGridChanged();
-        break;
+        return handleCanvasModifySize(arguments, player, game);
 
       case ClientRequest.Npc_Talk_Select_Option:
-        if (player.dead) return errorPlayerDead();
-        if (arguments.length != 2) return errorArgsExpected(2, arguments);
-        final index = int.tryParse(arguments[1]);
-        if (index == null) {
-          return errorInvalidArg('int required: got ${arguments[1]}');
-        }
-        if (index < 0 || index >= player.options.length){
-          return errorInvalidArg('invalid player option');
-        }
-        final action = player.options.values.toList()[index];
-        action.call();
-        break;
+        return handleNpcTalkSelectOption(player, arguments);
 
       case ClientRequest.Deck_Select_Card:
         if (player.dead) return errorPlayerDead();
@@ -517,6 +419,149 @@ class Connection {
       default:
         break;
     }
+  }
+
+  void handleSetBlock(Game game, List<String> arguments, Player player) {
+    if (!isLocalMachine && game is GameDarkAgeEditor == false) return;
+
+    if (arguments.length < 5) return errorArgsExpected(3, arguments);
+    final row = int.tryParse(arguments[1]);
+    if (row == null){
+      return errorInvalidArg('row');
+    }
+    final column = int.tryParse(arguments[2]);
+    if (column == null){
+      return errorInvalidArg('column');
+    }
+    final z = int.tryParse(arguments[3]);
+    if (z == null){
+      return errorInvalidArg('z');
+    }
+    final type = int.tryParse(arguments[4]);
+    if (type == GridNodeType.Boundary) {
+      throw Exception("Cannot set grid block boundary");
+    }
+    if (type == null){
+      return errorInvalidArg('type');
+    }
+    player.setBlock(z, row, column, type);
+    return;
+  }
+
+  void handleNpcTalkSelectOption(Player player, List<String> arguments) {
+    if (player.dead) return errorPlayerDead();
+    if (arguments.length != 2) return errorArgsExpected(2, arguments);
+    final index = int.tryParse(arguments[1]);
+    if (index == null) {
+      return errorInvalidArg('int required: got ${arguments[1]}');
+    }
+    if (index < 0 || index >= player.options.length){
+      return errorInvalidArg('invalid player option');
+    }
+    final action = player.options.values.toList()[index];
+    action.call();
+    return;
+  }
+
+  void handleCanvasModifySize(List<String> arguments, Player player, Game game) {
+    if (arguments.length != 4) return errorArgsExpected(4, arguments);
+    final dimension = int.tryParse(arguments[1]);
+    final add = int.tryParse(arguments[2]);
+    final start = int.tryParse(arguments[3]);
+    if (dimension == null) return;
+    if (add == null) return;
+    if (start == null) return;
+
+    final grid = player.scene.grid;
+    final columns = grid[0][0].length;
+    /// Dimensions Z: 0, Row: 1, Column: 2
+    /// Add: 1, Remove: 0
+    if (dimension == 1) {
+       if (add == 1) {
+         if (start == 1){
+           var type = GridNodeType.Grass;
+              for (final z in grid){
+                z.insert(
+                    0,
+                    generateGridRow(columns, type: type)
+                );
+                type = GridNodeType.Empty;
+              }
+         } else { // End
+           var type = GridNodeType.Grass;
+           for (final z in grid){
+             z.add(
+                 generateGridRow(columns, type: type)
+             );
+             type = GridNodeType.Empty;
+           }
+         }
+       } else { // Remove
+          if (start == 1){
+            for (final z in grid){
+              z.removeAt(0);
+            }
+          } else {
+            for (final z in grid){
+              z.removeLast();
+            }
+          }
+       }
+    }
+
+    // Dimension Column == 2;
+    if (dimension == 2){
+      if (add == 1){
+        if (start == 1){
+          var type = GridNodeType.Grass;
+           for (final z in grid){
+              for (final row in z){
+                 row.insert(0, generateNode(type));
+              }
+              type = GridNodeType.Empty;
+           }
+        } else {
+          var type = GridNodeType.Grass;
+          for (final z in grid){
+            for (final row in z){
+              row.add(generateNode(type));
+            }
+            type = GridNodeType.Empty;
+          }
+        }
+      }
+    }
+
+    game.onGridChanged();
+    return;
+  }
+
+  void handleSceneEdit(List<String> arguments) {
+    final sceneEditRequestIndex = int.tryParse(arguments[1]);
+    if (sceneEditRequestIndex == null)
+      return errorInvalidArg("sceneEditRequestIndex is null");
+
+    final editRequest = sceneEditRequestValues[sceneEditRequestIndex];
+
+    switch (editRequest){
+      case SceneEditRequest.Add_GameObject:
+        final player = _player;
+        if (player == null) return;
+        final x = double.tryParse(arguments[2]);
+        final y = double.tryParse(arguments[3]);
+        final z = double.tryParse(arguments[4]);
+        final type = int.tryParse(arguments[5]);
+        if (x == null) return errorInvalidArg('x is null (2)');
+        if (y == null) return errorInvalidArg('y is null (3)');
+        if (z == null) return errorInvalidArg('z is null (4)');
+        if (type == null) return errorInvalidArg('z is null (5)');
+        player.game.scene.gameObjects.add(
+          GameObjectFlower(x: x, y: y, z: z),
+        );
+        break;
+    }
+
+    return;
   }
 
   void handleClientRequestUpdate(List<int> args) {
