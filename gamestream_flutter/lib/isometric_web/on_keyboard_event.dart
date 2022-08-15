@@ -74,34 +74,40 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     return edit.paintBricks();
   if (key == PhysicalKeyboardKey.arrowUp) {
     if (shiftLeftDown) {
+      if (edit.gameObject.isNotNull){
+        return edit.translate(x: 0, y: 0, z: 1);
+      }
       edit.z.value++;
     } else {
+      if (edit.gameObject.isNotNull){
+        return edit.translate(x: -1, y: -1, z: 0);
+      }
       edit.row.value--;
     }
   }
   if (key == PhysicalKeyboardKey.arrowRight) {
-    final gameObject = edit.gameObject.value;
-    if (gameObject != null){
-      return sendClientRequestGameObjectTranslate(
-         x: gameObject.x,
-         y: gameObject.y,
-         z: gameObject.z,
-         type: gameObject.type,
-         tx: 0,
-         ty: -1,
-         tz: 0,
-      );
+    if (edit.gameObject.isNotNull){
+      return edit.translate(x: 1, y: -1, z: 0);
     }
     edit.column.value--;
   }
   if (key == PhysicalKeyboardKey.arrowDown) {
     if (shiftLeftDown) {
+      if (edit.gameObject.isNotNull){
+        return edit.translate(x: 0, y: 0, z: -1);
+      }
       edit.z.value--;
     } else {
+      if (edit.gameObject.isNotNull){
+        return edit.translate(x: 1, y: 1, z: 0);
+      }
       edit.row.value++;
     }
   }
   if (key == PhysicalKeyboardKey.arrowLeft) {
+    if (edit.gameObject.isNotNull){
+      return edit.translate(x: -1, y: 1, z: 0);
+    }
     edit.column.value++;
   }
 }

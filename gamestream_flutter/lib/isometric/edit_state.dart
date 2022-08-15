@@ -32,6 +32,20 @@ class EditState {
     gameObject.value = null;
   }
 
+  void translate({ double x = 0, double y = 0, double z = 0}){
+    final value = gameObject.value;
+    if (value == null) return;
+    return sendClientRequestGameObjectTranslate(
+      x: value.x,
+      y: value.y,
+      z: value.z,
+      type: value.type,
+      tx: x,
+      ty: y,
+      tz: z,
+    );
+  }
+
   var row = Watch(0, clamp: (int value){
     if (value < 0) return 0;
     if (value >= gridTotalRows) return gridTotalRows - 1;
