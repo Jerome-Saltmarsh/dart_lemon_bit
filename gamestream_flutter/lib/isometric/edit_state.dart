@@ -204,7 +204,16 @@ class EditState {
     z.value = player.indexZ;
   }
 
+  void deleteGameObject(GameObject value){
+    sendClientRequestGameObjectDelete(x: value.x, y: value.y, z: value.z, type: value.type);
+    deselectGameObject();
+  }
+
   void delete(){
+    final go = gameObject.value;
+    if (go != null){
+      return deleteGameObject(go);
+    }
     deleteIfTree();
     sendClientRequestSetBlock(row.value, column.value, z.value, GridNodeType.Empty);
   }

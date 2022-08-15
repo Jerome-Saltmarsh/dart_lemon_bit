@@ -172,6 +172,7 @@ void sendClientRequestAddGameObject({
   );
 }
 
+
 void sendClientRequestGameObjectTranslate({
   required double x,
   required double y,
@@ -184,6 +185,17 @@ void sendClientRequestGameObjectTranslate({
   sendClientRequest(
     ClientRequest.Scene_Edit,
     "${SceneEditRequest.GameObject_Translate.index} $x $y $z $type $tx $ty $tz",
+  );
+}
+void sendClientRequestGameObjectDelete({
+  required double x,
+  required double y,
+  required double z,
+  required int type,
+}) {
+  sendClientRequest(
+    ClientRequest.Scene_Edit,
+    "${SceneEditRequest.GameObject_Delete.index} $x $y $z $type",
   );
 }
 
