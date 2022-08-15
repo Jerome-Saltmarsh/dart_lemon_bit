@@ -40,6 +40,18 @@ void renderGameObject(GameObject value) {
       color: value.renderColor,
     );
 
+  if (value.type == GameObjectType.Bottle)
+    return render(
+      dstX: value.renderX,
+      dstY: value.renderY,
+      srcX: 1811,
+      srcY: 11,
+      srcWidth: 5,
+      srcHeight: 14,
+      anchorY: 0.95,
+      color: value.renderColor,
+    );
+
   if (value.type == GameObjectType.Wheel)
     return render(
       dstX: value.renderX,
