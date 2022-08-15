@@ -590,7 +590,15 @@ class NodeTable extends NodeSolid {
   int get type => GridNodeType.Table;
 }
 
-class NodeSunflower extends NodeSolid {
+class NodeSunflower extends Node {
   @override
   int get type => GridNodeType.Sunflower;
+
+  @override
+  bool getCollision(double x, double y, double z) => false;
+
+  @override
+  void resolveCharacterCollision(Character character, Game game) {
+
+  }
 }
