@@ -33,7 +33,8 @@ abstract class Node {
   }
 
   void applyLight1(){
-    applyLight(shade + 1);
+    if (shade <= 0) return;
+    applyLight(shade - 1);
   }
 
   int get wind => _wind;

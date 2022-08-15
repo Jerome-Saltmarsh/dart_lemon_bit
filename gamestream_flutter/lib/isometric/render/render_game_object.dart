@@ -97,6 +97,17 @@ void renderGameObject(GameObject value) {
       anchorY: 0.66
     );
 
+  if (value.type == GameObjectType.Cup)
+    return render(
+        dstX: value.renderX,
+        dstY: value.renderY,
+        srcX: 1816,
+        srcY: 0,
+        srcWidth: 6,
+        srcHeight: 11,
+        anchorY: 0.75
+    );
+
   if (value.type == GameObjectType.Butterfly)
     return render(
       dstX: value.renderX,

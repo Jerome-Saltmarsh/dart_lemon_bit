@@ -112,8 +112,8 @@ class GameObjectButterfly extends GameObject with Velocity implements Updatable 
 
   @override
   void update(Game game) {
-    const timeHourSix = 6 * secondsPerHour;
-    const timeHourSeventeen = 17 * secondsPerHour;
+    const timeHourSix = 9 * secondsPerHour;
+    const timeHourSeventeen = 16 * secondsPerHour;
     if (game.getTime() < timeHourSix || game.getTime() > timeHourSeventeen){
       visible = false;
       return;
