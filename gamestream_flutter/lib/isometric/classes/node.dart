@@ -32,6 +32,10 @@ abstract class Node {
     shade = value;
   }
 
+  void applyLight1(){
+    applyLight(shade + 1);
+  }
+
   int get wind => _wind;
 
   bool get emitsLight => false;

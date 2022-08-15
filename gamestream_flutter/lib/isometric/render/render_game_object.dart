@@ -37,7 +37,7 @@ void renderGameObject(GameObject value) {
       srcWidth: 3,
       srcHeight: 10,
       anchorY: 0.95,
-      color: value.renderColor,
+      // color: value.renderColor,
     );
 
   if (value.type == GameObjectType.Bottle)

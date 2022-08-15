@@ -124,6 +124,13 @@ class RenderOrderCharacters extends RenderOrder {
   void reset() {
     super.reset();
     applyEmissionsCharacters();
+
+    for (var i = 0; i < totalGameObjects; i++){
+       if (gameObjects[i].type != GameObjectType.Candle) continue;
+       gameObjects[i].tile.applyLight1();
+       gameObjects[i].tileBelow.applyLight1();
+
+    }
   }
 }
 
