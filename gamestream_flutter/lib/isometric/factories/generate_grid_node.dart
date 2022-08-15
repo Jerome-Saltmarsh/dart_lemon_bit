@@ -106,6 +106,10 @@ Node generateNode(int z, int row, int column, int type){
       return NodeBauHausPlain(row, column, z);
     case GridNodeType.Chimney:
       return NodeBauHausChimney(row, column, z);
+    case GridNodeType.Bed_Top:
+      return NodeBedTop(row, column, z);
+    case GridNodeType.Bed_Bottom:
+      return NodeBedBottom(row, column, z);
     default:
       throw Exception("Cannot build grid node type $type (${GridNodeType.getName(type)}");
       // print("Cannot build grid node type $type (${GridNodeType.getName(type)}");

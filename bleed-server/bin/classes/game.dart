@@ -189,7 +189,7 @@ extension GameFunctions on Game {
     required double y,
     required Character character,
   }) {
-    return findClosestVector2(
+    return findClosestVector3(
         positions: characters,
         x: x,
         y: y,
@@ -198,7 +198,7 @@ extension GameFunctions on Game {
   }
 
   Collider? getClosestCollider(double x, double y, Character character, {required double minDistance}) {
-    return findClosestVector2<Character>(
+    return findClosestVector3<Character>(
         positions: characters,
         x: x,
         y: y,

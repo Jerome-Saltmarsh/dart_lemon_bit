@@ -12,6 +12,7 @@ import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
+import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/render/render_wireframe.dart';
@@ -49,8 +50,13 @@ class GameRender {
     renderSprites();
 
     if (playModeEdit){
-      renderEditWireFrames();
-      renderMouseWireFrame();
+      final editGameObject = edit.gameObject.value;
+      if (editGameObject != null){
+        renderCircleV3(editGameObject);
+      } else {
+        renderEditWireFrames();
+        renderMouseWireFrame();
+      }
     }
 
     final mouseTargetName = player.mouseTargetName.value;
@@ -59,6 +65,8 @@ class GameRender {
        renderText(text: mouseTargetName, x: player.attackTarget.renderX, y: player.attackTarget.renderY - 55);
     }
     // renderPixelRed(player.target.renderX, player.target.renderY);
+
+
   }
 
   void renderMouseWireFrame(){

@@ -461,4 +461,6 @@ const editorSelectableGridTypes = [
     GridNodeType.Bau_Haus_Window,
     GridNodeType.Bau_Haus_Plain,
     GridNodeType.Chimney,
+    GridNodeType.Bed_Bottom,
+    GridNodeType.Bed_Top,
 ];

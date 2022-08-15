@@ -28,11 +28,15 @@ class GameObjectStatic extends GameObject {
     required this.type,
   }) : super(x: x, y: y, z: z, radius: 10) {
     collidable = false;
-
     switch (type) {
       case GameObjectType.Crystal:
         collidable = true;
         movable = false;
+        break;
+      case GameObjectType.Barrel:
+        collidable = true;
+        movable = false;
+        radius = 15;
         break;
       default:
         break;

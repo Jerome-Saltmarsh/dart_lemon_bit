@@ -75,7 +75,7 @@ T? sphereCaste<T extends Collider>({
   return closest;
 }
 
-T? findClosestVector2<T extends Position3>({
+T? findClosestVector3<T extends Position3>({
   required double x,
   required double y,
   required double z,
@@ -88,6 +88,25 @@ T? findClosestVector2<T extends Position3>({
 
   for (final position in positions) {
     if (!where(position)) continue;
+    final colliderDistance = getDistanceV3(position.x, position.y, position.z, x, y, z);
+    if (colliderDistance >= closestDistance) continue;
+    closest = position;
+    closestDistance = colliderDistance;
+  }
+  return closest;
+}
+
+T? findClosest3<T extends Position3>({
+  required double x,
+  required double y,
+  required double z,
+  required List<T> positions,
+}) {
+  if (positions.isEmpty) return null;
+  T? closest = null;
+  var closestDistance = 9999999.0;
+
+  for (final position in positions) {
     final colliderDistance = getDistanceV3(position.x, position.y, position.z, x, y, z);
     if (colliderDistance >= closestDistance) continue;
     closest = position;

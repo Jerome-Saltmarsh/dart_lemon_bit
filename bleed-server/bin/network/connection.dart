@@ -16,6 +16,7 @@ import '../functions/withinRadius.dart';
 import '../io/save_directory.dart';
 import '../io/write_scene_to_file.dart';
 import '../isometric/generate_grid_z.dart';
+import '../physics.dart';
 import '../utilities/is_valid_index.dart';
 
 class Connection {
@@ -544,6 +545,35 @@ class Connection {
     final editRequest = sceneEditRequestValues[sceneEditRequestIndex];
 
     switch (editRequest){
+      case SceneEditRequest.GameObject_Translate:
+        final player = _player;
+        if (player == null) return;
+        final x = double.tryParse(arguments[2]);
+        final y = double.tryParse(arguments[3]);
+        final z = double.tryParse(arguments[4]);
+        final type = int.tryParse(arguments[5]);
+        final tx = double.tryParse(arguments[6]);
+        final ty = double.tryParse(arguments[7]);
+        final tz = double.tryParse(arguments[8]);
+        if (x == null) return;
+        if (y == null) return;
+        if (z == null) return;
+        if (type == null) return;
+        if (tx == null) return;
+        if (ty == null) return;
+        if (tz == null) return;
+        final closest = findClosestVector3(
+            x: x,
+            y: y,
+            z: z,
+            positions: player.scene.gameObjects,
+            where: (GameObject go) => go.type == type,
+        );
+        if (closest == null) return;
+        closest.x += tx;
+        closest.y += ty;
+        closest.z += tz;
+        break;
       case SceneEditRequest.Add_GameObject:
         final player = _player;
         if (player == null) return;

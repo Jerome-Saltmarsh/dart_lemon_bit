@@ -1,5 +1,6 @@
 import 'package:bleed_common/grid_node_type.dart';
 import 'package:bleed_common/tile_size.dart';
+import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/classes/node_extensions.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_editor_column_changed.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_editor_z_changed.dart';
@@ -17,12 +18,18 @@ final edit = EditState();
 
 class EditState {
 
+  final gameObject = Watch<GameObject?>(null);
+
   double get posX => row.value * tileSize + tileSizeHalf;
   double get posY => column.value * tileSize + tileSizeHalf;
   double get posZ => z.value * tileHeight;
 
   void refreshSelected([int? val]){
     selected.value = grid[z.value][row.value][column.value];
+  }
+
+  void deselectGameObject(){
+    gameObject.value = null;
   }
 
   var row = Watch(0, clamp: (int value){

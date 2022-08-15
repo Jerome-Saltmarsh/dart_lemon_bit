@@ -574,3 +574,13 @@ class NodeChimney extends NodeSolid {
   @override
   int get type => GridNodeType.Chimney;
 }
+
+class NodeBedBottom extends NodeSolid {
+  @override
+  int get type => GridNodeType.Bed_Bottom;
+}
+
+class NodeBedTop extends NodeSolid {
+  @override
+  int get type => GridNodeType.Bed_Top;
+}

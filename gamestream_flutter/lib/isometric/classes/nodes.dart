@@ -28,18 +28,11 @@ class NodeBricks extends GridNodeColorRamp {
 
 class NodeGrass extends Node {
 
-  late int rowMinusColumn;
-
-  NodeGrass(int row, int column, int z) : super(row, column, z) {
-    rowMinusColumn = row - column;
-  }
+  NodeGrass(int row, int column, int z) : super(row, column, z);
 
   @override
-  void handleRender() {
-    renderSrcX(7158);
-    // if (wind == windIndexCalm) return renderSrcX(5267);
-    // return renderSrcX(5267 + ((((rowMinusColumn) + animationFrameGrassShort) % 6) * 48));
-  }
+  void handleRender() => renderSrcX(7158);
+
   @override
   int get type => GridNodeType.Grass;
 
@@ -687,4 +680,33 @@ class NodeBauHausChimney extends GridNodeColorRamp {
 
   @override
   int get type => GridNodeType.Chimney;
+}
+
+
+class NodeBedTop extends GridNodeShaded {
+
+  NodeBedTop(int row, int column, int z) : super(row: row, column: column, z: z);
+
+  @override
+  int get type => GridNodeType.Bed_Top;
+
+  @override
+  double get srcX => 10885;
+
+  @override
+  bool get isRainable => true;
+}
+
+class NodeBedBottom extends GridNodeShaded {
+
+  NodeBedBottom(int row, int column, int z) : super(row: row, column: column, z: z);
+
+  @override
+  int get type => GridNodeType.Bed_Bottom;
+
+  @override
+  double get srcX => 10836;
+
+  @override
+  bool get isRainable => true;
 }

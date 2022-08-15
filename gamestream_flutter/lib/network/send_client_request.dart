@@ -172,6 +172,21 @@ void sendClientRequestAddGameObject({
   );
 }
 
+void sendClientRequestGameObjectTranslate({
+  required double x,
+  required double y,
+  required double z,
+  required double tx,
+  required double ty,
+  required double tz,
+  required int type,
+}) {
+  sendClientRequest(
+    ClientRequest.Scene_Edit,
+    "${SceneEditRequest.GameObject_Translate.index} $x $y $z $type $tx $ty $tz",
+  );
+}
+
 Future sendClientRequestUpdate() async {
   const updateIndex = 0;
   updateBuffer[0] = updateIndex;

@@ -80,6 +80,18 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     }
   }
   if (key == PhysicalKeyboardKey.arrowRight) {
+    final gameObject = edit.gameObject.value;
+    if (gameObject != null){
+      return sendClientRequestGameObjectTranslate(
+         x: gameObject.x,
+         y: gameObject.y,
+         z: gameObject.z,
+         type: gameObject.type,
+         tx: 0,
+         ty: -1,
+         tz: 0,
+      );
+    }
     edit.column.value--;
   }
   if (key == PhysicalKeyboardKey.arrowDown) {

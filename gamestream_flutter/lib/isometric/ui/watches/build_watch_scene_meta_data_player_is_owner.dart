@@ -30,27 +30,7 @@ Stack buildStackEdit() {
         bottom: 6,
         child: Column(
           children: [
-            Column(
-              children: [
-                text("Objects"),
-                Container(
-                  height: 150,
-                  child: Refresh((){
-                    return SingleChildScrollView(
-                      child: Column(
-                        children: gameObjects.map((gameObject){
-                          return container(
-                              child: GameObjectType.getName(gameObject.type),
-                              action: () =>
-                              engine.cameraCenter(gameObject.renderX, gameObject.renderY)
-                          );
-                        }).toList(),
-                      ),
-                    );
-                  }),
-                ),
-              ],
-            ),
+            buildColumnObjects(),
             buildColumnSelected(),
             buildControlPaint(),
             buildWatchEditorTab(),
@@ -69,6 +49,33 @@ Stack buildStackEdit() {
       )
     ],
   );
+}
+
+Column buildColumnObjects() {
+  return Column(
+            children: [
+              text("Objects"),
+              Container(
+                height: 150,
+                child: Refresh((){
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: gameObjects.map((gameObject){
+                        return container(
+                            child: GameObjectType.getName(gameObject.type),
+                            action: () {
+                              engine.cameraCenter(
+                                  gameObject.renderX, gameObject.renderY);
+                                  edit.gameObject.value = gameObject;
+                            }
+                        );
+                      }).toList(),
+                    ),
+                  );
+                }),
+              ),
+            ],
+          );
 }
 
 Column buildColumnSelected() {
