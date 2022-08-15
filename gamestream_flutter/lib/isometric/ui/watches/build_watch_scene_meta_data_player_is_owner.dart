@@ -168,6 +168,7 @@ Row buildTopLeftMenu() {
                   buildButtonAddGameObject(GameObjectType.Flower),
                   buildButtonAddGameObject(GameObjectType.Stick),
                   buildButtonAddGameObject(GameObjectType.Barrel),
+                  buildButtonAddGameObject(GameObjectType.Wheel),
                 ],
             )
           ],

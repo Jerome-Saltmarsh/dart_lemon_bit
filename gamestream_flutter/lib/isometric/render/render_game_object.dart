@@ -28,6 +28,18 @@ void renderGameObject(GameObject value) {
       color: value.renderColor,
     );
 
+  if (value.type == GameObjectType.Wheel)
+    return render(
+      dstX: value.renderX,
+      dstY: value.renderY,
+      srcX: 1775,
+      srcY: 0,
+      srcWidth: 34,
+      srcHeight: 40,
+      anchorY: 0.9,
+      color: value.renderColor,
+    );
+
   if (value.type == GameObjectType.Flower)
     return render(
       dstX: value.renderX,
