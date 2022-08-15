@@ -514,10 +514,11 @@ class NodeWater extends Node {
       dstX: dstX,
       dstY: dstY + animationFrameWaterHeight,
       srcX: 7206 + animationFrameWaterSrcX,
-      srcY: 72.0 * shade,
+      srcY: 0,
       srcWidth: 48,
       srcHeight: 72,
       anchorY: 0.3334,
+      color: colorShades[shade],
     );
   }
   @override
@@ -536,10 +537,11 @@ class NodeWaterFlowing extends Node {
       dstX: dstX,
       dstY: dstY + animationFrameWaterHeight,
       srcX: 8096 + animationFrameWaterSrcX,
-      srcY: 72.0 * shade,
+      srcY: 0,
       srcWidth: 48,
       srcHeight: 72,
       anchorY: 0.3334,
+      color: colorShades[shade],
     );
   }
   @override
@@ -588,10 +590,11 @@ class NodeTreeBottom extends Node {
       dstX: dstX,
       dstY: dstY,
       srcX: 1478,
-      srcY: 74.0 * shade,
+      srcY: 0,
       srcWidth: 62.0,
       srcHeight: 74.0,
       anchorY: 0.5,
+      color: colorShades[shade],
     );
   }
   @override
@@ -618,10 +621,11 @@ class NodeTreeTop extends Node {
       dstX: dstX + (animationFrameTreePosition * 0.5),
       dstY: dstY,
       srcX: 1541,
-      srcY: 74.0 * bottom.shade,
+      srcY: 0,
       srcWidth: 62.0,
       srcHeight: 74.0,
       anchorY: 0.5,
+      color: colorShades[bottom.shade],
     );
 
   }
