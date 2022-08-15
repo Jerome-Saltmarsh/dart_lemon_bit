@@ -34,6 +34,8 @@ abstract class Node {
 
   int get wind => _wind;
 
+  bool get emitsLight => false;
+
   Node(int row, int column, int z) {
      dstX = (row - column) * tileSizeHalf;
      dstY = ((row + column) * tileSizeHalf) - (z * tileHeight);

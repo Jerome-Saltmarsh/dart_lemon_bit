@@ -590,6 +590,11 @@ class NodeTable extends NodeSolid {
   int get type => GridNodeType.Table;
 }
 
+class NodeOven extends NodeSolid {
+  @override
+  int get type => GridNodeType.Oven;
+}
+
 class NodeSunflower extends Node {
   @override
   int get type => GridNodeType.Sunflower;

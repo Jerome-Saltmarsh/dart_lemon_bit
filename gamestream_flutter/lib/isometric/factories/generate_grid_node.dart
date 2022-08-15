@@ -114,6 +114,8 @@ Node generateNode(int z, int row, int column, int type){
       return NodeTable(row, column, z);
     case GridNodeType.Sunflower:
       return NodeSunflower(row, column, z);
+    case GridNodeType.Oven:
+      return NodeOven(row, column, z);
     default:
       throw Exception("Cannot build grid node type $type (${GridNodeType.getName(type)}");
   }

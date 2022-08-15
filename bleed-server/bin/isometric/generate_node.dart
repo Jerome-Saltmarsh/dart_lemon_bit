@@ -114,6 +114,8 @@ Node generateNode(int type){
       return NodeTable();
     case GridNodeType.Sunflower:
       return NodeSunflower();
+    case GridNodeType.Oven:
+      return NodeOven();
     default:
       print("Warning: Cannot generate node for type $type (${GridNodeType.getName(type)})");
       return Node.empty;

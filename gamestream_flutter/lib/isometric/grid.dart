@@ -100,6 +100,7 @@ void refreshParticleEmitters() {
   gridForEachOfType(
       GridNodeType.Chimney,
           (z, row, column, type) {
+        if (!getNode(z + 1, row, column).isEmpty) return;
         addSmokeEmitter(z + 1, row, column);
       }
   );
@@ -268,8 +269,7 @@ void applyBakeMapEmissions() {
   for (var zIndex = 0; zIndex < gridTotalZ; zIndex++) {
     for (var rowIndex = 0; rowIndex < gridTotalRows; rowIndex++) {
       for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
-        final node = grid[zIndex][rowIndex][columnIndex];
-        if (!const [GridNodeType.Torch, GridNodeType.Fireplace].contains(node.type)) continue;
+        if (!grid[zIndex][rowIndex][columnIndex].emitsLight) continue;
         applyEmissionBake(
           zIndex: zIndex,
           rowIndex: rowIndex,

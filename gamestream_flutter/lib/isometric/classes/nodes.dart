@@ -406,6 +406,9 @@ class NodeTorch extends Node {
   }
   @override
   int get type => GridNodeType.Torch;
+
+  @override
+  bool get emitsLight => true;
 }
 
 class NodeTreeBottom extends Node {
@@ -486,6 +489,9 @@ class NodeFireplace extends Node {
   }
   @override
   int get type => GridNodeType.Fireplace;
+
+  @override
+  bool get emitsLight => true;
 }
 
 class GidNodeRoofHayNorth extends GridNodeColorRamp {
@@ -737,4 +743,21 @@ class NodeSunflower extends GridNodeShaded {
 
   @override
   bool get isRainable => true;
+}
+
+class NodeOven extends GridNodeShaded {
+
+  NodeOven(int row, int column, int z) : super(row: row, column: column, z: z);
+
+  @override
+  int get type => GridNodeType.Oven;
+
+  @override
+  double get srcX => 10984;
+
+  @override
+  bool get isRainable => true;
+
+  @override
+  bool get emitsLight => true;
 }
