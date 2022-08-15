@@ -589,3 +589,8 @@ class NodeTable extends NodeSolid {
   @override
   int get type => GridNodeType.Table;
 }
+
+class NodeSunflower extends NodeSolid {
+  @override
+  int get type => GridNodeType.Sunflower;
+}

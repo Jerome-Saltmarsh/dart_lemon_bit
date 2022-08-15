@@ -464,4 +464,5 @@ const editorSelectableGridTypes = [
     GridNodeType.Bed_Bottom,
     GridNodeType.Bed_Top,
     GridNodeType.Table,
+    GridNodeType.Sunflower,
 ];

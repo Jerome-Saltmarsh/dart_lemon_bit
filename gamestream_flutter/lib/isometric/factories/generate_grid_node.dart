@@ -112,6 +112,8 @@ Node generateNode(int z, int row, int column, int type){
       return NodeBedBottom(row, column, z);
     case GridNodeType.Table:
       return NodeTable(row, column, z);
+    case GridNodeType.Sunflower:
+      return NodeSunflower(row, column, z);
     default:
       throw Exception("Cannot build grid node type $type (${GridNodeType.getName(type)}");
   }

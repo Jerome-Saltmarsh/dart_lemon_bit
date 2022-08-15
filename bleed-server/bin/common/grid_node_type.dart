@@ -53,6 +53,7 @@ class GridNodeType {
   static const Bed_Bottom = 56;
   static const Bed_Top = 57;
   static const Table = 58;
+  static const Sunflower = 59;
 
   static isSolid(int type){
     if (type == GridNodeType.Bricks) return true;
@@ -187,6 +188,8 @@ class GridNodeType {
        Chimney: "Chimney",
        Bed_Bottom: "Bed Bottom",
        Bed_Top: "Bed Top",
+       Table: "Table",
+       Sunflower: "Sunflower",
      }[type] ?? "unknown($type)";
   }
   

@@ -724,3 +724,17 @@ class NodeTable extends GridNodeShaded {
   @override
   bool get isRainable => true;
 }
+
+class NodeSunflower extends GridNodeShaded {
+
+  NodeSunflower(int row, int column, int z) : super(row: row, column: column, z: z);
+
+  @override
+  int get type => GridNodeType.Sunflower;
+
+  @override
+  double get srcX => 10934;
+
+  @override
+  bool get isRainable => true;
+}
