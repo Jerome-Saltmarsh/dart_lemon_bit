@@ -7,6 +7,17 @@ class GameObjectType {
   static const Crystal = 6;
   static const Barrel = 7;
   static const Chest = 10;
+
+  static bool isStatic(int type){
+    return const [
+       Flower,
+       Rock,
+       Stick,
+       Crystal,
+       Barrel,
+       Chest,
+    ].contains(type);
+  }
   
   static String getName(int value){
     return const <int, String> {

@@ -97,6 +97,41 @@ abstract class Node {
     renderIndex = 0;
     renderAtlas();
   }
+
+  void renderShaded(double srcX){
+    const spriteWidth = 48.0;
+    const spriteHeight = 72.0;
+    const spriteWidthHalf = spriteWidth * 0.5;
+    const spriteHeightThird = 24.0;
+
+    src[bufferIndex] = srcX;
+    dst[bufferIndex] = 1;
+    colors[renderIndex] = colorShades[shade];
+
+    bufferIndex++;
+
+    src[bufferIndex] = 0;
+    dst[bufferIndex] = 0;
+
+    bufferIndex++;
+
+    src[bufferIndex] = srcX + spriteWidth;
+    dst[bufferIndex] = dstX - spriteWidthHalf;
+
+    bufferIndex++;
+
+    src[bufferIndex] = spriteHeight;
+    dst[bufferIndex] = dstY - spriteHeightThird;
+
+    bufferIndex++;
+    renderIndex++;
+
+    if (bufferIndex < buffers) return;
+    bufferIndex = 0;
+    renderIndex = 0;
+    renderAtlas();
+  }
+
 }
 
 class NodeBoundary extends Node {
@@ -171,6 +206,20 @@ abstract class GridNodeBasic extends Node {
 
   @override
   void handleRender() => renderSrcX(srcX);
+
+  double get srcX;
+}
+
+abstract class GridNodeShaded extends Node {
+
+  GridNodeShaded({
+    required int row,
+    required int column,
+    required int z,
+  }) : super(row, column, z);
+
+  @override
+  void handleRender() => renderShaded(srcX);
 
   double get srcX;
 }
@@ -789,7 +838,7 @@ class NodeGrassEdgeLeft extends GridNodeBasic {
   int get type => GridNodeType.Grass_Edge_Left;
 }
 
-class NodeBauHaus extends GridNodeBasic {
+class NodeBauHaus extends GridNodeShaded {
   NodeBauHaus(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
@@ -799,7 +848,7 @@ class NodeBauHaus extends GridNodeBasic {
   int get type => GridNodeType.Bau_Haus;
 }
 
-class NodeBauHausRoofNorth extends GridNodeBasic {
+class NodeBauHausRoofNorth extends GridNodeShaded {
   NodeBauHausRoofNorth(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
@@ -809,8 +858,8 @@ class NodeBauHausRoofNorth extends GridNodeBasic {
   int get type => GridNodeType.Bau_Haus_Roof_North;
 }
 
-class NodeBauHausRoofSouth extends GridNodeBasic {
-  NodeBauHausRoofSouth(int row, int column, int z) : super(row: row, column: column, z: z);
+class NodeBauHausRoofSouth extends GridNodeShaded {
+  NodeBauHausRoofSouth(int row, int column, int z): super(row: row, column: column, z: z);
 
   @override
   double get srcX => 10593;
