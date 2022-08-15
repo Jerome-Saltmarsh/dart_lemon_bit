@@ -710,3 +710,17 @@ class NodeBedBottom extends GridNodeShaded {
   @override
   bool get isRainable => true;
 }
+
+class NodeTable extends GridNodeShaded {
+
+  NodeTable(int row, int column, int z) : super(row: row, column: column, z: z);
+
+  @override
+  int get type => GridNodeType.Table;
+
+  @override
+  double get srcX => 7639;
+
+  @override
+  bool get isRainable => true;
+}

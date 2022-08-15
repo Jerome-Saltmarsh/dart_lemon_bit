@@ -7,6 +7,7 @@ class GameObjectType {
   static const Crystal = 6;
   static const Barrel = 7;
   static const Wheel = 8;
+  static const Candle = 9;
   static const Chest = 10;
 
   static bool isStatic(int type){
@@ -17,6 +18,7 @@ class GameObjectType {
        Crystal,
        Barrel,
        Wheel,
+       Candle,
        Chest,
     ].contains(type);
   }
@@ -32,6 +34,7 @@ class GameObjectType {
        Chest: "Chest",
        Barrel: "Barrel",
        Wheel: "Wheel",
+       Candle: "Candle",
     }[value] ?? "?";
   }
 }

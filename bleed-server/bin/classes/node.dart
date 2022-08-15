@@ -584,3 +584,8 @@ class NodeBedTop extends NodeSolid {
   @override
   int get type => GridNodeType.Bed_Top;
 }
+
+class NodeTable extends NodeSolid {
+  @override
+  int get type => GridNodeType.Table;
+}

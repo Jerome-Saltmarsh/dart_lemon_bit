@@ -28,6 +28,18 @@ void renderGameObject(GameObject value) {
       color: value.renderColor,
     );
 
+  if (value.type == GameObjectType.Candle)
+    return render(
+      dstX: value.renderX,
+      dstY: value.renderY,
+      srcX: 1812,
+      srcY: 0,
+      srcWidth: 3,
+      srcHeight: 10,
+      anchorY: 0.95,
+      color: value.renderColor,
+    );
+
   if (value.type == GameObjectType.Wheel)
     return render(
       dstX: value.renderX,
@@ -45,9 +57,10 @@ void renderGameObject(GameObject value) {
       dstX: value.renderX,
       dstY: value.renderY,
       srcX: 1680,
-      srcY: value.shade * 16,
+      srcY: 0,
       srcWidth: 16,
       srcHeight: 16,
+      color: value.renderColor,
     );
 
   if (value.type == GameObjectType.Stick)
@@ -55,9 +68,10 @@ void renderGameObject(GameObject value) {
       dstX: value.renderX,
       dstY: value.renderY,
       srcX: 1696,
-      srcY: value.shade * 16,
+      srcY: 0,
       srcWidth: 16,
       srcHeight: 16,
+      color: value.renderColor,
     );
 
   if (value.type == GameObjectType.Crystal)
