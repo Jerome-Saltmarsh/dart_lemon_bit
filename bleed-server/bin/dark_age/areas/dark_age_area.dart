@@ -20,13 +20,13 @@ class DarkAgeArea extends GameDarkAge {
        if (player.indexColumn == 0){
            if (column <= 0) continue;
            player.changeGame(engine.map[row][column - 1]);
-           player.indexColumn = 48;
+           player.indexColumn = player.scene.gridColumns - 2;
            continue;
        }
        if (player.indexRow == 0){
          if (row <= 0) continue;
          player.changeGame(engine.map[row - 1][column]);
-         player.indexRow = 48;
+         player.indexRow = player.scene.gridRows - 2;
          continue;
        }
        if (player.indexRow == scene.gridRows - 1){

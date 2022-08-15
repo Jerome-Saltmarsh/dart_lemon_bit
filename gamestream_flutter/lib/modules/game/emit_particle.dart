@@ -8,13 +8,15 @@ import 'package:lemon_math/library.dart';
 
 void emitParticlePixel({
   required double x,
-  required double y
+  required double y,
+  required double z,
 }) {
   const initialVelocityMin = 0.15;
   const initialVelocityMax = 0.25;
   final particle = getParticleInstance();
   particle.x = x;
   particle.y = y;
+  particle.z = z;
   particle.type = ParticleType.Pixel;
   particle.duration = randomInt(50, 150);
   particle.z = 0.5;

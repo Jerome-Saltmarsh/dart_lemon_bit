@@ -11,13 +11,13 @@ class GameDarkAgeFarm extends DarkAgeArea {
   GameDarkAgeFarm() : super(darkAgeScenes.farm, mapTile: MapTiles.Farm) {
     addNpc(
         name: "Magellan",
-        row: 25,
-        column: 20,
+        row: 28,
+        column: 21,
         z: 3,
         onInteractedWith: (player){
            player.interact(message: "I've been seeing more and more monsters in the wilderness lately");
         },
-        wanderRadius: 80,
+        wanderRadius: 50,
     );
 
     // gameObjects.add(GameObjectButterfly(x: 1125, y: 1000, z: 80));

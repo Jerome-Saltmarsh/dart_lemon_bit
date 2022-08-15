@@ -2,7 +2,6 @@
 import 'package:bleed_common/ClientRequest.dart';
 import 'package:gamestream_flutter/isometric/message_box.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
-import 'package:gamestream_flutter/modules/game/emit_particle.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/network/web_socket.dart';
 
@@ -22,12 +21,6 @@ class GameActions {
     bulletHole.y = y;
     serverResponseReader.bulletHoleIndex++;
     serverResponseReader.bulletHoleIndex %= _bulletHoles.length;
-  }
-
-  void emitPixelExplosion(double x, double y, {int amount = 10}) {
-    for (var i = 0; i < amount; i++) {
-      emitParticlePixel(x: x, y: y);
-    }
   }
 
   void playerEquip(int index) {

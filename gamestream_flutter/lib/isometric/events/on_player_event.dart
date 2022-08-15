@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/isometric/events/on_player_event_quest_comple
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_started.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 
 void onPlayerEvent(int event) {
@@ -22,7 +21,6 @@ void onPlayerEvent(int event) {
       player.npcTalkOptions.value = [];
       break;
     case PlayerEvent.Level_Up:
-      modules.game.actions.emitPixelExplosion(player.x, player.y, amount: 20);
       audio.buff(player.x, player.y);
       spawnFloatingText(player.x, player.y, 'LEVEL UP');
       break;

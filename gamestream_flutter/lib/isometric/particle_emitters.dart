@@ -1,9 +1,12 @@
 
 import 'dart:math';
 
+import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/classes/particle_emitter.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
+import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:lemon_math/library.dart';
 
 import 'particles.dart';
@@ -19,6 +22,20 @@ void updateParticleEmitters(){
     particle.y = emitter.y;
     particle.z = emitter.z;
     emitter.emit(particle);
+  }
+
+  if (animationFrame % 30 == 0){
+    for (var i = 0; i < totalGameObjects; i++){
+      if (gameObjects[i].type != GameObjectType.Crystal) continue;
+      final crystal = gameObjects[i];
+      spawnParticleOrbShard(
+        x: crystal.x,
+        y: crystal.y,
+        z: crystal.z,
+        speed: 1.5,
+        duration: 24,
+      );
+    }
   }
 }
 
