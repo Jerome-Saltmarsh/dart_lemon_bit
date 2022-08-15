@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:lemon_watch/watch.dart';
 
+import 'classes/nodes.dart';
 import 'convert/convert_distance_to_shade.dart';
 import 'watches/ambient_shade.dart';
 

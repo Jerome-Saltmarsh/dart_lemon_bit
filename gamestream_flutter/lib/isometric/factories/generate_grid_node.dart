@@ -1,5 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/node.dart';
+import 'package:gamestream_flutter/isometric/classes/nodes.dart';
 
 Node generateNode(int z, int row, int column, int type){
   switch (type){
