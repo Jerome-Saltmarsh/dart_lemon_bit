@@ -1,6 +1,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
+import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 import 'package:lemon_engine/render.dart';
 
@@ -14,6 +15,18 @@ void renderGameObject(GameObject value) {
        srcY: value.shade * 16,
        srcWidth: 16,
        srcHeight: 16,
+    );
+
+  if (value.type == GameObjectType.Barrel)
+    return render(
+      dstX: value.renderX,
+      dstY: value.renderY,
+      srcX: 1747,
+      srcY: 0,
+      srcWidth: 28,
+      srcHeight: 40,
+      anchorY: 0.66,
+      color: value.renderColor,
     );
 
   if (value.type == GameObjectType.Flower)

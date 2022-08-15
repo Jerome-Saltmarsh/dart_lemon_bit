@@ -5,6 +5,7 @@ class GameObjectType {
   static const Butterfly = 4;
   static const Chicken = 5;
   static const Crystal = 6;
+  static const Barrel = 7;
   static const Chest = 10;
   
   static String getName(int value){
@@ -16,6 +17,7 @@ class GameObjectType {
        Chicken: "Chicken",
        Crystal: "Crystal",
        Chest: "Chest",
+       Barrel: "Barrel",
     }[value] ?? "?";
   }
 }
