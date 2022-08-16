@@ -7,6 +7,7 @@ import '../classes/library.dart';
 import '../classes/node.dart';
 import '../common/game_object_type.dart';
 import '../isometric/generate_node.dart';
+import 'to_json_gameobject.dart';
 
 Scene convertJsonToScene(Json json, String name) {
   final height = json.getInt('grid-z');
@@ -33,6 +34,16 @@ GameObject convertJsonToGameObject(Json json) {
     final x = json.getDouble('x');
     final y = json.getDouble('y');
     final z = json.getDouble('z');
+
+    if (type == GameObjectType.Spawn) {
+      final spawnType = json.containsKey('spawn-type') ? json.getInt('spawn-type') : SpawnType.Chicken;
+      return GameObjectSpawn(
+          x: x,
+          y: y,
+          z: z,
+          spawnType: spawnType,
+      );
+    }
 
     if (GameObjectType.isStatic(type)) {
       return GameObjectStatic(

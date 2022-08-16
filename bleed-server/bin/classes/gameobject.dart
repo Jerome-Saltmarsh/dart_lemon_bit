@@ -57,6 +57,18 @@ abstract class Updatable {
   void update(Game game);
 }
 
+class GameObjectSpawn extends GameObjectStatic {
+
+  final int spawnType;
+
+  GameObjectSpawn({
+    required double x,
+    required double y,
+    required double z,
+    required this.spawnType,
+  }) : super(x: x, y: y, z: z, type: GameObjectType.Spawn);
+}
+
 abstract class GameObjectAnimal extends GameObject with Velocity {
   final target = Position3();
   var spawnX = 0.0;

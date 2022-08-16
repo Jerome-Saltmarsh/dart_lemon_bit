@@ -13,7 +13,15 @@ Json toJsonGameObject(GameObject gameObject) {
     'y': gameObject.y.toInt(),
     'z': gameObject.z.toInt(),
     'type': gameObject.type,
+    if (gameObject is GameObjectSpawn)
+       'spawn-type': gameObject.spawnType,
   };
+}
+
+class SpawnType {
+  static const Zombie = 0;
+  static const Chicken = 0;
+  static const Butterfly = 0;
 }
 
 Json toJsonGameObjectAnimal(GameObjectAnimal gameObject) => {

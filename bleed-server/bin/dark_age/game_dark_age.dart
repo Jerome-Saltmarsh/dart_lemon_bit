@@ -4,6 +4,7 @@ import 'package:lemon_math/library.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
+import '../classes/zombie.dart';
 import '../common/library.dart';
 import '../engine.dart';
 import 'dark_age_environment.dart';
@@ -15,7 +16,6 @@ class GameDarkAge extends Game {
   bool get full => false;
 
   GameDarkAge(Scene scene, this.environment) : super(scene) {
-
     for (var i = 0; i < gameObjects.length; i++){
        if (gameObjects[i].type == GameObjectType.Spawn){
          final gameObject = gameObjects[i];
