@@ -606,22 +606,9 @@ class Connection {
         player.scene.dirty = true;
         break;
       case GameObjectRequest.Delete:
-        final x = double.tryParse(arguments[2]);
-        final y = double.tryParse(arguments[3]);
-        final z = double.tryParse(arguments[4]);
-        final type = int.tryParse(arguments[5]);
-        if (x == null) return errorInvalidArg('x is null (2)');
-        if (y == null) return errorInvalidArg('y is null (3)');
-        if (z == null) return errorInvalidArg('z is null (4)');
-        if (type == null) return errorInvalidArg('type is null (5)');
-        final closest = findClosestVector3(
-            x: x,
-            y: y,
-            z: z,
-            positions: player.scene.gameObjects,
-            where: (GameObject v) => v.type == type,
-        );
-        player.scene.gameObjects.remove(closest);
+        final selectedGameObject = player.editorSelectedGameObject;
+        if (selectedGameObject == null) return;
+        player.scene.gameObjects.remove(selectedGameObject);
         player.scene.dirty = true;
         break;
     }

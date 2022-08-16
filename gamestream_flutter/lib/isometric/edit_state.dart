@@ -220,8 +220,7 @@ class EditState {
   }
 
   void deleteGameObjectSelected(){
-    sendClientRequestGameObjectDelete(x: gameObject.x, y: gameObject.y, z: gameObject.z, type: gameObject.type);
-    deselectGameObject();
+    sendClientRequestGameObjectDelete();
   }
 
   void cameraCenterSelectedObject() =>

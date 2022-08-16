@@ -199,15 +199,10 @@ void sendClientRequestGameObjectDeselect() {
 }
 
 
-void sendClientRequestGameObjectDelete({
-  required double x,
-  required double y,
-  required double z,
-  required int type,
-}) {
+void sendClientRequestGameObjectDelete() {
   sendClientRequest(
     ClientRequest.Scene_Edit,
-    "${GameObjectRequest.Delete.index} $x $y $z $type",
+    "${GameObjectRequest.Delete.index}",
   );
 }
 
