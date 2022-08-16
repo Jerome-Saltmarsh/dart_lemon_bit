@@ -65,7 +65,7 @@ void onPlayerEvent(int event) {
       audioSingleMaleHello.play();
       break;
     case PlayerEvent.GameObject_Deselected:
-      edit.gameObjectSelected = false;
+      edit.gameObjectSelected.value = false;
       break;
   }
 }

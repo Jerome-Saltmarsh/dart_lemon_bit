@@ -6,6 +6,7 @@ import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../classes/node.dart';
 import '../common/game_object_type.dart';
+import '../common/spawn_type.dart';
 import '../isometric/generate_node.dart';
 import 'to_json_gameobject.dart';
 
@@ -36,7 +37,9 @@ GameObject convertJsonToGameObject(Json json) {
     final z = json.getDouble('z');
 
     if (type == GameObjectType.Spawn) {
-      final spawnType = json.containsKey('spawn-type') ? json.getInt('spawn-type') : SpawnType.Chicken;
+      final spawnType = json.containsKey('spawn-type')
+          ? json.getInt('spawn-type')
+          : SpawnType.Chicken;
       return GameObjectSpawn(
           x: x,
           y: y,

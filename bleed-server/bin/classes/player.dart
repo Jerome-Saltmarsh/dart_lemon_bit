@@ -339,9 +339,15 @@ extension PlayerProperties on Player {
       writePosition3(target!);
     }
 
-    if (editorSelectedGameObject != null) {
+    final selectedGameObject = editorSelectedGameObject;
+    if (selectedGameObject != null) {
       writeByte(ServerResponse.Editor_GameObject_Selected);
-      writePosition3(editorSelectedGameObject!);
+      writePosition3(selectedGameObject);
+      writeByte(selectedGameObject.type);
+      if (selectedGameObject is GameObjectSpawn) {
+        assert (selectedGameObject.type == GameObjectType.Spawn);
+        writeByte(selectedGameObject.spawnType);
+      }
     }
 
     if (!sceneDownloaded){

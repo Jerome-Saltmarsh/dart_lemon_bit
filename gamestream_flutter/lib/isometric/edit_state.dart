@@ -19,8 +19,9 @@ final edit = EditState();
 
 class EditState {
 
+  var gameObjectSpawnType = 0;
   final gameObject = GameObject();
-  var gameObjectSelected = false;
+  final gameObjectSelected = Watch(false);
 
   double get posX => row.value * tileSize + tileSizeHalf;
   double get posY => column.value * tileSize + tileSizeHalf;
@@ -35,7 +36,7 @@ class EditState {
   }
 
   void translate({ double x = 0, double y = 0, double z = 0}){
-    assert (gameObjectSelected);
+    assert (gameObjectSelected.value);
     return sendClientRequestGameObjectTranslate(
       tx: x,
       ty: y,
@@ -228,7 +229,7 @@ class EditState {
   ;
 
   void delete(){
-    if (gameObjectSelected) {
+    if (gameObjectSelected.value) {
       return deleteGameObjectSelected();
     }
     deleteIfTree();

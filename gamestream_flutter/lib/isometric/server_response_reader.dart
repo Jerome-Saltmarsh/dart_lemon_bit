@@ -211,7 +211,12 @@ class ServerResponseReader with ByteReader {
           break;
         case ServerResponse.Editor_GameObject_Selected:
           readVector3(edit.gameObject);
-          edit.gameObjectSelected = true;
+          final type = readByte();
+          edit.gameObject.type = type;
+          if (type == GameObjectType.Spawn) {
+            edit.gameObjectSpawnType = readByte();
+          }
+          edit.gameObjectSelected.value = true;
           edit.cameraCenterSelectedObject();
           break;
         default:

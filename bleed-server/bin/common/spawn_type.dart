@@ -1,0 +1,14 @@
+
+class SpawnType {
+  static const Zombie = 0;
+  static const Chicken = 1;
+  static const Butterfly = 2;
+
+  static String getName(int type) {
+    return const {
+      Zombie: "Zombie",
+      Chicken: "Chicken",
+      Butterfly: "Butterfly",
+    } [type] ?? "Unknown ($type)";
+  }
+}

@@ -74,38 +74,38 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     return edit.paintBricks();
   if (key == PhysicalKeyboardKey.arrowUp) {
     if (shiftLeftDown) {
-      if (edit.gameObjectSelected){
+      if (edit.gameObjectSelected.value){
         return edit.translate(x: 0, y: 0, z: 1);
       }
       edit.z.value++;
     } else {
-      if (edit.gameObjectSelected){
+      if (edit.gameObjectSelected.value){
         return edit.translate(x: -1, y: -1, z: 0);
       }
       edit.row.value--;
     }
   }
   if (key == PhysicalKeyboardKey.arrowRight) {
-    if (edit.gameObjectSelected){
+    if (edit.gameObjectSelected.value){
       return edit.translate(x: 1, y: -1, z: 0);
     }
     edit.column.value--;
   }
   if (key == PhysicalKeyboardKey.arrowDown) {
     if (shiftLeftDown) {
-      if (edit.gameObjectSelected){
+      if (edit.gameObjectSelected.value){
         return edit.translate(x: 0, y: 0, z: -1);
       }
       edit.z.value--;
     } else {
-      if (edit.gameObjectSelected){
+      if (edit.gameObjectSelected.value){
         return edit.translate(x: 1, y: 1, z: 0);
       }
       edit.row.value++;
     }
   }
   if (key == PhysicalKeyboardKey.arrowLeft) {
-    if (edit.gameObjectSelected){
+    if (edit.gameObjectSelected.value){
       return edit.translate(x: -1, y: 1, z: 0);
     }
     edit.column.value++;

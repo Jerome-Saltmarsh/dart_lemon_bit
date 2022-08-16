@@ -50,7 +50,7 @@ class GameRender {
     renderSprites();
 
     if (playModeEdit){
-      if (edit.gameObjectSelected){
+      if (edit.gameObjectSelected.value){
         renderCircleV3(edit.gameObject);
       } else {
         renderEditWireFrames();
