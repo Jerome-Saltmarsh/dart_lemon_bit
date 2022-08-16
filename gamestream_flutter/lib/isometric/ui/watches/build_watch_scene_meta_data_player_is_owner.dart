@@ -1,4 +1,5 @@
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/spawn_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_show_game_dialog_canvas_size.dart';
@@ -46,11 +47,31 @@ Stack buildStackEdit() {
         left: 0,
         top: 0,
         child: buildTopLeftMenu(),
+      ),
+      Positioned(
+        right: 8,
+        top: 100,
+        child: visibleBuilder(edit.gameObjectSelected,
+            Container(
+              color: brownLight,
+              padding: const EdgeInsets.all(6),
+              child: watch(edit.gameObjectSelectedType, (int type){
+                return Column(
+                    children: [
+                      text(GameObjectType.getName(type)),
+                      if (type == GameObjectType.Spawn)
+                        watch(edit.gameObjectSelectedSpawnType, (int spawnType){
+                           return text("Spawns: ${SpawnType.getName(spawnType)}");
+                        }),
+                    ],
+                );
+              }),
+            )
+        ),
       )
     ],
   );
 }
-
 
 Column buildColumnObjects() {
   return Column(

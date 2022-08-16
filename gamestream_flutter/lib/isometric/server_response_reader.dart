@@ -213,8 +213,9 @@ class ServerResponseReader with ByteReader {
           readVector3(edit.gameObject);
           final type = readByte();
           edit.gameObject.type = type;
+          edit.gameObjectSelectedType.value = type;
           if (type == GameObjectType.Spawn) {
-            edit.gameObjectSpawnType = readByte();
+            edit.gameObjectSelectedSpawnType.value = readByte();
           }
           edit.gameObjectSelected.value = true;
           edit.cameraCenterSelectedObject();

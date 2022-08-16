@@ -19,9 +19,10 @@ final edit = EditState();
 
 class EditState {
 
-  var gameObjectSpawnType = 0;
   final gameObject = GameObject();
   final gameObjectSelected = Watch(false);
+  final gameObjectSelectedType = Watch(0);
+  final gameObjectSelectedSpawnType = Watch(0);
 
   double get posX => row.value * tileSize + tileSizeHalf;
   double get posY => column.value * tileSize + tileSizeHalf;
