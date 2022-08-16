@@ -15,7 +15,8 @@ class GameObjectType {
   static const Book_Purple = 14;
   static const Crystal_Small_Blue = 15;
   static const Flower_Green = 16;
-  
+  static const Spawn = 17;
+
   static const staticValues = [
     Flower,
     Rock,
@@ -31,6 +32,7 @@ class GameObjectType {
     Book_Purple,
     Crystal_Small_Blue,
     Flower_Green,
+    Spawn,
   ];
 
   static bool isStatic(int type){
@@ -55,6 +57,7 @@ class GameObjectType {
        Book_Purple: "Book Purple",
        Crystal_Small_Blue: "Crystal Small Blue",
        Flower_Green: "Flower Green",
+       Spawn: "Spawn",
     }[value] ?? "?";
   }
 }

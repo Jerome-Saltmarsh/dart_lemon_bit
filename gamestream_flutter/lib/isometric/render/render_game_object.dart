@@ -164,6 +164,16 @@ void renderGameObject(GameObject value) {
       srcWidth: 9,
       srcHeight: 7,
     );
+
+  if (value.type == GameObjectType.Spawn)
+    return render(
+      dstX: value.renderX,
+      dstY: value.renderY,
+      srcX: 1712,
+      srcY: 48,
+      srcWidth: 16,
+      srcHeight: 16,
+    );
 }
 
 void renderGameObjectChicken(GameObject value) {

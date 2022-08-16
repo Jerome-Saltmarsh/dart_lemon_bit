@@ -14,6 +14,7 @@ import 'package:gamestream_flutter/modules/core/actions.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
+import 'package:lemon_engine/screen.dart';
 
 import '../widgets/build_container.dart';
 
@@ -189,7 +190,14 @@ Widget buildMenu({required String text, required List<Widget> children}){
           return Column(
             children: [
               child,
-              ...children,
+              Container(
+                height: screen.height - 100,
+                child: SingleChildScrollView(
+                  child: Column(
+                     children: children,
+                  ),
+                ),
+              )
             ],
           );
         }
