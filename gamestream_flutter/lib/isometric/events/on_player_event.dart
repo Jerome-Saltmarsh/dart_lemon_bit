@@ -2,6 +2,7 @@ import 'package:bleed_common/PlayerEvent.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
+import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_completed.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_started.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
@@ -62,6 +63,9 @@ void onPlayerEvent(int event) {
       break;
     case PlayerEvent.Hello_Male_01:
       audioSingleMaleHello.play();
+      break;
+    case PlayerEvent.GameObject_Deselected:
+      edit.gameObjectSelected = false;
       break;
   }
 }

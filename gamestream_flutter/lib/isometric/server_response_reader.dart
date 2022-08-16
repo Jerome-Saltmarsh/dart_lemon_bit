@@ -210,7 +210,7 @@ class ServerResponseReader with ByteReader {
           readInteractingNpcName();
           break;
         case ServerResponse.Editor_GameObject_Selected:
-          readPosition(edit.gameObject);
+          readVector3(edit.gameObject);
           edit.gameObjectSelected = true;
           edit.cameraCenterSelectedObject();
           break;

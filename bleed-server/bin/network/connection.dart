@@ -1,6 +1,5 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
-import 'package:lemon_math/library.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../classes/gameobject.dart';
@@ -8,7 +7,7 @@ import '../classes/library.dart';
 import '../classes/position3.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
-import '../common/scene_edit_request.dart';
+import '../common/gameobject_request.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
 import '../engine.dart';
@@ -572,6 +571,11 @@ class Connection {
           distance = nextDistance;
         }
         player.editorSelectedGameObject = closest;
+        break;
+
+      case GameObjectRequest.Deselect:
+        player. editorSelectedGameObject = null;
+        player.writePlayerEvent(PlayerEvent.GameObject_Deselected);
         break;
 
       case GameObjectRequest.Translate:

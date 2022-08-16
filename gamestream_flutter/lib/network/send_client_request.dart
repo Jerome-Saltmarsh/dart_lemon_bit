@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
-import 'package:bleed_common/scene_edit_request.dart';
+import 'package:bleed_common/gameobject_request.dart';
 import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:lemon_engine/screen.dart';
@@ -190,6 +190,14 @@ void sendClientRequestGameObjectSelect() {
     "${GameObjectRequest.Select.index}",
   );
 }
+
+void sendClientRequestGameObjectDeselect() {
+  sendClientRequest(
+    ClientRequest.Scene_Edit,
+    "${GameObjectRequest.Deselect.index}",
+  );
+}
+
 
 void sendClientRequestGameObjectDelete({
   required double x,

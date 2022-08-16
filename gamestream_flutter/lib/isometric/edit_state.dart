@@ -30,8 +30,8 @@ class EditState {
     selected.value = grid[z.value][row.value][column.value];
   }
 
-  void deselectGameObject(){
-    gameObjectSelected = false;
+  void deselectGameObject() {
+    sendClientRequestGameObjectDeselect();
   }
 
   void translate({ double x = 0, double y = 0, double z = 0}){

@@ -2,6 +2,7 @@
 enum GameObjectRequest {
   Add,
   Select,
+  Deselect,
   Translate,
   Delete,
 }

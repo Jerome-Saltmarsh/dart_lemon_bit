@@ -21,4 +21,6 @@ class PlayerEvent {
   static const Quest_Started = 18;
   static const Quest_Completed = 19;
   static const Scene_Changed = 20;
+  static const GameObject_Deselected = 21;
+
 }
