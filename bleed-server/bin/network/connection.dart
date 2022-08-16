@@ -603,9 +603,16 @@ class Connection {
         if (y == null) return errorInvalidArg('y is null (3)');
         if (z == null) return errorInvalidArg('z is null (4)');
         if (type == null) return errorInvalidArg('type is null (5)');
-        player.game.scene.gameObjects.add(
-          GameObjectStatic(x: x, y: y, z: z, type: type),
-        );
+        if (type == GameObjectType.Spawn){
+          player.game.scene.gameObjects.add(
+            GameObjectSpawn(x: x, y: y, z: z, spawnType: 0),
+          );
+        } else {
+          player.game.scene.gameObjects.add(
+            GameObjectStatic(x: x, y: y, z: z, type: type),
+          );
+        }
+        player.editorSelectedGameObject = player.game.scene.gameObjects.last;
         player.scene.dirty = true;
         break;
 

@@ -1,6 +1,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
+import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 import 'package:lemon_engine/render.dart';
 
@@ -166,6 +167,7 @@ void renderGameObject(GameObject value) {
     );
 
   if (value.type == GameObjectType.Spawn)
+    if (modeIsPlay) return;
     return render(
       dstX: value.renderX,
       dstY: value.renderY,
