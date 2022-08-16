@@ -61,7 +61,10 @@ Stack buildStackEdit() {
                       text(GameObjectType.getName(type)),
                       if (type == GameObjectType.Spawn)
                         watch(edit.gameObjectSelectedSpawnType, (int spawnType){
-                           return text("Spawns: ${SpawnType.getName(spawnType)}");
+                           return container(
+                               child: "Spawns: ${SpawnType.getName(spawnType)}",
+                               action: sendGameObjectRequestSpawnTypeIncrement,
+                           );
                         }),
                     ],
                 );

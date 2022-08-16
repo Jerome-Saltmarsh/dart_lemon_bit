@@ -8,6 +8,7 @@ import '../classes/position3.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
 import '../common/gameobject_request.dart';
+import '../common/spawn_type.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
 import '../engine.dart';
@@ -556,6 +557,7 @@ class Connection {
     final gameObjectRequest = gameObjectRequests[gameObjectRequestIndex];
 
     switch (gameObjectRequest){
+
       case GameObjectRequest.Select:
         final gameObjects = player.scene.gameObjects;
         if (gameObjects.isEmpty) return;
@@ -574,7 +576,7 @@ class Connection {
         break;
 
       case GameObjectRequest.Deselect:
-        player. editorSelectedGameObject = null;
+        player.editorSelectedGameObject = null;
         player.writePlayerEvent(PlayerEvent.GameObject_Deselected);
         break;
 
@@ -591,6 +593,7 @@ class Connection {
         selectedGameObject.y += ty;
         selectedGameObject.z += tz;
         break;
+
       case GameObjectRequest.Add:
         final x = double.tryParse(arguments[2]);
         final y = double.tryParse(arguments[3]);
@@ -605,10 +608,23 @@ class Connection {
         );
         player.scene.dirty = true;
         break;
+
       case GameObjectRequest.Delete:
         final selectedGameObject = player.editorSelectedGameObject;
         if (selectedGameObject == null) return;
         player.scene.gameObjects.remove(selectedGameObject);
+        player.scene.dirty = true;
+        break;
+
+      case GameObjectRequest.Spawn_Type_Increment:
+        final selectedGameObject = player.editorSelectedGameObject;
+        if (selectedGameObject == null) return;
+        if (selectedGameObject is GameObjectSpawn == false) return;
+        final spawn = selectedGameObject as GameObjectSpawn;
+        spawn.spawnType++;
+        if (spawn.spawnType > SpawnType.Butterfly){
+          spawn.spawnType = 0;
+        }
         player.scene.dirty = true;
         break;
     }

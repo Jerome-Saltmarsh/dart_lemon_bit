@@ -5,6 +5,7 @@ enum GameObjectRequest {
   Deselect,
   Translate,
   Delete,
+  Spawn_Type_Increment,
 }
 
 const gameObjectRequests = GameObjectRequest.values;

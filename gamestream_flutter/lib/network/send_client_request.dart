@@ -184,26 +184,24 @@ void sendClientRequestGameObjectTranslate({
   );
 }
 
-void sendClientRequestGameObjectSelect() {
-  sendClientRequest(
-    ClientRequest.Scene_Edit,
-    "${GameObjectRequest.Select.index}",
-  );
+void sendGameObjectRequestSelect() {
+  sendGameObjectRequest(GameObjectRequest.Select);
 }
 
-void sendClientRequestGameObjectDeselect() {
-  sendClientRequest(
-    ClientRequest.Scene_Edit,
-    "${GameObjectRequest.Deselect.index}",
-  );
+void sendGameObjectRequestDeselect() {
+  sendGameObjectRequest(GameObjectRequest.Deselect);
 }
 
+void sendGameObjectRequestDelete() {
+  sendGameObjectRequest(GameObjectRequest.Delete);
+}
 
-void sendClientRequestGameObjectDelete() {
-  sendClientRequest(
-    ClientRequest.Scene_Edit,
-    "${GameObjectRequest.Delete.index}",
-  );
+void sendGameObjectRequestSpawnTypeIncrement() {
+  sendGameObjectRequest(GameObjectRequest.Spawn_Type_Increment);
+}
+
+void sendGameObjectRequest(GameObjectRequest request) {
+  sendClientRequest(ClientRequest.Scene_Edit, request.index);
 }
 
 Future sendClientRequestUpdate() async {

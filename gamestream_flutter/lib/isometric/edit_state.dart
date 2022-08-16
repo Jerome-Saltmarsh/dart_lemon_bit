@@ -33,7 +33,7 @@ class EditState {
   }
 
   void deselectGameObject() {
-    sendClientRequestGameObjectDeselect();
+    sendGameObjectRequestDeselect();
   }
 
   void translate({ double x = 0, double y = 0, double z = 0}){
@@ -150,7 +150,7 @@ class EditState {
   }
 
   void selectMouseGameObject(){
-    sendClientRequestGameObjectSelect();
+    sendGameObjectRequestSelect();
   }
 
   void paintTorch(){
@@ -222,7 +222,7 @@ class EditState {
   }
 
   void deleteGameObjectSelected(){
-    sendClientRequestGameObjectDelete();
+    sendGameObjectRequestDelete();
   }
 
   void cameraCenterSelectedObject() =>
