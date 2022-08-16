@@ -20,10 +20,8 @@ import 'library.dart';
 
 
 class Player extends Character with ByteWriter {
-  CharacterSelection? selection;
   final mouse = Vector2(0, 0);
   final _runTarget = Position3();
-  var characterSelectRequired = false;
   var debug = false;
   var score = 0;
   var characterState = CharacterState.Idle;
@@ -256,16 +254,6 @@ class Player extends Character with ByteWriter {
 
   void dispatchGameEvent(int type){
     game.dispatchV3(GameEventType.Character_Changing, this);
-  }
-
-  void setCharacterSelectionRequired(bool value){
-    characterSelectRequired = value;
-    writeCharacterSelectRequired();
-  }
-
-  void writeCharacterSelectRequired(){
-    writeByte(ServerResponse.Character_Select_Required);
-    writeBool(characterSelectRequired);
   }
 
   void gainExperience(int amount){
@@ -642,33 +630,6 @@ extension PlayerProperties on Player {
     for (final card in values) {
       writeByte(card.index);
     }
-  }
-
-  List<CardType> getCardOptions(){
-    if (selection == null) return [];
-    switch(selection){
-      case CharacterSelection.Archer:
-        return cardTypeChoicesBow;
-      case CharacterSelection.Warrior:
-        return cardTypeChoicesWarrior;
-      case CharacterSelection.Wizard:
-        return cardTypeChoicesStaff;
-      default:
-        return [];
-    }
-  }
-
-  void generatedCardChoices(){
-    if (cardChoices.isNotEmpty) return;
-
-    final options = getCardOptions();
-
-    while (cardChoices.length < 3 && options.length > cardChoices.length) {
-        final cardChoice = randomItem(options);
-        if (cardChoices.contains(cardChoice)) continue;
-        cardChoices.add(cardChoice);
-    }
-    writeCardChoices();
   }
 
   int getDamage(){

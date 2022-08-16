@@ -35,7 +35,6 @@ class ServerResponse {
   static const End = 47;
   static const Damage_Applied = 50;
   static const Lives_Remaining = 53;
-  static const Character_Select_Required = 54;
   static const Card_Choices = 55;
   static const Player_Deck = 56;
   static const Player_Deck_Active_Ability = 57;

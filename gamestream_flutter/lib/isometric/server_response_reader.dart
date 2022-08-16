@@ -131,9 +131,6 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Card_Choices:
           readCardChoices();
           break;
-        case ServerResponse.Character_Select_Required:
-          readCharacterSelectRequired();
-          break;
         case ServerResponse.Game_Status:
           readGameStatus();
           break;
@@ -548,10 +545,6 @@ class ServerResponseReader with ByteReader {
     player.experience.value = readPercentage();
     player.level.value = readByte();
     updateCameraMode();
-  }
-
-  void readCharacterSelectRequired() {
-    player.selectCharacterRequired.value = readBool();
   }
 
   List<Weapon> readWeapons() {

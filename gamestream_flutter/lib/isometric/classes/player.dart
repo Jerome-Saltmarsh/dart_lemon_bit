@@ -30,7 +30,6 @@ class Player extends Vector3 {
   var interactingNpcName = Watch<String?>(null, onChanged: onChangedNpcTalk);
   var npcTalk = Watch<String?>(null, onChanged: onChangedNpcTalk);
   var npcTalkOptions = Watch<List<String>>([]);
-  final selectCharacterRequired = Watch(false);
   final abilityTarget = Vector3();
   final attackTarget = Vector3();
   final mouseTargetName = Watch<String?>(null);
