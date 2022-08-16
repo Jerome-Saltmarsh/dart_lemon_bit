@@ -37,10 +37,6 @@ class EditState {
   void translate({ double x = 0, double y = 0, double z = 0}){
     assert (gameObjectSelected);
     return sendClientRequestGameObjectTranslate(
-      x: gameObject.x,
-      y: gameObject.y,
-      z: gameObject.z,
-      type: gameObject.type,
       tx: x,
       ty: y,
       tz: z,
@@ -226,16 +222,6 @@ class EditState {
   void deleteGameObjectSelected(){
     sendClientRequestGameObjectDelete(x: gameObject.x, y: gameObject.y, z: gameObject.z, type: gameObject.type);
     deselectGameObject();
-  }
-
-  void selectGameObject(GameObject gameObject){
-    this.gameObject.x = gameObject.x;
-    this.gameObject.y = gameObject.y;
-    this.gameObject.z = gameObject.z;
-    this.gameObject.type = gameObject.type;
-    this.gameObject.direction = gameObject.direction;
-    gameObjectSelected = true;
-    cameraCenterSelectedObject();
   }
 
   void cameraCenterSelectedObject() =>

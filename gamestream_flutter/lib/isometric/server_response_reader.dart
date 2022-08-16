@@ -209,6 +209,11 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Interacting_Npc_Name:
           readInteractingNpcName();
           break;
+        case ServerResponse.Editor_GameObject_Selected:
+          readPosition(edit.gameObject);
+          edit.gameObjectSelected = true;
+          edit.cameraCenterSelectedObject();
+          break;
         default:
           throw Exception("Cannot parse $response at index: $index");
       }

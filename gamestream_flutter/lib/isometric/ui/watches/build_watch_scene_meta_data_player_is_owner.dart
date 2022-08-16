@@ -50,6 +50,7 @@ Stack buildStackEdit() {
   );
 }
 
+
 Column buildColumnObjects() {
   return Column(
             children: [
@@ -62,7 +63,7 @@ Column buildColumnObjects() {
                       children: gameObjects.map((gameObject){
                         return container(
                             child: GameObjectType.getName(gameObject.type),
-                            action: () => edit.selectGameObject(gameObject)
+                            // action: () => edit.selectGameObject(gameObject)
                         );
                       }).toList(),
                     ),

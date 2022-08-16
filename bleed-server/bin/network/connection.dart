@@ -575,31 +575,17 @@ class Connection {
         break;
 
       case GameObjectRequest.Translate:
-        final x = double.tryParse(arguments[2]);
-        final y = double.tryParse(arguments[3]);
-        final z = double.tryParse(arguments[4]);
-        final type = int.tryParse(arguments[5]);
-        final tx = double.tryParse(arguments[6]);
-        final ty = double.tryParse(arguments[7]);
-        final tz = double.tryParse(arguments[8]);
-        if (x == null) return;
-        if (y == null) return;
-        if (z == null) return;
-        if (type == null) return;
+        final selectedGameObject = player.editorSelectedGameObject;
+        if (selectedGameObject == null) return;
+        final tx = double.tryParse(arguments[2]);
+        final ty = double.tryParse(arguments[3]);
+        final tz = double.tryParse(arguments[4]);
         if (tx == null) return;
         if (ty == null) return;
         if (tz == null) return;
-        final closest = findClosestVector3(
-            x: x,
-            y: y,
-            z: z,
-            positions: player.scene.gameObjects,
-            where: (GameObject go) => go.type == type,
-        );
-        if (closest == null) return;
-        closest.x += tx;
-        closest.y += ty;
-        closest.z += tz;
+        selectedGameObject.x += tx;
+        selectedGameObject.y += ty;
+        selectedGameObject.z += tz;
         break;
       case GameObjectRequest.Add:
         final x = double.tryParse(arguments[2]);

@@ -174,17 +174,13 @@ void sendClientRequestAddGameObject({
 
 
 void sendClientRequestGameObjectTranslate({
-  required double x,
-  required double y,
-  required double z,
   required double tx,
   required double ty,
   required double tz,
-  required int type,
 }) {
   sendClientRequest(
     ClientRequest.Scene_Edit,
-    "${GameObjectRequest.Translate.index} $x $y $z $type $tx $ty $tz",
+    "${GameObjectRequest.Translate.index} $tx $ty $tz",
   );
 }
 

@@ -339,6 +339,11 @@ extension PlayerProperties on Player {
       writePosition3(target!);
     }
 
+    if (editorSelectedGameObject != null) {
+      writeByte(ServerResponse.Editor_GameObject_Selected);
+      writePosition3(editorSelectedGameObject!);
+    }
+
     if (!sceneDownloaded){
       downloadScene();
     }
