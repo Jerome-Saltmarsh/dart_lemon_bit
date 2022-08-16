@@ -18,27 +18,21 @@ import 'rat.dart';
 import 'zombie.dart';
 import 'library.dart';
 
-
 class Player extends Character with ByteWriter {
   final mouse = Vector2(0, 0);
   final _runTarget = Position3();
   var debug = false;
-  var score = 0;
   var characterState = CharacterState.Idle;
   var framesSinceClientRequest = 0;
-  var pointsRecord = 0;
   var textDuration = 0;
   var experience = 0;
   var level = 1;
   var skillPoints = 0;
   var _magic = 0;
   var maxMagic = 100;
-  var magicRegen = 1;
-  var healthRegen = 1;
   var message = "";
   var text = "";
   var name = 'anon';
-  var storeVisible = false;
   var screenLeft = 0.0;
   var screenTop = 0.0;
   var screenRight = 0.0;
