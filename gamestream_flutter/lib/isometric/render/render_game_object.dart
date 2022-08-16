@@ -154,6 +154,16 @@ void renderGameObject(GameObject value) {
       srcWidth: 10,
       srcHeight: 19,
     );
+
+  if (value.type == GameObjectType.Flower_Green)
+    return render(
+      dstX: value.renderX,
+      dstY: value.renderY,
+      srcX: 1696,
+      srcY: 53,
+      srcWidth: 9,
+      srcHeight: 7,
+    );
 }
 
 void renderGameObjectChicken(GameObject value) {
