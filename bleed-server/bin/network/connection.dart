@@ -1,11 +1,13 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
+import 'package:lemon_math/library.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../classes/position3.dart';
 import '../common/library.dart';
+import '../common/maths.dart';
 import '../common/scene_edit_request.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
@@ -265,7 +267,7 @@ class Connection {
         break;
 
       case ClientRequest.Scene_Edit:
-        return handleSceneEdit(arguments);
+        return handleGameObjectRequest(arguments);
 
       case ClientRequest.Canvas_Modify_Size:
         return handleCanvasModifySize(arguments, player, game);
@@ -537,17 +539,42 @@ class Connection {
     return;
   }
 
-  void handleSceneEdit(List<String> arguments) {
-    final sceneEditRequestIndex = int.tryParse(arguments[1]);
-    if (sceneEditRequestIndex == null)
-      return errorInvalidArg("sceneEditRequestIndex is null");
+  void handleGameObjectRequest(List<String> arguments) {
+    final player = _player;
+    if (player == null) return;
 
-    final editRequest = sceneEditRequestValues[sceneEditRequestIndex];
+    if (arguments.length <= 1)
+      return errorInvalidArg('handleGameObjectRequest invalid args');
 
-    switch (editRequest){
-      case SceneEditRequest.GameObject_Translate:
-        final player = _player;
-        if (player == null) return;
+    final gameObjectRequestIndex = int.tryParse(arguments[1]);
+
+    if (gameObjectRequestIndex == null)
+      return errorInvalidArg("gameObjectRequestIndex is null");
+
+    if (!isValidIndex(gameObjectRequestIndex, gameObjectRequests))
+      return errorInvalidArg("gameObjectRequestIndex ($gameObjectRequestIndex) is invalid");
+
+    final gameObjectRequest = gameObjectRequests[gameObjectRequestIndex];
+
+    switch (gameObjectRequest){
+      case GameObjectRequest.Select:
+        final gameObjects = player.scene.gameObjects;
+        if (gameObjects.isEmpty) return;
+        final mouseX = player.mouseRenderX;
+        final mouseY = player.mouseRenderY;
+        var closest = gameObjects.first;
+        var distance = getDistanceXY(mouseX, mouseY, closest.renderX, closest.renderY);
+
+        for (final gameObject in gameObjects){
+          var nextDistance = getDistanceXY(mouseX, mouseY, gameObject.renderX, gameObject.renderY);
+          if (nextDistance >= distance) continue;
+          closest = gameObject;
+          distance = nextDistance;
+        }
+        player.editorSelectedGameObject = closest;
+        break;
+
+      case GameObjectRequest.Translate:
         final x = double.tryParse(arguments[2]);
         final y = double.tryParse(arguments[3]);
         final z = double.tryParse(arguments[4]);
@@ -574,9 +601,7 @@ class Connection {
         closest.y += ty;
         closest.z += tz;
         break;
-      case SceneEditRequest.Add_GameObject:
-        final player = _player;
-        if (player == null) return;
+      case GameObjectRequest.Add:
         final x = double.tryParse(arguments[2]);
         final y = double.tryParse(arguments[3]);
         final z = double.tryParse(arguments[4]);
@@ -590,9 +615,7 @@ class Connection {
         );
         player.scene.dirty = true;
         break;
-      case SceneEditRequest.GameObject_Delete:
-        final player = _player;
-        if (player == null) return;
+      case GameObjectRequest.Delete:
         final x = double.tryParse(arguments[2]);
         final y = double.tryParse(arguments[3]);
         final z = double.tryParse(arguments[4]);
@@ -612,8 +635,6 @@ class Connection {
         player.scene.dirty = true;
         break;
     }
-
-    return;
   }
 
   void handleClientRequestUpdate(List<int> args) {

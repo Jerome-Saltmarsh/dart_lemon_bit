@@ -1,8 +1,9 @@
 
-enum SceneEditRequest {
-  Add_GameObject,
-  GameObject_Translate,
-  GameObject_Delete,
+enum GameObjectRequest {
+  Add,
+  Select,
+  Translate,
+  Delete,
 }
 
-const sceneEditRequestValues = SceneEditRequest.values;
+const gameObjectRequests = GameObjectRequest.values;

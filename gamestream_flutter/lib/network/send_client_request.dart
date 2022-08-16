@@ -168,7 +168,7 @@ void sendClientRequestAddGameObject({
 }) {
   sendClientRequest(
       ClientRequest.Scene_Edit,
-      "${SceneEditRequest.Add_GameObject.index} $x $y $z $type",
+      "${GameObjectRequest.Add.index} $x $y $z $type",
   );
 }
 
@@ -184,9 +184,17 @@ void sendClientRequestGameObjectTranslate({
 }) {
   sendClientRequest(
     ClientRequest.Scene_Edit,
-    "${SceneEditRequest.GameObject_Translate.index} $x $y $z $type $tx $ty $tz",
+    "${GameObjectRequest.Translate.index} $x $y $z $type $tx $ty $tz",
   );
 }
+
+void sendClientRequestGameObjectSelect() {
+  sendClientRequest(
+    ClientRequest.Scene_Edit,
+    "${GameObjectRequest.Select.index}",
+  );
+}
+
 void sendClientRequestGameObjectDelete({
   required double x,
   required double y,
@@ -195,7 +203,7 @@ void sendClientRequestGameObjectDelete({
 }) {
   sendClientRequest(
     ClientRequest.Scene_Edit,
-    "${SceneEditRequest.GameObject_Delete.index} $x $y $z $type",
+    "${GameObjectRequest.Delete.index} $x $y $z $type",
   );
 }
 

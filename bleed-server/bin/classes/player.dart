@@ -13,6 +13,7 @@ import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
 import '../isometric/generate_node.dart';
 import '../utilities.dart';
+import 'gameobject.dart';
 import 'position3.dart';
 import 'rat.dart';
 import 'zombie.dart';
@@ -21,6 +22,11 @@ import 'library.dart';
 class Player extends Character with ByteWriter {
   final mouse = Vector2(0, 0);
   final _runTarget = Position3();
+
+  double get mouseRenderX =>  (mouse.x - mouse.y) * 0.5;
+  double get mouseRenderY =>  ((y + x) * 0.5) - z;
+
+  GameObject? editorSelectedGameObject;
   var debug = false;
   var characterState = CharacterState.Idle;
   var framesSinceClientRequest = 0;

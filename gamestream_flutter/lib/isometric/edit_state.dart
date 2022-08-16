@@ -143,12 +143,16 @@ class EditState {
   }
 
   void paintMouse(){
-      selectMouse();
+      selectMouseBlock();
       paint(selectPlayerIfPlay: false);
   }
 
-  void selectMouse(){
+  void selectMouseBlock(){
     mouseRaycast(selectBlock);
+  }
+
+  void selectMouseGameObject(){
+    sendClientRequestGameObjectSelect();
   }
 
   void paintTorch(){

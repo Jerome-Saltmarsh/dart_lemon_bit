@@ -60,6 +60,7 @@ abstract class GameObjectAnimal extends GameObject with Velocity {
   var spawnX = 0.0;
   var spawnY = 0.0;
   var spawnZ = 0.0;
+  var wanderRadius = 100;
 
   GameObjectAnimal({
     required double x, required double y, required double z,
@@ -72,9 +73,9 @@ abstract class GameObjectAnimal extends GameObject with Velocity {
     spawnZ = z;
   }
 
-  void assignNewTarget({double radius = 100}){
-    target.x = spawnX + giveOrTake(radius);
-    target.y = spawnY + giveOrTake(radius);
+  void assignNewTarget(){
+    target.x = spawnX + giveOrTake(wanderRadius);
+    target.y = spawnY + giveOrTake(wanderRadius);
   }
 }
 
