@@ -336,15 +336,20 @@ class NodeWoodCornerRight extends GridNodeColorRamp {
 }
 
 class NodeWater extends Node {
-  NodeWater(int row, int column, int z) : super(row, column, z);
+
+  late int frame;
+
+  NodeWater(int row, int column, int z) : super(row, column, z) {
+    frame = (row + column);
+  }
 
   @override
   void handleRender() {
     return render(
       dstX: dstX,
       dstY: dstY + animationFrameWaterHeight,
-      srcX: 7206 + animationFrameWaterSrcX,
-      srcY: 0,
+      srcX: 7976,
+      srcY: (((animationFrameWater + frame) % 6) * 72.0),
       srcWidth: 48,
       srcHeight: 72,
       anchorY: 0.3334,

@@ -45,14 +45,10 @@ void updateAnimationFrame(){
 }
 
 void _updateWaterFrame() {
-  animationFrameWater = animationFrame % 4;
-  if (animationFrameWater == 1) {
-    animationFrameWaterHeight = 2;
-  } else if (animationFrameWater == 3) {
-    animationFrameWaterHeight = 0;
-  } else {
-    animationFrameWaterHeight = 1;
-  }
+  animationFrameWater = animationFrame % 6;
+  animationFrameWaterHeight = const [
+    0, 1, 2, 3, 2, 1
+  ][animationFrameWater];
   animationFrameWaterSrcX = animationFrameWater * tileSize;
 }
 
