@@ -11,20 +11,28 @@ class GameObjectType {
   static const Bottle = 10;
   static const Chest = 11;
   static const Cup = 12;
+  static const Wooden_Shelf_Row = 13;
+  static const Book_Purple = 14;
+  static const Crystal_Small_Blue = 15;
+  
+  static const staticValues = [
+    Flower,
+    Rock,
+    Stick,
+    Crystal,
+    Barrel,
+    Wheel,
+    Candle,
+    Bottle,
+    Chest,
+    Cup,
+    Wooden_Shelf_Row,
+    Book_Purple,
+    Crystal_Small_Blue,
+  ];
 
   static bool isStatic(int type){
-    return const [
-       Flower,
-       Rock,
-       Stick,
-       Crystal,
-       Barrel,
-       Wheel,
-       Candle,
-       Bottle,
-       Chest,
-       Cup,
-    ].contains(type);
+    return staticValues.contains(type);
   }
   
   static String getName(int value){
@@ -41,6 +49,9 @@ class GameObjectType {
        Candle: "Candle",
        Bottle: "Bottle",
        Cup: "Cup",
+       Wooden_Shelf_Row: "Wooden Shelf Row",
+       Book_Purple: "Book Purple",
+       Crystal_Small_Blue: "Crystal Small Blue",
     }[value] ?? "?";
   }
 }

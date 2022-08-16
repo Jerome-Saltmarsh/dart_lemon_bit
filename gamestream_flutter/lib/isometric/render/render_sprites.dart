@@ -281,7 +281,7 @@ class RenderOrderGrid extends RenderOrder {
       //   offscreenNodesBottom++;
       //   return;
       // }
-      onscreenNodes++;
+      // onscreenNodes++;
       if (node.visible) {
         node.handleRender();
       } else {

@@ -158,16 +158,9 @@ Row buildTopLeftMenu() {
             ),
             buildMenu(
                 text: "Insert",
-                children: [
-                  buildButtonAddGameObject(GameObjectType.Rock),
-                  buildButtonAddGameObject(GameObjectType.Flower),
-                  buildButtonAddGameObject(GameObjectType.Stick),
-                  buildButtonAddGameObject(GameObjectType.Barrel),
-                  buildButtonAddGameObject(GameObjectType.Wheel),
-                  buildButtonAddGameObject(GameObjectType.Candle),
-                  buildButtonAddGameObject(GameObjectType.Bottle),
-                  buildButtonAddGameObject(GameObjectType.Cup),
-                ],
+                children: GameObjectType.staticValues
+                    .map(buildButtonAddGameObject)
+                    .toList(),
             )
           ],
         );

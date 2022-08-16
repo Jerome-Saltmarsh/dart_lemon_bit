@@ -122,6 +122,38 @@ void renderGameObject(GameObject value) {
 
   if (value.type == GameObjectType.Chicken)
     return renderGameObjectChicken(value);
+
+
+  if (value.type == GameObjectType.Wooden_Shelf_Row)
+    return render(
+        dstX: value.renderX,
+        dstY: value.renderY,
+        srcX: 1664,
+        srcY: 16,
+        srcWidth: 32,
+        srcHeight: 38,
+    );
+
+  if (value.type == GameObjectType.Book_Purple)
+    return render(
+      dstX: value.renderX,
+      dstY: value.renderY,
+      srcX: 1697,
+      srcY: 16,
+      srcWidth: 8,
+      srcHeight: 15,
+    );
+
+
+  if (value.type == GameObjectType.Crystal_Small_Blue)
+    return render(
+      dstX: value.renderX,
+      dstY: value.renderY,
+      srcX: 1697,
+      srcY: 33,
+      srcWidth: 10,
+      srcHeight: 19,
+    );
 }
 
 void renderGameObjectChicken(GameObject value) {
