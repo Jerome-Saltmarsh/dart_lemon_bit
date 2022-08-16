@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:typedef/json.dart';
 
+import '../classes/gameobject.dart';
 import '../classes/node.dart';
 import '../classes/scene.dart';
 import '../common/library.dart';
@@ -10,16 +11,22 @@ import 'convert_enemy_spawn_to_json.dart';
 import 'to_json_gameobject.dart';
 
 
+String convertSceneToString(Scene scene) {
+   return jsonEncode(convertSceneToJson(scene));
+}
 
-String convertSceneToString(Scene scene){
-   final json = Json();
-   json['grid-z'] = scene.gridHeight;
-   json['grid-rows'] = scene.gridRows;
-   json['grid-columns'] = scene.gridColumns;
-   json['grid'] = flattenGrid(scene.grid);
-   json['enemy-spawns'] = scene.enemySpawns.map(toJsonEnemySpawn).toList();
-   json['gameobjects'] = scene.gameObjects.map(toJsonGameObject).toList();
-   return jsonEncode(json);
+Json convertSceneToJson(Scene scene) {
+  final json = Json();
+  json['grid-z'] = scene.gridHeight;
+  json['grid-rows'] = scene.gridRows;
+  json['grid-columns'] = scene.gridColumns;
+  json['grid'] = flattenGrid(scene.grid);
+  json['enemy-spawns'] = scene.enemySpawns.map(toJsonEnemySpawn).toList();
+  json['gameobjects'] = scene.gameObjects
+      .where((gameObject) => gameObject.persist)
+      .map(toJsonGameObject)
+      .toList();
+  return json;
 }
 
 List<int> flattenGrid(List<List<List<Node>>> grid) {

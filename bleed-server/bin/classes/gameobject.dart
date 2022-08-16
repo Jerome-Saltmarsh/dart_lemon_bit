@@ -17,6 +17,8 @@ abstract class GameObject extends Collider {
   void write(Player player);
 
   int get type;
+
+  bool get persist => true;
 }
 
 class GameObjectStatic extends GameObject {
@@ -77,13 +79,12 @@ abstract class GameObjectAnimal extends GameObject with Velocity {
     target.x = spawnX + giveOrTake(wanderRadius);
     target.y = spawnY + giveOrTake(wanderRadius);
   }
+
+  @override
+  bool get persist => false;
 }
 
-class GameObjectButterfly extends GameObject with Velocity implements Updatable {
-  final target = Position3();
-  var spawnX = 0.0;
-  var spawnY = 0.0;
-  var spawnZ = 0.0;
+class GameObjectButterfly extends GameObjectAnimal with Velocity implements Updatable {
   var pause = 0;
   var visible = true;
 
@@ -91,7 +92,7 @@ class GameObjectButterfly extends GameObject with Velocity implements Updatable 
     required double x,
     required double y,
     required double z,
-  }) : super(x: x, y: y, z: z, radius: 10) {
+  }) : super(x: x, y: y, z: z) {
     target.x = x;
     target.y = y;
     target.z = z;
@@ -135,12 +136,6 @@ class GameObjectButterfly extends GameObject with Velocity implements Updatable 
      angle = this.getAngle(target);
      x += xv;
      y += yv;
-  }
-
-  void assignNewTarget(){
-    const radius = 100;
-    target.x = spawnX + giveOrTake(radius);
-    target.y = spawnY + giveOrTake(radius);
   }
 
   @override

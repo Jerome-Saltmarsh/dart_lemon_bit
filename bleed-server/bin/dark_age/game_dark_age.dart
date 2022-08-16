@@ -2,6 +2,7 @@
 
 import 'package:lemon_math/library.dart';
 
+import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../common/library.dart';
 import '../engine.dart';
@@ -13,7 +14,20 @@ class GameDarkAge extends Game {
   @override
   bool get full => false;
 
-  GameDarkAge(Scene scene, this.environment) : super(scene);
+  GameDarkAge(Scene scene, this.environment) : super(scene) {
+
+    for (var i = 0; i < gameObjects.length; i++){
+       if (gameObjects[i].type == GameObjectType.Spawn){
+         final gameObject = gameObjects[i];
+          gameObjects.add(
+              GameObjectChicken(
+                  x: gameObject.x,
+                  y: gameObject.y,
+                  z: gameObject.z),
+          );
+       }
+    }
+  }
 
   @override
   void setHourMinutes(int hour, int minutes){

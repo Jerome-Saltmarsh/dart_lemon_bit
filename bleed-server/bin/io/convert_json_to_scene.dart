@@ -18,19 +18,23 @@ Scene convertJsonToScene(Json json, String name) {
   return Scene(
     name: name,
     grid: convertFlatGridToGrid(json['grid'], height, rows, columns),
-    gameObjects: jsonGameObjects.map(convertJsonToGameObject).toList(),
+    gameObjects: jsonGameObjects.map(convertDynamicToGameObject).toList(),
     enemySpawns: enemySpawns,
   );
 }
 
-GameObject convertJsonToGameObject(dynamic json){
-  if (json is Json){
+GameObject convertDynamicToGameObject(dynamic value) {
+  if (value is Json) return convertJsonToGameObject(value);
+  throw Exception("Cannot convert value to gameobject");
+}
+
+GameObject convertJsonToGameObject(Json json) {
     final type = json.getInt('type');
     final x = json.getDouble('x');
     final y = json.getDouble('y');
     final z = json.getDouble('z');
 
-    if (GameObjectType.isStatic(type)){
+    if (GameObjectType.isStatic(type)) {
       return GameObjectStatic(
         x: x,
         y: y,
@@ -39,7 +43,7 @@ GameObject convertJsonToGameObject(dynamic json){
       );
     }
 
-    switch (type){
+    switch (type) {
       case GameObjectType.Chicken:
         return GameObjectChicken(
           x: x,
@@ -55,8 +59,6 @@ GameObject convertJsonToGameObject(dynamic json){
       default:
         throw Exception("Could not create gameobject from type $type");
     }
-  }
-  throw Exception();
 }
 
 List<List<List<Node>>> convertFlatGridToGrid(List<dynamic> flatGrid, int height, int rows, int columns){
