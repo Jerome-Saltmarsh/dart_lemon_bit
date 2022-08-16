@@ -50,9 +50,8 @@ class GameRender {
     renderSprites();
 
     if (playModeEdit){
-      final editGameObject = edit.gameObject.value;
-      if (editGameObject != null){
-        renderCircleV3(editGameObject);
+      if (edit.gameObjectSelected){
+        renderCircleV3(edit.gameObject);
       } else {
         renderEditWireFrames();
         renderMouseWireFrame();

@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/isometric/editor/events/on_editor_column_chan
 import 'package:gamestream_flutter/isometric/editor/events/on_editor_z_changed.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'classes/node.dart';
@@ -18,7 +19,8 @@ final edit = EditState();
 
 class EditState {
 
-  final gameObject = Watch<GameObject?>(null);
+  final gameObject = GameObject();
+  var gameObjectSelected = false;
 
   double get posX => row.value * tileSize + tileSizeHalf;
   double get posY => column.value * tileSize + tileSizeHalf;
@@ -29,17 +31,16 @@ class EditState {
   }
 
   void deselectGameObject(){
-    gameObject.value = null;
+    gameObjectSelected = false;
   }
 
   void translate({ double x = 0, double y = 0, double z = 0}){
-    final value = gameObject.value;
-    if (value == null) return;
+    assert (gameObjectSelected);
     return sendClientRequestGameObjectTranslate(
-      x: value.x,
-      y: value.y,
-      z: value.z,
-      type: value.type,
+      x: gameObject.x,
+      y: gameObject.y,
+      z: gameObject.z,
+      type: gameObject.type,
       tx: x,
       ty: y,
       tz: z,
@@ -218,15 +219,28 @@ class EditState {
     z.value = player.indexZ;
   }
 
-  void deleteGameObject(GameObject value){
-    sendClientRequestGameObjectDelete(x: value.x, y: value.y, z: value.z, type: value.type);
+  void deleteGameObjectSelected(){
+    sendClientRequestGameObjectDelete(x: gameObject.x, y: gameObject.y, z: gameObject.z, type: gameObject.type);
     deselectGameObject();
   }
 
+  void selectGameObject(GameObject gameObject){
+    this.gameObject.x = gameObject.x;
+    this.gameObject.y = gameObject.y;
+    this.gameObject.z = gameObject.z;
+    this.gameObject.type = gameObject.type;
+    this.gameObject.direction = gameObject.direction;
+    gameObjectSelected = true;
+    cameraCenterSelectedObject();
+  }
+
+  void cameraCenterSelectedObject() =>
+    engine.cameraCenter(gameObject.renderX, gameObject.renderY)
+  ;
+
   void delete(){
-    final go = gameObject.value;
-    if (go != null){
-      return deleteGameObject(go);
+    if (gameObjectSelected) {
+      return deleteGameObjectSelected();
     }
     deleteIfTree();
     sendClientRequestSetBlock(row.value, column.value, z.value, GridNodeType.Empty);

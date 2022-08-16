@@ -14,7 +14,6 @@ import 'package:gamestream_flutter/modules/core/actions.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
-import 'package:lemon_engine/engine.dart';
 
 import '../widgets/build_container.dart';
 
@@ -63,11 +62,7 @@ Column buildColumnObjects() {
                       children: gameObjects.map((gameObject){
                         return container(
                             child: GameObjectType.getName(gameObject.type),
-                            action: () {
-                              engine.cameraCenter(
-                                  gameObject.renderX, gameObject.renderY);
-                                  edit.gameObject.value = gameObject;
-                            }
+                            action: () => edit.selectGameObject(gameObject)
                         );
                       }).toList(),
                     ),
