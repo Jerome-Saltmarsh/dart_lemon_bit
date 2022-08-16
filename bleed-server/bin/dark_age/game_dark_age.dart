@@ -6,6 +6,7 @@ import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../classes/zombie.dart';
 import '../common/library.dart';
+import '../common/spawn_type.dart';
 import '../engine.dart';
 import 'dark_age_environment.dart';
 
@@ -17,14 +18,40 @@ class GameDarkAge extends Game {
 
   GameDarkAge(Scene scene, this.environment) : super(scene) {
     for (var i = 0; i < gameObjects.length; i++){
-       if (gameObjects[i].type == GameObjectType.Spawn){
-         final gameObject = gameObjects[i];
-          gameObjects.add(
-              GameObjectChicken(
-                  x: gameObject.x,
-                  y: gameObject.y,
-                  z: gameObject.z),
-          );
+      final gameObject = gameObjects[i];
+       if (gameObject is GameObjectSpawn) {
+         switch (gameObject.spawnType){
+           case SpawnType.Chicken:
+             gameObjects.add(
+               GameObjectChicken(
+                   x: gameObject.x,
+                   y: gameObject.y,
+                   z: gameObject.z),
+             );
+             break;
+           case SpawnType.Butterfly:
+             gameObjects.add(
+               GameObjectButterfly(
+                   x: gameObject.x,
+                   y: gameObject.y,
+                   z: gameObject.z),
+             );
+             break;
+           case SpawnType.Zombie:
+             characters.add(
+               Zombie(
+                   x: gameObject.x,
+                   y: gameObject.y,
+                   z: gameObject.z,
+                   health: 10,
+                  damage: 1,
+               )
+             );
+             break;
+           default:
+             print("Warning: Unrecognized SpawnType ${gameObject.spawnType}");
+             break;
+         }
        }
     }
   }
