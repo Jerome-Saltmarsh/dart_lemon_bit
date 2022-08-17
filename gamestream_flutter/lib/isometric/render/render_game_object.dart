@@ -12,9 +12,10 @@ void renderGameObject(GameObject value) {
        dstX: value.renderX,
        dstY: value.renderY,
        srcX: 1664,
-       srcY: value.shade * 16,
+       srcY: 0,
        srcWidth: 16,
        srcHeight: 16,
+      color: value.renderColor,
     );
 
   if (value.type == GameObjectType.Barrel)
@@ -38,7 +39,6 @@ void renderGameObject(GameObject value) {
       srcWidth: 3,
       srcHeight: 10,
       anchorY: 0.95,
-      // color: value.renderColor,
     );
 
   if (value.type == GameObjectType.Bottle)
