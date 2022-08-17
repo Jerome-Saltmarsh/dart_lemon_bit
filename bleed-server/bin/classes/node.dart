@@ -9,6 +9,8 @@ abstract class Node {
   bool getCollision(double x, double y, double z);
   void resolveCharacterCollision(Character character, Game game);
 
+  bool get isEmpty => type == GridNodeType.Empty;
+
 
   static final Node boundary = NodeBoundary();
   static final Node grass = NodeGrass();

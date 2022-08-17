@@ -602,6 +602,11 @@ class Connection {
         if (x == null) return errorInvalidArg('x is null (2)');
         if (y == null) return errorInvalidArg('y is null (3)');
         if (z == null) return errorInvalidArg('z is null (4)');
+
+        if (!player.scene.getNodeXYZ(x, y, z).isEmpty){
+          return errorInvalidArg("Selected Block is not empty");
+        }
+
         if (type == null) return errorInvalidArg('type is null (5)');
         if (type == GameObjectType.Spawn){
           player.game.scene.gameObjects.add(
@@ -619,13 +624,8 @@ class Connection {
       case GameObjectRequest.Delete:
         final selectedGameObject = player.editorSelectedGameObject;
         if (selectedGameObject == null) return;
-        player.scene.gameObjects.remove(selectedGameObject);
-        if (selectedGameObject is GameObjectSpawn){
-          player.game.removeInstance(selectedGameObject.instance);
-          selectedGameObject.instance = null;
-        }
+        player.game.removeInstance(selectedGameObject);
         player.editorSelectedGameObject = null;
-        player.scene.dirty = true;
         break;
 
       case GameObjectRequest.Spawn_Type_Increment:

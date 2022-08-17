@@ -450,16 +450,27 @@ extension GameFunctions on Game {
 
   void removeInstance(dynamic instance){
     if (instance == null) return;
-    if (instance is Zombie) {
+
+    if (instance is Player) {
+      instance.aimTarget = null;
+      players.remove(instance);
+    }
+    if (instance is Character) {
       characters.remove(instance);
       return;
     }
-    if (instance is GameObjectChicken){
+    if (instance is GameObject){
       gameObjects.remove(instance);
+
+      if (instance is GameObjectSpawn){
+        removeInstance(instance.instance);
+        instance.instance = null;
+        scene.dirty = true;
+      }
       return;
     }
-    if (instance is GameObjectButterfly){
-      gameObjects.remove(instance);
+    if (instance is Projectile){
+      projectiles.remove(instance);
       return;
     }
     throw Exception("Could not remove instance $instance");
