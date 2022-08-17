@@ -28,13 +28,7 @@ Stack buildStackEdit() {
       Positioned(
         left: 0,
         bottom: 6,
-        child: Column(
-          children: [
-            buildColumnSelected(),
-            buildControlPaint(),
-            buildWatchEditorTab(),
-          ],
-        ),
+        child: buildColumnEditNode(),
       ),
       Positioned(
           bottom: 6,
@@ -46,32 +40,43 @@ Stack buildStackEdit() {
         top: 0,
         child: buildTopLeftMenu(),
       ),
-      Positioned(
-        right: 8,
-        top: 100,
-        child: visibleBuilder(edit.gameObjectSelected,
-            Container(
-              color: brownLight,
-              padding: const EdgeInsets.all(6),
-              child: watch(edit.gameObjectSelectedType, (int type){
-                return Column(
-                    children: [
-                      text(GameObjectType.getName(type)),
-                      if (type == GameObjectType.Spawn)
-                        watch(edit.gameObjectSelectedSpawnType, (int spawnType){
-                           return container(
-                               child: "Spawns: ${SpawnType.getName(spawnType)}",
-                               action: sendGameObjectRequestSpawnTypeIncrement,
-                           );
-                        }),
-                    ],
-                );
-              }),
-            )
-        ),
-      )
     ],
   );
+}
+
+Widget buildColumnEditNode() {
+
+  return watch(edit.gameObjectSelected, (bool gameObjectSelected){
+
+    if (!gameObjectSelected){
+      return Column(
+        children: [
+          buildColumnSelected(),
+          buildControlPaint(),
+          buildWatchEditorTab(),
+        ],
+      );
+    }
+
+    return Container(
+      color: brownLight,
+      padding: const EdgeInsets.all(6),
+      child: watch(edit.gameObjectSelectedType, (int type){
+        return Column(
+          children: [
+            text(GameObjectType.getName(type)),
+            if (type == GameObjectType.Spawn)
+              watch(edit.gameObjectSelectedSpawnType, (int spawnType){
+                return container(
+                  child: "Spawns: ${SpawnType.getName(spawnType)}",
+                  action: sendGameObjectRequestSpawnTypeIncrement,
+                );
+              }),
+          ],
+        );
+      }),
+    );
+  });
 }
 
 Column buildColumnSelected() {
