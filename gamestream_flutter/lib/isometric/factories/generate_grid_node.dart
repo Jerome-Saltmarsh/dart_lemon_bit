@@ -10,6 +10,8 @@ Node generateNode(int z, int row, int column, int type){
       return Node.empty;
     case GridNodeType.Grass:
       return NodeGrass(row, column, z);
+    case GridNodeType.Grass_Flowers:
+      return NodeGrassFlowers(row, column, z);
     case GridNodeType.Bricks:
       return NodeBricks(row, column, z);
     case GridNodeType.Roof_Hay_South:

@@ -412,6 +412,7 @@ Widget buildColumnEdit(){
   );
 }
 
+
 const editorSelectableGridTypes = [
     GridNodeType.Empty,
     GridNodeType.Stairs_North,
@@ -422,6 +423,7 @@ const editorSelectableGridTypes = [
     GridNodeType.Brick_Top,
     GridNodeType.Grass,
     GridNodeType.Grass_Long,
+    GridNodeType.Grass_Flowers,
     GridNodeType.Torch,
     GridNodeType.Fireplace,
     GridNodeType.Wood,

@@ -14,6 +14,8 @@ Node generateNode(int type){
       return Node.waterFlowing;
     case GridNodeType.Grass:
       return Node.grass;
+    case GridNodeType.Grass_Flowers:
+      return Node.grassFlowers;
     case GridNodeType.Bricks:
       return Node.bricks;
     case GridNodeType.Stairs_North:

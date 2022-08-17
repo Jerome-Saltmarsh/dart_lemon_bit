@@ -40,6 +40,21 @@ class NodeGrass extends Node {
   bool get isRainable => true;
 }
 
+class NodeGrassFlowers extends Node {
+
+  NodeGrassFlowers(int row, int column, int z) : super(row, column, z);
+
+  @override
+  void handleRender() => renderSrcX(9782);
+
+  @override
+  int get type => GridNodeType.Grass_Flowers;
+
+  @override
+  bool get isRainable => true;
+}
+
+
 class NodeGrassSlopeNorth extends GridNodeColorRamp {
 
   NodeGrassSlopeNorth(int row, int column, int z) : super(row: row, column: column, z: z);

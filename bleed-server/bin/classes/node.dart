@@ -14,6 +14,7 @@ abstract class Node {
 
   static final Node boundary = NodeBoundary();
   static final Node grass = NodeGrass();
+  static final Node grassFlowers = NodeGrassFlowers();
   static final Node bricks = NodeBricks();
   static final Node wood = NodeWood();
   static final Node soil = NodeSoil();
@@ -78,6 +79,11 @@ abstract class NodeSolid extends Node {
 class NodeGrass extends NodeSolid {
   @override
   int get type => GridNodeType.Grass;
+}
+
+class NodeGrassFlowers extends NodeSolid {
+  @override
+  int get type => GridNodeType.Grass_Flowers;
 }
 
 class NodeBricks extends NodeSolid {
