@@ -355,7 +355,7 @@ class NodeWater extends Node {
   late int frame;
 
   NodeWater(int row, int column, int z) : super(row, column, z) {
-    frame = (row + column);
+    frame = (row + column) * 3;
   }
 
   @override
@@ -364,7 +364,7 @@ class NodeWater extends Node {
       dstX: dstX,
       dstY: dstY + animationFrameWaterHeight,
       srcX: 7976,
-      srcY: (((animationFrameWater + frame) % 6) * 72.0),
+      srcY: (((animationFrameWater + frame) % 10) * 72.0),
       srcWidth: 48,
       srcHeight: 72,
       anchorY: 0.3334,
