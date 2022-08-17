@@ -608,9 +608,12 @@ class Connection {
 
         if (type == null) return errorInvalidArg('type is null (5)');
         if (type == GameObjectType.Spawn){
-          player.game.scene.gameObjects.add(
-            GameObjectSpawn(x: x, y: y, z: z, spawnType: 0),
-          );
+          final game = player.game;
+          if (game is GameDarkAge){
+            final spawn = GameObjectSpawn(x: x, y: y, z: z, spawnType: 0);
+            game.scene.gameObjects.add(spawn);
+            game.spawnGameObject(spawn);
+          }
         } else {
           player.game.scene.gameObjects.add(
             GameObjectStatic(x: x, y: y, z: z, type: type),

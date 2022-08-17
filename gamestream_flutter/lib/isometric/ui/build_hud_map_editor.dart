@@ -412,7 +412,6 @@ Widget buildColumnEdit(){
   );
 }
 
-
 const editorSelectableGridTypes = [
     GridNodeType.Empty,
     GridNodeType.Stairs_North,
