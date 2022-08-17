@@ -4,6 +4,7 @@ import 'package:lemon_math/library.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
+import '../classes/rat.dart';
 import '../classes/zombie.dart';
 import '../common/library.dart';
 import '../common/spawn_type.dart';
@@ -27,7 +28,7 @@ class GameDarkAge extends Game {
 
   void setSpawnType(GameObjectSpawn spawn, int type){
     spawn.spawnType++;
-    if (spawn.spawnType > SpawnType.Butterfly){
+    if (spawn.spawnType > SpawnType.Rat){
       spawn.spawnType = 0;
     }
     onSpawnTypeChanged(spawn);
@@ -46,6 +47,15 @@ class GameDarkAge extends Game {
             y: spawn.y,
             z: spawn.z);
         gameObjects.add(instance);
+        spawn.instance = instance;
+        break;
+      case SpawnType.Rat:
+        final instance = Rat(
+            z: spawn.indexZ,
+            row: spawn.indexRow,
+            column: spawn.indexColumn
+        );
+        characters.add(instance);
         spawn.instance = instance;
         break;
       case SpawnType.Butterfly:
