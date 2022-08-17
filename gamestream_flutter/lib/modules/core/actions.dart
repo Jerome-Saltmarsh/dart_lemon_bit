@@ -1,6 +1,5 @@
 import 'package:bleed_common/GameType.dart';
 import 'package:firestore_client/firestoreService.dart';
-import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/control/classes/authentication.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/isometric/collectables.dart';
@@ -17,7 +16,6 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
 import 'package:gamestream_flutter/network/web_socket.dart';
 import 'package:gamestream_flutter/servers.dart';
-import 'package:gamestream_flutter/services/authService.dart';
 import 'package:gamestream_flutter/shared_preferences.dart';
 import 'package:gamestream_flutter/stripe.dart';
 import 'package:gamestream_flutter/ui/actions/sign_in_with_facebook.dart';
@@ -120,42 +118,6 @@ class CoreActions {
     core.state.operationStatus.value = OperationStatus.None;
   }
 
-  void logout() {
-    print("actions.logout()");
-    core.state.operationStatus.value = OperationStatus.Logging_Out;
-
-    try {
-      firebaseAuth.signOut().catchError(print);
-      googleSignIn.signOut().catchError((error) {
-        print(error);
-      });
-    }catch(e){
-      print(e);
-    }
-
-    storage.forgetAuthorization();
-    core.state.account.value = null;
-    Future.delayed(Duration(seconds: 1), (){
-      core.state.operationStatus.value = OperationStatus.None;
-    });
-  }
-
-  void loginWithGoogle() async {
-    print("core.actions.loginWithGoogle()");
-    core.state.operationStatus.value = OperationStatus.Authenticating;
-    await getGoogleAuthentication().then(login).catchError((error){
-      if (error is PlatformException){
-        if (error.code == "popup_closed_by_user"){
-          return;
-        }
-        setError(error.code);
-        return;
-      }
-      setError(error.toString());
-    }).whenComplete((){
-      core.state.operationStatus.value = OperationStatus.None;
-    });
-  }
 
   Future login(Authentication authentication){
     print("actions.login()");

@@ -22,31 +22,31 @@ class GameDarkAge extends Game {
        if (gameObject is GameObjectSpawn) {
          switch (gameObject.spawnType){
            case SpawnType.Chicken:
-             gameObjects.add(
-               GameObjectChicken(
-                   x: gameObject.x,
-                   y: gameObject.y,
-                   z: gameObject.z),
-             );
+             final instance = GameObjectChicken(
+                 x: gameObject.x,
+                 y: gameObject.y,
+                 z: gameObject.z);
+             gameObjects.add(instance);
+             gameObject.instance = instance;
              break;
            case SpawnType.Butterfly:
-             gameObjects.add(
-               GameObjectButterfly(
-                   x: gameObject.x,
-                   y: gameObject.y,
-                   z: gameObject.z),
-             );
+             final instance = GameObjectButterfly(
+                 x: gameObject.x,
+                 y: gameObject.y,
+                 z: gameObject.z);
+             gameObjects.add(instance);
+             gameObject.instance = instance;
              break;
            case SpawnType.Zombie:
-             characters.add(
-               Zombie(
-                   x: gameObject.x,
-                   y: gameObject.y,
-                   z: gameObject.z,
-                   health: 10,
-                  damage: 1,
-               )
+             final instance = Zombie(
+               x: gameObject.x,
+               y: gameObject.y,
+               z: gameObject.z,
+               health: 10,
+               damage: 1,
              );
+             characters.add(instance);
+             gameObject.instance = instance;
              break;
            default:
              print("Warning: Unrecognized SpawnType ${gameObject.spawnType}");

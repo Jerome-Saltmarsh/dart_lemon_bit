@@ -5,6 +5,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../classes/position3.dart';
+import '../classes/zombie.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
 import '../common/gameobject_request.dart';
@@ -18,7 +19,6 @@ import '../functions/withinRadius.dart';
 import '../io/save_directory.dart';
 import '../io/write_scene_to_file.dart';
 import '../isometric/generate_grid_z.dart';
-import '../physics.dart';
 import '../utilities/is_valid_index.dart';
 
 class Connection {
@@ -620,6 +620,20 @@ class Connection {
         final selectedGameObject = player.editorSelectedGameObject;
         if (selectedGameObject == null) return;
         player.scene.gameObjects.remove(selectedGameObject);
+
+        if (selectedGameObject is GameObjectSpawn){
+           final instance = selectedGameObject.instance;
+           if (instance is Zombie) {
+             player.game.characters.remove(instance);
+           }
+           if (instance is GameObjectChicken){
+             player.game.gameObjects.remove(instance);
+           }
+           if (instance is GameObjectButterfly){
+             player.game.gameObjects.remove(instance);
+           }
+        }
+
         player.scene.dirty = true;
         break;
 

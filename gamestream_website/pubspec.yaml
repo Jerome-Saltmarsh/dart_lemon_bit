@@ -1,0 +1,55 @@
+name: gamestream_flutter
+description: A client for gamestream platform
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.5 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  just_audio: ^0.9.28
+  google_sign_in: ^5.2.1
+  firebase_core: ^1.10.6
+  firebase_auth: ^3.3.4
+  url_strategy: ^0.2.0
+  lemon_dispatch: 0.3.1
+  lemon_byte:
+    path: C:\Users\Jerome\github\dart-lemon-byte
+  lemon_engine:
+    path: C:\Users\Jerome\github\bleed\dart-lemon-engine
+  firestore_client:
+    path: C:\Users\Jerome\github\bleed\firestore-client
+  flame_audio: ^1.2.0
+  universal_html: ^2.0.8
+  web_socket_channel: ^2.1.0
+  shelf_web_socket: ^1.0.1
+  shelf_router: ^1.1.2
+  animated_text_kit: ^4.2.1
+  shared_preferences: ^2.0.11
+  golden_ratio: 1.0.6
+  http: ^0.13.4
+  intl: ^0.17.0
+  flutter_facebook_auth: ^4.0.1
+  typedef: ^1.0.5
+  bleed_common:
+    path: C:\Users\Jerome\github\bleed\bleed-common
+
+dev_dependencies:
+  test: ^1.16.0
+
+flutter:
+  fonts:
+    - family: LibreBarcode39Text-Regular
+      fonts:
+        - asset: fonts/LibreBarcode39Text-Regular.ttf
+    - family: JetBrainsMono-Regular
+      fonts:
+        - asset: fonts/JetBrainsMono-Regular.ttf
+  assets:
+    - images/
+    - audio/
+    - audio/sounds/
+    - images/icons/

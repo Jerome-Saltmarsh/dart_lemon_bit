@@ -9,7 +9,6 @@ import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
-import 'package:gamestream_flutter/utils/widget_utils.dart';
 
 
 class WebsiteBuild {
@@ -25,38 +24,6 @@ class WebsiteBuild {
         fillColor: colours.black20,
       ),
     );
-  }
-
-  Widget mainMenu() {
-    return watchAccount((Account? account){
-      if (account == null) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            buttons.signInWithGoogleButton,
-            height8,
-            buttons.signInWithFacebookButton,
-          ],
-        );
-      }
-
-      return Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          onMouseOver(builder: (BuildContext context, bool mouseOver) {
-            return mouseOver ? Column(
-              children: [
-                buttons.buildAccount(mouseOver),
-                buttons.buttonAccount,
-                buttonCustomMap(),
-                buttons.buttonLogout,
-              ],
-            ) : buttons.account;
-          }),
-        ],
-      );
-    });
   }
 
   Widget buttonCustomMap(){

@@ -19,9 +19,7 @@ import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
-import 'package:gamestream_flutter/website/build/build_column_games.dart';
 import 'package:gamestream_flutter/website/build_layout_website.dart';
-import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/actions.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -31,32 +29,6 @@ import '../styles.dart';
 import 'build.dart';
 
 final nameController = TextEditingController();
-
-Widget buildDialogLogin() {
-  return dialog(
-      padding: 16,
-      color: colours.white05,
-      borderColor: colours.none,
-      height: 400,
-      borderWidth: 3,
-      child: buildLayout(
-          bottomLeft: button("Sign up", (){}),
-          bottomRight: button("Back", () {
-            website.state.dialog.value = WebsiteDialog.Games;
-          }, fillColor: colours.none,
-            borderColor: colours.none,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              height32,
-              buttons.signInWithGoogleButton,
-              height16,
-              buttons.signInWithFacebookButton,
-              height32,
-            ],
-          )));
-}
 
 Widget buildWatchErrorMessage(){
   return WatchBuilder(core.state.error, (String? message){
@@ -97,88 +69,6 @@ WatchBuilder<Connection> buildWatchConnection(Account? account) {
         return _views.connection;
     }
   });
-}
-
-Positioned buildLoginSuggestionBox() {
-  return Positioned(
-        top: 8,
-        right: 8,
-        child: Container(
-          padding: padding16,
-            decoration: BoxDecoration(
-              color: colours.white,
-              borderRadius: borderRadius4,
-            ),
-            width: 230.0 * goldenRatio_1618,
-            height: 230,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                height16,
-                buttons.signInWithGoogleButton,
-                height16,
-                buttons.signInWithFacebookButton,
-                height32,
-                text("Close", color: colours.black618, underline: true),
-              ],
-            ))
-    );
-}
-
-WatchBuilder<WebsiteDialog> buildWatchBuilderDialog() {
-  return WatchBuilder(website.state.dialog, (WebsiteDialog dialogs) {
-      switch (dialogs) {
-        case WebsiteDialog.Custom_Maps:
-          return website.build.dialogCustomMaps();
-
-        case WebsiteDialog.Subscription_Status_Changed:
-          return buildDialogSubscriptionStatus();
-
-        case WebsiteDialog.Subscription_Cancelled:
-          return buildDialogSubscriptionCancelled();
-
-        case WebsiteDialog.Subscription_Successful:
-          return buildDialogSubscriptionSuccessful();
-
-        case WebsiteDialog.Account_Created:
-          return buildDialogAccountCreated();
-
-        case WebsiteDialog.Welcome_2:
-          return buildDialogWelcome2();
-
-        case WebsiteDialog.Change_Region:
-          return buildDialogChangeRegion();
-
-        case WebsiteDialog.Login_Error:
-          return dialog(
-              child: buildLayout(
-                  child: text("Login Error"), bottomRight: backButton));
-
-        case WebsiteDialog.Change_Public_Name:
-          return buildDialogChangePublicName();
-
-        case WebsiteDialog.Account:
-          return buildDialogAccount();
-
-        case WebsiteDialog.Login:
-          return buildDialogLogin();
-
-        case WebsiteDialog.Invalid_Arguments:
-          return dialog(child: text("Invalid Arguments"));
-
-        case WebsiteDialog.Subscription_Required:
-          return dialog(child: text("Subscription Required"));
-
-        case WebsiteDialog.Games:
-          return buildColumnGames();
-
-        case WebsiteDialog.Confirm_Logout:
-          return dialog(child: text("Confirm Logout"));
-
-        case WebsiteDialog.Confirm_Cancel_Subscription:
-          return buildDialogConfirmCancelSubscription();
-      }
-    });
 }
 
 Widget buildDialogChangeRegion() {

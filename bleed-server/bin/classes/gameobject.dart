@@ -59,6 +59,7 @@ abstract class Updatable {
 
 class GameObjectSpawn extends GameObjectStatic {
   int spawnType;
+  dynamic instance;
 
   GameObjectSpawn({
     required double x,

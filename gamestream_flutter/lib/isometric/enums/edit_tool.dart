@@ -1,5 +1,0 @@
-
-enum EditTool {
-  Select,
-  Paint,
-}

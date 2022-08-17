@@ -9,6 +9,8 @@ import 'package:gamestream_flutter/ui/views.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
+import 'build/build_column_games.dart';
+
 const pad = 6.0;
 
 Widget buildPageWebsite() {
@@ -41,7 +43,7 @@ Widget buildPageWebsite() {
               width: engine.screen.width,
               height: engine.screen.height,
               alignment: Alignment.center,
-              child: buildWatchBuilderDialog()
+              child: buildColumnGames(),
           ),
       )
     ],

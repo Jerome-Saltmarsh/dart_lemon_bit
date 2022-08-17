@@ -116,26 +116,6 @@ class _Buttons {
     borderWidth: 1,
   );
 
-  final signInWithGoogleButton = button(
-    Container(
-      width: 220,
-    padding: EdgeInsets.symmetric(horizontal: 8),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        icons.google,
-        width16,
-        text("Continue", color: Colors.black),
-      ],
-    ),
-  ), core.actions.loginWithGoogle,
-    borderColor: colours.black618,
-    borderColorMouseOver: colours.black618,
-    fillColor: Colors.white,
-    fillColorMouseOver: Colors.white,
-    borderWidth: 1,
-  );
-
   final account = button(_iconSettings, (){
     if (website.state.dialog.value != WebsiteDialog.Account){
       website.state.dialog.value = WebsiteDialog.Account;
@@ -170,7 +150,6 @@ class _Buttons {
     );
   }
 
-  final Widget buttonLogout = buildMenuButton("Logout", core.actions.logout);
   final Widget buttonAccount = buildMenuButton("Account", website.actions.showDialogAccount);
   final Widget buttonGames = buildMenuButton("Games", website.actions.showDialogGames);
 
