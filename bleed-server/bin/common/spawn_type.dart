@@ -10,7 +10,7 @@ class SpawnType {
       Zombie: "Zombie",
       Chicken: "Chicken",
       Butterfly: "Butterfly",
-      Rat: "Butterfly",
+      Rat: "Rat",
     } [type] ?? "Unknown ($type)";
   }
 }
