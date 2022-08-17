@@ -5,7 +5,6 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_show_game_dialog_canvas_size.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
-import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
@@ -31,7 +30,6 @@ Stack buildStackEdit() {
         bottom: 6,
         child: Column(
           children: [
-            buildColumnObjects(),
             buildColumnSelected(),
             buildControlPaint(),
             buildWatchEditorTab(),
@@ -74,29 +72,6 @@ Stack buildStackEdit() {
       )
     ],
   );
-}
-
-Column buildColumnObjects() {
-  return Column(
-            children: [
-              text("Objects"),
-              Container(
-                height: 150,
-                child: Refresh((){
-                  return SingleChildScrollView(
-                    child: Column(
-                      children: gameObjects.map((gameObject){
-                        return container(
-                            child: GameObjectType.getName(gameObject.type),
-                            // action: () => edit.selectGameObject(gameObject)
-                        );
-                      }).toList(),
-                    ),
-                  );
-                }),
-              ),
-            ],
-          );
 }
 
 Column buildColumnSelected() {

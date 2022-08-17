@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/gameobject_request.dart';
 import 'package:gamestream_flutter/isometric/character_controller.dart';
-import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/screen.dart';
 

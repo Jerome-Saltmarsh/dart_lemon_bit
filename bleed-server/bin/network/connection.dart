@@ -849,8 +849,8 @@ class Connection {
   }
 
   void handleClientRequestTeleport(Player player) {
-    player.x = player.mouse.x;
-    player.y = player.mouse.y;
+    player.x = player.mouseGridX;
+    player.y = player.mouseGridY;
     player.health = player.maxHealth;
     player.state = CharacterState.Idle;
   }
