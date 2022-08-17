@@ -11,6 +11,7 @@ void onChangedMode(Mode mode){
        edit.deselectGameObject();
        cameraModeSetChase();
        sendClientRequestWeatherToggleTimePassing(true);
+       sendGameObjectRequestDeselect();
        return;
      case Mode.Edit:
        cameraModeSetFree();
