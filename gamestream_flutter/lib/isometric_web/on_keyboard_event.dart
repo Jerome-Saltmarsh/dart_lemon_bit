@@ -54,7 +54,11 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
   if (key == PhysicalKeyboardKey.keyF) return edit.paint();
   if (key == PhysicalKeyboardKey.keyR) return edit.selectPaintType();
   if (key == PhysicalKeyboardKey.keyG) {
-    cameraSetPositionGrid(edit.row.value, edit.column.value, edit.z.value);
+    if (edit.gameObjectSelected.value) {
+      sendGameObjectRequestMoveToMouse();
+    } else {
+      cameraSetPositionGrid(edit.row.value, edit.column.value, edit.z.value);
+    }
   }
   if (key == PhysicalKeyboardKey.keyY)
     return editor.actions.elevate();

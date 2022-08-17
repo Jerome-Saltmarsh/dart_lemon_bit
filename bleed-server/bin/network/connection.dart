@@ -640,6 +640,14 @@ class Connection {
           game.setSpawnType(spawn, spawn.type + 1);
         }
         break;
+
+      case GameObjectRequest.Move_To_Mouse:
+        final selectedGameObject = player.editorSelectedGameObject;
+        if (selectedGameObject == null) return;
+        selectedGameObject.x = player.mouseGridX;
+        selectedGameObject.y = player.mouseGridY;
+        selectedGameObject.z = player.z;
+        break;
     }
   }
 

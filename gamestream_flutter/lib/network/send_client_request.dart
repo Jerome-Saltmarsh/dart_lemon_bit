@@ -200,6 +200,10 @@ void sendGameObjectRequestSpawnTypeIncrement() {
   sendGameObjectRequest(GameObjectRequest.Spawn_Type_Increment);
 }
 
+void sendGameObjectRequestMoveToMouse() {
+  sendGameObjectRequest(GameObjectRequest.Move_To_Mouse);
+}
+
 void sendGameObjectRequest(GameObjectRequest request) {
   sendClientRequest(ClientRequest.Scene_Edit, request.index);
 }
