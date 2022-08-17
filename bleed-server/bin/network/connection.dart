@@ -620,20 +620,11 @@ class Connection {
         final selectedGameObject = player.editorSelectedGameObject;
         if (selectedGameObject == null) return;
         player.scene.gameObjects.remove(selectedGameObject);
-
         if (selectedGameObject is GameObjectSpawn){
-           final instance = selectedGameObject.instance;
-           if (instance is Zombie) {
-             player.game.characters.remove(instance);
-           }
-           if (instance is GameObjectChicken){
-             player.game.gameObjects.remove(instance);
-           }
-           if (instance is GameObjectButterfly){
-             player.game.gameObjects.remove(instance);
-           }
+          player.game.removeInstance(selectedGameObject.instance);
+          selectedGameObject.instance = null;
         }
-
+        player.editorSelectedGameObject = null;
         player.scene.dirty = true;
         break;
 
@@ -642,11 +633,10 @@ class Connection {
         if (selectedGameObject == null) return;
         if (selectedGameObject is GameObjectSpawn == false) return;
         final spawn = selectedGameObject as GameObjectSpawn;
-        spawn.spawnType++;
-        if (spawn.spawnType > SpawnType.Butterfly){
-          spawn.spawnType = 0;
+        final game = player.game;
+        if (game is GameDarkAge) {
+          game.setSpawnType(spawn, spawn.type + 1);
         }
-        player.scene.dirty = true;
         break;
     }
   }

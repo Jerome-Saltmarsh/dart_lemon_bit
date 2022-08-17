@@ -20,39 +20,56 @@ class GameDarkAge extends Game {
     for (var i = 0; i < gameObjects.length; i++){
       final gameObject = gameObjects[i];
        if (gameObject is GameObjectSpawn) {
-         switch (gameObject.spawnType){
-           case SpawnType.Chicken:
-             final instance = GameObjectChicken(
-                 x: gameObject.x,
-                 y: gameObject.y,
-                 z: gameObject.z);
-             gameObjects.add(instance);
-             gameObject.instance = instance;
-             break;
-           case SpawnType.Butterfly:
-             final instance = GameObjectButterfly(
-                 x: gameObject.x,
-                 y: gameObject.y,
-                 z: gameObject.z);
-             gameObjects.add(instance);
-             gameObject.instance = instance;
-             break;
-           case SpawnType.Zombie:
-             final instance = Zombie(
-               x: gameObject.x,
-               y: gameObject.y,
-               z: gameObject.z,
-               health: 10,
-               damage: 1,
-             );
-             characters.add(instance);
-             gameObject.instance = instance;
-             break;
-           default:
-             print("Warning: Unrecognized SpawnType ${gameObject.spawnType}");
-             break;
-         }
+         spawnGameObject(gameObject);
        }
+    }
+  }
+
+  void setSpawnType(GameObjectSpawn spawn, int type){
+    spawn.spawnType++;
+    if (spawn.spawnType > SpawnType.Butterfly){
+      spawn.spawnType = 0;
+    }
+    onSpawnTypeChanged(spawn);
+  }
+
+  void onSpawnTypeChanged(GameObjectSpawn spawn){
+       removeInstance(spawn.instance);
+       spawnGameObject(spawn);
+  }
+
+  void spawnGameObject(GameObjectSpawn spawn){
+    switch (spawn.spawnType){
+      case SpawnType.Chicken:
+        final instance = GameObjectChicken(
+            x: spawn.x,
+            y: spawn.y,
+            z: spawn.z);
+        gameObjects.add(instance);
+        spawn.instance = instance;
+        break;
+      case SpawnType.Butterfly:
+        final instance = GameObjectButterfly(
+            x: spawn.x,
+            y: spawn.y,
+            z: spawn.z);
+        gameObjects.add(instance);
+        spawn.instance = instance;
+        break;
+      case SpawnType.Zombie:
+        final instance = Zombie(
+          x: spawn.x,
+          y: spawn.y,
+          z: spawn.z,
+          health: 10,
+          damage: 1,
+        );
+        characters.add(instance);
+        spawn.instance = instance;
+        break;
+      default:
+        print("Warning: Unrecognized SpawnType ${spawn.spawnType}");
+        break;
     }
   }
 

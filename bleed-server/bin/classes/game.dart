@@ -448,6 +448,23 @@ extension GameFunctions on Game {
     checkProjectileCollision(characters);
   }
 
+  void removeInstance(dynamic instance){
+    if (instance == null) return;
+    if (instance is Zombie) {
+      characters.remove(instance);
+      return;
+    }
+    if (instance is GameObjectChicken){
+      gameObjects.remove(instance);
+      return;
+    }
+    if (instance is GameObjectButterfly){
+      gameObjects.remove(instance);
+      return;
+    }
+    throw Exception("Could not remove instance $instance");
+  }
+
   void updatePlayer(Player player) {
     player.framesSinceClientRequest++;
 
