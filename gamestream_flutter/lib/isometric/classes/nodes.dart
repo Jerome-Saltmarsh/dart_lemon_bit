@@ -168,7 +168,12 @@ class NodeGrassLong extends Node {
 
 
 class NodeRainFalling extends Node {
-  NodeRainFalling(int row, int column, int z) : super(row, column, z);
+
+  late int frame;
+
+  NodeRainFalling(int row, int column, int z) : super(row, column, z) {
+    frame = (row + column) * 2;
+  }
 
   @override
   bool get blocksPerception => false;
@@ -179,7 +184,7 @@ class NodeRainFalling extends Node {
       dstX: dstX - rainPosition,
       dstY: dstY + animationFrameRain,
       srcX: srcXRainFalling,
-      srcY: 72.0 * animationFrameRain,
+      srcY: 72.0 * ((animationFrameRain + frame) % 6),
       srcWidth: 48,
       srcHeight: 72,
       anchorY: 0.3334,
@@ -195,8 +200,11 @@ class NodeRainFalling extends Node {
 }
 
 class NodeRainLanding extends Node {
+  late int frame;
 
-  NodeRainLanding(int row, int column, int z) : super(row, column, z);
+  NodeRainLanding(int row, int column, int z) : super(row, column, z) {
+    frame = (row + column) * 2;
+  }
 
   @override
   bool get blocksPerception => false;
@@ -207,7 +215,7 @@ class NodeRainLanding extends Node {
       dstX: dstX,
       dstY: dstY,
       srcX: srcXRainLanding,
-      srcY: 72.0 * animationFrameRain,
+      srcY: 72.0 * ((animationFrameRain + frame) % 6),
       srcWidth: 48,
       srcHeight: 72,
       anchorY: 0.3334,
