@@ -576,8 +576,7 @@ class Connection {
         break;
 
       case GameObjectRequest.Deselect:
-        player.editorSelectedGameObject = null;
-        player.writePlayerEvent(PlayerEvent.GameObject_Deselected);
+        player.deselectSelectedGameObject();
         break;
 
       case GameObjectRequest.Translate:
@@ -625,7 +624,7 @@ class Connection {
         final selectedGameObject = player.editorSelectedGameObject;
         if (selectedGameObject == null) return;
         player.game.removeInstance(selectedGameObject);
-        player.editorSelectedGameObject = null;
+        player.deselectSelectedGameObject();
         break;
 
       case GameObjectRequest.Spawn_Type_Increment:

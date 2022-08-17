@@ -72,6 +72,12 @@ class Player extends Character with ByteWriter {
   var mapX = 0;
   var mapY = 0;
 
+  void deselectSelectedGameObject(){
+    if (editorSelectedGameObject == null) return;
+    editorSelectedGameObject = null;
+    writePlayerEvent(PlayerEvent.GameObject_Deselected);
+  }
+
   bool questToDo(Quest quest) => !questCompleted(quest) && !questInProgress(quest);
   bool questInProgress(Quest quest) => questsInProgress.contains(quest);
   bool questCompleted(Quest quest) => questsCompleted.contains(quest);
