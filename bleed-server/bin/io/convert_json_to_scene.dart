@@ -8,7 +8,6 @@ import '../classes/node.dart';
 import '../common/game_object_type.dart';
 import '../common/spawn_type.dart';
 import '../isometric/generate_node.dart';
-import 'to_json_gameobject.dart';
 
 Scene convertJsonToScene(Json json, String name) {
   final height = json.getInt('grid-z');

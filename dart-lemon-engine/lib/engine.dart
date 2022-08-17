@@ -327,12 +327,12 @@ abstract class KeyboardEventHandler {
 }
 
 class _Screen {
-  double width = 0;
-  double height = 0;
-  double top = 0;
-  double right = 0;
-  double bottom = 0;
-  double left = 0;
+  var width = 0.0;
+  var height = 0.0;
+  var top = 0.0;
+  var right = 0.0;
+  var bottom = 0.0;
+  var left = 0.0;
 
   bool contains(double x, double y) {
     return
@@ -343,18 +343,6 @@ class _Screen {
       y > top
           &&
       y < bottom
-    ;
-  }
-
-  bool containsV(Position value) {
-    return
-      value.x > left
-          &&
-      value.x < right
-          &&
-      value.y > top
-          &&
-      value.y < bottom
     ;
   }
 }

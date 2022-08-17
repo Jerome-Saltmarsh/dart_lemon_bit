@@ -206,20 +206,6 @@ class GameRender {
     }
   }
 
-  void drawBulletHoles(List<Vector2> bulletHoles) {
-    for (final bulletHole in bulletHoles) {
-      if (bulletHole.x == 0) return;
-      if (!engine.screen.contains(bulletHole.x, bulletHole.y)) continue;
-      // render(
-      //     dstX: bulletHole.x,
-      //     dstY: bulletHole.y,
-      //     srcX: 1,
-      //     srcY: 1,
-      //     srcSize: 4,
-      // );
-    }
-  }
-
   void drawMouseAim2() {
     engine.setPaintColorWhite();
     double angle = queries.getAngleBetweenMouseAndPlayer();

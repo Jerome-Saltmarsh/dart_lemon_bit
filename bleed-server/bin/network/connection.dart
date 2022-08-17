@@ -561,8 +561,8 @@ class Connection {
       case GameObjectRequest.Select:
         final gameObjects = player.scene.gameObjects;
         if (gameObjects.isEmpty) return;
-        final mouseX = player.mouseRenderX;
-        final mouseY = player.mouseRenderY;
+        final mouseX = player.mouse.x;
+        final mouseY = player.mouse.y;
         var closest = gameObjects.first;
         var distance = getDistanceXY(mouseX, mouseY, closest.renderX, closest.renderY);
 

@@ -20,11 +20,13 @@ import 'zombie.dart';
 import 'library.dart';
 
 class Player extends Character with ByteWriter {
+
+
   final mouse = Vector2(0, 0);
   final _runTarget = Position3();
 
-  double get mouseRenderX =>  (mouse.x - mouse.y) * 0.5;
-  double get mouseRenderY =>  ((y + x) * 0.5) - z;
+  double get mouseGridX => (mouse.x + mouse.y) + z;
+  double get mouseGridY => (mouse.y - mouse.x) + z;
 
   GameObject? editorSelectedGameObject;
   var debug = false;
@@ -137,7 +139,7 @@ class Player extends Character with ByteWriter {
   }
 
   void runToMouse(){
-    setRunTarget(mouse.x, mouse.y);
+    setRunTarget(mouseGridX, mouseGridY);
   }
 
   void setRunTarget(double x, double y){

@@ -4,6 +4,7 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/gameobject_request.dart';
 import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/screen.dart';
 
 import 'web_socket.dart';
@@ -208,8 +209,8 @@ Future sendClientRequestUpdate() async {
   const updateIndex = 0;
   updateBuffer[0] = updateIndex;
   updateBuffer[1] = characterAction;
-  writeNumberToByteArray(number: mouseGridX, list: updateBuffer, index: 2);
-  writeNumberToByteArray(number: mouseGridY, list: updateBuffer, index: 4);
+  writeNumberToByteArray(number: mouseWorldX, list: updateBuffer, index: 2);
+  writeNumberToByteArray(number: mouseWorldY, list: updateBuffer, index: 4);
   updateBuffer[6] = characterDirection;
   writeNumberToByteArray(number: screen.left, list: updateBuffer, index: 7);
   writeNumberToByteArray(number: screen.top, list: updateBuffer, index: 9);
