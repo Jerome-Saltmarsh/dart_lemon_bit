@@ -1,8 +1,5 @@
 
-import 'package:bleed_common/Shade.dart';
-import 'package:bleed_common/grid_node_type.dart';
-import 'package:bleed_common/tile_size.dart';
-import 'package:bleed_common/wind.dart';
+import 'package:bleed_common/library.dart';
 import 'package:lemon_engine/actions/render_atlas.dart';
 import 'package:lemon_engine/render.dart';
 import 'package:lemon_math/library.dart';
@@ -47,7 +44,7 @@ abstract class Node {
   }
 
   int get type;
-  String get name => GridNodeType.getName(type);
+  String get name => NodeType.getName(type);
   bool get isEmpty => false;
   bool get isRainable => false;
   bool get renderable => true;
@@ -149,7 +146,7 @@ class NodeBoundary extends Node {
   bool get renderable => false;
 
   @override
-  int get type => GridNodeType.Boundary;
+  int get type => NodeType.Boundary;
 
   @override
   bool get blocksPerception => false;
@@ -191,7 +188,7 @@ class NodeEmpty extends Node {
   bool get renderable => false;
 
   @override
-  int get type => GridNodeType.Empty;
+  int get type => NodeType.Empty;
 
   @override
   bool get isEmpty => true;

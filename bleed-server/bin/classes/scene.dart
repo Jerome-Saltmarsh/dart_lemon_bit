@@ -33,7 +33,7 @@ class Scene {
   }
 
   int getGridType(int z, int row, int column){
-     if (outOfBounds(z, row, column)) return GridNodeType.Boundary;
+     if (outOfBounds(z, row, column)) return NodeType.Boundary;
      return grid[z][row][column].type;
   }
 
@@ -195,22 +195,22 @@ class Scene {
   double getHeightAt(double x, double y, double z){
     var type = getNodeXYZ(x, y, z).type;
     final bottom = (z ~/ tileHeight) * tileHeight;
-    if (type == GridNodeType.Empty) return bottom;
-    if (type == GridNodeType.Boundary) return bottom;
+    if (type == NodeType.Empty) return bottom;
+    if (type == NodeType.Boundary) return bottom;
 
-    if (GridNodeType.isSlopeNorth(type)){
+    if (NodeType.isSlopeNorth(type)){
       final percentage = 1 - ((x % tileSize) / tileSize);
       return (percentage * tileHeight) + bottom;
     }
-    if (GridNodeType.isSlopeSouth(type)){
+    if (NodeType.isSlopeSouth(type)){
       final percentage = ((x % tileSize) / tileSize);
       return (percentage * tileHeight) + bottom;
     }
-    if (GridNodeType.isSlopeWest(type)){
+    if (NodeType.isSlopeWest(type)){
       final percentage = ((y % tileSize) / tileSize);
       return (percentage * tileHeight) + bottom;
     }
-    if (GridNodeType.isSlopeEast(type)){
+    if (NodeType.isSlopeEast(type)){
       final percentage = 1 - ((y % tileSize) / tileSize);
       return (percentage * tileHeight) + bottom;
     }

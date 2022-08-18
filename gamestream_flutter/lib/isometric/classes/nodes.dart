@@ -1,4 +1,4 @@
-import 'package:bleed_common/grid_node_type.dart';
+import 'package:bleed_common/node_type.dart';
 import 'package:bleed_common/wind.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/particle_emitters.dart';
@@ -17,7 +17,7 @@ class NodeBricks extends GridNodeColorRamp {
   NodeBricks(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Bricks;
+  int get type => NodeType.Bricks;
 
   @override
   double get srcX => 7104;
@@ -34,7 +34,7 @@ class NodeGrass extends Node {
   void handleRender() => renderSrcX(7158);
 
   @override
-  int get type => GridNodeType.Grass;
+  int get type => NodeType.Grass;
 
   @override
   bool get isRainable => true;
@@ -48,7 +48,7 @@ class NodeGrassFlowers extends Node {
   void handleRender() => renderSrcX(9782);
 
   @override
-  int get type => GridNodeType.Grass_Flowers;
+  int get type => NodeType.Grass_Flowers;
 
   @override
   bool get isRainable => true;
@@ -61,7 +61,7 @@ class NodeGrassSlopeNorth extends GridNodeColorRamp {
 
 
   @override
-  int get type => GridNodeType.Grass_Slope_North;
+  int get type => NodeType.Grass_Slope_North;
 
   @override
   double get srcX => 7925;
@@ -71,7 +71,7 @@ class NodeGrassSlopeEast extends GridNodeColorRamp {
   NodeGrassSlopeEast(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Grass_Slope_East;
+  int get type => NodeType.Grass_Slope_East;
 
   @override
   double get srcX => 7877;
@@ -82,7 +82,7 @@ class NodeGrassSlopeSouth extends GridNodeColorRamp {
   NodeGrassSlopeSouth(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Grass_Slope_South;
+  int get type => NodeType.Grass_Slope_South;
 
   @override
   double get srcX => 7829;
@@ -93,7 +93,7 @@ class NodeGrassSlopeWest extends GridNodeColorRamp {
   NodeGrassSlopeWest(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Grass_Slope_West;
+  int get type => NodeType.Grass_Slope_West;
 
   @override
   double get srcX => 7781;
@@ -103,7 +103,7 @@ class NodeGrassSlopeTop extends GridNodeColorRamp {
   NodeGrassSlopeTop(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Grass_Slope_Top;
+  int get type => NodeType.Grass_Slope_Top;
 
   @override
   double get srcX => 8536;
@@ -113,7 +113,7 @@ class NodeGrassSlopeRight extends GridNodeColorRamp {
   NodeGrassSlopeRight(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Grass_Slope_Right;
+  int get type => NodeType.Grass_Slope_Right;
 
   @override
   double get srcX => 8488;
@@ -123,7 +123,7 @@ class NodeGrassSlopeBottom extends GridNodeColorRamp {
   NodeGrassSlopeBottom(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Grass_Slope_Bottom;
+  int get type => NodeType.Grass_Slope_Bottom;
 
   @override
   double get srcX => 8440;
@@ -133,7 +133,7 @@ class NodeGrassSlopeLeft extends GridNodeColorRamp {
   NodeGrassSlopeLeft(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Grass_Slope_Left;
+  int get type => NodeType.Grass_Slope_Left;
 
   @override
   double get srcX => 8392;
@@ -163,7 +163,7 @@ class NodeGrassLong extends Node {
     }
   }
   @override
-  int get type => GridNodeType.Grass_Long;
+  int get type => NodeType.Grass_Long;
 }
 
 
@@ -192,7 +192,7 @@ class NodeRainFalling extends Node {
     );
   }
   @override
-  int get type => GridNodeType.Rain_Falling;
+  int get type => NodeType.Rain_Falling;
 
   @override
   bool get isEmpty => true;
@@ -223,7 +223,7 @@ class NodeRainLanding extends Node {
     );
   }
   @override
-  int get type => GridNodeType.Rain_Landing;
+  int get type => NodeType.Rain_Landing;
 
   @override
   bool get isEmpty => true;
@@ -233,7 +233,7 @@ class NodeWood extends GridNodeColorRamp {
   NodeWood(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Wood;
+  int get type => NodeType.Wood;
 
   @override
   double get srcX => 8887;
@@ -243,7 +243,7 @@ class NodeSoil extends GridNodeColorRamp {
   NodeSoil(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Soil;
+  int get type => NodeType.Soil;
 
   @override
   double get srcX => 8320;
@@ -256,7 +256,7 @@ class NodeRoofHayNorth extends GridNodeColorRamp {
   NodeRoofHayNorth(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Roof_Tile_North;
+  int get type => NodeType.Roof_Tile_North;
 
   @override
   double get srcX => 9415;
@@ -266,7 +266,7 @@ class NodeRoofHaySouth extends GridNodeColorRamp {
   NodeRoofHaySouth(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Roof_Tile_South;
+  int get type => NodeType.Roof_Tile_South;
 
   @override
   double get srcX => 9463;
@@ -276,7 +276,7 @@ class NodeWoodHalfRow1 extends GridNodeColorRamp {
   NodeWoodHalfRow1(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Wood_Half_Row_1;
+  int get type => NodeType.Wood_Half_Row_1;
 
   @override
   double get srcX => 8935;
@@ -289,7 +289,7 @@ class NodeWoodHalfRow2 extends GridNodeColorRamp {
   }
 
   @override
-  int get type => GridNodeType.Wood_Half_Row_1;
+  int get type => NodeType.Wood_Half_Row_1;
 
   @override
   double get srcX => 8935;
@@ -299,7 +299,7 @@ class NodeWoodHalfColumn1 extends GridNodeColorRamp {
   NodeWoodHalfColumn1(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Wood_Half_Column_1;
+  int get type => NodeType.Wood_Half_Column_1;
 
   @override
   double get srcX => 8983;
@@ -312,7 +312,7 @@ class NodeWoodHalfColumn2 extends GridNodeColorRamp {
   }
 
   @override
-  int get type => GridNodeType.Wood_Half_Column_2;
+  int get type => NodeType.Wood_Half_Column_2;
 
   @override
   double get srcX => 8983;
@@ -322,7 +322,7 @@ class NodeWoodCornerBottom extends GridNodeColorRamp {
   NodeWoodCornerBottom(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Wood_Corner_Bottom;
+  int get type => NodeType.Wood_Corner_Bottom;
 
   @override
   double get srcX => 9175;
@@ -332,7 +332,7 @@ class NodeWoodCornerLeft extends GridNodeColorRamp {
   NodeWoodCornerLeft(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Wood_Corner_Left;
+  int get type => NodeType.Wood_Corner_Left;
 
   @override
   double get srcX => 9031;
@@ -342,7 +342,7 @@ class NodeWoodCornerTop extends GridNodeColorRamp {
   NodeWoodCornerTop(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Wood_Corner_Top;
+  int get type => NodeType.Wood_Corner_Top;
 
   @override
   double get srcX => 9079;
@@ -352,7 +352,7 @@ class NodeWoodCornerRight extends GridNodeColorRamp {
   NodeWoodCornerRight(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Wood_Corner_Right;
+  int get type => NodeType.Wood_Corner_Right;
 
   @override
   double get srcX => 9127;
@@ -380,7 +380,7 @@ class NodeWater extends Node {
     );
   }
   @override
-  int get type => GridNodeType.Water;
+  int get type => NodeType.Water;
 
   @override
   bool get isRainable => true;
@@ -403,7 +403,7 @@ class NodeWaterFlowing extends Node {
     );
   }
   @override
-  int get type => GridNodeType.Water_Flowing;
+  int get type => NodeType.Water_Flowing;
 
   @override
   bool get isRainable => true;
@@ -413,7 +413,7 @@ class NodeStone extends GridNodeColorRamp {
   NodeStone(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Stone;
+  int get type => NodeType.Stone;
 
   @override
   double get srcX => 9831;
@@ -433,7 +433,7 @@ class NodeTorch extends Node {
     return renderTorchOnWindy(dstX, dstY);
   }
   @override
-  int get type => GridNodeType.Torch;
+  int get type => NodeType.Torch;
 
   @override
   bool get emitsLight => true;
@@ -459,7 +459,7 @@ class NodeTreeBottom extends Node {
     );
   }
   @override
-  int get type => GridNodeType.Tree_Bottom;
+  int get type => NodeType.Tree_Bottom;
 }
 
 class NodeTreeTop extends Node {
@@ -491,7 +491,7 @@ class NodeTreeTop extends Node {
 
   }
   @override
-  int get type => GridNodeType.Tree_Top;
+  int get type => NodeType.Tree_Top;
 }
 
 
@@ -516,7 +516,7 @@ class NodeFireplace extends Node {
     );
   }
   @override
-  int get type => GridNodeType.Fireplace;
+  int get type => NodeType.Fireplace;
 
   @override
   bool get emitsLight => true;
@@ -526,7 +526,7 @@ class GidNodeRoofHayNorth extends GridNodeColorRamp {
   GidNodeRoofHayNorth({required int row, required int column, required int z}) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Roof_Hay_North;
+  int get type => NodeType.Roof_Hay_North;
 
   @override
   double get srcX => 9552;
@@ -536,7 +536,7 @@ class GidNodeRoofHaySouth extends GridNodeColorRamp {
   GidNodeRoofHaySouth({required int row, required int column, required int z}) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Roof_Hay_South;
+  int get type => NodeType.Roof_Hay_South;
 
   @override
   double get srcX => 9600;
@@ -547,7 +547,7 @@ class NodeStairsNorth extends GridNodeColorRamp {
   NodeStairsNorth(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Stairs_North;
+  int get type => NodeType.Stairs_North;
 
   @override
   double get srcX => 7494;
@@ -557,7 +557,7 @@ class NodeStairsEast extends GridNodeColorRamp {
   NodeStairsEast(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Stairs_East;
+  int get type => NodeType.Stairs_East;
 
   @override
   double get srcX => 7542;
@@ -567,7 +567,7 @@ class NodeStairsSouth extends GridNodeColorRamp {
   NodeStairsSouth(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Stairs_South;
+  int get type => NodeType.Stairs_South;
 
   @override
   double get srcX => 7398;
@@ -577,7 +577,7 @@ class NodeStairsWest extends GridNodeColorRamp {
   NodeStairsWest(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Stairs_West;
+  int get type => NodeType.Stairs_West;
 
   @override
   double get srcX => 7446;
@@ -587,7 +587,7 @@ class NodeBrickTop extends GridNodeColorRamp {
   NodeBrickTop(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Brick_Top;
+  int get type => NodeType.Brick_Top;
 
   @override
   double get srcX => 8621;
@@ -597,7 +597,7 @@ class NodeTileNorth extends GridNodeColorRamp {
   NodeTileNorth(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Roof_Tile_North;
+  int get type => NodeType.Roof_Tile_North;
 
   @override
   double get srcX => 9415;
@@ -607,7 +607,7 @@ class NodeTileSouth extends GridNodeColorRamp {
   NodeTileSouth(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Roof_Tile_South;
+  int get type => NodeType.Roof_Tile_South;
 
   @override
   double get srcX => 9463;
@@ -620,7 +620,7 @@ class NodeGrassEdgeTop extends GridNodeColorRamp {
   double get srcX => 10042;
 
   @override
-  int get type => GridNodeType.Grass_Edge_Top;
+  int get type => NodeType.Grass_Edge_Top;
 }
 
 class NodeGrassEdgeRight extends GridNodeColorRamp {
@@ -630,7 +630,7 @@ class NodeGrassEdgeRight extends GridNodeColorRamp {
   double get srcX => 9994;
 
   @override
-  int get type => GridNodeType.Grass_Edge_Right;
+  int get type => NodeType.Grass_Edge_Right;
 }
 
 class NodeGrassEdgeBottom extends GridNodeColorRamp {
@@ -640,7 +640,7 @@ class NodeGrassEdgeBottom extends GridNodeColorRamp {
   double get srcX => 9946;
 
   @override
-  int get type => GridNodeType.Grass_Edge_Bottom;
+  int get type => NodeType.Grass_Edge_Bottom;
 }
 
 class NodeGrassEdgeLeft extends GridNodeColorRamp {
@@ -650,7 +650,7 @@ class NodeGrassEdgeLeft extends GridNodeColorRamp {
   double get srcX => 9898;
 
   @override
-  int get type => GridNodeType.Grass_Edge_Left;
+  int get type => NodeType.Grass_Edge_Left;
 }
 
 class NodeBauHaus extends GridNodeShaded {
@@ -660,7 +660,7 @@ class NodeBauHaus extends GridNodeShaded {
   double get srcX => 10545;
 
   @override
-  int get type => GridNodeType.Bau_Haus;
+  int get type => NodeType.Bau_Haus;
 }
 
 class NodeBauHausRoofNorth extends GridNodeShaded {
@@ -670,7 +670,7 @@ class NodeBauHausRoofNorth extends GridNodeShaded {
   double get srcX => 10641;
 
   @override
-  int get type => GridNodeType.Bau_Haus_Roof_North;
+  int get type => NodeType.Bau_Haus_Roof_North;
 }
 
 class NodeBauHausRoofSouth extends GridNodeShaded {
@@ -680,7 +680,7 @@ class NodeBauHausRoofSouth extends GridNodeShaded {
   double get srcX => 10593;
 
   @override
-  int get type => GridNodeType.Bau_Haus_Roof_South;
+  int get type => NodeType.Bau_Haus_Roof_South;
 }
 
 
@@ -691,7 +691,7 @@ class NodeBauHausWindow extends GridNodeColorRamp {
   double get srcX => 10689;
 
   @override
-  int get type => GridNodeType.Bau_Haus_Window;
+  int get type => NodeType.Bau_Haus_Window;
 }
 
 class NodeBauHausPlain extends GridNodeColorRamp {
@@ -701,7 +701,7 @@ class NodeBauHausPlain extends GridNodeColorRamp {
   double get srcX => 10738;
 
   @override
-  int get type => GridNodeType.Bau_Haus_Plain;
+  int get type => NodeType.Bau_Haus_Plain;
 }
 
 class NodeBauHausChimney extends GridNodeColorRamp {
@@ -713,7 +713,7 @@ class NodeBauHausChimney extends GridNodeColorRamp {
   double get srcX => 10787;
 
   @override
-  int get type => GridNodeType.Chimney;
+  int get type => NodeType.Chimney;
 }
 
 
@@ -722,7 +722,7 @@ class NodeBedTop extends GridNodeShaded {
   NodeBedTop(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Bed_Top;
+  int get type => NodeType.Bed_Top;
 
   @override
   double get srcX => 10885;
@@ -736,7 +736,7 @@ class NodeBedBottom extends GridNodeShaded {
   NodeBedBottom(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Bed_Bottom;
+  int get type => NodeType.Bed_Bottom;
 
   @override
   double get srcX => 10836;
@@ -750,7 +750,7 @@ class NodeTable extends GridNodeShaded {
   NodeTable(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Table;
+  int get type => NodeType.Table;
 
   @override
   double get srcX => 7639;
@@ -764,7 +764,7 @@ class NodeSunflower extends GridNodeShaded {
   NodeSunflower(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Sunflower;
+  int get type => NodeType.Sunflower;
 
   @override
   double get srcX => 10934;
@@ -778,7 +778,7 @@ class NodeOven extends GridNodeShaded {
   NodeOven(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
-  int get type => GridNodeType.Oven;
+  int get type => NodeType.Oven;
 
   @override
   double get srcX => 10984;

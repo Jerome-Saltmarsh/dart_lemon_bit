@@ -210,7 +210,7 @@ abstract class Character extends Collider with Team, Velocity, Material {
     y += yv;
 
     final type = getGridTypeInDirection(game: game, angle: angle, distance: radius);
-    if (type == GridNodeType.Tree_Bottom || type == GridNodeType.Torch) {
+    if (type == NodeType.Tree_Bottom || type == NodeType.Torch) {
       final nodeCenterX = indexRow * tileSize + tileSizeHalf;
       final nodeCenterY = indexColumn * tileSize + tileSizeHalf;
       final dis = getDistanceXY(nodeCenterX, nodeCenterY);

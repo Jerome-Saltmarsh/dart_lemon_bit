@@ -1,4 +1,5 @@
 import 'package:bleed_common/library.dart';
+
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
@@ -52,7 +53,7 @@ double getVolumeTargetRain() {
    if (rain.value == Rain.None) return 0.0;
    const r = 7;
    const maxDistance = r * tileSize;
-   final distance = getClosestByType(radius: r, type: GridNodeType.Rain_Landing) * tileSize;
+   final distance = getClosestByType(radius: r, type: NodeType.Rain_Landing) * tileSize;
    final v = convertDistanceToVolume(distance, maxDistance: maxDistance);
    return v * (rain.value == Rain.Light ? 0.5 : 1.0) * 0.5;
 }
@@ -73,9 +74,9 @@ double getVolumeTargetDayAmbience() {
 double getVolumeTargetFire(){
   const r = 4;
   const maxDistance = r * tileSize;
-  var closest = getClosestByType(radius: r, type: GridNodeType.Fireplace) * tileSize;
+  var closest = getClosestByType(radius: r, type: NodeType.Fireplace) * tileSize;
   if (torchesIgnited.value) {
-      final closestTorch = getClosestByType(radius: r, type: GridNodeType.Torch) * tileSize;
+      final closestTorch = getClosestByType(radius: r, type: NodeType.Torch) * tileSize;
       if (closestTorch < closest) {
          closest = closestTorch;
       }
@@ -95,6 +96,6 @@ double getVolumeHeartBeat(){
 double getVolumeStream(){
   const r = 7;
   const maxDistance = r * tileSize;
-  final distance = getClosestByType(radius: r, type: GridNodeType.Water_Flowing) * tileSize;
+  final distance = getClosestByType(radius: r, type: NodeType.Water_Flowing) * tileSize;
   return convertDistanceToVolume(distance, maxDistance: maxDistance) * 0.3;
 }

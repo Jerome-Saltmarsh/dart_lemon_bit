@@ -441,7 +441,7 @@ class Connection {
       return errorInvalidArg('z');
     }
     final type = int.tryParse(arguments[4]);
-    if (type == GridNodeType.Boundary) {
+    if (type == NodeType.Boundary) {
       throw Exception("Cannot set grid block boundary");
     }
     if (type == null){
@@ -482,21 +482,21 @@ class Connection {
     if (dimension == 1) {
        if (add == 1) {
          if (start == 1){
-           var type = GridNodeType.Grass;
+           var type = NodeType.Grass;
               for (final z in grid){
                 z.insert(
                     0,
                     generateGridRow(columns, type: type)
                 );
-                type = GridNodeType.Empty;
+                type = NodeType.Empty;
               }
          } else { // End
-           var type = GridNodeType.Grass;
+           var type = NodeType.Grass;
            for (final z in grid){
              z.add(
                  generateGridRow(columns, type: type)
              );
-             type = GridNodeType.Empty;
+             type = NodeType.Empty;
            }
          }
        } else { // Remove
@@ -516,20 +516,20 @@ class Connection {
     if (dimension == 2){
       if (add == 1){
         if (start == 1){
-          var type = GridNodeType.Grass;
+          var type = NodeType.Grass;
            for (final z in grid){
               for (final row in z){
                  row.insert(0, generateNode(type));
               }
-              type = GridNodeType.Empty;
+              type = NodeType.Empty;
            }
         } else {
-          var type = GridNodeType.Grass;
+          var type = NodeType.Grass;
           for (final z in grid){
             for (final row in z){
               row.add(generateNode(type));
             }
-            type = GridNodeType.Empty;
+            type = NodeType.Empty;
           }
         }
       }

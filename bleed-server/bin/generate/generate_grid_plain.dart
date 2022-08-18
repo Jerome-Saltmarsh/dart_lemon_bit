@@ -1,4 +1,4 @@
-import '../common/grid_node_type.dart';
+import '../common/node_type.dart';
 
 List<List<List<int>>> generateGridPlain({int rows = 50, int columns = 50, int height = 7}) {
   final List<List<List<int>>> grid = [];
@@ -9,7 +9,7 @@ List<List<List<int>>> generateGridPlain({int rows = 50, int columns = 50, int he
       final row = <int>[];
       layer.add(row);
       for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
-        row.add(z == 0 ? GridNodeType.Grass : GridNodeType.Empty);
+        row.add(z == 0 ? NodeType.Grass : NodeType.Empty);
       }
     }
   }

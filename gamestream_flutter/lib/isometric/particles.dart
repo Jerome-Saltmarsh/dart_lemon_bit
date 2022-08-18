@@ -77,11 +77,11 @@ void _updateParticle(Particle particle){
 
   final tile = particle.tile.type;
   final airBorn =
-      tile == GridNodeType.Empty        ||
-      tile == GridNodeType.Rain_Landing ||
-      tile == GridNodeType.Rain_Falling ||
-      tile == GridNodeType.Grass_Long ||
-      tile == GridNodeType.Fireplace    ;
+      tile == NodeType.Empty        ||
+      tile == NodeType.Rain_Landing ||
+      tile == NodeType.Rain_Falling ||
+      tile == NodeType.Grass_Long ||
+      tile == NodeType.Fireplace    ;
 
   if (!airBorn) {
     particle.deactivate();
@@ -102,7 +102,7 @@ void _updateParticle(Particle particle){
   if (particle.outOfBounds) return particle.deactivate();
 
   if (bounce) {
-    if (tile == GridNodeType.Water){
+    if (tile == NodeType.Water){
       return particle.deactivate();
     }
     if (particle.zv < -0.1){

@@ -11,7 +11,7 @@ var _next = 0;
 void updateGenerateLeaves(){
    if (_next-- > 0) return;
    _next = 50;
-   gridForEachOfType(GridNodeType.Tree_Top, (z, row, column, type) {
+   gridForEachOfType(NodeType.Tree_Top, (z, row, column, type) {
       if (grid[z][row][column].wind == Wind.Calm) return;
       final chance = random.nextDouble();
       if (chance < 0.85) return;

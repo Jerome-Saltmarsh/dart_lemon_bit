@@ -1,4 +1,4 @@
-class GridNodeType {
+class NodeType {
   static const Empty = 0;
   static const Boundary = 1;
   static const Grass = 2;
@@ -58,24 +58,24 @@ class GridNodeType {
   static const Grass_Flowers = 61;
 
   static isSolid(int type){
-    if (type == GridNodeType.Bricks) return true;
-    if (type == GridNodeType.Grass) return true;
-    if (type == GridNodeType.Wood) return true;
-    if (type == GridNodeType.Soil) return true;
-    if (type == GridNodeType.Boundary) return true;
-    if (type == GridNodeType.Stone) return true;
+    if (type == NodeType.Bricks) return true;
+    if (type == NodeType.Grass) return true;
+    if (type == NodeType.Wood) return true;
+    if (type == NodeType.Soil) return true;
+    if (type == NodeType.Boundary) return true;
+    if (type == NodeType.Stone) return true;
     return false;
   }
   
   static isGrassSlope(int type){
-    if (type == GridNodeType.Grass_Slope_North) return true;
-    if (type == GridNodeType.Grass_Slope_East) return true;
-    if (type == GridNodeType.Grass_Slope_South) return true;
-    if (type == GridNodeType.Grass_Slope_West) return true;
-    if (type == GridNodeType.Grass_Slope_Top) return true;
-    if (type == GridNodeType.Grass_Slope_Right) return true;
-    if (type == GridNodeType.Grass_Slope_Bottom) return true;
-    if (type == GridNodeType.Grass_Slope_Left) return true;
+    if (type == NodeType.Grass_Slope_North) return true;
+    if (type == NodeType.Grass_Slope_East) return true;
+    if (type == NodeType.Grass_Slope_South) return true;
+    if (type == NodeType.Grass_Slope_West) return true;
+    if (type == NodeType.Grass_Slope_Top) return true;
+    if (type == NodeType.Grass_Slope_Right) return true;
+    if (type == NodeType.Grass_Slope_Bottom) return true;
+    if (type == NodeType.Grass_Slope_Left) return true;
     return false;
   }
   

@@ -438,7 +438,7 @@ extension GameFunctions on Game {
       if (projectile.collideWithEnvironment) continue;
       if (scene.getCollisionAt(projectile.x, projectile.y, projectile.z)) {
         var type = scene.getNodeXYZ(projectile.x, projectile.y, projectile.z).type;
-        if (type == GridNodeType.Tree_Bottom){
+        if (type == NodeType.Tree_Bottom){
           dispatch(GameEventType.Material_Struck_Wood, projectile.x, projectile.y, projectile.z);
         }
         deactivateProjectile(projectile);

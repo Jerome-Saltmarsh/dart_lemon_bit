@@ -1,5 +1,5 @@
 
-import 'package:bleed_common/grid_node_type.dart';
+import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/classes/node.dart';
@@ -13,18 +13,18 @@ Widget buildWatchEditorTab(){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      watch(edit.selected, (Node type) => container(child: "${GridNodeType.getName(type.type)}", color: brownLight)),
-      buildColumnSelectGridNodeType()
+      watch(edit.selected, (Node type) => container(child: "${NodeType.getName(type.type)}", color: brownLight)),
+      buildColumnSelectNodeType()
     ],
   );
 }
 
-Widget buildColumnSelectGridNodeType(){
+Widget buildColumnSelectNodeType(){
   return Container(
     height: 200,
     child: SingleChildScrollView(
       child: Column(
-        children: editorSelectableGridTypes.map(buildButtonSelectGridNodeType).toList(),
+        children: editorSelectableGridTypes.map(buildButtonSelectNodeType).toList(),
       ),
     ),
   );

@@ -32,7 +32,7 @@ List<int> flattenGrid(List<List<List<Node>>> grid) {
   final height = grid.length;
   final rows = grid[0].length;
   final columns = grid[0][0].length;
-  final flattened = List.filled(height * rows * columns, GridNodeType.Empty);
+  final flattened = List.filled(height * rows * columns, NodeType.Empty);
   var i = 0;
   for (final z in grid) {
     for(final row in z) {

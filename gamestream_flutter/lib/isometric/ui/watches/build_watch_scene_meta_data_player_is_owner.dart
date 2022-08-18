@@ -108,7 +108,7 @@ Column buildControlPaint() {
 }
 
 Widget buildPaintType(int type) =>
-  container(child: GridNodeType.getName(type));
+  container(child: NodeType.getName(type));
 
 Row buildTopLeftMenu() {
   return Row(

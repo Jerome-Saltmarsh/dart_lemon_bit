@@ -91,14 +91,14 @@ void connectNodeTrees() {
 void refreshParticleEmitters() {
   particleEmitters.clear();
   gridForEachOfType(
-      GridNodeType.Fireplace,
+      NodeType.Fireplace,
       (z, row, column, type) {
         addSmokeEmitter(z, row, column);
       }
   );
 
   gridForEachOfType(
-      GridNodeType.Chimney,
+      NodeType.Chimney,
           (z, row, column, type) {
         if (!getNode(z + 1, row, column).isEmpty) return;
         addSmokeEmitter(z + 1, row, column);
@@ -209,7 +209,7 @@ void _applyShadowAt({
             }
           }
           // final type = grid[projectionZ][projectionRow][projectionColumn];
-          // if (type == GridNodeType.Tree_Bottom){
+          // if (type == NodeType.Tree_Bottom){
           //   gridLightBake[projectionZ - 1][projectionRow][projectionColumn] = shadowShade;
           // }
           projectionZ += directionZ;
@@ -223,23 +223,23 @@ void _applyShadowAt({
 
 bool _castesShadow(int type){
   return const [
-        GridNodeType.Bricks,
-        GridNodeType.Brick_Top,
-        GridNodeType.Grass,
-        GridNodeType.Stairs_South,
-        GridNodeType.Stairs_West,
-        GridNodeType.Stairs_East,
-        GridNodeType.Stairs_North,
-        GridNodeType.Roof_Tile_South,
-        GridNodeType.Roof_Tile_North,
-        GridNodeType.Bau_Haus_Roof_South,
-        GridNodeType.Bau_Haus_Roof_North,
+        NodeType.Bricks,
+        NodeType.Brick_Top,
+        NodeType.Grass,
+        NodeType.Stairs_South,
+        NodeType.Stairs_West,
+        NodeType.Stairs_East,
+        NodeType.Stairs_North,
+        NodeType.Roof_Tile_South,
+        NodeType.Roof_Tile_North,
+        NodeType.Bau_Haus_Roof_South,
+        NodeType.Bau_Haus_Roof_North,
   ].contains(type);
 }
 
 bool gridIsUnderSomething(int z, int row, int column){
   for (var zIndex = z + 1; zIndex < gridTotalZ; zIndex++){
-    if (grid[zIndex][row][column] != GridNodeType.Empty) return false;
+    if (grid[zIndex][row][column] != NodeType.Empty) return false;
   }
   return true;
 }

@@ -15,11 +15,11 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       final tile = getNodeXYZ(x, y, z - 2);
 
       if (raining.value){
-        if (getNodeXYZ(x, y, z + 2) == GridNodeType.Rain_Landing) {
+        if (getNodeXYZ(x, y, z + 2) == NodeType.Rain_Landing) {
           audioSingleFootstepMud6.playXYZ(x, y, z);
         }
       }
-      if (GridNodeType.isStone(tile.type)) {
+      if (NodeType.isStone(tile.type)) {
         return audioSingleFootstepStone.playXYZ(x, y, z);
       }
       if (randomBool()){

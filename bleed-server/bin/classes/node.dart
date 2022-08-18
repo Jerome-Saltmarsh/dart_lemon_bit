@@ -9,7 +9,7 @@ abstract class Node {
   bool getCollision(double x, double y, double z);
   void resolveCharacterCollision(Character character, Game game);
 
-  bool get isEmpty => type == GridNodeType.Empty;
+  bool get isEmpty => type == NodeType.Empty;
 
 
   static final Node boundary = NodeBoundary();
@@ -37,7 +37,7 @@ abstract class NodeNoneCollidable extends Node {
 
 class NodeEmpty extends NodeNoneCollidable {
   @override
-  int get type => GridNodeType.Empty;
+  int get type => NodeType.Empty;
 }
 
 class NodeBoundary extends Node {
@@ -61,7 +61,7 @@ class NodeBoundary extends Node {
   }
 
   @override
-  int get type => GridNodeType.Boundary;
+  int get type => NodeType.Boundary;
 }
 
 abstract class NodeSolid extends Node {
@@ -78,17 +78,17 @@ abstract class NodeSolid extends Node {
 
 class NodeGrass extends NodeSolid {
   @override
-  int get type => GridNodeType.Grass;
+  int get type => NodeType.Grass;
 }
 
 class NodeGrassFlowers extends NodeSolid {
   @override
-  int get type => GridNodeType.Grass_Flowers;
+  int get type => NodeType.Grass_Flowers;
 }
 
 class NodeBricks extends NodeSolid {
   @override
-  int get type => GridNodeType.Bricks;
+  int get type => NodeType.Bricks;
 }
 
 class NodeWater extends Node {
@@ -103,7 +103,7 @@ class NodeWater extends Node {
   }
 
   @override
-  int get type => GridNodeType.Water;
+  int get type => NodeType.Water;
 }
 
 class NodeWaterFlowing extends Node {
@@ -118,7 +118,7 @@ class NodeWaterFlowing extends Node {
   }
 
   @override
-  int get type => GridNodeType.Water_Flowing;
+  int get type => NodeType.Water_Flowing;
 }
 
 abstract class NodeSlope extends Node {
@@ -179,22 +179,22 @@ abstract class NodeSlopeWest extends NodeSlope {
 
 class NodeStairsNorth extends NodeSlopeNorth {
   @override
-  int get type => GridNodeType.Stairs_North;
+  int get type => NodeType.Stairs_North;
 }
 
 class NodeStairsEast extends NodeSlopeEast {
   @override
-  int get type => GridNodeType.Stairs_East;
+  int get type => NodeType.Stairs_East;
 }
 
 class NodeStairsSouth extends NodeSlopeSouth {
   @override
-  int get type => GridNodeType.Stairs_South;
+  int get type => NodeType.Stairs_South;
 }
 
 class NodeStairsWest extends NodeSlopeWest {
   @override
-  int get type => GridNodeType.Stairs_West;
+  int get type => NodeType.Stairs_West;
 }
 
 abstract class NodeRadial extends Node {
@@ -217,7 +217,7 @@ abstract class NodeRadial extends Node {
 
 class NodeTorch extends NodeRadial {
   @override
-  int get type => GridNodeType.Torch;
+  int get type => NodeType.Torch;
 
   @override
   double get radius => 0.2;
@@ -225,7 +225,7 @@ class NodeTorch extends NodeRadial {
 
 class NodeTreeBottom extends NodeRadial {
   @override
-  int get type => GridNodeType.Tree_Bottom;
+  int get type => NodeType.Tree_Bottom;
 
   @override
   double get radius => 0.2;
@@ -233,7 +233,7 @@ class NodeTreeBottom extends NodeRadial {
 
 class NodeTreeTop extends Node {
   @override
-  int get type => GridNodeType.Tree_Top;
+  int get type => NodeType.Tree_Top;
 
   @override
   bool getCollision(double x, double y, double z) {
@@ -253,17 +253,17 @@ class NodeTreeTop extends Node {
 
 class NodeGrassLong extends NodeNoneCollidable {
   @override
-  int get type => GridNodeType.Grass_Long;
+  int get type => NodeType.Grass_Long;
 }
 
 class NodeWood extends NodeSolid {
   @override
-  int get type => GridNodeType.Wood;
+  int get type => NodeType.Wood;
 }
 
 class NodeFireplace extends NodeRadial {
   @override
-  int get type => GridNodeType.Fireplace;
+  int get type => NodeType.Fireplace;
 
   @override
   double get radius => 0.4;
@@ -271,27 +271,27 @@ class NodeFireplace extends NodeRadial {
 
 class NodeGrassSlopeNorth extends NodeSlopeNorth {
   @override
-  int get type => GridNodeType.Grass_Slope_North;
+  int get type => NodeType.Grass_Slope_North;
 }
 
 class NodeGrassSlopeEast extends NodeSlopeEast {
   @override
-  int get type => GridNodeType.Grass_Slope_East;
+  int get type => NodeType.Grass_Slope_East;
 }
 
 class NodeGrassSlopeSouth extends NodeSlopeSouth {
   @override
-  int get type => GridNodeType.Grass_Slope_South;
+  int get type => NodeType.Grass_Slope_South;
 }
 
 class NodeGrassSlopeWest extends NodeSlopeWest {
   @override
-  int get type => GridNodeType.Grass_Slope_West;
+  int get type => NodeType.Grass_Slope_West;
 }
 
 class NodeBrickTop extends Node {
   @override
-  int get type => GridNodeType.Brick_Top;
+  int get type => NodeType.Brick_Top;
 
   @override
   bool getCollision(double x, double y, double z) {
@@ -307,7 +307,7 @@ class NodeBrickTop extends Node {
 
 class NodeWoodHalfRow1 extends Node {
   @override
-  int get type => GridNodeType.Wood_Half_Row_1;
+  int get type => NodeType.Wood_Half_Row_1;
 
   @override
   bool getCollision(double x, double y, double z) {
@@ -322,7 +322,7 @@ class NodeWoodHalfRow1 extends Node {
 
 class NodeWoodHalfRow2 extends Node {
   @override
-  int get type => GridNodeType.Wood_Half_Row_2;
+  int get type => NodeType.Wood_Half_Row_2;
 
   @override
   bool getCollision(double x, double y, double z) {
@@ -336,7 +336,7 @@ class NodeWoodHalfRow2 extends Node {
 
 class NodeWoodHalfColumn1 extends Node {
   @override
-  int get type => GridNodeType.Wood_Half_Column_1;
+  int get type => NodeType.Wood_Half_Column_1;
 
   @override
   bool getCollision(double x, double y, double z) {
@@ -351,7 +351,7 @@ class NodeWoodHalfColumn1 extends Node {
 
 class NodeWoodHalfColumn2 extends Node {
   @override
-  int get type => GridNodeType.Wood_Half_Column_2;
+  int get type => NodeType.Wood_Half_Column_2;
 
   @override
   bool getCollision(double x, double y, double z) {
@@ -365,38 +365,38 @@ class NodeWoodHalfColumn2 extends Node {
 
 class NodeRoofTileNorth extends NodeSlopeNorth {
   @override
-  int get type => GridNodeType.Roof_Tile_North;
+  int get type => NodeType.Roof_Tile_North;
 }
 
 class NodeRoofTileSouth extends NodeSlopeSouth {
   @override
-  int get type => GridNodeType.Roof_Tile_South;
+  int get type => NodeType.Roof_Tile_South;
 }
 
 class NodeSoil extends NodeSolid {
   @override
-  int get type => GridNodeType.Soil;
+  int get type => NodeType.Soil;
 }
 
 class NodeRoofHayNorth extends NodeSlopeNorth {
   @override
-  int get type => GridNodeType.Roof_Hay_North;
+  int get type => NodeType.Roof_Hay_North;
 }
 
 class NodeRoofHaySouth extends NodeSlopeSouth {
   @override
-  int get type => GridNodeType.Roof_Hay_South;
+  int get type => NodeType.Roof_Hay_South;
 }
 
 class NodeStone extends NodeSolid {
   @override
-  int get type => GridNodeType.Stone;
+  int get type => NodeType.Stone;
 }
 
 class NodeGrassSlopeTop extends NodeSlope {
 
   @override
-  int get type => GridNodeType.Grass_Slope_Top;
+  int get type => NodeType.Grass_Slope_Top;
 
   @override
   double getGradient(double x, double y) {
@@ -409,7 +409,7 @@ class NodeGrassSlopeTop extends NodeSlope {
 class NodeGrassSlopeRight extends NodeSlope {
 
   @override
-  int get type => GridNodeType.Grass_Slope_Right;
+  int get type => NodeType.Grass_Slope_Right;
 
   @override
   double getGradient(double x, double y) {
@@ -422,7 +422,7 @@ class NodeGrassSlopeRight extends NodeSlope {
 class NodeGrassSlopeBottom extends NodeSlope {
 
   @override
-  int get type => GridNodeType.Grass_Slope_Bottom;
+  int get type => NodeType.Grass_Slope_Bottom;
 
   @override
   double getGradient(double x, double y) {
@@ -434,7 +434,7 @@ class NodeGrassSlopeBottom extends NodeSlope {
 
 class NodeGrassSlopeLeft extends NodeSlope {
   @override
-  int get type => GridNodeType.Grass_Slope_Left;
+  int get type => NodeType.Grass_Slope_Left;
 
   @override
   double getGradient(double x, double y) {
@@ -455,7 +455,7 @@ class NodeWoodCornerTop extends Node {
   }
 
   @override
-  int get type => GridNodeType.Wood_Corner_Top;
+  int get type => NodeType.Wood_Corner_Top;
 }
 
 class NodeWoodCornerRight extends Node {
@@ -469,7 +469,7 @@ class NodeWoodCornerRight extends Node {
   }
 
   @override
-  int get type => GridNodeType.Wood_Corner_Right;
+  int get type => NodeType.Wood_Corner_Right;
 }
 
 class NodeWoodCornerBottom extends Node {
@@ -483,7 +483,7 @@ class NodeWoodCornerBottom extends Node {
   }
 
   @override
-  int get type => GridNodeType.Wood_Corner_Bottom;
+  int get type => NodeType.Wood_Corner_Bottom;
 }
 
 class NodeWoodCornerLeft extends Node {
@@ -497,7 +497,7 @@ class NodeWoodCornerLeft extends Node {
   }
 
   @override
-  int get type => GridNodeType.Wood_Corner_Left;
+  int get type => NodeType.Wood_Corner_Left;
 }
 
 
@@ -511,7 +511,7 @@ class NodeGrassEdgeTop extends NodeSlope {
   }
 
   @override
-  int get type => GridNodeType.Grass_Edge_Top;
+  int get type => NodeType.Grass_Edge_Top;
 }
 
 class NodeGrassEdgeRight extends NodeSlope {
@@ -524,7 +524,7 @@ class NodeGrassEdgeRight extends NodeSlope {
   }
 
   @override
-  int get type => GridNodeType.Grass_Edge_Right;
+  int get type => NodeType.Grass_Edge_Right;
 }
 
 class NodeGrassEdgeBottom extends NodeSlope {
@@ -537,7 +537,7 @@ class NodeGrassEdgeBottom extends NodeSlope {
   }
 
   @override
-  int get type => GridNodeType.Grass_Edge_Bottom;
+  int get type => NodeType.Grass_Edge_Bottom;
 }
 
 class NodeGrassEdgeLeft extends NodeSlope {
@@ -550,62 +550,62 @@ class NodeGrassEdgeLeft extends NodeSlope {
   }
 
   @override
-  int get type => GridNodeType.Grass_Edge_Left;
+  int get type => NodeType.Grass_Edge_Left;
 }
 
 class NodeBauHaus extends NodeSolid {
   @override
-  int get type => GridNodeType.Bau_Haus;
+  int get type => NodeType.Bau_Haus;
 }
 
 class NodeBauHausRoofNorth extends NodeSlopeNorth {
   @override
-  int get type => GridNodeType.Bau_Haus_Roof_North;
+  int get type => NodeType.Bau_Haus_Roof_North;
 }
 
 class NodeBauHausRoofSouth extends NodeSlopeSouth {
   @override
-  int get type => GridNodeType.Bau_Haus_Roof_South;
+  int get type => NodeType.Bau_Haus_Roof_South;
 }
 
 class NodeBauHausWindow extends NodeSolid {
   @override
-  int get type => GridNodeType.Bau_Haus_Window;
+  int get type => NodeType.Bau_Haus_Window;
 }
 
 class NodeBauHausPlain extends NodeSolid {
   @override
-  int get type => GridNodeType.Bau_Haus_Plain;
+  int get type => NodeType.Bau_Haus_Plain;
 }
 
 class NodeChimney extends NodeSolid {
   @override
-  int get type => GridNodeType.Chimney;
+  int get type => NodeType.Chimney;
 }
 
 class NodeBedBottom extends NodeSolid {
   @override
-  int get type => GridNodeType.Bed_Bottom;
+  int get type => NodeType.Bed_Bottom;
 }
 
 class NodeBedTop extends NodeSolid {
   @override
-  int get type => GridNodeType.Bed_Top;
+  int get type => NodeType.Bed_Top;
 }
 
 class NodeTable extends NodeSolid {
   @override
-  int get type => GridNodeType.Table;
+  int get type => NodeType.Table;
 }
 
 class NodeOven extends NodeSolid {
   @override
-  int get type => GridNodeType.Oven;
+  int get type => NodeType.Oven;
 }
 
 class NodeSunflower extends Node {
   @override
-  int get type => GridNodeType.Sunflower;
+  int get type => NodeType.Sunflower;
 
   @override
   bool getCollision(double x, double y, double z) => false;

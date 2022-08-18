@@ -1,12 +1,12 @@
 
 
-import 'package:bleed_common/grid_node_type.dart';
+import 'package:bleed_common/node_type.dart';
 import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 
 void rainOff(){
   gridForEach(
-      where: GridNodeType.isRain,
+      where: NodeType.isRain,
       apply: assignEmpty,
   );
 }

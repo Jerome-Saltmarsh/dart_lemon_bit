@@ -1,7 +1,7 @@
 
 
 
-import 'package:bleed_common/grid_node_type.dart';
+import 'package:bleed_common/node_type.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 
@@ -55,7 +55,7 @@ class EditorActions {
 
   void clear(){
     for (var z = 1 ; z < gridTotalZ; z++) {
-      sendClientRequestSetBlock(row, column, z, GridNodeType.Empty);
+      sendClientRequestSetBlock(row, column, z, NodeType.Empty);
     }
     sendClientRequestSetBlock(row, column, 0, edit.paintType.value);
   }

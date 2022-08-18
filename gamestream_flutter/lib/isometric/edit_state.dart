@@ -1,4 +1,4 @@
-import 'package:bleed_common/grid_node_type.dart';
+import 'package:bleed_common/node_type.dart';
 import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/classes/node_extensions.dart';
@@ -63,7 +63,7 @@ class EditState {
     return value;
   }, onChanged: onEditorZChanged);
   final selected = Watch<Node>(Node.boundary);
-  final paintType = Watch(GridNodeType.Bricks);
+  final paintType = Watch(NodeType.Bricks);
   final controlsVisibleWeather = Watch(true);
 
   int get selectedType => selected.value.type;
@@ -80,7 +80,7 @@ class EditState {
 
   void paintIfEmpty(int row, int column, int z, int type){
     if (outOfBounds(z, row, column)) return;
-    // if (!GridNodeType.isRainOrEmpty(selectedType) && selectedType != GridNodeType.Grass_Long) return;
+    // if (!NodeType.isRainOrEmpty(selectedType) && selectedType != NodeType.Grass_Long) return;
     sendClientRequestSetBlock(row, column, z, type);
   }
 
@@ -92,49 +92,49 @@ class EditState {
     final below = getNode(z, row + 1, column);
     final left = getNode(z, row, column + 1);
     final right = getNode(z, row, column - 1);
-    var type = GridNodeType.Grass;
+    var type = NodeType.Grass;
 
     if (above.isGrass && below.isEmpty){
-       type = GridNodeType.Grass_Slope_North;
+       type = NodeType.Grass_Slope_North;
     }
     if (left.isEmpty && right.isGrass) {
-      type = GridNodeType.Grass_Slope_East;
+      type = NodeType.Grass_Slope_East;
     }
     if (below.isGrass && above.isEmpty){
-      type = GridNodeType.Grass_Slope_South;
+      type = NodeType.Grass_Slope_South;
     }
     if (left.isGrass && right.isEmpty) {
-      type = GridNodeType.Grass_Slope_West;
+      type = NodeType.Grass_Slope_West;
     }
     if (left.isGrassSlopeSouth && below.isGrassSlopeWest){
-      type = GridNodeType.Grass_Slope_Top;
+      type = NodeType.Grass_Slope_Top;
     }
     if (above.isGrassSlopeWest && left.isGrassSlopeNorth){
-      type = GridNodeType.Grass_Slope_Right;
+      type = NodeType.Grass_Slope_Right;
     }
     if (above.isGrassSlopeEast && right.isGrassSlopeNorth){
-      type = GridNodeType.Grass_Slope_Bottom;
+      type = NodeType.Grass_Slope_Bottom;
     }
     if (right.isGrassSlopeSouth && below.isGrassSlopeEast){
-      type = GridNodeType.Grass_Slope_Left;
+      type = NodeType.Grass_Slope_Left;
     }
 
     if (above.isGrassSlopeWest && right.isGrassSlopeSouth){
-      type = GridNodeType.Grass_Edge_Top;
+      type = NodeType.Grass_Edge_Top;
     }
     if (right.isGrassSlopeNorth && below.isGrassSlopeWest){
-      type = GridNodeType.Grass_Edge_Right;
+      type = NodeType.Grass_Edge_Right;
     }
     if (left.isGrassSlopeNorth && below.isGrassSlopeEast){
-      type = GridNodeType.Grass_Edge_Bottom;
+      type = NodeType.Grass_Edge_Bottom;
     }
     if (above.isGrassSlopeEast && left.isGrassSlopeSouth){
-      type = GridNodeType.Grass_Edge_Left;
+      type = NodeType.Grass_Edge_Left;
     }
 
-    if (type != GridNodeType.Grass){
+    if (type != NodeType.Grass){
       if (edit.selectedType == type){
-        type = GridNodeType.Grass;
+        type = NodeType.Grass;
       }
     }
     sendClientRequestSetBlock(row, column, z, type);
@@ -154,27 +154,27 @@ class EditState {
   }
 
   void paintTorch(){
-    paint(value: GridNodeType.Torch);
+    paint(value: NodeType.Torch);
   }
 
   void paintTree(){
     selectPlayerIfPlayerMode();
     var zz = z.value;
-    // if (GridNodeType.isSolid(currentType)){
+    // if (NodeType.isSolid(currentType)){
     //     for (var i = 0; i < gridTotalZ - 1; i++){
-    //        if (GridNodeType.isSolid(grid[i][row.value][column.value])) continue;
+    //        if (NodeType.isSolid(grid[i][row.value][column.value])) continue;
     //        zz = i;
     //        break;
     //     }
     // } else {
     //   for (var i = zz - 1; i >= 0; i--){
-    //     if (!GridNodeType.isSolid(grid[i][row.value][column.value])) continue;
+    //     if (!NodeType.isSolid(grid[i][row.value][column.value])) continue;
     //     zz = i + 1;
     //     break;
     //   }
     // }
-    sendClientRequestSetBlock(row.value, column.value, zz, GridNodeType.Tree_Bottom);
-    sendClientRequestSetBlock(row.value, column.value, zz + 1, GridNodeType.Tree_Top);
+    sendClientRequestSetBlock(row.value, column.value, zz, NodeType.Tree_Bottom);
+    sendClientRequestSetBlock(row.value, column.value, zz + 1, NodeType.Tree_Top);
   }
 
   void selectPlayerIfPlayerMode(){
@@ -182,29 +182,29 @@ class EditState {
   }
 
   void paintLongGrass(){
-    paint(value: GridNodeType.Grass_Long);
+    paint(value: NodeType.Grass_Long);
   }
 
   void paintAtPlayerLongGrass(){
-    sendClientRequestSetBlock(player.indexRow, player.indexColumn, player.indexZ, GridNodeType.Grass_Long);
+    sendClientRequestSetBlock(player.indexRow, player.indexColumn, player.indexZ, NodeType.Grass_Long);
   }
 
   void paintBricks(){
-    paint(value: GridNodeType.Bricks);
+    paint(value: NodeType.Bricks);
   }
 
   void paintGrass(){
-    paint(value: GridNodeType.Grass);
+    paint(value: NodeType.Grass);
   }
 
   void paintWater(){
-    paint(value: GridNodeType.Water);
+    paint(value: NodeType.Water);
   }
 
   void paintFloorBricks(){
      for (var row = 0; row < gridTotalRows; row++){
         for (var column = 0; column < gridTotalColumns; column++){
-          sendClientRequestSetBlock(row, column, 0, GridNodeType.Bricks);
+          sendClientRequestSetBlock(row, column, 0, NodeType.Bricks);
         }
      }
   }
@@ -234,21 +234,21 @@ class EditState {
       return deleteGameObjectSelected();
     }
     deleteIfTree();
-    sendClientRequestSetBlock(row.value, column.value, z.value, GridNodeType.Empty);
+    sendClientRequestSetBlock(row.value, column.value, z.value, NodeType.Empty);
   }
 
   void deleteIfTree(){
-    if (selectedType == GridNodeType.Tree_Bottom){
+    if (selectedType == NodeType.Tree_Bottom){
       if (z.value < gridTotalZ - 1){
-        if (grid[z.value + 1][row.value][column.value] == GridNodeType.Tree_Top){
-          sendClientRequestSetBlock(row.value, column.value, z.value + 1, GridNodeType.Empty);
+        if (grid[z.value + 1][row.value][column.value] == NodeType.Tree_Top){
+          sendClientRequestSetBlock(row.value, column.value, z.value + 1, NodeType.Empty);
         }
       }
     }
-    if (selectedType == GridNodeType.Tree_Top){
+    if (selectedType == NodeType.Tree_Top){
       if (z.value > 0){
-        if (grid[z.value - 1][row.value][column.value] == GridNodeType.Tree_Bottom){
-          sendClientRequestSetBlock(row.value, column.value, z.value - 1, GridNodeType.Empty);
+        if (grid[z.value - 1][row.value][column.value] == NodeType.Tree_Bottom){
+          sendClientRequestSetBlock(row.value, column.value, z.value - 1, NodeType.Empty);
         }
       }
     }
@@ -269,7 +269,7 @@ class EditState {
       selectPlayer();
     }
 
-    if (value == GridNodeType.Empty){
+    if (value == NodeType.Empty){
        return delete();
     }
 
