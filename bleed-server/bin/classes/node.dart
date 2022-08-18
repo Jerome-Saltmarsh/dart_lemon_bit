@@ -15,6 +15,7 @@ abstract class Node {
   int get orientation => NodeOrientation.None;
 
   bool get isSloped => NodeOrientation.isSlope(orientation);
+  bool get isCorner => NodeOrientation.isCorner(orientation);
   bool get isSolid => orientation == NodeOrientation.Solid;
 
   static final Node boundary = NodeBoundary();
@@ -659,6 +660,8 @@ class NodeOriented extends Node {
   @override
   int get orientation => _orientation;
 
+  set orientation(int value) => _orientation = value;
+
   NodeOriented({required int orientation, required int type}) {
     this._orientation = orientation;
     this._type = type;
@@ -671,6 +674,9 @@ class NodeOriented extends Node {
 
     if (isSloped)
       return getHeight(x, y, z) > z;
+
+    if (isSloped)
+      return false;
 
     return false;
   }
@@ -703,6 +709,10 @@ class NodeOriented extends Node {
         return x;
       case NodeOrientation.West:
         return y;
+      case NodeOrientation.Corner_Top:
+        if (x < 0.5) return 1.0;;
+        if (y < 0.5) return 1.0;;
+        return 0;
       default:
         throw Exception(
             "Sloped orientation type required to calculate gradient");

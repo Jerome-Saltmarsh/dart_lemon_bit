@@ -21,4 +21,10 @@ class NodeOrientation {
       value == East ||
       value == South ||
       value == West ;
+
+   static bool isCorner(int value) =>
+       value == Corner_Top ||
+           value == Corner_Right ||
+           value == Corner_Bottom ||
+           value == Corner_Left ;
 }

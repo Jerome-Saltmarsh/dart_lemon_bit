@@ -862,7 +862,14 @@ class NodeWood2 extends Node {
       return renderSrcX(8935);
     if (orientation == NodeOrientation.Row_2)
       return renderSrcX(8935);
-
+    if (orientation == NodeOrientation.Corner_Top)
+      return renderSrcX(9079);
+    if (orientation == NodeOrientation.Corner_Right)
+      return renderSrcX(9128);
+    if (orientation == NodeOrientation.Corner_Bottom)
+      return renderSrcX(9175);
+    if (orientation == NodeOrientation.Corner_Left)
+      return renderSrcX(9031);
     throw Exception("Cannot render NodeWood2 orientation $orientation");
   }
 }

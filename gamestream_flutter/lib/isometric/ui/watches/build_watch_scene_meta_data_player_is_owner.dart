@@ -1,4 +1,5 @@
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/spawn_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
@@ -79,20 +80,20 @@ Widget buildColumnEditNodeOrientation(){
         Column(
           children: [
             container(
-                child: "Corner Left",
-                action: sendNodeRequestOrientWest
-            ),
-            container(
                 child: "Corner Top",
-                action: sendNodeRequestOrientWest
+                action: () => sendNodeRequestOrient(NodeOrientation.Corner_Top),
             ),
             container(
                 child: "Corner Right",
-                action: sendNodeRequestOrientWest
+              action: () => sendNodeRequestOrient(NodeOrientation.Corner_Right),
             ),
             container(
                 child: "Corner Bottom",
-                action: sendNodeRequestOrientWest
+              action: () => sendNodeRequestOrient(NodeOrientation.Corner_Bottom),
+            ),
+            container(
+              child: "Corner Left",
+              action: () => sendNodeRequestOrient(NodeOrientation.Corner_Left),
             ),
           ],
         ),
@@ -101,19 +102,19 @@ Widget buildColumnEditNodeOrientation(){
           children: [
             container(
                 child: "Row 1",
-                action: sendNodeRequestOrientWest
+                action: () => sendNodeRequestOrient(NodeOrientation.Row_1),
             ),
             container(
                 child: "Row 2",
-                action: sendNodeRequestOrientWest
+                action: () => sendNodeRequestOrient(NodeOrientation.Row_2),
             ),
             container(
                 child: "Column 1",
-                action: sendNodeRequestOrientWest
+                action: () => sendNodeRequestOrient(NodeOrientation.Column_1),
             ),
             container(
                 child: "Column 2",
-                action: sendNodeRequestOrientWest
+                action: () => sendNodeRequestOrient(NodeOrientation.Column_2),
             ),
           ],
         )

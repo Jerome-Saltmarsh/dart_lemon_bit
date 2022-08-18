@@ -568,8 +568,8 @@ class Connection {
         if (row == null) return;
         if (column == null) return;
         final node = player.scene.grid[z][row][column];
-        if (node is NodeBrickStairs){
-            node.direction = orientation;
+        if (node is NodeOriented) {
+            node.orientation = orientation;
             player.game.onGridChanged();
         }
         break;
