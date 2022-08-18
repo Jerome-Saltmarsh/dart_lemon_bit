@@ -57,6 +57,7 @@ class NodeType {
   static const Oven = 60;
   static const Grass_Flowers = 61;
   static const Brick_Stairs = 62;
+  static const Wood_2 = 63;
 
   static String getName(int type){
      return const {
@@ -119,6 +120,7 @@ class NodeType {
        Oven: "Oven",
        Grass_Flowers: "Grass Flowers",
        Brick_Stairs: "Brick Stairs",
+       Wood_2: "Wood 2",
      }[type] ?? "unknown($type)";
   }
 

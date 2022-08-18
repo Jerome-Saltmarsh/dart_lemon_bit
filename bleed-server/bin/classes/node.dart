@@ -14,14 +14,17 @@ abstract class Node {
 
   int get orientation => NodeOrientation.None;
 
+  bool get isSloped => NodeOrientation.isSlope(orientation);
+  bool get isSolid => orientation == NodeOrientation.Solid;
+
   static final Node boundary = NodeBoundary();
   static final Node grass = NodeGrass();
   static final Node grassFlowers = NodeGrassFlowers();
   static final Node bricks = NodeBricks();
-  static final Node wood = NodeWood();
   static final Node soil = NodeSoil();
   static final Node stone = NodeStone();
   static final Node treeTop = NodeTreeTop();
+  static final Node wood = NodeWood();
   static final Node empty = NodeEmpty();
   static final Node water = NodeWater();
   static final Node waterFlowing = NodeWaterFlowing();
@@ -258,11 +261,6 @@ class NodeGrassLong extends NodeNoneCollidable {
   int get type => NodeType.Grass_Long;
 }
 
-class NodeWood extends NodeSolid {
-  @override
-  int get type => NodeType.Wood;
-}
-
 class NodeFireplace extends NodeRadial {
   @override
   int get type => NodeType.Fireplace;
@@ -378,6 +376,11 @@ class NodeRoofTileSouth extends NodeSlopeSouth {
 class NodeSoil extends NodeSolid {
   @override
   int get type => NodeType.Soil;
+}
+
+class NodeWood extends NodeSolid {
+  @override
+  int get type => NodeType.Wood;
 }
 
 class NodeRoofHayNorth extends NodeSlopeNorth {
@@ -630,7 +633,7 @@ class NodeBrickStairs extends NodeSlope {
 
   @override
   double getGradient(double x, double y) {
-    switch(direction) {
+    switch (direction) {
       case NodeOrientation.North:
         return 1 - x;
       case NodeOrientation.East:
@@ -641,6 +644,68 @@ class NodeBrickStairs extends NodeSlope {
         return y;
       default:
         throw Exception("method: NodeBrickStairs.getGradient(), reason: Invalid orientation $orientation");
+    }
+  }
+}
+
+class NodeOriented extends Node {
+
+  var _orientation = NodeOrientation.North;
+  var _type = NodeType.Wood;
+
+  @override
+  int get type => _type;
+
+  @override
+  int get orientation => _orientation;
+
+  NodeOriented({required int orientation, required int type}) {
+    this._orientation = orientation;
+    this._type = type;
+  }
+
+  @override
+  bool getCollision(double x, double y, double z) {
+    if (isSolid)
+      return true;
+
+    if (isSloped)
+      return getHeight(x, y, z) > z;
+
+    return false;
+  }
+
+  @override
+  void resolveCharacterCollision(Character character, Game game) {
+    character.z = getHeight(character.x, character.y, character.z);
+    character.zVelocity = 0;
+  }
+
+  double getHeight(double x, double y, double z) {
+    final bottom = (z ~/ tileHeight) * tileHeight;
+    if (isSolid) return bottom + tileHeight;
+    final percX = ((x % tileSize) / tileSize);
+    final percY = ((y % tileSize) / tileSize);
+    assert (percX >= 0 && percX <= 1);
+    assert (percY >= 0 && percY <= 1);
+    return bottom + (getGradient(percX, percY) * tileHeight);
+  }
+
+  /// Returns a value between 0 and 1 which indicates the height of this given position
+  /// Arguments percX and percY are both values between 0 and 1 representing the relative position on the tile
+  double getGradient(double x, double y) {
+    switch (_orientation) {
+      case NodeOrientation.North:
+        return 1 - x;
+      case NodeOrientation.East:
+        return 1 - y;
+      case NodeOrientation.South:
+        return x;
+      case NodeOrientation.West:
+        return y;
+      default:
+        throw Exception(
+            "Sloped orientation type required to calculate gradient");
     }
   }
 }

@@ -832,3 +832,38 @@ class NodeBrickStairs extends Node {
     throw Exception("Cannot render brick stairs orientation $orientation");
   }
 }
+
+class NodeWood2 extends Node {
+  NodeWood2(int row, int column, int z) : super(row, column, z);
+
+  @override
+  int get type => NodeType.Wood_2;
+
+  @override
+  bool get isStone => false;
+
+  @override
+  void handleRender() {
+    if (orientation == NodeOrientation.Solid)
+      return renderSrcX(8887);
+    if (orientation == NodeOrientation.North)
+      return renderSrcX(7494);
+    if (orientation == NodeOrientation.East)
+      return renderSrcX(7542);
+    if (orientation == NodeOrientation.South)
+      return renderSrcX(7398);
+    if (orientation == NodeOrientation.West)
+      return renderSrcX(7446);
+    if (orientation == NodeOrientation.Column_1)
+      return renderSrcX(8935);
+    if (orientation == NodeOrientation.Column_2)
+      return renderSrcX(8935);
+    if (orientation == NodeOrientation.Row_1)
+      return renderSrcX(8935);
+    if (orientation == NodeOrientation.Row_2)
+      return renderSrcX(8935);
+
+    throw Exception("Cannot render NodeWood2 orientation $orientation");
+  }
+}
+

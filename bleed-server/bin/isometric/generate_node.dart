@@ -1,5 +1,6 @@
 
 import '../classes/node.dart';
+import '../common/node_orientation.dart';
 import '../common/node_type.dart';
 
 Node generateNode(int type){
@@ -120,6 +121,11 @@ Node generateNode(int type){
       return NodeOven();
     case NodeType.Brick_Stairs:
       return NodeBrickStairs();
+    case NodeType.Wood_2:
+      return NodeOriented(
+          orientation: NodeOrientation.Solid,
+          type: NodeType.Wood_2,
+      );
     default:
       print("Warning: Cannot generate node for type $type (${NodeType.getName(type)})");
       return Node.empty;

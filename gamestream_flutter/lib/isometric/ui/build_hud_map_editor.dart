@@ -468,4 +468,5 @@ const editorSelectableGridTypes = [
     NodeType.Sunflower,
     NodeType.Oven,
     NodeType.Brick_Stairs,
+    NodeType.Wood_2,
 ];

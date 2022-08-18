@@ -1,6 +1,4 @@
 import 'package:bleed_common/library.dart';
-import 'package:bleed_common/node_orientation.dart';
-import 'package:bleed_common/node_request.dart';
 import 'package:bleed_common/spawn_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
@@ -29,7 +27,7 @@ Stack buildStackEdit() {
     children: [
       Positioned(
         right: 6,
-        top: 100,
+        top: 80,
         child: buildColumnEditNodeOrientation(),
       ),
       Positioned(
@@ -57,22 +55,68 @@ Widget buildColumnEditNodeOrientation(){
 
     return Column(
       children: [
-        container(
-            child: "North",
-            action: sendNodeRequestOrientNorth
+        Column(
+          children: [
+            container(
+                child: "North",
+                action: sendNodeRequestOrientNorth
+            ),
+            container(
+                child: "East",
+                action: sendNodeRequestOrientEast
+            ),
+            container(
+                child: "South",
+                action: sendNodeRequestOrientSouth
+            ),
+            container(
+                child: "West",
+                action: sendNodeRequestOrientWest
+            ),
+          ],
         ),
-        container(
-            child: "East",
-            action: sendNodeRequestOrientEast
+        height8,
+        Column(
+          children: [
+            container(
+                child: "Corner Left",
+                action: sendNodeRequestOrientWest
+            ),
+            container(
+                child: "Corner Top",
+                action: sendNodeRequestOrientWest
+            ),
+            container(
+                child: "Corner Right",
+                action: sendNodeRequestOrientWest
+            ),
+            container(
+                child: "Corner Bottom",
+                action: sendNodeRequestOrientWest
+            ),
+          ],
         ),
-        container(
-            child: "South",
-            action: sendNodeRequestOrientSouth
-        ),
-        container(
-            child: "West",
-            action: sendNodeRequestOrientWest
-        ),
+        height8,
+        Column(
+          children: [
+            container(
+                child: "Row 1",
+                action: sendNodeRequestOrientWest
+            ),
+            container(
+                child: "Row 2",
+                action: sendNodeRequestOrientWest
+            ),
+            container(
+                child: "Column 1",
+                action: sendNodeRequestOrientWest
+            ),
+            container(
+                child: "Column 2",
+                action: sendNodeRequestOrientWest
+            ),
+          ],
+        )
       ],
     );
   });

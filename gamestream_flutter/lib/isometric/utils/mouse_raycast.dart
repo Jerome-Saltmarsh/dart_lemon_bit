@@ -17,6 +17,10 @@ void mouseRaycast(Function(int z, int row, int column) callback){
       z--;
       continue;
     }
+    if (!grid[z][row][column].visible) {
+      z--;
+      continue;
+    }
     callback(z, row, column);
     return;
   }
