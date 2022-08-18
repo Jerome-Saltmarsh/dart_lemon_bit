@@ -163,8 +163,14 @@ void sendClientRequestRespawn(){
  sendClientRequest(ClientRequest.Revive);
 }
 
+void sendNodeRequestOrientNorth() =>
+    sendNodeRequestOrient(NodeOrientation.North);
+
 void sendNodeRequestOrientEast() =>
     sendNodeRequestOrient(NodeOrientation.East);
+
+void sendNodeRequestOrientSouth() =>
+    sendNodeRequestOrient(NodeOrientation.South);
 
 void sendNodeRequestOrientWest() =>
     sendNodeRequestOrient(NodeOrientation.West);

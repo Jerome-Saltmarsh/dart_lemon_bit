@@ -28,6 +28,11 @@ Stack buildStackEdit() {
   return Stack(
     children: [
       Positioned(
+        right: 6,
+        top: 100,
+        child: buildColumnEditNodeOrientation(),
+      ),
+      Positioned(
         left: 0,
         bottom: 6,
         child: buildColumnEditNode(),
@@ -46,6 +51,33 @@ Stack buildStackEdit() {
   );
 }
 
+Widget buildColumnEditNodeOrientation(){
+  return watch(edit.gameObjectSelected, (bool gameObjectSelected){
+    if (gameObjectSelected) return const SizedBox();
+
+    return Column(
+      children: [
+        container(
+            child: "North",
+            action: sendNodeRequestOrientNorth
+        ),
+        container(
+            child: "East",
+            action: sendNodeRequestOrientEast
+        ),
+        container(
+            child: "South",
+            action: sendNodeRequestOrientSouth
+        ),
+        container(
+            child: "West",
+            action: sendNodeRequestOrientWest
+        ),
+      ],
+    );
+  });
+}
+
 Widget buildColumnEditNode() {
 
   return watch(edit.gameObjectSelected, (bool gameObjectSelected){
@@ -53,14 +85,6 @@ Widget buildColumnEditNode() {
     if (!gameObjectSelected){
       return Column(
         children: [
-          container(
-              child: "East",
-              action: sendNodeRequestOrientEast
-          ),
-          container(
-              child: "West",
-              action: sendNodeRequestOrientWest
-          ),
           buildColumnSelected(),
           buildControlPaint(),
           buildWatchEditorTab(),
