@@ -722,6 +722,18 @@ class NodeOriented extends Node {
         if (x < 0.5) return 1.0;
         if (y > 0.5) return 1.0;
         return 0;
+      case NodeOrientation.Row_1:
+        if (x < 0.5) return 1.0;
+        return 0;
+      case NodeOrientation.Row_2:
+        if (x > 0.5) return 1.0;
+        return 0;
+      case NodeOrientation.Column_1:
+        if (y < 0.5) return 1.0;
+        return 0;
+      case NodeOrientation.Column_2:
+        if (y > 0.5) return 1.0;
+        return 0;
       default:
         throw Exception(
             "Sloped orientation type required to calculate gradient");
