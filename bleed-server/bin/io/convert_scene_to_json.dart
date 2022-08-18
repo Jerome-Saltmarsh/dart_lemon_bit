@@ -1,5 +1,6 @@
 
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:typedef/json.dart';
 
@@ -19,7 +20,7 @@ Json convertSceneToJson(Scene scene) {
   json['grid-z'] = scene.gridHeight;
   json['grid-rows'] = scene.gridRows;
   json['grid-columns'] = scene.gridColumns;
-  json['grid'] = flattenGrid(scene.grid);
+  json['grid'] = convertNodesToByteArray(scene.grid);
   json['enemy-spawns'] = scene.enemySpawns.map(toJsonEnemySpawn).toList();
   json['gameobjects'] = scene.gameObjects
       .where((gameObject) => gameObject.persist)
@@ -28,13 +29,13 @@ Json convertSceneToJson(Scene scene) {
   return json;
 }
 
-List<int> flattenGrid(List<List<List<Node>>> grid) {
-  final height = grid.length;
-  final rows = grid[0].length;
-  final columns = grid[0][0].length;
-  final flattened = List.filled(height * rows * columns, NodeType.Empty);
+Uint8List convertNodesToByteArray(List<List<List<Node>>> nodes) {
+  final height = nodes.length;
+  final rows = nodes[0].length;
+  final columns = nodes[0][0].length;
+  final flattened = Uint8List(height * rows * columns);
   var i = 0;
-  for (final z in grid) {
+  for (final z in nodes) {
     for(final row in z) {
       for (final column in row) {
         flattened[i] = column.type;
