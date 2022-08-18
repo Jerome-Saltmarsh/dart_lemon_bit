@@ -622,6 +622,7 @@ extension PlayerProperties on Player {
     }
 
     writeByte(previousType);
+    writeByte(previousOrientation);
     writePositiveInt(count);
   }
 

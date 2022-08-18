@@ -2,10 +2,13 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/gameobject_request.dart';
+import 'package:bleed_common/node_orientation.dart';
+import 'package:bleed_common/node_request.dart';
 import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/screen.dart';
 
+import '../isometric/edit_state.dart';
 import 'web_socket.dart';
 
 final updateBuffer = Uint8List(16);
@@ -160,6 +163,25 @@ void sendClientRequestRespawn(){
  sendClientRequest(ClientRequest.Revive);
 }
 
+void sendNodeRequestOrientEast() =>
+    sendNodeRequestOrient(NodeOrientation.East);
+
+void sendNodeRequestOrientWest() =>
+    sendNodeRequestOrient(NodeOrientation.West);
+
+void sendNodeRequestOrient(int orientation){
+  sendNodeRequest(
+      NodeRequest.Orient,
+      "$orientation ${edit.z.value} ${edit.row.value} ${edit.column.value}",
+  );
+}
+
+void sendNodeRequest(NodeRequest request, [dynamic message]) =>
+  sendClientRequest(
+      ClientRequest.Node,
+      message != null ? "${request.index} $message" : request.index
+  );
+
 void sendClientRequestAddGameObject({
   required double x,
   required double y,
@@ -167,11 +189,10 @@ void sendClientRequestAddGameObject({
   required int type,
 }) {
   sendClientRequest(
-      ClientRequest.Scene_Edit,
+      ClientRequest.GameObject,
       "${GameObjectRequest.Add.index} $x $y $z $type",
   );
 }
-
 
 void sendClientRequestGameObjectTranslate({
   required double tx,
@@ -179,7 +200,7 @@ void sendClientRequestGameObjectTranslate({
   required double tz,
 }) {
   sendClientRequest(
-    ClientRequest.Scene_Edit,
+    ClientRequest.GameObject,
     "${GameObjectRequest.Translate.index} $tx $ty $tz",
   );
 }
@@ -205,7 +226,7 @@ void sendGameObjectRequestMoveToMouse() {
 }
 
 void sendGameObjectRequest(GameObjectRequest request) {
-  sendClientRequest(ClientRequest.Scene_Edit, request.index);
+  sendClientRequest(ClientRequest.GameObject, request.index);
 }
 
 Future sendClientRequestUpdate() async {

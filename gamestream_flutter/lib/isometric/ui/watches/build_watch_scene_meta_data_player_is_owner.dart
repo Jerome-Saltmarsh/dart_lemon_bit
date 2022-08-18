@@ -1,4 +1,6 @@
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/node_orientation.dart';
+import 'package:bleed_common/node_request.dart';
 import 'package:bleed_common/spawn_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
@@ -51,6 +53,14 @@ Widget buildColumnEditNode() {
     if (!gameObjectSelected){
       return Column(
         children: [
+          container(
+              child: "East",
+              action: sendNodeRequestOrientEast
+          ),
+          container(
+              child: "West",
+              action: sendNodeRequestOrientWest
+          ),
           buildColumnSelected(),
           buildControlPaint(),
           buildWatchEditorTab(),

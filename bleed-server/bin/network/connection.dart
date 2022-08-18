@@ -4,21 +4,21 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
+import '../classes/node.dart';
 import '../classes/position3.dart';
-import '../classes/zombie.dart';
+import '../common/gameobject_request.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
-import '../common/gameobject_request.dart';
-import '../common/spawn_type.dart';
+import '../common/node_request.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
 import '../engine.dart';
-import '../isometric/generate_node.dart';
 import '../functions/generateName.dart';
 import '../functions/withinRadius.dart';
 import '../io/save_directory.dart';
 import '../io/write_scene_to_file.dart';
 import '../isometric/generate_grid_z.dart';
+import '../isometric/generate_node.dart';
 import '../utilities/is_valid_index.dart';
 
 class Connection {
@@ -266,8 +266,11 @@ class Connection {
         game.onGridChanged();
         break;
 
-      case ClientRequest.Scene_Edit:
+      case ClientRequest.GameObject:
         return handleGameObjectRequest(arguments);
+
+      case ClientRequest.Node:
+        return handleNodeRequest(arguments);
 
       case ClientRequest.Canvas_Modify_Size:
         return handleCanvasModifySize(arguments, player, game);
@@ -537,6 +540,40 @@ class Connection {
 
     game.onGridChanged();
     return;
+  }
+
+  void handleNodeRequest(List<String> arguments) {
+    final player = _player;
+    if (player == null) return;
+    if (arguments.length <= 1)
+      return errorInvalidArg('handleGameObjectRequest invalid args');
+
+    final nodeRequestIndex = int.tryParse(arguments[1]);
+    if (nodeRequestIndex == null)
+      return errorInvalidArg("nodeRequestIndex is null");
+
+    if (!isValidIndex(nodeRequestIndex, nodeRequests))
+      return errorInvalidArg("nodeRequestIndex ($nodeRequestIndex) is invalid");
+
+    final nodeRequest = nodeRequests[nodeRequestIndex];
+
+    switch (nodeRequest){
+      case NodeRequest.Orient:
+        final orientation = int.tryParse(arguments[2]);
+        final z = int.tryParse(arguments[3]);
+        final row = int.tryParse(arguments[4]);
+        final column = int.tryParse(arguments[5]);
+        if (orientation == null) return;
+        if (z == null) return;
+        if (row == null) return;
+        if (column == null) return;
+        final node = player.scene.grid[z][row][column];
+        if (node is NodeBrickStairs){
+            node.direction = orientation;
+            player.game.onGridChanged();
+        }
+        break;
+    }
   }
 
   void handleGameObjectRequest(List<String> arguments) {
