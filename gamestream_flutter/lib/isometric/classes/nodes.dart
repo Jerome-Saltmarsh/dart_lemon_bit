@@ -1,3 +1,4 @@
+import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_type.dart';
 import 'package:bleed_common/wind.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
@@ -806,4 +807,28 @@ class NodeOven extends GridNodeShaded {
 
   @override
   bool get emitsLight => true;
+}
+
+class NodeBrickStairs extends Node {
+  NodeBrickStairs(int row, int column, int z) : super(row, column, z);
+
+  @override
+  int get type => NodeType.Brick_Stairs;
+
+  @override
+  bool get isStone => true;
+
+  @override
+  void handleRender() {
+    if (orientation == NodeOrientation.North)
+       return renderSrcX(7494);
+    if (orientation == NodeOrientation.East)
+      return renderSrcX(7542);
+    if (orientation == NodeOrientation.South)
+      return renderSrcX(7398);
+    if (orientation == NodeOrientation.West)
+      return renderSrcX(7446);
+
+    throw Exception("Cannot render brick stairs orientation $orientation");
+  }
 }

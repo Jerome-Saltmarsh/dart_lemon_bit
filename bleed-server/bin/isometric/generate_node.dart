@@ -118,6 +118,8 @@ Node generateNode(int type){
       return NodeSunflower();
     case NodeType.Oven:
       return NodeOven();
+    case NodeType.Brick_Stairs:
+      return NodeBrickStairs();
     default:
       print("Warning: Cannot generate node for type $type (${NodeType.getName(type)})");
       return Node.empty;

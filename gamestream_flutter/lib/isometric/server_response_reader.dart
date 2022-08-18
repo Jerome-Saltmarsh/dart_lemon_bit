@@ -488,12 +488,14 @@ class ServerResponseReader with ByteReader {
 
     while (total < grandTotal) {
       var type = readByte();
+      var orientation = readByte();
       var count = readPositiveInt();
       total += count;
 
       while (count > 0) {
         count--;
         grid[currentZ][currentRow][currentColumn] = generateNode(currentZ, currentRow, currentColumn, type);
+        grid[currentZ][currentRow][currentColumn].orientation = orientation;
         currentColumn++;
         if (currentColumn >= gridTotalColumns) {
           currentColumn = 0;

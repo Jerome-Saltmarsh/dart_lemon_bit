@@ -598,19 +598,23 @@ extension PlayerProperties on Player {
     writeInt(totalRows);
     writeInt(totalColumns);
     var previousType = grid[0][0][0].type;
+    var previousOrientation = grid[0][0][0].orientation;
     var count = 0;
     for (var z = 0; z < totalZ; z++){
       final plain = grid[z];
       for (var row = 0; row < totalRows; row++){
         final r = plain[row];
         for (var column = 0; column < totalColumns; column++) {
-          final type = r[column].type;
-          if (type == previousType){
+          final node = r[column];
+
+          if (node.type == previousType && node.orientation == previousOrientation){
             count++;
           } else {
             writeByte(previousType);
+            writeByte(previousOrientation);
             writePositiveInt(count);
-            previousType = type;
+            previousType = node.type;
+            previousOrientation = node.orientation;
             count = 1;
           }
         }

@@ -118,6 +118,8 @@ Node generateNode(int z, int row, int column, int type){
       return NodeSunflower(row, column, z);
     case NodeType.Oven:
       return NodeOven(row, column, z);
+    case NodeType.Brick_Stairs:
+      return NodeBrickStairs(row, column, z);
     default:
       throw Exception("Cannot build grid node type $type (${NodeType.getName(type)}");
   }

@@ -56,6 +56,7 @@ class NodeType {
   static const Sunflower = 59;
   static const Oven = 60;
   static const Grass_Flowers = 61;
+  static const Brick_Stairs = 62;
 
   static String getName(int type){
      return const {
@@ -117,10 +118,16 @@ class NodeType {
        Sunflower: "Sunflower",
        Oven: "Oven",
        Grass_Flowers: "Grass Flowers",
+       Brick_Stairs: "Brick Stairs",
      }[type] ?? "unknown($type)";
   }
 
   static bool isRain(int value) =>
       value == Rain_Falling       ||
       value == Rain_Landing       ;
+
+  static bool isOriented(int value) {
+     if (value == Brick_Stairs) return true;
+     return false;
+  }
 }

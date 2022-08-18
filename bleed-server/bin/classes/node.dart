@@ -1,6 +1,7 @@
 
 
 import '../common/library.dart';
+import '../common/node_orientation.dart';
 import 'character.dart';
 import 'game.dart';
 
@@ -11,6 +12,7 @@ abstract class Node {
 
   bool get isEmpty => type == NodeType.Empty;
 
+  int get orientation => NodeOrientation.None;
 
   static final Node boundary = NodeBoundary();
   static final Node grass = NodeGrass();
@@ -613,5 +615,32 @@ class NodeSunflower extends Node {
   @override
   void resolveCharacterCollision(Character character, Game game) {
 
+  }
+}
+
+class NodeBrickStairs extends NodeSlope {
+
+  var direction = NodeOrientation.North;
+
+  @override
+  int get type => NodeType.Brick_Stairs;
+
+  @override
+  int get orientation => direction;
+
+  @override
+  double getGradient(double x, double y) {
+    switch(direction) {
+      case NodeOrientation.North:
+        return 1 - x;
+      case NodeOrientation.East:
+        return 1 - y;
+      case NodeOrientation.South:
+        return x;
+      case NodeOrientation.West:
+        return y;
+      default:
+        throw Exception("method: NodeBrickStairs.getGradient(), reason: Invalid orientation $orientation");
+    }
   }
 }

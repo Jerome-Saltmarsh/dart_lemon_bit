@@ -1,5 +1,6 @@
 
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/node_orientation.dart';
 import 'package:lemon_engine/actions/render_atlas.dart';
 import 'package:lemon_engine/render.dart';
 import 'package:lemon_math/library.dart';
@@ -13,6 +14,7 @@ abstract class Node {
   var dstX = 0.0;
   var dstY = 0.0;
   var visible = true;
+  var orientation = NodeOrientation.None;
 
   void hide(){
     visible = false;
