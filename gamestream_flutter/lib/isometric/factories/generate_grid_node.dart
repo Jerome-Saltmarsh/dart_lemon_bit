@@ -122,7 +122,10 @@ Node generateNode(int z, int row, int column, int type){
       return NodeBrickStairs(row, column, z);
     case NodeType.Wood_2:
       return NodeWood2(row, column, z);
+    case NodeType.Cottage_Roof:
+      return NodeCottageRoof(row, column, z);
     default:
       throw Exception("Cannot build grid node type $type (${NodeType.getName(type)}");
   }
 }
+

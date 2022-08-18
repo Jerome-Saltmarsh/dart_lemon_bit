@@ -100,6 +100,43 @@ abstract class Node {
     renderAtlas();
   }
 
+
+  void renderSrcXY(double srcX, double srcY){
+    const spriteWidth = 48.0;
+    const spriteHeight = 72.0;
+    const spriteWidthHalf = spriteWidth * 0.5;
+    const spriteHeightThird = 24.0;
+
+    var srcY = shade * spriteHeight;
+
+    src[bufferIndex] = srcX;
+    dst[bufferIndex] = 1;
+    colors[renderIndex] = 0;
+
+    bufferIndex++;
+
+    src[bufferIndex] = srcY;
+    dst[bufferIndex] = 0;
+
+    bufferIndex++;
+
+    src[bufferIndex] = srcX + spriteWidth;
+    dst[bufferIndex] = dstX - spriteWidthHalf;
+
+    bufferIndex++;
+
+    src[bufferIndex] = srcY + spriteHeight;
+    dst[bufferIndex] = dstY - spriteHeightThird;
+
+    bufferIndex++;
+    renderIndex++;
+
+    if (bufferIndex < buffers) return;
+    bufferIndex = 0;
+    renderIndex = 0;
+    renderAtlas();
+  }
+
   void renderShaded(double srcX){
     const spriteWidth = 48.0;
     const spriteHeight = 72.0;
@@ -123,6 +160,40 @@ abstract class Node {
     bufferIndex++;
 
     src[bufferIndex] = spriteHeight;
+    dst[bufferIndex] = dstY - spriteHeightThird;
+
+    bufferIndex++;
+    renderIndex++;
+
+    if (bufferIndex < buffers) return;
+    bufferIndex = 0;
+    renderIndex = 0;
+    renderAtlas();
+  }
+
+  void renderShadedXY(double srcX, double srcY){
+    const spriteWidth = 48.0;
+    const spriteHeight = 72.0;
+    const spriteWidthHalf = spriteWidth * 0.5;
+    const spriteHeightThird = 24.0;
+
+    src[bufferIndex] = srcX;
+    dst[bufferIndex] = 1;
+    colors[renderIndex] = colorShades[shade];
+
+    bufferIndex++;
+
+    src[bufferIndex] = srcY;
+    dst[bufferIndex] = 0;
+
+    bufferIndex++;
+
+    src[bufferIndex] = srcX + spriteWidth;
+    dst[bufferIndex] = dstX - spriteWidthHalf;
+
+    bufferIndex++;
+
+    src[bufferIndex] = srcY + spriteHeight;
     dst[bufferIndex] = dstY - spriteHeightThird;
 
     bufferIndex++;

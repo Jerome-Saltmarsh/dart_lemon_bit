@@ -15,6 +15,10 @@ class NodeOrientation {
    static const Row_2 = 11;
    static const Column_1 = 12;
    static const Column_2 = 13;
+   static const South_West_Inner = 14;
+   static const North_West_Inner = 15;
+   static const North_East_Inner = 16;
+   static const South_East_Inner = 17;
 
    static bool isSlope(int value) =>
       value == North ||

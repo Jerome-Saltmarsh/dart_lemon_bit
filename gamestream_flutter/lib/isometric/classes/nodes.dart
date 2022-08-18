@@ -840,9 +840,6 @@ class NodeWood2 extends Node {
   int get type => NodeType.Wood_2;
 
   @override
-  bool get isStone => false;
-
-  @override
   void handleRender() {
     if (orientation == NodeOrientation.Solid)
       return renderSrcX(8887);
@@ -874,3 +871,29 @@ class NodeWood2 extends Node {
   }
 }
 
+class NodeCottageRoof extends Node {
+  NodeCottageRoof(int row, int column, int z) : super(row, column, z);
+
+  @override
+  int get type => NodeType.Cottage_Roof;
+
+  @override
+  void handleRender() {
+    if (orientation == NodeOrientation.North)
+      return renderShadedXY(11228, 0);
+    if (orientation == NodeOrientation.East)
+      return renderShadedXY(11228, 73);
+    if (orientation == NodeOrientation.South)
+      return renderShadedXY(11228, 146);
+    if (orientation == NodeOrientation.West)
+      return renderShadedXY(11228, 219);
+    if (orientation == NodeOrientation.North_East_Inner)
+      return renderShadedXY(11228, 292);
+    if (orientation == NodeOrientation.South_East_Inner)
+      return renderShadedXY(11228, 365);
+    if (orientation == NodeOrientation.South_West_Inner)
+      return renderShadedXY(11228, 438);
+    if (orientation == NodeOrientation.North_West_Inner)
+      return renderShadedXY(11228, 511);
+  }
+}

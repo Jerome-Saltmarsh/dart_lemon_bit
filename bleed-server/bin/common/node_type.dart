@@ -1,3 +1,15 @@
+
+// node_type belongs to a
+// node_group
+// wood
+// has solid, slopes, corners rows_columns
+// node_orientation
+// node_orientation_groups
+  // Slope_Symetric (North, East, South, West)
+  // Slope_Inner
+  // Slope_Outter
+  // Halvable
+// a node_group has possible node_orientations
 class NodeType {
   static const Empty = 0;
   static const Boundary = 1;
@@ -58,6 +70,7 @@ class NodeType {
   static const Grass_Flowers = 61;
   static const Brick_Stairs = 62;
   static const Wood_2 = 63;
+  static const Cottage_Roof = 64;
 
   static String getName(int type){
      return const {
@@ -76,7 +89,6 @@ class NodeType {
        Tree_Bottom: 'Tree Bottom',
        Tree_Top: 'Tree Top',
        Grass_Long: 'Grass Long',
-       // Enemy_Spawn: 'Enemy Spawn',
        Rain_Falling: 'Rain Falling',
        Rain_Landing: 'Rain Landing',
        Fireplace: 'Fireplace',
@@ -121,6 +133,7 @@ class NodeType {
        Grass_Flowers: "Grass Flowers",
        Brick_Stairs: "Brick Stairs",
        Wood_2: "Wood 2",
+       Cottage_Roof: "Cottage Roof",
      }[type] ?? "unknown($type)";
   }
 

@@ -126,6 +126,11 @@ Node generateNode(int type){
           orientation: NodeOrientation.Solid,
           type: NodeType.Wood_2,
       );
+    case NodeType.Cottage_Roof:
+      return NodeOriented(
+        orientation: NodeOrientation.Solid,
+        type: NodeType.Cottage_Roof,
+      );
     default:
       print("Warning: Cannot generate node for type $type (${NodeType.getName(type)})");
       return Node.empty;
