@@ -672,11 +672,8 @@ class NodeOriented extends Node {
     if (isSolid)
       return true;
 
-    if (isSloped)
+    if (isSloped || isCorner)
       return getHeight(x, y, z) > z;
-
-    if (isSloped)
-      return false;
 
     return false;
   }
@@ -710,8 +707,20 @@ class NodeOriented extends Node {
       case NodeOrientation.West:
         return y;
       case NodeOrientation.Corner_Top:
-        if (x < 0.5) return 1.0;;
-        if (y < 0.5) return 1.0;;
+        if (x < 0.5) return 1.0;
+        if (y < 0.5) return 1.0;
+        return 0;
+      case NodeOrientation.Corner_Right:
+        if (x > 0.5) return 1.0;
+        if (y < 0.5) return 1.0;
+        return 0;
+      case NodeOrientation.Corner_Bottom:
+        if (x > 0.5) return 1.0;
+        if (y > 0.5) return 1.0;
+        return 0;
+      case NodeOrientation.Corner_Left:
+        if (x < 0.5) return 1.0;
+        if (y > 0.5) return 1.0;
         return 0;
       default:
         throw Exception(
