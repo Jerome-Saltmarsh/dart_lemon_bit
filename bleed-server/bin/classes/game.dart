@@ -13,7 +13,6 @@ import 'ai.dart';
 import 'character.dart';
 import 'collider.dart';
 import 'components.dart';
-import 'enemy_spawn.dart';
 import 'gameobject.dart';
 import 'item.dart';
 import 'npc.dart';
@@ -36,10 +35,6 @@ abstract class Game {
 
   Game(this.scene) {
     engine.onGameCreated(this);
-
-    for (final enemySpawn in scene.enemySpawns){
-      enemySpawn.init(this);
-    }
   }
 
   void onGridChanged(){
@@ -220,16 +215,11 @@ extension GameFunctions on Game {
       }
     }
 
-    for (final enemySpawner in scene.enemySpawns) {
-       enemySpawner.update(this);
-    }
     update();
-    // updateCollectables();
     _updateCollisions();
     _updatePlayersAndNpcs();
     _updateProjectiles();
     _updateProjectiles(); // called twice to fix collision detection
-    // _updateItems();
     _updateCharacterFrames();
     sortGameObjects();
   }
@@ -279,10 +269,6 @@ extension GameFunctions on Game {
 
 
     if (destroyed) {
-      if (target is AI){
-         target.enemySpawn?.count--;
-      }
-
       target.collidable = false;
 
       if (target.dead && target is Zombie) {
@@ -1087,26 +1073,6 @@ extension GameFunctions on Game {
       // }
       return;
     }
-  }
-
-  void addEnemySpawn({
-    required int z,
-    required int row,
-    required int column,
-    required int health, int max = 5,
-    double wanderRadius = 200,
-  }){
-    final instance =         EnemySpawn(
-      z: z,
-      row: row,
-      column: column,
-      framesPerSpawn: 30,
-      health: health,
-      max: max,
-      wanderRadius: wanderRadius,
-    );
-    scene.enemySpawns.add(instance);
-    instance.init(this);
   }
 
   Npc addNpc({

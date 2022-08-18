@@ -5,7 +5,6 @@ import '../isometric/generate_empty_grid.dart';
 Scene generateEmptyScene(){
   return Scene(
     name: '',
-    enemySpawns: [],
     gameObjects: [],
     grid: generate_grid_empty(
       zHeight: 8,

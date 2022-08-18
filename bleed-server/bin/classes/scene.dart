@@ -1,7 +1,6 @@
 import '../common/library.dart';
 import 'ai.dart';
 import 'character.dart';
-import 'enemy_spawn.dart';
 import 'game.dart';
 import 'gameobject.dart';
 import 'node.dart';
@@ -14,7 +13,6 @@ class Scene {
   var gridColumns = 0;
   var name = "";
   var dirty = false;
-  final List<EnemySpawn> enemySpawns;
   final List<GameObject> gameObjects;
 
   double get gridRowLength => gridRows * tileSize;
@@ -26,7 +24,6 @@ class Scene {
   Scene({
     required this.name,
     required this.grid,
-    required this.enemySpawns,
     required this.gameObjects,
   }) {
     refreshGridMetrics();

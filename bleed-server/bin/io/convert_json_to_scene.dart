@@ -1,7 +1,6 @@
 
 import 'package:typedef/json.dart';
 
-import '../classes/enemy_spawn.dart';
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../classes/node.dart';
@@ -13,14 +12,12 @@ Scene convertJsonToScene(Json json, String name) {
   final height = json.getInt('grid-z');
   final rows = json.getInt('grid-rows');
   final columns = json.getInt('grid-columns');
-  var enemySpawns = <EnemySpawn>[];
   final List jsonGameObjects = json['gameobjects'] ?? [];
 
   return Scene(
     name: name,
     grid: convertFlatGridToGrid(json['grid'], height, rows, columns),
     gameObjects: jsonGameObjects.map(convertDynamicToGameObject).toList(),
-    enemySpawns: enemySpawns,
   );
 }
 

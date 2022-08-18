@@ -8,7 +8,6 @@ import '../functions/withinRadius.dart';
 import 'collider.dart';
 import 'components.dart';
 import 'character.dart';
-import 'enemy_spawn.dart';
 import 'game.dart';
 import 'player.dart';
 import 'position3.dart';
@@ -31,7 +30,6 @@ abstract class AI extends Character with Material {
   var objective;
   var wanderRadius = 0.0;
   var respawn = 0;
-  EnemySpawn? enemySpawn;
 
   bool get arrivedAtDest {
     const radius = 15;

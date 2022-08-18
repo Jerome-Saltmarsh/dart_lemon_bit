@@ -6,8 +6,6 @@ import 'package:typedef/json.dart';
 
 import '../classes/node.dart';
 import '../classes/scene.dart';
-import '../common/library.dart';
-import 'convert_enemy_spawn_to_json.dart';
 import 'to_json_gameobject.dart';
 
 
@@ -21,7 +19,6 @@ Json convertSceneToJson(Scene scene) {
   json['grid-rows'] = scene.gridRows;
   json['grid-columns'] = scene.gridColumns;
   json['grid'] = convertNodesToByteArray(scene.grid);
-  json['enemy-spawns'] = scene.enemySpawns.map(toJsonEnemySpawn).toList();
   json['gameobjects'] = scene.gameObjects
       .where((gameObject) => gameObject.persist)
       .map(toJsonGameObject)
@@ -33,15 +30,15 @@ Uint8List convertNodesToByteArray(List<List<List<Node>>> nodes) {
   final height = nodes.length;
   final rows = nodes[0].length;
   final columns = nodes[0][0].length;
-  final flattened = Uint8List(height * rows * columns);
+  final bytes = Uint8List(height * rows * columns);
   var i = 0;
   for (final z in nodes) {
     for(final row in z) {
       for (final column in row) {
-        flattened[i] = column.type;
+        bytes[i] = column.type;
         i++;
       }
     }
   }
-  return flattened;
+  return bytes;
 }
