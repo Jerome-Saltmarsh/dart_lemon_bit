@@ -24,6 +24,9 @@ class NodeBricks extends GridNodeColorRamp {
 
   @override
   bool get isRainable => true;
+
+  @override
+  bool get isStone => true;
 }
 
 class NodeGrass extends Node {
@@ -551,6 +554,9 @@ class NodeStairsNorth extends GridNodeColorRamp {
 
   @override
   double get srcX => 7494;
+
+  @override
+  bool get isStone => true;
 }
 
 class NodeStairsEast extends GridNodeColorRamp {
@@ -561,6 +567,9 @@ class NodeStairsEast extends GridNodeColorRamp {
 
   @override
   double get srcX => 7542;
+
+  @override
+  bool get isStone => true;
 }
 
 class NodeStairsSouth extends GridNodeColorRamp {
@@ -571,6 +580,9 @@ class NodeStairsSouth extends GridNodeColorRamp {
 
   @override
   double get srcX => 7398;
+
+  @override
+  bool get isStone => true;
 }
 
 class NodeStairsWest extends GridNodeColorRamp {
@@ -581,6 +593,9 @@ class NodeStairsWest extends GridNodeColorRamp {
 
   @override
   double get srcX => 7446;
+
+  @override
+  bool get isStone => true;
 }
 
 class NodeBrickTop extends GridNodeColorRamp {
@@ -591,6 +606,9 @@ class NodeBrickTop extends GridNodeColorRamp {
 
   @override
   double get srcX => 8621;
+
+  @override
+  bool get isStone => true;
 }
 
 class NodeTileNorth extends GridNodeColorRamp {

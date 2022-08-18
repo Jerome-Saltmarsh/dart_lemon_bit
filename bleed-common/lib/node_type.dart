@@ -123,16 +123,4 @@ class NodeType {
   static bool isRain(int value) =>
       value == Rain_Falling       ||
       value == Rain_Landing       ;
-
-  static isStone(int type){
-    return const [
-      Bricks,
-      Stairs_North,
-      Stairs_East,
-      Stairs_South,
-      Stairs_West,
-      Brick_Top,
-      Stone,
-    ].contains(type);
-  }
 }

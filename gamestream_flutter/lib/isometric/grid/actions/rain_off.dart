@@ -11,7 +11,6 @@ void rainOff(){
   );
 }
 
-
 void assignEmpty(int z, int row, int column, int type){
   grid[z][row][column] = Node.empty;
 }

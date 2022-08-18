@@ -51,6 +51,8 @@ abstract class Node {
   bool get blocksPerception => true;
   bool get isShadable => true;
 
+  bool get isStone => false;
+
   void resetShadeToBake(){
     shade = bake;
   }

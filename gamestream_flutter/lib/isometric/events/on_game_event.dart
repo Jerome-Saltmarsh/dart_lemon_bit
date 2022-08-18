@@ -19,7 +19,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
           audioSingleFootstepMud6.playXYZ(x, y, z);
         }
       }
-      if (NodeType.isStone(tile.type)) {
+      if (tile.isStone) {
         return audioSingleFootstepStone.playXYZ(x, y, z);
       }
       if (randomBool()){
