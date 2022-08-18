@@ -280,13 +280,15 @@ class Player extends Character with ByteWriter {
 
     if (previousType == type) return;
     scene.dirty = true;
-    scene.grid[z][row][column] = generateNode(type);
+    final node = generateNode(type);
+    scene.grid[z][row][column] = node;
     game.players.forEach((player) {
-      player.writeByte(ServerResponse.Block_Set);
+      player.writeByte(ServerResponse.Node);
       player.writeInt(z);
       player.writeInt(row);
       player.writeInt(column);
-      player.writeInt(type);
+      player.writeByte(type);
+      player.writeByte(node.orientation);
     });
   }
 

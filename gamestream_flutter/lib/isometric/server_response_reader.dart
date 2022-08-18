@@ -170,17 +170,14 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Player_Spawned:
           readPlayerSpawned();
           break;
-        // case ServerResponse.Player_Target:
-        //   readPlayerTarget();
-        //   break;
         case ServerResponse.Player_Weapons:
           readPlayerWeapons();
           break;
         case ServerResponse.Player_Equipped_Weapon:
           readPlayerEquippedWeapon();
           break;
-        case ServerResponse.Block_Set:
-          readBlockSet();
+        case ServerResponse.Node:
+          readNode();
           break;
         case ServerResponse.Player_Target:
           readVector3(player.target);
@@ -352,12 +349,15 @@ class ServerResponseReader with ByteReader {
     storeItems.value = readWeapons();
   }
 
-  void readBlockSet() {
+  void readNode() {
     final z = readInt();
     final row = readInt();
     final column = readInt();
-    final type = readInt();
-    grid[z][row][column] = generateNode(z, row, column, type);
+    final type = readByte();
+    final orientation = readByte();
+    final node = generateNode(z, row, column, type);
+    node.orientation = orientation;
+    grid[z][row][column] = node;
     edit.refreshSelected();
     onGridChanged();
   }

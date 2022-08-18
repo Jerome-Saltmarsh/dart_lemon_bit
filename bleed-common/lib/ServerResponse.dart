@@ -43,7 +43,7 @@ class ServerResponse {
   static const Player_Spawned = 60;
   static const Player_Target = 61;
   static const Grid = 62;
-  static const Block_Set = 63;
+  static const Node = 63;
   static const Player_Weapons = 64;
   static const Player_Equipped_Weapon = 65;
   static const Store_Items = 66;
