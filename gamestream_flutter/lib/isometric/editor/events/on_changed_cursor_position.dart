@@ -3,7 +3,8 @@
 
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 
-void onEditorZChanged(int z){
+/// node_type.dart
+void onChangedCursorPosition(int type) {
   edit.refreshSelected();
   edit.deselectGameObject();
 }

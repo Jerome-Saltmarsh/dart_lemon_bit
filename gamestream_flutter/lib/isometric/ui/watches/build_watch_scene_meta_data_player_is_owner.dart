@@ -50,78 +50,84 @@ Stack buildStackEdit() {
   );
 }
 
-Widget buildColumnEditNodeOrientation(){
+Widget buildColumnEditNodeOrientation() {
   return watch(edit.gameObjectSelected, (bool gameObjectSelected){
     if (gameObjectSelected) return const SizedBox();
 
     return Column(
       children: [
-        Column(
-          children: [
-            container(
-                child: "North",
-                action: sendNodeRequestOrientNorth
-            ),
-            container(
-                child: "East",
-                action: sendNodeRequestOrientEast
-            ),
-            container(
-                child: "South",
-                action: sendNodeRequestOrientSouth
-            ),
-            container(
-                child: "West",
-                action: sendNodeRequestOrientWest
-            ),
-          ],
-        ),
+        buildColumnNodeOrientationSlopeSymmetric(),
         height8,
-        Column(
-          children: [
-            container(
-                child: "Corner Top",
-                action: () => sendNodeRequestOrient(NodeOrientation.Corner_Top),
-            ),
-            container(
-                child: "Corner Right",
-              action: () => sendNodeRequestOrient(NodeOrientation.Corner_Right),
-            ),
-            container(
-                child: "Corner Bottom",
-              action: () => sendNodeRequestOrient(NodeOrientation.Corner_Bottom),
-            ),
-            container(
-              child: "Corner Left",
-              action: () => sendNodeRequestOrient(NodeOrientation.Corner_Left),
-            ),
-          ],
-        ),
+        buildColumnNodeOrientationCorner(),
         height8,
-        Column(
-          children: [
-            container(
-                child: "Row 1",
-                action: () => sendNodeRequestOrient(NodeOrientation.Row_1),
-            ),
-            container(
-                child: "Row 2",
-                action: () => sendNodeRequestOrient(NodeOrientation.Row_2),
-            ),
-            container(
-                child: "Column 1",
-                action: () => sendNodeRequestOrient(NodeOrientation.Column_1),
-            ),
-            container(
-                child: "Column 2",
-                action: () => sendNodeRequestOrient(NodeOrientation.Column_2),
-            ),
-          ],
-        )
+        buildColumnNodeOrientationHalf()
       ],
     );
   });
 }
+
+Widget buildColumnNodeOrientationHalf() {
+  return visibleBuilder(
+      edit.nodeSupportsHalf,
+      Column(
+        children: [
+          container(
+            child: "Row 1",
+            action: () => sendNodeRequestOrient(NodeOrientation.Row_1),
+          ),
+          container(
+            child: "Row 2",
+            action: () => sendNodeRequestOrient(NodeOrientation.Row_2),
+          ),
+          container(
+            child: "Column 1",
+            action: () => sendNodeRequestOrient(NodeOrientation.Column_1),
+          ),
+          container(
+            child: "Column 2",
+            action: () => sendNodeRequestOrient(NodeOrientation.Column_2),
+          ),
+        ],
+      ));
+}
+
+Widget buildColumnNodeOrientationCorner() {
+  return visibleBuilder(
+      edit.nodeSupportsCorner,
+      Column(
+        children: [
+          container(
+            child: "Corner Top",
+            action: () => sendNodeRequestOrient(NodeOrientation.Corner_Top),
+          ),
+          container(
+            child: "Corner Right",
+            action: () => sendNodeRequestOrient(NodeOrientation.Corner_Right),
+          ),
+          container(
+            child: "Corner Bottom",
+            action: () => sendNodeRequestOrient(NodeOrientation.Corner_Bottom),
+          ),
+          container(
+            child: "Corner Left",
+            action: () => sendNodeRequestOrient(NodeOrientation.Corner_Left),
+          ),
+        ],
+      ));
+}
+
+Widget buildColumnNodeOrientationSlopeSymmetric()  =>
+  visibleBuilder(
+      edit.nodeSupportsSlopeSymmetric,
+      Column(
+        children: [
+          container(child: "North", action: sendNodeRequestOrientNorth),
+          container(child: "East", action: sendNodeRequestOrientEast),
+          container(child: "South", action: sendNodeRequestOrientSouth),
+          container(child: "West", action: sendNodeRequestOrientWest),
+        ],
+      )
+  );
 
 Widget buildColumnEditNode() {
 

@@ -1,15 +1,4 @@
 
-// node_type belongs to a
-// node_group
-// wood
-// has solid, slopes, corners rows_columns
-// node_orientation
-// node_orientation_groups
-  // Slope_Symetric (North, East, South, West)
-  // Slope_Inner
-  // Slope_Outter
-  // Halvable
-// a node_group has possible node_orientations
 class NodeType {
   static const Empty = 0;
   static const Boundary = 1;
@@ -71,6 +60,48 @@ class NodeType {
   static const Brick_Stairs = 62;
   static const Wood_2 = 63;
   static const Cottage_Roof = 64;
+
+  static bool isSolid(int type){
+     return const [
+        Grass,
+        Bricks,
+        Wood,
+     ].contains(type);
+  }
+
+  static bool isSlopeSymmetric(int type){
+    return const [
+      Grass,
+      Bricks,
+      Wood,
+      Cottage_Roof
+    ].contains(type);
+  }
+
+  static bool isSlopeCornerInner(int type){
+    return const [
+      Grass,
+      Cottage_Roof
+    ].contains(type);
+  }
+
+  static bool isSlopeCornerOuter(int type){
+    return const [
+      Grass,
+    ].contains(type);
+  }
+
+  static bool isHalf(int type){
+    return const [
+      Wood,
+    ].contains(type);
+  }
+
+  static bool isCorner(int type){
+    return const [
+      Wood,
+    ].contains(type);
+  }
 
   static String getName(int type){
      return const {

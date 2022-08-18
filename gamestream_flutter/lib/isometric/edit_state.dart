@@ -2,15 +2,14 @@ import 'package:bleed_common/node_type.dart';
 import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/classes/node_extensions.dart';
-import 'package:gamestream_flutter/isometric/editor/events/on_editor_column_changed.dart';
-import 'package:gamestream_flutter/isometric/editor/events/on_editor_z_changed.dart';
+import 'package:gamestream_flutter/isometric/editor/events/on_changed_cursor_position.dart';
+import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'classes/node.dart';
-import 'editor/events/on_editor_row_changed.dart';
 import 'grid.dart';
 import 'player.dart';
 import 'utils/mouse_raycast.dart';
@@ -24,12 +23,28 @@ class EditState {
   final gameObjectSelectedType = Watch(0);
   final gameObjectSelectedSpawnType = Watch(0);
 
+  final nodeSupportsSolid = Watch(false);
+  final nodeSupportsSlopeSymmetric = Watch(false);
+  final nodeSupportsSlopeCornerInner = Watch(false);
+  final nodeSupportsSlopeCornerOuter = Watch(false);
+  final nodeSupportsHalf = Watch(false);
+  final nodeSupportsCorner = Watch(false);
+
   double get posX => row.value * tileSize + tileSizeHalf;
   double get posY => column.value * tileSize + tileSizeHalf;
   double get posZ => z.value * tileHeight;
 
+  void updateNodeSupports(int type){
+    nodeSupportsSolid.value = NodeType.isSolid(type);
+    nodeSupportsCorner.value = NodeType.isCorner(type);
+    nodeSupportsHalf.value = NodeType.isHalf(type);
+    nodeSupportsSlopeCornerInner.value = NodeType.isSlopeCornerInner(type);
+    nodeSupportsSlopeCornerOuter.value = NodeType.isSlopeCornerOuter(type);
+    nodeSupportsSlopeSymmetric.value = NodeType.isSlopeSymmetric(type);
+  }
+
   void refreshSelected([int? val]){
-    selected.value = grid[z.value][row.value][column.value];
+    selectedNode.value = grid[z.value][row.value][column.value];
   }
 
   void deselectGameObject() {
@@ -49,24 +64,24 @@ class EditState {
     if (value < 0) return 0;
     if (value >= gridTotalRows) return gridTotalRows - 1;
     return value;
-  }, onChanged: onEditorRowChanged);
+  }, onChanged: onChangedCursorPosition);
   var column = Watch(0, clamp: (int value){
     if (value < 0) return 0;
     if (value >= gridTotalColumns) return gridTotalColumns - 1;
     return value;
   },
-  onChanged: onEditorColumnChanged
+  onChanged: onChangedCursorPosition
   );
   var z = Watch(1, clamp: (int value){
     if (value < 0) return 0;
     if (value >= gridTotalZ) return gridTotalZ - 1;
     return value;
-  }, onChanged: onEditorZChanged);
-  final selected = Watch<Node>(Node.boundary);
+  }, onChanged: onChangedCursorPosition);
+  final selectedNode = Watch<Node>(Node.boundary, onChanged: onChangedSelectedNode);
   final paintType = Watch(NodeType.Bricks);
   final controlsVisibleWeather = Watch(true);
 
-  int get selectedType => selected.value.type;
+  int get selectedType => selectedNode.value.type;
 
   void actionToggleControlsVisibleWeather(){
     controlsVisibleWeather.value = !controlsVisibleWeather.value;
