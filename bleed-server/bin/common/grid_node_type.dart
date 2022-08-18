@@ -127,7 +127,6 @@ class GridNodeType {
     Tree_Bottom,
     Tree_Top,
     Grass_Long,
-    // Enemy_Spawn,
     Rain_Falling,
     Rain_Landing,
     Fireplace,
