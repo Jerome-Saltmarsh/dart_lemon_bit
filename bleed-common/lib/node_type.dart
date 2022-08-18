@@ -57,82 +57,6 @@ class NodeType {
   static const Oven = 60;
   static const Grass_Flowers = 61;
 
-  static isSolid(int type){
-    if (type == NodeType.Bricks) return true;
-    if (type == NodeType.Grass) return true;
-    if (type == NodeType.Wood) return true;
-    if (type == NodeType.Soil) return true;
-    if (type == NodeType.Boundary) return true;
-    if (type == NodeType.Stone) return true;
-    return false;
-  }
-  
-  static isGrassSlope(int type){
-    if (type == NodeType.Grass_Slope_North) return true;
-    if (type == NodeType.Grass_Slope_East) return true;
-    if (type == NodeType.Grass_Slope_South) return true;
-    if (type == NodeType.Grass_Slope_West) return true;
-    if (type == NodeType.Grass_Slope_Top) return true;
-    if (type == NodeType.Grass_Slope_Right) return true;
-    if (type == NodeType.Grass_Slope_Bottom) return true;
-    if (type == NodeType.Grass_Slope_Left) return true;
-    return false;
-  }
-  
-  static isStone(int type){
-    return const [
-        Bricks,
-        Stairs_North,
-        Stairs_East,
-        Stairs_South,
-        Stairs_West,
-        Brick_Top,
-        Stone,
-    ].contains(type);
-  }
-
-  static bool isSlopeNorth(int type){
-    return type == Stairs_North || type == Grass_Slope_North;
-  }
-
-  static bool isSlopeEast(int type){
-    return type == Stairs_East || type == Grass_Slope_East;
-  }
-
-  static bool isSlopeSouth(int type){
-    return type == Stairs_South || type == Grass_Slope_South;
-  }
-
-  static bool isSlopeWest(int type){
-    return type == Stairs_West || type == Grass_Slope_West;
-  }
-
-  static bool isWater(int type) {
-    return type == Water || type == Water_Flowing;
-  }
-
-  static const values = [
-    Empty,
-    Boundary,
-    Grass,
-    Bricks,
-    Brick_Top,
-    Stairs_North,
-    Stairs_East,
-    Stairs_South,
-    Stairs_West,
-    Water,
-    Water_Flowing,
-    Torch,
-    Tree_Bottom,
-    Tree_Top,
-    Grass_Long,
-    Rain_Falling,
-    Rain_Landing,
-    Fireplace,
-    Wood,
-  ];
-  
   static String getName(int type){
      return const {
        Empty: 'Empty',
@@ -195,31 +119,20 @@ class NodeType {
        Grass_Flowers: "Grass Flowers",
      }[type] ?? "unknown($type)";
   }
-  
-  static bool isFire(int value) =>
-     value == Fireplace           ||
-     value == Torch               ;
 
   static bool isRain(int value) =>
       value == Rain_Falling       ||
       value == Rain_Landing       ;
 
-  static bool isRainOrEmpty(int value) =>
-      value == Rain_Falling       ||
-      value == Rain_Landing       ||
-      value == Empty;
-
-  static bool isTree(int value) =>
-     value == Tree_Top            ||
-     value == Tree_Bottom         ;
-
-  static bool isStairs(int value) =>
-      value == Stairs_North       ||
-      value == Stairs_East        ||
-      value == Stairs_West        ||
-      value == Stairs_South       ||
-      value == Grass_Slope_North  ||
-      value == Grass_Slope_East   ||
-      value == Grass_Slope_South  ||
-      value == Grass_Slope_West   ;
+  static isStone(int type){
+    return const [
+      Bricks,
+      Stairs_North,
+      Stairs_East,
+      Stairs_South,
+      Stairs_West,
+      Brick_Top,
+      Stone,
+    ].contains(type);
+  }
 }

@@ -189,31 +189,6 @@ class Scene {
   //   return visitDirection(directionBehind, node);
   // }
 
-  double getHeightAt(double x, double y, double z){
-    var type = getNodeXYZ(x, y, z).type;
-    final bottom = (z ~/ tileHeight) * tileHeight;
-    if (type == NodeType.Empty) return bottom;
-    if (type == NodeType.Boundary) return bottom;
-
-    if (NodeType.isSlopeNorth(type)){
-      final percentage = 1 - ((x % tileSize) / tileSize);
-      return (percentage * tileHeight) + bottom;
-    }
-    if (NodeType.isSlopeSouth(type)){
-      final percentage = ((x % tileSize) / tileSize);
-      return (percentage * tileHeight) + bottom;
-    }
-    if (NodeType.isSlopeWest(type)){
-      final percentage = ((y % tileSize) / tileSize);
-      return (percentage * tileHeight) + bottom;
-    }
-    if (NodeType.isSlopeEast(type)){
-      final percentage = 1 - ((y % tileSize) / tileSize);
-      return (percentage * tileHeight) + bottom;
-    }
-    return bottom + tileHeight;
-  }
-
   bool getCollisionAt(double x, double y, double z) {
     return getNodeXYZ(x, y, z).getCollision(x, y, z);
   }
