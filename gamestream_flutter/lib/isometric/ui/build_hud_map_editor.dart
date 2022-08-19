@@ -443,4 +443,5 @@ const editorSelectableGridTypes = [
     NodeType.Cottage_Roof,
     NodeType.Grass_2,
     NodeType.Plain,
+    NodeType.Window,
 ];
