@@ -887,13 +887,13 @@ class NodeCottageRoof extends Node {
       return renderShadedXY(11228, 146);
     if (orientation == NodeOrientation.Slope_West)
       return renderShadedXY(11228, 219);
-    if (orientation == NodeOrientation.North_East_Inner)
+    if (orientation == NodeOrientation.Slope_Inner_North_East)
       return renderShadedXY(11228, 292);
-    if (orientation == NodeOrientation.South_East_Inner)
+    if (orientation == NodeOrientation.Slope_Inner_South_East)
       return renderShadedXY(11228, 365);
-    if (orientation == NodeOrientation.South_West_Inner)
+    if (orientation == NodeOrientation.Slope_Inner_South_West)
       return renderShadedXY(11228, 438);
-    if (orientation == NodeOrientation.North_West_Inner)
+    if (orientation == NodeOrientation.Slope_Inner_North_West)
       return renderShadedXY(11228, 511);
   }
 }
@@ -915,13 +915,13 @@ class NodeGrass2 extends Node {
       return renderShadedXY(11228, 146);
     if (orientation == NodeOrientation.Slope_West)
       return renderShadedXY(11228, 219);
-    if (orientation == NodeOrientation.North_East_Inner)
+    if (orientation == NodeOrientation.Slope_Inner_North_East)
       return renderShadedXY(11228, 292);
-    if (orientation == NodeOrientation.South_East_Inner)
+    if (orientation == NodeOrientation.Slope_Inner_South_East)
       return renderShadedXY(11228, 365);
-    if (orientation == NodeOrientation.South_West_Inner)
+    if (orientation == NodeOrientation.Slope_Inner_South_West)
       return renderShadedXY(11228, 438);
-    if (orientation == NodeOrientation.North_West_Inner)
+    if (orientation == NodeOrientation.Slope_Inner_North_West)
       return renderShadedXY(11228, 511);
   }
 }

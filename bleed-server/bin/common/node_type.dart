@@ -193,8 +193,8 @@ class NodeType {
   static int getDefaultOrientation(int value){
      if (isSolid(value)) return NodeOrientation.Solid;
      if (isSlopeSymmetric(value)) return NodeOrientation.Slope_North;
-     if (isSlopeCornerInner(value)) return NodeOrientation.North_East_Inner;
-     if (isSlopeCornerOuter(value)) return NodeOrientation.North_East_Outer;
+     if (isSlopeCornerInner(value)) return NodeOrientation.Slope_Inner_North_East;
+     if (isSlopeCornerOuter(value)) return NodeOrientation.Slope_Outer_North_East;
      if (isHalf(value)) return NodeOrientation.Half_Row_1;
      if (isCorner(value)) return NodeOrientation.Corner_Top;
      return NodeOrientation.None;

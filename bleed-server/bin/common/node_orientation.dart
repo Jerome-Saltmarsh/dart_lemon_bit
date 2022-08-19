@@ -15,22 +15,22 @@ class NodeOrientation {
    static const Half_Row_2 = 11;
    static const Half_Column_1 = 12;
    static const Half_Column_2 = 13;
-   static const South_West_Inner = 14;
-   static const North_West_Inner = 15;
-   static const North_East_Inner = 16;
-   static const South_East_Inner = 17;
-   static const South_West_Outer = 18;
-   static const North_West_Outer = 19;
-   static const North_East_Outer = 20;
-   static const South_East_Outer = 21;
+   static const Slope_Inner_South_West = 14;
+   static const Slope_Inner_North_West = 15;
+   static const Slope_Inner_North_East = 16;
+   static const Slope_Inner_South_East = 17;
+   static const Slope_Outer_South_West = 18;
+   static const Slope_Outer_North_West = 19;
+   static const Slope_Outer_North_East = 20;
+   static const Slope_Outer_South_East = 21;
    
    static String getName(int value){
       return {
          None: "None",
-         Slope_North: "North",
-         Slope_East: "East",
-         Slope_South: "South",
-         Slope_West: "West",
+         Slope_North: "Slope North",
+         Slope_East: "Slope East",
+         Slope_South: "Slope South",
+         Slope_West: "Slope West",
          Corner_Top: "Corner Top",
          Corner_Right: "Corner Right",
          Corner_Bottom: "Corner Bottom",
@@ -40,14 +40,14 @@ class NodeOrientation {
          Half_Row_2: "Half Row 2",
          Half_Column_1: "Half Column 1",
          Half_Column_2: "Half Column 2",
-         North_East_Inner: "North East Inner",
-         South_East_Inner: "South East Inner",
-         South_West_Inner: "South West Inner",
-         North_West_Inner: "North West Inner",
-         North_East_Outer: "North East Outer",
-         South_East_Outer: "South East Outer",
-         South_West_Outer: "South West Outer",
-         North_West_Outer: "North West Outer",
+         Slope_Inner_North_East: "Slope Inner North East",
+         Slope_Inner_South_East: "Slope Inner South East",
+         Slope_Inner_South_West: "Slope Inner South West",
+         Slope_Inner_North_West: "Slope Inner North West",
+         Slope_Outer_North_East: "Slope Outer North East",
+         Slope_Outer_South_East: "Slope Outer East",
+         Slope_Outer_South_West: "Slope Outer West",
+         Slope_Outer_North_West: "Slope Outer West",
          
       }[value] ?? "unknown: $value";
    }
@@ -60,17 +60,17 @@ class NodeOrientation {
    ];
 
    static const valuesSlopeCornerInner = [
-      North_East_Inner,
-      South_East_Inner,
-      South_West_Inner,
-      North_West_Inner,
+      Slope_Inner_North_East,
+      Slope_Inner_South_East,
+      Slope_Inner_South_West,
+      Slope_Inner_North_West,
    ];
 
    static const valuesSlopeCornerOuter = [
-      North_East_Outer,
-      South_East_Outer,
-      South_West_Outer,
-      North_West_Outer,
+      Slope_Outer_North_East,
+      Slope_Outer_South_East,
+      Slope_Outer_South_West,
+      Slope_Outer_North_West,
    ];
 
    static const valuesHalf = [
@@ -79,7 +79,7 @@ class NodeOrientation {
       Half_Column_1,
       Half_Column_2,
    ];
-   
+
    static const valuesCorners = [
       Corner_Top,
       Corner_Right,
