@@ -512,7 +512,7 @@ class NodeBricks2 extends Node {
 }
 
 class NodeWood2 extends Node {
-  NodeWood2(int row, int column, int z) : super(row, column, z);
+  NodeWood2(int row, int column, int z) : super(row, column, z) ;
 
   @override
   int get type => NodeType.Wood_2;
@@ -529,14 +529,26 @@ class NodeWood2 extends Node {
       return renderSrcX(11082 );
     if (orientation == NodeOrientation.Slope_West)
       return renderSrcX(11032);
-    if (orientation == NodeOrientation.Half_Column_1)
-      return renderSrcX(8935);
+    if (orientation == NodeOrientation.Half_Column_1){
+      dstX += 17;
+      dstY -= 17;
+      renderSrcX(8935);
+      dstX -= 17;
+      dstY += 17;
+      return;
+    }
     if (orientation == NodeOrientation.Half_Column_2)
       return renderSrcX(8935);
     if (orientation == NodeOrientation.Half_Row_1)
       return renderSrcX(8983);
-    if (orientation == NodeOrientation.Half_Row_2)
-      return renderSrcX(8983);
+    if (orientation == NodeOrientation.Half_Row_2) {
+      dstX -= 17;
+      dstY -= 17;
+      renderSrcX(8983);
+      dstX += 17;
+      dstY += 17;
+      return;
+    }
     if (orientation == NodeOrientation.Corner_Top)
       return renderSrcX(9079);
     if (orientation == NodeOrientation.Corner_Right)
