@@ -195,7 +195,7 @@ class NodeType {
      if (isSlopeSymmetric(value)) return NodeOrientation.Slope_North;
      if (isSlopeCornerInner(value)) return NodeOrientation.North_East_Inner;
      if (isSlopeCornerOuter(value)) return NodeOrientation.North_East_Outer;
-     if (isHalf(value)) return NodeOrientation.Row_1;
+     if (isHalf(value)) return NodeOrientation.Half_Row_1;
      if (isCorner(value)) return NodeOrientation.Corner_Top;
      return NodeOrientation.None;
   }

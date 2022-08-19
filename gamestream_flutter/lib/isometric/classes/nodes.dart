@@ -851,13 +851,13 @@ class NodeWood2 extends Node {
       return renderSrcX(11082 );
     if (orientation == NodeOrientation.Slope_West)
       return renderSrcX(11032);
-    if (orientation == NodeOrientation.Column_1)
+    if (orientation == NodeOrientation.Half_Column_1)
       return renderSrcX(8935);
-    if (orientation == NodeOrientation.Column_2)
+    if (orientation == NodeOrientation.Half_Column_2)
       return renderSrcX(8935);
-    if (orientation == NodeOrientation.Row_1)
+    if (orientation == NodeOrientation.Half_Row_1)
       return renderSrcX(8983);
-    if (orientation == NodeOrientation.Row_2)
+    if (orientation == NodeOrientation.Half_Row_2)
       return renderSrcX(8983);
     if (orientation == NodeOrientation.Corner_Top)
       return renderSrcX(9079);
