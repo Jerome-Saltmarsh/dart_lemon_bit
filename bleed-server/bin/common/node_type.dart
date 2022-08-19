@@ -35,6 +35,7 @@ class NodeType {
   static const Cottage_Roof = 64;
   static const Grass_2 = 65;
   static const Plain = 66;
+  static const Window = 67;
 
   static bool isSolid(int type){
      return const [
@@ -71,6 +72,7 @@ class NodeType {
     return const [
       Wood_2,
       Plain,
+      Window
     ].contains(type);
   }
 
@@ -83,37 +85,71 @@ class NodeType {
 
   static String getName(int type){
      return const {
-       Empty: 'Empty',
-       Boundary: 'Boundary',
-       Brick_Top: 'Brick Top',
-       Water: 'Water',
-       Water_Flowing: 'Flowing Water',
-       Torch: 'Torch',
-       Tree_Bottom: 'Tree Bottom',
-       Tree_Top: 'Tree Top',
-       Grass_Long: 'Grass Long',
-       Rain_Falling: 'Rain Falling',
-       Rain_Landing: 'Rain Landing',
-       Fireplace: 'Fireplace',
-       Soil: "Soil",
-       Roof_Hay_North: "Roof Hay North",
-       Roof_Hay_South: "Roof Hay South",
-       Stone: "Stone",
-       Bau_Haus: "Bau Haus",
-       Bau_Haus_Window: "Bau Haus Window",
-       Bau_Haus_Plain: "Bau Hau Plain",
-       Chimney: "Chimney",
-       Bed_Bottom: "Bed Bottom",
-       Bed_Top: "Bed Top",
-       Table: "Table",
-       Sunflower: "Sunflower",
-       Oven: "Oven",
-       Grass_Flowers: "Grass Flowers",
-       Brick_2: "Brick 2",
-       Wood_2: "Wood 2",
-       Cottage_Roof: "Cottage Roof",
-       Grass_2: "Grass 2",
-       Plain: "Plain",
+       Empty:
+          'Empty',
+       Boundary:
+          'Boundary',
+       Brick_Top:
+          'Brick Top',
+       Water:
+          'Water',
+       Water_Flowing:
+          'Flowing Water',
+       Torch:
+          'Torch',
+       Tree_Bottom:
+          'Tree Bottom',
+       Tree_Top:
+          'Tree Top',
+       Grass_Long:
+          'Grass Long',
+       Rain_Falling:
+          'Rain Falling',
+       Rain_Landing:
+          'Rain Landing',
+       Fireplace:
+          'Fireplace',
+       Soil:
+          "Soil",
+       Roof_Hay_North:
+          "Roof Hay North",
+       Roof_Hay_South:
+          "Roof Hay South",
+       Stone:
+          "Stone",
+       Bau_Haus:
+          "Bau Haus",
+       Bau_Haus_Window:
+          "Bau Haus Window",
+       Bau_Haus_Plain:
+          "Bau Hau Plain",
+       Chimney:
+          "Chimney",
+       Bed_Bottom:
+          "Bed Bottom",
+       Bed_Top:
+          "Bed Top",
+       Table:
+          "Table",
+       Sunflower:
+          "Sunflower",
+       Oven:
+          "Oven",
+       Grass_Flowers:
+          "Grass Flowers",
+       Brick_2:
+          "Brick 2",
+       Wood_2:
+          "Wood 2",
+       Cottage_Roof:
+          "Cottage Roof",
+       Grass_2:
+          "Grass 2",
+       Plain:
+          "Plain",
+       Window:
+          "Window",
+
      }[type] ?? "unknown($type)";
   }
 
@@ -125,16 +161,24 @@ class NodeType {
      value == Brick_2             ||
      value == Wood_2              ||
      value == Grass_2             ||
-     value == Plain             ||
+     value == Plain               ||
+     value == Window              ||
      value == Cottage_Roof        ;
 
   static int getDefaultOrientation(int value){
-     if (isSolid(value)) return NodeOrientation.Solid;
-     if (isSlopeSymmetric(value)) return NodeOrientation.Slope_North;
-     if (isSlopeCornerInner(value)) return NodeOrientation.Slope_Inner_North_East;
-     if (isSlopeCornerOuter(value)) return NodeOrientation.Slope_Outer_North_East;
-     if (isHalf(value)) return NodeOrientation.Half_Row_1;
-     if (isCorner(value)) return NodeOrientation.Corner_Top;
+     if (isSolid(value))
+       return NodeOrientation.Solid;
+     if (isSlopeSymmetric(value))
+       return NodeOrientation.Slope_North;
+     if (isSlopeCornerInner(value))
+       return NodeOrientation.Slope_Inner_North_East;
+     if (isSlopeCornerOuter(value))
+       return NodeOrientation.Slope_Outer_North_East;
+     if (isHalf(value))
+       return NodeOrientation.Half_North;
+     if (isCorner(value))
+       return NodeOrientation.Corner_Top;
+
      return NodeOrientation.None;
   }
 }

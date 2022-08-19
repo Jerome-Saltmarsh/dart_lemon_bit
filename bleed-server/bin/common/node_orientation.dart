@@ -11,10 +11,10 @@ class NodeOrientation {
    static const Corner_Right = 7;
    static const Corner_Bottom = 8;
    static const Solid = 9;
-   static const Half_Row_1 = 10;
-   static const Half_Row_2 = 11;
-   static const Half_Column_1 = 12;
-   static const Half_Column_2 = 13;
+   static const Half_North = 10;
+   static const Half_East = 11;
+   static const Half_South = 12;
+   static const Half_West = 13;
    static const Slope_Inner_South_West = 14;
    static const Slope_Inner_North_West = 15;
    static const Slope_Inner_North_East = 16;
@@ -36,10 +36,10 @@ class NodeOrientation {
          Corner_Bottom: "Corner Bottom",
          Corner_Left: "Corner Left",
          Solid: "Solid",
-         Half_Row_1: "Half Row 1",
-         Half_Row_2: "Half Row 2",
-         Half_Column_1: "Half Column 1",
-         Half_Column_2: "Half Column 2",
+         Half_North: "Half North",
+         Half_East: "Half East",
+         Half_South: "Half South",
+         Half_West: "Half West",
          Slope_Inner_North_East: "Slope Inner North East",
          Slope_Inner_South_East: "Slope Inner South East",
          Slope_Inner_South_West: "Slope Inner South West",
@@ -74,10 +74,10 @@ class NodeOrientation {
    ];
 
    static const valuesHalf = [
-      Half_Row_1,
-      Half_Row_2,
-      Half_Column_1,
-      Half_Column_2,
+      Half_North,
+      Half_East,
+      Half_South,
+      Half_West,
    ];
 
    static const valuesCorners = [

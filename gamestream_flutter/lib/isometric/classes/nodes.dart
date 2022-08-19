@@ -519,7 +519,7 @@ class NodeWood2 extends Node {
       return renderShadeManual(11082 );
     if (orientation == NodeOrientation.Slope_West)
       return renderShadeManual(11032);
-    if (orientation == NodeOrientation.Half_Column_1){
+    if (orientation == NodeOrientation.Half_North){
       dstX += 17;
       dstY -= 17;
       renderShadeManual(8935);
@@ -527,11 +527,11 @@ class NodeWood2 extends Node {
       dstY += 17;
       return;
     }
-    if (orientation == NodeOrientation.Half_Column_2)
+    if (orientation == NodeOrientation.Half_East)
       return renderShadeManual(8935);
-    if (orientation == NodeOrientation.Half_Row_1)
+    if (orientation == NodeOrientation.Half_West)
       return renderShadeManual(8983);
-    if (orientation == NodeOrientation.Half_Row_2) {
+    if (orientation == NodeOrientation.Half_South) {
       dstX -= 17;
       dstY -= 17;
       renderShadeManual(8983);
@@ -654,7 +654,7 @@ class NodePlain extends Node {
 
     if (orientation == NodeOrientation.Solid)
       return renderShadeAuto(srcX, srcYIndex0);
-    if (orientation == NodeOrientation.Half_Row_1) {
+    if (orientation == NodeOrientation.Half_North) {
       dstX -= 17;
       dstY -= 17;
       renderShadeAuto(srcX, srcYIndex1);
@@ -662,9 +662,9 @@ class NodePlain extends Node {
       dstY += 17;
       return;
     }
-    if (orientation == NodeOrientation.Half_Row_2)
+    if (orientation == NodeOrientation.Half_East)
       return renderShadeAuto(srcX, srcYIndex1);
-    if (orientation == NodeOrientation.Half_Column_1) {
+    if (orientation == NodeOrientation.Half_South) {
       dstX += 17;
       dstY -= 17;
       renderShadeAuto(srcX, srcYIndex2);
@@ -672,7 +672,7 @@ class NodePlain extends Node {
       dstY += 17;
       return;
     }
-    if (orientation == NodeOrientation.Half_Column_2)
+    if (orientation == NodeOrientation.Half_West)
       return renderShadeAuto(srcX, srcYIndex2);
     if (orientation == NodeOrientation.Corner_Left)
       return renderShadeAuto(srcX, srcYIndex3);
@@ -682,5 +682,26 @@ class NodePlain extends Node {
       return renderShadeAuto(srcX, srcYIndex5);
     if (orientation == NodeOrientation.Corner_Top)
       return renderShadeAuto(srcX, srcYIndex6);
+  }
+}
+
+class NodeWindow extends Node {
+  NodeWindow(int row, int column, int z) : super(row, column, z);
+
+  @override
+  int get type => NodeType.Window;
+
+  @override
+  void handleRender() {
+    const srcX = 11328.0;
+
+    if (orientation == NodeOrientation.Half_North)
+      return renderShadeAuto(srcX, srcYIndex0);
+    if (orientation == NodeOrientation.Half_East)
+      return renderShadeAuto(srcX, srcYIndex1);
+    if (orientation == NodeOrientation.Half_South)
+      return renderShadeAuto(srcX, srcYIndex2);
+    if (orientation == NodeOrientation.Half_West)
+      return renderShadeAuto(srcX, srcYIndex3);
   }
 }

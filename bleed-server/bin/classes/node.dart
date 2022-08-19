@@ -400,16 +400,16 @@ class NodeOriented extends Node {
         if (x < 0.5) return 1.0;
         if (y > 0.5) return 1.0;
         return 0;
-      case NodeOrientation.Half_Row_1:
+      case NodeOrientation.Half_North:
         if (x < 0.5) return 1.0;
         return 0;
-      case NodeOrientation.Half_Row_2:
-        if (x > 0.5) return 1.0;
-        return 0;
-      case NodeOrientation.Half_Column_1:
+      case NodeOrientation.Half_East:
         if (y < 0.5) return 1.0;
         return 0;
-      case NodeOrientation.Half_Column_2:
+      case NodeOrientation.Half_South:
+        if (x > 0.5) return 1.0;
+        return 0;
+      case NodeOrientation.Half_West:
         if (y > 0.5) return 1.0;
         return 0;
       case NodeOrientation.Slope_Inner_North_East: // Grass Edge Bottom
