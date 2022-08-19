@@ -123,6 +123,65 @@ List<int> convertNodesToByteArray(List<List<List<Node>>> nodes) {
           continue;
         }
 
+        if (node.type == NodeType.Bau_Haus_Roof_North){
+          bytes.add(NodeType.Cottage_Roof);
+          bytes.add(NodeOrientation.Slope_North);
+          continue;
+        }
+        if (node.type == NodeType.Bau_Haus_Roof_South){
+          bytes.add(NodeType.Cottage_Roof);
+          bytes.add(NodeOrientation.Slope_South);
+          continue;
+        }
+
+        if (node.type == NodeType.Wood_Corner_Top){
+          bytes.add(NodeType.Wood_2);
+          bytes.add(NodeOrientation.Corner_Top);
+          continue;
+        }
+
+        if (node.type == NodeType.Wood_Corner_Right){
+          bytes.add(NodeType.Wood_2);
+          bytes.add(NodeOrientation.Corner_Right);
+          continue;
+        }
+
+        if (node.type == NodeType.Wood_Corner_Bottom){
+          bytes.add(NodeType.Wood_2);
+          bytes.add(NodeOrientation.Corner_Bottom);
+          continue;
+        }
+
+        if (node.type == NodeType.Wood_Corner_Left){
+          bytes.add(NodeType.Wood_2);
+          bytes.add(NodeOrientation.Corner_Left);
+          continue;
+        }
+
+        if (node.type == NodeType.Wood_Half_Row_1){
+          bytes.add(NodeType.Wood_2);
+          bytes.add(NodeOrientation.Half_Row_1);
+          continue;
+        }
+
+        if (node.type == NodeType.Wood_Half_Row_2){
+          bytes.add(NodeType.Wood_2);
+          bytes.add(NodeOrientation.Half_Row_2);
+          continue;
+        }
+
+        if (node.type == NodeType.Wood_Half_Column_1){
+          bytes.add(NodeType.Wood_2);
+          bytes.add(NodeOrientation.Half_Column_1);
+          continue;
+        }
+
+        if (node.type == NodeType.Wood_Half_Column_2){
+          bytes.add(NodeType.Wood_2);
+          bytes.add(NodeOrientation.Half_Column_2);
+          continue;
+        }
+
         bytes.add(node.type);
 
         if (node is NodeOriented) {

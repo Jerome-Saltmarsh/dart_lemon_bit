@@ -1,19 +1,16 @@
 
 import '../classes/node.dart';
-import '../common/node_orientation.dart';
 import '../common/node_type.dart';
 
 Node generateNode(int type){
-  if (type == NodeType.Empty) {
+  if (type == NodeType.Empty)
     return Node.empty;
-  }
 
-  if (NodeType.isOriented(type)){
+  if (NodeType.isOriented(type))
     return NodeOriented(
       orientation: NodeType.getDefaultOrientation(type),
       type: type,
     );
-  }
 
   switch(type) {
     case NodeType.Boundary:
