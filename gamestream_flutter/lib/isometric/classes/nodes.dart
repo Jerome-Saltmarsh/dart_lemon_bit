@@ -638,19 +638,29 @@ class NodePlain extends Node {
 
   @override
   void handleRender() {
-
     const srcX = 11277.0;
 
-    if (orientation == NodeOrientation.Solid) {
-      return renderShadeAuto(10738, 0);
-    }
+    if (orientation == NodeOrientation.Solid)
+      return renderShadeAuto(srcX, 0);
     if (orientation == NodeOrientation.Half_Column_1) {
       dstX += 17;
       dstY -= 17;
-      renderShadeManual(srcX);
+      renderShadeAuto(srcX, 73);
       dstX -= 17;
       dstY += 17;
       return;
     }
+    if (orientation == NodeOrientation.Half_Column_2)
+      return renderShadeAuto(srcX, 73);
+    if (orientation == NodeOrientation.Half_Row_1) {
+      dstX -= 17;
+      dstY -= 17;
+      renderShadeAuto(srcX, 146);
+      dstX += 17;
+      dstY += 17;
+      return;
+    }
+    if (orientation == NodeOrientation.Half_Row_2)
+      return renderShadeAuto(srcX, 146);
   }
 }
