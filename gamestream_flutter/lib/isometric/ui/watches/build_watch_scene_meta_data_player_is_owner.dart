@@ -55,6 +55,8 @@ Widget buildColumnEditNodeOrientation() {
     if (gameObjectSelected) return const SizedBox();
     return Column(
       children: [
+        buildColumnNodeOrientationSolid(),
+        height8,
         buildColumnNodeOrientationSlopeSymmetric(),
         height8,
         buildColumnNodeOrientationCorner(),
@@ -68,6 +70,12 @@ Widget buildColumnEditNodeOrientation() {
     );
   });
 }
+
+Widget buildColumnNodeOrientationSolid() =>
+    visibleBuilder(
+      edit.nodeSupportsSolid,
+      buildButtonSelectNodeOrientation(NodeOrientation.Solid),
+    );
 
 Widget buildColumnNodeOrientationSlopeSymmetric() =>
     visibleBuilder(

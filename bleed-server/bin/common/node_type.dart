@@ -66,6 +66,7 @@ class NodeType {
         Grass,
         Bricks,
         Wood,
+        Wood_2,
      ].contains(type);
   }
 
@@ -74,7 +75,8 @@ class NodeType {
       Grass,
       Bricks,
       Wood,
-      Cottage_Roof
+      Cottage_Roof,
+      Wood_2,
     ].contains(type);
   }
 
@@ -94,12 +96,14 @@ class NodeType {
   static bool isHalf(int type){
     return const [
       Wood,
+      Wood_2,
     ].contains(type);
   }
 
   static bool isCorner(int type){
     return const [
       Wood,
+      Wood_2,
     ].contains(type);
   }
 
