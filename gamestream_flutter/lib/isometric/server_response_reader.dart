@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/quest.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
@@ -488,7 +489,10 @@ class ServerResponseReader with ByteReader {
 
     while (total < grandTotal) {
       var type = readByte();
-      var orientation = readByte();
+      var orientation = NodeOrientation.None;
+      if (NodeType.isOriented(type)) {
+        orientation = readByte();
+      }
       var count = readPositiveInt();
       total += count;
 

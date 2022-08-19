@@ -613,7 +613,11 @@ extension PlayerProperties on Player {
             count++;
           } else {
             writeByte(previousType);
-            writeByte(previousOrientation);
+
+            if (NodeType.isOriented(previousType)){
+              writeByte(previousOrientation);
+            }
+
             writePositiveInt(count);
             previousType = node.type;
             previousOrientation = node.orientation;
@@ -624,7 +628,9 @@ extension PlayerProperties on Player {
     }
 
     writeByte(previousType);
-    writeByte(previousOrientation);
+    if (NodeType.isOriented(previousType)){
+      writeByte(previousOrientation);
+    }
     writePositiveInt(count);
   }
 

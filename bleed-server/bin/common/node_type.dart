@@ -176,8 +176,8 @@ class NodeType {
       value == Rain_Falling       ||
       value == Rain_Landing       ;
 
-  static bool isOriented(int value) {
-     if (value == Brick_Stairs) return true;
-     return false;
-  }
+  static bool isOriented(int value) =>
+     value == Brick_Stairs        ||
+     value == Wood_2              ||
+     value == Cottage_Roof        ;
 }
