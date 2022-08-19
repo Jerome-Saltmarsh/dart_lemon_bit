@@ -898,7 +898,6 @@ class NodeCottageRoof extends Node {
   }
 }
 
-
 class NodeGrass2 extends Node {
   NodeGrass2(int row, int column, int z) : super(row, column, z);
 
@@ -907,21 +906,31 @@ class NodeGrass2 extends Node {
 
   @override
   void handleRender() {
+    if (orientation == NodeOrientation.Solid)
+      return renderSrcX(7158);
     if (orientation == NodeOrientation.Slope_North)
-      return renderShadedXY(11228, 0);
+      return renderSrcX(7925);
     if (orientation == NodeOrientation.Slope_East)
-      return renderShadedXY(11228, 73);
+      return renderSrcX(7877);
     if (orientation == NodeOrientation.Slope_South)
-      return renderShadedXY(11228, 146);
+      return renderSrcX(7829);
     if (orientation == NodeOrientation.Slope_West)
-      return renderShadedXY(11228, 219);
+      return renderSrcX(7781);
     if (orientation == NodeOrientation.Slope_Inner_North_East)
-      return renderShadedXY(11228, 292);
+      return renderSrcX(10042);
     if (orientation == NodeOrientation.Slope_Inner_South_East)
-      return renderShadedXY(11228, 365);
+      return renderSrcX(10042);
     if (orientation == NodeOrientation.Slope_Inner_South_West)
-      return renderShadedXY(11228, 438);
+      return renderSrcX(10042);
     if (orientation == NodeOrientation.Slope_Inner_North_West)
-      return renderShadedXY(11228, 511);
+      return renderSrcX(10042);
+    if (orientation == NodeOrientation.Slope_Outer_North_East)
+      return renderSrcX(10042);
+    if (orientation == NodeOrientation.Slope_Outer_South_East)
+      return renderSrcX(10042);
+    if (orientation == NodeOrientation.Slope_Outer_South_West)
+      return renderSrcX(10042);
+    if (orientation == NodeOrientation.Slope_Outer_North_West)
+      return renderSrcX(10042);
   }
 }
