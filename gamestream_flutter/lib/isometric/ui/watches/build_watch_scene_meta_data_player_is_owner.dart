@@ -60,11 +60,28 @@ Widget buildColumnEditNodeOrientation() {
         height8,
         buildColumnNodeOrientationCorner(),
         height8,
-        buildColumnNodeOrientationHalf()
+        buildColumnNodeOrientationHalf(),
+        height8,
+        buildColumnNodeOrientationSlopeCornerInner(),
       ],
     );
   });
 }
+
+Widget buildColumnNodeOrientationSlopeCornerInner() =>
+   visibleBuilder(
+       edit.nodeSupportsSlopeCornerInner,
+       Column(
+         children: NodeOrientation.valuesSlopeCornerInner
+             .map(buildButtonSelectNodeOrientation).toList(),
+       ),
+   );
+
+Widget buildButtonSelectNodeOrientation(int value) =>
+  container(
+    child: NodeOrientation.getName(value),
+    action: () => sendNodeRequestOrient(value),
+  );
 
 Widget buildColumnNodeOrientationHalf() {
   return visibleBuilder(
