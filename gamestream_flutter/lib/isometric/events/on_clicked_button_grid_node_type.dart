@@ -2,7 +2,7 @@
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 
-import '../factories/generate_grid_node.dart';
+import '../factories/generate_node.dart';
 import '../play_mode.dart';
 
 void onClickedButtonGridNodeType(int type){

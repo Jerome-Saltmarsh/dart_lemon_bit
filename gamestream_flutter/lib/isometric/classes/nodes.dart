@@ -386,16 +386,6 @@ class NodeBauHausWindow extends GridNodeColorRamp {
   int get type => NodeType.Bau_Haus_Window;
 }
 
-class NodeBauHausPlain extends GridNodeColorRamp {
-  NodeBauHausPlain(int row, int column, int z) : super(row: row, column: column, z: z);
-
-  @override
-  double get srcX => 10738;
-
-  @override
-  int get type => NodeType.Bau_Haus_Plain;
-}
-
 class NodeBauHausChimney extends GridNodeColorRamp {
   NodeBauHausChimney(int row, int column, int z) : super(row: row, column: column, z: z) {
     addSmokeEmitter(z + 1, row, column);
@@ -622,5 +612,34 @@ class NodeGrass2 extends Node {
       return renderSrcX(8440 );
     if (orientation == NodeOrientation.Slope_Outer_North_West)
       return renderSrcX(8392);
+  }
+}
+
+
+class NodeBauHausPlain extends Node {
+  NodeBauHausPlain(int row, int column, int z) : super(row, column, z);
+
+  @override
+  int get type => NodeType.Bau_Haus_Plain;
+
+  @override
+  void handleRender() {
+    if (orientation == NodeOrientation.Solid) {
+       return renderShaded(10738);
+    }
+  }
+}
+
+class NodePlain extends Node {
+  NodePlain(int row, int column, int z) : super(row, column, z);
+
+  @override
+  int get type => NodeType.Plain;
+
+  @override
+  void handleRender() {
+    if (orientation == NodeOrientation.Solid) {
+      return renderShaded(10738);
+    }
   }
 }

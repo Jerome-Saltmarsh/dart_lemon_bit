@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/isometric/factories/generate_grid_node.dart';
+import 'package:gamestream_flutter/isometric/factories/generate_node.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 
 void setGridType(int z, int row, int column, int type){

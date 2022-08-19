@@ -45,6 +45,12 @@ List<int> convertNodesToByteArray(List<List<List<Node>>> nodes) {
           continue;
         }
 
+        if (node.type == NodeType.Bau_Haus_Plain){
+          bytes.add(NodeType.Plain);
+          bytes.add(NodeOrientation.Solid);
+          continue;
+        }
+
         bytes.add(node.type);
 
         if (node is NodeOriented) {
