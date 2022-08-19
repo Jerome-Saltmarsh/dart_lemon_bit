@@ -56,6 +56,7 @@ abstract class Game {
       player.writeByte(node.type);
       player.writeByte(node.orientation);
     });
+    scene.dirty = true;
   }
 
   void removeFromEngine(){

@@ -26,17 +26,15 @@ Json convertSceneToJson(Scene scene) {
   return json;
 }
 
-Uint8List convertNodesToByteArray(List<List<List<Node>>> nodes) {
-  final height = nodes.length;
-  final rows = nodes[0].length;
-  final columns = nodes[0][0].length;
-  final bytes = Uint8List(height * rows * columns);
-  var i = 0;
+List<int> convertNodesToByteArray(List<List<List<Node>>> nodes) {
+  final bytes = <int>[];
   for (final z in nodes) {
     for(final row in z) {
-      for (final column in row) {
-        bytes[i] = column.type;
-        i++;
+      for (final node in row) {
+        bytes.add(node.type);
+        if (node is NodeOriented) {
+          bytes.add(node.orientation);
+        }
       }
     }
   }

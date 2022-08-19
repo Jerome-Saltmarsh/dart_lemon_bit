@@ -77,6 +77,10 @@ List<List<List<Node>>> convertFlatGridToGrid(List<dynamic> flatGrid, int height,
     return List.generate(rows, (rowIndex){
       return List.generate(columns, (columnIndex){
         final node = generateNode(flatGrid[index]);
+        if (node is NodeOriented){
+          index++;
+          node.orientation = flatGrid[index];
+        }
         index++;
         return node;
       });

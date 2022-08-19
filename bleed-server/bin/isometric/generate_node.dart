@@ -1,5 +1,6 @@
 
 import '../classes/node.dart';
+import '../common/node_orientation.dart';
 import '../common/node_type.dart';
 
 Node generateNode(int type){
@@ -22,7 +23,10 @@ Node generateNode(int type){
     case NodeType.Water_Flowing:
       return Node.waterFlowing;
     case NodeType.Grass:
-      return Node.grass;
+      return NodeOriented(
+        orientation: NodeOrientation.Solid,
+        type: NodeType.Grass_2,
+      );
     case NodeType.Grass_Flowers:
       return Node.grassFlowers;
     case NodeType.Bricks:
