@@ -17,7 +17,7 @@ class NodeGrassFlowers extends Node {
   NodeGrassFlowers(int row, int column, int z) : super(row, column, z);
 
   @override
-  void handleRender() => renderSrcX(9782);
+  void handleRender() => renderShadeManual(9782);
 
   @override
   int get type => NodeType.Grass_Flowers;
@@ -42,11 +42,11 @@ class NodeGrassLong extends Node {
 
     switch (wind) {
       case windIndexCalm:
-        return renderSrcX(10118);
+        return renderShadeManual(10118);
       case windIndexGentle:
-        return renderSrcX(10240 + ((((rowMinusColumn) + animationFrameGrass) % 6) * 48));
+        return renderShadeManual(10240 + ((((rowMinusColumn) + animationFrameGrass) % 6) * 48));
       default:
-        return renderSrcX(10240 + ((((rowMinusColumn) + animationFrameGrass) % 6) * 48));
+        return renderShadeManual(10240 + ((((rowMinusColumn) + animationFrameGrass) % 6) * 48));
     }
   }
   @override
@@ -487,15 +487,15 @@ class NodeBricks2 extends Node {
   @override
   void handleRender() {
     if (orientation == NodeOrientation.Solid)
-      return renderSrcX(7104);
+      return renderShadeManual(7104);
     if (orientation == NodeOrientation.Slope_North)
-       return renderSrcX(7494);
+       return renderShadeManual(7494);
     if (orientation == NodeOrientation.Slope_East)
-      return renderSrcX(7542);
+      return renderShadeManual(7542);
     if (orientation == NodeOrientation.Slope_South)
-      return renderSrcX(7398);
+      return renderShadeManual(7398);
     if (orientation == NodeOrientation.Slope_West)
-      return renderSrcX(7446);
+      return renderShadeManual(7446);
 
     throw Exception("Cannot render brick orientation ${NodeOrientation.getName(orientation)}");
   }
@@ -510,43 +510,43 @@ class NodeWood2 extends Node {
   @override
   void handleRender() {
     if (orientation == NodeOrientation.Solid)
-      return renderSrcX(8887);
+      return renderShadeManual(8887);
     if (orientation == NodeOrientation.Slope_North)
-      return renderSrcX(11179);
+      return renderShadeManual(11179);
     if (orientation == NodeOrientation.Slope_East)
-      return renderSrcX(11130);
+      return renderShadeManual(11130);
     if (orientation == NodeOrientation.Slope_South)
-      return renderSrcX(11082 );
+      return renderShadeManual(11082 );
     if (orientation == NodeOrientation.Slope_West)
-      return renderSrcX(11032);
+      return renderShadeManual(11032);
     if (orientation == NodeOrientation.Half_Column_1){
       dstX += 17;
       dstY -= 17;
-      renderSrcX(8935);
+      renderShadeManual(8935);
       dstX -= 17;
       dstY += 17;
       return;
     }
     if (orientation == NodeOrientation.Half_Column_2)
-      return renderSrcX(8935);
+      return renderShadeManual(8935);
     if (orientation == NodeOrientation.Half_Row_1)
-      return renderSrcX(8983);
+      return renderShadeManual(8983);
     if (orientation == NodeOrientation.Half_Row_2) {
       dstX -= 17;
       dstY -= 17;
-      renderSrcX(8983);
+      renderShadeManual(8983);
       dstX += 17;
       dstY += 17;
       return;
     }
     if (orientation == NodeOrientation.Corner_Top)
-      return renderSrcX(9079);
+      return renderShadeManual(9079);
     if (orientation == NodeOrientation.Corner_Right)
-      return renderSrcX(9128);
+      return renderShadeManual(9128);
     if (orientation == NodeOrientation.Corner_Bottom)
-      return renderSrcX(9175);
+      return renderShadeManual(9175);
     if (orientation == NodeOrientation.Corner_Left)
-      return renderSrcX(9031);
+      return renderShadeManual(9031);
     throw Exception("Cannot render NodeWood2 orientation $orientation");
   }
 }
@@ -560,21 +560,21 @@ class NodeCottageRoof extends Node {
   @override
   void handleRender() {
     if (orientation == NodeOrientation.Slope_North)
-      return renderShadedXY(11228, 0);
+      return renderShadeAuto(11228, 0);
     if (orientation == NodeOrientation.Slope_East)
-      return renderShadedXY(11228, 73);
+      return renderShadeAuto(11228, 73);
     if (orientation == NodeOrientation.Slope_South)
-      return renderShadedXY(11228, 146);
+      return renderShadeAuto(11228, 146);
     if (orientation == NodeOrientation.Slope_West)
-      return renderShadedXY(11228, 219);
+      return renderShadeAuto(11228, 219);
     if (orientation == NodeOrientation.Slope_Inner_North_East)
-      return renderShadedXY(11228, 292);
+      return renderShadeAuto(11228, 292);
     if (orientation == NodeOrientation.Slope_Inner_South_East)
-      return renderShadedXY(11228, 365);
+      return renderShadeAuto(11228, 365);
     if (orientation == NodeOrientation.Slope_Inner_South_West)
-      return renderShadedXY(11228, 438);
+      return renderShadeAuto(11228, 438);
     if (orientation == NodeOrientation.Slope_Inner_North_West)
-      return renderShadedXY(11228, 511);
+      return renderShadeAuto(11228, 511);
   }
 }
 
@@ -587,31 +587,31 @@ class NodeGrass2 extends Node {
   @override
   void handleRender() {
     if (orientation == NodeOrientation.Solid)
-      return renderSrcX(7158);
+      return renderShadeManual(7158);
     if (orientation == NodeOrientation.Slope_North)
-      return renderSrcX(7925);
+      return renderShadeManual(7925);
     if (orientation == NodeOrientation.Slope_East)
-      return renderSrcX(7877);
+      return renderShadeManual(7877);
     if (orientation == NodeOrientation.Slope_South)
-      return renderSrcX(7829);
+      return renderShadeManual(7829);
     if (orientation == NodeOrientation.Slope_West)
-      return renderSrcX(7781);
+      return renderShadeManual(7781);
     if (orientation == NodeOrientation.Slope_Inner_North_East)
-      return renderSrcX(9946); // correct
+      return renderShadeManual(9946); // correct
     if (orientation == NodeOrientation.Slope_Inner_South_East)
-      return renderSrcX(9898); // correct
+      return renderShadeManual(9898); // correct
     if (orientation == NodeOrientation.Slope_Inner_South_West)
-      return renderSrcX(10042);
+      return renderShadeManual(10042);
     if (orientation == NodeOrientation.Slope_Inner_North_West)
-      return renderSrcX(9994); // correct
+      return renderShadeManual(9994); // correct
     if (orientation == NodeOrientation.Slope_Outer_North_East)
-      return renderSrcX(8536 );
+      return renderShadeManual(8536 );
     if (orientation == NodeOrientation.Slope_Outer_South_East)
-      return renderSrcX(8488);
+      return renderShadeManual(8488);
     if (orientation == NodeOrientation.Slope_Outer_South_West)
-      return renderSrcX(8440 );
+      return renderShadeManual(8440 );
     if (orientation == NodeOrientation.Slope_Outer_North_West)
-      return renderSrcX(8392);
+      return renderShadeManual(8392);
   }
 }
 
@@ -625,7 +625,7 @@ class NodeBauHausPlain extends Node {
   @override
   void handleRender() {
     if (orientation == NodeOrientation.Solid) {
-       return renderShaded(10738);
+       return renderShadeAuto(10738, 0);
     }
   }
 }
@@ -638,8 +638,19 @@ class NodePlain extends Node {
 
   @override
   void handleRender() {
+
+    const srcX = 11277.0;
+
     if (orientation == NodeOrientation.Solid) {
-      return renderShaded(10738);
+      return renderShadeAuto(10738, 0);
+    }
+    if (orientation == NodeOrientation.Half_Column_1) {
+      dstX += 17;
+      dstY -= 17;
+      renderShadeManual(srcX);
+      dstX -= 17;
+      dstY += 17;
+      return;
     }
   }
 }

@@ -16,6 +16,8 @@ abstract class Node {
   var visible = true;
   var orientation = NodeOrientation.None;
 
+  int get color => colorShades[shade];
+
   void hide(){
     visible = false;
   }
@@ -64,17 +66,24 @@ abstract class Node {
 
   void handleRender();
 
-  void renderSrcX(double srcX){
+  void renderShadeManual(double srcX) {
+    const spriteHeight = 72.0;
+    renderSrcXY(srcX, shade * spriteHeight);
+  }
+
+  void renderShadeAuto(double x, double y) {
+    renderSrcXY(x, y, color);
+  }
+
+  void renderSrcXY(double srcX, double srcY, [int color = 0]){
     const spriteWidth = 48.0;
     const spriteHeight = 72.0;
     const spriteWidthHalf = spriteWidth * 0.5;
     const spriteHeightThird = 24.0;
 
-    var srcY = shade * spriteHeight;
-
     src[bufferIndex] = srcX;
     dst[bufferIndex] = 1;
-    colors[renderIndex] = 0;
+    colors[renderIndex] = color;
 
     bufferIndex++;
 
@@ -99,112 +108,6 @@ abstract class Node {
     renderIndex = 0;
     renderAtlas();
   }
-
-
-  void renderSrcXY(double srcX, double srcY){
-    const spriteWidth = 48.0;
-    const spriteHeight = 72.0;
-    const spriteWidthHalf = spriteWidth * 0.5;
-    const spriteHeightThird = 24.0;
-
-    var srcY = shade * spriteHeight;
-
-    src[bufferIndex] = srcX;
-    dst[bufferIndex] = 1;
-    colors[renderIndex] = 0;
-
-    bufferIndex++;
-
-    src[bufferIndex] = srcY;
-    dst[bufferIndex] = 0;
-
-    bufferIndex++;
-
-    src[bufferIndex] = srcX + spriteWidth;
-    dst[bufferIndex] = dstX - spriteWidthHalf;
-
-    bufferIndex++;
-
-    src[bufferIndex] = srcY + spriteHeight;
-    dst[bufferIndex] = dstY - spriteHeightThird;
-
-    bufferIndex++;
-    renderIndex++;
-
-    if (bufferIndex < buffers) return;
-    bufferIndex = 0;
-    renderIndex = 0;
-    renderAtlas();
-  }
-
-  void renderShaded(double srcX){
-    const spriteWidth = 48.0;
-    const spriteHeight = 72.0;
-    const spriteWidthHalf = spriteWidth * 0.5;
-    const spriteHeightThird = 24.0;
-
-    src[bufferIndex] = srcX;
-    dst[bufferIndex] = 1;
-    colors[renderIndex] = colorShades[shade];
-
-    bufferIndex++;
-
-    src[bufferIndex] = 0;
-    dst[bufferIndex] = 0;
-
-    bufferIndex++;
-
-    src[bufferIndex] = srcX + spriteWidth;
-    dst[bufferIndex] = dstX - spriteWidthHalf;
-
-    bufferIndex++;
-
-    src[bufferIndex] = spriteHeight;
-    dst[bufferIndex] = dstY - spriteHeightThird;
-
-    bufferIndex++;
-    renderIndex++;
-
-    if (bufferIndex < buffers) return;
-    bufferIndex = 0;
-    renderIndex = 0;
-    renderAtlas();
-  }
-
-  void renderShadedXY(double srcX, double srcY){
-    const spriteWidth = 48.0;
-    const spriteHeight = 72.0;
-    const spriteWidthHalf = spriteWidth * 0.5;
-    const spriteHeightThird = 24.0;
-
-    src[bufferIndex] = srcX;
-    dst[bufferIndex] = 1;
-    colors[renderIndex] = colorShades[shade];
-
-    bufferIndex++;
-
-    src[bufferIndex] = srcY;
-    dst[bufferIndex] = 0;
-
-    bufferIndex++;
-
-    src[bufferIndex] = srcX + spriteWidth;
-    dst[bufferIndex] = dstX - spriteWidthHalf;
-
-    bufferIndex++;
-
-    src[bufferIndex] = srcY + spriteHeight;
-    dst[bufferIndex] = dstY - spriteHeightThird;
-
-    bufferIndex++;
-    renderIndex++;
-
-    if (bufferIndex < buffers) return;
-    bufferIndex = 0;
-    renderIndex = 0;
-    renderAtlas();
-  }
-
 }
 
 class NodeBoundary extends Node {
@@ -278,7 +181,7 @@ abstract class GridNodeColorRamp extends Node {
   }) : super(row, column, z);
 
   @override
-  void handleRender() => renderSrcX(srcX);
+  void handleRender() => renderShadeManual(srcX);
 
   double get srcX;
 }
@@ -292,7 +195,7 @@ abstract class GridNodeShaded extends Node {
   }) : super(row, column, z);
 
   @override
-  void handleRender() => renderShaded(srcX);
+  void handleRender() => renderShadeAuto(srcX, 0);
 
   double get srcX;
 }
