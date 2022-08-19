@@ -570,7 +570,7 @@ class Connection {
         final node = player.scene.grid[z][row][column];
         if (node is NodeOriented) {
             node.orientation = orientation;
-            player.game.onGridChanged();
+            player.game.onNodeChanged(z, row, column);
         }
         break;
     }

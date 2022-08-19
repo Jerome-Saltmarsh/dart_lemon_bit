@@ -4,6 +4,7 @@ import 'package:bleed_common/spawn_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_show_game_dialog_canvas_size.dart';
+import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
@@ -110,11 +111,15 @@ Widget buildColumnNodeOrientationSlopeCornerOuter() =>
 Widget buildColumnButtonsNodeOrientations(List<int> orientations) =>
   Column(children: orientations.map(buildButtonSelectNodeOrientation).toList());
 
-Widget buildButtonSelectNodeOrientation(int value) =>
-    container(
+Widget buildButtonSelectNodeOrientation(int value) {
+  return watch(edit.selectedNode, (Node selectedNode) {
+    return container(
+      color: value == selectedNode.orientation ? brownDark : brownLight,
       child: NodeOrientation.getName(value),
       action: () => sendNodeRequestOrient(value),
     );
+  });
+}
 
 Widget buildColumnEditNode() {
 

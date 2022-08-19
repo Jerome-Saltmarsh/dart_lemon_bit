@@ -15,6 +15,7 @@ import 'collider.dart';
 import 'components.dart';
 import 'gameobject.dart';
 import 'item.dart';
+import 'node.dart';
 import 'npc.dart';
 import 'player.dart';
 import 'position3.dart';
@@ -43,6 +44,18 @@ abstract class Game {
     for (final player in players){
       player.writeGrid();
     }
+  }
+
+  void onNodeChanged(int z, int row, int column){
+    final node = scene.grid[z][row][column];
+    players.forEach((player) {
+      player.writeByte(ServerResponse.Node);
+      player.writeInt(z);
+      player.writeInt(row);
+      player.writeInt(column);
+      player.writeByte(node.type);
+      player.writeByte(node.orientation);
+    });
   }
 
   void removeFromEngine(){

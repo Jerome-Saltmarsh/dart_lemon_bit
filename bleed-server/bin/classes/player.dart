@@ -277,19 +277,11 @@ class Player extends Character with ByteWriter {
   void setBlock(int z, int row, int column, int type) {
     if (scene.outOfBounds(z, row, column)) return;
     final previousType = scene.getGridType(z, row, column);
-
     if (previousType == type) return;
     scene.dirty = true;
     final node = generateNode(type);
     scene.grid[z][row][column] = node;
-    game.players.forEach((player) {
-      player.writeByte(ServerResponse.Node);
-      player.writeInt(z);
-      player.writeInt(row);
-      player.writeInt(column);
-      player.writeByte(type);
-      player.writeByte(node.orientation);
-    });
+    game.onNodeChanged(z, row, column);
   }
 
   void changeGame(Game to){
