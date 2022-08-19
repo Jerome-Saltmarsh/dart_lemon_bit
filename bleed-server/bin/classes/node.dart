@@ -20,13 +20,10 @@ abstract class Node {
   bool get isOriented => NodeType.isOriented(type);
 
   static final Node boundary = NodeBoundary();
-  static final Node grass = NodeGrass();
   static final Node grassFlowers = NodeGrassFlowers();
-  static final Node bricks = NodeBricks();
   static final Node soil = NodeSoil();
   static final Node stone = NodeStone();
   static final Node treeTop = NodeTreeTop();
-  static final Node wood = NodeWood();
   static final Node empty = NodeEmpty();
   static final Node water = NodeWater();
   static final Node waterFlowing = NodeWaterFlowing();
@@ -83,19 +80,9 @@ abstract class NodeSolid extends Node {
   }
 }
 
-class NodeGrass extends NodeSolid {
-  @override
-  int get type => NodeType.Grass;
-}
-
 class NodeGrassFlowers extends NodeSolid {
   @override
   int get type => NodeType.Grass_Flowers;
-}
-
-class NodeBricks extends NodeSolid {
-  @override
-  int get type => NodeType.Bricks;
 }
 
 class NodeWater extends Node {
@@ -184,26 +171,6 @@ abstract class NodeSlopeWest extends NodeSlope {
   }
 }
 
-class NodeStairsNorth extends NodeSlopeNorth {
-  @override
-  int get type => NodeType.Stairs_North;
-}
-
-class NodeStairsEast extends NodeSlopeEast {
-  @override
-  int get type => NodeType.Stairs_East;
-}
-
-class NodeStairsSouth extends NodeSlopeSouth {
-  @override
-  int get type => NodeType.Stairs_South;
-}
-
-class NodeStairsWest extends NodeSlopeWest {
-  @override
-  int get type => NodeType.Stairs_West;
-}
-
 abstract class NodeRadial extends Node {
   double get radius;
 
@@ -271,26 +238,6 @@ class NodeFireplace extends NodeRadial {
   double get radius => 0.4;
 }
 
-class NodeGrassSlopeNorth extends NodeSlopeNorth {
-  @override
-  int get type => NodeType.Grass_Slope_North;
-}
-
-class NodeGrassSlopeEast extends NodeSlopeEast {
-  @override
-  int get type => NodeType.Grass_Slope_East;
-}
-
-class NodeGrassSlopeSouth extends NodeSlopeSouth {
-  @override
-  int get type => NodeType.Grass_Slope_South;
-}
-
-class NodeGrassSlopeWest extends NodeSlopeWest {
-  @override
-  int get type => NodeType.Grass_Slope_West;
-}
-
 class NodeBrickTop extends Node {
   @override
   int get type => NodeType.Brick_Top;
@@ -307,82 +254,9 @@ class NodeBrickTop extends Node {
   }
 }
 
-class NodeWoodHalfRow1 extends Node {
-  @override
-  int get type => NodeType.Wood_Half_Row_1;
-
-  @override
-  bool getCollision(double x, double y, double z) {
-    return (y % tileSize) > tileSizeHalf;
-  }
-
-  @override
-  void resolveCharacterCollision(Character character, Game game) {
-
-  }
-}
-
-class NodeWoodHalfRow2 extends Node {
-  @override
-  int get type => NodeType.Wood_Half_Row_2;
-
-  @override
-  bool getCollision(double x, double y, double z) {
-    return (y % tileSize) < tileSizeHalf;
-  }
-
-  @override
-  void resolveCharacterCollision(Character character, Game game) {
-  }
-}
-
-class NodeWoodHalfColumn1 extends Node {
-  @override
-  int get type => NodeType.Wood_Half_Column_1;
-
-  @override
-  bool getCollision(double x, double y, double z) {
-    return (x % tileSize) > tileSizeHalf;
-  }
-
-  @override
-  void resolveCharacterCollision(Character character, Game game) {
-  }
-}
-
-
-class NodeWoodHalfColumn2 extends Node {
-  @override
-  int get type => NodeType.Wood_Half_Column_2;
-
-  @override
-  bool getCollision(double x, double y, double z) {
-    return (x % tileSize) < tileSizeHalf;
-  }
-
-  @override
-  void resolveCharacterCollision(Character character, Game game) {
-  }
-}
-
-class NodeRoofTileNorth extends NodeSlopeNorth {
-  @override
-  int get type => NodeType.Roof_Tile_North;
-}
-
-class NodeRoofTileSouth extends NodeSlopeSouth {
-  @override
-  int get type => NodeType.Roof_Tile_South;
-}
-
 class NodeSoil extends NodeSolid {
   @override
   int get type => NodeType.Soil;
-}
-
-class NodeWood extends NodeSolid {
-  @override
-  int get type => NodeType.Wood;
 }
 
 class NodeRoofHayNorth extends NodeSlopeNorth {
@@ -400,179 +274,9 @@ class NodeStone extends NodeSolid {
   int get type => NodeType.Stone;
 }
 
-class NodeGrassSlopeTop extends NodeSlope {
-
-  @override
-  int get type => NodeType.Grass_Slope_Top;
-
-  @override
-  double getGradient(double x, double y) {
-      final total = x + y;
-      if (total < 1) return 0;
-      return total - 1.0;
-  }
-}
-
-class NodeGrassSlopeRight extends NodeSlope {
-
-  @override
-  int get type => NodeType.Grass_Slope_Right;
-
-  @override
-  double getGradient(double x, double y) {
-      final ratio = (y - x);
-      if (ratio < 0) return 0;
-      return ratio;
-  }
-}
-
-class NodeGrassSlopeBottom extends NodeSlope {
-
-  @override
-  int get type => NodeType.Grass_Slope_Bottom;
-
-  @override
-  double getGradient(double x, double y) {
-      final total = x + y;
-      if (total > 1) return 0;
-      return 1.0 - total;
-  }
-}
-
-class NodeGrassSlopeLeft extends NodeSlope {
-  @override
-  int get type => NodeType.Grass_Slope_Left;
-
-  @override
-  double getGradient(double x, double y) {
-      final tX = (x - y);
-      if (tX < 0) return 0;
-      return tX;
-  }
-}
-
-class NodeWoodCornerTop extends Node {
-  @override
-  bool getCollision(double x, double y, double z) {
-    return (y % tileSize) < tileSizeHalf ||  (x % tileSize) < tileSizeHalf;
-  }
-
-  @override
-  void resolveCharacterCollision(Character character, Game game) {
-  }
-
-  @override
-  int get type => NodeType.Wood_Corner_Top;
-}
-
-class NodeWoodCornerRight extends Node {
-  @override
-  bool getCollision(double x, double y, double z) {
-    return (y % tileSize) < tileSizeHalf ||  (x % tileSize) > tileSizeHalf;
-  }
-
-  @override
-  void resolveCharacterCollision(Character character, Game game) {
-  }
-
-  @override
-  int get type => NodeType.Wood_Corner_Right;
-}
-
-class NodeWoodCornerBottom extends Node {
-  @override
-  bool getCollision(double x, double y, double z) {
-    return (y % tileSize) > tileSizeHalf ||  (x % tileSize) > tileSizeHalf;
-  }
-
-  @override
-  void resolveCharacterCollision(Character character, Game game) {
-  }
-
-  @override
-  int get type => NodeType.Wood_Corner_Bottom;
-}
-
-class NodeWoodCornerLeft extends Node {
-  @override
-  bool getCollision(double x, double y, double z) {
-    return (y % tileSize) > tileSizeHalf ||  (x % tileSize) < tileSizeHalf;
-  }
-
-  @override
-  void resolveCharacterCollision(Character character, Game game) {
-  }
-
-  @override
-  int get type => NodeType.Wood_Corner_Left;
-}
-
-
-class NodeGrassEdgeTop extends NodeSlope {
-
-  @override
-  double getGradient(double x, double y) {
-      final total = x + y;
-      if (total > 1) return 1;
-      return total;
-  }
-
-  @override
-  int get type => NodeType.Grass_Edge_Top;
-}
-
-class NodeGrassEdgeRight extends NodeSlope {
-
-  @override
-  double getGradient(double x, double y) {
-      final tX = (x - y);
-      if (tX < 0) return 1;
-      return 1 - tX;
-  }
-
-  @override
-  int get type => NodeType.Grass_Edge_Right;
-}
-
-class NodeGrassEdgeBottom extends NodeSlope {
-
-  @override
-  double getGradient(double x, double y) {
-      final total = x + y;
-      if (total < 1) return 1;
-      return 1 - (total - 1);
-  }
-
-  @override
-  int get type => NodeType.Grass_Edge_Bottom;
-}
-
-class NodeGrassEdgeLeft extends NodeSlope {
-
-  @override
-  double getGradient(double x, double y) {
-      final tX = (x - y);
-      if (tX > 0) return 1;
-      return 1 + tX;
-  }
-
-  @override
-  int get type => NodeType.Grass_Edge_Left;
-}
-
 class NodeBauHaus extends NodeSolid {
   @override
   int get type => NodeType.Bau_Haus;
-}
-
-class NodeBauHausRoofNorth extends NodeSlopeNorth {
-  @override
-  int get type => NodeType.Bau_Haus_Roof_North;
-}
-
-class NodeBauHausRoofSouth extends NodeSlopeSouth {
-  @override
-  int get type => NodeType.Bau_Haus_Roof_South;
 }
 
 class NodeBauHausWindow extends NodeSolid {
@@ -625,8 +329,8 @@ class NodeSunflower extends Node {
 
 class NodeOriented extends Node {
 
-  var _orientation = NodeOrientation.Slope_North;
-  var _type = NodeType.Wood;
+  late int _orientation;
+  late int _type;
 
   @override
   int get type => _type;

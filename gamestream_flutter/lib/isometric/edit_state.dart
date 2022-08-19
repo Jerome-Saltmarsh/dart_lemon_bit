@@ -1,7 +1,6 @@
 import 'package:bleed_common/node_type.dart';
 import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
-import 'package:gamestream_flutter/isometric/classes/node_extensions.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_cursor_position.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
@@ -78,7 +77,7 @@ class EditState {
     return value;
   }, onChanged: onChangedCursorPosition);
   final selectedNode = Watch<Node>(Node.boundary, onChanged: onChangedSelectedNode);
-  final paintType = Watch(NodeType.Bricks);
+  final paintType = Watch(NodeType.Brick_2);
   final controlsVisibleWeather = Watch(true);
 
   int get selectedType => selectedNode.value.type;
@@ -101,57 +100,7 @@ class EditState {
 
   void paintSlope(int row, int column, int z){
     if (outOfBounds(z, row, column)) return;
-    // final current = getNode(z, row, column);
-
-    final above = getNode(z, row - 1, column);
-    final below = getNode(z, row + 1, column);
-    final left = getNode(z, row, column + 1);
-    final right = getNode(z, row, column - 1);
-    var type = NodeType.Grass;
-
-    if (above.isGrass && below.isEmpty){
-       type = NodeType.Grass_Slope_North;
-    }
-    if (left.isEmpty && right.isGrass) {
-      type = NodeType.Grass_Slope_East;
-    }
-    if (below.isGrass && above.isEmpty){
-      type = NodeType.Grass_Slope_South;
-    }
-    if (left.isGrass && right.isEmpty) {
-      type = NodeType.Grass_Slope_West;
-    }
-    if (left.isGrassSlopeSouth && below.isGrassSlopeWest){
-      type = NodeType.Grass_Slope_Top;
-    }
-    if (above.isGrassSlopeWest && left.isGrassSlopeNorth){
-      type = NodeType.Grass_Slope_Right;
-    }
-    if (above.isGrassSlopeEast && right.isGrassSlopeNorth){
-      type = NodeType.Grass_Slope_Bottom;
-    }
-    if (right.isGrassSlopeSouth && below.isGrassSlopeEast){
-      type = NodeType.Grass_Slope_Left;
-    }
-
-    if (above.isGrassSlopeWest && right.isGrassSlopeSouth){
-      type = NodeType.Grass_Edge_Top;
-    }
-    if (right.isGrassSlopeNorth && below.isGrassSlopeWest){
-      type = NodeType.Grass_Edge_Right;
-    }
-    if (left.isGrassSlopeNorth && below.isGrassSlopeEast){
-      type = NodeType.Grass_Edge_Bottom;
-    }
-    if (above.isGrassSlopeEast && left.isGrassSlopeSouth){
-      type = NodeType.Grass_Edge_Left;
-    }
-
-    if (type != NodeType.Grass){
-      if (edit.selectedType == type){
-        type = NodeType.Grass;
-      }
-    }
+    var type = NodeType.Grass_2;
     sendClientRequestSetBlock(row, column, z, type);
   }
 
@@ -205,11 +154,11 @@ class EditState {
   }
 
   void paintBricks(){
-    paint(value: NodeType.Bricks);
+    paint(value: NodeType.Brick_2);
   }
 
   void paintGrass(){
-    paint(value: NodeType.Grass);
+    paint(value: NodeType.Grass_2);
   }
 
   void paintWater(){
@@ -219,7 +168,7 @@ class EditState {
   void paintFloorBricks(){
      for (var row = 0; row < gridTotalRows; row++){
         for (var column = 0; column < gridTotalColumns; column++){
-          sendClientRequestSetBlock(row, column, 0, NodeType.Bricks);
+          sendClientRequestSetBlock(row, column, 0, NodeType.Brick_2);
         }
      }
   }

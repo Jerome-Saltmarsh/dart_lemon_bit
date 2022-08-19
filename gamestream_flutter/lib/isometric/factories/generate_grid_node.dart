@@ -8,12 +8,8 @@ Node generateNode(int z, int row, int column, int type){
       return Node.boundary;
     case NodeType.Empty:
       return Node.empty;
-    case NodeType.Grass:
-      return NodeGrass(row, column, z);
     case NodeType.Grass_Flowers:
       return NodeGrassFlowers(row, column, z);
-    case NodeType.Bricks:
-      return NodeBricks(row, column, z);
     case NodeType.Roof_Hay_South:
       return NodeRoofHaySouth(row, column, z);
     case NodeType.Roof_Hay_North:
@@ -32,76 +28,22 @@ Node generateNode(int z, int row, int column, int type){
       return NodeWaterFlowing(row, column, z);
     case NodeType.Water:
       return NodeWater(row, column, z);
-    case NodeType.Wood_Corner_Right:
-      return NodeWoodCornerRight(row, column, z);
-    case NodeType.Wood_Corner_Top:
-      return NodeWoodCornerTop(row, column, z);
-    case NodeType.Wood_Corner_Left:
-      return NodeWoodCornerLeft(row, column, z);
-    case NodeType.Wood_Corner_Bottom:
-      return NodeWoodCornerBottom(row, column, z);
     case NodeType.Soil:
       return NodeSoil(row, column, z);
     case NodeType.Grass_Long:
       return NodeGrassLong(row, column, z);
-    case NodeType.Grass_Slope_South:
-      return NodeGrassSlopeSouth(row, column, z);
-    case NodeType.Grass_Slope_North:
-      return NodeGrassSlopeNorth(row, column, z);
-    case NodeType.Grass_Slope_East:
-      return NodeGrassSlopeEast(row, column, z);
-    case NodeType.Grass_Slope_West:
-      return NodeGrassSlopeWest(row, column, z);
-    case NodeType.Grass_Slope_Left:
-      return NodeGrassSlopeLeft(row, column, z);
-    case NodeType.Grass_Slope_Top:
-      return NodeGrassSlopeTop(row, column, z);
-    case NodeType.Grass_Slope_Right:
-      return NodeGrassSlopeRight(row, column, z);
-    case NodeType.Grass_Slope_Bottom:
-      return NodeGrassSlopeBottom(row, column, z);
-    case NodeType.Wood:
-      return NodeWood(row, column, z);
     case NodeType.Rain_Landing:
       return NodeRainLanding(row, column, z);
     case NodeType.Rain_Falling:
       return NodeRainFalling(row, column, z);
-    case NodeType.Stairs_North:
-      return NodeStairsNorth(row, column, z);
-    case NodeType.Stairs_East:
-      return NodeStairsEast(row, column, z);
-    case NodeType.Stairs_South:
-      return NodeStairsSouth(row, column, z);
-    case NodeType.Stairs_West:
-      return NodeStairsWest(row, column, z);
-    case NodeType.Wood_Half_Column_1:
-      return NodeWoodHalfColumn1(row, column, z);
-    case NodeType.Wood_Half_Column_2:
-      return NodeWoodHalfColumn2(row, column, z);
-    case NodeType.Wood_Half_Row_1:
-      return NodeWoodHalfRow1(row, column, z);
-    case NodeType.Wood_Half_Row_2:
-      return NodeWoodHalfRow2(row, column, z);
     case NodeType.Brick_Top:
       return NodeBrickTop(row, column, z);
     case NodeType.Roof_Tile_North:
       return NodeTileNorth(row, column, z);
     case NodeType.Roof_Tile_South:
       return NodeTileSouth(row, column, z);
-    case NodeType.Grass_Edge_Top:
-      return NodeGrassEdgeTop(row, column, z);
-    case NodeType.Grass_Edge_Right:
-      return NodeGrassEdgeRight(row, column, z);
-    case NodeType.Grass_Edge_Bottom:
-      return NodeGrassEdgeBottom(row, column, z);
-    case NodeType.Grass_Edge_Left:
-      return NodeGrassEdgeLeft(row, column, z);
     case NodeType.Bau_Haus:
       return NodeBauHaus(row, column, z);
-    case NodeType.Bau_Haus_Roof_North:
-      return NodeBauHausRoofNorth(row, column, z);
-    case NodeType.Bau_Haus_Roof_South:
-      return NodeBauHausRoofSouth(row, column, z);
     case NodeType.Bau_Haus_Window:
       return NodeBauHausWindow(row, column, z);
     case NodeType.Bau_Haus_Plain:

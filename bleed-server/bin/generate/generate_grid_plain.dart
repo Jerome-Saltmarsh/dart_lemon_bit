@@ -9,7 +9,7 @@ List<List<List<int>>> generateGridPlain({int rows = 50, int columns = 50, int he
       final row = <int>[];
       layer.add(row);
       for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
-        row.add(z == 0 ? NodeType.Grass : NodeType.Empty);
+        row.add(z == 0 ? NodeType.Grass_2 : NodeType.Empty);
       }
     }
   }

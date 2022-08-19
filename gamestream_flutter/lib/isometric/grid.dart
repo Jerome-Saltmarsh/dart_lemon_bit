@@ -223,17 +223,9 @@ void _applyShadowAt({
 
 bool _castesShadow(int type){
   return const [
-        NodeType.Bricks,
         NodeType.Brick_Top,
-        NodeType.Grass,
-        NodeType.Stairs_South,
-        NodeType.Stairs_West,
-        NodeType.Stairs_East,
-        NodeType.Stairs_North,
         NodeType.Roof_Tile_South,
         NodeType.Roof_Tile_North,
-        NodeType.Bau_Haus_Roof_South,
-        NodeType.Bau_Haus_Roof_North,
   ].contains(type);
 }
 
