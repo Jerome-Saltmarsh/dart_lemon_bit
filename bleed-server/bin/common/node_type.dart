@@ -77,6 +77,7 @@ class NodeType {
   static bool isCorner(int type){
     return const [
       Wood_2,
+      Plain,
     ].contains(type);
   }
 

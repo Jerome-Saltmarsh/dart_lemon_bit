@@ -630,6 +630,18 @@ class NodeBauHausPlain extends Node {
   }
 }
 
+const srcYIndex0 = 0.0;
+const srcYIndex1 = 73.0;
+const srcYIndex2 = srcYIndex1 * 2;
+const srcYIndex3 = srcYIndex1 * 3;
+const srcYIndex4 = srcYIndex1 * 4;
+const srcYIndex5 = srcYIndex1 * 5;
+const srcYIndex6 = srcYIndex1 * 6;
+const srcYIndex7 = srcYIndex1 * 7;
+const srcYIndex8 = srcYIndex1 * 8;
+const srcYIndex9 = srcYIndex1 * 9;
+const srcYIndex10 = srcYIndex1 * 10;
+
 class NodePlain extends Node {
   NodePlain(int row, int column, int z) : super(row, column, z);
 
@@ -641,26 +653,34 @@ class NodePlain extends Node {
     const srcX = 11277.0;
 
     if (orientation == NodeOrientation.Solid)
-      return renderShadeAuto(srcX, 0);
-    if (orientation == NodeOrientation.Half_Column_1) {
-      dstX += 17;
-      dstY -= 17;
-      renderShadeAuto(srcX, 146);
-      dstX -= 17;
-      dstY += 17;
-      return;
-    }
-    if (orientation == NodeOrientation.Half_Column_2)
-      return renderShadeAuto(srcX, 146);
+      return renderShadeAuto(srcX, srcYIndex0);
     if (orientation == NodeOrientation.Half_Row_1) {
       dstX -= 17;
       dstY -= 17;
-      renderShadeAuto(srcX, 73);
+      renderShadeAuto(srcX, srcYIndex1);
       dstX += 17;
       dstY += 17;
       return;
     }
     if (orientation == NodeOrientation.Half_Row_2)
-      return renderShadeAuto(srcX, 73);
+      return renderShadeAuto(srcX, srcYIndex1);
+    if (orientation == NodeOrientation.Half_Column_1) {
+      dstX += 17;
+      dstY -= 17;
+      renderShadeAuto(srcX, srcYIndex2);
+      dstX -= 17;
+      dstY += 17;
+      return;
+    }
+    if (orientation == NodeOrientation.Half_Column_2)
+      return renderShadeAuto(srcX, srcYIndex2);
+    if (orientation == NodeOrientation.Corner_Left)
+      return renderShadeAuto(srcX, srcYIndex3);
+    if (orientation == NodeOrientation.Corner_Bottom)
+      return renderShadeAuto(srcX, srcYIndex4);
+    if (orientation == NodeOrientation.Corner_Right)
+      return renderShadeAuto(srcX, srcYIndex5);
+    if (orientation == NodeOrientation.Corner_Top)
+      return renderShadeAuto(srcX, srcYIndex6);
   }
 }
