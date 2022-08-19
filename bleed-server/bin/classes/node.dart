@@ -734,24 +734,38 @@ class NodeOriented extends Node {
       case NodeOrientation.Half_Column_2:
         if (y > 0.5) return 1.0;
         return 0;
-      case NodeOrientation.Slope_Inner_North_East:
+      case NodeOrientation.Slope_Inner_North_East: // Grass Edge Bottom
+        final total = x + y;
+        if (total < 1) return 1;
+        return 1 - (total - 1); 
+      case NodeOrientation.Slope_Inner_South_East: // Grass Edge Left
+        final tX = (x - y);
+        if (tX > 0) return 1;
+        return 1 + tX; 
+      case NodeOrientation.Slope_Inner_South_West: // Grass Edge Top
+        final total = x + y;
+        if (total > 1) return 1;
+        return total; 
+      case NodeOrientation.Slope_Inner_North_West: // Grass Edge Right
         final tX = (x - y);
         if (tX < 0) return 1;
-        return 1 - tX;
-      case NodeOrientation.Slope_Inner_South_East:
-        return 0;
-      case NodeOrientation.Slope_Inner_South_West:
-        return 0;
-      case NodeOrientation.Slope_Inner_North_West:
-        return 0;
-      case NodeOrientation.Slope_Outer_North_East:
-        return 0;
-      case NodeOrientation.Slope_Outer_South_East:
-        return 0;
-      case NodeOrientation.Slope_Outer_South_West:
-        return 0;
-      case NodeOrientation.Slope_Outer_North_West:
-        return 0;
+        return 1 - tX; 
+      case NodeOrientation.Slope_Outer_North_East: // Grass Slope Top
+        final total = x + y;
+        if (total < 1) return 0;
+        return total - 1.0;
+      case NodeOrientation.Slope_Outer_South_East: // Grass Slope Left
+        final tX = (x - y);
+        if (tX < 0) return 0;
+        return tX;
+      case NodeOrientation.Slope_Outer_South_West: // Grass Slope Bottom
+        final total = x + y;
+        if (total > 1) return 0;
+        return 1.0 - total;
+      case NodeOrientation.Slope_Outer_North_West: // Grass Slope Right
+        final ratio = (y - x);
+        if (ratio < 0) return 0;
+        return ratio;
       default:
         throw Exception(
             "Sloped orientation type required to calculate gradient");
