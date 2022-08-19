@@ -23,10 +23,7 @@ Node generateNode(int type){
     case NodeType.Water_Flowing:
       return Node.waterFlowing;
     case NodeType.Grass:
-      return NodeOriented(
-        orientation: NodeOrientation.Solid,
-        type: NodeType.Grass_2,
-      );
+      return Node.grass;
     case NodeType.Grass_Flowers:
       return Node.grassFlowers;
     case NodeType.Bricks:
