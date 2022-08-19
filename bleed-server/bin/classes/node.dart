@@ -734,6 +734,24 @@ class NodeOriented extends Node {
       case NodeOrientation.Half_Column_2:
         if (y > 0.5) return 1.0;
         return 0;
+      case NodeOrientation.Slope_Inner_North_East:
+        final tX = (x - y);
+        if (tX < 0) return 1;
+        return 1 - tX;
+      case NodeOrientation.Slope_Inner_South_East:
+        return 0;
+      case NodeOrientation.Slope_Inner_South_West:
+        return 0;
+      case NodeOrientation.Slope_Inner_North_West:
+        return 0;
+      case NodeOrientation.Slope_Outer_North_East:
+        return 0;
+      case NodeOrientation.Slope_Outer_South_East:
+        return 0;
+      case NodeOrientation.Slope_Outer_South_West:
+        return 0;
+      case NodeOrientation.Slope_Outer_North_West:
+        return 0;
       default:
         throw Exception(
             "Sloped orientation type required to calculate gradient");
