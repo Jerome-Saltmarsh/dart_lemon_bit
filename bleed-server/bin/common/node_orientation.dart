@@ -2,10 +2,10 @@
 
 class NodeOrientation {
    static const None = 0;
-   static const North = 1;
-   static const East = 2;
-   static const South = 3;
-   static const West = 4;
+   static const Slope_North = 1;
+   static const Slope_East = 2;
+   static const Slope_South = 3;
+   static const Slope_West = 4;
    static const Corner_Left = 5;
    static const Corner_Top = 6;
    static const Corner_Right = 7;
@@ -27,10 +27,10 @@ class NodeOrientation {
    static String getName(int value){
       return {
          None: "None",
-         North: "North",
-         East: "East",
-         South: "South",
-         West: "West",
+         Slope_North: "North",
+         Slope_East: "East",
+         Slope_South: "South",
+         Slope_West: "West",
          Corner_Top: "Corner Top",
          Corner_Right: "Corner Right",
          Corner_Bottom: "Corner Bottom",
@@ -53,10 +53,10 @@ class NodeOrientation {
    }
 
    static const valuesSlopeSymetric = [
-      North,
-      East,
-      South,
-      West,
+      Slope_North,
+      Slope_East,
+      Slope_South,
+      Slope_West,
    ];
 
    static const valuesSlopeCornerInner = [
@@ -88,10 +88,10 @@ class NodeOrientation {
    ];
 
    static bool isSlope(int value) =>
-      value == North ||
-      value == East ||
-      value == South ||
-      value == West ;
+      value == Slope_North ||
+      value == Slope_East ||
+      value == Slope_South ||
+      value == Slope_West ;
 
    static bool isCorner(int value) =>
        value == Corner_Top ||

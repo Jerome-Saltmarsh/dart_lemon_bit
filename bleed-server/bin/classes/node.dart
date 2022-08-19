@@ -624,7 +624,7 @@ class NodeSunflower extends Node {
 
 class NodeBrickStairs extends NodeSlope {
 
-  var direction = NodeOrientation.North;
+  var direction = NodeOrientation.Slope_North;
 
   @override
   int get type => NodeType.Brick_Stairs;
@@ -635,13 +635,13 @@ class NodeBrickStairs extends NodeSlope {
   @override
   double getGradient(double x, double y) {
     switch (direction) {
-      case NodeOrientation.North:
+      case NodeOrientation.Slope_North:
         return 1 - x;
-      case NodeOrientation.East:
+      case NodeOrientation.Slope_East:
         return 1 - y;
-      case NodeOrientation.South:
+      case NodeOrientation.Slope_South:
         return x;
-      case NodeOrientation.West:
+      case NodeOrientation.Slope_West:
         return y;
       default:
         throw Exception("method: NodeBrickStairs.getGradient(), reason: Invalid orientation $orientation");
@@ -651,7 +651,7 @@ class NodeBrickStairs extends NodeSlope {
 
 class NodeOriented extends Node {
 
-  var _orientation = NodeOrientation.North;
+  var _orientation = NodeOrientation.Slope_North;
   var _type = NodeType.Wood;
 
   @override
@@ -698,13 +698,13 @@ class NodeOriented extends Node {
   /// Arguments percX and percY are both values between 0 and 1 representing the relative position on the tile
   double getGradient(double x, double y) {
     switch (_orientation) {
-      case NodeOrientation.North:
+      case NodeOrientation.Slope_North:
         return 1 - x;
-      case NodeOrientation.East:
+      case NodeOrientation.Slope_East:
         return 1 - y;
-      case NodeOrientation.South:
+      case NodeOrientation.Slope_South:
         return x;
-      case NodeOrientation.West:
+      case NodeOrientation.Slope_West:
         return y;
       case NodeOrientation.Corner_Top:
         if (x < 0.5) return 1.0;

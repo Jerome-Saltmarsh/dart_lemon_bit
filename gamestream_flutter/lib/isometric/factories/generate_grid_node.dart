@@ -124,6 +124,8 @@ Node generateNode(int z, int row, int column, int type){
       return NodeWood2(row, column, z);
     case NodeType.Cottage_Roof:
       return NodeCottageRoof(row, column, z);
+    case NodeType.Grass_2:
+      return NodeGrass2(row, column, z);
     default:
       throw Exception("Cannot build grid node type $type (${NodeType.getName(type)}");
   }

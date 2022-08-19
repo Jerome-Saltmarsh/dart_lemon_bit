@@ -470,4 +470,5 @@ const editorSelectableGridTypes = [
     NodeType.Brick_Stairs,
     NodeType.Wood_2,
     NodeType.Cottage_Roof,
+    NodeType.Grass_2,
 ];
