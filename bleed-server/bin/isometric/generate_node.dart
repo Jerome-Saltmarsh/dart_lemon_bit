@@ -1,12 +1,20 @@
 
 import '../classes/node.dart';
-import '../common/node_orientation.dart';
 import '../common/node_type.dart';
 
 Node generateNode(int type){
+  if (type == NodeType.Empty) {
+    return Node.empty;
+  }
+
+  if (NodeType.isOriented(type)){
+    return NodeOriented(
+      orientation: NodeType.getDefaultOrientation(type),
+      type: type,
+    );
+  }
+
   switch(type) {
-    case NodeType.Empty:
-      return Node.empty;
     case NodeType.Boundary:
       return Node.boundary;
     case NodeType.Water:
@@ -121,16 +129,6 @@ Node generateNode(int type){
       return NodeOven();
     case NodeType.Brick_Stairs:
       return NodeBrickStairs();
-    case NodeType.Wood_2:
-      return NodeOriented(
-          orientation: NodeOrientation.Solid,
-          type: NodeType.Wood_2,
-      );
-    case NodeType.Cottage_Roof:
-      return NodeOriented(
-        orientation: NodeOrientation.Solid,
-        type: NodeType.Cottage_Roof,
-      );
     default:
       print("Warning: Cannot generate node for type $type (${NodeType.getName(type)})");
       return Node.empty;

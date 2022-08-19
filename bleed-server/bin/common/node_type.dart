@@ -1,4 +1,6 @@
 
+import 'node_orientation.dart';
+
 class NodeType {
   static const Empty = 0;
   static const Boundary = 1;
@@ -60,6 +62,7 @@ class NodeType {
   static const Brick_Stairs = 62;
   static const Wood_2 = 63;
   static const Cottage_Roof = 64;
+  static const Grass_2 = 65;
 
   static bool isSolid(int type){
      return const [
@@ -67,6 +70,7 @@ class NodeType {
         Bricks,
         Wood,
         Wood_2,
+        Grass_2,
      ].contains(type);
   }
 
@@ -77,19 +81,22 @@ class NodeType {
       Wood,
       Cottage_Roof,
       Wood_2,
+      Grass_2,
     ].contains(type);
   }
 
   static bool isSlopeCornerInner(int type){
     return const [
       Grass,
-      Cottage_Roof
+      Cottage_Roof,
+      Grass_2,
     ].contains(type);
   }
 
   static bool isSlopeCornerOuter(int type){
     return const [
       Grass,
+      Grass_2,
     ].contains(type);
   }
 
@@ -169,6 +176,7 @@ class NodeType {
        Brick_Stairs: "Brick Stairs",
        Wood_2: "Wood 2",
        Cottage_Roof: "Cottage Roof",
+       Grass_2: "Grass 2",
      }[type] ?? "unknown($type)";
   }
 
@@ -179,5 +187,16 @@ class NodeType {
   static bool isOriented(int value) =>
      value == Brick_Stairs        ||
      value == Wood_2              ||
+     value == Grass_2             ||
      value == Cottage_Roof        ;
+
+  static int getDefaultOrientation(int value){
+     if (isSolid(value)) return NodeOrientation.Solid;
+     if (isSlopeSymmetric(value)) return NodeOrientation.North;
+     if (isSlopeCornerInner(value)) return NodeOrientation.North_East_Inner;
+     if (isSlopeCornerOuter(value)) return NodeOrientation.North_East_Outer;
+     if (isHalf(value)) return NodeOrientation.Row_1;
+     if (isCorner(value)) return NodeOrientation.Corner_Top;
+     return NodeOrientation.None;
+  }
 }
