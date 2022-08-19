@@ -623,33 +623,6 @@ class NodeSunflower extends Node {
   }
 }
 
-class NodeBrickStairs extends NodeSlope {
-
-  var direction = NodeOrientation.Slope_North;
-
-  @override
-  int get type => NodeType.Brick_Stairs;
-
-  @override
-  int get orientation => direction;
-
-  @override
-  double getGradient(double x, double y) {
-    switch (direction) {
-      case NodeOrientation.Slope_North:
-        return 1 - x;
-      case NodeOrientation.Slope_East:
-        return 1 - y;
-      case NodeOrientation.Slope_South:
-        return x;
-      case NodeOrientation.Slope_West:
-        return y;
-      default:
-        throw Exception("method: NodeBrickStairs.getGradient(), reason: Invalid orientation $orientation");
-    }
-  }
-}
-
 class NodeOriented extends Node {
 
   var _orientation = NodeOrientation.Slope_North;

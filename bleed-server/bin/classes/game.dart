@@ -15,7 +15,6 @@ import 'collider.dart';
 import 'components.dart';
 import 'gameobject.dart';
 import 'item.dart';
-import 'node.dart';
 import 'npc.dart';
 import 'player.dart';
 import 'position3.dart';

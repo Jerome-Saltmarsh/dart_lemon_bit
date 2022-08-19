@@ -118,8 +118,8 @@ Node generateNode(int z, int row, int column, int type){
       return NodeSunflower(row, column, z);
     case NodeType.Oven:
       return NodeOven(row, column, z);
-    case NodeType.Brick_Stairs:
-      return NodeBrickStairs(row, column, z);
+    case NodeType.Brick_2:
+      return NodeBricks2(row, column, z);
     case NodeType.Wood_2:
       return NodeWood2(row, column, z);
     case NodeType.Cottage_Roof:

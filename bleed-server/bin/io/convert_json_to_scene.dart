@@ -5,6 +5,8 @@ import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../classes/node.dart';
 import '../common/game_object_type.dart';
+import '../common/node_orientation.dart';
+import '../common/node_type.dart';
 import '../common/spawn_type.dart';
 import '../isometric/generate_node.dart';
 
@@ -80,6 +82,10 @@ List<List<List<Node>>> convertFlatGridToGrid(List<dynamic> flatGrid, int height,
         if (node is NodeOriented){
           index++;
           node.orientation = flatGrid[index];
+
+          if (node.orientation == NodeOrientation.None) {
+             node.orientation = NodeType.getDefaultOrientation(node.type);
+          }
         }
         index++;
         return node;

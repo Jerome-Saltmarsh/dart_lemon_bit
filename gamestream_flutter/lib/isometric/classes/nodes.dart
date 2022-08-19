@@ -809,17 +809,22 @@ class NodeOven extends GridNodeShaded {
   bool get emitsLight => true;
 }
 
-class NodeBrickStairs extends Node {
-  NodeBrickStairs(int row, int column, int z) : super(row, column, z);
+class NodeBricks2 extends Node {
+  NodeBricks2(int row, int column, int z) : super(row, column, z);
 
   @override
-  int get type => NodeType.Brick_Stairs;
+  int get type => NodeType.Brick_2;
 
   @override
   bool get isStone => true;
 
   @override
+  bool get isRainable => orientation == NodeOrientation.Solid;
+
+  @override
   void handleRender() {
+    if (orientation == NodeOrientation.Solid)
+      return renderSrcX(7104);
     if (orientation == NodeOrientation.Slope_North)
        return renderSrcX(7494);
     if (orientation == NodeOrientation.Slope_East)
@@ -829,7 +834,7 @@ class NodeBrickStairs extends Node {
     if (orientation == NodeOrientation.Slope_West)
       return renderSrcX(7446);
 
-    throw Exception("Cannot render brick stairs orientation $orientation");
+    throw Exception("Cannot render brick orientation ${NodeOrientation.getName(orientation)}");
   }
 }
 

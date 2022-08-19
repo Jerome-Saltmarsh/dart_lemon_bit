@@ -59,7 +59,7 @@ class NodeType {
   static const Sunflower = 59;
   static const Oven = 60;
   static const Grass_Flowers = 61;
-  static const Brick_Stairs = 62;
+  static const Brick_2 = 62;
   static const Wood_2 = 63;
   static const Cottage_Roof = 64;
   static const Grass_2 = 65;
@@ -68,6 +68,7 @@ class NodeType {
      return const [
         Grass,
         Bricks,
+        Brick_2,
         Wood,
         Wood_2,
         Grass_2,
@@ -82,6 +83,7 @@ class NodeType {
       Cottage_Roof,
       Wood_2,
       Grass_2,
+      Brick_2,
     ].contains(type);
   }
 
@@ -173,7 +175,7 @@ class NodeType {
        Sunflower: "Sunflower",
        Oven: "Oven",
        Grass_Flowers: "Grass Flowers",
-       Brick_Stairs: "Brick Stairs",
+       Brick_2: "Brick 2",
        Wood_2: "Wood 2",
        Cottage_Roof: "Cottage Roof",
        Grass_2: "Grass 2",
@@ -185,7 +187,7 @@ class NodeType {
       value == Rain_Landing       ;
 
   static bool isOriented(int value) =>
-     value == Brick_Stairs        ||
+     value == Brick_2             ||
      value == Wood_2              ||
      value == Grass_2             ||
      value == Cottage_Roof        ;
