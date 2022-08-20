@@ -525,13 +525,13 @@ class NodeWood2 extends Node {
     if (orientation == NodeOrientation.Solid)
       return renderShadeManual(8886);
     if (orientation == NodeOrientation.Slope_North)
-      return renderShadeManual(8984);
+      return renderShadeManual(11179);
     if (orientation == NodeOrientation.Slope_East)
-      return renderShadeManual(8935);
+      return renderShadeManual(11130);
     if (orientation == NodeOrientation.Slope_South)
-      return renderShadeManual(8984 );
+      return renderShadeManual(11082);
     if (orientation == NodeOrientation.Slope_West)
-      return renderShadeManual(8935);
+      return renderShadeManual(11032);
     if (orientation == NodeOrientation.Half_North){
       dstX -= 17;
       dstY -= 17;
