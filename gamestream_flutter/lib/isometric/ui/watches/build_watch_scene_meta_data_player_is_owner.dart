@@ -103,19 +103,40 @@ Widget buildOrientationIcon(int orientation){
 }
 
 double mapOrientationToSrcX(int orientation){
+  if (NodeOrientation.isCorner(orientation)){
+    return 7256;
+  }
  return 7207;
 }
 
 double mapOrientationToSrcY(int orientation){
-  if (orientation == NodeOrientation.Solid) return 0;
-  if (orientation == NodeOrientation.Slope_North) return 5 * 73;
-  if (orientation == NodeOrientation.Slope_East) return 6 * 73;
-  if (orientation == NodeOrientation.Slope_South) return 7 * 73;
-  if (orientation == NodeOrientation.Slope_West) return 8 * 73;
-  if (orientation == NodeOrientation.Half_North) return 1 * 73;
-  if (orientation == NodeOrientation.Half_East) return 2 * 73;
-  if (orientation == NodeOrientation.Half_South) return 3 * 73;
-  if (orientation == NodeOrientation.Half_West) return 4 * 73;
+  if (orientation == NodeOrientation.Solid)
+    return 0 * 73;
+  if (orientation == NodeOrientation.Slope_North)
+    return 5 * 73;
+  if (orientation == NodeOrientation.Slope_East)
+    return 6 * 73;
+  if (orientation == NodeOrientation.Slope_South)
+    return 7 * 73;
+  if (orientation == NodeOrientation.Slope_West)
+    return 8 * 73;
+  if (orientation == NodeOrientation.Half_North)
+    return 1 * 73;
+  if (orientation == NodeOrientation.Half_East)
+    return 2 * 73;
+  if (orientation == NodeOrientation.Half_South)
+    return 3 * 73;
+  if (orientation == NodeOrientation.Half_West)
+    return 4 * 73;
+  if (orientation == NodeOrientation.Corner_Top)
+    return 0 * 73;
+  if (orientation == NodeOrientation.Corner_Right)
+    return 1 * 73;
+  if (orientation == NodeOrientation.Corner_Bottom)
+    return 2 * 73;
+  if (orientation == NodeOrientation.Corner_Left)
+    return 3 * 73;
+
   return 0;
 }
 
@@ -144,7 +165,18 @@ Widget buildColumnNodeOrientationSlopeSymmetric() =>
 Widget buildColumnNodeOrientationCorner() =>
     visibleBuilder(
       edit.nodeSupportsCorner,
-      buildColumnButtonsNodeOrientations(NodeOrientation.valuesCorners),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            buildOrientationIcon(NodeOrientation.Corner_Top),
+            Row(
+              children: [
+                buildOrientationIcon(NodeOrientation.Corner_Left),
+                buildOrientationIcon(NodeOrientation.Corner_Right),
+              ],
+            ),
+            buildOrientationIcon(NodeOrientation.Corner_Bottom),          ],
+        )
     );
 
 Widget buildColumnNodeOrientationHalf() =>
