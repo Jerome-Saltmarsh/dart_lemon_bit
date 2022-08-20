@@ -12,6 +12,19 @@ import '../constants/color_pitch_black.dart';
 import '../variables/src_x_rain_falling.dart';
 import 'node.dart';
 
+
+const srcYIndex0 = 0.0;
+const srcYIndex1 = 73.0;
+const srcYIndex2 = srcYIndex1 * 2;
+const srcYIndex3 = srcYIndex1 * 3;
+const srcYIndex4 = srcYIndex1 * 4;
+const srcYIndex5 = srcYIndex1 * 5;
+const srcYIndex6 = srcYIndex1 * 6;
+const srcYIndex7 = srcYIndex1 * 7;
+const srcYIndex8 = srcYIndex1 * 8;
+const srcYIndex9 = srcYIndex1 * 9;
+const srcYIndex10 = srcYIndex1 * 10;
+
 class NodeGrassFlowers extends Node {
 
   NodeGrassFlowers(int row, int column, int z) : super(row, column, z);
@@ -631,18 +644,6 @@ class NodeBauHausPlain extends Node {
   }
 }
 
-const srcYIndex0 = 0.0;
-const srcYIndex1 = 73.0;
-const srcYIndex2 = srcYIndex1 * 2;
-const srcYIndex3 = srcYIndex1 * 3;
-const srcYIndex4 = srcYIndex1 * 4;
-const srcYIndex5 = srcYIndex1 * 5;
-const srcYIndex6 = srcYIndex1 * 6;
-const srcYIndex7 = srcYIndex1 * 7;
-const srcYIndex8 = srcYIndex1 * 8;
-const srcYIndex9 = srcYIndex1 * 9;
-const srcYIndex10 = srcYIndex1 * 10;
-
 class NodePlain extends Node {
   NodePlain(int row, int column, int z) : super(row, column, z);
 
@@ -663,9 +664,7 @@ class NodePlain extends Node {
       dstY += 17;
       return;
     }
-    if (orientation == NodeOrientation.Half_East)
-      return renderShadeAuto(srcX, srcYIndex1);
-    if (orientation == NodeOrientation.Half_South) {
+    if (orientation == NodeOrientation.Half_East) {
       dstX += 17;
       dstY -= 17;
       renderShadeAuto(srcX, srcYIndex2);
@@ -673,6 +672,8 @@ class NodePlain extends Node {
       dstY += 17;
       return;
     }
+    if (orientation == NodeOrientation.Half_South)
+      return renderShadeAuto(srcX, srcYIndex1);
     if (orientation == NodeOrientation.Half_West)
       return renderShadeAuto(srcX, srcYIndex2);
     if (orientation == NodeOrientation.Corner_Left)
