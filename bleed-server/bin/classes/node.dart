@@ -350,10 +350,7 @@ class NodeOriented extends Node {
     if (isSolid)
       return true;
 
-    if (isSloped || isCorner)
-      return getHeight(x, y, z) > z;
-
-    return false;
+    return getHeight(x, y, z) > z;
   }
 
   @override
