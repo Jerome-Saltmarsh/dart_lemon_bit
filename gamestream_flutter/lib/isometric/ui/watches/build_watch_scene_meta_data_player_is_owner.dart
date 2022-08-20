@@ -57,8 +57,6 @@ Widget buildColumnEditNodeOrientation() {
     if (gameObjectSelected) return const SizedBox();
     return Column(
       children: [
-        buildAtlasButton(),
-        height8,
         buildColumnNodeOrientationSolid(),
         height8,
         buildColumnNodeOrientationSlopeSymmetric(),
@@ -78,8 +76,26 @@ Widget buildColumnEditNodeOrientation() {
 Widget buildColumnNodeOrientationSolid() =>
     visibleBuilder(
       edit.nodeSupportsSolid,
-      buildButtonSelectNodeOrientation(NodeOrientation.Solid),
+      onPressed(
+        callback: (){
+          edit.paintOrientation.value = NodeOrientation.Solid;
+          sendNodeRequestOrient(NodeOrientation.Solid);
+        },
+        child: Container(
+          width: 72,
+          height: 72,
+          alignment: Alignment.center,
+          color: brownLight,
+          child: buildCanvasImage(
+            srcX: 7207,
+            srcY: 0,
+            srcWidth: 48,
+            srcHeight: 72,
+          )
+        ),
+      ),
     );
+
 
 Widget buildColumnNodeOrientationSlopeSymmetric() =>
     visibleBuilder(
@@ -126,6 +142,8 @@ Widget buildButtonSelectNodeOrientation(int value) {
     );
   });
 }
+
+
 
 Widget buildColumnEditNode() {
 
