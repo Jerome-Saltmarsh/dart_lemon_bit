@@ -59,8 +59,6 @@ Widget buildColumnEditNodeOrientation() {
       children: [
         buildColumnNodeOrientationSolid(),
         height8,
-        buildColumnNodeOrientationSlopeSy(),
-        height8,
         buildColumnNodeOrientationSlopeSymmetric(),
         height8,
         buildColumnNodeOrientationCorner(),
@@ -79,12 +77,6 @@ Widget buildColumnNodeOrientationSolid() =>
     visibleBuilder(
       edit.nodeSupportsSolid,
       buildOrientationIcon(NodeOrientation.Solid),
-    );
-
-Widget buildColumnNodeOrientationSlopeSy() =>
-    visibleBuilder(
-      edit.nodeSupportsSolid,
-      buildOrientationIcon(NodeOrientation.Slope_North),
     );
 
 Widget buildOrientationIcon(int orientation){
@@ -115,7 +107,10 @@ double mapOrientationToSrcX(int orientation){
 
 double mapOrientationToSrcY(int orientation){
   if (orientation == NodeOrientation.Solid) return 0;
-  if (orientation == NodeOrientation.Slope_North) return 73;
+  if (orientation == NodeOrientation.Slope_North) return 5 * 73;
+  if (orientation == NodeOrientation.Slope_East) return 6 * 73;
+  if (orientation == NodeOrientation.Slope_South) return 7 * 73;
+  if (orientation == NodeOrientation.Slope_West) return 8 * 73;
   return 0;
 }
 
@@ -150,7 +145,8 @@ Widget buildColumnNodeOrientationSlopeCornerOuter() =>
     );
 
 Widget buildColumnButtonsNodeOrientations(List<int> orientations) =>
-  Column(children: orientations.map(buildButtonSelectNodeOrientation).toList());
+  Column(children: orientations.map(buildOrientationIcon).toList());
+  // Column(children: orientations.map(buildButtonSelectNodeOrientation).toList());
 
 Widget buildButtonSelectNodeOrientation(int value) {
   return watch(edit.selectedNode, (Node selectedNode) {
