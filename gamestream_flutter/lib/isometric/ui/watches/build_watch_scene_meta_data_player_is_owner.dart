@@ -172,10 +172,12 @@ Widget buildColumnNodeOrientationCorner() =>
             Row(
               children: [
                 buildOrientationIcon(NodeOrientation.Corner_Left),
+                width(48),
                 buildOrientationIcon(NodeOrientation.Corner_Right),
               ],
             ),
-            buildOrientationIcon(NodeOrientation.Corner_Bottom),          ],
+            buildOrientationIcon(NodeOrientation.Corner_Bottom),
+          ],
         )
     );
 
