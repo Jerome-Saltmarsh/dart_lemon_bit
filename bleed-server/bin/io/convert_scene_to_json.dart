@@ -51,6 +51,11 @@ List<int> convertNodesToByteArray(List<List<List<Node>>> nodes) {
           continue;
         }
 
+        if (node.type == NodeType.Water_Flowing) {
+          bytes.add(NodeType.Water);
+          continue;
+        }
+
         bytes.add(node.type);
 
         if (node is NodeOriented) {

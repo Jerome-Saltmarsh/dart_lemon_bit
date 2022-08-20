@@ -38,8 +38,8 @@ void sendClientRequestCasteBasic() {
   sendClientRequest(ClientRequest.Caste_Basic);
 }
 
-void sendClientRequestSetBlock(int row, int column, int z, int type) {
-  sendClientRequest(ClientRequest.Set_Block, '$row $column $z $type');
+void sendClientRequestSetBlock(int row, int column, int z, int type, [int orientation = NodeOrientation.None] ) {
+  sendClientRequest(ClientRequest.Set_Block, '$row $column $z $type $orientation');
 }
 
 void sendClientRequestDeckAddCard(CardType value){

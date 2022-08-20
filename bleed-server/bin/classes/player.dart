@@ -6,6 +6,7 @@ import 'package:lemon_math/library.dart';
 
 import '../common/flag.dart';
 import '../common/library.dart';
+import '../common/node_orientation.dart';
 import '../common/quest.dart';
 import '../convert/convert_card_type_to_card.dart';
 import '../dark_age/areas/dark_age_area.dart';
@@ -14,6 +15,7 @@ import '../dark_age/game_dark_age_editor.dart';
 import '../isometric/generate_node.dart';
 import '../utilities.dart';
 import 'gameobject.dart';
+import 'node.dart';
 import 'position3.dart';
 import 'rat.dart';
 import 'zombie.dart';
@@ -274,12 +276,15 @@ class Player extends Character with ByteWriter {
       }
   }
 
-  void setBlock(int z, int row, int column, int type) {
+  void setBlock(int z, int row, int column, int type, int orientation) {
     if (scene.outOfBounds(z, row, column)) return;
     final previousType = scene.getGridType(z, row, column);
     if (previousType == type) return;
     scene.dirty = true;
     final node = generateNode(type);
+    if (node is NodeOriented){
+      node.orientation = orientation;
+    }
     scene.grid[z][row][column] = node;
     game.onNodeChanged(z, row, column);
   }

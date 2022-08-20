@@ -1,7 +1,9 @@
+import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_type.dart';
 import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_cursor_position.dart';
+import 'package:gamestream_flutter/isometric/editor/events/on_changed_paint_type.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
@@ -77,7 +79,8 @@ class EditState {
     return value;
   }, onChanged: onChangedCursorPosition);
   final selectedNode = Watch<Node>(Node.boundary, onChanged: onChangedSelectedNode);
-  final paintType = Watch(NodeType.Brick_2);
+  final paintType = Watch(NodeType.Brick_2, onChanged: onChangedPaintType);
+  final paintOrientation = Watch(NodeOrientation.None);
   final controlsVisibleWeather = Watch(true);
 
   int get selectedType => selectedNode.value.type;
@@ -86,22 +89,17 @@ class EditState {
     controlsVisibleWeather.value = !controlsVisibleWeather.value;
   }
 
+
   void fill(){
     for (var zIndex = 0; zIndex <= z.value; zIndex++){
-      sendClientRequestSetBlock(row.value, column.value, zIndex, paintType.value);
+      sendClientRequestSetBlock(row.value, column.value, zIndex, paintType.value, paintOrientation.value);
     }
-  }
-
-  void paintIfEmpty(int row, int column, int z, int type){
-    if (outOfBounds(z, row, column)) return;
-    // if (!NodeType.isRainOrEmpty(selectedType) && selectedType != NodeType.Grass_Long) return;
-    sendClientRequestSetBlock(row, column, z, type);
   }
 
   void paintSlope(int row, int column, int z){
     if (outOfBounds(z, row, column)) return;
     var type = NodeType.Grass_2;
-    sendClientRequestSetBlock(row, column, z, type);
+    sendClientRequestSetBlock(row, column, z, type, paintOrientation.value);
   }
 
   void paintMouse(){
@@ -220,6 +218,7 @@ class EditState {
 
   void selectPaintType(){
      paintType.value = selectedType;
+     paintOrientation.value = selectedNode.value.orientation;
   }
 
   void selectPlayer(){
@@ -240,9 +239,14 @@ class EditState {
     if (value != null) {
       paintType.value = value;
     }
-
     deleteIfTree();
-    return sendClientRequestSetBlock(row.value, column.value, z.value, paintType.value);
+    return sendClientRequestSetBlock(
+        row.value,
+        column.value,
+        z.value,
+        paintType.value,
+        paintOrientation.value,
+    );
   }
 }
 

@@ -445,12 +445,16 @@ class Connection {
     }
     final type = int.tryParse(arguments[4]);
     if (type == NodeType.Boundary) {
-      throw Exception("Cannot set grid block boundary");
+      return errorInvalidArg('type cannot be boundary');
     }
     if (type == null){
       return errorInvalidArg('type');
     }
-    player.setBlock(z, row, column, type);
+    final orientation = int.tryParse(arguments[5]);
+    if (orientation == null) {
+      return errorInvalidArg('orientation is null');
+    }
+    player.setBlock(z, row, column, type, orientation);
     return;
   }
 
