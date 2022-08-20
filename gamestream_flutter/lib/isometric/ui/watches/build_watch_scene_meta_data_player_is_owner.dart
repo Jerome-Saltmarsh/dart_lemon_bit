@@ -117,7 +117,25 @@ double mapOrientationToSrcY(int orientation){
 Widget buildColumnNodeOrientationSlopeSymmetric() =>
     visibleBuilder(
       edit.nodeSupportsSlopeSymmetric,
-      buildColumnButtonsNodeOrientations(NodeOrientation.valuesSlopeSymmetric),
+      // buildColumnButtonsNodeOrientations(NodeOrientation.valuesSlopeSymmetric),
+      Row(
+        children: [
+           Column(
+             children: [
+               buildOrientationIcon(NodeOrientation.Slope_South),
+               buildOrientationIcon(NodeOrientation.Slope_East),
+             ],
+           ),
+          Column(
+            children: [
+              buildOrientationIcon(NodeOrientation.Slope_West),
+
+              buildOrientationIcon(NodeOrientation.Slope_North),
+
+            ],
+          )
+        ],
+      ),
     );
 
 Widget buildColumnNodeOrientationCorner() =>
