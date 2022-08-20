@@ -11,6 +11,7 @@ Widget buildCanvasImage({
     required double srcY,
     required double srcWidth,
     required double srcHeight,
+    double scale = 1.0,
 }){
   return buildCanvas(
     paint: (Canvas canvas, Size size){
@@ -23,6 +24,7 @@ Widget buildCanvasImage({
         srcHeight: srcHeight,
         dstX: 0,
         dstY: 0,
+        scale: scale,
       );
     },
   );

@@ -59,6 +59,8 @@ Widget buildColumnEditNodeOrientation() {
       children: [
         buildColumnNodeOrientationSolid(),
         height8,
+        buildColumnNodeOrientationSlopeSy(),
+        height8,
         buildColumnNodeOrientationSlopeSymmetric(),
         height8,
         buildColumnNodeOrientationCorner(),
@@ -76,26 +78,46 @@ Widget buildColumnEditNodeOrientation() {
 Widget buildColumnNodeOrientationSolid() =>
     visibleBuilder(
       edit.nodeSupportsSolid,
-      onPressed(
-        callback: (){
-          edit.paintOrientation.value = NodeOrientation.Solid;
-          sendNodeRequestOrient(NodeOrientation.Solid);
-        },
-        child: Container(
-          width: 72,
-          height: 72,
-          alignment: Alignment.center,
-          color: brownLight,
-          child: buildCanvasImage(
-            srcX: 7207,
-            srcY: 0,
-            srcWidth: 48,
-            srcHeight: 72,
-          )
-        ),
-      ),
+      buildOrientationIcon(NodeOrientation.Solid),
     );
 
+Widget buildColumnNodeOrientationSlopeSy() =>
+    visibleBuilder(
+      edit.nodeSupportsSolid,
+      buildOrientationIcon(NodeOrientation.Slope_North),
+    );
+
+Widget buildOrientationIcon(int orientation){
+  return onPressed(
+    callback: (){
+      edit.paintOrientation.value = orientation;
+      sendNodeRequestOrient(orientation);
+    },
+    child: Container(
+        width: 72,
+        height: 72,
+        alignment: Alignment.center,
+        color: brownLight,
+        child: buildCanvasImage(
+          srcX: mapOrientationToSrcX(orientation),
+          srcY: mapOrientationToSrcY(orientation),
+          srcWidth: 48,
+          srcHeight: 72,
+          scale: 0.75,
+        )
+    ),
+  );
+}
+
+double mapOrientationToSrcX(int orientation){
+ return 7207;
+}
+
+double mapOrientationToSrcY(int orientation){
+  if (orientation == NodeOrientation.Solid) return 0;
+  if (orientation == NodeOrientation.Slope_North) return 73;
+  return 0;
+}
 
 Widget buildColumnNodeOrientationSlopeSymmetric() =>
     visibleBuilder(
