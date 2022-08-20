@@ -9,6 +9,7 @@ import '../classes/position3.dart';
 import '../common/gameobject_request.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
+import '../common/node_orientation.dart';
 import '../common/node_request.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
@@ -454,6 +455,14 @@ class Connection {
     if (orientation == null) {
       return errorInvalidArg('orientation is null');
     }
+
+    if (
+      NodeType.isOriented(type) &&
+      !NodeType.supportsOrientation(type, orientation)
+    ){
+      return errorInvalidArg('Node Type ${NodeType.getName(type)} does not support orientation ${NodeOrientation.getName(orientation)}');
+    }
+
     player.setBlock(z, row, column, type, orientation);
     return;
   }

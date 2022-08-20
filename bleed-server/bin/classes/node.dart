@@ -14,7 +14,7 @@ abstract class Node {
 
   int get orientation => NodeOrientation.None;
 
-  bool get isSloped => NodeOrientation.isSlope(orientation);
+  bool get isSlopeSymmetric => NodeOrientation.isSlopeSymmetric(orientation);
   bool get isCorner => NodeOrientation.isCorner(orientation);
   bool get isSolid => orientation == NodeOrientation.Solid;
   bool get isOriented => NodeType.isOriented(type);

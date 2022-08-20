@@ -181,4 +181,27 @@ class NodeType {
 
      return NodeOrientation.None;
   }
+
+  static bool supportsOrientation(int type, int orientation){
+
+    if (NodeOrientation.isSolid(orientation))
+      return isSolid(type);
+
+    if (NodeOrientation.isHalf(orientation))
+      return isHalf(type);
+
+    if (NodeOrientation.isCorner(orientation))
+      return isCorner(type);
+
+    if (NodeOrientation.isSlopeCornerInner(orientation))
+      return isSlopeCornerInner(type);
+
+    if (NodeOrientation.isSlopeCornerOuter(orientation))
+      return isSlopeCornerOuter(type);
+
+    if (NodeOrientation.isSlopeSymmetric(orientation))
+      return isSlopeSymmetric(type);
+
+    return false;
+  }
 }

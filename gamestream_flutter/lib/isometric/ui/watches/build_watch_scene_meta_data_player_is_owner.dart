@@ -81,7 +81,7 @@ Widget buildColumnNodeOrientationSolid() =>
 Widget buildColumnNodeOrientationSlopeSymmetric() =>
     visibleBuilder(
       edit.nodeSupportsSlopeSymmetric,
-      buildColumnButtonsNodeOrientations(NodeOrientation.valuesSlopeSymetric),
+      buildColumnButtonsNodeOrientations(NodeOrientation.valuesSlopeSymmetric),
     );
 
 Widget buildColumnNodeOrientationCorner() =>
