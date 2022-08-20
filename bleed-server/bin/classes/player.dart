@@ -278,8 +278,10 @@ class Player extends Character with ByteWriter {
 
   void setBlock(int z, int row, int column, int type, int orientation) {
     if (scene.outOfBounds(z, row, column)) return;
-    final previousType = scene.getGridType(z, row, column);
-    if (previousType == type) return;
+    final previousNode = scene.getNode(z, row, column);
+    if (previousNode.type == type && previousNode.orientation == orientation){
+      return;
+    }
     scene.dirty = true;
     final node = generateNode(type);
     if (node is NodeOriented){

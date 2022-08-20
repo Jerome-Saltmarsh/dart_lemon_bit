@@ -116,7 +116,10 @@ Widget buildButtonSelectNodeOrientation(int value) {
     return container(
       color: value == selectedNode.orientation ? brownDark : brownLight,
       child: NodeOrientation.getName(value),
-      action: () => sendNodeRequestOrient(value),
+      action: () {
+        edit.paintOrientation.value = value;
+        sendNodeRequestOrient(value);
+      },
     );
   });
 }
