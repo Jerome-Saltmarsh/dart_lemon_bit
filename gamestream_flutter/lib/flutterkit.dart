@@ -416,7 +416,7 @@ Widget buildImage(String filename, {required double width, required double heigh
 
 Widget buildCanvas({
   required PaintCanvas paint,
-  required ValueNotifier<int> frame,
+  ValueNotifier<int>? frame,
   ShouldRepaint? shouldRepaint,
 }){
   return CustomPaint(
@@ -436,7 +436,7 @@ class CustomPainterPainter extends CustomPainter {
   final PaintCanvas paintCanvas;
   final ShouldRepaint doRepaint;
 
-  CustomPainterPainter(this.paintCanvas, this.doRepaint, ValueNotifier<int> frame) : super(repaint: frame);
+  CustomPainterPainter(this.paintCanvas, this.doRepaint, ValueNotifier<int>? frame) : super(repaint: frame);
 
   @override
   void paint(Canvas canvas, Size size) {

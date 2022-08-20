@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud.dart';
+import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_button.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stacks_play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_tab.dart';
@@ -56,6 +57,8 @@ Widget buildColumnEditNodeOrientation() {
     if (gameObjectSelected) return const SizedBox();
     return Column(
       children: [
+        buildAtlasButton(),
+        height8,
         buildColumnNodeOrientationSolid(),
         height8,
         buildColumnNodeOrientationSlopeSymmetric(),
