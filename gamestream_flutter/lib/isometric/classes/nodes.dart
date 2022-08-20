@@ -510,16 +510,24 @@ class NodeWood2 extends Node {
   @override
   void handleRender() {
     if (orientation == NodeOrientation.Solid)
-      return renderShadeManual(8887);
+      return renderShadeManual(8886);
     if (orientation == NodeOrientation.Slope_North)
-      return renderShadeManual(11179);
+      return renderShadeManual(8984);
     if (orientation == NodeOrientation.Slope_East)
-      return renderShadeManual(11130);
+      return renderShadeManual(8935);
     if (orientation == NodeOrientation.Slope_South)
-      return renderShadeManual(11082 );
+      return renderShadeManual(8984 );
     if (orientation == NodeOrientation.Slope_West)
-      return renderShadeManual(11032);
+      return renderShadeManual(8935);
     if (orientation == NodeOrientation.Half_North){
+      dstX -= 17;
+      dstY -= 17;
+      renderShadeManual(8983);
+      dstX += 17;
+      dstY += 17;
+      return;
+    }
+    if (orientation == NodeOrientation.Half_East) {
       dstX += 17;
       dstY -= 17;
       renderShadeManual(8935);
@@ -527,17 +535,10 @@ class NodeWood2 extends Node {
       dstY += 17;
       return;
     }
-    if (orientation == NodeOrientation.Half_East)
-      return renderShadeManual(8935);
     if (orientation == NodeOrientation.Half_West)
-      return renderShadeManual(8983);
+      return renderShadeManual(8935);
     if (orientation == NodeOrientation.Half_South) {
-      dstX -= 17;
-      dstY -= 17;
-      renderShadeManual(8983);
-      dstX += 17;
-      dstY += 17;
-      return;
+      return renderShadeManual(8983);
     }
     if (orientation == NodeOrientation.Corner_Top)
       return renderShadeManual(9079);
