@@ -81,6 +81,7 @@ Widget buildColumnNodeOrientationSolid() =>
 
 Widget buildOrientationIcon(int orientation){
   return onPressed(
+    hint: NodeOrientation.getName(orientation),
     callback: (){
       edit.paintOrientation.value = orientation;
       sendNodeRequestOrient(orientation);
@@ -111,6 +112,10 @@ double mapOrientationToSrcY(int orientation){
   if (orientation == NodeOrientation.Slope_East) return 6 * 73;
   if (orientation == NodeOrientation.Slope_South) return 7 * 73;
   if (orientation == NodeOrientation.Slope_West) return 8 * 73;
+  if (orientation == NodeOrientation.Half_North) return 1 * 73;
+  if (orientation == NodeOrientation.Half_East) return 2 * 73;
+  if (orientation == NodeOrientation.Half_South) return 3 * 73;
+  if (orientation == NodeOrientation.Half_West) return 4 * 73;
   return 0;
 }
 
@@ -129,9 +134,7 @@ Widget buildColumnNodeOrientationSlopeSymmetric() =>
           Column(
             children: [
               buildOrientationIcon(NodeOrientation.Slope_West),
-
               buildOrientationIcon(NodeOrientation.Slope_North),
-
             ],
           )
         ],
@@ -147,7 +150,22 @@ Widget buildColumnNodeOrientationCorner() =>
 Widget buildColumnNodeOrientationHalf() =>
     visibleBuilder(
       edit.nodeSupportsHalf,
-      buildColumnButtonsNodeOrientations(NodeOrientation.valuesHalf),
+        Row(
+          children: [
+            Column(
+              children: [
+                buildOrientationIcon(NodeOrientation.Half_North),
+                buildOrientationIcon(NodeOrientation.Half_West),
+              ],
+            ),
+            Column(
+              children: [
+                buildOrientationIcon(NodeOrientation.Half_East),
+                buildOrientationIcon(NodeOrientation.Half_South),
+              ],
+            )
+          ],
+        )
     );
 
 Widget buildColumnNodeOrientationSlopeCornerInner() =>
