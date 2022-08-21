@@ -322,7 +322,6 @@ Widget buildColumnEditNode() {
 Column buildColumnSelected() {
   return Column(
             children: [
-              container(child: "Selected", color: brownLight),
               container(
                  child: Row(
                    children: [
@@ -341,7 +340,6 @@ Column buildColumnSelected() {
 Column buildControlPaint() {
   return Column(
             children: [
-              container(child: "Paint", color: brownLight, toolTip: "Press F to paint. Press R to copy selected type"),
               watch(edit.paintType, buildPaintType),
             ],
           );

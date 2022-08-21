@@ -21,7 +21,7 @@ Widget buildWatchEditorTab(){
 
 Widget buildColumnSelectNodeType(){
   return Container(
-    height: 200,
+    height: 400,
     child: SingleChildScrollView(
       child: Column(
         children: editorSelectableGridTypes.map(buildButtonSelectNodeType).toList(),

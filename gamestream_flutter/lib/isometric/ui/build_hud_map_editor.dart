@@ -331,17 +331,16 @@ Widget buildToggleTimePassing(){
 }
 
 double mapNodeTypeToMapSrcX(int type) => {
-    NodeType.Empty: 7055.0,
-    NodeType.Water: 7055.0,
     NodeType.Brick_2: 7104.0,
     NodeType.Grass_2: 7158.0,
     NodeType.Wood_2: 7590.0,
     NodeType.Torch: 2086.0,
-}[type] ?? 0;
+}[type] ?? 7055;
 
-double mapNodeTypeToMapSrcY(int type) => {
+ double mapNodeTypeToMapSrcY(int type) => {
     NodeType.Water: 73.0,
     NodeType.Torch: 64.0,
+    NodeType.Window: 145.0,
 }[type] ?? 0;
 
 double mapNodeTypeToMapSrcWidth(int type) => {
@@ -365,6 +364,9 @@ Widget buildButtonSelectNodeType(int value) {
         return container(
             toolTip:
               NodeType.getName(value),
+            height: 78,
+            width: 78,
+            alignment: Alignment.center,
             child:
               canvas,
             action: () {
@@ -446,15 +448,9 @@ const editorSelectableGridTypes = [
     NodeType.Water_Flowing,
     NodeType.Tree_Top,
     NodeType.Tree_Bottom,
-    NodeType.Roof_Tile_North,
-    NodeType.Roof_Tile_South,
     NodeType.Soil,
-    NodeType.Roof_Hay_South,
-    NodeType.Roof_Hay_North,
     NodeType.Stone,
     NodeType.Bau_Haus,
-    NodeType.Bau_Haus_Window,
-    NodeType.Bau_Haus_Plain,
     NodeType.Chimney,
     NodeType.Bed_Bottom,
     NodeType.Bed_Top,
