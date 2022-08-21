@@ -38,10 +38,6 @@ void sendClientRequestCasteBasic() {
   sendClientRequest(ClientRequest.Caste_Basic);
 }
 
-void sendClientRequestSetBlock(int row, int column, int z, int type, [int orientation = NodeOrientation.None] ) {
-  sendClientRequest(ClientRequest.Set_Block, '$row $column $z $type $orientation');
-}
-
 void sendClientRequestDeckAddCard(CardType value){
   sendClientRequest(ClientRequest.Deck_Add_Card, value.index);
 }
@@ -182,10 +178,16 @@ void sendNodeRequestOrient(int orientation){
   );
 }
 
+void sendClientRequestSetBlock(int row, int column, int z, int type, [int orientation = NodeOrientation.None] ) =>
+  sendNodeRequest(
+      NodeRequest.Set,
+      '$row $column $z $type $orientation',
+  );
+
 void sendNodeRequest(NodeRequest request, [dynamic message]) =>
   sendClientRequest(
       ClientRequest.Node,
-      message != null ? "${request.index} $message" : request.index
+      message != null ? "${request.index} $message" : request.index,
   );
 
 void sendClientRequestAddGameObject({

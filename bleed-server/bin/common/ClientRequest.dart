@@ -15,7 +15,6 @@ enum ClientRequest {
   Teleport,
   Deck_Add_Card,
   Deck_Select_Card,
-  Set_Block,
   Spawn_Zombie,
   Set_Weapon,
   Set_Armour,

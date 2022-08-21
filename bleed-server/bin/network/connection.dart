@@ -259,9 +259,6 @@ class Connection {
         player.game.revive(player);
         return;
 
-      case ClientRequest.Set_Block:
-        return handleSetBlock(game, arguments, player);
-
       case ClientRequest.Editor_Set_Canvas_Size:
         game.scene.grid.add(generateGridZ(game.scene.gridRows, game.scene.gridColumns));
         game.onGridChanged();
@@ -428,30 +425,32 @@ class Connection {
     }
   }
 
-  void handleSetBlock(Game game, List<String> arguments, Player player) {
-    if (!isLocalMachine && game is GameDarkAgeEditor == false) return;
+  void handleSetBlock(List<String> arguments) {
+    final player = _player;
+    if (player == null) return;
+    if (!isLocalMachine && player.game is GameDarkAgeEditor == false) return;
 
     if (arguments.length < 5) return errorArgsExpected(3, arguments);
-    final row = int.tryParse(arguments[1]);
+    final row = int.tryParse(arguments[2]);
     if (row == null){
       return errorInvalidArg('row');
     }
-    final column = int.tryParse(arguments[2]);
+    final column = int.tryParse(arguments[3]);
     if (column == null){
       return errorInvalidArg('column');
     }
-    final z = int.tryParse(arguments[3]);
+    final z = int.tryParse(arguments[4]);
     if (z == null){
       return errorInvalidArg('z');
     }
-    final type = int.tryParse(arguments[4]);
+    final type = int.tryParse(arguments[5]);
     if (type == NodeType.Boundary) {
       return errorInvalidArg('type cannot be boundary');
     }
     if (type == null){
       return errorInvalidArg('type');
     }
-    final orientation = int.tryParse(arguments[5]);
+    final orientation = int.tryParse(arguments[6]);
     if (orientation == null) {
       return errorInvalidArg('orientation is null');
     }
@@ -571,6 +570,8 @@ class Connection {
     final nodeRequest = nodeRequests[nodeRequestIndex];
 
     switch (nodeRequest){
+      case NodeRequest.Set:
+        return handleSetBlock(arguments);
       case NodeRequest.Orient:
         final orientation = int.tryParse(arguments[2]);
         final z = int.tryParse(arguments[3]);

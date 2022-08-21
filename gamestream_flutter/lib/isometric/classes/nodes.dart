@@ -514,6 +514,7 @@ class NodeBricks2 extends Node {
   }
 }
 
+
 class NodeWood2 extends Node {
   NodeWood2(int row, int column, int z) : super(row, column, z) ;
 
