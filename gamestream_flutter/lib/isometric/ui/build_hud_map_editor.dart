@@ -335,6 +335,21 @@ double mapNodeTypeToMapSrcX(int type) => {
     NodeType.Grass_2: 7158.0,
     NodeType.Wood_2: 7590.0,
     NodeType.Torch: 2086.0,
+    NodeType.Grass_Long: 10118.0,
+    NodeType.Grass_Flowers: 9782.0,
+    NodeType.Brick_Top: 8621.0,
+    NodeType.Fireplace: 6469.0,
+    NodeType.Table: 7639.0,
+    NodeType.Stone: 9831.0,
+    NodeType.Plain: 10738.0,
+    NodeType.Soil: 10176.0,
+    NodeType.Bau_Haus: 10544.0,
+    NodeType.Chimney: 10787.0,
+    NodeType.Bed_Bottom: 10836.0,
+    NodeType.Bed_Top: 10885.0,
+    NodeType.Sunflower: 10934.0,
+    NodeType.Oven: 10983.0,
+    NodeType.Cottage_Roof: 11228.0,
 }[type] ?? 7055;
 
  double mapNodeTypeToMapSrcY(int type) => {
