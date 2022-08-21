@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
+import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_button.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
@@ -340,10 +341,31 @@ Widget buildButtonSpawnZombie(){
   });
 }
 
+double mapNodeTypeToMapSrcX(int type){
+  return {
+    NodeType.Brick_2: 7104.0,
+    NodeType.Grass_2: 7158.0,
+    NodeType.Wood_2: 7590.0,
+  }[type] ?? 0;
+}
+
+double mapNodeTypeToMapSrcY(int type){
+  return 0;
+}
+
 Widget buildButtonSelectNodeType(int value) {
+
+  final canvas = buildCanvasImage(
+      srcX: mapNodeTypeToMapSrcX(value),
+      srcY: mapNodeTypeToMapSrcY(value),
+      srcWidth: 48,
+      srcHeight: 72,
+  );
+
   return WatchBuilder(edit.selectedNode, (Node type) {
         return container(
-            child: NodeType.getName(value),
+            toolTip: NodeType.getName(value),
+            child: canvas,
             action: () {
               if (modeIsPlay){
                 setPlayModeEdit();
