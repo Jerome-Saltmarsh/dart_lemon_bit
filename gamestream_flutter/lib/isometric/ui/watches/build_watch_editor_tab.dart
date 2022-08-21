@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
+import 'package:lemon_engine/screen.dart';
 
 import '../build_hud_map_editor.dart';
 import '../widgets/build_container.dart';
@@ -21,7 +22,7 @@ Widget buildWatchEditorTab(){
 
 Widget buildColumnSelectNodeType(){
   return Container(
-    height: 400,
+    height: screen.height - 200,
     child: SingleChildScrollView(
       child: Column(
         children: editorSelectableGridTypes.map(buildButtonSelectNodeType).toList(),

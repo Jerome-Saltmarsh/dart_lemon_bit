@@ -342,8 +342,8 @@ Widget buildButtonSelectNodeType(int value) {
 
   return WatchBuilder(edit.selectedNode, (Node type) {
         return container(
-            toolTip:
-              NodeType.getName(value),
+            // toolTip:
+            //   NodeType.getName(value),
             height: 78,
             width: 78,
             alignment: Alignment.center,
@@ -443,4 +443,5 @@ const editorSelectableGridTypes = [
     NodeType.Grass_2,
     NodeType.Plain,
     NodeType.Window,
+    NodeType.Wooden_Plank
 ];

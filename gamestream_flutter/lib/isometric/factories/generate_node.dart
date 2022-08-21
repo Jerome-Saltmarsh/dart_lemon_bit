@@ -72,6 +72,8 @@ Node generateNode(int z, int row, int column, int type){
       return NodePlain(row, column, z);
     case NodeType.Window:
       return NodeWindow(row, column, z);
+    case NodeType.Wooden_Plank:
+      return NodeWoodenPlank(row, column, z);
     default:
       throw Exception("Cannot build grid node type $type (${NodeType.getName(type)}");
   }

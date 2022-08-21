@@ -36,6 +36,7 @@ class NodeType {
   static const Grass_2 = 65;
   static const Plain = 66;
   static const Window = 67;
+  static const Wooden_Plank = 68;
 
   static bool isSolid(int type){
      return const [
@@ -43,6 +44,7 @@ class NodeType {
         Wood_2,
         Grass_2,
         Plain,
+        Wooden_Plank
      ].contains(type);
   }
 
@@ -149,6 +151,8 @@ class NodeType {
           "Plain",
        Window:
           "Window",
+       Wooden_Plank:
+          "Wooden Plank",
 
      }[type] ?? "unknown($type)";
   }
@@ -163,6 +167,7 @@ class NodeType {
      value == Grass_2             ||
      value == Plain               ||
      value == Window              ||
+     value == Wooden_Plank        ||
      value == Cottage_Roof        ;
 
   static int getDefaultOrientation(int value){

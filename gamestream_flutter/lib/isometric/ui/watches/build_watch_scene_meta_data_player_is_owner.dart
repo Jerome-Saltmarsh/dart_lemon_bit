@@ -289,6 +289,8 @@ Widget buildColumnEditNode() {
   return watch(edit.gameObjectSelected, (bool gameObjectSelected){
 
     if (!gameObjectSelected){
+      return buildColumnSelectNodeType();
+
       return Column(
         children: [
           buildColumnSelected(),

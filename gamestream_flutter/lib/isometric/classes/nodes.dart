@@ -629,7 +629,6 @@ class NodeGrass2 extends Node {
   }
 }
 
-
 class NodeBauHausPlain extends Node {
   NodeBauHausPlain(int row, int column, int z) : super(row, column, z);
 
@@ -706,4 +705,15 @@ class NodeWindow extends Node {
     if (orientation == NodeOrientation.Half_West)
       return renderShadeAuto(srcX, srcYIndex3);
   }
+}
+
+class NodeWoodenPlank extends Node {
+  NodeWoodenPlank(int row, int column, int z) : super(row, column, z);
+
+  @override
+  int get type => NodeType.Wooden_Plank;
+
+  @override
+  void handleRender() {
+    return renderShadeAuto(7688, 0);  }
 }

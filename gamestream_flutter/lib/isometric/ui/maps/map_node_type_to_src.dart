@@ -22,6 +22,7 @@ double mapNodeTypeToSrcX(int type) => {
   NodeType.Cottage_Roof: 11228.0,
   NodeType.Tree_Bottom: 1478.0,
   NodeType.Tree_Top: 1540.0,
+  NodeType.Wooden_Plank: 7688.0,
 }[type] ?? 7055;
 
 double mapNodeTypeToSrcY(int type) => {
