@@ -106,6 +106,12 @@ double mapOrientationToSrcX(int orientation){
   if (NodeOrientation.isCorner(orientation)){
     return 7256;
   }
+  if (NodeOrientation.isSlopeCornerOuter(orientation)){
+    return 7256;
+  }
+  if (NodeOrientation.isSlopeCornerInner(orientation)){
+    return 7256;
+  }
  return 7207;
 }
 
@@ -136,7 +142,22 @@ double mapOrientationToSrcY(int orientation){
     return 2 * 73;
   if (orientation == NodeOrientation.Corner_Left)
     return 3 * 73;
-
+  if (orientation == NodeOrientation.Slope_Outer_South_West)
+    return 4 * 73;
+  if (orientation == NodeOrientation.Slope_Outer_North_West)
+    return 5 * 73;
+  if (orientation == NodeOrientation.Slope_Outer_North_East)
+    return 6 * 73;
+  if (orientation == NodeOrientation.Slope_Outer_South_East)
+    return 7 * 73;
+  if (orientation == NodeOrientation.Slope_Inner_South_East)
+    return 8 * 73;
+  if (orientation == NodeOrientation.Slope_Inner_North_East)
+    return 9 * 73;
+  if (orientation == NodeOrientation.Slope_Inner_North_West)
+    return 10 * 73;
+  if (orientation == NodeOrientation.Slope_Inner_South_West)
+    return 11 * 73;
   return 0;
 }
 
@@ -205,13 +226,43 @@ Widget buildColumnNodeOrientationHalf() =>
 Widget buildColumnNodeOrientationSlopeCornerInner() =>
     visibleBuilder(
       edit.nodeSupportsSlopeCornerInner,
-      buildColumnButtonsNodeOrientations(NodeOrientation.valuesSlopeCornerInner),
+        Row(
+          children: [
+            Column(
+              children: [
+                buildOrientationIcon(NodeOrientation.Slope_Inner_North_West),
+                buildOrientationIcon(NodeOrientation.Slope_Inner_North_East),
+              ],
+            ),
+            Column(
+              children: [
+                buildOrientationIcon(NodeOrientation.Slope_Inner_South_West),
+                buildOrientationIcon(NodeOrientation.Slope_Inner_South_East),
+              ],
+            )
+          ],
+        )
     );
 
 Widget buildColumnNodeOrientationSlopeCornerOuter() =>
     visibleBuilder(
       edit.nodeSupportsSlopeCornerOuter,
-      buildColumnButtonsNodeOrientations(NodeOrientation.valuesSlopeCornerOuter),
+        Row(
+          children: [
+            Column(
+              children: [
+                buildOrientationIcon(NodeOrientation.Slope_Outer_North_West),
+                buildOrientationIcon(NodeOrientation.Slope_Outer_North_East),
+              ],
+            ),
+            Column(
+              children: [
+                buildOrientationIcon(NodeOrientation.Slope_Outer_South_West),
+                buildOrientationIcon(NodeOrientation.Slope_Outer_South_East),
+              ],
+            )
+          ],
+        )
     );
 
 Widget buildColumnButtonsNodeOrientations(List<int> orientations) =>
