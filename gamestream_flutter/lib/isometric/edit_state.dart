@@ -79,6 +79,7 @@ class EditState {
     return value;
   }, onChanged: onChangedCursorPosition);
   final selectedNode = Watch<Node>(Node.boundary, onChanged: onChangedSelectedNode);
+  final selectedNodeOrientation = Watch(NodeOrientation.None);
   final paintType = Watch(NodeType.Brick_2, onChanged: onChangedPaintType);
   final paintOrientation = Watch(NodeOrientation.None);
   final controlsVisibleWeather = Watch(true);

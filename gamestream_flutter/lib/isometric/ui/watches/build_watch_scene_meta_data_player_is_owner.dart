@@ -58,15 +58,10 @@ Widget buildColumnEditNodeOrientation() {
     return Column(
       children: [
         buildColumnNodeOrientationSolid(),
-        height8,
         buildColumnNodeOrientationSlopeSymmetric(),
-        height8,
         buildColumnNodeOrientationCorner(),
-        height8,
         buildColumnNodeOrientationHalf(),
-        height8,
         buildColumnNodeOrientationSlopeCornerInner(),
-        height8,
         buildColumnNodeOrientationSlopeCornerOuter(),
       ],
     );
@@ -80,25 +75,30 @@ Widget buildColumnNodeOrientationSolid() =>
     );
 
 Widget buildOrientationIcon(int orientation){
+
+  final canvas = buildCanvasImage(
+    srcX: mapOrientationToSrcX(orientation),
+    srcY: mapOrientationToSrcY(orientation),
+    srcWidth: 48,
+    srcHeight: 72,
+    scale: 0.75,
+  );
+
   return onPressed(
     hint: NodeOrientation.getName(orientation),
     callback: (){
       edit.paintOrientation.value = orientation;
       sendNodeRequestOrient(orientation);
     },
-    child: Container(
-        width: 72,
-        height: 72,
-        alignment: Alignment.center,
-        color: brownLight,
-        child: buildCanvasImage(
-          srcX: mapOrientationToSrcX(orientation),
-          srcY: mapOrientationToSrcY(orientation),
-          srcWidth: 48,
-          srcHeight: 72,
-          scale: 0.75,
-        )
-    ),
+    child: watch(edit.selectedNode, (Node selectedNode){
+      return Container(
+          width: 72,
+          height: 72,
+          alignment: Alignment.center,
+          color: selectedNode.orientation == orientation ? brownLight : brownDark,
+          child: canvas
+      );
+    }),
   );
 }
 
