@@ -27,7 +27,8 @@ double mapNodeTypeToSrcX(int type) => {
 double mapNodeTypeToSrcY(int type) => {
   NodeType.Water: 73.0,
   NodeType.Torch: 64.0,
-  NodeType.Window: 145.0,
+  NodeType.Water_Flowing: 145.0,
+  NodeType.Window: 218.0,
 }[type] ?? 0;
 
 double mapNodeTypeToSrcWidth(int type) => {
