@@ -38,22 +38,22 @@ void readPlayerInput() {
        setPlayModePlay();
     }
 
-    const speed = 10;
-    const paddingX = 200;
-    const paddingY = 200;
+    // const speed = 10;
+    // const paddingX = 200;
+    // const paddingY = 200;
 
-    if (mouseWorldX < screen.left + paddingX){
-       engine.camera.x -= speed;
-    }
-    if (mouseWorldX > screen.right - paddingX){
-      engine.camera.x += speed;
-    }
-    if (mouseWorldY < screen.top + paddingY){
-      engine.camera.y -= speed;
-    }
-    if (mouseWorldY > screen.bottom - paddingY){
-      engine.camera.y += speed;
-    }
+    // if (mouseWorldX < screen.left + paddingX){
+    //    engine.camera.x -= speed;
+    // }
+    // if (mouseWorldX > screen.right - paddingX){
+    //   engine.camera.x += speed;
+    // }
+    // if (mouseWorldY < screen.top + paddingY){
+    //   engine.camera.y -= speed;
+    // }
+    // if (mouseWorldY > screen.bottom - paddingY){
+    //   engine.camera.y += speed;
+    // }
 
     return;
   }

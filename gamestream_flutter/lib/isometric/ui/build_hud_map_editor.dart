@@ -330,42 +330,43 @@ Widget buildToggleTimePassing(){
    });
 }
 
-
-Widget buildButtonSpawnZombie(){
-  return _button("Zombie", () {
-    sendClientRequestSpawnZombie(
-      z: edit.z.value,
-      row: edit.row.value,
-      column: edit.column.value,
-    );
-  });
-}
-
-double mapNodeTypeToMapSrcX(int type){
-  return {
+double mapNodeTypeToMapSrcX(int type) => {
+    NodeType.Empty: 7055.0,
+    NodeType.Water: 7055.0,
     NodeType.Brick_2: 7104.0,
     NodeType.Grass_2: 7158.0,
     NodeType.Wood_2: 7590.0,
-  }[type] ?? 0;
-}
+    NodeType.Torch: 2086.0,
+}[type] ?? 0;
 
-double mapNodeTypeToMapSrcY(int type){
-  return 0;
-}
+double mapNodeTypeToMapSrcY(int type) => {
+    NodeType.Water: 73.0,
+    NodeType.Torch: 64.0,
+}[type] ?? 0;
+
+double mapNodeTypeToMapSrcWidth(int type) => {
+    NodeType.Torch: 25.0,
+}[type] ?? 48;
+
+double mapNodeTypeToMapSrcHeight(int type) => {
+
+}[type] ?? 72;
 
 Widget buildButtonSelectNodeType(int value) {
 
   final canvas = buildCanvasImage(
-      srcX: mapNodeTypeToMapSrcX(value),
-      srcY: mapNodeTypeToMapSrcY(value),
-      srcWidth: 48,
-      srcHeight: 72,
+      srcX:       mapNodeTypeToMapSrcX      (value),
+      srcY:       mapNodeTypeToMapSrcY      (value),
+      srcWidth:   mapNodeTypeToMapSrcWidth  (value),
+      srcHeight:  mapNodeTypeToMapSrcHeight (value),
   );
 
   return WatchBuilder(edit.selectedNode, (Node type) {
         return container(
-            toolTip: NodeType.getName(value),
-            child: canvas,
+            toolTip:
+              NodeType.getName(value),
+            child:
+              canvas,
             action: () {
               if (modeIsPlay){
                 setPlayModeEdit();
