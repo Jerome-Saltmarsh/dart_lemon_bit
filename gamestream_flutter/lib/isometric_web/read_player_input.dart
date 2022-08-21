@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
 import 'package:gamestream_flutter/isometric_web/register_isometric_web_controls.dart';
 import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/screen.dart';
 
 import '../isometric/watches/scene_meta_data.dart';
 import '../network/send_client_request.dart';
@@ -36,6 +37,24 @@ void readPlayerInput() {
     if (_getKeyDirection() != null) {
        setPlayModePlay();
     }
+
+    const speed = 10;
+    const paddingX = 200;
+    const paddingY = 200;
+
+    if (mouseWorldX < screen.left + paddingX){
+       engine.camera.x -= speed;
+    }
+    if (mouseWorldX > screen.right - paddingX){
+      engine.camera.x += speed;
+    }
+    if (mouseWorldY < screen.top + paddingY){
+      engine.camera.y -= speed;
+    }
+    if (mouseWorldY > screen.bottom - paddingY){
+      engine.camera.y += speed;
+    }
+
     return;
   }
 
