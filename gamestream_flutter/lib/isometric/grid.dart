@@ -230,6 +230,7 @@ bool _castesShadow(int type){
 }
 
 bool gridIsUnderSomething(int z, int row, int column){
+  if (outOfBounds(z, row, column)) return false;
   for (var zIndex = z + 1; zIndex < gridTotalZ; zIndex++){
     if (grid[zIndex][row][column] != NodeType.Empty) return false;
   }
