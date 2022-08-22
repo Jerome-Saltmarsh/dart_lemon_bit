@@ -56,6 +56,7 @@ abstract class Node {
   bool get isShadable => true;
 
   bool get isStone => false;
+  bool get isWood => false;
 
   void resetShadeToBake(){
     shade = bake;

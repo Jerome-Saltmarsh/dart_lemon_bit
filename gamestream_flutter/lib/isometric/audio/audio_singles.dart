@@ -6,6 +6,7 @@ final audioSingleFootstepGrass8 = AudioSingle(name: 'footstep-grass-8', volume: 
 final audioSingleFootstepGrass7 = AudioSingle(name: 'footstep-grass-7', volume: 0.05, maxDistance: 200);
 final audioSingleFootstepMud6 = AudioSingle(name: 'mud-footstep-6', volume: 0.05, maxDistance: 200);
 final audioSingleFootstepStone = AudioSingle(name: 'footstep-stone', volume: 0.05, maxDistance: 250);
+final audioSingleFootstepWood = AudioSingle(name: 'footstep-wood-4', volume: 0.5, maxDistance: 250);
 final audioSingleBowDraw = AudioSingle(name: 'bow-draw', volume: 0.5, maxDistance: 200);
 final audioSingleNotificationSound10 = AudioSingle(name: 'notification-sound-10', volume: 0.5, maxDistance: 200);
 final audioSingleNotificationSound12 = AudioSingle(name: 'notification-sound-12', volume: 0.5, maxDistance: 200);

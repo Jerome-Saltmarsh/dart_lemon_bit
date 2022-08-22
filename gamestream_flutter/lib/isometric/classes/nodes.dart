@@ -516,6 +516,9 @@ class NodeWood2 extends Node {
   int get type => NodeType.Wood_2;
 
   @override
+  bool get isWood => true;
+
+  @override
   void handleRender() {
     if (orientation == NodeOrientation.Solid)
       return renderShadeManual(8886);
@@ -707,6 +710,9 @@ class NodeWoodenPlank extends Node {
 
   @override
   int get type => NodeType.Wooden_Plank;
+
+  @override
+  bool get isWood => true;
 
   @override
   void handleRender() {

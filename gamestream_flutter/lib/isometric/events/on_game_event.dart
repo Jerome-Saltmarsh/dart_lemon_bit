@@ -22,6 +22,9 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       if (tile.isStone) {
         return audioSingleFootstepStone.playXYZ(x, y, z);
       }
+      if (tile.isWood) {
+        return audioSingleFootstepWood.playXYZ(x, y, z);
+      }
       if (randomBool()){
         return audioSingleFootstepGrass8.playXYZ(x, y, z);
       }
