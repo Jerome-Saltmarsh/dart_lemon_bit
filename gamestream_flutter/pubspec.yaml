@@ -19,12 +19,10 @@ dependencies:
     path: C:\Users\Jerome\github\bleed\dart-lemon-engine
   firestore_client:
     path: C:\Users\Jerome\github\bleed\firestore-client
-  flame_audio: ^1.2.0
   universal_html: ^2.0.8
   web_socket_channel: ^2.1.0
   shelf_web_socket: ^1.0.1
   shelf_router: ^1.1.2
-  animated_text_kit: ^4.2.1
   shared_preferences: ^2.0.11
   golden_ratio: 1.0.6
   http: ^0.13.4

@@ -1,5 +1,4 @@
 
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
@@ -127,9 +126,8 @@ final _views = _Views();
 final _buildView = _BuildView();
 
 class _Views {
-  final Widget selectRegion = _buildView.selectRegion();
-  final Widget connecting = _buildView.connecting();
-  final Widget connection = _buildView.connection();
+  final selectRegion = _buildView.selectRegion();
+  final connection = _buildView.connection();
 }
 
 final Map<Connection, String> connectionMessage = {
@@ -182,31 +180,6 @@ class _BuildView {
         ),
       ],
     );
-  }
-
-
-  Widget connecting() {
-    return WatchBuilder(core.state.region, (Region region) {
-      return center(Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            height: 80,
-            child: AnimatedTextKit(repeatForever: true, animatedTexts: [
-              RotateAnimatedText("Connecting to ${enumString(gameType.value)} (${enumString(region)})",
-                  textStyle: TextStyle(color: Colors.white, fontSize: 30)),
-            ]),
-          ),
-          height32,
-          onPressed(
-              child: text("Cancel"),
-              callback: () {
-                sharedPreferences.remove('server');
-                refreshPage();
-              }),
-        ],
-      ));
-    });
   }
 }
 

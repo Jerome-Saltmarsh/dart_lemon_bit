@@ -1,6 +1,5 @@
 
 
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/assets.dart';
 import 'package:gamestream_flutter/colours.dart';
@@ -58,12 +57,7 @@ class CoreBuild {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              AnimatedTextKit(repeatForever: true, animatedTexts: [
-                RotateAnimatedText(enumString(operationStatus),
-                    textStyle: TextStyle(color: Colors.white, fontSize: 45,
-                        fontFamily: Fonts.LibreBarcode39Text
-                    )),
-              ])
+              text(operationStatus.name)
             ],
           ),
         )
