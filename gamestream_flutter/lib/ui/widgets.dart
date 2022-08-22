@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/control/classes/authentication.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
 import 'package:gamestream_flutter/ui/actions/sign_in_with_facebook.dart';
@@ -103,7 +102,7 @@ class _Buttons {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        icons.facebook,
+        text("Facebook"),
         width16,
         text("Continue", color: Colors.white),
       ],

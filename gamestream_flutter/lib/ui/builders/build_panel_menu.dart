@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_map.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
@@ -54,9 +53,9 @@ Widget buildButtonToggleFullscreen() {
     child: WatchBuilder(engine.fullScreen, (bool fullscreen) {
       return fullscreen
           ? Tooltip(
-              child: icons.symbols.fullscreenEnter, message: 'Exit Fullscreen')
+              child: text("Minimize"), message: 'Exit Fullscreen')
           : Tooltip(
-              child: icons.symbols.fullscreenExit, message: 'Enter Fullscreen');
+              child: text("Maximize"), message: 'Enter Fullscreen');
     }),
   );
 }
@@ -64,7 +63,7 @@ Widget buildButtonToggleFullscreen() {
 Widget buildButtonExit() {
   return onPressed(
     callback: core.actions.exitGame,
-    child: Tooltip(child: icons.symbols.home, message: 'EXIT'),
+    child: Tooltip(child: text("HOME"), message: 'EXIT'),
   );
 }
 
@@ -73,9 +72,9 @@ Widget buildButtonToggleAudio() {
     callback: audio.toggleSoundEnabled,
     child: WatchBuilder(audio.soundEnabled, (bool soundEnabled) {
       return soundEnabled
-          ? Tooltip(child: icons.symbols.soundEnabled, message: 'Disable Sound')
+          ? Tooltip(child: text("Disable Sound"), message: 'Disable Sound')
           : Tooltip(
-              child: icons.symbols.soundDisabled, message: 'Enable Sound');
+              child: text("Enable Sound"), message: 'Enable Sound');
     }),
   );
 }

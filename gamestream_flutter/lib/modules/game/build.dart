@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/icons.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/camera_mode.dart';
 import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
@@ -75,17 +74,6 @@ class GameBuild {
         padding: padding,
         width: width,
     );
-  }
-
-  Widget mapStoreTabToIcon(StoreTab value) {
-    switch (value) {
-      case StoreTab.Weapons:
-        return icons.sword;
-      case StoreTab.Armor:
-        return icons.shield;
-      case StoreTab.Items:
-        return icons.books.grey;
-    }
   }
 
   Widget mousePosition() {
