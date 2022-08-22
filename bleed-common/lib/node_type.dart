@@ -74,7 +74,8 @@ class NodeType {
     return const [
       Wood_2,
       Plain,
-      Window
+      Window,
+      Wooden_Plank,
     ].contains(type);
   }
 

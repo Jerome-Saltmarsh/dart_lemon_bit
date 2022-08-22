@@ -34,9 +34,6 @@ class NodeGrassFlowers extends Node {
 
   @override
   int get type => NodeType.Grass_Flowers;
-
-  @override
-  bool get isRainable => true;
 }
 
 class NodeGrassLong extends Node {
@@ -137,9 +134,6 @@ class NodeSoil extends GridNodeColorRamp {
 
   @override
   double get srcX => 8320;
-
-  @override
-  bool get isRainable => true;
 }
 
 class NodeRoofHayNorth extends GridNodeColorRamp {
@@ -502,13 +496,13 @@ class NodeBricks2 extends Node {
     if (orientation == NodeOrientation.Solid)
       return renderShadeManual(7104);
     if (orientation == NodeOrientation.Slope_North)
-       return renderShadeManual(7494);
+       return renderShadeManual(7394);
     if (orientation == NodeOrientation.Slope_East)
-      return renderShadeManual(7542);
+      return renderShadeManual(7443);
     if (orientation == NodeOrientation.Slope_South)
-      return renderShadeManual(7398);
+      return renderShadeManual(7492);
     if (orientation == NodeOrientation.Slope_West)
-      return renderShadeManual(7446);
+      return renderShadeManual(7541);
 
     throw Exception("Cannot render brick orientation ${NodeOrientation.getName(orientation)}");
   }
@@ -716,5 +710,31 @@ class NodeWoodenPlank extends Node {
 
   @override
   void handleRender() {
+    const srcX = 7688.0;
+
+    if (orientation == NodeOrientation.Half_West)
+      return renderShadeAuto(srcX, srcYIndex1);
+
+    if (orientation == NodeOrientation.Half_East){
+      dstX += 17;
+      dstY -= 17;
+      renderShadeAuto(srcX, srcYIndex1);
+      dstX -= 17;
+      dstY += 17;
+      return;
+    }
+
+    if (orientation == NodeOrientation.Half_South)
+      return renderShadeAuto(srcX, srcYIndex2);
+
+    if (orientation == NodeOrientation.Half_North){
+      dstX -= 17;
+      dstY -= 17;
+      renderShadeAuto(srcX, srcYIndex2);
+      dstX += 17;
+      dstY += 17;
+      return;
+    }
+
     return renderShadeAuto(7688, 0);  }
 }

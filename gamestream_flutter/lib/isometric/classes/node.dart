@@ -50,7 +50,7 @@ abstract class Node {
   int get type;
   String get name => NodeType.getName(type);
   bool get isEmpty => false;
-  bool get isRainable => false;
+  bool get isRainable => orientation == NodeOrientation.Solid;
   bool get renderable => true;
   bool get blocksPerception => true;
   bool get isShadable => true;

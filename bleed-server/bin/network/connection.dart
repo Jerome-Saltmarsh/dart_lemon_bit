@@ -425,7 +425,7 @@ class Connection {
     }
   }
 
-  void handleSetBlock(List<String> arguments) {
+  void handleNodeRequestSetBlock(List<String> arguments) {
     final player = _player;
     if (player == null) return;
     if (!isLocalMachine && player.game is GameDarkAgeEditor == false) return;
@@ -569,9 +569,9 @@ class Connection {
 
     final nodeRequest = nodeRequests[nodeRequestIndex];
 
-    switch (nodeRequest){
+    switch (nodeRequest) {
       case NodeRequest.Set:
-        return handleSetBlock(arguments);
+        return handleNodeRequestSetBlock(arguments);
       case NodeRequest.Orient:
         final orientation = int.tryParse(arguments[2]);
         final z = int.tryParse(arguments[3]);
@@ -607,7 +607,7 @@ class Connection {
 
     final gameObjectRequest = gameObjectRequests[gameObjectRequestIndex];
 
-    switch (gameObjectRequest){
+    switch (gameObjectRequest) {
 
       case GameObjectRequest.Select:
         final gameObjects = player.scene.gameObjects;
