@@ -818,6 +818,7 @@ extension GameFunctions on Game {
       z: 0,
       health: 10,
       damage: 1,
+      game: this,
     );
     characters.add(zombie);
     return zombie;
@@ -835,6 +836,7 @@ extension GameFunctions on Game {
       column: 0,
       health: 10,
       damage: 1,
+      game: this,
     );
     characters.add(instance);
     return instance;
@@ -1113,6 +1115,7 @@ extension GameFunctions on Game {
       team: team,
       health: health,
       wanderRadius:  wanderRadius,
+      game: this,
     );
     npc.equippedHead = head;
     npc.equippedArmour = armour;

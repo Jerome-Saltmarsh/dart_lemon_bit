@@ -72,8 +72,8 @@ class GameDarkAgeVillage extends DarkAgeArea {
     addNpcGuardBow(row: 30, column: 12);
     addNpcGuardBow(row: 30, column: 20);
 
-    characters.add(Rat(z: 1, row: 30, column: 30)..wanderRadius = 100);
-    characters.add(Rat(z: 1, row: 7, column: 47)..wanderRadius = 100);
+    characters.add(Rat(z: 1, row: 30, column: 30, game: this)..wanderRadius = 100);
+    characters.add(Rat(z: 1, row: 7, column: 47, game: this)..wanderRadius = 100);
   }
 
   @override

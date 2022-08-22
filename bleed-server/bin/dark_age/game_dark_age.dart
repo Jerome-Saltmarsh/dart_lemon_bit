@@ -53,7 +53,8 @@ class GameDarkAge extends Game {
         final instance = Rat(
             z: spawn.indexZ,
             row: spawn.indexRow,
-            column: spawn.indexColumn
+            column: spawn.indexColumn,
+            game: this
         );
         characters.add(instance);
         spawn.instance = instance;
@@ -73,6 +74,7 @@ class GameDarkAge extends Game {
           z: spawn.z,
           health: 10,
           damage: 1,
+          game: this
         );
         characters.add(instance);
         spawn.instance = instance;

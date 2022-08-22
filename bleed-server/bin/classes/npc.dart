@@ -1,4 +1,5 @@
 import '../common/character_type.dart';
+import 'game.dart';
 import 'player.dart';
 import 'ai.dart';
 import 'weapon.dart';
@@ -16,6 +17,7 @@ class Npc extends AI {
       required double z,
       required int health,
       required Weapon weapon,
+      required Game game,
       int team = 1,
       double wanderRadius = 0,
   })
@@ -23,6 +25,7 @@ class Npc extends AI {
             x: x,
             y: y,
             z: z,
+            game: game,
             health: health,
             weapon: weapon,
             team: team,

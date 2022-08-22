@@ -172,6 +172,31 @@ void spawnParticleBlood({
   );
 }
 
+void spawnParticleDustCloud({
+  required double x,
+  required double y,
+  required double z,
+}) {
+  spawnParticle(
+    type: ParticleType.Dust,
+    x: x,
+    y: y,
+    z: z,
+    zv: 0,
+    angle: 0,
+    speed: 1,
+    weight: 0,
+    duration: 300,
+    rotation: 0,
+    rotationV: 0,
+    scale: 1,
+    scaleV: 0,
+    bounciness: 0,
+    castShadow: false,
+  );
+}
+
+
 void spawnParticleLeaf({
   required double x,
   required double y,

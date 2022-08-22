@@ -13,6 +13,9 @@ import 'components.dart';
 import 'weapon.dart';
 
 abstract class Character extends Collider with Team, Velocity, Material {
+
+  Game game;
+
   var _health = 1;
   var maxHealth = 1;
 
@@ -68,6 +71,7 @@ abstract class Character extends Collider with Team, Velocity, Material {
     required double y,
     required double z,
     required int health,
+    required this.game,
     required this.equippedWeapon,
     double speed = 5.0,
     int team = Teams.none,
@@ -163,6 +167,9 @@ abstract class Character extends Collider with Team, Velocity, Material {
 
   void setCharacterStateRunning(){
     setCharacterState(value: CharacterState.Running, duration: 0);
+    if (stateDuration == 0) {
+      dispatch(GameEventType.Spawn_Dust_Cloud);
+    }
   }
 
   void setCharacterStateSpawning(){
@@ -195,6 +202,10 @@ abstract class Character extends Collider with Team, Velocity, Material {
     stateDurationRemaining = duration;
     state = value;
     onCharacterStateChanged();
+  }
+
+  void dispatch(int gameEventType, [double angle = 0]){
+     game.dispatch(gameEventType, x, y, z, angle);
   }
 
   void onCharacterStateChanged(){

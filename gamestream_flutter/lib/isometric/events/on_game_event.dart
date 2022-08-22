@@ -11,9 +11,10 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
   switch (type) {
     case GameEventType.Splash:
       return audioSingleSplash.playXYZ(x, y, z);
+    case GameEventType.Spawn_Dust_Cloud:
+      return spawnParticleDustCloud(x: x, y: y, z: z);
     case GameEventType.Footstep:
       final tile = getNodeXYZ(x, y, z - 2);
-
       if (raining.value){
         if (getNodeXYZ(x, y, z + 2) == NodeType.Rain_Landing) {
           audioSingleFootstepMud6.playXYZ(x, y, z);

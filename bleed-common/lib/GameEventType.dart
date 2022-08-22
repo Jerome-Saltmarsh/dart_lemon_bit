@@ -46,4 +46,5 @@ class GameEventType {
   static const Arm_Swing = 56;
   static const Character_Changing = 57;
   static const Splash = 58;
+  static const Spawn_Dust_Cloud = 59;
 }

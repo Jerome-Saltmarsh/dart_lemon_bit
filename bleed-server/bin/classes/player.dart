@@ -216,7 +216,7 @@ class Player extends Character with ByteWriter {
             speed: 4.25,
             team: team,
             equippedWeapon: weapon,
-
+            game: game,
   ){
     maxMagic = magic;
     _magic = maxMagic;
@@ -262,7 +262,7 @@ class Player extends Character with ByteWriter {
   }
 
   void dispatchGameEvent(int type){
-    game.dispatchV3(GameEventType.Character_Changing, this);
+    game.dispatchV3(type, this);
   }
 
   void gainExperience(int amount){

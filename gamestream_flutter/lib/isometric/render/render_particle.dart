@@ -98,6 +98,17 @@ void renderParticle(Particle value) {
           srcHeight: 8,
           color: value.renderColor
       );
+    case ParticleType.Dust:
+      return render(
+        dstX: value.renderX,
+        dstY: value.renderY,
+        srcX: 6151,
+        srcY: 0,
+        srcWidth: 32,
+        srcHeight: 32,
+        scale: 1.0,
+        color: value.renderColor,
+      );
 
     default:
       break;
