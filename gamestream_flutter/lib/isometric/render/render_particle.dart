@@ -1,5 +1,6 @@
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
+import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 import 'package:lemon_math/library.dart';
@@ -99,7 +100,7 @@ void renderParticle(Particle value) {
           color: value.renderColor
       );
     case ParticleType.Dust:
-      return render(
+      return renderRotated(
         dstX: value.renderX,
         dstY: value.renderY,
         srcX: 6151,
@@ -108,6 +109,7 @@ void renderParticle(Particle value) {
         srcHeight: 32,
         scale: 1.0,
         color: value.renderColor,
+        rotation: value.rotation
       );
 
     default:

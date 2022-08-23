@@ -167,9 +167,9 @@ abstract class Character extends Collider with Team, Velocity, Material {
 
   void setCharacterStateRunning(){
     setCharacterState(value: CharacterState.Running, duration: 0);
-    if (stateDuration == 0) {
-      dispatch(GameEventType.Spawn_Dust_Cloud);
-    }
+    // if (stateDuration == 0) {
+    //   dispatch(GameEventType.Spawn_Dust_Cloud);
+    // }
   }
 
   void setCharacterStateSpawning(){

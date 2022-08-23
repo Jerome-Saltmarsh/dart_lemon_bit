@@ -72,7 +72,7 @@ abstract class Node {
     renderSrcXY(srcX, shade * spriteHeight);
   }
 
-  void renderShadeAuto(double x, double y) {
+  void renderShadeAuto(double x, [double y = 0]) {
     renderSrcXY(x, y, color);
   }
 

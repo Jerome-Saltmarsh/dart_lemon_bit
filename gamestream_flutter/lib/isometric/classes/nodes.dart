@@ -479,6 +479,10 @@ class NodeOven extends GridNodeShaded {
   bool get emitsLight => true;
 }
 
+const paddedSpriteWidth = 49.0;
+const paddedSpriteHeight = 73.0;
+
+
 class NodeBricks2 extends Node {
   NodeBricks2(int row, int column, int z) : super(row, column, z);
 
@@ -493,6 +497,17 @@ class NodeBricks2 extends Node {
 
   @override
   void handleRender() {
+    const srcXHalfWest = 11426.0;
+    const srcXHalfSouth = srcXHalfWest + paddedSpriteWidth;
+    const srcXHalfEast = srcXHalfWest;
+    const srcXHalfNorth = srcXHalfSouth;
+
+    const srcXCorner = 11524.0;
+    const srcXCornerTop = srcXCorner;
+    const srcXCornerRight = srcXCornerTop + paddedSpriteWidth;
+    const srcXCornerBottom = srcXCornerRight + paddedSpriteWidth;
+    const srcXCornerLeft = srcXCornerBottom + paddedSpriteWidth;
+
     if (orientation == NodeOrientation.Solid)
       return renderShadeManual(7104);
     if (orientation == NodeOrientation.Slope_North)
@@ -503,6 +518,35 @@ class NodeBricks2 extends Node {
       return renderShadeManual(7492);
     if (orientation == NodeOrientation.Slope_West)
       return renderShadeManual(7541);
+    if (orientation == NodeOrientation.Half_West)
+      return renderShadeAuto(srcXHalfWest);
+    if (orientation == NodeOrientation.Half_South)
+      return renderShadeAuto(srcXHalfSouth);
+    if (orientation == NodeOrientation.Half_East){
+      dstX += 17;
+      dstY -= 17;
+      renderShadeAuto(srcXHalfEast);
+      dstX -= 17;
+      dstY += 17;
+      return;
+    }
+    if (orientation == NodeOrientation.Half_North){
+      dstX -= 17;
+      dstY -= 17;
+      renderShadeAuto(srcXHalfNorth);
+      dstX += 17;
+      dstY += 17;
+      return;
+    }
+
+    if (orientation == NodeOrientation.Corner_Top)
+      return renderShadeAuto(srcXCornerTop);
+    if (orientation == NodeOrientation.Corner_Right)
+      return renderShadeAuto(srcXCornerRight);
+    if (orientation == NodeOrientation.Corner_Bottom)
+      return renderShadeAuto(srcXCornerBottom);
+    if (orientation == NodeOrientation.Corner_Left)
+      return renderShadeAuto(srcXCornerLeft);
 
     throw Exception("Cannot render brick orientation ${NodeOrientation.getName(orientation)}");
   }

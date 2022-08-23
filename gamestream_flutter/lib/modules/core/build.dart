@@ -1,12 +1,10 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/assets.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:lemon_engine/game.dart';
@@ -18,7 +16,7 @@ class CoreBuild {
 
   Widget gameStream(){
     return Game(
-      title: core.state.title,
+      title: "GAMESTREAM",
       init: init,
       update: (){},
       buildUI: buildUI,
@@ -77,7 +75,7 @@ class CoreBuild {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                text("${core.state.title} ${(value * 100).toInt()}%", color: Colors.white),
+                text("GAMESTREAM ${(value * 100).toInt()}%", color: Colors.white),
                 height8,
                 Container(
                   width: _width,

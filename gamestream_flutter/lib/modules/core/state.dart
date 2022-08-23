@@ -12,7 +12,6 @@ class CoreState {
   final Watch<Account?> account = Watch(null);
   final Watch<Mode> mode = Watch(Mode.Website);
   final Watch<Region> region = Watch(Region.LocalHost);
-  final String title = "GAMESTREAM";
   final Watch<double> download = Watch(0);
   final debug = true;
   final status = Watch(GameStatus.None);
