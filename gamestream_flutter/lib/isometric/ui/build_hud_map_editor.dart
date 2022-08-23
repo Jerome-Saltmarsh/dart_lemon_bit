@@ -340,15 +340,12 @@ Widget buildButtonSelectNodeType(int value) {
       srcHeight:  mapNodeTypeToSrcHeight (value),
   );
 
-  return WatchBuilder(edit.selectedNode, (Node type) {
+  return WatchBuilder(edit.selectedNode, (Node node) {
         return container(
-            // toolTip:
-            //   NodeType.getName(value),
             height: 78,
             width: 78,
             alignment: Alignment.center,
-            child:
-              canvas,
+            child: canvas,
             action: () {
               if (modeIsPlay){
                 setPlayModeEdit();
@@ -360,25 +357,11 @@ Widget buildButtonSelectNodeType(int value) {
               edit.paint(value: value);
             },
             color:
-              type == value
+              node.type == value
               ? greyDark
               : grey
     );
   });
-}
-
-Widget _button(String value, Function action, {Color? color}){
-  return onPressed(
-    callback: action,
-    child: Container(
-      width: 200,
-      height: 50,
-      padding: const EdgeInsets.only(left: 6),
-      color: color ?? Colors.grey,
-      alignment: Alignment.centerLeft,
-      child: text(value),
-    ),
-  );
 }
 
 Widget buildColumnEdit(){

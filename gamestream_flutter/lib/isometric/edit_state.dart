@@ -90,6 +90,13 @@ class EditState {
     controlsVisibleWeather.value = !controlsVisibleWeather.value;
   }
 
+  void setPaintOrientationNone(){
+    paintOrientation.value = NodeOrientation.None;
+  }
+
+  void assignDefaultNodeOrientation(int nodeType){
+    paintOrientation.value = NodeType.getDefaultOrientation(nodeType);
+  }
 
   void fill(){
     for (var zIndex = 0; zIndex <= z.value; zIndex++){
@@ -237,16 +244,28 @@ class EditState {
        return delete();
     }
 
-    if (value != null) {
+    if (value == null){
+      value = paintType.value;
+    } else {
       paintType.value = value;
     }
+
     deleteIfTree();
+
+    var orientation = paintOrientation.value;
+
+    if (NodeType.isOriented(value)){
+       if (!NodeType.supportsOrientation(value, orientation)) {
+          orientation = NodeType.getDefaultOrientation(value);
+       }
+    }
+
     return sendClientRequestSetBlock(
         row.value,
         column.value,
         z.value,
-        paintType.value,
-        paintOrientation.value,
+        value,
+        orientation,
     );
   }
 }
