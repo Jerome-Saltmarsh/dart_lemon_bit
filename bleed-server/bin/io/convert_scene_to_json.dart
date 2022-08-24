@@ -30,7 +30,7 @@ Json convertSceneToJson(Scene scene) {
 List<int> convertNodesToByteArray(List<List<List<Node>>> nodes) {
   final bytes = <int>[];
   for (final z in nodes) {
-    for(final row in z) {
+    for (final row in z) {
       for (final node in row) {
 
         if (node.type == NodeType.Roof_Tile_North) {
