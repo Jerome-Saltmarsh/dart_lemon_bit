@@ -30,6 +30,17 @@ void renderGameObject(GameObject value) {
       color: value.renderColor,
     );
 
+  if (value.type == GameObjectType.Tavern_Sign)
+    return render(
+      dstX: value.renderX,
+      dstY: value.renderY,
+      srcX: 1645,
+      srcY: 0,
+      srcWidth: 19,
+      srcHeight: 39,
+      color: value.renderColor,
+    );
+
   if (value.type == GameObjectType.Candle)
     return render(
       dstX: value.renderX,
