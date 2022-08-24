@@ -37,6 +37,7 @@ class NodeType {
   static const Plain = 66;
   static const Window = 67;
   static const Wooden_Plank = 68;
+  static const Bau_Haus_2 = 69;
 
   static bool isSolid(int type){
      return const [
@@ -44,7 +45,8 @@ class NodeType {
         Wood_2,
         Grass_2,
         Plain,
-        Wooden_Plank
+        Wooden_Plank,
+        Bau_Haus_2,
      ].contains(type);
   }
 
@@ -77,6 +79,7 @@ class NodeType {
       Window,
       Wooden_Plank,
       Brick_2,
+      Bau_Haus_2,
     ].contains(type);
   }
 
@@ -85,6 +88,7 @@ class NodeType {
       Wood_2,
       Plain,
       Brick_2,
+      Bau_Haus_2,
     ].contains(type);
   }
 
@@ -124,6 +128,8 @@ class NodeType {
           "Stone",
        Bau_Haus:
           "Bau Haus",
+       Bau_Haus_2:
+       "Bau Haus",
        Bau_Haus_Window:
           "Bau Haus Window",
        Bau_Haus_Plain:
@@ -161,8 +167,8 @@ class NodeType {
   }
 
   static bool isRain(int value) =>
-      value == Rain_Falling       ||
-      value == Rain_Landing       ;
+     value == Rain_Falling       ||
+     value == Rain_Landing       ;
 
   static bool isOriented(int value) =>
      value == Brick_2             ||
@@ -171,6 +177,7 @@ class NodeType {
      value == Plain               ||
      value == Window              ||
      value == Wooden_Plank        ||
+     value == Bau_Haus_2          ||
      value == Cottage_Roof        ;
 
   static int getDefaultOrientation(int value){

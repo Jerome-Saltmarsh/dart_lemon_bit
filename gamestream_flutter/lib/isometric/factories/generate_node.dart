@@ -44,6 +44,8 @@ Node generateNode(int z, int row, int column, int type){
       return NodeTileSouth(row, column, z);
     case NodeType.Bau_Haus:
       return NodeBauHaus(row, column, z);
+    case NodeType.Bau_Haus_2:
+      return NodeBauHaus(row, column, z);
     case NodeType.Bau_Haus_Window:
       return NodeBauHausWindow(row, column, z);
     case NodeType.Bau_Haus_Plain:

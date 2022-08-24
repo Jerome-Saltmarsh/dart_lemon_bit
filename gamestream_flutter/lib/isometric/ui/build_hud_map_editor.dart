@@ -413,7 +413,7 @@ const editorSelectableGridTypes = [
     NodeType.Tree_Bottom,
     NodeType.Soil,
     NodeType.Stone,
-    NodeType.Bau_Haus,
+    NodeType.Bau_Haus_2,
     NodeType.Chimney,
     NodeType.Bed_Bottom,
     NodeType.Bed_Top,

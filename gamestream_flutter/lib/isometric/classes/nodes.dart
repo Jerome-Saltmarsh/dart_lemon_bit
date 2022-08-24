@@ -373,14 +373,46 @@ class NodeTileSouth extends GridNodeColorRamp {
   double get srcX => 9463;
 }
 
-class NodeBauHaus extends GridNodeShaded {
-  NodeBauHaus(int row, int column, int z) : super(row: row, column: column, z: z);
+class NodeBauHaus extends Node {
+  NodeBauHaus(int row, int column, int z) : super(row, column, z);
 
   @override
-  double get srcX => 10545;
+  int get type => NodeType.Bau_Haus_2;
 
   @override
-  int get type => NodeType.Bau_Haus;
+  void handleRender() {
+    const srcX = 11712.0;
+    if (orientation == NodeOrientation.Solid)
+      return renderShadeAuto(srcX, srcYIndex0);
+    if (orientation == NodeOrientation.Half_South)
+      return renderShadeAuto(srcX, srcYIndex1);
+    if (orientation == NodeOrientation.Half_North){
+      dstX -= 17;
+      dstY -= 17;
+      renderShadeAuto(srcX, srcYIndex1);
+      dstX += 17;
+      dstY += 17;
+      return;
+    }
+    if (orientation == NodeOrientation.Half_West)
+      return renderShadeAuto(srcX, srcYIndex2);
+    if (orientation == NodeOrientation.Half_East){
+      dstX += 17;
+      dstY -= 17;
+      renderShadeAuto(srcX, srcYIndex2);
+      dstX -= 17;
+      dstY += 17;
+      return;
+    }
+    if (orientation == NodeOrientation.Corner_Top)
+      return renderShadeAuto(srcX, srcYIndex3);
+    if (orientation == NodeOrientation.Corner_Right)
+      return renderShadeAuto(srcX, srcYIndex4);
+    if (orientation == NodeOrientation.Corner_Bottom)
+      return renderShadeAuto(srcX, srcYIndex5);
+    if (orientation == NodeOrientation.Corner_Left)
+      return renderShadeAuto(srcX, srcYIndex6);
+  }
 }
 
 class NodeBauHausWindow extends GridNodeColorRamp {
