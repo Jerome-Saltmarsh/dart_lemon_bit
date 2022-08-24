@@ -25,6 +25,21 @@ const srcYIndex8 = srcYIndex1 * 8;
 const srcYIndex9 = srcYIndex1 * 9;
 const srcYIndex10 = srcYIndex1 * 10;
 
+const spriteWidth = 48.0;
+const spriteHeight = 72.0;
+
+const spriteWidthPadded = spriteWidth + 1;
+const spriteHeightPadded = spriteHeight + 1;
+
+const srcIndexX0 = spriteWidthPadded * 0;
+const srcIndexX1 = spriteWidthPadded * 1;
+const srcIndexX2 = spriteWidthPadded * 2;
+const srcIndexX3 = spriteWidthPadded * 3;
+const srcIndexX4 = spriteWidthPadded * 4;
+const srcIndexX5 = spriteWidthPadded * 5;
+const srcIndexX6 = spriteWidthPadded * 6;
+const srcIndexX7 = spriteWidthPadded * 7;
+
 class NodeGrassFlowers extends Node {
 
   NodeGrassFlowers(int row, int column, int z) : super(row, column, z);
@@ -381,7 +396,7 @@ class NodeBauHaus extends Node {
 
   @override
   void handleRender() {
-    const srcX = 11712.0;
+    const srcX = 11720.0;
     if (orientation == NodeOrientation.Solid)
       return renderShadeAuto(srcX, srcYIndex0);
     if (orientation == NodeOrientation.Half_South)
@@ -511,10 +526,6 @@ class NodeOven extends GridNodeShaded {
   bool get emitsLight => true;
 }
 
-const paddedSpriteWidth = 49.0;
-const paddedSpriteHeight = 73.0;
-
-
 class NodeBricks2 extends Node {
   NodeBricks2(int row, int column, int z) : super(row, column, z);
 
@@ -529,19 +540,10 @@ class NodeBricks2 extends Node {
 
   @override
   void handleRender() {
-    const srcXHalfWest = 11426.0;
-    const srcXHalfSouth = srcXHalfWest + paddedSpriteWidth;
-    const srcXHalfEast = srcXHalfWest;
-    const srcXHalfNorth = srcXHalfSouth;
-
-    const srcXCorner = 11524.0;
-    const srcXCornerTop = srcXCorner;
-    const srcXCornerRight = srcXCornerTop + paddedSpriteWidth;
-    const srcXCornerBottom = srcXCornerRight + paddedSpriteWidth;
-    const srcXCornerLeft = srcXCornerBottom + paddedSpriteWidth;
+    const srcX = 11377.0;
 
     if (orientation == NodeOrientation.Solid)
-      return renderShadeManual(7104);
+      return renderShadeManual(srcX + srcIndexX0);
     if (orientation == NodeOrientation.Slope_North)
        return renderShadeManual(7394);
     if (orientation == NodeOrientation.Slope_East)
@@ -551,13 +553,13 @@ class NodeBricks2 extends Node {
     if (orientation == NodeOrientation.Slope_West)
       return renderShadeManual(7541);
     if (orientation == NodeOrientation.Half_West)
-      return renderShadeAuto(srcXHalfWest);
+      return renderShadeManual(srcX + srcIndexX1);
     if (orientation == NodeOrientation.Half_South)
-      return renderShadeAuto(srcXHalfSouth);
+      return renderShadeManual(srcX + srcIndexX2);
     if (orientation == NodeOrientation.Half_East){
       dstX += 17;
       dstY -= 17;
-      renderShadeAuto(srcXHalfEast);
+      renderShadeManual(srcX + srcIndexX1);
       dstX -= 17;
       dstY += 17;
       return;
@@ -565,20 +567,20 @@ class NodeBricks2 extends Node {
     if (orientation == NodeOrientation.Half_North){
       dstX -= 17;
       dstY -= 17;
-      renderShadeAuto(srcXHalfNorth);
+      renderShadeManual(srcX + srcIndexX2);
       dstX += 17;
       dstY += 17;
       return;
     }
 
     if (orientation == NodeOrientation.Corner_Top)
-      return renderShadeAuto(srcXCornerTop);
+      return renderShadeManual(srcX + srcIndexX3);
     if (orientation == NodeOrientation.Corner_Right)
-      return renderShadeAuto(srcXCornerRight);
+      return renderShadeManual(srcX + srcIndexX4);
     if (orientation == NodeOrientation.Corner_Bottom)
-      return renderShadeAuto(srcXCornerBottom);
+      return renderShadeManual(srcX + srcIndexX5);
     if (orientation == NodeOrientation.Corner_Left)
-      return renderShadeAuto(srcXCornerLeft);
+      return renderShadeManual(srcX + srcIndexX6);
 
     throw Exception("Cannot render brick orientation ${NodeOrientation.getName(orientation)}");
   }
