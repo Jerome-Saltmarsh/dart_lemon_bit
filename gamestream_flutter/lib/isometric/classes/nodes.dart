@@ -818,5 +818,13 @@ class NodeWoodenPlank extends Node {
       return;
     }
 
+    if (orientation == NodeOrientation.Corner_Top)
+      return renderShadeAuto(srcX, srcYIndex3);
+    if (orientation == NodeOrientation.Corner_Right)
+      return renderShadeAuto(srcX, srcYIndex4);
+    if (orientation == NodeOrientation.Corner_Bottom)
+      return renderShadeAuto(srcX, srcYIndex5);
+    if (orientation == NodeOrientation.Corner_Left)
+      return renderShadeAuto(srcX, srcYIndex5);
     return renderShadeAuto(7688, 0);  }
 }

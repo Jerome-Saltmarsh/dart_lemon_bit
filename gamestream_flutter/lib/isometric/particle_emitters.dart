@@ -27,7 +27,7 @@ void updateParticleEmitters(){
 }
 
 void updateGameObjects() {
-  if (engine.frame % 30 != 0) return;
+  if (engine.frame % 15 != 0) return;
   for (var i = 0; i < totalGameObjects; i++) {
     if (gameObjects[i].type != GameObjectType.Crystal) continue;
     final crystal = gameObjects[i];

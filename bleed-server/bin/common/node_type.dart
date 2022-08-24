@@ -89,6 +89,7 @@ class NodeType {
       Plain,
       Brick_2,
       Bau_Haus_2,
+      Wooden_Plank,
     ].contains(type);
   }
 
