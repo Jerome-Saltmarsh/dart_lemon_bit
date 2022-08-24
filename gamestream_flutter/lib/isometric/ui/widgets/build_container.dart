@@ -15,12 +15,14 @@ Widget container({
   Decoration? decoration,
   EdgeInsets? margin,
   EdgeInsets? padding,
+  Key? key,
 }){
   late Widget con;
   if (hoverColor != null){
     con = onMouseOver(
       builder: (context, mouseOver) {
         return Container(
+          key: key,
           decoration: decoration,
           padding: padding ?? const EdgeInsets.only(left: 8),
           alignment: alignment,

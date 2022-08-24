@@ -22,10 +22,17 @@ Widget buildWatchEditorTab(){
 
 Widget buildColumnSelectNodeType(){
   return Container(
-    height: screen.height - 200,
+    height: screen.height - 70,
     child: SingleChildScrollView(
-      child: Column(
-        children: editorSelectableGridTypes.map(buildButtonSelectNodeType).toList(),
+      child: Row(
+        children: [
+          Column(
+            children: editorGridTypesColumn1.map(buildButtonSelectNodeType).toList(),
+          ),
+          Column(
+            children: editorGridTypesColumn2.map(buildButtonSelectNodeType).toList(),
+          ),
+        ],
       ),
     ),
   );
