@@ -20,6 +20,7 @@ void updateIsometric(){
   updateGameActions();
   updateAnimationFrame();
   updateParticleEmitters();
+  updateGameObjects();
   updateParticles();
   updateProjectiles();
   updateRandomAudio();

@@ -78,7 +78,7 @@ class _Engine {
   }
 
   void updateEngine(){
-    const _padding = 48.0;
+    const _padding = 0.0;
     _screen.left = _camera.x - _padding;
     _screen.right = _camera.x + (_screen.width / engine.zoom) + _padding;
     _screen.top = _camera.y - _padding;

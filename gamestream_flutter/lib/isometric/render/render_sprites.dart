@@ -244,9 +244,9 @@ class RenderOrderGrid extends RenderOrder {
   var playerColumnRow = 0;
   var playerUnderRoof = false;
 
-  var screenTop = screen.top - tileSize;
+  var screenTop = screen.top - 120;
   var screenRight = screen.right + tileSize;
-  var screenBottom = screen.bottom + tileSize;
+  var screenBottom = screen.bottom + 80;
   var screenLeft = screen.left - tileSize;
 
   var maxZ = 0;
@@ -281,7 +281,7 @@ class RenderOrderGrid extends RenderOrder {
       //   offscreenNodesBottom++;
       //   return;
       // }
-      // onscreenNodes++;
+      onscreenNodes++;
       if (node.visible) {
         node.handleRender();
       } else {
@@ -342,8 +342,8 @@ class RenderOrderGrid extends RenderOrder {
 
     screenRight = screen.right + tileSize;
     screenLeft = screen.left - tileSize;
-    screenTop = screen.top - tileSize;
-    screenBottom = screen.bottom;
+    screenTop = screen.top - 72;
+    screenBottom = screen.bottom + 72;
     var screenTopLeftColumn = convertWorldToColumn(screenLeft, screenTop, 0);
     screenBottomRightRow = clamp(convertWorldToRow(screenRight, screenBottom, 0), 0, gridTotalRows - 1);
     screenTopLeftRow = convertWorldToRow(screenLeft, screenTop, 0);
@@ -418,13 +418,13 @@ class RenderOrderGrid extends RenderOrder {
   }
 
   void trimTop() {
-    while (renderY < screen.top){
+    while (renderY < screenTop){
       shiftIndexDown();
     }
     assignNode();
     calculateMinMaxZ();
     setStart();
-    assert(node.dstY >= screen.top);
+    assert(node.dstY >= screenTop);
   }
 
   // given a grid coordinate row / column workout the maximum z before it goes above the top of the screen.
@@ -432,7 +432,7 @@ class RenderOrderGrid extends RenderOrder {
   // calculate the world position Y at row / column, then workout its distance from the top of the screen;
   void calculateMinMaxZ(){
     final bottom = convertRowColumnToY(row, column);
-    final distance =  bottom - screen.top;
+    final distance =  bottom - screenTop;
     maxZ = (distance ~/ tileHeight);
     if (maxZ > gridTotalZMinusOne){
       maxZ = gridTotalZMinusOne;
