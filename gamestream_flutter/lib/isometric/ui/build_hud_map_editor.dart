@@ -77,7 +77,7 @@ Widget buildColumnEditBlendMode(){
 
 Widget buildControlsWeather() {
   return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         buildControlTime(),
@@ -261,7 +261,7 @@ Widget buildControlTime(){
             message: i.toString(),
             child: container(
               width: buttonWidth,
-              color: greyDark,
+              color: purple4,
               action: () => sendClientRequestTimeSetHour(i),
             ),
           ),
@@ -273,7 +273,7 @@ Widget buildControlTime(){
            message: i.toString(),
            child: container(
              width: buttonWidth,
-             color: grey,
+             color: purple3,
              action: () => sendClientRequestTimeSetHour(i),
            ),
          ),
@@ -292,19 +292,18 @@ Widget buildControlTime(){
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      text("Time: "),
+      // text("Time: "),
       watch(hours, (num hour) => text(padZero(hour))),
       text(":"),
       watch(minutes, (num hour) => text(padZero(hour))),
     ],
   );
   return Container(
-    width: totalWidth,
-    child: Column(
+    child: Row(
       children: [
         Container(
             color: brownLight,
-            width: totalWidth,
+            // width: totalWidth,
             alignment: Alignment.center,
             padding: const EdgeInsets.all(8),
             height: 50,

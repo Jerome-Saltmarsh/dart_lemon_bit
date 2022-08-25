@@ -95,7 +95,7 @@ Widget buildOrientationIcon(int orientation){
           width: 72,
           height: 72,
           alignment: Alignment.center,
-          color: selectedNode.orientation == orientation ? purple : brownDark,
+          color: selectedNode.orientation == orientation ? purple3 : brownDark,
           child: canvas
       );
     }),
