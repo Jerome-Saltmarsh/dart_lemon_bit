@@ -15,7 +15,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
   GameDarkAgeVillage() : super(darkAgeScenes.village, mapTile: MapTiles.Village) {
     addNpc(
         name: "Bell",
-        row: 17,
+        row: 21,
         column: 13,
         z: 1,
         wanderRadius: 0,
@@ -32,9 +32,9 @@ class GameDarkAgeVillage extends DarkAgeArea {
 
     addNpc(
         name: "Garry",
-        row: 25,
-        column: 20,
-        z: 1,
+        row: 20,
+        column: 21,
+        z: 2,
         wanderRadius: 50,
         head: HeadType.Steel_Helm,
         armour: ArmourType.shirtCyan,
@@ -45,9 +45,9 @@ class GameDarkAgeVillage extends DarkAgeArea {
 
     addNpc(
         name: "Jenkins",
-        row: 20,
-        column: 17,
         z: 1,
+        row: 19,
+        column: 17,
         head: HeadType.Wizards_Hat,
         armour: ArmourType.shirtBlue,
         pants: PantsType.white,
@@ -57,9 +57,9 @@ class GameDarkAgeVillage extends DarkAgeArea {
 
     addNpc(
       name: "Julia",
-      row: 16,
-      column: 17,
-      z: 5,
+      z: 4,
+      row: 20,
+      column: 16,
       head: HeadType.Blonde,
       armour: ArmourType.tunicPadded,
       pants: PantsType.brown,
@@ -70,7 +70,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
     addNpcGuardBow(row: 10, column: 20);
     addNpcGuardBow(row: 20, column: 31);
     addNpcGuardBow(row: 30, column: 12);
-    addNpcGuardBow(row: 30, column: 20);
+    addNpcGuardBow(row: 18, column: 31);
 
     characters.add(Rat(z: 1, row: 30, column: 30, game: this)..wanderRadius = 100);
     characters.add(Rat(z: 1, row: 7, column: 47, game: this)..wanderRadius = 100);
