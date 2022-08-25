@@ -17,6 +17,7 @@ import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
+import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:lemon_engine/render.dart';
@@ -137,38 +138,46 @@ Widget buildToggleShadows() {
         });
 }
 
+Widget buildIconRain(Rain rain, bool active){
+  return buildCanvasImage(
+      srcX: active ? 4352 : 4287,
+      srcY: 64.0 * rain.index,
+      srcWidth: 64.0,
+      srcHeight: 64.0,
+      scale: 50 / 64.0,
+  );
+}
+
 Widget buildToggleRain() {
 
-  const totalWidth = 200.0;
   final segments = rainValues.length;
-  final segmentWidth = totalWidth / segments;
 
   return watch(rain, (Rain rain) {
     final list = <Widget>[];
     for (var i = 0; i < segments; i++) {
-      final active = rain.index >= i;
+      final active = rain.index == i;
       final value = rainValues[i];
       list.add(
-          container(
-              width: segmentWidth,
-              height: 50,
-              color: active ? greyDark : grey,
-              action: () => sendClientRequestWeatherSetRain(value),
-              toolTip: value.name
-          )
+          onPressed(
+              child: Container(
+                  width: 52,
+                  height: 52,
+                  alignment: Alignment.center,
+                  child: buildIconRain(value, active),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: active ? purple3 : purple5, width: 2),
+                    borderRadius: borderRadius2,
+                  ),
+                  margin: const EdgeInsets.only(right: 2),
+
+              ),
+              callback: () => sendClientRequestWeatherSetRain(value),
+              hint: value.name
+          ),
       );
     }
-    return Column(
-      children: [
-        container(
-          child: 'Rain: ${rain.name}',
-          width: totalWidth,
-          color: brownLight,
-        ),
-        Row(
-          children: list,
-        ),
-      ],
+    return Row(
+      children: list,
     );
   });
 }
@@ -292,7 +301,6 @@ Widget buildControlTime(){
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      // text("Time: "),
       watch(hours, (num hour) => text(padZero(hour))),
       text(":"),
       watch(minutes, (num hour) => text(padZero(hour))),
@@ -303,7 +311,6 @@ Widget buildControlTime(){
       children: [
         Container(
             color: brownLight,
-            // width: totalWidth,
             alignment: Alignment.center,
             padding: const EdgeInsets.all(8),
             height: 50,
@@ -311,7 +318,6 @@ Widget buildControlTime(){
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 timeText,
-                // buildToggleTimePassing(),
               ],
             )
         ),
@@ -319,15 +325,6 @@ Widget buildControlTime(){
       ],
     ),
   );
-}
-
-Widget buildToggleTimePassing(){
-   return watch(watchTimePassing, (bool timePassing){
-       return text(
-           timePassing ? "Pause" : "Resume",
-           onPressed: sendClientRequestWeatherToggleTimePassing
-       );
-   });
 }
 
 Widget buildButtonSelectNodeType(int value) {
