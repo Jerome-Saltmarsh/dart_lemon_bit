@@ -33,6 +33,7 @@ void renderParticle(Particle value) {
           x: value.renderX,
           y: value.renderY,
           scale: value.scale,
+          rotation: value.rotation,
       );
     case ParticleType.Shrapnel:
       return renderShrapnel(
@@ -55,6 +56,20 @@ void renderParticle(Particle value) {
           srcWidth: 64,
           srcHeight: 64,
           color: value.renderColor
+      );
+
+    case ParticleType.Star_Explosion:
+      if (value.frame >= 8) {
+        return value.deactivate();
+      }
+      return render(
+          dstX: value.renderX,
+          dstY: value.renderY,
+          srcX: 2304.0,
+          srcY: 32.0 + (32.0 * value.frame),
+          srcWidth: 32,
+          srcHeight: 32,
+          // color: value.renderColor
       );
 
     case ParticleType.Zombie_Head:
@@ -136,15 +151,17 @@ void renderOrbShard({
   required double x,
   required double y,
   required double scale,
+  required double rotation,
 }) {
-  render(
+  renderRotated(
       dstX: x,
       dstY: y,
-      srcX: 616,
+      srcX: 2305,
       srcY: 0,
-      srcWidth: 8,
-      srcHeight: 8,
-      scale: scale
+      srcWidth: 16,
+      srcHeight: 16,
+      scale: scale,
+      rotation: rotation,
   );
 }
 

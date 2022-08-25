@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/update/update_lightning.dart';
+import 'package:lemon_engine/engine.dart';
 
 import 'animation_frame.dart';
 import 'audio/audio_loops.dart';
@@ -27,6 +28,14 @@ void updateIsometric(){
   gridWindResetToAmbient();
   applyObjectsToWind();
   updateZombieGrowls();
+  updateParticleFrames();
+}
+
+void updateParticleFrames() {
+  if (engine.frame % 10 != 0) return;
+  for (var i = 0; i < totalParticles; i++){
+    particles[i].updateFrame();
+  }
 }
 
 void applyObjectsToWind(){

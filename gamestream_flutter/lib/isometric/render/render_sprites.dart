@@ -21,12 +21,14 @@ import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_game_object.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
+import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
 import 'package:lemon_engine/screen.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
 import '../classes/particle.dart';
 import '../grid.dart';
+import '../lighting/apply_vector_emission.dart';
 import 'render_character_template.dart';
 import 'render_particle.dart';
 
@@ -129,7 +131,6 @@ class RenderOrderCharacters extends RenderOrder {
        if (gameObjects[i].type != GameObjectType.Candle) continue;
        gameObjects[i].tile.applyLight1();
        gameObjects[i].tileBelow.applyLight1();
-
     }
   }
 }

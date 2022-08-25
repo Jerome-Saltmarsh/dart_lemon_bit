@@ -3,12 +3,14 @@ import 'dart:math';
 import 'package:bleed_common/Direction.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
+import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:lemon_math/library.dart';
 
 class Particle extends Vector3 {
   var xv = 0.0;
   var yv = 0.0;
   var zv = 0.0;
+  var frame = 0;
   var weight = 0.0;
   var duration = 0;
   var rotation = 0.0;
@@ -23,10 +25,15 @@ class Particle extends Vector3 {
 
   bool get active => duration > 0;
 
+
   int get direction => convertAngleToDirection(rotation);
 
   void deactivate(){
     duration = -1;
+    frame = 0;
+    if (type == ParticleType.Orb_Shard) {
+      spawnParticleStarExploding(x: x, y: y, z: z);
+    }
   }
 
   bool get bleeds {
@@ -43,6 +50,11 @@ class Particle extends Vector3 {
   void setAngle({required double value, required double speed}){
     xv = getAdjacent(value, speed);
     yv = getOpposite(value, speed);
+  }
+
+  void updateFrame(){
+    if (!active) return;
+    frame++;
   }
 
   void updateMotion(){

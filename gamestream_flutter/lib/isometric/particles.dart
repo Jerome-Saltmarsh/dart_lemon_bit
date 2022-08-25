@@ -115,6 +115,10 @@ void _updateParticle(Particle particle){
   }
   particle.applyLimits();
   particle.duration--;
+
+  if (!particle.active) {
+    particle.deactivate();
+  }
 }
 
 int get bodyPartDuration => randomInt(120, 200);
@@ -543,10 +547,9 @@ void spawnParticleOrb(OrbType type, double x, double y) {
     zv: 0.05,
     weight: 0.0,
     duration: 50,
-    rotation: 0,
+    rotation: randomAngle(),
     rotationV: 0,
     scale: 0.3,
-    // scaleV: -0.01,
   );
 }
 
@@ -590,6 +593,27 @@ void spawnParticleOrbShard({
     scaleV: 0.01,
     weight: 0,
     duration: duration,
+    scale: 0.75
+  );
+}
+
+
+void spawnParticleStarExploding({
+  required double x,
+  required double y,
+  required double z,
+}) {
+  spawnParticle(
+      type: ParticleType.Star_Explosion,
+      x: x,
+      y: y,
+      z: z,
+      angle: randomAngle(),
+      speed: 0,
+      // scaleV: 1,
+      weight: 0,
+      duration: 100,
+      scale: 0.75
   );
 }
 
