@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/node.dart';
+import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_on.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
@@ -271,6 +272,18 @@ void applyBakeMapEmissions() {
           radius: 7,
         );
       }
+    }
+  }
+
+  for (final gameObject in gameObjects){
+    if (gameObject.type == GameObjectType.Crystal){
+      applyEmissionBake(
+        zIndex: gameObject.indexZ,
+        rowIndex: gameObject.indexRow,
+        columnIndex: gameObject.indexColumn,
+        maxBrightness: Shade.Very_Bright,
+        radius: 7,
+      );
     }
   }
 }
