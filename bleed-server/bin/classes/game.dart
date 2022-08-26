@@ -45,6 +45,10 @@ abstract class Game {
     }
   }
 
+  void onCharacterSpawned(Character character){
+
+  }
+
   void onNodeChanged(int z, int row, int column){
     final node = scene.grid[z][row][column];
     players.forEach((player) {

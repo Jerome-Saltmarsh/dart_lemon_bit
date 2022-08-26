@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/classes/particle_emitter.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
-import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
 import 'particles.dart';
@@ -39,6 +38,7 @@ void updateGameObjects() {
       z: crystal.z,
       speed: 2,
       duration: 50,
+      angle: randomAngle(),
     );
   }
 }

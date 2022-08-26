@@ -1,11 +1,12 @@
 
+
 import 'package:bleed_common/Projectile_Type.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/update/update_lightning.dart';
-import 'package:lemon_engine/engine.dart';
+import 'package:lemon_math/library.dart';
 
 import 'animation_frame.dart';
 import 'audio/audio_loops.dart';
@@ -74,7 +75,7 @@ void updateProjectiles() {
   for (var i = 0; i < totalProjectiles; i++) {
     final projectile = projectiles[i];
     if (projectile.type != ProjectileType.Orb) continue;
-    spawnParticleOrbShard(x: projectile.x, y: projectile.y, z: projectile.z);
+    spawnParticleOrbShard(x: projectile.x, y: projectile.y, z: projectile.z, angle: randomAngle());
   }
 }
 

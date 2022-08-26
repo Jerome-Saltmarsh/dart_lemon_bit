@@ -157,6 +157,11 @@ abstract class Character extends Collider with Team, Velocity, Material {
       case CharacterState.Performing:
         game.updateCharacterStatePerforming(this);
         break;
+      case CharacterState.Spawning:
+        if (stateDurationRemaining == 1){
+          game.onCharacterSpawned(this);
+        }
+        break;
     }
     stateDuration++;
   }

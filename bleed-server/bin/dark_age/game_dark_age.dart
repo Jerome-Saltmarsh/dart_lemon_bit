@@ -39,6 +39,13 @@ class GameDarkAge extends Game {
        spawnGameObject(spawn);
   }
 
+  @override
+  void onCharacterSpawned(Character character){
+    if (character is Player){
+      dispatchV3(GameEventType.Player_Spawned, character);
+    }
+  }
+
   void spawnGameObject(GameObjectSpawn spawn){
     switch (spawn.spawnType){
       case SpawnType.Chicken:
@@ -153,6 +160,7 @@ class GameDarkAge extends Game {
     player.writePlayerWeapons();
     return player;
   }
+
 
   void addNpcGuardBow({required int row, required int column, int z = 1}){
     addNpc(

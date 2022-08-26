@@ -47,4 +47,5 @@ class GameEventType {
   static const Character_Changing = 57;
   static const Splash = 58;
   static const Spawn_Dust_Cloud = 59;
+  static const Player_Spawned = 60;
 }

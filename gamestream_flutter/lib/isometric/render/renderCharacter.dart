@@ -17,10 +17,9 @@ void renderCharacter(Character character){
         dstY: character.renderY,
         srcWidth: 48,
         srcHeight: 72,
-        anchorY: 1.0
+        anchorY: 0.61
     );
   }
-
 
   switch(character.type){
     case CharacterType.Template:

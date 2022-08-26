@@ -9,6 +9,11 @@ import 'package:lemon_math/library.dart';
 
 void onGameEvent(int type, double x, double y, double z, double angle) {
   switch (type) {
+    case GameEventType.Player_Spawned:
+      for (var i = 0; i < 7; i++){
+        spawnParticleOrbShard(x: x, y: y, z: z, angle: randomAngle());
+      }
+      return;
     case GameEventType.Splash:
       return audioSingleSplash.playXYZ(x, y, z);
     case GameEventType.Spawn_Dust_Cloud:
@@ -250,7 +255,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
     case GameEventType.Blue_Orb_Deactivated:
       for (var i = 0; i < 8; i++) {
         spawnParticleOrbShard(
-            x: x, y: y, z: z, duration: 30, speed: randomBetween(1, 2));
+            x: x, y: y, z: z, duration: 30, speed: randomBetween(1, 2), angle: randomAngle());
       }
       spawnEffect(x: x, y: y, type: EffectType.Explosion, duration: 30);
       break;

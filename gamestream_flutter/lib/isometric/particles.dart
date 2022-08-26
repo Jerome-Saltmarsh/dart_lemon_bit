@@ -601,10 +601,11 @@ void spawnParticleOrbShard({
   required double x,
   required double y,
   required double z,
+  required double angle,
   int duration = 12,
   double speed = 1.0,
+  double scale = 0.75
 }) {
-  final angle = randomAngle();
   spawnParticle(
     type: ParticleType.Orb_Shard,
     x: x,
@@ -616,7 +617,7 @@ void spawnParticleOrbShard({
     scaleV: 0,
     weight: 0,
     duration: duration,
-    scale: 0.75
+    scale: scale,
   );
 }
 
