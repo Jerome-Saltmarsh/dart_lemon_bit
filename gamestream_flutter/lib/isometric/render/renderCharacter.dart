@@ -12,7 +12,7 @@ void renderCharacter(Character character){
   if (character.spawning) {
     return render(
         srcX: 2016,
-        srcY: 0,
+        srcY: (character.frame % 10) * 73.0,
         dstX: character.renderX,
         dstY: character.renderY,
         srcWidth: 48,
