@@ -35,6 +35,7 @@ void renderParticle(Particle value) {
           y: value.renderY,
           scale: value.scale,
           rotation: value.rotation,
+          frame: value.frame,
       );
       return;
     case ParticleType.Shrapnel:
@@ -154,14 +155,15 @@ void renderOrbShard({
   required double y,
   required double scale,
   required double rotation,
+  required int frame,
 }) {
   renderRotated(
       dstX: x,
       dstY: y,
       srcX: 2305,
-      srcY: 0,
-      srcWidth: 16,
-      srcHeight: 16,
+      srcY: 256 + (frame % 4) * 32,
+      srcWidth: 32,
+      srcHeight: 32,
       scale: scale,
       rotation: rotation,
   );

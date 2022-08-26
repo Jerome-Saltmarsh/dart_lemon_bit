@@ -55,10 +55,14 @@ class Particle extends Vector3 {
     if (z < 0){
       z = 0;
     }
-    rotation = clampAngle(rotation + rotationVelocity);
-    scale += scaleV;
-    if (scale < 0){
-      scale = 0;
+    if (rotationVelocity != 0){
+      rotation = clampAngle(rotation + rotationVelocity);
+    }
+    if (scaleV != 0){
+      scale += scaleV;
+      if (scale < 0){
+        scale = 0;
+      }
     }
   }
 

@@ -597,7 +597,6 @@ void freezeCircle({
   spawnEffect(x: x, y: y, type: EffectType.FreezeCircle, duration: 45);
 }
 
-
 void spawnParticleOrbShard({
   required double x,
   required double y,
@@ -605,12 +604,14 @@ void spawnParticleOrbShard({
   int duration = 12,
   double speed = 1.0,
 }) {
+  final angle = randomAngle();
   spawnParticle(
     type: ParticleType.Orb_Shard,
     x: x,
     y: y,
     z: z,
-    angle: randomAngle(),
+    angle: angle,
+    rotation: angle,
     speed: speed,
     scaleV: 0.01,
     weight: 0,
