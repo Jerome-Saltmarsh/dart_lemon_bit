@@ -1,5 +1,6 @@
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
+import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
@@ -29,12 +30,13 @@ void renderParticle(Particle value) {
           color: value.renderColor
       );
     case ParticleType.Orb_Shard:
-      return renderOrbShard(
+      renderOrbShard(
           x: value.renderX,
           y: value.renderY,
           scale: value.scale,
           rotation: value.rotation,
       );
+      return;
     case ParticleType.Shrapnel:
       return renderShrapnel(
           x: value.renderX,

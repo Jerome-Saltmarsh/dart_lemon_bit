@@ -36,15 +36,6 @@ class Particle extends Vector3 {
     }
   }
 
-  bool get bleeds {
-     if (type == ParticleType.Blood) return false;
-     if (type == ParticleType.Zombie_Head) return true;
-     if (type == ParticleType.Zombie_Torso) return true;
-     if (type == ParticleType.Zombie_Arm) return true;
-     if (type == ParticleType.Zombie_leg) return true;
-     return false;
-  }
-
   double get speed => sqrt(xv * xv + yv * yv);
 
   void setAngle({required double value, required double speed}){

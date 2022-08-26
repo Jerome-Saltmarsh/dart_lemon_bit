@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
+import 'package:gamestream_flutter/isometric/update.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
@@ -25,12 +26,22 @@ void sortParticles(){
   for (; totalActiveParticles < totalParticles; totalActiveParticles++){
       if (!particles[totalActiveParticles].active) break;
   }
+
   if (totalActiveParticles == 0) return;
   insertionSort(
     particles,
     compare: _compareParticles,
     end: totalActiveParticles,
   );
+
+  for (var i = 0; i < particles.length; i++){
+    final particle = particles[i];
+    if (i < totalActiveParticles){
+      assert (particle.active);
+    } else {
+      assert (!particle.active);
+    }
+  }
 }
 
 int _compareParticles(Particle a, Particle b) {
@@ -41,33 +52,42 @@ int _compareParticles(Particle a, Particle b) {
 }
 
 int _compareParticlesActive(Particle a, Particle b) {
-  if (a.active == b.active) return 0;
   if (a.active) return -1;
   return 1;
 }
 
 void updateParticles() {
-
-  for (var i = 0; i < totalActiveParticles; i++) {
+  for (var i = 0; i < particles.length; i++) {
     _updateParticle(particles[i]);
   }
+  updateParticlesZombieParts();
+  updateParticleFrames();
+}
 
-  if (engine.frame % 6 == 0) {
-    for (var i = 0; i < totalActiveParticles; i++) {
-      final particle = particles[i];
-      if (!particle.active) break;
-      if (!particle.bleeds) continue;
-      if (particle.speed < 2.0) continue;
-      spawnParticleBlood(
-        x: particle.x,
-        y: particle.y,
-        z: particle.z,
-        zv: 0,
-        angle: 0,
-        speed: 0,
-      );
-    }
+void updateParticlesZombieParts() {
+  if (engine.frame % 6 != 0) return;
+  for (var i = 0; i < totalActiveParticles; i++) {
+    final particle = particles[i];
+    if (!particle.active) break;
+    if (!particleEmitsBlood(particle.type)) continue;
+    if (particle.speed < 2.0) continue;
+    spawnParticleBlood(
+      x: particle.x,
+      y: particle.y,
+      z: particle.z,
+      zv: 0,
+      angle: 0,
+      speed: 0,
+    );
   }
+}
+
+bool particleEmitsBlood(int type){
+  if (type == ParticleType.Zombie_Head) return true;
+  if (type == ParticleType.Zombie_Torso) return true;
+  if (type == ParticleType.Zombie_Arm) return true;
+  if (type == ParticleType.Zombie_leg) return true;
+  return false;
 }
 
 
@@ -80,7 +100,7 @@ void _updateParticle(Particle particle){
       tile == NodeType.Empty        ||
       tile == NodeType.Rain_Landing ||
       tile == NodeType.Rain_Falling ||
-      tile == NodeType.Grass_Long ||
+      tile == NodeType.Grass_Long   ||
       tile == NodeType.Fireplace    ;
 
   if (!airBorn) {
@@ -92,9 +112,11 @@ void _updateParticle(Particle particle){
     particle.z = (particle.indexZ + 1) * tileHeight;
     particle.applyFloorFriction();
   } else {
-    final wind = particle.wind * 0.01;
-    particle.xv -= wind;
-    particle.yv += wind;
+    if (particle.type == ParticleType.Smoke){
+      final wind = particle.wind * 0.01;
+      particle.xv -= wind;
+      particle.yv += wind;
+    }
   }
   final bounce = particle.zv < 0 && !airBorn;
   particle.updateMotion();

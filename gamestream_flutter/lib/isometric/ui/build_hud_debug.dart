@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
+import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
@@ -12,7 +13,6 @@ import 'widgets/build_container.dart';
 Widget buildHudDebug() {
   return Stack(
     children: [
-      // Positioned(top: 0, right: 0, child: buildPanelMenu()),
       Positioned(
           top: 0,
           left: 0,
@@ -31,6 +31,8 @@ Widget buildHudDebug() {
               ),
               Refresh(() => text('characters: $totalCharacters')),
               Refresh(() => text('Onscreen: $onscreenNodes, off-left: $offscreenNodesLeft, off-top: $offscreenNodesTop, off-right: $offscreenNodesRight, off-bottom: $offscreenNodesBottom')),
+              Refresh(() => text('Engine.Frame: ${engine.frame}')),
+              Refresh(() => text('Particles: {active: $totalActiveParticles, total: ${particles.length}')),
             ],
           )),
     ],

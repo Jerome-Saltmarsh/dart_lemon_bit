@@ -28,12 +28,14 @@ void updateIsometric(){
   gridWindResetToAmbient();
   applyObjectsToWind();
   updateZombieGrowls();
-  updateParticleFrames();
 }
 
+var particleAnimation = 0;
+
 void updateParticleFrames() {
-  if (engine.frame % 10 != 0) return;
-  for (var i = 0; i < totalParticles; i++){
+  if (particleAnimation++ < 3) return;
+  particleAnimation = 0;
+  for (var i = 0; i < particles.length; i++){
     particles[i].updateFrame();
   }
 }

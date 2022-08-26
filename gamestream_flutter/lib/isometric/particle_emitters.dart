@@ -2,7 +2,6 @@
 import 'dart:math';
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/classes/particle_emitter.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
@@ -26,8 +25,11 @@ void updateParticleEmitters(){
   }
 }
 
+var nextCrystalEmission = 0;
+
 void updateGameObjects() {
-  if (engine.frame % 15 != 0) return;
+  if (nextCrystalEmission++ < 15) return;
+  nextCrystalEmission = 0;
   for (var i = 0; i < totalGameObjects; i++) {
     if (gameObjects[i].type != GameObjectType.Crystal) continue;
     final crystal = gameObjects[i];
@@ -35,9 +37,8 @@ void updateGameObjects() {
       x: crystal.x,
       y: crystal.y,
       z: crystal.z,
-      speed: 1.5,
+      speed: 2.5,
       duration: 24,
-
     );
   }
 }
