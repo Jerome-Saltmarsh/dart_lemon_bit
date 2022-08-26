@@ -37,8 +37,8 @@ void updateGameObjects() {
       x: crystal.x,
       y: crystal.y,
       z: crystal.z,
-      speed: 2.5,
-      duration: 24,
+      speed: 2,
+      duration: 50,
     );
   }
 }

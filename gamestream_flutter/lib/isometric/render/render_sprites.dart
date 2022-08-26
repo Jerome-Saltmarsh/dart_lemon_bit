@@ -21,14 +21,12 @@ import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_game_object.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
-import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
 import 'package:lemon_engine/screen.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
 import '../classes/particle.dart';
 import '../grid.dart';
-import '../lighting/apply_vector_emission.dart';
 import 'render_character_template.dart';
 import 'render_particle.dart';
 
@@ -230,6 +228,11 @@ var offscreenNodesBottom = 0;
 var offscreenNodesLeft = 0;
 var onscreenNodes = 0;
 
+var screenTop = screen.top - 120;
+var screenRight = screen.right + tileSize;
+var screenBottom = screen.bottom + 80;
+var screenLeft = screen.left - tileSize;
+
 class RenderOrderGrid extends RenderOrder {
   var z = 0;
   var column = 0;
@@ -244,11 +247,6 @@ class RenderOrderGrid extends RenderOrder {
 
   var playerColumnRow = 0;
   var playerUnderRoof = false;
-
-  var screenTop = screen.top - 120;
-  var screenRight = screen.right + tileSize;
-  var screenBottom = screen.bottom + 80;
-  var screenLeft = screen.left - tileSize;
 
   var maxZ = 0;
   var minZ = 0;

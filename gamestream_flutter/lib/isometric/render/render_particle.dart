@@ -1,10 +1,13 @@
+import 'dart:math';
+
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
-import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 import 'package:lemon_math/library.dart';
+
+import 'render_pixel.dart';
 
 void renderParticle(Particle value) {
   switch (value.type) {
@@ -62,18 +65,18 @@ void renderParticle(Particle value) {
       );
 
     case ParticleType.Star_Explosion:
-      if (value.frame >= 8) {
+      if (value.frame >= 7) {
         return value.deactivate();
       }
-      return render(
+      render(
           dstX: value.renderX,
           dstY: value.renderY,
           srcX: 2304.0,
           srcY: 32.0 + (32.0 * value.frame),
           srcWidth: 32,
           srcHeight: 32,
-          // color: value.renderColor
       );
+      return;
 
     case ParticleType.Zombie_Head:
       return render(
@@ -157,15 +160,15 @@ void renderOrbShard({
   required double rotation,
   required int frame,
 }) {
-  renderRotated(
+  const size = 16.0;
+  render(
       dstX: x,
       dstY: y,
-      srcX: 2305,
-      srcY: 256 + (frame % 4) * 32,
-      srcWidth: 32,
-      srcHeight: 32,
+      srcX: 2304 ,
+      srcY: 256 + (frame % 4) * size,
+      srcWidth: size,
+      srcHeight: size,
       scale: scale,
-      rotation: rotation,
   );
 }
 

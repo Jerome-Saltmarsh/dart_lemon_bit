@@ -149,6 +149,7 @@ class GameDarkAge extends Game {
     player.weapons.add(Weapon(type: WeaponType.Bow, damage: 2));
     player.weapons.add(Weapon(type: WeaponType.Handgun, damage: 5));
     player.weapons.add(Weapon(type: WeaponType.Shotgun, damage: 5));
+    player.weapons.add(Weapon(type: WeaponType.Staff, damage: 5));
     player.writePlayerWeapons();
     return player;
   }

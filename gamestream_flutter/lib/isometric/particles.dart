@@ -613,7 +613,7 @@ void spawnParticleOrbShard({
     angle: angle,
     rotation: angle,
     speed: speed,
-    scaleV: 0.01,
+    scaleV: 0,
     weight: 0,
     duration: duration,
     scale: 0.75
@@ -633,7 +633,6 @@ void spawnParticleStarExploding({
       z: z,
       angle: randomAngle(),
       speed: 0,
-      // scaleV: 1,
       weight: 0,
       duration: 100,
       scale: 0.75
