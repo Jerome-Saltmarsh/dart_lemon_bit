@@ -15,6 +15,7 @@ import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
+import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_zombie.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
@@ -67,12 +68,12 @@ void renderSprites() {
 
     if (totalRemaining == 1){
       while (next.remaining){
-        next.render();
+        next.renderNext();
       }
       return;
     }
 
-    if (next.render()) continue;
+    if (next.renderNext()) continue;
     totalRemaining--;
     remaining = totalRemaining > 0;
   }
@@ -83,29 +84,7 @@ class RenderOrderCharacters extends RenderOrder {
 
   @override
   void renderFunction() {
-
-    if (!character.tile.visible) return;
-
-    if (character.spawning) {
-      if (character.frame % 3 != 0) return;
-      return spawnParticleOrbShard(
-        x: character.x,
-        y: character.y,
-        z: character.z,
-        speed: 1.5,
-      );
-    }
-
-    switch(character.type){
-      case CharacterType.Template:
-        return renderCharacterTemplate(character);
-      case CharacterType.Rat:
-        return renderCharacterRat(character);
-      case CharacterType.Zombie:
-        return renderCharacterZombie(character);
-      default:
-        throw Exception("Cannot render character type: ${character.type}");
-    }
+    renderCharacter(character);
   }
 
   @override
@@ -590,7 +569,7 @@ abstract class RenderOrder {
      remaining = false;
   }
 
-  bool render() {
+  bool renderNext() {
     assert(remaining);
     renderFunction();
     _index = (_index + 1);
