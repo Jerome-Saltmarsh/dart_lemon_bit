@@ -17,7 +17,8 @@ void renderCharacter(Character character){
         dstY: character.renderY,
         srcWidth: 48,
         srcHeight: 72,
-        anchorY: 0.61
+        anchorY: 0.61,
+        scale: 0.75,
     );
   }
 
