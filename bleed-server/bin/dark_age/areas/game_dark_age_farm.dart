@@ -38,9 +38,16 @@ class GameDarkAgeFarm extends DarkAgeArea {
   @override
   void onPlayerJoined(Player player) {
     player.indexZ = 5;
-    player.indexRow = 15;
-    player.indexColumn = 21;
-    const radius = 30.0;
+    if (randomBool()){
+      player.indexRow = 16;
+      player.indexColumn = 21;
+    } else {
+      player.indexRow = 15;
+      player.indexColumn = 22;
+    }
+
+
+    const radius = 5.0;
     player.x += giveOrTake(radius);
     player.y += giveOrTake(radius);
   }
