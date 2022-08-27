@@ -45,11 +45,10 @@ class GameDarkAgeFarm extends DarkAgeArea {
       player.indexRow = 15;
       player.indexColumn = 22;
     }
-
-
     const radius = 5.0;
     player.x += giveOrTake(radius);
     player.y += giveOrTake(radius);
+    player.setCharacterStateSpawning();
   }
 
   @override

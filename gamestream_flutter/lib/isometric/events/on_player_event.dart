@@ -11,6 +11,8 @@ import 'package:lemon_engine/engine.dart';
 
 void onPlayerEvent(int event) {
   switch (event) {
+    case PlayerEvent.Spawn_Started:
+      return audioSingleTeleport();
     case PlayerEvent.Scene_Changed:
       return cameraCenterOnPlayer();
     case PlayerEvent.Quest_Started:

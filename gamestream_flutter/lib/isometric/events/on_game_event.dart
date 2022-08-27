@@ -9,6 +9,9 @@ import 'package:lemon_math/library.dart';
 
 void onGameEvent(int type, double x, double y, double z, double angle) {
   switch (type) {
+    case GameEventType.Player_Spawn_Started:
+      print("audioSingleTeleport.playXYZ($x, $y, $z);");
+      return audioSingleTeleport.playXYZ(x, y, z);
     case GameEventType.Player_Spawned:
       for (var i = 0; i < 7; i++){
         spawnParticleOrbShard(x: x, y: y, z: z, angle: randomAngle());

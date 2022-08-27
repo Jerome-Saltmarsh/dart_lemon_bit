@@ -84,7 +84,6 @@ abstract class Character extends Collider with Team, Velocity, Material {
     movementSpeed = speed;
     this.team = team;
     this.material = MaterialType.Flesh;
-    setCharacterStateSpawning();
   }
 
   void applyVelocity() {
@@ -161,6 +160,11 @@ abstract class Character extends Collider with Team, Velocity, Material {
         if (stateDurationRemaining == 1){
           game.onCharacterSpawned(this);
         }
+        if (stateDuration == 0) {
+          if (this is Player){
+            (this as Player).writePlayerEvent(PlayerEvent.Spawn_Started);
+          }
+        }
         break;
     }
     stateDuration++;
@@ -178,12 +182,14 @@ abstract class Character extends Collider with Team, Velocity, Material {
   }
 
   void setCharacterStateSpawning(){
+    if (state == CharacterState.Spawning) return;
     state = CharacterState.Spawning;
     stateDurationRemaining = 100;
   }
 
   void setCharacterStateHurt(){
     if (dead) return;
+    if (state == CharacterState.Hurt) return;
     stateDurationRemaining = 10;
     state = CharacterState.Hurt;
     ability = null;

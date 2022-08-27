@@ -40,5 +40,6 @@ final audioSingleZombieTalking = [
   AudioSingle(name: 'zombie-talking-05', volume: 0.4, maxDistance: 350),
 ];
 
+final audioSingleTeleport = AudioSingle(name: 'teleport-1', volume: 0.5, maxDistance: 250);
 
 

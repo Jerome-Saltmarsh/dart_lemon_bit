@@ -22,5 +22,6 @@ class PlayerEvent {
   static const Quest_Completed = 19;
   static const Scene_Changed = 20;
   static const GameObject_Deselected = 21;
+  static const Spawn_Started = 22;
 
 }
