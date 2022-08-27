@@ -90,10 +90,18 @@ bool particleEmitsBlood(int type){
   return false;
 }
 
-
-void _updateParticle(Particle particle){
+void _updateParticle(Particle particle) {
   if (!particle.active) return;
   if (particle.outOfBounds) return particle.deactivate();
+
+  switch (particle.type) {
+    case ParticleType.Smoke:
+      // update smoke particle
+      break;
+    case ParticleType.Orb_Shard:
+    // etx
+      break;
+  }
 
   final tile = particle.tile.type;
   final airBorn =
@@ -616,6 +624,28 @@ void spawnParticleOrbShard({
     speed: speed,
     scaleV: 0,
     weight: 0,
+    duration: duration,
+    scale: scale,
+  );
+}
+
+void spawnParticleBubble({
+  required double x,
+  required double y,
+  required double z,
+  int duration = 100,
+  double scale = 1.0
+}) {
+  spawnParticle(
+    type: ParticleType.Bubble,
+    x: x,
+    y: y,
+    z: z,
+    angle: 0,
+    rotation: 0,
+    speed: 0,
+    scaleV: 0,
+    weight: -0.5,
     duration: duration,
     scale: scale,
   );

@@ -5,7 +5,10 @@ import 'package:gamestream_flutter/isometric/actions/action_toggle_inventory.dar
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/editor/editor.dart';
+import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -36,6 +39,8 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     return editor.actions.raise();
   if (key == PhysicalKeyboardKey.keyX)
     return edit.paintMouse();
+  if (key == PhysicalKeyboardKey.keyZ)
+    return spawnParticleBubble(x: mouseGridX, y: mouseGridY, z: player.z);
 
   if (modeIsPlay) {
     if (key == PhysicalKeyboardKey.keyG)
@@ -48,6 +53,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
       return actionGameDialogShowMap();
     if (key == PhysicalKeyboardKey.keyJ)
       return sendClientRequestAttackBasic();
+    return;
   }
 
   // EDIT MODE
@@ -60,6 +66,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
       cameraSetPositionGrid(edit.row.value, edit.column.value, edit.z.value);
     }
   }
+
   if (key == PhysicalKeyboardKey.keyY)
     return editor.actions.elevate();
   if (key == PhysicalKeyboardKey.keyH)

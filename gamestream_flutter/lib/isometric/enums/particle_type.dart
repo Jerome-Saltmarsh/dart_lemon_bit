@@ -20,4 +20,6 @@ class ParticleType {
   static const Leaf = 19;
   static const Dust = 20;
   static const Star_Explosion = 21;
+  static const Bubble = 22;
+  static const Flame_Pixel = 23;
 }

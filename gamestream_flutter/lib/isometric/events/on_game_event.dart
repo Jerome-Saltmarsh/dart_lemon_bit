@@ -98,7 +98,6 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
           zv: 0.1);
       
       randomItem(audioSingleZombieDeaths).playXYZ(x, y, z);
-      
       break;
 
     case GameEventType.Zombie_Target_Acquired:
