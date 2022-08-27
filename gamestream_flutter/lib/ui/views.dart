@@ -2,7 +2,6 @@
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
-import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/init.dart';
@@ -10,7 +9,6 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/module.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
 import 'package:gamestream_flutter/servers.dart';
-import 'package:gamestream_flutter/shared_preferences.dart';
 import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
@@ -19,11 +17,11 @@ import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:gamestream_flutter/website/build_layout_website.dart';
-import 'package:lemon_engine/actions.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../isometric/ui/build_hud.dart';
-import '../network/web_socket.dart';
+import '../network/classes/websocket.dart';
+import '../network/instance/websocket.dart';
 import '../styles.dart';
 import 'build.dart';
 

@@ -14,11 +14,10 @@ enum Connection {
   Failed_To_Connect
 }
 
-final webSocket = _WebSocket();
 
-class _WebSocket {
+class WebSocket {
   late WebSocketChannel webSocketChannel;
-  final Watch<Connection> connection = Watch(Connection.None);
+  final connection = Watch(Connection.None);
   bool get connected => connection.value == Connection.Connected;
   bool get connecting => connection.value == Connection.Connecting;
   String connectionUri = "";
@@ -72,9 +71,9 @@ class _WebSocket {
     if (connecting) {
       connection.value = Connection.Connected;
     }
-    
+
     if (_response is Uint8List) {
-       return serverResponseReader.readBytes(_response);
+      return serverResponseReader.readBytes(_response);
     }
     if (_response is String){
       core.state.error.value = _response;

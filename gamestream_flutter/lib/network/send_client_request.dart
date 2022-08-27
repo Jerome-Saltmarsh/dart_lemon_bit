@@ -5,11 +5,11 @@ import 'package:bleed_common/gameobject_request.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_request.dart';
 import 'package:gamestream_flutter/isometric/character_controller.dart';
+import 'package:gamestream_flutter/network/instance/websocket.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/screen.dart';
 
 import '../isometric/edit_state.dart';
-import 'web_socket.dart';
 
 final updateBuffer = Uint8List(16);
 
