@@ -4,6 +4,14 @@ class SpawnType {
   static const Chicken = 1;
   static const Butterfly = 2;
   static const Rat = 3;
+  static const Jellyfish = 4;
+
+  static int getValue(int index){
+    const max = Jellyfish;
+    if (index < 0) return Zombie;
+    if (index > max) return max;
+    return index;
+  }
 
   static String getName(int type) {
     return const {
@@ -11,6 +19,7 @@ class SpawnType {
       Chicken: "Chicken",
       Butterfly: "Butterfly",
       Rat: "Rat",
+      Jellyfish: "Jellyfish",
     } [type] ?? "Unknown ($type)";
   }
 }

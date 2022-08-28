@@ -135,6 +135,8 @@ void renderGameObject(GameObject value) {
   if (value.type == GameObjectType.Chicken)
     return renderGameObjectChicken(value);
 
+  if (value.type == GameObjectType.Jellyfish)
+    return renderGameObjectJellyfish(value);
 
   if (value.type == GameObjectType.Wooden_Shelf_Row)
     return render(
@@ -227,6 +229,19 @@ void renderGameObjectChicken(GameObject value) {
     srcWidth: 64,
     srcHeight: 64,
     scale: 0.66,
+    color: value.renderColor,
+  );
+}
+
+void renderGameObjectJellyfish(GameObject value) {
+  render(
+    dstX: value.renderX,
+    dstY: value.renderY,
+    srcX: 2745,
+    srcY: 0,
+    srcWidth: 32,
+    srcHeight: 48,
+    scale: 1,
     color: value.renderColor,
   );
 }

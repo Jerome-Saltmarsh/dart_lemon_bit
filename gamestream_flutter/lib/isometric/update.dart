@@ -1,11 +1,14 @@
 
 
 import 'package:bleed_common/Projectile_Type.dart';
+import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/update/update_lightning.dart';
+import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:lemon_math/library.dart';
 
 import 'animation_frame.dart';
@@ -29,8 +32,19 @@ void updateIsometric(){
   gridWindResetToAmbient();
   applyObjectsToWind();
   updateZombieGrowls();
+
+  if (nextBubbleSpawn-- <= 0){
+    nextBubbleSpawn = 30;
+    spawnParticleBubble(x: mouseGridX, y: mouseGridY, z: player.z);
+  }
+  // for (var i = 0; i < totalCharacters; i++){
+  //   if (!characters[i].running) continue;
+  //   final character = characters[i];
+  //   spawnParticleBubble(x: character.x, y: character.y, z: character.z);
+  // }
 }
 
+var nextBubbleSpawn = 0;
 var particleAnimation = 0;
 
 void updateParticleFrames() {

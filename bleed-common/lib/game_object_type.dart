@@ -17,6 +17,7 @@ class GameObjectType {
   static const Flower_Green = 16;
   static const Spawn = 17;
   static const Tavern_Sign = 18;
+  static const Jellyfish = 19;
 
   static const staticValues = [
     Flower,
@@ -61,6 +62,7 @@ class GameObjectType {
        Flower_Green: "Flower Green",
        Spawn: "Spawn",
        Tavern_Sign: "Tavern Sign",
+       Jellyfish: "Jelly Fish",
     }[value] ?? "?";
   }
 }

@@ -27,10 +27,7 @@ class GameDarkAge extends Game {
   }
 
   void setSpawnType(GameObjectSpawn spawn, int type){
-    spawn.spawnType++;
-    if (spawn.spawnType > SpawnType.Rat){
-      spawn.spawnType = 0;
-    }
+    spawn.spawnType = SpawnType.getValue(spawn.spawnType + 1);
     onSpawnTypeChanged(spawn);
   }
 
@@ -50,6 +47,14 @@ class GameDarkAge extends Game {
     switch (spawn.spawnType){
       case SpawnType.Chicken:
         final instance = GameObjectChicken(
+            x: spawn.x,
+            y: spawn.y,
+            z: spawn.z);
+        gameObjects.add(instance);
+        spawn.instance = instance;
+        break;
+      case SpawnType.Jellyfish:
+        final instance = GameObjectJellyfish(
             x: spawn.x,
             y: spawn.y,
             z: spawn.z);

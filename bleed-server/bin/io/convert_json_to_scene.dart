@@ -62,6 +62,12 @@ GameObject convertJsonToGameObject(Json json) {
           y: y,
           z: z,
         );
+      case GameObjectType.Jellyfish:
+        return GameObjectJellyfish(
+          x: x,
+          y: y,
+          z: z,
+        );
       case GameObjectType.Butterfly:
         return GameObjectButterfly(
           x: x,

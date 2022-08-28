@@ -64,6 +64,7 @@ class ServerResponse {
   static const GameObject_Chicken = 95;
   static const GameObject_Static = 97;
   static const GameObject_Spawn = 98;
-  static const Editor_GameObject_Selected = 99;
+  static const GameObject_Jellyfish = 99;
+  static const Editor_GameObject_Selected = 100;
 }
 

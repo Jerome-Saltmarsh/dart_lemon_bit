@@ -25,8 +25,25 @@ void updateParticleEmitters(){
 }
 
 var nextCrystalEmission = 0;
+var nextBubble = 0;
 
 void updateGameObjects() {
+  updateCrystals();
+
+  if (nextBubble-- > 0) return;
+  nextBubble = 25;
+  for (var i = 0; i < totalGameObjects; i++) {
+    if (gameObjects[i].type != GameObjectType.Flower) continue;
+    final flower = gameObjects[i];
+    spawnParticleBubble(
+      x: flower.x,
+      y: flower.y,
+      z: flower.z,
+    );
+  }
+}
+
+void updateCrystals(){
   if (nextCrystalEmission++ < 15) return;
   nextCrystalEmission = 0;
   for (var i = 0; i < totalGameObjects; i++) {
