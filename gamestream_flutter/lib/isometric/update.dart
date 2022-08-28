@@ -32,16 +32,25 @@ void updateIsometric(){
   gridWindResetToAmbient();
   applyObjectsToWind();
   updateZombieGrowls();
+  updateMouseBubbleSpawn();
+  updateCharacters();
+}
 
-  if (nextBubbleSpawn-- <= 0){
-    nextBubbleSpawn = 30;
-    spawnParticleBubble(x: mouseGridX, y: mouseGridY, z: player.z);
+void updateMouseBubbleSpawn() {
+  if (nextBubbleSpawn-- > 0) return;
+  nextBubbleSpawn = 30;
+  spawnParticleBubble(x: mouseGridX, y: mouseGridY, z: player.z);
+}
+
+var _characterBubbleSpawn = 0;
+
+void updateCharacters() {
+  if (_characterBubbleSpawn-- > 0) return;
+  _characterBubbleSpawn = 60;
+  for (var i = 0; i < totalCharacters; i++){
+    final character = characters[i];
+    spawnParticleBubble(x: character.x, y: character.y, z: character.z + 24);
   }
-  // for (var i = 0; i < totalCharacters; i++){
-  //   if (!characters[i].running) continue;
-  //   final character = characters[i];
-  //   spawnParticleBubble(x: character.x, y: character.y, z: character.z);
-  // }
 }
 
 var nextBubbleSpawn = 0;

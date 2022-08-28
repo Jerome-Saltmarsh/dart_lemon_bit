@@ -38,6 +38,12 @@ class GameObjectType {
     Tavern_Sign,
   ];
 
+  static bool emitsBubbles(int type){
+    if (type == Jellyfish) return true;
+    if (type == Flower) return true;
+    return false;
+  }
+
   static bool isStatic(int type){
     return staticValues.contains(type);
   }

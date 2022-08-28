@@ -29,19 +29,14 @@ var nextBubble = 0;
 
 void updateGameObjects() {
   // updateCrystals();
-
   if (nextBubble-- > 0) return;
-  nextBubble = 25;
+  nextBubble = 50;
   for (var i = 0; i < totalGameObjects; i++) {
-    if (gameObjects[i].type != GameObjectType.Flower) continue;
-    final flower = gameObjects[i];
-    spawnParticleBubble(
-      x: flower.x,
-      y: flower.y,
-      z: flower.z,
-    );
+    if (!GameObjectType.emitsBubbles(gameObjects[i].type)) continue;
+    spawnParticleBubbleV3(gameObjects[i]);
   }
 }
+
 
 void updateCrystals(){
   if (nextCrystalEmission++ < 15) return;

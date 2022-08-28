@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/isometric/update.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
+import 'classes/vector3.dart';
 import 'effects.dart';
 
 final particles = <Particle>[];
@@ -628,6 +629,18 @@ void spawnParticleOrbShard({
     scale: scale,
   );
 }
+
+void spawnParticleBubbleV3(Vector3 value, {
+  int duration = 100,
+  double scale = 1.0
+}) =>
+  spawnParticleBubble(
+      x: value.x,
+      y: value.y,
+      z: value.z,
+      duration: duration,
+      scale: scale,
+  );
 
 void spawnParticleBubble({
   required double x,
