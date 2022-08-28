@@ -28,6 +28,7 @@ import 'package:lemon_watch/watch.dart';
 
 import '../classes/particle.dart';
 import '../grid.dart';
+import '../lighting/apply_emissions_gameobjects.dart';
 import 'render_character_template.dart';
 import 'render_particle.dart';
 
@@ -130,6 +131,13 @@ class RenderOrderGameObjects extends RenderOrder {
     gameObject = gameObjects[_index];
     order = gameObject.renderOrder;
     orderZ = gameObject.indexZ;
+  }
+
+
+  @override
+  void reset() {
+    applyEmissionGameObjects();
+    super.reset();
   }
 }
 

@@ -28,7 +28,7 @@ var nextCrystalEmission = 0;
 var nextBubble = 0;
 
 void updateGameObjects() {
-  updateCrystals();
+  // updateCrystals();
 
   if (nextBubble-- > 0) return;
   nextBubble = 25;

@@ -238,13 +238,6 @@ class GameObjectJellyfish extends GameObjectAnimal implements Updatable {
 
   @override
   void update(Game game){
-    const timeHourSix = 6 * secondsPerHour;
-    const timeHourSeventeen = 17 * secondsPerHour;
-    if (game.getTime() < timeHourSix || game.getTime() > timeHourSeventeen){
-      state = CharacterState.Sitting;
-      return;
-    }
-
     if (pause > 0) {
       pause--;
       if (pause <= 0){
