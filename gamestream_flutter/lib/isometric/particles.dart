@@ -753,7 +753,7 @@ void spawnParticleFire({
     angle: 0,
     rotation: 0,
     speed: 0,
-    scaleV: 0,
+    scaleV: 0.01,
     weight: -1,
     duration: duration,
     scale: scale,
