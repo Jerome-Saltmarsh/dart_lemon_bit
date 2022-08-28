@@ -5,9 +5,10 @@ class SpawnType {
   static const Butterfly = 2;
   static const Rat = 3;
   static const Jellyfish = 4;
+  static const Jellyfish_Red = 5;
 
   static int getValue(int index){
-    const max = Jellyfish;
+    const max = Jellyfish_Red;
     if (index < 0) return Zombie;
     if (index > max) return max;
     return index;
@@ -20,6 +21,7 @@ class SpawnType {
       Butterfly: "Butterfly",
       Rat: "Rat",
       Jellyfish: "Jellyfish",
+      Jellyfish_Red: "Jellyfish Red",
     } [type] ?? "Unknown ($type)";
   }
 }

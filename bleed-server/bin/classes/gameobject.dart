@@ -266,3 +266,55 @@ class GameObjectJellyfish extends GameObjectAnimal implements Updatable {
   @override
   int get type => GameObjectType.Jellyfish;
 }
+
+class GameObjectJellyfishRed extends GameObjectAnimal implements Updatable {
+
+  var pause = 0;
+  var state = CharacterState.Idle;
+
+  GameObjectJellyfishRed({
+    required double x,
+    required double y,
+    required double z,
+  }) : super(x: x, y: y, z: z) {
+    speed = 1.0;
+  }
+
+  @override
+  void write(Player player) {
+    player.writeByte(ServerResponse.GameObject_Jellyfish_Red);
+    player.writePosition3(this);
+    player.writeByte(state);
+    player.writeByte(direction);
+  }
+
+  @override
+  void update(Game game){
+    if (pause > 0) {
+      pause--;
+      if (pause <= 0){
+        if (randomBool()){
+          state = CharacterState.Performing;
+          pause = 100;
+        } else {
+          assignNewTarget();
+          angle = this.getAngle(target);
+        }
+      }
+      return;
+    }
+
+    if (distanceFromPos3(target) < 5){
+      state = CharacterState.Idle;
+      pause = 100;
+      return;
+    }
+    state = CharacterState.Running;
+    angle = this.getAngle(target);
+    x += xv;
+    y += yv;
+  }
+
+  @override
+  int get type => GameObjectType.Jellyfish_Red;
+}

@@ -18,6 +18,7 @@ class GameObjectType {
   static const Spawn = 17;
   static const Tavern_Sign = 18;
   static const Jellyfish = 19;
+  static const Jellyfish_Red = 20;
 
   static const staticValues = [
     Flower,
@@ -37,9 +38,16 @@ class GameObjectType {
     Spawn,
     Tavern_Sign,
   ];
+  
+  static bool emitsLightBright(int type){
+    if (type == Jellyfish) return true;
+    if (type == Jellyfish_Red) return true;
+    return false;
+  }
 
   static bool emitsBubbles(int type){
     if (type == Jellyfish) return true;
+    if (type == Jellyfish_Red) return true;
     if (type == Flower) return true;
     return false;
   }
@@ -69,6 +77,7 @@ class GameObjectType {
        Spawn: "Spawn",
        Tavern_Sign: "Tavern Sign",
        Jellyfish: "Jelly Fish",
+       Jellyfish_Red: "Jelly Fish Red",
     }[value] ?? "?";
   }
 }

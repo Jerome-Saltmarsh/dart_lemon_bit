@@ -103,6 +103,9 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.GameObject_Jellyfish:
           readGameObjectJellyfish();
           break;
+        case ServerResponse.GameObject_Jellyfish_Red:
+          readGameObjectJellyfishRed();
+          break;
         case ServerResponse.End:
           return readEnd();
         case ServerResponse.Items:
@@ -247,6 +250,15 @@ class ServerResponseReader with ByteReader {
   void readGameObjectJellyfish(){
     final gameObject = getInstanceGameObject();
     gameObject.type = GameObjectType.Jellyfish;
+    readVector3(gameObject);
+    gameObject.state = readByte();
+    gameObject.direction = readByte();
+    totalGameObjects++;
+  }
+
+  void readGameObjectJellyfishRed(){
+    final gameObject = getInstanceGameObject();
+    gameObject.type = GameObjectType.Jellyfish_Red;
     readVector3(gameObject);
     gameObject.state = readByte();
     gameObject.direction = readByte();

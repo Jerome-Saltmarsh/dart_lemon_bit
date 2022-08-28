@@ -138,6 +138,9 @@ void renderGameObject(GameObject value) {
   if (value.type == GameObjectType.Jellyfish)
     return renderGameObjectJellyfish(value);
 
+  if (value.type == GameObjectType.Jellyfish_Red)
+    return renderGameObjectJellyfishRed(value);
+
   if (value.type == GameObjectType.Wooden_Shelf_Row)
     return render(
         dstX: value.renderX,
@@ -238,6 +241,19 @@ void renderGameObjectJellyfish(GameObject value) {
     dstX: value.renderX,
     dstY: value.renderY,
     srcX: 2745,
+    srcY: animationFrameJellyFish * 48.0,
+    srcWidth: 32,
+    srcHeight: 48,
+    scale: 1,
+    color: value.renderColor,
+  );
+}
+
+void renderGameObjectJellyfishRed(GameObject value) {
+  render(
+    dstX: value.renderX,
+    dstY: value.renderY,
+    srcX: 2801,
     srcY: animationFrameJellyFish * 48.0,
     srcWidth: 32,
     srcHeight: 48,

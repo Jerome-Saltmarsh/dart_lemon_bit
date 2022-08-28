@@ -61,6 +61,14 @@ class GameDarkAge extends Game {
         gameObjects.add(instance);
         spawn.instance = instance;
         break;
+      case SpawnType.Jellyfish_Red:
+        final instance = GameObjectJellyfishRed(
+            x: spawn.x,
+            y: spawn.y,
+            z: spawn.z);
+        gameObjects.add(instance);
+        spawn.instance = instance;
+        break;
       case SpawnType.Rat:
         final instance = Rat(
             z: spawn.indexZ,

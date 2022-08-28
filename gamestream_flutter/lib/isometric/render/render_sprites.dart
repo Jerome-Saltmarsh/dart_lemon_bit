@@ -133,7 +133,6 @@ class RenderOrderGameObjects extends RenderOrder {
     orderZ = gameObject.indexZ;
   }
 
-
   @override
   void reset() {
     applyEmissionGameObjects();
