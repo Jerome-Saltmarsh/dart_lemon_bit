@@ -65,14 +65,17 @@ void renderParticle(Particle value) {
       );
 
     case ParticleType.Bubble:
+      const size = 4.0;
       return render(
           dstX: value.renderX,
           dstY: value.renderY,
-          srcX: 6862.0,
+          srcX: 6856.0,
+          // srcX: 6847.0,
+          srcY: 0,
           // srcX: 6829.0,
-          srcY: 32.0 *  (value.frame % 6),
-          srcWidth: 32,
-          srcHeight: 32,
+          // srcY: size *  (value.frame % 6),
+          srcWidth: size,
+          srcHeight: size,
           color: value.renderColor
       );
 
