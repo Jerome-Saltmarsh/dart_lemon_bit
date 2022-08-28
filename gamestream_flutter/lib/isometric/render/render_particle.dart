@@ -1,13 +1,9 @@
-import 'dart:math';
-
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 import 'package:lemon_math/library.dart';
-
-import 'render_pixel.dart';
 
 void renderParticle(Particle value) {
   switch (value.type) {
@@ -21,6 +17,18 @@ void renderParticle(Particle value) {
           srcHeight: 50,
           scale: value.scale,
           color: value.renderColor,
+      );
+    case ParticleType.Fire:
+      if (value.frame > 6) return;
+      return render(
+        dstX: value.renderX,
+        dstY: value.renderY,
+        srcX: 4432,
+        srcY: 32.0 * value.frame,
+        srcWidth: 32,
+        srcHeight: 32,
+        scale: value.scale,
+        // color: value.renderColor,
       );
     case ParticleType.Blood:
       return render(

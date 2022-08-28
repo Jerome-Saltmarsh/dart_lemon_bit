@@ -455,22 +455,19 @@ void spawnParticleShrapnel({
   );
 }
 
-
 void spawnParticleFlame({
   required double x,
   required double y,
   required double z,
-  required double zv,
-  required double angle,
-  required double speed
 }) {
+  print("spawnParticleFlame()");
   spawnParticle(
       type: ParticleType.Flame,
       x: x,
       y: y,
       z: z,
-      angle: angle,
-      speed: speed,
+      angle: 0,
+      speed: 0,
       zv: 0.015,
       weight: 0.0,
       duration: 120,
@@ -592,7 +589,6 @@ void spawnExplosion(double x, double y) {
   for (var i = 0; i < shrapnelCount; i++) {
     spawnParticleShrapnel(x: x, y: y, z: 0.3, zv: 1 + giveOrTake(0.25), angle: randomAngle(), speed: 1 + giveOrTake(0.25));
     spawnParticleSmoke(x: x, y: y, z: 0, zv: 0, angle: randomAngle(), speed: 0.5);
-    spawnParticleFlame(x: x, y: y, z: 0, zv: 0, angle: randomAngle(), speed: 0.5);
   }
   for (var i = 0; i < shrapnelCount; i++) {
     spawnParticleFireYellow(x: x, y: y, z: 0.3, zv: 1 + giveOrTake(0.25), angle: randomAngle(), speed: 1 + giveOrTake(0.25));
@@ -741,3 +737,25 @@ Particle getParticleInstance() {
   return particle;
 }
 
+void spawnParticleFire({
+  required double x,
+  required double y,
+  required double z,
+  int duration = 100,
+  double scale = 1.0
+}) {
+  spawnParticle(
+    type: ParticleType.Fire,
+    x: x,
+    y: y,
+    z: z,
+    zv: 1,
+    angle: 0,
+    rotation: 0,
+    speed: 0,
+    scaleV: 0,
+    weight: -1,
+    duration: duration,
+    scale: scale,
+  );
+}

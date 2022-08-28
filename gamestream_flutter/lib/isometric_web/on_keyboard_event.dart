@@ -40,8 +40,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
   if (key == PhysicalKeyboardKey.keyX)
     return edit.paintMouse();
   if (key == PhysicalKeyboardKey.keyZ)
-    return spawnParticleBubble(x: mouseGridX, y: mouseGridY, z: player.z);
-
+    return spawnParticleFire(x: mouseGridX, y: mouseGridY, z: player.z);
   if (modeIsPlay) {
     if (key == PhysicalKeyboardKey.keyG)
       return sendClientRequestTeleport();
