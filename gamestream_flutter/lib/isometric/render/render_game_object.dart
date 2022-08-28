@@ -102,8 +102,8 @@ void renderGameObject(GameObject value) {
     return render(
       dstX: value.renderX,
       dstY: value.renderY,
-      srcX: 1712,
-      srcY: 0,
+      srcX: 2778,
+      srcY: animationFrameJellyFish * 46.0,
       srcWidth: 22,
       srcHeight: 45,
       anchorY: 0.66
