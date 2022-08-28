@@ -21,6 +21,9 @@ const treeStrength = 0.5;
 const treeAnimation = [0, 1, 2, 1, 0, -1, -2, -1];
 final treeAnimationLength = treeAnimation.length;
 
+var animationFrameJellyFish = 0;
+var animationFrameRateJellyFish = 0;
+
 void updateAnimationFrame(){
   final frame = engine.frame;
   animationFrame = frame ~/ 15;
@@ -30,6 +33,11 @@ void updateAnimationFrame(){
   animationFrameRain = (frame ~/ 4) % 6;
   animationFrameGrass = animationFrame % 6;
   frameChicken = animationFrame % 2;
+
+  if (animationFrameRateJellyFish-- <= 0) {
+     animationFrameRateJellyFish = 5;
+     animationFrameJellyFish = (animationFrameJellyFish + 1) % 6;
+  }
   // if (windAmbient.value == Wind.Calm){
   //   animationFrameGrass = 0;
   //   animationFrameGrassShort = 0;
