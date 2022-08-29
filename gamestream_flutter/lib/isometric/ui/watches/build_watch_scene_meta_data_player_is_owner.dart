@@ -42,7 +42,7 @@ Stack buildStackEdit() {
       ),
       Positioned(
         left: 200,
-        top: 100,
+        top: 56,
         child: buildColumnSelectedNode(),
       ),
       Positioned(
@@ -53,7 +53,7 @@ Stack buildStackEdit() {
       Positioned(
         left: 0,
         top: 0,
-        child: buildTopLeftMenu(),
+        child: buildEditorMenu(),
       ),
     ],
   );
@@ -357,7 +357,7 @@ Column buildControlPaint() {
 Widget buildPaintType(int type) =>
   container(child: NodeType.getName(type));
 
-Row buildTopLeftMenu() {
+Row buildEditorMenu() {
   return Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
