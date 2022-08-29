@@ -19,7 +19,7 @@ void renderParticle(Particle value) {
           color: value.renderColor,
       );
     case ParticleType.Fire:
-      if (value.frame > 7 ) return;
+      if (value.frame > 8 ) return;
       return render(
         dstX: value.renderX,
         dstY: value.renderY,
