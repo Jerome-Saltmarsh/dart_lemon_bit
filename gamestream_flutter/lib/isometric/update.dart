@@ -57,7 +57,7 @@ var nextBubbleSpawn = 0;
 var particleAnimation = 0;
 
 void updateParticleFrames() {
-  if (particleAnimation++ < 3) return;
+  // if (particleAnimation++ < 3) return;
   particleAnimation = 0;
   for (var i = 0; i < particles.length; i++){
     particles[i].updateFrame();

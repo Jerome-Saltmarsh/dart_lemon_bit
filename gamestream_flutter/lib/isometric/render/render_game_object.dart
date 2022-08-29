@@ -124,11 +124,11 @@ void renderGameObject(GameObject value) {
     return render(
       dstX: value.renderX,
       dstY: value.renderY,
-      srcX: (animationFrame8 % 2) * 64 + (value.direction * 2 * 64),
-      srcY: 718,
-      srcWidth: 64,
-      srcHeight: 64,
-      scale: 0.25,
+      srcX: 1984,
+      srcY: (animationFrame8 % 2) * 23 + (value.direction * 2 * 23),
+      srcWidth: 30,
+      srcHeight: 23,
+      scale: 0.5,
       color: value.renderColor,
     );
 
