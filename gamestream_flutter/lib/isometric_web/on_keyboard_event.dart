@@ -1,4 +1,5 @@
 
+import 'package:lemon_math/library.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
 import 'package:gamestream_flutter/isometric/actions/action_toggle_inventory.dart';
@@ -39,8 +40,13 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     return editor.actions.raise();
   if (key == PhysicalKeyboardKey.keyX)
     return edit.paintMouse();
-  if (key == PhysicalKeyboardKey.keyZ)
+  if (key == PhysicalKeyboardKey.keyZ){
+    // for (var i = 0; i < 10; i++) {
+    //   spawnParticleBubble(x: mouseGridX, y: mouseGridY, z: player.z, speed: 1, angle: randomAngle());
+    // }
     return spawnParticleFire(x: mouseGridX, y: mouseGridY, z: player.z);
+  }
+
   if (modeIsPlay) {
     if (key == PhysicalKeyboardKey.keyG)
       return sendClientRequestTeleport();

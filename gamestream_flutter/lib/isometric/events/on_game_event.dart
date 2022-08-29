@@ -264,5 +264,12 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
 
     case GameEventType.Projectile_Fired_Fireball:
       return audioSingleFireball.playXYZ(x, y, z);
+
+    case GameEventType.Character_Death:
+      for (var i = 0; i < 15; i++) {
+        spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: randomAngle());
+      }
+      break;
   }
+
 }

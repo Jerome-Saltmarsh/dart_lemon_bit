@@ -49,4 +49,5 @@ class GameEventType {
   static const Spawn_Dust_Cloud = 59;
   static const Player_Spawned = 60;
   static const Player_Spawn_Started = 61;
+  static const Character_Death = 62;
 }

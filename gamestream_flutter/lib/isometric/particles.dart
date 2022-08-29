@@ -643,16 +643,18 @@ void spawnParticleBubble({
   required double y,
   required double z,
   int duration = 100,
-  double scale = 1.0
+  double scale = 1.0,
+  double angle = 0,
+  double speed = 0,
 }) {
   spawnParticle(
     type: ParticleType.Bubble,
     x: x,
     y: y,
     z: z,
-    angle: 0,
+    angle: angle,
     rotation: 0,
-    speed: 0,
+    speed: speed,
     scaleV: 0,
     weight: -0.5,
     duration: duration,

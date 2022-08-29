@@ -256,41 +256,43 @@ extension GameFunctions on Game {
     final damage = min(amount, target.health);
     target.health -= damage;
 
-    // if (src is Player && target is Position) {
-    //   src.writeDamageApplied(target as Position, damage);
-    // }
+    const forceMultiplier = 3.0;
+    target.accelerate(
+        radiansV2(src, target), damage / target.maxHealth * forceMultiplier);
 
-      const forceMultiplier = 3.0;
-      target.accelerate(radiansV2(src, target), damage / target.maxHealth * forceMultiplier);
+    switch (target.material) {
+      case MaterialType.Rock:
+        dispatchV3(GameEventType.Material_Struck_Rock, target);
+        break;
+      case MaterialType.Wood:
+        dispatchV3(GameEventType.Material_Struck_Wood, target);
+        break;
+      case MaterialType.Plant:
+        dispatchV3(GameEventType.Material_Struck_Plant, target);
+        break;
+      case MaterialType.Flesh:
+        dispatchV3(GameEventType.Material_Struck_Flesh, target,
+            angle: radiansV2(src, target));
+        break;
+      case MaterialType.Metal:
+        dispatchV3(GameEventType.Material_Struck_Metal, target);
+        break;
+    }
 
-    final destroyed = target.dead;
-
-      switch (target.material) {
-        case MaterialType.Rock:
-          dispatchV3(GameEventType.Material_Struck_Rock, target);
-          break;
-        case MaterialType.Wood:
-          dispatchV3(GameEventType.Material_Struck_Wood, target);
-          break;
-        case MaterialType.Plant:
-          dispatchV3(GameEventType.Material_Struck_Plant, target);
-          break;
-        case MaterialType.Flesh:
-          dispatchV3(GameEventType.Material_Struck_Flesh,
-              target, angle: radiansV2(src, target));
-          break;
-        case MaterialType.Metal:
-          dispatchV3(GameEventType.Material_Struck_Metal, target);
-          break;
-      }
-
-
-    if (destroyed) {
+    if (target.dead) {
       target.collidable = false;
 
-      if (target.dead && target is Zombie) {
+      if (target is Zombie) {
         dispatchV3(
           GameEventType.Zombie_Killed,
+          target,
+          angle: radiansV2(src, target),
+        );
+      }
+
+      if (target is Rat) {
+        dispatchV3(
+          GameEventType.Character_Death,
           target,
           angle: radiansV2(src, target),
         );
@@ -311,31 +313,31 @@ extension GameFunctions on Game {
       onDamaged(target, src, damage);
     }
 
-      final isZombie = target is Zombie;
+    final isZombie = target is Zombie;
 
-      if (destroyed) {
-        setCharacterStateDead(target);
+    if (target.dead) {
+      setCharacterStateDead(target);
+      return;
+    }
+    if (isZombie && randomBool()) {
+      dispatchV3(
+        GameEventType.Zombie_Hurt,
+        target,
+      );
+      target.setCharacterStateHurt();
+    }
+    if (target is AI) {
+      final targetAITarget = target.target;
+      if (targetAITarget == null) {
+        target.target = src;
         return;
       }
-      if (isZombie && randomBool()) {
-        dispatchV3(
-          GameEventType.Zombie_Hurt,
-          target,
-        );
-        target.setCharacterStateHurt();
+      final aiTargetDistance = distanceV2(target, targetAITarget);
+      final srcTargetDistance = distanceV2(src, target);
+      if (srcTargetDistance < aiTargetDistance) {
+        target.target = src;
       }
-      if (target is AI) {
-        final targetAITarget = target.target;
-        if (targetAITarget == null) {
-          target.target = src;
-          return;
-        }
-        final aiTargetDistance = distanceV2(target, targetAITarget);
-        final srcTargetDistance = distanceV2(src, target);
-        if (srcTargetDistance < aiTargetDistance) {
-          target.target = src;
-        }
-      }
+    }
   }
 
   void _updatePlayersAndNpcs() {

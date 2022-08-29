@@ -10,6 +10,19 @@ void renderCharacter(Character character){
   if (!character.tile.visible) return;
 
   if (character.spawning) {
+
+    if (character.type == CharacterType.Rat){
+      return render(
+        srcX: 1920,
+        srcY: (character.frame % 8) * 43.0,
+        dstX: character.renderX,
+        dstY: character.renderY,
+        srcWidth: 64,
+        srcHeight: 43,
+        scale: 0.75,
+      );
+    }
+
     return render(
         srcX: 2016,
         srcY: (character.frame % 8) * 73.0,
