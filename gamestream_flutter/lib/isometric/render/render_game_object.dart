@@ -135,6 +135,18 @@ void renderGameObject(GameObject value) {
   if (value.type == GameObjectType.Chicken)
     return renderGameObjectChicken(value);
 
+  if (value.type == GameObjectType.Lantern_Red)
+    return render(
+      dstX: value.renderX,
+      dstY: value.renderY,
+      srcX: 1744,
+      srcY: 48,
+      srcWidth: 12,
+      srcHeight: 22,
+      scale: 1.0,
+      color: value.renderColor,
+    );
+
   if (value.type == GameObjectType.Jellyfish)
     return renderGameObjectJellyfish(value);
 
