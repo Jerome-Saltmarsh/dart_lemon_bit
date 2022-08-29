@@ -9,7 +9,7 @@ import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 
 Widget buildColumnSelectedNode(){
   return Container(
-    width: 100,
+    width: 130,
     padding: EdgeInsets.all(6),
     color: brownDark,
     child: Column(
@@ -23,26 +23,26 @@ Widget buildColumnSelectedNode(){
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            text("-", onPressed: () => edit.row.value--),
+            text("<", onPressed: () => edit.row.value--),
             watch(edit.row, (int row) => text("X: $row")),
-            text("+", onPressed: () => edit.row.value++),
+            text(">", onPressed: () => edit.row.value++),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            text("-", onPressed: () => edit.column.value--),
+            text("<", onPressed: () => edit.column.value--),
             watch(edit.column, (int column) => text("Y: $column")),
-            text("+", onPressed: () => edit.column.value++),
+            text(">", onPressed: () => edit.column.value++),
           ],
 
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            text("-", onPressed: () => edit.z.value--),
+            text("<", onPressed: () => edit.z.value--),
             watch(edit.z, (int z) => text("Z: $z")),
-            text("+", onPressed: () => edit.z.value++),
+            text(">", onPressed: () => edit.z.value++),
           ],
         ),
       ],
