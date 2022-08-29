@@ -404,9 +404,17 @@ class Connection {
         break;
 
       case ClientRequest.Editor_Load_Scene:
+        if (arguments.length < 3) {
+          errorInvalidArg('3 args expected');
+        }
+
         final sceneString = arguments[2];
-        final scene = convertStringToScene(sceneString, "editor");
-        joinGameEditorScene(scene);
+        try {
+          final scene = convertStringToScene(sceneString, "editor");
+          joinGameEditorScene(scene);
+        } catch (error){
+          errorInvalidArg('Failed to load scene');
+        }
         break;
 
       case ClientRequest.Editor_Load_Game:

@@ -12,11 +12,11 @@ Widget buildGameDialogSceneSave(){
       TextField(
         autofocus: true,
         onSubmitted: (value){
-          editorSaveScene();
+          requestSaveScene();
         },
         onChanged: playerEnteredSceneName,
       ),
-      container(child: "Save", action: editorSaveScene),
+      container(child: "Save", action: requestSaveScene),
     ],
   );
 }

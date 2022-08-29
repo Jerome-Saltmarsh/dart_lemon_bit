@@ -19,6 +19,7 @@ import 'package:gamestream_flutter/isometric/floating_texts.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/io/custom_game_names.dart';
+import 'package:gamestream_flutter/isometric/lighting/apply_vector_emission.dart';
 import 'package:gamestream_flutter/isometric/npcs.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';

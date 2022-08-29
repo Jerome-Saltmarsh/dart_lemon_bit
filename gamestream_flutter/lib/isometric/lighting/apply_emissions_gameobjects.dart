@@ -9,6 +9,6 @@ import 'apply_vector_emission.dart';
 void applyEmissionGameObjects() {
    for (var i = 0; i < totalGameObjects; i++){
       if (!GameObjectType.emitsLightBright(gameObjects[i].type)) continue;
-      return applyVector3Emission(gameObjects[i], maxBrightness: Shade.Very_Bright);
+      applyVector3Emission(gameObjects[i], maxBrightness: Shade.Very_Bright);
    }
 }

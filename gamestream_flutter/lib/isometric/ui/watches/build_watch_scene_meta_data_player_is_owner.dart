@@ -365,7 +365,7 @@ Row buildTopLeftMenu() {
                           core.actions.exitGame();
                           connectToGameEditor();
                         }, hoverColor: brownDark),
-                        container(child: "Save", color: brownLight, action: editorSaveScene, hoverColor: brownDark),
+                        container(child: "Save", color: brownLight, action: requestSaveScene, hoverColor: brownDark),
                         container(child: "Load", color: brownLight, action: editorLoadScene, hoverColor: brownDark),
                         container(child: "Exit", color: brownLight, action: core.actions.exitGame, hoverColor: brownDark),
                       ],
