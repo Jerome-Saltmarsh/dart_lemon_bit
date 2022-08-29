@@ -219,18 +219,14 @@ void spawnParticleDustCloud({
     z: z,
     zv: 0,
     angle: 0,
-    speed: 1,
-    weight: 0,
+    speed: 0,
+    weight: -0.25,
     duration: 300,
     rotation: 0,
-    rotationV: 0.1,
-    scale: 0.25,
-    scaleV: 0,
     bounciness: 0,
     castShadow: false,
   );
 }
-
 
 void spawnParticleLeaf({
   required double x,

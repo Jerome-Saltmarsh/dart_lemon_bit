@@ -23,13 +23,11 @@ void renderParticle(Particle value) {
       return render(
         dstX: value.renderX,
         dstY: value.renderY,
-        // srcX: 4432,
         srcX: 4464,
         srcY: 32.0 * value.frame,
         srcWidth: 32,
         srcHeight: 32,
         scale: value.scale,
-        // color: value.renderColor,
       );
     case ParticleType.Blood:
       return render(
@@ -79,10 +77,7 @@ void renderParticle(Particle value) {
           dstX: value.renderX,
           dstY: value.renderY,
           srcX: 6856.0,
-          // srcX: 6847.0,
           srcY: 0,
-          // srcX: 6829.0,
-          // srcY: size *  (value.frame % 6),
           srcWidth: size,
           srcHeight: size,
           color: value.renderColor
@@ -144,17 +139,18 @@ void renderParticle(Particle value) {
           srcHeight: 8,
           color: value.renderColor
       );
+
     case ParticleType.Dust:
-      return renderRotated(
+      if (value.frame >= 8 ) return;
+      const size = 32.0;
+      return render(
         dstX: value.renderX,
         dstY: value.renderY,
-        srcX: 6151,
-        srcY: 0,
-        srcWidth: 32,
-        srcHeight: 32,
-        scale: 1.0,
-        color: value.renderColor,
-        rotation: value.rotation
+        srcX: 2832,
+        srcY: value.frame * size,
+        srcWidth: size,
+        srcHeight: size,
+        scale: value.scale,
       );
 
     default:

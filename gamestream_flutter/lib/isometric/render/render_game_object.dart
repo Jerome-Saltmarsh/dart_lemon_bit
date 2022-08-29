@@ -103,10 +103,10 @@ void renderGameObject(GameObject value) {
       dstX: value.renderX,
       dstY: value.renderY,
       srcX: 2778,
-      srcY: animationFrameJellyFish * 46.0,
+      srcY: animationFrameJellyFish * 61.0,
       srcWidth: 22,
-      srcHeight: 45,
-      anchorY: 0.66
+      srcHeight: 60,
+      anchorY: 0.8
     );
 
   if (value.type == GameObjectType.Cup)
