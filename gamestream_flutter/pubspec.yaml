@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  file_picker: ^5.0.1
   just_audio: ^0.9.28
   url_strategy: ^0.2.0
   lemon_dispatch: 0.3.1

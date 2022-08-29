@@ -4,6 +4,7 @@ import 'package:bleed_common/spawn_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_show_game_dialog_canvas_size.dart';
+import 'package:gamestream_flutter/isometric/editor/actions/save_scene.dart';
 import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
@@ -364,8 +365,8 @@ Row buildTopLeftMenu() {
                           core.actions.exitGame();
                           connectToGameEditor();
                         }, hoverColor: brownDark),
-                        container(child: "Save", color: brownLight, action: actionGameDialogShowSceneSave, hoverColor: brownDark),
-                        container(child: "Load", color: brownLight, action: actionGameDialogShowSceneLoad, hoverColor: brownDark),
+                        container(child: "Save", color: brownLight, action: editorSaveScene, hoverColor: brownDark),
+                        container(child: "Load", color: brownLight, action: editorLoadScene, hoverColor: brownDark),
                         container(child: "Exit", color: brownLight, action: core.actions.exitGame, hoverColor: brownDark),
                       ],
                     );

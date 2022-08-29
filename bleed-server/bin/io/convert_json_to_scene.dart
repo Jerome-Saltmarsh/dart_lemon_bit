@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:typedef/json.dart';
 
 import '../classes/gameobject.dart';
@@ -9,6 +11,10 @@ import '../common/node_orientation.dart';
 import '../common/node_type.dart';
 import '../common/spawn_type.dart';
 import '../isometric/generate_node.dart';
+
+Scene convertStringToScene(String value, String name){
+  return convertJsonToScene(jsonDecode(value), name);
+}
 
 Scene convertJsonToScene(Json json, String name) {
   final height = json.getInt('grid-z');

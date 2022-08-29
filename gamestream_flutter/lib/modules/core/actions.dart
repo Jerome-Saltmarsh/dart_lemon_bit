@@ -149,12 +149,6 @@ class CoreActions {
     player.gameDialog.value = null;
     player.npcTalkOptions.value = [];
     player.npcTalk.value = null;
-
-    for (final bullet in serverResponseReader.bulletHoles) {
-      bullet.x = 0;
-      bullet.y = 0;
-    }
-
     engine.zoom = 1;
     engine.redrawCanvas();
   }

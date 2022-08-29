@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
@@ -16,8 +15,6 @@ import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
-import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
-import 'package:gamestream_flutter/isometric/render/render_character_zombie.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_game_object.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
@@ -29,7 +26,6 @@ import 'package:lemon_watch/watch.dart';
 import '../classes/particle.dart';
 import '../grid.dart';
 import '../lighting/apply_emissions_gameobjects.dart';
-import 'render_character_template.dart';
 import 'render_particle.dart';
 
 

@@ -7,21 +7,11 @@ import 'package:gamestream_flutter/network/send_client_request.dart';
 
 import 'state.dart';
 
-final _bulletHoles = serverResponseReader.bulletHoles;
-
 class GameActions {
 
   final GameState state;
 
   GameActions(this.state);
-
-  void spawnBulletHole(double x, double y){
-    final bulletHole = _bulletHoles[serverResponseReader.bulletHoleIndex];
-    bulletHole.x = x;
-    bulletHole.y = y;
-    serverResponseReader.bulletHoleIndex++;
-    serverResponseReader.bulletHoleIndex %= _bulletHoles.length;
-  }
 
   void playerEquip(int index) {
     print("game.actions.playerEquip(index: $index)");

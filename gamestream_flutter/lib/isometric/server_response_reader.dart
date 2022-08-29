@@ -7,7 +7,6 @@ import 'package:bleed_common/quest.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
-import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/collectables.dart';
@@ -59,8 +58,6 @@ var durationTotal = 0;
 var time = DateTime.now();
 
 class ServerResponseReader with ByteReader {
-  final gameObjects = <GameObject>[];
-  final bulletHoles = <Vector2>[];
   final npcDebug = <NpcDebug>[];
   var bulletHoleIndex = 0;
   var itemsTotal = 0;

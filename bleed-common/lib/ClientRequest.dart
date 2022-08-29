@@ -31,6 +31,7 @@ enum ClientRequest {
   Weather_Toggle_Time_Passing,
   Custom_Game_Names,
   Editor_Load_Game,
+  Save_Scene,
   Editor_Set_Scene_Name,
   Time_Set_Hour,
   Submit_Player_Design,
@@ -39,6 +40,7 @@ enum ClientRequest {
   Npc_Talk_Select_Option,
   GameObject,
   Node,
+  Editor_Load_Scene,
 }
 
 const clientRequests = ClientRequest.values;

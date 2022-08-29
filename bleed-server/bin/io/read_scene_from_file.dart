@@ -12,3 +12,4 @@ Future<Scene> readSceneFromFile(String sceneName) async {
   final json = jsonDecode(text);
   return convertJsonToScene(json, sceneName);
 }
+

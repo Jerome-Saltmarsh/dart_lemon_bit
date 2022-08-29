@@ -16,6 +16,8 @@ import '../dark_age/game_dark_age_editor.dart';
 import '../engine.dart';
 import '../functions/generateName.dart';
 import '../functions/withinRadius.dart';
+import '../io/convert_json_to_scene.dart';
+import '../io/convert_scene_to_json.dart';
 import '../io/save_directory.dart';
 import '../io/write_scene_to_file.dart';
 import '../isometric/generate_grid_z.dart';
@@ -395,6 +397,17 @@ class Connection {
               }
           });
           break;
+
+      case ClientRequest.Save_Scene:
+        final scene = convertSceneToString(player.scene);
+        reply('scene: $scene');
+        break;
+
+      case ClientRequest.Editor_Load_Scene:
+        final sceneString = arguments[2];
+        final scene = convertStringToScene(sceneString, "editor");
+        joinGameEditorScene(scene);
+        break;
 
       case ClientRequest.Editor_Load_Game:
           joinGameEditor(name: arguments[1]);
@@ -838,6 +851,10 @@ class Connection {
         ? await engine.findGameEditorNew()
         : await engine.findGameEditorByName(name);
     joinGame(game);
+  }
+
+  Future joinGameEditorScene(Scene scene) async {
+    joinGame(GameDarkAgeEditor(scene: scene));
   }
 
   void joinGame(Game game){
