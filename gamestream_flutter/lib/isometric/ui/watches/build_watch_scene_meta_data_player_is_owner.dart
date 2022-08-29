@@ -11,6 +11,7 @@ import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_button.dart';
+import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stacks_play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_tab.dart';
@@ -38,6 +39,11 @@ Stack buildStackEdit() {
         left: 0,
         bottom: 6,
         child: buildColumnEditNode(),
+      ),
+      Positioned(
+        left: 200,
+        top: 100,
+        child: buildColumnSelectedNode(),
       ),
       Positioned(
           bottom: 6,

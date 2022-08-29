@@ -276,6 +276,15 @@ Widget buildControlTime() {
   );
 }
 
+Widget buildIconNodeType(int value){
+  return buildCanvasImage(
+    srcX: mapNodeTypeToSrcX(value),
+    srcY: mapNodeTypeToSrcY(value),
+    srcWidth: mapNodeTypeToSrcWidth(value),
+    srcHeight: mapNodeTypeToSrcHeight(value),
+  );
+}
+
 Widget buildButtonSelectNodeType(int value) {
   final canvas = buildCanvasImage(
     srcX: mapNodeTypeToSrcX(value),
