@@ -1,3 +1,7 @@
+Chopping trees makes sense at the start of the game because its a safe way to earn money
+but late game it doesnt make sense.
+
+
 [TODO]
 [ ] Ability level determines effectiveness
 [x] Fix Fireball

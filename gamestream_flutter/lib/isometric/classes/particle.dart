@@ -39,7 +39,6 @@ class Particle extends Vector3 {
   void deactivate(){
     duration = -1;
     frame = 0;
-    onParticleDeactivated(this);
     if (type == ParticleType.Orb_Shard) {
       spawnParticleStarExploding(x: x, y: y, z: z);
     }
