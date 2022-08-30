@@ -713,13 +713,13 @@ class NodeGrass2 extends Node {
     if (orientation == NodeOrientation.Slope_Inner_North_West)
       return renderShadeManual(9994); // correct
     if (orientation == NodeOrientation.Slope_Outer_North_East)
-      return renderShadeManual(8536 );
+      return renderShadeManual(8440);
     if (orientation == NodeOrientation.Slope_Outer_South_East)
-      return renderShadeManual(8488);
-    if (orientation == NodeOrientation.Slope_Outer_South_West)
-      return renderShadeManual(8440 );
-    if (orientation == NodeOrientation.Slope_Outer_North_West)
       return renderShadeManual(8392);
+    if (orientation == NodeOrientation.Slope_Outer_South_West)
+      return renderShadeManual(8536 );
+    if (orientation == NodeOrientation.Slope_Outer_North_West)
+      return renderShadeManual(8488);
   }
 }
 

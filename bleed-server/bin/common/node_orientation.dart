@@ -91,14 +91,14 @@ class NodeOrientation {
          Half_East: "Half East",
          Half_South: "Half South",
          Half_West: "Half West",
-         Slope_Inner_North_East: "Slope Inner North East",
-         Slope_Inner_South_East: "Slope Inner South East",
-         Slope_Inner_South_West: "Slope Inner South West",
-         Slope_Inner_North_West: "Slope Inner North West",
-         Slope_Outer_North_East: "Slope Outer North East",
-         Slope_Outer_South_East: "Slope Outer East",
-         Slope_Outer_South_West: "Slope Outer West",
-         Slope_Outer_North_West: "Slope Outer West",
+         Slope_Inner_North_East: "Slope Inner North-East",
+         Slope_Inner_South_East: "Slope Inner South-East",
+         Slope_Inner_South_West: "Slope Inner South-West",
+         Slope_Inner_North_West: "Slope Inner North-West",
+         Slope_Outer_North_East: "Slope Outer North-East",
+         Slope_Outer_South_East: "Slope Outer South-East",
+         Slope_Outer_South_West: "Slope Outer South-West",
+         Slope_Outer_North_West: "Slope Outer North-West",
 
       }[value] ?? "unknown: $value";
    }
