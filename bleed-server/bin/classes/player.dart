@@ -428,6 +428,7 @@ extension PlayerProperties on Player {
   void writePlayerAttackTargetName(String name, double health){
     writeByte(ServerResponse.Player_Attack_Target_Name);
     writeString(name);
+    writeBool(onSameTeam(this, aimTarget));
     writePercentage(health);
   }
 

@@ -1,4 +1,3 @@
-
 import 'dart:math';
 
 import 'package:bleed_common/library.dart';
@@ -28,7 +27,6 @@ import 'state.dart';
 import 'style.dart';
 
 class GameRender {
-
   final GameQueries queries;
   final GameState state;
   final GameStyle style;
@@ -38,49 +36,47 @@ class GameRender {
   GameRender(this.state, this.style, this.queries);
 
   void renderForeground(Canvas canvas, Size size) {
-      engine.setPaintColorWhite();
-      _renderPlayerNames();
-      drawPlayerText();
-      // renderFloatingTexts();
+    engine.setPaintColorWhite();
+    _renderPlayerNames();
+    drawPlayerText();
+    // renderFloatingTexts();
   }
 
   void renderGame(Canvas canvas, Size size) {
     drawAbility();
     attackTargetCircle();
     renderSprites();
-
-    if (playModeEdit){
-      if (edit.gameObjectSelected.value){
-        renderCircleV3(edit.gameObject);
-      } else {
-        renderEditWireFrames();
-        renderMouseWireFrame();
-      }
-    }
-
-    final mouseTargetName = player.mouseTargetName.value;
-
-    if (mouseTargetName != null && mouseTargetName != "Zombie"){
-       renderText(text: mouseTargetName, x: player.attackTarget.renderX, y: player.attackTarget.renderY - 55);
-    }
-    // renderPixelRed(player.target.renderX, player.target.renderY);
-
-
+    renderEditMode();
+    renderMouseTargetName();
   }
 
-  void renderMouseWireFrame(){
+  void renderEditMode() {
+    if (!playModeEdit) return;
+    if (edit.gameObjectSelected.value)
+      return renderCircleV3(edit.gameObject);
+    renderEditWireFrames();
+    renderMouseWireFrame();
+  }
+
+  void renderMouseTargetName() {
+    if (!player.mouseTargetAllie.value) return;
+    final mouseTargetName = player.mouseTargetName.value;
+    if (mouseTargetName == null) return;
+    renderText(
+        text: mouseTargetName,
+        x: player.attackTarget.renderX,
+        y: player.attackTarget.renderY - 55);
+  }
+
+  void renderMouseWireFrame() {
     mouseRaycast(renderWireFrameBlue);
   }
 
   void renderEditWireFrames() {
-     for (var z = 0; z < edit.z.value; z++){
-       renderWireFrameBlue(z, edit.row.value, edit.column.value);
+    for (var z = 0; z < edit.z.value; z++) {
+      renderWireFrameBlue(z, edit.row.value, edit.column.value);
     }
-    renderWireFrameRed(
-        edit.row.value,
-        edit.column.value,
-        edit.z.value
-    );
+    renderWireFrameRed(edit.row.value, edit.column.value, edit.z.value);
   }
 
   void renderTeamColours() {
@@ -89,13 +85,9 @@ class GameRender {
     }
   }
 
-  void renderTeamColour(Character character){
-     engine.draw.circle(
-         character.x,
-         character.y,
-         10,
-         character.allie ? Colors.green : Colors.red
-     );
+  void renderTeamColour(Character character) {
+    engine.draw.circle(character.x, character.y, 10,
+        character.allie ? Colors.green : Colors.red);
   }
 
   void renderCollectables() {
@@ -128,11 +120,11 @@ class GameRender {
     // drawCircle36(x, y);
   }
 
-  void drawCircle36V2(Position vector2){
+  void drawCircle36V2(Position vector2) {
     drawCircle36(vector2.x, vector2.y);
   }
 
-  void drawCircle36(double x, double y){
+  void drawCircle36(double x, double y) {
     // engine.render(dstX: x, dstY: y, srcX: 2420, srcY: 57, srcSize: 37);
   }
 
@@ -140,23 +132,23 @@ class GameRender {
     if (player.deckActiveCardIndex.value == -1) return;
 
     engine.draw.drawCircleOutline(
-        sides: 24,
-        radius: player.deckActiveCardRange.value,
-        x: player.x,
-        y: player.y,
-        color: Colors.white,
+      sides: 24,
+      radius: player.deckActiveCardRange.value,
+      x: player.x,
+      y: player.y,
+      color: Colors.white,
     );
 
     engine.draw.drawCircleOutline(
-        sides: 24,
-        radius: player.deckActiveCardRadius.value,
-        x: player.abilityTarget.x,
-        y: player.abilityTarget.y,
-        color: Colors.white,
+      sides: 24,
+      radius: player.deckActiveCardRadius.value,
+      x: player.abilityTarget.x,
+      y: player.abilityTarget.y,
+      color: Colors.white,
     );
   }
 
-  void drawDebugNpcs(List<NpcDebug> values){
+  void drawDebugNpcs(List<NpcDebug> values) {
     engine.setPaintColor(Colors.yellow);
     for (final npc in values) {
       drawLine(npc.x, npc.y, npc.targetX, npc.targetY);
@@ -181,7 +173,7 @@ class GameRender {
     paint.strokeWidth = 4.0;
 
     var index = 0;
-    while(true){
+    while (true) {
       final length = paths[index];
       if (length == 250) break;
       index++;
@@ -189,7 +181,7 @@ class GameRender {
       index++;
       var aY = paths[index];
       index++;
-      for(var i = 1; i < length; i++){
+      for (var i = 1; i < length; i++) {
         final bX = paths[index];
         final bY = paths[index + 1];
         index += 2;
@@ -201,7 +193,7 @@ class GameRender {
 
     engine.setPaintColor(colours.yellow);
     final totalLines = targetsTotal * 4;
-    for (var i = 0; i < totalLines; i += 4){
+    for (var i = 0; i < totalLines; i += 4) {
       drawLine(targets[i], targets[i + 1], targets[i + 2], targets[i + 3]);
     }
   }
@@ -227,5 +219,4 @@ class GameRender {
       engine.renderText(human.text, left, y, style: state.playerTextStyle);
     }
   }
-
 }

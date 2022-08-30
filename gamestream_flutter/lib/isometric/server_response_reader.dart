@@ -147,6 +147,7 @@ class ServerResponseReader with ByteReader {
           break;
         case ServerResponse.Player_Attack_Target_Name:
           player.mouseTargetName.value = readString();
+          player.mouseTargetAllie.value = readBool();
           player.mouseTargetHealth.value = readPercentage();
           break;
         case ServerResponse.Player_Attack_Target_None:

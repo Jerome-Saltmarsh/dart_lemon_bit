@@ -33,6 +33,7 @@ class Player extends Vector3 {
   final abilityTarget = Vector3();
   final attackTarget = Vector3();
   final mouseTargetName = Watch<String?>(null);
+  final mouseTargetAllie = Watch<bool>(false);
   final mouseTargetHealth = Watch(0.0);
   final weaponDamage = Watch(0);
   final weaponType = Watch(WeaponType.Unarmed, onChanged: onChangedPlayerWeapon);
