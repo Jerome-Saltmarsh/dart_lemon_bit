@@ -14,6 +14,7 @@ class Zombie extends AI {
     required int health,
     required int damage,
     required Game game,
+    required int team,
     double wanderRadius = 100,
   }) : super(
       x: x,
@@ -23,6 +24,7 @@ class Zombie extends AI {
       weapon: Weapon(type: WeaponType.Unarmed, damage: damage),
       wanderRadius: wanderRadius,
       game: game,
+      team: team,
   );
 
   @override

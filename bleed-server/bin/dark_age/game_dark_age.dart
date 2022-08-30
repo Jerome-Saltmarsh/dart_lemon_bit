@@ -8,6 +8,7 @@ import '../classes/rat.dart';
 import '../classes/zombie.dart';
 import '../common/library.dart';
 import '../common/spawn_type.dart';
+import '../common/teams.dart';
 import '../engine.dart';
 import 'dark_age_environment.dart';
 
@@ -94,7 +95,8 @@ class GameDarkAge extends Game {
           z: spawn.z,
           health: 10,
           damage: 1,
-          game: this
+          game: this,
+          team: Teams.evil,
         );
         characters.add(instance);
         spawn.instance = instance;

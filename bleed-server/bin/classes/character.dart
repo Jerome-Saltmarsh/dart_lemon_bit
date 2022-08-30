@@ -2,6 +2,7 @@ import 'package:lemon_math/library.dart';
 
 import '../common/character_type.dart';
 import '../common/library.dart';
+import '../common/teams.dart';
 import '../functions/withinRadius.dart';
 import '../utilities.dart';
 import 'collider.dart';
@@ -73,8 +74,8 @@ abstract class Character extends Collider with Team, Velocity, Material {
     required int health,
     required this.game,
     required this.equippedWeapon,
+    required int team,
     double speed = 5.0,
-    int team = Teams.none,
     this.equippedArmour = ArmourType.tunicPadded,
     this.equippedHead = HeadType.None,
 

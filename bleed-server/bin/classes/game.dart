@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
+import '../common/teams.dart';
 import '../engine.dart';
 import '../functions.dart';
 import '../functions/withinRadius.dart';
@@ -825,6 +826,7 @@ extension GameFunctions on Game {
       health: 10,
       damage: 1,
       game: this,
+      team: Teams.neutral,
     );
     characters.add(zombie);
     return zombie;
@@ -1145,12 +1147,6 @@ double angle2(double adjacent, double opposite) {
 }
 
 class ZombieSpawnPointsEmptyException implements Exception {}
-
-class Teams {
-  static const none = 0;
-  static const west = 1;
-  static const east = 2;
-}
 
 int calculateDamage({
   required MaterialType targetMaterialType,
