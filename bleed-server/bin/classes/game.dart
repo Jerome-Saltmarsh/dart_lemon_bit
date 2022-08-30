@@ -511,7 +511,7 @@ extension GameFunctions on Game {
         return;
       }
 
-      if (target is Npc) {
+      if (target is Npc && onSameTeam(this, target)) {
         if (withinRadius(player, target, 100)){
           if (!target.deadOrBusy){
             target.face(player);

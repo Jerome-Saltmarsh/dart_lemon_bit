@@ -742,7 +742,7 @@ class Connection {
 
     if (player.deadOrBusy) return;
 
-    player.aimTarget = game.getClosestCollider(
+      player.aimTarget = game.getClosestCollider(
         player.mouseGridX,
         player.mouseGridY,
         player,
