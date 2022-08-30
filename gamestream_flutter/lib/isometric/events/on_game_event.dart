@@ -270,6 +270,10 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
         spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: randomAngle());
       }
       break;
+
+    case GameEventType.Sword_Slash:
+      spawnParticleSlash(x: x, y: y, z: z, angle: angle);
+      break;
   }
 
 }

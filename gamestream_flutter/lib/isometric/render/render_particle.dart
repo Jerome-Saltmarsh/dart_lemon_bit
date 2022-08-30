@@ -1,6 +1,5 @@
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
-import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 import 'package:lemon_math/library.dart';
@@ -147,6 +146,19 @@ void renderParticle(Particle value) {
         dstX: value.renderX,
         dstY: value.renderY,
         srcX: 2832,
+        srcY: value.frame * size,
+        srcWidth: size,
+        srcHeight: size,
+        scale: value.scale,
+      );
+
+    case ParticleType.Slash:
+      if (value.frame >= 6 ) return;
+      const size = 64.0;
+      return render(
+        dstX: value.renderX,
+        dstY: value.renderY,
+        srcX: 6080,
         srcY: value.frame * size,
         srcWidth: size,
         srcHeight: size,

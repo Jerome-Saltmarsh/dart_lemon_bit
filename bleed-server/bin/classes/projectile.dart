@@ -16,8 +16,6 @@ class Projectile extends Collider with Active, Velocity {
   late bool collideWithEnvironment = false;
 
 
-
-
   Projectile() : super(x: 0, y: 0, z: 0, radius: 5);
 
   bool get overRange {

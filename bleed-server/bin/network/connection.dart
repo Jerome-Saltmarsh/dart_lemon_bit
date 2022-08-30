@@ -762,7 +762,7 @@ class Connection {
         final aimTarget = player.aimTarget;
         player.target = aimTarget;
 
-        if (aimTarget is Npc){
+        if (aimTarget is Npc && onSameTeam(player, aimTarget)){
           if (withinRadius(player, aimTarget, 100)){
             if (!aimTarget.deadOrBusy){
               aimTarget.face(player);
@@ -777,6 +777,9 @@ class Connection {
         if (player.interactingWithNpc){
           return player.endInteraction();
         }
+        
+        player.dispatchGameEvent(GameEventType.Sword_Slash);
+
 
         if (ability == null) {
           if (aimTarget != null) {

@@ -50,4 +50,6 @@ class GameEventType {
   static const Player_Spawned = 60;
   static const Player_Spawn_Started = 61;
   static const Character_Death = 62;
+  static const Sword_Slash = 63;
+
 }

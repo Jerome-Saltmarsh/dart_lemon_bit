@@ -659,6 +659,31 @@ void spawnParticleBubble({
 }
 
 
+void spawnParticleSlash({
+  required double x,
+  required double y,
+  required double z,
+  int duration = 100,
+  double scale = 1.0,
+  double angle = 0,
+  double speed = 0,
+}) {
+  spawnParticle(
+    type: ParticleType.Slash,
+    x: x,
+    y: y,
+    z: z,
+    angle: angle,
+    rotation: 0,
+    speed: 0,
+    scaleV: 0,
+    weight: 0,
+    duration: duration,
+    scale: scale,
+  );
+}
+
+
 void spawnParticleStarExploding({
   required double x,
   required double y,

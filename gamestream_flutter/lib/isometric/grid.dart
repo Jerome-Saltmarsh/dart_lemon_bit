@@ -249,6 +249,8 @@ bool gridIsUnderSomething(int z, int row, int column){
 }
 
 bool gridIsPerceptible(int zIndex, int row, int column){
+  if (outOfBounds(zIndex, row, column)) return false;
+
   for (var z = zIndex + 1; z < gridTotalZ; z += 2){
     row++;
     column++;
