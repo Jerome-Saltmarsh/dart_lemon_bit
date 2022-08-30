@@ -11,13 +11,13 @@ class Npc extends AI {
 
   Npc({
       required this.name,
-      required this.onInteractedWith,
       required double x,
       required double y,
       required double z,
       required int health,
       required Weapon weapon,
       required Game game,
+      this.onInteractedWith,
       int team = 1,
       double wanderRadius = 0,
   })

@@ -99,6 +99,21 @@ class GameDarkAge extends Game {
         characters.add(instance);
         spawn.instance = instance;
         break;
+      case SpawnType.Template:
+        final instance = Npc(
+            game: this,
+            x: spawn.x,
+            y: spawn.y,
+            z: spawn.z,
+            health: 10,
+            weapon: Weapon(type: WeaponType.Bow, damage: 1),
+            team: 2,
+            wanderRadius: 100,
+            name: 'Bandit',
+        );
+        characters.add(instance);
+        spawn.instance = instance;
+        break;
       default:
         print("Warning: Unrecognized SpawnType ${spawn.spawnType}");
         break;

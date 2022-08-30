@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/isometric/nodes/render/render_atlas_standard_
 import 'package:gamestream_flutter/isometric/ui/maps/map_node_type_to_src.dart';
 
 /// remove objects from the render layer to reduce garbage collection
-void renderNode({
+void renderNodeAt({
   required int row,
   required int column,
   required int z,
@@ -14,6 +14,9 @@ void renderNode({
   assert (nodeIsInBound(z, row, column));
   final type = grid[z][row][column].type;
   if (type == NodeType.Empty) return;
+
+  final orientation = grid[z][row][column].orientation;
+
 
   if (type == NodeType.Boulder) {
      return renderAtlasStandardNode(
