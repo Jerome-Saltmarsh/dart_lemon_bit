@@ -38,42 +38,51 @@ class NodeType {
   static const Window = 67;
   static const Wooden_Plank = 68;
   static const Bau_Haus_2 = 69;
+  static const Boulder = 70;
 
-  static bool isSolid(int type){
-     return const [
+  static bool isOriented(int value) =>
+      value == Brick_2 ||
+      value == Wood_2 ||
+      value == Grass_2 ||
+      value == Plain ||
+      value == Window ||
+      value == Wooden_Plank ||
+      value == Bau_Haus_2 ||
+      value == Boulder ||
+      value == Cottage_Roof;
+
+  static bool isSolid(int type) =>
+     const [
         Brick_2,
         Wood_2,
         Grass_2,
         Plain,
         Wooden_Plank,
         Bau_Haus_2,
+        Boulder,
      ].contains(type);
-  }
 
-  static bool isSlopeSymmetric(int type){
-    return const [
+  static bool isSlopeSymmetric(int type) =>
+    const [
       Cottage_Roof,
       Wood_2,
       Grass_2,
       Brick_2,
     ].contains(type);
-  }
 
-  static bool isSlopeCornerInner(int type){
-    return const [
+  static bool isSlopeCornerInner(int type) =>
+    const [
       Cottage_Roof,
       Grass_2,
     ].contains(type);
-  }
 
-  static bool isSlopeCornerOuter(int type){
-    return const [
+  static bool isSlopeCornerOuter(int type) =>
+    const [
       Grass_2,
     ].contains(type);
-  }
 
-  static bool isHalf(int type){
-    return const [
+  static bool isHalf(int type) =>
+    const [
       Wood_2,
       Plain,
       Window,
@@ -81,20 +90,18 @@ class NodeType {
       Brick_2,
       Bau_Haus_2,
     ].contains(type);
-  }
 
-  static bool isCorner(int type){
-    return const [
+  static bool isCorner(int type) =>
+    const [
       Wood_2,
       Plain,
       Brick_2,
       Bau_Haus_2,
       Wooden_Plank,
     ].contains(type);
-  }
 
-  static String getName(int type){
-     return const {
+  static String getName(int type) =>
+     const {
        Empty:
           'Empty',
        Boundary:
@@ -163,23 +170,14 @@ class NodeType {
           "Window",
        Wooden_Plank:
           "Wooden Plank",
+       Boulder:
+           "Boulder",
 
      }[type] ?? "unknown($type)";
-  }
 
   static bool isRain(int value) =>
      value == Rain_Falling       ||
      value == Rain_Landing       ;
-
-  static bool isOriented(int value) =>
-     value == Brick_2             ||
-     value == Wood_2              ||
-     value == Grass_2             ||
-     value == Plain               ||
-     value == Window              ||
-     value == Wooden_Plank        ||
-     value == Bau_Haus_2          ||
-     value == Cottage_Roof        ;
 
   static int getDefaultOrientation(int value){
      if (isSolid(value))

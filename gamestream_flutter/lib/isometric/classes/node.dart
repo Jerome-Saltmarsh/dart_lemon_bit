@@ -67,16 +67,18 @@ abstract class Node {
 
   void handleRender();
 
+  /// Renders a custom shade
   void renderShadeManual(double srcX) {
     const spriteHeight = 72.0;
-    renderSrcXY(srcX, shade * spriteHeight);
+    renderStandardNode(srcX, shade * spriteHeight);
   }
 
+  /// Use this to render dynamically
   void renderShadeAuto(double x, [double y = 0]) {
-    renderSrcXY(x, y, color);
+    renderStandardNode(x, y, color);
   }
 
-  void renderSrcXY(double srcX, double srcY, [int color = 0]){
+  void renderStandardNode(double srcX, double srcY, [int color = 0]){
     const spriteWidth = 48.0;
     const spriteHeight = 72.0;
     const spriteWidthHalf = spriteWidth * 0.5;
@@ -173,9 +175,9 @@ class NodeEmpty extends Node {
   bool get isEmpty => true;
 }
 
-abstract class GridNodeColorRamp extends Node {
+abstract class NodeShadeManual extends Node {
 
-  GridNodeColorRamp({
+  NodeShadeManual({
     required int row,
     required int column,
     required int z,
@@ -187,9 +189,9 @@ abstract class GridNodeColorRamp extends Node {
   double get srcX;
 }
 
-abstract class GridNodeShaded extends Node {
+abstract class NodeShadeAuto extends Node {
 
-  GridNodeShaded({
+  NodeShadeAuto({
     required int row,
     required int column,
     required int z,
@@ -200,3 +202,11 @@ abstract class GridNodeShaded extends Node {
 
   double get srcX;
 }
+
+
+/// Use this to render dynamically
+void renderNodeShadeAuto(Node node, double x, [double y = 0]) {
+  node.renderStandardNode(x, y, node.color);
+}
+
+// remove Node.renderNode method,

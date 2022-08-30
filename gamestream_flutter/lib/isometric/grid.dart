@@ -39,6 +39,16 @@ bool outOfBounds(int z, int row, int column){
    return false;
 }
 
+bool nodeIsInBound(int z, int row, int column){
+  if (z < 0) return false;
+  if (z >= gridTotalZ) return false;
+  if (row < 0) return false;
+  if (row >= gridTotalRows) return false;
+  if (column < 0) return false;
+  if (column >= gridTotalColumns) return false;
+  return true;
+}
+
 Node getNodeXYZ(double x, double y, double z){
   final plain = z ~/ tileSizeHalf;
   if (plain < 0) return Node.boundary;

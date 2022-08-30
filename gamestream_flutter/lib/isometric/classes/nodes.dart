@@ -141,7 +141,7 @@ class NodeRainLanding extends Node {
   bool get isEmpty => true;
 }
 
-class NodeSoil extends GridNodeColorRamp {
+class NodeSoil extends NodeShadeManual {
   NodeSoil(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
@@ -151,7 +151,7 @@ class NodeSoil extends GridNodeColorRamp {
   double get srcX => 8320;
 }
 
-class NodeRoofHayNorth extends GridNodeColorRamp {
+class NodeRoofHayNorth extends NodeShadeManual {
   NodeRoofHayNorth(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
@@ -161,7 +161,8 @@ class NodeRoofHayNorth extends GridNodeColorRamp {
   double get srcX => 9415;
 }
 
-class NodeRoofHaySouth extends GridNodeColorRamp {
+
+class NodeRoofHaySouth extends NodeShadeManual {
   NodeRoofHaySouth(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
@@ -222,7 +223,7 @@ class NodeWaterFlowing extends Node {
   bool get isRainable => true;
 }
 
-class NodeStone extends GridNodeColorRamp {
+class NodeStone extends NodeShadeManual {
   NodeStone(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
@@ -335,7 +336,7 @@ class NodeFireplace extends Node {
   bool get emitsLight => true;
 }
 
-class GidNodeRoofHayNorth extends GridNodeColorRamp {
+class GidNodeRoofHayNorth extends NodeShadeManual {
   GidNodeRoofHayNorth({required int row, required int column, required int z}) : super(row: row, column: column, z: z);
 
   @override
@@ -345,7 +346,7 @@ class GidNodeRoofHayNorth extends GridNodeColorRamp {
   double get srcX => 9552;
 }
 
-class GidNodeRoofHaySouth extends GridNodeColorRamp {
+class GidNodeRoofHaySouth extends NodeShadeManual {
   GidNodeRoofHaySouth({required int row, required int column, required int z}) : super(row: row, column: column, z: z);
 
   @override
@@ -355,7 +356,7 @@ class GidNodeRoofHaySouth extends GridNodeColorRamp {
   double get srcX => 9600;
 }
 
-class NodeBrickTop extends GridNodeColorRamp {
+class NodeBrickTop extends NodeShadeManual {
   NodeBrickTop(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
@@ -368,7 +369,7 @@ class NodeBrickTop extends GridNodeColorRamp {
   bool get isStone => true;
 }
 
-class NodeTileNorth extends GridNodeColorRamp {
+class NodeTileNorth extends NodeShadeManual {
   NodeTileNorth(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
@@ -378,7 +379,7 @@ class NodeTileNorth extends GridNodeColorRamp {
   double get srcX => 9415;
 }
 
-class NodeTileSouth extends GridNodeColorRamp {
+class NodeTileSouth extends NodeShadeManual {
   NodeTileSouth(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
@@ -430,7 +431,7 @@ class NodeBauHaus extends Node {
   }
 }
 
-class NodeBauHausWindow extends GridNodeColorRamp {
+class NodeBauHausWindow extends NodeShadeManual {
   NodeBauHausWindow(int row, int column, int z) : super(row: row, column: column, z: z);
 
   @override
@@ -440,7 +441,7 @@ class NodeBauHausWindow extends GridNodeColorRamp {
   int get type => NodeType.Bau_Haus_Window;
 }
 
-class NodeBauHausChimney extends GridNodeColorRamp {
+class NodeBauHausChimney extends NodeShadeManual {
   NodeBauHausChimney(int row, int column, int z) : super(row: row, column: column, z: z) {
     addSmokeEmitter(z + 1, row, column);
   }
@@ -453,7 +454,7 @@ class NodeBauHausChimney extends GridNodeColorRamp {
 }
 
 
-class NodeBedTop extends GridNodeShaded {
+class NodeBedTop extends NodeShadeAuto {
 
   NodeBedTop(int row, int column, int z) : super(row: row, column: column, z: z);
 
@@ -467,7 +468,7 @@ class NodeBedTop extends GridNodeShaded {
   bool get isRainable => true;
 }
 
-class NodeBedBottom extends GridNodeShaded {
+class NodeBedBottom extends NodeShadeAuto {
 
   NodeBedBottom(int row, int column, int z) : super(row: row, column: column, z: z);
 
@@ -481,7 +482,7 @@ class NodeBedBottom extends GridNodeShaded {
   bool get isRainable => true;
 }
 
-class NodeTable extends GridNodeShaded {
+class NodeTable extends NodeShadeAuto {
 
   NodeTable(int row, int column, int z) : super(row: row, column: column, z: z);
 
@@ -495,7 +496,7 @@ class NodeTable extends GridNodeShaded {
   bool get isRainable => true;
 }
 
-class NodeSunflower extends GridNodeShaded {
+class NodeSunflower extends NodeShadeAuto {
 
   NodeSunflower(int row, int column, int z) : super(row: row, column: column, z: z);
 
@@ -509,7 +510,7 @@ class NodeSunflower extends GridNodeShaded {
   bool get isRainable => true;
 }
 
-class NodeOven extends GridNodeShaded {
+class NodeOven extends NodeShadeAuto {
 
   NodeOven(int row, int column, int z) : super(row: row, column: column, z: z);
 
@@ -524,6 +525,23 @@ class NodeOven extends GridNodeShaded {
 
   @override
   bool get emitsLight => true;
+}
+
+class NodeBoulder extends NodeShadeAuto {
+
+  NodeBoulder(int row, int column, int z) : super(row: row, column: column, z: z);
+
+  @override
+  int get type => NodeType.Boulder;
+
+  @override
+  double get srcX => 11769;
+
+  @override
+  bool get isRainable => false;
+
+  @override
+  bool get emitsLight => false;
 }
 
 class NodeBricks2 extends Node {

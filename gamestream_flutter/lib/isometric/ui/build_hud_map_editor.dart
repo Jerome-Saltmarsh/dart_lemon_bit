@@ -377,5 +377,6 @@ const editorGridTypesColumn2 = [
   NodeType.Grass_2,
   NodeType.Plain,
   NodeType.Window,
-  NodeType.Wooden_Plank
+  NodeType.Wooden_Plank,
+  NodeType.Boulder,
 ];
