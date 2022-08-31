@@ -435,8 +435,8 @@ class NodeOriented extends Node {
         return tX;
       case NodeOrientation.Slope_Outer_South_West: // Grass Slope Bottom
         final total = x + y;
-        if (total > 1) return 0;
-        return 1.0 - total;
+        if (total < 1) return 0;
+        return total - 1;
       case NodeOrientation.Slope_Outer_North_West: // Grass Slope Right
         final ratio = (y - x);
         if (ratio < 0) return 0;
