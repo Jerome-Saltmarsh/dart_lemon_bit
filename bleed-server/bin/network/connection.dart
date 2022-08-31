@@ -790,6 +790,7 @@ class Connection {
           player.performY = player.y + opp;
           player.performZ = player.z;
           player.performDuration = 20;
+          player.performMaxHits  = 1;
           game.dispatch(GameEventType.Sword_Slash, player.performX, player.performY, player.z, angle);
 
           if (player.idling) {

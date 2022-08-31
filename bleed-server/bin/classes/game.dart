@@ -497,16 +497,17 @@ extension GameFunctions on Game {
     if (player.performDuration > 0) {
       player.performDuration--;
 
-      for (final character in characters) {
-        if (onSameTeam(player, character))
-          continue;
-        if (character.distanceFromXYZ(
+      if (player.performMaxHits > 0){
+        for (final character in characters) {
+          if (onSameTeam(player, character)) continue;
+          if (character.distanceFromXYZ(
             player.performX,
             player.performY,
             player.performZ,
-            ) > 50)
+          ) > 25) continue;
           applyHit(src: player, target: character, damage: 2);
-          continue;
+          player.performMaxHits--;
+        }
       }
     }
 
