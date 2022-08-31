@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
+import 'package:lemon_math/library.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../classes/gameobject.dart';
@@ -778,8 +781,17 @@ class Connection {
         if (player.interactingWithNpc){
           return player.endInteraction();
         }
-        
-        player.dispatchGameEvent(GameEventType.Sword_Slash, angle: player.mouseAngle);
+
+        if (player.performDuration <= 0) {
+          final angle = player.mouseAngle + pi;
+          final distance = 50.0;
+          final adj = getAdjacent(angle, distance);
+          final opp = getOpposite(angle, distance);
+          final x = player.x + adj;
+          final y = player.y + opp;
+          player.performDuration = 20;
+          game.dispatch(GameEventType.Sword_Slash, x, y, player.z, angle);
+        }
 
         /// TODO belongs inside game update
         if (ability == null) {

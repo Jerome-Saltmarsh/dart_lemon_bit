@@ -494,6 +494,10 @@ extension GameFunctions on Game {
 
     if (player.dead) return;
 
+    if (player.performDuration > 0) {
+      player.performDuration--;
+    }
+
     if (player.framesSinceClientRequest > 10) {
       player.setCharacterStateIdle();
     }

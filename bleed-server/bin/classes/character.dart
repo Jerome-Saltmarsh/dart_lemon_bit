@@ -49,6 +49,8 @@ abstract class Character extends Collider with Team, Velocity, Material {
   var equippedHead = HeadType.None;
   var equippedPants = PantsType.white;
 
+  var performDuration = 0;
+
   bool get running => state == CharacterState.Running;
   bool get idling => state == CharacterState.Idle;
   bool get characterStateIdle => state == CharacterState.Idle;
@@ -259,6 +261,14 @@ abstract class Character extends Collider with Team, Velocity, Material {
     assert(!deadOrBusy);
     angle = this.getAngle(position);
   }
+
+  void faceXY(double x, double y) {
+    assert(!deadOrBusy);
+    angle = getAngleXY(x, y);
+  }
+
+  double getAngleXY(double x, double y) =>
+      getAngleBetween(this.x, this.y, x, y);
 }
 
 bool onSameTeam(dynamic a, dynamic b){
