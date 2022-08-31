@@ -86,6 +86,9 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Character_Player:
           readCharacterPlayer();
           break;
+        case ServerResponse.Character_Slime:
+          readCharacterSlime();
+          break;
         case ServerResponse.GameObject_Static:
           final gameObject = getInstanceGameObject();
           readVector3(gameObject);
@@ -274,6 +277,13 @@ class ServerResponseReader with ByteReader {
   void readCharacterZombie() {
     final character = getCharacterInstance();
     character.type = CharacterType.Zombie;
+    readCharacter(character);
+    totalCharacters++;
+  }
+
+  void readCharacterSlime() {
+    final character = getCharacterInstance();
+    character.type = CharacterType.Slime;
     readCharacter(character);
     totalCharacters++;
   }

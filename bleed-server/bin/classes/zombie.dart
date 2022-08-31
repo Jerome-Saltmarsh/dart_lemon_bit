@@ -1,6 +1,5 @@
 
 
-import '../common/character_type.dart';
 import '../common/library.dart';
 import 'ai.dart';
 import 'game.dart';
@@ -21,7 +20,6 @@ class Zombie extends AI {
       x: x,
       y: y,
       z: z,
-      type: CharacterType.Rat,
       health: health,
       weapon: Weapon(type: WeaponType.Unarmed, damage: damage),
       wanderRadius: wanderRadius,

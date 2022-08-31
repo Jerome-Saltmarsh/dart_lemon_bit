@@ -25,7 +25,6 @@ class Npc extends AI {
             x: x,
             y: y,
             z: z,
-            type: CharacterType.Template,
             game: game,
             health: health,
             weapon: weapon,

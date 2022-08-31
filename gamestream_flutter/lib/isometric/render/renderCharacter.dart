@@ -2,6 +2,7 @@
 import 'package:bleed_common/character_type.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
+import 'package:gamestream_flutter/isometric/render/render_character_slime.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_template.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_zombie.dart';
 import 'package:lemon_engine/render.dart';
@@ -35,9 +36,11 @@ void renderCharacter(Character character){
     );
   }
 
-  switch(character.type){
+  switch (character.type) {
     case CharacterType.Template:
       return renderCharacterTemplate(character);
+    case CharacterType.Slime:
+      return renderCharacterSlime(character);
     case CharacterType.Rat:
       return renderCharacterRat(character);
     case CharacterType.Zombie:

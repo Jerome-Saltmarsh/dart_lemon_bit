@@ -60,6 +60,7 @@ class ServerResponse {
   static const Character_Zombie = 88;
   static const Character_Template = 89;
   static const Character_Player = 90;
+  static const Character_Slime = 91;
   static const GameObject_Butterfly = 94;
   static const GameObject_Chicken = 95;
   static const GameObject_Static = 97;

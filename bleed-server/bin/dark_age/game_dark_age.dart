@@ -2,6 +2,7 @@
 
 import 'package:lemon_math/library.dart';
 
+import '../classes/ai_slime.dart';
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../classes/rat.dart';
@@ -97,6 +98,17 @@ class GameDarkAge extends Game {
           damage: 1,
           game: this,
           team: Teams.evil,
+        );
+        characters.add(instance);
+        spawn.instance = instance;
+        break;
+      case SpawnType.Slime:
+        final instance = AISlime(
+          x: spawn.x,
+          y: spawn.y,
+          z: spawn.z,
+          health: 10,
+          game: this,
         );
         characters.add(instance);
         spawn.instance = instance;

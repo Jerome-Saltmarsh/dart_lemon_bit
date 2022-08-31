@@ -45,7 +45,6 @@ abstract class AI extends Character with Material {
     required int health,
     required Weapon weapon,
     required Game game,
-    required int type,
     int team = 0,
     double speed = 3.0,
     this.wanderRadius = 0,
