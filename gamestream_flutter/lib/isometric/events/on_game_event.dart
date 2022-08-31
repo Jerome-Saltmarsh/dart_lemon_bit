@@ -276,6 +276,9 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       spawnParticleSlash(x: x, y: y, z: z, angle: angle);
       audioSingleSciFiBlaster8.playXYZ(x, y, z);
       audioSingleSwingSword.playXYZ(x, y, z);
+      for (var i = 0; i < 3; i++) {
+        spawnParticleBubble(x: x, y: y, z: z, angle: angle + giveOrTake(piQuarter), speed: 3 + giveOrTake(2));
+      }
       break;
   }
 
