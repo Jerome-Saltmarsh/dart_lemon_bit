@@ -755,7 +755,6 @@ class Connection {
     switch (args[1]) {
       case CharacterAction.Idle:
         if (player.target != null) break;
-        player.direction = args[6];
         if (player.target == null){
           player.setCharacterStateIdle();
         }
@@ -791,6 +790,11 @@ class Connection {
           final y = player.y + opp;
           player.performDuration = 20;
           game.dispatch(GameEventType.Sword_Slash, x, y, player.z, angle);
+
+          if (player.idling) {
+            player.faceXY(player.mouseGridX, player.mouseGridY);
+            return;
+          }
         }
 
         /// TODO belongs inside game update
