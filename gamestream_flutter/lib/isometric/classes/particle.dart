@@ -30,6 +30,8 @@ class Particle extends Vector3 {
   var airFriction = 0.98;
   var hue = 0;
   var casteShadow = false;
+  /// Deactivates if this node hits a solid node
+  var checkNodeCollision = true;
 
   bool get active => duration > 0;
 

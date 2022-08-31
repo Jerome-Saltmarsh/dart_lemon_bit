@@ -95,15 +95,6 @@ void _updateParticle(Particle particle) {
   if (!particle.active) return;
   if (particle.outOfBounds) return particle.deactivate();
 
-  switch (particle.type) {
-    case ParticleType.Smoke:
-      // update smoke particle
-      break;
-    case ParticleType.Orb_Shard:
-    // etx
-      break;
-  }
-
   final tile = particle.tile.type;
   final airBorn =
       tile == NodeType.Empty        ||
@@ -112,7 +103,7 @@ void _updateParticle(Particle particle) {
       tile == NodeType.Grass_Long   ||
       tile == NodeType.Fireplace    ;
 
-  if (!airBorn) {
+  if (particle.checkNodeCollision && !airBorn) {
     particle.deactivate();
     return;
   }
@@ -658,6 +649,32 @@ void spawnParticleBubble({
   );
 }
 
+
+void spawnParticleCutGrass({
+  required double x,
+  required double y,
+  required double z,
+  int duration = 100,
+  double scale = 1.0,
+  double angle = 0,
+  double speed = 0,
+}) {
+  spawnParticle(
+    type: ParticleType.Cut_Grass,
+    x: x,
+    y: y,
+    z: z,
+    angle: angle,
+    rotation: 0,
+    speed: speed,
+    scaleV: 0,
+    weight: -0.5,
+    duration: duration,
+    scale: scale,
+    checkCollision: false
+  );
+}
+
 void spawnParticleSlash({
   required double x,
   required double y,
@@ -679,6 +696,7 @@ void spawnParticleSlash({
     weight: 0,
     duration: duration,
     scale: scale,
+    checkCollision: false
   );
 }
 
@@ -707,6 +725,7 @@ void spawnParticle({
   required double z,
   required double angle,
   required double speed,
+  bool checkCollision = true,
   double zv = 0,
   double weight = 1,
   int duration = 100,
@@ -726,6 +745,7 @@ void spawnParticle({
   particle.x = x;
   particle.y = y;
   particle.z = z;
+  particle.checkNodeCollision = checkCollision;
 
   if (speed > 0){
     particle.xv = getAdjacent(angle, speed);
@@ -754,6 +774,7 @@ Particle getParticleInstance() {
      return instance;
   }
   final particle = particles[totalActiveParticles];
+  particle.checkNodeCollision = true;
   assert (!particle.active);
   return particle;
 }

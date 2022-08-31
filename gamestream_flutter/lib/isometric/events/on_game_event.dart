@@ -20,7 +20,11 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
     case GameEventType.Splash:
       return audioSingleSplash.playXYZ(x, y, z);
     case GameEventType.Spawn_Dust_Cloud:
-      return spawnParticleDustCloud(x: x, y: y, z: z);
+      for (var i = 0; i < 3; i++){
+        spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: randomAngle());
+      }
+      break;
+      // return spawnParticleDustCloud(x: x, y: y, z: z);
     case GameEventType.Footstep:
       final tile = getNodeXYZ(x, y, z - 2);
       if (raining.value){
@@ -278,6 +282,31 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       audioSingleSwingSword.playXYZ(x, y, z);
       for (var i = 0; i < 3; i++) {
         spawnParticleBubble(x: x, y: y, z: z, angle: angle + giveOrTake(piQuarter), speed: 3 + giveOrTake(2));
+      }
+      final node = getNodeXYZ(x, y, z);
+      if (node.type == NodeType.Grass_Long) {
+        audioSingleGrassCut.playXYZ(x, y, z);
+        for (var i = 0; i < 3; i++) {
+          spawnParticleCutGrass(x: x, y: y, z: z);
+        }
+      }
+      if (node.type == NodeType.Tree_Bottom) {
+        audioSingleMaterialStruckWood.playXYZ(x, y, z);
+      }
+      if (node.type == NodeType.Torch) {
+        audioSingleMaterialStruckWood.playXYZ(x, y, z);
+      }
+      if (node.type == NodeType.Wood_2) {
+        audioSingleMaterialStruckWood.playXYZ(x, y, z);
+      }
+      if (node.type == NodeType.Wooden_Plank) {
+        audioSingleMaterialStruckWood.playXYZ(x, y, z);
+      }
+      if (node.type == NodeType.Boulder) {
+        audioSingleMaterialStruckStone.playXYZ(x, y, z);
+      }
+      if (node.type == NodeType.Brick_2) {
+        audioSingleMaterialStruckStone.playXYZ(x, y, z);
       }
       break;
   }

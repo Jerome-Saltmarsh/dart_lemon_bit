@@ -133,6 +133,17 @@ void renderParticle(Particle value) {
           color: value.renderColor
       );
 
+    case ParticleType.Cut_Grass:
+      return render(
+          dstX: value.renderX,
+          dstY: value.renderY,
+          srcX: 2928,
+          srcY: 0,
+          srcWidth: 32,
+          srcHeight: 32,
+          color: value.renderColor
+      );
+
     case ParticleType.Zombie_leg:
       return render(
           dstX: value.renderX,

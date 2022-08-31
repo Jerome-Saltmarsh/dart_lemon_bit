@@ -18,6 +18,8 @@ final audioSingleShotgunShot = AudioSingle(name: 'shotgun-shot', volume: 0.5, ma
 final audioSingleItemUnlock = AudioSingle(name: 'unlock', volume: 0.5, maxDistance: 400);
 final audioSingleZombieHurt = AudioSingle(name: 'zombie-hurt-1', volume: 0.5, maxDistance: 400);
 final audioSingleSplash = AudioSingle(name: 'splash', volume: 0.5, maxDistance: 400);
+final audioSingleMaterialStruckWood = AudioSingle(name: 'material-struck-wood', volume: 0.5, maxDistance: 400);
+final audioSingleMaterialStruckStone = AudioSingle(name: 'material-struck-stone', volume: 0.5, maxDistance: 400);
 final audioSingleZombieDeaths = [
   AudioSingle(name: 'zombie-death-02', volume: 1, maxDistance: 400),
   AudioSingle(name: 'zombie-death-09', volume: 1, maxDistance: 400),
@@ -31,6 +33,7 @@ final audioSingleDrawSword = AudioSingle(name: 'draw-sword', volume: 0.5, maxDis
 final audioSingleClickSound = AudioSingle(name: 'click-sound-8', volume: 0.5, maxDistance: 250);
 final audioSingleSwingArm = AudioSingle(name: 'swing-arm-11', volume: 0.4, maxDistance: 250);
 final audioSingleSwingSword = AudioSingle(name: 'swing-sword', volume: 0.4, maxDistance: 250);
+final audioSingleGrassCut = AudioSingle(name: 'grass-cut', volume: 0.4, maxDistance: 250);
 final audioSingleZombieBits = [
   AudioSingle(name: 'zombie-bite-04', volume: 0.4, maxDistance: 250),
   AudioSingle(name: 'zombie-bite-05', volume: 0.4, maxDistance: 250),
