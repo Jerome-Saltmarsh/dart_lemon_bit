@@ -14,6 +14,7 @@ import '../common/library.dart';
 import '../common/maths.dart';
 import '../common/node_orientation.dart';
 import '../common/node_request.dart';
+import '../common/node_size.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
 import '../engine.dart';
@@ -349,9 +350,15 @@ class Connection {
 
       case ClientRequest.Caste:
         if (player.deadOrBusy) return;
-        player.ability = PowerFireball();
-        player.angle = player.mouseAngle;
-        player.setCharacterStatePerforming(duration: 30);
+        // player.ability = PowerFireball();
+        // player.angle = player.mouseAngle;
+        // player.setCharacterStatePerforming(duration: 30);
+        game.spawnProjectileFireball(
+            player,
+            damage: 5,
+            range: 150,
+            angle: player.mouseAngle,
+        );
         break;
 
       case ClientRequest.Caste_Basic:
@@ -791,7 +798,7 @@ class Connection {
           player.performZ = player.z;
           player.performDuration = 20;
           player.performMaxHits  = 1;
-          game.dispatch(GameEventType.Sword_Slash, player.performX, player.performY, player.z, angle);
+          game.dispatch(GameEventType.Sword_Slash, player.performX, player.performY, player.z + nodeHeightHalf, angle);
 
           if (player.idling) {
             player.faceXY(player.mouseGridX, player.mouseGridY);
@@ -801,16 +808,17 @@ class Connection {
 
         /// TODO belongs inside game update
         if (ability == null) {
-          if (aimTarget != null) {
-            player.target = aimTarget;
-            if (withinRadius(player, aimTarget, player.equippedRange)){
-              player.face(aimTarget);
-              player.setCharacterStatePerforming(duration: player.equippedAttackDuration);
-            }
-          } else {
-            // player.runToMouse();
-          }
-          break;
+          return;
+          // if (aimTarget != null) {
+          //   player.target = aimTarget;
+          //   if (withinRadius(player, aimTarget, player.equippedRange)){
+          //     player.face(aimTarget);
+          //     player.setCharacterStatePerforming(duration: player.equippedAttackDuration);
+          //   }
+          // } else {
+          //   // player.runToMouse();
+          // }
+          // break;
         }
 
         switch (ability.mode) {
