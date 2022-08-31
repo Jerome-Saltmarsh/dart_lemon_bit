@@ -21,9 +21,10 @@ class ParticleType {
   static const Dust = 20;
   static const Star_Explosion = 21;
   static const Bubble = 22;
-  static const Flame_Pixel = 23;
-  static const Fire = 24;
-  static const Slash = 25;
-  static const Fire_Purple = 26;
-  static const Cut_Grass = 27;
+  static const Bubble_Small = 23;
+  static const Flame_Pixel = 24;
+  static const Fire = 25;
+  static const Slash = 26;
+  static const Fire_Purple = 27;
+  static const Cut_Grass = 28;
 }

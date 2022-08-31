@@ -108,6 +108,17 @@ void renderParticle(Particle value) {
           color: value.renderColor
       );
 
+    case ParticleType.Bubble_Small:
+      return render(
+          dstX: value.renderX,
+          dstY: value.renderY,
+          srcX: 2976.0,
+          srcY: ((value.frame ~/ 2) % 6) * 5,
+          srcWidth: 4,
+          srcHeight: 5,
+          color: value.renderColor
+      );
+
     case ParticleType.Star_Explosion:
       if (value.frame >= 7) {
         return value.deactivate();

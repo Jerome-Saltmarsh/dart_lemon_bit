@@ -635,7 +635,7 @@ void spawnParticleBubble({
   double speed = 0,
 }) {
   spawnParticle(
-    type: ParticleType.Bubble,
+    type: randomBool() ? ParticleType.Bubble : ParticleType.Bubble_Small,
     x: x,
     y: y,
     z: z,
@@ -648,7 +648,6 @@ void spawnParticleBubble({
     scale: scale,
   );
 }
-
 
 void spawnParticleCutGrass({
   required double x,
