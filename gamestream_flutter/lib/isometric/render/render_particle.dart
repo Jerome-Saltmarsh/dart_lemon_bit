@@ -28,6 +28,18 @@ void renderParticle(Particle value) {
         srcHeight: 32,
         scale: value.scale,
       );
+
+    case ParticleType.Fire_Purple:
+      if (value.frame > 12 ) return;
+      return render(
+        dstX: value.renderX,
+        dstY: value.renderY,
+        srcX: 6032,
+        srcY: 32.0 * value.frame,
+        srcWidth: 32,
+        srcHeight: 32,
+        scale: value.scale,
+      );
     case ParticleType.Blood:
       return render(
           dstX: value.renderX,

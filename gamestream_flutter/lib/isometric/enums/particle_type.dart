@@ -24,4 +24,5 @@ class ParticleType {
   static const Flame_Pixel = 23;
   static const Fire = 24;
   static const Slash = 25;
+  static const Fire_Purple = 26;
 }

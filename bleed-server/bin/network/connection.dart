@@ -356,7 +356,7 @@ class Connection {
         game.spawnProjectileFireball(
             player,
             damage: 5,
-            range: 150,
+            range: 250,
             angle: player.mouseAngle,
         );
         break;

@@ -268,11 +268,13 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
     case GameEventType.Character_Death:
       for (var i = 0; i < 15; i++) {
         spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: randomAngle());
+        spawnParticleFirePurple(x: x + giveOrTake(5), y: y + giveOrTake(5), z: z, speed: 1, angle: randomAngle());
       }
       break;
 
     case GameEventType.Sword_Slash:
       spawnParticleSlash(x: x, y: y, z: z, angle: angle);
+      audioSingleSciFiBlaster8.playXYZ(x, y, z);
       audioSingleSwingSword.playXYZ(x, y, z);
       break;
   }

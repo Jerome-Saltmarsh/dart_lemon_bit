@@ -44,7 +44,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     // for (var i = 0; i < 10; i++) {
     //   spawnParticleBubble(x: mouseGridX, y: mouseGridY, z: player.z, speed: 1, angle: randomAngle());
     // }
-    return spawnParticleDustCloud(x: mouseGridX, y: mouseGridY, z: player.z);
+    return spawnParticleFirePurple(x: mouseGridX, y: mouseGridY, z: player.z);
     // return spawnParticleFire(x: mouseGridX, y: mouseGridY, z: player.z);
   }
 
