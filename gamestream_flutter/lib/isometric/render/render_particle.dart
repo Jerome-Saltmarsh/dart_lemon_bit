@@ -83,8 +83,8 @@ void renderParticle(Particle value) {
       );
 
     case ParticleType.Bubble:
-      const size = 32.0;
       if (value.duration < 26){
+        const size = 32.0;
          final frame = (26 - value.duration) ~/ 2;
          return render(
              dstX: value.renderX,
@@ -97,7 +97,7 @@ void renderParticle(Particle value) {
          );
       }
 
-
+      const size = 8.0;
       return render(
           dstX: value.renderX,
           dstY: value.renderY,
