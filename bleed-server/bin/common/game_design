@@ -1,0 +1,163 @@
+ Dark-Age Game Design by Jerome Saltmarsh
+
+ When you strike a monster, it should be knocked back, like in super smash bros
+
+ This will add weight
+
+ The combat has to be a source of fun
+
+ Its a central part of the game.
+
+ Have a knocked back animation for the enemies
+
+ Also stunning enemies is a crucial strategy
+
+ Each character choice has a strength and weakness character opposite.
+
+ The player controls are
+   - Walk Upward        : W
+   - Walk Downward      : S
+   - Walk Left          : A
+   - Walk Right         : D
+   - strike             : left click
+   - secondary          : right click
+
+
+ Its not something I've spent much time trying to imagine. Actually gameplay and combat.
+ It hasn't really interested me so far.
+ What interested me the most so far was the world itself.
+ Bringing it to life.
+ Giving it soul and personality
+ To allow the gameplay to grow organically.
+ I'm happy though with the direction I discovered just recently
+ to free the attack up so play can continue to run and attack at the same time
+ Allows the game to flow, when a player pauses to attack that adds a delay.
+
+Perhaps these are the conditions necessary for brilliance
+
+Connect each attack, depending on the previous attack
+and where the sword is coming from chooses a specific animation.
+This will make you feel like a sword master
+
+MASTERY
+
+Perhaps that could be the name of the game
+
+It is perhaps the aim of the game.
+
+Create an enemy squish type character.
+
+It has custom drawn death animations, many
+
+It can get cut two and then reform itself
+
+Different weapons show different death animations.
+
+Each time you level up you can choose a new costume part.
+
+Each costume part offers a unique buff
+
+The clothes and buffs must be interlinked
+
+Each game a player gets to choose a primary and a secondary
+
+A primary is used to do a standard attack
+
+    - sword
+    - Num Chucks
+    - Mace
+    - Whip
+    - A bow
+    - A crossbow
+    - Pistol
+    - Shotgun
+    - Rifle
+
+A second
+
+The players three main moves are primary attack, secondary attack and guard.
+
+Blocking
+    When activated the guard will absorb a large amount of damage added.
+    It automatically regenerates over time
+    Automatically reduces when active
+
+
+
+A secondary could be like a shiriken,
+
+Dashing would be cool but I don't know what key would work
+
+Its already enough, one extra key makes it complicated
+
+You can simply hold two different weapons.
+
+Each weapon can have a secondary attack (right click)
+
+So changing the weapon also changes the primary and secondary attack
+
+A secondary attack may need time to regain before it can be used again
+
+Press Q to swap weapons
+
+You can also carry potions, potions can regain health or offer temporary buffs or even cure ailements.
+
+If you can an ailment on the road you can cure it without having to return to he town healer.
+
+Animate the world when it rains.
+
+Animate trees to have water bouncing off
+
+Brick stairs has water flowing down
+
+The water color doesn't complectely work I find, perhaps its not quite dark enough
+
+Animate a snail that blows out bubbles and a clam
+
+Purchases upgrades for your weapons.
+
+Collect delicious looking fruit to regain health
+
+Put magic into the animation of the creatures
+
+Make them play and have fun
+
+Water should have its own custom rain splash animation.
+
+As it is now doesn't look quite right.
+
+Its difficult to do with nodes which have manual shading
+
+It would require the rain frames to be redrawn manually too
+
+An alternative is to dynamically render the rain splash depending on what
+
+its landing on. For example water has a different darker splash animation
+
+
+Have those flowers which release their central flowers and the fly through the air.
+
+This will be what spawn those little floating particles
+
+Like yellow
+
+invisibility
+    cloak || potion || spell
+
+
+Team Mode
+
+Attack Mode - Free for all
+
+Spawn somewhere in the wilderness and try to reach level 12.
+
+You can make allies and enemies.
+
+
+
+
+
+
+
+
+

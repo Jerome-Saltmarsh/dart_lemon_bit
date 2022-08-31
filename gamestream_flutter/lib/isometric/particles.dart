@@ -689,13 +689,13 @@ void spawnParticleSlash({
     y: y,
     z: z,
     angle: angle,
-    rotation: 0,
+    rotation: angle,
     speed: speed,
     scaleV: 0,
     weight: 0,
     duration: duration,
     scale: scale,
-    checkCollision: false
+    checkCollision: false,
   );
 }
 

@@ -68,8 +68,17 @@ class NodeGrassLong extends Node {
     switch (wind) {
       case windIndexCalm:
         return renderShadeManual(10118);
-      case windIndexGentle:
-        return renderShadeManual(10240 + ((((rowMinusColumn) + animationFrameGrass) % 6) * 48));
+      // case windIndexGentle:
+      //   return renderShadeManual(10240 + ((((rowMinusColumn) + animationFrameGrass) % 6) * 48));
+      // case windIndexStrong:
+      //   return render(
+      //       dstX: dstX,
+      //       dstY: dstY + 24,
+      //       srcX: 8672,
+      //       srcY: (((rowMinusColumn) + animationFrameGrass) % 6) * 72,
+      //       srcWidth: 72,
+      //       srcHeight: 72,
+      //   );
       default:
         return renderShadeManual(10240 + ((((rowMinusColumn) + animationFrameGrass) % 6) * 48));
     }

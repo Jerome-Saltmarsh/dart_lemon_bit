@@ -353,6 +353,7 @@ class RenderOrderGrid extends RenderOrder {
     assignNode();
     trimTop();
     trimLeft();
+
     assignNode();
     refreshDynamicLightGrid();
 
