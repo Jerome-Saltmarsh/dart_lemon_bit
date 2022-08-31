@@ -790,7 +790,7 @@ class Connection {
 
         if (player.performDuration <= 0) {
           final angle = player.mouseAngle + pi;
-          final distance = 50.0;
+          final distance = 30.0;
           final adj = getAdjacent(angle, distance);
           final opp = getOpposite(angle, distance);
           player.performX = player.x + adj;
