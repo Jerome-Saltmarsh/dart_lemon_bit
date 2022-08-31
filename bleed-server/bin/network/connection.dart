@@ -762,6 +762,7 @@ class Connection {
         final aimTarget = player.aimTarget;
         player.target = aimTarget;
 
+        /// TODO belongs inside game update
         if (aimTarget is Npc && onSameTeam(player, aimTarget)){
           if (withinRadius(player, aimTarget, 100)){
             if (!aimTarget.deadOrBusy){
@@ -778,9 +779,9 @@ class Connection {
           return player.endInteraction();
         }
         
-        player.dispatchGameEvent(GameEventType.Sword_Slash);
+        player.dispatchGameEvent(GameEventType.Sword_Slash, angle: player.mouseAngle);
 
-
+        /// TODO belongs inside game update
         if (ability == null) {
           if (aimTarget != null) {
             player.target = aimTarget;
@@ -789,7 +790,7 @@ class Connection {
               player.setCharacterStatePerforming(duration: player.equippedAttackDuration);
             }
           } else {
-            player.runToMouse();
+            // player.runToMouse();
           }
           break;
         }

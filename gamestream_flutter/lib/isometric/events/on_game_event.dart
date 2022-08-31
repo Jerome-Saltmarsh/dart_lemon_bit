@@ -273,6 +273,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
 
     case GameEventType.Sword_Slash:
       spawnParticleSlash(x: x, y: y, z: z, angle: angle);
+      audioSingleSwingSword.playXYZ(x, y, z);
       break;
   }
 

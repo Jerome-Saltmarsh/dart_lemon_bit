@@ -22,7 +22,6 @@ import 'zombie.dart';
 
 class Player extends Character with ByteWriter {
 
-
   final mouse = Vector2(0, 0);
   final _runTarget = Position3();
 
@@ -177,9 +176,7 @@ class Player extends Character with ByteWriter {
   late Function sendBufferToClient;
   late Function(GameError error, {String message}) dispatchError;
 
-  double get mouseAngle {
-    return getAngleBetween(x, y, mouseGridX, mouseGridY);
-  }
+  double get mouseAngle => getAngleBetween(x, y, mouseGridX, mouseGridY);
 
   Scene get scene => game.scene;
 
@@ -261,8 +258,8 @@ class Player extends Character with ByteWriter {
     setCharacterState(value: CharacterState.Changing, duration: 20);
   }
 
-  void dispatchGameEvent(int type){
-    game.dispatchV3(type, this);
+  void dispatchGameEvent(int type, {double angle = 0}){
+    game.dispatchV3(type, this, angle: angle);
   }
 
   void gainExperience(int amount){
