@@ -1,5 +1,7 @@
 
 
+import 'dart:math';
+
 import 'package:bleed_common/Projectile_Type.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
@@ -99,6 +101,13 @@ void updateProjectiles() {
     final projectile = projectiles[i];
     if (projectile.type == ProjectileType.Fireball) {
       spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
+      spawnParticleBubble(
+          x: projectile.x + giveOrTake(5),
+          y: projectile.y + giveOrTake(5),
+          z: projectile.z,
+          angle: (projectile.angle + pi) + giveOrTake(piHalf ),
+          speed: 1.5,
+      );
       continue;
     }
 
