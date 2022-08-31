@@ -23,19 +23,19 @@ void renderParticle(Particle value) {
         dstX: value.renderX,
         dstY: value.renderY,
         srcX: 4464,
-        srcY: 32.0 * value.frame,
+        srcY: 32.0 * value.frame ,
         srcWidth: 32,
         srcHeight: 32,
         scale: value.scale,
       );
 
     case ParticleType.Fire_Purple:
-      if (value.frame > 12 ) return;
+      if (value.frame > 24 ) return;
       return render(
         dstX: value.renderX,
         dstY: value.renderY,
         srcX: 6032,
-        srcY: 32.0 * value.frame,
+        srcY: 32.0 * (value.frame ~/ 2) ,
         srcWidth: 32,
         srcHeight: 32,
         scale: value.scale,
