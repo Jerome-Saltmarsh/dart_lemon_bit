@@ -1,41 +1,34 @@
 
-
 import '../common/character_type.dart';
-import '../common/library.dart';
 import 'ai.dart';
 import 'game.dart';
 import 'player.dart';
 import 'weapon.dart';
 
-class Zombie extends AI {
-  Zombie({
+/// The most basic enemy.
+/// Easy to kill but plentiful
+class CharacterSlime extends AI {
+
+  CharacterSlime({
     required double x,
     required double y,
     required double z,
     required int health,
-    required int damage,
+    required Weapon weapon,
     required Game game,
-    required int team,
-    double wanderRadius = 100,
   }) : super(
       x: x,
       y: y,
       z: z,
-      type: CharacterType.Rat,
       health: health,
-      weapon: Weapon(type: WeaponType.Unarmed, damage: damage),
-      wanderRadius: wanderRadius,
+      weapon: weapon,
       game: game,
-      team: team,
-  );
-
-  @override
-  void customUpdateAI(Game game) {
-
+      type: CharacterType.Slime,
+  ) {
   }
 
   @override
   void write(Player player) {
-    player.writeZombie(this);
+
   }
 }

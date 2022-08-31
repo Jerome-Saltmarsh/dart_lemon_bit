@@ -1,4 +1,5 @@
 
+import '../common/character_type.dart';
 import '../common/library.dart';
 import 'ai.dart';
 import 'game.dart';
@@ -18,6 +19,7 @@ class Rat extends AI {
       x: 0,
       y: 0,
       z: 0,
+      type: CharacterType.Rat,
       health: health,
       weapon: Weapon(type: WeaponType.Unarmed, damage: damage),
       team: team,

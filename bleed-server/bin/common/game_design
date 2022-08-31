@@ -23,7 +23,8 @@
    - secondary          : right click
 
 
- Its not something I've spent much time trying to imagine. Actually gameplay and combat.
+ Its not something I've spent much time trying to imagine.
+ Gameplay and combat.
  It hasn't really interested me so far.
  What interested me the most so far was the world itself.
  Bringing it to life.
@@ -62,7 +63,6 @@ The clothes and buffs must be interlinked
 Each game a player gets to choose a primary and a secondary
 
 A primary is used to do a standard attack
-
     - sword
     - Num Chucks
     - Mace
@@ -141,17 +141,23 @@ This will be what spawn those little floating particles
 
 Like yellow
 
-invisibility
+INVISIBILITY
     cloak || potion || spell
 
+DIFFERENT MODES
+    Team Mode
+    Attack Mode - Free for all
+        Spawn somewhere in the wilderness and try to reach level 12.
+    You can make allies and enemies.
 
-Team Mode
+[TREASURE CHESTS]
+    Gameobjects which can be smashed open to or different coloured treasure boxes require
+    different color keys to unlock.
 
-Attack Mode - Free for all
 
-Spawn somewhere in the wilderness and try to reach level 12.
 
-You can make allies and enemies.
+
+
 
 
 
