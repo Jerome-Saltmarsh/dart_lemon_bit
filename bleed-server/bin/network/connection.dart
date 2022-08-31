@@ -786,10 +786,11 @@ class Connection {
           final distance = 50.0;
           final adj = getAdjacent(angle, distance);
           final opp = getOpposite(angle, distance);
-          final x = player.x + adj;
-          final y = player.y + opp;
+          player.performX = player.x + adj;
+          player.performY = player.y + opp;
+          player.performZ = player.z;
           player.performDuration = 20;
-          game.dispatch(GameEventType.Sword_Slash, x, y, player.z, angle);
+          game.dispatch(GameEventType.Sword_Slash, player.performX, player.performY, player.z, angle);
 
           if (player.idling) {
             player.faceXY(player.mouseGridX, player.mouseGridY);

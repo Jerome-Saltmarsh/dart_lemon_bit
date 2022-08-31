@@ -50,6 +50,9 @@ abstract class Character extends Collider with Team, Velocity, Material {
   var equippedPants = PantsType.white;
 
   var performDuration = 0;
+  var performX = 0.0;
+  var performY = 0.0;
+  var performZ = 0.0;
 
   bool get running => state == CharacterState.Running;
   bool get idling => state == CharacterState.Idle;
