@@ -102,6 +102,10 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
           zv: 0.1);
       
       randomItem(audioSingleZombieDeaths).playXYZ(x, y, z);
+      for (var i = 0; i < 15; i++) {
+        spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: randomAngle());
+        spawnParticleFirePurple(x: x + giveOrTake(5), y: y + giveOrTake(5), z: z, speed: 1, angle: randomAngle());
+      }
       break;
 
     case GameEventType.Zombie_Target_Acquired:
