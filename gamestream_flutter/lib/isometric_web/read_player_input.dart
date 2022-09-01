@@ -102,28 +102,28 @@ int? _getKeyDirection() {
 
   if (keysPressed.contains(LogicalKeyboardKey.keyW)) {
     if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
-      return Direction.North_East;
+      return Direction.East;
     }
     if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
-      return Direction.North_West;
+      return Direction.North;
     }
-    return Direction.North;
+    return Direction.North_East;
   }
 
   if (keysPressed.contains(LogicalKeyboardKey.keyS)) {
     if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
-      return Direction.South_East;
+      return Direction.South;
     }
     if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
-      return Direction.South_West;
+      return Direction.West;
     }
-    return Direction.South;
+    return Direction.South_West;
   }
   if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
-    return Direction.West;
+    return Direction.North_West;
   }
   if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
-    return Direction.East;
+    return Direction.South_East;
   }
   return null;
 }
