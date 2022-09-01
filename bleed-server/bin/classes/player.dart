@@ -176,7 +176,7 @@ class Player extends Character with ByteWriter {
   late Function sendBufferToClient;
   late Function(GameError error, {String message}) dispatchError;
 
-  double get mouseAngle => getAngleBetween(x, y, mouseGridX, mouseGridY);
+  double get mouseAngle => getAngleBetween(mouseGridX, mouseGridY, x, y);
 
   Scene get scene => game.scene;
 

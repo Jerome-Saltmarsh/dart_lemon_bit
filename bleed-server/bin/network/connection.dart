@@ -354,7 +354,7 @@ class Connection {
             player,
             damage: 5,
             range: 250,
-            angle: player.mouseAngle + pi,
+            angle: player.mouseAngle,
         );
         break;
 
@@ -786,8 +786,7 @@ class Connection {
         }
 
         if (player.performDuration <= 0) {
-          /// TODO Why is pi being added here?
-          final angle = player.mouseAngle + pi;
+          final angle = player.mouseAngle;
           final distance = 30.0;
           final adj = getAdjacent(angle, distance);
           final opp = getOpposite(angle, distance);
