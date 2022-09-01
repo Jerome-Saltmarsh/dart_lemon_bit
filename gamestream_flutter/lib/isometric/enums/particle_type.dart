@@ -27,4 +27,5 @@ class ParticleType {
   static const Slash = 26;
   static const Fire_Purple = 27;
   static const Cut_Grass = 28;
+  static const Handgun_Firing = 29;
 }

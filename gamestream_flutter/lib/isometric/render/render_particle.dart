@@ -201,6 +201,17 @@ void renderParticle(Particle value) {
         scale: value.scale,
       );
 
+    case ParticleType.Handgun_Firing:
+      return renderRotated(
+          dstX: value.renderX,
+          dstY: value.renderY,
+          srcX: 2640,
+          srcY: 0,
+          srcWidth: 16,
+          srcHeight: 16,
+          rotation: value.rotation + (piHalf + piQuarter),
+      );
+
     case ParticleType.Slash:
       if (value.frame >= 6 ) return;
       const size = 64.0;

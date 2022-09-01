@@ -699,6 +699,27 @@ void spawnParticleSlash({
   );
 }
 
+void spawnParticleHandgunFiring({
+  required double x,
+  required double y,
+  required double z,
+  double angle = 0,
+}) {
+  spawnParticle(
+    type: ParticleType.Handgun_Firing,
+    x: x,
+    y: y,
+    z: z,
+    angle: angle,
+    rotation: angle,
+    speed: 0,
+    scaleV: 0,
+    weight: 0,
+    duration: 7,
+    checkCollision: false,
+  );
+}
+
 void spawnParticleStarExploding({
   required double x,
   required double y,

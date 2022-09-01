@@ -17,7 +17,15 @@ void renderProjectile(Projectile value) {
       renderPixelRed(value.renderX, value.renderY);
       return renderFireball(value.renderX, value.renderY, value.angle - piQuarter);
     case ProjectileType.Bullet:
-      return renderPixelRed(value.renderX, value.renderY);
+      return renderRotated(
+          dstX: value.renderX,
+          dstY: value.renderY,
+          srcX: 2608,
+          srcY: 0,
+          srcWidth: 32,
+          srcHeight: 32,
+          rotation: value.angle + pi - piQuarter,
+      );
     case ProjectileType.Wave:
       // render(dstX: value.renderX, dstY: value.renderY, srcX: 144, srcY: 0, srcWidth: 8, srcHeight: 8);
       return renderRotated(

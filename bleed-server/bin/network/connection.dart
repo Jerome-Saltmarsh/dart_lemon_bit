@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
 import 'package:lemon_math/library.dart';
@@ -360,7 +358,7 @@ class Connection {
           projectileType: ProjectileType.Bullet,
           damage: 5,
         );
-        player.dispatch(GameEventType.Handgun_Fired);
+        player.dispatch(GameEventType.Handgun_Fired, player.mouseAngle);
         // game.spawnProjectileFireball(
         //     player,
         //     damage: 5,

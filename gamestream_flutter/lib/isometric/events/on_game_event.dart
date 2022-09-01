@@ -45,10 +45,11 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
 
     case GameEventType.Handgun_Fired:
       audioSingleHandgunFired.playXYZ(x, y, z);
-      const distance = 12.0;
+      const distance = 20.0;
       final xForward = getAdjacent(angle, distance);
       final yForward = getOpposite(angle, distance);
       spawnParticleShell(x: x + xForward, y: y + yForward);
+      spawnParticleHandgunFiring(x: x + xForward, y: y + yForward, z: z + 15, angle: angle);
       break;
     case GameEventType.Shotgun_Fired:
       audioSingleShotgunShot.playXYZ(x, y, z);
@@ -242,16 +243,6 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
           zv: 3,
         );
       }
-      // for (var i = 0; i < 1; i++) {
-      //   spawnParticleBlood(
-      //     x: x,
-      //     y: y,
-      //     z: z,
-      //     angle: angle + giveOrTake(0.2) + pi,
-      //     speed: 1.0 + giveOrTake(1),
-      //     zv: 0.07 + giveOrTake(0.01),
-      //   );
-      // }
       break;
 
     case GameEventType.Material_Struck_Metal:

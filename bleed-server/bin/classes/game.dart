@@ -791,6 +791,7 @@ extension GameFunctions on Game {
     projectile.y = src.y;
     projectile.z = src.z + tileHeightHalf;
     projectile.setVelocity(finalAngle + giveOrTake(accuracy), speed);
+    projectile.faceAngle = finalAngle;
     projectile.owner = src;
     projectile.range = range;
     projectile.type = projectileType;
