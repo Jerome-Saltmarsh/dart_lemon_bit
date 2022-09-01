@@ -228,6 +228,14 @@ extension GameFunctions on Game {
     }
 
     for (final gameObject in gameObjects){
+      if (!gameObject.active) {
+        gameObject.respawn--;
+        if (gameObject.respawn <= 0){
+          gameObject.active = true;
+        }
+        continue;
+      }
+
       if (gameObject is Updatable) {
         (gameObject as Updatable).update(this);
       }
@@ -515,12 +523,24 @@ extension GameFunctions on Game {
 
       if (player.performMaxHits > 0){
         for (final gameObject in gameObjects) {
-          if (gameObject is Velocity == false) continue;
+
           if (gameObject.distanceFromXYZ(
-              player.performX,
-              player.performY,
-              player.performZ,
-            ) > 25) continue;
+            player.performX,
+            player.performY,
+            player.performZ,
+          ) > 25) continue;
+
+          if (gameObject is GameObjectStatic){
+            if (!gameObject.active) continue;
+            if (gameObject.type == GameObjectType.Barrel) {
+                 gameObject.active = false;
+                 gameObject.collidable = false;
+                 gameObject.respawn = 200;
+            }
+          }
+
+          if (gameObject is Velocity == false) continue;
+
           (gameObject as Velocity).applyForce(force: 5, angle:  radiansV2(player, gameObject));
           player.performMaxHits--;
         }

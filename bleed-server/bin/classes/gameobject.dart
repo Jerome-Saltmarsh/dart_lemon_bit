@@ -7,6 +7,9 @@ import 'library.dart';
 import 'position3.dart';
 
 abstract class GameObject extends Collider {
+  var active = true;
+  var respawn = 0;
+
   GameObject({
     required double x,
     required double y,
@@ -23,6 +26,7 @@ abstract class GameObject extends Collider {
 
 class GameObjectStatic extends GameObject {
   final int type;
+
   GameObjectStatic({
     required double x,
     required double y,

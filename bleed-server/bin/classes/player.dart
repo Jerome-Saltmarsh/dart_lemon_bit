@@ -363,6 +363,7 @@ extension PlayerProperties on Player {
   void writeGameObjects(){
     final gameObjects = game.gameObjects;
     for (final gameObject in gameObjects) {
+      if (!gameObject.active) continue;
       if (gameObject.renderY < screenTop) continue;
       if (gameObject.renderX < screenLeft) continue;
       if (gameObject.renderX > screenRight) continue;
