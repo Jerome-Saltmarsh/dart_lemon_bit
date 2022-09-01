@@ -11,10 +11,9 @@ import 'power.dart';
 import 'components.dart';
 import 'weapon.dart';
 
-abstract class Character extends Collider with Team, Velocity, Material {
+abstract class Character extends Collider with Team, Velocity, Material, FaceDirection {
 
   Game game;
-
   var _health = 1;
   var maxHealth = 1;
 
@@ -92,7 +91,7 @@ abstract class Character extends Collider with Team, Velocity, Material {
 
   void applyVelocity() {
      if (speed > movementSpeed) return;
-     speed = movementSpeed;
+     // speed = movementSpeed;
      // app
   }
 
@@ -151,7 +150,7 @@ abstract class Character extends Collider with Team, Velocity, Material {
     switch (state) {
       case CharacterAction.Idle:
         // only do this if not struck or recovering
-        speed *= 0.75;
+        // speed *= 0.75;
         break;
       case CharacterState.Running:
         applyVelocity();
@@ -183,7 +182,7 @@ abstract class Character extends Collider with Team, Velocity, Material {
   void setCharacterStateRunning(){
     setCharacterState(value: CharacterState.Running, duration: 0);
     if (stateDuration == 0) {
-      dispatch(GameEventType.Spawn_Dust_Cloud, angle);
+      dispatch(GameEventType.Spawn_Dust_Cloud, vAngle);
     }
   }
 
@@ -237,7 +236,7 @@ abstract class Character extends Collider with Team, Velocity, Material {
     x += xv;
     y += yv;
 
-    final type = getGridTypeInDirection(game: game, angle: angle, distance: radius);
+    final type = getGridTypeInDirection(game: game, angle: vAngle, distance: radius);
     if (type == NodeType.Tree_Bottom || type == NodeType.Torch) {
       final nodeCenterX = indexRow * tileSize + tileSizeHalf;
       final nodeCenterY = indexColumn * tileSize + tileSizeHalf;
@@ -245,12 +244,12 @@ abstract class Character extends Collider with Team, Velocity, Material {
       const treeRadius = 5;
       final overlap = dis - treeRadius - radius;
       if (overlap < 0) {
-        x -= getAdjacent(angle, overlap);
-        y -= getOpposite(angle, overlap);
+        x -= getAdjacent(vAngle, overlap);
+        y -= getOpposite(vAngle, overlap);
       }
     }
 
-    speed *= 0.75; // friction
+    applyFriction(0.75);
   }
 
   bool withinAttackRange(Position3 target){
@@ -262,12 +261,12 @@ abstract class Character extends Collider with Team, Velocity, Material {
 
   void face(Position position) {
     assert(!deadOrBusy);
-    angle = this.getAngle(position);
+    faceAngle = this.getAngle(position);
   }
 
   void faceXY(double x, double y) {
     assert(!deadOrBusy);
-    angle = getAngleXY(x, y);
+    faceAngle = getAngleXY(x, y);
   }
 
   double getAngleXY(double x, double y) =>

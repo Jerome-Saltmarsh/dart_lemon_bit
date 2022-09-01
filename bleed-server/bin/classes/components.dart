@@ -1,11 +1,16 @@
-import 'dart:math';
-
-import 'package:lemon_math/functions/adjacent.dart';
-import 'package:lemon_math/functions/opposite.dart';
 import 'package:lemon_math/library.dart';
 
 import '../common/Direction.dart';
 import '../common/MaterialType.dart';
+
+class FaceDirection {
+  var faceAngle = 0.0;
+
+  int get faceDirection => convertAngleToDirection(faceAngle);
+
+  void set faceDirection(int value) =>
+      faceAngle = convertDirectionToAngle(value);
+}
 
 mixin Owner <T> {
   late T owner;
@@ -16,42 +21,41 @@ mixin Team {
 }
 
 mixin Velocity {
-  var angle = 0.0;
-  var speed = 0.0;
+  // var angle = 0.0;
+  // var speed = 0.0;
   var mass = 1.0;
+  /// Velocity X
+  var xv = 0.0;
+  /// Velocity Y
+  var yv = 0.0;
 
-  void set direction(int value) => angle = convertDirectionToAngle(value);
-  int get direction => convertAngleToDirection(angle);
+  double get speed => getHypotenuse(xv, yv);
+  double get vAngle => getAngle(xv, yv);
 
-  /// TODO HACK (Why is pi being added here?)
-  double get xv => getAdjacent(angle + pi, speed);
-  /// TODO HACK (Why is pi being added here?)
-  double get yv => getOpposite(angle + pi, speed);
+  // void set direction(int value) => angle = convertDirectionToAngle(value);
+  // int get direction => convertAngleToDirection(angle);
 
-  void setVelocity(double x, double y){
+  // /// TODO HACK (Why is pi being added here?)
+  // double get xv => getAdjacent(angle + pi, speed);
+  // /// TODO HACK (Why is pi being added here?)
+  // double get yv => getOpposite(angle + pi, speed);
 
+  void setVelocity(double angle, double speed){
+     xv = getAdjacent(angle, speed);
+     yv = getHypotenuse(angle, speed);
   }
 
   void applyFriction(double amount){
-    speed *= amount;
+    xv *= amount;
+    yv *= amount;
   }
 
   void applyForce({
     required double force,
     required double angle,
   }) {
-    final accelerationX = getAdjacent(angle, force);
-    final accelerationY = getOpposite(angle, force);
-
-    final xv2 = xv + accelerationX;
-    final yv2 = yv + accelerationY;
-
-    speed = getHypotenuse(xv2, yv2);
-    angle = getAngle(xv2, yv2);
-  }
-
-  void accelerate(double rotation, double acceleration) {
-    speed += acceleration;
+    xv += getAdjacent(angle, force);
+    yv += getOpposite(angle, force);
   }
 }
 

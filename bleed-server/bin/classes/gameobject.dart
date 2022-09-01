@@ -70,11 +70,15 @@ class GameObjectSpawn extends GameObjectStatic {
 }
 
 abstract class GameObjectAnimal extends GameObject with Velocity {
+  var faceAngle = 0.0;
+  var moveSpeed = 1.0;
   final target = Position3();
   var spawnX = 0.0;
   var spawnY = 0.0;
   var spawnZ = 0.0;
   var wanderRadius = 100;
+
+  int get faceDirection => convertAngleToDirection(faceAngle);
 
   GameObjectAnimal({
     required double x, required double y, required double z,
@@ -111,7 +115,6 @@ class GameObjectButterfly extends GameObjectAnimal with Velocity implements Upda
     spawnX = x;
     spawnY = y;
     spawnZ = z;
-    speed = 1.5;
     collidable = false;
     assignNewTarget();
   }
@@ -121,7 +124,7 @@ class GameObjectButterfly extends GameObjectAnimal with Velocity implements Upda
     if (!visible) return;
     player.writeByte(ServerResponse.GameObject_Butterfly);
     player.writePosition3(this);
-    player.writeByte(direction);
+    player.writeByte(faceDirection);
   }
 
   @override
@@ -145,7 +148,7 @@ class GameObjectButterfly extends GameObjectAnimal with Velocity implements Upda
        pause = 100;
        return;
      }
-     angle = this.getAngle(target);
+     // angle = this.getAngle(target);
      x += xv;
      y += yv;
   }
@@ -163,16 +166,14 @@ class GameObjectChicken extends GameObjectAnimal implements Updatable {
     required double x,
     required double y,
     required double z,
-  }) : super(x: x, y: y, z: z) {
-    speed = 1.0;
-  }
+  }) : super(x: x, y: y, z: z);
 
   @override
   void write(Player player) {
       player.writeByte(ServerResponse.GameObject_Chicken);
       player.writePosition3(this);
       player.writeByte(state);
-      player.writeByte(direction);
+      player.writeByte(faceDirection);
   }
 
   @override
@@ -192,7 +193,7 @@ class GameObjectChicken extends GameObjectAnimal implements Updatable {
            pause = 100;
         } else {
           assignNewTarget();
-          angle = this.getAngle(target);
+          faceAngle = this.getAngle(target);
         }
       }
       return;
@@ -204,7 +205,7 @@ class GameObjectChicken extends GameObjectAnimal implements Updatable {
       return;
     }
     state = CharacterState.Running;
-    angle = this.getAngle(target);
+    faceAngle = this.getAngle(target);
     x += xv;
     y += yv;
   }
@@ -225,7 +226,7 @@ class GameObjectJellyfish extends GameObjectAnimal implements Updatable {
     required double y,
     required double z,
   }) : super(x: x, y: y, z: z) {
-    speed = 1.0;
+    faceAngle = 1.0;
   }
 
   @override
@@ -233,7 +234,7 @@ class GameObjectJellyfish extends GameObjectAnimal implements Updatable {
     player.writeByte(ServerResponse.GameObject_Jellyfish);
     player.writePosition3(this);
     player.writeByte(state);
-    player.writeByte(direction);
+    player.writeByte(faceDirection);
   }
 
   @override
@@ -246,7 +247,7 @@ class GameObjectJellyfish extends GameObjectAnimal implements Updatable {
           pause = 100;
         } else {
           assignNewTarget();
-          angle = this.getAngle(target);
+          faceAngle = this.getAngle(target);
         }
       }
       return;
@@ -258,7 +259,7 @@ class GameObjectJellyfish extends GameObjectAnimal implements Updatable {
       return;
     }
     state = CharacterState.Running;
-    angle = this.getAngle(target);
+    faceAngle = this.getAngle(target);
     x += xv;
     y += yv;
   }
@@ -277,7 +278,6 @@ class GameObjectJellyfishRed extends GameObjectAnimal implements Updatable {
     required double y,
     required double z,
   }) : super(x: x, y: y, z: z) {
-    speed = 1.0;
   }
 
   @override
@@ -285,7 +285,7 @@ class GameObjectJellyfishRed extends GameObjectAnimal implements Updatable {
     player.writeByte(ServerResponse.GameObject_Jellyfish_Red);
     player.writePosition3(this);
     player.writeByte(state);
-    player.writeByte(direction);
+    player.writeByte(faceDirection);
   }
 
   @override
@@ -298,7 +298,7 @@ class GameObjectJellyfishRed extends GameObjectAnimal implements Updatable {
           pause = 100;
         } else {
           assignNewTarget();
-          angle = this.getAngle(target);
+          faceAngle = this.getAngle(target);
         }
       }
       return;
@@ -310,7 +310,7 @@ class GameObjectJellyfishRed extends GameObjectAnimal implements Updatable {
       return;
     }
     state = CharacterState.Running;
-    angle = this.getAngle(target);
+    faceAngle = this.getAngle(target);
     x += xv;
     y += yv;
   }

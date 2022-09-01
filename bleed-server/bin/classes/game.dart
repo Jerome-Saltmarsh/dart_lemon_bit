@@ -700,7 +700,7 @@ extension GameFunctions on Game {
       range: src.equippedRange,
       target: src.target,
       projectileType: ProjectileType.Orb,
-      angle: src.target != null ? null : src.angle,
+      angle: src.target != null ? null : src.faceAngle,
       damage: damage,
     );
   }
@@ -720,7 +720,7 @@ extension GameFunctions on Game {
       speed: 7,
       range: range,
       target: target,
-      angle: target != null ? null : angle ?? src.angle,
+      angle: target != null ? null : angle ?? src.faceAngle,
       projectileType: ProjectileType.Arrow,
       damage: damage,
     );
@@ -752,7 +752,7 @@ extension GameFunctions on Game {
     return spawnProjectile(
       src: src,
       accuracy: 0,
-      angle: src.angle,
+      angle: src.faceAngle,
       speed: speed,
       range: src.equippedRange,
       projectileType: ProjectileType.Bullet,
@@ -776,7 +776,7 @@ extension GameFunctions on Game {
       if (target != null && target is Collider){
         finalAngle = src.getAngle(target);
       } else {
-        finalAngle = src.angle;
+        finalAngle = src.faceAngle;
       }
     }
     projectile.damage = damage;
@@ -790,8 +790,7 @@ extension GameFunctions on Game {
     projectile.x = src.x;
     projectile.y = src.y;
     projectile.z = src.z + tileHeightHalf;
-    projectile.angle = finalAngle + giveOrTake(accuracy);
-    projectile.speed = speed;
+    projectile.setVelocity(finalAngle + giveOrTake(accuracy), speed);
     projectile.owner = src;
     projectile.range = range;
     projectile.type = projectileType;
@@ -1022,8 +1021,11 @@ extension GameFunctions on Game {
           dispatchV3(GameEventType.Clip_Empty, character);
           return;
         }
-        dispatchV3(GameEventType.Handgun_Fired, character,
-            angle: character.angle);
+        dispatchV3(
+            GameEventType.Handgun_Fired,
+            character,
+            angle: character.faceAngle,
+        );
         return;
       }
       if (stateDuration == 2) {
@@ -1082,7 +1084,7 @@ extension GameFunctions on Game {
           range: character.equippedRange * 2,
           projectileType: ProjectileType.Wave,
           damage: 1,
-          angle: character.angle,
+          angle: character.faceAngle,
       );
 
       final attackTarget = character.target;

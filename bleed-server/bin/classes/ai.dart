@@ -117,13 +117,13 @@ abstract class AI extends Character with Material {
       final r = radius + 2;
 
       if (!getCollisionInDirection(game: game, angle: destAngle, distance: r)){
-        angle = getDestinationAngle();
+        faceAngle = getDestinationAngle();
       } else
       if (!getCollisionInDirection(game: game, angle: destAngle - piHalf, distance: r)){
-        angle = destAngle - piHalf;
+        faceAngle = destAngle - piHalf;
       } else
       if (!getCollisionInDirection(game: game, angle: destAngle + piHalf, distance: r)){
-        angle = destAngle + piHalf;
+        faceAngle = destAngle + piHalf;
       }
       return setCharacterStateRunning();
     }
@@ -132,7 +132,7 @@ abstract class AI extends Character with Material {
       pathIndex--;
       destX = pathX[pathIndex];
       destY = pathY[pathIndex];
-      angle = getDestinationAngle();
+      faceAngle = getDestinationAngle();
       setCharacterStateRunning();
       return;
     }

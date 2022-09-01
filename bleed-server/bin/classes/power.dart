@@ -98,8 +98,8 @@ class PowerFireball extends Power {
     if (src.stateDuration != 10) return;
     final piSixteenth = piEighth * 0.5;
     game.spawnProjectileFireball(src, damage: damage, range: range);
-    game.spawnProjectileFireball(src, damage: damage, range: range, angle: src.angle + piSixteenth);
-    game.spawnProjectileFireball(src, damage: damage, range: range, angle: src.angle - piSixteenth);
+    game.spawnProjectileFireball(src, damage: damage, range: range, angle: src.faceAngle + piSixteenth);
+    game.spawnProjectileFireball(src, damage: damage, range: range, angle: src.faceAngle - piSixteenth);
     src.clearAbility();
   }
 }

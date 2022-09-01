@@ -333,7 +333,7 @@ class Connection {
           return;
         }
         player.target = null;
-        player.angle = player.mouseAngle;
+        player.faceAngle = player.mouseAngle;
         player.setCharacterStatePerforming(duration: 30);
         break;
 
@@ -845,7 +845,7 @@ class Connection {
 
         break;
       case CharacterAction.Run:
-        player.direction = args[6];
+        player.faceDirection = args[6];
         player.setCharacterStateRunning();
         player.target = null;
 

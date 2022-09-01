@@ -313,7 +313,7 @@ extension PlayerProperties on Player {
 
   void writePlayerDebug(){
     writeByte(state);
-    writeInt(angle * 100);
+    writeInt(faceAngle * 100);
     writeInt(mouseAngle * 100);
   }
 
@@ -502,7 +502,7 @@ extension PlayerProperties on Player {
     writePosition(projectile);
     writeInt(projectile.z);
     writeByte(projectile.type);
-    writeAngle(projectile.angle);
+    writeAngle(projectile.faceAngle);
   }
 
   void writeDamageApplied(Position target, int amount) {
@@ -528,7 +528,7 @@ extension PlayerProperties on Player {
   }
 
   void writeCharacter(Player player, Character character) {
-    writeByte((onSameTeam(player, character) ? 100 : 0) + (character.direction * 10) + character.state); // 1
+    writeByte((onSameTeam(player, character) ? 100 : 0) + (character.faceDirection * 10) + character.state); // 1
     writePosition(character);
     writeInt(character.z);
     writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);

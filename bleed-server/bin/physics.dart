@@ -23,7 +23,7 @@ I? raycastHit<I extends Collider>({
     final distance =  getDistanceBetweenV3(character, collider);
     if (distance > range) continue;
     final angle = character.getAngle(collider);
-    final angleDiff = calculateAngleDifference(angle, character.angle);
+    final angleDiff = calculateAngleDifference(angle, character.faceAngle);
     if (angleDiff > angleRange) continue;
     if (distance < targetDistance) {
       target = collider;
