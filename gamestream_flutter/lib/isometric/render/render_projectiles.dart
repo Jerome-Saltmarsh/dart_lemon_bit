@@ -4,6 +4,7 @@ import 'package:bleed_common/Projectile_Type.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 
 void renderProjectile(Projectile value) {
@@ -20,10 +21,10 @@ void renderProjectile(Projectile value) {
       return renderRotated(
           dstX: value.renderX,
           dstY: value.renderY,
-          srcX: 2608,
-          srcY: 0,
-          srcWidth: 32,
-          srcHeight: 32,
+          srcX: 2576,
+          srcY: (engine.frame % 6) * 64,
+          srcWidth: 64,
+          srcHeight:64,
           rotation: value.angle + pi - piQuarter,
       );
     case ProjectileType.Wave:

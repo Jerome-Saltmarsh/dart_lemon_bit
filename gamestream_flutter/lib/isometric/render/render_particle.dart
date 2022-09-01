@@ -18,6 +18,20 @@ void renderParticle(Particle value) {
           scale: value.scale,
           color: value.renderColor,
       );
+    case ParticleType.Bullet_Ring:
+      final frame = value.frame ~/ 2;
+      if (frame > 6) return;
+      const size = 32.0;
+      return render(
+        dstX: value.renderX,
+        dstY: value.renderY,
+        srcX: 2544,
+        srcY: frame * size,
+        srcWidth: size,
+        srcHeight: size,
+        scale: value.scale,
+        color: value.renderColor,
+      );
     case ParticleType.Fire:
       if (value.frame > 12 ) return;
       return render(

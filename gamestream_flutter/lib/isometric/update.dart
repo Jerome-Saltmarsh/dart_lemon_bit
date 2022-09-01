@@ -119,6 +119,13 @@ void updateProjectiles() {
         angle: (projectile.angle + pi) + giveOrTake(piHalf ),
         speed: 1.5,
       );
+      spawnParticleBulletRing(
+        x: projectile.x,
+        y: projectile.y,
+        z: projectile.z,
+        angle: projectile.angle,
+        speed: 1.5,
+      );
       continue;
     }
 

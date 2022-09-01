@@ -649,6 +649,31 @@ void spawnParticleBubble({
   );
 }
 
+
+void spawnParticleBulletRing({
+  required double x,
+  required double y,
+  required double z,
+  int duration = 100,
+  double scale = 1.0,
+  double angle = 0,
+  double speed = 0,
+}) {
+  spawnParticle(
+    type: ParticleType.Bullet_Ring,
+    x: x,
+    y: y,
+    z: z,
+    angle: angle,
+    rotation: 0,
+    speed: speed,
+    scaleV: 0,
+    weight: -0.5,
+    duration: duration,
+    scale: scale,
+  );
+}
+
 void spawnParticleCutGrass({
   required double x,
   required double y,
