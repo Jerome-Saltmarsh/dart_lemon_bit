@@ -350,14 +350,11 @@ class Connection {
 
       case ClientRequest.Caste:
         if (player.deadOrBusy) return;
-        // player.ability = PowerFireball();
-        // player.angle = player.mouseAngle;
-        // player.setCharacterStatePerforming(duration: 30);
         game.spawnProjectileFireball(
             player,
             damage: 5,
             range: 250,
-            angle: player.mouseAngle,
+            angle: player.mouseAngle + pi,
         );
         break;
 
@@ -789,6 +786,7 @@ class Connection {
         }
 
         if (player.performDuration <= 0) {
+          /// TODO Why is pi being added here?
           final angle = player.mouseAngle + pi;
           final distance = 30.0;
           final adj = getAdjacent(angle, distance);

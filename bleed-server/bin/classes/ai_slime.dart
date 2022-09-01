@@ -14,6 +14,7 @@ class AISlime extends AI {
     required double z,
     required int health,
     required Game game,
+    required int team,
   }) : super(
       x: x,
       y: y,
@@ -21,6 +22,7 @@ class AISlime extends AI {
       health: health,
       weapon: Weapon(type: WeaponType.Unarmed, damage: 1),
       game: game,
+      team: team,
   );
 
   @override

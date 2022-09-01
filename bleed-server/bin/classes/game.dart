@@ -657,7 +657,7 @@ extension GameFunctions on Game {
 
     if (target is Velocity) {
       (target as Velocity).applyForce(
-          force: 1,
+          force: 30,
           angle: radiansV2(src, target),
       );
     }
@@ -770,7 +770,7 @@ extension GameFunctions on Game {
     double? angle = 0,
     Position3? target,
   }) {
-    final projectile = getAvailableProjectile();
+    final projectile = getInstanceProjectile();
     var finalAngle = angle;
     if (finalAngle == null){
       if (target != null && target is Collider){
@@ -797,7 +797,7 @@ extension GameFunctions on Game {
     return projectile;
   }
 
-  Projectile getAvailableProjectile() {
+  Projectile getInstanceProjectile() {
     for (var i = 0; i < projectiles.length; i++) {
       if (projectiles[i].active) continue;
       return projectiles[i];

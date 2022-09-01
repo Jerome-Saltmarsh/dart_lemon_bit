@@ -109,6 +109,7 @@ class GameDarkAge extends Game {
           z: spawn.z,
           health: 30,
           game: this,
+          team: Teams.evil,
         );
         characters.add(instance);
         spawn.instance = instance;
