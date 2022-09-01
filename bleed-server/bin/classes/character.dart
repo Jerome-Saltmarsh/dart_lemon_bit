@@ -93,6 +93,7 @@ abstract class Character extends Collider with Team, Velocity, Material {
   void applyVelocity() {
      if (speed > movementSpeed) return;
      speed = movementSpeed;
+     // app
   }
 
   void customUpdateCharacter(Game game){
@@ -149,6 +150,7 @@ abstract class Character extends Collider with Team, Velocity, Material {
     }
     switch (state) {
       case CharacterAction.Idle:
+        // only do this if not struck or recovering
         speed *= 0.75;
         break;
       case CharacterState.Running:

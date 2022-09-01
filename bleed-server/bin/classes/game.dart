@@ -257,9 +257,9 @@ extension GameFunctions on Game {
     final damage = min(amount, target.health);
     target.health -= damage;
 
-    const forceMultiplier = 3.0;
-    target.accelerate(
-        radiansV2(src, target), damage / target.maxHealth * forceMultiplier);
+    // const forceMultiplier = 3.0;
+    // target.accelerate(
+    //     radiansV2(src, target), damage / target.maxHealth * forceMultiplier);
 
     switch (target.material) {
       case MaterialType.Rock:
@@ -646,12 +646,20 @@ extension GameFunctions on Game {
       if (target.dead) return;
     }
 
+    // TODO Hack
     if (src is Zombie) {
       dispatchV3(GameEventType.Zombie_Strike, src);
     }
     target.onStruckBy(src);
     if (target is Character){
       applyDamage(src: src, target: target, amount: damage);
+    }
+
+    if (target is Velocity) {
+      (target as Velocity).applyForce(
+          force: 1,
+          angle: radiansV2(src, target),
+      );
     }
   }
 

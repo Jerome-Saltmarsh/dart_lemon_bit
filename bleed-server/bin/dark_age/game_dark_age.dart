@@ -107,7 +107,7 @@ class GameDarkAge extends Game {
           x: spawn.x,
           y: spawn.y,
           z: spawn.z,
-          health: 10,
+          health: 30,
           game: this,
         );
         characters.add(instance);
