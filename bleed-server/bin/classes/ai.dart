@@ -142,7 +142,7 @@ abstract class AI extends Character with Material {
   }
 
   double getDestinationAngle(){
-    return getAngleBetween(x, y, destX, destY);
+    return getAngleBetween(destX, destY, x, y);
   }
 
   void customUpdateAI(Game game){
