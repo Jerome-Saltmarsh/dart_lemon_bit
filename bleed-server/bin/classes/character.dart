@@ -90,9 +90,11 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
   }
 
   void applyVelocity() {
-     if (speed > movementSpeed) return;
+     // if (speed > movementSpeed) return;
+     applyForce(force: 1.0, angle: faceAngle);
      // speed = movementSpeed;
      // app
+
   }
 
   void customUpdateCharacter(Game game){
@@ -126,7 +128,7 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
     return game.scene.getCollisionAt(x + getAdjacent(angle, distance), y + getOpposite(angle, distance), z + tileHeightHalf);
   }
 
-  int getGridTypeInDirection({required Game game, required double angle, required double distance}){
+  int getNodeTypeInDirection({required Game game, required double angle, required double distance}){
     return game.scene.getNodeXYZ(x + getAdjacent(angle, distance), y + getOpposite(angle, distance), z + tileHeightHalf).type;
   }
 
@@ -236,8 +238,8 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
     x += xv;
     y += yv;
 
-    final type = getGridTypeInDirection(game: game, angle: vAngle, distance: radius);
-    if (type == NodeType.Tree_Bottom || type == NodeType.Torch) {
+    final nodeType = getNodeTypeInDirection(game: game, angle: vAngle, distance: radius);
+    if (nodeType == NodeType.Tree_Bottom || nodeType == NodeType.Torch) {
       final nodeCenterX = indexRow * tileSize + tileSizeHalf;
       final nodeCenterY = indexColumn * tileSize + tileSizeHalf;
       final dis = getDistanceXY(nodeCenterX, nodeCenterY);

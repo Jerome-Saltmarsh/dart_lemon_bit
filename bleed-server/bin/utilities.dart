@@ -1,5 +1,3 @@
-import 'classes/character.dart';
-
 double clamp(double value, double min, double max) {
   if (value < min) return min;
   if (value > max) return max;
@@ -12,10 +10,5 @@ int clampInt(int value, int min, int max) {
   return value;
 }
 
-int calculateTime({int minute = 0, int hour = 0}){
-  const secondsPerMinute = 60;
-  const minutesPerHour = 60;
-  return secondsPerMinute * minutesPerHour * hour + minute;
-}
 
 
