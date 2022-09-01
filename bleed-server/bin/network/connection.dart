@@ -350,6 +350,8 @@ class Connection {
 
       case ClientRequest.Caste:
         if (player.deadOrBusy) return;
+        print("mouse angle: ${player.mouseAngle}");
+
         game.spawnProjectileFireball(
             player,
             damage: 5,

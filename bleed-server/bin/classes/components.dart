@@ -32,17 +32,9 @@ mixin Velocity {
   double get speed => getHypotenuse(xv, yv);
   double get vAngle => getAngle(xv, yv);
 
-  // void set direction(int value) => angle = convertDirectionToAngle(value);
-  // int get direction => convertAngleToDirection(angle);
-
-  // /// TODO HACK (Why is pi being added here?)
-  // double get xv => getAdjacent(angle + pi, speed);
-  // /// TODO HACK (Why is pi being added here?)
-  // double get yv => getOpposite(angle + pi, speed);
-
   void setVelocity(double angle, double speed){
      xv = getAdjacent(angle, speed);
-     yv = getHypotenuse(angle, speed);
+     yv = getOpposite(angle, speed);
   }
 
   void applyFriction(double amount){
