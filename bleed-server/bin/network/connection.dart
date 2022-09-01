@@ -350,14 +350,23 @@ class Connection {
 
       case ClientRequest.Caste:
         if (player.deadOrBusy) return;
-        print("mouse angle: ${player.mouseAngle}");
 
-        game.spawnProjectileFireball(
-            player,
-            damage: 5,
-            range: 250,
-            angle: player.mouseAngle,
+        game.spawnProjectile(
+          src: player,
+          accuracy: 0,
+          angle: player.mouseAngle,
+          speed: 8.0,
+          range: 300,
+          projectileType: ProjectileType.Bullet,
+          damage: 5,
         );
+        player.dispatch(GameEventType.Handgun_Fired);
+        // game.spawnProjectileFireball(
+        //     player,
+        //     damage: 5,
+        //     range: 250,
+        //     angle: player.mouseAngle,
+        // );
         break;
 
       case ClientRequest.Caste_Basic:

@@ -44,7 +44,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       return audioSingleFootstepGrass7.playXYZ(x, y, z);
 
     case GameEventType.Handgun_Fired:
-      audio.handgunShot(x, y);
+      audioSingleHandgunFired.playXYZ(x, y, z);
       const distance = 12.0;
       final xForward = getAdjacent(angle, distance);
       final yForward = getOpposite(angle, distance);

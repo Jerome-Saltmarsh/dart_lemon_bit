@@ -111,6 +111,17 @@ void updateProjectiles() {
       continue;
     }
 
+    if (projectile.type == ProjectileType.Bullet) {
+      spawnParticleBubble(
+        x: projectile.x + giveOrTake(5),
+        y: projectile.y + giveOrTake(5),
+        z: projectile.z,
+        angle: (projectile.angle + pi) + giveOrTake(piHalf ),
+        speed: 1.5,
+      );
+      continue;
+    }
+
     if (projectile.type != ProjectileType.Orb) continue;
     spawnParticleOrbShard(x: projectile.x, y: projectile.y, z: projectile.z, angle: randomAngle());
   }
