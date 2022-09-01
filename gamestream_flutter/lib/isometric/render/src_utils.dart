@@ -42,7 +42,10 @@ double loop4({
       required int framesPerDirection,
       double size = 64,
 }) {
-  return (character.direction * framesPerDirection * size) +
+  /// This hack is necessary because the frames ere print with index 0 being forward
+  /// however forward in the game world faces down right (South)
+  final direction = (character.direction + 4) % 8;
+  return (direction * framesPerDirection * size) +
       ((animation[character.frame % 4] - 1) * size);
 }
 
