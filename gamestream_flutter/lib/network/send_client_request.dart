@@ -247,11 +247,20 @@ void sendGameObjectRequestSpawnTypeIncrement() {
   sendGameObjectRequest(GameObjectRequest.Spawn_Type_Increment);
 }
 
+void sendGameObjectRequestSetSpawnAmount(int amount) {
+  if (amount <= 0) return;
+  if (amount > 256) return;
+  sendGameObjectRequest(GameObjectRequest.Set_Spawn_Amount, amount);
+}
+
 void sendGameObjectRequestMoveToMouse() {
   sendGameObjectRequest(GameObjectRequest.Move_To_Mouse);
 }
 
-void sendGameObjectRequest(GameObjectRequest request) {
+void sendGameObjectRequest(GameObjectRequest request, [dynamic message]) {
+  if (message != null){
+    sendClientRequest(ClientRequest.GameObject, '${request.index} $message');
+  }
   sendClientRequest(ClientRequest.GameObject, request.index);
 }
 

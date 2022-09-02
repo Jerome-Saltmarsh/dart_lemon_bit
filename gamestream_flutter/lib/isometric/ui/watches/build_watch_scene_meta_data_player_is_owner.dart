@@ -317,9 +317,31 @@ Widget buildColumnSelectedGameObject() {
                           action: sendGameObjectRequestSpawnTypeIncrement,
                         ),
                         watch (edit.gameObjectSelectedAmount, (int amount) =>
-                          container (
-                            child: "Amount: $amount",
-                            action: sendGameObjectRequestSpawnTypeIncrement,
+                          Row(
+                            children: [
+                              container(
+                                width: 50,
+                                height: 50,
+                                child: '-',
+                                action: amount <= 1 ? null : () =>
+                                    sendGameObjectRequestSetSpawnAmount(
+                                        amount - 1
+                                    ),
+                              ),
+                              container (
+                                child: "Amount: $amount",
+                                action: sendGameObjectRequestSpawnTypeIncrement,
+                              ),
+                              container(
+                                width: 50,
+                                height: 50,
+                                child: '+',
+                                action: amount >= 256 ? null : () =>
+                                    sendGameObjectRequestSetSpawnAmount(
+                                        amount + 1
+                                    ),
+                              ),
+                            ],
                           )
                         ),
                       ],

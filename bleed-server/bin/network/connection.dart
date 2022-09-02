@@ -718,6 +718,25 @@ class Connection {
         player.deselectSelectedGameObject();
         break;
 
+      case GameObjectRequest.Set_Spawn_Amount:
+        if (arguments.length < 3) return;
+        final selectedGameObject = player.editorSelectedGameObject;
+        if (selectedGameObject == null) return;
+        if (selectedGameObject is GameObjectSpawn == false) return;
+        final amount = int.tryParse(arguments[2]);
+        if (amount == null) {
+          return errorInvalidArg('invalid amount');
+        }
+        if (amount < 0){
+          return errorInvalidArg('amount must be greater than 0');
+        }
+        if (amount > 256){
+          return errorInvalidArg('amount must be less than 256');
+        }
+        final spawn = selectedGameObject as GameObjectSpawn;
+        spawn.amount = amount;
+        break;
+
       case GameObjectRequest.Spawn_Type_Increment:
         final selectedGameObject = player.editorSelectedGameObject;
         if (selectedGameObject == null) return;
