@@ -66,12 +66,14 @@ class GameObjectSpawn extends GameObjectStatic {
   /// common/spawn_type.dart
   int spawnType;
   int amount;
+  double spawnRadius;
 
   GameObjectSpawn({
     required double x,
     required double y,
     required double z,
     required this.spawnType,
+    this.spawnRadius = 50,
     this.amount = 1,
   }) : super(x: x, y: y, z: z, type: GameObjectType.Spawn);
 

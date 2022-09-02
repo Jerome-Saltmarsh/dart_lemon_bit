@@ -700,7 +700,9 @@ class Connection {
           if (game is GameDarkAge){
             final spawn = GameObjectSpawn(x: x, y: y, z: z, spawnType: 0);
             game.scene.gameObjects.add(spawn);
-            game.spawnGameObject(spawn);
+            for (var i = 0; i < spawn.amount; i++){
+              game.spawnGameObject(spawn);
+            }
           }
         } else {
           player.game.scene.gameObjects.add(
@@ -735,6 +737,10 @@ class Connection {
         }
         final spawn = selectedGameObject as GameObjectSpawn;
         spawn.amount = amount;
+        player.game.removeSpawnInstances(spawn);
+        for (var i = 0; i < spawn.amount; i++){
+          player.game.spawnGameObject(spawn);
+        }
         break;
 
       case GameObjectRequest.Spawn_Type_Increment:

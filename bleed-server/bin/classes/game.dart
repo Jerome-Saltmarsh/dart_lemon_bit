@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
+import '../common/spawn_type.dart';
 import '../common/teams.dart';
 import '../engine.dart';
 import '../functions.dart';
@@ -11,6 +12,7 @@ import '../io/write_scene_to_file.dart';
 import '../maths.dart';
 import '../physics.dart';
 import 'ai.dart';
+import 'ai_slime.dart';
 import 'character.dart';
 import 'collider.dart';
 import 'components.dart';
@@ -434,6 +436,8 @@ extension GameFunctions on Game {
     }
   }
 
+
+
   void _updateProjectiles() {
     var projectilesLength = projectiles.length;
     for (var i = 0; i < projectilesLength; i++) {
@@ -663,6 +667,101 @@ extension GameFunctions on Game {
         handleProjectileHit(projectile, collider);
         break;
       }
+    }
+  }
+
+  void spawnGameObject(GameObjectSpawn spawn){
+    final distance = randomBetween(0, spawn.spawnRadius);
+    final angle = randomAngle();
+    final x = getAdjacent(angle, distance);
+    final y = getOpposite(angle, distance);
+
+    switch (spawn.spawnType) {
+      case SpawnType.Chicken:
+        final instance = GameObjectChicken(
+            x: spawn.x + x,
+            y: spawn.y + y,
+            z: spawn.z);
+        instance.spawn = spawn;
+        gameObjects.add(instance);
+        return;
+      case SpawnType.Jellyfish:
+        final instance = GameObjectJellyfish(
+            x: spawn.x + x,
+            y: spawn.y + y,
+            z: spawn.z);
+        instance.spawn = spawn;
+        gameObjects.add(instance);
+        return;
+      case SpawnType.Jellyfish_Red:
+        final instance = GameObjectJellyfishRed(
+            x: spawn.x + x,
+            y: spawn.y + y,
+            z: spawn.z);
+        instance.spawn = spawn;
+        gameObjects.add(instance);
+        return;
+      case SpawnType.Rat:
+        final instance = Rat(
+            z: spawn.indexZ,
+            row: spawn.indexRow,
+            column: spawn.indexColumn,
+            game: this
+        );
+        instance.spawn = spawn;
+        characters.add(instance);
+        break;
+      case SpawnType.Butterfly:
+        final instance = GameObjectButterfly(
+            x: spawn.x,
+            y: spawn.y,
+            z: spawn.z);
+        instance.spawn = spawn;
+        gameObjects.add(instance);
+        break;
+      case SpawnType.Zombie:
+        final instance = Zombie(
+          x: spawn.x + x,
+          y: spawn.y + y,
+          z: spawn.z,
+          health: 10,
+          damage: 1,
+          game: this,
+          team: Teams.evil,
+        );
+        instance.spawn = spawn;
+        characters.add(instance);
+        break;
+      case SpawnType.Slime:
+        final instance = AISlime(
+          x: spawn.x + x,
+          y: spawn.y + y,
+          z: spawn.z,
+          health: 30,
+          game: this,
+          team: Teams.evil,
+        );
+        instance.spawn = spawn;
+        characters.add(instance);
+        break;
+      case SpawnType.Template:
+        final instance = Npc(
+          game: this,
+          x: spawn.x + x,
+          y: spawn.y + y,
+          z: spawn.z,
+          health: 10,
+          weapon: Weapon(type: WeaponType.Bow, damage: 1),
+          team: 2,
+          wanderRadius: 100,
+          name: 'Bandit',
+        );
+        instance.spawn = spawn;
+        characters.add(instance);
+        break;
+      default:
+        print("Warning: Unrecognized SpawnType ${spawn.spawnType}");
+        break;
     }
   }
 
@@ -1282,4 +1381,5 @@ int calculateDamage({
     default:
       return 0;
   }
+
 }
