@@ -338,23 +338,8 @@ extension PlayerProperties on Player {
     writeGameTime(game);
     writeCharacters();
     writeGameObjects();
+    writeEditorGameObjectSelected();
 
-    if (target != null){
-      writeByte(ServerResponse.Player_Target);
-      writePosition3(target!);
-    }
-
-    final selectedGameObject = editorSelectedGameObject;
-    if (selectedGameObject != null) {
-      writeByte(ServerResponse.Editor_GameObject_Selected);
-      writePosition3(selectedGameObject);
-      writeByte(selectedGameObject.type);
-      if (selectedGameObject is GameObjectSpawn) {
-        assert (selectedGameObject.type == GameObjectType.Spawn);
-        writeByte(selectedGameObject.spawnType);
-        writeByte(selectedGameObject.amount);
-      }
-    }
 
     if (!sceneDownloaded){
       downloadScene();
@@ -758,6 +743,19 @@ extension PlayerProperties on Player {
     final area = game as DarkAgeArea;
     writeByte(ServerResponse.Map_Coordinate);
     writeByte(area.mapTile);
+  }
+
+  void writeEditorGameObjectSelected() {
+    final selectedGameObject = editorSelectedGameObject;
+    if (selectedGameObject == null) return;
+    writeByte(ServerResponse.Editor_GameObject_Selected);
+    writePosition3(selectedGameObject);
+    writeByte(selectedGameObject.type);
+    if (selectedGameObject is GameObjectSpawn) {
+      assert(selectedGameObject.type == GameObjectType.Spawn);
+      writeByte(selectedGameObject.spawnType);
+      writeByte(selectedGameObject.spawnType);
+    }
   }
 }
 
