@@ -302,27 +302,34 @@ Widget buildColumnSelectedGameObject() {
     return Container(
       color: brownLight,
       padding: const EdgeInsets.all(6),
-      child: watch(edit.gameObjectSelectedType, (int type){
-        return Column(
-          children: [
-            text(GameObjectType.getName(type)),
-            if (type == GameObjectType.Spawn)
-              watch(edit.gameObjectSelectedSpawnType, (int spawnType){
-                return Column(
-                  children: [
-                    container(
-                       child: "Amount ${edit.gameObject.spawnAmount}",
-                    ),
-                    container(
-                      child: "Spawns: ${SpawnType.getName(spawnType)}",
-                      action: sendGameObjectRequestSpawnTypeIncrement,
-                    ),
-                  ],
-                );
-              }),
-          ],
-        );
-      }),
+      child: Column(
+        children: [
+          watch(edit.gameObjectSelectedType, (int type){
+            return Column(
+              children: [
+                text(GameObjectType.getName(type)),
+                if (type == GameObjectType.Spawn)
+                  watch(edit.gameObjectSelectedSpawnType, (int spawnType){
+                    return Column(
+                      children: [
+                        container (
+                          child: "Spawns: ${SpawnType.getName(spawnType)}",
+                          action: sendGameObjectRequestSpawnTypeIncrement,
+                        ),
+                        watch (edit.gameObjectSelectedAmount, (int amount) =>
+                          container (
+                            child: "Amount: $amount",
+                            action: sendGameObjectRequestSpawnTypeIncrement,
+                          )
+                        ),
+                      ],
+                    );
+                  }),
+              ],
+            );
+          }),
+        ],
+      ),
     );
   });
 }
