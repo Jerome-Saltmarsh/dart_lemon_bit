@@ -826,20 +826,31 @@ extension GameFunctions on Game {
   }
 
   void updateCharacter(Character character) {
-    if (character.dead){
-      if (character is AI){
-        if (character.respawn-- <= 0){
-           character.x = character.spawnX;
-           character.y = character.spawnY;
-           character.z = character.spawnZ;
-           character.collidable = true;
-           character.health = character.maxHealth;
-           character.setCharacterStateSpawning();
-        }
+    if (character.dead) {
+      if (character is AI) {
+        updateRespawnAI(character);
       }
       return;
     }
     character.updateCharacter(this);
+  }
+
+  void updateRespawnAI(AI ai) {
+    assert (ai.dead);
+    final spawn = ai.spawn;
+    if (spawn == null) return;
+    if (ai.respawn-- > 0) return;
+    final distance = randomBetween(0, spawn.spawnRadius);
+    final angle = randomAngle();
+    ai.x = spawn.x + getAdjacent(angle, distance);
+    ai.y = spawn.y + getOpposite(angle, distance);
+    ai.z = ai.spawnZ;
+    ai.collidable = true;
+    ai.health = ai.maxHealth;
+    ai.target = null;
+    ai.xv = 0;
+    ai.xv = 0;
+    ai.setCharacterStateSpawning();
   }
 
   Projectile spawnProjectileOrb(Character src, {required int damage}) {

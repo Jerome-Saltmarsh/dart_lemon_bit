@@ -5,6 +5,7 @@ import '../functions/withinRadius.dart';
 import '../utilities.dart';
 import 'collider.dart';
 import 'game.dart';
+import 'gameobject.dart';
 import 'player.dart';
 import 'position3.dart';
 import 'power.dart';
@@ -51,7 +52,7 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
   var performZ = 0.0;
   var performMaxHits = 1;
 
-  dynamic spawn;
+  GameObjectSpawn? spawn;
 
   bool get running => state == CharacterState.Running;
   bool get idling => state == CharacterState.Idle;
