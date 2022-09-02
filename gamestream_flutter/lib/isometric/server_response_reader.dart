@@ -19,7 +19,6 @@ import 'package:gamestream_flutter/isometric/floating_texts.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/io/custom_game_names.dart';
-import 'package:gamestream_flutter/isometric/lighting/apply_vector_emission.dart';
 import 'package:gamestream_flutter/isometric/npcs.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
@@ -90,18 +89,10 @@ class ServerResponseReader with ByteReader {
           readCharacterSlime();
           break;
         case ServerResponse.GameObject_Static:
-          final gameObject = getInstanceGameObject();
-          readVector3(gameObject);
-          gameObject.type = readByte();
-          totalGameObjects++;
+          readGameObjectStatic();
           break;
         case ServerResponse.GameObject_Spawn:
-          final gameObject = getInstanceGameObject();
-          readVector3(gameObject);
-          gameObject.type = GameObjectType.Spawn;
-          gameObject.spawnType = readByte();
-          gameObject.spawnAmount = readByte();
-          totalGameObjects++;
+          readGameObjectSpawn();
           break;
         case ServerResponse.GameObject_Butterfly:
           readGameObjectButterfly();
@@ -157,9 +148,7 @@ class ServerResponseReader with ByteReader {
           readPlayerAttackTarget();
           break;
         case ServerResponse.Player_Attack_Target_Name:
-          player.mouseTargetName.value = readString();
-          player.mouseTargetAllie.value = readBool();
-          player.mouseTargetHealth.value = readPercentage();
+          readPlayerAttackTargetName();
           break;
         case ServerResponse.Player_Attack_Target_None:
           readPlayerAttackTargetNone();
@@ -218,27 +207,57 @@ class ServerResponseReader with ByteReader {
           readSceneMetaData();
           break;
         case ServerResponse.Map_Coordinate:
-          player.mapTile.value = readByte();
+          readMapCoordinate();
           break;
         case ServerResponse.Interacting_Npc_Name:
           readInteractingNpcName();
           break;
         case ServerResponse.Editor_GameObject_Selected:
-          readVector3(edit.gameObject);
-          final type = readByte();
-          edit.gameObject.type = type;
-          edit.gameObjectSelectedType.value = type;
-          if (type == GameObjectType.Spawn) {
-            edit.gameObjectSelectedSpawnType.value = readByte();
-            edit.gameObjectSelectedAmount.value = readByte();
-          }
-          edit.gameObjectSelected.value = true;
-          edit.cameraCenterSelectedObject();
+          readEditorGameObjectSelected();
           break;
         default:
           throw Exception("Cannot parse $response at index: $index");
       }
     }
+  }
+
+  void readGameObjectStatic() {
+    final gameObject = getInstanceGameObject();
+    readVector3(gameObject);
+    gameObject.type = readByte();
+    totalGameObjects++;
+  }
+
+  void readGameObjectSpawn() {
+    final gameObject = getInstanceGameObject();
+    readVector3(gameObject);
+    gameObject.type = GameObjectType.Spawn;
+    gameObject.spawnType = readByte();
+    gameObject.spawnAmount = readByte();
+    totalGameObjects++;
+  }
+
+  void readPlayerAttackTargetName() {
+    player.mouseTargetName.value = readString();
+    player.mouseTargetAllie.value = readBool();
+    player.mouseTargetHealth.value = readPercentage();
+  }
+
+  void readMapCoordinate() {
+    player.mapTile.value = readByte();
+  }
+
+  void readEditorGameObjectSelected() {
+    readVector3(edit.gameObject);
+    final type = readByte();
+    edit.gameObject.type = type;
+    edit.gameObjectSelectedType.value = type;
+    if (type == GameObjectType.Spawn) {
+      edit.gameObjectSelectedSpawnType.value = readByte();
+      edit.gameObjectSelectedAmount.value = readByte();
+    }
+    edit.gameObjectSelected.value = true;
+    edit.cameraCenterSelectedObject();
   }
 
   void readGameObjectButterfly() {
