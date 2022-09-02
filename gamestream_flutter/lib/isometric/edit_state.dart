@@ -22,6 +22,7 @@ class EditState {
   final gameObject = GameObject();
   final gameObjectSelected = Watch(false);
   final gameObjectSelectedType = Watch(0);
+  final gameObjectSelectedAmount = Watch(0);
   final gameObjectSelectedSpawnType = Watch(0);
 
   final nodeSupportsSolid = Watch(false);

@@ -38,7 +38,7 @@ Stack buildStackEdit() {
       Positioned(
         left: 0,
         bottom: 6,
-        child: buildColumnEditNode(),
+        child: buildColumnSelectedGameObject(),
       ),
       Positioned(
         left: 200,
@@ -291,7 +291,7 @@ Widget buildButtonSelectNodeOrientation(int value) {
 
 
 
-Widget buildColumnEditNode() {
+Widget buildColumnSelectedGameObject() {
 
   return watch(edit.gameObjectSelected, (bool gameObjectSelected){
 
@@ -308,9 +308,16 @@ Widget buildColumnEditNode() {
             text(GameObjectType.getName(type)),
             if (type == GameObjectType.Spawn)
               watch(edit.gameObjectSelectedSpawnType, (int spawnType){
-                return container(
-                  child: "Spawns: ${SpawnType.getName(spawnType)}",
-                  action: sendGameObjectRequestSpawnTypeIncrement,
+                return Column(
+                  children: [
+                    container(
+                       child: "Amount ${edit.gameObject.spawnAmount}",
+                    ),
+                    container(
+                      child: "Spawns: ${SpawnType.getName(spawnType)}",
+                      action: sendGameObjectRequestSpawnTypeIncrement,
+                    ),
+                  ],
                 );
               }),
           ],
