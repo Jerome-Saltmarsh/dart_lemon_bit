@@ -682,8 +682,10 @@ extension GameFunctions on Game {
             x: spawn.x + x,
             y: spawn.y + y,
             z: spawn.z);
+        instance.wanderRadius = spawn.spawnRadius;
         instance.spawn = spawn;
         gameObjects.add(instance);
+
         return;
       case SpawnType.Jellyfish:
         final instance = GameObjectJellyfish(
@@ -708,6 +710,7 @@ extension GameFunctions on Game {
             column: spawn.indexColumn,
             game: this
         );
+        instance.wanderRadius = spawn.spawnRadius;
         instance.spawn = spawn;
         characters.add(instance);
         break;
@@ -717,6 +720,7 @@ extension GameFunctions on Game {
             y: spawn.y,
             z: spawn.z);
         instance.spawn = spawn;
+        instance.wanderRadius = spawn.spawnRadius;
         gameObjects.add(instance);
         break;
       case SpawnType.Zombie:
@@ -730,6 +734,7 @@ extension GameFunctions on Game {
           team: Teams.evil,
         );
         instance.spawn = spawn;
+        instance.wanderRadius = spawn.spawnRadius;
         characters.add(instance);
         break;
       case SpawnType.Slime:
@@ -742,6 +747,7 @@ extension GameFunctions on Game {
           team: Teams.evil,
         );
         instance.spawn = spawn;
+        instance.wanderRadius = spawn.spawnRadius;
         characters.add(instance);
         break;
       case SpawnType.Template:
@@ -757,6 +763,7 @@ extension GameFunctions on Game {
           name: 'Bandit',
         );
         instance.spawn = spawn;
+        instance.wanderRadius = spawn.spawnRadius;
         characters.add(instance);
         break;
       default:
@@ -850,6 +857,9 @@ extension GameFunctions on Game {
     ai.target = null;
     ai.xv = 0;
     ai.xv = 0;
+    ai.spawnX = ai.x;
+    ai.spawnY = ai.y;
+    ai.spawnZ = ai.z;
     ai.setCharacterStateSpawning();
   }
 

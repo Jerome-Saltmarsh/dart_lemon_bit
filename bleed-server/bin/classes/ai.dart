@@ -28,8 +28,9 @@ abstract class AI extends Character with Material {
   var spawnY = 0.0;
   var spawnZ = 0.0;
   var objective;
-  var wanderRadius = 0.0;
   var respawn = 0;
+  var wanderPause = randomInt(300, 500);
+  var wanderRadius = 0.0;
 
   bool get arrivedAtDest {
     const radius = 15;

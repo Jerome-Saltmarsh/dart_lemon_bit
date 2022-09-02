@@ -34,7 +34,6 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
   var state = CharacterState.Idle;
   var stateDurationRemaining = 0;
   var stateDuration = 0;
-  var wanderPause = randomInt(300, 500);
   var animationFrame = 0;
   var frozenDuration = 0;
   /// the character that was highlighted as the character began attacking
