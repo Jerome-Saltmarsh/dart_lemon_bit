@@ -311,6 +311,13 @@ extension GameFunctions on Game {
           angle: radiansV2(src, target),
         );
       }
+      if (target is AISlime) {
+        dispatchV3(
+          GameEventType.Character_Death,
+          target,
+          angle: radiansV2(src, target),
+        );
+      }
 
       for (final ai in characters) {
         if (ai.target != target) continue;
