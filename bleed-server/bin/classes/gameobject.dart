@@ -63,14 +63,25 @@ abstract class Updatable {
 }
 
 class GameObjectSpawn extends GameObjectStatic {
+  /// common/spawn_type.dart
   int spawnType;
+  int amount;
 
   GameObjectSpawn({
     required double x,
     required double y,
     required double z,
     required this.spawnType,
+    this.amount = 1,
   }) : super(x: x, y: y, z: z, type: GameObjectType.Spawn);
+
+  @override
+  void write(Player player) {
+    player.writeByte(ServerResponse.GameObject_Spawn);
+    player.writePosition3(this);
+    player.writeByte(spawnType);
+    player.writeByte(amount);
+  }
 }
 
 abstract class GameObjectAnimal extends GameObject with Velocity {

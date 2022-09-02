@@ -95,6 +95,14 @@ class ServerResponseReader with ByteReader {
           gameObject.type = readByte();
           totalGameObjects++;
           break;
+        case ServerResponse.GameObject_Spawn:
+          final gameObject = getInstanceGameObject();
+          readVector3(gameObject);
+          gameObject.type = GameObjectType.Spawn;
+          gameObject.spawnType = readByte();
+          gameObject.spawnAmount = readByte();
+          totalGameObjects++;
+          break;
         case ServerResponse.GameObject_Butterfly:
           readGameObjectButterfly();
           break;

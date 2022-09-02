@@ -11,7 +11,5 @@ export 'item.dart';
 export 'player.dart';
 export 'projectile.dart';
 export 'scene.dart';
-export 'spawn_point.dart';
-// export 'tile_node.dart';
 export 'ai.dart';
 export 'weapon.dart';
