@@ -270,10 +270,6 @@ extension GameFunctions on Game {
     final damage = min(amount, target.health);
     target.health -= damage;
 
-    // const forceMultiplier = 3.0;
-    // target.accelerate(
-    //     radiansV2(src, target), damage / target.maxHealth * forceMultiplier);
-
     switch (target.material) {
       case MaterialType.Rock:
         dispatchV3(GameEventType.Material_Struck_Rock, target);
@@ -628,12 +624,12 @@ extension GameFunctions on Game {
         player.setCharacterStateRunning();
         return;
       }
-      if (withinAttackRadius(player, target)) {
-        player.target = target;
-        player.attackTarget(target);
-        return;
-      }
-      player.setCharacterStateRunning();
+      // if (withinAttackRadius(player, target)) {
+      //   player.target = target;
+      //   player.attackTarget(target);
+      //   return;
+      // }
+      // player.setCharacterStateRunning();
       return;
     }
 
