@@ -255,6 +255,7 @@ class ServerResponseReader with ByteReader {
     if (type == GameObjectType.Spawn) {
       edit.gameObjectSelectedSpawnType.value = readByte();
       edit.gameObjectSelectedAmount.value = readByte();
+      edit.gameObjectSelectedRadius.value = readDouble();
     }
     edit.gameObjectSelected.value = true;
     edit.cameraCenterSelectedObject();

@@ -1,7 +1,6 @@
 
 import 'package:bleed_common/ClientRequest.dart';
 import 'package:gamestream_flutter/isometric/message_box.dart';
-import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/network/instance/websocket.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 

@@ -52,8 +52,17 @@ class GameRender {
 
   void renderEditMode() {
     if (!playModeEdit) return;
-    if (edit.gameObjectSelected.value)
+    if (edit.gameObjectSelected.value){
+      engine.draw.drawCircleOutline(
+        sides: 24,
+        radius: edit.gameObjectSelectedRadius.value,
+        x: edit.gameObject.renderX,
+        y: edit.gameObject.renderY,
+        color: Colors.white,
+      );
       return renderCircleV3(edit.gameObject);
+    }
+
     renderEditWireFrames();
     renderMouseWireFrame();
   }
@@ -118,14 +127,6 @@ class GameRender {
     // final shade = isometric.getShadeAtPosition(x, y);
     // if (shade >= Shade.Very_Dark) return;
     // drawCircle36(x, y);
-  }
-
-  void drawCircle36V2(Position vector2) {
-    drawCircle36(vector2.x, vector2.y);
-  }
-
-  void drawCircle36(double x, double y) {
-    // engine.render(dstX: x, dstY: y, srcX: 2420, srcY: 57, srcSize: 37);
   }
 
   void drawAbility() {
