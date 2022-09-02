@@ -465,6 +465,24 @@ extension GameFunctions on Game {
     checkProjectileCollision(characters);
   }
 
+  void removeSpawnInstances(GameObjectSpawn spawn) {
+
+    for (var i = 0; i < characters.length; i++) {
+      final character = characters[i];
+      if (character.spawn != spawn) continue;
+      i--;
+      removeInstance(character);
+    }
+
+    for (var i = 0; i < gameObjects.length; i++) {
+      final gameObject = gameObjects[i];
+      if (gameObject.spawn != spawn) continue;
+      i--;
+      removeInstance(gameObject);
+    }
+
+  }
+
   void removeInstance(dynamic instance){
     if (instance == null) return;
 
@@ -476,12 +494,10 @@ extension GameFunctions on Game {
       characters.remove(instance);
       return;
     }
-    if (instance is GameObject){
+    if (instance is GameObject) {
       gameObjects.remove(instance);
-
-      if (instance is GameObjectSpawn){
-        removeInstance(instance.instance);
-        instance.instance = null;
+      if (instance is GameObjectSpawn) {
+        removeSpawnInstances(instance);
         scene.dirty = true;
       }
       return;

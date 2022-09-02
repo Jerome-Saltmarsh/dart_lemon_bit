@@ -9,6 +9,7 @@ import 'position3.dart';
 abstract class GameObject extends Collider {
   var active = true;
   var respawn = 0;
+  dynamic spawn;
 
   GameObject({
     required double x,
@@ -63,7 +64,6 @@ abstract class Updatable {
 
 class GameObjectSpawn extends GameObjectStatic {
   int spawnType;
-  dynamic instance;
 
   GameObjectSpawn({
     required double x,

@@ -34,7 +34,7 @@ class GameDarkAge extends Game {
   }
 
   void onSpawnTypeChanged(GameObjectSpawn spawn){
-       removeInstance(spawn.instance);
+       removeSpawnInstances(spawn);
        spawnGameObject(spawn);
   }
 
@@ -52,24 +52,24 @@ class GameDarkAge extends Game {
             x: spawn.x,
             y: spawn.y,
             z: spawn.z);
+        instance.spawn = spawn;
         gameObjects.add(instance);
-        spawn.instance = instance;
         break;
       case SpawnType.Jellyfish:
         final instance = GameObjectJellyfish(
             x: spawn.x,
             y: spawn.y,
             z: spawn.z);
+        instance.spawn = spawn;
         gameObjects.add(instance);
-        spawn.instance = instance;
         break;
       case SpawnType.Jellyfish_Red:
         final instance = GameObjectJellyfishRed(
             x: spawn.x,
             y: spawn.y,
             z: spawn.z);
+        instance.spawn = spawn;
         gameObjects.add(instance);
-        spawn.instance = instance;
         break;
       case SpawnType.Rat:
         final instance = Rat(
@@ -78,16 +78,16 @@ class GameDarkAge extends Game {
             column: spawn.indexColumn,
             game: this
         );
+        instance.spawn = spawn;
         characters.add(instance);
-        spawn.instance = instance;
         break;
       case SpawnType.Butterfly:
         final instance = GameObjectButterfly(
             x: spawn.x,
             y: spawn.y,
             z: spawn.z);
+        instance.spawn = spawn;
         gameObjects.add(instance);
-        spawn.instance = instance;
         break;
       case SpawnType.Zombie:
         final instance = Zombie(
@@ -99,8 +99,8 @@ class GameDarkAge extends Game {
           game: this,
           team: Teams.evil,
         );
+        instance.spawn = spawn;
         characters.add(instance);
-        spawn.instance = instance;
         break;
       case SpawnType.Slime:
         final instance = AISlime(
@@ -111,8 +111,8 @@ class GameDarkAge extends Game {
           game: this,
           team: Teams.evil,
         );
+        instance.spawn = spawn;
         characters.add(instance);
-        spawn.instance = instance;
         break;
       case SpawnType.Template:
         final instance = Npc(
@@ -126,8 +126,8 @@ class GameDarkAge extends Game {
             wanderRadius: 100,
             name: 'Bandit',
         );
+        instance.spawn = spawn;
         characters.add(instance);
-        spawn.instance = instance;
         break;
       default:
         print("Warning: Unrecognized SpawnType ${spawn.spawnType}");

@@ -51,6 +51,8 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
   var performZ = 0.0;
   var performMaxHits = 1;
 
+  dynamic spawn;
+
   bool get running => state == CharacterState.Running;
   bool get idling => state == CharacterState.Idle;
   bool get characterStateIdle => state == CharacterState.Idle;
