@@ -253,6 +253,11 @@ void sendGameObjectRequestSetSpawnAmount(int amount) {
   sendGameObjectRequest(GameObjectRequest.Set_Spawn_Amount, amount);
 }
 
+void sendGameObjectRequestSetSpawnRadius(double value) {
+  assert (value > 0);
+  sendGameObjectRequest(GameObjectRequest.Set_Spawn_Radius, value);
+}
+
 void sendGameObjectRequestMoveToMouse() {
   sendGameObjectRequest(GameObjectRequest.Move_To_Mouse);
 }

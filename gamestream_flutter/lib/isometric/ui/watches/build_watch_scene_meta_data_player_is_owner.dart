@@ -316,6 +316,32 @@ Widget buildColumnSelectedGameObject() {
                           child: "Spawns: ${SpawnType.getName(spawnType)}",
                           action: sendGameObjectRequestSpawnTypeIncrement,
                         ),
+                        watch (edit.gameObjectSelectedRadius, (double radius){
+                          return Row(
+                            children: [
+                              container(
+                                width: 50,
+                                height: 50,
+                                child: '-',
+                                action: radius <= 1 ? null : () =>
+                                    sendGameObjectRequestSetSpawnRadius(
+                                        radius - 5
+                                    ),
+                              ),
+                              container(
+                                child: "Radius: ${radius.toStringAsFixed(1)}"
+                              ),
+                              container(
+                                width: 50,
+                                height: 50,
+                                child: '+',
+                                action: () => sendGameObjectRequestSetSpawnRadius(
+                                          radius + 5
+                                ),
+                              )
+                            ],
+                          );
+                        }),
                         watch (edit.gameObjectSelectedAmount, (int amount) =>
                           Row(
                             children: [

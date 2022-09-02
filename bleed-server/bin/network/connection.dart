@@ -737,10 +737,27 @@ class Connection {
         }
         final spawn = selectedGameObject as GameObjectSpawn;
         spawn.amount = amount;
-        player.game.removeSpawnInstances(spawn);
-        for (var i = 0; i < spawn.amount; i++){
-          player.game.spawnGameObject(spawn);
+        player.game.refreshSpawn(spawn);
+        break;
+
+      case GameObjectRequest.Set_Spawn_Radius:
+        if (arguments.length < 3) return;
+        final selectedGameObject = player.editorSelectedGameObject;
+        if (selectedGameObject == null) return;
+        if (selectedGameObject is GameObjectSpawn == false) return;
+        final amount = double.tryParse(arguments[2]);
+        if (amount == null) {
+          return errorInvalidArg('invalid amount');
         }
+        if (amount < 0){
+          return errorInvalidArg('amount must be greater than 0');
+        }
+        if (amount > 256){
+          return errorInvalidArg('amount must be less than 256');
+        }
+        final spawn = selectedGameObject as GameObjectSpawn;
+        spawn.spawnRadius = amount;
+        player.game.refreshSpawn(spawn);
         break;
 
       case GameObjectRequest.Spawn_Type_Increment:
