@@ -297,14 +297,6 @@ Widget buildColumnEditNode() {
 
     if (!gameObjectSelected){
       return buildColumnSelectNodeType();
-
-      return Column(
-        children: [
-          buildColumnSelected(),
-          buildControlPaint(),
-          buildWatchEditorTab(),
-        ],
-      );
     }
 
     return Container(
@@ -424,7 +416,7 @@ Widget buildButtonAddGameObject(int type) {
       child: GameObjectType.getName(type),
       color: brownLight,
       action: (){
-        sendClientRequestAddGameObject(
+        sendClientRequestAddGameObjectXYZ(
           x: edit.posX,
           y: edit.posY,
           z: edit.posZ,

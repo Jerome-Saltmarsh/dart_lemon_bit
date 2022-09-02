@@ -1,9 +1,11 @@
 
+import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
 import 'package:gamestream_flutter/isometric/actions/action_toggle_inventory.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/editor/actions/editor_action_add_spawn.dart';
 import 'package:gamestream_flutter/isometric/editor/editor.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
@@ -33,8 +35,12 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     return edit.paintTorch();
   if (key == PhysicalKeyboardKey.digit6)
     return edit.paintTree();
-  if (key == PhysicalKeyboardKey.digit7)
-    return edit.paintLongGrass();
+  if (key == PhysicalKeyboardKey.digit7) {
+    return editorActionAddGameObject(GameObjectType.Spawn);
+    // return edit.paintLongGrass();
+  }
+    // return edit.paintLongGrass();
+
   if (key == PhysicalKeyboardKey.keyU)
     return editor.actions.raise();
   if (key == PhysicalKeyboardKey.keyX)

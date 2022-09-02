@@ -7,10 +7,8 @@ import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
 import 'package:gamestream_flutter/isometric_web/register_isometric_web_controls.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/screen.dart';
 
 import '../isometric/watches/scene_meta_data.dart';
-import '../network/send_client_request.dart';
 
 void readPlayerInput() {
 

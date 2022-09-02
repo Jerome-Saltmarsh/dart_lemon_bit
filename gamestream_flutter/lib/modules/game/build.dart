@@ -7,7 +7,6 @@ import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/modules/game/actions.dart';
-import 'package:gamestream_flutter/modules/game/enums.dart';
 import 'package:gamestream_flutter/modules/game/update.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';

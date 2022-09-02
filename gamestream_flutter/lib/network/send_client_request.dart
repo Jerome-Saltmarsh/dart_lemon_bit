@@ -4,6 +4,7 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/gameobject_request.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_request.dart';
+import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/network/instance/websocket.dart';
 import 'package:lemon_engine/engine.dart';
@@ -191,6 +192,23 @@ void sendNodeRequest(NodeRequest request, [dynamic message]) =>
   );
 
 void sendClientRequestAddGameObject({
+  required int z,
+  required int row,
+  required int column,
+  required int type,
+}) {
+  final posZ = convertIndexZToPosition(z);
+  final posX = convertIndexRowToPosition(row);
+  final posY = convertIndexColumnToPosition(column);
+
+  sendClientRequest(
+    ClientRequest.GameObject,
+    "${GameObjectRequest.Add.index} $posX $posY $posZ $type",
+  );
+}
+
+
+void sendClientRequestAddGameObjectXYZ({
   required double x,
   required double y,
   required double z,
