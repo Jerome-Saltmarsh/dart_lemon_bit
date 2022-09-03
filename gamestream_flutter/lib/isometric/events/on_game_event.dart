@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
+import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/watches/raining.dart';
 import 'package:lemon_math/library.dart';
 
@@ -265,6 +266,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       return audioSingleFireball.playXYZ(x, y, z);
 
     case GameEventType.Character_Death:
+      final characterType = serverResponseReader.readByte();
       for (var i = 0; i < 15; i++) {
         spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: randomAngle());
         spawnParticleFirePurple(x: x + giveOrTake(5), y: y + giveOrTake(5), z: z, speed: 1, angle: randomAngle());

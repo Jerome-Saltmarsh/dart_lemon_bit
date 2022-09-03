@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
+import '../common/character_type.dart';
 import '../common/library.dart';
 import '../common/spawn_type.dart';
 import '../common/teams.dart';
@@ -306,18 +307,28 @@ extension GameFunctions on Game {
       }
 
       if (target is Rat) {
-        dispatchV3(
-          GameEventType.Character_Death,
-          target,
-          angle: radiansV2(src, target),
-        );
+        for (final player in players) {
+          player.writeGameEvent(
+            type: GameEventType.Character_Death,
+            x: target.x,
+            y: target.y,
+            z: target.z,
+            angle: radiansV2(src, target),
+          );
+          player.writeByte(CharacterType.Rat);
+        }
       }
       if (target is AISlime) {
-        dispatchV3(
-          GameEventType.Character_Death,
-          target,
-          angle: radiansV2(src, target),
-        );
+        for (final player in players) {
+          player.writeGameEvent(
+              type: GameEventType.Character_Death,
+              x: target.x,
+              y: target.y,
+              z: target.z,
+              angle: radiansV2(src, target),
+          );
+          player.writeByte(CharacterType.Slime);
+        }
       }
 
       for (final ai in characters) {
