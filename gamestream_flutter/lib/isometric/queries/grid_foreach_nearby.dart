@@ -20,7 +20,7 @@ int getClosestByType({required int radius, required int type}){
     for (var row = minRow; row <= maxRow; row++){
       final gridZRow = gridZ[row];
       for (var column = minColumn; column <= maxColumn; column++){
-         if (type != gridZRow[column]) continue;
+         if (gridZRow[column].type != type) continue;
          final distance = player.getGridDistance(z, row, column);
          if (distance > closest) continue;
          closest = distance;
