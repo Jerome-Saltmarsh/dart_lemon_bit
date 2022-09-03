@@ -24,6 +24,8 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
 
   int get health => _health;
 
+  int get type;
+
   double get healthPercentage => health / maxHealth;
 
   set health(int value) {

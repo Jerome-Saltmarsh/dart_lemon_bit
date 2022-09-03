@@ -1,5 +1,6 @@
 
 
+import '../common/character_type.dart';
 import '../common/library.dart';
 import 'ai.dart';
 import 'game.dart';
@@ -36,4 +37,7 @@ class Zombie extends AI {
   void write(Player player) {
     player.writeZombie(this);
   }
+
+  @override
+  int get type => CharacterType.Zombie;
 }

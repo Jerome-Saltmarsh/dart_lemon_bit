@@ -1,3 +1,4 @@
+import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
@@ -7,6 +8,8 @@ import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/watches/raining.dart';
 import 'package:lemon_math/library.dart';
+
+import 'on_character_death.dart';
 
 void onGameEvent(int type, double x, double y, double z, double angle) {
   switch (type) {
@@ -68,48 +71,6 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
         audio.humanHurt(x, y);
       }
       break;
-    case GameEventType.Zombie_Killed:
-      final zPos = z + tileSizeHalf;
-      spawnParticleHeadZombie(x: x, y: y, z: zPos, angle: angle, speed: 4.0);
-      spawnParticleArm(
-          x: x,
-          y: y,
-          z: zPos,
-          angle: angle + giveOrTake(0.5),
-          speed: 4.0 + giveOrTake(0.5));
-      spawnParticleArm(
-          x: x,
-          y: y,
-          z: zPos,
-          angle: angle + giveOrTake(0.5),
-          speed: 4.0 + giveOrTake(0.5));
-      spawnParticleLegZombie(
-          x: x,
-          y: y,
-          z: zPos,
-          angle: angle + giveOrTake(0.5),
-          speed: 4.0 + giveOrTake(0.5));
-      spawnParticleLegZombie(
-          x: x,
-          y: y,
-          z: zPos,
-          angle: angle + giveOrTake(0.5),
-          speed: 4.0 + giveOrTake(0.5));
-      spawnParticleOrgan(
-          x: x,
-          y: y,
-          z: zPos,
-          angle: angle + giveOrTake(0.5),
-          speed: 4.0 + giveOrTake(0.5),
-          zv: 0.1);
-      
-      randomItem(audioSingleZombieDeaths).playXYZ(x, y, z);
-      for (var i = 0; i < 15; i++) {
-        spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: randomAngle());
-        spawnParticleFirePurple(x: x + giveOrTake(5), y: y + giveOrTake(5), z: z, speed: 1, angle: randomAngle());
-      }
-      break;
-
     case GameEventType.Zombie_Target_Acquired:
       audio.zombieTargetAcquired(x, y);
       break;
@@ -267,10 +228,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
 
     case GameEventType.Character_Death:
       final characterType = serverResponseReader.readByte();
-      for (var i = 0; i < 15; i++) {
-        spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: randomAngle());
-        spawnParticleFirePurple(x: x + giveOrTake(5), y: y + giveOrTake(5), z: z, speed: 1, angle: randomAngle());
-      }
+      onCharacterDeath(characterType, x, y, z, angle);
       break;
 
     case GameEventType.Sword_Slash:
@@ -307,5 +265,4 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       }
       break;
   }
-
 }

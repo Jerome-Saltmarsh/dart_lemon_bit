@@ -38,4 +38,7 @@ class Rat extends AI {
   void write(Player player){
       player.writeRat(this);
   }
+
+  @override
+  int get type => CharacterType.Rat;
 }

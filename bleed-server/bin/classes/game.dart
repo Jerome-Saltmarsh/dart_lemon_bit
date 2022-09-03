@@ -298,37 +298,15 @@ extension GameFunctions on Game {
     if (target.dead) {
       target.collidable = false;
 
-      if (target is Zombie) {
-        dispatchV3(
-          GameEventType.Zombie_Killed,
-          target,
+      for (final player in players) {
+        player.writeGameEvent(
+          type: GameEventType.Character_Death,
+          x: target.x,
+          y: target.y,
+          z: target.z,
           angle: radiansV2(src, target),
         );
-      }
-
-      if (target is Rat) {
-        for (final player in players) {
-          player.writeGameEvent(
-            type: GameEventType.Character_Death,
-            x: target.x,
-            y: target.y,
-            z: target.z,
-            angle: radiansV2(src, target),
-          );
-          player.writeByte(CharacterType.Rat);
-        }
-      }
-      if (target is AISlime) {
-        for (final player in players) {
-          player.writeGameEvent(
-              type: GameEventType.Character_Death,
-              x: target.x,
-              y: target.y,
-              z: target.z,
-              angle: radiansV2(src, target),
-          );
-          player.writeByte(CharacterType.Slime);
-        }
+        player.writeByte(target.type);
       }
 
       for (final ai in characters) {

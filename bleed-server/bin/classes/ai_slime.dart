@@ -1,5 +1,6 @@
 
 import '../common/ServerResponse.dart';
+import '../common/character_type.dart';
 import '../common/weapon_type.dart';
 import 'ai.dart';
 import 'game.dart';
@@ -30,4 +31,7 @@ class AISlime extends AI {
     player.writeByte(ServerResponse.Character_Slime);
     player.writeCharacter(player, this);
   }
+
+  @override
+  int get type => CharacterType.Slime;
 }

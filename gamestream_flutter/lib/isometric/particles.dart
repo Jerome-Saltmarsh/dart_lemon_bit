@@ -871,3 +871,25 @@ void spawnParticleFirePurple({
     scale: scale,
   );
 }
+
+
+void spawnParticleSlimeDeath({
+  required double x,
+  required double y,
+  required double z,
+}) {
+  spawnParticle(
+    type: ParticleType.Character_Death_Slime,
+    x: x,
+    y: y,
+    z: z,
+    zv: 0,
+    angle: 0,
+    rotation: 0,
+    speed: 0,
+    scaleV: 0.01,
+    weight: -1,
+    duration: 0,
+    scale: 1.0,
+  );
+}

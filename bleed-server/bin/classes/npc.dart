@@ -36,4 +36,7 @@ class Npc extends AI {
   void write(Player player) {
     player.writeNpc(player, this);
   }
+
+  @override
+  int get type => CharacterType.Template;
 }
