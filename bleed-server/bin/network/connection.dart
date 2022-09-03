@@ -683,10 +683,7 @@ class Connection {
           final game = player.game;
           if (game is GameDarkAge){
             final spawn = GameObjectSpawn(x: x, y: y, z: z, spawnType: 0);
-            game.scene.gameObjects.add(spawn);
-            for (var i = 0; i < spawn.spawnAmount; i++){
-              game.spawnGameObject(spawn);
-            }
+            game.refreshSpawn(spawn);
           }
         } else {
           player.game.scene.gameObjects.add(

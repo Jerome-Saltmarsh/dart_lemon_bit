@@ -468,6 +468,15 @@ extension GameFunctions on Game {
     checkProjectileCollision(characters);
   }
 
+  void refreshSpawns(){
+    for (var i = 0; i < gameObjects.length; i++){
+      final gameObject = gameObjects[i];
+      if (gameObject is GameObjectSpawn) {
+        refreshSpawn(gameObject);
+      }
+    }
+  }
+
   void refreshSpawn(GameObjectSpawn spawn){
     removeSpawnInstances(spawn);
     for (var i = 0; i < spawn.spawnAmount; i++){

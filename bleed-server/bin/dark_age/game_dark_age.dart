@@ -20,12 +20,7 @@ class GameDarkAge extends Game {
   bool get full => false;
 
   GameDarkAge(Scene scene, this.environment) : super(scene) {
-    for (var i = 0; i < gameObjects.length; i++){
-      final gameObject = gameObjects[i];
-       if (gameObject is GameObjectSpawn) {
-         spawnGameObject(gameObject);
-       }
-    }
+    refreshSpawns();
   }
 
   void setSpawnType(GameObjectSpawn spawn, int type){
