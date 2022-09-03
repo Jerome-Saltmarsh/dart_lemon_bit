@@ -4,7 +4,6 @@ enum ClientRequest {
   Attack,
   Attack_Basic,
   Caste,
-  Caste_Basic,
   Revive,
   Equip,
   Toggle_Debug,

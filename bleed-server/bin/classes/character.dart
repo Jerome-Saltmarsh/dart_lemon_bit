@@ -91,6 +91,12 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
     this.material = MaterialType.Flesh;
   }
 
+  void updateFrame(){
+    animationFrame++;
+    if (animationFrame > 6)
+      animationFrame = 0;
+  }
+
   void applyVelocity() {
      // if (speed > movementSpeed) return;
      applyForce(force: 1.0, angle: faceAngle);

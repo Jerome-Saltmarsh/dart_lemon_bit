@@ -349,28 +349,14 @@ class Connection {
       case ClientRequest.Caste:
         if (player.deadOrBusy) return;
 
-        game.spawnProjectile(
-          src: player,
-          accuracy: 0,
-          angle: player.mouseAngle,
-          speed: 8.0,
-          range: 300,
-          projectileType: ProjectileType.Bullet,
-          damage: 5,
-        );
-        player.dispatch(GameEventType.Handgun_Fired, player.mouseAngle);
+        // game.fireHandgun(player, player.mouseAngle);
+        game.fireShotgun(player, player.mouseAngle);
         // game.spawnProjectileFireball(
         //     player,
         //     damage: 5,
         //     range: 250,
         //     angle: player.mouseAngle,
         // );
-        break;
-
-      case ClientRequest.Caste_Basic:
-        if (player.deadOrBusy) return;
-        player.ability = PowerFireball();
-        player.setCharacterStatePerforming(duration: 30);
         break;
 
       case ClientRequest.Equip:
@@ -385,8 +371,6 @@ class Connection {
         if (!TechType.isValid(techType)){
           return errorInvalidArg('Invalid tech type: got $techType');
         }
-        // player.equippedWeapon = techType;
-        // player.setStateChanging();
         return;
 
       case ClientRequest.Toggle_Debug:

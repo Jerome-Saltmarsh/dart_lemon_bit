@@ -35,10 +35,6 @@ void sendClientRequestCaste() {
   sendClientRequest(ClientRequest.Caste);
 }
 
-void sendClientRequestCasteBasic() {
-  sendClientRequest(ClientRequest.Caste_Basic);
-}
-
 void sendClientRequestDeckAddCard(CardType value){
   sendClientRequest(ClientRequest.Deck_Add_Card, value.index);
 }

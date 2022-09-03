@@ -104,6 +104,17 @@ abstract class Game {
 
   }
 
+  var _nextAnimationFrame = 0;
+
+  void _updateCharacterFrames() {
+    _nextAnimationFrame++;
+    if (_nextAnimationFrame < 6) return;
+    _nextAnimationFrame = 0;
+    for (final character in characters){
+      character.updateFrame();
+    }
+  }
+
   void moveCharacterToGridNode(Character character, int type){
     scene.findByType(type, (int z, int row, int column){
       character.indexZ = z;
@@ -253,12 +264,6 @@ extension GameFunctions on Game {
     _updateProjectiles(); // called twice to fix collision detection
     _updateCharacterFrames();
     sortGameObjects();
-  }
-
-  void updateFrames(List<Character> character) {
-    for (final character in character) {
-      character.animationFrame = (character.animationFrame + 1) % 8;
-    }
   }
 
   void applyDamage({
@@ -624,12 +629,6 @@ extension GameFunctions on Game {
         player.setCharacterStateRunning();
         return;
       }
-      // if (withinAttackRadius(player, target)) {
-      //   player.target = target;
-      //   player.attackTarget(target);
-      //   return;
-      // }
-      // player.setCharacterStateRunning();
       return;
     }
 
@@ -942,6 +941,34 @@ extension GameFunctions on Game {
     );
   }
 
+  void fireHandgun(Character src, double angle){
+    spawnProjectile(
+      src: src,
+      accuracy: 0,
+      angle: angle,
+      speed: 8.0,
+      range: 300,
+      projectileType: ProjectileType.Bullet,
+      damage: 5,
+    );
+    dispatch(GameEventType.Handgun_Fired, src.x, src.y, src.z, angle);
+  }
+
+  void fireShotgun(Character src, double angle) {
+    for (var i = 0; i < 5; i++){
+      spawnProjectile(
+        src: src,
+        accuracy: 0,
+        angle: angle + giveOrTake(0.25),
+        speed: 8.0,
+        range: 300,
+        projectileType: ProjectileType.Bullet,
+        damage: 5,
+      );
+    }
+    dispatch(GameEventType.Shotgun_Fired, src.x, src.y, src.z, angle);
+  }
+
   Projectile spawnProjectile({
     required Character src,
     required double speed,
@@ -1160,12 +1187,6 @@ extension GameFunctions on Game {
   //   ai.pathIndex = -1;
   //   // scene.visitNodeFirst(scene.getNodeByPosition(ai));
   // }
-
-  void _updateCharacterFrames() {
-    const characterFramesChange = 6;
-    if (engine.frame % characterFramesChange != 0) return;
-    updateFrames(characters);
-  }
 
   /// This represents a standard attack from the character, no powers
   void updateCharacterStateAttacking(Character character) {

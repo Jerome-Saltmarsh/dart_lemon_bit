@@ -4,8 +4,8 @@ import 'render_v3.dart';
 
 void renderCharacterSlime(Character character) => renderV3(
       value: character,
-      srcX: 2656,
-      srcY: 0,
-      srcWidth: 32,
-      srcHeight: 32,
+      srcX: 2992,
+      srcY: (48 * (character.frame % 6)),
+      srcWidth: 48,
+      srcHeight: 48,
     );
