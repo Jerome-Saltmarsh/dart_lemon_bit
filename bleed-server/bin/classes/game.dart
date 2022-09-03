@@ -746,6 +746,7 @@ extension GameFunctions on Game {
         );
         instance.spawn = spawn;
         instance.wanderRadius = spawn.spawnRadius;
+        instance.setCharacterStateSpawning();
         characters.add(instance);
         break;
       case SpawnType.Template:
