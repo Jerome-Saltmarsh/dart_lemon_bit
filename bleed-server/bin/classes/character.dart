@@ -18,9 +18,9 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
   var _health = 1;
   var maxHealth = 1;
 
-  bool get dead => _health <= 0;
-
-  bool get alive => _health > 0;
+  bool get dead => state == CharacterState.Dead;
+  bool get dying => state == CharacterState.Dying;
+  bool get alive => !dead && !dying;
 
   int get health => _health;
 

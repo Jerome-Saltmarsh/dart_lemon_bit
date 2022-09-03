@@ -272,9 +272,13 @@ extension GameFunctions on Game {
     required Character target,
     required int amount,
   }) {
-    if (target.dead) return;
+    if (!target.alive) return;
     final damage = min(amount, target.health);
     target.health -= damage;
+
+    if (target.health <= 0){
+      setCharacterStateDead(target);
+    }
 
     switch (target.material) {
       case MaterialType.Rock:
