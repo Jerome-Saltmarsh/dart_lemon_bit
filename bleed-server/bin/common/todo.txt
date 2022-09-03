@@ -1,4 +1,4 @@
-TODO
+FEATURE
 [ ] ? Spawn Attribute Health
 [ ] ? Spawn Attribute Damage
 [ ] ? Spawn Attribute Team
@@ -6,16 +6,17 @@ TODO
 [ ] Destroy Node Tree
 [ ] Add Enemy Spawns to world
 [ ] Clicking allie should cause player to run over and talk
-[ ] Destroy GameObject Rock
 [ ] Squish hurt audio
-[ ] Rat hurt audio
-[x] Persist Spawn
+[ ] Destroy GameObject Rock
 
-FIX
-[x] Rat Team
+BUG
+[?] Rat attack misses player
 [ ] Grass Corner Slope Color
 [ ] Water Flowing
-[ ] render column 0
 [ ] render last row
-[ ] Rat attack misses player
-[ ] Enemy AI should not spot if z difference too great
+
+COMPLETED
+[x] Rat hurt audio
+[x] Persist Spawn
+[x] Fix Rat Team
+[x] Fix render column 0

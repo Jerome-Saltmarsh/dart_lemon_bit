@@ -6,5 +6,8 @@ void onCharacterHurt(int type, double x, double y, double z, double angle) {
     case CharacterType.Zombie:
       audioSingleZombieHurt.playXYZ(x, y, z);
       break;
+    case CharacterType.Rat:
+      audioSingleRatSqueak.playXYZ(x, y, z);
+      break;
   }
 }

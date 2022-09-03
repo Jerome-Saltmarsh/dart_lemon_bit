@@ -240,7 +240,7 @@ class RenderOrderGrid extends RenderOrder {
   @override
   void renderFunction() {
 
-    while (column > 0 && row < rowsMax){
+    while (column >= 0 && row < rowsMax){
       assignNode();
       row++;
       column--;
