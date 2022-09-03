@@ -47,6 +47,13 @@ void updateMouseBubbleSpawn() {
 var _characterBubbleSpawn = 0;
 
 void updateCharacters() {
+
+  for (var i = 0; i < totalCharacters; i++){
+    final character = characters[i];
+    if (!character.hurt) continue;
+    spawnParticleBubble(x: character.x, y: character.y, z: character.z + 24);
+  }
+
   if (_characterBubbleSpawn-- > 0) return;
   _characterBubbleSpawn = 60;
   for (var i = 0; i < totalCharacters; i++){
