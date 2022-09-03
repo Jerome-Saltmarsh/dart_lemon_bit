@@ -1,4 +1,4 @@
-const version = 'v0.4.783';
+const version = 'v0.4.784';
 
 /**
 Make the combat satisfying

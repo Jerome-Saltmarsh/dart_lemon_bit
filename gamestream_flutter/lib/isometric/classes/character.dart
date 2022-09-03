@@ -25,6 +25,7 @@ class Character extends Vector3 {
   bool get spawning => state == CharacterState.Spawning;
   bool get running => state == CharacterState.Running;
   bool get performing => state == CharacterState.Performing;
+  bool get hurt => state == CharacterState.Hurt;
   bool get alive => !dead;
   double get angle => direction * piQuarter;
 }

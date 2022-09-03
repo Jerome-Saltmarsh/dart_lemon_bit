@@ -337,6 +337,11 @@ extension GameFunctions on Game {
       );
       target.setCharacterStateHurt();
     }
+
+    if (target is AISlime) {
+      target.setCharacterStateHurt();
+    }
+
     if (target is AI) {
       final targetAITarget = target.target;
       if (targetAITarget == null) {
