@@ -29,8 +29,16 @@ mixin Velocity {
   /// Velocity Y
   var yv = 0.0;
 
-  double get speed => getHypotenuse(xv, yv);
-  double get vAngle => getAngle(xv, yv);
+  double get velocitySpeed => getHypotenuse(xv, yv);
+  double get velocityAngle => getAngle(xv, yv);
+
+  void set velocitySpeed(double value){
+    assert (value >= 0);
+    final currentAngle = velocityAngle;
+    xv = getAdjacent(currentAngle, value);
+    yv = getOpposite(currentAngle, value);
+  }
+
 
   void setVelocity(double angle, double speed){
      xv = getAdjacent(angle, speed);
@@ -48,6 +56,10 @@ mixin Velocity {
   }) {
     xv += getAdjacent(angle, force);
     yv += getOpposite(angle, force);
+    const maxSpeed = 20.0;
+    if (velocitySpeed > maxSpeed) {
+       velocitySpeed = maxSpeed;
+    }
   }
 }
 

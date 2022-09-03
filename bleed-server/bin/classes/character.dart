@@ -100,11 +100,7 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
   }
 
   void applyVelocity() {
-     // if (speed > movementSpeed) return;
      applyForce(force: 1.0, angle: faceAngle);
-     // speed = movementSpeed;
-     // app
-
   }
 
   void customUpdateCharacter(Game game){
@@ -194,7 +190,7 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
   void setCharacterStateRunning(){
     setCharacterState(value: CharacterState.Running, duration: 0);
     if (stateDuration == 0) {
-      dispatch(GameEventType.Spawn_Dust_Cloud, vAngle);
+      dispatch(GameEventType.Spawn_Dust_Cloud, velocityAngle);
     }
   }
 
@@ -243,12 +239,12 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
 
   void updateMovement(Game game) {
     const minVelocity = 0.005;
-    if (speed <= minVelocity) return;
+    if (velocitySpeed <= minVelocity) return;
 
     x += xv;
     y += yv;
 
-    final nodeType = getNodeTypeInDirection(game: game, angle: vAngle, distance: radius);
+    final nodeType = getNodeTypeInDirection(game: game, angle: velocityAngle, distance: radius);
     if (nodeType == NodeType.Tree_Bottom || nodeType == NodeType.Torch) {
       final nodeCenterX = indexRow * tileSize + tileSizeHalf;
       final nodeCenterY = indexColumn * tileSize + tileSizeHalf;
@@ -256,8 +252,8 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
       const treeRadius = 5;
       final overlap = dis - treeRadius - radius;
       if (overlap < 0) {
-        x -= getAdjacent(vAngle, overlap);
-        y -= getOpposite(vAngle, overlap);
+        x -= getAdjacent(velocityAngle, overlap);
+        y -= getOpposite(velocityAngle, overlap);
       }
     }
 

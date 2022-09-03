@@ -640,7 +640,7 @@ extension GameFunctions on Game {
     }
 
 
-    if (player.distanceFromPos2(target) <= player.speed) {
+    if (player.distanceFromPos2(target) <= player.velocitySpeed) {
       player.target = null;
       player.setCharacterStateIdle();
       return;
@@ -823,7 +823,7 @@ extension GameFunctions on Game {
 
     if (target is Velocity) {
       (target as Velocity).applyForce(
-          force: 30,
+          force: 20,
           angle: radiansV2(src, target),
       );
     }
