@@ -13,6 +13,7 @@ import '../common/maths.dart';
 import '../common/node_orientation.dart';
 import '../common/node_request.dart';
 import '../common/node_size.dart';
+import '../common/spawn_type.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
 import '../engine.dart';
@@ -682,7 +683,12 @@ class Connection {
         if (type == GameObjectType.Spawn){
           final game = player.game;
           if (game is GameDarkAge){
-            final spawn = GameObjectSpawn(x: x, y: y, z: z, spawnType: 0);
+            final spawn = GameObjectSpawn(
+                x: x,
+                y: y,
+                z: z,
+                spawnType: SpawnType.Zombie,
+            );
             player.game.scene.gameObjects.add(spawn);
             game.refreshSpawn(spawn);
           }

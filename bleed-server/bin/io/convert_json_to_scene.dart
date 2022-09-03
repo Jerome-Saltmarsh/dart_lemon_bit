@@ -54,6 +54,10 @@ double? tryGetDouble(Json json, String fieldName){
   return null;
 }
 
+const teamGood = 1;
+const teamBad = 1;
+const teamDefault = teamBad;
+
 GameObject convertJsonToGameObject(Json json) {
     final type = json.getInt('type');
     final x = json.getDouble('x');

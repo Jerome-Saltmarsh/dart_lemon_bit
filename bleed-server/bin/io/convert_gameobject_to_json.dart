@@ -8,17 +8,27 @@ Json convertGameObjectToJson(GameObject gameObject) {
   if (gameObject is GameObjectAnimal)
     return toJsonGameObjectAnimal(gameObject);
 
+  if (gameObject is GameObjectSpawn)
+    return convertGameObjectSpawnToJson(gameObject);
+
   return {
     'x': gameObject.x.toInt(),
     'y': gameObject.y.toInt(),
     'z': gameObject.z.toInt(),
     'type': gameObject.type,
-    if (gameObject is GameObjectSpawn)
-       'spawn-type': gameObject.spawnType,
-    if (gameObject is GameObjectSpawn)
-      'spawn-amount': gameObject.spawnAmount,
-    if (gameObject is GameObjectSpawn)
-      'spawn-radius': gameObject.spawnRadius,
+  };
+}
+
+Json convertGameObjectSpawnToJson(GameObjectSpawn gameObject){
+  return {
+    'x': gameObject.x.toInt(),
+    'y': gameObject.y.toInt(),
+    'z': gameObject.z.toInt(),
+    'type': gameObject.type,
+    'spawn-type': gameObject.spawnType,
+    'spawn-amount': gameObject.spawnAmount,
+    'spawn-radius': gameObject.spawnRadius,
+    'spawn-radius': gameObject.spawnRadius,
   };
 }
 

@@ -8,11 +8,11 @@ import 'dark_age_area.dart';
 class AreaTavernCellar extends DarkAgeAreaUnderground {
   AreaTavernCellar() : super(darkAgeScenes.tavernCellar, mapTile: MapTiles.Village) {
 
-    characters.add(Rat(z: 1, row: 13, column: 20, game: this)..wanderRadius = 50);
-    characters.add(Rat(z: 1, row: 20, column: 11, game: this)..wanderRadius = 50);
-    characters.add(Rat(z: 1, row: 20, column: 12, game: this)..wanderRadius = 50);
-    characters.add(Rat(z: 1, row: 3, column: 11, game: this)..wanderRadius = 50);
-    characters.add(Rat(z: 1, row: 3, column: 12, game: this)..wanderRadius = 50);
+    // characters.add(Rat(z: 1, row: 13, column: 20, game: this)..wanderRadius = 50);
+    // characters.add(Rat(z: 1, row: 20, column: 11, game: this)..wanderRadius = 50);
+    // characters.add(Rat(z: 1, row: 20, column: 12, game: this)..wanderRadius = 50);
+    // characters.add(Rat(z: 1, row: 3, column: 11, game: this)..wanderRadius = 50);
+    // characters.add(Rat(z: 1, row: 3, column: 12, game: this)..wanderRadius = 50);
   }
   //
   // @override

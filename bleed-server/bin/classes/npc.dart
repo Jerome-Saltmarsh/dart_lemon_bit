@@ -17,8 +17,8 @@ class Npc extends AI {
       required int health,
       required Weapon weapon,
       required Game game,
+      required int team,
       this.onInteractedWith,
-      int team = 1,
       double wanderRadius = 0,
   })
       : super(

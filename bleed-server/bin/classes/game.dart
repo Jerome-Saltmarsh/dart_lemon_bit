@@ -8,6 +8,7 @@ import '../common/teams.dart';
 import '../engine.dart';
 import '../functions.dart';
 import '../functions/withinRadius.dart';
+import '../io/convert_json_to_scene.dart';
 import '../io/write_scene_to_file.dart';
 import '../maths.dart';
 import '../physics.dart';
@@ -717,7 +718,8 @@ extension GameFunctions on Game {
             z: spawn.indexZ,
             row: spawn.indexRow,
             column: spawn.indexColumn,
-            game: this
+            game: this,
+            team: Teams.evil,
         );
         instance.wanderRadius = spawn.spawnRadius;
         instance.spawn = spawn;
@@ -768,7 +770,7 @@ extension GameFunctions on Game {
           z: spawn.z,
           health: 10,
           weapon: Weapon(type: WeaponType.Bow, damage: 1),
-          team: 2,
+          team: Teams.good,
           wanderRadius: 100,
           name: 'Bandit',
         );
@@ -1080,6 +1082,7 @@ extension GameFunctions on Game {
       health: 10,
       damage: 1,
       game: this,
+      team: Teams.evil,
     );
     characters.add(instance);
     return instance;

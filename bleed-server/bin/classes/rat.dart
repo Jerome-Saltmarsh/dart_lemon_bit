@@ -12,9 +12,9 @@ class Rat extends AI {
     required int row,
     required int column,
     required Game game,
+    required int team ,
     int health = 3,
     int damage = 1,
-    int team = 10,
   }) : super(
       x: 0,
       y: 0,
