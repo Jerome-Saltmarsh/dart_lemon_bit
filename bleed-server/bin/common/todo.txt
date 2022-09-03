@@ -1,11 +1,12 @@
 TODO
-[ ] Persist Spawn
 [ ] Spawn Attribute Health
 [ ] Spawn Attribute Damage
-[ ] Add Enemy Spawns to world
+[ ] Spawn Attribute Team
 [ ] Clicking allie should cause player to run over and talk
 [ ] Destroy GameObject Rock
 [ ] Destroy Node Tree
+[ ] Add Enemy Spawns to world
+[x] Persist Spawn
 
 FIX
 [ ] Grass Corner Slope Color
