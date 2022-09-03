@@ -3,6 +3,7 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
+import 'package:gamestream_flutter/isometric/events/on_character_hurt.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
@@ -211,10 +212,6 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       audio.materialStruckMetal(x, y);
       break;
 
-    case GameEventType.Zombie_Hurt:
-      audioSingleZombieHurt.playXYZ(x, y, z);
-      break;
-
     case GameEventType.Blue_Orb_Deactivated:
       for (var i = 0; i < 8; i++) {
         spawnParticleOrbShard(
@@ -229,6 +226,11 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
     case GameEventType.Character_Death:
       final characterType = serverResponseReader.readByte();
       onCharacterDeath(characterType, x, y, z, angle);
+      break;
+
+    case GameEventType.Character_Hurt:
+      final characterType = serverResponseReader.readByte();
+      onCharacterHurt(characterType, x, y, z, angle);
       break;
 
     case GameEventType.Sword_Slash:

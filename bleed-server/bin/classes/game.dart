@@ -8,7 +8,6 @@ import '../common/teams.dart';
 import '../engine.dart';
 import '../functions.dart';
 import '../functions/withinRadius.dart';
-import '../io/convert_json_to_scene.dart';
 import '../io/write_scene_to_file.dart';
 import '../maths.dart';
 import '../physics.dart';
@@ -280,10 +279,7 @@ extension GameFunctions on Game {
       setCharacterStateDying(target);
     } else {
       onDamaged(target, src, damage);
-
-      if (target is AISlime) {
-        target.setCharacterStateHurt();
-      }
+      target.setCharacterStateHurt();
     }
 
     switch (target.material) {
@@ -305,15 +301,18 @@ extension GameFunctions on Game {
         break;
     }
 
-    final isZombie = target is Zombie;
-
-    if (isZombie && randomBool()) {
-      dispatchV3(
-        GameEventType.Zombie_Hurt,
-        target,
+    for (final player in players) {
+      final targetVelocityAngle = target.velocityAngle;
+      player.writeGameEvent(
+        type: GameEventType.Character_Hurt,
+        x: target.x,
+        y: target.y,
+        z: target.z,
+        angle: targetVelocityAngle,
       );
-      target.setCharacterStateHurt();
+      player.writeByte(target.type);
     }
+
 
     if (target is AI) {
       final targetAITarget = target.target;

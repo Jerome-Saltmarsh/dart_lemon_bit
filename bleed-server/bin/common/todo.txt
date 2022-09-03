@@ -12,6 +12,7 @@ TODO
 [x] Persist Spawn
 
 FIX
+[x] Rat Team
 [ ] Grass Corner Slope Color
 [ ] Water Flowing
 [ ] render column 0

@@ -38,7 +38,6 @@ class GameEventType {
   static const Material_Struck_Wood = 49;
   static const Material_Struck_Metal = 50;
   static const Material_Struck_Plant = 51;
-  static const Zombie_Hurt = 52;
   static const Blue_Orb_Deactivated = 53;
   static const Projectile_Fired_Fireball = 54;
   static const Footstep = 55;
@@ -49,6 +48,7 @@ class GameEventType {
   static const Player_Spawned = 60;
   static const Player_Spawn_Started = 61;
   static const Character_Death = 62;
-  static const Sword_Slash = 63;
+  static const Character_Hurt = 63;
+  static const Sword_Slash = 64;
 
 }

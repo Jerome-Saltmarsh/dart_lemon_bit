@@ -20,6 +20,7 @@ final audioSingleZombieHurt = AudioSingle(name: 'zombie-hurt-1', volume: 0.5, ma
 final audioSingleSplash = AudioSingle(name: 'splash', volume: 0.5, maxDistance: 400);
 final audioSingleMaterialStruckWood = AudioSingle(name: 'material-struck-wood', volume: 0.5, maxDistance: 400);
 final audioSingleMaterialStruckStone = AudioSingle(name: 'material-struck-stone', volume: 0.5, maxDistance: 400);
+final audioSingleRatSqueak = AudioSingle(name: 'rat-squeak', volume: 0.5, maxDistance: 400);
 final audioSingleZombieDeaths = [
   AudioSingle(name: 'zombie-death-02', volume: 1, maxDistance: 400),
   AudioSingle(name: 'zombie-death-09', volume: 1, maxDistance: 400),
