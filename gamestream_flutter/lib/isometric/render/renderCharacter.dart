@@ -11,7 +11,6 @@ void renderCharacter(Character character){
   if (!character.tile.visible) return;
 
   if (character.spawning) {
-
     if (character.type == CharacterType.Rat){
       return render(
         srcX: 1920,
@@ -23,7 +22,17 @@ void renderCharacter(Character character){
         scale: 0.75,
       );
     }
-
+    if (character.type == CharacterType.Slime) {
+      return render(
+        srcX: 3040,
+        srcY: (character.frame % 6) * 48.0,
+        dstX: character.renderX,
+        dstY: character.renderY,
+        srcWidth: 48,
+        srcHeight: 48,
+        scale: 0.75,
+      );
+    }
     return render(
         srcX: 2016,
         srcY: (character.frame % 8) * 73.0,

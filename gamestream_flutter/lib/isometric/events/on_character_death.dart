@@ -3,14 +3,15 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
+import 'package:gamestream_flutter/isometric/spawn/spawn_bubbles.dart';
+import 'package:gamestream_flutter/isometric/spawn/spawn_purple_fire_explosion.dart';
 import 'package:lemon_math/library.dart';
 
 void onCharacterDeath(int type, double x, double y, double z, double angle) {
-  for (var i = 0; i < 15; i++) {
-    spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: randomAngle());
-    spawnParticleFirePurple(x: x + giveOrTake(5), y: y + giveOrTake(5), z: z, speed: 1, angle: randomAngle());
-  }
-  switch (type){
+  spawnPurpleFireExplosion(x, y, z);
+  spawnBubbles(x, y, z);
+
+  switch (type) {
     case CharacterType.Zombie:
       return onCharacterDeathZombie(type, x, y, z, angle);
   }
