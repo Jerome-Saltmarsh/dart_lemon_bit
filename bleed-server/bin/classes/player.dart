@@ -759,7 +759,7 @@ extension PlayerProperties on Player {
     if (selectedGameObject is GameObjectSpawn) {
       assert(selectedGameObject.type == GameObjectType.Spawn);
       writeByte(selectedGameObject.spawnType);
-      writeByte(selectedGameObject.amount);
+      writeByte(selectedGameObject.spawnAmount);
       writeInt(selectedGameObject.spawnRadius);
     }
   }

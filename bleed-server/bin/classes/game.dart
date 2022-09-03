@@ -470,7 +470,7 @@ extension GameFunctions on Game {
 
   void refreshSpawn(GameObjectSpawn spawn){
     removeSpawnInstances(spawn);
-    for (var i = 0; i < spawn.amount; i++){
+    for (var i = 0; i < spawn.spawnAmount; i++){
       spawnGameObject(spawn);
     }
   }

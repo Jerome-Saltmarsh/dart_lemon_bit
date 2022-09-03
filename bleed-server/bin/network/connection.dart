@@ -684,7 +684,7 @@ class Connection {
           if (game is GameDarkAge){
             final spawn = GameObjectSpawn(x: x, y: y, z: z, spawnType: 0);
             game.scene.gameObjects.add(spawn);
-            for (var i = 0; i < spawn.amount; i++){
+            for (var i = 0; i < spawn.spawnAmount; i++){
               game.spawnGameObject(spawn);
             }
           }
@@ -720,7 +720,7 @@ class Connection {
           return errorInvalidArg('amount must be less than 256');
         }
         final spawn = selectedGameObject as GameObjectSpawn;
-        spawn.amount = amount;
+        spawn.spawnAmount = amount;
         player.game.refreshSpawn(spawn);
         break;
 

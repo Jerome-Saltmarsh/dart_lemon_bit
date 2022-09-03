@@ -7,7 +7,7 @@ import '../classes/node.dart';
 import '../classes/scene.dart';
 import '../common/node_orientation.dart';
 import '../common/node_type.dart';
-import 'to_json_gameobject.dart';
+import 'convert_gameobject_to_json.dart';
 
 
 String convertSceneToString(Scene scene) {
@@ -22,7 +22,7 @@ Json convertSceneToJson(Scene scene) {
   json['grid'] = convertNodesToByteArray(scene.grid);
   json['gameobjects'] = scene.gameObjects
       .where((gameObject) => gameObject.persist)
-      .map(toJsonGameObject)
+      .map(convertGameObjectToJson)
       .toList();
   return json;
 }

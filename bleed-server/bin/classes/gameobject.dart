@@ -65,7 +65,7 @@ abstract class Updatable {
 class GameObjectSpawn extends GameObjectStatic {
   /// common/spawn_type.dart
   int spawnType;
-  int amount;
+  int spawnAmount;
   double spawnRadius;
 
   GameObjectSpawn({
@@ -74,7 +74,7 @@ class GameObjectSpawn extends GameObjectStatic {
     required double z,
     required this.spawnType,
     this.spawnRadius = 50,
-    this.amount = 1,
+    this.spawnAmount = 1,
   }) : super(x: x, y: y, z: z, type: GameObjectType.Spawn);
 
   @override
@@ -82,7 +82,7 @@ class GameObjectSpawn extends GameObjectStatic {
     player.writeByte(ServerResponse.GameObject_Spawn);
     player.writePosition3(this);
     player.writeByte(spawnType);
-    player.writeByte(amount);
+    player.writeByte(spawnAmount);
   }
 }
 

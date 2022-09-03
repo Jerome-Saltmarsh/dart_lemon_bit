@@ -39,6 +39,7 @@ class NodeType {
   static const Wooden_Plank = 68;
   static const Bau_Haus_2 = 69;
   static const Boulder = 70;
+  static const Spawn = 71;
 
   static bool isOriented(int value) =>
       value == Brick_2 ||

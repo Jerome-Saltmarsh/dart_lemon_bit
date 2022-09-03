@@ -34,6 +34,26 @@ GameObject convertDynamicToGameObject(dynamic value) {
   throw Exception("Cannot convert value to gameobject");
 }
 
+int? tryGetInt(Json json, String fieldName){
+  final value = json[fieldName];
+  if (value == null) return null;
+  if (value is int) return value;
+  if (value is String){
+    return int.tryParse(value);
+  }
+  return null;
+}
+
+double? tryGetDouble(Json json, String fieldName){
+  final value = json[fieldName];
+  if (value == null) return null;
+  if (value is double) return value;
+  if (value is String){
+    return double.tryParse(value);
+  }
+  return null;
+}
+
 GameObject convertJsonToGameObject(Json json) {
     final type = json.getInt('type');
     final x = json.getDouble('x');
@@ -49,6 +69,8 @@ GameObject convertJsonToGameObject(Json json) {
           y: y,
           z: z,
           spawnType: spawnType,
+          spawnRadius: tryGetDouble(json, 'spawn-radius') ?? 50,
+          spawnAmount: tryGetInt(json, 'spawn-amount') ?? 1,
       );
     }
 

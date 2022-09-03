@@ -1,0 +1,14 @@
+TODO
+[ ] Persist Spawn
+[ ] Spawn Attribute Health
+[ ] Spawn Attribute Damage
+[ ] Add Enemy Spawns to world
+[ ] Clicking allie should cause player to run over and talk
+[ ] Destroy GameObject Rock
+[ ] Destroy Node Tree
+
+FIX
+[ ] Grass Corner Slope Color
+[ ] Water Flowing
+[ ] render column 0
+[ ] render last row
