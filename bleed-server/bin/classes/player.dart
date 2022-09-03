@@ -715,6 +715,7 @@ extension PlayerProperties on Player {
   }
 
   void writeNpcTalk({required String text, Map<String, Function>? options}){
+    interactingWithNpc = true;
     this.options = options ?? {'Goodbye' : endInteraction};
     writeByte(ServerResponse.Npc_Talk);
     writeString(text);
