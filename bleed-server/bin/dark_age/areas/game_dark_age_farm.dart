@@ -48,6 +48,14 @@ class GameDarkAgeFarm extends DarkAgeArea {
     player.x += giveOrTake(radius);
     player.y += giveOrTake(radius);
     player.setCharacterStateSpawning();
+
+    player. interact(
+        message: "Welcome to Dark-Age!",
+        responses: {
+          "Tutorial": player.endInteraction,
+          "Play": player.endInteraction,
+        }
+    );
   }
 
   @override

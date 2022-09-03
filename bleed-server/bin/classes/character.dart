@@ -20,7 +20,9 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
 
   bool get dead => state == CharacterState.Dead;
   bool get dying => state == CharacterState.Dying;
-  bool get alive => !dead && !dying;
+  bool get alive => !deadOrDying;
+
+  bool get deadOrDying => dead || dying;
 
   int get health => _health;
 
@@ -59,7 +61,7 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
   bool get idling => state == CharacterState.Idle;
   bool get characterStateIdle => state == CharacterState.Idle;
   bool get busy => stateDurationRemaining > 0;
-  bool get deadOrBusy => dead || busy;
+  bool get deadOrBusy => dying || dead || busy;
   bool get equippedTypeIsBow => equippedWeapon.type == WeaponType.Bow;
   bool get equippedTypeIsStaff => equippedWeapon.type == WeaponType.Staff;
   bool get unarmed => equippedWeapon.type == WeaponType.Unarmed;
@@ -140,6 +142,27 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
 
   void updateCharacter(Game game){
     if (dead) return;
+
+    if (dying){
+      updateMovement(game);
+      game.scene.resolveCharacterTileCollision(this, game);
+      if (stateDurationRemaining-- <= 0){
+        game.setCharacterStateDead(this);
+
+        for (final player in game.players) {
+          player.writeGameEvent(
+            type: GameEventType.Character_Death,
+            x: x,
+            y: y,
+            z: z,
+            angle: 0,
+          );
+          player.writeByte(type);
+        }
+      }
+      return;
+    }
+
     if (!busy){
       customUpdateCharacter(game);
     }
@@ -201,7 +224,7 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
   }
 
   void setCharacterStateHurt(){
-    if (dead) return;
+    if (deadOrDying) return;
     if (state == CharacterState.Hurt) return;
     stateDurationRemaining = 10;
     state = CharacterState.Hurt;

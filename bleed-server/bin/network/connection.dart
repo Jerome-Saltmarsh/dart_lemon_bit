@@ -281,7 +281,7 @@ class Connection {
         return handleNpcTalkSelectOption(player, arguments);
 
       case ClientRequest.Deck_Select_Card:
-        if (player.dead) return errorPlayerDead();
+        if (player.deadOrDying) return errorPlayerDead();
         if (arguments.length != 2) return errorArgsExpected(2, arguments);
         final deckIndex = int.tryParse(arguments[1]);
         if (deckIndex == null) {
@@ -488,7 +488,7 @@ class Connection {
   }
 
   void handleNpcTalkSelectOption(Player player, List<String> arguments) {
-    if (player.dead) return errorPlayerDead();
+    if (player.deadOrDying) return errorPlayerDead();
     if (arguments.length != 2) return errorArgsExpected(2, arguments);
     final index = int.tryParse(arguments[1]);
     if (index == null) {

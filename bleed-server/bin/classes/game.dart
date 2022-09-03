@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
-import '../common/character_type.dart';
 import '../common/library.dart';
 import '../common/spawn_type.dart';
 import '../common/teams.dart';
@@ -272,12 +271,18 @@ extension GameFunctions on Game {
     required Character target,
     required int amount,
   }) {
-    if (!target.alive) return;
+    if (target.deadOrDying) return;
     final damage = min(amount, target.health);
     target.health -= damage;
 
     if (target.health <= 0){
-      setCharacterStateDead(target);
+      setCharacterStateDying(target);
+    } else {
+      onDamaged(target, src, damage);
+
+      if (target is AISlime) {
+        target.setCharacterStateHurt();
+      }
     }
 
     switch (target.material) {
@@ -299,50 +304,13 @@ extension GameFunctions on Game {
         break;
     }
 
-    if (target.dead) {
-      target.collidable = false;
-
-      for (final player in players) {
-        player.writeGameEvent(
-          type: GameEventType.Character_Death,
-          x: target.x,
-          y: target.y,
-          z: target.z,
-          angle: radiansV2(src, target),
-        );
-        player.writeByte(target.type);
-      }
-
-      for (final ai in characters) {
-        if (ai.target != target) continue;
-        ai.clearTarget();
-      }
-
-      for (final player in players) {
-        if (player.aimTarget != target) continue;
-        player.aimTarget = null;
-      }
-
-      onKilled(target, src);
-    } else {
-      onDamaged(target, src, damage);
-    }
-
     final isZombie = target is Zombie;
 
-    if (target.dead) {
-      setCharacterStateDead(target);
-      return;
-    }
     if (isZombie && randomBool()) {
       dispatchV3(
         GameEventType.Zombie_Hurt,
         target,
       );
-      target.setCharacterStateHurt();
-    }
-
-    if (target is AISlime) {
       target.setCharacterStateHurt();
     }
 
@@ -401,6 +369,31 @@ extension GameFunctions on Game {
     }
   }
 
+  void setCharacterStateDying(Character character) {
+    if (character.deadOrDying) return;
+    character.health = 0;
+    character.state = CharacterState.Dying;
+    character.stateDurationRemaining = 10;
+    character.onCharacterStateChanged();
+    character.collidable = false;
+    character.onDeath();
+
+    for (final character in characters) {
+      if (character.target != character) continue;
+      character.clearTarget();
+    }
+
+    for (final projectile in projectiles) {
+      if (projectile.target != character) continue;
+      projectile.target = null;
+    }
+
+    for (final player in players) {
+      if (player.aimTarget != character) continue;
+      player.aimTarget = null;
+    }
+  }
+
   void setCharacterStateDead(Character character) {
     if (character.state == CharacterState.Dead) return;
     character.health = 0;
@@ -421,10 +414,10 @@ extension GameFunctions on Game {
   }
 
   void changeCharacterHealth(Character character, int amount) {
-    if (character.dead) return;
+    if (character.deadOrDying) return;
     character.health += amount;
     if (character.health > 0) return;
-    setCharacterStateDead(character);
+    setCharacterStateDying(character);
   }
 
   void deactivateProjectile(Projectile projectile) {
@@ -536,7 +529,7 @@ extension GameFunctions on Game {
       }
     }
 
-    if (player.dead) return;
+    if (player.deadOrDying) return;
 
     if (player.performDuration > 0) {
       player.performDuration--;
@@ -809,7 +802,7 @@ extension GameFunctions on Game {
     if (!target.collidable) return;
     if (target is Character) {
       if (onSameTeam(src, target)) return;
-      if (target.dead) return;
+      if (target.deadOrDying) return;
     }
 
     // TODO Hack
@@ -1097,7 +1090,7 @@ extension GameFunctions on Game {
 
   void updateAITargets() {
     for (final character in characters) {
-      if (character.dead) continue;
+      if (!character.alive) continue;
       if (character is AI == false) continue;
       final ai = character as AI;
 
@@ -1113,7 +1106,7 @@ extension GameFunctions on Game {
       var targetDistance = 9999999.0;
 
       for (final other in characters) {
-        if (other.dead) continue;
+        if (!other.alive) continue;
         if (other == character) continue;
         if (onSameTeam(other, character)) continue;
         if (!character.withinViewRange(other)) continue;

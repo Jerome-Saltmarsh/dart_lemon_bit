@@ -108,7 +108,6 @@ class GameDarkAgeVillage extends DarkAgeArea {
 
   @override
   void onPlayerJoined(Player player) {
-     player.interactingWithNpc = true;
      player.interact(
          message: "Welcome to Dark-Age!",
          responses: {
