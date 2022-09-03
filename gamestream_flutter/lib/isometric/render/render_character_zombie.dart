@@ -44,6 +44,12 @@ double _getZombieSrcX(Character character) {
           direction: character.direction,
           framesPerDirection: framesPerDirection,
       );
+    case CharacterState.Dying:
+      return single(
+        frame: 2,
+        direction: character.direction,
+        framesPerDirection: framesPerDirection,
+      );
     case CharacterState.Performing:
       return animate(
           animation: const [7, 7, 8, 8],

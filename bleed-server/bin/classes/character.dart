@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
@@ -155,7 +157,7 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
             x: x,
             y: y,
             z: z,
-            angle: 0,
+            angle: velocityAngle,
           );
           player.writeByte(type);
         }

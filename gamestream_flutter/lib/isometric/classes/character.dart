@@ -22,6 +22,7 @@ class Character extends Vector3 {
   var magic = 1.0;
 
   bool get dead => state == CharacterState.Dead;
+  bool get deadOrDying => dead || dying;
   bool get spawning => state == CharacterState.Spawning;
   bool get running => state == CharacterState.Running;
   bool get performing => state == CharacterState.Performing;

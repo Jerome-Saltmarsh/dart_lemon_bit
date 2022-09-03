@@ -12,7 +12,7 @@ void renderCharacterTemplate(Character character, {bool renderHealthBar = true})
   assert(character.direction >= 0);
   assert(character.direction < 8);
 
-  if (character.dead) return;
+  if (character.deadOrDying) return;
 
   if (renderHealthBar){
     renderCharacterHealthBar(character);
