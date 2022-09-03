@@ -1,7 +1,4 @@
 FEATURE
-[ ] ? Spawn Attribute Health
-[ ] ? Spawn Attribute Damage
-[ ] ? Spawn Attribute Team
 [ ] Purple Explosion audio
 [ ] Destroy Node Tree
 [ ] Add Enemy Spawns to world
@@ -13,10 +10,10 @@ BUG
 [?] Rat attack misses player
 [ ] Grass Corner Slope Color
 [ ] Water Flowing
-[ ] render last row
 
 COMPLETED
 [x] Rat hurt audio
 [x] Persist Spawn
 [x] Fix Rat Team
 [x] Fix render column 0
+[x] Fix render last row
