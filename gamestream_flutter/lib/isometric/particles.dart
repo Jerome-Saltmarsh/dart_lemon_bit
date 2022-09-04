@@ -426,24 +426,29 @@ void spawnParticleBlockGrass(double x, double y, double z, [int count = 3]){
 }
 
 
-void spawnParticlePotShard(double x, double y){
-  spawnParticle(
-    type: ParticleType.Pot_Shard,
-    x: x,
-    y: y,
-    z: randomBetween(0.0, 0.2),
-    angle: randomAngle(),
-    speed: randomBetween(0.5, 1.25),
-    zv: randomBetween(0.1, 0.2),
-    weight: 0.5,
-    duration: randomInt(150, 200),
-    scale: randomBetween(0.6, 1.25),
-    scaleV: 0,
-    rotation: randomAngle(),
-    castShadow: true,
-    bounciness: 0.35,
-  );
+void spawnParticleBlockBrick(double x, double y, double z, [int count = 3]){
+  for (var i = 0; i < count; i++){
+    spawnParticle(
+      type: ParticleType.Block_Brick,
+      x: x,
+      y: y,
+      z: z,
+      angle: randomAngle(),
+      speed: randomBetween(0.5, 1.25),
+      zv: randomBetween(2, 3),
+      weight: 10,
+      duration: 25,
+      scale: 0.6,
+      scaleV: 0,
+      rotation: randomAngle(),
+      castShadow: true,
+      bounciness: 0,
+      checkCollision: false,
+    );
+  }
 }
+
+
 
 void spawnParticleShrapnel({
   required double x,

@@ -96,6 +96,18 @@ void renderParticle(Particle value) {
         color: value.renderColor,
       );
 
+    case ParticleType.Block_Brick:
+      return render(
+        dstX: value.renderX,
+        dstY: value.renderY,
+        srcX: 1760,
+        srcY: 80,
+        srcWidth: 16,
+        srcHeight: 16,
+        scale: value.scale,
+        color: value.renderColor,
+      );
+
     case ParticleType.Fire:
       if (value.frame > 12 ) return;
       return render(

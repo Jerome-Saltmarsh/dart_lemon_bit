@@ -1,4 +1,3 @@
-import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
@@ -154,9 +153,6 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       break;
 
     case GameEventType.Object_Destroyed_Pot:
-      for (var i = 0; i < 8; i++) {
-        spawnParticlePotShard(x, y);
-      }
       audio.potBreaking(x, y);
       break;
 
@@ -263,9 +259,11 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       }
       if (node.type == NodeType.Boulder) {
         audioSingleMaterialStruckStone.playXYZ(x, y, z);
+        spawnParticleBlockBrick(x, y, z);
       }
       if (node.type == NodeType.Brick_2) {
         audioSingleMaterialStruckStone.playXYZ(x, y, z);
+        spawnParticleBlockBrick(x, y, z);
       }
       break;
     case GameEventType.Game_Object_Destroyed:
