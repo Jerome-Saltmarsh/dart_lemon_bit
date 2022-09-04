@@ -540,47 +540,7 @@ extension GameFunctions on Game {
 
     if (player.deadOrDying) return;
 
-    if (player.performDuration > 0) {
-      player.performDuration--;
-
-      if (player.performMaxHits > 0){
-        for (final character in characters) {
-          if (onSameTeam(player, character)) continue;
-          if (character.distanceFromXYZ(
-            player.performX,
-            player.performY,
-            player.performZ,
-          ) > 25) continue;
-          applyHit(src: player, target: character, damage: 2);
-          player.performMaxHits--;
-        }
-      }
-
-      if (player.performMaxHits > 0){
-        for (final gameObject in gameObjects) {
-
-          if (gameObject.distanceFromXYZ(
-            player.performX,
-            player.performY,
-            player.performZ,
-          ) > 25) continue;
-
-          if (gameObject is GameObjectStatic){
-            if (!gameObject.active) continue;
-            if (gameObject.type == GameObjectType.Barrel) {
-                 gameObject.active = false;
-                 gameObject.collidable = false;
-                 gameObject.respawn = 200;
-            }
-          }
-
-          if (gameObject is Velocity == false) continue;
-
-          (gameObject as Velocity).applyForce(force: 5, angle:  radiansV2(player, gameObject));
-          player.performMaxHits--;
-        }
-      }
-    }
+    updatePlayerAttacking(player);
 
     if (player.framesSinceClientRequest > 10) {
       player.setCharacterStateIdle();
@@ -1370,6 +1330,56 @@ extension GameFunctions on Game {
     npc.clearDest();
     characters.add(npc);
     return npc;
+  }
+
+
+  void updatePlayerAttacking(Player player) {
+    if (player.performDuration <= 0) return;
+    player.performDuration--;
+
+    const attackRadius = 25.0;
+
+    if (player.performMaxHits > 0) {
+      for (final character in characters) {
+        if (onSameTeam(player, character)) continue;
+        if (character.distanceFromXYZ(
+              player.performX,
+              player.performY,
+              player.performZ,
+            ) >
+            attackRadius) continue;
+        applyHit(src: player, target: character, damage: 2);
+        player.performMaxHits--;
+        return;
+      }
+    }
+
+    if (player.performMaxHits > 0) {
+      for (final gameObject in gameObjects) {
+        if (gameObject.distanceFromXYZ(
+              player.performX,
+              player.performY,
+              player.performZ,
+            ) >
+            attackRadius) continue;
+
+        if (gameObject is GameObjectStatic) {
+          if (!gameObject.active) continue;
+          if (gameObject.type == GameObjectType.Barrel) {
+            gameObject.active = false;
+            gameObject.collidable = false;
+            gameObject.respawn = 200;
+          }
+        }
+        player.performMaxHits--;
+        if (gameObject is Velocity == false) continue;
+        (gameObject as Velocity).applyForce(
+          force: 5,
+          angle: radiansV2(player, gameObject),
+        );
+        return;
+      }
+    }
   }
 }
 

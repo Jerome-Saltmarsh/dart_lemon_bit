@@ -75,6 +75,8 @@ class Player extends Character with ByteWriter {
   var mapY = 0;
 
   void performAttack() {
+    assert (alive);
+    if (busy) return;
     if (performDuration > 0) return;
     final angle = mouseAngle;
     final distance = 30.0;
