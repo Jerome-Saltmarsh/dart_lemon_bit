@@ -1,7 +1,7 @@
 class ServerResponse {
   static const Player = 0;
   static const Projectiles = 3;
-  static const Game_Events = 6;
+  static const Game_Event = 6;
   static const Grenades = 7;
   static const Game_Joined = 9;
   static const Scene = 10;

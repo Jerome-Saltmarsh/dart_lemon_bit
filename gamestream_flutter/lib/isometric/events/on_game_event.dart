@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/events/on_character_hurt.dart';
+import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
@@ -15,7 +16,6 @@ import 'on_character_death.dart';
 void onGameEvent(int type, double x, double y, double z, double angle) {
   switch (type) {
     case GameEventType.Player_Spawn_Started:
-      print("audioSingleTeleport.playXYZ($x, $y, $z);");
       return audioSingleTeleport.playXYZ(x, y, z);
     case GameEventType.Player_Spawned:
       for (var i = 0; i < 7; i++){
@@ -265,6 +265,10 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       if (node.type == NodeType.Brick_2) {
         audioSingleMaterialStruckStone.playXYZ(x, y, z);
       }
+      break;
+    case GameEventType.Game_Object_Destroyed:
+      final type = serverResponseReader.readByte();
+      onGameEventGameObjectDestroyed(x, y, z, angle, type);
       break;
   }
 }

@@ -486,7 +486,7 @@ extension PlayerProperties on Player {
     required double z,
     required double angle,
   }){
-    writeByte(ServerResponse.Game_Events);
+    writeByte(ServerResponse.Game_Event);
     writeByte(type);
     writeInt(x);
     writeInt(y);

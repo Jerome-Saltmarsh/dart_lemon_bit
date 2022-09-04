@@ -114,8 +114,8 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Projectiles:
           readProjectiles();
           break;
-        case ServerResponse.Game_Events:
-          readGameEvents();
+        case ServerResponse.Game_Event:
+          readGameEvent();
           break;
         case ServerResponse.Player_Events:
           readPlayerEvents();
@@ -660,7 +660,7 @@ class ServerResponseReader with ByteReader {
     sync.value = duration.inMilliseconds / averageUpdate.value;
   }
 
-  void readGameEvents(){
+  void readGameEvent(){
       final type = readByte();
       final x = readDouble();
       final y = readDouble();

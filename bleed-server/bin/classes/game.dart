@@ -5,6 +5,7 @@ import 'package:lemon_math/library.dart';
 import '../common/library.dart';
 import '../common/spawn_type.dart';
 import '../common/teams.dart';
+import '../dispatch/dispatch_game_object_destroyed.dart';
 import '../engine.dart';
 import '../functions.dart';
 import '../functions/withinRadius.dart';
@@ -1373,9 +1374,7 @@ extension GameFunctions on Game {
             gameObject.active = false;
             gameObject.collidable = false;
             gameObject.respawn = 200;
-
-
-
+            dispatchGameObjectDestroyed(players, gameObject);
           }
         }
         player.performMaxHits--;
