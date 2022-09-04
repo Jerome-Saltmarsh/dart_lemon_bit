@@ -30,7 +30,6 @@ void emitParticlePixel({
   particle.yv = giveOrTake(pi * randomBetween(initialVelocityMin, initialVelocityMax));
   particle.zv = 0.01;
   particle.airFriction = 0.98;
-  particle.hue = randomInt(0, 64);
 }
 
 void emitMyst(Particle particle) {
@@ -51,6 +50,5 @@ void emitMyst(Particle particle) {
   particle.xv = giveOrTake(pi * velocity);
   particle.yv = giveOrTake(pi * velocity);
   particle.zv = 0.0;
-  particle.casteShadow = false;
 }
 

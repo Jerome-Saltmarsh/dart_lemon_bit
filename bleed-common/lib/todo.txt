@@ -17,6 +17,7 @@ Optimize
 [ ] Spawn Particle Bubble
 
 BUG
+[ ] Block Particles Fly up walls
 [ ] Grass Corner Slope Color
 [ ] Water Flowing
 

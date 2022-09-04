@@ -177,7 +177,6 @@ void spawnParticleArm({
     rotationV: giveOrTake(0.25),
     scale: 0.75,
     scaleV: 0,
-    castShadow: true,
   );
 }
 
@@ -204,7 +203,6 @@ void spawnParticleBlood({
     scale: 0.6,
     scaleV: 0,
     bounciness: 0,
-    castShadow: true,
   );
 }
 
@@ -225,7 +223,6 @@ void spawnParticleDustCloud({
     duration: 300,
     rotation: 0,
     bounciness: 0,
-    castShadow: false,
   );
 }
 
@@ -252,7 +249,6 @@ void spawnParticleLeaf({
     scale: 0.6,
     scaleV: 0,
     bounciness: 0,
-    castShadow: true,
   );
 }
 
@@ -323,7 +319,6 @@ void spawnParticleShell({
     rotationV: 0.75,
     scale: 0.3,
     bounciness: 0.4,
-    castShadow: true,
   );
 }
 
@@ -367,7 +362,6 @@ void spawnParticleRockShard(double x, double y){
     scale: randomBetween(0.6, 1.25),
     scaleV: 0,
     rotation: randomAngle(),
-    castShadow: true,
     bounciness: 0.35,
   );
 }
@@ -386,7 +380,6 @@ void spawnParticleTreeShard(double x, double y, double z){
     scale: randomBetween(0.6, 1.25),
     scaleV: 0,
     rotation: randomAngle(),
-    castShadow: true,
     bounciness: 0.35,
   );
 }
@@ -406,7 +399,6 @@ void spawnParticleBlockWood(double x, double y, double z, [int count = 3]){
       scale: 0.6,
       scaleV: 0,
       rotation: randomAngle(),
-      castShadow: true,
       bounciness: 0,
       checkCollision: false,
     );
@@ -428,7 +420,6 @@ void spawnParticleBlockGrass(double x, double y, double z, [int count = 3]){
       scale: 0.6,
       scaleV: 0,
       rotation: randomAngle(),
-      castShadow: true,
       bounciness: 0,
       checkCollision: false,
     );
@@ -451,7 +442,6 @@ void spawnParticleBlockBrick(double x, double y, double z, [int count = 3]){
       scale: 0.6,
       scaleV: 0,
       rotation: randomAngle(),
-      castShadow: true,
       bounciness: 0,
       checkCollision: false,
     );
@@ -551,7 +541,6 @@ void spawnParticleHeadZombie({
       rotationV: 0.05,
       scale: 0.75,
       scaleV: 0,
-      castShadow: true
   );
 }
 
@@ -822,14 +811,12 @@ void spawnParticle({
   double rotationV = 0,
   bounciness = 0.5,
   double airFriction = 0.98,
-  bool castShadow = false,
   bool animation = false,
 }) {
   assert(duration > 0);
   final particle = getParticleInstance();
   assert(!particle.active);
   particle.type = type;
-  particle.casteShadow = castShadow;
   particle.x = x;
   particle.y = y;
   particle.z = z;
@@ -863,7 +850,6 @@ Particle getParticleInstance() {
      return instance;
   }
   final particle = particles[totalActiveParticles];
-  particle.checkNodeCollision = true;
   assert (!particle.active);
   return particle;
 }
