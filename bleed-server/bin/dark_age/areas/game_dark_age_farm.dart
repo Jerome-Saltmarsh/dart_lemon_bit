@@ -50,10 +50,9 @@ class GameDarkAgeFarm extends DarkAgeArea {
     player.setCharacterStateSpawning();
 
     player. interact(
-        message: "Welcome to Dark-Age!",
+        message: "Welcome to Dark-Age! \n\nUse the W,A,S,D keys to run \nLeft and right mouse click to attack and interact",
         responses: {
-          "Tutorial": player.endInteraction,
-          "Play": player.endInteraction,
+          "Okay!": player.endInteraction,
         }
     );
   }

@@ -52,16 +52,20 @@ int _compareParticles(Particle a, Particle b) {
   return a.z > b.z ? 1 : -1;
 }
 
+// TODO Optimize
 int _compareParticlesActive(Particle a, Particle b) {
   if (a.active) return -1;
   return 1;
 }
 
 void updateParticles() {
-  for (var i = 0; i < particles.length; i++) {
-    _updateParticle(particles[i]);
+  // for (var i = 0; i < particles.length; i++) {
+  //   _updateParticle(particles[i]);
+  // }
+  for(final particle in particles){
+    _updateParticle(particle);
   }
-  updateParticlesZombieParts();
+  // updateParticlesZombieParts();
   updateParticleFrames();
 }
 
@@ -94,6 +98,12 @@ bool particleEmitsBlood(int type){
 void _updateParticle(Particle particle) {
   if (!particle.active) return;
   if (particle.outOfBounds) return particle.deactivate();
+
+  if (particle.animation) {
+    if (particle.duration-- <= 0)
+      particle.deactivate();
+    return;
+  }
 
   final tile = particle.tile.type;
   final airBorn =
@@ -752,6 +762,7 @@ void spawnParticleSlash({
     duration: duration,
     scale: scale,
     checkCollision: false,
+    animation: true,
   );
 }
 
@@ -812,6 +823,7 @@ void spawnParticle({
   bounciness = 0.5,
   double airFriction = 0.98,
   bool castShadow = false,
+  bool animation = false,
 }) {
   assert(duration > 0);
   final particle = getParticleInstance();
@@ -822,6 +834,7 @@ void spawnParticle({
   particle.y = y;
   particle.z = z;
   particle.checkNodeCollision = checkCollision;
+  particle.animation = animation;
 
   if (speed > 0){
     particle.xv = getAdjacent(angle, speed);

@@ -31,6 +31,7 @@ class Particle extends Vector3 {
   var casteShadow = false;
   /// Deactivates if this node hits a solid node
   var checkNodeCollision = true;
+  var animation = false;
 
   bool get active => duration > 0;
 
@@ -40,6 +41,7 @@ class Particle extends Vector3 {
   void deactivate(){
     duration = -1;
     frame = 0;
+    // TODO Doesn't belong here
     if (type == ParticleType.Orb_Shard) {
       spawnParticleStarExploding(x: x, y: y, z: z);
     }

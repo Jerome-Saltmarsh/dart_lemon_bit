@@ -20,6 +20,7 @@ import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/render.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_math/library.dart';
 
@@ -48,6 +49,47 @@ class GameRender {
     renderSprites();
     renderEditMode();
     renderMouseTargetName();
+    // renderTutorialKeys();
+  }
+
+  void renderTutorialKeys() {
+     const distance = 50;
+    render(
+       srcX: 1840,
+        srcY: 33,
+        dstX: player.renderX,
+        dstY: player.renderY + distance,
+        srcWidth: 32,
+        srcHeight: 32,
+    );
+
+    // A
+    render(
+      srcX: 1840,
+      srcY: 99,
+      dstX: player.renderX - distance,
+      dstY: player.renderY,
+      srcWidth: 32,
+      srcHeight: 32,
+    );
+
+    // D
+    render(
+      srcX: 1840,
+      srcY: 0,
+      dstX: player.renderX + distance,
+      dstY: player.renderY,
+      srcWidth: 32,
+      srcHeight: 32,
+    );
+    render(
+      srcX: 1840,
+      srcY: 66,
+      dstX: player.renderX,
+      dstY: player.renderY - distance,
+      srcWidth: 32,
+      srcHeight: 32,
+    );
   }
 
   void renderEditMode() {

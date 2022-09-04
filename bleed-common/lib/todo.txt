@@ -1,10 +1,10 @@
 FEATURE
+[ ] Tutorial
 [ ] Destroy GameObject Barrel
 [ ] Destroy GameObject Rock
-[ ] GameObject Respawn
+[ ] GameObject Respawn Barrel
 [ ] Player Level Upgrades
 [ ] Player Weapons
-[ ] Tutorial
 [ ] Purple Explosion audio
 [ ] Destroy Node Tree
 [ ] Add Enemy Spawns to world
@@ -12,6 +12,9 @@ FEATURE
 [ ] Squish hurt audio
 [ ] Player changes map on edge
 [ ] Solid Water at edge of map
+
+Optimize
+[ ] Spawn Particle Bubble
 
 BUG
 [ ] Grass Corner Slope Color
