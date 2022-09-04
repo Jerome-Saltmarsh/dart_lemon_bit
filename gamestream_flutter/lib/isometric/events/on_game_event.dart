@@ -249,15 +249,19 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       }
       if (node.type == NodeType.Tree_Bottom) {
         audioSingleMaterialStruckWood.playXYZ(x, y, z);
+        spawnParticleShardWood(x, y, z, 3);
       }
       if (node.type == NodeType.Torch) {
         audioSingleMaterialStruckWood.playXYZ(x, y, z);
+        spawnParticleShardWood(x, y, z, 3);
       }
       if (node.type == NodeType.Wood_2) {
         audioSingleMaterialStruckWood.playXYZ(x, y, z);
+        spawnParticleShardWood(x, y, z, 3);
       }
       if (node.type == NodeType.Wooden_Plank) {
         audioSingleMaterialStruckWood.playXYZ(x, y, z);
+        spawnParticleShardWood(x, y, z, 3);
       }
       if (node.type == NodeType.Boulder) {
         audioSingleMaterialStruckStone.playXYZ(x, y, z);

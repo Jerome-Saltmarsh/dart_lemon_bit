@@ -7,6 +7,44 @@ import 'package:lemon_math/library.dart';
 
 void renderParticle(Particle value) {
   switch (value.type) {
+
+    case ParticleType.Bubble:
+      if (value.duration < 26){
+        const size = 32.0;
+        final frame = (26 - value.duration) ~/ 2;
+        return render(
+            dstX: value.renderX,
+            dstY: value.renderY,
+            srcX: 2896.0,
+            srcY: frame * size,
+            srcWidth: size,
+            srcHeight: size,
+            color: value.renderColor
+        );
+      }
+
+      const size = 8.0;
+      return render(
+          dstX: value.renderX,
+          dstY: value.renderY,
+          srcX: 2864.0,
+          srcY: ((value.frame ~/ 2) % 6) * size,
+          srcWidth: size,
+          srcHeight: size,
+          color: value.renderColor
+      );
+
+    case ParticleType.Bubble_Small:
+      return render(
+          dstX: value.renderX,
+          dstY: value.renderY,
+          srcX: 2976.0,
+          srcY: ((value.frame ~/ 2) % 6) * 5,
+          srcWidth: 4,
+          srcHeight: 5,
+          color: value.renderColor
+      );
+
     case ParticleType.Smoke:
       return render(
           dstX: value.renderX,
@@ -17,6 +55,18 @@ void renderParticle(Particle value) {
           srcHeight: 50,
           scale: value.scale,
           color: value.renderColor,
+      );
+
+    case ParticleType.Shard_Wood:
+      return render(
+        dstX: value.renderX,
+        dstY: value.renderY,
+        srcX: 1760,
+        srcY: 48,
+        srcWidth: 16,
+        srcHeight: 16,
+        scale: value.scale,
+        color: value.renderColor,
       );
     case ParticleType.Bullet_Ring:
       final frame = value.frame ~/ 2;
@@ -94,43 +144,6 @@ void renderParticle(Particle value) {
           srcY: 64.0 * value.direction,
           srcWidth: 64,
           srcHeight: 64,
-          color: value.renderColor
-      );
-
-    case ParticleType.Bubble:
-      if (value.duration < 26){
-        const size = 32.0;
-         final frame = (26 - value.duration) ~/ 2;
-         return render(
-             dstX: value.renderX,
-             dstY: value.renderY,
-             srcX: 2896.0,
-             srcY: frame * size,
-             srcWidth: size,
-             srcHeight: size,
-             color: value.renderColor
-         );
-      }
-
-      const size = 8.0;
-      return render(
-          dstX: value.renderX,
-          dstY: value.renderY,
-          srcX: 2864.0,
-          srcY: ((value.frame ~/ 2) % 6) * size,
-          srcWidth: size,
-          srcHeight: size,
-          color: value.renderColor
-      );
-
-    case ParticleType.Bubble_Small:
-      return render(
-          dstX: value.renderX,
-          dstY: value.renderY,
-          srcX: 2976.0,
-          srcY: ((value.frame ~/ 2) % 6) * 5,
-          srcWidth: 4,
-          srcHeight: 5,
           color: value.renderColor
       );
 

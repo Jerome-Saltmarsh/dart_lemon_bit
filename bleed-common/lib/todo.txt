@@ -1,8 +1,9 @@
 FEATURE
-[ ] Player Level Upgrades
-[ ] Player Weapons
 [ ] Destroy GameObject Barrel
 [ ] Destroy GameObject Rock
+[ ] GameObject Respawn
+[ ] Player Level Upgrades
+[ ] Player Weapons
 [ ] Tutorial
 [ ] Purple Explosion audio
 [ ] Destroy Node Tree

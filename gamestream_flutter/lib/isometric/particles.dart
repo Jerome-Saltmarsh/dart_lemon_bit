@@ -381,23 +381,26 @@ void spawnParticleTreeShard(double x, double y, double z){
   );
 }
 
-void spawnParticleShardWood(double x, double y){
-  spawnParticle(
-    type: ParticleType.Shard_Wood,
-    x: x,
-    y: y,
-    z: randomBetween(0.0, 0.2),
-    angle: randomAngle(),
-    speed: randomBetween(0.5, 1.25),
-    zv: randomBetween(0.1, 0.2),
-    weight: 0.5,
-    duration: randomInt(150, 200),
-    scale: randomBetween(1.0, 1.75),
-    scaleV: 0,
-    rotation: randomAngle(),
-    castShadow: true,
-    bounciness: 0.35,
-  );
+void spawnParticleShardWood(double x, double y, double z, [int count = 1]){
+  for (var i = 0; i < count; i++){
+    spawnParticle(
+      type: ParticleType.Shard_Wood,
+      x: x,
+      y: y,
+      z: z,
+      angle: randomAngle(),
+      speed: randomBetween(0.5, 1.25),
+      zv: randomBetween(2, 3),
+      weight: 10,
+      duration: 25,
+      scale: 0.6,
+      scaleV: 0,
+      rotation: randomAngle(),
+      castShadow: true,
+      bounciness: 0,
+      checkCollision: false,
+    );
+  }
 }
 
 void spawnParticlePotShard(double x, double y){
