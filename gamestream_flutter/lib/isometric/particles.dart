@@ -17,11 +17,27 @@ final particles = <Particle>[];
 var totalActiveParticles = 0;
 var totalParticles = 0;
 
+void sortParticlesActive(){
+  totalParticles = particles.length;
+  for (var pos = 1; pos < totalParticles; pos++) {
+    var min = 0;
+    var max = pos;
+    var element = particles[pos];
+    while (min < max) {
+      var mid = min + ((max - min) >> 1);
+      if (!particles[mid].active) {
+        max = mid;
+      } else {
+        min = mid + 1;
+      }
+    }
+    particles.setRange(min + 1, pos + 1, particles, min);
+    particles[min] = element;
+  }
+}
+
 void sortParticles(){
-  insertionSort(
-    particles,
-    compare: _compareParticlesActive,
-  );
+  sortParticlesActive();
   totalActiveParticles = 0;
   totalParticles = particles.length;
   for (; totalActiveParticles < totalParticles; totalActiveParticles++){
