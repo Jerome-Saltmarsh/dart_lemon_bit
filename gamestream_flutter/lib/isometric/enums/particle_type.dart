@@ -14,7 +14,7 @@ class ParticleType {
   static const Pot_Shard = 13;
   static const Rock = 14;
   static const Tree_Shard = 15;
-  static const Shard_Wood = 16;
+  static const Block_Wood = 16;
   static const Orb_Shard = 17;
   static const Flame = 18;
   static const Leaf = 19;
@@ -30,4 +30,5 @@ class ParticleType {
   static const Handgun_Firing = 29;
   static const Bullet_Ring = 30;
   static const Character_Death_Slime = 31;
+  static const Block_Grass = 32;
 }

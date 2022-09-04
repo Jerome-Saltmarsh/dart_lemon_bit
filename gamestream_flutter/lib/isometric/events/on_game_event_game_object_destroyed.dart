@@ -15,7 +15,7 @@ void onGameEventGameObjectDestroyed(
      case GameObjectType.Barrel:
        audioSingleCrateBreaking.playXYZ(x, y, z);
        for (var i = 0; i < 5; i++) {
-         spawnParticleShardWood(x, y, z);
+         spawnParticleBlockWood(x, y, z);
        }
        break;
    }

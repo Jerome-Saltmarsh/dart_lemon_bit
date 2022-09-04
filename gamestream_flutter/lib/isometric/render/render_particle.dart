@@ -45,29 +45,6 @@ void renderParticle(Particle value) {
           color: value.renderColor
       );
 
-    case ParticleType.Smoke:
-      return render(
-          dstX: value.renderX,
-          dstY: value.renderY,
-          srcX: 5612,
-          srcY: 0,
-          srcWidth: 50,
-          srcHeight: 50,
-          scale: value.scale,
-          color: value.renderColor,
-      );
-
-    case ParticleType.Shard_Wood:
-      return render(
-        dstX: value.renderX,
-        dstY: value.renderY,
-        srcX: 1760,
-        srcY: 48,
-        srcWidth: 16,
-        srcHeight: 16,
-        scale: value.scale,
-        color: value.renderColor,
-      );
     case ParticleType.Bullet_Ring:
       final frame = value.frame ~/ 2;
       if (frame > 6) return;
@@ -82,6 +59,43 @@ void renderParticle(Particle value) {
         scale: value.scale,
         color: value.renderColor,
       );
+
+    case ParticleType.Smoke:
+      return render(
+          dstX: value.renderX,
+          dstY: value.renderY,
+          srcX: 5612,
+          srcY: 0,
+          srcWidth: 50,
+          srcHeight: 50,
+          scale: value.scale,
+          color: value.renderColor,
+      );
+
+    case ParticleType.Block_Wood:
+      return render(
+        dstX: value.renderX,
+        dstY: value.renderY,
+        srcX: 1760,
+        srcY: 48,
+        srcWidth: 16,
+        srcHeight: 16,
+        scale: value.scale,
+        color: value.renderColor,
+      );
+
+    case ParticleType.Block_Grass:
+      return render(
+        dstX: value.renderX,
+        dstY: value.renderY,
+        srcX: 1760,
+        srcY: 64,
+        srcWidth: 16,
+        srcHeight: 16,
+        scale: value.scale,
+        color: value.renderColor,
+      );
+
     case ParticleType.Fire:
       if (value.frame > 12 ) return;
       return render(

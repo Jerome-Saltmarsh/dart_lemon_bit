@@ -243,25 +243,23 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       final node = getNodeXYZ(x, y, z);
       if (node.type == NodeType.Grass_Long) {
         audioSingleGrassCut.playXYZ(x, y, z);
-        for (var i = 0; i < 3; i++) {
-          spawnParticleCutGrass(x: x, y: y, z: z);
-        }
+        spawnParticleBlockGrass(x, y, z);
       }
       if (node.type == NodeType.Tree_Bottom) {
         audioSingleMaterialStruckWood.playXYZ(x, y, z);
-        spawnParticleShardWood(x, y, z, 3);
+        spawnParticleBlockWood(x, y, z);
       }
       if (node.type == NodeType.Torch) {
         audioSingleMaterialStruckWood.playXYZ(x, y, z);
-        spawnParticleShardWood(x, y, z, 3);
+        spawnParticleBlockWood(x, y, z);
       }
       if (node.type == NodeType.Wood_2) {
         audioSingleMaterialStruckWood.playXYZ(x, y, z);
-        spawnParticleShardWood(x, y, z, 3);
+        spawnParticleBlockWood(x, y, z);
       }
       if (node.type == NodeType.Wooden_Plank) {
         audioSingleMaterialStruckWood.playXYZ(x, y, z);
-        spawnParticleShardWood(x, y, z, 3);
+        spawnParticleBlockWood(x, y, z);
       }
       if (node.type == NodeType.Boulder) {
         audioSingleMaterialStruckStone.playXYZ(x, y, z);
