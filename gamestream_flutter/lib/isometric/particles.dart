@@ -51,37 +51,24 @@ void sortParticles(){
     end: totalActiveParticles,
   );
 
-  for (var i = 0; i < particles.length; i++){
-    final particle = particles[i];
-    if (i < totalActiveParticles){
-      assert (particle.active);
-    } else {
-      assert (!particle.active);
-    }
-  }
+  // for (var i = 0; i < particles.length; i++){
+  //   final particle = particles[i];
+  //   if (i < totalActiveParticles){
+  //     assert (particle.active);
+  //   } else {
+  //     assert (!particle.active);
+  //   }
+  // }
 }
 
 int _compareParticles(Particle a, Particle b) {
-  if (a.z == b.z){
     return a.renderOrder > b.renderOrder ? 1 : -1;
-  }
-  return a.z > b.z ? 1 : -1;
-}
-
-// TODO Optimize
-int _compareParticlesActive(Particle a, Particle b) {
-  if (a.active) return -1;
-  return 1;
 }
 
 void updateParticles() {
-  // for (var i = 0; i < particles.length; i++) {
-  //   _updateParticle(particles[i]);
-  // }
   for(final particle in particles){
     _updateParticle(particle);
   }
-  // updateParticlesZombieParts();
   updateParticleFrames();
 }
 
