@@ -301,17 +301,7 @@ extension GameFunctions on Game {
         break;
     }
 
-    for (final player in players) {
-      final targetVelocityAngle = target.velocityAngle;
-      player.writeGameEvent(
-        type: GameEventType.Character_Hurt,
-        x: target.x,
-        y: target.y,
-        z: target.z,
-        angle: targetVelocityAngle,
-      );
-      player.writeByte(target.type);
-    }
+    dispatchGameEventCharacterHurt(target);
 
 
     if (target is AI) {
@@ -325,6 +315,20 @@ extension GameFunctions on Game {
       if (srcTargetDistance < aiTargetDistance) {
         target.target = src;
       }
+    }
+  }
+
+  void dispatchGameEventCharacterHurt(Character character) {
+    for (final player in players) {
+      final targetVelocityAngle = character.velocityAngle;
+      player.writeGameEvent(
+        type: GameEventType.Character_Hurt,
+        x: character.x,
+        y: character.y,
+        z: character.z,
+        angle: targetVelocityAngle,
+      );
+      player.writeByte(character.type);
     }
   }
 
@@ -1369,6 +1373,9 @@ extension GameFunctions on Game {
             gameObject.active = false;
             gameObject.collidable = false;
             gameObject.respawn = 200;
+
+
+
           }
         }
         player.performMaxHits--;

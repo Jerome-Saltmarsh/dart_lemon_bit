@@ -150,17 +150,7 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
       game.scene.resolveCharacterTileCollision(this, game);
       if (stateDurationRemaining-- <= 0){
         game.setCharacterStateDead(this);
-
-        for (final player in game.players) {
-          player.writeGameEvent(
-            type: GameEventType.Character_Death,
-            x: x,
-            y: y,
-            z: z,
-            angle: velocityAngle,
-          );
-          player.writeByte(type);
-        }
+        dispatchGameEventCharacterDeath();
       }
       return;
     }
@@ -171,6 +161,19 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
     updateMovement(game);
     updateCharacterState(game);
     game.scene.resolveCharacterTileCollision(this, game);
+  }
+
+  void dispatchGameEventCharacterDeath(){
+    for (final player in game.players) {
+      player.writeGameEvent(
+        type: GameEventType.Character_Death,
+        x: x,
+        y: y,
+        z: z,
+        angle: velocityAngle,
+      );
+      player.writeByte(type);
+    }
   }
 
   void updateCharacterState(Game game){

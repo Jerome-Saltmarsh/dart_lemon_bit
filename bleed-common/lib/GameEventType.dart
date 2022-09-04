@@ -50,5 +50,6 @@ class GameEventType {
   static const Character_Death = 62;
   static const Character_Hurt = 63;
   static const Sword_Slash = 64;
+  static const Game_Object_Destroyed = 65;
 
 }

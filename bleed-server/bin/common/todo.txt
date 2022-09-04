@@ -1,4 +1,6 @@
 FEATURE
+[ ] Player Level Upgrades
+[ ] Player Weapons
 [ ] Destroy GameObject Barrel
 [ ] Destroy GameObject Rock
 [ ] Tutorial
