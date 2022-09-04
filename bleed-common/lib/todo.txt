@@ -1,17 +1,21 @@
 FEATURE
+[ ] Destroy GameObject Barrel
+[ ] Destroy GameObject Rock
+[ ] Tutorial
 [ ] Purple Explosion audio
 [ ] Destroy Node Tree
 [ ] Add Enemy Spawns to world
-[ ] Clicking allie should cause player to run over and talk
+[ ] Clicking allie causes player to run over and talk
 [ ] Squish hurt audio
-[ ] Destroy GameObject Rock
+[ ] Player changes map on edge
+[ ] Solid Water at edge of map
 
 BUG
-[?] Rat attack misses player
 [ ] Grass Corner Slope Color
 [ ] Water Flowing
 
 COMPLETED
+[x] Rat attack misses player
 [x] Rat hurt audio
 [x] Persist Spawn
 [x] Fix Rat Team

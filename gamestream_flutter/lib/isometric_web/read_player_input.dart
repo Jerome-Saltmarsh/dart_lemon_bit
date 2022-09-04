@@ -72,18 +72,7 @@ void readPlayerInput() {
   if (messageBoxVisible.value) return;
 
   if (engine.mouseLeftDown.value) {
-    /// TODO Fix
-    /// sending request attack as a separate request blocks the update request
-    /// this causes that frames instruction to get lost
     setCharacterActionPerform();
-    // if (keyPressed(LogicalKeyboardKey.shiftLeft)){
-
-      // sendClientRequestAttack();
-    // }
-    // else {
-      // setCharacterActionPerform();
-    // }
-    // return;
   }
 
   final direction = _getKeyDirection();

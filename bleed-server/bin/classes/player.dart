@@ -7,6 +7,7 @@ import 'package:lemon_math/library.dart';
 import '../common/character_type.dart';
 import '../common/flag.dart';
 import '../common/library.dart';
+import '../common/node_size.dart';
 import '../common/quest.dart';
 import '../convert/convert_card_type_to_card.dart';
 import '../dark_age/areas/dark_age_area.dart';
@@ -72,6 +73,30 @@ class Player extends Character with ByteWriter {
 
   var mapX = 0;
   var mapY = 0;
+
+  void performAttack() {
+    if (performDuration > 0) return;
+    final angle = mouseAngle;
+    final distance = 30.0;
+    final adj = getAdjacent(angle, distance);
+    final opp = getOpposite(angle, distance);
+    performX = x + adj;
+    performY = y + opp;
+    performZ = z;
+    performDuration = 20;
+    performMaxHits = 1;
+    game.dispatch(
+        GameEventType.Sword_Slash,
+        performX,
+        performY,
+        z + nodeHeightHalf,
+        angle,
+    );
+
+    if (idling) {
+      faceXY(mouseGridX, mouseGridY);
+    }
+  }
 
   void deselectSelectedGameObject(){
     if (editorSelectedGameObject == null) return;
