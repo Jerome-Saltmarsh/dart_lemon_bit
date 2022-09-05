@@ -6,14 +6,13 @@ import '../common/library.dart';
 import '../constants/frames_per_second.dart';
 import '../functions/withinRadius.dart';
 import 'collider.dart';
-import 'components.dart';
 import 'character.dart';
 import 'game.dart';
 import 'player.dart';
 import 'position3.dart';
 import 'weapon.dart';
 
-abstract class AI extends Character with Material {
+abstract class AI extends Character {
   static const viewRange = 200.0;
   static const chaseRange = 500.0;
   static const maxAIPathLength = 80;
@@ -59,7 +58,6 @@ abstract class AI extends Character with Material {
       equippedWeapon: weapon,
       speed: speed
   ) {
-    this.material = MaterialType.Flesh;
     clearDest();
     spawnX = x;
     spawnY = y;

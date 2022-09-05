@@ -13,11 +13,9 @@ import '../convert/convert_card_type_to_card.dart';
 import '../dark_age/areas/dark_age_area.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
-import '../isometric/generate_node.dart';
 import '../utilities.dart';
 import 'gameobject.dart';
 import 'library.dart';
-import 'node.dart';
 import 'position3.dart';
 import 'rat.dart';
 import 'zombie.dart';
@@ -74,7 +72,7 @@ class Player extends Character with ByteWriter {
   var mapX = 0;
   var mapY = 0;
 
-  void performAttack() {
+  void performPrimaryAttack() {
     assert (alive);
     if (busy) return;
     if (performDuration > 0) return;
@@ -249,16 +247,6 @@ class Player extends Character with ByteWriter {
     game.characters.add(this);
   }
 
-  void writeLivesRemaining(int lives){
-    writeByte(ServerResponse.Lives_Remaining);
-    writeByte(lives);
-  }
-
-  void writeGameStatus(){
-    // writeByte(ServerResponse.Game_Status);
-    // writeByte(game.status.index);
-  }
-
   void toggleDebug(){
     debug = !debug;
     writeByte(ServerResponse.Debug_Mode);
@@ -325,8 +313,6 @@ class Player extends Character with ByteWriter {
 
 extension PlayerProperties on Player {
 
-  bool get unarmed => equippedWeapon == TechType.Unarmed;
-
   void writePlayerDebug(){
     writeByte(state);
     writeInt(faceAngle * 100);
@@ -389,7 +375,6 @@ extension PlayerProperties on Player {
   void downloadScene(){
     writeGrid();
     writeWeather();
-    writeGameStatus();
     writeSceneMetaData();
     writeMapCoordinate();
     writePlayerEvent(PlayerEvent.Scene_Changed);

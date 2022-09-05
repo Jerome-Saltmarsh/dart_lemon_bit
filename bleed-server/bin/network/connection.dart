@@ -366,9 +366,6 @@ class Connection {
         if (techType == null){
           return errorInvalidArg('tech type integer required: got $techType');
         }
-        if (!TechType.isValid(techType)){
-          return errorInvalidArg('Invalid tech type: got $techType');
-        }
         return;
 
       case ClientRequest.Toggle_Debug:
@@ -800,7 +797,6 @@ class Connection {
         }
         break;
       case CharacterAction.Perform:
-        final ability = player.ability;
         final aimTarget = player.aimTarget;
         player.target = aimTarget;
 
@@ -821,7 +817,7 @@ class Connection {
           return player.endInteraction();
         }
 
-        return player.performAttack();
+        return player.performPrimaryAttack();
 
         // if (player.performDuration <= 0) {
         //   final angle = player.mouseAngle;
@@ -912,7 +908,6 @@ class Connection {
       }
     }
     game.onPlayerJoined(player);
-    player.writeGameStatus();
   }
 
   Future joinGameDarkAge() async {

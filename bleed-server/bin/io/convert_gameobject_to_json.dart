@@ -28,7 +28,6 @@ Json convertGameObjectSpawnToJson(GameObjectSpawn gameObject){
     'spawn-type': gameObject.spawnType,
     'spawn-amount': gameObject.spawnAmount,
     'spawn-radius': gameObject.spawnRadius,
-    'spawn-radius': gameObject.spawnRadius,
   };
 }
 

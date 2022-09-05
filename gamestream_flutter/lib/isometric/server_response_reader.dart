@@ -159,9 +159,6 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Damage_Applied:
           readDamageApplied();
           break;
-        case ServerResponse.Lives_Remaining:
-          readLivesRemaining();
-          break;
         case ServerResponse.Paths:
           readPaths();
           break;
@@ -448,10 +445,6 @@ class ServerResponseReader with ByteReader {
   void readGameTime() {
     hours.value = readByte();
     minutes.value = readByte();
-  }
-
-  void readLivesRemaining() {
-    modules.game.state.lives.value = readByte();
   }
 
   void readDamageApplied() {

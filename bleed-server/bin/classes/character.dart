@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
@@ -14,7 +12,7 @@ import 'power.dart';
 import 'components.dart';
 import 'weapon.dart';
 
-abstract class Character extends Collider with Team, Velocity, Material, FaceDirection {
+abstract class Character extends Collider with Team, Velocity, FaceDirection {
 
   Game game;
   var _health = 1;
@@ -94,7 +92,6 @@ abstract class Character extends Collider with Team, Velocity, Material, FaceDir
     this.health = health;
     movementSpeed = speed;
     this.team = team;
-    this.material = MaterialType.Flesh;
   }
 
   void updateFrame(){

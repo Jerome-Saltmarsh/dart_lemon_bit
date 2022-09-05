@@ -1,4 +1,5 @@
 PRIMARY GOAL
+[ ] Gain Player Base
 [ ] Close Gameplay Loop
 [ ] Build the world
 
@@ -6,12 +7,12 @@ FEATURES
 [x] Player changes map on edge
 [x] Squish hurt audio
 [x] Purple Explosion audio
+[ ] Player Weapons
 [ ] Scene Dungeon 1
 [ ] Render GameObject Respawn Barrel
 [ ] Destroy GameObject Barrel
 [ ] Destroy GameObject Rock
 [ ] Player Level Upgrades
-[ ] Player Weapons
 [ ] Destroy Node Tree
 [ ] Add Enemy Spawns to world
 [ ] Clicking allie causes player to run over and talk

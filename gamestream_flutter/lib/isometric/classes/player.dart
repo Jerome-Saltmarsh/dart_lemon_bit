@@ -68,13 +68,6 @@ class Player extends Vector3 {
   final questsInProgress = Watch<List<Quest>>([], onChanged: onQuestsInProgressChanged);
   final questsCompleted = Watch<List<Quest>>([]);
 
-  final canAffordUpgradePickaxe = Watch(false);
-  final canAffordUpgradeSword = Watch(false);
-  final canAffordUpgradeBow = Watch(false);
-  final canAffordUpgradeAxe = Watch(false);
-  final canAffordUpgradeHammer = Watch(false);
-  final canAffordUpgradeBag = Watch(false);
-  final canAffordPalisade = Watch(false);
   final weapons = Watch(<Weapon>[]);
   final weapon = Watch<Weapon>(
       Weapon(
@@ -83,57 +76,6 @@ class Player extends Vector3 {
         uuid: "-1",
       )
   );
-
-  Watch<bool> getCanAffordWatch(int type){
-    switch (type){
-      case TechType.Pickaxe:
-        return canAffordUpgradePickaxe;
-      case TechType.Sword:
-        return canAffordUpgradeSword;
-      case TechType.Axe:
-        return canAffordUpgradeAxe;
-      case TechType.Bow:
-        return canAffordUpgradeBow;
-      case TechType.Hammer:
-        return canAffordUpgradeHammer;
-      case TechType.Bag:
-        return canAffordUpgradeBag;
-    }
-    throw Exception('getCanAffordWatch error, $type has no watch');
-  }
-
-  bool canAfford(int type) {
-    final cost = TechType.getCost(type, getTechTypeLevel(type));
-    return
-      cost != null &&
-          wood.value >= cost.wood &&
-          stone.value >= cost.stone &&
-          gold.value >= cost.gold
-    ;
-  }
-
-  Watch<int> getTechLevelWatch(int type){
-    switch(type){
-      case TechType.Pickaxe:
-        return levelPickaxe;
-      case TechType.Sword:
-        return levelSword;
-      case TechType.Bow:
-        return levelBow;
-      case TechType.Axe:
-        return levelAxe;
-      case TechType.Hammer:
-        return levelHammer;
-      case TechType.Bag:
-        return levelBag;
-      default:
-        throw Exception("cannot get tech type level. type: $type");
-    }
-  }
-
-  int getTechTypeLevel(int type){
-    return getTechLevelWatch(type).value;
-  }
 
   // Properties
   bool get dead => !alive.value;

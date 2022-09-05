@@ -1,7 +1,6 @@
 import 'package:lemon_math/library.dart';
 
 import '../common/Direction.dart';
-import '../common/MaterialType.dart';
 
 class FaceDirection {
   var faceAngle = 0.0;
@@ -87,10 +86,6 @@ mixin Radius {
 
 mixin Type<T> {
   late T type;
-}
-
-mixin Material {
-  late MaterialType material;
 }
 
 mixin Id {

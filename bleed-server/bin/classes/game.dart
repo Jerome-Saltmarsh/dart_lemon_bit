@@ -300,26 +300,6 @@ extension GameFunctions on Game {
       onDamaged(target, src, damage);
       target.setCharacterStateHurt();
     }
-
-    switch (target.material) {
-      case MaterialType.Rock:
-        dispatchV3(GameEventType.Material_Struck_Rock, target);
-        break;
-      case MaterialType.Wood:
-        dispatchV3(GameEventType.Material_Struck_Wood, target);
-        break;
-      case MaterialType.Plant:
-        dispatchV3(GameEventType.Material_Struck_Plant, target);
-        break;
-      case MaterialType.Flesh:
-        dispatchV3(GameEventType.Material_Struck_Flesh, target,
-            angle: radiansV2(src, target));
-        break;
-      case MaterialType.Metal:
-        dispatchV3(GameEventType.Material_Struck_Metal, target);
-        break;
-    }
-
     dispatchGameEventCharacterHurt(target);
 
 
@@ -1428,59 +1408,3 @@ double angle2(double adjacent, double opposite) {
 
 class ZombieSpawnPointsEmptyException implements Exception {}
 
-int calculateDamage({
-  required MaterialType targetMaterialType,
-  required int techType,
-  required int level,
-}){
-  switch(targetMaterialType) {
-    case MaterialType.Rock:
-      if (techType == TechType.Pickaxe) return level + 1;
-      if (techType == TechType.Unarmed) return 1;
-      if (techType == TechType.Shotgun) return 0;
-      if (techType == TechType.Handgun) return 0;
-      if (techType == TechType.Bow) return 0;
-      if (techType == TechType.Axe) return 1;
-      if (techType == TechType.Hammer) return 1;
-      return 0;
-    case MaterialType.Wood:
-      if (techType == TechType.Pickaxe) return 1;
-      if (techType == TechType.Unarmed) return 1;
-      if (techType == TechType.Shotgun) return 0;
-      if (techType == TechType.Handgun) return 0;
-      if (techType == TechType.Bow) return 0;
-      if (techType == TechType.Axe) return level + 1;
-      if (techType == TechType.Hammer) return 1;
-      return 0;
-    case MaterialType.Plant:
-      if (techType == TechType.Pickaxe) return 1;
-      if (techType == TechType.Unarmed) return 1;
-      if (techType == TechType.Shotgun) return 0;
-      if (techType == TechType.Handgun) return 0;
-      if (techType == TechType.Bow) return 0;
-      if (techType == TechType.Hammer) return 0;
-      return 0;
-    case MaterialType.Flesh:
-      if (techType == TechType.Pickaxe) return level;
-      if (techType == TechType.Unarmed) return level;
-      if (techType == TechType.Shotgun) return level;
-      if (techType == TechType.Handgun) return level;
-      if (techType == TechType.Bow) return level;
-      if (techType == TechType.Sword) return level;
-      if (techType == TechType.Axe) return level;
-      if (techType == TechType.Hammer) return level;
-      return 0;
-    case MaterialType.Metal:
-      if (techType == TechType.Pickaxe) return 1;
-      if (techType == TechType.Unarmed) return 1;
-      if (techType == TechType.Axe) return 1;
-      if (techType == TechType.Shotgun) return 0;
-      if (techType == TechType.Handgun) return 0;
-      if (techType == TechType.Bow) return 0;
-      if (techType == TechType.Hammer) return level;
-      return 0;
-    default:
-      return 0;
-  }
-
-}

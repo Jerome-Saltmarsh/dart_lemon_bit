@@ -1,7 +1,6 @@
 
 
 import '../../classes/library.dart';
-import '../../classes/rat.dart';
 import '../../common/library.dart';
 import '../../common/map_tiles.dart';
 import '../dark_age_scenes.dart';
