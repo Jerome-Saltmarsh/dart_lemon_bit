@@ -2,14 +2,10 @@
 
 import 'package:lemon_math/library.dart';
 
-import '../classes/ai_slime.dart';
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
-import '../classes/rat.dart';
-import '../classes/zombie.dart';
 import '../common/library.dart';
 import '../common/spawn_type.dart';
-import '../common/teams.dart';
 import '../engine.dart';
 import 'dark_age_environment.dart';
 

@@ -1,5 +1,5 @@
 FEATURE
-[ ] Tutorial
+[ ] Player changes map on edge
 [ ] Destroy GameObject Barrel
 [ ] Destroy GameObject Rock
 [ ] GameObject Respawn Barrel
@@ -10,18 +10,19 @@ FEATURE
 [ ] Add Enemy Spawns to world
 [ ] Clicking allie causes player to run over and talk
 [ ] Squish hurt audio
-[ ] Player changes map on edge
 [ ] Solid Water at edge of map
 
 Optimize
-[ ] Spawn Particle Bubble
+[ ] Particles
 
 BUG
 [ ] Block Particles Fly up walls
+[ ] Strike Order should hit nearest object first
 [ ] Grass Corner Slope Color
 [ ] Water Flowing
 
 COMPLETED
+[x] Tutorial
 [x] Rat attack misses player
 [x] Rat hurt audio
 [x] Persist Spawn
