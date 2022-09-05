@@ -1,4 +1,5 @@
 PRIMARY GOAL
+[ ] Close Gameplay Loop
 [ ] Build the world
 
 FEATURES
