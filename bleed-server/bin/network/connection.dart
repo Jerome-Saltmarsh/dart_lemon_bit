@@ -481,7 +481,7 @@ class Connection {
       return errorInvalidArg('Node Type ${NodeType.getName(type)} does not support orientation ${NodeOrientation.getName(orientation)}');
     }
 
-    player.setBlock(z, row, column, type, orientation);
+    player.game.setNode(z, row, column, type, orientation);
     return;
   }
 

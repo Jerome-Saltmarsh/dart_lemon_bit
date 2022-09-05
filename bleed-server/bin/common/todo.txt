@@ -1,27 +1,30 @@
-FEATURE
+PRIMARY GOAL
+[ ] Build the world
+
+FEATURES
+[x] Player changes map on edge
+[x] Squish hurt audio
+[x] Purple Explosion audio
+[ ] Render GameObject Respawn Barrel
 [ ] Destroy GameObject Barrel
 [ ] Destroy GameObject Rock
-[ ] GameObject Respawn Barrel
 [ ] Player Level Upgrades
 [ ] Player Weapons
-[ ] Purple Explosion audio
 [ ] Destroy Node Tree
 [ ] Add Enemy Spawns to world
 [ ] Clicking allie causes player to run over and talk
-[ ] Squish hurt audio
 [ ] Solid Water at edge of map
 
-Optimize
+OPTIMIZATIONS
 [ ] Particles
 
-BUG
+BUGS
 [ ] Block Particles Fly up walls
 [ ] Strike Order should hit nearest object first
 [ ] Grass Corner Slope Color
 [ ] Water Flowing
 
 COMPLETED
-[x] Player changes map on edge
 [x] Tutorial
 [x] Rat attack misses player
 [x] Rat hurt audio

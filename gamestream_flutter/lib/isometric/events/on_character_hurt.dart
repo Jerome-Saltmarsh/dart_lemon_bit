@@ -9,5 +9,8 @@ void onCharacterHurt(int type, double x, double y, double z, double angle) {
     case CharacterType.Rat:
       audioSingleRatSqueak.playXYZ(x, y, z);
       break;
+    case CharacterType.Slime:
+      audioSingleBloodyPunches3.playXYZ(x, y, z);
+      break;
   }
 }

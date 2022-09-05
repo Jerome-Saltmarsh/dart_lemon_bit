@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
+import '../common/node_orientation.dart';
 import '../common/spawn_type.dart';
 import '../common/teams.dart';
 import '../dispatch/dispatch_game_object_destroyed.dart';
@@ -10,6 +11,7 @@ import '../engine.dart';
 import '../functions.dart';
 import '../functions/withinRadius.dart';
 import '../io/write_scene_to_file.dart';
+import '../isometric/generate_node.dart';
 import '../maths.dart';
 import '../physics.dart';
 import 'ai.dart';
@@ -19,6 +21,7 @@ import 'collider.dart';
 import 'components.dart';
 import 'gameobject.dart';
 import 'item.dart';
+import 'node.dart';
 import 'npc.dart';
 import 'player.dart';
 import 'position3.dart';
@@ -51,6 +54,21 @@ abstract class Game {
 
   void onCharacterSpawned(Character character){
 
+  }
+
+  void setNode(int z, int row, int column, int type, int orientation) {
+    if (scene.outOfBounds(z, row, column)) return;
+    final previousNode = scene.getNode(z, row, column);
+    if (previousNode.type == type && previousNode.orientation == orientation){
+      return;
+    }
+    scene.dirty = true;
+    final node = generateNode(type);
+    if (node is NodeOriented){
+      node.orientation = orientation;
+    }
+    scene.grid[z][row][column] = node;
+    onNodeChanged(z, row, column);
   }
 
   void onNodeChanged(int z, int row, int column){
@@ -1385,6 +1403,18 @@ extension GameFunctions on Game {
         );
         return;
       }
+    }
+
+    if (scene.getNodeXYZ(
+              player.performX,
+              player.performY,
+              player.performZ,
+            ).type == NodeType.Boulder
+    ) {
+      final z = player.performZ ~/ tileSizeHalf;
+      final row = player.performX ~/ tileSize;
+      final column = player.performY ~/ tileSize;
+      setNode(z, row, column, NodeType.Empty, NodeOrientation.None);
     }
   }
 }
