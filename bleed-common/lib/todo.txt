@@ -22,8 +22,8 @@ OPTIMIZATIONS
 [ ] Particles
 
 BUGS
-[ ] Grass Corner Slope Color
-[ ] Block Particles Fly up walls
+[x] Block Particles Fly up walls
+[x] Grass Corner Slope Color
 [ ] Strike Order should hit nearest object first
 [ ] Water Flowing
 

@@ -110,11 +110,13 @@ void _updateParticle(Particle particle) {
 
   final tile = particle.tile.type;
   final airBorn =
+      !particle.checkNodeCollision || (
       tile == NodeType.Empty        ||
       tile == NodeType.Rain_Landing ||
       tile == NodeType.Rain_Falling ||
       tile == NodeType.Grass_Long   ||
-      tile == NodeType.Fireplace    ;
+      tile == NodeType.Fireplace)    ;
+
 
   if (particle.checkNodeCollision && !airBorn) {
     particle.deactivate();
@@ -398,7 +400,7 @@ void spawnParticleBlockWood(double x, double y, double z, [int count = 3]){
       speed: randomBetween(0.5, 1.25),
       zv: randomBetween(2, 3),
       weight: 10,
-      duration: 25,
+      duration: 15,
       scale: 0.6,
       scaleV: 0,
       rotation: randomAngle(),
@@ -419,7 +421,7 @@ void spawnParticleBlockGrass(double x, double y, double z, [int count = 3]){
       speed: randomBetween(0.5, 1.25),
       zv: randomBetween(2, 3),
       weight: 10,
-      duration: 25,
+      duration: 15,
       scale: 0.6,
       scaleV: 0,
       rotation: randomAngle(),
@@ -441,7 +443,7 @@ void spawnParticleBlockBrick(double x, double y, double z, [int count = 3]){
       speed: randomBetween(0.5, 1.25),
       zv: randomBetween(2, 3),
       weight: 10,
-      duration: 25,
+      duration: 15,
       scale: 0.6,
       scaleV: 0,
       rotation: randomAngle(),
@@ -450,8 +452,6 @@ void spawnParticleBlockBrick(double x, double y, double z, [int count = 3]){
     );
   }
 }
-
-
 
 void spawnParticleShrapnel({
   required double x,
