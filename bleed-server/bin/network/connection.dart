@@ -809,6 +809,8 @@ class Connection {
             player.face(aimTarget);
             aimTarget.onInteractedWith?.call(player);
             break;
+          } else {
+            // player.tar
           }
           return;
         }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
@@ -294,7 +296,7 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
 
   void face(Position position) {
     assert(!deadOrBusy);
-    faceAngle = this.getAngle(position);
+    faceAngle = this.getAngle(position) + pi;
   }
 
   void faceXY(double x, double y) {

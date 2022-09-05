@@ -7,6 +7,7 @@ FEATURES
 [x] Player changes map on edge
 [x] Squish hurt audio
 [x] Purple Explosion audio
+[x] Clicking allie causes player to run over and talk
 [ ] Player Weapons
 [ ] Scene Dungeon 1
 [ ] Render GameObject Respawn Barrel
@@ -15,7 +16,6 @@ FEATURES
 [ ] Player Level Upgrades
 [ ] Destroy Node Tree
 [ ] Add Enemy Spawns to world
-[ ] Clicking allie causes player to run over and talk
 [ ] Solid Water at edge of map
 
 OPTIMIZATIONS
