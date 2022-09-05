@@ -1,5 +1,4 @@
 FEATURE
-[ ] Player changes map on edge
 [ ] Destroy GameObject Barrel
 [ ] Destroy GameObject Rock
 [ ] GameObject Respawn Barrel
@@ -22,6 +21,7 @@ BUG
 [ ] Water Flowing
 
 COMPLETED
+[x] Player changes map on edge
 [x] Tutorial
 [x] Rat attack misses player
 [x] Rat hurt audio

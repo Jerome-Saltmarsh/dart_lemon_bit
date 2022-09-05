@@ -19,30 +19,31 @@ class DarkAgeArea extends GameDarkAge {
   }
 
   void updateCheckPlayerChangeMap(){
+    const radius = 12;
     for (var i = 0; i < players.length; i++){
       final player = players[i];
-      if (player.y <= tileSizeHalf){
+      if (player.y <= radius){
         if (column <= 0) continue;
         player.changeGame(engine.map[row][column - 1]);
-        player.indexColumn = player.scene.gridColumns - 2;
+        player.indexColumn = player.scene.gridColumns - 1;
         continue;
       }
-      if (player.x <= tileSizeHalf){
+      if (player.x <= radius){
         if (row <= 0) continue;
         player.changeGame(engine.map[row - 1][column]);
-        player.indexRow = player.scene.gridRows - 2;
+        player.indexRow = player.scene.gridRows - 1;
         continue;
       }
-      if (player.x >= scene.gridRowLength - tileSizeHalf){
+      if (player.x >= scene.gridRowLength - radius){
         if (row >= engine.map.length - 1) continue;
         player.changeGame(engine.map[row + 1][column]);
-        player.indexRow = 1;
+        player.indexRow = 0;
         continue;
       }
-      if (player.y >= scene.gridColumnLength - tileSizeHalf){
+      if (player.y >= scene.gridColumnLength - radius){
         if (column >= engine.map[row].length - 1) continue;
         player.changeGame(engine.map[row][column + 1]);
-        player.indexColumn = 1;
+        player.indexColumn = 0;
         continue;
       }
     }
