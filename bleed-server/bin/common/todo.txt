@@ -5,6 +5,7 @@ FEATURES
 [x] Player changes map on edge
 [x] Squish hurt audio
 [x] Purple Explosion audio
+[ ] Scene Dungeon 1
 [ ] Render GameObject Respawn Barrel
 [ ] Destroy GameObject Barrel
 [ ] Destroy GameObject Rock
@@ -19,9 +20,9 @@ OPTIMIZATIONS
 [ ] Particles
 
 BUGS
+[ ] Grass Corner Slope Color
 [ ] Block Particles Fly up walls
 [ ] Strike Order should hit nearest object first
-[ ] Grass Corner Slope Color
 [ ] Water Flowing
 
 COMPLETED
