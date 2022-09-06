@@ -4,6 +4,7 @@ import 'package:bleed_server/system.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
+import '../common/attack_type.dart';
 import '../common/character_type.dart';
 import '../common/flag.dart';
 import '../common/library.dart';
@@ -45,13 +46,11 @@ class Player extends Character with ByteWriter {
   var screenTop = 0.0;
   var screenRight = 0.0;
   var screenBottom = 0.0;
-  var wood = 0;
-  var stone = 0;
-  var gold = 0;
   var sceneDownloaded = false;
   Game game;
   Collider? aimTarget; // the currently highlighted character
   Account? account;
+  var attackType = AttackType.Crossbow;
 
   var questZombieKillsRemaining = 2;
 
@@ -76,6 +75,16 @@ class Player extends Character with ByteWriter {
     assert (alive);
     if (busy) return;
     if (performDuration > 0) return;
+
+    switch (attackType) {
+      case AttackType.Blade:
+        return performAttackTypeBlade();
+      case AttackType.Crossbow:
+        return performAttackTypeCrossBow();
+    }
+  }
+
+  void performAttackTypeBlade(){
     final angle = mouseAngle;
     final distance = 30.0;
     final adj = getAdjacent(angle, distance);
@@ -86,15 +95,34 @@ class Player extends Character with ByteWriter {
     performDuration = 20;
     performMaxHits = 1;
     game.dispatch(
-        GameEventType.Sword_Slash,
-        performX,
-        performY,
-        z + nodeHeightHalf,
-        angle,
+      GameEventType.Sword_Slash,
+      performX,
+      performY,
+      z + nodeHeightHalf,
+      angle,
     );
 
     if (idling) {
-      faceXY(mouseGridX, mouseGridY);
+      faceMouse();
+    }
+  }
+
+  void faceMouse(){
+    faceXY(mouseGridX, mouseGridY);
+  }
+
+  void performAttackTypeCrossBow(){
+    performDuration = 20;
+    game.spawnProjectileArrow(this, damage: 1, range: 300, angle: mouseAngle);
+  }
+
+  void commandRun(int direction) {
+    faceDirection = direction;
+    setCharacterStateRunning();
+    target = null;
+
+    if (interactingWithNpc){
+      return endInteraction();
     }
   }
 

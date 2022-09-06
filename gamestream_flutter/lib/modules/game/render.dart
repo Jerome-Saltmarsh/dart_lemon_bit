@@ -1,12 +1,9 @@
 import 'dart:math';
 
-import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/isometric/ai.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
-import 'package:gamestream_flutter/isometric/classes/npc_debug.dart';
-import 'package:gamestream_flutter/isometric/collectables.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
@@ -141,26 +138,6 @@ class GameRender {
         character.allie ? Colors.green : Colors.red);
   }
 
-  void renderCollectables() {
-    for (var i = 0; i < totalCollectables; i++) {
-      final collectable = collectables[i];
-      switch (collectable.type) {
-        case CollectableType.Wood:
-          // isometric.render.renderIconWood(collectable);
-          continue;
-        case CollectableType.Stone:
-          // isometric.render.renderIconStone(collectable);
-          continue;
-        case CollectableType.Experience:
-          // isometric.render.renderIconExperience(collectable);
-          continue;
-        case CollectableType.Gold:
-          // isometric.render.renderIconGold(collectable);
-          continue;
-      }
-    }
-  }
-
   void attackTargetCircle() {
     // final attackTarget = state.player.attackTarget;
     // final x = attackTarget.x;
@@ -189,13 +166,6 @@ class GameRender {
       y: player.abilityTarget.y,
       color: Colors.white,
     );
-  }
-
-  void drawDebugNpcs(List<NpcDebug> values) {
-    engine.setPaintColor(Colors.yellow);
-    for (final npc in values) {
-      drawLine(npc.x, npc.y, npc.targetX, npc.targetY);
-    }
   }
 
   void _renderPlayerNames() {

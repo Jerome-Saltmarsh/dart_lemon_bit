@@ -23,29 +23,5 @@ class Collectable with
     moveTowards(target, duration * 0.075);
     if (getDistance(target) > 10) return;
     deactivate();
-
-    if (target is Player) {
-      _playerCollect(target as Player);
-    }
-  }
-
-  void _playerCollect(Player player){
-    switch (type) {
-      case CollectableType.Wood:
-        player.wood += amount;
-        player.writePlayerEvent(PlayerEvent.Collect_Wood);
-        break;
-      case CollectableType.Stone:
-        player.stone += amount;
-        player.writePlayerEvent(PlayerEvent.Collect_Rock);
-        break;
-      case CollectableType.Experience:
-        player.writePlayerEvent(PlayerEvent.Collect_Experience);
-        break;
-      case CollectableType.Gold:
-        player.gold += amount;
-        player.writePlayerEvent(PlayerEvent.Collect_Gold);
-        break;
-    }
   }
 }

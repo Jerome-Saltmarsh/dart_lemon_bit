@@ -818,77 +818,10 @@ class Connection {
         if (player.interactingWithNpc){
           return player.endInteraction();
         }
-
         return player.performPrimaryAttack();
-
-        // if (player.performDuration <= 0) {
-        //   final angle = player.mouseAngle;
-        //   final distance = 30.0;
-        //   final adj = getAdjacent(angle, distance);
-        //   final opp = getOpposite(angle, distance);
-        //   player.performX = player.x + adj;
-        //   player.performY = player.y + opp;
-        //   player.performZ = player.z;
-        //   player.performDuration = 20;
-        //   player.performMaxHits  = 1;
-        //   game.dispatch(GameEventType.Sword_Slash, player.performX, player.performY, player.z + nodeHeightHalf, angle);
-        //
-        //   if (player.idling) {
-        //     player.faceXY(player.mouseGridX, player.mouseGridY);
-        //     return;
-        //   }
-        // }
-        //
-        // /// TODO belongs inside game update
-        // if (ability == null) {
-        //   return;
-        //   // if (aimTarget != null) {
-        //   //   player.target = aimTarget;
-        //   //   if (withinRadius(player, aimTarget, player.equippedRange)){
-        //   //     player.face(aimTarget);
-        //   //     player.setCharacterStatePerforming(duration: player.equippedAttackDuration);
-        //   //   }
-        //   // } else {
-        //   //   // player.runToMouse();
-        //   // }
-        //   // break;
-        // }
-        //
-        // switch (ability.mode) {
-        //   case AbilityMode.Targeted:
-        //     if (aimTarget != null) {
-        //       player.target = aimTarget;
-        //       return;
-        //     } else {
-        //       player.runToMouse();
-        //       return;
-        //     }
-        //   case AbilityMode.Activated:
-        //     ability.cooldownRemaining = ability.cooldown;
-        //     break;
-        //   case AbilityMode.Area:
-        //     player.target = Position3().set(x: mouseX, y: mouseY, z: player.z);
-        //     break;
-        //   case AbilityMode.Directed:
-        //     ability.cooldownRemaining = ability.cooldown;
-        //     player.face(player.mouse);
-        //     player.setCharacterStatePerforming(duration: 30);
-        //     break;
-        // }
-        //
-        // break;
       case CharacterAction.Run:
-        player.faceDirection = args[6];
-        player.setCharacterStateRunning();
-        player.target = null;
-
-        if (player.interactingWithNpc){
-          return player.endInteraction();
-        }
-        break;
+        return player.commandRun(args[6]);
     }
-
-    return;
   }
 
   void onGameJoined(){

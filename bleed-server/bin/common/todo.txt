@@ -1,33 +1,24 @@
-PRIMARY GOAL
-[ ] Gain Player Base
-[ ] Close Gameplay Loop
-[ ] Build the world
-
 FEATURES
-[x] Player changes map on edge
-[x] Squish hurt audio
-[x] Purple Explosion audio
-[x] Clicking allie causes player to run over and talk
-[ ] Player Weapons
+[ ] Player Weapon Crossbow
+[ ] Player Level Upgrades
 [ ] Scene Dungeon 1
 [ ] Render GameObject Respawn Barrel
 [ ] Destroy GameObject Barrel
 [ ] Destroy GameObject Rock
-[ ] Player Level Upgrades
 [ ] Destroy Node Tree
 [ ] Add Enemy Spawns to world
 [ ] Solid Water at edge of map
-
-OPTIMIZATIONS
 [ ] Particles
-
-BUGS
-[x] Block Particles Fly up walls
-[x] Grass Corner Slope Color
-[ ] Strike Order should hit nearest object first
-[ ] Water Flowing
+[ ] Fix Strike Order should hit nearest object first
+[ ] Fix Water Flowing
 
 COMPLETED
+[x] Player changes map on edge
+[x] Squish hurt audio
+[x] Purple Explosion audio
+[x] Clicking allie causes player to run over and talk
+[x] Block Particles Fly up walls
+[x] Grass Corner Slope Color
 [x] Tutorial
 [x] Rat attack misses player
 [x] Rat hurt audio
