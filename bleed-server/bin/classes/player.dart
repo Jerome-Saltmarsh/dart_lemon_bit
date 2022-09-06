@@ -8,12 +8,15 @@ import '../common/attack_type.dart';
 import '../common/character_type.dart';
 import '../common/flag.dart';
 import '../common/library.dart';
+import '../common/node_orientation.dart';
 import '../common/node_size.dart';
 import '../common/quest.dart';
 import '../convert/convert_card_type_to_card.dart';
 import '../dark_age/areas/dark_age_area.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
+import '../dispatch/dispatch_game_object_destroyed.dart';
+import '../maths.dart';
 import '../utilities.dart';
 import 'gameobject.dart';
 import 'library.dart';
@@ -50,7 +53,7 @@ class Player extends Character with ByteWriter {
   Game game;
   Collider? aimTarget; // the currently highlighted character
   Account? account;
-  var attackType = AttackType.Crossbow;
+  var attackType = AttackType.Blade;
 
   var questZombieKillsRemaining = 2;
 
@@ -84,7 +87,7 @@ class Player extends Character with ByteWriter {
     }
   }
 
-  void performAttackTypeBlade(){
+  void performAttackTypeBlade() {
     final angle = mouseAngle;
     final distance = 30.0;
     final adj = getAdjacent(angle, distance);
@@ -104,6 +107,62 @@ class Player extends Character with ByteWriter {
 
     if (idling) {
       faceMouse();
+    }
+
+
+    const attackRadius = 25.0;
+
+    for (final character in game.characters) {
+      if (onSameTeam(this, character)) continue;
+      if (character.distanceFromXYZ(
+        performX,
+        performY,
+        performZ,
+      ) >
+          attackRadius) continue;
+      game.applyHit(src: this, target: character, damage: 2);
+      performMaxHits--;
+      return;
+    }
+
+    if (performMaxHits > 0) {
+      for (final gameObject in game.gameObjects) {
+        if (gameObject.distanceFromXYZ(
+          performX,
+          performY,
+          performZ,
+        ) >
+            attackRadius) continue;
+
+        if (gameObject is GameObjectStatic) {
+          if (!gameObject.active) continue;
+          if (gameObject.type == GameObjectType.Barrel) {
+            gameObject.active = false;
+            gameObject.collidable = false;
+            gameObject.respawn = 200;
+            dispatchGameObjectDestroyed(game.players, gameObject);
+          }
+        }
+        performMaxHits--;
+        if (gameObject is Velocity == false) continue;
+        (gameObject as Velocity).applyForce(
+          force: 5,
+          angle: radiansV2(this, gameObject),
+        );
+        return;
+      }
+    }
+
+    if (scene.getNodeXYZ(
+      performX,
+      performY,
+      performZ,
+    ).type == NodeType.Boulder
+    ) {
+      final z = performZ ~/ tileSizeHalf;
+      final row = performX ~/ tileSize;
+      final column = performY ~/ tileSize;
+      game.setNode(z, row, column, NodeType.Empty, NodeOrientation.None);
     }
   }
 

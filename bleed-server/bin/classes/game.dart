@@ -3,10 +3,8 @@ import 'dart:math';
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
-import '../common/node_orientation.dart';
 import '../common/spawn_type.dart';
 import '../common/teams.dart';
-import '../dispatch/dispatch_game_object_destroyed.dart';
 import '../engine.dart';
 import '../functions.dart';
 import '../functions/withinRadius.dart';
@@ -44,34 +42,32 @@ abstract class Game {
     engine.onGameCreated(this);
   }
 
-  void onGridChanged(){
+  void onGridChanged() {
     scene.refreshGridMetrics();
     scene.dirty = true;
-    for (final player in players){
+    for (final player in players) {
       player.writeGrid();
     }
   }
 
-  void onCharacterSpawned(Character character){
-
-  }
+  void onCharacterSpawned(Character character) {}
 
   void setNode(int z, int row, int column, int type, int orientation) {
     if (scene.outOfBounds(z, row, column)) return;
     final previousNode = scene.getNode(z, row, column);
-    if (previousNode.type == type && previousNode.orientation == orientation){
+    if (previousNode.type == type && previousNode.orientation == orientation) {
       return;
     }
     scene.dirty = true;
     final node = generateNode(type);
-    if (node is NodeOriented){
+    if (node is NodeOriented) {
       node.orientation = orientation;
     }
     scene.grid[z][row][column] = node;
     onNodeChanged(z, row, column);
   }
 
-  void onNodeChanged(int z, int row, int column){
+  void onNodeChanged(int z, int row, int column) {
     final node = scene.grid[z][row][column];
     players.forEach((player) {
       player.writeByte(ServerResponse.Node);
@@ -84,18 +80,16 @@ abstract class Game {
     scene.dirty = true;
   }
 
-  void removeFromEngine(){
+  void removeFromEngine() {
     print("removeFromEngine()");
     engine.games.remove(this);
   }
 
-  void setHourMinutes(int hour, int minutes){
-
-  }
+  void setHourMinutes(int hour, int minutes) {}
 
   bool get full;
 
-  void updateStatus(){
+  void updateStatus() {
     removeDisconnectedPlayers();
     updateInProgress();
 
@@ -104,24 +98,18 @@ abstract class Game {
     }
   }
 
-  bool containsPlayerWithName(String name){
-     for(final character in players){
-         if (character.name == name) return true;
-     }
-     return false;
+  bool containsPlayerWithName(String name) {
+    for (final character in players) {
+      if (character.name == name) return true;
+    }
+    return false;
   }
 
-  void onPlayerAddCardToDeck(Player player, CardType cardType){
+  void onPlayerAddCardToDeck(Player player, CardType cardType) {}
 
-  }
+  void onKilled(dynamic target, dynamic src) {}
 
-  void onKilled(dynamic target, dynamic src){
-
-  }
-
-  void onDamaged(dynamic target, dynamic src, int amount){
-
-  }
+  void onDamaged(dynamic target, dynamic src, int amount) {}
 
   var _nextAnimationFrame = 0;
 
@@ -129,13 +117,13 @@ abstract class Game {
     _nextAnimationFrame++;
     if (_nextAnimationFrame < 6) return;
     _nextAnimationFrame = 0;
-    for (final character in characters){
+    for (final character in characters) {
       character.updateFrame();
     }
   }
 
-  void moveCharacterToGridNode(Character character, int type){
-    scene.findByType(type, (int z, int row, int column){
+  void moveCharacterToGridNode(Character character, int type) {
+    scene.findByType(type, (int z, int row, int column) {
       character.indexZ = z;
       character.indexRow = row;
       character.indexColumn = column;
@@ -149,9 +137,7 @@ abstract class Game {
     onPlayerRevived(character);
   }
 
-  void onPlayerRevived(Player player){
-
-  }
+  void onPlayerRevived(Player player) {}
 
   /// In seconds
   int getTime();
@@ -164,9 +150,7 @@ abstract class Game {
 
   void onNpcObjectivesCompleted(Character npc) {}
 
-  void onPlayerLevelGained(Player player){
-
-  }
+  void onPlayerLevelGained(Player player) {}
 
   /// Returning true will cause the item to be removed
   bool onPlayerItemCollision(Player player, Item item) {
@@ -210,12 +194,10 @@ abstract class Game {
 
   Player spawnPlayer();
 
-  void onPlayerSelectCharacterType(Player player, CharacterSelection value){
+  void onPlayerSelectCharacterType(Player player, CharacterSelection value) {}
 
-  }
-
-  void playersWriteDeckCooldown(){
-    for (final player in players){
+  void playersWriteDeckCooldown() {
+    for (final player in players) {
       player.writeDeckCooldown();
     }
   }
@@ -228,7 +210,6 @@ abstract class Game {
 }
 
 extension GameFunctions on Game {
-
   Character? getClosestEnemy({
     required double x,
     required double y,
@@ -242,13 +223,17 @@ extension GameFunctions on Game {
         where: (other) => other.alive && !onSameTeam(other, character));
   }
 
-  Collider? getClosestCollider(double x, double y, Character character, {required double minDistance}) {
+  Collider? getClosestCollider(double x, double y, Character character,
+      {required double minDistance}) {
     return findClosestVector3<Character>(
-        positions: characters,
-        x: x,
-        y: y,
-        z: character.z,
-        where: (other) => other.alive && other != character && other.distanceFromXYZ(x, y, character.z) < minDistance,
+      positions: characters,
+      x: x,
+      y: y,
+      z: character.z,
+      where: (other) =>
+          other.alive &&
+          other != character &&
+          other.distanceFromXYZ(x, y, character.z) < minDistance,
     );
   }
 
@@ -259,10 +244,10 @@ extension GameFunctions on Game {
       updateAITargets();
     }
 
-    for (final gameObject in gameObjects){
+    for (final gameObject in gameObjects) {
       if (!gameObject.active) {
         gameObject.respawn--;
-        if (gameObject.respawn <= 0){
+        if (gameObject.respawn <= 0) {
           gameObject.active = true;
         }
         continue;
@@ -271,7 +256,7 @@ extension GameFunctions on Game {
       if (gameObject is Updatable) {
         (gameObject as Updatable).update(this);
       }
-      if (gameObject is Velocity){
+      if (gameObject is Velocity) {
         (gameObject as Velocity).applyFriction(0.95);
       }
     }
@@ -294,14 +279,13 @@ extension GameFunctions on Game {
     final damage = min(amount, target.health);
     target.health -= damage;
 
-    if (target.health <= 0){
+    if (target.health <= 0) {
       setCharacterStateDying(target);
     } else {
       onDamaged(target, src, damage);
       target.setCharacterStateHurt();
     }
     dispatchGameEventCharacterHurt(target);
-
 
     if (target is AI) {
       final targetAITarget = target.target;
@@ -332,7 +316,7 @@ extension GameFunctions on Game {
   }
 
   void _updatePlayersAndNpcs() {
-    for (var i = 0; i < characters.length; i++){
+    for (var i = 0; i < characters.length; i++) {
       final character = characters[i];
       updateCharacter(character);
       if (character is Player) {
@@ -352,23 +336,23 @@ extension GameFunctions on Game {
     sort(gameObjects);
   }
 
-  void sort(List<Position3> items){
-      var start = 0;
-      var end = items.length;
-      for (var pos = start + 1; pos < end; pos++) {
-        var min = start;
-        var max = pos;
-        var element = items[pos];
-        while (min < max) {
-          var mid = min + ((max - min) >> 1);
-          if (element.order <= items[mid].order) {
-            max = mid;
-          } else {
-            min = mid + 1;
-          }
+  void sort(List<Position3> items) {
+    var start = 0;
+    var end = items.length;
+    for (var pos = start + 1; pos < end; pos++) {
+      var min = start;
+      var max = pos;
+      var element = items[pos];
+      while (min < max) {
+        var mid = min + ((max - min) >> 1);
+        if (element.order <= items[mid].order) {
+          max = mid;
+        } else {
+          min = mid + 1;
         }
-        items.setRange(min + 1, pos + 1, items, min);
-        items[min] = element;
+      }
+      items.setRange(min + 1, pos + 1, items, min);
+      items[min] = element;
     }
   }
 
@@ -424,21 +408,21 @@ extension GameFunctions on Game {
   }
 
   void deactivateProjectile(Projectile projectile) {
-    assert (projectile.active);
+    assert(projectile.active);
     projectile.active = false;
     switch (projectile.type) {
       case ProjectileType.Bullet:
-        dispatch(GameEventType.Bullet_Hole, projectile.x, projectile.y, projectile.z);
+        dispatch(GameEventType.Bullet_Hole, projectile.x, projectile.y,
+            projectile.z);
         break;
       case ProjectileType.Orb:
-        dispatch(GameEventType.Blue_Orb_Deactivated, projectile.x, projectile.y, projectile.z);
+        dispatch(GameEventType.Blue_Orb_Deactivated, projectile.x, projectile.y,
+            projectile.z);
         break;
       default:
         break;
     }
   }
-
-
 
   void _updateProjectiles() {
     var projectilesLength = projectiles.length;
@@ -460,9 +444,11 @@ extension GameFunctions on Game {
       if (!projectile.active) continue;
       if (projectile.collideWithEnvironment) continue;
       if (scene.getCollisionAt(projectile.x, projectile.y, projectile.z)) {
-        var type = scene.getNodeXYZ(projectile.x, projectile.y, projectile.z).type;
-        if (type == NodeType.Tree_Bottom){
-          dispatch(GameEventType.Material_Struck_Wood, projectile.x, projectile.y, projectile.z);
+        var type =
+            scene.getNodeXYZ(projectile.x, projectile.y, projectile.z).type;
+        if (type == NodeType.Tree_Bottom) {
+          dispatch(GameEventType.Material_Struck_Wood, projectile.x,
+              projectile.y, projectile.z);
         }
         deactivateProjectile(projectile);
       }
@@ -471,8 +457,8 @@ extension GameFunctions on Game {
     checkProjectileCollision(characters);
   }
 
-  void refreshSpawns(){
-    for (var i = 0; i < gameObjects.length; i++){
+  void refreshSpawns() {
+    for (var i = 0; i < gameObjects.length; i++) {
       final gameObject = gameObjects[i];
       if (gameObject is GameObjectSpawn) {
         refreshSpawn(gameObject);
@@ -480,15 +466,14 @@ extension GameFunctions on Game {
     }
   }
 
-  void refreshSpawn(GameObjectSpawn spawn){
+  void refreshSpawn(GameObjectSpawn spawn) {
     removeSpawnInstances(spawn);
-    for (var i = 0; i < spawn.spawnAmount; i++){
+    for (var i = 0; i < spawn.spawnAmount; i++) {
       spawnGameObject(spawn);
     }
   }
 
   void removeSpawnInstances(GameObjectSpawn spawn) {
-
     for (var i = 0; i < characters.length; i++) {
       final character = characters[i];
       if (character.spawn != spawn) continue;
@@ -502,10 +487,9 @@ extension GameFunctions on Game {
       i--;
       removeInstance(gameObject);
     }
-
   }
 
-  void removeInstance(dynamic instance){
+  void removeInstance(dynamic instance) {
     if (instance == null) return;
 
     if (instance is Player) {
@@ -524,11 +508,11 @@ extension GameFunctions on Game {
       }
       return;
     }
-    if (instance is Projectile){
+    if (instance is Projectile) {
       projectiles.remove(instance);
       return;
     }
-    throw Exception("Could not remove instance $instance");
+    throw Exception();
   }
 
   void updatePlayer(Player player) {
@@ -564,8 +548,8 @@ extension GameFunctions on Game {
       }
 
       if (target is Npc && onSameTeam(player, target)) {
-        if (withinRadius(player, target, 100)){
-          if (!target.deadOrBusy){
+        if (withinRadius(player, target, 100)) {
+          if (!target.deadOrBusy) {
             target.face(player);
           }
           final onInteractedWith = target.onInteractedWith;
@@ -596,14 +580,13 @@ extension GameFunctions on Game {
     }
 
     if (ability != null) {
-      if (!withinRadius(player, target, ability.range)){
+      if (!withinRadius(player, target, ability.range)) {
         player.setCharacterStateRunning();
         return;
       }
       player.setCharacterStatePerforming(duration: ability.duration);
       return;
     }
-
 
     if (player.distanceFromPos2(target) <= player.velocitySpeed) {
       player.target = null;
@@ -642,7 +625,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void spawnGameObject(GameObjectSpawn spawn){
+  void spawnGameObject(GameObjectSpawn spawn) {
     final distance = randomBetween(0, spawn.spawnRadius);
     final angle = randomAngle();
     final x = getAdjacent(angle, distance);
@@ -650,48 +633,40 @@ extension GameFunctions on Game {
 
     switch (spawn.spawnType) {
       case SpawnType.Chicken:
-        final instance = GameObjectChicken(
-            x: spawn.x + x,
-            y: spawn.y + y,
-            z: spawn.z);
+        final instance =
+            GameObjectChicken(x: spawn.x + x, y: spawn.y + y, z: spawn.z);
         instance.wanderRadius = spawn.spawnRadius;
         instance.spawn = spawn;
         gameObjects.add(instance);
 
         return;
       case SpawnType.Jellyfish:
-        final instance = GameObjectJellyfish(
-            x: spawn.x + x,
-            y: spawn.y + y,
-            z: spawn.z);
+        final instance =
+            GameObjectJellyfish(x: spawn.x + x, y: spawn.y + y, z: spawn.z);
         instance.spawn = spawn;
         gameObjects.add(instance);
         return;
       case SpawnType.Jellyfish_Red:
-        final instance = GameObjectJellyfishRed(
-            x: spawn.x + x,
-            y: spawn.y + y,
-            z: spawn.z);
+        final instance =
+            GameObjectJellyfishRed(x: spawn.x + x, y: spawn.y + y, z: spawn.z);
         instance.spawn = spawn;
         gameObjects.add(instance);
         return;
       case SpawnType.Rat:
         final instance = Rat(
-            z: spawn.indexZ,
-            row: spawn.indexRow,
-            column: spawn.indexColumn,
-            game: this,
-            team: Teams.evil,
+          z: spawn.indexZ,
+          row: spawn.indexRow,
+          column: spawn.indexColumn,
+          game: this,
+          team: Teams.evil,
         );
         instance.wanderRadius = spawn.spawnRadius;
         instance.spawn = spawn;
         characters.add(instance);
         break;
       case SpawnType.Butterfly:
-        final instance = GameObjectButterfly(
-            x: spawn.x,
-            y: spawn.y,
-            z: spawn.z);
+        final instance =
+            GameObjectButterfly(x: spawn.x, y: spawn.y, z: spawn.z);
         instance.spawn = spawn;
         instance.wanderRadius = spawn.spawnRadius;
         gameObjects.add(instance);
@@ -750,21 +725,21 @@ extension GameFunctions on Game {
     projectile.active = false;
     if (target is Character) {
       applyHit(
-          src: projectile.owner,
-          target: target,
-          damage: projectile.damage,
+        src: projectile.owner,
+        target: target,
+        damage: projectile.damage,
       );
     }
     projectile.owner = null;
     projectile.target = null;
 
-    if (projectile.type == ProjectileType.Arrow){
+    if (projectile.type == ProjectileType.Arrow) {
       dispatch(GameEventType.Arrow_Hit, target.x, target.y, target.z);
     }
-    if (projectile.type == ProjectileType.Orb){
-      dispatch(GameEventType.Blue_Orb_Deactivated, target.x, target.y, target.z);
+    if (projectile.type == ProjectileType.Orb) {
+      dispatch(
+          GameEventType.Blue_Orb_Deactivated, target.x, target.y, target.z);
     }
-
   }
 
   void applyHit({
@@ -783,14 +758,14 @@ extension GameFunctions on Game {
       dispatchV3(GameEventType.Zombie_Strike, src);
     }
     target.onStruckBy(src);
-    if (target is Character){
+    if (target is Character) {
       applyDamage(src: src, target: target, amount: damage);
     }
 
     if (target is Velocity) {
       (target as Velocity).applyForce(
-          force: 20,
-          angle: radiansV2(src, target),
+        force: 20,
+        angle: radiansV2(src, target),
       );
     }
   }
@@ -800,8 +775,8 @@ extension GameFunctions on Game {
     if (ability == null) {
       return updateCharacterStateAttacking(character);
     }
-    if (character.stateDuration == 0){
-       ability.cooldownRemaining = ability.cooldown;
+    if (character.stateDuration == 0) {
+      ability.cooldownRemaining = ability.cooldown;
     }
     ability.onActivated(character, this);
   }
@@ -817,7 +792,7 @@ extension GameFunctions on Game {
   }
 
   void updateRespawnAI(AI ai) {
-    assert (ai.dead);
+    assert(ai.dead);
     final spawn = ai.spawn;
     if (spawn == null) return;
     if (ai.respawn-- > 0) return;
@@ -872,7 +847,8 @@ extension GameFunctions on Game {
     );
   }
 
-  Projectile spawnProjectileFireball(Character src, {
+  Projectile spawnProjectileFireball(
+    Character src, {
     required int damage,
     required double range,
     double? angle,
@@ -894,7 +870,7 @@ extension GameFunctions on Game {
     required Character src,
     double accuracy = 0,
     double speed = 12,
-  }){
+  }) {
     return spawnProjectile(
       src: src,
       accuracy: 0,
@@ -906,7 +882,7 @@ extension GameFunctions on Game {
     );
   }
 
-  void fireHandgun(Character src, double angle){
+  void fireHandgun(Character src, double angle) {
     spawnProjectile(
       src: src,
       accuracy: 0,
@@ -920,7 +896,7 @@ extension GameFunctions on Game {
   }
 
   void fireShotgun(Character src, double angle) {
-    for (var i = 0; i < 5; i++){
+    for (var i = 0; i < 5; i++) {
       spawnProjectile(
         src: src,
         accuracy: 0,
@@ -946,8 +922,8 @@ extension GameFunctions on Game {
   }) {
     final projectile = getInstanceProjectile();
     var finalAngle = angle;
-    if (finalAngle == null){
-      if (target != null && target is Collider){
+    if (finalAngle == null) {
+      if (target != null && target is Collider) {
         finalAngle = src.getAngle(target);
       } else {
         finalAngle = src.faceAngle;
@@ -956,7 +932,7 @@ extension GameFunctions on Game {
     projectile.damage = damage;
     projectile.collidable = true;
     projectile.active = true;
-    if (target is Collider){
+    if (target is Collider) {
       projectile.target = target;
     }
     projectile.start.x = src.x;
@@ -1015,8 +991,7 @@ extension GameFunctions on Game {
   Zombie getZombieInstance() {
     for (final character in characters) {
       if (character.alive) continue;
-      if (character is Zombie)
-        return character;
+      if (character is Zombie) return character;
     }
     final zombie = Zombie(
       x: 0,
@@ -1034,8 +1009,7 @@ extension GameFunctions on Game {
   Rat getInstanceRat() {
     for (final character in characters) {
       if (character.alive) continue;
-      if (character is Rat)
-        return character;
+      if (character is Rat) return character;
     }
     final instance = Rat(
       z: 0,
@@ -1069,10 +1043,7 @@ extension GameFunctions on Game {
       final ai = character as AI;
 
       var target = character.target;
-      if (
-          target != null &&
-          !character.withinChaseRange(target)
-      ) {
+      if (target != null && !character.withinChaseRange(target)) {
         character.target = null;
         character.clearDest();
       }
@@ -1097,7 +1068,7 @@ extension GameFunctions on Game {
   }
 
   void setNpcTarget(AI ai, Position3 value) {
-    if (value is Team){
+    if (value is Team) {
       assert(!onSameTeam(ai, value));
     }
     assert(ai.alive);
@@ -1116,7 +1087,7 @@ extension GameFunctions on Game {
     }
   }
 
-  bool removePlayer(Player player){
+  bool removePlayer(Player player) {
     if (!players.remove(player)) return false;
     characters.remove(player);
     for (final character in characters) {
@@ -1124,7 +1095,7 @@ extension GameFunctions on Game {
     }
     onPlayerDisconnected(player);
     if (player.scene.dirty && player.scene.name.isNotEmpty) {
-       writeSceneToFile(scene);
+      writeSceneToFile(scene);
     }
     return true;
   }
@@ -1192,9 +1163,9 @@ extension GameFunctions on Game {
           return;
         }
         dispatchV3(
-            GameEventType.Handgun_Fired,
-            character,
-            angle: character.faceAngle,
+          GameEventType.Handgun_Fired,
+          character,
+          angle: character.faceAngle,
         );
         return;
       }
@@ -1203,9 +1174,9 @@ extension GameFunctions on Game {
           return;
         }
         spawnProjectileBullet(
-            src: character,
-            accuracy: 0,
-            speed: 12.0,
+          src: character,
+          accuracy: 0,
+          speed: 12.0,
         );
         return;
       }
@@ -1235,7 +1206,7 @@ extension GameFunctions on Game {
 
     if (stateDuration != framePerformStrike) return;
 
-    if (character.equippedTypeIsStaff){
+    if (character.equippedTypeIsStaff) {
       spawnProjectileOrb(character, damage: equippedDamage);
       character.target = null;
       return;
@@ -1243,34 +1214,37 @@ extension GameFunctions on Game {
 
     if (character.equippedTypeIsBow) {
       dispatchV3(GameEventType.Release_Bow, character);
-      spawnProjectileArrow(character, damage: equippedDamage, target: character.target, range: character.equippedRange);
+      spawnProjectileArrow(character,
+          damage: equippedDamage,
+          target: character.target,
+          range: character.equippedRange);
       character.target = null;
       return;
     }
     if (character.equippedIsMelee) {
       spawnProjectile(
-          src: character,
-          speed: 3,
-          range: character.equippedRange * 2,
-          projectileType: ProjectileType.Wave,
-          damage: 1,
-          angle: character.faceAngle,
+        src: character,
+        speed: 3,
+        range: character.equippedRange * 2,
+        projectileType: ProjectileType.Wave,
+        damage: 1,
+        angle: character.faceAngle,
       );
 
       final attackTarget = character.target;
       if (attackTarget != null) {
         if (attackTarget is Collider && attackTarget.collidable) {
-          applyHit(src: character, target: attackTarget, damage: equippedDamage);
+          applyHit(
+              src: character, target: attackTarget, damage: equippedDamage);
           character.target = null;
           return;
         }
-         character.target = null;
+        character.target = null;
       }
       final zombieHit = raycastHit(
           character: character,
           colliders: characters,
-          range: character.equippedRange
-      );
+          range: character.equippedRange);
       if (zombieHit != null) {
         applyHit(
           src: character,
@@ -1309,7 +1283,7 @@ extension GameFunctions on Game {
     int team = 1,
     int health = 10,
     double wanderRadius = 0,
-  }){
+  }) {
     final npc = Npc(
       name: name,
       onInteractedWith: onInteractedWith,
@@ -1319,7 +1293,7 @@ extension GameFunctions on Game {
       weapon: Weapon(type: weaponType, damage: weaponDamage),
       team: team,
       health: health,
-      wanderRadius:  wanderRadius,
+      wanderRadius: wanderRadius,
       game: this,
     );
     npc.equippedHead = head;
@@ -1335,76 +1309,15 @@ extension GameFunctions on Game {
     return npc;
   }
 
-
   void updatePlayerAttacking(Player player) {
     if (player.performDuration <= 0) return;
     player.performDuration--;
+  }
 
-    const attackRadius = 25.0;
-
-    if (player.performMaxHits > 0) {
-      for (final character in characters) {
-        if (onSameTeam(player, character)) continue;
-        if (character.distanceFromXYZ(
-              player.performX,
-              player.performY,
-              player.performZ,
-            ) >
-            attackRadius) continue;
-        applyHit(src: player, target: character, damage: 2);
-        player.performMaxHits--;
-        return;
-      }
+  double angle2(double adjacent, double opposite) {
+    if (adjacent > 0) {
+      return pi2 - (atan2(adjacent, opposite) * -1);
     }
-
-    if (player.performMaxHits > 0) {
-      for (final gameObject in gameObjects) {
-        if (gameObject.distanceFromXYZ(
-              player.performX,
-              player.performY,
-              player.performZ,
-            ) >
-            attackRadius) continue;
-
-        if (gameObject is GameObjectStatic) {
-          if (!gameObject.active) continue;
-          if (gameObject.type == GameObjectType.Barrel) {
-            gameObject.active = false;
-            gameObject.collidable = false;
-            gameObject.respawn = 200;
-            dispatchGameObjectDestroyed(players, gameObject);
-          }
-        }
-        player.performMaxHits--;
-        if (gameObject is Velocity == false) continue;
-        (gameObject as Velocity).applyForce(
-          force: 5,
-          angle: radiansV2(player, gameObject),
-        );
-        return;
-      }
-    }
-
-    if (scene.getNodeXYZ(
-              player.performX,
-              player.performY,
-              player.performZ,
-            ).type == NodeType.Boulder
-    ) {
-      final z = player.performZ ~/ tileSizeHalf;
-      final row = player.performX ~/ tileSize;
-      final column = player.performY ~/ tileSize;
-      setNode(z, row, column, NodeType.Empty, NodeOrientation.None);
-    }
+    return atan2(adjacent, opposite);
   }
 }
-
-double angle2(double adjacent, double opposite) {
-  if (adjacent > 0) {
-    return pi2 - (atan2(adjacent, opposite) * -1);
-  }
-  return atan2(adjacent, opposite);
-}
-
-class ZombieSpawnPointsEmptyException implements Exception {}
-
