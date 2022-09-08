@@ -8,7 +8,9 @@ class AttackType {
    static const Node_Cannon = 7;
    static const Shotgun = 8;
    static const Handgun = 9;
-   
+   static const Weather = 10;
+   static const Time = 11;
+
    static String getName(int value){
        return const {
           Unarmed: "Unarmed",
@@ -20,6 +22,8 @@ class AttackType {
           Node_Cannon: "Node Cannon",
           Shotgun: "Shotgun",
           Handgun: "Handgun",
+          Weather: "Weather",
+          Time: "Time",
        }[value] ?? "? ($value)";
    }
 }

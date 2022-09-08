@@ -192,15 +192,18 @@ class Player extends Character with ByteWriter {
   }
 
   void performAttackTypeTeleport(){
+    performDuration = 10;
     x = mouseGridX;
     y = mouseGridY;
   }
 
   void performAttackTypeShotgun(){
+    performDuration = 10;
     game.fireShotgun(this, mouseAngle);
   }
 
   void performAttackTypeHandgun(){
+    performDuration = 10;
     game.fireHandgun(this, mouseAngle);
   }
 
@@ -442,6 +445,7 @@ extension PlayerProperties on Player {
     writeInt(z);
     writeInt(health); // 2
     writeInt(maxHealth); // 2
+    writeByte(attackType); // 2
     writeByte(equippedWeapon.type);
     writeByte(equippedWeapon.damage);
     writeByte(equippedArmour); // armour

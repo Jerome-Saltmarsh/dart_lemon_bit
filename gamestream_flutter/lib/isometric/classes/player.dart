@@ -1,3 +1,4 @@
+import 'package:bleed_common/attack_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/quest.dart';
 import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
@@ -37,6 +38,7 @@ class Player extends Vector3 {
   final mouseTargetHealth = Watch(0.0);
   final weaponDamage = Watch(0);
   final weaponType = Watch(WeaponType.Unarmed, onChanged: onChangedPlayerWeapon);
+  final attackType = Watch(AttackType.Unarmed);
   final armourType = Watch(ArmourType.tunicPadded);
   final headType = Watch(HeadType.None);
   final pantsType = Watch(PantsType.white);

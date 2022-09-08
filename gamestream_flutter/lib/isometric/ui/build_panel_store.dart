@@ -146,6 +146,9 @@ Widget buildColumnPlayerWeapons() {
          buildButtonEquipAttackType(AttackType.Shotgun),
          buildButtonEquipAttackType(AttackType.Handgun),
          buildButtonEquipAttackType(AttackType.Teleport),
+         buildButtonEquipAttackType(AttackType.Node_Cannon),
+         buildButtonEquipAttackType(AttackType.Weather),
+         buildButtonEquipAttackType(AttackType.Time),
        ],
      ),
    );

@@ -1,3 +1,4 @@
+import 'package:bleed_common/attack_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
@@ -17,6 +18,9 @@ Widget buildStackPlay() {
   return Stack(
     children: [
       Positioned(top: 50, right: 0, child: buildWatchInventoryVisible()),
+      watch(player.attackType, (t) {
+        return text(AttackType.getName(player.attackType.value));
+      }),
       Positioned(top: 50, left: 0, child: buildPanelStore()),
       Positioned(top: 0, left: 0, child: Container(
         width: screen.width,
