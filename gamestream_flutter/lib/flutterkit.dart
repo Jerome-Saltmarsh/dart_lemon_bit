@@ -143,17 +143,17 @@ Widget pressed({
   required Function? callback,
   dynamic hint
 }) {
-  return onPressed(child: child, callback: callback, hint: hint);
+  return onPressed(child: child, action: callback, hint: hint);
 }
 
 Widget onPressed({
     required Widget child,
-    required Function? callback,
+    required Function? action,
     Function? onRightClick,
     dynamic hint,
 }) {
   final Widget widget = MouseRegion(
-      cursor: callback != null
+      cursor: action != null
           ? SystemMouseCursors.click
           : SystemMouseCursors.forbidden,
       child: GestureDetector(
@@ -162,8 +162,8 @@ Widget onPressed({
             onRightClick.call();
           } : null,
           onTap: (){
-            if (callback == null) return;
-            callback();
+            if (action == null) return;
+            action();
           }
       ));
 

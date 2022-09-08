@@ -93,7 +93,7 @@ Widget buildOrientationIcon(int orientation){
 
   return onPressed(
     hint: NodeOrientation.getName(orientation),
-    callback: (){
+    action: (){
       edit.paintOrientation.value = orientation;
       sendNodeRequestOrient(orientation);
     },

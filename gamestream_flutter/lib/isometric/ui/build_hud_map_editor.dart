@@ -138,7 +138,7 @@ Widget buildToggleRain() {
             ),
             margin: const EdgeInsets.only(right: 2),
           ),
-          callback: () => sendClientRequestWeatherSetRain(value),
+          action: () => sendClientRequestWeatherSetRain(value),
           hint: 'Rain ${value.name}',
         ),
       );
@@ -316,7 +316,7 @@ Widget buildColumnEdit() {
   return Column(
     children: [
       onPressed(
-        callback: editZIncrease,
+        action: editZIncrease,
         child: Container(
           alignment: Alignment.center,
           child: text("+"),
@@ -335,7 +335,7 @@ Widget buildColumnEdit() {
         );
       }),
       onPressed(
-        callback: editZDecrease,
+        action: editZDecrease,
         child: Container(
           alignment: Alignment.center,
           child: text("-"),

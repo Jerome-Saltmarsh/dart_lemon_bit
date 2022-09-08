@@ -43,7 +43,7 @@ Positioned buildMiniMap() {
     left: 6,
     top: 6,
     child: onPressed(
-      callback: actionGameDialogShowMap,
+      action: actionGameDialogShowMap,
       child: Container(
           padding: const EdgeInsets.all(4),
           color: brownDark,

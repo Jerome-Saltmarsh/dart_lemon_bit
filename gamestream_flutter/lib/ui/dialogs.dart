@@ -63,7 +63,7 @@ Widget buildDialogAccount(){
                         color: colours.white60, size: 16)
                   ],
                 )),
-            callback: website.actions.showDialogChangePublicName),
+            action: website.actions.showDialogChangePublicName),
         height8,
         _buildRow("Email", account.email),
         height8,

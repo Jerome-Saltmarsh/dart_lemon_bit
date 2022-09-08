@@ -62,17 +62,18 @@ Widget buildToggleFullscreen() {
   });
 }
 
-Widget buildButtonExit() {
-  return onPressed(
-    callback: core.actions.exitGame,
-    // hint: "Exit Game",
-    child: buildCanvasImage(srcX: 80, srcY: 48, srcWidth: 48, srcHeight: 48),
+Widget buildButtonExit() =>
+  buildCanvasImage(
+      srcX: 80,
+      srcY: 48,
+      srcWidth: 48,
+      srcHeight: 48,
+      action: core.actions.exitGame,
   );
-}
 
 Widget buildButtonToggleAudio() {
   return onPressed(
-    callback: audio.toggleSoundEnabled,
+    action: audio.toggleSoundEnabled,
     child: WatchBuilder(audio.soundEnabled, (bool soundEnabled) {
       return soundEnabled
           ? Tooltip(child: text("Disable Sound"), message: 'Disable Sound')

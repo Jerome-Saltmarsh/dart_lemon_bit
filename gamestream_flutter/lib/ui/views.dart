@@ -267,7 +267,7 @@ Widget buildTopMessage(){
                 onPressed(
                     child: text(" for \$9.99 per month to unlock all games",
                         color: colours.white80, size: 20),
-                    callback: core.actions.openStripeCheckout),
+                    action: core.actions.openStripeCheckout),
               ],
             ),
             core.actions.openStripeCheckout,
@@ -280,7 +280,7 @@ Widget buildTopMessage(){
         return Row(
           children: [
             onPressed(
-              callback: core.actions.openStripeCheckout,
+              action: core.actions.openStripeCheckout,
               child: text(
                   "Your subscription expired on ${formatDate(account.subscriptionEndDate!)}",
                   color: colours.red),

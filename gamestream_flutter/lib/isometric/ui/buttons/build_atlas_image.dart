@@ -37,5 +37,5 @@ Widget buildCanvasImage({
 
   if (action == null) return child;
 
-  return onPressed(child: child, callback: action);
+  return onPressed(child: child, action: action);
 }
