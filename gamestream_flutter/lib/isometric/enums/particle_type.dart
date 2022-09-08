@@ -32,4 +32,5 @@ class ParticleType {
   static const Character_Death_Slime = 31;
   static const Block_Grass = 32;
   static const Block_Brick = 33;
+  static const Water_Drop = 34;
 }

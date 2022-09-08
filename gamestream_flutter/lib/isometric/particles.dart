@@ -160,6 +160,28 @@ void _updateParticle(Particle particle) {
 
 int get bodyPartDuration => randomInt(120, 200);
 
+void spawnParticleWaterDrop({
+  required double x,
+  required double y,
+  required double z,
+}) {
+  spawnParticle(
+    type: ParticleType.Water_Drop,
+    x: x,
+    y: y,
+    z: z,
+    angle: randomAngle(),
+    speed: 0.5,
+    zv: 1.5,
+    weight: 5,
+    duration: 15,
+    rotation: 0,
+    rotationV: 0,
+    scaleV: 0,
+    checkCollision: false
+  );
+}
+
 void spawnParticleArm({
   required double x,
   required double y,

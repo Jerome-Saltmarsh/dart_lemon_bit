@@ -1,4 +1,5 @@
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
@@ -7,6 +8,7 @@ import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_de
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
+import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/watches/raining.dart';
 import 'package:lemon_math/library.dart';
 
@@ -22,6 +24,9 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       }
       return;
     case GameEventType.Splash:
+      for (var i = 0; i < 8; i++){
+        spawnParticleWaterDrop(x: x, y: y, z: z);
+      }
       return audioSingleSplash.playXYZ(x, y, z);
     case GameEventType.Spawn_Dust_Cloud:
       for (var i = 0; i < 3; i++){
@@ -31,10 +36,17 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       // return spawnParticleDustCloud(x: x, y: y, z: z);
     case GameEventType.Footstep:
       final tile = getNodeXYZ(x, y, z - 2);
-      if (raining.value){
-        if (getNodeXYZ(x, y, z + 2) == NodeType.Rain_Landing) {
+      if (
+        raining.value && (
+          getNodeXYZ(x, y, z).type == NodeType.Rain_Landing ||
+          getNodeXYZ(x, y, z + 24).type == NodeType.Rain_Landing
+        )
+      ){
           audioSingleFootstepMud6.playXYZ(x, y, z);
-        }
+          final amount = rain.value == Rain.Heavy ? 3 : 2;
+          for (var i = 0; i < amount; i++){
+            spawnParticleWaterDrop(x: x, y: y, z: z);
+          }
       }
       if (tile.isStone) {
         return audioSingleFootstepStone.playXYZ(x, y, z);

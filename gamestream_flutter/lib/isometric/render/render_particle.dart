@@ -60,6 +60,18 @@ void renderParticle(Particle value) {
         color: value.renderColor,
       );
 
+    case ParticleType.Water_Drop:
+      return render(
+        dstX: value.renderX,
+        dstY: value.renderY,
+        srcX: 48,
+        srcY: 8,
+        srcWidth: 3,
+        srcHeight: 3,
+        scale: value.scale,
+        color: value.renderColor,
+      );
+
     case ParticleType.Smoke:
       return render(
           dstX: value.renderX,
