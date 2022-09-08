@@ -24,9 +24,16 @@ Widget buildPanelMenu() {
       width8,
       buildTime(),
       width8,
-      buildToggleFullscreen(),
+      onPressed(
+          child: buildToggleFullscreen(),
+          action:  engine.fullscreenToggle),
       width8,
-      buildButtonExit(),
+      onPressed(
+          child: buildButtonExit(),
+          action: () {
+            core.actions.exitGame();
+          }
+      ),
     ],
   ));
 }
@@ -51,7 +58,7 @@ Widget buildButtonShowMap() => Tooltip(
 
 Widget buildToggleFullscreen() {
   return WatchBuilder(engine.fullScreen, (bool fullscreen) {
-    return buildCanvasImage(
+    return buildCanvasImageButton(
         srcX: 80,
         srcY: 0,
         srcWidth: 48,
@@ -63,7 +70,7 @@ Widget buildToggleFullscreen() {
 }
 
 Widget buildButtonExit() =>
-  buildCanvasImage(
+    buildCanvasImageButton(
       srcX: 80,
       srcY: 48,
       srcWidth: 48,

@@ -90,18 +90,6 @@ Widget border({
   );
 }
 
-// BoxDecoration panelDecoration({
-//   double borderWidth = 2.0,
-//   Color borderColor = Colors.white,
-//   double borderRadius = 4,
-//   Color fillColor = Colors.white,
-// }) {
-//   return BoxDecoration(
-//       border: Border.all(color: borderColor, width: borderWidth),
-//       borderRadius: borderRadius4,
-//       color: fillColor);
-// }
-
 Widget button(dynamic value, Function onPressed, {
   double? width,
   double? height,
@@ -117,7 +105,7 @@ Widget button(dynamic value, Function onPressed, {
   bool boldOnHover = false,
   Alignment alignment = Alignment.center
 }) {
-  final Widget _button = pressed(
+  final _button = onPressed(
       callback: onPressed,
       child: onMouseOver(builder: (BuildContext context, bool mouseOver) {
         return border(
@@ -138,21 +126,13 @@ Widget button(dynamic value, Function onPressed, {
   return _button;
 }
 
-Widget pressed({
-  required Widget child,
-  required Function? callback,
-  dynamic hint
-}) {
-  return onPressed(child: child, action: callback, hint: hint);
-}
-
 Widget onPressed({
     required Widget child,
-    required Function? action,
+    Function? action,
     Function? onRightClick,
     dynamic hint,
 }) {
-  final Widget widget = MouseRegion(
+  final widget = MouseRegion(
       cursor: action != null
           ? SystemMouseCursors.click
           : SystemMouseCursors.forbidden,

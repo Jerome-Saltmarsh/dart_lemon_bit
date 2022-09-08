@@ -235,6 +235,7 @@ class CoreActions {
   }
 
   void exitGame(){
+    print('exit game');
     gameType.value = null;
     clearState();
     webSocket.disconnect();
