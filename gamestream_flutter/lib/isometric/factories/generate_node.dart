@@ -1,13 +1,8 @@
 import 'package:bleed_common/library.dart';
-import 'package:bleed_common/node_orientation.dart';
 import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/classes/nodes.dart';
 
 Node generateNode(int z, int row, int column, int type, int orientation){
-
-  if (orientation == NodeOrientation.Destroyed){
-      return Node.empty;
-  }
 
   switch (type){
     case NodeType.Boundary:
@@ -84,6 +79,9 @@ Node generateNode(int z, int row, int column, int type, int orientation){
       return NodeWoodenPlank(row, column, z);
     case NodeType.Boulder:
       return NodeBoulder(row, column, z);
+    case NodeType.Respawning:
+      print("respawning generated");
+      return NodeRespawning(row, column, z);
     default:
       throw Exception("Cannot build grid node type $type (${NodeType.getName(type)}");
   }

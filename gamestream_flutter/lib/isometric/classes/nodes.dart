@@ -857,3 +857,21 @@ class NodeWoodenPlank extends Node {
       return renderShadeAuto(srcX, srcYIndex5);
     return renderShadeAuto(7688, 0);  }
 }
+
+class NodeRespawning extends Node {
+
+  NodeRespawning(int row, int column, int z) : super(row, column, z);
+
+  @override
+  void handleRender() => render(
+      dstX: dstX,
+      dstY: dstY,
+      srcX: 9232,
+      srcY: 73 * (animationFrame % 6),
+      srcWidth: 48,
+      srcHeight: 72,
+  );
+
+  @override
+  int get type => NodeType.Respawning;
+}

@@ -18,7 +18,6 @@ import '../dark_age/game_dark_age_editor.dart';
 import '../dispatch/dispatch_game_object_destroyed.dart';
 import '../maths.dart';
 import '../utilities.dart';
-import 'action.dart';
 import 'gameobject.dart';
 import 'library.dart';
 import 'position3.dart';
@@ -154,20 +153,26 @@ class Player extends Character with ByteWriter {
       }
     }
 
-    if (scene.getNodeXYZ(
+
+    final node = scene.getNodeXYZ(
       performX,
       performY,
       performZ,
-    ).type == NodeType.Boulder
-    ) {
+    );
+    if (node.isDestroyed) return;
+    if (NodeType.isDestroyable(node.type)) {
       final z = performZ ~/ tileSizeHalf;
       final row = performX ~/ tileSize;
       final column = performY ~/ tileSize;
-      game.setNode(z, row, column, NodeType.Boulder, NodeOrientation.Destroyed);
+      game.setNode(z, row, column, NodeType.Empty, NodeOrientation.Destroyed);
 
-      game.actions.add(Action(100, () {
-        game.setNode(z, row, column, NodeType.Boulder, NodeOrientation.Solid);
-      }));
+      game.perform((){
+        game.setNode(z, row, column, NodeType.Respawning, NodeOrientation.None);
+      }, 300);
+
+      game.perform((){
+        game.setNode(z, row, column, node.type, node.orientation);
+      }, 400);
     }
   }
 

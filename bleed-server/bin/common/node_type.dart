@@ -40,6 +40,7 @@ class NodeType {
   static const Bau_Haus_2 = 69;
   static const Boulder = 70;
   static const Spawn = 71;
+  static const Respawning = 72;
 
   static bool isOriented(int value) =>
       value == Brick_2 ||
@@ -62,6 +63,10 @@ class NodeType {
         Bau_Haus_2,
         Boulder,
      ].contains(type);
+
+  static bool isDestroyable(int type){
+     return type == Boulder || type == Grass_Long;
+  }
 
   static bool isSlopeSymmetric(int type) =>
     const [

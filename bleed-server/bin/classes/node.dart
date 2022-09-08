@@ -260,6 +260,21 @@ class NodeSoil extends NodeSolid {
   int get type => NodeType.Soil;
 }
 
+class NodeRespawning extends Node {
+  @override
+  int get type => NodeType.Respawning;
+
+  @override
+  bool getCollision(double x, double y, double z) {
+    return false;
+  }
+
+  @override
+  void resolveCharacterCollision(Character character, Game game) {
+    return;
+  }
+}
+
 class NodeRoofHayNorth extends NodeSlopeNorth {
   @override
   int get type => NodeType.Roof_Hay_North;

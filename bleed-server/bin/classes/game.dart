@@ -40,6 +40,10 @@ abstract class Game {
 
   List<GameObject> get gameObjects => scene.gameObjects;
 
+  void perform(Function action, int duration){
+    actions.add(Action(duration, action));
+  }
+
   Game(this.scene) {
     engine.onGameCreated(this);
   }
