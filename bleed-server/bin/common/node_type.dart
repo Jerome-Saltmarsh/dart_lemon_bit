@@ -65,7 +65,10 @@ class NodeType {
      ].contains(type);
 
   static bool isDestroyable(int type){
-     return type == Boulder || type == Grass_Long;
+     return
+       type == Boulder ||
+       type == Sunflower ||
+       type == Grass_Long;
   }
 
   static bool isSlopeSymmetric(int type) =>

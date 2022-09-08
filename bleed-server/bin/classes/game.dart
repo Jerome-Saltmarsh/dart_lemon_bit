@@ -997,7 +997,6 @@ extension GameFunctions on Game {
     zombie.spawnX = x;
     zombie.spawnY = y;
     zombie.clearDest();
-    zombie.movementSpeed = speed;
     zombie.wanderRadius = wanderRadius;
     return zombie;
   }

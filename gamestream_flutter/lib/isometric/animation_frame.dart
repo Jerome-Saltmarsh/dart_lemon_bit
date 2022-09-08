@@ -14,6 +14,7 @@ var animationFrame8 = 0;
 var animationFrameGrass = 0;
 var animationFrameGrassShort = 0;
 var animationFrameRain = 0;
+var animationFrameRainWater = 0;
 var animationFrameTreePosition = 0;
 var rainPosition = 0.0;
 
@@ -30,7 +31,7 @@ void updateAnimationFrame(){
   _updateWaterFrame();
   animationFrameTorch = frame ~/ 10;
   animationFrame8 = frame ~/ 8;
-  animationFrameRain = (frame ~/ 4) % 6;
+  animationFrameRain = (frame ~/ 4) % 10;
   animationFrameGrass = animationFrame % 6;
   frameChicken = animationFrame % 2;
 

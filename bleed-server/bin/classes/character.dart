@@ -35,7 +35,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   set health(int value) {
     _health = clampInt(value, 0, maxHealth);
   }
-  late double movementSpeed;
   Power? ability = null;
   var state = CharacterState.Idle;
   var stateDurationRemaining = 0;
@@ -92,7 +91,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   }) : super(x: x, y: y, z: z, radius: 7) {
     maxHealth = health;
     this.health = health;
-    movementSpeed = speed;
     this.team = team;
   }
 
@@ -103,6 +101,10 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   }
 
   void applyVelocity() {
+    if (performDuration > 0){
+      applyForce(force: 0.8, angle: faceAngle);
+      return;
+    }
      applyForce(force: 1.0, angle: faceAngle);
   }
 

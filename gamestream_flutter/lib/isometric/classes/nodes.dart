@@ -1,4 +1,6 @@
 import 'package:bleed_common/node_orientation.dart';
+import 'package:gamestream_flutter/isometric/grid.dart';
+import 'package:lemon_math/library.dart';
 import 'package:bleed_common/node_type.dart';
 import 'package:bleed_common/wind.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
@@ -93,7 +95,7 @@ class NodeRainFalling extends Node {
   late int frame;
 
   NodeRainFalling(int row, int column, int z) : super(row, column, z) {
-    frame = (row + column) * 2;
+    frame = randomInt(0, 5);
   }
 
   @override
@@ -122,9 +124,11 @@ class NodeRainFalling extends Node {
 
 class NodeRainLanding extends Node {
   late int frame;
+  late bool onWater;
 
   NodeRainLanding(int row, int column, int z) : super(row, column, z) {
     frame = (row + column) * 2;
+    onWater = getNode(z - 1, row, column).type == NodeType.Water;
   }
 
   @override
@@ -132,6 +136,19 @@ class NodeRainLanding extends Node {
 
   @override
   void handleRender() {
+    if (onWater){
+      return render(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: 9280,
+        srcY: 72.0 * ((animationFrameRain + frame) % 10),
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorY: 0.3334,
+        color: colorShades[shade],
+      );
+    }
+
     return render(
       dstX: dstX,
       dstY: dstY,
