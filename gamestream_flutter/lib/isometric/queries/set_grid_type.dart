@@ -1,4 +1,5 @@
 
+import 'package:bleed_common/node_orientation.dart';
 import 'package:gamestream_flutter/isometric/factories/generate_node.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 
@@ -17,7 +18,7 @@ void setGridType(int z, int row, int column, int type){
     return;
 
   final current = grid[z][row][column];
-  final next = generateNode(z, row, column, type);
+  final next = generateNode(z, row, column, type, NodeOrientation.None);
   next.shade = current.shade;
   next.bake = current.bake;
   grid[z][row][column] = next;

@@ -17,6 +17,7 @@ abstract class Node {
   bool get isSlopeSymmetric => NodeOrientation.isSlopeSymmetric(orientation);
   bool get isCorner => NodeOrientation.isCorner(orientation);
   bool get isSolid => orientation == NodeOrientation.Solid;
+  bool get isDestroyed => orientation == NodeOrientation.Destroyed;
   bool get isOriented => NodeType.isOriented(type);
 
   static final Node boundary = NodeBoundary();
@@ -350,6 +351,9 @@ class NodeOriented extends Node {
     if (isSolid)
       return true;
 
+    if (isDestroyed)
+      return false;
+
     return getHeight(x, y, z) > z;
   }
 
@@ -362,6 +366,7 @@ class NodeOriented extends Node {
   double getHeight(double x, double y, double z) {
     final bottom = (z ~/ tileHeight) * tileHeight;
     if (isSolid) return bottom + tileHeight;
+    if (isDestroyed) return bottom;
     final percX = ((x % tileSize) / tileSize);
     final percY = ((y % tileSize) / tileSize);
     assert (percX >= 0 && percX <= 1);

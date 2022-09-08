@@ -415,7 +415,7 @@ class ServerResponseReader with ByteReader {
     final column = readInt();
     final type = readByte();
     final orientation = readByte();
-    final node = generateNode(z, row, column, type);
+    final node = generateNode(z, row, column, type, orientation);
     node.orientation = orientation;
     grid[z][row][column] = node;
     edit.refreshSelected();
@@ -553,7 +553,13 @@ class ServerResponseReader with ByteReader {
 
       while (count > 0) {
         count--;
-        grid[currentZ][currentRow][currentColumn] = generateNode(currentZ, currentRow, currentColumn, type);
+        grid[currentZ][currentRow][currentColumn] = generateNode(
+            currentZ,
+            currentRow,
+            currentColumn,
+            type,
+            orientation,
+        );
         grid[currentZ][currentRow][currentColumn].orientation = orientation;
         currentColumn++;
         if (currentColumn >= gridTotalColumns) {

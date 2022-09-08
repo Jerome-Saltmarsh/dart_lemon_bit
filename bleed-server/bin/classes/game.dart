@@ -12,6 +12,7 @@ import '../io/write_scene_to_file.dart';
 import '../isometric/generate_node.dart';
 import '../maths.dart';
 import '../physics.dart';
+import 'action.dart';
 import 'ai.dart';
 import 'ai_slime.dart';
 import 'character.dart';
@@ -35,6 +36,7 @@ abstract class Game {
   final players = <Player>[];
   final characters = <Character>[];
   final projectiles = <Projectile>[];
+  final actions = <Action>[];
 
   List<GameObject> get gameObjects => scene.gameObjects;
 
@@ -259,6 +261,14 @@ extension GameFunctions on Game {
       if (gameObject is Velocity) {
         (gameObject as Velocity).applyFriction(0.95);
       }
+    }
+
+    for (var i = 0; i < actions.length; i++){
+      final action = actions[i];
+      if (action.frames-- > 0) continue;
+      action.perform();
+      actions.removeAt(i);
+      i--;
     }
 
     update();

@@ -23,11 +23,9 @@ Widget buildPanelMenu() {
       buildButtonTogglePlayMode(),
       width8,
       buildTime(),
-      width8,
       onPressed(
           child: buildToggleFullscreen(),
           action:  engine.fullscreenToggle),
-      width8,
       onPressed(
           child: buildButtonExit(),
           action: () {
@@ -76,6 +74,7 @@ Widget buildButtonExit() =>
       srcWidth: 48,
       srcHeight: 48,
       action: core.actions.exitGame,
+      scale: 0.75
   );
 
 Widget buildButtonToggleAudio() {
