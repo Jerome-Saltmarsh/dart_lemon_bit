@@ -134,10 +134,6 @@ class GameBuild {
        return button(mode.name, cameraModeNext);
     });
   }
-
-  Widget buildButtonFullScreen(){
-    return button("Fullscreen", engine.fullscreenToggle);
-  }
 }
 
 

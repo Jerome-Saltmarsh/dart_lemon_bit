@@ -148,40 +148,7 @@ class _Buttons {
       borderRadius: borderRadius2,
     );
   }
-
-  final Widget buttonAccount = buildMenuButton("Account", website.actions.showDialogAccount);
-  final Widget buttonGames = buildMenuButton("Games", website.actions.showDialogGames);
-
-
-  final Widget exit = button('Exit', core.actions.exitGame);
-  final Widget changeCharacter = button("Change Hero", () {
-    // sendClientRequest(ClientRequest.Reset_Character_Type);
-  });
 }
-
-// Widget buildToggleFullscreen() {
-//   return onPressed(
-//     callback: () {
-//       if (fullScreenActive) {
-//         engine.fullScreenExit();
-//       } else {
-//         engine.fullScreenEnter();
-//       }
-//     },
-//     hint: "F11",
-//     child: border(
-//       child: Row(
-//         children: [
-//           text(fullScreenActive ? "Exit Fullscreen" : "Fullscreen"),
-//           width4,
-//           buildDecorationImage(
-//               image: decorationImages.fullscreen, width: 20, height: 20, borderWidth: 0),
-//         ],
-//       ),
-//     ),
-//   );
-// }
-
 Widget _buildFakeLoginButton(String userId, String text){
   return button('$userId $text', (){
      core.actions.login(Authentication(userId: userId, name: userId, email: "$userId@email.com"));

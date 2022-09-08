@@ -5,12 +5,9 @@ FEATURES
 [ ] Render GameObject Respawn Barrel
 [ ] Destroy GameObject Barrel
 [ ] Destroy GameObject Rock
-[ ] Destroy Node Tree
-[ ] Add Enemy Spawns to world
-[x] Solid Water at edge of map
-[ ] Particles
 [ ] Fix Strike Order should hit nearest object first
 [ ] Fix Water Flowing
+[x] Solid Water at edge of map
 
 COMPLETED
 [x] Player changes map on edge

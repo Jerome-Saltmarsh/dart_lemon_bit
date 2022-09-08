@@ -9,7 +9,7 @@ import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
-import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_button.dart';
+import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';

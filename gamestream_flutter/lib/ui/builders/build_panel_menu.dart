@@ -3,10 +3,12 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_map.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -22,7 +24,7 @@ Widget buildPanelMenu() {
       width8,
       buildTime(),
       width8,
-      buildButtonToggleFullscreen(),
+      buildToggleFullscreen(),
       width8,
       buildButtonExit(),
     ],
@@ -47,23 +49,24 @@ Widget buildButtonTogglePlayMode() {
 Widget buildButtonShowMap() => Tooltip(
     message: ("(M)"), child: text("Map", onPressed: actionGameDialogShowMap));
 
-Widget buildButtonToggleFullscreen() {
-  return onPressed(
-    callback: engine.fullscreenToggle,
-    child: WatchBuilder(engine.fullScreen, (bool fullscreen) {
-      return fullscreen
-          ? Tooltip(
-              child: text("Minimize"), message: 'Exit Fullscreen')
-          : Tooltip(
-              child: text("Maximize"), message: 'Enter Fullscreen');
-    }),
-  );
+Widget buildToggleFullscreen() {
+  return WatchBuilder(engine.fullScreen, (bool fullscreen) {
+    return buildCanvasImage(
+        srcX: 80,
+        srcY: 0,
+        srcWidth: 48,
+        srcHeight: 48,
+        scale: goldenRatio_0618,
+        action: engine.fullscreenToggle,
+    );
+  });
 }
 
 Widget buildButtonExit() {
   return onPressed(
     callback: core.actions.exitGame,
-    child: Tooltip(child: text("HOME"), message: 'EXIT'),
+    // hint: "Exit Game",
+    child: buildCanvasImage(srcX: 80, srcY: 48, srcWidth: 48, srcHeight: 48),
   );
 }
 
