@@ -25,11 +25,14 @@ Widget buildColumnSelectNodeType(){
     height: screen.height - 70,
     child: SingleChildScrollView(
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: editorGridTypesColumn1.map(buildButtonSelectNodeType).toList(),
           ),
           Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: editorGridTypesColumn2.map(buildButtonSelectNodeType).toList(),
           ),
         ],
