@@ -7,7 +7,7 @@ FEATURES
 [ ] Destroy GameObject Rock
 [ ] Destroy Node Tree
 [ ] Add Enemy Spawns to world
-[ ] Solid Water at edge of map
+[x] Solid Water at edge of map
 [ ] Particles
 [ ] Fix Strike Order should hit nearest object first
 [ ] Fix Water Flowing
