@@ -1,4 +1,5 @@
 
+import 'package:bleed_common/attack_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
@@ -137,16 +138,24 @@ Widget _buildButtonPants(int pantsType) {
 }
 
 Widget buildColumnPlayerWeapons() {
-   return Column(
-     children: [
-       container(child: text("Inventory")),
-       watch(player.weapons, (List<Weapon> weapons){
-          return Column(
-            children: weapons.map(_buildButtonEquipWeapon).toList(),
-          );
-       }),
-     ],
+   return Container(
+     color: brownLight,
+     padding: const EdgeInsets.all(6),
+     child: Column(
+       children: [
+         buildButtonEquipAttackType(AttackType.Shotgun),
+         buildButtonEquipAttackType(AttackType.Handgun),
+         buildButtonEquipAttackType(AttackType.Teleport),
+       ],
+     ),
    );
+}
+
+Widget buildButtonEquipAttackType(int weaponType){
+  return text(
+      AttackType.getName(weaponType),
+      onPressed: () => sendClientRequestPlayerEquipWeaponType(weaponType)
+  );
 }
 
 Widget _buildButtonEquipWeapon(Weapon weapon){

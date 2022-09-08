@@ -40,6 +40,7 @@ enum ClientRequest {
   GameObject,
   Node,
   Editor_Load_Scene,
+  Player_Equip_Weapon_Type,
 }
 
 const clientRequests = ClientRequest.values;

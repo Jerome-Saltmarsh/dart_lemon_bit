@@ -24,12 +24,21 @@ final treeAnimationLength = treeAnimation.length;
 
 var animationFrameJellyFish = 0;
 var animationFrameRateJellyFish = 0;
+var _animationFrameNext = 0;
+var _animationFrameTorchNext = 0;
 
 void updateAnimationFrame(){
   final frame = engine.frame;
-  animationFrame = frame ~/ 15;
+
+  if (_animationFrameNext-- <= 0){
+    _animationFrameNext = 3;
+    animationFrame++;
+  }
+  if (_animationFrameTorchNext-- <= 0){
+    _animationFrameTorchNext = 4;
+    animationFrameTorch++;
+  }
   _updateWaterFrame();
-  animationFrameTorch = frame ~/ 10;
   animationFrame8 = frame ~/ 8;
   animationFrameRain = (frame ~/ 4) % 10;
   animationFrameGrass = animationFrame % 6;

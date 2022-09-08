@@ -1,5 +1,6 @@
 import 'package:bleed_common/node_orientation.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
+import 'package:gamestream_flutter/isometric/watches/raining.dart';
 import 'package:lemon_math/library.dart';
 import 'package:bleed_common/node_type.dart';
 import 'package:bleed_common/wind.dart';
@@ -317,12 +318,15 @@ class NodeTreeTop extends Node {
 
   @override
   void handleRender() {
+
+    final f = raining.value ? animationFrame % 4 : -1;
+
     animationFrameTreePosition = treeAnimation[(rowMinusColumn + animationFrame) % treeAnimation.length] * wind;
     return render(
       dstX: dstX + (animationFrameTreePosition * 0.5),
       dstY: dstY,
       srcX: 1541,
-      srcY: 0,
+      srcY: 74.0 + (74 * f),
       srcWidth: 62.0,
       srcHeight: 74.0,
       anchorY: 0.5,

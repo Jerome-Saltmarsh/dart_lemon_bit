@@ -1,6 +1,19 @@
 
 DARK-AGE GAME DESIGN BY JEROME SALTMARSH
 
+Create 100's of different weapon types ranging from futuristic sci fi to cave man clubs.
+
+Allow the player to create whatever their imagination wants.
+
+TODO
+[ ] Particle Cannon
+[ ] Teleport Gun
+[ ] Portal Gun
+[ ] Can left and right attack at the same time.
+[ ] Animate weapon, should always point at mouse, create sounds as it moves
+[ ]
+
+
  When you strike a monster, it should be knocked back, like in super smash bros
 
  This will add weight

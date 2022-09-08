@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:bleed_common/ClientRequest.dart';
+import 'package:bleed_common/client_request.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_editor_dialog.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';

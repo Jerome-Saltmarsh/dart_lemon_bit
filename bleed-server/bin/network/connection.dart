@@ -398,6 +398,13 @@ class Connection {
         reply('scene: $scene');
         break;
 
+      case ClientRequest.Player_Equip_Weapon_Type:
+        final weaponTypeIndex = int.tryParse(arguments[1]);
+        if (weaponTypeIndex == null)
+          return errorInvalidArg("weapon type index is null");
+        player.attackType = weaponTypeIndex;
+        break;
+
       case ClientRequest.Editor_Load_Scene:
         if (arguments.length < 3) {
           errorInvalidArg('3 args expected');

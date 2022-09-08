@@ -254,6 +254,10 @@ void sendGameObjectRequestSetSpawnRadius(double value) {
   sendGameObjectRequest(GameObjectRequest.Set_Spawn_Radius, value);
 }
 
+void sendClientRequestPlayerEquipWeaponType(int weaponType){
+  sendClientRequest(ClientRequest.Player_Equip_Weapon_Type, weaponType);
+}
+
 void sendGameObjectRequestMoveToMouse() {
   sendGameObjectRequest(GameObjectRequest.Move_To_Mouse);
 }

@@ -84,6 +84,12 @@ class Player extends Character with ByteWriter {
         return performAttackTypeBlade();
       case AttackType.Crossbow:
         return performAttackTypeCrossBow();
+      case AttackType.Teleport:
+        return performAttackTypeTeleport();
+      case AttackType.Handgun:
+        return performAttackTypeHandgun();
+      case AttackType.Shotgun:
+        return performAttackTypeShotgun();
     }
   }
 
@@ -183,6 +189,19 @@ class Player extends Character with ByteWriter {
   void performAttackTypeCrossBow(){
     performDuration = 20;
     game.spawnProjectileArrow(this, damage: 1, range: 300, angle: mouseAngle);
+  }
+
+  void performAttackTypeTeleport(){
+    x = mouseGridX;
+    y = mouseGridY;
+  }
+
+  void performAttackTypeShotgun(){
+    game.fireShotgun(this, mouseAngle);
+  }
+
+  void performAttackTypeHandgun(){
+    game.fireHandgun(this, mouseAngle);
   }
 
   void commandRun(int direction) {
