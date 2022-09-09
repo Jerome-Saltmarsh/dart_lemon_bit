@@ -10,7 +10,7 @@ class AttackType {
    static const Handgun = 9;
    static const Weather = 10;
    static const Time = 11;
-
+   
    static String getName(int value){
        return const {
           Unarmed: "Unarmed",

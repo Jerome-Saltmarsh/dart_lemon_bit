@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_game_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_map_x.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_alive.dart';
+import 'package:gamestream_flutter/isometric/events/on_changed_player_attack_type.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_designed.dart';
 import 'package:gamestream_flutter/isometric/events/on_quests_in_progress_changed.dart';
 import 'package:lemon_watch/watch.dart';
@@ -38,7 +39,7 @@ class Player extends Vector3 {
   final mouseTargetHealth = Watch(0.0);
   final weaponDamage = Watch(0);
   final weaponType = Watch(WeaponType.Unarmed, onChanged: onChangedPlayerWeapon);
-  final attackType = Watch(AttackType.Unarmed);
+  final attackType = Watch(AttackType.Unarmed, onChanged: onChangedPlayerAttackType);
   final armourType = Watch(ArmourType.tunicPadded);
   final headType = Watch(HeadType.None);
   final pantsType = Watch(PantsType.white);

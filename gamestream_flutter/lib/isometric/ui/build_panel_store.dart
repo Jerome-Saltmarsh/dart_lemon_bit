@@ -137,51 +137,28 @@ Widget _buildButtonPants(int pantsType) {
   });
 }
 
-Widget buildColumnPlayerWeapons() {
-  return watch(player.attackType, (int playerAttackType) {
-    return Container(
-      color: brownLight,
-      padding: const EdgeInsets.all(6),
-      child: Column(
-        children: [
-          buildButtonEquipAttackType(AttackType.Shotgun, playerAttackType),
-          buildButtonEquipAttackType(AttackType.Handgun, playerAttackType),
-          buildButtonEquipAttackType(AttackType.Teleport, playerAttackType),
-          buildButtonEquipAttackType(AttackType.Node_Cannon, playerAttackType),
-          buildButtonEquipAttackType(AttackType.Weather, playerAttackType),
-          buildButtonEquipAttackType(AttackType.Time, playerAttackType),
-        ],
-      ),
-    );
-  });
-}
+Widget buildColumnPlayerWeapons(int activePlayerAttackType) =>
+  Container(
+    color: brownLight,
+    padding: const EdgeInsets.all(6),
+    child: Column(
+      children: [
+        buildButtonEquipAttackType(AttackType.Shotgun, activePlayerAttackType),
+        buildButtonEquipAttackType(AttackType.Handgun, activePlayerAttackType),
+        buildButtonEquipAttackType(AttackType.Teleport, activePlayerAttackType),
+        buildButtonEquipAttackType(AttackType.Node_Cannon, activePlayerAttackType),
+        buildButtonEquipAttackType(AttackType.Weather, activePlayerAttackType),
+        buildButtonEquipAttackType(AttackType.Time, activePlayerAttackType),
+        buildButtonEquipAttackType(AttackType.Blade, activePlayerAttackType),
+      ],
+    ),
+  );
 
 Widget buildButtonEquipAttackType(int weaponType, int activeWeaponType){
   return text(
       AttackType.getName(weaponType),
       onPressed: () => sendClientRequestPlayerEquipWeaponType(weaponType),
       bold: weaponType == activeWeaponType,
-  );
-}
-
-Widget _buildButtonEquipWeapon(Weapon weapon){
-  return MouseRegion(
-    onEnter: (event){
-      weaponInformation.value = weapon;
-    },
-    onExit: (event){
-      if (weaponInformation.value != weapon) return;
-      weaponInformation.value = null;
-    },
-    child: watch(player.weapon, (Weapon equippedWeapon){
-      return container(
-        color: weapon.uuid == equippedWeapon.uuid ? brownDark : brownLight,
-        child: text(WeaponType.getName(weapon.type)),
-        action: (){
-          sendClientRequestEquipWeapon(player.weapons.value.indexOf(weapon));
-        },
-      );
-    }),
   );
 }
 
