@@ -138,26 +138,29 @@ Widget _buildButtonPants(int pantsType) {
 }
 
 Widget buildColumnPlayerWeapons() {
-   return Container(
-     color: brownLight,
-     padding: const EdgeInsets.all(6),
-     child: Column(
-       children: [
-         buildButtonEquipAttackType(AttackType.Shotgun),
-         buildButtonEquipAttackType(AttackType.Handgun),
-         buildButtonEquipAttackType(AttackType.Teleport),
-         buildButtonEquipAttackType(AttackType.Node_Cannon),
-         buildButtonEquipAttackType(AttackType.Weather),
-         buildButtonEquipAttackType(AttackType.Time),
-       ],
-     ),
-   );
+  return watch(player.attackType, (int playerAttackType) {
+    return Container(
+      color: brownLight,
+      padding: const EdgeInsets.all(6),
+      child: Column(
+        children: [
+          buildButtonEquipAttackType(AttackType.Shotgun, playerAttackType),
+          buildButtonEquipAttackType(AttackType.Handgun, playerAttackType),
+          buildButtonEquipAttackType(AttackType.Teleport, playerAttackType),
+          buildButtonEquipAttackType(AttackType.Node_Cannon, playerAttackType),
+          buildButtonEquipAttackType(AttackType.Weather, playerAttackType),
+          buildButtonEquipAttackType(AttackType.Time, playerAttackType),
+        ],
+      ),
+    );
+  });
 }
 
-Widget buildButtonEquipAttackType(int weaponType){
+Widget buildButtonEquipAttackType(int weaponType, int activeWeaponType){
   return text(
       AttackType.getName(weaponType),
-      onPressed: () => sendClientRequestPlayerEquipWeaponType(weaponType)
+      onPressed: () => sendClientRequestPlayerEquipWeaponType(weaponType),
+      bold: weaponType == activeWeaponType,
   );
 }
 

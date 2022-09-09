@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_button_toggle_inventory.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_npc_talk.dart';
@@ -20,6 +21,14 @@ Widget buildStackPlay() {
       Positioned(top: 50, right: 0, child: buildWatchInventoryVisible()),
       watch(player.attackType, (t) {
         return text(AttackType.getName(player.attackType.value));
+      }),
+      watch(player.attackType, (int attackType) {
+        switch (attackType) {
+          case AttackType.Weather:
+            return buildControlsWeather();
+          default:
+            return const SizedBox();
+        }
       }),
       Positioned(top: 50, left: 0, child: buildPanelStore()),
       Positioned(top: 0, left: 0, child: Container(
