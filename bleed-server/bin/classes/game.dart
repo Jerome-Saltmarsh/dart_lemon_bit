@@ -896,6 +896,19 @@ extension GameFunctions on Game {
     );
   }
 
+  void fireAssaultRifle(Character src, double angle) {
+    spawnProjectile(
+      src: src,
+      accuracy: 0,
+      angle: angle,
+      speed: 8.0,
+      range: 300,
+      projectileType: ProjectileType.Bullet,
+      damage: 5,
+    );
+    dispatch(GameEventType.Handgun_Fired, src.x, src.y, src.z, angle);
+  }
+
   void fireHandgun(Character src, double angle) {
     spawnProjectile(
       src: src,

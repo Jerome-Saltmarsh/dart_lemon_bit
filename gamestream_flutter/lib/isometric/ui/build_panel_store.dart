@@ -150,6 +150,7 @@ Widget buildColumnPlayerWeapons(int activePlayerAttackType) =>
         buildButtonEquipAttackType(AttackType.Weather, activePlayerAttackType),
         buildButtonEquipAttackType(AttackType.Time, activePlayerAttackType),
         buildButtonEquipAttackType(AttackType.Blade, activePlayerAttackType),
+        buildButtonEquipAttackType(AttackType.Assault_Rifle, activePlayerAttackType),
       ],
     ),
   );
