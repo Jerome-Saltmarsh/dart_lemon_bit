@@ -155,10 +155,13 @@ Widget buildColumnPlayerWeapons(int activePlayerAttackType) =>
   );
 
 Widget buildButtonEquipAttackType(int weaponType, int activeWeaponType){
-  return text(
-      AttackType.getName(weaponType),
-      onPressed: () => sendClientRequestPlayerEquipWeaponType(weaponType),
-      bold: weaponType == activeWeaponType,
+  return onPressed(
+    action: () => sendClientRequestPlayerEquipAttackType1(weaponType),
+    onRightClick: () => sendClientRequestPlayerEquipAttackType2(weaponType),
+    child: text(
+        AttackType.getName(weaponType),
+        bold: weaponType == activeWeaponType,
+    ),
   );
 }
 
