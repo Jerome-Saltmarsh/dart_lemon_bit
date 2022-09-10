@@ -20,48 +20,14 @@ void readPlayerInput() {
   }
 
   if (playModeEdit) {
-    if (keyPressed(LogicalKeyboardKey.space)) {
-      engine.panCamera();
-    }
-    if (keyPressed(LogicalKeyboardKey.delete)) {
-      edit.delete();
-    }
-    if (keyPressed(LogicalKeyboardKey.keyR)) {
-      edit.selectedNode.value = edit.selectedNode.value;
-    }
-    if (engine.mouseRightDown.value){
-      setPlayModePlay();
-    }
-    if (_getKeyDirection() != null) {
-       setPlayModePlay();
-    }
-
-    // const speed = 10;
-    // const paddingX = 200;
-    // const paddingY = 200;
-
-    // if (mouseWorldX < screen.left + paddingX){
-    //    engine.camera.x -= speed;
-    // }
-    // if (mouseWorldX > screen.right - paddingX){
-    //   engine.camera.x += speed;
-    // }
-    // if (mouseWorldY < screen.top + paddingY){
-    //   engine.camera.y -= speed;
-    // }
-    // if (mouseWorldY > screen.bottom - paddingY){
-    //   engine.camera.y += speed;
-    // }
-
-    return;
+    return readPlayerInputEdit();
   }
 
   // PLAY MODE
 
   if (sceneMetaDataMapEditable.value) {
     if (keyPressed(LogicalKeyboardKey.space)) {
-      setPlayModeEdit();
-      return;
+      return setPlayModeEdit();
     }
   }
 
@@ -72,7 +38,11 @@ void readPlayerInput() {
   if (messageBoxVisible.value) return;
 
   if (engine.mouseLeftDown.value) {
-    setCharacterActionPerform();
+    return setCharacterActionPerform1();
+  }
+
+  if (engine.mouseRightDown.value){
+    return setCharacterActionPerform2();
   }
 
   final direction = _getKeyDirection();
@@ -82,6 +52,25 @@ void readPlayerInput() {
       setCharacterActionRun();
     }
   }
+}
+
+void readPlayerInputEdit() {
+  if (keyPressed(LogicalKeyboardKey.space)) {
+    engine.panCamera();
+  }
+  if (keyPressed(LogicalKeyboardKey.delete)) {
+    edit.delete();
+  }
+  if (keyPressed(LogicalKeyboardKey.keyR)) {
+    edit.selectedNode.value = edit.selectedNode.value;
+  }
+  if (engine.mouseRightDown.value){
+    setPlayModePlay();
+  }
+  if (_getKeyDirection() != null) {
+     setPlayModePlay();
+  }
+  return;
 }
 
 int? _getKeyDirection() {

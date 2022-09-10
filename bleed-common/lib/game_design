@@ -6,12 +6,14 @@ Create 100's of different weapon types ranging from futuristic sci fi to cave ma
 Allow the player to create whatever their imagination wants.
 
 TODO
+[ ] Right click inventory item to equip right click
+[ ] Right click uses secondary attack
 [ ] Particle Cannon
 [ ] Teleport Gun
 [ ] Portal Gun
 [ ] Can left and right attack at the same time.
 [ ] Animate weapon, should always point at mouse, create sounds as it moves
-[ ]
+
 
 
  When you strike a monster, it should be knocked back, like in super smash bros

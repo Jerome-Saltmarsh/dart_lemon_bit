@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/isometric_web/on_mouse_left_clicked.dart';
-import 'package:gamestream_flutter/isometric_web/on_mouse_right_clicked.dart';
+import 'package:gamestream_flutter/isometric_web/on_mouse_clicked_left.dart';
+import 'package:gamestream_flutter/isometric_web/on_mouse_clicked_right.dart';
 import 'package:lemon_engine/callbacks.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -10,8 +10,8 @@ final keys = KeyMap();
 
 void isometricWebControlsRegister(){
   print("isometricWebControlsRegister()");
-  onLeftClicked = onMouseLeftClicked;
-  engine.callbacks.onRightClicked = onMouseRightClicked;
+  onLeftClicked = onMouseClickedLeft;
+  engine.callbacks.onRightClicked = onMouseClickedRight;
   RawKeyboard.instance.addListener(onKeyboardEvent);
 }
 

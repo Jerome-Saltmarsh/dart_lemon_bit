@@ -402,7 +402,7 @@ class Connection {
         final weaponTypeIndex = int.tryParse(arguments[1]);
         if (weaponTypeIndex == null)
           return errorInvalidArg("weapon type index is null");
-        player.attackType = weaponTypeIndex;
+        player.attackType1 = weaponTypeIndex;
         break;
 
       case ClientRequest.Editor_Load_Scene:
@@ -803,11 +803,9 @@ class Connection {
           player.setCharacterStateIdle();
         }
         break;
-      case CharacterAction.Perform:
+      case CharacterAction.Perform1:
         final aimTarget = player.aimTarget;
         player.target = aimTarget;
-
-        /// TODO belongs inside game update
         if (aimTarget is Npc && onSameTeam(player, aimTarget)){
           if (withinRadius(player, aimTarget, 100)){
             if (!aimTarget.deadOrBusy){
@@ -815,17 +813,15 @@ class Connection {
             }
             player.face(aimTarget);
             aimTarget.onInteractedWith?.call(player);
-            break;
-          } else {
-            // player.tar
           }
           return;
         }
-
         if (player.interactingWithNpc){
           return player.endInteraction();
         }
-        return player.performPrimaryAttack();
+        return player.performAttackType1();
+      case CharacterAction.Perform2:
+        return player.performAttackType2();
       case CharacterAction.Run:
         return player.commandRun(args[6]);
     }

@@ -53,7 +53,8 @@ class Player extends Character with ByteWriter {
   Game game;
   Collider? aimTarget; // the currently highlighted character
   Account? account;
-  var attackType = AttackType.Blade;
+  var attackType1 = AttackType.Blade;
+  var attackType2 = AttackType.Handgun;
 
   var questZombieKillsRemaining = 2;
 
@@ -74,7 +75,15 @@ class Player extends Character with ByteWriter {
   var mapX = 0;
   var mapY = 0;
 
-  void performPrimaryAttack() {
+  void performAttackType1() {
+    performAttackType(attackType1);
+  }
+
+  void performAttackType2() {
+     performAttackType(attackType2);
+  }
+
+  void performAttackType(int attackType){
     assert (alive);
     if (busy) return;
     if (performDuration > 0) return;
@@ -445,7 +454,7 @@ extension PlayerProperties on Player {
     writeInt(z);
     writeInt(health); // 2
     writeInt(maxHealth); // 2
-    writeByte(attackType); // 2
+    writeByte(attackType1); // 2
     writeByte(equippedWeapon.type);
     writeByte(equippedWeapon.damage);
     writeByte(equippedArmour); // armour
