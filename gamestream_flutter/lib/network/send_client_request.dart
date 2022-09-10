@@ -277,9 +277,10 @@ Future sendClientRequestUpdate() async {
   const updateIndex = 0;
   updateBuffer[0] = updateIndex;
   updateBuffer[1] = characterAction;
-  writeNumberToByteArray(number: mouseWorldX, list: updateBuffer, index: 2);
-  writeNumberToByteArray(number: mouseWorldY, list: updateBuffer, index: 4);
-  updateBuffer[6] = characterDirection;
+  updateBuffer[2] = characterDirection;
+  writeNumberToByteArray(number: mouseWorldX, list: updateBuffer, index: 3);
+  writeNumberToByteArray(number: mouseWorldY, list: updateBuffer, index: 5);
+
   writeNumberToByteArray(number: screen.left, list: updateBuffer, index: 7);
   writeNumberToByteArray(number: screen.top, list: updateBuffer, index: 9);
   writeNumberToByteArray(number: screen.right, list: updateBuffer, index: 11);

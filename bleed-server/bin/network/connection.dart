@@ -785,8 +785,10 @@ class Connection {
     if (!player.sceneDownloaded) return;
 
     final game = player.game;
-    final mouseX = readNumberFromByteArray(args, index: 2).toDouble();
-    final mouseY = readNumberFromByteArray(args, index: 4).toDouble();
+    final action = args[1];
+    final direction = args[2];
+    final mouseX = readNumberFromByteArray(args, index: 3).toDouble();
+    final mouseY = readNumberFromByteArray(args, index: 5).toDouble();
     player.mouse.x = mouseX;
     player.mouse.y = mouseY;
     player.screenLeft = readNumberFromByteArray(args, index: 7).toDouble();
@@ -803,7 +805,7 @@ class Connection {
         minDistance: 35,
     );
 
-    switch (args[1]) {
+    switch (action) {
       case CharacterAction.Idle:
         if (player.target != null) break;
         if (player.target == null){
@@ -830,7 +832,7 @@ class Connection {
       case CharacterAction.Perform2:
         return player.performAttackType2();
       case CharacterAction.Run:
-        return player.commandRun(args[6]);
+        return player.commandRun(direction);
     }
   }
 
