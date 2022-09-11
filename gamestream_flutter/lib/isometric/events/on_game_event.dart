@@ -1,9 +1,9 @@
-import 'package:bleed_common/attack_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/events/on_character_hurt.dart';
+import 'package:gamestream_flutter/isometric/events/on_game_event_attack_performed.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
@@ -13,28 +13,14 @@ import 'package:gamestream_flutter/isometric/watches/raining.dart';
 import 'package:lemon_math/library.dart';
 
 import 'on_character_death.dart';
+import 'on_game_event_footstep.dart';
 
 void onGameEvent(int type, double x, double y, double z, double angle) {
   switch (type) {
     case GameEventType.Attack_Performed:
-      final attackType = serverResponseReader.readByte();
-      switch (attackType){
-        case AttackType.Handgun:
-          audioSingleHandgunFired.playXYZ(x, y, z);
-          const distance = 20.0;
-          final xForward = getAdjacent(angle, distance);
-          final yForward = getOpposite(angle, distance);
-          spawnParticleShell(x: x + xForward, y: y + yForward);
-          spawnParticleHandgunFiring(x: x + xForward, y: y + yForward, z: z + 15, angle: angle);
-          break;
-        case AttackType.Shotgun:
-          audioSingleShotgunShot.playXYZ(x, y, z);
-          spawnParticleShell(x: x, y: y);
-          break;
-        default:
-          return;
-      }
-      return;
+      return onGameEventAttackPerformed(x, y, z, angle);
+    case GameEventType.Footstep:
+      return onGameEventFootstep(x, y, z);
     case GameEventType.Player_Spawn_Started:
       return audioSingleTeleport.playXYZ(x, y, z);
     case GameEventType.Player_Spawned:
@@ -51,47 +37,6 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       for (var i = 0; i < 3; i++){
         spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: randomAngle());
       }
-      break;
-      // return spawnParticleDustCloud(x: x, y: y, z: z);
-    case GameEventType.Footstep:
-      final tile = getNodeXYZ(x, y, z - 2);
-      if (
-        raining.value && (
-          getNodeXYZ(x, y, z).type == NodeType.Rain_Landing ||
-          getNodeXYZ(x, y, z + 24).type == NodeType.Rain_Landing
-        )
-      ){
-          audioSingleFootstepMud6.playXYZ(x, y, z);
-          final amount = rain.value == Rain.Heavy ? 3 : 2;
-          for (var i = 0; i < amount; i++){
-            spawnParticleWaterDrop(x: x, y: y, z: z);
-          }
-      }
-      if (tile.isStone) {
-        return audioSingleFootstepStone.playXYZ(x, y, z);
-      }
-      if (tile.isWood) {
-        return audioSingleFootstepWood.playXYZ(x, y, z);
-      }
-      if (randomBool()){
-        return audioSingleFootstepGrass8.playXYZ(x, y, z);
-      }
-      return audioSingleFootstepGrass7.playXYZ(x, y, z);
-
-    case GameEventType.Handgun_Fired:
-      audioSingleHandgunFired.playXYZ(x, y, z);
-      const distance = 20.0;
-      final xForward = getAdjacent(angle, distance);
-      final yForward = getOpposite(angle, distance);
-      spawnParticleShell(x: x + xForward, y: y + yForward);
-      spawnParticleHandgunFiring(x: x + xForward, y: y + yForward, z: z + 15, angle: angle);
-      break;
-    case GameEventType.SniperRifle_Fired:
-      spawnParticleShell(x: x, y: y);
-      break;
-    case GameEventType.MachineGun_Fired:
-      audio.assaultRifleShot(x, y);
-      spawnParticleShell(x: x, y: y);
       break;
     case GameEventType.Player_Hit:
       if (randomBool()) {

@@ -907,7 +907,7 @@ extension GameFunctions on Game {
       projectileType: ProjectileType.Bullet,
       damage: 5,
     );
-    dispatch(GameEventType.Handgun_Fired, src.x, src.y, src.z, angle);
+    dispatchAttackPerformed(AttackType.Assault_Rifle, src.x, src.y, src.z, angle);
   }
 
   void fireHandgun(Character src, double angle) {
@@ -920,7 +920,6 @@ extension GameFunctions on Game {
       projectileType: ProjectileType.Bullet,
       damage: 5,
     );
-    // dispatch(GameEventType.Handgun_Fired, src.x, src.y, src.z, angle);
     dispatchAttackPerformed(AttackType.Handgun, src.x, src.y, src.z, angle);
   }
 
@@ -1203,11 +1202,6 @@ extension GameFunctions on Game {
           dispatchV3(GameEventType.Clip_Empty, character);
           return;
         }
-        dispatchV3(
-          GameEventType.Handgun_Fired,
-          character,
-          angle: character.faceAngle,
-        );
         return;
       }
       if (stateDuration == 2) {
