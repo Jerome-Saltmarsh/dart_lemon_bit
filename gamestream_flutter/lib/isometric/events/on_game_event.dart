@@ -8,8 +8,6 @@ import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_de
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
-import 'package:gamestream_flutter/isometric/watches/rain.dart';
-import 'package:gamestream_flutter/isometric/watches/raining.dart';
 import 'package:lemon_math/library.dart';
 
 import 'on_character_death.dart';
@@ -29,15 +27,9 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       }
       return;
     case GameEventType.Splash:
-      for (var i = 0; i < 8; i++){
-        spawnParticleWaterDrop(x: x, y: y, z: z);
-      }
-      return audioSingleSplash.playXYZ(x, y, z);
+      return onGameEventSplash(x, y, z);
     case GameEventType.Spawn_Dust_Cloud:
-      for (var i = 0; i < 3; i++){
-        spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: randomAngle());
-      }
-      break;
+      return onGameEventSpawnDustCloud(x, y, z);
     case GameEventType.Player_Hit:
       if (randomBool()) {
         audio.humanHurt(x, y);
@@ -45,8 +37,6 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       break;
     case GameEventType.Zombie_Target_Acquired:
       audio.zombieTargetAcquired(x, y);
-      break;
-    case GameEventType.Bullet_Hole:
       break;
     case GameEventType.Character_Changing:
       audioSingleChanging.playXYZ(x, y, z);
@@ -59,16 +49,6 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       break;
     case GameEventType.Player_Death:
       // actions.emitPixelExplosion(x, y);
-      break;
-    case GameEventType.Explosion:
-      spawnExplosion(x, y);
-      break;
-
-    case GameEventType.FreezeCircle:
-      freezeCircle(
-        x: x,
-        y: y,
-      );
       break;
     case GameEventType.Teleported:
       audio.magicalSwoosh(x, y);
@@ -93,93 +73,9 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
     case GameEventType.Arrow_Fired:
       audio.arrowFlyingPast6(x, y);
       break;
-    case GameEventType.Clip_Empty:
-      audio.dryShot2(x, y);
-      return;
-    case GameEventType.Reloaded:
-      audio.magIn2(x, y);
-      return;
-    case GameEventType.Use_MedKit:
-      audio.medkit(x, y);
-      break;
-    case GameEventType.Throw_Grenade:
-      audio.playAudioThrowGrenade(x, y);
-      break;
-    case GameEventType.Item_Acquired:
-      audio.itemAcquired(x, y);
-      break;
-    case GameEventType.Knife_Strike:
-      audio.playAudioKnifeStrike(x, y);
-      break;
-    case GameEventType.Health_Acquired:
-      audio.playAudioHeal(x, y);
-      break;
     case GameEventType.Crate_Breaking:
       audio.crateBreaking(x, y);
       break;
-    case GameEventType.Ammo_Acquired:
-      audio.gunPickup(x, y);
-      break;
-    case GameEventType.Credits_Acquired:
-      audio.collectStar4(x, y);
-      break;
-
-    case GameEventType.Object_Destroyed_Pot:
-      audio.potBreaking(x, y);
-      break;
-
-    case GameEventType.Object_Destroyed_Rock:
-      for (var i = 0; i < 8; i++) {
-        spawnParticleRockShard(x, y);
-      }
-      audio.rockBreaking(x, y);
-      break;
-
-    case GameEventType.Object_Destroyed_Tree:
-      for (var i = 0; i < 8; i++) {
-        spawnParticleTreeShard(x, y, z);
-      }
-      break;
-
-    case GameEventType.Object_Destroyed_Chest:
-      for (var i = 0; i < 8; i++) {
-        spawnParticleTreeShard(x, y, z);
-      }
-      audio.crateDestroyed(x, y);
-      break;
-
-    case GameEventType.Material_Struck_Wood:
-      for (var i = 0; i < 8; i++) {
-        // spawnParticleTreeShard(x, y, z);
-      }
-      break;
-
-    case GameEventType.Material_Struck_Rock:
-      for (var i = 0; i < 8; i++) {
-        spawnParticleRockShard(x, y);
-      }
-      audio.materialStruckRock(x, y);
-      break;
-
-    case GameEventType.Material_Struck_Flesh:
-      audioSingleBloodyPunches.playXYZ(x, y, z);
-      final total = randomInt(2, 5);
-      for (var i = 0; i < total; i++) {
-        spawnParticleBlood(
-          x: x,
-          y: y,
-          z: z,
-          angle: angle + giveOrTake(0.2),
-          speed: 4.0 + giveOrTake(2),
-          zv: 3,
-        );
-      }
-      break;
-
-    case GameEventType.Material_Struck_Metal:
-      audio.materialStruckMetal(x, y);
-      break;
-
     case GameEventType.Blue_Orb_Deactivated:
       for (var i = 0; i < 8; i++) {
         spawnParticleOrbShard(
@@ -202,45 +98,61 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       break;
 
     case GameEventType.Sword_Slash:
-      spawnParticleSlash(x: x, y: y, z: z, angle: angle);
-      audioSingleSciFiBlaster8.playXYZ(x, y, z);
-      audioSingleSwingSword.playXYZ(x, y, z);
-      for (var i = 0; i < 3; i++) {
-        spawnParticleBubble(x: x, y: y, z: z, angle: angle + giveOrTake(piQuarter), speed: 3 + giveOrTake(2));
-      }
-      final node = getNodeXYZ(x, y, z);
-      if (node.type == NodeType.Grass_Long) {
-        audioSingleGrassCut.playXYZ(x, y, z);
-        spawnParticleBlockGrass(x, y, z);
-      }
-      if (node.type == NodeType.Tree_Bottom) {
-        audioSingleMaterialStruckWood.playXYZ(x, y, z);
-        spawnParticleBlockWood(x, y, z);
-      }
-      if (node.type == NodeType.Torch) {
-        audioSingleMaterialStruckWood.playXYZ(x, y, z);
-        spawnParticleBlockWood(x, y, z);
-      }
-      if (node.type == NodeType.Wood_2) {
-        audioSingleMaterialStruckWood.playXYZ(x, y, z);
-        spawnParticleBlockWood(x, y, z);
-      }
-      if (node.type == NodeType.Wooden_Plank) {
-        audioSingleMaterialStruckWood.playXYZ(x, y, z);
-        spawnParticleBlockWood(x, y, z);
-      }
-      if (node.type == NodeType.Boulder) {
-        audioSingleMaterialStruckStone.playXYZ(x, y, z);
-        spawnParticleBlockBrick(x, y, z);
-      }
-      if (node.type == NodeType.Brick_2) {
-        audioSingleMaterialStruckStone.playXYZ(x, y, z);
-        spawnParticleBlockBrick(x, y, z);
-      }
-      break;
+      return onGameEventSwordSlash(x, y, z, angle);
+
     case GameEventType.Game_Object_Destroyed:
       final type = serverResponseReader.readByte();
-      onGameEventGameObjectDestroyed(x, y, z, angle, type);
-      break;
+      return onGameEventGameObjectDestroyed(x, y, z, angle, type);
   }
+}
+
+void onGameEventSwordSlash(double x, double y, double z, double angle) {
+  spawnParticleSlash(x: x, y: y, z: z, angle: angle);
+  audioSingleSciFiBlaster8.playXYZ(x, y, z);
+  audioSingleSwingSword.playXYZ(x, y, z);
+  for (var i = 0; i < 3; i++) {
+    spawnParticleBubble(x: x, y: y, z: z, angle: angle + giveOrTake(piQuarter), speed: 3 + giveOrTake(2));
+  }
+  final node = getNodeXYZ(x, y, z);
+  if (node.type == NodeType.Grass_Long) {
+    audioSingleGrassCut.playXYZ(x, y, z);
+    spawnParticleBlockGrass(x, y, z);
+  }
+  if (node.type == NodeType.Tree_Bottom) {
+    audioSingleMaterialStruckWood.playXYZ(x, y, z);
+    spawnParticleBlockWood(x, y, z);
+  }
+  if (node.type == NodeType.Torch) {
+    audioSingleMaterialStruckWood.playXYZ(x, y, z);
+    spawnParticleBlockWood(x, y, z);
+  }
+  if (node.type == NodeType.Wood_2) {
+    audioSingleMaterialStruckWood.playXYZ(x, y, z);
+    spawnParticleBlockWood(x, y, z);
+  }
+  if (node.type == NodeType.Wooden_Plank) {
+    audioSingleMaterialStruckWood.playXYZ(x, y, z);
+    spawnParticleBlockWood(x, y, z);
+  }
+  if (node.type == NodeType.Boulder) {
+    audioSingleMaterialStruckStone.playXYZ(x, y, z);
+    spawnParticleBlockBrick(x, y, z);
+  }
+  if (node.type == NodeType.Brick_2) {
+    audioSingleMaterialStruckStone.playXYZ(x, y, z);
+    spawnParticleBlockBrick(x, y, z);
+  }
+}
+
+void onGameEventSpawnDustCloud(double x, double y, double z) {
+  for (var i = 0; i < 3; i++){
+    spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: randomAngle());
+  }
+}
+
+void onGameEventSplash(double x, double y, double z) {
+  for (var i = 0; i < 8; i++){
+    spawnParticleWaterDrop(x: x, y: y, z: z);
+  }
+  return audioSingleSplash.playXYZ(x, y, z);
 }

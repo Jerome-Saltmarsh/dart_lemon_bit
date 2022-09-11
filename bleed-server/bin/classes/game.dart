@@ -426,10 +426,6 @@ extension GameFunctions on Game {
     assert(projectile.active);
     projectile.active = false;
     switch (projectile.type) {
-      case ProjectileType.Bullet:
-        dispatch(GameEventType.Bullet_Hole, projectile.x, projectile.y,
-            projectile.z);
-        break;
       case ProjectileType.Orb:
         dispatch(GameEventType.Blue_Orb_Deactivated, projectile.x, projectile.y,
             projectile.z);
@@ -459,11 +455,13 @@ extension GameFunctions on Game {
       if (!projectile.active) continue;
       if (projectile.collideWithEnvironment) continue;
       if (scene.getCollisionAt(projectile.x, projectile.y, projectile.z)) {
-        var type =
-            scene.getNodeXYZ(projectile.x, projectile.y, projectile.z).type;
+        var type = scene.getNodeXYZ(
+            projectile.x,
+            projectile.y,
+            projectile.z
+        ).type;
         if (type == NodeType.Tree_Bottom) {
-          dispatch(GameEventType.Material_Struck_Wood, projectile.x,
-              projectile.y, projectile.z);
+
         }
         deactivateProjectile(projectile);
       }
@@ -1199,7 +1197,7 @@ extension GameFunctions on Game {
     if (weaponType == WeaponType.Handgun) {
       if (stateDuration == 1) {
         if (character.equippedIsEmpty) {
-          dispatchV3(GameEventType.Clip_Empty, character);
+          // dispatchV3(GameEventType.Clip_Empty, character);
           return;
         }
         return;
@@ -1220,7 +1218,7 @@ extension GameFunctions on Game {
     if (character.equippedTypeIsShotgun) {
       if (stateDuration == 1) {
         if (character.equippedIsEmpty) {
-          dispatchV3(GameEventType.Ammo_Acquired, character);
+          // dispatchV3(GameEventType.Ammo_Acquired, character);
           return;
         }
         // dispatchV3(GameEventType.Shotgun_Fired, character);
