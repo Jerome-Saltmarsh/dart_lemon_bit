@@ -28,11 +28,11 @@ Widget buildPageWebsite({double padding = 6}) {
         left: padding,
         child: buildButtonRegion(),
       ),
-      Positioned(
-        bottom: padding,
-        left: padding,
-        child: buildMenuDebug() ?? const SizedBox(),
-      ),
+      // Positioned(
+      //   bottom: padding,
+      //   left: padding,
+      //   child: buildMenuDebug() ?? const SizedBox(),
+      // ),
       Positioned(
         bottom: padding,
         right: padding,

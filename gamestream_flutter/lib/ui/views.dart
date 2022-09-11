@@ -97,28 +97,28 @@ Widget buildDialogChangeRegion() {
 }
 
 
-Widget? buildMenuDebug() {
-  return dev(onHover((bool hovering){
-      return Container(
-        width: style.buttonWidth,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (hovering) ...[
-              buttons.showDialogSubscribed,
-              buttons.loginTestUser01,
-              buttons.loginTestUser02,
-              buttons.loginTestUser03,
-              buttons.spawnRandomUser,
-              button("Show Dialog - Welcome", website.actions.showDialogWelcome),
-            ],
-            border(child: "Debug")
-          ],
-        ),
-      );
-    }
-    ));
-}
+// Widget? buildMenuDebug() {
+//   return dev(onHover((bool hovering){
+//       return Container(
+//         width: style.buttonWidth,
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             if (hovering) ...[
+//               buttons.showDialogSubscribed,
+//               buttons.loginTestUser01,
+//               buttons.loginTestUser02,
+//               buttons.loginTestUser03,
+//               buttons.spawnRandomUser,
+//               button("Show Dialog - Welcome", website.actions.showDialogWelcome),
+//             ],
+//             border(child: "Debug")
+//           ],
+//         ),
+//       );
+//     }
+//     ));
+// }
 
 final _views = _Views();
 final _buildView = _BuildView();
