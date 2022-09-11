@@ -1,5 +1,5 @@
+import 'package:bleed_common/attack_type.dart';
 import 'package:bleed_common/library.dart';
-import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
@@ -16,6 +16,21 @@ import 'on_character_death.dart';
 
 void onGameEvent(int type, double x, double y, double z, double angle) {
   switch (type) {
+    case GameEventType.Attack_Performed:
+      final attackType = serverResponseReader.readByte();
+      switch (attackType){
+        case AttackType.Handgun:
+          audioSingleHandgunFired.playXYZ(x, y, z);
+          const distance = 20.0;
+          final xForward = getAdjacent(angle, distance);
+          final yForward = getOpposite(angle, distance);
+          spawnParticleShell(x: x + xForward, y: y + yForward);
+          spawnParticleHandgunFiring(x: x + xForward, y: y + yForward, z: z + 15, angle: angle);
+          break;
+        default:
+          return;
+      }
+      return;
     case GameEventType.Player_Spawn_Started:
       return audioSingleTeleport.playXYZ(x, y, z);
     case GameEventType.Player_Spawned:

@@ -5,7 +5,6 @@ import 'package:bleed_common/gameobject_request.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_request.dart';
 import 'package:bleed_common/node_size.dart';
-import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/isometric_web/read_player_input.dart';
 import 'package:gamestream_flutter/network/instance/websocket.dart';
 import 'package:lemon_engine/engine.dart';
@@ -289,7 +288,6 @@ Future sendClientRequestUpdate() async {
   writeNumberToByteArray(number: screen.bottom, list: updateBuffer, index: 14);
 
   webSocket.sink.add(updateBuffer);
-  characterAction = CharacterAction.Idle;
 }
 
 void sendClientRequestTogglePaths() {

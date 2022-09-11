@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
+import '../common/attack_type.dart';
 import '../common/library.dart';
 import '../common/spawn_type.dart';
 import '../common/teams.dart';
@@ -919,7 +920,8 @@ extension GameFunctions on Game {
       projectileType: ProjectileType.Bullet,
       damage: 5,
     );
-    dispatch(GameEventType.Handgun_Fired, src.x, src.y, src.z, angle);
+    // dispatch(GameEventType.Handgun_Fired, src.x, src.y, src.z, angle);
+    dispatchAttackPerformed(AttackType.Handgun, src.x, src.y, src.z, angle);
   }
 
   void fireShotgun(Character src, double angle) {
@@ -1059,6 +1061,19 @@ extension GameFunctions on Game {
   void dispatch(int type, double x, double y, double z, [double angle = 0]) {
     for (final player in players) {
       player.writeGameEvent(type: type, x: x, y: y, z: z, angle: angle);
+    }
+  }
+
+  void dispatchAttackPerformed(int attackType, double x, double y, double z, double angle){
+    for (final player in players) {
+      player.writeGameEvent(
+          type: GameEventType.Attack_Performed,
+          x: x,
+          y: y,
+          z: z,
+          angle: angle,
+      );
+      player.writeByte(attackType);
     }
   }
 

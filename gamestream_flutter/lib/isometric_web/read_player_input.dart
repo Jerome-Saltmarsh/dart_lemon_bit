@@ -1,6 +1,5 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/isometric/character_controller.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/message_box.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
@@ -36,22 +35,6 @@ void readPlayerInput() {
   }
 
   if (messageBoxVisible.value) return;
-
-  // if (engine.mouseLeftDown.value) {
-  //   return setCharacterActionPerform1();
-  // }
-  //
-  // if (engine.mouseRightDown.value){
-  //   return setCharacterActionPerform2();
-  // }
-  //
-  // final direction = getKeyDirection();
-  // if (direction != null) {
-  //   characterDirection = direction;
-  //   if (!keyPressed(LogicalKeyboardKey.shiftLeft)){
-  //     setCharacterActionRun();
-  //   }
-  // }
 }
 
 void readPlayerInputEdit() {
