@@ -14,35 +14,39 @@ Widget buildColumnSelectedNode(){
     color: brownDark,
     child: Column(
       children: [
-        watch(edit.selectedNode, (Node t) => text(NodeType.getName(t.type))),
+        Container(
+          height: 70,
+            alignment: Alignment.center,
+            child: watch(edit.selectedNode, (Node t) => text(NodeType.getName(t.type), align: TextAlign.center))),
         Container(
             height: 72,
             width: 72,
             alignment: Alignment.center,
             child: watch(edit.selectedNode, (Node t) => buildIconNodeType(t.type))),
+        height4,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            text("<", onPressed: () => edit.row.value--),
+            Tooltip(child: text("<", onPressed: () => edit.row.value--), message: "Arrow Up",),
             watch(edit.row, (int row) => text("X: $row")),
-            text(">", onPressed: () => edit.row.value++),
+            Tooltip(child: text(">", onPressed: () => edit.row.value++), message: "Arrow Down",),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            text("<", onPressed: () => edit.column.value--),
+            Tooltip(child: text("<", onPressed: () => edit.column.value--), message: "Arrow Right",),
             watch(edit.column, (int column) => text("Y: $column")),
-            text(">", onPressed: () => edit.column.value++),
+            Tooltip(child: text(">", onPressed: () => edit.column.value++), message: "Arrow Left",),
           ],
 
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            text("<", onPressed: () => edit.z.value--),
+            Tooltip(child: text("<", onPressed: () => edit.z.value--), message: "Shift + Arrow Down",),
             watch(edit.z, (int z) => text("Z: $z")),
-            text(">", onPressed: () => edit.z.value++),
+            Tooltip(child: text(">", onPressed: () => edit.z.value++), message: "Shift + Arrow Up",),
           ],
         ),
       ],

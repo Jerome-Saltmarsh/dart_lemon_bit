@@ -10,6 +10,7 @@ import '../common/library.dart';
 import '../common/maths.dart';
 import '../common/node_orientation.dart';
 import '../common/node_request.dart';
+import '../common/node_size.dart';
 import '../common/spawn_type.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
@@ -490,8 +491,18 @@ class Connection {
     ){
       return errorInvalidArg('Node Type ${NodeType.getName(type)} does not support orientation ${NodeOrientation.getName(orientation)}');
     }
+    final game = player.game;
+    game.setNode(z, row, column, NodeType.Respawning, orientation);
+    game.perform((){
+      game.setNode(z, row, column, type, orientation);
+    }, 25);
 
-    player.game.setNode(z, row, column, type, orientation);
+    game.dispatch(
+        GameEventType.Node_Set,
+        convertIndexToX(row),
+        convertIndexToY(column),
+        convertIndexToZ(z),
+    );
     return;
   }
 

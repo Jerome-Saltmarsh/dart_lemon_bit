@@ -193,16 +193,15 @@ void sendClientRequestAddGameObject({
   required int column,
   required int type,
 }) {
-  final posZ = convertIndexZToPosition(z);
-  final posX = convertIndexRowToPosition(row);
-  final posY = convertIndexColumnToPosition(column);
+  final posZ = convertIndexToZ(z);
+  final posX = convertIndexToX(row);
+  final posY = convertIndexToY(column);
 
   sendClientRequest(
     ClientRequest.GameObject,
     "${GameObjectRequest.Add.index} $posX $posY $posZ $type",
   );
 }
-
 
 void sendClientRequestAddGameObjectXYZ({
   required double x,

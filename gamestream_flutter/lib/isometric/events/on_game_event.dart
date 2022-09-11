@@ -21,6 +21,9 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       return onGameEventFootstep(x, y, z);
     case GameEventType.Player_Spawn_Started:
       return audioSingleTeleport.playXYZ(x, y, z);
+    case GameEventType.Node_Set:
+      audioSingleTeleport.playXYZ(x, y, z);
+      break;
     case GameEventType.Player_Spawned:
       for (var i = 0; i < 7; i++){
         spawnParticleOrbShard(x: x, y: y, z: z, angle: randomAngle());

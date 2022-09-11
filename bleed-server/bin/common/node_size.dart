@@ -3,14 +3,14 @@ const nodeSizeHalf = 24.0;
 const nodeHeight = 24.0;
 const nodeHeightHalf = 12.0;
 
-double convertIndexZToPosition(int z){
+double convertIndexToZ(int z){
   return z * nodeSizeHalf;
 }
 
-double convertIndexRowToPosition(int row){
+double convertIndexToX(int row){
   return row * nodeSize;
 }
 
-double convertIndexColumnToPosition(int column){
+double convertIndexToY(int column){
   return column * nodeSize;
 }

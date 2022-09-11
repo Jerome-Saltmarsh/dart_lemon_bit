@@ -887,7 +887,7 @@ class NodeRespawning extends Node {
   void handleRender() => render(
       dstX: dstX,
       dstY: dstY,
-      srcX: 9232,
+      srcX: 8752,
       srcY: 73 * (animationFrame % 6),
       srcWidth: 48,
       srcHeight: 72,
