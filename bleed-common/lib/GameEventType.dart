@@ -1,7 +1,6 @@
 class GameEventType {
   static const Handgun_Fired = 0;
   static const Arrow_Fired = 1;
-  static const Shotgun_Fired = 2;
   static const SniperRifle_Fired = 3;
   static const MachineGun_Fired = 4;
   static const Zombie_Target_Acquired = 7;

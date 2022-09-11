@@ -27,6 +27,10 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
           spawnParticleShell(x: x + xForward, y: y + yForward);
           spawnParticleHandgunFiring(x: x + xForward, y: y + yForward, z: z + 15, angle: angle);
           break;
+        case AttackType.Shotgun:
+          audioSingleShotgunShot.playXYZ(x, y, z);
+          spawnParticleShell(x: x, y: y);
+          break;
         default:
           return;
       }
@@ -81,10 +85,6 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       final yForward = getOpposite(angle, distance);
       spawnParticleShell(x: x + xForward, y: y + yForward);
       spawnParticleHandgunFiring(x: x + xForward, y: y + yForward, z: z + 15, angle: angle);
-      break;
-    case GameEventType.Shotgun_Fired:
-      audioSingleShotgunShot.playXYZ(x, y, z);
-      spawnParticleShell(x: x, y: y);
       break;
     case GameEventType.SniperRifle_Fired:
       spawnParticleShell(x: x, y: y);

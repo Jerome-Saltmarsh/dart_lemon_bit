@@ -936,7 +936,7 @@ extension GameFunctions on Game {
         damage: 5,
       );
     }
-    dispatch(GameEventType.Shotgun_Fired, src.x, src.y, src.z, angle);
+    dispatchAttackPerformed(AttackType.Shotgun, src.x, src.y, src.z, angle);
   }
 
   Projectile spawnProjectile({
@@ -1229,7 +1229,7 @@ extension GameFunctions on Game {
           dispatchV3(GameEventType.Ammo_Acquired, character);
           return;
         }
-        dispatchV3(GameEventType.Shotgun_Fired, character);
+        // dispatchV3(GameEventType.Shotgun_Fired, character);
         final totalBullets = 4;
         for (int i = 0; i < totalBullets; i++) {
           spawnProjectileBullet(
