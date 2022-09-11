@@ -37,21 +37,21 @@ void readPlayerInput() {
 
   if (messageBoxVisible.value) return;
 
-  if (engine.mouseLeftDown.value) {
-    return setCharacterActionPerform1();
-  }
-
-  if (engine.mouseRightDown.value){
-    return setCharacterActionPerform2();
-  }
-
-  final direction = getKeyDirection();
-  if (direction != null) {
-    characterDirection = direction;
-    if (!keyPressed(LogicalKeyboardKey.shiftLeft)){
-      setCharacterActionRun();
-    }
-  }
+  // if (engine.mouseLeftDown.value) {
+  //   return setCharacterActionPerform1();
+  // }
+  //
+  // if (engine.mouseRightDown.value){
+  //   return setCharacterActionPerform2();
+  // }
+  //
+  // final direction = getKeyDirection();
+  // if (direction != null) {
+  //   characterDirection = direction;
+  //   if (!keyPressed(LogicalKeyboardKey.shiftLeft)){
+  //     setCharacterActionRun();
+  //   }
+  // }
 }
 
 void readPlayerInputEdit() {
