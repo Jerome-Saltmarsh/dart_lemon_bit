@@ -224,6 +224,11 @@ class Player extends Character with ByteWriter {
   }
 
   void commandRun(int direction) {
+    if (direction == Direction.None){
+      setCharacterStateIdle();
+      return;
+    }
+
     faceDirection = direction;
     setCharacterStateRunning();
     target = null;

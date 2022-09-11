@@ -785,16 +785,18 @@ class Connection {
     if (!player.sceneDownloaded) return;
 
     final game = player.game;
-    final action = args[1];
-    final direction = args[2];
-    final mouseX = readNumberFromByteArray(args, index: 3).toDouble();
-    final mouseY = readNumberFromByteArray(args, index: 5).toDouble();
+    final direction = args[1];
+    final perform1 = args[2] == 1;
+    final perform2 = args[3] == 1;
+    final mouseX = readNumberFromByteArray(args, index: 4).toDouble();
+    final mouseY = readNumberFromByteArray(args, index: 6).toDouble();
+    player.screenLeft = readNumberFromByteArray(args, index: 8).toDouble();
+    player.screenTop = readNumberFromByteArray(args, index: 10).toDouble();
+    player.screenRight = readNumberFromByteArray(args, index: 12).toDouble();
+    player.screenBottom = readNumberFromByteArray(args, index: 14).toDouble();
+
     player.mouse.x = mouseX;
     player.mouse.y = mouseY;
-    player.screenLeft = readNumberFromByteArray(args, index: 7).toDouble();
-    player.screenTop = readNumberFromByteArray(args, index: 9).toDouble();
-    player.screenRight = readNumberFromByteArray(args, index: 11).toDouble();
-    player.screenBottom = readNumberFromByteArray(args, index: 13).toDouble();
 
     if (player.deadOrBusy) return;
 
@@ -805,35 +807,44 @@ class Connection {
         minDistance: 35,
     );
 
-    switch (action) {
-      case CharacterAction.Idle:
-        if (player.target != null) break;
-        if (player.target == null){
-          player.setCharacterStateIdle();
-        }
-        break;
-      case CharacterAction.Perform1:
-        final aimTarget = player.aimTarget;
-        player.target = aimTarget;
-        if (aimTarget is Npc && onSameTeam(player, aimTarget)){
-          if (withinRadius(player, aimTarget, 100)){
-            if (!aimTarget.deadOrBusy){
-              aimTarget.face(player);
-            }
-            player.face(aimTarget);
-            aimTarget.onInteractedWith?.call(player);
-          }
-          return;
-        }
-        if (player.interactingWithNpc){
-          return player.endInteraction();
-        }
-        return player.performAttackType1();
-      case CharacterAction.Perform2:
-        return player.performAttackType2();
-      case CharacterAction.Run:
-        return player.commandRun(direction);
+    player.commandRun(direction);
+
+    if (perform1){
+      player.performAttackType1();
     }
+    if (perform2){
+      player.performAttackType2();
+    }
+    return;
+    // switch (action) {
+    //   case CharacterAction.Idle:
+    //     if (player.target != null) break;
+    //     if (player.target == null){
+    //       player.setCharacterStateIdle();
+    //     }
+    //     break;
+    //   case CharacterAction.Perform1:
+    //     final aimTarget = player.aimTarget;
+    //     player.target = aimTarget;
+    //     if (aimTarget is Npc && onSameTeam(player, aimTarget)){
+    //       if (withinRadius(player, aimTarget, 100)){
+    //         if (!aimTarget.deadOrBusy){
+    //           aimTarget.face(player);
+    //         }
+    //         player.face(aimTarget);
+    //         aimTarget.onInteractedWith?.call(player);
+    //       }
+    //       return;
+    //     }
+    //     if (player.interactingWithNpc){
+    //       return player.endInteraction();
+    //     }
+    //     return player.performAttackType1();
+    //   case CharacterAction.Perform2:
+    //     return player.performAttackType2();
+    //   case CharacterAction.Run:
+    //     return player.commandRun(direction);
+    // }
   }
 
   void onGameJoined(){

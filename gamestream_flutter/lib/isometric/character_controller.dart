@@ -1,11 +1,7 @@
 import 'package:bleed_common/library.dart';
 
 var characterAction = CharacterAction.Idle;
-var characterAbility = AbilityType.None;
 var characterDirection = 0;
-
-void playerRun() =>
-  setCharacterAction(CharacterAction.Run);
 
 void setCharacterActionRun() =>
   setCharacterAction(CharacterAction.Run);

@@ -11,10 +11,11 @@ class Direction {
   static const South_West = 5;
   static const West = 6;
   static const North_West = 7;
+  static const None = 8;
 
   static String getName(int value){
     assert (value >= 0);
-    assert (value <= 7);
+    assert (value <= 8);
 
     return const <int, String> {
        North: "North",
@@ -25,6 +26,7 @@ class Direction {
        South_West: "South-West",
        West: "West",
        North_West: "North-West",
+       None: "None",
     }[value] ?? "?";
   }
 }

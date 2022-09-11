@@ -45,7 +45,7 @@ void readPlayerInput() {
     return setCharacterActionPerform2();
   }
 
-  final direction = _getKeyDirection();
+  final direction = getKeyDirection();
   if (direction != null) {
     characterDirection = direction;
     if (!keyPressed(LogicalKeyboardKey.shiftLeft)){
@@ -67,13 +67,13 @@ void readPlayerInputEdit() {
   if (engine.mouseRightDown.value){
     setPlayModePlay();
   }
-  if (_getKeyDirection() != null) {
+  if (getKeyDirection() != Direction.None) {
      setPlayModePlay();
   }
   return;
 }
 
-int? _getKeyDirection() {
+int getKeyDirection() {
   final keysPressed = keyboardInstance.keysPressed;
 
   if (keysPressed.contains(LogicalKeyboardKey.keyW)) {
@@ -101,6 +101,6 @@ int? _getKeyDirection() {
   if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
     return Direction.South_East;
   }
-  return null;
+  return Direction.None;
 }
 

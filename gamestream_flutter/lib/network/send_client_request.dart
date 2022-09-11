@@ -275,16 +275,18 @@ void sendGameObjectRequest(GameObjectRequest request, [dynamic message]) {
 
 Future sendClientRequestUpdate() async {
   const updateIndex = 0;
-  updateBuffer[0] = updateIndex;
-  updateBuffer[1] = characterAction;
-  updateBuffer[2] = characterDirection;
-  writeNumberToByteArray(number: mouseWorldX, list: updateBuffer, index: 3);
-  writeNumberToByteArray(number: mouseWorldY, list: updateBuffer, index: 5);
 
-  writeNumberToByteArray(number: screen.left, list: updateBuffer, index: 7);
-  writeNumberToByteArray(number: screen.top, list: updateBuffer, index: 9);
-  writeNumberToByteArray(number: screen.right, list: updateBuffer, index: 11);
-  writeNumberToByteArray(number: screen.bottom, list: updateBuffer, index: 13);
+  updateBuffer[0] = updateIndex;
+  updateBuffer[1] = characterDirection;
+  updateBuffer[2] = engine.mouseLeftDown.value ? 1 : 0;
+  updateBuffer[3] = engine.mouseRightDown.value ? 1 : 0;
+  writeNumberToByteArray(number: mouseWorldX, list: updateBuffer, index: 4);
+  writeNumberToByteArray(number: mouseWorldY, list: updateBuffer, index: 6);
+  writeNumberToByteArray(number: screen.left, list: updateBuffer, index: 8);
+  writeNumberToByteArray(number: screen.top, list: updateBuffer, index: 10);
+  writeNumberToByteArray(number: screen.right, list: updateBuffer, index: 12);
+  writeNumberToByteArray(number: screen.bottom, list: updateBuffer, index: 14);
+
   webSocket.sink.add(updateBuffer);
   characterAction = CharacterAction.Idle;
 }
