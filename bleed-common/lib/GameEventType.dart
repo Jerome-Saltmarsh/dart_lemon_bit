@@ -8,15 +8,12 @@ class GameEventType {
   static const Teleported = 24;
   static const EnemyTargeted = 25;
   static const Blue_Orb_Fired = 26;
-  static const Objective_Reached = 27;
   static const Arrow_Hit = 28;
   static const Draw_Bow = 29;
   static const Release_Bow = 30;
   static const Sword_Woosh = 31;
   static const Blue_Orb_Deactivated = 53;
-  static const Projectile_Fired_Fireball = 54;
   static const Footstep = 55;
-  static const Arm_Swing = 56;
   static const Character_Changing = 57;
   static const Splash = 58;
   static const Spawn_Dust_Cloud = 59;

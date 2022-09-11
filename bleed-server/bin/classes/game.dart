@@ -866,7 +866,13 @@ extension GameFunctions on Game {
     required double range,
     double? angle,
   }) {
-    dispatchV3(GameEventType.Projectile_Fired_Fireball, src);
+    dispatchAttackPerformed(
+      AttackType.Fireball,
+      src.x,
+      src.y,
+      src.z,
+      angle ?? src.faceAngle,
+    );
     return spawnProjectile(
       src: src,
       accuracy: 0,
@@ -1191,7 +1197,7 @@ extension GameFunctions on Game {
     }
     if (weaponType == WeaponType.Unarmed) {
       if (stateDuration == 7) {
-        dispatchV3(GameEventType.Arm_Swing, character);
+        // dispatchV3(GameEventType.Arm_Swing, character);
       }
     }
     if (weaponType == WeaponType.Handgun) {

@@ -15,7 +15,6 @@ import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
 import '../engine.dart';
 import '../functions/generateName.dart';
-import '../functions/withinRadius.dart';
 import '../io/convert_json_to_scene.dart';
 import '../io/convert_scene_to_json.dart';
 import '../io/save_directory.dart';

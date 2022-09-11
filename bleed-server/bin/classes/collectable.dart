@@ -1,7 +1,5 @@
 
 import 'package:lemon_math/library.dart';
-import '../common/library.dart';
-import 'player.dart';
 import 'components.dart';
 
 class Collectable with

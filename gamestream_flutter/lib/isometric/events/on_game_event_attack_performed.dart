@@ -20,6 +20,10 @@ void onGameEventAttackPerformed(double x, double y, double z, double angle) {
       audioSingleShotgunShot.playXYZ(x, y, z);
       spawnParticleShell(x: x, y: y);
       break;
+    case AttackType.Assault_Rifle:
+      audioSingleAssaultRifle.playXYZ(x, y, z);
+      // spawnParticleShell(x: x, y: y);
+      break;
     default:
       return;
   }

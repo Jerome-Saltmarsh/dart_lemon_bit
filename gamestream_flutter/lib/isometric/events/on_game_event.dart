@@ -64,18 +64,15 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       return audioSingleBowRelease.playXYZ(x, y, z);
     case GameEventType.Sword_Woosh:
       return audioSingleSwingSword.playXYZ(x, y, z);
-    case GameEventType.Arm_Swing:
-      return audioSingleSwingArm.playXYZ(x, y, z);
-    case GameEventType.Objective_Reached:
-      break;
     case GameEventType.EnemyTargeted:
       break;
+
     case GameEventType.Arrow_Fired:
-      audio.arrowFlyingPast6(x, y);
-      break;
+      return audio.arrowFlyingPast6(x, y);
+
     case GameEventType.Crate_Breaking:
-      audio.crateBreaking(x, y);
-      break;
+      return audio.crateBreaking(x, y);
+
     case GameEventType.Blue_Orb_Deactivated:
       for (var i = 0; i < 8; i++) {
         spawnParticleOrbShard(
@@ -84,18 +81,13 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       spawnEffect(x: x, y: y, type: EffectType.Explosion, duration: 30);
       break;
 
-    case GameEventType.Projectile_Fired_Fireball:
-      return audioSingleFireball.playXYZ(x, y, z);
-
     case GameEventType.Character_Death:
       final characterType = serverResponseReader.readByte();
-      onCharacterDeath(characterType, x, y, z, angle);
-      break;
+      return onCharacterDeath(characterType, x, y, z, angle);
 
     case GameEventType.Character_Hurt:
       final characterType = serverResponseReader.readByte();
-      onCharacterHurt(characterType, x, y, z, angle);
-      break;
+      return onCharacterHurt(characterType, x, y, z, angle);
 
     case GameEventType.Sword_Slash:
       return onGameEventSwordSlash(x, y, z, angle);
