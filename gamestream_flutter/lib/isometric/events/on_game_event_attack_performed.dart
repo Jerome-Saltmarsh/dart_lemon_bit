@@ -14,23 +14,18 @@ void onGameEventAttackPerformed(double x, double y, double z, double angle) {
       const distance = 20.0;
       final xForward = getAdjacent(angle, distance);
       final yForward = getOpposite(angle, distance);
-      // spawnParticleShell(x: x + xForward, y: y + yForward);
       spawnParticleHandgunFiring(x: x + xForward, y: y + yForward, z: z + 15, angle: angle);
       break;
     case AttackType.Shotgun:
-      audioSingleShotgunShot.playXYZ(x, y, z);
-      // spawnParticleShell(x: x, y: y);
-      break;
+      return audioSingleShotgunShot.playXYZ(x, y, z);
     case AttackType.Assault_Rifle:
-      audioSingleAssaultRifle.playXYZ(x, y, z);
-      // spawnParticleShell(x: x, y: y);
-      break;
+      return audioSingleAssaultRifle.playXYZ(x, y, z);
     case AttackType.Fireball:
-      audioSingleFireball.playXYZ(x, y, z);
-      break;
+      return audioSingleFireball.playXYZ(x, y, z);
     case AttackType.Blade:
-      onGameEventSwordSlash(x, y, z, angle);
-      break;
+      return onGameEventSwordSlash(x, y, z, angle);
+    case AttackType.Crowbar:
+      return spawnParticleSlashCrowbar(x, y, z, angle);
     default:
       return;
   }

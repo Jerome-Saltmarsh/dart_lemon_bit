@@ -142,16 +142,19 @@ Widget buildColumnPlayerWeapons(int activePlayerAttackType) =>
   Container(
     color: brownLight,
     padding: const EdgeInsets.all(6),
-    child: Column(
-      children: [
-        buildButtonEquipAttackType(AttackType.Shotgun, activePlayerAttackType),
-        buildButtonEquipAttackType(AttackType.Fireball, activePlayerAttackType),
-        buildButtonEquipAttackType(AttackType.Handgun, activePlayerAttackType),
-        buildButtonEquipAttackType(AttackType.Teleport, activePlayerAttackType),
-        buildButtonEquipAttackType(AttackType.Node_Cannon, activePlayerAttackType),
-        buildButtonEquipAttackType(AttackType.Blade, activePlayerAttackType),
-        buildButtonEquipAttackType(AttackType.Assault_Rifle, activePlayerAttackType),
-      ],
+    child: SingleChildScrollView(
+      child: Column(
+        children: [
+          buildButtonEquipAttackType(AttackType.Shotgun, activePlayerAttackType),
+          buildButtonEquipAttackType(AttackType.Fireball, activePlayerAttackType),
+          buildButtonEquipAttackType(AttackType.Handgun, activePlayerAttackType),
+          buildButtonEquipAttackType(AttackType.Teleport, activePlayerAttackType),
+          buildButtonEquipAttackType(AttackType.Node_Cannon, activePlayerAttackType),
+          buildButtonEquipAttackType(AttackType.Blade, activePlayerAttackType),
+          buildButtonEquipAttackType(AttackType.Assault_Rifle, activePlayerAttackType),
+          buildButtonEquipAttackType(AttackType.Crowbar, activePlayerAttackType),
+        ],
+      ),
     ),
   );
 

@@ -280,19 +280,26 @@ void renderParticle(Particle value) {
     case ParticleType.Slash:
       if (value.frame >= 6 ) return;
       const size = 64.0;
-      // return render(
-      //   dstX: value.renderX,
-      //   dstY: value.renderY,
-      //   srcX: 6080,
-      //   srcY: value.frame * size,
-      //   srcWidth: size,
-      //   srcHeight: size,
-      //   scale: value.scale,
-      // );
       return renderRotated(
         dstX: value.renderX,
         dstY: value.renderY,
         srcX: 6080,
+        srcY: value.frame * size,
+        srcWidth: size,
+        srcHeight: size,
+        scale: value.scale,
+        rotation: value.rotation + (piHalf + piQuarter),
+      );
+
+    case ParticleType.Slash_Crowbar:
+      if (value.frame >= 3 ) {
+        return particleDeactivate(value);
+      }
+      const size = 64.0;
+      return renderRotated(
+        dstX: value.renderX,
+        dstY: value.renderY,
+        srcX: 784,
         srcY: value.frame * size,
         srcWidth: size,
         srcHeight: size,

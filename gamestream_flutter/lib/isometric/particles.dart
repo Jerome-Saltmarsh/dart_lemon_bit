@@ -780,6 +780,47 @@ void spawnParticleSlash({
   );
 }
 
+void spawnParticleSlashCrowbar(
+  double x,
+  double y,
+  double z,
+  double angle,
+) =>
+  spawnParticleAnimation(
+    type: ParticleType.Slash_Crowbar,
+    x: x,
+    y: y,
+    z: z,
+    angle: angle,
+    duration: 50,
+    scale: 1.0,
+  );
+
+void spawnParticleAnimation({
+  required double x,
+  required double y,
+  required double z,
+  required int type,
+  int duration = 100,
+  double scale = 1.0,
+  double angle = 0,
+}) =>
+  spawnParticle(
+    type: type,
+    x: x,
+    y: y,
+    z: z,
+    angle: angle,
+    rotation: angle,
+    speed: 0,
+    scaleV: 0,
+    weight: 0,
+    duration: duration,
+    scale: scale,
+    checkCollision: false,
+    animation: true,
+  );
+
 void spawnParticleHandgunFiring({
   required double x,
   required double y,
