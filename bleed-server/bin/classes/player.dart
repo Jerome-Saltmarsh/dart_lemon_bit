@@ -101,6 +101,8 @@ class Player extends Character with ByteWriter {
         return performAttackTypeShotgun();
       case AttackType.Assault_Rifle:
         return performAttackTypeAssaultRifle();
+      case AttackType.Fireball:
+        return performAttackTypeFireball();
     }
   }
 
@@ -216,6 +218,11 @@ class Player extends Character with ByteWriter {
   void performAttackTypeAssaultRifle(){
     performDuration = 1;
     game.fireAssaultRifle(this, mouseAngle);
+  }
+
+  void performAttackTypeFireball(){
+    performDuration = 15;
+    game.fireFireball(this, mouseAngle);
   }
 
   void performAttackTypeHandgun(){

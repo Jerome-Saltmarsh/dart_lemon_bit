@@ -15,8 +15,9 @@ void renderProjectile(Projectile value) {
     case ProjectileType.Orb:
       return renderOrb(value.renderX, value.renderY);
     case ProjectileType.Fireball:
-      renderPixelRed(value.renderX, value.renderY);
-      return renderFireball(value.renderX, value.renderY, value.angle - piQuarter);
+      // renderPixelRed(value.renderX, value.renderY);
+      // return renderFireball(value.renderX, value.renderY, value.angle - piQuarter);
+      break;
     case ProjectileType.Bullet:
       return renderRotated(
           dstX: value.renderX,
