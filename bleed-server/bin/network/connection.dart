@@ -321,42 +321,6 @@ class Connection {
         player.game.onPlayerAddCardToDeck(player, cardType);
         break;
 
-      case ClientRequest.Attack:
-        if (player.deadOrBusy) return;
-
-        if (player.ability != null) {
-          player.clearCardAbility();
-          return;
-        }
-        player.target = null;
-        player.faceAngle = player.mouseAngle;
-        player.setCharacterStatePerforming(duration: 30);
-        break;
-
-      case ClientRequest.Attack_Basic:
-        if (player.deadOrBusy) return;
-
-        if (player.ability != null) {
-          player.clearCardAbility();
-          return;
-        }
-        player.target = null;
-        player.setCharacterStatePerforming(duration: 30);
-        break;
-
-      case ClientRequest.Caste:
-        if (player.deadOrBusy) return;
-
-        // game.fireHandgun(player, player.mouseAngle);
-        game.fireShotgun(player, player.mouseAngle);
-        // game.spawnProjectileFireball(
-        //     player,
-        //     damage: 5,
-        //     range: 250,
-        //     angle: player.mouseAngle,
-        // );
-        break;
-
       case ClientRequest.Equip:
         if (player.deadOrBusy) return;
         if (arguments.length != 2) {

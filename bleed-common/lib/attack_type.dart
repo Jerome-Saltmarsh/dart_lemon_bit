@@ -3,15 +3,17 @@ class AttackType {
    static const Blade = 1;
    static const Crossbow = 2;
    static const Orb = 3;
-   static const Teleport = 5;
-   static const Particle = 6;
-   static const Node_Cannon = 7;
-   static const Shotgun = 8;
-   static const Handgun = 9;
-   static const Weather = 10;
-   static const Time = 11;
-   static const Assault_Rifle = 12;
-   static const Fireball = 13;
+   static const Teleport = 4;
+   static const Particle = 5;
+   static const Node_Cannon = 6;
+   static const Shotgun = 7;
+   static const Handgun = 8;
+   static const Assault_Rifle = 11;
+   static const Fireball = 12;
+   static const Bow = 13;
+   static const Baseball_Bat = 14;
+   static const Crowbar = 15;
+   static const Rifle = 16;
 
    static String getName(int value){
        return const {
@@ -21,13 +23,15 @@ class AttackType {
           Orb: "Orb",
           Teleport: "Teleport",
           Particle: "Particle",
-          Node_Cannon: "Node Cannon",
+          Node_Cannon: "Editor",
           Shotgun: "Shotgun",
           Handgun: "Handgun",
-          Weather: "Weather",
-          Time: "Time",
           Assault_Rifle: "Assault Rifle",
           Fireball: "Fireball",
+          Bow: "Bow",
+          Baseball_Bat: "Baseball Bat",
+          Crowbar: "Crow-bar",
+          Rifle: "Rifle",
        }[value] ?? "? ($value)";
    }
 }

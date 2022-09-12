@@ -62,8 +62,6 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
       return actionGameDialogShowQuests();
     if (key == PhysicalKeyboardKey.keyM)
       return actionGameDialogShowMap();
-    if (key == PhysicalKeyboardKey.keyJ)
-      return sendClientRequestAttackBasic();
     return;
   }
 

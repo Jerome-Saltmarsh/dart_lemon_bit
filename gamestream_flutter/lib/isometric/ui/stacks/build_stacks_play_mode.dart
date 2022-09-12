@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
-import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_button_toggle_inventory.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_npc_talk.dart';
@@ -24,8 +23,6 @@ Widget buildStackPlay() {
       }),
       watch(player.attackType, (int attackType) {
         switch (attackType) {
-          case AttackType.Weather:
-            return buildControlsWeather();
           default:
             return const SizedBox();
         }

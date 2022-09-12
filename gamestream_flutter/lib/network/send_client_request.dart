@@ -24,18 +24,6 @@ void sendClientRequestTeleport(){
   sendClientRequest(ClientRequest.Teleport);
 }
 
-void sendClientRequestAttack() {
-  sendClientRequest(ClientRequest.Attack);
-}
-
-void sendClientRequestAttackBasic() {
-  sendClientRequest(ClientRequest.Attack_Basic);
-}
-
-void sendClientRequestCaste() {
-  sendClientRequest(ClientRequest.Caste);
-}
-
 void sendClientRequestDeckAddCard(CardType value){
   sendClientRequest(ClientRequest.Deck_Add_Card, value.index);
 }

@@ -1,9 +1,6 @@
 enum ClientRequest {
   Update,
   Join,
-  Attack,
-  Attack_Basic,
-  Caste,
   Revive,
   Equip,
   Toggle_Debug,
