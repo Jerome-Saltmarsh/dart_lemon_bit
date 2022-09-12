@@ -21,7 +21,6 @@ class GameEventType {
   static const Player_Spawn_Started = 61;
   static const Character_Death = 62;
   static const Character_Hurt = 63;
-  static const Sword_Slash = 64;
   static const Game_Object_Destroyed = 65;
   static const Attack_Performed = 66;
   static const Node_Set = 67;

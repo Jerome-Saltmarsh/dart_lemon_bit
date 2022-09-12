@@ -1,4 +1,3 @@
-import 'package:bleed_common/attack_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
@@ -6,6 +5,7 @@ import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/events/on_character_hurt.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_attack_performed.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
+import 'package:gamestream_flutter/isometric/events/on_game_event_weapon_type_equipped.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
@@ -30,19 +30,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       break;
     case GameEventType.Weapon_Type_Equipped:
       final attackType =  serverResponseReader.readByte();
-      switch (attackType) {
-        case AttackType.Shotgun:
-          audioSingleShotgunCock.playXYZ(x, y, z);
-          break;
-        case AttackType.Handgun:
-          audioSingleGunPickup.playXYZ(x, y, z);
-          break;
-        default:
-          break;
-      }
-
-
-      break;
+      return onGameEventWeaponTypeEquipped(attackType, x, y, z);
     case GameEventType.Player_Spawned:
       for (var i = 0; i < 7; i++){
         spawnParticleOrbShard(x: x, y: y, z: z, angle: randomAngle());
@@ -110,9 +98,6 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
     case GameEventType.Character_Hurt:
       final characterType = serverResponseReader.readByte();
       return onCharacterHurt(characterType, x, y, z, angle);
-
-    case GameEventType.Sword_Slash:
-      return onGameEventSwordSlash(x, y, z, angle);
 
     case GameEventType.Game_Object_Destroyed:
       final type = serverResponseReader.readByte();

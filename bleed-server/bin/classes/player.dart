@@ -116,13 +116,8 @@ class Player extends Character with ByteWriter {
     performZ = z;
     performDuration = 20;
     performMaxHits = 1;
-    game.dispatch(
-      GameEventType.Sword_Slash,
-      performX,
-      performY,
-      z + nodeHeightHalf,
-      angle,
-    );
+
+    game.dispatchAttackPerformed(AttackType.Blade, performX, performY, performZ, angle);
 
     if (idling) {
       faceMouse();
