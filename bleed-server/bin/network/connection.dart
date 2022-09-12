@@ -12,6 +12,7 @@ import '../common/node_orientation.dart';
 import '../common/node_request.dart';
 import '../common/node_size.dart';
 import '../common/spawn_type.dart';
+import '../common/teleport_scenes.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
 import '../engine.dart';
@@ -383,6 +384,27 @@ class Connection {
            weaponTypeIndex, player.x, player.y, player.z, 0,
         );
         player.attackType2 = weaponTypeIndex;
+        break;
+
+      case ClientRequest.Teleport_Scene:
+        final sceneIndex = int.tryParse(arguments[1]);
+
+        if (sceneIndex == null)
+          return errorInvalidArg('scene index is null');
+
+        if (!isValidIndex(sceneIndex, teleportScenes))
+          return errorInvalidArg("invalid scene index $sceneIndex");
+
+        final scene = teleportScenes[sceneIndex];
+
+        switch(scene){
+          case TeleportScenes.Dungeon_1:
+            player.changeGame(engine.findGameDarkAgeDungeon1());
+            break;
+          default:
+            break;
+        }
+
         break;
 
       case ClientRequest.Editor_Load_Scene:

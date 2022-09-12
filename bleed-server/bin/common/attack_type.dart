@@ -15,7 +15,7 @@ class AttackType {
    static const Crowbar = 15;
    static const Rifle = 16;
 
-   static String getName(int value){
+   static String getName(int value) {
        return const {
           Unarmed: "Unarmed",
           Blade: "Blade",

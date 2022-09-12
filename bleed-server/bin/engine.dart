@@ -23,6 +23,7 @@ import 'dark_age/areas/area-town.dart';
 import 'dark_age/areas/area_lake.dart';
 import 'dark_age/areas/area_tavern_cellar.dart';
 import 'dark_age/areas/dark_age_area.dart';
+import 'dark_age/areas/dark_age_dungeon_1.dart';
 import 'dark_age/areas/game_dark_age_dark_fortress.dart';
 import 'dark_age/areas/game_dark_age_farm.dart';
 import 'dark_age/areas/game_dark_age_forest.dart';
@@ -136,13 +137,13 @@ class Engine {
     games.add(game);
   }
 
-  GameDarkAgeCollege findGameDarkAgeCastle() {
+  DarkAgeDungeon1 findGameDarkAgeDungeon1() {
     for (final game in games) {
-      if (game is GameDarkAgeCollege) {
+      if (game is DarkAgeDungeon1) {
         return game;
       }
     }
-    return GameDarkAgeCollege();
+    return DarkAgeDungeon1();
   }
 
   GameDarkAge findGameDarkAgeVillage() {

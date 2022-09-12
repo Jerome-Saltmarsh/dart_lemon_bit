@@ -6,6 +6,7 @@ import 'package:bleed_common/gameobject_request.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_request.dart';
 import 'package:bleed_common/node_size.dart';
+import 'package:bleed_common/teleport_scenes.dart';
 import 'package:gamestream_flutter/isometric_web/read_player_input.dart';
 import 'package:gamestream_flutter/network/instance/websocket.dart';
 import 'package:lemon_engine/engine.dart';
@@ -22,6 +23,10 @@ void sendRequestSpeak(String message){
 
 void sendClientRequestTeleport(){
   sendClientRequest(ClientRequest.Teleport);
+}
+
+void sendClientRequestTeleportScene(TeleportScenes scene){
+  sendClientRequest(ClientRequest.Teleport_Scene, scene.index);
 }
 
 void sendClientRequestDeckAddCard(CardType value){

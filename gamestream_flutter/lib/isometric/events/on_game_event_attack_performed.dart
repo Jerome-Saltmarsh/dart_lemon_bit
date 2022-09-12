@@ -25,6 +25,7 @@ void onGameEventAttackPerformed(double x, double y, double z, double angle) {
     case AttackType.Blade:
       return onGameEventSwordSlash(x, y, z, angle);
     case AttackType.Crowbar:
+      audioSingleSwingSword.playXYZ(x, y, z);
       return spawnParticleSlashCrowbar(x, y, z, angle);
     default:
       return;

@@ -7,6 +7,7 @@ final darkAgeScenes = DarkAgeScenes();
 
 class DarkAgeScenes {
   late Scene village;
+  late Scene dungeon_1;
   late Scene castle;
   late Scene forest;
   late Scene forest_2;
@@ -39,14 +40,11 @@ class DarkAgeScenes {
       farmA = await loadScene('farm-a');
       farmB = await loadScene('farm-b');
       village = await loadScene('village');
-      // castle = await loadScene('castle');
+      dungeon_1 = await loadScene('dungeon-1');
       forest = await loadScene('forest');
       forest_2 = await loadScene('forest-b');
       forest_3 = await loadScene('forest-3');
       forest_4 = await loadScene('forest-4');
-      // darkFortress = await loadScene('dark-fortress');
-      // darkFortressDungeon = await loadScene('dark-fortress-dungeon');
-      // tavernCellar = await loadScene('tavern-cellar');
       mountainShrine = await loadScene('mountain-shrine');
       lake = await loadScene('lake');
       town = await loadScene('town');
@@ -58,7 +56,6 @@ class DarkAgeScenes {
       mountains_2 = await loadScene('mountains-2');
       mountains_3 = await loadScene('mountains-3');
       mountains_4 = await loadScene('mountains-4');
-      // outpost_1 = await loadScene('outpost-1');
       shrine_1 = await loadScene('shrine-1');
       empty = Scene(
           name: 'empty',

@@ -1,15 +1,19 @@
 import 'package:bleed_common/attack_type.dart';
+import 'package:bleed_common/teleport_scenes.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_button_toggle_inventory.dart';
+import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_npc_talk.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_experience.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_health.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_player_designed.dart';
 import 'package:gamestream_flutter/isometric/watches/inventory_visible.dart';
+import 'package:gamestream_flutter/network/send_client_request.dart';
+import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/ui/builders/build_text_box.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/screen.dart';
@@ -18,6 +22,7 @@ Widget buildStackPlay() {
   return Stack(
     children: [
       Positioned(top: 75, right: 16, child: buildWatchInventoryVisible()),
+      Positioned(left: 8, bottom: 50, child: buildColumnTeleport()),
       watch(player.attackType, (t) {
         return text(AttackType.getName(player.attackType.value));
       }),
@@ -106,4 +111,21 @@ Widget buildWatchInventoryVisible(){
   });
 }
 
+
+Widget buildColumnTeleport(){
+  return Container(
+    color: brownLight,
+    padding: padding8,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        text("Teleport Menu"),
+        text("Dungeon 1", onPressed: (){
+          sendClientRequestTeleportScene(TeleportScenes.Dungeon_1);
+        }),
+        text("Town"),
+      ],
+    ),
+  );
+}
 
