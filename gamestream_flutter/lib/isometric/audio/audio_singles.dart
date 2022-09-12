@@ -51,5 +51,7 @@ final audioSingleZombieTalking = [
 ];
 
 final audioSingleTeleport = AudioSingle(name: 'teleport-1', volume: 0.5, maxDistance: 250);
+final audioSingleHoverOverButton30 = AudioSingle(name: 'hover-over-button-sound-30', volume: 0.5, maxDistance: 250);
+final audioSingleHoverOverButton43 = AudioSingle(name: 'hover-over-button-sound-43', volume: 0.5, maxDistance: 250);
 
 

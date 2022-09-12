@@ -879,19 +879,12 @@ class NodeWoodenPlank extends Node {
     return renderShadeAuto(7688, 0);  }
 }
 
-class NodeRespawning extends Node {
+class NodeSpawning extends Node {
 
-  NodeRespawning(int row, int column, int z) : super(row, column, z);
+  NodeSpawning(int row, int column, int z) : super(row, column, z);
 
   @override
-  void handleRender() => render(
-      dstX: dstX,
-      dstY: dstY,
-      srcX: 8752,
-      srcY: 73 * (animationFrame % 6),
-      srcWidth: 48,
-      srcHeight: 72,
-  );
+  void handleRender() => renderStandardNode(8752, 0);
 
   @override
   int get type => NodeType.Respawning;

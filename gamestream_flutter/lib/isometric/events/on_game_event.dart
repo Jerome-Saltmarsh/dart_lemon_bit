@@ -22,7 +22,10 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
     case GameEventType.Player_Spawn_Started:
       return audioSingleTeleport.playXYZ(x, y, z);
     case GameEventType.Node_Set:
-      audioSingleTeleport.playXYZ(x, y, z);
+      audioSingleHoverOverButton43.playXYZ(x, y, z);
+      break;
+    case GameEventType.Node_Deleted:
+      audioSingleHoverOverButton30.playXYZ(x, y, z);
       break;
     case GameEventType.Player_Spawned:
       for (var i = 0; i < 7; i++){

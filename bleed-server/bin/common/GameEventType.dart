@@ -25,4 +25,5 @@ class GameEventType {
   static const Game_Object_Destroyed = 65;
   static const Attack_Performed = 66;
   static const Node_Set = 67;
+  static const Node_Deleted = 68;
 }

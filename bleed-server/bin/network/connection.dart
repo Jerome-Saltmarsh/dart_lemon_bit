@@ -492,18 +492,31 @@ class Connection {
       return errorInvalidArg('Node Type ${NodeType.getName(type)} does not support orientation ${NodeOrientation.getName(orientation)}');
     }
     final game = player.game;
-    game.setNode(z, row, column, NodeType.Respawning, orientation);
-    game.perform((){
-      game.setNode(z, row, column, type, orientation);
-    }, 25);
+    // game.setNode(z, row, column, NodeType.Respawning, orientation);
+    // game.perform((){
+    //   game.setNode(z, row, column, type, orientation);
+    // }, 15);
 
-    game.dispatch(
+    final current = game.scene.getNode(z, row, column);
+    if (current.type == type && current.orientation == orientation) return;
+
+    game.setNode(z, row, column, type, orientation);
+
+    if (type == NodeType.Empty){
+      game.dispatch(
+        GameEventType.Node_Deleted,
+        convertIndexToX(row),
+        convertIndexToY(column),
+        convertIndexToZ(z),
+      );
+    } else {
+      game.dispatch(
         GameEventType.Node_Set,
         convertIndexToX(row),
         convertIndexToY(column),
         convertIndexToZ(z),
-    );
-    return;
+      );
+    }
   }
 
   void handleNpcTalkSelectOption(Player player, List<String> arguments) {
