@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
+import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 
 Widget buildColumnSelectedNode(){
   return Container(
@@ -14,6 +15,13 @@ Widget buildColumnSelectedNode(){
     color: brownDark,
     child: Column(
       children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            container(child: "X", width: 50, alignment: Alignment.center),
+            container(child: "C", width: 50, alignment: Alignment.center),
+          ],
+        ),
         Container(
           height: 70,
             alignment: Alignment.center,

@@ -4,6 +4,7 @@ import 'package:lemon_math/library.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
+import '../classes/zombie.dart';
 import '../common/library.dart';
 import '../common/spawn_type.dart';
 import '../engine.dart';
@@ -75,12 +76,16 @@ class GameDarkAge extends Game {
   }
 
   @override
-  void onKilled(dynamic target, dynamic src){
-       if (src is Player){
+  void onKilled(dynamic target, dynamic src) {
+       if (src is Player) {
          if (target is AI){
             src.gainExperience(1);
          }
        }
+
+      if (target is AI) {
+         
+      }
   }
 
   @override

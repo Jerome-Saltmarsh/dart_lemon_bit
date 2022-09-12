@@ -12,6 +12,7 @@ import 'package:gamestream_flutter/isometric/lighting/apply_emissions_npcs.dart'
 import 'package:gamestream_flutter/isometric/lighting/apply_particle_emissions.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
+import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
@@ -24,6 +25,7 @@ import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
 import '../classes/particle.dart';
+import '../edit_state.dart';
 import '../grid.dart';
 import '../lighting/apply_emissions_gameobjects.dart';
 import 'render_particle.dart';
@@ -356,6 +358,15 @@ class RenderOrderGrid extends RenderOrder {
 
     assignNode();
     refreshDynamicLightGrid();
+
+    if (playModeEdit){
+       applyEmissionDynamic(
+           zIndex: edit.z.value,
+           rowIndex: edit.row.value,
+           columnIndex: edit.column.value,
+           maxBrightness: Shade.Very_Bright,
+       );
+    }
 
     if (playerImperceptible){
        // revealAbove(playerZ + 1, playerRow, playerColumn);
