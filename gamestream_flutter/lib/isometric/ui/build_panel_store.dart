@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/enums/equipment_type.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/player_store.dart';
-import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
+import 'package:gamestream_flutter/isometric/ui/buttons/build_button_equip_attack_type.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_watch/watch.dart';
@@ -145,69 +145,17 @@ Widget buildColumnPlayerWeapons(int activePlayerAttackType) =>
     child: Column(
       children: [
         buildButtonEquipAttackType(AttackType.Shotgun, activePlayerAttackType),
+        buildButtonEquipAttackType(AttackType.Fireball, activePlayerAttackType),
         buildButtonEquipAttackType(AttackType.Handgun, activePlayerAttackType),
         buildButtonEquipAttackType(AttackType.Teleport, activePlayerAttackType),
         buildButtonEquipAttackType(AttackType.Node_Cannon, activePlayerAttackType),
-        buildButtonEquipAttackType(AttackType.Weather, activePlayerAttackType),
-        buildButtonEquipAttackType(AttackType.Time, activePlayerAttackType),
         buildButtonEquipAttackType(AttackType.Blade, activePlayerAttackType),
         buildButtonEquipAttackType(AttackType.Assault_Rifle, activePlayerAttackType),
       ],
     ),
   );
 
-Widget buildButtonEquipAttackType(int weaponType, int activeWeaponType){
-  const unknown = AtlasImage(srcX: 11827, srcY: 133, width: 26, height: 20);
-  final weaponTypeAtlasImage = attackTypeAtlasImages[weaponType] ?? unknown;
 
-  return onPressed(
-    action: () => sendClientRequestPlayerEquipAttackType1(weaponType),
-    onRightClick: () => sendClientRequestPlayerEquipAttackType2(weaponType),
-    child: Container(
-      width: 100,
-      height: 75,
-      child: Column(
-        children: [
-          buildCanvasImageButton(
-            action: () => sendClientRequestPlayerEquipAttackType1(weaponType),
-              srcX: weaponTypeAtlasImage.srcX,
-              srcY: weaponTypeAtlasImage.srcY,
-              srcWidth: weaponTypeAtlasImage.width,
-              srcHeight: weaponTypeAtlasImage.height,
-          ),
-          height4,
-          text(
-              AttackType.getName(weaponType),
-              bold: weaponType == activeWeaponType,
-              size: 15
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
-const attackTypeAtlasImages = {
-   AttackType.Blade: AtlasImage(srcX: 11859, srcY: 164, width: 25, height: 25),
-   AttackType.Fireball : AtlasImage(srcX: 12117, srcY: 4, width: 22, height: 25),
-   AttackType.Handgun  : AtlasImage(srcX: 11824, srcY: 726, width: 12, height: 10),
-   AttackType.Shotgun  : AtlasImage(srcX: 11888, srcY: 693, width: 32, height: 11),
-   AttackType.Assault_Rifle  : AtlasImage(srcX: 11824, srcY: 691, width: 31, height: 13),
-};
-
-class AtlasImage {
-  final double srcX;
-  final double srcY;
-  final double width;
-  final double height;
-
-  const AtlasImage({
-    required this.srcX, 
-    required this.srcY, 
-    required this.width, 
-    required this.height,
-  });
-}
 
 Widget _buildButtonPurchaseWeapon(Weapon weapon) {
   return MouseRegion(
