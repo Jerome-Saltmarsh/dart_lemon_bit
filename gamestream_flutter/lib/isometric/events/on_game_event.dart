@@ -1,3 +1,4 @@
+import 'package:bleed_common/attack_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
@@ -26,6 +27,21 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       break;
     case GameEventType.Node_Deleted:
       audioSingleHoverOverButton30.playXYZ(x, y, z);
+      break;
+    case GameEventType.Weapon_Type_Equipped:
+      final attackType =  serverResponseReader.readByte();
+      switch (attackType) {
+        case AttackType.Shotgun:
+          audioSingleShotgunCock.playXYZ(x, y, z);
+          break;
+        case AttackType.Handgun:
+          audioSingleGunPickup.playXYZ(x, y, z);
+          break;
+        default:
+          break;
+      }
+
+
       break;
     case GameEventType.Player_Spawned:
       for (var i = 0; i < 7; i++){

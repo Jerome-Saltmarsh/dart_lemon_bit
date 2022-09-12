@@ -1080,6 +1080,19 @@ extension GameFunctions on Game {
     }
   }
 
+  void dispatchAttackTypeEquipped(int attackType, double x, double y, double z, double angle){
+    for (final player in players) {
+      player.writeGameEvent(
+        type: GameEventType.Weapon_Type_Equipped,
+        x: x,
+        y: y,
+        z: z,
+        angle: angle,
+      );
+      player.writeByte(attackType);
+    }
+  }
+
   void updateAITargets() {
     for (final character in characters) {
       if (!character.alive) continue;

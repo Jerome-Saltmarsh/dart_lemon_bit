@@ -402,13 +402,22 @@ class Connection {
         final weaponTypeIndex = int.tryParse(arguments[1]);
         if (weaponTypeIndex == null)
           return errorInvalidArg("weapon type index is null");
+
+        if (player.attackType1 == weaponTypeIndex) return;
         player.attackType1 = weaponTypeIndex;
+        player.game.dispatchAttackTypeEquipped(
+          weaponTypeIndex, player.x, player.y, player.z, 0,
+        );
         break;
 
       case ClientRequest.Player_Equip_Attack_Type_2:
         final weaponTypeIndex = int.tryParse(arguments[1]);
         if (weaponTypeIndex == null)
           return errorInvalidArg("weapon type index is null");
+        if (player.attackType2 == weaponTypeIndex) return;
+        player.game.dispatchAttackTypeEquipped(
+           weaponTypeIndex, player.x, player.y, player.z, 0,
+        );
         player.attackType2 = weaponTypeIndex;
         break;
 
