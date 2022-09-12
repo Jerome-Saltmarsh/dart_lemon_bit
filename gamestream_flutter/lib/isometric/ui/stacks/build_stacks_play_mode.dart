@@ -18,7 +18,7 @@ import 'package:lemon_engine/screen.dart';
 Widget buildStackPlay() {
   return Stack(
     children: [
-      Positioned(top: 50, right: 0, child: buildWatchInventoryVisible()),
+      Positioned(top: 75, right: 16, child: buildWatchInventoryVisible()),
       watch(player.attackType, (t) {
         return text(AttackType.getName(player.attackType.value));
       }),

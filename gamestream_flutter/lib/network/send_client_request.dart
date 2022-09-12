@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:bleed_common/attack_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/gameobject_request.dart';
 import 'package:bleed_common/node_orientation.dart';
@@ -254,10 +255,12 @@ void sendGameObjectRequestSetSpawnRadius(double value) {
 }
 
 void sendClientRequestPlayerEquipAttackType1(int weaponType){
+  print("sendClientRequestPlayerEquipAttackType1(${AttackType.getName(weaponType)}");
   sendClientRequest(ClientRequest.Player_Equip_Attack_Type_1, weaponType);
 }
 
 void sendClientRequestPlayerEquipAttackType2(int weaponType){
+  print("sendClientRequestPlayerEquipAttackType2(${AttackType.getName(weaponType)}");
   sendClientRequest(ClientRequest.Player_Equip_Attack_Type_2, weaponType);
 }
 
