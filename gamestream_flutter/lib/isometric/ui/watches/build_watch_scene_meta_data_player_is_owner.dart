@@ -59,10 +59,10 @@ Stack buildStackEdit() {
   );
 }
 
-Widget buildColumnEditNodeOrientation() {
-  return watch(edit.gameObjectSelected, (bool gameObjectSelected){
-    if (gameObjectSelected) return const SizedBox();
-    return Column(
+Widget buildColumnEditNodeOrientation() =>
+  visibleBuilder(
+    edit.nodeOrientationVisible,
+    Column(
       children: [
         buildColumnNodeOrientationSolid(),
         buildColumnNodeOrientationSlopeSymmetric(),
@@ -71,9 +71,8 @@ Widget buildColumnEditNodeOrientation() {
         buildColumnNodeOrientationSlopeCornerInner(),
         buildColumnNodeOrientationSlopeCornerOuter(),
       ],
-    );
-  });
-}
+    )
+  );
 
 Widget buildColumnNodeOrientationSolid() =>
     visibleBuilder(
@@ -97,7 +96,7 @@ Widget buildOrientationIcon(int orientation){
       edit.paintOrientation.value = orientation;
       sendNodeRequestOrient(orientation);
     },
-    child: watch(edit.selectedNode, (Node selectedNode){
+    child: watch(edit.nodeSelected, (Node selectedNode){
       return Container(
           width: 72,
           height: 72,
@@ -277,7 +276,7 @@ Widget buildColumnButtonsNodeOrientations(List<int> orientations) =>
   // Column(children: orientations.map(buildButtonSelectNodeOrientation).toList());
 
 Widget buildButtonSelectNodeOrientation(int value) {
-  return watch(edit.selectedNode, (Node selectedNode) {
+  return watch(edit.nodeSelected, (Node selectedNode) {
     return container(
       color: value == selectedNode.orientation ? brownDark : brownLight,
       child: NodeOrientation.getName(value),

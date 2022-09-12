@@ -8,6 +8,7 @@ FEATURES
 [ ] Destroy GameObject Rock
 [ ] Fix Strike Order should hit nearest object first
 [ ] Fix Water Flowing
+[ ] Fix Water Flowing
 [x] Solid Water at edge of map
 
 COMPLETED

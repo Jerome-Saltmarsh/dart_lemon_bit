@@ -13,7 +13,7 @@ void onClickedButtonGridNodeType(int type){
     edit.z.value = player.indexZ;
     return;
   }
-  edit.selectedNode.value = generateNode(
+  edit.nodeSelected.value = generateNode(
       edit.z.value,
       edit.row.value,
       edit.column.value,

@@ -97,10 +97,6 @@ Widget buildWatchMouseTargetName(){
            ),
         ),
       );
-      // return Container(
-      //     alignment: Alignment.center,
-      //     width: engine.screen.width,
-      //     child: container(child: name));
    });
 }
 

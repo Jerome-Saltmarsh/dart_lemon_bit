@@ -1,6 +1,7 @@
 
 import 'node_orientation.dart';
 
+
 class NodeType {
   static const Empty = 0;
   static const Boundary = 1;

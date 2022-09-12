@@ -19,6 +19,14 @@ final edit = EditState();
 
 class EditState {
 
+
+  int clamp(Function value, Function min, Function max){
+    if (value() < min()) return min();
+    if (value() > max()) return max();
+    return value();;
+  }
+
+
   final gameObject = GameObject();
   final gameObjectSelected = Watch(false);
   final gameObjectSelectedType = Watch(0);
@@ -26,12 +34,37 @@ class EditState {
   final gameObjectSelectedRadius = Watch(0.0);
   final gameObjectSelectedSpawnType = Watch(0);
 
+  final nodeSelected = Watch<Node>(Node.boundary, onChanged: onChangedSelectedNode);
+  final nodeSelectedOrientation = Watch(NodeOrientation.None);
+  final nodeOrientationVisible = Watch(true);
   final nodeSupportsSolid = Watch(false);
   final nodeSupportsSlopeSymmetric = Watch(false);
   final nodeSupportsSlopeCornerInner = Watch(false);
   final nodeSupportsSlopeCornerOuter = Watch(false);
   final nodeSupportsHalf = Watch(false);
   final nodeSupportsCorner = Watch(false);
+  var row = Watch(0, clamp: (int value){
+    if (value < 0) return 0;
+    if (value >= gridTotalRows) return gridTotalRows - 1;
+    return value;
+  }, onChanged: onChangedCursorPosition);
+  var column = Watch(0, clamp: (int value){
+    if (value < 0) return 0;
+    if (value >= gridTotalColumns) return gridTotalColumns - 1;
+    return value;
+  },
+      onChanged: onChangedCursorPosition
+  );
+  var z = Watch(1, clamp: (int value){
+    if (value < 0) return 0;
+    if (value >= gridTotalZ) return gridTotalZ - 1;
+    return value;
+  }, onChanged: onChangedCursorPosition);
+
+
+  final paintType = Watch(NodeType.Brick_2, onChanged: onChangedPaintType);
+  final paintOrientation = Watch(NodeOrientation.None);
+  final controlsVisibleWeather = Watch(true);
 
   double get posX => row.value * tileSize + tileSizeHalf;
   double get posY => column.value * tileSize + tileSizeHalf;
@@ -47,7 +80,7 @@ class EditState {
   }
 
   void refreshSelected([int? val]){
-    selectedNode.value = grid[z.value][row.value][column.value];
+    nodeSelected.value = grid[z.value][row.value][column.value];
   }
 
   void deselectGameObject() {
@@ -63,30 +96,7 @@ class EditState {
     );
   }
 
-  var row = Watch(0, clamp: (int value){
-    if (value < 0) return 0;
-    if (value >= gridTotalRows) return gridTotalRows - 1;
-    return value;
-  }, onChanged: onChangedCursorPosition);
-  var column = Watch(0, clamp: (int value){
-    if (value < 0) return 0;
-    if (value >= gridTotalColumns) return gridTotalColumns - 1;
-    return value;
-  },
-  onChanged: onChangedCursorPosition
-  );
-  var z = Watch(1, clamp: (int value){
-    if (value < 0) return 0;
-    if (value >= gridTotalZ) return gridTotalZ - 1;
-    return value;
-  }, onChanged: onChangedCursorPosition);
-  final selectedNode = Watch<Node>(Node.boundary, onChanged: onChangedSelectedNode);
-  final selectedNodeOrientation = Watch(NodeOrientation.None);
-  final paintType = Watch(NodeType.Brick_2, onChanged: onChangedPaintType);
-  final paintOrientation = Watch(NodeOrientation.None);
-  final controlsVisibleWeather = Watch(true);
-
-  int get selectedType => selectedNode.value.type;
+  int get selectedType => nodeSelected.value.type;
 
   void actionToggleControlsVisibleWeather(){
     controlsVisibleWeather.value = !controlsVisibleWeather.value;
@@ -228,7 +238,7 @@ class EditState {
 
   void selectPaintType(){
      paintType.value = selectedType;
-     paintOrientation.value = selectedNode.value.orientation;
+     paintOrientation.value = nodeSelected.value.orientation;
   }
 
   void selectPlayer(){

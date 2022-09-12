@@ -17,12 +17,12 @@ Widget buildColumnSelectedNode(){
         Container(
           height: 70,
             alignment: Alignment.center,
-            child: watch(edit.selectedNode, (Node t) => text(NodeType.getName(t.type), align: TextAlign.center))),
+            child: watch(edit.nodeSelected, (Node t) => text(NodeType.getName(t.type), align: TextAlign.center))),
         Container(
             height: 72,
             width: 72,
             alignment: Alignment.center,
-            child: watch(edit.selectedNode, (Node t) => buildIconNodeType(t.type))),
+            child: watch(edit.nodeSelected, (Node t) => buildIconNodeType(t.type))),
         height4,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

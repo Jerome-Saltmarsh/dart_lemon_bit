@@ -45,7 +45,7 @@ void readPlayerInputEdit() {
     edit.delete();
   }
   if (keyPressed(LogicalKeyboardKey.keyR)) {
-    edit.selectedNode.value = edit.selectedNode.value;
+    edit.nodeSelected.value = edit.nodeSelected.value;
   }
   if (engine.mouseRightDown.value){
     setPlayModePlay();

@@ -292,7 +292,7 @@ Widget buildButtonSelectNodeType(int value) {
     srcWidth: mapNodeTypeToSrcWidth(value),
     srcHeight: mapNodeTypeToSrcHeight(value),
   );
-  return WatchBuilder(edit.selectedNode, (Node node) {
+  return WatchBuilder(edit.nodeSelected, (Node node) {
     return container(
         height: 78,
         width: 78,
@@ -350,33 +350,33 @@ Widget buildColumnEdit() {
 
 const editorGridTypesColumn1 = [
   NodeType.Empty,
-  NodeType.Brick_Top,
-  NodeType.Grass_Long,
-  NodeType.Grass_Flowers,
-  NodeType.Torch,
-  NodeType.Fireplace,
   NodeType.Water,
-  NodeType.Water_Flowing,
-  NodeType.Tree_Top,
-  NodeType.Tree_Bottom,
+  NodeType.Brick_2,
   NodeType.Soil,
   NodeType.Stone,
+  NodeType.Wood_2,
+  NodeType.Wooden_Plank,
   NodeType.Bau_Haus_2,
+  // NodeType.Brick_Top,
+  NodeType.Torch,
+  NodeType.Fireplace,
+  // NodeType.Water_Flowing,
+  NodeType.Tree_Top,
+  NodeType.Tree_Bottom,
 ];
 
 const editorGridTypesColumn2 = [
   NodeType.Chimney,
-  NodeType.Bed_Bottom,
-  NodeType.Bed_Top,
+  NodeType.Grass_2,
+  NodeType.Grass_Flowers,
+  NodeType.Grass_Long,
+  // NodeType.Bed_Bottom,
+  // NodeType.Bed_Top,
+  NodeType.Plain,
   NodeType.Table,
   NodeType.Sunflower,
   NodeType.Oven,
-  NodeType.Brick_2,
-  NodeType.Wood_2,
   NodeType.Cottage_Roof,
-  NodeType.Grass_2,
-  NodeType.Plain,
   NodeType.Window,
-  NodeType.Wooden_Plank,
   NodeType.Boulder,
 ];
