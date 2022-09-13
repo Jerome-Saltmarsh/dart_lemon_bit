@@ -4,7 +4,6 @@ import 'package:lemon_math/library.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
-import '../classes/zombie.dart';
 import '../common/library.dart';
 import '../common/spawn_type.dart';
 import '../engine.dart';
@@ -60,11 +59,6 @@ class GameDarkAge extends Game {
   @override
   void update(){
     updateInternal();
-
-    // for (var i = 0; i < players.length; i++) {
-    //   final player = players[i];
-    //   checkPlayerPosition(player, player.indexZ, player.indexRow, player.indexColumn);
-    // }
   }
 
   // void checkPlayerPosition(Player player, int z, int row, int column){

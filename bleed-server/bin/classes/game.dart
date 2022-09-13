@@ -477,6 +477,16 @@ extension GameFunctions on Game {
         refreshSpawn(gameObject);
       }
     }
+
+    for (final plane in scene.grid) {
+      for (final row in plane) {
+         for (final node in row){
+            if (node is NodeSpawn){
+
+            }
+         }
+      }
+    }
   }
 
   void refreshSpawn(GameObjectSpawn spawn) {
@@ -680,6 +690,104 @@ extension GameFunctions on Game {
       case SpawnType.Butterfly:
         final instance =
             GameObjectButterfly(x: spawn.x, y: spawn.y, z: spawn.z);
+        instance.spawn = spawn;
+        instance.wanderRadius = spawn.spawnRadius;
+        gameObjects.add(instance);
+        break;
+      case SpawnType.Zombie:
+        final instance = Zombie(
+          x: spawn.x + x,
+          y: spawn.y + y,
+          z: spawn.z,
+          health: 10,
+          damage: 1,
+          game: this,
+          team: Teams.evil,
+        );
+        instance.spawn = spawn;
+        instance.wanderRadius = spawn.spawnRadius;
+        characters.add(instance);
+        break;
+      case SpawnType.Slime:
+        final instance = AISlime(
+          x: spawn.x + x,
+          y: spawn.y + y,
+          z: spawn.z,
+          health: 30,
+          game: this,
+          team: Teams.evil,
+        );
+        instance.spawn = spawn;
+        instance.wanderRadius = spawn.spawnRadius;
+        instance.setCharacterStateSpawning();
+        characters.add(instance);
+        break;
+      case SpawnType.Template:
+        final instance = Npc(
+          game: this,
+          x: spawn.x + x,
+          y: spawn.y + y,
+          z: spawn.z,
+          health: 10,
+          weapon: Weapon(type: WeaponType.Bow, damage: 1),
+          team: Teams.good,
+          wanderRadius: 100,
+          name: 'Bandit',
+        );
+        instance.spawn = spawn;
+        instance.wanderRadius = spawn.spawnRadius;
+        characters.add(instance);
+        break;
+      default:
+        print("Warning: Unrecognized SpawnType ${spawn.spawnType}");
+        break;
+    }
+  }
+
+  void spawnNode(NodeSpawn spawn) {
+    final distance = randomBetween(0, spawn.spawnRadius);
+    final angle = randomAngle();
+    final x = getAdjacent(angle, distance);
+    final y = getOpposite(angle, distance);
+
+    final radius = spawn.spawnRadius;
+
+    switch (spawn.spawnType) {
+      case SpawnType.Chicken:
+        final instance =
+        GameObjectChicken(x: spawn.x + x, y: spawn.y + y, z: spawn.z);
+        instance.wanderRadius = radius;
+        instance.spawn = spawn;
+        gameObjects.add(instance);
+
+        return;
+      case SpawnType.Jellyfish:
+        final instance =
+        GameObjectJellyfish(x: spawn.x + x, y: spawn.y + y, z: spawn.z);
+        instance.spawn = spawn;
+        gameObjects.add(instance);
+        return;
+      case SpawnType.Jellyfish_Red:
+        final instance =
+        GameObjectJellyfishRed(x: spawn.x + x, y: spawn.y + y, z: spawn.z);
+        instance.spawn = spawn;
+        gameObjects.add(instance);
+        return;
+      case SpawnType.Rat:
+        final instance = Rat(
+          z: spawn.indexZ,
+          row: spawn.indexRow,
+          column: spawn.indexColumn,
+          game: this,
+          team: Teams.evil,
+        );
+        instance.wanderRadius = spawn.spawnRadius;
+        instance.spawn = spawn;
+        characters.add(instance);
+        break;
+      case SpawnType.Butterfly:
+        final instance =
+        GameObjectButterfly(x: spawn.x, y: spawn.y, z: spawn.z);
         instance.spawn = spawn;
         instance.wanderRadius = spawn.spawnRadius;
         gameObjects.add(instance);

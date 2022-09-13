@@ -122,6 +122,7 @@ List<List<List<Node>>> convertFlatGridToGrid(List<dynamic> flatGrid, int height,
   final List<List<List<Node>>> grid = List.generate(height, (zIndex) {
     return List.generate(rows, (rowIndex){
       return List.generate(columns, (columnIndex){
+
         final node = generateNode(flatGrid[index]);
         if (node is NodeOriented){
           index++;
@@ -137,7 +138,10 @@ List<List<List<Node>>> convertFlatGridToGrid(List<dynamic> flatGrid, int height,
            index++;
            node.spawnAmount = flatGrid[index];
            index++;
-           node.spawnRadius = flatGrid[index];
+           node.spawnRadius = (flatGrid[index] as int).toDouble();
+           node.indexZ = zIndex;
+           node.indexRow = rowIndex;
+           node.indexColumn = columnIndex;
         }
         index++;
         return node;

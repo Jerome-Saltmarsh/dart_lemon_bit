@@ -55,7 +55,7 @@ List<int> convertNodesToByteArray(List<List<List<Node>>> nodes) {
           bytes.add(NodeType.Spawn);
           bytes.add(node.spawnType);
           bytes.add(node.spawnAmount);
-          bytes.add(node.spawnRadius);
+          bytes.add(node.spawnRadius.toInt());
           continue;
         }
 

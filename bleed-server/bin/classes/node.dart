@@ -2,6 +2,7 @@
 
 import '../common/library.dart';
 import '../common/node_orientation.dart';
+import '../common/node_size.dart';
 import 'character.dart';
 import 'game.dart';
 
@@ -267,8 +268,15 @@ class NodeRespawning extends NodeNoneCollidable {
 
 class NodeSpawn extends NodeNoneCollidable {
   var spawnType = 0;
-  var spawnRadius = 100;
-  var spawnAmount = 5;
+  var spawnRadius = 100.0;
+  var spawnAmount = 1;
+  late int indexZ;
+  late int indexRow;
+  late int indexColumn;
+
+  double get x => convertIndexToX(indexRow);
+  double get y => convertIndexToY(indexColumn);
+  double get z => convertIndexToY(indexZ);
 
   @override
   int get type => NodeType.Spawn;
