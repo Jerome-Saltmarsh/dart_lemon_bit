@@ -1,4 +1,77 @@
+Strike Stamina (The higher bar the greater tha damage)
+It automatically recharges after 3 seconds of not using it.
+The same bar is used to blocking and sprinting.
 
+Blocking
+Striking
+Sprinting
+deplete your strength
+
+Using Abilities depletes Magic
+
+Each weapon has different abilities
+
+Shotgun
+    - Mega blast shoots twice the number of shots
+
+Snap
+    - Allows you to teleport a short distance away
+
+Storm-Punk the name of the game
+Stream-Punk the name of the game
+
+Ruby Amulet - heals +1 health every 30 seconds
+Sapphire Amulet - heals +1 mana every 30 seconds
+
+Some items add a buff to the player on collection such as extra damage for the next ten seconds
+
+Attributes can effect how long buffs last
+
+Using a weapon charges its special, once a special is full it can be released.
+
+[CASUAL]
+    - no join queue
+    - endless
+    - no goal
+
+[WORLD]
+    - no join queue
+    - join the open world game
+    - solve quests
+    - explore the world
+
+[BATTLE-SOLO]
+    - join a queue
+    - last one standing wins
+
+[BATTLE-TEAM]
+    - join a queue
+    - last one standing wins
+
+[LEVELS]
+    - join a queue to find a game
+    - play on a team
+    - kill all the creeps on the map to reach the next level
+    - reach the highest level
+
+[WAVES]
+    - join a queue to find a game
+    - play on a team
+    - defend the base against swarms of enemies
+    - difficulty increases after each wave
+
+PRIMARY GAME LOOP
+    - Kill bad guys
+    - find loot
+    - Upgrade Player and inventory
+
+IDEAS
+    - eliminate magic altogether
+    - Each item only has a cooldown
+    - A weapons special can but upgraded and customized
+    - Striking creeps charges the special
+    - This mechanic is integrated into the hook
+    - Selectable Characters with entire law
 
 DARK-AGE GAME DESIGN BY JEROME SALTMARSH
 

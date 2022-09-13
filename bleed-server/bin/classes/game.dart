@@ -70,6 +70,12 @@ abstract class Game {
     if (node is NodeOriented) {
       node.orientation = orientation;
     }
+    if (node is NodeSpawn) {
+      node.indexZ = z;
+      node.indexRow = row;
+      node.indexColumn = column;
+      nodeSpawnInstancesCreate(node);
+    }
     scene.grid[z][row][column] = node;
     onNodeChanged(z, row, column);
   }
