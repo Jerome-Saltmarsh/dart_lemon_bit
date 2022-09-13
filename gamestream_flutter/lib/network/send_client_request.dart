@@ -29,6 +29,10 @@ void sendClientRequestTeleportScene(TeleportScenes scene){
   sendClientRequest(ClientRequest.Teleport_Scene, scene.index);
 }
 
+void sendClientRequestSpawnNodeData(int z, int row, int column){
+  sendClientRequest(ClientRequest.Spawn_Node_Data, '$z $row $column');
+}
+
 void sendClientRequestDeckAddCard(CardType value){
   sendClientRequest(ClientRequest.Deck_Add_Card, value.index);
 }

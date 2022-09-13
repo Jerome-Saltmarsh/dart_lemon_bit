@@ -212,6 +212,17 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Editor_GameObject_Selected:
           readEditorGameObjectSelected();
           break;
+        case ServerResponse.Node_Data:
+          print("ServerResponse.Node_Data");
+          final spawnType = readByte();
+          final spawnAmount = readInt();
+          final spawnRadius = readDouble();
+          edit.selectedNodeData.value = SpawnNodeData(
+             spawnType: spawnType,
+             spawnAmount: spawnAmount,
+             spawnRadius: spawnRadius,
+          );
+          break;
         default:
           throw Exception("Cannot parse $response at index: $index");
       }

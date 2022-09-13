@@ -68,5 +68,6 @@ class ServerResponse {
   static const GameObject_Jellyfish_Red = 100;
   static const Editor_GameObject_Selected = 101;
   static const Player_Can_Teleport = 102;
+  static const Node_Data = 103;
 }
 

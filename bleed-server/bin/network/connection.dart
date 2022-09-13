@@ -386,6 +386,30 @@ class Connection {
         player.attackType2 = weaponTypeIndex;
         break;
 
+      case ClientRequest.Spawn_Node_Data:
+        if (arguments.length < 4){
+          return errorInvalidArg('expected 4 args');
+        }
+        final z = int.tryParse(arguments[1]);
+        final row = int.tryParse(arguments[2]);
+        final column = int.tryParse(arguments[3]);
+
+        if (z == null) return errorInvalidArg('z is null');
+        if (row == null) return errorInvalidArg('row is null');
+        if (column == null) return errorInvalidArg('column is null');
+        final node = player.game.scene.getNode(z, row, column);
+
+        if (node is NodeSpawn){
+          player.writeByte(ServerResponse.Node_Data);
+          player.writeByte(node.spawnType);
+          player.writeInt(node.spawnAmount);
+          player.writeInt(node.spawnRadius);
+        } else {
+          return errorInvalidArg('node.type is not spawn');
+        }
+
+        break;
+
       case ClientRequest.Teleport_Scene:
         final sceneIndex = int.tryParse(arguments[1]);
 

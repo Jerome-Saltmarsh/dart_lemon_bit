@@ -3,6 +3,7 @@ import 'package:bleed_common/node_type.dart';
 import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_cursor_position.dart';
+import 'package:gamestream_flutter/isometric/editor/events/on_changed_node_type_spawn_selected.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_paint_type.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
@@ -17,6 +18,18 @@ import 'utils/mouse_raycast.dart';
 
 final edit = EditState();
 
+class SpawnNodeData {
+  final int spawnType;
+  final int spawnAmount;
+  final double spawnRadius;
+
+  SpawnNodeData({
+    required this.spawnType,
+    required this.spawnRadius,
+    required this.spawnAmount,
+  });
+}
+
 class EditState {
 
 
@@ -26,7 +39,7 @@ class EditState {
     return value();;
   }
 
-
+  final selectedNodeData = Watch<SpawnNodeData?>(null);
   final gameObject = GameObject();
   final gameObjectSelected = Watch(false);
   final gameObjectSelectedType = Watch(0);
@@ -37,7 +50,7 @@ class EditState {
   final nodeSelected = Watch<Node>(Node.boundary, onChanged: onChangedSelectedNode);
   final nodeSelectedOrientation = Watch(NodeOrientation.None);
   final nodeOrientationVisible = Watch(true);
-  final nodeTypeSpawnSelected = Watch(false,);
+  final nodeTypeSpawnSelected = Watch(false, onChanged: onChangeNodeTypeSpawnSelected);
   final nodeSupportsSolid = Watch(false);
   final nodeSupportsSlopeSymmetric = Watch(false);
   final nodeSupportsSlopeCornerInner = Watch(false);

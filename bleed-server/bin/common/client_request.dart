@@ -40,6 +40,7 @@ enum ClientRequest {
   Player_Equip_Attack_Type_1,
   Player_Equip_Attack_Type_2,
   Teleport_Scene,
+  Spawn_Node_Data,
 }
 
 const clientRequests = ClientRequest.values;

@@ -1,5 +1,6 @@
 import 'package:bleed_common/node_orientation.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
+import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/watches/raining.dart';
 import 'package:lemon_math/library.dart';
 import 'package:bleed_common/node_type.dart';
@@ -916,7 +917,10 @@ class NodeSpawn extends Node {
   NodeSpawn(int row, int column, int z) : super(row, column, z);
 
   @override
-  void handleRender() => renderStandardNode(8752, 0);
+  void handleRender(){
+     if (playModeEdit)
+       renderStandardNode(8752, 0);
+  }
 
   @override
   int get type => NodeType.Spawn;

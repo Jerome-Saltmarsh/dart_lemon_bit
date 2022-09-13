@@ -81,17 +81,22 @@ Widget buildColumnEditNodeOrientation() =>
   );
 
 Widget buildColumnEditSpawn() =>
-    visibleBuilder(
-        edit.nodeTypeSpawnSelected,
-        Container(
-          padding: padding6,
-          color: brownLight,
-          child: Column(
-            children: [
-              text("Spawn"),
-            ],
-          ),
-        )
+    watch(
+        edit.selectedNodeData,
+        (SpawnNodeData? value){
+          if (value == null) return const SizedBox();
+          return Container(
+            padding: padding6,
+            color: brownLight,
+            child: Column(
+              children: [
+                text("Type: ${SpawnType.getName(value.spawnType)}"),
+                text("Amount: ${value.spawnAmount}"),
+                text("Radius: ${value.spawnRadius}"),
+              ],
+            ),
+          );
+        }
     );
 
 Widget buildColumnNodeOrientationSolid() =>
