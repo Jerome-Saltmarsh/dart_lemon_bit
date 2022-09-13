@@ -494,6 +494,12 @@ extension GameFunctions on Game {
       removeInstance(character);
       i--;
     }
+    for (var i = 0; i < gameObjects.length; i++){
+      final gameObject = gameObjects[i];
+      if (gameObject.spawn != node) continue;
+      removeInstance(gameObject);
+      i--;
+    }
   }
 
   void nodeSpawnInstancesCreate(NodeSpawn node) {

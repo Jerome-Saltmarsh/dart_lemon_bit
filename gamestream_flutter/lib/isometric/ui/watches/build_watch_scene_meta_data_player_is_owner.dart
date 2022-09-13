@@ -91,7 +91,6 @@ Widget buildColumnEditSpawn() =>
             color: brownLight,
             child: Column(
               children: [
-                text("Type: ${SpawnType.getName(value.spawnType)}"),
                 Row(
                   children: [
                     text("Amount: ${value.spawnAmount}"),
