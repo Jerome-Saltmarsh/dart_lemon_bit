@@ -428,6 +428,8 @@ class Connection {
           node.spawnAmount = spawnAmount;
           node.spawnRadius = spawnRadius;
           player.writeNodeData(node);
+          game.nodeSpawnInstancesClear(node);
+          game.nodeSpawnInstancesCreate(node);
         } else {
           return errorInvalidArg('ClientRequest.Spawn_Node_Data_Modify. Selected node must be of type spawn');
         }
