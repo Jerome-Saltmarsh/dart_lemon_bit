@@ -20,6 +20,7 @@ import '../maths.dart';
 import '../utilities.dart';
 import 'gameobject.dart';
 import 'library.dart';
+import 'node.dart';
 import 'position3.dart';
 import 'rat.dart';
 import 'zombie.dart';
@@ -662,21 +663,6 @@ extension PlayerProperties on Player {
     writeTotalActive(projectiles);
     projectiles.forEach(writeProjectile);
   }
-  //
-  // void writePlayers(){
-  //   writeByte(ServerResponse.Players);
-  //   final players = game.players;
-  //   for (final otherPlayer in players) {
-  //     if (otherPlayer.dead) continue;
-  //     if (otherPlayer.renderY < screenTop) continue;
-  //     if (otherPlayer.renderX < screenLeft) continue;
-  //     if (otherPlayer.renderX > screenRight) continue;
-  //     if (otherPlayer.renderY > screenBottom) break;
-  //     writePlayer(otherPlayer);
-  //     writeString(otherPlayer.text);
-  //   }
-  //   writeByte(END);
-  // }
 
   void writeZombie(Zombie zombie){
     writeByte(ServerResponse.Character_Zombie);
@@ -863,6 +849,13 @@ extension PlayerProperties on Player {
       return card;
     }
     return null;
+  }
+
+  void writeNodeData(NodeSpawn node){
+    writeByte(ServerResponse.Node_Data);
+    writeByte(node.spawnType);
+    writeInt(node.spawnAmount);
+    writeInt(node.spawnRadius);
   }
 
   void addCardToDeck(CardType type){

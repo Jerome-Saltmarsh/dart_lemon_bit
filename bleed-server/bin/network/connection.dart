@@ -399,16 +399,9 @@ class Connection {
         if (column == null) return errorInvalidArg('column is null');
         final node = player.game.scene.getNode(z, row, column);
 
-        if (node is NodeSpawn){
-          player.writeByte(ServerResponse.Node_Data);
-          player.writeByte(node.spawnType);
-          player.writeInt(node.spawnAmount);
-          player.writeInt(node.spawnRadius);
-        } else {
-          return errorInvalidArg('node.type is not spawn');
-        }
-
-        break;
+        if (node is NodeSpawn)
+          return player.writeNodeData(node);
+        return errorInvalidArg('node.type is not spawn');
 
       case ClientRequest.Spawn_Node_Data_Modify:
         if (arguments.length < 6){
@@ -430,13 +423,16 @@ class Connection {
 
         final node = player.scene.getNode(z, row, column);
 
-        if (node is NodeSpawn){
+        if (node is NodeSpawn) {
           node.spawnType = spawnType;
           node.spawnAmount = spawnAmount;
           node.spawnRadius = spawnRadius;
+          player.writeNodeData(node);
         } else {
           return errorInvalidArg('ClientRequest.Spawn_Node_Data_Modify. Selected node must be of type spawn');
         }
+
+
 
         break;
 
