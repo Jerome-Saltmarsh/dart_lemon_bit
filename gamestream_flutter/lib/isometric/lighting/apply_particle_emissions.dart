@@ -22,4 +22,39 @@ void applyParticleEmission(Particle particle){
     }
     return applyVector3Emission(particle, maxBrightness: Shade.Dark);
   }
+
+  if (particle.type == ParticleType.Light_Emission){
+
+    if (particle.duration > 18){
+      return applyVector3Emission(particle, maxBrightness: Shade.Very_Very_Dark);
+    }
+    if (particle.duration > 17){
+      return applyVector3Emission(particle, maxBrightness: Shade.Very_Dark);
+    }
+    if (particle.duration > 16){
+      return applyVector3Emission(particle, maxBrightness: Shade.Dark);
+    }
+    if (particle.duration > 15){
+      return applyVector3Emission(particle, maxBrightness: Shade.Medium);
+    }
+    if (particle.duration > 14){
+      return applyVector3Emission(particle, maxBrightness: Shade.Bright);
+    }
+    if (particle.duration > 13){
+      return applyVector3Emission(particle, maxBrightness: Shade.Very_Bright);
+    }
+    if (particle.duration > 9){
+      return applyVector3Emission(particle, maxBrightness: Shade.Bright);
+    }
+    if (particle.duration > 7){
+      return applyVector3Emission(particle, maxBrightness: Shade.Medium);
+    }
+    if (particle.duration > 5) {
+      return applyVector3Emission(particle, maxBrightness: Shade.Dark);
+    }
+    if (particle.duration > 3) {
+      return applyVector3Emission(particle, maxBrightness: Shade.Very_Dark);
+    }
+    return applyVector3Emission(particle, maxBrightness: Shade.Very_Very_Dark);
+  }
 }

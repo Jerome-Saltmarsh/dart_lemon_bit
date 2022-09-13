@@ -11,6 +11,7 @@ void onCharacterDeath(int type, double x, double y, double z, double angle) {
   spawnPurpleFireExplosion(x, y, z);
   spawnBubbles(x, y, z);
 
+
   switch (type) {
     case CharacterType.Zombie:
       return onCharacterDeathZombie(type, x, y, z, angle);

@@ -860,6 +860,24 @@ void spawnParticleStarExploding({
   );
 }
 
+void spawnParticleLightEmission({
+  required double x,
+  required double y,
+  required double z,
+}) =>
+  spawnParticle(
+      type: ParticleType.Light_Emission,
+      x: x,
+      y: y,
+      z: z,
+      angle: 0,
+      speed: 0,
+      weight: 0,
+      duration: 19,
+      checkCollision: false,
+      animation: true,
+  );
+
 void spawnParticle({
   required int type,
   required double x,

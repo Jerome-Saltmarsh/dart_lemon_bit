@@ -8,4 +8,5 @@ void spawnPurpleFireExplosion(double x, double y, double z){
     spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: randomAngle());
     spawnParticleFirePurple(x: x + giveOrTake(5), y: y + giveOrTake(5), z: z, speed: 1, angle: randomAngle());
   }
+  spawnParticleLightEmission(x: x, y: y, z: z);
 }

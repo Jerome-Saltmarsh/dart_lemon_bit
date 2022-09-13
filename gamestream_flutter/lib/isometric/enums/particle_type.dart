@@ -34,4 +34,5 @@ class ParticleType {
   static const Block_Brick = 33;
   static const Water_Drop = 34;
   static const Slash_Crowbar = 35;
+  static const Light_Emission = 36;
 }
