@@ -184,6 +184,8 @@ class NodeType {
           "Wooden Plank",
        Boulder:
            "Boulder",
+       Spawn:
+           "Spawn",
 
      }[type] ?? "unknown($type)";
 

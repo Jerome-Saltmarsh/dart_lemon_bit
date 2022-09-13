@@ -910,3 +910,15 @@ class NodeSpawning extends Node {
   @override
   int get type => NodeType.Respawning;
 }
+
+class NodeSpawn extends Node {
+
+  NodeSpawn(int row, int column, int z) : super(row, column, z);
+
+  @override
+  void handleRender() => renderStandardNode(8752, 0);
+
+  @override
+  int get type => NodeType.Spawn;
+}
+

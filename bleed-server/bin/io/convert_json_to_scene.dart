@@ -131,6 +131,14 @@ List<List<List<Node>>> convertFlatGridToGrid(List<dynamic> flatGrid, int height,
              node.orientation = NodeType.getDefaultOrientation(node.type);
           }
         }
+        if (node is NodeSpawn) {
+           index++;
+           node.spawnType = flatGrid[index];
+           index++;
+           node.spawnAmount = flatGrid[index];
+           index++;
+           node.spawnRadius = flatGrid[index];
+        }
         index++;
         return node;
       });

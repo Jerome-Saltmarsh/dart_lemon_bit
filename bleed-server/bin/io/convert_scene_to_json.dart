@@ -51,6 +51,14 @@ List<int> convertNodesToByteArray(List<List<List<Node>>> nodes) {
           continue;
         }
 
+        if (node is NodeSpawn) {
+          bytes.add(NodeType.Spawn);
+          bytes.add(node.spawnType);
+          bytes.add(node.spawnAmount);
+          bytes.add(node.spawnRadius);
+          continue;
+        }
+
         if (node.type == NodeType.Roof_Tile_South) {
           bytes.add(NodeType.Cottage_Roof);
           bytes.add(NodeOrientation.Slope_South);

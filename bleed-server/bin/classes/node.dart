@@ -265,6 +265,15 @@ class NodeRespawning extends NodeNoneCollidable {
   int get type => NodeType.Respawning;
 }
 
+class NodeSpawn extends NodeNoneCollidable {
+  var spawnType = 0;
+  var spawnRadius = 100;
+  var spawnAmount = 5;
+
+  @override
+  int get type => NodeType.Spawn;
+}
+
 class NodeRoofHayNorth extends NodeSlopeNorth {
   @override
   int get type => NodeType.Roof_Hay_North;

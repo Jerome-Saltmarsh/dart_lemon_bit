@@ -80,8 +80,9 @@ Node generateNode(int z, int row, int column, int type, int orientation){
     case NodeType.Boulder:
       return NodeBoulder(row, column, z);
     case NodeType.Respawning:
-      print("respawning generated");
       return NodeSpawning(row, column, z);
+    case NodeType.Spawn:
+      return NodeSpawn(row, column, z);
     default:
       throw Exception("Cannot build grid node type $type (${NodeType.getName(type)}");
   }

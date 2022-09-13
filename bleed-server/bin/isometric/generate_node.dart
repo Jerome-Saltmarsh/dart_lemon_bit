@@ -63,6 +63,8 @@ Node generateNode(int type){
       return NodeOven();
     case NodeType.Respawning:
       return NodeRespawning();
+    case NodeType.Spawn:
+      return NodeSpawn();
     default:
       print("Warning: Cannot generate node for type $type (${NodeType.getName(type)})");
       return Node.empty;

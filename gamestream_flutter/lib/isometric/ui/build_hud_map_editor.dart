@@ -349,7 +349,6 @@ Widget buildColumnEdit() {
 }
 
 const editorGridTypesColumn1 = [
-  // NodeType.Empty,
   NodeType.Water,
   NodeType.Brick_2,
   NodeType.Soil,
@@ -361,6 +360,7 @@ const editorGridTypesColumn1 = [
   NodeType.Fireplace,
   NodeType.Tree_Top,
   NodeType.Tree_Bottom,
+  NodeType.Spawn,
 ];
 
 const editorGridTypesColumn2 = [
