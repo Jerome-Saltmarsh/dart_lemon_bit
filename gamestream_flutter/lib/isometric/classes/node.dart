@@ -57,6 +57,7 @@ abstract class Node {
 
   bool get isStone => false;
   bool get isWood => false;
+  bool get isSpawn => type == NodeType.Spawn;
 
   void resetShadeToBake(){
     shade = bake;

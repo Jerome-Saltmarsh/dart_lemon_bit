@@ -37,6 +37,7 @@ class EditState {
   final nodeSelected = Watch<Node>(Node.boundary, onChanged: onChangedSelectedNode);
   final nodeSelectedOrientation = Watch(NodeOrientation.None);
   final nodeOrientationVisible = Watch(true);
+  final nodeTypeSpawnSelected = Watch(false,);
   final nodeSupportsSolid = Watch(false);
   final nodeSupportsSlopeSymmetric = Watch(false);
   final nodeSupportsSlopeCornerInner = Watch(false);

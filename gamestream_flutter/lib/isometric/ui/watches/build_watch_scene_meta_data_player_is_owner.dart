@@ -21,6 +21,7 @@ import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:lemon_engine/screen.dart';
 
+import '../../../styles.dart';
 import '../widgets/build_container.dart';
 
 Widget buildPlayMode(Mode mode) {
@@ -34,6 +35,11 @@ Stack buildStackEdit() {
         right: 6,
         top: 80,
         child: buildColumnEditNodeOrientation(),
+      ),
+      Positioned(
+        right: 6,
+        top: 80,
+        child: buildColumnEditSpawn(),
       ),
       Positioned(
         left: 0,
@@ -73,6 +79,20 @@ Widget buildColumnEditNodeOrientation() =>
       ],
     )
   );
+
+Widget buildColumnEditSpawn() =>
+    visibleBuilder(
+        edit.nodeTypeSpawnSelected,
+        Container(
+          padding: padding6,
+          color: brownLight,
+          child: Column(
+            children: [
+              text("Spawn"),
+            ],
+          ),
+        )
+    );
 
 Widget buildColumnNodeOrientationSolid() =>
     visibleBuilder(

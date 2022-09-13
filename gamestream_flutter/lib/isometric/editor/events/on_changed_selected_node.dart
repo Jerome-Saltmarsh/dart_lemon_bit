@@ -7,4 +7,5 @@ void onChangedSelectedNode(Node node){
    edit.nodeSelectedOrientation.value = node.orientation;
    edit.updateNodeSupports(node.type);
    edit.nodeOrientationVisible.value = NodeType.isOriented(node.type);
+   edit.nodeTypeSpawnSelected.value = node.isSpawn;
 }
