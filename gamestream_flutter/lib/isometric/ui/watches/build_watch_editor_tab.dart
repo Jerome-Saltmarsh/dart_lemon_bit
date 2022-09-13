@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
+import 'package:gamestream_flutter/isometric/ui/constants/editor_grid_type_columns.dart';
 import 'package:lemon_engine/screen.dart';
 
 import '../build_hud_map_editor.dart';
