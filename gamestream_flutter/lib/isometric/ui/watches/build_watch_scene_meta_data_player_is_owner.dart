@@ -2,6 +2,7 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/spawn_type.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_show_game_dialog_canvas_size.dart';
 import 'package:gamestream_flutter/isometric/editor/actions/editor_action_modify_spawn_node.dart';
@@ -108,6 +109,7 @@ Widget buildColumnEditSpawn() =>
                 Column(
                   children: SpawnType.values.map((int spawnType) =>
                       container(
+                        color: spawnType == value.spawnType ? colours.blue : Colors.grey,
                         child: SpawnType.getName(spawnType),
                         action: () => editorActionModifySpawnNode(
                            spawnType: spawnType,
