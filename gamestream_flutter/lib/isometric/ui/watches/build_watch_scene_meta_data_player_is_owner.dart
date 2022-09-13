@@ -105,6 +105,19 @@ Widget buildColumnEditSpawn() =>
                   ],
                 ),
                 text("Radius: ${value.spawnRadius}"),
+                height16,
+                Column(
+                  children: SpawnType.values.map((int spawnType) =>
+                      container(
+                        child: SpawnType.getName(spawnType),
+                        action: () => editorActionModifySpawnNode(
+                           spawnType: spawnType,
+                           spawnAmount: value.spawnAmount,
+                           spawnRadius: value.spawnRadius,
+                        )
+                      ),
+                  ).toList(),
+                )
               ],
             ),
           );

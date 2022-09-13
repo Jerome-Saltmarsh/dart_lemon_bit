@@ -15,6 +15,17 @@ class SpawnType {
     if (index > max) return max;
     return index;
   }
+  
+  static const values = [
+    Zombie,
+    Chicken,
+    Butterfly,
+    Rat,
+    Jellyfish,
+    Jellyfish_Red,
+    Template,
+    Slime,
+  ];
 
   static String getName(int type) {
     return const {
