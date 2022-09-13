@@ -216,7 +216,7 @@ class ServerResponseReader with ByteReader {
           print("ServerResponse.Node_Data");
           final spawnType = readByte();
           final spawnAmount = readInt();
-          final spawnRadius = readDouble();
+          final spawnRadius = readInt();
           edit.selectedNodeData.value = SpawnNodeData(
              spawnType: spawnType,
              spawnAmount: spawnAmount,

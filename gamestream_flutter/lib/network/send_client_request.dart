@@ -261,6 +261,19 @@ void sendClientRequestPlayerEquipAttackType2(int weaponType){
   sendClientRequest(ClientRequest.Player_Equip_Attack_Type_2, weaponType);
 }
 
+void sendClientRequestSpawnNodeDataModify({
+  required int z,
+  required int row,
+  required int column,
+  required int spawnType,
+  required int spawnAmount,
+  required int spawnRadius,
+}) =>
+  sendClientRequest(
+      ClientRequest.Spawn_Node_Data_Modify,
+      '$z $row $column $spawnType $spawnAmount $spawnRadius'
+  );
+
 void sendGameObjectRequestMoveToMouse() {
   sendGameObjectRequest(GameObjectRequest.Move_To_Mouse);
 }

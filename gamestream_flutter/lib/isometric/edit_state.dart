@@ -21,7 +21,7 @@ final edit = EditState();
 class SpawnNodeData {
   final int spawnType;
   final int spawnAmount;
-  final double spawnRadius;
+  final int spawnRadius;
 
   SpawnNodeData({
     required this.spawnType,

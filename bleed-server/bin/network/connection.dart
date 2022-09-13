@@ -410,6 +410,36 @@ class Connection {
 
         break;
 
+      case ClientRequest.Spawn_Node_Data_Modify:
+        if (arguments.length < 6){
+          return errorInvalidArg('expected 6 args');
+        }
+        final z = int.tryParse(arguments[1]);
+        final row = int.tryParse(arguments[2]);
+        final column = int.tryParse(arguments[3]);
+        final spawnType = int.tryParse(arguments[4]);
+        final spawnAmount = int.tryParse(arguments[5]);
+        final spawnRadius = double.tryParse(arguments[6]);
+
+        if (z == null) return errorInvalidArg('z is null');
+        if (row == null) return errorInvalidArg('row is null');
+        if (column == null) return errorInvalidArg('column is null');
+        if (spawnType == null) return errorInvalidArg('spawnType is null');
+        if (spawnAmount == null) return errorInvalidArg('spawnAmount is null');
+        if (spawnRadius == null) return errorInvalidArg('spawnRadius is null');
+
+        final node = player.scene.getNode(z, row, column);
+
+        if (node is NodeSpawn){
+          node.spawnType = spawnType;
+          node.spawnAmount = spawnAmount;
+          node.spawnRadius = spawnRadius;
+        } else {
+          return errorInvalidArg('ClientRequest.Spawn_Node_Data_Modify. Selected node must be of type spawn');
+        }
+
+        break;
+
       case ClientRequest.Teleport_Scene:
         final sceneIndex = int.tryParse(arguments[1]);
 

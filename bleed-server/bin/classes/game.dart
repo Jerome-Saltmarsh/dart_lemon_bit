@@ -482,7 +482,9 @@ extension GameFunctions on Game {
       for (final row in plane) {
          for (final node in row){
             if (node is NodeSpawn){
-
+              for (var i = 0; i < node.spawnAmount; i++) {
+                spawnNodeInstance(node);
+              }
             }
          }
       }
@@ -744,7 +746,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void spawnNode(NodeSpawn spawn) {
+  void spawnNodeInstance(NodeSpawn spawn) {
     final distance = randomBetween(0, spawn.spawnRadius);
     final angle = randomAngle();
     final x = getAdjacent(angle, distance);

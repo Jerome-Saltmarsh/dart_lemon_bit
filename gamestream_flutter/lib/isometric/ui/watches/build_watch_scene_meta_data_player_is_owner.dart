@@ -4,6 +4,7 @@ import 'package:bleed_common/spawn_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_show_game_dialog_canvas_size.dart';
+import 'package:gamestream_flutter/isometric/editor/actions/editor_action_modify_spawn_node.dart';
 import 'package:gamestream_flutter/isometric/editor/actions/save_scene.dart';
 import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
@@ -91,7 +92,18 @@ Widget buildColumnEditSpawn() =>
             child: Column(
               children: [
                 text("Type: ${SpawnType.getName(value.spawnType)}"),
-                text("Amount: ${value.spawnAmount}"),
+                Row(
+                  children: [
+                    text("Amount: ${value.spawnAmount}"),
+                    text("+", onPressed: () =>
+                      editorActionModifySpawnNode(
+                        spawnType: value.spawnType,
+                        spawnRadius: value.spawnRadius,
+                        spawnAmount: value.spawnAmount + 1,
+                      )
+                    ),
+                  ],
+                ),
                 text("Radius: ${value.spawnRadius}"),
               ],
             ),
