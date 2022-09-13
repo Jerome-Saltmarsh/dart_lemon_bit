@@ -24,6 +24,9 @@ class NodeOrientation {
    static const Destroyed = 22;
    static const Respawning = 23;
 
+   static const Tree_Top = 24;
+   static const Tree_Bottom = 25;
+
    static const valuesSlopeSymmetric = [
       Slope_North,
       Slope_East,

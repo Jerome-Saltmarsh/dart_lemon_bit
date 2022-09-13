@@ -280,11 +280,6 @@ class NodeStone extends NodeSolid {
   int get type => NodeType.Stone;
 }
 
-class NodeBauHaus extends NodeSolid {
-  @override
-  int get type => NodeType.Bau_Haus;
-}
-
 class NodeBauHausWindow extends NodeSolid {
   @override
   int get type => NodeType.Bau_Haus_Window;

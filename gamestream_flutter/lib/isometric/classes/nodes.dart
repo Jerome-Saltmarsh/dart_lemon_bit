@@ -458,6 +458,22 @@ class NodeBauHaus extends Node {
       return renderShadeAuto(srcX, srcYIndex5);
     if (orientation == NodeOrientation.Corner_Left)
       return renderShadeAuto(srcX, srcYIndex6);
+    if (orientation == NodeOrientation.Slope_North)
+      return renderShadeAuto(11228, 0);
+    if (orientation == NodeOrientation.Slope_East)
+      return renderShadeAuto(11228, 73);
+    if (orientation == NodeOrientation.Slope_South)
+      return renderShadeAuto(11228, 146);
+    if (orientation == NodeOrientation.Slope_West)
+      return renderShadeAuto(11228, 219);
+    if (orientation == NodeOrientation.Slope_Inner_North_East)
+      return renderShadeAuto(11228, 292);
+    if (orientation == NodeOrientation.Slope_Inner_South_East)
+      return renderShadeAuto(11228, 365);
+    if (orientation == NodeOrientation.Slope_Inner_South_West)
+      return renderShadeAuto(11228, 438);
+    if (orientation == NodeOrientation.Slope_Inner_North_West)
+      return renderShadeAuto(11228, 511);
   }
 }
 
@@ -717,15 +733,20 @@ class NodeCottageRoof extends Node {
 }
 
 class NodeGrass2 extends Node {
-  NodeGrass2(int row, int column, int z) : super(row, column, z);
+
+  var variation = false;
+
+  NodeGrass2(int row, int column, int z) : super(row, column, z) {
+    variation = randomBool();
+  }
 
   @override
-  int get type => NodeType.Grass_2;
+  int get type => NodeType.Grass;
 
   @override
   void handleRender() {
     if (orientation == NodeOrientation.Solid)
-      return renderShadeManual(7158);
+      return renderShadeManual(variation ? 7158 : 9782);
     if (orientation == NodeOrientation.Slope_North)
       return renderShadeManual(7925);
     if (orientation == NodeOrientation.Slope_East)

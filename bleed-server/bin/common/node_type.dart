@@ -34,7 +34,7 @@ class NodeType {
   static const Brick_2 = 62;
   static const Wood_2 = 63;
   static const Cottage_Roof = 64;
-  static const Grass_2 = 65;
+  static const Grass = 65;
   static const Plain = 66;
   static const Window = 67;
   static const Wooden_Plank = 68;
@@ -46,7 +46,7 @@ class NodeType {
   static bool isOriented(int value) =>
       value == Brick_2 ||
       value == Wood_2 ||
-      value == Grass_2 ||
+      value == Grass ||
       value == Plain ||
       value == Window ||
       value == Wooden_Plank ||
@@ -58,7 +58,7 @@ class NodeType {
      const [
         Brick_2,
         Wood_2,
-        Grass_2,
+        Grass,
         Plain,
         Wooden_Plank,
         Bau_Haus_2,
@@ -76,19 +76,21 @@ class NodeType {
     const [
       Cottage_Roof,
       Wood_2,
-      Grass_2,
+      Grass,
       Brick_2,
+      Bau_Haus_2,
     ].contains(type);
 
   static bool isSlopeCornerInner(int type) =>
     const [
       Cottage_Roof,
-      Grass_2,
+      Grass,
+      Bau_Haus_2,
     ].contains(type);
 
   static bool isSlopeCornerOuter(int type) =>
     const [
-      Grass_2,
+      Grass,
     ].contains(type);
 
   static bool isHalf(int type) =>
@@ -172,7 +174,7 @@ class NodeType {
           "Wood 2",
        Cottage_Roof:
           "Cottage Roof",
-       Grass_2:
+       Grass:
           "Grass 2",
        Plain:
           "Plain",

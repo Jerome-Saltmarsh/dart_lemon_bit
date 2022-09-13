@@ -20,7 +20,7 @@ List<List<List<Node>>> generate_grid_empty({
          final r = <Node>[];
          plain.add(r);
          for (var column = 0; column < columns; column++){
-            r.add(z == 0 ? NodeOriented(orientation: NodeOrientation.Solid, type: NodeType.Grass_2) : Node.empty);
+            r.add(z == 0 ? NodeOriented(orientation: NodeOrientation.Solid, type: NodeType.Grass) : Node.empty);
          }
      }
   }

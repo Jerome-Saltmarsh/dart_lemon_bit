@@ -545,7 +545,7 @@ class Connection {
     if (dimension == 1) {
        if (add == 1) {
          if (start == 1){
-           var type = NodeType.Grass_2;
+           var type = NodeType.Grass;
               for (final z in grid){
                 z.insert(
                     0,
@@ -554,7 +554,7 @@ class Connection {
                 type = NodeType.Empty;
               }
          } else { // End
-           var type = NodeType.Grass_2;
+           var type = NodeType.Grass;
            for (final z in grid){
              z.add(
                  generateGridRow(columns, type: type)
@@ -579,7 +579,7 @@ class Connection {
     if (dimension == 2){
       if (add == 1){
         if (start == 1){
-          var type = NodeType.Grass_2;
+          var type = NodeType.Grass;
            for (final z in grid){
               for (final row in z){
                  row.insert(0, generateNode(type));
@@ -587,7 +587,7 @@ class Connection {
               type = NodeType.Empty;
            }
         } else {
-          var type = NodeType.Grass_2;
+          var type = NodeType.Grass;
           for (final z in grid){
             for (final row in z){
               row.add(generateNode(type));

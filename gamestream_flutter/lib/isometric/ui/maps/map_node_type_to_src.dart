@@ -2,7 +2,7 @@ import 'package:bleed_common/node_type.dart';
 
 double mapNodeTypeToSrcX(int type) => {
   NodeType.Brick_2: 11377.0,
-  NodeType.Grass_2: 7158.0,
+  NodeType.Grass: 7158.0,
   NodeType.Wood_2: 7590.0,
   NodeType.Torch: 2086.0,
   NodeType.Grass_Long: 10118.0,

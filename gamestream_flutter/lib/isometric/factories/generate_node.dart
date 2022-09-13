@@ -69,7 +69,7 @@ Node generateNode(int z, int row, int column, int type, int orientation){
       return NodeWood2(row, column, z);
     case NodeType.Cottage_Roof:
       return NodeCottageRoof(row, column, z);
-    case NodeType.Grass_2:
+    case NodeType.Grass:
       return NodeGrass2(row, column, z);
     case NodeType.Plain:
       return NodePlain(row, column, z);

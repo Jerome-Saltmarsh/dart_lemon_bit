@@ -30,11 +30,9 @@ void readPlayerInput() {
     }
   }
 
-  if (keyPressed(keys.speak)){
+  if (keyPressed(LogicalKeyboardKey.enter)){
     messageBoxShow();
   }
-
-  if (messageBoxVisible.value) return;
 }
 
 void readPlayerInputEdit() {

@@ -118,7 +118,7 @@ class EditState {
 
   void paintSlope(int row, int column, int z){
     if (outOfBounds(z, row, column)) return;
-    var type = NodeType.Grass_2;
+    var type = NodeType.Grass;
     sendClientRequestSetBlock(row, column, z, type, paintOrientation.value);
   }
 
@@ -176,7 +176,7 @@ class EditState {
   }
 
   void paintGrass(){
-    paint(value: NodeType.Grass_2);
+    paint(value: NodeType.Grass);
   }
 
   void paintWater(){

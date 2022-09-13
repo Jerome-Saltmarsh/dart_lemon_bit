@@ -12,7 +12,7 @@ Node generateNode(int type){
       type: type,
     );
 
-  switch(type) {
+  switch (type) {
     case NodeType.Boundary:
       return Node.boundary;
     case NodeType.Water:
@@ -45,8 +45,6 @@ Node generateNode(int type){
       return Node.empty;
     case NodeType.Rain_Falling:
       return Node.empty;
-    case NodeType.Bau_Haus:
-      return NodeBauHaus();
     case NodeType.Bau_Haus_Window:
       return NodeBauHausWindow();
     case NodeType.Bau_Haus_Plain:
