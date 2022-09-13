@@ -40,3 +40,9 @@ double convertRowColumnZToY(int row, int column, int z){
   return ((row + column) * tileSizeHalf) - (z * tileHeight);
 }
 
+
+double projectX(double x, double y) =>
+  (x - y) * 0.5;
+
+double projectY(double x, double y, double z,) =>
+    ((y + x) * 0.5) - z;

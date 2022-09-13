@@ -12,6 +12,7 @@ import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/render/render_wireframe.dart';
+import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse_raycast.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/game/queries.dart';
@@ -47,6 +48,8 @@ class GameRender {
     renderEditMode();
     renderMouseTargetName();
     // renderTutorialKeys();
+
+
   }
 
   void renderTutorialKeys() {
@@ -104,6 +107,17 @@ class GameRender {
 
     renderEditWireFrames();
     renderMouseWireFrame();
+
+    final nodeData = edit.selectedNodeData.value;
+    if (nodeData != null){
+       engine.draw.drawCircleOutline(
+           radius: nodeData.spawnRadius.toDouble(),
+           x: edit.renderX,
+           y: edit.renderY,
+           color: Colors.white,
+           sides: 8,
+       );
+    }
   }
 
   void renderMouseTargetName() {

@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/isometric/editor/events/on_changed_node_type_
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_paint_type.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
@@ -83,6 +84,9 @@ class EditState {
   double get posX => row.value * tileSize + tileSizeHalf;
   double get posY => column.value * tileSize + tileSizeHalf;
   double get posZ => z.value * tileHeight;
+
+  double get renderX => projectX(edit.posX, edit.posY);
+  double get renderY => projectY(edit.posX, edit.posY, edit.posZ);
 
   void updateNodeSupports(int type){
     nodeSupportsSolid.value = NodeType.isSolid(type);
