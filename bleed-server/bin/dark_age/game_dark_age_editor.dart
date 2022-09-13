@@ -7,6 +7,10 @@ import 'dark_age_environment.dart';
 import 'game_dark_age.dart';
 
 class GameDarkAgeEditor extends GameDarkAge {
+
+  @override
+  bool get mapVisible => false;
+
   GameDarkAgeEditor({Scene? scene}) : super(scene ?? generateEmptyScene(), DarkAgeEnvironment(DarkAgeTime()));
 
   @override

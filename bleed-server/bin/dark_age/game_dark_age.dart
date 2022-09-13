@@ -15,6 +15,8 @@ class GameDarkAge extends Game {
   @override
   bool get full => false;
 
+  bool get mapVisible => true;
+
   GameDarkAge(Scene scene, this.environment) : super(scene) {
     refreshSpawns();
   }

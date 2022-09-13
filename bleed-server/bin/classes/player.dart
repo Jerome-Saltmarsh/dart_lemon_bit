@@ -303,7 +303,7 @@ class Player extends Character with ByteWriter {
   }
 
   void performAttackTypeAssaultRifle(){
-    performDuration = 1;
+    performDuration = 4;
     game.fireAssaultRifle(this, mouseAngle);
   }
 
@@ -313,7 +313,7 @@ class Player extends Character with ByteWriter {
   }
 
   void performAttackTypeFireball(){
-    performDuration = 15;
+    performDuration = 3;
     game.fireFireball(this, mouseAngle);
   }
 
@@ -617,6 +617,12 @@ extension PlayerProperties on Player {
     writeWeather();
     writeSceneMetaData();
     writeMapCoordinate();
+
+    if (game is GameDarkAge) {
+       writeByte(ServerResponse.Render_Map);
+       writeBool((game as GameDarkAge).mapVisible);
+    }
+
     writePlayerEvent(PlayerEvent.Scene_Changed);
     sceneDownloaded = true;
   }

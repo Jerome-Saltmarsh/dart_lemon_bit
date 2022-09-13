@@ -23,15 +23,6 @@ Widget buildStackPlay() {
     children: [
       Positioned(top: 75, right: 16, child: buildWatchInventoryVisible()),
       Positioned(left: 8, bottom: 50, child: buildColumnTeleport()),
-      watch(player.attackType, (t) {
-        return text(AttackType.getName(player.attackType.value));
-      }),
-      watch(player.attackType, (int attackType) {
-        switch (attackType) {
-          default:
-            return const SizedBox();
-        }
-      }),
       Positioned(top: 50, left: 0, child: buildPanelStore()),
       Positioned(top: 0, left: 0, child: Container(
         width: screen.width,

@@ -69,5 +69,6 @@ class ServerResponse {
   static const Editor_GameObject_Selected = 101;
   static const Player_Can_Teleport = 102;
   static const Node_Data = 103;
+  static const Render_Map = 104;
 }
 

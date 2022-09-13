@@ -213,7 +213,6 @@ class ServerResponseReader with ByteReader {
           readEditorGameObjectSelected();
           break;
         case ServerResponse.Node_Data:
-          print("ServerResponse.Node_Data");
           final spawnType = readByte();
           final spawnAmount = readInt();
           final spawnRadius = readInt();
@@ -222,6 +221,9 @@ class ServerResponseReader with ByteReader {
              spawnAmount: spawnAmount,
              spawnRadius: spawnRadius,
           );
+          break;
+        case ServerResponse.Render_Map:
+          modules.game.state.mapVisible.value = readBool();
           break;
         default:
           throw Exception("Cannot parse $response at index: $index");
