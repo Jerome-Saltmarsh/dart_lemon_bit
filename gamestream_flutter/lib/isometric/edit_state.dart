@@ -212,12 +212,14 @@ class EditState {
   ;
 
   void delete(){
-    if (gameObjectSelected.value) {
+    if (gameObjectSelected.value)
       return deleteGameObjectSelected();
-    }
     deleteIfTree();
-    sendClientRequestSetBlock(row.value, column.value, z.value, NodeType.Empty);
+    setNodeType(NodeType.Empty, NodeOrientation.None);
   }
+
+  void setNodeType(int type, int orientation) =>
+    sendClientRequestSetBlock(row.value, column.value, z.value, type, orientation);
 
   void deleteIfTree(){
     if (selectedType == NodeType.Tree_Bottom){

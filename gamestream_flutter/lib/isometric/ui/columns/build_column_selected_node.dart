@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/editor/actions/editor_action_recenter_camera.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
@@ -18,8 +19,16 @@ Widget buildColumnSelectedNode(){
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            container(child: "X", width: 50, alignment: Alignment.center),
-            container(child: "C", width: 50, alignment: Alignment.center),
+            onPressed(
+              hint: 'Delete (D)',
+              action: edit.delete,
+              child: container(child: "X", width: 50, alignment: Alignment.center),
+            ),
+            onPressed(
+              hint: 'Recenter Camera (G)',
+              action: editorActionRecenterCamera,
+              child: container(child: "C", width: 50, alignment: Alignment.center),
+            ),
           ],
         ),
         Container(
