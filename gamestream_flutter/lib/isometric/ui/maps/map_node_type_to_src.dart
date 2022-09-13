@@ -25,6 +25,7 @@ double mapNodeTypeToSrcX(int type) => {
   NodeType.Wooden_Plank: 7688.0,
   NodeType.Bau_Haus_2: 11712.0,
   NodeType.Boulder: 11773.0,
+  NodeType.Spawn: 11776.0,
 }[type] ?? 7055;
 
 double mapNodeTypeToSrcY(int type) => {
@@ -32,6 +33,7 @@ double mapNodeTypeToSrcY(int type) => {
   NodeType.Torch: 64.0,
   NodeType.Water_Flowing: 145.0,
   NodeType.Window: 218.0,
+  NodeType.Spawn: 80.0,
 }[type] ?? 0;
 
 double mapNodeTypeToSrcWidth(int type) => {
