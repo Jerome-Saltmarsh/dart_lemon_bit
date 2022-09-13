@@ -119,9 +119,9 @@ GameObject convertJsonToGameObject(Json json) {
 
 List<List<List<Node>>> convertFlatGridToGrid(List<dynamic> flatGrid, int height, int rows, int columns){
   var index = 0;
-  final List<List<List<Node>>> grid = List.generate(height, (zIndex) {
-    return List.generate(rows, (rowIndex){
-      return List.generate(columns, (columnIndex){
+  return List.generate(height, (zIndex) =>
+    List.generate(rows, (rowIndex) =>
+      List.generate(columns, (columnIndex){
 
         final node = generateNode(flatGrid[index]);
         if (node is NodeOriented){
@@ -145,8 +145,7 @@ List<List<List<Node>>> convertFlatGridToGrid(List<dynamic> flatGrid, int height,
         }
         index++;
         return node;
-      });
-    });
-  });
-  return grid;
+      })
+    )
+  );
 }
