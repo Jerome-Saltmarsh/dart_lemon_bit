@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/editor/actions/editor_action_recenter_camera.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
+import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 
@@ -17,18 +18,48 @@ Widget buildColumnSelectedNode(){
     child: Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             onPressed(
-              hint: 'Delete (D)',
+              hint: "Delete (Delete)",
               action: edit.delete,
-              child: container(child: "X", width: 50, alignment: Alignment.center),
+              child: Container(
+                width: 16,
+                height: 16,
+                child: buildCanvasImageButton(
+                  srcX: 80,
+                  srcY: 96,
+                  srcWidth: 16,
+                  srcHeight: 16,
+                  action: edit.delete,
+                ),
+              ),
             ),
             onPressed(
-              hint: 'Recenter Camera (G)',
+              hint: "Center Camera (G)",
               action: editorActionRecenterCamera,
-              child: container(child: "C", width: 50, alignment: Alignment.center),
+              child: Container(
+                width: 16,
+                height: 16,
+                child: buildCanvasImageButton(
+                    srcX: 96,
+                    srcY: 96,
+                    srcWidth: 16,
+                    srcHeight: 16,
+                    action: editorActionRecenterCamera,
+                ),
+              ),
             ),
+            // onPressed(
+            //   hint: 'Recenter Camera (G)',
+            //   action: editorActionRecenterCamera,
+            //   child: buildCanvasImage(
+            //     srcX: 96,
+            //     srcY: 96,
+            //     srcWidth: 16,
+            //     srcHeight: 16,
+            //   ),
+            // ),
           ],
         ),
         Container(

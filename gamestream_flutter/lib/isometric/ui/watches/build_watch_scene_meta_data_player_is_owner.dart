@@ -273,21 +273,6 @@ Widget buildColumnNodeOrientationSlopeCornerOuter() =>
 
 Widget buildColumnButtonsNodeOrientations(List<int> orientations) =>
   Column(children: orientations.map(buildOrientationIcon).toList());
-  // Column(children: orientations.map(buildButtonSelectNodeOrientation).toList());
-
-Widget buildButtonSelectNodeOrientation(int value) {
-  return watch(edit.nodeSelected, (Node selectedNode) {
-    return container(
-      color: value == selectedNode.orientation ? brownDark : brownLight,
-      child: NodeOrientation.getName(value),
-      action: () {
-        edit.paintOrientation.value = value;
-        sendNodeRequestOrient(value);
-      },
-    );
-  });
-}
-
 
 
 Widget buildColumnSelectedGameObject() {

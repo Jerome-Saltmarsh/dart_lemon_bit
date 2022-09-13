@@ -212,6 +212,7 @@ class EditState {
   ;
 
   void delete(){
+    print("edit.delete()");
     if (gameObjectSelected.value)
       return deleteGameObjectSelected();
     deleteIfTree();

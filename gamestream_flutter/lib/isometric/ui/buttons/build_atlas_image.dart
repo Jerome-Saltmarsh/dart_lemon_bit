@@ -16,12 +16,16 @@ Widget buildCanvasImageButton({
 }) =>
   onPressed(
     action: action,
-    child: buildCanvasImage(
-        srcX: srcX,
-        srcY: srcY,
-        srcWidth: srcWidth,
-        srcHeight: srcHeight,
-        scale: scale,
+    child: Container(
+      width: srcWidth,
+      height: srcHeight,
+      child: buildCanvasImage(
+          srcX: srcX,
+          srcY: srcY,
+          srcWidth: srcWidth,
+          srcHeight: srcHeight,
+          scale: scale,
+      ),
     ),
   );
 
@@ -34,7 +38,7 @@ Widget buildCanvasImage({
 }) =>
   Container(
     alignment: Alignment.center,
-    width: srcX,
+    width: srcWidth,
     height: srcHeight,
     child: buildCanvas(
       paint: (Canvas canvas, Size size) =>
