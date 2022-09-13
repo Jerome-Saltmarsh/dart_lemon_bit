@@ -421,6 +421,15 @@ class Connection {
         if (spawnAmount == null) return errorInvalidArg('spawnAmount is null');
         if (spawnRadius == null) return errorInvalidArg('spawnRadius is null');
 
+        if (spawnAmount < 0)
+          return errorInvalidArg('spawn amount must be greater than 0');
+
+        if (spawnRadius < 0)
+          return errorInvalidArg('spawn radius must be greater than 0');
+
+        if (!SpawnType.values.contains(spawnType))
+          return errorInvalidArg('invalid spawn type: $spawnType');
+
         final node = player.scene.getNode(z, row, column);
 
         if (node is NodeSpawn) {
