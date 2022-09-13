@@ -17,7 +17,7 @@ class _FlutterKitConfiguration {
   double defaultTextFontSize = 18;
 }
 
-final _FlutterKitConfiguration flutterKitConfiguration = _FlutterKitConfiguration();
+final flutterKitConfiguration = _FlutterKitConfiguration();
 
 Widget watch<T>(Watch<T> watch, Widget Function(T t) builder){
   return WatchBuilder(watch, builder);

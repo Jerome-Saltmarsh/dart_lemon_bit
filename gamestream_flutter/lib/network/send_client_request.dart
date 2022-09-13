@@ -7,6 +7,7 @@ import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_request.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:bleed_common/teleport_scenes.dart';
+import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric_web/read_player_input.dart';
 import 'package:gamestream_flutter/network/instance/websocket.dart';
 import 'package:lemon_engine/engine.dart';
@@ -290,8 +291,8 @@ Future sendClientRequestUpdate() async {
 
   updateBuffer[0] = updateIndex;
   updateBuffer[1] = getKeyDirection();
-  updateBuffer[2] = engine.mouseLeftDown.value ? 1 : 0;
-  updateBuffer[3] = engine.mouseRightDown.value ? 1 : 0;
+  updateBuffer[2] = modeIsPlay && engine.mouseLeftDown.value ? 1 : 0;
+  updateBuffer[3] = modeIsPlay && engine.mouseRightDown.value ? 1 : 0;
   writeNumberToByteArray(number: mouseWorldX, list: updateBuffer, index: 4);
   writeNumberToByteArray(number: mouseWorldY, list: updateBuffer, index: 6);
   writeNumberToByteArray(number: screen.left, list: updateBuffer, index: 8);
