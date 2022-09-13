@@ -13,7 +13,7 @@ double mapNodeTypeToSrcX(int type) => {
   NodeType.Stone: 9831.0,
   NodeType.Plain: 10738.0,
   NodeType.Soil: 10176.0,
-  NodeType.Bau_Haus: 10544.0,
+  NodeType.Bau_Haus: 11720.0,
   NodeType.Chimney: 10787.0,
   NodeType.Bed_Bottom: 10836.0,
   NodeType.Bed_Top: 10885.0,

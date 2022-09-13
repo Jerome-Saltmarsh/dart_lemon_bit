@@ -46,7 +46,7 @@ class GameDarkAge extends Game {
 
   @override
   void onPlayerRevived(Player player){
-      player.changeGame(engine.findGameDarkAge());
+      player.changeGame(engine.findGameDarkAgeFarm());
       player.indexZ = 5;
       player.indexRow = 16;
       player.indexColumn = 22;

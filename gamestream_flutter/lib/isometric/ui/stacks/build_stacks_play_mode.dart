@@ -115,11 +115,13 @@ Widget buildColumnTeleport(){
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        text("Teleport Menu"),
+        text("Village", onPressed: (){
+          sendClientRequestTeleportScene(TeleportScenes.Village);
+        }),
+        height6,
         text("Dungeon 1", onPressed: (){
           sendClientRequestTeleportScene(TeleportScenes.Dungeon_1);
         }),
-        text("Town"),
       ],
     ),
   );

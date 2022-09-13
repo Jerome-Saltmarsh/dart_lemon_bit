@@ -155,7 +155,7 @@ class Engine {
     return GameDarkAgeVillage();
   }
 
-  GameDarkAge findGameDarkAge() {
+  GameDarkAge findGameDarkAgeFarm() {
     for (final game in games) {
       if (game is GameDarkAgeFarm) {
         return game;
