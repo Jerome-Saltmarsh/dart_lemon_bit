@@ -3,7 +3,7 @@
 import 'package:lemon_math/library.dart';
 
 import '../classes/collider.dart';
-import '../maths/get_distance_between_v3.dart';
+import '../common/maths.dart';
 
 void onCollisionBetweenColliders(Collider a, Collider b){
   resolveCollisionPhysics(a, b);
@@ -13,7 +13,7 @@ void onCollisionBetweenColliders(Collider a, Collider b){
 
 void resolveCollisionPhysics(Collider a, Collider b) {
   final combinedRadius = a.radius + b.radius;
-  final totalDistance = getDistanceBetweenV3(a, b);
+  final totalDistance = getDistanceXY(a.x, a.y, b.x, b.y);
   final overlap = combinedRadius - totalDistance;
   if (overlap < 0) return;
   var xDiff = a.x - b.x;
