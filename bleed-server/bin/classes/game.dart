@@ -46,8 +46,6 @@ abstract class Game {
   /// safe to override
   void customOnPlayerDisconnected(Player player) { }
   /// safe to override
-  void customOnCollisionBetweenPlayerAndLoot(Player player, GameObjectLoot loot) { }
-  /// safe to override
   void customOnGameObjectDeactivated(GameObject gameObject){ }
   /// safe to override
   void customOnCharacterSpawned(Character character) { }
@@ -80,7 +78,7 @@ abstract class Game {
   /// ACTIONS
 
   void perform(Function action, int duration){
-    actions.add(Action(duration, action));
+    actions.add(Action(duration, action)); /// TODO Recycle actions
   }
 
   void deactivateGameObject(GameObject gameObject){
@@ -251,9 +249,7 @@ abstract class Game {
       player.writeWeather();
     }
   }
-}
 
-extension GameFunctions on Game {
   Character? getClosestEnemy({
     required double x,
     required double y,
@@ -275,15 +271,15 @@ extension GameFunctions on Game {
       y: y,
       z: character.z,
       where: (other) =>
-          other.alive &&
+      other.alive &&
           other != character &&
           other.distanceFromXYZ(x, y, character.z) < minDistance,
     );
   }
 
   void activateGameObject(GameObject gameObject){
-      if (gameObject.active) return;
-      gameObject.active = true;
+    if (gameObject.active) return;
+    gameObject.active = true;
   }
 
   void updateGameObjects(){
@@ -380,7 +376,7 @@ extension GameFunctions on Game {
   void resolveCollisionsBetween(
       List<Collider> collidersA,
       List<Collider> collidersB,
-  ) {
+      ) {
     final aLength = collidersA.length;
     final bLength = collidersB.length;
     for (var i = 0; i < aLength; i++) {
@@ -401,10 +397,11 @@ extension GameFunctions on Game {
   }
 
   void internalOnCollisionBetweenColliders(Collider a, Collider b){
+    assert (a.collidable);
+    assert (b.collidable);
+    assert (a != b);
     resolveCollisionPhysics(a, b);
     customOnCollisionBetweenColliders(a, b);
-    a.onCollisionWith(b);
-    b.onCollisionWith(a);
   }
 
   void resolveCollisionPhysics(Collider a, Collider b) {
@@ -742,9 +739,9 @@ extension GameFunctions on Game {
     character.setCharacterState(value: CharacterState.Running, duration: 0);
     if (character.stateDuration == 0) {
       dispatchV3(
-          GameEventType.Spawn_Dust_Cloud,
-          character,
-          angle: character.velocityAngle,
+        GameEventType.Spawn_Dust_Cloud,
+        character,
+        angle: character.velocityAngle,
       );
     }
   }
@@ -787,7 +784,7 @@ extension GameFunctions on Game {
     switch (spawn.spawnType) {
       case SpawnType.Chicken:
         final instance =
-            GameObjectChicken(x: spawn.x + x, y: spawn.y + y, z: spawn.z);
+        GameObjectChicken(x: spawn.x + x, y: spawn.y + y, z: spawn.z);
         instance.wanderRadius = spawn.spawnRadius;
         instance.spawn = spawn;
         gameObjects.add(instance);
@@ -795,13 +792,13 @@ extension GameFunctions on Game {
         return;
       case SpawnType.Jellyfish:
         final instance =
-            GameObjectJellyfish(x: spawn.x + x, y: spawn.y + y, z: spawn.z);
+        GameObjectJellyfish(x: spawn.x + x, y: spawn.y + y, z: spawn.z);
         instance.spawn = spawn;
         gameObjects.add(instance);
         return;
       case SpawnType.Jellyfish_Red:
         final instance =
-            GameObjectJellyfishRed(x: spawn.x + x, y: spawn.y + y, z: spawn.z);
+        GameObjectJellyfishRed(x: spawn.x + x, y: spawn.y + y, z: spawn.z);
         instance.spawn = spawn;
         gameObjects.add(instance);
         return;
@@ -819,7 +816,7 @@ extension GameFunctions on Game {
         break;
       case SpawnType.Butterfly:
         final instance =
-            GameObjectButterfly(x: spawn.x, y: spawn.y, z: spawn.z);
+        GameObjectButterfly(x: spawn.x, y: spawn.y, z: spawn.z);
         instance.spawn = spawn;
         instance.wanderRadius = spawn.spawnRadius;
         gameObjects.add(instance);
@@ -860,11 +857,11 @@ extension GameFunctions on Game {
           z: spawn.z,
           health: 10,
           weapon: Weapon(
-              type: AttackType.Bow,
-              damage: 1,
-              capacity: 0,
-              duration: 10,
-              range: 200,
+            type: AttackType.Bow,
+            damage: 1,
+            capacity: 0,
+            duration: 10,
+            range: 200,
           ),
           team: Teams.good,
           wanderRadius: 100,
@@ -964,11 +961,11 @@ extension GameFunctions on Game {
           z: node.z,
           health: 10,
           weapon: Weapon(
-              type: AttackType.Bow,
-              damage: 1,
-              capacity: 0,
-              duration: 10,
-              range: 200,
+            type: AttackType.Bow,
+            damage: 1,
+            capacity: 0,
+            duration: 10,
+            range: 200,
           ),
           team: Teams.good,
           wanderRadius: 100,
@@ -1053,7 +1050,7 @@ extension GameFunctions on Game {
     }
 
     if (character is AI){
-       character.customUpdateCharacter(this);
+      character.customUpdateCharacter(this);
     }
 
     updateCharacterMovement(character);
@@ -1084,10 +1081,10 @@ extension GameFunctions on Game {
         character.applyVelocity();
         if (character.stateDuration % 10 == 0) {
           dispatch(
-              GameEventType.Footstep,
-              character.x,
-              character.y,
-              character.z,
+            GameEventType.Footstep,
+            character.x,
+            character.y,
+            character.z,
           );
         }
         break;
@@ -1117,9 +1114,9 @@ extension GameFunctions on Game {
     character.y += character.yv;
 
     final nodeType = character.getNodeTypeInDirection(
-        game: this,
-        angle: character.velocityAngle,
-        distance: character.radius,
+      game: this,
+      angle: character.velocityAngle,
+      distance: character.radius,
     );
 
     if (nodeType == NodeType.Tree_Bottom || nodeType == NodeType.Torch) {
@@ -1173,13 +1170,13 @@ extension GameFunctions on Game {
   }
 
   Projectile spawnProjectileArrow(
-    Character src, {
-    required int damage,
-    required double range,
-    double accuracy = 0,
-    Position3? target,
-    double? angle,
-  }) {
+      Character src, {
+        required int damage,
+        required double range,
+        double accuracy = 0,
+        Position3? target,
+        double? angle,
+      }) {
     dispatch(GameEventType.Arrow_Fired, src.x, src.y, src.z);
     return spawnProjectile(
       src: src,
@@ -1194,11 +1191,11 @@ extension GameFunctions on Game {
   }
 
   Projectile spawnProjectileFireball(
-    Character src, {
-    required int damage,
-    required double range,
-    double? angle,
-  }) {
+      Character src, {
+        required int damage,
+        required double range,
+        double? angle,
+      }) {
     dispatchAttackPerformed(
       AttackType.Fireball,
       src.x,
@@ -1442,11 +1439,11 @@ extension GameFunctions on Game {
   void dispatchAttackPerformed(int attackType, double x, double y, double z, double angle){
     for (final player in players) {
       player.writeGameEvent(
-          type: GameEventType.Attack_Performed,
-          x: x,
-          y: y,
-          z: z,
-          angle: angle,
+        type: GameEventType.Attack_Performed,
+        x: x,
+        y: y,
+        z: z,
+        angle: angle,
       );
       player.writeByte(attackType);
     }
@@ -1741,3 +1738,4 @@ extension GameFunctions on Game {
     return atan2(adjacent, opposite);
   }
 }
+

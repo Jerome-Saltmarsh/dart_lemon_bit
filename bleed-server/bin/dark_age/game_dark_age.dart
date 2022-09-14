@@ -40,6 +40,23 @@ class GameDarkAge extends Game {
   }
 
   @override
+  void customOnCollisionBetweenColliders(Collider a, Collider b) {
+    if (a is Player && b is GameObjectLoot) {
+      return onCollisionBetweenPlayerAndGameObjectLoot(a, b);
+    }
+    if (a is GameObjectLoot && b is Player) {
+      return onCollisionBetweenPlayerAndGameObjectLoot(b, a);
+    }
+  }
+
+  void onCollisionBetweenPlayerAndGameObjectLoot(Player player, GameObjectLoot loot){
+    deactivateGameObject(loot);
+    player.weapon.rounds = player.weapon.capacity;
+    player.writePlayerEventWeaponRounds();
+    player.dispatchEventLootCollected();
+  }
+
+  @override
   void setHourMinutes(int hour, int minutes){
     environment.time.time = (hour * secondsPerHour) + (minutes * secondsPerMinute);
     environment.updateShade();

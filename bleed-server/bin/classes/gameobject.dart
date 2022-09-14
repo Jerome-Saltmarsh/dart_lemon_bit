@@ -67,17 +67,6 @@ class GameObjectLoot extends GameObject {
 
   int lootType;
 
-  @override
-  void onCollisionWith(Collider other){
-    if (other is Player){
-       onCollisionWithPlayer(other);
-    }
-  }
-
-  void onCollisionWithPlayer(Player player) {
-     player.game.customOnCollisionBetweenPlayerAndLoot(player, this);
-  }
-
   GameObjectLoot({
     required double x,
     required double y,

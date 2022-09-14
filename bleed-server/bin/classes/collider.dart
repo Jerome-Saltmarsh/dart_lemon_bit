@@ -28,8 +28,6 @@ class Collider extends Position3 {
     this.radius = radius;
   }
 
-  void onCollisionWith(Collider other){ }
-
   void onStruckBy(dynamic src){
 
   }

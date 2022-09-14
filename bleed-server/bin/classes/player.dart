@@ -706,6 +706,10 @@ extension PlayerProperties on Player {
     writeInt(angle * radiansToDegrees);
   }
 
+  void dispatchEventLootCollected(){
+    writePlayerEvent(PlayerEvent.Loot_Collected);
+  }
+
   void writePlayerEvent(int value){
     writeByte(ServerResponse.Player_Events);
     writeByte(value);
