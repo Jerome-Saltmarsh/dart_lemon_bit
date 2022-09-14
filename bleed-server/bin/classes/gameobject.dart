@@ -21,6 +21,7 @@ abstract class GameObject extends Collider {
 
   int get type;
 
+  /// Determines whether or not this object should be serialized
   bool get persist => true;
 }
 
