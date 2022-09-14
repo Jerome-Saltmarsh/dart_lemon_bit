@@ -1080,10 +1080,10 @@ extension GameFunctions on Game {
       src: src,
       accuracy: 0,
       angle: angle,
-      speed: 8.0,
-      range: 300,
+      speed: 15.0,
+      range: 600,
       projectileType: ProjectileType.Bullet,
-      damage: 5,
+      damage: 10,
     );
     dispatchAttackPerformed(AttackType.Rifle, src.x, src.y, src.z, angle);
   }

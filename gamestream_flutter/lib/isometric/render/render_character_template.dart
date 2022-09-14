@@ -260,6 +260,8 @@ SpriteLayer _mapWeaponTypeToSpriteLayer(int weaponType) {
       return SpriteLayer.Bow_Wooden;
     case AttackType.Shotgun:
       return SpriteLayer.Shotgun;
+    case AttackType.Rifle:
+      return SpriteLayer.Shotgun;
     case AttackType.Handgun:
       return SpriteLayer.Handgun;
     default:

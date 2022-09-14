@@ -31,6 +31,15 @@ Weapon buildWeaponShotgun() =>
       range: 200,
     );
 
+Weapon buildWeaponRifle() =>
+    Weapon(
+      type: AttackType.Rifle,
+      damage: 10,
+      capacity: 8,
+      duration: 25,
+      range: 350,
+    );
+
 Weapon buildWeaponHandgun() =>
     Weapon(
       type: AttackType.Handgun,
