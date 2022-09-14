@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bleed_common/attack_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/isometric/ai.dart';
@@ -47,9 +48,14 @@ class GameRender {
     renderSprites();
     renderEditMode();
     renderMouseTargetName();
-    // renderTutorialKeys();
 
-
+    if (AttackType.requiresRounds(player.weaponType.value)){
+      renderText(
+        text: player.weaponRounds.value.toString(),
+        x: player.renderX,
+        y: player.renderY - 50,
+      );
+    }
   }
 
   void renderTutorialKeys() {
