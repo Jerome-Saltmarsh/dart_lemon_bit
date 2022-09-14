@@ -83,7 +83,7 @@ abstract class Game {
   }
 
   void deactivateGameObject(GameObject gameObject){
-     // if (!gameObject.active) return;
+     if (!gameObject.active) return;
      gameObject.active = false;
      gameObject.collidable = false;
      onGameObjectDeactivated(gameObject);

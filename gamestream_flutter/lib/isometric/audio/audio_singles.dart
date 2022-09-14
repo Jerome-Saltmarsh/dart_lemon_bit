@@ -24,6 +24,7 @@ final audioSingleSplash = AudioSingle(name: 'splash', volume: 0.5, maxDistance: 
 final audioSingleMaterialStruckWood = AudioSingle(name: 'material-struck-wood', volume: 0.5, maxDistance: 400);
 final audioSingleMaterialStruckStone = AudioSingle(name: 'material-struck-stone', volume: 0.5, maxDistance: 400);
 final audioSingleRatSqueak = AudioSingle(name: 'rat-squeak', volume: 0.5, maxDistance: 400);
+final audioSingleCollectStar3 = AudioSingle(name: 'collect-star-3', volume: 0.5, maxDistance: 400);
 final audioSingleMagicalImpact28 = AudioSingle(name: 'magical-impact-28', volume: 0.5, maxDistance: 400);
 final audioSingleBloodyPunches3 = AudioSingle(name: 'bloody-punches-3', volume: 0.5, maxDistance: 400);
 final audioSingleCrateBreaking = AudioSingle(name: 'crate-breaking', volume: 0.5, maxDistance: 400);

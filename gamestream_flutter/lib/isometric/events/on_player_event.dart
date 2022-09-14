@@ -14,6 +14,8 @@ void onPlayerEvent(int event) {
   switch (event) {
     case PlayerEvent.Spawn_Started:
       return audioSingleTeleport();
+    case PlayerEvent.Loot_Collected:
+      return audioSingleCollectStar3();
     case PlayerEvent.Weapon_Rounds:
       final rounds = serverResponseReader.readInt();
       final capacity = serverResponseReader.readInt();

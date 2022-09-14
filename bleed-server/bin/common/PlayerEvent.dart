@@ -24,5 +24,6 @@ class PlayerEvent {
   static const GameObject_Deselected = 21;
   static const Spawn_Started = 22;
   static const Weapon_Rounds = 23;
+  static const Loot_Collected = 24;
 
 }

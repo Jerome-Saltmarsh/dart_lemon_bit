@@ -2,6 +2,7 @@
 import '../../actions/action_spawn_loot.dart';
 import '../../classes/gameobject.dart';
 import '../../classes/library.dart';
+import '../../common/library.dart';
 import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';
 
@@ -17,7 +18,10 @@ class DarkAgeDungeon1 extends DarkAgeAreaUnderground {
      deactivateGameObject(loot);
      player.weapon.rounds = player.weapon.capacity;
      player.writePlayerEventWeaponRounds();
+     player.writePlayerEvent(PlayerEvent.Loot_Collected);
+     // player.writePlayerEvent(PlayerEvent.Loot_Collected);
   }
+
 
   @override
   void onKilled(dynamic target, dynamic src) {
