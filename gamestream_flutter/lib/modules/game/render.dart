@@ -40,7 +40,6 @@ class GameRender {
     engine.setPaintColorWhite();
     _renderPlayerNames();
     drawPlayerText();
-    // renderFloatingTexts();
   }
 
   void renderGame(Canvas canvas, Size size) {
@@ -49,20 +48,24 @@ class GameRender {
     renderSprites();
     renderEditMode();
     renderMouseTargetName();
+    renderWeaponRoundInformation();
+  }
 
-    if (AttackType.requiresRounds(player.weaponType.value)){
-      renderText(
-        text: player.weaponRounds.value.toString(),
-        x: player.renderX,
-        y: player.renderY - 50,
-      );
+  void renderWeaponRoundInformation() {
+    if (!AttackType.requiresRounds(player.weaponType.value))
+      return;
 
-      renderCharacterBarWeaponRounds(
-          player.renderX,
-          player.renderY - 7,
-          player.weaponRounds.value / player.weaponCapacity.value,
-      );
-    }
+    renderText(
+      text: player.weaponRounds.value.toString(),
+      x: player.renderX,
+      y: player.renderY - 50,
+    );
+
+    renderCharacterBarWeaponRounds(
+      x: player.renderX,
+      y: player.renderY - 7,
+      percentage: player.weaponRoundPercentage,
+    );
   }
 
   void renderTutorialKeys() {

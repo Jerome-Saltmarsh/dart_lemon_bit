@@ -35,7 +35,11 @@ void renderCharacterHealthBar(Character character){
 
 
 
-void renderCharacterBarWeaponRounds(double x, double y, double percentage){
+void renderCharacterBarWeaponRounds({
+  required double x,
+  required double y,
+  required double percentage,
+}){
   const srcX = 2400.0;
   const srcWidth = 40.0;
   const srcHeight = 8.0;

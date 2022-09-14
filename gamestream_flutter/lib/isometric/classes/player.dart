@@ -84,4 +84,6 @@ class Player extends Vector3 {
 
   // Properties
   bool get dead => !alive.value;
+
+  double get weaponRoundPercentage => weaponRounds.value / weaponCapacity.value;
 }
