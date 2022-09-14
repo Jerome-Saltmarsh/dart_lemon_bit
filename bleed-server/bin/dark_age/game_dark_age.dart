@@ -6,6 +6,7 @@ import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../common/library.dart';
 import '../common/spawn_type.dart';
+import '../constants/frames_per_second.dart';
 import '../engine.dart';
 import 'dark_age_environment.dart';
 
@@ -58,9 +59,24 @@ class GameDarkAge extends Game {
   @override
   int getTime() => environment.time.time;
 
+  var timerReplenishAmmo = framesPerSecond * 5;
+
   @override
   void update(){
     updateInternal();
+    replenishAmmo();
+  }
+
+  void replenishAmmo(){
+    if (timerReplenishAmmo-- > 0) return;
+    timerReplenishAmmo = framesPerSecond * 5;
+    for (final player in players) {
+      for (final weapon in player.weapons){
+         if (weapon.rounds >= weapon.capacity) continue;
+         weapon.rounds++;
+      }
+      player.writePlayerEventWeaponRounds();
+    }
   }
 
   void updateInternal(){
