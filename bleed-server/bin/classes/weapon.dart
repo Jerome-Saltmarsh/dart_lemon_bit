@@ -2,6 +2,7 @@
 import '../common/attack_type.dart';
 import '../functions/generateUUID.dart';
 
+
 class Weapon {
    int type;
    int damage;

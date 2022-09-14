@@ -68,8 +68,13 @@ class GameObjectLoot extends GameObject {
 
   @override
   void onCollisionWith(Collider other){
-    print("Loot collider by $other");
-    active = false;
+    if (other is Player){
+       onCollisionWithPlayer(other);
+    }
+  }
+
+  void onCollisionWithPlayer(Player player) {
+     player.game.onCollisionBetweenPlayerAndLoot(player, this);
   }
 
   GameObjectLoot({
@@ -77,9 +82,7 @@ class GameObjectLoot extends GameObject {
     required double y,
     required double z,
     required this.lootType,
-  }) : super(x: x, y: y, z: z, radius: 15) {
-    collidable = false;
-  }
+  }) : super(x: x, y: y, z: z, radius: 15);
 
   @override
   int get type => GameObjectType.Loot;

@@ -117,6 +117,11 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
 
   }
 
+  void setWeaponRounds(int value){
+    weapon.rounds = value;
+    // writePlayerEventWeaponRounds();
+  }
+
   void onDeath(){
 
   }

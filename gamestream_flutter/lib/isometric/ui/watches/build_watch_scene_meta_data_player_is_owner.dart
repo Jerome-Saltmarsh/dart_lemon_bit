@@ -100,7 +100,7 @@ Widget buildColumnEditSpawn() =>
                         editorActionModifySpawnNode(
                           spawnType: value.spawnType,
                           spawnRadius: value.spawnRadius,
-                          spawnAmount: value.spawnAmount - 10,
+                          spawnAmount: value.spawnAmount - 1,
                         )
                     ),
                     width2,
@@ -113,7 +113,7 @@ Widget buildColumnEditSpawn() =>
                         editorActionModifySpawnNode(
                           spawnType: value.spawnType,
                           spawnRadius: value.spawnRadius,
-                          spawnAmount: value.spawnAmount + 10,
+                          spawnAmount: value.spawnAmount + 1,
                         )
                     ),
                   ],

@@ -1,5 +1,6 @@
 
 import '../../actions/action_spawn_loot.dart';
+import '../../classes/gameobject.dart';
 import '../../classes/library.dart';
 import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';
@@ -9,6 +10,14 @@ class DarkAgeDungeon1 extends DarkAgeAreaUnderground {
 
   @override
   bool get mapVisible => false;
+
+  @override
+  void onCollisionBetweenPlayerAndLoot(Player player, GameObjectLoot loot){
+     print("loot collected by player");
+     loot.active = false;
+     player.weapon.rounds = player.weapon.capacity;
+     player.writePlayerEventWeaponRounds();
+  }
 
   @override
   void onKilled(dynamic target, dynamic src) {

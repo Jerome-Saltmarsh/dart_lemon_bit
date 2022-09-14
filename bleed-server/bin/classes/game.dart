@@ -41,6 +41,10 @@ abstract class Game {
 
   List<GameObject> get gameObjects => scene.gameObjects;
 
+  void onCollisionBetweenPlayerAndLoot(Player player, GameObjectLoot loot){
+
+  }
+
   void perform(Function action, int duration){
     actions.add(Action(duration, action));
   }
