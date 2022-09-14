@@ -58,7 +58,7 @@ class GameRender {
     renderText(
       text: player.weaponRounds.value.toString(),
       x: player.renderX,
-      y: player.renderY - 50,
+      y: player.renderY - 55,
     );
 
     renderCharacterBarWeaponRounds(

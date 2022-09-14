@@ -545,6 +545,7 @@ class Player extends Character with ByteWriter {
     to.characters.add(this);
     sceneDownloaded = false;
     game = to;
+    to.onPlayerJoined(this);
   }
 
   @override

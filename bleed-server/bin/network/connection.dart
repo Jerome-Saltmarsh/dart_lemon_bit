@@ -1,5 +1,6 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
+import 'package:lemon_math/library.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../classes/gameobject.dart';
@@ -17,6 +18,7 @@ import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
 import '../engine.dart';
 import '../functions/generateName.dart';
+import '../functions/move_player_to_crystal.dart';
 import '../io/convert_json_to_scene.dart';
 import '../io/convert_scene_to_json.dart';
 import '../io/save_directory.dart';
@@ -454,9 +456,11 @@ class Connection {
         switch (scene) {
           case TeleportScenes.Village:
             player.changeGame(engine.findGameDarkAgeFarm());
+            movePlayerToCrystal(player);
             break;
           case TeleportScenes.Dungeon_1:
             player.changeGame(engine.findGameDarkAgeDungeon1());
+            movePlayerToCrystal(player);
             break;
           default:
             break;

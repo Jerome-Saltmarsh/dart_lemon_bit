@@ -57,6 +57,7 @@ abstract class Game {
     }
   }
 
+
   void onCharacterSpawned(Character character) {}
 
   void setNode(int z, int row, int column, int type, int orientation) {
