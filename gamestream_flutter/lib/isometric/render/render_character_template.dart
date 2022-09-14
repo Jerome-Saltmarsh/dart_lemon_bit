@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
+import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:lemon_math/library.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
@@ -37,7 +38,16 @@ void renderCharacterTemplate(Character character, {bool renderHealthBar = true})
 
   // renderLine(character.x, character.y, character.z, character.aimAngle, 50);
   renderLine(character.x, character.y, character.z, character.aimAngle, 50);
-
+  const pi3Quarters = piQuarter * 3;
+  renderRotated(
+      dstX: character.renderX,
+      dstY: character.renderY,
+      srcX: 128,
+      srcY: 0,
+      srcWidth: 32,
+      srcHeight: 32,
+      rotation: character.aimAngle + pi3Quarters,
+  );
   // renderText(
   //     text: character.aimAngle.toString(),
   //     x: character.renderX,
