@@ -151,6 +151,36 @@ abstract class Game {
 
   void setHourMinutes(int hour, int minutes) {}
 
+  /// UPDATE
+
+  var _timerUpdateAITargets = 0;
+
+  void updateInProgress() {
+    frame++;
+    if (_timerUpdateAITargets-- <= 0) {
+      _timerUpdateAITargets = 15;
+      updateAITargets();
+    }
+
+    for (var i = 0; i < actions.length; i++){
+      final action = actions[i];
+      if (action.frames-- > 0) continue;
+      action.perform();
+      actions.removeAt(i);
+      i--;
+    }
+
+    update();
+    updateCollisions();
+    updateCharacters();
+    updateGameObjects();
+    updateProjectiles();
+    updateProjectiles(); // called twice to fix collision detection
+    updateCharacterFrames();
+    sortGameObjects();
+  }
+
+
   void updateStatus() {
     removeDisconnectedPlayers();
     updateInProgress();
@@ -169,7 +199,7 @@ abstract class Game {
 
   var _nextCharacterAnimationFrame = 0;
 
-  void _updateCharacterFrames() {
+  void updateCharacterFrames() {
     _nextCharacterAnimationFrame++;
     if (_nextCharacterAnimationFrame < 6) return;
     _nextCharacterAnimationFrame = 0;
@@ -255,15 +285,8 @@ extension GameFunctions on Game {
       gameObject.active = true;
   }
 
-  void updateInProgress() {
-    frame++;
-    if (frame % 15 == 0) {
-      // updateInteractableNpcTargets();
-      updateAITargets();
-    }
-
+  void updateGameObjects(){
     for (final gameObject in gameObjects) {
-
       if (gameObject is Updatable) {
         (gameObject as Updatable).update(this);
       }
@@ -271,22 +294,6 @@ extension GameFunctions on Game {
         (gameObject as Velocity).applyFriction(0.95);
       }
     }
-
-    for (var i = 0; i < actions.length; i++){
-      final action = actions[i];
-      if (action.frames-- > 0) continue;
-      action.perform();
-      actions.removeAt(i);
-      i--;
-    }
-
-    update();
-    _updateCollisions();
-    _updatePlayersAndNpcs();
-    _updateProjectiles();
-    _updateProjectiles(); // called twice to fix collision detection
-    _updateCharacterFrames();
-    sortGameObjects();
   }
 
   void applyDamage({
@@ -335,7 +342,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void _updatePlayersAndNpcs() {
+  void updateCharacters() {
     for (var i = 0; i < characters.length; i++) {
       final character = characters[i];
       updateCharacter(character);
@@ -345,7 +352,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void _updateCollisions() {
+  void updateCollisions() {
     resolveCollisions(characters);
     resolveCollisionsBetween(characters, gameObjects);
   }
@@ -442,7 +449,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void _updateProjectiles() {
+  void updateProjectiles() {
     var projectilesLength = projectiles.length;
     for (var i = 0; i < projectilesLength; i++) {
       final projectile = projectiles[i];

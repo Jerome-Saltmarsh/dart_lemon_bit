@@ -15,7 +15,6 @@ import 'weapon.dart';
 
 abstract class Character extends Collider with Team, Velocity, FaceDirection {
 
-  // Game game; /// TODO remove reference
   var _health = 1;
   var maxHealth = 1;
 
