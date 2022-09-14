@@ -145,25 +145,25 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   }
 
   /// TODO Handle business logic externally
-  void updateCharacter(Game game){
-    if (dead) return;
-
-    if (dying){
-      updateMovement(game);
-      game.scene.resolveCharacterTileCollision(this, game);
-      if (stateDurationRemaining-- <= 0){
-        game.setCharacterStateDead(this);
-      }
-      return;
-    }
-
-    if (!busy){
-      customUpdateCharacter(game);
-    }
-    updateMovement(game);
-    updateCharacterState(game);
-    game.scene.resolveCharacterTileCollision(this, game);
-  }
+  // void updateCharacter(Game game){
+  //   if (dead) return;
+  //
+  //   if (dying){
+  //     updateMovement(game);
+  //     game.scene.resolveCharacterTileCollision(this, game);
+  //     if (stateDurationRemaining-- <= 0){
+  //       game.setCharacterStateDead(this);
+  //     }
+  //     return;
+  //   }
+  //
+  //   if (!busy){
+  //     customUpdateCharacter(game);
+  //   }
+  //   updateMovement(game);
+  //   updateCharacterState(game);
+  //   game.scene.resolveCharacterTileCollision(this, game);
+  // }
 
   // void dispatchGameEventCharacterDeath(){
   //   for (final player in game.players) {

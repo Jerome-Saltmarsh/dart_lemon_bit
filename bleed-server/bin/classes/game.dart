@@ -949,7 +949,23 @@ extension GameFunctions on Game {
       }
       return;
     }
-    character.updateCharacter(this);
+    // character.updateCharacter(this);
+
+    if (character.dying){
+      character.updateMovement(this);
+      scene.resolveCharacterTileCollision(character, this);
+      if (character.stateDurationRemaining-- <= 0){
+        setCharacterStateDead(character);
+      }
+      return;
+    }
+
+    if (!character.busy){
+      character.customUpdateCharacter(this);
+    }
+    character.updateMovement(this);
+    character.updateCharacterState(this);
+    scene.resolveCharacterTileCollision(character, this);
   }
 
   void updateRespawnAI(AI ai) {
