@@ -267,28 +267,28 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     animationFrame = 0;
   }
 
-  void updateMovement(Game game) {
-    const minVelocity = 0.005;
-    if (velocitySpeed <= minVelocity) return;
-
-    x += xv;
-    y += yv;
-
-    final nodeType = getNodeTypeInDirection(game: game, angle: velocityAngle, distance: radius);
-    if (nodeType == NodeType.Tree_Bottom || nodeType == NodeType.Torch) {
-      final nodeCenterX = indexRow * tileSize + tileSizeHalf;
-      final nodeCenterY = indexColumn * tileSize + tileSizeHalf;
-      final dis = getDistanceXY(nodeCenterX, nodeCenterY);
-      const treeRadius = 5;
-      final overlap = dis - treeRadius - radius;
-      if (overlap < 0) {
-        x -= getAdjacent(velocityAngle, overlap);
-        y -= getOpposite(velocityAngle, overlap);
-      }
-    }
-
-    applyFriction(0.75);
-  }
+  // void updateMovement(Game game) {
+  //   const minVelocity = 0.005;
+  //   if (velocitySpeed <= minVelocity) return;
+  //
+  //   x += xv;
+  //   y += yv;
+  //
+  //   final nodeType = getNodeTypeInDirection(game: game, angle: velocityAngle, distance: radius);
+  //   if (nodeType == NodeType.Tree_Bottom || nodeType == NodeType.Torch) {
+  //     final nodeCenterX = indexRow * tileSize + tileSizeHalf;
+  //     final nodeCenterY = indexColumn * tileSize + tileSizeHalf;
+  //     final dis = getDistanceXY(nodeCenterX, nodeCenterY);
+  //     const treeRadius = 5;
+  //     final overlap = dis - treeRadius - radius;
+  //     if (overlap < 0) {
+  //       x -= getAdjacent(velocityAngle, overlap);
+  //       y -= getOpposite(velocityAngle, overlap);
+  //     }
+  //   }
+  //
+  //   applyFriction(0.75);
+  // }
 
   bool withinAttackRange(Position3 target){
     if (target is Collider){

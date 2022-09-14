@@ -4,6 +4,7 @@ import 'package:lemon_math/library.dart';
 
 import '../common/attack_type.dart';
 import '../common/library.dart';
+import '../common/maths.dart';
 import '../common/spawn_type.dart';
 import '../common/teams.dart';
 import '../engine.dart';
@@ -952,7 +953,8 @@ extension GameFunctions on Game {
     // character.updateCharacter(this);
 
     if (character.dying){
-      character.updateMovement(this);
+      // character.updateMovement(this);
+      updateCharacterMovement(character);
       scene.resolveCharacterTileCollision(character, this);
       if (character.stateDurationRemaining-- <= 0){
         setCharacterStateDead(character);
@@ -963,9 +965,38 @@ extension GameFunctions on Game {
     if (!character.busy){
       character.customUpdateCharacter(this);
     }
-    character.updateMovement(this);
+    // character.updateMovement(this);
+    updateCharacterMovement(character);
     character.updateCharacterState(this);
     scene.resolveCharacterTileCollision(character, this);
+  }
+
+  void updateCharacterMovement(Character character) {
+    const minVelocity = 0.005;
+    if (character.velocitySpeed <= minVelocity) return;
+
+    character.x += character.xv;
+    character.y += character.yv;
+
+    final nodeType = character.getNodeTypeInDirection(
+        game: this,
+        angle: character.velocityAngle,
+        distance: character.radius,
+    );
+
+    if (nodeType == NodeType.Tree_Bottom || nodeType == NodeType.Torch) {
+      final nodeCenterX = character.indexRow * tileSize + tileSizeHalf;
+      final nodeCenterY = character.indexColumn * tileSize + tileSizeHalf;
+      final dis = character.getDistanceXY(nodeCenterX, nodeCenterY);
+      const treeRadius = 5;
+      final overlap = dis - treeRadius - character.radius;
+      if (overlap < 0) {
+        character.x -= getAdjacent(character.velocityAngle, overlap);
+        character.y -= getOpposite(character.velocityAngle, overlap);
+      }
+    }
+
+    character.applyFriction(0.75);
   }
 
   void updateRespawnAI(AI ai) {
