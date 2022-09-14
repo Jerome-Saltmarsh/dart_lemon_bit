@@ -355,15 +355,16 @@ class Connection {
         break;
 
       case ClientRequest.Player_Equip_Attack_Type_1:
-        // final weaponTypeIndex = int.tryParse(arguments[1]);
-        // if (weaponTypeIndex == null)
-        //   return errorInvalidArg("weapon type index is null");
-        //
-        // if (player.attackType1 == weaponTypeIndex) return;
-        // player.attackType1 = weaponTypeIndex;
-        // player.game.dispatchAttackTypeEquipped(
-        //   weaponTypeIndex, player.x, player.y, player.z, 0,
-        // );
+        if (player.deadOrBusy) return;
+        if (player.isPerforming) return;
+        if (arguments.length < 2)
+          return errorInsufficientArgs(2, arguments);
+        final weaponUuid = arguments[1];
+        final weapon = player.getWeaponByUuid(weaponUuid);
+        if (weapon == null) {
+          return;
+        }
+        player.weapon = weapon;
         break;
 
       case ClientRequest.Player_Equip_Attack_Type_2:

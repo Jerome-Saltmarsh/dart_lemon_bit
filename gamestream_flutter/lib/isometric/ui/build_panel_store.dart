@@ -146,8 +146,8 @@ Widget buildColumnPlayerWeapons(int activePlayerAttackType) => watch(
         child: SingleChildScrollView(
           child: Column(
             children: weapons.map((Weapon weapon) =>
-              buildButtonEquipAttackType(
-                  weapon.type,
+              buildButtonWeapon(
+                  weapon,
                   activePlayerAttackType,
               )
             ).toList(),

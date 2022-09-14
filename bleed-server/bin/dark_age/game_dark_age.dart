@@ -94,11 +94,13 @@ class GameDarkAge extends Game {
     player.x += giveOrTake(5);
     player.y += giveOrTake(5);
     player.weapons.add(buildWeaponBow());
+    player.weapons.add(buildWeaponSword());
+    player.weapons.add(buildWeaponHandgun());
+    player.weapons.add(buildWeaponShotgun());
     player.weapons.add(buildWeaponUnarmed());
     player.writePlayerWeapons();
     return player;
   }
-
 
   void addNpcGuardBow({required int row, required int column, int z = 1}){
     addNpc(

@@ -22,6 +22,24 @@ class Weapon {
    }
 }
 
+Weapon buildWeaponShotgun() =>
+    Weapon(
+      type: AttackType.Shotgun,
+      damage: 1,
+      capacity: 0,
+      duration: 10,
+      range: 200,
+    );
+
+Weapon buildWeaponHandgun() =>
+    Weapon(
+      type: AttackType.Handgun,
+      damage: 1,
+      capacity: 0,
+      duration: 10,
+      range: 200,
+    );
+
 Weapon buildWeaponBow() =>
    Weapon(
       type: AttackType.Bow,

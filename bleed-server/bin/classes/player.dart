@@ -58,6 +58,14 @@ class Player extends Character with ByteWriter {
   final weapons = <Weapon>[];
   var storeItems = <Weapon>[];
 
+  Weapon? getWeaponByUuid(String weaponUuid){
+    for (final weapon in weapons){
+      if (weapon.uuid != weaponUuid) continue;
+      return weapon;
+    }
+    return null;
+  }
+
   final cardChoices = <CardType>[];
   final deck = <Card>[];
 
