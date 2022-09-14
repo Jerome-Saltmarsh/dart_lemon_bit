@@ -1065,7 +1065,7 @@ extension GameFunctions on Game {
       src: src,
       accuracy: 0,
       angle: angle,
-      speed: 4.0,
+      speed: 5.0,
       range: 300,
       projectileType: ProjectileType.Arrow,
       damage: 5,
