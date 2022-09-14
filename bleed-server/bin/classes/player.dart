@@ -4,7 +4,6 @@ import 'package:bleed_server/system.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
-import '../common/attack_type.dart';
 import '../common/character_type.dart';
 import '../common/flag.dart';
 import '../common/library.dart';

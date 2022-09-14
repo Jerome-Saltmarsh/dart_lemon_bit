@@ -324,17 +324,6 @@ class Connection {
         player.game.onPlayerAddCardToDeck(player, cardType);
         break;
 
-      case ClientRequest.Equip:
-        if (player.deadOrBusy) return;
-        if (arguments.length != 2) {
-          return errorArgsExpected(2, arguments);
-        }
-        final techType = int.tryParse(arguments[1]);
-        if (techType == null){
-          return errorInvalidArg('tech type integer required: got $techType');
-        }
-        return;
-
       case ClientRequest.Toggle_Debug:
         player.toggleDebug();
         break;

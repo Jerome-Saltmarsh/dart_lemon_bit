@@ -2,7 +2,6 @@ enum ClientRequest {
   Update,
   Join,
   Revive,
-  Equip,
   Toggle_Debug,
   Version,
   Speak,
