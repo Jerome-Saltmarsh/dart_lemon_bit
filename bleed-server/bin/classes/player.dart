@@ -380,7 +380,7 @@ class Player extends Character with ByteWriter {
   @override
   void onDeath(){
     game.dispatchV3(GameEventType.Player_Death, this);
-    game.onPlayerDeath(this);
+    game.customOnPlayerDeath(this);
   }
 
   void setInteractingNpcName(String value){
@@ -532,7 +532,7 @@ class Player extends Character with ByteWriter {
         experience -= experienceRequiredForNextLevel;
         level++;
         skillPoints++;
-        game.onPlayerLevelGained(this);
+        game.customOnPlayerLevelGained(this);
       }
   }
 
@@ -547,7 +547,7 @@ class Player extends Character with ByteWriter {
     to.characters.add(this);
     sceneDownloaded = false;
     game = to;
-    to.onPlayerJoined(this);
+    to.customOnPlayerJoined(this);
   }
 
   @override

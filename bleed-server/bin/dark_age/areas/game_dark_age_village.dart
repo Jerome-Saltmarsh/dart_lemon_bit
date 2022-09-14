@@ -104,7 +104,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
   }
 
   @override
-  void onPlayerJoined(Player player) {
+  void customOnPlayerJoined(Player player) {
      player.interact(
          message: "Welcome to Dark-Age!",
          responses: {

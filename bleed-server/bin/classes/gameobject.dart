@@ -75,7 +75,7 @@ class GameObjectLoot extends GameObject {
   }
 
   void onCollisionWithPlayer(Player player) {
-     player.game.onCollisionBetweenPlayerAndLoot(player, this);
+     player.game.customOnCollisionBetweenPlayerAndLoot(player, this);
   }
 
   GameObjectLoot({

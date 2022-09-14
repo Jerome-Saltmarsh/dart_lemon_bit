@@ -5,7 +5,6 @@ import 'package:lemon_math/library.dart';
 import '../common/library.dart';
 import '../constants/frames_per_second.dart';
 import '../functions/withinRadius.dart';
-import 'collider.dart';
 import 'character.dart';
 import 'game.dart';
 import 'position3.dart';

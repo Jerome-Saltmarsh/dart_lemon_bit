@@ -13,7 +13,7 @@ class DarkAgeDungeon1 extends DarkAgeAreaUnderground {
   bool get mapVisible => false;
 
   @override
-  void onCollisionBetweenPlayerAndLoot(Player player, GameObjectLoot loot){
+  void customOnCollisionBetweenPlayerAndLoot(Player player, GameObjectLoot loot){
      print("loot collected by player");
      deactivateGameObject(loot);
      player.weapon.rounds = player.weapon.capacity;
@@ -24,7 +24,7 @@ class DarkAgeDungeon1 extends DarkAgeAreaUnderground {
 
 
   @override
-  void onKilled(dynamic target, dynamic src) {
+  void customOnKilled(dynamic target, dynamic src) {
     if (target is AI) {
       actionSpawnLoot(
         game: this,

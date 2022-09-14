@@ -14,17 +14,17 @@ class GameDarkAgeEditor extends GameDarkAge {
   GameDarkAgeEditor({Scene? scene}) : super(scene ?? generateEmptyScene(), DarkAgeEnvironment(DarkAgeTime()));
 
   @override
-  void update(){
+  void customUpdate(){
     environment.update();
   }
 
   @override
-  void onPlayerDisconnected(Player player) {
+  void customOnPlayerDisconnected(Player player) {
       removeFromEngine();
   }
 
   @override
-  void onPlayerRevived(Player player) {
+  void customOnPlayerRevived(Player player) {
      if (isSafeToRevive(25, 25)){
        player.indexColumn = 25;
        player.indexRow = 25;

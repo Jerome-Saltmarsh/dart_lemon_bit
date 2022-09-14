@@ -3,10 +3,10 @@ import 'dart:math';
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
+import '../common/maths.dart';
 import '../common/spawn_type.dart';
 import '../common/teams.dart';
 import '../engine.dart';
-import '../functions.dart';
 import '../functions/withinRadius.dart';
 import '../io/write_scene_to_file.dart';
 import '../isometric/generate_node.dart';
@@ -42,37 +42,39 @@ abstract class Game {
   bool get full;
 
   /// safe to override
-  void update() {}
+  void customUpdate() { }
   /// safe to override
-  void onPlayerDisconnected(Player player) {}
+  void customOnPlayerDisconnected(Player player) { }
   /// safe to override
-  void onCollisionBetweenPlayerAndLoot(Player player, GameObjectLoot loot){  }
+  void customOnCollisionBetweenPlayerAndLoot(Player player, GameObjectLoot loot) { }
   /// safe to override
-  void onGameObjectDeactivated(GameObject gameObject){  }
+  void customOnGameObjectDeactivated(GameObject gameObject){ }
   /// safe to override
-  void onCharacterSpawned(Character character) {}
+  void customOnCharacterSpawned(Character character) { }
   /// safe to override
-  void onKilled(dynamic target, dynamic src) {}
+  void customOnKilled(dynamic target, dynamic src) { }
   /// safe to override
-  void onDamaged(dynamic target, dynamic src, int amount) {}
+  void customOnDamaged(dynamic target, dynamic src, int amount) { }
   /// safe to overridable
-  void onPlayerRevived(Player player) {}
+  void customOnPlayerRevived(Player player) { }
   /// safe to overridable
-  void onGameStarted() {}
+  void customOnGameStarted() { }
   /// safe to overridable
-  void onPlayerJoined(Player player) {}
+  void customOnPlayerJoined(Player player) { }
   /// safe to overridable
-  void onPlayerDeath(Player player) {}
+  void customOnPlayerDeath(Player player) { }
   /// safe to overridable
-  void onNpcObjectivesCompleted(Character npc) {}
+  void customOnNpcObjectivesCompleted(Character npc) { }
   /// safe to overridable
-  void onPlayerLevelGained(Player player) {}
+  void customOnPlayerLevelGained(Player player) { }
   /// safe to overridable
-  void onPlayerAddCardToDeck(Player player, CardType cardType) {}
+  void customOnPlayerAddCardToDeck(Player player, CardType cardType) { }
+  /// safe to override
+  void customOnCollisionBetweenColliders(Collider a, Collider b) { }
 
   /// CONSTRUCTOR
   Game(this.scene) {
-    engine.onGameCreated(this);
+    engine.onGameCreated(this); /// TODO Illegal external scope reference
   }
 
   /// ACTIONS
@@ -85,9 +87,8 @@ abstract class Game {
      if (!gameObject.active) return;
      gameObject.active = false;
      gameObject.collidable = false;
-     onGameObjectDeactivated(gameObject);
+     customOnGameObjectDeactivated(gameObject);
   }
-
 
   void onGridChanged() {
     scene.refreshGridMetrics();
@@ -170,7 +171,7 @@ abstract class Game {
       i--;
     }
 
-    update();
+    customUpdate();
     updateCollisions();
     updateCharacters();
     updateGameObjects();
@@ -220,7 +221,7 @@ abstract class Game {
     character.setCharacterStateSpawning();
     character.health = character.maxHealth;
     character.collidable = true;
-    onPlayerRevived(character);
+    customOnPlayerRevived(character);
   }
 
   /// In seconds
@@ -307,9 +308,9 @@ extension GameFunctions on Game {
 
     if (target.health <= 0) {
       setCharacterStateDying(target);
-      onKilled(target, src);
+      customOnKilled(target, src);
     } else {
-      onDamaged(target, src, damage);
+      customOnDamaged(target, src, damage);
       target.setCharacterStateHurt();
     }
     dispatchGameEventCharacterHurt(target);
@@ -355,6 +356,90 @@ extension GameFunctions on Game {
   void updateCollisions() {
     resolveCollisions(characters);
     resolveCollisionsBetween(characters, gameObjects);
+  }
+
+  void resolveCollisions(List<Collider> colliders) {
+    final numberOfColliders = colliders.length;
+    final numberOfCollidersMinusOne = numberOfColliders - 1;
+    for (var i = 0; i < numberOfCollidersMinusOne; i++) {
+      final colliderI = colliders[i];
+      if (!colliderI.collidable) continue;
+      final colliderIBottom = colliderI.bottom;
+      for (var j = i + 1; j < numberOfColliders; j++) {
+        final colliderJ = colliders[j];
+        if (!colliderJ.collidable) continue;
+        if (colliderJ.top > colliderIBottom) break;
+        if (colliderJ.left > colliderI.right) continue;
+        if (colliderJ.bottom < colliderI.top) continue;
+        if ((colliderJ.z - colliderI.z).abs() > tileHeight) continue;
+        internalOnCollisionBetweenColliders(colliderJ, colliderI);
+      }
+    }
+  }
+
+  void resolveCollisionsBetween(
+      List<Collider> collidersA,
+      List<Collider> collidersB,
+  ) {
+    final aLength = collidersA.length;
+    final bLength = collidersB.length;
+    for (var i = 0; i < aLength; i++) {
+      final a = collidersA[i];
+      if (!a.collidable) continue;
+      for (var j = 0; j < bLength; j++) {
+        final b = collidersB[j];
+        if (!b.collidable) continue;
+        if (a.bottom < b.top) continue;
+        if (a.top > b.bottom) continue;
+        if (a.right < b.left) continue;
+        if (a.left > b.right) continue;
+        if ((a.z - b.z).abs() > tileHeight) continue;
+        if (a == b) continue;
+        internalOnCollisionBetweenColliders(a, b);
+      }
+    }
+  }
+
+  void internalOnCollisionBetweenColliders(Collider a, Collider b){
+    resolveCollisionPhysics(a, b);
+    customOnCollisionBetweenColliders(a, b);
+    a.onCollisionWith(b);
+    b.onCollisionWith(a);
+  }
+
+  void resolveCollisionPhysics(Collider a, Collider b) {
+    final combinedRadius = a.radius + b.radius;
+    final totalDistance = getDistanceXY(a.x, a.y, b.x, b.y);
+    final overlap = combinedRadius - totalDistance;
+    if (overlap < 0) return;
+    var xDiff = a.x - b.x;
+    var yDiff = a.y - b.y;
+
+    if (xDiff == 0 && yDiff == 0) {
+      if (a.moveOnCollision){
+        a.x += 5;
+        xDiff += 5;
+      }
+      if (b.moveOnCollision){
+        b.x -= 5;
+        xDiff += 5;
+      }
+    }
+
+    final ratio = 1.0 / getHypotenuse(xDiff, yDiff);
+    final xDiffNormalized = xDiff * ratio;
+    final yDiffNormalized = yDiff * ratio;
+    final halfOverlap = overlap * 0.5;
+    final targetX = xDiffNormalized * halfOverlap;
+    final targetY = yDiffNormalized * halfOverlap;
+    if (a.moveOnCollision){
+      a.x += targetX;
+      a.y += targetY;
+    }
+    if (b.moveOnCollision){
+      b.x -= targetX;
+      b.y -= targetY;
+    }
   }
 
   void sortGameObjects() {
@@ -1011,7 +1096,7 @@ extension GameFunctions on Game {
         break;
       case CharacterState.Spawning:
         if (character.stateDurationRemaining == 1){
-          onCharacterSpawned(character);
+          customOnCharacterSpawned(character);
         }
         if (character.stateDuration == 0) {
           if (this is Player){
@@ -1434,7 +1519,7 @@ extension GameFunctions on Game {
   bool removePlayer(Player player) {
     if (!players.remove(player)) return false;
     characters.remove(player);
-    onPlayerDisconnected(player);
+    customOnPlayerDisconnected(player);
     if (player.scene.dirty && player.scene.name.isNotEmpty) {
       writeSceneToFile(scene);
     }

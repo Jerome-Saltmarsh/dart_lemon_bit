@@ -33,7 +33,7 @@ class GameDarkAge extends Game {
   }
 
   @override
-  void onCharacterSpawned(Character character){
+  void customOnCharacterSpawned(Character character){
     if (character is Player){
       dispatchV3(GameEventType.Player_Spawned, character);
     }
@@ -47,7 +47,7 @@ class GameDarkAge extends Game {
   }
 
   @override
-  void onPlayerRevived(Player player){
+  void customOnPlayerRevived(Player player){
       player.changeGame(engine.findGameDarkAgeFarm());
       player.indexZ = 5;
       player.indexRow = 16;
@@ -62,7 +62,7 @@ class GameDarkAge extends Game {
   var timerReplenishAmmo = framesPerSecond * 5;
 
   @override
-  void update(){
+  void customUpdate(){
     updateInternal();
     replenishAmmo();
   }

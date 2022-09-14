@@ -322,7 +322,7 @@ class Connection {
         if (!player.cardChoices.contains(cardType)){
           return error(GameError.Choose_Card, message: 'selected card is not a choice');
         }
-        player.game.onPlayerAddCardToDeck(player, cardType);
+        player.game.customOnPlayerAddCardToDeck(player, cardType);
         break;
 
       case ClientRequest.Toggle_Debug:
@@ -417,7 +417,8 @@ class Connection {
 
         if (spawnAmount < 0)
           return errorInvalidArg('spawn amount must be greater than 0');
-
+        if (spawnAmount > 100)
+          return errorInvalidArg('spawn cannot be greater than 100');
         if (spawnRadius < 0)
           return errorInvalidArg('spawn radius must be greater than 0');
 
@@ -941,7 +942,7 @@ class Connection {
         break;
       }
     }
-    game.onPlayerJoined(player);
+    game.customOnPlayerJoined(player);
   }
 
   Future joinGameDarkAge() async {

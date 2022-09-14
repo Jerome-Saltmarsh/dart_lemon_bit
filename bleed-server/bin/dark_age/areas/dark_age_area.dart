@@ -12,8 +12,8 @@ class DarkAgeArea extends GameDarkAge {
   DarkAgeArea(Scene scene, {required this.mapTile})
       : super(scene, engine.environmentAboveGround);
 
-  void update() {
-    super.update();
+  void customUpdate() {
+    super.customUpdate();
     updateCheckPlayerChangeMap();
   }
 

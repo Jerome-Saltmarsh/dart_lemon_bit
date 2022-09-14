@@ -37,7 +37,7 @@ class GameDarkAgeFarm extends DarkAgeArea {
   }
 
   @override
-  void onPlayerJoined(Player player) {
+  void customOnPlayerJoined(Player player) {
     player.indexZ = 5;
     if (randomBool()){
       player.indexRow = 16;
@@ -60,7 +60,7 @@ class GameDarkAgeFarm extends DarkAgeArea {
   }
 
   @override
-  void onKilled(dynamic target, dynamic src){
+  void customOnKilled(dynamic target, dynamic src){
      if (src is Player){
         if (src.questInProgress(Quest.Garry_Kill_Farm_Zombies)){
         }

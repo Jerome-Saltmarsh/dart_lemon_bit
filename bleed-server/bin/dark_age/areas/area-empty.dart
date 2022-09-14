@@ -8,7 +8,7 @@ class AreaEmpty extends DarkAgeArea {
   AreaEmpty() : super(darkAgeScenes.farmA, mapTile: MapTiles.FarmA);
 
   @override
-  void onPlayerJoined(Player player) {
+  void customOnPlayerJoined(Player player) {
      throw Exception("Player cannot join empty area");
   }
 }

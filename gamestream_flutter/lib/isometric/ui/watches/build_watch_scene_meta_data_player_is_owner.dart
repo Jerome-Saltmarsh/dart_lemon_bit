@@ -125,7 +125,7 @@ Widget buildColumnEditSpawn() =>
                     text("-", onPressed: () =>
                         editorActionModifySpawnNode(
                           spawnType: value.spawnType,
-                          spawnRadius: value.spawnRadius - 1,
+                          spawnRadius: value.spawnRadius - 10,
                           spawnAmount: value.spawnAmount,
                         )
                     ),
@@ -138,7 +138,7 @@ Widget buildColumnEditSpawn() =>
                     text("+", onPressed: () =>
                         editorActionModifySpawnNode(
                           spawnType: value.spawnType,
-                          spawnRadius: value.spawnRadius + 1,
+                          spawnRadius: value.spawnRadius + 10,
                           spawnAmount: value.spawnAmount,
                         )
                     ),
