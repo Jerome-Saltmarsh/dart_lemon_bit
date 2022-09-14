@@ -1,12 +1,29 @@
 
+import 'dart:math';
+
+import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
+import 'package:gamestream_flutter/isometric/utils/convert.dart';
+import 'package:lemon_math/library.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
+import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/render.dart';
 
 import '../classes/character.dart';
 import 'render_character_health_bar.dart';
 import 'src_utils.dart';
 
+
+void renderLine(double x, double y, double z, double angle, double distance){
+  final x2 = x + getAdjacent(angle, distance);
+  final y2 = y + getOpposite(angle, distance);
+  drawLine(
+      projectX(x, y),
+      projectY(x, y, z),
+      projectX(x2, y2),
+      projectY(x2, y2, z),
+  );
+}
 
 void renderCharacterTemplate(Character character, {bool renderHealthBar = true}) {
   assert(character.direction >= 0);
@@ -17,6 +34,16 @@ void renderCharacterTemplate(Character character, {bool renderHealthBar = true})
   if (renderHealthBar){
     renderCharacterHealthBar(character);
   }
+
+  // renderLine(character.x, character.y, character.z, character.aimAngle, 50);
+  renderLine(character.x, character.y, character.z, character.aimAngle, 50);
+
+  // renderText(
+  //     text: character.aimAngle.toString(),
+  //     x: character.renderX,
+  //     y: character.renderY - 60,
+  // );
+  // renderLine(character.x, character.y, character.z, pi, 50);
 
   final weaponType = character.weapon;
   final direction = character.direction;

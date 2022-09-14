@@ -362,8 +362,10 @@ class ServerResponseReader with ByteReader {
     character.pants = readByte();
     character.name = readString();
     character.text = readString();
+    character.aimAngle = readAngle();
     totalCharacters++;
   }
+
 
   void readInteractingNpcName() {
     player.interactingNpcName.value = readString();
@@ -626,12 +628,6 @@ class ServerResponseReader with ByteReader {
     }
   }
 
-  void readPlayerDebug(){
-    player.state.value = readByte();
-    player.angle = readDouble() / 100.0;
-    player.mouseAngle = readDouble() / 100.0;
-  }
-
   void readPlayer() {
     player.x = readDouble();
     player.y = readDouble();
@@ -647,6 +643,7 @@ class ServerResponseReader with ByteReader {
     player.alive.value = readBool();
     player.experience.value = readPercentage();
     player.level.value = readByte();
+    player.mouseAngle = readAngle();
     updateCameraMode();
   }
 
@@ -841,4 +838,6 @@ class ServerResponseReader with ByteReader {
     }
     return values;
   }
+
+  double readAngle() => readDouble() * degreesToRadians;
 }

@@ -1,4 +1,3 @@
-import 'package:bleed_common/attack_type.dart';
 import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:lemon_math/constants/pi_quarter.dart';
@@ -21,6 +20,7 @@ class Character extends Vector3 {
   var health = 1.0;
   /// percentage between 0 and 1
   var magic = 1.0;
+  var aimAngle = 0.0;
 
   bool get dead => state == CharacterState.Dead;
   bool get deadOrDying => dead || dying;

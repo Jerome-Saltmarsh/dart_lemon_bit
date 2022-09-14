@@ -573,7 +573,6 @@ extension PlayerProperties on Player {
     writeInt(z);
     writeInt(health); // 2
     writeInt(maxHealth); // 2
-    // writeByte(attackType1); // 2
     writeByte(weapon.type);
     writeByte(weapon.damage);
     writeByte(equippedArmour); // armour
@@ -582,6 +581,8 @@ extension PlayerProperties on Player {
     writeBool(alive); // 1
     writePercentage(experiencePercentage);
     writeByte(level);
+    writeAngle(mouseAngle);
+
     writeAttackTarget();
     writeProjectiles();
     writePlayerTarget();
@@ -746,6 +747,7 @@ extension PlayerProperties on Player {
     writeCharacterEquipment(player);
     writeString(player.name);
     writeString(player.text);
+    writeAngle(player.mouseAngle);
   }
 
   void writeNpc(Player player, Character npc) {
