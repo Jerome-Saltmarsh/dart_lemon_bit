@@ -2,52 +2,24 @@ import 'package:lemon_math/library.dart';
 
 import 'classes/collider.dart';
 import 'common/library.dart';
+import 'events/on_collision_between_colliders.dart';
 
-void updateCollisionBetween(List<Collider> gameObjects) {
-  final numberOfGameObjects = gameObjects.length;
-  final numberOfGameObjectsMinusOne = numberOfGameObjects - 1;
-  for (var i = 0; i < numberOfGameObjectsMinusOne; i++) {
-    final gameObjectI = gameObjects[i];
-    if (!gameObjectI.collidable) continue;
-    final gameObjectIBottom = gameObjectI.bottom;
-    for (var j = i + 1; j < numberOfGameObjects; j++) {
-      final gameObjectJ = gameObjects[j];
-      if (!gameObjectJ.collidable) continue;
-      if (gameObjectJ.top > gameObjectIBottom) break;
-      if (gameObjectJ.left > gameObjectI.right) continue;
-      if (gameObjectJ.bottom < gameObjectI.top) continue;
-      if ((gameObjectJ.z - gameObjectI.z).abs() > tileHeight) continue;
-      resolveCollisionA(gameObjectI, gameObjectJ);
+void updateCollisionBetween(List<Collider> colliders) {
+  final numberOfColliders = colliders.length;
+  final numberOfCollidersMinusOne = numberOfColliders - 1;
+  for (var i = 0; i < numberOfCollidersMinusOne; i++) {
+    final colliderI = colliders[i];
+    if (!colliderI.collidable) continue;
+    final colliderIBottom = colliderI.bottom;
+    for (var j = i + 1; j < numberOfColliders; j++) {
+      final colliderJ = colliders[j];
+      if (!colliderJ.collidable) continue;
+      if (colliderJ.top > colliderIBottom) break;
+      if (colliderJ.left > colliderI.right) continue;
+      if (colliderJ.bottom < colliderI.top) continue;
+      if ((colliderJ.z - colliderI.z).abs() > tileHeight) continue;
+      onCollisionBetweenColliders(colliderJ, colliderI);
     }
-  }
-}
-
-void resolveCollisionA(Collider a, Collider b) {
-  final overlap = a.getOverlap(b);
-  if (overlap < 0) return;
-  var xDiff = a.x - b.x;
-  var yDiff = a.y - b.y;
-
-  if (xDiff == 0 && yDiff == 0) {
-    a.x -= 5;
-    b.y += 5;
-    xDiff = 10;
-  }
-
-  final halfOverlap = overlap * 0.5;
-  final mag = getHypotenuse(xDiff, yDiff);
-  final ratio = 1.0 / mag;
-  final xDiffNormalized = xDiff * ratio;
-  final yDiffNormalized = yDiff * ratio;
-  final targetX = xDiffNormalized * halfOverlap;
-  final targetY = yDiffNormalized * halfOverlap;
-  if (a.movable){
-    a.x += targetX;
-    a.y += targetY;
-  }
-  if (b.movable){
-    b.x -= targetX;
-    b.y -= targetY;
   }
 }
 
@@ -66,25 +38,24 @@ void resolveCollisionB(Collider a, Collider b) {
   a.y += targetY;
 }
 
-void resolveCollisionBetween(
-    List<Collider> gameObjectsA,
-    List<Collider> gameObjectsB,
-    Function(Collider a, Collider b) onCollision
-    ) {
-  final aLength = gameObjectsA.length;
-  final bLength = gameObjectsB.length;
+void detectAndResolveCollisionsBetweenDifferentLists(
+    List<Collider> collidersA,
+    List<Collider> collidersB,
+) {
+  final aLength = collidersA.length;
+  final bLength = collidersB.length;
   for (var i = 0; i < aLength; i++) {
-    final a = gameObjectsA[i];
+    final a = collidersA[i];
     if (!a.collidable) continue;
     for (var j = 0; j < bLength; j++) {
-      final b = gameObjectsB[j];
+      final b = collidersB[j];
       if (!b.collidable) continue;
       if (a.bottom < b.top) continue;
       if (a.top > b.bottom) continue;
       if (a.right < b.left) continue;
       if (a.left > b.right) continue;
       if ((a.z - b.z).abs() > tileHeight) continue;
-      onCollision(a, b);
+      onCollisionBetweenColliders(a, b);
     }
   }
 }

@@ -183,28 +183,28 @@ abstract class Game {
 
   void onPlayerDisconnected(Player player) {}
 
-  void checkColliderCollision(
-      List<Collider> collidersA, List<Collider> collidersB) {
-    final totalColliders = collidersB.length;
-    for (final a in collidersA) {
-      if (!a.collidable) continue;
-      final aRadius = a.radius;
-      for (var i = 0; i < totalColliders; i++) {
-        final b = collidersB[i];
-        if (!b.collidable) continue;
-        if ((a.z - b.z).abs() > tileSize) continue;
-        final combinedRadius = aRadius + b.radius;
-        final _distance = distanceV2(a, b);
-        if (_distance > combinedRadius) continue;
-        final overlap = combinedRadius - _distance;
-        final r = radiansV2(a, b);
-        a.x -= getAdjacent(r, overlap);
-        a.y -= getOpposite(r, overlap);
-        a.onCollisionWith(b);
-        b.onCollisionWith(a);
-      }
-    }
-  }
+  // void checkColliderCollision(
+  //     List<Collider> collidersA, List<Collider> collidersB) {
+  //   final totalColliders = collidersB.length;
+  //   for (final a in collidersA) {
+  //     if (!a.collidable) continue;
+  //     final aRadius = a.radius;
+  //     for (var i = 0; i < totalColliders; i++) {
+  //       final b = collidersB[i];
+  //       if (!b.collidable) continue;
+  //       if ((a.z - b.z).abs() > tileSize) continue;
+  //       final combinedRadius = aRadius + b.radius;
+  //       final _distance = distanceV2(a, b);
+  //       if (_distance > combinedRadius) continue;
+  //       final overlap = combinedRadius - _distance;
+  //       final r = radiansV2(a, b);
+  //       a.x -= getAdjacent(r, overlap);
+  //       a.y -= getOpposite(r, overlap);
+  //       a.onCollisionWith(b);
+  //       b.onCollisionWith(a);
+  //     }
+  //   }
+  // }
 
   Player spawnPlayer();
 
@@ -350,7 +350,7 @@ extension GameFunctions on Game {
 
   void _updateCollisions() {
     updateCollisionBetween(characters);
-    resolveCollisionBetween(characters, gameObjects, resolveCollisionA);
+    detectAndResolveCollisionsBetweenDifferentLists(characters, gameObjects);
   }
 
   void sortGameObjects() {

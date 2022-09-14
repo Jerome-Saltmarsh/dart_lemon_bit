@@ -66,12 +66,20 @@ class GameObjectLoot extends GameObject {
 
   int lootType;
 
+  @override
+  void onCollisionWith(Collider other){
+    print("Loot collider by $other");
+    active = false;
+  }
+
   GameObjectLoot({
     required double x,
     required double y,
     required double z,
     required this.lootType,
-  }) : super(x: x, y: y, z: z, radius: 15);
+  }) : super(x: x, y: y, z: z, radius: 15) {
+    collidable = false;
+  }
 
   @override
   int get type => GameObjectType.Loot;
