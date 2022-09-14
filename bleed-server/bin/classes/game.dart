@@ -98,6 +98,19 @@ abstract class Game {
     }
   }
 
+  void dispatchGameEventCharacterDeath(Character character){
+    for (final player in players) {
+      player.writeGameEvent(
+        type: GameEventType.Character_Death,
+        x: character.x,
+        y: character.y,
+        z: character.z,
+        angle: character.velocityAngle,
+      );
+      player.writeByte(character.type);
+    }
+  }
+
   void setNode(int z, int row, int column, int type, int orientation) {
     if (scene.outOfBounds(z, row, column)) return;
     final previousNode = scene.getNode(z, row, column);
@@ -391,6 +404,8 @@ extension GameFunctions on Game {
 
   void setCharacterStateDead(Character character) {
     if (character.state == CharacterState.Dead) return;
+
+    dispatchGameEventCharacterDeath(character);
     character.health = 0;
     character.state = CharacterState.Dead;
     character.onCharacterStateChanged();

@@ -15,7 +15,7 @@ import 'weapon.dart';
 
 abstract class Character extends Collider with Team, Velocity, FaceDirection {
 
-  Game game;
+  Game game; /// TODO remove reference
   var _health = 1;
   var maxHealth = 1;
 
@@ -117,11 +117,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
 
   }
 
-  void setWeaponRounds(int value){
-    weapon.rounds = value;
-    // writePlayerEventWeaponRounds();
-  }
-
   void onDeath(){
 
   }
@@ -149,6 +144,7 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     return game.scene.getNodeXYZ(x + getAdjacent(angle, distance), y + getOpposite(angle, distance), z + tileHeightHalf).type;
   }
 
+  /// TODO Handle business logic externally
   void updateCharacter(Game game){
     if (dead) return;
 
@@ -157,7 +153,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
       game.scene.resolveCharacterTileCollision(this, game);
       if (stateDurationRemaining-- <= 0){
         game.setCharacterStateDead(this);
-        dispatchGameEventCharacterDeath();
       }
       return;
     }
@@ -170,18 +165,18 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     game.scene.resolveCharacterTileCollision(this, game);
   }
 
-  void dispatchGameEventCharacterDeath(){
-    for (final player in game.players) {
-      player.writeGameEvent(
-        type: GameEventType.Character_Death,
-        x: x,
-        y: y,
-        z: z,
-        angle: velocityAngle,
-      );
-      player.writeByte(type);
-    }
-  }
+  // void dispatchGameEventCharacterDeath(){
+  //   for (final player in game.players) {
+  //     player.writeGameEvent(
+  //       type: GameEventType.Character_Death,
+  //       x: x,
+  //       y: y,
+  //       z: z,
+  //       angle: velocityAngle,
+  //     );
+  //     player.writeByte(type);
+  //   }
+  // }
 
   void updateCharacterState(Game game){
     if (stateDurationRemaining > 0) {
