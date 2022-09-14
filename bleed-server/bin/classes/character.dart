@@ -63,7 +63,7 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   bool get characterStateIdle => state == CharacterState.Idle;
   bool get busy => stateDurationRemaining > 0;
   bool get deadOrBusy => dying || dead || busy;
-  bool get deadBusyOrPerforming => dying || dead || busy;
+  bool get deadBusyOrPerforming => dying || dead || performing;
   bool get equippedTypeIsBow => weapon.type == AttackType.Bow;
   bool get equippedTypeIsStaff => weapon.type == AttackType.Staff;
   bool get unarmed => weapon.type == AttackType.Unarmed;

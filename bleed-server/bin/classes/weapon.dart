@@ -45,7 +45,7 @@ Weapon buildWeaponBow() =>
       type: AttackType.Bow,
       damage: 1,
       capacity: 15,
-      duration: 10,
+      duration: 30,
       range: 200,
    );
 
@@ -63,9 +63,8 @@ Weapon buildWeaponSword() =>
     Weapon(
       type: AttackType.Blade,
       damage: 1,
-      capacity: 0,
-      duration: 10,
-      range: 200,
+      duration: 20,
+      range: 100,
     );
 
 Weapon buildWeaponUnarmed({int damage = 1}) =>
