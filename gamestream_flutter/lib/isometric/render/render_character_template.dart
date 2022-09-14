@@ -36,12 +36,13 @@ void renderCharacterTemplate(Character character, {bool renderHealthBar = true})
     renderCharacterHealthBar(character);
   }
 
-  // renderLine(character.x, character.y, character.z, character.aimAngle, 50);
-  renderLine(character.x, character.y, character.z, character.aimAngle, 50);
   const pi3Quarters = piQuarter * 3;
+  final x = character.x + getAdjacent(character.aimAngle, 30);
+  final y = character.y + getOpposite(character.aimAngle, 30);
+
   renderRotated(
-      dstX: character.renderX,
-      dstY: character.renderY,
+      dstX: projectX(x, y),
+      dstY: projectY(x, y, character.z),
       srcX: 128,
       srcY: 0,
       srcWidth: 32,
