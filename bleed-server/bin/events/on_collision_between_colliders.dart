@@ -11,6 +11,10 @@ void onCollisionBetweenColliders(Collider a, Collider b){
   b.onCollisionWith(a);
 }
 
+void doNothing(){
+
+}
+
 void resolveCollisionPhysics(Collider a, Collider b) {
   final combinedRadius = a.radius + b.radius;
   final totalDistance = getDistanceXY(a.x, a.y, b.x, b.y);
@@ -20,9 +24,14 @@ void resolveCollisionPhysics(Collider a, Collider b) {
   var yDiff = a.y - b.y;
 
   if (xDiff == 0 && yDiff == 0) {
-    a.x += 5;
-    b.x -= 5;
-    xDiff = 10;
+    if (a.moveOnCollision){
+      a.x += 5;
+      xDiff += 5;
+    }
+    if (b.moveOnCollision){
+      b.x -= 5;
+      xDiff += 5;
+    }
   }
 
   final ratio = 1.0 / getHypotenuse(xDiff, yDiff);

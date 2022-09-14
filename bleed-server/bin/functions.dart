@@ -53,6 +53,7 @@ void resolveCollisionsBetween(
       if (a.right < b.left) continue;
       if (a.left > b.right) continue;
       if ((a.z - b.z).abs() > tileHeight) continue;
+      if (a == b) continue;
       onCollisionBetweenColliders(a, b);
     }
   }

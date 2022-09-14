@@ -51,7 +51,6 @@ abstract class AI extends Character {
       x: x,
       y: y,
       z: z,
-      // game: game,
       health: health,
       team: team,
       weapon: weapon,
@@ -168,13 +167,5 @@ abstract class AI extends Character {
   bool withinChaseRange(Position3 target) {
     if (target == objective) return true;
     return withinRadius(this, target, chaseRange);
-  }
-
-  @override
-  void onCollisionWith(Collider other){
-    if (pathIndex < 0) return;
-    if (other is AI) {
-      rotateAround(other, 0.2);
-    }
   }
 }

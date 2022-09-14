@@ -74,7 +74,7 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
 
   void write(Player player);
 
-  Character({
+    Character({
     required double x,
     required double y,
     required double z,
