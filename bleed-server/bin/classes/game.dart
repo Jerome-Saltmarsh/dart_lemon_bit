@@ -20,7 +20,6 @@ import 'character.dart';
 import 'collider.dart';
 import 'components.dart';
 import 'gameobject.dart';
-import 'item.dart';
 import 'node.dart';
 import 'npc.dart';
 import 'player.dart';
@@ -83,11 +82,11 @@ abstract class Game {
     actions.add(Action(duration, action));
   }
 
-  void deactivateGameObject(GameObject value){
-     if (!value.active) return;
-     value.active = false;
-     value.collidable = false;
-     onGameObjectDeactivated(value);
+  void deactivateGameObject(GameObject gameObject){
+     // if (!gameObject.active) return;
+     gameObject.active = false;
+     gameObject.collidable = false;
+     onGameObjectDeactivated(gameObject);
   }
 
 
@@ -239,6 +238,11 @@ extension GameFunctions on Game {
     );
   }
 
+  void activateGameObject(GameObject gameObject){
+      if (gameObject.active) return;
+      gameObject.active = true;
+  }
+
   void updateInProgress() {
     frame++;
     if (frame % 15 == 0) {
@@ -247,13 +251,6 @@ extension GameFunctions on Game {
     }
 
     for (final gameObject in gameObjects) {
-      if (!gameObject.active) {
-        gameObject.respawn--;
-        if (gameObject.respawn <= 0) {
-          gameObject.active = true;
-        }
-        continue;
-      }
 
       if (gameObject is Updatable) {
         (gameObject as Updatable).update(this);

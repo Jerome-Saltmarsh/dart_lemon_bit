@@ -14,7 +14,7 @@ class DarkAgeDungeon1 extends DarkAgeAreaUnderground {
   @override
   void onCollisionBetweenPlayerAndLoot(Player player, GameObjectLoot loot){
      print("loot collected by player");
-     loot.active = false;
+     deactivateGameObject(loot);
      player.weapon.rounds = player.weapon.capacity;
      player.writePlayerEventWeaponRounds();
   }
