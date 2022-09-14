@@ -433,6 +433,7 @@ class Connection {
           player.writeNodeData(node);
           game.nodeSpawnInstancesClear(node);
           game.nodeSpawnInstancesCreate(node);
+          player.scene.dirty = true;
         } else {
           return errorInvalidArg('ClientRequest.Spawn_Node_Data_Modify. Selected node must be of type spawn');
         }
