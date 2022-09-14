@@ -40,18 +40,56 @@ abstract class Game {
   final actions = <Action>[];
 
   List<GameObject> get gameObjects => scene.gameObjects;
+  /// Must override
+  bool get full;
 
-  void onCollisionBetweenPlayerAndLoot(Player player, GameObjectLoot loot){
+  /// safe to override
+  void update() {}
+  /// safe to override
+  void onPlayerDisconnected(Player player) {}
+  /// safe to override
+  void onCollisionBetweenPlayerAndLoot(Player player, GameObjectLoot loot){  }
+  /// safe to override
+  void onGameObjectDeactivated(GameObject gameObject){  }
+  /// safe to override
+  void onCharacterSpawned(Character character) {}
+  /// safe to override
+  void onKilled(dynamic target, dynamic src) {}
+  /// safe to override
+  void onDamaged(dynamic target, dynamic src, int amount) {}
+  /// safe to overridable
+  void onPlayerRevived(Player player) {}
+  /// safe to overridable
+  void onGameStarted() {}
+  /// safe to overridable
+  void onPlayerJoined(Player player) {}
+  /// safe to overridable
+  void onPlayerDeath(Player player) {}
+  /// safe to overridable
+  void onNpcObjectivesCompleted(Character npc) {}
+  /// safe to overridable
+  void onPlayerLevelGained(Player player) {}
+  /// safe to overridable
+  void onPlayerAddCardToDeck(Player player, CardType cardType) {}
 
+  /// CONSTRUCTOR
+  Game(this.scene) {
+    engine.onGameCreated(this);
   }
+
+  /// ACTIONS
 
   void perform(Function action, int duration){
     actions.add(Action(duration, action));
   }
 
-  Game(this.scene) {
-    engine.onGameCreated(this);
+  void deactivateGameObject(GameObject value){
+     if (!value.active) return;
+     value.active = false;
+     value.collidable = false;
+     onGameObjectDeactivated(value);
   }
+
 
   void onGridChanged() {
     scene.refreshGridMetrics();
@@ -60,9 +98,6 @@ abstract class Game {
       player.writeGrid();
     }
   }
-
-
-  void onCharacterSpawned(Character character) {}
 
   void setNode(int z, int row, int column, int type, int orientation) {
     if (scene.outOfBounds(z, row, column)) return;
@@ -105,8 +140,6 @@ abstract class Game {
 
   void setHourMinutes(int hour, int minutes) {}
 
-  bool get full;
-
   void updateStatus() {
     removeDisconnectedPlayers();
     updateInProgress();
@@ -123,18 +156,12 @@ abstract class Game {
     return false;
   }
 
-  void onPlayerAddCardToDeck(Player player, CardType cardType) {}
-
-  void onKilled(dynamic target, dynamic src) {}
-
-  void onDamaged(dynamic target, dynamic src, int amount) {}
-
-  var _nextAnimationFrame = 0;
+  var _nextCharacterAnimationFrame = 0;
 
   void _updateCharacterFrames() {
-    _nextAnimationFrame++;
-    if (_nextAnimationFrame < 6) return;
-    _nextAnimationFrame = 0;
+    _nextCharacterAnimationFrame++;
+    if (_nextCharacterAnimationFrame < 6) return;
+    _nextCharacterAnimationFrame = 0;
     for (final character in characters) {
       character.updateFrame();
     }
@@ -155,25 +182,9 @@ abstract class Game {
     onPlayerRevived(character);
   }
 
-  void onPlayerRevived(Player player) {}
-
   /// In seconds
   int getTime();
 
-  void onGameStarted() {}
-
-  void onPlayerJoined(Player player) {}
-
-  void onPlayerDeath(Player player) {}
-
-  void onNpcObjectivesCompleted(Character npc) {}
-
-  void onPlayerLevelGained(Player player) {}
-
-  /// Returning true will cause the item to be removed
-  bool onPlayerItemCollision(Player player, Item item) {
-    return true;
-  }
 
   int countAlive(List<Character> characters) {
     var total = 0;
@@ -182,33 +193,6 @@ abstract class Game {
     }
     return total;
   }
-
-  void update() {}
-
-  void onPlayerDisconnected(Player player) {}
-
-  // void checkColliderCollision(
-  //     List<Collider> collidersA, List<Collider> collidersB) {
-  //   final totalColliders = collidersB.length;
-  //   for (final a in collidersA) {
-  //     if (!a.collidable) continue;
-  //     final aRadius = a.radius;
-  //     for (var i = 0; i < totalColliders; i++) {
-  //       final b = collidersB[i];
-  //       if (!b.collidable) continue;
-  //       if ((a.z - b.z).abs() > tileSize) continue;
-  //       final combinedRadius = aRadius + b.radius;
-  //       final _distance = distanceV2(a, b);
-  //       if (_distance > combinedRadius) continue;
-  //       final overlap = combinedRadius - _distance;
-  //       final r = radiansV2(a, b);
-  //       a.x -= getAdjacent(r, overlap);
-  //       a.y -= getOpposite(r, overlap);
-  //       a.onCollisionWith(b);
-  //       b.onCollisionWith(a);
-  //     }
-  //   }
-  // }
 
   Player spawnPlayer();
 
