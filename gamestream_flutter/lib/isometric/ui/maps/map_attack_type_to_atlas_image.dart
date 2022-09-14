@@ -10,4 +10,5 @@ const mapAttackTypeToAtlasImage = {
   AttackType.Assault_Rifle  : AtlasImage (srcX: 11824, srcY: 691, width: 31, height: 13),
   AttackType.Bow            : AtlasImage (srcX: 11920, srcY: 192, width: 32, height: 32),
   AttackType.Rifle          : AtlasImage (srcX: 11984, srcY: 658, width: 48, height: 14),
+  AttackType.Revolver       : AtlasImage (srcX: 11920, srcY: 726, width: 16, height: 10),
 };

@@ -264,6 +264,8 @@ SpriteLayer _mapWeaponTypeToSpriteLayer(int weaponType) {
       return SpriteLayer.Shotgun;
     case AttackType.Handgun:
       return SpriteLayer.Handgun;
+    case AttackType.Revolver:
+      return SpriteLayer.Handgun;
     default:
       throw Exception("cannot map ${weaponType} to sprite index");
   }

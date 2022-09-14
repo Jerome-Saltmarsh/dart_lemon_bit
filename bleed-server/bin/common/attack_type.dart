@@ -15,6 +15,7 @@ class AttackType {
    static const Crowbar = 15;
    static const Rifle = 16;
    static const Staff = 17;
+   static const Revolver = 18;
 
    static bool requiresRounds(int value) =>
         value == Crossbow ||
@@ -22,6 +23,7 @@ class AttackType {
         value == Handgun ||
         value == Assault_Rifle ||
         value == Bow ||
+        value == Revolver ||
         value == Rifle;
 
 
@@ -47,5 +49,6 @@ class AttackType {
           Crowbar: "Crow-bar",
           Rifle: "Rifle",
           Staff: "Staff",
+          Revolver: "Revolver",
        }[value] ?? "? ($value)";
 }

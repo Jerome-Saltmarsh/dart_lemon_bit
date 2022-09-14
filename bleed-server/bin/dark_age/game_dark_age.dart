@@ -100,6 +100,7 @@ class GameDarkAge extends Game {
     player.weapons.add(buildWeaponSword());
     player.weapons.add(buildWeaponHandgun());
     player.weapons.add(buildWeaponShotgun());
+    player.weapons.add(buildWeaponRevolver());
     player.weapons.add(buildWeaponUnarmed());
     player.weapons.add(buildWeaponRifle());
     player.writePlayerWeapons();
