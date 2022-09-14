@@ -16,7 +16,9 @@ void onPlayerEvent(int event) {
       return audioSingleTeleport();
     case PlayerEvent.Weapon_Rounds:
       final rounds = serverResponseReader.readInt();
+      final capacity = serverResponseReader.readInt();
       player.weaponRounds.value = rounds;
+      player.weaponCapacity.value = capacity;
       break;
     case PlayerEvent.Scene_Changed:
       return cameraCenterOnPlayer();

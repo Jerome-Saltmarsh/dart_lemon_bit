@@ -123,6 +123,7 @@ class Player extends Character with ByteWriter {
   void writePlayerEventWeaponRounds(){
     writePlayerEvent(PlayerEvent.Weapon_Rounds);
     writeInt(weapon.rounds);
+    writeInt(weapon.capacity);
   }
 
   void performAttackType2() {

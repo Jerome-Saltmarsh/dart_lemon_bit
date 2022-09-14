@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
+import 'package:gamestream_flutter/isometric/render/render_character_health_bar.dart';
 import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
@@ -54,6 +55,12 @@ class GameRender {
         text: player.weaponRounds.value.toString(),
         x: player.renderX,
         y: player.renderY - 50,
+      );
+
+      renderCharacterBarWeaponRounds(
+          player.renderX,
+          player.renderY - 7,
+          player.weaponRounds.value / player.weaponCapacity.value,
       );
     }
   }
