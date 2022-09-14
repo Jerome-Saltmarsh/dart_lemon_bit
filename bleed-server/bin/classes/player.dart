@@ -118,6 +118,8 @@ class Player extends Character with ByteWriter {
             distance: 40,
             attackRadius: 25,
         );
+      case AttackType.Bow:
+        return performAttackTypeBow();
     }
   }
 
@@ -306,6 +308,11 @@ class Player extends Character with ByteWriter {
   void performAttackTypeShotgun(){
     performDuration = 10;
     game.fireShotgun(this, mouseAngle);
+  }
+
+  void performAttackTypeBow(){
+    performDuration = 10;
+    game.fireArrow(this, mouseAngle);
   }
 
   void performAttackTypeAssaultRifle(){
