@@ -12,7 +12,6 @@ void onCollisionBetweenColliders(Collider a, Collider b){
 }
 
 void resolveCollisionPhysics(Collider a, Collider b) {
-
   final combinedRadius = a.radius + b.radius;
   final totalDistance = getDistanceBetweenV3(a, b);
   final overlap = combinedRadius - totalDistance;
