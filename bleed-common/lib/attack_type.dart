@@ -14,9 +14,14 @@ class AttackType {
    static const Baseball_Bat = 14;
    static const Crowbar = 15;
    static const Rifle = 16;
+   static const Staff = 17;
 
-   static String getName(int value) {
-       return const {
+   static bool isMelee(int value) =>
+         value == Unarmed ||
+         value == Blade;
+
+   static String getName(int value)  =>
+       const {
           Unarmed: "Unarmed",
           Blade: "Blade",
           Crossbow: "Crossbow",
@@ -32,6 +37,6 @@ class AttackType {
           Baseball_Bat: "Baseball Bat",
           Crowbar: "Crow-bar",
           Rifle: "Rifle",
+          Staff: "Staff",
        }[value] ?? "? ($value)";
-   }
 }

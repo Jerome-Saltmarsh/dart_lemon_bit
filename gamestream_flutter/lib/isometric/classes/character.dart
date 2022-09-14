@@ -1,3 +1,4 @@
+import 'package:bleed_common/attack_type.dart';
 import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:lemon_math/constants/pi_quarter.dart';
@@ -9,7 +10,7 @@ class Character extends Vector3 {
   var state = 0;
   var direction = 0;
   var frame = 0;
-  var weapon = WeaponType.Unarmed;
+  var weapon = AttackType.Unarmed;
   var armour = ArmourType.shirtCyan;
   var helm = HeadType.None;
   var pants = PantsType.white;

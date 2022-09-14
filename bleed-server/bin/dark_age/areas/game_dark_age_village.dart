@@ -1,6 +1,7 @@
 
 
 import '../../classes/library.dart';
+import '../../common/attack_type.dart';
 import '../../common/library.dart';
 import '../../common/map_tiles.dart';
 import '../dark_age_scenes.dart';
@@ -13,6 +14,7 @@ import 'dark_age_area.dart';
 class GameDarkAgeVillage extends DarkAgeArea {
   GameDarkAgeVillage() : super(darkAgeScenes.village, mapTile: MapTiles.Village) {
     addNpc(
+        weapon: buildWeaponUnarmed(),
         name: "Bell",
         row: 21,
         column: 13,
@@ -24,8 +26,8 @@ class GameDarkAgeVillage extends DarkAgeArea {
         onInteractedWith: (player) {
           player.health = player.maxHealth;
           player.setStoreItems([
-            Weapon(type: WeaponType.Bow, damage: 5),
-            Weapon(type: WeaponType.Sword, damage: 5),
+            Weapon(type: AttackType.Bow, damage: 5, duration: 10, range: 200),
+            Weapon(type: AttackType.Blade, damage: 5, duration: 15, range: 50),
           ]);
         });
 
@@ -38,7 +40,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
         head: HeadType.Steel_Helm,
         armour: ArmourType.shirtCyan,
         pants: PantsType.red,
-        weaponType: WeaponType.Axe,
+        weapon: buildWeaponUnarmed(),
         onInteractedWith: onInteractWithGarry,
     );
 
@@ -50,7 +52,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
         head: HeadType.Wizards_Hat,
         armour: ArmourType.shirtBlue,
         pants: PantsType.white,
-        weaponType: WeaponType.Staff,
+        weapon: buildWeaponUnarmed(),
         onInteractedWith: onInteractWithJenkins,
     );
 
@@ -62,7 +64,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
       head: HeadType.Blonde,
       armour: ArmourType.tunicPadded,
       pants: PantsType.brown,
-      weaponType: WeaponType.Unarmed,
+      weapon: buildWeaponUnarmed(),
       onInteractedWith: onInteractWithJulia,
     );
 

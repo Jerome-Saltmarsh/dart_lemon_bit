@@ -38,7 +38,7 @@ class Player extends Vector3 {
   final mouseTargetAllie = Watch<bool>(false);
   final mouseTargetHealth = Watch(0.0);
   final weaponDamage = Watch(0);
-  final weaponType = Watch(WeaponType.Unarmed, onChanged: onChangedPlayerWeapon);
+  final weaponType = Watch(AttackType.Unarmed, onChanged: onChangedPlayerWeapon);
   final attackType = Watch(AttackType.Unarmed, onChanged: onChangedPlayerAttackType);
   final armourType = Watch(ArmourType.tunicPadded);
   final headType = Watch(HeadType.None);
@@ -74,7 +74,7 @@ class Player extends Vector3 {
   final weapons = Watch(<Weapon>[]);
   final weapon = Watch<Weapon>(
       Weapon(
-        type: WeaponType.Unarmed,
+        type: AttackType.Unarmed,
         damage: 1,
         uuid: "-1",
       )

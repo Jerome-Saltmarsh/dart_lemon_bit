@@ -32,7 +32,6 @@ import 'dark_age/areas/game_dark_age_village.dart';
 import 'dark_age/dark_age_scenes.dart';
 import 'dark_age/dark_age_environment.dart';
 import 'dark_age/game_dark_age.dart';
-import 'dark_age/areas/game_dark_age_college.dart';
 import 'dark_age/game_dark_age_editor.dart';
 import 'io/read_scene_from_file.dart';
 import 'language.dart';

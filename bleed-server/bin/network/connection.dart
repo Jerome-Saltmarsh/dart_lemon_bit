@@ -145,7 +145,7 @@ class Connection {
         if (arguments.length < 2)  return errorArgsExpected(2, arguments);
         final weaponType = int.tryParse(arguments[1]);
         if (weaponType == null) return errorInvalidArg('weapon type');
-        player.equippedWeapon = Weapon(type: weaponType, damage: 1);
+        player.equippedWeapon = Weapon(type: weaponType, damage: 1, duration: 10, range: 50);
         player.setCharacterStateChanging();
         break;
 
@@ -184,6 +184,8 @@ class Connection {
             Weapon(
               type: type,
               damage: 1,
+              range: 100,
+              duration: 10
             )
         );
         player.writePlayerWeapons();

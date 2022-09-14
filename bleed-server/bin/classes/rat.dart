@@ -20,7 +20,7 @@ class Rat extends AI {
       y: 0,
       z: 0,
       health: health,
-      weapon: Weapon(type: WeaponType.Unarmed, damage: damage),
+      weapon: buildWeaponUnarmed(),
       team: team,
       game: game,
   ) {

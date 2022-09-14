@@ -9,7 +9,6 @@ import '../common/character_type.dart';
 import '../common/flag.dart';
 import '../common/library.dart';
 import '../common/node_orientation.dart';
-import '../common/node_size.dart';
 import '../common/quest.dart';
 import '../convert/convert_card_type_to_card.dart';
 import '../dark_age/areas/dark_age_area.dart';
@@ -56,8 +55,6 @@ class Player extends Character with ByteWriter {
   Account? account;
   var attackType1 = AttackType.Blade;
   var attackType2 = AttackType.Handgun;
-
-  var questZombieKillsRemaining = 2;
 
   final weapons = <Weapon>[];
   var storeItems = <Weapon>[];
@@ -499,11 +496,6 @@ class Player extends Character with ByteWriter {
 
   void equipAxe(){
     // equippedType = TechType.Axe;
-    setCharacterStateChanging();
-  }
-
-  void equipUnarmed(){
-    equippedWeapon = Weapon(type: WeaponType.Unarmed, damage: 1);
     setCharacterStateChanging();
   }
 

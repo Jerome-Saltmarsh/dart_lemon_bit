@@ -4,6 +4,7 @@ import 'package:lemon_math/library.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
+import '../common/attack_type.dart';
 import '../common/library.dart';
 import '../common/spawn_type.dart';
 import '../engine.dart';
@@ -88,7 +89,7 @@ class GameDarkAge extends Game {
   Player spawnPlayer() {
     final player = Player(
         game: this,
-        weapon: Weapon(type: WeaponType.Unarmed, damage: 1),
+        weapon: buildWeaponUnarmed(),
         team: 1,
     );
 
@@ -97,11 +98,8 @@ class GameDarkAge extends Game {
     player.indexColumn = 21;
     player.x += giveOrTake(5);
     player.y += giveOrTake(5);
-    player.weapons.add(Weapon(type: WeaponType.Sword, damage: 2));
-    player.weapons.add(Weapon(type: WeaponType.Bow, damage: 2));
-    player.weapons.add(Weapon(type: WeaponType.Handgun, damage: 5));
-    player.weapons.add(Weapon(type: WeaponType.Shotgun, damage: 5));
-    player.weapons.add(Weapon(type: WeaponType.Staff, damage: 5));
+    player.weapons.add(buildWeaponBow());
+    player.weapons.add(buildWeaponUnarmed());
     player.writePlayerWeapons();
     return player;
   }
@@ -116,8 +114,7 @@ class GameDarkAge extends Game {
       head: HeadType.Rogues_Hood,
       armour: ArmourType.shirtBlue,
       pants: PantsType.green,
-      weaponType: WeaponType.Bow,
-      weaponDamage: 3,
+      weapon: buildWeaponBow(),
     );
   }
 }

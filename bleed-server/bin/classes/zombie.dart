@@ -22,7 +22,7 @@ class Zombie extends AI {
       y: y,
       z: z,
       health: health,
-      weapon: Weapon(type: WeaponType.Unarmed, damage: damage),
+      weapon: buildWeaponUnarmed(),
       wanderRadius: wanderRadius,
       game: game,
       team: team,

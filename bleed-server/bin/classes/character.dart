@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
+import '../common/attack_type.dart';
 import '../common/library.dart';
 import '../functions/withinRadius.dart';
 import '../utilities.dart';
@@ -63,16 +64,16 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   bool get characterStateIdle => state == CharacterState.Idle;
   bool get busy => stateDurationRemaining > 0;
   bool get deadOrBusy => dying || dead || busy;
-  bool get equippedTypeIsBow => equippedWeapon.type == WeaponType.Bow;
-  bool get equippedTypeIsStaff => equippedWeapon.type == WeaponType.Staff;
-  bool get unarmed => equippedWeapon.type == WeaponType.Unarmed;
-  bool get equippedTypeIsShotgun => equippedWeapon.type == WeaponType.Shotgun;
-  bool get equippedIsMelee => WeaponType.isMelee(equippedWeapon.type);
+  bool get equippedTypeIsBow => equippedWeapon.type == AttackType.Bow;
+  bool get equippedTypeIsStaff => equippedWeapon.type == AttackType.Staff;
+  bool get unarmed => equippedWeapon.type == AttackType.Unarmed;
+  bool get equippedTypeIsShotgun => equippedWeapon.type == AttackType.Shotgun;
+  bool get equippedIsMelee => AttackType.isMelee(equippedWeapon.type);
   bool get equippedIsEmpty => false;
   int get equippedLevel => 1;
   int get equippedAttackDuration => 25;
   int get equippedDamage => equippedWeapon.damage;
-  double get equippedRange => WeaponType.getRange(equippedWeapon.type);
+  double get equippedRange => equippedWeapon.range;
 
   void write(Player player);
 

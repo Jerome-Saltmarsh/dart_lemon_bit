@@ -2,6 +2,7 @@
 import 'package:lemon_math/library.dart';
 
 import '../../classes/library.dart';
+import '../../common/attack_type.dart';
 import '../../common/flag.dart';
 import '../../common/library.dart';
 import '../../common/map_tiles.dart';
@@ -17,6 +18,7 @@ class AreaForest4 extends DarkAgeArea {
         column: 33,
         z: 1,
         wanderRadius: 20,
+        weapon: buildWeaponBow(),
         onInteractedWith: (Player player) {
           return player.interact(
               message:
@@ -48,7 +50,7 @@ class AreaForest4 extends DarkAgeArea {
       row: 18,
       column: 33,
       z: 1,
-      weaponType: WeaponType.Bow,
+      weapon:  buildWeaponBow(),
       head: randomItem(HeadType.values),
       armour: randomItem(ArmourType.values),
       pants: randomItem(PantsType.values),
@@ -60,7 +62,7 @@ class AreaForest4 extends DarkAgeArea {
       row: 18,
       column: 35,
       z: 1,
-      weaponType: WeaponType.Sword,
+      weapon: buildWeaponBow(),
       head: randomItem(HeadType.values),
       armour: randomItem(ArmourType.values),
       pants: randomItem(PantsType.values),
@@ -72,7 +74,7 @@ class AreaForest4 extends DarkAgeArea {
       row: 12,
       column: 37,
       z: 1,
-      weaponType: WeaponType.Axe,
+      weapon: buildWeaponBow(),
       head: randomItem(HeadType.values),
       armour: randomItem(ArmourType.values),
       pants: randomItem(PantsType.values),

@@ -755,7 +755,13 @@ extension GameFunctions on Game {
           y: spawn.y + y,
           z: spawn.z,
           health: 10,
-          weapon: Weapon(type: WeaponType.Bow, damage: 1),
+          weapon: Weapon(
+              type: AttackType.Bow,
+              damage: 1,
+              capacity: 0,
+              duration: 10,
+              range: 200,
+          ),
           team: Teams.good,
           wanderRadius: 100,
           name: 'Bandit',
@@ -853,7 +859,13 @@ extension GameFunctions on Game {
           y: node.y + y,
           z: node.z,
           health: 10,
-          weapon: Weapon(type: WeaponType.Bow, damage: 1),
+          weapon: Weapon(
+              type: AttackType.Bow,
+              damage: 1,
+              capacity: 0,
+              duration: 10,
+              range: 200,
+          ),
           team: Teams.good,
           wanderRadius: 100,
           name: 'Bandit',
@@ -1363,17 +1375,17 @@ extension GameFunctions on Game {
     }
 
     final weaponType = character.equippedWeapon.type;
-    if (weaponType == WeaponType.Sword) {
+    if (weaponType == AttackType.Blade) {
       if (stateDuration == 7) {
         dispatchV3(GameEventType.Sword_Woosh, character);
       }
     }
-    if (weaponType == WeaponType.Unarmed) {
+    if (weaponType == AttackType.Unarmed) {
       if (stateDuration == 7) {
         // dispatchV3(GameEventType.Arm_Swing, character);
       }
     }
-    if (weaponType == WeaponType.Handgun) {
+    if (weaponType == AttackType.Handgun) {
       if (stateDuration == 1) {
         if (character.equippedIsEmpty) {
           // dispatchV3(GameEventType.Clip_Empty, character);
@@ -1486,9 +1498,8 @@ extension GameFunctions on Game {
     required int row,
     required int column,
     required int z,
+    required Weapon weapon,
     Function(Player player)? onInteractedWith,
-    int weaponType = WeaponType.Unarmed,
-    int weaponDamage = 1,
     int head = HeadType.None,
     int armour = ArmourType.shirtCyan,
     int pants = PantsType.brown,
@@ -1502,7 +1513,7 @@ extension GameFunctions on Game {
       x: 0,
       y: 0,
       z: 0,
-      weapon: Weapon(type: weaponType, damage: weaponDamage),
+      weapon: weapon,
       team: team,
       health: health,
       wanderRadius: wanderRadius,

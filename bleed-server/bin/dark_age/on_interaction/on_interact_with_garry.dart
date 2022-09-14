@@ -2,8 +2,8 @@
 import '../../classes/player.dart';
 import '../../classes/weapon.dart';
 import '../../common/PlayerEvent.dart';
+import '../../common/attack_type.dart';
 import '../../common/quest.dart';
-import '../../common/weapon_type.dart';
 
 void onInteractWithGarry(Player player) {
   player.writePlayerEvent(PlayerEvent.Hello_Male_01);
@@ -15,28 +15,24 @@ void onInteractWithGarry(Player player) {
            "Staff": () {
              player.beginQuest(Quest.Garry_Kill_Farm_Zombies);
              player.setCharacterStateChanging();
-             player.equippedWeapon = Weapon(type: WeaponType.Staff, damage: 1);
+             player.equippedWeapon = buildWeaponStaff();
              player.endInteraction();
            },
            "Sword": () {
              player.beginQuest(Quest.Garry_Kill_Farm_Zombies);
              player.setCharacterStateChanging();
-             player.equippedWeapon = Weapon(type: WeaponType.Sword, damage: 1);
+             player.equippedWeapon = buildWeaponSword();
              player.endInteraction();
            },
            "Bow": () {
              player.beginQuest(Quest.Garry_Kill_Farm_Zombies);
              player.setCharacterStateChanging();
-             player.equippedWeapon = Weapon(type: WeaponType.Bow, damage: 1);
+             player.equippedWeapon = buildWeaponBow();
              player.endInteraction();
            },
            "I can't right now": player.endInteraction,
         }
      );
-  }
-
-  if (player.questInProgress(Quest.Garry_Kill_Farm_Zombies)){
-    return player.interact(message: "Please kill ${player.questZombieKillsRemaining} more zombies then return to me");
   }
 
   if (player.questInProgress(Quest.Garry_Return_To_Garry)){

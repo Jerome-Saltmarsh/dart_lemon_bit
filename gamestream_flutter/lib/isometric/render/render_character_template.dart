@@ -22,7 +22,7 @@ void renderCharacterTemplate(Character character, {bool renderHealthBar = true})
   final direction = character.direction;
   final color = colorShades[character.tileBelow.shade];
 
-  if (weaponType == WeaponType.Bow || weaponType == WeaponType.Shotgun) {
+  if (weaponType == AttackType.Bow || weaponType == AttackType.Shotgun) {
     if (direction == Direction.North_West ||
         direction == Direction.North ||
         direction == Direction.North_East ||
@@ -36,7 +36,7 @@ void renderCharacterTemplate(Character character, {bool renderHealthBar = true})
     return;
   }
 
-  if (WeaponType.isMelee(weaponType)) {
+  if (AttackType.isMelee(weaponType)) {
     if (direction == Direction.North_East ||
         direction == Direction.North ||
         direction == Direction.North_West ||
@@ -66,15 +66,11 @@ void _renderCharacterTemplate(Character character, int color) {
 
 void _renderCharacterTemplateWeapon(Character character) {
   final equipped = character.weapon;
-  if (equipped == WeaponType.Unarmed) return;
+  if (equipped == AttackType.Unarmed) return;
 
   final renderRow = const [
-    WeaponType.Hammer,
-    WeaponType.Axe,
-    WeaponType.Pickaxe,
-    WeaponType.Sword,
-    WeaponType.Sword,
-    WeaponType.Staff,
+    AttackType.Blade,
+    AttackType.Staff,
   ].indexOf(equipped);
 
   if (renderRow == -1) {
@@ -133,7 +129,7 @@ void _renderCharacterPart(Character character, SpriteLayer layer, int color) {
 double _getTemplateSrcX(Character character, {required double size}) {
   const framesPerDirection = 19;
   final weapon = character.weapon;
-  final variation = weapon == WeaponType.Shotgun || weapon == WeaponType.Bow;
+  final variation = weapon == AttackType.Shotgun || weapon == AttackType.Bow;
 
   switch (character.state) {
     case CharacterState.Running:
@@ -172,11 +168,11 @@ double _getTemplateSrcX(Character character, {required double size}) {
       final weapon = character.weapon;
       return animate(
           size: size,
-          animation: weapon == WeaponType.Bow
+          animation: weapon == AttackType.Bow
               ? const [5, 8, 6, 10]
-              : weapon == WeaponType.Handgun
+              : weapon == AttackType.Handgun
               ? const [8, 9, 8]
-              : weapon == WeaponType.Shotgun
+              : weapon == AttackType.Shotgun
               ? const [6, 7, 6, 6, 6, 8, 8, 6]
               : const [10, 10, 11, 11],
           character: character,
@@ -220,13 +216,13 @@ SpriteLayer _mapArmourTypeToSpriteLayer(int armourType) {
 
 SpriteLayer _mapWeaponTypeToSpriteLayer(int weaponType) {
   switch (weaponType) {
-    case WeaponType.Sword:
+    case AttackType.Blade:
       return SpriteLayer.Sword_Wooden;
-    case WeaponType.Bow:
+    case AttackType.Bow:
       return SpriteLayer.Bow_Wooden;
-    case WeaponType.Shotgun:
+    case AttackType.Shotgun:
       return SpriteLayer.Shotgun;
-    case WeaponType.Handgun:
+    case AttackType.Handgun:
       return SpriteLayer.Handgun;
     default:
       throw Exception("cannot map ${weaponType} to sprite index");
