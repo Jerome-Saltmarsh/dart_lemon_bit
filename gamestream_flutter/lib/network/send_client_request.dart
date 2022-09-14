@@ -257,7 +257,6 @@ void sendClientRequestPlayerEquipAttackType1(String weaponUuid){
 }
 
 void sendClientRequestPlayerEquipAttackType2(int weaponType){
-  print("sendClientRequestPlayerEquipAttackType2(${AttackType.getName(weaponType)}");
   sendClientRequest(ClientRequest.Player_Equip_Attack_Type_2, weaponType);
 }
 
