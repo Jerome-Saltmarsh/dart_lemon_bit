@@ -2,7 +2,6 @@
 import '../../classes/player.dart';
 import '../../classes/weapon.dart';
 import '../../common/PlayerEvent.dart';
-import '../../common/attack_type.dart';
 import '../../common/quest.dart';
 
 void onInteractWithGarry(Player player) {

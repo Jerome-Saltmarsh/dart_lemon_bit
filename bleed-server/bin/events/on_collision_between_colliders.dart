@@ -20,23 +20,22 @@ void resolveCollisionPhysics(Collider a, Collider b) {
   var yDiff = a.y - b.y;
 
   if (xDiff == 0 && yDiff == 0) {
-    a.x -= 5;
-    b.y += 5;
+    a.x += 5;
+    b.x -= 5;
     xDiff = 10;
   }
 
-  final halfOverlap = overlap * 0.5;
-  final mag = getHypotenuse(xDiff, yDiff);
-  final ratio = 1.0 / mag;
+  final ratio = 1.0 / getHypotenuse(xDiff, yDiff);
   final xDiffNormalized = xDiff * ratio;
   final yDiffNormalized = yDiff * ratio;
+  final halfOverlap = overlap * 0.5;
   final targetX = xDiffNormalized * halfOverlap;
   final targetY = yDiffNormalized * halfOverlap;
-  if (a.movable){
+  if (a.moveOnCollision){
     a.x += targetX;
     a.y += targetY;
   }
-  if (b.movable){
+  if (b.moveOnCollision){
     b.x -= targetX;
     b.y -= targetY;
   }

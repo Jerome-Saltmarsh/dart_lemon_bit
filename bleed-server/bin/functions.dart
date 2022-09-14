@@ -1,10 +1,8 @@
-import 'package:lemon_math/library.dart';
-
 import 'classes/collider.dart';
 import 'common/library.dart';
 import 'events/on_collision_between_colliders.dart';
 
-void updateCollisionBetween(List<Collider> colliders) {
+void resolveCollisions(List<Collider> colliders) {
   final numberOfColliders = colliders.length;
   final numberOfCollidersMinusOne = numberOfColliders - 1;
   for (var i = 0; i < numberOfCollidersMinusOne; i++) {
@@ -23,22 +21,22 @@ void updateCollisionBetween(List<Collider> colliders) {
   }
 }
 
-void resolveCollisionB(Collider a, Collider b) {
-  final overlap = a.getOverlap(b);
-  if (overlap <= 0) return;
-  final xDiff = a.x - b.x;
-  final yDiff = a.y - b.y;
-  final mag = getHypotenuse(xDiff, yDiff);
-  final ratio = 1.0 / mag;
-  final xDiffNormalized = xDiff * ratio;
-  final yDiffNormalized = yDiff * ratio;
-  final targetX = xDiffNormalized * overlap;
-  final targetY = yDiffNormalized * overlap;
-  a.x += targetX;
-  a.y += targetY;
-}
+// void resolveCollisionB(Collider a, Collider b) {
+//   final overlap = a.getOverlap(b);
+//   if (overlap <= 0) return;
+//   final xDiff = a.x - b.x;
+//   final yDiff = a.y - b.y;
+//   final mag = getHypotenuse(xDiff, yDiff);
+//   final ratio = 1.0 / mag;
+//   final xDiffNormalized = xDiff * ratio;
+//   final yDiffNormalized = yDiff * ratio;
+//   final targetX = xDiffNormalized * overlap;
+//   final targetY = yDiffNormalized * overlap;
+//   a.x += targetX;
+//   a.y += targetY;
+// }
 
-void detectAndResolveCollisionsBetweenDifferentLists(
+void resolveCollisionsBetween(
     List<Collider> collidersA,
     List<Collider> collidersB,
 ) {

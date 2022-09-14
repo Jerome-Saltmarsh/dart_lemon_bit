@@ -2,7 +2,6 @@
 import 'package:lemon_math/library.dart';
 
 import '../../classes/library.dart';
-import '../../common/attack_type.dart';
 import '../../common/flag.dart';
 import '../../common/library.dart';
 import '../../common/map_tiles.dart';

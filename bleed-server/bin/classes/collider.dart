@@ -11,8 +11,10 @@ class Collider extends Position3 {
   double get right => x + radius;
   double get top => y - radius;
   double get bottom => y + radius;
+  /// If false this object is completely ignored by collision detection
   var collidable = true;
-  var movable = true;
+  /// If false this object will not be moved during a collision
+  var moveOnCollision = true;
 
   Collider({
     required double x,
@@ -27,10 +29,6 @@ class Collider extends Position3 {
   }
 
   void onCollisionWith(Collider other){ }
-
-  double getOverlap(Collider collider){
-    return (radius + collider.radius) - getDistance(collider);
-  }
 
   void onStruckBy(dynamic src){
 

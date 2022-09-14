@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
-import '../common/attack_type.dart';
 import '../common/library.dart';
 import '../common/spawn_type.dart';
 import '../common/teams.dart';
@@ -347,8 +346,8 @@ extension GameFunctions on Game {
   }
 
   void _updateCollisions() {
-    updateCollisionBetween(characters);
-    detectAndResolveCollisionsBetweenDifferentLists(characters, gameObjects);
+    resolveCollisions(characters);
+    resolveCollisionsBetween(characters, gameObjects);
   }
 
   void sortGameObjects() {

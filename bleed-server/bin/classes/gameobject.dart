@@ -39,11 +39,11 @@ class GameObjectStatic extends GameObject {
     switch (type) {
       case GameObjectType.Crystal:
         collidable = true;
-        movable = false;
+        moveOnCollision = false;
         break;
       case GameObjectType.Barrel:
         collidable = true;
-        movable = false;
+        moveOnCollision = false;
         radius = 15;
         break;
       default:

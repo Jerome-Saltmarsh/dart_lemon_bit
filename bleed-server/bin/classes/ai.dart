@@ -8,7 +8,6 @@ import '../functions/withinRadius.dart';
 import 'collider.dart';
 import 'character.dart';
 import 'game.dart';
-import 'player.dart';
 import 'position3.dart';
 import 'weapon.dart';
 
@@ -62,11 +61,6 @@ abstract class AI extends Character {
     spawnX = x;
     spawnY = y;
     spawnZ = z;
-  }
-
-  @override
-  void onPlayerRemoved(Player player) {
-    clearTargetIf(player);
   }
 
   @override
