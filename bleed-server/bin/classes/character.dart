@@ -80,7 +80,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     required double y,
     required double z,
     required int health,
-    // required this.game,
     required this.weapon,
     required int team,
     double speed = 5.0,
@@ -105,14 +104,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
       return;
     }
      applyForce(force: 1.0, angle: faceAngle);
-  }
-
-  void customUpdateCharacter(Game game){
-
-  }
-
-  void onPlayerRemoved(Player player) {
-
   }
 
   void onDeath(){
@@ -145,13 +136,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   void setCharacterStatePerforming({required int duration}){
     setCharacterState(value: CharacterState.Performing, duration: duration);
   }
-
-  // void setCharacterStateRunning(){
-  //   setCharacterState(value: CharacterState.Running, duration: 0);
-  //   if (stateDuration == 0) {
-  //     dispatch(GameEventType.Spawn_Dust_Cloud, velocityAngle);
-  //   }
-  // }
 
   void setCharacterStateSpawning(){
     if (state == CharacterState.Spawning) return;

@@ -96,9 +96,8 @@ abstract class AI extends Character {
   }
 
 
-  @override
   void customUpdateCharacter(Game game){
-    assert (!deadOrBusy);
+    if (deadOrBusy) return;
 
     final target = this.target;
     if (target != null) {

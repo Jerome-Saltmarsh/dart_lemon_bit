@@ -960,24 +960,21 @@ extension GameFunctions on Game {
       }
       return;
     }
-    // character.updateCharacter(this);
 
+    if (character is AI){
+       character.customUpdateCharacter(this);
+    }
+
+    updateCharacterMovement(character);
+    scene.resolveCharacterTileCollision(character, this);
     if (character.dying){
-      // character.updateMovement(this);
-      updateCharacterMovement(character);
-      scene.resolveCharacterTileCollision(character, this);
       if (character.stateDurationRemaining-- <= 0){
         setCharacterStateDead(character);
       }
       return;
     }
 
-    if (!character.busy){
-      character.customUpdateCharacter(this);
-    }
-    updateCharacterMovement(character);
     updateCharacterState(character);
-    scene.resolveCharacterTileCollision(character, this);
   }
 
   void updateCharacterState(Character character){
@@ -1431,9 +1428,6 @@ extension GameFunctions on Game {
   bool removePlayer(Player player) {
     if (!players.remove(player)) return false;
     characters.remove(player);
-    for (final character in characters) {
-      character.onPlayerRemoved(player);
-    }
     onPlayerDisconnected(player);
     if (player.scene.dirty && player.scene.name.isNotEmpty) {
       writeSceneToFile(scene);
