@@ -8,7 +8,6 @@ import 'package:gamestream_flutter/modules/core/init.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/module.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
-import 'package:gamestream_flutter/servers.dart';
 import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
@@ -22,7 +21,6 @@ import 'package:lemon_watch/watch_builder.dart';
 import '../isometric/ui/build_hud.dart';
 import '../network/classes/websocket.dart';
 import '../network/instance/websocket.dart';
-import '../styles.dart';
 import 'build.dart';
 
 final nameController = TextEditingController();
@@ -63,10 +61,22 @@ WatchBuilder<Connection> buildWatchConnection(Account? account) {
       case Connection.None:
         return buildPageWebsite();
       default:
-        return _views.connection;
+        return buildConnection(connection);
     }
   });
 }
+
+Widget buildConnection(Connection value) => center(Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        text(connectionMessage[value], size: FontSize.Normal),
+        height32,
+        text("Back", onPressed: (){
+          core.actions.exitGame();
+          webSocket.disconnect();
+        }),
+      ],
+    ));
 
 Widget buildDialogChangeRegion() {
   return dialog(
@@ -96,38 +106,6 @@ Widget buildDialogChangeRegion() {
           )));
 }
 
-
-// Widget? buildMenuDebug() {
-//   return dev(onHover((bool hovering){
-//       return Container(
-//         width: style.buttonWidth,
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             if (hovering) ...[
-//               buttons.showDialogSubscribed,
-//               buttons.loginTestUser01,
-//               buttons.loginTestUser02,
-//               buttons.loginTestUser03,
-//               buttons.spawnRandomUser,
-//               button("Show Dialog - Welcome", website.actions.showDialogWelcome),
-//             ],
-//             border(child: "Debug")
-//           ],
-//         ),
-//       );
-//     }
-//     ));
-// }
-
-final _views = _Views();
-final _buildView = _BuildView();
-
-class _Views {
-  final selectRegion = _buildView.selectRegion();
-  final connection = _buildView.connection();
-}
-
 final Map<Connection, String> connectionMessage = {
   Connection.Done: "Connection to the server was lost",
   Connection.Error: "An error occurred with the connection to the server",
@@ -136,68 +114,6 @@ final Map<Connection, String> connectionMessage = {
   Connection.Failed_To_Connect: "Unable to establish a connection",
   Connection.None: "There is no connection to the server",
 };
-
-class _BuildView {
-  Widget connection() {
-    return WatchBuilder(webSocket.connection, (Connection value) {
-      return center(Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          buildTitle(),
-          height64,
-          text(connectionMessage[value], size: FontSize.Large),
-          height16,
-          button("Cancel", () {
-            core.actions.exitGame();
-            webSocket.disconnect();
-          }, width: 100),
-          height64,
-        ],
-      ));
-    });
-  }
-
-  Widget selectRegion() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          margin: EdgeInsets.only(top: 140),
-          child: SingleChildScrollView(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                      child: text("SELECT REGION",
-                          size: 50, weight: bold)),
-                  height16,
-                  ...selectableServerTypes.map(_buildSelectRegionButton)
-                ]),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-Widget _buildSelectRegionButton(Region region) {
-  return button(
-    text(
-      enumString(region),
-      size: 25,
-      // fontWeight: FontWeight.bold
-    ),
-    () {
-      core.state.region.value = region;
-    },
-    margin: EdgeInsets.only(bottom: 8),
-    width: 200,
-    borderWidth: 3,
-    // fillColor: colours.black15,
-    fillColorMouseOver: colours.black15,
-  );
-}
 
 Widget? dev(Widget child){
   return isLocalHost ? child : null;

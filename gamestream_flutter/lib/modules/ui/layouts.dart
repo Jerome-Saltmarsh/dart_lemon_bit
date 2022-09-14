@@ -24,21 +24,6 @@ class UILayouts {
         children: [
           text("CONNECTING", color: colours.white80),
         ],
-        // children: [
-        //   buildTitle(),
-        //   height32,
-        //   Refresh((){
-        //     var dotText = "";
-        //     var dotSpace = "";
-        //     for(var i = 0; i < dots; i++){
-        //       dotText += ".";
-        //       dotSpace += " ";
-        //     }
-        //     dots = (dots + 1) % 4;
-        //     return text("${dotSpace}LOADING$dotText", size: FontSize.Large, color: colours.white618);
-        //   }, milliseconds: 200,),
-        //   height(100),
-        // ],
       )),
     );
   }

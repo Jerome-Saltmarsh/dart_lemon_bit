@@ -35,7 +35,7 @@ class SpawnType {
       Rat: "Rat",
       Jellyfish: "Jellyfish",
       Jellyfish_Red: "Jellyfish Red",
-      Template: "Template",
+      Template: "Human",
       Slime: "Slime",
     } [type] ?? "Unknown ($type)";
   }
