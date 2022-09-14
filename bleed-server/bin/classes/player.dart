@@ -80,20 +80,17 @@ class Player extends Character with ByteWriter {
   var mapX = 0;
   var mapY = 0;
 
-  void performAttackType1() {
-    performAttackType(weapon.type);
-  }
+  void performAttack() {
+    if (deadBusyOrPerforming) return;
 
-  void performAttackType2() {
-     // performAttackType(attackType2);
-  }
+    if (AttackType.requiresRounds(weapon.type)){
+      if (weapon.rounds == 0) return;
+      weapon.rounds--;
+      writePlayerEventWeaponRounds();
+    }
+    performDuration = weapon.duration;
 
-  void performAttackType(int attackType){
-    assert (alive);
-    if (busy) return;
-    if (performDuration > 0) return;
-
-    switch (attackType) {
+    switch (weapon.type) {
       case AttackType.Unarmed:
         return performAttackTypeBlade();
       case AttackType.Blade:
@@ -114,13 +111,22 @@ class Player extends Character with ByteWriter {
         return performAttackTypeFireball();
       case AttackType.Crowbar:
         return performAttackMelee(
-            attackType: AttackType.Crowbar,
-            distance: 40,
-            attackRadius: 25,
+          attackType: AttackType.Crowbar,
+          distance: 40,
+          attackRadius: 25,
         );
       case AttackType.Bow:
         return performAttackTypeBow();
     }
+  }
+
+  void writePlayerEventWeaponRounds(){
+    writePlayerEvent(PlayerEvent.Weapon_Rounds);
+    writeInt(weapon.rounds);
+  }
+
+  void performAttackType2() {
+     // performAttackType(attackType2);
   }
 
   void performAttackTypeBlade() {
@@ -131,7 +137,6 @@ class Player extends Character with ByteWriter {
     performX = x + adj;
     performY = y + opp;
     performZ = z;
-    performDuration = 20;
     performMaxHits = 1;
 
     game.dispatchAttackPerformed(AttackType.Blade, performX, performY, performZ, angle);
@@ -295,7 +300,6 @@ class Player extends Character with ByteWriter {
   }
 
   void performAttackTypeCrossBow(){
-    performDuration = 20;
     game.spawnProjectileArrow(this, damage: 1, range: 300, angle: mouseAngle);
   }
 
@@ -306,32 +310,26 @@ class Player extends Character with ByteWriter {
   }
 
   void performAttackTypeShotgun(){
-    performDuration = 10;
     game.fireShotgun(this, mouseAngle);
   }
 
   void performAttackTypeBow(){
-    performDuration = 10;
     game.fireArrow(this, mouseAngle);
   }
 
   void performAttackTypeAssaultRifle(){
-    performDuration = 4;
     game.fireAssaultRifle(this, mouseAngle);
   }
 
   void performAttackTypeRifle(){
-    performDuration = 25;
     game.fireRifle(this, mouseAngle);
   }
 
   void performAttackTypeFireball(){
-    performDuration = 3;
     game.fireFireball(this, mouseAngle);
   }
 
   void performAttackTypeHandgun(){
-    performDuration = 10;
     game.fireHandgun(this, mouseAngle);
   }
 

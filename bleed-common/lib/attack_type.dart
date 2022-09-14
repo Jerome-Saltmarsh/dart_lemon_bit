@@ -16,6 +16,15 @@ class AttackType {
    static const Rifle = 16;
    static const Staff = 17;
 
+   static bool requiresRounds(int value) =>
+        value == Crossbow ||
+        value == Shotgun ||
+        value == Handgun ||
+        value == Assault_Rifle ||
+        value == Bow ||
+        value == Rifle;
+
+
    static bool isMelee(int value) =>
          value == Unarmed ||
          value == Blade;

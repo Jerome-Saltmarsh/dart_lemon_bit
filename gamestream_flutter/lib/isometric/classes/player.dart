@@ -71,6 +71,7 @@ class Player extends Vector3 {
   final questsInProgress = Watch<List<Quest>>([], onChanged: onQuestsInProgressChanged);
   final questsCompleted = Watch<List<Quest>>([]);
 
+  final weaponRounds = Watch(0);
   final weapons = Watch(<Weapon>[]);
   final weapon = Watch<Weapon>(
       Weapon(

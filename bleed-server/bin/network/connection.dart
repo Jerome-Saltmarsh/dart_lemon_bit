@@ -356,7 +356,7 @@ class Connection {
 
       case ClientRequest.Player_Equip_Attack_Type_1:
         if (player.deadOrBusy) return;
-        if (player.isPerforming) return;
+        if (player.performing) return;
         if (arguments.length < 2)
           return errorInsufficientArgs(2, arguments);
         final weaponUuid = arguments[1];
@@ -884,7 +884,7 @@ class Connection {
     player.commandRun(direction);
 
     if (perform1){
-      player.performAttackType1();
+      player.performAttack();
     }
     if (perform2){
       player.performAttackType2();

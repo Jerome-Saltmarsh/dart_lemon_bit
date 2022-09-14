@@ -26,7 +26,7 @@ Weapon buildWeaponShotgun() =>
     Weapon(
       type: AttackType.Shotgun,
       damage: 1,
-      capacity: 0,
+      capacity: 8,
       duration: 10,
       range: 200,
     );
@@ -35,7 +35,7 @@ Weapon buildWeaponHandgun() =>
     Weapon(
       type: AttackType.Handgun,
       damage: 1,
-      capacity: 0,
+      capacity: 20,
       duration: 10,
       range: 200,
     );
@@ -44,7 +44,7 @@ Weapon buildWeaponBow() =>
    Weapon(
       type: AttackType.Bow,
       damage: 1,
-      capacity: 0,
+      capacity: 15,
       duration: 10,
       range: 200,
    );
@@ -53,7 +53,7 @@ Weapon buildWeaponStaff() =>
     Weapon(
       type: AttackType.Staff,
       damage: 1,
-      capacity: 0,
+      capacity: 5,
       duration: 10,
       range: 200,
     );

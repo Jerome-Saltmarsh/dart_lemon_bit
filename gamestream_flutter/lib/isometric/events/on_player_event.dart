@@ -7,12 +7,17 @@ import 'package:gamestream_flutter/isometric/events/on_player_event_quest_comple
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_started.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:lemon_engine/engine.dart';
 
 void onPlayerEvent(int event) {
   switch (event) {
     case PlayerEvent.Spawn_Started:
       return audioSingleTeleport();
+    case PlayerEvent.Weapon_Rounds:
+      final rounds = serverResponseReader.readInt();
+      player.weaponRounds.value = rounds;
+      break;
     case PlayerEvent.Scene_Changed:
       return cameraCenterOnPlayer();
     case PlayerEvent.Quest_Started:
