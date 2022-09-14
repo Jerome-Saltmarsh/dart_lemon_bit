@@ -2,13 +2,11 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
-import '../common/attack_type.dart';
 import '../common/library.dart';
 import '../functions/withinRadius.dart';
 import '../utilities.dart';
 import 'collider.dart';
 import 'game.dart';
-import 'gameobject.dart';
 import 'player.dart';
 import 'position3.dart';
 import 'power.dart';
@@ -46,7 +44,7 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   /// This forces a hit to occur even if the target goes out of range of the attack
   Position3? target;
   var invincible = false;
-  Weapon equippedWeapon;
+  Weapon weapon;
   var equippedArmour = ArmourType.shirtCyan;
   var equippedHead = HeadType.None;
   var equippedPants = PantsType.white;
@@ -64,16 +62,16 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   bool get characterStateIdle => state == CharacterState.Idle;
   bool get busy => stateDurationRemaining > 0;
   bool get deadOrBusy => dying || dead || busy;
-  bool get equippedTypeIsBow => equippedWeapon.type == AttackType.Bow;
-  bool get equippedTypeIsStaff => equippedWeapon.type == AttackType.Staff;
-  bool get unarmed => equippedWeapon.type == AttackType.Unarmed;
-  bool get equippedTypeIsShotgun => equippedWeapon.type == AttackType.Shotgun;
-  bool get equippedIsMelee => AttackType.isMelee(equippedWeapon.type);
+  bool get equippedTypeIsBow => weapon.type == AttackType.Bow;
+  bool get equippedTypeIsStaff => weapon.type == AttackType.Staff;
+  bool get unarmed => weapon.type == AttackType.Unarmed;
+  bool get equippedTypeIsShotgun => weapon.type == AttackType.Shotgun;
+  bool get equippedIsMelee => AttackType.isMelee(weapon.type);
   bool get equippedIsEmpty => false;
   int get equippedLevel => 1;
   int get equippedAttackDuration => 25;
-  int get equippedDamage => equippedWeapon.damage;
-  double get equippedRange => equippedWeapon.range;
+  int get equippedDamage => weapon.damage;
+  double get equippedRange => weapon.range;
 
   void write(Player player);
 
@@ -83,7 +81,7 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     required double z,
     required int health,
     required this.game,
-    required this.equippedWeapon,
+    required this.weapon,
     required int team,
     double speed = 5.0,
     this.equippedArmour = ArmourType.tunicPadded,

@@ -55,7 +55,7 @@ abstract class AI extends Character {
       game: game,
       health: health,
       team: team,
-      equippedWeapon: weapon,
+      weapon: weapon,
       speed: speed
   ) {
     clearDest();

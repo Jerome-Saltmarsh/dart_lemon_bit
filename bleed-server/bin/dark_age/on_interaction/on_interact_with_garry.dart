@@ -15,19 +15,19 @@ void onInteractWithGarry(Player player) {
            "Staff": () {
              player.beginQuest(Quest.Garry_Kill_Farm_Zombies);
              player.setCharacterStateChanging();
-             player.equippedWeapon = buildWeaponStaff();
+             player.weapon = buildWeaponStaff();
              player.endInteraction();
            },
            "Sword": () {
              player.beginQuest(Quest.Garry_Kill_Farm_Zombies);
              player.setCharacterStateChanging();
-             player.equippedWeapon = buildWeaponSword();
+             player.weapon = buildWeaponSword();
              player.endInteraction();
            },
            "Bow": () {
              player.beginQuest(Quest.Garry_Kill_Farm_Zombies);
              player.setCharacterStateChanging();
-             player.equippedWeapon = buildWeaponBow();
+             player.weapon = buildWeaponBow();
              player.endInteraction();
            },
            "I can't right now": player.endInteraction,

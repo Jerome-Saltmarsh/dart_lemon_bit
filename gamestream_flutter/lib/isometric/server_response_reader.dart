@@ -627,7 +627,7 @@ class ServerResponseReader with ByteReader {
     player.z = readDouble();
     player.health.value = readDouble();
     player.maxHealth = readDouble();
-    player.attackType.value = readByte();
+    // player.attackType.value = readByte();
     player.weaponType.value = readByte();
     player.weaponDamage.value = readByte();
     player.armourType.value = readByte();

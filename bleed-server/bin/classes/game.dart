@@ -1043,7 +1043,7 @@ extension GameFunctions on Game {
       speed: speed,
       range: src.equippedRange,
       projectileType: ProjectileType.Bullet,
-      damage: src.equippedWeapon.damage,
+      damage: src.weapon.damage,
     );
   }
 
@@ -1374,7 +1374,7 @@ extension GameFunctions on Game {
       return;
     }
 
-    final weaponType = character.equippedWeapon.type;
+    final weaponType = character.weapon.type;
     if (weaponType == AttackType.Blade) {
       if (stateDuration == 7) {
         dispatchV3(GameEventType.Sword_Woosh, character);

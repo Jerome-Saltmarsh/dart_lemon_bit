@@ -39,7 +39,7 @@ class Player extends Vector3 {
   final mouseTargetHealth = Watch(0.0);
   final weaponDamage = Watch(0);
   final weaponType = Watch(AttackType.Unarmed, onChanged: onChangedPlayerWeapon);
-  final attackType = Watch(AttackType.Unarmed, onChanged: onChangedPlayerAttackType);
+  // final attackType = Watch(AttackType.Unarmed, onChanged: onChangedPlayerAttackType);
   final armourType = Watch(ArmourType.tunicPadded);
   final headType = Watch(HeadType.None);
   final pantsType = Watch(PantsType.white);

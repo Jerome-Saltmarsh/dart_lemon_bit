@@ -4,7 +4,6 @@ import 'package:lemon_math/library.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
-import '../common/attack_type.dart';
 import '../common/library.dart';
 import '../common/spawn_type.dart';
 import '../engine.dart';
@@ -63,10 +62,6 @@ class GameDarkAge extends Game {
   void update(){
     updateInternal();
   }
-
-  // void checkPlayerPosition(Player player, int z, int row, int column){
-  //
-  // }
 
   void updateInternal(){
 

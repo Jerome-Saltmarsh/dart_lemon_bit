@@ -91,10 +91,9 @@ Widget buildWatchMouseTargetName(){
 Widget buildWatchInventoryVisible(){
   return watch(inventoryVisible, (bool inventoryVisible){
     if (!inventoryVisible) return const SizedBox();
-    return watch(player.attackType, buildColumnPlayerWeapons);
+    return watch(player.weaponType, buildColumnPlayerWeapons);
   });
 }
-
 
 Widget buildColumnTeleport(){
   return Container(

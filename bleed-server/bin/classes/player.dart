@@ -53,8 +53,8 @@ class Player extends Character with ByteWriter {
   Game game;
   Collider? aimTarget; // the currently highlighted character
   Account? account;
-  var attackType1 = AttackType.Blade;
-  var attackType2 = AttackType.Handgun;
+  // var attackType1 = AttackType.Blade;
+  // var attackType2 = AttackType.Handgun;
 
   final weapons = <Weapon>[];
   var storeItems = <Weapon>[];
@@ -74,11 +74,11 @@ class Player extends Character with ByteWriter {
   var mapY = 0;
 
   void performAttackType1() {
-    performAttackType(attackType1);
+    performAttackType(weapon.type);
   }
 
   void performAttackType2() {
-     performAttackType(attackType2);
+     // performAttackType(attackType2);
   }
 
   void performAttackType(int attackType){
@@ -87,6 +87,8 @@ class Player extends Character with ByteWriter {
     if (performDuration > 0) return;
 
     switch (attackType) {
+      case AttackType.Unarmed:
+        return performAttackTypeBlade();
       case AttackType.Blade:
         return performAttackTypeBlade();
       case AttackType.Crossbow:
@@ -474,7 +476,7 @@ class Player extends Character with ByteWriter {
             health: health,
             speed: 4.25,
             team: team,
-            equippedWeapon: weapon,
+            weapon: weapon,
             game: game,
   ){
     maxMagic = magic;
@@ -557,9 +559,9 @@ extension PlayerProperties on Player {
     writeInt(z);
     writeInt(health); // 2
     writeInt(maxHealth); // 2
-    writeByte(attackType1); // 2
-    writeByte(equippedWeapon.type);
-    writeByte(equippedWeapon.damage);
+    // writeByte(attackType1); // 2
+    writeByte(weapon.type);
+    writeByte(weapon.damage);
     writeByte(equippedArmour); // armour
     writeByte(equippedHead); // helm
     writeByte(equippedPants); // helm
@@ -746,7 +748,7 @@ extension PlayerProperties on Player {
   }
 
   void writeCharacterEquipment(Character character) {
-    writeByte(character.equippedWeapon.type);
+    writeByte(character.weapon.type);
     writeByte(character.equippedArmour); // armour
     writeByte(character.equippedHead); // helm
     writeByte(character.equippedPants); // helm
@@ -913,9 +915,9 @@ extension PlayerProperties on Player {
 
   void writeEquippedWeapon(){
     writeByte(ServerResponse.Player_Equipped_Weapon);
-    writeByte(equippedWeapon.type);
-    writeInt(equippedWeapon.damage);
-    writeString(equippedWeapon.uuid);
+    writeByte(weapon.type);
+    writeInt(weapon.damage);
+    writeString(weapon.uuid);
   }
 
   void writePlayerTarget() {

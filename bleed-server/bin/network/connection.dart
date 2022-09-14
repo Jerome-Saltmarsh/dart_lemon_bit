@@ -145,7 +145,7 @@ class Connection {
         if (arguments.length < 2)  return errorArgsExpected(2, arguments);
         final weaponType = int.tryParse(arguments[1]);
         if (weaponType == null) return errorInvalidArg('weapon type');
-        player.equippedWeapon = Weapon(type: weaponType, damage: 1, duration: 10, range: 50);
+        player.weapon = Weapon(type: weaponType, damage: 1, duration: 10, range: 50);
         player.setCharacterStateChanging();
         break;
 
@@ -174,7 +174,7 @@ class Connection {
         break;
 
       case ClientRequest.Upgrade_Weapon_Damage:
-        player.equippedWeapon.damage++;
+        player.weapon.damage++;
         break;
 
       case ClientRequest.Purchase_Weapon:
@@ -251,7 +251,7 @@ class Connection {
         if (index == null || index < 0 || index >= player.weapons.length) {
           return errorInvalidArg('invalid weapon index $index');
         }
-        player.equippedWeapon = player.weapons[index];
+        player.weapon = player.weapons[index];
         player.setCharacterStateChanging();
         player.writeEquippedWeapon();
         break;
@@ -366,26 +366,26 @@ class Connection {
         break;
 
       case ClientRequest.Player_Equip_Attack_Type_1:
-        final weaponTypeIndex = int.tryParse(arguments[1]);
-        if (weaponTypeIndex == null)
-          return errorInvalidArg("weapon type index is null");
-
-        if (player.attackType1 == weaponTypeIndex) return;
-        player.attackType1 = weaponTypeIndex;
-        player.game.dispatchAttackTypeEquipped(
-          weaponTypeIndex, player.x, player.y, player.z, 0,
-        );
+        // final weaponTypeIndex = int.tryParse(arguments[1]);
+        // if (weaponTypeIndex == null)
+        //   return errorInvalidArg("weapon type index is null");
+        //
+        // if (player.attackType1 == weaponTypeIndex) return;
+        // player.attackType1 = weaponTypeIndex;
+        // player.game.dispatchAttackTypeEquipped(
+        //   weaponTypeIndex, player.x, player.y, player.z, 0,
+        // );
         break;
 
       case ClientRequest.Player_Equip_Attack_Type_2:
-        final weaponTypeIndex = int.tryParse(arguments[1]);
-        if (weaponTypeIndex == null)
-          return errorInvalidArg("weapon type index is null");
-        if (player.attackType2 == weaponTypeIndex) return;
-        player.game.dispatchAttackTypeEquipped(
-           weaponTypeIndex, player.x, player.y, player.z, 0,
-        );
-        player.attackType2 = weaponTypeIndex;
+        // final weaponTypeIndex = int.tryParse(arguments[1]);
+        // if (weaponTypeIndex == null)
+        //   return errorInvalidArg("weapon type index is null");
+        // if (player.attackType2 == weaponTypeIndex) return;
+        // player.game.dispatchAttackTypeEquipped(
+        //    weaponTypeIndex, player.x, player.y, player.z, 0,
+        // );
+        // player.attackType2 = weaponTypeIndex;
         break;
 
       case ClientRequest.Spawn_Node_Data:
