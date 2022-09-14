@@ -1,4 +1,3 @@
-import 'package:bleed_common/attack_type.dart';
 import 'package:bleed_common/teleport_scenes.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
@@ -36,8 +35,6 @@ Widget buildStackPlay() {
           ],
         ),
       )),
-      // Positioned(bottom: 50, left: 0, child: watch(player.npcTalk, buildControlNpcTalk)),
-      // Positioned(bottom: 200, left: 0, child: watch(player.npcTalkOptions, buildControlNpcTopics)),
       Positioned(bottom: 50, left: 0, child: buildWatchMouseTargetName()),
       Positioned(bottom: 8, right: 8, child: buildButtonToggleInventory()),
       buildWatchPlayerDesigned(),

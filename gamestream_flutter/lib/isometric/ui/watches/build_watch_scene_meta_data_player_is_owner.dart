@@ -88,23 +88,62 @@ Widget buildColumnEditSpawn() =>
         (SpawnNodeData? value){
           if (value == null) return const SizedBox();
           return Container(
-            padding: padding6,
+            padding: padding8,
             color: brownLight,
+            width: 200,
             child: Column(
               children: [
                 Row(
                   children: [
-                    text("Amount: ${value.spawnAmount}"),
+                    Expanded(child: text("Amount")),
+                    text("-", onPressed: () =>
+                        editorActionModifySpawnNode(
+                          spawnType: value.spawnType,
+                          spawnRadius: value.spawnRadius,
+                          spawnAmount: value.spawnAmount - 10,
+                        )
+                    ),
+                    width2,
+                    Container(
+                      alignment: Alignment.center,
+                        width: 60,
+                        child: text(value.spawnAmount)),
+                    width2,
                     text("+", onPressed: () =>
-                      editorActionModifySpawnNode(
-                        spawnType: value.spawnType,
-                        spawnRadius: value.spawnRadius,
-                        spawnAmount: value.spawnAmount + 1,
-                      )
+                        editorActionModifySpawnNode(
+                          spawnType: value.spawnType,
+                          spawnRadius: value.spawnRadius,
+                          spawnAmount: value.spawnAmount + 10,
+                        )
                     ),
                   ],
                 ),
-                text("Radius: ${value.spawnRadius}"),
+                height8,
+                Row(
+                  children: [
+                    Expanded(child: text("Radius")),
+                    text("-", onPressed: () =>
+                        editorActionModifySpawnNode(
+                          spawnType: value.spawnType,
+                          spawnRadius: value.spawnRadius - 1,
+                          spawnAmount: value.spawnAmount,
+                        )
+                    ),
+                    width2,
+                    Container(
+                        alignment: Alignment.center,
+                        width: 60,
+                        child: text(value.spawnRadius)),
+                    width2,
+                    text("+", onPressed: () =>
+                        editorActionModifySpawnNode(
+                          spawnType: value.spawnType,
+                          spawnRadius: value.spawnRadius + 1,
+                          spawnAmount: value.spawnAmount,
+                        )
+                    ),
+                  ],
+                ),
                 height16,
                 Column(
                   children: SpawnType.values.map((int spawnType) =>
