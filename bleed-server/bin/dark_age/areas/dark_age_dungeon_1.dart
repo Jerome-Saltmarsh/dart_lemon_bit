@@ -27,7 +27,7 @@ class DarkAgeDungeon1 extends DarkAgeAreaUnderground {
   void onKilled(dynamic target, dynamic src) {
     if (target is AI) {
       actionSpawnLoot(
-        game: target.game,
+        game: this,
         x: target.x,
         y: target.y,
         z: target.z,

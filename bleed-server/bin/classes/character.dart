@@ -15,21 +15,19 @@ import 'weapon.dart';
 
 abstract class Character extends Collider with Team, Velocity, FaceDirection {
 
-  Game game; /// TODO remove reference
+  // Game game; /// TODO remove reference
   var _health = 1;
   var maxHealth = 1;
 
   bool get dead => state == CharacterState.Dead;
   bool get dying => state == CharacterState.Dying;
   bool get alive => !deadOrDying;
-
   bool get deadOrDying => dead || dying;
-
   int get health => _health;
+  double get healthPercentage => health / maxHealth;
 
   int get type;
 
-  double get healthPercentage => health / maxHealth;
 
   set health(int value) {
     _health = clampInt(value, 0, maxHealth);
@@ -82,7 +80,7 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     required double y,
     required double z,
     required int health,
-    required this.game,
+    // required this.game,
     required this.weapon,
     required int team,
     double speed = 5.0,
@@ -144,49 +142,16 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     return game.scene.getNodeXYZ(x + getAdjacent(angle, distance), y + getOpposite(angle, distance), z + tileHeightHalf).type;
   }
 
-  /// TODO Handle business logic externally
-  // void updateCharacter(Game game){
-  //   if (dead) return;
-  //
-  //   if (dying){
-  //     updateMovement(game);
-  //     game.scene.resolveCharacterTileCollision(this, game);
-  //     if (stateDurationRemaining-- <= 0){
-  //       game.setCharacterStateDead(this);
-  //     }
-  //     return;
-  //   }
-  //
-  //   if (!busy){
-  //     customUpdateCharacter(game);
-  //   }
-  //   updateMovement(game);
-  //   updateCharacterState(game);
-  //   game.scene.resolveCharacterTileCollision(this, game);
-  // }
-
-  // void dispatchGameEventCharacterDeath(){
-  //   for (final player in game.players) {
-  //     player.writeGameEvent(
-  //       type: GameEventType.Character_Death,
-  //       x: x,
-  //       y: y,
-  //       z: z,
-  //       angle: velocityAngle,
-  //     );
-  //     player.writeByte(type);
-  //   }
-  // }
   void setCharacterStatePerforming({required int duration}){
     setCharacterState(value: CharacterState.Performing, duration: duration);
   }
 
-  void setCharacterStateRunning(){
-    setCharacterState(value: CharacterState.Running, duration: 0);
-    if (stateDuration == 0) {
-      dispatch(GameEventType.Spawn_Dust_Cloud, velocityAngle);
-    }
-  }
+  // void setCharacterStateRunning(){
+  //   setCharacterState(value: CharacterState.Running, duration: 0);
+  //   if (stateDuration == 0) {
+  //     dispatch(GameEventType.Spawn_Dust_Cloud, velocityAngle);
+  //   }
+  // }
 
   void setCharacterStateSpawning(){
     if (state == CharacterState.Spawning) return;
@@ -223,7 +188,7 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   }
 
   void dispatch(int gameEventType, [double angle = 0]){
-     game.dispatch(gameEventType, x, y, z, angle);
+     // game.dispatch(gameEventType, x, y, z, angle);
   }
 
   void onCharacterStateChanged(){

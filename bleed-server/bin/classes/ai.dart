@@ -52,7 +52,7 @@ abstract class AI extends Character {
       x: x,
       y: y,
       z: z,
-      game: game,
+      // game: game,
       health: health,
       team: team,
       weapon: weapon,
@@ -124,7 +124,7 @@ abstract class AI extends Character {
       if (!getCollisionInDirection(game: game, angle: destAngle + piHalf, distance: r)){
         faceAngle = destAngle + piHalf;
       }
-      return setCharacterStateRunning();
+      return  game.setCharacterStateRunning(this);
     }
 
     if (pathIndex > 0){
@@ -132,7 +132,7 @@ abstract class AI extends Character {
       destX = pathX[pathIndex];
       destY = pathY[pathIndex];
       faceAngle = getDestinationAngle();
-      setCharacterStateRunning();
+      game.setCharacterStateRunning(this);
       return;
     }
     state = CharacterState.Idle;

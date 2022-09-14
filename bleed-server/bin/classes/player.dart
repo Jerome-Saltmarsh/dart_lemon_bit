@@ -344,7 +344,7 @@ class Player extends Character with ByteWriter {
     }
 
     faceDirection = direction;
-    setCharacterStateRunning();
+    game.setCharacterStateRunning(this);
     target = null;
 
     if (interactingWithNpc){
@@ -493,7 +493,6 @@ class Player extends Character with ByteWriter {
             speed: 4.25,
             team: team,
             weapon: weapon,
-            game: game,
   ){
     maxMagic = magic;
     _magic = maxMagic;

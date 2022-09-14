@@ -614,7 +614,7 @@ extension GameFunctions on Game {
           player.setCharacterStateIdle();
           return;
         }
-        player.setCharacterStateRunning();
+        setCharacterStateRunning(player);
         return;
       }
 
@@ -624,7 +624,7 @@ extension GameFunctions on Game {
           player.setCharacterStatePerforming(duration: ability.duration);
           return;
         }
-        player.setCharacterStateRunning();
+        setCharacterStateRunning(player);
         return;
       }
       return;
@@ -632,7 +632,7 @@ extension GameFunctions on Game {
 
     if (ability != null) {
       if (!withinRadius(player, target, ability.range)) {
-        player.setCharacterStateRunning();
+        setCharacterStateRunning(player);
         return;
       }
       player.setCharacterStatePerforming(duration: ability.duration);
@@ -644,7 +644,18 @@ extension GameFunctions on Game {
       player.setCharacterStateIdle();
       return;
     }
-    player.setCharacterStateRunning();
+    setCharacterStateRunning(player);
+  }
+
+  void setCharacterStateRunning(Character character){
+    character.setCharacterState(value: CharacterState.Running, duration: 0);
+    if (character.stateDuration == 0) {
+      dispatchV3(
+          GameEventType.Spawn_Dust_Cloud,
+          character,
+          angle: character.velocityAngle,
+      );
+    }
   }
 
   void checkProjectileCollision(List<Collider> colliders) {
