@@ -303,6 +303,7 @@ extension GameFunctions on Game {
 
     if (target.health <= 0) {
       setCharacterStateDying(target);
+      onKilled(target, src);
     } else {
       onDamaged(target, src, damage);
       target.setCharacterStateHurt();

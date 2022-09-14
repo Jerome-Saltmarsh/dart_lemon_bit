@@ -70,5 +70,6 @@ class ServerResponse {
   static const Player_Can_Teleport = 102;
   static const Node_Data = 103;
   static const Render_Map = 104;
+  static const GameObject_Loot = 105;
 }
 

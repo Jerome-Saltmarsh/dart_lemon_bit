@@ -62,6 +62,28 @@ abstract class Updatable {
   void update(Game game);
 }
 
+class GameObjectLoot extends GameObject {
+
+  int lootType;
+
+  GameObjectLoot({
+    required double x,
+    required double y,
+    required double z,
+    required this.lootType,
+  }) : super(x: x, y: y, z: z, radius: 15);
+
+  @override
+  int get type => GameObjectType.Loot;
+
+  @override
+  void write(Player player) {
+    player.writeByte(ServerResponse.GameObject_Loot);
+    player.writePosition3(this);
+    player.writeByte(lootType);
+  }
+}
+
 class GameObjectSpawn extends GameObjectStatic {
   /// common/spawn_type.dart
   int spawnType;

@@ -20,6 +20,7 @@ class GameObjectType {
   static const Jellyfish = 19;
   static const Jellyfish_Red = 20;
   static const Lantern_Red = 21;
+  static const Loot = 22;
 
   static const staticValues = [
     Flower,

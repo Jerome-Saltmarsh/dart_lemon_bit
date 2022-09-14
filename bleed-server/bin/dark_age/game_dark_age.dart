@@ -68,19 +68,6 @@ class GameDarkAge extends Game {
   }
 
   @override
-  void onKilled(dynamic target, dynamic src) {
-       if (src is Player) {
-         if (target is AI){
-            src.gainExperience(1);
-         }
-       }
-
-      if (target is AI) {
-         
-      }
-  }
-
-  @override
   Player spawnPlayer() {
     final player = Player(
         game: this,

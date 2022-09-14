@@ -7,6 +7,18 @@ import 'package:lemon_engine/render.dart';
 
 void renderGameObject(GameObject value) {
 
+  if (value.type == GameObjectType.Loot)
+    return render(
+      dstX: value.renderX,
+      dstY: value.renderY,
+      srcX: 4443,
+      srcY: 11,
+      srcWidth: 10,
+      srcHeight: 15,
+      color: value.renderColor,
+    );
+
+
   if (value.type == GameObjectType.Rock)
     return render(
        dstX: value.renderX,

@@ -1,6 +1,5 @@
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
-import 'package:lemon_math/library.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../classes/gameobject.dart';
@@ -437,9 +436,6 @@ class Connection {
         } else {
           return errorInvalidArg('ClientRequest.Spawn_Node_Data_Modify. Selected node must be of type spawn');
         }
-
-
-
         break;
 
       case ClientRequest.Teleport_Scene:

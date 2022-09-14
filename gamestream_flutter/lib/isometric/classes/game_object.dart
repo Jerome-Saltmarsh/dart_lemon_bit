@@ -7,4 +7,5 @@ class GameObject extends Vector3 {
   /// Used by spawn objects
   var spawnType = 0;
   var spawnAmount = 0;
+  var lootType = 0;
 }
