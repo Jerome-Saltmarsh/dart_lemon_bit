@@ -100,13 +100,13 @@ class Player extends Character with ByteWriter {
       case AttackType.Teleport:
         return performAttackTypeTeleport();
       case AttackType.Handgun:
-        return performAttackTypeHandgun();
+        return performFireWeapon();
       case AttackType.Shotgun:
         return performAttackTypeShotgun();
       case AttackType.Assault_Rifle:
-        return performAttackTypeAssaultRifle();
+        return performFireWeapon();
       case AttackType.Rifle:
-        return performAttackTypeRifle();
+        return performFireWeapon();
       case AttackType.Fireball:
         return performAttackTypeFireball();
       case AttackType.Revolver:
@@ -320,10 +320,6 @@ class Player extends Character with ByteWriter {
     game.fireArrow(this, mouseAngle);
   }
 
-  void performAttackTypeAssaultRifle(){
-    game.fireAssaultRifle(this, mouseAngle);
-  }
-
   void performFireWeapon(){
     game.spawnProjectile(
       src: this,
@@ -337,16 +333,8 @@ class Player extends Character with ByteWriter {
     game.dispatchAttackPerformed(weapon.type, x, y, z, mouseAngle);
   }
 
-  void performAttackTypeRifle(){
-    game.fireRifle(this, mouseAngle);
-  }
-
   void performAttackTypeFireball(){
     game.fireFireball(this, mouseAngle);
-  }
-
-  void performAttackTypeHandgun(){
-    game.fireHandgun(this, mouseAngle);
   }
 
   void commandRun(int direction) {
