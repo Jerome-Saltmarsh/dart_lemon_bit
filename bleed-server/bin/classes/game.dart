@@ -4,7 +4,6 @@ import 'package:lemon_math/library.dart';
 
 import '../common/attack_type.dart';
 import '../common/library.dart';
-import '../common/maths.dart';
 import '../common/spawn_type.dart';
 import '../common/teams.dart';
 import '../engine.dart';
@@ -965,11 +964,51 @@ extension GameFunctions on Game {
     if (!character.busy){
       character.customUpdateCharacter(this);
     }
-    // character.updateMovement(this);
     updateCharacterMovement(character);
-    character.updateCharacterState(this);
+    updateCharacterState(character);
     scene.resolveCharacterTileCollision(character, this);
   }
+
+  void updateCharacterState(Character character){
+    if (character.stateDurationRemaining > 0) {
+      character.stateDurationRemaining--;
+      if (character.stateDurationRemaining == 0) {
+        return character.setCharacterStateIdle();
+      }
+    }
+    switch (character.state) {
+      case CharacterAction.Idle:
+      // only do this if not struck or recovering
+      // speed *= 0.75;
+        break;
+      case CharacterState.Running:
+        character.applyVelocity();
+        if (character.stateDuration % 10 == 0) {
+          dispatch(
+              GameEventType.Footstep,
+              character.x,
+              character.y,
+              character.z,
+          );
+        }
+        break;
+      case CharacterState.Performing:
+        updateCharacterStatePerforming(character);
+        break;
+      case CharacterState.Spawning:
+        if (character.stateDurationRemaining == 1){
+          onCharacterSpawned(character);
+        }
+        if (character.stateDuration == 0) {
+          if (this is Player){
+            (this as Player).writePlayerEvent(PlayerEvent.Spawn_Started);
+          }
+        }
+        break;
+    }
+    character.stateDuration++;
+  }
+
 
   void updateCharacterMovement(Character character) {
     const minVelocity = 0.005;

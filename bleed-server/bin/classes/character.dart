@@ -177,42 +177,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   //     player.writeByte(type);
   //   }
   // }
-
-  void updateCharacterState(Game game){
-    if (stateDurationRemaining > 0) {
-        stateDurationRemaining--;
-        if (stateDurationRemaining == 0) {
-          return setCharacterStateIdle();
-        }
-    }
-    switch (state) {
-      case CharacterAction.Idle:
-        // only do this if not struck or recovering
-        // speed *= 0.75;
-        break;
-      case CharacterState.Running:
-        applyVelocity();
-        if (stateDuration % 10 == 0) {
-          game.dispatch(GameEventType.Footstep, x, y, z);
-        }
-        break;
-      case CharacterState.Performing:
-        game.updateCharacterStatePerforming(this);
-        break;
-      case CharacterState.Spawning:
-        if (stateDurationRemaining == 1){
-          game.onCharacterSpawned(this);
-        }
-        if (stateDuration == 0) {
-          if (this is Player){
-            (this as Player).writePlayerEvent(PlayerEvent.Spawn_Started);
-          }
-        }
-        break;
-    }
-    stateDuration++;
-  }
-
   void setCharacterStatePerforming({required int duration}){
     setCharacterState(value: CharacterState.Performing, duration: duration);
   }
@@ -267,29 +231,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     animationFrame = 0;
   }
 
-  // void updateMovement(Game game) {
-  //   const minVelocity = 0.005;
-  //   if (velocitySpeed <= minVelocity) return;
-  //
-  //   x += xv;
-  //   y += yv;
-  //
-  //   final nodeType = getNodeTypeInDirection(game: game, angle: velocityAngle, distance: radius);
-  //   if (nodeType == NodeType.Tree_Bottom || nodeType == NodeType.Torch) {
-  //     final nodeCenterX = indexRow * tileSize + tileSizeHalf;
-  //     final nodeCenterY = indexColumn * tileSize + tileSizeHalf;
-  //     final dis = getDistanceXY(nodeCenterX, nodeCenterY);
-  //     const treeRadius = 5;
-  //     final overlap = dis - treeRadius - radius;
-  //     if (overlap < 0) {
-  //       x -= getAdjacent(velocityAngle, overlap);
-  //       y -= getOpposite(velocityAngle, overlap);
-  //     }
-  //   }
-  //
-  //   applyFriction(0.75);
-  // }
-
   bool withinAttackRange(Position3 target){
     if (target is Collider){
       return withinRadius(this, target, equippedRange + (target.radius * 0.5));
@@ -311,24 +252,9 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
       getAngleBetween(this.x, this.y, x, y);
 }
 
-bool onSameTeam(dynamic a, dynamic b){
-  if (a == b) return true;
-  if (a is Team == false) return false;
-  if (b is Team == false) return false;
-  if (a.team == 0) return false;
-  return a.team == b.team;
-}
-
 class RunSpeed {
    static const Slow = 1.0;
    static const Regular = 2.0;
    static const Fast = 3.0;
    static const Very_Fast = 4.0;
-}
-
-
-mixin Respawnable {
-  var respawn = 0;
-
-
 }

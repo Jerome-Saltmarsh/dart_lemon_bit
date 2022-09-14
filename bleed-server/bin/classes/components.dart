@@ -19,6 +19,14 @@ mixin Team {
   var team = 0;
 }
 
+bool onSameTeam(dynamic a, dynamic b){
+  if (a == b) return true;
+  if (a is Team == false) return false;
+  if (b is Team == false) return false;
+  if (a.team == 0) return false;
+  return a.team == b.team;
+}
+
 mixin Velocity {
   // var angle = 0.0;
   // var speed = 0.0;
