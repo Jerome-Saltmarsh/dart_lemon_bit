@@ -1,12 +1,12 @@
 import 'dart:typed_data';
 
-import 'package:bleed_common/attack_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/gameobject_request.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_request.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:bleed_common/teleport_scenes.dart';
+import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric_web/read_player_input.dart';
 import 'package:gamestream_flutter/network/instance/websocket.dart';
@@ -15,7 +15,7 @@ import 'package:lemon_engine/screen.dart';
 
 import '../isometric/edit_state.dart';
 
-final updateBuffer = Uint8List(16);
+final updateBuffer = Uint8List(17);
 
 void sendRequestSpeak(String message){
   if (message.trim().isEmpty) return;
@@ -291,15 +291,18 @@ Future sendClientRequestUpdate() async {
   updateBuffer[1] = getKeyDirection();
   updateBuffer[2] = modeIsPlay && engine.mouseLeftDown.value ? 1 : 0;
   updateBuffer[3] = modeIsPlay && engine.mouseRightDown.value ? 1 : 0;
-  writeNumberToByteArray(number: mouseWorldX, list: updateBuffer, index: 4);
-  writeNumberToByteArray(number: mouseWorldY, list: updateBuffer, index: 6);
-  writeNumberToByteArray(number: screen.left, list: updateBuffer, index: 8);
-  writeNumberToByteArray(number: screen.top, list: updateBuffer, index: 10);
-  writeNumberToByteArray(number: screen.right, list: updateBuffer, index: 12);
-  writeNumberToByteArray(number: screen.bottom, list: updateBuffer, index: 14);
+  updateBuffer[4] = modeIsPlay && keyPressedSpace ? 1 : 0;
+  writeNumberToByteArray(number: mouseWorldX, list: updateBuffer, index: 5);
+  writeNumberToByteArray(number: mouseWorldY, list: updateBuffer, index: 7);
+  writeNumberToByteArray(number: screen.left, list: updateBuffer, index: 9);
+  writeNumberToByteArray(number: screen.top, list: updateBuffer, index: 11);
+  writeNumberToByteArray(number: screen.right, list: updateBuffer, index: 13);
+  writeNumberToByteArray(number: screen.bottom, list: updateBuffer, index: 15);
 
   webSocket.sink.add(updateBuffer);
 }
+
+bool get keyPressedSpace => keyPressed(LogicalKeyboardKey.space);
 
 void sendClientRequestTogglePaths() {
   sendClientRequest(ClientRequest.Toggle_Debug);

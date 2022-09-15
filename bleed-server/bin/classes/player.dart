@@ -58,6 +58,12 @@ class Player extends Character with ByteWriter {
   final weapons = <Weapon>[];
   var storeItems = <Weapon>[];
 
+  Weapon? weaponSlot1 = buildWeaponShotgun();
+  Weapon? weaponSlot2 = buildWeaponSword();
+  Weapon? weaponSlot3 = buildWeaponBow();
+
+  // Ability Slots Q and E
+
   Weapon? getWeaponByUuid(String weaponUuid){
     for (final weapon in weapons){
       if (weapon.uuid != weaponUuid) continue;
@@ -80,7 +86,8 @@ class Player extends Character with ByteWriter {
   var mapX = 0;
   var mapY = 0;
 
-  void performAttack() {
+  void performAttack(Weapon? weapon) {
+    if (weapon == null) return;
     if (deadBusyOrPerforming) return;
 
     if (AttackType.requiresRounds(weapon.type)){

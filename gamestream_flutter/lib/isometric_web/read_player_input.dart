@@ -22,14 +22,6 @@ void readPlayerInput() {
     return readPlayerInputEdit();
   }
 
-  // PLAY MODE
-
-  if (sceneMetaDataMapEditable.value) {
-    if (keyPressed(LogicalKeyboardKey.space)) {
-      return setPlayModeEdit();
-    }
-  }
-
   if (keyPressed(LogicalKeyboardKey.enter)){
     messageBoxShow();
   }

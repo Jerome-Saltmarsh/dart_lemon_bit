@@ -158,6 +158,7 @@ abstract class Game {
   var _timerUpdateAITargets = 0;
 
   void updateInProgress() {
+
     frame++;
     if (_timerUpdateAITargets-- <= 0) {
       _timerUpdateAITargets = 15;
@@ -182,11 +183,9 @@ abstract class Game {
     sortGameObjects();
   }
 
-
   void updateStatus() {
     removeDisconnectedPlayers();
     updateInProgress();
-
     for (final player in players) {
       player.writeAndSendResponse();
     }

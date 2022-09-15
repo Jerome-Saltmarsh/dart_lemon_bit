@@ -865,18 +865,18 @@ class Connection {
     final direction = args[1];
     final perform1 = args[2] == 1;
     final perform2 = args[3] == 1;
-    final mouseX = readNumberFromByteArray(args, index: 4).toDouble();
-    final mouseY = readNumberFromByteArray(args, index: 6).toDouble();
-    player.screenLeft = readNumberFromByteArray(args, index: 8).toDouble();
-    player.screenTop = readNumberFromByteArray(args, index: 10).toDouble();
-    player.screenRight = readNumberFromByteArray(args, index: 12).toDouble();
-    player.screenBottom = readNumberFromByteArray(args, index: 14).toDouble();
+    final perform3 = args[4] == 1;
+    final mouseX = readNumberFromByteArray(args, index: 5).toDouble();
+    final mouseY = readNumberFromByteArray(args, index: 7).toDouble();
+    player.screenLeft = readNumberFromByteArray(args, index: 9).toDouble();
+    player.screenTop = readNumberFromByteArray(args, index: 11).toDouble();
+    player.screenRight = readNumberFromByteArray(args, index: 13).toDouble();
+    player.screenBottom = readNumberFromByteArray(args, index: 15).toDouble();
 
     player.mouse.x = mouseX;
     player.mouse.y = mouseY;
 
     if (player.deadOrBusy) return;
-
       player.aimTarget = game.getClosestCollider(
         player.mouseGridX,
         player.mouseGridY,
@@ -887,41 +887,14 @@ class Connection {
     player.commandRun(direction);
 
     if (perform1){
-      player.performAttack();
+      player.performAttack(player.weaponSlot1);
     }
     if (perform2){
-      player.performAttackType2();
+      player.performAttack(player.weaponSlot2);
     }
-    return;
-    // switch (action) {
-    //   case CharacterAction.Idle:
-    //     if (player.target != null) break;
-    //     if (player.target == null){
-    //       player.setCharacterStateIdle();
-    //     }
-    //     break;
-    //   case CharacterAction.Perform1:
-    //     final aimTarget = player.aimTarget;
-    //     player.target = aimTarget;
-    //     if (aimTarget is Npc && onSameTeam(player, aimTarget)){
-    //       if (withinRadius(player, aimTarget, 100)){
-    //         if (!aimTarget.deadOrBusy){
-    //           aimTarget.face(player);
-    //         }
-    //         player.face(aimTarget);
-    //         aimTarget.onInteractedWith?.call(player);
-    //       }
-    //       return;
-    //     }
-    //     if (player.interactingWithNpc){
-    //       return player.endInteraction();
-    //     }
-    //     return player.performAttackType1();
-    //   case CharacterAction.Perform2:
-    //     return player.performAttackType2();
-    //   case CharacterAction.Run:
-    //     return player.commandRun(direction);
-    // }
+    if (perform3){
+      player.performAttack(player.weaponSlot3);
+    }
   }
 
   void onGameJoined(){
