@@ -349,7 +349,7 @@ void applyEmissionDynamic({
   required int columnIndex,
   required int maxBrightness,
 }){
-  final radius = Shade.Pitch_Black - maxBrightness;
+  final radius = Shade.Pitch_Black;
   final zMin = max(zIndex - radius, 0);
   final zMax = min(zIndex + radius, gridTotalZ);
   final rowMin = max(rowIndex - radius, 0);

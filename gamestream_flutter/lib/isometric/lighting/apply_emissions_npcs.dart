@@ -18,11 +18,4 @@ void applyEmissionsCharacters() {
     if (!character.allie) continue;
     applyVector3Emission(character, maxBrightness: maxBrightness);
   }
-
-  // for (var i = 0; i < totalGameObjects; i++) {
-  //   final gameObject = gameObjects[i];
-  //   if (gameObject.type == GameObjectType.Butterfly){
-  //     applyVector3Emission(gameObject, maxBrightness: maxBrightness);
-  //   }
-  // }
 }

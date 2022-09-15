@@ -38,8 +38,11 @@ abstract class Game {
   final actions = <Action>[];
 
   List<GameObject> get gameObjects => scene.gameObjects;
+
   /// Must override
   bool get full;
+  /// In seconds
+  int getTime();
 
   /// safe to override
   void customUpdate() { }
@@ -50,9 +53,9 @@ abstract class Game {
   /// safe to override
   void customOnCharacterSpawned(Character character) { }
   /// safe to override
-  void customOnKilled(dynamic target, dynamic src) { }
+  void customOnCharacterKilled(Character target, dynamic src) { }
   /// safe to override
-  void customOnDamaged(dynamic target, dynamic src, int amount) { }
+  void customOnCharacterDamageApplied(Character target, dynamic src, int amount) { }
   /// safe to overridable
   void customOnPlayerRevived(Player player) { }
   /// safe to overridable
@@ -222,10 +225,6 @@ abstract class Game {
     customOnPlayerRevived(character);
   }
 
-  /// In seconds
-  int getTime();
-
-
   int countAlive(List<Character> characters) {
     var total = 0;
     for (final character in characters) {
@@ -293,7 +292,7 @@ abstract class Game {
     }
   }
 
-  void applyDamage({
+  void applyDamageToCharacter({
     required dynamic src,
     required Character target,
     required int amount,
@@ -304,24 +303,29 @@ abstract class Game {
 
     if (target.health <= 0) {
       setCharacterStateDying(target);
-      customOnKilled(target, src);
+      customOnCharacterKilled(target, src);
     } else {
-      customOnDamaged(target, src, damage);
+      customOnCharacterDamageApplied(target, src, damage);
       target.setCharacterStateHurt();
     }
     dispatchGameEventCharacterHurt(target);
 
     if (target is AI) {
-      final targetAITarget = target.target;
-      if (targetAITarget == null) {
-        target.target = src;
-        return;
-      }
-      final aiTargetDistance = distanceV2(target, targetAITarget);
-      final srcTargetDistance = distanceV2(src, target);
-      if (srcTargetDistance < aiTargetDistance) {
-        target.target = src;
-      }
+      onAIDamaged(target, src);
+    }
+  }
+
+  /// Can be safely overridden to customize behavior
+  void onAIDamaged(AI ai, dynamic src){
+    final targetAITarget = ai.target;
+    if (targetAITarget == null) {
+      ai.target = src;
+      return;
+    }
+    final aiTargetDistance = distanceV2(ai, targetAITarget);
+    final srcTargetDistance = distanceV2(src, ai);
+    if (srcTargetDistance < aiTargetDistance) {
+      ai.target = src;
     }
   }
 
@@ -1019,7 +1023,7 @@ abstract class Game {
     }
     target.onStruckBy(src);
     if (target is Character) {
-      applyDamage(src: src, target: target, amount: damage);
+      applyDamageToCharacter(src: src, target: target, amount: damage);
     }
 
     if (target is Velocity) {

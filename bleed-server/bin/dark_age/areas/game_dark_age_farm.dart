@@ -60,7 +60,7 @@ class GameDarkAgeFarm extends DarkAgeArea {
   }
 
   @override
-  void customOnKilled(dynamic target, dynamic src){
+  void customOnCharacterKilled(dynamic target, dynamic src){
      if (src is Player){
         if (src.questInProgress(Quest.Garry_Kill_Farm_Zombies)){
         }

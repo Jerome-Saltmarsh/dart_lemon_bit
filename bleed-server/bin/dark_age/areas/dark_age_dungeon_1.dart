@@ -11,7 +11,7 @@ class DarkAgeDungeon1 extends DarkAgeAreaUnderground {
   bool get mapVisible => false;
 
   @override
-  void customOnKilled(dynamic target, dynamic src) {
+  void customOnCharacterKilled(dynamic target, dynamic src) {
     if (target is AI) {
       actionSpawnLoot(
         game: this,
