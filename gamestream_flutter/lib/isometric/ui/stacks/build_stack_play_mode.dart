@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_npc_talk.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_experience.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_health.dart';
+import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_weapons.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_player_designed.dart';
 import 'package:gamestream_flutter/isometric/watches/inventory_visible.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
@@ -23,6 +24,7 @@ Widget buildStackPlay() {
       Positioned(top: 75, right: 16, child: buildWatchInventoryVisible()),
       Positioned(left: 8, bottom: 50, child: buildColumnTeleport()),
       Positioned(top: 50, left: 0, child: buildPanelStore()),
+      Positioned(top: 50, left: 0, child: buildControlsPlayerWeapons()),
       Positioned(top: 0, left: 0, child: Container(
         width: screen.width,
         height: screen.height,

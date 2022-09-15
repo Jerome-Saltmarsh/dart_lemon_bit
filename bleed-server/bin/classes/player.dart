@@ -122,7 +122,8 @@ class Player extends Character with ByteWriter {
         return performAttackMelee(
           attackType: AttackType.Crowbar,
           distance: 40,
-          attackRadius: 25,
+          attackRadius: 35,
+          damage: weapon.damage,
         );
       case AttackType.Bow:
         return performAttackTypeBow();
@@ -225,6 +226,7 @@ class Player extends Character with ByteWriter {
     required int attackType,
     required double distance,
     required double attackRadius,
+    required int damage,
   }) {
     final angle = mouseAngle;
     final adj = getAdjacent(angle, distance);
@@ -243,12 +245,9 @@ class Player extends Character with ByteWriter {
     for (final character in game.characters) {
       if (onSameTeam(this, character)) continue;
       if (character.distanceFromXYZ(
-        performX,
-        performY,
-        performZ,
-      ) >
-          attackRadius) continue;
-      game.applyHit(src: this, target: character, damage: 2);
+        performX, performY, performZ,
+        ) > attackRadius) continue;
+      game.applyHit(src: this, target: character, damage: damage);
     }
 
     for (final gameObject in game.gameObjects) {

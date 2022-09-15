@@ -1,10 +1,10 @@
-class AtlasImage {
+class AtlasSrc {
   final double srcX;
   final double srcY;
   final double width;
   final double height;
 
-  const AtlasImage({
+  const AtlasSrc({
     required this.srcX,
     required this.srcY,
     required this.width,

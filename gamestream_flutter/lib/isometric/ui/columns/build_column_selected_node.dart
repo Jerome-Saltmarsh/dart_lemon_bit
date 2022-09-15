@@ -18,10 +18,10 @@ Widget buildColumnSelectedNode(){
     child: Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             onPressed(
-              hint: "Delete (Delete)",
+              hint: "Delete",
               action: edit.delete,
               child: Container(
                 width: 16,
@@ -35,21 +35,21 @@ Widget buildColumnSelectedNode(){
                 ),
               ),
             ),
-            onPressed(
-              hint: "Center Camera (G)",
-              action: editorActionRecenterCamera,
-              child: Container(
-                width: 16,
-                height: 16,
-                child: buildCanvasImageButton(
-                    srcX: 96,
-                    srcY: 96,
-                    srcWidth: 16,
-                    srcHeight: 16,
-                    action: editorActionRecenterCamera,
-                ),
-              ),
-            ),
+            // onPressed(
+            //   hint: "Center Camera (G)",
+            //   action: editorActionRecenterCamera,
+            //   child: Container(
+            //     width: 16,
+            //     height: 16,
+            //     child: buildCanvasImageButton(
+            //         srcX: 96,
+            //         srcY: 96,
+            //         srcWidth: 16,
+            //         srcHeight: 16,
+            //         action: editorActionRecenterCamera,
+            //     ),
+            //   ),
+            // ),
             // onPressed(
             //   hint: 'Recenter Camera (G)',
             //   action: editorActionRecenterCamera,
