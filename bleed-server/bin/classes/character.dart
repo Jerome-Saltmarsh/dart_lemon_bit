@@ -90,19 +90,11 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     this.team = team;
   }
 
-  void updateFrame(){
-    animationFrame++;
-    if (animationFrame > 6)
-      animationFrame = 0;
-  }
-
-  void applyVelocity() {
-    if (performDuration > 0){
-      applyForce(force: 0.8, angle: faceAngle);
-      return;
-    }
-     applyForce(force: 1.0, angle: faceAngle);
-  }
+  // void updateFrame(){
+  //   animationFrame++;
+  //   if (animationFrame > 6)
+  //     animationFrame = 0;
+  // }
 
   void clearAbility(){
     ability = null;

@@ -206,7 +206,9 @@ abstract class Game {
     if (_nextCharacterAnimationFrame < 6) return;
     _nextCharacterAnimationFrame = 0;
     for (final character in characters) {
-      character.updateFrame();
+      if (character.animationFrame++ > 6){
+        character.animationFrame = 0;
+      }
     }
   }
 
@@ -1080,7 +1082,7 @@ abstract class Game {
       // speed *= 0.75;
         break;
       case CharacterState.Running:
-        character.applyVelocity();
+        character.applyForce(force: 1.0, angle: character.faceAngle);
         if (character.stateDuration % 10 == 0) {
           dispatch(
             GameEventType.Footstep,
