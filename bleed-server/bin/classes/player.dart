@@ -140,16 +140,20 @@ class Player extends Character with ByteWriter {
     performX = x + adj;
     performY = y + opp;
     performZ = z;
-    performMaxHits = 1;
 
-    game.dispatchAttackPerformed(AttackType.Blade, performX, performY, performZ, angle);
+    game.dispatchAttackPerformed(
+        AttackType.Blade,
+        performX,
+        performY,
+        performZ,
+        angle,
+    );
 
     if (idling) {
       faceMouse();
     }
 
-
-    const attackRadius = 25.0;
+    const attackRadius = 35.0;
 
     for (final character in game.characters) {
       if (onSameTeam(this, character)) continue;
@@ -160,38 +164,33 @@ class Player extends Character with ByteWriter {
       ) >
           attackRadius) continue;
       game.applyHit(src: this, target: character, damage: 2);
-      performMaxHits--;
       return;
     }
 
-    if (performMaxHits > 0) {
-      for (final gameObject in game.gameObjects) {
-        if (gameObject.distanceFromXYZ(
-          performX,
-          performY,
-          performZ,
-        ) >
-            attackRadius) continue;
+    for (final gameObject in game.gameObjects) {
+      if (gameObject.distanceFromXYZ(
+        performX,
+        performY,
+        performZ,
+      ) >
+          attackRadius) continue;
 
-        if (gameObject is GameObjectStatic) {
-          if (!gameObject.active) continue;
-          if (gameObject.type == GameObjectType.Barrel) {
-            gameObject.active = false;
-            gameObject.collidable = false;
-            gameObject.respawn = 200;
-            dispatchGameObjectDestroyed(game.players, gameObject);
-          }
+      if (gameObject is GameObjectStatic) {
+        if (!gameObject.active) continue;
+        if (gameObject.type == GameObjectType.Barrel) {
+          gameObject.active = false;
+          gameObject.collidable = false;
+          gameObject.respawn = 200;
+          dispatchGameObjectDestroyed(game.players, gameObject);
         }
-        performMaxHits--;
-        if (gameObject is Velocity == false) continue;
-        (gameObject as Velocity).applyForce(
-          force: 5,
-          angle: radiansV2(this, gameObject),
-        );
-        return;
       }
+      if (gameObject is Velocity == false) continue;
+      (gameObject as Velocity).applyForce(
+        force: 5,
+        angle: radiansV2(this, gameObject),
+      );
+      return;
     }
-
 
     final node = scene.getNodeXYZ(
       performX,
@@ -227,7 +226,6 @@ class Player extends Character with ByteWriter {
     performY = y + opp;
     performZ = z;
     performDuration = 20;
-    performMaxHits = 1;
 
     game.dispatchAttackPerformed(attackType, x, y, z, angle);
 
@@ -244,36 +242,30 @@ class Player extends Character with ByteWriter {
       ) >
           attackRadius) continue;
       game.applyHit(src: this, target: character, damage: 2);
-      performMaxHits--;
-      return;
     }
 
-    if (performMaxHits > 0) {
-      for (final gameObject in game.gameObjects) {
-        if (gameObject.distanceFromXYZ(
-          performX,
-          performY,
-          performZ,
-        ) >
-            attackRadius) continue;
+    for (final gameObject in game.gameObjects) {
+      if (gameObject.distanceFromXYZ(
+        performX,
+        performY,
+        performZ,
+      ) >
+          attackRadius) continue;
 
-        if (gameObject is GameObjectStatic) {
-          if (!gameObject.active) continue;
-          if (gameObject.type == GameObjectType.Barrel) {
-            gameObject.active = false;
-            gameObject.collidable = false;
-            gameObject.respawn = 200;
-            dispatchGameObjectDestroyed(game.players, gameObject);
-          }
+      if (gameObject is GameObjectStatic) {
+        if (!gameObject.active) continue;
+        if (gameObject.type == GameObjectType.Barrel) {
+          gameObject.active = false;
+          gameObject.collidable = false;
+          gameObject.respawn = 200;
+          dispatchGameObjectDestroyed(game.players, gameObject);
         }
-        performMaxHits--;
-        if (gameObject is Velocity == false) continue;
-        (gameObject as Velocity).applyForce(
-          force: 5,
-          angle: radiansV2(this, gameObject),
-        );
-        return;
       }
+      if (gameObject is Velocity == false) continue;
+      (gameObject as Velocity).applyForce(
+        force: 5,
+        angle: radiansV2(this, gameObject),
+      );
     }
 
     final node = scene.getNodeXYZ(

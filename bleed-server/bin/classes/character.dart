@@ -50,7 +50,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   var performX = 0.0;
   var performY = 0.0;
   var performZ = 0.0;
-  var performMaxHits = 1;
 
   dynamic spawn;
 
@@ -103,10 +102,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
       return;
     }
      applyForce(force: 1.0, angle: faceAngle);
-  }
-
-  void onDeath(){
-
   }
 
   void clearAbility(){

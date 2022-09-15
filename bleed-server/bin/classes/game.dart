@@ -476,7 +476,6 @@ abstract class Game {
     character.stateDurationRemaining = 10;
     character.onCharacterStateChanged();
     character.collidable = false;
-    character.onDeath();
 
     for (final character in characters) {
       if (character.target != character) continue;
@@ -502,7 +501,6 @@ abstract class Game {
     character.state = CharacterState.Dead;
     character.onCharacterStateChanged();
     character.collidable = false;
-    character.onDeath();
 
     for (final character in characters) {
       if (character.target != character) continue;
