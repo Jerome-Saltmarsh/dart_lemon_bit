@@ -85,7 +85,7 @@ Weapon buildWeaponStaff() =>
     );
 
 
-Weapon buildWeaponSword() =>
+Weapon buildWeaponBlade() =>
     Weapon(
       type: AttackType.Blade,
       damage: 3,

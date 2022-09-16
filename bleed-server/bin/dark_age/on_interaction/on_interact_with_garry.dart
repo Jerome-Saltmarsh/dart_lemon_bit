@@ -20,7 +20,7 @@ void onInteractWithGarry(Player player) {
            "Sword": () {
              player.beginQuest(Quest.Garry_Kill_Farm_Zombies);
              player.setCharacterStateChanging();
-             player.weapon = buildWeaponSword();
+             player.weapon = buildWeaponBlade();
              player.endInteraction();
            },
            "Bow": () {

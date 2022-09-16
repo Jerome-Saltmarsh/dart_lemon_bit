@@ -58,9 +58,9 @@ class Player extends Character with ByteWriter {
   final weapons = <Weapon>[];
   var storeItems = <Weapon>[];
 
-  var weaponSlot1 = buildWeaponShotgun();
-  var weaponSlot2 = buildWeaponSword();
-  var weaponSlot3 = buildWeaponBow();
+  var weaponSlot1 = buildWeaponHandgun();
+  var weaponSlot2 = buildWeaponShotgun();
+  var weaponSlot3 = buildWeaponBlade();
 
   // Ability Slots Q and E
 
