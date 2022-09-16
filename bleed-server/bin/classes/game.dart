@@ -82,7 +82,7 @@ abstract class Game {
 
   /// ACTIONS
 
-  void performAttack(Player player, Weapon weapon) {
+  void playerUseWeapon(Player player, Weapon weapon) {
     if (player.deadBusyOrPerforming) return;
 
     if (AttackType.requiresRounds(weapon.type)){

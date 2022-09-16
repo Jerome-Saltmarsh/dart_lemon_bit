@@ -887,13 +887,13 @@ class Connection {
     player.commandRun(direction);
 
     if (perform1){
-      game.performAttack(player, player.weaponSlot1);
+      game.playerUseWeapon(player, player.weaponSlot1);
     }
     if (perform2){
-      game.performAttack(player, player.weaponSlot2);
+      game.playerUseWeapon(player, player.weaponSlot2);
     }
     if (perform3){
-      game.performAttack(player, player.weaponSlot3);
+      game.playerUseWeapon(player, player.weaponSlot3);
     }
   }
 
