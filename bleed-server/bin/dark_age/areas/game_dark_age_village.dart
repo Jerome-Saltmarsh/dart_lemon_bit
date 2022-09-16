@@ -7,7 +7,6 @@ import '../dark_age_scenes.dart';
 import '../on_interaction/on_interact_with_garry.dart';
 import '../on_interaction/on_interact_with_jenkins.dart';
 import '../on_interaction/on_interact_with_julia.dart';
-import '../on_interaction/on_interact_with_tutorial.dart';
 import 'dark_age_area.dart';
 
 class GameDarkAgeVillage extends DarkAgeArea {
@@ -71,52 +70,5 @@ class GameDarkAgeVillage extends DarkAgeArea {
     addNpcGuardBow(row: 20, column: 31);
     addNpcGuardBow(row: 30, column: 12);
     addNpcGuardBow(row: 18, column: 31);
-  }
-
-  @override
-  void updateInternal() {
-    // for (var i = 0; i < players.length; i++) {
-    //   final player = players[i];
-    //   final row = player.indexRow;
-    //   final column = player.indexColumn;
-    //
-    //   if (row == 19 && column == 49) {
-    //     player.changeGame(engine.findGameDarkAgeCastle());
-    //     player.indexColumn = 1;
-    //     continue;
-    //   }
-    //   if (row == 49 && (column == 7 || column == 8)) {
-    //     player.changeGame(engine.findGameForest());
-    //     player.indexRow = 1;
-    //     continue;
-    //   }
-    //   if (row == 0 && (column == 9 || column == 8)) {
-    //     player.changeGame(engine.findGameFarm());
-    //     player.indexRow = 48;
-    //     continue;
-    //   }
-    //   if (column == 0 && (row == 6 || row == 7)) {
-    //     player.changeGame(engine.findGameDarkDarkFortress());
-    //     player.indexColumn = 48;
-    //     continue;
-    //   }
-    // }
-  }
-
-  @override
-  void customOnPlayerJoined(Player player) {
-     player.interact(
-         message: "Welcome to Dark-Age!",
-         responses: {
-            "Tutorial": () => onInteractWithTutorial(player),
-            "Play": player.endInteraction,
-        }
-     );
-     player.deck.addAll([
-       PowerFireball(),
-       PowerLongShot(),
-       PowerStunStrike(),
-     ]);
-     player.writeDeck();
   }
 }

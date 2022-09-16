@@ -95,10 +95,6 @@ class Player extends Character with ByteWriter {
     return null;
   }
 
-  void faceMouse(){
-    faceXY(mouseGridX, mouseGridY);
-  }
-
   void deselectSelectedGameObject(){
     if (editorSelectedGameObject == null) return;
     editorSelectedGameObject = null;

@@ -287,7 +287,7 @@ abstract class Game {
     );
 
     if (player.idling) {
-      player.faceMouse();
+      playerFaceMouse(player);
     }
 
     for (final character in characters) {
@@ -371,6 +371,13 @@ abstract class Game {
 
   void perform(Function action, int duration){
     actions.add(Action(duration, action)); /// TODO Recycle actions
+  }
+
+  void playerFaceMouse(Player player){
+      player.faceXY(
+          player.mouseGridX,
+          player.mouseGridY,
+      );
   }
 
   void deactivateGameObject(GameObject gameObject){
