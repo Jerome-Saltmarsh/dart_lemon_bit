@@ -72,6 +72,8 @@ abstract class Game {
   void customOnPlayerAddCardToDeck(Player player, CardType cardType) { }
   /// safe to override
   void customOnCollisionBetweenColliders(Collider a, Collider b) { }
+  /// safe to override
+  void customOnAIRespawned(AI ai){  }
 
   /// CONSTRUCTOR
   Game(this.scene) {
@@ -1202,6 +1204,7 @@ abstract class Game {
     ai.spawnY = ai.y;
     ai.spawnZ = ai.z;
     ai.setCharacterStateSpawning();
+    customOnAIRespawned(ai);
   }
 
   Projectile spawnProjectileOrb(Character src, {required int damage}) {
