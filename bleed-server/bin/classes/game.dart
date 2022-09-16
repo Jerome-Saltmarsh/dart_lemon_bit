@@ -305,6 +305,11 @@ abstract class Game {
     if (target.health <= 0) {
       setCharacterStateDying(target);
       customOnCharacterKilled(target, src);
+
+      if (target is AI){
+        onAIKilled(target);
+      }
+
     } else {
       customOnCharacterDamageApplied(target, src, damage);
       target.setCharacterStateHurt();
@@ -312,12 +317,19 @@ abstract class Game {
     dispatchGameEventCharacterHurt(target);
 
     if (target is AI) {
-      onAIDamaged(target, src);
+      onAIDamagedBy(target, src);
     }
   }
 
+  /// unsafe to override
+  void onAIKilled(AI ai){
+    ai.clearTarget();
+    ai.clearDest();
+    ai.clearPath();
+  }
+
   /// Can be safely overridden to customize behavior
-  void onAIDamaged(AI ai, dynamic src){
+  void onAIDamagedBy(AI ai, dynamic src){
     final targetAITarget = ai.target;
     if (targetAITarget == null) {
       ai.target = src;
@@ -1178,6 +1190,9 @@ abstract class Game {
     ai.x = spawn.x + getAdjacent(angle, distance);
     ai.y = spawn.y + getOpposite(angle, distance);
     ai.z = ai.spawnZ;
+    ai.clearDest();
+    ai.clearTarget();
+    ai.clearPath();
     ai.collidable = true;
     ai.health = ai.maxHealth;
     ai.target = null;

@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
-import '../constants/frames_per_second.dart';
 import '../functions/withinRadius.dart';
 import 'character.dart';
 import 'game.dart';
@@ -59,16 +58,6 @@ abstract class AI extends Character {
     spawnX = x;
     spawnY = y;
     spawnZ = z;
-  }
-
-  @override
-  void onDeath(){
-    clearTarget();
-    clearPath();
-    clearDest();
-    const framesPerMinute = framesPerSecond * secondsPerMinute;
-    const respawnDuration = framesPerMinute * 1;
-    respawn = respawnDuration;
   }
 
   @override
