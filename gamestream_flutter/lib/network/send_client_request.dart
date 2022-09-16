@@ -34,32 +34,8 @@ void sendClientRequestSpawnNodeData(int z, int row, int column){
   sendClientRequest(ClientRequest.Spawn_Node_Data, '$z $row $column');
 }
 
-void sendClientRequestDeckAddCard(CardType value){
-  sendClientRequest(ClientRequest.Deck_Add_Card, value.index);
-}
-
-void sendClientRequestDeckSelectCard(int index) {
-  sendClientRequest(ClientRequest.Deck_Select_Card, index);
-}
-
-void sendClientRequestReverseHour(){
-   sendClientRequest(ClientRequest.Reverse_Hour);
-}
-
-void sendClientRequestSkipHour(){
-  sendClientRequest(ClientRequest.Skip_Hour);
-}
-
 void sendClientRequestStoreClose(){
   sendClientRequest(ClientRequest.Store_Close);
-}
-
-void sendClientRequestSpawnZombie({
-  required int z,
-  required int row,
-  required int column
-}){
-  sendClientRequest(ClientRequest.Spawn_Zombie, '$z $row $column');
 }
 
 void sendClientRequestSetWeapon(int type){

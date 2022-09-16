@@ -23,7 +23,7 @@ import 'zombie.dart';
 class Player extends Character with ByteWriter {
 
   final mouse = Vector2(0, 0);
-  final _runTarget = Position3();
+  final runTarget = Position3();
 
   double get mouseGridX => (mouse.x + mouse.y) + z;
   double get mouseGridY => (mouse.y - mouse.x) + z;
@@ -46,6 +46,7 @@ class Player extends Character with ByteWriter {
   var screenRight = 0.0;
   var screenBottom = 0.0;
   var sceneDownloaded = false;
+  /// Warning - do not reference
   Game game;
   Collider? aimTarget; // the currently highlighted character
   Account? account;
@@ -161,9 +162,9 @@ class Player extends Character with ByteWriter {
 
   void setRunTarget(double x, double y){
     endInteraction();
-    _runTarget.x = x;
-    _runTarget.y = y;
-    target = _runTarget;
+    runTarget.x = x;
+    runTarget.y = y;
+    target = runTarget;
   }
 
   void setCardAbility(Power value){
@@ -236,15 +237,6 @@ class Player extends Character with ByteWriter {
     writeBool(debug);
   }
 
-  void equipPickaxe(){
-    // equippedType = TechType.Pickaxe;
-    setCharacterStateChanging();
-  }
-
-  void equipAxe(){
-    // equippedType = TechType.Axe;
-    setCharacterStateChanging();
-  }
 
   void setCharacterStateChanging(){
     if (deadOrBusy) return;
@@ -276,10 +268,6 @@ class Player extends Character with ByteWriter {
 
   @override
   int get type => CharacterType.Template;
-}
-
-
-extension PlayerProperties on Player {
 
   void writePlayerDebug(){
     writeByte(state);
@@ -351,8 +339,8 @@ extension PlayerProperties on Player {
     writeMapCoordinate();
 
     if (game is GameDarkAge) {
-       writeByte(ServerResponse.Render_Map);
-       writeBool((game as GameDarkAge).mapVisible);
+      writeByte(ServerResponse.Render_Map);
+      writeBool((game as GameDarkAge).mapVisible);
     }
 
     writePlayerEvent(PlayerEvent.Scene_Changed);
@@ -645,9 +633,9 @@ extension PlayerProperties on Player {
   }
 
   void writePlayerWeapons(){
-     writeByte(ServerResponse.Player_Weapons);
-     writeInt(weapons.length);
-     weapons.forEach(writeWeapon);
+    writeByte(ServerResponse.Player_Weapons);
+    writeInt(weapons.length);
+    weapons.forEach(writeWeapon);
   }
 
   void  writeWeapon(Weapon weapon){
@@ -681,9 +669,9 @@ extension PlayerProperties on Player {
   }
 
   void writeStoreItems(){
-     writeByte(ServerResponse.Store_Items);
-     writeInt(storeItems.length);
-     storeItems.forEach(writeWeapon);
+    writeByte(ServerResponse.Store_Items);
+    writeInt(storeItems.length);
+    storeItems.forEach(writeWeapon);
   }
 
   void writeNpcTalk({required String text, Map<String, Function>? options}){
@@ -693,7 +681,7 @@ extension PlayerProperties on Player {
     writeString(text);
     writeByte(this.options.length);
     for (final option in this.options.keys){
-       writeString(option);
+      writeString(option);
     }
   }
 
@@ -707,7 +695,7 @@ extension PlayerProperties on Player {
     writeByte(ServerResponse.Player_Quests);
     writeInt(questsInProgress.length);
     for (final quest in questsInProgress){
-       writeByte(quest.index);
+      writeByte(quest.index);
     }
     writeInt(questsCompleted.length);
     for (final quest in questsCompleted){
@@ -752,7 +740,6 @@ extension PlayerProperties on Player {
     writeInt(weaponSlot3.rounds);
   }
 }
-
 
 int getExperienceForLevel(int level){
   return (((level - 1) * (level - 1))) * 6;

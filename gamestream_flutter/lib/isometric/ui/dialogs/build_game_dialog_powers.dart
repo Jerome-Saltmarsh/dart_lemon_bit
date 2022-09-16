@@ -43,7 +43,7 @@ Widget buildDeckCard(DeckCard value){
     child: value.name,
     margin: EdgeInsets.only(bottom: 4),
     action: (){
-      sendClientRequestDeckSelectCard(player.deck.value.indexOf(value));
+
     }
   );
 }

@@ -15,7 +15,5 @@ Widget buildGameDialog(GameDialog? value) {
         return buildGameDialogQuests();
      case GameDialog.Map:
         return buildGameDialogMap();
-     case GameDialog.Powers:
-       return buildGameDialogPowers();
    }
 }

@@ -110,38 +110,6 @@ class Connection {
         handleClientRequestTeleport(player);
         return;
 
-      case ClientRequest.Skip_Hour:
-        if (game is GameDarkAge == false) return;
-        final universe = (game as GameDarkAge).environment;
-        universe.time.time = (universe.time.time + secondsPerHour) % secondsPerDay;
-        break;
-
-      case ClientRequest.Spawn_Zombie:
-        if (arguments.length < 4) return errorInsufficientArgs(4, arguments);
-
-        final z = int.tryParse(arguments[1]);
-        if (z == null) return errorInvalidArg('z');
-        final row = int.tryParse(arguments[2]);
-        if (row == null) return errorInvalidArg('row');
-        final column = int.tryParse(arguments[3]);
-        if (column == null) return errorInvalidArg('column');
-
-        game.spawnZombie(
-            x: row * tileSize + tileSizeHalf,
-            y: column * tileSize + tileSizeHalf,
-            z: z * tileHeight,
-            health: 10,
-            team: 0,
-            damage: 1
-        );
-        return;
-
-      case ClientRequest.Reverse_Hour:
-        if (game is GameDarkAge == false) return;
-        final universe = (game as GameDarkAge).environment;
-        universe.time.time = (universe.time.time - 3600) % secondsPerDay;
-        break;
-
       case ClientRequest.Set_Weapon:
         if (arguments.length < 2)  return errorArgsExpected(2, arguments);
         final weaponType = int.tryParse(arguments[1]);
@@ -172,10 +140,6 @@ class Connection {
         if (type == null) return errorInvalidArg('invalid head type $type');
         player.equippedPants = type;
         player.setCharacterStateChanging();
-        break;
-
-      case ClientRequest.Upgrade_Weapon_Damage:
-        player.weapon.damage++;
         break;
 
       case ClientRequest.Purchase_Weapon:
@@ -281,49 +245,6 @@ class Connection {
 
       case ClientRequest.Npc_Talk_Select_Option:
         return handleNpcTalkSelectOption(player, arguments);
-
-      case ClientRequest.Deck_Select_Card:
-        if (player.deadOrDying) return errorPlayerDead();
-        if (arguments.length != 2) return errorArgsExpected(2, arguments);
-        final deckIndex = int.tryParse(arguments[1]);
-        if (deckIndex == null) {
-          return errorInvalidArg('card choice index required: got ${arguments[1]}');
-        }
-        if (!isValidIndex(deckIndex, player.deck)){
-          return errorInvalidArg('Invalid deck index $deckIndex');
-        }
-        final card = player.deck[deckIndex];
-
-        if (player.ability == card){
-          player.clearCardAbility();
-          return;
-        }
-
-        if (card is Power && card.cooldownRemaining <= 0) {
-          player.setCardAbility(card);
-        }
-        break;
-
-      case ClientRequest.Deck_Add_Card:
-        if (player.cardChoices.isEmpty){
-          return error(GameError.Choose_Card, message: "card choices empty");
-        }
-        if (arguments.length != 2) {
-          return errorArgsExpected(2, arguments);
-        }
-        final cardTypeIndex = int.tryParse(arguments[1]);
-        if (cardTypeIndex == null) {
-          return errorInvalidArg('card choice index required: got ${arguments[1]}');
-        }
-        if (!isValidIndex(cardTypeIndex, cardTypes)){
-          return errorInvalidArg('invalid card type index: $cardTypeIndex');
-        }
-        final cardType = cardTypes[cardTypeIndex];
-        if (!player.cardChoices.contains(cardType)){
-          return error(GameError.Choose_Card, message: 'selected card is not a choice');
-        }
-        player.game.customOnPlayerAddCardToDeck(player, cardType);
-        break;
 
       case ClientRequest.Toggle_Debug:
         player.toggleDebug();
