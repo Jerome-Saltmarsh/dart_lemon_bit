@@ -1,16 +1,23 @@
 
+import 'package:lemon_math/library.dart';
+
 import '../common/attack_type.dart';
 import '../functions/generateUUID.dart';
-
 
 class Weapon {
    int type;
    int damage;
    int capacity;
    double range;
-   late int rounds;
+   late int _rounds;
    int duration;
    final uuid = generateUUID();
+
+   int get rounds => _rounds;
+
+   set rounds(int value) {
+     _rounds = clamp(value, 0, capacity);
+   }
 
    Weapon({
       required this.type,
@@ -19,7 +26,7 @@ class Weapon {
       required this.range,
       this.capacity = 0,
    }) {
-      rounds = capacity;
+      _rounds = capacity;
    }
 }
 

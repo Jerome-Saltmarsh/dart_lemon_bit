@@ -51,9 +51,11 @@ class GameDarkAge extends Game {
 
   void onCollisionBetweenPlayerAndGameObjectLoot(Player player, GameObjectLoot loot){
     deactivateGameObject(loot);
-    player.weapon.rounds = player.weapon.capacity;
     player.health++;
     player.experience++;
+    player.weaponSlot1.rounds++;
+    player.weaponSlot2.rounds++;
+    player.weaponSlot3.rounds++;
     player.writePlayerEventWeaponRounds();
     player.dispatchEventLootCollected();
   }
