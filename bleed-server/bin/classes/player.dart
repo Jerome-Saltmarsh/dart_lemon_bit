@@ -52,8 +52,8 @@ class Player extends Character with ByteWriter {
   final weapons = <Weapon>[];
   var storeItems = <Weapon>[];
 
-  var weaponSlot1 = buildWeaponHandgun();
-  var weaponSlot2 = buildWeaponFireball();
+  var weaponSlot1 = buildWeaponAssaultRifle();
+  var weaponSlot2 = buildWeaponShotgun();
   var weaponSlot3 = buildWeaponBlade();
 
   final questsInProgress = <Quest>[];
@@ -521,17 +521,13 @@ class Player extends Character with ByteWriter {
     writeInt(node.spawnRadius);
   }
 
-  int getDamage(){
-    return 5;
-  }
-
   void writePlayerWeapons(){
     writeByte(ServerResponse.Player_Weapons);
     writeInt(weapons.length);
     weapons.forEach(writeWeapon);
   }
 
-  void  writeWeapon(Weapon weapon){
+  void writeWeapon(Weapon weapon){
     writeByte(weapon.type);
     writeInt(weapon.damage);
     writeString(weapon.uuid);

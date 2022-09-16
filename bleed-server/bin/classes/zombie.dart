@@ -23,7 +23,6 @@ class Zombie extends AI {
       health: health,
       weapon: buildWeaponUnarmed(),
       wanderRadius: wanderRadius,
-      game: game,
       team: team,
   );
 

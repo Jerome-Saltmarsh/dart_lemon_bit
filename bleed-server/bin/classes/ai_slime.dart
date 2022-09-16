@@ -14,7 +14,6 @@ class AISlime extends AI {
     required double y,
     required double z,
     required int health,
-    required Game game,
     required int team,
   }) : super(
       x: x,
@@ -28,7 +27,6 @@ class AISlime extends AI {
           duration: 10,
           range: 50,
       ),
-      game: game,
       team: team,
   );
 

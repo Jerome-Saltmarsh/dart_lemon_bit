@@ -41,7 +41,6 @@ abstract class AI extends Character {
     required double z,
     required int health,
     required Weapon weapon,
-    required Game game,
     int team = 0,
     double speed = 3.0,
     this.wanderRadius = 0,

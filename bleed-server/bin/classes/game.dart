@@ -308,7 +308,7 @@ abstract class Game {
       if (character.distanceFromXYZ(
         performX, performY, performZ,
       ) > attackRadius) continue;
-      applyHit(src: this, target: character, damage: damage);
+      applyHit(src: player, target: character, damage: damage);
     }
 
     for (final gameObject in gameObjects) {
@@ -1165,7 +1165,6 @@ abstract class Game {
           y: spawn.y + y,
           z: spawn.z,
           health: 30,
-          game: this,
           team: Teams.evil,
         );
         instance.spawn = spawn;
@@ -1269,7 +1268,6 @@ abstract class Game {
           y: node.y + y,
           z: node.z,
           health: 30,
-          game: this,
           team: Teams.evil,
         );
         instance.spawn = node;

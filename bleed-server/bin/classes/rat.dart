@@ -21,7 +21,6 @@ class Rat extends AI {
       health: health,
       weapon: buildWeaponUnarmed(),
       team: team,
-      game: game,
   ) {
     indexZ = z;
     indexRow = row;
