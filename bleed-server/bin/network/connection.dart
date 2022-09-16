@@ -874,11 +874,16 @@ class Connection {
     );
   }
 
+  void setPlayer(Player player){
+    if (_player == player) return;
+    _player = player;
+    player.sendBufferToClient = sendBufferToClient;
+    player.dispatchError = error;
+  }
+
   void onGameJoined(){
     final player = _player;
     if (player == null) throw Exception("onGameJoinedException: player is null");
-    player.sendBufferToClient = sendBufferToClient;
-    player.dispatchError = error;
     player.sceneDownloaded = false;
     final account = _account;
     final game = player.game;
@@ -892,7 +897,6 @@ class Connection {
         break;
       }
     }
-    game.customOnPlayerJoined(player);
   }
 
   Future joinGameDarkAge() async {
@@ -915,7 +919,7 @@ class Connection {
     if (current != null) {
       current.game.removePlayer(current);
     }
-    _player = game.spawnPlayer();
+    setPlayer(game.spawnPlayer());
     onGameJoined();
   }
 

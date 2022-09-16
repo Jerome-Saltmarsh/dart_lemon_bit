@@ -63,8 +63,6 @@ abstract class Game {
   /// safe to overridable
   void customOnGameStarted() { }
   /// safe to overridable
-  void customOnPlayerJoined(Player player) { }
-  /// safe to overridable
   void customOnPlayerDeath(Player player) { }
   /// safe to overridable
   void customOnNpcObjectivesCompleted(Character npc) { }
