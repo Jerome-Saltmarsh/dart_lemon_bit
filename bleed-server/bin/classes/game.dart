@@ -802,6 +802,12 @@ abstract class Game {
     }
   }
 
+  void setCharacterStateChanging(Character character){
+    if (character.deadOrBusy) return;
+    dispatchV3(GameEventType.Character_Changing, character);
+    character.setCharacterState(value: CharacterState.Changing, duration: 20);
+  }
+
   void setCharacterStateDead(Character character) {
     if (character.state == CharacterState.Dead) return;
 

@@ -115,7 +115,7 @@ class Connection {
         final weaponType = int.tryParse(arguments[1]);
         if (weaponType == null) return errorInvalidArg('weapon type');
         player.weapon = Weapon(type: weaponType, damage: 1, duration: 10, range: 50);
-        player.setCharacterStateChanging();
+        player.game.setCharacterStateChanging(player);
         break;
 
       case ClientRequest.Set_Armour:
@@ -123,7 +123,7 @@ class Connection {
         final armourType = int.tryParse(arguments[1]);
         if (armourType == null) return errorInvalidArg('armour type');
         player.equippedArmour = armourType;
-        player.setCharacterStateChanging();
+        player.game.setCharacterStateChanging(player);
         break;
 
       case ClientRequest.Set_Head_Type:
@@ -131,7 +131,7 @@ class Connection {
         final type = int.tryParse(arguments[1]);
         if (type == null) return errorInvalidArg('invalid head type $type');
         player.equippedHead = type;
-        player.setCharacterStateChanging();
+        player.game.setCharacterStateChanging(player);
         break;
 
       case ClientRequest.Set_Pants_Type:
@@ -139,7 +139,7 @@ class Connection {
         final type = int.tryParse(arguments[1]);
         if (type == null) return errorInvalidArg('invalid head type $type');
         player.equippedPants = type;
-        player.setCharacterStateChanging();
+        player.game.setCharacterStateChanging(player);
         break;
 
       case ClientRequest.Purchase_Weapon:
@@ -217,7 +217,7 @@ class Connection {
           return errorInvalidArg('invalid weapon index $index');
         }
         player.weapon = player.weapons[index];
-        player.setCharacterStateChanging();
+        player.game.setCharacterStateChanging(player);
         player.writeEquippedWeapon();
         break;
 

@@ -237,17 +237,6 @@ class Player extends Character with ByteWriter {
     writeBool(debug);
   }
 
-
-  void setCharacterStateChanging(){
-    if (deadOrBusy) return;
-    dispatchGameEvent(GameEventType.Character_Changing);
-    setCharacterState(value: CharacterState.Changing, duration: 20);
-  }
-
-  void dispatchGameEvent(int type, {double angle = 0}){
-    game.dispatchV3(type, this, angle: angle);
-  }
-
   void changeGame(Game to){
     if (game == to) return;
     game.removePlayer(this);

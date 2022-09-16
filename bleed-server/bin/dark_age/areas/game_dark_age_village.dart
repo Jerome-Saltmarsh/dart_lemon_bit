@@ -3,13 +3,54 @@
 import '../../classes/library.dart';
 import '../../common/library.dart';
 import '../../common/map_tiles.dart';
+import '../../common/quest.dart';
 import '../dark_age_scenes.dart';
-import '../on_interaction/on_interact_with_garry.dart';
 import '../on_interaction/on_interact_with_jenkins.dart';
 import '../on_interaction/on_interact_with_julia.dart';
 import 'dark_age_area.dart';
 
 class GameDarkAgeVillage extends DarkAgeArea {
+
+  void onInteractWithGarry(Player player){
+    player.writePlayerEvent(PlayerEvent.Hello_Male_01);
+
+    if (player.questToDo(Quest.Garry_Kill_Farm_Zombies)){
+      return player.interact(
+          message: "Zombies keep on trampling all over my crops and destroying them. Would you be able to deal with them for me? I can lend you a weapon.",
+          responses: {
+            "Staff": () {
+              player.beginQuest(Quest.Garry_Kill_Farm_Zombies);
+              setCharacterStateChanging(player);
+              player.weapon = buildWeaponStaff();
+              player.endInteraction();
+            },
+            "Sword": () {
+              player.beginQuest(Quest.Garry_Kill_Farm_Zombies);
+              setCharacterStateChanging(player);
+              player.weapon = buildWeaponBlade();
+              player.endInteraction();
+            },
+            "Bow": () {
+              player.beginQuest(Quest.Garry_Kill_Farm_Zombies);
+              setCharacterStateChanging(player);
+              player.weapon = buildWeaponBow();
+              player.endInteraction();
+            },
+            "I can't right now": player.endInteraction,
+          }
+      );
+    }
+
+    if (player.questInProgress(Quest.Garry_Return_To_Garry)){
+      player.completeQuest(Quest.Garry_Return_To_Garry);
+      return player.interact(message: "Thank you for killing all those zombies, here is your reward");
+
+    }
+
+    return player.interact(message: "Thanks for clearing out those zombies for me");
+
+  }
+
   GameDarkAgeVillage() : super(darkAgeScenes.village, mapTile: MapTiles.Village) {
     addNpc(
         weapon: buildWeaponUnarmed(),
@@ -70,5 +111,49 @@ class GameDarkAgeVillage extends DarkAgeArea {
     addNpcGuardBow(row: 20, column: 31);
     addNpcGuardBow(row: 30, column: 12);
     addNpcGuardBow(row: 18, column: 31);
+  }
+
+  void onInteractWithJulia(Player player) {
+    player.interact(
+        message: "Hello dear, are you looking for new clothing?",
+        responses: {
+          "Pants": (){
+            player.interact(message: "Which color are you looking for?",
+                responses: {
+                  "brown": (){
+                    setCharacterStateChanging(player);
+                    player.equippedPants = PantsType.brown;
+                    player.endInteraction();
+                  },
+                  "blue": (){
+                    setCharacterStateChanging(player);
+                    player.equippedPants = PantsType.blue;
+                    player.endInteraction();
+                  },
+                  "red": (){
+                    setCharacterStateChanging(player);
+                    player.equippedPants = PantsType.red;
+                    player.endInteraction();
+                  },
+                  "green": (){
+                    setCharacterStateChanging(player);
+                    player.equippedPants = PantsType.green;
+                    player.endInteraction();
+                  },
+                  "white": (){
+                    setCharacterStateChanging(player);
+                    player.equippedPants = PantsType.white;
+                    player.endInteraction();
+                  },
+
+                  "I changed my mind": player.endInteraction
+                }
+            );
+          },
+          "Shirt": (){
+
+          },
+        }
+    );
   }
 }
