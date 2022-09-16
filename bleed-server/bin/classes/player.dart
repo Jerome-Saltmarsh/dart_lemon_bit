@@ -54,8 +54,6 @@ class Player extends Character with ByteWriter {
   var storeItems = <Weapon>[];
 
   var weaponSlot1 = buildWeaponHandgun();
-  // var weaponSlot2 = buildWeaponBow();
-  // var weaponSlot2 = buildWeaponShotgun();
   var weaponSlot2 = buildWeaponFireball();
   var weaponSlot3 = buildWeaponBlade();
 
@@ -95,12 +93,6 @@ class Player extends Character with ByteWriter {
       return weapon;
     }
     return null;
-  }
-
-  void writePlayerEventWeaponRounds(){
-    writePlayerEvent(PlayerEvent.Weapon_Rounds);
-    writeInt(weapon.rounds);
-    writeInt(weapon.capacity);
   }
 
   void faceMouse(){

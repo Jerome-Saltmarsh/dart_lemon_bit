@@ -366,7 +366,6 @@ class Connection {
           return;
         }
         player.weapon = weapon;
-        player.writePlayerEventWeaponRounds();
         break;
 
       case ClientRequest.Player_Equip_Attack_Type_2:

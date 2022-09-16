@@ -133,7 +133,6 @@ abstract class Game {
     if (AttackType.requiresRounds(weapon.type)){
       if (weapon.rounds == 0) return;
       weapon.rounds--;
-      player.writePlayerEventWeaponRounds();
     }
     player.performDuration = weapon.duration;
 

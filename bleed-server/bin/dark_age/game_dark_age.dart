@@ -94,7 +94,6 @@ class GameDarkAge extends Game {
     player.weaponSlot1.rounds++;
     player.weaponSlot2.rounds++;
     player.weaponSlot3.rounds++;
-    player.writePlayerEventWeaponRounds();
     player.dispatchEventLootCollected();
   }
 
@@ -123,19 +122,6 @@ class GameDarkAge extends Game {
   @override
   void customUpdate(){
     updateInternal();
-    replenishAmmo();
-  }
-
-  void replenishAmmo(){
-    if (timerReplenishAmmo-- > 0) return;
-    timerReplenishAmmo = framesPerSecond * 5;
-    for (final player in players) {
-      for (final weapon in player.weapons){
-         if (weapon.rounds >= weapon.capacity) continue;
-         weapon.rounds++;
-      }
-      player.writePlayerEventWeaponRounds();
-    }
   }
 
   void updateInternal(){
