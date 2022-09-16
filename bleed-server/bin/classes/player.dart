@@ -36,7 +36,7 @@ class Player extends Character with ByteWriter {
   var characterState = CharacterState.Idle;
   var framesSinceClientRequest = 0;
   var textDuration = 0;
-  var experience = 0;
+  var _experience = 0;
   var level = 1;
   var skillPoints = 0;
   var _magic = 0;
@@ -58,9 +58,9 @@ class Player extends Character with ByteWriter {
   final weapons = <Weapon>[];
   var storeItems = <Weapon>[];
 
-  Weapon weaponSlot1 = buildWeaponShotgun();
-  Weapon weaponSlot2 = buildWeaponSword();
-  Weapon weaponSlot3 = buildWeaponBow();
+  var weaponSlot1 = buildWeaponShotgun();
+  var weaponSlot2 = buildWeaponSword();
+  var weaponSlot3 = buildWeaponBow();
 
   // Ability Slots Q and E
 
@@ -85,6 +85,22 @@ class Player extends Character with ByteWriter {
 
   var mapX = 0;
   var mapY = 0;
+
+  int get experience => _experience;
+
+  set experience(int value){
+    if (value < 0) {
+      _experience = 0;
+      return;
+    }
+    _experience = value;
+    while (value >= experienceRequiredForNextLevel) {
+      value -= experienceRequiredForNextLevel;
+      level++;
+      skillPoints++;
+      game.customOnPlayerLevelGained(this);
+    }
+  }
 
   void performAttack(Weapon? weapon) {
     if (weapon == null) return;
@@ -479,8 +495,7 @@ class Player extends Character with ByteWriter {
   int get experienceRequiredForNextLevel => getExperienceForLevel(level + 1);
 
   double get experiencePercentage {
-    if (experience == 0) return 0.0;
-    return experience / experienceRequiredForNextLevel;
+    return _experience / experienceRequiredForNextLevel;
   }
 
   set magic(int value){
@@ -532,16 +547,6 @@ class Player extends Character with ByteWriter {
 
   void dispatchGameEvent(int type, {double angle = 0}){
     game.dispatchV3(type, this, angle: angle);
-  }
-
-  void gainExperience(int amount){
-      experience += amount;
-      while (experience > experienceRequiredForNextLevel) {
-        experience -= experienceRequiredForNextLevel;
-        level++;
-        skillPoints++;
-        game.customOnPlayerLevelGained(this);
-      }
   }
 
   void changeGame(Game to){

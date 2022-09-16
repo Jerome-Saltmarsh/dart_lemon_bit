@@ -43,6 +43,7 @@ Widget buildWidgetAttackSlot(AttackSlot slot) {
 
 final _rect = Rect.fromCenter(center: const Offset(0,0), width: 64, height: 64);
 const _pi2 = pi + pi;
+const _piOneAndHalf = pi * 1.5;
 
 Widget renderAttackSlot({
   required double srcX,
@@ -60,7 +61,7 @@ Widget renderAttackSlot({
 
             final previousColor = paint.color;
             paint.color = Colors.red;
-            canvas.drawArc(_rect, 0, _pi2 * percentage, true, paint);
+            canvas.drawArc(_rect, _piOneAndHalf, _pi2 - (_pi2 * percentage), true, paint);
             paint.color = previousColor;
 
             canvasRenderAtlas(
