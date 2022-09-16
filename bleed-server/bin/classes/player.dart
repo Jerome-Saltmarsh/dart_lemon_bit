@@ -99,9 +99,19 @@ class Player extends Character with ByteWriter {
 
     switch (weapon.type) {
       case AttackType.Unarmed:
-        return performAttackTypeBlade();
+        return performAttackMelee(
+          attackType: AttackType.Unarmed,
+          distance: 40,
+          attackRadius: 35,
+          damage: weapon.damage,
+        );
       case AttackType.Blade:
-        return performAttackTypeBlade();
+        return performAttackMelee(
+          attackType: AttackType.Blade,
+          distance: 40,
+          attackRadius: 35,
+          damage: weapon.damage,
+        );
       case AttackType.Crossbow:
         return performAttackTypeCrossBow();
       case AttackType.Teleport:
@@ -236,7 +246,7 @@ class Player extends Character with ByteWriter {
     performZ = z;
     performDuration = 20;
 
-    game.dispatchAttackPerformed(attackType, x, y, z, angle);
+    game.dispatchAttackPerformed(attackType, performX, performY, performZ, angle);
 
     if (idling) {
       faceMouse();

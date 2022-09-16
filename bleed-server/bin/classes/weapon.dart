@@ -81,7 +81,7 @@ Weapon buildWeaponStaff() =>
 Weapon buildWeaponSword() =>
     Weapon(
       type: AttackType.Blade,
-      damage: 1,
+      damage: 3,
       duration: 20,
       range: 100,
     );
