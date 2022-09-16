@@ -133,17 +133,33 @@ class Player extends Character with ByteWriter {
       case AttackType.Teleport:
         return performAttackTypeTeleport();
       case AttackType.Handgun:
-        return performFireWeapon();
+        return game.characterFireWeapon(
+            character: this,
+            weapon: weapon,
+            angle: mouseAngle,
+        );
       case AttackType.Shotgun:
         return performAttackTypeShotgun();
       case AttackType.Assault_Rifle:
-        return performFireWeapon();
+        return game.characterFireWeapon(
+          character: this,
+          weapon: weapon,
+          angle: mouseAngle,
+        );
       case AttackType.Rifle:
-        return performFireWeapon();
+        return game.characterFireWeapon(
+          character: this,
+          weapon: weapon,
+          angle: mouseAngle,
+        );
       case AttackType.Fireball:
         return performAttackTypeFireball();
       case AttackType.Revolver:
-        return performFireWeapon();
+        return game.characterFireWeapon(
+          character: this,
+          weapon: weapon,
+          angle: mouseAngle,
+        );
       case AttackType.Crowbar:
         return performAttackMelee(
           attackType: AttackType.Crowbar,
@@ -344,18 +360,19 @@ class Player extends Character with ByteWriter {
     game.fireArrow(this, mouseAngle);
   }
 
-  void performFireWeapon(){
-    game.spawnProjectile(
-      src: this,
-      accuracy: 0,
-      angle: mouseAngle,
-      speed: 8.0,
-      range: weapon.range,
-      projectileType: ProjectileType.Bullet,
-      damage: weapon.damage,
-    );
-    game.dispatchAttackPerformed(weapon.type, x, y, z, mouseAngle);
-  }
+  // void performFireWeapon(Weapon weapon){
+  //   game.spawnProjectile(
+  //     src: this,
+  //     accuracy: 0,
+  //     angle: mouseAngle,
+  //     speed: 8.0,
+  //     range: weapon.range,
+  //     projectileType: ProjectileType.Bullet,
+  //     damage: weapon.damage,
+  //   );
+  //   /// Illegal game reference
+  //   game.dispatchAttackPerformed(weapon.type, x, y, z, mouseAngle);
+  // }
 
   void performAttackTypeFireball(){
     game.fireFireball(this, mouseAngle);

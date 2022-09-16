@@ -887,6 +887,7 @@ class Connection {
     player.commandRun(direction);
 
     if (perform1){
+      //
       player.performAttack(player.weaponSlot1);
     }
     if (perform2){

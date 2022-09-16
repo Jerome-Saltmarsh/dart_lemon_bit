@@ -1,5 +1,11 @@
 import 'audio_single.dart';
 
+class SoundEffect {
+   AudioSingle value;
+
+   SoundEffect(this.value);
+}
+
 final audioSingleThunder = AudioSingle(name: 'thunder', volume: 0.5, maxDistance: 100);
 final audioSingleFireball = AudioSingle(name: 'fire-bolt-14', volume: 0.5, maxDistance: 200);
 final audioSingleFootstepGrass8 = AudioSingle(name: 'footstep-grass-8', volume: 0.05, maxDistance: 200);
@@ -41,7 +47,7 @@ final audioSingleDrawSword = AudioSingle(name: 'draw-sword', volume: 0.5, maxDis
 final audioSingleClickSound = AudioSingle(name: 'click-sound-8', volume: 0.5, maxDistance: 250);
 final audioSingleSwingArm = AudioSingle(name: 'swing-arm-11', volume: 0.4, maxDistance: 250);
 final audioSingleSwingSword = AudioSingle(name: 'swing-sword', volume: 0.4, maxDistance: 250);
-final audioSingleHandgunFired = AudioSingle(name: 'pistol-shot-20', volume: 0.4, maxDistance: 250);
+final audioSinglePistolShot20 = AudioSingle(name: 'pistol-shot-20', volume: 0.4, maxDistance: 250);
 final audioSingleGrassCut = AudioSingle(name: 'grass-cut', volume: 0.4, maxDistance: 250);
 final audioSingleZombieBits = [
   AudioSingle(name: 'zombie-bite-04', volume: 0.4, maxDistance: 250),

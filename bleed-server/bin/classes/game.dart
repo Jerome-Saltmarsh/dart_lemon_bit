@@ -81,6 +81,31 @@ abstract class Game {
   }
 
   /// ACTIONS
+  ///
+
+  void characterFireWeapon({
+    required Character character,
+    required Weapon weapon,
+    required double angle,
+  }){
+    spawnProjectile(
+      src: character,
+      accuracy: 0,
+      angle: angle,
+      speed: 8.0,
+      range: weapon.range,
+      projectileType: ProjectileType.Bullet,
+      damage: weapon.damage,
+    );
+    /// Illegal game reference
+    dispatchAttackPerformed(
+        weapon.type,
+        character.x,
+        character.y,
+        character.z,
+        angle,
+    );
+  }
 
   void perform(Function action, int duration){
     actions.add(Action(duration, action)); /// TODO Recycle actions
