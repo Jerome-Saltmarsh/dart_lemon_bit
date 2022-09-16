@@ -264,80 +264,6 @@ class Player extends Character with ByteWriter {
     }
   }
 
-  void performAttackMelee({
-    required int attackType,
-    required double distance,
-    required double attackRadius,
-    required int damage,
-  }) {
-    final angle = mouseAngle;
-    final adj = getAdjacent(angle, distance);
-    final opp = getOpposite(angle, distance);
-    performX = x + adj;
-    performY = y + opp;
-    performZ = z;
-    performDuration = 20;
-
-    game.dispatchAttackPerformed(attackType, performX, performY, performZ, angle);
-
-    if (idling) {
-      faceMouse();
-    }
-
-    for (final character in game.characters) {
-      if (onSameTeam(this, character)) continue;
-      if (character.distanceFromXYZ(
-        performX, performY, performZ,
-        ) > attackRadius) continue;
-      game.applyHit(src: this, target: character, damage: damage);
-    }
-
-    for (final gameObject in game.gameObjects) {
-      if (gameObject.distanceFromXYZ(
-        performX,
-        performY,
-        performZ,
-      ) >
-          attackRadius) continue;
-
-      if (gameObject is GameObjectStatic) {
-        if (!gameObject.active) continue;
-        if (gameObject.type == GameObjectType.Barrel) {
-          gameObject.active = false;
-          gameObject.collidable = false;
-          gameObject.respawn = 200;
-          dispatchGameObjectDestroyed(game.players, gameObject);
-        }
-      }
-      if (gameObject is Velocity == false) continue;
-      (gameObject as Velocity).applyForce(
-        force: 5,
-        angle: radiansV2(this, gameObject),
-      );
-    }
-
-    final node = scene.getNodeXYZ(
-      performX,
-      performY,
-      performZ,
-    );
-    if (node.isDestroyed) return;
-    if (NodeType.isDestroyable(node.type)) {
-      final z = performZ ~/ tileSizeHalf;
-      final row = performX ~/ tileSize;
-      final column = performY ~/ tileSize;
-      game.setNode(z, row, column, NodeType.Empty, NodeOrientation.Destroyed);
-
-      game.perform((){
-        game.setNode(z, row, column, NodeType.Respawning, NodeOrientation.None);
-      }, 300);
-
-      game.perform((){
-        game.setNode(z, row, column, node.type, node.orientation);
-      }, 400);
-    }
-  }
-
   void faceMouse(){
     faceXY(mouseGridX, mouseGridY);
   }
@@ -961,7 +887,7 @@ extension PlayerProperties on Player {
      weapons.forEach(writeWeapon);
   }
 
-  void writeWeapon(Weapon weapon){
+  void  writeWeapon(Weapon weapon){
     writeByte(weapon.type);
     writeInt(weapon.damage);
     writeString(weapon.uuid);

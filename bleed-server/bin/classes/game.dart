@@ -4,8 +4,10 @@ import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
 import '../common/maths.dart';
+import '../common/node_orientation.dart';
 import '../common/spawn_type.dart';
 import '../common/teams.dart';
+import '../dispatch/dispatch_game_object_destroyed.dart';
 import '../engine.dart';
 import '../functions/withinRadius.dart';
 import '../io/write_scene_to_file.dart';
@@ -94,17 +96,19 @@ abstract class Game {
 
     switch (weapon.type) {
       case AttackType.Unarmed:
-        return player.performAttackMelee(
+        return performAttackMelee(
+          player: player,
           attackType: AttackType.Unarmed,
           distance: 40,
           attackRadius: 35,
           damage: weapon.damage,
         );
       case AttackType.Blade:
-        return player.performAttackMelee(
-          attackType: AttackType.Blade,
-          distance: 40,
-          attackRadius: 35,
+        return performAttackMelee(
+          player: player,
+          attackType: weapon.type,
+          distance: weapon.range,
+          attackRadius: 35, /// TODO read value from weapon
           damage: weapon.damage,
         );
       case AttackType.Crossbow:
@@ -140,15 +144,104 @@ abstract class Game {
           angle: player.mouseAngle,
         );
       case AttackType.Crowbar:
-
-        return player.performAttackMelee(
-          attackType: AttackType.Blade,
-          distance: 40,
-          attackRadius: 35,
+        return performAttackMelee(
+          player: player,
+          attackType: weapon.type,
+          distance: weapon.range,
+          attackRadius: 35, /// TODO read value from weapon
           damage: weapon.damage,
         );
       case AttackType.Bow:
         return player.performAttackTypeBow();
+    }
+  }
+
+  void performAttackMelee({
+    required Player player,
+    required int attackType,
+    required double distance,
+    required double attackRadius,
+    required int damage,
+  }) {
+    final angle = player. mouseAngle;
+    final adj = getAdjacent(angle, distance);
+    final opp = getOpposite(angle, distance);
+
+
+    final performX = player.x + adj;
+    final performY = player.y + opp;
+    final performZ = player.z;
+
+    player.performX = performX;
+    player.performY = performY;
+    player.performZ = performZ;
+    player.performDuration = 20;
+
+    /// TODO name arguments
+    dispatchAttackPerformed(
+        attackType,
+        performX,
+        performY,
+        performZ,
+        angle,
+    );
+
+    if (player.idling) {
+      player.faceMouse();
+    }
+
+    for (final character in characters) {
+      if (onSameTeam(player, character)) continue;
+      if (character.distanceFromXYZ(
+        performX, performY, performZ,
+      ) > attackRadius) continue;
+      applyHit(src: this, target: character, damage: damage);
+    }
+
+    for (final gameObject in gameObjects) {
+      if (gameObject.distanceFromXYZ(
+        performX,
+        performY,
+        performZ,
+      ) >
+          attackRadius) continue;
+
+      if (gameObject is GameObjectStatic) {
+        if (!gameObject.active) continue;
+        if (gameObject.type == GameObjectType.Barrel) {
+          gameObject.active = false;
+          gameObject.collidable = false;
+          gameObject.respawn = 200;
+          /// TODO why is this external>
+          dispatchGameObjectDestroyed(players, gameObject);
+        }
+      }
+      if (gameObject is Velocity == false) continue;
+      (gameObject as Velocity).applyForce(
+        force: 5,
+        angle: radiansV2(player, gameObject),
+      );
+    }
+
+    final node = scene.getNodeXYZ(
+      performX,
+      performY,
+      performZ,
+    );
+    if (node.isDestroyed) return;
+    if (NodeType.isDestroyable(node.type)) {
+      final z = performZ ~/ tileSizeHalf;
+      final row = performX ~/ tileSize;
+      final column = performY ~/ tileSize;
+      setNode(z, row, column, NodeType.Empty, NodeOrientation.Destroyed);
+
+      perform((){
+        setNode(z, row, column, NodeType.Respawning, NodeOrientation.None);
+      }, 300);
+
+      perform((){
+        setNode(z, row, column, node.type, node.orientation);
+      }, 400);
     }
   }
 
