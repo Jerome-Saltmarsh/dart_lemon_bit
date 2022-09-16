@@ -59,7 +59,8 @@ class Player extends Character with ByteWriter {
   var storeItems = <Weapon>[];
 
   var weaponSlot1 = buildWeaponHandgun();
-  var weaponSlot2 = buildWeaponShotgun();
+  var weaponSlot2 = buildWeaponBow();
+  // var weaponSlot2 = buildWeaponShotgun();
   var weaponSlot3 = buildWeaponBlade();
 
   // Ability Slots Q and E
@@ -114,16 +115,6 @@ class Player extends Character with ByteWriter {
 
   void faceMouse(){
     faceXY(mouseGridX, mouseGridY);
-  }
-
-  void performAttackTypeTeleport(){
-    performDuration = 10;
-    x = mouseGridX;
-    y = mouseGridY;
-  }
-
-  void performAttackTypeBow(){
-    game.fireArrow(this, mouseAngle);
   }
 
   void performAttackTypeFireball(){

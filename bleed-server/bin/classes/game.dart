@@ -117,7 +117,7 @@ abstract class Game {
             angle: player.mouseAngle,
         );
       case AttackType.Teleport:
-        return player.performAttackTypeTeleport();
+        return playerTeleportToMouse(player);
       case AttackType.Handgun:
         return characterFireWeapon(
           character: player,
@@ -155,8 +155,24 @@ abstract class Game {
           damage: weapon.damage,
         );
       case AttackType.Bow:
-        return player.performAttackTypeBow();
+        characterFireArrow(
+            player,
+            damage: weapon.damage,
+            range: weapon.range,
+            angle: player.mouseAngle,
+        );
+        break;
+        // return player.performAttackTypeBow();
     }
+  }
+
+  void playerTeleportToMouse(Player player){
+    positionToPlayerMouse(player, player);
+  }
+
+  void positionToPlayerMouse(Position position, Player player){
+    position.x = player.mouseGridX;
+    position.y = player.mouseGridY;
   }
 
   void playerSpawnProjectileArrow({
@@ -1503,18 +1519,18 @@ abstract class Game {
     dispatchAttackPerformed(AttackType.Assault_Rifle, src.x, src.y, src.z, angle);
   }
 
-  void fireArrow(Character src, double angle) {
-    spawnProjectile(
-      src: src,
-      accuracy: 0,
-      angle: angle,
-      speed: 5.0,
-      range: 300,
-      projectileType: ProjectileType.Arrow,
-      damage: 5,
-    );
-    dispatchAttackPerformed(AttackType.Bow, src.x, src.y, src.z, angle);
-  }
+  // void fireArrow(Character src, double angle) {
+  //   spawnProjectile(
+  //     src: src,
+  //     accuracy: 0,
+  //     angle: angle,
+  //     speed: 5.0,
+  //     range: 300,
+  //     projectileType: ProjectileType.Arrow,
+  //     damage: 5,
+  //   );
+  //   dispatchAttackPerformed(AttackType.Bow, src.x, src.y, src.z, angle);
+  // }
 
   void fireRifle(Character src, double angle) {
     spawnProjectile(
