@@ -859,7 +859,7 @@ class Connection {
 
     if (player == null) return errorPlayerNotFound();
     player.framesSinceClientRequest = 0;
-    if (!player.sceneDownloaded) return;
+    // if (!player.sceneDownloaded) return;
 
     final game = player.game;
     final direction = args[1];
@@ -877,6 +877,7 @@ class Connection {
     player.mouse.y = mouseY;
 
     if (player.deadOrBusy) return;
+      /// TODO Illegal code position
       player.aimTarget = game.getClosestCollider(
         player.mouseGridX,
         player.mouseGridY,
