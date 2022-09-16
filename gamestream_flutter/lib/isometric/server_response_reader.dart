@@ -6,7 +6,6 @@ import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/quest.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
-import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/collectables.dart';
@@ -125,9 +124,6 @@ class ServerResponseReader with ByteReader {
           break;
         case ServerResponse.Grid:
           readGrid();
-          break;
-        case ServerResponse.Card_Choices:
-          readCardChoices();
           break;
         case ServerResponse.Game_Status:
           readGameStatus();
@@ -519,14 +515,6 @@ class ServerResponseReader with ByteReader {
     core.state.status.value = gameStatuses[readByte()];
   }
 
-  void readCardChoices() {
-    player.cardChoices.value = readCardTypes();
-  }
-
-  void readPlayerDeck() {
-    player.deck.value = readDeck();
-  }
-
   void readGrid() {
     gridTotalZ = readInt();
     gridTotalRows = readInt();
@@ -792,17 +780,6 @@ class ServerResponseReader with ByteReader {
     final cards = <CardType>[];
     for (var i = 0; i < numberOfCards; i++) {
       cards.add(cardTypes[readByte()]);
-    }
-    return cards;
-  }
-
-  List<DeckCard> readDeck(){
-    final numberOfCards = readByte();
-    final cards = <DeckCard>[];
-    for (var i = 0; i < numberOfCards; i++) {
-      final type = readByte();
-      final level = readByte();
-      cards.add(DeckCard(cardTypes[type], level));
     }
     return cards;
   }

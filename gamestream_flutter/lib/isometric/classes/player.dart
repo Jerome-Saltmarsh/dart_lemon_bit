@@ -1,13 +1,10 @@
-import 'package:bleed_common/attack_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/quest.dart';
-import 'package:gamestream_flutter/isometric/classes/deck_card.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_game_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_map_x.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_alive.dart';
-import 'package:gamestream_flutter/isometric/events/on_changed_player_attack_type.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_designed.dart';
 import 'package:gamestream_flutter/isometric/events/on_quests_in_progress_changed.dart';
 import 'package:lemon_watch/watch.dart';
@@ -63,11 +60,6 @@ class Player extends Vector3 {
   final levelAxe = Watch(0);
   final levelHammer = Watch(0);
   final levelBag = Watch(0);
-  final cardChoices = Watch<List<CardType>>([]);
-  final deck = Watch<List<DeckCard>>([]);
-  final deckActiveCardIndex = Watch(-1);
-  final deckActiveCardRange = Watch(0.0);
-  final deckActiveCardRadius = Watch(0.0);
   final questsInProgress = Watch<List<Quest>>([], onChanged: onQuestsInProgressChanged);
   final questsCompleted = Watch<List<Quest>>([]);
 

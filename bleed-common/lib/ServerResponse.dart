@@ -24,7 +24,6 @@ class ServerResponse {
   static const Player_Attack_Target_None = 30;
   static const Waiting_For_More_Players = 31; 
   static const Player_Text = 32;
-  static const Team_Lives_Remaining = 33;
   static const Game_Type = 34;
   static const Game_Status = 35;
   static const Subscription_Required = 41;
@@ -34,7 +33,6 @@ class ServerResponse {
   static const Gem_Spawns = 46;
   static const End = 47;
   static const Damage_Applied = 50;
-  static const Card_Choices = 55;
   static const Player_Spawned = 60;
   static const Player_Target = 61;
   static const Grid = 62;

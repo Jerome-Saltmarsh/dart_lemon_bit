@@ -43,7 +43,6 @@ class GameRender {
   }
 
   void renderGame(Canvas canvas, Size size) {
-    drawAbility();
     attackTargetCircle();
     renderSprites();
     renderEditMode();
@@ -176,26 +175,6 @@ class GameRender {
     // final shade = isometric.getShadeAtPosition(x, y);
     // if (shade >= Shade.Very_Dark) return;
     // drawCircle36(x, y);
-  }
-
-  void drawAbility() {
-    if (player.deckActiveCardIndex.value == -1) return;
-
-    engine.draw.drawCircleOutline(
-      sides: 24,
-      radius: player.deckActiveCardRange.value,
-      x: player.x,
-      y: player.y,
-      color: Colors.white,
-    );
-
-    engine.draw.drawCircleOutline(
-      sides: 24,
-      radius: player.deckActiveCardRadius.value,
-      x: player.abilityTarget.x,
-      y: player.abilityTarget.y,
-      color: Colors.white,
-    );
   }
 
   void _renderPlayerNames() {
