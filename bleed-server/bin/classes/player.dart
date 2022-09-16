@@ -24,10 +24,8 @@ class Player extends Character with ByteWriter {
 
   final mouse = Vector2(0, 0);
   final runTarget = Position3();
-
-  double get mouseGridX => (mouse.x + mouse.y) + z;
-  double get mouseGridY => (mouse.y - mouse.x) + z;
-
+  late Function sendBufferToClient;
+  late Function(GameError error, {String message}) dispatchError;
   GameObject? editorSelectedGameObject;
   var debug = false;
   var characterState = CharacterState.Idle;
@@ -71,6 +69,10 @@ class Player extends Character with ByteWriter {
 
   var mapX = 0;
   var mapY = 0;
+
+
+  double get mouseGridX => (mouse.x + mouse.y) + z;
+  double get mouseGridY => (mouse.y - mouse.x) + z;
 
   int get experience => _experience;
 
@@ -185,9 +187,6 @@ class Player extends Character with ByteWriter {
     return deck.where((card) => card == type).length;
   }
 
-  late Function sendBufferToClient;
-  late Function(GameError error, {String message}) dispatchError;
-
   double get mouseAngle => getAngleBetween(mouseGridX, mouseGridY, x, y);
 
   Scene get scene => game.scene;
@@ -235,19 +234,6 @@ class Player extends Character with ByteWriter {
     debug = !debug;
     writeByte(ServerResponse.Debug_Mode);
     writeBool(debug);
-  }
-
-  void changeGame(Game to){
-    if (game == to) return;
-    game.removePlayer(this);
-    for (final character in game.characters) {
-      if (character.target != this) continue;
-      character.clearTarget();
-    }
-    to.players.add(this);
-    to.characters.add(this);
-    sceneDownloaded = false;
-    game = to;
   }
 
   @override

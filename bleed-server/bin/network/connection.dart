@@ -349,11 +349,11 @@ class Connection {
 
         switch (scene) {
           case TeleportScenes.Village:
-            player.changeGame(engine.findGameDarkAgeFarm());
+            game.changeGame(player, engine.findGameDarkAgeFarm());
             movePlayerToCrystal(player);
             break;
           case TeleportScenes.Dungeon_1:
-            player.changeGame(engine.findGameDarkAgeDungeon1());
+            game.changeGame(player, engine.findGameDarkAgeDungeon1());
             movePlayerToCrystal(player);
             break;
           default:

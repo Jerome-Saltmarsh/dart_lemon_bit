@@ -122,6 +122,19 @@ abstract class Game {
     }
   }
 
+  void changeGame(Player player, Game to){
+    if (this == to) return;
+    removePlayer(player);
+    for (final character in characters) {
+      if (character.target != this) continue;
+      character.clearTarget();
+    }
+    to.players.add(player);
+    to.characters.add(player);
+    player.sceneDownloaded = false;
+    player.game = to;
+  }
+
   void playerUpdateAimTarget(Player player){
     player.aimTarget = getClosestCollider(
       player.mouseGridX,
