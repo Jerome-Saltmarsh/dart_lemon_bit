@@ -14,14 +14,15 @@ Widget buildButtonWeapon(Weapon weapon, int activeWeaponType) {
   final weaponTypeAtlasImage = mapAttackTypeToAtlasSrc[weapon.type] ?? unknown;
 
   return onPressed(
-    action: () => sendClientRequestPlayerEquipAttackType1(weapon.uuid),
+    // action: () => sendClientRequestPlayerEquipAttackType1(weapon.uuid),
     child: Container(
       width: 100,
       height: 75,
       child: Column(
         children: [
           buildCanvasImageButton(
-            action: () => sendClientRequestPlayerEquipAttackType1(weapon.uuid),
+            // action: () => sendClientRequestPlayerEquipAttackType1(weapon.uuid),
+            action: () => {},
             srcX: weaponTypeAtlasImage.srcX,
             srcY: weaponTypeAtlasImage.srcY,
             srcWidth: weaponTypeAtlasImage.width,

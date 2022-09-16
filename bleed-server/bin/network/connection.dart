@@ -276,30 +276,6 @@ class Connection {
         reply('scene: $scene');
         break;
 
-      case ClientRequest.Player_Equip_Attack_Type_1:
-        if (player.deadOrBusy) return;
-        if (player.performing) return;
-        if (arguments.length < 2)
-          return errorInsufficientArgs(2, arguments);
-        final weaponUuid = arguments[1];
-        final weapon = player.getWeaponByUuid(weaponUuid);
-        if (weapon == null) {
-          return;
-        }
-        player.weapon = weapon;
-        break;
-
-      case ClientRequest.Player_Equip_Attack_Type_2:
-        // final weaponTypeIndex = int.tryParse(arguments[1]);
-        // if (weaponTypeIndex == null)
-        //   return errorInvalidArg("weapon type index is null");
-        // if (player.attackType2 == weaponTypeIndex) return;
-        // player.game.dispatchAttackTypeEquipped(
-        //    weaponTypeIndex, player.x, player.y, player.z, 0,
-        // );
-        // player.attackType2 = weaponTypeIndex;
-        break;
-
       case ClientRequest.Spawn_Node_Data:
         if (arguments.length < 4){
           return errorInvalidArg('expected 4 args');

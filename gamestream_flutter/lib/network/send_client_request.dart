@@ -228,14 +228,6 @@ void sendGameObjectRequestSetSpawnRadius(double value) {
   sendGameObjectRequest(GameObjectRequest.Set_Spawn_Radius, value);
 }
 
-void sendClientRequestPlayerEquipAttackType1(String weaponUuid){
-  sendClientRequest(ClientRequest.Player_Equip_Attack_Type_1, weaponUuid);
-}
-
-void sendClientRequestPlayerEquipAttackType2(int weaponType){
-  sendClientRequest(ClientRequest.Player_Equip_Attack_Type_2, weaponType);
-}
-
 void sendClientRequestSpawnNodeDataModify({
   required int z,
   required int row,

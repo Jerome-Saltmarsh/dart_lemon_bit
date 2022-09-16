@@ -31,8 +31,6 @@ enum ClientRequest {
   GameObject,
   Node,
   Editor_Load_Scene,
-  Player_Equip_Attack_Type_1,
-  Player_Equip_Attack_Type_2,
   Teleport_Scene,
   Spawn_Node_Data,
   Spawn_Node_Data_Modify,
