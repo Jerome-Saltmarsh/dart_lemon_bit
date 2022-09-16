@@ -7,14 +7,11 @@ import 'package:lemon_math/library.dart';
 import '../common/character_type.dart';
 import '../common/flag.dart';
 import '../common/library.dart';
-import '../common/node_orientation.dart';
 import '../common/quest.dart';
 import '../convert/convert_card_type_to_card.dart';
 import '../dark_age/areas/dark_age_area.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
-import '../dispatch/dispatch_game_object_destroyed.dart';
-import '../maths.dart';
 import '../utilities.dart';
 import 'gameobject.dart';
 import 'library.dart';
@@ -52,26 +49,15 @@ class Player extends Character with ByteWriter {
   Game game;
   Collider? aimTarget; // the currently highlighted character
   Account? account;
-  // var attackType1 = AttackType.Blade;
-  // var attackType2 = AttackType.Handgun;
 
   final weapons = <Weapon>[];
   var storeItems = <Weapon>[];
 
   var weaponSlot1 = buildWeaponHandgun();
-  var weaponSlot2 = buildWeaponBow();
+  // var weaponSlot2 = buildWeaponBow();
   // var weaponSlot2 = buildWeaponShotgun();
+  var weaponSlot2 = buildWeaponFireball();
   var weaponSlot3 = buildWeaponBlade();
-
-  // Ability Slots Q and E
-
-  Weapon? getWeaponByUuid(String weaponUuid){
-    for (final weapon in weapons){
-      if (weapon.uuid != weaponUuid) continue;
-      return weapon;
-    }
-    return null;
-  }
 
   final cardChoices = <CardType>[];
   final deck = <Card>[];
@@ -103,22 +89,22 @@ class Player extends Character with ByteWriter {
     }
   }
 
+  Weapon? getWeaponByUuid(String weaponUuid){
+    for (final weapon in weapons){
+      if (weapon.uuid != weaponUuid) continue;
+      return weapon;
+    }
+    return null;
+  }
+
   void writePlayerEventWeaponRounds(){
     writePlayerEvent(PlayerEvent.Weapon_Rounds);
     writeInt(weapon.rounds);
     writeInt(weapon.capacity);
   }
 
-  void performAttackType2() {
-     // performAttackType(attackType2);
-  }
-
   void faceMouse(){
     faceXY(mouseGridX, mouseGridY);
-  }
-
-  void performAttackTypeFireball(){
-    game.fireFireball(this, mouseAngle);
   }
 
   void commandRun(int direction) {

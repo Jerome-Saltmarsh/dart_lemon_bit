@@ -66,6 +66,15 @@ Weapon buildWeaponHandgun() =>
       range: 200,
     );
 
+Weapon buildWeaponFireball() =>
+    Weapon(
+      type: AttackType.Fireball,
+      damage: 1,
+      capacity: 20,
+      duration: 10,
+      range: 200,
+    );
+
 Weapon buildWeaponBow() =>
    Weapon(
       type: AttackType.Bow,

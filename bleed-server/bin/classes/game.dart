@@ -139,7 +139,11 @@ abstract class Game {
           angle: player.mouseAngle,
         );
       case AttackType.Fireball:
-        return player.performAttackTypeFireball();
+        characterSpawnProjectileFireball(
+            player,
+            angle: player.mouseAngle,
+        );
+        break;
       case AttackType.Revolver:
         return characterFireWeapon(
           character: player,
@@ -1545,17 +1549,22 @@ abstract class Game {
     dispatchAttackPerformed(AttackType.Rifle, src.x, src.y, src.z, angle);
   }
 
-  void fireFireball(Character src, double angle) {
+  void characterSpawnProjectileFireball(Character character, {
+    required double angle,
+    double speed = 3.0,
+    double range = 300,
+    int damage = 5,
+  }) {
     spawnProjectile(
-      src: src,
-      accuracy: 0,
-      angle: angle,
-      speed: 3.0,
-      range: 300,
+      src: character,
       projectileType: ProjectileType.Fireball,
-      damage: 5,
+      accuracy: 0, // TODO delete accuracy
+      angle: angle,
+      speed: speed,
+      range: range,
+      damage: damage,
     );
-    dispatchAttackPerformed(AttackType.Fireball, src.x, src.y, src.z, angle);
+    dispatchAttackPerformed(AttackType.Fireball, character.x, character.y, character.z, angle);
   }
 
   void fireHandgun(Character src, double angle) {
