@@ -10,7 +10,6 @@ void actionSpawnLoot({
   required double y,
   required double z,
 }){
-  print('actionSpawnLoot()');
   game.gameObjects.add(
       GameObjectLoot(
           x: x,
