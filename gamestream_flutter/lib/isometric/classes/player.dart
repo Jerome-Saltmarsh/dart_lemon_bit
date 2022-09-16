@@ -82,6 +82,18 @@ class Player extends Vector3 {
       )
   );
 
+  final weaponSlot1Type = Watch(AttackType.Unarmed);
+  final weaponSlot1Rounds = Watch(0);
+  final weaponSlot1Capacity = Watch(0);
+
+  final weaponSlot2Type = Watch(AttackType.Unarmed);
+  final weaponSlot2Rounds = Watch(0);
+  final weaponSlot2Capacity = Watch(0);
+
+  final weaponSlot3Type = Watch(AttackType.Unarmed);
+  final weaponSlot3Rounds = Watch(0);
+  final weaponSlot3Capacity = Watch(0);
+
   // Properties
   bool get dead => !alive.value;
 

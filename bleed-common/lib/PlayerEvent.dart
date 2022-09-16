@@ -25,5 +25,7 @@ class PlayerEvent {
   static const Spawn_Started = 22;
   static const Weapon_Rounds = 23;
   static const Loot_Collected = 24;
+  static const Weapon_Slot_Type_Changed = 25;
+  static const Weapon_Slot_Rounds_Changed = 26;
 
 }

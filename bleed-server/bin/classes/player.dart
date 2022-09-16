@@ -58,9 +58,9 @@ class Player extends Character with ByteWriter {
   final weapons = <Weapon>[];
   var storeItems = <Weapon>[];
 
-  Weapon? weaponSlot1 = buildWeaponShotgun();
-  Weapon? weaponSlot2 = buildWeaponSword();
-  Weapon? weaponSlot3 = buildWeaponBow();
+  Weapon weaponSlot1 = buildWeaponShotgun();
+  Weapon weaponSlot2 = buildWeaponSword();
+  Weapon weaponSlot3 = buildWeaponBow();
 
   // Ability Slots Q and E
 
@@ -583,6 +583,8 @@ extension PlayerProperties on Player {
     writeByte(level);
     writeAngle(mouseAngle);
 
+
+    writePlayerSlots();
     writeAttackTarget();
     writeProjectiles();
     writePlayerTarget();
@@ -1012,7 +1014,24 @@ extension PlayerProperties on Player {
       writeInt(selectedGameObject.spawnRadius);
     }
   }
+
+  void writePlayerSlots() {
+    writeByte(ServerResponse.Player_Slots);
+
+    writeByte(weaponSlot1.type);
+    writeInt(weaponSlot1.rounds);
+    writeInt(weaponSlot1.capacity);
+
+    writeByte(weaponSlot2.type);
+    writeInt(weaponSlot2.rounds);
+    writeInt(weaponSlot2.capacity);
+
+    writeByte(weaponSlot3.type);
+    writeInt(weaponSlot3.rounds);
+    writeInt(weaponSlot3.capacity);
+  }
 }
+
 
 int getExperienceForLevel(int level){
   return (((level - 1) * (level - 1))) * 6;
