@@ -172,17 +172,17 @@ class ServerResponseReader with ByteReader {
           readPlayer();
           break;
         case ServerResponse.Player_Slots:
-          player.weaponSlot1Type.value = readByte();
-          player.weaponSlot1Rounds.value = readInt();
-          player.weaponSlot1Capacity.value = readInt();
+          player.weaponSlot1.attackType.value = readByte();
+          player.weaponSlot1.capacity.value = readInt();
+          player.weaponSlot1.rounds.value = readInt();
 
-          player.weaponSlot2Type.value = readByte();
-          player.weaponSlot2Rounds.value = readInt();
-          player.weaponSlot2Capacity.value = readInt();
+          player.weaponSlot2.attackType.value = readByte();
+          player.weaponSlot2.capacity.value = readInt();
+          player.weaponSlot2.rounds.value = readInt();
 
-          player.weaponSlot3Type.value = readByte();
-          player.weaponSlot3Rounds.value = readInt();
-          player.weaponSlot3Capacity.value = readInt();
+          player.weaponSlot3.attackType.value = readByte();
+          player.weaponSlot3.capacity.value = readInt();
+          player.weaponSlot3.rounds.value = readInt();
           break;
         case ServerResponse.Player_Spawned:
           readPlayerSpawned();

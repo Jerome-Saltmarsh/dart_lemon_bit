@@ -11,11 +11,11 @@ Widget buildControlsPlayerWeapons() => Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          buildButtonAttackType(player.weaponSlot1Type.value),
+          buildWidgetAttackSlot(player.weaponSlot1),
           width6,
-          buildButtonAttackType(player.weaponSlot2Type.value),
+          buildWidgetAttackSlot(player.weaponSlot2),
           width6,
-          buildButtonAttackType(player.weaponSlot3Type.value),
+          buildWidgetAttackSlot(player.weaponSlot3),
         ],
       ),
     );

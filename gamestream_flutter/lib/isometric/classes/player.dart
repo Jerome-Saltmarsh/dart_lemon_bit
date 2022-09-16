@@ -82,20 +82,19 @@ class Player extends Vector3 {
       )
   );
 
-  final weaponSlot1Type = Watch(AttackType.Unarmed);
-  final weaponSlot1Rounds = Watch(0);
-  final weaponSlot1Capacity = Watch(0);
-
-  final weaponSlot2Type = Watch(AttackType.Unarmed);
-  final weaponSlot2Rounds = Watch(0);
-  final weaponSlot2Capacity = Watch(0);
-
-  final weaponSlot3Type = Watch(AttackType.Unarmed);
-  final weaponSlot3Rounds = Watch(0);
-  final weaponSlot3Capacity = Watch(0);
+  final weaponSlot1 = AttackSlot();
+  final weaponSlot2 = AttackSlot();
+  final weaponSlot3 = AttackSlot();
 
   // Properties
   bool get dead => !alive.value;
 
   double get weaponRoundPercentage => weaponCapacity.value == 0 ? 0 : weaponRounds.value / weaponCapacity.value;
+}
+
+
+class AttackSlot {
+  final attackType = Watch(AttackType.Unarmed);
+  final capacity = Watch(0);
+  final rounds = Watch(0);
 }

@@ -1019,16 +1019,16 @@ extension PlayerProperties on Player {
     writeByte(ServerResponse.Player_Slots);
 
     writeByte(weaponSlot1.type);
-    writeInt(weaponSlot1.rounds);
     writeInt(weaponSlot1.capacity);
+    writeInt(weaponSlot1.rounds);
 
     writeByte(weaponSlot2.type);
-    writeInt(weaponSlot2.rounds);
     writeInt(weaponSlot2.capacity);
+    writeInt(weaponSlot2.rounds);
 
     writeByte(weaponSlot3.type);
-    writeInt(weaponSlot3.rounds);
     writeInt(weaponSlot3.capacity);
+    writeInt(weaponSlot3.rounds);
   }
 }
 
