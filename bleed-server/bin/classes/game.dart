@@ -2088,5 +2088,16 @@ abstract class Game {
     }
     return atan2(adjacent, opposite);
   }
+
+  void playerDeleteEditorSelectedGameObject(Player player){
+    removeInstance(player.editorSelectedGameObject);
+    playerDeselectEditorSelectedGameObject(player);
+  }
+
+  void playerDeselectEditorSelectedGameObject(Player player){
+    if (player.editorSelectedGameObject == null) return;
+    player.editorSelectedGameObject = null;
+    player.writePlayerEvent(PlayerEvent.GameObject_Deselected);
+  }
 }
 

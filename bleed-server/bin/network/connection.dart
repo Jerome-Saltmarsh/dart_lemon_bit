@@ -733,7 +733,7 @@ class Connection {
         break;
 
       case GameObjectRequest.Deselect:
-        player.deselectSelectedGameObject();
+        player.game.playerDeselectEditorSelectedGameObject(player);
         break;
 
       case GameObjectRequest.Translate:
@@ -786,10 +786,7 @@ class Connection {
         break;
 
       case GameObjectRequest.Delete:
-        final selectedGameObject = player.editorSelectedGameObject;
-        if (selectedGameObject == null) return;
-        player.game.removeInstance(selectedGameObject);
-        player.deselectSelectedGameObject();
+        player.game.playerDeleteEditorSelectedGameObject(player);
         break;
 
       case GameObjectRequest.Set_Spawn_Amount:
