@@ -147,12 +147,6 @@ class Player extends Character with ByteWriter {
     writePlayerEvent(PlayerEvent.Quest_Started);
   }
 
-  @override
-  void onDeath(){
-    game.dispatchV3(GameEventType.Player_Death, this);
-    game.customOnPlayerDeath(this);
-  }
-
   void setInteractingNpcName(String value){
      this.npcName = value;
      writeByte(ServerResponse.Interacting_Npc_Name);

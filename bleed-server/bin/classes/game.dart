@@ -84,6 +84,51 @@ abstract class Game {
 
   /// ACTIONS
 
+  void onPlayerUpdateRequestedReceived({
+    required Player player,
+    required int direction,
+    required bool perform1,
+    required bool perform2,
+    required bool perform3,
+    required double mouseX,
+    required double mouseY,
+    required double screenLeft,
+    required double screenTop,
+    required double screenRight,
+    required double screenBottom,
+  }) {
+    player.framesSinceClientRequest = 0;
+    player.screenLeft = screenLeft;
+    player.screenTop = screenTop;
+    player.screenRight = screenRight;
+    player.screenBottom = screenBottom;
+
+    player.mouse.x = mouseX;
+    player.mouse.y = mouseY;
+
+
+    if (player.deadOrBusy) return;
+    /// TODO Illegal code position
+    player.aimTarget = getClosestCollider(
+      player.mouseGridX,
+      player.mouseGridY,
+      player,
+      minDistance: 35,
+    );
+
+    player.commandRun(direction);
+
+    if (perform1){
+      playerUseWeapon(player, player.weaponSlot1);
+    }
+    if (perform2){
+      playerUseWeapon(player, player.weaponSlot2);
+    }
+    if (perform3){
+      playerUseWeapon(player, player.weaponSlot3);
+    }
+  }
+
   void playerUseWeapon(Player player, Weapon weapon) {
     if (player.deadBusyOrPerforming) return;
 

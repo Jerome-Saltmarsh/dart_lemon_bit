@@ -858,44 +858,20 @@ class Connection {
     final player = _player;
 
     if (player == null) return errorPlayerNotFound();
-    player.framesSinceClientRequest = 0;
-    // if (!player.sceneDownloaded) return;
 
-    final game = player.game;
-    final direction = args[1];
-    final perform1 = args[2] == 1;
-    final perform2 = args[3] == 1;
-    final perform3 = args[4] == 1;
-    final mouseX = readNumberFromByteArray(args, index: 5).toDouble();
-    final mouseY = readNumberFromByteArray(args, index: 7).toDouble();
-    player.screenLeft = readNumberFromByteArray(args, index: 9).toDouble();
-    player.screenTop = readNumberFromByteArray(args, index: 11).toDouble();
-    player.screenRight = readNumberFromByteArray(args, index: 13).toDouble();
-    player.screenBottom = readNumberFromByteArray(args, index: 15).toDouble();
-
-    player.mouse.x = mouseX;
-    player.mouse.y = mouseY;
-
-    if (player.deadOrBusy) return;
-      /// TODO Illegal code position
-      player.aimTarget = game.getClosestCollider(
-        player.mouseGridX,
-        player.mouseGridY,
-        player,
-        minDistance: 35,
+    player.game.onPlayerUpdateRequestedReceived(
+      player: player,
+      direction: args[1],
+      perform1: args[2] == 1,
+      perform2: args[3] == 1,
+      perform3: args[4] == 1,
+      mouseX: readNumberFromByteArray(args, index: 5).toDouble(),
+      mouseY: readNumberFromByteArray(args, index: 7).toDouble(),
+      screenLeft: readNumberFromByteArray(args, index: 9).toDouble(),
+      screenTop: readNumberFromByteArray(args, index: 11).toDouble(),
+      screenRight: readNumberFromByteArray(args, index: 13).toDouble(),
+      screenBottom: readNumberFromByteArray(args, index: 15).toDouble(),
     );
-
-    player.commandRun(direction);
-
-    if (perform1){
-      game.playerUseWeapon(player, player.weaponSlot1);
-    }
-    if (perform2){
-      game.playerUseWeapon(player, player.weaponSlot2);
-    }
-    if (perform3){
-      game.playerUseWeapon(player, player.weaponSlot3);
-    }
   }
 
   void onGameJoined(){
