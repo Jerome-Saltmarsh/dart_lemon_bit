@@ -5,7 +5,6 @@ import 'package:bleed_common/attack_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/classes/player.dart';
-import 'package:gamestream_flutter/isometric/ui/functions/render_atlas_src.dart';
 import 'package:gamestream_flutter/isometric/ui/maps/map_attack_type_to_atlas_src.dart';
 import 'package:lemon_engine/render_single_atlas.dart';
 import 'package:lemon_engine/state/atlas.dart';
@@ -34,6 +33,7 @@ Widget buildWidgetAttackSlot(AttackSlot slot) {
             srcY: atlasSrc.srcY,
             srcWidth: atlasSrc.width,
             srcHeight: atlasSrc.height,
+            percentage: capacity <= 0 ? 1.0 : rounds / capacity,
           ),
         );
       });
@@ -41,12 +41,15 @@ Widget buildWidgetAttackSlot(AttackSlot slot) {
   });
 }
 
+final _rect = Rect.fromCenter(center: const Offset(0,0), width: 64, height: 64);
+const _pi2 = pi + pi;
+
 Widget renderAttackSlot({
   required double srcX,
   required double srcY,
   required double srcWidth,
   required double srcHeight,
-  double scale = 1.0,
+  required double percentage,
 }) =>
     Container(
       alignment: Alignment.center,
@@ -57,9 +60,7 @@ Widget renderAttackSlot({
 
             final previousColor = paint.color;
             paint.color = Colors.red;
-            canvas.drawArc(
-                Rect.fromCenter(center: Offset(0,0), width: 64, height: 64),
-                0, pi, true, paint);
+            canvas.drawArc(_rect, 0, _pi2 * percentage, true, paint);
             paint.color = previousColor;
 
             canvasRenderAtlas(
@@ -71,7 +72,7 @@ Widget renderAttackSlot({
               srcHeight: srcHeight,
               dstX: 0,
               dstY: 0,
-              scale: scale,
+              scale: 1,
             );
           }
       ),
