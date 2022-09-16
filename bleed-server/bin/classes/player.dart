@@ -102,75 +102,75 @@ class Player extends Character with ByteWriter {
     }
   }
 
-  void performAttack(Weapon? weapon) {
-    if (weapon == null) return;
-    if (deadBusyOrPerforming) return;
-
-    if (AttackType.requiresRounds(weapon.type)){
-      if (weapon.rounds == 0) return;
-      weapon.rounds--;
-      writePlayerEventWeaponRounds();
-    }
-    performDuration = weapon.duration;
-
-    switch (weapon.type) {
-      case AttackType.Unarmed:
-        return performAttackMelee(
-          attackType: AttackType.Unarmed,
-          distance: 40,
-          attackRadius: 35,
-          damage: weapon.damage,
-        );
-      case AttackType.Blade:
-        return performAttackMelee(
-          attackType: AttackType.Blade,
-          distance: 40,
-          attackRadius: 35,
-          damage: weapon.damage,
-        );
-      case AttackType.Crossbow:
-        return performAttackTypeCrossBow();
-      case AttackType.Teleport:
-        return performAttackTypeTeleport();
-      case AttackType.Handgun:
-        return game.characterFireWeapon(
-            character: this,
-            weapon: weapon,
-            angle: mouseAngle,
-        );
-      case AttackType.Shotgun:
-        return performAttackTypeShotgun();
-      case AttackType.Assault_Rifle:
-        return game.characterFireWeapon(
-          character: this,
-          weapon: weapon,
-          angle: mouseAngle,
-        );
-      case AttackType.Rifle:
-        return game.characterFireWeapon(
-          character: this,
-          weapon: weapon,
-          angle: mouseAngle,
-        );
-      case AttackType.Fireball:
-        return performAttackTypeFireball();
-      case AttackType.Revolver:
-        return game.characterFireWeapon(
-          character: this,
-          weapon: weapon,
-          angle: mouseAngle,
-        );
-      case AttackType.Crowbar:
-        return performAttackMelee(
-          attackType: AttackType.Crowbar,
-          distance: 40,
-          attackRadius: 35,
-          damage: weapon.damage,
-        );
-      case AttackType.Bow:
-        return performAttackTypeBow();
-    }
-  }
+  // void performAttack(Weapon? weapon) {
+  //   if (weapon == null) return;
+  //   if (deadBusyOrPerforming) return;
+  //
+  //   if (AttackType.requiresRounds(weapon.type)){
+  //     if (weapon.rounds == 0) return;
+  //     weapon.rounds--;
+  //     writePlayerEventWeaponRounds();
+  //   }
+  //   performDuration = weapon.duration;
+  //
+  //   switch (weapon.type) {
+  //     case AttackType.Unarmed:
+  //       return performAttackMelee(
+  //         attackType: AttackType.Unarmed,
+  //         distance: 40,
+  //         attackRadius: 35,
+  //         damage: weapon.damage,
+  //       );
+  //     case AttackType.Blade:
+  //       return performAttackMelee(
+  //         attackType: AttackType.Blade,
+  //         distance: 40,
+  //         attackRadius: 35,
+  //         damage: weapon.damage,
+  //       );
+  //     case AttackType.Crossbow:
+  //       return performAttackTypeCrossBow();
+  //     case AttackType.Teleport:
+  //       return performAttackTypeTeleport();
+  //     case AttackType.Handgun:
+  //       return game.characterFireWeapon(
+  //           character: this,
+  //           weapon: weapon,
+  //           angle: mouseAngle,
+  //       );
+  //     case AttackType.Shotgun:
+  //       return performAttackTypeShotgun();
+  //     case AttackType.Assault_Rifle:
+  //       return game.characterFireWeapon(
+  //         character: this,
+  //         weapon: weapon,
+  //         angle: mouseAngle,
+  //       );
+  //     case AttackType.Rifle:
+  //       return game.characterFireWeapon(
+  //         character: this,
+  //         weapon: weapon,
+  //         angle: mouseAngle,
+  //       );
+  //     case AttackType.Fireball:
+  //       return performAttackTypeFireball();
+  //     case AttackType.Revolver:
+  //       return game.characterFireWeapon(
+  //         character: this,
+  //         weapon: weapon,
+  //         angle: mouseAngle,
+  //       );
+  //     case AttackType.Crowbar:
+  //       return performAttackMelee(
+  //         attackType: AttackType.Crowbar,
+  //         distance: 40,
+  //         attackRadius: 35,
+  //         damage: weapon.damage,
+  //       );
+  //     case AttackType.Bow:
+  //       return performAttackTypeBow();
+  //   }
+  // }
 
   void writePlayerEventWeaponRounds(){
     writePlayerEvent(PlayerEvent.Weapon_Rounds);

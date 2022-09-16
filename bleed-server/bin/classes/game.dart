@@ -81,7 +81,76 @@ abstract class Game {
   }
 
   /// ACTIONS
-  ///
+
+  void performAttack(Player player, Weapon weapon) {
+    if (player.deadBusyOrPerforming) return;
+
+    if (AttackType.requiresRounds(weapon.type)){
+      if (weapon.rounds == 0) return;
+      weapon.rounds--;
+      player.writePlayerEventWeaponRounds();
+    }
+    player.performDuration = weapon.duration;
+
+    switch (weapon.type) {
+      case AttackType.Unarmed:
+        return player.performAttackMelee(
+          attackType: AttackType.Unarmed,
+          distance: 40,
+          attackRadius: 35,
+          damage: weapon.damage,
+        );
+      case AttackType.Blade:
+        return player.performAttackMelee(
+          attackType: AttackType.Blade,
+          distance: 40,
+          attackRadius: 35,
+          damage: weapon.damage,
+        );
+      case AttackType.Crossbow:
+        return player.performAttackTypeCrossBow();
+      case AttackType.Teleport:
+        return player.performAttackTypeTeleport();
+      case AttackType.Handgun:
+        return characterFireWeapon(
+          character: player,
+          weapon: weapon,
+          angle: player.mouseAngle,
+        );
+      case AttackType.Shotgun:
+        return player.performAttackTypeShotgun();
+      case AttackType.Assault_Rifle:
+        return characterFireWeapon(
+          character: player,
+          weapon: weapon,
+          angle: player.mouseAngle,
+        );
+      case AttackType.Rifle:
+        return characterFireWeapon(
+          character: player,
+          weapon: weapon,
+          angle: player.mouseAngle,
+        );
+      case AttackType.Fireball:
+        return player.performAttackTypeFireball();
+      case AttackType.Revolver:
+        return characterFireWeapon(
+          character: player,
+          weapon: weapon,
+          angle: player.mouseAngle,
+        );
+      case AttackType.Crowbar:
+
+        return player.performAttackMelee(
+          attackType: AttackType.Blade,
+          distance: 40,
+          attackRadius: 35,
+          damage: weapon.damage,
+        );
+      case AttackType.Bow:
+        return player.performAttackTypeBow();
+    }
+  }
 
   void characterFireWeapon({
     required Character character,
