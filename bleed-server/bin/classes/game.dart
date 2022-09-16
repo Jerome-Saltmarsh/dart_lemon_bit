@@ -96,7 +96,7 @@ abstract class Game {
 
     switch (weapon.type) {
       case AttackType.Unarmed:
-        return performAttackMelee(
+        return playerAttackMelee(
           player: player,
           attackType: AttackType.Unarmed,
           distance: 40,
@@ -104,7 +104,7 @@ abstract class Game {
           damage: weapon.damage,
         );
       case AttackType.Blade:
-        return performAttackMelee(
+        return playerAttackMelee(
           player: player,
           attackType: weapon.type,
           distance: weapon.range,
@@ -112,7 +112,10 @@ abstract class Game {
           damage: weapon.damage,
         );
       case AttackType.Crossbow:
-        return player.performAttackTypeCrossBow();
+        return playerSpawnProjectileArrow(
+            character: player,
+            angle: player.mouseAngle,
+        );
       case AttackType.Teleport:
         return player.performAttackTypeTeleport();
       case AttackType.Handgun:
@@ -122,7 +125,7 @@ abstract class Game {
           angle: player.mouseAngle,
         );
       case AttackType.Shotgun:
-        return player.performAttackTypeShotgun();
+        return performAttackTypeShotgun(player, player.mouseAngle);
       case AttackType.Assault_Rifle:
         return characterFireWeapon(
           character: player,
@@ -144,7 +147,7 @@ abstract class Game {
           angle: player.mouseAngle,
         );
       case AttackType.Crowbar:
-        return performAttackMelee(
+        return playerAttackMelee(
           player: player,
           attackType: weapon.type,
           distance: weapon.range,
@@ -156,7 +159,24 @@ abstract class Game {
     }
   }
 
-  void performAttackMelee({
+  void playerSpawnProjectileArrow({
+    required Character character,
+    required double angle,
+    int damage = 1,
+    double range = 300,
+  }) =>
+    characterFireArrow(
+        character,
+        damage: damage,
+        range: range,
+        angle: angle,
+    );
+
+  void performAttackTypeShotgun(Character character, double angle){
+    characterFireShotgun(character, angle);
+  }
+
+  void playerAttackMelee({
     required Player player,
     required int attackType,
     required double distance,
@@ -1408,7 +1428,7 @@ abstract class Game {
     );
   }
 
-  Projectile spawnProjectileArrow(
+  Projectile characterFireArrow(
       Character src, {
         required int damage,
         required double range,
@@ -1535,7 +1555,7 @@ abstract class Game {
     dispatchAttackPerformed(AttackType.Handgun, src.x, src.y, src.z, angle);
   }
 
-  void fireShotgun(Character src, double angle) {
+  void characterFireShotgun(Character src, double angle) {
     for (var i = 0; i < 5; i++) {
       spawnProjectile(
         src: src,
@@ -1871,7 +1891,7 @@ abstract class Game {
 
     if (character.equippedTypeIsBow) {
       dispatchV3(GameEventType.Release_Bow, character);
-      spawnProjectileArrow(character,
+      characterFireArrow(character,
           damage: equippedDamage,
           target: character.target,
           range: character.equippedRange);

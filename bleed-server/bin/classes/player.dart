@@ -102,76 +102,6 @@ class Player extends Character with ByteWriter {
     }
   }
 
-  // void performAttack(Weapon? weapon) {
-  //   if (weapon == null) return;
-  //   if (deadBusyOrPerforming) return;
-  //
-  //   if (AttackType.requiresRounds(weapon.type)){
-  //     if (weapon.rounds == 0) return;
-  //     weapon.rounds--;
-  //     writePlayerEventWeaponRounds();
-  //   }
-  //   performDuration = weapon.duration;
-  //
-  //   switch (weapon.type) {
-  //     case AttackType.Unarmed:
-  //       return performAttackMelee(
-  //         attackType: AttackType.Unarmed,
-  //         distance: 40,
-  //         attackRadius: 35,
-  //         damage: weapon.damage,
-  //       );
-  //     case AttackType.Blade:
-  //       return performAttackMelee(
-  //         attackType: AttackType.Blade,
-  //         distance: 40,
-  //         attackRadius: 35,
-  //         damage: weapon.damage,
-  //       );
-  //     case AttackType.Crossbow:
-  //       return performAttackTypeCrossBow();
-  //     case AttackType.Teleport:
-  //       return performAttackTypeTeleport();
-  //     case AttackType.Handgun:
-  //       return game.characterFireWeapon(
-  //           character: this,
-  //           weapon: weapon,
-  //           angle: mouseAngle,
-  //       );
-  //     case AttackType.Shotgun:
-  //       return performAttackTypeShotgun();
-  //     case AttackType.Assault_Rifle:
-  //       return game.characterFireWeapon(
-  //         character: this,
-  //         weapon: weapon,
-  //         angle: mouseAngle,
-  //       );
-  //     case AttackType.Rifle:
-  //       return game.characterFireWeapon(
-  //         character: this,
-  //         weapon: weapon,
-  //         angle: mouseAngle,
-  //       );
-  //     case AttackType.Fireball:
-  //       return performAttackTypeFireball();
-  //     case AttackType.Revolver:
-  //       return game.characterFireWeapon(
-  //         character: this,
-  //         weapon: weapon,
-  //         angle: mouseAngle,
-  //       );
-  //     case AttackType.Crowbar:
-  //       return performAttackMelee(
-  //         attackType: AttackType.Crowbar,
-  //         distance: 40,
-  //         attackRadius: 35,
-  //         damage: weapon.damage,
-  //       );
-  //     case AttackType.Bow:
-  //       return performAttackTypeBow();
-  //   }
-  // }
-
   void writePlayerEventWeaponRounds(){
     writePlayerEvent(PlayerEvent.Weapon_Rounds);
     writeInt(weapon.rounds);
@@ -182,94 +112,8 @@ class Player extends Character with ByteWriter {
      // performAttackType(attackType2);
   }
 
-  void performAttackTypeBlade() {
-    final angle = mouseAngle;
-    final distance = 30.0;
-    final adj = getAdjacent(angle, distance);
-    final opp = getOpposite(angle, distance);
-    performX = x + adj;
-    performY = y + opp;
-    performZ = z;
-
-    game.dispatchAttackPerformed(
-        AttackType.Blade,
-        performX,
-        performY,
-        performZ,
-        angle,
-    );
-
-    if (idling) {
-      faceMouse();
-    }
-
-    const attackRadius = 35.0;
-
-    for (final character in game.characters) {
-      if (onSameTeam(this, character)) continue;
-      if (character.distanceFromXYZ(
-        performX,
-        performY,
-        performZ,
-      ) >
-          attackRadius) continue;
-      game.applyHit(src: this, target: character, damage: 2);
-      return;
-    }
-
-    for (final gameObject in game.gameObjects) {
-      if (gameObject.distanceFromXYZ(
-        performX,
-        performY,
-        performZ,
-      ) >
-          attackRadius) continue;
-
-      if (gameObject is GameObjectStatic) {
-        if (!gameObject.active) continue;
-        if (gameObject.type == GameObjectType.Barrel) {
-          gameObject.active = false;
-          gameObject.collidable = false;
-          gameObject.respawn = 200;
-          dispatchGameObjectDestroyed(game.players, gameObject);
-        }
-      }
-      if (gameObject is Velocity == false) continue;
-      (gameObject as Velocity).applyForce(
-        force: 5,
-        angle: radiansV2(this, gameObject),
-      );
-      return;
-    }
-
-    final node = scene.getNodeXYZ(
-      performX,
-      performY,
-      performZ,
-    );
-    if (node.isDestroyed) return;
-    if (NodeType.isDestroyable(node.type)) {
-      final z = performZ ~/ tileSizeHalf;
-      final row = performX ~/ tileSize;
-      final column = performY ~/ tileSize;
-      game.setNode(z, row, column, NodeType.Empty, NodeOrientation.Destroyed);
-
-      game.perform((){
-        game.setNode(z, row, column, NodeType.Respawning, NodeOrientation.None);
-      }, 300);
-
-      game.perform((){
-        game.setNode(z, row, column, node.type, node.orientation);
-      }, 400);
-    }
-  }
-
   void faceMouse(){
     faceXY(mouseGridX, mouseGridY);
-  }
-
-  void performAttackTypeCrossBow(){
-    game.spawnProjectileArrow(this, damage: 1, range: 300, angle: mouseAngle);
   }
 
   void performAttackTypeTeleport(){
@@ -278,27 +122,9 @@ class Player extends Character with ByteWriter {
     y = mouseGridY;
   }
 
-  void performAttackTypeShotgun(){
-    game.fireShotgun(this, mouseAngle);
-  }
-
   void performAttackTypeBow(){
     game.fireArrow(this, mouseAngle);
   }
-
-  // void performFireWeapon(Weapon weapon){
-  //   game.spawnProjectile(
-  //     src: this,
-  //     accuracy: 0,
-  //     angle: mouseAngle,
-  //     speed: 8.0,
-  //     range: weapon.range,
-  //     projectileType: ProjectileType.Bullet,
-  //     damage: weapon.damage,
-  //   );
-  //   /// Illegal game reference
-  //   game.dispatchAttackPerformed(weapon.type, x, y, z, mouseAngle);
-  // }
 
   void performAttackTypeFireball(){
     game.fireFireball(this, mouseAngle);
