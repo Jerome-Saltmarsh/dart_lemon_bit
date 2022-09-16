@@ -1053,7 +1053,7 @@ abstract class Game {
     }
 
     if (character is AI){
-      character.customUpdateCharacter(this);
+      updateAI(character);
     }
 
     updateCharacterMovement(character);
@@ -1066,6 +1066,37 @@ abstract class Game {
     }
 
     updateCharacterState(character);
+  }
+
+  void updateAI(AI ai){
+      if (ai.deadOrBusy) return;
+
+      final target = ai.target;
+      if (target != null) {
+        if (ai.withinAttackRange(target)) {
+          return ai.attackTarget(target);
+        }
+        if ((ai.getDistance(target) < 300)) {
+          ai.destX = target.x;
+          ai.destY = target.y;
+        }
+      }
+
+      if (!ai.arrivedAtDest) {
+        ai.faceAngle = ai.getDestinationAngle();
+        return  setCharacterStateRunning(ai);
+      }
+
+      if (ai.pathIndex > 0){
+        ai.pathIndex--;
+        ai.destX = ai.pathX[ai.pathIndex];
+        ai.destY = ai.pathY[ai.pathIndex];
+        ai.faceAngle = ai.getDestinationAngle();
+        setCharacterStateRunning(ai);
+        return;
+      }
+      ai.state = CharacterState.Idle;
+      ai.applyBehaviorWander(this);
   }
 
   void updateCharacterState(Character character){

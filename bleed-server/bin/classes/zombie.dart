@@ -28,11 +28,6 @@ class Zombie extends AI {
   );
 
   @override
-  void customUpdateAI(Game game) {
-
-  }
-
-  @override
   void write(Player player) {
     player.writeZombie(this);
   }

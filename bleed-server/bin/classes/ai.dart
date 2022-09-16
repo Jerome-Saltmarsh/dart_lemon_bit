@@ -87,56 +87,8 @@ abstract class AI extends Character {
     destY = y;
   }
 
-
-  void customUpdateCharacter(Game game){
-    if (deadOrBusy) return;
-
-    final target = this.target;
-    if (target != null) {
-      if (withinAttackRange(target)) {
-        return attackTarget(target);
-      }
-      if ((getDistance(target) < 300)) {
-        destX = target.x;
-        destY = target.y;
-      }
-    }
-
-    if (!arrivedAtDest) {
-      final destAngle = getDestinationAngle();
-      final r = radius + 2;
-
-      if (!getCollisionInDirection(game: game, angle: destAngle, distance: r)){
-        faceAngle = getDestinationAngle();
-      } else
-      if (!getCollisionInDirection(game: game, angle: destAngle - piHalf, distance: r)){
-        faceAngle = destAngle - piHalf;
-      } else
-      if (!getCollisionInDirection(game: game, angle: destAngle + piHalf, distance: r)){
-        faceAngle = destAngle + piHalf;
-      }
-      return  game.setCharacterStateRunning(this);
-    }
-
-    if (pathIndex > 0){
-      pathIndex--;
-      destX = pathX[pathIndex];
-      destY = pathY[pathIndex];
-      faceAngle = getDestinationAngle();
-      game.setCharacterStateRunning(this);
-      return;
-    }
-    state = CharacterState.Idle;
-    applyBehaviorWander(game);
-    customUpdateAI(game);
-  }
-
   double getDestinationAngle(){
     return getAngleBetween(destX, destY, x, y);
-  }
-
-  void customUpdateAI(Game game){
-
   }
 
   void applyBehaviorWander(Game game){
