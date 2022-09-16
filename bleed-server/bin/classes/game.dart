@@ -75,6 +75,9 @@ abstract class Game {
   /// safe to override
   void customOnAIRespawned(AI ai){  }
 
+  /// Safe to override
+  double get minAimTargetCursorDistance => 35;
+
   /// CONSTRUCTOR
   Game(this.scene) {
     engine.onGameCreated(this); /// TODO Illegal external scope reference
@@ -100,21 +103,13 @@ abstract class Game {
     player.screenTop = screenTop;
     player.screenRight = screenRight;
     player.screenBottom = screenBottom;
-
     player.mouse.x = mouseX;
     player.mouse.y = mouseY;
 
-
     if (player.deadOrBusy) return;
-    /// TODO Illegal code position
-    player.aimTarget = getClosestCollider(
-      player.mouseGridX,
-      player.mouseGridY,
-      player,
-      minDistance: 35,
-    );
 
-    player.commandRun(direction);
+    playerUpdateAimTarget(player);
+    playerRunInDirection(player, direction);
 
     if (perform1){
       playerUseWeapon(player, player.weaponSlot1);
@@ -124,6 +119,29 @@ abstract class Game {
     }
     if (perform3){
       playerUseWeapon(player, player.weaponSlot3);
+    }
+  }
+
+  void playerUpdateAimTarget(Player player){
+    player.aimTarget = getClosestCollider(
+      player.mouseGridX,
+      player.mouseGridY,
+      player,
+      minDistance: minAimTargetCursorDistance,
+    );
+  }
+
+  void playerRunInDirection(Player player, int direction) {
+    if (direction == Direction.None){
+      player.setCharacterStateIdle();
+      return;
+    }
+    player.faceDirection = direction;
+    setCharacterStateRunning(player);
+    player.target = null;
+
+    if (player.interactingWithNpc){
+      return player.endInteraction();
     }
   }
 

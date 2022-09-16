@@ -120,15 +120,6 @@ class GameDarkAge extends Game {
   var timerReplenishAmmo = framesPerSecond * 5;
 
   @override
-  void customUpdate(){
-    updateInternal();
-  }
-
-  void updateInternal(){
-
-  }
-
-  @override
   Player spawnPlayer() {
     final player = Player(
         game: this,

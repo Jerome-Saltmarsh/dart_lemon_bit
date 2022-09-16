@@ -99,21 +99,6 @@ class Player extends Character with ByteWriter {
     faceXY(mouseGridX, mouseGridY);
   }
 
-  void commandRun(int direction) {
-    if (direction == Direction.None){
-      setCharacterStateIdle();
-      return;
-    }
-
-    faceDirection = direction;
-    game.setCharacterStateRunning(this);
-    target = null;
-
-    if (interactingWithNpc){
-      return endInteraction();
-    }
-  }
-
   void deselectSelectedGameObject(){
     if (editorSelectedGameObject == null) return;
     editorSelectedGameObject = null;
