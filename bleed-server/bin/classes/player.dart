@@ -56,9 +56,6 @@ class Player extends Character with ByteWriter {
   var weaponSlot2 = buildWeaponFireball();
   var weaponSlot3 = buildWeaponBlade();
 
-  final cardChoices = <CardType>[];
-  final deck = <Card>[];
-
   final questsInProgress = <Quest>[];
   final questsCompleted = <Quest>[];
   final flags = <Flag>[];
@@ -167,24 +164,6 @@ class Player extends Character with ByteWriter {
     runTarget.x = x;
     runTarget.y = y;
     target = runTarget;
-  }
-
-  void setCardAbility(Power value){
-    if (ability == value) return;
-    ability = value;
-    writeByte(ServerResponse.Player_Deck_Active_Ability);
-    writeByte(deck.indexOf(value));
-    writeInt(value.range);
-    writeInt(value.radius);
-  }
-
-  void clearCardAbility(){
-    ability = null;
-    writeByte(ServerResponse.Player_Deck_Active_Ability_None);
-  }
-
-  int numberOfCardsOfType(CardType type){
-    return deck.where((card) => card == type).length;
   }
 
   double get mouseAngle => getAngleBetween(mouseGridX, mouseGridY, x, y);
@@ -491,20 +470,6 @@ class Player extends Character with ByteWriter {
     writeInt(value.z);
   }
 
-  void writeCardChoices() {
-    writeByte(ServerResponse.Card_Choices);
-    writeCardTypes(cardChoices);
-  }
-
-  void writeDeck() {
-    writeByte(ServerResponse.Player_Deck);
-    writeByte(deck.length);
-    for (final card in deck) {
-      writeByte(card.type.index);
-      writeByte(card.level);
-    }
-  }
-
   void writeGrid(){
     writeByte(ServerResponse.Grid);
     final grid = game.scene.grid;
@@ -549,14 +514,6 @@ class Player extends Character with ByteWriter {
     writePositiveInt(count);
   }
 
-  Card? getCardByType(CardType type){
-    for (final card in deck) {
-      if (card.type != type) continue;
-      return card;
-    }
-    return null;
-  }
-
   void writeNodeData(NodeSpawn node){
     writeByte(ServerResponse.Node_Data);
     writeByte(node.spawnType);
@@ -564,47 +521,8 @@ class Player extends Character with ByteWriter {
     writeInt(node.spawnRadius);
   }
 
-  void addCardToDeck(CardType type){
-
-    final card = getCardByType(type);
-    if (card != null){
-      card.level++;
-    } else {
-      deck.add(convertCardTypeToCard(type));
-    }
-    writeDeck();
-    if (type == CardType.Passive_General_Max_HP_10) {
-      maxHealth += 10;
-      health += 10;
-    }
-  }
-
-  void writeCardTypes(List<CardType> values){
-    writeByte(values.length);
-    for (final card in values) {
-      writeByte(card.index);
-    }
-  }
-
   int getDamage(){
     return 5;
-  }
-
-  void writeDeckCooldown(){
-    writeByte(ServerResponse.Player_Deck_Cooldown);
-    writeByte(deck.length);
-    for (final card in deck) {
-      if (card is Power){
-        if (card.cooldownRemaining > 0){
-          card.cooldownRemaining--;
-        }
-        writeByte(card.cooldownRemaining);
-        writeByte(card.cooldown);
-      } else {
-        writeByte(0);
-        writeByte(0);
-      }
-    }
   }
 
   void writePlayerWeapons(){

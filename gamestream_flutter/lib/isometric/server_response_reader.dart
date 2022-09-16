@@ -123,20 +123,8 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Player_Events:
           readPlayerEvents();
           break;
-        case ServerResponse.Player_Deck_Cooldown:
-          readPlayerDeckCooldown();
-          break;
-        case ServerResponse.Player_Deck:
-          readPlayerDeck();
-          break;
         case ServerResponse.Grid:
           readGrid();
-          break;
-        case ServerResponse.Player_Deck_Active_Ability:
-          readPlayerDeckActiveAbility();
-          break;
-        case ServerResponse.Player_Deck_Active_Ability_None:
-          readPlayerDeckActiveAbilityNone();
           break;
         case ServerResponse.Card_Choices:
           readCardChoices();
@@ -535,30 +523,8 @@ class ServerResponseReader with ByteReader {
     player.cardChoices.value = readCardTypes();
   }
 
-  void readPlayerDeckActiveAbilityNone() {
-    player.deckActiveCardIndex.value = -1;
-    engine.cursorType.value = CursorType.Basic;
-  }
-
-  void readPlayerDeckActiveAbility() {
-    player.deckActiveCardIndex.value = readByte();
-    player.deckActiveCardRange.value = readDouble();
-    player.deckActiveCardRadius.value = readDouble();
-    engine.cursorType.value = CursorType.Click;
-  }
-
   void readPlayerDeck() {
     player.deck.value = readDeck();
-  }
-
-  void readPlayerDeckCooldown() {
-    final length = readByte();
-    assert (length == player.deck.value.length);
-    for (var i = 0; i < length; i++){
-        final card = player.deck.value[i];
-        card.cooldownRemaining.value = readByte();
-        card.cooldown.value = readByte();
-    }
   }
 
   void readGrid() {

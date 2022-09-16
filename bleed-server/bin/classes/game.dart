@@ -547,12 +547,6 @@ abstract class Game {
 
   void onPlayerSelectCharacterType(Player player, CharacterSelection value) {}
 
-  void playersWriteDeckCooldown() {
-    for (final player in players) {
-      player.writeDeckCooldown();
-    }
-  }
-
   void playersWriteWeather() {
     for (final player in players) {
       player.writeWeather();

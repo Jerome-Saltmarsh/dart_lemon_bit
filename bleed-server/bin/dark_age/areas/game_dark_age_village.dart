@@ -6,50 +6,9 @@ import '../../common/map_tiles.dart';
 import '../../common/quest.dart';
 import '../dark_age_scenes.dart';
 import '../on_interaction/on_interact_with_jenkins.dart';
-import '../on_interaction/on_interact_with_julia.dart';
 import 'dark_age_area.dart';
 
 class GameDarkAgeVillage extends DarkAgeArea {
-
-  void onInteractWithGarry(Player player){
-    player.writePlayerEvent(PlayerEvent.Hello_Male_01);
-
-    if (player.questToDo(Quest.Garry_Kill_Farm_Zombies)){
-      return player.interact(
-          message: "Zombies keep on trampling all over my crops and destroying them. Would you be able to deal with them for me? I can lend you a weapon.",
-          responses: {
-            "Staff": () {
-              player.beginQuest(Quest.Garry_Kill_Farm_Zombies);
-              setCharacterStateChanging(player);
-              player.weapon = buildWeaponStaff();
-              player.endInteraction();
-            },
-            "Sword": () {
-              player.beginQuest(Quest.Garry_Kill_Farm_Zombies);
-              setCharacterStateChanging(player);
-              player.weapon = buildWeaponBlade();
-              player.endInteraction();
-            },
-            "Bow": () {
-              player.beginQuest(Quest.Garry_Kill_Farm_Zombies);
-              setCharacterStateChanging(player);
-              player.weapon = buildWeaponBow();
-              player.endInteraction();
-            },
-            "I can't right now": player.endInteraction,
-          }
-      );
-    }
-
-    if (player.questInProgress(Quest.Garry_Return_To_Garry)){
-      player.completeQuest(Quest.Garry_Return_To_Garry);
-      return player.interact(message: "Thank you for killing all those zombies, here is your reward");
-
-    }
-
-    return player.interact(message: "Thanks for clearing out those zombies for me");
-
-  }
 
   GameDarkAgeVillage() : super(darkAgeScenes.village, mapTile: MapTiles.Village) {
     addNpc(
@@ -156,4 +115,69 @@ class GameDarkAgeVillage extends DarkAgeArea {
         }
     );
   }
+
+
+  void onInteractWithGarry(Player player){
+    player.writePlayerEvent(PlayerEvent.Hello_Male_01);
+
+    if (player.questToDo(Quest.Garry_Kill_Farm_Zombies)){
+      return player.interact(
+          message: "Zombies keep on trampling all over my crops and destroying them. Would you be able to deal with them for me? I can lend you a weapon.",
+          responses: {
+            "Staff": () {
+              player.beginQuest(Quest.Garry_Kill_Farm_Zombies);
+              setCharacterStateChanging(player);
+              player.weapon = buildWeaponStaff();
+              player.endInteraction();
+            },
+            "Sword": () {
+              player.beginQuest(Quest.Garry_Kill_Farm_Zombies);
+              setCharacterStateChanging(player);
+              player.weapon = buildWeaponBlade();
+              player.endInteraction();
+            },
+            "Bow": () {
+              player.beginQuest(Quest.Garry_Kill_Farm_Zombies);
+              setCharacterStateChanging(player);
+              player.weapon = buildWeaponBow();
+              player.endInteraction();
+            },
+            "I can't right now": player.endInteraction,
+          }
+      );
+    }
+
+    if (player.questInProgress(Quest.Garry_Return_To_Garry)){
+      player.completeQuest(Quest.Garry_Return_To_Garry);
+      return player.interact(message: "Thank you for killing all those zombies, here is your reward");
+
+    }
+
+    return player.interact(message: "Thanks for clearing out those zombies for me");
+
+  }
+
+  void onInteractWithJenkins(Player player) {
+
+    if (player.questToDo(Quest.Jenkins_Retrieve_Stolen_Scroll))
+      return toDoJenkinsRetrieveStolenScroll(player);
+
+    if (player.questInProgress(Quest.Jenkins_Retrieve_Stolen_Scroll))
+      return inProgressJenkinsRetrieveStolenScroll(player);
+
+    if (player.questInProgress(Quest.Jenkins_Return_Stole_Scroll_To_Jenkins)) {
+      player.completeQuest(Quest.Jenkins_Return_Stole_Scroll_To_Jenkins);
+      player.beginQuest(Quest.Jenkins_Deliver_Scroll_To_College);
+      return player.interact(
+        message: "Fantastic you have recovered the scroll! I have another favour to ask of you. That scroll needs to be delivered to the College is Westhorn, considering you capabilities would you be so kind as to deliver it for me?",
+      );
+    }
+
+
+    if (player.questInProgress(Quest.Jenkins_Deliver_Scroll_To_College))
+      return inProgressJenkinsDeliverScroll(player);
+
+    return interactionJenkinsAllQuestsCompleted(player);
+  }
+
 }

@@ -99,7 +99,7 @@ Weapon buildWeaponBlade() =>
       type: AttackType.Blade,
       damage: 3,
       duration: 20,
-      range: 100,
+      range: 60,
     );
 
 Weapon buildWeaponUnarmed({int damage = 1}) =>

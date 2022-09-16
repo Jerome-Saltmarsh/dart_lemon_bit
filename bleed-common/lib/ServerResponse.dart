@@ -35,10 +35,6 @@ class ServerResponse {
   static const End = 47;
   static const Damage_Applied = 50;
   static const Card_Choices = 55;
-  static const Player_Deck = 56;
-  static const Player_Deck_Active_Ability = 57;
-  static const Player_Deck_Active_Ability_None = 58;
-  static const Player_Deck_Cooldown = 59;
   static const Player_Spawned = 60;
   static const Player_Target = 61;
   static const Grid = 62;
