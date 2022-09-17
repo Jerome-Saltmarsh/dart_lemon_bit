@@ -24,7 +24,6 @@ class Player extends Character with ByteWriter {
   final mouse = Vector2(0, 0);
   final runTarget = Position3();
   late Function sendBufferToClient;
-  late Function(GameError error, {String message}) dispatchError;
   GameObject? editorSelectedGameObject;
   var debug = false;
   var characterState = CharacterState.Idle;
@@ -32,7 +31,7 @@ class Player extends Character with ByteWriter {
   var textDuration = 0;
   var _experience = 0;
   var level = 1;
-  var skillPoints = 0;
+  var points = 0;
   var _magic = 0;
   var maxMagic = 100;
   var message = "";
@@ -81,7 +80,7 @@ class Player extends Character with ByteWriter {
     while (value >= experienceRequiredForNextLevel) {
       value -= experienceRequiredForNextLevel;
       level++;
-      skillPoints++;
+      points++;
       game.customOnPlayerLevelGained(this);
     }
   }

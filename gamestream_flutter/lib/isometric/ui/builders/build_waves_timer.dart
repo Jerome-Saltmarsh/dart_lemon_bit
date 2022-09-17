@@ -9,13 +9,21 @@ Widget buildWavesTimer(int timer) {
   return Column(
     children: [
       text('NEXT WAVE: $timer'),
-      text("Assault Rifle", onPressed: (){
+      text("Assault Rifle", onPressed: () {
         sendClientRequestPurchaseWeapon(
           AttackType.Assault_Rifle,
         );
       }),
-      text("Handgun"),
-      text("Sword"),
+      text("Handgun", onPressed: () {
+        sendClientRequestPurchaseWeapon(
+          AttackType.Handgun,
+        );
+      }),
+      text("Sword", onPressed: () {
+        sendClientRequestPurchaseWeapon(
+          AttackType.Blade,
+        );
+      }),
     ],
   );
 }

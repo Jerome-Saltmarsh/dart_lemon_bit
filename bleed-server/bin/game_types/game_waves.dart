@@ -68,22 +68,10 @@ class GameWaves extends Game {
   }
 
   @override
-  void customOnCollisionBetweenColliders(Collider a, Collider b) {
-    if (a is Player && b is GameObjectLoot) {
-      return onCollisionBetweenPlayerAndGameObjectLoot(a, b);
-    }
-    if (a is GameObjectLoot && b is Player) {
-      return onCollisionBetweenPlayerAndGameObjectLoot(b, a);
-    }
-  }
-
-  void onCollisionBetweenPlayerAndGameObjectLoot(Player player, GameObjectLoot loot){
+  void customOnPlayerCollisionWithLoot(Player player, GameObjectLoot loot){
     deactivateGameObject(loot);
-    player.health++;
     player.experience++;
-    player.weaponSlot1.rounds++;
-    player.weaponSlot2.rounds++;
-    player.weaponSlot3.rounds++;
+    player.points++;
     player.dispatchEventLootCollected();
   }
 

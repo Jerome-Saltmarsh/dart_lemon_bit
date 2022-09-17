@@ -764,7 +764,6 @@ class Connection {
     if (_player == player) return;
     _player = player;
     player.sendBufferToClient = sendBufferToClient;
-    player.dispatchError = error;
   }
 
   void onGameJoined(){

@@ -71,6 +71,8 @@ abstract class Game {
   /// safe to override
   void customOnCollisionBetweenColliders(Collider a, Collider b) { }
   /// safe to override
+  void customOnPlayerCollisionWithLoot(Player player, GameObjectLoot loot) { }
+  /// safe to override
   void customOnAIRespawned(AI ai){  }
   /// safe to override
   void handlePlayerRequestPurchaseWeapon(Player player, int type){ }
@@ -723,6 +725,14 @@ abstract class Game {
     if (a.physical && b.physical){
       resolveCollisionPhysics(a, b);
     }
+
+    if (a is Player && b is GameObjectLoot) {
+      return customOnPlayerCollisionWithLoot(a, b);
+    }
+    if (a is GameObjectLoot && b is Player) {
+      return customOnPlayerCollisionWithLoot(b, a);
+    }
+
     customOnCollisionBetweenColliders(a, b);
   }
 
