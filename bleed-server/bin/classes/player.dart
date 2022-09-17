@@ -8,7 +8,6 @@ import '../common/character_type.dart';
 import '../common/flag.dart';
 import '../common/library.dart';
 import '../common/quest.dart';
-import '../convert/convert_card_type_to_card.dart';
 import '../dark_age/areas/dark_age_area.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';

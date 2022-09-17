@@ -51,9 +51,6 @@ import 'dark_age_environment.dart';
 class GameDarkAge extends Game {
   final DarkAgeEnvironment environment;
 
-  @override
-  bool get full => false;
-
   bool get mapVisible => true;
 
   GameDarkAge(Scene scene, this.environment) : super(scene) {
@@ -154,5 +151,10 @@ class GameDarkAge extends Game {
       pants: PantsType.green,
       weapon: buildWeaponBow(),
     );
+  }
+
+  @override
+  void customUpdate() {
+    // TODO: implement customUpdate
   }
 }

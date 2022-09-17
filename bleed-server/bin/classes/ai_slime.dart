@@ -3,7 +3,6 @@ import '../common/ServerResponse.dart';
 import '../common/attack_type.dart';
 import '../common/character_type.dart';
 import 'ai.dart';
-import 'game.dart';
 import 'player.dart';
 import 'weapon.dart';
 

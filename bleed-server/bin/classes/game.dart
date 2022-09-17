@@ -45,7 +45,7 @@ abstract class Game {
   int getTime();
 
   /// safe to override
-  void customUpdate() { }
+  void customUpdate();
   /// safe to override
   void customOnPlayerDisconnected(Player player) { }
   /// safe to override

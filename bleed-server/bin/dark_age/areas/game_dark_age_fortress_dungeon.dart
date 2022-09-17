@@ -6,4 +6,8 @@ class GameDarkAgeFortressDungeon extends DarkAgeAreaUnderground {
   GameDarkAgeFortressDungeon() : super(darkAgeScenes.darkFortressDungeon, mapTile: -1) {
 
   }
+
+  @override
+  void customUpdate() {
+  }
 }
