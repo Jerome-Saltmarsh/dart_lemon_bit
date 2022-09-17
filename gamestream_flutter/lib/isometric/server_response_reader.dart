@@ -423,7 +423,6 @@ class ServerResponseReader with ByteReader {
   void readEnd() {
     byteLength.value = index;
     index = 0;
-    engine.redrawCanvas();
   }
 
   void readStoreItems() {
