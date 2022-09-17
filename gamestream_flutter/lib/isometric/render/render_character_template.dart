@@ -26,6 +26,21 @@ void renderLine(double x, double y, double z, double angle, double distance){
   );
 }
 
+void renderArrow(double x, double y, double z, double angle){
+  const pi3Quarters = piQuarter * 3;
+  x += getAdjacent(angle, 30);
+  y += getOpposite(angle, 30);
+  renderRotated(
+    dstX: projectX(x, y),
+    dstY: projectY(x, y, z),
+    srcX: 128,
+    srcY: 0,
+    srcWidth: 32,
+    srcHeight: 32,
+    rotation: angle + pi3Quarters,
+  );
+}
+
 void renderCharacterTemplate(Character character, {bool renderHealthBar = true}) {
   assert(character.direction >= 0);
   assert(character.direction < 8);
@@ -36,25 +51,7 @@ void renderCharacterTemplate(Character character, {bool renderHealthBar = true})
     renderCharacterHealthBar(character);
   }
 
-  const pi3Quarters = piQuarter * 3;
-  final x = character.x + getAdjacent(character.aimAngle, 30);
-  final y = character.y + getOpposite(character.aimAngle, 30);
-
-  renderRotated(
-      dstX: projectX(x, y),
-      dstY: projectY(x, y, character.z),
-      srcX: 128,
-      srcY: 0,
-      srcWidth: 32,
-      srcHeight: 32,
-      rotation: character.aimAngle + pi3Quarters,
-  );
-  // renderText(
-  //     text: character.aimAngle.toString(),
-  //     x: character.renderX,
-  //     y: character.renderY - 60,
-  // );
-  // renderLine(character.x, character.y, character.z, pi, 50);
+  // renderArrow(character.x, character.y, character.z, character.aimAngle);
 
   final weaponType = character.weapon;
   final direction = character.direction;

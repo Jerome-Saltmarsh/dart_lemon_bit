@@ -72,6 +72,8 @@ abstract class Game {
   void customOnCollisionBetweenColliders(Collider a, Collider b) { }
   /// safe to override
   void customOnAIRespawned(AI ai){  }
+  /// safe to override
+  void handlePlayerRequestPurchaseWeapon(Player player, int type){ }
 
   /// Safe to override
   double get minAimTargetCursorDistance => 35;

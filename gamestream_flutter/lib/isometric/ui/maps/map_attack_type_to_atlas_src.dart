@@ -11,4 +11,5 @@ const mapAttackTypeToAtlasSrc = {
   AttackType.Bow            : AtlasSrc (srcX: 11920, srcY: 192, width: 32, height: 32),
   AttackType.Rifle          : AtlasSrc (srcX: 11984, srcY: 658, width: 48, height: 14),
   AttackType.Revolver       : AtlasSrc (srcX: 11920, srcY: 726, width: 16, height: 10),
+  AttackType.Unarmed        : AtlasSrc (srcX: 12304, srcY: 160, width: 32, height: 32),
 };

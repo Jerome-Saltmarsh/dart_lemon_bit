@@ -19,7 +19,11 @@ class GameWaves extends Game {
 
   @override
   Player spawnPlayer() {
-    return Player(game: this, weapon: buildWeaponUnarmed());
+    final player = Player(game: this, weapon: buildWeaponUnarmed());
+    player.weaponSlot1 = buildWeaponUnarmed();
+    player.weaponSlot2 = buildWeaponUnarmed();
+    player.weaponSlot3 = buildWeaponUnarmed();
+    return player;
   }
 
   @override
@@ -83,4 +87,16 @@ class GameWaves extends Game {
     player.dispatchEventLootCollected();
   }
 
+  @override
+  void handlePlayerRequestPurchaseWeapon(Player player, int type) {
+    if (type == AttackType.Assault_Rifle){
+       player.weaponSlot1 = buildWeaponAssaultRifle();
+    }
+    if (type == AttackType.Shotgun){
+      player.weaponSlot1 = buildWeaponShotgun();
+    }
+    if (type == AttackType.Blade){
+      player.weaponSlot2 = buildWeaponBlade();
+    }
+  }
 }

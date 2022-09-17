@@ -144,18 +144,10 @@ class Connection {
         break;
 
       case ClientRequest.Purchase_Weapon:
+        if (arguments.length < 2) return errorArgsExpected(2, arguments);
         final type = int.tryParse(arguments[1]);
         if (type == null) return errorInvalidArg('invalid weapon type $type');
-        player.weapons.add(
-            Weapon(
-              type: type,
-              damage: 1,
-              range: 100,
-              duration: 10
-            )
-        );
-        player.writePlayerWeapons();
-        player.writePlayerEvent(PlayerEvent.Item_Purchased);
+        player.game.handlePlayerRequestPurchaseWeapon(player, type);
         break;
 
       case ClientRequest.Store_Close:
