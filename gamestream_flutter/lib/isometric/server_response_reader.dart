@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:bleed_common/character_type.dart';
+import 'package:bleed_common/game_waves_response.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/quest.dart';
@@ -26,6 +27,7 @@ import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
+import 'package:gamestream_flutter/state/state_game_waves.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
@@ -92,6 +94,14 @@ class ServerResponseReader with ByteReader {
           break;
         case ServerResponse.GameObject_Spawn:
           readGameObjectSpawn();
+          break;
+        case ServerResponse.Game_Waves:
+          final gameWavesResponse = readByte();
+          switch(gameWavesResponse){
+            case GameWavesResponse.timer:
+              stateGameWavesTimer.value = readInt();
+              break;
+          }
           break;
         case ServerResponse.GameObject_Loot:
           readGameObjectLoot();

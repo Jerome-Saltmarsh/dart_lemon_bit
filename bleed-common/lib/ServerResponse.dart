@@ -65,5 +65,6 @@ class ServerResponse {
   static const Node_Data = 103;
   static const Render_Map = 104;
   static const GameObject_Loot = 105;
+  static const Game_Waves = 106;
 }
 

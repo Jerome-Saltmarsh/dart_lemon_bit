@@ -24,12 +24,7 @@ Widget buildHud() {
     children: [
       buildWatchEditorDialog(),
       watch(player.gameDialog, buildGameDialog),
-      Container(
-        width: screen.width,
-        height: screen.height,
-        alignment: Alignment.center,
-        child: buildWatchPlayerAlive(),
-      ),
+      watch(player.alive, buildAlive),
       buildTopRightMenu(),
       visibleBuilder(modules.game.state.mapVisible, buildMiniMap()),
       watch(playMode, buildPlayMode),

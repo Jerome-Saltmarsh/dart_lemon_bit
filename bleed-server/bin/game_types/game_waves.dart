@@ -1,12 +1,10 @@
 
 
-import '../classes/character.dart';
-import '../classes/game.dart';
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../classes/node.dart';
-import '../classes/player.dart';
-import '../classes/weapon.dart';
+import '../common/game_waves_response.dart';
+import '../common/library.dart';
 import '../common/teams.dart';
 import '../dark_age/dark_age_scenes.dart';
 
@@ -28,6 +26,13 @@ class GameWaves extends Game {
   void customUpdate() {
     if (timer <= 0) return;
     timer--;
+
+    for (final player in players) {
+      player.writeByte(ServerResponse.Game_Waves);
+      player.writeByte(GameWavesResponse.timer);
+      player.writeInt(timer);
+    }
+
     if (timer > 0) return;
 
     for (final row in scene.grid) {
