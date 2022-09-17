@@ -23,7 +23,7 @@ class Player extends Vector3 {
   var team = 0;
   var abilityRange = 0.0;
   var abilityRadius = 0.0;
-  var maxHealth = 0.0;
+  var maxHealth = 0;
   var attackRange = 0.0;
   final mapTile = Watch(0, onChanged: onMapTileChanged);
   var interactingNpcName = Watch<String?>(null, onChanged: onChangedNpcTalk);
@@ -41,7 +41,7 @@ class Player extends Vector3 {
   final headType = Watch(HeadType.None);
   final pantsType = Watch(PantsType.white);
   final equippedLevel = Watch(0);
-  final health = Watch(0.0);
+  final health = Watch(0);
   final designed = Watch(true, onChanged: onChangedPlayerDesigned);
   final experience = Watch(0.0);
   final level = Watch(1);

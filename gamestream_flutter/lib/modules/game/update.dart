@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/update.dart';
 import 'package:gamestream_flutter/isometric_web/read_player_input.dart';
@@ -18,10 +19,8 @@ class GameUpdate {
     totalUpdates.value++;
     framesSinceUpdateReceived.value++;
     updateIsometric();
-
-
-      readPlayerInput();
-
+    readPlayerInput();
     sendClientRequestUpdate();
+    updateCameraMode();
   }
 }

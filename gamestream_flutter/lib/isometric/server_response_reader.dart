@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:bleed_common/api_player.dart';
 import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/game_waves_response.dart';
 import 'package:bleed_common/library.dart';
@@ -163,7 +164,42 @@ class ServerResponseReader with ByteReader {
           readGameTime();
           break;
         case ServerResponse.Player:
-          readPlayer();
+          final apiPlayer = readByte();
+
+          switch(apiPlayer) {
+            case ApiPlayer.Position:
+              readVector3(player);
+              break;
+            case ApiPlayer.Health:
+              player.health.value = readInt();
+              break;
+            case ApiPlayer.Max_Health:
+              player.maxHealth = readInt();
+              break;
+            case ApiPlayer.Armour_Type:
+              player.armourType.value = readByte();
+              break;
+            case ApiPlayer.Head_Type:
+              player.headType.value = readByte();
+              break;
+            case ApiPlayer.Pants_Type:
+              player.pantsType.value = readByte();
+              break;
+            case ApiPlayer.Alive:
+              player.alive.value = readBool();
+              break;
+            case ApiPlayer.Experience_Percentage:
+              player.experience.value = readPercentage();
+              break;
+            case ApiPlayer.Level:
+              player.level.value = readInt();
+              break;
+            case ApiPlayer.Aim_Angle:
+              player.mouseAngle = readAngle();
+              break;
+          }
+
+          // readPlayer();
           break;
         case ServerResponse.Player_Slots:
           player.weaponSlot1.attackType.value = readByte();
@@ -602,24 +638,24 @@ class ServerResponseReader with ByteReader {
     }
   }
 
-  void readPlayer() {
-    player.x = readDouble();
-    player.y = readDouble();
-    player.z = readDouble();
-    player.health.value = readDouble();
-    player.maxHealth = readDouble();
-    // player.attackType.value = readByte();
-    player.weaponType.value = readByte();
-    player.weaponDamage.value = readByte();
-    player.armourType.value = readByte();
-    player.headType.value = readByte();
-    player.pantsType.value = readByte();
-    player.alive.value = readBool();
-    player.experience.value = readPercentage();
-    player.level.value = readByte();
-    player.mouseAngle = readAngle();
-    updateCameraMode();
-  }
+  // void readPlayer() {
+  //   player.x = readDouble();
+  //   player.y = readDouble();
+  //   player.z = readDouble();
+  //   player.health.value = readDouble();
+  //   player.maxHealth = readDouble();
+  //   // player.attackType.value = readByte();
+  //   player.weaponType.value = readByte();
+  //   player.weaponDamage.value = readByte();
+  //   player.armourType.value = readByte();
+  //   player.headType.value = readByte();
+  //   player.pantsType.value = readByte();
+  //   player.alive.value = readBool();
+  //   player.experience.value = readPercentage();
+  //   player.level.value = readByte();
+  //   player.mouseAngle = readAngle();
+  //   updateCameraMode();
+  // }
 
   List<Weapon> readWeapons() {
     final weapons = <Weapon>[];

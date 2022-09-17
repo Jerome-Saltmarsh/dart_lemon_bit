@@ -4,6 +4,7 @@ import 'package:bleed_server/system.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
+import '../common/api_player.dart';
 import '../common/character_type.dart';
 import '../common/flag.dart';
 import '../common/library.dart';
@@ -229,21 +230,54 @@ class Player extends Character with ByteWriter {
 
   void writePlayerGame() {
     writeByte(ServerResponse.Player);
-    writeInt(x);
-    writeInt(y);
-    writeInt(z);
-    writeInt(health); // 2
+    writeByte(ApiPlayer.Position);
+    writePosition3(this);
+
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Health);
+    writeInt(health);
+
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Max_Health);
     writeInt(maxHealth); // 2
-    writeByte(weapon.type);
-    writeByte(weapon.damage);
-    writeByte(equippedArmour); // armour
-    writeByte(equippedHead); // helm
-    writeByte(equippedPants); // helm
-    writeBool(alive); // 1
+
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Armour_Type);
+    writeByte(equippedArmour);
+
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Head_Type);
+    writeByte(equippedHead);
+
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Pants_Type);
+    writeByte(equippedPants);
+
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Alive);
+    writeBool(alive);
+
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Experience_Percentage);
     writePercentage(experiencePercentage);
-    writeByte(level);
+
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Level);
+    writeInt(level);
+
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Aim_Angle);
     writeAngle(mouseAngle);
 
+    // writeByte(weapon.type);
+    // writeByte(weapon.damage);
+    // writeByte(equippedArmour); // armour
+    // writeByte(equippedHead); // helm
+    // writeByte(equippedPants); // helm
+    // writeBool(alive); // 1
+    // writePercentage(experiencePercentage);
+    // writeByte(level);
+    // writeAngle(mouseAngle);
 
     writePlayerSlots();
     writeAttackTarget();

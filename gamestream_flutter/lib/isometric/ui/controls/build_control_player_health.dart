@@ -15,7 +15,7 @@ Widget buildControlPlayerHealth() {
 
   return Tooltip(
     message: 'Health',
-    child: WatchBuilder(player.health, (double health) {
+    child: WatchBuilder(player.health, (int health) {
 
       final maxHealth = player.maxHealth;
       if (maxHealth <= 0) return empty;
