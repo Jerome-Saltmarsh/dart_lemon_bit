@@ -3,6 +3,7 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_map.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
@@ -23,7 +24,7 @@ import 'build_hud_debug.dart';
 Widget buildHud()  =>
   Stack(
     children: [
-      buildWatchEditorDialog(),
+      watch(editorDialog, buildWatchEditorDialog),
       watch(player.gameDialog, buildGameDialog),
       buildWatchBool(player.alive, buildContainerRespawn, false),
       buildTopRightMenu(),
