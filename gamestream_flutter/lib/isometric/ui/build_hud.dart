@@ -20,8 +20,8 @@ import 'package:lemon_engine/screen.dart';
 
 import 'build_hud_debug.dart';
 
-Widget buildHud() {
-  return Stack(
+Widget buildHud()  =>
+  Stack(
     children: [
       buildWatchEditorDialog(),
       watch(player.gameDialog, buildGameDialog),
@@ -30,13 +30,12 @@ Widget buildHud() {
       buildWatchBool(modules.game.state.mapVisible, buildMiniMap),
       watch(playMode, buildPlayMode),
       buildWatchBool(debugVisible, buildHudDebug),
-      buildControlQuestUpdated()
+      buildWatchBool(player.questAdded, buildContainerQuestUpdated),
     ],
   );
-}
 
-Positioned buildMiniMap() {
-  return Positioned(
+Positioned buildMiniMap() =>
+  Positioned(
     left: 6,
     top: 6,
     child: onPressed(
@@ -47,23 +46,19 @@ Positioned buildMiniMap() {
           child: GameMapWidget(width: 133, height: 133)),
     ),
   );
-}
 
-Widget buildControlQuestUpdated() {
-  return visibleBuilder(
-      player.questAdded,
-      Container(
-        width: screen.width,
-        alignment: Alignment.topCenter,
-        child: container(
-            child: "QUEST UPDATED",
-            alignment: Alignment.center,
-            color: green,
-            width: 200,
-            margin: EdgeInsets.only(top: 16),
-            action: actionGameDialogShowQuests),
-      ));
-}
+Widget buildContainerQuestUpdated() =>
+  Container(
+    width: screen.width,
+    alignment: Alignment.topCenter,
+    child: container(
+        child: "QUEST UPDATED",
+        alignment: Alignment.center,
+        color: green,
+        width: 200,
+        margin: EdgeInsets.only(top: 16),
+        action: actionGameDialogShowQuests),
+  );
 
 Positioned buildTopRightMenu() =>
     Positioned(top: 0, right: 0, child: buildPanelMenu());
