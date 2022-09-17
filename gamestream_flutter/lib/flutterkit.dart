@@ -354,9 +354,9 @@ Widget visibleBuilder(Watch<bool> watch, Widget widget){
   });
 }
 
-Widget buildWatchBool(Watch<bool> watch, Widget Function() builder) =>
-  WatchBuilder(watch, (bool visible) =>
-    visible ? builder() : const SizedBox()
+Widget buildWatchBool(Watch<bool> watch, Widget Function() builder, [bool match = true]) =>
+  WatchBuilder(watch, (bool value) =>
+    value == match ? builder() : const SizedBox()
   );
 
 Widget textBuilder(Watch watch){

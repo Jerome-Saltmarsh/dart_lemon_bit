@@ -9,8 +9,7 @@ import 'package:lemon_engine/screen.dart';
 import '../../../network/send_client_request.dart';
 import '../widgets/build_container.dart';
 
-Widget buildAlive(bool alive){
-  if (alive) return const SizedBox();
+Widget buildContainerRespawn(){
   const width = 300;
   return Container(
     width: screen.width,
