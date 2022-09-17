@@ -26,7 +26,7 @@ Widget buildHud() {
       watch(player.gameDialog, buildGameDialog),
       watch(player.alive, buildAlive),
       buildTopRightMenu(),
-      visibleBuilder(modules.game.state.mapVisible, buildMiniMap()),
+      buildWatchBool(modules.game.state.mapVisible, buildMiniMap),
       watch(playMode, buildPlayMode),
       buildWatchDebugVisible(),
       buildControlQuestUpdated()

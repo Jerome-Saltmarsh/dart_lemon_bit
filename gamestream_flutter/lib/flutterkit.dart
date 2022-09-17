@@ -354,6 +354,11 @@ Widget visibleBuilder(Watch<bool> watch, Widget widget){
   });
 }
 
+Widget buildWatchBool(Watch<bool> watch, Widget Function() builder) =>
+  WatchBuilder(watch, (bool visible) =>
+    visible ? builder() : const SizedBox()
+  );
+
 Widget textBuilder(Watch watch){
   return WatchBuilder(watch, (dynamic value){
     return text(value);
