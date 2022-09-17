@@ -44,8 +44,8 @@ Widget buildPanelMaxZRender() {
   ]);
 }
 
-Widget buildControlsWeather() {
-  return Row(
+Widget buildControlsWeather() =>
+  Row(
     crossAxisAlignment: CrossAxisAlignment.end,
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
@@ -58,7 +58,6 @@ Widget buildControlsWeather() {
       buildControlWind(),
     ],
   );
-}
 
 Widget buildControlWind() {
   final segments = windValues.length;

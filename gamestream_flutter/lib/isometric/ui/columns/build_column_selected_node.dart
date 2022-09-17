@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
-import 'package:gamestream_flutter/isometric/editor/actions/editor_action_recenter_camera.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
-import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 
-Widget buildColumnSelectedNode(){
-  return Container(
+Widget buildColumnSelectedNode() =>
+  Container(
     width: 130,
     padding: EdgeInsets.all(6),
     color: brownDark,
@@ -100,4 +98,3 @@ Widget buildColumnSelectedNode(){
       ],
     ),
   );
-}

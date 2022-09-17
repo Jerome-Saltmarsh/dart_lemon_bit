@@ -12,6 +12,7 @@ import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud.dart';
+import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
@@ -26,17 +27,19 @@ import 'package:lemon_engine/screen.dart';
 import '../../../styles.dart';
 import '../widgets/build_container.dart';
 
-Widget buildPlayMode(Mode mode) {
-  return mode == Mode.Play ? buildStackPlay() : buildStackEdit();
-}
+Widget buildPlayMode(Mode mode) =>
+  mode == Mode.Play ? buildStackPlay() : buildStackEdit();
 
-Stack buildStackEdit() {
-  return Stack(
+Stack buildStackEdit() =>
+  Stack(
     children: [
       Positioned(
         right: 6,
         top: 80,
-        child: buildColumnEditNodeOrientation(),
+        child: buildWatchBool(
+            edit.nodeOrientationVisible,
+            buildColumnEditNodeOrientation
+        ),
       ),
       Positioned(
         right: 6,
@@ -56,7 +59,10 @@ Stack buildStackEdit() {
       Positioned(
           bottom: 6,
           left: 0,
-          child: buildControlsEnvironment()
+          child: buildWatchBool(
+              edit.controlsVisibleWeather,
+              buildControlsWeather,
+          )
       ),
       Positioned(
         left: 0,
@@ -65,11 +71,8 @@ Stack buildStackEdit() {
       ),
     ],
   );
-}
 
 Widget buildColumnEditNodeOrientation() =>
-  visibleBuilder(
-    edit.nodeOrientationVisible,
     Column(
       children: [
         buildColumnNodeOrientationSolid(),
@@ -79,8 +82,7 @@ Widget buildColumnEditNodeOrientation() =>
         buildColumnNodeOrientationSlopeCornerInner(),
         buildColumnNodeOrientationSlopeCornerOuter(),
       ],
-    )
-  );
+    );
 
 Widget buildColumnEditSpawn() =>
     watch(
