@@ -18,6 +18,7 @@ import '../dark_age/game_dark_age_editor.dart';
 import '../engine.dart';
 import '../functions/generateName.dart';
 import '../functions/move_player_to_crystal.dart';
+import '../game_types/game_waves.dart';
 import '../io/convert_json_to_scene.dart';
 import '../io/convert_scene_to_json.dart';
 import '../io/save_directory.dart';
@@ -807,6 +808,11 @@ class Connection {
     joinGame(GameDarkAgeEditor(scene: scene));
   }
 
+  Future joinGameWaves() async {
+    joinGame(GameWaves());
+  }
+
+
   void joinGame(Game game){
     final current = _player;
     if (current != null) {
@@ -866,6 +872,9 @@ class Connection {
         break;
       case GameType.Dark_Age:
         joinGameDarkAge();
+        break;
+      case GameType.Waves:
+        joinGameWaves();
         break;
       default:
         throw Exception("Invalid Game Type: $gameType");

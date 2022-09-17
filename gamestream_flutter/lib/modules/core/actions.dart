@@ -259,6 +259,10 @@ void connectToGameArena() {
   connectToGame(GameType.Arena);
 }
 
+void connectToGameWaves() {
+  connectToGame(GameType.Waves);
+}
+
 void connectToGame(GameType type, [String message = ""]){
   gameType.value = type;
   connectToWebSocketServer(core.state.region.value, '${type.index} $message');

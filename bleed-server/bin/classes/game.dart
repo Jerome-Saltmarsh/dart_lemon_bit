@@ -41,8 +41,6 @@ abstract class Game {
 
   List<GameObject> get gameObjects => scene.gameObjects;
 
-  /// Must override
-  bool get full;
   /// In seconds
   int getTime();
 
