@@ -72,7 +72,9 @@ class GameObjectLoot extends GameObject {
     required double y,
     required double z,
     required this.lootType,
-  }) : super(x: x, y: y, z: z, radius: 15);
+  }) : super(x: x, y: y, z: z, radius: 15) {
+    physical = false;
+  }
 
   @override
   int get type => GameObjectType.Loot;

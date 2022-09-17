@@ -718,7 +718,9 @@ abstract class Game {
     assert (a.collidable);
     assert (b.collidable);
     assert (a != b);
-    resolveCollisionPhysics(a, b);
+    if (a.physical && b.physical){
+      resolveCollisionPhysics(a, b);
+    }
     customOnCollisionBetweenColliders(a, b);
   }
 
@@ -2107,6 +2109,22 @@ abstract class Game {
     if (player.editorSelectedGameObject == null) return;
     player.editorSelectedGameObject = null;
     player.writePlayerEvent(PlayerEvent.GameObject_Deselected);
+  }
+
+  void spawnGameObjectLoot({
+    required double x,
+    required double y,
+    required double z,
+    required int type,
+  }){
+    gameObjects.add(
+        GameObjectLoot(
+          x: x,
+          y: y,
+          z: z,
+          lootType: type,
+        )
+    );
   }
 }
 

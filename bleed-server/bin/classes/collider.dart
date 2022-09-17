@@ -13,6 +13,7 @@ class Collider extends Position3 {
   double get bottom => y + radius;
   /// If false this object is completely ignored by collision detection
   var collidable = true;
+  var physical = true;
   /// If false this object will not be moved during a collision
   var moveOnCollision = true;
 

@@ -2,7 +2,6 @@
 
 import '../classes/character.dart';
 import '../classes/game.dart';
-import '../classes/gameobject.dart';
 import '../classes/node.dart';
 import '../classes/player.dart';
 import '../classes/weapon.dart';
@@ -49,13 +48,11 @@ class GameWaves extends Game {
 
   @override
   void customOnCharacterKilled(Character target, dynamic src) {
-    gameObjects.add(
-        GameObjectLoot(
-          x: target.x,
-          y: target.y,
-          z: target.z,
-          lootType: 0,
-        )
+    spawnGameObjectLoot(
+        x: target.x,
+        y: target.y,
+        z: target.z,
+        type: 0,
     );
   }
 }
