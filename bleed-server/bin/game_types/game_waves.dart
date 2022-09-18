@@ -3,6 +3,7 @@
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../classes/node.dart';
+import '../common/api_player.dart';
 import '../common/game_waves_response.dart';
 import '../common/library.dart';
 import '../common/teams.dart';
@@ -72,11 +73,14 @@ class GameWaves extends Game {
     deactivateGameObject(loot);
     player.experience++;
     player.points++;
+    player.writePoints();
     player.dispatchEventLootCollected();
   }
 
   @override
   void handlePlayerRequestPurchaseWeapon(Player player, int type) {
+    if (timer == 0) return;
+
     if (type == AttackType.Assault_Rifle){
        player.weaponSlot1 = buildWeaponAssaultRifle();
     }

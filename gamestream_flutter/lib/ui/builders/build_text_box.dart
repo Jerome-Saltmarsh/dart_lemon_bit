@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/message_box.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
+import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -49,7 +50,7 @@ Widget buildPanelWriteMessage() {
                   margin: EdgeInsets.only(left: 8, bottom: 16),
                   child: Row(
                     children: [
-                      onPressed(action: modules.game.actions.sendAndCloseTextBox, child: border(child: text("Send")), hint: "(Press Enter)"),
+                      onPressed(action: sendAndCloseTextBox, child: border(child: text("Send")), hint: "(Press Enter)"),
                       width16,
                       onPressed(action: messageBoxHide, child: text("Cancel", decoration: TextDecoration.underline), hint: ("(Press Escape")),
                     ],
@@ -60,4 +61,9 @@ Widget buildPanelWriteMessage() {
           ),
         ));
   },);
+}
+
+void sendAndCloseTextBox(){
+  sendRequestSpeak(modules.game.state.textEditingControllerMessage.text);
+  messageBoxHide();
 }

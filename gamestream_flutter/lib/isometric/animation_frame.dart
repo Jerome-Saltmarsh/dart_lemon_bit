@@ -26,7 +26,6 @@ var animationFrameJellyFish = 0;
 var animationFrameRateJellyFish = 0;
 var _animationFrameNext = 0;
 var _animationFrameTorchNext = 0;
-var _animationFrameNextRain = 0;
 
 void updateAnimationFrame(){
   final frame = engine.frame;

@@ -37,7 +37,7 @@ class EditState {
   int clamp(Function value, Function min, Function max){
     if (value() < min()) return min();
     if (value() > max()) return max();
-    return value();;
+    return value();
   }
 
   final selectedNodeData = Watch<SpawnNodeData?>(null);

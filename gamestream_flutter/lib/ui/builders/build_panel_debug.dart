@@ -5,34 +5,11 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
-import 'package:gamestream_flutter/ui/builders/build_time.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../../isometric/player.dart';
 
-Widget buildPanelDebug(){
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      buildVersion(),
-      buildTime(),
-      mouseRowColumn(),
-      mouseRowColumnPercentage(),
-      buildTotalParticles,
-      buildActiveParticles,
-      mousePositionWorld,
-      mousePositionGrid,
-      mousePositionScreen,
-      byteCountWatcher,
-      bufferLengthWatcher,
-      playerPosition,
-      cameraZoom,
-      buildFramesSinceUpdate(),
-      playerScreen,
-    ],
-  );
-}
 
 Widget mouseRowColumn(){
   return Refresh((){

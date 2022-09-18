@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bleed_common/attack_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
@@ -14,10 +12,8 @@ import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/render/render_wireframe.dart';
-import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse_raycast.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
-import 'package:gamestream_flutter/modules/game/queries.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
@@ -28,13 +24,12 @@ import 'state.dart';
 import 'style.dart';
 
 class GameRender {
-  final GameQueries queries;
   final GameState state;
   final GameStyle style;
 
   bool get debug => state.debug.value;
 
-  GameRender(this.state, this.style, this.queries);
+  GameRender(this.state, this.style);
 
   void renderForeground(Canvas canvas, Size size) {
     engine.setPaintColorWhite();
@@ -218,16 +213,6 @@ class GameRender {
     for (var i = 0; i < totalLines; i += 4) {
       drawLine(targets[i], targets[i + 1], targets[i + 2], targets[i + 3]);
     }
-  }
-
-  void drawMouseAim2() {
-    engine.setPaintColorWhite();
-    double angle = queries.getAngleBetweenMouseAndPlayer();
-    double mouseDistance = queries.getDistanceBetweenMouseAndPlayer();
-    double d = min(mouseDistance, player.attackRange);
-    double vX = getAdjacent(angle, d);
-    double vY = getOpposite(angle, d);
-    drawLine(player.x, player.y, player.x + vX, player.y + vY);
   }
 
   void drawPlayerText() {

@@ -45,7 +45,7 @@ class Player extends Vector3 {
   final designed = Watch(true, onChanged: onChangedPlayerDesigned);
   final experience = Watch(0.0);
   final level = Watch(1);
-  final skillPoints = Watch(0);
+  final points = Watch(0);
   final message = Watch("");
   final state = Watch(CharacterState.Idle, onChanged: onChangedPlayerState);
   final alive = Watch(true, onChanged: onChangedPlayerAlive);

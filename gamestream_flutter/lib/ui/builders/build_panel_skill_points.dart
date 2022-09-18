@@ -7,7 +7,7 @@ import 'package:lemon_watch/watch_builder.dart';
 
 
 Widget buildPanelSkillPoints() {
-   return WatchBuilder(player.skillPoints, (int skillPoints){
+   return WatchBuilder(player.points, (int skillPoints){
       return text("Points $skillPoints", color: skillPoints == 0 ? colours.white60 : colours.white);
    });
 }

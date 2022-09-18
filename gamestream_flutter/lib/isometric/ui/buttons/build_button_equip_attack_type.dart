@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/classes/atlas_src.dart';
 import 'package:gamestream_flutter/isometric/ui/maps/map_attack_type_to_atlas_src.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 
 
 Widget buildButtonWeapon(Weapon weapon, int activeWeaponType) {
@@ -14,7 +13,6 @@ Widget buildButtonWeapon(Weapon weapon, int activeWeaponType) {
   final weaponTypeAtlasImage = mapAttackTypeToAtlasSrc[weapon.type] ?? unknown;
 
   return onPressed(
-    // action: () => sendClientRequestPlayerEquipAttackType1(weapon.uuid),
     child: Container(
       width: 100,
       height: 75,

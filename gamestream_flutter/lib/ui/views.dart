@@ -2,7 +2,6 @@
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
-import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/init.dart';
@@ -22,7 +21,6 @@ import 'package:lemon_watch/watch_builder.dart';
 import '../isometric/ui/build_hud.dart';
 import '../network/classes/websocket.dart';
 import '../network/instance/websocket.dart';
-import 'build.dart';
 
 final nameController = TextEditingController();
 

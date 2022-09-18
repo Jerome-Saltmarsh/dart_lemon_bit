@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog.dart';
@@ -37,6 +38,7 @@ Widget buildGameUI()  =>
       watch(playMode, buildPlayMode),
       buildWatchBool(debugVisible, buildHudDebug),
       buildWatchBool(player.questAdded, buildContainerQuestUpdated),
+      watch(framesSinceUpdateReceived, (int frames) => text("Frames since update: $frames")),
     ],
   );
 
@@ -49,13 +51,19 @@ Widget buildGameTypeUI(int? gameType) {
    }
 }
 
-Widget buildGameTypeWavesUI(){
-  return Stack(
-    children: [
-      watch(stateGameWavesTimer, buildWavesTimer),
-    ],
-  );
-}
+Widget buildGameTypeWavesUI() => Stack(
+      children: [
+        Positioned(
+          bottom: 0,
+          left: 0,
+          child: watch(player.points, (int points) => text("Points: $points")),
+        ),
+        Positioned(
+            top: 0,
+            left: 0,
+            child: watch(stateGameWavesTimer, buildWavesTimer)),
+      ],
+    );
 
 Positioned buildMiniMap() =>
   Positioned(

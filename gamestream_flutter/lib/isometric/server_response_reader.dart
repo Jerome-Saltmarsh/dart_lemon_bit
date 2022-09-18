@@ -277,6 +277,9 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Aim_Angle:
         player.mouseAngle = readAngle();
         break;
+      case ApiPlayer.Points:
+        player.points.value = readInt();
+        break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
     }

@@ -238,13 +238,6 @@ const _zombieBite = [
   'bloody-punches-3.mp3',
 ];
 
-const _pistolShot = [
-  "pistol-shot-19.mp3",
-  "pistol-shot-20.mp3",
-  "pistol-shot-21.mp3",
-  "pistol-shot-22.mp3",
-];
-
 const _maleScreams = [
   'male-screams-01.mp3',
   'male-screams-05.mp3',

@@ -662,6 +662,12 @@ class Player extends Character with ByteWriter {
     writeInt(weaponSlot3.capacity);
     writeInt(weaponSlot3.rounds);
   }
+
+  void writePoints(){
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Points);
+    writeInt(points);
+  }
 }
 
 int getExperienceForLevel(int level){
