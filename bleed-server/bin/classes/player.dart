@@ -320,7 +320,7 @@ class Player extends Character with ByteWriter {
     writePlayerEvent(PlayerEvent.Scene_Changed);
 
     writeRenderMap(game.customPropMapVisible);
-    // writeGameType(GameType.Waves.index);
+    writeGameType(game.gameType);
 
     sceneDownloaded = true;
   }
