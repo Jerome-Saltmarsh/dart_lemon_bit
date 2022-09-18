@@ -25,13 +25,10 @@ import 'package:lemon_engine/screen.dart';
 import 'build_hud_debug.dart';
 import 'builders/build_waves_timer.dart';
 
-Widget buildHud()  =>
+Widget buildGameUI()  =>
   Stack(
     children: [
-      watch(gameType, (int? value){
-         return text("Game Type: ${value == null ? 'null' : GameType.getName(value)}");
-      }),
-      watch(stateGameWavesTimer, buildWavesTimer),
+      watch(gameType, buildGameTypeUI),
       watch(editorDialog, buildWatchEditorDialog),
       watch(player.gameDialog, buildGameDialog),
       buildWatchBool(player.alive, buildContainerRespawn, false),
@@ -42,6 +39,23 @@ Widget buildHud()  =>
       buildWatchBool(player.questAdded, buildContainerQuestUpdated),
     ],
   );
+
+Widget buildGameTypeUI(int? gameType) {
+   switch (gameType) {
+     case GameType.Waves:
+       return buildGameTypeWavesUI();
+     default:
+       return const SizedBox();
+   }
+}
+
+Widget buildGameTypeWavesUI(){
+  return Stack(
+    children: [
+      watch(stateGameWavesTimer, buildWavesTimer),
+    ],
+  );
+}
 
 Positioned buildMiniMap() =>
   Positioned(
