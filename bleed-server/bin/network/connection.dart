@@ -760,30 +760,6 @@ class Connection {
     );
   }
 
-  void setPlayer(Player player){
-    if (_player == player) return;
-    _player = player;
-    player.sendBufferToClient = sendBufferToClient;
-  }
-
-  void onGameJoined(){
-    final player = _player;
-    if (player == null) throw Exception("onGameJoinedException: player is null");
-    player.sceneDownloaded = false;
-    final account = _account;
-    final game = player.game;
-    if (account != null) {
-      player.name = account.publicName;
-    } else {
-      while (true) {
-        final randomName = generateRandomName();
-        if (game.containsPlayerWithName(randomName)) continue;
-        player.name = randomName;
-        break;
-      }
-    }
-  }
-
   Future joinGameDarkAge() async {
     joinGame(engine.findGameDarkAgeFarm());
   }
@@ -805,12 +781,23 @@ class Connection {
 
 
   void joinGame(Game game){
-    final current = _player;
-    if (current != null) {
-      current.game.removePlayer(current);
+    if (_player != null) {
+      _player!.game.removePlayer(_player!);
     }
-    setPlayer(game.spawnPlayer());
-    onGameJoined();
+    _player = game.spawnPlayer();
+    _player!.sendBufferToClient = sendBufferToClient;
+    _player!.sceneDownloaded = false;
+    final account = _account;
+    if (account != null) {
+      _player!.name = account.publicName;
+    } else {
+      while (true) {
+        final randomName = generateRandomName();
+        if (game.containsPlayerWithName(randomName)) continue;
+        _player!.name = randomName;
+        break;
+      }
+    }
   }
 
   void errorInsufficientResources(){

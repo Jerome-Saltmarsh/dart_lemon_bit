@@ -228,10 +228,14 @@ class Player extends Character with ByteWriter {
     writeInt(mouseAngle * 100);
   }
 
-  void writePlayerGame() {
+  void writePlayerPosition(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Position);
     writePosition3(this);
+  }
+
+  void writePlayerGame() {
+    writePlayerPosition();
 
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Health);
@@ -268,16 +272,6 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Aim_Angle);
     writeAngle(mouseAngle);
-
-    // writeByte(weapon.type);
-    // writeByte(weapon.damage);
-    // writeByte(equippedArmour); // armour
-    // writeByte(equippedHead); // helm
-    // writeByte(equippedPants); // helm
-    // writeBool(alive); // 1
-    // writePercentage(experiencePercentage);
-    // writeByte(level);
-    // writeAngle(mouseAngle);
 
     writePlayerSlots();
     writeAttackTarget();

@@ -6,6 +6,7 @@ import 'package:bleed_common/game_waves_response.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/quest.dart';
+import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
@@ -164,42 +165,10 @@ class ServerResponseReader with ByteReader {
           readGameTime();
           break;
         case ServerResponse.Player:
-          final apiPlayer = readByte();
-
-          switch(apiPlayer) {
-            case ApiPlayer.Position:
-              readVector3(player);
-              break;
-            case ApiPlayer.Health:
-              player.health.value = readInt();
-              break;
-            case ApiPlayer.Max_Health:
-              player.maxHealth = readInt();
-              break;
-            case ApiPlayer.Armour_Type:
-              player.armourType.value = readByte();
-              break;
-            case ApiPlayer.Head_Type:
-              player.headType.value = readByte();
-              break;
-            case ApiPlayer.Pants_Type:
-              player.pantsType.value = readByte();
-              break;
-            case ApiPlayer.Alive:
-              player.alive.value = readBool();
-              break;
-            case ApiPlayer.Experience_Percentage:
-              player.experience.value = readPercentage();
-              break;
-            case ApiPlayer.Level:
-              player.level.value = readInt();
-              break;
-            case ApiPlayer.Aim_Angle:
-              player.mouseAngle = readAngle();
-              break;
-          }
-
-          // readPlayer();
+          readServerResponsePlayer();
+          break;
+        case ServerResponse.Game_Type:
+          gameType.value = gameTypes[readByte()];
           break;
         case ServerResponse.Player_Slots:
           player.weaponSlot1.attackType.value = readByte();
@@ -272,6 +241,44 @@ class ServerResponseReader with ByteReader {
         default:
           throw Exception("Cannot parse $response at index: $index");
       }
+    }
+  }
+
+  void readServerResponsePlayer() {
+    final apiPlayer = readByte();
+    switch (apiPlayer) {
+      case ApiPlayer.Position:
+        readVector3(player);
+        break;
+      case ApiPlayer.Health:
+        player.health.value = readInt();
+        break;
+      case ApiPlayer.Max_Health:
+        player.maxHealth = readInt();
+        break;
+      case ApiPlayer.Armour_Type:
+        player.armourType.value = readByte();
+        break;
+      case ApiPlayer.Head_Type:
+        player.headType.value = readByte();
+        break;
+      case ApiPlayer.Pants_Type:
+        player.pantsType.value = readByte();
+        break;
+      case ApiPlayer.Alive:
+        player.alive.value = readBool();
+        break;
+      case ApiPlayer.Experience_Percentage:
+        player.experience.value = readPercentage();
+        break;
+      case ApiPlayer.Level:
+        player.level.value = readInt();
+        break;
+      case ApiPlayer.Aim_Angle:
+        player.mouseAngle = readAngle();
+        break;
+      default:
+        throw Exception("Cannot parse apiPlayer $apiPlayer");
     }
   }
 
