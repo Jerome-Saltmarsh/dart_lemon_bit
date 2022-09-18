@@ -89,5 +89,5 @@ class GameWaves extends Game {
   }
 
   @override
-  int get gameType => GameType.Waves.index;
+  int get gameType => GameType.Waves;
 }

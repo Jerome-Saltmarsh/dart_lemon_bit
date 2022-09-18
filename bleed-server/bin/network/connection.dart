@@ -838,13 +838,7 @@ class Connection {
 
   void handleClientRequestJoin(List<String> arguments,) {
     if (arguments.length < 2) return errorInsufficientArgs(2, arguments);
-
-    final gameTypeIndex = int.tryParse(arguments[1]);
-
-    if (!isValidIndex(gameTypeIndex, gameTypes)) return errorInvalidArg('invalid game type index $gameTypeIndex');
-
-    final gameType = gameTypes[gameTypeIndex!];
-
+    final gameType = int.tryParse(arguments[1]);
     switch (gameType) {
       case GameType.Editor:
         joinGameEditor();
@@ -856,7 +850,7 @@ class Connection {
         joinGameWaves();
         break;
       default:
-        throw Exception("Invalid Game Type: $gameType");
+        return errorInvalidArg('invalid game type index $gameType');
     }
   }
 

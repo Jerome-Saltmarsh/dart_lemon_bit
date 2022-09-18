@@ -55,7 +55,7 @@ class GameDarkAge extends Game {
   bool get customPropMapVisible => true;
 
   @override
-  int get gameType => GameType.Dark_Age.index;
+  int get gameType => GameType.Dark_Age;
 
   GameDarkAge(Scene scene, this.environment) : super(scene) {
     refreshSpawns();

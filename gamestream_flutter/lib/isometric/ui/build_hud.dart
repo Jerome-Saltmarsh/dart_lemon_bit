@@ -28,8 +28,8 @@ import 'builders/build_waves_timer.dart';
 Widget buildHud()  =>
   Stack(
     children: [
-      watch(gameType, (GameType? value){
-         return text('game type: $value');
+      watch(gameType, (int? value){
+         return text("Game Type: ${value == null ? 'null' : GameType.getName(value)}");
       }),
       watch(stateGameWavesTimer, buildWavesTimer),
       watch(editorDialog, buildWatchEditorDialog),

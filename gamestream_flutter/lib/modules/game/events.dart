@@ -26,7 +26,6 @@ class GameEvents {
   GameEvents(this.actions, this.state);
 
   void register(){
-    gameType.onChanged(_onGameTypeChanged);
     player.alive.onChanged(_onPlayerAliveChanged);
     player.state.onChanged(onPlayerCharacterStateChanged);
     messageBoxVisible.onChanged(onTextModeChanged);

@@ -37,7 +37,7 @@ String parseHttpToWebSocket(String url) {
   return url.replaceAll("https", "wss") + "/:8080";
 }
 
-String getHttpsConnectionString(Region server, GameType gameType) {
+String getHttpsConnectionString(Region server, int gameType) {
   switch (server) {
     case Region.Australia:
           return ServerUri.Sydney;
