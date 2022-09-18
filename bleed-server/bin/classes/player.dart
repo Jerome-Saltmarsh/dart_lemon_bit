@@ -317,14 +317,13 @@ class Player extends Character with ByteWriter {
     writeWeather();
     writeSceneMetaData();
     writeMapCoordinate();
-
-    if (game is GameDarkAge) {
-      writeByte(ServerResponse.Render_Map);
-      writeBool((game as GameDarkAge).mapVisible);
-    }
-
     writePlayerEvent(PlayerEvent.Scene_Changed);
     sceneDownloaded = true;
+  }
+
+  void writeRenderMap(bool value){
+    writeByte(ServerResponse.Render_Map);
+    writeBool(value);
   }
 
   void writePlayerSpawned(){

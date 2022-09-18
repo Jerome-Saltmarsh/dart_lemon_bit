@@ -779,22 +779,22 @@ class Connection {
     joinGame(GameWaves());
   }
 
-
   void joinGame(Game game){
     if (_player != null) {
       _player!.game.removePlayer(_player!);
     }
-    _player = game.spawnPlayer();
-    _player!.sendBufferToClient = sendBufferToClient;
-    _player!.sceneDownloaded = false;
+    final player = game.spawnPlayer();
+    _player = _player = player;
+    player.sendBufferToClient = sendBufferToClient;
+    player.sceneDownloaded = false;
     final account = _account;
     if (account != null) {
-      _player!.name = account.publicName;
+      player.name = account.publicName;
     } else {
       while (true) {
         final randomName = generateRandomName();
         if (game.containsPlayerWithName(randomName)) continue;
-        _player!.name = randomName;
+        player.name = randomName;
         break;
       }
     }

@@ -137,6 +137,7 @@ class GameDarkAge extends Game {
     player.weapons.add(buildWeaponUnarmed());
     player.weapons.add(buildWeaponRifle());
     player.writePlayerWeapons();
+    player.writeRenderMap(mapVisible);
     return player;
   }
 

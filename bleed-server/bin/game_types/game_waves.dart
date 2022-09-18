@@ -23,6 +23,7 @@ class GameWaves extends Game {
     player.weaponSlot1 = buildWeaponUnarmed();
     player.weaponSlot2 = buildWeaponUnarmed();
     player.weaponSlot3 = buildWeaponUnarmed();
+    player.writeRenderMap(false);
     return player;
   }
 
