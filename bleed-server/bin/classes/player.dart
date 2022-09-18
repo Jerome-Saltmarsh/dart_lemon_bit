@@ -318,12 +318,21 @@ class Player extends Character with ByteWriter {
     writeSceneMetaData();
     writeMapCoordinate();
     writePlayerEvent(PlayerEvent.Scene_Changed);
+
+    writeRenderMap(game.customPropMapVisible);
+    // writeGameType(GameType.Waves.index);
+
     sceneDownloaded = true;
   }
 
   void writeRenderMap(bool value){
     writeByte(ServerResponse.Render_Map);
     writeBool(value);
+  }
+
+  void writeGameType(int value){
+    writeByte(ServerResponse.Game_Type);
+    writeByte(value);
   }
 
   void writePlayerSpawned(){

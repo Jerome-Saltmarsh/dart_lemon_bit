@@ -51,7 +51,11 @@ import 'dark_age_environment.dart';
 class GameDarkAge extends Game {
   final DarkAgeEnvironment environment;
 
-  bool get mapVisible => true;
+  @override
+  bool get customPropMapVisible => true;
+
+  @override
+  int get gameType => GameType.Dark_Age.index;
 
   GameDarkAge(Scene scene, this.environment) : super(scene) {
     refreshSpawns();
@@ -137,7 +141,6 @@ class GameDarkAge extends Game {
     player.weapons.add(buildWeaponUnarmed());
     player.weapons.add(buildWeaponRifle());
     player.writePlayerWeapons();
-    player.writeRenderMap(mapVisible);
     return player;
   }
 

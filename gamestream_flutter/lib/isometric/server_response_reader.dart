@@ -168,7 +168,8 @@ class ServerResponseReader with ByteReader {
           readServerResponsePlayer();
           break;
         case ServerResponse.Game_Type:
-          gameType.value = gameTypes[readByte()];
+          final type = readByte();
+          gameType.value = gameTypes[type];
           break;
         case ServerResponse.Player_Slots:
           player.weaponSlot1.attackType.value = readByte();

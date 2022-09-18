@@ -77,13 +77,21 @@ abstract class Game {
   /// safe to override
   void handlePlayerRequestPurchaseWeapon(Player player, int type){ }
 
+  /// PROPERTIES
+
   /// Safe to override
   double get minAimTargetCursorDistance => 35;
+
+  bool get customPropMapVisible => false;
+  int get gameType;
+
 
   /// CONSTRUCTOR
   Game(this.scene) {
     engine.onGameCreated(this); /// TODO Illegal external scope reference
   }
+
+
 
   /// ACTIONS
 

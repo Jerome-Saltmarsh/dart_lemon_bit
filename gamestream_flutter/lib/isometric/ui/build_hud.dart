@@ -1,4 +1,6 @@
+import 'package:bleed_common/GameType.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_map.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
@@ -26,6 +28,9 @@ import 'builders/build_waves_timer.dart';
 Widget buildHud()  =>
   Stack(
     children: [
+      watch(gameType, (GameType? value){
+         return text('game type: $value');
+      }),
       watch(stateGameWavesTimer, buildWavesTimer),
       watch(editorDialog, buildWatchEditorDialog),
       watch(player.gameDialog, buildGameDialog),

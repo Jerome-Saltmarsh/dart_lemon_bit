@@ -787,6 +787,7 @@ class Connection {
     _player = _player = player;
     player.sendBufferToClient = sendBufferToClient;
     player.sceneDownloaded = false;
+
     final account = _account;
     if (account != null) {
       player.name = account.publicName;
