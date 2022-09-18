@@ -26,6 +26,7 @@ var animationFrameJellyFish = 0;
 var animationFrameRateJellyFish = 0;
 var _animationFrameNext = 0;
 var _animationFrameTorchNext = 0;
+var _animationFrameNextRain = 0;
 
 void updateAnimationFrame(){
   final frame = engine.frame;
@@ -40,7 +41,11 @@ void updateAnimationFrame(){
   }
   _updateWaterFrame();
   animationFrame8 = frame ~/ 8;
-  animationFrameRain = (frame ~/ 4) % 10;
+
+  animationFrameRain++;
+  if (animationFrameRain >= 6){
+    animationFrameRain = 0;
+  }
   animationFrameGrass = animationFrame % 6;
   frameChicken = animationFrame % 2;
 
