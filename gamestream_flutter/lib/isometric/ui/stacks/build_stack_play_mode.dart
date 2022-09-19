@@ -4,7 +4,6 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
-import 'package:gamestream_flutter/isometric/ui/buttons/build_button_toggle_inventory.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_npc_talk.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_experience.dart';

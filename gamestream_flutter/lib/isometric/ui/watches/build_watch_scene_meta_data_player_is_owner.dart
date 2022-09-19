@@ -58,9 +58,13 @@ Stack buildStackEdit() =>
       Positioned(
           bottom: 6,
           left: 0,
-          child: buildWatchBool(
-              edit.controlsVisibleWeather,
-              buildControlsWeather,
+          child: Container(
+            width: screen.width,
+            alignment: Alignment.center,
+            child: buildWatchBool(
+                edit.controlsVisibleWeather,
+                buildControlsWeather,
+            ),
           )
       ),
       Positioned(

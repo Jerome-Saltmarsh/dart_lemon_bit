@@ -47,7 +47,7 @@ Widget buildPanelMaxZRender() {
 Widget buildControlsWeather() =>
   Row(
     crossAxisAlignment: CrossAxisAlignment.end,
-    mainAxisAlignment: MainAxisAlignment.start,
+    mainAxisAlignment: MainAxisAlignment.center,
     children: [
       buildControlTime(),
       width4,
