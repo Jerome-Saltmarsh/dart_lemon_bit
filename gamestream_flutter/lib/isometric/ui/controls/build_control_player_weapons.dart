@@ -10,11 +10,17 @@ Widget buildControlsPlayerWeapons() => Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          buildWidgetAttackSlot(player.weaponSlot1),
+          Tooltip(
+              message: "Left Click",
+              child: buildWidgetAttackSlot(player.weaponSlot1)),
           width6,
-          buildWidgetAttackSlot(player.weaponSlot2),
+          Tooltip(
+              message: "Right Click",
+              child: buildWidgetAttackSlot(player.weaponSlot2)),
           width6,
-          buildWidgetAttackSlot(player.weaponSlot3),
+          Tooltip(
+              message: "Space",
+              child: buildWidgetAttackSlot(player.weaponSlot3)),
         ],
       ),
     );

@@ -38,7 +38,6 @@ Widget buildStackPlay() {
         ),
       )),
       Positioned(bottom: 50, left: 0, child: buildWatchMouseTargetName()),
-      Positioned(bottom: 8, right: 8, child: buildButtonToggleInventory()),
       buildWatchPlayerDesigned(),
       Positioned(bottom: 8, child: Container(
         width: screen.width,
