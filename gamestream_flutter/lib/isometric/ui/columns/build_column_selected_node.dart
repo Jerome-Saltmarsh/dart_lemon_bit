@@ -11,7 +11,8 @@ import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 Widget buildEditorSelectedNode() =>
   Container(
     width: 130,
-    padding: EdgeInsets.all(6),
+    height: 220,
+    padding: const EdgeInsets.all(6),
     color: brownDark,
     child: Column(
       children: [
@@ -50,6 +51,7 @@ Widget buildEditorSelectedNode() =>
                 srcY: 110,
                 srcWidth: 21,
                 srcHeight: 21,
+                hint: "Arrow Up"
               ),
             ),
             Container(
@@ -66,6 +68,19 @@ Widget buildEditorSelectedNode() =>
                 srcY: 56,
                 srcWidth: 21,
                 srcHeight: 21,
+                hint: "Arrow Down"
+              ),
+            ),
+            Positioned(
+              top: -5,
+              left: 27,
+              child: buildAtlasImageButton(
+                action: edit.cursorZIncrease,
+                srcX: 9650,
+                srcY: 0,
+                srcWidth: 21,
+                srcHeight: 21,
+                hint: "Shift + Arrow Up"
               ),
             ),
           ],

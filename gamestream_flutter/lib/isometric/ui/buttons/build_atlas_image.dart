@@ -13,11 +13,14 @@ Widget buildAtlasImageButton({
   required double srcHeight,
   required Function? action,
   double scale = 1.0,
+  String hint = "",
 }) =>
   onPressed(
     action: action,
+    hint: hint,
     child: onPressed(
       action: action,
+      hint: hint,
       child: Container(
         width: srcWidth,
         height: srcHeight,
