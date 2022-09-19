@@ -2,7 +2,6 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/state/state_game_waves.dart';
 
 import 'widgets/build_container.dart';
@@ -21,11 +20,9 @@ Widget buildStackGameTypeWavesUI() => Stack(
   ],
 );
 
-Widget buildWavesTimer(int timer) {
-  if (timer <= 0) return const SizedBox();
-
-  return watch(gameWaves.refresh, (t) {
-    return Row(
+Widget buildWavesTimer(int timer) => timer <= 0 ? const SizedBox() :
+  watch(gameWaves.refresh, (t) =>
+    Row(
       children: [
           Column(
             children: [
@@ -47,6 +44,5 @@ Widget buildWavesTimer(int timer) {
         )
 
       ],
-    );
-  });
-}
+    )
+  );
