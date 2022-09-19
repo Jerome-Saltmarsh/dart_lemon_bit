@@ -53,7 +53,7 @@ Stack buildStackEdit() =>
       Positioned(
         left: 200,
         top: 56,
-        child: buildColumnSelectedNode(),
+        child: buildEditorSelectedNode(),
       ),
       Positioned(
           bottom: 6,
@@ -177,7 +177,7 @@ Widget buildColumnNodeOrientationSolid() =>
 
 Widget buildOrientationIcon(int orientation){
 
-  final canvas = buildCanvasImage(
+  final canvas = buildAtlasImage(
     srcX: mapOrientationToSrcX(orientation),
     srcY: mapOrientationToSrcY(orientation),
     srcWidth: 48,

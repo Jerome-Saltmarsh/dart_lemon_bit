@@ -8,7 +8,7 @@ import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 
-Widget buildColumnSelectedNode() =>
+Widget buildEditorSelectedNode() =>
   Container(
     width: 130,
     padding: EdgeInsets.all(6),
@@ -24,7 +24,7 @@ Widget buildColumnSelectedNode() =>
               child: Container(
                 width: 16,
                 height: 16,
-                child: buildCanvasImageButton(
+                child: buildAtlasImageButton(
                   srcX: 80,
                   srcY: 96,
                   srcWidth: 16,
@@ -33,42 +33,32 @@ Widget buildColumnSelectedNode() =>
                 ),
               ),
             ),
-            // onPressed(
-            //   hint: "Center Camera (G)",
-            //   action: editorActionRecenterCamera,
-            //   child: Container(
-            //     width: 16,
-            //     height: 16,
-            //     child: buildCanvasImageButton(
-            //         srcX: 96,
-            //         srcY: 96,
-            //         srcWidth: 16,
-            //         srcHeight: 16,
-            //         action: editorActionRecenterCamera,
-            //     ),
-            //   ),
-            // ),
-            // onPressed(
-            //   hint: 'Recenter Camera (G)',
-            //   action: editorActionRecenterCamera,
-            //   child: buildCanvasImage(
-            //     srcX: 96,
-            //     srcY: 96,
-            //     srcWidth: 16,
-            //     srcHeight: 16,
-            //   ),
-            // ),
           ],
         ),
         Container(
           height: 70,
             alignment: Alignment.center,
             child: watch(edit.nodeSelected, (Node t) => text(NodeType.getName(t.type), align: TextAlign.center))),
-        Container(
-            height: 72,
-            width: 72,
-            alignment: Alignment.center,
-            child: watch(edit.nodeSelected, (Node t) => buildIconNodeType(t.type))),
+        Stack(
+          children: [
+            Container(
+                height: 72,
+                width: 72,
+                alignment: Alignment.center,
+                child: watch(edit.nodeSelected, (Node t) => buildIconNodeType(t.type))),
+            Positioned(
+              top: 25,
+              left: 38,
+              child: buildAtlasImageButton(
+                action: () => edit.row.value++,
+                srcX: 9648,
+                srcY: 0,
+                srcWidth: 48,
+                srcHeight: 72,
+              ),
+            )
+          ],
+        ),
         height4,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

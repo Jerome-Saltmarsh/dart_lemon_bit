@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:lemon_engine/render_single_atlas.dart';
 import 'package:lemon_engine/state/atlas.dart';
 
-Widget buildCanvasImageButton({
+Widget buildAtlasImageButton({
   required double srcX,
   required double srcY,
   required double srcWidth,
@@ -16,20 +16,23 @@ Widget buildCanvasImageButton({
 }) =>
   onPressed(
     action: action,
-    child: Container(
-      width: srcWidth,
-      height: srcHeight,
-      child: buildCanvasImage(
-          srcX: srcX,
-          srcY: srcY,
-          srcWidth: srcWidth,
-          srcHeight: srcHeight,
-          scale: scale,
+    child: onPressed(
+      action: action,
+      child: Container(
+        width: srcWidth,
+        height: srcHeight,
+        child: buildAtlasImage(
+            srcX: srcX,
+            srcY: srcY,
+            srcWidth: srcWidth,
+            srcHeight: srcHeight,
+            scale: scale,
+        ),
       ),
     ),
   );
 
-Widget buildCanvasImage({
+Widget buildAtlasImage({
     required double srcX,
     required double srcY,
     required double srcWidth,
