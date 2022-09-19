@@ -10,10 +10,11 @@ import '../dark_age/dark_age_scenes.dart';
 
 class GameWaves extends Game {
 
-  static const framesBetweenRounds = 1000;
+  static const framesBetweenRounds = 600;
 
   var timer = framesBetweenRounds;
   var remaining = 0;
+  var round = 1;
 
   GameWaves() : super(darkAgeScenes.dungeon_1);
 
@@ -81,15 +82,17 @@ class GameWaves extends Game {
       for (final column in row) {
         for (final node in column){
           if (node is NodeSpawn) {
-            remaining++;
-            spawnZombie(
-              x: node.x,
-              y: node.y,
-              z: node.z,
-              health: 2,
-              team: Teams.evil,
-              damage: 1,
-            );
+            for (var i = 0; i < round; i++){
+              remaining++;
+              spawnZombie(
+                x: node.x,
+                y: node.y,
+                z: node.z,
+                health: 2,
+                team: Teams.evil,
+                damage: 1,
+              );
+            }
           }
         }
       }
@@ -109,6 +112,7 @@ class GameWaves extends Game {
 
       if (remaining == 0){
         timer = framesBetweenRounds;
+        round++;
       }
     }
   }
