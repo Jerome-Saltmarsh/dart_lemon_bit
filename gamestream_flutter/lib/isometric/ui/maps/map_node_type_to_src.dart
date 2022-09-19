@@ -26,6 +26,7 @@ double mapNodeTypeToSrcX(int type) => {
   NodeType.Bau_Haus_2: 10544.0,
   NodeType.Boulder: 11773.0,
   NodeType.Spawn: 11776.0,
+  NodeType.Empty: 7055.0,
 }[type] ?? 7055;
 
 double mapNodeTypeToSrcY(int type) => {

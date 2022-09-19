@@ -41,22 +41,33 @@ Widget buildEditorSelectedNode() =>
             child: watch(edit.nodeSelected, (Node t) => text(NodeType.getName(t.type), align: TextAlign.center))),
         Stack(
           children: [
+            Positioned(
+              top: 3,
+              left: 3,
+              child: buildAtlasImageButton(
+                action: edit.cursorRowDecrease,
+                srcX: 9649,
+                srcY: 110,
+                srcWidth: 21,
+                srcHeight: 21,
+              ),
+            ),
             Container(
                 height: 72,
                 width: 72,
                 alignment: Alignment.center,
                 child: watch(edit.nodeSelected, (Node t) => buildIconNodeType(t.type))),
             Positioned(
-              top: 25,
-              left: 38,
+              top: 45,
+              left: 45,
               child: buildAtlasImageButton(
-                action: () => edit.row.value++,
-                srcX: 9648,
-                srcY: 0,
-                srcWidth: 48,
-                srcHeight: 72,
+                action: edit.cursorRowIncrease,
+                srcX: 9649,
+                srcY: 56,
+                srcWidth: 21,
+                srcHeight: 21,
               ),
-            )
+            ),
           ],
         ),
         height4,

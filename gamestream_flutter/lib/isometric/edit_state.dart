@@ -58,6 +58,14 @@ class EditState {
   final nodeSupportsSlopeCornerOuter = Watch(false);
   final nodeSupportsHalf = Watch(false);
   final nodeSupportsCorner = Watch(false);
+
+  void cursorRowIncrease() => row.value++;
+  void cursorRowDecrease() => row.value--;
+  void cursorColumnIncrease() => column.value++;
+  void cursorColumnDecrease() => column.value--;
+  void cursorZIncrease() => z.value++;
+  void cursorZDecrease() => z.value--;
+
   var row = Watch(0, clamp: (int value){
     if (value < 0) return 0;
     if (value >= gridTotalRows) return gridTotalRows - 1;
