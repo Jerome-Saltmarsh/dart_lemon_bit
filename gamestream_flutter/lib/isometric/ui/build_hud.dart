@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
+import 'package:gamestream_flutter/isometric/ui/build_stack_game_type_waves.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
@@ -19,12 +20,10 @@ import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
 import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/state/state_game_waves.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:lemon_engine/screen.dart';
 
 import 'build_hud_debug.dart';
-import 'builders/build_waves_timer.dart';
 
 Widget buildGameUI()  =>
   Stack(
@@ -38,32 +37,18 @@ Widget buildGameUI()  =>
       watch(playMode, buildPlayMode),
       buildWatchBool(debugVisible, buildHudDebug),
       buildWatchBool(player.questAdded, buildContainerQuestUpdated),
-      watch(rendersSinceUpdate, (int frames) => text("Frames since update: $frames")),
+      // watch(rendersSinceUpdate, (int frames) => text("Frames since update: $frames")),
     ],
   );
 
 Widget buildGameTypeUI(int? gameType) {
    switch (gameType) {
      case GameType.Waves:
-       return buildGameTypeWavesUI();
+       return buildStackGameTypeWavesUI();
      default:
        return const SizedBox();
    }
 }
-
-Widget buildGameTypeWavesUI() => Stack(
-      children: [
-        Positioned(
-          bottom: 0,
-          left: 0,
-          child: watch(player.points, (int points) => text("Points: $points")),
-        ),
-        Positioned(
-            top: 0,
-            left: 0,
-            child: watch(stateGameWavesTimer, buildWavesTimer)),
-      ],
-    );
 
 Positioned buildMiniMap() =>
   Positioned(

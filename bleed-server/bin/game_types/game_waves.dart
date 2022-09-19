@@ -3,7 +3,6 @@
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../classes/node.dart';
-import '../common/api_player.dart';
 import '../common/game_waves_response.dart';
 import '../common/library.dart';
 import '../common/teams.dart';
@@ -11,7 +10,10 @@ import '../dark_age/dark_age_scenes.dart';
 
 class GameWaves extends Game {
 
-  var timer = 300;
+  static const framesBetweenRounds = 300;
+
+  var timer = framesBetweenRounds;
+  var remaining = 0;
 
   GameWaves() : super(darkAgeScenes.dungeon_1);
 
@@ -24,8 +26,39 @@ class GameWaves extends Game {
     player.weaponSlot1 = buildWeaponUnarmed();
     player.weaponSlot2 = buildWeaponUnarmed();
     player.weaponSlot3 = buildWeaponUnarmed();
+    player.setCharacterStateSpawning();
+
+    perform((){
+
+      player.writeByte(ServerResponse.Game_Waves);
+      player.writeByte(GameWavesResponse.clear_upgrades);
+
+      player.writeByte(ServerResponse.Game_Waves);
+      player.writeByte(GameWavesResponse.purchase_primary);
+      player.writeByte(AttackType.Assault_Rifle);
+      player.writeInt(20);
+
+      player.writeByte(ServerResponse.Game_Waves);
+      player.writeByte(GameWavesResponse.purchase_primary);
+      player.writeByte(AttackType.Rifle);
+      player.writeInt(20);
+
+      player.writeByte(ServerResponse.Game_Waves);
+      player.writeByte(GameWavesResponse.purchase_secondary);
+      player.writeByte(AttackType.Handgun);
+      player.writeInt(5);
+
+      player.writeByte(ServerResponse.Game_Waves);
+      player.writeByte(GameWavesResponse.purchase_tertiary);
+      player.writeByte(AttackType.Blade);
+      player.writeInt(20);
+
+    }, 1);
+
+
     return player;
   }
+
 
   @override
   void customUpdate() {
@@ -38,34 +71,46 @@ class GameWaves extends Game {
       player.writeInt(timer);
     }
 
-    if (timer > 0) return;
+    if (timer == 0)
+      spawnCreeps();
 
+  }
+
+  void spawnCreeps(){
     for (final row in scene.grid) {
-       for (final column in row) {
-          for (final node in column){
-             if (node is NodeSpawn) {
-                spawnZombie(
-                    x: node.x,
-                    y: node.y,
-                    z: node.z,
-                    health: 2,
-                    team: Teams.evil,
-                    damage: 1,
-                );
-             }
+      for (final column in row) {
+        for (final node in column){
+          if (node is NodeSpawn) {
+            remaining++;
+            spawnZombie(
+              x: node.x,
+              y: node.y,
+              z: node.z,
+              health: 2,
+              team: Teams.evil,
+              damage: 1,
+            );
           }
-       }
+        }
+      }
     }
   }
 
   @override
   void customOnCharacterKilled(Character target, dynamic src) {
-    spawnGameObjectLoot(
+    if (target is AI) {
+      remaining--;
+      spawnGameObjectLoot(
         x: target.x,
         y: target.y,
         z: target.z,
         type: 0,
-    );
+      );
+
+      if (remaining == 0){
+        timer = framesBetweenRounds;
+      }
+    }
   }
 
   @override

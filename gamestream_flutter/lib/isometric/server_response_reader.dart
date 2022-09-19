@@ -89,12 +89,7 @@ class ServerResponseReader with ByteReader {
           readGameObjectSpawn();
           break;
         case ServerResponse.Game_Waves:
-          final gameWavesResponse = readByte();
-          switch(gameWavesResponse){
-            case GameWavesResponse.timer:
-              stateGameWavesTimer.value = readInt();
-              break;
-          }
+          readServerResponseGameWaves();
           break;
         case ServerResponse.GameObject_Loot:
           readGameObjectLoot();
@@ -229,6 +224,42 @@ class ServerResponseReader with ByteReader {
         default:
           throw Exception("Cannot parse $response at index: $index");
       }
+    }
+  }
+
+  void readServerResponseGameWaves() {
+    final gameWavesResponse = readByte();
+    switch (gameWavesResponse) {
+      case GameWavesResponse.timer:
+        gameWaves.timer.value = readInt();
+        break;
+      case GameWavesResponse.clear_upgrades:
+        gameWaves.purchasePrimary.clear();
+        gameWaves.purchaseSecondary.clear();
+        gameWaves.purchaseTertiary.clear();
+        gameWaves.refresh.value++;
+        break;
+      case GameWavesResponse.purchase_primary:
+        final type = readByte();
+        final cost = readInt();
+        final purchase = Purchase(type, cost);
+        gameWaves.purchasePrimary.add(purchase);
+        gameWaves.refresh.value++;
+        break;
+      case GameWavesResponse.purchase_secondary:
+        final type = readByte();
+        final cost = readInt();
+        final purchase = Purchase(type, cost);
+        gameWaves.purchaseSecondary.add(purchase);
+        gameWaves.refresh.value++;
+        break;
+      case GameWavesResponse.purchase_tertiary:
+        final type = readByte();
+        final cost = readInt();
+        final purchase = Purchase(type, cost);
+        gameWaves.purchaseTertiary.add(purchase);
+        gameWaves.refresh.value++;
+        break;
     }
   }
 
