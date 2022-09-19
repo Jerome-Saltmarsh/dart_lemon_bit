@@ -4,25 +4,34 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/state/state_game_waves.dart';
+import 'package:lemon_engine/screen.dart';
 
 import 'widgets/build_container.dart';
 
 Widget buildStackGameTypeWavesUI() => Stack(
-  children: [
-    Positioned(
-      bottom: 0,
-      left: 0,
-      child: watch(player.points, (int points) => text("Points: $points")),
-    ),
-    Positioned(
-        top: 0,
-        left: 0,
-        child: buildWatchBool(gameWaves.canPurchase, buildWavesTimer)),
-  ],
-);
+      children: [
+        Positioned(
+          bottom: 0,
+          left: 0,
+          child: watch(player.points, (int points) => text("Points: $points")),
+        ),
+        Positioned(
+            top: 0,
+            left: 0,
+            child: Container(
+                alignment: Alignment.center,
+                width: screen.width,
+                height: screen.height,
+                child: buildWatchBool(gameWaves.canPurchase, buildWavesTimer),
+            ),
+        ),
+      ],
+    );
 
 Widget buildWavesTimer() =>
   Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       watch(gameWaves.timer, (double time) => Container(
         width: 300,
@@ -36,8 +45,11 @@ Widget buildWavesTimer() =>
           color: Colors.green,
         ),
       )),
+      height64,
       watch(gameWaves.refresh, (t) =>
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
               Column(
                 children: [
@@ -45,12 +57,14 @@ Widget buildWavesTimer() =>
                   ...gameWaves.purchasePrimary.map(buildPurchase)
                 ],
               ),
+              width8,
             Column(
               children: [
                 text("Secondary"),
                 ...gameWaves.purchaseSecondary.map(buildPurchase)
               ],
             ),
+            width8,
             Column(
               children: [
                 text("Tertiary"),
