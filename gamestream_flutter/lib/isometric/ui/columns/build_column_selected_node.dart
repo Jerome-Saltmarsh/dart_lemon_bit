@@ -70,32 +70,32 @@ Widget buildEditorSelectedNode() =>
             ),
           ],
         ),
-        height4,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Tooltip(child: text("<", onPressed: () => edit.row.value--), message: "Arrow Up",),
-            watch(edit.row, (int row) => text("X: $row")),
-            Tooltip(child: text(">", onPressed: () => edit.row.value++), message: "Arrow Down",),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Tooltip(child: text("<", onPressed: () => edit.column.value--), message: "Arrow Right",),
-            watch(edit.column, (int column) => text("Y: $column")),
-            Tooltip(child: text(">", onPressed: () => edit.column.value++), message: "Arrow Left",),
-          ],
-
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Tooltip(child: text("<", onPressed: () => edit.z.value--), message: "Shift + Arrow Down",),
-            watch(edit.z, (int z) => text("Z: $z")),
-            Tooltip(child: text(">", onPressed: () => edit.z.value++), message: "Shift + Arrow Up",),
-          ],
-        ),
+        // height4,
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     Tooltip(child: text("<", onPressed: () => edit.row.value--), message: "Arrow Up",),
+        //     watch(edit.row, (int row) => text("X: $row")),
+        //     Tooltip(child: text(">", onPressed: () => edit.row.value++), message: "Arrow Down",),
+        //   ],
+        // ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     Tooltip(child: text("<", onPressed: () => edit.column.value--), message: "Arrow Right",),
+        //     watch(edit.column, (int column) => text("Y: $column")),
+        //     Tooltip(child: text(">", onPressed: () => edit.column.value++), message: "Arrow Left",),
+        //   ],
+        //
+        // ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     Tooltip(child: text("<", onPressed: () => edit.z.value--), message: "Shift + Arrow Down",),
+        //     watch(edit.z, (int z) => text("Z: $z")),
+        //     Tooltip(child: text(">", onPressed: () => edit.z.value++), message: "Shift + Arrow Up",),
+        //   ],
+        // ),
       ],
     ),
   );

@@ -169,13 +169,13 @@ class NodeType {
        Grass_Flowers:
           "Grass Flowers",
        Brick_2:
-          "Brick 2",
+          "Brick",
        Wood_2:
-          "Wood 2",
+          "Wood",
        Cottage_Roof:
           "Cottage Roof",
        Grass:
-          "Grass 2",
+          "Grass",
        Plain:
           "Plain",
        Window:
