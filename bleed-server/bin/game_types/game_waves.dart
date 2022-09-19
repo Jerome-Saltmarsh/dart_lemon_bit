@@ -21,6 +21,13 @@ class GameWaves extends Game {
   @override
   int getTime() => 0;
 
+  int mapAttackTypeToCost(int attackType) => {
+      AttackType.Blade: 3,
+      AttackType.Assault_Rifle: 10,
+      AttackType.Handgun: 5,
+      AttackType.Rifle: 15,
+  }[attackType] ?? 0;
+
   @override
   Player spawnPlayer() {
     final player = Player(game: this, weapon: buildWeaponUnarmed());
@@ -38,26 +45,24 @@ class GameWaves extends Game {
       player.writeByte(ServerResponse.Game_Waves);
       player.writeByte(GameWavesResponse.purchase_primary);
       player.writeByte(AttackType.Assault_Rifle);
-      player.writeInt(20);
+      player.writeInt(mapAttackTypeToCost(AttackType.Assault_Rifle));
 
       player.writeByte(ServerResponse.Game_Waves);
       player.writeByte(GameWavesResponse.purchase_primary);
       player.writeByte(AttackType.Rifle);
-      player.writeInt(20);
+      player.writeInt(mapAttackTypeToCost(AttackType.Rifle));
 
       player.writeByte(ServerResponse.Game_Waves);
       player.writeByte(GameWavesResponse.purchase_secondary);
       player.writeByte(AttackType.Handgun);
-      player.writeInt(5);
+      player.writeInt(mapAttackTypeToCost(AttackType.Handgun));
 
       player.writeByte(ServerResponse.Game_Waves);
       player.writeByte(GameWavesResponse.purchase_tertiary);
       player.writeByte(AttackType.Blade);
-      player.writeInt(20);
+      player.writeInt(mapAttackTypeToCost(AttackType.Blade));
 
     }, 1);
-
-
     return player;
   }
 
@@ -129,6 +134,11 @@ class GameWaves extends Game {
   @override
   void customOnPlayerRequestPurchaseWeapon(Player player, int type) {
     if (timer == 0) return;
+
+    final cost = mapAttackTypeToCost(type);
+    if (cost > player.points) return;
+
+    player.points - cost;
 
     if (type == AttackType.Assault_Rifle){
        player.weaponSlot1 = buildWeaponAssaultRifle();
