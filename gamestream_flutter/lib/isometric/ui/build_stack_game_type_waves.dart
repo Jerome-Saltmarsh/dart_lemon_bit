@@ -2,6 +2,7 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/ui/buttons/build_button_equip_attack_type.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/state/state_game_waves.dart';
 import 'package:lemon_engine/screen.dart';
@@ -83,7 +84,8 @@ Widget buildPurchase(Purchase purchase) =>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          text(AttackType.getName(purchase.type)),
+          // text(AttackType.getName(purchase.type)),
+          buildIconAttackType(purchase.type),
           text(purchase.cost),
         ],
       )

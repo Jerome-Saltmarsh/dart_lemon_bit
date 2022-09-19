@@ -8,6 +8,19 @@ import 'package:gamestream_flutter/isometric/ui/classes/atlas_src.dart';
 import 'package:gamestream_flutter/isometric/ui/maps/map_attack_type_to_atlas_src.dart';
 
 
+Widget buildIconAttackType(int type) {
+  const unknown = AtlasSrc(srcX: 11827, srcY: 133, width: 26, height: 20);
+  return buildAtlasSrc(mapAttackTypeToAtlasSrc[type] ?? unknown);
+}
+
+Widget buildAtlasSrc(AtlasSrc atlasSrc) =>
+  buildCanvasImage(
+    srcX: atlasSrc.srcX,
+    srcY: atlasSrc.srcY,
+    srcWidth: atlasSrc.width,
+    srcHeight: atlasSrc.height,
+  );
+
 Widget buildButtonWeapon(Weapon weapon, int activeWeaponType) {
   const unknown = AtlasSrc(srcX: 11827, srcY: 133, width: 26, height: 20);
   final weaponTypeAtlasImage = mapAttackTypeToAtlasSrc[weapon.type] ?? unknown;
