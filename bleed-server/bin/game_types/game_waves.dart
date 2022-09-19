@@ -6,6 +6,7 @@ import '../classes/node.dart';
 import '../common/game_waves_response.dart';
 import '../common/library.dart';
 import '../common/teams.dart';
+import '../common/type_position.dart';
 import '../dark_age/dark_age_scenes.dart';
 
 class GameWaves extends Game {
@@ -28,6 +29,14 @@ class GameWaves extends Game {
       AttackType.Rifle: 15,
   }[attackType] ?? 0;
 
+  void writePurchase(Player player, int position, int type){
+    player.writeByte(ServerResponse.Game_Waves);
+    player.writeByte(GameWavesResponse.purchase);
+    player.writeByte(position);
+    player.writeByte(type);
+    player.writeInt(mapAttackTypeToCost(type));
+  }
+
   @override
   Player spawnPlayer() {
     final player = Player(game: this, weapon: buildWeaponUnarmed());
@@ -42,25 +51,15 @@ class GameWaves extends Game {
       player.writeByte(ServerResponse.Game_Waves);
       player.writeByte(GameWavesResponse.clear_upgrades);
 
-      player.writeByte(ServerResponse.Game_Waves);
-      player.writeByte(GameWavesResponse.purchase_primary);
-      player.writeByte(AttackType.Assault_Rifle);
-      player.writeInt(mapAttackTypeToCost(AttackType.Assault_Rifle));
+      writePurchase(player, TypePosition.Primary, AttackType.Assault_Rifle);
+      writePurchase(player, TypePosition.Primary, AttackType.Rifle);
+      writePurchase(player, TypePosition.Primary, AttackType.Shotgun);
+      writePurchase(player, TypePosition.Secondary, AttackType.Handgun);
+      writePurchase(player, TypePosition.Secondary, AttackType.Crossbow);
+      writePurchase(player, TypePosition.Tertiary, AttackType.Blade);
+      writePurchase(player, TypePosition.Tertiary, AttackType.Staff);
 
-      player.writeByte(ServerResponse.Game_Waves);
-      player.writeByte(GameWavesResponse.purchase_primary);
-      player.writeByte(AttackType.Rifle);
-      player.writeInt(mapAttackTypeToCost(AttackType.Rifle));
 
-      player.writeByte(ServerResponse.Game_Waves);
-      player.writeByte(GameWavesResponse.purchase_secondary);
-      player.writeByte(AttackType.Handgun);
-      player.writeInt(mapAttackTypeToCost(AttackType.Handgun));
-
-      player.writeByte(ServerResponse.Game_Waves);
-      player.writeByte(GameWavesResponse.purchase_tertiary);
-      player.writeByte(AttackType.Blade);
-      player.writeInt(mapAttackTypeToCost(AttackType.Blade));
 
     }, 1);
     return player;

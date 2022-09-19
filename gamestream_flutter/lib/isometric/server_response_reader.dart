@@ -6,6 +6,7 @@ import 'package:bleed_common/game_waves_response.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/quest.dart';
+import 'package:bleed_common/type_position.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
@@ -239,25 +240,23 @@ class ServerResponseReader with ByteReader {
         gameWaves.purchaseTertiary.clear();
         gameWaves.refresh.value++;
         break;
-      case GameWavesResponse.purchase_primary:
+      case GameWavesResponse.purchase:
+        final position = readByte();
         final type = readByte();
         final cost = readInt();
         final purchase = Purchase(type, cost);
-        gameWaves.purchasePrimary.add(purchase);
-        gameWaves.refresh.value++;
-        break;
-      case GameWavesResponse.purchase_secondary:
-        final type = readByte();
-        final cost = readInt();
-        final purchase = Purchase(type, cost);
-        gameWaves.purchaseSecondary.add(purchase);
-        gameWaves.refresh.value++;
-        break;
-      case GameWavesResponse.purchase_tertiary:
-        final type = readByte();
-        final cost = readInt();
-        final purchase = Purchase(type, cost);
-        gameWaves.purchaseTertiary.add(purchase);
+
+        switch (position){
+          case TypePosition.Primary:
+            gameWaves.purchasePrimary.add(purchase);
+            break;
+          case TypePosition.Secondary:
+            gameWaves.purchaseSecondary.add(purchase);
+            break;
+          case TypePosition.Tertiary:
+            gameWaves.purchaseTertiary.add(purchase);
+            break;
+        }
         gameWaves.refresh.value++;
         break;
     }
