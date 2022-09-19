@@ -75,7 +75,7 @@ abstract class Game {
   /// safe to override
   void customOnAIRespawned(AI ai){  }
   /// safe to override
-  void handlePlayerRequestPurchaseWeapon(Player player, int type){ }
+  void customOnPlayerRequestPurchaseWeapon(Player player, int type){ }
 
   /// PROPERTIES
 

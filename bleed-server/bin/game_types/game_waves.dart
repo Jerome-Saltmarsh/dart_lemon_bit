@@ -59,7 +59,6 @@ class GameWaves extends Game {
     return player;
   }
 
-
   @override
   void customUpdate() {
     if (timer <= 0) return;
@@ -123,7 +122,7 @@ class GameWaves extends Game {
   }
 
   @override
-  void handlePlayerRequestPurchaseWeapon(Player player, int type) {
+  void customOnPlayerRequestPurchaseWeapon(Player player, int type) {
     if (timer == 0) return;
 
     if (type == AttackType.Assault_Rifle){

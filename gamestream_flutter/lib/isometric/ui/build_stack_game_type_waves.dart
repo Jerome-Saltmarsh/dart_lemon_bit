@@ -2,6 +2,7 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/state/state_game_waves.dart';
 
 import 'widgets/build_container.dart';
@@ -27,22 +28,33 @@ Widget buildWavesTimer(int timer) => timer <= 0 ? const SizedBox() :
           Column(
             children: [
               text("Primary"),
-              ...gameWaves.purchasePrimary.map((e) => container(child: AttackType.getName(e.type)))
+              ...gameWaves.purchasePrimary.map(buildPurchase)
             ],
           ),
         Column(
           children: [
             text("Secondary"),
-            ...gameWaves.purchaseSecondary.map((e) => container(child: AttackType.getName(e.type)))
+            ...gameWaves.purchaseSecondary.map(buildPurchase)
           ],
         ),
         Column(
           children: [
             text("Tertiary"),
-            ...gameWaves.purchaseTertiary.map((e) => container(child: AttackType.getName(e.type)))
+            ...gameWaves.purchaseTertiary.map(buildPurchase)
           ],
-        )
-
+        ),
       ],
     )
+  );
+
+Widget buildPurchase(Purchase purchase) =>
+  container(
+      action: () => sendClientRequestPurchaseWeapon(purchase.type),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          text(AttackType.getName(purchase.type)),
+          text(purchase.cost),
+        ],
+      )
   );
