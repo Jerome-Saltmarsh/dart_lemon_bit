@@ -1,4 +1,3 @@
-import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
@@ -84,7 +83,6 @@ Widget buildPurchase(Purchase purchase) =>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // text(AttackType.getName(purchase.type)),
           buildIconAttackType(purchase.type),
           text(purchase.cost),
         ],
