@@ -42,7 +42,6 @@ import 'classes/node.dart';
 import 'classes/npc_debug.dart';
 import 'classes/projectile.dart';
 import 'grid.dart';
-import 'items.dart';
 import 'player.dart';
 import 'player_store.dart';
 import 'time.dart';
@@ -51,22 +50,14 @@ import 'weather/breeze.dart';
 final serverResponseReader = ServerResponseReader();
 final byteLength = Watch(0);
 final bufferSize = Watch(0);
-final totalEvents = Watch(0);
-final framesSinceUpdateReceived = Watch(0);
-final msSinceLastUpdate = Watch(0);
-final averageUpdate = Watch(0.0);
-final sync = Watch(0.0);
-var durationTotal = 0;
-
-var time = DateTime.now();
+final rendersSinceUpdate = Watch(0);
+final updateFrame = Watch(0);
 
 class ServerResponseReader with ByteReader {
-  final npcDebug = <NpcDebug>[];
-  var bulletHoleIndex = 0;
-  var itemsTotal = 0;
 
   void readBytes(Uint8List values) {
-    framesSinceUpdateReceived.value = 0;
+    updateFrame.value++;
+    rendersSinceUpdate.value = 0;
     index = 0;
     totalCharacters = 0;
     totalGameObjects = 0;
@@ -122,9 +113,6 @@ class ServerResponseReader with ByteReader {
           break;
         case ServerResponse.End:
           return readEnd();
-        case ServerResponse.Items:
-          readerItems();
-          break;
         case ServerResponse.Projectiles:
           readProjectiles();
           break;
@@ -248,6 +236,10 @@ class ServerResponseReader with ByteReader {
     final apiPlayer = readByte();
     switch (apiPlayer) {
       case ApiPlayer.Position:
+        player.previousPosition.x = player.x;
+        player.previousPosition.y = player.y;
+        player.previousPosition.z = player.z;
+        // saveInterpolation();
         readVector3(player);
         break;
       case ApiPlayer.Health:
@@ -479,6 +471,7 @@ class ServerResponseReader with ByteReader {
   void readEnd() {
     byteLength.value = index;
     index = 0;
+    engine.redrawCanvas();
   }
 
   void readStoreItems() {
@@ -687,20 +680,6 @@ class ServerResponseReader with ByteReader {
     );
   }
 
-  void updateSync() {
-    final now = DateTime.now();
-    final duration = now.difference(time);
-    time = now;
-    msSinceLastUpdate.value = duration.inMilliseconds;
-    totalEvents.value++;
-    durationTotal += duration.inMilliseconds;
-    if (durationTotal == 0){
-      durationTotal = 35;
-    }
-    averageUpdate.value = durationTotal / totalEvents.value;
-    sync.value = duration.inMilliseconds / averageUpdate.value;
-  }
-
   void readGameEvent(){
       final type = readByte();
       final x = readDouble();
@@ -733,19 +712,6 @@ class ServerResponseReader with ByteReader {
     character.allie = byte >= 100;
     character.direction = (byte % 100) ~/ 10;
     character.state = byte % 10;
-  }
-
-  void readerItems(){
-    itemsTotal = 0;
-    while (true) {
-      final itemTypeIndex = readByte();
-      if (itemTypeIndex == END) break;
-      final item = items[index];
-      item.type = itemTypeIndex;
-      item.x = readDouble();
-      item.y = readDouble();
-      itemsTotal++;
-    }
   }
 
   void readNpcs() {

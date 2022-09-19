@@ -78,4 +78,9 @@ class Vector3 with Position {
   double _sq(double value){
     return value * value;
   }
+
+  double get magnitude {
+    return sqrt((x * x) + (y * y) + (z * z));
+  }
+
 }

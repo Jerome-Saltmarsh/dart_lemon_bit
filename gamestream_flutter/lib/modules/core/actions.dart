@@ -142,7 +142,6 @@ class CoreActions {
     totalPlayers = 0;
     totalProjectiles = 0;
     totalNpcs = 0;
-    serverResponseReader.bulletHoleIndex = 0;
     totalCollectables = 0;
     particleEmitters.clear();
     particles.clear();

@@ -9,7 +9,6 @@ class ServerResponse {
   static const Paths = 12; 
   static const Score = 13;
   static const Player_Events = 14;
-  static const Items = 15;
   static const Version = 16;
   static const Crates = 17;
   static const NpcMessage = 18;

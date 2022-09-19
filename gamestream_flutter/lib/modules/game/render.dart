@@ -2,6 +2,8 @@ import 'package:bleed_common/attack_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/isometric/ai.dart';
+import 'package:gamestream_flutter/isometric/camera.dart';
+import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
@@ -12,6 +14,7 @@ import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/render/render_wireframe.dart';
+import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse_raycast.dart';
 import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -19,9 +22,11 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_math/library.dart';
-
+import 'package:lemon_watch/watch.dart';
 import 'state.dart';
 import 'style.dart';
+
+final renderFrame = Watch(0);
 
 class GameRender {
   final GameState state;
@@ -38,12 +43,41 @@ class GameRender {
   }
 
   void renderGame(Canvas canvas, Size size) {
+    renderFrame.value++;
+    updateCameraMode();
+    // interpolatePlayer();
     attackTargetCircle();
     renderSprites();
     renderEditMode();
     renderMouseTargetName();
     renderWeaponRoundInformation();
+    rendersSinceUpdate.value++;
   }
+
+  /// Render the player in the same relative position to the camera
+  void interpolatePlayer(){
+
+    player.interpolating.value = rendersSinceUpdate.value == 1;
+
+    if (!player.interpolating.value) return;
+
+    final playerCharacter = getPlayerCharacter();
+    if (playerCharacter == null) return;
+
+    player.velocity.x = player.x - player.previousPosition.x;
+    player.velocity.y = player.y - player.previousPosition.y;
+    player.velocity.z = player.z - player.previousPosition.z;
+
+
+    // final speed = player.velocity.magnitude;
+
+    // if (speed < 5){
+      playerCharacter.x += player.velocity.x;
+      playerCharacter.y += player.velocity.y;
+      playerCharacter.z -= player.velocity.z;
+    // }
+  }
+
 
   void renderWeaponRoundInformation() {
     if (!AttackType.requiresRounds(player.weaponType.value))

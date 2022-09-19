@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
+import 'package:gamestream_flutter/modules/game/render.dart';
 import 'package:lemon_engine/engine.dart';
 
 import '../server_response_reader.dart';
@@ -32,7 +33,12 @@ Widget buildHudDebug() {
               Refresh(() => text('characters: $totalCharacters')),
               Refresh(() => text('Onscreen: $onscreenNodes, off-left: $offscreenNodesLeft, off-top: $offscreenNodesTop, off-right: $offscreenNodesRight, off-bottom: $offscreenNodesBottom')),
               Refresh(() => text('Engine.Frame: ${engine.frame}')),
+              watch(renderFrame, (t) => text("Render.Frame: $t")),
+              watch(updateFrame, (t) => text("Update.Frame: $t")),
               Refresh(() => text('Particles: {active: $totalActiveParticles, total: ${particles.length}')),
+              Refresh(() => text('Player Velocity: (x: ${player.velocity.x}, y: ${player.velocity.y}, z: ${player.velocity.z})')),
+              Refresh(() => text('Player Velocity Magnitude: ${player.velocity.magnitude}')),
+              watch(player.interpolating, (bool interpolating) => text("Interpolating: $interpolating")),
             ],
           )),
     ],

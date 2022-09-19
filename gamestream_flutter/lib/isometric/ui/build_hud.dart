@@ -38,7 +38,7 @@ Widget buildGameUI()  =>
       watch(playMode, buildPlayMode),
       buildWatchBool(debugVisible, buildHudDebug),
       buildWatchBool(player.questAdded, buildContainerQuestUpdated),
-      watch(framesSinceUpdateReceived, (int frames) => text("Frames since update: $frames")),
+      watch(rendersSinceUpdate, (int frames) => text("Frames since update: $frames")),
     ],
   );
 
