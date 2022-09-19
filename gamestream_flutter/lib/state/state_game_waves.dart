@@ -4,7 +4,10 @@ import 'package:lemon_watch/watch.dart';
 final gameWaves = GameWaves();
 
 class GameWaves {
-  final timer = Watch(0);
+  final timer = Watch(0.0, onChanged: (double value){
+    gameWaves.canPurchase.value = value > 0;
+  });
+  final canPurchase = Watch(false);
 
   final purchasePrimary = <Purchase>[];
   final purchaseSecondary = <Purchase>[];

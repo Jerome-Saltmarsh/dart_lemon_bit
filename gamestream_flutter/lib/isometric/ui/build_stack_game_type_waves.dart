@@ -17,34 +17,50 @@ Widget buildStackGameTypeWavesUI() => Stack(
     Positioned(
         top: 0,
         left: 0,
-        child: watch(gameWaves.timer, buildWavesTimer)),
+        child: buildWatchBool(gameWaves.canPurchase, buildWavesTimer)),
   ],
 );
 
-Widget buildWavesTimer(int timer) => timer <= 0 ? const SizedBox() :
-  watch(gameWaves.refresh, (t) =>
-    Row(
-      children: [
-          Column(
-            children: [
-              text("Primary"),
-              ...gameWaves.purchasePrimary.map(buildPurchase)
-            ],
-          ),
-        Column(
-          children: [
-            text("Secondary"),
-            ...gameWaves.purchaseSecondary.map(buildPurchase)
-          ],
+Widget buildWavesTimer() =>
+  Column(
+    children: [
+      watch(gameWaves.timer, (double time) => Container(
+        width: 300,
+        height: 50,
+        padding: EdgeInsets.all(3),
+        color: Colors.white,
+        alignment: Alignment.centerLeft,
+        child: Container(
+          width: 300 * time,
+          height: 50,
+          color: Colors.green,
         ),
-        Column(
+      )),
+      watch(gameWaves.refresh, (t) =>
+        Row(
           children: [
-            text("Tertiary"),
-            ...gameWaves.purchaseTertiary.map(buildPurchase)
+              Column(
+                children: [
+                  text("Primary"),
+                  ...gameWaves.purchasePrimary.map(buildPurchase)
+                ],
+              ),
+            Column(
+              children: [
+                text("Secondary"),
+                ...gameWaves.purchaseSecondary.map(buildPurchase)
+              ],
+            ),
+            Column(
+              children: [
+                text("Tertiary"),
+                ...gameWaves.purchaseTertiary.map(buildPurchase)
+              ],
+            ),
           ],
-        ),
-      ],
-    )
+        )
+      ),
+    ],
   );
 
 Widget buildPurchase(Purchase purchase) =>

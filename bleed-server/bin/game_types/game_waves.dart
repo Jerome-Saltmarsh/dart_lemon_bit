@@ -10,7 +10,7 @@ import '../dark_age/dark_age_scenes.dart';
 
 class GameWaves extends Game {
 
-  static const framesBetweenRounds = 300;
+  static const framesBetweenRounds = 1000;
 
   var timer = framesBetweenRounds;
   var remaining = 0;
@@ -23,6 +23,7 @@ class GameWaves extends Game {
   @override
   Player spawnPlayer() {
     final player = Player(game: this, weapon: buildWeaponUnarmed());
+    player.points = 5;
     player.weaponSlot1 = buildWeaponUnarmed();
     player.weaponSlot2 = buildWeaponUnarmed();
     player.weaponSlot3 = buildWeaponUnarmed();
@@ -67,7 +68,7 @@ class GameWaves extends Game {
     for (final player in players) {
       player.writeByte(ServerResponse.Game_Waves);
       player.writeByte(GameWavesResponse.timer);
-      player.writeInt(timer);
+      player.writePercentage(timer / framesBetweenRounds);
     }
 
     if (timer == 0)
