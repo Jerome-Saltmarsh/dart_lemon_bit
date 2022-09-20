@@ -8,6 +8,9 @@ import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 
+const _shiftX = 23.0;
+const _shiftY = 20.0;
+
 Widget buildEditorSelectedNode() =>
   Container(
     width: 130,
@@ -40,87 +43,95 @@ Widget buildEditorSelectedNode() =>
           height: 70,
             alignment: Alignment.center,
             child: watch(edit.nodeSelected, (Node t) => text(NodeType.getName(t.type), align: TextAlign.center))),
-        Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Positioned(
-              top: 60,
-              left: 27,
-              child: buildAtlasImageButton(
-                  action: edit.cursorZDecrease,
+        Container(
+          width: 120,
+          height: 120,
+          alignment: Alignment.center,
+          color: Colors.green,
+          child: Stack(
+            // clipBehavior: Clip.none,
+            fit: StackFit.expand,
+            alignment: Alignment.center,
+            children: [
+              Positioned(
+                top: 65 + _shiftY,
+                left: 27 + _shiftX,
+                child: buildAtlasImageButton(
+                    action: edit.cursorZDecrease,
+                    srcX: 9650,
+                    srcY: 27,
+                    srcWidth: 19,
+                    srcHeight: 27,
+                    hint: "Shift + Arrow Down"
+                ),
+              ),
+              Positioned(
+                top: 3 + _shiftY,
+                left: 3 + _shiftY,
+                child: buildAtlasImageButton(
+                  action: edit.cursorRowDecrease,
+                  srcX: 9649,
+                  srcY: 110,
+                  srcWidth: 21,
+                  srcHeight: 21,
+                  hint: "Arrow Up"
+                ),
+              ),
+              Positioned(
+                top: 3 + _shiftY,
+                left: 45+ _shiftX,
+                child: buildAtlasImageButton(
+                    action: edit.cursorColumnDecrease,
+                    srcX: 9649,
+                    srcY: 137,
+                    srcWidth: 21,
+                    srcHeight: 21,
+                    hint: "Arrow Right"
+                ),
+              ),
+              Container(
+                  height: 72,
+                  width: 72,
+                  alignment: Alignment.center,
+                  child: watch(edit.nodeSelected, (Node t) => buildIconNodeType(t.type))),
+              Positioned(
+                top: 50 + _shiftY,
+                left: 50 + _shiftX,
+                child: buildAtlasImageButton(
+                  action: edit.cursorRowIncrease,
+                  srcX: 9649,
+                  srcY: 56,
+                  srcWidth: 21,
+                  srcHeight: 21,
+                  hint: "Arrow Down"
+                ),
+              ),
+              Positioned(
+                top: -10 + _shiftY,
+                left: 27 + _shiftX,
+                child: buildAtlasImageButton(
+                  action: edit.cursorZIncrease,
                   srcX: 9650,
-                  srcY: 27,
-                  srcWidth: 19,
-                  srcHeight: 27,
-                  hint: "Shift + Arrow Down"
-              ),
-            ),
-            Positioned(
-              top: 3,
-              left: 3,
-              child: buildAtlasImageButton(
-                action: edit.cursorRowDecrease,
-                srcX: 9649,
-                srcY: 110,
-                srcWidth: 21,
-                srcHeight: 21,
-                hint: "Arrow Up"
-              ),
-            ),
-            Positioned(
-              top: 3,
-              left: 45,
-              child: buildAtlasImageButton(
-                  action: edit.cursorColumnDecrease,
-                  srcX: 9649,
-                  srcY: 137,
+                  srcY: 0,
                   srcWidth: 21,
                   srcHeight: 21,
-                  hint: "Arrow Right"
+                  hint: "Shift + Arrow Up"
+                ),
               ),
-            ),
-            Container(
-                height: 72,
-                width: 72,
-                alignment: Alignment.center,
-                child: watch(edit.nodeSelected, (Node t) => buildIconNodeType(t.type))),
-            Positioned(
-              top: 50,
-              left: 50,
-              child: buildAtlasImageButton(
-                action: edit.cursorRowIncrease,
-                srcX: 9649,
-                srcY: 56,
-                srcWidth: 21,
-                srcHeight: 21,
-                hint: "Arrow Down"
+              Positioned(
+                top: 50 + _shiftY,
+                left: 0 + _shiftX,
+                child: buildAtlasImageButton(
+                    action: edit.cursorColumnIncrease,
+                    srcX: 9649,
+                    srcY: 83,
+                    srcWidth: 21,
+                    srcHeight: 21,
+                    hint: "Arrow Left"
+                ),
               ),
-            ),
-            Positioned(
-              top: -10,
-              left: 27,
-              child: buildAtlasImageButton(
-                action: edit.cursorZIncrease,
-                srcX: 9650,
-                srcY: 0,
-                srcWidth: 21,
-                srcHeight: 21,
-                hint: "Shift + Arrow Up"
-              ),
-            ),
-            Positioned(
-              top: 50,
-              left: 0,
-              child: buildAtlasImageButton(
-                  action: edit.cursorColumnIncrease,
-                  srcX: 9649,
-                  srcY: 83,
-                  srcWidth: 21,
-                  srcHeight: 21,
-                  hint: "Arrow Left"
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
         // height4,
         // Row(
