@@ -32,7 +32,7 @@ class Player extends Character with ByteWriter {
   var textDuration = 0;
   var _experience = 0;
   var level = 1;
-  var points = 0;
+  var _points = 0;
   var _magic = 0;
   var maxMagic = 100;
   var message = "";
@@ -71,6 +71,14 @@ class Player extends Character with ByteWriter {
   double get mouseGridY => (mouse.y - mouse.x) + z;
 
   int get experience => _experience;
+
+  int get points => _points;
+
+  set points(int value){
+    if (_points == value) return;
+    _points = value >= 0 ? value : 0;
+    writePoints();
+  }
 
   set experience(int value){
     if (value < 0) {

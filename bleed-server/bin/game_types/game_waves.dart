@@ -137,7 +137,7 @@ class GameWaves extends Game {
     final cost = mapAttackTypeToCost(type);
     if (cost > player.points) return;
 
-    player.points - cost;
+    player.points -= cost;
 
     if (type == AttackType.Assault_Rifle){
        player.weaponSlot1 = buildWeaponAssaultRifle();
