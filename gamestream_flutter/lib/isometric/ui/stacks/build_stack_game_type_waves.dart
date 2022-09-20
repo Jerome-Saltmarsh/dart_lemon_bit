@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_button_equip_attack_type.dart';
+import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/state/state_game_waves.dart';
 import 'package:lemon_engine/screen.dart';
-
-import 'widgets/build_container.dart';
 
 Widget buildStackGameTypeWavesUI() => Stack(
       children: [

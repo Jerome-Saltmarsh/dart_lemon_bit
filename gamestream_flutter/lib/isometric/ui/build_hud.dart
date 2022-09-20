@@ -10,7 +10,7 @@ import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
-import 'package:gamestream_flutter/isometric/ui/build_stack_game_type_waves.dart';
+import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_game_type_waves.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
@@ -24,6 +24,7 @@ import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:lemon_engine/screen.dart';
 
 import 'build_hud_debug.dart';
+import 'stacks/build_stack_game_type_world.dart';
 
 Widget buildGameUI()  =>
   Stack(
@@ -37,7 +38,6 @@ Widget buildGameUI()  =>
       watch(playMode, buildPlayMode),
       buildWatchBool(debugVisible, buildHudDebug),
       buildWatchBool(player.questAdded, buildContainerQuestUpdated),
-      // watch(rendersSinceUpdate, (int frames) => text("Frames since update: $frames")),
     ],
   );
 
@@ -45,6 +45,8 @@ Widget buildGameTypeUI(int? gameType) {
    switch (gameType) {
      case GameType.Waves:
        return buildStackGameTypeWavesUI();
+     case GameType.Dark_Age:
+       return buildStackGameTypeWorld();
      default:
        return const SizedBox();
    }
