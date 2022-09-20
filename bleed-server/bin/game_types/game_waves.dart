@@ -29,10 +29,20 @@ class GameWaves extends Game {
       AttackType.Rifle: 15,
   }[attackType] ?? 0;
 
-  void writePurchase(Player player, int position, int type){
+  int mapAttackTypeToPosition(int attackType) => {
+    AttackType.Assault_Rifle: TypePosition.Primary,
+    AttackType.Rifle: TypePosition.Primary,
+    AttackType.Shotgun: TypePosition.Primary,
+    AttackType.Handgun: TypePosition.Secondary,
+    AttackType.Fireball: TypePosition.Secondary,
+    AttackType.Bow: TypePosition.Secondary,
+    AttackType.Blade: TypePosition.Tertiary,
+  }[attackType] ?? 0;
+
+  void writePurchase(Player player, int type){
     player.writeByte(ServerResponse.Game_Waves);
     player.writeByte(GameWavesResponse.purchase);
-    player.writeByte(position);
+    player.writeByte(mapAttackTypeToPosition(type));
     player.writeByte(type);
     player.writeInt(mapAttackTypeToCost(type));
   }
@@ -51,16 +61,16 @@ class GameWaves extends Game {
       player.writeByte(ServerResponse.Game_Waves);
       player.writeByte(GameWavesResponse.clear_upgrades);
 
-      writePurchase(player, TypePosition.Primary, AttackType.Assault_Rifle);
-      writePurchase(player, TypePosition.Primary, AttackType.Rifle);
-      writePurchase(player, TypePosition.Primary, AttackType.Shotgun);
-      writePurchase(player, TypePosition.Secondary, AttackType.Handgun);
-      writePurchase(player, TypePosition.Secondary, AttackType.Crossbow);
-      writePurchase(player, TypePosition.Tertiary, AttackType.Blade);
-      writePurchase(player, TypePosition.Tertiary, AttackType.Staff);
-
-
-
+      writePurchase(player, AttackType.Assault_Rifle);
+      writePurchase(player, AttackType.Rifle);
+      writePurchase(player, AttackType.Shotgun);
+      writePurchase(player, AttackType.Handgun);
+      writePurchase(player, AttackType.Crossbow);
+      writePurchase(player, AttackType.Bow);
+      writePurchase(player, AttackType.Fireball);
+      writePurchase(player, AttackType.Blade);
+      writePurchase(player, AttackType.Staff);
+      writePurchase(player, AttackType.Baseball_Bat);
     }, 1);
     return player;
   }
@@ -121,6 +131,37 @@ class GameWaves extends Game {
     }
   }
 
+  Weapon buildWeaponByType(int type){
+    switch(type){
+      case AttackType.Bow:
+        return buildWeaponBow();
+      case AttackType.Unarmed:
+        return buildWeaponUnarmed();
+      case AttackType.Assault_Rifle:
+        return buildWeaponAssaultRifle();
+      case AttackType.Rifle:
+        return buildWeaponRifle();
+      case AttackType.Handgun:
+        return buildWeaponHandgun();
+      case AttackType.Blade:
+        return buildWeaponBlade();
+      case AttackType.Fireball:
+        return buildWeaponFireball();
+      case AttackType.Baseball_Bat:
+        return buildWeaponBaseballBat();
+      case AttackType.Fireball:
+        return buildWeaponFireball();
+      case AttackType.Staff:
+        return buildWeaponStaff();
+      case AttackType.Crossbow:
+        return buildWeaponCrossBow();
+      case AttackType.Revolver:
+        return buildWeaponRevolver();
+      default:
+        throw Exception("could not build weapon of type $type");
+    }
+  }
+
   @override
   void customOnPlayerCollisionWithLoot(Player player, GameObjectLoot loot){
     deactivateGameObject(loot);
@@ -128,6 +169,22 @@ class GameWaves extends Game {
     player.points++;
     player.writePoints();
     player.dispatchEventLootCollected();
+  }
+
+  void assignPlayerWeapon(Player player, Weapon weapon){
+     switch(mapAttackTypeToPosition(weapon.type)){
+       case TypePosition.Primary:
+         player.weaponSlot1 = weapon;
+         return;
+       case TypePosition.Secondary:
+         player.weaponSlot2 = weapon;
+         return;
+       case TypePosition.Tertiary:
+         player.weaponSlot3 = weapon;
+         return;
+       default:
+         throw Exception("Cannot assign player weapon to player ${weapon.type}");
+     }
   }
 
   @override
@@ -139,15 +196,8 @@ class GameWaves extends Game {
 
     player.points -= cost;
 
-    if (type == AttackType.Assault_Rifle){
-       player.weaponSlot1 = buildWeaponAssaultRifle();
-    }
-    if (type == AttackType.Shotgun){
-      player.weaponSlot1 = buildWeaponShotgun();
-    }
-    if (type == AttackType.Blade){
-      player.weaponSlot2 = buildWeaponBlade();
-    }
+    player.writePlayerEvent(PlayerEvent.Item_Equipped);
+    assignPlayerWeapon(player, buildWeaponByType(type));
   }
 
   @override

@@ -143,6 +143,14 @@ void onGameEventSwordSlash(double x, double y, double z, double angle) {
   }
 }
 
+void onGameEventAttackPerformedUnarmed(double x, double y, double z, double angle) {
+  spawnParticleSlash(x: x, y: y, z: z, angle: angle);
+  // audioSingleArmSwingWhoosh.playXYZ(x, y, z);
+  for (var i = 0; i < 3; i++) {
+    spawnParticleBubble(x: x, y: y, z: z, angle: angle + giveOrTake(piQuarter), speed: 3 + giveOrTake(2));
+  }
+}
+
 void onGameEventSpawnDustCloud(double x, double y, double z) {
   for (var i = 0; i < 3; i++){
     spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: randomAngle());

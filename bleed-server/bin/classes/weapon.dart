@@ -93,6 +93,15 @@ Weapon buildWeaponBow() =>
       range: 200,
    );
 
+Weapon buildWeaponCrossBow() =>
+    Weapon(
+      type: AttackType.Crossbow,
+      damage: 1,
+      capacity: 15,
+      duration: 30,
+      range: 200,
+    );
+
 Weapon buildWeaponStaff() =>
     Weapon(
       type: AttackType.Staff,
@@ -102,6 +111,14 @@ Weapon buildWeaponStaff() =>
       range: 200,
     );
 
+/// TODO implement
+Weapon buildWeaponBaseballBat() =>
+    Weapon(
+      type: AttackType.Blade,
+      damage: 3,
+      duration: 20,
+      range: 60,
+    );
 
 Weapon buildWeaponBlade() =>
     Weapon(
