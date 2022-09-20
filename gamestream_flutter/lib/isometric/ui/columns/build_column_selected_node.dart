@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
+import 'package:gamestream_flutter/utils/widget_utils.dart';
 
 const _shiftX = 23.0;
 const _shiftY = 20.0;
@@ -49,20 +50,21 @@ Widget buildEditorSelectedNode() =>
           alignment: Alignment.center,
           color: Colors.green,
           child: Stack(
-            // clipBehavior: Clip.none,
             fit: StackFit.expand,
             alignment: Alignment.center,
             children: [
               Positioned(
                 top: 65 + _shiftY,
                 left: 27 + _shiftX,
-                child: buildAtlasImageButton(
-                    action: edit.cursorZDecrease,
-                    srcX: 9650,
-                    srcY: 27,
-                    srcWidth: 19,
-                    srcHeight: 27,
-                    hint: "Shift + Arrow Down"
+                child: onMouseOver(builder: (BuildContext context, bool mouseOver) =>
+                      buildAtlasImageButton(
+                          action: edit.cursorZDecrease,
+                          srcX: mouseOver ? 9673 : 9650,
+                          srcY: 27,
+                          srcWidth: 19,
+                          srcHeight: 27,
+                          hint: "Shift + Arrow Down"
+                      )
                 ),
               ),
               Positioned(
