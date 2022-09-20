@@ -99,14 +99,14 @@ Widget buildEditorSelectedNode() =>
               Positioned(
                 top: 50 + _shiftY,
                 left: 50 + _shiftX,
-                child: buildAtlasImageButton(
+                child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
                   action: edit.cursorRowIncrease,
-                  srcX: 9649,
+                  srcX: mouseOver ? 9672 : 9649,
                   srcY: 56,
                   srcWidth: 21,
                   srcHeight: 21,
                   hint: "Arrow Down"
-                ),
+                )),
               ),
               Positioned(
                 top: -10 + _shiftY,
