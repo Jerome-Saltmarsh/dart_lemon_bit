@@ -41,7 +41,20 @@ Widget buildEditorSelectedNode() =>
             alignment: Alignment.center,
             child: watch(edit.nodeSelected, (Node t) => text(NodeType.getName(t.type), align: TextAlign.center))),
         Stack(
+          clipBehavior: Clip.none,
           children: [
+            Positioned(
+              top: 55,
+              left: 27,
+              child: buildAtlasImageButton(
+                  action: edit.cursorZDecrease,
+                  srcX: 9650,
+                  srcY: 27,
+                  srcWidth: 19,
+                  srcHeight: 27,
+                  hint: "Shift + Arrow Down"
+              ),
+            ),
             Positioned(
               top: 3,
               left: 3,
