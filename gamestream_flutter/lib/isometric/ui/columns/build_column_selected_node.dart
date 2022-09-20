@@ -111,26 +111,26 @@ Widget buildEditorSelectedNode() =>
               Positioned(
                 top: -10 + _shiftY,
                 left: 27 + _shiftX,
-                child: buildAtlasImageButton(
+                child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
                   action: edit.cursorZIncrease,
-                  srcX: 9650,
+                  srcX: mouseOver ? 9673 : 9650,
                   srcY: 0,
                   srcWidth: 21,
                   srcHeight: 21,
                   hint: "Shift + Arrow Up"
-                ),
+                )),
               ),
               Positioned(
                 top: 50 + _shiftY,
                 left: 0 + _shiftX,
-                child: buildAtlasImageButton(
+                child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
                     action: edit.cursorColumnIncrease,
-                    srcX: 9649,
+                    srcX: mouseOver ? 9672 : 9649,
                     srcY: 83,
                     srcWidth: 21,
                     srcHeight: 21,
                     hint: "Arrow Left"
-                ),
+                )),
               ),
             ],
           ),
