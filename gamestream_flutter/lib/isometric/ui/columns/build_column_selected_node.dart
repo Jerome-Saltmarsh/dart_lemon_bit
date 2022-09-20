@@ -67,13 +67,25 @@ Widget buildEditorSelectedNode() =>
                 hint: "Arrow Up"
               ),
             ),
+            Positioned(
+              top: 3,
+              left: 45,
+              child: buildAtlasImageButton(
+                  action: edit.cursorColumnDecrease,
+                  srcX: 9649,
+                  srcY: 137,
+                  srcWidth: 21,
+                  srcHeight: 21,
+                  hint: "Arrow Right"
+              ),
+            ),
             Container(
                 height: 72,
                 width: 72,
                 alignment: Alignment.center,
                 child: watch(edit.nodeSelected, (Node t) => buildIconNodeType(t.type))),
             Positioned(
-              top: 45,
+              top: 65,
               left: 45,
               child: buildAtlasImageButton(
                 action: edit.cursorRowIncrease,
