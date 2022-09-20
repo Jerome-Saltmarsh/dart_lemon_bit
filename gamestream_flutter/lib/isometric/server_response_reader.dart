@@ -40,7 +40,6 @@ import 'package:lemon_watch/watch.dart';
 import 'ai.dart';
 import 'camera.dart';
 import 'classes/node.dart';
-import 'classes/npc_debug.dart';
 import 'classes/projectile.dart';
 import 'grid.dart';
 import 'player.dart';
@@ -88,6 +87,9 @@ class ServerResponseReader with ByteReader {
           break;
         case ServerResponse.GameObject_Spawn:
           readGameObjectSpawn();
+          break;
+        case ServerResponse.GameObject:
+          readGameObject();
           break;
         case ServerResponse.Game_Waves:
           readServerResponseGameWaves();
@@ -228,6 +230,15 @@ class ServerResponseReader with ByteReader {
     }
   }
 
+  void readGameObject() {
+    final gameObjectType = readByte();
+    switch (gameObjectType) {
+      case GameObjectType.Particle_Emitter:
+        final instance = getInstanceGameObject();
+        break;
+    }
+  }
+
   void readServerResponseGameWaves() {
     final gameWavesResponse = readByte();
     switch (gameWavesResponse) {
@@ -312,14 +323,12 @@ class ServerResponseReader with ByteReader {
     readVector3(gameObject);
     gameObject.type = GameObjectType.Loot;
     gameObject.lootType = readByte();
-    totalGameObjects++;
   }
 
   void readGameObjectStatic() {
     final gameObject = getInstanceGameObject();
     readVector3(gameObject);
     gameObject.type = readByte();
-    totalGameObjects++;
   }
 
   void readGameObjectSpawn() {
@@ -328,7 +337,6 @@ class ServerResponseReader with ByteReader {
     gameObject.type = GameObjectType.Spawn;
     gameObject.spawnType = readByte();
     gameObject.spawnAmount = readByte();
-    totalGameObjects++;
   }
 
   void readPlayerAttackTargetName() {
@@ -360,7 +368,6 @@ class ServerResponseReader with ByteReader {
     gameObject.type = GameObjectType.Butterfly;
     readVector3(gameObject);
     gameObject.direction = readByte();
-    totalGameObjects++;
   }
 
   void readGameObjectChicken(){
@@ -369,7 +376,6 @@ class ServerResponseReader with ByteReader {
     readVector3(gameObject);
     gameObject.state = readByte();
     gameObject.direction = readByte();
-    totalGameObjects++;
   }
 
   void readGameObjectJellyfish(){
@@ -378,7 +384,6 @@ class ServerResponseReader with ByteReader {
     readVector3(gameObject);
     gameObject.state = readByte();
     gameObject.direction = readByte();
-    totalGameObjects++;
   }
 
   void readGameObjectJellyfishRed(){
@@ -387,7 +392,6 @@ class ServerResponseReader with ByteReader {
     readVector3(gameObject);
     gameObject.state = readByte();
     gameObject.direction = readByte();
-    totalGameObjects++;
   }
 
   void readCharacterRat() {

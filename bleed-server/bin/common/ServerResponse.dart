@@ -2,15 +2,12 @@ class ServerResponse {
   static const Player = 0;
   static const Projectiles = 3;
   static const Game_Event = 6;
-  static const Grenades = 7;
   static const Game_Joined = 9;
   static const Scene = 10;
   static const Collectables = 11;
   static const Paths = 12; 
-  static const Score = 13;
   static const Player_Events = 14;
   static const Version = 16;
-  static const Crates = 17;
   static const NpcMessage = 18;
   static const NpcsDebug = 22;
   static const Game_Time = 23;
@@ -29,7 +26,6 @@ class ServerResponse {
   static const Lobby_CountDown = 42;
   static const Player_Slots = 44;
   static const Debug_Mode = 45;
-  static const Gem_Spawns = 46;
   static const End = 47;
   static const Damage_Applied = 50;
   static const Player_Spawned = 60;
@@ -65,5 +61,6 @@ class ServerResponse {
   static const Render_Map = 104;
   static const GameObject_Loot = 105;
   static const Game_Waves = 106;
+  static const GameObject = 107;
 }
 

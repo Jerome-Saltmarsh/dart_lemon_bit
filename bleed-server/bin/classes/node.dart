@@ -262,6 +262,7 @@ class NodeSoil extends NodeSolid {
 }
 
 class NodeRespawning extends NodeNoneCollidable {
+
   @override
   int get type => NodeType.Respawning;
 }

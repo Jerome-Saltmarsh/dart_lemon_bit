@@ -111,6 +111,27 @@ class GameObjectSpawn extends GameObjectStatic {
   }
 }
 
+class GameObjectParticleEmitter extends GameObject {
+
+  GameObjectParticleEmitter({
+    required double x,
+    required double y,
+    required double z,
+  }) : super(x: x, y: y, z: z, radius: 0) {
+    collidable = false;
+  }
+
+  @override
+  int get type => GameObjectType.Particle_Emitter;
+
+  @override
+  void write(Player player) {
+     player.writeByte(ServerResponse.GameObject);
+     player.writeByte(GameObjectType.Particle_Emitter);
+     player.writePosition3(this);
+  }
+}
+
 abstract class GameObjectAnimal extends GameObject with Velocity {
   var faceAngle = 0.0;
   var moveSpeed = 1.0;

@@ -9,5 +9,5 @@ GameObject getInstanceGameObject(){
   if (gameObjects.length <= totalGameObjects){
     gameObjects.add(GameObject());
   }
-  return gameObjects[totalGameObjects];
+  return gameObjects[totalGameObjects++];
 }
