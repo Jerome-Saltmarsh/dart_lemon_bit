@@ -44,7 +44,7 @@ Widget buildEditorSelectedNode() =>
           clipBehavior: Clip.none,
           children: [
             Positioned(
-              top: 55,
+              top: 60,
               left: 27,
               child: buildAtlasImageButton(
                   action: edit.cursorZDecrease,
@@ -85,8 +85,8 @@ Widget buildEditorSelectedNode() =>
                 alignment: Alignment.center,
                 child: watch(edit.nodeSelected, (Node t) => buildIconNodeType(t.type))),
             Positioned(
-              top: 65,
-              left: 45,
+              top: 50,
+              left: 50,
               child: buildAtlasImageButton(
                 action: edit.cursorRowIncrease,
                 srcX: 9649,
@@ -97,7 +97,7 @@ Widget buildEditorSelectedNode() =>
               ),
             ),
             Positioned(
-              top: -5,
+              top: -10,
               left: 27,
               child: buildAtlasImageButton(
                 action: edit.cursorZIncrease,
