@@ -96,6 +96,18 @@ Widget buildEditorSelectedNode() =>
                 hint: "Shift + Arrow Up"
               ),
             ),
+            Positioned(
+              top: 50,
+              left: 0,
+              child: buildAtlasImageButton(
+                  action: edit.cursorColumnIncrease,
+                  srcX: 9649,
+                  srcY: 83,
+                  srcWidth: 21,
+                  srcHeight: 21,
+                  hint: "Arrow Left"
+              ),
+            ),
           ],
         ),
         // height4,
