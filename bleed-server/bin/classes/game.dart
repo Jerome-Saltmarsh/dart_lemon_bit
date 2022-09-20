@@ -91,9 +91,21 @@ abstract class Game {
     engine.onGameCreated(this); /// TODO Illegal external scope reference
   }
 
+  /// QUERIES
 
+  GameObject? findGameObjectByType(int type){
+    for (final gameObject in gameObjects){
+       if (gameObject.type == type) return gameObject;
+    }
+    return null;
+  }
 
   /// ACTIONS
+
+  void move(Position3 value, double angle, double distance){
+    value.x += getAdjacent(angle, distance);
+    value.y += getOpposite(angle, distance);
+  }
 
   void onPlayerUpdateRequestedReceived({
     required Player player,

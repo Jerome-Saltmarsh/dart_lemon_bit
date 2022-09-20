@@ -1,5 +1,7 @@
 
 
+import 'package:lemon_math/library.dart';
+
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../classes/node.dart';
@@ -55,6 +57,15 @@ class GameWaves extends Game {
     player.weaponSlot2 = buildWeaponUnarmed();
     player.weaponSlot3 = buildWeaponUnarmed();
     player.setCharacterStateSpawning();
+
+    final crystal = findGameObjectByType(GameObjectType.Crystal);
+
+    if (crystal != null){
+       player.x = crystal.x;
+       player.y = crystal.y;
+       player.z = crystal.z;
+       move(player, randomAngle(), 75);
+    }
 
     perform((){
 
