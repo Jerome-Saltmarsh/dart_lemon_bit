@@ -26,4 +26,5 @@ class GameEventType {
   static const Node_Set = 67;
   static const Node_Deleted = 68;
   static const Weapon_Type_Equipped = 69;
+  static const Node_Struck = 70;
 }

@@ -20,6 +20,7 @@ abstract class Node {
   bool get isSolid => orientation == NodeOrientation.Solid;
   bool get isDestroyed => orientation == NodeOrientation.Destroyed;
   bool get isOriented => NodeType.isOriented(type);
+  bool get isStrikable;
 
   static final Node boundary = NodeBoundary();
   static final Node grassFlowers = NodeGrassFlowers();
@@ -44,9 +45,16 @@ abstract class NodeNoneCollidable extends Node {
 class NodeEmpty extends NodeNoneCollidable {
   @override
   int get type => NodeType.Empty;
+
+  @override
+  bool get isStrikable => false;
 }
 
 class NodeBoundary extends Node {
+
+  @override
+  bool get isStrikable => false;
+
   @override
   bool getCollision(double x, double y, double z) => true;
 
@@ -85,9 +93,15 @@ abstract class NodeSolid extends Node {
 class NodeGrassFlowers extends NodeSolid {
   @override
   int get type => NodeType.Grass_Flowers;
+
+  @override
+  bool get isStrikable => true;
 }
 
 class NodeWater extends Node {
+
+  @override
+  bool get isStrikable => false;
 
   @override
   bool getCollision(double x, double y, double z) => true;
@@ -103,6 +117,9 @@ class NodeWater extends Node {
 }
 
 class NodeWaterFlowing extends Node {
+
+  @override
+  bool get isStrikable => false;
 
   @override
   bool getCollision(double x, double y, double z) => true;
@@ -192,6 +209,10 @@ abstract class NodeRadial extends Node {
 }
 
 class NodeTorch extends NodeRadial {
+
+  @override
+  bool get isStrikable => true;
+
   @override
   int get type => NodeType.Torch;
 
@@ -200,6 +221,10 @@ class NodeTorch extends NodeRadial {
 }
 
 class NodeTreeBottom extends NodeRadial {
+
+  @override
+  bool get isStrikable => true;
+
   @override
   int get type => NodeType.Tree_Bottom;
 
@@ -208,6 +233,10 @@ class NodeTreeBottom extends NodeRadial {
 }
 
 class NodeTreeTop extends Node {
+
+  @override
+  bool get isStrikable => true;
+
   @override
   int get type => NodeType.Tree_Top;
 
@@ -228,11 +257,19 @@ class NodeTreeTop extends Node {
 }
 
 class NodeGrassLong extends NodeNoneCollidable {
+
+  @override
+  bool get isStrikable => true;
+
   @override
   int get type => NodeType.Grass_Long;
 }
 
 class NodeFireplace extends NodeRadial {
+
+  @override
+  bool get isStrikable => false;
+
   @override
   int get type => NodeType.Fireplace;
 
@@ -241,6 +278,10 @@ class NodeFireplace extends NodeRadial {
 }
 
 class NodeBrickTop extends Node {
+
+  @override
+  bool get isStrikable => true;
+
   @override
   int get type => NodeType.Brick_Top;
 
@@ -257,6 +298,10 @@ class NodeBrickTop extends Node {
 }
 
 class NodeSoil extends NodeSolid {
+
+  @override
+  bool get isStrikable => true;
+
   @override
   int get type => NodeType.Soil;
 }
@@ -264,10 +309,17 @@ class NodeSoil extends NodeSolid {
 class NodeRespawning extends NodeNoneCollidable {
 
   @override
+  bool get isStrikable => false;
+
+  @override
   int get type => NodeType.Respawning;
 }
 
 class NodeSpawn extends NodeNoneCollidable {
+
+  @override
+  bool get isStrikable => false;
+
   var spawnType = 0;
   var spawnRadius = 100.0;
   var spawnAmount = 1;
@@ -284,56 +336,100 @@ class NodeSpawn extends NodeNoneCollidable {
 }
 
 class NodeRoofHayNorth extends NodeSlopeNorth {
+
+  @override
+  bool get isStrikable => false;
+
   @override
   int get type => NodeType.Roof_Hay_North;
 }
 
 class NodeRoofHaySouth extends NodeSlopeSouth {
+
+  @override
+  bool get isStrikable => false;
+
   @override
   int get type => NodeType.Roof_Hay_South;
 }
 
 class NodeStone extends NodeSolid {
+
+  @override
+  bool get isStrikable => true;
+
   @override
   int get type => NodeType.Stone;
 }
 
 class NodeBauHausWindow extends NodeSolid {
+
+  @override
+  bool get isStrikable => false;
+
   @override
   int get type => NodeType.Bau_Haus_Window;
 }
 
 class NodeBauHausPlain extends NodeSolid {
+
+  @override
+  bool get isStrikable => false;
+
   @override
   int get type => NodeType.Bau_Haus_Plain;
 }
 
 class NodeChimney extends NodeSolid {
+
+  @override
+  bool get isStrikable => true;
+
   @override
   int get type => NodeType.Chimney;
 }
 
 class NodeBedBottom extends NodeSolid {
+
+  @override
+  bool get isStrikable => true;
+
   @override
   int get type => NodeType.Bed_Bottom;
 }
 
 class NodeBedTop extends NodeSolid {
+
+  @override
+  bool get isStrikable => true;
+
   @override
   int get type => NodeType.Bed_Top;
 }
 
 class NodeTable extends NodeSolid {
+
+  @override
+  bool get isStrikable => true;
+
   @override
   int get type => NodeType.Table;
 }
 
 class NodeOven extends NodeSolid {
+
+  @override
+  bool get isStrikable => true;
+
   @override
   int get type => NodeType.Oven;
 }
 
 class NodeSunflower extends Node {
+
+  @override
+  bool get isStrikable => true;
+
   @override
   int get type => NodeType.Sunflower;
 
@@ -353,6 +449,9 @@ class NodeOriented extends Node {
 
   @override
   int get type => _type;
+
+  @override
+  bool get isStrikable => true;
 
   @override
   int get orientation => _orientation;

@@ -352,6 +352,19 @@ abstract class Game {
       performZ,
     );
     if (node.isDestroyed) return;
+    if (!node.isStrikable) return;
+
+    for (final player in players) {
+      player.writeGameEvent(
+          type: GameEventType.Node_Struck,
+          x: performX,
+          y: performY,
+          z: performZ,
+          angle: angle,
+      );
+      player.writeByte(node.type);
+    }
+
     if (NodeType.isDestroyable(node.type)) {
       final z = performZ ~/ tileSizeHalf;
       final row = performX ~/ tileSize;

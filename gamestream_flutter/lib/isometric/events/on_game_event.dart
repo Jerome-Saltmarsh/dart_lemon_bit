@@ -25,6 +25,10 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
     case GameEventType.Node_Set:
       audioSingleHoverOverButton43.playXYZ(x, y, z);
       break;
+    case GameEventType.Node_Struck:
+      final nodeType = serverResponseReader.readByte();
+      onGameEventNodeStruck(nodeType, x, y, z);
+      break;
     case GameEventType.Node_Deleted:
       audioSingleHoverOverButton30.playXYZ(x, y, z);
       break;
@@ -105,41 +109,30 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
   }
 }
 
+void onGameEventNodeStruck(int nodeType, double x, double y, double z) {
+
+  if (NodeType.isMaterialWood(nodeType)){
+    audioSingleMaterialStruckWood.playXYZ(x, y, z);
+    spawnParticleBlockWood(x, y, z);
+  }
+
+  if (NodeType.isMaterialGrass(nodeType)){
+    audioSingleGrassCut.playXYZ(x, y, z);
+    spawnParticleBlockGrass(x, y, z);
+  }
+
+  if (NodeType.isMaterialStone(nodeType)){
+    audioSingleMaterialStruckStone.playXYZ(x, y, z);
+    spawnParticleBlockBrick(x, y, z);
+  }
+}
+
 void onGameEventSwordSlash(double x, double y, double z, double angle) {
   spawnParticleSlash(x: x, y: y, z: z, angle: angle);
   audioSingleSciFiBlaster8.playXYZ(x, y, z);
   audioSingleSwingSword.playXYZ(x, y, z);
   for (var i = 0; i < 3; i++) {
     spawnParticleBubble(x: x, y: y, z: z, angle: angle + giveOrTake(piQuarter), speed: 3 + giveOrTake(2));
-  }
-  final node = getNodeXYZ(x, y, z);
-  if (node.type == NodeType.Grass_Long) {
-    audioSingleGrassCut.playXYZ(x, y, z);
-    spawnParticleBlockGrass(x, y, z);
-  }
-  if (node.type == NodeType.Tree_Bottom) {
-    audioSingleMaterialStruckWood.playXYZ(x, y, z);
-    spawnParticleBlockWood(x, y, z);
-  }
-  if (node.type == NodeType.Torch) {
-    audioSingleMaterialStruckWood.playXYZ(x, y, z);
-    spawnParticleBlockWood(x, y, z);
-  }
-  if (node.type == NodeType.Wood_2) {
-    audioSingleMaterialStruckWood.playXYZ(x, y, z);
-    spawnParticleBlockWood(x, y, z);
-  }
-  if (node.type == NodeType.Wooden_Plank) {
-    audioSingleMaterialStruckWood.playXYZ(x, y, z);
-    spawnParticleBlockWood(x, y, z);
-  }
-  if (node.type == NodeType.Boulder) {
-    audioSingleMaterialStruckStone.playXYZ(x, y, z);
-    spawnParticleBlockBrick(x, y, z);
-  }
-  if (node.type == NodeType.Brick_2) {
-    audioSingleMaterialStruckStone.playXYZ(x, y, z);
-    spawnParticleBlockBrick(x, y, z);
   }
 }
 

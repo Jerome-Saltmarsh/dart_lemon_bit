@@ -42,6 +42,25 @@ class NodeType {
   static const Boulder = 70;
   static const Spawn = 71;
   static const Respawning = 72;
+  
+  static bool isMaterialWood(int value) =>
+     value == Torch ||
+     value == Tree_Bottom ||
+     value == Table ||
+     value == Wood_2 ||
+     value == Wooden_Plank;
+
+  static bool isMaterialGrass(int value) =>
+      value == Grass_Long ||
+      value == Grass_Flowers ||
+      value == Grass;
+
+  static bool isMaterialStone(int value) =>
+      value == Brick_Top ||
+      value == Stone ||
+      value == Oven ||
+      value == Brick_2 ||
+      value == Chimney;
 
   static bool isOriented(int value) =>
       value == Brick_2 ||
