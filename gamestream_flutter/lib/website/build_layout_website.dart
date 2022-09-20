@@ -13,9 +13,8 @@ import 'package:lemon_watch/watch_builder.dart';
 import '../isometric/ui/widgets/build_container.dart';
 import 'build/build_column_games.dart';
 
-Widget buildPageWebsite({double padding = 6}) {
-
-  return Stack(
+Widget buildPageWebsite({double padding = 6})  =>
+  Stack(
     children: [
       Positioned(
         top: padding,
@@ -27,11 +26,6 @@ Widget buildPageWebsite({double padding = 6}) {
         left: padding,
         child: buildButtonRegion(),
       ),
-      // Positioned(
-      //   bottom: padding,
-      //   left: padding,
-      //   child: buildMenuDebug() ?? const SizedBox(),
-      // ),
       Positioned(
         bottom: padding,
         right: padding,
@@ -39,18 +33,24 @@ Widget buildPageWebsite({double padding = 6}) {
             size: FontSize.Small),
       ),
       Positioned(
-        top: 0,
+        top: screen.height * 0.25,
         left: 0,
         child: Container(
           width: screen.width,
           height: screen.height,
-          alignment: Alignment.center,
-          child: buildColumnGames(),
+          alignment: Alignment.topCenter,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              text("DARK-AGE", size: 60),
+              height64,
+              buildColumnGames(),
+            ],
+          ),
         ),
       )
     ],
   );
-}
 
 Widget buildButtonRegion() => WatchBuilder(
     core.state.region,
