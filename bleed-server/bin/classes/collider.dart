@@ -29,10 +29,6 @@ class Collider extends Position3 {
     this.radius = radius;
   }
 
-  void onStruckBy(dynamic src){
-
-  }
-
   double distanceFromPos3(Position3 value) {
     return distanceFromXYZ(value.x, value.y, value.z);
   }

@@ -1384,7 +1384,6 @@ abstract class Game {
     if (src is Zombie) {
       dispatchV3(GameEventType.Zombie_Strike, src);
     }
-    target.onStruckBy(src);
     if (target is Character) {
       applyDamageToCharacter(src: src, target: target, amount: damage);
     }
