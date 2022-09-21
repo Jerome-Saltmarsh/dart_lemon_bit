@@ -1,3 +1,5 @@
+import 'package:bleed_common/game_wave_request.dart';
+import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
@@ -32,6 +34,7 @@ Widget buildWavesTimer() =>
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
+      text("READY", onPressed: () => sendClientRequest(ClientRequest.Game_Waves, GameWaveRequest.ready)),
       watch(gameWaves.timer, (double time) => Container(
         width: 300,
         height: 50,

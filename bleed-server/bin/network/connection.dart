@@ -381,7 +381,7 @@ class Connection {
 
       case ClientRequest.Editor_Set_Scene_Name:
           if (game is GameDarkAgeEditor == false) {
-             throw Exception("Player must be owner to set name");
+             return errorInvalidArg('game type must be GameDarkAgeEditor');
           }
           var name = "";
           for (var i = 1; i < arguments.length; i++){
@@ -392,6 +392,13 @@ class Connection {
           writeSceneToFile(scene);
           player.writeSceneMetaData();
           break;
+
+      case ClientRequest.Game_Waves:
+        if (game is GameWaves == false) return;
+        final gameWaves = game as GameWaves;
+        if (gameWaves.timer <= 1) return;
+        gameWaves.timer = 1;
+        break;
 
       default:
         break;
