@@ -12,4 +12,8 @@ const mapAttackTypeToAtlasSrc = {
   AttackType.Rifle          : AtlasSrc (srcX: 11984, srcY: 658, width: 48, height: 14),
   AttackType.Revolver       : AtlasSrc (srcX: 11920, srcY: 726, width: 16, height: 10),
   AttackType.Unarmed        : AtlasSrc (srcX: 12304, srcY: 160, width: 32, height: 32),
+  AttackType.Crossbow       : AtlasSrc (srcX: 11952, srcY: 192, width: 32, height: 32),
+  AttackType.Staff          : AtlasSrc (srcX: 12048, srcY: 192, width: 32, height: 32),
+  AttackType.Crowbar        : AtlasSrc (srcX: 12176, srcY: 544, width: 32, height: 32),
+  AttackType.Baseball_Bat   : AtlasSrc (srcX: 11920, srcY: 645, width: 25, height: 07),
 };

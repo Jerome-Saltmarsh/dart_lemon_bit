@@ -81,6 +81,7 @@ Widget buildWavesTimer() =>
 
 Widget buildPurchase(Purchase purchase) =>
   container(
+      toolTip: AttackType.getName(purchase.type),
       action: () => sendClientRequestPurchaseWeapon(purchase.type),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

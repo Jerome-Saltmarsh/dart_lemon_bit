@@ -39,6 +39,7 @@ class GameWaves extends Game {
     AttackType.Fireball: TypePosition.Secondary,
     AttackType.Bow: TypePosition.Secondary,
     AttackType.Blade: TypePosition.Tertiary,
+    AttackType.Baseball_Bat: TypePosition.Tertiary,
   }[attackType] ?? 0;
 
   void writePurchase(Player player, int type){
