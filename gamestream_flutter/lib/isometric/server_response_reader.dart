@@ -48,12 +48,13 @@ import 'time.dart';
 import 'weather/breeze.dart';
 
 final serverResponseReader = ServerResponseReader();
-final byteLength = Watch(0);
-final bufferSize = Watch(0);
-final rendersSinceUpdate = Watch(0);
-final updateFrame = Watch(0);
 
 class ServerResponseReader with ByteReader {
+  final byteLength = Watch(0);
+  final bufferSize = Watch(0);
+  final updateFrame = Watch(0);
+  final rendersSinceUpdate = Watch(0);
+
 
   void readBytes(Uint8List values) {
     updateFrame.value++;
@@ -677,25 +678,6 @@ class ServerResponseReader with ByteReader {
        i += 4;
     }
   }
-
-  // void readPlayer() {
-  //   player.x = readDouble();
-  //   player.y = readDouble();
-  //   player.z = readDouble();
-  //   player.health.value = readDouble();
-  //   player.maxHealth = readDouble();
-  //   // player.attackType.value = readByte();
-  //   player.weaponType.value = readByte();
-  //   player.weaponDamage.value = readByte();
-  //   player.armourType.value = readByte();
-  //   player.headType.value = readByte();
-  //   player.pantsType.value = readByte();
-  //   player.alive.value = readBool();
-  //   player.experience.value = readPercentage();
-  //   player.level.value = readByte();
-  //   player.mouseAngle = readAngle();
-  //   updateCameraMode();
-  // }
 
   List<Weapon> readWeapons() {
     final weapons = <Weapon>[];

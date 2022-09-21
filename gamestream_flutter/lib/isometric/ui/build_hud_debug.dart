@@ -34,7 +34,7 @@ Widget buildHudDebug() {
               Refresh(() => text('Onscreen: $onscreenNodes, off-left: $offscreenNodesLeft, off-top: $offscreenNodesTop, off-right: $offscreenNodesRight, off-bottom: $offscreenNodesBottom')),
               Refresh(() => text('Engine.Frame: ${engine.frame}')),
               watch(renderFrame, (t) => text("Render.Frame: $t")),
-              watch(updateFrame, (t) => text("Update.Frame: $t")),
+              watch(serverResponseReader.updateFrame, (t) => text("Update.Frame: $t")),
               Refresh(() => text('Particles: {active: $totalActiveParticles, total: ${particles.length}')),
               Refresh(() => text('Player Velocity: (x: ${player.velocity.x}, y: ${player.velocity.y}, z: ${player.velocity.z})')),
               Refresh(() => text('Player Velocity Magnitude: ${player.velocity.magnitude}')),
@@ -69,5 +69,5 @@ Widget _buildContainerPlayerInfo() {
   });
 }
 
-Widget buildControlBytes() => watch(byteLength, (int bytes) => container(child: 'Bytes: $bytes'));
-Widget buildControlBufferSize() => watch(bufferSize, (int bufferSize) => container(child: 'Buffer: $bufferSize'));
+Widget buildControlBytes() => watch(serverResponseReader.byteLength, (int bytes) => container(child: 'Bytes: $bytes'));
+Widget buildControlBufferSize() => watch(serverResponseReader.bufferSize, (int bufferSize) => container(child: 'Buffer: $bufferSize'));

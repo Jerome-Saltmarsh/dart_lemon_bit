@@ -1,6 +1,4 @@
 
-import 'dart:math';
-
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:lemon_engine/actions/render_atlas.dart';

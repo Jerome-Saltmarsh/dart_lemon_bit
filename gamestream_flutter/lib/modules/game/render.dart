@@ -51,13 +51,13 @@ class GameRender {
     renderEditMode();
     renderMouseTargetName();
     renderWeaponRoundInformation();
-    rendersSinceUpdate.value++;
+    serverResponseReader.rendersSinceUpdate.value++;
   }
 
   /// Render the player in the same relative position to the camera
   void interpolatePlayer(){
 
-    player.interpolating.value = rendersSinceUpdate.value == 1;
+    player.interpolating.value = serverResponseReader.rendersSinceUpdate.value == 1;
 
     if (!player.interpolating.value) return;
 

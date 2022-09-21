@@ -8,7 +8,6 @@ import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_de
 import 'package:gamestream_flutter/isometric/events/on_game_event_weapon_type_equipped.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
-import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
 import 'on_character_death.dart';

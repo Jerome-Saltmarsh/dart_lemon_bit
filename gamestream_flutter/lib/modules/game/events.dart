@@ -96,10 +96,4 @@ class GameEvents {
         break;
     }
   }
-
-  void _onGameTypeChanged(GameType? type) {
-    engine.camera.x = 0;
-    engine.camera.y = 0;
-    engine.zoom = 1;
-  }
 }
