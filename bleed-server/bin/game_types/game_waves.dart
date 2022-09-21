@@ -171,6 +171,8 @@ class GameWaves extends Game {
         return buildWeaponCrossBow();
       case AttackType.Revolver:
         return buildWeaponRevolver();
+      case AttackType.Shotgun:
+        return buildWeaponShotgun();
       default:
         throw Exception("could not build weapon of type $type");
     }

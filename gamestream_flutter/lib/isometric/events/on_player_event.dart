@@ -84,7 +84,7 @@ void onPlayerEvent(int event) {
 }
 
 void onPlayerEventItemEquipped(int type) {
-  switch (type){
+  switch (type) {
     case AttackType.Revolver:
       audioSingleRevolverReload();
       break;
@@ -99,6 +99,9 @@ void onPlayerEventItemEquipped(int type) {
       break;
     case AttackType.Blade:
       audioSingleSwordUnsheathe();
+      break;
+    case AttackType.Assault_Rifle:
+      audioSingleGunPickup();
       break;
   }
 }

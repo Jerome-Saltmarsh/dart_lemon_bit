@@ -7,9 +7,6 @@ void onGameEventWeaponTypeEquipped(int attackType, double x, double y, double z)
     case AttackType.Shotgun:
       audioSingleShotgunCock.playXYZ(x, y, z);
       break;
-    case AttackType.Handgun:
-      audioSingleGunPickup.playXYZ(x, y, z);
-      break;
     default:
       break;
   }
