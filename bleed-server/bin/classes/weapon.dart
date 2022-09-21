@@ -91,7 +91,7 @@ Weapon buildWeaponBow() =>
       damage: 1,
       capacity: 15,
       duration: 30,
-      range: 200,
+      range: 300,
    );
 
 Weapon buildWeaponCrossBow() =>

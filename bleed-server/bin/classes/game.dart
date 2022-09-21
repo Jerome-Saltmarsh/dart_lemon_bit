@@ -181,15 +181,17 @@ abstract class Game {
 
   void playerReleaseWeaponCharge(Player player, Weapon weapon){
     if (weapon.charge <= 0) return;
-      weapon.charge = 0;
 
-      dispatchV3(GameEventType.Release_Bow, player);
-      spawnProjectileArrow(
-          src: player,
-          angle: player.mouseAngle,
-          damage: weapon.damage,
-          range: weapon.range,
-      );
+    final maxCharge = 30;
+    double power = weapon.charge >= maxCharge ? 1.0 : weapon.charge / maxCharge;
+    weapon.charge = 0;
+    dispatchV3(GameEventType.Release_Bow, player);
+    spawnProjectileArrow(
+      src: player,
+      angle: player.mouseAngle,
+      damage: weapon.damage,
+      range: weapon.range * power,
+    );
   }
 
   void playerUseWeapon(Player player, Weapon weapon) {

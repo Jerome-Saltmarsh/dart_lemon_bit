@@ -103,5 +103,8 @@ void onPlayerEventItemEquipped(int type) {
     case AttackType.Assault_Rifle:
       audioSingleGunPickup();
       break;
+    case AttackType.Bow:
+      audioSingleBowDraw();
+      break;
   }
 }
