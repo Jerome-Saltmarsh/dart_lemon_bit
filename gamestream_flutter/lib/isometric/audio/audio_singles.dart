@@ -32,6 +32,7 @@ final audioSingleRevolverReload = AudioSingle(name: 'revolver-reload-01', volume
 final audioSingleReload6 = AudioSingle(name: 'reload_06', volume: 0.5, maxDistance: 400);
 final audioSingleItemUnlock = AudioSingle(name: 'unlock', volume: 0.5, maxDistance: 400);
 final audioSingleZombieHurt = AudioSingle(name: 'zombie-hurt-1', volume: 0.5, maxDistance: 400);
+final audioSingleZombieHit4 = AudioSingle(name: 'zombie-hit-04', volume: 0.5, maxDistance: 400);
 final audioSingleSplash = AudioSingle(name: 'splash', volume: 0.5, maxDistance: 400);
 final audioSingleMaterialStruckWood = AudioSingle(name: 'material-struck-wood', volume: 0.5, maxDistance: 400);
 final audioSingleMaterialStruckStone = AudioSingle(name: 'material-struck-stone', volume: 0.5, maxDistance: 400);

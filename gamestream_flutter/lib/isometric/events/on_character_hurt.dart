@@ -21,7 +21,11 @@ void onGameEventCharacterHurt(int type, double x, double y, double z, double ang
 
   switch (type) {
     case CharacterType.Zombie:
-      audioSingleZombieHurt.playXYZ(x, y, z);
+      if (randomBool()){
+        audioSingleZombieHurt.playXYZ(x, y, z);
+      } else {
+        audioSingleZombieHit4.playXYZ(x, y, z);
+      }
       break;
     case CharacterType.Rat:
       audioSingleRatSqueak.playXYZ(x, y, z);
