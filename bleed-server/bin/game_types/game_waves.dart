@@ -36,6 +36,7 @@ class GameWaves extends Game {
     AttackType.Rifle: TypePosition.Primary,
     AttackType.Shotgun: TypePosition.Primary,
     AttackType.Handgun: TypePosition.Secondary,
+    AttackType.Revolver: TypePosition.Secondary,
     AttackType.Fireball: TypePosition.Secondary,
     AttackType.Bow: TypePosition.Secondary,
     AttackType.Blade: TypePosition.Tertiary,
@@ -77,6 +78,7 @@ class GameWaves extends Game {
       writePurchase(player, AttackType.Rifle);
       writePurchase(player, AttackType.Shotgun);
       writePurchase(player, AttackType.Handgun);
+      writePurchase(player, AttackType.Revolver);
       writePurchase(player, AttackType.Crossbow);
       writePurchase(player, AttackType.Bow);
       writePurchase(player, AttackType.Fireball);

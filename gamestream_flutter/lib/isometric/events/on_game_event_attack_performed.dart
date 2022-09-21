@@ -22,6 +22,8 @@ void onGameEventAttackPerformed(double x, double y, double z, double angle) {
       return audioSingleAssaultRifle.playXYZ(x, y, z);
     case AttackType.Rifle:
       return audioSingleSniperRifleFired.playXYZ(x, y, z);
+    case AttackType.Revolver:
+      return audioSingleRevolverFired.playXYZ(x, y, z);
     case AttackType.Fireball:
       return audioSingleFireball.playXYZ(x, y, z);
     case AttackType.Blade:
