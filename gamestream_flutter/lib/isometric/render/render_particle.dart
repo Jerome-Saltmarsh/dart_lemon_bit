@@ -144,11 +144,12 @@ void renderParticle(Particle value) {
         scale: value.scale,
       );
     case ParticleType.Blood:
+      // print("render blood");
       return render(
           dstX: value.renderX,
           dstY: value.renderY,
-          srcX: 184,
-          srcY: 0,
+          srcX: 16,
+          srcY: 25,
           srcWidth: 8,
           srcHeight: 8,
           color: value.renderColor
