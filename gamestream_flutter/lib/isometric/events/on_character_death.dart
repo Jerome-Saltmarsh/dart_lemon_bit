@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/isometric/spawn/spawn_bubbles.dart';
 import 'package:gamestream_flutter/isometric/spawn/spawn_purple_fire_explosion.dart';
 import 'package:lemon_math/library.dart';
 
-void onCharacterDeath(int type, double x, double y, double z, double angle) {
+void onGameEventCharacterDeath(int type, double x, double y, double z, double angle) {
   spawnPurpleFireExplosion(x, y, z);
   spawnBubbles(x, y, z);
 

@@ -22,8 +22,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
     case GameEventType.Player_Spawn_Started:
       return audioSingleTeleport.playXYZ(x, y, z);
     case GameEventType.Node_Set:
-      audioSingleHoverOverButton43.playXYZ(x, y, z);
-      break;
+      return onGameEventNodeSet(x, y, z);
     case GameEventType.Node_Struck:
       final nodeType = serverResponseReader.readByte();
       onGameEventNodeStruck(nodeType, x, y, z);
@@ -61,7 +60,6 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       }
       break;
     case GameEventType.Player_Death:
-      // actions.emitPixelExplosion(x, y);
       break;
     case GameEventType.Teleported:
       audio.magicalSwoosh(x, y);
@@ -96,16 +94,20 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
 
     case GameEventType.Character_Death:
       final characterType = serverResponseReader.readByte();
-      return onCharacterDeath(characterType, x, y, z, angle);
+      return onGameEventCharacterDeath(characterType, x, y, z, angle);
 
     case GameEventType.Character_Hurt:
       final characterType = serverResponseReader.readByte();
-      return onCharacterHurt(characterType, x, y, z, angle);
+      return onGameEventCharacterHurt(characterType, x, y, z, angle);
 
     case GameEventType.Game_Object_Destroyed:
       final type = serverResponseReader.readByte();
       return onGameEventGameObjectDestroyed(x, y, z, angle, type);
   }
+}
+
+void onGameEventNodeSet(double x, double y, double z) {
+  audioSingleHoverOverButton43.playXYZ(x, y, z);
 }
 
 void onGameEventNodeStruck(int nodeType, double x, double y, double z) {
