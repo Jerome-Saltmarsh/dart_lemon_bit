@@ -24,7 +24,6 @@ class ParticleType {
   static const Bubble_Small = 23;
   static const Flame_Pixel = 24;
   static const Fire = 25;
-  static const Slash = 26;
   static const Fire_Purple = 27;
   static const Cut_Grass = 28;
   static const Handgun_Firing = 29;
@@ -35,4 +34,6 @@ class ParticleType {
   static const Water_Drop = 34;
   static const Slash_Crowbar = 35;
   static const Light_Emission = 36;
+  static const Strike_Punch = 37;
+  static const Strike_Blade = 38;
 }

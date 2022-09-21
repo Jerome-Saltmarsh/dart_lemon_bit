@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_de
 import 'package:gamestream_flutter/isometric/events/on_game_event_weapon_type_equipped.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
 import 'on_character_death.dart';
@@ -129,20 +130,38 @@ void onGameEventNodeStruck(int nodeType, double x, double y, double z) {
 }
 
 void onGameEventAttackPerformedBlade(double x, double y, double z, double angle) {
-  spawnParticleSlash(x: x, y: y, z: z, angle: angle);
+  spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
   audioSingleSciFiBlaster8.playXYZ(x, y, z);
   audioSingleSwingSword.playXYZ(x, y, z);
-  for (var i = 0; i < 3; i++) {
-    spawnParticleBubble(x: x, y: y, z: z, angle: angle + giveOrTake(piQuarter), speed: 3 + giveOrTake(2));
-  }
+
+  // const range = 5.0;
+  // engine.camera.x += getAdjacent(angle + piQuarter, range);
+  // engine.camera.y += getOpposite(angle + piQuarter, range);
+
+  spawnParticleBubbles(
+    count: 3,
+    x: x,
+    y: y,
+    z: z,
+    angle: angle,
+  );
 }
 
 void onGameEventAttackPerformedUnarmed(double x, double y, double z, double angle) {
-  spawnParticleSlash(x: x, y: y, z: z, angle: angle);
+  spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
   audioSingleArmSwing.playXYZ(x, y, z);
-  for (var i = 0; i < 3; i++) {
-    spawnParticleBubble(x: x, y: y, z: z, angle: angle + giveOrTake(piQuarter), speed: 3 + giveOrTake(2));
-  }
+
+  // const range = 25.0;
+  // engine.camera.x += getAdjacent(angle + piQuarter, range);
+  // engine.camera.y += getOpposite(angle + piQuarter, range);
+
+  spawnParticleBubbles(
+    count: 3,
+    x: x,
+    y: y,
+    z: z,
+    angle: angle,
+  );
 }
 
 void onGameEventSpawnDustCloud(double x, double y, double z) {

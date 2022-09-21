@@ -277,14 +277,30 @@ void renderParticle(Particle value) {
           rotation: value.rotation + (piHalf + piQuarter),
       );
 
-    case ParticleType.Slash:
-      if (value.frame >= 6 ) return;
+    case ParticleType.Strike_Blade:
+      if (value.frame >= 6 ) {
+         return particleDeactivate(value);
+      }
       const size = 64.0;
       return renderRotated(
         dstX: value.renderX,
         dstY: value.renderY,
         srcX: 6080,
         srcY: value.frame * size,
+        srcWidth: size,
+        srcHeight: size,
+        scale: value.scale,
+        rotation: value.rotation + (piHalf + piQuarter),
+      );
+
+    case ParticleType.Strike_Punch:
+      if (value.frame >= 3 ) return;
+      const size = 32.0;
+      return renderRotated(
+        dstX: value.renderX,
+        dstY: value.renderY,
+        srcX: 6272 ,
+        srcY: 32 + value.frame * size,
         srcWidth: size,
         srcHeight: size,
         scale: value.scale,

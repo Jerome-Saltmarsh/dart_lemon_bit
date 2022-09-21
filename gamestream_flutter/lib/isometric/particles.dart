@@ -680,6 +680,22 @@ void spawnParticleBubbleV3(Vector3 value, {
       scale: scale,
   );
 
+void spawnParticleBubbles({
+  required int count,
+  required double x,
+  required double y,
+  required double z,
+  required double angle,
+}){
+  spawnParticleBubble(
+      x: x,
+      y: y,
+      z: z,
+      angle: angle + giveOrTake(piQuarter),
+      speed: 3 + giveOrTake(2),
+  );
+}
+
 void spawnParticleBubble({
   required double x,
   required double y,
@@ -754,7 +770,7 @@ void spawnParticleCutGrass({
   );
 }
 
-void spawnParticleSlash({
+void spawnParticleStrikeBlade({
   required double x,
   required double y,
   required double z,
@@ -764,7 +780,33 @@ void spawnParticleSlash({
   double speed = 2,
 }) {
   spawnParticle(
-    type: ParticleType.Slash,
+    type: ParticleType.Strike_Blade,
+    x: x,
+    y: y,
+    z: z,
+    angle: angle,
+    rotation: angle,
+    speed: speed,
+    scaleV: 0,
+    weight: 0,
+    duration: duration,
+    scale: scale,
+    checkCollision: false,
+    animation: true,
+  );
+}
+
+void spawnParticleStrikePunch({
+  required double x,
+  required double y,
+  required double z,
+  int duration = 100,
+  double scale = 1.0,
+  double angle = 0,
+  double speed = 2,
+}) {
+  spawnParticle(
+    type: ParticleType.Strike_Punch,
     x: x,
     y: y,
     z: z,
