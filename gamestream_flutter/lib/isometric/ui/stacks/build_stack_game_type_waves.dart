@@ -35,6 +35,18 @@ Widget buildWavesTimer() =>
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       text("READY", onPressed: () => sendClientRequest(ClientRequest.Game_Waves, GameWaveRequest.ready)),
+      //
+      // Stack(
+      //   children: [
+      //     Container(
+      //         width: 300,
+      //         height: 50,
+      //         alignment: Alignment.center,
+      //         child: watch(gameWaves.round, (int round) => text("Round $round"))
+      //     ),
+      //
+      //   ],
+      // ),
       watch(gameWaves.timer, (double time) => Container(
         width: 300,
         height: 50,

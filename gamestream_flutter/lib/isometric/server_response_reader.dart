@@ -245,6 +245,9 @@ class ServerResponseReader with ByteReader {
       case GameWavesResponse.timer:
         gameWaves.timer.value = readPercentage();
         break;
+      case GameWavesResponse.round:
+        gameWaves.round.value = readInt();
+        break;
       case GameWavesResponse.clear_upgrades:
         gameWaves.purchasePrimary.clear();
         gameWaves.purchaseSecondary.clear();

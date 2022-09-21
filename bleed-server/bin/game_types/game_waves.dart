@@ -60,6 +60,12 @@ class GameWaves extends Game {
     move(player, randomAngle(), 75);
   }
 
+  void playerWriteRound(Player player){
+    player.writeByte(ServerResponse.Game_Waves);
+    player.writeByte(GameWavesResponse.round);
+    player.writeInt(round);
+  }
+
   @override
   Player spawnPlayer() {
     final player = Player(game: this, weapon: buildWeaponUnarmed());
@@ -69,8 +75,9 @@ class GameWaves extends Game {
     player.weaponSlot3 = buildWeaponUnarmed();
     player.setCharacterStateSpawning();
 
-
     movePlayerToCrystal(player);
+
+    playerWriteRound(player);
 
     perform((){
 
@@ -151,6 +158,7 @@ class GameWaves extends Game {
 
   void onNextRoundStart(Player player){
     movePlayerToCrystal(player);
+    playerWriteRound(player);
     player.health = player.maxHealth;
     player.weaponSlot1.rounds = player.weaponSlot1.capacity;
     player.weaponSlot2.rounds = player.weaponSlot2.capacity;

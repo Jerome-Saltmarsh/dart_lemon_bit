@@ -8,6 +8,7 @@ class GameWaves {
     gameWaves.canPurchase.value = value > 0;
   });
   final canPurchase = Watch(false);
+  final round = Watch(0);
 
   final purchasePrimary = <Purchase>[];
   final purchaseSecondary = <Purchase>[];
