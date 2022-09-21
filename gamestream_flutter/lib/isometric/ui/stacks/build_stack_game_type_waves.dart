@@ -35,30 +35,30 @@ Widget buildWavesTimer() =>
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       text("READY", onPressed: () => sendClientRequest(ClientRequest.Game_Waves, GameWaveRequest.ready)),
-      //
-      // Stack(
-      //   children: [
-      //     Container(
-      //         width: 300,
-      //         height: 50,
-      //         alignment: Alignment.center,
-      //         child: watch(gameWaves.round, (int round) => text("Round $round"))
-      //     ),
-      //
-      //   ],
-      // ),
-      watch(gameWaves.timer, (double time) => Container(
-        width: 300,
-        height: 50,
-        padding: EdgeInsets.all(3),
-        color: Colors.white,
-        alignment: Alignment.centerLeft,
-        child: Container(
-          width: 300 * time,
-          height: 50,
-          color: Colors.green,
-        ),
-      )),
+      height16,
+      Stack(
+        children: [
+          watch(gameWaves.timer, (double time) => Container(
+            width: 300,
+            height: 50,
+            padding: EdgeInsets.all(3),
+            color: Colors.white,
+            alignment: Alignment.centerLeft,
+            child: Container(
+              width: 300 * time,
+              height: 50,
+              color: Colors.green,
+            ),
+          )),
+          Container(
+              width: 300,
+              height: 50,
+              alignment: Alignment.center,
+              child: watch(gameWaves.round, (int round) => text("Round $round", color: Colors.black))
+          ),
+        ],
+      ),
+
       height64,
       watch(gameWaves.refresh, (t) =>
         Row(
