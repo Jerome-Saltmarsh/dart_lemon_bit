@@ -53,7 +53,7 @@ class GameWaves extends Game {
   @override
   Player spawnPlayer() {
     final player = Player(game: this, weapon: buildWeaponUnarmed());
-    player.points = 5;
+    player.points = 50;
     player.weaponSlot1 = buildWeaponUnarmed();
     player.weaponSlot2 = buildWeaponUnarmed();
     player.weaponSlot3 = buildWeaponUnarmed();
@@ -177,7 +177,6 @@ class GameWaves extends Game {
   @override
   void customOnPlayerCollisionWithLoot(Player player, GameObjectLoot loot){
     deactivateGameObject(loot);
-    player.experience++;
     player.points++;
     player.writePoints();
     player.dispatchEventLootCollected();

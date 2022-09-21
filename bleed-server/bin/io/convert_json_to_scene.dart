@@ -112,6 +112,13 @@ GameObject convertJsonToGameObject(Json json) {
           y: y,
           z: z,
         );
+      case GameObjectType.Loot:
+        return GameObjectLoot(
+          x: x,
+          y: y,
+          z: z,
+          lootType: 0
+        );
       default:
         throw Exception("Could not create gameobject from type $type");
     }

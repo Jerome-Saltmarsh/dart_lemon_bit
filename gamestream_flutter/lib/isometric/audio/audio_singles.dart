@@ -24,6 +24,7 @@ final audioSingleShotgunShot = AudioSingle(name: 'shotgun-shot', volume: 0.5, ma
 final audioSingleShotgunCock = AudioSingle(name: 'cock-shotgun-03', volume: 0.5, maxDistance: 400);
 final audioSingleGunPickup = AudioSingle(name: 'gun-pickup-01', volume: 0.5, maxDistance: 400);
 final audioSingleAssaultRifle = AudioSingle(name: 'assault-rifle-shot', volume: 0.5, maxDistance: 400);
+final audioSingleSniperRifleFired = AudioSingle(name: 'sniper-shot-04', volume: 0.5, maxDistance: 400);
 final audioSingleItemUnlock = AudioSingle(name: 'unlock', volume: 0.5, maxDistance: 400);
 final audioSingleZombieHurt = AudioSingle(name: 'zombie-hurt-1', volume: 0.5, maxDistance: 400);
 final audioSingleSplash = AudioSingle(name: 'splash', volume: 0.5, maxDistance: 400);
