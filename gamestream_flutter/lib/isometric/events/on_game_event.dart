@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/isometric/events/on_character_hurt.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_attack_performed.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_weapon_type_equipped.dart';
-import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:lemon_math/library.dart';
@@ -127,7 +126,7 @@ void onGameEventNodeStruck(int nodeType, double x, double y, double z) {
   }
 }
 
-void onGameEventSwordSlash(double x, double y, double z, double angle) {
+void onGameEventAttackPerformedBlade(double x, double y, double z, double angle) {
   spawnParticleSlash(x: x, y: y, z: z, angle: angle);
   audioSingleSciFiBlaster8.playXYZ(x, y, z);
   audioSingleSwingSword.playXYZ(x, y, z);
@@ -138,7 +137,7 @@ void onGameEventSwordSlash(double x, double y, double z, double angle) {
 
 void onGameEventAttackPerformedUnarmed(double x, double y, double z, double angle) {
   spawnParticleSlash(x: x, y: y, z: z, angle: angle);
-  // audioSingleArmSwingWhoosh.playXYZ(x, y, z);
+  audioSingleArmSwing.playXYZ(x, y, z);
   for (var i = 0; i < 3; i++) {
     spawnParticleBubble(x: x, y: y, z: z, angle: angle + giveOrTake(piQuarter), speed: 3 + giveOrTake(2));
   }

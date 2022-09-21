@@ -23,7 +23,9 @@ void onGameEventAttackPerformed(double x, double y, double z, double angle) {
     case AttackType.Fireball:
       return audioSingleFireball.playXYZ(x, y, z);
     case AttackType.Blade:
-      return onGameEventSwordSlash(x, y, z, angle);
+      return onGameEventAttackPerformedBlade(x, y, z, angle);
+    case AttackType.Unarmed:
+      return onGameEventAttackPerformedUnarmed(x, y, z, angle);
     case AttackType.Crowbar:
       audioSingleSwingSword.playXYZ(x, y, z);
       return spawnParticleSlashCrowbar(x, y, z, angle);

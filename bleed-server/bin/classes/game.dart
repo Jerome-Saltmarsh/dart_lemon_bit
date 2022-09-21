@@ -194,9 +194,10 @@ abstract class Game {
         return playerAttackMelee(
           player: player,
           attackType: AttackType.Unarmed,
-          distance: 40,
+          distance: weapon.range,
           attackRadius: 35,
           damage: weapon.damage,
+          duration: weapon.duration,
         );
       case AttackType.Blade:
         return playerAttackMelee(
@@ -205,6 +206,7 @@ abstract class Game {
           distance: weapon.range,
           attackRadius: 35, /// TODO read value from weapon
           damage: weapon.damage,
+          duration: weapon.duration,
         );
       case AttackType.Crossbow:
         return playerSpawnProjectileArrow(
@@ -252,6 +254,7 @@ abstract class Game {
           distance: weapon.range,
           attackRadius: 35, /// TODO read value from weapon
           damage: weapon.damage,
+          duration: weapon.duration,
         );
       case AttackType.Bow:
         characterFireArrow(
@@ -261,7 +264,6 @@ abstract class Game {
             angle: player.mouseAngle,
         );
         break;
-        // return player.performAttackTypeBow();
     }
   }
 
@@ -297,20 +299,18 @@ abstract class Game {
     required double distance,
     required double attackRadius,
     required int damage,
+    required int duration,
   }) {
     final angle = player. mouseAngle;
-    final adj = getAdjacent(angle, distance);
-    final opp = getOpposite(angle, distance);
 
-
-    final performX = player.x + adj;
-    final performY = player.y + opp;
+    final performX = player.x + getAdjacent(angle, distance);
+    final performY = player.y + getOpposite(angle, distance);
     final performZ = player.z;
 
     player.performX = performX;
     player.performY = performY;
     player.performZ = performZ;
-    player.performDuration = 20;
+    player.performDuration = duration;
 
     /// TODO name arguments
     dispatchAttackPerformed(
