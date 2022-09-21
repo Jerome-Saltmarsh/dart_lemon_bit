@@ -411,6 +411,17 @@ class Player extends Character with ByteWriter {
     writeInt(angle * radiansToDegrees);
   }
 
+  void writeGameEventGameObjectDestroyed(GameObject gameObject){
+      writeGameEvent(
+        type: GameEventType.Game_Object_Destroyed,
+        x: gameObject.x,
+        y: gameObject.y,
+        z: gameObject.z,
+        angle: 0,
+      );
+      writeByte(gameObject.type);
+  }
+
   void dispatchEventLootCollected(){
     writePlayerEvent(PlayerEvent.Loot_Collected);
   }

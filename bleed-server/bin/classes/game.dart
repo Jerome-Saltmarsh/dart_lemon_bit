@@ -7,7 +7,6 @@ import '../common/maths.dart';
 import '../common/node_orientation.dart';
 import '../common/spawn_type.dart';
 import '../common/teams.dart';
-import '../dispatch/dispatch_game_object_destroyed.dart';
 import '../engine.dart';
 import '../functions/withinRadius.dart';
 import '../io/write_scene_to_file.dart';
@@ -347,8 +346,9 @@ abstract class Game {
           gameObject.active = false;
           gameObject.collidable = false;
           gameObject.respawn = 200;
-          /// TODO why is this external>
-          dispatchGameObjectDestroyed(players, gameObject);
+          for (final player in players) {
+            player.writeGameEventGameObjectDestroyed(gameObject);
+          }
         }
       }
       if (gameObject is Velocity == false) continue;
