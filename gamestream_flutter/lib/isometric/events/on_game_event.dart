@@ -78,9 +78,8 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       return audioSingleSwingSword.playXYZ(x, y, z);
     case GameEventType.EnemyTargeted:
       break;
-
     case GameEventType.Arrow_Fired:
-      return audio.arrowFlyingPast6(x, y);
+      return audioSingleArrowFlying.playXYZ(x, y, z);
 
     case GameEventType.Crate_Breaking:
       return audio.crateBreaking(x, y);

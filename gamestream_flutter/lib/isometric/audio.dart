@@ -190,10 +190,6 @@ class _Audio {
     _playPositioned('buff-11.mp3', x, y);
   }
 
-  void arrowFlyingPast6(double x, double y) {
-    _playPositioned('arrow-flying-past-6.mp3', x, y);
-  }
-
   void sciFiBlaster1(double x, double y) {
     _playPositioned('sci-fi-blaster-1.mp3', x, y);
   }

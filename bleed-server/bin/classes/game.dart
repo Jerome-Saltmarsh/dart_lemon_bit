@@ -179,8 +179,30 @@ abstract class Game {
     }
   }
 
+  void playerReleaseWeaponCharge(Player player, Weapon weapon){
+    if (weapon.charge <= 0) return;
+      weapon.charge = 0;
+
+      dispatchV3(GameEventType.Release_Bow, player);
+      spawnProjectileArrow(
+          src: player,
+          angle: player.mouseAngle,
+          damage: weapon.damage,
+          range: weapon.range,
+      );
+  }
+
   void playerUseWeapon(Player player, Weapon weapon) {
     if (player.deadBusyOrPerforming) return;
+
+    if (weapon.type == AttackType.Bow){
+      weapon.charge++;
+      if (weapon.charge == 1){
+         dispatchV3(GameEventType.Draw_Bow, player);
+      }
+      return;
+    }
+
 
     if (AttackType.requiresRounds(weapon.type)){
       if (weapon.rounds == 0) return;
@@ -208,9 +230,11 @@ abstract class Game {
           duration: weapon.duration,
         );
       case AttackType.Crossbow:
-        return playerSpawnProjectileArrow(
-            character: player,
+        return spawnProjectileArrow(
+            src: player,
             angle: player.mouseAngle,
+            damage: weapon.damage,
+            range: weapon.range,
         );
       case AttackType.Teleport:
         return playerTeleportToMouse(player);
@@ -256,8 +280,8 @@ abstract class Game {
           duration: weapon.duration,
         );
       case AttackType.Bow:
-        characterFireArrow(
-            player,
+        spawnProjectileArrow(
+            src: player,
             damage: weapon.damage,
             range: weapon.range,
             angle: player.mouseAngle,
@@ -274,19 +298,6 @@ abstract class Game {
     position.x = player.mouseGridX;
     position.y = player.mouseGridY;
   }
-
-  void playerSpawnProjectileArrow({
-    required Character character,
-    required double angle,
-    int damage = 1,
-    double range = 300,
-  }) =>
-    characterFireArrow(
-        character,
-        damage: damage,
-        range: range,
-        angle: angle,
-    );
 
   void performAttackTypeShotgun(Character character, double angle){
     characterFireShotgun(character, angle);
@@ -1575,8 +1586,8 @@ abstract class Game {
     );
   }
 
-  Projectile characterFireArrow(
-      Character src, {
+  void spawnProjectileArrow({
+        required Character src,
         required int damage,
         required double range,
         double accuracy = 0,
@@ -1584,7 +1595,7 @@ abstract class Game {
         double? angle,
       }) {
     dispatch(GameEventType.Arrow_Fired, src.x, src.y, src.z);
-    return spawnProjectile(
+    spawnProjectile(
       src: src,
       accuracy: accuracy,
       speed: 7,
@@ -2043,10 +2054,12 @@ abstract class Game {
 
     if (character.equippedTypeIsBow) {
       dispatchV3(GameEventType.Release_Bow, character);
-      characterFireArrow(character,
+         spawnProjectileArrow(
+          src: character,
           damage: equippedDamage,
           target: character.target,
-          range: character.equippedRange);
+          range: character.equippedRange,
+         );
       character.target = null;
       return;
     }

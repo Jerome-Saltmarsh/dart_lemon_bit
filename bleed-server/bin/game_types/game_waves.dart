@@ -11,6 +11,10 @@ import '../common/teams.dart';
 import '../common/type_position.dart';
 import '../dark_age/dark_age_scenes.dart';
 
+class GameWavePlayer extends Player {
+  GameWavePlayer({required Game game, required Weapon weapon}) : super(game: game, weapon: weapon);
+}
+
 class GameWaves extends Game {
 
   static const framesBetweenRounds = 600;
@@ -64,6 +68,50 @@ class GameWaves extends Game {
     player.writeByte(ServerResponse.Game_Waves);
     player.writeByte(GameWavesResponse.round);
     player.writeInt(round);
+  }
+
+  @override
+  void onPlayerUpdateRequestedReceived({
+    required Player player,
+    required int direction,
+    required bool perform1,
+    required bool perform2,
+    required bool perform3,
+    required double mouseX,
+    required double mouseY,
+    required double screenLeft,
+    required double screenTop,
+    required double screenRight,
+    required double screenBottom,
+  }) {
+    player.framesSinceClientRequest = 0;
+    player.screenLeft = screenLeft;
+    player.screenTop = screenTop;
+    player.screenRight = screenRight;
+    player.screenBottom = screenBottom;
+    player.mouse.x = mouseX;
+    player.mouse.y = mouseY;
+
+    if (player.deadOrBusy) return;
+
+    // playerUpdateAimTarget(player);
+    playerRunInDirection(player, direction);
+
+    if (perform1){
+      playerUseWeapon(player, player.weaponSlot1);
+    } else {
+      playerReleaseWeaponCharge(player, player.weaponSlot1);
+    }
+    if (perform2){
+      playerUseWeapon(player, player.weaponSlot2);
+    } else {
+      playerReleaseWeaponCharge(player, player.weaponSlot2);
+    }
+    if (perform3){
+      playerUseWeapon(player, player.weaponSlot3);
+    } else {
+      playerReleaseWeaponCharge(player, player.weaponSlot3);
+    }
   }
 
   @override

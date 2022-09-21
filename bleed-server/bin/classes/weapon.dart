@@ -11,6 +11,7 @@ class Weapon {
    double range;
    late int _rounds;
    int duration;
+   var charge = 0;
    final uuid = generateUUID();
 
    int get rounds => _rounds;

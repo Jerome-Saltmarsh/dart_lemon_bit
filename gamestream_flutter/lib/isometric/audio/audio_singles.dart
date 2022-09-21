@@ -17,6 +17,7 @@ final audioSingleBowDraw = AudioSingle(name: 'bow-draw', volume: 0.5, maxDistanc
 final audioSingleNotificationSound10 = AudioSingle(name: 'notification-sound-10', volume: 0.5, maxDistance: 200);
 final audioSingleNotificationSound12 = AudioSingle(name: 'notification-sound-12', volume: 0.5, maxDistance: 200);
 final audioSingleBowRelease = AudioSingle(name: 'bow-release', volume: 0.5, maxDistance: 250);
+final audioSingleArrowFlying = AudioSingle(name: 'arrow-flying-past-6', volume: 0.5, maxDistance: 250);
 final audioSingleBloodyPunches = AudioSingle(name: 'bloody-punches-1', volume: 0.5, maxDistance: 400);
 final audioSingleSciFiBlaster = AudioSingle(name: 'sci-fi-blaster-1', volume: 0.5, maxDistance: 400);
 final audioSingleSciFiBlaster8 = AudioSingle(name: 'sci-fi-blaster-8', volume: 0.5, maxDistance: 400);
