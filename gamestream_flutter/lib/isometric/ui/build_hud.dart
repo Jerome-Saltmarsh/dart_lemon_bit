@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_game_type_waves.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
@@ -37,6 +38,17 @@ Widget buildGameUI()  =>
       watch(playMode, buildPlayMode),
       buildWatchBool(debugVisible, buildHudDebug),
       buildWatchBool(player.questAdded, buildContainerQuestUpdated),
+      Positioned(
+        bottom: 0,
+        left: 0,
+        child: watch(player.interpolating, (bool value) {
+          if (!value) return text("Interpolation Off", onPressed: () => player.interpolating.value = true);
+          return watch(serverResponseReader.rendersSinceUpdate, (int frames){
+            return text("Frames: $frames", onPressed: () => player.interpolating.value = false);
+          });
+        }),
+      ),
+
     ],
   );
 

@@ -45,7 +45,7 @@ class GameRender {
   void renderGame(Canvas canvas, Size size) {
     renderFrame.value++;
     updateCameraMode();
-    // interpolatePlayer();
+    interpolatePlayer();
     attackTargetCircle();
     renderSprites();
     renderEditMode();
@@ -57,9 +57,9 @@ class GameRender {
   /// Render the player in the same relative position to the camera
   void interpolatePlayer(){
 
-    player.interpolating.value = serverResponseReader.rendersSinceUpdate.value == 1;
-
     if (!player.interpolating.value) return;
+
+    if (serverResponseReader.rendersSinceUpdate.value != 1) return;
 
     final playerCharacter = getPlayerCharacter();
     if (playerCharacter == null) return;
