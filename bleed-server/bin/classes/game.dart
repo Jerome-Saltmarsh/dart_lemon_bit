@@ -641,7 +641,12 @@ abstract class Game {
     target.health -= damage;
 
     if (target.health <= 0) {
-      setCharacterStateDying(target);
+      if (target is Zombie){
+        setCharacterStateDead(target);
+      } else {
+        setCharacterStateDying(target);
+      }
+
       customOnCharacterKilled(target, src);
 
       if (target is AI){
