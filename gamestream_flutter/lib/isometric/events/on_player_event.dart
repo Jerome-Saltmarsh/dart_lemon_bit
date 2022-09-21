@@ -51,20 +51,7 @@ void onPlayerEvent(int event) {
       break;
     case PlayerEvent.Item_Equipped:
       final type = serverResponseReader.readByte();
-      switch (type){
-        case AttackType.Revolver:
-          audioSingleRevolverReload();
-          break;
-        case AttackType.Handgun:
-          audioSingleReload6();
-          break;
-        case AttackType.Shotgun:
-          audioSingleShotgunCock();
-          break;
-        case AttackType.Rifle:
-          audioSingleMagIn2();
-          break;
-      }
+      onPlayerEventItemEquipped(type);
       break;
     case PlayerEvent.Medkit:
       audio.medkit(screenCenterWorldX, screenCenterWorldY);
@@ -92,6 +79,26 @@ void onPlayerEvent(int event) {
       break;
     case PlayerEvent.GameObject_Deselected:
       edit.gameObjectSelected.value = false;
+      break;
+  }
+}
+
+void onPlayerEventItemEquipped(int type) {
+  switch (type){
+    case AttackType.Revolver:
+      audioSingleRevolverReload();
+      break;
+    case AttackType.Handgun:
+      audioSingleReload6();
+      break;
+    case AttackType.Shotgun:
+      audioSingleShotgunCock();
+      break;
+    case AttackType.Rifle:
+      audioSingleMagIn2();
+      break;
+    case AttackType.Blade:
+      audioSingleSwordUnsheathe();
       break;
   }
 }

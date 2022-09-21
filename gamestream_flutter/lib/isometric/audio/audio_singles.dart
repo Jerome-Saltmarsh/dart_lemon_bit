@@ -23,6 +23,7 @@ final audioSingleSciFiBlaster8 = AudioSingle(name: 'sci-fi-blaster-8', volume: 0
 final audioSingleShotgunShot = AudioSingle(name: 'shotgun-shot', volume: 0.5, maxDistance: 400);
 final audioSingleShotgunCock = AudioSingle(name: 'cock-shotgun-03', volume: 0.5, maxDistance: 400);
 final audioSingleMagIn2 = AudioSingle(name: 'mag-in-02', volume: 0.5, maxDistance: 400);
+final audioSingleSwordUnsheathe = AudioSingle(name: 'sword-unsheathe', volume: 0.5, maxDistance: 400);
 final audioSingleGunPickup = AudioSingle(name: 'gun-pickup-01', volume: 0.5, maxDistance: 400);
 final audioSingleAssaultRifle = AudioSingle(name: 'assault-rifle-shot', volume: 0.5, maxDistance: 400);
 final audioSingleSniperRifleFired = AudioSingle(name: 'sniper-shot-04', volume: 0.5, maxDistance: 400);
