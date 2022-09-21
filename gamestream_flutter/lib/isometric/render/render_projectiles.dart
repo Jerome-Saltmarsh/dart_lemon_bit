@@ -10,7 +10,7 @@ import 'package:lemon_engine/render.dart';
 void renderProjectile(Projectile value) {
   switch (value.type) {
     case ProjectileType.Arrow:
-      renderPixelRed(value.renderX, value.renderY);
+      // renderPixelRed(value.renderX, value.renderY);
       return renderArrow(value.renderX, value.renderY, value.angle);
     case ProjectileType.Orb:
       return renderOrb(value.renderX, value.renderY);
