@@ -915,7 +915,7 @@ void spawnParticleLightEmission({
       angle: 0,
       speed: 0,
       weight: 0,
-      duration: 19,
+      duration: 35,
       checkCollision: false,
       animation: true,
   );

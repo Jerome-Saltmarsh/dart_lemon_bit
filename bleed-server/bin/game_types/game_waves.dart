@@ -51,6 +51,15 @@ class GameWaves extends Game {
     player.writeInt(mapAttackTypeToCost(type));
   }
 
+  void movePlayerToCrystal(Player player){
+    final crystal = findGameObjectByType(GameObjectType.Crystal);
+    if (crystal == null) return;
+    player.x = crystal.x;
+    player.y = crystal.y;
+    player.z = crystal.z;
+    move(player, randomAngle(), 75);
+  }
+
   @override
   Player spawnPlayer() {
     final player = Player(game: this, weapon: buildWeaponUnarmed());
@@ -60,14 +69,8 @@ class GameWaves extends Game {
     player.weaponSlot3 = buildWeaponUnarmed();
     player.setCharacterStateSpawning();
 
-    final crystal = findGameObjectByType(GameObjectType.Crystal);
 
-    if (crystal != null){
-       player.x = crystal.x;
-       player.y = crystal.y;
-       player.z = crystal.z;
-       move(player, randomAngle(), 75);
-    }
+    movePlayerToCrystal(player);
 
     perform((){
 
@@ -141,8 +144,17 @@ class GameWaves extends Game {
       if (remaining == 0){
         timer = framesBetweenRounds;
         round++;
+        players.forEach(onNextRoundStart);
       }
     }
+  }
+
+  void onNextRoundStart(Player player){
+    movePlayerToCrystal(player);
+    player.health = player.maxHealth;
+    player.weaponSlot1.rounds = player.weaponSlot1.capacity;
+    player.weaponSlot2.rounds = player.weaponSlot2.capacity;
+    player.weaponSlot3.rounds = player.weaponSlot3.capacity;
   }
 
   Weapon buildWeaponByType(int type){
