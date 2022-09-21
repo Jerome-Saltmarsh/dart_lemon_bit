@@ -210,6 +210,8 @@ class GameWaves extends Game {
     player.points -= cost;
 
     player.writePlayerEvent(PlayerEvent.Item_Equipped);
+    player.writeByte(type);
+
     assignPlayerWeapon(player, buildWeaponByType(type));
   }
 

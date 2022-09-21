@@ -1,4 +1,5 @@
 import 'package:bleed_common/PlayerEvent.dart';
+import 'package:bleed_common/attack_type.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
@@ -49,7 +50,21 @@ void onPlayerEvent(int event) {
       audio.itemAcquired(screenCenterWorldX, screenCenterWorldY);
       break;
     case PlayerEvent.Item_Equipped:
-      audio.itemAcquired(screenCenterWorldX, screenCenterWorldY);
+      final type = serverResponseReader.readByte();
+      switch (type){
+        case AttackType.Revolver:
+          audioSingleRevolverReload();
+          break;
+        case AttackType.Handgun:
+          audioSingleReload6();
+          break;
+        case AttackType.Shotgun:
+          audioSingleShotgunCock();
+          break;
+        case AttackType.Rifle:
+          audioSingleMagIn2();
+          break;
+      }
       break;
     case PlayerEvent.Medkit:
       audio.medkit(screenCenterWorldX, screenCenterWorldY);
