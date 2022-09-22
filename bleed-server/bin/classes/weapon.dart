@@ -39,7 +39,7 @@ Weapon buildWeaponShotgun() =>
       type: AttackType.Shotgun,
       damage: 1,
       capacity: 8,
-      duration: 10,
+      duration: 20,
       range: 200,
     );
 

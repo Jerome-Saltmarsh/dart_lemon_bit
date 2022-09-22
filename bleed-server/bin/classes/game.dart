@@ -247,7 +247,7 @@ abstract class Game {
           angle: player.mouseAngle,
         );
       case AttackType.Shotgun:
-        return performAttackTypeShotgun(player, player.mouseAngle);
+        return characterFireShotgun(player, player.mouseAngle);
       case AttackType.Assault_Rifle:
         return characterFireWeapon(
           character: player,
@@ -299,10 +299,6 @@ abstract class Game {
   void positionToPlayerMouse(Position position, Player player){
     position.x = player.mouseGridX;
     position.y = player.mouseGridY;
-  }
-
-  void performAttackTypeShotgun(Character character, double angle){
-    characterFireShotgun(character, angle);
   }
 
   void playerAttackMelee({
@@ -1730,15 +1726,18 @@ abstract class Game {
   }
 
   void characterFireShotgun(Character src, double angle) {
+    if (src.weapon.durationRemaining > 0) return;
+    src.weapon.durationRemaining = src.weapon.duration;
+
     for (var i = 0; i < 5; i++) {
       spawnProjectile(
         src: src,
         accuracy: 0,
         angle: angle + giveOrTake(0.25),
         speed: 8.0,
-        range: 300,
+        range: src.weapon.range,
         projectileType: ProjectileType.Bullet,
-        damage: 5,
+        damage:src.weapon.damage,
       );
     }
     dispatchAttackPerformed(AttackType.Shotgun, src.x, src.y, src.z, angle);
