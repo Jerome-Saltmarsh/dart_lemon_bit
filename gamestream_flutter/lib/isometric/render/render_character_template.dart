@@ -48,7 +48,19 @@ void renderCharacterTemplate(Character character, {bool renderHealthBar = true})
     renderCharacterHealthBar(character);
   }
 
-  // renderArrow(character.x, character.y, character.z, character.aimAngle);
+  renderArrow(character.x, character.y, character.z, character.aimAngle);
+
+  final angle = ((character.aimAngle - piEighth) ~/ piQuarter + 4) % 8;
+
+  render(
+      dstX: character.renderX,
+      dstY: character.renderY,
+      srcX: 160,
+      srcY: 64.0 * angle,
+      srcWidth: 64,
+      srcHeight: 64,
+  );
+
 
   final weaponType = character.weapon;
   final direction = character.direction;
