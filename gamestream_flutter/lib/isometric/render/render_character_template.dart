@@ -51,7 +51,7 @@ void renderCharacterWeaponHandgun(Character character){
     dstX: character.renderX + getAdjacent(angle, distance),
     dstY: character.renderY + getOpposite(angle, distance) - 8,
     srcX: 224 ,
-    srcY: (size * direction * 3),
+    srcY: (size * direction * 3) + (weaponState * size),
     srcWidth: size,
     srcHeight: size,
   );

@@ -11,10 +11,10 @@ void onGameEventAttackPerformed(double x, double y, double z, double angle) {
   switch (attackType){
     case AttackType.Handgun:
       audioSinglePistolShot20.playXYZ(x, y, z);
-      const distance = 20.0;
-      final xForward = getAdjacent(angle, distance);
-      final yForward = getOpposite(angle, distance);
-      spawnParticleHandgunFiring(x: x + xForward, y: y + yForward, z: z + 15, angle: angle);
+      // const distance = 20.0;
+      // final xForward = getAdjacent(angle, distance);
+      // final yForward = getOpposite(angle, distance);
+      // spawnParticleHandgunFiring(x: x + xForward, y: y + yForward, z: z + 15, angle: angle);
       break;
     case AttackType.Shotgun:
       return audioSingleShotgunShot.playXYZ(x, y, z);

@@ -1060,7 +1060,7 @@ abstract class Game {
     if (player.weapon.durationRemaining > 0) {
       player.weapon.durationRemaining--;
       if (player.weapon.durationRemaining == 0){
-        player.weapon.state = AttackState.Idle;
+        player.weapon.state = AttackState.Aiming;
       }
     }
 
