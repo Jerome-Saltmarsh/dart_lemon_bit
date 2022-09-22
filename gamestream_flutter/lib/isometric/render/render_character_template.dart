@@ -57,6 +57,24 @@ void renderCharacterWeaponHandgun(Character character){
   );
 }
 
+void renderCharacterWeaponShotgun(Character character){
+  final weaponState = character.weaponState;
+  final angle = character.aimAngle + piQuarter;
+  final distance = 15.0;
+  const size = 32.0;
+  final direction = character.aimDirection;
+
+  render(
+    dstX: character.renderX + getAdjacent(angle, distance),
+    dstY: character.renderY + getOpposite(angle, distance) - 8,
+    srcX: 256 ,
+    srcY: (size * direction * 3) + (weaponState * size),
+    srcWidth: size,
+    srcHeight: size,
+  );
+}
+
+
 void renderCharacterTemplate(Character character, {bool renderHealthBar = true}) {
   assert(character.direction >= 0);
   assert(character.direction < 8);
