@@ -1,12 +1,11 @@
 
-import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
-import 'package:gamestream_flutter/isometric/utils/convert.dart';
-import 'package:gamestream_flutter/modules/game/render_rotated.dart';
-import 'package:lemon_math/library.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
+import 'package:gamestream_flutter/isometric/utils/convert.dart';
+import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/render.dart';
+import 'package:lemon_math/library.dart';
 
 import '../classes/character.dart';
 import 'render_character_health_bar.dart';
@@ -55,6 +54,15 @@ void renderCharacterWeaponHandgun(Character character){
     srcWidth: size,
     srcHeight: size,
   );
+}
+
+void renderCharacterWeapon(Character character){
+    switch(character.weapon){
+      case AttackType.Handgun:
+        return renderCharacterWeaponHandgun(character);
+      case AttackType.Shotgun:
+        return renderCharacterWeaponShotgun(character);
+    }
 }
 
 void renderCharacterWeaponShotgun(Character character){

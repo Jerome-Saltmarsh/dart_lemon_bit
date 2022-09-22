@@ -91,23 +91,21 @@ class GameWaves extends Game {
 
     if (player.deadOrBusy) return;
 
+    playerRunInDirection(player, direction);
     playerUpdateAimTarget(player);
 
+    if (player.weapon.durationRemaining > 0) return;
+    player.weapon.state = AttackState.Aiming;
 
-    playerRunInDirection(player, direction);
-
-    if (perform1){
+    if (perform1) {
+      player.weapon = player.weaponSlot1;
       playerUseWeapon(player, player.weapon);
     } else {
       playerReleaseWeaponCharge(player, player.weapon);
     }
-
-    if (player.weapon.durationRemaining == 0) {
-      if (player.aimTarget != null) {
-        player.weapon.state = AttackState.Aiming;
-      } else {
-        player.weapon.state = AttackState.Idle;
-      }
+    if (perform2) {
+      player.weapon = player.weaponSlot2;
+      playerUseWeapon(player, player.weapon);
     }
   }
 

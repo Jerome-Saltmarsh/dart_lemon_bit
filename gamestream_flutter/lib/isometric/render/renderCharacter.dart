@@ -50,12 +50,11 @@ void renderCharacter(Character character){
       final aimDirection = character.aimDirection;
       final weaponInFront = aimDirection >= 2 && aimDirection <= 6;
       if (!weaponInFront) {
-        renderCharacterWeaponShotgun(character);
-        // renderCharacterWeaponHandgun(character);
+        renderCharacterWeapon(character);
       }
       renderCharacterTemplate(character);
       if (weaponInFront) {
-        renderCharacterWeaponShotgun(character);
+        renderCharacterWeapon(character);
       }
       return;
     case CharacterType.Slime:
