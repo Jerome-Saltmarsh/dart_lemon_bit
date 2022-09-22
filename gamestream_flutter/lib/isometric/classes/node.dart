@@ -74,6 +74,10 @@ abstract class Node {
     renderStandardNode(srcX, shade * spriteHeight);
   }
 
+  void renderShadeManual2(double srcX, int shade) {
+    renderStandardNode(srcX, shade * 72);
+  }
+
   /// Use this to render dynamically
   void renderShadeAuto(double x, [double y = 0]) {
     renderStandardNode(x, y, color);

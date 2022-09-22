@@ -9,6 +9,7 @@ import 'package:lemon_engine/render.dart';
 
 void renderCharacter(Character character){
   if (!character.tile.visible) return;
+  if (!character.tileBelow.visible) return;
 
   if (character.spawning) {
     if (character.type == CharacterType.Rat){

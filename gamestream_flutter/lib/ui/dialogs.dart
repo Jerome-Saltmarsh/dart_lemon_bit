@@ -79,7 +79,7 @@ Widget buildDialogAccount(){
 Widget _buildSubscriptionPanel(Account account){
   final subscriptionStartDate = account.subscriptionStartDate;
   final subscriptionEndDate = account.subscriptionEndDate;
-  return panel(
+  return buildPanel(
       child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [

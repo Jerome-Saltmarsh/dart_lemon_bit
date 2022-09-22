@@ -427,7 +427,7 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerEvent(int value){
-    writeByte(ServerResponse.Player_Events);
+    writeByte(ServerResponse.Player_Event);
     writeByte(value);
   }
 
@@ -705,4 +705,3 @@ class Player extends Character with ByteWriter {
 int getExperienceForLevel(int level){
   return (((level - 1) * (level - 1))) * 6;
 }
-

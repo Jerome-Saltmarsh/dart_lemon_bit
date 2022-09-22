@@ -187,14 +187,14 @@ Widget buildMenuButton(String text, Function onPressed){
 }
 
 Widget panelDark({required Widget child, bool expand = true}){
-  return panel(child: child, expand: expand, color: colours.black10);
+  return buildPanel(child: child, expand: expand, color: colours.black10);
 }
 
 Widget panelLight({required Widget child, bool expand = true}){
-  return panel(child: child, expand: expand, color: colours.white05);
+  return buildPanel(child: child, expand: expand, color: colours.white05);
 }
 
-Widget panel({required Widget child, bool expand = true, Color? color}){
+Widget buildPanel({required Widget child, bool expand = true, Color? color}){
   return Container(
     padding: padding16,
     child: child,

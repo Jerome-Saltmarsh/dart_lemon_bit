@@ -263,13 +263,130 @@ DIFFERENT MODES
 
 
 
+/**
+ * Quest 1: Go to the village and talk to Julia
+ *
+ * Julia:
+ *  hello stranger, welcome to our village
+ *  I need your help
+ *  before I ask it of you I need to see that you are capable
+ *  Could you please go down to the basement
+ *  Inside stored away in a treasure box is hidden a key
+ *  It is golden in colour and quite heavy to hold
+ *  Please fetch it and return it to me
+ *
+ *  Julia:
+ *  Do you have the key?
+ *  [Options]
+ *    What key?
+ *    Not Yet:
+ *    Yes I have it.
+ *
+ *  Julia:
+ *   That is fantastic, please give it to me
+ *
+ *   Options:
+ *   (If player has the key)
+ *   - (GIVE KEY) Here it
+ *   - (TELL A LIE TO KEEP THE KEY) I haven't gotten it yet
+ *   - (ADMIT LIE) Actually the truth is I haven't gotten it yet
+ *   - (LIE)
+ *
+ *   Julia: The item that you have brought me is actually a kind of weapon
+ *   I will teach you how to wield it and with its power you can help me save
+ *   the kingdom.
+ *
+ *   Bring the world to life.
+ *   To implement. Allow player control options
+ *   Style_1: The player can run and perform at the same time
+ *
+ *  Style_2: The player cannot run and perform at the same time
+ *
+ *
+ *  STYLE_1
+ *    the character weapon is not rendered as part of the body but as separate
+ *
+ *  STYLE_2
+ *    the character weapon is rendered as part of the body
+ *
+ *    Rendered (VERB-PAST) : Belongs to "Render" ->
+ *    Verb-Present: Render
+ *    Means: In the context of computer software the term render is often used
+ *    in 3d programs and is the process of exporting a processed version
+ *
+ *    Example-1:
+ *      The computer rendered the animation
+ *    Example-2:
+ *      His hay fever rendered him useless
+ *
+ *  Each words key is simply the characters.
+ *
+ *  It is case insensitive
+ *
+ *
+ *  A user can define new terms
+ *  A user can modify existing terms
+ *  Request Submit Modification Request
+ *  View submitted modification requests
+ *  Upvote or down vote modifications
+ *  modification requests that has more down votes can be sorted
+ *
+ *  LINK
+ *  KNOWLEDGE-BASE
+ *  KNOW-BASE
+ *
+ *  A Tool for learning a new language
+ *  Learn new sentences
+ *  Practice old words
+ *
+ *  - Er ist vor eine Stunde zur Schule zurueckgekehrt
+ *  - Ich habe mich geaergert weil du mich aufgeweckt hast
+ *  - Einen Moment lang wirkte der Schulleiter ganz verbluefft
+ *  - Dann breitete sich ein Laecheln auf seinem Gesicht aus
+ *
+ *  Submit short video
+ *  Report video
+ *
+ *
+ * Allow the player to modify the game through the editor
+ * Listen for triggers
+ * Triggers [
+ *  - ON_COLLISION_BETWEEN (a, b)
+ *  - ON_COLLISION_BETWEEN_GAMEOBJECT_AND_ALL_EXCEPT_GAMEOBJECTS
+ *  - ON_COLLISION_BETWEEN_GAMEOBJECT_AND_GAMEOBJECT
+ *  - ON_COLLISION_BETWEEN_PLAYER_AND_GAMEOBJECT-LOOT
+ *  - ON_COLLISION_BETWEEN_PLAYER_AND_CHARACTER
+ *  - ON_COLLISION_BETWEEN_PLAYER_AND_CHARACTER-ZOMBIE
+ *  - ON_COLLISION_BETWEEN_PLAYER_AND_PLAYER
+ *  - ON_DESTROYED
+ *  - ON_DESTROYED_GAMEOBJECT
+ *  - ON_CHARACTER_ALL_DEATH
+ *  - ON_CHARACTER_ZOMBIE_DEATH
+ *  - ON_CHARACTER_SLIME_DEATH
+ *    ON_PLAYER_JOINED
+ *    ON_PLAYER_EXITED
+ *
+ * ]
+ *
+ * Actions
+ * - actions.move.player.to.crystal
+ * actions.spawn.zombie
+ * actions.spawn.rat
+ *
+ * Action
+ *  - SPAWN_ZOMBIE
+ *        Index: (Z, ROW, COLUMN)
+ *        Find: instance
+ *  - SET_NODE
+ *        Index:
+ *        TYPE
+ *
+ * -
+ * Player_Write
+ * - SHADE
+ * - TIME
+ * -
 
 
-
-
-
-
-
-
-
-
+ *
+ */

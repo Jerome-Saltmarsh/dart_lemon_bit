@@ -118,8 +118,8 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Game_Event:
           readGameEvent();
           break;
-        case ServerResponse.Player_Events:
-          readPlayerEvents();
+        case ServerResponse.Player_Event:
+          readPlayerEvent();
           break;
         case ServerResponse.Grid:
           readGrid();
@@ -782,11 +782,7 @@ class ServerResponseReader with ByteReader {
     return readByte();
   }
 
-  double _nextPercentage(){
-    return readByte() / 100.0;
-  }
-
-  void readPlayerEvents() {
+  void readPlayerEvent() {
     onPlayerEvent(readByte());
   }
 

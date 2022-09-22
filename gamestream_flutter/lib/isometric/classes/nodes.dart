@@ -592,7 +592,11 @@ class NodeBoulder extends NodeShadeAuto {
 }
 
 class NodeBricks2 extends Node {
-  NodeBricks2(int row, int column, int z) : super(row, column, z);
+  final int row;
+  final int column;
+  final int z;
+
+  NodeBricks2(this.row, this.column, this.z) : super(row, column, z);
 
   @override
   int get type => NodeType.Brick_2;
@@ -607,8 +611,14 @@ class NodeBricks2 extends Node {
   void handleRender() {
     const srcX = 11377.0;
 
-    if (orientation == NodeOrientation.Solid)
-      return renderShadeManual(srcX + srcIndexX0);
+    if (orientation == NodeOrientation.Solid){
+      return renderShadeManual(11377);
+      // renderShadeManual2(12352, getNode(z, row + 1, column).shade);
+      // renderShadeManual2(12401, getNode(z, row, column + 1).shade);
+      // renderShadeManual2(12450, getNode(z + 1, row, column).shade);
+      // return;
+    }
+
     if (orientation == NodeOrientation.Slope_North)
        return renderShadeManual(7394);
     if (orientation == NodeOrientation.Slope_East)

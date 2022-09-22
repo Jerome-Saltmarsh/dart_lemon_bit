@@ -58,6 +58,7 @@ class EditState {
   final nodeSupportsSlopeCornerOuter = Watch(false);
   final nodeSupportsHalf = Watch(false);
   final nodeSupportsCorner = Watch(false);
+  final isActiveEditTriggers = Watch(true);
 
   void cursorRowIncrease() => row.value++;
   void cursorRowDecrease() => row.value--;
