@@ -44,14 +44,16 @@ void renderCharacterWeaponHandgun(Character character){
   final weaponState = character.weaponState;
   final angle = character.aimAngle + piQuarter;
   final distance = 25.0;
+  const size = 32.0;
+  final direction = character.aimDirection;
+
   render(
     dstX: character.renderX + getAdjacent(angle, distance),
     dstY: character.renderY + getOpposite(angle, distance) - 8,
-    srcX: 160,
-    srcY: 64.0 * character.aimDirection,
-    srcWidth: 64,
-    srcHeight: 64,
-    scale: 0.62,
+    srcX: 224 ,
+    srcY: (size * direction * 3),
+    srcWidth: size,
+    srcHeight: size,
   );
 }
 
