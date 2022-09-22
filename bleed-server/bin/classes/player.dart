@@ -6,6 +6,7 @@ import 'package:lemon_math/library.dart';
 
 import '../common/api_player.dart';
 import '../common/character_type.dart';
+import '../common/environment_response.dart';
 import '../common/flag.dart';
 import '../common/library.dart';
 import '../common/quest.dart';
@@ -686,6 +687,18 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Points);
     writeInt(points);
+  }
+
+  void writeEnvironmentShade(int value){
+    writeByte(ServerResponse.Environment);
+    writeByte(EnvironmentResponse.Shade);
+    writeByte(value);
+  }
+
+  void writeEnvironmentTime(int value){
+    writeByte(ServerResponse.Environment);
+    writeByte(EnvironmentResponse.Time);
+    writeByte(value);
   }
 }
 

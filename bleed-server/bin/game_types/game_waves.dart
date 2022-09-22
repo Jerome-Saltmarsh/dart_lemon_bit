@@ -138,6 +138,8 @@ class GameWaves extends Game {
       writePurchase(player, AttackType.Blade);
       writePurchase(player, AttackType.Staff);
       writePurchase(player, AttackType.Baseball_Bat);
+
+      player.writeEnvironmentShade(Shade.Medium);
     }, 1);
     return player;
   }

@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/api_player.dart';
 import 'package:bleed_common/character_type.dart';
+import 'package:bleed_common/environment_response.dart';
 import 'package:bleed_common/game_waves_response.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
@@ -172,6 +173,9 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Player_Weapons:
           readPlayerWeapons();
           break;
+        case ServerResponse.Environment:
+          readServerResponseEnvironment();
+          break;
         case ServerResponse.Player_Equipped_Weapon:
           readPlayerEquippedWeapon();
           break;
@@ -224,6 +228,15 @@ class ServerResponseReader with ByteReader {
         default:
           throw Exception("Cannot parse $response at index: $index");
       }
+    }
+  }
+
+  void readServerResponseEnvironment() {
+    final environmentResponse = readByte();
+    switch (environmentResponse){
+      case EnvironmentResponse.Shade:
+            ambientShade.value = readByte();
+            break;
     }
   }
 
