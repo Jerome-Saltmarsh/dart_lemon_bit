@@ -43,7 +43,7 @@ void renderArrow(double x, double y, double z, double angle){
 void renderCharacterWeaponHandgun(Character character){
   final weaponState = character.weaponState;
   final angle = character.aimAngle + piQuarter;
-  final distance = 25.0;
+  final distance = 15.0;
   const size = 32.0;
   final direction = character.aimDirection;
 
