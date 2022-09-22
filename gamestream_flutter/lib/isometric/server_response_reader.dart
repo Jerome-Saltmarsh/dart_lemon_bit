@@ -435,17 +435,17 @@ class ServerResponseReader with ByteReader {
     character.y = readDouble();
     character.z = readDouble();
     _parseCharacterFrameHealth(character, readByte());
-    character.magic = _nextPercentage();
-    character.weapon = readByte();
-    character.armour = readByte();
-    character.helm = readByte();
-    character.pants = readByte();
+    // character.magic = _nextPercentage();
+    readCharacterEquipment(character);
+    // character.weapon = readByte();
+    // character.armour = readByte();
+    // character.helm = readByte();
+    // character.pants = readByte();
     character.name = readString();
     character.text = readString();
     character.aimAngle = readAngle();
     totalCharacters++;
   }
-
 
   void readInteractingNpcName() {
     player.interactingNpcName.value = readString();

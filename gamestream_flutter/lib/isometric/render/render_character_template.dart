@@ -50,7 +50,7 @@ void renderCharacterWeaponHandgun(Character character){
     srcY: 64.0 * character.aimDirection,
     srcWidth: 64,
     srcHeight: 64,
-    scale: 1,
+    scale: 0.62,
   );
 }
 
@@ -64,8 +64,7 @@ void renderCharacterTemplate(Character character, {bool renderHealthBar = true})
     renderCharacterHealthBar(character);
   }
 
-  renderArrow(character.x, character.y, character.z, character.aimAngle);
-  //
+  // renderArrow(character.x, character.y, character.z, character.aimAngle);
   // renderText(text: '$aimDirection', x: character.renderX, y: character.renderY - 100);
 
   final weaponType = character.weapon;
