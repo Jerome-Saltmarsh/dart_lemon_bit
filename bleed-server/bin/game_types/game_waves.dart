@@ -182,6 +182,7 @@ class GameWaves extends Game {
               );
               zombie.chaseRange = 99999;
               zombie.viewRange = 99999;
+              zombie.maxSpeed = 1.0;
             }
           }
         }

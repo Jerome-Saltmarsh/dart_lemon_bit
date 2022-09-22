@@ -1458,10 +1458,10 @@ abstract class Game {
         if (ai.withinAttackRange(target)) {
           return ai.attackTarget(target);
         }
-        if ((ai.getDistance(target) < 300)) {
+        // if ((ai.getDistance(target) < ai.chaseRange)) {
           ai.destX = target.x;
           ai.destY = target.y;
-        }
+        // }
       }
 
       if (!ai.arrivedAtDest) {
