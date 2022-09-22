@@ -47,7 +47,16 @@ void renderCharacter(Character character){
 
   switch (character.type) {
     case CharacterType.Template:
-      return renderCharacterTemplate(character);
+      final aimDirection = character.aimDirection;
+      final weaponInFront = aimDirection >= 2 && aimDirection <= 6;
+      if (!weaponInFront) {
+        renderCharacterWeaponHandgun(character);
+      }
+      renderCharacterTemplate(character);
+      if (weaponInFront) {
+        renderCharacterWeaponHandgun(character);
+      }
+      return;
     case CharacterType.Slime:
       return renderCharacterSlime(character);
     case CharacterType.Rat:

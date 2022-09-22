@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:lemon_math/library.dart';
@@ -38,6 +39,19 @@ void renderArrow(double x, double y, double z, double angle){
   );
 }
 
+
+void renderCharacterWeaponHandgun(Character character){
+  render(
+    dstX: character.renderX,
+    dstY: character.renderY,
+    srcX: 160,
+    srcY: 64.0 * character.aimDirection,
+    srcWidth: 64,
+    srcHeight: 64,
+    scale: 1,
+  );
+}
+
 void renderCharacterTemplate(Character character, {bool renderHealthBar = true}) {
   assert(character.direction >= 0);
   assert(character.direction < 8);
@@ -49,18 +63,8 @@ void renderCharacterTemplate(Character character, {bool renderHealthBar = true})
   }
 
   renderArrow(character.x, character.y, character.z, character.aimAngle);
-
-  final angle = ((character.aimAngle - piEighth) ~/ piQuarter + 4) % 8;
-
-  render(
-      dstX: character.renderX,
-      dstY: character.renderY,
-      srcX: 160,
-      srcY: 64.0 * angle,
-      srcWidth: 64,
-      srcHeight: 64,
-  );
-
+  //
+  // renderText(text: '$aimDirection', x: character.renderX, y: character.renderY - 100);
 
   final weaponType = character.weapon;
   final direction = character.direction;

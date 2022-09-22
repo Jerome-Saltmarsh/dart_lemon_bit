@@ -1,6 +1,7 @@
 import 'package:bleed_common/character_type.dart';
+
+import 'package:lemon_math/library.dart';
 import 'package:bleed_common/library.dart';
-import 'package:lemon_math/constants/pi_quarter.dart';
 
 import 'vector3.dart';
 
@@ -30,5 +31,6 @@ class Character extends Vector3 {
   bool get hurt => state == CharacterState.Hurt;
   bool get dying => state == CharacterState.Dying;
   bool get alive => !dead;
+  int get aimDirection => ((aimAngle - piEighth) ~/ piQuarter + 4) % 8;
   double get angle => direction * piQuarter;
 }
