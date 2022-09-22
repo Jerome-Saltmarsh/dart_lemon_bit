@@ -327,25 +327,26 @@ void spawnParticleOrgan({
       scaleV: 0);
 }
 
-void spawnParticleShell({
-  required double x,
-  required double y,
-}) {
-  final type = ParticleType.Shell;
+void spawnParticleShell(
+  double x,
+  double y,
+  double z,
+) {
   spawnParticle(
-    type: type,
+    type: ParticleType.Shell,
     x: x,
     y: y,
-    z: 0.8,
+    z: z,
+    zv: 2,
     angle: randomAngle(),
-    speed: 1.5,
-    zv: 0.075,
-    weight: 0.35,
-    duration: 1000,
-    rotation: randomAngle(),
-    rotationV: 0.75,
-    scale: 0.3,
-    bounciness: 0.4,
+    speed: 2,
+    weight: 6,
+    duration: randomInt(120, 200),
+    rotation: randomInt(0, 7).toDouble(),
+    rotationV: giveOrTake(0.25),
+    scale: 0.6,
+    scaleV: 0,
+    bounciness: 0,
   );
 }
 

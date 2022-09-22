@@ -132,6 +132,18 @@ void renderParticle(Particle value) {
         scale: value.scale,
       );
 
+    case ParticleType.Shell:
+      return render(
+        dstX: value.renderX,
+        dstY: value.renderY,
+        srcX: 1008 + (value.direction * 32),
+        srcY: 0,
+        srcWidth: 32,
+        srcHeight: 32,
+        scale: 0.25,
+        color: value.renderColor,
+      );
+
     case ParticleType.Fire_Purple:
       if (value.frame > 24 ) return;
       return render(
