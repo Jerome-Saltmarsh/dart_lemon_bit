@@ -12,7 +12,6 @@ import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
-import 'package:gamestream_flutter/isometric/collectables.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event.dart';
@@ -138,9 +137,6 @@ class ServerResponseReader with ByteReader {
           break;
         case ServerResponse.Player_Attack_Target_None:
           readPlayerAttackTargetNone();
-          break;
-        case ServerResponse.Collectables:
-          readCollectables();
           break;
         case ServerResponse.Damage_Applied:
           readDamageApplied();
@@ -566,18 +562,6 @@ class ServerResponseReader with ByteReader {
     player.levelBow.value = readByte();
     player.levelAxe.value = readByte();
     player.levelHammer.value = readByte();
-  }
-
-  void readCollectables() {
-    var totalCollectables = 0;
-    var type = readByte();
-    while (type != END) {
-      final collectable = collectables[totalCollectables];
-      collectable.type = type;
-      readVector2(collectable);
-      totalCollectables++;
-      type = readByte();
-    }
   }
 
   void readPlayerAttackTargetNone() {

@@ -2,7 +2,6 @@ import 'package:bleed_common/GameType.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/control/classes/authentication.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
-import 'package:gamestream_flutter/isometric/collectables.dart';
 import 'package:gamestream_flutter/isometric/npcs.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
@@ -141,7 +140,6 @@ class CoreActions {
     totalPlayers = 0;
     totalProjectiles = 0;
     totalNpcs = 0;
-    totalCollectables = 0;
     particleEmitters.clear();
     particles.clear();
     player.gameDialog.value = null;

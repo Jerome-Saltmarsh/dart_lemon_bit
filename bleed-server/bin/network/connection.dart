@@ -243,10 +243,6 @@ class Connection {
         player.toggleDebug();
         break;
 
-      case ClientRequest.Version:
-        reply('${ServerResponse.Version} $version');
-        break;
-
       case ClientRequest.Speak:
         player.text = arguments
             .sublist(1, arguments.length)
