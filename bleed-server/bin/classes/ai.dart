@@ -10,20 +10,19 @@ import 'position3.dart';
 import 'weapon.dart';
 
 abstract class AI extends Character {
-  static const viewRange = 200.0;
-  static const chaseRange = 500.0;
   static const maxAIPathLength = 80;
   static const maxAIPathLengthMinusOne = maxAIPathLength - 3;
 
   final pathX = Float32List(maxAIPathLength);
   final pathY = Float32List(maxAIPathLength);
+  var viewRange = 200.0;
+  var chaseRange = 500.0;
   var pathIndex = 0;
   var destX = 0.0;
   var destY = 0.0;
   var spawnX = 0.0;
   var spawnY = 0.0;
   var spawnZ = 0.0;
-  var objective;
   var respawn = 0;
   var wanderPause = randomInt(300, 500);
   var wanderRadius = 0.0;
@@ -95,16 +94,14 @@ abstract class AI extends Character {
 
   void clearTargetIf(Character value){
     if (target != value) return;
-    target = objective;
+    target = null;
   }
 
   bool withinViewRange(Position3 target) {
-    if (target == objective) return true;
     return withinRadius(this, target, viewRange);
   }
 
   bool withinChaseRange(Position3 target) {
-    if (target == objective) return true;
     return withinRadius(this, target, chaseRange);
   }
 }

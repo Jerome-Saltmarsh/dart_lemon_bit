@@ -542,6 +542,7 @@ abstract class Game {
 
   void updateStatus() {
     removeDisconnectedPlayers();
+    if (players.length == 0) return;
     updateInProgress();
     for (final player in players) {
       player.writeAndSendResponse();
@@ -1890,31 +1891,32 @@ abstract class Game {
     for (final character in characters) {
       if (!character.alive) continue;
       if (character is AI == false) continue;
-      final ai = character as AI;
-
-      var target = character.target;
-      if (target != null && !character.withinChaseRange(target)) {
-        character.target = null;
-        character.clearDest();
-      }
-
-      var targetDistance = 9999999.0;
-
-      for (final other in characters) {
-        if (!other.alive) continue;
-        if (other == character) continue;
-        if (onSameTeam(other, character)) continue;
-        if (!character.withinViewRange(other)) continue;
-        final npcDistance = character.getDistance(other);
-        if (npcDistance >= targetDistance) continue;
-        setNpcTarget(character, other);
-        targetDistance = npcDistance;
-      }
-      target = character.target;
-      if (target == null) continue;
-      if (targetDistance < 100) continue;
-      npcSetPathTo(character, target);
+      updateAITarget(character as AI);
     }
+  }
+
+  void updateAITarget(AI ai){
+    var target = ai.target;
+    if (target != null && !ai.withinChaseRange(target)) {
+      ai.target = null;
+      ai.clearDest();
+    }
+
+    var targetDistance = 9999999.0;
+
+    for (final other in characters) {
+      if (!other.alive) continue;
+      if (onSameTeam(other, ai)) continue;
+      if (!ai.withinViewRange(other)) continue;
+      final npcDistance = ai.getDistance(other);
+      if (npcDistance >= targetDistance) continue;
+      setNpcTarget(ai, other);
+      targetDistance = npcDistance;
+    }
+    target = ai.target;
+    if (target == null) return;
+    if (targetDistance < 100) return;
+    npcSetPathTo(ai, target);
   }
 
   void setNpcTarget(AI ai, Position3 value) {

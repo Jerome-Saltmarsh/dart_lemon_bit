@@ -284,7 +284,6 @@ class ServerResponseReader with ByteReader {
         player.previousPosition.x = player.x;
         player.previousPosition.y = player.y;
         player.previousPosition.z = player.z;
-        // saveInterpolation();
         readVector3(player);
         break;
       case ApiPlayer.Health:

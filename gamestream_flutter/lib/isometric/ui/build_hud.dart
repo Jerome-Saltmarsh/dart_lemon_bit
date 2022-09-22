@@ -38,19 +38,21 @@ Widget buildGameUI()  =>
       watch(playMode, buildPlayMode),
       buildWatchBool(debugVisible, buildHudDebug),
       buildWatchBool(player.questAdded, buildContainerQuestUpdated),
-      Positioned(
-        bottom: 0,
-        left: 0,
-        child: watch(player.interpolating, (bool value) {
-          if (!value) return text("Interpolation Off", onPressed: () => player.interpolating.value = true);
-          return watch(serverResponseReader.rendersSinceUpdate, (int frames){
-            return text("Frames: $frames", onPressed: () => player.interpolating.value = false);
-          });
-        }),
-      ),
-
+      // buildWatchInterpolation(),
     ],
   );
+
+Positioned buildWatchInterpolation() =>
+  Positioned(
+      bottom: 0,
+      left: 0,
+      child: watch(player.interpolating, (bool value) {
+        if (!value) return text("Interpolation Off", onPressed: () => player.interpolating.value = true);
+        return watch(serverResponseReader.rendersSinceUpdate, (int frames){
+          return text("Frames: $frames", onPressed: () => player.interpolating.value = false);
+        });
+      }),
+    );
 
 Widget buildGameTypeUI(int? gameType) {
    switch (gameType) {

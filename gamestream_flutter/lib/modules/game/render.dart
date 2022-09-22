@@ -59,25 +59,20 @@ class GameRender {
 
     if (!player.interpolating.value) return;
 
+    if (serverResponseReader.rendersSinceUpdate.value == 0) {
+      return;
+    }
     if (serverResponseReader.rendersSinceUpdate.value != 1) return;
 
     final playerCharacter = getPlayerCharacter();
     if (playerCharacter == null) return;
-
-    player.velocity.x = player.x - player.previousPosition.x;
-    player.velocity.y = player.y - player.previousPosition.y;
-    player.velocity.z = player.z - player.previousPosition.z;
-
-
-    // final speed = player.velocity.magnitude;
-
-    // if (speed < 5){
-      playerCharacter.x += player.velocity.x;
-      playerCharacter.y += player.velocity.y;
-      playerCharacter.z -= player.velocity.z;
-    // }
+    final velocityX = player.x - player.previousPosition.x;
+    final velocityY = player.y - player.previousPosition.y;
+    final velocityZ = player.z - player.previousPosition.z;
+    playerCharacter.x += velocityX;
+    playerCharacter.y += velocityY;
+    playerCharacter.z -= velocityZ;
   }
-
 
   void renderWeaponRoundInformation() {
     if (!AttackType.requiresRounds(player.weaponType.value))

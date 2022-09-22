@@ -149,7 +149,9 @@ class GameWaves extends Game {
 
   @override
   void customUpdate() {
-    if (timer <= 0) return;
+    if (timer <= 0) {
+      return;
+    }
     timer--;
 
     for (final player in players) {
@@ -168,9 +170,9 @@ class GameWaves extends Game {
       for (final column in row) {
         for (final node in column){
           if (node is NodeSpawn) {
-            for (var i = 0; i < round; i++){
+            for (var i = 0; i < round * 3; i++){
               remaining++;
-              spawnZombie(
+              final zombie = spawnZombie(
                 x: node.x,
                 y: node.y,
                 z: node.z,
@@ -178,6 +180,8 @@ class GameWaves extends Game {
                 team: Teams.evil,
                 damage: 1,
               );
+              zombie.chaseRange = 99999;
+              zombie.viewRange = 99999;
             }
           }
         }

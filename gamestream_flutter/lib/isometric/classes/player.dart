@@ -15,8 +15,7 @@ import '../events/on_changed_player_weapon.dart';
 import 'vector3.dart';
 
 class Player extends Vector3 {
-  final interpolating = Watch(false);
-  final velocity = Vector3();
+  final interpolating = Watch(true);
   final previousPosition = Vector3();
   final target = Vector3();
   final questAdded = Watch(false);
