@@ -10,9 +10,8 @@ class GameState {
   final storeTab = Watch(storeTabs[0]);
   final panelTypeKey = <int, GlobalKey> {};
   final playerTextStyle = TextStyle(color: Colors.white);
-  final mapVisible = Watch(false, onChanged: (bool value){
-    print("map visible: $value");
-  });
+  final mapVisible = Watch(false);
+  final timeVisible = Watch(true);
 }
 
 

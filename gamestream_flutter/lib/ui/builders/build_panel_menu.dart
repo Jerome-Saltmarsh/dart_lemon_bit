@@ -22,7 +22,7 @@ Widget buildPanelMenu() {
     children: [
       buildButtonTogglePlayMode(),
       width8,
-      buildTime(),
+      buildWatchBool(modules.game.state.timeVisible, buildTime),
       onPressed(
           child: buildToggleFullscreen(),
           action:  engine.fullscreenToggle),
