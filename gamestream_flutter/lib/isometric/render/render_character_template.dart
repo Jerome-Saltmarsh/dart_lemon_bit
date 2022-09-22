@@ -41,9 +41,11 @@ void renderArrow(double x, double y, double z, double angle){
 
 
 void renderCharacterWeaponHandgun(Character character){
+  final angle = character.aimAngle + piQuarter;
+  final distance = 25.0;
   render(
-    dstX: character.renderX,
-    dstY: character.renderY,
+    dstX: character.renderX + getAdjacent(angle, distance),
+    dstY: character.renderY + getOpposite(angle, distance) - 8,
     srcX: 160,
     srcY: 64.0 * character.aimDirection,
     srcWidth: 64,
