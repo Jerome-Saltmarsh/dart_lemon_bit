@@ -43,7 +43,9 @@ class _Engine {
       }
     }
   });
-  final mouseRightDown = Watch(false);
+  final mouseRightDown = Watch(false, onChanged: (bool value){
+
+  });
   var mouseLeftDownFrames = 0;
   final Watch<int> fps = Watch(0);
   final Watch<Color> backgroundColor = Watch(Colors.white);

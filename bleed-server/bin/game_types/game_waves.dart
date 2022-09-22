@@ -5,6 +5,7 @@ import 'package:lemon_math/library.dart';
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../classes/node.dart';
+import '../common/attack_state.dart';
 import '../common/game_waves_response.dart';
 import '../common/library.dart';
 import '../common/teams.dart';
@@ -90,7 +91,9 @@ class GameWaves extends Game {
 
     if (player.deadOrBusy) return;
 
-    // playerUpdateAimTarget(player);
+    playerUpdateAimTarget(player);
+
+
     playerRunInDirection(player, direction);
 
     if (perform1){
@@ -99,21 +102,13 @@ class GameWaves extends Game {
       playerReleaseWeaponCharge(player, player.weapon);
     }
 
-    // if (perform1){
-    //   playerUseWeapon(player, player.weaponSlot1);
-    // } else {
-    //   playerReleaseWeaponCharge(player, player.weaponSlot1);
-    // }
-    // if (perform2){
-    //   playerUseWeapon(player, player.weaponSlot2);
-    // } else {
-    //   playerReleaseWeaponCharge(player, player.weaponSlot2);
-    // }
-    // if (perform3){
-    //   playerUseWeapon(player, player.weaponSlot3);
-    // } else {
-    //   playerReleaseWeaponCharge(player, player.weaponSlot3);
-    // }
+    if (player.weapon.durationRemaining == 0) {
+      if (player.aimTarget != null) {
+        player.weapon.state = AttackState.Aiming;
+      } else {
+        player.weapon.state = AttackState.Idle;
+      }
+    }
   }
 
   @override
