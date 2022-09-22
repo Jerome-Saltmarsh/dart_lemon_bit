@@ -21,7 +21,6 @@ import 'rat.dart';
 import 'zombie.dart';
 
 class Player extends Character with ByteWriter {
-
   final mouse = Vector2(0, 0);
   final runTarget = Position3();
   late Function sendBufferToClient;
@@ -487,6 +486,7 @@ class Player extends Character with ByteWriter {
 
   void writeCharacterEquipment(Character character) {
     writeByte(character.weapon.type);
+    writeByte(character.weapon.state);
     writeByte(character.equippedArmour); // armour
     writeByte(character.equippedHead); // helm
     writeByte(character.equippedPants); // helm

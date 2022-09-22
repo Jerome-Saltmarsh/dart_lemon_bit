@@ -1,6 +1,7 @@
 
 import 'package:lemon_math/library.dart';
 
+import '../common/attack_state.dart';
 import '../common/attack_type.dart';
 import '../functions/generateUUID.dart';
 
@@ -8,10 +9,12 @@ class Weapon {
    int type;
    int damage;
    int capacity;
+   var state = AttackState.Idle;
    double range;
    late int _rounds;
    int duration;
    var charge = 0;
+   var durationRemaining = 0;
    final uuid = generateUUID();
 
    int get rounds => _rounds;

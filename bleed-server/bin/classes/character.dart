@@ -46,14 +46,14 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   var equippedHead = HeadType.None;
   var equippedPants = PantsType.white;
 
-  var performDuration = 0;
+  // var performDuration = 0;
   var performX = 0.0;
   var performY = 0.0;
   var performZ = 0.0;
 
   dynamic spawn;
 
-  bool get performing => performDuration > 0;
+  bool get performing => weapon.durationRemaining > 0;
   bool get running => state == CharacterState.Running;
   bool get idling => state == CharacterState.Idle;
   bool get characterStateIdle => state == CharacterState.Idle;

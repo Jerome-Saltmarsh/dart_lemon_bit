@@ -11,10 +11,6 @@ import '../common/teams.dart';
 import '../common/type_position.dart';
 import '../dark_age/dark_age_scenes.dart';
 
-class GameWavePlayer extends Player {
-  GameWavePlayer({required Game game, required Weapon weapon}) : super(game: game, weapon: weapon);
-}
-
 class GameWaves extends Game {
 
   static const framesBetweenRounds = 600;
@@ -98,25 +94,31 @@ class GameWaves extends Game {
     playerRunInDirection(player, direction);
 
     if (perform1){
-      playerUseWeapon(player, player.weaponSlot1);
+      playerUseWeapon(player, player.weapon);
     } else {
-      playerReleaseWeaponCharge(player, player.weaponSlot1);
+      playerReleaseWeaponCharge(player, player.weapon);
     }
-    if (perform2){
-      playerUseWeapon(player, player.weaponSlot2);
-    } else {
-      playerReleaseWeaponCharge(player, player.weaponSlot2);
-    }
-    if (perform3){
-      playerUseWeapon(player, player.weaponSlot3);
-    } else {
-      playerReleaseWeaponCharge(player, player.weaponSlot3);
-    }
+
+    // if (perform1){
+    //   playerUseWeapon(player, player.weaponSlot1);
+    // } else {
+    //   playerReleaseWeaponCharge(player, player.weaponSlot1);
+    // }
+    // if (perform2){
+    //   playerUseWeapon(player, player.weaponSlot2);
+    // } else {
+    //   playerReleaseWeaponCharge(player, player.weaponSlot2);
+    // }
+    // if (perform3){
+    //   playerUseWeapon(player, player.weaponSlot3);
+    // } else {
+    //   playerReleaseWeaponCharge(player, player.weaponSlot3);
+    // }
   }
 
   @override
   Player spawnPlayer() {
-    final player = Player(game: this, weapon: buildWeaponUnarmed());
+    final player = Player(game: this, weapon: buildWeaponHandgun());
     player.points = 50;
     player.weaponSlot1 = buildWeaponUnarmed();
     player.weaponSlot2 = buildWeaponUnarmed();

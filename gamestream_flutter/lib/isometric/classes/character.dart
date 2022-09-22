@@ -11,6 +11,7 @@ class Character extends Vector3 {
   var direction = 0;
   var frame = 0;
   var weapon = AttackType.Unarmed;
+  var weaponState = AttackType.Unarmed;
   var armour = ArmourType.shirtCyan;
   var helm = HeadType.None;
   var pants = PantsType.white;

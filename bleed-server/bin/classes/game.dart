@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
+import '../common/attack_state.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
 import '../common/node_orientation.dart';
@@ -210,7 +211,6 @@ abstract class Game {
       if (weapon.rounds == 0) return;
       weapon.rounds--;
     }
-    player.performDuration = weapon.duration;
 
     switch (weapon.type) {
       case AttackType.Unarmed:
@@ -322,7 +322,7 @@ abstract class Game {
     player.performX = performX;
     player.performY = performY;
     player.performZ = performZ;
-    player.performDuration = duration;
+    player.weapon.durationRemaining = player.weapon.duration;
 
     /// TODO name arguments
     dispatchAttackPerformed(
@@ -411,6 +411,10 @@ abstract class Game {
     required Weapon weapon,
     required double angle,
   }){
+    if (weapon.durationRemaining > 0) return;
+    weapon.durationRemaining = weapon.duration;
+    weapon.state = AttackState.Firing;
+
     spawnProjectile(
       src: character,
       accuracy: 0,
@@ -420,7 +424,6 @@ abstract class Game {
       projectileType: ProjectileType.Bullet,
       damage: weapon.damage,
     );
-    /// Illegal game reference
     dispatchAttackPerformed(
         weapon.type,
         character.x,
@@ -1054,7 +1057,12 @@ abstract class Game {
 
     if (player.deadOrDying) return;
 
-    updatePlayerAttacking(player);
+    if (player.weapon.durationRemaining > 0) {
+      player.weapon.durationRemaining--;
+      if (player.weapon.durationRemaining == 0){
+        player.weapon.state = AttackState.Idle;
+      }
+    }
 
     if (player.framesSinceClientRequest > 10) {
       player.setCharacterStateIdle();
@@ -2152,11 +2160,6 @@ abstract class Game {
     npc.clearDest();
     characters.add(npc);
     return npc;
-  }
-
-  void updatePlayerAttacking(Player player) {
-    if (player.performDuration <= 0) return;
-    player.performDuration--;
   }
 
   double angle2(double adjacent, double opposite) {
