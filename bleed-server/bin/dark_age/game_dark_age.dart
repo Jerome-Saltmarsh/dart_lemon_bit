@@ -65,6 +65,11 @@ class GameDarkAge extends Game {
     refreshSpawns();
   }
 
+  @override
+  void customDownloadScene(Player player) {
+    player.writeWeather();
+  }
+
   void setSpawnType(GameObjectSpawn spawn, int type){
     spawn.spawnType = SpawnType.getValue(spawn.spawnType + 1);
     onSpawnTypeChanged(spawn);

@@ -17,17 +17,9 @@ class GameSkirmish extends Game {
 
   GameSkirmish({required Scene scene}) : super(scene);
 
-
-
   @override
   void customUpdate() {
 
-  }
-
-  @override
-  void customDownloadScene(Player player) {
-    player.writeEnvironmentShade(Shade.Very_Dark);
-    movePlayerToCrystal(player);
   }
 
   @override
@@ -36,5 +28,12 @@ class GameSkirmish extends Game {
   @override
   Player spawnPlayer() {
     return Player(game: this, weapon: buildWeaponUnarmed());
+  }
+
+  @override
+  void customInitPlayer(Player player) {
+    player.writeEnvironmentShade(Shade.Very_Dark);
+    player.writeEnvironmentRain(Rain.Light);
+    movePlayerToCrystal(player);
   }
 }

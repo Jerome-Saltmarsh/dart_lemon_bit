@@ -33,6 +33,7 @@ import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/state/game_options.dart';
 import 'package:gamestream_flutter/state/state_game_waves.dart';
+import 'package:http/http.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
@@ -244,6 +245,9 @@ class ServerResponseReader with ByteReader {
       case EnvironmentResponse.Shade:
             ambientShade.value = readByte();
             break;
+      case EnvironmentResponse.Rain:
+        rain.value = readRain();
+        break;
     }
   }
 

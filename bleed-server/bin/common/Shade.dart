@@ -7,6 +7,16 @@ class Shade {
   static const Very_Very_Dark = 5;
   static const Pitch_Black = 6;
   
+  static String getName(int value) => {
+       Very_Bright: "Very Bright",
+       Bright: "Bright",
+       Medium: "Medium",
+       Dark: "Dark",
+       Very_Dark: "Very_Dark",
+       Very_Very_Dark: "Very_Very_Dark",
+       Pitch_Black: "Pitch_Black",
+  }[value] ?? "Shade-Unknown($value)";
+  
   static int fromHour(int hour){
       if (hour < 1) return Pitch_Black;
       if (hour < 3) return Very_Very_Dark;

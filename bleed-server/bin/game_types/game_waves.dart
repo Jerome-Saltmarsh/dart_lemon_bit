@@ -99,6 +99,7 @@ class GameWaves extends Game {
     writePurchase(player, AttackType.Staff);
     writePurchase(player, AttackType.Baseball_Bat);
     player.writeEnvironmentShade(Shade.Medium);
+    player.writeEnvironmentRain(Rain.Light);
   }
 
   @override

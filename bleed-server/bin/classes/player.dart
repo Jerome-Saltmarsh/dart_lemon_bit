@@ -350,15 +350,12 @@ class Player extends Character with ByteWriter {
 
   void downloadScene(){
     writeGrid();
-    writeWeather();
     writeSceneMetaData();
     writeMapCoordinate();
-    writePlayerEvent(PlayerEvent.Scene_Changed);
-
     writeRenderMap(game.customPropMapVisible);
     writeGameType(game.gameType);
     game.customDownloadScene(this);
-
+    writePlayerEvent(PlayerEvent.Scene_Changed);
     sceneDownloaded = true;
   }
 
@@ -715,6 +712,12 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Environment);
     writeByte(EnvironmentResponse.Shade);
     writeByte(value);
+  }
+
+  void writeEnvironmentRain(Rain rain){
+    writeByte(ServerResponse.Environment);
+    writeByte(EnvironmentResponse.Rain);
+    writeByte(rain.index);
   }
 
   void writeEnvironmentTime(int value){
