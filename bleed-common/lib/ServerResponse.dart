@@ -61,5 +61,6 @@ class ServerResponse {
   static const Game_Waves = 106;
   static const GameObject = 107;
   static const Environment = 108;
+  static const Options = 109;
 }
 

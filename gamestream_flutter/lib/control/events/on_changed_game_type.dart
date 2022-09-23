@@ -5,5 +5,6 @@ import 'package:gamestream_flutter/modules/modules.dart';
 
 void onChangedGameType(int? value){
   print("onChangedGameType($value)");
-  modules.game.state.timeVisible.value = value != GameType.Waves;
+  if (value == null) return;
+  modules.game.state.timeVisible.value = GameType.isTimed(value);
 }

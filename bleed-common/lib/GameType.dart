@@ -10,7 +10,12 @@ class GameType {
      Waves,
      Skirmish,
   ];
-  
+
+  static bool isTimed(int gameType) => const [
+      Dark_Age,
+      Editor,
+  ].contains(gameType);
+
   static String getName(int value) => const {
       Dark_Age: "Dark Age",
       Editor: "Editor",
