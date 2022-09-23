@@ -42,6 +42,8 @@ abstract class Game {
   List<GameObject> get gameObjects => scene.gameObjects;
 
   /// In seconds
+  void customInitPlayer(Player player) {}
+  /// In seconds
   int getTime();
   /// safe to override
   void customDownloadScene(Player player){ }

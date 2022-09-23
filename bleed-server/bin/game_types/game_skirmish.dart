@@ -4,6 +4,7 @@ import '../classes/player.dart';
 import '../classes/scene.dart';
 import '../classes/weapon.dart';
 import '../common/library.dart';
+import '../functions/move_player_to_crystal.dart';
 
 class GameSkirmish extends Game {
 
@@ -20,6 +21,7 @@ class GameSkirmish extends Game {
   @override
   void customDownloadScene(Player player) {
     player.writeEnvironmentShade(Shade.Very_Dark);
+    movePlayerToCrystal(player);
   }
 
   @override

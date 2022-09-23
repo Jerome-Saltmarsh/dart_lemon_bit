@@ -117,31 +117,27 @@ class GameWaves extends Game {
     player.weaponSlot2 = buildWeaponUnarmed();
     player.weaponSlot3 = buildWeaponUnarmed();
     player.setCharacterStateSpawning();
-
     movePlayerToCrystal(player);
-
     playerWriteRound(player);
-
-    perform((){
-
-      player.writeByte(ServerResponse.Game_Waves);
-      player.writeByte(GameWavesResponse.clear_upgrades);
-
-      writePurchase(player, AttackType.Assault_Rifle);
-      writePurchase(player, AttackType.Rifle);
-      writePurchase(player, AttackType.Shotgun);
-      writePurchase(player, AttackType.Handgun);
-      writePurchase(player, AttackType.Revolver);
-      writePurchase(player, AttackType.Crossbow);
-      writePurchase(player, AttackType.Bow);
-      writePurchase(player, AttackType.Fireball);
-      writePurchase(player, AttackType.Blade);
-      writePurchase(player, AttackType.Staff);
-      writePurchase(player, AttackType.Baseball_Bat);
-
-      player.writeEnvironmentShade(Shade.Medium);
-    }, 1);
     return player;
+  }
+
+  @override
+  void customInitPlayer(Player player) {
+    player.writeByte(ServerResponse.Game_Waves);
+    player.writeByte(GameWavesResponse.clear_upgrades);
+    writePurchase(player, AttackType.Assault_Rifle);
+    writePurchase(player, AttackType.Rifle);
+    writePurchase(player, AttackType.Shotgun);
+    writePurchase(player, AttackType.Handgun);
+    writePurchase(player, AttackType.Revolver);
+    writePurchase(player, AttackType.Crossbow);
+    writePurchase(player, AttackType.Bow);
+    writePurchase(player, AttackType.Fireball);
+    writePurchase(player, AttackType.Blade);
+    writePurchase(player, AttackType.Staff);
+    writePurchase(player, AttackType.Baseball_Bat);
+    player.writeEnvironmentShade(Shade.Medium);
   }
 
   @override

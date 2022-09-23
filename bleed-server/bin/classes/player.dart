@@ -43,6 +43,7 @@ class Player extends Character with ByteWriter {
   var screenRight = 0.0;
   var screenBottom = 0.0;
   var sceneDownloaded = false;
+  var initialized = false;
   /// Warning - do not reference
   Game game;
   Collider? aimTarget; // the currently highlighted character
@@ -290,6 +291,10 @@ class Player extends Character with ByteWriter {
     writeGameObjects();
     writeEditorGameObjectSelected();
 
+    if (!initialized){
+      game.customInitPlayer(this);
+      initialized = true;
+    }
 
     if (!sceneDownloaded){
       downloadScene();
