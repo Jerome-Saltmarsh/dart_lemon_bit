@@ -738,6 +738,12 @@ class Player extends Character with ByteWriter {
     writeByte(value);
   }
 
+  void writeEnvironmentBreeze(bool value){
+    writeByte(ServerResponse.Environment);
+    writeByte(EnvironmentResponse.Breeze);
+    writeBool(value);
+  }
+
   void writeGameOptionControlScheme(){
     writeByte(ServerResponse.Options);
     writeByte(GameOption.Set_Control_Scheme);

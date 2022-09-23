@@ -36,6 +36,7 @@ class GameSkirmish extends Game {
     player.writeEnvironmentRain(Rain.Light);
     player.writeEnvironmentLightning(Lightning.Off);
     player.writeEnvironmentWind(Wind.Gentle);
+    player.writeEnvironmentBreeze(false);
     movePlayerToCrystal(player);
   }
 }

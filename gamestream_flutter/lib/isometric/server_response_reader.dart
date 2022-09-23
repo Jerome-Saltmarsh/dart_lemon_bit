@@ -254,6 +254,9 @@ class ServerResponseReader with ByteReader {
       case EnvironmentResponse.Wind:
         windAmbient.value = readWind();
         break;
+      case EnvironmentResponse.Breeze:
+        weatherBreeze.value = readBool();
+        break;
     }
   }
 
