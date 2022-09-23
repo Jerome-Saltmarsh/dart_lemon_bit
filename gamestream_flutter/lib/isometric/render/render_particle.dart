@@ -147,7 +147,9 @@ void renderParticle(Particle value) {
       );
 
     case ParticleType.Fire_Purple:
-      if (value.frame > 24 ) return;
+      if (value.frame > 24 ) {
+        return particleDeactivate(value);
+      }
       return render(
         dstX: value.renderX,
         dstY: value.renderY,
