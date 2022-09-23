@@ -666,7 +666,7 @@ class Connection {
               x: x,
               y: y,
               z: z,
-              particleType: ParticleType.Flame,
+              particleType: ParticleType.Fire,
           );
         } else
         if (type == GameObjectType.Spawn){

@@ -23,6 +23,7 @@ abstract class GameObject extends Collider {
 
   /// Determines whether or not this object should be serialized
   bool get persist => true;
+
 }
 
 class GameObjectStatic extends GameObject {
@@ -111,8 +112,10 @@ class GameObjectSpawn extends GameObjectStatic {
   }
 }
 
-class GameObjectParticleEmitter extends GameObject {
+class GameObjectParticleEmitter extends GameObject with Updatable{
   int particleType;
+  int nextSpawn = 0;
+  int spawnRate = 30;
 
   GameObjectParticleEmitter({
     required double x,
@@ -131,6 +134,18 @@ class GameObjectParticleEmitter extends GameObject {
      player.writeByte(ServerResponse.GameObject);
      player.writeByte(GameObjectType.Particle_Emitter);
      player.writePosition3(this);
+  }
+
+  @override
+  void update(Game game) {
+    if (nextSpawn-- > 0) return;
+    nextSpawn = spawnRate;
+
+    for (final player in game.players){
+      player.writeByte(ServerResponse.Spawn_Particle);
+      player.writePosition3(this);
+      player.writeByte(particleType);
+    }
   }
 }
 
