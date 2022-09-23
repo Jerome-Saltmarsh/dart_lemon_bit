@@ -37,7 +37,7 @@ class GameDarkAgeFarm extends DarkAgeArea {
   }
 
   @override
-  void customOnPlayerJoined(Player player) {
+  void customInitPlayer(Player player) {
     player.indexZ = 5;
     if (randomBool()){
       player.indexRow = 16;
@@ -51,7 +51,7 @@ class GameDarkAgeFarm extends DarkAgeArea {
     player.y += giveOrTake(radius);
     player.setCharacterStateSpawning();
 
-    player. interact(
+    player.interact(
         message: "Welcome to Dark-Age! \n\nUse the W,A,S,D keys to run \nLeft and right mouse click to attack and interact",
         responses: {
           "Okay!": player.endInteraction,

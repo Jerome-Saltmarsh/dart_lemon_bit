@@ -10,7 +10,6 @@ import '../common/game_waves_response.dart';
 import '../common/library.dart';
 import '../common/teams.dart';
 import '../common/type_position.dart';
-import '../dark_age/dark_age_scenes.dart';
 
 class GameWaves extends Game {
 
@@ -111,7 +110,11 @@ class GameWaves extends Game {
 
   @override
   Player spawnPlayer() {
-    final player = Player(game: this, weapon: buildWeaponHandgun());
+    return Player(game: this, weapon: buildWeaponHandgun());
+  }
+
+  @override
+  void customInitPlayer(Player player) {
     player.points = 50;
     player.weaponSlot1 = buildWeaponUnarmed();
     player.weaponSlot2 = buildWeaponUnarmed();
@@ -119,11 +122,7 @@ class GameWaves extends Game {
     player.setCharacterStateSpawning();
     movePlayerToCrystal(player);
     playerWriteRound(player);
-    return player;
-  }
 
-  @override
-  void customInitPlayer(Player player) {
     player.writeByte(ServerResponse.Game_Waves);
     player.writeByte(GameWavesResponse.clear_upgrades);
     writePurchase(player, AttackType.Assault_Rifle);
