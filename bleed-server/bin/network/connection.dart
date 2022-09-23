@@ -13,11 +13,13 @@ import '../common/node_request.dart';
 import '../common/node_size.dart';
 import '../common/spawn_type.dart';
 import '../common/teleport_scenes.dart';
+import '../dark_age/dark_age_scenes.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
 import '../engine.dart';
 import '../functions/generateName.dart';
 import '../functions/move_player_to_crystal.dart';
+import '../game_types/game_skirmish.dart';
 import '../game_types/game_waves.dart';
 import '../io/convert_json_to_scene.dart';
 import '../io/convert_scene_to_json.dart';
@@ -779,7 +781,11 @@ class Connection {
   }
 
   Future joinGameWaves() async {
-    joinGame(GameWaves());
+    joinGame(GameWaves(scene: darkAgeScenes.dungeon_1));
+  }
+
+  Future joinGameSkirmish() async {
+    joinGame(GameSkirmish(scene: darkAgeScenes.dungeon_1));
   }
 
   void joinGame(Game game){
@@ -851,6 +857,9 @@ class Connection {
         break;
       case GameType.Waves:
         joinGameWaves();
+        break;
+      case GameType.Skirmish:
+        joinGameSkirmish();
         break;
       default:
         return errorInvalidArg('invalid game type index $gameType');

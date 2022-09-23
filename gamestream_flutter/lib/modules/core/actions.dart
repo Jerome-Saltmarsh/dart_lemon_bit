@@ -221,12 +221,10 @@ class CoreActions {
   }
 
   void setModePlay() {
-    print("actions.setModePlay()");
     core.state.mode.value = core.state.mode.value = Mode.Player;
   }
 
   void setModeWebsite() {
-    print("actions.setModePlay()");
     core.state.mode.value = core.state.mode.value = Mode.Website;
   }
 
@@ -237,28 +235,16 @@ class CoreActions {
     webSocket.disconnect();
   }
 
-  // functions
-  void leaveLobby() {
-    exitGame();
-  }
+  void leaveLobby() => exitGame();
 }
 
-void connectToGameDarkAge(){
-  connectToGame(GameType.Dark_Age);
-}
+void connectToGameDarkAge() => connectToGame(GameType.Dark_Age);
 
-void connectToGameEditor(){
-  connectToGame(GameType.Editor);
-}
+void connectToGameEditor() => connectToGame(GameType.Editor);
 
-void connectToGameArena() {
-  connectToGame(GameType.Arena);
-}
+void connectToGameWaves() => connectToGame(GameType.Waves);
 
-void connectToGameWaves() {
-  connectToGame(GameType.Waves);
-}
+void connectToGameSkirmish() => connectToGame(GameType.Skirmish);
 
-void connectToGame(int gameType, [String message = ""]){
+void connectToGame(int gameType, [String message = ""]) =>
   connectToWebSocketServer(core.state.region.value, '${gameType} $message');
-}

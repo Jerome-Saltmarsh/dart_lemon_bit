@@ -20,7 +20,7 @@ class GameWaves extends Game {
   var remaining = 0;
   var round = 1;
 
-  GameWaves() : super(darkAgeScenes.dungeon_1);
+  GameWaves({required Scene scene}) : super(scene);
 
   @override
   int getTime() => 0;
