@@ -121,7 +121,9 @@ void renderParticle(Particle value) {
       );
 
     case ParticleType.Fire:
-      if (value.frame > 12 ) return;
+      if (value.frame > 12 ) {
+        return particleDeactivate(value);
+      }
       return render(
         dstX: value.renderX,
         dstY: value.renderY,

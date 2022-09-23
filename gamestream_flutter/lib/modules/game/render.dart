@@ -44,8 +44,8 @@ class GameRender {
 
   void renderGame(Canvas canvas, Size size) {
     renderFrame.value++;
-    updateCameraMode();
     interpolatePlayer();
+    updateCameraMode();
     attackTargetCircle();
     renderSprites();
     renderEditMode();
