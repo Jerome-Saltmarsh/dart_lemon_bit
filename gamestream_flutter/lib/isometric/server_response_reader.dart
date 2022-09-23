@@ -241,10 +241,10 @@ class ServerResponseReader with ByteReader {
 
   void readServerResponseEnvironment() {
     final environmentResponse = readByte();
-    switch (environmentResponse){
+    switch (environmentResponse) {
       case EnvironmentResponse.Shade:
-            ambientShade.value = readByte();
-            break;
+        ambientShade.value = readByte();
+        break;
       case EnvironmentResponse.Rain:
         rain.value = readRain();
         break;

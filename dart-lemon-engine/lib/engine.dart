@@ -231,7 +231,7 @@ class _Engine {
   }
 
   void clearCallbacks() {
-    print("engine.actions.clearCallbacks()");
+    print("lemon-engine.clearCallbacks()");
     callbacks.onMouseMoved = null;
     callbacks.onMouseScroll = null;
     callbacks.onMouseDragging = null;

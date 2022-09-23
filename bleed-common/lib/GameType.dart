@@ -16,7 +16,7 @@ class GameType {
       Editor,
   ].contains(gameType);
 
-  static String getName(int value) => const {
+  static String getName(int? value) => value == null ? 'None' : const {
       Dark_Age: "Dark Age",
       Editor: "Editor",
       Waves: "Waves",

@@ -74,12 +74,12 @@ class CoreEvents {
   }
 
   void _onServerTypeChanged(Region serverType) {
-    print('core.events.onServerTypeChanged($serverType)');
+    print('onChangedRegion($serverType)');
     storage.saveServerType(serverType);
   }
 
   void onModeChanged(Mode mode){
-    print("core.events.onGameModeChanged($mode)");
+    print("onChangedMode($mode)");
     engine.clearCallbacks();
     engine.drawCanvas.value = null;
     engine.drawForeground.value = null;
@@ -112,9 +112,8 @@ class CoreEvents {
     engine.redrawCanvas();
   }
 
-
   void onConnectionChanged(Connection connection) {
-    print("events.onConnectionChanged($connection)");
+    print("onChangedConnection($connection)");
 
     switch (connection) {
 
