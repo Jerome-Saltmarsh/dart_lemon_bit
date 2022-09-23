@@ -293,6 +293,7 @@ class Player extends Character with ByteWriter {
     writeEditorGameObjectSelected();
 
     if (!initialized){
+      writeGameOptionControlScheme();
       game.customInitPlayer(this);
       initialized = true;
     }
@@ -708,10 +709,10 @@ class Player extends Character with ByteWriter {
     writeByte(value);
   }
 
-  void writeGameOptionControlScheme(int value){
+  void writeGameOptionControlScheme(){
     writeByte(ServerResponse.Options);
     writeByte(GameOption.Set_Control_Scheme);
-    writeByte(value);
+    writeByte(game.controlScheme);
   }
 }
 

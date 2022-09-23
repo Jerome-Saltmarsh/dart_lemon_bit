@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:lemon_math/library.dart';
 
 import '../common/attack_state.dart';
+import '../common/control_scheme.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
 import '../common/node_orientation.dart';
@@ -38,6 +39,8 @@ abstract class Game {
   final characters = <Character>[];
   final projectiles = <Projectile>[];
   final actions = <Action>[];
+
+  int get controlScheme;
 
   List<GameObject> get gameObjects => scene.gameObjects;
 
@@ -123,6 +126,92 @@ abstract class Game {
     required double screenRight,
     required double screenBottom,
   }) {
+    switch(controlScheme) {
+      case ControlScheme.schemeA:
+         return handlePlayerControlSchemeA(
+             player: player,
+             direction: direction,
+             perform1: perform1,
+             perform2: perform2,
+             perform3: perform3,
+             mouseX: mouseX,
+             mouseY: mouseY,
+             screenLeft: screenLeft,
+             screenTop: screenTop,
+             screenRight: screenRight,
+             screenBottom: screenBottom,
+         );
+      case ControlScheme.schemeB:
+        return handlePlayerControlSchemeB(
+          player: player,
+          direction: direction,
+          perform1: perform1,
+          perform2: perform2,
+          perform3: perform3,
+          mouseX: mouseX,
+          mouseY: mouseY,
+          screenLeft: screenLeft,
+          screenTop: screenTop,
+          screenRight: screenRight,
+          screenBottom: screenBottom,
+        );
+    }
+  }
+
+  void handlePlayerControlSchemeA({
+    required Player player,
+    required int direction,
+    required bool perform1,
+    required bool perform2,
+    required bool perform3,
+    required double mouseX,
+    required double mouseY,
+    required double screenLeft,
+    required double screenTop,
+    required double screenRight,
+    required double screenBottom,
+  }){
+    player.framesSinceClientRequest = 0;
+    player.screenLeft = screenLeft;
+    player.screenTop = screenTop;
+    player.screenRight = screenRight;
+    player.screenBottom = screenBottom;
+    player.mouse.x = mouseX;
+    player.mouse.y = mouseY;
+
+    if (player.deadOrBusy) return;
+
+    playerRunInDirection(player, direction);
+    playerUpdateAimTarget(player);
+
+    if (player.weapon.durationRemaining > 0) return;
+    player.weapon.state = AttackState.Aiming;
+
+    if (perform1) {
+      player.weapon = player.weaponSlot1;
+      playerUseWeapon(player, player.weapon);
+    } else {
+      playerReleaseWeaponCharge(player, player.weapon);
+    }
+    if (perform2) {
+      player.weapon = player.weaponSlot2;
+      playerUseWeapon(player, player.weapon);
+    }
+  }
+
+  void handlePlayerControlSchemeB({
+    required Player player,
+    required int direction,
+    required bool perform1,
+    required bool perform2,
+    required bool perform3,
+    required double mouseX,
+    required double mouseY,
+    required double screenLeft,
+    required double screenTop,
+    required double screenRight,
+    required double screenBottom,
+  }){
     player.framesSinceClientRequest = 0;
     player.screenLeft = screenLeft;
     player.screenTop = screenTop;
@@ -137,15 +226,8 @@ abstract class Game {
     playerRunInDirection(player, direction);
 
     if (perform1){
-      // playerUseWeapon(player, player.weaponSlot1);
       player.setCharacterStatePerforming(duration: player.weapon.duration);
     }
-    // if (perform2){
-    //   playerUseWeapon(player, player.weaponSlot2);
-    // }
-    // if (perform3){
-    //   playerUseWeapon(player, player.weaponSlot3);
-    // }
   }
 
   void changeGame(Player player, Game to){

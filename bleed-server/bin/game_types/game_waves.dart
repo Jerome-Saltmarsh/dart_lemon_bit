@@ -5,7 +5,6 @@ import 'package:lemon_math/library.dart';
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../classes/node.dart';
-import '../common/attack_state.dart';
 import '../common/control_scheme.dart';
 import '../common/game_waves_response.dart';
 import '../common/library.dart';
@@ -19,6 +18,9 @@ class GameWaves extends Game {
   var timer = framesBetweenRounds;
   var remaining = 0;
   var round = 1;
+
+  @override
+  int get controlScheme => ControlScheme.schemeA;
 
   GameWaves({required Scene scene}) : super(scene);
 
@@ -68,48 +70,6 @@ class GameWaves extends Game {
   }
 
   @override
-  void onPlayerUpdateRequestedReceived({
-    required Player player,
-    required int direction,
-    required bool perform1,
-    required bool perform2,
-    required bool perform3,
-    required double mouseX,
-    required double mouseY,
-    required double screenLeft,
-    required double screenTop,
-    required double screenRight,
-    required double screenBottom,
-  }) {
-    player.framesSinceClientRequest = 0;
-    player.screenLeft = screenLeft;
-    player.screenTop = screenTop;
-    player.screenRight = screenRight;
-    player.screenBottom = screenBottom;
-    player.mouse.x = mouseX;
-    player.mouse.y = mouseY;
-
-    if (player.deadOrBusy) return;
-
-    playerRunInDirection(player, direction);
-    playerUpdateAimTarget(player);
-
-    if (player.weapon.durationRemaining > 0) return;
-    player.weapon.state = AttackState.Aiming;
-
-    if (perform1) {
-      player.weapon = player.weaponSlot1;
-      playerUseWeapon(player, player.weapon);
-    } else {
-      playerReleaseWeaponCharge(player, player.weapon);
-    }
-    if (perform2) {
-      player.weapon = player.weaponSlot2;
-      playerUseWeapon(player, player.weapon);
-    }
-  }
-
-  @override
   Player spawnPlayer() {
     return Player(game: this, weapon: buildWeaponHandgun());
   }
@@ -138,8 +98,6 @@ class GameWaves extends Game {
     writePurchase(player, AttackType.Staff);
     writePurchase(player, AttackType.Baseball_Bat);
     player.writeEnvironmentShade(Shade.Medium);
-
-    player.writeGameOptionControlScheme(ControlScheme.schemeA);
   }
 
   @override

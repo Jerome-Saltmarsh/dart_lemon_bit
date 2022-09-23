@@ -9,6 +9,8 @@ import 'package:gamestream_flutter/isometric/render/render_character_zombie.dart
 import 'package:gamestream_flutter/state/game_options.dart';
 import 'package:lemon_engine/render.dart';
 
+var renderTemplateWithWeapon = false;
+
 void renderCharacter(Character character){
   if (!character.tile.visible) return;
   if (!character.tileBelow.visible) return;
@@ -50,7 +52,9 @@ void renderCharacter(Character character){
 
   switch (character.type) {
     case CharacterType.Template:
-      if (drawTemplateWithoutWeapon){
+      if (renderTemplateWithWeapon){
+        renderCharacterTemplateWithWeapon(character);
+      } else {
         final aimDirection = character.aimDirection;
         final weaponInFront = aimDirection >= 2 && aimDirection <= 6;
         if (!weaponInFront) {
@@ -60,8 +64,6 @@ void renderCharacter(Character character){
         if (weaponInFront) {
           renderCharacterWeapon(character);
         }
-      } else {
-        renderCharacterTemplateWithWeapon(character);
       }
       return;
     case CharacterType.Slime:

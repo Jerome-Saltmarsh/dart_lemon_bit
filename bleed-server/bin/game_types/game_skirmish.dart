@@ -9,10 +9,15 @@ import '../functions/move_player_to_crystal.dart';
 
 class GameSkirmish extends Game {
 
-  GameSkirmish({required Scene scene}) : super(scene);
+  @override
+  int get controlScheme => ControlScheme.schemeA;
 
   @override
   int get gameType => GameType.Skirmish;
+
+  GameSkirmish({required Scene scene}) : super(scene);
+
+
 
   @override
   void customUpdate() {
@@ -31,10 +36,5 @@ class GameSkirmish extends Game {
   @override
   Player spawnPlayer() {
     return Player(game: this, weapon: buildWeaponUnarmed());
-  }
-
-  @override
-  void customInitPlayer(Player player) {
-    player.writeGameOptionControlScheme(ControlScheme.schemeA);
   }
 }

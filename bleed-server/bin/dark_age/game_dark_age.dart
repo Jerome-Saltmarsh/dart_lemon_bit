@@ -4,6 +4,7 @@ import 'package:lemon_math/library.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
+import '../common/control_scheme.dart';
 import '../common/library.dart';
 import '../common/spawn_type.dart';
 import '../constants/frames_per_second.dart';
@@ -56,6 +57,9 @@ class GameDarkAge extends Game {
 
   @override
   int get gameType => GameType.Dark_Age;
+
+  @override
+  int get controlScheme => ControlScheme.schemeB;
 
   GameDarkAge(Scene scene, this.environment) : super(scene) {
     refreshSpawns();
