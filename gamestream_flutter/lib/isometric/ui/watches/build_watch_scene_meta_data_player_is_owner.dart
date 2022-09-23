@@ -396,9 +396,7 @@ Widget buildColumnSelectedGameObject() {
               children: [
                 text(GameObjectType.getName(type)),
                 if (type == GameObjectType.Particle_Emitter)
-                  watch(edit.gameObjectSelectedParticleType, (int particleType) => text("Particle Type: $particleType")),
-                if (type == GameObjectType.Particle_Emitter)
-                  watch(edit.gameObjectSelectedParticleSpawnRate, (int rate) => text("Rate: $rate")),
+                  buildColumnEditParticleEmitter(),
                 if (type == GameObjectType.Spawn)
                   watch(edit.gameObjectSelectedSpawnType, (int spawnType){
                     return Column(
@@ -471,6 +469,16 @@ Widget buildColumnSelectedGameObject() {
       ),
     );
   });
+}
+
+Widget buildColumnEditParticleEmitter(){
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      watch(edit.gameObjectSelectedParticleType, (int particleType) => text("Particle Type: $particleType")),
+      watch(edit.gameObjectSelectedParticleSpawnRate, (int rate) => text("Rate: $rate")),
+    ],
+  );
 }
 
 Column buildColumnSelected() {
