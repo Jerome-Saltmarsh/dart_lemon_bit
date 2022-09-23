@@ -160,13 +160,21 @@ class ServerResponseReader with ByteReader {
           final y = readDouble();
           final z = readDouble();
           final particleType = readByte();
+          final duration = readInt();
+          final angle = readAngle();
+          final speed = readDouble() * 0.01;
+          final weight = readDouble() * 0.01;
+          final zv = readDouble() * 0.01;
           spawnParticle(
               type: particleType,
               x: x,
               y: y,
               z: z,
-              angle: 0,
-              speed: 0,
+              angle: angle,
+              speed: speed,
+              duration: duration,
+              weight: weight,
+              zv: zv,
           );
           break;
         case ServerResponse.Game_Type:

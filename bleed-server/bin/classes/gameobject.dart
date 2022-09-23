@@ -116,12 +116,23 @@ class GameObjectParticleEmitter extends GameObject with Updatable{
   int particleType;
   int nextSpawn = 0;
   int spawnRate = 30;
+  int duration;
+  double angle = 0.0;
+  double speed = 0.0;
+  double weight;
+  double zv;
 
   GameObjectParticleEmitter({
     required double x,
     required double y,
     required double z,
     required this.particleType,
+    required this.duration,
+    required this.angle,
+    required this.speed,
+    required this.weight,
+    required this.zv,
+    required this.spawnRate,
   }) : super(x: x, y: y, z: z, radius: 0) {
     collidable = false;
   }
@@ -145,6 +156,11 @@ class GameObjectParticleEmitter extends GameObject with Updatable{
       player.writeByte(ServerResponse.Spawn_Particle);
       player.writePosition3(this);
       player.writeByte(particleType);
+      player.writeInt(duration);
+      player.writeAngle(angle);
+      player.writeInt(speed * 100);
+      player.writeInt(weight * 100);
+      player.writeInt(zv * 100);
     }
   }
 }

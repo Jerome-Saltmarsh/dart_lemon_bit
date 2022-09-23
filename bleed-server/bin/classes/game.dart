@@ -1349,16 +1349,6 @@ abstract class Game {
         instance.wanderRadius = spawn.spawnRadius;
         characters.add(instance);
         break;
-      case GameObjectType.Particle_Emitter:
-        final instance = GameObjectParticleEmitter(
-            x: spawn.x,
-            y: spawn.y,
-            z: spawn.z,
-            particleType: ParticleType.Flame,
-        );
-        instance.spawn = spawn;
-        gameObjects.add(instance);
-        break;
       default:
         print("Warning: Unrecognized SpawnType ${spawn.spawnType}");
         break;
@@ -1370,13 +1360,25 @@ abstract class Game {
     required double y,
     required double z,
     required int particleType,
+    required int duration,
+    required int rate,
+    required double angle,
+    required double speed,
   }){
-    gameObjects.add(GameObjectParticleEmitter(
-      x: x,
-      y: y,
-      z: z,
-      particleType: particleType,
-    ));
+    gameObjects.add(
+        GameObjectParticleEmitter(
+          x: x,
+          y: y,
+          z: z,
+          particleType: particleType,
+          duration: duration,
+          angle: angle,
+          speed: speed,
+          zv: 1,
+          weight: -1,
+          spawnRate: rate,
+        )
+    );
   }
 
   void spawnNodeInstance(NodeSpawn node) {

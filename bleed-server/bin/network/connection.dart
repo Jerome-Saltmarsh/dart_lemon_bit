@@ -667,6 +667,10 @@ class Connection {
               y: y,
               z: z,
               particleType: ParticleType.Fire,
+              speed: 1.0,
+              angle: 0,
+              duration: 200,
+              rate: 10,
           );
         } else
         if (type == GameObjectType.Spawn){
