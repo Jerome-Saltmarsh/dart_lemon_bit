@@ -45,6 +45,8 @@ class EditState {
   final gameObjectSelected = Watch(false);
   final gameObjectSelectedType = Watch(0);
   final gameObjectSelectedAmount = Watch(0);
+  final gameObjectSelectedParticleType = Watch(0);
+  final gameObjectSelectedParticleSpawnRate = Watch(0);
   final gameObjectSelectedRadius = Watch(0.0);
   final gameObjectSelectedSpawnType = Watch(0);
 

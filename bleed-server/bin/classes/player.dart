@@ -684,6 +684,10 @@ class Player extends Character with ByteWriter {
       writeByte(selectedGameObject.spawnAmount);
       writeInt(selectedGameObject.spawnRadius);
     }
+    if (selectedGameObject is GameObjectParticleEmitter){
+       writeByte(selectedGameObject.particleType);
+       writeInt(selectedGameObject.spawnRate);
+    }
   }
 
   void writePlayerSlots() {

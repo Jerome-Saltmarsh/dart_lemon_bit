@@ -5,17 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_show_game_dialog_canvas_size.dart';
-import 'package:gamestream_flutter/isometric/editor/actions/editor_action_modify_spawn_node.dart';
-import 'package:gamestream_flutter/isometric/editor/actions/save_scene.dart';
 import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/editor/actions/editor_action_modify_spawn_node.dart';
+import 'package:gamestream_flutter/isometric/editor/actions/save_scene.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
-import 'package:gamestream_flutter/isometric/ui/dialogs/build_dialog_editor_triggers.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_tab.dart';
 import 'package:gamestream_flutter/modules/core/actions.dart';
@@ -396,6 +395,10 @@ Widget buildColumnSelectedGameObject() {
             return Column(
               children: [
                 text(GameObjectType.getName(type)),
+                if (type == GameObjectType.Particle_Emitter)
+                  watch(edit.gameObjectSelectedParticleType, (int particleType) => text("Particle Type: $particleType")),
+                if (type == GameObjectType.Particle_Emitter)
+                  watch(edit.gameObjectSelectedParticleSpawnRate, (int rate) => text("Rate: $rate")),
                 if (type == GameObjectType.Spawn)
                   watch(edit.gameObjectSelectedSpawnType, (int spawnType){
                     return Column(

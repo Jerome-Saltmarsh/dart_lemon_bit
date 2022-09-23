@@ -416,6 +416,11 @@ class ServerResponseReader with ByteReader {
       edit.gameObjectSelectedAmount.value = readByte();
       edit.gameObjectSelectedRadius.value = readDouble();
     }
+    if (type == GameObjectType.Particle_Emitter){
+      edit.gameObjectSelectedParticleType.value = readByte();
+      edit.gameObjectSelectedParticleSpawnRate.value = readInt();
+    }
+
     edit.gameObjectSelected.value = true;
     edit.cameraCenterSelectedObject();
   }
