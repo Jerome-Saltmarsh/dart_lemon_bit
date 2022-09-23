@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:bleed_common/api_player.dart';
 import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/environment_response.dart';
+import 'package:bleed_common/game_option.dart';
 import 'package:bleed_common/game_waves_response.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
@@ -30,6 +31,7 @@ import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
+import 'package:gamestream_flutter/state/game_options.dart';
 import 'package:gamestream_flutter/state/state_game_waves.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_engine/engine.dart';
@@ -224,6 +226,14 @@ class ServerResponseReader with ByteReader {
           break;
         case ServerResponse.Render_Map:
           modules.game.state.mapVisible.value = readBool();
+          break;
+        case ServerResponse.Options:
+          final optionType = readByte();
+          switch(optionType){
+            case GameOption.Set_Control_Scheme:
+              gameOptions.controlScheme.value = readByte();
+              break;
+          }
           break;
         default:
           throw Exception("Cannot parse $response at index: $index");
@@ -806,15 +816,6 @@ class ServerResponseReader with ByteReader {
     final value = readByte();
     if (value == 0) return 0;
      return value / 256.0;
-  }
-
-  List<CardType> readCardTypes(){
-    final numberOfCards = readByte();
-    final cards = <CardType>[];
-    for (var i = 0; i < numberOfCards; i++) {
-      cards.add(cardTypes[readByte()]);
-    }
-    return cards;
   }
 
   List<Quest> readQuests(){

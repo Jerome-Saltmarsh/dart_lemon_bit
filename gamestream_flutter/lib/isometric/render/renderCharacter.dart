@@ -1,10 +1,12 @@
 
 import 'package:bleed_common/character_type.dart';
+import 'package:bleed_common/control_scheme.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_slime.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_template.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_zombie.dart';
+import 'package:gamestream_flutter/state/game_options.dart';
 import 'package:lemon_engine/render.dart';
 
 void renderCharacter(Character character){
@@ -48,14 +50,18 @@ void renderCharacter(Character character){
 
   switch (character.type) {
     case CharacterType.Template:
-      final aimDirection = character.aimDirection;
-      final weaponInFront = aimDirection >= 2 && aimDirection <= 6;
-      if (!weaponInFront) {
-        renderCharacterWeapon(character);
-      }
-      renderCharacterTemplate(character);
-      if (weaponInFront) {
-        renderCharacterWeapon(character);
+      if (gameOptions.controlScheme.value == ControlScheme.schemeA){
+        final aimDirection = character.aimDirection;
+        final weaponInFront = aimDirection >= 2 && aimDirection <= 6;
+        if (!weaponInFront) {
+          renderCharacterWeapon(character);
+        }
+        renderCharacterTemplateWithoutWeapon(character);
+        if (weaponInFront) {
+          renderCharacterWeapon(character);
+        }
+      } else {
+        renderCharacterTemplateWithWeapon(character);
       }
       return;
     case CharacterType.Slime:

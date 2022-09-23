@@ -83,7 +83,18 @@ void renderCharacterWeaponShotgun(Character character){
 }
 
 
-void renderCharacterTemplate(Character character, {bool renderHealthBar = true}) {
+void renderCharacterTemplateWithoutWeapon(Character character, {bool renderHealthBar = true}) {
+  assert(character.direction >= 0);
+  assert(character.direction < 8);
+  if (character.deadOrDying) return;
+
+  if (renderHealthBar){
+    renderCharacterHealthBar(character);
+  }
+  _renderCharacterTemplate(character, colorShades[character.tileBelow.shade]);
+}
+
+void renderCharacterTemplateWithWeapon(Character character, {bool renderHealthBar = true}) {
   assert(character.direction >= 0);
   assert(character.direction < 8);
 

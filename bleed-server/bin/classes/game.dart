@@ -137,14 +137,15 @@ abstract class Game {
     playerRunInDirection(player, direction);
 
     if (perform1){
-      playerUseWeapon(player, player.weaponSlot1);
+      // playerUseWeapon(player, player.weaponSlot1);
+      player.setCharacterStatePerforming(duration: player.weapon.duration);
     }
-    if (perform2){
-      playerUseWeapon(player, player.weaponSlot2);
-    }
-    if (perform3){
-      playerUseWeapon(player, player.weaponSlot3);
-    }
+    // if (perform2){
+    //   playerUseWeapon(player, player.weaponSlot2);
+    // }
+    // if (perform3){
+    //   playerUseWeapon(player, player.weaponSlot3);
+    // }
   }
 
   void changeGame(Player player, Game to){

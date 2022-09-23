@@ -8,6 +8,7 @@ import '../common/api_player.dart';
 import '../common/character_type.dart';
 import '../common/environment_response.dart';
 import '../common/flag.dart';
+import '../common/game_option.dart';
 import '../common/library.dart';
 import '../common/quest.dart';
 import '../dark_age/areas/dark_age_area.dart';
@@ -704,6 +705,12 @@ class Player extends Character with ByteWriter {
   void writeEnvironmentTime(int value){
     writeByte(ServerResponse.Environment);
     writeByte(EnvironmentResponse.Time);
+    writeByte(value);
+  }
+
+  void writeGameOptionControlScheme(int value){
+    writeByte(ServerResponse.Options);
+    writeByte(GameOption.Set_Control_Scheme);
     writeByte(value);
   }
 }

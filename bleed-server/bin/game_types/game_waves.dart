@@ -6,6 +6,7 @@ import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../classes/node.dart';
 import '../common/attack_state.dart';
+import '../common/control_scheme.dart';
 import '../common/game_waves_response.dart';
 import '../common/library.dart';
 import '../common/teams.dart';
@@ -137,6 +138,8 @@ class GameWaves extends Game {
     writePurchase(player, AttackType.Staff);
     writePurchase(player, AttackType.Baseball_Bat);
     player.writeEnvironmentShade(Shade.Medium);
+
+    player.writeGameOptionControlScheme(ControlScheme.schemeA);
   }
 
   @override

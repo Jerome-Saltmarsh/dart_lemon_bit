@@ -2,6 +2,8 @@
 import 'package:lemon_math/library.dart';
 
 import '../../classes/library.dart';
+import '../../common/control_scheme.dart';
+import '../../common/game_option.dart';
 import '../../common/library.dart';
 import '../../common/map_tiles.dart';
 import '../../common/quest.dart';
@@ -41,6 +43,9 @@ class GameDarkAgeFarm extends DarkAgeArea {
   void customInitPlayer(Player player) {
     movePlayerToCrystal(player);
     player.setCharacterStateSpawning();
+    player.weapon = buildWeaponShotgun();
+
+    player.writeGameOptionControlScheme(ControlScheme.schemeB);
 
     player.interact(
         message: "Welcome to Dark-Age! \n\nUse the W,A,S,D keys to run \nLeft and right mouse click to attack and interact",
