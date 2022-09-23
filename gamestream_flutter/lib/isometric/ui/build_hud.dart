@@ -38,7 +38,6 @@ Widget buildGameUI()  =>
       watch(playMode, buildPlayMode),
       buildWatchBool(debugVisible, buildHudDebug),
       buildWatchBool(player.questAdded, buildContainerQuestUpdated),
-      // buildWatchInterpolation(),
     ],
   );
 
