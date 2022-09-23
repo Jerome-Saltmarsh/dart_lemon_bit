@@ -68,13 +68,7 @@ class Player extends Vector3 {
   final weaponRounds = Watch(0);
   final weaponCapacity = Watch(0);
   final weapons = Watch(<Weapon>[]);
-  final weapon = Watch<Weapon>(
-      Weapon(
-        type: AttackType.Unarmed,
-        damage: 1,
-        uuid: "-1",
-      )
-  );
+  final weapon = Watch<AttackSlot>(AttackSlot());
 
   final weaponSlot1 = AttackSlot();
   final weaponSlot2 = AttackSlot();

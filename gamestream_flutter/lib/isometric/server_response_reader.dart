@@ -178,9 +178,6 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Environment:
           readServerResponseEnvironment();
           break;
-        case ServerResponse.Player_Equipped_Weapon:
-          readPlayerEquippedWeapon();
-          break;
         case ServerResponse.Node:
           readNode();
           break;
@@ -334,6 +331,15 @@ class ServerResponseReader with ByteReader {
         break;
       case ApiPlayer.Points:
         player.points.value = readInt();
+        break;
+      case ApiPlayer.Weapon_Type:
+        player.weapon.value.attackType.value = readByte();
+        break;
+      case ApiPlayer.Weapon_Rounds:
+        player.weapon.value.rounds.value = readInt();
+        break;
+      case ApiPlayer.Weapon_Capacity:
+        player.weapon.value.capacity.value = readInt();
         break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
@@ -545,10 +551,6 @@ class ServerResponseReader with ByteReader {
     grid[z][row][column] = node;
     edit.refreshSelected();
     onGridChanged();
-  }
-
-  void readPlayerEquippedWeapon() {
-    player.weapon.value = readWeapon();
   }
 
   void readPlayerWeapons() {

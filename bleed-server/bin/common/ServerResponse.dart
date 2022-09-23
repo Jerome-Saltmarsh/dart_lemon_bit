@@ -31,7 +31,6 @@ class ServerResponse {
   static const Grid = 62;
   static const Node = 63;
   static const Player_Weapons = 64;
-  static const Player_Equipped_Weapon = 65;
   static const Store_Items = 66;
   static const Player_Attack_Target_Name = 77;
   static const Weather = 78;

@@ -80,6 +80,7 @@ class GameWaves extends Game {
     player.weaponSlot1 = buildWeaponUnarmed();
     player.weaponSlot2 = buildWeaponUnarmed();
     player.weaponSlot3 = buildWeaponUnarmed();
+    player.weapon = player.weaponSlot1;
     player.setCharacterStateSpawning();
     movePlayerToCrystal(player);
     playerWriteRound(player);

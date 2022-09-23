@@ -213,7 +213,7 @@ class Connection {
         }
         player.weapon = player.weapons[index];
         player.game.setCharacterStateChanging(player);
-        player.writeEquippedWeapon();
+        // player.writeEquippedWeapon();
         break;
 
       case ClientRequest.Revive:

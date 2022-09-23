@@ -292,15 +292,36 @@ class Player extends Character with ByteWriter {
     writeGameObjects();
     writeEditorGameObjectSelected();
 
-    if (!initialized){
+    if (!initialized) {
       writeGameOptionControlScheme();
       game.customInitPlayer(this);
       initialized = true;
+      writePlayerWeaponType();
+      writePlayerWeaponCapacity();
+      writePlayerWeaponRounds();
     }
 
     if (!sceneDownloaded){
       downloadScene();
     }
+  }
+
+  void writePlayerWeaponType(){
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Weapon_Type);
+    writeByte(weapon.type);
+  }
+
+  void writePlayerWeaponRounds(){
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Weapon_Rounds);
+    writeInt(weapon.rounds);
+  }
+
+  void writePlayerWeaponCapacity(){
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Weapon_Capacity);
+    writeInt(weapon.capacity);
   }
 
   void writeGameObjects(){
@@ -590,13 +611,6 @@ class Player extends Character with ByteWriter {
   }
 
   void writeWeapon(Weapon weapon){
-    writeByte(weapon.type);
-    writeInt(weapon.damage);
-    writeString(weapon.uuid);
-  }
-
-  void writeEquippedWeapon(){
-    writeByte(ServerResponse.Player_Equipped_Weapon);
     writeByte(weapon.type);
     writeInt(weapon.damage);
     writeString(weapon.uuid);
