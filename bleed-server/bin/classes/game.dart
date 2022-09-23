@@ -43,7 +43,8 @@ abstract class Game {
 
   /// In seconds
   int getTime();
-
+  /// safe to override
+  void customDownloadScene(Player player){ }
   /// safe to override
   void customUpdate();
   /// safe to override

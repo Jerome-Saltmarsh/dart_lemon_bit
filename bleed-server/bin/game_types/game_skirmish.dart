@@ -18,6 +18,11 @@ class GameSkirmish extends Game {
   }
 
   @override
+  void customDownloadScene(Player player) {
+    player.writeEnvironmentShade(Shade.Very_Dark);
+  }
+
+  @override
   int getTime() => 0;
 
   @override

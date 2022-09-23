@@ -329,6 +329,7 @@ class Player extends Character with ByteWriter {
 
     writeRenderMap(game.customPropMapVisible);
     writeGameType(game.gameType);
+    game.customDownloadScene(this);
 
     sceneDownloaded = true;
   }
