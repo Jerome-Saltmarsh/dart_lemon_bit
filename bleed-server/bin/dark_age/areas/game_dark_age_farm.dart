@@ -5,6 +5,7 @@ import '../../classes/library.dart';
 import '../../common/library.dart';
 import '../../common/map_tiles.dart';
 import '../../common/quest.dart';
+import '../../functions/move_player_to_crystal.dart';
 import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';
 
@@ -38,17 +39,7 @@ class GameDarkAgeFarm extends DarkAgeArea {
 
   @override
   void customInitPlayer(Player player) {
-    player.indexZ = 5;
-    if (randomBool()){
-      player.indexRow = 16;
-      player.indexColumn = 21;
-    } else {
-      player.indexRow = 15;
-      player.indexColumn = 22;
-    }
-    const radius = 5.0;
-    player.x += giveOrTake(radius);
-    player.y += giveOrTake(radius);
+    movePlayerToCrystal(player);
     player.setCharacterStateSpawning();
 
     player.interact(
