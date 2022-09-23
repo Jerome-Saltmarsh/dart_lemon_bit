@@ -1,5 +1,7 @@
+import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/Shade.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
@@ -33,13 +35,14 @@ Widget buildHudDebug() {
                 ],
               ),
               Refresh(() => text('characters: $totalCharacters')),
-              Refresh(() => text('Onscreen: $onscreenNodes, off-left: $offscreenNodesLeft, off-top: $offscreenNodesTop, off-right: $offscreenNodesRight, off-bottom: $offscreenNodesBottom')),
+              Refresh(() => text('Particles: active: $totalActiveParticles, total: ${particles.length}')),
+              Refresh(() => text('Nodes onscreen: $onscreenNodes, off-left: $offscreenNodesLeft, off-top: $offscreenNodesTop, off-right: $offscreenNodesRight, off-bottom: $offscreenNodesBottom')),
               Refresh(() => text('Engine.Frame: ${engine.frame}')),
               watch(renderFrame, (t) => text("Render.Frame: $t")),
               watch(serverResponseReader.updateFrame, (t) => text("Update.Frame: $t")),
-              Refresh(() => text('Particles: {active: $totalActiveParticles, total: ${particles.length}')),
               watch(player.interpolating, (bool interpolating) => text("Interpolating: $interpolating", onPressed: () => player.interpolating.value = !player.interpolating.value)),
               watch(ambientShade, (int shade) => text("ambient-shade: ${Shade.getName(shade)}")),
+              watch(gameType, (int? value) => text("game-type:  ${value == null ? 'None' : GameType.getName(value)}")),
             ],
           )),
     ],
