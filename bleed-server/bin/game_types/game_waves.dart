@@ -213,20 +213,25 @@ class GameWaves extends Game {
     player.dispatchEventLootCollected();
   }
 
-  void assignPlayerWeapon(Player player, Weapon weapon){
+  void onWeaponPurchased(Player player, Weapon weapon){
+    player.weapon = weapon;
+     player.writePlayerWeaponType();
+     player.writePlayerWeaponCapacity();
+     player.writePlayerWeaponRounds();
      switch(mapAttackTypeToPosition(weapon.type)){
        case TypePosition.Primary:
          player.weaponSlot1 = weapon;
-         return;
+         break;
        case TypePosition.Secondary:
          player.weaponSlot2 = weapon;
-         return;
+         break;
        case TypePosition.Tertiary:
          player.weaponSlot3 = weapon;
-         return;
+         break;
        default:
          throw Exception("Cannot assign player weapon to player ${weapon.type}");
      }
+
   }
 
   @override
@@ -241,7 +246,7 @@ class GameWaves extends Game {
     player.writePlayerEvent(PlayerEvent.Item_Equipped);
     player.writeByte(type);
 
-    assignPlayerWeapon(player, buildWeaponByType(type));
+    onWeaponPurchased(player, buildWeaponByType(type));
   }
 
   @override
