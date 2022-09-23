@@ -34,6 +34,8 @@ class GameSkirmish extends Game {
   void customInitPlayer(Player player) {
     player.writeEnvironmentShade(Shade.Very_Dark);
     player.writeEnvironmentRain(Rain.Light);
+    player.writeEnvironmentLightning(Lightning.Off);
+    player.writeEnvironmentWind(Wind.Gentle);
     movePlayerToCrystal(player);
   }
 }

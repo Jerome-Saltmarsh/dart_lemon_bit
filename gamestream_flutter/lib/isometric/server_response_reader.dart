@@ -248,6 +248,12 @@ class ServerResponseReader with ByteReader {
       case EnvironmentResponse.Rain:
         rain.value = readRain();
         break;
+      case EnvironmentResponse.Lightning:
+        lightning.value = readLightning();
+        break;
+      case EnvironmentResponse.Wind:
+        windAmbient.value = readWind();
+        break;
     }
   }
 

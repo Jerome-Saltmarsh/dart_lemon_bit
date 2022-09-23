@@ -714,6 +714,18 @@ class Player extends Character with ByteWriter {
     writeByte(value);
   }
 
+  void writeEnvironmentLightning(Lightning value){
+    writeByte(ServerResponse.Environment);
+    writeByte(EnvironmentResponse.Lightning);
+    writeByte(value.index);
+  }
+
+  void writeEnvironmentWind(Wind wind){
+    writeByte(ServerResponse.Environment);
+    writeByte(EnvironmentResponse.Wind);
+    writeByte(wind.index);
+  }
+
   void writeEnvironmentRain(Rain rain){
     writeByte(ServerResponse.Environment);
     writeByte(EnvironmentResponse.Rain);
