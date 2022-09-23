@@ -50,7 +50,7 @@ void renderCharacter(Character character){
 
   switch (character.type) {
     case CharacterType.Template:
-      if (gameOptions.controlScheme.value == ControlScheme.schemeA){
+      if (drawTemplateWithoutWeapon){
         final aimDirection = character.aimDirection;
         final weaponInFront = aimDirection >= 2 && aimDirection <= 6;
         if (!weaponInFront) {

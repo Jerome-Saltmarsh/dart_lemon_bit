@@ -3,6 +3,10 @@ import 'package:lemon_watch/watch.dart';
 
 final gameOptions = GameOptions();
 
+var drawTemplateWithoutWeapon = false;
+
 class GameOptions {
-  final controlScheme = Watch(ControlScheme.schemeA);
+  final controlScheme = Watch(ControlScheme.schemeA, onChanged: (int value){
+    drawTemplateWithoutWeapon = value == ControlScheme.schemeA;
+  });
 }
