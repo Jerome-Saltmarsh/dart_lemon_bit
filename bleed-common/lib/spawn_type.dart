@@ -9,6 +9,7 @@ class SpawnType {
   static const Template = 6;
   static const Slime = 7;
 
+
   static int getValue(int index){
     const max = Slime;
     if (index < 0) return Zombie;

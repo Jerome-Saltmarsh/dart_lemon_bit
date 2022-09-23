@@ -265,6 +265,7 @@ class ServerResponseReader with ByteReader {
     switch (gameObjectType) {
       case GameObjectType.Particle_Emitter:
         final instance = getInstanceGameObject();
+        readVector3(instance);
         break;
     }
   }

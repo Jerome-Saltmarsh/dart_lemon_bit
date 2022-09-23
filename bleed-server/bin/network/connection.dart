@@ -11,6 +11,7 @@ import '../common/maths.dart';
 import '../common/node_orientation.dart';
 import '../common/node_request.dart';
 import '../common/node_size.dart';
+import '../common/particle_type.dart';
 import '../common/spawn_type.dart';
 import '../common/teleport_scenes.dart';
 import '../dark_age/dark_age_scenes.dart';
@@ -659,6 +660,15 @@ class Connection {
         }
 
         if (type == null) return errorInvalidArg('type is null (5)');
+
+        if (type == GameObjectType.Particle_Emitter){
+          player.game.spawnGameObjectParticleEmitter(
+              x: x,
+              y: y,
+              z: z,
+              particleType: ParticleType.Flame,
+          );
+        } else
         if (type == GameObjectType.Spawn){
           final game = player.game;
           if (game is GameDarkAge){

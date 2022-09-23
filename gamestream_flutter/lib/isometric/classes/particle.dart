@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:bleed_common/Direction.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
-import 'package:gamestream_flutter/isometric/enums/particle_type.dart';
+import 'package:bleed_common/particle_type.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:lemon_math/library.dart';
 

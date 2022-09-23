@@ -8,4 +8,5 @@ void onChangedSelectedNode(Node node){
    edit.updateNodeSupports(node.type);
    edit.nodeOrientationVisible.value = NodeType.isOriented(node.type);
    edit.nodeTypeSpawnSelected.value = node.isSpawn;
+   edit.gameObjectSelected.value = false;
 }

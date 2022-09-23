@@ -7,6 +7,7 @@ import '../common/control_scheme.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
 import '../common/node_orientation.dart';
+import '../common/particle_type.dart';
 import '../common/spawn_type.dart';
 import '../common/teams.dart';
 import '../engine.dart';
@@ -1348,10 +1349,34 @@ abstract class Game {
         instance.wanderRadius = spawn.spawnRadius;
         characters.add(instance);
         break;
+      case GameObjectType.Particle_Emitter:
+        final instance = GameObjectParticleEmitter(
+            x: spawn.x,
+            y: spawn.y,
+            z: spawn.z,
+            particleType: ParticleType.Flame,
+        );
+        instance.spawn = spawn;
+        gameObjects.add(instance);
+        break;
       default:
         print("Warning: Unrecognized SpawnType ${spawn.spawnType}");
         break;
     }
+  }
+
+  void spawnGameObjectParticleEmitter({
+    required double x,
+    required double y,
+    required double z,
+    required int particleType,
+  }){
+    gameObjects.add(GameObjectParticleEmitter(
+      x: x,
+      y: y,
+      z: z,
+      particleType: particleType,
+    ));
   }
 
   void spawnNodeInstance(NodeSpawn node) {

@@ -112,11 +112,13 @@ class GameObjectSpawn extends GameObjectStatic {
 }
 
 class GameObjectParticleEmitter extends GameObject {
+  int particleType;
 
   GameObjectParticleEmitter({
     required double x,
     required double y,
     required double z,
+    required this.particleType,
   }) : super(x: x, y: y, z: z, radius: 0) {
     collidable = false;
   }

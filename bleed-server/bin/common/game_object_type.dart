@@ -41,6 +41,7 @@ class GameObjectType {
     Spawn,
     Tavern_Sign,
     Lantern_Red,
+    Particle_Emitter,
   ];
   
   static bool emitsLightBright(int type){
@@ -84,6 +85,7 @@ class GameObjectType {
        Jellyfish: "Jelly Fish",
        Jellyfish_Red: "Jelly Fish Red",
        Lantern_Red: "Lantern Red",
+       Particle_Emitter: "Particle Emitter"
     }[value] ?? "?";
   }
 }
