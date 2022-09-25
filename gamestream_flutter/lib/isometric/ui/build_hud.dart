@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
+import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_game_type_skirmish.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_game_type_waves.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog.dart';
@@ -59,6 +60,8 @@ Widget buildGameTypeUI(int? gameType) {
        return buildStackGameTypeWavesUI();
      case GameType.Dark_Age:
        return buildStackGameTypeWorld();
+     case GameType.Skirmish:
+       return buildStackGameTypeSkirmish();
      default:
        return const SizedBox();
    }

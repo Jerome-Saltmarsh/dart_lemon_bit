@@ -39,7 +39,8 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] UI Weapon Information
 /// [ ] 3d model weapon sword
 /// [ ] 3d model weapon assault rifle
-/// [ ] drop weapon on no ammo
+/// [ ] item acquired audio
+/// [x] drop weapon on no ammo
 ///
 class GameSkirmish extends Game {
 
@@ -86,7 +87,7 @@ class GameSkirmish extends Game {
     if (other is GameObjectWeapon){
       deactivateGameObject(other);
       player.weapon = buildWeaponByType(other.weaponType);
-      player.writePlayerEventItemEquipped(other.type);
+      player.writePlayerEventItemEquipped(other.weaponType);
     }
   }
 
