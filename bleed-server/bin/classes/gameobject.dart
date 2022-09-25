@@ -217,6 +217,31 @@ class GameObjectHandgun extends GameObject {
   }
 }
 
+class GameObjectWeapon extends GameObject {
+  int weaponType;
+
+  @override
+  int get type => GameObjectType.Weapon;
+
+  @override
+  bool get persist => false;
+
+  GameObjectWeapon({
+    required double x,
+    required double y,
+    required double z,
+    required this.weaponType,
+  }) : super(x: x, y: y, z: z, radius: 14) {
+    physical = false;
+  }
+
+  @override
+  void write(Player player) {
+    player.writeGameObject(this);
+    player.writeByte(weaponType);
+  }
+}
+
 class GameObjectButterfly extends GameObjectAnimal with Velocity implements Updatable {
   var pause = 0;
   var visible = true;

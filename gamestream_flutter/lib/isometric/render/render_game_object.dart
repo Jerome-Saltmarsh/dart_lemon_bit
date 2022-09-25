@@ -217,16 +217,30 @@ void renderGameObject(GameObject value) {
     );
   }
 
-  if (value.type == GameObjectType.Handgun) {
-    return render(
-      dstX: value.renderX,
-      dstY: value.renderY,
-      srcX: 234,
-      srcY: 200,
-      srcWidth: 17,
-      srcHeight: 10,
-    );
+  if (value.type == GameObjectType.Weapon) {
+    switch(value.subType){
+      case AttackType.Shotgun:
+        return render(
+          dstX: value.renderX,
+          dstY: value.renderY,
+          srcX: 262,
+          srcY: 204,
+          srcWidth: 26,
+          srcHeight: 7,
+        );
+      case AttackType.Handgun:
+        return render(
+          dstX: value.renderX,
+          dstY: value.renderY,
+          srcX: 234,
+          srcY: 200,
+          srcWidth: 17,
+          srcHeight: 10,
+        );
+    }
+
   }
+
 }
 
 void renderGameObjectChicken(GameObject value) {

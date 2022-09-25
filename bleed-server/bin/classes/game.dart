@@ -1339,21 +1339,23 @@ abstract class Game {
         characters.add(instance);
         break;
       case SpawnType.Random_Item:
-        switch(randomInt(0, 3)){
+        switch(randomInt(0, 2)){
           case 0:
-            final instance = GameObjectShotgun(
+            final instance = GameObjectWeapon(
               x: node.centerX,
               y: node.centerY,
               z: node.centerZ,
+              weaponType: AttackType.Handgun
             );
             instance.spawn = node;
             gameObjects.add(instance);
             break;
           case 1:
-            final instance = GameObjectHandgun(
+            final instance = GameObjectWeapon(
               x: node.centerX,
               y: node.centerY,
               z: node.centerZ,
+              weaponType: AttackType.Shotgun
             );
             instance.spawn = node;
             gameObjects.add(instance);
