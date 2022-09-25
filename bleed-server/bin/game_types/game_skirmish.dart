@@ -101,10 +101,12 @@ class GameSkirmish extends Game {
     if (a is Player && b is GameObjectShotgun){
         deactivateGameObject(b);
         a.weapon = buildWeaponShotgun();
+        a.writePlayerEventItemEquipped(a.weapon.type);
     }
     if (b is Player && a is GameObjectShotgun){
         deactivateGameObject(a);
         b.weapon = buildWeaponShotgun();
+        b.writePlayerEventItemEquipped(b.weapon.type);
     }
   }
 

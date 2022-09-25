@@ -457,6 +457,11 @@ class Player extends Character with ByteWriter {
     writeByte(value);
   }
 
+  void writePlayerEventItemEquipped(int itemType){
+    writePlayerEvent(PlayerEvent.Item_Equipped);
+    writeByte(itemType);
+  }
+
   void writeGameTime(Game game){
     writeByte(ServerResponse.Game_Time);
     final totalMinutes = game.getTime() ~/ 60;
