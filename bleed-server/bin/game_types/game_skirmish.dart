@@ -86,9 +86,16 @@ class GameSkirmish extends Game {
   void customOnCollisionBetweenPlayerAndOther(Player player, Collider other){
     if (other is GameObjectWeapon){
       deactivateGameObject(other);
-      player.weapon = buildWeaponByType(other.weaponType);
-      player.writePlayerEventItemEquipped(other.weaponType);
+      playerSetWeapon(player, buildWeaponByType(other.weaponType));
     }
+  }
+
+  void playerSetWeapon(Player player, Weapon weapon){
+    player.weapon = weapon;
+    player.writePlayerWeaponType();
+    player.writePlayerWeaponRounds();
+    player.writePlayerWeaponCapacity();
+    player.writePlayerEventItemEquipped(player.weapon.type);
   }
 
   @override
@@ -130,11 +137,11 @@ class GameSkirmish extends Game {
 
     if (perform1) {
       playerUseWeapon(player, player.weapon);
+      player.writePlayerWeaponRounds();
 
       if (player.weapon.requiresRounds) {
          if (player.weapon.rounds == 0) {
-            player.weapon = buildWeaponUnarmed();
-            player.writePlayerEvent(PlayerEvent.Item_Dropped);
+            playerSetWeapon(player, buildWeaponUnarmed());
          }
       }
     }

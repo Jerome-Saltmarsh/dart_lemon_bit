@@ -12,7 +12,7 @@ import 'package:lemon_engine/state/paint.dart';
 
 Widget buildWidgetAttackSlot(AttackSlot slot) {
 
-  return watch(slot.attackType, (int attackType) {
+  return watch(slot.type, (int attackType) {
     return watch(slot.capacity, (int capacity) {
       return watch(slot.rounds, (int rounds) {
 

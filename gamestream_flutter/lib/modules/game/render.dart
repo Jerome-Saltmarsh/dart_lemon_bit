@@ -75,11 +75,11 @@ class GameRender {
   }
 
   void renderWeaponRoundInformation() {
-    if (!AttackType.requiresRounds(player.weaponType.value))
+    if (!AttackType.requiresRounds(player.weapon.type.value))
       return;
 
     renderText(
-      text: player.weaponRounds.value.toString(),
+      text: player.weapon.rounds.value.toString(),
       x: player.renderX,
       y: player.renderY - 55,
     );

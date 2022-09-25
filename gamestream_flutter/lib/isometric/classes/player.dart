@@ -37,8 +37,7 @@ class Player extends Vector3 {
   final mouseTargetAllie = Watch<bool>(false);
   final mouseTargetHealth = Watch(0.0);
   final weaponDamage = Watch(0);
-  final weaponType = Watch(AttackType.Unarmed, onChanged: onChangedPlayerWeapon);
-  // final attackType = Watch(AttackType.Unarmed, onChanged: onChangedPlayerAttackType);
+  // final weaponType = Watch(AttackType.Unarmed, onChanged: onChangedPlayerWeapon);
   final armourType = Watch(ArmourType.tunicPadded);
   final headType = Watch(HeadType.None);
   final pantsType = Watch(PantsType.white);
@@ -65,11 +64,8 @@ class Player extends Vector3 {
   final questsInProgress = Watch<List<Quest>>([], onChanged: onQuestsInProgressChanged);
   final questsCompleted = Watch<List<Quest>>([]);
 
-  final weaponRounds = Watch(0);
-  final weaponCapacity = Watch(0);
   final weapons = Watch(<Weapon>[]);
-  final weapon = Watch<AttackSlot>(AttackSlot());
-
+  final weapon = AttackSlot();
   final weaponSlot1 = AttackSlot();
   final weaponSlot2 = AttackSlot();
   final weaponSlot3 = AttackSlot();
@@ -77,12 +73,14 @@ class Player extends Vector3 {
   // Properties
   bool get dead => !alive.value;
 
-  double get weaponRoundPercentage => weaponCapacity.value == 0 ? 0 : weaponRounds.value / weaponCapacity.value;
+  double get weaponRoundPercentage => weapon.capacity.value == 0
+      ? 0 : weapon.rounds.value / weapon.capacity.value;
 }
 
 
 class AttackSlot {
-  final attackType = Watch(AttackType.Unarmed);
+  /// see attack_type.dart
+  final type = Watch(AttackType.Unarmed);
   final capacity = Watch(0);
   final rounds = Watch(0);
 }

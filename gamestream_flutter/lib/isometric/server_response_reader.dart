@@ -178,15 +178,15 @@ class ServerResponseReader with ByteReader {
           gameType.value = readByte();
           break;
         case ServerResponse.Player_Slots:
-          player.weaponSlot1.attackType.value = readByte();
+          player.weaponSlot1.type.value = readByte();
           player.weaponSlot1.capacity.value = readInt();
           player.weaponSlot1.rounds.value = readInt();
 
-          player.weaponSlot2.attackType.value = readByte();
+          player.weaponSlot2.type.value = readByte();
           player.weaponSlot2.capacity.value = readInt();
           player.weaponSlot2.rounds.value = readInt();
 
-          player.weaponSlot3.attackType.value = readByte();
+          player.weaponSlot3.type.value = readByte();
           player.weaponSlot3.capacity.value = readInt();
           player.weaponSlot3.rounds.value = readInt();
           break;
@@ -369,13 +369,13 @@ class ServerResponseReader with ByteReader {
         player.points.value = readInt();
         break;
       case ApiPlayer.Weapon_Type:
-        player.weapon.value.attackType.value = readByte();
+        player.weapon.type.value = readByte();
         break;
       case ApiPlayer.Weapon_Rounds:
-        player.weapon.value.rounds.value = readInt();
+        player.weapon.rounds.value = readInt();
         break;
       case ApiPlayer.Weapon_Capacity:
-        player.weapon.value.capacity.value = readInt();
+        player.weapon.capacity.value = readInt();
         break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
