@@ -676,81 +676,18 @@ class Connection {
               spawnRate: 10,
             )
           );
-        } else
-        if (type == GameObjectType.Spawn){
-          final game = player.game;
-          if (game is GameDarkAge){
-            final spawn = GameObjectSpawn(
-                x: x,
-                y: y,
-                z: z,
-                spawnType: SpawnType.Zombie,
-            );
-            player.game.scene.gameObjects.add(spawn);
-            game.refreshSpawn(spawn);
-          }
         } else {
           player.game.scene.gameObjects.add(
             GameObjectStatic(x: x, y: y, z: z, type: type),
           );
         }
+
         player.editorSelectedGameObject = player.game.scene.gameObjects.last;
         player.scene.dirty = true;
         break;
 
       case GameObjectRequest.Delete:
         player.game.playerDeleteEditorSelectedGameObject(player);
-        break;
-
-      case GameObjectRequest.Set_Spawn_Amount:
-        if (arguments.length < 3) return;
-        final selectedGameObject = player.editorSelectedGameObject;
-        if (selectedGameObject == null) return;
-        if (selectedGameObject is GameObjectSpawn == false) return;
-        final amount = int.tryParse(arguments[2]);
-        if (amount == null) {
-          return errorInvalidArg('invalid amount');
-        }
-        if (amount < 0){
-          return errorInvalidArg('amount must be greater than 0');
-        }
-        if (amount > 256){
-          return errorInvalidArg('amount must be less than 256');
-        }
-        final spawn = selectedGameObject as GameObjectSpawn;
-        spawn.spawnAmount = amount;
-        player.game.refreshSpawn(spawn);
-        break;
-
-      case GameObjectRequest.Set_Spawn_Radius:
-        if (arguments.length < 3) return;
-        final selectedGameObject = player.editorSelectedGameObject;
-        if (selectedGameObject == null) return;
-        if (selectedGameObject is GameObjectSpawn == false) return;
-        final amount = double.tryParse(arguments[2]);
-        if (amount == null) {
-          return errorInvalidArg('invalid amount');
-        }
-        if (amount < 0){
-          return errorInvalidArg('amount must be greater than 0');
-        }
-        if (amount > 256){
-          return errorInvalidArg('amount must be less than 256');
-        }
-        final spawn = selectedGameObject as GameObjectSpawn;
-        spawn.spawnRadius = amount;
-        player.game.refreshSpawn(spawn);
-        break;
-
-      case GameObjectRequest.Spawn_Type_Increment:
-        final selectedGameObject = player.editorSelectedGameObject;
-        if (selectedGameObject == null) return;
-        if (selectedGameObject is GameObjectSpawn == false) return;
-        final spawn = selectedGameObject as GameObjectSpawn;
-        final game = player.game;
-        if (game is GameDarkAge) {
-          game.setSpawnType(spawn, spawn.type + 1);
-        }
         break;
 
       case GameObjectRequest.Move_To_Mouse:

@@ -12,7 +12,7 @@ class SpawnType {
   static const GameObject_Weapon_Shotgun = 9;
   static const GameObject_Weapon_Rifle = 10;
   static const GameObject_Weapon_Sword = 11;
-  static const GameObject_Random_Item = 12;
+  static const Random_Item = 12;
 
   static int getValue(int index){
     const max = GameObject_Weapon_Sword;
@@ -34,7 +34,7 @@ class SpawnType {
     GameObject_Weapon_Shotgun,
     GameObject_Weapon_Rifle,
     GameObject_Weapon_Sword,
-    GameObject_Random_Item,
+    Random_Item,
   ];
 
   static String getName(int type) {
@@ -51,7 +51,7 @@ class SpawnType {
       GameObject_Weapon_Shotgun: "Shotgun",
       GameObject_Weapon_Rifle: "Rifle",
       GameObject_Weapon_Sword: "Sword",
-      GameObject_Random_Item: "Random Item",
+      Random_Item: "Random Item",
     } [type] ?? "Unknown ($type)";
   }
 }

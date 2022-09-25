@@ -88,30 +88,6 @@ class GameObjectLoot extends GameObject {
   }
 }
 
-class GameObjectSpawn extends GameObjectStatic {
-  /// common/spawn_type.dart
-  int spawnType;
-  int spawnAmount;
-  double spawnRadius;
-
-  GameObjectSpawn({
-    required double x,
-    required double y,
-    required double z,
-    required this.spawnType,
-    this.spawnRadius = 50,
-    this.spawnAmount = 1,
-  }) : super(x: x, y: y, z: z, type: GameObjectType.Spawn);
-
-  @override
-  void write(Player player) {
-    player.writeByte(ServerResponse.GameObject_Spawn);
-    player.writePosition3(this);
-    player.writeByte(spawnType);
-    player.writeByte(spawnAmount);
-  }
-}
-
 class GameObjectParticleEmitter extends GameObject with Updatable{
   int particleType;
   int nextSpawn = 0;
@@ -194,6 +170,25 @@ abstract class GameObjectAnimal extends GameObject with Velocity {
 
   @override
   bool get persist => false;
+}
+
+class GameObjectShotgun extends GameObject {
+
+  GameObjectShotgun({
+    required double x,
+    required double y,
+    required double z,
+  }) : super(x: x, y: y, z: z, radius: 14);
+
+  @override
+  int get type => GameObjectType.Item;
+
+  @override
+  void write(Player player) {
+    player.writeByte(ServerResponse.GameObject);
+    player.writeByte(GameObjectType.Shotgun);
+    player.writePosition3(this);
+  }
 }
 
 class GameObjectButterfly extends GameObjectAnimal with Velocity implements Updatable {

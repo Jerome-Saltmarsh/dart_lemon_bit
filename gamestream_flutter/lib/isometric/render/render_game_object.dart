@@ -206,16 +206,16 @@ void renderGameObject(GameObject value) {
       srcHeight: 7,
     );
 
-  if (value.type == GameObjectType.Spawn)
-    if (modeIsPlay) return;
+  if (value.type == GameObjectType.Shotgun) {
     return render(
       dstX: value.renderX,
       dstY: value.renderY,
-      srcX: 1712,
-      srcY: 48,
-      srcWidth: 16,
-      srcHeight: 16,
+      srcX: 262,
+      srcY: 204,
+      srcWidth: 26,
+      srcHeight: 7,
     );
+  }
 }
 
 void renderGameObjectChicken(GameObject value) {

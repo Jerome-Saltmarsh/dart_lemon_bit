@@ -1,8 +1,10 @@
 
+import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../classes/node.dart';
 import '../common/control_scheme.dart';
 import '../common/library.dart';
+import '../common/spawn_type.dart';
 import '../common/teams.dart';
 import '../functions/move_player_to_crystal.dart';
 
@@ -46,14 +48,29 @@ class GameSkirmish extends Game {
      foreachNodeSpawn(spawnZom);
   }
 
-  void spawnZom(NodeSpawn node) =>
-      spawnZombieAtNodeSpawn(
-        node: node,
-        health: 5,
-        team: Teams.evil,
-        damage: 1,
-        respawnDuration: 500,
-      );
+  void spawnZom(NodeSpawn node) {
+     switch(node.spawnType){
+       case SpawnType.Zombie:
+         spawnZombieAtNodeSpawn(
+           node: node,
+           health: 5,
+           team: Teams.evil,
+           damage: 1,
+           respawnDuration: 500,
+         );
+         break;
+       case SpawnType.Random_Item:
+         gameObjects.add(
+           GameObjectShotgun(
+               x: node.x,
+               y: node.y,
+               z: node.z,
+           )
+         );
+         break;
+     }
+  }
+
 
   @override
   void customUpdate() {

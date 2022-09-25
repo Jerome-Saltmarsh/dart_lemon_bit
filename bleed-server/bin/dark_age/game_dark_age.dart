@@ -74,16 +74,6 @@ class GameDarkAge extends Game {
     player.writeWeather();
   }
 
-  void setSpawnType(GameObjectSpawn spawn, int type){
-    spawn.spawnType = SpawnType.getValue(spawn.spawnType + 1);
-    onSpawnTypeChanged(spawn);
-  }
-
-  void onSpawnTypeChanged(GameObjectSpawn spawn){
-       removeSpawnInstances(spawn);
-       spawnGameObject(spawn);
-  }
-
   @override
   void customOnCharacterSpawned(Character character){
     if (character is Player){

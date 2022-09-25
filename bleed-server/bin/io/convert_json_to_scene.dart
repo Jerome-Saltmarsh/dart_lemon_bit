@@ -64,20 +64,6 @@ GameObject convertJsonToGameObject(Json json) {
     final y = json.getDouble('y');
     final z = json.getDouble('z');
 
-    if (type == GameObjectType.Spawn) {
-      final spawnType = json.containsKey('spawn-type')
-          ? json.getInt('spawn-type')
-          : SpawnType.Chicken;
-      return GameObjectSpawn(
-          x: x,
-          y: y,
-          z: z,
-          spawnType: spawnType,
-          spawnRadius: tryGetDouble(json, 'spawn-radius') ?? 50,
-          spawnAmount: tryGetInt(json, 'spawn-amount') ?? 1,
-      );
-    }
-
     if (GameObjectType.isStatic(type)) {
       return GameObjectStatic(
         x: x,
@@ -118,6 +104,13 @@ GameObject convertJsonToGameObject(Json json) {
           y: y,
           z: z,
           lootType: 0
+        );
+      case 17:
+        return GameObjectLoot(
+            x: x,
+            y: y,
+            z: z,
+            lootType: 0
         );
       default:
         throw Exception("Could not create gameobject from type $type");

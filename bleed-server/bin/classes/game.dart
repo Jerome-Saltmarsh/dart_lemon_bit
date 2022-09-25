@@ -1054,13 +1054,6 @@ abstract class Game {
   }
 
   void refreshSpawns() {
-    for (var i = 0; i < gameObjects.length; i++) {
-      final gameObject = gameObjects[i];
-      if (gameObject is GameObjectSpawn) {
-        refreshSpawn(gameObject);
-      }
-    }
-
     for (final plane in scene.grid) {
       for (final row in plane) {
         for (final node in row) {
@@ -1091,29 +1084,6 @@ abstract class Game {
     }
   }
 
-  void refreshSpawn(GameObjectSpawn spawn) {
-    removeSpawnInstances(spawn);
-    for (var i = 0; i < spawn.spawnAmount; i++) {
-      spawnGameObject(spawn);
-    }
-  }
-
-  void removeSpawnInstances(GameObjectSpawn spawn) {
-    for (var i = 0; i < characters.length; i++) {
-      final character = characters[i];
-      if (character.spawn != spawn) continue;
-      i--;
-      removeInstance(character);
-    }
-
-    for (var i = 0; i < gameObjects.length; i++) {
-      final gameObject = gameObjects[i];
-      if (gameObject.spawn != spawn) continue;
-      i--;
-      removeInstance(gameObject);
-    }
-  }
-
   void removeInstance(dynamic instance) {
     if (instance == null) return;
 
@@ -1128,10 +1098,6 @@ abstract class Game {
     }
     if (instance is GameObject) {
       gameObjects.remove(instance);
-      if (instance is GameObjectSpawn) {
-        removeSpawnInstances(instance);
-        scene.dirty = true;
-      }
       return;
     }
     if (instance is Projectile) {
@@ -1264,107 +1230,6 @@ abstract class Game {
         handleProjectileHit(projectile, collider);
         break;
       }
-    }
-  }
-
-  void spawnGameObject(GameObjectSpawn spawn) {
-    final distance = randomBetween(0, spawn.spawnRadius);
-    final angle = randomAngle();
-    final x = getAdjacent(angle, distance);
-    final y = getOpposite(angle, distance);
-
-    switch (spawn.spawnType) {
-      case SpawnType.Chicken:
-        final instance =
-        GameObjectChicken(x: spawn.x + x, y: spawn.y + y, z: spawn.z);
-        instance.wanderRadius = spawn.spawnRadius;
-        instance.spawn = spawn;
-        gameObjects.add(instance);
-
-        return;
-      case SpawnType.Jellyfish:
-        final instance =
-        GameObjectJellyfish(x: spawn.x + x, y: spawn.y + y, z: spawn.z);
-        instance.spawn = spawn;
-        gameObjects.add(instance);
-        return;
-      case SpawnType.Jellyfish_Red:
-        final instance =
-        GameObjectJellyfishRed(x: spawn.x + x, y: spawn.y + y, z: spawn.z);
-        instance.spawn = spawn;
-        gameObjects.add(instance);
-        return;
-      case SpawnType.Rat:
-        final instance = Rat(
-          z: spawn.indexZ,
-          row: spawn.indexRow,
-          column: spawn.indexColumn,
-          game: this,
-          team: Teams.evil,
-        );
-        instance.wanderRadius = spawn.spawnRadius;
-        instance.spawn = spawn;
-        characters.add(instance);
-        break;
-      case SpawnType.Butterfly:
-        final instance =
-        GameObjectButterfly(x: spawn.x, y: spawn.y, z: spawn.z);
-        instance.spawn = spawn;
-        instance.wanderRadius = spawn.spawnRadius;
-        gameObjects.add(instance);
-        break;
-      case SpawnType.Zombie:
-        final instance = Zombie(
-          x: spawn.x + x,
-          y: spawn.y + y,
-          z: spawn.z,
-          health: 10,
-          damage: 1,
-          game: this,
-          team: Teams.evil,
-        );
-        instance.spawn = spawn;
-        instance.wanderRadius = spawn.spawnRadius;
-        characters.add(instance);
-        break;
-      case SpawnType.Slime:
-        final instance = AISlime(
-          x: spawn.x + x,
-          y: spawn.y + y,
-          z: spawn.z,
-          health: 30,
-          team: Teams.evil,
-        );
-        instance.spawn = spawn;
-        instance.wanderRadius = spawn.spawnRadius;
-        instance.setCharacterStateSpawning();
-        characters.add(instance);
-        break;
-      case SpawnType.Template:
-        final instance = Npc(
-          game: this,
-          x: spawn.x + x,
-          y: spawn.y + y,
-          z: spawn.z,
-          health: 10,
-          weapon: Weapon(
-            type: AttackType.Bow,
-            damage: 1,
-            capacity: 0,
-            duration: 10,
-            range: 200,
-          ),
-          team: Teams.good,
-          wanderRadius: 100,
-          name: 'Bandit',
-        );
-        instance.spawn = spawn;
-        instance.wanderRadius = spawn.spawnRadius;
-        characters.add(instance);
-        break;
-      default:
-        print("Warning: Unrecognized SpawnType ${spawn.spawnType}");
-        break;
     }
   }
 

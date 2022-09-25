@@ -35,12 +35,6 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     return edit.paintTorch();
   if (key == PhysicalKeyboardKey.digit6)
     return edit.paintTree();
-  if (key == PhysicalKeyboardKey.digit7) {
-    return editorActionAddGameObject(GameObjectType.Spawn);
-    // return edit.paintLongGrass();
-  }
-    // return edit.paintLongGrass();
-
   if (key == PhysicalKeyboardKey.keyU)
     return editor.actions.raise();
   if (key == PhysicalKeyboardKey.keyX)

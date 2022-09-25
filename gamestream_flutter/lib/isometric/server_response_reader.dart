@@ -90,9 +90,6 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.GameObject_Static:
           readGameObjectStatic();
           break;
-        case ServerResponse.GameObject_Spawn:
-          readGameObjectSpawn();
-          break;
         case ServerResponse.GameObject:
           readGameObject();
           break;
@@ -285,9 +282,13 @@ class ServerResponseReader with ByteReader {
 
   void readGameObject() {
     final gameObjectType = readByte();
+    final instance = getInstanceGameObject();
+    instance.type = gameObjectType;
     switch (gameObjectType) {
       case GameObjectType.Particle_Emitter:
-        final instance = getInstanceGameObject();
+        readVector3(instance);
+        break;
+      case GameObjectType.Shotgun:
         readVector3(instance);
         break;
     }
@@ -396,14 +397,6 @@ class ServerResponseReader with ByteReader {
     gameObject.type = readByte();
   }
 
-  void readGameObjectSpawn() {
-    final gameObject = getInstanceGameObject();
-    readVector3(gameObject);
-    gameObject.type = GameObjectType.Spawn;
-    gameObject.spawnType = readByte();
-    gameObject.spawnAmount = readByte();
-  }
-
   void readPlayerAttackTargetName() {
     player.mouseTargetName.value = readString();
     player.mouseTargetAllie.value = readBool();
@@ -419,11 +412,6 @@ class ServerResponseReader with ByteReader {
     final type = readByte();
     edit.gameObject.type = type;
     edit.gameObjectSelectedType.value = type;
-    if (type == GameObjectType.Spawn) {
-      edit.gameObjectSelectedSpawnType.value = readByte();
-      edit.gameObjectSelectedAmount.value = readByte();
-      edit.gameObjectSelectedRadius.value = readDouble();
-    }
     if (type == GameObjectType.Particle_Emitter){
       edit.gameObjectSelectedParticleType.value = readByte();
       edit.gameObjectSelectedParticleSpawnRate.value = readInt();

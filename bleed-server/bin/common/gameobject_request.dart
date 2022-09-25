@@ -5,9 +5,6 @@ enum GameObjectRequest {
   Deselect,
   Translate,
   Delete,
-  Spawn_Type_Increment,
-  Set_Spawn_Amount,
-  Set_Spawn_Radius,
   Set_Type,
   Move_To_Mouse
 }

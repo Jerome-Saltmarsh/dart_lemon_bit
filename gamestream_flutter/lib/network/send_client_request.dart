@@ -213,21 +213,6 @@ void sendGameObjectRequestDelete() {
   sendGameObjectRequest(GameObjectRequest.Delete);
 }
 
-void sendGameObjectRequestSpawnTypeIncrement() {
-  sendGameObjectRequest(GameObjectRequest.Spawn_Type_Increment);
-}
-
-void sendGameObjectRequestSetSpawnAmount(int amount) {
-  if (amount <= 0) return;
-  if (amount > 256) return;
-  sendGameObjectRequest(GameObjectRequest.Set_Spawn_Amount, amount);
-}
-
-void sendGameObjectRequestSetSpawnRadius(double value) {
-  assert (value > 0);
-  sendGameObjectRequest(GameObjectRequest.Set_Spawn_Radius, value);
-}
-
 void sendClientRequestSpawnNodeDataModify({
   required int z,
   required int row,

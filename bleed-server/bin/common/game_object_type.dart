@@ -15,13 +15,14 @@ class GameObjectType {
   static const Book_Purple = 14;
   static const Crystal_Small_Blue = 15;
   static const Flower_Green = 16;
-  static const Spawn = 17;
   static const Tavern_Sign = 18;
   static const Jellyfish = 19;
   static const Jellyfish_Red = 20;
   static const Lantern_Red = 21;
   static const Loot = 22;
   static const Particle_Emitter = 23;
+  static const Item = 24;
+  static const Shotgun = 25;
 
   static const staticValues = [
     Flower,
@@ -38,7 +39,6 @@ class GameObjectType {
     Book_Purple,
     Crystal_Small_Blue,
     Flower_Green,
-    Spawn,
     Tavern_Sign,
     Lantern_Red,
     Particle_Emitter,
@@ -80,12 +80,12 @@ class GameObjectType {
        Book_Purple: "Book Purple",
        Crystal_Small_Blue: "Crystal Small Blue",
        Flower_Green: "Flower Green",
-       Spawn: "Spawn",
        Tavern_Sign: "Tavern Sign",
        Jellyfish: "Jelly Fish",
        Jellyfish_Red: "Jelly Fish Red",
        Lantern_Red: "Lantern Red",
-       Particle_Emitter: "Particle Emitter"
+       Particle_Emitter: "Particle Emitter",
+       Shotgun: "Shotgun"
     }[value] ?? "?";
   }
 }

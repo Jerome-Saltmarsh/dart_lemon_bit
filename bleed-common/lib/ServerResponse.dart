@@ -49,7 +49,6 @@ class ServerResponse {
   static const GameObject_Butterfly = 94;
   static const GameObject_Chicken = 95;
   static const GameObject_Static = 97;
-  static const GameObject_Spawn = 98;
   static const GameObject_Jellyfish = 99;
   static const GameObject_Jellyfish_Red = 100;
   static const Editor_GameObject_Selected = 101;
