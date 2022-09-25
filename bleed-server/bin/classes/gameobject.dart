@@ -174,14 +174,19 @@ abstract class GameObjectAnimal extends GameObject with Velocity {
 
 class GameObjectShotgun extends GameObject {
 
+  @override
+  int get type => GameObjectType.Item;
+
+  @override
+  bool get persist => false;
+
   GameObjectShotgun({
     required double x,
     required double y,
     required double z,
   }) : super(x: x, y: y, z: z, radius: 14);
 
-  @override
-  int get type => GameObjectType.Item;
+
 
   @override
   void write(Player player) {

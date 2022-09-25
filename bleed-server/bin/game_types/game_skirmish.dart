@@ -2,6 +2,7 @@
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../classes/node.dart';
+import '../common/attack_state.dart';
 import '../common/control_scheme.dart';
 import '../common/library.dart';
 import '../common/spawn_type.dart';
@@ -111,6 +112,41 @@ class GameSkirmish extends Game {
   void customOnCharacterKilled(Character target, src) {
     if (target is AI) {
        target.respawn = 500;
+    }
+  }
+
+  @override
+  void handlePlayerControlSchemeA({
+    required Player player,
+    required int direction,
+    required bool perform1,
+    required bool perform2,
+    required bool perform3,
+    required double mouseX,
+    required double mouseY,
+    required double screenLeft,
+    required double screenTop,
+    required double screenRight,
+    required double screenBottom,
+  }){
+    player.framesSinceClientRequest = 0;
+    player.screenLeft = screenLeft;
+    player.screenTop = screenTop;
+    player.screenRight = screenRight;
+    player.screenBottom = screenBottom;
+    player.mouse.x = mouseX;
+    player.mouse.y = mouseY;
+
+    if (player.deadOrBusy) return;
+
+    playerRunInDirection(player, direction);
+    playerUpdateAimTarget(player);
+
+    if (player.weapon.durationRemaining > 0) return;
+    player.weapon.state = AttackState.Aiming;
+
+    if (perform1) {
+      playerUseWeapon(player, player.weapon);
     }
   }
 }
