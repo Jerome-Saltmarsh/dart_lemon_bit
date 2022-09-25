@@ -216,6 +216,17 @@ void renderGameObject(GameObject value) {
       srcHeight: 7,
     );
   }
+
+  if (value.type == GameObjectType.Handgun) {
+    return render(
+      dstX: value.renderX,
+      dstY: value.renderY,
+      srcX: 234,
+      srcY: 200,
+      srcWidth: 17,
+      srcHeight: 10,
+    );
+  }
 }
 
 void renderGameObjectChicken(GameObject value) {

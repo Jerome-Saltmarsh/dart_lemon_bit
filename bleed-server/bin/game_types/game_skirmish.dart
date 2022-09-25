@@ -1,4 +1,6 @@
 
+import 'package:lemon_math/library.dart';
+
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../classes/node.dart';
@@ -61,17 +63,30 @@ class GameSkirmish extends Game {
          );
          break;
        case SpawnType.Random_Item:
-         gameObjects.add(
-           GameObjectShotgun(
-               x: node.x,
-               y: node.y,
-               z: node.z,
-           )
-         );
-         break;
+         switch(randomInt(0, 2)){
+           case 0:
+             gameObjects.add(
+                 GameObjectShotgun(
+                   x: node.x,
+                   y: node.y,
+                   z: node.z,
+                 )
+             );
+             break;
+           case 1:
+             gameObjects.add(
+                 GameObjectHandgun(
+                   x: node.x,
+                   y: node.y,
+                   z: node.z,
+                 )
+             );
+             break;
+           default:
+             throw Exception("invalid random item index");
+         }
      }
   }
-
 
   @override
   void customUpdate() {

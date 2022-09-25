@@ -175,7 +175,7 @@ abstract class GameObjectAnimal extends GameObject with Velocity {
 class GameObjectShotgun extends GameObject {
 
   @override
-  int get type => GameObjectType.Item;
+  int get type => GameObjectType.Shotgun;
 
   @override
   bool get persist => false;
@@ -187,11 +187,33 @@ class GameObjectShotgun extends GameObject {
   }) : super(x: x, y: y, z: z, radius: 14);
 
 
-
   @override
   void write(Player player) {
     player.writeByte(ServerResponse.GameObject);
     player.writeByte(GameObjectType.Shotgun);
+    player.writePosition3(this);
+  }
+}
+
+class GameObjectHandgun extends GameObject {
+
+  @override
+  int get type => GameObjectType.Handgun;
+
+  @override
+  bool get persist => false;
+
+  GameObjectHandgun({
+    required double x,
+    required double y,
+    required double z,
+  }) : super(x: x, y: y, z: z, radius: 14);
+
+
+  @override
+  void write(Player player) {
+    player.writeByte(ServerResponse.GameObject);
+    player.writeByte(GameObjectType.Handgun);
     player.writePosition3(this);
   }
 }
