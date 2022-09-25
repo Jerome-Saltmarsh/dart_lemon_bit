@@ -555,6 +555,12 @@ class Player extends Character with ByteWriter {
     writeInt(value.z);
   }
 
+  void writeGameObject(GameObject gameObject){
+    writeByte(ServerResponse.GameObject);
+    writeByte(gameObject.type);
+    writePosition3(gameObject);
+  }
+
   void writeGrid(){
     writeByte(ServerResponse.Grid);
     final grid = game.scene.grid;

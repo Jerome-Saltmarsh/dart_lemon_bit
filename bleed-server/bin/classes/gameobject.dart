@@ -189,9 +189,7 @@ class GameObjectShotgun extends GameObject {
 
   @override
   void write(Player player) {
-    player.writeByte(ServerResponse.GameObject);
-    player.writeByte(GameObjectType.Shotgun);
-    player.writePosition3(this);
+    player.writeGameObject(this);
   }
 }
 
@@ -212,9 +210,7 @@ class GameObjectHandgun extends GameObject {
 
   @override
   void write(Player player) {
-    player.writeByte(ServerResponse.GameObject);
-    player.writeByte(GameObjectType.Handgun);
-    player.writePosition3(this);
+    player.writeGameObject(this);
   }
 }
 
