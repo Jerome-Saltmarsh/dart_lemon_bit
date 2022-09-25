@@ -1,7 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
-import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 import 'package:lemon_engine/render.dart';
 
@@ -206,17 +205,6 @@ void renderGameObject(GameObject value) {
       srcHeight: 7,
     );
 
-  if (value.type == GameObjectType.Shotgun) {
-    return render(
-      dstX: value.renderX,
-      dstY: value.renderY,
-      srcX: 262,
-      srcY: 204,
-      srcWidth: 26,
-      srcHeight: 7,
-    );
-  }
-
   if (value.type == GameObjectType.Weapon) {
     switch(value.subType){
       case AttackType.Shotgun:
@@ -227,6 +215,15 @@ void renderGameObject(GameObject value) {
           srcY: 204,
           srcWidth: 26,
           srcHeight: 7,
+        );
+      case AttackType.Handgun:
+        return render(
+          dstX: value.renderX,
+          dstY: value.renderY,
+          srcX: 234,
+          srcY: 200,
+          srcWidth: 17,
+          srcHeight: 10,
         );
       case AttackType.Handgun:
         return render(

@@ -6,8 +6,9 @@ import '../common/library.dart';
 import 'library.dart';
 import 'position3.dart';
 
-abstract class GameObject extends Collider {
+class GameObject extends Collider {
   var active = true;
+  int type;
   dynamic spawn;
 
   GameObject({
@@ -15,27 +16,24 @@ abstract class GameObject extends Collider {
     required double y,
     required double z,
     required double radius,
+    required this.type,
   }) : super(x: x, y: y, z: z, radius: radius);
 
-  void write(Player player);
-
-  int get type;
+  void write(Player player) {}
 
   /// Determines whether or not this object should be serialized
   bool get persist => true;
-
 }
 
 class GameObjectStatic extends GameObject {
-  final int type;
   var respawn = 0;
 
   GameObjectStatic({
     required double x,
     required double y,
     required double z,
-    required this.type,
-  }) : super(x: x, y: y, z: z, radius: 10) {
+    required int type,
+  }) : super(x: x, y: y, z: z, radius: 10, type: type) {
     collidable = false;
     switch (type) {
       case GameObjectType.Crystal:
@@ -73,12 +71,9 @@ class GameObjectLoot extends GameObject {
     required double y,
     required double z,
     required this.lootType,
-  }) : super(x: x, y: y, z: z, radius: 15) {
+  }) : super(x: x, y: y, z: z, radius: 15, type: GameObjectType.Loot) {
     physical = false;
   }
-
-  @override
-  int get type => GameObjectType.Loot;
 
   @override
   void write(Player player) {
@@ -109,7 +104,7 @@ class GameObjectParticleEmitter extends GameObject with Updatable{
     required this.weight,
     required this.zv,
     required this.spawnRate,
-  }) : super(x: x, y: y, z: z, radius: 0) {
+  }) : super(x: x, y: y, z: z, radius: 0, type: GameObjectType.Loot) {
     collidable = false;
   }
 
@@ -153,8 +148,8 @@ abstract class GameObjectAnimal extends GameObject with Velocity {
   int get faceDirection => convertAngleToDirection(faceAngle);
 
   GameObjectAnimal({
-    required double x, required double y, required double z,
-  }) : super(x: x, y: y, z: z, radius: 5) {
+    required double x, required double y, required double z, required int type,
+  }) : super(x: x, y: y, z: z, radius: 5, type: type) {
     target.x = x;
     target.y = y;
     target.z = z;
@@ -176,9 +171,6 @@ class GameObjectWeapon extends GameObject {
   int weaponType;
 
   @override
-  int get type => GameObjectType.Weapon;
-
-  @override
   bool get persist => false;
 
   GameObjectWeapon({
@@ -186,7 +178,7 @@ class GameObjectWeapon extends GameObject {
     required double y,
     required double z,
     required this.weaponType,
-  }) : super(x: x, y: y, z: z, radius: 14) {
+  }) : super(x: x, y: y, z: z, radius: 14, type: GameObjectType.Weapon) {
     physical = false;
   }
 
@@ -205,7 +197,7 @@ class GameObjectButterfly extends GameObjectAnimal with Velocity implements Upda
     required double x,
     required double y,
     required double z,
-  }) : super(x: x, y: y, z: z) {
+  }) : super(x: x, y: y, z: z, type: GameObjectType.Butterfly) {
     target.x = x;
     target.y = y;
     target.z = z;
@@ -250,9 +242,6 @@ class GameObjectButterfly extends GameObjectAnimal with Velocity implements Upda
      x += xv;
      y += yv;
   }
-
-  @override
-  int get type => GameObjectType.Butterfly;
 }
 
 class GameObjectChicken extends GameObjectAnimal implements Updatable {
@@ -264,7 +253,7 @@ class GameObjectChicken extends GameObjectAnimal implements Updatable {
     required double x,
     required double y,
     required double z,
-  }) : super(x: x, y: y, z: z);
+  }) : super(x: x, y: y, z: z, type: GameObjectType.Chicken);
 
   @override
   void write(Player player) {
@@ -307,12 +296,7 @@ class GameObjectChicken extends GameObjectAnimal implements Updatable {
     x += xv;
     y += yv;
   }
-
-  @override
-  int get type => GameObjectType.Chicken;
 }
-
-
 
 class GameObjectJellyfish extends GameObjectAnimal implements Updatable {
 
@@ -323,7 +307,7 @@ class GameObjectJellyfish extends GameObjectAnimal implements Updatable {
     required double x,
     required double y,
     required double z,
-  }) : super(x: x, y: y, z: z) {
+  }) : super(x: x, y: y, z: z, type: GameObjectType.Jellyfish) {
     faceAngle = 1.0;
   }
 
@@ -375,7 +359,7 @@ class GameObjectJellyfishRed extends GameObjectAnimal implements Updatable {
     required double x,
     required double y,
     required double z,
-  }) : super(x: x, y: y, z: z) {
+  }) : super(x: x, y: y, z: z, type: GameObjectType.Jellyfish) {
   }
 
   @override
@@ -412,7 +396,4 @@ class GameObjectJellyfishRed extends GameObjectAnimal implements Updatable {
     x += xv;
     y += yv;
   }
-
-  @override
-  int get type => GameObjectType.Jellyfish_Red;
 }
