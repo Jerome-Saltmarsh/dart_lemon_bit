@@ -1339,34 +1339,26 @@ abstract class Game {
         characters.add(instance);
         break;
       case SpawnType.Random_Item:
-        switch(randomInt(0, 2)){
-          case 0:
-            final instance = GameObjectWeapon(
-              x: node.centerX,
-              y: node.centerY,
-              z: node.centerZ,
-              weaponType: AttackType.Handgun
-            );
-            instance.spawn = node;
-            gameObjects.add(instance);
-            break;
-          case 1:
-            final instance = GameObjectWeapon(
-              x: node.centerX,
-              y: node.centerY,
-              z: node.centerZ,
-              weaponType: AttackType.Shotgun
-            );
-            instance.spawn = node;
-            gameObjects.add(instance);
-            break;
-        }
+        final instance = GameObjectWeapon(
+            x: node.centerX,
+            y: node.centerY,
+            z: node.centerZ,
+            weaponType: getRandomWeaponIndex(),
+        );
+        instance.spawn = node;
+        gameObjects.add(instance);
         break;
       default:
         print("Spawn GameObject Warning: Unrecognized SpawnType ${node.spawnType} ${SpawnType.getName(node.spawnType)}");
         break;
     }
   }
+
+  int getRandomWeaponIndex() =>
+    randomItem([
+      AttackType.Handgun,
+      AttackType.Shotgun,
+    ]);
 
   void handleProjectileHit(Projectile projectile, Position3 target) {
     projectile.active = false;
@@ -2228,6 +2220,17 @@ abstract class Game {
           lootType: type,
         )
     );
+  }
+
+  Weapon buildWeaponByType(int type){
+    switch(type){
+      case AttackType.Shotgun:
+        return buildWeaponShotgun();
+      case AttackType.Handgun:
+        return buildWeaponHandgun();
+      default:
+        throw Exception("cannot build weapon for type $type");
+    }
   }
 }
 
