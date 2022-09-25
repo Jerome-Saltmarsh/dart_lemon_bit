@@ -53,8 +53,8 @@ void onPlayerEvent(int event) {
       final type = serverResponseReader.readByte();
       onPlayerEventItemEquipped(type);
       break;
-    case PlayerEvent.Medkit:
-      audio.medkit(screenCenterWorldX, screenCenterWorldY);
+    case PlayerEvent.Item_Dropped:
+      audioSingleSwitchSounds4();
       break;
     case PlayerEvent.Item_Sold:
       audio.coins(screenCenterWorldX, screenCenterWorldY);

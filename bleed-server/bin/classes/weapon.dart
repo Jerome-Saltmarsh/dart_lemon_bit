@@ -19,6 +19,8 @@ class Weapon {
 
    int get rounds => _rounds;
 
+   bool get requiresRounds => AttackType.requiresRounds(type);
+
    set rounds(int value) {
      _rounds = clamp(value, 0, capacity);
    }

@@ -6,7 +6,7 @@ class PlayerEvent {
   static const Dash_Activated = 4;
   static const Item_Purchased = 5;
   static const Item_Equipped = 6;
-  static const Medkit = 7;
+  static const Item_Dropped = 7;
   static const Item_Sold = 8;
   static const Drink_Potion = 9;
   static const Orb_Earned_Topaz = 10;

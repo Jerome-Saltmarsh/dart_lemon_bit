@@ -1,14 +1,10 @@
 
-import 'package:lemon_math/library.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
-import '../classes/node.dart';
 import '../common/attack_state.dart';
 import '../common/control_scheme.dart';
 import '../common/library.dart';
-import '../common/spawn_type.dart';
-import '../common/teams.dart';
 import '../functions/move_player_to_crystal.dart';
 
 /// a very simple game
@@ -38,6 +34,12 @@ import '../functions/move_player_to_crystal.dart';
 /// or a sword and a pistol
 ///
 /// it may be better without the space key
+///
+/// TODO
+/// [ ] UI Weapon Information
+/// [ ] 3d model weapon sword
+/// [ ] 3d model weapon assault rifle
+/// [ ] drop weapon on no ammo
 ///
 class GameSkirmish extends Game {
 
@@ -127,6 +129,13 @@ class GameSkirmish extends Game {
 
     if (perform1) {
       playerUseWeapon(player, player.weapon);
+
+      if (player.weapon.requiresRounds) {
+         if (player.weapon.rounds == 0) {
+            player.weapon = buildWeaponUnarmed();
+            player.writePlayerEvent(PlayerEvent.Item_Dropped);
+         }
+      }
     }
   }
 }

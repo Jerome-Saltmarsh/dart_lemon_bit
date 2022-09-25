@@ -58,6 +58,7 @@ final audioSingleSwingSword = AudioSingle(name: 'swing-sword', volume: 0.4, maxD
 final audioSingleArmSwing = AudioSingle(name: 'arm-swing-whoosh-11', volume: 0.4, maxDistance: 250);
 final audioSinglePistolShot20 = AudioSingle(name: 'pistol-shot-20', volume: 0.4, maxDistance: 250);
 final audioSingleGrassCut = AudioSingle(name: 'grass-cut', volume: 0.4, maxDistance: 250);
+final audioSingleSwitchSounds4 = AudioSingle(name: 'switch-sounds-4', volume: 0.4, maxDistance: 250);
 final audioSingleZombieBits = [
   AudioSingle(name: 'zombie-bite-04', volume: 0.4, maxDistance: 250),
   AudioSingle(name: 'zombie-bite-05', volume: 0.4, maxDistance: 250),

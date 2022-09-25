@@ -17,7 +17,6 @@ void renderGameObject(GameObject value) {
       color: value.renderColor,
     );
 
-
   if (value.type == GameObjectType.Rock)
     return render(
        dstX: value.renderX,

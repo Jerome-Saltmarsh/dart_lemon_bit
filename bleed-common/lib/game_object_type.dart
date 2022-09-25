@@ -22,6 +22,9 @@ class GameObjectType {
   static const Loot = 22;
   static const Particle_Emitter = 23;
   static const Weapon = 26;
+  static const Shotgun = 27;
+  static const Handgun = 28;
+  static const Blade = 28;
 
   static const staticValues = [
     Flower,
