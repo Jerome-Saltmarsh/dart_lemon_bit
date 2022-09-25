@@ -1,6 +1,7 @@
 
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
+import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -218,7 +219,7 @@ void _renderCharacterPart(Character character, SpriteLayer layer, int color) {
 double _getTemplateSrcX(Character character, {required double size}) {
   const framesPerDirection = 19;
   final weapon = character.weapon;
-  final variation = weapon == AttackType.Shotgun || weapon == AttackType.Bow;
+  final variation =  renderTemplateWithWeapon && weapon == AttackType.Shotgun || weapon == AttackType.Bow;
 
   switch (character.state) {
     case CharacterState.Running:

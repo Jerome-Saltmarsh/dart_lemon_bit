@@ -40,7 +40,7 @@ Weapon buildWeaponShotgun() =>
       damage: 1,
       capacity: 8,
       duration: 20,
-      range: 200,
+      range: 300,
     );
 
 Weapon buildWeaponRifle() =>

@@ -96,6 +96,18 @@ class GameSkirmish extends Game {
   }
 
   @override
+  void customOnCollisionBetweenColliders(Collider a, Collider b) {
+    if (a is Player && b is GameObjectShotgun){
+        deactivateGameObject(b);
+        a.weapon = buildWeaponShotgun();
+    }
+    if (b is Player && a is GameObjectShotgun){
+        deactivateGameObject(a);
+        b.weapon = buildWeaponShotgun();
+    }
+  }
+
+  @override
   void customOnCharacterKilled(Character target, src) {
     if (target is AI) {
        target.respawn = 500;
