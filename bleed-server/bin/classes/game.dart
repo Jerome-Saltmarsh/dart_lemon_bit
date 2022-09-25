@@ -89,6 +89,8 @@ abstract class Game {
   /// safe to override
   void customOnCollisionBetweenColliders(Collider a, Collider b) { }
   /// safe to override
+  void customOnCollisionBetweenPlayerAndOther(Player a, Collider b) { }
+  /// safe to override
   void customOnPlayerCollisionWithLoot(Player player, GameObjectLoot loot) { }
   /// safe to override
   void customOnAIRespawned(AI ai){  }
@@ -882,6 +884,12 @@ abstract class Game {
     }
     if (a is GameObjectLoot && b is Player) {
       return customOnPlayerCollisionWithLoot(b, a);
+    }
+    if (a is Player){
+      customOnCollisionBetweenPlayerAndOther(a, b);
+    }
+    if (b is Player){
+      customOnCollisionBetweenPlayerAndOther(b, a);
     }
 
     customOnCollisionBetweenColliders(a, b);

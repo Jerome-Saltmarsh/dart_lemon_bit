@@ -76,15 +76,22 @@ class GameSkirmish extends Game {
 
   @override
   void customOnCollisionBetweenColliders(Collider a, Collider b) {
-    if (a is Player && b is GameObjectShotgun){
-        deactivateGameObject(b);
-        a.weapon = buildWeaponShotgun();
-        a.writePlayerEventItemEquipped(a.weapon.type);
+
+  }
+
+  @override
+  void customOnCollisionBetweenPlayerAndOther(Player player, Collider other){
+    if (other is GameObjectHandgun) {
+      deactivateGameObject(other);
+      player.weapon = buildWeaponHandgun();
+      player.writePlayerEventItemEquipped(other.type);
+      return;
     }
-    if (b is Player && a is GameObjectShotgun){
-        deactivateGameObject(a);
-        b.weapon = buildWeaponShotgun();
-        b.writePlayerEventItemEquipped(b.weapon.type);
+    if (other is GameObjectHandgun) {
+      deactivateGameObject(other);
+      player.weapon = buildWeaponHandgun();
+      player.writePlayerEventItemEquipped(other.type);
+      return;
     }
   }
 
