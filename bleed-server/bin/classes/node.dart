@@ -331,6 +331,10 @@ class NodeSpawn extends NodeNoneCollidable {
   double get y => convertIndexToY(indexColumn);
   double get z => convertIndexToY(indexZ);
 
+  double get centerX => x + nodeSizeHalf;
+  double get centerY => y + nodeSizeHalf;
+  double get centerZ => z - nodeHeightHalf;
+
   @override
   int get type => NodeType.Spawn;
 }

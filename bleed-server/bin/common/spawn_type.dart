@@ -13,6 +13,9 @@ class SpawnType {
   static const GameObject_Weapon_Rifle = 10;
   static const GameObject_Weapon_Sword = 11;
   static const Random_Item = 12;
+  static const Character = 13;
+  static const GameObject = 14;
+
 
   static int getValue(int index){
     const max = GameObject_Weapon_Sword;

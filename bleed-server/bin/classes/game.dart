@@ -1330,8 +1330,17 @@ abstract class Game {
         instance.wanderRadius = node.spawnRadius;
         characters.add(instance);
         break;
+      case SpawnType.Random_Item:
+        final instance = GameObjectShotgun(
+            x: node.centerX,
+            y: node.centerY,
+            z: node.centerZ,
+        );
+        instance.spawn = node;
+        gameObjects.add(instance);
+        break;
       default:
-        print("Warning: Unrecognized SpawnType ${node.spawnType}");
+        print("Spawn GameObject Warning: Unrecognized SpawnType ${node.spawnType} ${SpawnType.getName(node.spawnType)}");
         break;
     }
   }
