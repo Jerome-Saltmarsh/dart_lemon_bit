@@ -51,7 +51,7 @@ Stack buildStackEdit() =>
       Positioned(
         right: 6,
         top: 80,
-        child: buildColumnEditSpawn(),
+        child: buildColumnEditNodeSpawn(),
       ),
       Positioned(
         left: 0,
@@ -95,7 +95,7 @@ Widget buildColumnEditNodeOrientation() =>
       ],
     );
 
-Widget buildColumnEditSpawn() =>
+Widget buildColumnEditNodeSpawn() =>
     watch(
         edit.selectedNodeData,
         (SpawnNodeData? value){
@@ -158,18 +158,23 @@ Widget buildColumnEditSpawn() =>
                   ],
                 ),
                 height16,
-                Column(
-                  children: SpawnType.values.map((int spawnType) =>
-                      container(
-                        color: spawnType == value.spawnType ? colours.blue : Colors.grey,
-                        child: SpawnType.getName(spawnType),
-                        action: () => editorActionModifySpawnNode(
-                           spawnType: spawnType,
-                           spawnAmount: value.spawnAmount,
-                           spawnRadius: value.spawnRadius,
-                        )
-                      ),
-                  ).toList(),
+                Container(
+                  height: screen.height - 200,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: SpawnType.values.map((int spawnType) =>
+                          container(
+                            color: spawnType == value.spawnType ? colours.blue : Colors.grey,
+                            child: SpawnType.getName(spawnType),
+                            action: () => editorActionModifySpawnNode(
+                               spawnType: spawnType,
+                               spawnAmount: value.spawnAmount,
+                               spawnRadius: value.spawnRadius,
+                            )
+                          ),
+                      ).toList(),
+                    ),
+                  ),
                 )
               ],
             ),
@@ -397,71 +402,6 @@ Widget buildColumnSelectedGameObject() {
                 text(GameObjectType.getName(type)),
                 if (type == GameObjectType.Particle_Emitter)
                   buildColumnEditParticleEmitter(),
-                if (type == GameObjectType.Spawn)
-                  watch(edit.gameObjectSelectedSpawnType, (int spawnType){
-                    return Column(
-                      children: [
-                        container (
-                          child: "Spawns: ${SpawnType.getName(spawnType)}",
-                          action: sendGameObjectRequestSpawnTypeIncrement,
-                        ),
-                        watch (edit.gameObjectSelectedRadius, (double radius){
-                          return Row(
-                            children: [
-                              container(
-                                width: 50,
-                                height: 50,
-                                child: '-',
-                                action: radius <= 1 ? null : () =>
-                                    sendGameObjectRequestSetSpawnRadius(
-                                        radius - 5
-                                    ),
-                              ),
-                              container(
-                                child: "Radius: ${radius.toStringAsFixed(1)}"
-                              ),
-                              container(
-                                width: 50,
-                                height: 50,
-                                child: '+',
-                                action: () => sendGameObjectRequestSetSpawnRadius(
-                                          radius + 5
-                                ),
-                              )
-                            ],
-                          );
-                        }),
-                        watch (edit.gameObjectSelectedAmount, (int amount) =>
-                          Row(
-                            children: [
-                              container(
-                                width: 50,
-                                height: 50,
-                                child: '-',
-                                action: amount <= 1 ? null : () =>
-                                    sendGameObjectRequestSetSpawnAmount(
-                                        amount - 1
-                                    ),
-                              ),
-                              container (
-                                child: "Amount: $amount",
-                                action: sendGameObjectRequestSpawnTypeIncrement,
-                              ),
-                              container(
-                                width: 50,
-                                height: 50,
-                                child: '+',
-                                action: amount >= 256 ? null : () =>
-                                    sendGameObjectRequestSetSpawnAmount(
-                                        amount + 1
-                                    ),
-                              ),
-                            ],
-                          )
-                        ),
-                      ],
-                    );
-                  }),
               ],
             );
           }),

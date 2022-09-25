@@ -61,6 +61,10 @@ class GameDarkAge extends Game {
   @override
   int get controlScheme => ControlScheme.schemeB;
 
+  void onHourChanged(int hour){
+
+  }
+
   GameDarkAge(Scene scene, this.environment) : super(scene) {
     refreshSpawns();
   }

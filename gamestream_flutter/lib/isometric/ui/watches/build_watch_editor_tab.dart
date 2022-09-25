@@ -21,8 +21,8 @@ Widget buildWatchEditorTab(){
   );
 }
 
-Widget buildColumnSelectNodeType(){
-  return Container(
+Widget buildColumnSelectNodeType() =>
+  Container(
     height: screen.height - 70,
     child: SingleChildScrollView(
       child: Row(
@@ -40,7 +40,6 @@ Widget buildColumnSelectNodeType(){
       ),
     ),
   );
-}
 
 Widget buildColumnSelectObjectType(){
   return Column();

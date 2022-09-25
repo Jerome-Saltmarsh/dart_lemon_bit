@@ -223,6 +223,7 @@ class GameObjectButterfly extends GameObjectAnimal with Velocity implements Upda
     player.writeByte(faceDirection);
   }
 
+  /// TODO illegal business logic
   @override
   void update(Game game) {
     const timeHourSix = 9 * secondsPerHour;

@@ -8,11 +8,15 @@ class SpawnType {
   static const Jellyfish_Red = 5;
   static const Template = 6;
   static const Slime = 7;
-
+  static const GameObject_Weapon_Handgun = 8;
+  static const GameObject_Weapon_Shotgun = 9;
+  static const GameObject_Weapon_Rifle = 10;
+  static const GameObject_Weapon_Sword = 11;
+  static const GameObject_Random_Item = 12;
 
   static int getValue(int index){
-    const max = Slime;
-    if (index < 0) return Zombie;
+    const max = GameObject_Weapon_Sword;
+    if (index < 0) return 0;
     if (index > max) return max;
     return index;
   }
@@ -26,6 +30,11 @@ class SpawnType {
     Jellyfish_Red,
     Template,
     Slime,
+    GameObject_Weapon_Handgun,
+    GameObject_Weapon_Shotgun,
+    GameObject_Weapon_Rifle,
+    GameObject_Weapon_Sword,
+    GameObject_Random_Item,
   ];
 
   static String getName(int type) {
@@ -38,6 +47,11 @@ class SpawnType {
       Jellyfish_Red: "Jellyfish Red",
       Template: "Human",
       Slime: "Slime",
+      GameObject_Weapon_Handgun: "Handgun",
+      GameObject_Weapon_Shotgun: "Shotgun",
+      GameObject_Weapon_Rifle: "Rifle",
+      GameObject_Weapon_Sword: "Sword",
+      GameObject_Random_Item: "Random Item",
     } [type] ?? "Unknown ($type)";
   }
 }

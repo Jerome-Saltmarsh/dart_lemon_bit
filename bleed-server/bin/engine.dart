@@ -45,7 +45,15 @@ class Engine {
   late DarkAgeEnvironment environmentAboveGround;
   late DarkAgeEnvironment environmentUnderground;
 
-  final map = <List<DarkAgeArea>>[];
+  final gameMap = <List<DarkAgeArea>>[];
+
+  DarkAgeArea? getDarkArea(int row, int column){
+     if (row < 0) return null;
+     if (column < 0) return null;
+     if (row >= gameMap.length) return null;
+     if (column >= gameMap[0].length) return null;
+     return gameMap[row][column];
+  }
 
   Future init() async {
     officialTime = DarkAgeTime();
@@ -83,15 +91,15 @@ class Engine {
       AreaMountains4(),
       AreaPlains4(),
     ];
-    map.add(mapRow1);
-    map.add(mapRow2);
-    map.add(mapRow3);
-    map.add(mapRow4);
+    gameMap.add(mapRow1);
+    gameMap.add(mapRow2);
+    gameMap.add(mapRow3);
+    gameMap.add(mapRow4);
 
-    for (var row = 0; row < map.length; row++){
-      final r = map[row];
+    for (var row = 0; row < gameMap.length; row++){
+      final r = gameMap[row];
        for (var column = 0; column < r.length; column++){
-          final area = map[row][column];
+          final area = gameMap[row][column];
           area.row = row;
           area.column = column;
        }

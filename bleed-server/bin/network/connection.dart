@@ -662,15 +662,19 @@ class Connection {
         if (type == null) return errorInvalidArg('type is null (5)');
 
         if (type == GameObjectType.Particle_Emitter){
-          player.game.spawnGameObjectParticleEmitter(
+          player.game.gameObjects.add(
+            GameObjectParticleEmitter(
               x: x,
               y: y,
               z: z,
               particleType: ParticleType.Fire,
-              speed: 1.0,
+              duration: 100,
               angle: 0,
-              duration: 200,
-              rate: 10,
+              speed: 0,
+              zv: 1,
+              weight: -1,
+              spawnRate: 10,
+            )
           );
         } else
         if (type == GameObjectType.Spawn){
@@ -799,7 +803,7 @@ class Connection {
   }
 
   Future joinGameSkirmish() async {
-    joinGame(GameSkirmish(scene: darkAgeScenes.dungeon_1));
+    joinGame(GameSkirmish(scene: darkAgeScenes.skirmish_1));
   }
 
   void joinGame(Game game){

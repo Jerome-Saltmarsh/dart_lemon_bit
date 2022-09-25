@@ -8,6 +8,7 @@ final darkAgeScenes = DarkAgeScenes();
 class DarkAgeScenes {
   late Scene village;
   late Scene dungeon_1;
+  late Scene skirmish_1;
   late Scene castle;
   late Scene forest;
   late Scene forest_2;
@@ -41,6 +42,7 @@ class DarkAgeScenes {
       farmB = await loadScene('farm-b');
       village = await loadScene('village');
       dungeon_1 = await loadScene('dungeon-1');
+      skirmish_1 = await loadScene('skirmish-1');
       forest = await loadScene('forest');
       forest_2 = await loadScene('forest-b');
       forest_3 = await loadScene('forest-3');

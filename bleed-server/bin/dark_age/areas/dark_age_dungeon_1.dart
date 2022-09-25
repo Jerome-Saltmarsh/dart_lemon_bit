@@ -9,9 +9,6 @@ class DarkAgeDungeon1 extends DarkAgeAreaUnderground {
   DarkAgeDungeon1() : super(darkAgeScenes.dungeon_1, mapTile: 0);
 
   @override
-  bool get mapVisible => false;
-
-  @override
   void customOnCharacterKilled(dynamic target, dynamic src) {
     if (target is AI) {
       target.respawn = framesPerSecond * 10;

@@ -3,7 +3,6 @@ import '../../classes/library.dart';
 import '../../engine.dart';
 import '../game_dark_age.dart';
 
-
 class DarkAgeArea extends GameDarkAge {
   var row = 0;
   var column = 0;
@@ -23,25 +22,25 @@ class DarkAgeArea extends GameDarkAge {
       final player = players[i];
       if (player.y <= radius){
         if (column <= 0) continue;
-        changeGame(player, engine.map[row][column - 1]);
+        changeGame(player, engine.gameMap[row][column - 1]);
         player.indexColumn = player.scene.gridColumns - 1;
         continue;
       }
       if (player.x <= radius){
         if (row <= 0) continue;
-        changeGame(player, engine.map[row - 1][column]);
+        changeGame(player, engine.gameMap[row - 1][column]);
         player.indexRow = player.scene.gridRows - 1;
         continue;
       }
       if (player.x >= scene.gridRowLength - radius){
-        if (row >= engine.map.length - 1) continue;
-        changeGame(player, engine.map[row + 1][column]);
+        if (row >= engine.gameMap.length - 1) continue;
+        changeGame(player, engine.gameMap[row + 1][column]);
         player.indexRow = 0;
         continue;
       }
       if (player.y >= scene.gridColumnLength - radius){
-        if (column >= engine.map[row].length - 1) continue;
-        changeGame(player, engine.map[row][column + 1]);
+        if (column >= engine.gameMap[row].length - 1) continue;
+        changeGame(player, engine.gameMap[row][column + 1]);
         player.indexColumn = 0;
         continue;
       }

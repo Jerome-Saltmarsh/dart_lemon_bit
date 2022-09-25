@@ -7,7 +7,6 @@ import '../common/control_scheme.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
 import '../common/node_orientation.dart';
-import '../common/particle_type.dart';
 import '../common/spawn_type.dart';
 import '../common/teams.dart';
 import '../engine.dart';
@@ -44,6 +43,18 @@ abstract class Game {
   int get controlScheme;
 
   List<GameObject> get gameObjects => scene.gameObjects;
+
+  void foreachNodeSpawn(Function(NodeSpawn value) handle) {
+    for (final row in scene.grid) {
+      for (final column in row) {
+        for (final node in column) {
+          if (node is NodeSpawn) {
+            handle(node);
+          }
+        }
+      }
+    }
+  }
 
   /// In seconds
   void customInitPlayer(Player player) {}
@@ -750,7 +761,9 @@ abstract class Game {
       customOnCharacterKilled(target, src);
 
       if (target is AI){
-        onAIKilled(target);
+        target.clearTarget();
+        target.clearDest();
+        target.clearPath();
       }
 
     } else {
@@ -1355,32 +1368,6 @@ abstract class Game {
     }
   }
 
-  void spawnGameObjectParticleEmitter({
-    required double x,
-    required double y,
-    required double z,
-    required int particleType,
-    required int duration,
-    required int rate,
-    required double angle,
-    required double speed,
-  }){
-    gameObjects.add(
-        GameObjectParticleEmitter(
-          x: x,
-          y: y,
-          z: z,
-          particleType: particleType,
-          duration: duration,
-          angle: angle,
-          speed: speed,
-          zv: 1,
-          weight: -1,
-          spawnRate: rate,
-        )
-    );
-  }
-
   void spawnNodeInstance(NodeSpawn node) {
     final distance = randomBetween(0, node.spawnRadius);
     final angle = randomAngle();
@@ -1669,9 +1656,16 @@ abstract class Game {
 
   void updateRespawnAI(AI ai) {
     assert(ai.dead);
-    final spawn = ai.spawn;
-    if (spawn == null) return;
+    if (ai.spawn == null) return;
     if (ai.respawn-- > 0) return;
+    respawnAI(ai);
+  }
+
+  void respawnAI(AI ai){
+    final spawn = ai.spawn;
+    if (spawn == null){
+      throw Exception("ai.spawn is null");
+    }
     final distance = randomBetween(0, spawn.spawnRadius);
     final angle = randomAngle();
     ai.x = spawn.x + getAdjacent(angle, distance);
@@ -1928,6 +1922,37 @@ abstract class Game {
     zombie.z = z;
     zombie.spawnX = x;
     zombie.spawnY = y;
+    zombie.clearDest();
+    zombie.wanderRadius = wanderRadius;
+    return zombie;
+  }
+
+  Zombie spawnZombieAtNodeSpawn({
+    required NodeSpawn node,
+    required int health,
+    required int team,
+    required int damage,
+    int respawnDuration = 100,
+    double speed = RunSpeed.Regular,
+    List<Vector2>? objectives,
+    double wanderRadius = 100.0,
+  }) {
+    assert(team >= 0 && team <= 256);
+    final zombie = getZombieInstance();
+    zombie.team = team;
+    zombie.spawn = node;
+    zombie.respawn = respawnDuration;
+    zombie.state = CharacterState.Idle;
+    zombie.stateDurationRemaining = 0;
+    zombie.maxHealth = health;
+    zombie.health = health;
+    zombie.collidable = true;
+    zombie.x = node.x;
+    zombie.y = node.y;
+    zombie.z = node.z;
+    zombie.spawnX = node.x;
+    zombie.spawnY = node.y;
+    zombie.spawnZ = node.z;
     zombie.clearDest();
     zombie.wanderRadius = wanderRadius;
     return zombie;
