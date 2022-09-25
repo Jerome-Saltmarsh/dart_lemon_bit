@@ -184,7 +184,9 @@ class GameObjectShotgun extends GameObject {
     required double x,
     required double y,
     required double z,
-  }) : super(x: x, y: y, z: z, radius: 14);
+  }) : super(x: x, y: y, z: z, radius: 14) {
+    physical = false;
+  }
 
 
   @override
@@ -205,8 +207,9 @@ class GameObjectHandgun extends GameObject {
     required double x,
     required double y,
     required double z,
-  }) : super(x: x, y: y, z: z, radius: 14);
-
+  }) : super(x: x, y: y, z: z, radius: 14) {
+    physical = false;
+  }
 
   @override
   void write(Player player) {

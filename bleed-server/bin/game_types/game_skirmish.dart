@@ -48,44 +48,7 @@ class GameSkirmish extends Game {
   int get gameType => GameType.Skirmish;
 
   GameSkirmish({required Scene scene}) : super(scene) {
-     foreachNodeSpawn(spawnZom);
-  }
-
-  void spawnZom(NodeSpawn node) {
-     switch(node.spawnType){
-       case SpawnType.Zombie:
-         spawnZombieAtNodeSpawn(
-           node: node,
-           health: 5,
-           team: Teams.evil,
-           damage: 1,
-           respawnDuration: 500,
-         );
-         break;
-       case SpawnType.Random_Item:
-         switch(randomInt(0, 2)){
-           case 0:
-             gameObjects.add(
-                 GameObjectShotgun(
-                   x: node.x,
-                   y: node.y,
-                   z: node.z,
-                 )
-             );
-             break;
-           case 1:
-             gameObjects.add(
-                 GameObjectHandgun(
-                   x: node.x,
-                   y: node.y,
-                   z: node.z,
-                 )
-             );
-             break;
-           default:
-             throw Exception("invalid random item index");
-         }
-     }
+     foreachNodeSpawn(spawnNodeInstance);
   }
 
   @override

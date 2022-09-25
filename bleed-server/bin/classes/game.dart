@@ -1331,13 +1331,26 @@ abstract class Game {
         characters.add(instance);
         break;
       case SpawnType.Random_Item:
-        final instance = GameObjectShotgun(
-            x: node.centerX,
-            y: node.centerY,
-            z: node.centerZ,
-        );
-        instance.spawn = node;
-        gameObjects.add(instance);
+        switch(randomInt(0, 3)){
+          case 0:
+            final instance = GameObjectShotgun(
+              x: node.centerX,
+              y: node.centerY,
+              z: node.centerZ,
+            );
+            instance.spawn = node;
+            gameObjects.add(instance);
+            break;
+          case 1:
+            final instance = GameObjectHandgun(
+              x: node.centerX,
+              y: node.centerY,
+              z: node.centerZ,
+            );
+            instance.spawn = node;
+            gameObjects.add(instance);
+            break;
+        }
         break;
       default:
         print("Spawn GameObject Warning: Unrecognized SpawnType ${node.spawnType} ${SpawnType.getName(node.spawnType)}");
