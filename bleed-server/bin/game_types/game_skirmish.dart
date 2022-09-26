@@ -36,13 +36,22 @@ import '../functions/move_player_to_crystal.dart';
 /// it may be better without the space key
 ///
 /// TODO
-/// [ ] UI Weapon Information
 /// [ ] 3d model weapon sword
+/// [ ] 3d model weapon staff
 /// [ ] 3d model weapon assault rifle
-/// [ ] item acquired audio
+/// [ ] 3d model weapon sniper rifle
+/// [ ] 3d model weapon revolver
+/// [ ] 3d model weapon flame thrower
+/// [ ] Build Map
+/// [ ] Multiple Spawn Points
+/// [x] Players join same game (max 7)
+/// [x] UI Weapon Information
+/// [x] item acquired audio
 /// [x] drop weapon on no ammo
 ///
 class GameSkirmish extends Game {
+
+  static const maxPlayers = 7;
 
   @override
   int get controlScheme => ControlScheme.schemeA;
@@ -64,7 +73,7 @@ class GameSkirmish extends Game {
 
   @override
   Player spawnPlayer() {
-    return Player(game: this, weapon: buildWeaponUnarmed());
+    return Player(game: this, weapon: buildWeaponUnarmed(), team: 0);
   }
 
   @override

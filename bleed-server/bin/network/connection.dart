@@ -740,6 +740,12 @@ class Connection {
   }
 
   Future joinGameSkirmish() async {
+    for (final game in engine.games){
+       if (game is GameSkirmish){
+          if (game.players.length < GameSkirmish.maxPlayers)
+            return joinGame(game);
+       }
+    }
     joinGame(GameSkirmish(scene: darkAgeScenes.skirmish_1));
   }
 
