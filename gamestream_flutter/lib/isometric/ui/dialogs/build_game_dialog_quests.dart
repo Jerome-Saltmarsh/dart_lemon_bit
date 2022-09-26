@@ -14,8 +14,8 @@ import 'game_dialog_tab.dart';
 final activeQuests = Watch<List<Quest>>(player.questsInProgress.value);
 final inProgress = watch(player.questsInProgress, buildColumnQuests);
 
-Widget buildGameDialogQuests(){
-  return Container(
+Widget buildGameDialogQuests() =>
+  Container(
     width: screen.width,
     height: screen.height,
     alignment: Alignment.center,
@@ -42,7 +42,6 @@ Widget buildGameDialogQuests(){
       ),
     ),
   );
-}
 
 Widget buildButtonCloseGameDialog() =>
   container(
