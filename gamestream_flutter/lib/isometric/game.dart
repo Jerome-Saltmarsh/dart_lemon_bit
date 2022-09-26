@@ -21,6 +21,7 @@ void actionToggleEdit() {
 }
 
 class Game {
+  final canOpenMapAndQuestMenu = Watch(false);
   final textEditingControllerMessage = TextEditingController();
   final textFieldMessage = FocusNode();
   final debug = Watch(false);

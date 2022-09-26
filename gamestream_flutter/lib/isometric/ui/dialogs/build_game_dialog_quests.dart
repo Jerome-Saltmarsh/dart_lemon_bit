@@ -25,7 +25,7 @@ Widget buildGameDialogQuests(){
       height: screen.height * goldenRatio_0618,
       child: Column(
         children: [
-          gameDialogTab,
+          watch(player.gameDialog, buildGameDialog),
           Container(
             padding: const EdgeInsets.all(16),
             alignment: Alignment.topLeft,

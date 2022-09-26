@@ -6,8 +6,27 @@ import '../../player.dart';
 import '../constants/colors.dart';
 import '../widgets/build_container.dart';
 
-final gameDialogTab = watch(player.gameDialog, (GameDialog? gameDialog){
-  return Row(
+// final gameDialogTab = watch(player.gameDialog, (GameDialog? gameDialog){
+//   return Row(
+//     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//     children: [
+//       Row(
+//         children: GameDialog.values.map((e) =>
+//             container(
+//               child: e.name,
+//               action: ()=> player.gameDialog.value = e,
+//               color: gameDialog == e ? brownDark : brownLight,
+//               hoverColor: brownDark,
+//             ),
+//         ).toList(),
+//       ),
+//       buildButtonCloseGameDialog(),
+//     ],
+//   );
+// });
+
+Widget buildGameDialog(GameDialog? gameDialog) =>
+  Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Row(
@@ -23,7 +42,6 @@ final gameDialogTab = watch(player.gameDialog, (GameDialog? gameDialog){
       buildButtonCloseGameDialog(),
     ],
   );
-});
 
 
 Widget buildButtonCloseGameDialog() =>

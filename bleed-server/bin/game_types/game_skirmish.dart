@@ -44,8 +44,8 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] 3d model weapon sniper rifle
 /// [ ] 3d model weapon revolver
 /// [ ] 3d model weapon flame thrower
-/// [ ] Build Map
-/// [ ] Multiple Spawn Points
+/// [ ] build scene
+/// [ ] multiple spawn points
 /// [ ] Fix bug player faces forward automatically on release arrow key
 /// [ ] Disable open map or quest dialog
 /// [ ] Disable player chat
