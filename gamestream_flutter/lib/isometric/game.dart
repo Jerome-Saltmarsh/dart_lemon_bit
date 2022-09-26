@@ -1,4 +1,6 @@
+import 'package:bleed_common/GameType.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -34,7 +36,10 @@ void messageBoxHide(){
 }
 
 class Game {
-  final messageBoxVisible = Watch(false, onChanged: onVisibilityChangedMessageBox);
+  final messageBoxVisible = Watch(false, clamp: (bool value){
+     if (gameType.value == GameType.Skirmish) return false;
+     return value;
+  }, onChanged: onVisibilityChangedMessageBox);
   final canOpenMapAndQuestMenu = Watch(false);
   final textEditingControllerMessage = TextEditingController();
   final textFieldMessage = FocusNode();
