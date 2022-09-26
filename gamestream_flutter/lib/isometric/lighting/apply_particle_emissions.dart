@@ -1,8 +1,8 @@
 
 
 import 'package:bleed_common/Shade.dart';
-import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:bleed_common/particle_type.dart';
+import 'package:gamestream_flutter/isometric/classes/particle.dart';
 
 import 'apply_vector_emission.dart';
 

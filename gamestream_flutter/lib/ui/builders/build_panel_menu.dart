@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_map.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
-import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
@@ -22,7 +22,7 @@ Widget buildPanelMenu() {
     children: [
       buildButtonTogglePlayMode(),
       width8,
-      buildWatchBool(modules.game.state.timeVisible, buildTime),
+      buildWatchBool(game.timeVisible, buildTime),
       onPressed(
           child: buildToggleFullscreen(),
           action:  engine.fullscreenToggle),
@@ -39,11 +39,11 @@ Widget buildPanelMenu() {
 Widget buildButtonTogglePlayMode() {
   return watch(sceneMetaDataMapEditable, (bool isOwner) {
     if (!isOwner) return const SizedBox();
-    return watch(playMode, (mode) {
+    return watch(game.edit, (bool edit) {
       return container(
           toolTip: "Tab",
-          child: mode == Mode.Play ? "EDIT" : "PLAY",
-          action: actionPlayModeToggle,
+          child: edit ? "PLAY" : "EDIT",
+          action: actionToggleEdit,
           color: green,
           alignment: Alignment.center,
           width: 100);

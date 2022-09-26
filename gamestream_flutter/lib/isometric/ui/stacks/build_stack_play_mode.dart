@@ -10,7 +10,6 @@ import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_ex
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_health.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_weapons.dart';
 import 'package:gamestream_flutter/isometric/ui/ui_state.dart';
-import 'package:gamestream_flutter/isometric/ui/watches/build_watch_player_designed.dart';
 import 'package:gamestream_flutter/isometric/watches/inventory_visible.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/styles.dart';
@@ -38,21 +37,23 @@ Widget buildStackPlay() {
       )),
       Positioned(bottom: 50, left: 0, child: buildWatchMouseTargetName()),
       // buildWatchPlayerDesigned(),
-      Positioned(bottom: 8, child: Container(
-        width: screen.width,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            buildControlPlayerExperience(),
-            width6,
-            buildControlPlayerHealth(),
-          ],
-        ),
-      )),
       buildPanelWriteMessage(),
     ]
   );
 }
+
+Widget buildBottomPlayerExperienceAndHealthBar() =>
+  Positioned(bottom: 8, child: Container(
+    width: screen.width,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        buildControlPlayerExperience(),
+        width6,
+        buildControlPlayerHealth(),
+      ],
+    ),
+  ));
 
 Widget buildWatchMouseTargetName(){
    return watch(player.mouseTargetName, (String? name){

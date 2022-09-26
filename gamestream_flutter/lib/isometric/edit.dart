@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/isometric/editor/events/on_changed_cursor_pos
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_node_type_spawn_selected.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_paint_type.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node.dart';
-import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
@@ -17,7 +17,7 @@ import 'grid.dart';
 import 'player.dart';
 import 'utils/mouse_raycast.dart';
 
-final edit = EditState();
+final edit = Edit();
 
 class SpawnNodeData {
   final int spawnType;
@@ -31,7 +31,7 @@ class SpawnNodeData {
   });
 }
 
-class EditState {
+class Edit {
 
 
   int clamp(Function value, Function min, Function max){
@@ -189,7 +189,7 @@ class EditState {
   }
 
   void selectPlayerIfPlayerMode(){
-    if (modeIsPlay) selectPlayer();
+    if (playMode) selectPlayer();
   }
 
   void paintLongGrass(){
@@ -280,7 +280,7 @@ class EditState {
   }
 
   void paint({int? value, bool selectPlayerIfPlay = true}) {
-    if (modeIsPlay && selectPlayerIfPlay){
+    if (playMode && selectPlayerIfPlay){
       selectPlayer();
     }
 

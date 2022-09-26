@@ -1,5 +1,5 @@
-import 'package:lemon_math/library.dart';
 import 'package:bleed_common/Shade.dart';
+import 'package:lemon_math/library.dart';
 
 int convertDistanceToShade(int distance, {int maxBrightness = Shade.Very_Bright}){
   // if (distance > Shade.Pitch_Black + 2) {

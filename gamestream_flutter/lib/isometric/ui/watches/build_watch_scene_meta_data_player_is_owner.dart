@@ -6,16 +6,16 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_show_game_dialog_canvas_size.dart';
 import 'package:gamestream_flutter/isometric/classes/node.dart';
-import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/editor/actions/editor_action_modify_spawn_node.dart';
 import 'package:gamestream_flutter/isometric/editor/actions/save_scene.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
-import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_play_mode.dart';
+import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_tab.dart';
 import 'package:gamestream_flutter/modules/core/actions.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -26,12 +26,16 @@ import 'package:lemon_engine/screen.dart';
 import '../../../styles.dart';
 import '../widgets/build_container.dart';
 
-Widget buildPlayMode(Mode mode) =>
-  mode == Mode.Play ? buildStackPlay() : buildStackEdit();
+// Widget buildPlayMode(Mode mode) =>
+//   mode == Mode.Play ? buildStackPlay() : buildStackEdit();
+
+Widget buildPlayMode(bool edit) =>
+  edit ? buildStackEdit() : buildStackPlay();
 
 Stack buildStackEdit() =>
   Stack(
     children: [
+      watch(editorDialog, buildWatchEditorDialog),
       Positioned(
         right: 6,
         top: 80,

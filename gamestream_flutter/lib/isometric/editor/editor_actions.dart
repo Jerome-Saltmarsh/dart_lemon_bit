@@ -2,7 +2,7 @@
 
 
 import 'package:bleed_common/node_type.dart';
-import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 
 import '../../network/send_client_request.dart';

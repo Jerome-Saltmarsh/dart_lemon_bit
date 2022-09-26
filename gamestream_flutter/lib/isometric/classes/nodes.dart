@@ -1,16 +1,16 @@
 import 'package:bleed_common/node_orientation.dart';
-import 'package:gamestream_flutter/isometric/grid.dart';
-import 'package:gamestream_flutter/isometric/play_mode.dart';
-import 'package:gamestream_flutter/isometric/watches/raining.dart';
-import 'package:lemon_math/library.dart';
 import 'package:bleed_common/node_type.dart';
 import 'package:bleed_common/wind.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
+import 'package:gamestream_flutter/isometric/game.dart';
+import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/particle_emitters.dart';
 import 'package:gamestream_flutter/isometric/render/render_torch.dart';
 import 'package:gamestream_flutter/isometric/variables/src_x_rain_landing.dart';
+import 'package:gamestream_flutter/isometric/watches/raining.dart';
 import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
 import 'package:lemon_engine/render.dart';
+import 'package:lemon_math/library.dart';
 
 import '../constants/color_pitch_black.dart';
 import '../variables/src_x_rain_falling.dart';
@@ -928,7 +928,7 @@ class NodeSpawn extends Node {
 
   @override
   void handleRender(){
-     if (playModeEdit)
+     if (editMode)
        renderStandardNode(8752, 0);
   }
 

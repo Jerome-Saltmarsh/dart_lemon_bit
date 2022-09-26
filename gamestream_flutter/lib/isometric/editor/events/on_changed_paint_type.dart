@@ -1,7 +1,7 @@
 
 
 import 'package:bleed_common/node_type.dart';
-import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/edit.dart';
 
 void onChangedPaintType(int type) {
   if (!NodeType.isOriented(type))

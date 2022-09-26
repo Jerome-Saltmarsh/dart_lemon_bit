@@ -1,6 +1,6 @@
 
 import 'package:gamestream_flutter/isometric/camera.dart';
-import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/edit.dart';
 
 void editorActionRecenterCamera() =>
   cameraSetPositionGrid(

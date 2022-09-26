@@ -1,7 +1,6 @@
 import 'package:bleed_common/character_type.dart';
-
-import 'package:lemon_math/library.dart';
 import 'package:bleed_common/library.dart';
+import 'package:lemon_math/library.dart';
 
 import 'vector3.dart';
 

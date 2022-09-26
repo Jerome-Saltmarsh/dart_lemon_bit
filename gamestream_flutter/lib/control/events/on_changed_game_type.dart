@@ -1,10 +1,11 @@
 
 
 import 'package:bleed_common/GameType.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
+import 'package:gamestream_flutter/isometric/game.dart';
 
 void onChangedGameType(int? value){
   print("onChangedGameType(${GameType.getName(value)})");
   if (value == null) return;
-  modules.game.state.timeVisible.value = GameType.isTimed(value);
+  game.edit.value = value == GameType.Editor;
+  game.timeVisible.value = GameType.isTimed(value);
 }

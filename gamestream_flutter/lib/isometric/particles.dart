@@ -2,10 +2,10 @@
 import 'dart:math';
 
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/particle_type.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
-import 'package:bleed_common/particle_type.dart';
 import 'package:gamestream_flutter/isometric/update.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';

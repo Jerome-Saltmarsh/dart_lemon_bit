@@ -2,10 +2,10 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/classes/node.dart';
-import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/edit.dart';
+import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
-import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
@@ -298,8 +298,8 @@ Widget buildButtonSelectNodeType(int value) {
         alignment: Alignment.center,
         child: canvas,
         action: () {
-          if (modeIsPlay) {
-            setPlayModeEdit();
+          if (playMode) {
+            game.setModePlay();
             edit.column.value = player.indexColumn;
             edit.row.value = player.indexRow;
             edit.z.value = player.indexZ;

@@ -4,30 +4,29 @@ import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_map.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
-import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
-import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
-import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_game_type_skirmish.dart';
-import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_game_type_waves.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog.dart';
+import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_game_type_skirmish.dart';
+import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_game_type_waves.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_player_alive.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_data_player_is_owner.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
 import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:lemon_engine/screen.dart';
 
 import 'build_hud_debug.dart';
 import 'stacks/build_stack_game_type_world.dart';
 
-Widget buildGameUI()  =>
+Widget buildStackGame()  =>
   Stack(
     children: [
       watch(gameType, buildGameTypeUI),
@@ -35,10 +34,9 @@ Widget buildGameUI()  =>
       watch(player.gameDialog, buildGameDialog),
       buildWatchBool(player.alive, buildContainerRespawn, false),
       buildTopRightMenu(),
-      buildWatchBool(modules.game.state.mapVisible, buildMiniMap),
-      watch(playMode, buildPlayMode),
+      buildWatchBool(game.mapVisible, buildMiniMap),
+      watch(game.edit, buildPlayMode),
       buildWatchBool(debugVisible, buildHudDebug),
-      buildWatchBool(player.questAdded, buildContainerQuestUpdated),
     ],
   );
 

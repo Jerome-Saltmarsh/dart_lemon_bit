@@ -1,13 +1,13 @@
 
-import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/edit.dart';
+import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 
 import '../factories/generate_node.dart';
-import '../play_mode.dart';
 
 void onClickedButtonGridNodeType(int type){
-  if (modeIsPlay){
-    setPlayModeEdit();
+  if (editMode){
+    game.setModeEdit();
     edit.column.value = player.indexColumn;
     edit.row.value = player.indexRow;
     edit.z.value = player.indexZ;

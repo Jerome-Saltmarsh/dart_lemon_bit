@@ -7,12 +7,12 @@ import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
+import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emissions_npcs.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_particle_emissions.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
-import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
@@ -25,7 +25,7 @@ import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
 import '../classes/particle.dart';
-import '../edit_state.dart';
+import '../edit.dart';
 import '../grid.dart';
 import '../lighting/apply_emissions_gameobjects.dart';
 import 'render_particle.dart';
@@ -359,7 +359,7 @@ class RenderOrderGrid extends RenderOrder {
     assignNode();
     refreshDynamicLightGrid();
 
-    if (playModeEdit){
+    if (editMode){
        applyEmissionDynamic(
            zIndex: edit.z.value,
            rowIndex: edit.row.value,

@@ -47,6 +47,8 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] Build Map
 /// [ ] Multiple Spawn Points
 /// [ ] Fix bug player faces forward automatically on release arrow key
+/// [ ] Disable open map or quest dialog
+/// [ ] Disable player chat
 /// [x] Players join same game (max 7)
 /// [x] UI Weapon Information
 /// [x] item acquired audio

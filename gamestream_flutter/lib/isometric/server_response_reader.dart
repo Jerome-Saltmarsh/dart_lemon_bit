@@ -14,12 +14,13 @@ import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
-import 'package:gamestream_flutter/isometric/edit_state.dart';
+import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event.dart';
 import 'package:gamestream_flutter/isometric/factories/generate_node.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
+import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/io/custom_game_names.dart';
@@ -34,7 +35,6 @@ import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/state/game_options.dart';
 import 'package:gamestream_flutter/state/state_game_waves.dart';
-import 'package:http/http.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
@@ -243,7 +243,7 @@ class ServerResponseReader with ByteReader {
           );
           break;
         case ServerResponse.Render_Map:
-          modules.game.state.mapVisible.value = readBool();
+          game.mapVisible.value = readBool();
           break;
         case ServerResponse.Options:
           final optionType = readByte();
@@ -630,7 +630,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readDebugMode() {
-    modules.game.state.debug.value = readBool();
+    game.debug.value = readBool();
   }
 
   void readGameStatus() {
@@ -691,7 +691,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readPaths() {
-    modules.game.state.debug.value = true;
+    game.debug.value = true;
     var index = 0;
     while (true) {
       final pathIndex = readInt();

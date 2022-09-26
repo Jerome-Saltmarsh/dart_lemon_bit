@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/message_box.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:lemon_engine/engine.dart';
@@ -41,8 +41,8 @@ Widget buildPanelWriteMessage() {
                           borderSide: BorderSide(color: Colors.white60),
                         ),
                       ),
-                      focusNode: modules.game.state.textFieldMessage,
-                      controller: modules.game.state.textEditingControllerMessage,
+                      focusNode: game.textFieldMessage,
+                      controller: game.textEditingControllerMessage,
                       maxLength: 50,
                       style: TextStyle(color: Colors.white),
                     )),
@@ -64,6 +64,6 @@ Widget buildPanelWriteMessage() {
 }
 
 void sendAndCloseTextBox(){
-  sendRequestSpeak(modules.game.state.textEditingControllerMessage.text);
+  sendRequestSpeak(game.textEditingControllerMessage.text);
   messageBoxHide();
 }

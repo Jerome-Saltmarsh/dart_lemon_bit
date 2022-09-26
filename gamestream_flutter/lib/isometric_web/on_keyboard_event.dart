@@ -1,14 +1,12 @@
 
-import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
 import 'package:gamestream_flutter/isometric/actions/action_toggle_inventory.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
-import 'package:gamestream_flutter/isometric/edit_state.dart';
-import 'package:gamestream_flutter/isometric/editor/actions/editor_action_add_spawn.dart';
+import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/editor/editor.dart';
+import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
-import 'package:gamestream_flutter/isometric/play_mode.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
@@ -29,7 +27,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
   final key = event.physicalKey;
 
   if (key == PhysicalKeyboardKey.tab)
-    return actionPlayModeToggle();
+    return game.toggleEdit();
 
   if (key == PhysicalKeyboardKey.digit5)
     return edit.paintTorch();
@@ -47,7 +45,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     // return spawnParticleFire(x: mouseGridX, y: mouseGridY, z: player.z);
   }
 
-  if (modeIsPlay) {
+  if (playMode) {
     if (key == PhysicalKeyboardKey.keyG)
       return sendClientRequestTeleport();
     if (key == PhysicalKeyboardKey.keyI)

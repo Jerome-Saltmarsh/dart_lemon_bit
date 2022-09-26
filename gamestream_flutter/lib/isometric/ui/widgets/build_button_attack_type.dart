@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:bleed_common/attack_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/isometric/classes/player.dart';
+import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/maps/map_attack_type_to_atlas_src.dart';
 import 'package:lemon_engine/render_single_atlas.dart';
 import 'package:lemon_engine/state/atlas.dart';

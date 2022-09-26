@@ -10,17 +10,13 @@ import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 
-import 'state.dart';
+import '../../isometric/game.dart';
 
 
 
 class GameEvents {
 
-  final GameState state;
-
   Timer? updateTimer;
-
-  GameEvents(this.state);
 
   void register(){
     player.alive.onChanged(_onPlayerAliveChanged);
@@ -39,12 +35,12 @@ class GameEvents {
 
   void onTextModeChanged(bool textMode) {
     if (textMode) {
-      state.textFieldMessage.requestFocus();
+      game.textFieldMessage.requestFocus();
       return;
     }
-    sendRequestSpeak(state.textEditingControllerMessage.text);
-    state.textFieldMessage.unfocus();
-    state.textEditingControllerMessage.text = "";
+    sendRequestSpeak(game.textEditingControllerMessage.text);
+    game.textFieldMessage.unfocus();
+    game.textEditingControllerMessage.text = "";
   }
 
   // TODO Remove

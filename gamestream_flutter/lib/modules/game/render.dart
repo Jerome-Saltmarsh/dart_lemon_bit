@@ -5,8 +5,7 @@ import 'package:gamestream_flutter/isometric/ai.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
-import 'package:gamestream_flutter/isometric/edit_state.dart';
-import 'package:gamestream_flutter/isometric/play_mode.dart';
+import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_health_bar.dart';
@@ -23,18 +22,17 @@ import 'package:lemon_engine/render.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
-import 'state.dart';
+import '../../isometric/game.dart';
 import 'style.dart';
 
 final renderFrame = Watch(0);
 
 class GameRender {
-  final GameState state;
   final GameStyle style;
 
-  bool get debug => state.debug.value;
+  bool get debug => game.debug.value;
 
-  GameRender(this.state, this.style);
+  GameRender(this.style);
 
   void renderForeground(Canvas canvas, Size size) {
     engine.setPaintColorWhite();
@@ -132,7 +130,7 @@ class GameRender {
   }
 
   void renderEditMode() {
-    if (!playModeEdit) return;
+    if (playMode) return;
     if (edit.gameObjectSelected.value){
       engine.draw.drawCircleOutline(
         sides: 24,
@@ -214,7 +212,7 @@ class GameRender {
   }
 
   void drawPaths() {
-    if (!state.debug.value) return;
+    if (!game.debug.value) return;
     engine.setPaintColor(colours.blue);
     paint.strokeWidth = 4.0;
 
@@ -252,7 +250,7 @@ class GameRender {
       final width = charWidth * human.text.length;
       final left = human.renderX - width;
       final y = human.renderY - 70;
-      engine.renderText(human.text, left, y, style: state.playerTextStyle);
+      engine.renderText(human.text, left, y, style: game.playerTextStyle);
     }
   }
 }
