@@ -218,10 +218,9 @@ void _renderCharacterPartBody(Character character, int color) {
 }
 
 void _renderCharacterPartPants(Character character, int color) {
-  if (renderTemplateWithWeapon) {
-    _renderCharacterPart(
-        character, _mapLegTypeToSpriteLayer(character.pants), color);
-  }
+  // if (renderTemplateWithWeapon) {
+    _renderCharacterPart(character, _mapLegTypeToSpriteLayer(character.pants), color);
+  // }
 }
 
 void _renderCharacterPart(Character character, int layer, int color) {

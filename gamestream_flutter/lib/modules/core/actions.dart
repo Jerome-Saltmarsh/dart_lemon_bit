@@ -180,22 +180,23 @@ class CoreActions {
 
 
   void openStripeCheckout() {
-    print("actions.openStripeCheckout()");
-    final account = core.state.account.value;
-    if (account == null){
-      core.actions.setError("Account is null");
-      return;
-    }
-    if (account.subscriptionActive){
-      core.actions.setError("Premium subscription already active");
-      return;
-    }
-
-    core.state.operationStatus.value = OperationStatus.Opening_Secure_Payment_Session;
-    stripeCheckout(
-        userId: account.userId,
-        email: account.email
-    );
+    throw Exception("No longer supported");
+    // print("actions.openStripeCheckout()");
+    // final account = core.state.account.value;
+    // if (account == null){
+    //   core.actions.setError("Account is null");
+    //   return;
+    // }
+    // if (account.subscriptionActive){
+    //   core.actions.setError("Premium subscription already active");
+    //   return;
+    // }
+    //
+    // core.state.operationStatus.value = OperationStatus.Opening_Secure_Payment_Session;
+    // stripeCheckout(
+    //     userId: account.userId,
+    //     email: account.email
+    // );
   }
 
   void store(String key, dynamic value){

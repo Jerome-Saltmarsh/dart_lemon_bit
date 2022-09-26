@@ -48,6 +48,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] 3d model weapon flame thrower
 /// [ ] respawn weapons on empty
 /// [ ] draw punch sprite
+/// [ ] Remove Stripe
 /// [ ] running backwards is slower
 /// [ ] Make the player run backwards when facing behind
 /// [x] Render Head in aim direction
