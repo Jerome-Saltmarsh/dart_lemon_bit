@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/isometric/ui/controls/build_control_npc_talk.
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_experience.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_health.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_weapons.dart';
+import 'package:gamestream_flutter/isometric/ui/stacks/build_page.dart';
 import 'package:gamestream_flutter/isometric/ui/ui_state.dart';
 import 'package:gamestream_flutter/isometric/watches/inventory_visible.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
@@ -17,8 +18,8 @@ import 'package:gamestream_flutter/ui/builders/build_text_box.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/screen.dart';
 
-Widget buildStackPlay() {
-  return Stack(
+Widget buildStackPlay() =>
+  buildPage(
     children: [
       Positioned(top: 75, right: 16, child: buildWatchInventoryVisible()),
       Positioned(top: 50, left: 0, child: buildPanelStore()),
@@ -40,7 +41,6 @@ Widget buildStackPlay() {
       buildPanelWriteMessage(),
     ]
   );
-}
 
 Widget buildBottomPlayerExperienceAndHealthBar() =>
   Positioned(bottom: 8, child: Container(

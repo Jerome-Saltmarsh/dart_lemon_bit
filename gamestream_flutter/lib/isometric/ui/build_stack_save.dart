@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
-import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
-import 'package:lemon_engine/screen.dart';
 import 'package:lemon_watch/watch.dart';
 
 import '../../flutterkit.dart';

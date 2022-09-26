@@ -39,7 +39,6 @@ Widget buildStackGame()  =>
         buildTopRightMenu(),
         buildWatchBool(game.mapVisible, buildMiniMap),
         watch(game.edit, buildPlayMode),
-        buildStackEdit(),
         buildWatchBool(debugVisible, buildHudDebug),
       ],
     ),
