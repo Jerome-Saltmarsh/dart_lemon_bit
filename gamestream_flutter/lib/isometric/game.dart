@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
 import 'package:lemon_watch/watch.dart';
 
 import '../modules/game/enums.dart';
@@ -20,7 +21,20 @@ void actionToggleEdit() {
   game.edit.value = !game.edit.value;
 }
 
+void messageBoxToggle(){
+  game.messageBoxVisible.value = !game.messageBoxVisible.value;
+}
+
+void messageBoxShow(){
+  game.messageBoxVisible.value = true;
+}
+
+void messageBoxHide(){
+  game.messageBoxVisible.value = false;
+}
+
 class Game {
+  final messageBoxVisible = Watch(false, onChanged: onVisibilityChangedMessageBox);
   final canOpenMapAndQuestMenu = Watch(false);
   final textEditingControllerMessage = TextEditingController();
   final textFieldMessage = FocusNode();

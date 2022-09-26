@@ -3,16 +3,10 @@ import 'dart:async';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
-import 'package:gamestream_flutter/isometric/message_box.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
-
-import '../../isometric/game.dart';
-
-
 
 class GameEvents {
 
@@ -21,7 +15,6 @@ class GameEvents {
   void register(){
     player.alive.onChanged(_onPlayerAliveChanged);
     player.state.onChanged(onPlayerCharacterStateChanged);
-    messageBoxVisible.onChanged(onTextModeChanged);
     sub(_onGameError);
 
     updateTimer = Timer.periodic(Duration(milliseconds: 1000.0 ~/ 30.0), (timer) {
@@ -31,16 +24,6 @@ class GameEvents {
 
   void deregister(){
     updateTimer?.cancel();
-  }
-
-  void onTextModeChanged(bool textMode) {
-    if (textMode) {
-      game.textFieldMessage.requestFocus();
-      return;
-    }
-    sendRequestSpeak(game.textEditingControllerMessage.text);
-    game.textFieldMessage.unfocus();
-    game.textEditingControllerMessage.text = "";
   }
 
   // TODO Remove
