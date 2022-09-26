@@ -42,14 +42,6 @@ Widget buildStackEdit() =>
             buildColumnEditNodeOrientation
         ),
       ),
-      // Positioned(
-      //   left: 100,
-      //   bottom: 100,
-      //   child: buildWatchBool(
-      //       edit.isActiveEditTriggers,
-      //       buildDialogEditorTriggers
-      //   ),
-      // ),
       Positioned(
         right: 6,
         top: 80,

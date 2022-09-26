@@ -16,8 +16,7 @@ import '../../colours.dart';
 import 'build_time.dart';
 
 Widget buildPanelMenu() =>
-  buildPanel(
-      child: Row(
+    Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           buildButtonTogglePlayMode(),
@@ -33,8 +32,8 @@ Widget buildPanelMenu() =>
               }
           ),
         ]
-      )
-  );
+    );
+
 
 Widget buildButtonTogglePlayMode() {
   return watch(sceneMetaDataMapEditable, (bool isOwner) {
