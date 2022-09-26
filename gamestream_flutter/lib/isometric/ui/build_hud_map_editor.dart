@@ -299,7 +299,7 @@ Widget buildButtonSelectNodeType(int value) {
         child: canvas,
         action: () {
           if (playMode) {
-            game.setModePlay();
+            actionSetModePlay();
             edit.column.value = player.indexColumn;
             edit.row.value = player.indexRow;
             edit.z.value = player.indexZ;

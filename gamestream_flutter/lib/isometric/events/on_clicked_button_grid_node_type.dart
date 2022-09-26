@@ -7,7 +7,7 @@ import '../factories/generate_node.dart';
 
 void onClickedButtonGridNodeType(int type){
   if (editMode){
-    game.setModeEdit();
+    actionSetModeEdit();
     edit.column.value = player.indexColumn;
     edit.row.value = player.indexRow;
     edit.z.value = player.indexZ;

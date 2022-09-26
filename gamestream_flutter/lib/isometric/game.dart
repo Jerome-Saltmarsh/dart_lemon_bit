@@ -30,18 +30,6 @@ class Game {
   final mapVisible = Watch(false);
   final timeVisible = Watch(true);
   final edit = Watch(false);
-
-  void setModeEdit(){
-    edit.value = true;
-  }
-
-  void setModePlay(){
-    edit.value = false;
-  }
-
-  void toggleEdit(){
-    edit.value = !edit.value;
-  }
 }
 
 

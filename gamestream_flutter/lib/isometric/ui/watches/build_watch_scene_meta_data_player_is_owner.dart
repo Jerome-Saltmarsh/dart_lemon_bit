@@ -32,59 +32,63 @@ import '../widgets/build_container.dart';
 Widget buildPlayMode(bool edit) =>
   edit ? buildStackEdit() : buildStackPlay();
 
-Stack buildStackEdit() =>
-  Stack(
-    children: [
-      watch(editorDialog, buildWatchEditorDialog),
-      Positioned(
-        right: 6,
-        top: 80,
-        child: buildWatchBool(
-            edit.nodeOrientationVisible,
-            buildColumnEditNodeOrientation
+Widget buildStackEdit() =>
+  Container(
+    width: screen.width,
+      height: screen.height,
+    child: Stack(
+      children: [
+        watch(editorDialog, buildWatchEditorDialog),
+        Positioned(
+          right: 6,
+          top: 80,
+          child: buildWatchBool(
+              edit.nodeOrientationVisible,
+              buildColumnEditNodeOrientation
+          ),
         ),
-      ),
-      // Positioned(
-      //   left: 100,
-      //   bottom: 100,
-      //   child: buildWatchBool(
-      //       edit.isActiveEditTriggers,
-      //       buildDialogEditorTriggers
-      //   ),
-      // ),
-      Positioned(
-        right: 6,
-        top: 80,
-        child: buildColumnEditNodeSpawn(),
-      ),
-      Positioned(
-        left: 0,
-        bottom: 6,
-        child: buildColumnSelectedGameObject(),
-      ),
-      Positioned(
-        left: 200,
-        top: 56,
-        child: buildEditorSelectedNode(),
-      ),
-      Positioned(
-          bottom: 6,
+        // Positioned(
+        //   left: 100,
+        //   bottom: 100,
+        //   child: buildWatchBool(
+        //       edit.isActiveEditTriggers,
+        //       buildDialogEditorTriggers
+        //   ),
+        // ),
+        Positioned(
+          right: 6,
+          top: 80,
+          child: buildColumnEditNodeSpawn(),
+        ),
+        Positioned(
           left: 0,
-          child: Container(
-            width: screen.width,
-            alignment: Alignment.center,
-            child: buildWatchBool(
-                edit.controlsVisibleWeather,
-                buildControlsWeather,
-            ),
-          )
-      ),
-      Positioned(
-        left: 0,
-        top: 0,
-        child: buildEditorMenu(),
-      ),
-    ],
+          bottom: 6,
+          child: buildColumnSelectedGameObject(),
+        ),
+        Positioned(
+          left: 200,
+          top: 56,
+          child: buildEditorSelectedNode(),
+        ),
+        Positioned(
+            bottom: 6,
+            left: 0,
+            child: Container(
+              width: screen.width,
+              alignment: Alignment.center,
+              child: buildWatchBool(
+                  edit.controlsVisibleWeather,
+                  buildControlsWeather,
+              ),
+            )
+        ),
+        Positioned(
+          left: 0,
+          top: 0,
+          child: buildEditorMenu(),
+        ),
+      ],
+    ),
   );
 
 Widget buildColumnEditNodeOrientation() =>

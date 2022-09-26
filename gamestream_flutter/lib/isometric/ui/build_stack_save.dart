@@ -14,19 +14,6 @@ import 'constants/colors.dart';
 final sceneNameController = TextEditingController()..addListener(onSceneNamedChanged);
 final enteredSceneNameText = Watch("");
 
-Widget buildStackSave(){
-  return Stack(children: [
-    Positioned(top: 0, right: 0, child: buildPanelMenu()),
-    Positioned(top: 100, left: 0, child: Container(
-        width: screen.width,
-        child: buildControlSceneName(),
-        alignment: Alignment.center,
-    ))
-
-
-  ],);
-}
-
 Widget buildControlSceneName(){
   return watch(sceneMetaDataSceneName, (String? sceneName){
       if (sceneName == null || sceneName.trim().isEmpty) {

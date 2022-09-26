@@ -15,8 +15,8 @@ import 'package:lemon_engine/engine.dart';
 import '../server_response_reader.dart';
 import 'widgets/build_container.dart';
 
-Widget buildHudDebug() {
-  return Stack(
+Widget buildHudDebug() =>
+  Stack(
     children: [
       Positioned(
           top: 0,
@@ -47,7 +47,6 @@ Widget buildHudDebug() {
           )),
     ],
   );
-}
 
 Widget _buildContainerMouseInfo() {
   return Refresh(() {

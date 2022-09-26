@@ -56,7 +56,7 @@ WatchBuilder<Connection> buildWatchConnection(Account? account) {
       case Connection.Connecting:
         return ui.layouts.buildLayoutLoading();
       case Connection.Connected:
-        print("buildGameUI()");
+        print("buildStackGame()");
         return buildStackGame();
       case Connection.None:
         return buildPageWebsite();

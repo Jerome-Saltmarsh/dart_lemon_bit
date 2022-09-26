@@ -27,7 +27,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
   final key = event.physicalKey;
 
   if (key == PhysicalKeyboardKey.tab)
-    return game.toggleEdit();
+    return actionToggleEdit();
 
   if (key == PhysicalKeyboardKey.digit5)
     return edit.paintTorch();

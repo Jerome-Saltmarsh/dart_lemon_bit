@@ -27,17 +27,22 @@ import 'build_hud_debug.dart';
 import 'stacks/build_stack_game_type_world.dart';
 
 Widget buildStackGame()  =>
-  Stack(
-    children: [
-      watch(gameType, buildGameTypeUI),
-      watch(editorDialog, buildWatchEditorDialog),
-      watch(player.gameDialog, buildGameDialog),
-      buildWatchBool(player.alive, buildContainerRespawn, false),
-      buildTopRightMenu(),
-      buildWatchBool(game.mapVisible, buildMiniMap),
-      watch(game.edit, buildPlayMode),
-      buildWatchBool(debugVisible, buildHudDebug),
-    ],
+  Container(
+    width: screen.width,
+    height: screen.height,
+    child: Stack(
+      children: [
+        watch(gameType, buildGameTypeUI),
+        watch(editorDialog, buildWatchEditorDialog),
+        watch(player.gameDialog, buildGameDialog),
+        buildWatchBool(player.alive, buildContainerRespawn, false),
+        buildTopRightMenu(),
+        buildWatchBool(game.mapVisible, buildMiniMap),
+        watch(game.edit, buildPlayMode),
+        buildStackEdit(),
+        buildWatchBool(debugVisible, buildHudDebug),
+      ],
+    ),
   );
 
 Positioned buildWatchInterpolation() =>

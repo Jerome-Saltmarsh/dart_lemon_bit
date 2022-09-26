@@ -6,9 +6,9 @@ Widget buildStackGameTypeSkirmish() =>
   Stack(
     children: [
         Positioned(
-          top: 0,
+          bottom: 0,
           left: 0,
-          child: text("Hello World"),
+          child: text("Hello Skirmish"),
         )
     ]
   );

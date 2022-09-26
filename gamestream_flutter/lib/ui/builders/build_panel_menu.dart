@@ -15,26 +15,26 @@ import 'package:lemon_watch/watch_builder.dart';
 import '../../colours.dart';
 import 'build_time.dart';
 
-Widget buildPanelMenu() {
-  return buildPanel(
+Widget buildPanelMenu() =>
+  buildPanel(
       child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: [
-      buildButtonTogglePlayMode(),
-      width8,
-      buildWatchBool(game.timeVisible, buildTime),
-      onPressed(
-          child: buildToggleFullscreen(),
-          action:  engine.fullscreenToggle),
-      onPressed(
-          child: buildButtonExit(),
-          action: () {
-            core.actions.exitGame();
-          }
-      ),
-    ],
-  ));
-}
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          buildButtonTogglePlayMode(),
+          width8,
+          buildWatchBool(game.timeVisible, buildTime),
+          onPressed(
+              child: buildToggleFullscreen(),
+              action:  engine.fullscreenToggle),
+          onPressed(
+              child: buildButtonExit(),
+              action: () {
+                core.actions.exitGame();
+              }
+          ),
+        ]
+      )
+  );
 
 Widget buildButtonTogglePlayMode() {
   return watch(sceneMetaDataMapEditable, (bool isOwner) {
