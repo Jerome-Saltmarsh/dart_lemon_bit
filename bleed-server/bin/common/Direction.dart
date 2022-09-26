@@ -16,7 +16,6 @@ class Direction {
   static String getName(int value){
     assert (value >= 0);
     assert (value <= 8);
-
     return const <int, String> {
        North: "North",
        North_East: "North-East",
@@ -29,23 +28,23 @@ class Direction {
        None: "None",
     }[value] ?? "?";
   }
+
+  static double toRadian(int direction){
+    if (direction == Direction.North) return pi;
+    if (direction == Direction.North_East) return pi + piQuarter;
+    if (direction == Direction.East) return pi + piHalf;
+    if (direction == Direction.South_East) return pi + piHalf + piQuarter;
+    if (direction == Direction.South) return 0;
+    if (direction == Direction.South_West) return piQuarter;
+    if (direction == Direction.West) return piHalf;
+    if (direction == Direction.North_West) return piHalf + piQuarter;
+    throw Exception("Could not convert direction $direction to angle");
+  }
 }
 
 int convertAngleToDirection(double angle) {
   const piEight = pi / 8;
   return clampDirection(clampAngle(angle - piEight) ~/ piQuarter);
-}
-
-double convertDirectionToAngle(int direction){
-  if (direction == Direction.North) return pi;
-  if (direction == Direction.North_East) return pi + piQuarter;
-  if (direction == Direction.East) return pi + piHalf;
-  if (direction == Direction.South_East) return pi + piHalf + piQuarter;
-  if (direction == Direction.South) return 0;
-  if (direction == Direction.South_West) return piQuarter;
-  if (direction == Direction.West) return piHalf;
-  if (direction == Direction.North_West) return piHalf + piQuarter;
-  throw Exception("Could not convert direction $direction to angle");
 }
 
 int clampDirection(int index){

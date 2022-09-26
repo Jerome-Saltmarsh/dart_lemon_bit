@@ -236,7 +236,8 @@ double _getTemplateSrcX(Character character, {required double size}) {
       return single(
           size: size,
           frame: variation ? 1 : 2,
-          direction: character.direction,
+          // direction: (character.direction + 8) % 8,
+          direction: (character.direction),
           framesPerDirection: framesPerDirection
       );
 

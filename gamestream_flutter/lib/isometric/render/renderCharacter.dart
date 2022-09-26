@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_slime.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_template.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_zombie.dart';
+import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:lemon_engine/render.dart';
 
 var renderTemplateWithWeapon = false;
@@ -12,6 +13,8 @@ var renderTemplateWithWeapon = false;
 void renderCharacter(Character character){
   if (!character.tile.visible) return;
   if (!character.tileBelow.visible) return;
+
+  renderText(text: character.direction.toString(), x: character.renderX, y: character.renderY - 100);
 
   if (character.spawning) {
     if (character.type == CharacterType.Rat){

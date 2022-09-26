@@ -266,20 +266,6 @@ abstract class Game {
     );
   }
 
-  void playerRunInDirection(Player player, int direction) {
-    if (direction == Direction.None){
-      player.setCharacterStateIdle();
-      return;
-    }
-    player.faceDirection = direction;
-    setCharacterStateRunning(player);
-    player.target = null;
-
-    if (player.interactingWithNpc){
-      return player.endInteraction();
-    }
-  }
-
   void playerReleaseWeaponCharge(Player player, Weapon weapon){
     if (weapon.charge <= 0) return;
 
@@ -293,6 +279,20 @@ abstract class Game {
       damage: weapon.damage,
       range: weapon.range * power,
     );
+  }
+
+  void playerRunInDirection(Player player, int direction) {
+    if (direction == Direction.None){
+      player.setCharacterStateIdle();
+      return;
+    }
+    player.faceDirection = direction;
+    setCharacterStateRunning(player);
+    player.target = null;
+
+    if (player.interactingWithNpc){
+      return player.endInteraction();
+    }
   }
 
   void playerUseWeapon(Player player, Weapon weapon) {

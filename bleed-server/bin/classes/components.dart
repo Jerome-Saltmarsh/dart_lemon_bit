@@ -3,12 +3,26 @@ import 'package:lemon_math/library.dart';
 import '../common/Direction.dart';
 
 class FaceDirection {
-  var faceAngle = 0.0;
+  var _faceAngle = 0.0;
+
+  double get faceAngle => _faceAngle;
+
+  void set faceAngle(double value){
+    if (value < 0){
+      _faceAngle = pi2 - (-value % pi2);
+      return;
+    }
+    if (value > pi2){
+      _faceAngle = value % pi2;
+      return;
+    }
+    _faceAngle = value;
+  }
 
   int get faceDirection => convertAngleToDirection(faceAngle);
 
   void set faceDirection(int value) =>
-      faceAngle = convertDirectionToAngle(value);
+      faceAngle = Direction.toRadian(value);
 }
 
 mixin Owner <T> {
