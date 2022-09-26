@@ -48,8 +48,9 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] 3d model weapon flame thrower
 /// [ ] respawn weapons on empty
 /// [ ] draw punch sprite
-/// [ ] Render Head in aim direction
+/// [ ] running backwards is slower
 /// [ ] Make the player run backwards when facing behind
+/// [x] Render Head in aim direction
 /// [x] Fix bug player faces forward automatically on release arrow key
 /// [x] Disable player chat
 /// [x] Disable open map or quest dialog

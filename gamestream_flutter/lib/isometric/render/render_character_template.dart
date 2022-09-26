@@ -1,4 +1,3 @@
-
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
@@ -12,19 +11,18 @@ import '../classes/character.dart';
 import 'render_character_health_bar.dart';
 import 'src_utils.dart';
 
-
-void renderLine(double x, double y, double z, double angle, double distance){
+void renderLine(double x, double y, double z, double angle, double distance) {
   final x2 = x + getAdjacent(angle, distance);
   final y2 = y + getOpposite(angle, distance);
   drawLine(
-      projectX(x, y),
-      projectY(x, y, z),
-      projectX(x2, y2),
-      projectY(x2, y2, z),
+    projectX(x, y),
+    projectY(x, y, z),
+    projectX(x2, y2),
+    projectY(x2, y2, z),
   );
 }
 
-void renderArrow(double x, double y, double z, double angle){
+void renderArrow(double x, double y, double z, double angle) {
   const pi3Quarters = piQuarter * 3;
   x += getAdjacent(angle, 30);
   y += getOpposite(angle, 30);
@@ -39,8 +37,7 @@ void renderArrow(double x, double y, double z, double angle){
   );
 }
 
-
-void renderCharacterWeaponHandgun(Character character){
+void renderCharacterWeaponHandgun(Character character) {
   final weaponState = character.weaponState;
   final angle = character.aimAngle + piQuarter;
   final distance = 15.0;
@@ -50,25 +47,25 @@ void renderCharacterWeaponHandgun(Character character){
   render(
     dstX: character.renderX + getAdjacent(angle, distance),
     dstY: character.renderY + getOpposite(angle, distance) - 8,
-    srcX: 224 ,
+    srcX: 224,
     srcY: (size * direction * 3) + (weaponState * size),
     srcWidth: size,
     srcHeight: size,
   );
 }
 
-void renderCharacterWeapon(Character character){
-    switch(character.weapon){
-      case AttackType.Handgun:
-        return renderCharacterWeaponHandgun(character);
-      case AttackType.Shotgun:
-        return renderCharacterWeaponShotgun(character);
-      case AttackType.Blade:
-        return renderCharacterWeaponBlade(character);
-    }
+void renderCharacterWeapon(Character character) {
+  switch (character.weapon) {
+    case AttackType.Handgun:
+      return renderCharacterWeaponHandgun(character);
+    case AttackType.Shotgun:
+      return renderCharacterWeaponShotgun(character);
+    case AttackType.Blade:
+      return renderCharacterWeaponBlade(character);
+  }
 }
 
-void renderCharacterWeaponShotgun(Character character){
+void renderCharacterWeaponShotgun(Character character) {
   final weaponState = character.weaponState;
   final angle = character.aimAngle + piQuarter;
   final distance = 15.0;
@@ -78,15 +75,14 @@ void renderCharacterWeaponShotgun(Character character){
   render(
     dstX: character.renderX + getAdjacent(angle, distance),
     dstY: character.renderY + getOpposite(angle, distance) - 8,
-    srcX: 256 ,
+    srcX: 256,
     srcY: (size * direction * 3) + (weaponState * size),
     srcWidth: size,
     srcHeight: size,
   );
 }
 
-
-void renderCharacterWeaponBlade(Character character){
+void renderCharacterWeaponBlade(Character character) {
   // final weaponState = character.weaponState;
   final angle = character.aimAngle + piQuarter;
   final distance = 15.0;
@@ -96,32 +92,33 @@ void renderCharacterWeaponBlade(Character character){
   render(
     dstX: character.renderX + getAdjacent(angle, distance),
     dstY: character.renderY + getOpposite(angle, distance) - 8,
-    srcX: 304 ,
+    srcX: 304,
     srcY: size * direction,
     srcWidth: size,
     srcHeight: size,
   );
 }
 
-
-void renderCharacterTemplateWithoutWeapon(Character character, {bool renderHealthBar = true}) {
+void renderCharacterTemplateWithoutWeapon(Character character,
+    {bool renderHealthBar = true}) {
   assert(character.direction >= 0);
   assert(character.direction < 8);
   if (character.deadOrDying) return;
 
-  if (renderHealthBar){
+  if (renderHealthBar) {
     renderCharacterHealthBar(character);
   }
   _renderCharacterTemplate(character, colorShades[character.tileBelow.shade]);
 }
 
-void renderCharacterTemplateWithWeapon(Character character, {bool renderHealthBar = true}) {
+void renderCharacterTemplateWithWeapon(Character character,
+    {bool renderHealthBar = true}) {
   assert(character.direction >= 0);
   assert(character.direction < 8);
 
   if (character.deadOrDying) return;
 
-  if (renderHealthBar){
+  if (renderHealthBar) {
     renderCharacterHealthBar(character);
   }
 
@@ -151,8 +148,7 @@ void renderCharacterTemplateWithWeapon(Character character, {bool renderHealthBa
         direction == Direction.North ||
         direction == Direction.North_West ||
         direction == Direction.West ||
-        direction == Direction.South_West
-    ) {
+        direction == Direction.South_West) {
       _renderCharacterTemplateWeapon(character);
       _renderCharacterTemplate(character, color);
     } else {
@@ -166,13 +162,12 @@ void renderCharacterTemplateWithWeapon(Character character, {bool renderHealthBa
 }
 
 void _renderCharacterTemplate(Character character, int color) {
-  if (character.tile.type != NodeType.Grass_Long){
+  if (character.tile.type != NodeType.Grass_Long) {
     _renderCharacterShadow(character);
     _renderCharacterPartPants(character, color);
   }
   _renderCharacterPartBody(character, color);
   _renderCharacterPartHead(character, color);
-
 }
 
 void _renderCharacterTemplateWeapon(Character character) {
@@ -185,24 +180,21 @@ void _renderCharacterTemplateWeapon(Character character) {
   ].indexOf(equipped);
 
   if (renderRow == -1) {
-    _renderCharacterPart(
-        character,
-        _mapWeaponTypeToSpriteLayer(character.weapon),
-        character.renderColor
-    );
+    _renderCharacterPart(character,
+        _mapWeaponTypeToSpriteLayer(character.weapon), character.renderColor);
     return;
   }
   render(
-      dstX: character.renderX,
-      dstY: character.renderY,
-      srcX: _getTemplateSrcX(character, size: 96),
-      srcY: 2491.0 + (renderRow * 96),
-      srcWidth: 96,
-      srcHeight: 96,
-      anchorX: 0.5,
-      anchorY: 0.7,
-      scale: 0.75,
-      color: character.renderColor,
+    dstX: character.renderX,
+    dstY: character.renderY,
+    srcX: _getTemplateSrcX(character, size: 96),
+    srcY: 2491.0 + (renderRow * 96),
+    srcWidth: 96,
+    srcHeight: 96,
+    anchorX: 0.5,
+    anchorY: 0.7,
+    scale: 0.75,
+    color: character.renderColor,
   );
 }
 
@@ -211,42 +203,49 @@ void _renderCharacterShadow(Character character) {
 }
 
 void _renderCharacterPartHead(Character character, int color) {
-  if (renderTemplateWithWeapon){
-    _renderCharacterPart(character, _mapHeadTypeToSpriteLayer(character.helm), color);
+  if (renderTemplateWithWeapon) {
+    _renderCharacterPart(
+        character, _mapHeadTypeToSpriteLayer(character.helm), color);
   } else {
-    _renderCharacterPartAimDirection(character, _mapHeadTypeToSpriteLayer(character.helm), color);
+    _renderCharacterPartAimDirection(
+        character, _mapHeadTypeToSpriteLayer(character.helm), color);
   }
 }
 
 void _renderCharacterPartBody(Character character, int color) {
-  _renderCharacterPart(character, _mapArmourTypeToSpriteLayer(character.armour), color);
+  _renderCharacterPart(
+      character, _mapArmourTypeToSpriteLayer(character.armour), color);
 }
 
 void _renderCharacterPartPants(Character character, int color) {
-  _renderCharacterPart(character, _mapLegTypeToSpriteLayer(character.pants), color);
+  if (renderTemplateWithWeapon) {
+    _renderCharacterPart(
+        character, _mapLegTypeToSpriteLayer(character.pants), color);
+  }
 }
 
-void _renderCharacterPart(Character character, SpriteLayer layer, int color) {
+void _renderCharacterPart(Character character, int layer, int color) {
   render(
-      dstX: character.renderX,
-      dstY: character.renderY,
-      srcX: _getTemplateSrcX(character, size: 64),
-      srcY: 1051.0 + (layer.index * 64),
-      srcWidth: 64.0,
-      srcHeight: 64.0,
-      scale: 0.75,
-      anchorX: 0.5,
-      anchorY: 0.75,
-      color: color,
+    dstX: character.renderX,
+    dstY: character.renderY,
+    srcX: _getTemplateSrcX(character, size: 64),
+    srcY: 1051.0 + (layer * 64),
+    srcWidth: 64.0,
+    srcHeight: 64.0,
+    scale: 0.75,
+    anchorX: 0.5,
+    anchorY: 0.75,
+    color: color,
   );
 }
 
-void _renderCharacterPartAimDirection(Character character, SpriteLayer layer, int color) {
+void _renderCharacterPartAimDirection(
+    Character character, int layer, int color) {
   render(
     dstX: character.renderX,
     dstY: character.renderY,
     srcX: _getTemplateSrcXAimDirection(character, size: 64),
-    srcY: 1051.0 + (layer.index * 64),
+    srcY: 1051.0 + (layer * 64),
     srcWidth: 64.0,
     srcHeight: 64.0,
     scale: 0.75,
@@ -259,7 +258,8 @@ void _renderCharacterPartAimDirection(Character character, SpriteLayer layer, in
 double _getTemplateSrcX(Character character, {required double size}) {
   const framesPerDirection = 19;
   final weapon = character.weapon;
-  final variation =  renderTemplateWithWeapon && weapon == AttackType.Shotgun || weapon == AttackType.Bow;
+  final variation = renderTemplateWithWeapon && weapon == AttackType.Shotgun ||
+      weapon == AttackType.Bow;
 
   switch (character.state) {
     case CharacterState.Running:
@@ -269,16 +269,14 @@ double _getTemplateSrcX(Character character, {required double size}) {
           size: size,
           animation: variation ? frames2 : frames1,
           character: character,
-          framesPerDirection: framesPerDirection
-      );
+          framesPerDirection: framesPerDirection);
 
     case CharacterState.Idle:
       return single(
           size: size,
           frame: variation ? 1 : 2,
           direction: (character.renderDirection),
-          framesPerDirection: framesPerDirection
-      );
+          framesPerDirection: framesPerDirection);
 
     case CharacterState.Hurt:
       return single(
@@ -301,10 +299,10 @@ double _getTemplateSrcX(Character character, {required double size}) {
           animation: weapon == AttackType.Bow
               ? const [5, 8, 6, 10]
               : weapon == AttackType.Handgun
-              ? const [8, 9, 8]
-              : weapon == AttackType.Shotgun
-              ? const [6, 7, 6, 6, 6, 8, 8, 6]
-              : const [10, 10, 11, 11],
+                  ? const [8, 9, 8]
+                  : weapon == AttackType.Shotgun
+                      ? const [6, 7, 6, 6, 6, 8, 8, 6]
+                      : const [10, 10, 11, 11],
           character: character,
           framesPerDirection: framesPerDirection);
 
@@ -314,11 +312,12 @@ double _getTemplateSrcX(Character character, {required double size}) {
   }
 }
 
-
-double _getTemplateSrcXAimDirection(Character character, {required double size}) {
+double _getTemplateSrcXAimDirection(Character character,
+    {required double size}) {
   const framesPerDirection = 19;
   final weapon = character.weapon;
-  final variation =  renderTemplateWithWeapon && weapon == AttackType.Shotgun || weapon == AttackType.Bow;
+  final variation = renderTemplateWithWeapon && weapon == AttackType.Shotgun ||
+      weapon == AttackType.Bow;
 
   switch (character.state) {
     case CharacterState.Running:
@@ -328,16 +327,14 @@ double _getTemplateSrcXAimDirection(Character character, {required double size})
           size: size,
           animation: variation ? frames2 : frames1,
           character: character,
-          framesPerDirection: framesPerDirection
-      );
+          framesPerDirection: framesPerDirection);
 
     case CharacterState.Idle:
       return single(
           size: size,
           frame: variation ? 1 : 2,
           direction: (character.aimDirection),
-          framesPerDirection: framesPerDirection
-      );
+          framesPerDirection: framesPerDirection);
 
     case CharacterState.Hurt:
       return single(
@@ -360,10 +357,10 @@ double _getTemplateSrcXAimDirection(Character character, {required double size})
           animation: weapon == AttackType.Bow
               ? const [5, 8, 6, 10]
               : weapon == AttackType.Handgun
-              ? const [8, 9, 8]
-              : weapon == AttackType.Shotgun
-              ? const [6, 7, 6, 6, 6, 8, 8, 6]
-              : const [10, 10, 11, 11],
+                  ? const [8, 9, 8]
+                  : weapon == AttackType.Shotgun
+                      ? const [6, 7, 6, 6, 6, 8, 8, 6]
+                      : const [10, 10, 11, 11],
           character: character,
           framesPerDirection: framesPerDirection);
 
@@ -373,24 +370,24 @@ double _getTemplateSrcXAimDirection(Character character, {required double size})
   }
 }
 
-SpriteLayer _mapLegTypeToSpriteLayer(int legType){
-   switch (legType) {
-     case PantsType.brown:
-       return SpriteLayer.Pants_Brown;
-     case PantsType.blue:
-       return SpriteLayer.Pants_Blue;
-     case PantsType.white:
-       return SpriteLayer.Pants_White;
-     case PantsType.green:
-       return SpriteLayer.Pants_Green;
-     case PantsType.red:
-       return SpriteLayer.Pants_Red;
-     default:
-       return SpriteLayer.Pants_Blue;
-   }
+int _mapLegTypeToSpriteLayer(int legType) {
+  switch (legType) {
+    case PantsType.brown:
+      return SpriteLayer.Pants_Brown;
+    case PantsType.blue:
+      return SpriteLayer.Pants_Blue;
+    case PantsType.white:
+      return SpriteLayer.Pants_White;
+    case PantsType.green:
+      return SpriteLayer.Pants_Green;
+    case PantsType.red:
+      return SpriteLayer.Pants_Red;
+    default:
+      return SpriteLayer.Pants_Blue;
+  }
 }
 
-SpriteLayer _mapArmourTypeToSpriteLayer(int armourType) {
+int _mapArmourTypeToSpriteLayer(int armourType) {
   switch (armourType) {
     case ArmourType.shirtCyan:
       return SpriteLayer.Shirt_Cyan;
@@ -403,7 +400,7 @@ SpriteLayer _mapArmourTypeToSpriteLayer(int armourType) {
   }
 }
 
-SpriteLayer _mapWeaponTypeToSpriteLayer(int weaponType) {
+int _mapWeaponTypeToSpriteLayer(int weaponType) {
   switch (weaponType) {
     case AttackType.Blade:
       return SpriteLayer.Sword_Wooden;
@@ -422,7 +419,7 @@ SpriteLayer _mapWeaponTypeToSpriteLayer(int weaponType) {
   }
 }
 
-SpriteLayer _mapHeadTypeToSpriteLayer(int headType) {
+int _mapHeadTypeToSpriteLayer(int headType) {
   switch (headType) {
     case HeadType.None:
       return SpriteLayer.Head_Plain;
@@ -439,28 +436,28 @@ SpriteLayer _mapHeadTypeToSpriteLayer(int headType) {
   }
 }
 
-enum SpriteLayer {
-  Shadow,
-  Pants_Blue,
-  Pants_Brown,
-  Pants_Green,
-  Pants_Red,
-  Pants_White,
-  Pants_Swat,
-  Staff_Wooden,
-  Sword_Wooden,
-  Sword_Steel,
-  Shotgun,
-  Handgun,
-  Bow_Wooden,
-  Shirt_Cyan,
-  Shirt_Blue,
-  Swat_Vest,
-  Tunic_Padded,
-  Head_Blonde,
-  Head_Plain,
-  Steel_Helm,
-  Rogues_Hood,
-  Hat_Wizard,
-  Swat_Helm,
+class SpriteLayer {
+  static const Shadow = 0;
+  static const Pants_Blue = Shadow + 1;
+  static const Pants_Brown = Pants_Blue + 1;
+  static const Pants_Green = Pants_Brown + 1;
+  static const Pants_Red = Pants_Green + 1;
+  static const Pants_White = Pants_Red + 1;
+  static const Pants_Swat = Pants_White + 1;
+  static const Staff_Wooden = Pants_Swat + 1;
+  static const Sword_Wooden = Staff_Wooden + 1;
+  static const Sword_Steel = Sword_Wooden + 1;
+  static const Shotgun = Sword_Steel + 1;
+  static const Handgun = Shotgun + 1;
+  static const Bow_Wooden = Handgun + 1;
+  static const Shirt_Cyan = Bow_Wooden + 1;
+  static const Shirt_Blue = Shirt_Cyan + 1;
+  static const Swat_Vest = Shirt_Blue + 1;
+  static const Tunic_Padded = Swat_Vest + 1;
+  static const Head_Blonde = Tunic_Padded + 1;
+  static const Head_Plain = Head_Blonde + 1;
+  static const Steel_Helm = Head_Plain + 1;
+  static const Rogues_Hood = Steel_Helm + 1;
+  static const Hat_Wizard = Rogues_Hood + 1;
+  static const Swat_Helm = Hat_Wizard + 1;
 }
