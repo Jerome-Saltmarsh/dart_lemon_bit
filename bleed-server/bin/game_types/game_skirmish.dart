@@ -46,6 +46,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] 3d model weapon flame thrower
 /// [ ] Build Map
 /// [ ] Multiple Spawn Points
+/// [ ] Fix bug player faces forward automatically on release arrow key
 /// [x] Players join same game (max 7)
 /// [x] UI Weapon Information
 /// [x] item acquired audio
@@ -78,7 +79,7 @@ class GameSkirmish extends Game {
     final player = Player(game: this, weapon: buildWeaponUnarmed(), team: 0);
     player.equippedPants = randomItem(PantsType.values);
     player.equippedArmour = randomItem(ArmourType.values);
-    // player.equippedArmour = randomItem(ArmourType.values);
+    player.equippedHead = randomItem(HeadType.values);
     return player;
   }
 
