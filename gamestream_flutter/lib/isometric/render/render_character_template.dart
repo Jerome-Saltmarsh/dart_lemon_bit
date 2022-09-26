@@ -236,8 +236,7 @@ double _getTemplateSrcX(Character character, {required double size}) {
       return single(
           size: size,
           frame: variation ? 1 : 2,
-          // direction: (character.direction + 8) % 8,
-          direction: (character.direction),
+          direction: (character.renderDirection),
           framesPerDirection: framesPerDirection
       );
 
@@ -245,14 +244,14 @@ double _getTemplateSrcX(Character character, {required double size}) {
       return single(
           size: size,
           frame: 3,
-          direction: character.direction,
+          direction: character.renderDirection,
           framesPerDirection: framesPerDirection);
 
     case CharacterState.Changing:
       return single(
           size: size,
           frame: 4,
-          direction: character.direction,
+          direction: character.renderDirection,
           framesPerDirection: framesPerDirection);
 
     case CharacterState.Performing:

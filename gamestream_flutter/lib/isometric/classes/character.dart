@@ -33,4 +33,5 @@ class Character extends Vector3 {
   bool get alive => !dead;
   int get aimDirection => ((aimAngle - piEighth) ~/ piQuarter + 4) % 8;
   double get angle => direction * piQuarter;
+  int get renderDirection => direction == 0 ? 7 : (direction - 1);
 }

@@ -765,7 +765,7 @@ class ServerResponseReader with ByteReader {
 
   void readTeamDirectionState(Character character, int byte){
     character.allie = byte >= 100;
-    character.direction = (byte % 100) ~/ 10;
+    character.direction = ((byte % 100) ~/ 10);
     character.state = byte % 10;
   }
 

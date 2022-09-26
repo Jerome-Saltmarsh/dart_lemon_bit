@@ -14,7 +14,7 @@ void renderCharacter(Character character){
   if (!character.tile.visible) return;
   if (!character.tileBelow.visible) return;
 
-  renderText(text: character.direction.toString(), x: character.renderX, y: character.renderY - 100);
+  // renderText(text: character.direction.toString(), x: character.renderX, y: character.renderY - 100);
 
   if (character.spawning) {
     if (character.type == CharacterType.Rat){

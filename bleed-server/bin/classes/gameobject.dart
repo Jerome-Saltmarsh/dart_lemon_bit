@@ -145,7 +145,7 @@ abstract class GameObjectAnimal extends GameObject with Velocity {
   var spawnZ = 0.0;
   var wanderRadius = 100.0;
 
-  int get faceDirection => convertAngleToDirection(faceAngle);
+  int get faceDirection => Direction.fromRadian(faceAngle);
 
   GameObjectAnimal({
     required double x, required double y, required double z, required int type,

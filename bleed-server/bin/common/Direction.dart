@@ -40,12 +40,20 @@ class Direction {
     if (direction == Direction.North_West) return piHalf + piQuarter;
     throw Exception("Could not convert direction $direction to angle");
   }
+
+  static int fromRadian(double angle) {
+    if (angle < piQuarter * 1) return South;
+    if (angle < piQuarter * 2) return South_West;
+    if (angle < piQuarter * 3) return West;
+    if (angle < piQuarter * 4) return North_West;
+    if (angle < piQuarter * 5) return North;
+    if (angle < piQuarter * 6) return North_East;
+    if (angle < piQuarter * 7) return East;
+    return South_East;
+  }
 }
 
-int convertAngleToDirection(double angle) {
-  const piEight = pi / 8;
-  return clampDirection(clampAngle(angle - piEight) ~/ piQuarter);
-}
+
 
 int clampDirection(int index){
   return index >= 0 ? index % 8 : 8 - (index.abs() % 8);

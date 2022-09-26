@@ -19,7 +19,7 @@ class FaceDirection {
     _faceAngle = value;
   }
 
-  int get faceDirection => convertAngleToDirection(faceAngle);
+  int get faceDirection => Direction.fromRadian(faceAngle);
 
   void set faceDirection(int value) =>
       faceAngle = Direction.toRadian(value);

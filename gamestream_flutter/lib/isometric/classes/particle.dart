@@ -33,8 +33,7 @@ class Particle extends Vector3 {
 
   bool get active => duration > 0;
 
-
-  int get direction => convertAngleToDirection(rotation);
+  int get direction => Direction.fromRadian(rotation);
 
   void deactivate(){
     duration = -1;
