@@ -63,6 +63,8 @@ void renderCharacterWeapon(Character character){
         return renderCharacterWeaponHandgun(character);
       case AttackType.Shotgun:
         return renderCharacterWeaponShotgun(character);
+      case AttackType.Blade:
+        return renderCharacterWeaponBlade(character);
     }
 }
 
@@ -78,6 +80,24 @@ void renderCharacterWeaponShotgun(Character character){
     dstY: character.renderY + getOpposite(angle, distance) - 8,
     srcX: 256 ,
     srcY: (size * direction * 3) + (weaponState * size),
+    srcWidth: size,
+    srcHeight: size,
+  );
+}
+
+
+void renderCharacterWeaponBlade(Character character){
+  // final weaponState = character.weaponState;
+  final angle = character.aimAngle + piQuarter;
+  final distance = 15.0;
+  const size = 64.0;
+  final direction = character.aimDirection;
+
+  render(
+    dstX: character.renderX + getAdjacent(angle, distance),
+    dstY: character.renderY + getOpposite(angle, distance) - 8,
+    srcX: 304 ,
+    srcY: size * direction,
     srcWidth: size,
     srcHeight: size,
   );

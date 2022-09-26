@@ -38,14 +38,16 @@ import '../functions/move_player_to_crystal.dart';
 /// it may be better without the space key
 ///
 /// TODO
+/// [ ] build scene
+/// [ ] multiple spawn points
 /// [ ] 3d model weapon sword
 /// [ ] 3d model weapon staff
 /// [ ] 3d model weapon assault rifle
 /// [ ] 3d model weapon sniper rifle
 /// [ ] 3d model weapon revolver
 /// [ ] 3d model weapon flame thrower
-/// [ ] build scene
-/// [ ] multiple spawn points
+/// [ ] respawn weapons on empty
+/// [ ] draw punch sprite
 /// [x] Fix bug player faces forward automatically on release arrow key
 /// [x] Disable player chat
 /// [x] Disable open map or quest dialog
@@ -78,7 +80,7 @@ class GameSkirmish extends Game {
 
   @override
   Player spawnPlayer() {
-    final player = Player(game: this, weapon: buildWeaponUnarmed(), team: 0);
+    final player = Player(game: this, weapon: buildWeaponBlade(), team: 0);
     player.equippedPants = randomItem(PantsType.values);
     player.equippedArmour = randomItem(ArmourType.values);
     player.equippedHead = randomItem(HeadType.values);
