@@ -172,6 +172,7 @@ void _renderCharacterTemplate(Character character, int color) {
   }
   _renderCharacterPartBody(character, color);
   _renderCharacterPartHead(character, color);
+
 }
 
 void _renderCharacterTemplateWeapon(Character character) {
@@ -210,7 +211,11 @@ void _renderCharacterShadow(Character character) {
 }
 
 void _renderCharacterPartHead(Character character, int color) {
-  _renderCharacterPart(character, _mapHeadTypeToSpriteLayer(character.helm), color);
+  if (renderTemplateWithWeapon){
+    _renderCharacterPart(character, _mapHeadTypeToSpriteLayer(character.helm), color);
+  } else {
+    _renderCharacterPartAimDirection(character, _mapHeadTypeToSpriteLayer(character.helm), color);
+  }
 }
 
 void _renderCharacterPartBody(Character character, int color) {
@@ -233,6 +238,21 @@ void _renderCharacterPart(Character character, SpriteLayer layer, int color) {
       anchorX: 0.5,
       anchorY: 0.75,
       color: color,
+  );
+}
+
+void _renderCharacterPartAimDirection(Character character, SpriteLayer layer, int color) {
+  render(
+    dstX: character.renderX,
+    dstY: character.renderY,
+    srcX: _getTemplateSrcXAimDirection(character, size: 64),
+    srcY: 1051.0 + (layer.index * 64),
+    srcWidth: 64.0,
+    srcHeight: 64.0,
+    scale: 0.75,
+    anchorX: 0.5,
+    anchorY: 0.75,
+    color: color,
   );
 }
 
@@ -272,6 +292,65 @@ double _getTemplateSrcX(Character character, {required double size}) {
           size: size,
           frame: 4,
           direction: character.renderDirection,
+          framesPerDirection: framesPerDirection);
+
+    case CharacterState.Performing:
+      final weapon = character.weapon;
+      return animate(
+          size: size,
+          animation: weapon == AttackType.Bow
+              ? const [5, 8, 6, 10]
+              : weapon == AttackType.Handgun
+              ? const [8, 9, 8]
+              : weapon == AttackType.Shotgun
+              ? const [6, 7, 6, 6, 6, 8, 8, 6]
+              : const [10, 10, 11, 11],
+          character: character,
+          framesPerDirection: framesPerDirection);
+
+    default:
+      throw Exception(
+          "getCharacterSrcX cannot get body x for state ${character.state}");
+  }
+}
+
+
+double _getTemplateSrcXAimDirection(Character character, {required double size}) {
+  const framesPerDirection = 19;
+  final weapon = character.weapon;
+  final variation =  renderTemplateWithWeapon && weapon == AttackType.Shotgun || weapon == AttackType.Bow;
+
+  switch (character.state) {
+    case CharacterState.Running:
+      const frames1 = [12, 13, 14, 15];
+      const frames2 = [16, 17, 18, 19];
+      return loop4AimDirection(
+          size: size,
+          animation: variation ? frames2 : frames1,
+          character: character,
+          framesPerDirection: framesPerDirection
+      );
+
+    case CharacterState.Idle:
+      return single(
+          size: size,
+          frame: variation ? 1 : 2,
+          direction: (character.aimDirection),
+          framesPerDirection: framesPerDirection
+      );
+
+    case CharacterState.Hurt:
+      return single(
+          size: size,
+          frame: 3,
+          direction: character.aimDirection,
+          framesPerDirection: framesPerDirection);
+
+    case CharacterState.Changing:
+      return single(
+          size: size,
+          frame: 4,
+          direction: character.aimDirection,
           framesPerDirection: framesPerDirection);
 
     case CharacterState.Performing:

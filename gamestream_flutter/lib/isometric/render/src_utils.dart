@@ -46,6 +46,16 @@ double loop4({
       ((animation[character.frame % 4] - 1) * size);
 }
 
+double loop4AimDirection({
+  required List<int> animation,
+  required Character character,
+  required int framesPerDirection,
+  double size = 64,
+}) {
+  return (character.aimDirection * framesPerDirection * size) +
+      ((animation[character.frame % 4] - 1) * size);
+}
+
 double animate({
       required List<int> animation,
       required Character character,
@@ -55,4 +65,15 @@ double animate({
   final animationFrame = min(character.frame, animation.length - 1);
   final frame = animation[animationFrame] - 1;
   return (character.renderDirection * framesPerDirection * size) + (frame * size);
+}
+
+double animateAimDirection({
+  required List<int> animation,
+  required Character character,
+  required int framesPerDirection,
+  double size = 64.0
+}) {
+  final animationFrame = min(character.frame, animation.length - 1);
+  final frame = animation[animationFrame] - 1;
+  return (character.aimDirection * framesPerDirection * size) + (frame * size);
 }
