@@ -169,8 +169,42 @@ void renderCharacterTemplateWithWeapon(Character character,
 void _renderCharacterTemplate(Character character, int color) {
   if (character.tile.type != NodeType.Grass_Long) {
     _renderCharacterShadow(character);
-    _renderCharacterPartPants(character, color);
+
+    final diff = Direction.getDifference(character.direction, character.aimDirection).abs();
+
+    // renderText(text: '$diff', x: character.renderX, y: character.renderY - 100);
+
+
+    if (diff == 3 && character.running) {
+      // render them backwards
+      // _renderCharacterPart(character, _mapLegTypeToSpriteLayer(character.legs), color);
+      _renderCharacterPartCustom(
+         variation: false,
+         renderX: character.renderX,
+         renderY: character.renderY,
+         state: character.state,
+         frame: character.frame,
+         direction: (character.direction + 3) % 8,
+         layer: _mapLegTypeToSpriteLayer(character.legs),
+         color: color,
+         weapon: character.weapon,
+      );
+      _renderCharacterPartCustom(
+        variation: false,
+        renderX: character.renderX,
+        renderY: character.renderY,
+        state: character.state,
+        frame: character.frame,
+        direction: (character.direction + 3) % 8,
+        layer: _mapArmourTypeToSpriteLayer(character.body),
+        color: color,
+        weapon: character.weapon,
+      );
+      _renderCharacterPartHead(character, color);
+      return;
+    }
   }
+  _renderCharacterPartPants(character, color);
   _renderCharacterPartBody(character, color);
   _renderCharacterPartHead(character, color);
 }
@@ -243,6 +277,37 @@ void _renderCharacterPart(Character character, int layer, int color) {
   );
 }
 
+void _renderCharacterPartCustom({
+  required bool variation,
+  required double renderX,
+  required double renderY,
+  required int state,
+  required int frame,
+  required int direction,
+  required int weapon,
+  required int layer,
+  required int color,
+}) =>
+  render(
+    dstX: renderX,
+    dstY: renderY,
+    srcX: getTemplateSrcXCustom(
+        variation: variation,
+        size: 64,
+        characterState: state,
+        direction: direction,
+        frame: frame,
+        weapon: weapon,
+    ),
+    srcY: 1051.0 + (layer * 64),
+    srcWidth: 64.0,
+    srcHeight: 64.0,
+    scale: 0.75,
+    anchorX: 0.5,
+    anchorY: 0.75,
+    color: color,
+  );
+
 void _renderCharacterPartAimDirection(
     Character character, int layer, int color) {
   render(
@@ -258,6 +323,11 @@ void _renderCharacterPartAimDirection(
     color: color,
   );
 }
+
+bool getVariation(Character character) =>
+      character.weapon == AttackType.Shotgun ||
+      character.weapon == AttackType.Bow;
+
 
 double _getTemplateSrcX(Character character, {required double size}) {
   const framesPerDirection = 19;
@@ -313,6 +383,68 @@ double _getTemplateSrcX(Character character, {required double size}) {
     default:
       throw Exception(
           "getCharacterSrcX cannot get body x for state ${character.state}");
+  }
+}
+
+double getTemplateSrcXCustom({
+  required bool variation,
+  required int characterState,
+  required int direction,
+  required int frame,
+  required int weapon,
+  required double size,
+}) {
+  const framesPerDirection = 19;
+
+  switch (characterState) {
+    case CharacterState.Running:
+      const frames1 = [12, 13, 14, 15];
+      const frames2 = [16, 17, 18, 19];
+      return loopCustom(
+          size: size,
+          frame: frame,
+          animation: variation ? frames2 : frames1,
+          direction: direction,
+          framesPerDirection: framesPerDirection);
+
+    case CharacterState.Idle:
+      return single(
+          size: size,
+          frame: variation ? 1 : 2,
+          direction: direction,
+          framesPerDirection: framesPerDirection);
+
+    case CharacterState.Hurt:
+      return single(
+          size: size,
+          frame: 3,
+          direction: direction,
+          framesPerDirection: framesPerDirection);
+
+    case CharacterState.Changing:
+      return single(
+          size: size,
+          frame: 4,
+          direction: direction,
+          framesPerDirection: framesPerDirection);
+
+    case CharacterState.Performing:
+      return animateCustom(
+          size: size,
+          animation: weapon == AttackType.Bow
+              ? const [5, 8, 6, 10]
+              : weapon == AttackType.Handgun
+              ? const [8, 9, 8]
+              : weapon == AttackType.Shotgun
+              ? const [6, 7, 6, 6, 6, 8, 8, 6]
+              : const [10, 10, 11, 11],
+          frame: frame,
+          direction: direction,
+          framesPerDirection: framesPerDirection);
+
+    default:
+      throw Exception(
+          "getCharacterSrcX cannot get body x for state ${characterState}");
   }
 }
 
