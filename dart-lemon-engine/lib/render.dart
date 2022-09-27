@@ -20,6 +20,105 @@ void setRenderBlendMode(BlendMode value){
   renderBlendMode = value;
 }
 
+
+void assignCurrentEngineRenderSrcX(double value){
+  src[bufferIndex] = value;
+}
+
+void engineRender({
+  required double srcX,
+  required double srcY,
+  required double srcWidth,
+  required double srcHeight,
+  required double dstX,
+  required double dstY,
+  double dstScale = 1,
+  double dstRotation = 0,
+  double anchorX = 0.0,
+  double anchorY = 0.0,
+}) {
+  engineRenderSetSrc(
+      x: srcX, 
+      y: srcY, 
+      width: srcWidth, 
+      height: srcHeight,
+  );
+  engineRenderSetDst(
+      x: dstX, 
+      y: dstY, 
+      scale: dstScale, 
+      rotation: dstRotation, 
+      anchorX: anchorX, 
+      anchorY: anchorY,
+  );
+
+  renderIndex += 4;
+  if (bufferIndex < buffers) return;
+  bufferIndex = 0;
+  renderIndex = 0;
+  renderAtlas();
+}
+
+void engineRenderSetSrc({
+  required double x,
+  required double y,
+  required double width,
+  required double height,
+}){
+  engineRenderSetSrcX(x);
+  engineRenderSetSrcY(y);
+  engineRenderSetSrcWidth(width);
+  engineRenderSetSrcHeight(width);
+}
+
+void engineRenderSetSrcX(double value){
+  src[bufferIndex] = value;
+}
+
+void engineRenderSetSrcY(double value){
+  src[bufferIndex + 1] = value;
+}
+
+void engineRenderSetSrcWidth(double value){
+  src[bufferIndex + 2] = value;
+}
+
+void engineRenderSetSrcHeight(double value){
+  src[bufferIndex + 3] = value;
+}
+
+void engineRenderSetDst({
+  required double x,
+  required double y,
+  required double scale,
+  required double rotation,
+  required double anchorX,
+  required double anchorY,
+}){
+  dst[bufferIndex] = x;
+  dst[bufferIndex + 1] = y;
+  dst[bufferIndex + 2] = width;
+  dst[bufferIndex + 3] = height;
+}
+
+void engineRenderSetRotation(double value){
+  
+}
+
+void engineRenderIncrementBufferIndex(){
+  /// the buffer is an int array
+  /// each render requires 4 int values
+  /// there are several three different buffers 
+  /// the src buffer
+  /// the dst buffer
+  /// the color buffer
+  bufferIndex += 4;
+  if (bufferIndex < buffers) return;
+  bufferIndex = 0;
+  renderIndex = 0;
+  renderAtlas();
+}
+
 void renderR({
   required double dstX,
   required double dstY,
