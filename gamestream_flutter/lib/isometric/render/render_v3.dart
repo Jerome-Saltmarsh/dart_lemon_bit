@@ -1,4 +1,5 @@
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
+import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:lemon_engine/render.dart';
 
 void renderV3({
@@ -15,5 +16,5 @@ void renderV3({
       srcY: srcY,
       srcWidth: srcWidth,
       srcHeight: srcHeight,
-      color: value.renderColor,
+      color: getNodeBelowShade(value),
     );

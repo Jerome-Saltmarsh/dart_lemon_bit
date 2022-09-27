@@ -36,8 +36,13 @@ import '../functions/move_player_to_crystal.dart';
 /// or a sword and a pistol
 ///
 /// it may be better without the space key
+/// [IDEAS]
+/// [ ] Start losing health if energy gets too low
+/// [ ] Shield item
+/// [ ] Grenade item
+/// [ ] Accuracy decreased while running
 ///
-/// TODO
+/// [TODO]
 /// [ ] build scene
 /// [ ] multiple spawn points
 /// [ ] 3d model weapon sword
@@ -55,7 +60,9 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] zombie death animation 2
 /// [ ] zombie death animation 3
 /// [ ] running backwards is slower
+/// [ ] Fix weapon render order
 /// [ ] fix attack animation
+/// [ ] Highlight enemy on mouse over
 /// [x] Make the player run backwards when facing behind
 /// [x] Remove Stripe
 /// [x] Render Head in aim direction

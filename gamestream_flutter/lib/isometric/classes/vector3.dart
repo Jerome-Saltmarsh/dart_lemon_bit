@@ -9,6 +9,8 @@ import 'package:lemon_math/library.dart';
 class Vector3 with Position {
   late double z;
 
+  // int get shade => tileBelow.shade;
+
   int get indexZ => z ~/ tileSizeHalf;
   int get indexRow => x ~/ tileSize;
   int get indexColumn => y ~/ tileSize;
@@ -16,12 +18,11 @@ class Vector3 with Position {
   Node get tile => getNode(indexZ, indexRow, indexColumn);
   Node get tileBelow => indexZ == 0 ? Node.boundary : getNode(indexZ - 1, indexRow, indexColumn);
   Node get tileAbove => indexZ < gridTotalZ - 1 ? Node.boundary : getNode(indexZ + 1, indexRow, indexColumn);
-  int get shade => tileBelow.shade;
   int get wind => tile.wind;
 
   double get renderX => (x - y) * 0.5;
   double get renderY => ((y + x) * 0.5) - z;
-  int get renderColor => colorShades[shade];
+  // int get renderColor => colorShades[shade];
 
   void set indexZ(int value){
     z = value * tileSizeHalf;

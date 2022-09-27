@@ -1,5 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
+import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
@@ -258,7 +259,7 @@ void _renderCharacterTemplateWeapon(Character character) {
 
   if (renderRow == -1) {
     _renderCharacterPart(character,
-        _mapWeaponTypeToSpriteLayer(character.weapon), character.renderColor);
+        _mapWeaponTypeToSpriteLayer(character.weapon), getNodeBelowShade(character));
     return;
   }
   render(
@@ -271,7 +272,7 @@ void _renderCharacterTemplateWeapon(Character character) {
     anchorX: 0.5,
     anchorY: 0.7,
     scale: 0.75,
-    color: character.renderColor,
+    color: getNodeBelowShade(character),
   );
 }
 

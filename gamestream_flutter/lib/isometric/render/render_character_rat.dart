@@ -1,6 +1,7 @@
 
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
+import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 import 'package:lemon_engine/render.dart';
@@ -18,7 +19,7 @@ void renderCharacterRat(Character character){
       srcHeight: 64,
       anchorY: 0.66,
       scale: 1,
-      color: character.renderColor,
+      color: getNodeBelowShade(character),
     );
   }
 
@@ -32,7 +33,7 @@ void renderCharacterRat(Character character){
       srcHeight: 64,
       anchorY: 0.66,
       scale: 1,
-      color: character.renderColor,
+      color: getNodeBelowShade(character),
     );
   }
 
@@ -46,6 +47,6 @@ void renderCharacterRat(Character character){
     srcHeight: 64,
     anchorY: 0.66,
     scale: 1,
-    color: character.renderColor,
+    color: getNodeBelowShade(character),
   );
 }

@@ -1,4 +1,5 @@
 import 'package:gamestream_flutter/isometric/classes/character.dart';
+import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:lemon_engine/render.dart';
 
 
@@ -8,7 +9,7 @@ void renderCharacterHealthBar(Character character){
   const srcHeight = 8.0;
   const marginY = 45;
   const srcWidthHalf = srcWidth * 0.5;
-  final color = character.renderColor;
+  final color = getNodeBelowShade(character);
 
   render(
       dstX: character.renderX - srcWidthHalf,
