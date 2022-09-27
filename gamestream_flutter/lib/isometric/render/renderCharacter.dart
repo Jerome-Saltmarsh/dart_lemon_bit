@@ -58,11 +58,11 @@ void renderCharacter(Character character){
         final aimDirection = character.aimDirection;
         final weaponInFront = aimDirection >= 2 && aimDirection <= 6;
         if (!weaponInFront) {
-          renderCharacterWeapon(character);
+          // renderCharacterWeapon(character);
         }
         renderCharacterTemplateWithoutWeapon(character);
         if (weaponInFront) {
-          renderCharacterWeapon(character);
+          // renderCharacterWeapon(character);
         }
       }
       return;

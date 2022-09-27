@@ -1,7 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
-import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -198,11 +197,24 @@ void _renderCharacterTemplate(Character character, int color) {
         weapon: character.weapon,
       );
       _renderCharacterPartHead(character, color);
+
+      if (!character.unarmed){
+        _renderCharacterPartCustom(
+          variation: getVariation(character),
+          renderX: character.renderX,
+          renderY: character.renderY,
+          state: character.usingWeapon ? CharacterState.Performing : character.state,
+          frame: character.frame,
+          direction: (character.renderDirection + 4) % 8,
+          layer: _mapWeaponTypeToSpriteLayer(character.weapon),
+          color: color,
+          weapon: character.weapon,
+        );
+      }
       return;
     }
   }
   _renderCharacterPartPants(character, color);
-  // _renderCharacterPartBody(character, color);
 
   _renderCharacterPartCustom(
     variation: getVariation(character),
@@ -217,6 +229,20 @@ void _renderCharacterTemplate(Character character, int color) {
   );
 
   _renderCharacterPartHead(character, color);
+
+  if (character.weapon != AttackType.Unarmed){
+    _renderCharacterPartCustom(
+      variation: getVariation(character),
+      renderX: character.renderX,
+      renderY: character.renderY,
+      state: character.usingWeapon ? CharacterState.Performing : character.state,
+      frame: character.frame,
+      direction: character.usingWeapon ? character.aimDirection : character.renderDirection,
+      layer: _mapWeaponTypeToSpriteLayer(character.weapon),
+      color: color,
+      weapon: character.weapon,
+    );
+  }
 }
 
 void _renderCharacterTemplateWeapon(Character character) {
