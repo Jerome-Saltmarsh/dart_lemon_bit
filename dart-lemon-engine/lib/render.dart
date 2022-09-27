@@ -95,10 +95,10 @@ void engineRenderSetDst({
   required double anchorX,
   required double anchorY,
 }){
-  dst[bufferIndex] = x;
-  dst[bufferIndex + 1] = y;
-  dst[bufferIndex + 2] = width;
-  dst[bufferIndex + 3] = height;
+  // dst[bufferIndex] = x;
+  // dst[bufferIndex + 1] = y;
+  // dst[bufferIndex + 2] = width;
+  // dst[bufferIndex + 3] = height;
 }
 
 void engineRenderSetRotation(double value){

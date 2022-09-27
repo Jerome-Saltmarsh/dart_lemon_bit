@@ -36,4 +36,9 @@ class ParticleType {
   static const Light_Emission = 36;
   static const Strike_Punch = 37;
   static const Strike_Blade = 38;
+  static const Character_Animation_Death_Zombie_1 = 39;
+  static const Character_Animation_Death_Zombie_2 = 40;
+  static const Character_Animation_Death_Zombie_3 = 41;
+  static const Character_Animation_Death_Slime_1 = 41;
+  static const Character_Animation_Death_Slime_2 = 42;
 }

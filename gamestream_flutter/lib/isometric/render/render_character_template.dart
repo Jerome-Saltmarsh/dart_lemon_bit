@@ -173,7 +173,9 @@ void _renderCharacterTemplate(Character character, int color) {
 
     // renderText(text: '$diff', x: character.renderX, y: character.renderY - 100);
 
-    if (diff == 4 && character.running) {
+    if (diff >= 3 && character.running) {
+      final aimDirection = ((character.usingWeapon ? character.aimDirection : character.renderDirection) + 4) % 8;
+
       _renderCharacterPartCustom(
          variation: false,
          renderX: character.renderX,
@@ -191,7 +193,7 @@ void _renderCharacterTemplate(Character character, int color) {
         renderY: character.renderY,
         state: character.usingWeapon ? CharacterState.Performing : character.state,
         frame: character.frame,
-        direction: (character.renderDirection + 4) % 8,
+        direction: aimDirection,
         layer: _mapArmourTypeToSpriteLayer(character.body),
         color: color,
         weapon: character.weapon,
@@ -205,7 +207,7 @@ void _renderCharacterTemplate(Character character, int color) {
           renderY: character.renderY,
           state: character.usingWeapon ? CharacterState.Performing : character.state,
           frame: character.frame,
-          direction: (character.renderDirection + 4) % 8,
+          direction: aimDirection,
           layer: _mapWeaponTypeToSpriteLayer(character.weapon),
           color: color,
           weapon: character.weapon,
@@ -222,7 +224,7 @@ void _renderCharacterTemplate(Character character, int color) {
     renderY: character.renderY,
     state: character.usingWeapon ? CharacterState.Performing : character.state,
     frame: character.frame,
-    direction: character.renderDirection,
+    direction: character.usingWeapon ? character.aimDirection : character.renderDirection,
     layer: _mapArmourTypeToSpriteLayer(character.body),
     color: color,
     weapon: character.weapon,

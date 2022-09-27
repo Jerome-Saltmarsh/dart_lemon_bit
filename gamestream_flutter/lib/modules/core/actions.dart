@@ -15,7 +15,6 @@ import 'package:gamestream_flutter/modules/website/enums.dart';
 import 'package:gamestream_flutter/network/instance/websocket.dart';
 import 'package:gamestream_flutter/servers.dart';
 import 'package:gamestream_flutter/shared_preferences.dart';
-import 'package:gamestream_flutter/stripe.dart';
 import 'package:gamestream_flutter/ui/actions/sign_in_with_facebook.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';

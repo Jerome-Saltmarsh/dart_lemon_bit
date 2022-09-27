@@ -45,12 +45,19 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] 3d model weapon assault rifle
 /// [ ] 3d model weapon sniper rifle
 /// [ ] 3d model weapon revolver
+/// [ ] 3d model shield
 /// [ ] 3d model weapon flame thrower
 /// [ ] respawn weapons on empty
 /// [ ] draw punch sprite
-/// [ ] Remove Stripe
+/// [ ] slime death animation 1
+/// [ ] slime death animation 2
+/// [ ] zombie death animation 1
+/// [ ] zombie death animation 2
+/// [ ] zombie death animation 3
 /// [ ] running backwards is slower
-/// [ ] Make the player run backwards when facing behind
+/// [ ] fix attack animation
+/// [x] Make the player run backwards when facing behind
+/// [x] Remove Stripe
 /// [x] Render Head in aim direction
 /// [x] Fix bug player faces forward automatically on release arrow key
 /// [x] Disable player chat

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/particle_type.dart';
 import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
@@ -31,7 +32,19 @@ void onGameEventCharacterDeath(int type, double x, double y, double z, double an
 }
 
 void onCharacterDeathZombie(int type, double x, double y, double z, double angle){
-
+  spawnParticleAnimation(
+      type: randomItem(
+          const [
+            ParticleType.Character_Animation_Death_Zombie_1,
+            ParticleType.Character_Animation_Death_Zombie_2,
+            ParticleType.Character_Animation_Death_Zombie_3,
+          ]
+      ),
+      x: x,
+      y: y,
+      z: z,
+      angle: angle,
+  );
   angle += pi;
 
   final zPos = z + tileSizeHalf;
