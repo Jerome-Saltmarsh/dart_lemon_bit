@@ -5,9 +5,11 @@ import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 
 int getNodeBelowColor(Vector3 vector3) =>
-  colorShades [
-    getNodeBelowShade(vector3)
-  ];
+    convertShadeToColor(
+      getNodeBelowShade(vector3)
+    );
+
+int convertShadeToColor(int shade) =>  colorShades[shade];
 
 int getNodeBelowShade(Vector3 vector3) => getNodeBelowV3(vector3).shade;
 

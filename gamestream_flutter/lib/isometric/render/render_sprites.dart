@@ -17,6 +17,7 @@ import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
+import 'package:gamestream_flutter/isometric/queries/get_distance_from_mouse.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
@@ -393,9 +394,25 @@ class RenderOrderGrid extends RenderOrder {
     _index = 0;
     remaining = total > 0;
 
+    var nearest = 25.0;
+    var nearestIndex = -1;
+
     for (var i = 0; i < totalCharacters; i++){
        characters[i].color = getNodeBelowColor(characters[i]);
+       final characterDistance = getDistanceFromMouse(characters[i]);
+       if (characterDistance > nearest) continue;
+       nearest = characterDistance;
+       nearestIndex = i;
     }
+
+    if (nearestIndex != -1){
+       characters[nearestIndex].color = convertShadeToColor(Shade.Very_Bright);
+    }
+
+
+
+
+
 
 
   }
