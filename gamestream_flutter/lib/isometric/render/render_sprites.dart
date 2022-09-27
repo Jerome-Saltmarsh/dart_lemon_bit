@@ -15,7 +15,9 @@ import 'package:gamestream_flutter/isometric/lighting/apply_particle_emissions.d
 import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
+import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_game_object.dart';
@@ -390,8 +392,13 @@ class RenderOrderGrid extends RenderOrder {
     total = getTotal();
     _index = 0;
     remaining = total > 0;
-  }
 
+    for (var i = 0; i < totalCharacters; i++){
+       characters[i].color = getNodeBelowColor(characters[i]);
+    }
+
+
+  }
 
   void revealRaycast(int z, int row, int column){
     for (; z < gridTotalZ; z += 2){

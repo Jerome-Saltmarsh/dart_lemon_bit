@@ -25,7 +25,7 @@ class Character extends Vector3 {
   var magic = 1.0;
   var aimAngle = 0.0;
   var usingWeapon = false;
-  var shade = 0;
+  var color = 0;
 
   bool get dead => state == CharacterState.Dead;
   bool get deadOrDying => dead || dying;

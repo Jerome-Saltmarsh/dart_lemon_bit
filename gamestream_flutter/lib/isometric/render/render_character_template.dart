@@ -272,7 +272,7 @@ void _renderCharacterTemplateWeapon(Character character) {
     anchorX: 0.5,
     anchorY: 0.7,
     scale: 0.75,
-    color: getNodeBelowShade(character),
+    color: character.color,
   );
 }
 

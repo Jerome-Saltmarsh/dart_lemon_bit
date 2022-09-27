@@ -19,7 +19,7 @@ void renderCharacterZombie(Character character) {
       srcHeight: 64,
       anchorY: 0.66,
       scale: 0.7,
-      color: getNodeBelowColor(character),
+      color: character.color,
   );
 }
 
