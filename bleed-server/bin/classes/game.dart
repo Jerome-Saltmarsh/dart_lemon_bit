@@ -1310,7 +1310,7 @@ abstract class Game {
           x: node.x + x,
           y: node.y + y,
           z: node.z,
-          health: 30,
+          health: 1,
           team: Teams.evil,
         );
         instance.spawn = node;

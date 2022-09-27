@@ -190,7 +190,7 @@ void _renderCharacterTemplate(Character character, int color) {
          weapon: character.weapon,
       );
       _renderCharacterPartCustom(
-        variation: false,
+        variation: getVariation(character),
         renderX: character.renderX,
         renderY: character.renderY,
         state: character.state,
@@ -332,7 +332,7 @@ bool getVariation(Character character) =>
 double _getTemplateSrcX(Character character, {required double size}) {
   const framesPerDirection = 19;
   final weapon = character.weapon;
-  final variation = renderTemplateWithWeapon && weapon == AttackType.Shotgun ||
+  final variation = weapon == AttackType.Shotgun ||
       weapon == AttackType.Bow;
 
   switch (character.state) {
