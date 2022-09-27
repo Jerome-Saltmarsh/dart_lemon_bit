@@ -58,9 +58,8 @@ abstract class Game {
 
   /// In seconds
   void customInitPlayer(Player player) {}
-  /// In seconds
-  int getTime();
-
+  /// safe to override
+  void customPlayerWrite(Player player){ }
   /// safe to override
   void customUpdatePlayer(Player player){ }
   /// safe to override

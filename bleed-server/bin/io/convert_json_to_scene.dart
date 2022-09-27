@@ -9,7 +9,6 @@ import '../classes/node.dart';
 import '../common/game_object_type.dart';
 import '../common/node_orientation.dart';
 import '../common/node_type.dart';
-import '../common/spawn_type.dart';
 import '../isometric/generate_node.dart';
 
 Scene convertStringToScene(String value, String name){

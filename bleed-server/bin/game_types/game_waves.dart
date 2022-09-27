@@ -24,9 +24,6 @@ class GameWaves extends Game {
 
   GameWaves({required Scene scene}) : super(scene);
 
-  @override
-  int getTime() => 0;
-
   int mapAttackTypeToCost(int attackType) => {
       AttackType.Blade: 3,
       AttackType.Assault_Rifle: 10,

@@ -92,9 +92,6 @@ class GameSkirmish extends Game {
   }
 
   @override
-  int getTime() => 0;
-
-  @override
   Player spawnPlayer() {
     final player = Player(game: this, weapon: buildWeaponBlade(), team: 0);
     player.equippedPants = randomItem(PantsType.values);

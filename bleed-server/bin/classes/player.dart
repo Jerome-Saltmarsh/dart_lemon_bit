@@ -289,7 +289,6 @@ class Player extends Character with ByteWriter {
     writeAttackTarget();
     writeProjectiles();
     writePlayerTarget();
-    writeGameTime(game);
     writeCharacters();
     writeGameObjects();
     writeEditorGameObjectSelected();
@@ -379,6 +378,7 @@ class Player extends Character with ByteWriter {
 
   void writeAndSendResponse(){
     writePlayerGame();
+    game.customPlayerWrite(this);
     writeByte(ServerResponse.End);
     sendBufferToClient();
   }
@@ -464,9 +464,9 @@ class Player extends Character with ByteWriter {
     writeByte(itemType);
   }
 
-  void writeGameTime(Game game){
+  void writeGameTime(int time){
     writeByte(ServerResponse.Game_Time);
-    final totalMinutes = game.getTime() ~/ 60;
+    final totalMinutes = time ~/ 60;
     writeByte(totalMinutes ~/ 60);
     writeByte(totalMinutes % 60);
   }

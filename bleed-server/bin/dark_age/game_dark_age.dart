@@ -6,7 +6,6 @@ import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../common/control_scheme.dart';
 import '../common/library.dart';
-import '../common/spawn_type.dart';
 import '../constants/frames_per_second.dart';
 import '../engine.dart';
 import 'dark_age_environment.dart';
@@ -82,6 +81,11 @@ class GameDarkAge extends Game {
   }
 
   @override
+  void customPlayerWrite(Player player) {
+     player.writeGameTime(environment.time.time);
+  }
+
+  @override
   void customOnCollisionBetweenColliders(Collider a, Collider b) {
     if (a is Player && b is GameObjectLoot) {
       return onCollisionBetweenPlayerAndGameObjectLoot(a, b);
@@ -117,9 +121,6 @@ class GameDarkAge extends Game {
       player.x += giveOrTake(5);
       player.y += giveOrTake(5);
   }
-
-  @override
-  int getTime() => environment.time.time;
 
   var timerReplenishAmmo = framesPerSecond * 5;
 

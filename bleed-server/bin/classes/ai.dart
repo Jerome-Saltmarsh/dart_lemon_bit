@@ -58,13 +58,6 @@ abstract class AI extends Character {
     spawnZ = z;
   }
 
-  @override
-  void onStruckBy(src) {
-    if (target == null) {
-      target = src;
-    }
-  }
-
   void clearPath() {
     pathIndex = -1;
   }

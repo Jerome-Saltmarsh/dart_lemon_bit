@@ -219,28 +219,28 @@ class GameObjectButterfly extends GameObjectAnimal with Velocity implements Upda
   /// TODO illegal business logic
   @override
   void update(Game game) {
-    const timeHourSix = 9 * secondsPerHour;
-    const timeHourSeventeen = 16 * secondsPerHour;
-    if (game.getTime() < timeHourSix || game.getTime() > timeHourSeventeen){
-      visible = false;
-      return;
-    } else {
-      visible = true;
-    }
-
-    if (pause > 0) {
-       pause--;
-       return;
-    }
-
-     if (distanceFromPos3(target) < 5){
-       assignNewTarget();
-       pause = 100;
-       return;
-     }
-     // angle = this.getAngle(target);
-     x += xv;
-     y += yv;
+    // const timeHourSix = 9 * secondsPerHour;
+    // const timeHourSeventeen = 16 * secondsPerHour;
+    // if (game.getTime() < timeHourSix || game.getTime() > timeHourSeventeen){
+    //   visible = false;
+    //   return;
+    // } else {
+    //   visible = true;
+    // }
+    //
+    // if (pause > 0) {
+    //    pause--;
+    //    return;
+    // }
+    //
+    //  if (distanceFromPos3(target) < 5){
+    //    assignNewTarget();
+    //    pause = 100;
+    //    return;
+    //  }
+    //  // angle = this.getAngle(target);
+    //  x += xv;
+    //  y += yv;
   }
 }
 
@@ -265,36 +265,36 @@ class GameObjectChicken extends GameObjectAnimal implements Updatable {
 
   @override
   void update(Game game){
-    const timeHourSix = 6 * secondsPerHour;
-    const timeHourSeventeen = 17 * secondsPerHour;
-    if (game.getTime() < timeHourSix || game.getTime() > timeHourSeventeen){
-       state = CharacterState.Sitting;
-       return;
-    }
-
-    if (pause > 0) {
-      pause--;
-      if (pause <= 0){
-        if (randomBool()){
-           state = CharacterState.Performing;
-           pause = 100;
-        } else {
-          assignNewTarget();
-          faceAngle = this.getAngle(target);
-        }
-      }
-      return;
-    }
-
-    if (distanceFromPos3(target) < 5){
-      state = CharacterState.Idle;
-      pause = 100;
-      return;
-    }
-    state = CharacterState.Running;
-    faceAngle = this.getAngle(target);
-    x += xv;
-    y += yv;
+    // const timeHourSix = 6 * secondsPerHour;
+    // const timeHourSeventeen = 17 * secondsPerHour;
+    // if (game.getTime() < timeHourSix || game.getTime() > timeHourSeventeen){
+    //    state = CharacterState.Sitting;
+    //    return;
+    // }
+    //
+    // if (pause > 0) {
+    //   pause--;
+    //   if (pause <= 0){
+    //     if (randomBool()){
+    //        state = CharacterState.Performing;
+    //        pause = 100;
+    //     } else {
+    //       assignNewTarget();
+    //       faceAngle = this.getAngle(target);
+    //     }
+    //   }
+    //   return;
+    // }
+    //
+    // if (distanceFromPos3(target) < 5){
+    //   state = CharacterState.Idle;
+    //   pause = 100;
+    //   return;
+    // }
+    // state = CharacterState.Running;
+    // faceAngle = this.getAngle(target);
+    // x += xv;
+    // y += yv;
   }
 }
 
