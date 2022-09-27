@@ -504,9 +504,9 @@ class Player extends Character with ByteWriter {
     writeAngle(player.mouseAngle);
     writeBool(player.usingWeapon);
 
-    // if (player.usingWeapon){
-    //   player.writeInt(weapon.durationRemaining);
-    // }
+    if (player.usingWeapon) {
+      player.writeInt(player.weapon.frame);
+    }
   }
 
   void writeNpc(Player player, Character npc) {

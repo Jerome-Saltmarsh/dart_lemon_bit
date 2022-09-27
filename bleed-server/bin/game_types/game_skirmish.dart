@@ -41,7 +41,8 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] Shield item
 /// [ ] Grenade item
 /// [ ] Accuracy decreased while running
-///
+/// [ ] Enemies drop magic orbs required for powers
+
 /// [TODO]
 /// [ ] build scene
 /// [ ] multiple spawn points
@@ -54,15 +55,16 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] 3d model weapon flame thrower
 /// [ ] respawn weapons on empty
 /// [ ] draw punch sprite
+/// [ ] remove Node class from front end
 /// [ ] slime death animation 1
 /// [ ] slime death animation 2
 /// [ ] zombie death animation 1
 /// [ ] zombie death animation 2
 /// [ ] zombie death animation 3
 /// [ ] running backwards is slower
-/// [ ] Fix weapon render order
+/// [ ] fix weapon render order
 /// [ ] fix attack animation
-/// [ ] Highlight enemy on mouse over
+/// [x] Highlight enemy on mouse over
 /// [x] Make the player run backwards when facing behind
 /// [x] Remove Stripe
 /// [x] Render Head in aim direction

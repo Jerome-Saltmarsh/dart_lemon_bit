@@ -174,6 +174,8 @@ void _renderCharacterTemplate(Character character, int color) {
 
     // renderText(text: '$diff', x: character.renderX, y: character.renderY - 100);
 
+    /// If the the player is running backwards to the direction they are aiming
+    /// render the player to run backwards
     if (diff >= 3 && character.running) {
       final aimDirection = ((character.usingWeapon ? character.aimDirection : character.renderDirection) + 4) % 8;
 
@@ -207,7 +209,7 @@ void _renderCharacterTemplate(Character character, int color) {
           renderX: character.renderX,
           renderY: character.renderY,
           state: character.usingWeapon ? CharacterState.Performing : character.state,
-          frame: character.frame,
+          frame: character.weaponFrame,
           direction: aimDirection,
           layer: _mapWeaponTypeToSpriteLayer(character.weapon),
           color: color,
@@ -224,7 +226,7 @@ void _renderCharacterTemplate(Character character, int color) {
     renderX: character.renderX,
     renderY: character.renderY,
     state: character.usingWeapon ? CharacterState.Performing : character.state,
-    frame: character.frame,
+    frame: character.weaponFrame,
     direction: character.usingWeapon ? character.aimDirection : character.renderDirection,
     layer: _mapArmourTypeToSpriteLayer(character.body),
     color: color,

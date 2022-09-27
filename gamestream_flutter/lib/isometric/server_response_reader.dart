@@ -493,6 +493,11 @@ class ServerResponseReader with ByteReader {
     character.text = readString();
     character.aimAngle = readAngle();
     character.usingWeapon = readBool();
+    if (character.usingWeapon){
+      character.weaponFrame = readInt();
+    } else {
+      character.weaponFrame = 0;
+    }
     totalCharacters++;
   }
 

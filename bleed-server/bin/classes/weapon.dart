@@ -19,6 +19,8 @@ class Weapon {
 
    int get rounds => _rounds;
 
+   int get frame => duration - durationRemaining;
+
    bool get requiresRounds => AttackType.requiresRounds(type);
 
    set rounds(int value) {
