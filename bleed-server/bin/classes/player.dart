@@ -68,9 +68,10 @@ class Player extends Character with ByteWriter {
   var mapX = 0;
   var mapY = 0;
 
-
   double get mouseGridX => (mouse.x + mouse.y) + z;
   double get mouseGridY => (mouse.y - mouse.x) + z;
+
+  int get aimDirection => Direction.fromRadian(mouseAngle);
 
   int get experience => _experience;
 
@@ -175,6 +176,7 @@ class Player extends Character with ByteWriter {
     target = runTarget;
   }
 
+  /// in radians
   double get mouseAngle => getAngleBetween(mouseGridX, mouseGridY, x, y);
 
   Scene get scene => game.scene;

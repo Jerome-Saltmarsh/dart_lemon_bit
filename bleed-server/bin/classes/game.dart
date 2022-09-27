@@ -60,6 +60,9 @@ abstract class Game {
   void customInitPlayer(Player player) {}
   /// In seconds
   int getTime();
+
+  /// safe to override
+  void customUpdatePlayer(Player player){ }
   /// safe to override
   void customDownloadScene(Player player){ }
   /// safe to override
@@ -819,6 +822,7 @@ abstract class Game {
       updateCharacter(character);
       if (character is Player) {
         updatePlayer(character);
+        customUpdatePlayer(character);
       }
     }
   }

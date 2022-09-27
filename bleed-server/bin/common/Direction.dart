@@ -13,6 +13,26 @@ class Direction {
   static const North_West = 7;
   static const None = 8;
 
+  /// 7 and 1
+  /// the difference is actually only 2
+  ///
+  static int getDifference(int a, int b){
+    final diff = (a - b).abs();
+    if (diff < 4) {
+      if (a < b){
+        return -diff;
+      }
+      return diff;
+    }
+    const totalDirections = 8;
+    final diff2 = totalDirections - diff;
+
+    if (a > b){
+       return -diff2;
+    }
+    return diff2;
+  }
+
   static String getName(int value){
     assert (value >= 0);
     assert (value <= 8);
