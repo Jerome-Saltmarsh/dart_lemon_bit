@@ -179,50 +179,51 @@ void _renderCharacterTemplate(Character character, int color) {
     if (diff >= 3 && character.running) {
       final aimDirection = ((character.usingWeapon ? character.aimDirection : character.renderDirection) + 4) % 8;
 
-      _renderCharacterPartCustom(
+      renderCharacterPartCustom(
+         layer: mapToLayerLegs(character.legs),
          variation: false,
          renderX: character.renderX,
          renderY: character.renderY,
          state: character.state,
          frame: character.frame,
          direction: (character.renderDirection + 4) % 8,
-         layer: _mapLegTypeToSpriteLayer(character.legs),
          color: color,
          weapon: character.weapon,
       );
-      _renderCharacterPartCustom(
+
+      renderCharacterPartCustom(
+        layer: mapToLayerBody(character.body),
         variation: getVariation(character),
         renderX: character.renderX,
         renderY: character.renderY,
         state: character.usingWeapon ? CharacterState.Performing : character.state,
         frame: character.usingWeapon ? character.weaponFrame : character.frame,
         direction: aimDirection,
-        layer: _mapArmourTypeToSpriteLayer(character.body),
         color: color,
         weapon: character.weapon,
       );
 
-      _renderCharacterPartCustom(
+      renderCharacterPartCustom(
+        layer: mapToLayerHead(character.head),
         variation: getVariation(character),
         renderX: character.renderX,
         renderY: character.renderY,
         state: character.usingWeapon ? CharacterState.Performing : character.state,
         frame: character.usingWeapon ? character.weaponFrame : character.frame,
         direction: aimDirection,
-        layer: mapHeadTypeToSpriteLayer(character.head),
         color: color,
         weapon: character.weapon,
       );
 
       if (!character.unarmed){
-        _renderCharacterPartCustom(
+        renderCharacterPartCustom(
+          layer: mapToLayerWeapon(character.weapon),
           variation: getVariation(character),
           renderX: character.renderX,
           renderY: character.renderY,
           state: character.usingWeapon ? CharacterState.Performing : character.state,
           frame: character.usingWeapon ? character.weaponFrame : character.frame,
           direction: aimDirection,
-          layer: _mapWeaponTypeToSpriteLayer(character.weapon),
           color: color,
           weapon: character.weapon,
         );
@@ -230,42 +231,53 @@ void _renderCharacterTemplate(Character character, int color) {
       return;
     }
   }
-  _renderCharacterPartPants(character, color);
 
-  _renderCharacterPartCustom(
+  renderCharacterPartCustom(
+    layer: mapToLayerLegs(character.legs),
+    variation: false,
+    renderX: character.renderX,
+    renderY: character.renderY,
+    state: character.state,
+    frame: character.frame,
+    direction: character.renderDirection,
+    color: color,
+    weapon: character.weapon,
+  );
+
+  renderCharacterPartCustom(
+    layer: mapToLayerBody(character.body),
     variation: getVariation(character),
     renderX: character.renderX,
     renderY: character.renderY,
     state: character.usingWeapon ? CharacterState.Performing : character.state,
     frame: character.weaponFrame,
     direction: character.usingWeapon ? character.aimDirection : character.renderDirection,
-    layer: _mapArmourTypeToSpriteLayer(character.body),
     color: color,
     weapon: character.weapon,
   );
 
-  _renderCharacterPartCustom(
+  renderCharacterPartCustom(
+    layer: mapToLayerHead(character.head),
     variation: getVariation(character),
     renderX: character.renderX,
     renderY: character.renderY,
     state: character.usingWeapon ? CharacterState.Performing : character.state,
     frame: character.usingWeapon ? character.weaponFrame : character.frame,
     direction: character.aimDirection,
-    layer: mapHeadTypeToSpriteLayer(character.head),
     color: color,
     weapon: character.weapon,
   );
 
 
   if (character.weapon != AttackType.Unarmed){
-    _renderCharacterPartCustom(
+    renderCharacterPartCustom(
       variation: getVariation(character),
       renderX: character.renderX,
       renderY: character.renderY,
       state: character.usingWeapon ? CharacterState.Performing : character.state,
       frame: character.frame,
       direction: character.usingWeapon ? character.aimDirection : character.renderDirection,
-      layer: _mapWeaponTypeToSpriteLayer(character.weapon),
+      layer: mapToLayerWeapon(character.weapon),
       color: color,
       weapon: character.weapon,
     );
@@ -283,7 +295,7 @@ void _renderCharacterTemplateWeapon(Character character) {
 
   if (renderRow == -1) {
     _renderCharacterPart(character,
-        _mapWeaponTypeToSpriteLayer(character.weapon), getNodeBelowShade(character));
+        mapToLayerWeapon(character.weapon), getNodeBelowShade(character));
     return;
   }
   render(
@@ -307,21 +319,21 @@ void _renderCharacterShadow(Character character) {
 void _renderCharacterPartHead(Character character, int color) {
   if (renderTemplateWithWeapon) {
     _renderCharacterPart(
-        character, mapHeadTypeToSpriteLayer(character.head), color);
+        character, mapToLayerHead(character.head), color);
   } else {
     _renderCharacterPartAimDirection(
-        character, mapHeadTypeToSpriteLayer(character.head), color);
+        character, mapToLayerHead(character.head), color);
   }
 }
 
 void _renderCharacterPartBody(Character character, int color) {
   _renderCharacterPart(
-      character, _mapArmourTypeToSpriteLayer(character.body), color);
+      character, mapToLayerBody(character.body), color);
 }
 
 void _renderCharacterPartPants(Character character, int color) {
   // if (renderTemplateWithWeapon) {
-    _renderCharacterPart(character, _mapLegTypeToSpriteLayer(character.legs), color);
+    _renderCharacterPart(character, mapToLayerLegs(character.legs), color);
   // }
 }
 
@@ -340,7 +352,7 @@ void _renderCharacterPart(Character character, int layer, int color) {
   );
 }
 
-void _renderCharacterPartCustom({
+void renderCharacterPartCustom({
   required bool variation,
   required double renderX,
   required double renderY,
@@ -569,7 +581,7 @@ double _getTemplateSrcXAimDirection(Character character,
   }
 }
 
-int _mapLegTypeToSpriteLayer(int legType) {
+int mapToLayerLegs(int legType) {
   switch (legType) {
     case PantsType.brown:
       return SpriteLayer.Pants_Brown;
@@ -586,7 +598,7 @@ int _mapLegTypeToSpriteLayer(int legType) {
   }
 }
 
-int _mapArmourTypeToSpriteLayer(int armourType) {
+int mapToLayerBody(int armourType) {
   switch (armourType) {
     case ArmourType.shirtCyan:
       return SpriteLayer.Shirt_Cyan;
@@ -599,7 +611,7 @@ int _mapArmourTypeToSpriteLayer(int armourType) {
   }
 }
 
-int _mapWeaponTypeToSpriteLayer(int weaponType) {
+int mapToLayerWeapon(int weaponType) {
   switch (weaponType) {
     case AttackType.Blade:
       return SpriteLayer.Sword_Wooden;
@@ -618,7 +630,7 @@ int _mapWeaponTypeToSpriteLayer(int weaponType) {
   }
 }
 
-int mapHeadTypeToSpriteLayer(int headType) {
+int mapToLayerHead(int headType) {
   switch (headType) {
     case HeadType.None:
       return SpriteLayer.Head_Plain;
