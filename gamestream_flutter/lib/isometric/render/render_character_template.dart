@@ -170,21 +170,18 @@ void _renderCharacterTemplate(Character character, int color) {
   if (character.tile.type != NodeType.Grass_Long) {
     _renderCharacterShadow(character);
 
-    final diff = Direction.getDifference(character.direction, character.aimDirection).abs();
+    final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
 
     // renderText(text: '$diff', x: character.renderX, y: character.renderY - 100);
 
-
-    if (diff == 3 && character.running) {
-      // render them backwards
-      // _renderCharacterPart(character, _mapLegTypeToSpriteLayer(character.legs), color);
+    if (diff == 4 && character.running) {
       _renderCharacterPartCustom(
          variation: false,
          renderX: character.renderX,
          renderY: character.renderY,
          state: character.state,
          frame: character.frame,
-         direction: (character.direction + 3) % 8,
+         direction: (character.renderDirection + 4) % 8,
          layer: _mapLegTypeToSpriteLayer(character.legs),
          color: color,
          weapon: character.weapon,
@@ -193,9 +190,9 @@ void _renderCharacterTemplate(Character character, int color) {
         variation: getVariation(character),
         renderX: character.renderX,
         renderY: character.renderY,
-        state: character.state,
+        state: character.usingWeapon ? CharacterState.Performing : character.state,
         frame: character.frame,
-        direction: (character.direction + 3) % 8,
+        direction: (character.renderDirection + 4) % 8,
         layer: _mapArmourTypeToSpriteLayer(character.body),
         color: color,
         weapon: character.weapon,
@@ -205,7 +202,20 @@ void _renderCharacterTemplate(Character character, int color) {
     }
   }
   _renderCharacterPartPants(character, color);
-  _renderCharacterPartBody(character, color);
+  // _renderCharacterPartBody(character, color);
+
+  _renderCharacterPartCustom(
+    variation: getVariation(character),
+    renderX: character.renderX,
+    renderY: character.renderY,
+    state: character.usingWeapon ? CharacterState.Performing : character.state,
+    frame: character.frame,
+    direction: character.renderDirection,
+    layer: _mapArmourTypeToSpriteLayer(character.body),
+    color: color,
+    weapon: character.weapon,
+  );
+
   _renderCharacterPartHead(character, color);
 }
 

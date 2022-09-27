@@ -498,11 +498,15 @@ class Player extends Character with ByteWriter {
   void writePlayer(Player player) {
     writeByte(ServerResponse.Character_Player);
     writeCharacter(player, player);
-    // writePercentage(player.magicPercentage);
     writeCharacterEquipment(player);
     writeString(player.name);
     writeString(player.text);
     writeAngle(player.mouseAngle);
+    writeBool(player.usingWeapon);
+
+    // if (player.usingWeapon){
+    //   player.writeInt(weapon.durationRemaining);
+    // }
   }
 
   void writeNpc(Player player, Character npc) {

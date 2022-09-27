@@ -24,6 +24,7 @@ class Character extends Vector3 {
   /// percentage between 0 and 1
   var magic = 1.0;
   var aimAngle = 0.0;
+  var usingWeapon = false;
 
   bool get dead => state == CharacterState.Dead;
   bool get deadOrDying => dead || dying;
