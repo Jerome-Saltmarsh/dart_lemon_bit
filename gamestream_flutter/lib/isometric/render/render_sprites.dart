@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emissions_npcs.dart';
+import 'package:gamestream_flutter/isometric/lighting/apply_emmissions_particles.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_particle_emissions.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
@@ -101,13 +102,13 @@ class RenderOrderCharacters extends RenderOrder {
   @override
   void reset() {
     super.reset();
-    applyEmissionsCharacters();
-
-    for (var i = 0; i < totalGameObjects; i++){
-       if (gameObjects[i].type != GameObjectType.Candle) continue;
-       gameObjects[i].tile.applyLight1();
-       gameObjects[i].tileBelow.applyLight1();
-    }
+    // applyEmissionsCharacters();
+    //
+    // for (var i = 0; i < totalGameObjects; i++){
+    //    if (gameObjects[i].type != GameObjectType.Candle) continue;
+    //    gameObjects[i].tile.applyLight1();
+    //    gameObjects[i].tileBelow.applyLight1();
+    // }
   }
 }
 
@@ -133,7 +134,6 @@ class RenderOrderGameObjects extends RenderOrder {
 
   @override
   void reset() {
-    applyEmissionGameObjects();
     super.reset();
   }
 }
@@ -190,9 +190,6 @@ class RenderOrderParticle extends RenderOrder {
   void reset() {
     sortParticles();
     totalActive = totalActiveParticles;
-    for (var i = 0; i < totalActive; i++){
-       applyParticleEmission(particles[i]);
-    }
     super.reset();
   }
 }
@@ -358,6 +355,9 @@ class RenderOrderGrid extends RenderOrder {
 
     assignNode();
     refreshDynamicLightGrid();
+    applyEmissionsCharacters();
+    applyEmissionGameObjects();
+    applyEmissionsParticles();
 
     if (editMode){
        applyEmissionDynamic(

@@ -11,4 +11,9 @@ void applyEmissionGameObjects() {
       if (!GameObjectType.emitsLightBright(gameObjects[i].type)) continue;
       applyVector3Emission(gameObjects[i], maxBrightness: Shade.Very_Bright);
    }
+   for (var i = 0; i < totalGameObjects; i++){
+      if (gameObjects[i].type != GameObjectType.Candle) continue;
+      gameObjects[i].tile.applyLight1();
+      gameObjects[i].tileBelow.applyLight1();
+   }
 }

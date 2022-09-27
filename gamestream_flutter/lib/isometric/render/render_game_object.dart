@@ -1,6 +1,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
+import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 import 'package:lemon_engine/render.dart';
@@ -15,7 +16,7 @@ void renderGameObject(GameObject value) {
       srcY: 11,
       srcWidth: 10,
       srcHeight: 15,
-      color: getNodeBelowShade(value),
+      color: getNodeBelowColor(value),
     );
 
   if (value.type == GameObjectType.Rock)
@@ -26,7 +27,7 @@ void renderGameObject(GameObject value) {
        srcY: 0,
        srcWidth: 16,
        srcHeight: 16,
-      color: getNodeBelowShade(value),
+      color: getNodeBelowColor(value),
     );
 
   if (value.type == GameObjectType.Barrel)
@@ -38,7 +39,7 @@ void renderGameObject(GameObject value) {
       srcWidth: 28,
       srcHeight: 40,
       anchorY: 0.66,
-      color: getNodeBelowShade(value),
+      color: getNodeBelowColor(value),
     );
 
   if (value.type == GameObjectType.Tavern_Sign)
@@ -49,7 +50,7 @@ void renderGameObject(GameObject value) {
       srcY: 0,
       srcWidth: 19,
       srcHeight: 39,
-      color: getNodeBelowShade(value),
+      color: getNodeBelowColor(value),
     );
 
   if (value.type == GameObjectType.Candle)
@@ -72,7 +73,7 @@ void renderGameObject(GameObject value) {
       srcWidth: 5,
       srcHeight: 14,
       anchorY: 0.95,
-      color: getNodeBelowShade(value),
+      color: getNodeBelowColor(value),
     );
 
   if (value.type == GameObjectType.Wheel)
@@ -84,7 +85,7 @@ void renderGameObject(GameObject value) {
       srcWidth: 34,
       srcHeight: 40,
       anchorY: 0.9,
-      color: getNodeBelowShade(value),
+      color: getNodeBelowColor(value),
     );
 
   if (value.type == GameObjectType.Flower)
@@ -95,7 +96,7 @@ void renderGameObject(GameObject value) {
       srcY: 0,
       srcWidth: 16,
       srcHeight: 16,
-      color: getNodeBelowShade(value),
+      color: getNodeBelowColor(value),
     );
 
   if (value.type == GameObjectType.Stick)
@@ -106,7 +107,7 @@ void renderGameObject(GameObject value) {
       srcY: 0,
       srcWidth: 16,
       srcHeight: 16,
-      color: getNodeBelowShade(value),
+      color: getNodeBelowColor(value),
     );
 
   if (value.type == GameObjectType.Crystal)
@@ -140,7 +141,7 @@ void renderGameObject(GameObject value) {
       srcWidth: 30,
       srcHeight: 23,
       scale: 0.5,
-      color: getNodeBelowShade(value),
+      color: getNodeBelowColor(value),
     );
 
   if (value.type == GameObjectType.Chicken)
@@ -155,7 +156,7 @@ void renderGameObject(GameObject value) {
       srcWidth: 12,
       srcHeight: 22,
       scale: 1.0,
-      color: getNodeBelowShade(value),
+      color: colorShades[Shade.Very_Bright],
     );
 
   if (value.type == GameObjectType.Jellyfish)

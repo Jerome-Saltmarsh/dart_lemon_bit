@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'apply_vector_emission.dart';
 
 void applyParticleEmission(Particle particle){
+  if (!particle.active) return;
   if (particle.type == ParticleType.Orb_Shard){
     if (particle.duration > 12){
       return applyVector3Emission(particle, maxBrightness: Shade.Very_Bright);
