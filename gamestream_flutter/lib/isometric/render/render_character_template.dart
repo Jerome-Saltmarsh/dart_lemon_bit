@@ -1,6 +1,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
+import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -108,6 +109,10 @@ void renderCharacterTemplateWithoutWeapon(Character character,
   if (renderHealthBar) {
     renderCharacterHealthBar(character);
   }
+
+  // renderText(text: '${character.aimDirection}', x: character.renderX, y: character.renderY - 100);
+  // renderText(text: '${character.aimAngle.toStringAsFixed(3)}', x: character.renderX, y: character.renderY - 75);
+
   _renderCharacterTemplate(character, colorShades[character.tileBelow.shade]);
 }
 
@@ -123,7 +128,7 @@ void renderCharacterTemplateWithWeapon(Character character,
   }
 
   // renderArrow(character.x, character.y, character.z, character.aimAngle);
-  // renderText(text: '$aimDirection', x: character.renderX, y: character.renderY - 100);
+  // renderText(text: '${character.aimDirection}', x: character.renderX, y: character.renderY - 100);
 
   final weaponType = character.weapon;
   final direction = character.direction;
@@ -205,21 +210,21 @@ void _renderCharacterShadow(Character character) {
 void _renderCharacterPartHead(Character character, int color) {
   if (renderTemplateWithWeapon) {
     _renderCharacterPart(
-        character, _mapHeadTypeToSpriteLayer(character.helm), color);
+        character, _mapHeadTypeToSpriteLayer(character.head), color);
   } else {
     _renderCharacterPartAimDirection(
-        character, _mapHeadTypeToSpriteLayer(character.helm), color);
+        character, _mapHeadTypeToSpriteLayer(character.head), color);
   }
 }
 
 void _renderCharacterPartBody(Character character, int color) {
   _renderCharacterPart(
-      character, _mapArmourTypeToSpriteLayer(character.armour), color);
+      character, _mapArmourTypeToSpriteLayer(character.body), color);
 }
 
 void _renderCharacterPartPants(Character character, int color) {
   // if (renderTemplateWithWeapon) {
-    _renderCharacterPart(character, _mapLegTypeToSpriteLayer(character.pants), color);
+    _renderCharacterPart(character, _mapLegTypeToSpriteLayer(character.legs), color);
   // }
 }
 

@@ -85,7 +85,7 @@ class GameSkirmish extends Game {
       final diff = Direction.getDifference(player.aimDirection, player.faceDirection);
       if (diff >= 2){
         player.faceAngle += piQuarter;
-      } else if (diff <= -2) {
+      } else if (diff <= -3) {
         player.faceAngle -= piQuarter;
       }
     }

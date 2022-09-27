@@ -806,9 +806,9 @@ class ServerResponseReader with ByteReader {
   void readCharacterEquipment(Character character){
     character.weapon = readByte();
     character.weaponState = readByte();
-    character.armour = readByte();
-    character.helm = readByte();
-    character.pants = readByte();
+    character.body = readByte();
+    character.head = readByte();
+    character.legs = readByte();
   }
 
   void _parseCharacterFrameHealth(Character character, int byte){

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:lemon_math/library.dart';
@@ -11,9 +13,9 @@ class Character extends Vector3 {
   var frame = 0;
   var weapon = AttackType.Unarmed;
   var weaponState = AttackType.Unarmed;
-  var armour = ArmourType.shirtCyan;
-  var helm = HeadType.None;
-  var pants = PantsType.white;
+  var body = ArmourType.shirtCyan;
+  var head = HeadType.None;
+  var legs = PantsType.white;
   var name = "";
   var text = "";
   var allie = false;
@@ -31,7 +33,7 @@ class Character extends Vector3 {
   bool get hurt => state == CharacterState.Hurt;
   bool get dying => state == CharacterState.Dying;
   bool get alive => !dead;
-  int get aimDirection => ((aimAngle - piEighth) ~/ piQuarter + 4) % 8;
+  int get aimDirection => ((aimAngle - (pi / 16.0)) ~/ piQuarter + 4) % 8;
   double get angle => direction * piQuarter;
   int get renderDirection => direction == 0 ? 7 : (direction - 1);
 }
