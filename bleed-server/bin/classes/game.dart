@@ -511,6 +511,10 @@ abstract class Game {
     if (weapon.durationRemaining > 0) return;
     weapon.durationRemaining = weapon.duration;
     weapon.state = AttackState.Firing;
+    character.applyForce(
+      force: 2.0,
+      angle: angle + pi,
+    );
 
     spawnProjectile(
       src: character,
@@ -1708,19 +1712,6 @@ abstract class Game {
       damage: damage,
     );
     dispatchAttackPerformed(AttackType.Fireball, character.x, character.y, character.z, angle);
-  }
-
-  void fireHandgun(Character src, double angle) {
-    spawnProjectile(
-      src: src,
-      accuracy: 0,
-      angle: angle,
-      speed: 8.0,
-      range: 300,
-      projectileType: ProjectileType.Bullet,
-      damage: 5,
-    );
-    dispatchAttackPerformed(AttackType.Handgun, src.x, src.y, src.z, angle);
   }
 
   void characterFireShotgun(Character src, double angle) {
