@@ -220,19 +220,7 @@ void renderCharacterTemplate(Character character) {
         weapon: character.weapon,
       );
 
-      if (!character.unarmed){
-        renderCharacterTemplatePartCustom(
-          layer: mapToLayerWeapon(character.weapon),
-          variation: getVariation(character),
-          renderX: character.renderX,
-          renderY: character.renderY,
-          state: character.usingWeapon ? CharacterState.Performing : character.state,
-          frame: character.usingWeapon ? character.weaponFrame : character.frame,
-          direction: character.usingWeapon ? character.aimDirection : renderDirectionOpposite,
-          color: character.color,
-          weapon: character.weapon,
-        );
-      }
+      renderCharacterTemplateWeapon2(character);
       return;
     }
 
@@ -274,62 +262,40 @@ void renderCharacterTemplate(Character character) {
     weapon: character.weapon,
   );
 
-
-  if (character.weapon != AttackType.Unarmed){
-    if (weaponIs96(character.weapon)){
-      renderCharacterTemplatePartCustom96(
-        variation: getVariation(character),
-        renderX: character.renderX,
-        renderY: character.renderY,
-        state: character.usingWeapon ? CharacterState.Performing : character.state,
-        frame: character.usingWeapon ? character.weaponFrame : character.frame,
-        direction: character.usingWeapon ? character.aimDirection : character.renderDirection,
-        color: character.color,
-        weapon: character.weapon,
-      );
-    } else {
-      renderCharacterTemplatePartCustom(
-        variation: getVariation(character),
-        renderX: character.renderX,
-        renderY: character.renderY,
-        state: character.usingWeapon ? CharacterState.Performing : character.state,
-        frame: character.usingWeapon ? character.weaponFrame : character.frame,
-        direction: character.usingWeapon ? character.aimDirection : character.renderDirection,
-        layer: mapToLayerWeapon(character.weapon),
-        color: character.color,
-        weapon: character.weapon,
-      );
-    }
-  }
+  renderCharacterTemplateWeapon2(character);
 }
 
 void renderCharacterTemplateWeapon2(Character character){
-  if (character.weapon != AttackType.Unarmed){
-    if (weaponIs96(character.weapon)){
-      renderCharacterTemplatePartCustom96(
-        variation: getVariation(character),
-        renderX: character.renderX,
-        renderY: character.renderY,
-        state: character.usingWeapon ? CharacterState.Performing : character.state,
-        frame: character.usingWeapon ? character.weaponFrame : character.frame,
-        direction: character.usingWeapon ? character.aimDirection : character.renderDirection,
-        color: character.color,
-        weapon: character.weapon,
-      );
-    } else {
-      renderCharacterTemplatePartCustom(
-        variation: getVariation(character),
-        renderX: character.renderX,
-        renderY: character.renderY,
-        state: character.usingWeapon ? CharacterState.Performing : character.state,
-        frame: character.usingWeapon ? character.weaponFrame : character.frame,
-        direction: character.usingWeapon ? character.aimDirection : character.renderDirection,
-        layer: mapToLayerWeapon(character.weapon),
-        color: character.color,
-        weapon: character.weapon,
-      );
-    }
+  if (character.weapon == AttackType.Unarmed) return;
+  if (weaponIs96(character.weapon)) {
+    renderCharacterTemplatePartCustom96(
+      variation: getVariation(character),
+      renderX: character.renderX,
+      renderY: character.renderY,
+      state:
+          character.usingWeapon ? CharacterState.Performing : character.state,
+      frame: character.usingWeapon ? character.weaponFrame : character.frame,
+      direction: character.usingWeapon
+          ? character.aimDirection
+          : character.renderDirection,
+      color: character.color,
+      weapon: character.weapon,
+    );
+    return;
   }
+  renderCharacterTemplatePartCustom(
+    variation: getVariation(character),
+    renderX: character.renderX,
+    renderY: character.renderY,
+    state: character.usingWeapon ? CharacterState.Performing : character.state,
+    frame: character.usingWeapon ? character.weaponFrame : character.frame,
+    direction: character.usingWeapon
+        ? character.aimDirection
+        : character.renderDirection,
+    layer: mapToLayerWeapon(character.weapon),
+    color: character.color,
+    weapon: character.weapon,
+  );
 }
 
 void renderCharacterTemplateWeapon(Character character) {
