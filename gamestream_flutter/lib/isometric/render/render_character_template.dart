@@ -182,6 +182,10 @@ void renderCharacterTemplate(Character character) {
     if (diff >= 3 && character.running) {
       final renderDirectionOpposite = (character.renderDirection + 4) % 8;
 
+      if (weaponInFront) {
+        renderCharacterTemplateWeapon2(character, renderDirectionOpposite);
+      }
+
       if (!inLongGrass){
         renderCharacterTemplatePartCustom(
           layer: mapToLayerLegs(character.legs),
@@ -220,7 +224,9 @@ void renderCharacterTemplate(Character character) {
         weapon: character.weapon,
       );
 
-      renderCharacterTemplateWeapon2(character, renderDirectionOpposite);
+      if (!weaponInFront) {
+        renderCharacterTemplateWeapon2(character, renderDirectionOpposite);
+      }
       return;
     }
 
