@@ -142,5 +142,5 @@ Weapon buildWeaponUnarmed({int damage = 1}) =>
        damage: damage,
        capacity: 0,
        duration: 10,
-       range: 50,
+       range: 35,
     );
