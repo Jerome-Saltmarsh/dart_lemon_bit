@@ -178,7 +178,6 @@ void renderCharacterTemplate(Character character, int color) {
     /// render the player to run backwards
     if (diff >= 3 && character.running) {
       final renderDirectionOpposite = (character.renderDirection + 4) % 8;
-      final aimDirection = character.usingWeapon ? character.aimDirection : renderDirectionOpposite;
 
       renderCharacterPartCustom(
          layer: mapToLayerLegs(character.legs),
@@ -211,7 +210,7 @@ void renderCharacterTemplate(Character character, int color) {
         renderY: character.renderY,
         state: character.usingWeapon ? CharacterState.Performing : character.state,
         frame: character.usingWeapon ? character.weaponFrame : character.frame,
-        direction: character.usingWeapon ? character.aimDirection : renderDirectionOpposite,
+        direction: character.aimDirection,
         color: color,
         weapon: character.weapon,
       );
