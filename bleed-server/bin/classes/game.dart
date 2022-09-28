@@ -1725,6 +1725,11 @@ abstract class Game {
 
   void characterFireShotgun(Character src, double angle) {
     if (src.weapon.durationRemaining > 0) return;
+
+    src.applyForce(
+      force: 6.0,
+      angle: angle + pi,
+    );
     src.weapon.durationRemaining = src.weapon.duration;
 
     for (var i = 0; i < 5; i++) {
