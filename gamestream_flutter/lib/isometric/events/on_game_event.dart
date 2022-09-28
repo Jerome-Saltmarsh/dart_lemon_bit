@@ -77,6 +77,20 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       return audioSingleSwingSword.playXYZ(x, y, z);
     case GameEventType.EnemyTargeted:
       break;
+    case GameEventType.Attack_Missed:
+      final attackType = serverResponseReader.readByte();
+      switch (attackType) {
+        case AttackType.Unarmed:
+          audioSingleArmSwing.playXYZ(x, y, z);
+          break;
+        case AttackType.Blade:
+          audioSingleArmSwing.playXYZ(x, y, z);
+          break;
+        case AttackType.Baseball_Bat:
+          audioSingleArmSwing.playXYZ(x, y, z);
+          break;
+      }
+      break;
     case GameEventType.Arrow_Fired:
       return audioSingleArrowFlying.playXYZ(x, y, z);
 
@@ -147,8 +161,6 @@ void onGameEventAttackPerformedBlade(double x, double y, double z, double angle)
 
 void onGameEventAttackPerformedUnarmed(double x, double y, double z, double angle) {
   spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
-  audioSingleArmSwing.playXYZ(x, y, z);
-
   // const range = 25.0;
   // engine.camera.x += getAdjacent(angle + piQuarter, range);
   // engine.camera.y += getOpposite(angle + piQuarter, range);

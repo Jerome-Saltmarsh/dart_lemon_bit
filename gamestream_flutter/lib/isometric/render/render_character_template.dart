@@ -1,6 +1,5 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
-import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -299,7 +298,7 @@ void renderCharacterTemplateWeapon2(Character character, int direction){
     frame: character.usingWeapon ? character.weaponFrame : character.frame,
     direction: character.usingWeapon
         ? character.aimDirection
-        : character.renderDirection,
+        : direction,
     layer: mapToLayerWeapon(character.weapon),
     color: character.color,
     weapon: character.weapon,

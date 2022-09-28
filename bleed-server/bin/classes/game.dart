@@ -439,6 +439,7 @@ abstract class Game {
       // playerFaceMouse(player);
     }
 
+    var attackHit = false;
 
     for (final character in characters) {
       if (onSameTeam(player, character)) continue;
@@ -449,6 +450,7 @@ abstract class Game {
                       performZ,
                     ) > attackRadius) continue;
         applyHit(src: player, target: character, damage: damage);
+      attackHit = true;
        player.applyForce(
            force: 7.5,
            angle: getAngleBetween(player.x, player.y, character.x, character.y),
@@ -469,6 +471,7 @@ abstract class Game {
           gameObject.active = false;
           gameObject.collidable = false;
           gameObject.respawn = 200;
+          attackHit = true;
           for (final player in players) {
             player.writeGameEventGameObjectDestroyed(gameObject);
           }
@@ -484,6 +487,8 @@ abstract class Game {
         force: 5,
         angle: radiansV2(player, gameObject),
       );
+
+      attackHit = true;
     }
 
     final node = scene.getNodeXYZ(
@@ -492,13 +497,28 @@ abstract class Game {
       performZ,
     );
     if (node.isDestroyed) return;
-    if (!node.isStrikable) return;
+    if (!node.isStrikable) {
+      if (!attackHit){
+        for (final player in players) {
+          player.writeGameEvent(
+            type: GameEventType.Attack_Missed,
+            x: performX,
+            y: performY,
+            z: performZ,
+            angle: angle,
+          );
+          player.writeByte(attackType);
+        }
+      }
+      return;
+    }
 
     player.applyForce(
       force: 4.5,
       angle: angle + pi,
     );
 
+    attackHit = true;
     for (final player in players) {
       player.writeGameEvent(
           type: GameEventType.Node_Struck,
@@ -516,6 +536,7 @@ abstract class Game {
       final column = performY ~/ tileSize;
       setNode(z, row, column, NodeType.Empty, NodeOrientation.Destroyed);
 
+      attackHit = true;
       perform((){
         setNode(z, row, column, NodeType.Respawning, NodeOrientation.None);
       }, 300);
@@ -523,6 +544,19 @@ abstract class Game {
       perform((){
         setNode(z, row, column, node.type, node.orientation);
       }, 400);
+    }
+
+    if (!attackHit){
+      for (final player in players) {
+        player.writeGameEvent(
+          type: GameEventType.Attack_Missed,
+          x: performX,
+          y: performY,
+          z: performZ,
+          angle: angle,
+        );
+        player.writeByte(attackType);
+      }
     }
   }
 
