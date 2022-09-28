@@ -431,7 +431,7 @@ abstract class Game {
     );
 
     player.applyForce(
-      force: 3.0,
+      force: 2.5,
       angle: angle,
     );
 
@@ -495,7 +495,7 @@ abstract class Game {
     if (!node.isStrikable) return;
 
     player.applyForce(
-      force: 7.5,
+      force: 4.5,
       angle: angle + pi,
     );
 

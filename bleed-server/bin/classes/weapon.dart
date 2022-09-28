@@ -41,10 +41,10 @@ class Weapon {
 Weapon buildWeaponShotgun() =>
     Weapon(
       type: AttackType.Shotgun,
-      damage: 1,
+      damage: 3,
       capacity: 8,
       duration: 20,
-      range: 300,
+      range: 250,
     );
 
 Weapon buildWeaponRifle() =>

@@ -109,7 +109,7 @@ void renderCharacterTemplateWithoutWeapon(Character character,
     renderCharacterHealthBar(character);
   }
 
-  renderText(text: '${character.renderDirection}', x: character.renderX, y: character.renderY - 100);
+  // renderText(text: '${character.renderDirection}', x: character.renderX, y: character.renderY - 100);
   // renderText(text: '${character.aimAngle.toStringAsFixed(3)}', x: character.renderX, y: character.renderY - 75);
 
   renderCharacterTemplate(character);
