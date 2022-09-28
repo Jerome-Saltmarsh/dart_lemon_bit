@@ -11,5 +11,6 @@ void onChangedGameType(int? value){
   }
   game.edit.value = value == GameType.Editor;
   game.timeVisible.value = GameType.isTimed(value);
+  game.mapVisible.value = value == GameType.Dark_Age;
   fullScreenEnter();
 }
