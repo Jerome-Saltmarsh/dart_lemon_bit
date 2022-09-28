@@ -6,7 +6,10 @@ import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:lemon_math/library.dart';
 
 void onGameEventCharacterHurt(int type, double x, double y, double z, double angle) {
-  audioSingleBloodyPunches3.playXYZ(x, y, z);
+
+  randomItem(audioSingleBloodyPunches).playXYZ(x, y, z);
+
+  audioSingleHeavyPunch13.playXYZ(x, y, z);
 
   for (var i = 0; i < 4; i++){
     spawnParticleBlood(

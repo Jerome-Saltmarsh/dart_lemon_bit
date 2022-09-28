@@ -129,9 +129,9 @@ void onGameEventNodeStruck(int nodeType, double x, double y, double z) {
 
 void onGameEventAttackPerformedBlade(double x, double y, double z, double angle) {
   spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
-  audioSingleSciFiBlaster8.playXYZ(x, y, z);
-  audioSingleSwingSword.playXYZ(x, y, z);
+  // audioSingleSciFiBlaster8.playXYZ(x, y, z);
 
+  audioSingleSwingSword.playXYZ(x, y, z);
   // const range = 5.0;
   // engine.camera.x += getAdjacent(angle + piQuarter, range);
   // engine.camera.y += getOpposite(angle + piQuarter, range);

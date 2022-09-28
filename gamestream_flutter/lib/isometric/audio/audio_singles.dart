@@ -18,7 +18,6 @@ final audioSingleNotificationSound10 = AudioSingle(name: 'notification-sound-10'
 final audioSingleNotificationSound12 = AudioSingle(name: 'notification-sound-12', volume: 0.5, maxDistance: 200);
 final audioSingleBowRelease = AudioSingle(name: 'bow-release', volume: 0.5, maxDistance: 250);
 final audioSingleArrowFlying = AudioSingle(name: 'arrow-flying-past-6', volume: 0.5, maxDistance: 250);
-final audioSingleBloodyPunches = AudioSingle(name: 'bloody-punches-1', volume: 0.5, maxDistance: 400);
 final audioSingleSciFiBlaster = AudioSingle(name: 'sci-fi-blaster-1', volume: 0.5, maxDistance: 400);
 final audioSingleSciFiBlaster8 = AudioSingle(name: 'sci-fi-blaster-8', volume: 0.5, maxDistance: 400);
 final audioSingleShotgunShot = AudioSingle(name: 'shotgun-shot', volume: 0.5, maxDistance: 400);
@@ -40,13 +39,16 @@ final audioSingleMaterialStruckStone = AudioSingle(name: 'material-struck-stone'
 final audioSingleRatSqueak = AudioSingle(name: 'rat-squeak', volume: 0.5, maxDistance: 400);
 final audioSingleCollectStar3 = AudioSingle(name: 'collect-star-3', volume: 0.5, maxDistance: 400);
 final audioSingleMagicalImpact28 = AudioSingle(name: 'magical-impact-28', volume: 0.5, maxDistance: 400);
-final audioSingleBloodyPunches3 = AudioSingle(name: 'bloody-punches-3', volume: 0.5, maxDistance: 400);
+final audioSingleBloodyPunches1 = AudioSingle(name: 'bloody-punches-1', volume: 1.0, maxDistance: 400);
+final audioSingleBloodyPunches3 = AudioSingle(name: 'bloody-punches-3', volume: 1.0, maxDistance: 400);
+final audioSingleBloodyPunches = [audioSingleBloodyPunches1, audioSingleBloodyPunches3];
 final audioSingleCrateBreaking = AudioSingle(name: 'crate-breaking', volume: 0.5, maxDistance: 400);
 final audioSingleZombieDeaths = [
   AudioSingle(name: 'zombie-death-02', volume: 1, maxDistance: 400),
   AudioSingle(name: 'zombie-death-09', volume: 1, maxDistance: 400),
   AudioSingle(name: 'zombie-death-15', volume: 1, maxDistance: 400),
 ];
+
 
 final audioSingleMaleHello = AudioSingle(name: 'male-hello-1', volume: 0.5, maxDistance: 400);
 final audioSingleRooster = AudioSingle(name: 'rooster', volume: 0.5, maxDistance: 400);
@@ -56,6 +58,7 @@ final audioSingleClickSound = AudioSingle(name: 'click-sound-8', volume: 0.5, ma
 final audioSingleSwingArm = AudioSingle(name: 'swing-arm-11', volume: 0.4, maxDistance: 250);
 final audioSingleSwingSword = AudioSingle(name: 'swing-sword', volume: 0.4, maxDistance: 250);
 final audioSingleArmSwing = AudioSingle(name: 'arm-swing-whoosh-11', volume: 0.4, maxDistance: 250);
+final audioSingleHeavyPunch13 = AudioSingle(name: 'heavy-punch-13', volume: 1, maxDistance: 250);
 final audioSinglePistolShot20 = AudioSingle(name: 'pistol-shot-20', volume: 0.4, maxDistance: 250);
 final audioSingleGrassCut = AudioSingle(name: 'grass-cut', volume: 0.4, maxDistance: 250);
 final audioSingleSwitchSounds4 = AudioSingle(name: 'switch-sounds-4', volume: 0.4, maxDistance: 250);
