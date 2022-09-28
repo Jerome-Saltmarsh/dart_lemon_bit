@@ -1,5 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
+import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -108,7 +109,7 @@ void renderCharacterTemplateWithoutWeapon(Character character,
     renderCharacterHealthBar(character);
   }
 
-  // renderText(text: '${character.aimDirection}', x: character.renderX, y: character.renderY - 100);
+  renderText(text: '${character.renderDirection}', x: character.renderX, y: character.renderY - 100);
   // renderText(text: '${character.aimAngle.toStringAsFixed(3)}', x: character.renderX, y: character.renderY - 75);
 
   renderCharacterTemplate(character);
@@ -173,6 +174,7 @@ void renderCharacterTemplate(Character character) {
     }
 
     final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
+    final weaponInFront = character.renderDirection >= 2 && character.renderDirection < 6;
 
     // renderText(text: '$diff', x: character.renderX, y: character.renderY - 100);
 
@@ -219,9 +221,13 @@ void renderCharacterTemplate(Character character) {
         weapon: character.weapon,
       );
 
-      renderCharacterTemplateWeapon2(character);
+      renderCharacterTemplateWeapon2(character, renderDirectionOpposite);
       return;
     }
+
+  if (!weaponInFront){
+    renderCharacterTemplateWeapon2(character, character.renderDirection);
+  }
 
     if (!inLongGrass){
       renderCharacterTemplatePartCustom(
@@ -261,10 +267,13 @@ void renderCharacterTemplate(Character character) {
     weapon: character.weapon,
   );
 
-  renderCharacterTemplateWeapon2(character);
+  if (weaponInFront){
+    renderCharacterTemplateWeapon2(character,  character.renderDirection);
+  }
+
 }
 
-void renderCharacterTemplateWeapon2(Character character){
+void renderCharacterTemplateWeapon2(Character character, int direction){
   if (character.weapon == AttackType.Unarmed) return;
   if (weaponIs96(character.weapon)) {
     renderCharacterTemplatePartCustom96(
@@ -276,7 +285,7 @@ void renderCharacterTemplateWeapon2(Character character){
       frame: character.usingWeapon ? character.weaponFrame : character.frame,
       direction: character.usingWeapon
           ? character.aimDirection
-          : character.renderDirection,
+          : direction,
       color: character.color,
       weapon: character.weapon,
     );
