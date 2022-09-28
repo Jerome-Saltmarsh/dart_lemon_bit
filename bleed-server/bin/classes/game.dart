@@ -431,7 +431,7 @@ abstract class Game {
     );
 
     player.applyForce(
-      force: 3.5,
+      force: 3.0,
       angle: angle,
     );
 
@@ -472,6 +472,11 @@ abstract class Game {
           for (final player in players) {
             player.writeGameEventGameObjectDestroyed(gameObject);
           }
+
+          player.applyForce(
+            force: 7.5,
+            angle: getAngleBetween(player.x, player.y, gameObject.x, gameObject.y),
+          );
         }
       }
       if (gameObject is Velocity == false) continue;
@@ -488,6 +493,11 @@ abstract class Game {
     );
     if (node.isDestroyed) return;
     if (!node.isStrikable) return;
+
+    player.applyForce(
+      force: 7.5,
+      angle: angle + pi,
+    );
 
     for (final player in players) {
       player.writeGameEvent(
