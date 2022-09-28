@@ -63,6 +63,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] zombie death animation 3
 /// [ ] running backwards is slower
 /// [ ] fix weapon render order
+/// [ ] Design Mouse Cursor
 /// [ ] fix attack animation
 /// [x] Highlight enemy on mouse over
 /// [x] Make the player run backwards when facing behind

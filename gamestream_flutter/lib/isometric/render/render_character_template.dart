@@ -167,8 +167,12 @@ void renderCharacterTemplateWithWeapon(Character character,
 }
 
 void renderCharacterTemplate(Character character, int color) {
-  if (character.tile.type != NodeType.Grass_Long) {
-    _renderCharacterShadow(character);
+
+  final inLongGrass = character.tile.type == NodeType.Grass_Long;
+
+    if (!inLongGrass) {
+      renderCharacterTemplateShadow(character);
+    }
 
     final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
 
@@ -179,19 +183,21 @@ void renderCharacterTemplate(Character character, int color) {
     if (diff >= 3 && character.running) {
       final renderDirectionOpposite = (character.renderDirection + 4) % 8;
 
-      renderCharacterPartCustom(
-         layer: mapToLayerLegs(character.legs),
-         variation: false,
-         renderX: character.renderX,
-         renderY: character.renderY,
-         state: character.state,
-         frame: character.frame,
-         direction: renderDirectionOpposite,
-         color: color,
-         weapon: character.weapon,
-      );
+      if (!inLongGrass){
+        renderCharacterTemplatePartCustom(
+          layer: mapToLayerLegs(character.legs),
+          variation: false,
+          renderX: character.renderX,
+          renderY: character.renderY,
+          state: character.state,
+          frame: character.frame,
+          direction: renderDirectionOpposite,
+          color: color,
+          weapon: character.weapon,
+        );
+      }
 
-      renderCharacterPartCustom(
+      renderCharacterTemplatePartCustom(
         layer: mapToLayerBody(character.body),
         variation: getVariation(character),
         renderX: character.renderX,
@@ -203,7 +209,7 @@ void renderCharacterTemplate(Character character, int color) {
         weapon: character.weapon,
       );
 
-      renderCharacterPartCustom(
+      renderCharacterTemplatePartCustom(
         layer: mapToLayerHead(character.head),
         variation: getVariation(character),
         renderX: character.renderX,
@@ -216,7 +222,7 @@ void renderCharacterTemplate(Character character, int color) {
       );
 
       if (!character.unarmed){
-        renderCharacterPartCustom(
+        renderCharacterTemplatePartCustom(
           layer: mapToLayerWeapon(character.weapon),
           variation: getVariation(character),
           renderX: character.renderX,
@@ -230,21 +236,22 @@ void renderCharacterTemplate(Character character, int color) {
       }
       return;
     }
-  }
 
-  renderCharacterPartCustom(
-    layer: mapToLayerLegs(character.legs),
-    variation: false,
-    renderX: character.renderX,
-    renderY: character.renderY,
-    state: character.state,
-    frame: character.frame,
-    direction: character.renderDirection,
-    color: color,
-    weapon: character.weapon,
-  );
+    if (!inLongGrass){
+      renderCharacterTemplatePartCustom(
+        layer: mapToLayerLegs(character.legs),
+        variation: false,
+        renderX: character.renderX,
+        renderY: character.renderY,
+        state: character.state,
+        frame: character.frame,
+        direction: character.renderDirection,
+        color: color,
+        weapon: character.weapon,
+      );
+    }
 
-  renderCharacterPartCustom(
+  renderCharacterTemplatePartCustom(
     layer: mapToLayerBody(character.body),
     variation: getVariation(character),
     renderX: character.renderX,
@@ -256,7 +263,7 @@ void renderCharacterTemplate(Character character, int color) {
     weapon: character.weapon,
   );
 
-  renderCharacterPartCustom(
+  renderCharacterTemplatePartCustom(
     layer: mapToLayerHead(character.head),
     variation: getVariation(character),
     renderX: character.renderX,
@@ -270,7 +277,7 @@ void renderCharacterTemplate(Character character, int color) {
 
 
   if (character.weapon != AttackType.Unarmed){
-    renderCharacterPartCustom(
+    renderCharacterTemplatePartCustom(
       variation: getVariation(character),
       renderX: character.renderX,
       renderY: character.renderY,
@@ -312,29 +319,8 @@ void renderCharacterTemplateWeapon(Character character) {
   );
 }
 
-void _renderCharacterShadow(Character character) {
+void renderCharacterTemplateShadow(Character character) {
   _renderCharacterPart(character, SpriteLayer.Shadow, 0);
-}
-
-void _renderCharacterPartHead(Character character, int color) {
-  if (renderTemplateWithWeapon) {
-    _renderCharacterPart(
-        character, mapToLayerHead(character.head), color);
-  } else {
-    _renderCharacterPartAimDirection(
-        character, mapToLayerHead(character.head), color);
-  }
-}
-
-void _renderCharacterPartBody(Character character, int color) {
-  _renderCharacterPart(
-      character, mapToLayerBody(character.body), color);
-}
-
-void _renderCharacterPartPants(Character character, int color) {
-  // if (renderTemplateWithWeapon) {
-    _renderCharacterPart(character, mapToLayerLegs(character.legs), color);
-  // }
 }
 
 void _renderCharacterPart(Character character, int layer, int color) {
@@ -352,7 +338,7 @@ void _renderCharacterPart(Character character, int layer, int color) {
   );
 }
 
-void renderCharacterPartCustom({
+void renderCharacterTemplatePartCustom({
   required bool variation,
   required double renderX,
   required double renderY,
