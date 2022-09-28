@@ -250,7 +250,7 @@ void renderCharacterTemplate(Character character, int color) {
     renderX: character.renderX,
     renderY: character.renderY,
     state: character.usingWeapon ? CharacterState.Performing : character.state,
-    frame: character.weaponFrame,
+    frame: character.usingWeapon ? character.weaponFrame : character.frame,
     direction: character.usingWeapon ? character.aimDirection : character.renderDirection,
     color: color,
     weapon: character.weapon,
