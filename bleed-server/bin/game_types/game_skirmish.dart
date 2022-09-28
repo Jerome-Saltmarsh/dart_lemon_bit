@@ -82,7 +82,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] zombie death animation 3
 /// [ ] design mouse cursor
 /// [ ] melee weapons run out of rounds but only on hit
-/// [ ] fix weapon render not aligned with character
+/// [x] fix weapon render not aligned with character
 /// [x] fix weapon render order while running backwards
 /// [x] respawn weapons on empty
 /// [x] fix do not highlight player character

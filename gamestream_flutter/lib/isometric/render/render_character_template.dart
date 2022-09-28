@@ -425,7 +425,7 @@ void renderCharacterTemplatePartCustom96({
       srcHeight: 96.0,
       scale: 0.75,
       anchorX: 0.5,
-      anchorY: 0.75,
+      anchorY: 0.69,
       color: color,
     );
 
