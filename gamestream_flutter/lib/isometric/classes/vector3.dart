@@ -2,14 +2,11 @@ import 'dart:math';
 
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/node.dart';
-import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:lemon_math/library.dart';
 
 class Vector3 with Position {
   late double z;
-
-  // int get shade => tileBelow.shade;
 
   int get indexZ => z ~/ tileSizeHalf;
   int get indexRow => x ~/ tileSize;
