@@ -436,10 +436,17 @@ abstract class Game {
 
     for (final character in characters) {
       if (onSameTeam(player, character)) continue;
+      if (!character.collidable) continue;
       if (character.distanceFromXYZ(
-        performX, performY, performZ,
-      ) > attackRadius) continue;
-      applyHit(src: player, target: character, damage: damage);
+                      performX,
+                      performY,
+                      performZ,
+                    ) > attackRadius) continue;
+        applyHit(src: player, target: character, damage: damage);
+       player.applyForce(
+           force: 5.0,
+           angle: getAngleBetween(player.x, player.y, character.x, character.y),
+       );
     }
 
     for (final gameObject in gameObjects) {

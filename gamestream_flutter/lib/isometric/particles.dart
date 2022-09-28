@@ -36,6 +36,18 @@ void sortParticlesActive(){
   }
 }
 
+bool verifyTotalActiveParticles() =>
+   countActiveParticles() == totalActiveParticles;
+
+int countActiveParticles(){
+  var active = 0;
+  for (var i = 0; i < particles.length; i++){
+    if (particles[i].active)
+      active++;
+  }
+  return active;
+}
+
 void sortParticles(){
   sortParticlesActive();
   totalActiveParticles = 0;
@@ -45,20 +57,14 @@ void sortParticles(){
   }
 
   if (totalActiveParticles == 0) return;
+  
+  assert(verifyTotalActiveParticles());
+
   insertionSort(
     particles,
     compare: _compareParticles,
     end: totalActiveParticles,
   );
-
-  // for (var i = 0; i < particles.length; i++){
-  //   final particle = particles[i];
-  //   if (i < totalActiveParticles){
-  //     assert (particle.active);
-  //   } else {
-  //     assert (!particle.active);
-  //   }
-  // }
 }
 
 int _compareParticles(Particle a, Particle b) {
@@ -969,6 +975,7 @@ void spawnParticle({
   particle.airFriction = airFriction;
 }
 
+/// This may be the cause of the bug in which the sword particle does not render
 Particle getParticleInstance() {
   totalActiveParticles++;
   if (totalActiveParticles >= totalParticles){
