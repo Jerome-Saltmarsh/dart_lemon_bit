@@ -430,9 +430,15 @@ abstract class Game {
         angle,
     );
 
+    player.applyForce(
+      force: 3.5,
+      angle: angle,
+    );
+
     if (player.idling) {
       // playerFaceMouse(player);
     }
+
 
     for (final character in characters) {
       if (onSameTeam(player, character)) continue;
@@ -444,7 +450,7 @@ abstract class Game {
                     ) > attackRadius) continue;
         applyHit(src: player, target: character, damage: damage);
        player.applyForce(
-           force: 5.0,
+           force: 7.5,
            angle: getAngleBetween(player.x, player.y, character.x, character.y),
        );
     }
