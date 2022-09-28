@@ -4,6 +4,7 @@ import 'package:lemon_math/library.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
+import '../classes/node.dart';
 import '../common/attack_state.dart';
 import '../common/control_scheme.dart';
 import '../common/library.dart';
@@ -72,7 +73,6 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] 3d model weapon flame thrower
 /// [ ] 3d model spinning wireframe gem
 /// [ ] particle type darkness
-/// [ ] respawn weapons on empty
 /// [ ] draw punch sprite
 /// [ ] remove Node class from front end
 /// [ ] slime death animation 1
@@ -84,6 +84,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] melee weapons run out of rounds but only on hit
 /// [ ] fix weapon render not aligned with character
 /// [ ] fix weapon render order while running backwards
+/// [x] respawn weapons on empty
 /// [x] fix do not highlight player character
 /// [x] fix attack animation
 /// [x] Highlight enemy on mouse over
@@ -157,11 +158,14 @@ class GameSkirmish extends Game {
   void customOnCollisionBetweenPlayerAndOther(Player player, Collider other){
     if (other is GameObjectWeapon){
       deactivateGameObject(other);
-      playerSetWeapon(player, buildWeaponByType(other.weaponType));
+      final weapon = buildWeaponByType(other.weaponType);
+      weapon.spawn = other;
+      playerSetWeapon(player, weapon);
     }
   }
 
   void playerSetWeapon(Player player, Weapon weapon){
+    player.weapon.spawn = null;
     player.weapon = weapon;
     player.writePlayerWeaponType();
     player.writePlayerWeaponRounds();
@@ -203,15 +207,27 @@ class GameSkirmish extends Game {
     playerRunInDirection(player, direction);
     playerUpdateAimTarget(player);
 
-    if (player.weapon.durationRemaining > 0) return;
-    player.weapon.state = AttackState.Aiming;
+    final weapon = player.weapon;
+
+    if (weapon.durationRemaining > 0) return;
+    weapon.state = AttackState.Aiming;
 
     if (perform1) {
-      playerUseWeapon(player, player.weapon);
+      playerUseWeapon(player, weapon);
       player.writePlayerWeaponRounds();
 
-      if (player.weapon.requiresRounds) {
-         if (player.weapon.rounds == 0) {
+      if (weapon.requiresRounds) {
+         if (weapon.rounds == 0) {
+           if (weapon.spawn != null){
+              final spawn = weapon.spawn;
+              if (spawn is GameObjectWeapon){
+                final spawnSpawn = spawn.spawn;
+                  if (spawnSpawn is NodeSpawn){
+                    spawnNodeInstance(spawnSpawn);
+                  }
+
+              }
+           }
             playerSetWeapon(player, buildWeaponUnarmed());
          }
       }

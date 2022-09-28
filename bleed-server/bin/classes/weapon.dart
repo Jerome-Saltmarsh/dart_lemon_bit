@@ -15,6 +15,7 @@ class Weapon {
    int duration;
    var charge = 0;
    var durationRemaining = 0;
+   dynamic spawn;
    final uuid = generateUUID();
 
    int get rounds => _rounds;
@@ -68,7 +69,7 @@ Weapon buildWeaponRevolver() =>
 Weapon buildWeaponHandgun() =>
     Weapon(
       type: AttackType.Handgun,
-      damage: 1,
+      damage: 4,
       capacity: 20,
       duration: 10,
       range: 200,
