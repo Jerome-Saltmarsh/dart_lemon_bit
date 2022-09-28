@@ -113,7 +113,7 @@ void renderCharacterTemplateWithoutWeapon(Character character,
   // renderText(text: '${character.aimDirection}', x: character.renderX, y: character.renderY - 100);
   // renderText(text: '${character.aimAngle.toStringAsFixed(3)}', x: character.renderX, y: character.renderY - 75);
 
-  _renderCharacterTemplate(character, colorShades[character.tileBelow.shade]);
+  renderCharacterTemplate(character, colorShades[character.tileBelow.shade]);
 }
 
 void renderCharacterTemplateWithWeapon(Character character,
@@ -139,11 +139,11 @@ void renderCharacterTemplateWithWeapon(Character character,
         direction == Direction.North ||
         direction == Direction.North_East ||
         direction == Direction.East) {
-      _renderCharacterTemplateWeapon(character);
-      _renderCharacterTemplate(character, color);
+      renderCharacterTemplateWeapon(character);
+      renderCharacterTemplate(character, color);
     } else {
-      _renderCharacterTemplate(character, color);
-      _renderCharacterTemplateWeapon(character);
+      renderCharacterTemplate(character, color);
+      renderCharacterTemplateWeapon(character);
     }
     return;
   }
@@ -154,19 +154,19 @@ void renderCharacterTemplateWithWeapon(Character character,
         direction == Direction.North_West ||
         direction == Direction.West ||
         direction == Direction.South_West) {
-      _renderCharacterTemplateWeapon(character);
-      _renderCharacterTemplate(character, color);
+      renderCharacterTemplateWeapon(character);
+      renderCharacterTemplate(character, color);
     } else {
-      _renderCharacterTemplate(character, color);
-      _renderCharacterTemplateWeapon(character);
+      renderCharacterTemplate(character, color);
+      renderCharacterTemplateWeapon(character);
     }
     return;
   }
-  _renderCharacterTemplate(character, color);
-  _renderCharacterTemplateWeapon(character);
+  renderCharacterTemplate(character, color);
+  renderCharacterTemplateWeapon(character);
 }
 
-void _renderCharacterTemplate(Character character, int color) {
+void renderCharacterTemplate(Character character, int color) {
   if (character.tile.type != NodeType.Grass_Long) {
     _renderCharacterShadow(character);
 
@@ -177,7 +177,8 @@ void _renderCharacterTemplate(Character character, int color) {
     /// If the the player is running backwards to the direction they are aiming
     /// render the player to run backwards
     if (diff >= 3 && character.running) {
-      final aimDirection = ((character.usingWeapon ? character.aimDirection : character.renderDirection) + 4) % 8;
+      final renderDirectionOpposite = (character.renderDirection + 4) % 8;
+      final aimDirection = character.usingWeapon ? character.aimDirection : renderDirectionOpposite;
 
       renderCharacterPartCustom(
          layer: mapToLayerLegs(character.legs),
@@ -186,7 +187,7 @@ void _renderCharacterTemplate(Character character, int color) {
          renderY: character.renderY,
          state: character.state,
          frame: character.frame,
-         direction: (character.renderDirection + 4) % 8,
+         direction: renderDirectionOpposite,
          color: color,
          weapon: character.weapon,
       );
@@ -198,7 +199,7 @@ void _renderCharacterTemplate(Character character, int color) {
         renderY: character.renderY,
         state: character.usingWeapon ? CharacterState.Performing : character.state,
         frame: character.usingWeapon ? character.weaponFrame : character.frame,
-        direction: aimDirection,
+        direction: character.usingWeapon ? character.aimDirection : renderDirectionOpposite,
         color: color,
         weapon: character.weapon,
       );
@@ -210,7 +211,7 @@ void _renderCharacterTemplate(Character character, int color) {
         renderY: character.renderY,
         state: character.usingWeapon ? CharacterState.Performing : character.state,
         frame: character.usingWeapon ? character.weaponFrame : character.frame,
-        direction: aimDirection,
+        direction: character.usingWeapon ? character.aimDirection : renderDirectionOpposite,
         color: color,
         weapon: character.weapon,
       );
@@ -223,7 +224,7 @@ void _renderCharacterTemplate(Character character, int color) {
           renderY: character.renderY,
           state: character.usingWeapon ? CharacterState.Performing : character.state,
           frame: character.usingWeapon ? character.weaponFrame : character.frame,
-          direction: aimDirection,
+          direction: character.usingWeapon ? character.aimDirection : renderDirectionOpposite,
           color: color,
           weapon: character.weapon,
         );
@@ -284,7 +285,7 @@ void _renderCharacterTemplate(Character character, int color) {
   }
 }
 
-void _renderCharacterTemplateWeapon(Character character) {
+void renderCharacterTemplateWeapon(Character character) {
   final equipped = character.weapon;
   if (equipped == AttackType.Unarmed) return;
 

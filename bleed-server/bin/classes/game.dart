@@ -431,7 +431,7 @@ abstract class Game {
     );
 
     if (player.idling) {
-      playerFaceMouse(player);
+      // playerFaceMouse(player);
     }
 
     for (final character in characters) {
