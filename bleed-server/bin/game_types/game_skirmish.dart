@@ -37,11 +37,12 @@ import '../functions/move_player_to_crystal.dart';
 ///
 /// it may be better without the space key
 /// [IDEAS]
-/// [ ] Start losing health if energy gets too low
-/// [ ] Shield item
-/// [ ] Grenade item
-/// [ ] Accuracy decreased while running
-/// [ ] Enemies drop magic orbs required for powers
+/// [ ] start losing health if energy gets too low
+/// [ ] shield item
+/// [ ] grenade item
+/// [ ] accuracy decreased while running
+/// [ ] enemies drop magic orbs required for powers
+/// [ ] running backwards is slower
 
 /// [TODO]
 /// [ ] build scene
@@ -61,10 +62,12 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] zombie death animation 1
 /// [ ] zombie death animation 2
 /// [ ] zombie death animation 3
-/// [ ] running backwards is slower
+/// [ ] design mouse cursor
+/// [ ] melee weapons run out of rounds but only on hit
+/// [ ] fix weapon render not aligned with character
 /// [ ] fix weapon render order
-/// [ ] Design Mouse Cursor
-/// [ ] fix attack animation
+/// [x] fix do not highlight player character
+/// [x] fix attack animation
 /// [x] Highlight enemy on mouse over
 /// [x] Make the player run backwards when facing behind
 /// [x] Remove Stripe
