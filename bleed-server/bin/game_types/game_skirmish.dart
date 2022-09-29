@@ -59,7 +59,10 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] the lower the bar the less damage is also incurred
 /// [ ] the weapon special can be unleashed before it is full but the effect is less
 
-
+/// [OPTIMIZATIONS]
+/// reset grid shade on separate worker
+/// replace node classes with uint8 lists
+/// engine render flush in a batch
 
 /// [TODO]
 /// [ ] build scene
@@ -82,6 +85,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] zombie death animation 3
 /// [ ] design mouse cursor
 /// [ ] melee weapons run out of rounds but only on hit
+/// [ ] fix weapon-96 does not render running forward
 /// [x] fix weapon render not aligned with character
 /// [x] fix weapon render order while running backwards
 /// [x] respawn weapons on empty

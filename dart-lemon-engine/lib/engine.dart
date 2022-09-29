@@ -166,28 +166,19 @@ class _Engine {
     textPainter.paint(other ?? canvas, Offset(x, y));
   }
 
-  /// If there are draw jobs remaining in the buffer
-  /// it draws them and clears the rest
-  void flushRenderBuffer(){
-    for (var i = 0; i < bufferIndex;) {
-      colorsFlush[0] = colors[i ~/ 4];
-      srcFlush[0] = src[i];
-      dstFlush[0] = dst[i];
-      i++;
-      srcFlush[1] = src[i];
-      dstFlush[1] = dst[i]; // scale
-      i++;
-      srcFlush[2] = src[i];
-      dstFlush[2] = dst[i];
-      i++;
-      srcFlush[3] = src[i]; // scale
-      dstFlush[3] = dst[i]; // scale
-      i++;
-      canvas.drawRawAtlas(atlas, dstFlush, srcFlush, colorsFlush, renderBlendMode, null, paint);
-    }
-    bufferIndex = 0;
-    renderIndex = 0;
-  }
+  // /// If there are draw jobs remaining in the buffer
+  // /// it draws them and clears the rest
+  // void flushRenderBuffer(){
+  //   for (var i = bufferIndex; i < bufferSize; i += 4) {
+  //     src[i] = 0;
+  //     src[i + 1] = 0;
+  //     src[i + 2] = 0;
+  //     src[i + 3] = 0;
+  //     canvas.drawRawAtlas(atlas, dst, src, colors, renderBlendMode, null, paint);
+  //   }
+  //   bufferIndex = 0;
+  //   renderIndex = 0;
+  // }
 
   void cameraFollow(double x, double y, double speed){
     final diffX = screenCenterWorldX - x;

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/render.dart';
 import 'package:lemon_watch/watch_builder.dart';
 import 'canvas.dart';
 import 'enums.dart';
@@ -206,7 +207,7 @@ class _GamePainter extends CustomPainter {
     canvas.translate(-_camera.x, -_camera.y);
     engine.drawCanvas.value?.call(canvas, size);
     if (engine.drawCanvas.isNotNull){
-      engine.flushRenderBuffer();
+      engineRenderFlushBuffer();
     }
   }
 

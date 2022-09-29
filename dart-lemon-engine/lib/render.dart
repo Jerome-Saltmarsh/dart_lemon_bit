@@ -11,9 +11,9 @@ final buffers = bufferSize * 4;
 final src = Float32List(buffers);
 final dst = Float32List(buffers);
 final colors = Int32List(bufferSize);
-final srcFlush = Float32List(4);
-final dstFlush = Float32List(4);
-final colorsFlush = Int32List(1);
+// final srcFlush = Float32List(4);
+// final dstFlush = Float32List(4);
+// final colorsFlush = Int32List(1);
 var renderBlendMode = BlendMode.dstATop;
 
 void setRenderBlendMode(BlendMode value){
@@ -54,6 +54,22 @@ void engineRender({
 
   renderIndex += 4;
   if (bufferIndex < buffers) return;
+  bufferIndex = 0;
+  renderIndex = 0;
+  renderAtlas();
+}
+
+/// If there are draw jobs remaining in the buffer
+/// it draws them and clears the rest
+void engineRenderFlushBuffer(){
+  for (var i = bufferIndex; i < buffers; i += 4) {
+    src[i] = 0;
+    src[i + 1] = 0;
+    src[i + 2] = 0;
+    src[i + 3] = 0;
+    dst[i] = 0;
+    dst[i + 1] = 0;
+  }
   bufferIndex = 0;
   renderIndex = 0;
   renderAtlas();
