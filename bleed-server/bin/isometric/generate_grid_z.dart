@@ -9,7 +9,7 @@ List<List<Node>> generateGridZ(
     {
       int type = NodeType.Empty
     }) =>
-  List.generate(rows, (index) => generateGridRow(columns));
+  List.generate(rows, (index) => generateGridRow(columns), growable: false);
 
 List<Node> generateGridRow(int columns, {int type = NodeType.Empty}) =>
-  List.generate(columns, (index) => generateNode(type));
+  List.generate(columns, (index) => generateNode(type), growable: false);

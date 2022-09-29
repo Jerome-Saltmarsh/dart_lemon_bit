@@ -144,7 +144,7 @@ List<List<List<Node>>> convertFlatGridToGrid(List<dynamic> flatGrid, int height,
         }
         index++;
         return node;
-      })
-    )
-  );
+      }, growable: false)
+   , growable: false)
+  , growable: false);
 }
