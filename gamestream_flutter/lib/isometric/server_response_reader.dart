@@ -23,6 +23,7 @@ import 'package:gamestream_flutter/isometric/floating_texts.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
+import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:gamestream_flutter/isometric/io/custom_game_names.dart';
 import 'package:gamestream_flutter/isometric/npcs.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
@@ -643,6 +644,7 @@ class ServerResponseReader with ByteReader {
     gridTotalRows = readInt();
     gridTotalColumns = readInt();
 
+
     grid = List.generate(gridTotalZ, (indexZ) =>
         List.generate(gridTotalRows, (indexRow) =>
             List.generate(gridTotalColumns, (indexColumn) => Node.empty, growable: false),
@@ -652,6 +654,11 @@ class ServerResponseReader with ByteReader {
     );
 
     final grandTotal = gridTotalZ * gridTotalRows * gridTotalColumns;
+
+    gridNodeTypes = Uint8List(grandTotal);
+
+    var gridIndex = 0;
+
     var total = 0;
 
     var currentZ = 0;
@@ -659,24 +666,26 @@ class ServerResponseReader with ByteReader {
     var currentColumn = 0;
 
     while (total < grandTotal) {
-      var type = readByte();
-      var orientation = NodeOrientation.None;
-      if (NodeType.isOriented(type)) {
-        orientation = readByte();
+      var nodeType = readByte();
+      var nodeOrientation = NodeOrientation.None;
+      if (NodeType.isOriented(nodeType)) {
+        nodeOrientation = readByte();
       }
       var count = readPositiveInt();
       total += count;
 
       while (count > 0) {
+        gridNodeTypes[gridIndex] = nodeType;
+        gridIndex++;
         count--;
         grid[currentZ][currentRow][currentColumn] = generateNode(
             currentZ,
             currentRow,
             currentColumn,
-            type,
-            orientation,
+            nodeType,
+            nodeOrientation,
         );
-        grid[currentZ][currentRow][currentColumn].orientation = orientation;
+        grid[currentZ][currentRow][currentColumn].orientation = nodeOrientation;
         currentColumn++;
         if (currentColumn >= gridTotalColumns) {
           currentColumn = 0;

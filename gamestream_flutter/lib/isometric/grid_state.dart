@@ -1,7 +1,8 @@
 import 'dart:typed_data';
 
-late List<List<Uint8List>> gridShade;
-late List<List<Uint8List>> gridBake;
-late List<List<Uint8List>> gridWind;
-late List<List<Uint8List>> gridOrientation;
-late List<List<List<bool>>> gridVisible;
+var gridNodeTypes = Uint8List(0);
+var gridNodeOrientations = Uint8List(0);
+var gridShade = Uint8List(0);
+var gridBake = Uint8List(0);
+var gridWind = Uint8List(0);
+var gridVisible = Uint8List(0);
