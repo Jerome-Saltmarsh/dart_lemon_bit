@@ -645,8 +645,10 @@ class ServerResponseReader with ByteReader {
 
     grid = List.generate(gridTotalZ, (indexZ) =>
         List.generate(gridTotalRows, (indexRow) =>
-            List.generate(gridTotalColumns, (indexColumn) => Node.empty)
-        )
+            List.generate(gridTotalColumns, (indexColumn) => Node.empty, growable: false),
+            growable: false
+        ),
+        growable: false
     );
 
     final grandTotal = gridTotalZ * gridTotalRows * gridTotalColumns;
