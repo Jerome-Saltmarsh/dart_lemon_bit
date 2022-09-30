@@ -117,8 +117,8 @@ void renderNodeTypeBrick({
       );
     case NodeOrientation.Half_South:
       return renderStandardNode(
-        dstX: x + 17,
-        dstY: y - 17,
+        dstX: x,
+        dstY: y,
         srcX: AtlasSrc.Node_Brick_Half_South,
         srcY: spriteHeight * shade,
       );
