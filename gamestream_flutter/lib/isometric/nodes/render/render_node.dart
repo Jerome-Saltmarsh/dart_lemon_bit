@@ -4,13 +4,13 @@ import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid_state.dart';
+import 'package:gamestream_flutter/isometric/nodes/render/atlas_src.dart';
 import 'package:lemon_engine/render.dart';
 
 const spriteWidth = 48.0;
 const spriteHeight = 72.0;
 
-const atlasSrcX_Node_Grass = 7158.0;
-const atlasSrcX_Node_Brick = 11377.0;
+
 
 /// remove objects from the render layer to reduce garbage collection
 void renderNodeAt({
@@ -60,12 +60,11 @@ void renderNodeTypeGrass({
       return renderStandardNode(
           dstX: x,
           dstY: y,
-          srcX: atlasSrcX_Node_Grass,
+          srcX: AtlasSrc.Node_Grass,
           srcY: spriteHeight * shade,
       );
   }
 }
-
 
 void renderNodeTypeBrick({
   required double x,
@@ -78,7 +77,28 @@ void renderNodeTypeBrick({
       return renderStandardNode(
         dstX: x,
         dstY: y,
-        srcX: atlasSrcX_Node_Brick,
+        srcX: AtlasSrc.Node_Brick,
+        srcY: spriteHeight * shade,
+      );
+    case NodeOrientation.Slope_North:
+      return renderStandardNode(
+        dstX: x,
+        dstY: y,
+        srcX: AtlasSrc.Node_Brick_Slope_North,
+        srcY: spriteHeight * shade,
+      );
+    case NodeOrientation.Slope_East:
+      return renderStandardNode(
+        dstX: x,
+        dstY: y,
+        srcX: AtlasSrc.Node_Brick_Slope_East,
+        srcY: spriteHeight * shade,
+      );
+    case NodeOrientation.Slope_West:
+      return renderStandardNode(
+        dstX: x,
+        dstY: y,
+        srcX: AtlasSrc.Node_Brick_Slope_West,
         srcY: spriteHeight * shade,
       );
   }
