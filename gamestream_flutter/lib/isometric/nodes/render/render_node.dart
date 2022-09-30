@@ -54,8 +54,6 @@ void renderStandardNode({
 }){
   const spriteWidth = 48.0;
   const spriteHeight = 72.0;
-  // const spriteWidthHalf = spriteWidth * 0.5;
-  const spriteHeightThird = 24.0;
 
   render(
      dstX: dstX,
@@ -64,7 +62,7 @@ void renderStandardNode({
      srcY: srcY,
      srcWidth: spriteWidth,
      srcHeight: spriteHeight,
-     anchorY: spriteHeightThird,
+     anchorY: 0.33,
   );
 
   // engineRenderSetSrc(
