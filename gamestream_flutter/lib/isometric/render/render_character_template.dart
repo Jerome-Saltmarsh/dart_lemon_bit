@@ -1,4 +1,5 @@
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
@@ -166,7 +167,7 @@ void renderCharacterTemplateWithWeapon(Character character,
 
 void renderCharacterTemplate(Character character) {
 
-  final inLongGrass = character.tile.type == NodeType.Grass_Long;
+  final inLongGrass = gridNodeTypeAtVector3(character) == NodeType.Grass_Long;
 
     if (!inLongGrass) {
       renderCharacterTemplateShadow(character);

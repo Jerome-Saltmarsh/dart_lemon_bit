@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:lemon_math/library.dart';
 
@@ -12,7 +11,7 @@ class Vector3 with Position {
   int get indexRow => x ~/ tileSize;
   int get indexColumn => y ~/ tileSize;
   double get renderOrder => x + y;
-  Node get tile => getNode(indexZ, indexRow, indexColumn);
+  // Node get tile => getNode(indexZ, indexRow, indexColumn);
   // Node get tileBelow => indexZ == 0 ? Node.boundary : getNode(indexZ - 1, indexRow, indexColumn);
   // Node get tileAbove => indexZ < gridTotalZ - 1 ? Node.boundary : getNode(indexZ + 1, indexRow, indexColumn);
   // int get wind => tile.wind;

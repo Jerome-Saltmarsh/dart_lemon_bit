@@ -123,7 +123,6 @@ class RenderOrderGameObjects extends RenderOrder {
 
   @override
   void renderFunction() {
-    if (!gameObject.tile.visible) return;
     renderGameObject(gameObject);
   }
 
@@ -145,7 +144,6 @@ class RenderOrderProjectiles extends RenderOrder {
 
   @override
   void renderFunction() {
-    if (!projectile.tile.visible) return;
     renderProjectile(projectile);
   }
 
@@ -174,7 +172,6 @@ class RenderOrderParticle extends RenderOrder {
 
   @override
   void renderFunction() {
-    if (!particle.tile.visible) return;
     renderParticle(particle);
   }
 

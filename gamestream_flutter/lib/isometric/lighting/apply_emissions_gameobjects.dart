@@ -16,7 +16,7 @@ void applyEmissionGameObjects() {
    for (var i = 0; i < totalGameObjects; i++){
       final gameObject = gameObjects[i];
       if (gameObject.type != GameObjectType.Candle) continue;
-      gameObject.tile.applyLight1();
+      // gameObject.tile.applyLight1();
       // gameObject.tileBelow.applyLight1();
 
       final nodeIndex = gridNodeIndexVector3(gameObject);
