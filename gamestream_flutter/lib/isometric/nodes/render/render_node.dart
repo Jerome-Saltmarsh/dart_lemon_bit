@@ -4,9 +4,12 @@ import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid_state.dart';
-import 'package:gamestream_flutter/isometric/nodes/render/render_atlas_standard_node.dart';
-import 'package:gamestream_flutter/isometric/ui/maps/map_node_type_to_src.dart';
 import 'package:lemon_engine/render.dart';
+
+const spriteWidth = 48.0;
+const spriteHeight = 72.0;
+
+const atlasSrcX_Node_Grass = 7158.0;
 
 /// remove objects from the render layer to reduce garbage collection
 void renderNodeAt({
@@ -23,14 +26,18 @@ void renderNodeAt({
 
   final nodeType = gridNodeTypes[index];
   if (nodeType == NodeType.Empty) return;
-  final nodeOrientation = gridNodeOrientations[index];
 
   final dstX = projectX(row, column);
   final dstY = projectY(row, column, z);
 
   switch (nodeType) {
     case NodeType.Grass:
-      return renderNodeTypeGrass(x: dstX, y: dstY, orientation: nodeOrientation);
+      return renderNodeTypeGrass(
+          x: dstX,
+          y: dstY,
+          orientation: gridNodeOrientations[index],
+          shade: 0,
+      );
   }
 }
 
@@ -38,10 +45,16 @@ void renderNodeTypeGrass({
   required double x,
   required double y,
   required int orientation,
+  required int shade,
 }) {
   switch (orientation) {
     case NodeOrientation.Solid:
-      return renderStandardNode(dstX: x, dstY: y, srcX: 7158, srcY: 0);
+      return renderStandardNode(
+          dstX: x,
+          dstY: y,
+          srcX: atlasSrcX_Node_Grass,
+          srcY: spriteHeight * shade,
+      );
   }
 }
 
@@ -52,9 +65,6 @@ void renderStandardNode({
   required double srcY,
   int color = 1,
 }){
-  const spriteWidth = 48.0;
-  const spriteHeight = 72.0;
-
   render(
      dstX: dstX,
      dstY: dstY,
@@ -64,22 +74,6 @@ void renderStandardNode({
      srcHeight: spriteHeight,
      anchorY: 0.33,
   );
-
-  // engineRenderSetSrc(
-  //     x: srcX,
-  //     y: srcY,
-  //     width: spriteWidth,
-  //     height: spriteHeight,
-  // );
-  //
-  // engineRenderSetDstScale1Rotation0(
-  //     x: dstX,
-  //     y: dstY,
-  //     anchorX: spriteWidthHalf,
-  //     anchorY: spriteHeightThird,
-  // );
-  //
-  // engineRenderIncrementBufferIndex();
 }
 
 double projectX(int row, int column){
