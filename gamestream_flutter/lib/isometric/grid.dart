@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_on.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
+import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:gamestream_flutter/isometric/particle_emitters.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
@@ -363,6 +364,8 @@ void applyEmissionDynamic({
       final r = plain[row];
       for (var column = columnMin; column < columnMax; column++) {
         final node = r[column];
+        final nodeIndex = gridNodeGetIndex(z, row, column);
+
         if (!node.isShadable) continue;
         var distance = 0;
         if (lightModeRadial.value){
@@ -379,7 +382,12 @@ void applyEmissionDynamic({
             distance = distanceColumn;
           }
         }
+
+        final shade = convertDistanceToShade(distance, maxBrightness: maxBrightness);
         node.applyLight(convertDistanceToShade(distance, maxBrightness: maxBrightness));
+
+        if (gridNodeShade[nodeIndex] <= shade) return;
+          gridNodeShade[nodeIndex] = shade;
       }
     }
   }

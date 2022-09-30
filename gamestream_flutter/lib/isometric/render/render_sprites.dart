@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
+import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emissions_npcs.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emmissions_particles.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
@@ -522,6 +523,11 @@ class RenderOrderGrid extends RenderOrder {
   }
 
     void refreshDynamicLightGrid(){
+
+        for (var i = 0; i < gridNodeTotal; i++){
+           gridNodeShade[i] = gridNodeBake[i];
+        }
+
         for (var z = 0; z < gridTotalZ; z++) {
           final zPlain = grid[z];
           final zLength = z * tileSize;

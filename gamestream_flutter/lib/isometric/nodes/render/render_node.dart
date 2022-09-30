@@ -36,7 +36,7 @@ void renderNodeAt({
           x: dstX,
           y: dstY,
           orientation: gridNodeOrientations[index],
-          shade: 0,
+          shade: gridNodeShade[index],
       );
   }
 }

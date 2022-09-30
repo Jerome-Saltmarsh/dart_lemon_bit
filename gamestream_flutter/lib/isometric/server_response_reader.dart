@@ -657,12 +657,12 @@ class ServerResponseReader with ByteReader {
 
     gridNodeTypes = Uint8List(grandTotal);
     gridNodeOrientations = Uint8List(grandTotal);
+    gridNodeShade = Uint8List(grandTotal);
+    gridNodeBake = Uint8List(grandTotal);
     gridNodeVisible = List.generate(grandTotal, (index) => true, growable: false);
 
     var gridIndex = 0;
-
     var total = 0;
-
     var currentZ = 0;
     var currentRow = 0;
     var currentColumn = 0;
