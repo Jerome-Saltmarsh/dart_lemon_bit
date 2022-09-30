@@ -10,6 +10,7 @@ const spriteWidth = 48.0;
 const spriteHeight = 72.0;
 
 const atlasSrcX_Node_Grass = 7158.0;
+const atlasSrcX_Node_Brick = 11377.0;
 
 /// remove objects from the render layer to reduce garbage collection
 void renderNodeAt({
@@ -38,6 +39,13 @@ void renderNodeAt({
           orientation: gridNodeOrientations[index],
           shade: gridNodeShade[index],
       );
+    case NodeType.Brick_2:
+      return renderNodeTypeBrick(
+        x: dstX,
+        y: dstY,
+        orientation: gridNodeOrientations[index],
+        shade: gridNodeShade[index],
+      );
   }
 }
 
@@ -54,6 +62,24 @@ void renderNodeTypeGrass({
           dstY: y,
           srcX: atlasSrcX_Node_Grass,
           srcY: spriteHeight * shade,
+      );
+  }
+}
+
+
+void renderNodeTypeBrick({
+  required double x,
+  required double y,
+  required int orientation,
+  required int shade,
+}) {
+  switch (orientation) {
+    case NodeOrientation.Solid:
+      return renderStandardNode(
+        dstX: x,
+        dstY: y,
+        srcX: atlasSrcX_Node_Brick,
+        srcY: spriteHeight * shade,
       );
   }
 }
