@@ -2,7 +2,6 @@
 import 'package:bleed_common/node_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
@@ -43,7 +42,12 @@ Widget buildEditorSelectedNode() =>
         Container(
           height: 70,
             alignment: Alignment.center,
-            child: watch(edit.nodeSelected, (Node t) => text(NodeType.getName(t.type), align: TextAlign.center))),
+            child: watch(
+                edit.nodeSelectedType,
+                    (int nodeType) =>
+                        text(NodeType.getName(nodeType), align: TextAlign.center)
+            )
+        ),
         Container(
           width: 120,
           height: 120,
@@ -95,7 +99,7 @@ Widget buildEditorSelectedNode() =>
                   height: 72,
                   width: 72,
                   alignment: Alignment.center,
-                  child: watch(edit.nodeSelected, (Node t) => buildIconNodeType(t.type))),
+                  child: watch(edit.nodeSelectedType, buildIconNodeType)),
               Positioned(
                 top: 50 + _shiftY,
                 left: 50 + _shiftX,

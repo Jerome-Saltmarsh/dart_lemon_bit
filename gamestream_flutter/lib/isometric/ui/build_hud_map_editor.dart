@@ -1,7 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
@@ -291,7 +290,7 @@ Widget buildButtonSelectNodeType(int value) {
     srcWidth: mapNodeTypeToSrcWidth(value),
     srcHeight: mapNodeTypeToSrcHeight(value),
   );
-  return WatchBuilder(edit.nodeSelected, (Node node) {
+  return WatchBuilder(edit.nodeSelectedType, (int nodeType) {
     return container(
         height: 78,
         width: 78,
@@ -307,7 +306,7 @@ Widget buildButtonSelectNodeType(int value) {
           }
           edit.paint(value: value);
         },
-        color: node.type == value ? greyDark : grey);
+        color: nodeType == value ? greyDark : grey);
   });
 }
 

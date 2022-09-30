@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
-import 'package:bleed_common/library.dart';
 import 'package:bleed_common/gameobject_request.dart';
+import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_request.dart';
 import 'package:bleed_common/node_size.dart';

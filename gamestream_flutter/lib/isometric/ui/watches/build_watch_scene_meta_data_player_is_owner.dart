@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_show_game_dialog_canvas_size.dart';
-import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/editor/actions/editor_action_modify_spawn_node.dart';
 import 'package:gamestream_flutter/isometric/editor/actions/save_scene.dart';
@@ -198,12 +197,12 @@ Widget buildOrientationIcon(int orientation){
       edit.paintOrientation.value = orientation;
       sendNodeRequestOrient(orientation);
     },
-    child: watch(edit.nodeSelected, (Node selectedNode){
+    child: watch(edit.nodeSelectedOrientation, (int selectedNodeOrientation) {
       return Container(
           width: 72,
           height: 72,
           alignment: Alignment.center,
-          color: selectedNode.orientation == orientation ? purple3 : brownDark,
+          color: selectedNodeOrientation == orientation ? purple3 : brownDark,
           child: canvas
       );
     }),

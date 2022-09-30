@@ -6,13 +6,14 @@ import 'package:gamestream_flutter/isometric/editor/events/on_changed_cursor_pos
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_node_type_spawn_selected.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_paint_type.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node.dart';
+import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node_type.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
+import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'classes/node.dart';
 import 'grid.dart';
 import 'player.dart';
 import 'utils/mouse_raycast.dart';
@@ -50,7 +51,8 @@ class Edit {
   final gameObjectSelectedRadius = Watch(0.0);
   final gameObjectSelectedSpawnType = Watch(0);
 
-  final nodeSelected = Watch<Node>(Node.boundary, onChanged: onChangedSelectedNode);
+  final nodeSelectedIndex = Watch<int>(0, onChanged: onChangedSelectedNode);
+  final nodeSelectedType = Watch<int>(0, onChanged: onChangedSelectedNodeType);
   final nodeSelectedOrientation = Watch(NodeOrientation.None);
   final nodeOrientationVisible = Watch(true);
   final nodeTypeSpawnSelected = Watch(false, onChanged: onChangeNodeTypeSpawnSelected);
@@ -108,9 +110,8 @@ class Edit {
     nodeSupportsSlopeSymmetric.value = NodeType.isSlopeSymmetric(type);
   }
 
-  void refreshSelected([int? val]){
-    // TODO
-    // nodeSelected.value = grid[z.value][row.value][column.value];
+  void refreshSelected(){
+    nodeSelectedIndex.value = gridNodeIndexZRC(z.value, row.value, column.value);
   }
 
   void deselectGameObject() {
@@ -125,8 +126,6 @@ class Edit {
       tz: z,
     );
   }
-
-  int get selectedType => nodeSelected.value.type;
 
   void actionToggleControlsVisibleWeather(){
     controlsVisibleWeather.value = !controlsVisibleWeather.value;
@@ -245,33 +244,15 @@ class Edit {
     print("edit.delete()");
     if (gameObjectSelected.value)
       return deleteGameObjectSelected();
-    deleteIfTree();
     setNodeType(NodeType.Empty, NodeOrientation.None);
   }
 
   void setNodeType(int type, int orientation) =>
     sendClientRequestSetBlock(row.value, column.value, z.value, type, orientation);
 
-  void deleteIfTree(){
-    if (selectedType == NodeType.Tree_Bottom){
-      if (z.value < gridTotalZ - 1){
-        // if (grid[z.value + 1][row.value][column.value] == NodeType.Tree_Top){
-        //   sendClientRequestSetBlock(row.value, column.value, z.value + 1, NodeType.Empty);
-        // }
-      }
-    }
-    if (selectedType == NodeType.Tree_Top){
-      if (z.value > 0){
-        // if (grid[z.value - 1][row.value][column.value] == NodeType.Tree_Bottom){
-        //   sendClientRequestSetBlock(row.value, column.value, z.value - 1, NodeType.Empty);
-        // }
-      }
-    }
-  }
-
   void selectPaintType(){
-     paintType.value = selectedType;
-     paintOrientation.value = nodeSelected.value.orientation;
+     paintType.value = nodeSelectedType.value;
+     paintOrientation.value = nodeSelectedOrientation.value;
   }
 
   void selectPlayer(){
@@ -294,8 +275,6 @@ class Edit {
     } else {
       paintType.value = value;
     }
-
-    deleteIfTree();
 
     var orientation = paintOrientation.value;
 

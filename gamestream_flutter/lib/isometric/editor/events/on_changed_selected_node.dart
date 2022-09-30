@@ -1,12 +1,11 @@
 
-import 'package:bleed_common/node_type.dart';
-import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
+import 'package:gamestream_flutter/isometric/grid_state.dart';
 
-void onChangedSelectedNode(Node node){
-   edit.nodeSelectedOrientation.value = node.orientation;
-   edit.updateNodeSupports(node.type);
-   edit.nodeOrientationVisible.value = NodeType.isOriented(node.type);
-   edit.nodeTypeSpawnSelected.value = node.isSpawn;
+void onChangedSelectedNode(int index){
+   assert (index >= 0);
+   assert (index < gridNodeTotal);
+   edit.nodeSelectedOrientation.value = gridNodeOrientations[index];
+   edit.updateNodeSupports(gridNodeTypes[index]);
    edit.gameObjectSelected.value = false;
 }
