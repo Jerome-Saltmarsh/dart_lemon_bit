@@ -12,6 +12,7 @@ import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emissions_npcs.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emmissions_particles.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
+import 'package:gamestream_flutter/isometric/nodes/render/render_node.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/projectiles.dart';
@@ -262,11 +263,14 @@ class RenderOrderGrid extends RenderOrder {
       //   return;
       // }
       onscreenNodes++;
-      if (node.visible) {
-        node.handleRender();
-      } else {
-        node.visible = true;
-      }
+      renderNodeAt(row: row, column: column, z: z);
+
+      // if (node.visible) {
+      //   node.handleRender();
+      //
+      // } else {
+      //   node.visible = true;
+      // }
     }
   }
 

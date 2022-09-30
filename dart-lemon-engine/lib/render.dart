@@ -103,11 +103,11 @@ void engineRenderSetSrcHeight(double value){
   src[bufferIndex + 3] = value;
 }
 
-void engineRenderSetDst({
+/// This function provides significant performance benifits as it 
+/// does not need to calculate scale or rotation
+void engineRenderSetDstScale1Rotation0({
   required double x,
   required double y,
-  required double scale,
-  required double rotation,
   required double anchorX,
   required double anchorY,
 }){
@@ -117,17 +117,22 @@ void engineRenderSetDst({
   // dst[bufferIndex + 3] = height;
 }
 
-void engineRenderSetRotation(double value){
+void engineRenderSetDst({
+  required double x,
+  required double y,
+  required double anchorX,
+  required double anchorY,
+  double scale = 1.0,
+  double rotation = 0.0,
+}){
   
 }
 
+/// Increments the current buffer index
+/// if the buffer is full 
+///   the engine performs a render 
+///   and resets the buffer to 0
 void engineRenderIncrementBufferIndex(){
-  /// the buffer is an int array
-  /// each render requires 4 int values
-  /// there are several three different buffers 
-  /// the src buffer
-  /// the dst buffer
-  /// the color buffer
   bufferIndex += 4;
   if (bufferIndex < buffers) return;
   bufferIndex = 0;

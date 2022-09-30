@@ -656,6 +656,8 @@ class ServerResponseReader with ByteReader {
     final grandTotal = gridTotalZ * gridTotalRows * gridTotalColumns;
 
     gridNodeTypes = Uint8List(grandTotal);
+    gridNodeOrientations = Uint8List(grandTotal);
+    gridNodeVisible = List.generate(grandTotal, (index) => true, growable: false);
 
     var gridIndex = 0;
 
@@ -676,6 +678,7 @@ class ServerResponseReader with ByteReader {
 
       while (count > 0) {
         gridNodeTypes[gridIndex] = nodeType;
+        gridNodeOrientations[gridIndex] = nodeOrientation;
         gridIndex++;
         count--;
         grid[currentZ][currentRow][currentColumn] = generateNode(
