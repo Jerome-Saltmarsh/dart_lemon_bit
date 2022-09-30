@@ -3,6 +3,8 @@
 import 'package:bleed_common/Shade.dart';
 import 'package:bleed_common/game_object_type.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
+import 'package:gamestream_flutter/isometric/grid_state.dart';
+import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 
 import 'apply_vector_emission.dart';
 
@@ -12,8 +14,19 @@ void applyEmissionGameObjects() {
       applyVector3Emission(gameObjects[i], maxBrightness: Shade.Very_Bright);
    }
    for (var i = 0; i < totalGameObjects; i++){
-      if (gameObjects[i].type != GameObjectType.Candle) continue;
-      gameObjects[i].tile.applyLight1();
-      gameObjects[i].tileBelow.applyLight1();
+      final gameObject = gameObjects[i];
+      if (gameObject.type != GameObjectType.Candle) continue;
+      gameObject.tile.applyLight1();
+      // gameObject.tileBelow.applyLight1();
+
+      final nodeIndex = gridNodeIndexVector3(gameObject);
+      final nodeShade = gridNodeShade[nodeIndex];
+      gridNodeShadeSet(nodeIndex, nodeShade - 1);
+
+      if (gameObject.indexZ > 0){
+         final nodeBelowIndex = gridNodeIndexVector3NodeBelow(gameObject);
+         final nodeBelowShade = gridNodeShade[nodeBelowIndex];
+         gridNodeShadeSet(nodeBelowIndex, nodeBelowShade - 1);
+      }
    }
 }

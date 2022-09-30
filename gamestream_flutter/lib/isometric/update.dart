@@ -91,7 +91,7 @@ void applyWindFromProjectile(Projectile projectile){
     // final row = projectile.indexRow;
     // final column = projectile.indexColumn;
     projectile.tile.wind++;
-    projectile.tileAbove.wind++;
+    // projectile.tileAbove.wind++;
     // if (z > 0){
       // gridWind[z - 1][row][column]++;
     // }
@@ -100,7 +100,7 @@ void applyWindFromProjectile(Projectile projectile){
 void applyCharacterToWind(Character character){
    if (character.running || character.performing) {
      character.tile.wind++;
-     character.tileAbove.wind++;
+     // character.tileAbove.wind++;
      if (gridNodeInBoundsVector3(character)) return;
      gridNodeIncrementWindVector3(character);
    }

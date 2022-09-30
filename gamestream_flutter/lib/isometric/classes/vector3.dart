@@ -13,8 +13,8 @@ class Vector3 with Position {
   int get indexColumn => y ~/ tileSize;
   double get renderOrder => x + y;
   Node get tile => getNode(indexZ, indexRow, indexColumn);
-  Node get tileBelow => indexZ == 0 ? Node.boundary : getNode(indexZ - 1, indexRow, indexColumn);
-  Node get tileAbove => indexZ < gridTotalZ - 1 ? Node.boundary : getNode(indexZ + 1, indexRow, indexColumn);
+  // Node get tileBelow => indexZ == 0 ? Node.boundary : getNode(indexZ - 1, indexRow, indexColumn);
+  // Node get tileAbove => indexZ < gridTotalZ - 1 ? Node.boundary : getNode(indexZ + 1, indexRow, indexColumn);
   // int get wind => tile.wind;
 
   double get renderX => (x - y) * 0.5;

@@ -12,6 +12,15 @@ var gridNodeWind = Uint8List(0);
 var gridNodeVisible = <bool>[];
 var gridNodeTotal = 0;
 
+void gridNodeShadeSet(int index, int shade){
+  if (shade < 0) {
+    shade = 0;
+  } else
+  if (shade > Shade.Pitch_Black){
+    shade = Shade.Pitch_Black;
+  }
+  gridNodeShade[index] = shade;
+}
 
 int gridNodeGetIndex(int z, int row, int column) {
   assert (gridNodeIsInBounds(z, row, column));

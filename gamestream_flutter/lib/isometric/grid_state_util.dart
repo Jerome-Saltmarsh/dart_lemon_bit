@@ -12,6 +12,13 @@ int gridNodeIndexVector3(Vector3 vector3) =>
     vector3.indexColumn,
   );
 
+int gridNodeIndexVector3NodeBelow(Vector3 vector3) =>
+    gridNodeGetIndex(
+      vector3.indexZ - 1,
+      vector3.indexRow,
+      vector3.indexColumn,
+    );
+
 bool gridNodeInBoundsVector3(Vector3 vector3) =>
     gridNodeIsInBounds(vector3.indexZ, vector3.indexRow, vector3.indexColumn);
 
