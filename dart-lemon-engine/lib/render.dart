@@ -203,16 +203,16 @@ void render({
   double anchorY = 0.5,
   int color = 0,
 }){
-  final scos = cos0 * scale;
-  final ssin = sin0 * scale;
+  // final scos = cos0 * scale;
+  // final ssin = sin0 * scale;
 
   src[bufferIndex] = srcX;
-  dst[bufferIndex] = scos;
+  dst[bufferIndex] = cos0 * scale;
   colors[renderIndex] = color;
   bufferIndex++;
 
   src[bufferIndex] = srcY;
-  dst[bufferIndex] = ssin;
+  dst[bufferIndex] = sin0 * scale;
   bufferIndex++;
 
   src[bufferIndex] = srcX + srcWidth;
