@@ -283,14 +283,14 @@ Widget buildIconNodeType(int value){
   );
 }
 
-Widget buildButtonSelectNodeType(int value) {
+Widget buildButtonSelectNodeType(int nodeType) {
   final canvas = buildAtlasImage(
-    srcX: mapNodeTypeToSrcX(value),
-    srcY: mapNodeTypeToSrcY(value),
-    srcWidth: mapNodeTypeToSrcWidth(value),
-    srcHeight: mapNodeTypeToSrcHeight(value),
+    srcX: mapNodeTypeToSrcX(nodeType),
+    srcY: mapNodeTypeToSrcY(nodeType),
+    srcWidth: mapNodeTypeToSrcWidth(nodeType),
+    srcHeight: mapNodeTypeToSrcHeight(nodeType),
   );
-  return WatchBuilder(edit.nodeSelectedType, (int nodeType) {
+  return WatchBuilder(edit.nodeSelectedType, (int selectedNodeType) {
     return container(
         height: 78,
         width: 78,
@@ -304,9 +304,9 @@ Widget buildButtonSelectNodeType(int value) {
             edit.z.value = player.indexZ;
             return;
           }
-          edit.paint(value: value);
+          edit.paint(nodeType: nodeType);
         },
-        color: nodeType == value ? greyDark : grey);
+        color: selectedNodeType == nodeType ? greyDark : grey);
   });
 }
 

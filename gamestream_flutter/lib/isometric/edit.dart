@@ -51,7 +51,7 @@ class Edit {
   final gameObjectSelectedRadius = Watch(0.0);
   final gameObjectSelectedSpawnType = Watch(0);
 
-  final nodeSelectedIndex = Watch<int>(0, onChanged: onChangedSelectedNode);
+  final nodeSelectedIndex = Watch<int>(0, onChanged: onChangedSelectedNodeIndex);
   final nodeSelectedType = Watch<int>(0, onChanged: onChangedSelectedNodeType);
   final nodeSelectedOrientation = Watch(NodeOrientation.None);
   final nodeOrientationVisible = Watch(true);
@@ -101,16 +101,7 @@ class Edit {
   double get renderX => projectX(edit.posX, edit.posY);
   double get renderY => projectY(edit.posX, edit.posY, edit.posZ);
 
-  void updateNodeSupports(int type){
-    nodeSupportsSolid.value = NodeType.isSolid(type);
-    nodeSupportsCorner.value = NodeType.isCorner(type);
-    nodeSupportsHalf.value = NodeType.isHalf(type);
-    nodeSupportsSlopeCornerInner.value = NodeType.isSlopeCornerInner(type);
-    nodeSupportsSlopeCornerOuter.value = NodeType.isSlopeCornerOuter(type);
-    nodeSupportsSlopeSymmetric.value = NodeType.isSlopeSymmetric(type);
-  }
-
-  void refreshSelected(){
+  void refreshNodeSelectedIndex(){
     nodeSelectedIndex.value = gridNodeIndexZRC(z.value, row.value, column.value);
   }
 
@@ -165,7 +156,7 @@ class Edit {
   }
 
   void paintTorch(){
-    paint(value: NodeType.Torch);
+    paint(nodeType: NodeType.Torch);
   }
 
   void paintTree(){
@@ -193,7 +184,7 @@ class Edit {
   }
 
   void paintLongGrass(){
-    paint(value: NodeType.Grass_Long);
+    paint(nodeType: NodeType.Grass_Long);
   }
 
   void paintAtPlayerLongGrass(){
@@ -201,15 +192,15 @@ class Edit {
   }
 
   void paintBricks(){
-    paint(value: NodeType.Brick_2);
+    paint(nodeType: NodeType.Brick_2);
   }
 
   void paintGrass(){
-    paint(value: NodeType.Grass);
+    paint(nodeType: NodeType.Grass);
   }
 
   void paintWater(){
-    paint(value: NodeType.Water);
+    paint(nodeType: NodeType.Water);
   }
 
   void paintFloorBricks(){
@@ -261,26 +252,26 @@ class Edit {
     column.value = player.indexColumn;
   }
 
-  void paint({int? value, bool selectPlayerIfPlay = true}) {
+  void paint({int? nodeType, bool selectPlayerIfPlay = true}) {
     if (playMode && selectPlayerIfPlay){
       selectPlayer();
     }
 
-    if (value == NodeType.Empty){
+    if (nodeType == NodeType.Empty){
        return delete();
     }
 
-    if (value == null){
-      value = paintType.value;
+    if (nodeType == null){
+      nodeType = paintType.value;
     } else {
-      paintType.value = value;
+      paintType.value = nodeType;
     }
 
     var orientation = paintOrientation.value;
 
-    if (NodeType.isOriented(value)){
-       if (!NodeType.supportsOrientation(value, orientation)) {
-          orientation = NodeType.getDefaultOrientation(value);
+    if (NodeType.isOriented(nodeType)){
+       if (!NodeType.supportsOrientation(nodeType, orientation)) {
+          orientation = NodeType.getDefaultOrientation(nodeType);
        }
     }
 
@@ -288,7 +279,7 @@ class Edit {
         row.value,
         column.value,
         z.value,
-        value,
+        nodeType,
         orientation,
     );
   }

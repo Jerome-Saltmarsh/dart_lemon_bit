@@ -19,6 +19,6 @@ void onClickedButtonGridNodeType(int type){
   //     type,
   //     edit.paintOrientation.value,
   // );
-  edit.paint(value: type);
+  edit.paint(nodeType: type);
 }
 

@@ -577,7 +577,7 @@ class ServerResponseReader with ByteReader {
     final index = gridNodeIndexZRC(z, row, column);
     gridNodeTypes[index] = type;
     gridNodeOrientations[index] = orientation;
-    edit.refreshSelected();
+    edit.refreshNodeSelectedIndex();
     onGridChanged();
   }
 
