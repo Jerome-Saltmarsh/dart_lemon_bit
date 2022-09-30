@@ -12,6 +12,7 @@ import 'package:lemon_math/library.dart';
 
 import 'classes/vector3.dart';
 import 'effects.dart';
+import 'grid_state_util.dart';
 
 final particles = <Particle>[];
 var totalActiveParticles = 0;
@@ -134,7 +135,7 @@ void _updateParticle(Particle particle) {
     particle.applyFloorFriction();
   } else {
     if (particle.type == ParticleType.Smoke){
-      final wind = particle.wind * 0.01;
+      final wind = gridNodeWindGetVector3(particle) * 0.01;
       particle.xv -= wind;
       particle.yv += wind;
     }

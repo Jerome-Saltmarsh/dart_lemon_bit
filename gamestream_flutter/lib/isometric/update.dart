@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
+import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/update/update_lightning.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
@@ -100,6 +101,8 @@ void applyCharacterToWind(Character character){
    if (character.running || character.performing) {
      character.tile.wind++;
      character.tileAbove.wind++;
+     if (gridNodeInBoundsVector3(character)) return;
+     gridNodeIncrementWindVector3(character);
    }
 }
 

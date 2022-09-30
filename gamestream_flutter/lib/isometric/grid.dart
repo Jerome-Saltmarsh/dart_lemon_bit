@@ -170,6 +170,11 @@ void resetGridToAmbient(){
       }
     }
   }
+
+  for (var i = 0; i < gridNodeTotal; i++){
+     gridNodeBake[i] = shade;
+     gridNodeShade[i] = shade;
+  }
 }
 
 void refreshLighting(){
@@ -339,7 +344,6 @@ void applyEmissionBake({
         final distanceValue = convertDistanceToShade(distance, maxBrightness: maxBrightness);
         if (distanceValue >= currentValue) continue;
         node.bake = distanceValue;
-
         gridNodeBake[gridNodeGetIndex(z, row, column)] = distanceValue;
       }
     }
