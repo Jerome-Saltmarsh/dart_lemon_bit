@@ -339,6 +339,8 @@ void applyEmissionBake({
         final distanceValue = convertDistanceToShade(distance, maxBrightness: maxBrightness);
         if (distanceValue >= currentValue) continue;
         node.bake = distanceValue;
+
+        gridNodeBake[gridNodeGetIndex(z, row, column)] = distanceValue;
       }
     }
   }
