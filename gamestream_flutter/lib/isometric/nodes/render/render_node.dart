@@ -18,7 +18,7 @@ void renderNodeAt({
   required int column,
   required int z,
 }){
-  final index = (z * gridTotalRows * gridTotalColumns) + (row * gridTotalColumns) + column;
+  final index = (z * gridTotalArea) + (row * gridTotalColumns) + column;
 
   if (!gridNodeVisible[index]) {
     gridNodeVisible[index] = true;
@@ -99,6 +99,34 @@ void renderNodeTypeBrick({
         dstX: x,
         dstY: y,
         srcX: AtlasSrc.Node_Brick_Slope_West,
+        srcY: spriteHeight * shade,
+      );
+    case NodeOrientation.Half_North:
+      return renderStandardNode(
+        dstX: x - 17,
+        dstY: y - 17,
+        srcX: AtlasSrc.Node_Brick_Half_North,
+        srcY: spriteHeight * shade,
+      );
+    case NodeOrientation.Half_East:
+      return renderStandardNode(
+        dstX: x + 17,
+        dstY: y - 17,
+        srcX: AtlasSrc.Node_Brick_Half_East,
+        srcY: spriteHeight * shade,
+      );
+    case NodeOrientation.Half_South:
+      return renderStandardNode(
+        dstX: x + 17,
+        dstY: y - 17,
+        srcX: AtlasSrc.Node_Brick_Half_South,
+        srcY: spriteHeight * shade,
+      );
+    case NodeOrientation.Half_West:
+      return renderStandardNode(
+        dstX: x + 17,
+        dstY: y - 17,
+        srcX: AtlasSrc.Node_Brick_Half_West,
         srcY: spriteHeight * shade,
       );
   }

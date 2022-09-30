@@ -20,11 +20,10 @@ final gridShadows = Watch(true, onChanged: (bool value){
   refreshLighting();
 });
 
-// var grid = <List<List<Node>>>[];
 var gridTotalZ = 0;
 var gridTotalRows = 0;
 var gridTotalColumns = 0;
-
+var gridTotalArea = 0;
 var gridRowLength = 0.0;
 var gridColumnLength = 0.0;
 var gridZLength = 0.0;

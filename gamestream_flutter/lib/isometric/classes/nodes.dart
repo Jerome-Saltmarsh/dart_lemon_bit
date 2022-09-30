@@ -627,18 +627,6 @@ class NodeBricks2 extends Node {
       return renderShadeManual(7492);
     if (orientation == NodeOrientation.Slope_West)
       return renderShadeManual(7541);
-    if (orientation == NodeOrientation.Half_West)
-      return renderShadeManual(srcX + srcIndexX1);
-    if (orientation == NodeOrientation.Half_South)
-      return renderShadeManual(srcX + srcIndexX2);
-    if (orientation == NodeOrientation.Half_East){
-      dstX += 17;
-      dstY -= 17;
-      renderShadeManual(srcX + srcIndexX1);
-      dstX -= 17;
-      dstY += 17;
-      return;
-    }
     if (orientation == NodeOrientation.Half_North){
       dstX -= 17;
       dstY -= 17;
@@ -647,6 +635,18 @@ class NodeBricks2 extends Node {
       dstY += 17;
       return;
     }
+    if (orientation == NodeOrientation.Half_East){
+      dstX += 17;
+      dstY -= 17;
+      renderShadeManual(srcX + srcIndexX1);
+      dstX -= 17;
+      dstY += 17;
+      return;
+    }
+    if (orientation == NodeOrientation.Half_South)
+      return renderShadeManual(srcX + srcIndexX2);
+    if (orientation == NodeOrientation.Half_West)
+      return renderShadeManual(srcX + srcIndexX1);
 
     if (orientation == NodeOrientation.Corner_Top)
       return renderShadeManual(srcX + srcIndexX3);
