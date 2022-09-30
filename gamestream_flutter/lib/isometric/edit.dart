@@ -109,7 +109,8 @@ class Edit {
   }
 
   void refreshSelected([int? val]){
-    nodeSelected.value = grid[z.value][row.value][column.value];
+    // TODO
+    // nodeSelected.value = grid[z.value][row.value][column.value];
   }
 
   void deselectGameObject() {
@@ -254,16 +255,16 @@ class Edit {
   void deleteIfTree(){
     if (selectedType == NodeType.Tree_Bottom){
       if (z.value < gridTotalZ - 1){
-        if (grid[z.value + 1][row.value][column.value] == NodeType.Tree_Top){
-          sendClientRequestSetBlock(row.value, column.value, z.value + 1, NodeType.Empty);
-        }
+        // if (grid[z.value + 1][row.value][column.value] == NodeType.Tree_Top){
+        //   sendClientRequestSetBlock(row.value, column.value, z.value + 1, NodeType.Empty);
+        // }
       }
     }
     if (selectedType == NodeType.Tree_Top){
       if (z.value > 0){
-        if (grid[z.value - 1][row.value][column.value] == NodeType.Tree_Bottom){
-          sendClientRequestSetBlock(row.value, column.value, z.value - 1, NodeType.Empty);
-        }
+        // if (grid[z.value - 1][row.value][column.value] == NodeType.Tree_Bottom){
+        //   sendClientRequestSetBlock(row.value, column.value, z.value - 1, NodeType.Empty);
+        // }
       }
     }
   }

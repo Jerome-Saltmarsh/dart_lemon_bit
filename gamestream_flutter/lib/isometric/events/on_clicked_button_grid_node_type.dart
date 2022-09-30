@@ -13,13 +13,14 @@ void onClickedButtonGridNodeType(int type){
     edit.z.value = player.indexZ;
     return;
   }
-  edit.nodeSelected.value = generateNode(
-      edit.z.value,
-      edit.row.value,
-      edit.column.value,
-      type,
-      edit.paintOrientation.value,
-  );
+  // TODO
+  // edit.nodeSelected.value = generateNode(
+  //     edit.z.value,
+  //     edit.row.value,
+  //     edit.column.value,
+  //     type,
+  //     edit.paintOrientation.value,
+  // );
   edit.paint(value: type);
 }
 

@@ -4,6 +4,7 @@
 import 'dart:math';
 
 import 'package:gamestream_flutter/isometric/grid.dart';
+import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 
 int getClosestByType({required int radius, required int type}){
@@ -13,14 +14,11 @@ int getClosestByType({required int radius, required int type}){
   final maxColumn = min(player.indexColumn + radius, gridTotalColumns - 1);
   final minZ = max(player.indexZ - radius, 0);
   final maxZ = min(player.indexZ + radius, gridTotalZ - 1);
-
   var closest = 99999;
   for (var z = minZ; z <= maxZ; z++){
-    final gridZ = grid[z];
     for (var row = minRow; row <= maxRow; row++){
-      final gridZRow = gridZ[row];
       for (var column = minColumn; column <= maxColumn; column++){
-         if (gridZRow[column].type != type) continue;
+        if (gridNodeZRCType(z, row, column) != type) continue;
          final distance = player.getGridDistance(z, row, column);
          if (distance > closest) continue;
          closest = distance;

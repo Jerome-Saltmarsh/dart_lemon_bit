@@ -22,7 +22,7 @@ void gridNodeShadeSet(int index, int shade){
   gridNodeShade[index] = shade;
 }
 
-int gridNodeGetIndex(int z, int row, int column) {
+int gridNodeIndexZRC(int z, int row, int column) {
   assert (gridNodeIsInBounds(z, row, column));
   return (z * gridTotalRows * gridTotalColumns) + (row * gridTotalColumns) + column;
 }
@@ -38,7 +38,30 @@ bool gridNodeIsInBounds(int z, int row, int column){
 }
 
 void gridNodeWindIncrement(int z, int row, int column){
-  final index = gridNodeGetIndex(z, row, column);
+  final index = gridNodeIndexZRC(z, row, column);
   if (gridNodeWind[index] >= windIndexStrong) return;
   gridNodeWind[index]++;
 }
+
+int gridNodeGetIndexXYZ(double x, double y, double z) =>
+  gridNodeIndexZRC(
+      z ~/ tileSizeHalf,
+      x ~/ tileSize,
+      y ~/ tileSize,
+  );
+
+int gridNodeXYZType(double x, double y, double z) =>
+    gridNodeTypes[gridNodeXYZIndex(x, y, z)];
+
+bool gridNodeZRCTypeEmpty(int z, int row, int column) =>
+    gridNodeTypes[gridNodeIndexZRC(z, row, column)] == NodeType.Empty;
+
+int gridNodeZRCType(int z, int row, int column) =>
+    gridNodeTypes[gridNodeIndexZRC(z, row, column)];
+
+int gridNodeXYZIndex(double x, double y, double z) =>
+    gridNodeIndexZRC(
+      z ~/ tileSizeHalf,
+      x ~/ tileSize,
+      y ~/ tileSize,
+    );

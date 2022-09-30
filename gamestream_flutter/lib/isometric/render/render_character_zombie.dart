@@ -8,7 +8,7 @@ import 'render_character_health_bar.dart';
 import 'src_utils.dart';
 
 void renderCharacterZombie(Character character) {
-  final shade = getCharacterShade(character);
+  final shade = getRenderShade(character);
 
   if (shade < Shade.Dark) renderCharacterHealthBar(character);
   render(

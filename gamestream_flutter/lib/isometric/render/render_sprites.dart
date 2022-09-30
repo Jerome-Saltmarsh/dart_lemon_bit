@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
-import 'package:gamestream_flutter/isometric/classes/node.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
@@ -49,7 +49,7 @@ var totalRemaining = 0;
 var totalIndex = 0;
 
 final maxZRender = Watch<int>(gridTotalZ, clamp: (int value){
-  return clamp<int>(value, 0, max(grid.length - 1, 0));
+  return clamp<int>(value, 0, max(gridTotalZ - 1, 0));
 });
 
 void renderSprites() {
@@ -219,7 +219,7 @@ class RenderOrderGrid extends RenderOrder {
   var row = 0;
   var rowsMax = 0;
   var shiftIndex = 0;
-  late Node node;
+  // late Node node;
   var screenTopLeftRow = 0;
   var screenBottomRightRow = 0;
   var gridTotalColumnsMinusOne = 0;
@@ -230,7 +230,7 @@ class RenderOrderGrid extends RenderOrder {
 
   var maxZ = 0;
   var minZ = 0;
-  late List<List<Node>> zPlain;
+  // late List<List<Node>> zPlain;
 
   double get renderX => (row - column) * tileSizeHalf;
   double get renderY => convertRowColumnZToY(row, column, z);
@@ -243,11 +243,11 @@ class RenderOrderGrid extends RenderOrder {
       row++;
       column--;
 
-      if (!node.renderable) continue;
-      if (node.dstX > screenRight) return;
-      assert (node.dstX >= screenLeft);
-      assert (node.dstY >= screenTop);
-      assert (node.dstY <= screenBottom);
+      // if (!node.renderable) continue;
+      if ((row - column) * nodeSizeHalf > screenRight) return;
+      // assert (node.dstX >= screenLeft);
+      // assert (node.dstY >= screenTop);
+      // assert (node.dstY <= screenBottom);
       // if (node.dstX < screenLeft) {
       //   offscreenNodesLeft++;
       //   continue;
@@ -274,7 +274,7 @@ class RenderOrderGrid extends RenderOrder {
 
   @override
   void updateFunction() {
-    zPlain = grid[z];
+    // zPlain = grid[z];
     nextGridNode();
     order = ((row + column) * tileSize) + tileSizeHalf;
     orderZ = z;
@@ -299,7 +299,7 @@ class RenderOrderGrid extends RenderOrder {
     order = 0;
     orderZ = 0;
     z = 0;
-    zPlain = grid[z];
+    // zPlain = grid[z];
     orderZ = 0;
     gridTotalColumnsMinusOne = gridTotalColumns - 1;
     playerZ = player.indexZ;
@@ -397,19 +397,23 @@ class RenderOrderGrid extends RenderOrder {
   }
 
   void revealRaycast(int z, int row, int column){
+    if (!gridNodeIsInBounds(z, row, column)) return;
+
     for (; z < gridTotalZ; z += 2){
       row++;
       column++;
       if (row >= gridTotalRows) return;
       if (column >= gridTotalColumns) return;
-      getNode(z, row, column).hide();
-      getNode(z + 1, row, column).hide();
+      gridNodeVisible[gridNodeIndexZRC(z, row, column)] = false;
+      if (z < gridTotalZ - 2){
+        gridNodeVisible[gridNodeIndexZRC(z + 1, row, column)] = false;
+      }
     }
   }
 
   void revealAbove(int z, int row, int column){
     for (; z < gridTotalZ; z++){
-      grid[z][row][column].hide();
+      gridNodeVisible[gridNodeIndexZRC(z, row, column)] = false;
     }
   }
 
@@ -420,7 +424,7 @@ class RenderOrderGrid extends RenderOrder {
     assignNode();
     calculateMinMaxZ();
     setStart();
-    assert(node.dstY >= screenTop);
+    // assert(node.dstY >= screenTop);
   }
 
   // given a grid coordinate row / column workout the maximum z before it goes above the top of the screen.
@@ -466,7 +470,7 @@ class RenderOrderGrid extends RenderOrder {
       row = startRow;
       column = startColumn;
     }
-    zPlain = grid[z];
+    // zPlain = grid[z];
   }
 
   void assignNode() {
@@ -476,7 +480,7 @@ class RenderOrderGrid extends RenderOrder {
     assert (row < gridTotalRows);
     assert (column >= 0);
     assert (column < gridTotalColumns);
-    node = zPlain[row][column];
+    // node = zPlain[row][column];
   }
 
   void shiftIndexDown(){
@@ -525,23 +529,23 @@ class RenderOrderGrid extends RenderOrder {
            gridNodeShade[i] = gridNodeBake[i];
         }
 
-        for (var z = 0; z < gridTotalZ; z++) {
-          final zPlain = grid[z];
-          final zLength = z * tileSize;
-          final minRow = convertWorldToRowSafe(screenLeft, screenTop, zLength);
-          final maxRow = convertWorldToRowSafe(screenRight, screenBottom, zLength);
-          final minColumn = convertWorldToColumnSafe(screenRight, screenTop, zLength);
-          final maxColumn = convertWorldToColumnSafe(screenLeft, screenBottom, zLength);
-          for (var rowIndex = minRow; rowIndex <= maxRow; rowIndex++) {
-            final dynamicRow = zPlain[rowIndex];
-            for (var columnIndex = minColumn; columnIndex <= maxColumn; columnIndex++) {
-              final node = dynamicRow[columnIndex];
-              if (node.dstY > screenBottom) break;
-              if (node.dstX > screenRight) continue;
-              node.resetShadeToBake();
-            }
-          }
-        }
+        // for (var z = 0; z < gridTotalZ; z++) {
+        //   final zPlain = grid[z];
+        //   final zLength = z * tileSize;
+        //   final minRow = convertWorldToRowSafe(screenLeft, screenTop, zLength);
+        //   final maxRow = convertWorldToRowSafe(screenRight, screenBottom, zLength);
+        //   final minColumn = convertWorldToColumnSafe(screenRight, screenTop, zLength);
+        //   final maxColumn = convertWorldToColumnSafe(screenLeft, screenBottom, zLength);
+        //   for (var rowIndex = minRow; rowIndex <= maxRow; rowIndex++) {
+        //     final dynamicRow = zPlain[rowIndex];
+        //     for (var columnIndex = minColumn; columnIndex <= maxColumn; columnIndex++) {
+        //       final node = dynamicRow[columnIndex];
+        //       if (node.dstY > screenBottom) break;
+        //       if (node.dstX > screenRight) continue;
+        //       node.resetShadeToBake();
+        //     }
+        //   }
+        // }
       }
 }
 

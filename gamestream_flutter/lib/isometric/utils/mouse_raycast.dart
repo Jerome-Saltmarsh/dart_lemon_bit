@@ -1,5 +1,7 @@
+import 'package:bleed_common/node_type.dart';
 import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
+import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -13,11 +15,12 @@ void mouseRaycast(Function(int z, int row, int column) callback){
     if (row >= gridTotalRows) break;
     if (column >= gridTotalColumns) break;
     if (z >= gridTotalZ) break;
-    if (grid[z][row][column].isEmpty) {
+    final index = gridNodeIndexZRC(z, row, column);
+    if (gridNodeTypes[index] == NodeType.Empty) {
       z--;
       continue;
     }
-    if (!grid[z][row][column].visible) {
+    if (!gridNodeVisible[index]) {
       z--;
       continue;
     }

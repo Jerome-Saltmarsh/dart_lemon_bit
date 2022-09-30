@@ -44,7 +44,6 @@ import 'package:lemon_watch/watch.dart';
 
 import 'ai.dart';
 import 'camera.dart';
-import 'classes/node.dart';
 import 'classes/projectile.dart';
 import 'grid.dart';
 import 'player.dart';
@@ -576,9 +575,9 @@ class ServerResponseReader with ByteReader {
     final column = readInt();
     final type = readByte();
     final orientation = readByte();
-    final node = generateNode(z, row, column, type, orientation);
-    node.orientation = orientation;
-    grid[z][row][column] = node;
+    final index = gridNodeIndexZRC(z, row, column);
+    gridNodeTypes[index] = type;
+    gridNodeOrientations[index] = orientation;
     edit.refreshSelected();
     onGridChanged();
   }
@@ -645,13 +644,13 @@ class ServerResponseReader with ByteReader {
     gridTotalColumns = readInt();
 
 
-    grid = List.generate(gridTotalZ, (indexZ) =>
-        List.generate(gridTotalRows, (indexRow) =>
-            List.generate(gridTotalColumns, (indexColumn) => Node.empty, growable: false),
-            growable: false
-        ),
-        growable: false
-    );
+    // grid = List.generate(gridTotalZ, (indexZ) =>
+    //     List.generate(gridTotalRows, (indexRow) =>
+    //         List.generate(gridTotalColumns, (indexColumn) => Node.empty, growable: false),
+    //         growable: false
+    //     ),
+    //     growable: false
+    // );
 
     final grandTotal = gridTotalZ * gridTotalRows * gridTotalColumns;
 
@@ -683,14 +682,14 @@ class ServerResponseReader with ByteReader {
         gridNodeOrientations[gridIndex] = nodeOrientation;
         gridIndex++;
         count--;
-        grid[currentZ][currentRow][currentColumn] = generateNode(
-            currentZ,
-            currentRow,
-            currentColumn,
-            nodeType,
-            nodeOrientation,
-        );
-        grid[currentZ][currentRow][currentColumn].orientation = nodeOrientation;
+        // grid[currentZ][currentRow][currentColumn] = generateNode(
+        //     currentZ,
+        //     currentRow,
+        //     currentColumn,
+        //     nodeType,
+        //     nodeOrientation,
+        // );
+        // grid[currentZ][currentRow][currentColumn].orientation = nodeOrientation;
         currentColumn++;
         if (currentColumn >= gridTotalColumns) {
           currentColumn = 0;

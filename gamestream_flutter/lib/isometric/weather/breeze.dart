@@ -1,5 +1,7 @@
+import 'package:bleed_common/library.dart';
 import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
+import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:lemon_watch/watch.dart';
 
 final weatherBreeze = Watch(false);
@@ -60,7 +62,12 @@ void applyGridLine(int index, int strength){
   }
   while (windLineRow < gridTotalRows && windLineColumn < gridTotalColumns){
     for (var windLineZ = 0; windLineZ < gridTotalZ; windLineZ++){
-      grid[windLineZ][windLineRow][windLineColumn].wind += strength;
+      final index = gridNodeIndexZRC(windLineZ, windLineRow, windLineColumn);
+      gridNodeWind[index] += strength;
+      // TODO refactor
+      if (gridNodeWind[index] > windIndexStrong){
+        gridNodeWind[index] = windIndexStrong;
+      }
     }
     windLineRow++;
     windLineColumn++;

@@ -130,6 +130,9 @@ class NodeType {
       Bau_Haus_2,
       Wooden_Plank,
     ].contains(type);
+  
+  static bool isRainable(int type) =>
+     type == Grass;
 
   static String getName(int type) =>
      const {
@@ -211,6 +214,14 @@ class NodeType {
   static bool isRain(int value) =>
      value == Rain_Falling       ||
      value == Rain_Landing       ;
+  
+  static bool blocksPerception(int value){
+    return value == isSolid(value);
+  }
+  
+  static bool emitsLight(int value) =>
+    value == Torch || 
+    value == Fireplace;
 
   static int getDefaultOrientation(int value){
      if (isSolid(value))

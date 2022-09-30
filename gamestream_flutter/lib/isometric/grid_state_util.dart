@@ -12,14 +12,14 @@ int gridNodeTypeAtVector3(Vector3 vector3) =>
     gridNodeTypes[gridNodeIndexVector3(vector3)];
 
 int gridNodeIndexVector3(Vector3 vector3) =>
-  gridNodeGetIndex(
+  gridNodeIndexZRC(
     vector3.indexZ,
     vector3.indexRow,
     vector3.indexColumn,
   );
 
 int gridNodeIndexVector3NodeBelow(Vector3 vector3) =>
-    gridNodeGetIndex(
+    gridNodeIndexZRC(
       vector3.indexZ - 1,
       vector3.indexRow,
       vector3.indexColumn,

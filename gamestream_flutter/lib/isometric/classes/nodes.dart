@@ -130,7 +130,7 @@ class NodeRainLanding extends Node {
 
   NodeRainLanding(int row, int column, int z) : super(row, column, z) {
     frame = (row + column) * 2;
-    onWater = getNode(z - 1, row, column).type == NodeType.Water;
+    // onWater = getNode(z - 1, row, column).type == NodeType.Water;
   }
 
   @override
