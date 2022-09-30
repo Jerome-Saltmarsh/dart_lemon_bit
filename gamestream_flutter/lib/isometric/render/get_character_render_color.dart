@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
+import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
 
 int getNodeBelowColor(Vector3 vector3) =>
     convertShadeToColor(
@@ -12,6 +13,16 @@ int getNodeBelowColor(Vector3 vector3) =>
     );
 
 int convertShadeToColor(int shade) =>  colorShades[shade];
+
+int getCharacterShade(Vector3 vector3){
+   if (!gridNodeInBoundsVector3(vector3)) {
+     return ambientShade.value;
+   }
+   if (vector3.indexZ > 0){
+     return getNodeBelowShade(vector3);
+   }
+   return gridNodeShadeAtVector3(vector3);
+}
 
 int getNodeBelowShade(Vector3 vector3) =>
   gridNodeShade[

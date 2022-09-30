@@ -5,6 +5,9 @@ import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 
 import 'grid_state.dart';
 
+int gridNodeShadeAtVector3(Vector3 vector3) =>
+  gridNodeShade[gridNodeIndexVector3(vector3)];
+
 int gridNodeIndexVector3(Vector3 vector3) =>
   gridNodeGetIndex(
     vector3.indexZ,
