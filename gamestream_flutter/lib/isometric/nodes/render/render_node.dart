@@ -2,6 +2,8 @@
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
+import 'package:gamestream_flutter/isometric/animation_frame.dart';
+import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src.dart';
@@ -58,7 +60,17 @@ void renderNodeAt({
         return renderTorchOn(dstX, dstY);
       }
       return renderTorchOnWindy(dstX, dstY);
-
+    case NodeType.Water:
+      return render(
+        dstX: dstX,
+        dstY: dstY + animationFrameWaterHeight,
+        srcX: 7976,
+        srcY: (((animationFrameWater + ((row + column) * 3)) % 10) * 72.0),
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorY: 0.3334,
+        color: colorShades[gridNodeShade[index]],
+      );
   }
 }
 
