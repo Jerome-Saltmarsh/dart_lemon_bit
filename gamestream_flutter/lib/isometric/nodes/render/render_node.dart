@@ -168,6 +168,27 @@ void renderNodeTypeGrass({
           srcX: AtlasSrc.Node_Grass,
           srcY: spriteHeight * shade,
       );
+    case NodeOrientation.Slope_North:
+      return renderStandardNode(
+        dstX: x,
+        dstY: y,
+        srcX: AtlasSrc.Node_Grass_Slope_North,
+        srcY: spriteHeight * shade,
+      );
+    case NodeOrientation.Slope_East:
+      return renderStandardNode(
+        dstX: x,
+        dstY: y,
+        srcX: AtlasSrc.Node_Grass_Slope_East,
+        srcY: spriteHeight * shade,
+      );
+    case NodeOrientation.Slope_West:
+      return renderStandardNode(
+        dstX: x,
+        dstY: y,
+        srcX: AtlasSrc.Node_Grass_Slope_West,
+        srcY: spriteHeight * shade,
+      );
   }
 }
 
