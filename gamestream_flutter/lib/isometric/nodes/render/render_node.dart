@@ -151,6 +151,14 @@ void renderNodeAt({
         anchorY: 0.3334,
         color: colorShades[gridNodeShade[index]],
       );
+    case NodeType.Stone:
+      renderStandardNode(
+          dstX: dstX,
+          dstY: dstY,
+          srcX: 9831,
+          srcY: 0,
+          color: colorShades[gridNodeShade[index]],
+      );  
   }
 }
 
