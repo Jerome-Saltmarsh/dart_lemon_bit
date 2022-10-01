@@ -3,6 +3,7 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
+import 'package:gamestream_flutter/isometric/classes/nodes.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid_state.dart';
@@ -40,20 +41,23 @@ void renderNodeAt({
   final dstX = projectX(row, column);
   final dstY = projectY(row, column, z);
 
+  final shade = gridNodeShade[index];
+  final color = colorShades[shade];
+
   switch (nodeType) {
     case NodeType.Grass:
       return renderNodeTypeGrass(
           x: dstX,
           y: dstY,
           orientation: gridNodeOrientations[index],
-          shade: gridNodeShade[index],
+          shade: shade,
       );
     case NodeType.Brick_2:
       return renderNodeTypeBrick(
         x: dstX,
         y: dstY,
         orientation: gridNodeOrientations[index],
-        shade: gridNodeShade[index],
+        shade: shade,
       );
     case NodeType.Torch:
       if (!torchesIgnited.value) {
@@ -72,7 +76,7 @@ void renderNodeAt({
         srcWidth: 48,
         srcHeight: 72,
         anchorY: 0.3334,
-        color: colorShades[gridNodeShade[index]],
+        color: color,
       );
     case NodeType.Tree_Bottom:
       return render(
@@ -83,7 +87,7 @@ void renderNodeAt({
         srcWidth: 62.0,
         srcHeight: 74.0,
         anchorY: 0.5,
-        color: colorShades[gridNodeShade[index]],
+        color: color,
       );
     case NodeType.Tree_Top:
       final f = raining.value ? animationFrame % 4 : -1;
@@ -126,7 +130,7 @@ void renderNodeAt({
         srcWidth: 48,
         srcHeight: 72,
         anchorY: 0.3334,
-        color: colorShades[gridNodeShade[index]],
+        color: color,
       );
     case NodeType.Rain_Landing:
       if (gridNodeZRCTypeSafe(z - 1, row, column) == NodeType.Water){
@@ -138,7 +142,7 @@ void renderNodeAt({
           srcWidth: 48,
           srcHeight: 72,
           anchorY: 0.3334,
-          color: colorShades[gridNodeShade[index]],
+          color: color,
         );
       }
       return render(
@@ -149,16 +153,59 @@ void renderNodeAt({
         srcWidth: 48,
         srcHeight: 72,
         anchorY: 0.3334,
-        color: colorShades[gridNodeShade[index]],
+        color: color,
       );
     case NodeType.Stone:
-      renderStandardNode(
+      return renderStandardNode(
           dstX: dstX,
           dstY: dstY,
-          srcX: 9831,
+          srcX: AtlasSrc.Node_Stone,
           srcY: 0,
-          color: colorShades[gridNodeShade[index]],
-      );  
+          color: color,
+      );
+    case NodeType.Plain:
+      switch (gridNodeOrientations[index]){
+        case NodeOrientation.Solid:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Plain_Solid,
+            srcY: 0,
+            color: color,
+          );
+        case NodeOrientation.Half_North:
+          return renderStandardNode(
+            dstX: dstX - 17,
+            dstY: dstY - 17,
+            srcX: AtlasSrc.Node_Plain_Solid,
+            srcY: srcYIndex1,
+            color: color,
+          );
+        case NodeOrientation.Half_East:
+          return renderStandardNode(
+            dstX: dstX + 17,
+            dstY: dstY - 17,
+            srcX: AtlasSrc.Node_Plain_Solid,
+            srcY: srcYIndex2,
+            color: color,
+          );
+        case NodeOrientation.Half_South:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Plain_Solid,
+            srcY: srcYIndex1,
+            color: color,
+          );
+        case NodeOrientation.Half_West:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Plain_Solid,
+            srcY: srcYIndex2,
+            color: color,
+          );
+      }
   }
 }
 
