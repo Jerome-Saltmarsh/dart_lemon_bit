@@ -12,4 +12,5 @@ class AtlasSrc {
   static const Node_Brick_Half_East = 11377.0 + srcIndexX1;
   static const Node_Brick_Half_South = 11377.0 + srcIndexX2;
   static const Node_Brick_Half_West = 11377.0 + srcIndexX1;
+  static const Node_Grass_Long = 10240.0 + srcIndexX1;
 }

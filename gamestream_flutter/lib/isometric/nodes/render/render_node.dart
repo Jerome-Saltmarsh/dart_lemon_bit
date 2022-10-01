@@ -98,6 +98,23 @@ void renderNodeAt({
         anchorY: 0.5,
         color: colorShades[nodeBelowShade],
       );
+    case NodeType.Grass_Long:
+      switch (gridNodeWind[index]) {
+        case windIndexCalm:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 10118,
+            srcY: spriteHeight * gridNodeShade[index],
+          );
+        default:
+          return renderStandardNode(
+              dstX: dstX,
+              dstY: dstY,
+              srcX: 10240 + ((((row - column) + animationFrameGrass) % 6) * 48),
+              srcY: spriteHeight * gridNodeShade[index],
+          );
+      }
   }
 }
 
