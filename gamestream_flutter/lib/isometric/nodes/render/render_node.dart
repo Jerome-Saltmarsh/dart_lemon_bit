@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src.dart';
 import 'package:gamestream_flutter/isometric/render/render_torch.dart';
+import 'package:gamestream_flutter/isometric/watches/raining.dart';
 import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
 import 'package:lemon_engine/render.dart';
 
@@ -70,6 +71,32 @@ void renderNodeAt({
         srcHeight: 72,
         anchorY: 0.3334,
         color: colorShades[gridNodeShade[index]],
+      );
+    case NodeType.Tree_Bottom:
+      return render(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: 1478,
+        srcY: 0,
+        srcWidth: 62.0,
+        srcHeight: 74.0,
+        anchorY: 0.5,
+        color: colorShades[gridNodeShade[index]],
+      );
+    case NodeType.Tree_Top:
+      final f = raining.value ? animationFrame % 4 : -1;
+      var shift = treeAnimation[((row - column) + animationFrame) % treeAnimation.length] * gridNodeWind[index];
+      final nodeBelowShade = gridNodeShade[gridNodeIndexZRC(z > 0 ? z - 1 : z, row, column)];
+
+      return render(
+        dstX: dstX + (shift * 0.5),
+        dstY: dstY,
+        srcX: 1541,
+        srcY: 74.0 + (74 * f),
+        srcWidth: 62.0,
+        srcHeight: 74.0,
+        anchorY: 0.5,
+        color: colorShades[nodeBelowShade],
       );
   }
 }
