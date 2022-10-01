@@ -205,6 +205,38 @@ void renderNodeAt({
             srcY: srcYIndex2,
             color: color,
           );
+        case NodeOrientation.Corner_Top:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Plain_Solid,
+            srcY: srcYIndex6,
+            color: color,
+          );
+        case NodeOrientation.Corner_Right:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Plain_Solid,
+            srcY: srcYIndex5,
+            color: color,
+          );
+        case NodeOrientation.Corner_Bottom:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Plain_Solid,
+            srcY: srcYIndex4,
+            color: color,
+          );
+        case NodeOrientation.Corner_Left:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Plain_Solid,
+            srcY: srcYIndex3,
+            color: color,
+          );
       }
   }
 }
