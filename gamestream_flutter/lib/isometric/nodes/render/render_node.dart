@@ -189,6 +189,62 @@ void renderNodeTypeGrass({
         srcX: AtlasSrc.Node_Grass_Slope_West,
         srcY: spriteHeight * shade,
       );
+    case NodeOrientation.Slope_Inner_North_East:
+      return renderStandardNode(
+        dstX: x,
+        dstY: y,
+        srcX: AtlasSrc.Node_Grass_Slope_Inner_North_East,
+        srcY: spriteHeight * shade,
+      );
+    case NodeOrientation.Slope_Inner_South_East:
+      return renderStandardNode(
+        dstX: x,
+        dstY: y,
+        srcX: AtlasSrc.Node_Grass_Slope_Inner_South_East,
+        srcY: spriteHeight * shade,
+      );
+    case NodeOrientation.Slope_Inner_South_West:
+      return renderStandardNode(
+        dstX: x,
+        dstY: y,
+        srcX: AtlasSrc.Node_Grass_Slope_Inner_South_West,
+        srcY: spriteHeight * shade,
+      );
+    case NodeOrientation.Slope_Inner_North_West:
+      return renderStandardNode(
+        dstX: x,
+        dstY: y,
+        srcX: AtlasSrc.Node_Grass_Slope_Inner_North_West,
+        srcY: spriteHeight * shade,
+      );
+    case NodeOrientation.Slope_Outer_North_East:
+      return renderStandardNode(
+        dstX: x,
+        dstY: y,
+        srcX: AtlasSrc.Node_Grass_Slope_Outer_North_East,
+        srcY: spriteHeight * shade,
+      );
+    case NodeOrientation.Slope_Outer_South_East:
+      return renderStandardNode(
+        dstX: x,
+        dstY: y,
+        srcX: AtlasSrc.Node_Grass_Slope_Outer_South_East,
+        srcY: spriteHeight * shade,
+      );
+    case NodeOrientation.Slope_Outer_South_West:
+      return renderStandardNode(
+        dstX: x,
+        dstY: y,
+        srcX: AtlasSrc.Node_Grass_Slope_Outer_South_West,
+        srcY: spriteHeight * shade,
+      );
+    case NodeOrientation.Slope_Outer_North_West:
+      return renderStandardNode(
+        dstX: x,
+        dstY: y,
+        srcX: AtlasSrc.Node_Grass_Slope_Outer_North_West,
+        srcY: spriteHeight * shade,
+      );
   }
 }
 
