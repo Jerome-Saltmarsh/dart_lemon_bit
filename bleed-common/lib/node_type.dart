@@ -132,6 +132,8 @@ class NodeType {
     ].contains(type);
   
   static bool isRainable(int type) =>
+     type == Water ||
+     type == Brick_2 ||
      type == Grass;
 
   static String getName(int type) =>

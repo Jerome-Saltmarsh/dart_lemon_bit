@@ -8,6 +8,8 @@ import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src.dart';
 import 'package:gamestream_flutter/isometric/render/render_torch.dart';
+import 'package:gamestream_flutter/isometric/variables/src_x_rain_falling.dart';
+import 'package:gamestream_flutter/isometric/variables/src_x_rain_landing.dart';
 import 'package:gamestream_flutter/isometric/watches/raining.dart';
 import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
 import 'package:lemon_engine/render.dart';
@@ -115,6 +117,40 @@ void renderNodeAt({
               srcY: spriteHeight * gridNodeShade[index],
           );
       }
+    case NodeType.Rain_Falling:
+      return render(
+        dstX: dstX - rainPosition,
+        dstY: dstY + animationFrameRain,
+        srcX: srcXRainFalling,
+        srcY: 72.0 * ((animationFrameRain + row + column) % 6),
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorY: 0.3334,
+        color: colorShades[gridNodeShade[index]],
+      );
+    case NodeType.Rain_Landing:
+      if (gridNodeZRCTypeSafe(z - 1, row, column) == NodeType.Water){
+        return render(
+          dstX: dstX,
+          dstY: dstY,
+          srcX: 9280,
+          srcY: 72.0 * ((animationFrameRain + row + column) % 10),
+          srcWidth: 48,
+          srcHeight: 72,
+          anchorY: 0.3334,
+          color: colorShades[gridNodeShade[index]],
+        );
+      }
+      return render(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: srcXRainLanding,
+        srcY: 72.0 * ((animationFrameRain + row + column) % 6),
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorY: 0.3334,
+        color: colorShades[gridNodeShade[index]],
+      );
   }
 }
 

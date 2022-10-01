@@ -66,6 +66,16 @@ int gridNodeXYZType(double x, double y, double z) =>
 bool gridNodeZRCTypeEmpty(int z, int row, int column) =>
     gridNodeTypes[gridNodeIndexZRC(z, row, column)] == NodeType.Empty;
 
+int gridNodeZRCTypeSafe(int z, int row, int column) {
+  if (z < 0) return NodeType.Boundary;
+  if (row < 0) return NodeType.Boundary;
+  if (column < 0) return NodeType.Boundary;
+  if (z >= gridTotalZ) return NodeType.Boundary;
+  if (row >= gridTotalRows) return NodeType.Boundary;
+  if (column >= gridTotalColumns) return NodeType.Boundary;
+  return gridNodeZRCType(z, row, column);
+}
+
 int gridNodeZRCType(int z, int row, int column) =>
     gridNodeTypes[gridNodeIndexZRC(z, row, column)];
 
