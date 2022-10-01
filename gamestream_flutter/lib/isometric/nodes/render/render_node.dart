@@ -3,7 +3,6 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
-import 'package:gamestream_flutter/isometric/classes/nodes.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid_state.dart';
@@ -180,6 +179,102 @@ void renderNodeAt({
         dstY: dstY,
         color: color,
       );
+    case NodeType.Wood_2:
+      switch(gridNodeOrientations[index]){
+        case NodeOrientation.Solid:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Wood_Solid,
+            srcY: 0,
+          );
+        case NodeOrientation.Slope_North:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Wood_Slope_North,
+            srcY: 0,
+          );
+        case NodeOrientation.Slope_East:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Wood_Slope_East,
+            srcY: 0,
+          );
+        case NodeOrientation.Slope_South:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Wood_Slope_South,
+            srcY: 0,
+          );
+        case NodeOrientation.Slope_West:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Wood_Slope_West,
+            srcY: 0,
+          );
+        case NodeOrientation.Half_North:
+          return renderStandardNode(
+            dstX: dstX - 17,
+            dstY: dstY - 17,
+            srcX: AtlasSrc.Node_Wood_Half_North,
+            srcY: 0,
+          );
+        case NodeOrientation.Half_East:
+          return renderStandardNode(
+            dstX: dstX + 17,
+            dstY: dstY - 17,
+            srcX: AtlasSrc.Node_Wood_Half_East,
+            srcY: 0,
+          );
+        case NodeOrientation.Half_South:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Wood_Half_South,
+            srcY: 0,
+          );
+        case NodeOrientation.Half_West:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Wood_Half_West,
+            srcY: 0,
+          );
+        case NodeOrientation.Corner_Top:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Wood_Corner_Top,
+            srcY: 0,
+          );
+        case NodeOrientation.Corner_Right:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Wood_Corner_Right,
+            srcY: 0,
+          );
+        case NodeOrientation.Corner_Bottom:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Wood_Corner_Bottom,
+            srcY: 0,
+          );
+        case NodeOrientation.Corner_Left:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Wood_Corner_Left,
+            srcY: 0,
+          );
+      }
+
+      break;
   }
 }
 

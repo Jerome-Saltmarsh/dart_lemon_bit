@@ -45,6 +45,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] accuracy decreased while running
 /// [ ] enemies drop magic orbs required for powers
 /// [ ] running backwards is slower
+/// [ ] modify animations editor
 
 /// [AQUARIUS]
 /// Design character fish

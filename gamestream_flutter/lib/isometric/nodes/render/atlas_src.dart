@@ -28,4 +28,17 @@ class AtlasSrc {
   static const Node_Stone = 9831.0;
   static const Node_Plain_Solid = 11277.0;
   static const Node_Wooden_Plank = 7688.0;
+  static const Node_Wood_Solid = 8886.0;
+  static const Node_Wood_Slope_North = 11179.0;
+  static const Node_Wood_Slope_East = 11130.0;
+  static const Node_Wood_Slope_South = 11082.0;
+  static const Node_Wood_Slope_West = 11032.0;
+  static const Node_Wood_Half_North = 8983.0;
+  static const Node_Wood_Half_East = 8935.0;
+  static const Node_Wood_Half_South = 8983.0;
+  static const Node_Wood_Half_West = 8935.0;
+  static const Node_Wood_Corner_Top = 9082.0;
+  static const Node_Wood_Corner_Right = 9131.0;
+  static const Node_Wood_Corner_Bottom = 9180.0;
+  static const Node_Wood_Corner_Left = 9033.0;
 }
