@@ -15,6 +15,8 @@ import 'package:gamestream_flutter/isometric/watches/raining.dart';
 import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
 import 'package:lemon_engine/render.dart';
 
+import 'render_node_plain.dart';
+
 const spriteWidth = 48.0;
 const spriteHeight = 72.0;
 
@@ -164,77 +166,52 @@ void renderNodeAt({
           color: color,
       );
     case NodeType.Plain:
-      switch (gridNodeOrientations[index]){
+      return renderNodePlain(
+        orientation: gridNodeOrientations[index],
+        dstX: dstX,
+        dstY: dstY,
+        color: color,
+      );
+    case NodeType.Wooden_Plank:
+      switch(gridNodeOrientations[index]){
         case NodeOrientation.Solid:
           return renderStandardNode(
-            dstX: dstX,
-            dstY: dstY,
-            srcX: AtlasSrc.Node_Plain_Solid,
-            srcY: 0,
-            color: color,
+              dstX: dstX,
+              dstY: dstY,
+              srcX: AtlasSrc.Node_Wooden_Plank,
+              srcY: 0,
+              color: color,
           );
         case NodeOrientation.Half_North:
           return renderStandardNode(
             dstX: dstX - 17,
             dstY: dstY - 17,
-            srcX: AtlasSrc.Node_Plain_Solid,
-            srcY: srcYIndex1,
+            srcX: AtlasSrc.Node_Wooden_Plank,
+            srcY: srcYIndex2,
             color: color,
           );
         case NodeOrientation.Half_East:
           return renderStandardNode(
             dstX: dstX + 17,
             dstY: dstY - 17,
-            srcX: AtlasSrc.Node_Plain_Solid,
-            srcY: srcYIndex2,
+            srcX: AtlasSrc.Node_Wooden_Plank,
+            srcY: srcYIndex1,
             color: color,
           );
         case NodeOrientation.Half_South:
           return renderStandardNode(
             dstX: dstX,
             dstY: dstY,
-            srcX: AtlasSrc.Node_Plain_Solid,
-            srcY: srcYIndex1,
+            srcX: AtlasSrc.Node_Wooden_Plank,
+            srcY: srcYIndex2,
             color: color,
           );
         case NodeOrientation.Half_West:
           return renderStandardNode(
             dstX: dstX,
             dstY: dstY,
-            srcX: AtlasSrc.Node_Plain_Solid,
-            srcY: srcYIndex2,
-            color: color,
-          );
-        case NodeOrientation.Corner_Top:
-          return renderStandardNode(
-            dstX: dstX,
-            dstY: dstY,
-            srcX: AtlasSrc.Node_Plain_Solid,
-            srcY: srcYIndex6,
-            color: color,
-          );
-        case NodeOrientation.Corner_Right:
-          return renderStandardNode(
-            dstX: dstX,
-            dstY: dstY,
-            srcX: AtlasSrc.Node_Plain_Solid,
-            srcY: srcYIndex5,
-            color: color,
-          );
-        case NodeOrientation.Corner_Bottom:
-          return renderStandardNode(
-            dstX: dstX,
-            dstY: dstY,
-            srcX: AtlasSrc.Node_Plain_Solid,
-            srcY: srcYIndex4,
-            color: color,
-          );
-        case NodeOrientation.Corner_Left:
-          return renderStandardNode(
-            dstX: dstX,
-            dstY: dstY,
-            srcX: AtlasSrc.Node_Plain_Solid,
-            srcY: srcYIndex3,
+            srcX: AtlasSrc.Node_Wooden_Plank,
+            srcY: srcYIndex1,
             color: color,
           );
       }

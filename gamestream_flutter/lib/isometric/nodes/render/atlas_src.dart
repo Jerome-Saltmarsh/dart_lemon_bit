@@ -27,4 +27,5 @@ class AtlasSrc {
   static const Node_Grass_Long = 10240.0 + srcIndexX1;
   static const Node_Stone = 9831.0;
   static const Node_Plain_Solid = 11277.0;
+  static const Node_Wooden_Plank = 7688.0;
 }
