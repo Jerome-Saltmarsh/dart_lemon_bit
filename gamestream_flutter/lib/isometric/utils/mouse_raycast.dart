@@ -16,7 +16,10 @@ void mouseRaycast(Function(int z, int row, int column) callback){
     if (column >= gridTotalColumns) break;
     if (z >= gridTotalZ) break;
     final index = gridNodeIndexZRC(z, row, column);
-    if (gridNodeTypes[index] == NodeType.Empty) {
+    if (gridNodeTypes[index] == NodeType.Empty
+        ||
+        NodeType.isRain(gridNodeTypes[index])
+    ) {
       z--;
       continue;
     }
