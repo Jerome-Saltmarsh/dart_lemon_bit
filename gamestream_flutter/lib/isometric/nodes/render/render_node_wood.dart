@@ -17,6 +17,7 @@ void renderNodeWood({
         dstY: dstY,
         srcX: AtlasSrc.Node_Wood_Solid,
         srcY: 0,
+        color: color,
       );
     case NodeOrientation.Slope_North:
       return renderStandardNode(

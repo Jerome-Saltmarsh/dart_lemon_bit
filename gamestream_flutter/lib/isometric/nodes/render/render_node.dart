@@ -206,6 +206,83 @@ void renderNodeAt({
           srcY: 0,
           color: color,
       );
+    case NodeType.Soil:
+      return renderStandardNode(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: AtlasSrc.Node_Soil,
+        srcY: 0,
+        color: color,
+      );
+    case NodeType.Fireplace:
+      return render(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: 6469,
+        srcY: ((animationFrameTorch % 6) * 72),
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorY: 0.3334,
+      );
+    case NodeType.Boulder:
+      return renderStandardNode(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: AtlasSrc.Node_Boulder,
+        srcY: 0,
+        color: color,
+      );
+    case NodeType.Oven:
+      return renderStandardNode(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: AtlasSrc.Node_Oven,
+        srcY: 0,
+        color: color,
+      );
+    case NodeType.Chimney:
+      return renderStandardNode(
+        dstX: dstX,
+        dstY: dstY,
+        srcX: AtlasSrc.Node_Chimney,
+        srcY: 0,
+        color: color,
+      );
+    case NodeType.Window:
+      switch(gridNodeOrientations[index]){
+        case NodeOrientation.Half_North:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Window,
+            srcY: 0,
+            color: color,
+          );
+        case NodeOrientation.Half_East:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Window,
+            srcY: srcYIndex1,
+            color: color,
+          );
+        case NodeOrientation.Half_South:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Window,
+            srcY: srcYIndex2,
+            color: color,
+          );
+        case NodeOrientation.Half_East:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Window,
+            srcY: srcYIndex3,
+            color: color,
+          );
+      }
   }
 }
 
@@ -386,11 +463,12 @@ void renderStandardNode({
   render(
      dstX: dstX,
      dstY: dstY,
-     srcX:  srcX,
+     srcX: srcX,
      srcY: srcY,
      srcWidth: spriteWidth,
      srcHeight: spriteHeight,
      anchorY: 0.33,
+     color: color,
   );
 }
 

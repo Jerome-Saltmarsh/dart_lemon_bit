@@ -42,6 +42,11 @@ class AtlasSrc {
   static const Node_Wood_Corner_Bottom = 9180.0;
   static const Node_Wood_Corner_Left = 9033.0;
   static const Node_Sunflower = 10934.0;
+  static const Node_Soil = 8320.0;
+  static const Node_Boulder = 11769.0;
+  static const Node_Oven = 10984.0;
+  static const Node_Chimney = 10787.0;
+  static const Node_Window = 11328.0;
   static const Node_Bau_Haus_Solid = 11720.0;
   static const Node_Bau_Haus_Slope = 11228.0;
 }

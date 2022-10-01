@@ -850,7 +850,6 @@ class NodeWindow extends Node {
   @override
   void handleRender() {
     const srcX = 11328.0;
-
     if (orientation == NodeOrientation.Half_North)
       return renderShadeAuto(srcX, srcYIndex0);
     if (orientation == NodeOrientation.Half_East)
