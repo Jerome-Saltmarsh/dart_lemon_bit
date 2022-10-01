@@ -103,6 +103,8 @@ class Edit {
 
   void refreshNodeSelectedIndex(){
     nodeSelectedIndex.value = gridNodeIndexZRC(z.value, row.value, column.value);
+    nodeSelectedType.value = gridNodeTypes[nodeSelectedIndex.value];
+    nodeSelectedOrientation.value = gridNodeOrientations[nodeSelectedIndex.value];
   }
 
   void deselectGameObject() {
