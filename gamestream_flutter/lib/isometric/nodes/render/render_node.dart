@@ -94,6 +94,13 @@ void renderNodeTypeBrick({
         srcX: AtlasSrc.Node_Brick_Slope_East,
         srcY: spriteHeight * shade,
       );
+    case NodeOrientation.Slope_South:
+      return renderStandardNode(
+        dstX: x,
+        dstY: y,
+        srcX: AtlasSrc.Node_Brick_Slope_South,
+        srcY: spriteHeight * shade,
+      );
     case NodeOrientation.Slope_West:
       return renderStandardNode(
         dstX: x,

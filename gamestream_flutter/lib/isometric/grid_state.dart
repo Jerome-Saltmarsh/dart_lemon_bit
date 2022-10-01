@@ -50,6 +50,16 @@ int gridNodeGetIndexXYZ(double x, double y, double z) =>
       y ~/ tileSize,
   );
 
+int gridNodeXYZTypeSafe(double x, double y, double z) {
+  if (x < 0) return NodeType.Boundary;
+  if (y < 0) return NodeType.Boundary;
+  if (z < 0) return NodeType.Boundary;
+  if (x >= gridRowLength) return NodeType.Boundary;
+  if (y >= gridColumnLength) return NodeType.Boundary;
+  if (z >= gridZLength) return NodeType.Boundary;
+  return gridNodeXYZType(x, y, z);
+}
+
 int gridNodeXYZType(double x, double y, double z) =>
     gridNodeTypes[gridNodeXYZIndex(x, y, z)];
 

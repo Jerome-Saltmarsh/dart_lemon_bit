@@ -8,12 +8,10 @@ import 'package:lemon_math/library.dart';
 
 
 void onGameEventFootstep(double x, double y, double z) {
-
-  final tile = z > 2 ? gridNodeXYZType(x, y, z - 2) : gridNodeXYZType(x, y, z);
   if (raining.value && (
-      gridNodeXYZType(x, y, z) == NodeType.Rain_Landing
+      gridNodeXYZTypeSafe(x, y, z) == NodeType.Rain_Landing
           ||
-      gridNodeXYZType(x, y, z + 24) == NodeType.Rain_Landing
+      gridNodeXYZTypeSafe(x, y, z + 24) == NodeType.Rain_Landing
   )
   ){
     audioSingleFootstepMud6.playXYZ(x, y, z);
@@ -22,10 +20,12 @@ void onGameEventFootstep(double x, double y, double z) {
       spawnParticleWaterDrop(x: x, y: y, z: z);
     }
   }
-  if (NodeType.isMaterialStone(tile)) {
+
+  final nodeType = gridNodeXYZTypeSafe(x, y, z - 2);
+  if (NodeType.isMaterialStone(nodeType)) {
     return audioSingleFootstepStone.playXYZ(x, y, z);
   }
-  if (NodeType.isMaterialWood(tile)) {
+  if (NodeType.isMaterialWood(nodeType)) {
     return audioSingleFootstepWood.playXYZ(x, y, z);
   }
   if (randomBool()){
