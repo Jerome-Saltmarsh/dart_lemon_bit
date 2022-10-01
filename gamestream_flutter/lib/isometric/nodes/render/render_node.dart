@@ -214,6 +214,38 @@ void renderNodeAt({
             srcY: srcYIndex1,
             color: color,
           );
+        case NodeOrientation.Corner_Top:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Wooden_Plank,
+            srcY: srcYIndex3,
+            color: color,
+          );
+        case NodeOrientation.Corner_Right:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Wooden_Plank,
+            srcY: srcYIndex4,
+            color: color,
+          );
+        case NodeOrientation.Corner_Bottom:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Wooden_Plank,
+            srcY: srcYIndex5,
+            color: color,
+          );
+        case NodeOrientation.Corner_Left:
+          return renderStandardNode(
+            dstX: dstX,
+            dstY: dstY,
+            srcX: AtlasSrc.Node_Wooden_Plank,
+            srcY: srcYIndex6,
+            color: color,
+          );
       }
   }
 }
