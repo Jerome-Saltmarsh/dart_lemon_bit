@@ -308,15 +308,11 @@ void applyEmissionBake({
   for (var z = zMin; z < zMax; z++){
     for (var row = rowMin; row < rowMax; row++){
       for (var column = columnMin; column < columnMax; column++) {
-        // final node = grid[z][row][column];
-        // if (!node.isShadable) continue;
         final nodeIndex = gridNodeIndexZRC(z, row, column);
-        final currentValue = gridNodeBake[nodeIndex];
         var distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
         final distanceValue = convertDistanceToShade(distance, maxBrightness: maxBrightness);
-        if (distanceValue >= currentValue) continue;
+        if (distanceValue >= gridNodeBake[nodeIndex]) continue;
         gridNodeBake[nodeIndex] = distanceValue;
-        // gridNodeBake[gridNodeIndexZRC(z, row, column)] = distanceValue;
       }
     }
   }
@@ -340,11 +336,10 @@ void applyEmissionDynamic({
     for (var row = rowMin; row < rowMax; row++){
       for (var column = columnMin; column < columnMax; column++) {
         final nodeIndex = gridNodeIndexZRC(z, row, column);
-        final distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
-        final shade = convertDistanceToShade(distance, maxBrightness: maxBrightness);
-
-        if (gridNodeShade[nodeIndex] <= shade) return;
-        gridNodeShade[nodeIndex] = shade;
+        var distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
+        final distanceValue = convertDistanceToShade(distance, maxBrightness: maxBrightness);
+        if (distanceValue >= gridNodeShade[nodeIndex]) continue;
+        gridNodeShade[nodeIndex] = distanceValue;
       }
     }
   }
