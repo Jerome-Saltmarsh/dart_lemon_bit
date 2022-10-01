@@ -60,11 +60,6 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] the lower the bar the less damage is also incurred
 /// [ ] the weapon special can be unleashed before it is full but the effect is less
 
-/// [OPTIMIZATIONS]
-/// reset grid shade on separate worker
-/// replace node classes with uint8 lists
-/// engine render flush in a batch
-
 /// [TODO]
 /// [ ] build scene
 /// [ ] multiple spawn points
