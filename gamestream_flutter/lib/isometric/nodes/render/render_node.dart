@@ -5,6 +5,8 @@ import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src.dart';
+import 'package:gamestream_flutter/isometric/render/render_torch.dart';
+import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
 import 'package:lemon_engine/render.dart';
 
 const spriteWidth = 48.0;
@@ -19,6 +21,8 @@ void renderNodeAt({
   required int z,
 }){
   final index = (z * gridTotalArea) + (row * gridTotalColumns) + column;
+
+  if (index >= gridNodeTotal) return;
 
   if (!gridNodeVisible[index]) {
     gridNodeVisible[index] = true;
@@ -46,6 +50,15 @@ void renderNodeAt({
         orientation: gridNodeOrientations[index],
         shade: gridNodeShade[index],
       );
+    case NodeType.Torch:
+      if (!torchesIgnited.value) {
+        return renderTorchOff(dstX, dstY);
+      }
+      if (gridNodeWind[index] == Wind.Calm){
+        return renderTorchOn(dstX, dstY);
+      }
+      return renderTorchOnWindy(dstX, dstY);
+
   }
 }
 
