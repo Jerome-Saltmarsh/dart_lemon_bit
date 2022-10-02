@@ -42,7 +42,12 @@ class NodeType {
   static const Boulder = 70;
   static const Spawn = 71;
   static const Respawning = 72;
-  
+
+  static bool isStrikable(int type) =>
+    type == Grass ||
+    type == Brick_2 ||
+    type == Wood_2;
+
   static bool isMaterialWood(int value) =>
      value == Torch ||
      value == Tree_Bottom ||
@@ -74,67 +79,53 @@ class NodeType {
       value == Cottage_Roof;
 
   static bool isSolid(int type) =>
-     const [
-        Brick_2,
-        Wood_2,
-        Grass,
-        Plain,
-        Wooden_Plank,
-        Bau_Haus_2,
-        Boulder,
-     ].contains(type);
+    type == Brick_2 ||
+    type == Wood_2 ||
+    type == Grass ||
+    type == Plain ||
+    type == Wooden_Plank ||
+    type == Bau_Haus_2 ||
+    type == Boulder;
 
-  static bool isDestroyable(int type){
-     return
-       type == Boulder ||
-       type == Sunflower ||
-       type == Grass_Long;
-  }
+  static bool isDestroyable(int type) =>
+    type == Boulder ||
+    type == Sunflower ||
+    type == Grass_Long;
 
   static bool isSlopeSymmetric(int type) =>
-    const [
-      Cottage_Roof,
-      Wood_2,
-      Grass,
-      Brick_2,
-      Bau_Haus_2,
-    ].contains(type);
+    type == Cottage_Roof ||
+    type == Wood_2 ||
+    type == Grass ||
+    type == Brick_2 ||
+    type == Bau_Haus_2;
 
   static bool isSlopeCornerInner(int type) =>
-    const [
-      Cottage_Roof,
-      Grass,
-      Bau_Haus_2,
-    ].contains(type);
+    type == Cottage_Roof ||
+    type == Grass ||
+    type == Bau_Haus_2;
 
   static bool isSlopeCornerOuter(int type) =>
-    const [
-      Grass,
-    ].contains(type);
+    type == Grass;
 
   static bool isHalf(int type) =>
-    const [
-      Wood_2,
-      Plain,
-      Window,
-      Wooden_Plank,
-      Brick_2,
-      Bau_Haus_2,
-    ].contains(type);
+    type == Wood_2 ||
+    type == Plain ||
+    type == Window ||
+    type == Wooden_Plank ||
+    type == Brick_2 ||
+    type == Bau_Haus_2;
 
   static bool isCorner(int type) =>
-    const [
-      Wood_2,
-      Plain,
-      Brick_2,
-      Bau_Haus_2,
-      Wooden_Plank,
-    ].contains(type);
-  
+    type == Wood_2 ||
+    type == Plain ||
+    type == Brick_2 ||
+    type == Bau_Haus_2 ||
+    type == Wooden_Plank;
+
   static bool isRainable(int type) =>
-     type == Water ||
-     type == Brick_2 ||
-     type == Grass;
+    type == Water ||
+    type == Brick_2 ||
+    type == Grass;
 
   static String getName(int type) =>
      const {
@@ -264,7 +255,4 @@ class NodeType {
 
     return false;
   }
-
-  static bool isStrikable(int type) =>
-     type == Grass || type == Brick_2 || type == Wood_2;
 }
