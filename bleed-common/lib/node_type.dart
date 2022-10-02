@@ -128,83 +128,6 @@ class NodeType {
     type == Brick_2 ||
     type == Grass;
 
-  static String getName(int type) =>
-     const {
-       Empty:
-          'Empty',
-       Boundary:
-          'Boundary',
-       Brick_Top:
-          'Brick Top',
-       Water:
-          'Water',
-       Water_Flowing:
-          'Flowing Water',
-       Torch:
-          'Torch',
-       Tree_Bottom:
-          'Tree Bottom',
-       Tree_Top:
-          'Tree Top',
-       Grass_Long:
-          'Grass Long',
-       Rain_Falling:
-          'Rain Falling',
-       Rain_Landing:
-          'Rain Landing',
-       Fireplace:
-          'Fireplace',
-       Soil:
-          "Soil",
-       Roof_Hay_North:
-          "Roof Hay North",
-       Roof_Hay_South:
-          "Roof Hay South",
-       Stone:
-          "Stone",
-       Bau_Haus:
-          "Bau Haus",
-       Bau_Haus_2:
-       "Bau Haus",
-       Bau_Haus_Window:
-          "Bau Haus Window",
-       Bau_Haus_Plain:
-          "Bau Hau Plain",
-       Chimney:
-          "Chimney",
-       Bed_Bottom:
-          "Bed Bottom",
-       Bed_Top:
-          "Bed Top",
-       Table:
-          "Table",
-       Sunflower:
-          "Sunflower",
-       Oven:
-          "Oven",
-       Grass_Flowers:
-          "Grass Flowers",
-       Brick_2:
-          "Brick",
-       Wood_2:
-          "Wood",
-       Cottage_Roof:
-          "Cottage Roof",
-       Grass:
-          "Grass",
-       Plain:
-          "Plain",
-       Window:
-          "Window",
-       Wooden_Plank:
-          "Wooden Plank",
-       Boulder:
-           "Boulder",
-       Spawn:
-           "Spawn",
-
-     }[type] ?? "unknown($type)";
-
   static bool isRain(int value) =>
      value == Rain_Falling       ||
      value == Rain_Landing       ;
@@ -218,6 +141,8 @@ class NodeType {
     value == Fireplace;
 
   static int getDefaultOrientation(int value){
+     if (value == Empty)
+       return NodeOrientation.None;
      if (isSolid(value))
        return NodeOrientation.Solid;
      if (isSlopeSymmetric(value))
@@ -256,4 +181,43 @@ class NodeType {
 
     return false;
   }
+
+  static String getName(int type) => const {
+    Empty: 'Empty',
+    Boundary: 'Boundary',
+    Brick_Top: 'Brick Top',
+    Water: 'Water',
+    Water_Flowing: 'Flowing Water',
+    Torch: 'Torch',
+    Tree_Bottom: 'Tree Bottom',
+    Tree_Top: 'Tree Top',
+    Grass_Long: 'Grass Long',
+    Rain_Falling: 'Rain Falling',
+    Rain_Landing: 'Rain Landing',
+    Fireplace: 'Fireplace',
+    Soil: "Soil",
+    Roof_Hay_North: "Roof Hay North",
+    Roof_Hay_South: "Roof Hay South",
+    Stone: "Stone",
+    Bau_Haus: "Bau Haus",
+    Bau_Haus_2: "Bau Haus",
+    Bau_Haus_Window: "Bau Haus Window",
+    Bau_Haus_Plain: "Bau Hau Plain",
+    Chimney: "Chimney",
+    Bed_Bottom: "Bed Bottom",
+    Bed_Top: "Bed Top",
+    Table: "Table",
+    Sunflower: "Sunflower",
+    Oven: "Oven",
+    Grass_Flowers: "Grass Flowers",
+    Brick_2: "Brick",
+    Wood_2: "Wood",
+    Cottage_Roof: "Cottage Roof",
+    Grass: "Grass",
+    Plain: "Plain",
+    Window: "Window",
+    Wooden_Plank: "Wooden Plank",
+    Boulder: "Boulder",
+    Spawn: "Spawn",
+  }[type] ?? "unknown($type)";
 }
