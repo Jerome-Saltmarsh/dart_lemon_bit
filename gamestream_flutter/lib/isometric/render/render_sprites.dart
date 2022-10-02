@@ -201,12 +201,13 @@ var playerZ = 0;
 var playerRow = 0;
 var playerColumn = 0;
 
-var offscreenNodes = 0;
 var offscreenNodesTop = 0;
 var offscreenNodesRight = 0;
 var offscreenNodesBottom = 0;
 var offscreenNodesLeft = 0;
+
 var onscreenNodes = 0;
+var offscreenNodes = 0;
 
 var screenTop = screen.top - 120;
 var screenRight = screen.right + tileSize;
@@ -219,6 +220,7 @@ var renderNodeColumn = 0;
 var renderNodeDstX = 0.0;
 var renderNodeDstY = 0.0;
 var renderNodeIndex = 0;
+var renderNodeType = 0;
 
 class RenderOrderGrid extends RenderOrder {
   var rowsMax = 0;
@@ -244,12 +246,21 @@ class RenderOrderGrid extends RenderOrder {
         renderNodeRow <= rowsMax &&
         renderNodeDstX < screenRight
     ){
-      renderNodeAt();
+
+      // if (renderNodeIndex >= gridNodeTotal) {
+      //   offscreenNodes++;
+      //   return;
+      // }
+
+      renderNodeType = gridNodeTypes[renderNodeIndex];
+
+      if (renderNodeType != NodeType.Empty){
+        renderNodeAt();
+      }
       renderNodeRow++;
       renderNodeColumn--;
       renderNodeIndex += gridTotalColumnsMinusOne;
       renderNodeDstX += spriteWidth;
-      onscreenNodes++;
     }
   }
 
@@ -277,10 +288,10 @@ class RenderOrderGrid extends RenderOrder {
     }
     renderNodeDstX = (renderNodeRow - renderNodeColumn) * nodeSizeHalf;
     renderNodeDstY = ((renderNodeRow + renderNodeColumn) * nodeSizeHalf) - (renderNodeZ * nodeHeight);
+    renderNodeIndex = (renderNodeZ * gridTotalArea) + (renderNodeRow * gridTotalColumns) + renderNodeColumn;
+    renderNodeType = gridNodeTypes[renderNodeIndex];
     order = ((renderNodeRow + renderNodeColumn) * tileSize) + tileSizeHalf;
     orderZ = renderNodeZ;
-
-    renderNodeIndex = (renderNodeZ * gridTotalArea) + (renderNodeRow * gridTotalColumns) + renderNodeColumn;
   }
 
   @override
@@ -292,17 +303,16 @@ class RenderOrderGrid extends RenderOrder {
   void reset() {
     rowsMax = gridTotalRows - 1;
     gridTotalZMinusOne = gridTotalZ - 1;
-    offscreenNodes = 0;
     offscreenNodesTop = 0;
     offscreenNodesRight = 0;
     offscreenNodesBottom = 0;
     offscreenNodesLeft = 0;
+    offscreenNodes = 0;
     onscreenNodes = 0;
     minZ = 0;
     order = 0;
     orderZ = 0;
     renderNodeZ = 0;
-    // zPlain = grid[z];
     orderZ = 0;
     gridTotalColumnsMinusOne = gridTotalColumns - 1;
     playerZ = player.indexZ;
@@ -352,12 +362,17 @@ class RenderOrderGrid extends RenderOrder {
 
     renderNodeRow = screenTopLeftRow;
     renderNodeColumn = screenTopLeftColumn;
+
+
     shiftIndex = 0;
     calculateMinMaxZ();
     trimTop();
     trimLeft();
 
     renderNodeDstY = ((renderNodeRow + renderNodeColumn) * nodeSizeHalf) - (renderNodeZ * nodeHeight);
+
+    renderNodeIndex = (renderNodeZ * gridTotalArea) + (renderNodeRow * gridTotalColumns) + renderNodeColumn;
+    renderNodeType = gridNodeTypes[renderNodeIndex];
 
     refreshDynamicLightGrid();
     applyEmissionsCharacters();

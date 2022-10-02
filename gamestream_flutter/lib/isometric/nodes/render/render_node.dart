@@ -5,7 +5,6 @@ import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/classes/nodes.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
-import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node_bau_haus.dart';
@@ -28,23 +27,15 @@ const spriteHeight = 72.0;
 
 /// remove objects from the render layer to reduce garbage collection
 void renderNodeAt(){
-  // final renderNodeIndex = (renderNodeZ * gridTotalArea) + (renderNodeRow * gridTotalColumns) + renderNodeColumn;
-
-  if (renderNodeIndex >= gridNodeTotal) return;
-
-  final nodeType = gridNodeTypes[renderNodeIndex];
-  if (nodeType == NodeType.Empty) return;
-
+  onscreenNodes++;
   if (!gridNodeVisible[renderNodeIndex]) {
     gridNodeVisible[renderNodeIndex] = true;
     return;
   }
-
-  // final renderNodeDstY = projectY(renderNodeRow, renderNodeColumn, renderNodeZ);
   final shade = gridNodeShade[renderNodeIndex];
   final color = colorShades[shade];
 
-  switch (nodeType) {
+  switch (renderNodeType) {
     case NodeType.Grass:
       return renderNodeTypeGrass(
           x: renderNodeDstX,
