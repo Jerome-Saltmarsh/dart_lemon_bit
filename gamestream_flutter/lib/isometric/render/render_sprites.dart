@@ -213,13 +213,15 @@ var screenRight = screen.right + tileSize;
 var screenBottom = screen.bottom + 80;
 var screenLeft = screen.left - tileSize;
 
+var renderNodeZ = 0;
+var renderNodeRow = 0;
+var renderNodeColumn = 0;
+var renderNodeDstX = 0.0;
+var renderNodeDstY = 0.0;
+
 class RenderOrderGrid extends RenderOrder {
-  var z = 0;
-  var column = 0;
-  var row = 0;
   var rowsMax = 0;
   var shiftIndex = 0;
-  // late Node node;
   var screenTopLeftRow = 0;
   var screenBottomRightRow = 0;
   var gridTotalColumnsMinusOne = 0;
@@ -232,17 +234,17 @@ class RenderOrderGrid extends RenderOrder {
   var minZ = 0;
   // late List<List<Node>> zPlain;
 
-  double get renderX => (row - column) * tileSizeHalf;
-  double get renderY => convertRowColumnZToY(row, column, z);
+  double get renderX => (renderNodeRow - renderNodeColumn) * tileSizeHalf;
+  double get renderY => convertRowColumnZToY(renderNodeRow, renderNodeColumn, renderNodeZ);
 
   @override
   void renderFunction() {
-
-    while (column >= 0 && row <= rowsMax){
-      renderNodeAt(row: row, column: column, z: z);
-      row++;
-      column--;
-      if ((row - column) * nodeSizeHalf > screenRight) return;
+    while (renderNodeColumn >= 0 && renderNodeRow <= rowsMax){
+      renderNodeAt();
+      renderNodeRow++;
+      renderNodeColumn--;
+      renderNodeDstX = (renderNodeRow - renderNodeColumn) * nodeSizeHalf;
+      if (renderNodeDstX > screenRight) return;
       onscreenNodes++;
     }
   }
@@ -250,8 +252,8 @@ class RenderOrderGrid extends RenderOrder {
   @override
   void updateFunction() {
     nextGridNode();
-    order = ((row + column) * tileSize) + tileSizeHalf;
-    orderZ = z;
+    order = ((renderNodeRow + renderNodeColumn) * tileSize) + tileSizeHalf;
+    orderZ = renderNodeZ;
   }
 
   @override
@@ -272,7 +274,7 @@ class RenderOrderGrid extends RenderOrder {
     minZ = 0;
     order = 0;
     orderZ = 0;
-    z = 0;
+    renderNodeZ = 0;
     // zPlain = grid[z];
     orderZ = 0;
     gridTotalColumnsMinusOne = gridTotalColumns - 1;
@@ -321,8 +323,8 @@ class RenderOrderGrid extends RenderOrder {
       screenTopLeftColumn = 0;
     }
 
-    row = screenTopLeftRow;
-    column = screenTopLeftColumn;
+    renderNodeRow = screenTopLeftRow;
+    renderNodeColumn = screenTopLeftColumn;
     shiftIndex = 0;
     calculateMinMaxZ();
     trimTop();
@@ -400,7 +402,7 @@ class RenderOrderGrid extends RenderOrder {
   // otherwise use totalZ;
   // calculate the world position Y at row / column, then workout its distance from the top of the screen;
   void calculateMinMaxZ(){
-    final bottom = convertRowColumnToY(row, column);
+    final bottom = convertRowColumnToY(renderNodeRow, renderNodeColumn);
     final distance =  bottom - screenTop;
     maxZ = (distance ~/ tileHeight);
     if (maxZ > gridTotalZMinusOne){
@@ -410,7 +412,7 @@ class RenderOrderGrid extends RenderOrder {
       maxZ = 0;
     }
 
-    while (convertRowColumnZToY(row, column, minZ) > screenBottom){
+    while (convertRowColumnZToY(renderNodeRow, renderNodeColumn, minZ) > screenBottom){
       minZ++;
       if (minZ >= gridTotalZ){
         return end();
@@ -419,9 +421,9 @@ class RenderOrderGrid extends RenderOrder {
   }
 
   void nextGridNode(){
-    z++;
-    if (z > maxZ) {
-      z = 0;
+    renderNodeZ++;
+    if (renderNodeZ > maxZ) {
+      renderNodeZ = 0;
       shiftIndexDown();
       if (!remaining) return;
       calculateMinMaxZ();
@@ -429,28 +431,28 @@ class RenderOrderGrid extends RenderOrder {
       trimLeft();
 
       while (renderY > screenBottom) {
-        z++;
-        if (z > maxZ) {
+        renderNodeZ++;
+        if (renderNodeZ > maxZ) {
           remaining = false;
           return;
         }
       }
     } else {
-      row = startRow;
-      column = startColumn;
+      renderNodeRow = startRow;
+      renderNodeColumn = startColumn;
     }
   }
 
   void shiftIndexDown(){
-    column = row + column + 1;
-    row = 0;
-    if (column < gridTotalColumns) {
+    renderNodeColumn = renderNodeRow + renderNodeColumn + 1;
+    renderNodeRow = 0;
+    if (renderNodeColumn < gridTotalColumns) {
       return setStart();
     }
-    row = column - gridTotalColumnsMinusOne;
-    column = gridTotalColumnsMinusOne;
+    renderNodeRow = renderNodeColumn - gridTotalColumnsMinusOne;
+    renderNodeColumn = gridTotalColumnsMinusOne;
 
-    if (row >= gridTotalRows){
+    if (renderNodeRow >= gridTotalRows){
        remaining = false;
        return;
     }
@@ -460,22 +462,22 @@ class RenderOrderGrid extends RenderOrder {
   void trimLeft(){
     final offscreen = countLeftOffscreen;
     if (offscreen <= 0) return;
-    column -= offscreen;
-    row += offscreen;
+    renderNodeColumn -= offscreen;
+    renderNodeRow += offscreen;
     while (renderX < screenLeft){
-      row++;
-      column--;
+      renderNodeRow++;
+      renderNodeColumn--;
     }
     setStart();
   }
 
   void setStart(){
-    startRow = row;
-    startColumn = column;
+    startRow = renderNodeRow;
+    startColumn = renderNodeColumn;
   }
 
   int get countLeftOffscreen {
-    final x = convertRowColumnToX(row, column);
+    final x = convertRowColumnToX(renderNodeRow, renderNodeColumn);
     if (screen.left < x) return 0;
     final diff = screen.left - x;
     return diff ~/ tileSize;
