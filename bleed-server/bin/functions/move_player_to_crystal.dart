@@ -12,5 +12,6 @@ void movePlayerToCrystal(Player player) {
     const distance = 50.0;
     player.x = gameObject.x + getAdjacent(angle, distance);
     player.y = gameObject.y + getOpposite(angle, distance);
+    player.z = gameObject.z;
   }
 }

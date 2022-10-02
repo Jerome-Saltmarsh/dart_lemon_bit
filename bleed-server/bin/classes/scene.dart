@@ -106,7 +106,7 @@ class Scene {
     y >= 0 &&
     z < gridHeightLength &&
     x < gridRowLength &&
-    y <= gridColumnLength;
+    y < gridColumnLength;
 
   // bool visitDirection(int direction, Node from) {
   //   if (direction == Direction.North_West && !from.up.open && !from.left.open) return false;
@@ -222,13 +222,12 @@ class Scene {
   bool getCollisionAt(double x, double y, double z) {
      if (x < 0) return true;
      if (y < 0) return true;
+     if (z < 0) return false;
      if (x > gridRowLength) return true;
      if (y > gridColumnLength) return true;
-     if (z < 0) return false;
      if (z > gridHeightLength) return false;
-     return nodeOrientations[getNodeTypeXYZ(x, y, z)] != NodeOrientation.None;
+     return getNodeOrientationXYZ(x, y, z) != NodeOrientation.None;
   }
-
 
   void resolveCharacterTileCollision(Character character, Game game) {
     character.z -= character.zVelocity;
@@ -264,7 +263,11 @@ class Scene {
         final bottom = (character.z ~/ tileHeight) * tileHeight;
         final percX = ((character.x % tileSize) / tileSize);
         final percY = ((character.y % tileSize) / tileSize);
-        character.z = bottom + (getOrientationGradient(nodeAtFeetOrientation, percX, percY) * nodeHeight);
+        final nodeTop = bottom + (getOrientationGradient(nodeAtFeetOrientation, percX, percY) * nodeHeight);
+        if (nodeTop > character.z){
+          character.z = nodeTop;
+          character.zVelocity = 0;
+        }
       }
     } else {
       if (character.z < -100){
