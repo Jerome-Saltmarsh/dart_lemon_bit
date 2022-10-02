@@ -567,26 +567,26 @@ class Player extends Character with ByteWriter {
     writePosition3(gameObject);
   }
 
-  void writeGrid(){
+  void writeGrid() {
     writeByte(ServerResponse.Grid);
-    final grid = game.scene.grid;
-    final totalZ = grid.length;
-    final totalRows = grid[0].length;
-    final totalColumns = grid[0][0].length;
-    writeInt(totalZ);
-    writeInt(totalRows);
-    writeInt(totalColumns);
-    var previousType = grid[0][0][0].type;
-    var previousOrientation = grid[0][0][0].orientation;
+    // final grid = game.scene.grid;
+    // final totalZ = grid.length;
+    // final totalRows = grid[0].length;
+    // final totalColumns = grid[0][0].length;
+    writeInt(scene.gridHeight);
+    writeInt(scene.gridRows);
+    writeInt(scene.gridColumns);
+    var previousType = scene.nodeTypes[0];
+    var previousOrientation = scene.nodeOrientations[0];
     var count = 0;
-    for (var z = 0; z < totalZ; z++){
-      final plain = grid[z];
-      for (var row = 0; row < totalRows; row++){
-        final r = plain[row];
-        for (var column = 0; column < totalColumns; column++) {
-          final node = r[column];
+    for (var z = 0; z < scene.gridHeight; z++){
+      for (var row = 0; row < scene.gridRows; row++){
+        for (var column = 0; column < scene.gridColumns; column++) {
+          final nodeIndex = scene.getNodeIndex(z, row, column);
+          final nodeType = scene.nodeTypes[nodeIndex];
+          final nodeOrientation = scene.nodeOrientations[nodeIndex];
 
-          if (node.type == previousType && node.orientation == previousOrientation){
+          if (nodeType == previousType && nodeOrientation == previousOrientation){
             count++;
           } else {
             writeByte(previousType);
@@ -596,8 +596,8 @@ class Player extends Character with ByteWriter {
             }
 
             writePositiveInt(count);
-            previousType = node.type;
-            previousOrientation = node.orientation;
+            previousType = nodeType;
+            previousOrientation = nodeOrientation;
             count = 1;
           }
         }

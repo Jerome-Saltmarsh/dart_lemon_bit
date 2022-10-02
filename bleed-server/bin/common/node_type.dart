@@ -264,4 +264,7 @@ class NodeType {
 
     return false;
   }
+
+  static bool isStrikable(int type) =>
+     type == Grass || type == Brick_2 || type == Wood_2;
 }

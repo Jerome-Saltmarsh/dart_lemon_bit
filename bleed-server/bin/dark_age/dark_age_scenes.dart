@@ -1,4 +1,6 @@
 
+import 'dart:typed_data';
+
 import '../classes/library.dart';
 import '../io/load_scene.dart';
 import '../isometric/generate_empty_grid.dart';
@@ -62,11 +64,11 @@ class DarkAgeScenes {
       empty = Scene(
           name: 'empty',
           gameObjects: [],
-          grid: generate_grid_empty(
-              zHeight: 1,
-              rows: 10,
-              columns: 10
-          ),
+          gridColumns: 0,
+          gridHeight: 0,
+          gridRows: 0,
+          nodeOrientations: Uint8List(0),
+          nodeTypes: Uint8List(0),
       );
       print("Loading dark age scenes finished");
   }

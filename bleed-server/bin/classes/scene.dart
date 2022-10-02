@@ -1,4 +1,8 @@
+import 'dart:typed_data';
+
 import '../common/library.dart';
+import '../common/node_orientation.dart';
+import '../common/node_size.dart';
 import 'ai.dart';
 import 'character.dart';
 import 'game.dart';
@@ -6,35 +10,56 @@ import 'gameobject.dart';
 import 'node.dart';
 
 class Scene {
-  final List<List<List<Node>>> grid;
+  late Uint8List nodeTypes;
+  late Uint8List nodeOrientations;
 
   var gridHeight = 0;
   var gridRows = 0;
   var gridColumns = 0;
+  var gridVolume = 0;
+  var gridArea = 0;
   var name = "";
   var dirty = false;
   final List<GameObject> gameObjects;
 
-  double get gridRowLength => gridRows * tileSize;
-  double get gridColumnLength => gridColumns * tileSize;
-
-  int? startHour;
-  int? secondsPerFrames;
+  late double gridRowLength;
+  late double gridColumnLength;
+  late double gridHeightLength;
 
   Scene({
     required this.name,
-    required this.grid,
+    required this.nodeTypes,
+    required this.nodeOrientations,
+    required this.gridHeight,
+    required this.gridRows,
+    required this.gridColumns,
     required this.gameObjects,
   }) {
     refreshGridMetrics();
   }
 
-  int getGridType(int z, int row, int column) =>
-     getNode(z, row, column).type;
+  void refreshGridMetrics(){
+    gridArea = gridRows * gridColumns;
+    gridVolume = gridHeight * gridArea;
+    gridRowLength = gridRows * tileSize;
+    gridColumnLength = gridColumns * tileSize;
+    gridHeightLength = gridHeight * nodeHeight;
+  }
 
-  Node getNode(int z, int row, int column){
-    if (outOfBounds(z, row, column)) return Node.boundary;
-    return grid[z][row][column];
+  int getGridType(int z, int row, int column) =>
+      outOfBounds(z, row, column)
+          ? NodeType.Boundary
+          : nodeTypes[getNodeIndex(z, row, column)];
+
+  int getGridOrientation(int z, int row, int column) =>
+      outOfBounds(z, row, column)
+          ? NodeType.Boundary
+          : nodeOrientations[getNodeIndex(z, row, column)];
+
+
+  int getNodeIndex(int z, int row, int column) {
+    assert (!outOfBounds(z, row, column));
+    return (z * gridArea) + (row * gridColumns) + column;
   }
 
   bool outOfBounds(int z, int row, int column){
@@ -47,39 +72,41 @@ class Scene {
      return false;
   }
 
-  void refreshGridMetrics(){
-    gridHeight = grid.length;
-    gridRows = grid[0].length;
-    gridColumns = grid[0][0].length;
+  void setNode(int z, int row, int column, int type, int orientation) {
+    if (outOfBounds(z, row, column)) return;
+    final index = getNodeIndex(z, row, column);
+    final currentType = nodeTypes[index];
+    final currentOrientation = nodeOrientations[index];
+    if (currentType == type && currentOrientation == orientation) {
+      return;
+    }
+    dirty = true;
+    nodeTypes[index] = type;
+    nodeOrientations[index] = orientation;
   }
 
-  bool findByType(int type, void Function(int z, int row, int column) callback) {
-     for (var zI = 0; zI < gridHeight; zI++){
-       final z = grid[zI];
-        for (var rowI = 0; rowI < gridRows; rowI++){
-          final row = z[rowI];
-           for (var columnI = 0; columnI < gridColumns; columnI++){
-              if (row[columnI] != type) continue;
-              callback(zI, rowI, columnI);
-              return true;
-           }
-        }
-     }
-     return false;
-  }
+  int getNodeTypeXYZ(double x, double y, double z) =>
+     nodeTypes[getNodeIndexXYZ(x, y, z)];
 
-  Node getNodeXYZ(double x, double y, double z){
-    if (z < 0) return Node.boundary;
-    if (x < 0) return Node.boundary;
-    if (y < 0) return Node.boundary;
-    final row = x ~/ tileSize;
-    if (row >= gridRows) return Node.boundary;
-    final column = y ~/ tileSize;
-    if (column >= gridColumns) return Node.boundary;
-    final height = z ~/ tileSizeHalf;
-    if (height >= gridHeight) return Node.boundary;
-    return grid[height][row][column];
-  }
+  int getNodeIndexXYZ(double x, double y, double z) =>
+    getNodeIndex(
+        z ~/ tileSizeHalf,
+        x ~/ tileSize,
+        y ~/ tileSize,
+    );
+
+  int getNodeOrientationXYZ(double x, double y, double z) =>
+      getNodeInBoundsXYZ(x, y, z)
+          ? NodeOrientation.None
+          : nodeOrientations[getNodeIndexXYZ(x, y, z)];
+
+  bool getNodeInBoundsXYZ(double x, double y, double z) =>
+    z >= 0 &&
+    x >= 0 &&
+    y >= 0 &&
+    z < gridHeightLength &&
+    x < gridRowLength &&
+    y <= gridColumnLength;
 
   // bool visitDirection(int direction, Node from) {
   //   if (direction == Direction.North_West && !from.up.open && !from.left.open) return false;
@@ -192,20 +219,12 @@ class Scene {
   //   return visitDirection(directionBehind, node);
   // }
 
-  bool getCollisionAt(double x, double y, double z) {
-    return getNodeXYZ(x, y, z).getCollision(x, y, z);
-  }
+  bool getCollisionAt(double x, double y, double z) =>
+    nodeOrientations[getNodeTypeXYZ(x, y, z)] != NodeOrientation.None;
 
   void resolveCharacterTileCollision(Character character, Game game) {
     character.z -= character.zVelocity;
     character.zVelocity += 0.98;
-
-    var nodeAtFeet = getNodeXYZ(character.x, character.y, character.z);
-    nodeAtFeet.resolveCharacterCollision(character, game);
-
-    if (character.z < -100){
-       game.setCharacterStateDead(character);
-    }
 
     const distance = 3;
     final stepHeight = character.z + tileHeightHalf;
@@ -227,7 +246,33 @@ class Scene {
       character.x -= distance;
       character.y += distance;
     }
+
+
+    if (getNodeInBoundsXYZ(character.x, character.y, character.z)) {
+      final nodeAtFeetIndex = getNodeIndexXYZ(character.x, character.y, character.z);
+      final nodeAtFeetOrientation = nodeOrientations[nodeAtFeetIndex];
+
+      if (nodeAtFeetOrientation != NodeOrientation.None) {
+        final bottom = (character.z ~/ tileHeight) * tileHeight;
+        final percX = ((character.x % tileSize) / tileSize);
+        final percY = ((character.y % tileSize) / tileSize);
+        character.z = bottom + (getOrientationGradient(nodeAtFeetOrientation, percX, percY) * nodeHeight);
+      }
+    } else {
+      if (character.z < -100){
+        game.setCharacterStateDead(character);
+      }
+    }
   }
+  //
+  // double getHeight(double x, double y, double z) {
+  //   final bottom = (z ~/ tileHeight) * tileHeight;
+  //   final percX = ((x % tileSize) / tileSize);
+  //   final percY = ((y % tileSize) / tileSize);
+  //   assert (percX >= 0 && percX <= 1);
+  //   assert (percY >= 0 && percY <= 1);
+  //   return bottom + (getGradient(percX, percY) * tileHeight);
+  // }
 }
 
 late AI pathFindAI;
@@ -251,12 +296,83 @@ int parseRowsAndColumnsToDirection(int rows, int columns) {
   return Direction.East;
 }
 
-// double getTilePositionX(int row, int column){
-//   return (column * halfTileSize) - (row * halfTileSize);
-// }
-//
-// double getTilePositionY(int row, int column){
-//   return (row * halfTileSize) + (column * halfTileSize) + halfTileSize;
-// }
-//
 
+/// Returns a value between 0 and 1 which indicates the height of this given position
+/// Arguments percX and percY are both values between 0 and 1 representing the relative position on the tile
+double getOrientationGradient(int orientation, double x, double y) {
+  switch (orientation) {
+    case NodeOrientation.Solid:
+      return 1;
+    case NodeOrientation.Slope_North:
+      return 1 - x;
+    case NodeOrientation.Slope_East:
+      return 1 - y;
+    case NodeOrientation.Slope_South:
+      return x;
+    case NodeOrientation.Slope_West:
+      return y;
+    case NodeOrientation.Corner_Top:
+      if (x < 0.5) return 1.0;
+      if (y < 0.5) return 1.0;
+      return 0;
+    case NodeOrientation.Corner_Right:
+      if (x > 0.5) return 1.0;
+      if (y < 0.5) return 1.0;
+      return 0;
+    case NodeOrientation.Corner_Bottom:
+      if (x > 0.5) return 1.0;
+      if (y > 0.5) return 1.0;
+      return 0;
+    case NodeOrientation.Corner_Left:
+      if (x < 0.5) return 1.0;
+      if (y > 0.5) return 1.0;
+      return 0;
+    case NodeOrientation.Half_North:
+      if (x < 0.5) return 1.0;
+      return 0;
+    case NodeOrientation.Half_East:
+      if (y < 0.5) return 1.0;
+      return 0;
+    case NodeOrientation.Half_South:
+      if (x > 0.5) return 1.0;
+      return 0;
+    case NodeOrientation.Half_West:
+      if (y > 0.5) return 1.0;
+      return 0;
+    case NodeOrientation.Slope_Inner_North_East: // Grass Edge Bottom
+      final total = x + y;
+      if (total < 1) return 1;
+      return 1 - (total - 1);
+    case NodeOrientation.Slope_Inner_South_East: // Grass Edge Left
+      final tX = (x - y);
+      if (tX > 0) return 1;
+      return 1 + tX;
+    case NodeOrientation.Slope_Inner_South_West: // Grass Edge Top
+      final total = x + y;
+      if (total > 1) return 1;
+      return total;
+    case NodeOrientation.Slope_Inner_North_West: // Grass Edge Right
+      final tX = (x - y);
+      if (tX < 0) return 1;
+      return 1 - tX;
+    case NodeOrientation.Slope_Outer_North_East: // Grass Slope Top
+      final total = x + y;
+      if (total > 1) return 0;
+      return 1.0 - total;
+    case NodeOrientation.Slope_Outer_South_East: // Grass Slope Left
+      final tX = (x - y);
+      if (tX < 0) return 0;
+      return tX;
+    case NodeOrientation.Slope_Outer_South_West: // Grass Slope Bottom
+      final total = x + y;
+      if (total < 1) return 0;
+      return total - 1;
+    case NodeOrientation.Slope_Outer_North_West: // Grass Slope Right
+      final ratio = (y - x);
+      if (ratio < 0) return 0;
+      return ratio;
+    default:
+      throw Exception(
+          "Sloped orientation type required to calculate gradient");
+  }
+}

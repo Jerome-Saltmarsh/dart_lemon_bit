@@ -19,7 +19,8 @@ Json convertSceneToJson(Scene scene) {
   json['grid-z'] = scene.gridHeight;
   json['grid-rows'] = scene.gridRows;
   json['grid-columns'] = scene.gridColumns;
-  json['grid'] = convertNodesToByteArray(scene.grid);
+  /// TODO
+  // json['grid'] = convertNodesToByteArray(scene.grid);
   json['gameobjects'] = scene.gameObjects
       .where((gameObject) => gameObject.persist)
       .map(convertGameObjectToJson)

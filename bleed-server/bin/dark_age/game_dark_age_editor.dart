@@ -47,10 +47,9 @@ class GameDarkAgeEditor extends GameDarkAge {
 
   bool isSafeToRevive(int row, int column) {
      for (var z = scene.gridHeight - 1; z >= 0; z--){
-       final type = scene.grid[z][row][column];
+       final type = scene.getGridType(z, row, column);
         if (type == NodeType.Water) return false;
         if (type == NodeType.Water_Flowing) return false;
-        if (scene.grid[z][row][column].isSolid) return true;
      }
      return false;
   }

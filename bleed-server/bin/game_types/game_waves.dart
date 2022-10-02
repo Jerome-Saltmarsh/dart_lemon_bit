@@ -118,28 +118,28 @@ class GameWaves extends Game {
   }
 
   void spawnCreeps(){
-    for (final row in scene.grid) {
-      for (final column in row) {
-        for (final node in column){
-          if (node is NodeSpawn) {
-            for (var i = 0; i < round * 3; i++){
-              remaining++;
-              final zombie = spawnZombie(
-                x: node.x,
-                y: node.y,
-                z: node.z,
-                health: 2,
-                team: Teams.evil,
-                damage: 1,
-              );
-              zombie.chaseRange = 99999;
-              zombie.viewRange = 99999;
-              zombie.maxSpeed = 1.0;
-            }
-          }
-        }
-      }
-    }
+    // for (final row in scene.grid) {
+    //   for (final column in row) {
+    //     for (final node in column){
+    //       if (node is NodeSpawn) {
+    //         for (var i = 0; i < round * 3; i++){
+    //           remaining++;
+    //           final zombie = spawnZombie(
+    //             x: node.x,
+    //             y: node.y,
+    //             z: node.z,
+    //             health: 2,
+    //             team: Teams.evil,
+    //             damage: 1,
+    //           );
+    //           zombie.chaseRange = 99999;
+    //           zombie.viewRange = 99999;
+    //           zombie.maxSpeed = 1.0;
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
   }
 
   @override

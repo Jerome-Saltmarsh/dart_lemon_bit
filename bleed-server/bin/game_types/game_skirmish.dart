@@ -60,7 +60,14 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] the lower the bar the less damage is also incurred
 /// [ ] the weapon special can be unleashed before it is full but the effect is less
 
-/// [TODO]
+/// [RELEASE 1.10]
+/// [ ] slime death animation 1
+/// [ ] slime death animation 2
+/// [ ] zombie death animation 1
+/// [ ] zombie death animation 2
+/// [ ] zombie death animation 3
+
+/// [RELEASE 1.00]
 /// [ ] build scene
 /// [ ] multiple spawn points
 /// [ ] 3d model weapon sword
@@ -73,32 +80,9 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] 3d model spinning wireframe gem
 /// [ ] particle type darkness
 /// [ ] draw punch sprite
-/// [ ] remove Node class from front end
-/// [ ] slime death animation 1
-/// [ ] slime death animation 2
-/// [ ] zombie death animation 1
-/// [ ] zombie death animation 2
-/// [ ] zombie death animation 3
 /// [ ] design mouse cursor
 /// [ ] melee weapons run out of rounds but only on hit
-/// [ ] fix weapon-96 does not render running forward
-/// [x] fix weapon render not aligned with character
-/// [x] fix weapon render order while running backwards
-/// [x] respawn weapons on empty
-/// [x] fix do not highlight player character
-/// [x] fix attack animation
-/// [x] Highlight enemy on mouse over
-/// [x] Make the player run backwards when facing behind
-/// [x] Remove Stripe
-/// [x] Render Head in aim direction
-/// [x] Fix bug player faces forward automatically on release arrow key
-/// [x] Disable player chat
-/// [x] Disable open map or quest dialog
-/// [x] Players join same game (max 7)
-/// [x] UI Weapon Information
-/// [x] item acquired audio
-/// [x] drop weapon on no ammo
-///
+/// [ ] refactor - remove node class from backend
 class GameSkirmish extends Game {
 
   static const maxPlayers = 7;
@@ -110,7 +94,7 @@ class GameSkirmish extends Game {
   int get gameType => GameType.Skirmish;
 
   GameSkirmish({required Scene scene}) : super(scene) {
-     foreachNodeSpawn(spawnNodeInstance);
+     // foreachNodeSpawn(spawnNodeInstance);
   }
 
   @override

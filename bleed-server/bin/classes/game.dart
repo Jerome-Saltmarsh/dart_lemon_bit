@@ -44,17 +44,17 @@ abstract class Game {
 
   List<GameObject> get gameObjects => scene.gameObjects;
 
-  void foreachNodeSpawn(Function(NodeSpawn value) handle) {
-    for (final row in scene.grid) {
-      for (final column in row) {
-        for (final node in column) {
-          if (node is NodeSpawn) {
-            handle(node);
-          }
-        }
-      }
-    }
-  }
+  // void foreachNodeSpawn(Function(NodeSpawn value) handle) {
+  //   for (final row in scene.grid) {
+  //     for (final column in row) {
+  //       for (final node in column) {
+  //         if (node is NodeSpawn) {
+  //           handle(node);
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 
   /// In seconds
   void customInitPlayer(Player player) {}
@@ -491,13 +491,12 @@ abstract class Game {
       attackHit = true;
     }
 
-    final node = scene.getNodeXYZ(
-      performX,
-      performY,
-      performZ,
-    );
-    if (node.isDestroyed) return;
-    if (!node.isStrikable) {
+    if (!scene.getNodeInBoundsXYZ(performX, performY, performZ)) return;
+    final nodeIndex = scene.getNodeIndexXYZ(performX, performY, performZ);
+    final nodeType = scene.nodeTypes[nodeIndex];
+    final nodeOrientation = scene.nodeOrientations[nodeIndex];
+
+    if (!NodeType.isStrikable(nodeType)) {
       if (!attackHit){
         for (final player in players) {
           player.writeGameEvent(
@@ -527,10 +526,10 @@ abstract class Game {
           z: performZ,
           angle: angle,
       );
-      player.writeByte(node.type);
+      player.writeByte(nodeType);
     }
 
-    if (NodeType.isDestroyable(node.type)) {
+    if (NodeType.isDestroyable(nodeType)) {
       final z = performZ ~/ tileSizeHalf;
       final row = performX ~/ tileSize;
       final column = performY ~/ tileSize;
@@ -542,7 +541,7 @@ abstract class Game {
       }, 300);
 
       perform((){
-        setNode(z, row, column, node.type, node.orientation);
+        setNode(z, row, column, nodeType, nodeOrientation);
       }, 400);
     }
 
@@ -632,34 +631,32 @@ abstract class Game {
 
   void setNode(int z, int row, int column, int type, int orientation) {
     if (scene.outOfBounds(z, row, column)) return;
-    final previousNode = scene.getNode(z, row, column);
-    if (previousNode.type == type && previousNode.orientation == orientation) {
+    final index = scene.getNodeIndex(z, row, column);
+    final currentType = scene.nodeTypes[index];
+    final currentOrientation = scene.nodeOrientations[index];
+    if (currentType == type && currentOrientation == orientation) {
       return;
     }
     scene.dirty = true;
-    final node = generateNode(type);
-    if (node is NodeOriented) {
-      node.orientation = orientation;
-    }
-    if (node is NodeSpawn) {
-      node.indexZ = z;
-      node.indexRow = row;
-      node.indexColumn = column;
-      nodeSpawnInstancesCreate(node);
-    }
-    scene.grid[z][row][column] = node;
+    scene.nodeTypes[index] = type;
+    scene.nodeOrientations[index] = orientation;
+    scene.setNode(z, row, column, type, orientation);
     onNodeChanged(z, row, column);
   }
 
   void onNodeChanged(int z, int row, int column) {
-    final node = scene.grid[z][row][column];
+    final nodeIndex = scene.getNodeIndex(z, row, column);
+    final type = scene.nodeTypes[nodeIndex];
+    final orientation = scene.nodeTypes[nodeIndex];
+
+    /// TODO convert to player.writeNode function in
     players.forEach((player) {
       player.writeByte(ServerResponse.Node);
       player.writeInt(z);
       player.writeInt(row);
       player.writeInt(column);
-      player.writeByte(node.type);
-      player.writeByte(node.orientation);
+      player.writeByte(type);
+      player.writeByte(orientation);
     });
     scene.dirty = true;
   }
@@ -728,14 +725,6 @@ abstract class Game {
         character.animationFrame = 0;
       }
     }
-  }
-
-  void moveCharacterToGridNode(Character character, int type) {
-    scene.findByType(type, (int z, int row, int column) {
-      character.indexZ = z;
-      character.indexRow = row;
-      character.indexColumn = column;
-    });
   }
 
   void revive(Player character) {
@@ -1109,14 +1098,6 @@ abstract class Game {
       if (!projectile.active) continue;
       if (projectile.collideWithEnvironment) continue;
       if (scene.getCollisionAt(projectile.x, projectile.y, projectile.z)) {
-        var type = scene.getNodeXYZ(
-            projectile.x,
-            projectile.y,
-            projectile.z
-        ).type;
-        if (type == NodeType.Tree_Bottom) {
-
-        }
         deactivateProjectile(projectile);
       }
     }
@@ -1125,13 +1106,13 @@ abstract class Game {
   }
 
   void refreshSpawns() {
-    for (final plane in scene.grid) {
-      for (final row in plane) {
-        for (final node in row) {
-          if (node is NodeSpawn) nodeSpawnInstancesCreate(node);
-        }
-      }
-    }
+    // for (final plane in scene.grid) {
+    //   for (final row in plane) {
+    //     for (final node in row) {
+    //       if (node is NodeSpawn) nodeSpawnInstancesCreate(node);
+    //     }
+    //   }
+    // }
   }
 
   void nodeSpawnInstancesClear(NodeSpawn node) {

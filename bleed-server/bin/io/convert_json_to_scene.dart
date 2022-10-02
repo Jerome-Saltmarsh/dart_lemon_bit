@@ -1,5 +1,6 @@
 
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:typedef/json.dart';
 
@@ -21,9 +22,15 @@ Scene convertJsonToScene(Json json, String name) {
   final columns = json.getInt('grid-columns');
   final List jsonGameObjects = json['gameobjects'] ?? [];
 
+  final gridNode = convertFlatGridToNodeGrid(json['grid'], height, rows, columns);
+
   return Scene(
     name: name,
-    grid: convertFlatGridToGrid(json['grid'], height, rows, columns),
+    nodeOrientations: gridNode.nodeOrientations,
+    nodeTypes: gridNode.nodeTypes,
+    gridRows: rows,
+    gridHeight: height,
+    gridColumns: columns,
     gameObjects: jsonGameObjects.map(convertDynamicToGameObject).toList(),
   );
 }
@@ -116,8 +123,107 @@ GameObject convertJsonToGameObject(Json json) {
     }
 }
 
+class NodeGrid {
+  final int height;
+  final int rows;
+  final int columns;
+  late final int area;
+
+  final Uint8List nodeTypes;
+  final Uint8List nodeOrientations;
+
+  NodeGrid({
+    required this.nodeTypes,
+    required this.nodeOrientations,
+    required this.height,
+    required this.rows,
+    required this.columns,
+  }) {
+    area = rows * columns;
+  }
+
+  int getNodeIndex(int z, int row, int column){
+    // assert (gridNodeIsInBounds(z, row, column));
+    return (z * area) + (row * columns) + column;
+  }
+}
+
+NodeGrid convertFlatGridToNodeGrid(List<dynamic> flatGrid, int height, int rows, int columns){
+  final nodeVolume = height * rows * columns;
+  final nodeTypes = Uint8List(nodeVolume);
+  final nodeOrientations = Uint8List(nodeVolume);
+  var nodeIndex = 0;
+
+  for (var flatGridIndex = 0; flatGridIndex < flatGrid.length; flatGridIndex++){
+    final nodeType = flatGrid[flatGridIndex];
+    nodeTypes[nodeIndex] = nodeType;
+
+    if (NodeType.isOriented(nodeType)){
+      flatGridIndex++;
+      final nodeOrientation = flatGrid[flatGridIndex];
+      nodeOrientations[nodeIndex] =
+      NodeType.supportsOrientation(nodeType, nodeOrientation)
+          ? nodeOrientation
+          : NodeType.getDefaultOrientation(nodeType);
+      nodeIndex++;
+      continue;
+    }
+
+    if (nodeType == NodeType.Spawn){
+      flatGridIndex++;
+      final spawnType = flatGrid[flatGridIndex];
+      flatGridIndex++;
+      final spawnAmount = flatGrid[flatGridIndex];
+      flatGridIndex++;
+      final spawnRadius = flatGrid[flatGridIndex];
+    }
+    nodeIndex++;
+  }
+
+  return NodeGrid(
+      nodeTypes: nodeTypes,
+      nodeOrientations: nodeOrientations,
+      height: height,
+      rows: rows,
+      columns: columns,
+  );
+}
+
+
 List<List<List<Node>>> convertFlatGridToGrid(List<dynamic> flatGrid, int height, int rows, int columns){
   var index = 0;
+
+  final nodeVolume = height * rows * columns;
+  final nodeTypes = Uint8List(nodeVolume);
+  final nodeOrientations = Uint8List(nodeVolume);
+  var nodeIndex = 0;
+
+  for (var flatGridIndex = 0; flatGridIndex < flatGrid.length; flatGridIndex++){
+     final nodeType = flatGrid[flatGridIndex];
+     nodeTypes[nodeIndex] = nodeType;
+
+     if (NodeType.isOriented(nodeType)){
+        flatGridIndex++;
+        final nodeOrientation = flatGrid[flatGridIndex];
+        nodeOrientations[nodeIndex] =
+          NodeType.supportsOrientation(nodeType, nodeOrientation)
+            ? nodeOrientation
+            : NodeType.getDefaultOrientation(nodeType);
+        nodeIndex++;
+        continue;
+     }
+
+     if (nodeType == NodeType.Spawn){
+        flatGridIndex++;
+        final spawnType = flatGrid[flatGridIndex];
+        flatGridIndex++;
+        final spawnAmount = flatGrid[flatGridIndex];
+        flatGridIndex++;
+        final spawnRadius = flatGrid[flatGridIndex];
+     }
+     nodeIndex++;
+  }
+
   return List.generate(height, (zIndex) =>
     List.generate(rows, (rowIndex) =>
       List.generate(columns, (columnIndex){

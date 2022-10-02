@@ -115,9 +115,16 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     return game.scene.getCollisionAt(x + getAdjacent(angle, distance), y + getOpposite(angle, distance), z + tileHeightHalf);
   }
 
-  int getNodeTypeInDirection({required Game game, required double angle, required double distance}){
-    return game.scene.getNodeXYZ(x + getAdjacent(angle, distance), y + getOpposite(angle, distance), z + tileHeightHalf).type;
-  }
+  int getNodeTypeInDirection({
+    required Game game,
+    required double angle,
+    required double distance,
+  }) =>
+     game.scene.getNodeTypeXYZ(
+         x + getAdjacent(angle, distance),
+         y + getOpposite(angle, distance),
+         z + tileHeightHalf,
+     );
 
   void setCharacterStatePerforming({required int duration}){
     setCharacterState(value: CharacterState.Performing, duration: duration);

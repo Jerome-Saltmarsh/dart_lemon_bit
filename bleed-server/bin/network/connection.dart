@@ -226,7 +226,8 @@ class Connection {
         return;
 
       case ClientRequest.Editor_Set_Canvas_Size:
-        game.scene.grid.add(generateGridZ(game.scene.gridRows, game.scene.gridColumns));
+        /// TODO
+        // game.scene.grid.add(generateGridZ(game.scene.gridRows, game.scene.gridColumns));
         game.onGridChanged();
         break;
 
@@ -484,76 +485,77 @@ class Connection {
   }
 
   void handleCanvasModifySize(List<String> arguments, Player player, Game game) {
-    if (arguments.length != 4) return errorArgsExpected(4, arguments);
-    final dimension = int.tryParse(arguments[1]);
-    final add = int.tryParse(arguments[2]);
-    final start = int.tryParse(arguments[3]);
-    if (dimension == null) return;
-    if (add == null) return;
-    if (start == null) return;
-
-    final grid = player.scene.grid;
-    final columns = grid[0][0].length;
-    /// Dimensions Z: 0, Row: 1, Column: 2
-    /// Add: 1, Remove: 0
-    if (dimension == 1) {
-       if (add == 1) {
-         if (start == 1){
-           var type = NodeType.Grass;
-              for (final z in grid){
-                z.insert(
-                    0,
-                    generateGridRow(columns, type: type)
-                );
-                type = NodeType.Empty;
-              }
-         } else { // End
-           var type = NodeType.Grass;
-           for (final z in grid){
-             z.add(
-                 generateGridRow(columns, type: type)
-             );
-             type = NodeType.Empty;
-           }
-         }
-       } else { // Remove
-          if (start == 1){
-            for (final z in grid){
-              z.removeAt(0);
-            }
-          } else {
-            for (final z in grid){
-              z.removeLast();
-            }
-          }
-       }
-    }
-
-    // Dimension Column == 2;
-    if (dimension == 2){
-      if (add == 1){
-        if (start == 1){
-          var type = NodeType.Grass;
-           for (final z in grid){
-              for (final row in z){
-                 row.insert(0, generateNode(type));
-              }
-              type = NodeType.Empty;
-           }
-        } else {
-          var type = NodeType.Grass;
-          for (final z in grid){
-            for (final row in z){
-              row.add(generateNode(type));
-            }
-            type = NodeType.Empty;
-          }
-        }
-      }
-    }
-
-    game.onGridChanged();
-    return;
+    /// TODO
+    // if (arguments.length != 4) return errorArgsExpected(4, arguments);
+    // final dimension = int.tryParse(arguments[1]);
+    // final add = int.tryParse(arguments[2]);
+    // final start = int.tryParse(arguments[3]);
+    // if (dimension == null) return;
+    // if (add == null) return;
+    // if (start == null) return;
+    //
+    // final grid = player.scene.grid;
+    // final columns = grid[0][0].length;
+    // /// Dimensions Z: 0, Row: 1, Column: 2
+    // /// Add: 1, Remove: 0
+    // if (dimension == 1) {
+    //    if (add == 1) {
+    //      if (start == 1){
+    //        var type = NodeType.Grass;
+    //           for (final z in grid){
+    //             z.insert(
+    //                 0,
+    //                 generateGridRow(columns, type: type)
+    //             );
+    //             type = NodeType.Empty;
+    //           }
+    //      } else { // End
+    //        var type = NodeType.Grass;
+    //        for (final z in grid){
+    //          z.add(
+    //              generateGridRow(columns, type: type)
+    //          );
+    //          type = NodeType.Empty;
+    //        }
+    //      }
+    //    } else { // Remove
+    //       if (start == 1){
+    //         for (final z in grid){
+    //           z.removeAt(0);
+    //         }
+    //       } else {
+    //         for (final z in grid){
+    //           z.removeLast();
+    //         }
+    //       }
+    //    }
+    // }
+    //
+    // // Dimension Column == 2;
+    // if (dimension == 2){
+    //   if (add == 1){
+    //     if (start == 1){
+    //       var type = NodeType.Grass;
+    //        for (final z in grid){
+    //           for (final row in z){
+    //              row.insert(0, generateNode(type));
+    //           }
+    //           type = NodeType.Empty;
+    //        }
+    //     } else {
+    //       var type = NodeType.Grass;
+    //       for (final z in grid){
+    //         for (final row in z){
+    //           row.add(generateNode(type));
+    //         }
+    //         type = NodeType.Empty;
+    //       }
+    //     }
+    //   }
+    // }
+    //
+    // game.onGridChanged();
+    // return;
   }
 
   void handleNodeRequest(List<String> arguments) {
@@ -583,10 +585,16 @@ class Connection {
         if (z == null) return;
         if (row == null) return;
         if (column == null) return;
-        final node = player.scene.grid[z][row][column];
-        if (node is NodeOriented) {
-            node.orientation = orientation;
-            player.game.onNodeChanged(z, row, column);
+        final scene = player.game.scene;
+        if (scene.outOfBounds(z, row, column)){
+          return;
+        }
+        final nodeIndex = scene.getNodeIndex(z, row, column);
+        final nodeType = scene.nodeTypes[nodeIndex];
+        if (NodeType.supportsOrientation(nodeType, orientation)) {
+          scene.nodeOrientations[nodeIndex] = orientation;
+        } else {
+          errorInvalidArg('node type $nodeType ${NodeType.getName(nodeType)} does not support orientation $orientation ${NodeOrientation.getName(orientation)}');
         }
         break;
     }
