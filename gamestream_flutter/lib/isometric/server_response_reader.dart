@@ -655,7 +655,6 @@ class ServerResponseReader with ByteReader {
 
     var gridIndex = 0;
     var total = 0;
-    var currentZ = 0;
     var currentRow = 0;
     var currentColumn = 0;
 
@@ -673,21 +672,12 @@ class ServerResponseReader with ByteReader {
         gridNodeOrientations[gridIndex] = nodeOrientation;
         gridIndex++;
         count--;
-        // grid[currentZ][currentRow][currentColumn] = generateNode(
-        //     currentZ,
-        //     currentRow,
-        //     currentColumn,
-        //     nodeType,
-        //     nodeOrientation,
-        // );
-        // grid[currentZ][currentRow][currentColumn].orientation = nodeOrientation;
         currentColumn++;
         if (currentColumn >= gridTotalColumns) {
           currentColumn = 0;
           currentRow++;
           if (currentRow >= gridTotalRows) {
             currentRow = 0;
-            currentZ++;
           }
         }
       }

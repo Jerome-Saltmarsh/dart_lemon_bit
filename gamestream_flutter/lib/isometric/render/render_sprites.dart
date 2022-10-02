@@ -239,13 +239,16 @@ class RenderOrderGrid extends RenderOrder {
 
   @override
   void renderFunction() {
-    while (renderNodeColumn >= 0 && renderNodeRow <= rowsMax){
+    while (
+        renderNodeColumn >= 0 &&
+        renderNodeRow <= rowsMax &&
+        renderNodeDstX < screenRight
+    ){
       renderNodeAt();
       renderNodeRow++;
       renderNodeColumn--;
       renderNodeIndex += gridTotalColumnsMinusOne;
       renderNodeDstX = (renderNodeRow - renderNodeColumn) * nodeSizeHalf;
-      if (renderNodeDstX > screenRight) return;
       onscreenNodes++;
     }
   }
@@ -272,6 +275,7 @@ class RenderOrderGrid extends RenderOrder {
       renderNodeRow = startRow;
       renderNodeColumn = startColumn;
     }
+    renderNodeDstX = (renderNodeRow - renderNodeColumn) * nodeSizeHalf;
     renderNodeDstY = ((renderNodeRow + renderNodeColumn) * nodeSizeHalf) - (renderNodeZ * nodeHeight);
     order = ((renderNodeRow + renderNodeColumn) * tileSize) + tileSizeHalf;
     orderZ = renderNodeZ;
