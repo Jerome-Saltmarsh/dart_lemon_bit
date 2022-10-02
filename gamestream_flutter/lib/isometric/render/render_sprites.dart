@@ -232,7 +232,6 @@ class RenderOrderGrid extends RenderOrder {
 
   var maxZ = 0;
   var minZ = 0;
-  // late List<List<Node>> zPlain;
 
   double get renderX => (renderNodeRow - renderNodeColumn) * tileSizeHalf;
   double get renderY => convertRowColumnZToY(renderNodeRow, renderNodeColumn, renderNodeZ);
@@ -251,7 +250,27 @@ class RenderOrderGrid extends RenderOrder {
 
   @override
   void updateFunction() {
-    nextGridNode();
+    renderNodeZ++;
+    if (renderNodeZ > maxZ) {
+      renderNodeZ = 0;
+      shiftIndexDown();
+      if (!remaining) return;
+      calculateMinMaxZ();
+      if (!remaining) return;
+      trimLeft();
+
+      while (renderY > screenBottom) {
+        renderNodeZ++;
+        if (renderNodeZ > maxZ) {
+          remaining = false;
+          return;
+        }
+      }
+    } else {
+      renderNodeRow = startRow;
+      renderNodeColumn = startColumn;
+    }
+    renderNodeDstY = ((renderNodeRow + renderNodeColumn) * nodeSizeHalf) - (renderNodeZ * nodeHeight);
     order = ((renderNodeRow + renderNodeColumn) * tileSize) + tileSizeHalf;
     orderZ = renderNodeZ;
   }
@@ -329,6 +348,8 @@ class RenderOrderGrid extends RenderOrder {
     calculateMinMaxZ();
     trimTop();
     trimLeft();
+
+    renderNodeDstY = ((renderNodeRow + renderNodeColumn) * nodeSizeHalf) - (renderNodeZ * nodeHeight);
 
     refreshDynamicLightGrid();
     applyEmissionsCharacters();
@@ -420,29 +441,6 @@ class RenderOrderGrid extends RenderOrder {
     }
   }
 
-  void nextGridNode(){
-    renderNodeZ++;
-    if (renderNodeZ > maxZ) {
-      renderNodeZ = 0;
-      shiftIndexDown();
-      if (!remaining) return;
-      calculateMinMaxZ();
-      if (!remaining) return;
-      trimLeft();
-
-      while (renderY > screenBottom) {
-        renderNodeZ++;
-        if (renderNodeZ > maxZ) {
-          remaining = false;
-          return;
-        }
-      }
-    } else {
-      renderNodeRow = startRow;
-      renderNodeColumn = startColumn;
-    }
-  }
-
   void shiftIndexDown(){
     renderNodeColumn = renderNodeRow + renderNodeColumn + 1;
     renderNodeRow = 0;
@@ -456,6 +454,7 @@ class RenderOrderGrid extends RenderOrder {
        remaining = false;
        return;
     }
+    renderNodeDstY = ((renderNodeRow + renderNodeColumn) * nodeSizeHalf) - (renderNodeZ * nodeHeight);
     setStart();
   }
 

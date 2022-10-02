@@ -40,8 +40,7 @@ void renderNodeAt(){
     return;
   }
 
-  final dstY = projectY(renderNodeRow, renderNodeColumn, renderNodeZ);
-
+  // final renderNodeDstY = projectY(renderNodeRow, renderNodeColumn, renderNodeZ);
   final shade = gridNodeShade[index];
   final color = colorShades[shade];
 
@@ -49,29 +48,29 @@ void renderNodeAt(){
     case NodeType.Grass:
       return renderNodeTypeGrass(
           x: renderNodeDstX,
-          y: dstY,
+          y: renderNodeDstY,
           orientation: gridNodeOrientations[index],
           shade: shade,
       );
     case NodeType.Brick_2:
       return renderNodeTypeBrick(
         x: renderNodeDstX,
-        y: dstY,
+        y: renderNodeDstY,
         orientation: gridNodeOrientations[index],
         shade: shade,
       );
     case NodeType.Torch:
       if (!torchesIgnited.value) {
-        return renderTorchOff(renderNodeDstX, dstY);
+        return renderTorchOff(renderNodeDstX, renderNodeDstY);
       }
       if (gridNodeWind[index] == Wind.Calm){
-        return renderTorchOn(renderNodeDstX, dstY);
+        return renderTorchOn(renderNodeDstX, renderNodeDstY);
       }
-      return renderTorchOnWindy(renderNodeDstX, dstY);
+      return renderTorchOnWindy(renderNodeDstX, renderNodeDstY);
     case NodeType.Water:
       return render(
         dstX: renderNodeDstX,
-        dstY: dstY + animationFrameWaterHeight,
+        dstY: renderNodeDstY + animationFrameWaterHeight,
         srcX: 7976,
         srcY: (((animationFrameWater + ((renderNodeRow + renderNodeColumn) * 3)) % 10) * 72.0),
         srcWidth: 48,
@@ -82,7 +81,7 @@ void renderNodeAt(){
     case NodeType.Tree_Bottom:
       return render(
         dstX: renderNodeDstX,
-        dstY: dstY,
+        dstY: renderNodeDstY,
         srcX: 1478,
         srcY: 0,
         srcWidth: 62.0,
@@ -97,7 +96,7 @@ void renderNodeAt(){
 
       return render(
         dstX: renderNodeDstX + (shift * 0.5),
-        dstY: dstY,
+        dstY: renderNodeDstY,
         srcX: 1541,
         srcY: 74.0 + (74 * f),
         srcWidth: 62.0,
@@ -110,14 +109,14 @@ void renderNodeAt(){
         case windIndexCalm:
           return renderStandardNode(
             dstX: renderNodeDstX,
-            dstY: dstY,
+            dstY: renderNodeDstY,
             srcX: 10118,
             srcY: spriteHeight * gridNodeShade[index],
           );
         default:
           return renderStandardNode(
               dstX: renderNodeDstX,
-              dstY: dstY,
+              dstY: renderNodeDstY,
               srcX: 10240 + ((((renderNodeRow - renderNodeColumn) + animationFrameGrass) % 6) * 48),
               srcY: spriteHeight * gridNodeShade[index],
           );
@@ -125,7 +124,7 @@ void renderNodeAt(){
     case NodeType.Rain_Falling:
       return render(
         dstX: renderNodeDstX - rainPosition,
-        dstY: dstY + animationFrameRain,
+        dstY: renderNodeDstY + animationFrameRain,
         srcX: srcXRainFalling,
         srcY: 72.0 * ((animationFrameRain + renderNodeRow + renderNodeColumn) % 6),
         srcWidth: 48,
@@ -137,7 +136,7 @@ void renderNodeAt(){
       if (gridNodeZRCTypeSafe(renderNodeZ - 1, renderNodeRow, renderNodeColumn) == NodeType.Water){
         return render(
           dstX: renderNodeDstX,
-          dstY: dstY,
+          dstY: renderNodeDstY,
           srcX: 9280,
           srcY: 72.0 * ((animationFrameRain + renderNodeRow + renderNodeColumn) % 10),
           srcWidth: 48,
@@ -148,7 +147,7 @@ void renderNodeAt(){
       }
       return render(
         dstX: renderNodeDstX,
-        dstY: dstY,
+        dstY: renderNodeDstY,
         srcX: srcXRainLanding,
         srcY: 72.0 * ((animationFrameRain + renderNodeRow + renderNodeColumn) % 6),
         srcWidth: 48,
@@ -159,7 +158,7 @@ void renderNodeAt(){
     case NodeType.Stone:
       return renderStandardNode(
           dstX: renderNodeDstX,
-          dstY: dstY,
+          dstY: renderNodeDstY,
           srcX: AtlasSrc.Node_Stone,
           srcY: 0,
           color: color,
@@ -168,21 +167,21 @@ void renderNodeAt(){
       return renderNodePlain(
         orientation: gridNodeOrientations[index],
         dstX: renderNodeDstX,
-        dstY: dstY,
+        dstY: renderNodeDstY,
         color: color,
       );
     case NodeType.Wooden_Plank:
       return renderNodeWoodenPlank(
         orientation: gridNodeOrientations[index],
         dstX: renderNodeDstX,
-        dstY: dstY,
+        dstY: renderNodeDstY,
         color: color,
       );
     case NodeType.Wood_2:
       renderNodeWood(
           orientation: gridNodeOrientations[index],
           dstX: renderNodeDstX,
-          dstY: dstY,
+          dstY: renderNodeDstY,
           color: color,
       );
       break;
@@ -190,14 +189,14 @@ void renderNodeAt(){
       renderNodeBauHaus(
         orientation: gridNodeOrientations[index],
         dstX: renderNodeDstX,
-        dstY: dstY,
+        dstY: renderNodeDstY,
         color: color,
       );
       break;
     case NodeType.Sunflower:
       return renderStandardNode(
           dstX: renderNodeDstX,
-          dstY: dstY,
+          dstY: renderNodeDstY,
           srcX: AtlasSrc.Node_Sunflower,
           srcY: 0,
           color: color,
@@ -205,7 +204,7 @@ void renderNodeAt(){
     case NodeType.Soil:
       return renderStandardNode(
         dstX: renderNodeDstX,
-        dstY: dstY,
+        dstY: renderNodeDstY,
         srcX: AtlasSrc.Node_Soil,
         srcY: 0,
         color: color,
@@ -213,7 +212,7 @@ void renderNodeAt(){
     case NodeType.Fireplace:
       return render(
         dstX: renderNodeDstX,
-        dstY: dstY,
+        dstY: renderNodeDstY,
         srcX: 6469,
         srcY: ((animationFrameTorch % 6) * 72),
         srcWidth: 48,
@@ -223,7 +222,7 @@ void renderNodeAt(){
     case NodeType.Boulder:
       return renderStandardNode(
         dstX: renderNodeDstX,
-        dstY: dstY,
+        dstY: renderNodeDstY,
         srcX: AtlasSrc.Node_Boulder,
         srcY: 0,
         color: color,
@@ -231,7 +230,7 @@ void renderNodeAt(){
     case NodeType.Oven:
       return renderStandardNode(
         dstX: renderNodeDstX,
-        dstY: dstY,
+        dstY: renderNodeDstY,
         srcX: AtlasSrc.Node_Oven,
         srcY: 0,
         color: color,
@@ -239,7 +238,7 @@ void renderNodeAt(){
     case NodeType.Chimney:
       return renderStandardNode(
         dstX: renderNodeDstX,
-        dstY: dstY,
+        dstY: renderNodeDstY,
         srcX: AtlasSrc.Node_Chimney,
         srcY: 0,
         color: color,
@@ -249,7 +248,7 @@ void renderNodeAt(){
         case NodeOrientation.Half_North:
           return renderStandardNode(
             dstX: renderNodeDstX,
-            dstY: dstY,
+            dstY: renderNodeDstY,
             srcX: AtlasSrc.Node_Window,
             srcY: 0,
             color: color,
@@ -257,7 +256,7 @@ void renderNodeAt(){
         case NodeOrientation.Half_East:
           return renderStandardNode(
             dstX: renderNodeDstX,
-            dstY: dstY,
+            dstY: renderNodeDstY,
             srcX: AtlasSrc.Node_Window,
             srcY: srcYIndex1,
             color: color,
@@ -265,7 +264,7 @@ void renderNodeAt(){
         case NodeOrientation.Half_South:
           return renderStandardNode(
             dstX: renderNodeDstX,
-            dstY: dstY,
+            dstY: renderNodeDstY,
             srcX: AtlasSrc.Node_Window,
             srcY: srcYIndex2,
             color: color,
@@ -273,7 +272,7 @@ void renderNodeAt(){
         case NodeOrientation.Half_East:
           return renderStandardNode(
             dstX: renderNodeDstX,
-            dstY: dstY,
+            dstY: renderNodeDstY,
             srcX: AtlasSrc.Node_Window,
             srcY: srcYIndex3,
             color: color,
