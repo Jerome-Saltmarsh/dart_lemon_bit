@@ -218,6 +218,7 @@ var renderNodeRow = 0;
 var renderNodeColumn = 0;
 var renderNodeDstX = 0.0;
 var renderNodeDstY = 0.0;
+var renderNodeIndex = 0;
 
 class RenderOrderGrid extends RenderOrder {
   var rowsMax = 0;
@@ -242,6 +243,7 @@ class RenderOrderGrid extends RenderOrder {
       renderNodeAt();
       renderNodeRow++;
       renderNodeColumn--;
+      renderNodeIndex += gridTotalColumnsMinusOne;
       renderNodeDstX = (renderNodeRow - renderNodeColumn) * nodeSizeHalf;
       if (renderNodeDstX > screenRight) return;
       onscreenNodes++;
@@ -273,6 +275,8 @@ class RenderOrderGrid extends RenderOrder {
     renderNodeDstY = ((renderNodeRow + renderNodeColumn) * nodeSizeHalf) - (renderNodeZ * nodeHeight);
     order = ((renderNodeRow + renderNodeColumn) * tileSize) + tileSizeHalf;
     orderZ = renderNodeZ;
+
+    renderNodeIndex = (renderNodeZ * gridTotalArea) + (renderNodeRow * gridTotalColumns) + renderNodeColumn;
   }
 
   @override

@@ -643,15 +643,6 @@ class ServerResponseReader with ByteReader {
     gridTotalColumns = readInt();
     gridTotalArea = gridTotalRows * gridTotalColumns;
 
-
-    // grid = List.generate(gridTotalZ, (indexZ) =>
-    //     List.generate(gridTotalRows, (indexRow) =>
-    //         List.generate(gridTotalColumns, (indexColumn) => Node.empty, growable: false),
-    //         growable: false
-    //     ),
-    //     growable: false
-    // );
-
     final grandTotal = gridTotalZ * gridTotalRows * gridTotalColumns;
 
     gridNodeTotal = grandTotal;

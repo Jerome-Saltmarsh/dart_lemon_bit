@@ -28,20 +28,20 @@ const spriteHeight = 72.0;
 
 /// remove objects from the render layer to reduce garbage collection
 void renderNodeAt(){
-  final index = (renderNodeZ * gridTotalArea) + (renderNodeRow * gridTotalColumns) + renderNodeColumn;
+  // final renderNodeIndex = (renderNodeZ * gridTotalArea) + (renderNodeRow * gridTotalColumns) + renderNodeColumn;
 
-  if (index >= gridNodeTotal) return;
+  if (renderNodeIndex >= gridNodeTotal) return;
 
-  final nodeType = gridNodeTypes[index];
+  final nodeType = gridNodeTypes[renderNodeIndex];
   if (nodeType == NodeType.Empty) return;
 
-  if (!gridNodeVisible[index]) {
-    gridNodeVisible[index] = true;
+  if (!gridNodeVisible[renderNodeIndex]) {
+    gridNodeVisible[renderNodeIndex] = true;
     return;
   }
 
   // final renderNodeDstY = projectY(renderNodeRow, renderNodeColumn, renderNodeZ);
-  final shade = gridNodeShade[index];
+  final shade = gridNodeShade[renderNodeIndex];
   final color = colorShades[shade];
 
   switch (nodeType) {
@@ -49,21 +49,21 @@ void renderNodeAt(){
       return renderNodeTypeGrass(
           x: renderNodeDstX,
           y: renderNodeDstY,
-          orientation: gridNodeOrientations[index],
+          orientation: gridNodeOrientations[renderNodeIndex],
           shade: shade,
       );
     case NodeType.Brick_2:
       return renderNodeTypeBrick(
         x: renderNodeDstX,
         y: renderNodeDstY,
-        orientation: gridNodeOrientations[index],
+        orientation: gridNodeOrientations[renderNodeIndex],
         shade: shade,
       );
     case NodeType.Torch:
       if (!torchesIgnited.value) {
         return renderTorchOff(renderNodeDstX, renderNodeDstY);
       }
-      if (gridNodeWind[index] == Wind.Calm){
+      if (gridNodeWind[renderNodeIndex] == Wind.Calm){
         return renderTorchOn(renderNodeDstX, renderNodeDstY);
       }
       return renderTorchOnWindy(renderNodeDstX, renderNodeDstY);
@@ -91,7 +91,7 @@ void renderNodeAt(){
       );
     case NodeType.Tree_Top:
       final f = raining.value ? animationFrame % 4 : -1;
-      var shift = treeAnimation[((renderNodeRow - renderNodeColumn) + animationFrame) % treeAnimation.length] * gridNodeWind[index];
+      var shift = treeAnimation[((renderNodeRow - renderNodeColumn) + animationFrame) % treeAnimation.length] * gridNodeWind[renderNodeIndex];
       final nodeBelowShade = gridNodeShade[gridNodeIndexZRC(renderNodeZ > 0 ? renderNodeZ - 1 : renderNodeZ, renderNodeRow, renderNodeColumn)];
 
       return render(
@@ -105,20 +105,20 @@ void renderNodeAt(){
         color: colorShades[nodeBelowShade],
       );
     case NodeType.Grass_Long:
-      switch (gridNodeWind[index]) {
+      switch (gridNodeWind[renderNodeIndex]) {
         case windIndexCalm:
           return renderStandardNode(
             dstX: renderNodeDstX,
             dstY: renderNodeDstY,
             srcX: 10118,
-            srcY: spriteHeight * gridNodeShade[index],
+            srcY: spriteHeight * gridNodeShade[renderNodeIndex],
           );
         default:
           return renderStandardNode(
               dstX: renderNodeDstX,
               dstY: renderNodeDstY,
               srcX: 10240 + ((((renderNodeRow - renderNodeColumn) + animationFrameGrass) % 6) * 48),
-              srcY: spriteHeight * gridNodeShade[index],
+              srcY: spriteHeight * gridNodeShade[renderNodeIndex],
           );
       }
     case NodeType.Rain_Falling:
@@ -165,21 +165,21 @@ void renderNodeAt(){
       );
     case NodeType.Plain:
       return renderNodePlain(
-        orientation: gridNodeOrientations[index],
+        orientation: gridNodeOrientations[renderNodeIndex],
         dstX: renderNodeDstX,
         dstY: renderNodeDstY,
         color: color,
       );
     case NodeType.Wooden_Plank:
       return renderNodeWoodenPlank(
-        orientation: gridNodeOrientations[index],
+        orientation: gridNodeOrientations[renderNodeIndex],
         dstX: renderNodeDstX,
         dstY: renderNodeDstY,
         color: color,
       );
     case NodeType.Wood_2:
       renderNodeWood(
-          orientation: gridNodeOrientations[index],
+          orientation: gridNodeOrientations[renderNodeIndex],
           dstX: renderNodeDstX,
           dstY: renderNodeDstY,
           color: color,
@@ -187,7 +187,7 @@ void renderNodeAt(){
       break;
     case NodeType.Bau_Haus_2:
       renderNodeBauHaus(
-        orientation: gridNodeOrientations[index],
+        orientation: gridNodeOrientations[renderNodeIndex],
         dstX: renderNodeDstX,
         dstY: renderNodeDstY,
         color: color,
@@ -244,7 +244,7 @@ void renderNodeAt(){
         color: color,
       );
     case NodeType.Window:
-      switch(gridNodeOrientations[index]){
+      switch(gridNodeOrientations[renderNodeIndex]){
         case NodeOrientation.Half_North:
           return renderStandardNode(
             dstX: renderNodeDstX,
