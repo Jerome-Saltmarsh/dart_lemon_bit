@@ -241,17 +241,12 @@ class RenderOrderGrid extends RenderOrder {
 
   @override
   void renderFunction() {
+
     while (
         renderNodeColumn >= 0 &&
         renderNodeRow <= rowsMax &&
-        renderNodeDstX < screenRight
+        renderNodeDstX <= screenRight
     ){
-
-      // if (renderNodeIndex >= gridNodeTotal) {
-      //   offscreenNodes++;
-      //   return;
-      // }
-
       renderNodeType = gridNodeTypes[renderNodeIndex];
 
       if (renderNodeType != NodeType.Empty){
@@ -369,8 +364,8 @@ class RenderOrderGrid extends RenderOrder {
     trimTop();
     trimLeft();
 
+    renderNodeDstX = (renderNodeRow - renderNodeColumn) * nodeSizeHalf;
     renderNodeDstY = ((renderNodeRow + renderNodeColumn) * nodeSizeHalf) - (renderNodeZ * nodeHeight);
-
     renderNodeIndex = (renderNodeZ * gridTotalArea) + (renderNodeRow * gridTotalColumns) + renderNodeColumn;
     renderNodeType = gridNodeTypes[renderNodeIndex];
 
