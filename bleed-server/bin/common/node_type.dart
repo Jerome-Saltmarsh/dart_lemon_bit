@@ -49,37 +49,38 @@ class NodeType {
     type == Wood_2;
 
   static bool isMaterialWood(int value) =>
-     value == Torch ||
-     value == Tree_Bottom ||
-     value == Table ||
-     value == Wood_2 ||
-     value == Wooden_Plank;
+    value == Torch ||
+    value == Tree_Bottom ||
+    value == Table ||
+    value == Wood_2 ||
+    value == Wooden_Plank;
 
   static bool isMaterialGrass(int value) =>
-      value == Grass_Long ||
-      value == Grass_Flowers ||
-      value == Grass;
+    value == Grass_Long ||
+    value == Grass_Flowers ||
+    value == Grass;
 
   static bool isMaterialStone(int value) =>
-      value == Brick_Top ||
-      value == Stone ||
-      value == Oven ||
-      value == Brick_2 ||
-      value == Chimney;
+    value == Brick_Top ||
+    value == Stone ||
+    value == Oven ||
+    value == Brick_2 ||
+    value == Chimney;
 
   static bool isOriented(int value) =>
-      value == Brick_2 ||
-      value == Wood_2 ||
-      value == Grass ||
-      value == Plain ||
-      value == Window ||
-      value == Wooden_Plank ||
-      value == Bau_Haus_2 ||
-      value == Boulder ||
-      value == Cottage_Roof;
+    value == Brick_2 ||
+    value == Wood_2 ||
+    value == Grass ||
+    value == Plain ||
+    value == Window ||
+    value == Wooden_Plank ||
+    value == Bau_Haus_2 ||
+    value == Boulder ||
+    value == Cottage_Roof;
 
   static bool isSolid(int type) =>
     type == Brick_2 ||
+    type == Stone ||
     type == Wood_2 ||
     type == Grass ||
     type == Plain ||
