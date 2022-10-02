@@ -1,8 +1,8 @@
 
 import 'package:bleed_common/node_orientation.dart';
-import 'package:gamestream_flutter/isometric/classes/nodes.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src.dart';
 
+import 'render_constants.dart';
 import 'render_node.dart';
 
 void renderNodePlain({

@@ -3,7 +3,6 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
-import 'package:gamestream_flutter/isometric/classes/nodes.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src.dart';
@@ -17,6 +16,7 @@ import 'package:gamestream_flutter/isometric/watches/raining.dart';
 import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
 import 'package:lemon_engine/render.dart';
 
+import 'render_constants.dart';
 import 'render_node_plain.dart';
 import 'render_node_wooden_plank.dart';
 

@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/isometric/classes/nodes.dart';
+import 'render_constants.dart';
 
 class AtlasSrc {
   static const Node_Grass = 7158.0;
