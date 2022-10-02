@@ -239,7 +239,6 @@ class RenderOrderGrid extends RenderOrder {
   void renderFunction() {
 
     while (column >= 0 && row <= rowsMax){
-      assignNode();
       row++;
       column--;
 
@@ -351,11 +350,9 @@ class RenderOrderGrid extends RenderOrder {
     column = screenTopLeftColumn;
     shiftIndex = 0;
     calculateMinMaxZ();
-    assignNode();
     trimTop();
     trimLeft();
 
-    assignNode();
     refreshDynamicLightGrid();
     applyEmissionsCharacters();
     applyEmissionGameObjects();
@@ -421,10 +418,8 @@ class RenderOrderGrid extends RenderOrder {
     while (renderY < screenTop){
       shiftIndexDown();
     }
-    assignNode();
     calculateMinMaxZ();
     setStart();
-    // assert(node.dstY >= screenTop);
   }
 
   // given a grid coordinate row / column workout the maximum z before it goes above the top of the screen.
@@ -471,16 +466,6 @@ class RenderOrderGrid extends RenderOrder {
       column = startColumn;
     }
     // zPlain = grid[z];
-  }
-
-  void assignNode() {
-    assert (z >= 0);
-    assert (z < gridTotalZ);
-    assert (row >= 0);
-    assert (row < gridTotalRows);
-    assert (column >= 0);
-    assert (column < gridTotalColumns);
-    // node = zPlain[row][column];
   }
 
   void shiftIndexDown(){

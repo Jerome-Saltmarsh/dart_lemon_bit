@@ -1,6 +1,7 @@
 import 'package:bleed_common/GameType.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
+import 'package:gamestream_flutter/isometric/events/on_changed_edit.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -49,7 +50,7 @@ class Game {
   final playerTextStyle = TextStyle(color: Colors.white);
   final mapVisible = Watch(false);
   final timeVisible = Watch(true);
-  final edit = Watch(false);
+  final edit = Watch(false, onChanged: onChangedEdit);
 }
 
 
