@@ -43,6 +43,14 @@ class NodeType {
   static const Spawn = 71;
   static const Respawning = 72;
 
+  static bool isOriented(int value) =>
+    isSolid(value) ||
+    isHalf(value) ||
+    isCorner(value) ||
+    isSlopeCornerInner(value) ||
+    isSlopeCornerOuter(value) ||
+    isSlopeSymmetric(value) ;
+
   static bool isStrikable(int type) =>
     type == Grass ||
     type == Brick_2 ||
@@ -67,20 +75,8 @@ class NodeType {
     value == Brick_2 ||
     value == Chimney;
 
-  static bool isOriented(int value) =>
-    value == Brick_2 ||
-    value == Wood_2 ||
-    value == Grass ||
-    value == Plain ||
-    value == Window ||
-    value == Wooden_Plank ||
-    value == Bau_Haus_2 ||
-    value == Boulder ||
-    value == Cottage_Roof;
-
   static bool isSolid(int type) =>
     type == Brick_2 ||
-    type == Stone ||
     type == Wood_2 ||
     type == Grass ||
     type == Plain ||
@@ -129,13 +125,12 @@ class NodeType {
     type == Grass;
 
   static bool isRain(int value) =>
-     value == Rain_Falling       ||
-     value == Rain_Landing       ;
+     value == Rain_Falling ||
+     value == Rain_Landing ;
   
-  static bool blocksPerception(int value){
-    return value == isSolid(value);
-  }
-  
+  static bool blocksPerception(int value) =>
+     value == isSolid(value);
+
   static bool emitsLight(int value) =>
     value == Torch || 
     value == Fireplace;
