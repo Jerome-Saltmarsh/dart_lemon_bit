@@ -24,7 +24,7 @@ void gridNodeShadeSet(int index, int shade){
 
 int gridNodeIndexZRC(int z, int row, int column) {
   assert (gridNodeIsInBounds(z, row, column));
-  return (z * gridTotalRows * gridTotalColumns) + (row * gridTotalColumns) + column;
+  return (z * gridTotalArea) + (row * gridTotalColumns) + column;
 }
 
 bool gridNodeIsInBounds(int z, int row, int column){

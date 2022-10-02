@@ -239,41 +239,16 @@ class RenderOrderGrid extends RenderOrder {
   void renderFunction() {
 
     while (column >= 0 && row <= rowsMax){
+      renderNodeAt(row: row, column: column, z: z);
       row++;
       column--;
-
-      // if (!node.renderable) continue;
       if ((row - column) * nodeSizeHalf > screenRight) return;
-      // assert (node.dstX >= screenLeft);
-      // assert (node.dstY >= screenTop);
-      // assert (node.dstY <= screenBottom);
-      // if (node.dstX < screenLeft) {
-      //   offscreenNodesLeft++;
-      //   continue;
-      // }
-      // if (node.dstY < screenTop) {
-      //   offscreenNodesTop++;
-      //   return;
-      // }
-      // if (node.dstY > screenBottom) {
-      //   offscreenNodesBottom++;
-      //   return;
-      // }
       onscreenNodes++;
-      renderNodeAt(row: row, column: column, z: z);
-
-      // if (node.visible) {
-      //   node.handleRender();
-      //
-      // } else {
-      //   node.visible = true;
-      // }
     }
   }
 
   @override
   void updateFunction() {
-    // zPlain = grid[z];
     nextGridNode();
     order = ((row + column) * tileSize) + tileSizeHalf;
     orderZ = z;
@@ -385,7 +360,6 @@ class RenderOrderGrid extends RenderOrder {
           }
        }
     }
-    // super.reset();
     total = getTotal();
     _index = 0;
     remaining = total > 0;
@@ -465,7 +439,6 @@ class RenderOrderGrid extends RenderOrder {
       row = startRow;
       column = startColumn;
     }
-    // zPlain = grid[z];
   }
 
   void shiftIndexDown(){
@@ -508,30 +481,11 @@ class RenderOrderGrid extends RenderOrder {
     return diff ~/ tileSize;
   }
 
-    void refreshDynamicLightGrid(){
-
-        for (var i = 0; i < gridNodeTotal; i++){
-           gridNodeShade[i] = gridNodeBake[i];
-        }
-
-        // for (var z = 0; z < gridTotalZ; z++) {
-        //   final zPlain = grid[z];
-        //   final zLength = z * tileSize;
-        //   final minRow = convertWorldToRowSafe(screenLeft, screenTop, zLength);
-        //   final maxRow = convertWorldToRowSafe(screenRight, screenBottom, zLength);
-        //   final minColumn = convertWorldToColumnSafe(screenRight, screenTop, zLength);
-        //   final maxColumn = convertWorldToColumnSafe(screenLeft, screenBottom, zLength);
-        //   for (var rowIndex = minRow; rowIndex <= maxRow; rowIndex++) {
-        //     final dynamicRow = zPlain[rowIndex];
-        //     for (var columnIndex = minColumn; columnIndex <= maxColumn; columnIndex++) {
-        //       final node = dynamicRow[columnIndex];
-        //       if (node.dstY > screenBottom) break;
-        //       if (node.dstX > screenRight) continue;
-        //       node.resetShadeToBake();
-        //     }
-        //   }
-        // }
-      }
+  void refreshDynamicLightGrid() {
+    for (var i = 0; i < gridNodeTotal; i++) {
+      gridNodeShade[i] = gridNodeBake[i];
+    }
+  }
 }
 
 abstract class RenderOrder {
