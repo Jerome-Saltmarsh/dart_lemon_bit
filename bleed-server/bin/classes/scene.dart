@@ -219,8 +219,16 @@ class Scene {
   //   return visitDirection(directionBehind, node);
   // }
 
-  bool getCollisionAt(double x, double y, double z) =>
-    nodeOrientations[getNodeTypeXYZ(x, y, z)] != NodeOrientation.None;
+  bool getCollisionAt(double x, double y, double z) {
+     if (x < 0) return true;
+     if (y < 0) return true;
+     if (x > gridRowLength) return true;
+     if (y > gridColumnLength) return true;
+     if (z < 0) return false;
+     if (z > gridHeightLength) return false;
+     return nodeOrientations[getNodeTypeXYZ(x, y, z)] != NodeOrientation.None;
+  }
+
 
   void resolveCharacterTileCollision(Character character, Game game) {
     character.z -= character.zVelocity;

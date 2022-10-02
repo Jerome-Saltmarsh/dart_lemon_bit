@@ -280,11 +280,13 @@ class Connection {
         if (z == null) return errorInvalidArg('z is null');
         if (row == null) return errorInvalidArg('row is null');
         if (column == null) return errorInvalidArg('column is null');
-        final node = player.game.scene.getNode(z, row, column);
-
-        if (node is NodeSpawn)
-          return player.writeNodeData(node);
-        return errorInvalidArg('node.type is not spawn');
+        /// TODO
+        // final node = player.game.scene.getNode(z, row, column);
+        //
+        // if (node is NodeSpawn)
+        //   return player.writeNodeData(node);
+        // return errorInvalidArg('node.type is not spawn');
+        break;
 
       case ClientRequest.Spawn_Node_Data_Modify:
         if (arguments.length < 6){
@@ -314,19 +316,22 @@ class Connection {
         if (!SpawnType.values.contains(spawnType))
           return errorInvalidArg('invalid spawn type: $spawnType');
 
-        final node = player.scene.getNode(z, row, column);
 
-        if (node is NodeSpawn) {
-          node.spawnType = spawnType;
-          node.spawnAmount = spawnAmount;
-          node.spawnRadius = spawnRadius;
-          player.writeNodeData(node);
-          game.nodeSpawnInstancesClear(node);
-          game.nodeSpawnInstancesCreate(node);
-          player.scene.dirty = true;
-        } else {
-          return errorInvalidArg('ClientRequest.Spawn_Node_Data_Modify. Selected node must be of type spawn');
-        }
+        /// TODO
+
+        // final node = player.scene.getNode(z, row, column);
+
+        // if (node is NodeSpawn) {
+        //   node.spawnType = spawnType;
+        //   node.spawnAmount = spawnAmount;
+        //   node.spawnRadius = spawnRadius;
+        //   player.writeNodeData(node);
+        //   game.nodeSpawnInstancesClear(node);
+        //   game.nodeSpawnInstancesCreate(node);
+        //   player.scene.dirty = true;
+        // } else {
+        //   return errorInvalidArg('ClientRequest.Spawn_Node_Data_Modify. Selected node must be of type spawn');
+        // }
         break;
 
       case ClientRequest.Teleport_Scene:
@@ -447,8 +452,10 @@ class Connection {
     //   game.setNode(z, row, column, type, orientation);
     // }, 15);
 
-    final current = game.scene.getNode(z, row, column);
-    if (current.type == type && current.orientation == orientation) return;
+    final nodeIndex = game.scene.getNodeIndex(z, row, column);
+    final currentType = game.scene.nodeTypes[nodeIndex];
+    final currentOrientation = game.scene.nodeOrientations[nodeIndex];
+    if (currentType == type && currentOrientation == orientation) return;
 
     game.setNode(z, row, column, type, orientation);
 
@@ -663,9 +670,9 @@ class Connection {
         if (y == null) return errorInvalidArg('y is null (3)');
         if (z == null) return errorInvalidArg('z is null (4)');
 
-        if (!player.scene.getNodeXYZ(x, y, z).isEmpty){
-          return errorInvalidArg("Selected Block is not empty");
-        }
+        // if (!player.scene.getNodeXYZ(x, y, z).isEmpty){
+        //   return errorInvalidArg("Selected Block is not empty");
+        // }
 
         if (type == null) return errorInvalidArg('type is null (5)');
 

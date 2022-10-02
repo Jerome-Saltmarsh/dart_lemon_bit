@@ -1,15 +1,16 @@
 
+import 'dart:typed_data';
+
 import '../classes/library.dart';
-import '../isometric/generate_empty_grid.dart';
 
 Scene generateEmptyScene(){
   return Scene(
     name: '',
     gameObjects: [],
-    grid: generate_grid_empty(
-      zHeight: 8,
-      rows: 50,
-      columns: 50,
-    ),
+    gridHeight: 8,
+    gridColumns: 50,
+    gridRows: 50,
+    nodeTypes: Uint8List(0), /// TODO
+    nodeOrientations: Uint8List(0), /// TODO
   );
 }
