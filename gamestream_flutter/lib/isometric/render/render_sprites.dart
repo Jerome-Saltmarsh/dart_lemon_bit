@@ -248,7 +248,7 @@ class RenderOrderGrid extends RenderOrder {
       renderNodeRow++;
       renderNodeColumn--;
       renderNodeIndex += gridTotalColumnsMinusOne;
-      renderNodeDstX = (renderNodeRow - renderNodeColumn) * nodeSizeHalf;
+      renderNodeDstX += spriteWidth;
       onscreenNodes++;
     }
   }
