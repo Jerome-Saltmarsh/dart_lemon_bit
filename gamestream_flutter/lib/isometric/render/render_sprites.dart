@@ -34,17 +34,24 @@ import '../lighting/apply_emissions_gameobjects.dart';
 import 'render_particle.dart';
 
 
-final renderOrder = <RenderOrder> [
-  RenderOrderGrid(),
-  RenderOrderParticle(),
-  RenderOrderProjectiles(),
-  RenderOrderCharacters(),
-  RenderOrderGameObjects(),
-];
+final renderOrderGrid = RenderOrderGrid();
+final renderOrderParticle = RenderOrderParticle();
+final renderOrderProjectiles = RenderOrderProjectiles();
+final renderOrderCharacters = RenderOrderCharacters();
+final renderOrderGameObjects = RenderOrderGameObjects();
+
+
+// final renderOrder = <RenderOrder> [
+//   RenderOrderGrid(),
+//   RenderOrderParticle(),
+//   RenderOrderProjectiles(),
+//   RenderOrderCharacters(),
+//   RenderOrderGameObjects(),
+// ];
 
 // renderOrderLength gets called a lot during rendering so use a const and update it manually if need be
-const renderOrderLength = 5;
-var renderOrderFirst = renderOrder.first;
+// const renderOrderLength = 5;
+// var renderOrderFirst = renderOrder.first;
 var totalRemaining = 0;
 var totalIndex = 0;
 
@@ -52,15 +59,22 @@ final maxZRender = Watch<int>(gridTotalZ, clamp: (int value){
   return clamp<int>(value, 0, max(gridTotalZ - 1, 0));
 });
 
+void resetRenderOrder(RenderOrder value){
+  value.reset();
+  if (value.remaining){
+    totalRemaining++;
+  }
+}
+
 void renderSprites() {
   var remaining = false;
   totalRemaining = 0;
-  for (final order in renderOrder){
-      order.reset();
-      if (order.remaining){
-        totalRemaining++;
-      }
-  }
+  resetRenderOrder(renderOrderCharacters);
+  resetRenderOrder(renderOrderGameObjects);
+  resetRenderOrder(renderOrderGrid);
+  resetRenderOrder(renderOrderParticle);
+  resetRenderOrder(renderOrderProjectiles);
+
   remaining = totalRemaining > 0;
 
   while (remaining) {
@@ -537,8 +551,8 @@ abstract class RenderOrder {
   }
 
   RenderOrder compare(RenderOrder that){
-    if (!remaining) return that;
-    if (!that.remaining) return this;
+    // if (!remaining) return that;
+    // if (!that.remaining) return this;
     if (order < that.order) return this;
     if (orderZ < that.orderZ) return this;
     return that;
@@ -568,11 +582,20 @@ abstract class RenderOrder {
 }
 
 RenderOrder getNextRenderOrder(){
-  var next = renderOrderFirst;
-  for (var i = 1; i < renderOrderLength; i++){
-    next =  next.compare(renderOrder[i]);
-  }
-  return next;
+   RenderOrder renderOrder = renderOrderGrid;
+   if (renderOrderCharacters.remaining){
+     renderOrder = renderOrder.compare(renderOrderCharacters);
+   }
+   if (renderOrderProjectiles.remaining){
+     renderOrder = renderOrder.compare(renderOrderProjectiles);
+   }
+   if (renderOrderGameObjects.remaining){
+     renderOrder = renderOrder.compare(renderOrderGameObjects);
+   }
+   if (renderOrderParticle.remaining){
+     renderOrder = renderOrder.compare(renderOrderParticle);
+   }
+   return renderOrder;
 }
 
 int getRenderRow(int row, int z){
