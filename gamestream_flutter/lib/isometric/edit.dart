@@ -271,10 +271,8 @@ class Edit {
 
     var orientation = paintOrientation.value;
 
-    if (NodeType.isOriented(nodeType)){
-       if (!NodeType.supportsOrientation(nodeType, orientation)) {
-          orientation = NodeType.getDefaultOrientation(nodeType);
-       }
+    if (!NodeType.supportsOrientation(nodeType, orientation)) {
+      orientation = NodeType.getDefaultOrientation(nodeType);
     }
 
     return sendClientRequestSetBlock(

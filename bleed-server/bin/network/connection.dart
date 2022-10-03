@@ -438,10 +438,7 @@ class Connection {
       return errorInvalidArg('orientation is null');
     }
 
-    if (
-      NodeType.isOriented(type) &&
-      !NodeType.supportsOrientation(type, orientation)
-    ){
+    if (!NodeType.supportsOrientation(type, orientation)){
       return errorInvalidArg('Node Type ${NodeType.getName(type)} does not support orientation ${NodeOrientation.getName(orientation)}');
     }
     final game = player.game;
