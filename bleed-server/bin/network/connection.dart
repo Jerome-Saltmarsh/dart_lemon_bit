@@ -1,10 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
-import '../classes/node.dart';
 import '../common/gameobject_request.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
@@ -70,7 +71,7 @@ class Connection {
   }
 
   void onData(dynamic args) {
-    if (args is List<int>) {
+    if (args is Uint8List) {
       return handleClientRequestUpdate(args);
     }
     if (args is String) {
@@ -710,7 +711,7 @@ class Connection {
     }
   }
 
-  void handleClientRequestUpdate(List<int> args) {
+  void handleClientRequestUpdate(Uint8List args) {
     final player = _player;
 
     if (player == null) return errorPlayerNotFound();
