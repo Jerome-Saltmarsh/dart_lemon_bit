@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
+import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/players.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_health_bar.dart';
@@ -42,6 +43,9 @@ class GameRender {
   }
 
   void renderGame(Canvas canvas, Size size) {
+    /// particles are only on the ui and thus can update every frame
+    /// this makes them much smoother as they don't freeze
+    updateParticles();
     renderFrame.value++;
     interpolatePlayer();
     updateCameraMode();

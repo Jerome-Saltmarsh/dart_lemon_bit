@@ -174,6 +174,7 @@ class _GameState extends State<Game> {
                 height: engine.screen.height,
                 child: CustomPaint(
                     painter: _GamePainter(repaint: engine.drawFrame),
+                    /// Disable foreground painter if its not needed
                     foregroundPainter: _GameForegroundPainter(repaint: _foregroundFrame),
                 )
             );

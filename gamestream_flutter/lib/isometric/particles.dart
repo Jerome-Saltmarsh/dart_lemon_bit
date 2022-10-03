@@ -73,6 +73,7 @@ int _compareParticles(Particle a, Particle b) {
     return a.renderOrder > b.renderOrder ? 1 : -1;
 }
 
+/// do this during the draw call so that particles are smoother
 void updateParticles() {
   for(final particle in particles){
     _updateParticle(particle);

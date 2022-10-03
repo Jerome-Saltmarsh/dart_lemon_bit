@@ -4,6 +4,17 @@ import 'package:bleed_common/library.dart';
 
 import 'grid.dart';
 
+var gridNodeSrc0 = Float32List(0);
+var gridNodeSrc1 = Float32List(0);
+var gridNodeSrc2 = Float32List(0);
+var gridNodeSrc3 = Float32List(0);
+var gridNodeDst0 = Float32List(0);
+var gridNodeDst1 = Float32List(0);
+var gridNodeDst2 = Float32List(0);
+var gridNodeDst3 = Float32List(0);
+var gridNodeColor = Int32List(0);
+var gridNodeEmpty = List<bool>.generate(0, (index) => false);
+
 var gridNodeTypes = Uint8List(0);
 var gridNodeOrientations = Uint8List(0);
 var gridNodeShade = Uint8List(0);

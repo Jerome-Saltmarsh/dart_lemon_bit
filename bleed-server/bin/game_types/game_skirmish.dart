@@ -84,6 +84,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] melee weapons run out of rounds but only on hit
 /// [ ] custom websocket address
 /// [ ] custom websocket port
+/// [ ] fix player color flicker
 /// [ ] fix spawn node
 /// [x] fix dark-age controls
 /// [x] fix set node

@@ -29,7 +29,6 @@ void updateIsometric(){
   updateAnimationFrame();
   updateParticleEmitters();
   updateGameObjects();
-  updateParticles();
   updateProjectiles();
   updateRandomAudio();
   gridWindResetToAmbient();
