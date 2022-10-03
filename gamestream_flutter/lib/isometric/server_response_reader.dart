@@ -6,7 +6,6 @@ import 'package:bleed_common/environment_response.dart';
 import 'package:bleed_common/game_option.dart';
 import 'package:bleed_common/game_waves_response.dart';
 import 'package:bleed_common/library.dart';
-import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/quest.dart';
 import 'package:bleed_common/type_position.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
@@ -659,11 +658,8 @@ class ServerResponseReader with ByteReader {
     var currentColumn = 0;
 
     while (total < grandTotal) {
-      var nodeType = readByte();
-      var nodeOrientation = NodeOrientation.None;
-      if (NodeType.isOriented(nodeType)) {
-        nodeOrientation = readByte();
-      }
+      final nodeType = readByte();
+      final nodeOrientation = readByte();
       var count = readPositiveInt();
       total += count;
 

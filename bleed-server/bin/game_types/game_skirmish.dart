@@ -81,7 +81,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] draw punch sprite
 /// [ ] design mouse cursor
 /// [ ] melee weapons run out of rounds but only on hit
-/// [ ] fix save scene
+/// [x] fix save scene
 /// [x] refactor - remove node class from backend
 class GameSkirmish extends Game {
 

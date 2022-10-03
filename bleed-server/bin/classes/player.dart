@@ -17,7 +17,6 @@ import '../dark_age/game_dark_age_editor.dart';
 import '../utilities.dart';
 import 'gameobject.dart';
 import 'library.dart';
-import 'node.dart';
 import 'position3.dart';
 import 'rat.dart';
 import 'zombie.dart';
@@ -569,32 +568,26 @@ class Player extends Character with ByteWriter {
 
   void writeGrid() {
     writeByte(ServerResponse.Grid);
-    // final grid = game.scene.grid;
-    // final totalZ = grid.length;
-    // final totalRows = grid[0].length;
-    // final totalColumns = grid[0][0].length;
     writeInt(scene.gridHeight);
     writeInt(scene.gridRows);
     writeInt(scene.gridColumns);
     var previousType = scene.nodeTypes[0];
     var previousOrientation = scene.nodeOrientations[0];
     var count = 0;
+    final nodeTypes = scene.nodeTypes;
+    final nodeOrientations = scene.nodeOrientations;
     for (var z = 0; z < scene.gridHeight; z++){
       for (var row = 0; row < scene.gridRows; row++){
         for (var column = 0; column < scene.gridColumns; column++) {
           final nodeIndex = scene.getNodeIndex(z, row, column);
-          final nodeType = scene.nodeTypes[nodeIndex];
-          final nodeOrientation = scene.nodeOrientations[nodeIndex];
+          final nodeType = nodeTypes[nodeIndex];
+          final nodeOrientation = nodeOrientations[nodeIndex];
 
           if (nodeType == previousType && nodeOrientation == previousOrientation){
             count++;
           } else {
             writeByte(previousType);
-
-            if (NodeType.isOriented(previousType)){
-              writeByte(previousOrientation);
-            }
-
+            writeByte(previousOrientation);
             writePositiveInt(count);
             previousType = nodeType;
             previousOrientation = nodeOrientation;
@@ -605,9 +598,7 @@ class Player extends Character with ByteWriter {
     }
 
     writeByte(previousType);
-    if (NodeType.isOriented(previousType)){
-      writeByte(previousOrientation);
-    }
+    writeByte(previousOrientation);
     writePositiveInt(count);
   }
 
