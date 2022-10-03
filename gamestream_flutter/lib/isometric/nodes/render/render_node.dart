@@ -4,6 +4,7 @@ import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
+import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node_bau_haus.dart';
@@ -269,6 +270,16 @@ void renderNodeAt(){
             color: color,
           );
       }
+      break;
+    case NodeType.Spawn:
+      if (playMode) return;
+      renderStandardNode(
+        dstX: renderNodeDstX,
+        dstY: renderNodeDstY,
+        srcX: AtlasSrc.Node_Spawn,
+        srcY: 0,
+      );
+      break;
   }
 }
 
