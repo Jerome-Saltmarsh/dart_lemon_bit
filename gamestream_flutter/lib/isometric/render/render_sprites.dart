@@ -75,11 +75,8 @@ void renderSprites() {
   resetRenderOrder(renderOrderParticle);
   resetRenderOrder(renderOrderProjectiles);
 
-  remaining = totalRemaining > 0;
-
-  while (remaining) {
+  while (true) {
     final next = getNextRenderOrder();
-
     if (!next.remaining) return;
 
     if (totalRemaining == 1){
@@ -89,9 +86,10 @@ void renderSprites() {
       return;
     }
 
-    if (next.renderNext()) continue;
-    totalRemaining--;
-    remaining = totalRemaining > 0;
+    next.renderNext();
+    if (!next.remaining){
+      totalRemaining--;
+    }
   }
 }
 
@@ -569,16 +567,14 @@ abstract class RenderOrder {
      remaining = false;
   }
 
-  bool renderNext() {
+  void renderNext() {
     assert(remaining);
     renderFunction();
     _index = (_index + 1);
     remaining = _index < total;
     if (remaining) {
       updateFunction();
-      return true;
     }
-    return false;
   }
 }
 
