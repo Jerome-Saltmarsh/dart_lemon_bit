@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:lemon_math/library.dart';
 
 import '../common/attack_state.dart';
-import '../common/control_scheme.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
 import '../common/node_orientation.dart';
@@ -139,36 +138,43 @@ abstract class Game {
     required double screenRight,
     required double screenBottom,
   }) {
-    switch(controlScheme) {
-      case ControlScheme.schemeA:
-         return handlePlayerControlSchemeA(
-             player: player,
-             direction: direction,
-             perform1: perform1,
-             perform2: perform2,
-             perform3: perform3,
-             mouseX: mouseX,
-             mouseY: mouseY,
-             screenLeft: screenLeft,
-             screenTop: screenTop,
-             screenRight: screenRight,
-             screenBottom: screenBottom,
-         );
-      case ControlScheme.schemeB:
-        return handlePlayerControlSchemeB(
-          player: player,
-          direction: direction,
-          perform1: perform1,
-          perform2: perform2,
-          perform3: perform3,
-          mouseX: mouseX,
-          mouseY: mouseY,
-          screenLeft: screenLeft,
-          screenTop: screenTop,
-          screenRight: screenRight,
-          screenBottom: screenBottom,
-        );
+    player.framesSinceClientRequest = 0;
+    player.screenLeft = screenLeft;
+    player.screenTop = screenTop;
+    player.screenRight = screenRight;
+    player.screenBottom = screenBottom;
+    player.mouse.x = mouseX;
+    player.mouse.y = mouseY;
+
+    if (player.deadOrBusy) return;
+
+    playerRunInDirection(player, direction);
+    playerUpdateAimTarget(player);
+
+    final weapon = player.weapon;
+
+    if (weapon.durationRemaining > 0) return;
+    weapon.state = AttackState.Aiming;
+
+    if (perform1) {
+      playerUseWeapon(player, weapon);
+      player.writePlayerWeaponRounds();
+
+      if (weapon.requiresRounds) {
+        if (weapon.rounds == 0) {
+          playerSetWeapon(player, buildWeaponUnarmed());
+        }
+      }
     }
+  }
+
+  void playerSetWeapon(Player player, Weapon weapon){
+    player.weapon.spawn = null;
+    player.weapon = weapon;
+    player.writePlayerWeaponType();
+    player.writePlayerWeaponRounds();
+    player.writePlayerWeaponCapacity();
+    player.writePlayerEventItemEquipped(player.weapon.type);
   }
 
   void handlePlayerControlSchemeA({

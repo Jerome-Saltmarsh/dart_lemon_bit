@@ -99,8 +99,9 @@ void renderCharacterWeaponBlade(Character character) {
   );
 }
 
-void renderCharacterTemplateWithoutWeapon(Character character,
-    {bool renderHealthBar = true}) {
+void renderCharacterTemplate(Character character,
+    {bool renderHealthBar = true}
+) {
   assert(character.direction >= 0);
   assert(character.direction < 8);
   if (character.deadOrDying) return;
@@ -112,128 +113,25 @@ void renderCharacterTemplateWithoutWeapon(Character character,
   // renderText(text: '${character.renderDirection}', x: character.renderX, y: character.renderY - 100);
   // renderText(text: '${character.aimAngle.toStringAsFixed(3)}', x: character.renderX, y: character.renderY - 75);
 
-  renderCharacterTemplate(character);
-}
-
-void renderCharacterTemplateWithWeapon(Character character,
-    {bool renderHealthBar = true}) {
-  assert(character.direction >= 0);
-  assert(character.direction < 8);
-
-  if (character.deadOrDying) return;
-
-  if (renderHealthBar) {
-    renderCharacterHealthBar(character);
-  }
-
-  // renderArrow(character.x, character.y, character.z, character.aimAngle);
-  // renderText(text: '${character.aimDirection}', x: character.renderX, y: character.renderY - 100);
-
-  final weaponType = character.weapon;
-  final direction = character.direction;
-  // final color = colorShades[character.tileBelow.shade];
-
-  if (weaponType == AttackType.Bow || weaponType == AttackType.Shotgun) {
-    if (direction == Direction.North_West ||
-        direction == Direction.North ||
-        direction == Direction.North_East ||
-        direction == Direction.East) {
-      renderCharacterTemplateWeapon(character);
-      renderCharacterTemplate(character);
-    } else {
-      renderCharacterTemplate(character);
-      renderCharacterTemplateWeapon(character);
-    }
-    return;
-  }
-
-  if (AttackType.isMelee(weaponType)) {
-    if (direction == Direction.North_East ||
-        direction == Direction.North ||
-        direction == Direction.North_West ||
-        direction == Direction.West ||
-        direction == Direction.South_West) {
-      renderCharacterTemplateWeapon(character);
-      renderCharacterTemplate(character);
-    } else {
-      renderCharacterTemplate(character);
-      renderCharacterTemplateWeapon(character);
-    }
-    return;
-  }
-  renderCharacterTemplate(character);
-  renderCharacterTemplateWeapon(character);
-}
-
-void renderCharacterTemplate(Character character) {
-
   final inLongGrass = gridNodeTypeAtVector3(character) == NodeType.Grass_Long;
 
-    if (!inLongGrass) {
-      renderCharacterTemplateShadow(character);
-    }
-
-    final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
-    final weaponInFront = character.renderDirection >= 2 && character.renderDirection < 6;
-
-    // renderText(text: '$diff', x: character.renderX, y: character.renderY - 100);
-
-    /// If the the player is running backwards to the direction they are aiming
-    /// render the player to run backwards
-    if (diff >= 3 && character.running) {
-      final renderDirectionOpposite = (character.renderDirection + 4) % 8;
-
-      if (weaponInFront) {
-        renderCharacterTemplateWeapon2(character, renderDirectionOpposite);
-      }
-
-      if (!inLongGrass){
-        renderCharacterTemplatePartCustom(
-          layer: mapToLayerLegs(character.legs),
-          variation: false,
-          renderX: character.renderX,
-          renderY: character.renderY,
-          state: character.state,
-          frame: character.frame,
-          direction: renderDirectionOpposite,
-          color: character.color,
-          weapon: character.weapon,
-        );
-      }
-
-      renderCharacterTemplatePartCustom(
-        layer: mapToLayerBody(character.body),
-        variation: getVariation(character),
-        renderX: character.renderX,
-        renderY: character.renderY,
-        state: character.usingWeapon ? CharacterState.Performing : character.state,
-        frame: character.usingWeapon ? character.weaponFrame : character.frame,
-        direction: character.usingWeapon ? character.aimDirection : renderDirectionOpposite,
-        color: character.color,
-        weapon: character.weapon,
-      );
-
-      renderCharacterTemplatePartCustom(
-        layer: mapToLayerHead(character.head),
-        variation: getVariation(character),
-        renderX: character.renderX,
-        renderY: character.renderY,
-        state: character.usingWeapon ? CharacterState.Performing : character.state,
-        frame: character.usingWeapon ? character.weaponFrame : character.frame,
-        direction: character.aimDirection,
-        color: character.color,
-        weapon: character.weapon,
-      );
-
-      if (!weaponInFront) {
-        renderCharacterTemplateWeapon2(character, renderDirectionOpposite);
-      }
-      return;
-    }
-
-  if (!weaponInFront){
-    renderCharacterTemplateWeapon2(character, character.renderDirection);
+  if (!inLongGrass) {
+    renderCharacterTemplateShadow(character);
   }
+
+  final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
+  final weaponInFront = character.renderDirection >= 2 && character.renderDirection < 6;
+
+  // renderText(text: '$diff', x: character.renderX, y: character.renderY - 100);
+
+  /// If the the player is running backwards to the direction they are aiming
+  /// render the player to run backwards
+  if (diff >= 3 && character.running) {
+    final renderDirectionOpposite = (character.renderDirection + 4) % 8;
+
+    if (weaponInFront) {
+      renderCharacterTemplateWeapon2(character, renderDirectionOpposite);
+    }
 
     if (!inLongGrass){
       renderCharacterTemplatePartCustom(
@@ -243,11 +141,59 @@ void renderCharacterTemplate(Character character) {
         renderY: character.renderY,
         state: character.state,
         frame: character.frame,
-        direction: character.renderDirection,
+        direction: renderDirectionOpposite,
         color: character.color,
         weapon: character.weapon,
       );
     }
+
+    renderCharacterTemplatePartCustom(
+      layer: mapToLayerBody(character.body),
+      variation: getVariation(character),
+      renderX: character.renderX,
+      renderY: character.renderY,
+      state: character.usingWeapon ? CharacterState.Performing : character.state,
+      frame: character.usingWeapon ? character.weaponFrame : character.frame,
+      direction: character.usingWeapon ? character.aimDirection : renderDirectionOpposite,
+      color: character.color,
+      weapon: character.weapon,
+    );
+
+    renderCharacterTemplatePartCustom(
+      layer: mapToLayerHead(character.head),
+      variation: getVariation(character),
+      renderX: character.renderX,
+      renderY: character.renderY,
+      state: character.usingWeapon ? CharacterState.Performing : character.state,
+      frame: character.usingWeapon ? character.weaponFrame : character.frame,
+      direction: character.aimDirection,
+      color: character.color,
+      weapon: character.weapon,
+    );
+
+    if (!weaponInFront) {
+      renderCharacterTemplateWeapon2(character, renderDirectionOpposite);
+    }
+    return;
+  }
+
+  if (!weaponInFront){
+    renderCharacterTemplateWeapon2(character, character.renderDirection);
+  }
+
+  if (!inLongGrass){
+    renderCharacterTemplatePartCustom(
+      layer: mapToLayerLegs(character.legs),
+      variation: false,
+      renderX: character.renderX,
+      renderY: character.renderY,
+      state: character.state,
+      frame: character.frame,
+      direction: character.renderDirection,
+      color: character.color,
+      weapon: character.weapon,
+    );
+  }
 
   renderCharacterTemplatePartCustom(
     layer: mapToLayerBody(character.body),
@@ -276,8 +222,8 @@ void renderCharacterTemplate(Character character) {
   if (weaponInFront){
     renderCharacterTemplateWeapon2(character,  character.renderDirection);
   }
-
 }
+
 
 void renderCharacterTemplateWeapon2(Character character, int direction){
   if (character.weapon == AttackType.Unarmed) return;

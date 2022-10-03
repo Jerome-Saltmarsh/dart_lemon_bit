@@ -83,8 +83,9 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] melee weapons run out of rounds but only on hit
 /// [ ] custom websocket address
 /// [ ] custom websocket port
-/// [ ] fix dark-age controls
-/// [ ] fix set node
+/// [ ] fix spawn node
+/// [x] fix dark-age controls
+/// [x] fix set node
 /// [x] fix rain falling color
 /// [x] grass with flowers
 /// [x] NodeOrientation: Radial
@@ -209,16 +210,6 @@ class GameSkirmish extends Game {
 
       if (weapon.requiresRounds) {
          if (weapon.rounds == 0) {
-           if (weapon.spawn != null){
-              final spawn = weapon.spawn;
-              if (spawn is GameObjectWeapon){
-                final spawnSpawn = spawn.spawn;
-                  // if (spawnSpawn is NodeSpawn){
-                  //   spawnNodeInstance(spawnSpawn);
-                  // }
-
-              }
-           }
             playerSetWeapon(player, buildWeaponUnarmed());
          }
       }

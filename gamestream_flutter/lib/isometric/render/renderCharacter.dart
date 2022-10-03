@@ -52,19 +52,7 @@ void renderCharacter(Character character){
 
   switch (character.type) {
     case CharacterType.Template:
-      if (renderTemplateWithWeapon){
-        renderCharacterTemplateWithWeapon(character);
-      } else {
-        final aimDirection = character.aimDirection;
-        final weaponInFront = aimDirection >= 2 && aimDirection <= 6;
-        if (!weaponInFront) {
-          // renderCharacterWeapon(character);
-        }
-        renderCharacterTemplateWithoutWeapon(character);
-        if (weaponInFront) {
-          // renderCharacterWeapon(character);
-        }
-      }
+      renderCharacterTemplate(character);
       return;
     case CharacterType.Slime:
       return renderCharacterSlime(character);
