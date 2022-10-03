@@ -84,6 +84,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] custom websocket address
 /// [ ] custom websocket port
 /// [ ] fix set node
+/// [x] grass with flowers
 /// [x] NodeOrientation: Radial
 /// [x] fix save scene
 /// [x] refactor - remove node class from backend

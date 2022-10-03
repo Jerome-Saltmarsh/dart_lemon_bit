@@ -10,6 +10,7 @@ var gridNodeShade = Uint8List(0);
 var gridNodeBake = Uint8List(0);
 var gridNodeWind = Uint8List(0);
 var gridNodeVisible = <bool>[];
+var gridNodeVariation = <bool>[];
 var gridNodeTotal = 0;
 
 void gridNodeShadeSet(int index, int shade){

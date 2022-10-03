@@ -650,6 +650,7 @@ class ServerResponseReader with ByteReader {
     gridNodeShade = Uint8List(grandTotal);
     gridNodeBake = Uint8List(grandTotal);
     gridNodeWind = Uint8List(grandTotal);
+    gridNodeVariation = List.generate(grandTotal, (index) => false, growable: false);
     gridNodeVisible = List.generate(grandTotal, (index) => true, growable: false);
 
     var gridIndex = 0;
@@ -666,6 +667,11 @@ class ServerResponseReader with ByteReader {
       while (count > 0) {
         gridNodeTypes[gridIndex] = nodeType;
         gridNodeOrientations[gridIndex] = nodeOrientation;
+
+        if (nodeType == NodeType.Grass) {
+          gridNodeVariation[gridIndex] = randomBool();
+        }
+
         gridIndex++;
         count--;
         currentColumn++;

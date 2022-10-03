@@ -283,7 +283,7 @@ void renderNodeTypeGrass({
       return renderStandardNode(
           dstX: x,
           dstY: y,
-          srcX: AtlasSrc.Node_Grass,
+          srcX: gridNodeVariation[renderNodeIndex] ? AtlasSrc.Node_Grass : AtlasSrc.Node_Grass_Flowers,
           srcY: spriteHeight * shade,
       );
     case NodeOrientation.Slope_North:
