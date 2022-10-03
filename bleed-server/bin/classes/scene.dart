@@ -7,7 +7,6 @@ import 'ai.dart';
 import 'character.dart';
 import 'game.dart';
 import 'gameobject.dart';
-import 'node.dart';
 
 class Scene {
   late Uint8List nodeTypes;
@@ -110,117 +109,6 @@ class Scene {
     x < gridRowLength &&
     y < gridColumnLength;
 
-  // bool visitDirection(int direction, Node from) {
-  //   if (direction == Direction.North_West && !from.up.open && !from.left.open) return false;
-  //   if (direction == Direction.South_West && !from.down.open && !from.left.open) return false;
-  //   if (direction == Direction.South_East && !from.down.open && !from.right.open) return false;
-  //   if (direction == Direction.North_East && !from.up.open && !from.right.open) return false;
-  //   return visitNode(from.getNodeByDirection(direction), from);
-  // }
-
-  // bool visitNodeFirst(Node node){
-  //   node.depth = 0;
-  //   node.previous = null;
-  //   node.searchId = pathFindSearchID;
-  //
-  //   if (!node.open) {
-  //     return false;
-  //   }
-  //
-  //   if (node.depth == 50 || node == pathFindDestination) {
-  //     var current = node.previous;
-  //     final pathX = pathFindAI.pathX;
-  //     final pathY = pathFindAI.pathY;
-  //     var index = 0;
-  //     while (current != null) {
-  //       pathX[index] = current.x;
-  //       pathY[index] = current.y;
-  //       current = current.previous;
-  //       index++;
-  //     }
-  //     pathFindAI.pathIndex = index - 2;
-  //     return true;
-  //   }
-  //
-  //   final direction = parseRowsAndColumnsToDirection(
-  //     pathFindDestination.row - node.row,
-  //     pathFindDestination.column - node.column,
-  //   );
-  //   node.reserveSurroundingNodes();
-  //
-  //   if (visitDirection(direction, node)) return true;
-  //
-  //   final directionIndex = direction;
-  //
-  //   for (var i = 1; i < 4; i++) {
-  //     final leftDirection = clampDirection(directionIndex - i);
-  //     if (visitDirection(leftDirection, node)) {
-  //       return true;
-  //     }
-  //     final rightDirection = clampDirection(directionIndex + i);
-  //     if (visitDirection(rightDirection, node)) {
-  //       return true;
-  //     }
-  //   }
-  //
-  //   final directionBehind = clampDirection(directionIndex + 4);
-  //   return visitDirection(directionBehind, node);
-  // }
-
-  // bool visitNode(Node node, Node previous) {
-  //   if (!node.visitable) return false;
-  //
-  //   if (node.reserveId == pathFindSearchID){
-  //     if (node.reserved != previous){
-  //       return visitNode(node, node.reserved!);
-  //     }
-  //   }
-  //
-  //   node.depth = previous.depth + 1;
-  //
-  //   node.previous = previous;
-  //   node.searchId = pathFindSearchID;
-  //
-  //   if (node.depth == 60 || node == pathFindDestination) {
-  //     var current = node.previous;
-  //     final pathX = pathFindAI.pathX;
-  //     final pathY = pathFindAI.pathY;
-  //     var index = 0;
-  //     while (current != null) {
-  //       pathX[index] = current.x;
-  //       pathY[index] = current.y;
-  //       current = current.previous;
-  //       index++;
-  //     }
-  //     pathFindAI.pathIndex = index - 2;
-  //     return true;
-  //   }
-  //
-  //   final direction = parseRowsAndColumnsToDirection(
-  //     pathFindDestination.row - node.row,
-  //     pathFindDestination.column - node.column,
-  //   );
-  //   node.reserveSurroundingNodes();
-  //
-  //   if (visitDirection(direction, node)) return true;
-  //
-  //   final directionIndex = direction;
-  //
-  //   for (var i = 1; i < 4; i++) {
-  //     final leftDirection = clampDirection(directionIndex - i);
-  //     if (visitDirection(leftDirection, node)) {
-  //       return true;
-  //     }
-  //     final rightDirection = clampDirection(directionIndex + i);
-  //     if (visitDirection(rightDirection, node)) {
-  //       return true;
-  //     }
-  //   }
-  //
-  //   final directionBehind = clampDirection(directionIndex + 4);
-  //   return visitDirection(directionBehind, node);
-  // }
-
   bool getCollisionAt(double x, double y, double z) {
      if (x < 0) return true;
      if (y < 0) return true;
@@ -256,11 +144,14 @@ class Scene {
       character.y += distance;
     }
 
-
     if (getNodeInBoundsXYZ(character.x, character.y, character.z)) {
       final nodeAtFeetIndex = getNodeIndexXYZ(character.x, character.y, character.z);
       final nodeAtFeetOrientation = nodeOrientations[nodeAtFeetIndex];
 
+      if (nodeAtFeetOrientation == NodeOrientation.Solid){
+        character.z = ((character.z ~/ tileHeight) * tileHeight) + tileHeight;
+        character.zVelocity = 0;
+      } else
       if (nodeAtFeetOrientation != NodeOrientation.None) {
         final bottom = (character.z ~/ tileHeight) * tileHeight;
         final percX = ((character.x % tileSize) / tileSize);
@@ -277,19 +168,9 @@ class Scene {
       }
     }
   }
-  //
-  // double getHeight(double x, double y, double z) {
-  //   final bottom = (z ~/ tileHeight) * tileHeight;
-  //   final percX = ((x % tileSize) / tileSize);
-  //   final percY = ((y % tileSize) / tileSize);
-  //   assert (percX >= 0 && percX <= 1);
-  //   assert (percY >= 0 && percY <= 1);
-  //   return bottom + (getGradient(percX, percY) * tileHeight);
-  // }
 }
 
 late AI pathFindAI;
-// late Node pathFindDestination;
 var pathFindSearchID = 0;
 
 

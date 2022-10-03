@@ -43,14 +43,6 @@ class NodeType {
   static const Spawn = 71;
   static const Respawning = 72;
 
-  // static bool isOriented(int value) =>
-  //   isSolid(value) ||
-  //   isHalf(value) ||
-  //   isCorner(value) ||
-  //   isSlopeCornerInner(value) ||
-  //   isSlopeCornerOuter(value) ||
-  //   isSlopeSymmetric(value) ;
-
   static bool isStrikable(int type) =>
     type == Grass ||
     type == Brick_2 ||
@@ -77,6 +69,8 @@ class NodeType {
 
   static bool isSolid(int type) =>
     type == Brick_2 ||
+    type == Soil ||
+    type == Stone ||
     type == Wood_2 ||
     type == Grass ||
     type == Plain ||
