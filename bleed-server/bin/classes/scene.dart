@@ -4,9 +4,10 @@ import '../common/library.dart';
 import '../common/node_orientation.dart';
 import '../common/node_size.dart';
 import 'ai.dart';
-import 'character.dart';
-import 'game.dart';
 import 'gameobject.dart';
+
+late AI pathFindAI;
+var pathFindSearchID = 0;
 
 class Scene {
   late Uint8List nodeTypes;
@@ -96,10 +97,15 @@ class Scene {
         y ~/ tileSize,
     );
 
-  int getNodeOrientationXYZ(double x, double y, double z) =>
-      getNodeInBoundsXYZ(x, y, z)
-          ? NodeOrientation.None
-          : nodeOrientations[getNodeIndexXYZ(x, y, z)];
+  int getNodeOrientationXYZ(double x, double y, double z){
+     if (x < 0) return NodeOrientation.Solid;
+     if (y < 0) return NodeOrientation.Solid;
+     if (z < 0) return NodeOrientation.None;
+     if (x > gridRowLength) return NodeOrientation.Solid;
+     if (y > gridColumnLength) return NodeOrientation.Solid;
+     if (z > gridHeightLength) return NodeOrientation.None;
+     return nodeOrientations[getNodeIndexXYZ(x, y, z)];
+  }
 
   bool getNodeInBoundsXYZ(double x, double y, double z) =>
     z >= 0 &&
@@ -113,66 +119,25 @@ class Scene {
      if (x < 0) return true;
      if (y < 0) return true;
      if (z < 0) return false;
-     if (x > gridRowLength) return true;
-     if (y > gridColumnLength) return true;
-     if (z > gridHeightLength) return false;
-     return getNodeOrientationXYZ(x, y, z) != NodeOrientation.None;
+     if (x >= gridRowLength) return true;
+     if (y >= gridColumnLength) return true;
+     if (z >= gridHeightLength) return false;
+     final orientation = getNodeOrientationXYZ(x, y, z);
+     if (orientation == NodeOrientation.None) return false;
+     if (orientation == NodeOrientation.Solid) return true;
+     final bottom = (z ~/ tileHeight) * tileHeight;
+     final percX = ((x % tileSize) / tileSize);
+     final percY = ((y % tileSize) / tileSize);
+     return bottom + (getOrientationGradient(orientation, percX, percY) * nodeHeight) >= z;
   }
 
-  void resolveCharacterTileCollision(Character character, Game game) {
-    character.z -= character.zVelocity;
-    character.zVelocity += 0.98;
-
-    const distance = 3;
-    final stepHeight = character.z + tileHeightHalf;
-
-    if (getCollisionAt(character.left, character.top, stepHeight)) {
-      character.x += distance;
-      character.y += distance;
-    }
-    else
-    if (getCollisionAt(character.right, character.bottom, stepHeight)) {
-      character.x -= distance;
-      character.y -= distance;
-    }
-    if (getCollisionAt(character.left, character.bottom, stepHeight)) {
-      character.x += distance;
-      character.y -= distance;
-    } else
-    if (getCollisionAt(character.right, character.top, stepHeight)) {
-      character.x -= distance;
-      character.y += distance;
-    }
-
-    if (getNodeInBoundsXYZ(character.x, character.y, character.z)) {
-      final nodeAtFeetIndex = getNodeIndexXYZ(character.x, character.y, character.z);
-      final nodeAtFeetOrientation = nodeOrientations[nodeAtFeetIndex];
-
-      if (nodeAtFeetOrientation == NodeOrientation.Solid){
-        character.z = ((character.z ~/ tileHeight) * tileHeight) + tileHeight;
-        character.zVelocity = 0;
-      } else
-      if (nodeAtFeetOrientation != NodeOrientation.None) {
-        final bottom = (character.z ~/ tileHeight) * tileHeight;
-        final percX = ((character.x % tileSize) / tileSize);
-        final percY = ((character.y % tileSize) / tileSize);
-        final nodeTop = bottom + (getOrientationGradient(nodeAtFeetOrientation, percX, percY) * nodeHeight);
-        if (nodeTop > character.z){
-          character.z = nodeTop;
-          character.zVelocity = 0;
-        }
-      }
-    } else {
-      if (character.z < -100){
-        game.setCharacterStateDead(character);
-      }
-    }
+  double getHeightAtXYZ(double x, double y, double z){
+    final bottom = (z ~/ tileHeight) * tileHeight;
+    final percX = ((x % tileSize) / tileSize);
+    final percY = ((y % tileSize) / tileSize);
+    return bottom + (getOrientationGradient(getNodeOrientationXYZ(x, y, z), percX, percY) * nodeHeight);
   }
 }
-
-late AI pathFindAI;
-var pathFindSearchID = 0;
-
 
 int parseRowsAndColumnsToDirection(int rows, int columns) {
   assert(rows != 0 || columns != 0);

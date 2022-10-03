@@ -7,6 +7,7 @@ import '../common/control_scheme.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
 import '../common/node_orientation.dart';
+import '../common/node_size.dart';
 import '../common/teams.dart';
 import '../engine.dart';
 import '../functions/withinRadius.dart';
@@ -1472,7 +1473,7 @@ abstract class Game {
     }
 
     updateCharacterMovement(character);
-    scene.resolveCharacterTileCollision(character, this);
+    resolveCharacterTileCollision(character);
     if (character.dying){
       if (character.stateDurationRemaining-- <= 0){
         setCharacterStateDead(character);
@@ -1554,8 +1555,11 @@ abstract class Game {
     character.stateDuration++;
   }
 
-
   void updateCharacterMovement(Character character) {
+    character.z -= character.zVelocity;
+    const gravity = 0.98;
+    character.zVelocity += gravity;
+
     const minVelocity = 0.005;
     if (character.velocitySpeed <= minVelocity) return;
 
@@ -2262,6 +2266,53 @@ abstract class Game {
         return buildWeaponHandgun();
       default:
         throw Exception("cannot build weapon for type $type");
+    }
+  }
+
+  void resolveCharacterTileCollision(Character character) {
+    const distance = 3;
+    final stepHeight = character.z + tileHeightHalf;
+
+    if (scene.getCollisionAt(character.left, character.top, stepHeight)) {
+      character.x += distance;
+      character.y += distance;
+    }
+    else
+    if (scene.getCollisionAt(character.right, character.bottom, stepHeight)) {
+      character.x -= distance;
+      character.y -= distance;
+    }
+    if (scene.getCollisionAt(character.left, character.bottom, stepHeight)) {
+      character.x += distance;
+      character.y -= distance;
+    } else
+    if (scene.getCollisionAt(character.right, character.top, stepHeight)) {
+      character.x -= distance;
+      character.y += distance;
+    }
+
+    if (scene.getNodeInBoundsXYZ(character.x, character.y, character.z)) {
+      final nodeAtFeetIndex = scene.getNodeIndexXYZ(character.x, character.y, character.z);
+      final nodeAtFeetOrientation = scene.nodeOrientations[nodeAtFeetIndex];
+
+      if (nodeAtFeetOrientation == NodeOrientation.Solid){
+        character.z = ((character.z ~/ tileHeight) * tileHeight) + tileHeight;
+        character.zVelocity = 0;
+      } else
+      if (nodeAtFeetOrientation != NodeOrientation.None) {
+        final bottom = (character.z ~/ tileHeight) * tileHeight;
+        final percX = ((character.x % tileSize) / tileSize);
+        final percY = ((character.y % tileSize) / tileSize);
+        final nodeTop = bottom + (getOrientationGradient(nodeAtFeetOrientation, percX, percY) * nodeHeight);
+        if (nodeTop > character.z){
+          character.z = nodeTop;
+          character.zVelocity = 0;
+        }
+      }
+    } else {
+      if (character.z < -100){
+        setCharacterStateDead(character);
+      }
     }
   }
 }
