@@ -79,16 +79,17 @@ void renderSprites() {
     final next = getNextRenderOrder();
     if (!next.remaining) return;
 
-    if (totalRemaining == 1){
-      while (next.remaining){
-        next.renderNext();
-      }
-      return;
-    }
-
     next.renderNext();
     if (!next.remaining){
       totalRemaining--;
+      if (totalRemaining == 1){
+        if (renderOrderGrid.remaining){
+           while(renderOrderGrid.remaining){
+             renderOrderGrid.renderNext();
+           }
+        }
+        return;
+      }
     }
   }
 }
