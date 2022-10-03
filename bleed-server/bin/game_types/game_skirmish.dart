@@ -7,6 +7,7 @@ import '../classes/library.dart';
 import '../common/attack_state.dart';
 import '../common/control_scheme.dart';
 import '../common/library.dart';
+import '../common/node_size.dart';
 import '../functions/move_player_to_crystal.dart';
 
 /// a very simple game
@@ -102,7 +103,25 @@ class GameSkirmish extends Game {
   int get gameType => GameType.Skirmish;
 
   GameSkirmish({required Scene scene}) : super(scene) {
-     // foreachNodeSpawn(spawnNodeInstance);
+
+    for (var i = 0; i <scene.gridVolume; i++){
+        if (scene.nodeTypes[i] == NodeType.Spawn){
+          final indexZ = i ~/ scene.gridArea;
+          var remainder = i - (indexZ * scene.gridArea);
+          final indexRow = remainder ~/ scene.gridColumns;
+          remainder -= indexRow * scene.gridColumns;
+          final indexColumn = remainder;
+           spawnZombie(
+               x: indexRow * nodeSize,
+               y: indexColumn * nodeSize,
+               z: indexZ * nodeHeight,
+               health: 3,
+               team: 100,
+               damage: 1,
+           );
+        }
+    }
+
   }
 
   @override
