@@ -150,6 +150,10 @@ class NodeType {
 
   static bool supportsOrientation(int type, int orientation){
 
+    if (type == NodeType.Empty) {
+      return orientation == NodeOrientation.None;
+    }
+
     if (NodeOrientation.isSolid(orientation))
       return isSolid(type);
 

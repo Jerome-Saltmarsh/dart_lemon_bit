@@ -25,10 +25,15 @@ Scene convertJsonToScene(Json json, String name) {
 
   for(var i = 0; i < total; i++){
     assert (nodeTypesDynamic.length == total);
-    types[i] = nodeTypesDynamic[i];
-    orientations[i] = nodeOrientations[i];
+    final nodeType = nodeTypesDynamic[i];
+    final nodeOrientation = nodeOrientations[i];
+    types[i] = nodeType;
+    if (NodeType.supportsOrientation(nodeType, nodeOrientation)){
+      orientations[i] = nodeOrientation;
+    } else {
+      orientations[i] = NodeType.getDefaultOrientation(nodeType);
+    }
   }
-
   return Scene(
     name: name,
     nodeOrientations: orientations,
