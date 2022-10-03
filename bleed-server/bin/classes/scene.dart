@@ -289,7 +289,7 @@ class Scene {
 }
 
 late AI pathFindAI;
-late Node pathFindDestination;
+// late Node pathFindDestination;
 var pathFindSearchID = 0;
 
 

@@ -26,8 +26,6 @@ import '../io/convert_json_to_scene.dart';
 import '../io/convert_scene_to_json.dart';
 import '../io/save_directory.dart';
 import '../io/write_scene_to_file.dart';
-import '../isometric/generate_grid_z.dart';
-import '../isometric/generate_node.dart';
 import '../utilities/is_valid_index.dart';
 
 class Connection {

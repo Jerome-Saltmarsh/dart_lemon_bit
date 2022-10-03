@@ -6,15 +6,11 @@ import 'package:typedef/json.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
-import '../classes/node.dart';
 import '../common/game_object_type.dart';
-import '../common/node_orientation.dart';
 import '../common/node_type.dart';
-import '../isometric/generate_node.dart';
 
-Scene convertStringToScene(String value, String name){
-  return convertJsonToScene(jsonDecode(value), name);
-}
+Scene convertStringToScene(String value, String name) =>
+  convertJsonToScene(jsonDecode(value), name);
 
 Scene convertJsonToScene(Json json, String name) {
   final height = json.getInt('grid-z');
@@ -190,67 +186,67 @@ NodeGrid convertFlatGridToNodeGrid(List<dynamic> flatGrid, int height, int rows,
 }
 
 
-List<List<List<Node>>> convertFlatGridToGrid(List<dynamic> flatGrid, int height, int rows, int columns){
-  var index = 0;
-
-  final nodeVolume = height * rows * columns;
-  final nodeTypes = Uint8List(nodeVolume);
-  final nodeOrientations = Uint8List(nodeVolume);
-  var nodeIndex = 0;
-
-  for (var flatGridIndex = 0; flatGridIndex < flatGrid.length; flatGridIndex++){
-     final nodeType = flatGrid[flatGridIndex];
-     nodeTypes[nodeIndex] = nodeType;
-
-     if (NodeType.isOriented(nodeType)){
-        flatGridIndex++;
-        final nodeOrientation = flatGrid[flatGridIndex];
-        nodeOrientations[nodeIndex] =
-          NodeType.supportsOrientation(nodeType, nodeOrientation)
-            ? nodeOrientation
-            : NodeType.getDefaultOrientation(nodeType);
-        nodeIndex++;
-        continue;
-     }
-
-     if (nodeType == NodeType.Spawn){
-        flatGridIndex++;
-        final spawnType = flatGrid[flatGridIndex];
-        flatGridIndex++;
-        final spawnAmount = flatGrid[flatGridIndex];
-        flatGridIndex++;
-        final spawnRadius = flatGrid[flatGridIndex];
-     }
-     nodeIndex++;
-  }
-
-  return List.generate(height, (zIndex) =>
-    List.generate(rows, (rowIndex) =>
-      List.generate(columns, (columnIndex){
-
-        final node = generateNode(flatGrid[index]);
-        if (node is NodeOriented){
-          index++;
-          node.orientation = flatGrid[index];
-
-          if (node.orientation == NodeOrientation.None) {
-             node.orientation = NodeType.getDefaultOrientation(node.type);
-          }
-        }
-        if (node is NodeSpawn) {
-           index++;
-           node.spawnType = flatGrid[index];
-           index++;
-           node.spawnAmount = flatGrid[index];
-           index++;
-           node.spawnRadius = (flatGrid[index] as int).toDouble();
-           node.indexZ = zIndex;
-           node.indexRow = rowIndex;
-           node.indexColumn = columnIndex;
-        }
-        index++;
-        return node;
-      }, growable: false)
-   , growable: false)
-  , growable: false);
-}
+// List<List<List<Node>>> convertFlatGridToGrid(List<dynamic> flatGrid, int height, int rows, int columns){
+//   var index = 0;
+//
+//   final nodeVolume = height * rows * columns;
+//   final nodeTypes = Uint8List(nodeVolume);
+//   final nodeOrientations = Uint8List(nodeVolume);
+//   var nodeIndex = 0;
+//
+//   for (var flatGridIndex = 0; flatGridIndex < flatGrid.length; flatGridIndex++){
+//      final nodeType = flatGrid[flatGridIndex];
+//      nodeTypes[nodeIndex] = nodeType;
+//
+//      if (NodeType.isOriented(nodeType)){
+//         flatGridIndex++;
+//         final nodeOrientation = flatGrid[flatGridIndex];
+//         nodeOrientations[nodeIndex] =
+//           NodeType.supportsOrientation(nodeType, nodeOrientation)
+//             ? nodeOrientation
+//             : NodeType.getDefaultOrientation(nodeType);
+//         nodeIndex++;
+//         continue;
+//      }
+//
+//      if (nodeType == NodeType.Spawn){
+//         flatGridIndex++;
+//         final spawnType = flatGrid[flatGridIndex];
+//         flatGridIndex++;
+//         final spawnAmount = flatGrid[flatGridIndex];
+//         flatGridIndex++;
+//         final spawnRadius = flatGrid[flatGridIndex];
+//      }
+//      nodeIndex++;
+//   }
+//
+//   return List.generate(height, (zIndex) =>
+//     List.generate(rows, (rowIndex) =>
+//       List.generate(columns, (columnIndex){
+//
+//         final node = generateNode(flatGrid[index]);
+//         if (node is NodeOriented){
+//           index++;
+//           node.orientation = flatGrid[index];
+//
+//           if (node.orientation == NodeOrientation.None) {
+//              node.orientation = NodeType.getDefaultOrientation(node.type);
+//           }
+//         }
+//         if (node is NodeSpawn) {
+//            index++;
+//            node.spawnType = flatGrid[index];
+//            index++;
+//            node.spawnAmount = flatGrid[index];
+//            index++;
+//            node.spawnRadius = (flatGrid[index] as int).toDouble();
+//            node.indexZ = zIndex;
+//            node.indexRow = rowIndex;
+//            node.indexColumn = columnIndex;
+//         }
+//         index++;
+//         return node;
+//       }, growable: false)
+//    , growable: false)
+//   , growable: false);
+// }

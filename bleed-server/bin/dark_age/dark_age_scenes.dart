@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import '../classes/library.dart';
 import '../io/load_scene.dart';
-import '../isometric/generate_empty_grid.dart';
 
 final darkAgeScenes = DarkAgeScenes();
 

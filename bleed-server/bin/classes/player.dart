@@ -611,12 +611,12 @@ class Player extends Character with ByteWriter {
     writePositiveInt(count);
   }
 
-  void writeNodeData(NodeSpawn node){
-    writeByte(ServerResponse.Node_Data);
-    writeByte(node.spawnType);
-    writeInt(node.spawnAmount);
-    writeInt(node.spawnRadius);
-  }
+  // void writeNodeData(NodeSpawn node){
+  //   writeByte(ServerResponse.Node_Data);
+  //   writeByte(node.spawnType);
+  //   writeInt(node.spawnAmount);
+  //   writeInt(node.spawnRadius);
+  // }
 
   void writePlayerWeapons(){
     writeByte(ServerResponse.Player_Weapons);

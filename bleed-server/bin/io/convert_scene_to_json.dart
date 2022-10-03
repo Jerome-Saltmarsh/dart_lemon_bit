@@ -10,9 +10,8 @@ import '../common/node_type.dart';
 import 'convert_gameobject_to_json.dart';
 
 
-String convertSceneToString(Scene scene) {
-   return jsonEncode(convertSceneToJson(scene));
-}
+String convertSceneToString(Scene scene) =>
+   jsonEncode(convertSceneToJson(scene));
 
 Json convertSceneToJson(Scene scene) {
   final json = Json();
@@ -26,64 +25,4 @@ Json convertSceneToJson(Scene scene) {
       .map(convertGameObjectToJson)
       .toList();
   return json;
-}
-
-List<int> convertNodesToByteArray(List<List<List<Node>>> nodes) {
-  final bytes = <int>[];
-  for (final z in nodes) {
-    for (final row in z) {
-      for (final node in row) {
-
-        if (node.type == NodeType.Roof_Tile_North) {
-          bytes.add(NodeType.Cottage_Roof);
-          bytes.add(NodeOrientation.Slope_North);
-          continue;
-        }
-
-        if (node.type == NodeType.Bau_Haus) {
-          bytes.add(NodeType.Bau_Haus_2);
-          bytes.add(NodeOrientation.Solid);
-          continue;
-        }
-
-        if (node.type == NodeType.Grass_Flowers) {
-          bytes.add(NodeType.Grass);
-          bytes.add(NodeOrientation.Solid);
-          continue;
-        }
-
-        if (node is NodeSpawn) {
-          bytes.add(NodeType.Spawn);
-          bytes.add(node.spawnType);
-          bytes.add(node.spawnAmount);
-          bytes.add(node.spawnRadius.toInt());
-          continue;
-        }
-
-        if (node.type == NodeType.Roof_Tile_South) {
-          bytes.add(NodeType.Cottage_Roof);
-          bytes.add(NodeOrientation.Slope_South);
-          continue;
-        }
-
-        if (node.type == NodeType.Bau_Haus_Plain){
-          bytes.add(NodeType.Plain);
-          bytes.add(NodeOrientation.Solid);
-          continue;
-        }
-
-        if (node.type == NodeType.Water_Flowing) {
-          bytes.add(NodeType.Water);
-          continue;
-        }
-
-        bytes.add(node.type);
-
-        if (node is NodeOriented) {
-          bytes.add(node.orientation);
-        }
-      }
-    }
-  }
-  return bytes;
 }

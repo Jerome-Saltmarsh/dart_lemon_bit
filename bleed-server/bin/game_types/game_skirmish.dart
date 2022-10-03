@@ -206,9 +206,9 @@ class GameSkirmish extends Game {
               final spawn = weapon.spawn;
               if (spawn is GameObjectWeapon){
                 final spawnSpawn = spawn.spawn;
-                  if (spawnSpawn is NodeSpawn){
-                    spawnNodeInstance(spawnSpawn);
-                  }
+                  // if (spawnSpawn is NodeSpawn){
+                  //   spawnNodeInstance(spawnSpawn);
+                  // }
 
               }
            }

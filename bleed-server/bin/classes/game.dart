@@ -7,22 +7,18 @@ import '../common/control_scheme.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
 import '../common/node_orientation.dart';
-import '../common/spawn_type.dart';
 import '../common/teams.dart';
 import '../engine.dart';
 import '../functions/withinRadius.dart';
 import '../io/write_scene_to_file.dart';
-import '../isometric/generate_node.dart';
 import '../maths.dart';
 import '../physics.dart';
 import 'action.dart';
 import 'ai.dart';
-import 'ai_slime.dart';
 import 'character.dart';
 import 'collider.dart';
 import 'components.dart';
 import 'gameobject.dart';
-import 'node.dart';
 import 'npc.dart';
 import 'player.dart';
 import 'position3.dart';
@@ -1115,26 +1111,26 @@ abstract class Game {
     // }
   }
 
-  void nodeSpawnInstancesClear(NodeSpawn node) {
-    for (var i = 0; i < characters.length; i++){
-      final character = characters[i];
-      if (character.spawn != node) continue;
-      removeInstance(character);
-      i--;
-    }
-    for (var i = 0; i < gameObjects.length; i++){
-      final gameObject = gameObjects[i];
-      if (gameObject.spawn != node) continue;
-      removeInstance(gameObject);
-      i--;
-    }
-  }
+  // void nodeSpawnInstancesClear(NodeSpawn node) {
+  //   for (var i = 0; i < characters.length; i++){
+  //     final character = characters[i];
+  //     if (character.spawn != node) continue;
+  //     removeInstance(character);
+  //     i--;
+  //   }
+  //   for (var i = 0; i < gameObjects.length; i++){
+  //     final gameObject = gameObjects[i];
+  //     if (gameObject.spawn != node) continue;
+  //     removeInstance(gameObject);
+  //     i--;
+  //   }
+  // }
 
-  void nodeSpawnInstancesCreate(NodeSpawn node) {
-    for (var i = 0; i < node.spawnAmount; i++){
-      spawnNodeInstance(node);
-    }
-  }
+  // void nodeSpawnInstancesCreate(NodeSpawn node) {
+  //   for (var i = 0; i < node.spawnAmount; i++){
+  //     spawnNodeInstance(node);
+  //   }
+  // }
 
   void removeInstance(dynamic instance) {
     if (instance == null) return;
@@ -1285,118 +1281,118 @@ abstract class Game {
     }
   }
 
-  void spawnNodeInstance(NodeSpawn node) {
-    final distance = randomBetween(0, node.spawnRadius);
-    final angle = randomAngle();
-    final x = getAdjacent(angle, distance);
-    final y = getOpposite(angle, distance);
-
-    final radius = node.spawnRadius;
-
-    switch (node.spawnType) {
-      case SpawnType.Chicken:
-        final instance =
-        GameObjectChicken(x: node.x + x, y: node.y + y, z: node.z);
-        instance.wanderRadius = radius;
-        instance.spawn = node;
-        gameObjects.add(instance);
-
-        return;
-      case SpawnType.Jellyfish:
-        final instance =
-        GameObjectJellyfish(x: node.x + x, y: node.y + y, z: node.z);
-        instance.spawn = node;
-        gameObjects.add(instance);
-        return;
-      case SpawnType.Jellyfish_Red:
-        final instance =
-        GameObjectJellyfishRed(x: node.x + x, y: node.y + y, z: node.z);
-        instance.spawn = node;
-        gameObjects.add(instance);
-        return;
-      case SpawnType.Rat:
-        final instance = Rat(
-          z: node.indexZ,
-          row: node.indexRow,
-          column: node.indexColumn,
-          game: this,
-          team: Teams.evil,
-        );
-        instance.wanderRadius = node.spawnRadius;
-        instance.spawn = node;
-        characters.add(instance);
-        break;
-      case SpawnType.Butterfly:
-        final instance =
-        GameObjectButterfly(x: node.x, y: node.y, z: node.z);
-        instance.spawn = node;
-        instance.wanderRadius = node.spawnRadius;
-        gameObjects.add(instance);
-        break;
-      case SpawnType.Zombie:
-        final instance = Zombie(
-          x: node.x + x,
-          y: node.y + y,
-          z: node.z,
-          health: 10,
-          damage: 1,
-          game: this,
-          team: Teams.evil,
-        );
-        instance.spawn = node;
-        instance.wanderRadius = node.spawnRadius;
-        characters.add(instance);
-        break;
-      case SpawnType.Slime:
-        final instance = AISlime(
-          x: node.x + x,
-          y: node.y + y,
-          z: node.z,
-          health: 1,
-          team: Teams.evil,
-        );
-        instance.spawn = node;
-        instance.wanderRadius = node.spawnRadius;
-        instance.setCharacterStateSpawning();
-        characters.add(instance);
-        break;
-      case SpawnType.Template:
-        final instance = Npc(
-          game: this,
-          x: node.x + x,
-          y: node.y + y,
-          z: node.z,
-          health: 10,
-          weapon: Weapon(
-            type: AttackType.Bow,
-            damage: 1,
-            capacity: 0,
-            duration: 10,
-            range: 200,
-          ),
-          team: Teams.good,
-          wanderRadius: 100,
-          name: 'Bandit',
-        );
-        instance.spawn = node;
-        instance.wanderRadius = node.spawnRadius;
-        characters.add(instance);
-        break;
-      case SpawnType.Random_Item:
-        final instance = GameObjectWeapon(
-            x: node.centerX,
-            y: node.centerY,
-            z: node.centerZ,
-            weaponType: getRandomWeaponIndex(),
-        );
-        instance.spawn = node;
-        gameObjects.add(instance);
-        break;
-      default:
-        print("Spawn GameObject Warning: Unrecognized SpawnType ${node.spawnType} ${SpawnType.getName(node.spawnType)}");
-        break;
-    }
-  }
+  // void spawnNodeInstance(NodeSpawn node) {
+  //   final distance = randomBetween(0, node.spawnRadius);
+  //   final angle = randomAngle();
+  //   final x = getAdjacent(angle, distance);
+  //   final y = getOpposite(angle, distance);
+  //
+  //   final radius = node.spawnRadius;
+  //
+  //   switch (node.spawnType) {
+  //     case SpawnType.Chicken:
+  //       final instance =
+  //       GameObjectChicken(x: node.x + x, y: node.y + y, z: node.z);
+  //       instance.wanderRadius = radius;
+  //       instance.spawn = node;
+  //       gameObjects.add(instance);
+  //
+  //       return;
+  //     case SpawnType.Jellyfish:
+  //       final instance =
+  //       GameObjectJellyfish(x: node.x + x, y: node.y + y, z: node.z);
+  //       instance.spawn = node;
+  //       gameObjects.add(instance);
+  //       return;
+  //     case SpawnType.Jellyfish_Red:
+  //       final instance =
+  //       GameObjectJellyfishRed(x: node.x + x, y: node.y + y, z: node.z);
+  //       instance.spawn = node;
+  //       gameObjects.add(instance);
+  //       return;
+  //     case SpawnType.Rat:
+  //       final instance = Rat(
+  //         z: node.indexZ,
+  //         row: node.indexRow,
+  //         column: node.indexColumn,
+  //         game: this,
+  //         team: Teams.evil,
+  //       );
+  //       instance.wanderRadius = node.spawnRadius;
+  //       instance.spawn = node;
+  //       characters.add(instance);
+  //       break;
+  //     case SpawnType.Butterfly:
+  //       final instance =
+  //       GameObjectButterfly(x: node.x, y: node.y, z: node.z);
+  //       instance.spawn = node;
+  //       instance.wanderRadius = node.spawnRadius;
+  //       gameObjects.add(instance);
+  //       break;
+  //     case SpawnType.Zombie:
+  //       final instance = Zombie(
+  //         x: node.x + x,
+  //         y: node.y + y,
+  //         z: node.z,
+  //         health: 10,
+  //         damage: 1,
+  //         game: this,
+  //         team: Teams.evil,
+  //       );
+  //       instance.spawn = node;
+  //       instance.wanderRadius = node.spawnRadius;
+  //       characters.add(instance);
+  //       break;
+  //     case SpawnType.Slime:
+  //       final instance = AISlime(
+  //         x: node.x + x,
+  //         y: node.y + y,
+  //         z: node.z,
+  //         health: 1,
+  //         team: Teams.evil,
+  //       );
+  //       instance.spawn = node;
+  //       instance.wanderRadius = node.spawnRadius;
+  //       instance.setCharacterStateSpawning();
+  //       characters.add(instance);
+  //       break;
+  //     case SpawnType.Template:
+  //       final instance = Npc(
+  //         game: this,
+  //         x: node.x + x,
+  //         y: node.y + y,
+  //         z: node.z,
+  //         health: 10,
+  //         weapon: Weapon(
+  //           type: AttackType.Bow,
+  //           damage: 1,
+  //           capacity: 0,
+  //           duration: 10,
+  //           range: 200,
+  //         ),
+  //         team: Teams.good,
+  //         wanderRadius: 100,
+  //         name: 'Bandit',
+  //       );
+  //       instance.spawn = node;
+  //       instance.wanderRadius = node.spawnRadius;
+  //       characters.add(instance);
+  //       break;
+  //     case SpawnType.Random_Item:
+  //       final instance = GameObjectWeapon(
+  //           x: node.centerX,
+  //           y: node.centerY,
+  //           z: node.centerZ,
+  //           weaponType: getRandomWeaponIndex(),
+  //       );
+  //       instance.spawn = node;
+  //       gameObjects.add(instance);
+  //       break;
+  //     default:
+  //       print("Spawn GameObject Warning: Unrecognized SpawnType ${node.spawnType} ${SpawnType.getName(node.spawnType)}");
+  //       break;
+  //   }
+  // }
 
   int getRandomWeaponIndex() =>
     randomItem([
@@ -1852,36 +1848,36 @@ abstract class Game {
     return zombie;
   }
 
-  Zombie spawnZombieAtNodeSpawn({
-    required NodeSpawn node,
-    required int health,
-    required int team,
-    required int damage,
-    int respawnDuration = 100,
-    double speed = RunSpeed.Regular,
-    List<Vector2>? objectives,
-    double wanderRadius = 100.0,
-  }) {
-    assert(team >= 0 && team <= 256);
-    final zombie = getZombieInstance();
-    zombie.team = team;
-    zombie.spawn = node;
-    zombie.respawn = respawnDuration;
-    zombie.state = CharacterState.Idle;
-    zombie.stateDurationRemaining = 0;
-    zombie.maxHealth = health;
-    zombie.health = health;
-    zombie.collidable = true;
-    zombie.x = node.x;
-    zombie.y = node.y;
-    zombie.z = node.z;
-    zombie.spawnX = node.x;
-    zombie.spawnY = node.y;
-    zombie.spawnZ = node.z;
-    zombie.clearDest();
-    zombie.wanderRadius = wanderRadius;
-    return zombie;
-  }
+  // Zombie spawnZombieAtNodeSpawn({
+  //   required NodeSpawn node,
+  //   required int health,
+  //   required int team,
+  //   required int damage,
+  //   int respawnDuration = 100,
+  //   double speed = RunSpeed.Regular,
+  //   List<Vector2>? objectives,
+  //   double wanderRadius = 100.0,
+  // }) {
+  //   assert(team >= 0 && team <= 256);
+  //   final zombie = getZombieInstance();
+  //   zombie.team = team;
+  //   zombie.spawn = node;
+  //   zombie.respawn = respawnDuration;
+  //   zombie.state = CharacterState.Idle;
+  //   zombie.stateDurationRemaining = 0;
+  //   zombie.maxHealth = health;
+  //   zombie.health = health;
+  //   zombie.collidable = true;
+  //   zombie.x = node.x;
+  //   zombie.y = node.y;
+  //   zombie.z = node.z;
+  //   zombie.spawnX = node.x;
+  //   zombie.spawnY = node.y;
+  //   zombie.spawnZ = node.z;
+  //   zombie.clearDest();
+  //   zombie.wanderRadius = wanderRadius;
+  //   return zombie;
+  // }
 
   Zombie getZombieInstance() {
     for (final character in characters) {
