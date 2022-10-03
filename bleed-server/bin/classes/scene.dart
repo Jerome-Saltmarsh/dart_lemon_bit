@@ -125,17 +125,11 @@ class Scene {
      final orientation = getNodeOrientationXYZ(x, y, z);
      if (orientation == NodeOrientation.None) return false;
      if (orientation == NodeOrientation.Solid) return true;
-     final bottom = (z ~/ tileHeight) * tileHeight;
      final percX = ((x % tileSize) / tileSize);
      final percY = ((y % tileSize) / tileSize);
-     return bottom + (getOrientationGradient(orientation, percX, percY) * nodeHeight) >= z;
-  }
-
-  double getHeightAtXYZ(double x, double y, double z){
-    final bottom = (z ~/ tileHeight) * tileHeight;
-    final percX = ((x % tileSize) / tileSize);
-    final percY = ((y % tileSize) / tileSize);
-    return bottom + (getOrientationGradient(getNodeOrientationXYZ(x, y, z), percX, percY) * nodeHeight);
+     return ((z ~/ tileHeight) * tileHeight)
+         + (getOrientationGradient(orientation, percX, percY) * nodeHeight)
+         >= z;
   }
 }
 
