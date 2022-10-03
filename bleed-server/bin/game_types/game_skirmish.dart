@@ -83,7 +83,9 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] melee weapons run out of rounds but only on hit
 /// [ ] custom websocket address
 /// [ ] custom websocket port
+/// [ ] fix dark-age controls
 /// [ ] fix set node
+/// [x] fix rain falling color
 /// [x] grass with flowers
 /// [x] NodeOrientation: Radial
 /// [x] fix save scene

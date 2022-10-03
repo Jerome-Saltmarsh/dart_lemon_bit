@@ -122,6 +122,9 @@ class NodeType {
     type == Brick_2 ||
     type == Grass;
 
+  static bool isRainOrEmpty(value) =>
+    isRain(value) || value == Empty;
+  
   static bool isRain(int value) =>
      value == Rain_Falling ||
      value == Rain_Landing ;

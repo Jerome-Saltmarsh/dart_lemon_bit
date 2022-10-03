@@ -434,20 +434,14 @@ class Connection {
     if (type == null){
       return errorInvalidArg('type');
     }
-    final orientation = int.tryParse(arguments[6]);
+    var orientation = int.tryParse(arguments[6]);
     if (orientation == null) {
       return errorInvalidArg('orientation is null');
     }
-
     if (!NodeType.supportsOrientation(type, orientation)){
-      return errorInvalidArg('Node Type ${NodeType.getName(type)} does not support orientation ${NodeOrientation.getName(orientation)}');
+      orientation = NodeType.getDefaultOrientation(type);
     }
     final game = player.game;
-    // game.setNode(z, row, column, NodeType.Respawning, orientation);
-    // game.perform((){
-    //   game.setNode(z, row, column, type, orientation);
-    // }, 15);
-
     final nodeIndex = game.scene.getNodeIndex(z, row, column);
     final currentType = game.scene.nodeTypes[nodeIndex];
     final currentOrientation = game.scene.nodeOrientations[nodeIndex];
