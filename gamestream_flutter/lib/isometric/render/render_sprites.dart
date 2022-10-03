@@ -247,6 +247,9 @@ class RenderOrderGrid extends RenderOrder {
   var playerColumnRow = 0;
   var playerUnderRoof = false;
 
+  var startRow = 0;
+  var startColumn = 0;
+
   var maxZ = 0;
   var minZ = 0;
 
@@ -527,8 +530,6 @@ abstract class RenderOrder {
   var order = 0.0;
   var orderZ = 0;
   var remaining = true;
-  var startRow = 0;
-  var startColumn = 0;
 
   void renderFunction();
   void updateFunction();
@@ -583,8 +584,11 @@ abstract class RenderOrder {
 
 RenderOrder getNextRenderOrder(){
    RenderOrder renderOrder = renderOrderGrid;
-   if (renderOrderCharacters.remaining){
-     renderOrder = renderOrder.compare(renderOrderCharacters);
+   if (renderOrderCharacters.remaining &&
+       renderOrderCharacters.order < renderOrder.order &&
+       renderOrderCharacters.orderZ < renderOrder.orderZ
+   ) {
+    renderOrder = renderOrderCharacters;
    }
    if (renderOrderProjectiles.remaining){
      renderOrder = renderOrder.compare(renderOrderProjectiles);
