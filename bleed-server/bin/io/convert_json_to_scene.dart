@@ -16,14 +16,23 @@ Scene convertJsonToScene(Json json, String name) {
   final height = json.getInt('grid-z');
   final rows = json.getInt('grid-rows');
   final columns = json.getInt('grid-columns');
+  final total = height * rows * columns;
   final List jsonGameObjects = json['gameobjects'] ?? [];
+  final nodeTypesDynamic = (json['grid-types'] as List);
+  final nodeOrientations = (json['grid-orientations'] as List);
+  final types = Uint8List(total);
+  final orientations = Uint8List(total);
 
-  final gridNode = convertFlatGridToNodeGrid(json['grid'], height, rows, columns);
+  for(var i = 0; i < total; i++){
+    assert (nodeTypesDynamic.length == total);
+    types[i] = nodeTypesDynamic[i];
+    orientations[i] = nodeOrientations[i];
+  }
 
   return Scene(
     name: name,
-    nodeOrientations: gridNode.nodeOrientations,
-    nodeTypes: gridNode.nodeTypes,
+    nodeOrientations: orientations,
+    nodeTypes: types,
     gridRows: rows,
     gridHeight: height,
     gridColumns: columns,

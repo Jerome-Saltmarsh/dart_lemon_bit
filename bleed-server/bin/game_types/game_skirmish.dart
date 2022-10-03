@@ -4,7 +4,6 @@ import 'package:lemon_math/library.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
-import '../classes/node.dart';
 import '../common/attack_state.dart';
 import '../common/control_scheme.dart';
 import '../common/library.dart';
@@ -82,7 +81,8 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] draw punch sprite
 /// [ ] design mouse cursor
 /// [ ] melee weapons run out of rounds but only on hit
-/// [ ] refactor - remove node class from backend
+/// [ ] fix save scene
+/// [x] refactor - remove node class from backend
 class GameSkirmish extends Game {
 
   static const maxPlayers = 7;

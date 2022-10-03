@@ -42,7 +42,6 @@ class DarkAgeScenes {
       farmA = await loadScene('farm-a');
       farmB = await loadScene('farm-b');
       village = await loadScene('village');
-      dungeon_1 = await loadScene('dungeon-1');
       skirmish_1 = await loadScene('skirmish-1');
       forest = await loadScene('forest');
       forest_2 = await loadScene('forest-b');
