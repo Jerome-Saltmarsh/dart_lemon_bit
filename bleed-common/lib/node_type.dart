@@ -78,10 +78,14 @@ class NodeType {
     type == Bau_Haus_2 ||
     type == Boulder;
 
+  static bool isRadial(int type) =>
+    type == Tree_Bottom ||
+    type == Torch ;
+
   static bool isDestroyable(int type) =>
     type == Boulder ||
     type == Sunflower ||
-    type == Grass_Long;
+    type == Grass_Long ;
 
   static bool isSlopeSymmetric(int type) =>
     type == Cottage_Roof ||
@@ -144,6 +148,8 @@ class NodeType {
        return NodeOrientation.Half_North;
      if (isCorner(value))
        return NodeOrientation.Corner_Top;
+     if (isRadial(value))
+       return NodeOrientation.Radial;
 
      return NodeOrientation.None;
   }

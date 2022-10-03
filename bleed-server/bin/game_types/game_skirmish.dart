@@ -81,6 +81,10 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] draw punch sprite
 /// [ ] design mouse cursor
 /// [ ] melee weapons run out of rounds but only on hit
+/// [ ] custom websocket address
+/// [ ] custom websocket port
+/// [ ] fix set node
+/// [x] NodeOrientation: Radial
 /// [x] fix save scene
 /// [x] refactor - remove node class from backend
 class GameSkirmish extends Game {

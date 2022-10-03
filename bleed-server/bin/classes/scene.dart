@@ -156,6 +156,11 @@ double getOrientationGradient(int orientation, double x, double y) {
   switch (orientation) {
     case NodeOrientation.Solid:
       return 1;
+    case NodeOrientation.Radial:
+      const radius = 0.25;
+      if  ((0.5 - x).abs() > radius) return 0;
+      if  ((0.5 - y).abs() > radius) return 0;
+      return 1.0;
     case NodeOrientation.Slope_North:
       return 1 - x;
     case NodeOrientation.Slope_East:
