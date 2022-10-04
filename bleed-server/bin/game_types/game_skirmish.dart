@@ -85,7 +85,8 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] custom websocket address
 /// [ ] custom websocket port
 /// [ ] fix player color flicker
-/// [ ] fix spawn node
+/// [ ] fix bug dark age nodes stop rendering
+/// [x] fix spawn node
 /// [x] fix dark-age controls
 /// [x] fix set node
 /// [x] fix rain falling color

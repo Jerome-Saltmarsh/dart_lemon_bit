@@ -78,11 +78,8 @@ void renderSprites() {
 
   while (true) {
     RenderOrder next = renderOrderGrid;
-    if (renderOrderCharacters.remaining &&
-        renderOrderCharacters.order < next.order &&
-        renderOrderCharacters.orderZ < next.orderZ
-    ) {
-      next = renderOrderCharacters;
+    if (renderOrderCharacters.remaining){
+      next = next.compare(renderOrderCharacters);
     }
     if (renderOrderProjectiles.remaining){
       next = next.compare(renderOrderProjectiles);
