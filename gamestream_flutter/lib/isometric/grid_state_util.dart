@@ -1,6 +1,7 @@
 
 
 
+import 'package:bleed_common/node_type.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 
 import 'grid_state.dart';
@@ -9,7 +10,9 @@ int gridNodeShadeAtVector3(Vector3 vector3) =>
   gridNodeShade[gridNodeIndexVector3(vector3)];
 
 int gridNodeTypeAtVector3(Vector3 vector3) =>
-    gridNodeTypes[gridNodeIndexVector3(vector3)];
+    gridNodeInBoundsVector3(vector3)
+        ? gridNodeTypes[gridNodeIndexVector3(vector3)]
+        : NodeType.Boundary;
 
 int gridNodeIndexVector3(Vector3 vector3) =>
   gridNodeIndexZRC(
