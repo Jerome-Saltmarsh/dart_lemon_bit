@@ -67,7 +67,6 @@ void resetRenderOrder(RenderOrder value){
 }
 
 void renderSprites() {
-  var remaining = false;
   totalRemaining = 0;
   resetRenderOrder(renderOrderCharacters);
   resetRenderOrder(renderOrderGameObjects);
@@ -75,22 +74,36 @@ void renderSprites() {
   resetRenderOrder(renderOrderParticle);
   resetRenderOrder(renderOrderProjectiles);
 
-  while (true) {
-    final next = getNextRenderOrder();
-    if (!next.remaining) return;
+  if (totalRemaining == 0) return;
 
-    next.renderNext();
-    if (!next.remaining){
-      totalRemaining--;
-      if (totalRemaining == 1){
-        if (renderOrderGrid.remaining){
-           while(renderOrderGrid.remaining){
-             renderOrderGrid.renderNext();
-           }
-        }
-        return;
-      }
+  while (true) {
+    RenderOrder next = renderOrderGrid;
+    if (renderOrderCharacters.remaining &&
+        renderOrderCharacters.order < next.order &&
+        renderOrderCharacters.orderZ < next.orderZ
+    ) {
+      next = renderOrderCharacters;
     }
+    if (renderOrderProjectiles.remaining){
+      next = next.compare(renderOrderProjectiles);
+    }
+    if (renderOrderGameObjects.remaining){
+      next = next.compare(renderOrderGameObjects);
+    }
+    if (renderOrderParticle.remaining){
+      next = next.compare(renderOrderParticle);
+    }
+    next.renderNext();
+    if (next.remaining) continue;
+    totalRemaining--;
+    if (totalRemaining > 1) continue;
+    while (renderOrderGrid.remaining) {
+      renderOrderGrid.renderNext();
+    }
+    while (renderOrderCharacters.remaining) {
+      renderOrderCharacters.renderNext();
+    }
+    return;
   }
 }
 
@@ -579,25 +592,25 @@ abstract class RenderOrder {
   }
 }
 
-RenderOrder getNextRenderOrder(){
-   RenderOrder renderOrder = renderOrderGrid;
-   if (renderOrderCharacters.remaining &&
-       renderOrderCharacters.order < renderOrder.order &&
-       renderOrderCharacters.orderZ < renderOrder.orderZ
-   ) {
-    renderOrder = renderOrderCharacters;
-   }
-   if (renderOrderProjectiles.remaining){
-     renderOrder = renderOrder.compare(renderOrderProjectiles);
-   }
-   if (renderOrderGameObjects.remaining){
-     renderOrder = renderOrder.compare(renderOrderGameObjects);
-   }
-   if (renderOrderParticle.remaining){
-     renderOrder = renderOrder.compare(renderOrderParticle);
-   }
-   return renderOrder;
-}
+// RenderOrder getNextRenderOrder(){
+//    RenderOrder renderOrder = renderOrderGrid;
+//    if (renderOrderCharacters.remaining &&
+//        renderOrderCharacters.order < renderOrder.order &&
+//        renderOrderCharacters.orderZ < renderOrder.orderZ
+//    ) {
+//     renderOrder = renderOrderCharacters;
+//    }
+//    if (renderOrderProjectiles.remaining){
+//      renderOrder = renderOrder.compare(renderOrderProjectiles);
+//    }
+//    if (renderOrderGameObjects.remaining){
+//      renderOrder = renderOrder.compare(renderOrderGameObjects);
+//    }
+//    if (renderOrderParticle.remaining){
+//      renderOrder = renderOrder.compare(renderOrderParticle);
+//    }
+//    return renderOrder;
+// }
 
 int getRenderRow(int row, int z){
   return row - (z ~/ 2);
