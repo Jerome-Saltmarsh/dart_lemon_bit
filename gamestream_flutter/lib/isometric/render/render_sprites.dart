@@ -74,10 +74,12 @@ void renderSprites() {
   resetRenderOrder(renderOrderParticle);
   resetRenderOrder(renderOrderProjectiles);
 
+  RenderOrder first = renderOrderGrid;
+
   if (totalRemaining == 0) return;
 
   while (true) {
-    RenderOrder next = renderOrderGrid;
+    RenderOrder next = first;
     if (renderOrderCharacters.remaining){
       next = next.compare(renderOrderCharacters);
     }
@@ -93,7 +95,26 @@ void renderSprites() {
     next.renderNext();
     if (next.remaining) continue;
     totalRemaining--;
-    if (totalRemaining > 1) continue;
+    if (totalRemaining == 0) return;
+
+    if (totalRemaining > 1) {
+      if (next == renderOrderGrid) {
+        if (renderOrderCharacters.remaining) {
+          next = renderOrderCharacters;
+        }
+        if (renderOrderProjectiles.remaining) {
+          next = renderOrderProjectiles;
+        }
+        if (renderOrderGameObjects.remaining) {
+          next = renderOrderGameObjects;
+        }
+        if (renderOrderParticle.remaining) {
+          next = renderOrderParticle;
+        }
+      }
+      continue;
+    }
+
     while (renderOrderGrid.remaining) {
       renderOrderGrid.renderNext();
     }
@@ -579,7 +600,8 @@ abstract class RenderOrder {
   }
 
   void renderNext() {
-    assert(remaining);
+    if (!remaining) return;
+    // assert(remaining);
     renderFunction();
     _index = (_index + 1);
     remaining = _index < total;

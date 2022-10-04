@@ -1,5 +1,7 @@
+import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
+import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
@@ -15,7 +17,7 @@ int getRenderShade(Vector3 vector3){
    if (!gridNodeInBoundsVector3(vector3)) {
      return ambientShade.value;
    }
-   if (vector3.indexZ > 0){
+   if (vector3.z >= tileHeight && vector3.z < gridZLength){
      return getNodeBelowShade(vector3);
    }
    return gridNodeShadeAtVector3(vector3);
