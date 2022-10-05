@@ -1,5 +1,4 @@
 
-import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/client_request.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/init.dart';

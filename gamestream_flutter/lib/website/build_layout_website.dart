@@ -39,7 +39,7 @@ Widget buildPageWebsite({double padding = 6})  =>
         Positioned(
           top: padding,
           left: padding,
-        child: buildButtonRegion(),
+          child: buildButtonRegion(),
       ),
       Positioned(
         bottom: padding,
@@ -71,25 +71,26 @@ Widget buildPageWebsite({double padding = 6})  =>
 Widget buildButtonRegion() => WatchBuilder(
     core.state.region,
     (Region selectedRegion) => onMouseOver(
-        builder: (BuildContext context, bool mouseOver) => !mouseOver
+        builder: (BuildContext context, bool mouseOver) =>
+            !mouseOver
             ? container(
-          child: Row(
-            children: [
-              text('REGION ', color: Colors.white54),
-              text(enumString(selectedRegion), color: Colors.white70),
-              buildWatchBool(isVisibleDialogCustomRegion, () {
-                return Container(
-                  width: 280,
-                  margin: const EdgeInsets.only(left: 12),
-                  child: TextField(
-                    autofocus: true,
-                    controller: website.state.customConnectionStrongController,
-                    decoration: InputDecoration(
-                        labelText: 'ws connection string'
+                child: Row(
+                children: [
+                text('REGION ', color: Colors.white54),
+                text(enumString(selectedRegion), color: Colors.white70),
+                buildWatchBool(isVisibleDialogCustomRegion, () {
+                  return Container(
+                    width: 280,
+                    margin: const EdgeInsets.only(left: 12),
+                    child: TextField(
+                      autofocus: true,
+                      controller: website.state.customConnectionStrongController,
+                      decoration: InputDecoration(
+                          labelText: 'ws connection string'
+                      ),
                     ),
-                  ),
-                );
-              })
+                  );
+                })
             ],
           ),
           color: Colors.transparent,

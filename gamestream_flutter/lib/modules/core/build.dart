@@ -32,25 +32,21 @@ class CoreBuild {
   Widget buildUI(BuildContext context) {
     return Stack(
       children: [
-        buildWatchOperationStatus(),
+        watch(core.state.operationStatus, buildOperationStatus),
         buildWatchErrorMessage(),
       ],
     );
   }
 
-  Widget buildWatchOperationStatus(){
-    return WatchBuilder(core.state.operationStatus, (OperationStatus operationStatus){
-      if (operationStatus != OperationStatus.None){
-        return _layoutOperationStatus(operationStatus);
-      }
-      return WatchBuilder(core.state.mode, (Mode mode) {
-        return watchAccount(buildAccount);
-      });
-    });
-  }
+  Widget buildOperationStatus(OperationStatus operationStatus) =>
+    operationStatus != OperationStatus.None
+        ? _layoutOperationStatus(operationStatus)
+        : WatchBuilder(core.state.mode, (Mode mode) {
+            return watchAccount(buildAccount);
+          });
 
-  Widget _layoutOperationStatus(OperationStatus operationStatus) {
-    return buildLayout(
+  Widget _layoutOperationStatus(OperationStatus operationStatus) =>
+    buildLayout(
         child: fullScreen(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -60,7 +56,6 @@ class CoreBuild {
           ),
         )
     );
-  }
 
   Widget buildLoadingScreen(BuildContext context) {
     final double _width = 300;

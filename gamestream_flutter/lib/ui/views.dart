@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/init.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/modules/ui/module.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
 import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
@@ -50,11 +49,11 @@ Widget buildAccount(Account? account) {
   return buildWatchConnection(account);
 }
 
-WatchBuilder<Connection> buildWatchConnection(Account? account) {
-  return WatchBuilder(webSocket.connection, (Connection connection) {
+WatchBuilder<Connection> buildWatchConnection(Account? account) =>
+  WatchBuilder(webSocket.connection, (Connection connection) {
     switch (connection) {
       case Connection.Connecting:
-        return ui.layouts.buildLayoutLoading();
+        return buildLayoutLoading();
       case Connection.Connected:
         print("buildStackGame()");
         return buildStackGame();
@@ -64,7 +63,18 @@ WatchBuilder<Connection> buildWatchConnection(Account? account) {
         return buildConnection(connection);
     }
   });
-}
+
+Widget buildLayoutLoading() =>
+  buildLayout(
+    padding: 6,
+    child: Center(child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        text("CONNECTING", color: colours.white80),
+      ],
+    )),
+  );
 
 Widget buildConnection(Connection value) => center(Column(
       mainAxisAlignment: MainAxisAlignment.center,

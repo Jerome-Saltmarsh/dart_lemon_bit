@@ -11,22 +11,6 @@ class UILayouts {
   final UIStyle style;
 
   UILayouts(this.style);
-
-  var dots = 0;
-
-  Widget buildLayoutLoading(){
-    dots = 0;
-    return buildLayout(
-      padding: style.layoutPadding,
-      child: Center(child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          text("CONNECTING", color: colours.white80),
-        ],
-      )),
-    );
-  }
 }
 
 Widget buildLayoutWaitingForPlayers(){
