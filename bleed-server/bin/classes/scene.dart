@@ -100,10 +100,15 @@ class Scene {
   int getNodeOrientationXYZ(double x, double y, double z){
      if (x < 0) return NodeOrientation.Solid;
      if (y < 0) return NodeOrientation.Solid;
+     if (x >= gridRowLength) return NodeOrientation.Solid;
+     if (y >= gridColumnLength) return NodeOrientation.Solid;
+     if (z >= gridHeightLength) return NodeOrientation.None;
      if (z < 0) return NodeOrientation.None;
-     if (x > gridRowLength) return NodeOrientation.Solid;
-     if (y > gridColumnLength) return NodeOrientation.Solid;
-     if (z > gridHeightLength) return NodeOrientation.None;
+
+     if (getNodeIndexXYZ(x, y, z) >= nodeOrientations.length) {
+       throw Exception();
+     }
+
      return nodeOrientations[getNodeIndexXYZ(x, y, z)];
   }
 
@@ -118,10 +123,11 @@ class Scene {
   bool getCollisionAt(double x, double y, double z) {
      if (x < 0) return true;
      if (y < 0) return true;
-     if (z < 0) return false;
      if (x >= gridRowLength) return true;
      if (y >= gridColumnLength) return true;
      if (z >= gridHeightLength) return false;
+     if (z < 0) return false;
+
      final orientation = getNodeOrientationXYZ(x, y, z);
      if (orientation == NodeOrientation.None) return false;
      if (orientation == NodeOrientation.Solid) return true;
