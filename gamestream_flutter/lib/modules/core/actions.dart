@@ -247,4 +247,4 @@ void connectToGameWaves() => connectToGame(GameType.Waves);
 void connectToGameSkirmish() => connectToGame(GameType.Skirmish);
 
 void connectToGame(int gameType, [String message = ""]) =>
-  connectToWebSocketServer(core.state.region.value, '${gameType} $message');
+  connectToRegion(core.state.region.value, '${gameType} $message');

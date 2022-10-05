@@ -82,10 +82,9 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] draw punch sprite
 /// [ ] design mouse cursor
 /// [ ] melee weapons run out of rounds but only on hit
-/// [ ] custom websocket address
-/// [ ] custom websocket port
 /// [ ] fix bug dark age nodes stop rendering
-/// [ ] fix player color flicker
+/// [ ] custom websocket address
+/// [?] fix player color flicker
 /// [x] fix spawn node
 /// [x] fix dark-age controls
 /// [x] fix set node

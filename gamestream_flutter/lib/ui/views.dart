@@ -106,13 +106,14 @@ Widget buildDialogChangeRegion() {
           )));
 }
 
-final Map<Connection, String> connectionMessage = {
+const connectionMessage = {
   Connection.Done: "Connection to the server was lost",
   Connection.Error: "An error occurred with the connection to the server",
   Connection.Connected: "Connected to server",
   Connection.Connecting: "Connecting to server",
   Connection.Failed_To_Connect: "Unable to establish a connection",
   Connection.None: "There is no connection to the server",
+  Connection.Invalid_Connection: "Invalid websocket connection string",
 };
 
 Widget? dev(Widget child){

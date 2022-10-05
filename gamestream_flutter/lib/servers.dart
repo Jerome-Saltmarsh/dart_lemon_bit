@@ -3,25 +3,33 @@ import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/client_request.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/init.dart';
+import 'package:gamestream_flutter/modules/modules.dart';
 
 import 'network/instance/websocket.dart';
 
-void connectToWebSocketServer(Region server, String message) {
+void connectToRegion(Region server, String message) {
   if (server == Region.LocalHost) {
-    _connectLocalHost(message: message);
+    connectToServer('ws://localhost:8080', message);
     return;
   }
-  final httpsConnectionString = getHttpsConnectionString(server, GameType.Dark_Age);
+  if (server == Region.Custom){
+    print("connecting to custom server");
+    print(website.state.customConnectionStrongController.text);
+    connectToServer(website.state.customConnectionStrongController.text, message);
+    return;
+  }
+  final httpsConnectionString = getRegionConnectionString(server);
   final wsConnectionString = parseHttpToWebSocket(httpsConnectionString);
-  _connectToServer(wsConnectionString, message);
+  connectToServer(wsConnectionString, message);
 }
 
-void _connectLocalHost({int port = 8080, required String message}) {
-  _connectToServer('ws://localhost:$port', message);
+void connectLocalHost({int port = 8080, required String message}) {
+  connectToServer('ws://localhost:$port', message);
 }
 
-void _connectToServer(String uri, String message){
-  webSocket.connect(uri: uri, message: '${ClientRequest.Join.index} $message');
+void connectToServer(String uri, String message){
+    webSocket.connect(
+        uri: uri, message: '${ClientRequest.Join.index} $message');
 }
 
 final List<Region> selectableServerTypes =
@@ -33,14 +41,13 @@ class ServerUri {
   static const Singapore = "https://gamestream-ws-osbmaezptq-as.a.run.app";
 }
 
-String parseHttpToWebSocket(String url) {
-  return url.replaceAll("https", "wss") + "/:8080";
-}
+String parseHttpToWebSocket(String url, {String port = '8080'}) =>
+  url.replaceAll("https", "wss") + "/:$port";
 
-String getHttpsConnectionString(Region server, int gameType) {
-  switch (server) {
+String getRegionConnectionString(Region region) {
+  switch (region) {
     case Region.Australia:
-          return ServerUri.Sydney;
+      return ServerUri.Sydney;
     case Region.Singapore:
       return ServerUri.Singapore;
     default:

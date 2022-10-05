@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric_web/download_file.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_watch/watch.dart';
+import 'package:universal_html/html.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 enum Connection {
@@ -12,7 +13,8 @@ enum Connection {
   Connected,
   Done,
   Error,
-  Failed_To_Connect
+  Failed_To_Connect,
+  Invalid_Connection,
 }
 
 
@@ -30,29 +32,41 @@ class WebSocket {
   void connect({required String uri, required dynamic message}) {
     print("webSocket.connect($uri)");
     connection.value = Connection.Connecting;
-    webSocketChannel = WebSocketChannel.connect(Uri.parse(uri), protocols: ['gamestream.online']);
-    webSocketChannel.stream.listen(_onEvent, onError: _onError, onDone: _onDone);
-    sink = webSocketChannel.sink;
-    connectionEstablished = DateTime.now();
+    try {
+      webSocketChannel = WebSocketChannel.connect(
+          Uri.parse(uri), protocols: ['gamestream.online']);
 
-    sink.done.then((value){
-      print("Connection Finished");
-      print("webSocketChannel.closeCode: ${webSocketChannel.closeCode}");
-      print("webSocketChannel.closeReason: ${webSocketChannel.closeReason}");
-
-      if (connectionEstablished != null){
-        final duration = DateTime.now().difference(connectionEstablished!);
-        print("Connection Duration ${duration.inSeconds} seconds");
+      webSocketChannel.stream.listen(_onEvent, onError: _onError, onDone: _onDone);
+      sink = webSocketChannel.sink;
+      connectionEstablished = DateTime.now();
+      sink.done.then((value){
+        print("Connection Finished");
+        print("webSocketChannel.closeCode: ${webSocketChannel.closeCode}");
+        print("webSocketChannel.closeReason: ${webSocketChannel.closeReason}");
+        if (connectionEstablished != null){
+          final duration = DateTime.now().difference(connectionEstablished!);
+          print("Connection Duration ${duration.inSeconds} seconds");
+        }
+      });
+      connectionUri = uri;
+      sinkMessage(message);
+    } catch(e) {
+      if (e is DomException){
+        connection.value = Connection.Failed_To_Connect;
+         // if (e.toString().contains('is invalid')){
+         //   connection.value = Connection.Invalid_Connection;
+         // }else{
+         //   connection.value = Connection.Failed_To_Connect;
+         // }
       }
-
-    });
-    connectionUri = uri;
-    sinkMessage(message);
+    }
   }
 
   void disconnect() {
     print('network.disconnect()');
-    sink.close();
+    if (connected){
+      sink.close();
+    }
     connection.value = Connection.None;
   }
 

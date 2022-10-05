@@ -1,9 +1,11 @@
 
+import 'package:flutter/material.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'enums.dart';
 
 class WebsiteState {
-  final Watch<bool> signInSuggestionVisible = Watch(false);
-  final Watch<WebsiteDialog> dialog = Watch(WebsiteDialog.Games);
+  final signInSuggestionVisible = Watch(false);
+  final dialog = Watch(WebsiteDialog.Games);
+  final customConnectionStrongController = TextEditingController();
 }

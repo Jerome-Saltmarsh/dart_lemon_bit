@@ -83,6 +83,7 @@ Widget buildButtonRegion() => WatchBuilder(
                   margin: const EdgeInsets.only(left: 12),
                   child: TextField(
                     autofocus: true,
+                    controller: website.state.customConnectionStrongController,
                     decoration: InputDecoration(
                         labelText: 'ws connection string'
                     ),
