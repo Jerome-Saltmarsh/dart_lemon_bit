@@ -31,11 +31,11 @@ Widget buildPageWebsite({double padding = 6})  =>
       //     child: buildDialogCustomRegion(),
       //   );
       // }),
-      // Positioned(
-      //     top: 8,
-      //     left: 100,
-      //     child: buildWatchBool(isVisibleDialogCustomRegion, buildDialogCustomRegion),
-      //   ),
+      Positioned(
+          top: 0,
+          left: 180,
+          child: buildWatchBool(isVisibleDialogCustomRegion, buildInputCustomConnectionString),
+        ),
         Positioned(
           top: padding,
           left: padding,
@@ -67,7 +67,6 @@ Widget buildPageWebsite({double padding = 6})  =>
     ],
   );
 
-
 Widget buildButtonRegion() => WatchBuilder(
     core.state.region,
     (Region selectedRegion) => onMouseOver(
@@ -78,19 +77,6 @@ Widget buildButtonRegion() => WatchBuilder(
                 children: [
                 text('REGION ', color: Colors.white54),
                 text(enumString(selectedRegion), color: Colors.white70),
-                buildWatchBool(isVisibleDialogCustomRegion, () {
-                  return Container(
-                    width: 280,
-                    margin: const EdgeInsets.only(left: 12),
-                    child: TextField(
-                      autofocus: true,
-                      controller: website.state.customConnectionStrongController,
-                      decoration: InputDecoration(
-                          labelText: 'ws connection string'
-                      ),
-                    ),
-                  );
-                })
             ],
           ),
           color: Colors.transparent,
@@ -115,6 +101,20 @@ Widget buildButtonRegion() => WatchBuilder(
                   )
                 ],
               )));
+
+
+Widget buildInputCustomConnectionString() =>
+    Container(
+      width: 280,
+      margin: const EdgeInsets.only(left: 12),
+      child: TextField(
+        autofocus: true,
+        controller: website.state.customConnectionStrongController,
+        decoration: InputDecoration(
+            labelText: 'ws connection string'
+        ),
+      ),
+    );
 
 Widget buildButtonSelectRegion(Region region){
   return Container(
