@@ -45,7 +45,13 @@ class Edit {
   final gameObjectSelectedRadius = Watch(0.0);
   final gameObjectSelectedSpawnType = Watch(0);
 
-  final nodeSelectedIndex = Watch<int>(0, onChanged: onChangedSelectedNodeIndex);
+  final nodeSelectedIndex = Watch<int>(0, clamp: (int value){
+    if (value < 0)
+      return 0;
+    if (value >= gridNodeTotal)
+      return gridNodeTotal - 1;
+    return value;
+  }, onChanged: onChangedSelectedNodeIndex);
   final nodeSelectedType = Watch<int>(0, onChanged: onChangedSelectedNodeType);
   final nodeSelectedOrientation = Watch(NodeOrientation.None);
   final nodeOrientationVisible = Watch(true);

@@ -70,38 +70,38 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
       if (edit.gameObjectSelected.value){
         return edit.translate(x: 0, y: 0, z: 1);
       }
-      edit.cursorZIncrease();
+      edit.cursorZDecrease();
     } else {
       if (edit.gameObjectSelected.value){
         return edit.translate(x: -1, y: -1, z: 0);
       }
-      edit.cursorRowDecrease();
+      edit.cursorRowIncrease();
     }
   }
   if (key == PhysicalKeyboardKey.arrowRight) {
     if (edit.gameObjectSelected.value){
       return edit.translate(x: 1, y: -1, z: 0);
     }
-    edit.cursorColumnDecrease();
+    edit.cursorColumnIncrease();
   }
   if (key == PhysicalKeyboardKey.arrowDown) {
     if (shiftLeftDown) {
       if (edit.gameObjectSelected.value){
         return edit.translate(x: 0, y: 0, z: -1);
       }
-      edit.cursorZDecrease();
+      edit.cursorZIncrease();
     } else {
       if (edit.gameObjectSelected.value){
         return edit.translate(x: 1, y: 1, z: 0);
       }
-      edit.cursorRowIncrease();
+      edit.cursorRowDecrease();
     }
   }
   if (key == PhysicalKeyboardKey.arrowLeft) {
     if (edit.gameObjectSelected.value){
       return edit.translate(x: -1, y: 1, z: 0);
     }
-    edit.cursorColumnIncrease();
+    edit.cursorColumnDecrease();
   }
 }
 
