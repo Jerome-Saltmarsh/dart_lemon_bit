@@ -590,6 +590,12 @@ class Connection {
         final nodeType = scene.nodeTypes[nodeIndex];
         if (NodeType.supportsOrientation(nodeType, orientation)) {
           scene.nodeOrientations[nodeIndex] = orientation;
+          for (final player in player.game.players){
+             player.writeByte(ServerResponse.Node);
+             player.writePositiveInt(nodeIndex);
+             player.writeByte(nodeType);
+             player.writeByte(orientation);
+          }
         } else {
           errorInvalidArg('node type $nodeType ${NodeType.getName(nodeType)} does not support orientation $orientation ${NodeOrientation.getName(orientation)}');
         }

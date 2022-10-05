@@ -568,14 +568,11 @@ class ServerResponseReader with ByteReader {
   }
 
   void readNode() {
-    final z = readInt();
-    final row = readInt();
-    final column = readInt();
-    final type = readByte();
-    final orientation = readByte();
-    final index = gridNodeIndexZRC(z, row, column);
-    gridNodeTypes[index] = type;
-    gridNodeOrientations[index] = orientation;
+    final nodeIndex = readPositiveInt();
+    final nodeType = readByte();
+    final nodeOrientation = readByte();
+    gridNodeTypes[nodeIndex] = nodeType;
+    gridNodeOrientations[nodeIndex] = nodeOrientation;
     edit.refreshNodeSelectedIndex();
     onGridChanged();
   }

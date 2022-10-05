@@ -31,6 +31,9 @@ Scene convertJsonToScene(Json json, String name) {
     if (nodeType == NodeType.Cottage_Roof){
       nodeType = NodeType.Bau_Haus_2;
     }
+    if (nodeType == NodeType.Brick_Top){
+      nodeType = NodeType.Brick_2;
+    }
 
     types[i] = nodeType;
     if (NodeType.supportsOrientation(nodeType, nodeOrientation)){
