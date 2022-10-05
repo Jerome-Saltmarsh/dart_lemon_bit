@@ -84,8 +84,7 @@ class NodeOrientation {
    static bool isSlopeCornerOuter(int value) =>
        valuesSlopeCornerOuter.contains(value);
 
-   static String getName(int value){
-      return {
+   static String getName(int value) => {
          None: "None",
          Slope_North: "Slope North",
          Slope_East: "Slope East",
@@ -108,7 +107,6 @@ class NodeOrientation {
          Slope_Outer_South_East: "Slope Outer South-East",
          Slope_Outer_South_West: "Slope Outer South-West",
          Slope_Outer_North_West: "Slope Outer North-West",
-
-      }[value] ?? "unknown: $value";
-   }
+         Radial: "Radial",
+   }[value] ?? "unknown: $value";
 }

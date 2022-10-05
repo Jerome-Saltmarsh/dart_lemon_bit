@@ -77,6 +77,10 @@ class NodeType {
     type == Wooden_Plank ||
     type == Bau_Haus_2 ||
     type == Table ||
+    type == Oven ||
+    type == Bed_Top ||
+    type == Bed_Bottom ||
+    type == Chimney ||
     type == Boulder;
 
   static bool isOrientationEmpty(int type) =>
@@ -85,6 +89,9 @@ class NodeType {
       type == Spawn ||
       type == Respawning ||
       type == Rain_Landing ||
+      type == Tree_Top ||
+      type == Grass_Long ||
+      type == Sunflower ||
       type == Rain_Falling ;
 
   static bool isRadial(int type) =>
@@ -188,6 +195,9 @@ class NodeType {
 
     if (NodeOrientation.isSlopeSymmetric(orientation))
       return isSlopeSymmetric(type);
+
+    if (orientation == NodeOrientation.Radial)
+      return isRadial(type);
 
     return false;
   }
