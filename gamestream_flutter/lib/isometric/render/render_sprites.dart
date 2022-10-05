@@ -416,11 +416,6 @@ class RenderOrderGrid extends RenderOrder {
     renderNodeIndex = (renderNodeZ * gridTotalArea) + (renderNodeRow * gridTotalColumns) + renderNodeColumn;
     renderNodeType = gridNodeTypes[renderNodeIndex];
 
-    refreshDynamicLightGrid();
-    applyEmissionsCharacters();
-    applyEmissionGameObjects();
-    applyEmissionsParticles();
-
     if (editMode){
        applyEmissionDynamic(
            zIndex: edit.z,
@@ -452,7 +447,12 @@ class RenderOrderGrid extends RenderOrder {
     _index = 0;
     remaining = total > 0;
 
-    highLightCharacterNearestMouse();
+    refreshDynamicLightGrid();
+    applyEmissionsCharacters();
+    applyEmissionGameObjects();
+    applyEmissionsParticles();
+    applyCharacterColors();
+    highlightCharacterNearMouse();
   }
 
   void revealRaycast(int z, int row, int column){
