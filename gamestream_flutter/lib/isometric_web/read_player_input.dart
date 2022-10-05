@@ -30,9 +30,9 @@ void readPlayerInputEdit() {
   if (keyPressed(LogicalKeyboardKey.delete)) {
     edit.delete();
   }
-  if (keyPressed(LogicalKeyboardKey.keyR)) {
-    edit.nodeSelectedIndex.value = edit.nodeSelectedIndex.value;
-  }
+  // if (keyPressed(LogicalKeyboardKey.keyR)) {
+  //   edit.nodeSelectedIndex.value = edit.nodeSelectedIndex.value;
+  // }
   if (getKeyDirection() != Direction.None) {
     actionSetModePlay();
   }

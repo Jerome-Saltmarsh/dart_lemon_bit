@@ -3,7 +3,6 @@ import 'package:bleed_common/node_type.dart';
 import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/convert_index.dart';
-import 'package:gamestream_flutter/isometric/editor/events/on_changed_cursor_position.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_node_type_spawn_selected.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_paint_type.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node.dart';
@@ -45,13 +44,6 @@ class Edit {
   final gameObjectSelectedRadius = Watch(0.0);
   final gameObjectSelectedSpawnType = Watch(0);
 
-  final nodeSelectedIndex = Watch<int>(0, clamp: (int value){
-    if (value < 0)
-      return 0;
-    if (value >= gridNodeTotal)
-      return gridNodeTotal - 1;
-    return value;
-  }, onChanged: onChangedSelectedNodeIndex);
   final nodeSelectedType = Watch<int>(0, onChanged: onChangedSelectedNodeType);
   final nodeSelectedOrientation = Watch(NodeOrientation.None);
   final nodeOrientationVisible = Watch(true);
@@ -64,18 +56,11 @@ class Edit {
   final nodeSupportsCorner = Watch(false);
   final isActiveEditTriggers = Watch(true);
 
-  void cursorRowIncrease() {
-     if (row >= gridTotalRows) return;
-     row++;
-  }
-
-  void cursorRowDecrease() => row--;
-  void cursorColumnIncrease() => column++;
-  void cursorColumnDecrease() => column--;
-  void cursorZIncrease() => z++;
-  void cursorZDecrease() => z--;
-
-  var nodeIndex = Watch(0, onChanged: onChangedCursorPosition);
+  var nodeIndex = Watch(0, clamp: (int value){
+     if (value < 0) return 0;
+     if (value >= gridNodeTotal) return gridNodeTotal - 1;
+     return value;
+  }, onChanged: onChangedSelectedNodeIndex);
 
   int get z => convertIndexToZ(nodeIndex.value);
   int get row => convertIndexToRow(nodeIndex.value);
@@ -113,9 +98,8 @@ class Edit {
   double get renderY => projectY(edit.posX, edit.posY, edit.posZ);
 
   void refreshNodeSelectedIndex(){
-    nodeSelectedIndex.value = gridNodeIndexZRC(z, row, column);
-    nodeSelectedType.value = gridNodeTypes[nodeSelectedIndex.value];
-    nodeSelectedOrientation.value = gridNodeOrientations[nodeSelectedIndex.value];
+    nodeSelectedType.value = gridNodeTypes[nodeIndex.value];
+    nodeSelectedOrientation.value = gridNodeOrientations[nodeIndex.value];
   }
 
   void deselectGameObject() {
@@ -189,7 +173,6 @@ class Edit {
   ;
 
   void delete(){
-    print("edit.delete()");
     if (gameObjectSelected.value)
       return deleteGameObjectSelected();
     setNodeType(NodeType.Empty, NodeOrientation.None);
@@ -231,5 +214,11 @@ class Edit {
     );
   }
 
-  void setCursorToPlayer() => nodeIndex.value = player.nodeIndex;
+  void cursorSetToPlayer() => nodeIndex.value = player.nodeIndex;
+  void cursorRowIncrease() => row++;
+  void cursorRowDecrease() => row--;
+  void cursorColumnIncrease() => column++;
+  void cursorColumnDecrease() => column--;
+  void cursorZIncrease() => z++;
+  void cursorZDecrease() => z--;
 }
