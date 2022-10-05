@@ -572,6 +572,7 @@ class ServerResponseReader with ByteReader {
     final nodeIndex = readPositiveInt();
     final nodeType = readByte();
     final nodeOrientation = readByte();
+    assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
     gridNodeTypes[nodeIndex] = nodeType;
     gridNodeOrientations[nodeIndex] = nodeOrientation;
     edit.refreshNodeSelectedIndex();

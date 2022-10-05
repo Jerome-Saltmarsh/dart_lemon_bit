@@ -13,8 +13,6 @@ var gridNodeDst1 = Float32List(0);
 var gridNodeDst2 = Float32List(0);
 var gridNodeDst3 = Float32List(0);
 var gridNodeColor = Int32List(0);
-var gridNodeEmpty = List<bool>.generate(0, (index) => false);
-
 var gridNodeTypes = Uint8List(0);
 var gridNodeOrientations = Uint8List(0);
 var gridNodeShade = Uint8List(0);
@@ -23,19 +21,24 @@ var gridNodeWind = Uint8List(0);
 var gridNodeVisible = <bool>[];
 var gridNodeVariation = <bool>[];
 var gridNodeTotal = 0;
+var gridNodeEmpty = List<bool>.generate(0, (index) => false);
+
 
 void gridNodeShadeSet(int index, int shade){
+
   if (shade < 0) {
     shade = 0;
   } else
   if (shade > Shade.Pitch_Black){
     shade = Shade.Pitch_Black;
+
   }
   gridNodeShade[index] = shade;
 }
 
 int gridNodeIndexZRC(int z, int row, int column) {
   assert (gridNodeIsInBounds(z, row, column));
+
   return (z * gridTotalArea) + (row * gridTotalColumns) + column;
 }
 
