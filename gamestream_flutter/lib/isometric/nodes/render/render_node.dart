@@ -20,7 +20,9 @@ import 'package:lemon_engine/render.dart';
 
 import 'render_constants.dart';
 import 'render_node_plain.dart';
+import 'render_node_type_brick.dart';
 import 'render_node_wooden_plank.dart';
+import 'render_standard_node.dart';
 
 const spriteWidth = 48.0;
 const spriteWidthHalf = 24.0;
@@ -303,6 +305,11 @@ void renderNodeTypeGrass({
         srcX: AtlasSrc.Node_Grass_Slope_East,
         srcY: spriteHeight * shade,
       );
+    case NodeOrientation.Slope_South:
+      return renderStandardNode(
+        srcX: AtlasSrc.Node_Grass_Slope_South,
+        srcY: spriteHeight * shade,
+      );
     case NodeOrientation.Slope_West:
       return renderStandardNode(
         srcX: AtlasSrc.Node_Grass_Slope_West,
@@ -351,96 +358,6 @@ void renderNodeTypeGrass({
     default:
       throw Exception('renderNodeTypeGrass(x: $x, y: $y, orientation: ${NodeOrientation.getName(orientation)}, shade: ${Shade.getName(shade)}');
   }
-}
-
-void renderNodeTypeBrick({
-  required double x,
-  required double y,
-  required int orientation,
-  required int shade,
-}) {
-  switch (orientation) {
-    case NodeOrientation.Solid:
-      return renderStandardNode(
-        srcX: AtlasSrc.Node_Brick,
-        srcY: spriteHeight * shade,
-      );
-    case NodeOrientation.Slope_North:
-      return renderStandardNode(
-        srcX: AtlasSrc.Node_Brick_Slope_North,
-        srcY: spriteHeight * shade,
-      );
-    case NodeOrientation.Slope_East:
-      return renderStandardNode(
-        srcX: AtlasSrc.Node_Brick_Slope_East,
-        srcY: spriteHeight * shade,
-      );
-    case NodeOrientation.Slope_South:
-      return renderStandardNode(
-        srcX: AtlasSrc.Node_Brick_Slope_South,
-        srcY: spriteHeight * shade,
-      );
-    case NodeOrientation.Slope_West:
-      return renderStandardNode(
-        srcX: AtlasSrc.Node_Brick_Slope_West,
-        srcY: spriteHeight * shade,
-      );
-    case NodeOrientation.Half_North:
-      return renderStandardNode(
-        srcX: AtlasSrc.Node_Brick_Half_North,
-        srcY: spriteHeight * shade,
-      );
-    case NodeOrientation.Half_East:
-      return renderStandardNode(
-        srcX: AtlasSrc.Node_Brick_Half_East,
-        srcY: spriteHeight * shade,
-      );
-    case NodeOrientation.Half_South:
-      return renderStandardNode(
-        srcX: AtlasSrc.Node_Brick_Half_South,
-        srcY: spriteHeight * shade,
-      );
-    case NodeOrientation.Half_West:
-      return renderStandardNode(
-        srcX: AtlasSrc.Node_Brick_Half_West,
-        srcY: spriteHeight * shade,
-      );
-    default:
-      throw Exception("renderNodeTypeBrick(orientation: ${NodeOrientation.getName(orientation)}");
-  }
-}
-
-void renderStandardNode({
-  required double srcX,
-  required double srcY,
-  int color = 1,
-}){
-
-  colors[renderIndex] = color;
-
-  src[bufferIndex] = srcX;
-  dst[bufferIndex] = 1;
-  bufferIndex++;
-
-  src[bufferIndex] = srcY;
-  dst[bufferIndex] = 0;
-  bufferIndex++;
-
-  src[bufferIndex] = srcX + spriteWidth;
-  dst[bufferIndex] = renderNodeDstX - spriteWidthHalf;
-
-  bufferIndex++;
-  src[bufferIndex] = srcY + spriteHeight;
-  dst[bufferIndex] = renderNodeDstY - spriteHeightThird;
-
-  bufferIndex++;
-  renderIndex++;
-
-  if (bufferIndex < buffers) return;
-  bufferIndex = 0;
-  renderIndex = 0;
-
-  renderAtlas();
 }
 
 void renderStandardNodeHalfNorth({

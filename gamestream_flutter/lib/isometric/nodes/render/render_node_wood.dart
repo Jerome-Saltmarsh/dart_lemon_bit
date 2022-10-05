@@ -2,7 +2,7 @@
 import 'package:bleed_common/node_orientation.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src.dart';
 
-import 'render_node.dart';
+import 'render_standard_node.dart';
 
 void renderNodeWood({
   required int orientation,

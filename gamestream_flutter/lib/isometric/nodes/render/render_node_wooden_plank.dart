@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/isometric/nodes/render/atlas_src.dart';
 
 import 'render_constants.dart';
 import 'render_node.dart';
+import 'render_standard_node.dart';
 
 void renderNodeWoodenPlank({
   required int orientation,
