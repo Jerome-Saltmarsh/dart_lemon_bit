@@ -9,8 +9,6 @@ import '../classes/library.dart';
 import '../common/gameobject_request.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
-import '../common/node_orientation.dart';
-import '../common/node_request.dart';
 import '../common/particle_type.dart';
 import '../common/spawn_type.dart';
 import '../common/teleport_scenes.dart';
@@ -526,51 +524,6 @@ class Connection {
     //
     // game.onGridChanged();
     // return;
-  }
-
-  void handleNodeRequest(List<String> arguments) {
-    final player = _player;
-    if (player == null) return;
-    if (arguments.length <= 1)
-      return errorInvalidArg('handleGameObjectRequest invalid args');
-
-    final nodeRequestIndex = int.tryParse(arguments[1]);
-    if (nodeRequestIndex == null)
-      return errorInvalidArg("nodeRequestIndex is null");
-
-    if (!isValidIndex(nodeRequestIndex, nodeRequests))
-      return errorInvalidArg("nodeRequestIndex ($nodeRequestIndex) is invalid");
-
-    final nodeRequest = nodeRequests[nodeRequestIndex];
-
-    switch (nodeRequest) {
-      case NodeRequest.Set:
-        return handleNodeRequestSetBlock(arguments);
-      case NodeRequest.Orient:
-        final orientation = int.tryParse(arguments[2]);
-        final z = int.tryParse(arguments[3]);
-        final row = int.tryParse(arguments[4]);
-        final column = int.tryParse(arguments[5]);
-        if (orientation == null) return;
-        if (z == null) return;
-        if (row == null) return;
-        if (column == null) return;
-        final scene = player.game.scene;
-        if (scene.outOfBounds(z, row, column)){
-          return;
-        }
-        final nodeIndex = scene.getNodeIndex(z, row, column);
-        final nodeType = scene.nodeTypes[nodeIndex];
-        if (NodeType.supportsOrientation(nodeType, orientation)) {
-          scene.nodeOrientations[nodeIndex] = orientation;
-          for (final player in player.game.players){
-            player.writeNode(nodeIndex);
-          }
-        } else {
-          errorInvalidArg('node type $nodeType ${NodeType.getName(nodeType)} does not support orientation $orientation ${NodeOrientation.getName(orientation)}');
-        }
-        break;
-    }
   }
 
   void handleGameObjectRequest(List<String> arguments) {
