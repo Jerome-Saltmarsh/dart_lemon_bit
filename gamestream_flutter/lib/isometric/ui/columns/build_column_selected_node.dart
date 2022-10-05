@@ -62,7 +62,7 @@ Widget buildEditorSelectedNode() =>
                 left: 27 + _shiftX,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) =>
                       buildAtlasImageButton(
-                          action: edit.cursorZDecrease,
+                          action: edit.cursorZIncrease,
                           srcX: mouseOver ? 9673 : 9650,
                           srcY: 27,
                           srcWidth: 19,
@@ -75,7 +75,7 @@ Widget buildEditorSelectedNode() =>
                 top: 3 + _shiftY,
                 left: 3 + _shiftY,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
-                  action: edit.cursorRowDecrease,
+                  action: edit.cursorRowIncrease,
                   srcX: mouseOver ? 9672 : 9649,
                   srcY: 110,
                   srcWidth: 21,
@@ -87,7 +87,7 @@ Widget buildEditorSelectedNode() =>
                 top: 5 + _shiftY,
                 left: 50 + _shiftX,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
-                    action: edit.cursorColumnDecrease,
+                    action: edit.cursorColumnIncrease,
                     srcX: mouseOver ? 9672 : 9649,
                     srcY: 137,
                     srcWidth: 21,
@@ -104,7 +104,7 @@ Widget buildEditorSelectedNode() =>
                 top: 50 + _shiftY,
                 left: 50 + _shiftX,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
-                  action: edit.cursorRowIncrease,
+                  action: edit.cursorRowDecrease,
                   srcX: mouseOver ? 9672 : 9649,
                   srcY: 56,
                   srcWidth: 21,
@@ -116,7 +116,7 @@ Widget buildEditorSelectedNode() =>
                 top: -10 + _shiftY,
                 left: 27 + _shiftX,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
-                  action: edit.cursorZIncrease,
+                  action: edit.cursorZDecrease,
                   srcX: mouseOver ? 9673 : 9650,
                   srcY: 0,
                   srcWidth: 21,
@@ -128,7 +128,7 @@ Widget buildEditorSelectedNode() =>
                 top: 50 + _shiftY,
                 left: 0 + _shiftX,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
-                    action: edit.cursorColumnIncrease,
+                    action: edit.cursorColumnDecrease,
                     srcX: mouseOver ? 9672 : 9649,
                     srcY: 83,
                     srcWidth: 21,
@@ -139,32 +139,6 @@ Widget buildEditorSelectedNode() =>
             ],
           ),
         ),
-        // height4,
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     Tooltip(child: text("<", onPressed: () => edit.row.value--), message: "Arrow Up",),
-        //     watch(edit.row, (int row) => text("X: $row")),
-        //     Tooltip(child: text(">", onPressed: () => edit.row.value++), message: "Arrow Down",),
-        //   ],
-        // ),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     Tooltip(child: text("<", onPressed: () => edit.column.value--), message: "Arrow Right",),
-        //     watch(edit.column, (int column) => text("Y: $column")),
-        //     Tooltip(child: text(">", onPressed: () => edit.column.value++), message: "Arrow Left",),
-        //   ],
-        //
-        // ),
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     Tooltip(child: text("<", onPressed: () => edit.z.value--), message: "Shift + Arrow Down",),
-        //     watch(edit.z, (int z) => text("Z: $z")),
-        //     Tooltip(child: text(">", onPressed: () => edit.z.value++), message: "Shift + Arrow Up",),
-        //   ],
-        // ),
       ],
     ),
   );
