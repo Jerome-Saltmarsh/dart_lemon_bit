@@ -124,7 +124,27 @@ class GameSkirmish extends Game {
         }
     }
 
+    addGameObjectWeaponShotgun(z: 1, row: 2, column: 2);
   }
+
+  void addGameObjectWeaponShotgun({
+    required int z,
+    required int row,
+    required int column,
+  }){
+    gameObjects.add(
+        GameObjectWeapon(
+            x: row * tileSize,
+            y: column * tileSize,
+            z: z * tileHeight,
+            weaponType: AttackType.Shotgun,
+        )
+    );
+  }
+
+  // int convertIndexToZ(int index) => index ~/ scene.gridArea;
+  // int convertIndexToRow(int index) => index - (convertIndexToZ(index) * scene.gridArea);
+  // int convertIndexToColumn(int index) => index - (convertIndexToZ(index) * scene.gridArea);
 
   @override
   void customUpdate() {

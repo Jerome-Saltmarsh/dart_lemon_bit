@@ -76,7 +76,16 @@ class NodeType {
     type == Plain ||
     type == Wooden_Plank ||
     type == Bau_Haus_2 ||
+    type == Table ||
     type == Boulder;
+
+  static bool isOrientationEmpty(int type) =>
+      type == Empty ||
+      type == Water ||
+      type == Spawn ||
+      type == Respawning ||
+      type == Rain_Landing ||
+      type == Rain_Falling ;
 
   static bool isRadial(int type) =>
     type == Tree_Bottom ||
@@ -157,11 +166,10 @@ class NodeType {
      return NodeOrientation.None;
   }
 
-  static bool supportsOrientation(int type, int orientation){
+  static bool supportsOrientation(int type, int orientation) {
 
-    if (type == NodeType.Empty) {
-      return orientation == NodeOrientation.None;
-    }
+    if (orientation == NodeOrientation.None)
+      return isOrientationEmpty(type);
 
     if (NodeOrientation.isSolid(orientation))
       return isSolid(type);
@@ -221,5 +229,6 @@ class NodeType {
     Wooden_Plank: "Wooden Plank",
     Boulder: "Boulder",
     Spawn: "Spawn",
+    Respawning: "Respawning",
   }[type] ?? "unknown($type)";
 }

@@ -12,6 +12,9 @@ import 'package:lemon_watch/watch_builder.dart';
 
 import '../isometric/ui/widgets/build_container.dart';
 import 'build/build_column_games.dart';
+import 'package:lemon_watch/watch.dart';
+
+final isVisibleDialogCustomRegion = Watch(false);
 
 Widget buildPageWebsite({double padding = 6})  =>
   Stack(
@@ -21,9 +24,21 @@ Widget buildPageWebsite({double padding = 6})  =>
         right: padding,
         child: buildTextVersion(),
       ),
-      Positioned(
-        top: padding,
-        left: padding,
+      // buildWatchBool(isVisibleDialogCustomRegion, () {
+      //   return Positioned(
+      //     top: 16,
+      //     left: 100,
+      //     child: buildDialogCustomRegion(),
+      //   );
+      // }),
+      // Positioned(
+      //     top: 8,
+      //     left: 100,
+      //     child: buildWatchBool(isVisibleDialogCustomRegion, buildDialogCustomRegion),
+      //   ),
+        Positioned(
+          top: padding,
+          left: padding,
         child: buildButtonRegion(),
       ),
       Positioned(
@@ -52,11 +67,32 @@ Widget buildPageWebsite({double padding = 6})  =>
     ],
   );
 
+
 Widget buildButtonRegion() => WatchBuilder(
     core.state.region,
     (Region selectedRegion) => onMouseOver(
         builder: (BuildContext context, bool mouseOver) => !mouseOver
-            ? container(child: enumString(selectedRegion), color: Colors.transparent,)
+            ? container(
+          child: Row(
+            children: [
+              text('REGION ', color: Colors.white54),
+              text(enumString(selectedRegion), color: Colors.white70),
+              buildWatchBool(isVisibleDialogCustomRegion, () {
+                return Container(
+                  width: 280,
+                  margin: const EdgeInsets.only(left: 12),
+                  child: TextField(
+                    autofocus: true,
+                    decoration: InputDecoration(
+                        labelText: 'ws connection string'
+                    ),
+                  ),
+                );
+              })
+            ],
+          ),
+          color: Colors.transparent,
+        )
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

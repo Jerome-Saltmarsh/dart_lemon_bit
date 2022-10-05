@@ -1,7 +1,6 @@
 
 import 'dart:typed_data';
 
-// used to store projectiles particles and gameobjects
 class ApiGameObject {
   final positionX = Float32List(100);
   final positionY = Float32List(100);
@@ -30,16 +29,7 @@ class ApiGameObject {
   }
 
   int getInactiveIndex() =>
-    inactiveIndexAvailable ? inactiveIndex-- : No_Active_Index_Available;
-
-}
-
-
-
-// create a sub list of move distances
-
-// next sub sort that list or moves
-
-void sortInts(List<int> numbers){
-
+    inactiveIndexAvailable
+        ? inactiveIndex--
+        : No_Active_Index_Available;
 }

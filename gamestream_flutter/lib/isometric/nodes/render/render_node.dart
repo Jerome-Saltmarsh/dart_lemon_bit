@@ -27,16 +27,14 @@ const spriteWidthHalf = 24.0;
 const spriteHeight = 72.0;
 const spriteHeightThird = 24.0;
 
-
-
 /// remove objects from the render layer to reduce garbage collection
 void renderNodeAt(){
-  onscreenNodes++;
-
   if (!gridNodeVisible[renderNodeIndex]) {
     gridNodeVisible[renderNodeIndex] = true;
     return;
   }
+
+  onscreenNodes++;
   final shade = gridNodeShade[renderNodeIndex];
   final color = colorShades[shade];
 
@@ -258,6 +256,28 @@ void renderNodeAt(){
         srcY: 0,
       );
       break;
+    case NodeType.Respawning:
+      return;
+    case NodeType.Table:
+      renderStandardNode(
+        srcX: AtlasSrc.Node_Table,
+        srcY: 0,
+      );
+      return;
+    case NodeType.Bed_Top:
+      renderStandardNode(
+        srcX: AtlasSrc.Node_Bed_Top,
+        srcY: 0,
+      );
+      return;
+    case NodeType.Bed_Bottom:
+      renderStandardNode(
+        srcX: AtlasSrc.Node_Bed_Bottom,
+        srcY: 0,
+      );
+      return;
+    default:
+      throw Exception('renderNode(index: $renderNodeIndex, type: ${NodeType.getName(renderNodeType)}, orientation: ${NodeOrientation.getName(gridNodeOrientations[renderNodeIndex])}');
   }
 }
 
@@ -328,6 +348,8 @@ void renderNodeTypeGrass({
         srcX: AtlasSrc.Node_Grass_Slope_Outer_North_West,
         srcY: spriteHeight * shade,
       );
+    default:
+      throw Exception('renderNodeTypeGrass(x: $x, y: $y, orientation: ${NodeOrientation.getName(orientation)}, shade: ${Shade.getName(shade)}');
   }
 }
 
@@ -383,6 +405,8 @@ void renderNodeTypeBrick({
         srcX: AtlasSrc.Node_Brick_Half_West,
         srcY: spriteHeight * shade,
       );
+    default:
+      throw Exception("renderNodeTypeBrick(orientation: ${NodeOrientation.getName(orientation)}");
   }
 }
 

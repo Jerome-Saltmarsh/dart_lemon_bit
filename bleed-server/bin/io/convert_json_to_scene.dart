@@ -25,8 +25,13 @@ Scene convertJsonToScene(Json json, String name) {
 
   for(var i = 0; i < total; i++){
     assert (nodeTypesDynamic.length == total);
-    final nodeType = nodeTypesDynamic[i];
+    var nodeType = nodeTypesDynamic[i];
     final nodeOrientation = nodeOrientations[i];
+
+    if (nodeType == NodeType.Cottage_Roof){
+      nodeType = NodeType.Bau_Haus_2;
+    }
+
     types[i] = nodeType;
     if (NodeType.supportsOrientation(nodeType, nodeOrientation)){
       orientations[i] = nodeOrientation;

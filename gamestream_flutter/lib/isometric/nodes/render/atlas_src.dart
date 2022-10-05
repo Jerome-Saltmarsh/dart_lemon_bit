@@ -51,4 +51,7 @@ class AtlasSrc {
   static const Node_Spawn = 8752.0;
   static const Node_Bau_Haus_Solid = 11720.0;
   static const Node_Bau_Haus_Slope = 11228.0;
+  static const Node_Table = 7639.0;
+  static const Node_Bed_Bottom = 10836.0;
+  static const Node_Bed_Top = 10885.0;
 }

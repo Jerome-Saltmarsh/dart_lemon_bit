@@ -1,4 +1,5 @@
 class NodeOrientation {
+   /// none collidable nodes such as empty space and rain
    static const None = 0;
    static const Slope_North = 1;
    static const Slope_East = 2;
@@ -67,6 +68,9 @@ class NodeOrientation {
 
    static bool isCorner(int value) =>
        valuesCorners.contains(value);
+
+   static bool isEmpty(int value) =>
+      value == None;
 
    static bool isSolid(int value) =>
        value == Solid;

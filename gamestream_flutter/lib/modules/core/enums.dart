@@ -26,7 +26,8 @@ enum Region {
   South_Korea,
   USA_East,
   USA_West,
-  LocalHost
+  LocalHost,
+  Custom,
 }
 
 final List<Region> regions = Region.values;
