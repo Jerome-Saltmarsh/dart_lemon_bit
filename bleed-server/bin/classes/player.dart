@@ -755,6 +755,15 @@ class Player extends Character with ByteWriter {
     writeByte(GameOption.Set_Control_Scheme);
     writeByte(game.controlScheme);
   }
+
+  void writeNode(int index){
+    assert (index >= 0);
+    assert (index < scene.gridVolume);
+    writeByte(ServerResponse.Node);
+    writePositiveInt(index);
+    writeByte(scene.nodeTypes[index]);
+    writeByte(scene.nodeOrientations[index]);
+  }
 }
 
 int getExperienceForLevel(int level){

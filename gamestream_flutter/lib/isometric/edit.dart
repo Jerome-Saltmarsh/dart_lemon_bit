@@ -2,12 +2,12 @@ import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_type.dart';
 import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
+import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_cursor_position.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_node_type_spawn_selected.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_paint_type.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node_type.dart';
-import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
@@ -35,12 +35,6 @@ class SpawnNodeData {
 class Edit {
 
 
-  int clamp(Function value, Function min, Function max){
-    if (value() < min()) return min();
-    if (value() > max()) return max();
-    return value();
-  }
-
   final selectedNodeData = Watch<SpawnNodeData?>(null);
   final gameObject = GameObject();
   final gameObjectSelected = Watch(false);
@@ -64,45 +58,56 @@ class Edit {
   final nodeSupportsCorner = Watch(false);
   final isActiveEditTriggers = Watch(true);
 
-  void cursorRowIncrease() => row.value++;
-  void cursorRowDecrease() => row.value--;
-  void cursorColumnIncrease() => column.value++;
-  void cursorColumnDecrease() => column.value--;
-  void cursorZIncrease() => z.value++;
-  void cursorZDecrease() => z.value--;
+  void cursorRowIncrease() {
+     if (row >= gridTotalRows) return;
+     row++;
+  }
 
-  var row = Watch(0, clamp: (int value){
-    if (value < 0) return 0;
-    if (value >= gridTotalRows) return gridTotalRows - 1;
-    return value;
-  }, onChanged: onChangedCursorPosition);
-  var column = Watch(0, clamp: (int value){
-    if (value < 0) return 0;
-    if (value >= gridTotalColumns) return gridTotalColumns - 1;
-    return value;
-  },
-      onChanged: onChangedCursorPosition
-  );
-  var z = Watch(1, clamp: (int value){
-    if (value < 0) return 0;
-    if (value >= gridTotalZ) return gridTotalZ - 1;
-    return value;
-  }, onChanged: onChangedCursorPosition);
+  void cursorRowDecrease() => row--;
+  void cursorColumnIncrease() => column++;
+  void cursorColumnDecrease() => column--;
+  void cursorZIncrease() => z++;
+  void cursorZDecrease() => z--;
 
+  var nodeIndex = Watch(0, onChanged: onChangedCursorPosition);
+
+  int get z => convertIndexToZ(nodeIndex.value);
+  int get row => convertIndexToRow(nodeIndex.value);
+  int get column => convertIndexToColumn(nodeIndex.value);
+
+  set z(int value){
+     if (value < 0) return;
+     if (value >= gridTotalZ) return;
+     final difference = z - value;
+     nodeIndex.value += difference * gridTotalArea;
+  }
+
+  set row(int value){
+    if (value < 0) return;
+    if (value >= gridTotalRows) return;
+    final difference = row - value;
+    nodeIndex.value += difference * gridTotalColumns;
+  }
+
+  set column(int value){
+    if (value < 0) return;
+    if (value >= gridTotalColumns) return;
+    nodeIndex.value += column - value;
+  }
 
   final paintType = Watch(NodeType.Brick_2, onChanged: onChangedPaintType);
   final paintOrientation = Watch(NodeOrientation.None);
   final controlsVisibleWeather = Watch(true);
 
-  double get posX => row.value * tileSize + tileSizeHalf;
-  double get posY => column.value * tileSize + tileSizeHalf;
-  double get posZ => z.value * tileHeight;
+  double get posX => row * tileSize + tileSizeHalf;
+  double get posY => column * tileSize + tileSizeHalf;
+  double get posZ => z * tileHeight;
 
   double get renderX => projectX(edit.posX, edit.posY);
   double get renderY => projectY(edit.posX, edit.posY, edit.posZ);
 
   void refreshNodeSelectedIndex(){
-    nodeSelectedIndex.value = gridNodeIndexZRC(z.value, row.value, column.value);
+    nodeSelectedIndex.value = gridNodeIndexZRC(z, row, column);
     nodeSelectedType.value = gridNodeTypes[nodeSelectedIndex.value];
     nodeSelectedOrientation.value = gridNodeOrientations[nodeSelectedIndex.value];
   }
@@ -132,18 +137,6 @@ class Edit {
     paintOrientation.value = NodeType.getDefaultOrientation(nodeType);
   }
 
-  void fill(){
-    for (var zIndex = 0; zIndex <= z.value; zIndex++){
-      sendClientRequestSetBlock(row.value, column.value, zIndex, paintType.value, paintOrientation.value);
-    }
-  }
-
-  void paintSlope(int row, int column, int z){
-    if (outOfBounds(z, row, column)) return;
-    var type = NodeType.Grass;
-    sendClientRequestSetBlock(row, column, z, type, paintOrientation.value);
-  }
-
   void paintMouse(){
       selectMouseBlock();
       paint(selectPlayerIfPlay: false);
@@ -161,36 +154,8 @@ class Edit {
     paint(nodeType: NodeType.Torch);
   }
 
-  void paintTree(){
-    selectPlayerIfPlayerMode();
-    var zz = z.value;
-    // if (NodeType.isSolid(currentType)){
-    //     for (var i = 0; i < gridTotalZ - 1; i++){
-    //        if (NodeType.isSolid(grid[i][row.value][column.value])) continue;
-    //        zz = i;
-    //        break;
-    //     }
-    // } else {
-    //   for (var i = zz - 1; i >= 0; i--){
-    //     if (!NodeType.isSolid(grid[i][row.value][column.value])) continue;
-    //     zz = i + 1;
-    //     break;
-    //   }
-    // }
-    sendClientRequestSetBlock(row.value, column.value, zz, NodeType.Tree_Bottom);
-    sendClientRequestSetBlock(row.value, column.value, zz + 1, NodeType.Tree_Top);
-  }
-
-  void selectPlayerIfPlayerMode(){
-    if (playMode) selectPlayer();
-  }
-
   void paintLongGrass(){
     paint(nodeType: NodeType.Grass_Long);
-  }
-
-  void paintAtPlayerLongGrass(){
-    sendClientRequestSetBlock(player.indexRow, player.indexColumn, player.indexZ, NodeType.Grass_Long);
   }
 
   void paintBricks(){
@@ -205,24 +170,8 @@ class Edit {
     paint(nodeType: NodeType.Water);
   }
 
-  void paintFloorBricks(){
-     for (var row = 0; row < gridTotalRows; row++){
-        for (var column = 0; column < gridTotalColumns; column++){
-          sendClientRequestSetBlock(row, column, 0, NodeType.Brick_2);
-        }
-     }
-  }
-
   void selectBlock(int z, int row, int column){
-    this.row.value = row;
-    this.column.value = column;
-    this.z.value = z;
-  }
-
-  void selectPlayerBlock(){
-    row.value = player.indexRow;
-    column.value = player.indexColumn;
-    z.value = player.indexZ;
+    nodeIndex.value = gridNodeIndexZRC(z, row, column);
   }
 
   void deleteGameObjectSelected(){
@@ -241,24 +190,18 @@ class Edit {
   }
 
   void setNodeType(int type, int orientation) =>
-    sendClientRequestSetBlock(row.value, column.value, z.value, type, orientation);
+    sendClientRequestSetBlock(
+        index: nodeIndex.value,
+        type: type,
+        orientation: orientation,
+    );
 
   void selectPaintType(){
      paintType.value = nodeSelectedType.value;
      paintOrientation.value = nodeSelectedOrientation.value;
   }
 
-  void selectPlayer(){
-    z.value = player.indexZ;
-    row.value = player.indexRow;
-    column.value = player.indexColumn;
-  }
-
   void paint({int? nodeType, bool selectPlayerIfPlay = true}) {
-    if (playMode && selectPlayerIfPlay){
-      selectPlayer();
-    }
-
     if (nodeType == NodeType.Empty){
        return delete();
     }
@@ -276,21 +219,11 @@ class Edit {
     }
 
     return sendClientRequestSetBlock(
-        row.value,
-        column.value,
-        z.value,
-        nodeType,
-        orientation,
+        index: nodeIndex.value,
+        type: nodeType,
+        orientation: orientation,
     );
   }
-}
 
-void editZIncrease(){
-   if (edit.z.value >= gridTotalZ) return;
-   edit.z.value++;
-}
-
-void editZDecrease(){
-  if (edit.z.value <= 0) return;
-  edit.z.value--;
+  void setCursorToPlayer() => nodeIndex.value = player.nodeIndex;
 }

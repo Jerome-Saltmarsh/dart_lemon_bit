@@ -1,13 +1,12 @@
 
 import 'package:gamestream_flutter/isometric/edit.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 
 void editorActionRefreshSelectedNodeData(){
-  sendClientRequestSpawnNodeData(
-    edit.z.value,
-    edit.row.value,
-    edit.column.value,
-  );
+  // sendClientRequestSpawnNodeData(
+  //   edit.z.value,
+  //   edit.row.value,
+  //   edit.column.value,
+  // );
 }
 
 void editorActionClearSelectedNodeData(){

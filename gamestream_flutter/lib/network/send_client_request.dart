@@ -2,8 +2,6 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/gameobject_request.dart';
 import 'package:bleed_common/library.dart';
-import 'package:bleed_common/node_orientation.dart';
-import 'package:bleed_common/node_request.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:bleed_common/teleport_scenes.dart';
 import 'package:flutter/services.dart';
@@ -13,7 +11,6 @@ import 'package:gamestream_flutter/network/instance/websocket.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/screen.dart';
 
-import '../isometric/edit.dart';
 
 final updateBuffer = Uint8List(17);
 
@@ -131,35 +128,14 @@ void sendClientRequestRespawn(){
  sendClientRequest(ClientRequest.Revive);
 }
 
-void sendNodeRequestOrientNorth() =>
-    sendNodeRequestOrient(NodeOrientation.Slope_North);
-
-void sendNodeRequestOrientEast() =>
-    sendNodeRequestOrient(NodeOrientation.Slope_East);
-
-void sendNodeRequestOrientSouth() =>
-    sendNodeRequestOrient(NodeOrientation.Slope_South);
-
-void sendNodeRequestOrientWest() =>
-    sendNodeRequestOrient(NodeOrientation.Slope_West);
-
-void sendNodeRequestOrient(int orientation){
-  sendNodeRequest(
-      NodeRequest.Orient,
-      "$orientation ${edit.z.value} ${edit.row.value} ${edit.column.value}",
-  );
-}
-
-void sendClientRequestSetBlock(int row, int column, int z, int type, [int orientation = NodeOrientation.None] ) =>
-  sendNodeRequest(
-      NodeRequest.Set,
-      '$row $column $z $type $orientation',
-  );
-
-void sendNodeRequest(NodeRequest request, [dynamic message]) =>
+void sendClientRequestSetBlock({
+  required int index,
+  required int type,
+  required int orientation,
+}) =>
   sendClientRequest(
       ClientRequest.Node,
-      message != null ? "${request.index} $message" : request.index,
+      '$index $type $orientation',
   );
 
 void sendClientRequestAddGameObject({

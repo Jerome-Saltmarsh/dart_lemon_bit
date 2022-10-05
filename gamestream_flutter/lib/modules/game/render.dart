@@ -177,10 +177,10 @@ class GameRender {
   }
 
   void renderEditWireFrames() {
-    for (var z = 0; z < edit.z.value; z++) {
-      renderWireFrameBlue(z, edit.row.value, edit.column.value);
+    for (var z = 0; z < edit.z; z++) {
+      renderWireFrameBlue(z, edit.row, edit.column);
     }
-    renderWireFrameRed(edit.row.value, edit.column.value, edit.z.value);
+    renderWireFrameRed(edit.row, edit.column, edit.z);
   }
 
   void renderTeamColours() {

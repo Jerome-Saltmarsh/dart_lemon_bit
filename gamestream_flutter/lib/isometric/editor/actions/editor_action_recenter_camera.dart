@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/isometric/edit.dart';
 
 void editorActionRecenterCamera() =>
   cameraSetPositionGrid(
-      edit.row.value,
-      edit.column.value,
-      edit.z.value,
+      edit.row,
+      edit.column,
+      edit.z,
   );

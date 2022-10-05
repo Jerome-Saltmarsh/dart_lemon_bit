@@ -5,7 +5,6 @@ import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
-import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
@@ -145,16 +144,6 @@ Widget buildToggleRain() {
       children: list,
     );
   });
-}
-
-Widget buildButtonRecenter() {
-  return container(
-      child: "Recenter",
-      action: () {
-        edit.z.value = player.indexZ;
-        edit.row.value = player.indexRow;
-        edit.column.value = player.indexColumn;
-      });
 }
 
 Widget buildButtonLightning() {
@@ -299,9 +288,6 @@ Widget buildButtonSelectNodeType(int nodeType) {
         action: () {
           if (playMode) {
             actionSetModePlay();
-            edit.column.value = player.indexColumn;
-            edit.row.value = player.indexRow;
-            edit.z.value = player.indexZ;
             return;
           }
           edit.paint(nodeType: nodeType);
@@ -310,39 +296,4 @@ Widget buildButtonSelectNodeType(int nodeType) {
   });
 }
 
-Widget buildColumnEdit() {
-  return Column(
-    children: [
-      onPressed(
-        action: editZIncrease,
-        child: Container(
-          alignment: Alignment.center,
-          child: text("+"),
-          width: 50,
-          height: 50,
-          color: Colors.grey,
-        ),
-      ),
-      watch(edit.z, (int z) {
-        return Container(
-          alignment: Alignment.center,
-          child: text('Z:$z'),
-          width: 50,
-          height: 50,
-          color: Colors.grey,
-        );
-      }),
-      onPressed(
-        action: editZDecrease,
-        child: Container(
-          alignment: Alignment.center,
-          child: text("-"),
-          width: 50,
-          height: 50,
-          color: Colors.grey,
-        ),
-      ),
-    ],
-  );
-}
 

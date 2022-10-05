@@ -423,9 +423,9 @@ class RenderOrderGrid extends RenderOrder {
 
     if (editMode){
        applyEmissionDynamic(
-           zIndex: edit.z.value,
-           rowIndex: edit.row.value,
-           columnIndex: edit.column.value,
+           zIndex: edit.z,
+           rowIndex: edit.row,
+           columnIndex: edit.column,
            maxBrightness: Shade.Very_Bright,
        );
     }

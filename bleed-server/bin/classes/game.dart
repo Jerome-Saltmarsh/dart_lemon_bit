@@ -497,7 +497,6 @@ abstract class Game {
     if (!scene.getNodeInBoundsXYZ(performX, performY, performZ)) return;
     final nodeIndex = scene.getNodeIndexXYZ(performX, performY, performZ);
     final nodeType = scene.nodeTypes[nodeIndex];
-    final nodeOrientation = scene.nodeOrientations[nodeIndex];
 
     if (!NodeType.isStrikable(nodeType)) {
       if (!attackHit){
@@ -533,19 +532,12 @@ abstract class Game {
     }
 
     if (NodeType.isDestroyable(nodeType)) {
-      final z = performZ ~/ tileSizeHalf;
-      final row = performX ~/ tileSize;
-      final column = performY ~/ tileSize;
-      setNode(z, row, column, NodeType.Empty, NodeOrientation.Destroyed);
-
+      setNode(
+          nodeIndex: nodeIndex,
+          nodeType: NodeType.Empty,
+          nodeOrientation: NodeOrientation.None,
+      );
       attackHit = true;
-      perform((){
-        setNode(z, row, column, NodeType.Respawning, NodeOrientation.None);
-      }, 300);
-
-      perform((){
-        setNode(z, row, column, nodeType, nodeOrientation);
-      }, 400);
     }
 
     if (!attackHit){
@@ -630,38 +622,6 @@ abstract class Game {
       );
       player.writeByte(character.type);
     }
-  }
-
-  void setNode(int z, int row, int column, int type, int orientation) {
-    if (scene.outOfBounds(z, row, column)) return;
-    final index = scene.getNodeIndex(z, row, column);
-    final currentType = scene.nodeTypes[index];
-    final currentOrientation = scene.nodeOrientations[index];
-    if (currentType == type && currentOrientation == orientation) {
-      return;
-    }
-    scene.dirty = true;
-    scene.nodeTypes[index] = type;
-    scene.nodeOrientations[index] = orientation;
-    scene.setNode(z, row, column, type, orientation);
-    onNodeChanged(z, row, column);
-  }
-
-  void onNodeChanged(int z, int row, int column) {
-    final nodeIndex = scene.getNodeIndex(z, row, column);
-    final type = scene.nodeTypes[nodeIndex];
-    final orientation = scene.nodeTypes[nodeIndex];
-
-    /// TODO convert to player.writeNode function in
-    players.forEach((player) {
-      player.writeByte(ServerResponse.Node);
-      player.writeInt(z);
-      player.writeInt(row);
-      player.writeInt(column);
-      player.writeByte(type);
-      player.writeByte(orientation);
-    });
-    scene.dirty = true;
   }
 
   void removeFromEngine() {
@@ -2320,6 +2280,46 @@ abstract class Game {
         setCharacterStateDead(character);
       }
     }
+  }
+
+  void setNode({
+    required int nodeIndex,
+    required int nodeType,
+    required int nodeOrientation,
+  }) {
+    if (nodeIndex >= scene.gridVolume) {
+      throw Exception("node index out of bounds");
+    }
+    if (
+      nodeType == scene.nodeTypes[nodeIndex] &&
+      nodeOrientation == scene.nodeOrientations[nodeIndex]
+    ) return;
+
+    if (!NodeType.supportsOrientation(nodeType, nodeOrientation)){
+      throw Exception("game.setNode(index: $nodeIndex, type: $nodeType, orientation: $nodeOrientation");
+    }
+    scene.dirty = true;
+    scene.nodeOrientations[nodeIndex] = nodeOrientation;
+    scene.nodeTypes[nodeIndex] = nodeType;
+    for (final player in players){
+      player.writeNode(nodeIndex);
+    }
+
+    // if (nodeType == NodeType.Empty){
+    //   dispatch(
+    //     GameEventType.Node_Deleted,
+    //     convertIndexToX(row),
+    //     convertIndexToY(column),
+    //     convertIndexToZ(z),
+    //   );
+    // } else {
+    //   game.dispatch(
+    //     GameEventType.Node_Set,
+    //     convertIndexToX(row),
+    //     convertIndexToY(column),
+    //     convertIndexToZ(z),
+    //   );
+    // }
   }
 }
 

@@ -4,9 +4,9 @@ import 'package:gamestream_flutter/network/send_client_request.dart';
 
 void editorActionAddGameObject(int type){
   sendClientRequestAddGameObject(
-      z: edit.z.value,
-      row: edit.row.value,
-      column: edit.column.value,
+      z: edit.z,
+      row: edit.row,
+      column: edit.column,
       type: type,
   );
 }

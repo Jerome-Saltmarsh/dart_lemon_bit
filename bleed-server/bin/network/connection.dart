@@ -11,7 +11,6 @@ import '../common/library.dart';
 import '../common/maths.dart';
 import '../common/node_orientation.dart';
 import '../common/node_request.dart';
-import '../common/node_size.dart';
 import '../common/particle_type.dart';
 import '../common/spawn_type.dart';
 import '../common/teleport_scenes.dart';
@@ -234,7 +233,7 @@ class Connection {
         return handleGameObjectRequest(arguments);
 
       case ClientRequest.Node:
-        return handleNodeRequest(arguments);
+        return handleNodeRequestSetBlock(arguments);
 
       case ClientRequest.Canvas_Modify_Size:
         return handleCanvasModifySize(arguments, player, game);
@@ -414,56 +413,30 @@ class Connection {
     if (player == null) return;
     if (!isLocalMachine && player.game is GameDarkAgeEditor == false) return;
 
-    if (arguments.length < 5) return errorArgsExpected(3, arguments);
-    final row = int.tryParse(arguments[2]);
-    if (row == null){
-      return errorInvalidArg('row');
-    }
-    final column = int.tryParse(arguments[3]);
-    if (column == null){
-      return errorInvalidArg('column');
-    }
-    final z = int.tryParse(arguments[4]);
-    if (z == null){
-      return errorInvalidArg('z');
-    }
-    final type = int.tryParse(arguments[5]);
-    if (type == NodeType.Boundary) {
-      return errorInvalidArg('type cannot be boundary');
-    }
-    if (type == null){
-      return errorInvalidArg('type');
-    }
-    var orientation = int.tryParse(arguments[6]);
-    if (orientation == null) {
+    if (arguments.length < 4) return errorInvalidArg('4 args expected');
+
+    var nodeIndex = int.tryParse(arguments[1]);
+    var nodeType = int.tryParse(arguments[2]);
+    var nodeOrientation = int.tryParse(arguments[3]);
+    if (nodeIndex == null) {
       return errorInvalidArg('orientation is null');
     }
-    if (!NodeType.supportsOrientation(type, orientation)){
-      orientation = NodeType.getDefaultOrientation(type);
+    if (nodeType == null) {
+      return errorInvalidArg('nodeType is null');
+    }
+    if (nodeOrientation == null) {
+      return errorInvalidArg('nodeOrientation is null');
+    }
+    if (!NodeType.supportsOrientation(nodeType, nodeOrientation)){
+      nodeOrientation = NodeType.getDefaultOrientation(nodeType);
     }
     final game = player.game;
-    final nodeIndex = game.scene.getNodeIndex(z, row, column);
-    final currentType = game.scene.nodeTypes[nodeIndex];
-    final currentOrientation = game.scene.nodeOrientations[nodeIndex];
-    if (currentType == type && currentOrientation == orientation) return;
-
-    game.setNode(z, row, column, type, orientation);
-
-    if (type == NodeType.Empty){
-      game.dispatch(
-        GameEventType.Node_Deleted,
-        convertIndexToX(row),
-        convertIndexToY(column),
-        convertIndexToZ(z),
-      );
-    } else {
-      game.dispatch(
-        GameEventType.Node_Set,
-        convertIndexToX(row),
-        convertIndexToY(column),
-        convertIndexToZ(z),
-      );
-    }
+    final scene = game.scene;
+    game.setNode(
+        nodeIndex: nodeIndex,
+        nodeType: nodeType,
+        nodeOrientation: nodeOrientation,
+    );
   }
 
   void handleNpcTalkSelectOption(Player player, List<String> arguments) {
@@ -591,10 +564,7 @@ class Connection {
         if (NodeType.supportsOrientation(nodeType, orientation)) {
           scene.nodeOrientations[nodeIndex] = orientation;
           for (final player in player.game.players){
-             player.writeByte(ServerResponse.Node);
-             player.writePositiveInt(nodeIndex);
-             player.writeByte(nodeType);
-             player.writeByte(orientation);
+            player.writeNode(nodeIndex);
           }
         } else {
           errorInvalidArg('node type $nodeType ${NodeType.getName(nodeType)} does not support orientation $orientation ${NodeOrientation.getName(orientation)}');

@@ -2,36 +2,43 @@ import 'dart:math';
 
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
+import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:lemon_math/library.dart';
 
 class Vector3 with Position {
   late double z;
 
+  /// remove
   int get indexZ => z ~/ tileSizeHalf;
+  /// remove
   int get indexRow => x ~/ tileSize;
+  /// remove
   int get indexColumn => y ~/ tileSize;
+  /// remove
+  int get nodeIndex => gridNodeGetIndexXYZ(x, y, z);
   double get renderOrder => x + y;
   // Node get tile => getNode(indexZ, indexRow, indexColumn);
   // Node get tileBelow => indexZ == 0 ? Node.boundary : getNode(indexZ - 1, indexRow, indexColumn);
   // Node get tileAbove => indexZ < gridTotalZ - 1 ? Node.boundary : getNode(indexZ + 1, indexRow, indexColumn);
   // int get wind => tile.wind;
-
+  /// remove
   double get renderX => (x - y) * 0.5;
+  /// remove
   double get renderY => ((y + x) * 0.5) - z;
   // int get renderColor => colorShades[shade];
-
+  /// remove
   void set indexZ(int value){
     z = value * tileSizeHalf;
   }
-
+  /// remove
   void set indexRow(int value){
     x = value * tileSize;
   }
-
+  /// remove
   void set indexColumn(int value){
     y = value * tileSize;
   }
-
+  /// remove
   bool get outOfBounds =>
      z < 0                ||
      x < 0                ||

@@ -11,9 +11,9 @@ void editorActionModifySpawnNode({
   assert (edit.nodeTypeSpawnSelected.value);
 
   sendClientRequestSpawnNodeDataModify(
-    z: edit.z.value,
-    row: edit.row.value,
-    column: edit.column.value,
+    z: edit.z,
+    row: edit.row,
+    column: edit.column,
     spawnType: spawnType,
     spawnAmount: spawnAmount,
     spawnRadius: spawnRadius,

@@ -12,7 +12,6 @@ void onChangedMode(bool mode){
     sendGameObjectRequestDeselect();
   } else {
     cameraModeSetFree();
-    edit.selectPlayerBlock();
     sendClientRequestWeatherToggleTimePassing(false);
   }
 }

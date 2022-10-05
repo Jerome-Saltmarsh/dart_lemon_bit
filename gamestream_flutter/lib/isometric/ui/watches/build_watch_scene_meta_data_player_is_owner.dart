@@ -195,7 +195,11 @@ Widget buildOrientationIcon(int orientation){
     hint: NodeOrientation.getName(orientation),
     action: (){
       edit.paintOrientation.value = orientation;
-      sendNodeRequestOrient(orientation);
+      sendClientRequestSetBlock(
+          index: edit.nodeIndex.value,
+          type: edit.nodeSelectedType.value,
+          orientation: orientation,
+      );
     },
     child: watch(edit.nodeSelectedOrientation, (int selectedNodeOrientation) {
       return Container(
@@ -414,24 +418,6 @@ Widget buildColumnEditParticleEmitter(){
   );
 }
 
-Column buildColumnSelected() {
-  return Column(
-            children: [
-              container(
-                 child: Row(
-                   children: [
-                     container(child: "-", width: 50, action: ()=> edit.z.value--, toolTip: "Shift + Down Arrow"),
-                     watch(edit.z, (t) {
-                       return container(child: 'Z: $t', width: 92);
-                     }),
-                     container(child: "+", width: 50, action: ()=> edit.z.value++, toolTip: "Shift + Up Arrow"),
-                   ],
-                 )
-              ),
-            ],
-          );
-}
-
 Column buildControlPaint() {
   return Column(
             children: [
@@ -473,7 +459,6 @@ Row buildEditorMenu() {
                     children: [
                       container(child: "Edit", color: brownLight),
                       container(child: "Canvas Size", color: brownLight, hoverColor: brownDark, action: actionGameDialogEditCanvasSizeShow),
-                      container(child: "Floor Bricks", color: brownLight, hoverColor: brownDark, action: edit.paintFloorBricks),
                     ],
                   );
                 }
