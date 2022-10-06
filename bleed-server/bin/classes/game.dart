@@ -2263,7 +2263,7 @@ abstract class Game {
         final bottom = (character.z ~/ tileHeight) * tileHeight;
         final percX = ((character.x % tileSize) / tileSize);
         final percY = ((character.y % tileSize) / tileSize);
-        final nodeTop = bottom + (getOrientationGradient(nodeAtFeetOrientation, percX, percY) * nodeHeight);
+        final nodeTop = bottom + (NodeOrientation.getGradient(nodeAtFeetOrientation, percX, percY) * nodeHeight);
         if (nodeTop > character.z){
           character.z = nodeTop;
           character.zVelocity = 0;

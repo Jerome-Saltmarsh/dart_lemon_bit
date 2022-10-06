@@ -109,4 +109,88 @@ class NodeOrientation {
          Slope_Outer_North_West: "Slope Outer North-West",
          Radial: "Radial",
    }[value] ?? "unknown: $value";
+
+   static double getGradient(int orientation, double x, double y) {
+     switch (orientation) {
+       case Solid:
+         return 1;
+       case Radial:
+         const radius = 0.25;
+         if  ((0.5 - x).abs() > radius) return 0;
+         if  ((0.5 - y).abs() > radius) return 0;
+         return 1.0;
+       case Slope_North:
+         return 1 - x;
+       case Slope_East:
+         return 1 - y;
+       case Slope_South:
+         return x;
+       case Slope_West:
+         return y;
+       case Corner_Top:
+         if (x < 0.5) return 1.0;
+         if (y < 0.5) return 1.0;
+         return 0;
+       case Corner_Right:
+         if (x > 0.5) return 1.0;
+         if (y < 0.5) return 1.0;
+         return 0;
+       case Corner_Bottom:
+         if (x > 0.5) return 1.0;
+         if (y > 0.5) return 1.0;
+         return 0;
+       case Corner_Left:
+         if (x < 0.5) return 1.0;
+         if (y > 0.5) return 1.0;
+         return 0;
+       case Half_North:
+         if (x < 0.5) return 1.0;
+         return 0;
+       case Half_East:
+         if (y < 0.5) return 1.0;
+         return 0;
+       case Half_South:
+         if (x > 0.5) return 1.0;
+         return 0;
+       case Half_West:
+         if (y > 0.5) return 1.0;
+         return 0;
+       case Slope_Inner_North_East: // Grass Edge Bottom
+         final total = x + y;
+         if (total < 1) return 1;
+         return 1 - (total - 1);
+       case Slope_Inner_South_East: // Grass Edge Left
+         final tX = (x - y);
+         if (tX > 0) return 1;
+         return 1 + tX;
+       case Slope_Inner_South_West: // Grass Edge Top
+         final total = x + y;
+         if (total > 1) return 1;
+         return total;
+       case Slope_Inner_North_West: // Grass Edge Right
+         final tX = (x - y);
+         if (tX < 0) return 1;
+         return 1 - tX;
+       case Slope_Outer_North_East: // Grass Slope Top
+         final total = x + y;
+         if (total > 1) return 0;
+         return 1.0 - total;
+       case Slope_Outer_South_East: // Grass Slope Left
+         final tX = (x - y);
+         if (tX < 0) return 0;
+         return tX;
+       case Slope_Outer_South_West: // Grass Slope Bottom
+         final total = x + y;
+         if (total < 1) return 0;
+         return total - 1;
+       case Slope_Outer_North_West: // Grass Slope Right
+         final ratio = (y - x);
+         if (ratio < 0) return 0;
+         return ratio;
+       default:
+         throw Exception(
+             "node_orientation.getGradient(orientation: ${getName(orientation)}, x: $x, y: $y"
+         );
+     }
+   }
 }
