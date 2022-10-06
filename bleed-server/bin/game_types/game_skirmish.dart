@@ -84,6 +84,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] custom websocket address
 /// [ ] multiple spawn points
 /// [ ] spawn weapons
+/// [x] fix revive player falling in water
 /// [x] fix brick render
 /// [x] fix bug player not striking zombie
 /// [x] enemies respawn after time
@@ -227,6 +228,11 @@ class GameSkirmish extends Game {
     if (target is AI) {
        target.respawn = 500;
     }
+  }
+
+  @override
+  void customOnPlayerRevived(Player player){
+    movePlayerToCrystal(player);
   }
 
   @override
