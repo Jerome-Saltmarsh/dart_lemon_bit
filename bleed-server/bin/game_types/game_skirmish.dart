@@ -83,8 +83,9 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] melee weapons run out of rounds but only on hit
 /// [ ] custom websocket address
 /// [ ] multiple spawn points
-/// [ ] fix bug player not striking zombie
 /// [ ] spawn weapons
+/// [x] fix brick render
+/// [x] fix bug player not striking zombie
 /// [x] enemies respawn after time
 /// [x] fix bug dark age nodes stop rendering
 /// [x] fix player color flicker

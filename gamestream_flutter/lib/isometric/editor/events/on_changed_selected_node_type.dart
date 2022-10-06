@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/isometric/edit.dart';
 void onChangedSelectedNodeType(int nodeType){
   edit.nodeOrientationVisible.value = true;
   edit.nodeTypeSpawnSelected.value = nodeType == NodeType.Spawn;
-  edit.nodeSupportsSolid.value = NodeType.isSolid(nodeType);
+  edit.nodeSupportsSolid.value = NodeType.isOrientationSolid(nodeType);
   edit.nodeSupportsCorner.value = NodeType.isCorner(nodeType);
   edit.nodeSupportsHalf.value = NodeType.isHalf(nodeType);
   edit.nodeSupportsSlopeCornerInner.value = NodeType.isSlopeCornerInner(nodeType);

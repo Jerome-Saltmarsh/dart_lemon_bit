@@ -1,6 +1,6 @@
 import 'package:bleed_common/node_orientation.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src.dart';
-import 'package:gamestream_flutter/isometric/nodes/render/render_node.dart';
+import 'package:gamestream_flutter/isometric/nodes/render/render_constants.dart';
 
 import 'render_standard_node.dart';
 
@@ -14,7 +14,7 @@ void renderNodeTypeBrick({
     case NodeOrientation.Solid:
       return renderStandardNode(
         srcX: AtlasSrc.Node_Brick,
-        srcY: spriteHeight * shade,
+        srcY: spriteHeightPadded * shade,
       );
     case NodeOrientation.Slope_North:
       return renderStandardNode(
