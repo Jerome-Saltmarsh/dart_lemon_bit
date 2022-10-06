@@ -258,6 +258,13 @@ void renderNodeAt(){
         srcY: 0,
       );
       break;
+    case NodeType.Spawn_Weapon:
+      if (playMode) return;
+      renderStandardNode(
+        srcX: AtlasSrc.Node_Spawn,
+        srcY: 0,
+      );
+      break;
     case NodeType.Respawning:
       return;
     case NodeType.Table:

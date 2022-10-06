@@ -41,6 +41,7 @@ class NodeType {
   static const Bau_Haus_2 = 69;
   static const Boulder = 70;
   static const Spawn = 71;
+  static const Spawn_Weapon = 73;
   static const Respawning = 72;
 
   static bool isMaterialWood(int value) =>
@@ -79,15 +80,16 @@ class NodeType {
     type == Boulder;
 
   static bool isOrientationEmpty(int type) =>
-      type == Empty ||
-      type == Water ||
-      type == Spawn ||
-      type == Respawning ||
-      type == Rain_Landing ||
-      type == Tree_Top ||
-      type == Grass_Long ||
-      type == Sunflower ||
-      type == Rain_Falling ;
+    type == Empty ||
+    type == Water ||
+    type == Spawn ||
+    type == Spawn_Weapon ||
+    type == Respawning ||
+    type == Rain_Landing ||
+    type == Tree_Top ||
+    type == Grass_Long ||
+    type == Sunflower ||
+    type == Rain_Falling ;
 
   static bool isRadial(int type) =>
     type == Tree_Bottom ||
@@ -237,5 +239,6 @@ class NodeType {
     Boulder: "Boulder",
     Spawn: "Spawn",
     Respawning: "Respawning",
+    Spawn_Weapon: "Spawn Weapon",
   }[type] ?? "unknown($type)";
 }

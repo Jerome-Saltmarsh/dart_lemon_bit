@@ -27,6 +27,7 @@ double mapNodeTypeToSrcX(int type) => {
   NodeType.Boulder: 11773.0,
   NodeType.Spawn: 11776.0,
   NodeType.Empty: 7055.0,
+  NodeType.Spawn_Weapon: 11776.0,
 }[type] ?? 7055;
 
 double mapNodeTypeToSrcY(int type) => {
@@ -35,6 +36,7 @@ double mapNodeTypeToSrcY(int type) => {
   NodeType.Water_Flowing: 145.0,
   NodeType.Window: 218.0,
   NodeType.Spawn: 80.0,
+  NodeType.Spawn_Weapon: 153.0,
 }[type] ?? 0;
 
 double mapNodeTypeToSrcWidth(int type) => {
