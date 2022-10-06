@@ -492,7 +492,7 @@ abstract class Game {
     final nodeIndex = scene.getNodeIndexXYZ(performX, performY, performZ);
     final nodeType = scene.nodeTypes[nodeIndex];
 
-    if (!NodeType.isStrikable(nodeType)) {
+    if (NodeType.isOrientationEmpty(nodeType)) {
       if (!attackHit){
         for (final player in players) {
           player.writeGameEvent(

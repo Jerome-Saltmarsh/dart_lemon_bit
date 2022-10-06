@@ -43,11 +43,6 @@ class NodeType {
   static const Spawn = 71;
   static const Respawning = 72;
 
-  static bool isStrikable(int type) =>
-    type == Grass ||
-    type == Brick_2 ||
-    type == Wood_2;
-
   static bool isMaterialWood(int value) =>
     value == Torch ||
     value == Tree_Bottom ||
@@ -67,7 +62,7 @@ class NodeType {
     value == Brick_2 ||
     value == Chimney;
 
-  static bool isSolid(int type) =>
+  static bool isOrientationSolid(int type) =>
     type == Brick_2 ||
     type == Soil ||
     type == Stone ||
@@ -96,7 +91,8 @@ class NodeType {
 
   static bool isRadial(int type) =>
     type == Tree_Bottom ||
-    type == Torch ;
+    type == Torch ||
+    type == Fireplace ;
 
   static bool isDestroyable(int type) =>
     type == Boulder ||
@@ -146,7 +142,7 @@ class NodeType {
      value == Rain_Landing ;
   
   static bool blocksPerception(int value) =>
-     value == isSolid(value);
+     value == isOrientationSolid(value);
 
   static bool emitsLight(int value) =>
     value == Torch || 
@@ -155,7 +151,7 @@ class NodeType {
   static int getDefaultOrientation(int value){
      if (value == Empty)
        return NodeOrientation.None;
-     if (isSolid(value))
+     if (isOrientationSolid(value))
        return NodeOrientation.Solid;
      if (isSlopeSymmetric(value))
        return NodeOrientation.Slope_North;
@@ -170,16 +166,17 @@ class NodeType {
      if (isRadial(value))
        return NodeOrientation.Radial;
 
-     return NodeOrientation.None;
+     throw Exception("node_type.getDefaultOrientation(${getName(value)}");
   }
+
 
   static bool supportsOrientation(int type, int orientation) {
 
     if (orientation == NodeOrientation.None)
       return isOrientationEmpty(type);
 
-    if (NodeOrientation.isSolid(orientation))
-      return isSolid(type);
+    if (orientation == NodeOrientation.Solid)
+      return isOrientationSolid(type);
 
     if (NodeOrientation.isHalf(orientation))
       return isHalf(type);

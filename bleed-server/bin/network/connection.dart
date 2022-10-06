@@ -676,7 +676,7 @@ class Connection {
   Future joinGameSkirmish() async {
     for (final game in engine.games){
        if (game is GameSkirmish){
-          if (game.players.length < GameSkirmish.maxPlayers)
+          if (game.players.length < game.configMaxPlayers)
             return joinGame(game);
        }
     }

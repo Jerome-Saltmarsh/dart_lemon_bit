@@ -69,7 +69,6 @@ import '../functions/move_player_to_crystal.dart';
 
 /// [RELEASE 1.00]
 /// [ ] build scene
-/// [ ] multiple spawn points
 /// [ ] 3d model weapon sword
 /// [ ] 3d model weapon staff
 /// [ ] 3d model weapon assault rifle
@@ -83,7 +82,9 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] design mouse cursor
 /// [ ] melee weapons run out of rounds but only on hit
 /// [ ] custom websocket address
-/// [ ] enemies respawn after time
+/// [ ] multiple spawn points
+/// [ ] spawn weapons
+/// [x] enemies respawn after time
 /// [x] fix bug dark age nodes stop rendering
 /// [x] fix player color flicker
 /// [x] fix spawn node
@@ -96,7 +97,8 @@ import '../functions/move_player_to_crystal.dart';
 /// [x] refactor - remove node class from backend
 class GameSkirmish extends Game {
 
-  static const maxPlayers = 7;
+  static const configAIRespawnFrames = 500;
+  var configMaxPlayers = 7;
 
   @override
   int get controlScheme => ControlScheme.schemeA;
@@ -106,7 +108,8 @@ class GameSkirmish extends Game {
 
   GameSkirmish({required Scene scene}) : super(scene) {
 
-    for (var i = 0; i < scene.gridVolume; i++){
+    final volume = scene.gridVolume;
+    for (var i = 0; i < volume; i++){
         if (scene.nodeTypes[i] != NodeType.Spawn) continue;
           final indexZ = i ~/ scene.gridArea;
           var remainder = i - (indexZ * scene.gridArea);
@@ -154,7 +157,7 @@ class GameSkirmish extends Game {
   }
 
   void respawnAI(AI ai){
-    ai.respawn = 500;
+    ai.respawn = configAIRespawnFrames;
     ai.health = ai.maxHealth;
     ai.state = CharacterState.Idle;
     moveV3ToNodeIndex(ai, ai.spawnNodeIndex);
