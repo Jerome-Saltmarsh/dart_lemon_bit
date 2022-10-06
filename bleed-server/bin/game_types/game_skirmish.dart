@@ -83,6 +83,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] melee weapons run out of rounds but only on hit
 /// [ ] custom websocket address
 /// [ ] multiple spawn points
+/// [ ] fix bug player not striking zombie
 /// [ ] spawn weapons
 /// [x] enemies respawn after time
 /// [x] fix bug dark age nodes stop rendering
@@ -159,7 +160,9 @@ class GameSkirmish extends Game {
   void respawnAI(AI ai){
     ai.respawn = configAIRespawnFrames;
     ai.health = ai.maxHealth;
-    ai.state = CharacterState.Idle;
+    ai.state = CharacterState.Spawning;
+    ai.collidable = true;
+    ai.stateDurationRemaining = 30;
     moveV3ToNodeIndex(ai, ai.spawnNodeIndex);
   }
 

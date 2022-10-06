@@ -439,14 +439,14 @@ abstract class Game {
     var attackHit = false;
 
     for (final character in characters) {
-      if (onSameTeam(player, character)) continue;
       if (!character.collidable) continue;
+      if (onSameTeam(player, character)) continue;
       if (character.distanceFromXYZ(
-                      performX,
-                      performY,
-                      performZ,
-                    ) > attackRadius) continue;
-        applyHit(src: player, target: character, damage: damage);
+        performX,
+        performY,
+        performZ,
+      ) > attackRadius) continue;
+      applyHit(src: player, target: character, damage: damage);
       attackHit = true;
        player.applyForce(
            force: 7.5,
