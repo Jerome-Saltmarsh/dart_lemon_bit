@@ -137,22 +137,23 @@ class Scene {
          + (getOrientationGradient(orientation, percX, percY) * nodeHeight)
          >= z;
   }
-}
 
-int parseRowsAndColumnsToDirection(int rows, int columns) {
-  assert(rows != 0 || columns != 0);
-  if (rows > 0) {
-     if (columns < 0) return Direction.South_West;
-     if (columns == 0) return Direction.South;
-     return Direction.South_East;
-  }
-  if (rows < 0) {
-    if (columns < 0) return Direction.North_West;
-    if (columns == 0) return Direction.North;
-    return Direction.North_East;
-  }
-  if (columns < 0) return Direction.West;
-  return Direction.East;
+  double convertNodeIndexToZPosition(int index) =>
+      convertNodeIndexToZ(index) * nodeHeight;
+
+  double convertNodeIndexToYPosition(int index) =>
+      convertNodeIndexToColumn(index) * nodeSize;
+
+  double convertNodeIndexToXPosition(int index) =>
+      convertNodeIndexToRow(index) * nodeSize;
+
+  int convertNodeIndexToRow(int index) =>
+      (index - (convertNodeIndexToZ(index) * gridArea)) ~/ gridColumns;
+
+  int convertNodeIndexToColumn(int index) =>
+      index - ((convertNodeIndexToZ(index) * gridArea) + (convertNodeIndexToRow(index) * gridColumns));
+
+  int convertNodeIndexToZ(int index) => index ~/ gridArea;
 }
 
 

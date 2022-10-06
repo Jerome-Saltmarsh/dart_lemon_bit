@@ -82,9 +82,10 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] draw punch sprite
 /// [ ] design mouse cursor
 /// [ ] melee weapons run out of rounds but only on hit
-/// [ ] fix bug dark age nodes stop rendering
 /// [ ] custom websocket address
-/// [?] fix player color flicker
+/// [ ] enemies respawn after time
+/// [x] fix bug dark age nodes stop rendering
+/// [x] fix player color flicker
 /// [x] fix spawn node
 /// [x] fix dark-age controls
 /// [x] fix set node
@@ -105,14 +106,14 @@ class GameSkirmish extends Game {
 
   GameSkirmish({required Scene scene}) : super(scene) {
 
-    for (var i = 0; i <scene.gridVolume; i++){
-        if (scene.nodeTypes[i] == NodeType.Spawn){
+    for (var i = 0; i < scene.gridVolume; i++){
+        if (scene.nodeTypes[i] != NodeType.Spawn) continue;
           final indexZ = i ~/ scene.gridArea;
           var remainder = i - (indexZ * scene.gridArea);
           final indexRow = remainder ~/ scene.gridColumns;
           remainder -= indexRow * scene.gridColumns;
           final indexColumn = remainder;
-           spawnZombie(
+          final zombie = spawnZombie(
                x: indexRow * nodeSize,
                y: indexColumn * nodeSize,
                z: indexZ * nodeHeight,
@@ -120,7 +121,7 @@ class GameSkirmish extends Game {
                team: 100,
                damage: 1,
            );
-        }
+          zombie.spawnNodeIndex = i;
     }
 
     addGameObjectWeaponShotgun(z: 1, row: 2, column: 2);
@@ -141,13 +142,22 @@ class GameSkirmish extends Game {
     );
   }
 
-  // int convertIndexToZ(int index) => index ~/ scene.gridArea;
-  // int convertIndexToRow(int index) => index - (convertIndexToZ(index) * scene.gridArea);
-  // int convertIndexToColumn(int index) => index - (convertIndexToZ(index) * scene.gridArea);
-
   @override
   void customUpdate() {
+      for (final character in characters) {
+      if (character.alive) continue;
+      if (character is AI) {
+        if (character.respawn-- <= 0)
+          respawnAI(character);
+      }
+    }
+  }
 
+  void respawnAI(AI ai){
+    ai.respawn = 500;
+    ai.health = ai.maxHealth;
+    ai.state = CharacterState.Idle;
+    moveV3ToNodeIndex(ai, ai.spawnNodeIndex);
   }
 
   @override

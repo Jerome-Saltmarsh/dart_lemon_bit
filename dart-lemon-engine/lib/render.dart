@@ -6,15 +6,13 @@ import 'package:lemon_engine/actions/render_atlas.dart';
 
 var bufferIndex = 0;
 var renderIndex = 0;
-const bufferSize = 300;
+const bufferSize = 1000;
 final buffers = bufferSize * 4;
 final src = Float32List(buffers);
 final dst = Float32List(buffers);
 final colors = Int32List(bufferSize);
-// final srcFlush = Float32List(4);
-// final dstFlush = Float32List(4);
-// final colorsFlush = Int32List(1);
 var renderBlendMode = BlendMode.dstATop;
+
 
 void setRenderBlendMode(BlendMode value){
   renderBlendMode = value;

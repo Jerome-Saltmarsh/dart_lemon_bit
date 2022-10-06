@@ -40,18 +40,6 @@ abstract class Game {
 
   List<GameObject> get gameObjects => scene.gameObjects;
 
-  // void foreachNodeSpawn(Function(NodeSpawn value) handle) {
-  //   for (final row in scene.grid) {
-  //     for (final column in row) {
-  //       for (final node in column) {
-  //         if (node is NodeSpawn) {
-  //           handle(node);
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-
   /// In seconds
   void customInitPlayer(Player player) {}
   /// safe to override
@@ -119,6 +107,12 @@ abstract class Game {
   }
 
   /// ACTIONS
+
+  void moveV3ToNodeIndex(Position3 vector3, int nodeIndex){
+    vector3.x = scene.convertNodeIndexToXPosition(nodeIndex);
+    vector3.y = scene.convertNodeIndexToYPosition(nodeIndex);
+    vector3.z = scene.convertNodeIndexToZPosition(nodeIndex);
+  }
 
   void move(Position3 value, double angle, double distance){
     value.x += getAdjacent(angle, distance);
