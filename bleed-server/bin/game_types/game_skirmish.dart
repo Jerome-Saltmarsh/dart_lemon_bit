@@ -79,8 +79,10 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] draw punch sprite
 /// [ ] design mouse cursor
 /// [ ] fix see through house when inside
+/// [ ] center camera on player on spawn
 /// [ ] melee weapons run out of rounds but only on hit
 /// [ ] custom websocket address
+/// [ ] spawn handgun, blade, machine-gun, bazooka, land-mine, smg, sniper-rifle, body-armour
 /// [ ] multiple spawn points
 /// [ ] respawn weapon on empty
 /// [x] fix prevent rain on grass slope
@@ -191,7 +193,6 @@ class GameSkirmish extends Game {
   }
 
   void playerSetWeapon(Player player, Weapon weapon){
-    player.weapon.spawn = null;
     player.weapon = weapon;
     player.writePlayerWeaponType();
     player.writePlayerWeaponRounds();
@@ -199,15 +200,18 @@ class GameSkirmish extends Game {
     player.writePlayerEventItemEquipped(player.weapon.type);
   }
 
-  // @override
-  // void customOnCharacterKilled(Character target, src) {
-  //   if (target is AI) {
-  //      target.respawn = 500;
-  //   }
-  // }
-
   @override
   void customOnPlayerRevived(Player player){
     movePlayerToCrystal(player);
+  }
+
+  @override
+  void customOnPlayerWeaponRoundsExhausted(Player player, Weapon weapon){
+    playerSetWeaponUnarmed(player);
+    final weaponSpawn = weapon.spawn;
+    if (weaponSpawn is GameObject){
+        weaponSpawn.active = true;
+        weaponSpawn.collidable = true;
+    }
   }
 }

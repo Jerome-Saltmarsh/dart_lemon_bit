@@ -84,7 +84,7 @@ abstract class Game {
   void customOnPlayerRequestPurchaseWeapon(Player player, int type){ }
   /// safe to override
   void customOnPlayerWeaponRoundsExhausted(Player player, Weapon weapon){
-    playerSetWeapon(player, buildWeaponUnarmed());
+    playerSetWeaponUnarmed(player);
   }
   /// PROPERTIES
 
@@ -158,6 +158,10 @@ abstract class Game {
       playerUseWeapon(player, weapon);
       player.writePlayerWeaponRounds();
     }
+  }
+
+  void playerSetWeaponUnarmed(Player player) {
+    playerSetWeapon(player, buildWeaponUnarmed());
   }
 
   void playerSetWeapon(Player player, Weapon weapon){
