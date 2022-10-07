@@ -119,6 +119,7 @@ class GameSkirmish extends Game {
 
   static const configAIRespawnFrames = 500;
   var configMaxPlayers = 7;
+  var configZombieHealth = 5;
 
   List<int> playerSpawnPoints = [];
 
@@ -134,6 +135,8 @@ class GameSkirmish extends Game {
     for (var i = 0; i < volume; i++){
         if (scene.nodeTypes[i] == NodeType.Spawn) {
           final instance = spawnZombieAtIndex(i);
+          instance.maxHealth = configZombieHealth;
+          instance.health = configZombieHealth;
           instance.respawn = configAIRespawnFrames;
           continue;
         }
