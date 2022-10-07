@@ -221,27 +221,27 @@ void renderNodeAt(){
     case NodeType.Window:
       switch(gridNodeOrientations[renderNodeIndex]){
         case NodeOrientation.Half_North:
-          return renderStandardNode(
+          return renderStandardNodeHalfNorth(
             srcX: AtlasSrc.Node_Window,
-            srcY: 0,
+            srcY: spriteHeight,
             color: color,
           );
         case NodeOrientation.Half_East:
-          return renderStandardNode(
+          return renderStandardNodeHalfEast(
             srcX: AtlasSrc.Node_Window,
-            srcY: srcYIndex1,
+            srcY: 0,
             color: color,
           );
         case NodeOrientation.Half_South:
           return renderStandardNode(
             srcX: AtlasSrc.Node_Window,
-            srcY: srcYIndex2,
+            srcY: spriteHeight,
             color: color,
           );
-        case NodeOrientation.Half_East:
+        case NodeOrientation.Half_West:
           return renderStandardNode(
             srcX: AtlasSrc.Node_Window,
-            srcY: srcYIndex3,
+            srcY: 0,
             color: color,
           );
       }

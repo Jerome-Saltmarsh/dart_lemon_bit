@@ -79,12 +79,12 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] particle type darkness
 /// [ ] draw punch sprite
 /// [ ] design mouse cursor
+/// [ ] fix see through house when inside
 /// [ ] melee weapons run out of rounds but only on hit
 /// [ ] custom websocket address
-/// [ ] fix render window west
 /// [ ] multiple spawn points
 /// [ ] prevent turn while attacking
-/// [ ] fix see through house when inside
+/// [x] fix render window west
 /// [x] spawn weapons
 /// [x] fix render fence
 /// [x] fix revive player falling in water
