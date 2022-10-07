@@ -81,11 +81,20 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] fix see through house when inside
 /// [ ] fix handgun fire animation
 /// [ ] center camera on player on spawn
-/// [ ] melee weapons run out of rounds but only on hit
-/// [ ] custom websocket address
 /// [ ] fix editor camera stutters on selected
-/// [ ] spawn handgun, blade, machine-gun, bazooka, land-mine, smg, sniper-rifle, body-armour
+/// [ ] spawn bazooka,
+/// [ ] spawn land-mine
+/// [ ] spawn body-armour,
+/// [ ] spawn blade,
+/// [ ] spawn hammer
+/// [ ] spawn pick-axe
+/// [ ] spawn assault-rifle,
+/// [ ] spawn sniper-rifle,
+/// [ ] spawn smg,
+/// [ ] melee weapons run out of rounds but only on hit
 /// [ ] multiple player spawn points
+/// [x] custom region
+/// [x] spawn handgun,
 /// [x] respawn weapon on empty
 /// [x] fix prevent rain on grass slope
 /// [x] prevent turn while attacking

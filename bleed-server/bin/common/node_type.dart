@@ -1,7 +1,6 @@
 
 import 'node_orientation.dart';
 
-
 class NodeType {
   static const Empty = 0;
   static const Boundary = 1;
@@ -15,11 +14,7 @@ class NodeType {
   static const Fireplace = 20;
   static const Water_Flowing = 26;
   static const Brick_Top = 27;
-  static const Roof_Tile_North = 33;
-  static const Roof_Tile_South = 37;
   static const Soil = 38;
-  static const Roof_Hay_North = 39;
-  static const Roof_Hay_South = 40;
   static const Stone = 41;
   static const Bau_Haus = 50;
   static const Bau_Haus_Window = 53;
@@ -42,6 +37,7 @@ class NodeType {
   static const Boulder = 70;
   static const Spawn = 71;
   static const Spawn_Weapon = 73;
+  static const Spawn_Player = 74;
   static const Respawning = 72;
 
   static bool isMaterialWood(int value) =>
@@ -84,6 +80,7 @@ class NodeType {
     type == Water ||
     type == Spawn ||
     type == Spawn_Weapon ||
+    type == Spawn_Player ||
     type == Respawning ||
     type == Rain_Landing ||
     type == Tree_Top ||
@@ -146,8 +143,8 @@ class NodeType {
     value == Fireplace;
 
   static int getDefaultOrientation(int value){
-     if (value == Empty)
-       return NodeOrientation.None;
+     if (isOrientationEmpty(value))
+       return value;
      if (isOrientationSolid(value))
        return NodeOrientation.Solid;
      if (isSlopeSymmetric(value))
@@ -162,6 +159,7 @@ class NodeType {
        return NodeOrientation.Corner_Top;
      if (isRadial(value))
        return NodeOrientation.Radial;
+
 
      throw Exception("node_type.getDefaultOrientation(${getName(value)}");
   }
@@ -210,8 +208,6 @@ class NodeType {
     Rain_Landing: 'Rain Landing',
     Fireplace: 'Fireplace',
     Soil: "Soil",
-    Roof_Hay_North: "Roof Hay North",
-    Roof_Hay_South: "Roof Hay South",
     Stone: "Stone",
     Bau_Haus: "Bau Haus",
     Bau_Haus_2: "Bau Haus",
@@ -235,5 +231,6 @@ class NodeType {
     Spawn: "Spawn",
     Respawning: "Respawning",
     Spawn_Weapon: "Spawn Weapon",
+    Spawn_Player: "Spawn Player",
   }[type] ?? "unknown($type)";
 }

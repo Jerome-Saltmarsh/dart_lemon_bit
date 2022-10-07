@@ -194,7 +194,7 @@ void _applyShadowAt({
         // final tile = grid[z][row][column];
         final index = gridNodeIndexZRC(z, row, column);
         final tile = gridNodeTypes[index];
-        if (!_castesShadow(tile)) continue;
+        if (!castesShadow(tile)) continue;
         var projectionZ = z + directionZ;
         var projectionRow = row + directionRow;
         var projectionColumn = column + directionColumn;
@@ -221,13 +221,10 @@ void _applyShadowAt({
   }
 }
 
-bool _castesShadow(int type){
-  return const [
-        NodeType.Brick_Top,
-        NodeType.Roof_Tile_South,
-        NodeType.Roof_Tile_North,
-  ].contains(type);
-}
+bool castesShadow(int type) =>
+    type == NodeType.Brick_2 ||
+    type == NodeType.Water ||
+    type == NodeType.Brick_Top;
 
 bool gridIsUnderSomething(int z, int row, int column){
   if (outOfBounds(z, row, column)) return false;
