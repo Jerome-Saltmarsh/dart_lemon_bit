@@ -4,7 +4,6 @@ import 'package:lemon_math/library.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
-import '../common/attack_state.dart';
 import '../common/control_scheme.dart';
 import '../common/library.dart';
 import '../functions/move_player_to_crystal.dart';
@@ -119,7 +118,8 @@ class GameSkirmish extends Game {
     final volume = scene.gridVolume;
     for (var i = 0; i < volume; i++){
         if (scene.nodeTypes[i] == NodeType.Spawn) {
-          spawnZombieAtIndex(i);
+          final instance = spawnZombieAtIndex(i);
+          instance.respawn = configAIRespawnFrames;
           continue;
         }
         if (scene.nodeTypes[i] == NodeType.Spawn_Weapon) {
@@ -199,59 +199,15 @@ class GameSkirmish extends Game {
     player.writePlayerEventItemEquipped(player.weapon.type);
   }
 
-  @override
-  void customOnCharacterKilled(Character target, src) {
-    if (target is AI) {
-       target.respawn = 500;
-    }
-  }
+  // @override
+  // void customOnCharacterKilled(Character target, src) {
+  //   if (target is AI) {
+  //      target.respawn = 500;
+  //   }
+  // }
 
   @override
   void customOnPlayerRevived(Player player){
     movePlayerToCrystal(player);
-  }
-
-  @override
-  void handlePlayerControlSchemeA({
-    required Player player,
-    required int direction,
-    required bool perform1,
-    required bool perform2,
-    required bool perform3,
-    required double mouseX,
-    required double mouseY,
-    required double screenLeft,
-    required double screenTop,
-    required double screenRight,
-    required double screenBottom,
-  }){
-    player.framesSinceClientRequest = 0;
-    player.screenLeft = screenLeft;
-    player.screenTop = screenTop;
-    player.screenRight = screenRight;
-    player.screenBottom = screenBottom;
-    player.mouse.x = mouseX;
-    player.mouse.y = mouseY;
-
-    if (player.deadOrBusy) return;
-
-    playerRunInDirection(player, direction);
-    playerUpdateAimTarget(player);
-
-    final weapon = player.weapon;
-
-    if (weapon.durationRemaining > 0) return;
-    weapon.state = AttackState.Aiming;
-
-    if (perform1) {
-      playerUseWeapon(player, weapon);
-      player.writePlayerWeaponRounds();
-
-      if (weapon.requiresRounds) {
-         if (weapon.rounds == 0) {
-            playerSetWeapon(player, buildWeaponUnarmed());
-         }
-      }
-    }
   }
 }

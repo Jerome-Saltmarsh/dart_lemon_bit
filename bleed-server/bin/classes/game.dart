@@ -82,7 +82,8 @@ abstract class Game {
   void customOnAIRespawned(AI ai){  }
   /// safe to override
   void customOnPlayerRequestPurchaseWeapon(Player player, int type){ }
-
+  /// safe to override
+  void customOnPlayerWeaponRoundsExhausted(Player player, Weapon weapon){ }
   /// PROPERTIES
 
   /// Safe to override
@@ -1683,7 +1684,7 @@ abstract class Game {
     return projectile;
   }
 
-  void spawnZombieAtIndex(int i){
+  Zombie spawnZombieAtIndex(int i){
     final indexZ = i ~/ scene.gridArea;
     var remainder = i - (indexZ * scene.gridArea);
     final indexRow = remainder ~/ scene.gridColumns;
@@ -1698,6 +1699,7 @@ abstract class Game {
       damage: 1,
     );
     zombie.spawnNodeIndex = i;
+    return zombie;
   }
 
   GameObject spawnGameObjectAtIndex({required int index, required int type}){
