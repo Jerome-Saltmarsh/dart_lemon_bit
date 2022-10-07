@@ -61,7 +61,7 @@ void renderNodeAt(){
     case NodeType.Water:
       return render(
         dstX: renderNodeDstX,
-        dstY: renderNodeDstY + animationFrameWaterHeight,
+        dstY: renderNodeDstY + animationFrameWaterHeight + 14,
         srcX: 7976,
         srcY: (((animationFrameWater + ((renderNodeRow + renderNodeColumn) * 3)) % 10) * 72.0),
         srcWidth: spriteWidth,
