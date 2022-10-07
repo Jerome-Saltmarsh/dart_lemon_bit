@@ -125,11 +125,19 @@ class GameSkirmish extends Game {
           continue;
         }
         if (scene.nodeTypes[i] == NodeType.Spawn_Weapon) {
-          spawnGameObjectAtIndex(index: i, type: GameObjectType.Weapon_Shotgun);
+          spawnGameObjectAtIndex(
+              index: i,
+              type: getRandomItemType(),
+          );
           continue;
         }
     }
   }
+
+  int getRandomItemType() => randomItem(const [
+    GameObjectType.Weapon_Shotgun,
+    GameObjectType.Weapon_Handgun,
+  ]);
 
   @override
   void customUpdate() {
@@ -190,15 +198,22 @@ class GameSkirmish extends Game {
       weapon.spawn = gameObject;
       playerSetWeapon(player, weapon);
     }
+
+    if (gameObject.type == GameObjectType.Weapon_Handgun){
+      deactivateGameObject(gameObject);
+      final weapon = buildWeaponByType(AttackType.Handgun);
+      weapon.spawn = gameObject;
+      playerSetWeapon(player, weapon);
+    }
   }
 
-  void playerSetWeapon(Player player, Weapon weapon){
-    player.weapon = weapon;
-    player.writePlayerWeaponType();
-    player.writePlayerWeaponRounds();
-    player.writePlayerWeaponCapacity();
-    player.writePlayerEventItemEquipped(player.weapon.type);
-  }
+  // void playerSetWeapon(Player player, Weapon weapon){
+  //   player.weapon = weapon;
+  //   player.writePlayerWeaponType();
+  //   player.writePlayerWeaponRounds();
+  //   player.writePlayerWeaponCapacity();
+  //   player.writePlayerEventItemEquipped(player.weapon.type);
+  // }
 
   @override
   void customOnPlayerRevived(Player player){
@@ -208,10 +223,19 @@ class GameSkirmish extends Game {
   @override
   void customOnPlayerWeaponRoundsExhausted(Player player, Weapon weapon){
     playerSetWeaponUnarmed(player);
-    final weaponSpawn = weapon.spawn;
-    if (weaponSpawn is GameObject){
-        weaponSpawn.active = true;
-        weaponSpawn.collidable = true;
+  }
+
+  reactivateGameObject(GameObject gameObject){
+    gameObject.active = true;
+    gameObject.collidable = true;
+    gameObject.type = getRandomItemType();
+  }
+
+  @override
+  void customOnPlayerWeaponChanged(Player player, Weapon newWeapon, Weapon previousWeapon){
+    final previousWeaponSpawn = previousWeapon.spawn;
+    if (previousWeaponSpawn is GameObject) {
+      reactivateGameObject(previousWeaponSpawn);
     }
   }
 }

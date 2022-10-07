@@ -86,6 +86,9 @@ abstract class Game {
   void customOnPlayerWeaponRoundsExhausted(Player player, Weapon weapon){
     playerSetWeaponUnarmed(player);
   }
+  /// safe to override
+  void customOnPlayerWeaponChanged(Player player, Weapon newWeapon, Weapon previousWeapon){ }
+
   /// PROPERTIES
 
   /// Safe to override
@@ -165,12 +168,14 @@ abstract class Game {
   }
 
   void playerSetWeapon(Player player, Weapon weapon){
-    player.weapon.spawn = null;
+    if (player.weapon == weapon) return;
+    final previousWeapon = player.weapon;
     player.weapon = weapon;
     player.writePlayerWeaponType();
     player.writePlayerWeaponRounds();
     player.writePlayerWeaponCapacity();
     player.writePlayerEventItemEquipped(player.weapon.type);
+    customOnPlayerWeaponChanged(player, weapon, previousWeapon);
   }
 
   void changeGame(Player player, Game to){
