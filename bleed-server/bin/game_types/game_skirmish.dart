@@ -83,8 +83,8 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] melee weapons run out of rounds but only on hit
 /// [ ] custom websocket address
 /// [ ] multiple spawn points
-/// [ ] fix prevent rain on grass slope
 /// [ ] respawn weapon on empty
+/// [x] fix prevent rain on grass slope
 /// [x] prevent turn while attacking
 /// [x] fix render window west
 /// [x] spawn weapons

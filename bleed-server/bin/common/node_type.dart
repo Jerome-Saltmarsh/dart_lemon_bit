@@ -131,11 +131,6 @@ class NodeType {
     type == Bau_Haus_2 ||
     type == Wooden_Plank;
 
-  static bool isRainable(int type) =>
-    type == Water ||
-    type == Brick_2 ||
-    type == Grass;
-
   static bool isRainOrEmpty(value) =>
     isRain(value) || value == Empty;
   
