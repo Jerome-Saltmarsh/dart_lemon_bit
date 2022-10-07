@@ -3,7 +3,7 @@ import 'library.dart';
 
 class GameObject extends Collider {
   var active = true;
-  /// game_object_type
+  /// GameObjectType.dart
   int type;
   dynamic spawn;
 
@@ -12,8 +12,9 @@ class GameObject extends Collider {
     required double y,
     required double z,
     required this.type,
-  }) : super(x: x, y: y, z: z, radius: 10) {
+  }) : super(x: x, y: y, z: z, radius: 15) {
     collidable = GameObjectType.isCollidable(type);
+    moveOnCollision = false;
   }
 }
 

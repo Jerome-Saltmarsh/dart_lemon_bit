@@ -7,7 +7,6 @@ import '../classes/library.dart';
 import '../common/attack_state.dart';
 import '../common/control_scheme.dart';
 import '../common/library.dart';
-import '../common/node_size.dart';
 import '../functions/move_player_to_crystal.dart';
 
 /// a very simple game
@@ -82,6 +81,8 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] design mouse cursor
 /// [ ] melee weapons run out of rounds but only on hit
 /// [ ] custom websocket address
+/// [ ] fix render fence
+/// [ ] fix render window west
 /// [ ] multiple spawn points
 /// [ ] spawn weapons
 /// [x] fix revive player falling in water

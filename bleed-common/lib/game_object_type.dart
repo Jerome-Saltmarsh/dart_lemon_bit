@@ -21,10 +21,9 @@ class GameObjectType {
   static const Lantern_Red = 21;
   static const Loot = 22;
   static const Particle_Emitter = 23;
-  static const Weapon = 26;
   static const Weapon_Shotgun = 27;
   static const Weapon_Handgun = 28;
-  static const Weapon_Blade = 28;
+  static const Weapon_Blade = 29;
 
   static const staticValues = [
     Flower,
@@ -93,7 +92,9 @@ class GameObjectType {
        Jellyfish_Red: "Jelly Fish Red",
        Lantern_Red: "Lantern Red",
        Particle_Emitter: "Particle Emitter",
-       Weapon: "Weapon",
+       Weapon_Handgun: "Handgun",
+       Weapon_Shotgun: "Shotgun",
+       Weapon_Blade: "Blade",
     }[value] ?? "?";
   }
 }

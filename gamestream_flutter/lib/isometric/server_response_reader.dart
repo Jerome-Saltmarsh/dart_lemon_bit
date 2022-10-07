@@ -283,12 +283,6 @@ class ServerResponseReader with ByteReader {
     final instance = getInstanceGameObject();
     instance.type = readByte();
     readVector3(instance);
-
-    switch(instance.type) {
-      case GameObjectType.Weapon:
-        instance.subType = readByte();
-        break;
-    }
   }
 
   void readServerResponseGameWaves() {
