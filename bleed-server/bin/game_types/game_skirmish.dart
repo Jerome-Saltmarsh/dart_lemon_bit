@@ -92,7 +92,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] spawn sniper-rifle,
 /// [ ] spawn smg,
 /// [ ] melee weapons run out of rounds but only on hit
-/// [ ] multiple player spawn points
+/// [x] multiple player spawn points
 /// [x] custom region
 /// [x] spawn handgun,
 /// [x] respawn weapon on empty
@@ -120,6 +120,8 @@ class GameSkirmish extends Game {
   static const configAIRespawnFrames = 500;
   var configMaxPlayers = 7;
 
+  List<int> playerSpawnPoints = [];
+
   @override
   int get controlScheme => ControlScheme.schemeA;
 
@@ -140,6 +142,10 @@ class GameSkirmish extends Game {
               index: i,
               type: getRandomItemType(),
           );
+          continue;
+        }
+        if (scene.nodeTypes[i] == NodeType.Spawn_Player) {
+          playerSpawnPoints.add(i);
           continue;
         }
     }
@@ -198,7 +204,10 @@ class GameSkirmish extends Game {
     player.writeEnvironmentLightning(Lightning.Off);
     player.writeEnvironmentWind(Wind.Gentle);
     player.writeEnvironmentBreeze(false);
-    movePlayerToCrystal(player);
+    // movePlayerToCrystal(player);
+    if (playerSpawnPoints.isNotEmpty){
+      moveV3ToNodeIndex(player, randomItem(playerSpawnPoints));
+    }
   }
 
   @override
