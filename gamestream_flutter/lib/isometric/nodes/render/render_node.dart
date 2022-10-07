@@ -24,11 +24,6 @@ import 'render_node_type_brick.dart';
 import 'render_node_wooden_plank.dart';
 import 'render_standard_node.dart';
 
-const spriteWidth = 48.0;
-const spriteWidthHalf = 24.0;
-const spriteHeight = 72.0;
-const spriteHeightThird = 24.0;
-
 /// remove objects from the render layer to reduce garbage collection
 void renderNodeAt(){
   if (!gridNodeVisible[renderNodeIndex]) {
@@ -376,15 +371,15 @@ void renderStandardNodeHalfNorth({
   colors[renderIndex] = color;
 
   src[bufferIndex] = srcX;
-  dst[bufferIndex] = cos0;
+  dst[bufferIndex] = 1;
   bufferIndex++;
 
   src[bufferIndex] = srcY;
-  dst[bufferIndex] = sin0;
+  dst[bufferIndex] = 0;
   bufferIndex++;
 
   src[bufferIndex] = srcX + spriteWidth;
-  dst[bufferIndex] = renderNodeDstX - spriteWidth - 17;
+  dst[bufferIndex] = renderNodeDstX - spriteWidthHalf - 17;
 
   bufferIndex++;
   src[bufferIndex] = srcY + spriteHeight;
@@ -410,15 +405,15 @@ void renderStandardNodeHalfEast({
   colors[renderIndex] = color;
 
   src[bufferIndex] = srcX;
-  dst[bufferIndex] = cos0;
+  dst[bufferIndex] = 1;
   bufferIndex++;
 
   src[bufferIndex] = srcY;
-  dst[bufferIndex] = sin0;
+  dst[bufferIndex] = 0;
   bufferIndex++;
 
   src[bufferIndex] = srcX + spriteWidth;
-  dst[bufferIndex] = renderNodeDstX - spriteWidth + 17;
+  dst[bufferIndex] = renderNodeDstX - spriteWidthHalf + 17;
 
   bufferIndex++;
   src[bufferIndex] = srcY + spriteHeight;

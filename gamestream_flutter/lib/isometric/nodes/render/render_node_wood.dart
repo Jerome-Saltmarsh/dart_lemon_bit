@@ -1,6 +1,7 @@
 
 import 'package:bleed_common/node_orientation.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src.dart';
+import 'package:gamestream_flutter/isometric/nodes/render/render_node.dart';
 
 import 'render_standard_node.dart';
 
@@ -38,12 +39,12 @@ void renderNodeWood({
         srcY: 0,
       );
     case NodeOrientation.Half_North:
-      return renderStandardNode(
+      return renderStandardNodeHalfNorth(
         srcX: AtlasSrc.Node_Wood_Half_North,
         srcY: 0,
       );
     case NodeOrientation.Half_East:
-      return renderStandardNode(
+      return renderStandardNodeHalfEast(
         srcX: AtlasSrc.Node_Wood_Half_East,
         srcY: 0,
       );

@@ -81,11 +81,12 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] design mouse cursor
 /// [ ] melee weapons run out of rounds but only on hit
 /// [ ] custom websocket address
-/// [ ] fix render fence
 /// [ ] fix render window west
 /// [ ] multiple spawn points
 /// [ ] prevent turn while attacking
-/// [ ] spawn weapons
+/// [ ] fix see through house when inside
+/// [x] spawn weapons
+/// [x] fix render fence
 /// [x] fix revive player falling in water
 /// [x] fix brick render
 /// [x] fix bug player not striking zombie

@@ -466,25 +466,14 @@ Row buildEditorMenu() {
                 return container(child: "Edit", color: brownLight);
               }
             ),
-            // onMouseOver(
-            //   builder: (context, over) {
-            //     if (over){
-            //       return Column(
-            //         children: [
-            //           container(child: "View", color: brownLight),
-            //           container(child: "Weather", color: brownLight, hoverColor: brownDark, action: edit.actionToggleControlsVisibleWeather),
-            //           container(child: "Grid", color: brownLight, hoverColor: brownDark),
-            //         ],
-            //       );
-            //     }
-            //     return container(child: "View", color: brownLight);
-            //   }
-            // ),
             buildMenu(
                 text: "Insert",
-                children: GameObjectType.staticValues
-                    .map(buildButtonAddGameObject)
-                    .toList(),
+                children: const [
+                  GameObjectType.Barrel,
+                  GameObjectType.Wheel,
+                ]
+                  .map(buildButtonAddGameObject)
+                  .toList(),
             )
           ],
         );

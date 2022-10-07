@@ -1,6 +1,9 @@
 const spriteWidth = 48.0;
 const spriteHeight = 72.0;
 
+const spriteWidthHalf = 24.0;
+const spriteHeightThird = 24.0;
+
 const spriteWidthPadded = spriteWidth + 1;
 const spriteHeightPadded = spriteHeight + 1;
 
