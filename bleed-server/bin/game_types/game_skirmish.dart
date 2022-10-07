@@ -174,6 +174,11 @@ class GameSkirmish extends Game {
     }
   }
 
+  @override
+  void customOnPlayerWeaponReady(Player player){
+
+  }
+
   void respawnAI(AI ai){
     ai.respawn = configAIRespawnFrames;
     ai.health = ai.maxHealth;
@@ -223,6 +228,7 @@ class GameSkirmish extends Game {
       deactivateGameObject(gameObject);
       final weapon = buildWeaponByType(AttackType.Shotgun);
       weapon.spawn = gameObject;
+      player.weaponSlot1 = weapon;
       playerSetWeapon(player, weapon);
     }
 
@@ -230,6 +236,7 @@ class GameSkirmish extends Game {
       deactivateGameObject(gameObject);
       final weapon = buildWeaponByType(AttackType.Handgun);
       weapon.spawn = gameObject;
+      player.weaponSlot1 = weapon;
       playerSetWeapon(player, weapon);
     }
   }

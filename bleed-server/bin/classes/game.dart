@@ -128,8 +128,11 @@ abstract class Game {
   void onPlayerUpdateRequestedReceived({
     required Player player,
     required int direction,
+    /// Left click
     required bool perform1,
+    /// Right Click
     required bool perform2,
+    /// Space Bar
     required bool perform3,
     required double mouseX,
     required double mouseY,
@@ -157,9 +160,16 @@ abstract class Game {
     weapon.state = AttackState.Aiming;
     player.lookRadians = player.mouseAngle;
 
+    if (player.deadBusyOrPerforming) return;
+
     if (perform1) {
-      playerUseWeapon(player, weapon);
+      playerUseWeapon(player, player.weaponSlot1);
       player.writePlayerWeaponRounds();
+    }
+
+    if (perform2){
+      playerUseWeapon(player, player.weaponSlot2);
+      playerUseWeapon(player, weapon);
     }
   }
 
@@ -231,6 +241,8 @@ abstract class Game {
 
   void playerUseWeapon(Player player, Weapon weapon) {
     if (player.deadBusyOrPerforming) return;
+
+    player.weapon = weapon;
 
     if (weapon.type == AttackType.Bow){
       weapon.charge++;
@@ -1044,6 +1056,7 @@ abstract class Game {
             customOnPlayerWeaponRoundsExhausted(player, weapon);
           }
         }
+        customOnPlayerWeaponReady(player);
       }
     }
 
@@ -1114,6 +1127,13 @@ abstract class Game {
     setCharacterStateRunning(player);
   }
 
+  /// once the player has finished striking then reequip the weapon
+  void customOnPlayerWeaponReady(Player player){
+      if (player.weapon == player.weaponSlot2){
+        player.weapon = player.weaponSlot1;
+      }
+  }
+
   void setCharacterStateRunning(Character character){
     character.setCharacterState(value: CharacterState.Running, duration: 0);
     if (character.stateDuration == 0) {
@@ -1153,119 +1173,6 @@ abstract class Game {
       }
     }
   }
-
-  // void spawnNodeInstance(NodeSpawn node) {
-  //   final distance = randomBetween(0, node.spawnRadius);
-  //   final angle = randomAngle();
-  //   final x = getAdjacent(angle, distance);
-  //   final y = getOpposite(angle, distance);
-  //
-  //   final radius = node.spawnRadius;
-  //
-  //   switch (node.spawnType) {
-  //     case SpawnType.Chicken:
-  //       final instance =
-  //       GameObjectChicken(x: node.x + x, y: node.y + y, z: node.z);
-  //       instance.wanderRadius = radius;
-  //       instance.spawn = node;
-  //       gameObjects.add(instance);
-  //
-  //       return;
-  //     case SpawnType.Jellyfish:
-  //       final instance =
-  //       GameObjectJellyfish(x: node.x + x, y: node.y + y, z: node.z);
-  //       instance.spawn = node;
-  //       gameObjects.add(instance);
-  //       return;
-  //     case SpawnType.Jellyfish_Red:
-  //       final instance =
-  //       GameObjectJellyfishRed(x: node.x + x, y: node.y + y, z: node.z);
-  //       instance.spawn = node;
-  //       gameObjects.add(instance);
-  //       return;
-  //     case SpawnType.Rat:
-  //       final instance = Rat(
-  //         z: node.indexZ,
-  //         row: node.indexRow,
-  //         column: node.indexColumn,
-  //         game: this,
-  //         team: Teams.evil,
-  //       );
-  //       instance.wanderRadius = node.spawnRadius;
-  //       instance.spawn = node;
-  //       characters.add(instance);
-  //       break;
-  //     case SpawnType.Butterfly:
-  //       final instance =
-  //       GameObjectButterfly(x: node.x, y: node.y, z: node.z);
-  //       instance.spawn = node;
-  //       instance.wanderRadius = node.spawnRadius;
-  //       gameObjects.add(instance);
-  //       break;
-  //     case SpawnType.Zombie:
-  //       final instance = Zombie(
-  //         x: node.x + x,
-  //         y: node.y + y,
-  //         z: node.z,
-  //         health: 10,
-  //         damage: 1,
-  //         game: this,
-  //         team: Teams.evil,
-  //       );
-  //       instance.spawn = node;
-  //       instance.wanderRadius = node.spawnRadius;
-  //       characters.add(instance);
-  //       break;
-  //     case SpawnType.Slime:
-  //       final instance = AISlime(
-  //         x: node.x + x,
-  //         y: node.y + y,
-  //         z: node.z,
-  //         health: 1,
-  //         team: Teams.evil,
-  //       );
-  //       instance.spawn = node;
-  //       instance.wanderRadius = node.spawnRadius;
-  //       instance.setCharacterStateSpawning();
-  //       characters.add(instance);
-  //       break;
-  //     case SpawnType.Template:
-  //       final instance = Npc(
-  //         game: this,
-  //         x: node.x + x,
-  //         y: node.y + y,
-  //         z: node.z,
-  //         health: 10,
-  //         weapon: Weapon(
-  //           type: AttackType.Bow,
-  //           damage: 1,
-  //           capacity: 0,
-  //           duration: 10,
-  //           range: 200,
-  //         ),
-  //         team: Teams.good,
-  //         wanderRadius: 100,
-  //         name: 'Bandit',
-  //       );
-  //       instance.spawn = node;
-  //       instance.wanderRadius = node.spawnRadius;
-  //       characters.add(instance);
-  //       break;
-  //     case SpawnType.Random_Item:
-  //       final instance = GameObjectWeapon(
-  //           x: node.centerX,
-  //           y: node.centerY,
-  //           z: node.centerZ,
-  //           weaponType: getRandomWeaponIndex(),
-  //       );
-  //       instance.spawn = node;
-  //       gameObjects.add(instance);
-  //       break;
-  //     default:
-  //       print("Spawn GameObject Warning: Unrecognized SpawnType ${node.spawnType} ${SpawnType.getName(node.spawnType)}");
-  //       break;
-  //   }
-  // }
 
   int getRandomWeaponIndex() =>
     randomItem([
