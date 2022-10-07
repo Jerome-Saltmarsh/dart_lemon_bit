@@ -641,17 +641,18 @@ class ServerResponseReader with ByteReader {
     gridTotalRows = readInt();
     gridTotalColumns = readInt();
     gridTotalArea = gridTotalRows * gridTotalColumns;
-
     final grandTotal = gridTotalZ * gridTotalRows * gridTotalColumns;
-
+    if (gridNodeTypes.length < grandTotal) {
+      print('new buffers generated $grandTotal');
+      gridNodeTypes = Uint8List(grandTotal);
+      gridNodeOrientations = Uint8List(grandTotal);
+      gridNodeShade = Uint8List(grandTotal);
+      gridNodeBake = Uint8List(grandTotal);
+      gridNodeWind = Uint8List(grandTotal);
+      gridNodeVariation = List.generate(grandTotal, (index) => false, growable: false);
+      gridNodeVisible = List.generate(grandTotal, (index) => true, growable: false);
+    }
     gridNodeTotal = grandTotal;
-    gridNodeTypes = Uint8List(grandTotal);
-    gridNodeOrientations = Uint8List(grandTotal);
-    gridNodeShade = Uint8List(grandTotal);
-    gridNodeBake = Uint8List(grandTotal);
-    gridNodeWind = Uint8List(grandTotal);
-    gridNodeVariation = List.generate(grandTotal, (index) => false, growable: false);
-    gridNodeVisible = List.generate(grandTotal, (index) => true, growable: false);
 
     var gridIndex = 0;
     var total = 0;

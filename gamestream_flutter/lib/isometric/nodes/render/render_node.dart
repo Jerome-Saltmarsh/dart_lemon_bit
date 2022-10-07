@@ -446,60 +446,6 @@ double projectY(int row, int column, int z){
   return ((row + column) * nodeSizeHalf) - (z * nodeHeight);
 }
 
-
-// the benefit of doing this is that nothing gets added to the stack
-void renderNodeFast(int index){
-  if (gridNodeEmpty[index]) return;
-  if (gridNodeVisible[index]) return;
-  src[bufferIndex + 0] = gridNodeSrc0[index];
-  src[bufferIndex + 1] = gridNodeSrc1[index];
-  src[bufferIndex + 2] = gridNodeSrc2[index];
-  src[bufferIndex + 3] = gridNodeSrc3[index];
-  dst[bufferIndex + 0] = gridNodeDst0[index];
-  dst[bufferIndex + 1] = gridNodeDst1[index];
-  dst[bufferIndex + 2] = gridNodeDst2[index];
-  dst[bufferIndex + 3] = gridNodeDst3[index];
-  colors[renderIndex] = gridNodeColor[index];
-  bufferIndex += 4;
-  renderIndex++;
-  if (bufferIndex < buffers) return;
-  bufferIndex = 0;
-  renderIndex = 0;
-  renderAtlas();
-}
-
-void assignNodeRenderDstAndSrc(int z, int row, int column){
-  final index = gridNodeIndexZRC(z, row, column);
-  final type = gridNodeTypes[index];
-  final isTypeEmpty = type == NodeType.Empty;
-  gridNodeEmpty[index] = isTypeEmpty;
-  if (isTypeEmpty) return;
-  final orientation = gridNodeOrientations[index];
-
-  const spriteWidth = 48.0;
-  const spriteWidthHalf = spriteWidth ~/ 2;
-  const spriteHeight = 72.0;
-  const spriteHeightThird = spriteHeight * 0.333;
-
-  final dstX = (row - column) * nodeSizeHalf;
-  final dstY = ((row + column) * nodeSizeHalf) - (z * nodeHeight);
-
-  switch(type) {
-    case NodeType.Grass:
-       switch(orientation){
-         case NodeOrientation.Solid:
-           gridNodeSrc0[index] = 7158.0; // left
-           gridNodeSrc1[index] = 0.0; // top
-           gridNodeSrc2[index] = gridNodeSrc0[index] + spriteWidth;
-           gridNodeSrc3[index] = gridNodeSrc1[index] + spriteHeight;
-           gridNodeDst0[index] = 1;
-           gridNodeDst1[index] = 0;
-           gridNodeDst2[index] = dstX - spriteWidthHalf;
-           gridNodeDst3[index] = dstY - spriteHeightThird;
-       }
-  }
-}
-
 void updateGridAnimation(){
   for (var i = 0; i < gridNodeTotal; i++){
   }

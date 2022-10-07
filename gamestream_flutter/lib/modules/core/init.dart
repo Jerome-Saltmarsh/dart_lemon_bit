@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:gamestream_flutter/isometric/map_atlas.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/shared_preferences.dart';
@@ -22,6 +23,7 @@ Future init() async {
     print("Environment: Production");
   }
   engine.cursorType.value = CursorType.Basic;
+  print(gridNodeTypes[0]);
 }
 
 void initializeEventListeners() {
