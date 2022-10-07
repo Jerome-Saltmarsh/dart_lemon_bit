@@ -22,9 +22,9 @@ class GameObjectType {
   static const Loot = 22;
   static const Particle_Emitter = 23;
   static const Weapon = 26;
-  static const Shotgun = 27;
-  static const Handgun = 28;
-  static const Blade = 28;
+  static const Weapon_Shotgun = 27;
+  static const Weapon_Handgun = 28;
+  static const Weapon_Blade = 28;
 
   static const staticValues = [
     Flower,
@@ -45,7 +45,10 @@ class GameObjectType {
     Lantern_Red,
     Particle_Emitter,
   ];
-  
+
+  static bool isCollidable(int type) =>
+    type == Barrel;
+
   static bool emitsLightBright(int type){
     if (type == Jellyfish) return true;
     if (type == Jellyfish_Red) return true;

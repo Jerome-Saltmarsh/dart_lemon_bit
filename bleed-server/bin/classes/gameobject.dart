@@ -15,73 +15,20 @@ class GameObject extends Collider {
     required double x,
     required double y,
     required double z,
-    required double radius,
     required this.type,
-  }) : super(x: x, y: y, z: z, radius: radius);
-
-  void write(Player player) {}
+  }) : super(x: x, y: y, z: z, radius: 10) {
+    collidable = GameObjectType.isCollidable(type);
+  }
 
   /// Determines whether or not this object should be serialized
   bool get persist => true;
 }
 
-class GameObjectStatic extends GameObject {
-  var respawn = 0;
-
-  GameObjectStatic({
-    required double x,
-    required double y,
-    required double z,
-    required int type,
-  }) : super(x: x, y: y, z: z, radius: 10, type: type) {
-    collidable = false;
-    switch (type) {
-      case GameObjectType.Crystal:
-        collidable = true;
-        moveOnCollision = false;
-        break;
-      case GameObjectType.Barrel:
-        collidable = true;
-        moveOnCollision = false;
-        radius = 15;
-        break;
-      default:
-        break;
-    }
-  }
-
-  @override
-  void write(Player player) {
-    player.writeByte(ServerResponse.GameObject_Static);
-    player.writePosition3(this);
-    player.writeByte(type);
-  }
-}
 
 abstract class Updatable {
   void update(Game game);
 }
 
-class GameObjectLoot extends GameObject {
-
-  int lootType;
-
-  GameObjectLoot({
-    required double x,
-    required double y,
-    required double z,
-    required this.lootType,
-  }) : super(x: x, y: y, z: z, radius: 15, type: GameObjectType.Loot) {
-    physical = false;
-  }
-
-  @override
-  void write(Player player) {
-    player.writeByte(ServerResponse.GameObject_Loot);
-    player.writePosition3(this);
-    player.writeByte(lootType);
-  }
-}
 
 class GameObjectParticleEmitter extends GameObject with Updatable{
   int particleType;
@@ -104,7 +51,7 @@ class GameObjectParticleEmitter extends GameObject with Updatable{
     required this.weight,
     required this.zv,
     required this.spawnRate,
-  }) : super(x: x, y: y, z: z, radius: 0, type: GameObjectType.Loot) {
+  }) : super(x: x, y: y, z: z, type: GameObjectType.Loot) {
     collidable = false;
   }
 
@@ -149,7 +96,7 @@ abstract class GameObjectAnimal extends GameObject with Velocity {
 
   GameObjectAnimal({
     required double x, required double y, required double z, required int type,
-  }) : super(x: x, y: y, z: z, radius: 5, type: type) {
+  }) : super(x: x, y: y, z: z, type: type) {
     target.x = x;
     target.y = y;
     target.z = z;
@@ -178,7 +125,7 @@ class GameObjectWeapon extends GameObject {
     required double y,
     required double z,
     required this.weaponType,
-  }) : super(x: x, y: y, z: z, radius: 14, type: GameObjectType.Weapon) {
+  }) : super(x: x, y: y, z: z, type: GameObjectType.Weapon) {
     physical = false;
   }
 

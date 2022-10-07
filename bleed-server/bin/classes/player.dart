@@ -332,7 +332,9 @@ class Player extends Character with ByteWriter {
       if (gameObject.renderX < screenLeft) continue;
       if (gameObject.renderX > screenRight) continue;
       if (gameObject.renderY > screenBottom) continue;
-      gameObject.write(this);
+      writeByte(ServerResponse.GameObject);
+      writeByte(gameObject.type);
+      writePosition3(gameObject);
     }
   }
 
@@ -560,7 +562,7 @@ class Player extends Character with ByteWriter {
     writeInt(value.z);
   }
 
-  void writeGameObject(GameObject gameObject){
+  void writeGameObject(GameObject gameObject) {
     writeByte(ServerResponse.GameObject);
     writeByte(gameObject.type);
     writePosition3(gameObject);

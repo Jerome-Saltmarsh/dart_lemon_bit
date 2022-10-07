@@ -118,7 +118,7 @@ class GameSkirmish extends Game {
           continue;
         }
         if (scene.nodeTypes[i] == NodeType.Spawn_Weapon) {
-          spawnGameObjectAtIndex(i);
+          spawnGameObjectAtIndex(index: i, type: GameObjectType.Weapon_Shotgun);
           continue;
         }
     }

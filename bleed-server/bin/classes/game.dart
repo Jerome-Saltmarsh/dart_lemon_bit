@@ -77,7 +77,7 @@ abstract class Game {
   /// safe to override
   void customOnCollisionBetweenPlayerAndOther(Player a, Collider b) { }
   /// safe to override
-  void customOnPlayerCollisionWithLoot(Player player, GameObjectLoot loot) { }
+  void customOnPlayerCollisionWithLoot(Player player, GameObject loot) { }
   /// safe to override
   void customOnAIRespawned(AI ai){  }
   /// safe to override
@@ -462,23 +462,6 @@ abstract class Game {
       ) >
           attackRadius) continue;
 
-      if (gameObject is GameObjectStatic) {
-        if (!gameObject.active) continue;
-        if (gameObject.type == GameObjectType.Barrel) {
-          gameObject.active = false;
-          gameObject.collidable = false;
-          gameObject.respawn = 200;
-          attackHit = true;
-          for (final player in players) {
-            player.writeGameEventGameObjectDestroyed(gameObject);
-          }
-
-          player.applyForce(
-            force: 7.5,
-            angle: getAngleBetween(player.x, player.y, gameObject.x, gameObject.y),
-          );
-        }
-      }
       if (gameObject is Velocity == false) continue;
       (gameObject as Velocity).applyForce(
         force: 5,
@@ -888,12 +871,6 @@ abstract class Game {
       resolveCollisionPhysics(a, b);
     }
 
-    if (a is Player && b is GameObjectLoot) {
-      return customOnPlayerCollisionWithLoot(a, b);
-    }
-    if (a is GameObjectLoot && b is Player) {
-      return customOnPlayerCollisionWithLoot(b, a);
-    }
     if (a is Player){
       customOnCollisionBetweenPlayerAndOther(a, b);
     }
@@ -1800,18 +1777,14 @@ abstract class Game {
     zombie.spawnNodeIndex = i;
   }
 
-  GameObject spawnGameObjectAtIndex(int i){
-    final z = i ~/ scene.gridArea;
-    var remainder = i - (z * scene.gridArea);
-    final row = remainder ~/ scene.gridColumns;
-    remainder -= row * scene.gridColumns;
-    final column = remainder;
-    final instance = GameObjectWeapon(
-      x: row * tileSize,
-      y: column * tileSize,
-      z: z * tileHeight,
-      weaponType: AttackType.Shotgun,
+  GameObject spawnGameObjectAtIndex({required int index, required int type}){
+    final instance = GameObject(
+      x: 0,
+      y: 0,
+      z: 0,
+      type: type,
     );
+    moveV3ToNodeIndex(instance, index);
     gameObjects.add(instance);
     return instance;
   }
@@ -2241,14 +2214,7 @@ abstract class Game {
     required double z,
     required int type,
   }){
-    gameObjects.add(
-        GameObjectLoot(
-          x: x,
-          y: y,
-          z: z,
-          lootType: type,
-        )
-    );
+    // TODO
   }
 
   Weapon buildWeaponByType(int type){

@@ -201,14 +201,6 @@ class GameWaves extends Game {
     }
   }
 
-  @override
-  void customOnPlayerCollisionWithLoot(Player player, GameObjectLoot loot){
-    deactivateGameObject(loot);
-    player.points++;
-    player.writePoints();
-    player.dispatchEventLootCollected();
-  }
-
   void onWeaponPurchased(Player player, Weapon weapon){
     player.weapon = weapon;
      player.writePlayerWeaponType();

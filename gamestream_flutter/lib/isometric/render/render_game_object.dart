@@ -236,9 +236,8 @@ void renderGameObject(GameObject value) {
           srcHeight: 10,
         );
     }
-
+    throw Exception("render_game_object.renderGameObject(type: ${GameObjectType.getName(value.type)})");
   }
-
 }
 
 void renderGameObjectChicken(GameObject value) {

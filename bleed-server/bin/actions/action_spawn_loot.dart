@@ -11,11 +11,11 @@ void actionSpawnLoot({
   required double z,
 }){
   game.gameObjects.add(
-      GameObjectLoot(
+      GameObject(
           x: x,
           y: y,
           z: z + tileHeightHalf,
-          lootType: 0,
+          type: GameObjectType.Loot,
       )
   );
 }

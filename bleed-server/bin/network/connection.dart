@@ -453,77 +453,7 @@ class Connection {
   }
 
   void handleCanvasModifySize(List<String> arguments, Player player, Game game) {
-    /// TODO
-    // if (arguments.length != 4) return errorArgsExpected(4, arguments);
-    // final dimension = int.tryParse(arguments[1]);
-    // final add = int.tryParse(arguments[2]);
-    // final start = int.tryParse(arguments[3]);
-    // if (dimension == null) return;
-    // if (add == null) return;
-    // if (start == null) return;
-    //
-    // final grid = player.scene.grid;
-    // final columns = grid[0][0].length;
-    // /// Dimensions Z: 0, Row: 1, Column: 2
-    // /// Add: 1, Remove: 0
-    // if (dimension == 1) {
-    //    if (add == 1) {
-    //      if (start == 1){
-    //        var type = NodeType.Grass;
-    //           for (final z in grid){
-    //             z.insert(
-    //                 0,
-    //                 generateGridRow(columns, type: type)
-    //             );
-    //             type = NodeType.Empty;
-    //           }
-    //      } else { // End
-    //        var type = NodeType.Grass;
-    //        for (final z in grid){
-    //          z.add(
-    //              generateGridRow(columns, type: type)
-    //          );
-    //          type = NodeType.Empty;
-    //        }
-    //      }
-    //    } else { // Remove
-    //       if (start == 1){
-    //         for (final z in grid){
-    //           z.removeAt(0);
-    //         }
-    //       } else {
-    //         for (final z in grid){
-    //           z.removeLast();
-    //         }
-    //       }
-    //    }
-    // }
-    //
-    // // Dimension Column == 2;
-    // if (dimension == 2){
-    //   if (add == 1){
-    //     if (start == 1){
-    //       var type = NodeType.Grass;
-    //        for (final z in grid){
-    //           for (final row in z){
-    //              row.insert(0, generateNode(type));
-    //           }
-    //           type = NodeType.Empty;
-    //        }
-    //     } else {
-    //       var type = NodeType.Grass;
-    //       for (final z in grid){
-    //         for (final row in z){
-    //           row.add(generateNode(type));
-    //         }
-    //         type = NodeType.Empty;
-    //       }
-    //     }
-    //   }
-    // }
-    //
-    // game.onGridChanged();
-    // return;
+    // TODO
   }
 
   void handleGameObjectRequest(List<String> arguments) {
@@ -612,7 +542,7 @@ class Connection {
           );
         } else {
           player.game.scene.gameObjects.add(
-            GameObjectStatic(x: x, y: y, z: z, type: type),
+            GameObject(x: x, y: y, z: z, type: type)
           );
         }
 
