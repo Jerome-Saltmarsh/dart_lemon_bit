@@ -49,6 +49,9 @@ class GameObjectType {
   static bool isCollidable(int type) =>
     type == Barrel;
 
+  static bool isPersistable(int type) =>
+    type == Barrel;
+
   static bool emitsLightBright(int type){
     if (type == Jellyfish) return true;
     if (type == Jellyfish_Red) return true;

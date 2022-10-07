@@ -181,11 +181,11 @@ class GameSkirmish extends Game {
   }
 
   @override
-  void customOnCollisionBetweenPlayerAndOther(Player player, Collider other){
-    if (other is GameObjectWeapon){
-      deactivateGameObject(other);
-      final weapon = buildWeaponByType(other.weaponType);
-      weapon.spawn = other;
+  void customOnCollisionBetweenPlayerAndGameObject(Player player, GameObject gameObject) {
+    if (gameObject.type == GameObjectType.Weapon_Shotgun){
+      deactivateGameObject(gameObject);
+      final weapon = buildWeaponByType(AttackType.Shotgun);
+      weapon.spawn = gameObject;
       playerSetWeapon(player, weapon);
     }
   }

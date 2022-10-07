@@ -75,9 +75,9 @@ abstract class Game {
   /// safe to override
   void customOnCollisionBetweenColliders(Collider a, Collider b) { }
   /// safe to override
-  void customOnCollisionBetweenPlayerAndOther(Player a, Collider b) { }
+  void customOnCollisionBetweenPlayerAndOther(Player player, Collider collider) { }
   /// safe to override
-  void customOnPlayerCollisionWithLoot(Player player, GameObject loot) { }
+  void customOnCollisionBetweenPlayerAndGameObject(Player player, GameObject gameObject) { }
   /// safe to override
   void customOnAIRespawned(AI ai){  }
   /// safe to override
@@ -631,7 +631,6 @@ abstract class Game {
     customUpdate();
     updateCollisions();
     updateCharacters();
-    updateGameObjects();
     updateProjectiles();
     updateProjectiles(); // called twice to fix collision detection
     updateCharacterFrames();
@@ -722,17 +721,6 @@ abstract class Game {
   void activateGameObject(GameObject gameObject){
     if (gameObject.active) return;
     gameObject.active = true;
-  }
-
-  void updateGameObjects(){
-    for (final gameObject in gameObjects) {
-      if (gameObject is Updatable) {
-        (gameObject as Updatable).update(this);
-      }
-      if (gameObject is Velocity) {
-        (gameObject as Velocity).applyFriction(0.95);
-      }
-    }
   }
 
   void applyDamageToCharacter({
@@ -871,13 +859,18 @@ abstract class Game {
       resolveCollisionPhysics(a, b);
     }
 
-    if (a is Player){
+    if (a is Player) {
+      if (b is GameObject) {
+         customOnCollisionBetweenPlayerAndGameObject(a, b);
+      }
       customOnCollisionBetweenPlayerAndOther(a, b);
     }
-    if (b is Player){
+    if (b is Player) {
+      if (a is GameObject) {
+         customOnCollisionBetweenPlayerAndGameObject(b, a);
+      }
       customOnCollisionBetweenPlayerAndOther(b, a);
     }
-
     customOnCollisionBetweenColliders(a, b);
   }
 

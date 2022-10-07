@@ -6,7 +6,6 @@ import 'package:typedef/json.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
-import '../common/game_object_type.dart';
 import '../common/node_type.dart';
 
 Scene convertStringToScene(String value, String name) =>
@@ -82,12 +81,12 @@ const teamGood = 1;
 const teamBad = 1;
 const teamDefault = teamBad;
 
-GameObject convertJsonToGameObject(Json json) {
-    final type = json.getInt('type');
-    final x = json.getDouble('x');
-    final y = json.getDouble('y');
-    final z = json.getDouble('z');
-    return GameObject(x: x, y: y, z: z, type: type);
-}
+GameObject convertJsonToGameObject(Json json) =>
+    GameObject(
+        x: json.getDouble('x'),
+        y: json.getDouble('y'),
+        z: json.getDouble('z'),
+        type: json.getInt('type'),
+    );
 
 

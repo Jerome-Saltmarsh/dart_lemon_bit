@@ -3,7 +3,9 @@ import 'dart:convert';
 
 import 'package:typedef/json.dart';
 
+import '../classes/gameobject.dart';
 import '../classes/scene.dart';
+import '../common/game_object_type.dart';
 import 'convert_gameobject_to_json.dart';
 
 
@@ -17,6 +19,9 @@ Json convertSceneToJson(Scene scene) => Json()..
   ['grid-types'] = scene.nodeTypes..
   ['grid-orientations'] = scene.nodeOrientations..
   ['gameobjects'] = scene.gameObjects
-    .where((gameObject) => gameObject.persist)
+    .where(isPersistable)
     .map(convertGameObjectToJson)
     .toList();
+
+bool isPersistable(GameObject gameObject) =>
+    GameObjectType.isPersistable(gameObject.type);

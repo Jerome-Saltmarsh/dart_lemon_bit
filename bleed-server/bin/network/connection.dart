@@ -518,33 +518,11 @@ class Connection {
         if (x == null) return errorInvalidArg('x is null (2)');
         if (y == null) return errorInvalidArg('y is null (3)');
         if (z == null) return errorInvalidArg('z is null (4)');
-
-        // if (!player.scene.getNodeXYZ(x, y, z).isEmpty){
-        //   return errorInvalidArg("Selected Block is not empty");
-        // }
-
         if (type == null) return errorInvalidArg('type is null (5)');
 
-        if (type == GameObjectType.Particle_Emitter){
-          player.game.gameObjects.add(
-            GameObjectParticleEmitter(
-              x: x,
-              y: y,
-              z: z,
-              particleType: ParticleType.Fire,
-              duration: 100,
-              angle: 0,
-              speed: 0,
-              zv: 1,
-              weight: -1,
-              spawnRate: 10,
-            )
-          );
-        } else {
-          player.game.scene.gameObjects.add(
-            GameObject(x: x, y: y, z: z, type: type)
-          );
-        }
+        player.game.scene.gameObjects.add(
+          GameObject(x: x, y: y, z: z, type: type)
+        );
 
         player.editorSelectedGameObject = player.game.scene.gameObjects.last;
         player.scene.dirty = true;
