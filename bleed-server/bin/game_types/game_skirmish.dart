@@ -152,7 +152,7 @@ class GameSkirmish extends Game {
   @override
   void customUpdatePlayer(Player player) {
     if (player.idling){
-      final diff = Direction.getDifference(player.aimDirection, player.faceDirection);
+      final diff = Direction.getDifference(player.lookDirection, player.faceDirection);
       if (diff >= 2){
         player.faceAngle += piQuarter;
       } else if (diff <= -3) {

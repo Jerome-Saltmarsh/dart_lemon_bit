@@ -83,7 +83,9 @@ abstract class Game {
   /// safe to override
   void customOnPlayerRequestPurchaseWeapon(Player player, int type){ }
   /// safe to override
-  void customOnPlayerWeaponRoundsExhausted(Player player, Weapon weapon){ }
+  void customOnPlayerWeaponRoundsExhausted(Player player, Weapon weapon){
+    playerSetWeapon(player, buildWeaponUnarmed());
+  }
   /// PROPERTIES
 
   /// Safe to override
@@ -155,12 +157,6 @@ abstract class Game {
     if (perform1) {
       playerUseWeapon(player, weapon);
       player.writePlayerWeaponRounds();
-
-      if (weapon.requiresRounds) {
-        if (weapon.rounds == 0) {
-          playerSetWeapon(player, buildWeaponUnarmed());
-        }
-      }
     }
   }
 
@@ -1029,10 +1025,16 @@ abstract class Game {
     if (player.deadOrDying) return;
 
     if (player.weapon.durationRemaining > 0) {
-      player.weapon.durationRemaining--;
-      if (player.weapon.durationRemaining == 0){
-        player.weapon.state = AttackState.Aiming;
+      final weapon = player.weapon;
+      weapon.durationRemaining--;
+      if (weapon.durationRemaining == 0){
+        weapon.state = AttackState.Aiming;
         player.lookRadians = player.mouseAngle;
+        if (weapon.requiresRounds) {
+          if (weapon.rounds == 0) {
+            customOnPlayerWeaponRoundsExhausted(player, weapon);
+          }
+        }
       }
     }
 
