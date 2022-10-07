@@ -94,6 +94,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] spawn smg,
 /// [ ] melee weapons run out of rounds but only on hit
 /// [ ] fix editor navigation buttons
+/// [ ] client on no message from server received dialog
 /// [x] fix editor respawn
 /// [x] multiple player spawn points
 /// [x] custom region

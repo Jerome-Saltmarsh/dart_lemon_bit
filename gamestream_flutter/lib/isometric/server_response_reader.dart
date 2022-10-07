@@ -51,13 +51,21 @@ import 'time.dart';
 import 'weather/breeze.dart';
 
 final serverResponseReader = ServerResponseReader();
+final triggerAlarmNoMessageReceivedFromServer = Watch(false);
+
+void onChangedRendersSinceUpdate(int value){
+   triggerAlarmNoMessageReceivedFromServer.value = value > 200;
+}
+
+void register(){
+  serverResponseReader.rendersSinceUpdate.onChanged(onChangedRendersSinceUpdate);
+}
 
 class ServerResponseReader with ByteReader {
   final byteLength = Watch(0);
   final bufferSize = Watch(0);
   final updateFrame = Watch(0);
-  final rendersSinceUpdate = Watch(0);
-
+  final rendersSinceUpdate = Watch(0, onChanged: onChangedRendersSinceUpdate);
 
   void readBytes(Uint8List values) {
     updateFrame.value++;

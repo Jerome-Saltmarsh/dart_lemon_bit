@@ -32,6 +32,7 @@ Widget buildStackGame()  =>
     height: screen.height,
     child: Stack(
       children: [
+        buildWatchBool(triggerAlarmNoMessageReceivedFromServer, buildDialogFramesSinceUpdate),
         watch(gameType, buildGameTypeUI),
         watch(editorDialog, buildWatchEditorDialog),
         watch(player.gameDialog, buildGameDialog),
@@ -42,6 +43,13 @@ Widget buildStackGame()  =>
         buildWatchBool(debugVisible, buildHudDebug),
       ],
     ),
+  );
+
+Widget buildDialogFramesSinceUpdate() =>
+  Positioned(
+      child:  watch(serverResponseReader.rendersSinceUpdate,  (int frames) {
+                return text("Renders Since Update: ${serverResponseReader.rendersSinceUpdate}");
+              })
   );
 
 Positioned buildWatchInterpolation() =>
