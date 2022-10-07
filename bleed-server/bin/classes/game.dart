@@ -1783,6 +1783,39 @@ abstract class Game {
     return projectile;
   }
 
+  void spawnZombieAtIndex(int i){
+    final indexZ = i ~/ scene.gridArea;
+    var remainder = i - (indexZ * scene.gridArea);
+    final indexRow = remainder ~/ scene.gridColumns;
+    remainder -= indexRow * scene.gridColumns;
+    final indexColumn = remainder;
+    final zombie = spawnZombie(
+      x: indexRow * nodeSize,
+      y: indexColumn * nodeSize,
+      z: indexZ * nodeHeight,
+      health: 3,
+      team: 100,
+      damage: 1,
+    );
+    zombie.spawnNodeIndex = i;
+  }
+
+  GameObject spawnGameObjectAtIndex(int i){
+    final z = i ~/ scene.gridArea;
+    var remainder = i - (z * scene.gridArea);
+    final row = remainder ~/ scene.gridColumns;
+    remainder -= row * scene.gridColumns;
+    final column = remainder;
+    final instance = GameObjectWeapon(
+      x: row * tileSize,
+      y: column * tileSize,
+      z: z * tileHeight,
+      weaponType: AttackType.Shotgun,
+    );
+    gameObjects.add(instance);
+    return instance;
+  }
+
   Zombie spawnZombie({
     required double x,
     required double y,

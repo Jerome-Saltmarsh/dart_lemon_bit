@@ -113,39 +113,15 @@ class GameSkirmish extends Game {
 
     final volume = scene.gridVolume;
     for (var i = 0; i < volume; i++){
-        if (scene.nodeTypes[i] != NodeType.Spawn) continue;
-          final indexZ = i ~/ scene.gridArea;
-          var remainder = i - (indexZ * scene.gridArea);
-          final indexRow = remainder ~/ scene.gridColumns;
-          remainder -= indexRow * scene.gridColumns;
-          final indexColumn = remainder;
-          final zombie = spawnZombie(
-               x: indexRow * nodeSize,
-               y: indexColumn * nodeSize,
-               z: indexZ * nodeHeight,
-               health: 3,
-               team: 100,
-               damage: 1,
-           );
-          zombie.spawnNodeIndex = i;
+        if (scene.nodeTypes[i] == NodeType.Spawn) {
+          spawnZombieAtIndex(i);
+          continue;
+        }
+        if (scene.nodeTypes[i] == NodeType.Spawn_Weapon) {
+          spawnGameObjectAtIndex(i);
+          continue;
+        }
     }
-
-    addGameObjectWeaponShotgun(z: 1, row: 2, column: 2);
-  }
-
-  void addGameObjectWeaponShotgun({
-    required int z,
-    required int row,
-    required int column,
-  }){
-    gameObjects.add(
-        GameObjectWeapon(
-            x: row * tileSize,
-            y: column * tileSize,
-            z: z * tileHeight,
-            weaponType: AttackType.Shotgun,
-        )
-    );
   }
 
   @override
