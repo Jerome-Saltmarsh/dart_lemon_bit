@@ -149,6 +149,7 @@ abstract class Game {
 
     if (weapon.durationRemaining > 0) return;
     weapon.state = AttackState.Aiming;
+    player.lookRadians = player.mouseAngle;
 
     if (perform1) {
       playerUseWeapon(player, weapon);
@@ -169,78 +170,6 @@ abstract class Game {
     player.writePlayerWeaponRounds();
     player.writePlayerWeaponCapacity();
     player.writePlayerEventItemEquipped(player.weapon.type);
-  }
-
-  void handlePlayerControlSchemeA({
-    required Player player,
-    required int direction,
-    required bool perform1,
-    required bool perform2,
-    required bool perform3,
-    required double mouseX,
-    required double mouseY,
-    required double screenLeft,
-    required double screenTop,
-    required double screenRight,
-    required double screenBottom,
-  }){
-    player.framesSinceClientRequest = 0;
-    player.screenLeft = screenLeft;
-    player.screenTop = screenTop;
-    player.screenRight = screenRight;
-    player.screenBottom = screenBottom;
-    player.mouse.x = mouseX;
-    player.mouse.y = mouseY;
-
-    if (player.deadOrBusy) return;
-
-    playerRunInDirection(player, direction);
-    playerUpdateAimTarget(player);
-
-    if (player.weapon.durationRemaining > 0) return;
-    player.weapon.state = AttackState.Aiming;
-
-    if (perform1) {
-      player.weapon = player.weaponSlot1;
-      playerUseWeapon(player, player.weapon);
-    } else {
-      playerReleaseWeaponCharge(player, player.weapon);
-    }
-    if (perform2) {
-      player.weapon = player.weaponSlot2;
-      playerUseWeapon(player, player.weapon);
-    }
-  }
-
-  void handlePlayerControlSchemeB({
-    required Player player,
-    required int direction,
-    required bool perform1,
-    required bool perform2,
-    required bool perform3,
-    required double mouseX,
-    required double mouseY,
-    required double screenLeft,
-    required double screenTop,
-    required double screenRight,
-    required double screenBottom,
-  }){
-    player.framesSinceClientRequest = 0;
-    player.screenLeft = screenLeft;
-    player.screenTop = screenTop;
-    player.screenRight = screenRight;
-    player.screenBottom = screenBottom;
-    player.mouse.x = mouseX;
-    player.mouse.y = mouseY;
-
-    if (player.deadOrBusy) return;
-
-    playerUpdateAimTarget(player);
-    playerRunInDirection(player, direction);
-
-    if (perform1){
-      player.setCharacterStatePerforming(duration: player.weapon.duration);
-    }
   }
 
   void changeGame(Player player, Game to){
@@ -274,7 +203,7 @@ abstract class Game {
     dispatchV3(GameEventType.Release_Bow, player);
     spawnProjectileArrow(
       src: player,
-      angle: player.mouseAngle,
+      angle: player.lookRadians,
       damage: weapon.damage,
       range: weapon.range * power,
     );
@@ -332,7 +261,7 @@ abstract class Game {
       case AttackType.Crossbow:
         return spawnProjectileArrow(
             src: player,
-            angle: player.mouseAngle,
+            angle: player.lookRadians,
             damage: weapon.damage,
             range: weapon.range,
         );
@@ -342,33 +271,33 @@ abstract class Game {
         return characterFireWeapon(
           character: player,
           weapon: weapon,
-          angle: player.mouseAngle,
+          angle: player.lookRadians,
         );
       case AttackType.Shotgun:
-        return characterFireShotgun(player, player.mouseAngle);
+        return characterFireShotgun(player, player.lookRadians);
       case AttackType.Assault_Rifle:
         return characterFireWeapon(
           character: player,
           weapon: weapon,
-          angle: player.mouseAngle,
+          angle: player.lookRadians,
         );
       case AttackType.Rifle:
         return characterFireWeapon(
           character: player,
           weapon: weapon,
-          angle: player.mouseAngle,
+          angle: player.lookRadians,
         );
       case AttackType.Fireball:
         characterSpawnProjectileFireball(
             player,
-            angle: player.mouseAngle,
+            angle: player.lookRadians,
         );
         break;
       case AttackType.Revolver:
         return characterFireWeapon(
           character: player,
           weapon: weapon,
-          angle: player.mouseAngle,
+          angle: player.lookRadians,
         );
       case AttackType.Crowbar:
         return playerAttackMelee(
@@ -384,7 +313,7 @@ abstract class Game {
             src: player,
             damage: weapon.damage,
             range: weapon.range,
-            angle: player.mouseAngle,
+            angle: player.lookRadians,
         );
         break;
     }
@@ -407,7 +336,7 @@ abstract class Game {
     required int damage,
     required int duration,
   }) {
-    final angle = player. mouseAngle;
+    final angle = player.lookRadians;
 
     final performX = player.x + getAdjacent(angle, distance);
     final performY = player.y + getOpposite(angle, distance);
@@ -1102,6 +1031,7 @@ abstract class Game {
       player.weapon.durationRemaining--;
       if (player.weapon.durationRemaining == 0){
         player.weapon.state = AttackState.Aiming;
+        player.lookRadians = player.mouseAngle;
       }
     }
 

@@ -44,6 +44,7 @@ class Player extends Character with ByteWriter {
   var screenBottom = 0.0;
   var sceneDownloaded = false;
   var initialized = false;
+  var lookRadians = 0.0;
   /// Warning - do not reference
   Game game;
   Collider? aimTarget; // the currently highlighted character
@@ -502,7 +503,7 @@ class Player extends Character with ByteWriter {
     writeCharacterEquipment(player);
     writeString(player.name);
     writeString(player.text);
-    writeAngle(player.mouseAngle);
+    writeAngle(player.lookRadians);
     writeBool(player.usingWeapon);
 
     if (player.usingWeapon) {
