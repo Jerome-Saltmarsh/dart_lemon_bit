@@ -248,6 +248,9 @@ class GameSkirmish extends Game {
 
   @override
   void customOnPlayerWeaponRoundsExhausted(Player player, Weapon weapon){
+    if (weapon == player.weaponSlot1){
+      player.weaponSlot1 = player.weaponSlot2; // unarmed
+    }
     playerSetWeaponUnarmed(player);
   }
 
