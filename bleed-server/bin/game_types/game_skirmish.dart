@@ -82,9 +82,10 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] center camera on player on spawn
 /// [ ] melee weapons run out of rounds but only on hit
 /// [ ] custom websocket address
+/// [ ] fix editor camera stutters on selected
 /// [ ] spawn handgun, blade, machine-gun, bazooka, land-mine, smg, sniper-rifle, body-armour
 /// [ ] multiple spawn points
-/// [ ] respawn weapon on empty
+/// [x] respawn weapon on empty
 /// [x] fix prevent rain on grass slope
 /// [x] prevent turn while attacking
 /// [x] fix render window west
@@ -207,14 +208,6 @@ class GameSkirmish extends Game {
     }
   }
 
-  // void playerSetWeapon(Player player, Weapon weapon){
-  //   player.weapon = weapon;
-  //   player.writePlayerWeaponType();
-  //   player.writePlayerWeaponRounds();
-  //   player.writePlayerWeaponCapacity();
-  //   player.writePlayerEventItemEquipped(player.weapon.type);
-  // }
-
   @override
   void customOnPlayerRevived(Player player){
     movePlayerToCrystal(player);
@@ -225,17 +218,17 @@ class GameSkirmish extends Game {
     playerSetWeaponUnarmed(player);
   }
 
-  reactivateGameObject(GameObject gameObject){
-    gameObject.active = true;
-    gameObject.collidable = true;
-    gameObject.type = getRandomItemType();
-  }
-
   @override
   void customOnPlayerWeaponChanged(Player player, Weapon newWeapon, Weapon previousWeapon){
     final previousWeaponSpawn = previousWeapon.spawn;
     if (previousWeaponSpawn is GameObject) {
       reactivateGameObject(previousWeaponSpawn);
     }
+  }
+
+  reactivateGameObject(GameObject gameObject){
+    gameObject.active = true;
+    gameObject.collidable = true;
+    gameObject.type = getRandomItemType();
   }
 }
