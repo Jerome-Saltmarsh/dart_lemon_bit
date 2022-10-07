@@ -92,6 +92,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] spawn sniper-rifle,
 /// [ ] spawn smg,
 /// [ ] melee weapons run out of rounds but only on hit
+/// [ ] fix editor navigation buttons
 /// [x] multiple player spawn points
 /// [x] custom region
 /// [x] spawn handgun,

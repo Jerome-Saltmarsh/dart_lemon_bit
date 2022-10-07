@@ -2225,7 +2225,7 @@ abstract class Game {
     ) return;
 
     if (!NodeType.supportsOrientation(nodeType, nodeOrientation)){
-      throw Exception("game.setNode(index: $nodeIndex, type: $nodeType, orientation: $nodeOrientation");
+      throw Exception("game.setNode(index: $nodeIndex, type: ${NodeType.getName(nodeType)}, orientation: ${NodeOrientation.getName(nodeOrientation)}");
     }
     scene.dirty = true;
     scene.nodeOrientations[nodeIndex] = nodeOrientation;
