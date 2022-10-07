@@ -2,6 +2,7 @@
 import '../classes/player.dart';
 import '../classes/scene.dart';
 import '../common/GameType.dart';
+import '../common/library.dart';
 import '../common/node_type.dart';
 import '../scene/generate_empty_scene.dart';
 import 'dark_age_environment.dart';
@@ -30,6 +31,7 @@ class GameDarkAgeEditor extends GameDarkAge {
        player.indexColumn = 25;
        player.indexRow = 25;
        player.indexZ = 8;
+       player.state = CharacterState.Idle;
        return;
      }
 
@@ -51,6 +53,6 @@ class GameDarkAgeEditor extends GameDarkAge {
         if (type == NodeType.Water) return false;
         if (type == NodeType.Water_Flowing) return false;
      }
-     return false;
+     return true;
   }
 }

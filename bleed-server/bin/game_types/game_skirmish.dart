@@ -66,6 +66,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] zombie death animation 3
 
 /// [RELEASE 1.00]
+/// [ ] auto connect to firestorm on first visit
 /// [ ] build scene
 /// [ ] 3d model weapon sword
 /// [ ] 3d model weapon staff
@@ -93,6 +94,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] spawn smg,
 /// [ ] melee weapons run out of rounds but only on hit
 /// [ ] fix editor navigation buttons
+/// [x] fix editor respawn
 /// [x] multiple player spawn points
 /// [x] custom region
 /// [x] spawn handgun,

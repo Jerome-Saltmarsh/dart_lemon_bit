@@ -2217,7 +2217,7 @@ abstract class Game {
     required int nodeOrientation,
   }) {
     if (nodeIndex >= scene.gridVolume) {
-      throw Exception("node index out of bounds");
+      throw Exception("game.setNode(nodeIndex: $nodeIndex) - node index out of bounds");
     }
     if (
       nodeType == scene.nodeTypes[nodeIndex] &&
