@@ -25,10 +25,10 @@ class GameObjectType {
   static const Weapon_Handgun = 28;
   static const Weapon_Blade = 29;
 
-  static bool isCollidable(int type) => true;
-
   static bool isPersistable(int type) =>
-      type == Barrel;
+      type != Loot &&
+      type != Weapon_Handgun &&
+      type != Weapon_Shotgun;
 
   static bool emitsLightBright(int type){
     if (type == Jellyfish) return true;

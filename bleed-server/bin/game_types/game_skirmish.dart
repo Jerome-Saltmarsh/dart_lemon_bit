@@ -79,12 +79,13 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] draw punch sprite
 /// [ ] design mouse cursor
 /// [ ] fix see through house when inside
+/// [ ] fix handgun fire animation
 /// [ ] center camera on player on spawn
 /// [ ] melee weapons run out of rounds but only on hit
 /// [ ] custom websocket address
 /// [ ] fix editor camera stutters on selected
 /// [ ] spawn handgun, blade, machine-gun, bazooka, land-mine, smg, sniper-rifle, body-armour
-/// [ ] multiple spawn points
+/// [ ] multiple player spawn points
 /// [x] respawn weapon on empty
 /// [x] fix prevent rain on grass slope
 /// [x] prevent turn while attacking

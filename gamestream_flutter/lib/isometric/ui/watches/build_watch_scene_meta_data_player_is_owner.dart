@@ -471,6 +471,17 @@ Row buildEditorMenu() {
                 children: const [
                   GameObjectType.Barrel,
                   GameObjectType.Wheel,
+                  GameObjectType.Crystal,
+                  GameObjectType.Crystal_Small_Blue,
+                  GameObjectType.Lantern_Red,
+                  GameObjectType.Tavern_Sign,
+                  GameObjectType.Book_Purple,
+                  GameObjectType.Bottle,
+                  GameObjectType.Candle,
+                  GameObjectType.Cup,
+                  GameObjectType.Wooden_Shelf_Row,
+                  GameObjectType.Rock,
+                  GameObjectType.Stick,
                 ]
                   .map(buildButtonAddGameObject)
                   .toList(),

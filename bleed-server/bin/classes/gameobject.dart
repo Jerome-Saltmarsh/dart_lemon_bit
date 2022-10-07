@@ -1,4 +1,3 @@
-import '../common/library.dart';
 import 'library.dart';
 
 class GameObject extends Collider {
@@ -13,7 +12,7 @@ class GameObject extends Collider {
     required double z,
     required this.type,
   }) : super(x: x, y: y, z: z, radius: 15) {
-    collidable = GameObjectType.isCollidable(type);
+    collidable = true;
     moveOnCollision = false;
   }
 }
