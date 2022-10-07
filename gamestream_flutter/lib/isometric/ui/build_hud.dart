@@ -20,6 +20,7 @@ import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_d
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
 import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
+import 'package:gamestream_flutter/modules/game/render.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 import 'package:lemon_engine/screen.dart';
 
@@ -47,8 +48,8 @@ Widget buildStackGame()  =>
 
 Widget buildDialogFramesSinceUpdate() =>
   Positioned(
-      child:  watch(serverResponseReader.rendersSinceUpdate,  (int frames) {
-                return text("Renders Since Update: ${serverResponseReader.rendersSinceUpdate}");
+      child:  watch(rendersSinceUpdate,  (int frames) {
+                return text("Renders Since Update: $rendersSinceUpdate");
               })
   );
 
@@ -58,7 +59,7 @@ Positioned buildWatchInterpolation() =>
       left: 0,
       child: watch(player.interpolating, (bool value) {
         if (!value) return text("Interpolation Off", onPressed: () => player.interpolating.value = true);
-        return watch(serverResponseReader.rendersSinceUpdate, (int frames){
+        return watch(rendersSinceUpdate, (int frames){
           return text("Frames: $frames", onPressed: () => player.interpolating.value = false);
         });
       }),

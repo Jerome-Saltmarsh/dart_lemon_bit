@@ -28,6 +28,7 @@ import '../../isometric/game.dart';
 import 'style.dart';
 
 final renderFrame = Watch(0);
+final rendersSinceUpdate = Watch(0, onChanged: onChangedRendersSinceUpdate);
 
 class GameRender {
   final GameStyle style;
@@ -54,7 +55,7 @@ class GameRender {
     renderEditMode();
     renderMouseTargetName();
     renderWeaponRoundInformation();
-    serverResponseReader.rendersSinceUpdate.value++;
+    rendersSinceUpdate.value++;
   }
 
   /// Render the player in the same relative position to the camera
@@ -62,10 +63,10 @@ class GameRender {
 
     if (!player.interpolating.value) return;
 
-    if (serverResponseReader.rendersSinceUpdate.value == 0) {
+    if (rendersSinceUpdate.value == 0) {
       return;
     }
-    if (serverResponseReader.rendersSinceUpdate.value != 1) return;
+    if (rendersSinceUpdate.value != 1) return;
 
     final playerCharacter = getPlayerCharacter();
     if (playerCharacter == null) return;

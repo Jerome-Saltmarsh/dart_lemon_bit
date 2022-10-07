@@ -32,6 +32,7 @@ import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
+import 'package:gamestream_flutter/modules/game/render.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/state/game_options.dart';
 import 'package:gamestream_flutter/state/state_game_waves.dart';
@@ -57,19 +58,17 @@ void onChangedRendersSinceUpdate(int value){
    triggerAlarmNoMessageReceivedFromServer.value = value > 200;
 }
 
-void register(){
-  serverResponseReader.rendersSinceUpdate.onChanged(onChangedRendersSinceUpdate);
+void onChangedUpdateFrame(int value){
+  rendersSinceUpdate.value = 0;
 }
 
 class ServerResponseReader with ByteReader {
   final byteLength = Watch(0);
   final bufferSize = Watch(0);
-  final updateFrame = Watch(0);
-  final rendersSinceUpdate = Watch(0, onChanged: onChangedRendersSinceUpdate);
+  final updateFrame = Watch(0, onChanged: onChangedUpdateFrame);
 
   void readBytes(Uint8List values) {
     updateFrame.value++;
-    rendersSinceUpdate.value = 0;
     index = 0;
     totalCharacters = 0;
     totalGameObjects = 0;

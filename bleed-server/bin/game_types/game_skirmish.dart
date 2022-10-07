@@ -8,33 +8,6 @@ import '../common/control_scheme.dart';
 import '../common/library.dart';
 import '../functions/move_player_to_crystal.dart';
 
-/// a very simple game
-/// the player picks one of five characters
-/// each character has predetermined weapons
-///
-/// alternatively each player spawns with a default weapon and roams the map
-/// to find equipment
-/// i do not know which is better
-///
-/// weapon can be single handed or two handed
-///
-/// two single handed weapons may be equipped at the same time
-///
-/// these can also be used at the same time
-///
-/// a heavy weapon may only be used by both hands
-///
-/// like diablo 2 the player has two different weapon slots
-///
-/// these can be swapped by pressing
-///
-/// duel pistols may be wielded
-///
-/// or a sword and a shield
-///
-/// or a sword and a pistol
-///
-/// it may be better without the space key
 /// [IDEAS]
 /// [ ] player can jump
 /// [ ] start losing health if energy gets too low
@@ -44,6 +17,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] enemies drop magic orbs required for powers
 /// [ ] running backwards is slower
 /// [ ] modify animations editor
+/// [ ] single handed weapons can be duel wielded like sword and shield
 
 /// [AQUARIUS]
 /// Design character fish
@@ -94,6 +68,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] spawn smg,
 /// [ ] melee weapons run out of rounds but only on hit
 /// [ ] fix editor navigation buttons
+/// [ ] recycle client grid node buffer
 /// [ ] client on no message from server received dialog
 /// [x] fix editor respawn
 /// [x] multiple player spawn points
