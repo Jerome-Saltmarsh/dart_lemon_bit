@@ -84,6 +84,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] fix render fence
 /// [ ] fix render window west
 /// [ ] multiple spawn points
+/// [ ] prevent turn while attacking
 /// [ ] spawn weapons
 /// [x] fix revive player falling in water
 /// [x] fix brick render
@@ -174,11 +175,6 @@ class GameSkirmish extends Game {
     player.writeEnvironmentWind(Wind.Gentle);
     player.writeEnvironmentBreeze(false);
     movePlayerToCrystal(player);
-  }
-
-  @override
-  void customOnCollisionBetweenColliders(Collider a, Collider b) {
-
   }
 
   @override
