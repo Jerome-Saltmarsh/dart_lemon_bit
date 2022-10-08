@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/particle_type.dart';
-import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/grid_state.dart';
@@ -118,7 +117,7 @@ void _updateParticle(Particle particle) {
   }
 
   final nodeIndex = gridNodeIndexVector3(particle);
-  final tile = gridNodeTypes[nodeIndex];
+  final tile = nodesType[nodeIndex];
   final airBorn =
       !particle.checkNodeCollision || (
       tile == NodeType.Empty        ||
@@ -286,29 +285,6 @@ void spawnParticleLeaf({
     scale: 0.6,
     scaleV: 0,
     bounciness: 0,
-  );
-}
-
-void spawnParticleFireYellow({
-  required double x,
-  required double y,
-  required double z,
-  required double zv,
-  required double angle,
-  required double speed
-}){
-  const type = ParticleType.FireYellow;
-  spawnParticle(
-      type: type,
-      x: x,
-      y: y,
-      z: 0,
-      angle: angle,
-      speed: speed,
-      weight: 0,
-      duration: randomInt(10, 25),
-      scale: 1,
-      scaleV: 0.035
   );
 }
 
@@ -632,20 +608,6 @@ void spawnParticleOrb(OrbType type, double x, double y) {
     rotationV: 0,
     scale: 0.3,
   );
-}
-
-void spawnExplosion(double x, double y) {
-  spawnEffect(x: x, y: y, type: EffectType.Explosion, duration: 30);
-  audio.explosion(x, y);
-  // modules.game.actions.spawnBulletHole(x, y);
-  const shrapnelCount = 6;
-  for (var i = 0; i < shrapnelCount; i++) {
-    spawnParticleShrapnel(x: x, y: y, z: 0.3, zv: 1 + giveOrTake(0.25), angle: randomAngle(), speed: 1 + giveOrTake(0.25));
-    spawnParticleSmoke(x: x, y: y, z: 0, zv: 0, angle: randomAngle(), speed: 0.5);
-  }
-  for (var i = 0; i < shrapnelCount; i++) {
-    spawnParticleFireYellow(x: x, y: y, z: 0.3, zv: 1 + giveOrTake(0.25), angle: randomAngle(), speed: 1 + giveOrTake(0.25));
-  }
 }
 
 void freezeCircle({

@@ -16,5 +16,5 @@ void setGridType(int z, int row, int column, int type){
   if (column >= gridTotalColumns)
     return;
 
-  gridNodeTypes[gridNodeIndexZRC(z, row, column)] = type;
+  nodesType[getGridNodeIndexZRC(z, row, column)] = type;
 }

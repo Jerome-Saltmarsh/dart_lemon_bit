@@ -61,11 +61,11 @@ void applyGridLine(int index, int strength){
   }
   while (windLineRow < gridTotalRows && windLineColumn < gridTotalColumns){
     for (var windLineZ = 0; windLineZ < gridTotalZ; windLineZ++){
-      final index = gridNodeIndexZRC(windLineZ, windLineRow, windLineColumn);
-      gridNodeWind[index] += strength;
+      final index = getGridNodeIndexZRC(windLineZ, windLineRow, windLineColumn);
+      nodesWind[index] += strength;
       // TODO refactor
-      if (gridNodeWind[index] > windIndexStrong){
-        gridNodeWind[index] = windIndexStrong;
+      if (nodesWind[index] > windIndexStrong){
+        nodesWind[index] = windIndexStrong;
       }
     }
     windLineRow++;

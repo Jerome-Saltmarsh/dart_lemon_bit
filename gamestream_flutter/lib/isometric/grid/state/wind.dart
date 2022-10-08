@@ -15,8 +15,8 @@ void gridWindResetToAmbient(){
   //    }
   // }
 
-  for (var i = 0; i < gridNodeTotal; i++){
-     gridNodeWind[i] = ambientWindIndex;
+  for (var i = 0; i < nodesTotal; i++){
+     nodesWind[i] = ambientWindIndex;
   }
 }
 

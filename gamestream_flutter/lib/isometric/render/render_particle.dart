@@ -1,5 +1,7 @@
 import 'package:bleed_common/particle_type.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
+import 'package:gamestream_flutter/isometric/grid.dart';
+import 'package:gamestream_flutter/isometric/grid_state.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
@@ -167,6 +169,14 @@ void renderParticle(Particle value) {
       );
     case ParticleType.Blood:
       // print("render blood");
+       final nodeIndex = getGridNodeIndexV3(value);
+       // caste shadow
+       // projects a shadow down
+       if (nodeIndex > gridTotalArea) {
+          final nodeBelowIndex = nodeIndex - gridTotalArea;
+          final nodeBelowOrientation = nodesOrientation[nodeBelowIndex];
+       }
+
       return render(
           dstX: value.renderX,
           dstY: value.renderY,
@@ -192,9 +202,6 @@ void renderParticle(Particle value) {
           y: value.renderY,
           scale: value.scale,
       );
-    case ParticleType.FireYellow:
-      return renderFireYellow(
-          x: value.renderX, y: value.renderY, scale: value.scale);
     case ParticleType.Flame:
       return renderFlame(value);
 
@@ -431,23 +438,4 @@ void renderFlame(Position position) {
       srcWidth: 18,
       srcHeight: 23,
       anchorY: 0.9);
-}
-
-void renderShadow({
-  required Position position,
-  required double scale,
-}) {
-  // mapShadeShadow();
-  // engine.mapDst(
-  //   x: position.x,
-  //   y: position.y,
-  //   anchorX: 4.0,
-  //   anchorY: 4.0,
-  //   scale: scale,
-  // );
-  // engine.renderAtlas();
-}
-
-void mapShadeShadow() {
-  // engine.mapSrc(x: 1, y: 34, width: 8.0, height: 8.0);
 }

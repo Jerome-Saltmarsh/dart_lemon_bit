@@ -23,7 +23,7 @@ Future init() async {
     print("Environment: Production");
   }
   engine.cursorType.value = CursorType.Basic;
-  print(gridNodeTypes[0]);
+  print(nodesType[0]);
 }
 
 void initializeEventListeners() {

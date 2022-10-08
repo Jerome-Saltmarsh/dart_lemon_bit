@@ -574,8 +574,8 @@ class ServerResponseReader with ByteReader {
     final nodeType = readByte();
     final nodeOrientation = readByte();
     assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
-    gridNodeTypes[nodeIndex] = nodeType;
-    gridNodeOrientations[nodeIndex] = nodeOrientation;
+    nodesType[nodeIndex] = nodeType;
+    nodesOrientation[nodeIndex] = nodeOrientation;
     edit.refreshNodeSelectedIndex();
     onGridChanged();
   }
@@ -642,17 +642,17 @@ class ServerResponseReader with ByteReader {
     gridTotalColumns = readInt();
     gridTotalArea = gridTotalRows * gridTotalColumns;
     final grandTotal = gridTotalZ * gridTotalRows * gridTotalColumns;
-    if (gridNodeTypes.length < grandTotal) {
+    if (nodesType.length < grandTotal) {
       print('new buffers generated $grandTotal');
-      gridNodeTypes = Uint8List(grandTotal);
-      gridNodeOrientations = Uint8List(grandTotal);
-      gridNodeShade = Uint8List(grandTotal);
-      gridNodeBake = Uint8List(grandTotal);
-      gridNodeWind = Uint8List(grandTotal);
-      gridNodeVariation = List.generate(grandTotal, (index) => false, growable: false);
-      gridNodeVisible = List.generate(grandTotal, (index) => true, growable: false);
+      nodesType = Uint8List(grandTotal);
+      nodesOrientation = Uint8List(grandTotal);
+      nodesShade = Uint8List(grandTotal);
+      nodesBake = Uint8List(grandTotal);
+      nodesWind = Uint8List(grandTotal);
+      nodesVariation = List.generate(grandTotal, (index) => false, growable: false);
+      nodesVisible = List.generate(grandTotal, (index) => true, growable: false);
     }
-    gridNodeTotal = grandTotal;
+    nodesTotal = grandTotal;
 
     var gridIndex = 0;
     var total = 0;
@@ -671,11 +671,11 @@ class ServerResponseReader with ByteReader {
       total += count;
 
       while (count > 0) {
-        gridNodeTypes[gridIndex] = nodeType;
-        gridNodeOrientations[gridIndex] = nodeOrientation;
+        nodesType[gridIndex] = nodeType;
+        nodesOrientation[gridIndex] = nodeOrientation;
 
         if (nodeType == NodeType.Grass) {
-          gridNodeVariation[gridIndex] = randomBool();
+          nodesVariation[gridIndex] = randomBool();
         }
 
         gridIndex++;

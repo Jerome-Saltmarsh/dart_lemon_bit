@@ -20,12 +20,12 @@ void applyEmissionGameObjects() {
       // gameObject.tileBelow.applyLight1();
 
       final nodeIndex = gridNodeIndexVector3(gameObject);
-      final nodeShade = gridNodeShade[nodeIndex];
+      final nodeShade = nodesShade[nodeIndex];
       gridNodeShadeSet(nodeIndex, nodeShade - 1);
 
       if (gameObject.indexZ > 0){
          final nodeBelowIndex = gridNodeIndexVector3NodeBelow(gameObject);
-         final nodeBelowShade = gridNodeShade[nodeBelowIndex];
+         final nodeBelowShade = nodesShade[nodeBelowIndex];
          gridNodeShadeSet(nodeBelowIndex, nodeBelowShade - 1);
       }
    }

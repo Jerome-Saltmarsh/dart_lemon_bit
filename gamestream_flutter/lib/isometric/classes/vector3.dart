@@ -15,7 +15,7 @@ class Vector3 with Position {
   /// remove
   int get indexColumn => y ~/ tileSize;
   /// remove
-  int get nodeIndex => gridNodeGetIndexXYZ(x, y, z);
+  int get nodeIndex => getGridNodeIndexXYZ(x, y, z);
   double get renderOrder => x + y;
   // Node get tile => getNode(indexZ, indexRow, indexColumn);
   // Node get tileBelow => indexZ == 0 ? Node.boundary : getNode(indexZ - 1, indexRow, indexColumn);

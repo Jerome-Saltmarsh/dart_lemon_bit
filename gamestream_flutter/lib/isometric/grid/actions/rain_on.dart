@@ -8,10 +8,10 @@ void rainOn(){
   for (var row = 0; row < gridTotalRows; row++) {
     for (var column = 0; column < gridTotalColumns; column++) {
       for (var z = gridTotalZ - 1; z >= 0; z--) {
-        final index = gridNodeIndexZRC(z, row, column);
-        final type = gridNodeTypes[index];
+        final index = getGridNodeIndexZRC(z, row, column);
+        final type = nodesType[index];
         if (type != NodeType.Empty) {
-          if (type == NodeType.Water || gridNodeOrientations[index] == NodeOrientation.Solid) {
+          if (type == NodeType.Water || nodesOrientation[index] == NodeOrientation.Solid) {
             setGridType(z + 1, row, column, NodeType.Rain_Landing);
           }
           setGridType(z + 2, row, column, NodeType.Rain_Falling);

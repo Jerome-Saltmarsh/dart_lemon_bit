@@ -1,21 +1,24 @@
 import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 
 import 'grid.dart';
 
-const gridNodeInitialSize = 70 * 70 * 8;
-var gridNodeTotal = gridNodeInitialSize;
-var gridNodeColor = Int32List(gridNodeInitialSize);
-var gridNodeTypes = Uint8List(gridNodeInitialSize);
-var gridNodeOrientations = Uint8List(gridNodeInitialSize);
-var gridNodeShade = Uint8List(gridNodeInitialSize);
-var gridNodeBake = Uint8List(gridNodeInitialSize);
-var gridNodeWind = Uint8List(gridNodeInitialSize);
-var gridNodeVisible = List<bool>.generate(gridNodeInitialSize, (index) => false);
-var gridNodeVariation = List<bool>.generate(gridNodeInitialSize, (index) => false);
-var gridNodeEmpty = List<bool>.generate(gridNodeInitialSize, (index) => false);
+const nodesInitialSize = 70 * 70 * 8;
+var nodesBake = Uint8List(nodesInitialSize);
+var nodesColor = Int32List(nodesInitialSize);
+var nodesOrientation = Uint8List(nodesInitialSize);
+var nodesShade = Uint8List(nodesInitialSize);
+var nodesTotal = nodesInitialSize;
+var nodesType = Uint8List(nodesInitialSize);
+var nodesVariation = List<bool>.generate(nodesInitialSize, (index) => false);
+var nodesVisible = List<bool>.generate(nodesInitialSize, (index) => false);
+var nodesWind = Uint8List(nodesInitialSize);
 
+int getGridNodeIndexBelow(int index){
+  return index - gridTotalArea;
+}
 
 void gridNodeShadeSet(int index, int shade){
 
@@ -26,10 +29,10 @@ void gridNodeShadeSet(int index, int shade){
     shade = Shade.Pitch_Black;
 
   }
-  gridNodeShade[index] = shade;
+  nodesShade[index] = shade;
 }
 
-int gridNodeIndexZRC(int z, int row, int column) {
+int getGridNodeIndexZRC(int z, int row, int column) {
   assert (gridNodeIsInBounds(z, row, column));
 
   return (z * gridTotalArea) + (row * gridTotalColumns) + column;
@@ -46,13 +49,18 @@ bool gridNodeIsInBounds(int z, int row, int column){
 }
 
 void gridNodeWindIncrement(int z, int row, int column){
-  final index = gridNodeIndexZRC(z, row, column);
-  if (gridNodeWind[index] >= windIndexStrong) return;
-  gridNodeWind[index]++;
+  final index = getGridNodeIndexZRC(z, row, column);
+  if (nodesWind[index] >= windIndexStrong) return;
+  nodesWind[index]++;
 }
 
-int gridNodeGetIndexXYZ(double x, double y, double z) =>
-  gridNodeIndexZRC(
+int getGridNodeIndexV3(Vector3 vector3) =>
+    getGridNodeIndexXYZ(
+      vector3.x, vector3.y, vector3.z
+    );
+
+int getGridNodeIndexXYZ(double x, double y, double z) =>
+  getGridNodeIndexZRC(
       z ~/ tileSizeHalf,
       x ~/ tileSize,
       y ~/ tileSize,
@@ -69,10 +77,10 @@ int gridNodeXYZTypeSafe(double x, double y, double z) {
 }
 
 int gridNodeXYZType(double x, double y, double z) =>
-    gridNodeTypes[gridNodeXYZIndex(x, y, z)];
+    nodesType[gridNodeXYZIndex(x, y, z)];
 
 bool gridNodeZRCTypeRainOrEmpty(int z, int row, int column) =>
-     NodeType.isRainOrEmpty(gridNodeTypes[gridNodeIndexZRC(z, row, column)]);
+     NodeType.isRainOrEmpty(nodesType[getGridNodeIndexZRC(z, row, column)]);
 
 int gridNodeZRCTypeSafe(int z, int row, int column) {
   if (z < 0) return NodeType.Boundary;
@@ -85,10 +93,10 @@ int gridNodeZRCTypeSafe(int z, int row, int column) {
 }
 
 int gridNodeZRCType(int z, int row, int column) =>
-    gridNodeTypes[gridNodeIndexZRC(z, row, column)];
+    nodesType[getGridNodeIndexZRC(z, row, column)];
 
 int gridNodeXYZIndex(double x, double y, double z) =>
-    gridNodeIndexZRC(
+    getGridNodeIndexZRC(
       z ~/ tileSizeHalf,
       x ~/ tileSize,
       y ~/ tileSize,

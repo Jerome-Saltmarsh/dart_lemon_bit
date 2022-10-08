@@ -58,7 +58,7 @@ class Edit {
 
   var nodeIndex = Watch(0, clamp: (int value){
      if (value < 0) return 0;
-     if (value >= gridNodeTotal) return gridNodeTotal - 1;
+     if (value >= nodesTotal) return nodesTotal - 1;
      return value;
   }, onChanged: onChangedSelectedNodeIndex);
 
@@ -98,8 +98,8 @@ class Edit {
   double get renderY => projectY(edit.posX, edit.posY, edit.posZ);
 
   void refreshNodeSelectedIndex(){
-    nodeSelectedType.value = gridNodeTypes[nodeIndex.value];
-    nodeSelectedOrientation.value = gridNodeOrientations[nodeIndex.value];
+    nodeSelectedType.value = nodesType[nodeIndex.value];
+    nodeSelectedOrientation.value = nodesOrientation[nodeIndex.value];
   }
 
   void deselectGameObject() {
@@ -161,7 +161,7 @@ class Edit {
   }
 
   void selectBlock(int z, int row, int column){
-    nodeIndex.value = gridNodeIndexZRC(z, row, column);
+    nodeIndex.value = getGridNodeIndexZRC(z, row, column);
   }
 
   void deleteGameObjectSelected(){

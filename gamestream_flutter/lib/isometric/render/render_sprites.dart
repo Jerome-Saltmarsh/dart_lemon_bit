@@ -295,7 +295,7 @@ class RenderOrderGrid extends RenderOrder {
         renderNodeRow <= rowsMax &&
         renderNodeDstX <= screenRight
     ){
-      renderNodeType = gridNodeTypes[renderNodeIndex];
+      renderNodeType = nodesType[renderNodeIndex];
 
       if (renderNodeType != NodeType.Empty){
         renderNodeAt();
@@ -332,7 +332,7 @@ class RenderOrderGrid extends RenderOrder {
     renderNodeDstX = (renderNodeRow - renderNodeColumn) * nodeSizeHalf;
     renderNodeDstY = ((renderNodeRow + renderNodeColumn) * nodeSizeHalf) - (renderNodeZ * nodeHeight);
     renderNodeIndex = (renderNodeZ * gridTotalArea) + (renderNodeRow * gridTotalColumns) + renderNodeColumn;
-    renderNodeType = gridNodeTypes[renderNodeIndex];
+    renderNodeType = nodesType[renderNodeIndex];
     order = ((renderNodeRow + renderNodeColumn) * tileSize) + tileSizeHalf;
     orderZ = renderNodeZ;
   }
@@ -415,7 +415,7 @@ class RenderOrderGrid extends RenderOrder {
     renderNodeDstX = (renderNodeRow - renderNodeColumn) * nodeSizeHalf;
     renderNodeDstY = ((renderNodeRow + renderNodeColumn) * nodeSizeHalf) - (renderNodeZ * nodeHeight);
     renderNodeIndex = (renderNodeZ * gridTotalArea) + (renderNodeRow * gridTotalColumns) + renderNodeColumn;
-    renderNodeType = gridNodeTypes[renderNodeIndex];
+    renderNodeType = nodesType[renderNodeIndex];
 
     if (editMode){
        applyEmissionDynamic(
@@ -464,16 +464,16 @@ class RenderOrderGrid extends RenderOrder {
       column++;
       if (row >= gridTotalRows) return;
       if (column >= gridTotalColumns) return;
-      gridNodeVisible[gridNodeIndexZRC(z, row, column)] = false;
+      nodesVisible[getGridNodeIndexZRC(z, row, column)] = false;
       if (z < gridTotalZ - 2){
-        gridNodeVisible[gridNodeIndexZRC(z + 1, row, column)] = false;
+        nodesVisible[getGridNodeIndexZRC(z + 1, row, column)] = false;
       }
     }
   }
 
   void revealAbove(int z, int row, int column){
     for (; z < gridTotalZ; z++){
-      gridNodeVisible[gridNodeIndexZRC(z, row, column)] = false;
+      nodesVisible[getGridNodeIndexZRC(z, row, column)] = false;
     }
   }
 
@@ -549,8 +549,8 @@ class RenderOrderGrid extends RenderOrder {
   }
 
   void refreshDynamicLightGrid() {
-    for (var i = 0; i < gridNodeTotal; i++) {
-      gridNodeShade[i] = gridNodeBake[i];
+    for (var i = 0; i < nodesTotal; i++) {
+      nodesShade[i] = nodesBake[i];
     }
   }
 }

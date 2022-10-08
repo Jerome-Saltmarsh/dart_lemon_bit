@@ -54,6 +54,35 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] fire-storm build scene
 /// [ ] edit fix change canvas size (HARD)
 /// [ ] spawn sniper-rifle,
+/// [ ] fix editor file save
+/// [ ] feature editor rotate current node
+/// [ ] feature editor rotate current node backward
+/// [ ] feature editor to change the tile type but keep the orientation
+///
+/// [ ] feature editor grid
+/// [ ] feature editor player
+/// [ ] feature editor particles
+/// [ ] feature editor characters
+/// [ ] feature editor gameobjects
+
+/// [ ] feature website single | multi
+/// [ ] fix editor lightning is changing by itself
+/// [ ] fix editor wind is changing by itself
+/// [ ] fix editor rain is changing by itself
+/// [ ] editor text ("press tab to edit") during play mode
+/// [ ] feature editor short cut key to skip hours
+/// [ ] feature create multiplayer sandbox mode
+/// [ ] Sand-box Alone
+/// [ ] Sand-pit With others
+/// [ ] idea higher nodes have a slightly lightly color
+/// [ ] idea higher key sets time to midnight
+/// [ ] idea key sets time to mid day
+///     this allows distinction between tiles
+///
+/// [ ] weapon crossbow
+/// [ ] weapon bow
+/// [ ] Finding items triggers environmental changes
+/// [ ] feature render particle blood shadow
 
 /// 08-10-2022
 /// [x] render game object weapon shadows
