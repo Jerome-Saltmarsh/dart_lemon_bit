@@ -69,7 +69,7 @@ class Edit {
   set z(int value){
      if (value < 0) return;
      if (value >= gridTotalZ) return;
-     final difference = z - value;
+     final difference = value - z;
      nodeIndex.value += difference * gridTotalArea;
   }
 

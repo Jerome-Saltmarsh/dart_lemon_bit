@@ -67,9 +67,11 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] spawn sniper-rifle,
 /// [ ] spawn smg,
 /// [ ] melee weapons run out of rounds but only on hit
-/// [ ] fix editor navigation buttons
-/// [ ] recycle client grid node buffer
 /// [ ] client on no message from server received dialog
+/// 08-10-2022
+/// [x] fix editor navigation buttons
+/// [x] recycle client grid node buffer
+/// 07-10-2022
 /// [x] fix editor respawn
 /// [x] multiple player spawn points
 /// [x] custom region

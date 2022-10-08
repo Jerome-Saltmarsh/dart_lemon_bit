@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/isometric/editor/editor.dart';
+import 'package:gamestream_flutter/isometric/editor/editor_actions.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
@@ -132,6 +132,6 @@ Widget buildButtonIncreaseGridSizeZ() {
                 child: "+",
                 width: 50,
                 alignment: Alignment.center,
-                action: editor.actions.increaseCanvasSizeZ
+                action: increaseCanvasSizeZ,
             );
 }

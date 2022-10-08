@@ -62,7 +62,7 @@ Widget buildEditorSelectedNode() =>
                 left: 27 + _shiftX,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) =>
                       buildAtlasImageButton(
-                          action: edit.cursorZIncrease,
+                          action: edit.cursorZDecrease,
                           srcX: mouseOver ? 9673 : 9650,
                           srcY: 27,
                           srcWidth: 19,
@@ -116,7 +116,7 @@ Widget buildEditorSelectedNode() =>
                 top: -10 + _shiftY,
                 left: 27 + _shiftX,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
-                  action: edit.cursorZDecrease,
+                  action: edit.cursorZIncrease,
                   srcX: mouseOver ? 9673 : 9650,
                   srcY: 0,
                   srcWidth: 21,
