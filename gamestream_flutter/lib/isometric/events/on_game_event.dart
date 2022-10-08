@@ -1,3 +1,4 @@
+import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
@@ -16,13 +17,21 @@ import 'on_game_event_footstep.dart';
 
 void onGameEvent(int type, double x, double y, double z, double angle) {
   switch (type) {
-    case GameEventType.Attack_Performed:
-      return onGameEventAttackPerformed(x, y, z, angle);
     case GameEventType.Footstep:
       return onGameEventFootstep(x, y, z);
+    case GameEventType.Attack_Performed:
+      return onGameEventAttackPerformed(x, y, z, angle);
     case GameEventType.Player_Spawn_Started:
       cameraCenterOnPlayer();
       return audioSingleTeleport.playXYZ(x, y, z);
+    case GameEventType.AI_Target_Acquired:
+      final characterType = serverResponseReader.readByte();
+      switch (characterType){
+        case CharacterType.Zombie:
+          randomItem(audioSingleZombieTalking).playXYZ(x, y, z);
+          break;
+      }
+      break;
     case GameEventType.Node_Set:
       return onGameEventNodeSet(x, y, z);
     case GameEventType.Node_Struck:

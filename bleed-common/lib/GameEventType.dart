@@ -28,4 +28,5 @@ class GameEventType {
   static const Weapon_Type_Equipped = 69;
   static const Node_Struck = 70;
   static const Attack_Missed = 71;
+  static const AI_Target_Acquired = 72;
 }

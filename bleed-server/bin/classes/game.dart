@@ -1776,6 +1776,7 @@ abstract class Game {
 
   void updateAITarget(AI ai){
     var target = ai.target;
+    final targetSet = target != null;
     if (target != null && !ai.withinChaseRange(target)) {
       ai.target = null;
       ai.clearDest();
@@ -1796,6 +1797,22 @@ abstract class Game {
     if (target == null) return;
     if (targetDistance < 100) return;
     npcSetPathTo(ai, target);
+    if (!targetSet){
+      dispatchGameEventAITargetAcquired(ai);
+    }
+  }
+
+  void dispatchGameEventAITargetAcquired(AI ai){
+    for (final player in players) {
+      player.writeGameEvent(
+        type: GameEventType.AI_Target_Acquired,
+        x: ai.x,
+        y: ai.y,
+        z: ai.z,
+        angle: 0,
+      );
+      player.writeByte(ai.type);
+    }
   }
 
   void setNpcTarget(AI ai, Position3 value) {

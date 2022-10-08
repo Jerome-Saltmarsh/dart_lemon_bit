@@ -56,6 +56,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] melee weapons run out of capacity
 
 /// 08-10-2022
+/// [x] zombie make audio on target spotted
 /// [x] animate gameobject weapons up and down
 /// [x] gameobject weapon-blade,
 /// [x] fix center camera on player on spawn
