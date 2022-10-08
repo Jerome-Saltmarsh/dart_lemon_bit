@@ -471,7 +471,17 @@ class Connection {
       return errorInvalidArg('handleCanvasModifySize start is null');
 
     switch (dimension){
-      NodeAxis.Z:
+      case GridAxis.Z:
+        break;
+      case GridAxis.Row:
+        if (add == 1){
+           if (start == 1){
+             player.game.scene.modifyGridAddRowAtStart();
+
+           }
+        }
+        break;
+      case GridAxis.Column:
         break;
     }
   }

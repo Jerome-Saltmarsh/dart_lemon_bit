@@ -20,6 +20,7 @@ void updateCameraMode() {
 }
 
 void cameraCenterOnPlayer(){
+  print('cameraCenterOnPlayer()');
   engine.cameraCenter(player.renderX, player.renderY);
 }
 

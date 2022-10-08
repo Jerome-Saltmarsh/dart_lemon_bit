@@ -41,3 +41,4 @@ export 'rain.dart';
 export 'wind.dart';
 export 'lightning.dart';
 export 'attack_type.dart';
+export 'grid_axis.dart';

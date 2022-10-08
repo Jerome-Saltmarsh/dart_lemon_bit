@@ -27,5 +27,5 @@ class PlayerEvent {
   static const Loot_Collected = 24;
   static const Weapon_Slot_Type_Changed = 25;
   static const Weapon_Slot_Rounds_Changed = 26;
-
+  static const Player_Moved = 27;
 }

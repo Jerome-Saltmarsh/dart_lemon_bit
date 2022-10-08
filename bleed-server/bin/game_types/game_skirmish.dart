@@ -40,10 +40,6 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] particle type darkness
 /// [ ] draw punch sprite
 /// [ ] design mouse cursor
-/// [ ] fix see through house when inside
-/// [ ] fix handgun fire animation
-/// [ ] fix center camera on player on spawn
-/// [ ] fix editor camera stutters on selected
 /// [ ] spawn bazooka,
 /// [ ] spawn land-mine
 /// [ ] spawn body-armour,
@@ -54,8 +50,13 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] spawn sniper-rifle,
 /// [ ] spawn smg,
 /// [ ] fire-storm build scene
-/// [ ] edit fix change canvas size
+/// [ ] edit fix change canvas size (HARD)
+/// [ ] fix see through house when inside
+/// [ ] fix handgun fire animation
+/// [ ] fix editor camera stutters on selected
+
 /// 08-10-2022
+/// [x] fix center camera on player on spawn
 /// [x] client on no message from server received dialog
 /// [x] fix camera editor pans back to player
 /// [x] fix editor navigation buttons
@@ -186,6 +187,8 @@ class GameSkirmish extends Game {
     if (playerSpawnPoints.isNotEmpty){
       moveV3ToNodeIndex(player, randomItem(playerSpawnPoints));
     }
+    player.writePlayerPosition();
+    player.writePlayerEvent(PlayerEvent.Player_Moved);
   }
 
   @override

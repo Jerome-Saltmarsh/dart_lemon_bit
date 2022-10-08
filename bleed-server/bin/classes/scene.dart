@@ -154,4 +154,8 @@ class Scene {
       index - ((convertNodeIndexToZ(index) * gridArea) + (convertNodeIndexToRow(index) * gridColumns));
 
   int convertNodeIndexToZ(int index) => index ~/ gridArea;
+
+  void modifyGridAddRowAtStart(){
+
+  }
 }

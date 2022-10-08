@@ -80,6 +80,9 @@ void onPlayerEvent(int event) {
     case PlayerEvent.GameObject_Deselected:
       edit.gameObjectSelected.value = false;
       break;
+    case PlayerEvent.Player_Moved:
+      cameraCenterOnPlayer();
+      break;
   }
 }
 

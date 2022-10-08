@@ -1,6 +1,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
+import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/events/on_character_hurt.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_attack_performed.dart';
@@ -20,6 +21,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
     case GameEventType.Footstep:
       return onGameEventFootstep(x, y, z);
     case GameEventType.Player_Spawn_Started:
+      cameraCenterOnPlayer();
       return audioSingleTeleport.playXYZ(x, y, z);
     case GameEventType.Node_Set:
       return onGameEventNodeSet(x, y, z);
