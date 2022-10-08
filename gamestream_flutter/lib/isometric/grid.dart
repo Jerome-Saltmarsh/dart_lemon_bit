@@ -4,7 +4,7 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_on.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
-import 'package:gamestream_flutter/isometric/grid_state.dart';
+import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/particle_emitters.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
@@ -17,32 +17,32 @@ final gridShadows = Watch(true, onChanged: (bool value){
   refreshLighting();
 });
 
-var gridTotalZ = 0;
-var gridTotalRows = 0;
-var gridTotalColumns = 0;
-var gridRowLength = 0.0;
-var gridColumnLength = 0.0;
-var gridZLength = 0.0;
-var gridTotalArea = 0;
+var nodesTotalZ = 0;
+var nodesTotalRows = 0;
+var nodesTotalColumns = 0;
+var nodesLengthRow = 0.0;
+var nodesLengthColumn = 0.0;
+var nodesLengthZ = 0.0;
+var nodesArea = 0;
 
 
 bool outOfBounds(int z, int row, int column){
    if (z < 0) return true;
-   if (z >= gridTotalZ) return true;
+   if (z >= nodesTotalZ) return true;
    if (row < 0) return true;
-   if (row >= gridTotalRows) return true;
+   if (row >= nodesTotalRows) return true;
    if (column < 0) return true;
-   if (column >= gridTotalColumns) return true;
+   if (column >= nodesTotalColumns) return true;
    return false;
 }
 
 bool nodeIsInBound(int z, int row, int column){
   if (z < 0) return false;
-  if (z >= gridTotalZ) return false;
+  if (z >= nodesTotalZ) return false;
   if (row < 0) return false;
-  if (row >= gridTotalRows) return false;
+  if (row >= nodesTotalRows) return false;
   if (column < 0) return false;
-  if (column >= gridTotalColumns) return false;
+  if (column >= nodesTotalColumns) return false;
   return true;
 }
 
@@ -84,9 +84,9 @@ void onGridChanged(){
 }
 
 void connectNodeTrees() {
-   for (var z = 0; z < gridTotalZ; z++){
-    for (var row = 0; row < gridTotalRows; row++){
-       for (var column = 0; column < gridTotalColumns; column++){
+   for (var z = 0; z < nodesTotalZ; z++){
+    for (var row = 0; row < nodesTotalRows; row++){
+       for (var column = 0; column < nodesTotalColumns; column++){
            // final node = getNode(z, row, column);
            // if (node is NodeTreeTop){
            //   node.bottom = getNode(z - 1, row, column);
@@ -136,9 +136,9 @@ void gridForEachOfType(
 }
 
 void gridForEachNode(Function(int z, int row, int column) apply) {
-  for (var zIndex = 0; zIndex < gridTotalZ; zIndex++) {
-    for (var rowIndex = 0; rowIndex < gridTotalRows; rowIndex++) {
-      for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
+  for (var zIndex = 0; zIndex < nodesTotalZ; zIndex++) {
+    for (var rowIndex = 0; rowIndex < nodesTotalRows; rowIndex++) {
+      for (var columnIndex = 0; columnIndex < nodesTotalColumns; columnIndex++) {
         apply(zIndex, rowIndex, columnIndex);
       }
     }
@@ -188,11 +188,11 @@ void _applyShadowAt({
   final current = ambientShade.value;
   final shadowShade = current >= Shade.Pitch_Black ? current : current + 1;
 
-  for (var z = 0; z < gridTotalZ; z++) {
-    for (var row = 0; row < gridTotalRows; row++){
-      for (var column = 0; column < gridTotalColumns; column++){
+  for (var z = 0; z < nodesTotalZ; z++) {
+    for (var row = 0; row < nodesTotalRows; row++){
+      for (var column = 0; column < nodesTotalColumns; column++){
         // final tile = grid[z][row][column];
-        final index = getGridNodeIndexZRC(z, row, column);
+        final index = getNodeIndexZRC(z, row, column);
         final tile = nodesType[index];
         if (!castesShadow(tile)) continue;
         var projectionZ = z + directionZ;
@@ -202,9 +202,9 @@ void _applyShadowAt({
             projectionZ >= 0 &&
             projectionRow >= 0 &&
             projectionColumn >= 0 &&
-            projectionZ < gridTotalZ &&
-            projectionRow < gridTotalRows &&
-            projectionColumn < gridTotalColumns
+            projectionZ < nodesTotalZ &&
+            projectionRow < nodesTotalRows &&
+            projectionColumn < nodesTotalColumns
         ) {
           final shade = nodesBake[index];
           if (shade < shadowShade){
@@ -228,7 +228,7 @@ bool castesShadow(int type) =>
 
 bool gridIsUnderSomething(int z, int row, int column){
   if (outOfBounds(z, row, column)) return false;
-  for (var zIndex = z + 1; zIndex < gridTotalZ; zIndex++){
+  for (var zIndex = z + 1; zIndex < nodesTotalZ; zIndex++){
     if (!gridNodeZRCTypeRainOrEmpty(z, row, column)) return false;
   }
   return true;
@@ -237,11 +237,11 @@ bool gridIsUnderSomething(int z, int row, int column){
 bool gridIsPerceptible(int zIndex, int row, int column){
   if (outOfBounds(zIndex, row, column)) return false;
 
-  for (var z = zIndex + 1; z < gridTotalZ; z += 2){
+  for (var z = zIndex + 1; z < nodesTotalZ; z += 2){
     row++;
     column++;
-    if (row >= gridTotalRows) break;
-    if (column >= gridTotalColumns) break;
+    if (row >= nodesTotalRows) break;
+    if (column >= nodesTotalColumns) break;
     if (NodeType.blocksPerception(gridNodeZRCType(z, row, column))) return false;
   }
   return true;
@@ -252,15 +252,15 @@ void refreshGridMetrics(){
   // gridTotalRows = grid[0].length;
   // gridTotalColumns = grid[0][0].length;
 
-  gridRowLength = gridTotalRows * tileSize;
-  gridColumnLength = gridTotalColumns * tileSize;
-  gridZLength = gridTotalZ * tileHeight;
+  nodesLengthRow = nodesTotalRows * tileSize;
+  nodesLengthColumn = nodesTotalColumns * tileSize;
+  nodesLengthZ = nodesTotalZ * tileHeight;
 }
 
 void applyBakeMapEmissions() {
-  for (var zIndex = 0; zIndex < gridTotalZ; zIndex++) {
-    for (var rowIndex = 0; rowIndex < gridTotalRows; rowIndex++) {
-      for (var columnIndex = 0; columnIndex < gridTotalColumns; columnIndex++) {
+  for (var zIndex = 0; zIndex < nodesTotalZ; zIndex++) {
+    for (var rowIndex = 0; rowIndex < nodesTotalRows; rowIndex++) {
+      for (var columnIndex = 0; columnIndex < nodesTotalColumns; columnIndex++) {
         if (!NodeType.emitsLight(
             gridNodeZRCType(zIndex, rowIndex, columnIndex))
         ) continue;
@@ -296,16 +296,16 @@ void applyEmissionBake({
   int radius = 5,
 }){
   final zMin = max(zIndex - radius, 0);
-  final zMax = min(zIndex + radius, gridTotalZ);
+  final zMax = min(zIndex + radius, nodesTotalZ);
   final rowMin = max(rowIndex - radius, 0);
-  final rowMax = min(rowIndex + radius, gridTotalRows);
+  final rowMax = min(rowIndex + radius, nodesTotalRows);
   final columnMin = max(columnIndex - radius, 0);
-  final columnMax = min(columnIndex + radius, gridTotalColumns);
+  final columnMax = min(columnIndex + radius, nodesTotalColumns);
 
   for (var z = zMin; z < zMax; z++){
     for (var row = rowMin; row < rowMax; row++){
       for (var column = columnMin; column < columnMax; column++) {
-        final nodeIndex = getGridNodeIndexZRC(z, row, column);
+        final nodeIndex = getNodeIndexZRC(z, row, column);
         var distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
         final distanceValue = convertDistanceToShade(distance, maxBrightness: maxBrightness);
         if (distanceValue >= nodesBake[nodeIndex]) continue;
@@ -323,16 +323,16 @@ void applyEmissionDynamic({
 }){
   final radius = Shade.Pitch_Black;
   final zMin = max(zIndex - radius, 0);
-  final zMax = min(zIndex + radius, gridTotalZ);
+  final zMax = min(zIndex + radius, nodesTotalZ);
   final rowMin = max(rowIndex - radius, 0);
-  final rowMax = min(rowIndex + radius, gridTotalRows);
+  final rowMax = min(rowIndex + radius, nodesTotalRows);
   final columnMin = max(columnIndex - radius, 0);
-  final columnMax = min(columnIndex + radius, gridTotalColumns);
+  final columnMax = min(columnIndex + radius, nodesTotalColumns);
 
   for (var z = zMin; z < zMax; z++){
     for (var row = rowMin; row < rowMax; row++){
       for (var column = columnMin; column < columnMax; column++) {
-        final nodeIndex = getGridNodeIndexZRC(z, row, column);
+        final nodeIndex = getNodeIndexZRC(z, row, column);
         var distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
         final distanceValue = convertDistanceToShade(distance, maxBrightness: maxBrightness);
         if (distanceValue >= nodesShade[nodeIndex]) continue;

@@ -1,10 +1,10 @@
 import 'package:gamestream_flutter/isometric/grid.dart';
 
 int convertIndexToZ(int index) =>
-    index ~/ gridTotalArea;
+    index ~/ nodesArea;
 
 int convertIndexToRow(int index) =>
-    (index - ((index ~/ gridTotalArea) * gridTotalArea)) ~/ gridTotalColumns;
+    (index - ((index ~/ nodesArea) * nodesArea)) ~/ nodesTotalColumns;
 
 int convertIndexToColumn(int index) =>
-    index - ((convertIndexToZ(index) * gridTotalArea) + (convertIndexToRow(index) * gridTotalColumns));
+    index - ((convertIndexToZ(index) * nodesArea) + (convertIndexToRow(index) * nodesTotalColumns));

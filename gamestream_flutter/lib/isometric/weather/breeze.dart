@@ -1,6 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
-import 'package:gamestream_flutter/isometric/grid_state.dart';
+import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:lemon_watch/watch.dart';
 
 final weatherBreeze = Watch(false);
@@ -16,7 +16,7 @@ void updateWindLine() {
     windLine++;
   }
 
-  if (windLine >= gridTotalColumns + gridTotalRows) {
+  if (windLine >= nodesTotalColumns + nodesTotalRows) {
     windLine = 0;
   }
 
@@ -38,12 +38,12 @@ void updateWindLine() {
 double get windLineRenderX {
   var windLineColumn = 0;
   var windLineRow = 0;
-  if (windLine < gridTotalRows){
+  if (windLine < nodesTotalRows){
     windLineColumn = 0;
-    windLineRow = gridTotalRows - windLine - 1;
+    windLineRow = nodesTotalRows - windLine - 1;
   } else {
     windLineRow = 0;
-    windLineColumn = windLine - gridTotalRows + 1;
+    windLineColumn = windLine - nodesTotalRows + 1;
   }
   return (windLineRow - windLineColumn) * tileSizeHalf;
 }
@@ -52,16 +52,16 @@ void applyGridLine(int index, int strength){
   if (index < 0) return;
   var windLineRow = 0;
   var windLineColumn = 0;
-  if (index < gridTotalRows){
+  if (index < nodesTotalRows){
     windLineColumn = 0;
-    windLineRow = gridTotalRows - index - 1;
+    windLineRow = nodesTotalRows - index - 1;
   } else {
     windLineRow = 0;
-    windLineColumn = index - gridTotalRows + 1;
+    windLineColumn = index - nodesTotalRows + 1;
   }
-  while (windLineRow < gridTotalRows && windLineColumn < gridTotalColumns){
-    for (var windLineZ = 0; windLineZ < gridTotalZ; windLineZ++){
-      final index = getGridNodeIndexZRC(windLineZ, windLineRow, windLineColumn);
+  while (windLineRow < nodesTotalRows && windLineColumn < nodesTotalColumns){
+    for (var windLineZ = 0; windLineZ < nodesTotalZ; windLineZ++){
+      final index = getNodeIndexZRC(windLineZ, windLineRow, windLineColumn);
       nodesWind[index] += strength;
       // TODO refactor
       if (nodesWind[index] > windIndexStrong){

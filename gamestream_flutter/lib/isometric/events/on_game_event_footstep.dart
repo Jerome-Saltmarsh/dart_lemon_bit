@@ -1,6 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
-import 'package:gamestream_flutter/isometric/grid_state.dart';
+import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/watches/raining.dart';

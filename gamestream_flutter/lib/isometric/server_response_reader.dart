@@ -22,7 +22,7 @@ import 'package:gamestream_flutter/isometric/floating_texts.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
-import 'package:gamestream_flutter/isometric/grid_state.dart';
+import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/io/custom_game_names.dart';
 import 'package:gamestream_flutter/isometric/npcs.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
@@ -637,11 +637,11 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGrid() {
-    gridTotalZ = readInt();
-    gridTotalRows = readInt();
-    gridTotalColumns = readInt();
-    gridTotalArea = gridTotalRows * gridTotalColumns;
-    final grandTotal = gridTotalZ * gridTotalRows * gridTotalColumns;
+    nodesTotalZ = readInt();
+    nodesTotalRows = readInt();
+    nodesTotalColumns = readInt();
+    nodesArea = nodesTotalRows * nodesTotalColumns;
+    final grandTotal = nodesTotalZ * nodesTotalRows * nodesTotalColumns;
     if (nodesType.length < grandTotal) {
       print('new buffers generated $grandTotal');
       nodesType = Uint8List(grandTotal);
@@ -681,10 +681,10 @@ class ServerResponseReader with ByteReader {
         gridIndex++;
         count--;
         currentColumn++;
-        if (currentColumn >= gridTotalColumns) {
+        if (currentColumn >= nodesTotalColumns) {
           currentColumn = 0;
           currentRow++;
-          if (currentRow >= gridTotalRows) {
+          if (currentRow >= nodesTotalRows) {
             currentRow = 0;
           }
         }

@@ -9,7 +9,7 @@ import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
-import 'package:gamestream_flutter/isometric/grid_state.dart';
+import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emissions_characters.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emmissions_particles.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
@@ -56,8 +56,8 @@ final renderOrderGameObjects = RenderOrderGameObjects();
 var totalRemaining = 0;
 var totalIndex = 0;
 
-final maxZRender = Watch<int>(gridTotalZ, clamp: (int value){
-  return clamp<int>(value, 0, max(gridTotalZ - 1, 0));
+final maxZRender = Watch<int>(nodesTotalZ, clamp: (int value){
+  return clamp<int>(value, 0, max(nodesTotalZ - 1, 0));
 });
 
 void resetRenderOrder(RenderOrder value){
@@ -331,7 +331,7 @@ class RenderOrderGrid extends RenderOrder {
     }
     renderNodeDstX = (renderNodeRow - renderNodeColumn) * nodeSizeHalf;
     renderNodeDstY = ((renderNodeRow + renderNodeColumn) * nodeSizeHalf) - (renderNodeZ * nodeHeight);
-    renderNodeIndex = (renderNodeZ * gridTotalArea) + (renderNodeRow * gridTotalColumns) + renderNodeColumn;
+    renderNodeIndex = (renderNodeZ * nodesArea) + (renderNodeRow * nodesTotalColumns) + renderNodeColumn;
     renderNodeType = nodesType[renderNodeIndex];
     order = ((renderNodeRow + renderNodeColumn) * tileSize) + tileSizeHalf;
     orderZ = renderNodeZ;
@@ -339,13 +339,13 @@ class RenderOrderGrid extends RenderOrder {
 
   @override
   int getTotal() {
-    return gridTotalZ * gridTotalRows * gridTotalColumns;
+    return nodesTotalZ * nodesTotalRows * nodesTotalColumns;
   }
 
   @override
   void reset() {
-    rowsMax = gridTotalRows - 1;
-    gridTotalZMinusOne = gridTotalZ - 1;
+    rowsMax = nodesTotalRows - 1;
+    gridTotalZMinusOne = nodesTotalZ - 1;
     offscreenNodesTop = 0;
     offscreenNodesRight = 0;
     offscreenNodesBottom = 0;
@@ -357,7 +357,7 @@ class RenderOrderGrid extends RenderOrder {
     orderZ = 0;
     renderNodeZ = 0;
     orderZ = 0;
-    gridTotalColumnsMinusOne = gridTotalColumns - 1;
+    gridTotalColumnsMinusOne = nodesTotalColumns - 1;
     playerZ = player.indexZ;
     playerRow = player.indexRow;
     playerColumn = player.indexColumn;
@@ -383,7 +383,7 @@ class RenderOrderGrid extends RenderOrder {
     screenTop = screen.top - 72;
     screenBottom = screen.bottom + 72;
     var screenTopLeftColumn = convertWorldToColumn(screenLeft, screenTop, 0);
-    screenBottomRightRow = clamp(convertWorldToRow(screenRight, screenBottom, 0), 0, gridTotalRows - 1);
+    screenBottomRightRow = clamp(convertWorldToRow(screenRight, screenBottom, 0), 0, nodesTotalRows - 1);
     screenTopLeftRow = convertWorldToRow(screenLeft, screenTop, 0);
 
     if (screenTopLeftRow < 0){
@@ -394,7 +394,7 @@ class RenderOrderGrid extends RenderOrder {
       screenTopLeftRow += screenTopLeftColumn;
       screenTopLeftColumn = 0;
     }
-    if (screenTopLeftColumn >= gridTotalColumns){
+    if (screenTopLeftColumn >= nodesTotalColumns){
       screenTopLeftRow = screenTopLeftColumn - gridTotalColumnsMinusOne;
       screenTopLeftColumn = gridTotalColumnsMinusOne;
     }
@@ -414,7 +414,7 @@ class RenderOrderGrid extends RenderOrder {
 
     renderNodeDstX = (renderNodeRow - renderNodeColumn) * nodeSizeHalf;
     renderNodeDstY = ((renderNodeRow + renderNodeColumn) * nodeSizeHalf) - (renderNodeZ * nodeHeight);
-    renderNodeIndex = (renderNodeZ * gridTotalArea) + (renderNodeRow * gridTotalColumns) + renderNodeColumn;
+    renderNodeIndex = (renderNodeZ * nodesArea) + (renderNodeRow * nodesTotalColumns) + renderNodeColumn;
     renderNodeType = nodesType[renderNodeIndex];
 
     if (editMode){
@@ -457,23 +457,23 @@ class RenderOrderGrid extends RenderOrder {
   }
 
   void revealRaycast(int z, int row, int column){
-    if (!gridNodeIsInBounds(z, row, column)) return;
+    if (!verifyInBoundZRC(z, row, column)) return;
 
-    for (; z < gridTotalZ; z += 2){
+    for (; z < nodesTotalZ; z += 2){
       row++;
       column++;
-      if (row >= gridTotalRows) return;
-      if (column >= gridTotalColumns) return;
-      nodesVisible[getGridNodeIndexZRC(z, row, column)] = false;
-      if (z < gridTotalZ - 2){
-        nodesVisible[getGridNodeIndexZRC(z + 1, row, column)] = false;
+      if (row >= nodesTotalRows) return;
+      if (column >= nodesTotalColumns) return;
+      nodesVisible[getNodeIndexZRC(z, row, column)] = false;
+      if (z < nodesTotalZ - 2){
+        nodesVisible[getNodeIndexZRC(z + 1, row, column)] = false;
       }
     }
   }
 
   void revealAbove(int z, int row, int column){
-    for (; z < gridTotalZ; z++){
-      nodesVisible[getGridNodeIndexZRC(z, row, column)] = false;
+    for (; z < nodesTotalZ; z++){
+      nodesVisible[getNodeIndexZRC(z, row, column)] = false;
     }
   }
 
@@ -501,7 +501,7 @@ class RenderOrderGrid extends RenderOrder {
 
     while (convertRowColumnZToY(renderNodeRow, renderNodeColumn, minZ) > screenBottom){
       minZ++;
-      if (minZ >= gridTotalZ){
+      if (minZ >= nodesTotalZ){
         return end();
       }
     }
@@ -510,13 +510,13 @@ class RenderOrderGrid extends RenderOrder {
   void shiftIndexDown(){
     renderNodeColumn = renderNodeRow + renderNodeColumn + 1;
     renderNodeRow = 0;
-    if (renderNodeColumn < gridTotalColumns) {
+    if (renderNodeColumn < nodesTotalColumns) {
       return setStart();
     }
     renderNodeRow = renderNodeColumn - gridTotalColumnsMinusOne;
     renderNodeColumn = gridTotalColumnsMinusOne;
 
-    if (renderNodeRow >= gridTotalRows){
+    if (renderNodeRow >= nodesTotalRows){
        remaining = false;
        return;
     }

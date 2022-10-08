@@ -3,7 +3,7 @@
 import 'package:bleed_common/Shade.dart';
 import 'package:bleed_common/game_object_type.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
-import 'package:gamestream_flutter/isometric/grid_state.dart';
+import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 
 import 'apply_vector_emission.dart';
@@ -21,12 +21,12 @@ void applyEmissionGameObjects() {
 
       final nodeIndex = gridNodeIndexVector3(gameObject);
       final nodeShade = nodesShade[nodeIndex];
-      gridNodeShadeSet(nodeIndex, nodeShade - 1);
+      setNodeShade(nodeIndex, nodeShade - 1);
 
       if (gameObject.indexZ > 0){
          final nodeBelowIndex = gridNodeIndexVector3NodeBelow(gameObject);
          final nodeBelowShade = nodesShade[nodeBelowIndex];
-         gridNodeShadeSet(nodeBelowIndex, nodeBelowShade - 1);
+         setNodeShade(nodeBelowIndex, nodeBelowShade - 1);
       }
    }
 }

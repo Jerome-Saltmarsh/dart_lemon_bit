@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/isometric/editor/events/on_changed_node_type_
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_paint_type.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node_type.dart';
-import 'package:gamestream_flutter/isometric/grid_state.dart';
+import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
@@ -68,21 +68,21 @@ class Edit {
 
   set z(int value){
      if (value < 0) return;
-     if (value >= gridTotalZ) return;
+     if (value >= nodesTotalZ) return;
      final difference = value - z;
-     nodeIndex.value += difference * gridTotalArea;
+     nodeIndex.value += difference * nodesArea;
   }
 
   set row(int value){
     if (value < 0) return;
-    if (value >= gridTotalRows) return;
+    if (value >= nodesTotalRows) return;
     final difference = row - value;
-    nodeIndex.value += difference * gridTotalColumns;
+    nodeIndex.value += difference * nodesTotalColumns;
   }
 
   set column(int value){
     if (value < 0) return;
-    if (value >= gridTotalColumns) return;
+    if (value >= nodesTotalColumns) return;
     nodeIndex.value += column - value;
   }
 
@@ -161,7 +161,7 @@ class Edit {
   }
 
   void selectBlock(int z, int row, int column){
-    nodeIndex.value = getGridNodeIndexZRC(z, row, column);
+    nodeIndex.value = getNodeIndexZRC(z, row, column);
   }
 
   void deleteGameObjectSelected(){

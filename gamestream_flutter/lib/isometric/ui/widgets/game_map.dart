@@ -70,8 +70,8 @@ class GameMapWidget extends StatelessWidget {
   }
 
   void renderPlayerDot(Canvas canvas) {
-    final playerPerX = player.x / (tileSize * gridTotalRows);
-    final playerPerY = player.y / (tileSize * gridTotalColumns);
+    final playerPerX = player.x / (tileSize * nodesTotalRows);
+    final playerPerY = player.y / (tileSize * nodesTotalColumns);
 
     final playerX = (mapTileActive.x + playerPerX);
     final playerY = (mapTileActive.y + playerPerY);
@@ -94,8 +94,8 @@ class GameMapWidget extends StatelessWidget {
   }
 
   void snapCameraToTarget() {
-    final playerPerX = player.x / (tileSize * gridTotalRows);
-    final playerPerY = player.y / (tileSize * gridTotalColumns);
+    final playerPerX = player.x / (tileSize * nodesTotalRows);
+    final playerPerY = player.y / (tileSize * nodesTotalColumns);
     final playerX = (mapTileActive.x + playerPerX);
     final playerY = (mapTileActive.y + playerPerY);
     final renderX = ((playerX * mapTileSize) - (playerY * mapTileSize)) * 0.5;

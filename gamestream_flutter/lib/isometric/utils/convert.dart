@@ -20,11 +20,11 @@ int convertWorldToColumn(double x, double y, double z) {
 }
 
 int convertWorldToRowSafe(double x, double y, double z) {
-  return clamp(convertWorldToRow(x, y, z), 0, gridTotalRows - 1);
+  return clamp(convertWorldToRow(x, y, z), 0, nodesTotalRows - 1);
 }
 
 int convertWorldToColumnSafe(double x, double y, double z) {
-  return clamp(convertWorldToColumn(x, y, z), 0, gridTotalColumns - 1);
+  return clamp(convertWorldToColumn(x, y, z), 0, nodesTotalColumns - 1);
 }
 
 double convertRowColumnToX(int row, int column){

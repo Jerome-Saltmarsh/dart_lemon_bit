@@ -19,7 +19,7 @@ Widget buildDialogCanvasSize() =>
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Refresh(() => text("Z: $gridTotalZ")),
+              Refresh(() => text("Z: $nodesTotalZ")),
               buildButtonIncreaseGridSizeZ(),
             ],
           ),
@@ -48,7 +48,7 @@ Widget buildDialogCanvasSize() =>
                           start: true
                       )
               ),
-              Refresh(() => text("Rows: $gridTotalRows")),
+              Refresh(() => text("Rows: $nodesTotalRows")),
               container(
                   child: "-",
                   width: 50,
@@ -98,7 +98,7 @@ Widget buildDialogCanvasSize() =>
                           start: true
                       )
               ),
-              Refresh(() => text("Columns: $gridTotalColumns")),
+              Refresh(() => text("Columns: $nodesTotalColumns")),
               container(
                   child: "-",
                   width: 50,

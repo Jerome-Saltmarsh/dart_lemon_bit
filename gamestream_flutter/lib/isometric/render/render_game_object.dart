@@ -6,6 +6,8 @@ import 'package:gamestream_flutter/isometric/render/get_character_render_color.d
 import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 import 'package:lemon_engine/render.dart';
 
+import 'render_shadow.dart';
+
 void renderGameObject(GameObject value) {
 
   if (value.type == GameObjectType.Loot)
@@ -243,18 +245,6 @@ void renderGameObject(GameObject value) {
       srcHeight: 13,
     );
   }
-}
-
-void renderShadow(double x, double y, double z, {double scale = 1}){
-  return render(
-    dstX: (x - y) * 0.5,
-    dstY: ((y + x) * 0.5) - z,
-    srcX: 192,
-    srcY: 0,
-    srcWidth: 8,
-    srcHeight: 8,
-    scale: scale,
-  );
 }
 
 void renderGameObjectChicken(GameObject value) {

@@ -5,7 +5,7 @@ import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
-import 'package:gamestream_flutter/isometric/grid_state.dart';
+import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node_bau_haus.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node_wood.dart';
@@ -83,7 +83,7 @@ void renderNodeAt(){
     case NodeType.Tree_Top:
       final f = raining.value ? animationFrame % 4 : -1;
       var shift = treeAnimation[((renderNodeRow - renderNodeColumn) + animationFrame) % treeAnimation.length] * nodesWind[renderNodeIndex];
-      final nodeBelowShade = nodesShade[getGridNodeIndexZRC(renderNodeZ > 0 ? renderNodeZ - 1 : renderNodeZ, renderNodeRow, renderNodeColumn)];
+      final nodeBelowShade = nodesShade[getNodeIndexZRC(renderNodeZ > 0 ? renderNodeZ - 1 : renderNodeZ, renderNodeRow, renderNodeColumn)];
 
       return render(
         dstX: renderNodeDstX + (shift * 0.5),

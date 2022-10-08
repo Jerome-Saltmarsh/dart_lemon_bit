@@ -1,6 +1,6 @@
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_type.dart';
-import 'package:gamestream_flutter/isometric/grid_state.dart';
+import 'package:gamestream_flutter/isometric/nodes.dart';
 
 void rainOff() {
   for (var i = 0; i < nodesTotal; i++) {
