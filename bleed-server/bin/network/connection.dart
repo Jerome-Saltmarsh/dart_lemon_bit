@@ -470,14 +470,18 @@ class Connection {
     if (start == null)
       return errorInvalidArg('handleCanvasModifySize start is null');
 
+    final scene = player.game.scene;
+
     switch (dimension){
       case GridAxis.Z:
         break;
       case GridAxis.Row:
         if (add == 1){
            if (start == 1){
-             player.game.scene.modifyGridAddRowAtStart();
-
+             scene.modifyGridAddRowAtStart();
+             final newLength = scene.gridVolume + scene.gridColumns;
+             final newGridTypes = Uint8List(newLength);
+             final newGridOrientations = Uint8List(newLength);
            }
         }
         break;

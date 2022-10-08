@@ -2066,6 +2066,8 @@ abstract class Game {
         return buildWeaponShotgun();
       case AttackType.Handgun:
         return buildWeaponHandgun();
+      case AttackType.Blade:
+        return buildWeaponBlade();
       default:
         throw Exception("cannot build weapon for type $type");
     }

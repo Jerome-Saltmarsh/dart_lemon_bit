@@ -43,17 +43,18 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] spawn bazooka,
 /// [ ] spawn land-mine
 /// [ ] spawn body-armour,
-/// [ ] spawn blade,
 /// [ ] spawn hammer
 /// [ ] spawn pick-axe
 /// [ ] spawn assault-rifle,
 /// [ ] spawn sniper-rifle,
 /// [ ] spawn smg,
-/// [ ] fire-storm build scene
-/// [ ] edit fix change canvas size (HARD)
 /// [ ] fix see through house when inside
 /// [ ] fix handgun fire animation
 /// [ ] fix editor camera stutters on selected
+/// [ ] fire-storm build scene
+/// [ ] edit fix change canvas size (HARD)
+/// [ ] animate gameobject weapons up and down
+/// [x] gameobject weapon-blade,
 
 /// 08-10-2022
 /// [x] fix center camera on player on spawn
@@ -128,6 +129,7 @@ class GameSkirmish extends Game {
   int getRandomItemType() => randomItem(const [
     GameObjectType.Weapon_Shotgun,
     GameObjectType.Weapon_Handgun,
+    GameObjectType.Weapon_Blade,
   ]);
 
   @override
@@ -207,6 +209,14 @@ class GameSkirmish extends Game {
       weapon.spawn = gameObject;
       player.weaponSlot1 = weapon;
       playerSetWeapon(player, weapon);
+    }
+
+    if (gameObject.type == GameObjectType.Weapon_Blade){
+      deactivateGameObject(gameObject);
+      final weapon = buildWeaponByType(AttackType.Blade);
+      weapon.spawn = gameObject;
+      player.weaponSlot2 = weapon;
+      // playerSetWeapon(player, weapon);
     }
   }
 

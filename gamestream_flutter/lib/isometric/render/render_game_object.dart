@@ -225,6 +225,16 @@ void renderGameObject(GameObject value) {
       srcWidth: 17,
       srcHeight: 10,
     );
+
+  if (value.type == GameObjectType.Weapon_Blade)
+    return render(
+      dstX: value.renderX,
+      dstY: value.renderY,
+      srcX: 1029,
+      srcY: 1644,
+      srcWidth: 33,
+      srcHeight: 13,
+    );
 }
 
 void renderGameObjectChicken(GameObject value) {
