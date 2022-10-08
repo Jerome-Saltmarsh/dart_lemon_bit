@@ -252,7 +252,7 @@ abstract class Game {
       return;
     }
 
-    if (AttackType.requiresRounds(weapon.type)){
+    if (weapon.capacity > 0){
       if (weapon.rounds == 0) return;
       weapon.rounds--;
     }

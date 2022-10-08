@@ -79,7 +79,7 @@ class GameRender {
   }
 
   void renderWeaponRoundInformation() {
-    if (!AttackType.requiresRounds(player.weapon.type.value))
+    if (player.weapon.capacity.value <= 0)
       return;
 
     // renderText(

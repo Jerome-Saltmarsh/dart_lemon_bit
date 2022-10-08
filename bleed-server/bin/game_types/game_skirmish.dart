@@ -237,7 +237,18 @@ class GameSkirmish extends Game {
 
   @override
   void customOnPlayerWeaponChanged(Player player, Weapon newWeapon, Weapon previousWeapon){
-    final previousWeaponSpawn = previousWeapon.spawn;
+    reactiveWeaponGameObject(previousWeapon);
+  }
+
+  @override
+  void customOnPlayerDisconnected(Player player) {
+    reactiveWeaponGameObject(player.weaponSlot1);
+    reactiveWeaponGameObject(player.weaponSlot2);
+    reactiveWeaponGameObject(player.weaponSlot3);
+  }
+
+  void reactiveWeaponGameObject(Weapon weapon){
+    final previousWeaponSpawn = weapon.spawn;
     if (previousWeaponSpawn is GameObject) {
       reactivateGameObject(previousWeaponSpawn);
     }

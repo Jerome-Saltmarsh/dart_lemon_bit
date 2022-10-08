@@ -22,7 +22,7 @@ class Weapon {
 
    int get frame => duration - durationRemaining;
 
-   bool get requiresRounds => AttackType.requiresRounds(type);
+   bool get requiresRounds => capacity > 0;
 
    set rounds(int value) {
      _rounds = clamp(value, 0, capacity);
@@ -135,6 +135,7 @@ Weapon buildWeaponBlade() =>
       damage: 3,
       duration: 20,
       range: 60,
+      capacity: 15,
     );
 
 Weapon buildWeaponUnarmed({int damage = 1}) =>
