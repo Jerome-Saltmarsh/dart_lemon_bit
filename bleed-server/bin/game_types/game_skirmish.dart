@@ -46,13 +46,14 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] spawn hammer
 /// [ ] spawn pick-axe
 /// [ ] spawn assault-rifle,
-/// [ ] spawn sniper-rifle,
 /// [ ] spawn smg,
 /// [ ] fix see through house when inside
 /// [ ] fix handgun fire animation
 /// [ ] fix editor camera stutters on selected
 /// [ ] fire-storm build scene
 /// [ ] edit fix change canvas size (HARD)
+/// [ ] spawn sniper-rifle,
+/// [ ] melee weapons run out of capacity
 
 /// 08-10-2022
 /// [x] animate gameobject weapons up and down
@@ -171,7 +172,7 @@ class GameSkirmish extends Game {
 
   @override
   Player spawnPlayer() {
-    final player = Player(game: this, weapon: buildWeaponBlade(), team: 0);
+    final player = Player(game: this, weapon: buildWeaponUnarmed(), team: 0);
     player.equippedPants = randomItem(PantsType.values);
     player.equippedArmour = randomItem(ArmourType.values);
     player.equippedHead = randomItem(HeadType.values);
@@ -180,7 +181,7 @@ class GameSkirmish extends Game {
 
   @override
   void customInitPlayer(Player player) {
-    player.writeEnvironmentShade(Shade.Very_Dark);
+    player.writeEnvironmentShade(Shade.Very_Very_Dark);
     player.writeEnvironmentRain(Rain.Light);
     player.writeEnvironmentLightning(Lightning.Off);
     player.writeEnvironmentWind(Wind.Gentle);
