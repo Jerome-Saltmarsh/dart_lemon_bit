@@ -88,7 +88,8 @@ abstract class Game {
   }
   /// safe to override
   void customOnPlayerWeaponChanged(Player player, Weapon newWeapon, Weapon previousWeapon){ }
-
+  /// once the player has finished striking then reequip the weapon
+  void customOnPlayerWeaponReady(Player player) {  }
   /// PROPERTIES
 
   /// Safe to override
@@ -185,7 +186,7 @@ abstract class Game {
     player.writePlayerWeaponRounds();
     player.writePlayerWeaponCapacity();
     player.writePlayerEventItemEquipped(player.weapon.type);
-    customOnPlayerWeaponChanged(player, weapon, previousWeapon);
+    // customOnPlayerWeaponChanged(player, weapon, previousWeapon);
   }
 
   void changeGame(Player player, Game to){
@@ -1126,13 +1127,6 @@ abstract class Game {
       return;
     }
     setCharacterStateRunning(player);
-  }
-
-  /// once the player has finished striking then reequip the weapon
-  void customOnPlayerWeaponReady(Player player){
-      if (player.weapon == player.weaponSlot2){
-        player.weapon = player.weaponSlot1;
-      }
   }
 
   void setCharacterStateRunning(Character character){

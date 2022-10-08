@@ -138,7 +138,7 @@ class GameSkirmish extends Game {
 
   @override
   void customUpdate() {
-      for (final character in characters) {
+    for (final character in characters) {
       if (character.alive) continue;
       if (character is AI) {
         if (character.respawn-- <= 0)
@@ -149,7 +149,9 @@ class GameSkirmish extends Game {
 
   @override
   void customOnPlayerWeaponReady(Player player){
-
+    // if (player.weapon == player.weaponSlot2){
+    //   playerSetWeapon(player, player.weaponSlot1);
+    // }
   }
 
   void respawnAI(AI ai){
@@ -205,6 +207,7 @@ class GameSkirmish extends Game {
       weapon.spawn = gameObject;
       player.weaponSlot1 = weapon;
       playerSetWeapon(player, weapon);
+      player.writePlayerEventItemEquipped(weapon.type);
     }
 
     if (gameObject.type == GameObjectType.Weapon_Handgun){
@@ -213,6 +216,7 @@ class GameSkirmish extends Game {
       weapon.spawn = gameObject;
       player.weaponSlot1 = weapon;
       playerSetWeapon(player, weapon);
+      player.writePlayerEventItemEquipped(weapon.type);
     }
 
     if (gameObject.type == GameObjectType.Weapon_Blade){
@@ -220,7 +224,7 @@ class GameSkirmish extends Game {
       final weapon = buildWeaponByType(AttackType.Blade);
       weapon.spawn = gameObject;
       player.weaponSlot2 = weapon;
-      // playerSetWeapon(player, weapon);
+      player.writePlayerEventItemEquipped(weapon.type);
     }
   }
 
@@ -231,6 +235,7 @@ class GameSkirmish extends Game {
 
   @override
   void customOnPlayerWeaponRoundsExhausted(Player player, Weapon weapon){
+    reactiveWeaponGameObject(weapon);
     if (weapon == player.weaponSlot1){
       player.weaponSlot1 = player.weaponSlot3; // unarmed
       playerSetWeapon(player, player.weaponSlot2);
@@ -243,7 +248,7 @@ class GameSkirmish extends Game {
 
   @override
   void customOnPlayerWeaponChanged(Player player, Weapon newWeapon, Weapon previousWeapon){
-    reactiveWeaponGameObject(previousWeapon);
+    // reactiveWeaponGameObject(previousWeapon);
   }
 
   /// safe to overridable
