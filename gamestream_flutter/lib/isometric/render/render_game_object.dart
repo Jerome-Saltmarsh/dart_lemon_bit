@@ -206,7 +206,10 @@ void renderGameObject(GameObject value) {
       srcHeight: 7,
     );
 
-  if (value.type == GameObjectType.Weapon_Shotgun)
+  const shadowScale = 1.5;
+  const shadowScaleHeight = 0.15;
+  if (value.type == GameObjectType.Weapon_Shotgun) {
+    renderShadow(value.x, value.y, value.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
     return render(
       dstX: value.renderX,
       dstY: ((value.y + value.x) * 0.5) - value.z + animationFrameWaterHeight,
@@ -215,8 +218,10 @@ void renderGameObject(GameObject value) {
       srcWidth: 26,
       srcHeight: 7,
     );
+  }
 
-  if (value.type == GameObjectType.Weapon_Handgun)
+  if (value.type == GameObjectType.Weapon_Handgun) {
+    renderShadow(value.x, value.y, value.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
     return render(
       dstX: value.renderX,
       dstY: ((value.y + value.x) * 0.5) - value.z + animationFrameWaterHeight,
@@ -225,8 +230,10 @@ void renderGameObject(GameObject value) {
       srcWidth: 17,
       srcHeight: 10,
     );
+  }
 
-  if (value.type == GameObjectType.Weapon_Blade)
+  if (value.type == GameObjectType.Weapon_Blade) {
+    renderShadow(value.x, value.y, value.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
     return render(
       dstX: value.renderX,
       dstY: ((value.y + value.x) * 0.5) - value.z + animationFrameWaterHeight,
@@ -235,6 +242,19 @@ void renderGameObject(GameObject value) {
       srcWidth: 33,
       srcHeight: 13,
     );
+  }
+}
+
+void renderShadow(double x, double y, double z, {double scale = 1}){
+  return render(
+    dstX: (x - y) * 0.5,
+    dstY: ((y + x) * 0.5) - z,
+    srcX: 192,
+    srcY: 0,
+    srcWidth: 8,
+    srcHeight: 8,
+    scale: scale,
+  );
 }
 
 void renderGameObjectChicken(GameObject value) {

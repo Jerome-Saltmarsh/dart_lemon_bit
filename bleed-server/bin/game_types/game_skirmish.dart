@@ -54,9 +54,9 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] fire-storm build scene
 /// [ ] edit fix change canvas size (HARD)
 /// [ ] spawn sniper-rifle,
-/// [ ] render game object weapon shadows
 
 /// 08-10-2022
+/// [x] render game object weapon shadows
 /// [x] melee weapons run out of capacity
 /// [x] zombie make audio on target spotted
 /// [x] animate gameobject weapons up and down
