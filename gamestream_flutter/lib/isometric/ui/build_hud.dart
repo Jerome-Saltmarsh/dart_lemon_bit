@@ -46,12 +46,13 @@ Widget buildStackGame()  =>
     ),
   );
 
-Widget buildDialogFramesSinceUpdate() =>
-  Positioned(
-      child:  watch(rendersSinceUpdate,  (int frames) {
-                return text("Renders Since Update: $rendersSinceUpdate");
-              })
-  );
+Widget buildDialogFramesSinceUpdate() => Positioned(
+      top: 8,
+      left: 8,
+      child: watch(rendersSinceUpdate,  (int frames) =>
+                text("Warning: No message received from server $frames")
+              )
+);
 
 Positioned buildWatchInterpolation() =>
   Positioned(

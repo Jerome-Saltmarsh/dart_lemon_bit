@@ -66,9 +66,9 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] spawn assault-rifle,
 /// [ ] spawn sniper-rifle,
 /// [ ] spawn smg,
-/// [ ] melee weapons run out of rounds but only on hit
-/// [ ] client on no message from server received dialog
+/// [ ] melee weapons run out and automatically recharges
 /// 08-10-2022
+/// [x] client on no message from server received dialog
 /// [x] fix camera editor pans back to player
 /// [x] fix editor navigation buttons
 /// [x] recycle client grid node buffer

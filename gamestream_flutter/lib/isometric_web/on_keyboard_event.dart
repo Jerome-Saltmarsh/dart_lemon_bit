@@ -70,7 +70,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
       if (edit.gameObjectSelected.value){
         return edit.translate(x: 0, y: 0, z: 1);
       }
-      edit.cursorZDecrease();
+      edit.cursorZIncrease();
     } else {
       if (edit.gameObjectSelected.value){
         return edit.translate(x: -1, y: -1, z: 0);
@@ -89,7 +89,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
       if (edit.gameObjectSelected.value){
         return edit.translate(x: 0, y: 0, z: -1);
       }
-      edit.cursorZIncrease();
+      edit.cursorZDecrease();
     } else {
       if (edit.gameObjectSelected.value){
         return edit.translate(x: 1, y: 1, z: 0);
