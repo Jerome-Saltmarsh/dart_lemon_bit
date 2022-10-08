@@ -47,15 +47,17 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] spawn pick-axe
 /// [ ] spawn assault-rifle,
 /// [ ] spawn smg,
+/// [ ] fix collision physics colliders get pushed up nodes
 /// [ ] fix see through house when inside
 /// [ ] fix handgun fire animation
 /// [ ] fix editor camera stutters on selected
 /// [ ] fire-storm build scene
 /// [ ] edit fix change canvas size (HARD)
 /// [ ] spawn sniper-rifle,
-/// [ ] melee weapons run out of capacity
+/// [ ] render game object weapon shadows
 
 /// 08-10-2022
+/// [x] melee weapons run out of capacity
 /// [x] zombie make audio on target spotted
 /// [x] animate gameobject weapons up and down
 /// [x] gameobject weapon-blade,
@@ -230,9 +232,13 @@ class GameSkirmish extends Game {
   @override
   void customOnPlayerWeaponRoundsExhausted(Player player, Weapon weapon){
     if (weapon == player.weaponSlot1){
-      player.weaponSlot1 = player.weaponSlot2; // unarmed
+      player.weaponSlot1 = player.weaponSlot3; // unarmed
+      playerSetWeapon(player, player.weaponSlot2);
     }
-    playerSetWeaponUnarmed(player);
+    if (weapon == player.weaponSlot2){
+      player.weaponSlot2 = player.weaponSlot3; // unarmed
+      playerSetWeapon(player, player.weaponSlot1);
+    }
   }
 
   @override
@@ -240,8 +246,21 @@ class GameSkirmish extends Game {
     reactiveWeaponGameObject(previousWeapon);
   }
 
+  /// safe to overridable
+  void customOnPlayerDeath(Player player) {
+    reactivatePlayerWeapons(player);
+    player.weapon = buildWeaponUnarmed();
+    player.weaponSlot1 = player.weapon;
+    player.weaponSlot2 = player.weapon;
+    player.weaponSlot3 = player.weapon;
+  }
+
   @override
   void customOnPlayerDisconnected(Player player) {
+    reactivatePlayerWeapons(player);
+  }
+
+  void reactivatePlayerWeapons(Player player){
     reactiveWeaponGameObject(player.weaponSlot1);
     reactiveWeaponGameObject(player.weaponSlot2);
     reactiveWeaponGameObject(player.weaponSlot3);

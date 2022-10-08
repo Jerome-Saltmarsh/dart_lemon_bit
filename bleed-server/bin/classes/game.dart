@@ -163,13 +163,13 @@ abstract class Game {
     if (player.deadBusyOrPerforming) return;
 
     if (perform1) {
-      playerUseWeapon(player, player.weaponSlot1);
-      player.writePlayerWeaponRounds();
+      playerSetWeapon(player, player.weaponSlot1);
+      playerUseWeapon(player);
     }
 
     if (perform2){
-      playerUseWeapon(player, player.weaponSlot2);
-      playerUseWeapon(player, weapon);
+      playerSetWeapon(player, player.weaponSlot2);
+      playerUseWeapon(player);
     }
   }
 
@@ -239,10 +239,10 @@ abstract class Game {
     }
   }
 
-  void playerUseWeapon(Player player, Weapon weapon) {
+  void playerUseWeapon(Player player) {
     if (player.deadBusyOrPerforming) return;
 
-    player.weapon = weapon;
+    final weapon = player.weapon;
 
     if (weapon.type == AttackType.Bow){
       weapon.charge++;
@@ -255,6 +255,7 @@ abstract class Game {
     if (weapon.capacity > 0){
       if (weapon.rounds == 0) return;
       weapon.rounds--;
+      player.writePlayerWeaponRounds();
     }
 
     switch (weapon.type) {
