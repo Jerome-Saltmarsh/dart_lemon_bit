@@ -53,10 +53,10 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] fix editor camera stutters on selected
 /// [ ] fire-storm build scene
 /// [ ] edit fix change canvas size (HARD)
-/// [ ] animate gameobject weapons up and down
-/// [x] gameobject weapon-blade,
 
 /// 08-10-2022
+/// [x] animate gameobject weapons up and down
+/// [x] gameobject weapon-blade,
 /// [x] fix center camera on player on spawn
 /// [x] client on no message from server received dialog
 /// [x] fix camera editor pans back to player

@@ -209,7 +209,7 @@ void renderGameObject(GameObject value) {
   if (value.type == GameObjectType.Weapon_Shotgun)
     return render(
       dstX: value.renderX,
-      dstY: value.renderY,
+      dstY: ((value.y + value.x) * 0.5) - value.z + animationFrameWaterHeight,
       srcX: 262,
       srcY: 204,
       srcWidth: 26,
@@ -219,7 +219,7 @@ void renderGameObject(GameObject value) {
   if (value.type == GameObjectType.Weapon_Handgun)
     return render(
       dstX: value.renderX,
-      dstY: value.renderY,
+      dstY: ((value.y + value.x) * 0.5) - value.z + animationFrameWaterHeight,
       srcX: 234,
       srcY: 200,
       srcWidth: 17,
@@ -229,7 +229,7 @@ void renderGameObject(GameObject value) {
   if (value.type == GameObjectType.Weapon_Blade)
     return render(
       dstX: value.renderX,
-      dstY: value.renderY,
+      dstY: ((value.y + value.x) * 0.5) - value.z + animationFrameWaterHeight,
       srcX: 1029,
       srcY: 1644,
       srcWidth: 33,
