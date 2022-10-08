@@ -1,4 +1,5 @@
 
+import 'package:bleed_common/grid_axis.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/editor/editor_actions.dart';
@@ -7,8 +8,8 @@ import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:golden_ratio/constants.dart';
 
-Widget buildDialogCanvasSize(){
-  return Container(
+Widget buildDialogCanvasSize() =>
+  Container(
       width: 400,
       height: 400 * goldenRatio_0618,
       padding: const EdgeInsets.all(6),
@@ -31,7 +32,7 @@ Widget buildDialogCanvasSize(){
                 alignment: Alignment.center,
                 action: () =>
                   sendClientRequestCanvasModifySize(
-                      dimension: 1,
+                      gridAxis: GridAxis.Row,
                       add: false,
                       start: true
                   )
@@ -42,7 +43,7 @@ Widget buildDialogCanvasSize(){
                   alignment: Alignment.center,
                   action: () =>
                       sendClientRequestCanvasModifySize(
-                          dimension: 1,
+                          gridAxis: GridAxis.Row,
                           add: true,
                           start: true
                       )
@@ -54,7 +55,7 @@ Widget buildDialogCanvasSize(){
                   alignment: Alignment.center,
                   action: () =>
                       sendClientRequestCanvasModifySize(
-                          dimension: 1,
+                          gridAxis: GridAxis.Row,
                           add: false,
                           start: false
                       )
@@ -65,7 +66,7 @@ Widget buildDialogCanvasSize(){
                   alignment: Alignment.center,
                   action: () =>
                       sendClientRequestCanvasModifySize(
-                          dimension: 1,
+                          gridAxis: GridAxis.Row,
                           add: true,
                           start: false
                       )
@@ -81,7 +82,7 @@ Widget buildDialogCanvasSize(){
                   alignment: Alignment.center,
                   action: () =>
                       sendClientRequestCanvasModifySize(
-                          dimension: 2,
+                          gridAxis: GridAxis.Column,
                           add: false,
                           start: true
                       )
@@ -92,7 +93,7 @@ Widget buildDialogCanvasSize(){
                   alignment: Alignment.center,
                   action: () =>
                       sendClientRequestCanvasModifySize(
-                          dimension: 2,
+                          gridAxis: GridAxis.Column,
                           add: true,
                           start: true
                       )
@@ -104,7 +105,7 @@ Widget buildDialogCanvasSize(){
                   alignment: Alignment.center,
                   action: () =>
                       sendClientRequestCanvasModifySize(
-                          dimension: 2,
+                          gridAxis: GridAxis.Column,
                           add: false,
                           start: false
                       )
@@ -115,7 +116,7 @@ Widget buildDialogCanvasSize(){
                   alignment: Alignment.center,
                   action: () =>
                       sendClientRequestCanvasModifySize(
-                          dimension: 2,
+                          gridAxis: GridAxis.Column,
                           add: true,
                           start: false
                       )
@@ -125,7 +126,6 @@ Widget buildDialogCanvasSize(){
         ],
       ),
   );
-}
 
 Widget buildButtonIncreaseGridSizeZ() {
   return container(

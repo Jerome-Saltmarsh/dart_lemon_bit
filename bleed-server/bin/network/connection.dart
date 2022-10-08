@@ -233,7 +233,7 @@ class Connection {
         return handleNodeRequestSetBlock(arguments);
 
       case ClientRequest.Canvas_Modify_Size:
-        return handleCanvasModifySize(arguments, player, game);
+        return handleCanvasModifySize(arguments);
 
       case ClientRequest.Npc_Talk_Select_Option:
         return handleNpcTalkSelectOption(player, arguments);
@@ -450,8 +450,30 @@ class Connection {
     return;
   }
 
-  void handleCanvasModifySize(List<String> arguments, Player player, Game game) {
-    // TODO
+  void handleCanvasModifySize(List<String> arguments) {
+    final player = _player;
+    if (player == null) return;
+
+    if (arguments.length < 4)
+      return errorInvalidArg('handleCanvasModifySize insufficient args');
+
+    final dimension = int.tryParse(arguments[1]);
+    final add = int.tryParse(arguments[1]);
+    final start = int.tryParse(arguments[1]);
+
+    if (dimension == null)
+      return errorInvalidArg('handleCanvasModifySize dimension is null');
+
+    if (add == null)
+      return errorInvalidArg('handleCanvasModifySize add is null');
+
+    if (start == null)
+      return errorInvalidArg('handleCanvasModifySize start is null');
+
+    switch (dimension){
+      NodeAxis.Z:
+        break;
+    }
   }
 
   void handleGameObjectRequest(List<String> arguments) {

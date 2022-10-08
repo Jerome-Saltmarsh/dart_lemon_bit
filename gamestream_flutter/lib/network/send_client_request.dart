@@ -59,11 +59,11 @@ void sendClientRequestSetCanvasSize(int z, int rows, int columns){
 /// add: true means add; false means remove;
 /// start: true means insert at the beginning; false means add to the end
 void sendClientRequestCanvasModifySize({
-  required int dimension,
+  required int gridAxis,
   required bool add,
   required bool start,
 }) {
-  sendClientRequest(ClientRequest.Canvas_Modify_Size, '$dimension ${add ? 1 : 0} ${start ? 1 : 0}');
+  sendClientRequest(ClientRequest.Canvas_Modify_Size, '$gridAxis ${add ? 1 : 0} ${start ? 1 : 0}');
 }
 
 void sendClientRequestSetPantsType(int type){

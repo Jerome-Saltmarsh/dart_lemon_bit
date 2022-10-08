@@ -18,19 +18,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] running backwards is slower
 /// [ ] modify animations editor
 /// [ ] single handed weapons can be duel wielded like sword and shield
-
-/// [AQUARIUS]
-/// Design character fish
-/// Swim around and explore the acquarium
-/// Meet other fish
-/// Fish automatically swims towards the mouse
-/// It also automatically starts sinking
-/// Hold mouse down to swim up
-/// [ ] right click to unleash the weapons special
-/// [ ] weapon special gets charged whenever an enemy is hit or killed
-/// [ ] unarmed has amount but automatically recharges
-/// [ ] the lower the bar the less damage is also incurred
-/// [ ] the weapon special can be unleashed before it is full but the effect is less
+/// [ ] melee weapons run out and automatically recharges
 
 /// [RELEASE 1.10]
 /// [ ] slime death animation 1
@@ -41,7 +29,6 @@ import '../functions/move_player_to_crystal.dart';
 
 /// [RELEASE 1.00]
 /// [ ] auto connect to firestorm on first visit
-/// [ ] build scene
 /// [ ] 3d model weapon sword
 /// [ ] 3d model weapon staff
 /// [ ] 3d model weapon assault rifle
@@ -55,7 +42,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] design mouse cursor
 /// [ ] fix see through house when inside
 /// [ ] fix handgun fire animation
-/// [ ] center camera on player on spawn
+/// [ ] fix center camera on player on spawn
 /// [ ] fix editor camera stutters on selected
 /// [ ] spawn bazooka,
 /// [ ] spawn land-mine
@@ -66,7 +53,8 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] spawn assault-rifle,
 /// [ ] spawn sniper-rifle,
 /// [ ] spawn smg,
-/// [ ] melee weapons run out and automatically recharges
+/// [ ] fire-storm build scene
+/// [ ] edit fix change canvas size
 /// 08-10-2022
 /// [x] client on no message from server received dialog
 /// [x] fix camera editor pans back to player
