@@ -69,6 +69,7 @@ import '../functions/move_player_to_crystal.dart';
 /// [ ] melee weapons run out of rounds but only on hit
 /// [ ] client on no message from server received dialog
 /// 08-10-2022
+/// [x] fix camera editor pans back to player
 /// [x] fix editor navigation buttons
 /// [x] recycle client grid node buffer
 /// 07-10-2022
