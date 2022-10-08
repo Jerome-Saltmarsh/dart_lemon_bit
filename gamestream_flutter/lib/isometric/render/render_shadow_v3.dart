@@ -18,7 +18,7 @@ void casteShadowDownV3(Vector3 vector3){
     final nodeBelowOrientation = nodesOrientation[nodeBelowIndex];
     if (nodeBelowOrientation == NodeOrientation.Solid){
       final topRemainder = vector3.z % tileHeight;
-      renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: 1.0);
+      renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / tileHeight) * 2 : 2.0);
     }
   }
 }

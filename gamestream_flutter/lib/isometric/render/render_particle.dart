@@ -198,6 +198,9 @@ void renderParticle(Particle particle) {
       return renderFlame(particle);
 
     case ParticleType.Zombie_Arm:
+
+      casteShadowDownV3(particle);
+
       return render(
           dstX: particle.renderX,
           dstY: particle.renderY,
@@ -224,6 +227,8 @@ void renderParticle(Particle particle) {
       return;
 
     case ParticleType.Zombie_Head:
+
+      casteShadowDownV3(particle);
       return render(
           dstX: particle.renderX,
           dstY: particle.renderY,
@@ -248,6 +253,8 @@ void renderParticle(Particle particle) {
       );
 
     case ParticleType.Zombie_leg:
+
+      casteShadowDownV3(particle);
       return render(
           dstX: particle.renderX,
           dstY: particle.renderY,
@@ -260,6 +267,8 @@ void renderParticle(Particle particle) {
       );
 
     case ParticleType.Zombie_Torso:
+
+      casteShadowDownV3(particle);
       return render(
           dstX: particle.renderX,
           dstY: particle.renderY,
@@ -310,6 +319,7 @@ void renderParticle(Particle particle) {
          return particleDeactivate(particle);
       }
       const size = 64.0;
+      casteShadowDownV3(particle);
       return renderRotated(
         dstX: particle.renderX,
         dstY: particle.renderY,
@@ -324,6 +334,7 @@ void renderParticle(Particle particle) {
     case ParticleType.Strike_Punch:
       if (particle.frame >= 3 ) return;
       const size = 32.0;
+      casteShadowDownV3(particle);
       return renderRotated(
         dstX: particle.renderX,
         dstY: particle.renderY,
