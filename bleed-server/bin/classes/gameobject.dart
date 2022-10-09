@@ -4,7 +4,7 @@ class GameObject extends Collider {
   var active = true;
   /// GameObjectType.dart
   int type;
-  dynamic spawn;
+  int timer = 0;
 
   GameObject({
     required double x,

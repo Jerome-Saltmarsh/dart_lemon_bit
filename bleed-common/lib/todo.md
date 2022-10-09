@@ -54,7 +54,6 @@
 [ ] editor add tab gameobjects
 [ ] editor add short cut key to skip hours
 [ ] editor add multiplayer mode
-[ ] editor add text ("press tab to edit") during play mode
 
 [ ] editor fix camera stutters on selected
 [ ] editor fix change canvas size 
@@ -69,6 +68,7 @@
 [ ] firestorm add weapon bow
 
 [09-10-2022]
+[x] editor add text ("press tab to edit") during play mode
 [x] firestorm add message movement
 [x] firestorm add message sword acquired - right click to use it
 [x] firestorm add message handgun acquired - left click to use it

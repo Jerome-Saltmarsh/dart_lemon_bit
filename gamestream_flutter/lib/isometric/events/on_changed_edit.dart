@@ -9,7 +9,8 @@ void onChangedEdit(bool value) {
   if (value) {
      cameraMode = CameraMode.Free;
      edit.cursorSetToPlayer();
-     player.message.value = "press tab to play";
+     player.message.value = "-press arrow keys to move\n\n-press tab to play";
+     player.messageTimer = 300;
   } else {
     cameraMode = CameraMode.Chase;
     player.message.value = "press tab to edit";

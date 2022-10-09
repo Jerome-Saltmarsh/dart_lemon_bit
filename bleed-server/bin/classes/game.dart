@@ -522,10 +522,11 @@ abstract class Game {
       );
   }
 
-  void deactivateGameObject(GameObject gameObject){
+  void deactivateGameObject(GameObject gameObject, {int duration = 0}){
      if (!gameObject.active) return;
      gameObject.active = false;
      gameObject.collidable = false;
+     gameObject.timer = duration;
      customOnGameObjectDeactivated(gameObject);
   }
 
@@ -575,6 +576,14 @@ abstract class Game {
       action.perform();
       actions.removeAt(i);
       i--;
+    }
+
+    for (final gameObject in gameObjects){
+       if (gameObject.active) continue;
+       if (gameObject.timer <= 0) continue;
+       gameObject.timer--;
+       if (gameObject.timer > 0) continue;
+       activateGameObject(gameObject);
     }
 
     customUpdate();
@@ -668,8 +677,8 @@ abstract class Game {
   }
 
   void activateGameObject(GameObject gameObject){
-    if (gameObject.active) return;
     gameObject.active = true;
+    gameObject.collidable = true;
   }
 
   void applyDamageToCharacter({
@@ -2080,6 +2089,8 @@ abstract class Game {
         return buildWeaponHandgun();
       case AttackType.Blade:
         return buildWeaponBlade();
+      case AttackType.Bow:
+        return buildWeaponBow();
       default:
         throw Exception("cannot build weapon for type $type");
     }

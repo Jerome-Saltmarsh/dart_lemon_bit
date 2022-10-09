@@ -236,7 +236,7 @@ void renderGameObject(GameObject value) {
 
   if (value.type == GameObjectType.Weapon_Blade) {
     renderShadow(value.x, value.y, value.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
-    return render(
+    render(
       dstX: value.renderX,
       dstY: ((value.y + value.x) * 0.5) - value.z + animationFrameWaterHeight,
       srcX: 1029,
@@ -244,6 +244,20 @@ void renderGameObject(GameObject value) {
       srcWidth: 33,
       srcHeight: 13,
     );
+    return;
+  }
+
+  if (value.type == GameObjectType.Weapon_Bow) {
+    renderShadow(value.x, value.y, value.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
+    render(
+      dstX: value.renderX,
+      dstY: ((value.y + value.x) * 0.5) - value.z + animationFrameWaterHeight,
+      srcX: 7181,
+      srcY: 1838,
+      srcWidth: 30,
+      srcHeight: 28,
+    );
+    return;
   }
 }
 

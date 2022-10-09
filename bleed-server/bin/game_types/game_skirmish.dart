@@ -12,6 +12,7 @@ import '../functions/move_player_to_crystal.dart';
 class GameSkirmish extends Game {
 
   static const configAIRespawnFrames = 500;
+  static const configRespawnFramesWeapons = 500;
   var configMaxPlayers = 7;
   var configZombieHealth = 5;
 
@@ -52,6 +53,7 @@ class GameSkirmish extends Game {
     GameObjectType.Weapon_Shotgun,
     GameObjectType.Weapon_Handgun,
     GameObjectType.Weapon_Blade,
+    GameObjectType.Weapon_Bow,
   ]);
 
   @override
@@ -109,8 +111,7 @@ class GameSkirmish extends Game {
     player.writeEnvironmentLightning(Lightning.Off);
     player.writeEnvironmentWind(Wind.Gentle);
     player.writeEnvironmentBreeze(false);
-    player.writePlayerMessage("Press W,A,S,D to run");
-    // movePlayerToCrystal(player);
+    player.writePlayerMessage("press W,A,S,D to run and LEFT CLICK to punch");
     if (playerSpawnPoints.isNotEmpty){
       moveV3ToNodeIndex(player, randomItem(playerSpawnPoints));
     }
@@ -121,8 +122,8 @@ class GameSkirmish extends Game {
   @override
   void customOnCollisionBetweenPlayerAndGameObject(Player player, GameObject gameObject) {
     if (gameObject.type == GameObjectType.Weapon_Shotgun){
-      deactivateGameObject(gameObject);
-      final weapon = buildWeaponByType(AttackType.Shotgun);
+      deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
+      final weapon = buildWeaponShotgun();
       weapon.spawn = gameObject;
       player.weaponSlot1 = weapon;
       playerSetWeapon(player, weapon);
@@ -131,8 +132,8 @@ class GameSkirmish extends Game {
     }
 
     if (gameObject.type == GameObjectType.Weapon_Handgun){
-      deactivateGameObject(gameObject);
-      final weapon = buildWeaponByType(AttackType.Handgun);
+      deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
+      final weapon = buildWeaponHandgun();
       weapon.spawn = gameObject;
       player.weaponSlot1 = weapon;
       playerSetWeapon(player, weapon);
@@ -142,12 +143,21 @@ class GameSkirmish extends Game {
     }
 
     if (gameObject.type == GameObjectType.Weapon_Blade){
-      deactivateGameObject(gameObject);
-      final weapon = buildWeaponByType(AttackType.Blade);
+      deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
+      final weapon = buildWeaponBlade();
       weapon.spawn = gameObject;
       player.weaponSlot2 = weapon;
       player.writePlayerEventItemEquipped(weapon.type);
       player.writePlayerMessage("right click to use sword");
+    }
+
+    if (gameObject.type == GameObjectType.Weapon_Bow){
+      deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
+      final weapon = buildWeaponBow();
+      weapon.spawn = gameObject;
+      player.weaponSlot1 = weapon;
+      player.writePlayerEventItemEquipped(weapon.type);
+      player.writePlayerMessage("left click to use bow");
     }
   }
 
@@ -158,7 +168,6 @@ class GameSkirmish extends Game {
 
   @override
   void customOnPlayerWeaponRoundsExhausted(Player player, Weapon weapon){
-    reactiveWeaponGameObject(weapon);
     if (weapon == player.weaponSlot1){
       player.weaponSlot1 = player.weaponSlot3; // unarmed
       playerSetWeapon(player, player.weaponSlot2);
@@ -185,13 +194,10 @@ class GameSkirmish extends Game {
 
   @override
   void customOnPlayerDisconnected(Player player) {
-    reactivatePlayerWeapons(player);
+
   }
 
   void reactivatePlayerWeapons(Player player){
-    reactiveWeaponGameObject(player.weaponSlot1);
-    reactiveWeaponGameObject(player.weaponSlot2);
-    reactiveWeaponGameObject(player.weaponSlot3);
   }
 
   void reactiveWeaponGameObject(Weapon weapon){
