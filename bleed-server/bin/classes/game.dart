@@ -180,13 +180,11 @@ abstract class Game {
 
   void playerSetWeapon(Player player, Weapon weapon){
     if (player.weapon == weapon) return;
-    final previousWeapon = player.weapon;
     player.weapon = weapon;
     player.writePlayerWeaponType();
     player.writePlayerWeaponRounds();
     player.writePlayerWeaponCapacity();
     player.writePlayerEventItemEquipped(player.weapon.type);
-    // customOnPlayerWeaponChanged(player, weapon, previousWeapon);
   }
 
   void changeGame(Player player, Game to){
@@ -335,6 +333,18 @@ abstract class Game {
             damage: weapon.damage,
             range: weapon.range,
             angle: player.lookRadians,
+        );
+        break;
+      case AttackType.Staff:
+        weapon.durationRemaining = weapon.duration;
+        spawnProjectileOrb(player, damage: 2);
+        playerAttackMelee(
+          player: player,
+          attackType: weapon.type,
+          distance: weapon.range,
+          attackRadius: 35, /// TODO read value from weapon
+          damage: weapon.damage,
+          duration: weapon.duration,
         );
         break;
     }
