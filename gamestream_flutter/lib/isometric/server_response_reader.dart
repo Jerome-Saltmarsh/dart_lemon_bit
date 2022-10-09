@@ -528,7 +528,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readSceneMetaData() {
-    sceneMetaDataMapEditable.value = readBool();
+    sceneEditable.value = readBool();
     sceneMetaDataSceneName.value = readString();
   }
 

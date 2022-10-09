@@ -1,3 +1,3 @@
-void onChangedMetaDataPlayerIsOwner(bool playerIsOwner){
+void onChangedSceneEditable(bool playerIsOwner){
    // game.edit.value = playerIsOwner;
 }

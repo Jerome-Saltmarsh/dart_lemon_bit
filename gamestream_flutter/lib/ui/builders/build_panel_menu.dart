@@ -35,7 +35,7 @@ Widget buildPanelMenu() =>
 
 
 Widget buildButtonTogglePlayMode() {
-  return watch(sceneMetaDataMapEditable, (bool isOwner) {
+  return watch(sceneEditable, (bool isOwner) {
     if (!isOwner) return const SizedBox();
     return watch(game.edit, (bool edit) {
       return container(

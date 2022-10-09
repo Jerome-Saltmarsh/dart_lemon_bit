@@ -96,7 +96,7 @@ class CoreEvents {
         engine.drawCanvas.value = null;
         engine.drawCanvasAfterUpdate = true;
         engine.keyPressedHandlers = {};
-        sceneMetaDataMapEditable.value = false;
+        sceneEditable.value = false;
         break;
 
       case Mode.Player:
