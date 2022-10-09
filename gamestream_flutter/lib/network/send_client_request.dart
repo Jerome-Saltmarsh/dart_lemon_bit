@@ -4,6 +4,7 @@ import 'package:bleed_common/edit_request.dart';
 import 'package:bleed_common/gameobject_request.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_size.dart';
+import 'package:bleed_common/request_modify_canvas_size.dart';
 import 'package:bleed_common/teleport_scenes.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
@@ -50,21 +51,6 @@ void sendClientRequestSetArmour(int type){
 
 void sendClientRequestSetHeadType(int type){
   sendClientRequest(ClientRequest.Set_Head_Type, type);
-}
-
-void sendClientRequestSetCanvasSize(int z, int rows, int columns){
-  sendClientRequest(ClientRequest.Editor_Set_Canvas_Size, '$z $rows $columns');
-}
-
-/// dimension: 0 == Z; 1 == Row; 2 == Column;
-/// add: true means add; false means remove;
-/// start: true means insert at the beginning; false means add to the end
-void sendClientRequestCanvasModifySize({
-  required int gridAxis,
-  required bool add,
-  required bool start,
-}) {
-  sendClientRequest(ClientRequest.Canvas_Modify_Size, '$gridAxis ${add ? 1 : 0} ${start ? 1 : 0}');
 }
 
 void sendClientRequestSetPantsType(int type){
@@ -190,9 +176,11 @@ void sendGameObjectRequestDelete() {
   sendGameObjectRequest(GameObjectRequest.Delete);
 }
 
-void sendClientRequestEdit(EditRequest request, [dynamic message = null]){
+void sendClientRequestModifyCanvasSize(RequestModifyCanvasSize request) =>
+  sendClientRequestEdit(EditRequest.Modify_Canvas_Size, request.index);
+
+void sendClientRequestEdit(EditRequest request, [dynamic message = null]) =>
   sendClientRequest(ClientRequest.Edit, '${request.index} $message');
-}
 
 void sendClientRequestSpawnNodeDataModify({
   required int z,

@@ -50,7 +50,6 @@
 [ ] editor add multiplayer mode
 
 [ ] editor fix camera stutters on selected
-[ ] editor fix change canvas size 
 [ ] editor fix file save
 [ ] editor fix lightning is changing by itself
 [ ] editor fix wind is changing by itself
@@ -66,6 +65,8 @@
 [ ] editor add tab particles
 [ ] editor add tab characters
 [ ] editor add tab gameobjects
+
+[ ] editor fix change canvas size
 
 [09-10-2022]
 [x] engine add weapon staff

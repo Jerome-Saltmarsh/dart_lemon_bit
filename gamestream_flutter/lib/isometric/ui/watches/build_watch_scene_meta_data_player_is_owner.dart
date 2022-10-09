@@ -1,12 +1,11 @@
 import 'package:bleed_common/edit_request.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
-import 'package:bleed_common/spawn_type.dart';
+import 'package:bleed_common/request_modify_canvas_size.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
-import 'package:gamestream_flutter/isometric/editor/actions/editor_action_modify_spawn_node.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
@@ -20,7 +19,6 @@ import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:lemon_engine/screen.dart';
 
-import '../../../styles.dart';
 import '../stacks/build_page.dart';
 import '../widgets/build_container.dart';
 
@@ -46,7 +44,7 @@ Widget buildStackEdit(EditTab activeEditTab) =>
           bottom: 6,
           child: buildColumnSelectedGameObject(),
         ),
-      if (activeEditTab == EditTab.Characters)
+      if (activeEditTab == EditTab.Objects)
         Positioned(
           left: 0,
           bottom: 6,
@@ -76,6 +74,24 @@ Widget buildStackEdit(EditTab activeEditTab) =>
               child: buildWatchBool(
                   edit.controlsVisibleWeather,
                   buildControlsWeather,
+              ),
+            )
+        ),
+      if (activeEditTab == EditTab.File)
+        Positioned(
+            top: 50,
+            left: 0,
+            child: Container(
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                   text("SAVE"),
+                   text("LOAD"),
+                   text("MAP SIZE"),
+                  ...RequestModifyCanvasSize.values.map((e) => container(
+                     child: e.name, action: () => sendClientRequestModifyCanvasSize(e)
+                  )).toList(),
+                ],
               ),
             )
         ),
@@ -361,10 +377,10 @@ Widget buildPaintType(int type) =>
 
 enum EditTab {
   Grid,
-  Characters,
   Objects,
   Player,
   Weather,
+  File,
 }
 
 Row buildEditorMenu(EditTab activeEditTab) =>
@@ -374,6 +390,7 @@ Row buildEditorMenu(EditTab activeEditTab) =>
           children: EditTab.values.map(
                   (editTab) => container(
                             child: editTab.name,
+                            width: 150,
                             color: activeEditTab == editTab
                                 ? colours.brownDark
                                 : colours.brownLight,

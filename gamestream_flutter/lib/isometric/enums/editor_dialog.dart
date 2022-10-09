@@ -11,7 +11,6 @@ final editorDialog = Watch<EditorDialog?>(null, onChanged: onChangedEditorDialog
 enum EditorDialog {
   Scene_Load,
   Scene_Save,
-  Canvas_Size,
   Debug,
   Audio_Mixer,
 }

@@ -10,6 +10,7 @@ import '../common/edit_request.dart';
 import '../common/gameobject_request.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
+import '../common/request_modify_canvas_size.dart';
 import '../common/spawn_type.dart';
 import '../common/teleport_scenes.dart';
 import '../dark_age/dark_age_scenes.dart';
@@ -221,12 +222,6 @@ class Connection {
         player.game.revive(player);
         return;
 
-      case ClientRequest.Editor_Set_Canvas_Size:
-        /// TODO
-        // game.scene.grid.add(generateGridZ(game.scene.gridRows, game.scene.gridColumns));
-        game.onGridChanged();
-        break;
-
       case ClientRequest.GameObject:
         return handleGameObjectRequest(arguments);
 
@@ -234,10 +229,7 @@ class Connection {
         return handleNodeRequestSetBlock(arguments);
 
       case ClientRequest.Edit:
-        return handleEditRequest(arguments);
-
-      case ClientRequest.Canvas_Modify_Size:
-        return handleCanvasModifySize(arguments);
+        return handleRequestEdit(arguments);
 
       case ClientRequest.Npc_Talk_Select_Option:
         return handleNpcTalkSelectOption(player, arguments);
@@ -409,7 +401,7 @@ class Connection {
     }
   }
 
-  void handleEditRequest(List<String> arguments) {
+  void handleRequestEdit(List<String> arguments) {
     final player = _player;
     if (player == null) return;
     final game = player.game;
@@ -429,6 +421,58 @@ class Connection {
     }
     final editRequest = EditRequest.values[editRequestIndex];
     switch (editRequest) {
+      case EditRequest.Modify_Canvas_Size:
+        if (arguments.length < 3) {
+          return errorInsufficientArgs(3, arguments);
+        }
+        final modifyCanvasSizeIndex = int.tryParse(arguments[2]);
+        if (modifyCanvasSizeIndex == null){
+          return errorInvalidArg('modify canvas size is null');
+        }
+        if (!isValidIndex(modifyCanvasSizeIndex, RequestModifyCanvasSize.values)){
+          return errorInvalidArg('invalid modify canvas index $modifyCanvasSizeIndex');
+        }
+        final modifyCanvasSize = RequestModifyCanvasSize.values[modifyCanvasSizeIndex];
+        switch(modifyCanvasSize){
+          case RequestModifyCanvasSize.Add_Row_Start:
+            // TODO: Handle this case.
+            break;
+          case RequestModifyCanvasSize.Remove_Row_Start:
+            // TODO: Handle this case.
+            break;
+          case RequestModifyCanvasSize.Add_Row_End:
+            // TODO: Handle this case.
+            break;
+          case RequestModifyCanvasSize.Remove_Row_End:
+            // TODO: Handle this case.
+            break;
+          case RequestModifyCanvasSize.Add_Z_Start:
+            // TODO: Handle this case.
+            break;
+          case RequestModifyCanvasSize.Remove_Z_Start:
+            // TODO: Handle this case.
+            break;
+          case RequestModifyCanvasSize.Add_Z_End:
+            // TODO: Handle this case.
+            break;
+          case RequestModifyCanvasSize.Remove_Z_End:
+            // TODO: Handle this case.
+            break;
+          case RequestModifyCanvasSize.Add_Column_Start:
+            // TODO: Handle this case.
+            break;
+          case RequestModifyCanvasSize.Remove_Column_Start:
+            // TODO: Handle this case.
+            break;
+          case RequestModifyCanvasSize.Add_Column_End:
+            // TODO: Handle this case.
+            break;
+          case RequestModifyCanvasSize.Remove_Column_End:
+            // TODO: Handle this case.
+            break;
+        }
+        return;
+
       case EditRequest.Spawn_Zombie:
         if (arguments.length < 3) {
           return errorInsufficientArgs(3, arguments);
@@ -486,46 +530,6 @@ class Connection {
     final action = player.options.values.toList()[index];
     action.call();
     return;
-  }
-
-  void handleCanvasModifySize(List<String> arguments) {
-    final player = _player;
-    if (player == null) return;
-
-    if (arguments.length < 4)
-      return errorInvalidArg('handleCanvasModifySize insufficient args');
-
-    final dimension = int.tryParse(arguments[1]);
-    final add = int.tryParse(arguments[1]);
-    final start = int.tryParse(arguments[1]);
-
-    if (dimension == null)
-      return errorInvalidArg('handleCanvasModifySize dimension is null');
-
-    if (add == null)
-      return errorInvalidArg('handleCanvasModifySize add is null');
-
-    if (start == null)
-      return errorInvalidArg('handleCanvasModifySize start is null');
-
-    final scene = player.game.scene;
-
-    switch (dimension){
-      case GridAxis.Z:
-        break;
-      case GridAxis.Row:
-        if (add == 1){
-           if (start == 1){
-             scene.modifyGridAddRowAtStart();
-             final newLength = scene.gridVolume + scene.gridColumns;
-             final newGridTypes = Uint8List(newLength);
-             final newGridOrientations = Uint8List(newLength);
-           }
-        }
-        break;
-      case GridAxis.Column:
-        break;
-    }
   }
 
   void handleGameObjectRequest(List<String> arguments) {

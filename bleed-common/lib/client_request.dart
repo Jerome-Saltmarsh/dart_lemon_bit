@@ -25,8 +25,6 @@ enum ClientRequest {
   Editor_Set_Scene_Name,
   Time_Set_Hour,
   Submit_Player_Design,
-  Editor_Set_Canvas_Size,
-  Canvas_Modify_Size,
   Npc_Talk_Select_Option,
   GameObject,
   Node,
