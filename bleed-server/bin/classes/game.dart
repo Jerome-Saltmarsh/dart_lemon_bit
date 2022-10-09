@@ -245,13 +245,13 @@ abstract class Game {
 
     final weapon = player.weapon;
 
-    if (weapon.type == AttackType.Bow){
-      weapon.charge++;
-      if (weapon.charge == 1){
-         dispatchV3(GameEventType.Draw_Bow, player);
-      }
-      return;
-    }
+    // if (weapon.type == AttackType.Bow){
+    //   weapon.charge++;
+    //   if (weapon.charge == 1){
+    //      dispatchV3(GameEventType.Draw_Bow, player);
+    //   }
+    //   return;
+    // }
 
     if (weapon.capacity > 0){
       if (weapon.rounds == 0) return;
@@ -329,6 +329,7 @@ abstract class Game {
           duration: weapon.duration,
         );
       case AttackType.Bow:
+        weapon.durationRemaining = weapon.duration;
         spawnProjectileArrow(
             src: player,
             damage: weapon.damage,

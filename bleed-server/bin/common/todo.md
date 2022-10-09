@@ -40,7 +40,6 @@
 [ ] engine add weapon smg,
 [ ] engine fix collision physics colliders get pushed up nodes
 [ ] engine fix see through house when inside
-[ ] engine fix handgun fire animation
 
 [ ] website add auto connect to firestorm on first visit
 [ ] website add toggle single | multi
@@ -65,9 +64,11 @@
 [ ] firestorm design scene
 [ ] firestorm add weapon sniper-rifle,
 [ ] firestorm add weapon crossbow
-[ ] firestorm add weapon bow
+[ ] engine fix fire animation handgun
+[ ] engine fix fire animation bow
 
 [09-10-2022]
+[x] firestorm add weapon bow
 [x] editor add text ("press tab to edit") during play mode
 [x] firestorm add message movement
 [x] firestorm add message sword acquired - right click to use it

@@ -4,11 +4,10 @@ import 'package:bleed_common/spawn_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/isometric/actions/action_show_game_dialog_canvas_size.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/editor/actions/editor_action_modify_spawn_node.dart';
-import 'package:gamestream_flutter/isometric/editor/actions/save_scene.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
+import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
@@ -16,8 +15,6 @@ import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_tab.dart';
-import 'package:gamestream_flutter/modules/core/actions.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:lemon_engine/screen.dart';
@@ -27,12 +24,13 @@ import '../stacks/build_page.dart';
 import '../widgets/build_container.dart';
 
 Widget buildPlayMode(bool edit) =>
-  edit ? buildStackEdit() : buildStackPlay();
+  edit ? watch(game.editTab, buildStackEdit) : buildStackPlay();
 
-Widget buildStackEdit() =>
+Widget buildStackEdit(EditTab activeEditTab) =>
     buildPage(
     children: [
       watch(editorDialog, buildWatchEditorDialog),
+      if (activeEditTab == EditTab.Grid)
       Positioned(
         right: 6,
         top: 80,
@@ -41,37 +39,50 @@ Widget buildStackEdit() =>
             buildColumnEditNodeOrientation
         ),
       ),
-      Positioned(
-        right: 6,
-        top: 80,
-        child: buildColumnEditNodeSpawn(),
-      ),
-      Positioned(
-        left: 0,
-        bottom: 6,
-        child: buildColumnSelectedGameObject(),
-      ),
-      Positioned(
-        left: 200,
-        top: 56,
-        child: buildEditorSelectedNode(),
-      ),
-      Positioned(
-          bottom: 6,
+      if (activeEditTab == EditTab.Objects)
+        Positioned(
           left: 0,
-          child: Container(
-            width: screen.width,
-            alignment: Alignment.center,
-            child: buildWatchBool(
-                edit.controlsVisibleWeather,
-                buildControlsWeather,
-            ),
-          )
-      ),
+          bottom: 6,
+          child: buildColumnSelectedGameObject(),
+        ),
+      if (activeEditTab == EditTab.Grid)
+        Positioned(
+          left: 0,
+          top: 50,
+          child: buildColumnSelectNodeType(),
+        ),
+      if (activeEditTab == EditTab.Grid)
+        Positioned(
+          left: 200,
+          top: 56,
+          child: buildEditorSelectedNode(),
+        ),
+      if (activeEditTab == EditTab.Weather)
+        Positioned(
+            bottom: 6,
+            left: 0,
+            child: Container(
+              width: screen.width,
+              alignment: Alignment.center,
+              child: buildWatchBool(
+                  edit.controlsVisibleWeather,
+                  buildControlsWeather,
+              ),
+            )
+        ),
+      // Positioned(
+      //   left: 0,
+      //   top: 0,
+      //   child: Container(
+      //       child: watch(game.editTab, buildEditorMenu),
+      //       width: screen.width,
+      //       height: screen.height,
+      //   ),
+      // ),
       Positioned(
         left: 0,
         top: 0,
-        child: buildEditorMenu(),
+        child: buildEditorMenu(activeEditTab),
       ),
     ],
   );
@@ -86,93 +97,6 @@ Widget buildColumnEditNodeOrientation() =>
         buildColumnNodeOrientationSlopeCornerInner(),
         buildColumnNodeOrientationSlopeCornerOuter(),
       ],
-    );
-
-Widget buildColumnEditNodeSpawn() =>
-    watch(
-        edit.selectedNodeData,
-        (SpawnNodeData? value){
-          if (value == null) return const SizedBox();
-          return Container(
-            padding: padding8,
-            color: brownLight,
-            width: 200,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(child: text("Amount")),
-                    text("-", onPressed: () =>
-                        editorActionModifySpawnNode(
-                          spawnType: value.spawnType,
-                          spawnRadius: value.spawnRadius,
-                          spawnAmount: value.spawnAmount - 1,
-                        )
-                    ),
-                    width2,
-                    Container(
-                      alignment: Alignment.center,
-                        width: 60,
-                        child: text(value.spawnAmount)),
-                    width2,
-                    text("+", onPressed: () =>
-                        editorActionModifySpawnNode(
-                          spawnType: value.spawnType,
-                          spawnRadius: value.spawnRadius,
-                          spawnAmount: value.spawnAmount + 1,
-                        )
-                    ),
-                  ],
-                ),
-                height8,
-                Row(
-                  children: [
-                    Expanded(child: text("Radius")),
-                    text("-", onPressed: () =>
-                        editorActionModifySpawnNode(
-                          spawnType: value.spawnType,
-                          spawnRadius: value.spawnRadius - 10,
-                          spawnAmount: value.spawnAmount,
-                        )
-                    ),
-                    width2,
-                    Container(
-                        alignment: Alignment.center,
-                        width: 60,
-                        child: text(value.spawnRadius)),
-                    width2,
-                    text("+", onPressed: () =>
-                        editorActionModifySpawnNode(
-                          spawnType: value.spawnType,
-                          spawnRadius: value.spawnRadius + 10,
-                          spawnAmount: value.spawnAmount,
-                        )
-                    ),
-                  ],
-                ),
-                height16,
-                Container(
-                  height: screen.height - 200,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: SpawnType.values.map((int spawnType) =>
-                          container(
-                            color: spawnType == value.spawnType ? colours.blue : Colors.grey,
-                            child: SpawnType.getName(spawnType),
-                            action: () => editorActionModifySpawnNode(
-                               spawnType: spawnType,
-                               spawnAmount: value.spawnAmount,
-                               spawnRadius: value.spawnRadius,
-                            )
-                          ),
-                      ).toList(),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          );
-        }
     );
 
 Widget buildColumnNodeOrientationSolid() =>
@@ -384,10 +308,6 @@ Widget buildColumnSelectedGameObject() {
 
   return watch(edit.gameObjectSelected, (bool gameObjectSelected){
 
-    if (!gameObjectSelected){
-      return buildColumnSelectNodeType();
-    }
-
     return Container(
       color: brownLight,
       padding: const EdgeInsets.all(6),
@@ -429,66 +349,29 @@ Column buildControlPaint() {
 Widget buildPaintType(int type) =>
   container(child: NodeType.getName(type));
 
-Row buildEditorMenu() {
-  return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            onMouseOver(
-                builder: (context, over) {
-                  if (over){
-                    return Column(
-                      children: [
-                        container(child: "File", color: brownLight),
-                        container(child: "New", color: brownLight, action: (){
-                          core.actions.exitGame();
-                          connectToGameEditor();
-                        }, hoverColor: brownDark),
-                        container(child: "Save", color: brownLight, action: requestSaveScene, hoverColor: brownDark),
-                        container(child: "Load", color: brownLight, action: editorLoadScene, hoverColor: brownDark),
-                        container(child: "Exit", color: brownLight, action: core.actions.exitGame, hoverColor: brownDark),
-                      ],
-                    );
-                  }
-                  return container(child: "File", color: brownLight);
-                }
-            ),
-            onMouseOver(
-              builder: (context, over) {
-                if (over){
-                  return Column(
-                    children: [
-                      container(child: "Edit", color: brownLight),
-                      container(child: "Canvas Size", color: brownLight, hoverColor: brownDark, action: actionGameDialogEditCanvasSizeShow),
-                    ],
-                  );
-                }
 
-                return container(child: "Edit", color: brownLight);
-              }
-            ),
-            buildMenu(
-                text: "Insert",
-                children: const [
-                  GameObjectType.Barrel,
-                  GameObjectType.Wheel,
-                  GameObjectType.Crystal,
-                  GameObjectType.Crystal_Small_Blue,
-                  GameObjectType.Lantern_Red,
-                  GameObjectType.Tavern_Sign,
-                  GameObjectType.Book_Purple,
-                  GameObjectType.Bottle,
-                  GameObjectType.Candle,
-                  GameObjectType.Cup,
-                  GameObjectType.Wooden_Shelf_Row,
-                  GameObjectType.Rock,
-                  GameObjectType.Stick,
-                ]
-                  .map(buildButtonAddGameObject)
-                  .toList(),
-            )
-          ],
-        );
+enum EditTab {
+  Grid,
+  Characters,
+  Objects,
+  Player,
+  Weather,
 }
+
+Row buildEditorMenu(EditTab activeEditTab) =>
+  Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: EditTab.values.map(
+                  (editTab) => container(
+                            child: editTab.name,
+                            color: activeEditTab == editTab
+                                ? colours.brownDark
+                                : colours.brownLight,
+                            action: () => game.editTab.value = editTab,
+                         )
+          ).toList(),
+        );
 
 Widget buildButtonAddGameObject(int type) {
   return container(
