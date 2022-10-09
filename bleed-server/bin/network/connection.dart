@@ -6,6 +6,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
+import '../common/edit_request.dart';
 import '../common/gameobject_request.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
@@ -232,6 +233,9 @@ class Connection {
       case ClientRequest.Node:
         return handleNodeRequestSetBlock(arguments);
 
+      case ClientRequest.Edit:
+        return handleEditRequest(arguments);
+
       case ClientRequest.Canvas_Modify_Size:
         return handleCanvasModifySize(arguments);
 
@@ -403,6 +407,40 @@ class Connection {
       default:
         break;
     }
+  }
+
+  void handleEditRequest(List<String> arguments) {
+    final player = _player;
+    if (player == null) return;
+    final game = player.game;
+    if (!isLocalMachine && game is GameDarkAgeEditor == false) return;
+    final scene = game.scene;
+
+    if (arguments.length < 2){
+      return errorInvalidArg('insufficient args');
+    }
+
+    final editRequestIndex = int.tryParse(arguments[1]);
+    if (editRequestIndex == null){
+      return errorInvalidArg('editRequestIndex is null');
+    }
+    if (!isValidIndex(editRequestIndex, EditRequest.values)){
+       return errorInvalidArg('invalid edit request $editRequestIndex');
+    }
+    final editRequest = EditRequest.values[editRequestIndex];
+    switch (editRequest) {
+      case EditRequest.Spawn_Zombie:
+        if (arguments.length < 3) {
+          return errorInsufficientArgs(3, arguments);
+        }
+        final spawnIndex = int.tryParse(arguments[2]);
+        if (spawnIndex == null) {
+          return errorInvalidArg('spawn index required');
+        }
+        game.spawnZombieAtIndex(spawnIndex);
+        break;
+    }
+
   }
 
   void handleNodeRequestSetBlock(List<String> arguments) {

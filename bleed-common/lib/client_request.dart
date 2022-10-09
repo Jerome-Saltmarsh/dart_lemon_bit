@@ -35,6 +35,7 @@ enum ClientRequest {
   Spawn_Node_Data,
   Spawn_Node_Data_Modify,
   Game_Waves,
+  Edit,
 }
 
 const clientRequests = ClientRequest.values;

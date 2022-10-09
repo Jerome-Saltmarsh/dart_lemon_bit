@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:bleed_common/edit_request.dart';
 import 'package:bleed_common/gameobject_request.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_size.dart';
@@ -187,6 +188,10 @@ void sendGameObjectRequestDeselect() {
 
 void sendGameObjectRequestDelete() {
   sendGameObjectRequest(GameObjectRequest.Delete);
+}
+
+void sendClientRequestEdit(EditRequest request, [dynamic message = null]){
+  sendClientRequest(ClientRequest.Edit, '${request.index} $message');
 }
 
 void sendClientRequestSpawnNodeDataModify({

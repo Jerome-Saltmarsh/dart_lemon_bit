@@ -1,3 +1,4 @@
+import 'package:bleed_common/edit_request.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/spawn_type.dart';
@@ -44,6 +45,14 @@ Widget buildStackEdit(EditTab activeEditTab) =>
           left: 0,
           bottom: 6,
           child: buildColumnSelectedGameObject(),
+        ),
+      if (activeEditTab == EditTab.Characters)
+        Positioned(
+          left: 0,
+          bottom: 6,
+          child: container(child: 'Spawn Zombie', action: (){
+            sendClientRequestEdit(EditRequest.Spawn_Zombie, edit.nodeIndex.value);
+          }),
         ),
       if (activeEditTab == EditTab.Grid)
         Positioned(
