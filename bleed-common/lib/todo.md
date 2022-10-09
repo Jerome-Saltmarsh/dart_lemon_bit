@@ -67,9 +67,8 @@
 [ ] editor add tab characters
 [ ] editor add tab gameobjects
 
-[ ] engine add weapon staff
-
 [09-10-2022]
+[x] engine add weapon staff
 [x] editor add tab weather
 [x] editor add tab grid
 [x] firestorm add weapon bow

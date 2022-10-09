@@ -114,8 +114,8 @@ Weapon buildWeaponCrossBow() =>
 Weapon buildWeaponStaff() =>
     Weapon(
       type: AttackType.Staff,
-      damage: 1,
-      capacity: 5,
+      damage: 5,
+      capacity: 15,
       duration: 10,
       range: 200,
     );

@@ -1422,7 +1422,7 @@ abstract class Game {
       range: src.equippedRange,
       target: src.target,
       projectileType: ProjectileType.Orb,
-      angle: src.target != null ? null : src.faceAngle,
+      angle: src.target != null ? null : (src is Player ? src.lookRadians : src.faceAngle),
       damage: damage,
     );
   }
