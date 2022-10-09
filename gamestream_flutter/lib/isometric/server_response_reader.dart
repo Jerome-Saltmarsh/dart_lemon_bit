@@ -379,6 +379,7 @@ class ServerResponseReader with ByteReader {
         break;
       case ApiPlayer.Message:
         player.message.value = readString();
+        player.messageTimer = 200;
         break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");

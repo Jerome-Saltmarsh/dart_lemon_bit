@@ -67,9 +67,11 @@
 [ ] firestorm add weapon sniper-rifle,
 [ ] firestorm add weapon crossbow
 [ ] firestorm add weapon bow
-[ ] firestorm add message sword acquired - right click to use it
-[ ] firestorm add message handgun acquired - left click to use it
+
 [09-10-2022]
+[x] firestorm add message movement
+[x] firestorm add message sword acquired - right click to use it
+[x] firestorm add message handgun acquired - left click to use it
 
 [08-10-2022]
 [x] feature render particle blood shadow

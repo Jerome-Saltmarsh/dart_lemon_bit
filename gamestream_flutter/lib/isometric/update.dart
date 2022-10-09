@@ -36,6 +36,13 @@ void updateIsometric(){
   updateZombieGrowls();
   updateMouseBubbleSpawn();
   updateCharacters();
+
+  if (player.messageTimer > 0) {
+     player.messageTimer--;
+     if (player.messageTimer == 0){
+        player.message.value = "";
+     }
+  }
 }
 
 void updateMouseBubbleSpawn() {

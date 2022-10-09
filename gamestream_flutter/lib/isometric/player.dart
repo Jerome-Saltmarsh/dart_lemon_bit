@@ -49,6 +49,7 @@ class Player extends Vector3 {
   final level = Watch(1);
   final points = Watch(0);
   final message = Watch("");
+  var messageTimer = 0;
   final state = Watch(CharacterState.Idle, onChanged: onChangedPlayerState);
   final alive = Watch(true, onChanged: onChangedPlayerAlive);
   final magic = Watch(0.0);
