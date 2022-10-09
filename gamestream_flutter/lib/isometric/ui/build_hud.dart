@@ -33,6 +33,14 @@ Widget buildStackGame()  =>
     height: screen.height,
     child: Stack(
       children: [
+        watch(tutorialMessage, (String? message){
+          if (message == null) return Positioned(child: const SizedBox());
+          return Positioned(
+             top: 8,
+              left: 0,
+              child: text(message),
+          );
+        }),
         buildWatchBool(triggerAlarmNoMessageReceivedFromServer, buildDialogFramesSinceUpdate),
         watch(gameType, buildGameTypeUI),
         watch(editorDialog, buildWatchEditorDialog),

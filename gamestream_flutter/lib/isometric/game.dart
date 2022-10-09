@@ -12,6 +12,8 @@ final game = Game();
 bool get playMode => !game.edit.value;
 bool get editMode => game.edit.value;
 
+final tutorialMessage = Watch<String?>(null);
+
 void actionSetModePlay(){
   game.edit.value = false;
 }

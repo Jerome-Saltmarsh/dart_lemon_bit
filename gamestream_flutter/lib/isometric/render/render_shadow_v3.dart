@@ -9,6 +9,11 @@ import 'package:gamestream_flutter/isometric/nodes.dart';
 
 import 'render_shadow.dart';
 
+
+double raycastDown(double x, double y){
+   return 0.0;
+}
+
 void casteShadowDownV3(Vector3 vector3){
   if (vector3.z < nodeHeight) return;
   if (vector3.z >= nodesLengthZ) return;
