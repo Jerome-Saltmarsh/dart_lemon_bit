@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/isometric/events/on_changed_map_x.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_npc_talk.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_alive.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_designed.dart';
+import 'package:gamestream_flutter/isometric/events/on_changed_player_message.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_state.dart';
 import 'package:gamestream_flutter/isometric/events/on_quests_in_progress_changed.dart';
 import 'package:lemon_watch/watch.dart';
@@ -48,7 +49,7 @@ class Player extends Vector3 {
   final experience = Watch(0.0);
   final level = Watch(1);
   final points = Watch(0);
-  final message = Watch("");
+  final message = Watch("", onChanged: onChangedPlayerMessage);
   var messageTimer = 0;
   final state = Watch(CharacterState.Idle, onChanged: onChangedPlayerState);
   final alive = Watch(true, onChanged: onChangedPlayerAlive);
