@@ -109,6 +109,7 @@ class GameSkirmish extends Game {
     player.writeEnvironmentLightning(Lightning.Off);
     player.writeEnvironmentWind(Wind.Gentle);
     player.writeEnvironmentBreeze(false);
+    player.writePlayerMessage("Press W,A,S,D to run");
     // movePlayerToCrystal(player);
     if (playerSpawnPoints.isNotEmpty){
       moveV3ToNodeIndex(player, randomItem(playerSpawnPoints));
@@ -126,6 +127,7 @@ class GameSkirmish extends Game {
       player.weaponSlot1 = weapon;
       playerSetWeapon(player, weapon);
       player.writePlayerEventItemEquipped(weapon.type);
+      player.writePlayerMessage("left click to fire shotgun");
     }
 
     if (gameObject.type == GameObjectType.Weapon_Handgun){
@@ -135,6 +137,8 @@ class GameSkirmish extends Game {
       player.weaponSlot1 = weapon;
       playerSetWeapon(player, weapon);
       player.writePlayerEventItemEquipped(weapon.type);
+      player.writePlayerEventItemEquipped(weapon.type);
+      player.writePlayerMessage("left click to fire handgun");
     }
 
     if (gameObject.type == GameObjectType.Weapon_Blade){
@@ -143,6 +147,7 @@ class GameSkirmish extends Game {
       weapon.spawn = gameObject;
       player.weaponSlot2 = weapon;
       player.writePlayerEventItemEquipped(weapon.type);
+      player.writePlayerMessage("right click to use sword");
     }
   }
 

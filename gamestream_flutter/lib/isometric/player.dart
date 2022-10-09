@@ -71,6 +71,8 @@ class Player extends Vector3 {
   final weaponSlot2 = AttackSlot();
   final weaponSlot3 = AttackSlot();
 
+  // final message = Watch("");
+
   // Properties
   bool get dead => !alive.value;
 

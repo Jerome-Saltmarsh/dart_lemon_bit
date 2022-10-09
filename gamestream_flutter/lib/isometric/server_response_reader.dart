@@ -377,6 +377,9 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Weapon_Capacity:
         player.weapon.capacity.value = readInt();
         break;
+      case ApiPlayer.Message:
+        player.message.value = readString();
+        break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
     }

@@ -33,14 +33,23 @@ Widget buildStackGame()  =>
     height: screen.height,
     child: Stack(
       children: [
-        watch(tutorialMessage, (String? message){
-          if (message == null) return Positioned(child: const SizedBox());
-          return Positioned(
-             top: 8,
+        watch(player.message, (String message) =>
+          Positioned(
+              bottom: 64,
               left: 0,
-              child: text(message),
-          );
-        }),
+              child: message.isEmpty
+                  ? const SizedBox()
+                  : Container(
+                      width: screen.width,
+                      alignment: Alignment.center,
+                      child: Container(
+                          padding: const EdgeInsets.all(12),
+                          color: Colors.white10,
+                          child: text(message)
+                      )
+                    ),
+          )
+        ),
         buildWatchBool(triggerAlarmNoMessageReceivedFromServer, buildDialogFramesSinceUpdate),
         watch(gameType, buildGameTypeUI),
         watch(editorDialog, buildWatchEditorDialog),

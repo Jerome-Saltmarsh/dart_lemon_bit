@@ -16,4 +16,5 @@ class ApiPlayer {
   static const Experience_Percentage = 13;
   static const Level = 14;
   static const Aim_Angle = 15;
+  static const Message = 16;
 }

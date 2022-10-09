@@ -466,6 +466,12 @@ class Player extends Character with ByteWriter {
     writeByte(itemType);
   }
 
+  void writePlayerMessage(String message){
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Message);
+    writeString(message);
+  }
+
   void writeGameTime(int time){
     writeByte(ServerResponse.Game_Time);
     final totalMinutes = time ~/ 60;
