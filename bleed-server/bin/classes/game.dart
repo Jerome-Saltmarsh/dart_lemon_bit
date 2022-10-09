@@ -1842,7 +1842,7 @@ abstract class Game {
     var playerLength = players.length;
     for (var i = 0; i < playerLength; i++) {
       final player = players[i];
-      if (player.framesSinceClientRequest++ < 150) continue;
+      if (player.framesSinceClientRequest++ < 300) continue;
       if (!removePlayer(player)) continue;
       i--;
       playerLength--;

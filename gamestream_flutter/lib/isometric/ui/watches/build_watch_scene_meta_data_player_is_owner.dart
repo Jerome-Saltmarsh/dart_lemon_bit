@@ -84,9 +84,12 @@ Widget buildStackEdit(EditTab activeEditTab) =>
             child: Container(
               alignment: Alignment.center,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                   text("SAVE"),
-                   text("LOAD"),
+                   container(child: "SAVE", action: actionGameDialogShowSceneSave),
+                   container(child: "LOAD", action: editorLoadScene),
+                   height16,
                    text("MAP SIZE"),
                   ...RequestModifyCanvasSize.values.map((e) => container(
                      child: e.name, action: () => sendClientRequestModifyCanvasSize(e)
@@ -376,11 +379,11 @@ Widget buildPaintType(int type) =>
 
 
 enum EditTab {
+  File,
   Grid,
   Objects,
   Player,
   Weather,
-  File,
 }
 
 Row buildEditorMenu(EditTab activeEditTab) =>
