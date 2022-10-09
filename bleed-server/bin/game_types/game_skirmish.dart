@@ -54,6 +54,7 @@ class GameSkirmish extends Game {
     GameObjectType.Weapon_Handgun,
     GameObjectType.Weapon_Blade,
     GameObjectType.Weapon_Bow,
+    GameObjectType.Weapon_Staff,
   ]);
 
   @override
@@ -123,6 +124,7 @@ class GameSkirmish extends Game {
   void customOnCollisionBetweenPlayerAndGameObject(Player player, GameObject gameObject) {
     if (gameObject.type == GameObjectType.Weapon_Shotgun){
       deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
+      gameObject.type = getRandomItemType();
       final weapon = buildWeaponShotgun();
       weapon.spawn = gameObject;
       player.weaponSlot1 = weapon;
@@ -133,6 +135,7 @@ class GameSkirmish extends Game {
 
     if (gameObject.type == GameObjectType.Weapon_Handgun){
       deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
+      gameObject.type = getRandomItemType();
       final weapon = buildWeaponHandgun();
       weapon.spawn = gameObject;
       player.weaponSlot1 = weapon;
@@ -144,6 +147,7 @@ class GameSkirmish extends Game {
 
     if (gameObject.type == GameObjectType.Weapon_Blade){
       deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
+      gameObject.type = getRandomItemType();
       final weapon = buildWeaponBlade();
       weapon.spawn = gameObject;
       player.weaponSlot2 = weapon;
@@ -153,11 +157,22 @@ class GameSkirmish extends Game {
 
     if (gameObject.type == GameObjectType.Weapon_Bow){
       deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
+      gameObject.type = getRandomItemType();
       final weapon = buildWeaponBow();
       weapon.spawn = gameObject;
       player.weaponSlot1 = weapon;
       player.writePlayerEventItemEquipped(weapon.type);
       player.writePlayerMessage("left click to use bow");
+    }
+
+    if (gameObject.type == GameObjectType.Weapon_Staff){
+      deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
+      gameObject.type = getRandomItemType();
+      final weapon = buildWeaponStaff();
+      weapon.spawn = gameObject;
+      player.weaponSlot1 = weapon;
+      player.writePlayerEventItemEquipped(weapon.type);
+      player.writePlayerMessage("left click to use staff");
     }
   }
 

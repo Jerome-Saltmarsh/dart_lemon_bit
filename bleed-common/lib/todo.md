@@ -33,11 +33,11 @@
 [ ] engine add particle type darkness
 [ ] engine add weapon bazooka,
 [ ] engine add weapon land-mine
-[ ] engine add weapon body-armour,
+[ ] engine add weapon body-armour
 [ ] engine add weapon hammer
 [ ] engine add weapon pick-axe
-[ ] engine add weapon assault-rifle,
-[ ] engine add weapon smg,
+[ ] engine add weapon assault-rifle
+[ ] engine add weapon smg
 [ ] engine fix collision physics colliders get pushed up nodes
 [ ] engine fix see through house when inside
 
@@ -46,11 +46,6 @@
 
 [ ] editor add button rotate current node
 [ ] editor add button next node type
-[ ] editor add tab grid
-[ ] editor add tab player
-[ ] editor add tab particles
-[ ] editor add tab characters
-[ ] editor add tab gameobjects
 [ ] editor add short cut key to skip hours
 [ ] editor add multiplayer mode
 
@@ -67,7 +62,16 @@
 [ ] engine fix fire animation handgun
 [ ] engine fix fire animation bow
 
+[ ] editor add tab player
+[ ] editor add tab particles
+[ ] editor add tab characters
+[ ] editor add tab gameobjects
+
+[ ] engine add weapon staff
+
 [09-10-2022]
+[x] editor add tab weather
+[x] editor add tab grid
 [x] firestorm add weapon bow
 [x] editor add text ("press tab to edit") during play mode
 [x] firestorm add message movement

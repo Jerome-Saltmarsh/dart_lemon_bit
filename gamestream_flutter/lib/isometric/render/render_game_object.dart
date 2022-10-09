@@ -259,6 +259,19 @@ void renderGameObject(GameObject value) {
     );
     return;
   }
+
+  if (value.type == GameObjectType.Weapon_Staff) {
+    renderShadow(value.x, value.y, value.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
+    render(
+      dstX: value.renderX,
+      dstY: ((value.y + value.x) * 0.5) - value.z + animationFrameWaterHeight,
+      srcX: 7119,
+      srcY: 1519,
+      srcWidth: 24,
+      srcHeight: 24,
+    );
+    return;
+  }
 }
 
 void renderGameObjectChicken(GameObject value) {

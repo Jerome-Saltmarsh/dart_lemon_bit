@@ -25,12 +25,14 @@ class GameObjectType {
   static const Weapon_Handgun = 28;
   static const Weapon_Blade = 29;
   static const Weapon_Bow = 30;
+  static const Weapon_Staff = 31;
 
   static bool isPersistable(int type) =>
       type != Loot &&
       type != Weapon_Handgun &&
       type != Weapon_Blade &&
       type != Weapon_Bow &&
+      type != Weapon_Staff &&
       type != Weapon_Shotgun;
 
   static bool emitsLightBright(int type){
