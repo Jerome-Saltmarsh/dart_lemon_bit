@@ -39,7 +39,6 @@
 [ ] engine add weapon assault-rifle
 [ ] engine add weapon smg
 [ ] engine fix collision physics colliders get pushed up nodes
-[ ] engine fix see through house when inside
 
 [ ] website add auto connect to firestorm on first visit
 [ ] website add toggle single | multi
@@ -67,8 +66,10 @@
 
 [ ] firestorm design scene
 [ ] editor fix change canvas size
+[ ] engine fix see through house when inside
 
 [10-10-2022]
+[x] fix edit emit index light
 [x] fix debug panel
 
 [09-10-2022]

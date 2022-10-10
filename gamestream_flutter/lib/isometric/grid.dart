@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/node_orientation.dart';
 import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_on.dart';
@@ -235,17 +236,18 @@ bool gridIsUnderSomething(int z, int row, int column){
   return true;
 }
 
-bool gridIsPerceptible(int zIndex, int row, int column){
-  if (outOfBounds(zIndex, row, column)) return false;
-
-  for (var z = zIndex + 1; z < nodesTotalZ; z += 2){
-    row++;
-    column++;
-    if (row >= nodesTotalRows) break;
-    if (column >= nodesTotalColumns) break;
-    if (NodeType.blocksPerception(gridNodeZRCType(z, row, column))) return false;
+bool gridIsPerceptible(int index){
+  if (index < 0) return true;
+  if (index >= nodesTotal) return true;
+  while (true){
+    index += nodesArea;
+    index++;
+    index += nodesTotalColumns;
+    if (index >= nodesTotal) return true;
+    if (nodesOrientation[index] == NodeOrientation.Solid){
+      return false;
+    }
   }
-  return true;
 }
 
 void refreshGridMetrics(){

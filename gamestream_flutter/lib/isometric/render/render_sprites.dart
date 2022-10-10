@@ -239,7 +239,7 @@ class RenderOrderParticle extends RenderOrder {
 }
 
 
-var playerImperceptible = false;
+var playerPerceptible = false;
 var playerRenderRow = 0;
 var playerRenderColumn = 0;
 var playerZ = 0;
@@ -274,6 +274,8 @@ class RenderOrderGrid extends RenderOrder {
   var screenBottomRightRow = 0;
   var gridTotalColumnsMinusOne = 0;
   var gridTotalZMinusOne = 0;
+
+  var indexShow = 0;
 
   var playerColumnRow = 0;
   var playerUnderRoof = false;
@@ -365,18 +367,8 @@ class RenderOrderGrid extends RenderOrder {
     playerRenderRow = playerRow - (player.indexZ ~/ 2);
     playerRenderColumn = playerColumn - (player.indexZ ~/ 2);
     playerUnderRoof = gridIsUnderSomething(playerZ, playerRow, playerColumn);
-
-    playerImperceptible =
-        !gridIsPerceptible(playerZ, playerRow, playerColumn)
-          ||
-        !gridIsPerceptible(playerZ + 1, playerRow, playerColumn)
-          ||
-        !gridIsPerceptible(playerZ, playerRow + 1, playerColumn + 1)
-          ||
-        !gridIsPerceptible(playerZ, playerRow - 1, playerColumn)
-          ||
-        !gridIsPerceptible(playerZ, playerRow , playerColumn - 1)
-    ;
+    indexShow = player.nodeIndex;
+    playerPerceptible = gridIsPerceptible(indexShow);
 
     screenRight = screen.right + tileSize;
     screenLeft = screen.left - tileSize;
@@ -417,23 +409,29 @@ class RenderOrderGrid extends RenderOrder {
     renderNodeIndex = (renderNodeZ * nodesArea) + (renderNodeRow * nodesTotalColumns) + renderNodeColumn;
     renderNodeType = nodesType[renderNodeIndex];
 
-    if (playerImperceptible){
-       // revealAbove(playerZ + 1, playerRow, playerColumn);
+    if (!playerPerceptible) {
+       var i = indexShow + nodesArea + nodesTotalColumns + 1;
+       while(true){
+         if (i >= nodesTotal) break;
+         nodesVisible[i] = false;
+         i += indexShow + nodesArea + nodesTotalColumns + 1;
+       }
+
        // revealAbove(playerZ + 1, playerRow + 1, playerColumn);
        // revealAbove(playerZ + 1, playerRow, playerColumn + 1);
        // revealAbove(playerZ + 1, playerRow + 1, playerColumn + 1);
 
-      final d = 3;
-       for (var r = playerRow - d; r < playerRow + d; r++){
-          for (var c = playerColumn - d; c < playerColumn + d; c++) {
-            if (r < playerRow || c < playerColumn){
-              revealRaycast(playerZ + 2, r, c);
-            } else {
-              revealRaycast(playerZ + 1, r, c);
-              revealRaycast(playerZ + 2, r, c);
-            }
-          }
-       }
+      // final d = 3;
+      //  for (var r = playerRow - d; r < playerRow + d; r++){
+      //     for (var c = playerColumn - d; c < playerColumn + d; c++) {
+      //       if (r < playerRow || c < playerColumn){
+      //         revealRaycast(playerZ + 2, r, c);
+      //       } else {
+      //         revealRaycast(playerZ + 1, r, c);
+      //         revealRaycast(playerZ + 2, r, c);
+      //       }
+      //     }
+      //  }
     }
     total = getTotal();
     _index = 0;
