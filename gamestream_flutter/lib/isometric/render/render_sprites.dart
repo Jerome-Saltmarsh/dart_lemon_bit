@@ -371,7 +371,8 @@ class RenderOrderGrid extends RenderOrder {
     playerPerceptible =
         gridIsPerceptible(indexShow) &&
         gridIsPerceptible(indexShow + 1) &&
-        gridIsPerceptible(indexShow + nodesTotalColumns) ;
+        gridIsPerceptible(indexShow + nodesTotalColumns) &&
+        gridIsPerceptible(indexShow + nodesTotalColumns + 1) ;
 
     for (var i = 0 ; i < nodesTotal; i++){
       nodesVisible[i] = true;
@@ -417,14 +418,14 @@ class RenderOrderGrid extends RenderOrder {
     renderNodeType = nodesType[renderNodeIndex];
 
     if (!playerPerceptible) {
-      hideIndex(indexShow);
-      hideIndex(indexShow + 1);
-      hideIndex(indexShow + nodesTotalColumns);
-      hideIndex(indexShow + nodesTotalColumns + 1);
-      hideIndex(indexShow + nodesArea);
-      hideIndex(indexShow + 1 + nodesArea);
-      hideIndex(indexShow + nodesTotalColumns + nodesArea);
-      hideIndex(indexShow + nodesTotalColumns + nodesArea + 1);
+      const radius = 3;
+
+      for (var r = -radius; r < radius; r++){
+         for (var c = -radius; c < radius; c++){
+            var index = indexShow - (nodesTotalColumns * r) + c;
+            hideIndex(index);
+         }
+      }
     }
 
     total = getTotal();
@@ -450,7 +451,13 @@ class RenderOrderGrid extends RenderOrder {
   void hideIndex(int index){
     var i = index + nodesArea + nodesTotalColumns + 1;
     while (true) {
-      if (i >= nodesTotal) return;
+      if (i >= nodesTotal) break;
+      nodesVisible[i] = false;
+      i += nodesArea + nodesArea + nodesTotalColumns + 1;
+    }
+    i = index + nodesArea + nodesArea + nodesTotalColumns + 1;
+    while (true) {
+      if (i >= nodesTotal) break;
       nodesVisible[i] = false;
       i += nodesArea + nodesArea + nodesTotalColumns + 1;
     }
