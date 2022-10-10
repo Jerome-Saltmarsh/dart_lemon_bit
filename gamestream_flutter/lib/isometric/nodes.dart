@@ -13,8 +13,11 @@ var nodesShade = Uint8List(nodesInitialSize);
 var nodesTotal = nodesInitialSize;
 var nodesType = Uint8List(nodesInitialSize);
 var nodesVariation = List<bool>.generate(nodesInitialSize, (index) => false);
-var nodesVisible = List<bool>.generate(nodesInitialSize, (index) => false);
+var nodesVisible = List<bool>.generate(nodesInitialSize, (index) => true);
+var nodesVisibleIndex = Uint16List(nodesInitialSize);
 var nodesWind = Uint8List(nodesInitialSize);
+
+var visibleIndex = 0;
 
 
 int getNodeIndexBelow(int index){

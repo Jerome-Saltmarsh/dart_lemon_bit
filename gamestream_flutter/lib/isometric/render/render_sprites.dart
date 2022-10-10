@@ -374,10 +374,6 @@ class RenderOrderGrid extends RenderOrder {
         gridIsPerceptible(indexShow + nodesTotalColumns) &&
         gridIsPerceptible(indexShow + nodesTotalColumns + 1) ;
 
-    for (var i = 0 ; i < nodesTotal; i++){
-      nodesVisible[i] = true;
-    }
-
     screenRight = screen.right + tileSize;
     screenLeft = screen.left - tileSize;
     screenTop = screen.top - 72;
@@ -417,6 +413,11 @@ class RenderOrderGrid extends RenderOrder {
     renderNodeIndex = (renderNodeZ * nodesArea) + (renderNodeRow * nodesTotalColumns) + renderNodeColumn;
     renderNodeType = nodesType[renderNodeIndex];
 
+    while (visibleIndex > 0) {
+       nodesVisible[nodesVisibleIndex[visibleIndex]] = true;
+       visibleIndex--;
+    }
+
     if (!playerPerceptible) {
       const radius = 3;
 
@@ -453,12 +454,16 @@ class RenderOrderGrid extends RenderOrder {
     while (true) {
       if (i >= nodesTotal) break;
       nodesVisible[i] = false;
+      nodesVisibleIndex[visibleIndex] = i;
+      visibleIndex++;
       i += nodesArea + nodesArea + nodesTotalColumns + 1;
     }
     i = index + nodesArea + nodesArea + nodesTotalColumns + 1;
     while (true) {
       if (i >= nodesTotal) break;
       nodesVisible[i] = false;
+      nodesVisibleIndex[visibleIndex] = i;
+      visibleIndex++;
       i += nodesArea + nodesArea + nodesTotalColumns + 1;
     }
   }
