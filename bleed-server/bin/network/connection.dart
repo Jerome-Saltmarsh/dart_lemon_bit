@@ -10,6 +10,7 @@ import '../common/edit_request.dart';
 import '../common/gameobject_request.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
+import '../common/node_orientation.dart';
 import '../common/request_modify_canvas_size.dart';
 import '../common/spawn_type.dart';
 import '../common/teleport_scenes.dart';
@@ -435,7 +436,25 @@ class Connection {
         final modifyCanvasSize = RequestModifyCanvasSize.values[modifyCanvasSizeIndex];
         switch(modifyCanvasSize){
           case RequestModifyCanvasSize.Add_Row_Start:
-            // TODO: Handle this case.
+            final newGridVolume = scene.gridVolume + (scene.gridColumns * scene.gridHeight);
+            final newNodeTypes = Uint8List(newGridVolume);
+            final newNodeOrientations = Uint8List(newGridVolume);
+            var newIndex = 0;
+            // scene.con
+            for (var i = 0; i < scene.gridVolume; i++){
+               if (scene.convertNodeIndexToRow(i) == 0){
+                 newNodeTypes[newIndex] = NodeType.Grass;
+                 newNodeOrientations[newIndex] = NodeOrientation.Solid;
+                 newIndex++;
+               }
+               newNodeTypes[newIndex] = scene.nodeTypes[i];
+               newNodeOrientations[newIndex] = scene.nodeOrientations[i];
+               newIndex++;
+            }
+            scene.nodeTypes = newNodeTypes;
+            scene.nodeOrientations = newNodeOrientations;
+            scene.gridRows++;
+            game.onGridChanged();
             break;
           case RequestModifyCanvasSize.Remove_Row_Start:
             // TODO: Handle this case.
