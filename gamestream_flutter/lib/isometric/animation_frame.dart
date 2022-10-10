@@ -31,7 +31,7 @@ void updateAnimationFrame(){
   final frame = engine.frame;
 
   if (_animationFrameNext-- <= 0){
-    _animationFrameNext = 3;
+    _animationFrameNext = 5;
     animationFrame++;
   }
   if (_animationFrameTorchNext-- <= 0){
