@@ -99,7 +99,30 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, Player playe
       }
       break;
     case RequestModifyCanvasSize.Remove_Row_End:
-    // TODO: Handle this case.
+      final newGridVolume = scene.gridVolume - (scene.gridColumns * scene.gridHeight);
+      final newNodeTypes = Uint8List(newGridVolume);
+      final newNodeOrientations = Uint8List(newGridVolume);
+      var newIndex = 0;
+      for (var i = 0; i < scene.gridVolume; i++) {
+        if (i % scene.gridArea == scene.gridArea - scene.gridColumns){
+          i += scene.gridColumns;
+        }
+        if (i < scene.gridVolume){
+          newNodeTypes[newIndex] = scene.nodeTypes[i];
+          newNodeOrientations[newIndex] = scene.nodeOrientations[i];
+          newIndex++;
+        }
+      }
+      scene.nodeTypes = newNodeTypes;
+      scene.nodeOrientations = newNodeOrientations;
+      scene.gridRows--;
+      game.onGridChanged();
+      for (final character in game.characters) {
+        character.x -= nodeSize;
+      }
+      for (final gameObject in game.gameObjects) {
+        gameObject.x -= nodeSize;
+      }
       break;
     case RequestModifyCanvasSize.Add_Z:
     // TODO: Handle this case.
