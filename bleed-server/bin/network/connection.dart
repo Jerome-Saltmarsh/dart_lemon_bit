@@ -10,7 +10,6 @@ import '../common/edit_request.dart';
 import '../common/gameobject_request.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
-import '../common/node_orientation.dart';
 import '../common/request_modify_canvas_size.dart';
 import '../common/spawn_type.dart';
 import '../common/teleport_scenes.dart';
@@ -27,6 +26,7 @@ import '../io/convert_scene_to_json.dart';
 import '../io/save_directory.dart';
 import '../io/write_scene_to_file.dart';
 import '../utilities/is_valid_index.dart';
+import 'handle_request_modify_canvas_size.dart';
 
 class Connection {
   final started = DateTime.now();
@@ -433,61 +433,8 @@ class Connection {
         if (!isValidIndex(modifyCanvasSizeIndex, RequestModifyCanvasSize.values)){
           return errorInvalidArg('invalid modify canvas index $modifyCanvasSizeIndex');
         }
-        final modifyCanvasSize = RequestModifyCanvasSize.values[modifyCanvasSizeIndex];
-        switch(modifyCanvasSize){
-          case RequestModifyCanvasSize.Add_Row_Start:
-            final newGridVolume = scene.gridVolume + (scene.gridColumns * scene.gridHeight);
-            final newNodeTypes = Uint8List(newGridVolume);
-            final newNodeOrientations = Uint8List(newGridVolume);
-            var newIndex = 0;
-            for (var i = 0; i < scene.gridVolume; i++) {
-               if (i % scene.gridArea == 0){
-                 final k = newIndex;
-                 var type = i < scene.gridArea ? NodeType.Grass : NodeType.Empty;
-                 var orientation = NodeType.getDefaultOrientation(type);
-                 for (var j = 0; j < scene.gridColumns; j++){
-                   newNodeTypes[k + j] = type;
-                   newNodeOrientations[k + j] = orientation;
-                   newIndex++;
-                 }
-               }
-               newNodeTypes[newIndex] = scene.nodeTypes[i];
-               newNodeOrientations[newIndex] = scene.nodeOrientations[i];
-               newIndex++;
-            }
-            scene.nodeTypes = newNodeTypes;
-            scene.nodeOrientations = newNodeOrientations;
-            scene.gridRows++;
-            game.onGridChanged();
-            break;
-          case RequestModifyCanvasSize.Remove_Row_Start:
-            // TODO: Handle this case.
-            break;
-          case RequestModifyCanvasSize.Add_Row_End:
-            // TODO: Handle this case.
-            break;
-          case RequestModifyCanvasSize.Remove_Row_End:
-            // TODO: Handle this case.
-            break;
-          case RequestModifyCanvasSize.Add_Z:
-            // TODO: Handle this case.
-            break;
-          case RequestModifyCanvasSize.Remove_Z:
-            // TODO: Handle this case.
-            break;
-          case RequestModifyCanvasSize.Add_Column_Start:
-            // TODO: Handle this case.
-            break;
-          case RequestModifyCanvasSize.Remove_Column_Start:
-            // TODO: Handle this case.
-            break;
-          case RequestModifyCanvasSize.Add_Column_End:
-            // TODO: Handle this case.
-            break;
-          case RequestModifyCanvasSize.Remove_Column_End:
-            // TODO: Handle this case.
-            break;
-        }
+        final request = RequestModifyCanvasSize.values[modifyCanvasSizeIndex];
+        handleRequestModifyCanvasSize(request, player);
         return;
 
       case EditRequest.Spawn_Zombie:
