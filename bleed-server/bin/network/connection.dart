@@ -440,12 +440,14 @@ class Connection {
             final newNodeTypes = Uint8List(newGridVolume);
             final newNodeOrientations = Uint8List(newGridVolume);
             var newIndex = 0;
-            // scene.con
-            for (var i = 0; i < scene.gridVolume; i++){
-               if (scene.convertNodeIndexToRow(i) == 0){
-                 newNodeTypes[newIndex] = NodeType.Grass;
-                 newNodeOrientations[newIndex] = NodeOrientation.Solid;
-                 newIndex++;
+            for (var i = 0; i < scene.gridVolume; i++) {
+               if (i % scene.gridArea == 0){
+                 final k = newIndex;
+                 for (var j = 0; j < scene.gridColumns; j++){
+                   newNodeTypes[k + j] = NodeType.Grass;
+                   newNodeOrientations[k + j] = NodeOrientation.Solid;
+                   newIndex++;
+                 }
                }
                newNodeTypes[newIndex] = scene.nodeTypes[i];
                newNodeOrientations[newIndex] = scene.nodeOrientations[i];
@@ -465,16 +467,10 @@ class Connection {
           case RequestModifyCanvasSize.Remove_Row_End:
             // TODO: Handle this case.
             break;
-          case RequestModifyCanvasSize.Add_Z_Start:
+          case RequestModifyCanvasSize.Add_Z:
             // TODO: Handle this case.
             break;
-          case RequestModifyCanvasSize.Remove_Z_Start:
-            // TODO: Handle this case.
-            break;
-          case RequestModifyCanvasSize.Add_Z_End:
-            // TODO: Handle this case.
-            break;
-          case RequestModifyCanvasSize.Remove_Z_End:
+          case RequestModifyCanvasSize.Remove_Z:
             // TODO: Handle this case.
             break;
           case RequestModifyCanvasSize.Add_Column_Start:
