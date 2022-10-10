@@ -653,8 +653,9 @@ class ServerResponseReader with ByteReader {
       nodesBake = Uint8List(grandTotal);
       nodesWind = Uint8List(grandTotal);
       nodesVariation = List.generate(grandTotal, (index) => false, growable: false);
-      nodesVisible = List.generate(grandTotal, (index) => true, growable: true);
+      nodesVisible = List.generate(grandTotal, (index) => true, growable: false);
       nodesVisibleIndex = Uint16List(grandTotal);
+      nodesDynamicIndex = Uint16List(grandTotal);
     }
     nodesTotal = grandTotal;
 

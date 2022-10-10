@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
+import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emissions_characters.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emmissions_particles.dart';
@@ -367,7 +368,8 @@ class RenderOrderGrid extends RenderOrder {
     playerRenderRow = playerRow - (player.indexZ ~/ 2);
     playerRenderColumn = playerColumn - (player.indexZ ~/ 2);
     playerUnderRoof = gridIsUnderSomething(playerZ, playerRow, playerColumn);
-    indexShow = player.nodeIndex;
+
+    indexShow = inBoundsVector3(player) ? player.nodeIndex : 0;
     playerPerceptible =
         gridIsPerceptible(indexShow) &&
         gridIsPerceptible(indexShow + 1) &&
@@ -561,9 +563,12 @@ class RenderOrderGrid extends RenderOrder {
   }
 
   void refreshDynamicLightGrid() {
-    for (var i = 0; i < nodesTotal; i++) {
+    while (dynamicIndex >= 0) {
+      final i = nodesDynamicIndex[dynamicIndex];
       nodesShade[i] = nodesBake[i];
+      dynamicIndex--;
     }
+    dynamicIndex = 0;
   }
 }
 

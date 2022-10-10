@@ -149,18 +149,10 @@ void gridForEachNode(Function(int z, int row, int column) apply) {
 
 void resetGridToAmbient(){
   final shade = ambientShade.value;
-  // for (final z in grid){
-  //   for (final row in z){
-  //     for (final column in row){
-  //       column.bake = shade;
-  //       column.shade = shade;
-  //     }
-  //   }
-  // }
-
   for (var i = 0; i < nodesTotal; i++){
      nodesBake[i] = shade;
      nodesShade[i] = shade;
+     dynamicIndex = 0;
   }
 }
 
@@ -313,6 +305,7 @@ void applyEmissionBake({
         final distanceValue = convertDistanceToShade(distance, maxBrightness: maxBrightness);
         if (distanceValue >= nodesBake[nodeIndex]) continue;
         nodesBake[nodeIndex] = distanceValue;
+        nodesShade[nodeIndex] = distanceValue;
       }
     }
   }
@@ -341,6 +334,8 @@ void applyEmissionDynamic({
         final distanceValue = convertDistanceToShade(distance, maxBrightness: maxBrightness);
         if (distanceValue >= nodesShade[nodeIndex]) continue;
         nodesShade[nodeIndex] = distanceValue;
+        nodesDynamicIndex[dynamicIndex] = nodeIndex;
+        dynamicIndex++;
       }
     }
   }
