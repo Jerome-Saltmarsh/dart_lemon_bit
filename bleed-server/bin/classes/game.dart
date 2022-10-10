@@ -13,7 +13,6 @@ import '../functions/withinRadius.dart';
 import '../io/write_scene_to_file.dart';
 import '../maths.dart';
 import '../physics.dart';
-import 'action.dart';
 import 'ai.dart';
 import 'character.dart';
 import 'collider.dart';
@@ -34,7 +33,6 @@ abstract class Game {
   final players = <Player>[];
   final characters = <Character>[];
   final projectiles = <Projectile>[];
-  final actions = <Action>[];
 
   int get controlScheme;
 
@@ -522,10 +520,6 @@ abstract class Game {
     );
   }
 
-  void perform(Function action, int duration){
-    actions.add(Action(duration, action)); /// TODO Recycle actions
-  }
-
   void playerFaceMouse(Player player){
       player.faceXY(
           player.mouseGridX,
@@ -579,14 +573,6 @@ abstract class Game {
     if (_timerUpdateAITargets-- <= 0) {
       _timerUpdateAITargets = 15;
       updateAITargets();
-    }
-
-    for (var i = 0; i < actions.length; i++){
-      final action = actions[i];
-      if (action.frames-- > 0) continue;
-      action.perform();
-      actions.removeAt(i);
-      i--;
     }
 
     for (final gameObject in gameObjects){

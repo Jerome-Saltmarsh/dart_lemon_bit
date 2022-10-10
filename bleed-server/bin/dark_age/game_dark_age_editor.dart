@@ -1,9 +1,7 @@
 
 import '../classes/player.dart';
 import '../classes/scene.dart';
-import '../common/GameType.dart';
 import '../common/library.dart';
-import '../common/node_type.dart';
 import '../scene/generate_empty_scene.dart';
 import 'dark_age_environment.dart';
 import 'game_dark_age.dart';
