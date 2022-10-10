@@ -443,9 +443,11 @@ class Connection {
             for (var i = 0; i < scene.gridVolume; i++) {
                if (i % scene.gridArea == 0){
                  final k = newIndex;
+                 var type = i < scene.gridArea ? NodeType.Grass : NodeType.Empty;
+                 var orientation = NodeType.getDefaultOrientation(type);
                  for (var j = 0; j < scene.gridColumns; j++){
-                   newNodeTypes[k + j] = NodeType.Grass;
-                   newNodeOrientations[k + j] = NodeOrientation.Solid;
+                   newNodeTypes[k + j] = type;
+                   newNodeOrientations[k + j] = orientation;
                    newIndex++;
                  }
                }
