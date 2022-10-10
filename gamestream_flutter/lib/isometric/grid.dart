@@ -244,7 +244,7 @@ bool gridIsPerceptible(int index){
     index++;
     index += nodesTotalColumns;
     if (index >= nodesTotal) return true;
-    if (nodesOrientation[index] == NodeOrientation.Solid){
+    if (nodesOrientation[index] != NodeOrientation.None){
       return false;
     }
   }

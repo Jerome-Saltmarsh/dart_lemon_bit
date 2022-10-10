@@ -16,6 +16,7 @@ var nodesVariation = List<bool>.generate(nodesInitialSize, (index) => false);
 var nodesVisible = List<bool>.generate(nodesInitialSize, (index) => false);
 var nodesWind = Uint8List(nodesInitialSize);
 
+
 int getNodeIndexBelow(int index){
   return index - nodesArea;
 }

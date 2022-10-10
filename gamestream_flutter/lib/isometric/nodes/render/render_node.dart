@@ -27,7 +27,6 @@ import 'render_standard_node.dart';
 /// remove objects from the render layer to reduce garbage collection
 void renderNodeAt(){
   if (!nodesVisible[renderNodeIndex]) {
-    nodesVisible[renderNodeIndex] = true;
     return;
   }
 

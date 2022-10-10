@@ -368,7 +368,14 @@ class RenderOrderGrid extends RenderOrder {
     playerRenderColumn = playerColumn - (player.indexZ ~/ 2);
     playerUnderRoof = gridIsUnderSomething(playerZ, playerRow, playerColumn);
     indexShow = player.nodeIndex;
-    playerPerceptible = gridIsPerceptible(indexShow);
+    playerPerceptible =
+        gridIsPerceptible(indexShow) &&
+        gridIsPerceptible(indexShow + 1) &&
+        gridIsPerceptible(indexShow + nodesTotalColumns) ;
+
+    for (var i = 0 ; i < nodesTotal; i++){
+      nodesVisible[i] = true;
+    }
 
     screenRight = screen.right + tileSize;
     screenLeft = screen.left - tileSize;
@@ -410,29 +417,16 @@ class RenderOrderGrid extends RenderOrder {
     renderNodeType = nodesType[renderNodeIndex];
 
     if (!playerPerceptible) {
-       var i = indexShow + nodesArea + nodesTotalColumns + 1;
-       while(true){
-         if (i >= nodesTotal) break;
-         nodesVisible[i] = false;
-         i += indexShow + nodesArea + nodesTotalColumns + 1;
-       }
-
-       // revealAbove(playerZ + 1, playerRow + 1, playerColumn);
-       // revealAbove(playerZ + 1, playerRow, playerColumn + 1);
-       // revealAbove(playerZ + 1, playerRow + 1, playerColumn + 1);
-
-      // final d = 3;
-      //  for (var r = playerRow - d; r < playerRow + d; r++){
-      //     for (var c = playerColumn - d; c < playerColumn + d; c++) {
-      //       if (r < playerRow || c < playerColumn){
-      //         revealRaycast(playerZ + 2, r, c);
-      //       } else {
-      //         revealRaycast(playerZ + 1, r, c);
-      //         revealRaycast(playerZ + 2, r, c);
-      //       }
-      //     }
-      //  }
+      hideIndex(indexShow);
+      hideIndex(indexShow + 1);
+      hideIndex(indexShow + nodesTotalColumns);
+      hideIndex(indexShow + nodesTotalColumns + 1);
+      hideIndex(indexShow + nodesArea);
+      hideIndex(indexShow + 1 + nodesArea);
+      hideIndex(indexShow + nodesTotalColumns + nodesArea);
+      hideIndex(indexShow + nodesTotalColumns + nodesArea + 1);
     }
+
     total = getTotal();
     _index = 0;
     remaining = total > 0;
@@ -451,6 +445,15 @@ class RenderOrderGrid extends RenderOrder {
     }
 
     highlightCharacterNearMouse();
+  }
+
+  void hideIndex(int index){
+    var i = index + nodesArea + nodesTotalColumns + 1;
+    while (true) {
+      if (i >= nodesTotal) return;
+      nodesVisible[i] = false;
+      i += nodesArea + nodesArea + nodesTotalColumns + 1;
+    }
   }
 
   void revealRaycast(int z, int row, int column){
