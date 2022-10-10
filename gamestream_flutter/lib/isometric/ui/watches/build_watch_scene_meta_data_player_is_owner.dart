@@ -47,7 +47,7 @@ Widget buildStackEdit(EditTab activeEditTab) =>
       if (activeEditTab == EditTab.Objects)
         Positioned(
           left: 0,
-          bottom: 6,
+          top: 50,
           child: container(child: 'Spawn Zombie', action: (){
             sendClientRequestEdit(EditRequest.Spawn_Zombie, edit.nodeIndex.value);
           }),

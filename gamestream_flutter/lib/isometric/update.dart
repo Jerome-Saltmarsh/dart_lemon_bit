@@ -3,7 +3,6 @@
 import 'dart:math';
 
 import 'package:bleed_common/Projectile_Type.dart';
-import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
@@ -35,7 +34,6 @@ void updateIsometric(){
   applyObjectsToWind();
   updateZombieGrowls();
   updateMouseBubbleSpawn();
-  updateCharacters();
 
   if (player.messageTimer > 0) {
      player.messageTimer--;
@@ -49,24 +47,6 @@ void updateMouseBubbleSpawn() {
   if (nextBubbleSpawn-- > 0) return;
   nextBubbleSpawn = 30;
   spawnParticleBubble(x: mouseGridX, y: mouseGridY, z: player.z);
-}
-
-var _characterBubbleSpawn = 0;
-
-void updateCharacters() {
-
-  for (var i = 0; i < totalCharacters; i++){
-    final character = characters[i];
-    if (!character.hurt) continue;
-    spawnParticleBubble(x: character.x, y: character.y, z: character.z + 24);
-  }
-
-  if (_characterBubbleSpawn-- > 0) return;
-  _characterBubbleSpawn = 60;
-  for (var i = 0; i < totalCharacters; i++){
-    final character = characters[i];
-    spawnParticleBubble(x: character.x, y: character.y, z: character.z + 24);
-  }
 }
 
 var nextBubbleSpawn = 0;
