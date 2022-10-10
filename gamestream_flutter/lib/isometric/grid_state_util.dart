@@ -3,6 +3,7 @@
 
 import 'package:bleed_common/node_type.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
+import 'package:gamestream_flutter/isometric/grid.dart';
 
 import 'nodes.dart';
 
@@ -36,3 +37,13 @@ void gridNodeIncrementWindVector3(Vector3 vector3) =>
 
 int gridNodeWindGetVector3(Vector3 vector3) =>
   nodesWind[gridNodeIndexVector3(vector3)];
+
+bool inBoundsVector3(Vector3 vector3){
+   if (vector3.x < 0) return false;
+   if (vector3.y < 0) return false;
+   if (vector3.z < 0) return false;
+   if (vector3.x >= nodesLengthRow) return false;
+   if (vector3.y >= nodesLengthColumn) return false;
+   if (vector3.z >= nodesLengthZ) return false;
+   return true;
+}
