@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
+import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
 import 'package:gamestream_flutter/modules/game/render.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -19,8 +20,8 @@ Widget buildHudDebug() =>
   Stack(
     children: [
       Positioned(
-          top: 0,
-          left: 0,
+          top: 6,
+          left: 6,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -45,6 +46,8 @@ Widget buildHudDebug() =>
               watch(player.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => player.interpolating.value = !player.interpolating.value)),
               watch(ambientShade, (int shade) => text("ambient-shade: ${Shade.getName(shade)}")),
               watch(gameType, (int? value) => text("game-type: ${value == null ? 'None' : GameType.getName(value)}")),
+              height24,
+              text("close x", onPressed: () => debugVisible.value = false),
             ],
           )),
     ],
