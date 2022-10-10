@@ -68,6 +68,9 @@
 
 [ ] editor fix change canvas size
 
+[10-10-2022]
+[x] fix debug panel
+
 [09-10-2022]
 [x] engine add weapon staff
 [x] editor add tab weather
