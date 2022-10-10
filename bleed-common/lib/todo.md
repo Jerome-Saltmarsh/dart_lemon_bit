@@ -60,15 +60,14 @@
 [ ] engine fix fire animation bow
 
 [ ] editor add tab player
-[ ] editor add tab particles
-[ ] editor add tab characters
-[ ] editor add tab gameobjects
+[ ] editor add tab objects
 
 [ ] firestorm design scene
+[ ] firestorm destructable gameobjects
 [ ] editor fix change canvas size
-[ ] engine fix see through house when inside
 
 [10-10-2022]
+[x] engine fix see through house when inside
 [x] fix edit emit index light
 [x] fix debug panel
 

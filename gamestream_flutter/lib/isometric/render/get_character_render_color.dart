@@ -7,7 +7,7 @@ int convertShadeToColor(int shade) =>  colorShades[shade];
 int getRenderShade(Vector3 vector3) =>
   getNodeBelowShade(vector3);
 
-int getNodeBelowColor(Vector3 vector3) =>
+int getRenderColor(Vector3 vector3) =>
     convertShadeToColor(
         getNodeBelowShade(vector3)
     );

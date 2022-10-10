@@ -18,7 +18,7 @@ void renderGameObject(GameObject gameObject) {
       srcY: 11,
       srcWidth: 10,
       srcHeight: 15,
-      color: getNodeBelowColor(gameObject),
+      color: getRenderColor(gameObject),
     );
 
   if (gameObject.type == GameObjectType.Rock)
@@ -29,7 +29,7 @@ void renderGameObject(GameObject gameObject) {
        srcY: 0,
        srcWidth: 16,
        srcHeight: 16,
-      color: getNodeBelowColor(gameObject),
+      color: getRenderColor(gameObject),
     );
 
   if (gameObject.type == GameObjectType.Barrel)
@@ -41,7 +41,7 @@ void renderGameObject(GameObject gameObject) {
       srcWidth: 28,
       srcHeight: 40,
       anchorY: 0.66,
-      color: getNodeBelowColor(gameObject),
+      color: getRenderColor(gameObject),
     );
 
   if (gameObject.type == GameObjectType.Tavern_Sign)
@@ -52,7 +52,7 @@ void renderGameObject(GameObject gameObject) {
       srcY: 0,
       srcWidth: 19,
       srcHeight: 39,
-      color: getNodeBelowColor(gameObject),
+      color: getRenderColor(gameObject),
     );
 
   if (gameObject.type == GameObjectType.Candle)
@@ -75,7 +75,7 @@ void renderGameObject(GameObject gameObject) {
       srcWidth: 5,
       srcHeight: 14,
       anchorY: 0.95,
-      color: getNodeBelowColor(gameObject),
+      color: getRenderColor(gameObject),
     );
 
   if (gameObject.type == GameObjectType.Wheel)
@@ -87,7 +87,7 @@ void renderGameObject(GameObject gameObject) {
       srcWidth: 34,
       srcHeight: 40,
       anchorY: 0.9,
-      color: getNodeBelowColor(gameObject),
+      color: getRenderColor(gameObject),
     );
 
   if (gameObject.type == GameObjectType.Flower)
@@ -98,7 +98,7 @@ void renderGameObject(GameObject gameObject) {
       srcY: 0,
       srcWidth: 16,
       srcHeight: 16,
-      color: getNodeBelowColor(gameObject),
+      color: getRenderColor(gameObject),
     );
 
   if (gameObject.type == GameObjectType.Stick)
@@ -109,7 +109,7 @@ void renderGameObject(GameObject gameObject) {
       srcY: 0,
       srcWidth: 16,
       srcHeight: 16,
-      color: getNodeBelowColor(gameObject),
+      color: getRenderColor(gameObject),
     );
 
   if (gameObject.type == GameObjectType.Crystal)
@@ -143,7 +143,7 @@ void renderGameObject(GameObject gameObject) {
       srcWidth: 30,
       srcHeight: 23,
       scale: 0.5,
-      color: getNodeBelowColor(gameObject),
+      color: getRenderColor(gameObject),
     );
 
   if (gameObject.type == GameObjectType.Chicken)
@@ -219,7 +219,7 @@ void renderGameObject(GameObject gameObject) {
       srcY: 204,
       srcWidth: 26,
       srcHeight: 7,
-      color: getNodeBelowColor(gameObject)
+      color: getRenderColor(gameObject)
     );
   }
 
@@ -232,7 +232,7 @@ void renderGameObject(GameObject gameObject) {
       srcY: 200,
       srcWidth: 17,
       srcHeight: 10,
-      color: getNodeBelowColor(gameObject)
+      color: getRenderColor(gameObject)
     );
   }
 
@@ -245,7 +245,7 @@ void renderGameObject(GameObject gameObject) {
       srcY: 1644,
       srcWidth: 33,
       srcHeight: 13,
-      color: getNodeBelowColor(gameObject)
+      color: getRenderColor(gameObject)
     );
     return;
   }
@@ -259,7 +259,7 @@ void renderGameObject(GameObject gameObject) {
       srcY: 1838,
       srcWidth: 30,
       srcHeight: 28,
-      color: getNodeBelowColor(gameObject)
+      color: getRenderColor(gameObject)
     );
     return;
   }
@@ -273,7 +273,7 @@ void renderGameObject(GameObject gameObject) {
       srcY: 1519,
       srcWidth: 24,
       srcHeight: 24,
-      color: getNodeBelowColor(gameObject)
+      color: getRenderColor(gameObject)
     );
     return;
   }

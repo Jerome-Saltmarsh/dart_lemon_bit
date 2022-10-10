@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/isometric/render/get_character_render_color.d
 
 void applyCharacterColors(){
   for (var i = 0; i < totalCharacters; i++){
-    characters[i].color = getNodeBelowColor(characters[i]);
+    characters[i].color = getRenderColor(characters[i]);
   }
 }
 

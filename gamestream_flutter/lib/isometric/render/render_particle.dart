@@ -22,7 +22,7 @@ void renderParticle(Particle particle) {
             srcY: frame * size,
             srcWidth: size,
             srcHeight: size,
-          color: getRenderShade(particle),
+            color: getRenderColor(particle),
         );
       }
 
@@ -34,7 +34,7 @@ void renderParticle(Particle particle) {
           srcY: ((particle.frame ~/ 2) % 6) * size,
           srcWidth: size,
           srcHeight: size,
-        color: getRenderShade(particle),
+          color: getRenderColor(particle),
       );
 
     case ParticleType.Bubble_Small:
@@ -45,7 +45,7 @@ void renderParticle(Particle particle) {
           srcY: ((particle.frame ~/ 2) % 6) * 5,
           srcWidth: 4,
           srcHeight: 5,
-        color: getRenderShade(particle),
+          color: getRenderColor(particle),
       );
 
     case ParticleType.Bullet_Ring:
@@ -60,7 +60,7 @@ void renderParticle(Particle particle) {
         srcWidth: size,
         srcHeight: size,
         scale: particle.scale,
-        color: getRenderShade(particle),
+        color: getRenderColor(particle),
       );
 
     case ParticleType.Water_Drop:
@@ -72,7 +72,7 @@ void renderParticle(Particle particle) {
         srcWidth: 3,
         srcHeight: 3,
         scale: particle.scale,
-        color: getRenderShade(particle),
+        color: getRenderColor(particle),
       );
 
     case ParticleType.Smoke:
@@ -84,7 +84,7 @@ void renderParticle(Particle particle) {
           srcWidth: 50,
           srcHeight: 50,
           scale: particle.scale,
-        color: getRenderShade(particle),
+          color: getRenderColor(particle),
       );
 
     case ParticleType.Block_Wood:
@@ -96,8 +96,7 @@ void renderParticle(Particle particle) {
         srcWidth: 16,
         srcHeight: 16,
         scale: particle.scale,
-        
-      color: getRenderShade(particle),
+        color: getRenderColor(particle),
       );
 
     case ParticleType.Block_Grass:
@@ -109,8 +108,7 @@ void renderParticle(Particle particle) {
         srcWidth: 16,
         srcHeight: 16,
         scale: particle.scale,
-        
-      color: getRenderShade(particle),
+        color: getRenderColor(particle),
       );
 
     case ParticleType.Block_Brick:
@@ -122,8 +120,7 @@ void renderParticle(Particle particle) {
         srcWidth: 16,
         srcHeight: 16,
         scale: particle.scale,
-        
-      color: getRenderShade(particle),
+        color: getRenderColor(particle),
       );
 
     case ParticleType.Fire:
@@ -149,8 +146,7 @@ void renderParticle(Particle particle) {
         srcWidth: 32,
         srcHeight: 32,
         scale: 0.25,
-        
-      color: getRenderShade(particle),
+        color: getRenderColor(particle),
       );
 
     case ParticleType.Fire_Purple:
@@ -176,8 +172,7 @@ void renderParticle(Particle particle) {
           srcY: 25,
           srcWidth: 8,
           srcHeight: 8,
-
-        color: getRenderShade(particle),
+          color: getRenderColor(particle),
       );
     case ParticleType.Orb_Shard:
       renderOrbShard(
@@ -208,8 +203,7 @@ void renderParticle(Particle particle) {
           srcY: 64.0 * particle.direction,
           srcWidth: 64,
           srcHeight: 64,
-
-        color: getRenderShade(particle),
+          color: getRenderColor(particle),
       );
 
     case ParticleType.Star_Explosion:
@@ -236,8 +230,7 @@ void renderParticle(Particle particle) {
           srcY: 64.0 * particle.direction,
           srcWidth: 64,
           srcHeight: 64,
-
-        color: getRenderShade(particle),
+          color: getRenderColor(particle),
       );
 
     case ParticleType.Cut_Grass:
@@ -248,8 +241,7 @@ void renderParticle(Particle particle) {
           srcY: 0,
           srcWidth: 32,
           srcHeight: 32,
-
-        color: getRenderShade(particle),
+          color: getRenderColor(particle),
       );
 
     case ParticleType.Zombie_leg:
@@ -262,8 +254,7 @@ void renderParticle(Particle particle) {
           srcY: 64.0 * particle.direction,
           srcWidth: 64,
           srcHeight: 64,
-
-        color: getRenderShade(particle),
+          color: getRenderColor(particle),
       );
 
     case ParticleType.Zombie_Torso:
@@ -276,8 +267,7 @@ void renderParticle(Particle particle) {
           srcY: 64.0 * particle.direction,
           srcWidth: 64,
           srcHeight: 64,
-
-        color: getRenderShade(particle),
+          color: getRenderColor(particle),
       );
     case ParticleType.Leaf:
       return render(
@@ -287,7 +277,7 @@ void renderParticle(Particle particle) {
           srcY: 25,
           srcWidth: 8,
           srcHeight: 8,
-        color: getRenderShade(particle),
+          color: getRenderColor(particle),
       );
 
     case ParticleType.Dust:
