@@ -52,30 +52,3 @@ Widget buildHudDebug() =>
           )),
     ],
   );
-
-Widget _buildContainerMouseInfo() {
-  return Refresh(() {
-    return Container(
-      height: 50,
-      alignment: Alignment.centerLeft,
-      color: Colors.grey,
-      child: text(
-          "mouseGridX: ${mouseGridX.toInt()}, mouseGridY: ${mouseGridY.toInt()}, mousePlayerAngle: ${mousePlayerAngle.toStringAsFixed(1)}, mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}"),
-    );
-  });
-}
-
-Widget _buildContainerPlayerInfo() {
-  return Refresh(() {
-    return Container(
-        height: 50,
-        alignment: Alignment.centerLeft,
-        color: Colors.grey,
-        child: text(
-          "Player zIndex: ${player.indexZ}, row: ${player.indexRow}, column: ${player.indexColumn}, x: ${player.x}, y: ${player.y}, z: ${player.z}, renderX: ${player.renderX}, renderY: ${player.renderY}, angle: ${player.angle}, mouseAngle: ${player.mouseAngle}",
-        ));
-  });
-}
-
-Widget buildControlBytes() => watch(serverResponseReader.byteLength, (int bytes) => container(child: 'Bytes: $bytes'));
-Widget buildControlBufferSize() => watch(serverResponseReader.bufferSize, (int bufferSize) => container(child: 'Buffer: $bufferSize'));

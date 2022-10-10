@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:bleed_common/edit_request.dart';
 import 'package:bleed_common/gameobject_request.dart';
 import 'package:bleed_common/library.dart';
-import 'package:bleed_common/node_size.dart';
 import 'package:bleed_common/request_modify_canvas_size.dart';
 import 'package:bleed_common/teleport_scenes.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +11,6 @@ import 'package:gamestream_flutter/isometric_web/read_player_input.dart';
 import 'package:gamestream_flutter/network/instance/websocket.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/screen.dart';
-
 
 final updateBuffer = Uint8List(17);
 
@@ -126,18 +124,12 @@ void sendClientRequestSetBlock({
   );
 
 void sendClientRequestAddGameObject({
-  required int z,
-  required int row,
-  required int column,
+  required int index,
   required int type,
 }) {
-  final posZ = convertIndexToZ(z);
-  final posX = convertIndexToX(row);
-  final posY = convertIndexToY(column);
-
   sendClientRequest(
     ClientRequest.GameObject,
-    "${GameObjectRequest.Add.index} $posX $posY $posZ $type",
+    "${GameObjectRequest.Add.index} $index $type",
   );
 }
 

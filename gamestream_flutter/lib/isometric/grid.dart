@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_on.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
@@ -316,11 +317,12 @@ void applyEmissionBake({
 }
 
 void applyEmissionDynamic({
-  required int zIndex,
-  required int rowIndex,
-  required int columnIndex,
+  required int index,
   required int maxBrightness,
 }){
+  final zIndex = convertIndexToZ(index);
+  final rowIndex = convertIndexToRow(index);
+  final columnIndex = convertIndexToColumn(index);
   final radius = Shade.Pitch_Black;
   final zMin = max(zIndex - radius, 0);
   final zMax = min(zIndex + radius, nodesTotalZ);

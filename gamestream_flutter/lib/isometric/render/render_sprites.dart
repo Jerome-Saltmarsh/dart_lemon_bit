@@ -417,15 +417,6 @@ class RenderOrderGrid extends RenderOrder {
     renderNodeIndex = (renderNodeZ * nodesArea) + (renderNodeRow * nodesTotalColumns) + renderNodeColumn;
     renderNodeType = nodesType[renderNodeIndex];
 
-    if (editMode){
-       applyEmissionDynamic(
-           zIndex: edit.z,
-           rowIndex: edit.row,
-           columnIndex: edit.column,
-           maxBrightness: Shade.Very_Bright,
-       );
-    }
-
     if (playerImperceptible){
        // revealAbove(playerZ + 1, playerRow, playerColumn);
        // revealAbove(playerZ + 1, playerRow + 1, playerColumn);
@@ -453,6 +444,14 @@ class RenderOrderGrid extends RenderOrder {
     applyEmissionGameObjects();
     applyEmissionsParticles();
     applyCharacterColors();
+
+    if (editMode){
+      applyEmissionDynamic(
+        index: edit.nodeIndex.value,
+        maxBrightness: Shade.Very_Bright,
+      );
+    }
+
     highlightCharacterNearMouse();
   }
 

@@ -55,7 +55,6 @@
 [ ] editor fix wind is changing by itself
 [ ] editor fix rain is changing by itself
 
-[ ] firestorm design scene
 [ ] firestorm add weapon sniper-rifle,
 [ ] firestorm add weapon crossbow
 [ ] engine fix fire animation handgun
@@ -66,6 +65,7 @@
 [ ] editor add tab characters
 [ ] editor add tab gameobjects
 
+[ ] firestorm design scene
 [ ] editor fix change canvas size
 
 [10-10-2022]
