@@ -631,8 +631,6 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerTarget() {
-    if (ability == null) return;
-    if (ability!.isModeArea) return;
     writeByte(ServerResponse.Player_Target);
     writePosition(target != null ? target! : mouse);
 

@@ -407,7 +407,6 @@ class Connection {
     if (player == null) return;
     final game = player.game;
     if (!isLocalMachine && game is GameDarkAgeEditor == false) return;
-    final scene = game.scene;
 
     if (arguments.length < 2){
       return errorInvalidArg('insufficient args');
@@ -578,6 +577,10 @@ class Connection {
         selectedGameObject.x = player.mouseGridX;
         selectedGameObject.y = player.mouseGridY;
         selectedGameObject.z = player.z;
+        break;
+
+      case GameObjectRequest.Set_Type:
+        // TODO: Handle this case.
         break;
     }
   }

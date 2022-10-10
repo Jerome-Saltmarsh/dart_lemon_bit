@@ -6,11 +6,10 @@ import '../common/library.dart';
 import '../functions/withinRadius.dart';
 import '../utilities.dart';
 import 'collider.dart';
+import 'components.dart';
 import 'game.dart';
 import 'player.dart';
 import 'position3.dart';
-import 'power.dart';
-import 'components.dart';
 import 'weapon.dart';
 
 abstract class Character extends Collider with Team, Velocity, FaceDirection {
@@ -31,7 +30,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   set health(int value) {
     _health = clampInt(value, 0, maxHealth);
   }
-  Power? ability = null;
   var state = CharacterState.Idle;
   var stateDurationRemaining = 0;
   var stateDuration = 0;
@@ -96,10 +94,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   //     animationFrame = 0;
   // }
 
-  void clearAbility(){
-    ability = null;
-  }
-
   void clearTarget(){
     target = null;
   }
@@ -141,7 +135,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     if (state == CharacterState.Hurt) return;
     stateDurationRemaining = 10;
     state = CharacterState.Hurt;
-    ability = null;
     onCharacterStateChanged();
   }
 

@@ -1078,8 +1078,6 @@ abstract class Game {
       player.face(target);
     }
 
-    final ability = player.ability;
-
     if (target is Collider) {
       if (!target.collidable) {
         player.target = null;
@@ -1106,24 +1104,6 @@ abstract class Game {
         return;
       }
 
-      if (ability != null) {
-        if (withinRadius(player, target, ability.range)) {
-          player.target = target;
-          player.setCharacterStatePerforming(duration: ability.duration);
-          return;
-        }
-        setCharacterStateRunning(player);
-        return;
-      }
-      return;
-    }
-
-    if (ability != null) {
-      if (!withinRadius(player, target, ability.range)) {
-        setCharacterStateRunning(player);
-        return;
-      }
-      player.setCharacterStatePerforming(duration: ability.duration);
       return;
     }
 
@@ -1230,14 +1210,7 @@ abstract class Game {
   }
 
   void updateCharacterStatePerforming(Character character) {
-    final ability = character.ability;
-    if (ability == null) {
-      return updateCharacterStateAttacking(character);
-    }
-    if (character.stateDuration == 0) {
-      ability.cooldownRemaining = ability.cooldown;
-    }
-    ability.onActivated(character, this);
+    updateCharacterStateAttacking(character);
   }
 
   void updateCharacter(Character character) {
