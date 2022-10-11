@@ -65,13 +65,14 @@
 [ ] editor add tab player
 [ ] editor add tab objects
 
-[ ] optimize gridWindResetToAmbient
 [ ] firestorm destructable gameobjects
 [ ] editor fix change canvas size
 [ ] firestorm design scene
+[ ] engine fix rain falling node repeating
 
 [11-10-2022]
 [x] fix player sometimes invisible
+[x] optimize gridWindResetToAmbient
 
 [10-10-2022]
 [x] engine optimization reset dynamic shade

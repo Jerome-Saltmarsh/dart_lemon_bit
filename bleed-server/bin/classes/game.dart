@@ -2118,6 +2118,8 @@ abstract class Game {
     required int nodeType,
     required int nodeOrientation,
   }) {
+    assert (nodeIndex >= 0);
+
     if (nodeIndex >= scene.gridVolume) {
       throw Exception("game.setNode(nodeIndex: $nodeIndex) - node index out of bounds");
     }
@@ -2127,7 +2129,7 @@ abstract class Game {
     ) return;
 
     if (!NodeType.supportsOrientation(nodeType, nodeOrientation)){
-      throw Exception("game.setNode(index: $nodeIndex, type: ${NodeType.getName(nodeType)}, orientation: ${NodeOrientation.getName(nodeOrientation)}");
+      nodeOrientation = NodeType.getDefaultOrientation(nodeType);
     }
     scene.dirty = true;
     scene.nodeOrientations[nodeIndex] = nodeOrientation;
@@ -2135,22 +2137,6 @@ abstract class Game {
     for (final player in players){
       player.writeNode(nodeIndex);
     }
-
-    // if (nodeType == NodeType.Empty){
-    //   dispatch(
-    //     GameEventType.Node_Deleted,
-    //     convertIndexToX(row),
-    //     convertIndexToY(column),
-    //     convertIndexToZ(z),
-    //   );
-    // } else {
-    //   game.dispatch(
-    //     GameEventType.Node_Set,
-    //     convertIndexToX(row),
-    //     convertIndexToY(column),
-    //     convertIndexToZ(z),
-    //   );
-    // }
   }
 }
 
