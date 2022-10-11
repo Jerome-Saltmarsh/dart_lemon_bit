@@ -7,6 +7,11 @@ const spriteHeightThird = 24.0;
 const spriteWidthPadded = spriteWidth + 1;
 const spriteHeightPadded = spriteHeight + 1;
 
+const spriteHeight_1 = spriteHeight * 1;
+const spriteHeight_2 = spriteHeight * 2;
+const spriteHeight_3 = spriteHeight * 3;
+const spriteHeight_4 = spriteHeight * 4;
+
 const srcYIndex0 = spriteHeightPadded * 0;
 const srcYIndex1 = spriteHeightPadded * 1;
 const srcYIndex2 = spriteHeightPadded * 2;

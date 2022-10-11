@@ -26,8 +26,7 @@ import 'render_node_type_brick.dart';
 import 'render_node_wooden_plank.dart';
 import 'render_standard_node.dart';
 
-/// remove objects from the render layer to reduce garbage collection
-void renderNodeAt(){
+void renderNodeAt() {
   if (!nodesVisible[renderNodeIndex] && nodesOrientation[renderNodeIndex] != NodeOrientation.None) {
     if (renderNodeIndex > nodesArea){
         final nodeBelowIndex = renderNodeIndex - nodesArea;
@@ -38,10 +37,23 @@ void renderNodeAt(){
         final renderNodeIndexColumn = convertIndexToColumn(renderNodeIndex);
         final renderNodeIndexRow = convertIndexToRow(renderNodeIndex);
         if (renderNodeIndexColumn > indexShowColumn && renderNodeIndexRow > indexShowRow){
-          // final renderNodeIndexOrientation = nodesOrientation[renderNodeIndex];
+          var orientation = nodesOrientation[renderNodeIndex];
+          var srcY = 0.0;
+          if (orientation == NodeOrientation.Slope_North){
+            srcY = spriteHeight_1;
+          }
+          if (orientation == NodeOrientation.Slope_East){
+            srcY = spriteHeight_2;
+          }
+          if (orientation == NodeOrientation.Slope_South){
+            srcY = spriteHeight_3;
+          }
+          if (orientation == NodeOrientation.Slope_West){
+            srcY = spriteHeight_4;
+          }
           return renderStandardNode(
             srcX: 8801,
-            srcY: 0,
+            srcY: srcY,
             color: nodesShade[nodesShade[renderNodeIndex]],
           );
         }
