@@ -46,21 +46,15 @@ void renderNodeAt(){
           );
         }
     }
-    // return;
   }
-
   onscreenNodes++;
-  final shade = nodesShade[renderNodeIndex];
-  final color = colorShades[shade];
 
   switch (renderNodeType) {
     case NodeType.Grass:
-      return renderNodeTypeGrass(
-          shade: shade,
-      );
+      return renderNodeTypeGrass();
     case NodeType.Brick_2:
       return renderNodeTypeBrick(
-        shade: shade,
+        shade: nodesShade[renderNodeIndex],
       );
     case NodeType.Torch:
       if (!torchesIgnited.value) {
@@ -79,7 +73,7 @@ void renderNodeAt(){
         srcWidth: spriteWidth,
         srcHeight: spriteHeight,
         anchorY: 0.3334,
-        color: color,
+        color: colorShades[nodesShade[renderNodeIndex]],
       );
     case NodeType.Tree_Bottom:
       return render(
@@ -90,7 +84,7 @@ void renderNodeAt(){
         srcWidth: 62.0,
         srcHeight: 74.0,
         anchorY: 0.5,
-        color: color,
+        color: colorShades[nodesShade[renderNodeIndex]],
       );
     case NodeType.Tree_Top:
       final f = raining.value ? animationFrame % 4 : -1;
@@ -129,7 +123,7 @@ void renderNodeAt(){
         srcWidth: 48,
         srcHeight: 72,
         anchorY: 0.3334,
-        color: color,
+        color: colorShades[nodesShade[renderNodeIndex]],
       );
     case NodeType.Rain_Landing:
       if (gridNodeZRCTypeSafe(renderNodeZ - 1, renderNodeRow, renderNodeColumn) == NodeType.Water){
@@ -141,7 +135,7 @@ void renderNodeAt(){
           srcWidth: 48,
           srcHeight: 72,
           anchorY: 0.3334,
-          color: color,
+          color: colorShades[nodesShade[renderNodeIndex]],
         );
       }
       return render(
@@ -152,34 +146,34 @@ void renderNodeAt(){
         srcWidth: 48,
         srcHeight: 72,
         anchorY: 0.3334,
-        color: color,
+        color: colorShades[nodesShade[renderNodeIndex]],
       );
     case NodeType.Stone:
       return renderStandardNode(
           srcX: AtlasSrc.Node_Stone,
           srcY: 0,
-          color: color,
+          color: colorShades[nodesShade[renderNodeIndex]],
       );
     case NodeType.Plain:
       return renderNodePlain(
         orientation: nodesOrientation[renderNodeIndex],
         dstX: renderNodeDstX,
         dstY: renderNodeDstY,
-        color: color,
+        color: colorShades[nodesShade[renderNodeIndex]],
       );
     case NodeType.Wooden_Plank:
       return renderNodeWoodenPlank(
         orientation: nodesOrientation[renderNodeIndex],
         dstX: renderNodeDstX,
         dstY: renderNodeDstY,
-        color: color,
+        color: colorShades[nodesShade[renderNodeIndex]],
       );
     case NodeType.Wood_2:
       renderNodeWood(
           orientation: nodesOrientation[renderNodeIndex],
           dstX: renderNodeDstX,
           dstY: renderNodeDstY,
-          color: color,
+          color: colorShades[nodesShade[renderNodeIndex]],
       );
       break;
     case NodeType.Bau_Haus_2:
@@ -187,20 +181,20 @@ void renderNodeAt(){
         orientation: nodesOrientation[renderNodeIndex],
         dstX: renderNodeDstX,
         dstY: renderNodeDstY,
-        color: color,
+        color: colorShades[nodesShade[renderNodeIndex]],
       );
       break;
     case NodeType.Sunflower:
       return renderStandardNode(
           srcX: AtlasSrc.Node_Sunflower,
           srcY: 0,
-          color: color,
+          color: colorShades[nodesShade[renderNodeIndex]],
       );
     case NodeType.Soil:
       return renderStandardNode(
         srcX: AtlasSrc.Node_Soil,
         srcY: 0,
-        color: color,
+        color: colorShades[nodesShade[renderNodeIndex]],
       );
     case NodeType.Fireplace:
       return render(
@@ -216,19 +210,19 @@ void renderNodeAt(){
       return renderStandardNode(
         srcX: AtlasSrc.Node_Boulder,
         srcY: 0,
-        color: color,
+        color: colorShades[nodesShade[renderNodeIndex]],
       );
     case NodeType.Oven:
       return renderStandardNode(
         srcX: AtlasSrc.Node_Oven,
         srcY: 0,
-        color: color,
+        color: colorShades[nodesShade[renderNodeIndex]],
       );
     case NodeType.Chimney:
       return renderStandardNode(
         srcX: AtlasSrc.Node_Chimney,
         srcY: 0,
-        color: color,
+        color: colorShades[nodesShade[renderNodeIndex]],
       );
     case NodeType.Window:
       switch(nodesOrientation[renderNodeIndex]){
@@ -236,25 +230,25 @@ void renderNodeAt(){
           return renderStandardNodeHalfNorth(
             srcX: AtlasSrc.Node_Window,
             srcY: spriteHeight,
-            color: color,
+            color: colorShades[nodesShade[renderNodeIndex]],
           );
         case NodeOrientation.Half_East:
           return renderStandardNodeHalfEast(
             srcX: AtlasSrc.Node_Window,
             srcY: 0,
-            color: color,
+            color: colorShades[nodesShade[renderNodeIndex]],
           );
         case NodeOrientation.Half_South:
           return renderStandardNode(
             srcX: AtlasSrc.Node_Window,
             srcY: spriteHeight,
-            color: color,
+            color: colorShades[nodesShade[renderNodeIndex]],
           );
         case NodeOrientation.Half_West:
           return renderStandardNode(
             srcX: AtlasSrc.Node_Window,
             srcY: 0,
-            color: color,
+            color: colorShades[nodesShade[renderNodeIndex]],
           );
       }
       break;
@@ -304,80 +298,77 @@ void renderNodeAt(){
   }
 }
 
-void renderNodeTypeGrass({
-  // required double x,
-  // required double y,
-  // required int orientation,
-  required int shade,
-}) {
+void renderNodeTypeGrass() {
   switch (nodesOrientation[renderNodeIndex]) {
     case NodeOrientation.Solid:
       return renderStandardNode(
           srcX: nodesVariation[renderNodeIndex] ? AtlasSrc.Node_Grass : AtlasSrc.Node_Grass_Flowers,
-          srcY: spriteHeight * shade,
+          srcY: spriteHeight * nodesShade[renderNodeIndex],
       );
     case NodeOrientation.Slope_North:
       return renderStandardNode(
         srcX: AtlasSrc.Node_Grass_Slope_North,
-        srcY: spriteHeight * shade,
+        srcY: spriteHeight * nodesShade[renderNodeIndex],
       );
     case NodeOrientation.Slope_East:
       return renderStandardNode(
         srcX: AtlasSrc.Node_Grass_Slope_East,
-        srcY: spriteHeight * shade,
+        srcY: spriteHeight * nodesShade[renderNodeIndex],
       );
     case NodeOrientation.Slope_South:
       return renderStandardNode(
         srcX: AtlasSrc.Node_Grass_Slope_South,
-        srcY: spriteHeight * shade,
+        srcY: spriteHeight * nodesShade[renderNodeIndex],
       );
     case NodeOrientation.Slope_West:
       return renderStandardNode(
         srcX: AtlasSrc.Node_Grass_Slope_West,
-        srcY: spriteHeight * shade,
+        srcY: spriteHeight * nodesShade[renderNodeIndex],
       );
     case NodeOrientation.Slope_Inner_North_East:
       return renderStandardNode(
         srcX: AtlasSrc.Node_Grass_Slope_Inner_North_East,
-        srcY: spriteHeight * shade,
+        srcY: spriteHeight * nodesShade[renderNodeIndex],
       );
     case NodeOrientation.Slope_Inner_South_East:
       return renderStandardNode(
         srcX: AtlasSrc.Node_Grass_Slope_Inner_South_East,
-        srcY: spriteHeight * shade,
+        srcY: spriteHeight * nodesShade[renderNodeIndex],
       );
     case NodeOrientation.Slope_Inner_South_West:
       return renderStandardNode(
         srcX: AtlasSrc.Node_Grass_Slope_Inner_South_West,
-        srcY: spriteHeight * shade,
+        srcY: spriteHeight * nodesShade[renderNodeIndex],
       );
     case NodeOrientation.Slope_Inner_North_West:
       return renderStandardNode(
         srcX: AtlasSrc.Node_Grass_Slope_Inner_North_West,
-        srcY: spriteHeight * shade,
+        srcY: spriteHeight * nodesShade[renderNodeIndex],
       );
     case NodeOrientation.Slope_Outer_North_East:
       return renderStandardNode(
         srcX: AtlasSrc.Node_Grass_Slope_Outer_North_East,
-        srcY: spriteHeight * shade,
+        srcY: spriteHeight * nodesShade[renderNodeIndex],
       );
     case NodeOrientation.Slope_Outer_South_East:
       return renderStandardNode(
         srcX: AtlasSrc.Node_Grass_Slope_Outer_South_East,
-        srcY: spriteHeight * shade,
+        srcY: spriteHeight * nodesShade[renderNodeIndex],
       );
     case NodeOrientation.Slope_Outer_South_West:
       return renderStandardNode(
         srcX: AtlasSrc.Node_Grass_Slope_Outer_South_West,
-        srcY: spriteHeight * shade,
+        srcY: spriteHeight * nodesShade[renderNodeIndex],
       );
     case NodeOrientation.Slope_Outer_North_West:
       return renderStandardNode(
         srcX: AtlasSrc.Node_Grass_Slope_Outer_North_West,
-        srcY: spriteHeight * shade,
+        srcY: spriteHeight * nodesShade[renderNodeIndex],
       );
     default:
-      throw Exception('renderNodeTypeGrass(orientation: ${NodeOrientation.getName(nodesOrientation[renderNodeIndex])}, shade: ${Shade.getName(shade)}');
+      throw Exception(
+          'renderNodeTypeGrass(orientation: ${NodeOrientation.getName(nodesOrientation[renderNodeIndex])}, shade: ${Shade.getName(nodesShade[renderNodeIndex])}'
+      );
   }
 }
 
