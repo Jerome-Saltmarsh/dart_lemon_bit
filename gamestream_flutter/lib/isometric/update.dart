@@ -21,7 +21,6 @@ import 'particles.dart';
 import 'players.dart';
 import 'projectiles.dart';
 import 'update/update_zombie_growls.dart';
-import 'weather/breeze.dart';
 
 void updateIsometric(){
   updateGameActions();
@@ -30,7 +29,6 @@ void updateIsometric(){
   updateGameObjects();
   updateProjectiles();
   updateRandomAudio();
-  gridWindResetToAmbient();
   applyObjectsToWind();
   updateZombieGrowls();
   updateMouseBubbleSpawn();
@@ -67,7 +65,7 @@ void applyObjectsToWind(){
      applyWindFromProjectile(projectiles[i]);
   }
 
-  updateWindLine();
+  // updateWindLine();
   updateAudioLoops();
   updateLightning();
 }
