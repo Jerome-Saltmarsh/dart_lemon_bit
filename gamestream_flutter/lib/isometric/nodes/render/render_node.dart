@@ -38,6 +38,7 @@ void renderNodeAt(){
         final renderNodeIndexColumn = convertIndexToColumn(renderNodeIndex);
         final renderNodeIndexRow = convertIndexToRow(renderNodeIndex);
         if (renderNodeIndexColumn > indexShowColumn && renderNodeIndexRow > indexShowRow){
+          // final renderNodeIndexOrientation = nodesOrientation[renderNodeIndex];
           return renderStandardNode(
             srcX: 8801,
             srcY: 0,
@@ -55,16 +56,10 @@ void renderNodeAt(){
   switch (renderNodeType) {
     case NodeType.Grass:
       return renderNodeTypeGrass(
-          x: renderNodeDstX,
-          y: renderNodeDstY,
-          orientation: nodesOrientation[renderNodeIndex],
           shade: shade,
       );
     case NodeType.Brick_2:
       return renderNodeTypeBrick(
-        x: renderNodeDstX,
-        y: renderNodeDstY,
-        orientation: nodesOrientation[renderNodeIndex],
         shade: shade,
       );
     case NodeType.Torch:
@@ -310,12 +305,12 @@ void renderNodeAt(){
 }
 
 void renderNodeTypeGrass({
-  required double x,
-  required double y,
-  required int orientation,
+  // required double x,
+  // required double y,
+  // required int orientation,
   required int shade,
 }) {
-  switch (orientation) {
+  switch (nodesOrientation[renderNodeIndex]) {
     case NodeOrientation.Solid:
       return renderStandardNode(
           srcX: nodesVariation[renderNodeIndex] ? AtlasSrc.Node_Grass : AtlasSrc.Node_Grass_Flowers,
@@ -382,7 +377,7 @@ void renderNodeTypeGrass({
         srcY: spriteHeight * shade,
       );
     default:
-      throw Exception('renderNodeTypeGrass(x: $x, y: $y, orientation: ${NodeOrientation.getName(orientation)}, shade: ${Shade.getName(shade)}');
+      throw Exception('renderNodeTypeGrass(orientation: ${NodeOrientation.getName(nodesOrientation[renderNodeIndex])}, shade: ${Shade.getName(shade)}');
   }
 }
 
