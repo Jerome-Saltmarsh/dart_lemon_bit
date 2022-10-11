@@ -138,7 +138,18 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, Player playe
       game.onGridChanged();
       break;
     case RequestModifyCanvasSize.Remove_Z:
-    // TODO: Handle this case.
+      if (scene.gridHeight <= 5) return;
+      final newGridVolume = scene.gridVolume - (scene.gridArea);
+      final newNodeTypes = Uint8List(newGridVolume);
+      final newNodeOrientations = Uint8List(newGridVolume);
+      for (var i = 0; i < newGridVolume; i++){
+        newNodeTypes[i] = scene.nodeTypes[i];
+        newNodeOrientations[i] = scene.nodeOrientations[i];
+      }
+      scene.nodeTypes = newNodeTypes;
+      scene.nodeOrientations = newNodeOrientations;
+      scene.gridHeight--;
+      game.onGridChanged();
       break;
     case RequestModifyCanvasSize.Add_Column_Start:
     // TODO: Handle this case.
