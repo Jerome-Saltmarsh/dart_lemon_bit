@@ -272,6 +272,7 @@ var renderNodeType = 0;
 var indexShow = 0;
 var indexShowRow = 0;
 var indexShowColumn = 0;
+var indexShowZ = 0;
 
 class RenderOrderGrid extends RenderOrder {
   var rowsMax = 0;
@@ -375,12 +376,14 @@ class RenderOrderGrid extends RenderOrder {
     indexShow = inBoundsVector3(player) ? player.nodeIndex : 0;
     indexShowRow = convertIndexToRow(indexShow);
     indexShowColumn = convertIndexToColumn(indexShow);
+    indexShowZ = convertIndexToZ(indexShow);
 
     indexShowPerceptible =
         gridIsPerceptible(indexShow) &&
         gridIsPerceptible(indexShow + 1) &&
         gridIsPerceptible(indexShow - 1) &&
         gridIsPerceptible(indexShow + nodesTotalColumns) &&
+        gridIsPerceptible(indexShow - nodesTotalColumns) &&
         gridIsPerceptible(indexShow + nodesTotalColumns + 1) ;
 
     screenRight = screen.right + tileSize;

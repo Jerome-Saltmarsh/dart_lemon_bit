@@ -36,7 +36,13 @@ void renderNodeAt() {
         }
         final renderNodeIndexColumn = convertIndexToColumn(renderNodeIndex);
         final renderNodeIndexRow = convertIndexToRow(renderNodeIndex);
+        final renderNodeIndexZ = convertIndexToZ(renderNodeIndex);
+        final zDiff = (renderNodeIndexZ - indexShowZ).abs();
+
         if (renderNodeIndexColumn > indexShowColumn && renderNodeIndexRow > indexShowRow){
+          if (zDiff > 2 ){
+            return;
+          }
           var orientation = nodesOrientation[renderNodeIndex];
           var srcY = 0.0;
           if (orientation == NodeOrientation.Solid) {
