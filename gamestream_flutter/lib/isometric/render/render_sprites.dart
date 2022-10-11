@@ -419,6 +419,8 @@ class RenderOrderGrid extends RenderOrder {
        nodesVisible[nodesVisibleIndex[visibleIndex]] = true;
        visibleIndex--;
     }
+    nodesVisible[nodesVisibleIndex[0]] = true;
+
 
     if (!playerPerceptible) {
       const radius = 3;

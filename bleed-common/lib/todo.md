@@ -68,7 +68,9 @@
 [ ] firestorm design scene
 [ ] firestorm destructable gameobjects
 [ ] editor fix change canvas size
-[ ] fix player sometimes invisible
+
+[11-10-2022]
+[x] fix player sometimes invisible
 
 [10-10-2022]
 [x] engine optimization reset dynamic shade
