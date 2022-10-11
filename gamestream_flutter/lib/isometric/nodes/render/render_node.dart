@@ -35,18 +35,14 @@ void renderNodeAt(){
         if (nodeBelowOrientation == NodeOrientation.None) {
            return;
         }
-        final showNodeColumn = convertIndexToColumn(indexShow);
-        final showNodeRow = convertIndexToRow(indexShow);
         final renderNodeIndexColumn = convertIndexToColumn(renderNodeIndex);
         final renderNodeIndexRow = convertIndexToRow(renderNodeIndex);
-
-        if (renderNodeIndexColumn > showNodeColumn && renderNodeIndexRow > showNodeRow){
+        if (renderNodeIndexColumn > indexShowColumn && renderNodeIndexRow > indexShowRow){
           return renderStandardNode(
-            srcX: 8752,
+            srcX: 8801,
             srcY: 0,
-            // color: color,
+            color: nodesShade[nodesShade[renderNodeIndex]],
           );
-          // return;
         }
     }
     // return;
