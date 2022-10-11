@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
+import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
@@ -240,7 +241,7 @@ class RenderOrderParticle extends RenderOrder {
 }
 
 
-var playerPerceptible = false;
+var indexShowPerceptible = false;
 var playerRenderRow = 0;
 var playerRenderColumn = 0;
 var playerZ = 0;
@@ -269,6 +270,8 @@ var renderNodeIndex = 0;
 var renderNodeType = 0;
 
 var indexShow = 0;
+var indexShowRow = 0;
+var indexShowColumn = 0;
 
 class RenderOrderGrid extends RenderOrder {
   var rowsMax = 0;
@@ -370,9 +373,13 @@ class RenderOrderGrid extends RenderOrder {
     playerUnderRoof = gridIsUnderSomething(playerZ, playerRow, playerColumn);
 
     indexShow = inBoundsVector3(player) ? player.nodeIndex : 0;
-    playerPerceptible =
+    indexShowRow = convertIndexToRow(indexShow);
+    indexShowColumn = convertIndexToColumn(indexShow);
+
+    indexShowPerceptible =
         gridIsPerceptible(indexShow) &&
         gridIsPerceptible(indexShow + 1) &&
+        gridIsPerceptible(indexShow - 1) &&
         gridIsPerceptible(indexShow + nodesTotalColumns) &&
         gridIsPerceptible(indexShow + nodesTotalColumns + 1) ;
 
@@ -422,13 +429,17 @@ class RenderOrderGrid extends RenderOrder {
     nodesVisible[nodesVisibleIndex[0]] = true;
 
 
-    if (!playerPerceptible) {
+    if (!indexShowPerceptible) {
       const radius = 3;
-
-      for (var r = -radius; r < radius; r++){
-         for (var c = -radius; c < radius; c++){
-            var index = indexShow - (nodesTotalColumns * r) + c;
-            hideIndex(index);
+      for (var r = -radius; r <= radius; r++){
+        if (r < 0) continue;
+        if (r >= nodesTotalRows) continue;
+         for (var c = -radius; c <= radius; c++){
+           if (indexShowRow + r < 0) continue;
+           if (indexShowRow + r >= nodesTotalRows) continue;
+           if (indexShowColumn + c < 0) continue;
+           if (indexShowColumn + c >= nodesTotalRows) continue;
+            hideIndex(indexShow - (nodesTotalColumns * r) + c);
          }
       }
     }
