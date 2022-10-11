@@ -69,18 +69,15 @@ Widget buildStateRegion(Region selectedRegion) => Container(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: Region.values
-            .map((Region region) => container(
-                  width: 300,
-                  action: () => actionSelectRegion(region),
-                  color: Colors.transparent,
-                  child: text('Region ${enumString(region)}',
-                      underline: selectedRegion == region,
-                      bold: selectedRegion == region,
-                      color: selectedRegion == region
-                          ? Colors.white70
-                          : Colors.white30,
-                  ),
-                ))
+            .map((Region region) => buildTextButton('Region ${enumString(region)}',
+              action: () => actionSelectRegion(region),
+              colorRegular: selectedRegion == region
+                ? Colors.white54
+                : Colors.white24,
+              colorMouseOver: selectedRegion == region
+                ? Colors.white54
+                : Colors.white54,
+        ))
             .toList(),
       ),
 );
