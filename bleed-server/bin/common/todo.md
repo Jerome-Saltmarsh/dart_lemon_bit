@@ -58,6 +58,9 @@
 [ ] firestorm add weapon crossbow
 [ ] engine fix fire animation handgun
 [ ] engine fix fire animation bow
+[ ] engine refactor declassify particles
+[ ] engine refactor declassify characters
+[ ] engine refactor declassify gameobjects
 
 [ ] editor add tab player
 [ ] editor add tab objects
@@ -65,8 +68,10 @@
 [ ] firestorm design scene
 [ ] firestorm destructable gameobjects
 [ ] editor fix change canvas size
+[ ] fix player sometimes invisible
 
 [10-10-2022]
+[x] engine optimization reset dynamic shade
 [x] engine fix see through house when inside
 [x] fix edit emit index light
 [x] fix debug panel

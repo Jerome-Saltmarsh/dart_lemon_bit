@@ -46,16 +46,10 @@ class ServerResponse {
   static const Character_Template = 89;
   static const Character_Player = 90;
   static const Character_Slime = 91;
-  static const GameObject_Butterfly = 94;
-  static const GameObject_Chicken = 95;
-  static const GameObject_Static = 97;
-  static const GameObject_Jellyfish = 99;
-  static const GameObject_Jellyfish_Red = 100;
   static const Editor_GameObject_Selected = 101;
   static const Player_Can_Teleport = 102;
   static const Node_Data = 103;
   static const Render_Map = 104;
-  static const GameObject_Loot = 105;
   static const Game_Waves = 106;
   static const GameObject = 107;
   static const Environment = 108;

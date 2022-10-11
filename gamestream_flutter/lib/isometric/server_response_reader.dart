@@ -93,29 +93,11 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Character_Slime:
           readCharacterSlime();
           break;
-        case ServerResponse.GameObject_Static:
-          readGameObjectStatic();
-          break;
         case ServerResponse.GameObject:
           readGameObject();
           break;
         case ServerResponse.Game_Waves:
           readServerResponseGameWaves();
-          break;
-        case ServerResponse.GameObject_Loot:
-          readGameObjectLoot();
-          break;
-        case ServerResponse.GameObject_Butterfly:
-          readGameObjectButterfly();
-          break;
-        case ServerResponse.GameObject_Chicken:
-          readGameObjectChicken();
-          break;
-        case ServerResponse.GameObject_Jellyfish:
-          readGameObjectJellyfish();
-          break;
-        case ServerResponse.GameObject_Jellyfish_Red:
-          readGameObjectJellyfishRed();
           break;
         case ServerResponse.End:
           return readEnd();
@@ -383,13 +365,6 @@ class ServerResponseReader with ByteReader {
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
     }
-  }
-
-  void readGameObjectLoot() {
-    final gameObject = getInstanceGameObject();
-    readVector3(gameObject);
-    gameObject.type = GameObjectType.Loot;
-    gameObject.lootType = readByte();
   }
 
   void readGameObjectStatic() {
