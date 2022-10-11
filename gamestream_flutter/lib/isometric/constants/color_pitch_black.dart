@@ -3,14 +3,8 @@ import 'package:flutter/cupertino.dart';
 
 const colorPitchBlack = Color.fromRGBO(37, 32, 48, 1.0);
 
-final colorShadesColors = <Color> [
-  colorPitchBlack.withOpacity(0), // very bright
-  colorPitchBlack.withOpacity(0.4), // bright
-  colorPitchBlack.withOpacity(0.6), // medium
-  colorPitchBlack.withOpacity(0.7),  // dark
-  colorPitchBlack.withOpacity(0.8), // very dark
-  colorPitchBlack.withOpacity(0.95), // pitchBlack
-  colorPitchBlack.withOpacity(1), // pitchBlack
-];
+const opacities = <double>[0.0, 0.4, 0.6, 0.7, 0.8, 0.95, 1.0];
 
-final colorShades = colorShadesColors.map((color) => color.value).toList(growable: false);
+final colorShades = opacities
+    .map((opacity) => colorPitchBlack.withOpacity(opacity).value)
+    .toList(growable: false);
