@@ -268,6 +268,8 @@ var renderNodeDstY = 0.0;
 var renderNodeIndex = 0;
 var renderNodeType = 0;
 
+var indexShow = 0;
+
 class RenderOrderGrid extends RenderOrder {
   var rowsMax = 0;
   var shiftIndex = 0;
@@ -275,8 +277,6 @@ class RenderOrderGrid extends RenderOrder {
   var screenBottomRightRow = 0;
   var gridTotalColumnsMinusOne = 0;
   var gridTotalZMinusOne = 0;
-
-  var indexShow = 0;
 
   var playerColumnRow = 0;
   var playerUnderRoof = false;

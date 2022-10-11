@@ -4,7 +4,9 @@ import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
+import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
+import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node_bau_haus.dart';
@@ -26,8 +28,28 @@ import 'render_standard_node.dart';
 
 /// remove objects from the render layer to reduce garbage collection
 void renderNodeAt(){
-  if (!nodesVisible[renderNodeIndex]) {
-    return;
+  if (!nodesVisible[renderNodeIndex] && nodesOrientation[renderNodeIndex] != NodeOrientation.None) {
+    if (renderNodeIndex > nodesArea){
+        final nodeBelowIndex = renderNodeIndex - nodesArea;
+        final nodeBelowOrientation = nodesOrientation[nodeBelowIndex];
+        if (nodeBelowOrientation == NodeOrientation.None) {
+           return;
+        }
+        final showNodeColumn = convertIndexToColumn(indexShow);
+        final showNodeRow = convertIndexToRow(indexShow);
+        final renderNodeIndexColumn = convertIndexToColumn(renderNodeIndex);
+        final renderNodeIndexRow = convertIndexToRow(renderNodeIndex);
+
+        if (renderNodeIndexColumn > showNodeColumn && renderNodeIndexRow > showNodeRow){
+          return renderStandardNode(
+            srcX: 8752,
+            srcY: 0,
+            // color: color,
+          );
+          // return;
+        }
+    }
+    // return;
   }
 
   onscreenNodes++;

@@ -69,6 +69,7 @@
 [ ] editor fix change canvas size
 [ ] firestorm design scene
 [ ] engine fix rain falling node repeating
+[ ] engine walls semi transparent
 
 [11-10-2022]
 [x] fix player sometimes invisible
