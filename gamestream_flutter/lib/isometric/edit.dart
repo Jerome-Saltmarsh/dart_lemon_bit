@@ -73,17 +73,18 @@ class Edit {
      nodeIndex.value += difference * nodesArea;
   }
 
+
   set row(int value){
     if (value < 0) return;
     if (value >= nodesTotalRows) return;
-    final difference = row - value;
+    final difference = value - row;
     nodeIndex.value += difference * nodesTotalColumns;
   }
 
   set column(int value){
     if (value < 0) return;
     if (value >= nodesTotalColumns) return;
-    nodeIndex.value += column - value;
+    nodeIndex.value += value - column;
   }
 
   final paintType = Watch(NodeType.Brick_2, onChanged: onChangedPaintType);

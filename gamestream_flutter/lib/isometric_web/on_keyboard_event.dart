@@ -75,14 +75,14 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
       if (edit.gameObjectSelected.value){
         return edit.translate(x: -1, y: -1, z: 0);
       }
-      edit.cursorRowIncrease();
+      edit.cursorRowDecrease();
     }
   }
   if (key == PhysicalKeyboardKey.arrowRight) {
     if (edit.gameObjectSelected.value){
       return edit.translate(x: 1, y: -1, z: 0);
     }
-    edit.cursorColumnIncrease();
+    edit.cursorColumnDecrease();
   }
   if (key == PhysicalKeyboardKey.arrowDown) {
     if (shiftLeftDown) {
@@ -94,14 +94,14 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
       if (edit.gameObjectSelected.value){
         return edit.translate(x: 1, y: 1, z: 0);
       }
-      edit.cursorRowDecrease();
+      edit.cursorRowIncrease();
     }
   }
   if (key == PhysicalKeyboardKey.arrowLeft) {
     if (edit.gameObjectSelected.value){
       return edit.translate(x: -1, y: 1, z: 0);
     }
-    edit.cursorColumnDecrease();
+    edit.cursorColumnIncrease();
   }
 }
 

@@ -66,12 +66,14 @@
 [ ] editor add tab objects
 
 [ ] firestorm destructable gameobjects
-[ ] editor fix change canvas size
+[ ] editor change canvas size column
 [ ] firestorm design scene
 [ ] engine fix rain falling node repeating
 [ ] engine walls semi transparent
 
 [11-10-2022]
+[x] editor fix selection at grid edge
+[x] canvas size add z
 [x] fix player sometimes invisible
 [x] optimize gridWindResetToAmbient
 
