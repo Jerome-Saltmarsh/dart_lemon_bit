@@ -328,9 +328,11 @@ void applyEmissionDynamic({
 
   for (var z = zMin; z < zMax; z++){
     for (var row = rowMin; row < rowMax; row++){
+      final a = (z * nodesArea) + (row * nodesTotalColumns);
+      final b = (z - zIndex).abs() + (row - rowIndex).abs();
       for (var column = columnMin; column < columnMax; column++) {
-        final nodeIndex = getNodeIndexZRC(z, row, column);
-        var distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
+        final nodeIndex = a + column;
+        var distance = b + (column - columnIndex).abs() - 1;
         final distanceValue = convertDistanceToShade(distance, maxBrightness: maxBrightness);
         if (distanceValue >= nodesShade[nodeIndex]) continue;
         nodesShade[nodeIndex] = distanceValue;

@@ -39,16 +39,19 @@ void renderNodeAt() {
         if (renderNodeIndexColumn > indexShowColumn && renderNodeIndexRow > indexShowRow){
           var orientation = nodesOrientation[renderNodeIndex];
           var srcY = 0.0;
-          if (orientation == NodeOrientation.Slope_North){
+          if (orientation == NodeOrientation.Solid) {
+            srcY = 0;
+          } else
+          if (orientation == NodeOrientation.Slope_North) {
             srcY = spriteHeight_1;
-          }
-          if (orientation == NodeOrientation.Slope_East){
+          } else
+          if (orientation == NodeOrientation.Slope_East) {
             srcY = spriteHeight_2;
-          }
-          if (orientation == NodeOrientation.Slope_South){
+          } else
+          if (orientation == NodeOrientation.Slope_South) {
             srcY = spriteHeight_3;
-          }
-          if (orientation == NodeOrientation.Slope_West){
+          } else
+          if (orientation == NodeOrientation.Slope_West) {
             srcY = spriteHeight_4;
           }
           return renderStandardNode(
