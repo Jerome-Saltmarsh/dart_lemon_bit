@@ -431,14 +431,12 @@ class RenderOrderGrid extends RenderOrder {
 
     if (!indexShowPerceptible) {
       const radius = 3;
-      for (var r = -radius; r <= radius; r++){
-        if (r < 0) continue;
-        if (r >= nodesTotalRows) continue;
-         for (var c = -radius; c <= radius; c++){
+      for (var r = -radius; r <= radius + 2; r++){
+         for (var c = -radius; c <= radius + 2; c++){
            if (indexShowRow + r < 0) continue;
            if (indexShowRow + r >= nodesTotalRows) continue;
            if (indexShowColumn + c < 0) continue;
-           if (indexShowColumn + c >= nodesTotalRows) continue;
+           if (indexShowColumn + c >= nodesTotalColumns) continue;
             hideIndex(indexShow - (nodesTotalColumns * r) + c);
          }
       }
