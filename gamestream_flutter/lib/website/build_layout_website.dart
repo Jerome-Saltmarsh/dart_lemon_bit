@@ -70,7 +70,7 @@ Widget buildStateRegion(Region selectedRegion) => Container(
         mainAxisAlignment: MainAxisAlignment.center,
         children: Region.values
             .map((Region region) => buildTextButton('Region ${enumString(region)}',
-              action: () => actionSelectRegion(region),
+              action: selectedRegion == region ? null : () => actionSelectRegion(region),
               colorRegular: selectedRegion == region
                 ? Colors.white54
                 : Colors.white24,
