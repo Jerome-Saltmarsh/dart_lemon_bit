@@ -26,6 +26,9 @@ class Scene {
   late double gridColumnLength;
   late double gridHeightLength;
 
+  int get columnsPerRow => gridRows;
+  int get rowsPerZ => gridColumns;
+
   Scene({
     required this.name,
     required this.nodeTypes,
