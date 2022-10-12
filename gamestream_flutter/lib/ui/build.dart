@@ -74,12 +74,11 @@ Region detectRegion(){
   return Region.Australia;
 }
 
-
 Widget buildTitle(){
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      text("GAME",
+      text("PLAY",
           size: 60,
           color: Colors.white,
           family: Fonts.LibreBarcode39Text

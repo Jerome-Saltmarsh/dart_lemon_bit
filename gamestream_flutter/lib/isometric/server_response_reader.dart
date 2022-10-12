@@ -67,6 +67,9 @@ class ServerResponseReader with ByteReader {
   final bufferSize = Watch(0);
   final updateFrame = Watch(0, onChanged: onChangedUpdateFrame);
 
+  var previous = -1;
+  var response = -1;
+
   void readBytes(Uint8List values) {
     updateFrame.value++;
     index = 0;
@@ -76,8 +79,9 @@ class ServerResponseReader with ByteReader {
     this.values = values;
 
     while (true) {
-      final response = readByte();
-      switch (response){
+      previous = response;
+      response = readByte();
+      switch (response) {
         case ServerResponse.Character_Rat:
           readCharacterRat();
           break;
@@ -242,10 +246,20 @@ class ServerResponseReader with ByteReader {
           }
           break;
         default:
-          throw Exception("Cannot parse $response at index: $index");
+          if (debugging) {
+            return;
+          }
+          print("read bytes exception, unrecognized server response $response at index $index, length: ${values.length}");
+          print(values);
+          modules.core.state.error.value = "read response error";
+          debugging = true;
+          readBytes(values);
+          return;
       }
     }
   }
+
+  var debugging = false;
 
   void readServerResponseEnvironment() {
     final environmentResponse = readByte();
@@ -469,13 +483,8 @@ class ServerResponseReader with ByteReader {
     readCharacterEquipment(character);
     character.name = readString();
     character.text = readString();
-    character.aimAngle = readAngle();
-    character.usingWeapon = readBool();
-    if (character.usingWeapon){
-      character.weaponFrame = readInt();
-    } else {
-      character.weaponFrame = 0;
-    }
+    character.lookRadian = readAngle();
+    character.weaponFrame = readByte();
     totalCharacters++;
   }
 
@@ -615,6 +624,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGrid() {
+    print("readGrid()");
     nodesTotalZ = readInt();
     nodesTotalRows = readInt();
     nodesTotalColumns = readInt();

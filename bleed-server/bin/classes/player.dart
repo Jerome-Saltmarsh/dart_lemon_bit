@@ -44,7 +44,7 @@ class Player extends Character with ByteWriter {
   var screenBottom = 0.0;
   var sceneDownloaded = false;
   var initialized = false;
-  var lookRadians = 0.0;
+  var lookRadian = 0.0;
   /// Warning - do not reference
   Game game;
   Collider? aimTarget; // the currently highlighted character
@@ -71,7 +71,7 @@ class Player extends Character with ByteWriter {
   double get mouseGridX => (mouse.x + mouse.y) + z;
   double get mouseGridY => (mouse.y - mouse.x) + z;
 
-  int get lookDirection => Direction.fromRadian(lookRadians);
+  int get lookDirection => Direction.fromRadian(lookRadian);
 
   int get experience => _experience;
 
@@ -509,12 +509,14 @@ class Player extends Character with ByteWriter {
     writeCharacterEquipment(player);
     writeString(player.name);
     writeString(player.text);
-    writeAngle(player.lookRadians);
-    writeBool(player.usingWeapon);
-
-    if (player.usingWeapon) {
-      player.writeInt(player.weapon.frame);
+    writeAngle(player.lookRadian);
+    if (player.weapon.frame < 0){
+      throw Exception();
     }
+    if (player.weapon.frame > 255){
+      throw Exception();
+    }
+    writeByte(player.weapon.frame);
   }
 
   void writeNpc(Player player, Character npc) {

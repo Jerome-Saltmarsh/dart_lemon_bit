@@ -23,11 +23,11 @@ class Character extends Vector3 {
   var health = 1.0;
   /// percentage between 0 and 1
   var magic = 1.0;
-  var aimAngle = 0.0;
-  var usingWeapon = false;
+  var lookRadian = 0.0;
   var weaponFrame = 0;
   var color = 0;
 
+  bool get usingWeapon => weaponFrame > 0;
   bool get dead => state == CharacterState.Dead;
   bool get deadOrDying => dead || dying;
   bool get spawning => state == CharacterState.Spawning;
@@ -36,7 +36,7 @@ class Character extends Vector3 {
   bool get hurt => state == CharacterState.Hurt;
   bool get dying => state == CharacterState.Dying;
   bool get alive => !dead;
-  int get aimDirection => ((aimAngle - (pi / 16.0)) ~/ piQuarter + 4) % 8;
+  int get aimDirection => ((lookRadian - (pi / 16.0)) ~/ piQuarter + 4) % 8;
   double get angle => direction * piQuarter;
   int get renderDirection => direction == 0 ? 7 : (direction - 1);
 

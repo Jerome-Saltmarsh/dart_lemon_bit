@@ -157,7 +157,7 @@ abstract class Game {
 
     if (weapon.durationRemaining > 0) return;
     weapon.state = AttackState.Aiming;
-    player.lookRadians = player.mouseAngle;
+    player.lookRadian = player.mouseAngle;
 
     if (player.deadBusyOrPerforming) return;
 
@@ -216,7 +216,7 @@ abstract class Game {
     dispatchV3(GameEventType.Release_Bow, player);
     spawnProjectileArrow(
       src: player,
-      angle: player.lookRadians,
+      angle: player.lookRadian,
       damage: weapon.damage,
       range: weapon.range * power,
     );
@@ -277,7 +277,7 @@ abstract class Game {
       case AttackType.Crossbow:
         return spawnProjectileArrow(
             src: player,
-            angle: player.lookRadians,
+            angle: player.lookRadian,
             damage: weapon.damage,
             range: weapon.range,
         );
@@ -287,33 +287,33 @@ abstract class Game {
         return characterFireWeapon(
           character: player,
           weapon: weapon,
-          angle: player.lookRadians,
+          angle: player.lookRadian,
         );
       case AttackType.Shotgun:
-        return characterFireShotgun(player, player.lookRadians);
+        return characterFireShotgun(player, player.lookRadian);
       case AttackType.Assault_Rifle:
         return characterFireWeapon(
           character: player,
           weapon: weapon,
-          angle: player.lookRadians,
+          angle: player.lookRadian,
         );
       case AttackType.Rifle:
         return characterFireWeapon(
           character: player,
           weapon: weapon,
-          angle: player.lookRadians,
+          angle: player.lookRadian,
         );
       case AttackType.Fireball:
         characterSpawnProjectileFireball(
             player,
-            angle: player.lookRadians,
+            angle: player.lookRadian,
         );
         break;
       case AttackType.Revolver:
         return characterFireWeapon(
           character: player,
           weapon: weapon,
-          angle: player.lookRadians,
+          angle: player.lookRadian,
         );
       case AttackType.Crowbar:
         return playerAttackMelee(
@@ -330,7 +330,7 @@ abstract class Game {
             src: player,
             damage: weapon.damage,
             range: weapon.range,
-            angle: player.lookRadians,
+            angle: player.lookRadian,
         );
         break;
       case AttackType.Staff:
@@ -365,7 +365,7 @@ abstract class Game {
     required int damage,
     required int duration,
   }) {
-    final angle = player.lookRadians;
+    final angle = player.lookRadian;
 
     final performX = player.x + getAdjacent(angle, distance);
     final performY = player.y + getOpposite(angle, distance);
@@ -432,22 +432,6 @@ abstract class Game {
     if (!scene.getNodeInBoundsXYZ(performX, performY, performZ)) return;
     final nodeIndex = scene.getNodeIndexXYZ(performX, performY, performZ);
     final nodeType = scene.nodeTypes[nodeIndex];
-
-    if (NodeType.isOrientationEmpty(nodeType)) {
-      if (!attackHit){
-        for (final player in players) {
-          player.writeGameEvent(
-            type: GameEventType.Attack_Missed,
-            x: performX,
-            y: performY,
-            z: performZ,
-            angle: angle,
-          );
-          player.writeByte(attackType);
-        }
-      }
-      return;
-    }
 
     player.applyForce(
       force: 4.5,
@@ -1058,7 +1042,7 @@ abstract class Game {
       weapon.durationRemaining--;
       if (weapon.durationRemaining == 0){
         weapon.state = AttackState.Aiming;
-        player.lookRadians = player.mouseAngle;
+        player.lookRadian = player.mouseAngle;
         if (weapon.requiresRounds) {
           if (weapon.rounds == 0) {
             customOnPlayerWeaponRoundsExhausted(player, weapon);
@@ -1381,7 +1365,7 @@ abstract class Game {
       range: src.equippedRange,
       target: src.target,
       projectileType: ProjectileType.Orb,
-      angle: src.target != null ? null : (src is Player ? src.lookRadians : src.faceAngle),
+      angle: src.target != null ? null : (src is Player ? src.lookRadian : src.faceAngle),
       damage: damage,
     );
   }

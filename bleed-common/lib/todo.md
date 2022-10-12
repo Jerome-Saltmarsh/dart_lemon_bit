@@ -70,6 +70,8 @@
 [ ] firestorm design scene
 [ ] engine fix rain falling node repeating
 [ ] engine walls semi transparent
+[ ] get working on mobile device
+[ ] fix strike causes error on 
 
 [11-10-2022]
 [x] editor fix selection at grid edge

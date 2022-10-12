@@ -152,6 +152,7 @@ class CoreEvents {
 }
 
 void onChangedRegion(Region region){
+  print("onChangedRegion(${region.name})");
   setDialogVisibleCustomRegion(region == Region.Custom);
 }
 

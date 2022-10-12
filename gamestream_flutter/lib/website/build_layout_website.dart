@@ -71,12 +71,15 @@ Widget buildStateRegion(Region selectedRegion) => Container(
         children: Region.values
             .map((Region region) => buildTextButton('Region ${enumString(region)}',
               action: selectedRegion == region ? null : () => actionSelectRegion(region),
+              size: 18,
               colorRegular: selectedRegion == region
                 ? Colors.white54
                 : Colors.white24,
               colorMouseOver: selectedRegion == region
                 ? Colors.white54
                 : Colors.white54,
+
+
         ))
             .toList(),
       ),

@@ -20,7 +20,7 @@ class Weapon {
 
    int get rounds => _rounds;
 
-   int get frame => duration - durationRemaining;
+   int get frame => durationRemaining > 0 ? duration - durationRemaining : 0;
 
    bool get requiresRounds => capacity > 0;
 

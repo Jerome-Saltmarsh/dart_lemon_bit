@@ -39,7 +39,7 @@ void renderArrow(double x, double y, double z, double angle) {
 
 void renderCharacterWeaponHandgun(Character character) {
   final weaponState = character.weaponState;
-  final angle = character.aimAngle + piQuarter;
+  final angle = character.lookRadian + piQuarter;
   final distance = 15.0;
   const size = 32.0;
   final direction = character.aimDirection;
@@ -67,7 +67,7 @@ void renderCharacterWeapon(Character character) {
 
 void renderCharacterWeaponShotgun(Character character) {
   final weaponState = character.weaponState;
-  final angle = character.aimAngle + piQuarter;
+  final angle = character.lookRadian + piQuarter;
   final distance = 15.0;
   const size = 32.0;
   final direction = character.aimDirection;
@@ -84,7 +84,7 @@ void renderCharacterWeaponShotgun(Character character) {
 
 void renderCharacterWeaponBlade(Character character) {
   // final weaponState = character.weaponState;
-  final angle = character.aimAngle + piQuarter;
+  final angle = character.lookRadian + piQuarter;
   final distance = 15.0;
   const size = 64.0;
   final direction = character.aimDirection;

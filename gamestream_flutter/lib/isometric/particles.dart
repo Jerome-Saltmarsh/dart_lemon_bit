@@ -950,7 +950,7 @@ Particle getParticleInstance() {
      return instance;
   }
   final particle = particles[totalActiveParticles];
-  assert (!particle.active);
+  // assert (!particle.active);
   return particle;
 }
 
