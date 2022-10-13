@@ -10,7 +10,7 @@ import 'on_keyboard_event.dart';
 void isometricWebControlsRegister(){
   print("isometricWebControlsRegister()");
   onLeftClicked = onMouseClickedLeft;
-  engine.callbacks.onRightClicked = onMouseClickedRight;
+  engine.onRightClicked = onMouseClickedRight;
   RawKeyboard.instance.addListener(onKeyboardEvent);
 }
 

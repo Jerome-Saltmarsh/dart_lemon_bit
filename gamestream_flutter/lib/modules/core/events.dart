@@ -39,7 +39,7 @@ class CoreEvents {
 
     switch(value) {
       case GameStatus.In_Progress:
-        engine.drawCanvas.value = modules.game.render.renderGame;
+        engine.onDrawCanvas = modules.game.render.renderGame;
         engine.drawCanvasAfterUpdate = false;
         fullScreenEnter();
         break;
@@ -82,30 +82,28 @@ class CoreEvents {
   void onModeChanged(Mode mode){
     print("onChangedMode($mode)");
     engine.clearCallbacks();
-    engine.drawCanvas.value = null;
-    engine.drawForeground.value = null;
+    engine.onDrawCanvas = null;
+    engine.onDrawForeground = null;
     engine.drawCanvasAfterUpdate = true;
     engine.update = null;
     engine.keyPressedHandlers = {};
     modules.game.events.deregister();
     isometricWebControlsDeregister();
 
-    switch(mode){
+    switch(mode) {
 
       case Mode.Website:
-        engine.drawCanvas.value = null;
         engine.drawCanvasAfterUpdate = true;
-        engine.keyPressedHandlers = {};
         sceneEditable.value = false;
         break;
 
       case Mode.Player:
-        engine.drawCanvas.value = modules.game.render.renderGame;
-        engine.drawForeground.value = modules.game.render.renderForeground;
+        engine.onDrawCanvas = modules.game.render.renderGame;
+        engine.onDrawForeground = modules.game.render.renderForeground;
         engine.update = modules.game.update.update;
         engine.drawCanvasAfterUpdate = true;
         modules.game.events.register();
-        engine.registerZoomCameraOnMouseScroll();
+        engine.zoomOnScroll = true;
         isometricWebControlsRegister();
         break;
     }

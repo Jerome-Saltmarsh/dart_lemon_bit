@@ -14,7 +14,6 @@ final isLocalHost = Uri.base.host == 'localhost'; // TODO move to lemon-engine
 
 Future init() async {
   await loadSharedPreferences();
-  initializeEventListeners();
   Images.mapAtlas = await loadImage('images/atlas-map.png');
   Images.blocks = await loadImage('images/atlas-blocks.png');
   Images.characters = await loadImage('images/atlas-characters.png');
@@ -29,10 +28,6 @@ Future init() async {
 
 void onTapDown(TapDownDetails details){
 
-}
-
-void initializeEventListeners() {
-  engine.callbacks.onMouseScroll = engine.events.onMouseScroll;
 }
 
 Future loadSharedPreferences() async {

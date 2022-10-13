@@ -108,11 +108,11 @@ class _GameState extends State<Game> {
 
   Widget buildCanvas(BuildContext context) {
     final child = Listener(
-      onPointerSignal: engine.onPointerSignal,
-      onPointerDown: engine.onPointerDown,
-      onPointerUp: engine.onPointerUp,
-      onPointerHover:engine.onPointerHover,
-      onPointerMove: engine.onPointerMove,
+      onPointerSignal: engine.internalOnPointerSignal,
+      onPointerDown: engine.internalOnPointerDown,
+      onPointerUp: engine.internalOnPointerUp,
+      onPointerHover:engine.internalOnPointerHover,
+      onPointerMove: engine.internalOnPointerMove,
       child: GestureDetector(
           onTapDown: engine.onTapDown,
           onLongPress: engine.onLongPress,

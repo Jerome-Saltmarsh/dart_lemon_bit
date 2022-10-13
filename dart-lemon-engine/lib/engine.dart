@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lemon_engine/callbacks.dart';
 import 'package:lemon_engine/device_type.dart';
 import 'package:lemon_engine/draw.dart';
 import 'package:lemon_engine/enums.dart';
@@ -24,13 +23,13 @@ import 'state/paint.dart';
 final engine = _Engine();
 
 class _Engine {
-  final callbacks = LemonEngineCallbacks();
   final draw = LemonEngineDraw();
   late final LemonEngineEvents events;
   var scrollSensitivity = 0.0005;
   var cameraSmoothFollow = true;
   var zoomSensitivity = 0.175;
   var targetZoom = 1.0;
+  var zoomOnScroll = true;
 
 
   final Map<LogicalKeyboardKey, int> keyboardState = {};
@@ -39,9 +38,7 @@ class _Engine {
   var previousUpdateTime = DateTime.now();
   final mouseLeftDown = Watch(false, onChanged: (bool value) {
     if (value) {
-      if (onLeftClicked != null) {
-        onLeftClicked!();
-      }
+        engine.onLeftClicked?.call();
     }
   });
   final mouseRightDown = Watch(false, onChanged: (bool value) {
@@ -155,7 +152,6 @@ class _Engine {
     paint.isAntiAlias = false;
     events = LemonEngineEvents();
     RawKeyboard.instance.addListener(events.onKeyboardEvent);
-    registerZoomCameraOnMouseScroll();
 
     mouseLeftDown.onChanged((bool leftDown) {
       if (!leftDown) mouseLeftDownFrames = 0;
@@ -163,7 +159,7 @@ class _Engine {
 
     mouseRightDown.onChanged((bool value) {
       if (value) {
-        callbacks.onRightClicked?.call();
+        onRightClicked?.call();
       }
     });
 
@@ -174,8 +170,12 @@ class _Engine {
     loadAtlas('images/atlas.png');
   }
 
-  void registerZoomCameraOnMouseScroll() {
-    callbacks.onMouseScroll = events.onMouseScroll;
+  void internalOnMouseScroll(double amount) {
+    if (zoomOnScroll) {
+      targetZoom -=  amount * scrollSensitivity;
+      targetZoom = targetZoom.clamp(0.2, 6);
+    }
+    onMouseScroll?.call(amount);
   }
 
   void mapColor(Color color) {
@@ -246,19 +246,16 @@ class _Engine {
 
   void clearCallbacks() {
     print("lemon-engine.clearCallbacks()");
-    // callbacks.onMouseMoved = null;
-    callbacks.onMouseScroll = null;
-    // callbacks.onMouseDragging = null;
-    // callbacks.onPanStarted = null;
-    callbacks.onLeftClicked = null;
-    callbacks.onLongLeftClicked = null;
-    callbacks.onKeyReleased = null;
-    callbacks.onKeyPressed = null;
-    callbacks.onKeyHeld = null;
+    onMouseScroll = null;
+    onLeftClicked = null;
+    onLongLeftClicked = null;
+    // onKeyReleased = null;
+    // onKeyPressed = null;
+    // onKeyHeld = null;
   }
 
   void setPaintColorWhite() {
-    setPaintColor(Colors.white);
+    paint.color = Colors.white;
   }
 
   void setPaintStrokeWidth(double value) {
@@ -270,21 +267,21 @@ class _Engine {
     paint.color = value;
   }
 
-  void onPointerMove(PointerMoveEvent event) {
+  void internalOnPointerMove(PointerMoveEvent event) {
     previousMousePosition.x = mousePosition.x;
     previousMousePosition.y = mousePosition.y;
     mousePosition.x = event.position.dx;
     mousePosition.y = event.position.dy;
   }
 
-  void onPointerHover(PointerHoverEvent event) {
+  void internalOnPointerHover(PointerHoverEvent event) {
     previousMousePosition.x = mousePosition.x;
     previousMousePosition.y = mousePosition.y;
     mousePosition.x = event.position.dx;
     mousePosition.y = event.position.dy;
   }
 
-  void onPointerUp(PointerUpEvent event) {
+  void internalOnPointerUp(PointerUpEvent event) {
     if (mouseLeftDown.value) {
       mouseLeftDown.value = false;
       return;
@@ -295,7 +292,7 @@ class _Engine {
     }
   }
 
-  void onPointerDown(PointerDownEvent event) {
+  void internalOnPointerDown(PointerDownEvent event) {
     if (event.buttons == 1) {
       mouseLeftDown.value = true;
       return;
@@ -306,9 +303,9 @@ class _Engine {
     }
   }
 
-  void onPointerSignal(PointerSignalEvent pointerSignalEvent) {
+  void internalOnPointerSignal(PointerSignalEvent pointerSignalEvent) {
     if (pointerSignalEvent is PointerScrollEvent) {
-      callbacks.onMouseScroll?.call(pointerSignalEvent.scrollDelta.dy);
+      internalOnMouseScroll(pointerSignalEvent.scrollDelta.dy);
     }
   }
 
@@ -331,6 +328,18 @@ class _Engine {
   DrawCanvas? onDrawCanvas;
   /// override safe
   DrawCanvas? onDrawForeground;
+  /// override safe
+  Function? onKeyPressedSpace;
+  /// override safe
+  Function? onLeftClicked;
+  /// override safe
+  Function? onLongLeftClicked;
+  /// override safe
+  Function(double value)? onMouseScroll;
+  /// override safe
+  Function? onRightClicked;
+  /// override safe
+  Function? onRightClickReleased;
 
   void internalOnPanStart(DragStartDetails details){
     panStarted = true;
