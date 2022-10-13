@@ -104,7 +104,7 @@ void renderNodeAt() {
         width: AtlasSrcX.Node_Tree_Bottom_Width,
         height: AtlasSrcX.Node_Tree_Bottom_Height,
         anchorY: 0.5,
-        color: renderNodeColor,
+        color: renderNodeBelowColor,
       );
     case NodeType.Tree_Top:
       // final f = raining.value ? animationFrame % 4 : -1;
@@ -117,7 +117,7 @@ void renderNodeAt() {
         width: AtlasSrcX.Node_Tree_Top_Width,
         height: AtlasSrcX.Node_Tree_Top_Height,
         anchorY: 0.5,
-        color: renderNodeBelowColor,
+        color: getRenderLayerColor(-2),
       );
       return;
     case NodeType.Grass_Long:

@@ -290,6 +290,16 @@ int get renderNodeBelowShade {
 
 int get renderNodeBelowColor => colorShades[renderNodeBelowShade];
 
+int getRenderLayerColor(int layers) =>
+  colorShades[getRenderLayerShade(layers)];
+
+int getRenderLayerShade(int layers){
+   final index = renderNodeIndex + (layers * nodesArea);
+   if (index < 0) return ambientShade.value;
+   if (index >= nodesTotal) return ambientShade.value;
+   return nodesShade[index];
+}
+
 
 class RenderOrderGrid extends RenderOrder {
   var rowsMax = 0;
