@@ -8,10 +8,8 @@ import 'package:gamestream_flutter/io/touchscreen.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric_web/read_player_input.dart';
 import 'package:gamestream_flutter/network/instance/websocket.dart';
-import 'package:lemon_engine/device_type.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/screen.dart';
-import 'package:universal_html/html.dart';
 
 final updateBuffer = Uint8List(17);
 

@@ -27,7 +27,6 @@ final engine = _Engine();
 class _Engine {
 
 
-
   final callbacks = LemonEngineCallbacks();
   final draw = LemonEngineDraw();
   late final LemonEngineEvents events;
@@ -41,14 +40,14 @@ class _Engine {
   var mousePosition = Vector2(0, 0);
   var previousMousePosition = Vector2(0, 0);
   var previousUpdateTime = DateTime.now();
-  final mouseLeftDown = Watch(false, onChanged: (bool value){
-    if (value){
-      if (onLeftClicked != null){
+  final mouseLeftDown = Watch(false, onChanged: (bool value) {
+    if (value) {
+      if (onLeftClicked != null) {
         onLeftClicked!();
       }
     }
   });
-  final mouseRightDown = Watch(false, onChanged: (bool value){
+  final mouseRightDown = Watch(false, onChanged: (bool value) {
 
   });
   var mouseLeftDownFrames = 0;
@@ -72,10 +71,31 @@ class _Engine {
   Function? update;
 
   bool get deviceIsComputer => deviceType.value == DeviceType.Computer;
+
   bool get deviceIsPhone => deviceType.value == DeviceType.Phone;
 
+  void internalSetScreenSize(double width, double height){
+    if (screen.width == width && screen.height == height) return;
+    if (!screen.initialized) {
+      screen.width = width;
+      screen.height = height;
+      return;
+    }
+    final previousScreenWidth = screen.width;
+    final previousScreenHeight = screen.height;
+    screen.width = width;
+    screen.height = height;
+    onScreenSizeChanged!.call(
+      previousScreenWidth,
+      previousScreenHeight,
+      screen.width,
+      screen.height,
+    );
+  }
+
   void toggleDeviceType() =>
-    deviceType.value = deviceIsComputer ? DeviceType.Phone : DeviceType.Computer;
+      deviceType.value =
+      deviceIsComputer ? DeviceType.Phone : DeviceType.Computer;
 
   var textPainter = TextPainter(
       textAlign: TextAlign.center,
@@ -83,14 +103,13 @@ class _Engine {
   );
 
   final Map<String, TextSpan> textSpans = {
-
   };
-  
+
   Future loadAtlas(String filename) async {
-      atlas = await loadImage(filename);
+    atlas = await loadImage(filename);
   }
 
-  void updateEngine(){
+  void updateEngine() {
     _screen.left = _camera.x;
     _screen.right = _camera.x + (_screen.width / zoom);
     _screen.top = _camera.y;
@@ -98,7 +117,8 @@ class _Engine {
     if (mouseLeftDown.value) {
       mouseLeftDownFrames++;
     }
-    deviceType.value = screen.width < 800 ? DeviceType.Phone : DeviceType.Computer;
+    deviceType.value =
+    screen.width < 800 ? DeviceType.Phone : DeviceType.Computer;
     update?.call();
     final sX = screenCenterWorldX;
     final sY = screenCenterWorldY;
@@ -112,15 +132,15 @@ class _Engine {
     }
   }
 
-  TextSpan getTextSpan(String text){
+  TextSpan getTextSpan(String text) {
     var value = textSpans[text];
     if (value != null) return value;
     value = TextSpan(style: TextStyle(color: Colors.white), text: text);
     textSpans[text] = value;
     return value;
   }
-  
-  void writeText(String text, double x, double y){
+
+  void writeText(String text, double x, double y) {
     textPainter.text = getTextSpan(text);
     textPainter.layout();
     textPainter.paint(canvas, Offset(x, y));
@@ -131,7 +151,7 @@ class _Engine {
 
   int get frame => drawFrame.value;
 
-  _Engine(){
+  _Engine() {
     WidgetsFlutterBinding.ensureInitialized();
     paint.filterQuality = FilterQuality.none;
     paint.isAntiAlias = false;
@@ -140,9 +160,9 @@ class _Engine {
     registerZoomCameraOnMouseScroll();
 
     mouseLeftDown.onChanged((bool leftDown) {
-       if (!leftDown) mouseLeftDownFrames = 0;
+      if (!leftDown) mouseLeftDownFrames = 0;
     });
-    
+
     mouseRightDown.onChanged((bool value) {
       if (value) {
         callbacks.onRightClicked?.call();
@@ -150,21 +170,22 @@ class _Engine {
     });
 
     document.onFullscreenChange.listen((event) {
-       fullScreen.value = fullScreenActive;
+      fullScreen.value = fullScreenActive;
     });
 
     loadAtlas('images/atlas.png');
   }
 
-  void registerZoomCameraOnMouseScroll(){
+  void registerZoomCameraOnMouseScroll() {
     callbacks.onMouseScroll = events.onMouseScroll;
   }
 
-  void mapColor(Color color){
+  void mapColor(Color color) {
     colors[bufferIndex] = color.value;
   }
 
-  void renderText(String text, double x, double y, {Canvas? other, TextStyle? style}) {
+  void renderText(String text, double x, double y,
+      {Canvas? other, TextStyle? style}) {
     textPainter.text = TextSpan(style: style ?? const TextStyle(), text: text);
     textPainter.layout();
     textPainter.paint(other ?? canvas, Offset(x, y));
@@ -184,7 +205,7 @@ class _Engine {
   //   renderIndex = 0;
   // }
 
-  void cameraFollow(double x, double y, double speed){
+  void cameraFollow(double x, double y, double speed) {
     final diffX = screenCenterWorldX - x;
     final diffY = screenCenterWorldY - y;
     camera.x -= (diffX * 75) * speed;
@@ -200,7 +221,7 @@ class _Engine {
     drawFrame.value++;
   }
 
-  void fullscreenToggle(){
+  void fullscreenToggle() {
     fullScreenActive ? fullScreenExit() : fullScreenEnter();
   }
 
@@ -208,7 +229,7 @@ class _Engine {
     document.exitFullscreen();
   }
 
-  void panCamera(){
+  void panCamera() {
     final positionX = screenToWorldX(mousePosition.x);
     final positionY = screenToWorldY(mousePosition.y);
     final previousX = screenToWorldX(previousMousePosition.x);
@@ -238,11 +259,11 @@ class _Engine {
     callbacks.onKeyHeld = null;
   }
 
-  void setPaintColorWhite(){
+  void setPaintColorWhite() {
     setPaintColor(Colors.white);
   }
 
-  void setPaintStrokeWidth(double value){
+  void setPaintStrokeWidth(double value) {
     paint.strokeWidth = value;
   }
 
@@ -251,14 +272,14 @@ class _Engine {
     paint.color = value;
   }
 
-  void onPointerMove (PointerMoveEvent event){
+  void onPointerMove(PointerMoveEvent event) {
     previousMousePosition.x = mousePosition.x;
     previousMousePosition.y = mousePosition.y;
     mousePosition.x = event.position.dx;
     mousePosition.y = event.position.dy;
   }
 
-  void onPointerHover (PointerHoverEvent event){
+  void onPointerHover(PointerHoverEvent event) {
     previousMousePosition.x = mousePosition.x;
     previousMousePosition.y = mousePosition.y;
     mousePosition.x = event.position.dx;
@@ -276,12 +297,12 @@ class _Engine {
     }
   }
 
-  void onPointerDown(PointerDownEvent event){
-    if (event.buttons == 1){
+  void onPointerDown(PointerDownEvent event) {
+    if (event.buttons == 1) {
       mouseLeftDown.value = true;
       return;
     }
-    if (event.buttons == 2){
+    if (event.buttons == 2) {
       mouseRightDown.value = true;
       return;
     }
@@ -292,7 +313,31 @@ class _Engine {
       callbacks.onMouseScroll?.call(pointerSignalEvent.scrollDelta.dy);
     }
   }
+
+  /// override safe. run this snippet inside your initialization code.
+  /// engine.onTapDown = (TapDownDetails details) => print('tap detected');
+  GestureTapDownCallback? onTapDown;
+  /// override safe
+  GestureLongPressCallback? onLongPress;
+  /// override safe
+  GestureDragStartCallback? onPanStart;
+
+  CallbackOnScreenSizeChanged? onScreenSizeChanged;
+
+  void internalOnPanStart(DragStartDetails details){
+    mouseDragging = true;
+    callbacks.onPanStarted?.call();
+    onPanStart?.call(details);
+  }
+
 }
+
+typedef CallbackOnScreenSizeChanged = void Function(
+  double previousWidth,
+    double previousHeight,
+    double newWidth,
+    double newHeight,
+);
 
 final keyboardInstance = RawKeyboard.instance;
 
@@ -320,16 +365,6 @@ double worldToScreenX(double x) {
 double worldToScreenY(double y) {
   return engine.zoom * (y - _camera.y);
 }
-
-// Future<ui.Image> loadImage(String url) async {
-//   final ByteData data = await rootBundle.load(url);
-//   final Uint8List img = Uint8List.view(data.buffer);
-//   final Completer<ui.Image> completer = new Completer();
-//   ui.decodeImageFromList(img, (ui.Image img) {
-//     return completer.complete(img);
-//   });
-//   return completer.future;
-// }
 
 double distanceFromMouse(double x, double y) {
   return distanceBetween(mouseWorldX, mouseWorldY, x, y);
@@ -366,6 +401,7 @@ abstract class KeyboardEventHandler {
 }
 
 class _Screen {
+  var initialized = false;
   var width = 0.0;
   var height = 0.0;
   var top = 0.0;

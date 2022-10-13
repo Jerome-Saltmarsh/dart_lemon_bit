@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/atlases.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/shared_preferences.dart';
@@ -20,6 +21,14 @@ Future init() async {
   atlas = Images.characters;
   engine.cursorType.value = CursorType.Basic;
   print("environment: ${isLocalHost ? 'localhost' : 'production'}");
+
+  engine.onTapDown = onTapDown;
+
+}
+
+
+void onTapDown(TapDownDetails details){
+  print('onTapDown()');
 }
 
 void initializeEventListeners() {

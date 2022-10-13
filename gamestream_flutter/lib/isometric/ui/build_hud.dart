@@ -62,6 +62,7 @@ Widget buildStackGame()  =>
         buildWatchBool(game.mapVisible, buildMiniMap),
         watch(game.edit, buildPlayMode),
         buildWatchBool(debugVisible, buildHudDebug),
+        // https://stackoverflow.com/questions/67147229/how-can-i-detect-multiple-touches-in-flutter
         Positioned(
             bottom: 0,
             left: 0,
@@ -108,6 +109,34 @@ Widget buildStackGame()  =>
                            left: sizeThird,
                            child: container(width: sizeThird, height: sizeThird, color: Colors.green, action: (){
                              Touchscreen.direction = Direction.None;
+                           })
+                       ),
+                       Positioned(
+                           top: 0,
+                           left: 0,
+                           child: container(width: sizeThird, height: sizeThird, color: Colors.orange, action: (){
+                             Touchscreen.direction = Direction.North;
+                           })
+                       ),
+                       Positioned(
+                           top: 0,
+                           right: 0,
+                           child: container(width: sizeThird, height: sizeThird, color: Colors.orange, action: (){
+                             Touchscreen.direction = Direction.East;
+                           })
+                       ),
+                       Positioned(
+                           bottom: 0,
+                           right: 0,
+                           child: container(width: sizeThird, height: sizeThird, color: Colors.orange, action: (){
+                             Touchscreen.direction = Direction.South;
+                           })
+                       ),
+                       Positioned(
+                           bottom: 0,
+                           left: 0,
+                           child: container(width: sizeThird, height: sizeThird, color: Colors.orange, action: (){
+                             Touchscreen.direction = Direction.West;
                            })
                        ),
                      ],

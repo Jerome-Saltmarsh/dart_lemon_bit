@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 import 'package:lemon_watch/watch_builder.dart';
+
 import 'canvas.dart';
 import 'enums.dart';
 import 'state/paint.dart';
@@ -23,6 +24,8 @@ class Game extends StatefulWidget {
   final WidgetBuilder buildUI;
   final DrawCanvas drawCanvasForeground;
   final int framesPerSecond;
+
+
 
   Game({
       required this.title,
@@ -90,11 +93,13 @@ class _GameState extends State<Game> {
             return LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
                 engine.buildContext = context;
+                engine.internalSetScreenSize(constraints.maxWidth, constraints.maxHeight);
+
                 engine.screen.width = constraints.maxWidth;
                 engine.screen.height = constraints.maxHeight;
                 return Stack(
                   children: [
-                    _buildCanvas(context),
+                    buildCanvas(context),
                     widget.buildUI(context),
                   ],
                 );
@@ -107,7 +112,7 @@ class _GameState extends State<Game> {
     });
   }
 
-  Widget _buildCanvas(BuildContext context) {
+  Widget buildCanvas(BuildContext context) {
     final child = Listener(
       onPointerSignal: engine.onPointerSignal,
       onPointerDown: engine.onPointerDown,
@@ -115,9 +120,8 @@ class _GameState extends State<Game> {
       onPointerHover:engine.onPointerHover,
       onPointerMove: engine.onPointerMove,
       child: GestureDetector(
-          onLongPress: (){
-            engine.callbacks.onLongLeftClicked?.call();
-          },
+          onTapDown: engine.onTapDown,
+          onLongPress: engine.onLongPress,
           onPanStart: (start) {
             engine.mouseDragging = true;
             engine.callbacks.onPanStarted?.call();
