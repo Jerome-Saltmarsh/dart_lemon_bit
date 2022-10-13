@@ -32,9 +32,9 @@ class AtlasSrcX {
   static const Node_Brick_Corner_Right = Node_Brick_Corner_Top + Sprite_Width_Padded;
   static const Node_Brick_Corner_Bottom = Node_Brick_Corner_Right + Sprite_Width_Padded;
   static const Node_Brick_Corner_Left = Node_Brick_Corner_Bottom + Sprite_Width_Padded;
-  static const Node_Grass_Long = 1220.0;
-  static const Node_Stone = 1269.0;
-  static const Node_Plain_Solid = 1389.0;
+  static const Node_Grass_Long = 1218.0;
+  static const Node_Stone = 1508.0;
+  static const Node_Plain_Solid = 1557.0;
   static const Node_Plain_Half_Row_X = Node_Plain_Solid;
   static const Node_Plain_Half_Row_Y = Sprite_Height_Padded;
   static const Node_Plain_Half_Column_X = Node_Plain_Solid;

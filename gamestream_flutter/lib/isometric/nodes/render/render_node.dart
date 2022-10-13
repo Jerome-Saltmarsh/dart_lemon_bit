@@ -126,12 +126,12 @@ void renderNodeAt() {
       switch (nodesWind[renderNodeIndex]) {
         case windIndexCalm:
           return renderStandardNode(
-            srcX: 10118,
+            srcX: AtlasSrcX.Node_Grass_Long,
             srcY: spriteHeight * nodesShade[renderNodeIndex],
           );
         default:
           return renderStandardNode(
-              srcX: 10240 + ((((renderNodeRow - renderNodeColumn) + animationFrameGrass) % 6) * 48),
+              srcX: AtlasSrcX.Node_Grass_Long + ((((renderNodeRow - renderNodeColumn) + animationFrameGrass) % 6) * 48),
               srcY: spriteHeight * nodesShade[renderNodeIndex],
           );
       }

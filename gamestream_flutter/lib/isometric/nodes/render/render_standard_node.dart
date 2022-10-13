@@ -29,3 +29,20 @@ void renderStandardNode({
   _dst[3] = renderNodeDstY - spriteHeightThird;
   canvas.drawRawAtlas(Images.blocks, _dst, _src, _colors, BlendMode.dstATop, null, paint);
 }
+
+void renderNonStandardNode({
+  required double srcX,
+  required double srcY,
+  int color = 1,
+}){
+  _colors[0] = color;
+  _src[0] = srcX;
+  _dst[0] = 1;
+  _src[1] = srcY;
+  _dst[1] = 0;
+  _src[2] = srcX + spriteWidth;
+  _dst[2] = renderNodeDstX - spriteWidthHalf;
+  _src[3] = srcY + spriteHeight;
+  _dst[3] = renderNodeDstY - spriteHeightThird;
+  canvas.drawRawAtlas(Images.blocks, _dst, _src, _colors, BlendMode.dstATop, null, paint);
+}
