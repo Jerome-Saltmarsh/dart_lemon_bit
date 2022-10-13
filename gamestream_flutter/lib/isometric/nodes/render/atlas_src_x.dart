@@ -116,9 +116,11 @@ class AtlasSrcX {
   static const Node_Bau_Haus_Slope_Inner_South_West_Y = Node_Bau_Haus_Slope_Inner_South_East_Y + Sprite_Height_Padded;
   static const Node_Bau_Haus_Slope_Inner_North_West_X = Node_Bau_Haus_Slope_North_X;
   static const Node_Bau_Haus_Slope_Inner_North_West_Y = Node_Bau_Haus_Slope_Inner_South_West_Y + Sprite_Height_Padded;
+  static const Node_Sunflower_X = 618.0;
+  static const Node_Sunflower_Y = 512.0;
+  static const Node_Soil_X = 618.0;
+  static const Node_Soil_Y = 584.0;
 
-  static const Node_Sunflower = 10934.0;
-  static const Node_Soil = 8320.0;
   static const Node_Boulder = 11769.0;
   static const Node_Oven = 10984.0;
   static const Node_Chimney = 10787.0;

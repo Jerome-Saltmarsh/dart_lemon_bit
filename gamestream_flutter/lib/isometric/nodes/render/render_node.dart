@@ -172,17 +172,17 @@ void renderNodeAt() {
       renderNodeBauHaus();
       break;
     case NodeType.Sunflower:
-      return renderStandardNode(
-          srcX: AtlasSrcX.Node_Sunflower,
-          srcY: 0,
-          color: colorShades[nodesShade[renderNodeIndex]],
+      renderStandardNodeShaded(
+          srcX: AtlasSrcX.Node_Sunflower_X,
+          srcY: AtlasSrcX.Node_Sunflower_Y,
       );
+      return;
     case NodeType.Soil:
-      return renderStandardNode(
-        srcX: AtlasSrcX.Node_Soil,
-        srcY: 0,
-        color: colorShades[nodesShade[renderNodeIndex]],
+      renderStandardNodeShaded(
+        srcX: AtlasSrcX.Node_Soil_X,
+        srcY: AtlasSrcX.Node_Soil_Y,
       );
+      return;
     case NodeType.Fireplace:
       return render(
         dstX: renderNodeDstX,
