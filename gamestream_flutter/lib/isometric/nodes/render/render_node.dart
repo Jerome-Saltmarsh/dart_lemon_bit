@@ -176,12 +176,8 @@ void renderNodeAt() {
           color: colorShades[nodesShade[renderNodeIndex]],
       );
     case NodeType.Plain:
-      return renderNodePlain(
-        orientation: nodesOrientation[renderNodeIndex],
-        dstX: renderNodeDstX,
-        dstY: renderNodeDstY,
-        color: colorShades[nodesShade[renderNodeIndex]],
-      );
+      renderNodePlain();
+      return;
     case NodeType.Wooden_Plank:
       return renderNodeWoodenPlank(
         orientation: nodesOrientation[renderNodeIndex],

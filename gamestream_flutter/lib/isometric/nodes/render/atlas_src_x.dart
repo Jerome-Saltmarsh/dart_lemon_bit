@@ -1,43 +1,53 @@
 
-import 'render_constants.dart';
-
-
-
 class AtlasSrcX {
-  static const Sprite_Width = 48;
-  /// Padded width each sprite is separated by one empty pixel
-  static const Width = Sprite_Width + 1;
+  static const Sprite_Width = 48.0;
+  static const Sprite_Height = 72.0;
+  static const Sprite_Width_Padded = Sprite_Width + 1;
+  static const Sprite_Height_Padded = Sprite_Height + 1;
+
   static const Node_Grass = 0.0;
-  static const Node_Grass_Flowers = Node_Grass + Width;
-  static const Node_Grass_Slope_North = Node_Grass_Flowers + Width;
-  static const Node_Grass_Slope_East = Node_Grass_Slope_North + Width;
-  static const Node_Grass_Slope_South = Node_Grass_Slope_East + Width;
-  static const Node_Grass_Slope_West = Node_Grass_Slope_South + Width;
-  static const Node_Grass_Slope_Inner_South_East = Node_Grass_Slope_West + Width;
-  static const Node_Grass_Slope_Inner_North_East = Node_Grass_Slope_Inner_South_East + Width;
-  static const Node_Grass_Slope_Inner_North_West = Node_Grass_Slope_Inner_North_East + Width;
-  static const Node_Grass_Slope_Inner_South_West = Node_Grass_Slope_Inner_North_West + Width;
-  static const Node_Grass_Slope_Outer_South_East = Node_Grass_Slope_Inner_South_West + Width;
-  static const Node_Grass_Slope_Outer_North_East = Node_Grass_Slope_Outer_South_East + Width;
-  static const Node_Grass_Slope_Outer_North_West = Node_Grass_Slope_Outer_North_East + Width;
-  static const Node_Grass_Slope_Outer_South_West = Node_Grass_Slope_Outer_North_West + Width;
+  static const Node_Grass_Flowers = Node_Grass + Sprite_Width_Padded;
+  static const Node_Grass_Slope_North = Node_Grass_Flowers + Sprite_Width_Padded;
+  static const Node_Grass_Slope_East = Node_Grass_Slope_North + Sprite_Width_Padded;
+  static const Node_Grass_Slope_South = Node_Grass_Slope_East + Sprite_Width_Padded;
+  static const Node_Grass_Slope_West = Node_Grass_Slope_South + Sprite_Width_Padded;
+  static const Node_Grass_Slope_Inner_South_East = Node_Grass_Slope_West + Sprite_Width_Padded;
+  static const Node_Grass_Slope_Inner_North_East = Node_Grass_Slope_Inner_South_East + Sprite_Width_Padded;
+  static const Node_Grass_Slope_Inner_North_West = Node_Grass_Slope_Inner_North_East + Sprite_Width_Padded;
+  static const Node_Grass_Slope_Inner_South_West = Node_Grass_Slope_Inner_North_West + Sprite_Width_Padded;
+  static const Node_Grass_Slope_Outer_South_East = Node_Grass_Slope_Inner_South_West + Sprite_Width_Padded;
+  static const Node_Grass_Slope_Outer_North_East = Node_Grass_Slope_Outer_South_East + Sprite_Width_Padded;
+  static const Node_Grass_Slope_Outer_North_West = Node_Grass_Slope_Outer_North_East + Sprite_Width_Padded;
+  static const Node_Grass_Slope_Outer_South_West = Node_Grass_Slope_Outer_North_West + Sprite_Width_Padded;
   static const Node_Brick = 680.0;
   static const Node_Brick_Half_North = Node_Brick + Sprite_Width;
   static const Node_Brick_Half_East = Node_Brick_Half_North + Sprite_Width;
   static const Node_Brick_Half_South = Node_Brick_Half_North;
   static const Node_Brick_Half_West = Node_Brick_Half_East;
-  static const Node_Brick_Slope_North = Node_Brick + Sprite_Width;
-  static const Node_Brick_Slope_East = 7443.0;
-  static const Node_Brick_Slope_South = 7492.0;
-  static const Node_Brick_Slope_West = 7541.0;
-
+  static const Node_Brick_Slope_North = 1023.0;
+  static const Node_Brick_Slope_East = Node_Brick_Slope_North + Sprite_Width_Padded;
+  static const Node_Brick_Slope_South = Node_Brick_Slope_East + Sprite_Width_Padded;
+  static const Node_Brick_Slope_West = Node_Brick_Slope_South + Sprite_Width_Padded;
   static const Node_Brick_Corner_Top = 11524.0;
-  static const Node_Brick_Corner_Right = Node_Brick_Corner_Top + spriteWidthPadded;
-  static const Node_Brick_Corner_Bottom = Node_Brick_Corner_Right + spriteWidthPadded;
-  static const Node_Brick_Corner_Left = Node_Brick_Corner_Bottom + spriteWidthPadded;
-  static const Node_Grass_Long = 10240.0 + srcIndexX1;
-  static const Node_Stone = 9831.0;
-  static const Node_Plain_Solid = 11277.0;
+  static const Node_Brick_Corner_Right = Node_Brick_Corner_Top + Sprite_Width_Padded;
+  static const Node_Brick_Corner_Bottom = Node_Brick_Corner_Right + Sprite_Width_Padded;
+  static const Node_Brick_Corner_Left = Node_Brick_Corner_Bottom + Sprite_Width_Padded;
+  static const Node_Grass_Long = 1220.0;
+  static const Node_Stone = 1269.0;
+  static const Node_Plain_Solid = 1389.0;
+  static const Node_Plain_Half_Row_X = Node_Plain_Solid;
+  static const Node_Plain_Half_Row_Y = Sprite_Height_Padded;
+  static const Node_Plain_Half_Column_X = Node_Plain_Solid;
+  static const Node_Plain_Half_Column_Y = Sprite_Height_Padded * 2;
+  static const Node_Plain_Corner_Top_X = Node_Plain_Solid;
+  static const Node_Plain_Corner_Top_Y = Sprite_Height_Padded * 6;
+  static const Node_Plain_Corner_Right_X = Node_Plain_Solid;
+  static const Node_Plain_Corner_Right_Y = Sprite_Height_Padded * 5;
+  static const Node_Plain_Corner_Bottom_X = Node_Plain_Solid;
+  static const Node_Plain_Corner_Bottom_Y = Sprite_Height_Padded * 4;
+  static const Node_Plain_Corner_Left_X = Node_Plain_Solid;
+  static const Node_Plain_Corner_Left_Y = Sprite_Height_Padded * 3;
+
   static const Node_Wooden_Plank = 7688.0;
   static const Node_Wood_Solid = 8886.0;
   static const Node_Wood_Slope_North = 11179.0;
