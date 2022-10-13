@@ -15,15 +15,6 @@ final isLocalHost = Uri.base.host == 'localhost'; // TODO move to lemon-engine
 Future init() async {
   await loadSharedPreferences();
   initializeEventListeners();
-  // loadImage('images/pixel.png').then((value) async {
-  //    final data = await value.toByteData();
-  //    if (data == null) return;
-  //    final bytes = Uint8List.view(data.buffer);
-  //    print("pixel-data");
-  //    final buffer = await ImmutableBuffer.fromUint8List(Uint8List(4));
-  //    ImageDescriptor.raw(buffer, width: 1, height: 1, pixelFormat: PixelFormat.rgba8888);
-  //    print(bytes);
-  // });
   Images.mapAtlas = await loadImage('images/atlas-map.png');
   Images.blocks = await loadImage('images/atlas-blocks.png');
   Images.characters = await loadImage('images/atlas-characters.png');
