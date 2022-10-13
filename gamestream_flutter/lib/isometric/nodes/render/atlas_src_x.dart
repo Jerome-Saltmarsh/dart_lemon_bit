@@ -139,14 +139,21 @@ class AtlasSrcX {
   static const Node_Wooden_Plank_Corner_Bottom_Y = Node_Wooden_Plank_Corner_Right_Y + Sprite_Height_Padded;
   static const Node_Wooden_Plank_Corner_Left_X = Node_Wooden_Plank_Solid_X;
   static const Node_Wooden_Plank_Corner_Left_Y = Node_Wooden_Plank_Corner_Bottom_Y + Sprite_Height_Padded;
+  static const Node_Spawn_X = 618.0;
+  static const Node_Spawn_Y = 1021.0;
+  static const Node_Table_X = 667.0;
+  static const Node_Table_Y = 945.0;
+  static const Node_Wood_Slope_North_X = 912.0;
+  static const Node_Wood_Slope_North_Y = 512.0;
+  static const Node_Wood_Slope_East_X = Node_Wood_Slope_North_X - Sprite_Width_Padded;
+  static const Node_Wood_Slope_East_Y = Node_Wood_Slope_North_Y;
+  static const Node_Wood_Slope_South_X = Node_Wood_Slope_East_X - Sprite_Width_Padded;
+  static const Node_Wood_Slope_South_Y = Node_Wood_Slope_North_Y;
+  static const Node_Wood_Slope_West_X = Node_Wood_Slope_South_X - Sprite_Width_Padded;
+  static const Node_Wood_Slope_West_Y = Node_Wood_Slope_North_Y;
 
-  static const Node_Wood_Slope_North = 11179.0;
-  static const Node_Wood_Slope_East = 11130.0;
-  static const Node_Wood_Slope_South = 11082.0;
-  static const Node_Wood_Slope_West = 11032.0;
-
-  static const Node_Spawn = 8752.0;
-  static const Node_Table = 7639.0;
-  static const Node_Bed_Bottom = 10836.0;
-  static const Node_Bed_Top = 10885.0;
+  static const Node_Bed_Bottom_X = 765.0;
+  static const Node_Bed_Bottom_Y = 585.0;
+  static const Node_Bed_Top_X = Node_Bed_Bottom_X + Sprite_Width_Padded;
+  static const Node_Bed_Top_Y = Node_Bed_Bottom_Y;
 }

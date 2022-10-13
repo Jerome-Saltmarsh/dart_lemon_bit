@@ -212,43 +212,43 @@ void renderNodeAt() {
     case NodeType.Spawn:
       if (playMode) return;
       renderStandardNode(
-        srcX: AtlasSrcX.Node_Spawn,
-        srcY: 0,
+        srcX: AtlasSrcX.Node_Spawn_X,
+        srcY: AtlasSrcX.Node_Spawn_Y,
       );
       break;
     case NodeType.Spawn_Weapon:
       if (playMode) return;
       renderStandardNode(
-        srcX: AtlasSrcX.Node_Spawn,
-        srcY: 0,
+        srcX: AtlasSrcX.Node_Spawn_X,
+        srcY: AtlasSrcX.Node_Spawn_Y,
       );
       break;
     case NodeType.Spawn_Player:
       if (playMode) return;
       renderStandardNode(
-        srcX: AtlasSrcX.Node_Spawn,
-        srcY: 0,
+        srcX: AtlasSrcX.Node_Spawn_X,
+        srcY: AtlasSrcX.Node_Spawn_Y,
       );
       break;
-    case NodeType.Respawning:
-      return;
     case NodeType.Table:
       renderStandardNode(
-        srcX: AtlasSrcX.Node_Table,
-        srcY: 0,
+        srcX: AtlasSrcX.Node_Table_X,
+        srcY: AtlasSrcX.Node_Table_Y,
       );
       return;
     case NodeType.Bed_Top:
       renderStandardNode(
-        srcX: AtlasSrcX.Node_Bed_Top,
-        srcY: 0,
+        srcX: AtlasSrcX.Node_Bed_Top_X,
+        srcY: AtlasSrcX.Node_Bed_Top_Y,
       );
       return;
     case NodeType.Bed_Bottom:
       renderStandardNode(
-        srcX: AtlasSrcX.Node_Bed_Bottom,
-        srcY: 0,
+        srcX: AtlasSrcX.Node_Bed_Bottom_X,
+        srcY: AtlasSrcX.Node_Bed_Bottom_Y,
       );
+      return;
+    case NodeType.Respawning:
       return;
     default:
       throw Exception('renderNode(index: $renderNodeIndex, type: ${NodeType.getName(renderNodeType)}, orientation: ${NodeOrientation.getName(nodesOrientation[renderNodeIndex])}');

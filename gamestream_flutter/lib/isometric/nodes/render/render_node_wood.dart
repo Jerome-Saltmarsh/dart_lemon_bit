@@ -15,32 +15,32 @@ void renderNodeWood(){
       return;
     case NodeOrientation.Slope_North:
       renderStandardNodeShaded(
-        srcX: AtlasSrcX.Node_Wood_Slope_North,
-        srcY: 0,
+        srcX: AtlasSrcX.Node_Wood_Slope_North_X,
+        srcY: AtlasSrcX.Node_Wood_Slope_North_Y,
       );
       return;
     case NodeOrientation.Slope_East:
       renderStandardNodeShaded(
-        srcX: AtlasSrcX.Node_Wood_Slope_East,
-        srcY: 0,
+        srcX: AtlasSrcX.Node_Wood_Slope_East_X,
+        srcY: AtlasSrcX.Node_Wood_Slope_East_Y,
       );
       return;
     case NodeOrientation.Slope_South:
       renderStandardNodeShaded(
-        srcX: AtlasSrcX.Node_Wood_Slope_South,
-        srcY: 0,
+        srcX: AtlasSrcX.Node_Wood_Slope_South_X,
+        srcY: AtlasSrcX.Node_Wood_Slope_South_Y,
       );
       return;
     case NodeOrientation.Slope_West:
-      renderStandardNode(
-        srcX: AtlasSrcX.Node_Wood_Slope_West,
-        srcY: 0,
+      renderStandardNodeShaded(
+        srcX: AtlasSrcX.Node_Wood_Slope_West_X,
+        srcY: AtlasSrcX.Node_Wood_Slope_West_Y,
       );
       return;
     case NodeOrientation.Half_North:
       renderStandardNodeHalfNorth(
-        srcX: AtlasSrcX.Node_Wood_Half_South_X,
-        srcY: AtlasSrcX.Node_Wood_Half_South_Y,
+        srcX: AtlasSrcX.Node_Wood_Slope_North_X,
+        srcY: AtlasSrcX.Node_Wood_Slope_North_Y,
         color: renderNodeColor,
       );
       return;
