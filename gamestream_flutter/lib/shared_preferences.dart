@@ -1,21 +1,21 @@
 
 import 'package:gamestream_flutter/control/classes/authentication.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-late SharedPreferences sharedPreferences;
 
 final storage = _Storage();
 final _keys = _Keys();
 
 class _Storage {
-  bool get serverSaved => sharedPreferences.containsKey(_keys.server);
-  int? get _serverIndex => sharedPreferences.getInt(_keys.server);
+
+  bool get serverSaved => engine.sharedPreferences.containsKey(_keys.server);
+  int? get _serverIndex => engine.sharedPreferences.getInt(_keys.server);
   Region get serverType => regions[_serverIndex ?? Region.Australia.index];
 
   void saveServerType(Region value){
     print("storage.saveServerType($value)");
-    sharedPreferences.setInt('server', value.index);
+    engine.sharedPreferences.setInt('server', value.index);
   }
 
   void rememberAuthorization(Authentication authorization){
@@ -26,9 +26,9 @@ class _Storage {
   }
 
   void forgetAuthorization(){
-    sharedPreferences.remove(_keys.userId);
-    sharedPreferences.remove(_keys.userEmail);
-    sharedPreferences.remove(_keys.userName);
+    engine.sharedPreferences.remove(_keys.userId);
+    engine.sharedPreferences.remove(_keys.userEmail);
+    engine.sharedPreferences.remove(_keys.userName);
   }
 
   Authentication recallAuthorization() {
@@ -42,12 +42,12 @@ class _Storage {
     );
   }
 
-  bool get authorizationRemembered => sharedPreferences.containsKey(_keys.userId);
+  bool get authorizationRemembered => engine.sharedPreferences.containsKey(_keys.userId);
 
   String get userId => get(_keys.userId);
 
   void remove(String key){
-    sharedPreferences.remove(key);
+    engine.sharedPreferences.remove(key);
   }
 
   void put(String key, dynamic value){
@@ -59,27 +59,27 @@ class _Storage {
     }
 
     if (value is String){
-      sharedPreferences.setString(key, value);
+      engine.sharedPreferences.setString(key, value);
       return;
     }
 
     if (value is int){
-      sharedPreferences.setInt(key, value);
+      engine.sharedPreferences.setInt(key, value);
       return;
     }
 
     if (value is double){
-      sharedPreferences.setDouble(key, value);
+      engine.sharedPreferences.setDouble(key, value);
       return;
     }
 
     if (value is bool){
-      sharedPreferences.setBool(key, value);
+      engine.sharedPreferences.setBool(key, value);
       return;
     }
 
     if (value is DateTime){
-      sharedPreferences.setString(key, value.toIso8601String());
+      engine.sharedPreferences.setString(key, value.toIso8601String());
       return;
     }
 
@@ -87,27 +87,27 @@ class _Storage {
   }
 
   bool contains(String key){
-    return sharedPreferences.containsKey(key);
+    return engine.sharedPreferences.containsKey(key);
   }
 
   T get<T>(String key){
-    if (!sharedPreferences.containsKey(key)){
+    if (!engine.sharedPreferences.containsKey(key)){
       throw Exception('shared preference does not contain key $key');
     }
     if (T == int){
-      return sharedPreferences.getInt(key) as T;
+      return engine.sharedPreferences.getInt(key) as T;
     }
     if (T == double){
-      return sharedPreferences.getDouble(key) as T;
+      return engine.sharedPreferences.getDouble(key) as T;
     }
     if (T == String){
-      return sharedPreferences.getString(key) as T;
+      return engine.sharedPreferences.getString(key) as T;
     }
     if (T == bool){
-      return sharedPreferences.getBool(key) as T;
+      return engine.sharedPreferences.getBool(key) as T;
     }
     if (T.toString().startsWith('DateTime')){
-      return DateTime.parse(sharedPreferences.getString(key)!) as T;
+      return DateTime.parse(engine.sharedPreferences.getString(key)!) as T;
     }
     throw Exception("cannot get value for key $key");
   }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'canvas.dart';
 import 'enums.dart';
@@ -15,17 +16,14 @@ void _defaultDrawCanvasForeground(Canvas canvas, Size size) {
 class Game extends StatefulWidget {
   final String title;
   final Map<String, WidgetBuilder>? routes;
-  final Function init;
   final WidgetBuilder? buildLoadingScreen;
   final WidgetBuilder buildUI;
   final DrawCanvas drawCanvasForeground;
   final int framesPerSecond;
 
-
-
   Game({
       required this.title,
-      required this.init,
+      required Function(SharedPreferences sharedPreferences) init,
       required Function update,
       required this.buildUI,
       this.buildLoadingScreen,
@@ -42,29 +40,18 @@ class Game extends StatefulWidget {
     engine.themeData.value = themeData;
     engine.onDrawCanvas = drawCanvas;
     engine.update = update;
+    engine.onInit = init;
   }
 
   @override
   _GameState createState() => _GameState();
 }
 
-
-
-
-
 class _GameState extends State<Game> {
   @override
   void initState() {
     super.initState();
-    print("lemon_engine.init()");
-    _internalInit();
-  }
-
-  Future _internalInit() async {
-    engine.disableRightClickContextMenu();
-    paint.isAntiAlias = false;
-    await widget.init();
-    engine.initialized.value = true;
+    engine.internalInit();
   }
 
   @override

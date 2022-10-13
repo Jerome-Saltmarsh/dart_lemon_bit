@@ -1,8 +1,8 @@
 
 import 'package:bleed_common/client_request.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
-import 'package:gamestream_flutter/modules/core/init.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
+import 'package:lemon_engine/engine.dart';
 
 import 'network/instance/websocket.dart';
 
@@ -32,7 +32,7 @@ void connectToServer(String uri, String message){
 }
 
 final List<Region> selectableServerTypes =
-    regions.where((type) => (isLocalHost || type != Region.LocalHost)
+    regions.where((type) => (engine.isLocalHost || type != Region.LocalHost)
     ).toList();
 
 class ServerUri {

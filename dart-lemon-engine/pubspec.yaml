@@ -14,4 +14,5 @@ dependencies:
   lemon_math:
       path: C:\Users\Jerome\github\dart-lemon-math
   universal_html: ^2.0.8
+  shared_preferences: ^2.0.11
 

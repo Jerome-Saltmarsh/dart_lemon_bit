@@ -1,4 +1,4 @@
-import 'package:gamestream_flutter/modules/core/init.dart';
+import 'package:lemon_engine/engine.dart';
 
 enum OperationStatus {
   None,
@@ -33,7 +33,7 @@ enum Region {
 final List<Region> regions = Region.values;
 
 final selectableRegions = regions.where((element){
-  if (element == Region.LocalHost && !isLocalHost) return false;
+  if (element == Region.LocalHost && !engine.isLocalHost) return false;
   return true;
 }).toList();
 

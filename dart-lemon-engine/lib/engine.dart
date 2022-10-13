@@ -12,6 +12,7 @@ import 'package:lemon_engine/events.dart';
 import 'package:lemon_engine/state/atlas.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_html/html.dart';
 
 import 'actions.dart';
@@ -23,6 +24,7 @@ import 'state/paint.dart';
 final engine = _Engine();
 
 class _Engine {
+  late final sharedPreferences;
   final draw = LemonEngineDraw();
   late final LemonEngineEvents events;
   var scrollSensitivity = 0.0005;
@@ -54,7 +56,8 @@ class _Engine {
   final notifierPaintFrame = ValueNotifier<int>(0);
   final notifierPaintForeground = ValueNotifier<int>(0);
   final screen = _Screen();
-  final initialized = Watch(false);
+  final initialized = Watch(false, onChanged: (bool value){
+  });
   final cursorType = Watch(CursorType.Precise);
   var panStarted = false;
   final camera = Vector2(0, 0);
@@ -63,11 +66,15 @@ class _Engine {
   late BuildContext buildContext;
   Function? update;
 
+
+
   bool get deviceIsComputer => deviceType.value == DeviceType.Computer;
 
   bool get deviceIsPhone => deviceType.value == DeviceType.Phone;
 
   BuildContext? context;
+
+  bool get isLocalHost => Uri.base.host == 'localhost';
 
   void internalSetScreenSize(double width, double height){
     if (screen.width == width && screen.height == height) return;
@@ -340,6 +347,8 @@ class _Engine {
   Function? onRightClicked;
   /// override safe
   Function? onRightClickReleased;
+  /// override safe
+  Function(SharedPreferences sharedPreferences)? onInit;
 
   void internalOnPanStart(DragStartDetails details){
     panStarted = true;
@@ -359,6 +368,18 @@ class _Engine {
     if (onDrawCanvas == null) return;
     onDrawCanvas!.call(canvas, size);
     engineRenderFlushBuffer();
+  }
+
+  void internalInit() async {
+    print("engine.internalInit()");
+    disableRightClickContextMenu();
+    paint.isAntiAlias = false;
+    sharedPreferences = await SharedPreferences.getInstance();
+    print("sharedPreferences ready");
+    if (onInit != null) {
+      await onInit!(sharedPreferences);
+    }
+    initialized.value = true;
   }
 }
 
