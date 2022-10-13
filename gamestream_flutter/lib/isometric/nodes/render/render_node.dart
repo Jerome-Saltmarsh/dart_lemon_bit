@@ -15,7 +15,6 @@ import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/render/render_torch.dart';
 import 'package:gamestream_flutter/isometric/variables/src_x_rain_falling.dart';
 import 'package:gamestream_flutter/isometric/variables/src_x_rain_landing.dart';
-import 'package:gamestream_flutter/isometric/watches/raining.dart';
 import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
 import 'package:lemon_engine/actions/render_atlas.dart';
 import 'package:lemon_engine/render.dart';
@@ -94,52 +93,52 @@ void renderNodeAt() {
         srcWidth: spriteWidth,
         srcHeight: spriteHeight,
         anchorY: 0.3334,
-        color: colorShades[nodesShade[renderNodeIndex]],
+        color: renderNodeColor,
       );
     case NodeType.Tree_Bottom:
-      return render(
+      return renderAdvanced(
         dstX: renderNodeDstX,
         dstY: renderNodeDstY,
-        srcX: 1478,
-        srcY: 0,
-        srcWidth: 62.0,
-        srcHeight: 74.0,
+        srcX: AtlasSrcX.Node_Tree_Bottom_X,
+        srcY: AtlasSrcX.Node_Tree_Bottom_Y,
+        width: AtlasSrcX.Node_Tree_Bottom_Width,
+        height: AtlasSrcX.Node_Tree_Bottom_Height,
         anchorY: 0.5,
-        color: colorShades[nodesShade[renderNodeIndex]],
+        color: renderNodeColor,
       );
     case NodeType.Tree_Top:
-      final f = raining.value ? animationFrame % 4 : -1;
-      var shift = treeAnimation[((renderNodeRow - renderNodeColumn) + animationFrame) % treeAnimation.length] * nodesWind[renderNodeIndex];
-      final nodeBelowShade = nodesShade[getNodeIndexZRC(renderNodeZ > 0 ? renderNodeZ - 1 : renderNodeZ, renderNodeRow, renderNodeColumn)];
-
-      return render(
+      // final f = raining.value ? animationFrame % 4 : -1;
+      var shift = treeAnimation[((renderNodeRow - renderNodeColumn) + animationFrame) % treeAnimation.length] * renderNodeWind;
+      renderAdvanced(
         dstX: renderNodeDstX + (shift * 0.5),
         dstY: renderNodeDstY,
-        srcX: 1541,
-        srcY: 74.0 + (74 * f),
-        srcWidth: 62.0,
-        srcHeight: 74.0,
+        srcX: AtlasSrcX.Node_Tree_Top_X,
+        srcY: AtlasSrcX.Node_Tree_Top_Y,
+        width: AtlasSrcX.Node_Tree_Top_Width,
+        height: AtlasSrcX.Node_Tree_Top_Height,
         anchorY: 0.5,
-        color: colorShades[nodeBelowShade],
+        color: renderNodeBelowColor,
       );
+      return;
     case NodeType.Grass_Long:
       switch (nodesWind[renderNodeIndex]) {
         case windIndexCalm:
-          return renderStandardNode(
+          renderStandardNode(
             srcX: AtlasSrcX.Node_Grass_Long,
-            srcY: spriteHeight * nodesShade[renderNodeIndex],
+            srcY: spriteHeight * renderNodeShade,
           );
+          return;
         default:
-          return renderStandardNode(
+          renderStandardNode(
               srcX: AtlasSrcX.Node_Grass_Long + ((((renderNodeRow - renderNodeColumn) + animationFrameGrass) % 6) * 48),
-              srcY: spriteHeight * nodesShade[renderNodeIndex],
+              srcY: spriteHeight * renderNodeShade,
           );
+          return;
       }
     case NodeType.Rain_Falling:
-      renderStandardNode(
+        renderStandardNodeShaded(
         srcX: srcXRainFalling,
         srcY: 72.0 * ((animationFrameRain + renderNodeRow + renderNodeColumn) % 6),
-        color: colorShades[nodesShade[renderNodeIndex]],
       );
       return;
       // return render(
@@ -154,23 +153,23 @@ void renderNodeAt() {
       // );
     case NodeType.Rain_Landing:
       if (getNodeTypeBelow(renderNodeIndex) == NodeType.Water){
-        return renderStandardNode(
+        renderStandardNodeShaded(
           srcX: AtlasSrcX.Node_Rain_Landing_Water_X,
           srcY: 72.0 * ((animationFrameRain + renderNodeRow + renderNodeColumn) % 10),
-          color: colorShades[nodesShade[renderNodeIndex]],
         );
+        return;
       }
-      return renderStandardNode(
+      renderStandardNodeShaded(
         srcX: srcXRainLanding,
         srcY: 72.0 * ((animationFrameRain + renderNodeRow + renderNodeColumn) % 6),
-        color: colorShades[nodesShade[renderNodeIndex]],
       );
+      return;
     case NodeType.Stone:
-      return renderStandardNode(
+      renderStandardNodeShaded(
           srcX: AtlasSrcX.Node_Stone,
           srcY: 0,
-          color: colorShades[nodesShade[renderNodeIndex]],
       );
+      return;
     case NodeType.Plain:
       renderNodePlain();
       return;

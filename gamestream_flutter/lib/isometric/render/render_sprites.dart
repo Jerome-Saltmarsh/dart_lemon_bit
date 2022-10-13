@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
+import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
@@ -26,6 +27,7 @@ import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_game_object.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
+import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
 import 'package:lemon_engine/screen.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -273,6 +275,21 @@ var indexShow = 0;
 var indexShowRow = 0;
 var indexShowColumn = 0;
 var indexShowZ = 0;
+
+int get renderNodeShade => nodesShade[renderNodeIndex];
+int get renderNodeColor => colorShades[renderNodeShade];
+int get renderNodeWind => nodesWind[renderNodeShade];
+
+int get renderNodeBelowIndex => renderNodeIndex + nodesArea;
+
+int get renderNodeBelowShade {
+  if (renderNodeBelowIndex < 0) return ambientShade.value;
+  if (renderNodeBelowIndex >= nodesTotal) return ambientShade.value;
+  return nodesShade[renderNodeBelowIndex];
+}
+
+int get renderNodeBelowColor => colorShades[renderNodeBelowShade];
+
 
 class RenderOrderGrid extends RenderOrder {
   var rowsMax = 0;
