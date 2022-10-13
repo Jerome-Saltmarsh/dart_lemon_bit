@@ -85,13 +85,13 @@ void renderNodeAt() {
       }
       return renderTorchOnWindy(renderNodeDstX, renderNodeDstY);
     case NodeType.Water:
-      return render(
+      return renderAdvanced(
         dstX: renderNodeDstX,
         dstY: renderNodeDstY + animationFrameWaterHeight + 14,
-        srcX: 7976,
-        srcY: (((animationFrameWater + ((renderNodeRow + renderNodeColumn) * 3)) % 10) * 72.0),
-        srcWidth: spriteWidth,
-        srcHeight: spriteHeight,
+        srcX: AtlasSrcX.Node_Water_X,
+        srcY: AtlasSrcX.Node_Water_Y + (((animationFrameWater + ((renderNodeRow + renderNodeColumn) * 3)) % 10) * 72.0),
+        width: spriteWidth,
+        height: spriteHeight,
         anchorY: 0.3334,
         color: renderNodeColor,
       );

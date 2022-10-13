@@ -60,6 +60,8 @@ class AtlasSrcX {
   static const Node_Tree_Top_Y = Node_Tree_Bottom_Y;
   static const Node_Tree_Top_Width = Node_Tree_Bottom_Width;
   static const Node_Tree_Top_Height = Node_Tree_Bottom_Height;
+  static const Node_Water_X = 128.0;
+  static const Node_Water_Y = 512.0;
 
 
   static const Node_Wooden_Plank = 7688.0;
