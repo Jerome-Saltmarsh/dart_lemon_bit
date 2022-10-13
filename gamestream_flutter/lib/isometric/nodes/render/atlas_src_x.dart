@@ -120,8 +120,11 @@ class AtlasSrcX {
   static const Node_Sunflower_Y = 512.0;
   static const Node_Soil_X = 618.0;
   static const Node_Soil_Y = 584.0;
+  static const Node_Campfire_X = 667.0;
+  static const Node_Campfire_Y = 512.0;
+  static const Node_Boulder_X = 618.0;
+  static const Node_Boulder_Y = 657.0;
 
-  static const Node_Boulder = 11769.0;
   static const Node_Oven = 10984.0;
   static const Node_Chimney = 10787.0;
   static const Node_Window = 10689.0;

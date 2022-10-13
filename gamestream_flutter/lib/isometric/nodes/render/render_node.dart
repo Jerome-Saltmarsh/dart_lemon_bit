@@ -16,7 +16,6 @@ import 'package:gamestream_flutter/isometric/render/render_torch.dart';
 import 'package:gamestream_flutter/isometric/variables/src_x_rain_falling.dart';
 import 'package:gamestream_flutter/isometric/variables/src_x_rain_landing.dart';
 import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
-import 'package:lemon_engine/render.dart';
 
 import 'render_constants.dart';
 import 'render_node_plain.dart';
@@ -184,26 +183,21 @@ void renderNodeAt() {
       );
       return;
     case NodeType.Fireplace:
-      return render(
-        dstX: renderNodeDstX,
-        dstY: renderNodeDstY,
-        srcX: 6469,
-        srcY: ((animationFrameTorch % 6) * 72),
-        srcWidth: 48,
-        srcHeight: 72,
-        anchorY: 0.3334,
+      renderStandardNode(
+        srcX: AtlasSrcX.Node_Campfire_X,
+        srcY: AtlasSrcX.Node_Campfire_Y + ((animationFrameTorch % 6) * 72),
       );
+      return;
     case NodeType.Boulder:
-      return renderStandardNode(
-        srcX: AtlasSrcX.Node_Boulder,
-        srcY: 0,
-        color: colorShades[nodesShade[renderNodeIndex]],
+      renderStandardNodeShaded(
+        srcX: AtlasSrcX.Node_Boulder_X,
+        srcY: AtlasSrcX.Node_Boulder_Y,
       );
+      return;
     case NodeType.Oven:
-      return renderStandardNode(
+      return renderStandardNodeShaded(
         srcX: AtlasSrcX.Node_Oven,
         srcY: 0,
-        color: colorShades[nodesShade[renderNodeIndex]],
       );
     case NodeType.Chimney:
       return renderStandardNode(
