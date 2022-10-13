@@ -100,6 +100,22 @@ class AtlasSrcX {
   static const Node_Wood_Slope_South = 11082.0;
   static const Node_Wood_Slope_West = 11032.0;
 
+  static const Node_Bau_Haus_Slope_North_X = 569.0;
+  static const Node_Bau_Haus_Slope_North_Y = 512.0;
+  static const Node_Bau_Haus_Slope_East_X = Node_Bau_Haus_Slope_North_X;
+  static const Node_Bau_Haus_Slope_East_Y = Node_Bau_Haus_Slope_North_Y + Sprite_Height_Padded;
+  static const Node_Bau_Haus_Slope_South_X = Node_Bau_Haus_Slope_North_X;
+  static const Node_Bau_Haus_Slope_South_Y = Node_Bau_Haus_Slope_East_Y + Sprite_Height_Padded;
+  static const Node_Bau_Haus_Slope_West_X = Node_Bau_Haus_Slope_North_X;
+  static const Node_Bau_Haus_Slope_West_Y = Node_Bau_Haus_Slope_South_Y + Sprite_Height_Padded;
+  static const Node_Bau_Haus_Slope_Inner_North_East_X = Node_Bau_Haus_Slope_North_X;
+  static const Node_Bau_Haus_Slope_Inner_North_East_Y = Node_Bau_Haus_Slope_West_Y + Sprite_Height_Padded;
+  static const Node_Bau_Haus_Slope_Inner_South_East_X = Node_Bau_Haus_Slope_North_X;
+  static const Node_Bau_Haus_Slope_Inner_South_East_Y = Node_Bau_Haus_Slope_Inner_North_East_Y + Sprite_Height_Padded;
+  static const Node_Bau_Haus_Slope_Inner_South_West_X = Node_Bau_Haus_Slope_North_X;
+  static const Node_Bau_Haus_Slope_Inner_South_West_Y = Node_Bau_Haus_Slope_Inner_South_East_Y + Sprite_Height_Padded;
+  static const Node_Bau_Haus_Slope_Inner_North_West_X = Node_Bau_Haus_Slope_North_X;
+  static const Node_Bau_Haus_Slope_Inner_North_West_Y = Node_Bau_Haus_Slope_Inner_South_West_Y + Sprite_Height_Padded;
 
   static const Node_Sunflower = 10934.0;
   static const Node_Soil = 8320.0;
@@ -108,7 +124,6 @@ class AtlasSrcX {
   static const Node_Chimney = 10787.0;
   static const Node_Window = 10689.0;
   static const Node_Spawn = 8752.0;
-  static const Node_Bau_Haus_Slope = 11228.0;
   static const Node_Table = 7639.0;
   static const Node_Bed_Bottom = 10836.0;
   static const Node_Bed_Top = 10885.0;
