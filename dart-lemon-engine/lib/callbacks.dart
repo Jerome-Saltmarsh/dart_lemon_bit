@@ -4,10 +4,10 @@ import 'package:flutter/services.dart';
 Function? onLeftClicked;
 
 class LemonEngineCallbacks {
-  Function? onMouseDragging;
+  // Function? onMouseDragging;
   Function? onLeftClicked;
   Function? onLongLeftClicked;
-  Function? onPanStarted;
+  // Function? onPanStarted;
   Function(double value)? onMouseScroll;
   Function? onRightClicked;
   Function? onRightClickReleased;

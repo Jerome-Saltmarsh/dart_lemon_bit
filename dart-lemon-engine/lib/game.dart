@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/render.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import 'canvas.dart';
@@ -13,8 +11,6 @@ import 'state/paint.dart';
 void _defaultDrawCanvasForeground(Canvas canvas, Size size) {
   // do nothing
 }
-
-final _camera = engine.camera;
 
 class Game extends StatefulWidget {
   final String title;
@@ -44,7 +40,7 @@ class Game extends StatefulWidget {
     engine.backgroundColor.value = backgroundColor;
     engine.drawCanvasAfterUpdate = drawCanvasAfterUpdate;
     engine.themeData.value = themeData;
-    engine.drawCanvas.value = drawCanvas;
+    engine.onDrawCanvas = drawCanvas;
     engine.update = update;
   }
 
@@ -52,14 +48,11 @@ class Game extends StatefulWidget {
   _GameState createState() => _GameState();
 }
 
-final _foregroundFrame = ValueNotifier<int>(0);
+
 
 
 
 class _GameState extends State<Game> {
-  late Timer _updateTimer;
-
-
   @override
   void initState() {
     super.initState();
@@ -76,6 +69,8 @@ class _GameState extends State<Game> {
 
   @override
   Widget build(BuildContext context) {
+    engine.buildContext = context;
+
     return WatchBuilder(engine.themeData, (ThemeData? themeData){
       return MaterialApp(
         title: widget.title,
@@ -92,7 +87,6 @@ class _GameState extends State<Game> {
             }
             return LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
-                engine.buildContext = context;
                 engine.internalSetScreenSize(constraints.maxWidth, constraints.maxHeight);
 
                 engine.screen.width = constraints.maxWidth;
@@ -122,42 +116,36 @@ class _GameState extends State<Game> {
       child: GestureDetector(
           onTapDown: engine.onTapDown,
           onLongPress: engine.onLongPress,
-          onPanStart: (start) {
-            engine.mouseDragging = true;
-            engine.callbacks.onPanStarted?.call();
-          },
-          onPanUpdate: (DragUpdateDetails value) {
-            engine.callbacks.onMouseDragging?.call();
-          },
-          onPanEnd: (value) {
-            engine.mouseDragging = false;
-          },
+          onPanStart: engine.internalOnPanStart,
+          onPanUpdate: engine.onPanUpdate,
+          onPanEnd: engine.internalOnPanEnd,
           child: WatchBuilder(engine.backgroundColor, (Color backgroundColor){
             return Container(
                 color: backgroundColor,
                 width: engine.screen.width,
                 height: engine.screen.height,
                 child: CustomPaint(
-                    painter: _GamePainter(repaint: engine.drawFrame),
-                    /// Disable foreground painter if its not needed
-                    foregroundPainter: _GameForegroundPainter(repaint: _foregroundFrame),
+                    painter: _GamePainter(repaint: engine.notifierPaintFrame),
+                    foregroundPainter: _GameForegroundPainter(
+                        repaint: engine.notifierPaintForeground
+                    ),
                 )
             );
           })),
     );
 
-    return WatchBuilder(engine.cursorType, (CursorType cursorType){
-      return MouseRegion(
+    return WatchBuilder(engine.cursorType, (CursorType cursorType) =>
+      MouseRegion(
         cursor: mapCursorTypeToSystemMouseCursor(cursorType),
         child: child,
-      );
-    });
+      )
+    );
   }
 
   @override
   void dispose() {
     super.dispose();
-    _updateTimer.cancel();
+    engine.onDispose?.call();
   }
 }
 
@@ -168,14 +156,7 @@ class _GamePainter extends CustomPainter {
 
   @override
   void paint(Canvas _canvas, Size size) {
-    if (!engine.initialized.value) return;
-    canvas = _canvas;
-    canvas.scale(engine.zoom, engine.zoom);
-    canvas.translate(-_camera.x, -_camera.y);
-    engine.drawCanvas.value?.call(canvas, size);
-    if (engine.drawCanvas.isNotNull){
-      engineRenderFlushBuffer();
-    }
+    engine.internalPaint(_canvas, size);
   }
 
   @override
@@ -189,10 +170,7 @@ class _GameForegroundPainter extends CustomPainter {
 
   @override
   void paint(Canvas _canvas, Size _size) {
-    canvas = canvas;
-    canvas.scale(engine.zoom, engine.zoom);
-    canvas.translate(-engine.camera.x, -engine.camera.y);
-    engine.drawForeground.value?.call(canvas, _size);
+    engine.onDrawForeground?.call(canvas, _size);
   }
 
   @override

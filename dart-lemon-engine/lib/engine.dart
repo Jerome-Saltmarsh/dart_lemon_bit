@@ -21,12 +21,9 @@ import 'load_image.dart';
 import 'render.dart';
 import 'state/paint.dart';
 
-final _camera = engine.camera;
 final engine = _Engine();
 
 class _Engine {
-
-
   final callbacks = LemonEngineCallbacks();
   final draw = LemonEngineDraw();
   late final LemonEngineEvents events;
@@ -51,28 +48,29 @@ class _Engine {
 
   });
   var mouseLeftDownFrames = 0;
-  final Watch<int> fps = Watch(0);
-  final Watch<Color> backgroundColor = Watch(Colors.white);
-  final Watch<ThemeData?> themeData = Watch(null);
+  final fps = Watch(0);
+  final backgroundColor = Watch(Colors.white);
+  final themeData = Watch<ThemeData?>(null);
   final fullScreen = Watch(false);
   var millisecondsSinceLastFrame = 50;
   var drawCanvasAfterUpdate = true;
-  final drawFrame = ValueNotifier<int>(0);
-  final _Screen screen = _Screen();
+  final notifierPaintFrame = ValueNotifier<int>(0);
+  final notifierPaintForeground = ValueNotifier<int>(0);
+  final screen = _Screen();
   final initialized = Watch(false);
-  final Watch<CursorType> cursorType = Watch(CursorType.Precise);
-  late BuildContext buildContext;
-  var mouseDragging = false;
+  final cursorType = Watch(CursorType.Precise);
+  var panStarted = false;
   final camera = Vector2(0, 0);
   var zoom = 1.0;
-  final drawCanvas = Watch<DrawCanvas?>(null);
-  final drawForeground = Watch<DrawCanvas?>(null);
   final deviceType = Watch(DeviceType.Computer);
+  late BuildContext buildContext;
   Function? update;
 
   bool get deviceIsComputer => deviceType.value == DeviceType.Computer;
 
   bool get deviceIsPhone => deviceType.value == DeviceType.Phone;
+
+  BuildContext? context;
 
   void internalSetScreenSize(double width, double height){
     if (screen.width == width && screen.height == height) return;
@@ -110,10 +108,10 @@ class _Engine {
   }
 
   void updateEngine() {
-    _screen.left = _camera.x;
-    _screen.right = _camera.x + (_screen.width / zoom);
-    _screen.top = _camera.y;
-    _screen.bottom = _camera.y + (_screen.height / zoom);
+    _screen.left = camera.x;
+    _screen.right = camera.x + (_screen.width / zoom);
+    _screen.top = camera.y;
+    _screen.bottom = camera.y + (_screen.height / zoom);
     if (mouseLeftDown.value) {
       mouseLeftDownFrames++;
     }
@@ -149,7 +147,7 @@ class _Engine {
   var keyPressedHandlers = <LogicalKeyboardKey, Function>{};
   var keyReleasedHandlers = <LogicalKeyboardKey, Function>{};
 
-  int get frame => drawFrame.value;
+  int get frame => notifierPaintFrame.value;
 
   _Engine() {
     WidgetsFlutterBinding.ensureInitialized();
@@ -218,7 +216,7 @@ class _Engine {
   }
 
   void redrawCanvas() {
-    drawFrame.value++;
+    notifierPaintFrame.value++;
   }
 
   void fullscreenToggle() {
@@ -250,8 +248,8 @@ class _Engine {
     print("lemon-engine.clearCallbacks()");
     // callbacks.onMouseMoved = null;
     callbacks.onMouseScroll = null;
-    callbacks.onMouseDragging = null;
-    callbacks.onPanStarted = null;
+    // callbacks.onMouseDragging = null;
+    // callbacks.onPanStarted = null;
     callbacks.onLeftClicked = null;
     callbacks.onLongLeftClicked = null;
     callbacks.onKeyReleased = null;
@@ -321,15 +319,38 @@ class _Engine {
   GestureLongPressCallback? onLongPress;
   /// override safe
   GestureDragStartCallback? onPanStart;
-
+  /// override safe
+  GestureDragUpdateCallback? onPanUpdate;
+  /// override safe
+  GestureDragEndCallback? onPanEnd;
+  /// override safe
   CallbackOnScreenSizeChanged? onScreenSizeChanged;
+  /// override safe
+  Function? onDispose;
+  /// override safe
+  DrawCanvas? onDrawCanvas;
+  /// override safe
+  DrawCanvas? onDrawForeground;
 
   void internalOnPanStart(DragStartDetails details){
-    mouseDragging = true;
-    callbacks.onPanStarted?.call();
+    panStarted = true;
     onPanStart?.call(details);
   }
 
+  void internalOnPanEnd(DragEndDetails details){
+    panStarted = false;
+    onPanEnd?.call(details);
+  }
+
+  void internalPaint(Canvas _canvas, Size size) {
+    canvas = _canvas;
+    canvas.scale(zoom, zoom);
+    canvas.translate(-camera.x, -camera.y);
+    if (!initialized.value) return;
+    if (onDrawCanvas == null) return;
+    onDrawCanvas!.call(canvas, size);
+    engineRenderFlushBuffer();
+  }
 }
 
 typedef CallbackOnScreenSizeChanged = void Function(
@@ -351,19 +372,19 @@ bool keyPressed(LogicalKeyboardKey key) {
 }
 
 double screenToWorldX(double value) {
-  return _camera.x + value / engine.zoom;
+  return engine.camera.x + value / engine.zoom;
 }
 
 double screenToWorldY(double value) {
-  return _camera.y + value / engine.zoom;
+  return engine.camera.y + value / engine.zoom;
 }
 
 double worldToScreenX(double x) {
-  return engine.zoom * (x - _camera.x);
+  return engine.zoom * (x - engine.camera.x);
 }
 
 double worldToScreenY(double y) {
-  return engine.zoom * (y - _camera.y);
+  return engine.zoom * (y - engine.camera.y);
 }
 
 double distanceFromMouse(double x, double y) {
@@ -420,4 +441,5 @@ class _Screen {
       y < bottom
     ;
   }
+
 }

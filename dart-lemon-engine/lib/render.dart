@@ -60,6 +60,7 @@ void engineRender({
 /// If there are draw jobs remaining in the buffer
 /// it draws them and clears the rest
 void engineRenderFlushBuffer(){
+  if (bufferIndex == 0) return;
   for (var i = bufferIndex; i < buffers; i += 4) {
     src[i] = 0;
     src[i + 1] = 0;
