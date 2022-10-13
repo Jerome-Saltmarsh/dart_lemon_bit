@@ -2,9 +2,11 @@ library lemon_engine;
 
 import 'dart:async';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/callbacks.dart';
+import 'package:lemon_engine/device_type.dart';
 import 'package:lemon_engine/draw.dart';
 import 'package:lemon_engine/enums.dart';
 import 'package:lemon_engine/events.dart';
@@ -24,6 +26,8 @@ final engine = _Engine();
 
 class _Engine {
 
+
+
   final callbacks = LemonEngineCallbacks();
   final draw = LemonEngineDraw();
   late final LemonEngineEvents events;
@@ -31,6 +35,7 @@ class _Engine {
   var cameraSmoothFollow = true;
   var zoomSensitivity = 0.175;
   var targetZoom = 1.0;
+
 
   final Map<LogicalKeyboardKey, int> keyboardState = {};
   var mousePosition = Vector2(0, 0);
@@ -63,8 +68,14 @@ class _Engine {
   var zoom = 1.0;
   final drawCanvas = Watch<DrawCanvas?>(null);
   final drawForeground = Watch<DrawCanvas?>(null);
+  final deviceType = Watch(DeviceType.Computer);
   Function? update;
 
+  bool get deviceIsComputer => deviceType.value == DeviceType.Computer;
+  bool get deviceIsPhone => deviceType.value == DeviceType.Phone;
+
+  void toggleDeviceType() =>
+    deviceType.value = deviceIsComputer ? DeviceType.Phone : DeviceType.Computer;
 
   var textPainter = TextPainter(
       textAlign: TextAlign.center,
@@ -80,31 +91,24 @@ class _Engine {
   }
 
   void updateEngine(){
-    const _padding = 0.0;
-    _screen.left = _camera.x - _padding;
-    _screen.right = _camera.x + (_screen.width / engine.zoom) + _padding;
-    _screen.top = _camera.y - _padding;
-    _screen.bottom = _camera.y + (_screen.height / engine.zoom) + _padding;
-
-    if (engine.mouseLeftDown.value) {
-      engine.mouseLeftDownFrames++;
+    _screen.left = _camera.x;
+    _screen.right = _camera.x + (_screen.width / zoom);
+    _screen.top = _camera.y;
+    _screen.bottom = _camera.y + (_screen.height / zoom);
+    if (mouseLeftDown.value) {
+      mouseLeftDownFrames++;
     }
-
-    
-
-    // if (engine.frame % engine.framesPerAnimationFrame == 0){
-    //   engine.animationFrame++;
-    // }
-
-    engine.update?.call();
+    deviceType.value = screen.width < 800 ? DeviceType.Phone : DeviceType.Computer;
+    update?.call();
     final sX = screenCenterWorldX;
     final sY = screenCenterWorldY;
-    final zoomDiff = engine.targetZoom - engine.zoom;
-    engine.zoom += zoomDiff * engine.zoomSensitivity;
-    engine.cameraCenter(sX, sY);
+    final zoomDiff = targetZoom - zoom;
+    zoom += zoomDiff * zoomSensitivity;
+    cameraCenter(sX, sY);
 
-    if (engine.drawCanvasAfterUpdate) {
-      engine.redrawCanvas();
+
+    if (drawCanvasAfterUpdate) {
+      redrawCanvas();
     }
   }
 
@@ -223,7 +227,7 @@ class _Engine {
 
   void clearCallbacks() {
     print("lemon-engine.clearCallbacks()");
-    callbacks.onMouseMoved = null;
+    // callbacks.onMouseMoved = null;
     callbacks.onMouseScroll = null;
     callbacks.onMouseDragging = null;
     callbacks.onPanStarted = null;
@@ -245,6 +249,48 @@ class _Engine {
   void setPaintColor(Color value) {
     if (paint.color == value) return;
     paint.color = value;
+  }
+
+  void onPointerMove (PointerMoveEvent event){
+    previousMousePosition.x = mousePosition.x;
+    previousMousePosition.y = mousePosition.y;
+    mousePosition.x = event.position.dx;
+    mousePosition.y = event.position.dy;
+  }
+
+  void onPointerHover (PointerHoverEvent event){
+    previousMousePosition.x = mousePosition.x;
+    previousMousePosition.y = mousePosition.y;
+    mousePosition.x = event.position.dx;
+    mousePosition.y = event.position.dy;
+  }
+
+  void onPointerUp(PointerUpEvent event) {
+    if (mouseLeftDown.value) {
+      mouseLeftDown.value = false;
+      return;
+    }
+    if (mouseRightDown.value) {
+      mouseRightDown.value = false;
+      return;
+    }
+  }
+
+  void onPointerDown(PointerDownEvent event){
+    if (event.buttons == 1){
+      mouseLeftDown.value = true;
+      return;
+    }
+    if (event.buttons == 2){
+      mouseRightDown.value = true;
+      return;
+    }
+  }
+
+  void onPointerSignal(PointerSignalEvent pointerSignalEvent) {
+    if (pointerSignalEvent is PointerScrollEvent) {
+      callbacks.onMouseScroll?.call(pointerSignalEvent.scrollDelta.dy);
+    }
   }
 }
 

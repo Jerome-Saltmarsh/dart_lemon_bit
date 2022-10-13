@@ -59,6 +59,45 @@ Widget buildStackGame()  =>
         buildWatchBool(game.mapVisible, buildMiniMap),
         watch(game.edit, buildPlayMode),
         buildWatchBool(debugVisible, buildHudDebug),
+        Positioned(
+            bottom: 0,
+            left: 0,
+            child: Builder(
+              builder: (context) {
+                const size = 150.0;
+                const sizeThird = size / 3;
+                return Container(
+                  width: size,
+                  height: size,
+                  color: Colors.orange,
+                  child: Stack(
+                     children: [
+                       Positioned(
+                           top: 0,
+                           left: sizeThird,
+                           child: Container(width: sizeThird, height: sizeThird, color: Colors.blue,)
+                       ),
+                       Positioned(
+                           top: sizeThird,
+                           left: 0,
+                           child: Container(width: sizeThird, height: sizeThird, color: Colors.blue,)
+                       ),
+                       Positioned(
+                           top: sizeThird,
+                           right: 0,
+                           child: Container(width: sizeThird, height: sizeThird, color: Colors.blue,)
+                       ),
+                       Positioned(
+                           bottom: 0,
+                           left: sizeThird,
+                           child: Container(width: sizeThird, height: sizeThird, color: Colors.blue,)
+                       ),
+                     ],
+                  ),
+                );
+              }
+            )
+        ),
       ],
     ),
   );

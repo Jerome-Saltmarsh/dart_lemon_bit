@@ -9,13 +9,12 @@ import 'src_utils.dart';
 
 void renderCharacterZombie(Character character) {
   final shade = getRenderShade(character);
-
   if (shade < Shade.Dark) renderCharacterHealthBar(character);
   render(
       dstX: character.renderX,
       dstY: character.renderY,
       srcX: _getZombieSrcX(character),
-      srcY: 789.0,
+      srcY: 0.0,
       srcWidth: 64,
       srcHeight: 64,
       anchorY: 0.66,

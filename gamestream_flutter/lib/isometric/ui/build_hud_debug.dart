@@ -11,6 +11,7 @@ import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
 import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
 import 'package:gamestream_flutter/modules/game/render.dart';
+import 'package:lemon_engine/device_type.dart';
 import 'package:lemon_engine/engine.dart';
 
 import '../server_response_reader.dart';
@@ -47,6 +48,7 @@ Widget buildHudDebug() =>
               watch(gameType, (int? value) => text("game-type: ${value == null ? 'None' : GameType.getName(value)}")),
               height24,
               text("close x", onPressed: () => debugVisible.value = false),
+              watch(engine.deviceType, (DeviceType deviceType) => text("device-type: ${deviceType.name}", onPressed: engine.toggleDeviceType)),
             ],
           )),
     ],

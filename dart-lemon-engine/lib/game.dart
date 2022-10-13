@@ -108,51 +108,12 @@ class _GameState extends State<Game> {
   }
 
   Widget _buildCanvas(BuildContext context) {
-
     final child = Listener(
-      onPointerSignal: (PointerSignalEvent pointerSignalEvent) {
-        if (pointerSignalEvent is PointerScrollEvent) {
-          engine.callbacks.onMouseScroll?.call(pointerSignalEvent.scrollDelta.dy);
-        }
-      },
-      onPointerDown: (PointerDownEvent event){
-        if (event.buttons == 1){
-          engine.mouseLeftDown.value = true;
-          return;
-        }
-        if (event.buttons == 2){
-          engine.mouseRightDown.value = true;
-          return;
-        }
-      },
-      onPointerUp: (PointerUpEvent event) {
-        if (engine.mouseLeftDown.value) {
-          engine.mouseLeftDown.value = false;
-          return;
-        }
-        if (engine.mouseRightDown.value) {
-          engine.mouseRightDown.value = false;
-          return;
-        }
-      },
-      onPointerHover:(PointerHoverEvent event){
-        engine.previousMousePosition.x = engine.mousePosition.x;
-        engine.previousMousePosition.y = engine.mousePosition.y;
-        engine.mousePosition.x = event.position.dx;
-        engine.mousePosition.y = event.position.dy;
-        engine.callbacks.onMouseMoved?.call(
-            engine.mousePosition, engine.previousMousePosition
-        );
-      },
-      onPointerMove: (PointerMoveEvent event){
-        engine.previousMousePosition.x = engine.mousePosition.x;
-        engine.previousMousePosition.y = engine.mousePosition.y;
-        engine.mousePosition.x = event.position.dx;
-        engine.mousePosition.y = event.position.dy;
-        engine.callbacks.onMouseMoved?.call(
-            engine.mousePosition, engine.previousMousePosition
-        );
-      },
+      onPointerSignal: engine.onPointerSignal,
+      onPointerDown: engine.onPointerDown,
+      onPointerUp: engine.onPointerUp,
+      onPointerHover:engine.onPointerHover,
+      onPointerMove: engine.onPointerMove,
       child: GestureDetector(
           onLongPress: (){
             engine.callbacks.onLongLeftClicked?.call();
