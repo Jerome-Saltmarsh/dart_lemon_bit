@@ -3,7 +3,6 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
-import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
@@ -20,6 +19,7 @@ import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
 import 'render_constants.dart';
 import 'render_node_plain.dart';
 import 'render_node_type_brick.dart';
+import 'render_node_window.dart';
 import 'render_node_wooden_plank.dart';
 import 'render_standard_node.dart';
 
@@ -195,43 +195,19 @@ void renderNodeAt() {
       );
       return;
     case NodeType.Oven:
-      return renderStandardNodeShaded(
-        srcX: AtlasSrcX.Node_Oven,
-        srcY: 0,
+      renderStandardNodeShaded(
+        srcX: AtlasSrcX.Node_Oven_X,
+        srcY: AtlasSrcX.Node_Oven_Y,
       );
+      return;
     case NodeType.Chimney:
-      return renderStandardNode(
-        srcX: AtlasSrcX.Node_Chimney,
-        srcY: 0,
-        color: colorShades[nodesShade[renderNodeIndex]],
+      renderStandardNodeShaded(
+        srcX: AtlasSrcX.Node_Chimney_X,
+        srcY: AtlasSrcX.Node_Chimney_Y,
       );
+      return;
     case NodeType.Window:
-      switch(nodesOrientation[renderNodeIndex]){
-        case NodeOrientation.Half_North:
-          return renderStandardNodeHalfNorth(
-            srcX: AtlasSrcX.Node_Window,
-            srcY: spriteHeight,
-            color: colorShades[nodesShade[renderNodeIndex]],
-          );
-        case NodeOrientation.Half_East:
-          return renderStandardNodeHalfEast(
-            srcX: AtlasSrcX.Node_Window,
-            srcY: 0,
-            color: colorShades[nodesShade[renderNodeIndex]],
-          );
-        case NodeOrientation.Half_South:
-          return renderStandardNode(
-            srcX: AtlasSrcX.Node_Window,
-            srcY: spriteHeight,
-            color: colorShades[nodesShade[renderNodeIndex]],
-          );
-        case NodeOrientation.Half_West:
-          return renderStandardNode(
-            srcX: AtlasSrcX.Node_Window,
-            srcY: 0,
-            color: colorShades[nodesShade[renderNodeIndex]],
-          );
-      }
+      renderNodeWindow();
       break;
     case NodeType.Spawn:
       if (playMode) return;

@@ -92,14 +92,6 @@ class AtlasSrcX {
   static const Node_Bau_Haus_Corner_Bottom_Y = Node_Bau_Haus_Corner_Right_Y + Sprite_Height_Padded;
   static const Node_Bau_Haus_Corner_Left_X = Node_Bau_Haus_Solid_X;
   static const Node_Bau_Haus_Corner_Left_Y = Node_Bau_Haus_Corner_Bottom_Y + Sprite_Height_Padded;
-
-  static const Node_Wooden_Plank = 7688.0;
-  static const Node_Wooden_Plank_Y = 7688.0;
-  static const Node_Wood_Slope_North = 11179.0;
-  static const Node_Wood_Slope_East = 11130.0;
-  static const Node_Wood_Slope_South = 11082.0;
-  static const Node_Wood_Slope_West = 11032.0;
-
   static const Node_Bau_Haus_Slope_North_X = 569.0;
   static const Node_Bau_Haus_Slope_North_Y = 512.0;
   static const Node_Bau_Haus_Slope_East_X = Node_Bau_Haus_Slope_North_X;
@@ -124,10 +116,35 @@ class AtlasSrcX {
   static const Node_Campfire_Y = 512.0;
   static const Node_Boulder_X = 618.0;
   static const Node_Boulder_Y = 657.0;
+  static const Node_Chimney_X = 618.0;
+  static const Node_Chimney_Y = 730.0;
+  static const Node_Oven_X = 618.0;
+  static const Node_Oven_Y = 804.0;
+  static const Node_Window_West_X = 618.0;
+  static const Node_Window_West_Y = 876.0;
+  static const Node_Window_South_X = Node_Window_West_X;
+  static const Node_Window_South_Y = Node_Window_West_Y + Sprite_Height_Padded;
 
-  static const Node_Oven = 10984.0;
-  static const Node_Chimney = 10787.0;
-  static const Node_Window = 10689.0;
+  static const Node_Wooden_Plank_Solid_X = 716.0;
+  static const Node_Wooden_Plank_Solid_Y = 512.0;
+  static const Node_Wooden_Plank_Half_West_X = Node_Wooden_Plank_Solid_X;
+  static const Node_Wooden_Plank_Half_West_Y = Node_Wooden_Plank_Solid_Y + Sprite_Height_Padded;
+  static const Node_Wooden_Plank_Half_South_X = Node_Wooden_Plank_Solid_X;
+  static const Node_Wooden_Plank_Half_South_Y = Node_Wooden_Plank_Half_West_Y + Sprite_Height_Padded;
+  static const Node_Wooden_Plank_Corner_Top_X = Node_Wooden_Plank_Solid_X;
+  static const Node_Wooden_Plank_Corner_Top_Y = Node_Wooden_Plank_Half_South_Y + Sprite_Height_Padded;
+  static const Node_Wooden_Plank_Corner_Right_X = Node_Wooden_Plank_Solid_X;
+  static const Node_Wooden_Plank_Corner_Right_Y = Node_Wooden_Plank_Corner_Top_Y + Sprite_Height_Padded;
+  static const Node_Wooden_Plank_Corner_Bottom_X = Node_Wooden_Plank_Solid_X;
+  static const Node_Wooden_Plank_Corner_Bottom_Y = Node_Wooden_Plank_Corner_Right_Y + Sprite_Height_Padded;
+  static const Node_Wooden_Plank_Corner_Left_X = Node_Wooden_Plank_Solid_X;
+  static const Node_Wooden_Plank_Corner_Left_Y = Node_Wooden_Plank_Corner_Bottom_Y + Sprite_Height_Padded;
+
+  static const Node_Wood_Slope_North = 11179.0;
+  static const Node_Wood_Slope_East = 11130.0;
+  static const Node_Wood_Slope_South = 11082.0;
+  static const Node_Wood_Slope_West = 11032.0;
+
   static const Node_Spawn = 8752.0;
   static const Node_Table = 7639.0;
   static const Node_Bed_Bottom = 10836.0;
