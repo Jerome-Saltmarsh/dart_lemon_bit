@@ -62,22 +62,29 @@ class AtlasSrcX {
   static const Node_Tree_Top_Height = Node_Tree_Bottom_Height;
   static const Node_Water_X = 128.0;
   static const Node_Water_Y = 512.0;
-
+  static const Node_Wood_Solid_X = 177.0;
+  static const Node_Wood_Solid_Y = 512.0;
+  static const Node_Wood_Half_West_X = Node_Wood_Solid_X + Sprite_Width_Padded;
+  static const Node_Wood_Half_West_Y = Node_Wood_Solid_Y;
+  static const Node_Wood_Half_South_X = Node_Wood_Half_West_X + Sprite_Width_Padded;
+  static const Node_Wood_Half_South_Y = Node_Wood_Solid_Y;
+  static const Node_Wood_Corner_Left_X = Node_Wood_Half_South_X + Sprite_Width_Padded;
+  static const Node_Wood_Corner_Left_Y = Node_Wood_Solid_Y;
+  static const Node_Wood_Corner_Top_X = Node_Wood_Corner_Left_X + Sprite_Width_Padded;
+  static const Node_Wood_Corner_Top_Y = Node_Wood_Solid_Y;
+  static const Node_Wood_Corner_Right_X = Node_Wood_Corner_Top_X + Sprite_Width_Padded;
+  static const Node_Wood_Corner_Right_Y = Node_Wood_Solid_Y;
+  static const Node_Wood_Corner_Bottom_X = Node_Wood_Corner_Right_X + Sprite_Width_Padded;
+  static const Node_Wood_Corner_Bottom_Y = Node_Wood_Solid_Y;
 
   static const Node_Wooden_Plank = 7688.0;
-  static const Node_Wood_Solid = 8886.0;
+  static const Node_Wooden_Plank_Y = 7688.0;
   static const Node_Wood_Slope_North = 11179.0;
   static const Node_Wood_Slope_East = 11130.0;
   static const Node_Wood_Slope_South = 11082.0;
   static const Node_Wood_Slope_West = 11032.0;
-  static const Node_Wood_Half_North = 8983.0;
-  static const Node_Wood_Half_East = 8935.0;
-  static const Node_Wood_Half_South = 8983.0;
-  static const Node_Wood_Half_West = 8935.0;
-  static const Node_Wood_Corner_Top = 9082.0;
-  static const Node_Wood_Corner_Right = 9131.0;
-  static const Node_Wood_Corner_Bottom = 9180.0;
-  static const Node_Wood_Corner_Left = 9033.0;
+
+
   static const Node_Sunflower = 10934.0;
   static const Node_Soil = 8320.0;
   static const Node_Boulder = 11769.0;

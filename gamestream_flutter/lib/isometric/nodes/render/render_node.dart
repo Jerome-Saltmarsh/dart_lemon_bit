@@ -141,16 +141,6 @@ void renderNodeAt() {
         srcY: 72.0 * ((animationFrameRain + renderNodeRow + renderNodeColumn) % 6),
       );
       return;
-      // return render(
-      //   dstX: renderNodeDstX - rainPosition,
-      //   dstY: renderNodeDstY + animationFrameRain,
-      //   srcX: srcXRainFalling,
-      //   srcY: 72.0 * ((animationFrameRain + renderNodeRow + renderNodeColumn) % 6),
-      //   srcWidth: 48,
-      //   srcHeight: 72,
-      //   anchorY: 0.3334,
-      //   color: colorShades[nodesShade[renderNodeIndex]],
-      // );
     case NodeType.Rain_Landing:
       if (getNodeTypeBelow(renderNodeIndex) == NodeType.Water){
         renderStandardNodeShaded(
@@ -174,19 +164,10 @@ void renderNodeAt() {
       renderNodePlain();
       return;
     case NodeType.Wooden_Plank:
-      return renderNodeWoodenPlank(
-        orientation: nodesOrientation[renderNodeIndex],
-        dstX: renderNodeDstX,
-        dstY: renderNodeDstY,
-        color: colorShades[nodesShade[renderNodeIndex]],
-      );
+      renderNodeWoodenPlank();
+      return;
     case NodeType.Wood_2:
-      renderNodeWood(
-          orientation: nodesOrientation[renderNodeIndex],
-          dstX: renderNodeDstX,
-          dstY: renderNodeDstY,
-          color: colorShades[nodesShade[renderNodeIndex]],
-      );
+      renderNodeWood();
       break;
     case NodeType.Bau_Haus_2:
       renderNodeBauHaus(
@@ -384,72 +365,72 @@ void renderNodeTypeGrass() {
   }
 }
 
-void renderStandardNodeHalfNorth({
-  required double srcX,
-  required double srcY,
-  int color = 1,
-}){
+// void renderStandardNodeHalfNorth({
+//   required double srcX,
+//   required double srcY,
+//   int color = 1,
+// }){
+//
+//   colors[renderIndex] = color;
+//
+//   src[bufferIndex] = srcX;
+//   dst[bufferIndex] = 1;
+//   bufferIndex++;
+//
+//   src[bufferIndex] = srcY;
+//   dst[bufferIndex] = 0;
+//   bufferIndex++;
+//
+//   src[bufferIndex] = srcX + spriteWidth;
+//   dst[bufferIndex] = renderNodeDstX - spriteWidthHalf - 17;
+//
+//   bufferIndex++;
+//   src[bufferIndex] = srcY + spriteHeight;
+//   dst[bufferIndex] = renderNodeDstY - spriteHeightThird - 17;
+//
+//   bufferIndex++;
+//   renderIndex++;
+//
+//   if (bufferIndex < buffers) return;
+//   bufferIndex = 0;
+//   renderIndex = 0;
+//
+//   renderAtlas();
+// }
 
-  colors[renderIndex] = color;
 
-  src[bufferIndex] = srcX;
-  dst[bufferIndex] = 1;
-  bufferIndex++;
-
-  src[bufferIndex] = srcY;
-  dst[bufferIndex] = 0;
-  bufferIndex++;
-
-  src[bufferIndex] = srcX + spriteWidth;
-  dst[bufferIndex] = renderNodeDstX - spriteWidthHalf - 17;
-
-  bufferIndex++;
-  src[bufferIndex] = srcY + spriteHeight;
-  dst[bufferIndex] = renderNodeDstY - spriteHeightThird - 17;
-
-  bufferIndex++;
-  renderIndex++;
-
-  if (bufferIndex < buffers) return;
-  bufferIndex = 0;
-  renderIndex = 0;
-
-  renderAtlas();
-}
-
-
-void renderStandardNodeHalfEast({
-  required double srcX,
-  required double srcY,
-  int color = 1,
-}){
-
-  colors[renderIndex] = color;
-
-  src[bufferIndex] = srcX;
-  dst[bufferIndex] = 1;
-  bufferIndex++;
-
-  src[bufferIndex] = srcY;
-  dst[bufferIndex] = 0;
-  bufferIndex++;
-
-  src[bufferIndex] = srcX + spriteWidth;
-  dst[bufferIndex] = renderNodeDstX - spriteWidthHalf + 17;
-
-  bufferIndex++;
-  src[bufferIndex] = srcY + spriteHeight;
-  dst[bufferIndex] = renderNodeDstY - spriteHeightThird - 17;
-
-  bufferIndex++;
-  renderIndex++;
-
-  if (bufferIndex < buffers) return;
-  bufferIndex = 0;
-  renderIndex = 0;
-
-  renderAtlas();
-}
+// void renderStandardNodeHalfEast({
+//   required double srcX,
+//   required double srcY,
+//   int color = 1,
+// }){
+//
+//   colors[renderIndex] = color;
+//
+//   src[bufferIndex] = srcX;
+//   dst[bufferIndex] = 1;
+//   bufferIndex++;
+//
+//   src[bufferIndex] = srcY;
+//   dst[bufferIndex] = 0;
+//   bufferIndex++;
+//
+//   src[bufferIndex] = srcX + spriteWidth;
+//   dst[bufferIndex] = renderNodeDstX - spriteWidthHalf + 17;
+//
+//   bufferIndex++;
+//   src[bufferIndex] = srcY + spriteHeight;
+//   dst[bufferIndex] = renderNodeDstY - spriteHeightThird - 17;
+//
+//   bufferIndex++;
+//   renderIndex++;
+//
+//   if (bufferIndex < buffers) return;
+//   bufferIndex = 0;
+//   renderIndex = 0;
+//
+//   renderAtlas();
+// }
 
 
 

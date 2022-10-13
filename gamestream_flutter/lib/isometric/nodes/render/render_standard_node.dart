@@ -49,6 +49,37 @@ void renderStandardNodeShaded({
   canvas.drawRawAtlas(Images.blocks, _dst, _src, _colors, BlendMode.dstATop, null, paint);
 }
 
+void renderStandardNodeHalfEast({
+  required double srcX,
+  required double srcY,
+  int color = 1,
+}){
+  _colors[0] = color;
+  _src[0] = srcX;
+  _src[1] = srcY;
+  _src[2] = srcX + spriteWidth;
+  _dst[2] = renderNodeDstX - spriteWidthHalf + 17;
+  _src[3] = srcY + spriteHeight;
+  _dst[3] = renderNodeDstY - spriteHeightThird - 17;
+  canvas.drawRawAtlas(Images.blocks, _dst, _src, _colors, BlendMode.dstATop, null, paint);
+}
+
+void renderStandardNodeHalfNorth({
+  required double srcX,
+  required double srcY,
+  int color = 1,
+}){
+  _colors[0] = color;
+  _src[0] = srcX;
+  _src[1] = srcY;
+  _src[2] = srcX + spriteWidth;
+  _dst[2] = renderNodeDstX - spriteWidthHalf - 17;
+  _src[3] = srcY + spriteHeight;
+  _dst[3] = renderNodeDstY - spriteHeightThird - 17;
+  canvas.drawRawAtlas(Images.blocks, _dst, _src, _colors, BlendMode.dstATop, null, paint);
+}
+
+
 void renderAdvanced({
   required double dstX,
   required double dstY,

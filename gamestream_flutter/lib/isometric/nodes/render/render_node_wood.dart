@@ -2,94 +2,91 @@
 import 'package:bleed_common/node_orientation.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node.dart';
+import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 
 import 'render_standard_node.dart';
 
-void renderNodeWood({
-  required int orientation,
-  required double dstX,
-  required double dstY,
-  required int color,
-}){
-  switch(orientation) {
+void renderNodeWood(){
+  switch(renderNodeOrientation) {
     case NodeOrientation.Solid:
-      return renderStandardNode(
-        srcX: AtlasSrcX.Node_Wood_Solid,
-        srcY: 0,
-        color: color,
+      renderStandardNodeShaded(
+        srcX: AtlasSrcX.Node_Wood_Solid_X,
+        srcY: AtlasSrcX.Node_Wood_Solid_Y,
       );
+      return;
     case NodeOrientation.Slope_North:
-      return renderStandardNode(
+      renderStandardNodeShaded(
         srcX: AtlasSrcX.Node_Wood_Slope_North,
         srcY: 0,
-        color: color,
       );
+      return;
     case NodeOrientation.Slope_East:
-      return renderStandardNode(
+      renderStandardNodeShaded(
         srcX: AtlasSrcX.Node_Wood_Slope_East,
         srcY: 0,
-        color: color,
       );
+      return;
     case NodeOrientation.Slope_South:
-      return renderStandardNode(
+      renderStandardNodeShaded(
         srcX: AtlasSrcX.Node_Wood_Slope_South,
         srcY: 0,
-        color: color,
       );
+      return;
     case NodeOrientation.Slope_West:
-      return renderStandardNode(
+      renderStandardNode(
         srcX: AtlasSrcX.Node_Wood_Slope_West,
         srcY: 0,
-        color: color,
       );
+      return;
     case NodeOrientation.Half_North:
-      return renderStandardNodeHalfNorth(
-        srcX: AtlasSrcX.Node_Wood_Half_North,
-        srcY: 0,
-        color: color,
+      renderStandardNodeHalfNorth(
+        srcX: AtlasSrcX.Node_Wood_Half_South_X,
+        srcY: AtlasSrcX.Node_Wood_Half_South_Y,
+        color: renderNodeColor,
       );
+      return;
     case NodeOrientation.Half_East:
-      return renderStandardNodeHalfEast(
-        srcX: AtlasSrcX.Node_Wood_Half_East,
-        srcY: 0,
-        color: color,
+      renderStandardNodeHalfEast(
+        srcX: AtlasSrcX.Node_Wood_Half_West_X,
+        srcY: AtlasSrcX.Node_Wood_Half_West_Y,
+        color: renderNodeColor,
       );
+      return;
     case NodeOrientation.Half_South:
-      return renderStandardNode(
-        srcX: AtlasSrcX.Node_Wood_Half_South,
-        srcY: 0,
-        color: color,
+      renderStandardNodeShaded(
+        srcX: AtlasSrcX.Node_Wood_Half_South_X,
+        srcY: AtlasSrcX.Node_Wood_Half_South_Y,
       );
+      return;
     case NodeOrientation.Half_West:
-      return renderStandardNode(
-        srcX: AtlasSrcX.Node_Wood_Half_West,
-        srcY: 0,
-        color: color,
+      renderStandardNodeShaded(
+        srcX: AtlasSrcX.Node_Wood_Half_West_X,
+        srcY: AtlasSrcX.Node_Wood_Half_West_Y,
       );
+      return;
     case NodeOrientation.Corner_Top:
-      return renderStandardNode(
-        srcX: AtlasSrcX.Node_Wood_Corner_Top,
-        srcY: 0,
-        color: color,
+      renderStandardNodeShaded(
+        srcX: AtlasSrcX.Node_Wood_Corner_Top_X,
+        srcY: AtlasSrcX.Node_Wood_Corner_Top_Y,
       );
+      return;
     case NodeOrientation.Corner_Right:
-      return renderStandardNode(
-        srcX: AtlasSrcX.Node_Wood_Corner_Right,
-        srcY: 0,
-        color: color,
+      renderStandardNodeShaded(
+        srcX: AtlasSrcX.Node_Wood_Corner_Right_X,
+        srcY: AtlasSrcX.Node_Wood_Corner_Right_Y,
       );
+      return;
     case NodeOrientation.Corner_Bottom:
-      return renderStandardNode(
-        srcX: AtlasSrcX.Node_Wood_Corner_Bottom,
-        srcY: 0,
-        color: color,
+      renderStandardNodeShaded(
+        srcX: AtlasSrcX.Node_Wood_Corner_Bottom_X,
+        srcY: AtlasSrcX.Node_Wood_Corner_Bottom_Y,
       );
+      return;
     case NodeOrientation.Corner_Left:
-      return renderStandardNode(
-        srcX: AtlasSrcX.Node_Wood_Corner_Left,
-        srcY: 0,
-        color: color,
+      renderStandardNodeShaded(
+        srcX: AtlasSrcX.Node_Wood_Corner_Left_X,
+        srcY: AtlasSrcX.Node_Wood_Corner_Left_Y,
       );
+      return;
   }
-
 }

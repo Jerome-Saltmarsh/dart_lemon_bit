@@ -1,72 +1,72 @@
 
 import 'package:bleed_common/node_orientation.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
+import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 
 import 'render_constants.dart';
 import 'render_node.dart';
 import 'render_standard_node.dart';
 
-void renderNodeWoodenPlank({
-  required int orientation,
-  required double dstX,
-  required double dstY,
-  required int color,
-}){
-  switch(orientation){
+void renderNodeWoodenPlank(){
+  switch(renderNodeOrientation){
     case NodeOrientation.Solid:
-      return renderStandardNode(
+      renderStandardNodeShaded(
         srcX: AtlasSrcX.Node_Wooden_Plank,
         srcY: 0,
-        color: color,
       );
+      return;
     case NodeOrientation.Half_North:
-      return renderStandardNodeHalfNorth(
+      renderStandardNodeHalfNorth(
         srcX: AtlasSrcX.Node_Wooden_Plank,
         srcY: srcYIndex2,
-        color: color,
+        color: renderNodeColor,
       );
+      return;
     case NodeOrientation.Half_East:
-      return renderStandardNodeHalfEast(
+      renderStandardNodeHalfEast(
         srcX: AtlasSrcX.Node_Wooden_Plank,
         srcY: srcYIndex1,
-        color: color,
+        color: renderNodeColor,
       );
+      return;
     case NodeOrientation.Half_South:
-      return renderStandardNode(
+      renderStandardNode(
         srcX: AtlasSrcX.Node_Wooden_Plank,
         srcY: srcYIndex2,
-        color: color,
+        color: renderNodeColor,
       );
+      return;
     case NodeOrientation.Half_West:
-      return renderStandardNode(
+      renderStandardNode(
         srcX: AtlasSrcX.Node_Wooden_Plank,
         srcY: srcYIndex1,
-        color: color,
+        color: renderNodeColor,
       );
+      return;
     case NodeOrientation.Corner_Top:
-      return renderStandardNode(
+      renderStandardNodeShaded(
         srcX: AtlasSrcX.Node_Wooden_Plank,
         srcY: srcYIndex3,
-        color: color,
       );
+      return;
     case NodeOrientation.Corner_Right:
-      return renderStandardNode(
+      renderStandardNode(
         srcX: AtlasSrcX.Node_Wooden_Plank,
         srcY: srcYIndex4,
-        color: color,
       );
+      return;
     case NodeOrientation.Corner_Bottom:
-      return renderStandardNode(
+      renderStandardNodeShaded(
         srcX: AtlasSrcX.Node_Wooden_Plank,
         srcY: srcYIndex5,
-        color: color,
       );
+      return;
     case NodeOrientation.Corner_Left:
-      return renderStandardNode(
+      renderStandardNodeShaded(
         srcX: AtlasSrcX.Node_Wooden_Plank,
         srcY: srcYIndex6,
-        color: color,
       );
+      return;
   }
 
 }

@@ -277,6 +277,7 @@ var indexShowColumn = 0;
 var indexShowZ = 0;
 
 int get renderNodeShade => nodesShade[renderNodeIndex];
+int get renderNodeOrientation => nodesOrientation[renderNodeIndex];
 int get renderNodeColor => colorShades[renderNodeShade];
 int get renderNodeWind => nodesWind[renderNodeShade];
 
