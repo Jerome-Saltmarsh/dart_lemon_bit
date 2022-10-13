@@ -4,7 +4,7 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/request_modify_canvas_size.dart';
 import 'package:bleed_common/teleport_scenes.dart';
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/io/io_touchscreen.dart';
+import 'package:gamestream_flutter/io/touchscreen.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric_web/read_player_input.dart';
 import 'package:gamestream_flutter/network/instance/websocket.dart';

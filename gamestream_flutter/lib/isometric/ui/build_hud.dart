@@ -1,3 +1,6 @@
+
+import 'package:bleed_common/Direction.dart';
+import 'package:gamestream_flutter/io/touchscreen.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
@@ -75,22 +78,37 @@ Widget buildStackGame()  =>
                        Positioned(
                            top: 0,
                            left: sizeThird,
-                           child: Container(width: sizeThird, height: sizeThird, color: Colors.blue,)
+                           child: onPressed(
+                               action: () => Touchscreen.direction = Direction.North_East,
+                               child: Container(width: sizeThird, height: sizeThird, color: Colors.blue,))
                        ),
                        Positioned(
                            top: sizeThird,
                            left: 0,
-                           child: Container(width: sizeThird, height: sizeThird, color: Colors.blue,)
+                           child: container(width: sizeThird, height: sizeThird, color: Colors.blue, action: (){
+                             Touchscreen.direction = Direction.North_West;
+                           })
                        ),
                        Positioned(
                            top: sizeThird,
                            right: 0,
-                           child: Container(width: sizeThird, height: sizeThird, color: Colors.blue,)
+                           child: container(width: sizeThird, height: sizeThird, color: Colors.blue, action: (){
+                             Touchscreen.direction = Direction.South_East;
+                           })
                        ),
                        Positioned(
                            bottom: 0,
                            left: sizeThird,
-                           child: Container(width: sizeThird, height: sizeThird, color: Colors.blue,)
+                           child: container(width: sizeThird, height: sizeThird, color: Colors.blue, action: (){
+                             Touchscreen.direction = Direction.South_West;
+                           })
+                       ),
+                       Positioned(
+                           bottom: sizeThird,
+                           left: sizeThird,
+                           child: container(width: sizeThird, height: sizeThird, color: Colors.green, action: (){
+                             Touchscreen.direction = Direction.None;
+                           })
                        ),
                      ],
                   ),
