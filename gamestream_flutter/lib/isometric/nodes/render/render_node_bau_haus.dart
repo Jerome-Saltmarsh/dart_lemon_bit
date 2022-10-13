@@ -3,137 +3,126 @@
 
 
 import 'package:bleed_common/node_orientation.dart';
-import 'package:gamestream_flutter/isometric/nodes/render/render_node.dart';
+import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 
 import 'atlas_src_x.dart';
-import 'render_constants.dart';
 import 'render_standard_node.dart';
 
 
-void renderNodeBauHaus({
-  required int orientation,
-  required double dstX,
-  required double dstY,
-  required int color,
-}){
-  switch (orientation){
+void renderNodeBauHaus() {
+  switch (renderNodeOrientation) {
     case NodeOrientation.Solid:
-      renderStandardNode(
-        srcX: AtlasSrcX.Node_Bau_Haus_Solid,
-        srcY: 0,
-        color: color,
+      renderStandardNodeShaded(
+        srcX: AtlasSrcX.Node_Bau_Haus_Solid_X,
+        srcY: AtlasSrcX.Node_Bau_Haus_Solid_Y,
       );
       break;
     case NodeOrientation.Half_North:
       renderStandardNodeHalfNorth(
-        srcX: AtlasSrcX.Node_Bau_Haus_Solid,
-        srcY: srcYIndex1,
-        color: color,
+        srcX: AtlasSrcX.Node_Bau_Haus_Half_South_X,
+        srcY: AtlasSrcX.Node_Bau_Haus_Half_South_Y,
+        color: renderNodeColor,
       );
       break;
     case NodeOrientation.Half_East:
       renderStandardNodeHalfEast(
-        srcX: AtlasSrcX.Node_Bau_Haus_Solid,
-        srcY: srcYIndex2,
-        color: color,
+        srcX: AtlasSrcX.Node_Bau_Haus_Half_West_X,
+        srcY: AtlasSrcX.Node_Bau_Haus_Half_West_Y,
+        color: renderNodeColor,
       );
       break;
     case NodeOrientation.Half_South:
       renderStandardNode(
-        srcX: AtlasSrcX.Node_Bau_Haus_Solid,
-        srcY: srcYIndex1,
-        color: color,
+        srcX: AtlasSrcX.Node_Bau_Haus_Half_South_X,
+        srcY: AtlasSrcX.Node_Bau_Haus_Half_South_Y,
+        color: renderNodeColor,
       );
       break;
     case NodeOrientation.Half_West:
       renderStandardNode(
-        srcX: AtlasSrcX.Node_Bau_Haus_Solid,
-        srcY: srcYIndex2,
-        color: color,
+        srcX: AtlasSrcX.Node_Bau_Haus_Half_South_X,
+        srcY: AtlasSrcX.Node_Bau_Haus_Half_South_Y,
+        color: renderNodeColor,
       );
       break;
     case NodeOrientation.Corner_Top:
-      renderStandardNode(
-        srcX: AtlasSrcX.Node_Bau_Haus_Solid,
-        srcY: srcYIndex3,
-        color: color,
+      renderStandardNodeShaded(
+        srcX: AtlasSrcX.Node_Bau_Haus_Corner_Top_X,
+        srcY: AtlasSrcX.Node_Bau_Haus_Corner_Top_Y,
       );
       break;
     case NodeOrientation.Corner_Right:
-      renderStandardNode(
-        srcX: AtlasSrcX.Node_Bau_Haus_Solid,
-        srcY: srcYIndex4,
-        color: color,
+      renderStandardNodeShaded(
+        srcX: AtlasSrcX.Node_Bau_Haus_Corner_Right_X,
+        srcY: AtlasSrcX.Node_Bau_Haus_Corner_Right_Y,
       );
       break;
     case NodeOrientation.Corner_Bottom:
-      renderStandardNode(
-        srcX: AtlasSrcX.Node_Bau_Haus_Solid,
-        srcY: srcYIndex5,
-        color: color,
+      renderStandardNodeShaded(
+        srcX: AtlasSrcX.Node_Bau_Haus_Corner_Bottom_X,
+        srcY: AtlasSrcX.Node_Bau_Haus_Corner_Bottom_Y,
       );
       break;
     case NodeOrientation.Corner_Left:
-      renderStandardNode(
-        srcX: AtlasSrcX.Node_Bau_Haus_Solid,
-        srcY: srcYIndex6,
-        color: color,
+      renderStandardNodeShaded(
+        srcX: AtlasSrcX.Node_Bau_Haus_Corner_Left_X,
+        srcY: AtlasSrcX.Node_Bau_Haus_Corner_Left_Y,
       );
       break;
     case NodeOrientation.Slope_North:
       renderStandardNode(
         srcX: AtlasSrcX.Node_Bau_Haus_Slope,
         srcY: 0,
-        color: color,
+        color: renderNodeColor,
       );
       break;
     case NodeOrientation.Slope_East:
       renderStandardNode(
         srcX: AtlasSrcX.Node_Bau_Haus_Slope,
         srcY: 73.0,
-        color: color,
+        color: renderNodeColor,
       );
       break;
     case NodeOrientation.Slope_South:
       renderStandardNode(
         srcX: AtlasSrcX.Node_Bau_Haus_Slope,
         srcY: 146.0,
-        color: color,
+        color: renderNodeColor,
       );
       break;
     case NodeOrientation.Slope_West:
       renderStandardNode(
         srcX: AtlasSrcX.Node_Bau_Haus_Slope,
         srcY: 73.0 * 3,
-        color: color,
+        color: renderNodeColor,
       );
       break;
     case NodeOrientation.Slope_Inner_North_East:
       renderStandardNode(
         srcX: AtlasSrcX.Node_Bau_Haus_Slope,
         srcY: 292,
-        color: color,
+        color: renderNodeColor,
       );
       break;
     case NodeOrientation.Slope_Inner_South_East:
       renderStandardNode(
         srcX: AtlasSrcX.Node_Bau_Haus_Slope,
         srcY: 365,
-        color: color,
+        color: renderNodeColor,
       );
       break;
     case NodeOrientation.Slope_Inner_South_West:
       renderStandardNode(
         srcX: AtlasSrcX.Node_Bau_Haus_Slope,
         srcY: 438,
-        color: color,
+        color: renderNodeColor,
       );
       break;
     case NodeOrientation.Slope_Inner_North_West:
       renderStandardNode(
         srcX: AtlasSrcX.Node_Bau_Haus_Slope,
         srcY: 511,
-        color: color,
+        color: renderNodeColor,
       );
       break;
   }

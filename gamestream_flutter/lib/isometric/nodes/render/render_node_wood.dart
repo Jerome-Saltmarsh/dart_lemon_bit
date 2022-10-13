@@ -1,13 +1,12 @@
 
 import 'package:bleed_common/node_orientation.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
-import 'package:gamestream_flutter/isometric/nodes/render/render_node.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 
 import 'render_standard_node.dart';
 
 void renderNodeWood(){
-  switch(renderNodeOrientation) {
+  switch (renderNodeOrientation) {
     case NodeOrientation.Solid:
       renderStandardNodeShaded(
         srcX: AtlasSrcX.Node_Wood_Solid_X,

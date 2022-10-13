@@ -16,7 +16,6 @@ import 'package:gamestream_flutter/isometric/render/render_torch.dart';
 import 'package:gamestream_flutter/isometric/variables/src_x_rain_falling.dart';
 import 'package:gamestream_flutter/isometric/variables/src_x_rain_landing.dart';
 import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
-import 'package:lemon_engine/actions/render_atlas.dart';
 import 'package:lemon_engine/render.dart';
 
 import 'render_constants.dart';
@@ -170,12 +169,7 @@ void renderNodeAt() {
       renderNodeWood();
       break;
     case NodeType.Bau_Haus_2:
-      renderNodeBauHaus(
-        orientation: nodesOrientation[renderNodeIndex],
-        dstX: renderNodeDstX,
-        dstY: renderNodeDstY,
-        color: colorShades[nodesShade[renderNodeIndex]],
-      );
+      renderNodeBauHaus();
       break;
     case NodeType.Sunflower:
       return renderStandardNode(
