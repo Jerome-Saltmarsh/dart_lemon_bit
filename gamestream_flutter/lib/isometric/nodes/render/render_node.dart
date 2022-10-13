@@ -11,13 +11,12 @@ import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node_bau_haus.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node_wood.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
-import 'package:gamestream_flutter/isometric/render/render_torch.dart';
 import 'package:gamestream_flutter/isometric/variables/src_x_rain_falling.dart';
 import 'package:gamestream_flutter/isometric/variables/src_x_rain_landing.dart';
-import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
 
 import 'render_constants.dart';
 import 'render_node_plain.dart';
+import 'render_node_torch.dart';
 import 'render_node_type_brick.dart';
 import 'render_node_window.dart';
 import 'render_node_wooden_plank.dart';
@@ -75,13 +74,8 @@ void renderNodeAt() {
         shade: nodesShade[renderNodeIndex],
       );
     case NodeType.Torch:
-      if (!torchesIgnited.value) {
-        return renderTorchOff(renderNodeDstX, renderNodeDstY);
-      }
-      if (nodesWind[renderNodeIndex] == Wind.Calm){
-        return renderTorchOn(renderNodeDstX, renderNodeDstY);
-      }
-      return renderTorchOnWindy(renderNodeDstX, renderNodeDstY);
+      renderNodeTorch();
+      break;
     case NodeType.Water:
       return renderAdvanced(
         dstX: renderNodeDstX,

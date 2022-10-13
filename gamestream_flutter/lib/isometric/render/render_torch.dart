@@ -14,18 +14,6 @@ void renderTorchOff(double x, double y) {
   );
 }
 
-void  renderTorchOn(double x, double y) {
-  render(
-      dstX: x,
-      dstY: y,
-      srcX: 2086,
-      srcY: 70 + (((x + y + (animationFrameTorch)) % 6) * 70),
-      srcWidth: 25,
-      srcHeight: 70,
-      anchorY: 0.33
-  );
-}
-
 void renderTorchOnWindy(double x, double y) {
   render(
       dstX: x,

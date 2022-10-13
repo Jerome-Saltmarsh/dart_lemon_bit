@@ -151,9 +151,15 @@ class AtlasSrcX {
   static const Node_Wood_Slope_South_Y = Node_Wood_Slope_North_Y;
   static const Node_Wood_Slope_West_X = Node_Wood_Slope_South_X - Sprite_Width_Padded;
   static const Node_Wood_Slope_West_Y = Node_Wood_Slope_North_Y;
-
   static const Node_Bed_Bottom_X = 765.0;
   static const Node_Bed_Bottom_Y = 585.0;
   static const Node_Bed_Top_X = Node_Bed_Bottom_X + Sprite_Width_Padded;
   static const Node_Bed_Top_Y = Node_Bed_Bottom_Y;
+
+  static const Node_Torch_X = 960.0;
+  static const Node_Torch_Y = 512.0;
+  static const Node_Torch_Width = 25.0;
+  static const Node_Torch_Height = 70.0;
+  static const Node_Torch_Windy_X = 986.0;
+  static const Node_Torch_Windy_Y = 512.0;
 }
