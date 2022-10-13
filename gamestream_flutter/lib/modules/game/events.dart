@@ -6,24 +6,13 @@ import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_dispatch/instance.dart';
-import 'package:lemon_engine/engine.dart';
 
 class GameEvents {
-
-  Timer? updateTimer;
 
   void register(){
     player.alive.onChanged(_onPlayerAliveChanged);
     player.state.onChanged(onPlayerCharacterStateChanged);
     sub(_onGameError);
-
-    updateTimer = Timer.periodic(Duration(milliseconds: 1000.0 ~/ 30.0), (timer) {
-      engine.updateEngine();
-    });
-  }
-
-  void deregister(){
-    updateTimer?.cancel();
   }
 
   // TODO Remove

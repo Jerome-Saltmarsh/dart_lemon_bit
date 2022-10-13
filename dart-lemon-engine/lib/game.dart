@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
@@ -7,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'canvas.dart';
 import 'enums.dart';
-import 'state/paint.dart';
 
 void _defaultDrawCanvasForeground(Canvas canvas, Size size) {
   // do nothing
@@ -19,7 +17,6 @@ class Game extends StatefulWidget {
   final WidgetBuilder? buildLoadingScreen;
   final WidgetBuilder buildUI;
   final DrawCanvas drawCanvasForeground;
-  final int framesPerSecond;
 
   Game({
       required this.title,
@@ -32,14 +29,15 @@ class Game extends StatefulWidget {
       DrawCanvas? drawCanvas,
       Color backgroundColor = Colors.black,
       bool drawCanvasAfterUpdate = true,
-      this.framesPerSecond = 60,
+      int framesPerSecond = 60,
       ThemeData? themeData,
   }){
+    engine.setFramesPerSecond(framesPerSecond);
     engine.backgroundColor.value = backgroundColor;
     engine.drawCanvasAfterUpdate = drawCanvasAfterUpdate;
     engine.themeData.value = themeData;
     engine.onDrawCanvas = drawCanvas;
-    engine.update = update;
+    engine.onUpdate = update;
     engine.onInit = init;
   }
 

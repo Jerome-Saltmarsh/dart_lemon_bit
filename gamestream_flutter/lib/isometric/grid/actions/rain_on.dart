@@ -8,6 +8,7 @@ void rainOn(){
   for (var row = 0; row < nodesTotalRows; row++) {
     for (var column = 0; column < nodesTotalColumns; column++) {
       for (var z = nodesTotalZ - 1; z >= 0; z--) {
+
         final index = getNodeIndexZRC(z, row, column);
         final type = nodesType[index];
         if (type != NodeType.Empty) {
@@ -19,7 +20,7 @@ void rainOn(){
         }
 
         if (
-            column == 0 ||
+        column == 0 ||
             row == 0 ||
             !gridNodeZRCTypeRainOrEmpty(z, row - 1, column) ||
             !gridNodeZRCTypeRainOrEmpty(z, row, column - 1)

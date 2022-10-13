@@ -14,6 +14,7 @@ import 'package:lemon_watch/watch.dart';
 
 import 'convert/convert_distance_to_shade.dart';
 import 'watches/ambient_shade.dart';
+import 'watches/raining.dart';
 
 final gridShadows = Watch(true, onChanged: (bool value){
   refreshLighting();
@@ -76,27 +77,13 @@ void onGridChanged(){
   refreshGridMetrics();
   gridWindResetToAmbient();
 
-  if (rain.value != Rain.None) {
+  if (raining.value) {
      rainOn();
   }
-
-  connectNodeTrees();
   refreshLighting();
   refreshParticleEmitters();
 }
 
-void connectNodeTrees() {
-   for (var z = 0; z < nodesTotalZ; z++){
-    for (var row = 0; row < nodesTotalRows; row++){
-       for (var column = 0; column < nodesTotalColumns; column++){
-           // final node = getNode(z, row, column);
-           // if (node is NodeTreeTop){
-           //   node.bottom = getNode(z - 1, row, column);
-           // }
-       }
-    }
-  }
-}
 
 void refreshParticleEmitters() {
   particleEmitters.clear();

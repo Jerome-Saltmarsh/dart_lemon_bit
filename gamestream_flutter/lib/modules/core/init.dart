@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/atlases.dart';
+import 'package:gamestream_flutter/event_handlers.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/shared_preferences.dart';
 import 'package:lemon_engine/engine.dart';
@@ -19,14 +19,14 @@ Future init(SharedPreferences sharedPreferences) async {
   atlas = Images.characters;
   engine.cursorType.value = CursorType.Basic;
   print("environment: ${engine.isLocalHost ? 'localhost' : 'production'}");
-  engine.onTapDown = onTapDown;
+  // engine.onLongPress = EventHandler.onLongPress;
 
+  engine.register(
+     onTapDown: EventHandler.onTapDown,
+     // onDrawCanvas:
+  );
 }
 
-
-void onTapDown(TapDownDetails details){
-
-}
 
 Future loadStateFromSharedPreferences() async {
   if (storage.serverSaved) {

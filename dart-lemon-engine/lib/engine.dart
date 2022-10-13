@@ -24,6 +24,7 @@ import 'state/paint.dart';
 final engine = _Engine();
 
 class _Engine {
+  Timer? updateTimer;
   late final sharedPreferences;
   final draw = LemonEngineDraw();
   late final LemonEngineEvents events;
@@ -64,9 +65,6 @@ class _Engine {
   var zoom = 1.0;
   final deviceType = Watch(DeviceType.Computer);
   late BuildContext buildContext;
-  Function? update;
-
-
 
   bool get deviceIsComputer => deviceType.value == DeviceType.Computer;
 
@@ -109,29 +107,6 @@ class _Engine {
 
   Future loadAtlas(String filename) async {
     atlas = await loadImage(filename);
-  }
-
-  void updateEngine() {
-    _screen.left = camera.x;
-    _screen.right = camera.x + (_screen.width / zoom);
-    _screen.top = camera.y;
-    _screen.bottom = camera.y + (_screen.height / zoom);
-    if (mouseLeftDown.value) {
-      mouseLeftDownFrames++;
-    }
-    deviceType.value =
-    screen.width < 800 ? DeviceType.Phone : DeviceType.Computer;
-    update?.call();
-    final sX = screenCenterWorldX;
-    final sY = screenCenterWorldY;
-    final zoomDiff = targetZoom - zoom;
-    zoom += zoomDiff * zoomSensitivity;
-    cameraCenter(sX, sY);
-
-
-    if (drawCanvasAfterUpdate) {
-      redrawCanvas();
-    }
   }
 
   TextSpan getTextSpan(String text) {
@@ -316,6 +291,71 @@ class _Engine {
     }
   }
 
+  void register({
+    GestureTapDownCallback? onTapDown,
+    GestureLongPressCallback? onLongPress,
+    GestureDragStartCallback? onPanStart,
+    GestureDragUpdateCallback? onPanUpdate,
+    GestureDragEndCallback? onPanEnd,
+    CallbackOnScreenSizeChanged? onScreenSizeChanged,
+    Function? onDispose,
+    DrawCanvas? onDrawCanvas,
+    DrawCanvas? onDrawForeground,
+    Function? onKeyPressedSpace,
+    Function? onLeftClicked,
+    Function? onLongLeftClicked,
+    Function(double value)? onMouseScroll,
+    Function? onRightClicked,
+    Function? onRightClickReleased,
+    Function(SharedPreferences sharedPreferences)? onInit,
+  }) {
+    if (onTapDown != null) {
+        this.onTapDown = onTapDown;
+    }
+    if (onLongPress != null){
+       this.onLongPress = onLongPress;
+    }
+    if (onPanStart != null){
+      this.onPanStart = onPanStart;
+    }
+    if (onPanUpdate != null){
+      this.onPanUpdate = onPanUpdate;
+    }
+    if (onPanEnd != null){
+      this.onPanEnd = onPanEnd;
+    }
+    if (onScreenSizeChanged != null){
+      this.onScreenSizeChanged = onScreenSizeChanged;
+    }
+    if (onDispose != null){
+      this.onDispose = onDispose;
+    }
+    if (onDrawCanvas != null){
+      this.onDrawCanvas = onDrawCanvas;
+    }
+    if (onDrawForeground != null){
+      this.onDrawForeground = onDrawForeground;
+    }
+    if (onKeyPressedSpace != null){
+      this.onKeyPressedSpace = onKeyPressedSpace;
+    }
+    if (onLeftClicked != null){
+      this.onLeftClicked = onLeftClicked;
+    }
+    if (onMouseScroll != null){
+      this.onMouseScroll = onMouseScroll;
+    }
+    if (onRightClicked != null){
+      this.onRightClicked = onRightClicked;
+    }
+    if (onRightClickReleased != null){
+      this.onRightClickReleased = onRightClickReleased;
+    }
+    if (onInit != null){
+      this.onInit = onInit;
+    }
+  }
+
   /// override safe. run this snippet inside your initialization code.
   /// engine.onTapDown = (TapDownDetails details) => print('tap detected');
   GestureTapDownCallback? onTapDown;
@@ -349,6 +389,10 @@ class _Engine {
   Function? onRightClickReleased;
   /// override safe
   Function(SharedPreferences sharedPreferences)? onInit;
+  /// override safe
+  Function? onUpdate;
+  /// override safe
+  Function? onUpdateTimerReset;
 
   void internalOnPanStart(DragStartDetails details){
     panStarted = true;
@@ -370,8 +414,18 @@ class _Engine {
     engineRenderFlushBuffer();
   }
 
+  Duration buildDurationFramesPerSecond(int framesPerSecond){
+    return Duration(milliseconds: convertFramesPerSecondsToMilliseconds(framesPerSecond));
+  }
+
+  int convertFramesPerSecondsToMilliseconds(int framesPerSecond){
+    const millisecondsPerSecond = 1000;
+    return millisecondsPerSecond ~/ framesPerSecond;
+  }
+
   void internalInit() async {
     print("engine.internalInit()");
+    // TODO start update timer here
     disableRightClickContextMenu();
     paint.isAntiAlias = false;
     sharedPreferences = await SharedPreferences.getInstance();
@@ -379,7 +433,60 @@ class _Engine {
     if (onInit != null) {
       await onInit!(sharedPreferences);
     }
+    updateTimer = Timer.periodic(
+        durationPerFrame,
+        internalOnTimerUpdateTriggered,
+    );
     initialized.value = true;
+  }
+
+  var  _millisecondsPerFrame = 30;
+
+  int get millisecondsPerFrame => _millisecondsPerFrame;
+
+  set millisecondsPerFrame(int value) {
+    if (millisecondsPerFrame == value) return;
+    _millisecondsPerFrame = value;
+    resetUpdateTimer();
+  }
+
+  void resetUpdateTimer(){
+    updateTimer?.cancel();
+    updateTimer = Timer.periodic(
+      durationPerFrame,
+      internalOnTimerUpdateTriggered,
+    );
+    onUpdateTimerReset?.call();
+  }
+
+  Duration get durationPerFrame => buildDurationFramesPerSecond(millisecondsPerFrame);
+
+
+
+  /// Timer is a potentiol memory leak
+  void internalOnTimerUpdateTriggered(Timer timer){
+    _screen.left = camera.x;
+    _screen.right = camera.x + (_screen.width / zoom);
+    _screen.top = camera.y;
+    _screen.bottom = camera.y + (_screen.height / zoom);
+    if (mouseLeftDown.value) {
+      mouseLeftDownFrames++;
+    }
+    deviceType.value =
+    screen.width < 800 ? DeviceType.Phone : DeviceType.Computer;
+    onUpdate?.call();
+    final sX = screenCenterWorldX;
+    final sY = screenCenterWorldY;
+    final zoomDiff = targetZoom - zoom;
+    zoom += zoomDiff * zoomSensitivity;
+    cameraCenter(sX, sY);
+    if (drawCanvasAfterUpdate) {
+      redrawCanvas();
+    }
+  }
+
+  void setFramesPerSecond(int framesPerSecond) {
+     millisecondsPerFrame = convertFramesPerSecondsToMilliseconds(framesPerSecond);
   }
 }
 

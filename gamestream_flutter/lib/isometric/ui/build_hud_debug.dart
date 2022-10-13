@@ -48,7 +48,7 @@ Widget buildHudDebug() =>
               watch(gameType, (int? value) => text("game-type: ${value == null ? 'None' : GameType.getName(value)}")),
               height24,
               text("close x", onPressed: () => debugVisible.value = false),
-              watch(engine.deviceType, (DeviceType deviceType) => text("device-type: ${deviceType.name}", onPressed: engine.toggleDeviceType)),
+              watch(engine.deviceType, (int deviceType) => text("device-type: ${DeviceType.getName(deviceType)}", onPressed: engine.toggleDeviceType)),
             ],
           )),
     ],

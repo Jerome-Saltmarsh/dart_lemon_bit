@@ -85,9 +85,8 @@ class CoreEvents {
     engine.onDrawCanvas = null;
     engine.onDrawForeground = null;
     engine.drawCanvasAfterUpdate = true;
-    engine.update = null;
+    engine.onUpdate = null;
     engine.keyPressedHandlers = {};
-    modules.game.events.deregister();
     isometricWebControlsDeregister();
 
     switch(mode) {
@@ -100,7 +99,7 @@ class CoreEvents {
       case Mode.Player:
         engine.onDrawCanvas = modules.game.render.renderGame;
         engine.onDrawForeground = modules.game.render.renderForeground;
-        engine.update = modules.game.update.update;
+        engine.onUpdate = modules.game.update.update;
         engine.drawCanvasAfterUpdate = true;
         modules.game.events.register();
         engine.zoomOnScroll = true;
@@ -133,7 +132,7 @@ class CoreEvents {
 
       case Connection.Done:
         onConnectionDone();
-        engine.update = null;
+        engine.onUpdate = null;
         core.state.mode.value = Mode.Website;
         engine.fullScreenExit();
         core.actions.clearState();
