@@ -1,9 +1,9 @@
 
 import 'render_constants.dart';
 
-class AtlasSrc {
-  static const Node_Grass = 7158.0;
-  static const Node_Grass_Flowers = 9782.0;
+class AtlasSrcX {
+  static const Node_Grass = 0.0;
+  static const Node_Grass_Flowers = Node_Grass + 1;
   static const Node_Grass_Slope_North = 7925.0;
   static const Node_Grass_Slope_East = 7877.0;
   static const Node_Grass_Slope_South = 7829.0;

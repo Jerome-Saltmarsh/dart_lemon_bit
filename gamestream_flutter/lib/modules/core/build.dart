@@ -20,7 +20,9 @@ class CoreBuild {
       init: init,
       update: (){},
       buildUI: buildUI,
-      drawCanvas: null,
+      // drawCanvas: (Canvas canvas, Size size) {
+      //   canvas.drawCircle(Offset(100, 100), 5, paint);
+      // },
       drawCanvasAfterUpdate: true,
       backgroundColor: colours.black,
       buildLoadingScreen: buildLoadingScreen,

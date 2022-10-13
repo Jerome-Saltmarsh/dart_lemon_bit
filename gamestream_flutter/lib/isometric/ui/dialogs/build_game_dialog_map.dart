@@ -1,7 +1,7 @@
 
 import 'package:bleed_common/map_tiles.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/isometric/map_atlas.dart';
+import 'package:gamestream_flutter/atlases.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
@@ -74,7 +74,7 @@ void mapCameraCenter(double x, double y){
 void renderMapTile(Canvas canvas, MapTile value){
   canvasRenderAtlas(
     canvas: canvas,
-    atlas: mapAtlas,
+    atlas: Images.mapAtlas,
     srcX: mapTileSize * value.srcIndex,
     srcY: 0,
     srcWidth: mapTileSize,

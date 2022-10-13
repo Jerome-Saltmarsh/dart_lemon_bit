@@ -203,6 +203,7 @@ class _GamePainter extends CustomPainter {
 
   @override
   void paint(Canvas _canvas, Size size) {
+    if (!engine.initialized.value) return;
     canvas = _canvas;
     canvas.scale(engine.zoom, engine.zoom);
     canvas.translate(-_camera.x, -_camera.y);
@@ -213,11 +214,8 @@ class _GamePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
-
 
 class _GameForegroundPainter extends CustomPainter {
 

@@ -26,9 +26,7 @@ void canvasRenderAtlas({
   double anchorY = 0.5,
   double scale = 1.0,
   Rect? cullRect,
-  // int color = 1,
 }){
-  // _colors[0] = color;
   _src[0] = srcX;
   _src[1] = srcY;
   _src[2] = srcX + srcWidth;

@@ -1,39 +1,31 @@
 
+import 'dart:typed_data';
+import 'dart:ui';
+
+import 'package:gamestream_flutter/atlases.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
-import 'package:lemon_engine/actions/render_atlas.dart';
-import 'package:lemon_engine/render.dart';
+import 'package:lemon_engine/canvas.dart';
+import 'package:lemon_engine/state/paint.dart';
 
 import 'render_constants.dart';
+
+final _src = Float32List(4);
+final _dst = Float32List(4);
+final _colors = Int32List(1);
 
 void renderStandardNode({
   required double srcX,
   required double srcY,
   int color = 1,
 }){
-
-  colors[renderIndex] = color;
-
-  src[bufferIndex] = srcX;
-  dst[bufferIndex] = 1;
-  bufferIndex++;
-
-  src[bufferIndex] = srcY;
-  dst[bufferIndex] = 0;
-  bufferIndex++;
-
-  src[bufferIndex] = srcX + spriteWidth;
-  dst[bufferIndex] = renderNodeDstX - spriteWidthHalf;
-
-  bufferIndex++;
-  src[bufferIndex] = srcY + spriteHeight;
-  dst[bufferIndex] = renderNodeDstY - spriteHeightThird;
-
-  bufferIndex++;
-  renderIndex++;
-
-  if (bufferIndex < buffers) return;
-  bufferIndex = 0;
-  renderIndex = 0;
-
-  renderAtlas();
+  _colors[0] = color;
+  _src[0] = srcX;
+  _dst[0] = 1;
+  _src[1] = srcY;
+  _dst[1] = 0;
+  _src[2] = srcX + spriteWidth;
+  _dst[2] = renderNodeDstX - spriteWidthHalf;
+  _src[3] = srcY + spriteHeight;
+  _dst[3] = renderNodeDstY - spriteHeightThird;
+  canvas.drawRawAtlas(Images.blocks, _dst, _src, _colors, BlendMode.dstATop, null, paint);
 }

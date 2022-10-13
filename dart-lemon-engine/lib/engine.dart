@@ -75,7 +75,7 @@ class _Engine {
 
   };
   
-  Future loadAtlas(String filename) async{
+  Future loadAtlas(String filename) async {
       atlas = await loadImage(filename);
   }
 

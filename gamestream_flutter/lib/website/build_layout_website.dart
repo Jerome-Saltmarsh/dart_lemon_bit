@@ -7,10 +7,9 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/style.dart';
 import 'package:gamestream_flutter/to_string.dart';
 import 'package:lemon_engine/screen.dart';
-
-import '../isometric/ui/widgets/build_container.dart';
-import 'build/build_column_games.dart';
 import 'package:lemon_watch/watch.dart';
+
+import 'build/build_column_games.dart';
 
 final isVisibleDialogCustomRegion = Watch(false);
 
@@ -22,13 +21,6 @@ Widget buildPageWebsite({double padding = 6})  =>
         right: padding,
         child: buildTextVersion(),
       ),
-      // buildWatchBool(isVisibleDialogCustomRegion, () {
-      //   return Positioned(
-      //     top: 16,
-      //     left: 100,
-      //     child: buildDialogCustomRegion(),
-      //   );
-      // }),
       Positioned(
           top: 0,
           left: 180,
@@ -52,16 +44,13 @@ Widget buildPageWebsite({double padding = 6})  =>
           width: screen.width,
           height: screen.height,
           alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              buildColumnGames(),
-            ],
-          ),
+          child: buildColumnGames(),
         ),
       )
     ],
   );
+
+final colorRegion = Colors.orange;
 
 Widget buildStateRegion(Region selectedRegion) => Container(
   height: screen.height,
@@ -69,18 +58,19 @@ Widget buildStateRegion(Region selectedRegion) => Container(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: Region.values
-            .map((Region region) => buildTextButton('Region ${enumString(region)}',
-              action: selectedRegion == region ? null : () => actionSelectRegion(region),
-              size: 18,
-              colorRegular: selectedRegion == region
-                ? Colors.white54
-                : Colors.white24,
-              colorMouseOver: selectedRegion == region
-                ? Colors.white54
-                : Colors.white54,
-
-
-        ))
+            .map((Region region) => Container(
+              margin: const EdgeInsets.symmetric(vertical: 4),
+              child: buildTextButton('Region ${enumString(region)}',
+                action: selectedRegion == region ? null : () => actionSelectRegion(region),
+                size: 18,
+                colorRegular: selectedRegion == region
+                  ? colorRegion.withOpacity(0.54)
+                  : colorRegion.withOpacity(0.24),
+                colorMouseOver: selectedRegion == region
+                    ? colorRegion.withOpacity(0.54)
+                    : colorRegion.withOpacity(0.39),
+        ),
+            ))
             .toList(),
       ),
 );

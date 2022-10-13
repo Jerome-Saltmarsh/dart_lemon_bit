@@ -6,18 +6,16 @@ import 'package:lemon_engine/actions/render_atlas.dart';
 
 var bufferIndex = 0;
 var renderIndex = 0;
-const bufferSize = 1000;
+const bufferSize = 500;
 final buffers = bufferSize * 4;
 final src = Float32List(buffers);
 final dst = Float32List(buffers);
 final colors = Int32List(bufferSize);
 var renderBlendMode = BlendMode.dstATop;
 
-
 void setRenderBlendMode(BlendMode value){
   renderBlendMode = value;
 }
-
 
 void assignCurrentEngineRenderSrcX(double value){
   src[bufferIndex] = value;
@@ -34,6 +32,7 @@ void engineRender({
   double dstRotation = 0,
   double anchorX = 0.0,
   double anchorY = 0.0,
+  color = 1,
 }) {
   engineRenderSetSrc(
       x: srcX, 
@@ -49,6 +48,7 @@ void engineRender({
       anchorX: anchorX, 
       anchorY: anchorY,
   );
+
 
   renderIndex += 4;
   if (bufferIndex < buffers) return;

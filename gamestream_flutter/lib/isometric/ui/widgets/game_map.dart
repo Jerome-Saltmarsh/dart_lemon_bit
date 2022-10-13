@@ -1,13 +1,12 @@
 
 import 'package:bleed_common/library.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:gamestream_flutter/atlases.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog_map.dart';
 import 'package:lemon_engine/render_single_atlas.dart';
-
-import '../../map_atlas.dart';
 
 class GameMapWidget extends StatelessWidget {
   var screenCenterX = 0.0;
@@ -83,7 +82,7 @@ class GameMapWidget extends StatelessWidget {
 
     canvasRenderAtlas(
       canvas: canvas,
-      atlas: mapAtlas,
+      atlas: Images.mapAtlas,
       srcX: 92,
       srcY: 28,
       srcWidth: 8,

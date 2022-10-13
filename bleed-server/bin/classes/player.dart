@@ -510,12 +510,6 @@ class Player extends Character with ByteWriter {
     writeString(player.name);
     writeString(player.text);
     writeAngle(player.lookRadian);
-    if (player.weapon.frame < 0){
-      throw Exception();
-    }
-    if (player.weapon.frame > 255){
-      throw Exception();
-    }
     writeByte(player.weapon.frame);
   }
 

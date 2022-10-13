@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:bleed_common/edit_request.dart';
 import 'package:bleed_common/gameobject_request.dart';
 import 'package:bleed_common/library.dart';

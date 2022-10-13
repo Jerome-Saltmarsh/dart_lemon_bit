@@ -73,6 +73,10 @@
 [ ] get working on mobile device
 [ ] fix strike causes error on 
 
+[commands]
+flutter build web --web-renderer canvaskit --release
+
+
 [11-10-2022]
 [x] editor fix selection at grid edge
 [x] canvas size add z
