@@ -26,6 +26,13 @@ int getNodeIndexBelow(int index){
   return index - nodesArea;
 }
 
+int getNodeTypeBelow(int index){
+  if (index < nodesArea) return NodeType.Boundary;
+  final indexBelow = index - nodesArea;
+  if (indexBelow >= nodesTotal) return NodeType.Boundary;
+  return nodesType[indexBelow];
+}
+
 void setNodeShade(int index, int shade){
 
   if (shade < 0) {

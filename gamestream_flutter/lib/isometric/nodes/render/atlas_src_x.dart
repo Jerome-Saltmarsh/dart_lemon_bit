@@ -47,6 +47,11 @@ class AtlasSrcX {
   static const Node_Plain_Corner_Bottom_Y = Sprite_Height_Padded * 4;
   static const Node_Plain_Corner_Left_X = Node_Plain_Solid;
   static const Node_Plain_Corner_Left_Y = Sprite_Height_Padded * 3;
+  static const Node_Rain_Falling_Light_X = 1606.0;
+  static const Node_Rain_Falling_Heavy_X = Node_Rain_Falling_Light_X + Sprite_Width_Padded;
+  static const Node_Rain_Landing_Light_X = 1704.0;
+  static const Node_Rain_Landing_Heavy_X = Node_Rain_Landing_Light_X + Sprite_Width_Padded;
+  static const Node_Rain_Landing_Water_X = Node_Rain_Landing_Light_X + Sprite_Width_Padded;
 
   static const Node_Wooden_Plank = 7688.0;
   static const Node_Wood_Solid = 8886.0;

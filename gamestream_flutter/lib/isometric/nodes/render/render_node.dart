@@ -136,37 +136,33 @@ void renderNodeAt() {
           );
       }
     case NodeType.Rain_Falling:
-      return render(
-        dstX: renderNodeDstX - rainPosition,
-        dstY: renderNodeDstY + animationFrameRain,
+      renderStandardNode(
         srcX: srcXRainFalling,
         srcY: 72.0 * ((animationFrameRain + renderNodeRow + renderNodeColumn) % 6),
-        srcWidth: 48,
-        srcHeight: 72,
-        anchorY: 0.3334,
         color: colorShades[nodesShade[renderNodeIndex]],
       );
+      return;
+      // return render(
+      //   dstX: renderNodeDstX - rainPosition,
+      //   dstY: renderNodeDstY + animationFrameRain,
+      //   srcX: srcXRainFalling,
+      //   srcY: 72.0 * ((animationFrameRain + renderNodeRow + renderNodeColumn) % 6),
+      //   srcWidth: 48,
+      //   srcHeight: 72,
+      //   anchorY: 0.3334,
+      //   color: colorShades[nodesShade[renderNodeIndex]],
+      // );
     case NodeType.Rain_Landing:
-      if (gridNodeZRCTypeSafe(renderNodeZ - 1, renderNodeRow, renderNodeColumn) == NodeType.Water){
-        return render(
-          dstX: renderNodeDstX,
-          dstY: renderNodeDstY,
-          srcX: 9280,
+      if (getNodeTypeBelow(renderNodeIndex) == NodeType.Water){
+        return renderStandardNode(
+          srcX: AtlasSrcX.Node_Rain_Landing_Water_X,
           srcY: 72.0 * ((animationFrameRain + renderNodeRow + renderNodeColumn) % 10),
-          srcWidth: 48,
-          srcHeight: 72,
-          anchorY: 0.3334,
           color: colorShades[nodesShade[renderNodeIndex]],
         );
       }
-      return render(
-        dstX: renderNodeDstX,
-        dstY: renderNodeDstY,
+      return renderStandardNode(
         srcX: srcXRainLanding,
         srcY: 72.0 * ((animationFrameRain + renderNodeRow + renderNodeColumn) % 6),
-        srcWidth: 48,
-        srcHeight: 72,
-        anchorY: 0.3334,
         color: colorShades[nodesShade[renderNodeIndex]],
       );
     case NodeType.Stone:

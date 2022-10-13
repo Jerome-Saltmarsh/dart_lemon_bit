@@ -2,10 +2,11 @@ import 'package:universal_html/html.dart';
 
 void fullScreenEnter() {
   final element = document.documentElement;
-  if (element == null){
-    return print("fullScreenEnter() error: document.documentElement == null");
+  if (element == null) {
+    print("fullScreenEnter() error: document.documentElement == null");
+    return;
   }
-  element.requestFullscreen();
+  element.requestFullscreen().catchError((error){});
 }
 
 void refreshPage(){
