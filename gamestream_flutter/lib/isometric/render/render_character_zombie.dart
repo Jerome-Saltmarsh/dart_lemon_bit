@@ -14,9 +14,9 @@ void renderCharacterZombie(Character character) {
   if (shade < Shade.Dark) renderCharacterHealthBar(character);
 
   Engine.renderSprite(
-      image: Images.characters,
-      srcX: _getZombieSrcX(character),
-      srcY: 0,
+      image: Images.zombie,
+      srcX: getZombieSrcX(character),
+      srcY: character.renderDirection * 64,
       srcWidth: 64,
       srcHeight: 64,
       dstX: character.renderX,
@@ -25,21 +25,10 @@ void renderCharacterZombie(Character character) {
       scale: 0.7,
       color: character.color,
   );
-  // render(
-  //     dstX: character.renderX,
-  //     dstY: character.renderY,
-  //     srcX: _getZombieSrcX(character),
-  //     srcY: 0.0,
-  //     srcWidth: 64,
-  //     srcHeight: 64,
-  //     anchorY: 0.66,
-  //     scale: 0.7,
-  //     color: character.color,
-  // );
 }
 
-double _getZombieSrcX(Character character) {
-  const framesPerDirection = 8;
+double getZombieSrcX(Character character) {
+  const framesPerDirection = 0;
   switch (character.state) {
     case CharacterState.Running:
       const frames = [3, 4, 5, 6];

@@ -24,6 +24,7 @@ void renderStandardNode({
   required double srcY,
   int color = 1,
 }){
+  onscreenNodes++;
   _colors[0] = color;
   _src[0] = srcX;
   _src[1] = srcY;
@@ -38,6 +39,7 @@ void renderStandardNodeShaded({
   required double srcX,
   required double srcY,
 }){
+  onscreenNodes++;
   _colors[0] = colorShades[nodesShade[renderNodeIndex]];
   _src[0] = srcX;
   _src[1] = srcY;
@@ -53,6 +55,7 @@ void renderStandardNodeHalfEast({
   required double srcY,
   int color = 1,
 }){
+  onscreenNodes++;
   _colors[0] = color;
   _src[0] = srcX;
   _src[1] = srcY;
@@ -68,6 +71,7 @@ void renderStandardNodeHalfNorth({
   required double srcY,
   int color = 1,
 }){
+  onscreenNodes++;
   _colors[0] = color;
   _src[0] = srcX;
   _src[1] = srcY;
@@ -90,6 +94,7 @@ void renderAdvanced({
   double anchorY = 0.5,
   int color = 1,
 }){
+  onscreenNodes++;
   _colors[0] = color;
   _src[0] = srcX;
   _dst[0] = 1;

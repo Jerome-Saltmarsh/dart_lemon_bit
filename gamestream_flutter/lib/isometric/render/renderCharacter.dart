@@ -4,7 +4,6 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_slime.dart';
-import 'package:gamestream_flutter/isometric/render/render_character_template.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_zombie.dart';
 import 'package:lemon_engine/render.dart';
 
@@ -50,7 +49,8 @@ void renderCharacter(Character character){
 
   switch (character.type) {
     case CharacterType.Template:
-      renderCharacterTemplate(character);
+      // renderCharacterTemplate(character);
+      renderCharacterZombie(character);
       return;
     case CharacterType.Slime:
       return renderCharacterSlime(character);

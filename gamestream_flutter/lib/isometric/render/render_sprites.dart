@@ -331,7 +331,6 @@ class RenderOrderGrid extends RenderOrder {
         renderNodeDstX <= screenRight
     ){
       renderNodeType = nodesType[renderNodeIndex];
-
       if (renderNodeType != NodeType.Empty){
         renderNodeAt();
       }

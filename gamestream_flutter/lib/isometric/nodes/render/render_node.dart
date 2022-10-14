@@ -64,8 +64,6 @@ void renderNodeAt() {
         }
     }
   }
-  onscreenNodes++;
-
   switch (renderNodeType) {
     case NodeType.Grass:
       return renderNodeTypeGrass();
@@ -250,6 +248,14 @@ void renderNodeAt() {
 }
 
 void renderNodeTypeGrass() {
+  // final renderNodeInFront = renderNodeIndex + nodesArea + nodesArea + nodesTotalColumns + 1;
+  //
+  // if (renderNodeInFront < nodesTotal){
+  //   if (nodesOrientation[renderNodeInFront] == NodeOrientation.Solid){
+  //     // return;
+  //   }
+  // }
+
   switch (nodesOrientation[renderNodeIndex]) {
     case NodeOrientation.Solid:
       return renderStandardNode(

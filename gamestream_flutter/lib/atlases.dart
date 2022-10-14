@@ -6,5 +6,6 @@ class Images {
    static late Image mapAtlas;
    static late Image blocks;
    static late Image characters;
+   static late Image zombie;
 }
 

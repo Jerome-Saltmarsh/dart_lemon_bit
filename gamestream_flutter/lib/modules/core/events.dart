@@ -2,6 +2,7 @@
 
 import 'package:bleed_common/GameStatus.dart';
 import 'package:firestore_client/firestoreService.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/isometric/events/on_connection_done.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
@@ -14,6 +15,7 @@ import 'package:gamestream_flutter/network/instance/websocket.dart';
 import 'package:gamestream_flutter/shared_preferences.dart';
 import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/website/build_layout_website.dart';
+import 'package:gamestream_flutter/website/website.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/actions.dart';
 import 'package:lemon_engine/engine.dart';
@@ -79,20 +81,17 @@ class CoreEvents {
     storage.saveServerType(serverType);
   }
 
+
   void onModeChanged(Mode mode){
     print("onChangedMode($mode)");
-    engine.clearCallbacks();
-    engine.onDrawCanvas = null;
-    engine.onDrawForeground = null;
-    engine.drawCanvasAfterUpdate = true;
-    engine.onUpdate = null;
     engine.keyPressedHandlers = {};
     isometricWebControlsDeregister();
 
     switch(mode) {
-
       case Mode.Website:
         engine.drawCanvasAfterUpdate = true;
+        engine.onDrawCanvas = Website.renderCanvas;
+        engine.onUpdate = Website.update;
         sceneEditable.value = false;
         break;
 
