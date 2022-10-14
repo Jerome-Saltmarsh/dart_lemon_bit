@@ -127,20 +127,20 @@ void renderNodeAt() {
     case NodeType.Rain_Falling:
         renderStandardNodeShaded(
         srcX: srcXRainFalling,
-        srcY: 72.0 * ((animationFrameRain + renderNodeRow + renderNodeColumn) % 6),
+        srcY: 72.0 * ((animationFrame + renderNodeRow + renderNodeColumn) % 6),
       );
       return;
     case NodeType.Rain_Landing:
       if (getNodeTypeBelow(renderNodeIndex) == NodeType.Water){
         renderStandardNodeShaded(
           srcX: AtlasSrcX.Node_Rain_Landing_Water_X,
-          srcY: 72.0 * ((animationFrameRain + renderNodeRow + renderNodeColumn) % 10),
+          srcY: 72.0 * ((animationFrame + renderNodeRow + renderNodeColumn) % 10),
         );
         return;
       }
       renderStandardNodeShaded(
         srcX: srcXRainLanding,
-        srcY: 72.0 * ((animationFrameRain + renderNodeRow + renderNodeColumn) % 6),
+        srcY: 72.0 * ((animationFrame + renderNodeRow + renderNodeColumn) % 6),
       );
       return;
     case NodeType.Stone:
@@ -176,7 +176,7 @@ void renderNodeAt() {
     case NodeType.Fireplace:
       renderStandardNode(
         srcX: AtlasSrcX.Node_Campfire_X,
-        srcY: AtlasSrcX.Node_Campfire_Y + ((animationFrameTorch % 6) * 72),
+        srcY: AtlasSrcX.Node_Campfire_Y + ((animationFrame % 6) * 72),
       );
       return;
     case NodeType.Boulder:

@@ -1,16 +1,15 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:url_strategy/url_strategy.dart';
+import 'package:gamestream_flutter/modules/core/init.dart';
+import 'package:gamestream_flutter/website/website.dart';
+import 'package:lemon_engine/engine.dart';
+
 
 void main() {
-  setPathUrlStrategy();
-  runZonedGuarded(() async {
-    runApp(modules.core.build.gameStream());
-  }, (error, stackTrace){
-        print("Unhandled Exception Caught");
-        print(error);
-        print(stackTrace);
-  });
+  Engine.run(
+    title: "GameStream",
+    init: init,
+    buildUI: Website.buildUI,
+    themeData: ThemeData(fontFamily: 'JetBrainsMono-Regular'),
+
+  );
 }

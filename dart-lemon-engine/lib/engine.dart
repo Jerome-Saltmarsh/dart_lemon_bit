@@ -10,12 +10,14 @@ import 'package:lemon_engine/device_type.dart';
 import 'package:lemon_engine/draw.dart';
 import 'package:lemon_engine/enums.dart';
 import 'package:lemon_engine/events.dart';
+import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/atlas.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_html/html.dart';
 import 'dart:ui' as ui;
+import 'package:url_strategy/url_strategy.dart' as us;
 
 import 'actions.dart';
 import 'load_image.dart';
@@ -24,8 +26,70 @@ import 'render.dart';
 final engine = Engine();
 
 class Engine {
-  static late Canvas canvas;
 
+  /// override safe. run this snippet inside your initialization code.
+  /// engine.onTapDown = (TapDownDetails details) => print('tap detected');
+  static GestureTapDownCallback? onTapDown;
+  /// override safe
+  static GestureLongPressCallback? onLongPress;
+  /// override safe
+  static GestureDragStartCallback? onPanStart;
+  /// override safe
+  static GestureDragUpdateCallback? onPanUpdate;
+  /// override safe
+  static GestureDragEndCallback? onPanEnd;
+  /// override safe
+  static CallbackOnScreenSizeChanged? onScreenSizeChanged;
+  /// override safe
+  static Function? onDispose;
+  /// override safe
+  static DrawCanvas? onDrawCanvas;
+  /// override safe
+  static DrawCanvas? onDrawCanvasForeground;
+  /// override safe
+  static DrawCanvas? onDrawForeground;
+  /// override safe
+  static Function? onKeyPressedSpace;
+  /// override safe
+  static Function? onLeftClicked;
+  /// override safe
+  static Function? onLongLeftClicked;
+  /// override safe
+  static Function(double value)? onMouseScroll;
+  /// override safe
+  static Function? onRightClicked;
+  /// override safe
+  static Function? onRightClickReleased;
+  /// override safe
+  static Function(SharedPreferences sharedPreferences)? onInit;
+  /// override safe
+  static Function? onUpdate;
+  /// override safe
+  /// gets called when update timer is changed
+  static Function? onUpdateTimerReset;
+  /// override safe
+  static WidgetBuilder? onBuildLoadingScreen;
+  /// override safe
+  static Function(Object error, StackTrace stack)? onError;
+
+  // SETTERS
+  static set buildUI(WidgetBuilder? value) => watchBuildUI.value = value;
+  static set title(String value) => watchTitle.value = value;
+  static set backgroundColor(Color value) => watchBackgroundColor.value = value;
+
+  // GETTERS
+  static WidgetBuilder? get buildUI => watchBuildUI.value;
+  static String get title => watchTitle.value;
+  static Color get backgroundColor => watchBackgroundColor.value;
+
+  // WATCHES
+  static final watchBackgroundColor = Watch(Colors.black);
+  static final watchBuildUI = Watch<WidgetBuilder?>(null);
+  static final watchTitle = Watch("Demo");
+
+  // VARIABLES
+  static late Canvas canvas;
+  static final keyboard = RawKeyboard.instance;
   static final paint = Paint()
     ..color = Colors.white
     ..strokeCap = StrokeCap.round
@@ -50,7 +114,7 @@ class Engine {
   var previousUpdateTime = DateTime.now();
   final mouseLeftDown = Watch(false, onChanged: (bool value) {
     if (value) {
-        engine.onLeftClicked?.call();
+        Engine.onLeftClicked?.call();
     }
   });
   final mouseRightDown = Watch(false, onChanged: (bool value) {
@@ -58,8 +122,7 @@ class Engine {
   });
   var mouseLeftDownFrames = 0;
   final fps = Watch(0);
-  final backgroundColor = Watch(Colors.white);
-  final themeData = Watch<ThemeData?>(null);
+  static final themeData = Watch<ThemeData?>(null);
   final fullScreen = Watch(false);
   var millisecondsSinceLastFrame = 50;
   var drawCanvasAfterUpdate = true;
@@ -133,6 +196,72 @@ class Engine {
   }
 
   int get frame => notifierPaintFrame.value;
+
+  static void run({
+    String title = "Demo",
+    Function(SharedPreferences sharedPreferences)? init,
+    Function? update,
+    WidgetBuilder? buildUI,
+    DrawCanvas? onDrawCanvas,
+    ThemeData? themeData,
+    GestureTapDownCallback? onTapDown,
+    GestureLongPressCallback? onLongPress,
+    GestureDragStartCallback? onPanStart,
+    GestureDragUpdateCallback? onPanUpdate,
+    GestureDragEndCallback? onPanEnd,
+    CallbackOnScreenSizeChanged? onScreenSizeChanged,
+    Function? onDispose,
+    DrawCanvas? onDrawForeground,
+    Function? onKeyPressedSpace,
+    Function? onLeftClicked,
+    Function? onLongLeftClicked,
+    Function(double value)? onMouseScroll,
+    Function? onRightClicked,
+    Function? onRightClickReleased,
+    Function(SharedPreferences sharedPreferences)? onInit,
+    bool setPathUrlStrategy = true,
+    Color backgroundColor = Colors.black,
+  }){
+    Engine.watchTitle.value = title;
+    Engine.onInit = init;
+    Engine.onUpdate = update;
+    Engine.watchBuildUI.value = buildUI;
+    Engine.onDrawCanvas = onDrawCanvas;
+    Engine.onTapDown = onTapDown;
+    Engine.onLongPress = onLongPress;
+    Engine.onPanStart = onPanStart;
+    Engine.onPanUpdate = onPanUpdate;
+    Engine.onPanEnd = onPanEnd;
+    Engine.onScreenSizeChanged = onScreenSizeChanged;
+    Engine.onDispose = onDispose;
+    Engine.onDrawCanvas = onDrawCanvas;
+    Engine.onDrawForeground = onDrawForeground;
+    Engine.onKeyPressedSpace = onKeyPressedSpace;
+    Engine.onLeftClicked = onLeftClicked;
+    Engine.onMouseScroll = onMouseScroll;
+    Engine.onRightClicked = onRightClicked;
+    Engine.onRightClickReleased = onRightClickReleased;
+    Engine.themeData.value = themeData;
+    // Engine.bac
+    
+    if (setPathUrlStrategy){
+      us.setPathUrlStrategy();
+    }
+
+    runZonedGuarded(() async {
+      runApp(Game());
+    }, internalOnError);
+  }
+
+  static void internalOnError(Object error, StackTrace stack) {
+      if (onError != null){
+        onError!.call(error, stack);
+        return;
+      }
+      print("Warning no Engine.onError handler set");
+      print(error);
+      print(stack);
+  }
 
   Engine() {
     WidgetsFlutterBinding.ensureInitialized();
@@ -297,109 +426,6 @@ class Engine {
     }
   }
 
-  void register({
-    GestureTapDownCallback? onTapDown,
-    GestureLongPressCallback? onLongPress,
-    GestureDragStartCallback? onPanStart,
-    GestureDragUpdateCallback? onPanUpdate,
-    GestureDragEndCallback? onPanEnd,
-    CallbackOnScreenSizeChanged? onScreenSizeChanged,
-    Function? onDispose,
-    DrawCanvas? onDrawCanvas,
-    DrawCanvas? onDrawForeground,
-    Function? onKeyPressedSpace,
-    Function? onLeftClicked,
-    Function? onLongLeftClicked,
-    Function(double value)? onMouseScroll,
-    Function? onRightClicked,
-    Function? onRightClickReleased,
-    Function(SharedPreferences sharedPreferences)? onInit,
-  }) {
-    if (onTapDown != null) {
-        this.onTapDown = onTapDown;
-    }
-    if (onLongPress != null){
-       this.onLongPress = onLongPress;
-    }
-    if (onPanStart != null){
-      this.onPanStart = onPanStart;
-    }
-    if (onPanUpdate != null){
-      this.onPanUpdate = onPanUpdate;
-    }
-    if (onPanEnd != null){
-      this.onPanEnd = onPanEnd;
-    }
-    if (onScreenSizeChanged != null){
-      this.onScreenSizeChanged = onScreenSizeChanged;
-    }
-    if (onDispose != null){
-      this.onDispose = onDispose;
-    }
-    if (onDrawCanvas != null){
-      this.onDrawCanvas = onDrawCanvas;
-    }
-    if (onDrawForeground != null){
-      this.onDrawForeground = onDrawForeground;
-    }
-    if (onKeyPressedSpace != null){
-      this.onKeyPressedSpace = onKeyPressedSpace;
-    }
-    if (onLeftClicked != null){
-      this.onLeftClicked = onLeftClicked;
-    }
-    if (onMouseScroll != null){
-      this.onMouseScroll = onMouseScroll;
-    }
-    if (onRightClicked != null){
-      this.onRightClicked = onRightClicked;
-    }
-    if (onRightClickReleased != null){
-      this.onRightClickReleased = onRightClickReleased;
-    }
-    if (onInit != null){
-      this.onInit = onInit;
-    }
-  }
-
-  /// override safe. run this snippet inside your initialization code.
-  /// engine.onTapDown = (TapDownDetails details) => print('tap detected');
-  GestureTapDownCallback? onTapDown;
-  /// override safe
-  GestureLongPressCallback? onLongPress;
-  /// override safe
-  GestureDragStartCallback? onPanStart;
-  /// override safe
-  GestureDragUpdateCallback? onPanUpdate;
-  /// override safe
-  GestureDragEndCallback? onPanEnd;
-  /// override safe
-  CallbackOnScreenSizeChanged? onScreenSizeChanged;
-  /// override safe
-  Function? onDispose;
-  /// override safe
-  DrawCanvas? onDrawCanvas;
-  /// override safe
-  DrawCanvas? onDrawForeground;
-  /// override safe
-  Function? onKeyPressedSpace;
-  /// override safe
-  Function? onLeftClicked;
-  /// override safe
-  Function? onLongLeftClicked;
-  /// override safe
-  Function(double value)? onMouseScroll;
-  /// override safe
-  Function? onRightClicked;
-  /// override safe
-  Function? onRightClickReleased;
-  /// override safe
-  Function(SharedPreferences sharedPreferences)? onInit;
-  /// override safe
-  Function? onUpdate;
-  /// override safe
-  Function? onUpdateTimerReset;
-
   void internalOnPanStart(DragStartDetails details){
     panStarted = true;
     onPanStart?.call(details);
@@ -550,25 +576,17 @@ class Engine {
     _dst4[3] = dstY - (srcHeight * anchorY * scale); // scale
     canvas.drawRawAtlas(image, _dst4, _src4, _colors1, BlendMode.dstATop, null, paint);
   }
+
+  static bool keyPressed(LogicalKeyboardKey key) =>
+    keyboard.keysPressed.contains(key);
 }
 
 typedef CallbackOnScreenSizeChanged = void Function(
-  double previousWidth,
+    double previousWidth,
     double previousHeight,
     double newWidth,
     double newHeight,
 );
-
-final keyboardInstance = RawKeyboard.instance;
-
-void onKeyPressed(LogicalKeyboardKey key, Function action){
-    if (keyPressed(key)) action.call();
-}
-
-// global utilities
-bool keyPressed(LogicalKeyboardKey key) {
-  return keyboardInstance.keysPressed.contains(key);
-}
 
 double screenToWorldX(double value) {
   return engine.camera.x + value / engine.zoom;

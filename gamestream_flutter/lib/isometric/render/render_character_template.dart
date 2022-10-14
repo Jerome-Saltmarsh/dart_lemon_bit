@@ -150,7 +150,7 @@ void renderTemplateWeapon(Character character, int direction){
   Engine.renderSprite(
     image: ImagesTemplateWeapons.shotgun,
     srcX: frame * size,
-    srcY: character.renderDirection * size,
+    srcY: direction * size,
     srcWidth: size,
     srcHeight: size,
     dstX: getRenderX(character),
@@ -175,7 +175,6 @@ void renderCharacterTemplate(Character character, {
   var frameLegs = 0;
   var frameHead = 0;
   var frameBody = 0;
-  var frameWeapon = 0;
   final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
   final weaponInFront = character.renderDirection >= 2 && character.renderDirection < 6;
   final runningBackwards = diff >= 3 && character.running;

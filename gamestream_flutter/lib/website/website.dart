@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/atlases.dart';
+import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 
 class Website {
@@ -27,5 +28,9 @@ class Website {
 
    static void update(){
 
+   }
+
+   static Widget buildUI(BuildContext context){
+     return modules.core.build.buildUI();
    }
 }

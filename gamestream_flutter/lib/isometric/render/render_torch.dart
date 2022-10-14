@@ -19,7 +19,7 @@ void renderTorchOnWindy(double x, double y) {
       dstX: x,
       dstY: y,
       srcX: 2128,
-      srcY: 70 + (((x + y + (animationFrameTorch)) % 6) * 70),
+      srcY: 70 + (((x + y + (animationFrame)) % 6) * 70),
       srcWidth: 25,
       srcHeight: 70,
       anchorY: 0.33

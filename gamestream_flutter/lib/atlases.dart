@@ -1,6 +1,8 @@
 
 import 'dart:ui';
 
+import 'package:bleed_common/head_type.dart';
+
 class Images {
    static late Image pixel;
    static late Image mapAtlas;
@@ -16,6 +18,21 @@ class ImagesTemplateHead {
    static late Image steel;
    static late Image swat;
    static late Image wizard;
+
+   Image fromHeadType(int headType){
+       switch(headType){
+          case HeadType.None:
+             return plain;
+          case HeadType.Rogues_Hood:
+             return rogue;
+          case HeadType.Steel_Helm:
+             return steel;
+          case HeadType.Wizards_Hat:
+             return wizard;
+          default:
+             return plain;
+       }
+   }
 }
 
 class ImagesTemplateBody {

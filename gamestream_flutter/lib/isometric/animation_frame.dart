@@ -1,7 +1,5 @@
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
-import 'package:lemon_engine/engine.dart';
 
 var animationFrame = 0;
 var frameChicken = 0;
@@ -9,11 +7,9 @@ var animationFrameWater = 0;
 var animationFrameWaterHeight = 0;
 var animationFrameWaterSrcX = 0.0;
 var animationFrameWaterFlowingSrcX = 0.0;
-var animationFrameTorch = 0;
 var animationFrame8 = 0;
 var animationFrameGrass = 0;
 var animationFrameGrassShort = 0;
-var animationFrameRain = 0;
 var animationFrameRainWater = 0;
 var animationFrameTreePosition = 0;
 var rainPosition = 0.0;
@@ -24,30 +20,24 @@ final treeAnimationLength = treeAnimation.length;
 
 var animationFrameJellyFish = 0;
 var animationFrameRateJellyFish = 0;
-var _animationFrameNext = 0;
-var _animationFrameTorchNext = 0;
+var _next = 0;
 
-void updateAnimationFrame(){
-  final frame = engine.frame;
+void updateAnimationFrame() {
+  if (_next++ < 2) return;
+  _next = 0;
+  animationFrame++;
 
-  if (_animationFrameNext-- <= 0){
-    _animationFrameNext = 5;
-    animationFrame++;
+  if (animationFrameWater++ >= 10){
+    animationFrameWater = 0;
   }
-  if (_animationFrameTorchNext-- <= 0){
-    _animationFrameTorchNext = 4;
-    animationFrameTorch++;
-  }
-  _updateWaterFrame();
-  animationFrame8 = frame ~/ 8;
+  animationFrameWaterHeight = const [
+    0, 1, 2, 3, 4, 5, 4, 3, 2, 1,
+  ][animationFrameWater];
+  animationFrameWaterSrcX = animationFrameWater * tileSize;
 
-  animationFrameRain++;
-  if (animationFrameRain >= 6){
-    animationFrameRain = 0;
+  if (animationFrameGrass++ >= 6){
+    animationFrameGrass = 0;
   }
-  animationFrameGrass = animationFrame % 6;
-  frameChicken = animationFrame % 2;
-
   if (animationFrameRateJellyFish-- <= 0) {
      animationFrameRateJellyFish = 5;
      animationFrameJellyFish = (animationFrameJellyFish + 1) % 6;
@@ -63,15 +53,8 @@ void updateAnimationFrame(){
   //     animationFrameGrassShort = frame ~/ 10;
   //   }
   // }
-  rainPosition = (animationFrameRain * windAmbient.value.index * 2.5);
+  // rainPosition = (animationFrameRain * windAmbient.value.index * 2.5);
 }
 
-void _updateWaterFrame() {
-  animationFrameWater = animationFrame % 10;
-  animationFrameWaterHeight = const [
-    0, 1, 2, 3, 4, 5, 4, 3, 2, 1,
-  ][animationFrameWater];
-  animationFrameWaterSrcX = animationFrameWater * tileSize;
-}
 
 

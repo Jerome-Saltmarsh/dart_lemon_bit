@@ -40,7 +40,7 @@ class CoreEvents {
 
     switch(value) {
       case GameStatus.In_Progress:
-        engine.onDrawCanvas = modules.game.render.renderGame;
+        Engine.onDrawCanvas = modules.game.render.renderGame;
         engine.drawCanvasAfterUpdate = false;
         fullScreenEnter();
         break;
@@ -89,15 +89,15 @@ class CoreEvents {
     switch(mode) {
       case Mode.Website:
         engine.drawCanvasAfterUpdate = true;
-        engine.onDrawCanvas = Website.renderCanvas;
-        engine.onUpdate = Website.update;
+        Engine.onDrawCanvas = Website.renderCanvas;
+        Engine.onUpdate = Website.update;
         sceneEditable.value = false;
         break;
 
       case Mode.Player:
-        engine.onDrawCanvas = modules.game.render.renderGame;
-        engine.onDrawForeground = modules.game.render.renderForeground;
-        engine.onUpdate = modules.game.update.update;
+        Engine.onDrawCanvas = modules.game.render.renderGame;
+        Engine.onDrawForeground = modules.game.render.renderForeground;
+        Engine.onUpdate = modules.game.update.update;
         engine.drawCanvasAfterUpdate = true;
         modules.game.events.register();
         engine.zoomOnScroll = true;
@@ -130,7 +130,7 @@ class CoreEvents {
 
       case Connection.Done:
         onConnectionDone();
-        engine.onUpdate = null;
+        Engine.onUpdate = null;
         core.state.mode.value = Mode.Website;
         engine.fullScreenExit();
         core.actions.clearState();

@@ -2,43 +2,21 @@
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'enums.dart';
 
-void _defaultDrawCanvasForeground(Canvas canvas, Size size) {
-  // do nothing
-}
-
 class Game extends StatefulWidget {
-  final String title;
-  final Map<String, WidgetBuilder>? routes;
-  final WidgetBuilder? buildLoadingScreen;
-  final WidgetBuilder buildUI;
-  final DrawCanvas drawCanvasForeground;
-
-  Game({
-      required this.title,
-      required Function(SharedPreferences sharedPreferences) init,
-      required Function update,
-      required this.buildUI,
-      this.buildLoadingScreen,
-      this.routes,
-      this.drawCanvasForeground = _defaultDrawCanvasForeground,
-      DrawCanvas? drawCanvas,
-      Color backgroundColor = Colors.black,
-      bool drawCanvasAfterUpdate = true,
-      int framesPerSecond = 60,
-      ThemeData? themeData,
-  }){
-    engine.setFramesPerSecond(framesPerSecond);
-    engine.backgroundColor.value = backgroundColor;
-    engine.drawCanvasAfterUpdate = drawCanvasAfterUpdate;
-    engine.themeData.value = themeData;
-    engine.onDrawCanvas = drawCanvas;
-    engine.onUpdate = update;
-    engine.onInit = init;
-  }
+  // Game({
+  //     Color backgroundColor = Colors.black,
+  //     bool drawCanvasAfterUpdate = true,
+  //     int framesPerSecond = 60,
+  //     ThemeData? themeData,
+  // }){
+  //   engine.setFramesPerSecond(framesPerSecond);
+  //   engine.backgroundColor.value = backgroundColor;
+  //   engine.drawCanvasAfterUpdate = drawCanvasAfterUpdate;
+  //   engine.themeData.value = themeData;
+  // }
 
   @override
   _GameState createState() => _GameState();
@@ -55,30 +33,27 @@ class _GameState extends State<Game> {
   Widget build(BuildContext context) {
     engine.buildContext = context;
 
-    return WatchBuilder(engine.themeData, (ThemeData? themeData){
+    return WatchBuilder(Engine.themeData, (ThemeData? themeData){
       return MaterialApp(
-        title: widget.title,
-        routes: widget.routes ?? {},
+        title: Engine.title,
+        // routes: Engine.routes ?? {},
         theme: themeData,
         home: Scaffold(
-          body: WatchBuilder(engine.initialized, (bool? value) {
-            if (value != true) {
-              WidgetBuilder? buildLoadingScreen = widget.buildLoadingScreen;
-              if (buildLoadingScreen != null){
-                return buildLoadingScreen(context);
-              }
-              return Text("Loading");
+          body: WatchBuilder(engine.initialized, (bool value) {
+            if (!value) {
+              return Engine.onBuildLoadingScreen != null ? Engine.onBuildLoadingScreen!(context) : Text("Loading");
             }
             return LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
                 engine.internalSetScreenSize(constraints.maxWidth, constraints.maxHeight);
-
                 engine.screen.width = constraints.maxWidth;
                 engine.screen.height = constraints.maxHeight;
                 return Stack(
                   children: [
                     buildCanvas(context),
-                    widget.buildUI(context),
+                    WatchBuilder(Engine.watchBuildUI, (WidgetBuilder? buildUI)
+                      => buildUI != null ? buildUI(context) : const SizedBox()
+                    )
                   ],
                 );
               },
@@ -98,12 +73,12 @@ class _GameState extends State<Game> {
       onPointerHover:engine.internalOnPointerHover,
       onPointerMove: engine.internalOnPointerMove,
       child: GestureDetector(
-          onTapDown: engine.onTapDown,
-          onLongPress: engine.onLongPress,
+          onTapDown: Engine.onTapDown,
+          onLongPress: Engine.onLongPress,
           onPanStart: engine.internalOnPanStart,
-          onPanUpdate: engine.onPanUpdate,
+          onPanUpdate: Engine.onPanUpdate,
           onPanEnd: engine.internalOnPanEnd,
-          child: WatchBuilder(engine.backgroundColor, (Color backgroundColor){
+          child: WatchBuilder(Engine.watchBackgroundColor, (Color backgroundColor){
             return Container(
                 color: backgroundColor,
                 width: engine.screen.width,
@@ -129,7 +104,7 @@ class _GameState extends State<Game> {
   @override
   void dispose() {
     super.dispose();
-    engine.onDispose?.call();
+    Engine.onDispose?.call();
   }
 }
 
@@ -154,7 +129,7 @@ class _GameForegroundPainter extends CustomPainter {
 
   @override
   void paint(Canvas _canvas, Size _size) {
-    engine.onDrawForeground?.call(Engine.canvas, _size);
+    Engine.onDrawForeground?.call(Engine.canvas, _size);
   }
 
   @override

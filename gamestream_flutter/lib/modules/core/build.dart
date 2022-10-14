@@ -7,31 +7,25 @@ import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/views.dart';
-import 'package:lemon_engine/game.dart';
 import 'package:lemon_watch/watch_builder.dart';
-
-import 'init.dart';
 
 class CoreBuild {
 
-  Widget gameStream(){
-    return Game(
-      title: "GAMESTREAM",
-      init: init,
-      update: (){},
-      buildUI: buildUI,
-      // drawCanvas: (Canvas canvas, Size size) {
-      //   canvas.drawCircle(Offset(100, 100), 5, paint);
-      // },
-      drawCanvasAfterUpdate: true,
-      backgroundColor: colours.black,
-      buildLoadingScreen: buildLoadingScreen,
-      themeData: ThemeData(fontFamily: 'JetBrainsMono-Regular'),
-      framesPerSecond: 35,
-    );
-  }
+  // Widget gameStream(){
+  //   return Game(
+  //     // title: "GAMESTREAM",
+  //     // init: init,
+  //     // update: (){},
+  //     // buildUI: buildUI,
+  //     drawCanvasAfterUpdate: true,
+  //     backgroundColor: colours.black,
+  //     buildLoadingScreen: buildLoadingScreen,
+  //     themeData: ThemeData(fontFamily: 'JetBrainsMono-Regular'),
+  //     framesPerSecond: 35,
+  //   );
+  // }
 
-  Widget buildUI(BuildContext context) {
+  Widget buildUI() {
     return Stack(
       children: [
         watch(core.state.operationStatus, buildOperationStatus),

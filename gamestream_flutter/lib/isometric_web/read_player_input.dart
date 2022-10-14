@@ -7,10 +7,10 @@ import 'package:lemon_engine/engine.dart';
 
 void readPlayerInput() {
 
-  if (keyPressed(LogicalKeyboardKey.keyO)) {
+  if (Engine.keyPressed(LogicalKeyboardKey.keyO)) {
     debugVisible.value = true;
   }
-  if (keyPressed(LogicalKeyboardKey.keyP)) {
+  if (Engine.keyPressed(LogicalKeyboardKey.keyP)) {
     debugVisible.value = false;
   }
 
@@ -18,16 +18,16 @@ void readPlayerInput() {
     return readPlayerInputEdit();
   }
 
-  if (keyPressed(LogicalKeyboardKey.enter)){
+  if (Engine.keyPressed(LogicalKeyboardKey.enter)){
     messageBoxShow();
   }
 }
 
 void readPlayerInputEdit() {
-  if (keyPressed(LogicalKeyboardKey.space)) {
+  if (Engine.keyPressed(LogicalKeyboardKey.space)) {
     engine.panCamera();
   }
-  if (keyPressed(LogicalKeyboardKey.delete)) {
+  if (Engine.keyPressed(LogicalKeyboardKey.delete)) {
     edit.delete();
   }
   // if (keyPressed(LogicalKeyboardKey.keyR)) {
@@ -40,7 +40,7 @@ void readPlayerInputEdit() {
 }
 
 int getKeyDirection() {
-  final keysPressed = keyboardInstance.keysPressed;
+  final keysPressed = Engine.keyboard.keysPressed;
 
   if (keysPressed.contains(LogicalKeyboardKey.keyW)) {
     if (keysPressed.contains(LogicalKeyboardKey.keyD)) {

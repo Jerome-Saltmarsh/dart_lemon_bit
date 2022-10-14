@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:gamestream_flutter/atlases.dart';
-import 'package:gamestream_flutter/event_handlers.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/shared_preferences.dart';
 import 'package:gamestream_flutter/website/website.dart';
@@ -31,11 +30,7 @@ Future init(SharedPreferences sharedPreferences) async {
   ImagesTemplateWeapons.shotgun = await loadImage('images/template/weapons/template-weapons-shotgun.png');
   engine.cursorType.value = CursorType.Basic;
   print("environment: ${engine.isLocalHost ? 'localhost' : 'production'}");
-
-  engine.register(
-     onTapDown: EventHandler.onTapDown,
-     onDrawCanvas: Website.renderCanvas,
-  );
+  Engine.onDrawCanvas = Website.renderCanvas;
 }
 
 

@@ -105,4 +105,4 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
   }
 }
 
-bool get shiftLeftDown => keyPressed(LogicalKeyboardKey.shiftLeft);
+bool get shiftLeftDown => Engine.keyPressed(LogicalKeyboardKey.shiftLeft);

@@ -222,7 +222,7 @@ Future sendClientRequestUpdate() async {
   webSocket.sink.add(updateBuffer);
 }
 
-bool get keyPressedSpace => keyPressed(LogicalKeyboardKey.space);
+bool get keyPressedSpace => Engine.keyPressed(LogicalKeyboardKey.space);
 
 void sendClientRequestTogglePaths() {
   sendClientRequest(ClientRequest.Toggle_Debug);
