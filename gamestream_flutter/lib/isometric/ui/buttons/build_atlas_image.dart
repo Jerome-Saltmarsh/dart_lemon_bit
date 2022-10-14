@@ -48,7 +48,7 @@ Widget buildAtlasImage({
     height: srcHeight,
     child: buildCanvas(
       paint: (Canvas canvas, Size size) =>
-        Engine.renderCanvas(
+        Engine.renderExternalCanvas(
           canvas: canvas,
           image: atlas,
           srcX: srcX,

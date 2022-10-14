@@ -502,7 +502,7 @@ class Engine {
   static const _cos0 = 1;
   static const _sin0 = 0;
 
-  static void canvasRenderAtlas({
+  static void renderSprite({
     required ui.Image image,
     required double srcX,
     required double srcY,
@@ -513,7 +513,9 @@ class Engine {
     double anchorX = 0.5,
     double anchorY = 0.5,
     double scale = 1.0,
+    int color = 1,
   }){
+    _colors1[0] = color;
     _src4[0] = srcX;
     _src4[1] = srcY;
     _src4[2] = srcX + srcWidth;
@@ -525,7 +527,7 @@ class Engine {
     canvas.drawRawAtlas(image, _dst4, _src4, _colors1, BlendMode.dstATop, null, paint);
   }
 
-  static void renderCanvas({
+  static void renderExternalCanvas({
     required Canvas canvas,
     required ui.Image image,
     required double srcX,

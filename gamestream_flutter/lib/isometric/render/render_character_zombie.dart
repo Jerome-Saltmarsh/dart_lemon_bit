@@ -1,9 +1,10 @@
 
 
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/atlases.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
-import 'package:lemon_engine/render.dart';
+import 'package:lemon_engine/engine.dart';
 
 import 'render_character_health_bar.dart';
 import 'src_utils.dart';
@@ -11,17 +12,30 @@ import 'src_utils.dart';
 void renderCharacterZombie(Character character) {
   final shade = getRenderShade(character);
   if (shade < Shade.Dark) renderCharacterHealthBar(character);
-  render(
-      dstX: character.renderX,
-      dstY: character.renderY,
+
+  Engine.renderSprite(
+      image: Images.characters,
       srcX: _getZombieSrcX(character),
-      srcY: 0.0,
+      srcY: 0,
       srcWidth: 64,
       srcHeight: 64,
+      dstX: character.renderX,
+      dstY: character.renderY,
       anchorY: 0.66,
       scale: 0.7,
       color: character.color,
   );
+  // render(
+  //     dstX: character.renderX,
+  //     dstY: character.renderY,
+  //     srcX: _getZombieSrcX(character),
+  //     srcY: 0.0,
+  //     srcWidth: 64,
+  //     srcHeight: 64,
+  //     anchorY: 0.66,
+  //     scale: 0.7,
+  //     color: character.color,
+  // );
 }
 
 double _getZombieSrcX(Character character) {

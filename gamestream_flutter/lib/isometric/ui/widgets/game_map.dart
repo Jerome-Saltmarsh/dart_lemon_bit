@@ -80,7 +80,7 @@ class GameMapWidget extends StatelessWidget {
 
     cameraCenter(renderX, renderY);
 
-    Engine.renderCanvas(
+    Engine.renderExternalCanvas(
       canvas: canvas,
       image: Images.mapAtlas,
       srcX: 92,
