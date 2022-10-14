@@ -14,6 +14,7 @@ Future init(SharedPreferences sharedPreferences) async {
   await loadStateFromSharedPreferences();
   Images.characters = await loadImage('images/atlas-characters.png');
   Images.zombie = await loadImage('images/atlas-zombie.png');
+  Images.templateShadow = await loadImage('images/template/template-shadow.png');
   Images.mapAtlas = await loadImage('images/atlas-map.png');
   Images.blocks = await loadImage('images/atlas-blocks.png');
   ImagesTemplateHead.plain = await loadImage('images/template/head/template-head-plain.png');

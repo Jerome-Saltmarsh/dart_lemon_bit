@@ -203,6 +203,17 @@ void renderCharacterTemplate(Character character, {
     renderTemplateWeapon(character, finalDirection);
   }
   Engine.renderSprite(
+    image: Images.templateShadow,
+    srcX: frameLegs * 64,
+    srcY: upperBodyDirection * 64,
+    srcWidth: 64,
+    srcHeight: 64,
+    dstX: getRenderX(character),
+    dstY: getRenderY(character),
+    scale: 0.75,
+    color: getRenderColor(character),
+  );
+  Engine.renderSprite(
     image: ImagesTemplateLegs.white,
     srcX: frameLegs * 64,
     srcY: upperBodyDirection * 64,
