@@ -157,6 +157,7 @@ void renderTemplateWeapon(Character character, int direction){
     dstY: getRenderY(character),
     scale: 0.75,
     color: getRenderColor(character),
+    anchorY: 0.75
   );
 }
 
@@ -212,6 +213,7 @@ void renderCharacterTemplate(Character character, {
     dstY: getRenderY(character),
     scale: 0.75,
     color: getRenderColor(character),
+    anchorY: 0.75,
   );
   Engine.renderSprite(
     image: ImagesTemplateLegs.white,
@@ -223,6 +225,7 @@ void renderCharacterTemplate(Character character, {
     dstY: getRenderY(character),
     scale: 0.75,
     color: getRenderColor(character),
+    anchorY: 0.75
   );
   Engine.renderSprite(
     image: ImagesTemplateBody.blue,
@@ -234,6 +237,7 @@ void renderCharacterTemplate(Character character, {
     dstY: getRenderY(character),
     scale: 0.75,
     color: getRenderColor(character),
+    anchorY: 0.75
   );
   Engine.renderSprite(
     image: ImagesTemplateHead.rogue,
@@ -245,6 +249,7 @@ void renderCharacterTemplate(Character character, {
     dstY: getRenderY(character),
     scale: 0.75,
     color: getRenderColor(character),
+    anchorY: 0.75
   );
   if (weaponInFront){
     renderTemplateWeapon(character, finalDirection);
