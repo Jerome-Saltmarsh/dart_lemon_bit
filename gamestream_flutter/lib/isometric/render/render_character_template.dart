@@ -4,6 +4,7 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/atlases.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
+import 'package:gamestream_flutter/isometric/render/get_render_x.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -132,9 +133,10 @@ void renderCharacterTemplate(Character character, {
     srcY: character.renderDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
-    dstX: character.renderX,
-    dstY: character.renderY,
+    dstX: getRenderX(character),
+    dstY: getRenderY(character),
     scale: 0.75,
+    color: getRenderColor(character),
   );
   Engine.renderSprite(
     image: ImagesTemplateBody.blue,
@@ -142,9 +144,10 @@ void renderCharacterTemplate(Character character, {
     srcY: character.renderDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
-    dstX: character.renderX,
-    dstY: character.renderY,
+    dstX: getRenderX(character),
+    dstY: getRenderY(character),
     scale: 0.75,
+    color: getRenderColor(character),
   );
   Engine.renderSprite(
     image: ImagesTemplateHead.rogue,
@@ -152,9 +155,10 @@ void renderCharacterTemplate(Character character, {
     srcY: character.renderDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
-    dstX: character.renderX,
-    dstY: character.renderY,
+    dstX: getRenderX(character),
+    dstY: getRenderY(character),
     scale: 0.75,
+    color: getRenderColor(character),
   );
   return;
   final inLongGrass = gridNodeTypeAtVector3(character) == NodeType.Grass_Long;
