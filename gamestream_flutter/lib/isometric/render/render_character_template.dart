@@ -177,10 +177,10 @@ void renderCharacterTemplate(Character character, {
   var frameWeapon = 0;
   final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
   final weaponInFront = character.renderDirection >= 2 && character.renderDirection < 6;
-  final renderBackwards = diff >= 3 && character.running;
+  final runningBackwards = diff >= 3 && character.running;
 
   final renderDirectionOpposite = (character.renderDirection + 4) % 8;
-  final upperBodyDirection = renderBackwards ? renderDirectionOpposite : character.renderDirection;
+  final upperBodyDirection = runningBackwards ? renderDirectionOpposite : character.renderDirection;
   final finalDirection = character.usingWeapon ? character.aimDirection : upperBodyDirection;
 
   var variation = character.weapon == AttackType.Bow || character.weapon == AttackType.Shotgun;
@@ -199,10 +199,13 @@ void renderCharacterTemplate(Character character, {
       break;
   }
 
+  if (!weaponInFront){
+    renderTemplateWeapon(character, finalDirection);
+  }
   Engine.renderSprite(
     image: ImagesTemplateLegs.white,
     srcX: frameLegs * 64,
-    srcY: character.renderDirection * 64,
+    srcY: upperBodyDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
     dstX: getRenderX(character),
@@ -232,7 +235,10 @@ void renderCharacterTemplate(Character character, {
     scale: 0.75,
     color: getRenderColor(character),
   );
-  renderTemplateWeapon(character, finalDirection);
+  if (weaponInFront){
+    renderTemplateWeapon(character, finalDirection);
+  }
+
   return;
   final inLongGrass = gridNodeTypeAtVector3(character) == NodeType.Grass_Long;
 
