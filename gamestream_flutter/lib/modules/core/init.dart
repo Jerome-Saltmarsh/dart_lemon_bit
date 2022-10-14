@@ -16,6 +16,15 @@ Future init(SharedPreferences sharedPreferences) async {
   Images.zombie = await loadImage('images/atlas-zombie.png');
   Images.mapAtlas = await loadImage('images/atlas-map.png');
   Images.blocks = await loadImage('images/atlas-blocks.png');
+  ImagesTemplateHead.plain = await loadImage('images/template/head/template-head-plain.png');
+  ImagesTemplateHead.rogue = await loadImage('images/template/head/template-head-rogue.png');
+  ImagesTemplateHead.steel = await loadImage('images/template/head/template-head-steel.png');
+  ImagesTemplateHead.swat = await loadImage('images/template/head/template-head-swat.png');
+  ImagesTemplateHead.wizard = await loadImage('images/template/head/template-head-wizard.png');
+  ImagesTemplateBody.blue = await loadImage('images/template/body/template-body-blue.png');
+  ImagesTemplateBody.tunic = await loadImage('images/template/body/template-body-tunic.png');
+  ImagesTemplateLegs.blue = await loadImage('images/template/legs/template-legs-blue.png');
+  ImagesTemplateLegs.white = await loadImage('images/template/legs/template-legs-white.png');
   engine.cursorType.value = CursorType.Basic;
   print("environment: ${engine.isLocalHost ? 'localhost' : 'production'}");
 

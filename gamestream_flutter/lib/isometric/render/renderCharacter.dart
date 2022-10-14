@@ -7,6 +7,8 @@ import 'package:gamestream_flutter/isometric/render/render_character_slime.dart'
 import 'package:gamestream_flutter/isometric/render/render_character_zombie.dart';
 import 'package:lemon_engine/render.dart';
 
+import 'render_character_template.dart';
+
 var renderTemplateWithWeapon = false;
 
 void renderCharacter(Character character){
@@ -49,8 +51,8 @@ void renderCharacter(Character character){
 
   switch (character.type) {
     case CharacterType.Template:
-      // renderCharacterTemplate(character);
-      renderCharacterZombie(character);
+      renderCharacterTemplate(character);
+      // renderCharacterZombie(character);
       return;
     case CharacterType.Slime:
       return renderCharacterSlime(character);

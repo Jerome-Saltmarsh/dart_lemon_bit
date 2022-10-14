@@ -1,9 +1,13 @@
+import 'dart:typed_data';
+
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/atlases.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:gamestream_flutter/utils.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render.dart';
 import 'package:lemon_math/library.dart';
 
@@ -99,9 +103,9 @@ void renderCharacterWeaponBlade(Character character) {
   );
 }
 
-void renderCharacterTemplate(Character character,
-    {bool renderHealthBar = true}
-) {
+void renderCharacterTemplate(Character character, {
+  bool renderHealthBar = true,
+}) {
   assert(character.direction >= 0);
   assert(character.direction < 8);
   if (character.deadOrDying) return;
@@ -109,10 +113,34 @@ void renderCharacterTemplate(Character character,
   if (renderHealthBar) {
     renderCharacterHealthBar(character);
   }
-
-  // renderText(text: '${character.renderDirection}', x: character.renderX, y: character.renderY - 100);
-  // renderText(text: '${character.aimAngle.toStringAsFixed(3)}', x: character.renderX, y: character.renderY - 75);
-
+  Engine.renderSprite(
+    image: ImagesTemplateLegs.white,
+    srcX: 0,
+    srcY: 0,
+    srcWidth: 64,
+    srcHeight: 64,
+    dstX: character.renderX,
+    dstY: character.renderY,
+  );
+  Engine.renderSprite(
+    image: ImagesTemplateBody.blue,
+    srcX: 0,
+    srcY: 0,
+    srcWidth: 64,
+    srcHeight: 64,
+    dstX: character.renderX,
+    dstY: character.renderY,
+  );
+  Engine.renderSprite(
+    image: ImagesTemplateHead.rogue,
+    srcX: 0,
+    srcY: 0,
+    srcWidth: 64,
+    srcHeight: 64,
+    dstX: character.renderX,
+    dstY: character.renderY,
+  );
+  return;
   final inLongGrass = gridNodeTypeAtVector3(character) == NodeType.Grass_Long;
 
   if (!inLongGrass) {
@@ -121,8 +149,6 @@ void renderCharacterTemplate(Character character,
 
   final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
   final weaponInFront = character.renderDirection >= 2 && character.renderDirection < 6;
-
-  // renderText(text: '$diff', x: character.renderX, y: character.renderY - 100);
 
   /// If the the player is running backwards to the direction they are aiming
   /// render the player to run backwards
@@ -146,6 +172,7 @@ void renderCharacterTemplate(Character character,
         weapon: character.weapon,
       );
     }
+
 
     renderCharacterTemplatePartCustom(
       layer: mapToLayerBody(character.body),
@@ -447,7 +474,6 @@ double getTemplateSrcXCustom({
   required double size,
 }) {
   const framesPerDirection = 19;
-
   switch (characterState) {
     case CharacterState.Running:
       const frames1 = [12, 13, 14, 15];
@@ -493,6 +519,121 @@ double getTemplateSrcXCustom({
           frame: frame,
           direction: direction,
           framesPerDirection: framesPerDirection);
+
+    default:
+      throw Exception(
+          "getCharacterSrcX cannot get body x for state ${characterState}");
+  }
+}
+
+class TemplateAnimation {
+  static final Uint8List Running1 = (){
+      final list = Uint8List(4);
+      list[0] = 12;
+      list[1] = 13;
+      list[2] = 14;
+      list[3] = 15;
+      return list;
+  }();
+
+  static final Uint8List Running2 = (){
+    final list = Uint8List(4);
+    list[0] = 16;
+    list[1] = 17;
+    list[2] = 18;
+    list[3] = 19;
+    return list;
+  }();
+
+  static Uint8List Idle = (){
+    final list = Uint8List(1);
+    list[0] = 1;
+    return list;
+  }();
+
+  static Uint8List Hurt = (){
+    final list = Uint8List(1);
+    list[0] = 3;
+    return list;
+  }();
+
+  static Uint8List Changing = (){
+    final list = Uint8List(1);
+    list[0] = 4;
+    return list;
+  }();
+
+  static Uint8List FiringBow = (){
+    final list = Uint8List(4);
+    list[0] = 5;
+    list[1] = 8;
+    list[2] = 6;
+    list[3] = 10;
+    return list;
+  }();
+
+  static Uint8List FiringHandgun = (){
+    final list = Uint8List(3);
+    list[0] = 8;
+    list[1] = 9;
+    list[2] = 8;
+    return list;
+  }();
+
+  static Uint8List FiringShotgun = (){
+    final list = Uint8List(8);
+    list[0] = 6;
+    list[1] = 7;
+    list[2] = 6;
+    list[3] = 6;
+    list[4] = 6;
+    list[5] = 8;
+    list[6] = 8;
+    list[7] = 6;
+    return list;
+  }();
+
+  static Uint8List Striking = (){
+    final list = Uint8List(4);
+    list[0] = 10;
+    list[1] = 10;
+    list[2] = 11;
+    list[3] = 11;
+    return list;
+  }();
+}
+
+Uint8List getAnimation({
+  required int characterState,
+  required int weapon,
+}) {
+  switch (characterState) {
+    case CharacterState.Running:
+      final variation = weapon == AttackType.Shotgun || weapon == AttackType.Bow;
+      return variation
+          ? TemplateAnimation.Running1
+          : TemplateAnimation.Running2;
+
+    case CharacterState.Idle:
+      return TemplateAnimation.Idle;
+
+    case CharacterState.Hurt:
+      return TemplateAnimation.Hurt;
+
+    case CharacterState.Changing:
+      return TemplateAnimation.Changing;
+
+    case CharacterState.Performing:
+      switch (weapon) {
+        case AttackType.Bow:
+          return TemplateAnimation.FiringBow;
+        case AttackType.Handgun:
+          return TemplateAnimation.FiringHandgun;
+        case AttackType.Shotgun:
+          return TemplateAnimation.FiringShotgun;
+        default:
+          return TemplateAnimation.Striking;
+      }
 
     default:
       throw Exception(
