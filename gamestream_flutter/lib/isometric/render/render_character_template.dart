@@ -113,32 +113,48 @@ void renderCharacterTemplate(Character character, {
   if (renderHealthBar) {
     renderCharacterHealthBar(character);
   }
+
+  var frameLegs = 0;
+  var frameHead = 0;
+  var frameBody = 0;
+  switch(character.state){
+    case CharacterState.Idle:
+      frameLegs = 0;
+      break;
+    case CharacterState.Running:
+      frameLegs = TemplateAnimation.Running1[character.frame % 4];
+      break;
+  }
+
   Engine.renderSprite(
     image: ImagesTemplateLegs.white,
-    srcX: 0,
-    srcY: 0,
+    srcX: frameLegs * 64,
+    srcY: character.renderDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
     dstX: character.renderX,
     dstY: character.renderY,
+    scale: 0.75,
   );
   Engine.renderSprite(
     image: ImagesTemplateBody.blue,
-    srcX: 0,
-    srcY: 0,
+    srcX: frameBody * 64,
+    srcY: character.renderDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
     dstX: character.renderX,
     dstY: character.renderY,
+    scale: 0.75,
   );
   Engine.renderSprite(
     image: ImagesTemplateHead.rogue,
-    srcX: 0,
-    srcY: 0,
+    srcX: frameHead * 64,
+    srcY: character.renderDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
     dstX: character.renderX,
     dstY: character.renderY,
+    scale: 0.75,
   );
   return;
   final inLongGrass = gridNodeTypeAtVector3(character) == NodeType.Grass_Long;
