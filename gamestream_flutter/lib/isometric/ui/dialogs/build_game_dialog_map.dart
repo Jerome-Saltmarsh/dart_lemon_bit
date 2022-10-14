@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
 import 'package:golden_ratio/constants.dart';
-import 'package:lemon_engine/render_single_atlas.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/screen.dart';
 
 import '../../../flutterkit.dart';
@@ -72,9 +72,9 @@ void mapCameraCenter(double x, double y){
 }
 
 void renderMapTile(Canvas canvas, MapTile value){
-  canvasRenderAtlas(
+  Engine.renderCanvas(
     canvas: canvas,
-    atlas: Images.mapAtlas,
+    image: Images.mapAtlas,
     srcX: mapTileSize * value.srcIndex,
     srcY: 0,
     srcWidth: mapTileSize,

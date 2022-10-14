@@ -4,7 +4,6 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'canvas.dart';
 import 'enums.dart';
 
 void _defaultDrawCanvasForeground(Canvas canvas, Size size) {
@@ -155,7 +154,7 @@ class _GameForegroundPainter extends CustomPainter {
 
   @override
   void paint(Canvas _canvas, Size _size) {
-    engine.onDrawForeground?.call(canvas, _size);
+    engine.onDrawForeground?.call(Engine.canvas, _size);
   }
 
   @override

@@ -3,7 +3,7 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:lemon_engine/render_single_atlas.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/state/atlas.dart';
 
 Widget buildAtlasImageButton({
@@ -48,9 +48,9 @@ Widget buildAtlasImage({
     height: srcHeight,
     child: buildCanvas(
       paint: (Canvas canvas, Size size) =>
-        canvasRenderAtlas(
+        Engine.renderCanvas(
           canvas: canvas,
-          atlas: atlas,
+          image: atlas,
           srcX: srcX,
           srcY: srcY,
           srcWidth: srcWidth,

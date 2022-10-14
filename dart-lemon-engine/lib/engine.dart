@@ -1,6 +1,7 @@
 library lemon_engine;
 
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -14,16 +15,24 @@ import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_html/html.dart';
+import 'dart:ui' as ui;
 
 import 'actions.dart';
-import 'canvas.dart';
 import 'load_image.dart';
 import 'render.dart';
-import 'state/paint.dart';
 
-final engine = _Engine();
+final engine = Engine();
 
-class _Engine {
+class Engine {
+  static late Canvas canvas;
+
+  static final paint = Paint()
+    ..color = Colors.white
+    ..strokeCap = StrokeCap.round
+    ..style = PaintingStyle.fill
+    ..isAntiAlias = false
+    ..strokeWidth = 1;
+
   Timer? updateTimer;
   late final sharedPreferences;
   final draw = LemonEngineDraw();
@@ -33,8 +42,8 @@ class _Engine {
   var zoomSensitivity = 0.175;
   var targetZoom = 1.0;
   var zoomOnScroll = true;
-
-
+  var keyPressedHandlers = <LogicalKeyboardKey, Function>{};
+  var keyReleasedHandlers = <LogicalKeyboardKey, Function>{};
   final Map<LogicalKeyboardKey, int> keyboardState = {};
   var mousePosition = Vector2(0, 0);
   var previousMousePosition = Vector2(0, 0);
@@ -123,12 +132,9 @@ class _Engine {
     textPainter.paint(canvas, Offset(x, y));
   }
 
-  var keyPressedHandlers = <LogicalKeyboardKey, Function>{};
-  var keyReleasedHandlers = <LogicalKeyboardKey, Function>{};
-
   int get frame => notifierPaintFrame.value;
 
-  _Engine() {
+  Engine() {
     WidgetsFlutterBinding.ensureInitialized();
     paint.filterQuality = FilterQuality.none;
     paint.isAntiAlias = false;
@@ -404,8 +410,8 @@ class _Engine {
     onPanEnd?.call(details);
   }
 
-  void internalPaint(Canvas _canvas, Size size) {
-    canvas = _canvas;
+  void internalPaint(Canvas canvas, Size size) {
+    Engine.canvas = canvas;
     canvas.scale(zoom, zoom);
     canvas.translate(-camera.x, -camera.y);
     if (!initialized.value) return;
@@ -487,6 +493,60 @@ class _Engine {
 
   void setFramesPerSecond(int framesPerSecond) {
      millisecondsPerFrame = convertFramesPerSecondsToMilliseconds(framesPerSecond);
+  }
+
+
+  static final _src4 = Float32List(4);
+  static final _dst4 = Float32List(4);
+  static final _colors1 = Int32List(1);
+  static const _cos0 = 1;
+  static const _sin0 = 0;
+
+  static void canvasRenderAtlas({
+    required ui.Image image,
+    required double srcX,
+    required double srcY,
+    required double srcWidth,
+    required double srcHeight,
+    required double dstX,
+    required double dstY,
+    double anchorX = 0.5,
+    double anchorY = 0.5,
+    double scale = 1.0,
+  }){
+    _src4[0] = srcX;
+    _src4[1] = srcY;
+    _src4[2] = srcX + srcWidth;
+    _src4[3] = srcY + srcHeight;
+    _dst4[0] = _cos0 * scale;
+    _dst4[1] = _sin0 * scale; // scale
+    _dst4[2] = dstX - (srcWidth * anchorX * scale);
+    _dst4[3] = dstY - (srcHeight * anchorY * scale); // scale
+    canvas.drawRawAtlas(image, _dst4, _src4, _colors1, BlendMode.dstATop, null, paint);
+  }
+
+  static void renderCanvas({
+    required Canvas canvas,
+    required ui.Image image,
+    required double srcX,
+    required double srcY,
+    required double srcWidth,
+    required double srcHeight,
+    required double dstX,
+    required double dstY,
+    double anchorX = 0.5,
+    double anchorY = 0.5,
+    double scale = 1.0,
+  }){
+    _src4[0] = srcX;
+    _src4[1] = srcY;
+    _src4[2] = srcX + srcWidth;
+    _src4[3] = srcY + srcHeight;
+    _dst4[0] = _cos0 * scale;
+    _dst4[1] = _sin0 * scale; // scale
+    _dst4[2] = dstX - (srcWidth * anchorX * scale);
+    _dst4[3] = dstY - (srcHeight * anchorY * scale); // scale
+    canvas.drawRawAtlas(image, _dst4, _src4, _colors1, BlendMode.dstATop, null, paint);
   }
 }
 

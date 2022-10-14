@@ -1,14 +1,10 @@
 
-import 'dart:math';
 
 import 'package:bleed_common/attack_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/maps/map_attack_type_to_atlas_src.dart';
-import 'package:lemon_engine/render_single_atlas.dart';
-import 'package:lemon_engine/state/atlas.dart';
-import 'package:lemon_engine/state/paint.dart';
 
 Widget buildWidgetAttackSlot(AttackSlot slot) {
 
@@ -41,9 +37,9 @@ Widget buildWidgetAttackSlot(AttackSlot slot) {
   });
 }
 
-final _rect = Rect.fromCenter(center: const Offset(0,0), width: 64, height: 64);
-const _pi2 = pi + pi;
-const _piOneAndHalf = pi * 1.5;
+// final _rect = Rect.fromCenter(center: const Offset(0,0), width: 64, height: 64);
+// const _pi2 = pi + pi;
+// const _piOneAndHalf = pi * 1.5;
 
 Widget renderAttackSlot({
   required double srcX,
@@ -59,22 +55,22 @@ Widget renderAttackSlot({
       child: buildCanvas(
           paint: (Canvas canvas, Size size) {
 
-            final previousColor = paint.color;
-            paint.color = Colors.red;
-            canvas.drawArc(_rect, _piOneAndHalf, _pi2 - (_pi2 * percentage), true, paint);
-            paint.color = previousColor;
-
-            canvasRenderAtlas(
-              canvas: canvas,
-              atlas: atlas,
-              srcX: srcX,
-              srcY: srcY,
-              srcWidth: srcWidth,
-              srcHeight: srcHeight,
-              dstX: 0,
-              dstY: 0,
-              scale: 1,
-            );
+            // final previousColor = paint.color;
+            // paint.color = Colors.red;
+            // canvas.drawArc(_rect, _piOneAndHalf, _pi2 - (_pi2 * percentage), true, paint);
+            // paint.color = previousColor;
+            //
+            // canvasRenderAtlas(
+            //   canvas: canvas,
+            //   atlas: atlas,
+            //   srcX: srcX,
+            //   srcY: srcY,
+            //   srcWidth: srcWidth,
+            //   srcHeight: srcHeight,
+            //   dstX: 0,
+            //   dstY: 0,
+            //   scale: 1,
+            // );
           }
       ),
     );

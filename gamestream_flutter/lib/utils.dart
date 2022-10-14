@@ -2,9 +2,7 @@ import 'dart:ui';
 
 import 'package:bleed_common/library.dart';
 import 'package:intl/intl.dart';
-import 'package:lemon_engine/canvas.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_math/library.dart';
 
 import 'isometric/player.dart';
@@ -19,7 +17,7 @@ void snapToGrid(Vector2 value){
 }
 
 void drawLine(double x1, double y1, double x2, double y2) {
-  canvas.drawLine(offset(x1, y1), offset(x2, y2), paint);
+  Engine.canvas.drawLine(offset(x1, y1), offset(x2, y2), Engine.paint);
 }
 
 Offset offset(double x, double y) {

@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog_map.dart';
-import 'package:lemon_engine/render_single_atlas.dart';
+import 'package:lemon_engine/engine.dart';
 
 class GameMapWidget extends StatelessWidget {
   var screenCenterX = 0.0;
@@ -80,9 +80,9 @@ class GameMapWidget extends StatelessWidget {
 
     cameraCenter(renderX, renderY);
 
-    canvasRenderAtlas(
+    Engine.renderCanvas(
       canvas: canvas,
-      atlas: Images.mapAtlas,
+      image: Images.mapAtlas,
       srcX: 92,
       srcY: 28,
       srcWidth: 8,

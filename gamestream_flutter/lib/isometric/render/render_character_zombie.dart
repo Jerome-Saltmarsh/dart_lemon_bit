@@ -1,4 +1,5 @@
 
+
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
@@ -61,3 +62,4 @@ double _getZombieSrcX(Character character) {
       throw Exception("Render zombie invalid state ${character.state}");
   }
 }
+
