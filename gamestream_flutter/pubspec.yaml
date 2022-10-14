@@ -46,6 +46,7 @@ flutter:
         - asset: fonts/JetBrainsMono-Regular.ttf
   assets:
     - images/
+    - images/template/
     - images/template/body/
     - images/template/head/
     - images/template/legs/

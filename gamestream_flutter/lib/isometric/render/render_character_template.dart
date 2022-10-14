@@ -104,6 +104,62 @@ void renderCharacterWeaponBlade(Character character) {
   );
 }
 
+bool weaponIs96(int weapon) =>
+   weapon == AttackType.Staff ||
+   weapon == AttackType.Blade ;
+
+void renderTemplateWeapon(Character character, int direction){
+  if (character.unarmed) return;
+  final weapon = character.weapon;
+  var size = weaponIs64(weapon) ? 64.0 : 96.0;
+  var frame = 0;
+  var bowOrShotgun = weapon == AttackType.Bow ||weapon == AttackType.Shotgun;
+
+  if (character.usingWeapon){
+
+  }
+
+  switch (character.state) {
+    case CharacterState.Idle:
+      if (bowOrShotgun) {
+        frame = 0;
+      } else {
+        frame = 1;
+      }
+      break;
+    case CharacterState.Running:
+      if (bowOrShotgun){
+         frame = const[15, 16, 17, 18][character.frame % 4];
+      } else {
+         frame = const[11, 12, 13, 14][character.frame % 4];
+      }
+      break;
+    case CharacterState.Performing:
+      if (weapon == AttackType.Shotgun){
+        frame = const[15, 16, 17, 18][character.frame % 4];
+      }
+      break;
+    case CharacterState.Changing:
+      break;
+    case CharacterState.Hurt:
+      break;
+    default:
+      return;
+  }
+
+  Engine.renderSprite(
+    image: ImagesTemplateWeapons.shotgun,
+    srcX: frame * size,
+    srcY: character.renderDirection * size,
+    srcWidth: size,
+    srcHeight: size,
+    dstX: getRenderX(character),
+    dstY: getRenderY(character),
+    scale: 0.75,
+    color: getRenderColor(character),
+  );
+}
+
 void renderCharacterTemplate(Character character, {
   bool renderHealthBar = true,
 }) {
@@ -118,9 +174,25 @@ void renderCharacterTemplate(Character character, {
   var frameLegs = 0;
   var frameHead = 0;
   var frameBody = 0;
-  switch(character.state){
+  var frameWeapon = 0;
+  final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
+  final weaponInFront = character.renderDirection >= 2 && character.renderDirection < 6;
+  final renderBackwards = diff >= 3 && character.running;
+
+  final renderDirectionOpposite = (character.renderDirection + 4) % 8;
+  final upperBodyDirection = renderBackwards ? renderDirectionOpposite : character.renderDirection;
+  final finalDirection = character.usingWeapon ? character.aimDirection : upperBodyDirection;
+
+  var variation = character.weapon == AttackType.Bow || character.weapon == AttackType.Shotgun;
+
+  switch (character.state) {
     case CharacterState.Idle:
       frameLegs = 0;
+      if (variation){
+        frameBody = 0;
+      } else {
+        frameBody = 1;
+      }
       break;
     case CharacterState.Running:
       frameLegs = TemplateAnimation.Running1[character.frame % 4];
@@ -141,7 +213,7 @@ void renderCharacterTemplate(Character character, {
   Engine.renderSprite(
     image: ImagesTemplateBody.blue,
     srcX: frameBody * 64,
-    srcY: character.renderDirection * 64,
+    srcY: finalDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
     dstX: getRenderX(character),
@@ -152,7 +224,7 @@ void renderCharacterTemplate(Character character, {
   Engine.renderSprite(
     image: ImagesTemplateHead.rogue,
     srcX: frameHead * 64,
-    srcY: character.renderDirection * 64,
+    srcY: character.aimDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
     dstX: getRenderX(character),
@@ -160,6 +232,7 @@ void renderCharacterTemplate(Character character, {
     scale: 0.75,
     color: getRenderColor(character),
   );
+  renderTemplateWeapon(character, finalDirection);
   return;
   final inLongGrass = gridNodeTypeAtVector3(character) == NodeType.Grass_Long;
 
@@ -167,8 +240,8 @@ void renderCharacterTemplate(Character character, {
     renderCharacterTemplateShadow(character);
   }
 
-  final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
-  final weaponInFront = character.renderDirection >= 2 && character.renderDirection < 6;
+  // final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
+  // final weaponInFront = character.renderDirection >= 2 && character.renderDirection < 6;
 
   /// If the the player is running backwards to the direction they are aiming
   /// render the player to run backwards
@@ -387,11 +460,6 @@ bool weaponIs64(int weapon) =>
    weapon == AttackType.Handgun ||
    weapon == AttackType.Bow ||
    weapon == AttackType.Shotgun;
-
-
-bool weaponIs96(int weapon) =>
-    weapon == AttackType.Blade ||
-    weapon == AttackType.Staff;
 
 void renderCharacterTemplatePartCustom96({
   required bool variation,

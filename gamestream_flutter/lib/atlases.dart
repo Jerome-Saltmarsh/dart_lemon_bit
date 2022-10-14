@@ -29,3 +29,9 @@ class ImagesTemplateLegs {
    static late Image white;
 }
 
+class ImagesTemplateWeapons {
+   static late Image bow;
+   static late Image shotgun;
+   static late Image handgun;
+}
+

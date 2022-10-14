@@ -97,7 +97,6 @@ void renderNodeAt() {
         color: renderNodeBelowColor,
       );
     case NodeType.Tree_Top:
-      // final f = raining.value ? animationFrame % 4 : -1;
       var shift = treeAnimation[((renderNodeRow - renderNodeColumn) + animationFrame) % treeAnimation.length] * renderNodeWind;
       renderAdvanced(
         dstX: renderNodeDstX + (shift * 0.5),
