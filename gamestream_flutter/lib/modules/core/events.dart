@@ -26,7 +26,6 @@ class CoreEvents {
   late final CoreState state;
 
   CoreEvents(this.state){
-    state.mode.onChanged(onModeChanged);
     state.region.onChanged(_onServerTypeChanged);
     state.account.onChanged(_onAccountChanged);
     state.status.onChanged(_onGameStatusChanged);
@@ -58,7 +57,6 @@ class CoreEvents {
     });
   }
 
-
   void _onAccountChanged(Account? account) {
     print("events.onAccountChanged($account)");
     if (account == null) return;
@@ -79,21 +77,12 @@ class CoreEvents {
     storage.saveServerType(serverType);
   }
 
+  void onConnectionChanged(Connection connection) {
+    print("onChangedConnection($connection)");
 
-  void onModeChanged(Mode mode){
-    print("onChangedMode($mode)");
-    Engine.keyPressedHandlers = {};
-    isometricWebControlsDeregister();
+    switch (connection) {
 
-    switch(mode) {
-      case Mode.Website:
-        Engine.drawCanvasAfterUpdate = true;
-        Engine.onDrawCanvas = Website.renderCanvas;
-        Engine.onUpdate = Website.update;
-        sceneEditable.value = false;
-        break;
-
-      case Mode.Player:
+      case Connection.Connected:
         Engine.onDrawCanvas = modules.game.render.renderGame;
         Engine.onDrawForeground = modules.game.render.renderForeground;
         Engine.onUpdate = modules.game.update.update;
@@ -102,30 +91,21 @@ class CoreEvents {
         Engine.zoomOnScroll = true;
         isometricWebControlsRegister();
         break;
-    }
-
-    Engine.redrawCanvas();
-  }
-
-  void onConnectionChanged(Connection connection) {
-    print("onChangedConnection($connection)");
-
-    switch (connection) {
-
-      case Connection.Connected:
-        core.state.mode.value = Mode.Player;
-        break;
 
       case Connection.Done:
         onConnectionDone();
+        isometricWebControlsDeregister();
         Engine.onUpdate = null;
-        core.state.mode.value = Mode.Website;
         Engine.fullScreenExit();
         core.actions.clearState();
         Engine.drawCanvasAfterUpdate = true;
         Engine.cursorType.value = CursorType.Basic;
         core.state.status.value = GameStatus.None;
         gameType.value = null;
+        Engine.drawCanvasAfterUpdate = true;
+        Engine.onDrawCanvas = Website.renderCanvas;
+        Engine.onUpdate = Website.update;
+        sceneEditable.value = false;
         break;
       default:
         break;

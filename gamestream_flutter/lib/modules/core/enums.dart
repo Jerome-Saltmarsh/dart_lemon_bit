@@ -13,11 +13,6 @@ enum OperationStatus {
   Saving_Map,
 }
 
-enum Mode {
-  Website,
-  Player,
-}
-
 enum Region {
   Australia,
   Singapore,

@@ -220,14 +220,6 @@ class CoreActions {
     gameType.value = null;
   }
 
-  void setModePlay() {
-    core.state.mode.value = core.state.mode.value = Mode.Player;
-  }
-
-  void setModeWebsite() {
-    core.state.mode.value = core.state.mode.value = Mode.Website;
-  }
-
   void exitGame(){
     print('exit game');
     gameType.value = null;

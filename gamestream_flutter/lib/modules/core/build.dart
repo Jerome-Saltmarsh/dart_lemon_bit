@@ -37,9 +37,7 @@ class CoreBuild {
   Widget buildOperationStatus(OperationStatus operationStatus) =>
     operationStatus != OperationStatus.None
         ? _layoutOperationStatus(operationStatus)
-        : WatchBuilder(core.state.mode, (Mode mode) {
-            return watchAccount(buildAccount);
-          });
+        : watchAccount(buildAccount);
 
   Widget _layoutOperationStatus(OperationStatus operationStatus) =>
     buildLayout(

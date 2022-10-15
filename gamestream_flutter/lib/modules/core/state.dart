@@ -11,7 +11,6 @@ class CoreState {
   final operationStatus = Watch(OperationStatus.None);
   final error = Watch<String?>(null);
   final account = Watch<Account?>(null);
-  final mode = Watch(Mode.Website);
   final region = Watch(Region.LocalHost, onChanged: onChangedRegion);
   final download = Watch(0.0);
   final debug = true;
