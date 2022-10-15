@@ -5,4 +5,3 @@ enum StoreTab {
   Items,
 }
 
-final List<StoreTab> storeTabs = StoreTab.values;

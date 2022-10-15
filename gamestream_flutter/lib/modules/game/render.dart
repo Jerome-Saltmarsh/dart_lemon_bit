@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/isometric/ai.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
@@ -26,7 +27,7 @@ final rendersSinceUpdate = Watch(0, onChanged: onChangedRendersSinceUpdate);
 class GameRender {
   final GameStyle style;
 
-  bool get debug => game.debug.value;
+  bool get debug => GameUI.debug.value;
 
   GameRender(this.style);
 
@@ -161,7 +162,7 @@ class GameRender {
   }
 
   void drawPaths() {
-    if (!game.debug.value) return;
+    if (!GameUI.debug.value) return;
     Engine.setPaintColor(colours.blue);
     Engine.paint.strokeWidth = 4.0;
 
@@ -199,7 +200,7 @@ class GameRender {
       final width = charWidth * human.text.length;
       final left = human.renderX - width;
       final y = human.renderY - 70;
-      Engine.renderText(human.text, left, y, style: game.playerTextStyle);
+      Engine.renderText(human.text, left, y, style: GameUI.playerTextStyle);
     }
   }
 }

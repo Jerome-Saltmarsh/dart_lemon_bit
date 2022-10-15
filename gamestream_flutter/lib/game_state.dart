@@ -4,7 +4,9 @@ import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/Shade.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_type.dart';
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/audio_engine.dart';
+import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/classes/particle_emitter.dart';
@@ -13,6 +15,8 @@ import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_action_finished_lightning_flash.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_ambient_shade.dart';
+import 'package:gamestream_flutter/isometric/events/on_changed_edit.dart';
+import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
@@ -24,6 +28,7 @@ import 'package:lemon_watch/watch.dart';
 
 class GameState {
   static final gameType = Watch<int?>(null, onChanged: onChangedGameType);
+  static final edit = Watch(false, onChanged: onChangedEdit);
   static final player = Player();
 
   static final characters = <Character>[];
@@ -163,9 +168,9 @@ class GameState {
     if (value == null) {
       return;
     }
-    game.edit.value = value == GameType.Editor;
-    game.timeVisible.value = GameType.isTimed(value);
-    game.mapVisible.value = value == GameType.Dark_Age;
+    GameState.edit.value = value == GameType.Editor;
+    GameUI.timeVisible.value = GameType.isTimed(value);
+    GameUI.mapVisible.value = value == GameType.Dark_Age;
     Engine.fullScreenEnter();
   }
 

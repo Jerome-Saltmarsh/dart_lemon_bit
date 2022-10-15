@@ -7,7 +7,6 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
-import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
@@ -23,7 +22,7 @@ import '../stacks/build_page.dart';
 import '../widgets/build_container.dart';
 
 Widget buildPlayMode(bool edit) =>
-  edit ? watch(game.editTab, buildStackEdit) : buildStackPlay();
+  edit ? watch(EditState.editTab, buildStackEdit) : buildStackPlay();
 
 Widget buildStackEdit(EditTab activeEditTab) =>
     buildPage(
@@ -397,7 +396,7 @@ Row buildEditorMenu(EditTab activeEditTab) =>
                             color: activeEditTab == editTab
                                 ? colours.brownDark
                                 : colours.brownLight,
-                            action: () => game.editTab.value = editTab,
+                            action: () => EditState.editTab.value = editTab,
                          )
           ).toList(),
         );

@@ -10,6 +10,7 @@ import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/quest.dart';
 import 'package:bleed_common/type_position.dart';
 import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
@@ -223,7 +224,7 @@ class ServerResponseReader with ByteReader {
           // );
           break;
         case ServerResponse.Render_Map:
-          game.mapVisible.value = readBool();
+          GameUI.mapVisible.value = readBool();
           break;
         case ServerResponse.Options:
           final optionType = readByte();
@@ -605,7 +606,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readDebugMode() {
-    game.debug.value = readBool();
+    GameUI.debug.value = readBool();
   }
 
   void readGrid() {
@@ -671,7 +672,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readPaths() {
-    game.debug.value = true;
+    GameUI.debug.value = true;
     var index = 0;
     while (true) {
       final pathIndex = readInt();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
@@ -20,7 +21,7 @@ Widget buildPanelMenu() =>
         children: [
           buildButtonTogglePlayMode(),
           width8,
-          buildWatchBool(game.timeVisible, buildTime),
+          buildWatchBool(GameUI.timeVisible, buildTime),
           onPressed(
               child: buildToggleFullscreen(),
               action:  Engine.fullscreenToggle),
@@ -37,7 +38,7 @@ Widget buildPanelMenu() =>
 Widget buildButtonTogglePlayMode() {
   return watch(sceneEditable, (bool isOwner) {
     if (!isOwner) return const SizedBox();
-    return watch(game.edit, (bool edit) {
+    return watch(GameState.edit, (bool edit) {
       return container(
           toolTip: "Tab",
           child: edit ? "PLAY" : "EDIT",

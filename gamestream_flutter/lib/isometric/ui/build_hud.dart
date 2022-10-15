@@ -4,6 +4,7 @@ import 'package:bleed_common/GameType.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/io/touchscreen.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
@@ -57,8 +58,8 @@ Widget buildStackGame()  =>
         watch(GameState.player.gameDialog, buildGameDialog),
         buildWatchBool(GameState.player.alive, buildContainerRespawn, false),
         buildTopRightMenu(),
-        buildWatchBool(game.mapVisible, buildMiniMap),
-        watch(game.edit, buildPlayMode),
+        buildWatchBool(GameUI.mapVisible, buildMiniMap),
+        watch(GameState.edit, buildPlayMode),
         buildWatchBool(debugVisible, buildHudDebug),
         // https://stackoverflow.com/questions/67147229/how-can-i-detect-multiple-touches-in-flutter
         Positioned(

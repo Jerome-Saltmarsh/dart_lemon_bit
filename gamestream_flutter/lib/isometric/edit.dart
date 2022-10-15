@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/isometric/editor/events/on_changed_paint_type
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node_type.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
+import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_data_player_is_owner.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
@@ -17,6 +18,7 @@ import 'package:lemon_watch/watch.dart';
 import 'utils/mouse_raycast.dart';
 
 class EditState {
+  static final editTab = Watch(EditTab.Grid);
   static final gameObject = GameObject();
   static final gameObjectSelected = Watch(false);
   static final gameObjectSelectedType = Watch(0);
