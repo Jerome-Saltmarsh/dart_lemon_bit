@@ -9,10 +9,10 @@ import 'player.dart';
 void updateCameraMode() {
   switch (cameraMode){
     case CameraMode.Chase:
-      engine.cameraFollow(player.renderX, player.renderY, 0.00075);
+      Engine.cameraFollow(player.renderX, player.renderY, 0.00075);
       break;
     case CameraMode.Locked:
-      engine.cameraFollow(player.renderX, player.renderY, 1.0);
+      Engine.cameraFollow(player.renderX, player.renderY, 1.0);
       break;
     case CameraMode.Free:
       break;

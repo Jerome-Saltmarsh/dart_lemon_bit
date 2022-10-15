@@ -16,7 +16,6 @@ import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/website/build_layout_website.dart';
 import 'package:gamestream_flutter/website/website.dart';
 import 'package:lemon_dispatch/instance.dart';
-import 'package:lemon_engine/actions.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
 
@@ -42,7 +41,7 @@ class CoreEvents {
       case GameStatus.In_Progress:
         Engine.onDrawCanvas = modules.game.render.renderGame;
         Engine.drawCanvasAfterUpdate = false;
-        fullScreenEnter();
+        Engine.fullScreenEnter();
         break;
       default:
         Engine.fullScreenExit();
@@ -115,17 +114,6 @@ class CoreEvents {
 
       case Connection.Connected:
         core.state.mode.value = Mode.Player;
-        // if (game.type.value == GameType.Custom){
-        //   final account = core.state.account.value;
-        //   if (account == null){
-        //     core.actions.setError("Account required to play custom map");
-        //     return;
-        //   }
-        //   final mapName = game.customGameName;
-        //   sendRequestJoinCustomGame(mapName: mapName, playerId: account.userId);
-        // }else{
-        //   sendRequestJoinGame(game.type.value);
-        // }
         break;
 
       case Connection.Done:
@@ -134,7 +122,6 @@ class CoreEvents {
         core.state.mode.value = Mode.Website;
         Engine.fullScreenExit();
         core.actions.clearState();
-        engine.clearCallbacks();
         Engine.drawCanvasAfterUpdate = true;
         Engine.cursorType.value = CursorType.Basic;
         core.state.status.value = GameStatus.None;

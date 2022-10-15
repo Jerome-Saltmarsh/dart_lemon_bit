@@ -2,6 +2,7 @@ library lemon_engine;
 
 import 'dart:async';
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -16,16 +17,14 @@ import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_html/html.dart';
-import 'dart:ui' as ui;
 import 'package:url_strategy/url_strategy.dart' as us;
 
-import 'actions.dart';
 import 'load_image.dart';
 import 'render.dart';
 
-final engine = Engine();
-
 class Engine {
+  /// HOOKS
+  /// the following hooks are designed to be easily swapped in and out without inheritance
 
   /// override safe. run this snippet inside your initialization code.
   /// engine.onTapDown = (TapDownDetails details) => print('tap detected');
@@ -90,7 +89,7 @@ class Engine {
   static final watchBackgroundColor = Watch(DefaultBackgroundColor);
   static final watchBuildUI = Watch<WidgetBuilder?>(null);
   static final watchTitle = Watch(DefaultTitle);
-  static final watchInitialized = Watch(false, onChanged: (bool value){ });
+  static final watchInitialized = Watch(false);
   static final watchDurationPerFrame = Watch(Duration(milliseconds: DefaultMillisecondsPerFrame));
   static final watchMouseLeftDown = Watch(false, onChanged: internalOnChangedMouseLeftDown);
   static final mouseRightDown = Watch(false);
@@ -183,7 +182,7 @@ class Engine {
     atlas = await loadImage(filename);
   }
 
-  TextSpan getTextSpan(String text) {
+  static TextSpan getTextSpan(String text) {
     var value = textSpans[text];
     if (value != null) return value;
     value = TextSpan(style: TextStyle(color: Colors.white), text: text);
@@ -191,7 +190,7 @@ class Engine {
     return value;
   }
 
-  void writeText(String text, double x, double y) {
+  static void writeText(String text, double x, double y) {
     textPainter.text = getTextSpan(text);
     textPainter.layout();
     textPainter.paint(canvas, Offset(x, y));
@@ -314,7 +313,7 @@ class Engine {
   //   renderIndex = 0;
   // }
 
-  void cameraFollow(double x, double y, double speed) {
+  static void cameraFollow(double x, double y, double speed) {
     final diffX = screenCenterWorldX - x;
     final diffY = screenCenterWorldY - y;
     camera.x -= (diffX * 75) * speed;
@@ -330,12 +329,29 @@ class Engine {
     notifierPaintFrame.value++;
   }
 
-  static void fullscreenToggle() {
-    fullScreenActive ? fullScreenExit() : fullScreenEnter();
+  static void refreshPage(){
+    final window = document.window;
+    if (window == null) return;
+    final domain = document.domain;
+    if (domain == null) return;
+    window.location.href = domain;
   }
 
-  static void fullScreenExit() {
-    document.exitFullscreen();
+  static void fullscreenToggle()  =>
+    fullScreenActive ? fullScreenExit() : fullScreenEnter();
+
+  static void fullScreenExit() => document.exitFullscreen();
+
+  static void fullScreenEnter() {
+    final element = document.documentElement;
+    if (element == null) {
+      return;
+    }
+    try {
+      element.requestFullscreen().catchError((error) {});
+    } catch(error) {
+      // ignore
+    }
   }
 
   static void panCamera() {
@@ -353,13 +369,6 @@ class Engine {
 
   static void disableRightClickContextMenu() {
     document.onContextMenu.listen((event) => event.preventDefault());
-  }
-
-  void clearCallbacks() {
-    print("lemon-engine.clearCallbacks()");
-    onMouseScroll = null;
-    onLeftClicked = null;
-    onLongLeftClicked = null;
   }
 
   static void setPaintColorWhite() {
