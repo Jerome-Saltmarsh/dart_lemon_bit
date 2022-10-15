@@ -3,7 +3,6 @@ import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
-import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
 import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
@@ -17,7 +16,7 @@ final audioLoops = <AudioLoop> [
   AudioLoop(name: 'wind', getTargetVolume: getVolumeTargetWind),
   AudioLoop(name: 'rain', getTargetVolume: getVolumeTargetRain),
   AudioLoop(name: 'crickets', getTargetVolume: getVolumeTargetCrickets),
-  AudioLoop(name: 'day-ambience', getTargetVolume: getVolumeTargetDayAmbience),
+  AudioLoop(name: 'day-ambience', getTargetVolume: GameState.getVolumeTargetDayAmbience),
   AudioLoop(name: 'fire', getTargetVolume: getVolumeTargetFire),
   AudioLoop(name: 'distant-thunder', getTargetVolume: getVolumeTargetDistanceThunder),
   AudioLoop(name: 'heart-beat', getTargetVolume: getVolumeHeartBeat),
@@ -65,10 +64,7 @@ double getVolumeTargetCrickets() {
   return 0;
 }
 
-double getVolumeTargetDayAmbience() {
-  if (ambientShade.value == Shade.Very_Bright) return 0.2;
-  return 0;
-}
+
 
 double getVolumeTargetFire(){
   const r = 4;

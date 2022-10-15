@@ -3,7 +3,6 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/ai.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
-import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_health_bar.dart';
@@ -63,7 +62,7 @@ class GameRender {
     }
     if (rendersSinceUpdate.value != 1) return;
 
-    final playerCharacter = getPlayerCharacter();
+    final playerCharacter = GameState.getPlayerCharacter();
     if (playerCharacter == null) return;
     final velocityX = GameState.player.x - GameState.player.previousPosition.x;
     final velocityY = GameState.player.y - GameState.player.previousPosition.y;

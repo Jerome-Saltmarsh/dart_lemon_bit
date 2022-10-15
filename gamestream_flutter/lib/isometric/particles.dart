@@ -6,7 +6,6 @@ import 'package:bleed_common/particle_type.dart';
 import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
-import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/update.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
@@ -116,7 +115,7 @@ void _updateParticle(Particle particle) {
   }
 
   final nodeIndex = gridNodeIndexVector3(particle);
-  final tile = nodesType[nodeIndex];
+  final tile = GameState.nodesType[nodeIndex];
   final airBorn =
       !particle.checkNodeCollision || (
       tile == NodeType.Empty        ||

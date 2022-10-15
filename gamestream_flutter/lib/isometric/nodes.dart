@@ -1,25 +1,10 @@
-import 'dart:typed_data';
-
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 
 import 'grid.dart';
 
-const nodesInitialSize = 70 * 70 * 8;
-var nodesBake = Uint8List(nodesInitialSize);
-var nodesColor = Int32List(nodesInitialSize);
-var nodesOrientation = Uint8List(nodesInitialSize);
-var nodesShade = Uint8List(nodesInitialSize);
-var nodesTotal = nodesInitialSize;
-var nodesType = Uint8List(nodesInitialSize);
-var nodesVariation = List<bool>.generate(nodesInitialSize, (index) => false, growable: false);
-var nodesVisible = List<bool>.generate(nodesInitialSize, (index) => true, growable: false);
-var nodesVisibleIndex = Uint16List(nodesInitialSize);
-var nodesDynamicIndex = Uint16List(nodesInitialSize);
-var nodesWind = Uint8List(nodesInitialSize);
 
-var visibleIndex = 0;
-var dynamicIndex = 0;
 
 
 int getNodeIndexBelow(int index){
@@ -29,8 +14,8 @@ int getNodeIndexBelow(int index){
 int getNodeTypeBelow(int index){
   if (index < nodesArea) return NodeType.Boundary;
   final indexBelow = index - nodesArea;
-  if (indexBelow >= nodesTotal) return NodeType.Boundary;
-  return nodesType[indexBelow];
+  if (indexBelow >= GameState.nodesTotal) return NodeType.Boundary;
+  return GameState.nodesType[indexBelow];
 }
 
 void setNodeShade(int index, int shade){
@@ -42,7 +27,7 @@ void setNodeShade(int index, int shade){
     shade = Shade.Pitch_Black;
 
   }
-  nodesShade[index] = shade;
+  GameState.nodesShade[index] = shade;
 }
 
 int getNodeIndexZRC(int z, int row, int column) {
@@ -66,8 +51,8 @@ bool verifyInBoundZRC(int z, int row, int column){
 
 void gridNodeWindIncrement(int z, int row, int column){
   final index = getNodeIndexZRC(z, row, column);
-  if (nodesWind[index] >= windIndexStrong) return;
-  nodesWind[index]++;
+  if (GameState.nodesWind[index] >= windIndexStrong) return;
+  GameState.nodesWind[index]++;
 }
 
 int getGridNodeIndexV3(Vector3 vector3) =>
@@ -93,10 +78,10 @@ int gridNodeXYZTypeSafe(double x, double y, double z) {
 }
 
 int gridNodeXYZType(double x, double y, double z) =>
-    nodesType[gridNodeXYZIndex(x, y, z)];
+    GameState.nodesType[gridNodeXYZIndex(x, y, z)];
 
 bool gridNodeZRCTypeRainOrEmpty(int z, int row, int column) =>
-     NodeType.isRainOrEmpty(nodesType[getNodeIndexZRC(z, row, column)]);
+     NodeType.isRainOrEmpty(GameState.nodesType[getNodeIndexZRC(z, row, column)]);
 
 int gridNodeZRCTypeSafe(int z, int row, int column) {
   if (z < 0) return NodeType.Boundary;
@@ -109,7 +94,7 @@ int gridNodeZRCTypeSafe(int z, int row, int column) {
 }
 
 int gridNodeZRCType(int z, int row, int column) =>
-    nodesType[getNodeIndexZRC(z, row, column)];
+    GameState.nodesType[getNodeIndexZRC(z, row, column)];
 
 int gridNodeXYZIndex(double x, double y, double z) =>
     getNodeIndexZRC(

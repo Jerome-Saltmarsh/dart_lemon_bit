@@ -58,7 +58,7 @@ class Edit {
 
   var nodeIndex = Watch(0, clamp: (int value){
      if (value < 0) return 0;
-     if (value >= nodesTotal) return nodesTotal - 1;
+     if (value >= GameState.nodesTotal) return GameState.nodesTotal - 1;
      return value;
   }, onChanged: onChangedSelectedNodeIndex);
 
@@ -99,8 +99,8 @@ class Edit {
   double get renderY => projectY(edit.posX, edit.posY, edit.posZ);
 
   void refreshNodeSelectedIndex(){
-    nodeSelectedType.value = nodesType[nodeIndex.value];
-    nodeSelectedOrientation.value = nodesOrientation[nodeIndex.value];
+    nodeSelectedType.value = GameState.nodesType[nodeIndex.value];
+    nodeSelectedOrientation.value = GameState.nodesOrientation[nodeIndex.value];
   }
 
   void deselectGameObject() {

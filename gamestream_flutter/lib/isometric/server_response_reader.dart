@@ -11,7 +11,6 @@ import 'package:bleed_common/quest.dart';
 import 'package:bleed_common/type_position.dart';
 import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/gamestream.dart';
-import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
@@ -24,9 +23,7 @@ import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/io/custom_game_names.dart';
-import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
-import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
 import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
@@ -69,7 +66,7 @@ class ServerResponseReader with ByteReader {
   void readBytes(Uint8List values) {
     updateFrame.value++;
     index = 0;
-    totalCharacters = 0;
+    GameState.totalCharacters = 0;
     totalGameObjects = 0;
     bufferSize.value = values.length;
     this.values = values;
@@ -259,7 +256,7 @@ class ServerResponseReader with ByteReader {
     final environmentResponse = readByte();
     switch (environmentResponse) {
       case EnvironmentResponse.Shade:
-        ambientShade.value = readByte();
+        GameState.ambientShade.value = readByte();
         break;
       case EnvironmentResponse.Rain:
         rain.value = readRain();
@@ -437,36 +434,36 @@ class ServerResponseReader with ByteReader {
   }
 
   void readCharacterRat() {
-    final character = getCharacterInstance();
+    final character = GameState.getCharacterInstance();
     character.type = CharacterType.Rat;
     readCharacter(character);
-    totalCharacters++;
+    GameState.totalCharacters++;
   }
 
   void readCharacterZombie() {
-    final character = getCharacterInstance();
+    final character = GameState.getCharacterInstance();
     character.type = CharacterType.Zombie;
     readCharacter(character);
-    totalCharacters++;
+    GameState.totalCharacters++;
   }
 
   void readCharacterSlime() {
-    final character = getCharacterInstance();
+    final character = GameState.getCharacterInstance();
     character.type = CharacterType.Slime;
     readCharacter(character);
-    totalCharacters++;
+    GameState.totalCharacters++;
   }
 
   void readCharacterTemplate() {
-    final character = getCharacterInstance();
+    final character = GameState.getCharacterInstance();
     character.type = CharacterType.Template;
     readCharacter(character);
     readCharacterEquipment(character);
-    totalCharacters++;
+    GameState.totalCharacters++;
   }
 
   void readCharacterPlayer(){
-    final character = getCharacterInstance();
+    final character = GameState.getCharacterInstance();
     final teamDirectionState = readByte();
     character.type = CharacterType.Template;
     readTeamDirectionState(character, teamDirectionState);
@@ -479,7 +476,7 @@ class ServerResponseReader with ByteReader {
     character.text = readString();
     character.lookRadian = readAngle();
     character.weaponFrame = readByte();
-    totalCharacters++;
+    GameState.totalCharacters++;
   }
 
   void readInteractingNpcName() {
@@ -525,7 +522,7 @@ class ServerResponseReader with ByteReader {
     lightning.value = readLightning();
     watchTimePassing.value = readBool();
     windAmbient.value = readWind();
-    ambientShade.value = readByte();
+    GameState.ambientShade.value = readByte();
   }
 
   Rain readRain(){
@@ -555,8 +552,8 @@ class ServerResponseReader with ByteReader {
     final nodeType = readByte();
     final nodeOrientation = readByte();
     assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
-    nodesType[nodeIndex] = nodeType;
-    nodesOrientation[nodeIndex] = nodeOrientation;
+    GameState.nodesType[nodeIndex] = nodeType;
+    GameState.nodesOrientation[nodeIndex] = nodeOrientation;
     edit.refreshNodeSelectedIndex();
     onGridChanged();
   }
@@ -620,19 +617,19 @@ class ServerResponseReader with ByteReader {
     nodesTotalColumns = readInt();
     nodesArea = nodesTotalRows * nodesTotalColumns;
     final grandTotal = nodesTotalZ * nodesTotalRows * nodesTotalColumns;
-    if (nodesType.length < grandTotal) {
+    if (GameState.nodesType.length < grandTotal) {
       print('new buffers generated $grandTotal');
-      nodesType = Uint8List(grandTotal);
-      nodesOrientation = Uint8List(grandTotal);
-      nodesShade = Uint8List(grandTotal);
-      nodesBake = Uint8List(grandTotal);
-      nodesWind = Uint8List(grandTotal);
-      nodesVariation = List.generate(grandTotal, (index) => false, growable: false);
-      nodesVisible = List.generate(grandTotal, (index) => true, growable: false);
-      nodesVisibleIndex = Uint16List(grandTotal);
-      nodesDynamicIndex = Uint16List(grandTotal);
+      GameState.nodesType = Uint8List(grandTotal);
+      GameState.nodesOrientation = Uint8List(grandTotal);
+      GameState.nodesShade = Uint8List(grandTotal);
+      GameState.nodesBake = Uint8List(grandTotal);
+      GameState.nodesWind = Uint8List(grandTotal);
+      GameState.nodesVariation = List.generate(grandTotal, (index) => false, growable: false);
+      GameState.nodesVisible = List.generate(grandTotal, (index) => true, growable: false);
+      GameState.nodesVisibleIndex = Uint16List(grandTotal);
+      GameState.nodesDynamicIndex = Uint16List(grandTotal);
     }
-    nodesTotal = grandTotal;
+    GameState.nodesTotal = grandTotal;
 
     var gridIndex = 0;
     var total = 0;
@@ -651,11 +648,11 @@ class ServerResponseReader with ByteReader {
       total += count;
 
       while (count > 0) {
-        nodesType[gridIndex] = nodeType;
-        nodesOrientation[gridIndex] = nodeOrientation;
+        GameState.nodesType[gridIndex] = nodeType;
+        GameState.nodesOrientation[gridIndex] = nodeOrientation;
 
         if (nodeType == NodeType.Grass) {
-          nodesVariation[gridIndex] = randomBool();
+          GameState.nodesVariation[gridIndex] = randomBool();
         }
 
         gridIndex++;

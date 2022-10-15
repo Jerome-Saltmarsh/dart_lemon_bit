@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
@@ -13,7 +12,6 @@ import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
-import 'package:gamestream_flutter/isometric/lighting/apply_emissions_characters.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emmissions_particles.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
@@ -26,7 +24,6 @@ import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_game_object.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
-import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -139,14 +136,14 @@ class RenderOrderCharacters extends RenderOrder {
 
   @override
   void updateFunction() {
-    character = characters[_index];
+    character = GameState.characters[_index];
     order = character.renderOrder;
     orderZ = character.indexZ;
   }
 
   @override
   int getTotal() {
-    return totalCharacters;
+    return GameState.totalCharacters;
   }
 
   @override
@@ -275,17 +272,17 @@ var indexShowRow = 0;
 var indexShowColumn = 0;
 var indexShowZ = 0;
 
-int get renderNodeShade => nodesShade[renderNodeIndex];
-int get renderNodeOrientation => nodesOrientation[renderNodeIndex];
+int get renderNodeShade => GameState.nodesShade[renderNodeIndex];
+int get renderNodeOrientation => GameState.nodesOrientation[renderNodeIndex];
 int get renderNodeColor => colorShades[renderNodeShade];
-int get renderNodeWind => nodesWind[renderNodeShade];
+int get renderNodeWind => GameState.nodesWind[renderNodeShade];
 
 int get renderNodeBelowIndex => renderNodeIndex + nodesArea;
 
 int get renderNodeBelowShade {
-  if (renderNodeBelowIndex < 0) return ambientShade.value;
-  if (renderNodeBelowIndex >= nodesTotal) return ambientShade.value;
-  return nodesShade[renderNodeBelowIndex];
+  if (renderNodeBelowIndex < 0) return GameState.ambientShade.value;
+  if (renderNodeBelowIndex >= GameState.nodesTotal) return GameState.ambientShade.value;
+  return GameState.nodesShade[renderNodeBelowIndex];
 }
 
 int get renderNodeBelowColor => colorShades[renderNodeBelowShade];
@@ -295,9 +292,9 @@ int getRenderLayerColor(int layers) =>
 
 int getRenderLayerShade(int layers){
    final index = renderNodeIndex + (layers * nodesArea);
-   if (index < 0) return ambientShade.value;
-   if (index >= nodesTotal) return ambientShade.value;
-   return nodesShade[index];
+   if (index < 0) return GameState.ambientShade.value;
+   if (index >= GameState.nodesTotal) return GameState.ambientShade.value;
+   return GameState.nodesShade[index];
 }
 
 
@@ -329,7 +326,7 @@ class RenderOrderGrid extends RenderOrder {
         renderNodeRow <= rowsMax &&
         renderNodeDstX <= screenRight
     ){
-      renderNodeType = nodesType[renderNodeIndex];
+      renderNodeType = GameState.nodesType[renderNodeIndex];
       if (renderNodeType != NodeType.Empty){
         renderNodeAt();
       }
@@ -365,7 +362,7 @@ class RenderOrderGrid extends RenderOrder {
     renderNodeDstX = (renderNodeRow - renderNodeColumn) * nodeSizeHalf;
     renderNodeDstY = ((renderNodeRow + renderNodeColumn) * nodeSizeHalf) - (renderNodeZ * nodeHeight);
     renderNodeIndex = (renderNodeZ * nodesArea) + (renderNodeRow * nodesTotalColumns) + renderNodeColumn;
-    renderNodeType = nodesType[renderNodeIndex];
+    renderNodeType = GameState.nodesType[renderNodeIndex];
     order = ((renderNodeRow + renderNodeColumn) * tileSize) + tileSizeHalf;
     orderZ = renderNodeZ;
   }
@@ -449,13 +446,13 @@ class RenderOrderGrid extends RenderOrder {
     renderNodeDstX = (renderNodeRow - renderNodeColumn) * nodeSizeHalf;
     renderNodeDstY = ((renderNodeRow + renderNodeColumn) * nodeSizeHalf) - (renderNodeZ * nodeHeight);
     renderNodeIndex = (renderNodeZ * nodesArea) + (renderNodeRow * nodesTotalColumns) + renderNodeColumn;
-    renderNodeType = nodesType[renderNodeIndex];
+    renderNodeType = GameState.nodesType[renderNodeIndex];
 
-    while (visibleIndex > 0) {
-       nodesVisible[nodesVisibleIndex[visibleIndex]] = true;
-       visibleIndex--;
+    while (GameState.visibleIndex > 0) {
+      GameState.nodesVisible[GameState.nodesVisibleIndex[GameState.visibleIndex]] = true;
+      GameState.visibleIndex--;
     }
-    nodesVisible[nodesVisibleIndex[0]] = true;
+    GameState.nodesVisible[GameState.nodesVisibleIndex[0]] = true;
 
 
     if (!indexShowPerceptible) {
@@ -476,7 +473,7 @@ class RenderOrderGrid extends RenderOrder {
     remaining = total > 0;
 
     refreshDynamicLightGrid();
-    applyEmissionsCharacters();
+    GameState.applyEmissionsCharacters();
     applyEmissionGameObjects();
     applyEmissionsParticles();
     applyCharacterColors();
@@ -494,18 +491,18 @@ class RenderOrderGrid extends RenderOrder {
   void hideIndex(int index){
     var i = index + nodesArea + nodesTotalColumns + 1;
     while (true) {
-      if (i >= nodesTotal) break;
-      nodesVisible[i] = false;
-      nodesVisibleIndex[visibleIndex] = i;
-      visibleIndex++;
+      if (i >= GameState.nodesTotal) break;
+      GameState.nodesVisible[i] = false;
+      GameState.nodesVisibleIndex[GameState.visibleIndex] = i;
+      GameState.visibleIndex++;
       i += nodesArea + nodesArea + nodesTotalColumns + 1;
     }
     i = index + nodesArea + nodesArea + nodesTotalColumns + 1;
     while (true) {
-      if (i >= nodesTotal) break;
-      nodesVisible[i] = false;
-      nodesVisibleIndex[visibleIndex] = i;
-      visibleIndex++;
+      if (i >= GameState.nodesTotal) break;
+      GameState.nodesVisible[i] = false;
+      GameState.nodesVisibleIndex[GameState.visibleIndex] = i;
+      GameState.visibleIndex++;
       i += nodesArea + nodesArea + nodesTotalColumns + 1;
     }
   }
@@ -518,16 +515,16 @@ class RenderOrderGrid extends RenderOrder {
       column++;
       if (row >= nodesTotalRows) return;
       if (column >= nodesTotalColumns) return;
-      nodesVisible[getNodeIndexZRC(z, row, column)] = false;
+      GameState.nodesVisible[getNodeIndexZRC(z, row, column)] = false;
       if (z < nodesTotalZ - 2){
-        nodesVisible[getNodeIndexZRC(z + 1, row, column)] = false;
+        GameState.nodesVisible[getNodeIndexZRC(z + 1, row, column)] = false;
       }
     }
   }
 
   void revealAbove(int z, int row, int column){
     for (; z < nodesTotalZ; z++){
-      nodesVisible[getNodeIndexZRC(z, row, column)] = false;
+      GameState.nodesVisible[getNodeIndexZRC(z, row, column)] = false;
     }
   }
 
@@ -603,12 +600,12 @@ class RenderOrderGrid extends RenderOrder {
   }
 
   void refreshDynamicLightGrid() {
-    while (dynamicIndex >= 0) {
-      final i = nodesDynamicIndex[dynamicIndex];
-      nodesShade[i] = nodesBake[i];
-      dynamicIndex--;
+    while (GameState.dynamicIndex >= 0) {
+      final i = GameState.nodesDynamicIndex[GameState.dynamicIndex];
+      GameState.nodesShade[i] = GameState.nodesBake[i];
+      GameState.dynamicIndex--;
     }
-    dynamicIndex = 0;
+    GameState.dynamicIndex = 0;
   }
 }
 

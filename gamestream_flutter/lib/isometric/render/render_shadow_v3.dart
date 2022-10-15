@@ -2,6 +2,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
@@ -19,7 +20,7 @@ void casteShadowDownV3(Vector3 vector3){
   final nodeIndex = getGridNodeIndexV3(vector3);
   if (nodeIndex > nodesArea) {
     final nodeBelowIndex = nodeIndex - nodesArea;
-    final nodeBelowOrientation = nodesOrientation[nodeBelowIndex];
+    final nodeBelowOrientation = GameState.nodesOrientation[nodeBelowIndex];
     if (nodeBelowOrientation == NodeOrientation.Solid){
       final topRemainder = vector3.z % tileHeight;
       renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / tileHeight) * 2 : 2.0);

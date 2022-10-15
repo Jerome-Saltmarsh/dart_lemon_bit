@@ -1,5 +1,6 @@
 import 'package:bleed_common/node_type.dart';
 import 'package:bleed_common/tile_size.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
@@ -16,14 +17,14 @@ void mouseRaycast(Function(int z, int row, int column) callback){
     if (column >= nodesTotalColumns) break;
     if (z >= nodesTotalZ) break;
     final index = getNodeIndexZRC(z, row, column);
-    if (nodesType[index] == NodeType.Empty
+    if (GameState.nodesType[index] == NodeType.Empty
         ||
-        NodeType.isRain(nodesType[index])
+        NodeType.isRain(GameState.nodesType[index])
     ) {
       z--;
       continue;
     }
-    if (!nodesVisible[index]) {
+    if (!GameState.nodesVisible[index]) {
       z--;
       continue;
     }

@@ -1,5 +1,5 @@
 import 'package:bleed_common/node_orientation.dart';
-import 'package:gamestream_flutter/isometric/nodes.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_constants.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
@@ -9,7 +9,7 @@ import 'render_standard_node.dart';
 void renderNodeTypeBrick({
   required int shade,
 }) {
-  switch (nodesOrientation[renderNodeIndex]) {
+  switch (GameState.nodesOrientation[renderNodeIndex]) {
     case NodeOrientation.Solid:
       return renderStandardNode(
         srcX: AtlasSrcX.Node_Brick,
@@ -76,6 +76,6 @@ void renderNodeTypeBrick({
         srcY: spriteHeight * shade,
       );
     default:
-      throw Exception("renderNodeTypeBrick(orientation: ${NodeOrientation.getName(nodesOrientation[renderNodeIndex])}");
+      throw Exception("renderNodeTypeBrick(orientation: ${NodeOrientation.getName(GameState.nodesOrientation[renderNodeIndex])}");
   }
 }

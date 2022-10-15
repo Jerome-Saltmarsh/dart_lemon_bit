@@ -1,14 +1,14 @@
 
 import 'package:bleed_common/node_orientation.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
-import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 
 import 'render_standard_node.dart';
 
 void renderNodePlain(){
-  switch (nodesOrientation[renderNodeIndex]){
+  switch (GameState.nodesOrientation[renderNodeIndex]){
     case NodeOrientation.Solid:
       return renderStandardNodeShaded(
         srcX: AtlasSrcX.Node_Plain_Solid,
@@ -18,13 +18,13 @@ void renderNodePlain(){
       return renderStandardNodeHalfNorth(
         srcX: AtlasSrcX.Node_Plain_Half_Row_X,
         srcY: AtlasSrcX.Node_Plain_Half_Row_Y,
-        color: colorShades[nodesShade[renderNodeIndex]],
+        color: colorShades[GameState.nodesShade[renderNodeIndex]],
       );
     case NodeOrientation.Half_East:
       return renderStandardNodeHalfEast(
         srcX: AtlasSrcX.Node_Plain_Half_Column_X,
         srcY: AtlasSrcX.Node_Plain_Half_Column_Y,
-        color: colorShades[nodesShade[renderNodeIndex]],
+        color: colorShades[GameState.nodesShade[renderNodeIndex]],
       );
     case NodeOrientation.Half_South:
       return renderStandardNodeShaded(

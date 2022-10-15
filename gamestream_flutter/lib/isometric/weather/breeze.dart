@@ -1,4 +1,5 @@
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:lemon_watch/watch.dart';
@@ -62,10 +63,10 @@ void applyGridLine(int index, int strength){
   while (windLineRow < nodesTotalRows && windLineColumn < nodesTotalColumns){
     for (var windLineZ = 0; windLineZ < nodesTotalZ; windLineZ++){
       final index = getNodeIndexZRC(windLineZ, windLineRow, windLineColumn);
-      nodesWind[index] += strength;
+      GameState.nodesWind[index] += strength;
       // TODO refactor
-      if (nodesWind[index] > windIndexStrong){
-        nodesWind[index] = windIndexStrong;
+      if (GameState.nodesWind[index] > windIndexStrong){
+        GameState.nodesWind[index] = windIndexStrong;
       }
     }
     windLineRow++;

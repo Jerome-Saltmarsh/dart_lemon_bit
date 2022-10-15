@@ -1,5 +1,6 @@
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_type.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/queries/set_grid_type.dart';
@@ -10,9 +11,9 @@ void rainOn(){
       for (var z = nodesTotalZ - 1; z >= 0; z--) {
 
         final index = getNodeIndexZRC(z, row, column);
-        final type = nodesType[index];
+        final type = GameState.nodesType[index];
         if (type != NodeType.Empty) {
-          if (type == NodeType.Water || nodesOrientation[index] == NodeOrientation.Solid) {
+          if (type == NodeType.Water || GameState.nodesOrientation[index] == NodeOrientation.Solid) {
             setGridType(z + 1, row, column, NodeType.Rain_Landing);
           }
           setGridType(z + 2, row, column, NodeType.Rain_Falling);
