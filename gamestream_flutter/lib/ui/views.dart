@@ -45,24 +45,22 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
   );
 }
 
-Widget buildAccount(Account? account) {
-  return buildWatchConnection(account);
+Widget buildAccount(Account? account) =>
+  watch(webSocket.connection, buildConnection);
+
+Widget buildConnection(Connection connection) {
+  switch (connection) {
+    case Connection.Connecting:
+      return buildLayoutLoading();
+    case Connection.Connected:
+      return buildStackGame();
+    case Connection.None:
+      return buildPageWebsite();
+    default:
+      return buildConnection(connection);
+  }
 }
 
-WatchBuilder<Connection> buildWatchConnection(Account? account) =>
-  WatchBuilder(webSocket.connection, (Connection connection) {
-    switch (connection) {
-      case Connection.Connecting:
-        return buildLayoutLoading();
-      case Connection.Connected:
-        print("buildStackGame()");
-        return buildStackGame();
-      case Connection.None:
-        return buildPageWebsite();
-      default:
-        return buildConnection(connection);
-    }
-  });
 
 Widget buildLayoutLoading() =>
   buildLayout(
@@ -75,18 +73,6 @@ Widget buildLayoutLoading() =>
       ],
     )),
   );
-
-Widget buildConnection(Connection value) => center(Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        text(connectionMessage[value], size: FontSize.Normal),
-        height32,
-        text("Back", onPressed: (){
-          core.actions.exitGame();
-          webSocket.disconnect();
-        }),
-      ],
-    ));
 
 Widget buildDialogChangeRegion() {
   return dialog(

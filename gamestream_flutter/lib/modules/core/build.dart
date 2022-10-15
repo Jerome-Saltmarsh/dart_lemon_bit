@@ -11,20 +11,6 @@ import 'package:lemon_watch/watch_builder.dart';
 
 class CoreBuild {
 
-  // Widget gameStream(){
-  //   return Game(
-  //     // title: "GAMESTREAM",
-  //     // init: init,
-  //     // update: (){},
-  //     // buildUI: buildUI,
-  //     drawCanvasAfterUpdate: true,
-  //     backgroundColor: colours.black,
-  //     buildLoadingScreen: buildLoadingScreen,
-  //     themeData: ThemeData(fontFamily: 'JetBrainsMono-Regular'),
-  //     framesPerSecond: 35,
-  //   );
-  // }
-
   Widget buildUI() {
     return Stack(
       children: [
