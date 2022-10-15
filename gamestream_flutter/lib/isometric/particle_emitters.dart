@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/particle_type.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/classes/particle_emitter.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
@@ -10,10 +11,9 @@ import 'package:lemon_math/library.dart';
 
 import 'particles.dart';
 
-final particleEmitters = <ParticleEmitter>[];
 
 void updateParticleEmitters(){
-  for (final emitter in particleEmitters) {
+  for (final emitter in GameState.particleEmitters) {
     if (emitter.next-- > 0) continue;
     emitter.next = emitter.rate;
     final particle = getParticleInstance();
@@ -60,7 +60,7 @@ void isometricParticleEmittersActionAddSmokeEmitter(double x, double y){
 }
 
 void addSmokeEmitter(int z, int row, int column){
-  particleEmitters.add(
+  GameState.particleEmitters.add(
       ParticleEmitter(
           z: z,
           row: row,

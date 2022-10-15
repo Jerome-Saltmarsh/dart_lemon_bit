@@ -1,23 +1,23 @@
 import 'dart:async';
 
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
-import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_dispatch/instance.dart';
 
 class GameEvents {
 
   void register(){
-    player.alive.onChanged(_onPlayerAliveChanged);
-    player.state.onChanged(onPlayerCharacterStateChanged);
+    GameState.player.alive.onChanged(_onPlayerAliveChanged);
+    GameState.player.state.onChanged(onPlayerCharacterStateChanged);
     sub(_onGameError);
   }
 
   // TODO Remove
   void onPlayerCharacterStateChanged(int characterState){
-    player.alive.value = characterState != CharacterState.Dead;
+    GameState.player.alive.value = characterState != CharacterState.Dead;
   }
 
   void _onPlayerAliveChanged(bool value) {

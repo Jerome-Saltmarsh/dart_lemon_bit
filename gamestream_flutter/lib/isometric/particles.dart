@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/particle_type.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
@@ -14,36 +15,34 @@ import 'classes/vector3.dart';
 import 'effects.dart';
 import 'grid_state_util.dart';
 
-final particles = <Particle>[];
-var totalActiveParticles = 0;
-var totalParticles = 0;
+
 
 void sortParticlesActive(){
-  totalParticles = particles.length;
-  for (var pos = 1; pos < totalParticles; pos++) {
+  GameState.totalParticles = GameState.particles.length;
+  for (var pos = 1; pos < GameState.totalParticles; pos++) {
     var min = 0;
     var max = pos;
-    var element = particles[pos];
+    var element = GameState.particles[pos];
     while (min < max) {
       var mid = min + ((max - min) >> 1);
-      if (!particles[mid].active) {
+      if (!GameState.particles[mid].active) {
         max = mid;
       } else {
         min = mid + 1;
       }
     }
-    particles.setRange(min + 1, pos + 1, particles, min);
-    particles[min] = element;
+    GameState.particles.setRange(min + 1, pos + 1, GameState.particles, min);
+    GameState.particles[min] = element;
   }
 }
 
 bool verifyTotalActiveParticles() =>
-   countActiveParticles() == totalActiveParticles;
+   countActiveParticles() == GameState.totalActiveParticles;
 
 int countActiveParticles(){
   var active = 0;
-  for (var i = 0; i < particles.length; i++){
-    if (particles[i].active)
+  for (var i = 0; i < GameState.particles.length; i++){
+    if (GameState.particles[i].active)
       active++;
   }
   return active;
@@ -51,20 +50,20 @@ int countActiveParticles(){
 
 void sortParticles(){
   sortParticlesActive();
-  totalActiveParticles = 0;
-  totalParticles = particles.length;
-  for (; totalActiveParticles < totalParticles; totalActiveParticles++){
-      if (!particles[totalActiveParticles].active) break;
+  GameState.totalActiveParticles = 0;
+  GameState.totalParticles = GameState.particles.length;
+  for (; GameState.totalActiveParticles < GameState.totalParticles; GameState.totalActiveParticles++){
+      if (!GameState.particles[GameState.totalActiveParticles].active) break;
   }
 
-  if (totalActiveParticles == 0) return;
+  if (GameState.totalActiveParticles == 0) return;
   
   assert(verifyTotalActiveParticles());
 
   insertionSort(
-    particles,
+    GameState.particles,
     compare: _compareParticles,
-    end: totalActiveParticles,
+    end: GameState.totalActiveParticles,
   );
 }
 
@@ -74,7 +73,7 @@ int _compareParticles(Particle a, Particle b) {
 
 /// do this during the draw call so that particles are smoother
 void updateParticles() {
-  for(final particle in particles){
+  for(final particle in GameState.particles){
     _updateParticle(particle);
   }
   updateParticleFrames();
@@ -82,8 +81,8 @@ void updateParticles() {
 
 void updateParticlesZombieParts() {
   if (Engine.paintFrame % 6 != 0) return;
-  for (var i = 0; i < totalActiveParticles; i++) {
-    final particle = particles[i];
+  for (var i = 0; i < GameState.totalActiveParticles; i++) {
+    final particle = GameState.particles[i];
     if (!particle.active) break;
     if (!particleEmitsBlood(particle.type)) continue;
     if (particle.speed < 2.0) continue;
@@ -943,13 +942,13 @@ void spawnParticle({
 
 /// This may be the cause of the bug in which the sword particle does not render
 Particle getParticleInstance() {
-  totalActiveParticles++;
-  if (totalActiveParticles >= totalParticles){
+  GameState.totalActiveParticles++;
+  if (GameState.totalActiveParticles >= GameState.totalParticles){
      final instance = Particle();
-     particles.add(instance);
+     GameState.particles.add(instance);
      return instance;
   }
-  final particle = particles[totalActiveParticles];
+  final particle = GameState.particles[GameState.totalActiveParticles];
   // assert (!particle.active);
   return particle;
 }

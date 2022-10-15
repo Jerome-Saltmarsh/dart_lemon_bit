@@ -1,18 +1,18 @@
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'camera_mode.dart';
 import 'enums/camera_mode.dart';
-import 'player.dart';
 
 
 void updateCameraMode() {
   switch (cameraMode){
     case CameraMode.Chase:
-      Engine.cameraFollow(player.renderX, player.renderY, 0.00075);
+      Engine.cameraFollow(GameState.player.renderX, GameState.player.renderY, 0.00075);
       break;
     case CameraMode.Locked:
-      Engine.cameraFollow(player.renderX, player.renderY, 1.0);
+      Engine.cameraFollow(GameState.player.renderX, GameState.player.renderY, 1.0);
       break;
     case CameraMode.Free:
       break;
@@ -21,7 +21,7 @@ void updateCameraMode() {
 
 void cameraCenterOnPlayer(){
   print('cameraCenterOnPlayer()');
-  Engine.cameraCenter(player.renderX, player.renderY);
+  Engine.cameraCenter(GameState.player.renderX, GameState.player.renderY);
 }
 
 void cameraSetPositionGrid(int row, int column, int z){

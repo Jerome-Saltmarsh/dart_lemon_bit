@@ -19,7 +19,6 @@ class ServerResponse {
   static const Waiting_For_More_Players = 31; 
   static const Player_Text = 32;
   static const Game_Type = 34;
-  static const Game_Status = 35;
   static const Subscription_Required = 41;
   static const Lobby_CountDown = 42;
   static const Player_Slots = 44;

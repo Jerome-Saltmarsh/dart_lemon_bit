@@ -1,13 +1,13 @@
 
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
-import 'package:gamestream_flutter/isometric/projectiles.dart';
 
 import 'apply_vector_emission.dart';
 
 void applyProjectileEmissions() {
-  for (var i = 0; i < totalProjectiles; i++){
-    applyProjectileEmission(projectiles[i]);
+  for (var i = 0; i < GameState.totalProjectiles; i++){
+    applyProjectileEmission(GameState.projectiles[i]);
   }
 }
 

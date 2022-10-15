@@ -2,12 +2,6 @@ import 'package:bleed_common/GameType.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/authentication.dart';
 import 'package:gamestream_flutter/gamestream.dart';
-import 'package:gamestream_flutter/isometric/npcs.dart';
-import 'package:gamestream_flutter/isometric/particles.dart';
-import 'package:gamestream_flutter/isometric/player.dart';
-import 'package:gamestream_flutter/isometric/players.dart';
-import 'package:gamestream_flutter/isometric/projectiles.dart';
-import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -16,9 +10,7 @@ import 'package:gamestream_flutter/network/instance/websocket.dart';
 import 'package:gamestream_flutter/servers.dart';
 import 'package:gamestream_flutter/ui/actions/sign_in_with_facebook.dart';
 import 'package:lemon_dispatch/instance.dart';
-import 'package:lemon_engine/engine.dart';
 
-import '../../isometric/particle_emitters.dart';
 import 'exceptions.dart';
 
 
@@ -127,24 +119,8 @@ class CoreActions {
 
   void disconnect(){
     print("actions.disconnect()");
-    clearState();
+    gamestream.clearGameState();
     webSocket.disconnect();
-  }
-
-  void clearState() {
-    player.x = -1;
-    player.y = -1;
-    totalZombies = 0;
-    totalPlayers = 0;
-    totalProjectiles = 0;
-    totalNpcs = 0;
-    particleEmitters.clear();
-    particles.clear();
-    player.gameDialog.value = null;
-    player.npcTalkOptions.value = [];
-    player.npcTalk.value = null;
-    Engine.zoom = 1;
-    Engine.redrawCanvas();
   }
 
   Future signInOrCreateAccount({

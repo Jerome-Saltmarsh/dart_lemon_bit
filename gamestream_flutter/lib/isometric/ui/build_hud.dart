@@ -1,16 +1,16 @@
 
 import 'package:bleed_common/Direction.dart';
-import 'package:gamestream_flutter/gamestream.dart';
-import 'package:gamestream_flutter/io/touchscreen.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/gamestream.dart';
+import 'package:gamestream_flutter/io/touchscreen.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_map.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
-import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
@@ -36,7 +36,7 @@ Widget buildStackGame()  =>
     height: Engine.screen.height,
     child: Stack(
       children: [
-        watch(player.message, (String message) =>
+        watch(GameState.player.message, (String message) =>
           Positioned(
               bottom: 64,
               left: 0,
@@ -56,8 +56,8 @@ Widget buildStackGame()  =>
         buildWatchBool(triggerAlarmNoMessageReceivedFromServer, buildDialogFramesSinceUpdate),
         watch(gamestream.gameType, buildGameTypeUI),
         watch(editorDialog, buildWatchEditorDialog),
-        watch(player.gameDialog, buildGameDialog),
-        buildWatchBool(player.alive, buildContainerRespawn, false),
+        watch(GameState.player.gameDialog, buildGameDialog),
+        buildWatchBool(GameState.player.alive, buildContainerRespawn, false),
         buildTopRightMenu(),
         buildWatchBool(game.mapVisible, buildMiniMap),
         watch(game.edit, buildPlayMode),
@@ -161,10 +161,10 @@ Positioned buildWatchInterpolation() =>
   Positioned(
       bottom: 0,
       left: 0,
-      child: watch(player.interpolating, (bool value) {
-        if (!value) return text("Interpolation Off", onPressed: () => player.interpolating.value = true);
+      child: watch(GameState.player.interpolating, (bool value) {
+        if (!value) return text("Interpolation Off", onPressed: () => GameState.player.interpolating.value = true);
         return watch(rendersSinceUpdate, (int frames){
-          return text("Frames: $frames", onPressed: () => player.interpolating.value = false);
+          return text("Frames: $frames", onPressed: () => GameState.player.interpolating.value = false);
         });
       }),
     );

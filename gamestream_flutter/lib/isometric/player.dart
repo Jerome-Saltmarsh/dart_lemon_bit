@@ -14,8 +14,6 @@ import 'package:gamestream_flutter/isometric/events/on_quests_in_progress_change
 import 'package:lemon_watch/watch.dart';
 
 
-final player = Player();
-
 class Player extends Vector3 {
   final interpolating = Watch(true);
   final previousPosition = Vector3();

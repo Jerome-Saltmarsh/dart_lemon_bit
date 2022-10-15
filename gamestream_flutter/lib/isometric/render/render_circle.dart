@@ -1,6 +1,5 @@
 
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
-
 import 'package:lemon_engine/engine.dart';
 
 void renderCircle32(double x, double y, { double scale = 1.0}){

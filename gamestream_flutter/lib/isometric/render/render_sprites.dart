@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_size.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
@@ -12,15 +13,13 @@ import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
-import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emissions_characters.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emmissions_particles.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
+import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_constants.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
-import 'package:gamestream_flutter/isometric/player.dart';
-import 'package:gamestream_flutter/isometric/projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/highlight_character_nearest_mouse.dart';
 import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
@@ -198,14 +197,14 @@ class RenderOrderProjectiles extends RenderOrder {
 
   @override
   void updateFunction() {
-     projectile = projectiles[_index];
+     projectile = GameState.projectiles[_index];
      order = projectile.renderOrder;
      orderZ = projectile.indexZ;
   }
 
   @override
   int getTotal() {
-    return totalProjectiles;
+    return GameState.totalProjectiles;
   }
 
   @override
@@ -226,7 +225,7 @@ class RenderOrderParticle extends RenderOrder {
 
   @override
   void updateFunction() {
-    particle = particles[_index];
+    particle = GameState.particles[_index];
     order = particle.renderOrder;
     orderZ = particle.indexZ;
   }
@@ -237,7 +236,7 @@ class RenderOrderParticle extends RenderOrder {
   @override
   void reset() {
     sortParticles();
-    totalActive = totalActiveParticles;
+    totalActive = GameState.totalActiveParticles;
     super.reset();
   }
 }
@@ -392,15 +391,15 @@ class RenderOrderGrid extends RenderOrder {
     renderNodeZ = 0;
     orderZ = 0;
     gridTotalColumnsMinusOne = nodesTotalColumns - 1;
-    playerZ = player.indexZ;
-    playerRow = player.indexRow;
-    playerColumn = player.indexColumn;
+    playerZ = GameState.player.indexZ;
+    playerRow = GameState.player.indexRow;
+    playerColumn = GameState.player.indexColumn;
     playerColumnRow = playerRow + playerColumn;
-    playerRenderRow = playerRow - (player.indexZ ~/ 2);
-    playerRenderColumn = playerColumn - (player.indexZ ~/ 2);
+    playerRenderRow = playerRow - (GameState.player.indexZ ~/ 2);
+    playerRenderColumn = playerColumn - (GameState.player.indexZ ~/ 2);
     playerUnderRoof = gridIsUnderSomething(playerZ, playerRow, playerColumn);
 
-    indexShow = inBoundsVector3(player) ? player.nodeIndex : 0;
+    indexShow = inBoundsVector3(GameState.player) ? GameState.player.nodeIndex : 0;
     indexShowRow = convertIndexToRow(indexShow);
     indexShowColumn = convertIndexToColumn(indexShow);
     indexShowZ = convertIndexToZ(indexShow);

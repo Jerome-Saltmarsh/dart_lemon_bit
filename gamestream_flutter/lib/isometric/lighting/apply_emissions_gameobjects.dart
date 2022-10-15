@@ -3,8 +3,8 @@
 import 'package:bleed_common/Shade.dart';
 import 'package:bleed_common/game_object_type.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
-import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
+import 'package:gamestream_flutter/isometric/nodes.dart';
 
 import 'apply_vector_emission.dart';
 

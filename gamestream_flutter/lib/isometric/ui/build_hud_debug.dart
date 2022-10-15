@@ -2,10 +2,9 @@ import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/Shade.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/gamestream.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
-import 'package:gamestream_flutter/isometric/particles.dart';
-import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
@@ -30,19 +29,19 @@ Widget buildHudDebug() =>
                   "mouseGridX: ${mouseGridX.toInt()}, mouseGridY: ${mouseGridY.toInt()}, mousePlayerAngle: ${mousePlayerAngle.toStringAsFixed(1)}, mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}"
                 )),
                 Refresh(() =>  text(
-                  "player-position: x: ${player.x}, y: ${player.y}, z: ${player.z}\n"
-                  "player-index: z: ${player.indexZ}, row: ${player.indexRow}, column: ${player.indexColumn}\n"
-                  "player-render: renderX: ${player.renderX}, renderY: ${player.renderY}, angle: ${player.angle}, mouseAngle: ${player.mouseAngle}"
+                  "player-position: x: ${GameState.player.x}, y: ${GameState.player.y}, z: ${GameState.player.z}\n"
+                  "player-index: z: ${GameState.player.indexZ}, row: ${GameState.player.indexRow}, column: ${GameState.player.indexColumn}\n"
+                  "player-render: renderX: ${GameState.player.renderX}, renderY: ${GameState.player.renderY}, angle: ${GameState.player.angle}, mouseAngle: ${GameState.player.mouseAngle}"
                 )),
               watch(serverResponseReader.byteLength, (int bytes) => text('network-bytes: $bytes')),
               watch(serverResponseReader.bufferSize, (int bufferSize) => text('network-buffer: $bufferSize')),
               Refresh(() => text('characters: active: $totalCharacters, total: ${characters.length}')),
-              Refresh(() => text('particles: active: $totalActiveParticles, total: ${particles.length}')),
+              Refresh(() => text('particles: active: $GameState.totalActiveParticles, total: ${GameState.particles.length}')),
               Refresh(() => text('nodes-rendered: $onscreenNodes')),
               Refresh(() => text('engine-frame: ${Engine.paintFrame}')),
               watch(renderFrame, (t) => text("render-frame: $t")),
               watch(serverResponseReader.updateFrame, (t) => text("update-frame: $t")),
-              watch(player.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => player.interpolating.value = !player.interpolating.value)),
+              watch(GameState.player.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => GameState.player.interpolating.value = !GameState.player.interpolating.value)),
               watch(ambientShade, (int shade) => text("ambient-shade: ${Shade.getName(shade)}")),
               watch(gamestream.gameType, (int? value) => text("game-type: ${value == null ? 'None' : GameType.getName(value)}")),
               watch(Engine.deviceType, (int deviceType) => text("device-type: ${DeviceType.getName(deviceType)}", onPressed: Engine.toggleDeviceType)),

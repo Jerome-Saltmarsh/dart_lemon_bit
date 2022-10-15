@@ -1,12 +1,12 @@
 
 import 'package:flutter/services.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
 import 'package:gamestream_flutter/isometric/actions/action_toggle_inventory.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
-import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
@@ -31,7 +31,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
   if (key == PhysicalKeyboardKey.digit5)
     return edit.paintTorch();
   if (key == PhysicalKeyboardKey.keyZ){
-    return spawnParticleFirePurple(x: mouseGridX, y: mouseGridY, z: player.z);
+    return spawnParticleFirePurple(x: mouseGridX, y: mouseGridY, z: GameState.player.z);
   }
 
   if (playMode) {

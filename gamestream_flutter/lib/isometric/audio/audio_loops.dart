@@ -1,6 +1,6 @@
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
-import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
 import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
@@ -89,7 +89,7 @@ double getVolumeTargetDistanceThunder(){
 }
 
 double getVolumeHeartBeat(){
-   return 1.0 - player.health.value / player.maxHealth;
+   return 1.0 - GameState.player.health.value / GameState.player.maxHealth;
 }
 
 double getVolumeStream(){

@@ -1,6 +1,5 @@
 
 
-import 'package:bleed_common/GameStatus.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/modules/core/events.dart';
 import 'package:lemon_watch/watch.dart';
@@ -14,5 +13,4 @@ class CoreState {
   final region = Watch(Region.LocalHost, onChanged: onChangedRegion);
   final download = Watch(0.0);
   final debug = true;
-  final status = Watch(GameStatus.None);
 }

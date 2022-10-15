@@ -3,11 +3,11 @@
 import 'dart:math';
 
 import 'package:bleed_common/Projectile_Type.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
-import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/update/update_lightning.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:lemon_math/library.dart';
@@ -17,8 +17,6 @@ import 'audio/audio_loops.dart';
 import 'audio/audio_random.dart';
 import 'particle_emitters.dart';
 import 'particles.dart';
-import 'players.dart';
-import 'projectiles.dart';
 import 'update/update_zombie_growls.dart';
 
 void updateIsometric(){
@@ -32,10 +30,10 @@ void updateIsometric(){
   updateZombieGrowls();
   updateMouseBubbleSpawn();
 
-  if (player.messageTimer > 0) {
-     player.messageTimer--;
-     if (player.messageTimer == 0){
-        player.message.value = "";
+  if (GameState.player.messageTimer > 0) {
+    GameState.player.messageTimer--;
+     if (GameState.player.messageTimer == 0){
+       GameState.player.message.value = "";
      }
   }
 }
@@ -43,7 +41,7 @@ void updateIsometric(){
 void updateMouseBubbleSpawn() {
   if (nextBubbleSpawn-- > 0) return;
   nextBubbleSpawn = 30;
-  spawnParticleBubble(x: mouseGridX, y: mouseGridY, z: player.z);
+  spawnParticleBubble(x: mouseGridX, y: mouseGridY, z: GameState.player.z);
 }
 
 var nextBubbleSpawn = 0;
@@ -52,16 +50,16 @@ var particleAnimation = 0;
 void updateParticleFrames() {
   // if (particleAnimation++ < 3) return;
   particleAnimation = 0;
-  for (var i = 0; i < particles.length; i++){
-    particles[i].updateFrame();
+  for (var i = 0; i < GameState.particles.length; i++){
+    GameState.particles[i].updateFrame();
   }
 }
 
 void applyObjectsToWind(){
-  foreachPlayer(applyCharacterToWind);
+  // foreachPlayer(applyCharacterToWind);
 
-  for (var i = 0; i < totalProjectiles; i++){
-     applyWindFromProjectile(projectiles[i]);
+  for (var i = 0; i < GameState.totalProjectiles; i++){
+     applyWindFromProjectile(GameState.projectiles[i]);
   }
 
   // updateWindLine();
@@ -90,8 +88,8 @@ void applyCharacterToWind(Character character){
 }
 
 void updateProjectiles() {
-  for (var i = 0; i < totalProjectiles; i++) {
-    final projectile = projectiles[i];
+  for (var i = 0; i < GameState.totalProjectiles; i++) {
+    final projectile = GameState.projectiles[i];
     if (projectile.type == ProjectileType.Fireball) {
       spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
       spawnParticleBubble(

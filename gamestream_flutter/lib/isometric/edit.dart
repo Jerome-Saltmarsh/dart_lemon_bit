@@ -1,6 +1,7 @@
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_type.dart';
 import 'package:bleed_common/tile_size.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_node_type_spawn_selected.dart';
@@ -14,7 +15,6 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'grid.dart';
-import 'player.dart';
 import 'utils/mouse_raycast.dart';
 
 final edit = Edit();
@@ -215,7 +215,7 @@ class Edit {
     );
   }
 
-  void cursorSetToPlayer() => nodeIndex.value = player.nodeIndex;
+  void cursorSetToPlayer() => nodeIndex.value = GameState.player.nodeIndex;
   void cursorRowIncrease() => row++;
   void cursorRowDecrease() => row--;
   void cursorColumnIncrease() => column++;

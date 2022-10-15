@@ -124,7 +124,6 @@ class Engine {
   static const PIEight = pi * 0.125;
 
   // VARIABLES
-  static late ui.Image atlas;
   static var textPainter = TextPainter(
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr
@@ -217,8 +216,8 @@ class Engine {
       deviceType.value =
       deviceIsComputer ? DeviceType.Phone : DeviceType.Computer;
 
-  static Future loadAtlas(String filename) async {
-    atlas = await loadImageAsset(filename);
+  static Future loadBufferImage(String filename) async {
+    bufferImage = await loadImageAsset(filename);
   }
 
   static Future<ui.Image> loadImageAsset(String url) async {
@@ -491,7 +490,7 @@ class Engine {
       fullScreen.value = fullScreenActive;
     });
 
-    loadAtlas('images/atlas.png');
+    loadBufferImage('images/atlas.png');
     disableRightClickContextMenu();
     paint.isAntiAlias = false;
     Engine.sharedPreferences = await SharedPreferences.getInstance();
@@ -602,9 +601,12 @@ class Engine {
     canvas.drawCircle(offset, radius, paint);
   }
 
+  // SECTION RENDER
+
+  static late ui.Image bufferImage;
   static var bufferIndex = 0;
   static var bufferBlendMode = BlendMode.dstATop;
-  static const bufferSize = 100;
+  static const bufferSize = 10;
   static final bufferSrc = Float32List(bufferSize * 4);
   static final bufferDst = Float32List(bufferSize * 4);
   static final bufferColors = Int32List(bufferSize);
@@ -684,7 +686,7 @@ class Engine {
 
   static void _internalRenderBuffer(){
     bufferIndex = 0;
-    canvas.drawRawAtlas(atlas, bufferDst, bufferSrc, bufferColors, bufferBlendMode, null, paint);
+    canvas.drawRawAtlas(bufferImage, bufferDst, bufferSrc, bufferColors, bufferBlendMode, null, paint);
   }
 
   static void renderCircleOutline({

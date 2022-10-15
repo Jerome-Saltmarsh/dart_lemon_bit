@@ -2,7 +2,7 @@ import 'package:bleed_common/teleport_scenes.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_npc_talk.dart';
@@ -27,8 +27,8 @@ Widget buildStackPlay() =>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            watch(player.npcTalk, buildControlNpcTalk),
-            watch(player.npcTalkOptions, buildControlNpcTopics)
+            watch(GameState.player.npcTalk, buildControlNpcTalk),
+            watch(GameState.player.npcTalkOptions, buildControlNpcTopics)
           ],
         ),
       )),
@@ -52,7 +52,7 @@ Widget buildBottomPlayerExperienceAndHealthBar() =>
   ));
 
 Widget buildWatchMouseTargetName(){
-   return watch(player.mouseTargetName, (String? name){
+   return watch(GameState.player.mouseTargetName, (String? name){
       if (name == null) return SizedBox();
 
       return Container(
@@ -65,7 +65,7 @@ Widget buildWatchMouseTargetName(){
            alignment: Alignment.centerLeft,
            child: Stack(
              children: [
-               watch(player.mouseTargetHealth, (double health){
+               watch(GameState.player.mouseTargetHealth, (double health){
                   return Container(
                     height: 50,
                     width: 100 * health,
@@ -88,7 +88,7 @@ Widget buildWatchMouseTargetName(){
 Widget buildWatchInventoryVisible(){
   return watch(inventoryVisible, (bool inventoryVisible){
     if (!inventoryVisible) return const SizedBox();
-    return watch(player.weapon.type, buildColumnPlayerWeapons);
+    return watch(GameState.player.weapon.type, buildColumnPlayerWeapons);
   });
 }
 

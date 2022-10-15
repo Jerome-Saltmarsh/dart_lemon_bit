@@ -1,6 +1,5 @@
 
 
-import 'package:bleed_common/GameStatus.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/gamestream.dart';
 import 'package:gamestream_flutter/isometric/events/on_connection_done.dart';
@@ -27,25 +26,10 @@ class CoreEvents {
   CoreEvents(this.state){
     state.region.onChanged(_onServerTypeChanged);
     state.account.onChanged(_onAccountChanged);
-    state.status.onChanged(_onGameStatusChanged);
     webSocket.connection.onChanged(onConnectionChanged);
     sub(_onLoginException);
   }
 
-  void _onGameStatusChanged(GameStatus value){
-    print('events.onGameStatusChanged(value: $value)');
-
-    switch(value) {
-      case GameStatus.In_Progress:
-        Engine.onDrawCanvas = modules.game.render.renderGame;
-        Engine.drawCanvasAfterUpdate = false;
-        Engine.fullScreenEnter();
-        break;
-      default:
-        Engine.fullScreenExit();
-        break;
-    }
-  }
 
   Future _onLoginException(LoginException error) async {
     print("onLoginException()");
@@ -72,15 +56,11 @@ class CoreEvents {
   }
 
   void _onServerTypeChanged(Region serverType) {
-    print('onChangedRegion($serverType)');
     storage.saveServerType(serverType);
   }
 
   void onConnectionChanged(Connection connection) {
-    print("onChangedConnection($connection)");
-
     switch (connection) {
-
       case Connection.Connected:
         Engine.onDrawCanvas = modules.game.render.renderGame;
         Engine.onDrawForeground = modules.game.render.renderForeground;
@@ -89,6 +69,7 @@ class CoreEvents {
         modules.game.events.register();
         Engine.zoomOnScroll = true;
         isometricWebControlsRegister();
+        Engine.fullScreenEnter();
         break;
 
       case Connection.Done:
@@ -96,10 +77,9 @@ class CoreEvents {
         isometricWebControlsDeregister();
         Engine.onUpdate = null;
         Engine.fullScreenExit();
-        core.actions.clearState();
+        gamestream.clearGameState();
         Engine.drawCanvasAfterUpdate = true;
         Engine.cursorType.value = CursorType.Basic;
-        core.state.status.value = GameStatus.None;
         gamestream.gameType.value = null;
         Engine.drawCanvasAfterUpdate = true;
         Engine.onDrawCanvas = Website.renderCanvas;

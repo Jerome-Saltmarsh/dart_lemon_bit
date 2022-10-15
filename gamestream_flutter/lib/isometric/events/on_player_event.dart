@@ -1,5 +1,6 @@
 import 'package:bleed_common/PlayerEvent.dart';
 import 'package:bleed_common/attack_type.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
@@ -7,7 +8,6 @@ import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_completed.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_started.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
-import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -20,8 +20,8 @@ void onPlayerEvent(int event) {
     case PlayerEvent.Weapon_Rounds:
       final rounds = serverResponseReader.readInt();
       final capacity = serverResponseReader.readInt();
-      player.weapon.rounds.value = rounds;
-      player.weapon.capacity.value = capacity;
+      GameState.player.weapon.rounds.value = rounds;
+      GameState.player.weapon.capacity.value = capacity;
       break;
     case PlayerEvent.Scene_Changed:
       return cameraCenterOnPlayer();
@@ -30,18 +30,18 @@ void onPlayerEvent(int event) {
     case PlayerEvent.Quest_Completed:
       return onPlayerEventQuestCompleted();
     case PlayerEvent.Interaction_Finished:
-      player.npcTalk.value = null;
-      player.npcTalkOptions.value = [];
+      GameState.player.npcTalk.value = null;
+      GameState.player.npcTalkOptions.value = [];
       break;
     case PlayerEvent.Level_Up:
-      audio.buff(player.x, player.y);
-      spawnFloatingText(player.x, player.y, 'LEVEL UP');
+      audio.buff(GameState.player.x, GameState.player.y);
+      spawnFloatingText(GameState.player.x, GameState.player.y, 'LEVEL UP');
       break;
     case PlayerEvent.Skill_Upgraded:
-      audio.unlock(player.x, player.y);
+      audio.unlock(GameState.player.x, GameState.player.y);
       break;
     case PlayerEvent.Dash_Activated:
-      audio.buff11(player.x, player.y);
+      audio.buff11(GameState.player.x, GameState.player.y);
       break;
     case PlayerEvent.Item_Purchased:
       audioSingleItemUnlock();
