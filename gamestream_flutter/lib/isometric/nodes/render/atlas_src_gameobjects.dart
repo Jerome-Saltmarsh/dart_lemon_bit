@@ -28,5 +28,9 @@ class AtlasSrcGameObjects {
   static const Crystal_Large_Height = 45.0;
   static const Crystal_Anchor_Y = 0.8;
 
-
+  static const Cup_X = 0.0;
+  static const Cup_Y = 16.0;
+  static const Cup_Width = 6.0;
+  static const Cup_Height = 11.0;
+  static const Cup_Anchor_Y = 0.75;
 }
