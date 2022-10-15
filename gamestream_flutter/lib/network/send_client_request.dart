@@ -9,7 +9,6 @@ import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric_web/read_player_input.dart';
 import 'package:gamestream_flutter/network/instance/websocket.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/screen.dart';
 
 
 final updateBuffer = Uint8List(17);
@@ -202,10 +201,10 @@ Future sendClientRequestUpdate() async {
   const updateIndex = 0;
   updateBuffer[0] = updateIndex;
 
-  if (engine.deviceIsComputer){
+  if (Engine.deviceIsComputer){
     updateBuffer[1] = getKeyDirection();
-    updateBuffer[2] = !game.edit.value && engine.mouseLeftDown.value ? 1 : 0;
-    updateBuffer[3] = !game.edit.value && engine.mouseRightDown.value ? 1 : 0;
+    updateBuffer[2] = !game.edit.value && Engine.watchMouseLeftDown.value ? 1 : 0;
+    updateBuffer[3] = !game.edit.value && Engine.mouseRightDown.value ? 1 : 0;
     updateBuffer[4] = !game.edit.value && keyPressedSpace ? 1 : 0;
   } else {
     updateBuffer[1] = Touchscreen.direction;
@@ -215,10 +214,10 @@ Future sendClientRequestUpdate() async {
   }
   writeNumberToByteArray(number: mouseWorldX, list: updateBuffer, index: 5);
   writeNumberToByteArray(number: mouseWorldY, list: updateBuffer, index: 7);
-  writeNumberToByteArray(number: screen.left, list: updateBuffer, index: 9);
-  writeNumberToByteArray(number: screen.top, list: updateBuffer, index: 11);
-  writeNumberToByteArray(number: screen.right, list: updateBuffer, index: 13);
-  writeNumberToByteArray(number: screen.bottom, list: updateBuffer, index: 15);
+  writeNumberToByteArray(number: Engine.screen.left, list: updateBuffer, index: 9);
+  writeNumberToByteArray(number: Engine.screen.top, list: updateBuffer, index: 11);
+  writeNumberToByteArray(number: Engine.screen.right, list: updateBuffer, index: 13);
+  writeNumberToByteArray(number: Engine.screen.bottom, list: updateBuffer, index: 15);
   webSocket.sink.add(updateBuffer);
 }
 

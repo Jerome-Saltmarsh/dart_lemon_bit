@@ -170,7 +170,7 @@ class Edit {
   }
 
   void cameraCenterSelectedObject() =>
-    engine.cameraCenter(gameObject.renderX, gameObject.renderY)
+      Engine.cameraCenter(gameObject.renderX, gameObject.renderY)
   ;
 
   void delete(){

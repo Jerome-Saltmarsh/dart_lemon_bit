@@ -17,7 +17,7 @@ import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialo
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_tab.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
-import 'package:lemon_engine/screen.dart';
+import 'package:lemon_engine/engine.dart';
 
 import '../stacks/build_page.dart';
 import '../widgets/build_container.dart';
@@ -69,7 +69,7 @@ Widget buildStackEdit(EditTab activeEditTab) =>
             bottom: 6,
             left: 0,
             child: Container(
-              width: screen.width,
+              width: Engine.screen.width,
               alignment: Alignment.center,
               child: buildWatchBool(
                   edit.controlsVisibleWeather,
@@ -425,7 +425,7 @@ Widget buildMenu({required String text, required List<Widget> children}){
             children: [
               child,
               Container(
-                height: screen.height - 100,
+                height: Engine.screen.height - 100,
                 child: SingleChildScrollView(
                   child: Column(
                      children: children,

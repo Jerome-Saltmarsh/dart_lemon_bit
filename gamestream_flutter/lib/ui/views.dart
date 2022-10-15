@@ -127,7 +127,7 @@ const connectionMessage = {
 };
 
 Widget? dev(Widget child){
-  return engine.isLocalHost ? child : null;
+  return Engine.isLocalHost ? child : null;
 }
 
 Widget margin({

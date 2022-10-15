@@ -8,7 +8,7 @@ import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:golden_ratio/constants.dart';
-import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/Engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../../colours.dart';
@@ -23,7 +23,7 @@ Widget buildPanelMenu() =>
           buildWatchBool(game.timeVisible, buildTime),
           onPressed(
               child: buildToggleFullscreen(),
-              action:  engine.fullscreenToggle),
+              action:  Engine.fullscreenToggle),
           onPressed(
               child: buildButtonExit(),
               action: () {
@@ -53,14 +53,14 @@ Widget buildButtonShowMap() => Tooltip(
     message: ("(M)"), child: text("Map", onPressed: actionGameDialogShowMap));
 
 Widget buildToggleFullscreen() {
-  return WatchBuilder(engine.fullScreen, (bool fullscreen) {
+  return WatchBuilder(Engine.fullScreen, (bool fullscreen) {
     return buildAtlasImageButton(
         srcX: 80,
         srcY: 0,
         srcWidth: 48,
         srcHeight: 48,
         scale: goldenRatio_0618,
-        action: engine.fullscreenToggle,
+        action: Engine.fullscreenToggle,
     );
   });
 }

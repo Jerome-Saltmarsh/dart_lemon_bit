@@ -41,11 +41,11 @@ class CoreEvents {
     switch(value) {
       case GameStatus.In_Progress:
         Engine.onDrawCanvas = modules.game.render.renderGame;
-        engine.drawCanvasAfterUpdate = false;
+        Engine.drawCanvasAfterUpdate = false;
         fullScreenEnter();
         break;
       default:
-        engine.fullScreenExit();
+        Engine.fullScreenExit();
         break;
     }
   }
@@ -83,12 +83,12 @@ class CoreEvents {
 
   void onModeChanged(Mode mode){
     print("onChangedMode($mode)");
-    engine.keyPressedHandlers = {};
+    Engine.keyPressedHandlers = {};
     isometricWebControlsDeregister();
 
     switch(mode) {
       case Mode.Website:
-        engine.drawCanvasAfterUpdate = true;
+        Engine.drawCanvasAfterUpdate = true;
         Engine.onDrawCanvas = Website.renderCanvas;
         Engine.onUpdate = Website.update;
         sceneEditable.value = false;
@@ -98,14 +98,14 @@ class CoreEvents {
         Engine.onDrawCanvas = modules.game.render.renderGame;
         Engine.onDrawForeground = modules.game.render.renderForeground;
         Engine.onUpdate = modules.game.update.update;
-        engine.drawCanvasAfterUpdate = true;
+        Engine.drawCanvasAfterUpdate = true;
         modules.game.events.register();
-        engine.zoomOnScroll = true;
+        Engine.zoomOnScroll = true;
         isometricWebControlsRegister();
         break;
     }
 
-    engine.redrawCanvas();
+    Engine.redrawCanvas();
   }
 
   void onConnectionChanged(Connection connection) {
@@ -132,11 +132,11 @@ class CoreEvents {
         onConnectionDone();
         Engine.onUpdate = null;
         core.state.mode.value = Mode.Website;
-        engine.fullScreenExit();
+        Engine.fullScreenExit();
         core.actions.clearState();
         engine.clearCallbacks();
-        engine.drawCanvasAfterUpdate = true;
-        engine.cursorType.value = CursorType.Basic;
+        Engine.drawCanvasAfterUpdate = true;
+        Engine.cursorType.value = CursorType.Basic;
         core.state.status.value = GameStatus.None;
         gameType.value = null;
         break;

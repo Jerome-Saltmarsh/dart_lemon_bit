@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_button_attack_type.dart';
-import 'package:lemon_engine/screen.dart';
+import 'package:lemon_engine/engine.dart';
 
 Widget buildControlsPlayerWeapons() => Container(
-      width: screen.width,
+      width: Engine.screen.width,
       alignment: Alignment.center,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

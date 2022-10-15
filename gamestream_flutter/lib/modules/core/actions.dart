@@ -144,8 +144,8 @@ class CoreActions {
     player.gameDialog.value = null;
     player.npcTalkOptions.value = [];
     player.npcTalk.value = null;
-    engine.zoom = 1;
-    engine.redrawCanvas();
+    Engine.zoom = 1;
+    Engine.redrawCanvas();
   }
 
   Future signInOrCreateAccount({

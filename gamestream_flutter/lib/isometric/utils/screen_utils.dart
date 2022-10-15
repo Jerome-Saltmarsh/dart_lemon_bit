@@ -6,5 +6,5 @@ double get screenCenterRenderX {
   // final row = convertWorldToRow(x, y, 0);
   // final column = convertWorldToColumn(x, y, 0);
   // return (row - column) * tileSizeHalf;
-  return (engine.screen.left + engine.screen.right) / 2;
+  return (Engine.screen.left + Engine.screen.right) / 2;
 }

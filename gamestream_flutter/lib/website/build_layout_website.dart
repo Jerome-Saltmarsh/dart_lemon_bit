@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/style.dart';
 import 'package:gamestream_flutter/to_string.dart';
-import 'package:lemon_engine/screen.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'build/build_column_games.dart';
@@ -41,8 +41,8 @@ Widget buildPageWebsite({double padding = 6})  =>
         top: 0,
         left: 0,
         child: Container(
-          width: screen.width,
-          height: screen.height,
+          width: Engine.screen.width,
+          height: Engine.screen.height,
           alignment: Alignment.center,
           child: buildColumnGames(),
         ),
@@ -53,7 +53,7 @@ Widget buildPageWebsite({double padding = 6})  =>
 final colorRegion = Colors.orange;
 
 Widget buildStateRegion(Region selectedRegion) => Container(
-  height: screen.height,
+  height: Engine.screen.height,
   child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,

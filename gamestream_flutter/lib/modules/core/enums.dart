@@ -33,7 +33,7 @@ enum Region {
 final List<Region> regions = Region.values;
 
 final selectableRegions = regions.where((element){
-  if (element == Region.LocalHost && !engine.isLocalHost) return false;
+  if (element == Region.LocalHost && !Engine.isLocalHost) return false;
   return true;
 }).toList();
 

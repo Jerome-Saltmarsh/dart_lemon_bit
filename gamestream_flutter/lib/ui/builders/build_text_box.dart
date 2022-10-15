@@ -13,7 +13,7 @@ Widget buildPanelWriteMessage() {
     return Positioned(
         bottom: 100,
         child: Container(
-          width: engine.screen.width,
+          width: Engine.screen.width,
           alignment: Alignment.center,
           child: Container(
             width: 400,

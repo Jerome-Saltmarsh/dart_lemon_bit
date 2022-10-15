@@ -25,15 +25,15 @@ import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
 import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
 import 'package:gamestream_flutter/modules/game/render.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
-import 'package:lemon_engine/screen.dart';
+import 'package:lemon_engine/engine.dart';
 
 import 'build_hud_debug.dart';
 import 'stacks/build_stack_game_type_world.dart';
 
 Widget buildStackGame()  =>
   Container(
-    width: screen.width,
-    height: screen.height,
+    width: Engine.screen.width,
+    height: Engine.screen.height,
     child: Stack(
       children: [
         watch(player.message, (String message) =>
@@ -43,7 +43,7 @@ Widget buildStackGame()  =>
               child: message.isEmpty
                   ? const SizedBox()
                   : Container(
-                      width: screen.width,
+                      width: Engine.screen.width,
                       alignment: Alignment.center,
                       child: Container(
                           padding: const EdgeInsets.all(12),
@@ -197,7 +197,7 @@ Positioned buildMiniMap() =>
 
 Widget buildContainerQuestUpdated() =>
   Container(
-    width: screen.width,
+    width: Engine.screen.width,
     alignment: Alignment.topCenter,
     child: container(
         child: "QUEST UPDATED",
@@ -215,7 +215,7 @@ Widget buildControlsEnvironment() {
   return visibleBuilder(
     edit.controlsVisibleWeather,
     Container(
-      width: screen.width,
+      width: Engine.screen.width,
       alignment: Alignment.center,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

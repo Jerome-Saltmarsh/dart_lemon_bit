@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/watches/design_equipment_tab.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:golden_ratio/constants.dart';
-import 'package:lemon_engine/screen.dart';
+import 'package:lemon_engine/engine.dart';
 
 Widget buildStackPlayerDesign() {
   return watch(activePlayerDesignTab, (activePlayerDesignTabValue) {
@@ -15,7 +15,7 @@ Widget buildStackPlayerDesign() {
       Positioned(
         top: 0,
         child: Container(
-          width: screen.width,
+          width: Engine.screen.width,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +52,7 @@ Widget buildStackPlayerDesign() {
       Positioned(
           bottom: 100,
           child: Container(
-            width: screen.width,
+            width: Engine.screen.width,
             alignment: Alignment.center,
             child: container(
                 width: 200,

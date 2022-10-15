@@ -36,7 +36,7 @@ class GameRender {
   GameRender(this.style);
 
   void renderForeground(Canvas canvas, Size size) {
-    engine.setPaintColorWhite();
+    Engine.setPaintColorWhite();
     _renderPlayerNames();
     drawPlayerText();
   }
@@ -136,7 +136,7 @@ class GameRender {
   void renderEditMode() {
     if (playMode) return;
     if (edit.gameObjectSelected.value){
-      engine.draw.drawCircleOutline(
+      Engine.draw.drawCircleOutline(
         sides: 24,
         radius: edit.gameObjectSelectedRadius.value,
         x: edit.gameObject.renderX,
@@ -151,7 +151,7 @@ class GameRender {
 
     final nodeData = edit.selectedNodeData.value;
     if (nodeData != null){
-       engine.draw.drawCircleOutline(
+      Engine.draw.drawCircleOutline(
            radius: nodeData.spawnRadius.toDouble(),
            x: edit.renderX,
            y: edit.renderY,
@@ -189,7 +189,7 @@ class GameRender {
   }
 
   void renderTeamColour(Character character) {
-    engine.draw.circle(character.x, character.y, 10,
+    Engine.draw.circle(character.x, character.y, 10,
         character.allie ? Colors.green : Colors.red);
   }
 
@@ -217,7 +217,7 @@ class GameRender {
 
   void drawPaths() {
     if (!game.debug.value) return;
-    engine.setPaintColor(colours.blue);
+    Engine.setPaintColor(colours.blue);
     Engine.paint.strokeWidth = 4.0;
 
     var index = 0;
@@ -239,7 +239,7 @@ class GameRender {
       }
     }
 
-    engine.setPaintColor(colours.yellow);
+    Engine.setPaintColor(colours.yellow);
     final totalLines = targetsTotal * 4;
     for (var i = 0; i < totalLines; i += 4) {
       drawLine(targets[i], targets[i + 1], targets[i + 2], targets[i + 3]);
@@ -254,7 +254,7 @@ class GameRender {
       final width = charWidth * human.text.length;
       final left = human.renderX - width;
       final y = human.renderY - 70;
-      engine.renderText(human.text, left, y, style: game.playerTextStyle);
+      Engine.renderText(human.text, left, y, style: game.playerTextStyle);
     }
   }
 }

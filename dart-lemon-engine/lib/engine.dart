@@ -81,11 +81,33 @@ class Engine {
   static WidgetBuilder? get buildUI => watchBuildUI.value;
   static String get title => watchTitle.value;
   static Color get backgroundColor => watchBackgroundColor.value;
+  static bool get isLocalHost => Uri.base.host == 'localhost';
 
   // WATCHES
-  static final watchBackgroundColor = Watch(Colors.black);
+  static final watchBackgroundColor = Watch(DefaultBackgroundColor);
   static final watchBuildUI = Watch<WidgetBuilder?>(null);
-  static final watchTitle = Watch("Demo");
+  static final watchTitle = Watch(DefaultTitle);
+  static final watchInitialized = Watch(false, onChanged: (bool value){ });
+  static final watchDurationPerFrame = Watch(Duration(milliseconds: DefaultMillisecondsPerFrame));
+  static final watchMouseLeftDown = Watch(false, onChanged: internalOnChangedMouseLeftDown);
+  static final mouseRightDown = Watch(false, onChanged: (bool value) {
+
+  });
+
+  // CONSTANTS
+  static const DefaultMillisecondsPerFrame = 30;
+  static const DefaultBackgroundColor = Colors.black;
+  static const DefaultTitle = "DEMO";
+  static const MillisecondsPerSecond = 1000;
+
+  static void internalOnChangedMouseLeftDown(bool value){
+    print('internalOnChangedMouseLeftDown');
+    if (value) {
+      onLeftClicked?.call();
+    } else {
+      mouseLeftDownFrames = 0;
+    }
+  }
 
   // VARIABLES
   static late Canvas canvas;
@@ -97,56 +119,40 @@ class Engine {
     ..isAntiAlias = false
     ..strokeWidth = 1;
 
-  Timer? updateTimer;
-  late final sharedPreferences;
-  final draw = LemonEngineDraw();
-  late final LemonEngineEvents events;
-  var scrollSensitivity = 0.0005;
-  var cameraSmoothFollow = true;
-  var zoomSensitivity = 0.175;
-  var targetZoom = 1.0;
-  var zoomOnScroll = true;
-  var keyPressedHandlers = <LogicalKeyboardKey, Function>{};
-  var keyReleasedHandlers = <LogicalKeyboardKey, Function>{};
-  final Map<LogicalKeyboardKey, int> keyboardState = {};
-  var mousePosition = Vector2(0, 0);
-  var previousMousePosition = Vector2(0, 0);
-  var previousUpdateTime = DateTime.now();
-  final mouseLeftDown = Watch(false, onChanged: (bool value) {
-    if (value) {
-        Engine.onLeftClicked?.call();
-    }
-  });
-  final mouseRightDown = Watch(false, onChanged: (bool value) {
-
-  });
-  var mouseLeftDownFrames = 0;
-  final fps = Watch(0);
+  static Timer? updateTimer;
+  static late final sharedPreferences;
+  static late final LemonEngineEvents events;
+  static final draw = LemonEngineDraw();
+  static var scrollSensitivity = 0.0005;
+  static var cameraSmoothFollow = true;
+  static var zoomSensitivity = 0.175;
+  static var targetZoom = 1.0;
+  static var zoomOnScroll = true;
+  static var keyPressedHandlers = <LogicalKeyboardKey, Function>{};
+  static var keyReleasedHandlers = <LogicalKeyboardKey, Function>{};
+  static final Map<LogicalKeyboardKey, int> keyboardState = {};
+  static var mousePosition = Vector2(0, 0);
+  static var previousMousePosition = Vector2(0, 0);
+  static var previousUpdateTime = DateTime.now();
+  static var mouseLeftDownFrames = 0;
   static final themeData = Watch<ThemeData?>(null);
-  final fullScreen = Watch(false);
-  var millisecondsSinceLastFrame = 50;
-  var drawCanvasAfterUpdate = true;
-  final notifierPaintFrame = ValueNotifier<int>(0);
-  final notifierPaintForeground = ValueNotifier<int>(0);
-  final screen = _Screen();
-  final initialized = Watch(false, onChanged: (bool value){
-  });
-  final cursorType = Watch(CursorType.Precise);
-  var panStarted = false;
-  final camera = Vector2(0, 0);
-  var zoom = 1.0;
-  final deviceType = Watch(DeviceType.Computer);
-  late BuildContext buildContext;
+  static final fullScreen = Watch(false);
+  static var drawCanvasAfterUpdate = true;
+  static final notifierPaintFrame = ValueNotifier<int>(0);
+  static final notifierPaintForeground = ValueNotifier<int>(0);
+  static final screen = _Screen();
+  static final cursorType = Watch(CursorType.Precise);
+  static var panStarted = false;
+  static final camera = Vector2(0, 0);
+  static var zoom = 1.0;
+  static final deviceType = Watch(DeviceType.Computer);
+  static late BuildContext buildContext;
 
-  bool get deviceIsComputer => deviceType.value == DeviceType.Computer;
+  static bool get deviceIsComputer => deviceType.value == DeviceType.Computer;
 
-  bool get deviceIsPhone => deviceType.value == DeviceType.Phone;
+  static bool get deviceIsPhone => deviceType.value == DeviceType.Phone;
 
-  BuildContext? context;
-
-  bool get isLocalHost => Uri.base.host == 'localhost';
-
-  void internalSetScreenSize(double width, double height){
+  static void internalSetScreenSize(double width, double height){
     if (screen.width == width && screen.height == height) return;
     if (!screen.initialized) {
       screen.width = width;
@@ -165,19 +171,19 @@ class Engine {
     );
   }
 
-  void toggleDeviceType() =>
+  static void toggleDeviceType() =>
       deviceType.value =
       deviceIsComputer ? DeviceType.Phone : DeviceType.Computer;
 
-  var textPainter = TextPainter(
+  static var textPainter = TextPainter(
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr
   );
 
-  final Map<String, TextSpan> textSpans = {
+  static final Map<String, TextSpan> textSpans = {
   };
 
-  Future loadAtlas(String filename) async {
+  static Future loadAtlas(String filename) async {
     atlas = await loadImage(filename);
   }
 
@@ -198,7 +204,7 @@ class Engine {
   int get frame => notifierPaintFrame.value;
 
   static void run({
-    String title = "Demo",
+    String title = DefaultTitle,
     Function(SharedPreferences sharedPreferences)? init,
     Function? update,
     WidgetBuilder? buildUI,
@@ -219,9 +225,11 @@ class Engine {
     Function? onRightClicked,
     Function? onRightClickReleased,
     Function(SharedPreferences sharedPreferences)? onInit,
+    Function(Object error, StackTrace stack)? onError,
     bool setPathUrlStrategy = true,
-    Color backgroundColor = Colors.black,
+    Color backgroundColor = DefaultBackgroundColor,
   }){
+    WidgetsFlutterBinding.ensureInitialized();
     Engine.watchTitle.value = title;
     Engine.onInit = init;
     Engine.onUpdate = update;
@@ -242,37 +250,17 @@ class Engine {
     Engine.onRightClicked = onRightClicked;
     Engine.onRightClickReleased = onRightClickReleased;
     Engine.themeData.value = themeData;
-    // Engine.bac
-    
+    Engine.backgroundColor = backgroundColor;
+    Engine.onError = onError;
+
     if (setPathUrlStrategy){
       us.setPathUrlStrategy();
     }
 
-    runZonedGuarded(() async {
-      runApp(Game());
-    }, internalOnError);
-  }
-
-  static void internalOnError(Object error, StackTrace stack) {
-      if (onError != null){
-        onError!.call(error, stack);
-        return;
-      }
-      print("Warning no Engine.onError handler set");
-      print(error);
-      print(stack);
-  }
-
-  Engine() {
-    WidgetsFlutterBinding.ensureInitialized();
     paint.filterQuality = FilterQuality.none;
     paint.isAntiAlias = false;
     events = LemonEngineEvents();
     RawKeyboard.instance.addListener(events.onKeyboardEvent);
-
-    mouseLeftDown.onChanged((bool leftDown) {
-      if (!leftDown) mouseLeftDownFrames = 0;
-    });
 
     mouseRightDown.onChanged((bool value) {
       if (value) {
@@ -285,9 +273,21 @@ class Engine {
     });
 
     loadAtlas('images/atlas.png');
+
+    runZonedGuarded(Engine._internalInit, internalOnError);
   }
 
-  void internalOnMouseScroll(double amount) {
+  static void internalOnError(Object error, StackTrace stack) {
+      if (onError != null){
+        onError!.call(error, stack);
+        return;
+      }
+      print("Warning no Engine.onError handler set");
+      print(error);
+      print(stack);
+  }
+
+  static void internalOnMouseScroll(double amount) {
     if (zoomOnScroll) {
       targetZoom -=  amount * scrollSensitivity;
       targetZoom = targetZoom.clamp(0.2, 6);
@@ -295,11 +295,11 @@ class Engine {
     onMouseScroll?.call(amount);
   }
 
-  void mapColor(Color color) {
+  static void mapColor(Color color) {
     colors[bufferIndex] = color.value;
   }
 
-  void renderText(String text, double x, double y,
+  static void renderText(String text, double x, double y,
       {Canvas? other, TextStyle? style}) {
     textPainter.text = TextSpan(style: style ?? const TextStyle(), text: text);
     textPainter.layout();
@@ -327,24 +327,24 @@ class Engine {
     camera.y -= (diffY * 75) * speed;
   }
 
-  void cameraCenter(double x, double y) {
+  static void cameraCenter(double x, double y) {
     camera.x = x - (screenCenterX / zoom);
     camera.y = y - (screenCenterY / zoom);
   }
 
-  void redrawCanvas() {
+  static void redrawCanvas() {
     notifierPaintFrame.value++;
   }
 
-  void fullscreenToggle() {
+  static void fullscreenToggle() {
     fullScreenActive ? fullScreenExit() : fullScreenEnter();
   }
 
-  void fullScreenExit() {
+  static void fullScreenExit() {
     document.exitFullscreen();
   }
 
-  void panCamera() {
+  static void panCamera() {
     final positionX = screenToWorldX(mousePosition.x);
     final positionY = screenToWorldY(mousePosition.y);
     final previousX = screenToWorldX(previousMousePosition.x);
@@ -357,7 +357,7 @@ class Engine {
     camera.y += diffY;
   }
 
-  void disableRightClickContextMenu() {
+  static void disableRightClickContextMenu() {
     document.onContextMenu.listen((event) => event.preventDefault());
   }
 
@@ -366,142 +366,122 @@ class Engine {
     onMouseScroll = null;
     onLeftClicked = null;
     onLongLeftClicked = null;
-    // onKeyReleased = null;
-    // onKeyPressed = null;
-    // onKeyHeld = null;
   }
 
-  void setPaintColorWhite() {
+  static void setPaintColorWhite() {
     paint.color = Colors.white;
   }
 
-  void setPaintStrokeWidth(double value) {
+  static void setPaintStrokeWidth(double value) {
     paint.strokeWidth = value;
   }
 
-  void setPaintColor(Color value) {
+  static void setPaintColor(Color value) {
     if (paint.color == value) return;
     paint.color = value;
   }
 
-  void internalOnPointerMove(PointerMoveEvent event) {
+  static void internalOnPointerMove(PointerMoveEvent event) {
     previousMousePosition.x = mousePosition.x;
     previousMousePosition.y = mousePosition.y;
     mousePosition.x = event.position.dx;
     mousePosition.y = event.position.dy;
   }
 
-  void internalOnPointerHover(PointerHoverEvent event) {
+  static void internalOnPointerHover(PointerHoverEvent event) {
     previousMousePosition.x = mousePosition.x;
     previousMousePosition.y = mousePosition.y;
     mousePosition.x = event.position.dx;
     mousePosition.y = event.position.dy;
   }
 
-  void internalOnPointerUp(PointerUpEvent event) {
-    if (mouseLeftDown.value) {
-      mouseLeftDown.value = false;
-      return;
-    }
-    if (mouseRightDown.value) {
-      mouseRightDown.value = false;
-      return;
-    }
+  /// event.buttons is always 0 and does not seem to correspond to the left or right mouse
+  /// click like in internalOnPointerDown
+  static void internalOnPointerUp(PointerUpEvent event) {
+    // if (event.buttons == 0) {
+    //   watchMouseLeftDown.value = false;
+    // }
+    // if (event.buttons == 2) {
+    //   mouseRightDown.value = false;
+    // }
+    watchMouseLeftDown.value = false;
   }
 
-  void internalOnPointerDown(PointerDownEvent event) {
+  static void internalOnPointerDown(PointerDownEvent event) {
     if (event.buttons == 1) {
-      mouseLeftDown.value = true;
-      return;
+      watchMouseLeftDown.value = true;
     }
     if (event.buttons == 2) {
       mouseRightDown.value = true;
-      return;
     }
   }
 
-  void internalOnPointerSignal(PointerSignalEvent pointerSignalEvent) {
+  static void internalOnPointerSignal(PointerSignalEvent pointerSignalEvent) {
     if (pointerSignalEvent is PointerScrollEvent) {
       internalOnMouseScroll(pointerSignalEvent.scrollDelta.dy);
     }
   }
 
-  void internalOnPanStart(DragStartDetails details){
+  static void internalOnPanStart(DragStartDetails details){
     panStarted = true;
     onPanStart?.call(details);
   }
 
-  void internalOnPanEnd(DragEndDetails details){
+  static void internalOnPanEnd(DragEndDetails details){
     panStarted = false;
     onPanEnd?.call(details);
   }
 
-  void internalPaint(Canvas canvas, Size size) {
+  static void internalPaint(Canvas canvas, Size size) {
     Engine.canvas = canvas;
     canvas.scale(zoom, zoom);
     canvas.translate(-camera.x, -camera.y);
-    if (!initialized.value) return;
+    if (!watchInitialized.value) return;
     if (onDrawCanvas == null) return;
     onDrawCanvas!.call(canvas, size);
     engineRenderFlushBuffer();
   }
 
-  Duration buildDurationFramesPerSecond(int framesPerSecond){
-    return Duration(milliseconds: convertFramesPerSecondsToMilliseconds(framesPerSecond));
-  }
+  static Duration buildDurationFramesPerSecond(int framesPerSecond) =>
+    Duration(milliseconds: convertFramesPerSecondsToMilliseconds(framesPerSecond));
 
-  int convertFramesPerSecondsToMilliseconds(int framesPerSecond){
-    const millisecondsPerSecond = 1000;
-    return millisecondsPerSecond ~/ framesPerSecond;
-  }
+  static int convertFramesPerSecondsToMilliseconds(int framesPerSecond) =>
+    MillisecondsPerSecond ~/ framesPerSecond;
 
-  void internalInit() async {
+  static Future _internalInit() async {
     print("engine.internalInit()");
-    // TODO start update timer here
+    runApp(Game());
     disableRightClickContextMenu();
     paint.isAntiAlias = false;
-    sharedPreferences = await SharedPreferences.getInstance();
-    print("sharedPreferences ready");
+    Engine.sharedPreferences = await SharedPreferences.getInstance();
+    print("sharedPreferences set");
     if (onInit != null) {
       await onInit!(sharedPreferences);
     }
     updateTimer = Timer.periodic(
-        durationPerFrame,
-        internalOnTimerUpdateTriggered,
+        watchDurationPerFrame.value,
+        internalOnUpdate,
     );
-    initialized.value = true;
+    watchInitialized.value = true;
   }
 
-  var  _millisecondsPerFrame = 30;
-
-  int get millisecondsPerFrame => _millisecondsPerFrame;
-
-  set millisecondsPerFrame(int value) {
-    if (millisecondsPerFrame == value) return;
-    _millisecondsPerFrame = value;
-    resetUpdateTimer();
-  }
-
-  void resetUpdateTimer(){
+  static void resetUpdateTimer(){
     updateTimer?.cancel();
     updateTimer = Timer.periodic(
-      durationPerFrame,
-      internalOnTimerUpdateTriggered,
+      watchDurationPerFrame.value,
+      internalOnUpdate,
     );
     onUpdateTimerReset?.call();
+
+
   }
 
-  Duration get durationPerFrame => buildDurationFramesPerSecond(millisecondsPerFrame);
-
-
-
-  /// Timer is a potentiol memory leak
-  void internalOnTimerUpdateTriggered(Timer timer){
+  static void internalOnUpdate(Timer timer){
     _screen.left = camera.x;
     _screen.right = camera.x + (_screen.width / zoom);
     _screen.top = camera.y;
     _screen.bottom = camera.y + (_screen.height / zoom);
-    if (mouseLeftDown.value) {
+    if (watchMouseLeftDown.value) {
       mouseLeftDownFrames++;
     }
     deviceType.value =
@@ -517,9 +497,8 @@ class Engine {
     }
   }
 
-  void setFramesPerSecond(int framesPerSecond) {
-     millisecondsPerFrame = convertFramesPerSecondsToMilliseconds(framesPerSecond);
-  }
+  void setFramesPerSecond(int framesPerSecond) =>
+     watchDurationPerFrame.value = buildDurationFramesPerSecond(framesPerSecond);
 
 
   static final _src4 = Float32List(4);
@@ -589,19 +568,19 @@ typedef CallbackOnScreenSizeChanged = void Function(
 );
 
 double screenToWorldX(double value) {
-  return engine.camera.x + value / engine.zoom;
+  return Engine.camera.x + value / Engine.zoom;
 }
 
 double screenToWorldY(double value) {
-  return engine.camera.y + value / engine.zoom;
+  return Engine.camera.y + value / Engine.zoom;
 }
 
 double worldToScreenX(double x) {
-  return engine.zoom * (x - engine.camera.x);
+  return Engine.zoom * (x - Engine.camera.x);
 }
 
 double worldToScreenY(double y) {
-  return engine.zoom * (y - engine.camera.y);
+  return Engine.zoom * (y - Engine.camera.y);
 }
 
 double distanceFromMouse(double x, double y) {
@@ -612,13 +591,10 @@ T closestToMouse<T extends Vector2>(List<T> values){
   return findClosest(values, mouseWorldX, mouseWorldY);
 }
 
-// global constants
-const int millisecondsPerSecond = 1000;
-
 // global properties
 // Offset get mouseWorld => Offset(mouseWorldX, mouseWorldY);
-final _mousePosition = engine.mousePosition;
-final _screen = engine.screen;
+final _mousePosition = Engine.mousePosition;
+final _screen = Engine.screen;
 
 double get screenCenterX => _screen.width * 0.5;
 double get screenCenterY => _screen.height * 0.5;

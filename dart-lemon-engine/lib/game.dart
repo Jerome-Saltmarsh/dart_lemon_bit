@@ -23,15 +23,10 @@ class Game extends StatefulWidget {
 }
 
 class _GameState extends State<Game> {
-  @override
-  void initState() {
-    super.initState();
-    engine.internalInit();
-  }
 
   @override
   Widget build(BuildContext context) {
-    engine.buildContext = context;
+    Engine.buildContext = context;
 
     return WatchBuilder(Engine.themeData, (ThemeData? themeData){
       return MaterialApp(
@@ -39,15 +34,15 @@ class _GameState extends State<Game> {
         // routes: Engine.routes ?? {},
         theme: themeData,
         home: Scaffold(
-          body: WatchBuilder(engine.initialized, (bool value) {
+          body: WatchBuilder(Engine.watchInitialized, (bool value) {
             if (!value) {
               return Engine.onBuildLoadingScreen != null ? Engine.onBuildLoadingScreen!(context) : Text("Loading");
             }
             return LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
-                engine.internalSetScreenSize(constraints.maxWidth, constraints.maxHeight);
-                engine.screen.width = constraints.maxWidth;
-                engine.screen.height = constraints.maxHeight;
+                Engine.internalSetScreenSize(constraints.maxWidth, constraints.maxHeight);
+                Engine.screen.width = constraints.maxWidth;
+                Engine.screen.height = constraints.maxHeight;
                 return Stack(
                   children: [
                     buildCanvas(context),
@@ -67,33 +62,33 @@ class _GameState extends State<Game> {
 
   Widget buildCanvas(BuildContext context) {
     final child = Listener(
-      onPointerSignal: engine.internalOnPointerSignal,
-      onPointerDown: engine.internalOnPointerDown,
-      onPointerUp: engine.internalOnPointerUp,
-      onPointerHover:engine.internalOnPointerHover,
-      onPointerMove: engine.internalOnPointerMove,
+      onPointerSignal: Engine.internalOnPointerSignal,
+      onPointerDown: Engine.internalOnPointerDown,
+      onPointerUp: Engine.internalOnPointerUp,
+      onPointerHover: Engine.internalOnPointerHover,
+      onPointerMove: Engine.internalOnPointerMove,
       child: GestureDetector(
           onTapDown: Engine.onTapDown,
           onLongPress: Engine.onLongPress,
-          onPanStart: engine.internalOnPanStart,
+          onPanStart: Engine.internalOnPanStart,
           onPanUpdate: Engine.onPanUpdate,
-          onPanEnd: engine.internalOnPanEnd,
+          onPanEnd: Engine.internalOnPanEnd,
           child: WatchBuilder(Engine.watchBackgroundColor, (Color backgroundColor){
             return Container(
                 color: backgroundColor,
-                width: engine.screen.width,
-                height: engine.screen.height,
+                width: Engine.screen.width,
+                height: Engine.screen.height,
                 child: CustomPaint(
-                    painter: _GamePainter(repaint: engine.notifierPaintFrame),
+                    painter: _GamePainter(repaint: Engine.notifierPaintFrame),
                     foregroundPainter: _GameForegroundPainter(
-                        repaint: engine.notifierPaintForeground
+                        repaint: Engine.notifierPaintForeground
                     ),
                 )
             );
           })),
     );
 
-    return WatchBuilder(engine.cursorType, (CursorType cursorType) =>
+    return WatchBuilder(Engine.cursorType, (CursorType cursorType) =>
       MouseRegion(
         cursor: mapCursorTypeToSystemMouseCursor(cursorType),
         child: child,
@@ -115,7 +110,7 @@ class _GamePainter extends CustomPainter {
 
   @override
   void paint(Canvas _canvas, Size size) {
-    engine.internalPaint(_canvas, size);
+    Engine.internalPaint(_canvas, size);
   }
 
   @override

@@ -14,7 +14,6 @@ import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/ui/builders/build_text_box.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/screen.dart';
 
 Widget buildStackPlay() =>
   buildPage(
@@ -22,8 +21,8 @@ Widget buildStackPlay() =>
       Positioned(top: 75, right: 16, child: buildWatchInventoryVisible()),
       Positioned(top: 50, left: 0, child: buildPanelStore()),
       Positioned(top: 0, left: 0, child: Container(
-        width: screen.width,
-        height: screen.height,
+        width: Engine.screen.width,
+        height: Engine.screen.height,
         alignment: Alignment.center,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -41,7 +40,7 @@ Widget buildStackPlay() =>
 
 Widget buildBottomPlayerExperienceAndHealthBar() =>
   Positioned(bottom: 8, child: Container(
-    width: screen.width,
+    width: Engine.screen.width,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -58,7 +57,7 @@ Widget buildWatchMouseTargetName(){
 
       return Container(
         alignment: Alignment.center,
-        width: engine.screen.width,
+        width: Engine.screen.width,
         child: Container(
            color: colours.redDark1,
            height: 50,

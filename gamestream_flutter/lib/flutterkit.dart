@@ -305,8 +305,8 @@ Widget dialog({
   EdgeInsets margin = EdgeInsets.zero,
 }) {
   return Container(
-    width: engine.screen.width,
-    height: engine.screen.height,
+    width: Engine.screen.width,
+    height: Engine.screen.height,
     alignment: alignment,
     child: Container(
       margin: margin,

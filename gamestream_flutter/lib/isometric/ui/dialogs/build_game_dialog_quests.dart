@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:golden_ratio/constants.dart';
-import 'package:lemon_engine/screen.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'game_dialog_tab.dart';
@@ -16,13 +16,13 @@ final inProgress = watch(player.questsInProgress, buildColumnQuests);
 
 Widget buildGameDialogQuests() =>
   Container(
-    width: screen.width,
-    height: screen.height,
+    width: Engine.screen.width,
+    height: Engine.screen.height,
     alignment: Alignment.center,
     child: Container(
       color: brownLight,
-      width: screen.width * goldenRatio_0618,
-      height: screen.height * goldenRatio_0618,
+      width: Engine.screen.width * goldenRatio_0618,
+      height: Engine.screen.height * goldenRatio_0618,
       child: Column(
         children: [
           watch(player.gameDialog, buildGameDialog),

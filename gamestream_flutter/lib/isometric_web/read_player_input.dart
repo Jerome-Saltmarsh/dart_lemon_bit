@@ -25,7 +25,7 @@ void readPlayerInput() {
 
 void readPlayerInputEdit() {
   if (Engine.keyPressed(LogicalKeyboardKey.space)) {
-    engine.panCamera();
+    Engine.panCamera();
   }
   if (Engine.keyPressed(LogicalKeyboardKey.delete)) {
     edit.delete();

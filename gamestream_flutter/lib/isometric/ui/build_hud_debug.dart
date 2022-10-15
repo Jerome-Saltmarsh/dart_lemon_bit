@@ -46,7 +46,7 @@ Widget buildHudDebug() =>
               watch(player.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => player.interpolating.value = !player.interpolating.value)),
               watch(ambientShade, (int shade) => text("ambient-shade: ${Shade.getName(shade)}")),
               watch(gameType, (int? value) => text("game-type: ${value == null ? 'None' : GameType.getName(value)}")),
-              watch(engine.deviceType, (int deviceType) => text("device-type: ${DeviceType.getName(deviceType)}", onPressed: engine.toggleDeviceType)),
+              watch(Engine.deviceType, (int deviceType) => text("device-type: ${DeviceType.getName(deviceType)}", onPressed: Engine.toggleDeviceType)),
               height24,
               text("close x", onPressed: () => debugVisible.value = false),
             ],

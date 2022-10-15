@@ -5,14 +5,14 @@ import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_button_game_dialog_close.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_editor_dialog.dart';
-import 'package:lemon_engine/screen.dart';
+import 'package:lemon_engine/engine.dart';
 
 Widget buildWatchEditorDialog(EditorDialog? activeEditorDialog){
   if (activeEditorDialog == null) return const SizedBox();
 
   return Container(
-    width: screen.width,
-    height: screen.height,
+    width: Engine.screen.width,
+    height: Engine.screen.height,
     alignment: Alignment.center,
     child: Container(
         width: 350,

@@ -26,7 +26,7 @@ class LemonEngineDraw {
     double r = (pi * 2) / sides;
     List<Offset> points = [];
     Offset z = Offset(x, y);
-    engine.setPaintColor(color);
+    Engine.setPaintColor(color);
     Engine.paint.strokeWidth = width;
 
     for (int i = 0; i <= sides; i++) {

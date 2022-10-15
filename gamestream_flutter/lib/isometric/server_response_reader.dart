@@ -549,7 +549,7 @@ class ServerResponseReader with ByteReader {
   void readEnd() {
     byteLength.value = index;
     index = 0;
-    engine.redrawCanvas();
+    Engine.redrawCanvas();
   }
 
   void readStoreItems() {
@@ -579,8 +579,8 @@ class ServerResponseReader with ByteReader {
     player.x = readDouble();
     player.y = readDouble();
     cameraCenterOnPlayer();
-    engine.zoom = 1.0;
-    engine.targetZoom = 1.0;
+    Engine.zoom = 1.0;
+    Engine.targetZoom = 1.0;
   }
 
   void readGameTime() {
@@ -607,12 +607,12 @@ class ServerResponseReader with ByteReader {
     player.attackTarget.x = 0;
     player.attackTarget.y = 0;
     player.mouseTargetName.value = null;
-    engine.cursorType.value = CursorType.Basic;
+    Engine.cursorType.value = CursorType.Basic;
   }
 
   void readPlayerAttackTarget() {
     readVector3(player.attackTarget);
-    engine.cursorType.value = CursorType.Click;
+    Engine.cursorType.value = CursorType.Click;
   }
 
   void readDebugMode() {

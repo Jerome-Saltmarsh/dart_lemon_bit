@@ -8,7 +8,7 @@ import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_we
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/state/state_game_waves.dart';
-import 'package:lemon_engine/screen.dart';
+import 'package:lemon_engine/engine.dart';
 
 Widget buildStackGameTypeWavesUI() => Stack(
       children: [
@@ -23,8 +23,8 @@ Widget buildStackGameTypeWavesUI() => Stack(
             left: 0,
             child: Container(
                 alignment: Alignment.center,
-                width: screen.width,
-                height: screen.height,
+                width: Engine.screen.width,
+                height: Engine.screen.height,
                 child: buildWatchBool(gameWaves.canPurchase, buildWavesTimer),
             ),
         ),

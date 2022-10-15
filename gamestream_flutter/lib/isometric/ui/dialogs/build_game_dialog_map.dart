@@ -7,7 +7,6 @@ import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/screen.dart';
 
 import '../../../flutterkit.dart';
 import 'game_dialog_tab.dart';
@@ -23,20 +22,20 @@ var mapScreenCenterX = 0.0;
 var mapScreenCenterY = 0.0;
 
 Widget buildGameDialogMap(){
-  mapScreenCenterX = screen.width / 2;
-  mapScreenCenterY = screen.height / 2;
+  mapScreenCenterX = Engine.screen.width / 2;
+  mapScreenCenterY = Engine.screen.height / 2;
   return Container(
-    width: screen.width,
-    height: screen.height,
+    width: Engine.screen.width,
+    height: Engine.screen.height,
     alignment: Alignment.center,
     child: Container(
       color: brownLight,
-      width: screen.width * goldenRatio_0618,
-      height: screen.height * goldenRatio_0618,
+      width: Engine.screen.width * goldenRatio_0618,
+      height: Engine.screen.height * goldenRatio_0618,
       child: Column(
         children: [
           watch(player.gameDialog, buildGameDialog),
-          GameMapWidget(width: screen.width * goldenRatio_0618, height: screen.height * goldenRatio_0618 - 50),
+          GameMapWidget(width: Engine.screen.width * goldenRatio_0618, height: Engine.screen.height * goldenRatio_0618 - 50),
         ],
       ),
     ),

@@ -21,7 +21,7 @@ void updateCameraMode() {
 
 void cameraCenterOnPlayer(){
   print('cameraCenterOnPlayer()');
-  engine.cameraCenter(player.renderX, player.renderY);
+  Engine.cameraCenter(player.renderX, player.renderY);
 }
 
 void cameraSetPositionGrid(int row, int column, int z){
@@ -31,5 +31,5 @@ void cameraSetPositionGrid(int row, int column, int z){
 void cameraSetPosition(double x, double y, double z){
   final renderX = (x - y) * 0.5;
   final renderY = ((y + x) * 0.5) - z;
-  engine.cameraCenter(renderX, renderY);
+  Engine.cameraCenter(renderX, renderY);
 }

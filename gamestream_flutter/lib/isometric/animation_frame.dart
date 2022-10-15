@@ -27,7 +27,7 @@ void updateAnimationFrame() {
   _next = 0;
   animationFrame++;
 
-  if (animationFrameWater++ >= 10){
+  if (animationFrameWater++ >= 9){
     animationFrameWater = 0;
   }
   animationFrameWaterHeight = const [

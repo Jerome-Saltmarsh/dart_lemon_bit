@@ -32,7 +32,7 @@ void connectToServer(String uri, String message){
 }
 
 final List<Region> selectableServerTypes =
-    regions.where((type) => (engine.isLocalHost || type != Region.LocalHost)
+    regions.where((type) => (Engine.isLocalHost || type != Region.LocalHost)
     ).toList();
 
 class ServerUri {

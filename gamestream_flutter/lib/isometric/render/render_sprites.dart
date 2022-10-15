@@ -28,7 +28,7 @@ import 'package:gamestream_flutter/isometric/render/render_game_object.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/isometric/watches/ambient_shade.dart';
-import 'package:lemon_engine/screen.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -258,10 +258,10 @@ var offscreenNodesLeft = 0;
 var onscreenNodes = 0;
 var offscreenNodes = 0;
 
-var screenTop = screen.top - 120;
-var screenRight = screen.right + tileSize;
-var screenBottom = screen.bottom + 80;
-var screenLeft = screen.left - tileSize;
+var screenTop = 0.0;
+var screenRight = 0.0;
+var screenBottom = 0.0;
+var screenLeft = 0.0;
 
 var renderNodeZ = 0;
 var renderNodeRow = 0;
@@ -413,10 +413,10 @@ class RenderOrderGrid extends RenderOrder {
         gridIsPerceptible(indexShow - nodesTotalColumns) &&
         gridIsPerceptible(indexShow + nodesTotalColumns + 1) ;
 
-    screenRight = screen.right + tileSize;
-    screenLeft = screen.left - tileSize;
-    screenTop = screen.top - 72;
-    screenBottom = screen.bottom + 72;
+    screenRight = Engine.screen.right + tileSize;
+    screenLeft = Engine.screen.left - tileSize;
+    screenTop = Engine.screen.top - 72;
+    screenBottom = Engine.screen.bottom + 72;
     var screenTopLeftColumn = convertWorldToColumn(screenLeft, screenTop, 0);
     screenBottomRightRow = clamp(convertWorldToRow(screenRight, screenBottom, 0), 0, nodesTotalRows - 1);
     screenTopLeftRow = convertWorldToRow(screenLeft, screenTop, 0);
@@ -598,8 +598,8 @@ class RenderOrderGrid extends RenderOrder {
 
   int get countLeftOffscreen {
     final x = convertRowColumnToX(renderNodeRow, renderNodeColumn);
-    if (screen.left < x) return 0;
-    final diff = screen.left - x;
+    if (Engine.screen.left < x) return 0;
+    final diff = Engine.screen.left - x;
     return diff ~/ tileSize;
   }
 
