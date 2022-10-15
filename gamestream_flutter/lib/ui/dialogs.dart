@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/ui/views.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
+import 'package:gamestream_flutter/website/website.dart';
 import 'package:golden_ratio/constants.dart';
 
 import '../flutterkit.dart';
@@ -231,7 +232,7 @@ Widget buildDialogPremiumAccountRequired(){
 }
 
 Widget buildDialogSubscriptionStatus(){
-  final account = core.state.account.value;
+  final account = Website.account.value;
   if (account == null){
     return buildDialogMessage("Account is null");
   }
@@ -289,7 +290,7 @@ Widget buildDialogWelcome2(){
 final _nameController = TextEditingController();
 
 Widget buildDialogChangePublicName() {
-  final account = core.state.account.value;
+  final account = Website.account.value;
 
   if (account == null){
     return buildDialogMessage("Account is null");

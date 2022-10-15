@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/style.dart';
 import 'package:gamestream_flutter/to_string.dart';
+import 'package:gamestream_flutter/website/website.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -29,7 +30,7 @@ Widget buildPageWebsite({double padding = 6})  =>
         Positioned(
           // top: padding,
           left: 32,
-          child: watch(core.state.region, buildStateRegion),
+          child: watch(Website.region, buildStateRegion),
       ),
       Positioned(
         bottom: padding,
@@ -99,5 +100,5 @@ Widget buildTextVersion(){
 }
 
 void actionSelectRegion(Region value) {
-  core.state.region.value = value;
+  Website.region.value = value;
 }

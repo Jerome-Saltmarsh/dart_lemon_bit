@@ -1,14 +1,10 @@
 
-import 'state.dart';
+import 'package:gamestream_flutter/website/website.dart';
 
 class CoreProperties {
 
-  final CoreState state;
-
-  CoreProperties(this.state);
-
   bool get premiumAccountAuthenticated {
-    final account = state.account.value;
+    final account = Website.account.value;
     if (account == null){
       return false;
     }

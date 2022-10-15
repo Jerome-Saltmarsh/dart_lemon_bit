@@ -28,7 +28,6 @@ import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:gamestream_flutter/modules/game/render.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/state/state_game_waves.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_engine/engine.dart';
@@ -240,7 +239,6 @@ class ServerResponseReader with ByteReader {
           }
           print("read bytes exception, unrecognized server response $response at index $index, length: ${values.length}");
           print(values);
-          modules.core.state.error.value = "read response error";
           debugging = true;
           readBytes(values);
           return;

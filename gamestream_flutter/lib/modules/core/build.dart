@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/views.dart';
+import 'package:gamestream_flutter/website/website.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 class CoreBuild {
@@ -14,7 +14,7 @@ class CoreBuild {
   Widget buildUI() {
     return Stack(
       children: [
-        watch(core.state.operationStatus, buildOperationStatus),
+        watch(Website.operationStatus, buildOperationStatus),
         buildWatchErrorMessage(),
       ],
     );
@@ -42,7 +42,7 @@ class CoreBuild {
     final double _height = 50;
     return fullScreen(
       color: colours.black,
-      child: WatchBuilder(core.state.download, (double value) {
+      child: WatchBuilder(Website.download, (double value) {
         value = 0.6182;
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,

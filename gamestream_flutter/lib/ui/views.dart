@@ -14,6 +14,7 @@ import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:gamestream_flutter/website/build_layout_website.dart';
+import 'package:gamestream_flutter/website/website.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -24,7 +25,7 @@ import '../network/instance/websocket.dart';
 final nameController = TextEditingController();
 
 Widget buildWatchErrorMessage(){
-  return WatchBuilder(core.state.error, (String? message){
+  return WatchBuilder(Website.error, (String? message){
     if (message == null) return empty;
     return buildErrorDialog(message);
   });
@@ -40,7 +41,7 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
           child: Center(
             child: text(message, color: colours.white),
           ),
-          bottomRight: bottomRight ?? text("okay", onPressed: core.actions.clearError)
+          bottomRight: bottomRight ?? text("okay", onPressed: () => Website.error.value = null)
       )
   );
 }
@@ -87,10 +88,10 @@ Widget buildDialogChangeRegion() {
             children: [
               ...selectableRegions.map((region) {
                 return button(enumString(region), () {
-                  core.state.region.value = region;
+                  Website.region.value = region;
                   modules.website.actions.showDialogGames();
                 },
-                    fillColor: region == core.state.region.value
+                    fillColor: region == Website.region.value
                         ? colours.black20
                         : colours.white05,
                     borderColor: colours.none,
@@ -136,7 +137,7 @@ Widget margin({
 
 
 Widget watchAccount(Widget builder(Account? value)) {
-  return WatchBuilder(core.state.account, (Account? account) {
+  return WatchBuilder(Website.account, (Account? account) {
     return builder(account);
   });
 }
@@ -230,7 +231,7 @@ Widget buildDialogGameFinished(){
 }
 
 bool isAccountName(String publicName){
-  final account = core.state.account.value;
+  final account = Website.account.value;
   if (account == null) return false;
   return account.publicName == publicName;
 }

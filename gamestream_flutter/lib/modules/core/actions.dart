@@ -3,12 +3,11 @@ import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/authentication.dart';
 import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
-import 'package:gamestream_flutter/modules/core/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/modules/website/enums.dart';
 import 'package:gamestream_flutter/network/instance/websocket.dart';
 import 'package:gamestream_flutter/servers.dart';
 import 'package:gamestream_flutter/ui/actions/sign_in_with_facebook.dart';
+import 'package:gamestream_flutter/website/website.dart';
 import 'package:lemon_dispatch/instance.dart';
 
 import 'exceptions.dart';
@@ -16,23 +15,21 @@ import 'exceptions.dart';
 
 class CoreActions {
 
-  CoreState get state => core.state;
-
   void operationCompleted(){
-    state.operationStatus.value = OperationStatus.None;
+    Website.operationStatus.value = OperationStatus.None;
   }
 
   void setError(String message){
-    state.error.value = message;
+    Website.error.value = message;
   }
 
-  void clearError(){
-    state.error.value = null;
+  void clearErrosr(){
+    Website.error.value = null;
   }
 
   void changeAccountPublicName(String value) async {
     print("actions.changePublicName('$value')");
-    final account = core.state.account.value;
+    final account = Website.account.value;
     if (account == null) {
       setError("Account is null");
       return;
@@ -47,14 +44,14 @@ class CoreActions {
       setError("Name entered is empty");
       return;
     }
-    core.state.operationStatus.value = OperationStatus.Changing_Public_Name;
+    Website.operationStatus.value = OperationStatus.Changing_Public_Name;
     final response = await firestoreService
         .changePublicName(userId: account.userId, publicName: value)
         .catchError((error) {
       setError(error.toString());
       throw error;
     });
-    core.state.operationStatus.value = OperationStatus.None;
+    Website.operationStatus.value = OperationStatus.None;
 
     switch (response) {
       case ChangeNameStatus.Success:
@@ -80,30 +77,30 @@ class CoreActions {
   void cancelSubscription() async {
     print("actions.cancelSubscription()");
     website.actions.showDialogAccount();
-    final account = core.state.account.value;
+    final account = Website.account.value;
     if (account == null) {
       setError('Account is null');
       return;
     }
-    core.state.operationStatus.value = OperationStatus.Cancelling_Subscription;
+    Website.operationStatus.value = OperationStatus.Cancelling_Subscription;
     await firestoreService.cancelSubscription(account.userId);
     await updateAccount();
-    core.state.operationStatus.value = OperationStatus.None;
+    Website.operationStatus.value = OperationStatus.None;
   }
 
   Future updateAccount() async {
     print("refreshAccountDetails()");
-    final account = core.state.account.value;
+    final account = Website.account.value;
     if (account == null){
       return;
     }
 
-    core.state.operationStatus.value = OperationStatus.Updating_Account;
-    core.state.account.value = await firestoreService.findUserById(account.userId).catchError((error){
+    Website.operationStatus.value = OperationStatus.Updating_Account;
+    Website.account.value = await firestoreService.findUserById(account.userId).catchError((error){
       pub(LoginException(error));
       return null;
     });
-    core.state.operationStatus.value = OperationStatus.None;
+    Website.operationStatus.value = OperationStatus.None;
   }
 
 
@@ -127,34 +124,34 @@ class CoreActions {
     required String privateName
   }) async {
     print("actions.signInOrCreateAccount()");
-    core.state.operationStatus.value = OperationStatus.Authenticating;
+    Website.operationStatus.value = OperationStatus.Authenticating;
     final account = await firestoreService.findUserById(userId).catchError((error){
       pub(LoginException(error));
       throw error;
     });
     if (account == null){
       print("No account found. Creating new account");
-      core.state.operationStatus.value = OperationStatus.Creating_Account;
+      Website.operationStatus.value = OperationStatus.Creating_Account;
       await firestoreService.createAccount(userId: userId, email: email, privateName: privateName);
-      core.state.operationStatus.value = OperationStatus.Authenticating;
-      core.state.account.value = await firestoreService.findUserById(userId);
-      if (core.state.account.value == null){
+      Website.operationStatus.value = OperationStatus.Authenticating;
+      Website.account.value = await firestoreService.findUserById(userId);
+      if (Website.account.value == null){
         throw Exception("failed to find new account");
       }
       // TODO Illegal reference to website
-      website.state.dialog.value = WebsiteDialog.Account_Created;
+      // Website.dialog.value = WebsiteDialog.Account_Created;
     }else{
       print("Existing Account found");
-      core.state.account.value = account;
+      Website.account.value = account;
     }
-    core.state.operationStatus.value = OperationStatus.None;
+    Website.operationStatus.value = OperationStatus.None;
   }
 
 
   void openStripeCheckout() {
     throw Exception("No longer supported");
     // print("actions.openStripeCheckout()");
-    // final account = core.state.account.value;
+    // final account = Website.account.value;
     // if (account == null){
     //   core.actions.setError("Account is null");
     //   return;
@@ -164,7 +161,7 @@ class CoreActions {
     //   return;
     // }
     //
-    // core.state.operationStatus.value = OperationStatus.Opening_Secure_Payment_Session;
+    // Website.operationStatus.value = OperationStatus.Opening_Secure_Payment_Session;
     // stripeCheckout(
     //     userId: account.userId,
     //     email: account.email
@@ -186,7 +183,7 @@ class CoreActions {
 
   void closeErrorMessage(){
     print("actions.closeErrorMessage()");
-    core.state.error.value = null;
+    Website.error.value = null;
   }
 
   void deselectGameType(){
@@ -207,4 +204,4 @@ void connectToGameWaves() => connectToGame(GameType.Waves);
 void connectToGameSkirmish() => connectToGame(GameType.Skirmish);
 
 void connectToGame(int gameType, [String message = ""]) =>
-  connectToRegion(core.state.region.value, '${gameType} $message');
+  connectToRegion(Website.region.value, '${gameType} $message');

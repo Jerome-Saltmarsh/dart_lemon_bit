@@ -2,11 +2,9 @@
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/isometric/events/on_connection_done.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric_web/register_isometric_web_controls.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
-import 'package:gamestream_flutter/modules/core/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/network/classes/websocket.dart';
 import 'package:gamestream_flutter/network/instance/websocket.dart';
@@ -21,11 +19,10 @@ import 'exceptions.dart';
 
 class CoreEvents {
 
-  late final CoreState state;
 
-  CoreEvents(this.state){
-    state.region.onChanged(_onServerTypeChanged);
-    state.account.onChanged(_onAccountChanged);
+  CoreEvents(){
+    Website.region.onChanged(_onServerTypeChanged);
+    Website.account.onChanged(_onAccountChanged);
     webSocket.connection.onChanged(onConnectionChanged);
     sub(_onLoginException);
   }
@@ -36,7 +33,7 @@ class CoreEvents {
 
     Future.delayed(Duration(seconds: 1), (){
       // game.dialog.value = Dialogs.Login_Error;
-      state.error.value = error.cause.toString();
+      Website.error.value = error.cause.toString();
     });
   }
 
@@ -73,7 +70,6 @@ class CoreEvents {
         break;
 
       case Connection.Done:
-        onConnectionDone();
         isometricWebControlsDeregister();
         Engine.onUpdate = null;
         Engine.fullScreenExit();
@@ -102,5 +98,5 @@ void setDialogVisibleCustomRegion(bool value){
 }
 
 void setRegion(Region value){
-  core.state.region.value = value;
+  Website.region.value = value;
 }

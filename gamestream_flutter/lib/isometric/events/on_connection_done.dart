@@ -1,4 +1,0 @@
-
-void onConnectionDone(){
-  // grid.clear();
-}

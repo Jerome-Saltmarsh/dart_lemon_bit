@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric_web/download_file.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
+import 'package:gamestream_flutter/website/website.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:universal_html/html.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -95,7 +95,7 @@ class WebSocket {
         final contents = _response.substring(6, _response.length);
         downloadString(contents: contents, filename: "hello.json");
       }
-      core.state.error.value = _response;
+      Website.error.value = _response;
       return;
     }
     throw Exception("cannot parse response: $_response");
