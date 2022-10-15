@@ -3,7 +3,7 @@ import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:lemon_engine/render.dart';
 
 void renderTorchOff(double x, double y) {
-  return render(
+  return renderBuffer(
       dstX: x,
       dstY: y,
       srcX: 2086,
@@ -15,7 +15,7 @@ void renderTorchOff(double x, double y) {
 }
 
 void renderTorchOnWindy(double x, double y) {
-  render(
+  renderBuffer(
       dstX: x,
       dstY: y,
       srcX: 2128,

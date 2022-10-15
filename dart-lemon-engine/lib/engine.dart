@@ -19,6 +19,19 @@ import 'render.dart';
 
 /// boilerplate code for game development
 ///
+///
+/// __event-hooks__
+///
+/// event hooks start with the word 'on'
+///
+/// event hooks are safe to override
+///
+/// event hooks can be overridden during runtime
+///
+/// ```dart
+/// Engine.onLeftClicked = () => print("left mouse clicked');
+/// ```
+///
 /// __getting started__
 /// ```dart
 ///void main() {
@@ -91,6 +104,7 @@ class Engine {
   static bool get deviceIsComputer => deviceType.value == DeviceType.Computer;
   static bool get deviceIsPhone => deviceType.value == DeviceType.Phone;
   static int get paintFrame => notifierPaintFrame.value;
+  static bool get initialized => watchInitialized.value;
 
   // WATCHES
   static final watchBackgroundColor = Watch(DefaultBackgroundColor);
@@ -98,7 +112,7 @@ class Engine {
   static final watchTitle = Watch(DefaultTitle);
   static final watchInitialized = Watch(false);
   static final watchDurationPerFrame = Watch(Duration(milliseconds: DefaultMillisecondsPerFrame));
-  static final watchMouseLeftDown = Watch(false, onChanged: internalOnChangedMouseLeftDown);
+  static final watchMouseLeftDown = Watch(false, onChanged: _internalOnChangedMouseLeftDown);
   static final mouseRightDown = Watch(false);
 
   // CONSTANTS
@@ -162,7 +176,7 @@ class Engine {
 
   // INTERNAL FUNCTIONS
 
-  static void internalOnKeyboardEvent(RawKeyEvent event) {
+  static void _internalOnKeyboardEvent(RawKeyEvent event) {
     if (event is RawKeyDownEvent) {
       keyPressedHandlers[event.logicalKey]?.call();
       return;
@@ -172,7 +186,7 @@ class Engine {
     }
   }
 
-  static void internalOnChangedMouseLeftDown(bool value){
+  static void _internalOnChangedMouseLeftDown(bool value){
     if (value) {
       onLeftClicked?.call();
     } else {
@@ -180,7 +194,7 @@ class Engine {
     }
   }
 
-  static void internalSetScreenSize(double width, double height){
+  static void _internalSetScreenSize(double width, double height){
     if (screen.width == width && screen.height == height) return;
     if (!screen.initialized) {
       screen.width = width;
@@ -284,10 +298,10 @@ class Engine {
       us.setPathUrlStrategy();
     }
     WidgetsFlutterBinding.ensureInitialized();
-    runZonedGuarded(Engine._internalInit, internalOnError);
+    runZonedGuarded(Engine._internalInit, _internalOnError);
   }
 
-  static void internalOnError(Object error, StackTrace stack) {
+  static void _internalOnError(Object error, StackTrace stack) {
       if (onError != null){
         onError!.call(error, stack);
         return;
@@ -297,16 +311,12 @@ class Engine {
       print(stack);
   }
 
-  static void internalOnMouseScroll(double amount) {
+  static void _internalOnMouseScroll(double amount) {
     if (zoomOnScroll) {
       targetZoom -=  amount * scrollSensitivity;
       targetZoom = targetZoom.clamp(0.2, 6);
     }
     onMouseScroll?.call(amount);
-  }
-
-  static void mapColor(Color color) {
-    colors[bufferIndex] = color.value;
   }
 
   static void renderText(String text, double x, double y,
@@ -399,14 +409,14 @@ class Engine {
     paint.color = value;
   }
 
-  static void internalOnPointerMove(PointerMoveEvent event) {
+  static void _internalOnPointerMove(PointerMoveEvent event) {
     previousMousePosition.x = mousePosition.x;
     previousMousePosition.y = mousePosition.y;
     mousePosition.x = event.position.dx;
     mousePosition.y = event.position.dy;
   }
 
-  static void internalOnPointerHover(PointerHoverEvent event) {
+  static void _internalOnPointerHover(PointerHoverEvent event) {
     previousMousePosition.x = mousePosition.x;
     previousMousePosition.y = mousePosition.y;
     mousePosition.x = event.position.dx;
@@ -415,7 +425,7 @@ class Engine {
 
   /// event.buttons is always 0 and does not seem to correspond to the left or right mouse
   /// click like in internalOnPointerDown
-  static void internalOnPointerUp(PointerUpEvent event) {
+  static void _internalOnPointerUp(PointerUpEvent event) {
     // if (event.buttons == 0) {
     //   watchMouseLeftDown.value = false;
     // }
@@ -425,7 +435,7 @@ class Engine {
     watchMouseLeftDown.value = false;
   }
 
-  static void internalOnPointerDown(PointerDownEvent event) {
+  static void _internalOnPointerDown(PointerDownEvent event) {
     if (event.buttons == 1) {
       watchMouseLeftDown.value = true;
     }
@@ -434,27 +444,27 @@ class Engine {
     }
   }
 
-  static void internalOnPointerSignal(PointerSignalEvent pointerSignalEvent) {
+  static void _internalOnPointerSignal(PointerSignalEvent pointerSignalEvent) {
     if (pointerSignalEvent is PointerScrollEvent) {
-      internalOnMouseScroll(pointerSignalEvent.scrollDelta.dy);
+      _internalOnMouseScroll(pointerSignalEvent.scrollDelta.dy);
     }
   }
 
-  static void internalOnPanStart(DragStartDetails details){
+  static void _internalOnPanStart(DragStartDetails details){
     panStarted = true;
     onPanStart?.call(details);
   }
 
-  static void internalOnPanEnd(DragEndDetails details){
+  static void _internalOnPanEnd(DragEndDetails details){
     panStarted = false;
     onPanEnd?.call(details);
   }
 
-  static void internalPaint(Canvas canvas, Size size) {
+  static void _internalPaint(Canvas canvas, Size size) {
     Engine.canvas = canvas;
     canvas.scale(zoom, zoom);
     canvas.translate(-camera.x, -camera.y);
-    if (!watchInitialized.value) return;
+    if (!initialized) return;
     if (onDrawCanvas == null) return;
     onDrawCanvas!.call(canvas, size);
     engineRenderFlushBuffer();
@@ -467,11 +477,11 @@ class Engine {
     MillisecondsPerSecond ~/ framesPerSecond;
 
   static Future _internalInit() async {
-    runApp(internalBuildApp());
+    runApp(_internalBuildApp());
 
     paint.filterQuality = FilterQuality.none;
     paint.isAntiAlias = false;
-    keyboard.addListener(internalOnKeyboardEvent);
+    keyboard.addListener(_internalOnKeyboardEvent);
 
     mouseRightDown.onChanged((bool value) {
       if (value) {
@@ -492,7 +502,7 @@ class Engine {
     }
     updateTimer = Timer.periodic(
         watchDurationPerFrame.value,
-        internalOnUpdate,
+        _internalOnUpdate,
     );
     watchInitialized.value = true;
   }
@@ -501,12 +511,12 @@ class Engine {
     updateTimer?.cancel();
     updateTimer = Timer.periodic(
       watchDurationPerFrame.value,
-      internalOnUpdate,
+      _internalOnUpdate,
     );
     onUpdateTimerReset?.call();
   }
 
-  static void internalOnUpdate(Timer timer){
+  static void _internalOnUpdate(Timer timer){
     _screen.left = camera.x;
     _screen.right = camera.x + (_screen.width / zoom);
     _screen.top = camera.y;
@@ -529,7 +539,6 @@ class Engine {
 
   void setFramesPerSecond(int framesPerSecond) =>
      watchDurationPerFrame.value = buildDurationFramesPerSecond(framesPerSecond);
-
 
   static final _src4 = Float32List(4);
   static final _dst4 = Float32List(4);
@@ -555,8 +564,8 @@ class Engine {
     _src4[1] = srcY;
     _src4[2] = srcX + srcWidth;
     _src4[3] = srcY + srcHeight;
-    _dst4[0] = _cos0 * scale;
-    _dst4[1] = _sin0 * scale; // scale
+    _dst4[0] = scale;
+    _dst4[1] = 0; // scale
     _dst4[2] = dstX - (srcWidth * anchorX * scale);
     _dst4[3] = dstY - (srcHeight * anchorY * scale); // scale
     canvas.drawRawAtlas(image, _dst4, _src4, _colors1, BlendMode.dstATop, null, paint);
@@ -618,7 +627,7 @@ class Engine {
     }
   }
 
-  static Widget internalBuildApp(){
+  static Widget _internalBuildApp(){
     return WatchBuilder(Engine.themeData, (ThemeData? themeData){
       return MaterialApp(
         title: Engine.title,
@@ -631,11 +640,11 @@ class Engine {
             }
             return LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
-                Engine.internalSetScreenSize(constraints.maxWidth, constraints.maxHeight);
+                Engine._internalSetScreenSize(constraints.maxWidth, constraints.maxHeight);
                 Engine.buildContext = context;
                 return Stack(
                   children: [
-                    internalBuildCanvas(context),
+                    _internalBuildCanvas(context),
                     WatchBuilder(Engine.watchBuildUI, (WidgetBuilder? buildUI)
                     => buildUI != null ? buildUI(context) : const SizedBox()
                     )
@@ -650,19 +659,19 @@ class Engine {
     });
   }
 
-  static Widget internalBuildCanvas(BuildContext context) {
+  static Widget _internalBuildCanvas(BuildContext context) {
     final child = Listener(
-      onPointerSignal: Engine.internalOnPointerSignal,
-      onPointerDown: Engine.internalOnPointerDown,
-      onPointerUp: Engine.internalOnPointerUp,
-      onPointerHover: Engine.internalOnPointerHover,
-      onPointerMove: Engine.internalOnPointerMove,
+      onPointerSignal: Engine._internalOnPointerSignal,
+      onPointerDown: Engine._internalOnPointerDown,
+      onPointerUp: Engine._internalOnPointerUp,
+      onPointerHover: Engine._internalOnPointerHover,
+      onPointerMove: Engine._internalOnPointerMove,
       child: GestureDetector(
           onTapDown: Engine.onTapDown,
           onLongPress: Engine.onLongPress,
-          onPanStart: Engine.internalOnPanStart,
+          onPanStart: Engine._internalOnPanStart,
           onPanUpdate: Engine.onPanUpdate,
-          onPanEnd: Engine.internalOnPanEnd,
+          onPanEnd: Engine._internalOnPanEnd,
           child: WatchBuilder(Engine.watchBackgroundColor, (Color backgroundColor){
             return Container(
                 color: backgroundColor,
@@ -805,7 +814,7 @@ class _GamePainter extends CustomPainter {
 
   @override
   void paint(Canvas _canvas, Size size) {
-    Engine.internalPaint(_canvas, size);
+    Engine._internalPaint(_canvas, size);
   }
 
   @override

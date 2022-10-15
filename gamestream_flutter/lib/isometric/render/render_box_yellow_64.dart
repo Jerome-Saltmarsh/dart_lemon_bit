@@ -2,7 +2,7 @@
 import 'package:lemon_engine/render.dart';
 
 void renderBoxYellow64(double x, double y){
-  render(
+  renderBuffer(
     dstX: x,
     dstY: y,
     srcX: 560,

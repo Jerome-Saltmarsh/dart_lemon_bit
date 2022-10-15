@@ -2,7 +2,7 @@
 import 'package:lemon_engine/render.dart';
 
 void renderShadow(double x, double y, double z, {double scale = 1}) =>
-   render(
+    renderBuffer(
     dstX: (x - y) * 0.5,
     dstY: ((y + x) * 0.5) - z,
     srcX: 192,

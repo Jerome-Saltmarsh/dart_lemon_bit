@@ -8,7 +8,7 @@ void renderPixelRedV2(Vector3 value){
 }
 
 void renderPixelRed(double x, double y){
-  render(
+  renderBuffer(
     dstX: x,
     dstY: y,
     srcX: 144,

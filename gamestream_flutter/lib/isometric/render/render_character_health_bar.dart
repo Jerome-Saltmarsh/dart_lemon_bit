@@ -11,7 +11,7 @@ void renderCharacterHealthBar(Character character){
   const srcWidthHalf = srcWidth * 0.5;
   final color = getNodeBelowShade(character);
 
-  render(
+  renderBuffer(
       dstX: character.renderX - srcWidthHalf,
       dstY: character.renderY - marginY,
       srcX: srcX,
@@ -22,7 +22,7 @@ void renderCharacterHealthBar(Character character){
       color: color,
   );
 
-  render(
+  renderBuffer(
       dstX: character.renderX - srcWidthHalf,
       dstY: character.renderY - marginY,
       srcX: srcX,
@@ -47,7 +47,7 @@ void renderCharacterBarWeaponRounds({
   const marginY = 45;
   const srcWidthHalf = srcWidth * 0.5;
 
-  render(
+  renderBuffer(
     dstX: x - srcWidthHalf,
     dstY: y - marginY,
     srcX: srcX,
@@ -57,7 +57,7 @@ void renderCharacterBarWeaponRounds({
     anchorX: 0,
   );
 
-  render(
+  renderBuffer(
     dstX: x - srcWidthHalf,
     dstY: y - marginY,
     srcX: srcX,

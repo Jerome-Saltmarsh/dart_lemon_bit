@@ -10,7 +10,7 @@ void renderCharacterRat(Character character){
   renderPixelRed(character.renderX, character.renderY);
 
   if (character.state == CharacterState.Running){
-    return render(
+    return renderBuffer(
       dstX: character.renderX,
       dstY: character.renderY,
       srcX: loop4(animation: const [1, 2, 3, 4], character: character, framesPerDirection: 4),
@@ -24,7 +24,7 @@ void renderCharacterRat(Character character){
   }
 
   if (character.state == CharacterState.Performing){
-    return render(
+    return renderBuffer(
       dstX: character.renderX,
       dstY: character.renderY,
       srcX: 2680,
@@ -38,7 +38,7 @@ void renderCharacterRat(Character character){
   }
 
 
-  return render(
+  return renderBuffer(
     dstX: character.renderX,
     dstY: character.renderY,
     srcX: 2680,

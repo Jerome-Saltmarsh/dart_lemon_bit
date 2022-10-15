@@ -7,7 +7,7 @@ void renderWireFrameBlue(
     int row,
     int column,
     ) {
-  return render(
+  return renderBuffer(
     dstX: getTileWorldX(row, column),
     dstY: getTileWorldY(row, column) - (z * tileHeight),
     srcX: 6944,
@@ -19,7 +19,7 @@ void renderWireFrameBlue(
 }
 
 void renderWireFrameRed(int row, int column, int z) {
-  return render(
+  return renderBuffer(
     dstX: getTileWorldX(row, column),
     dstY: getTileWorldY(row, column) - (z * tileHeight),
     srcX: 6895,

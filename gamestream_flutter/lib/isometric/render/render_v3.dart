@@ -9,7 +9,7 @@ void renderV3({
   required double srcHeight,
   double srcY = 0,
 }) =>
-    render(
+    renderBuffer(
       dstX: value.renderX,
       dstY: value.renderY,
       srcX: srcX,

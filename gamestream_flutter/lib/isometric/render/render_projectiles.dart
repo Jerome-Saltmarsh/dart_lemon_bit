@@ -48,7 +48,7 @@ void renderProjectile(Projectile value) {
 const piQuarter = pi * 0.25;
 
 void renderPixelRed(double x, double y){
-  return render(dstX: x, dstY: y, srcX: 144, srcY: 0, srcWidth: 8, srcHeight: 8);
+  return renderBuffer(dstX: x, dstY: y, srcX: 144, srcY: 0, srcWidth: 8, srcHeight: 8);
 }
 
 void renderFireball(double x, double y, double rotation) {
@@ -87,7 +87,7 @@ void renderArrow(double x, double y, double angle) {
 }
 
 void renderOrb(double x, double y) {
-  render(
+  renderBuffer(
       dstX: x,
       dstY: y,
       srcX: 417,

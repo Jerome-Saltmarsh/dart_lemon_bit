@@ -49,7 +49,7 @@ void renderCharacterWeaponHandgun(Character character) {
   const size = 32.0;
   final direction = character.aimDirection;
 
-  render(
+  renderBuffer(
     dstX: character.renderX + getAdjacent(angle, distance),
     dstY: character.renderY + getOpposite(angle, distance) - 8,
     srcX: 224,
@@ -77,7 +77,7 @@ void renderCharacterWeaponShotgun(Character character) {
   const size = 32.0;
   final direction = character.aimDirection;
 
-  render(
+  renderBuffer(
     dstX: character.renderX + getAdjacent(angle, distance),
     dstY: character.renderY + getOpposite(angle, distance) - 8,
     srcX: 256,
@@ -94,7 +94,7 @@ void renderCharacterWeaponBlade(Character character) {
   const size = 64.0;
   final direction = character.aimDirection;
 
-  render(
+  renderBuffer(
     dstX: character.renderX + getAdjacent(angle, distance),
     dstY: character.renderY + getOpposite(angle, distance) - 8,
     srcX: 304,
@@ -413,7 +413,7 @@ void renderCharacterTemplateWeapon(Character character) {
         mapToLayerWeapon(character.weapon), getNodeBelowShade(character));
     return;
   }
-  render(
+  renderBuffer(
     dstX: character.renderX,
     dstY: character.renderY,
     srcX: _getTemplateSrcX(character, size: 96),
@@ -432,7 +432,7 @@ void renderCharacterTemplateShadow(Character character) {
 }
 
 void _renderCharacterPart(Character character, int layer, int color) {
-  render(
+  renderBuffer(
     dstX: character.renderX,
     dstY: character.renderY,
     srcX: _getTemplateSrcX(character, size: 64),
@@ -457,7 +457,7 @@ void renderCharacterTemplatePartCustom({
   required int layer,
   required int color,
 }) =>
-  render(
+    renderBuffer(
     dstX: renderX,
     dstY: renderY,
     srcX: getTemplateSrcXCustom(
@@ -492,7 +492,7 @@ void renderCharacterTemplatePartCustom96({
   required int weapon,
   required int color,
 }) =>
-    render(
+    renderBuffer(
       dstX: renderX,
       dstY: renderY,
       srcX: getTemplateSrcXCustom(
