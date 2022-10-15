@@ -12,7 +12,6 @@ import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
-import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emmissions_particles.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
@@ -27,7 +26,6 @@ import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/render_shadow.dart';
-import 'package:gamestream_flutter/isometric/render/render_util.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
@@ -189,6 +187,9 @@ class RenderEngine {
       totalRemaining++;
     }
   }
+  
+  static double getRenderX(Vector3 v3) => (v3.x - v3.y) * 0.5;
+  static double getRenderY(Vector3 v3) => ((v3.y + v3.x) * 0.5) - v3.z;
 
   static void renderGameObject(GameObject gameObject) {
     switch (gameObject.type) {
@@ -206,8 +207,8 @@ class RenderEngine {
       case GameObjectType.Loot:
         Engine.renderSprite(
           image: Images.gameobjects,
-          dstX: RenderUtil.getRenderX(gameObject),
-          dstY: RenderUtil.getRenderY(gameObject),
+          dstX: getRenderX(gameObject),
+          dstY: getRenderY(gameObject),
           srcX: AtlasSrcGameObjects.Loot_X,
           srcY: AtlasSrcGameObjects.Loot_Y,
           srcWidth: AtlasSrcGameObjects.Loot_Width,
@@ -218,8 +219,8 @@ class RenderEngine {
       case GameObjectType.Barrel:
         Engine.renderSprite(
           image: Images.gameobjects,
-          dstX: RenderUtil.getRenderX(gameObject),
-          dstY: RenderUtil.getRenderY(gameObject),
+          dstX: getRenderX(gameObject),
+          dstY: getRenderY(gameObject),
           srcX: AtlasSrcGameObjects.Barrel_X,
           srcY: AtlasSrcGameObjects.Barrel_Y,
           srcWidth: AtlasSrcGameObjects.Barrel_Width,
@@ -231,8 +232,8 @@ class RenderEngine {
       case GameObjectType.Tavern_Sign:
         Engine.renderSprite(
           image: Images.gameobjects,
-          dstX: RenderUtil.getRenderX(gameObject),
-          dstY: RenderUtil.getRenderY(gameObject),
+          dstX: getRenderX(gameObject),
+          dstY: getRenderY(gameObject),
           srcX: AtlasSrcGameObjects.Tavern_Sign_X,
           srcY: AtlasSrcGameObjects.Tavern_Sign_Y,
           srcWidth: AtlasSrcGameObjects.Tavern_Sign_Width,
@@ -242,8 +243,8 @@ class RenderEngine {
         return;
       case GameObjectType.Candle:
         Engine.renderBuffer(
-          dstX: RenderUtil.getRenderX(gameObject),
-          dstY: RenderUtil.getRenderY(gameObject),
+          dstX: getRenderX(gameObject),
+          dstY: getRenderY(gameObject),
           srcX: 1812,
           srcY: 0,
           srcWidth: 3,
@@ -253,8 +254,8 @@ class RenderEngine {
         return;
       case GameObjectType.Bottle:
         Engine.renderBuffer(
-          dstX: RenderUtil.getRenderX(gameObject),
-          dstY: RenderUtil.getRenderY(gameObject),
+          dstX: getRenderX(gameObject),
+          dstY: getRenderY(gameObject),
           srcX: 1811,
           srcY: 11,
           srcWidth: 5,
@@ -265,8 +266,8 @@ class RenderEngine {
         return;
       case GameObjectType.Wheel:
         Engine.renderBuffer(
-          dstX: RenderUtil.getRenderX(gameObject),
-          dstY: RenderUtil.getRenderY(gameObject),
+          dstX: getRenderX(gameObject),
+          dstY: getRenderY(gameObject),
           srcX: 1775,
           srcY: 0,
           srcWidth: 34,
@@ -277,8 +278,8 @@ class RenderEngine {
         return;
       case GameObjectType.Flower:
         Engine.renderBuffer(
-          dstX: RenderUtil.getRenderX(gameObject),
-          dstY: RenderUtil.getRenderY(gameObject),
+          dstX: getRenderX(gameObject),
+          dstY: getRenderY(gameObject),
           srcX: 1680,
           srcY: 0,
           srcWidth: 16,
@@ -288,8 +289,8 @@ class RenderEngine {
         return;
       case GameObjectType.Stick:
         Engine.renderBuffer(
-          dstX: RenderUtil.getRenderX(gameObject),
-          dstY: RenderUtil.getRenderY(gameObject),
+          dstX: getRenderX(gameObject),
+          dstY: getRenderY(gameObject),
           srcX: 1696,
           srcY: 0,
           srcWidth: 16,
@@ -300,8 +301,8 @@ class RenderEngine {
       case GameObjectType.Crystal:
         Engine.renderSprite(
             image: Images.gameobjects,
-            dstX: RenderUtil.getRenderX(gameObject),
-            dstY: RenderUtil.getRenderY(gameObject),
+            dstX: getRenderX(gameObject),
+            dstY: getRenderY(gameObject),
             srcX: AtlasSrcGameObjects.Crystal_Large_X,
             srcY: AtlasSrcGameObjects.Crystal_Large_Y,
             srcWidth: AtlasSrcGameObjects.Crystal_Large_Width,
@@ -311,8 +312,8 @@ class RenderEngine {
         return;
       case GameObjectType.Cup:
         Engine.renderBuffer(
-          dstX: RenderUtil.getRenderX(gameObject),
-          dstY: RenderUtil.getRenderY(gameObject),
+          dstX: getRenderX(gameObject),
+          dstY: getRenderY(gameObject),
           srcX: AtlasSrcGameObjects.Cup_X,
           srcY: AtlasSrcGameObjects.Cup_Y,
           srcWidth: AtlasSrcGameObjects.Cup_Width,
@@ -322,8 +323,8 @@ class RenderEngine {
         return;
       case GameObjectType.Lantern_Red:
         Engine.renderBuffer(
-          dstX:RenderUtil.getRenderX(gameObject),
-          dstY:RenderUtil.getRenderY(gameObject),
+          dstX:getRenderX(gameObject),
+          dstY:getRenderY(gameObject),
           srcX: 1744,
           srcY: 48,
           srcWidth: 12,
@@ -334,8 +335,8 @@ class RenderEngine {
         return;
       case GameObjectType.Wooden_Shelf_Row:
         Engine.renderBuffer(
-            dstX:RenderUtil.getRenderX(gameObject),
-            dstY:RenderUtil.getRenderY(gameObject),
+            dstX:getRenderX(gameObject),
+            dstY:getRenderY(gameObject),
             srcX: 1664,
             srcY: 16,
             srcWidth: 32,
@@ -344,8 +345,8 @@ class RenderEngine {
         return;
       case GameObjectType.Book_Purple:
         Engine.renderBuffer(
-          dstX:RenderUtil.getRenderX(gameObject),
-          dstY:RenderUtil.getRenderY(gameObject),
+          dstX:getRenderX(gameObject),
+          dstY:getRenderY(gameObject),
           srcX: 1697,
           srcY: 16,
           srcWidth: 8,
@@ -354,8 +355,8 @@ class RenderEngine {
         return;
       case GameObjectType.Crystal_Small_Blue:
         Engine.renderBuffer(
-          dstX:RenderUtil.getRenderX(gameObject),
-          dstY:RenderUtil.getRenderY(gameObject),
+          dstX:getRenderX(gameObject),
+          dstY:getRenderY(gameObject),
           srcX: 1697,
           srcY: 33,
           srcWidth: 10,
@@ -364,8 +365,8 @@ class RenderEngine {
         return;
       case GameObjectType.Flower_Green:
         Engine.renderBuffer(
-          dstX:RenderUtil.getRenderX(gameObject),
-          dstY:RenderUtil.getRenderY(gameObject),
+          dstX:getRenderX(gameObject),
+          dstY:getRenderY(gameObject),
           srcX: 1696,
           srcY: 53,
           srcWidth: 9,
@@ -380,7 +381,7 @@ class RenderEngine {
     if (gameObject.type == GameObjectType.Weapon_Shotgun) {
       renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
       return Engine.renderBuffer(
-          dstX: RenderUtil.getRenderX(gameObject),
+          dstX: getRenderX(gameObject),
           dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
           srcX: 262,
           srcY: 204,
@@ -393,7 +394,7 @@ class RenderEngine {
     if (gameObject.type == GameObjectType.Weapon_Handgun) {
       renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
       return Engine.renderBuffer(
-          dstX:RenderUtil.getRenderX(gameObject),
+          dstX:getRenderX(gameObject),
           dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
           srcX: 234,
           srcY: 200,
@@ -406,7 +407,7 @@ class RenderEngine {
     if (gameObject.type == GameObjectType.Weapon_Blade) {
       renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
       Engine.renderBuffer(
-          dstX:RenderUtil.getRenderX(gameObject),
+          dstX:getRenderX(gameObject),
           dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
           srcX: 1029,
           srcY: 1644,
@@ -420,7 +421,7 @@ class RenderEngine {
     if (gameObject.type == GameObjectType.Weapon_Bow) {
       renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
       Engine.renderBuffer(
-          dstX:RenderUtil.getRenderX(gameObject),
+          dstX:getRenderX(gameObject),
           dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
           srcX: 7181,
           srcY: 1838,
@@ -434,7 +435,7 @@ class RenderEngine {
     if (gameObject.type == GameObjectType.Weapon_Staff) {
       renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
       Engine.renderBuffer(
-          dstX: RenderUtil.getRenderX(gameObject),
+          dstX: getRenderX(gameObject),
           dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
           srcX: 7119,
           srcY: 1519,
