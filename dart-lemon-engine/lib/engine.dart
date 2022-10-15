@@ -8,9 +8,9 @@ import 'dart:ui' as ui;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lemon_engine/game.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
+import 'package:lemon_watch/watch_builder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_html/html.dart';
 import 'package:url_strategy/url_strategy.dart' as us;
@@ -257,7 +257,6 @@ class Engine {
     bool setPathUrlStrategy = true,
     Color backgroundColor = DefaultBackgroundColor,
   }){
-    WidgetsFlutterBinding.ensureInitialized();
     Engine.watchTitle.value = title;
     Engine.onInit = init;
     Engine.onUpdate = update;
@@ -284,23 +283,7 @@ class Engine {
     if (setPathUrlStrategy){
       us.setPathUrlStrategy();
     }
-
-    paint.filterQuality = FilterQuality.none;
-    paint.isAntiAlias = false;
-    keyboard.addListener(internalOnKeyboardEvent);
-
-    mouseRightDown.onChanged((bool value) {
-      if (value) {
-        onRightClicked?.call();
-      }
-    });
-
-    document.onFullscreenChange.listen((event) {
-      fullScreen.value = fullScreenActive;
-    });
-
-    loadAtlas('images/atlas.png');
-
+    WidgetsFlutterBinding.ensureInitialized();
     runZonedGuarded(Engine._internalInit, internalOnError);
   }
 
@@ -484,12 +467,26 @@ class Engine {
     MillisecondsPerSecond ~/ framesPerSecond;
 
   static Future _internalInit() async {
-    print("engine.internalInit()");
-    runApp(Game());
+    runApp(internalBuildApp());
+
+    paint.filterQuality = FilterQuality.none;
+    paint.isAntiAlias = false;
+    keyboard.addListener(internalOnKeyboardEvent);
+
+    mouseRightDown.onChanged((bool value) {
+      if (value) {
+        onRightClicked?.call();
+      }
+    });
+
+    document.onFullscreenChange.listen((event) {
+      fullScreen.value = fullScreenActive;
+    });
+
+    loadAtlas('images/atlas.png');
     disableRightClickContextMenu();
     paint.isAntiAlias = false;
     Engine.sharedPreferences = await SharedPreferences.getInstance();
-    print("sharedPreferences set");
     if (onInit != null) {
       await onInit!(sharedPreferences);
     }
@@ -621,6 +618,88 @@ class Engine {
     }
   }
 
+  static Widget internalBuildApp(){
+    return WatchBuilder(Engine.themeData, (ThemeData? themeData){
+      return MaterialApp(
+        title: Engine.title,
+        // routes: Engine.routes ?? {},
+        theme: themeData,
+        home: Scaffold(
+          body: WatchBuilder(Engine.watchInitialized, (bool value) {
+            if (!value) {
+              return onBuildLoadingScreen != null ? onBuildLoadingScreen!(buildContext) : Text("Loading");
+            }
+            return LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                Engine.internalSetScreenSize(constraints.maxWidth, constraints.maxHeight);
+                Engine.buildContext = context;
+                return Stack(
+                  children: [
+                    internalBuildCanvas(context),
+                    WatchBuilder(Engine.watchBuildUI, (WidgetBuilder? buildUI)
+                    => buildUI != null ? buildUI(context) : const SizedBox()
+                    )
+                  ],
+                );
+              },
+            );
+          }),
+        ),
+        debugShowCheckedModeBanner: false,
+      );
+    });
+  }
+
+  static Widget internalBuildCanvas(BuildContext context) {
+    final child = Listener(
+      onPointerSignal: Engine.internalOnPointerSignal,
+      onPointerDown: Engine.internalOnPointerDown,
+      onPointerUp: Engine.internalOnPointerUp,
+      onPointerHover: Engine.internalOnPointerHover,
+      onPointerMove: Engine.internalOnPointerMove,
+      child: GestureDetector(
+          onTapDown: Engine.onTapDown,
+          onLongPress: Engine.onLongPress,
+          onPanStart: Engine.internalOnPanStart,
+          onPanUpdate: Engine.onPanUpdate,
+          onPanEnd: Engine.internalOnPanEnd,
+          child: WatchBuilder(Engine.watchBackgroundColor, (Color backgroundColor){
+            return Container(
+                color: backgroundColor,
+                width: Engine.screen.width,
+                height: Engine.screen.height,
+                child: CustomPaint(
+                  painter: _GamePainter(repaint: Engine.notifierPaintFrame),
+                  foregroundPainter: _GameForegroundPainter(
+                      repaint: Engine.notifierPaintForeground
+                  ),
+                )
+            );
+          })),
+    );
+
+    return WatchBuilder(Engine.cursorType, (CursorType cursorType) =>
+        MouseRegion(
+          cursor: _mapCursorTypeToSystemMouseCursor(cursorType),
+          child: child,
+        )
+    );
+  }
+}
+
+SystemMouseCursor _mapCursorTypeToSystemMouseCursor(CursorType value){
+  switch (value) {
+    case CursorType.Forbidden:
+      return SystemMouseCursors.forbidden;
+    case CursorType.Precise:
+      return SystemMouseCursors.precise;
+    case CursorType.None:
+      return SystemMouseCursors.none;
+    case CursorType.Click:
+      return SystemMouseCursors.click;
+    default:
+      return SystemMouseCursors.basic;
+  }
 }
 
 typedef CallbackOnScreenSizeChanged = void Function(
@@ -714,5 +793,38 @@ enum CursorType {
   Forbidden,
   Precise,
   Click,
+}
+
+
+// Private Classes
+
+class _GamePainter extends CustomPainter {
+
+  const _GamePainter({required Listenable repaint})
+      : super(repaint: repaint);
+
+  @override
+  void paint(Canvas _canvas, Size size) {
+    Engine.internalPaint(_canvas, size);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
+}
+
+class _GameForegroundPainter extends CustomPainter {
+
+  const _GameForegroundPainter({required Listenable repaint})
+      : super(repaint: repaint);
+
+  @override
+  void paint(Canvas _canvas, Size _size) {
+    Engine.onDrawForeground?.call(Engine.canvas, _size);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
 }
 
