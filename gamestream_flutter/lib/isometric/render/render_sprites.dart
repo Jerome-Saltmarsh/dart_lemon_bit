@@ -100,6 +100,21 @@ class RenderEngine {
     return clamp<int>(value, 0, max(GameState.nodesTotalZ - 1, 0));
   });
 
+  static double get renderX => (RenderEngine.currentNodeRow - RenderEngine.currentNodeColumn) * tileSizeHalf;
+  static double get renderY => convertRowColumnZToY(RenderEngine.currentNodeRow, RenderEngine.currentNodeColumn, RenderEngine.currentNodeZ);
+
+  static void nodesTrimLeft(){
+    final offscreen = RenderEngine.renderOrderGrid.countLeftOffscreen;
+    if (offscreen <= 0) return;
+    RenderEngine.currentNodeColumn -= offscreen;
+    RenderEngine.currentNodeRow += offscreen;
+    while (renderX < RenderEngine.screenLeft){
+      RenderEngine.currentNodeRow++;
+      RenderEngine.currentNodeColumn--;
+    }
+    RenderEngine.nodesSetStart();
+  }
+
   static void nodesSetStart(){
     nodesStartRow = currentNodeRow;
     nodeStartColumn = currentNodeColumn;
@@ -322,9 +337,6 @@ int getRenderLayerShade(int layers){
 
 class RenderOrderNodes extends RenderOrder {
 
-  double get renderX => (RenderEngine.currentNodeRow - RenderEngine.currentNodeColumn) * tileSizeHalf;
-  double get renderY => convertRowColumnZToY(RenderEngine.currentNodeRow, RenderEngine.currentNodeColumn, RenderEngine.currentNodeZ);
-
   @override
   void renderFunction() {
 
@@ -353,9 +365,9 @@ class RenderOrderNodes extends RenderOrder {
       if (!remaining) return;
       calculateMinMaxZ();
       if (!remaining) return;
-      nodesTrimLeft();
+      RenderEngine.nodesTrimLeft();
 
-      while (renderY > RenderEngine.screenBottom) {
+      while (RenderEngine.renderY > RenderEngine.screenBottom) {
         RenderEngine.currentNodeZ++;
         if (RenderEngine.currentNodeZ > RenderEngine.nodesMaxZ) {
           remaining = false;
@@ -448,7 +460,7 @@ class RenderOrderNodes extends RenderOrder {
     RenderEngine.nodesShiftIndex = 0;
     calculateMinMaxZ();
     trimTop();
-    nodesTrimLeft();
+    RenderEngine.nodesTrimLeft();
 
     RenderEngine.currentNodeDstX = (RenderEngine.currentNodeRow - RenderEngine.currentNodeColumn) * nodeSizeHalf;
     RenderEngine.currentNodeDstY = ((RenderEngine.currentNodeRow + RenderEngine.currentNodeColumn) * nodeSizeHalf) - (RenderEngine.currentNodeZ * nodeHeight);
@@ -536,7 +548,7 @@ class RenderOrderNodes extends RenderOrder {
   }
 
   void trimTop() {
-    while (renderY < RenderEngine.screenTop){
+    while (RenderEngine.renderY < RenderEngine.screenTop){
       RenderEngine.nodesShiftIndexDown();
     }
     calculateMinMaxZ();
@@ -565,17 +577,7 @@ class RenderOrderNodes extends RenderOrder {
     }
   }
 
-  void nodesTrimLeft(){
-    final offscreen = countLeftOffscreen;
-    if (offscreen <= 0) return;
-    RenderEngine.currentNodeColumn -= offscreen;
-    RenderEngine.currentNodeRow += offscreen;
-    while (renderX < RenderEngine.screenLeft){
-      RenderEngine.currentNodeRow++;
-      RenderEngine.currentNodeColumn--;
-    }
-    RenderEngine.nodesSetStart();
-  }
+
 
 
 
