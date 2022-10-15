@@ -1,13 +1,13 @@
 
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 
-final gameObjects = <GameObject>[];
-var totalGameObjects = 0;
+
 
 
 GameObject getInstanceGameObject(){
-  if (gameObjects.length <= totalGameObjects){
-    gameObjects.add(GameObject());
+  if (GameState.gameObjects.length <= GameState.totalGameObjects){
+    GameState.gameObjects.add(GameObject());
   }
-  return gameObjects[totalGameObjects++];
+  return GameState.gameObjects[GameState.totalGameObjects++];
 }

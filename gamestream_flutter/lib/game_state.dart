@@ -7,6 +7,7 @@ import 'package:bleed_common/node_type.dart';
 import 'package:gamestream_flutter/audio_engine.dart';
 import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
+import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/classes/particle_emitter.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
@@ -28,6 +29,7 @@ class GameState {
   static final edit = Watch(false, onChanged: onChangedEdit);
   static final player = Player();
 
+  static final gameObjects = <GameObject>[];
   static final characters = <Character>[];
   static final players = <Character>[];
   static final npcs = <Character>[];
@@ -36,6 +38,7 @@ class GameState {
   static final projectiles = <Projectile>[];
   static final particleEmitters = <ParticleEmitter>[];
 
+  static var totalGameObjects = 0;
   static var totalCharacters = 0;
   static var totalPlayers = 0;
   static var totalNpcs = 0;

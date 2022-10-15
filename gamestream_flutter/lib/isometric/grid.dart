@@ -184,7 +184,7 @@ void applyBakeMapEmissions() {
     }
   }
 
-  for (final gameObject in gameObjects){
+  for (final gameObject in GameState.gameObjects){
     if (gameObject.type == GameObjectType.Crystal){
       applyEmissionBake(
         zIndex: gameObject.indexZ,

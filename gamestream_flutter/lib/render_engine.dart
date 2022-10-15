@@ -109,17 +109,14 @@ class RenderEngine {
   static double get currentNodeRenderY => convertRowColumnZToY(currentNodeRow, currentNodeColumn, currentNodeZ);
 
 
-  static void renderCurrentParticle(){
+  static void renderCurrentParticle() =>
     renderParticle(currentParticle);
-  }
 
-  static void renderCurrentProjectile(){
+  static void renderCurrentProjectile() =>
     renderProjectile(currentRenderProjectile);
-  }
 
-  static void renderCurrentGameObject(){
+  static void renderCurrentGameObject() =>
     renderGameObject(currentRenderGameObject);
-  }
 
   static void updateCurrentParticle(){
     currentParticle = GameState.particles[renderOrderParticle.index];
@@ -134,7 +131,7 @@ class RenderEngine {
   }
 
   static void updateCurrentGameObject(){
-    currentRenderGameObject = gameObjects[renderOrderGameObjects.index];
+    currentRenderGameObject = GameState.gameObjects[renderOrderGameObjects.index];
     renderOrderGameObjects.order = currentRenderGameObject.renderOrder;
     renderOrderGameObjects.orderZ = currentRenderGameObject.indexZ;
   }
@@ -767,7 +764,7 @@ class RenderOrderCharacters extends RenderOrder {
 class RenderOrderGameObjects extends RenderOrder {
 
   @override
-  int getTotal() => totalGameObjects;
+  int getTotal() => GameState.totalGameObjects;
 
   @override
   void renderFunction() => RenderEngine.renderCurrentGameObject();

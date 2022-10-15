@@ -31,9 +31,9 @@ void updateGameObjects() {
   // updateCrystals();
   if (nextBubble-- > 0) return;
   nextBubble = 50;
-  for (var i = 0; i < totalGameObjects; i++) {
-    if (!GameObjectType.emitsBubbles(gameObjects[i].type)) continue;
-    spawnParticleBubbleV3(gameObjects[i]);
+  for (var i = 0; i < GameState.totalGameObjects; i++) {
+    if (!GameObjectType.emitsBubbles(GameState.gameObjects[i].type)) continue;
+    spawnParticleBubbleV3(GameState.gameObjects[i]);
   }
 }
 
@@ -41,9 +41,9 @@ void updateGameObjects() {
 void updateCrystals(){
   if (nextCrystalEmission++ < 15) return;
   nextCrystalEmission = 0;
-  for (var i = 0; i < totalGameObjects; i++) {
-    if (gameObjects[i].type != GameObjectType.Crystal) continue;
-    final crystal = gameObjects[i];
+  for (var i = 0; i < GameState.totalGameObjects; i++) {
+    if (GameState.gameObjects[i].type != GameObjectType.Crystal) continue;
+    final crystal = GameState.gameObjects[i];
     spawnParticleOrbShard(
       x: crystal.x,
       y: crystal.y,

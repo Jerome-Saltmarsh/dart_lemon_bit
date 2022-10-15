@@ -10,12 +10,12 @@ import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'apply_vector_emission.dart';
 
 void applyEmissionGameObjects() {
-   for (var i = 0; i < totalGameObjects; i++){
-      if (!GameObjectType.emitsLightBright(gameObjects[i].type)) continue;
-      applyVector3Emission(gameObjects[i], maxBrightness: Shade.Very_Bright);
+   for (var i = 0; i < GameState.totalGameObjects; i++){
+      if (!GameObjectType.emitsLightBright(GameState.gameObjects[i].type)) continue;
+      applyVector3Emission(GameState.gameObjects[i], maxBrightness: Shade.Very_Bright);
    }
-   for (var i = 0; i < totalGameObjects; i++){
-      final gameObject = gameObjects[i];
+   for (var i = 0; i < GameState.totalGameObjects; i++){
+      final gameObject = GameState.gameObjects[i];
       if (gameObject.type != GameObjectType.Candle) continue;
       // gameObject.tile.applyLight1();
       // gameObject.tileBelow.applyLight1();
