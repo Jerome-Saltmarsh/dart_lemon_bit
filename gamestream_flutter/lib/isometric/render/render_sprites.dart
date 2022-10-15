@@ -35,94 +35,84 @@ import '../lighting/apply_emissions_gameobjects.dart';
 import 'render_particle.dart';
 
 
-final renderOrderGrid = RenderOrderGrid();
-final renderOrderParticle = RenderOrderParticle();
-final renderOrderProjectiles = RenderOrderProjectiles();
-final renderOrderCharacters = RenderOrderCharacters();
-final renderOrderGameObjects = RenderOrderGameObjects();
 
+class RenderEngine {
+  static var totalRemaining = 0;
+  static var totalIndex = 0;
+  static final renderOrderGrid = RenderOrderGrid();
+  static final renderOrderParticle = RenderOrderParticle();
+  static final renderOrderProjectiles = RenderOrderProjectiles();
+  static final renderOrderCharacters = RenderOrderCharacters();
+  static final renderOrderGameObjects = RenderOrderGameObjects();
 
-// final renderOrder = <RenderOrder> [
-//   RenderOrderGrid(),
-//   RenderOrderParticle(),
-//   RenderOrderProjectiles(),
-//   RenderOrderCharacters(),
-//   RenderOrderGameObjects(),
-// ];
+  static final maxZRender = Watch<int>(nodesTotalZ, clamp: (int value){
+    return clamp<int>(value, 0, max(nodesTotalZ - 1, 0));
+  });
 
-// renderOrderLength gets called a lot during rendering so use a const and update it manually if need be
-// const renderOrderLength = 5;
-// var renderOrderFirst = renderOrder.first;
-var totalRemaining = 0;
-var totalIndex = 0;
-
-final maxZRender = Watch<int>(nodesTotalZ, clamp: (int value){
-  return clamp<int>(value, 0, max(nodesTotalZ - 1, 0));
-});
-
-void resetRenderOrder(RenderOrder value){
-  value.reset();
-  if (value.remaining){
-    totalRemaining++;
+  static void resetRenderOrder(RenderOrder value){
+    value.reset();
+    if (value.remaining){
+      totalRemaining++;
+    }
   }
-}
 
-void renderSprites() {
-  totalRemaining = 0;
-  resetRenderOrder(renderOrderCharacters);
-  resetRenderOrder(renderOrderGameObjects);
-  resetRenderOrder(renderOrderGrid);
-  resetRenderOrder(renderOrderParticle);
-  resetRenderOrder(renderOrderProjectiles);
+  static void renderSprites() {
+    totalRemaining = 0;
+    resetRenderOrder(renderOrderCharacters);
+    resetRenderOrder(renderOrderGameObjects);
+    resetRenderOrder(renderOrderGrid);
+    resetRenderOrder(renderOrderParticle);
+    resetRenderOrder(renderOrderProjectiles);
 
-  RenderOrder first = renderOrderGrid;
+    RenderOrder first = renderOrderGrid;
 
-  if (totalRemaining == 0) return;
-
-  while (true) {
-    RenderOrder next = first;
-    if (renderOrderCharacters.remaining){
-      next = next.compare(renderOrderCharacters);
-    }
-    if (renderOrderProjectiles.remaining){
-      next = next.compare(renderOrderProjectiles);
-    }
-    if (renderOrderGameObjects.remaining){
-      next = next.compare(renderOrderGameObjects);
-    }
-    if (renderOrderParticle.remaining){
-      next = next.compare(renderOrderParticle);
-    }
-    next.renderNext();
-    if (next.remaining) continue;
-    totalRemaining--;
     if (totalRemaining == 0) return;
 
-    if (totalRemaining > 1) {
-      if (next == renderOrderGrid) {
-        if (renderOrderCharacters.remaining) {
-          next = renderOrderCharacters;
-        }
-        if (renderOrderProjectiles.remaining) {
-          next = renderOrderProjectiles;
-        }
-        if (renderOrderGameObjects.remaining) {
-          next = renderOrderGameObjects;
-        }
-        if (renderOrderParticle.remaining) {
-          next = renderOrderParticle;
-        }
+    while (true) {
+      RenderOrder next = first;
+      if (renderOrderCharacters.remaining){
+        next = next.compare(renderOrderCharacters);
       }
-      continue;
-    }
+      if (renderOrderProjectiles.remaining){
+        next = next.compare(renderOrderProjectiles);
+      }
+      if (renderOrderGameObjects.remaining){
+        next = next.compare(renderOrderGameObjects);
+      }
+      if (renderOrderParticle.remaining){
+        next = next.compare(renderOrderParticle);
+      }
+      next.renderNext();
+      if (next.remaining) continue;
+      totalRemaining--;
+      if (totalRemaining == 0) return;
 
-    while (renderOrderGrid.remaining) {
-      renderOrderGrid.renderNext();
+      if (totalRemaining > 1) {
+        if (next == renderOrderGrid) {
+          if (renderOrderCharacters.remaining) {
+            next = renderOrderCharacters;
+          }
+          if (renderOrderProjectiles.remaining) {
+            next = renderOrderProjectiles;
+          }
+          if (renderOrderGameObjects.remaining) {
+            next = renderOrderGameObjects;
+          }
+          if (renderOrderParticle.remaining) {
+            next = renderOrderParticle;
+          }
+        }
+        continue;
+      }
+
+      while (renderOrderGrid.remaining) {
+        renderOrderGrid.renderNext();
+      }
+      while (renderOrderCharacters.remaining) {
+        renderOrderCharacters.renderNext();
+      }
+      return;
     }
-    while (renderOrderCharacters.remaining) {
-      renderOrderCharacters.renderNext();
-    }
-    return;
   }
 }
 
@@ -695,5 +685,5 @@ int getRenderColumn(int column, int z){
 }
 
 void renderTotalIndex(Vector3 position){
-  renderText(text: totalIndex.toString(), x: position.renderX, y: position.renderY - 100);
+  renderText(text: RenderEngine.totalIndex.toString(), x: position.renderX, y: position.renderY - 100);
 }

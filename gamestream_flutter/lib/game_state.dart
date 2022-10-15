@@ -38,9 +38,6 @@ class GameState {
 
   static var totalActiveParticles = 0;
   static var ambientColor = colorShades[Shade.Bright];
-
-  static final ambientShade = Watch(Shade.Bright, onChanged: onChangedAmbientShade);
-  static const nodesInitialSize = 70 * 70 * 8;
   static var nodesBake = Uint8List(nodesInitialSize);
   static var nodesColor = Int32List(nodesInitialSize);
   static var nodesOrientation = Uint8List(nodesInitialSize);
@@ -55,6 +52,8 @@ class GameState {
   static var visibleIndex = 0;
   static var dynamicIndex = 0;
 
+  static final ambientShade = Watch(Shade.Bright, onChanged: onChangedAmbientShade);
+  static const nodesInitialSize = 70 * 70 * 8;
 
   // QUERIES
 

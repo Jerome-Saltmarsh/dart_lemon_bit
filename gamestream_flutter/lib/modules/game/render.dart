@@ -45,7 +45,7 @@ class GameRender {
     interpolatePlayer();
     updateCameraMode();
     attackTargetCircle();
-    renderSprites();
+    RenderEngine.renderSprites();
     renderEditMode();
     renderMouseTargetName();
     renderWeaponRoundInformation();

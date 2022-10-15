@@ -25,18 +25,18 @@ Widget buildPanelMaxZRender() {
     container(
         child: "+",
         action: () {
-          maxZRender.value++;
+          RenderEngine.maxZRender.value++;
         },
         alignment: Alignment.center),
     container(
-        child: watch(maxZRender, (int max) {
+        child: watch(RenderEngine.maxZRender, (int max) {
           return text('MaxZRender: $max');
         }),
         alignment: Alignment.center),
     container(
         child: "-",
         action: () {
-          maxZRender.value--;
+          RenderEngine.maxZRender.value--;
         },
         alignment: Alignment.center),
   ]);
