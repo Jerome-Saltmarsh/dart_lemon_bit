@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_map.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
@@ -50,7 +50,7 @@ Widget buildButtonTogglePlayMode() {
 }
 
 Widget buildButtonShowMap() => Tooltip(
-    message: ("(M)"), child: text("Map", onPressed: actionGameDialogShowMap));
+    message: ("(M)"), child: text("Map", onPressed: GameState.actionGameDialogShowMap));
 
 Widget buildToggleFullscreen() {
   return WatchBuilder(Engine.fullScreen, (bool fullscreen) {

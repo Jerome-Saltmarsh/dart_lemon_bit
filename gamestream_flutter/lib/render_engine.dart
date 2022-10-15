@@ -399,7 +399,7 @@ class RenderEngine {
 
     if (editMode){
       applyEmissionDynamic(
-        index: edit.nodeIndex.value,
+        index: EditState.nodeIndex.value,
         maxBrightness: Shade.Very_Bright,
       );
     }

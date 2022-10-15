@@ -78,7 +78,7 @@ void onPlayerEvent(int event) {
       AudioEngine.audioSingleMaleHello.play();
       break;
     case PlayerEvent.GameObject_Deselected:
-      edit.gameObjectSelected.value = false;
+      EditState.gameObjectSelected.value = false;
       break;
     case PlayerEvent.Player_Moved:
       cameraCenterOnPlayer();

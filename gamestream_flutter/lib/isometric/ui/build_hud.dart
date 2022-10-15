@@ -4,9 +4,7 @@ import 'package:bleed_common/GameType.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/gamestream.dart';
 import 'package:gamestream_flutter/io/touchscreen.dart';
-import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_map.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
@@ -54,7 +52,7 @@ Widget buildStackGame()  =>
           )
         ),
         buildWatchBool(triggerAlarmNoMessageReceivedFromServer, buildDialogFramesSinceUpdate),
-        watch(gamestream.gameType, buildGameTypeUI),
+        watch(GameState.gameType, buildGameTypeUI),
         watch(editorDialog, buildWatchEditorDialog),
         watch(GameState.player.gameDialog, buildGameDialog),
         buildWatchBool(GameState.player.alive, buildContainerRespawn, false),
@@ -187,7 +185,7 @@ Positioned buildMiniMap() =>
     left: 6,
     top: 6,
     child: onPressed(
-      action: actionGameDialogShowMap,
+      action: GameState.actionGameDialogShowMap,
       child: Container(
           padding: const EdgeInsets.all(4),
           color: brownDark,
@@ -213,7 +211,7 @@ Positioned buildTopRightMenu() =>
 
 Widget buildControlsEnvironment() {
   return visibleBuilder(
-    edit.controlsVisibleWeather,
+    EditState.controlsVisibleWeather,
     Container(
       width: Engine.screen.width,
       alignment: Alignment.center,

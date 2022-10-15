@@ -1,13 +1,13 @@
 import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/audio_engine.dart';
+import 'package:gamestream_flutter/game_events.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/events/on_character_hurt.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_attack_performed.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
-import 'package:gamestream_flutter/isometric/events/on_game_event_weapon_type_equipped.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:lemon_math/library.dart';
@@ -43,7 +43,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       break;
     case GameEventType.Weapon_Type_Equipped:
       final attackType =  serverResponseReader.readByte();
-      return onGameEventWeaponTypeEquipped(attackType, x, y, z);
+      return GameEvents.onGameEventWeaponTypeEquipped(attackType, x, y, z);
     case GameEventType.Player_Spawned:
       for (var i = 0; i < 7; i++){
         spawnParticleOrbShard(x: x, y: y, z: z, angle: randomAngle());

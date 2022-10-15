@@ -1,7 +1,7 @@
 import 'package:bleed_common/GameType.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/authentication.dart';
-import 'package:gamestream_flutter/gamestream.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/state.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -118,8 +118,6 @@ class CoreActions {
   }
 
   void disconnect(){
-    print("actions.disconnect()");
-    gamestream.clearGameState();
     webSocket.disconnect();
   }
 
@@ -192,7 +190,7 @@ class CoreActions {
   }
 
   void deselectGameType(){
-    gamestream.gameType.value = null;
+    GameState.gameType.value = null;
   }
 
   void exitGame() => webSocket.disconnect();

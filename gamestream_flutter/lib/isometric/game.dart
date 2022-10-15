@@ -1,6 +1,6 @@
 import 'package:bleed_common/GameType.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_edit.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_data_player_is_owner.dart';
@@ -40,7 +40,7 @@ void messageBoxHide(){
 class Game {
   final editTab = Watch(EditTab.Grid);
   final messageBoxVisible = Watch(false, clamp: (bool value){
-     if (gamestream.gameType.value == GameType.Skirmish) return false;
+     if (GameState.gameType.value == GameType.Skirmish) return false;
      return value;
   }, onChanged: onVisibilityChangedMessageBox);
   final canOpenMapAndQuestMenu = Watch(false);

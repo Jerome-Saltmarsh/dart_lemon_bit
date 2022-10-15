@@ -10,7 +10,6 @@ import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/quest.dart';
 import 'package:bleed_common/type_position.dart';
 import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/gamestream.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
@@ -156,7 +155,7 @@ class ServerResponseReader with ByteReader {
           );
           break;
         case ServerResponse.Game_Type:
-          gamestream.gameType.value = readByte();
+          GameState.gameType.value = readByte();
           break;
         case ServerResponse.Player_Slots:
           GameState.player.weaponSlot1.type.value = readByte();
@@ -217,11 +216,11 @@ class ServerResponseReader with ByteReader {
           final spawnType = readByte();
           final spawnAmount = readInt();
           final spawnRadius = readInt();
-          edit.selectedNodeData.value = SpawnNodeData(
-             spawnType: spawnType,
-             spawnAmount: spawnAmount,
-             spawnRadius: spawnRadius,
-          );
+          // EditState.selectedNodeData.value = SpawnNodeData(
+          //    spawnType: spawnType,
+          //    spawnAmount: spawnAmount,
+          //    spawnRadius: spawnRadius,
+          // );
           break;
         case ServerResponse.Render_Map:
           game.mapVisible.value = readBool();
@@ -388,17 +387,17 @@ class ServerResponseReader with ByteReader {
   }
 
   void readEditorGameObjectSelected() {
-    readVector3(edit.gameObject);
+    readVector3(EditState.gameObject);
     final type = readByte();
-    edit.gameObject.type = type;
-    edit.gameObjectSelectedType.value = type;
+    EditState.gameObject.type = type;
+    EditState.gameObjectSelectedType.value = type;
     if (type == GameObjectType.Particle_Emitter){
-      edit.gameObjectSelectedParticleType.value = readByte();
-      edit.gameObjectSelectedParticleSpawnRate.value = readInt();
+      EditState.gameObjectSelectedParticleType.value = readByte();
+      EditState.gameObjectSelectedParticleSpawnRate.value = readInt();
     }
 
-    edit.gameObjectSelected.value = true;
-    edit.cameraCenterSelectedObject();
+    EditState.gameObjectSelected.value = true;
+    EditState.cameraCenterSelectedObject();
   }
 
   void readGameObjectButterfly() {
@@ -553,7 +552,7 @@ class ServerResponseReader with ByteReader {
     assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
     GameState.nodesType[nodeIndex] = nodeType;
     GameState.nodesOrientation[nodeIndex] = nodeOrientation;
-    edit.refreshNodeSelectedIndex();
+    EditState.refreshNodeSelectedIndex();
     onGridChanged();
   }
 

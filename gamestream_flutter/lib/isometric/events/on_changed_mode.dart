@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/network/send_client_request.dart';
 
 void onChangedMode(bool mode){
   if (mode){
-    edit.deselectGameObject();
+    EditState.deselectGameObject();
     cameraModeSetChase();
     sendClientRequestWeatherToggleTimePassing(true);
     sendGameObjectRequestDeselect();

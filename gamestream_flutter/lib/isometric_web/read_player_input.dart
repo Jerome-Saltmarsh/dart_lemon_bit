@@ -28,7 +28,7 @@ void readPlayerInputEdit() {
     Engine.panCamera();
   }
   if (Engine.keyPressed(LogicalKeyboardKey.delete)) {
-    edit.delete();
+    EditState.delete();
   }
   // if (keyPressed(LogicalKeyboardKey.keyR)) {
   //   edit.nodeSelectedIndex.value = edit.nodeSelectedIndex.value;

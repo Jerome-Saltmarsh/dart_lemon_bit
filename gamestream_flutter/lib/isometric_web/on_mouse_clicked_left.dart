@@ -12,10 +12,10 @@ void onMouseClickedLeft(){
 
 void onMouseClickedEditMode(){
   if (shiftLeftDown){
-    edit.selectMouseGameObject();
+    EditState.selectMouseGameObject();
     return;
   }
-  edit.selectMouseBlock();
+  EditState.selectMouseBlock();
   editorActionRecenterCamera();
 }
 

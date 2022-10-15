@@ -91,30 +91,30 @@ class GameRender {
 
   void renderEditMode() {
     if (playMode) return;
-    if (edit.gameObjectSelected.value){
+    if (EditState.gameObjectSelected.value){
       Engine.renderCircleOutline(
         sides: 24,
-        radius: edit.gameObjectSelectedRadius.value,
-        x: edit.gameObject.renderX,
-        y: edit.gameObject.renderY,
+        radius: EditState.gameObjectSelectedRadius.value,
+        x: EditState.gameObject.renderX,
+        y: EditState.gameObject.renderY,
         color: Colors.white,
       );
-      return renderCircleV3(edit.gameObject);
+      return renderCircleV3(EditState.gameObject);
     }
 
     renderEditWireFrames();
     renderMouseWireFrame();
 
-    final nodeData = edit.selectedNodeData.value;
-    if (nodeData != null){
-      Engine.renderCircleOutline(
-           radius: nodeData.spawnRadius.toDouble(),
-           x: edit.renderX,
-           y: edit.renderY,
-           color: Colors.white,
-           sides: 8,
-       );
-    }
+    // final nodeData = EditState.selectedNodeData.value;
+    // if (nodeData != null){
+    //   Engine.renderCircleOutline(
+    //        radius: nodeData.spawnRadius.toDouble(),
+    //        x: EditState.renderX,
+    //        y: EditState.renderY,
+    //        color: Colors.white,
+    //        sides: 8,
+    //    );
+    // }
   }
 
   void renderMouseTargetName() {
@@ -132,10 +132,10 @@ class GameRender {
   }
 
   void renderEditWireFrames() {
-    for (var z = 0; z < edit.z; z++) {
-      renderWireFrameBlue(z, edit.row, edit.column);
+    for (var z = 0; z < EditState.z; z++) {
+      renderWireFrameBlue(z, EditState.row, EditState.column);
     }
-    renderWireFrameRed(edit.row, edit.column, edit.z);
+    renderWireFrameRed(EditState.row, EditState.column, EditState.z);
   }
 
   void attackTargetCircle() {

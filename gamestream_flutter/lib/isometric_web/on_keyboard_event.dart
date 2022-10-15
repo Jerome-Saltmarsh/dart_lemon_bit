@@ -11,8 +11,6 @@ import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
 
-import '../isometric/actions/action_game_dialog_show_map.dart';
-
 void onKeyboardEvent(RawKeyEvent event){
   if (event is RawKeyDownEvent){
     return onRawKeyDownEvent(event);
@@ -29,7 +27,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     return actionToggleEdit();
 
   if (key == PhysicalKeyboardKey.digit5)
-    return edit.paintTorch();
+    return EditState.paintTorch();
   if (key == PhysicalKeyboardKey.keyZ){
     return spawnParticleFirePurple(x: mouseGridX, y: mouseGridY, z: GameState.player.z);
   }
@@ -42,66 +40,66 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     if (key == PhysicalKeyboardKey.keyT)
       return actionGameDialogShowQuests();
     if (key == PhysicalKeyboardKey.keyM)
-      return actionGameDialogShowMap();
+      return GameState.actionGameDialogShowMap();
     return;
   }
 
   // EDIT MODE
-  if (key == PhysicalKeyboardKey.keyF) return edit.paint();
-  if (key == PhysicalKeyboardKey.keyR) return edit.selectPaintType();
+  if (key == PhysicalKeyboardKey.keyF) return EditState.paint();
+  if (key == PhysicalKeyboardKey.keyR) return EditState.selectPaintType();
   if (key == PhysicalKeyboardKey.keyG) {
-    if (edit.gameObjectSelected.value) {
+    if (EditState.gameObjectSelected.value) {
       sendGameObjectRequestMoveToMouse();
     } else {
-      cameraSetPositionGrid(edit.row, edit.column, edit.z);
+      cameraSetPositionGrid(EditState.row, EditState.column, EditState.z);
     }
   }
 
   if (key == PhysicalKeyboardKey.digit1)
-    return edit.delete();
+    return EditState.delete();
   if (key == PhysicalKeyboardKey.digit2)
-    return edit.paintGrass();
+    return EditState.paintGrass();
   if (key == PhysicalKeyboardKey.digit3)
-    return edit.paintWater();
+    return EditState.paintWater();
   if (key == PhysicalKeyboardKey.digit4)
-    return edit.paintBricks();
+    return EditState.paintBricks();
   if (key == PhysicalKeyboardKey.arrowUp) {
     if (shiftLeftDown) {
-      if (edit.gameObjectSelected.value){
-        return edit.translate(x: 0, y: 0, z: 1);
+      if (EditState.gameObjectSelected.value){
+        return EditState.translate(x: 0, y: 0, z: 1);
       }
-      edit.cursorZIncrease();
+      EditState.cursorZIncrease();
     } else {
-      if (edit.gameObjectSelected.value){
-        return edit.translate(x: -1, y: -1, z: 0);
+      if (EditState.gameObjectSelected.value){
+        return EditState.translate(x: -1, y: -1, z: 0);
       }
-      edit.cursorRowDecrease();
+      EditState.cursorRowDecrease();
     }
   }
   if (key == PhysicalKeyboardKey.arrowRight) {
-    if (edit.gameObjectSelected.value){
-      return edit.translate(x: 1, y: -1, z: 0);
+    if (EditState.gameObjectSelected.value){
+      return EditState.translate(x: 1, y: -1, z: 0);
     }
-    edit.cursorColumnDecrease();
+    EditState.cursorColumnDecrease();
   }
   if (key == PhysicalKeyboardKey.arrowDown) {
     if (shiftLeftDown) {
-      if (edit.gameObjectSelected.value){
-        return edit.translate(x: 0, y: 0, z: -1);
+      if (EditState.gameObjectSelected.value){
+        return EditState.translate(x: 0, y: 0, z: -1);
       }
-      edit.cursorZDecrease();
+      EditState.cursorZDecrease();
     } else {
-      if (edit.gameObjectSelected.value){
-        return edit.translate(x: 1, y: 1, z: 0);
+      if (EditState.gameObjectSelected.value){
+        return EditState.translate(x: 1, y: 1, z: 0);
       }
-      edit.cursorRowIncrease();
+      EditState.cursorRowIncrease();
     }
   }
   if (key == PhysicalKeyboardKey.arrowLeft) {
-    if (edit.gameObjectSelected.value){
-      return edit.translate(x: -1, y: 1, z: 0);
+    if (EditState.gameObjectSelected.value){
+      return EditState.translate(x: -1, y: 1, z: 0);
     }
-    edit.cursorColumnIncrease();
+    EditState.cursorColumnIncrease();
   }
 }
 

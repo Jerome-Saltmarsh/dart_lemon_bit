@@ -24,7 +24,7 @@ Widget buildEditorSelectedNode() =>
           children: [
             onPressed(
               hint: "Delete",
-              action: edit.delete,
+              action: EditState.delete,
               child: Container(
                 width: 16,
                 height: 16,
@@ -33,7 +33,7 @@ Widget buildEditorSelectedNode() =>
                   srcY: 96,
                   srcWidth: 16,
                   srcHeight: 16,
-                  action: edit.delete,
+                  action: EditState.delete,
                 ),
               ),
             ),
@@ -43,7 +43,7 @@ Widget buildEditorSelectedNode() =>
           height: 70,
             alignment: Alignment.center,
             child: watch(
-                edit.nodeSelectedType,
+                EditState.nodeSelectedType,
                     (int nodeType) =>
                         text(NodeType.getName(nodeType), align: TextAlign.center)
             )
@@ -62,7 +62,7 @@ Widget buildEditorSelectedNode() =>
                 left: 27 + _shiftX,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) =>
                       buildAtlasImageButton(
-                          action: edit.cursorZDecrease,
+                          action: EditState.cursorZDecrease,
                           srcX: mouseOver ? 9673 : 9650,
                           srcY: 27,
                           srcWidth: 19,
@@ -75,7 +75,7 @@ Widget buildEditorSelectedNode() =>
                 top: 3 + _shiftY,
                 left: 3 + _shiftY,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
-                  action: edit.cursorRowIncrease,
+                  action: EditState.cursorRowIncrease,
                   srcX: mouseOver ? 9672 : 9649,
                   srcY: 110,
                   srcWidth: 21,
@@ -87,7 +87,7 @@ Widget buildEditorSelectedNode() =>
                 top: 5 + _shiftY,
                 left: 50 + _shiftX,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
-                    action: edit.cursorColumnIncrease,
+                    action: EditState.cursorColumnIncrease,
                     srcX: mouseOver ? 9672 : 9649,
                     srcY: 137,
                     srcWidth: 21,
@@ -99,12 +99,12 @@ Widget buildEditorSelectedNode() =>
                   height: 72,
                   width: 72,
                   alignment: Alignment.center,
-                  child: watch(edit.nodeSelectedType, buildIconNodeType)),
+                  child: watch(EditState.nodeSelectedType, buildIconNodeType)),
               Positioned(
                 top: 50 + _shiftY,
                 left: 50 + _shiftX,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
-                  action: edit.cursorRowDecrease,
+                  action: EditState.cursorRowDecrease,
                   srcX: mouseOver ? 9672 : 9649,
                   srcY: 56,
                   srcWidth: 21,
@@ -116,7 +116,7 @@ Widget buildEditorSelectedNode() =>
                 top: -10 + _shiftY,
                 left: 27 + _shiftX,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
-                  action: edit.cursorZIncrease,
+                  action: EditState.cursorZIncrease,
                   srcX: mouseOver ? 9673 : 9650,
                   srcY: 0,
                   srcWidth: 21,
@@ -128,7 +128,7 @@ Widget buildEditorSelectedNode() =>
                 top: 50 + _shiftY,
                 left: 0 + _shiftX,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
-                    action: edit.cursorColumnDecrease,
+                    action: EditState.cursorColumnDecrease,
                     srcX: mouseOver ? 9672 : 9649,
                     srcY: 83,
                     srcWidth: 21,

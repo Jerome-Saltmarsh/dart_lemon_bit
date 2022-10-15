@@ -279,7 +279,7 @@ Widget buildButtonSelectNodeType(int nodeType) {
     srcWidth: mapNodeTypeToSrcWidth(nodeType),
     srcHeight: mapNodeTypeToSrcHeight(nodeType),
   );
-  return WatchBuilder(edit.nodeSelectedType, (int selectedNodeType) {
+  return WatchBuilder(EditState.nodeSelectedType, (int selectedNodeType) {
     return container(
         height: 78,
         width: 78,
@@ -290,7 +290,7 @@ Widget buildButtonSelectNodeType(int nodeType) {
             actionSetModePlay();
             return;
           }
-          edit.paint(nodeType: nodeType);
+          EditState.paint(nodeType: nodeType);
         },
         color: selectedNodeType == nodeType ? greyDark : grey);
   });

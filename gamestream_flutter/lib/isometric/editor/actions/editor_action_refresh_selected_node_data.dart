@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/isometric/edit.dart';
+
 
 void editorActionRefreshSelectedNodeData(){
   // sendClientRequestSpawnNodeData(
@@ -10,5 +10,5 @@ void editorActionRefreshSelectedNodeData(){
 }
 
 void editorActionClearSelectedNodeData(){
-  edit.selectedNodeData.value = null;
+  // EditState.selectedNodeData.value = null;
 }

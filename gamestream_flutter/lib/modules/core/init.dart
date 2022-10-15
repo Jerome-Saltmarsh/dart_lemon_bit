@@ -25,7 +25,7 @@ Future init(SharedPreferences sharedPreferences) async {
   ImagesTemplateWeapons.handgun = await Engine.loadImageAsset('images/template/weapons/template-weapons-handgun.png');
   ImagesTemplateWeapons.shotgun = await Engine.loadImageAsset('images/template/weapons/template-weapons-shotgun.png');
   Engine.cursorType.value = CursorType.Basic;
-  print("environment: ${Engine.isLocalHost ? 'localhost' : 'production'}");
   Engine.onDrawCanvas = Website.renderCanvas;
+  print("environment: ${Engine.isLocalHost ? 'localhost' : 'production'}");
 }
 

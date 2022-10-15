@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/Shade.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_type.dart';
@@ -9,16 +10,20 @@ import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/classes/particle_emitter.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
+import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_action_finished_lightning_flash.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_ambient_shade.dart';
+import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_vector_emission.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
 class GameState {
+  static final gameType = Watch<int?>(null, onChanged: onChangedGameType);
   static final player = Player();
 
   static final characters = <Character>[];
@@ -151,5 +156,26 @@ class GameState {
       nodesType[i] = NodeType.Empty;
       nodesOrientation[i] = NodeOrientation.None;
     }
+  }
+
+  static void onChangedGameType(int? value){
+    print("gamestream.onChangedGameType(${GameType.getName(value)})");
+    if (value == null) {
+      return;
+    }
+    game.edit.value = value == GameType.Editor;
+    game.timeVisible.value = GameType.isTimed(value);
+    game.mapVisible.value = value == GameType.Dark_Age;
+    Engine.fullScreenEnter();
+  }
+
+  static void actionGameDialogShowMap() {
+    if (gameType.value != GameType.Dark_Age) return;
+
+    if (player.gameDialog.value == GameDialog.Map){
+      player.gameDialog.value = null;
+      return;
+    }
+    player.gameDialog.value = GameDialog.Map;
   }
 }

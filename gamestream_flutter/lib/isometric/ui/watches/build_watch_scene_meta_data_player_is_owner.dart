@@ -34,7 +34,7 @@ Widget buildStackEdit(EditTab activeEditTab) =>
         right: 6,
         top: 80,
         child: buildWatchBool(
-            edit.nodeOrientationVisible,
+            EditState.nodeOrientationVisible,
             buildColumnEditNodeOrientation
         ),
       ),
@@ -49,7 +49,7 @@ Widget buildStackEdit(EditTab activeEditTab) =>
           left: 0,
           top: 50,
           child: container(child: 'Spawn Zombie', action: (){
-            sendClientRequestEdit(EditRequest.Spawn_Zombie, edit.nodeIndex.value);
+            sendClientRequestEdit(EditRequest.Spawn_Zombie, EditState.nodeIndex.value);
           }),
         ),
       if (activeEditTab == EditTab.Grid)
@@ -72,7 +72,7 @@ Widget buildStackEdit(EditTab activeEditTab) =>
               width: Engine.screen.width,
               alignment: Alignment.center,
               child: buildWatchBool(
-                  edit.controlsVisibleWeather,
+                EditState.controlsVisibleWeather,
                   buildControlsWeather,
               ),
             )
@@ -129,7 +129,7 @@ Widget buildColumnEditNodeOrientation() =>
 
 Widget buildColumnNodeOrientationSolid() =>
     visibleBuilder(
-      edit.nodeSupportsSolid,
+      EditState.nodeSupportsSolid,
       buildOrientationIcon(NodeOrientation.Solid),
     );
 
@@ -146,14 +146,14 @@ Widget buildOrientationIcon(int orientation){
   return onPressed(
     hint: NodeOrientation.getName(orientation),
     action: (){
-      edit.paintOrientation.value = orientation;
+      EditState.paintOrientation.value = orientation;
       sendClientRequestSetBlock(
-          index: edit.nodeIndex.value,
-          type: edit.nodeSelectedType.value,
+          index: EditState.nodeIndex.value,
+          type: EditState.nodeSelectedType.value,
           orientation: orientation,
       );
     },
-    child: watch(edit.nodeSelectedOrientation, (int selectedNodeOrientation) {
+    child: watch(EditState.nodeSelectedOrientation, (int selectedNodeOrientation) {
       return Container(
           width: 72,
           height: 72,
@@ -226,7 +226,7 @@ double mapOrientationToSrcY(int orientation){
 
 Widget buildColumnNodeOrientationSlopeSymmetric() =>
     visibleBuilder(
-      edit.nodeSupportsSlopeSymmetric,
+      EditState.nodeSupportsSlopeSymmetric,
       // buildColumnButtonsNodeOrientations(NodeOrientation.valuesSlopeSymmetric),
       Row(
         children: [
@@ -248,7 +248,7 @@ Widget buildColumnNodeOrientationSlopeSymmetric() =>
 
 Widget buildColumnNodeOrientationCorner() =>
     visibleBuilder(
-      edit.nodeSupportsCorner,
+        EditState.nodeSupportsCorner,
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -267,7 +267,7 @@ Widget buildColumnNodeOrientationCorner() =>
 
 Widget buildColumnNodeOrientationHalf() =>
     visibleBuilder(
-      edit.nodeSupportsHalf,
+        EditState.nodeSupportsHalf,
         Row(
           children: [
             Column(
@@ -288,7 +288,7 @@ Widget buildColumnNodeOrientationHalf() =>
 
 Widget buildColumnNodeOrientationSlopeCornerInner() =>
     visibleBuilder(
-      edit.nodeSupportsSlopeCornerInner,
+        EditState.nodeSupportsSlopeCornerInner,
         Row(
           children: [
             Column(
@@ -309,7 +309,7 @@ Widget buildColumnNodeOrientationSlopeCornerInner() =>
 
 Widget buildColumnNodeOrientationSlopeCornerOuter() =>
     visibleBuilder(
-      edit.nodeSupportsSlopeCornerOuter,
+        EditState.nodeSupportsSlopeCornerOuter,
         Row(
           children: [
             Column(
@@ -334,14 +334,14 @@ Widget buildColumnButtonsNodeOrientations(List<int> orientations) =>
 
 Widget buildColumnSelectedGameObject() {
 
-  return watch(edit.gameObjectSelected, (bool gameObjectSelected){
+  return watch(EditState.gameObjectSelected, (bool gameObjectSelected){
 
     return Container(
       color: brownLight,
       padding: const EdgeInsets.all(6),
       child: Column(
         children: [
-          watch(edit.gameObjectSelectedType, (int type){
+          watch(EditState.gameObjectSelectedType, (int type){
             return Column(
               children: [
                 text(GameObjectType.getName(type)),
@@ -360,8 +360,8 @@ Widget buildColumnEditParticleEmitter(){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      watch(edit.gameObjectSelectedParticleType, (int particleType) => text("Particle Type: $particleType")),
-      watch(edit.gameObjectSelectedParticleSpawnRate, (int rate) => text("Rate: $rate")),
+      watch(EditState.gameObjectSelectedParticleType, (int particleType) => text("Particle Type: $particleType")),
+      watch(EditState.gameObjectSelectedParticleSpawnRate, (int rate) => text("Rate: $rate")),
     ],
   );
 }
@@ -369,7 +369,7 @@ Widget buildColumnEditParticleEmitter(){
 Column buildControlPaint() {
   return Column(
             children: [
-              watch(edit.paintType, buildPaintType),
+              watch(EditState.paintType, buildPaintType),
             ],
           );
 }
@@ -408,9 +408,9 @@ Widget buildButtonAddGameObject(int type) {
       color: brownLight,
       action: (){
         sendClientRequestAddGameObjectXYZ(
-          x: edit.posX,
-          y: edit.posY,
-          z: edit.posZ,
+          x: EditState.posX,
+          y: EditState.posY,
+          z: EditState.posZ,
           type: type,
         );
       });

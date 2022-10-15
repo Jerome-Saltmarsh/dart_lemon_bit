@@ -14,7 +14,7 @@ Widget buildWatchEditorTab(){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      watch(edit.nodeSelectedType, (int nodeType) => container(child: "${NodeType.getName(nodeType)}", color: brownLight)),
+      watch(EditState.nodeSelectedType, (int nodeType) => container(child: "${NodeType.getName(nodeType)}", color: brownLight)),
       buildColumnSelectNodeType()
     ],
   );

@@ -9,7 +9,7 @@ import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 void onChangedEdit(bool value) {
   if (value) {
      cameraMode = CameraMode.Free;
-     edit.cursorSetToPlayer();
+     EditState.cursorSetToPlayer();
      GameState.player.message.value = "-press arrow keys to move\n\n-press tab to play";
      GameState.player.messageTimer = 300;
   } else {

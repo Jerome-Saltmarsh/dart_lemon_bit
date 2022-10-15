@@ -16,97 +16,79 @@ import 'package:lemon_watch/watch.dart';
 
 import 'utils/mouse_raycast.dart';
 
-final edit = Edit();
+class EditState {
+  static final gameObject = GameObject();
+  static final gameObjectSelected = Watch(false);
+  static final gameObjectSelectedType = Watch(0);
+  static final gameObjectSelectedAmount = Watch(0);
+  static final gameObjectSelectedParticleType = Watch(0);
+  static final gameObjectSelectedParticleSpawnRate = Watch(0);
+  static final gameObjectSelectedRadius = Watch(0.0);
+  static final gameObjectSelectedSpawnType = Watch(0);
 
-class SpawnNodeData {
-  final int spawnType;
-  final int spawnAmount;
-  final int spawnRadius;
+  static final nodeSelectedType = Watch<int>(0, onChanged: onChangedSelectedNodeType);
+  static final nodeSelectedOrientation = Watch(NodeOrientation.None);
+  static final nodeOrientationVisible = Watch(true);
+  static final nodeTypeSpawnSelected = Watch(false, onChanged: onChangeNodeTypeSpawnSelected);
+  static final nodeSupportsSolid = Watch(false);
+  static final nodeSupportsSlopeSymmetric = Watch(false);
+  static final nodeSupportsSlopeCornerInner = Watch(false);
+  static final nodeSupportsSlopeCornerOuter = Watch(false);
+  static final nodeSupportsHalf = Watch(false);
+  static final nodeSupportsCorner = Watch(false);
+  static final isActiveEditTriggers = Watch(true);
 
-  SpawnNodeData({
-    required this.spawnType,
-    required this.spawnRadius,
-    required this.spawnAmount,
-  });
-}
-
-class Edit {
-
-
-  final selectedNodeData = Watch<SpawnNodeData?>(null);
-  final gameObject = GameObject();
-  final gameObjectSelected = Watch(false);
-  final gameObjectSelectedType = Watch(0);
-  final gameObjectSelectedAmount = Watch(0);
-  final gameObjectSelectedParticleType = Watch(0);
-  final gameObjectSelectedParticleSpawnRate = Watch(0);
-  final gameObjectSelectedRadius = Watch(0.0);
-  final gameObjectSelectedSpawnType = Watch(0);
-
-  final nodeSelectedType = Watch<int>(0, onChanged: onChangedSelectedNodeType);
-  final nodeSelectedOrientation = Watch(NodeOrientation.None);
-  final nodeOrientationVisible = Watch(true);
-  final nodeTypeSpawnSelected = Watch(false, onChanged: onChangeNodeTypeSpawnSelected);
-  final nodeSupportsSolid = Watch(false);
-  final nodeSupportsSlopeSymmetric = Watch(false);
-  final nodeSupportsSlopeCornerInner = Watch(false);
-  final nodeSupportsSlopeCornerOuter = Watch(false);
-  final nodeSupportsHalf = Watch(false);
-  final nodeSupportsCorner = Watch(false);
-  final isActiveEditTriggers = Watch(true);
-
-  var nodeIndex = Watch(0, clamp: (int value){
+  static var nodeIndex = Watch(0, clamp: (int value){
      if (value < 0) return 0;
      if (value >= GameState.nodesTotal) return GameState.nodesTotal - 1;
      return value;
   }, onChanged: onChangedSelectedNodeIndex);
 
-  int get z => convertIndexToZ(nodeIndex.value);
-  int get row => convertIndexToRow(nodeIndex.value);
-  int get column => convertIndexToColumn(nodeIndex.value);
+  static int get z => convertIndexToZ(nodeIndex.value);
+  static int get row => convertIndexToRow(nodeIndex.value);
+  static int get column => convertIndexToColumn(nodeIndex.value);
 
-  set z(int value){
+  static set z(int value){
      if (value < 0) return;
      if (value >= GameState.nodesTotalZ) return;
      final difference = value - z;
      nodeIndex.value += difference * GameState.nodesArea;
   }
 
-
-  set row(int value){
+  static set row(int value){
     if (value < 0) return;
     if (value >= GameState.nodesTotalRows) return;
     final difference = value - row;
     nodeIndex.value += difference * GameState.nodesTotalColumns;
   }
 
-  set column(int value){
+  static set column(int value){
     if (value < 0) return;
     if (value >= GameState.nodesTotalColumns) return;
     nodeIndex.value += value - column;
   }
 
-  final paintType = Watch(NodeType.Brick_2, onChanged: onChangedPaintType);
-  final paintOrientation = Watch(NodeOrientation.None);
-  final controlsVisibleWeather = Watch(true);
+  static final paintType = Watch(NodeType.Brick_2, onChanged: onChangedPaintType);
+  static final paintOrientation = Watch(NodeOrientation.None);
+  static final controlsVisibleWeather = Watch(true);
 
-  double get posX => row * tileSize + tileSizeHalf;
-  double get posY => column * tileSize + tileSizeHalf;
-  double get posZ => z * tileHeight;
+  static double get posX => row * tileSize + tileSizeHalf;
+  static double get posY => column * tileSize + tileSizeHalf;
+  static double get posZ => z * tileHeight;
 
-  double get renderX => projectX(edit.posX, edit.posY);
-  double get renderY => projectY(edit.posX, edit.posY, edit.posZ);
+  static double get renderX => projectX(posX, posY);
+  static double get renderY => projectY(posX, posY, posZ);
 
-  void refreshNodeSelectedIndex(){
+  static void refreshNodeSelectedIndex(){
     nodeSelectedType.value = GameState.nodesType[nodeIndex.value];
     nodeSelectedOrientation.value = GameState.nodesOrientation[nodeIndex.value];
   }
 
-  void deselectGameObject() {
+  static void deselectGameObject() {
     sendGameObjectRequestDeselect();
   }
 
-  void translate({ double x = 0, double y = 0, double z = 0}){
+  static void translate({ double x = 0, double y = 0, double z = 0}){
     assert (gameObjectSelected.value);
     return sendClientRequestGameObjectTranslate(
       tx: x,
@@ -115,82 +97,82 @@ class Edit {
     );
   }
 
-  void actionToggleControlsVisibleWeather(){
+  static void actionToggleControlsVisibleWeather(){
     controlsVisibleWeather.value = !controlsVisibleWeather.value;
   }
 
-  void setPaintOrientationNone(){
+  static void setPaintOrientationNone(){
     paintOrientation.value = NodeOrientation.None;
   }
 
-  void assignDefaultNodeOrientation(int nodeType){
+  static void assignDefaultNodeOrientation(int nodeType){
     paintOrientation.value = NodeType.getDefaultOrientation(nodeType);
   }
 
-  void paintMouse(){
+  static void paintMouse(){
       selectMouseBlock();
       paint(selectPlayerIfPlay: false);
   }
 
-  void selectMouseBlock(){
+  static void selectMouseBlock(){
     mouseRaycast(selectBlock);
   }
 
-  void selectMouseGameObject(){
+  static void selectMouseGameObject(){
     sendGameObjectRequestSelect();
   }
 
-  void paintTorch(){
+  static void paintTorch(){
     paint(nodeType: NodeType.Torch);
   }
 
-  void paintLongGrass(){
+  static void paintLongGrass(){
     paint(nodeType: NodeType.Grass_Long);
   }
 
-  void paintBricks(){
+  static void paintBricks(){
     paint(nodeType: NodeType.Brick_2);
   }
 
-  void paintGrass(){
+  static void paintGrass(){
     paint(nodeType: NodeType.Grass);
   }
 
-  void paintWater(){
+  static void paintWater(){
     paint(nodeType: NodeType.Water);
   }
 
-  void selectBlock(int z, int row, int column){
+  static void selectBlock(int z, int row, int column){
     nodeIndex.value = getNodeIndexZRC(z, row, column);
   }
 
-  void deleteGameObjectSelected(){
+  static void deleteGameObjectSelected(){
     sendGameObjectRequestDelete();
   }
 
-  void cameraCenterSelectedObject() =>
+  static void cameraCenterSelectedObject() =>
       Engine.cameraCenter(gameObject.renderX, gameObject.renderY)
   ;
 
-  void delete(){
+  static void delete(){
     if (gameObjectSelected.value)
       return deleteGameObjectSelected();
     setNodeType(NodeType.Empty, NodeOrientation.None);
   }
 
-  void setNodeType(int type, int orientation) =>
+  static void setNodeType(int type, int orientation) =>
     sendClientRequestSetBlock(
         index: nodeIndex.value,
         type: type,
         orientation: orientation,
     );
 
-  void selectPaintType(){
+  static void selectPaintType(){
      paintType.value = nodeSelectedType.value;
      paintOrientation.value = nodeSelectedOrientation.value;
   }
 
-  void paint({int? nodeType, bool selectPlayerIfPlay = true}) {
+  static void paint({int? nodeType, bool selectPlayerIfPlay = true}) {
     if (nodeType == NodeType.Empty){
        return delete();
     }
@@ -214,11 +196,11 @@ class Edit {
     );
   }
 
-  void cursorSetToPlayer() => nodeIndex.value = GameState.player.nodeIndex;
-  void cursorRowIncrease() => row++;
-  void cursorRowDecrease() => row--;
-  void cursorColumnIncrease() => column++;
-  void cursorColumnDecrease() => column--;
-  void cursorZIncrease() => z++;
-  void cursorZDecrease() => z--;
+  static void cursorSetToPlayer() => nodeIndex.value = GameState.player.nodeIndex;
+  static void cursorRowIncrease() => row++;
+  static void cursorRowDecrease() => row--;
+  static void cursorColumnIncrease() => column++;
+  static void cursorColumnDecrease() => column--;
+  static void cursorZIncrease() => z++;
+  static void cursorZDecrease() => z--;
 }

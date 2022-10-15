@@ -34,11 +34,6 @@ class GameEvents {
       case GameError.Insufficient_Resources:
         audio.error();
         break;
-      case GameError.PlayerId_Required:
-        core.actions.disconnect();
-        website.actions.showDialogLogin();
-        core.actions.setError("Account is null");
-        return;
       case GameError.Subscription_Required:
         core.actions.disconnect();
         website.actions.showDialogSubscriptionRequired();

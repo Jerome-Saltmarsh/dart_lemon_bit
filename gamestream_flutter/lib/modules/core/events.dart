@@ -1,6 +1,7 @@
 
 
 import 'package:firestore_client/firestoreService.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/gamestream.dart';
 import 'package:gamestream_flutter/isometric/events/on_connection_done.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
@@ -77,10 +78,10 @@ class CoreEvents {
         isometricWebControlsDeregister();
         Engine.onUpdate = null;
         Engine.fullScreenExit();
-        gamestream.clearGameState();
+        GameStream.clearGameState();
         Engine.drawCanvasAfterUpdate = true;
         Engine.cursorType.value = CursorType.Basic;
-        gamestream.gameType.value = null;
+        GameState.gameType.value = null;
         Engine.drawCanvasAfterUpdate = true;
         Engine.onDrawCanvas = Website.renderCanvas;
         Engine.onUpdate = Website.update;
