@@ -78,9 +78,16 @@ class RenderEngine {
   static var indexShowColumn = 0;
   static var indexShowZ = 0;
 
+  static late Particle currentParticle;
+  static late Character currentRenderCharacter;
+  static late GameObject currentRenderGameObject;
+  static late Projectile currentRenderProjectile;
+
   static final maxZRender = Watch<int>(GameState.nodesTotalZ, clamp: (int value){
     return clamp<int>(value, 0, max(GameState.nodesTotalZ - 1, 0));
   });
+
+  // ACTIONS
 
   static void resetRenderOrder(RenderOrder value){
     value.reset();
@@ -150,18 +157,17 @@ class RenderEngine {
 }
 
 class RenderOrderCharacters extends RenderOrder {
-  late Character character;
 
   @override
   void renderFunction() {
-    renderCharacter(character);
+    renderCharacter(RenderEngine.currentRenderCharacter);
   }
 
   @override
   void updateFunction() {
-    character = GameState.characters[_index];
-    order = character.renderOrder;
-    orderZ = character.indexZ;
+    RenderEngine.currentRenderCharacter = GameState.characters[_index];
+    order = RenderEngine.currentRenderCharacter.renderOrder;
+    orderZ = RenderEngine.currentRenderCharacter.indexZ;
   }
 
   @override
@@ -184,21 +190,19 @@ class RenderOrderCharacters extends RenderOrder {
 
 class RenderOrderGameObjects extends RenderOrder {
 
-  late GameObject gameObject;
-
   @override
   int getTotal() => totalGameObjects;
 
   @override
   void renderFunction() {
-    renderGameObject(gameObject);
+    renderGameObject(RenderEngine.currentRenderGameObject);
   }
 
   @override
   void updateFunction() {
-    gameObject = gameObjects[_index];
-    order = gameObject.renderOrder;
-    orderZ = gameObject.indexZ;
+    RenderEngine.currentRenderGameObject = gameObjects[_index];
+    order = RenderEngine.currentRenderGameObject.renderOrder;
+    orderZ = RenderEngine.currentRenderGameObject.indexZ;
   }
 
   @override
@@ -208,18 +212,16 @@ class RenderOrderGameObjects extends RenderOrder {
 }
 
 class RenderOrderProjectiles extends RenderOrder {
-  late Projectile projectile;
-
   @override
   void renderFunction() {
-    renderProjectile(projectile);
+    renderProjectile(RenderEngine.currentRenderProjectile);
   }
 
   @override
   void updateFunction() {
-     projectile = GameState.projectiles[_index];
-     order = projectile.renderOrder;
-     orderZ = projectile.indexZ;
+    RenderEngine.currentRenderProjectile = GameState.projectiles[_index];
+     order = RenderEngine.currentRenderProjectile.renderOrder;
+     orderZ = RenderEngine.currentRenderProjectile.indexZ;
   }
 
   @override
@@ -235,28 +237,25 @@ class RenderOrderProjectiles extends RenderOrder {
 }
 
 class RenderOrderParticle extends RenderOrder {
-  late Particle particle;
-  var totalActive = 0;
 
   @override
   void renderFunction() {
-    renderParticle(particle);
+    renderParticle(RenderEngine.currentParticle);
   }
 
   @override
   void updateFunction() {
-    particle = GameState.particles[_index];
-    order = particle.renderOrder;
-    orderZ = particle.indexZ;
+    RenderEngine.currentParticle = GameState.particles[_index];
+    order = RenderEngine.currentParticle.renderOrder;
+    orderZ = RenderEngine.currentParticle.indexZ;
   }
 
   @override
-  int getTotal() => totalActive;
+  int getTotal() => GameState.totalActiveParticles;
 
   @override
   void reset() {
     sortParticles();
-    totalActive = GameState.totalActiveParticles;
     super.reset();
   }
 }
@@ -284,6 +283,7 @@ int getRenderLayerShade(int layers){
    if (index >= GameState.nodesTotal) return GameState.ambientShade.value;
    return GameState.nodesShade[index];
 }
+
 
 
 class RenderOrderGrid extends RenderOrder {

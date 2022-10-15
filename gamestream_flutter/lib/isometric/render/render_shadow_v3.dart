@@ -4,7 +4,6 @@ import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
-import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 
 import 'render_shadow.dart';

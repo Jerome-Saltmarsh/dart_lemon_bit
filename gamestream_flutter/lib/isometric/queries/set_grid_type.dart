@@ -1,6 +1,5 @@
 
 import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 
 void setGridType(int z, int row, int column, int type){

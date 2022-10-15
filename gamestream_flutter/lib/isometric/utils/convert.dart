@@ -1,7 +1,6 @@
 
 import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:lemon_math/library.dart';
 
 double convertWorldToGridX(double x, double y) {

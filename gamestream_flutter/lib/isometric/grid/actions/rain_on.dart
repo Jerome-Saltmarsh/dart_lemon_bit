@@ -1,7 +1,6 @@
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_type.dart';
 import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/queries/set_grid_type.dart';
 

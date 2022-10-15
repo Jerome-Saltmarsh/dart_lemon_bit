@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:lemon_math/library.dart';
 

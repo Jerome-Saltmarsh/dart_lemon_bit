@@ -14,7 +14,6 @@ import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'grid.dart';
 import 'utils/mouse_raycast.dart';
 
 final edit = Edit();

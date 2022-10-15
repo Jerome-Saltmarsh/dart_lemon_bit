@@ -2,10 +2,6 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 
-import 'grid.dart';
-
-
-
 
 int getNodeIndexBelow(int index){
   return index - GameState.nodesArea;
