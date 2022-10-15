@@ -3,7 +3,6 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/isometric/ai.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
-import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
@@ -15,10 +14,8 @@ import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/render/render_wireframe.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse_raycast.dart';
-import 'package:gamestream_flutter/isometric/zombies.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/render.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -40,6 +37,7 @@ class GameRender {
     _renderPlayerNames();
     drawPlayerText();
   }
+
 
   void renderGame(Canvas canvas, Size size) {
     /// particles are only on the ui and thus can update every frame
@@ -93,50 +91,10 @@ class GameRender {
     );
   }
 
-  void renderTutorialKeys() {
-     const distance = 50;
-    render(
-       srcX: 1840,
-        srcY: 33,
-        dstX: player.renderX,
-        dstY: player.renderY + distance,
-        srcWidth: 32,
-        srcHeight: 32,
-    );
-
-    // A
-    render(
-      srcX: 1840,
-      srcY: 99,
-      dstX: player.renderX - distance,
-      dstY: player.renderY,
-      srcWidth: 32,
-      srcHeight: 32,
-    );
-
-    // D
-    render(
-      srcX: 1840,
-      srcY: 0,
-      dstX: player.renderX + distance,
-      dstY: player.renderY,
-      srcWidth: 32,
-      srcHeight: 32,
-    );
-    render(
-      srcX: 1840,
-      srcY: 66,
-      dstX: player.renderX,
-      dstY: player.renderY - distance,
-      srcWidth: 32,
-      srcHeight: 32,
-    );
-  }
-
   void renderEditMode() {
     if (playMode) return;
     if (edit.gameObjectSelected.value){
-      Engine.draw.drawCircleOutline(
+      Engine.renderCircleOutline(
         sides: 24,
         radius: edit.gameObjectSelectedRadius.value,
         x: edit.gameObject.renderX,
@@ -151,7 +109,7 @@ class GameRender {
 
     final nodeData = edit.selectedNodeData.value;
     if (nodeData != null){
-      Engine.draw.drawCircleOutline(
+      Engine.renderCircleOutline(
            radius: nodeData.spawnRadius.toDouble(),
            x: edit.renderX,
            y: edit.renderY,
@@ -180,17 +138,6 @@ class GameRender {
       renderWireFrameBlue(z, edit.row, edit.column);
     }
     renderWireFrameRed(edit.row, edit.column, edit.z);
-  }
-
-  void renderTeamColours() {
-    for (var i = 0; i < totalZombies; i++) {
-      renderTeamColour(zombies[i]);
-    }
-  }
-
-  void renderTeamColour(Character character) {
-    Engine.draw.circle(character.x, character.y, 10,
-        character.allie ? Colors.green : Colors.red);
   }
 
   void attackTargetCircle() {

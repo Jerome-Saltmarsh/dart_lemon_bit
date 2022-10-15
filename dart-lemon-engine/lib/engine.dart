@@ -1,13 +1,13 @@
 library lemon_engine;
 
 import 'dart:async';
+import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lemon_engine/draw.dart';
 import 'package:lemon_engine/events.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_math/library.dart';
@@ -18,6 +18,18 @@ import 'package:url_strategy/url_strategy.dart' as us;
 
 import 'render.dart';
 
+/// A utility to build games with
+///
+/// __getting started__
+/// ```dart
+///void main() {
+///   Engine.run(
+///     title: "My Game Name",
+///     buildUI: (BuildContext context) => Text("Welcome"),
+///     backgroundColor: Colors.red,
+///   );
+/// }
+/// ```
 class Engine {
   /// HOOKS
   /// the following hooks are designed to be easily swapped in and out without inheritance
@@ -95,6 +107,10 @@ class Engine {
   static const DefaultBackgroundColor = Colors.black;
   static const DefaultTitle = "DEMO";
   static const MillisecondsPerSecond = 1000;
+  static const PI2 = pi + pi;
+  static const PIHalf = pi * 0.5;
+  static const PIQuarter = pi * 0.25;
+  static const PIEight = pi * 0.125;
 
   // VARIABLES
   static late ui.Image atlas;
@@ -116,7 +132,6 @@ class Engine {
   static Timer? updateTimer;
   static late final sharedPreferences;
   static late final LemonEngineEvents events;
-  static final draw = LemonEngineDraw();
   static var scrollSensitivity = 0.0005;
   static var cameraSmoothFollow = true;
   static var zoomSensitivity = 0.175;
@@ -141,6 +156,11 @@ class Engine {
   static var zoom = 1.0;
   static final deviceType = Watch(DeviceType.Computer);
   static late BuildContext buildContext;
+
+  // QUERIES
+
+  static bool keyPressed(LogicalKeyboardKey key) =>
+      keyboard.keysPressed.contains(key);
 
   // INTERNAL FUNCTIONS
 
@@ -170,6 +190,8 @@ class Engine {
       screen.height,
     );
   }
+
+  // ACTIONS
 
   static void toggleDeviceType() =>
       deviceType.value =
@@ -366,8 +388,6 @@ class Engine {
     final previousY = screenToWorldY(previousMousePosition.y);
     final diffX = previousX - positionX;
     final diffY = previousY - positionY;
-    // camera.x += diffX * zoom;
-    // camera.y += diffY * zoom;
     camera.x += diffX;
     camera.y += diffY;
   }
@@ -480,8 +500,6 @@ class Engine {
       internalOnUpdate,
     );
     onUpdateTimerReset?.call();
-
-
   }
 
   static void internalOnUpdate(Timer timer){
@@ -564,8 +582,38 @@ class Engine {
     canvas.drawRawAtlas(image, _dst4, _src4, _colors1, BlendMode.dstATop, null, paint);
   }
 
-  static bool keyPressed(LogicalKeyboardKey key) =>
-    keyboard.keysPressed.contains(key);
+  static void renderCircle(double x, double y, double radius, Color color) {
+    renderCircleOffset(Offset(x, y), radius, color);
+  }
+
+  static void renderCircleOffset(Offset offset, double radius, Color color) {
+    setPaintColor(color);
+    canvas.drawCircle(offset, radius, paint);
+  }
+
+  static void renderCircleOutline({
+    required double radius,
+    required double x,
+    required double y,
+    required Color color,
+    int sides = 6,
+    double width = 3,
+  }) {
+    double r = (pi * 2) / sides;
+    List<Offset> points = [];
+    Offset z = Offset(x, y);
+    Engine.setPaintColor(color);
+    Engine.paint.strokeWidth = width;
+
+    for (int i = 0; i <= sides; i++) {
+      double a1 = i * r;
+      points.add(Offset(cos(a1) * radius, sin(a1) * radius));
+    }
+    for (int i = 0; i < points.length - 1; i++) {
+      Engine.canvas.drawLine(points[i] + z, points[i + 1] + z, Engine.paint);
+    }
+  }
+
 }
 
 typedef CallbackOnScreenSizeChanged = void Function(
