@@ -100,16 +100,56 @@ class RenderEngine {
     return clamp<int>(value, 0, max(GameState.nodesTotalZ - 1, 0));
   });
 
-  static double get renderX => (currentNodeRow - currentNodeColumn) * tileSizeHalf;
-  static double get renderY => convertRowColumnZToY(currentNodeRow, currentNodeColumn, currentNodeZ);
+  static double get currentNodeRenderX => (currentNodeRow - currentNodeColumn) * tileSizeHalf;
+  static double get currentNodeRenderY => convertRowColumnZToY(currentNodeRow, currentNodeColumn, currentNodeZ);
 
+
+  static void renderCurrentParticle(){
+    renderParticle(RenderEngine.currentParticle);
+  }
+
+  static void renderCurrentProjectile(){
+    renderProjectile(RenderEngine.currentRenderProjectile);
+  }
+
+  static void renderCurrentGameObject(){
+    renderGameObject(RenderEngine.currentRenderGameObject);
+  }
+
+  static void updateCurrentParticle(){
+    RenderEngine.currentParticle = GameState.particles[renderOrderParticle.index];
+    renderOrderParticle.order = RenderEngine.currentParticle.renderOrder;
+    renderOrderParticle.orderZ = RenderEngine.currentParticle.indexZ;
+  }
+
+  static void updateCurrentProjectile(){
+    RenderEngine.currentRenderProjectile = GameState.projectiles[renderOrderProjectiles.index];
+    renderOrderProjectiles.order = RenderEngine.currentRenderProjectile.renderOrder;
+    renderOrderProjectiles.orderZ = RenderEngine.currentRenderProjectile.indexZ;
+  }
+
+  static void updateCurrentGameObject(){
+    RenderEngine.currentRenderGameObject = gameObjects[renderOrderGameObjects.index];
+    renderOrderGameObjects.order = RenderEngine.currentRenderGameObject.renderOrder;
+    renderOrderGameObjects.orderZ = RenderEngine.currentRenderGameObject.indexZ;
+  }
+
+  static void renderCurrentCharacter(){
+    renderCharacter(currentRenderCharacter);
+  }
+
+  static void updateCurrentCharacter() {
+    currentRenderCharacter = GameState.characters[renderOrderCharacters.index];
+    renderOrderCharacters.order = currentRenderCharacter.renderOrder;
+    renderOrderCharacters.orderZ = currentRenderCharacter.indexZ;
+  }
 
   static void nodesTrimLeft(){
     final offscreen = countLeftOffscreen;
     if (offscreen <= 0) return;
     currentNodeColumn -= offscreen;
     currentNodeRow += offscreen;
-    while (renderX < screenLeft){
+    while (currentNodeRenderX < screenLeft){
       currentNodeRow++;
       currentNodeColumn--;
     }
@@ -234,7 +274,7 @@ class RenderEngine {
       if (!renderOrderGrid.remaining) return;
       nodesTrimLeft();
 
-      while (renderY > screenBottom) {
+      while (currentNodeRenderY > screenBottom) {
         currentNodeZ++;
         if (currentNodeZ > nodesMaxZ) {
           renderOrderGrid.remaining = false;
@@ -408,7 +448,7 @@ class RenderEngine {
   }
 
   static void nodesTrimTop() {
-    while (renderY < screenTop){
+    while (currentNodeRenderY < screenTop){
       nodesShiftIndexDown();
     }
     nodesCalculateMinMaxZ();
@@ -455,35 +495,11 @@ class RenderEngine {
 }
 
 class RenderOrderCharacters extends RenderOrder {
-
   @override
-  void renderFunction() {
-    renderCharacter(RenderEngine.currentRenderCharacter);
-  }
-
+  void renderFunction() => RenderEngine.renderCurrentCharacter();
+  void updateFunction() => RenderEngine.updateCurrentCharacter();
   @override
-  void updateFunction() {
-    RenderEngine.currentRenderCharacter = GameState.characters[_index];
-    order = RenderEngine.currentRenderCharacter.renderOrder;
-    orderZ = RenderEngine.currentRenderCharacter.indexZ;
-  }
-
-  @override
-  int getTotal() {
-    return GameState.totalCharacters;
-  }
-
-  @override
-  void reset() {
-    super.reset();
-    // applyEmissionsCharacters();
-    //
-    // for (var i = 0; i < totalGameObjects; i++){
-    //    if (gameObjects[i].type != GameObjectType.Candle) continue;
-    //    gameObjects[i].tile.applyLight1();
-    //    gameObjects[i].tileBelow.applyLight1();
-    // }
-  }
+  int getTotal() => GameState.totalCharacters;
 }
 
 class RenderOrderGameObjects extends RenderOrder {
@@ -492,16 +508,10 @@ class RenderOrderGameObjects extends RenderOrder {
   int getTotal() => totalGameObjects;
 
   @override
-  void renderFunction() {
-    renderGameObject(RenderEngine.currentRenderGameObject);
-  }
+  void renderFunction() => RenderEngine.renderCurrentGameObject();
 
   @override
-  void updateFunction() {
-    RenderEngine.currentRenderGameObject = gameObjects[_index];
-    order = RenderEngine.currentRenderGameObject.renderOrder;
-    orderZ = RenderEngine.currentRenderGameObject.indexZ;
-  }
+  void updateFunction() => RenderEngine.updateCurrentGameObject();
 
   @override
   void reset() {
@@ -511,16 +521,10 @@ class RenderOrderGameObjects extends RenderOrder {
 
 class RenderOrderProjectiles extends RenderOrder {
   @override
-  void renderFunction() {
-    renderProjectile(RenderEngine.currentRenderProjectile);
-  }
+  void renderFunction() => RenderEngine.renderCurrentProjectile();
 
   @override
-  void updateFunction() {
-    RenderEngine.currentRenderProjectile = GameState.projectiles[_index];
-     order = RenderEngine.currentRenderProjectile.renderOrder;
-     orderZ = RenderEngine.currentRenderProjectile.indexZ;
-  }
+  void updateFunction() => RenderEngine.updateCurrentProjectile();
 
   @override
   int getTotal() {
@@ -537,17 +541,10 @@ class RenderOrderProjectiles extends RenderOrder {
 class RenderOrderParticle extends RenderOrder {
 
   @override
-  void renderFunction() {
-    renderParticle(RenderEngine.currentParticle);
-  }
+  void renderFunction() => RenderEngine.renderCurrentParticle();
 
   @override
-  void updateFunction() {
-    RenderEngine.currentParticle = GameState.particles[_index];
-    order = RenderEngine.currentParticle.renderOrder;
-    orderZ = RenderEngine.currentParticle.indexZ;
-  }
-
+  void updateFunction() => RenderEngine.updateCurrentParticle();
   @override
   int getTotal() => GameState.totalActiveParticles;
 
@@ -593,92 +590,6 @@ class RenderOrderNodes extends RenderOrder {
   @override
   int getTotal() {
     return GameState.nodesTotalZ * GameState.nodesTotalRows * GameState.nodesTotalColumns;
-  }
-
-  static void nodesHideIndex(int index){
-    var i = index + GameState.nodesArea + GameState.nodesTotalColumns + 1;
-    while (true) {
-      if (i >= GameState.nodesTotal) break;
-      GameState.nodesVisible[i] = false;
-      GameState.nodesVisibleIndex[GameState.visibleIndex] = i;
-      GameState.visibleIndex++;
-      i += GameState.nodesArea + GameState.nodesArea + GameState.nodesTotalColumns + 1;
-    }
-    i = index + GameState.nodesArea + GameState.nodesArea + GameState.nodesTotalColumns + 1;
-    while (true) {
-      if (i >= GameState.nodesTotal) break;
-      GameState.nodesVisible[i] = false;
-      GameState.nodesVisibleIndex[GameState.visibleIndex] = i;
-      GameState.visibleIndex++;
-      i += GameState.nodesArea + GameState.nodesArea + GameState.nodesTotalColumns + 1;
-    }
-  }
-
-  static void nodesRevealRaycast(int z, int row, int column){
-    if (!verifyInBoundZRC(z, row, column)) return;
-
-    for (; z < GameState.nodesTotalZ; z += 2){
-      row++;
-      column++;
-      if (row >= GameState.nodesTotalRows) return;
-      if (column >= GameState.nodesTotalColumns) return;
-      GameState.nodesVisible[getNodeIndexZRC(z, row, column)] = false;
-      if (z < GameState.nodesTotalZ - 2){
-        GameState.nodesVisible[getNodeIndexZRC(z + 1, row, column)] = false;
-      }
-    }
-  }
-
-  static void nodesRevealAbove(int z, int row, int column){
-    for (; z < GameState.nodesTotalZ; z++){
-      GameState.nodesVisible[getNodeIndexZRC(z, row, column)] = false;
-    }
-  }
-
-  static void nodesTrimTop() {
-    while (RenderEngine.renderY < RenderEngine.screenTop){
-      RenderEngine.nodesShiftIndexDown();
-    }
-    nodesCalculateMinMaxZ();
-    RenderEngine.nodesSetStart();
-  }
-
-  // given a grid coordinate row / column workout the maximum z before it goes above the top of the screen.
-  // otherwise use totalZ;
-  // calculate the world position Y at row / column, then workout its distance from the top of the screen;
-  static void nodesCalculateMinMaxZ(){
-    final bottom = convertRowColumnToY(RenderEngine.currentNodeRow, RenderEngine.currentNodeColumn);
-    final distance =  bottom - RenderEngine.screenTop;
-    RenderEngine.nodesMaxZ = (distance ~/ tileHeight);
-    if (RenderEngine.nodesMaxZ > RenderEngine.nodesGridTotalZMinusOne){
-      RenderEngine.nodesMaxZ = RenderEngine.nodesGridTotalZMinusOne;
-    }
-    if (RenderEngine.nodesMaxZ < 0){
-      RenderEngine.nodesMaxZ = 0;
-    }
-
-    while (convertRowColumnZToY(RenderEngine.currentNodeRow, RenderEngine.currentNodeColumn, RenderEngine.nodesMinZ) > RenderEngine.screenBottom){
-      RenderEngine.nodesMinZ++;
-      if (RenderEngine.nodesMinZ >= GameState.nodesTotalZ){
-        return RenderEngine.renderOrderGrid.end();
-      }
-    }
-  }
-
-  static int get countLeftOffscreen {
-    final x = convertRowColumnToX(RenderEngine.currentNodeRow, RenderEngine.currentNodeColumn);
-    if (Engine.screen.left < x) return 0;
-    final diff = Engine.screen.left - x;
-    return diff ~/ tileSize;
-  }
-
-  static void refreshDynamicLightGrid() {
-    while (GameState.dynamicIndex >= 0) {
-      final i = GameState.nodesDynamicIndex[GameState.dynamicIndex];
-      GameState.nodesShade[i] = GameState.nodesBake[i];
-      GameState.dynamicIndex--;
-    }
-    GameState.dynamicIndex = 0;
   }
 }
 
@@ -738,26 +649,6 @@ abstract class RenderOrder {
     }
   }
 }
-
-// RenderOrder getNextRenderOrder(){
-//    RenderOrder renderOrder = renderOrderGrid;
-//    if (renderOrderCharacters.remaining &&
-//        renderOrderCharacters.order < renderOrder.order &&
-//        renderOrderCharacters.orderZ < renderOrder.orderZ
-//    ) {
-//     renderOrder = renderOrderCharacters;
-//    }
-//    if (renderOrderProjectiles.remaining){
-//      renderOrder = renderOrder.compare(renderOrderProjectiles);
-//    }
-//    if (renderOrderGameObjects.remaining){
-//      renderOrder = renderOrder.compare(renderOrderGameObjects);
-//    }
-//    if (renderOrderParticle.remaining){
-//      renderOrder = renderOrder.compare(renderOrderParticle);
-//    }
-//    return renderOrder;
-// }
 
 int getRenderRow(int row, int z){
   return row - (z ~/ 2);
