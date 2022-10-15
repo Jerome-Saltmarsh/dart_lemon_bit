@@ -1,7 +1,7 @@
 import 'package:bleed_common/GameType.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/control/classes/authentication.dart';
-import 'package:gamestream_flutter/control/state/game_type.dart';
+import 'package:gamestream_flutter/gamestream.dart';
 import 'package:gamestream_flutter/isometric/npcs.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
@@ -217,15 +217,10 @@ class CoreActions {
   }
 
   void deselectGameType(){
-    gameType.value = null;
+    gamestream.gameType.value = null;
   }
 
-  void exitGame(){
-    print('exit game');
-    gameType.value = null;
-    clearState();
-    webSocket.disconnect();
-  }
+  void exitGame() => webSocket.disconnect();
 
   void leaveLobby() => exitGame();
 }

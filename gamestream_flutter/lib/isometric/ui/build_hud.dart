@@ -1,9 +1,9 @@
 
 import 'package:bleed_common/Direction.dart';
+import 'package:gamestream_flutter/gamestream.dart';
 import 'package:gamestream_flutter/io/touchscreen.dart';
 import 'package:bleed_common/GameType.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_map.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
@@ -54,7 +54,7 @@ Widget buildStackGame()  =>
           )
         ),
         buildWatchBool(triggerAlarmNoMessageReceivedFromServer, buildDialogFramesSinceUpdate),
-        watch(gameType, buildGameTypeUI),
+        watch(gamestream.gameType, buildGameTypeUI),
         watch(editorDialog, buildWatchEditorDialog),
         watch(player.gameDialog, buildGameDialog),
         buildWatchBool(player.alive, buildContainerRespawn, false),

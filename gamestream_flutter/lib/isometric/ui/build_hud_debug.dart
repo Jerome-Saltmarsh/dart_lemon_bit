@@ -1,8 +1,8 @@
 import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/Shade.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/control/state/game_type.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/gamestream.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
@@ -45,7 +45,7 @@ Widget buildHudDebug() =>
               watch(serverResponseReader.updateFrame, (t) => text("update-frame: $t")),
               watch(player.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => player.interpolating.value = !player.interpolating.value)),
               watch(ambientShade, (int shade) => text("ambient-shade: ${Shade.getName(shade)}")),
-              watch(gameType, (int? value) => text("game-type: ${value == null ? 'None' : GameType.getName(value)}")),
+              watch(gamestream.gameType, (int? value) => text("game-type: ${value == null ? 'None' : GameType.getName(value)}")),
               watch(Engine.deviceType, (int deviceType) => text("device-type: ${DeviceType.getName(deviceType)}", onPressed: Engine.toggleDeviceType)),
               height24,
               text("close x", onPressed: () => debugVisible.value = false),

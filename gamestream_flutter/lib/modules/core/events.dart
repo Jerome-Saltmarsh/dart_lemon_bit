@@ -2,7 +2,7 @@
 
 import 'package:bleed_common/GameStatus.dart';
 import 'package:firestore_client/firestoreService.dart';
-import 'package:gamestream_flutter/control/state/game_type.dart';
+import 'package:gamestream_flutter/gamestream.dart';
 import 'package:gamestream_flutter/isometric/events/on_connection_done.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric_web/register_isometric_web_controls.dart';
@@ -101,7 +101,7 @@ class CoreEvents {
         Engine.drawCanvasAfterUpdate = true;
         Engine.cursorType.value = CursorType.Basic;
         core.state.status.value = GameStatus.None;
-        gameType.value = null;
+        gamestream.gameType.value = null;
         Engine.drawCanvasAfterUpdate = true;
         Engine.onDrawCanvas = Website.renderCanvas;
         Engine.onUpdate = Website.update;

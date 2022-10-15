@@ -9,7 +9,7 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/quest.dart';
 import 'package:bleed_common/type_position.dart';
-import 'package:gamestream_flutter/control/state/game_type.dart';
+import 'package:gamestream_flutter/gamestream.dart';
 import 'package:gamestream_flutter/isometric/characters.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
@@ -167,7 +167,7 @@ class ServerResponseReader with ByteReader {
           );
           break;
         case ServerResponse.Game_Type:
-          gameType.value = readByte();
+          gamestream.gameType.value = readByte();
           break;
         case ServerResponse.Player_Slots:
           player.weaponSlot1.type.value = readByte();

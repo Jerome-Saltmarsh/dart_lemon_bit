@@ -13,7 +13,7 @@ void main() {
     buildUI: Website.buildUI,
     themeData: ThemeData(fontFamily: 'JetBrainsMono-Regular'),
     backgroundColor: colorPitchBlack,
-    onError: GameStream.onError,
+    onError: gamestream.onError,
   );
 }
 
