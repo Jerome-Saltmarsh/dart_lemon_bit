@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:lemon_math/library.dart';
@@ -39,9 +40,9 @@ class Vector3 with Position {
      z < 0                ||
      x < 0                ||
      y < 0                ||
-     x > nodesLengthRow    ||
-     y > nodesLengthColumn ||
-     z >= nodesLengthZ     ;
+     x > GameState.nodesLengthRow    ||
+     y > GameState.nodesLengthColumn ||
+     z >= GameState.nodesLengthZ     ;
 
   int getGridDistance(int z, int row, int column){
     var distance = (z - indexZ).abs();

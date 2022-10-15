@@ -68,22 +68,22 @@ class Edit {
 
   set z(int value){
      if (value < 0) return;
-     if (value >= nodesTotalZ) return;
+     if (value >= GameState.nodesTotalZ) return;
      final difference = value - z;
-     nodeIndex.value += difference * nodesArea;
+     nodeIndex.value += difference * GameState.nodesArea;
   }
 
 
   set row(int value){
     if (value < 0) return;
-    if (value >= nodesTotalRows) return;
+    if (value >= GameState.nodesTotalRows) return;
     final difference = value - row;
-    nodeIndex.value += difference * nodesTotalColumns;
+    nodeIndex.value += difference * GameState.nodesTotalColumns;
   }
 
   set column(int value){
     if (value < 0) return;
-    if (value >= nodesTotalColumns) return;
+    if (value >= GameState.nodesTotalColumns) return;
     nodeIndex.value += value - column;
   }
 

@@ -14,28 +14,14 @@ import 'package:lemon_watch/watch.dart';
 import 'convert/convert_distance_to_shade.dart';
 import 'watches/raining.dart';
 
-final gridShadows = Watch(true, onChanged: (bool value){
-  refreshLighting();
-});
-
-var nodesTotalZ = 0;
-var nodesTotalRows = 0;
-var nodesTotalColumns = 0;
-var nodesLengthRow = 0.0;
-var nodesLengthColumn = 0.0;
-var nodesLengthZ = 0.0;
-var nodesArea = 0;
-
-
-
 
 bool nodeIsInBound(int z, int row, int column){
   if (z < 0) return false;
-  if (z >= nodesTotalZ) return false;
+  if (z >= GameState.nodesTotalZ) return false;
   if (row < 0) return false;
-  if (row >= nodesTotalRows) return false;
+  if (row >= GameState.nodesTotalRows) return false;
   if (column < 0) return false;
-  if (column >= nodesTotalColumns) return false;
+  if (column >= GameState.nodesTotalColumns) return false;
   return true;
 }
 
@@ -57,7 +43,7 @@ bool nodeIsInBound(int z, int row, int column){
 //   return grid[z][row][column];
 // }
 
-void toggleShadows () => gridShadows.value = !gridShadows.value;
+void toggleShadows () => GameState.gridShadows.value = !GameState.gridShadows.value;
 
 void actionSetAmbientShadeToHour(){
   GameState.ambientShade.value = Shade.fromHour(hours.value);
@@ -74,9 +60,9 @@ void onGridChanged(){
 }
 
 void gridForEachNode(Function(int z, int row, int column) apply) {
-  for (var zIndex = 0; zIndex < nodesTotalZ; zIndex++) {
-    for (var rowIndex = 0; rowIndex < nodesTotalRows; rowIndex++) {
-      for (var columnIndex = 0; columnIndex < nodesTotalColumns; columnIndex++) {
+  for (var zIndex = 0; zIndex < GameState.nodesTotalZ; zIndex++) {
+    for (var rowIndex = 0; rowIndex < GameState.nodesTotalRows; rowIndex++) {
+      for (var columnIndex = 0; columnIndex < GameState.nodesTotalColumns; columnIndex++) {
         apply(zIndex, rowIndex, columnIndex);
       }
     }
@@ -87,7 +73,7 @@ void gridForEachNode(Function(int z, int row, int column) apply) {
 
 void refreshLighting(){
   GameState.resetGridToAmbient();
-  if (gridShadows.value){
+  if (GameState.gridShadows.value){
     _applyShadows();
   }
   applyBakeMapEmissions();
@@ -111,9 +97,9 @@ void _applyShadowAt({
   final current = GameState.ambientShade.value;
   final shadowShade = current >= Shade.Pitch_Black ? current : current + 1;
 
-  for (var z = 0; z < nodesTotalZ; z++) {
-    for (var row = 0; row < nodesTotalRows; row++){
-      for (var column = 0; column < nodesTotalColumns; column++){
+  for (var z = 0; z < GameState.nodesTotalZ; z++) {
+    for (var row = 0; row < GameState.nodesTotalRows; row++){
+      for (var column = 0; column < GameState.nodesTotalColumns; column++){
         // final tile = grid[z][row][column];
         final index = getNodeIndexZRC(z, row, column);
         final tile = GameState.nodesType[index];
@@ -125,9 +111,9 @@ void _applyShadowAt({
             projectionZ >= 0 &&
             projectionRow >= 0 &&
             projectionColumn >= 0 &&
-            projectionZ < nodesTotalZ &&
-            projectionRow < nodesTotalRows &&
-            projectionColumn < nodesTotalColumns
+            projectionZ < GameState.nodesTotalZ &&
+            projectionRow < GameState.nodesTotalRows &&
+            projectionColumn < GameState.nodesTotalColumns
         ) {
           final shade = GameState.nodesBake[index];
           if (shade < shadowShade){
@@ -151,7 +137,7 @@ bool castesShadow(int type) =>
 
 bool gridIsUnderSomething(int z, int row, int column){
   if (GameState.outOfBounds(z, row, column)) return false;
-  for (var zIndex = z + 1; zIndex < nodesTotalZ; zIndex++){
+  for (var zIndex = z + 1; zIndex < GameState.nodesTotalZ; zIndex++){
     if (!gridNodeZRCTypeRainOrEmpty(z, row, column)) return false;
   }
   return true;
@@ -161,9 +147,9 @@ bool gridIsPerceptible(int index){
   if (index < 0) return true;
   if (index >= GameState.nodesTotal) return true;
   while (true){
-    index += nodesArea;
+    index += GameState.nodesArea;
     index++;
-    index += nodesTotalColumns;
+    index += GameState.nodesTotalColumns;
     if (index >= GameState.nodesTotal) return true;
     if (GameState.nodesOrientation[index] != NodeOrientation.None){
       return false;
@@ -176,15 +162,15 @@ void refreshGridMetrics(){
   // gridTotalRows = grid[0].length;
   // gridTotalColumns = grid[0][0].length;
 
-  nodesLengthRow = nodesTotalRows * tileSize;
-  nodesLengthColumn = nodesTotalColumns * tileSize;
-  nodesLengthZ = nodesTotalZ * tileHeight;
+  GameState.nodesLengthRow = GameState.nodesTotalRows * tileSize;
+  GameState.nodesLengthColumn = GameState.nodesTotalColumns * tileSize;
+  GameState.nodesLengthZ = GameState.nodesTotalZ * tileHeight;
 }
 
 void applyBakeMapEmissions() {
-  for (var zIndex = 0; zIndex < nodesTotalZ; zIndex++) {
-    for (var rowIndex = 0; rowIndex < nodesTotalRows; rowIndex++) {
-      for (var columnIndex = 0; columnIndex < nodesTotalColumns; columnIndex++) {
+  for (var zIndex = 0; zIndex < GameState.nodesTotalZ; zIndex++) {
+    for (var rowIndex = 0; rowIndex < GameState.nodesTotalRows; rowIndex++) {
+      for (var columnIndex = 0; columnIndex < GameState.nodesTotalColumns; columnIndex++) {
         if (!NodeType.emitsLight(
             gridNodeZRCType(zIndex, rowIndex, columnIndex))
         ) continue;
@@ -220,11 +206,11 @@ void applyEmissionBake({
   int radius = 5,
 }){
   final zMin = max(zIndex - radius, 0);
-  final zMax = min(zIndex + radius, nodesTotalZ);
+  final zMax = min(zIndex + radius, GameState.nodesTotalZ);
   final rowMin = max(rowIndex - radius, 0);
-  final rowMax = min(rowIndex + radius, nodesTotalRows);
+  final rowMax = min(rowIndex + radius, GameState.nodesTotalRows);
   final columnMin = max(columnIndex - radius, 0);
-  final columnMax = min(columnIndex + radius, nodesTotalColumns);
+  final columnMax = min(columnIndex + radius, GameState.nodesTotalColumns);
 
   for (var z = zMin; z < zMax; z++){
     for (var row = rowMin; row < rowMax; row++){
@@ -249,15 +235,15 @@ void applyEmissionDynamic({
   final columnIndex = convertIndexToColumn(index);
   final radius = Shade.Pitch_Black;
   final zMin = max(zIndex - radius, 0);
-  final zMax = min(zIndex + radius, nodesTotalZ);
+  final zMax = min(zIndex + radius, GameState.nodesTotalZ);
   final rowMin = max(rowIndex - radius, 0);
-  final rowMax = min(rowIndex + radius, nodesTotalRows);
+  final rowMax = min(rowIndex + radius, GameState.nodesTotalRows);
   final columnMin = max(columnIndex - radius, 0);
-  final columnMax = min(columnIndex + radius, nodesTotalColumns);
+  final columnMax = min(columnIndex + radius, GameState.nodesTotalColumns);
 
   for (var z = zMin; z < zMax; z++){
     for (var row = rowMin; row < rowMax; row++){
-      final a = (z * nodesArea) + (row * nodesTotalColumns);
+      final a = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns);
       final b = (z - zIndex).abs() + (row - rowIndex).abs();
       for (var column = columnMin; column < columnMax; column++) {
         final nodeIndex = a + column;

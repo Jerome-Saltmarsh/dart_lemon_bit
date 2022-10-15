@@ -8,12 +8,12 @@ import 'grid.dart';
 
 
 int getNodeIndexBelow(int index){
-  return index - nodesArea;
+  return index - GameState.nodesArea;
 }
 
 int getNodeTypeBelow(int index){
-  if (index < nodesArea) return NodeType.Boundary;
-  final indexBelow = index - nodesArea;
+  if (index < GameState.nodesArea) return NodeType.Boundary;
+  final indexBelow = index - GameState.nodesArea;
   if (indexBelow >= GameState.nodesTotal) return NodeType.Boundary;
   return GameState.nodesType[indexBelow];
 }
@@ -32,7 +32,7 @@ void setNodeShade(int index, int shade){
 
 int getNodeIndexZRC(int z, int row, int column) {
   assert (verifyInBoundZRC(z, row, column));
-  return (z * nodesArea) + (row * nodesTotalColumns) + column;
+  return (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
 }
 
 /// a verification receives some data and returns true or false
@@ -41,11 +41,11 @@ int getNodeIndexZRC(int z, int row, int column) {
 /// a check does not change any state
 bool verifyInBoundZRC(int z, int row, int column){
   if (z < 0) return false;
-  if (z >= nodesTotalZ) return false;
+  if (z >= GameState.nodesTotalZ) return false;
   if (row < 0) return false;
-  if (row >= nodesTotalRows) return false;
+  if (row >= GameState.nodesTotalRows) return false;
   if (column < 0) return false;
-  if (column >= nodesTotalColumns) return false;
+  if (column >= GameState.nodesTotalColumns) return false;
   return true;
 }
 
@@ -71,9 +71,9 @@ int gridNodeXYZTypeSafe(double x, double y, double z) {
   if (x < 0) return NodeType.Boundary;
   if (y < 0) return NodeType.Boundary;
   if (z < 0) return NodeType.Boundary;
-  if (x >= nodesLengthRow) return NodeType.Boundary;
-  if (y >= nodesLengthColumn) return NodeType.Boundary;
-  if (z >= nodesLengthZ) return NodeType.Boundary;
+  if (x >= GameState.nodesLengthRow) return NodeType.Boundary;
+  if (y >= GameState.nodesLengthColumn) return NodeType.Boundary;
+  if (z >= GameState.nodesLengthZ) return NodeType.Boundary;
   return gridNodeXYZType(x, y, z);
 }
 
@@ -87,9 +87,9 @@ int gridNodeZRCTypeSafe(int z, int row, int column) {
   if (z < 0) return NodeType.Boundary;
   if (row < 0) return NodeType.Boundary;
   if (column < 0) return NodeType.Boundary;
-  if (z >= nodesTotalZ) return NodeType.Boundary;
-  if (row >= nodesTotalRows) return NodeType.Boundary;
-  if (column >= nodesTotalColumns) return NodeType.Boundary;
+  if (z >= GameState.nodesTotalZ) return NodeType.Boundary;
+  if (row >= GameState.nodesTotalRows) return NodeType.Boundary;
+  if (column >= GameState.nodesTotalColumns) return NodeType.Boundary;
   return gridNodeZRCType(z, row, column);
 }
 

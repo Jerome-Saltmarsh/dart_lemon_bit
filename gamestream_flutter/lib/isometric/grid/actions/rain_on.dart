@@ -6,9 +6,9 @@ import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/queries/set_grid_type.dart';
 
 void rainOn(){
-  for (var row = 0; row < nodesTotalRows; row++) {
-    for (var column = 0; column < nodesTotalColumns; column++) {
-      for (var z = nodesTotalZ - 1; z >= 0; z--) {
+  for (var row = 0; row < GameState.nodesTotalRows; row++) {
+    for (var column = 0; column < GameState.nodesTotalColumns; column++) {
+      for (var z = GameState.nodesTotalZ - 1; z >= 0; z--) {
 
         final index = getNodeIndexZRC(z, row, column);
         final type = GameState.nodesType[index];

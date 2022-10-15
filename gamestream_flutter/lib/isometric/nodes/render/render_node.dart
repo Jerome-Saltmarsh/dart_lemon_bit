@@ -25,8 +25,8 @@ import 'render_standard_node.dart';
 
 void renderNodeAt() {
   if (!GameState.nodesVisible[RenderEngine.renderNodeIndex] && GameState.nodesOrientation[RenderEngine.renderNodeIndex] != NodeOrientation.None) {
-    if (RenderEngine.renderNodeIndex > nodesArea){
-        final nodeBelowIndex = RenderEngine.renderNodeIndex - nodesArea;
+    if (RenderEngine.renderNodeIndex > GameState.nodesArea){
+        final nodeBelowIndex = RenderEngine.renderNodeIndex - GameState.nodesArea;
         final nodeBelowOrientation = GameState.nodesOrientation[nodeBelowIndex];
         if (nodeBelowOrientation == NodeOrientation.None) {
            return;

@@ -16,10 +16,10 @@ double raycastDown(double x, double y){
 
 void casteShadowDownV3(Vector3 vector3){
   if (vector3.z < nodeHeight) return;
-  if (vector3.z >= nodesLengthZ) return;
+  if (vector3.z >= GameState.nodesLengthZ) return;
   final nodeIndex = getGridNodeIndexV3(vector3);
-  if (nodeIndex > nodesArea) {
-    final nodeBelowIndex = nodeIndex - nodesArea;
+  if (nodeIndex > GameState.nodesArea) {
+    final nodeBelowIndex = nodeIndex - GameState.nodesArea;
     final nodeBelowOrientation = GameState.nodesOrientation[nodeBelowIndex];
     if (nodeBelowOrientation == NodeOrientation.Solid){
       final topRemainder = vector3.z % tileHeight;

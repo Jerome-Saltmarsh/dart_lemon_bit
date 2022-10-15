@@ -612,11 +612,11 @@ class ServerResponseReader with ByteReader {
 
   void readGrid() {
     print("readGrid()");
-    nodesTotalZ = readInt();
-    nodesTotalRows = readInt();
-    nodesTotalColumns = readInt();
-    nodesArea = nodesTotalRows * nodesTotalColumns;
-    final grandTotal = nodesTotalZ * nodesTotalRows * nodesTotalColumns;
+    GameState.nodesTotalZ = readInt();
+    GameState.nodesTotalRows = readInt();
+    GameState.nodesTotalColumns = readInt();
+    GameState.nodesArea = GameState.nodesTotalRows * GameState.nodesTotalColumns;
+    final grandTotal = GameState.nodesTotalZ * GameState.nodesTotalRows * GameState.nodesTotalColumns;
     if (GameState.nodesType.length < grandTotal) {
       print('new buffers generated $grandTotal');
       GameState.nodesType = Uint8List(grandTotal);
@@ -658,10 +658,10 @@ class ServerResponseReader with ByteReader {
         gridIndex++;
         count--;
         currentColumn++;
-        if (currentColumn >= nodesTotalColumns) {
+        if (currentColumn >= GameState.nodesTotalColumns) {
           currentColumn = 0;
           currentRow++;
-          if (currentRow >= nodesTotalRows) {
+          if (currentRow >= GameState.nodesTotalRows) {
             currentRow = 0;
           }
         }

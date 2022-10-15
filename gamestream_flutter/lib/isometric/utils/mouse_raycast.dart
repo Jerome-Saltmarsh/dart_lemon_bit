@@ -7,15 +7,15 @@ import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:lemon_engine/engine.dart';
 
 void mouseRaycast(Function(int z, int row, int column) callback){
-  var z = nodesTotalZ - 1;
+  var z = GameState.nodesTotalZ - 1;
   while (z >= 0){
     final row = convertWorldToRow(mouseWorldX, mouseWorldY, z * tileHeight);
     final column = convertWorldToColumn(mouseWorldX, mouseWorldY, z * tileHeight);
     if (row < 0) break;
     if (column < 0) break;
-    if (row >= nodesTotalRows) break;
-    if (column >= nodesTotalColumns) break;
-    if (z >= nodesTotalZ) break;
+    if (row >= GameState.nodesTotalRows) break;
+    if (column >= GameState.nodesTotalColumns) break;
+    if (z >= GameState.nodesTotalZ) break;
     final index = getNodeIndexZRC(z, row, column);
     if (GameState.nodesType[index] == NodeType.Empty
         ||

@@ -10,11 +10,11 @@ void setGridType(int z, int row, int column, int type){
     return;
   if (column < 0)
     return;
-  if (z >= nodesTotalZ)
+  if (z >= GameState.nodesTotalZ)
     return;
-  if (row >= nodesTotalRows)
+  if (row >= GameState.nodesTotalRows)
     return;
-  if (column >= nodesTotalColumns)
+  if (column >= GameState.nodesTotalColumns)
     return;
 
   GameState.nodesType[getNodeIndexZRC(z, row, column)] = type;

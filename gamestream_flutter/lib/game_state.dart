@@ -52,6 +52,19 @@ class GameState {
   static var visibleIndex = 0;
   static var dynamicIndex = 0;
 
+  static final gridShadows = Watch(true, onChanged: (bool value){
+    refreshLighting();
+  });
+
+  static var nodesTotalZ = 0;
+  static var nodesTotalRows = 0;
+  static var nodesTotalColumns = 0;
+  static var nodesLengthRow = 0.0;
+  static var nodesLengthColumn = 0.0;
+  static var nodesLengthZ = 0.0;
+  static var nodesArea = 0;
+
+
   static final ambientShade = Watch(Shade.Bright, onChanged: onChangedAmbientShade);
   static const nodesInitialSize = 70 * 70 * 8;
 

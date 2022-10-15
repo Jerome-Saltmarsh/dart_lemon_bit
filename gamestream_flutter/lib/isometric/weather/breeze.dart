@@ -11,12 +11,12 @@ var move = true;
 double get windLineRenderX {
   var windLineColumn = 0;
   var windLineRow = 0;
-  if (windLine < nodesTotalRows){
+  if (windLine < GameState.nodesTotalRows){
     windLineColumn = 0;
-    windLineRow = nodesTotalRows - windLine - 1;
+    windLineRow = GameState.nodesTotalRows - windLine - 1;
   } else {
     windLineRow = 0;
-    windLineColumn = windLine - nodesTotalRows + 1;
+    windLineColumn = windLine - GameState.nodesTotalRows + 1;
   }
   return (windLineRow - windLineColumn) * tileSizeHalf;
 }
@@ -25,15 +25,15 @@ void applyGridLine(int index, int strength){
   if (index < 0) return;
   var windLineRow = 0;
   var windLineColumn = 0;
-  if (index < nodesTotalRows){
+  if (index < GameState.nodesTotalRows){
     windLineColumn = 0;
-    windLineRow = nodesTotalRows - index - 1;
+    windLineRow = GameState.nodesTotalRows - index - 1;
   } else {
     windLineRow = 0;
-    windLineColumn = index - nodesTotalRows + 1;
+    windLineColumn = index - GameState.nodesTotalRows + 1;
   }
-  while (windLineRow < nodesTotalRows && windLineColumn < nodesTotalColumns){
-    for (var windLineZ = 0; windLineZ < nodesTotalZ; windLineZ++){
+  while (windLineRow < GameState.nodesTotalRows && windLineColumn < GameState.nodesTotalColumns){
+    for (var windLineZ = 0; windLineZ < GameState.nodesTotalZ; windLineZ++){
       final index = getNodeIndexZRC(windLineZ, windLineRow, windLineColumn);
       GameState.nodesWind[index] += strength;
       // TODO refactor

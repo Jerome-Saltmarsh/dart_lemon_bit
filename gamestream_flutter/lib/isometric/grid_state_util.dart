@@ -15,9 +15,9 @@ bool inBoundsVector3(Vector3 vector3){
   if (vector3.x < 0) return false;
   if (vector3.y < 0) return false;
   if (vector3.z < 0) return false;
-  if (vector3.x >= nodesLengthRow) return false;
-  if (vector3.y >= nodesLengthColumn) return false;
-  if (vector3.z >= nodesLengthZ) return false;
+  if (vector3.x >= GameState.nodesLengthRow) return false;
+  if (vector3.y >= GameState.nodesLengthColumn) return false;
+  if (vector3.z >= GameState.nodesLengthZ) return false;
   return true;
 }
 
