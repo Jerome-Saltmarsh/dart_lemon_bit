@@ -81,7 +81,7 @@ void updateParticles() {
 }
 
 void updateParticlesZombieParts() {
-  if (engine.frame % 6 != 0) return;
+  if (Engine.paintFrame % 6 != 0) return;
   for (var i = 0; i < totalActiveParticles; i++) {
     final particle = particles[i];
     if (!particle.active) break;

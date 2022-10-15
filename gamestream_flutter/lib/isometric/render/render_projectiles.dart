@@ -24,7 +24,7 @@ void renderProjectile(Projectile value) {
           dstX: value.renderX,
           dstY: value.renderY,
           srcX: 2576,
-          srcY: (engine.frame % 6) * 64,
+          srcY: (Engine.paintFrame % 6) * 64,
           srcWidth: 64,
           srcHeight:64,
           rotation: value.angle + pi - piQuarter,

@@ -426,7 +426,7 @@ void renderFlame(Position position) {
   render(
       dstX: position.x,
       dstY: position.y,
-      srcY: ((position.x + position.y + engine.frame) % 6) * 23,
+      srcY: ((position.x + position.y + Engine.paintFrame) % 6) * 23,
       srcX: 5669,
       srcWidth: 18,
       srcHeight: 23,

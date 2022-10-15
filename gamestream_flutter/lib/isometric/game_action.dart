@@ -31,7 +31,7 @@ class GameAction {
 
    void update(){
       if (!active) return;
-      if (end > engine.frame) return;
+      if (end > Engine.paintFrame) return;
       action();
       active = false;
    }
@@ -39,7 +39,7 @@ class GameAction {
    void set({required Function action, required int duration}) {
       assert (duration >= 0);
       this.action = action;
-      this.end = engine.frame + duration;
+      this.end = Engine.paintFrame + duration;
       this.active = true;
    }
 }

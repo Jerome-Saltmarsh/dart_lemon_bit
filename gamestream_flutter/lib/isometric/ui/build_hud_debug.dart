@@ -40,7 +40,7 @@ Widget buildHudDebug() =>
               Refresh(() => text('characters: active: $totalCharacters, total: ${characters.length}')),
               Refresh(() => text('particles: active: $totalActiveParticles, total: ${particles.length}')),
               Refresh(() => text('nodes-rendered: $onscreenNodes')),
-              Refresh(() => text('engine-frame: ${engine.frame}')),
+              Refresh(() => text('engine-frame: ${Engine.paintFrame}')),
               watch(renderFrame, (t) => text("render-frame: $t")),
               watch(serverResponseReader.updateFrame, (t) => text("update-frame: $t")),
               watch(player.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => player.interpolating.value = !player.interpolating.value)),

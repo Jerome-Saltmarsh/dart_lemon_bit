@@ -82,6 +82,9 @@ class Engine {
   static String get title => watchTitle.value;
   static Color get backgroundColor => watchBackgroundColor.value;
   static bool get isLocalHost => Uri.base.host == 'localhost';
+  static bool get deviceIsComputer => deviceType.value == DeviceType.Computer;
+  static bool get deviceIsPhone => deviceType.value == DeviceType.Phone;
+  static int get paintFrame => notifierPaintFrame.value;
 
   // WATCHES
   static final watchBackgroundColor = Watch(DefaultBackgroundColor);
@@ -90,9 +93,7 @@ class Engine {
   static final watchInitialized = Watch(false, onChanged: (bool value){ });
   static final watchDurationPerFrame = Watch(Duration(milliseconds: DefaultMillisecondsPerFrame));
   static final watchMouseLeftDown = Watch(false, onChanged: internalOnChangedMouseLeftDown);
-  static final mouseRightDown = Watch(false, onChanged: (bool value) {
-
-  });
+  static final mouseRightDown = Watch(false);
 
   // CONSTANTS
   static const DefaultMillisecondsPerFrame = 30;
@@ -100,16 +101,13 @@ class Engine {
   static const DefaultTitle = "DEMO";
   static const MillisecondsPerSecond = 1000;
 
-  static void internalOnChangedMouseLeftDown(bool value){
-    print('internalOnChangedMouseLeftDown');
-    if (value) {
-      onLeftClicked?.call();
-    } else {
-      mouseLeftDownFrames = 0;
-    }
-  }
-
   // VARIABLES
+  static var textPainter = TextPainter(
+      textAlign: TextAlign.center,
+      textDirection: TextDirection.ltr
+  );
+  static final Map<String, TextSpan> textSpans = {
+  };
   static late Canvas canvas;
   static final keyboard = RawKeyboard.instance;
   static final paint = Paint()
@@ -148,9 +146,15 @@ class Engine {
   static final deviceType = Watch(DeviceType.Computer);
   static late BuildContext buildContext;
 
-  static bool get deviceIsComputer => deviceType.value == DeviceType.Computer;
+  // INTERNAL FUNCTIONS
 
-  static bool get deviceIsPhone => deviceType.value == DeviceType.Phone;
+  static void internalOnChangedMouseLeftDown(bool value){
+    if (value) {
+      onLeftClicked?.call();
+    } else {
+      mouseLeftDownFrames = 0;
+    }
+  }
 
   static void internalSetScreenSize(double width, double height){
     if (screen.width == width && screen.height == height) return;
@@ -175,14 +179,6 @@ class Engine {
       deviceType.value =
       deviceIsComputer ? DeviceType.Phone : DeviceType.Computer;
 
-  static var textPainter = TextPainter(
-      textAlign: TextAlign.center,
-      textDirection: TextDirection.ltr
-  );
-
-  static final Map<String, TextSpan> textSpans = {
-  };
-
   static Future loadAtlas(String filename) async {
     atlas = await loadImage(filename);
   }
@@ -200,8 +196,6 @@ class Engine {
     textPainter.layout();
     textPainter.paint(canvas, Offset(x, y));
   }
-
-  int get frame => notifierPaintFrame.value;
 
   static void run({
     String title = DefaultTitle,
