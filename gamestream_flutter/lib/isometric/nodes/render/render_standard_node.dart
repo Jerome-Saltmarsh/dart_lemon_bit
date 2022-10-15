@@ -29,9 +29,9 @@ void renderStandardNode({
   _src[0] = srcX;
   _src[1] = srcY;
   _src[2] = srcX + spriteWidth;
-  _dst[2] = RenderEngine.renderNodeDstX - spriteWidthHalf;
+  _dst[2] = RenderEngine.currentNodeDstX - spriteWidthHalf;
   _src[3] = srcY + spriteHeight;
-  _dst[3] = RenderEngine.renderNodeDstY - spriteHeightThird;
+  _dst[3] = RenderEngine.currentNodeDstY - spriteHeightThird;
   Engine.canvas.drawRawAtlas(Images.blocks, _dst, _src, _colors, BlendMode.dstATop, null, Engine.paint);
 }
 
@@ -40,13 +40,13 @@ void renderStandardNodeShaded({
   required double srcY,
 }){
   RenderEngine.onscreenNodes++;
-  _colors[0] = colorShades[GameState.nodesShade[RenderEngine.renderNodeIndex]];
+  _colors[0] = colorShades[GameState.nodesShade[RenderEngine.currentNodeIndex]];
   _src[0] = srcX;
   _src[1] = srcY;
   _src[2] = srcX + spriteWidth;
-  _dst[2] = RenderEngine.renderNodeDstX - spriteWidthHalf;
+  _dst[2] = RenderEngine.currentNodeDstX - spriteWidthHalf;
   _src[3] = srcY + spriteHeight;
-  _dst[3] = RenderEngine.renderNodeDstY - spriteHeightThird;
+  _dst[3] = RenderEngine.currentNodeDstY - spriteHeightThird;
   Engine.canvas.drawRawAtlas(Images.blocks, _dst, _src, _colors, BlendMode.dstATop, null, Engine.paint);
 }
 
@@ -60,9 +60,9 @@ void renderStandardNodeHalfEast({
   _src[0] = srcX;
   _src[1] = srcY;
   _src[2] = srcX + spriteWidth;
-  _dst[2] = RenderEngine.renderNodeDstX - spriteWidthHalf + 17;
+  _dst[2] = RenderEngine.currentNodeDstX - spriteWidthHalf + 17;
   _src[3] = srcY + spriteHeight;
-  _dst[3] = RenderEngine.renderNodeDstY - spriteHeightThird - 17;
+  _dst[3] = RenderEngine.currentNodeDstY - spriteHeightThird - 17;
   Engine.canvas.drawRawAtlas(Images.blocks, _dst, _src, _colors, BlendMode.dstATop, null, Engine.paint);
 }
 
@@ -76,9 +76,9 @@ void renderStandardNodeHalfNorth({
   _src[0] = srcX;
   _src[1] = srcY;
   _src[2] = srcX + spriteWidth;
-  _dst[2] = RenderEngine.renderNodeDstX - spriteWidthHalf - 17;
+  _dst[2] = RenderEngine.currentNodeDstX - spriteWidthHalf - 17;
   _src[3] = srcY + spriteHeight;
-  _dst[3] = RenderEngine.renderNodeDstY - spriteHeightThird - 17;
+  _dst[3] = RenderEngine.currentNodeDstY - spriteHeightThird - 17;
   Engine.canvas.drawRawAtlas(Images.blocks, _dst, _src, _colors, BlendMode.dstATop, null, Engine.paint);
 }
 

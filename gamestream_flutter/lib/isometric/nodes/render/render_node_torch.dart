@@ -12,8 +12,8 @@ void renderNodeTorch(){
     renderAdvanced(
         srcX: AtlasSrcX.Node_Torch_X,
         srcY: AtlasSrcX.Node_Torch_Y,
-        dstX: RenderEngine.renderNodeDstX,
-        dstY: RenderEngine.renderNodeDstY,
+        dstX: RenderEngine.currentNodeDstX,
+        dstY: RenderEngine.currentNodeDstY,
         width: AtlasSrcX.Node_Torch_Width,
         height: AtlasSrcX.Node_Torch_Height,
     );
@@ -22,9 +22,9 @@ void renderNodeTorch(){
   if (renderNodeWind == Wind.Calm){
     renderAdvanced(
       srcX: AtlasSrcX.Node_Torch_X,
-      srcY: AtlasSrcX.Node_Torch_Y + AtlasSrcX.Node_Torch_Height + (((RenderEngine.renderNodeRow + (animationFrame)) % 6) * AtlasSrcX.Node_Torch_Height),
-      dstX: RenderEngine.renderNodeDstX,
-      dstY: RenderEngine.renderNodeDstY,
+      srcY: AtlasSrcX.Node_Torch_Y + AtlasSrcX.Node_Torch_Height + (((RenderEngine.currentNodeRow + (animationFrame)) % 6) * AtlasSrcX.Node_Torch_Height),
+      dstX: RenderEngine.currentNodeDstX,
+      dstY: RenderEngine.currentNodeDstY,
       width: AtlasSrcX.Node_Torch_Width,
       height: AtlasSrcX.Node_Torch_Height,
     );
@@ -32,9 +32,9 @@ void renderNodeTorch(){
   }
   renderAdvanced(
     srcX: AtlasSrcX.Node_Torch_Windy_X,
-    srcY: AtlasSrcX.Node_Torch_Windy_Y + AtlasSrcX.Node_Torch_Height + (((RenderEngine.renderNodeRow + (animationFrame)) % 6) * AtlasSrcX.Node_Torch_Height),
-    dstX: RenderEngine.renderNodeDstX,
-    dstY: RenderEngine.renderNodeDstY,
+    srcY: AtlasSrcX.Node_Torch_Windy_Y + AtlasSrcX.Node_Torch_Height + (((RenderEngine.currentNodeRow + (animationFrame)) % 6) * AtlasSrcX.Node_Torch_Height),
+    dstX: RenderEngine.currentNodeDstX,
+    dstY: RenderEngine.currentNodeDstY,
     width: AtlasSrcX.Node_Torch_Width,
     height: AtlasSrcX.Node_Torch_Height,
   );

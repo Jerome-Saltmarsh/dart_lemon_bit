@@ -39,7 +39,7 @@ import 'render_particle.dart';
 class RenderEngine {
   static var totalRemaining = 0;
   static var totalIndex = 0;
-  static final renderOrderGrid = RenderOrderGrid();
+  static final renderOrderGrid = RenderOrderNodes();
   static final renderOrderParticle = RenderOrderParticle();
   static final renderOrderProjectiles = RenderOrderProjectiles();
   static final renderOrderCharacters = RenderOrderCharacters();
@@ -65,13 +65,13 @@ class RenderEngine {
   static var screenBottom = 0.0;
   static var screenLeft = 0.0;
 
-  static var renderNodeZ = 0;
-  static var renderNodeRow = 0;
-  static var renderNodeColumn = 0;
-  static var renderNodeDstX = 0.0;
-  static var renderNodeDstY = 0.0;
-  static var renderNodeIndex = 0;
-  static var renderNodeType = 0;
+  static var currentNodeZ = 0;
+  static var currentNodeRow = 0;
+  static var currentNodeColumn = 0;
+  static var currentNodeDstX = 0.0;
+  static var currentNodeDstY = 0.0;
+  static var currentNodeIndex = 0;
+  static var currentNodeType = 0;
 
   static var indexShow = 0;
   static var indexShowRow = 0;
@@ -82,6 +82,19 @@ class RenderEngine {
   static late Character currentRenderCharacter;
   static late GameObject currentRenderGameObject;
   static late Projectile currentRenderProjectile;
+
+  static var nodesRowsMax = 0;
+  static var nodesShiftIndex = 0;
+  static var nodesScreenTopLeftRow = 0;
+  static var nodesScreenBottomRightRow = 0;
+  static var nodesGridTotalColumnsMinusOne = 0;
+  static var nodesGridTotalZMinusOne = 0;
+  static var nodesPlayerColumnRow = 0;
+  static var nodesPlayerUnderRoof = false;
+  static var nodesStartRow = 0;
+  static var nodeStartColumn = 0;
+  static var nodesMaxZ = 0;
+  static var nodesMinZ = 0;
 
   static final maxZRender = Watch<int>(GameState.nodesTotalZ, clamp: (int value){
     return clamp<int>(value, 0, max(GameState.nodesTotalZ - 1, 0));
@@ -260,11 +273,11 @@ class RenderOrderParticle extends RenderOrder {
   }
 }
 
-int get renderNodeShade => GameState.nodesShade[RenderEngine.renderNodeIndex];
-int get renderNodeOrientation => GameState.nodesOrientation[RenderEngine.renderNodeIndex];
+int get renderNodeShade => GameState.nodesShade[RenderEngine.currentNodeIndex];
+int get renderNodeOrientation => GameState.nodesOrientation[RenderEngine.currentNodeIndex];
 int get renderNodeColor => colorShades[renderNodeShade];
 int get renderNodeWind => GameState.nodesWind[renderNodeShade];
-int get renderNodeBelowIndex => RenderEngine.renderNodeIndex + GameState.nodesArea;
+int get renderNodeBelowIndex => RenderEngine.currentNodeIndex + GameState.nodesArea;
 
 int get renderNodeBelowShade {
   if (renderNodeBelowIndex < 0) return GameState.ambientShade.value;
@@ -278,58 +291,41 @@ int getRenderLayerColor(int layers) =>
   colorShades[getRenderLayerShade(layers)];
 
 int getRenderLayerShade(int layers){
-   final index = RenderEngine.renderNodeIndex + (layers * GameState.nodesArea);
+   final index = RenderEngine.currentNodeIndex + (layers * GameState.nodesArea);
    if (index < 0) return GameState.ambientShade.value;
    if (index >= GameState.nodesTotal) return GameState.ambientShade.value;
    return GameState.nodesShade[index];
 }
 
+class RenderOrderNodes extends RenderOrder {
 
-
-class RenderOrderGrid extends RenderOrder {
-  var rowsMax = 0;
-  var shiftIndex = 0;
-  var screenTopLeftRow = 0;
-  var screenBottomRightRow = 0;
-  var gridTotalColumnsMinusOne = 0;
-  var gridTotalZMinusOne = 0;
-
-  var playerColumnRow = 0;
-  var playerUnderRoof = false;
-
-  var startRow = 0;
-  var startColumn = 0;
-
-  var maxZ = 0;
-  var minZ = 0;
-
-  double get renderX => (RenderEngine.renderNodeRow - RenderEngine.renderNodeColumn) * tileSizeHalf;
-  double get renderY => convertRowColumnZToY(RenderEngine.renderNodeRow, RenderEngine.renderNodeColumn, RenderEngine.renderNodeZ);
+  double get renderX => (RenderEngine.currentNodeRow - RenderEngine.currentNodeColumn) * tileSizeHalf;
+  double get renderY => convertRowColumnZToY(RenderEngine.currentNodeRow, RenderEngine.currentNodeColumn, RenderEngine.currentNodeZ);
 
   @override
   void renderFunction() {
 
     while (
-    RenderEngine.renderNodeColumn >= 0 &&
-        RenderEngine.renderNodeRow <= rowsMax &&
-        RenderEngine.renderNodeDstX <= RenderEngine.screenRight
+    RenderEngine.currentNodeColumn >= 0 &&
+        RenderEngine.currentNodeRow <= RenderEngine.nodesRowsMax &&
+        RenderEngine.currentNodeDstX <= RenderEngine.screenRight
     ){
-      RenderEngine.renderNodeType = GameState.nodesType[RenderEngine.renderNodeIndex];
-      if (RenderEngine.renderNodeType != NodeType.Empty){
+      RenderEngine.currentNodeType = GameState.nodesType[RenderEngine.currentNodeIndex];
+      if (RenderEngine.currentNodeType != NodeType.Empty){
         renderNodeAt();
       }
-      RenderEngine.renderNodeRow++;
-      RenderEngine.renderNodeColumn--;
-      RenderEngine.renderNodeIndex += gridTotalColumnsMinusOne;
-      RenderEngine.renderNodeDstX += spriteWidth;
+      RenderEngine.currentNodeRow++;
+      RenderEngine.currentNodeColumn--;
+      RenderEngine.currentNodeIndex += RenderEngine.nodesGridTotalColumnsMinusOne;
+      RenderEngine.currentNodeDstX += spriteWidth;
     }
   }
 
   @override
   void updateFunction() {
-    RenderEngine.renderNodeZ++;
-    if (RenderEngine.renderNodeZ > maxZ) {
-      RenderEngine.renderNodeZ = 0;
+    RenderEngine.currentNodeZ++;
+    if (RenderEngine.currentNodeZ > RenderEngine.nodesMaxZ) {
+      RenderEngine.currentNodeZ = 0;
       shiftIndexDown();
       if (!remaining) return;
       calculateMinMaxZ();
@@ -337,22 +333,22 @@ class RenderOrderGrid extends RenderOrder {
       trimLeft();
 
       while (renderY > RenderEngine.screenBottom) {
-        RenderEngine.renderNodeZ++;
-        if (RenderEngine.renderNodeZ > maxZ) {
+        RenderEngine.currentNodeZ++;
+        if (RenderEngine.currentNodeZ > RenderEngine.nodesMaxZ) {
           remaining = false;
           return;
         }
       }
     } else {
-      RenderEngine.renderNodeRow = startRow;
-      RenderEngine.renderNodeColumn = startColumn;
+      RenderEngine.currentNodeRow = RenderEngine.nodesStartRow;
+      RenderEngine.currentNodeColumn = RenderEngine.nodeStartColumn;
     }
-    RenderEngine.renderNodeDstX = (RenderEngine.renderNodeRow - RenderEngine.renderNodeColumn) * nodeSizeHalf;
-    RenderEngine.renderNodeDstY = ((RenderEngine.renderNodeRow + RenderEngine.renderNodeColumn) * nodeSizeHalf) - (RenderEngine.renderNodeZ * nodeHeight);
-    RenderEngine.renderNodeIndex = (RenderEngine.renderNodeZ * GameState.nodesArea) + (RenderEngine.renderNodeRow * GameState.nodesTotalColumns) + RenderEngine.renderNodeColumn;
-    RenderEngine.renderNodeType = GameState.nodesType[RenderEngine.renderNodeIndex];
-    order = ((RenderEngine.renderNodeRow + RenderEngine.renderNodeColumn) * tileSize) + tileSizeHalf;
-    orderZ = RenderEngine.renderNodeZ;
+    RenderEngine.currentNodeDstX = (RenderEngine.currentNodeRow - RenderEngine.currentNodeColumn) * nodeSizeHalf;
+    RenderEngine.currentNodeDstY = ((RenderEngine.currentNodeRow + RenderEngine.currentNodeColumn) * nodeSizeHalf) - (RenderEngine.currentNodeZ * nodeHeight);
+    RenderEngine.currentNodeIndex = (RenderEngine.currentNodeZ * GameState.nodesArea) + (RenderEngine.currentNodeRow * GameState.nodesTotalColumns) + RenderEngine.currentNodeColumn;
+    RenderEngine.currentNodeType = GameState.nodesType[RenderEngine.currentNodeIndex];
+    order = ((RenderEngine.currentNodeRow + RenderEngine.currentNodeColumn) * tileSize) + tileSizeHalf;
+    orderZ = RenderEngine.currentNodeZ;
   }
 
   @override
@@ -362,27 +358,27 @@ class RenderOrderGrid extends RenderOrder {
 
   @override
   void reset() {
-    rowsMax = GameState.nodesTotalRows - 1;
-    gridTotalZMinusOne = GameState.nodesTotalZ - 1;
+    RenderEngine.nodesRowsMax = GameState.nodesTotalRows - 1;
+    RenderEngine.nodesGridTotalZMinusOne = GameState.nodesTotalZ - 1;
     RenderEngine.offscreenNodesTop = 0;
     RenderEngine.offscreenNodesRight = 0;
     RenderEngine.offscreenNodesBottom = 0;
     RenderEngine.offscreenNodesLeft = 0;
     RenderEngine.offscreenNodes = 0;
     RenderEngine.onscreenNodes = 0;
-    minZ = 0;
+    RenderEngine.nodesMinZ = 0;
     order = 0;
     orderZ = 0;
-    RenderEngine.renderNodeZ = 0;
+    RenderEngine.currentNodeZ = 0;
     orderZ = 0;
-    gridTotalColumnsMinusOne = GameState.nodesTotalColumns - 1;
+    RenderEngine.nodesGridTotalColumnsMinusOne = GameState.nodesTotalColumns - 1;
     RenderEngine.playerZ = GameState.player.indexZ;
     RenderEngine.playerRow = GameState.player.indexRow;
     RenderEngine.playerColumn = GameState.player.indexColumn;
-    playerColumnRow = RenderEngine.playerRow + RenderEngine.playerColumn;
+    RenderEngine.nodesPlayerColumnRow = RenderEngine.playerRow + RenderEngine.playerColumn;
     RenderEngine.playerRenderRow = RenderEngine.playerRow - (GameState.player.indexZ ~/ 2);
     RenderEngine.playerRenderColumn = RenderEngine.playerColumn - (GameState.player.indexZ ~/ 2);
-    playerUnderRoof = gridIsUnderSomething(RenderEngine.playerZ, RenderEngine.playerRow, RenderEngine.playerColumn);
+    RenderEngine.nodesPlayerUnderRoof = gridIsUnderSomething(RenderEngine.playerZ, RenderEngine.playerRow, RenderEngine.playerColumn);
 
     RenderEngine.indexShow = inBoundsVector3(GameState.player) ? GameState.player.nodeIndex : 0;
     RenderEngine.indexShowRow = convertIndexToRow(RenderEngine.indexShow);
@@ -402,39 +398,39 @@ class RenderOrderGrid extends RenderOrder {
     RenderEngine.screenTop = Engine.screen.top - 72;
     RenderEngine.screenBottom = Engine.screen.bottom + 72;
     var screenTopLeftColumn = convertWorldToColumn(RenderEngine.screenLeft, RenderEngine.screenTop, 0);
-    screenBottomRightRow = clamp(convertWorldToRow(RenderEngine.screenRight, RenderEngine.screenBottom, 0), 0, GameState.nodesTotalRows - 1);
-    screenTopLeftRow = convertWorldToRow(RenderEngine.screenLeft, RenderEngine.screenTop, 0);
+    RenderEngine.nodesScreenBottomRightRow = clamp(convertWorldToRow(RenderEngine.screenRight, RenderEngine.screenBottom, 0), 0, GameState.nodesTotalRows - 1);
+    RenderEngine.nodesScreenTopLeftRow = convertWorldToRow(RenderEngine.screenLeft, RenderEngine.screenTop, 0);
 
-    if (screenTopLeftRow < 0){
-      screenTopLeftColumn += screenTopLeftRow;
-      screenTopLeftRow = 0;
+    if (RenderEngine.nodesScreenTopLeftRow < 0){
+      screenTopLeftColumn += RenderEngine.nodesScreenTopLeftRow;
+      RenderEngine.nodesScreenTopLeftRow = 0;
     }
     if (screenTopLeftColumn < 0){
-      screenTopLeftRow += screenTopLeftColumn;
+      RenderEngine.nodesScreenTopLeftRow += screenTopLeftColumn;
       screenTopLeftColumn = 0;
     }
     if (screenTopLeftColumn >= GameState.nodesTotalColumns){
-      screenTopLeftRow = screenTopLeftColumn - gridTotalColumnsMinusOne;
-      screenTopLeftColumn = gridTotalColumnsMinusOne;
+      RenderEngine.nodesScreenTopLeftRow = screenTopLeftColumn - RenderEngine.nodesGridTotalColumnsMinusOne;
+      screenTopLeftColumn = RenderEngine.nodesGridTotalColumnsMinusOne;
     }
-    if (screenTopLeftRow < 0 || screenTopLeftColumn < 0){
-      screenTopLeftRow = 0;
+    if (RenderEngine.nodesScreenTopLeftRow < 0 || screenTopLeftColumn < 0){
+      RenderEngine.nodesScreenTopLeftRow = 0;
       screenTopLeftColumn = 0;
     }
 
-    RenderEngine.renderNodeRow = screenTopLeftRow;
-    RenderEngine.renderNodeColumn = screenTopLeftColumn;
+    RenderEngine.currentNodeRow = RenderEngine.nodesScreenTopLeftRow;
+    RenderEngine.currentNodeColumn = screenTopLeftColumn;
 
 
-    shiftIndex = 0;
+    RenderEngine.nodesShiftIndex = 0;
     calculateMinMaxZ();
     trimTop();
     trimLeft();
 
-    RenderEngine.renderNodeDstX = (RenderEngine.renderNodeRow - RenderEngine.renderNodeColumn) * nodeSizeHalf;
-    RenderEngine.renderNodeDstY = ((RenderEngine.renderNodeRow + RenderEngine.renderNodeColumn) * nodeSizeHalf) - (RenderEngine.renderNodeZ * nodeHeight);
-    RenderEngine.renderNodeIndex = (RenderEngine.renderNodeZ * GameState.nodesArea) + (RenderEngine.renderNodeRow * GameState.nodesTotalColumns) + RenderEngine.renderNodeColumn;
-    RenderEngine.renderNodeType = GameState.nodesType[RenderEngine.renderNodeIndex];
+    RenderEngine.currentNodeDstX = (RenderEngine.currentNodeRow - RenderEngine.currentNodeColumn) * nodeSizeHalf;
+    RenderEngine.currentNodeDstY = ((RenderEngine.currentNodeRow + RenderEngine.currentNodeColumn) * nodeSizeHalf) - (RenderEngine.currentNodeZ * nodeHeight);
+    RenderEngine.currentNodeIndex = (RenderEngine.currentNodeZ * GameState.nodesArea) + (RenderEngine.currentNodeRow * GameState.nodesTotalColumns) + RenderEngine.currentNodeColumn;
+    RenderEngine.currentNodeType = GameState.nodesType[RenderEngine.currentNodeIndex];
 
     while (GameState.visibleIndex > 0) {
       GameState.nodesVisible[GameState.nodesVisibleIndex[GameState.visibleIndex]] = true;
@@ -528,60 +524,60 @@ class RenderOrderGrid extends RenderOrder {
   // otherwise use totalZ;
   // calculate the world position Y at row / column, then workout its distance from the top of the screen;
   void calculateMinMaxZ(){
-    final bottom = convertRowColumnToY(RenderEngine.renderNodeRow, RenderEngine.renderNodeColumn);
+    final bottom = convertRowColumnToY(RenderEngine.currentNodeRow, RenderEngine.currentNodeColumn);
     final distance =  bottom - RenderEngine.screenTop;
-    maxZ = (distance ~/ tileHeight);
-    if (maxZ > gridTotalZMinusOne){
-      maxZ = gridTotalZMinusOne;
+    RenderEngine.nodesMaxZ = (distance ~/ tileHeight);
+    if (RenderEngine.nodesMaxZ > RenderEngine.nodesGridTotalZMinusOne){
+      RenderEngine.nodesMaxZ = RenderEngine.nodesGridTotalZMinusOne;
     }
-    if (maxZ < 0){
-      maxZ = 0;
+    if (RenderEngine.nodesMaxZ < 0){
+      RenderEngine.nodesMaxZ = 0;
     }
 
-    while (convertRowColumnZToY(RenderEngine.renderNodeRow, RenderEngine.renderNodeColumn, minZ) > RenderEngine.screenBottom){
-      minZ++;
-      if (minZ >= GameState.nodesTotalZ){
+    while (convertRowColumnZToY(RenderEngine.currentNodeRow, RenderEngine.currentNodeColumn, RenderEngine.nodesMinZ) > RenderEngine.screenBottom){
+      RenderEngine.nodesMinZ++;
+      if (RenderEngine.nodesMinZ >= GameState.nodesTotalZ){
         return end();
       }
     }
   }
 
   void shiftIndexDown(){
-    RenderEngine.renderNodeColumn = RenderEngine.renderNodeRow + RenderEngine.renderNodeColumn + 1;
-    RenderEngine.renderNodeRow = 0;
-    if (RenderEngine.renderNodeColumn < GameState.nodesTotalColumns) {
+    RenderEngine.currentNodeColumn = RenderEngine.currentNodeRow + RenderEngine.currentNodeColumn + 1;
+    RenderEngine.currentNodeRow = 0;
+    if (RenderEngine.currentNodeColumn < GameState.nodesTotalColumns) {
       return setStart();
     }
-    RenderEngine.renderNodeRow = RenderEngine.renderNodeColumn - gridTotalColumnsMinusOne;
-    RenderEngine.renderNodeColumn = gridTotalColumnsMinusOne;
+    RenderEngine.currentNodeRow = RenderEngine.currentNodeColumn - RenderEngine.nodesGridTotalColumnsMinusOne;
+    RenderEngine.currentNodeColumn = RenderEngine.nodesGridTotalColumnsMinusOne;
 
-    if (RenderEngine.renderNodeRow >= GameState.nodesTotalRows){
+    if (RenderEngine.currentNodeRow >= GameState.nodesTotalRows){
        remaining = false;
        return;
     }
-    RenderEngine.renderNodeDstY = ((RenderEngine.renderNodeRow + RenderEngine.renderNodeColumn) * nodeSizeHalf) - (RenderEngine.renderNodeZ * nodeHeight);
+    RenderEngine.currentNodeDstY = ((RenderEngine.currentNodeRow + RenderEngine.currentNodeColumn) * nodeSizeHalf) - (RenderEngine.currentNodeZ * nodeHeight);
     setStart();
   }
 
   void trimLeft(){
     final offscreen = countLeftOffscreen;
     if (offscreen <= 0) return;
-    RenderEngine.renderNodeColumn -= offscreen;
-    RenderEngine.renderNodeRow += offscreen;
+    RenderEngine.currentNodeColumn -= offscreen;
+    RenderEngine.currentNodeRow += offscreen;
     while (renderX < RenderEngine.screenLeft){
-      RenderEngine.renderNodeRow++;
-      RenderEngine.renderNodeColumn--;
+      RenderEngine.currentNodeRow++;
+      RenderEngine.currentNodeColumn--;
     }
     setStart();
   }
 
   void setStart(){
-    startRow = RenderEngine.renderNodeRow;
-    startColumn = RenderEngine.renderNodeColumn;
+    RenderEngine.nodesStartRow = RenderEngine.currentNodeRow;
+    RenderEngine.nodeStartColumn = RenderEngine.currentNodeColumn;
   }
 
   int get countLeftOffscreen {
-    final x = convertRowColumnToX(RenderEngine.renderNodeRow, RenderEngine.renderNodeColumn);
+    final x = convertRowColumnToX(RenderEngine.currentNodeRow, RenderEngine.currentNodeColumn);
     if (Engine.screen.left < x) return 0;
     final diff = Engine.screen.left - x;
     return diff ~/ tileSize;
