@@ -4,7 +4,6 @@ import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/Shade.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_type.dart';
-import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/audio_engine.dart';
 import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
@@ -16,8 +15,6 @@ import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_action_finished_lightning_flash.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_ambient_shade.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_edit.dart';
-import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
-import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_vector_emission.dart';
@@ -182,5 +179,21 @@ class GameState {
       return;
     }
     player.gameDialog.value = GameDialog.Map;
+  }
+
+  static void clear() {
+    player.x = -1;
+    player.y = -1;
+    totalZombies = 0;
+    totalPlayers = 0;
+    totalProjectiles = 0;
+    totalNpcs = 0;
+    particleEmitters.clear();
+    particles.clear();
+    player.gameDialog.value = null;
+    player.npcTalkOptions.value = [];
+    player.npcTalk.value = null;
+    Engine.zoom = 1;
+    Engine.redrawCanvas();
   }
 }

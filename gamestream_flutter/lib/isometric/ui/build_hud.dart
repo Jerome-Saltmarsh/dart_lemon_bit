@@ -9,7 +9,6 @@ import 'package:gamestream_flutter/io/touchscreen.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
-import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
