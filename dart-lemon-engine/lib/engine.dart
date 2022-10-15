@@ -16,7 +16,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_html/html.dart';
 import 'package:url_strategy/url_strategy.dart' as us;
 
-import 'load_image.dart';
 import 'render.dart';
 
 class Engine {
@@ -177,7 +176,15 @@ class Engine {
       deviceIsComputer ? DeviceType.Phone : DeviceType.Computer;
 
   static Future loadAtlas(String filename) async {
-    atlas = await loadImage(filename);
+    atlas = await loadImageAsset(filename);
+  }
+
+  static Future<ui.Image> loadImageAsset(String url) async {
+    final byteData = await rootBundle.load(url);
+    final bytes = Uint8List.view(byteData.buffer);
+    final codec = await ui.instantiateImageCodec(bytes);
+    final frameInfo = await codec.getNextFrame();
+    return frameInfo.image;
   }
 
   static TextSpan getTextSpan(String text) {
