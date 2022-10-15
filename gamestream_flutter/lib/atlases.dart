@@ -10,6 +10,7 @@ class Images {
    static late Image characters;
    static late Image zombie;
    static late Image templateShadow;
+   static late Image gameobjects;
 }
 
 class ImagesTemplateHead {

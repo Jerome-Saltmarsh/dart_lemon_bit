@@ -1,8 +1,11 @@
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/atlases.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
+import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
+import 'package:gamestream_flutter/isometric/render/render_util.dart';
 import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -10,55 +13,58 @@ import 'render_shadow.dart';
 
 void renderGameObject(GameObject gameObject) {
 
-  if (gameObject.type == GameObjectType.Loot)
+  if (gameObject.type == GameObjectType.Rock)
     return Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: gameObject.renderY,
-      srcX: 4443,
-      srcY: 11,
-      srcWidth: 10,
-      srcHeight: 15,
+      srcX: AtlasSrcGameObjects.Rock_X,
+      srcY: AtlasSrcGameObjects.Rock_Y,
+      srcWidth: AtlasSrcGameObjects.Rock_Width,
+      srcHeight: AtlasSrcGameObjects.Rock_Height,
       color: getRenderColor(gameObject),
     );
 
-  if (gameObject.type == GameObjectType.Rock)
-    return Engine.renderBuffer(
-       dstX: gameObject.renderX,
-       dstY: gameObject.renderY,
-       srcX: 1664,
-       srcY: 0,
-       srcWidth: 16,
-       srcHeight: 16,
-      color: getRenderColor(gameObject),
+  if (gameObject.type == GameObjectType.Loot)
+    return Engine.renderSprite(
+       image: Images.gameobjects,
+       dstX: RenderUtil.getRenderX(gameObject),
+       dstY: RenderUtil.getRenderY(gameObject),
+       srcX: AtlasSrcGameObjects.Loot_X,
+       srcY: AtlasSrcGameObjects.Loot_Y,
+       srcWidth: AtlasSrcGameObjects.Loot_Width,
+       srcHeight: AtlasSrcGameObjects.Loot_Height,
+       color: getRenderColor(gameObject),
     );
 
   if (gameObject.type == GameObjectType.Barrel)
-    return Engine.renderBuffer(
-      dstX: gameObject.renderX,
-      dstY: gameObject.renderY,
-      srcX: 1747,
-      srcY: 0,
-      srcWidth: 28,
-      srcHeight: 40,
-      anchorY: 0.66,
+    return Engine.renderSprite(
+      image: Images.gameobjects,
+      dstX: RenderUtil.getRenderX(gameObject),
+      dstY: RenderUtil.getRenderY(gameObject),
+      srcX: AtlasSrcGameObjects.Barrel_X,
+      srcY: AtlasSrcGameObjects.Barrel_Y,
+      srcWidth: AtlasSrcGameObjects.Barrel_Width,
+      srcHeight: AtlasSrcGameObjects.Barrel_Height,
+      anchorY: AtlasSrcGameObjects.Barrel_Anchor,
       color: getRenderColor(gameObject),
     );
 
   if (gameObject.type == GameObjectType.Tavern_Sign)
-    return Engine.renderBuffer(
-      dstX: gameObject.renderX,
-      dstY: gameObject.renderY,
-      srcX: 1645,
-      srcY: 0,
-      srcWidth: 19,
-      srcHeight: 39,
+    return Engine.renderSprite(
+      image: Images.gameobjects,
+      dstX: RenderUtil.getRenderX(gameObject),
+      dstY: RenderUtil.getRenderY(gameObject),
+      srcX: AtlasSrcGameObjects.Tavern_Sign_X,
+      srcY: AtlasSrcGameObjects.Tavern_Sign_Y,
+      srcWidth: AtlasSrcGameObjects.Tavern_Sign_Width,
+      srcHeight: AtlasSrcGameObjects.Tavern_Sign_Height,
       color: getRenderColor(gameObject),
     );
 
   if (gameObject.type == GameObjectType.Candle)
     return Engine.renderBuffer(
-      dstX: gameObject.renderX,
-      dstY: gameObject.renderY,
+      dstX: RenderUtil.getRenderX(gameObject),
+      dstY: RenderUtil.getRenderY(gameObject),
       srcX: 1812,
       srcY: 0,
       srcWidth: 3,
@@ -68,8 +74,8 @@ void renderGameObject(GameObject gameObject) {
 
   if (gameObject.type == GameObjectType.Bottle)
     return Engine.renderBuffer(
-      dstX: gameObject.renderX,
-      dstY: gameObject.renderY,
+      dstX: RenderUtil.getRenderX(gameObject),
+      dstY: RenderUtil.getRenderY(gameObject),
       srcX: 1811,
       srcY: 11,
       srcWidth: 5,
@@ -80,8 +86,8 @@ void renderGameObject(GameObject gameObject) {
 
   if (gameObject.type == GameObjectType.Wheel)
     return Engine.renderBuffer(
-      dstX: gameObject.renderX,
-      dstY: gameObject.renderY,
+      dstX: RenderUtil.getRenderX(gameObject),
+      dstY: RenderUtil.getRenderY(gameObject),
       srcX: 1775,
       srcY: 0,
       srcWidth: 34,
@@ -92,8 +98,8 @@ void renderGameObject(GameObject gameObject) {
 
   if (gameObject.type == GameObjectType.Flower)
     return Engine.renderBuffer(
-      dstX: gameObject.renderX,
-      dstY: gameObject.renderY,
+      dstX: RenderUtil.getRenderX(gameObject),
+      dstY: RenderUtil.getRenderY(gameObject),
       srcX: 1680,
       srcY: 0,
       srcWidth: 16,
@@ -103,8 +109,8 @@ void renderGameObject(GameObject gameObject) {
 
   if (gameObject.type == GameObjectType.Stick)
     return Engine.renderBuffer(
-      dstX: gameObject.renderX,
-      dstY: gameObject.renderY,
+      dstX: RenderUtil.getRenderX(gameObject),
+      dstY: RenderUtil.getRenderY(gameObject),
       srcX: 1696,
       srcY: 0,
       srcWidth: 16,
@@ -113,20 +119,21 @@ void renderGameObject(GameObject gameObject) {
     );
 
   if (gameObject.type == GameObjectType.Crystal)
-    return Engine.renderBuffer(
-      dstX: gameObject.renderX,
-      dstY: gameObject.renderY,
-      srcX: 2778,
-      srcY: animationFrameJellyFish * 61.0,
-      srcWidth: 22,
-      srcHeight: 60,
-      anchorY: 0.8
+    return Engine.renderSprite(
+      image: Images.gameobjects,
+      dstX: RenderUtil.getRenderX(gameObject),
+      dstY: RenderUtil.getRenderY(gameObject),
+      srcX: AtlasSrcGameObjects.Crystal_Large_X,
+      srcY: AtlasSrcGameObjects.Crystal_Large_Y,
+      srcWidth: AtlasSrcGameObjects.Crystal_Large_Width,
+      srcHeight: AtlasSrcGameObjects.Crystal_Large_Height,
+      anchorY: AtlasSrcGameObjects.Crystal_Anchor_Y
     );
 
   if (gameObject.type == GameObjectType.Cup)
     return Engine.renderBuffer(
-        dstX: gameObject.renderX,
-        dstY: gameObject.renderY,
+        dstX: RenderUtil.getRenderX(gameObject),
+        dstY: RenderUtil.getRenderY(gameObject),
         srcX: 1816,
         srcY: 0,
         srcWidth: 6,
@@ -136,8 +143,8 @@ void renderGameObject(GameObject gameObject) {
 
   if (gameObject.type == GameObjectType.Butterfly)
     return Engine.renderBuffer(
-      dstX: gameObject.renderX,
-      dstY: gameObject.renderY,
+      dstX:RenderUtil.getRenderX(gameObject),
+      dstY:RenderUtil.getRenderY(gameObject),
       srcX: 1984,
       srcY: (animationFrame8 % 2) * 23 + (gameObject.direction * 2 * 23),
       srcWidth: 30,
@@ -151,8 +158,8 @@ void renderGameObject(GameObject gameObject) {
 
   if (gameObject.type == GameObjectType.Lantern_Red)
     return Engine.renderBuffer(
-      dstX: gameObject.renderX,
-      dstY: gameObject.renderY,
+      dstX:RenderUtil.getRenderX(gameObject),
+      dstY:RenderUtil.getRenderY(gameObject),
       srcX: 1744,
       srcY: 48,
       srcWidth: 12,
@@ -169,8 +176,8 @@ void renderGameObject(GameObject gameObject) {
 
   if (gameObject.type == GameObjectType.Wooden_Shelf_Row)
     return Engine.renderBuffer(
-        dstX: gameObject.renderX,
-        dstY: gameObject.renderY,
+        dstX:RenderUtil.getRenderX(gameObject),
+        dstY:RenderUtil.getRenderY(gameObject),
         srcX: 1664,
         srcY: 16,
         srcWidth: 32,
@@ -179,8 +186,8 @@ void renderGameObject(GameObject gameObject) {
 
   if (gameObject.type == GameObjectType.Book_Purple)
     return Engine.renderBuffer(
-      dstX: gameObject.renderX,
-      dstY: gameObject.renderY,
+      dstX:RenderUtil.getRenderX(gameObject),
+      dstY:RenderUtil.getRenderY(gameObject),
       srcX: 1697,
       srcY: 16,
       srcWidth: 8,
@@ -190,8 +197,8 @@ void renderGameObject(GameObject gameObject) {
 
   if (gameObject.type == GameObjectType.Crystal_Small_Blue)
     return Engine.renderBuffer(
-      dstX: gameObject.renderX,
-      dstY: gameObject.renderY,
+      dstX:RenderUtil.getRenderX(gameObject),
+      dstY:RenderUtil.getRenderY(gameObject),
       srcX: 1697,
       srcY: 33,
       srcWidth: 10,
@@ -200,8 +207,8 @@ void renderGameObject(GameObject gameObject) {
 
   if (gameObject.type == GameObjectType.Flower_Green)
     return Engine.renderBuffer(
-      dstX: gameObject.renderX,
-      dstY: gameObject.renderY,
+      dstX:RenderUtil.getRenderX(gameObject),
+      dstY:RenderUtil.getRenderY(gameObject),
       srcX: 1696,
       srcY: 53,
       srcWidth: 9,
@@ -213,7 +220,7 @@ void renderGameObject(GameObject gameObject) {
   if (gameObject.type == GameObjectType.Weapon_Shotgun) {
     renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
     return Engine.renderBuffer(
-      dstX: gameObject.renderX,
+      dstX:RenderUtil.getRenderX(gameObject),
       dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
       srcX: 262,
       srcY: 204,
@@ -226,7 +233,7 @@ void renderGameObject(GameObject gameObject) {
   if (gameObject.type == GameObjectType.Weapon_Handgun) {
     renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
     return Engine.renderBuffer(
-      dstX: gameObject.renderX,
+      dstX:RenderUtil.getRenderX(gameObject),
       dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
       srcX: 234,
       srcY: 200,
@@ -239,7 +246,7 @@ void renderGameObject(GameObject gameObject) {
   if (gameObject.type == GameObjectType.Weapon_Blade) {
     renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
     Engine.renderBuffer(
-      dstX: gameObject.renderX,
+      dstX:RenderUtil.getRenderX(gameObject),
       dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
       srcX: 1029,
       srcY: 1644,
@@ -253,7 +260,7 @@ void renderGameObject(GameObject gameObject) {
   if (gameObject.type == GameObjectType.Weapon_Bow) {
     renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
     Engine.renderBuffer(
-      dstX: gameObject.renderX,
+      dstX:RenderUtil.getRenderX(gameObject),
       dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
       srcX: 7181,
       srcY: 1838,
@@ -267,7 +274,7 @@ void renderGameObject(GameObject gameObject) {
   if (gameObject.type == GameObjectType.Weapon_Staff) {
     renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
     Engine.renderBuffer(
-      dstX: gameObject.renderX,
+      dstX: RenderUtil.getRenderX(gameObject),
       dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
       srcX: 7119,
       srcY: 1519,

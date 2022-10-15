@@ -23,10 +23,6 @@ class CoreActions {
     Website.error.value = message;
   }
 
-  void clearErrosr(){
-    Website.error.value = null;
-  }
-
   void changeAccountPublicName(String value) async {
     print("actions.changePublicName('$value')");
     final account = Website.account.value;

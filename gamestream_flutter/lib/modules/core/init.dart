@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future init(SharedPreferences sharedPreferences) async {
   Images.characters = await Engine.loadImageAsset('images/atlas-characters.png');
   Images.zombie = await Engine.loadImageAsset('images/atlas-zombie.png');
+  Images.gameobjects = await Engine.loadImageAsset('images/atlas-gameobjects.png');
   Images.templateShadow = await Engine.loadImageAsset('images/template/template-shadow.png');
   Images.mapAtlas = await Engine.loadImageAsset('images/atlas-map.png');
   Images.blocks = await Engine.loadImageAsset('images/atlas-blocks.png');

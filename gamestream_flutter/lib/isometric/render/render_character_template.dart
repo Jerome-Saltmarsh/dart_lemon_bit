@@ -4,7 +4,7 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/atlases.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
-import 'package:gamestream_flutter/isometric/render/get_render_x.dart';
+import 'package:gamestream_flutter/isometric/render/render_util.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -152,8 +152,8 @@ void renderTemplateWeapon(Character character, int direction){
     srcY: direction * size,
     srcWidth: size,
     srcHeight: size,
-    dstX: getRenderX(character),
-    dstY: getRenderY(character),
+    dstX: RenderUtil.getRenderX(character),
+    dstY: RenderUtil.getRenderY(character),
     scale: 0.75,
     color: getRenderColor(character),
     anchorY: 0.75
@@ -207,8 +207,8 @@ void renderCharacterTemplate(Character character, {
     srcY: upperBodyDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
-    dstX: getRenderX(character),
-    dstY: getRenderY(character),
+    dstX: RenderUtil.getRenderX(character),
+    dstY: RenderUtil.getRenderY(character),
     scale: 0.75,
     color: getRenderColor(character),
     anchorY: 0.75,
@@ -219,8 +219,8 @@ void renderCharacterTemplate(Character character, {
     srcY: upperBodyDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
-    dstX: getRenderX(character),
-    dstY: getRenderY(character),
+    dstX: RenderUtil.getRenderX(character),
+    dstY: RenderUtil.getRenderY(character),
     scale: 0.75,
     color: getRenderColor(character),
     anchorY: 0.75
@@ -231,8 +231,8 @@ void renderCharacterTemplate(Character character, {
     srcY: finalDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
-    dstX: getRenderX(character),
-    dstY: getRenderY(character),
+    dstX: RenderUtil.getRenderX(character),
+    dstY: RenderUtil.getRenderY(character),
     scale: 0.75,
     color: getRenderColor(character),
     anchorY: 0.75
@@ -243,8 +243,8 @@ void renderCharacterTemplate(Character character, {
     srcY: character.aimDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
-    dstX: getRenderX(character),
-    dstY: getRenderY(character),
+    dstX: RenderUtil.getRenderX(character),
+    dstY: RenderUtil.getRenderY(character),
     scale: 0.75,
     color: getRenderColor(character),
     anchorY: 0.75
