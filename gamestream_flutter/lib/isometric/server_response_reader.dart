@@ -34,11 +34,9 @@ import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:gamestream_flutter/modules/game/render.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/state/game_options.dart';
 import 'package:gamestream_flutter/state/state_game_waves.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/enums.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -241,7 +239,8 @@ class ServerResponseReader with ByteReader {
           final optionType = readByte();
           switch(optionType){
             case GameOption.Set_Control_Scheme:
-              gameOptions.controlScheme.value = readByte();
+              final controlsScheme = readByte();
+              print(controlsScheme);
               break;
           }
           break;

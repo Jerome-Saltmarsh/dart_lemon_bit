@@ -1,23 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import 'enums.dart';
-
 class Game extends StatefulWidget {
-  // Game({
-  //     Color backgroundColor = Colors.black,
-  //     bool drawCanvasAfterUpdate = true,
-  //     int framesPerSecond = 60,
-  //     ThemeData? themeData,
-  // }){
-  //   engine.setFramesPerSecond(framesPerSecond);
-  //   engine.backgroundColor.value = backgroundColor;
-  //   engine.drawCanvasAfterUpdate = drawCanvasAfterUpdate;
-  //   engine.themeData.value = themeData;
-  // }
-
   @override
   _GameState createState() => _GameState();
 }
@@ -101,6 +88,22 @@ class _GameState extends State<Game> {
     super.dispose();
     Engine.onDispose?.call();
   }
+
+  SystemMouseCursor mapCursorTypeToSystemMouseCursor(CursorType value){
+    switch (value) {
+      case CursorType.Forbidden:
+        return SystemMouseCursors.forbidden;
+      case CursorType.Precise:
+        return SystemMouseCursors.precise;
+      case CursorType.None:
+        return SystemMouseCursors.none;
+      case CursorType.Click:
+        return SystemMouseCursors.click;
+      default:
+        return SystemMouseCursors.basic;
+    }
+  }
+
 }
 
 class _GamePainter extends CustomPainter {

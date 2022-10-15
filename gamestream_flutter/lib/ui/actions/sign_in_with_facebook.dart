@@ -1,5 +1,5 @@
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:gamestream_flutter/control/classes/authentication.dart';
+import 'package:gamestream_flutter/authentication.dart';
 
 var _initialized = false;
 

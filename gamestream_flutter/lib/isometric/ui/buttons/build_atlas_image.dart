@@ -2,9 +2,9 @@
 
 
 import 'package:flutter/widgets.dart';
+import 'package:gamestream_flutter/atlases.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/state/atlas.dart';
 
 Widget buildAtlasImageButton({
   required double srcX,
@@ -50,7 +50,7 @@ Widget buildAtlasImage({
       paint: (Canvas canvas, Size size) =>
         Engine.renderExternalCanvas(
           canvas: canvas,
-          image: atlas,
+          image: Images.mapAtlas,
           srcX: srcX,
           srcY: srcY,
           srcWidth: srcWidth,

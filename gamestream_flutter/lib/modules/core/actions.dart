@@ -1,6 +1,6 @@
 import 'package:bleed_common/GameType.dart';
 import 'package:firestore_client/firestoreService.dart';
-import 'package:gamestream_flutter/control/classes/authentication.dart';
+import 'package:gamestream_flutter/authentication.dart';
 import 'package:gamestream_flutter/gamestream.dart';
 import 'package:gamestream_flutter/isometric/npcs.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
@@ -14,7 +14,6 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
 import 'package:gamestream_flutter/network/instance/websocket.dart';
 import 'package:gamestream_flutter/servers.dart';
-import 'package:gamestream_flutter/shared_preferences.dart';
 import 'package:gamestream_flutter/ui/actions/sign_in_with_facebook.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
@@ -118,7 +117,7 @@ class CoreActions {
 
   Future login(Authentication authentication){
     print("actions.login()");
-    storage.rememberAuthorization(authentication);
+    // storage.rememberAuthorization(authentication);
     return signInOrCreateAccount(
         userId: authentication.userId,
         email: authentication.email,
@@ -199,7 +198,7 @@ class CoreActions {
   }
 
   void store(String key, dynamic value){
-    storage.put(key, value);
+    // storage.put(key, value);
   }
 
 

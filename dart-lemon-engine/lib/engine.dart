@@ -7,12 +7,9 @@ import 'dart:ui' as ui;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lemon_engine/device_type.dart';
 import 'package:lemon_engine/draw.dart';
-import 'package:lemon_engine/enums.dart';
 import 'package:lemon_engine/events.dart';
 import 'package:lemon_engine/game.dart';
-import 'package:lemon_engine/state/atlas.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -101,6 +98,7 @@ class Engine {
   static const MillisecondsPerSecond = 1000;
 
   // VARIABLES
+  static late ui.Image atlas;
   static var textPainter = TextPainter(
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr
@@ -626,16 +624,33 @@ class _Screen {
   var bottom = 0.0;
   var left = 0.0;
 
-  bool contains(double x, double y) {
-    return
-      x > left
-          &&
-      x < right
-          &&
-      y > top
-          &&
-      y < bottom
-    ;
-  }
-
+  bool contains(double x, double y) =>
+    x > left &&
+    x < right &&
+    y > top &&
+    y < bottom ;
 }
+
+class DeviceType {
+  static final Phone = 0;
+  static final Computer = 1;
+
+  static String getName(int value){
+    if (value == Phone){
+      return "Phone";
+    }
+    if (value == Computer){
+      return "Computer";
+    }
+    return "unknown-device-type($value)";
+  }
+}
+
+enum CursorType {
+  None,
+  Basic,
+  Forbidden,
+  Precise,
+  Click,
+}
+
