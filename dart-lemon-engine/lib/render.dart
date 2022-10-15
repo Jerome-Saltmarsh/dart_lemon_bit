@@ -2,7 +2,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
-import 'package:lemon_engine/actions/render_atlas.dart';
+import 'package:lemon_engine/engine.dart';
 
 var bufferIndex = 0;
 var renderIndex = 0;
@@ -229,4 +229,8 @@ void render({
   renderIndex = 0;
 
   renderAtlas();
+}
+
+void renderAtlas(){
+  Engine.canvas.drawRawAtlas(Engine.atlas, dst, src, colors, renderBlendMode, null, Engine.paint);
 }

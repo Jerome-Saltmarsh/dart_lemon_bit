@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:lemon_engine/actions/render_atlas.dart';
 import 'package:lemon_engine/render.dart';
 import 'package:lemon_math/library.dart';
 

@@ -8,7 +8,6 @@ import 'dart:ui' as ui;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lemon_engine/events.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -18,7 +17,7 @@ import 'package:url_strategy/url_strategy.dart' as us;
 
 import 'render.dart';
 
-/// A utility to build games with
+/// boilerplate code for game development
 ///
 /// __getting started__
 /// ```dart
@@ -131,7 +130,6 @@ class Engine {
 
   static Timer? updateTimer;
   static late final sharedPreferences;
-  static late final LemonEngineEvents events;
   static var scrollSensitivity = 0.0005;
   static var cameraSmoothFollow = true;
   static var zoomSensitivity = 0.175;
@@ -163,6 +161,16 @@ class Engine {
       keyboard.keysPressed.contains(key);
 
   // INTERNAL FUNCTIONS
+
+  static void internalOnKeyboardEvent(RawKeyEvent event) {
+    if (event is RawKeyDownEvent) {
+      keyPressedHandlers[event.logicalKey]?.call();
+      return;
+    }
+    if (event is RawKeyUpEvent) {
+      keyReleasedHandlers[event.logicalKey]?.call();
+    }
+  }
 
   static void internalOnChangedMouseLeftDown(bool value){
     if (value) {
@@ -279,8 +287,7 @@ class Engine {
 
     paint.filterQuality = FilterQuality.none;
     paint.isAntiAlias = false;
-    events = LemonEngineEvents();
-    RawKeyboard.instance.addListener(events.onKeyboardEvent);
+    keyboard.addListener(internalOnKeyboardEvent);
 
     mouseRightDown.onChanged((bool value) {
       if (value) {
