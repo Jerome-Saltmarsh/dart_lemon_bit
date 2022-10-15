@@ -5,14 +5,13 @@ import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/render.dart';
 
 import 'render_shadow.dart';
 
 void renderGameObject(GameObject gameObject) {
 
   if (gameObject.type == GameObjectType.Loot)
-    return renderBuffer(
+    return Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: gameObject.renderY,
       srcX: 4443,
@@ -23,7 +22,7 @@ void renderGameObject(GameObject gameObject) {
     );
 
   if (gameObject.type == GameObjectType.Rock)
-    return renderBuffer(
+    return Engine.renderBuffer(
        dstX: gameObject.renderX,
        dstY: gameObject.renderY,
        srcX: 1664,
@@ -34,7 +33,7 @@ void renderGameObject(GameObject gameObject) {
     );
 
   if (gameObject.type == GameObjectType.Barrel)
-    return renderBuffer(
+    return Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: gameObject.renderY,
       srcX: 1747,
@@ -46,7 +45,7 @@ void renderGameObject(GameObject gameObject) {
     );
 
   if (gameObject.type == GameObjectType.Tavern_Sign)
-    return renderBuffer(
+    return Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: gameObject.renderY,
       srcX: 1645,
@@ -57,7 +56,7 @@ void renderGameObject(GameObject gameObject) {
     );
 
   if (gameObject.type == GameObjectType.Candle)
-    return renderBuffer(
+    return Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: gameObject.renderY,
       srcX: 1812,
@@ -68,7 +67,7 @@ void renderGameObject(GameObject gameObject) {
     );
 
   if (gameObject.type == GameObjectType.Bottle)
-    return renderBuffer(
+    return Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: gameObject.renderY,
       srcX: 1811,
@@ -80,7 +79,7 @@ void renderGameObject(GameObject gameObject) {
     );
 
   if (gameObject.type == GameObjectType.Wheel)
-    return renderBuffer(
+    return Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: gameObject.renderY,
       srcX: 1775,
@@ -92,7 +91,7 @@ void renderGameObject(GameObject gameObject) {
     );
 
   if (gameObject.type == GameObjectType.Flower)
-    return renderBuffer(
+    return Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: gameObject.renderY,
       srcX: 1680,
@@ -103,7 +102,7 @@ void renderGameObject(GameObject gameObject) {
     );
 
   if (gameObject.type == GameObjectType.Stick)
-    return renderBuffer(
+    return Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: gameObject.renderY,
       srcX: 1696,
@@ -114,7 +113,7 @@ void renderGameObject(GameObject gameObject) {
     );
 
   if (gameObject.type == GameObjectType.Crystal)
-    return renderBuffer(
+    return Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: gameObject.renderY,
       srcX: 2778,
@@ -125,7 +124,7 @@ void renderGameObject(GameObject gameObject) {
     );
 
   if (gameObject.type == GameObjectType.Cup)
-    return renderBuffer(
+    return Engine.renderBuffer(
         dstX: gameObject.renderX,
         dstY: gameObject.renderY,
         srcX: 1816,
@@ -136,7 +135,7 @@ void renderGameObject(GameObject gameObject) {
     );
 
   if (gameObject.type == GameObjectType.Butterfly)
-    return renderBuffer(
+    return Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: gameObject.renderY,
       srcX: 1984,
@@ -151,7 +150,7 @@ void renderGameObject(GameObject gameObject) {
     return renderGameObjectChicken(gameObject);
 
   if (gameObject.type == GameObjectType.Lantern_Red)
-    return renderBuffer(
+    return Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: gameObject.renderY,
       srcX: 1744,
@@ -169,7 +168,7 @@ void renderGameObject(GameObject gameObject) {
     return renderGameObjectJellyfishRed(gameObject);
 
   if (gameObject.type == GameObjectType.Wooden_Shelf_Row)
-    return renderBuffer(
+    return Engine.renderBuffer(
         dstX: gameObject.renderX,
         dstY: gameObject.renderY,
         srcX: 1664,
@@ -179,7 +178,7 @@ void renderGameObject(GameObject gameObject) {
     );
 
   if (gameObject.type == GameObjectType.Book_Purple)
-    return renderBuffer(
+    return Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: gameObject.renderY,
       srcX: 1697,
@@ -190,7 +189,7 @@ void renderGameObject(GameObject gameObject) {
 
 
   if (gameObject.type == GameObjectType.Crystal_Small_Blue)
-    return renderBuffer(
+    return Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: gameObject.renderY,
       srcX: 1697,
@@ -200,7 +199,7 @@ void renderGameObject(GameObject gameObject) {
     );
 
   if (gameObject.type == GameObjectType.Flower_Green)
-    return renderBuffer(
+    return Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: gameObject.renderY,
       srcX: 1696,
@@ -213,7 +212,7 @@ void renderGameObject(GameObject gameObject) {
   const shadowScaleHeight = 0.15;
   if (gameObject.type == GameObjectType.Weapon_Shotgun) {
     renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
-    return renderBuffer(
+    return Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
       srcX: 262,
@@ -226,7 +225,7 @@ void renderGameObject(GameObject gameObject) {
 
   if (gameObject.type == GameObjectType.Weapon_Handgun) {
     renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
-    return renderBuffer(
+    return Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
       srcX: 234,
@@ -239,7 +238,7 @@ void renderGameObject(GameObject gameObject) {
 
   if (gameObject.type == GameObjectType.Weapon_Blade) {
     renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
-    renderBuffer(
+    Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
       srcX: 1029,
@@ -253,7 +252,7 @@ void renderGameObject(GameObject gameObject) {
 
   if (gameObject.type == GameObjectType.Weapon_Bow) {
     renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
-    renderBuffer(
+    Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
       srcX: 7181,
@@ -267,7 +266,7 @@ void renderGameObject(GameObject gameObject) {
 
   if (gameObject.type == GameObjectType.Weapon_Staff) {
     renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
-    renderBuffer(
+    Engine.renderBuffer(
       dstX: gameObject.renderX,
       dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
       srcX: 7119,
@@ -310,7 +309,7 @@ void renderGameObjectChicken(GameObject value) {
     );
   }
 
-  renderBuffer(
+  Engine.renderBuffer(
     dstX: value.renderX,
     dstY: value.renderY,
     srcX: srcX,
@@ -323,7 +322,7 @@ void renderGameObjectChicken(GameObject value) {
 }
 
 void renderGameObjectJellyfish(GameObject value) {
-  renderBuffer(
+  Engine.renderBuffer(
     dstX: value.renderX,
     dstY: value.renderY,
     srcX: 2745,

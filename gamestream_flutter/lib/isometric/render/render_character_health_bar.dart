@@ -1,7 +1,6 @@
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
-import 'package:lemon_engine/render.dart';
-
+import 'package:lemon_engine/engine.dart';
 
 void renderCharacterHealthBar(Character character){
   const srcX = 2400.0;
@@ -11,7 +10,7 @@ void renderCharacterHealthBar(Character character){
   const srcWidthHalf = srcWidth * 0.5;
   final color = getNodeBelowShade(character);
 
-  renderBuffer(
+  Engine.renderBuffer(
       dstX: character.renderX - srcWidthHalf,
       dstY: character.renderY - marginY,
       srcX: srcX,
@@ -22,7 +21,7 @@ void renderCharacterHealthBar(Character character){
       color: color,
   );
 
-  renderBuffer(
+  Engine.renderBuffer(
       dstX: character.renderX - srcWidthHalf,
       dstY: character.renderY - marginY,
       srcX: srcX,
@@ -47,7 +46,7 @@ void renderCharacterBarWeaponRounds({
   const marginY = 45;
   const srcWidthHalf = srcWidth * 0.5;
 
-  renderBuffer(
+  Engine.renderBuffer(
     dstX: x - srcWidthHalf,
     dstY: y - marginY,
     srcX: srcX,
@@ -57,7 +56,7 @@ void renderCharacterBarWeaponRounds({
     anchorX: 0,
   );
 
-  renderBuffer(
+  Engine.renderBuffer(
     dstX: x - srcWidthHalf,
     dstY: y - marginY,
     srcX: srcX,

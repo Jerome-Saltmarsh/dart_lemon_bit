@@ -1,5 +1,5 @@
 name: lemon_engine
-description: A simple loop and render library
+description: build canvas games for the web
 version: 0.3.20
 homepage: https://github.com/Jerome-Saltmarsh/dart-lemon-engine
 

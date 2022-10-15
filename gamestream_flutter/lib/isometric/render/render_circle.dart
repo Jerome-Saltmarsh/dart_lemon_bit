@@ -1,9 +1,10 @@
 
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
-import 'package:lemon_engine/render.dart';
+
+import 'package:lemon_engine/engine.dart';
 
 void renderCircle32(double x, double y, { double scale = 1.0}){
-  renderBuffer(
+  Engine.renderBuffer(
       dstX: x,
       dstY: y,
       srcX: 858,
@@ -15,7 +16,7 @@ void renderCircle32(double x, double y, { double scale = 1.0}){
 }
 
 void renderCircleV3(Vector3 value, { double scale = 1.0}){
-  renderBuffer(
+  Engine.renderBuffer(
     dstX: value.renderX,
     dstY: value.renderY,
     srcX: 858,
@@ -28,7 +29,7 @@ void renderCircleV3(Vector3 value, { double scale = 1.0}){
 
 void renderCircle({required double x, required double y, required double size}){
      final ratio = size / 32.0;
-     renderBuffer(
+     Engine.renderBuffer(
        dstX: x,
        dstY: y,
        srcX: 519,

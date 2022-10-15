@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/render.dart';
 
 void renderProjectile(Projectile value) {
   switch (value.type) {
@@ -48,7 +47,7 @@ void renderProjectile(Projectile value) {
 const piQuarter = pi * 0.25;
 
 void renderPixelRed(double x, double y){
-  return renderBuffer(dstX: x, dstY: y, srcX: 144, srcY: 0, srcWidth: 8, srcHeight: 8);
+  return Engine.renderBuffer(dstX: x, dstY: y, srcX: 144, srcY: 0, srcWidth: 8, srcHeight: 8);
 }
 
 void renderFireball(double x, double y, double rotation) {
@@ -87,7 +86,7 @@ void renderArrow(double x, double y, double angle) {
 }
 
 void renderOrb(double x, double y) {
-  renderBuffer(
+  Engine.renderBuffer(
       dstX: x,
       dstY: y,
       srcX: 417,

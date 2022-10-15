@@ -1,5 +1,5 @@
 
-import 'package:lemon_engine/render.dart';
+import 'package:lemon_engine/engine.dart';
 
 import '../classes/vector3.dart';
 
@@ -8,7 +8,7 @@ void renderPixelRedV2(Vector3 value){
 }
 
 void renderPixelRed(double x, double y){
-  renderBuffer(
+  Engine.renderBuffer(
     dstX: x,
     dstY: y,
     srcX: 144,

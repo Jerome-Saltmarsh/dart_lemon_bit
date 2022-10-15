@@ -15,8 +15,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_html/html.dart';
 import 'package:url_strategy/url_strategy.dart' as us;
 
-import 'render.dart';
-
 /// boilerplate code for game development
 ///
 ///
@@ -467,7 +465,7 @@ class Engine {
     if (!initialized) return;
     if (onDrawCanvas == null) return;
     onDrawCanvas!.call(canvas, size);
-    engineRenderFlushBuffer();
+    _internalFlushRenderBuffer();
   }
 
   static Duration buildDurationFramesPerSecond(int framesPerSecond) =>
@@ -602,6 +600,91 @@ class Engine {
   static void renderCircleOffset(Offset offset, double radius, Color color) {
     setPaintColor(color);
     canvas.drawCircle(offset, radius, paint);
+  }
+
+  static var bufferIndex = 0;
+  static var bufferBlendMode = BlendMode.dstATop;
+  static const bufferSize = 100;
+  static final bufferSrc = Float32List(bufferSize * 4);
+  static final bufferDst = Float32List(bufferSize * 4);
+  static final bufferColors = Int32List(bufferSize);
+
+  static void _internalFlushRenderBuffer() {
+    if (bufferIndex == 0) return;
+    while (bufferIndex < bufferSize) {
+      bufferSrc[bufferIndex] = 0;
+      bufferDst[bufferIndex] = 0;
+      bufferSrc[bufferIndex + 1] = 0;
+      bufferDst[bufferIndex + 1] = 0;
+      bufferSrc[bufferIndex + 2] = 0;
+      bufferSrc[bufferIndex + 3] = 0;
+      bufferIndex++;
+    }
+    _internalRenderBuffer();
+  }
+
+  static void renderBufferRotated({
+    required double dstX,
+    required double dstY,
+    required double srcX,
+    required double srcY,
+    required double srcWidth,
+    required double srcHeight,
+    required double rotation,
+    double scale = 1.0,
+    double anchorX = 0.5,
+    double anchorY = 0.5,
+  }){
+    final scos = cos(rotation) * scale;
+    final ssin = sin(rotation) * scale;
+    final tx = dstX + -scos * anchorX + ssin * anchorY;
+    final ty = dstY + -ssin * anchorX - scos * anchorY;
+    final i = bufferIndex * 4;
+    bufferSrc[i] = srcX;
+    bufferDst[i] = scos;
+    bufferSrc[i + 1] = srcY;
+    bufferDst[i + 1] = ssin;
+    bufferSrc[i + 2] = srcX + srcWidth;
+    bufferDst[i + 2] = tx;
+    bufferSrc[i + 3] = srcY + srcHeight;
+    bufferDst[i + 3] = ty;
+    _internalIncrementBufferIndex();
+  }
+
+  static void renderBuffer({
+    required double dstX,
+    required double dstY,
+    required double srcX,
+    required double srcY,
+    required double srcWidth,
+    required double srcHeight,
+    double scale = 1.0,
+    double anchorX = 0.5,
+    double anchorY = 0.5,
+    int color = 0,
+  }){
+    final i = bufferIndex * 4;
+    bufferColors[bufferIndex] = color;
+    bufferSrc[i] = srcX;
+    bufferDst[i] = scale;
+    bufferSrc[i + 1] = srcY;
+    bufferDst[i + 1] = 0;
+    bufferSrc[i + 2] = srcX + srcWidth;
+    bufferDst[i + 2] = dstX - (srcWidth * anchorX * scale);
+    bufferSrc[i + 3] = srcY + srcHeight;
+    bufferDst[i + 3] = dstY - (srcHeight * anchorY * scale);
+    _internalIncrementBufferIndex();
+  }
+
+  static void _internalIncrementBufferIndex(){
+    bufferIndex++;
+    if (bufferIndex >= bufferSize)
+      _internalRenderBuffer();
+  }
+
+  static void _internalRenderBuffer(){
+    bufferIndex = 0;
+    canvas.drawRawAtlas(atlas, bufferDst, bufferSrc, bufferColors, bufferBlendMode, null, paint);
   }
 
   static void renderCircleOutline({

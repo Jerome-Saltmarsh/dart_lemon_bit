@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_slime.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_zombie.dart';
-import 'package:lemon_engine/render.dart';
+import 'package:lemon_engine/engine.dart';
 
 import 'render_character_template.dart';
 
@@ -16,7 +16,7 @@ void renderCharacter(Character character){
 
   if (character.spawning) {
     if (character.type == CharacterType.Rat){
-      return renderBuffer(
+      return Engine.renderBuffer(
         srcX: 1920,
         srcY: (character.frame % 8) * 43.0,
         dstX: character.renderX,
@@ -27,7 +27,7 @@ void renderCharacter(Character character){
       );
     }
     if (character.type == CharacterType.Slime) {
-      return renderBuffer(
+      return Engine.renderBuffer(
         srcX: 3040,
         srcY: (character.frame % 6) * 48.0,
         dstX: character.renderX,
@@ -37,7 +37,7 @@ void renderCharacter(Character character){
         scale: 0.75,
       );
     }
-    return renderBuffer(
+    return Engine.renderBuffer(
         srcX: 2016,
         srcY: (character.frame % 8) * 73.0,
         dstX: character.renderX,

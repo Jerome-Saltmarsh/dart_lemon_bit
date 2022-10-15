@@ -2,7 +2,6 @@ import 'package:bleed_common/particle_type.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/render.dart';
 import 'package:lemon_math/library.dart';
 
 import 'get_character_render_color.dart';
@@ -15,7 +14,7 @@ void renderParticle(Particle particle) {
       if (particle.duration < 26){
         const size = 32.0;
         final frame = (26 - particle.duration) ~/ 2;
-        return renderBuffer(
+        return Engine.renderBuffer(
             dstX: particle.renderX,
             dstY: particle.renderY,
             srcX: 2896.0,
@@ -27,7 +26,7 @@ void renderParticle(Particle particle) {
       }
 
       const size = 8.0;
-      return renderBuffer(
+      return Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 2864.0,
@@ -38,7 +37,7 @@ void renderParticle(Particle particle) {
       );
 
     case ParticleType.Bubble_Small:
-      return renderBuffer(
+      return Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 2976.0,
@@ -52,7 +51,7 @@ void renderParticle(Particle particle) {
       final frame = particle.frame ~/ 2;
       if (frame > 6) return;
       const size = 32.0;
-      return renderBuffer(
+      return Engine.renderBuffer(
         dstX: particle.renderX,
         dstY: particle.renderY,
         srcX: 2544,
@@ -64,7 +63,7 @@ void renderParticle(Particle particle) {
       );
 
     case ParticleType.Water_Drop:
-      return renderBuffer(
+      return Engine.renderBuffer(
         dstX: particle.renderX,
         dstY: particle.renderY,
         srcX: 48,
@@ -76,7 +75,7 @@ void renderParticle(Particle particle) {
       );
 
     case ParticleType.Smoke:
-      return renderBuffer(
+      return Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 5612,
@@ -88,7 +87,7 @@ void renderParticle(Particle particle) {
       );
 
     case ParticleType.Block_Wood:
-      return renderBuffer(
+      return Engine.renderBuffer(
         dstX: particle.renderX,
         dstY: particle.renderY,
         srcX: 1760,
@@ -100,7 +99,7 @@ void renderParticle(Particle particle) {
       );
 
     case ParticleType.Block_Grass:
-      return renderBuffer(
+      return Engine.renderBuffer(
         dstX: particle.renderX,
         dstY: particle.renderY,
         srcX: 1760,
@@ -112,7 +111,7 @@ void renderParticle(Particle particle) {
       );
 
     case ParticleType.Block_Brick:
-      return renderBuffer(
+      return Engine.renderBuffer(
         dstX: particle.renderX,
         dstY: particle.renderY,
         srcX: 1760,
@@ -127,7 +126,7 @@ void renderParticle(Particle particle) {
       if (particle.frame > 12 ) {
         return particleDeactivate(particle);
       }
-      return renderBuffer(
+      return Engine.renderBuffer(
         dstX: particle.renderX,
         dstY: particle.renderY,
         srcX: 4464,
@@ -138,7 +137,7 @@ void renderParticle(Particle particle) {
       );
 
     case ParticleType.Shell:
-      return renderBuffer(
+      return Engine.renderBuffer(
         dstX: particle.renderX,
         dstY: particle.renderY,
         srcX: 1008 + (particle.direction * 32),
@@ -153,7 +152,7 @@ void renderParticle(Particle particle) {
       if (particle.frame > 24 ) {
         return particleDeactivate(particle);
       }
-      return renderBuffer(
+      return Engine.renderBuffer(
         dstX: particle.renderX,
         dstY: particle.renderY,
         srcX: 6032,
@@ -165,7 +164,7 @@ void renderParticle(Particle particle) {
     case ParticleType.Blood:
        casteShadowDownV3(particle);
 
-      return renderBuffer(
+      return Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 16,
@@ -196,7 +195,7 @@ void renderParticle(Particle particle) {
 
       casteShadowDownV3(particle);
 
-      return renderBuffer(
+      return Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 4030.0,
@@ -210,7 +209,7 @@ void renderParticle(Particle particle) {
       if (particle.frame >= 7) {
         return particle.deactivate();
       }
-      renderBuffer(
+      Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 2304.0,
@@ -223,7 +222,7 @@ void renderParticle(Particle particle) {
     case ParticleType.Zombie_Head:
 
       casteShadowDownV3(particle);
-      return renderBuffer(
+      return Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 4030.0 + 64,
@@ -234,7 +233,7 @@ void renderParticle(Particle particle) {
       );
 
     case ParticleType.Cut_Grass:
-      return renderBuffer(
+      return Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 2928,
@@ -247,7 +246,7 @@ void renderParticle(Particle particle) {
     case ParticleType.Zombie_leg:
 
       casteShadowDownV3(particle);
-      return renderBuffer(
+      return Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 4030.0 + (64 * 2),
@@ -260,7 +259,7 @@ void renderParticle(Particle particle) {
     case ParticleType.Zombie_Torso:
 
       casteShadowDownV3(particle);
-      return renderBuffer(
+      return Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 4030.0 + (64 * 3),
@@ -270,7 +269,7 @@ void renderParticle(Particle particle) {
           color: getRenderColor(particle),
       );
     case ParticleType.Leaf:
-      return renderBuffer(
+      return Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 281.0,
@@ -283,7 +282,7 @@ void renderParticle(Particle particle) {
     case ParticleType.Dust:
       if (particle.frame >= 8 ) return;
       const size = 32.0;
-      return renderBuffer(
+      return Engine.renderBuffer(
         dstX: particle.renderX,
         dstY: particle.renderY,
         srcX: 2832,
@@ -362,7 +361,7 @@ void renderSmoke({
   required double y,
   required double scale,
 }) {
-  renderBuffer(
+  Engine.renderBuffer(
       dstX: x,
       dstY: y,
       srcX: 5612,
@@ -380,7 +379,7 @@ void renderOrbShard({
   required int frame,
 }) {
   const size = 16.0;
-  renderBuffer(
+  Engine.renderBuffer(
       dstX: x,
       dstY: y,
       srcX: 2304 ,
@@ -396,7 +395,7 @@ void renderShrapnel({
   required double y,
   double scale = 1.0,
 }) {
-  renderBuffer(
+  Engine.renderBuffer(
       dstX: x,
       dstY: y,
       srcX: 1,
@@ -412,7 +411,7 @@ void renderFireYellow({
   required double y,
   double scale = 1.0,
 }) {
-  renderBuffer(
+  Engine.renderBuffer(
       dstX: x,
       dstY: y,
       srcX: 145,
@@ -423,7 +422,7 @@ void renderFireYellow({
 }
 
 void renderFlame(Position position) {
-  renderBuffer(
+  Engine.renderBuffer(
       dstX: position.x,
       dstY: position.y,
       srcY: ((position.x + position.y + Engine.paintFrame) % 6) * 23,

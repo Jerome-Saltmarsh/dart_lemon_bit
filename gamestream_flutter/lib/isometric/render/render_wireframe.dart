@@ -1,13 +1,13 @@
 
 import 'package:bleed_common/library.dart';
-import 'package:lemon_engine/render.dart';
+import 'package:lemon_engine/engine.dart';
 
 void renderWireFrameBlue(
     int z,
     int row,
     int column,
     ) {
-  return renderBuffer(
+  return Engine.renderBuffer(
     dstX: getTileWorldX(row, column),
     dstY: getTileWorldY(row, column) - (z * tileHeight),
     srcX: 6944,
@@ -19,7 +19,7 @@ void renderWireFrameBlue(
 }
 
 void renderWireFrameRed(int row, int column, int z) {
-  return renderBuffer(
+  return Engine.renderBuffer(
     dstX: getTileWorldX(row, column),
     dstY: getTileWorldY(row, column) - (z * tileHeight),
     srcX: 6895,

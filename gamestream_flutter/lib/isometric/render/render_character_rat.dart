@@ -4,13 +4,13 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/src_utils.dart';
-import 'package:lemon_engine/render.dart';
+import 'package:lemon_engine/engine.dart';
 
 void renderCharacterRat(Character character){
   renderPixelRed(character.renderX, character.renderY);
 
   if (character.state == CharacterState.Running){
-    return renderBuffer(
+    return Engine.renderBuffer(
       dstX: character.renderX,
       dstY: character.renderY,
       srcX: loop4(animation: const [1, 2, 3, 4], character: character, framesPerDirection: 4),
@@ -24,7 +24,7 @@ void renderCharacterRat(Character character){
   }
 
   if (character.state == CharacterState.Performing){
-    return renderBuffer(
+    return Engine.renderBuffer(
       dstX: character.renderX,
       dstY: character.renderY,
       srcX: 2680,
@@ -38,7 +38,7 @@ void renderCharacterRat(Character character){
   }
 
 
-  return renderBuffer(
+  return Engine.renderBuffer(
     dstX: character.renderX,
     dstY: character.renderY,
     srcX: 2680,

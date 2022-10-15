@@ -9,7 +9,6 @@ import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/render.dart';
 import 'package:lemon_math/library.dart';
 
 import '../classes/character.dart';
@@ -49,7 +48,7 @@ void renderCharacterWeaponHandgun(Character character) {
   const size = 32.0;
   final direction = character.aimDirection;
 
-  renderBuffer(
+  Engine.renderBuffer(
     dstX: character.renderX + getAdjacent(angle, distance),
     dstY: character.renderY + getOpposite(angle, distance) - 8,
     srcX: 224,
@@ -77,7 +76,7 @@ void renderCharacterWeaponShotgun(Character character) {
   const size = 32.0;
   final direction = character.aimDirection;
 
-  renderBuffer(
+  Engine.renderBuffer(
     dstX: character.renderX + getAdjacent(angle, distance),
     dstY: character.renderY + getOpposite(angle, distance) - 8,
     srcX: 256,
@@ -94,7 +93,7 @@ void renderCharacterWeaponBlade(Character character) {
   const size = 64.0;
   final direction = character.aimDirection;
 
-  renderBuffer(
+  Engine.renderBuffer(
     dstX: character.renderX + getAdjacent(angle, distance),
     dstY: character.renderY + getOpposite(angle, distance) - 8,
     srcX: 304,
@@ -413,7 +412,7 @@ void renderCharacterTemplateWeapon(Character character) {
         mapToLayerWeapon(character.weapon), getNodeBelowShade(character));
     return;
   }
-  renderBuffer(
+  Engine.renderBuffer(
     dstX: character.renderX,
     dstY: character.renderY,
     srcX: _getTemplateSrcX(character, size: 96),
@@ -432,7 +431,7 @@ void renderCharacterTemplateShadow(Character character) {
 }
 
 void _renderCharacterPart(Character character, int layer, int color) {
-  renderBuffer(
+  Engine.renderBuffer(
     dstX: character.renderX,
     dstY: character.renderY,
     srcX: _getTemplateSrcX(character, size: 64),
@@ -457,7 +456,7 @@ void renderCharacterTemplatePartCustom({
   required int layer,
   required int color,
 }) =>
-    renderBuffer(
+    Engine.renderBuffer(
     dstX: renderX,
     dstY: renderY,
     srcX: getTemplateSrcXCustom(
@@ -492,7 +491,7 @@ void renderCharacterTemplatePartCustom96({
   required int weapon,
   required int color,
 }) =>
-    renderBuffer(
+    Engine.renderBuffer(
       dstX: renderX,
       dstY: renderY,
       srcX: getTemplateSrcXCustom(

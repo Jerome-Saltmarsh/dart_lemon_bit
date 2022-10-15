@@ -1,8 +1,8 @@
 
-import 'package:lemon_engine/render.dart';
+import 'package:lemon_engine/engine.dart';
 
 void renderBoxYellow64(double x, double y){
-  renderBuffer(
+  Engine.renderBuffer(
     dstX: x,
     dstY: y,
     srcX: 560,
