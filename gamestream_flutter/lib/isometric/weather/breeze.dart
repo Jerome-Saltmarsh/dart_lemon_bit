@@ -1,22 +1,20 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:lemon_watch/watch.dart';
 
-final weatherBreeze = Watch(false);
-var windLine = 0;
-var move = true;
+
+
 
 double get windLineRenderX {
   var windLineColumn = 0;
   var windLineRow = 0;
-  if (windLine < GameState.nodesTotalRows){
+  if (GameState.windLine < GameState.nodesTotalRows){
     windLineColumn = 0;
-    windLineRow = GameState.nodesTotalRows - windLine - 1;
+    windLineRow = GameState.nodesTotalRows - GameState.windLine - 1;
   } else {
     windLineRow = 0;
-    windLineColumn = windLine - GameState.nodesTotalRows + 1;
+    windLineColumn = GameState.windLine - GameState.nodesTotalRows + 1;
   }
   return (windLineRow - windLineColumn) * tileSizeHalf;
 }

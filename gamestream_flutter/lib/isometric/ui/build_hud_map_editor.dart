@@ -1,6 +1,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
@@ -170,7 +171,7 @@ Widget buildButtonLightning() {
   });
 }
 
-Widget buildButtonBreeze() => watch(weatherBreeze, (bool weatherBreezeOn) {
+Widget buildButtonBreeze() => watch(GameState.weatherBreeze, (bool weatherBreezeOn) {
       return Column(
         children: [
           container(

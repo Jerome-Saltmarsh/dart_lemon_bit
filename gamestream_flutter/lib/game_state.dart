@@ -64,6 +64,10 @@ class GameState {
   static var nodesLengthZ = 0.0;
   static var nodesArea = 0;
 
+  static final weatherBreeze = Watch(false);
+  static var windLine = 0;
+  static var move = true;
+
 
   static final ambientShade = Watch(Shade.Bright, onChanged: onChangedAmbientShade);
   static const nodesInitialSize = 70 * 70 * 8;
