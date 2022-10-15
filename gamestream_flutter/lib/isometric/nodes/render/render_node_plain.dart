@@ -8,7 +8,7 @@ import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'render_standard_node.dart';
 
 void renderNodePlain(){
-  switch (GameState.nodesOrientation[renderNodeIndex]){
+  switch (GameState.nodesOrientation[RenderEngine.renderNodeIndex]){
     case NodeOrientation.Solid:
       return renderStandardNodeShaded(
         srcX: AtlasSrcX.Node_Plain_Solid,
@@ -18,13 +18,13 @@ void renderNodePlain(){
       return renderStandardNodeHalfNorth(
         srcX: AtlasSrcX.Node_Plain_Half_Row_X,
         srcY: AtlasSrcX.Node_Plain_Half_Row_Y,
-        color: colorShades[GameState.nodesShade[renderNodeIndex]],
+        color: colorShades[GameState.nodesShade[RenderEngine.renderNodeIndex]],
       );
     case NodeOrientation.Half_East:
       return renderStandardNodeHalfEast(
         srcX: AtlasSrcX.Node_Plain_Half_Column_X,
         srcY: AtlasSrcX.Node_Plain_Half_Column_Y,
-        color: colorShades[GameState.nodesShade[renderNodeIndex]],
+        color: colorShades[GameState.nodesShade[RenderEngine.renderNodeIndex]],
       );
     case NodeOrientation.Half_South:
       return renderStandardNodeShaded(

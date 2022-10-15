@@ -5,36 +5,8 @@ import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:lemon_watch/watch.dart';
 
 final weatherBreeze = Watch(false);
-
 var windLine = 0;
 var move = true;
-
-void updateWindLine() {
-  if (!weatherBreeze.value) return;
-
-  move = !move;
-  if (move){
-    windLine++;
-  }
-
-  if (windLine >= nodesTotalColumns + nodesTotalRows) {
-    windLine = 0;
-  }
-
-  applyGridLine(windLine, 1);
-  applyGridLine(windLine - 1, 1);
-  applyGridLine(windLine - 2, 1);
-  applyGridLine(windLine - 3, 2);
-  applyGridLine(windLine - 4, 2);
-  applyGridLine(windLine - 5, 2);
-  applyGridLine(windLine - 6, 2);
-  applyGridLine(windLine - 7, 1);
-  applyGridLine(windLine - 8, 1);
-  applyGridLine(windLine - 9, 1);
-  applyGridLine(windLine - 10, 1);
-  applyGridLine(windLine - 11, 1);
-  applyGridLine(windLine - 12, 1);
-}
 
 double get windLineRenderX {
   var windLineColumn = 0;

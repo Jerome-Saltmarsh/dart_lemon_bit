@@ -9,7 +9,7 @@ import 'render_standard_node.dart';
 void renderNodeTypeBrick({
   required int shade,
 }) {
-  switch (GameState.nodesOrientation[renderNodeIndex]) {
+  switch (GameState.nodesOrientation[RenderEngine.renderNodeIndex]) {
     case NodeOrientation.Solid:
       return renderStandardNode(
         srcX: AtlasSrcX.Node_Brick,
@@ -76,6 +76,6 @@ void renderNodeTypeBrick({
         srcY: spriteHeight * shade,
       );
     default:
-      throw Exception("renderNodeTypeBrick(orientation: ${NodeOrientation.getName(GameState.nodesOrientation[renderNodeIndex])}");
+      throw Exception("renderNodeTypeBrick(orientation: ${NodeOrientation.getName(GameState.nodesOrientation[RenderEngine.renderNodeIndex])}");
   }
 }

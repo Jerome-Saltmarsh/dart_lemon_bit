@@ -24,14 +24,14 @@ void renderStandardNode({
   required double srcY,
   int color = 1,
 }){
-  onscreenNodes++;
+  RenderEngine.onscreenNodes++;
   _colors[0] = color;
   _src[0] = srcX;
   _src[1] = srcY;
   _src[2] = srcX + spriteWidth;
-  _dst[2] = renderNodeDstX - spriteWidthHalf;
+  _dst[2] = RenderEngine.renderNodeDstX - spriteWidthHalf;
   _src[3] = srcY + spriteHeight;
-  _dst[3] = renderNodeDstY - spriteHeightThird;
+  _dst[3] = RenderEngine.renderNodeDstY - spriteHeightThird;
   Engine.canvas.drawRawAtlas(Images.blocks, _dst, _src, _colors, BlendMode.dstATop, null, Engine.paint);
 }
 
@@ -39,14 +39,14 @@ void renderStandardNodeShaded({
   required double srcX,
   required double srcY,
 }){
-  onscreenNodes++;
-  _colors[0] = colorShades[GameState.nodesShade[renderNodeIndex]];
+  RenderEngine.onscreenNodes++;
+  _colors[0] = colorShades[GameState.nodesShade[RenderEngine.renderNodeIndex]];
   _src[0] = srcX;
   _src[1] = srcY;
   _src[2] = srcX + spriteWidth;
-  _dst[2] = renderNodeDstX - spriteWidthHalf;
+  _dst[2] = RenderEngine.renderNodeDstX - spriteWidthHalf;
   _src[3] = srcY + spriteHeight;
-  _dst[3] = renderNodeDstY - spriteHeightThird;
+  _dst[3] = RenderEngine.renderNodeDstY - spriteHeightThird;
   Engine.canvas.drawRawAtlas(Images.blocks, _dst, _src, _colors, BlendMode.dstATop, null, Engine.paint);
 }
 
@@ -55,14 +55,14 @@ void renderStandardNodeHalfEast({
   required double srcY,
   int color = 1,
 }){
-  onscreenNodes++;
+  RenderEngine.onscreenNodes++;
   _colors[0] = color;
   _src[0] = srcX;
   _src[1] = srcY;
   _src[2] = srcX + spriteWidth;
-  _dst[2] = renderNodeDstX - spriteWidthHalf + 17;
+  _dst[2] = RenderEngine.renderNodeDstX - spriteWidthHalf + 17;
   _src[3] = srcY + spriteHeight;
-  _dst[3] = renderNodeDstY - spriteHeightThird - 17;
+  _dst[3] = RenderEngine.renderNodeDstY - spriteHeightThird - 17;
   Engine.canvas.drawRawAtlas(Images.blocks, _dst, _src, _colors, BlendMode.dstATop, null, Engine.paint);
 }
 
@@ -71,14 +71,14 @@ void renderStandardNodeHalfNorth({
   required double srcY,
   int color = 1,
 }){
-  onscreenNodes++;
+  RenderEngine.onscreenNodes++;
   _colors[0] = color;
   _src[0] = srcX;
   _src[1] = srcY;
   _src[2] = srcX + spriteWidth;
-  _dst[2] = renderNodeDstX - spriteWidthHalf - 17;
+  _dst[2] = RenderEngine.renderNodeDstX - spriteWidthHalf - 17;
   _src[3] = srcY + spriteHeight;
-  _dst[3] = renderNodeDstY - spriteHeightThird - 17;
+  _dst[3] = RenderEngine.renderNodeDstY - spriteHeightThird - 17;
   Engine.canvas.drawRawAtlas(Images.blocks, _dst, _src, _colors, BlendMode.dstATop, null, Engine.paint);
 }
 
@@ -94,7 +94,7 @@ void renderAdvanced({
   double anchorY = 0.5,
   int color = 1,
 }){
-  onscreenNodes++;
+  RenderEngine.onscreenNodes++;
   _colors[0] = color;
   _src[0] = srcX;
   _dst[0] = 1;
