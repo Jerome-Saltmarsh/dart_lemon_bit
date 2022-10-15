@@ -45,7 +45,7 @@ Widget buildPageWebsite({double padding = 6})  =>
           width: Engine.screen.width,
           height: Engine.screen.height,
           alignment: Alignment.center,
-          child: buildColumnGames(),
+          child: Website.buildColumnGames(),
         ),
       )
     ],

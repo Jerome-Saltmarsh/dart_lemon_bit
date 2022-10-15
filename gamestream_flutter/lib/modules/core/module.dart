@@ -1,6 +1,5 @@
 
 import 'actions.dart';
-import 'build.dart';
 import 'events.dart';
 import 'properties.dart';
 
@@ -8,7 +7,6 @@ import 'properties.dart';
 class CoreModule {
   late final events;
   late final properties;
-  final build = CoreBuild();
   final actions = CoreActions();
 
   CoreModule(){

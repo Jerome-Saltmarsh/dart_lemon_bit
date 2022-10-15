@@ -57,9 +57,6 @@ class ServerResponseReader with ByteReader {
   final bufferSize = Watch(0);
   final updateFrame = Watch(0, onChanged: onChangedUpdateFrame);
 
-  var previous = -1;
-  var response = -1;
-
   void readBytes(Uint8List values) {
     updateFrame.value++;
     index = 0;
@@ -69,9 +66,7 @@ class ServerResponseReader with ByteReader {
     this.values = values;
 
     while (true) {
-      previous = response;
-      response = readByte();
-      switch (response) {
+      switch (readByte()) {
         case ServerResponse.Character_Rat:
           readCharacterRat();
           break;
@@ -237,7 +232,6 @@ class ServerResponseReader with ByteReader {
           if (debugging) {
             return;
           }
-          print("read bytes exception, unrecognized server response $response at index $index, length: ${values.length}");
           print(values);
           debugging = true;
           readBytes(values);
