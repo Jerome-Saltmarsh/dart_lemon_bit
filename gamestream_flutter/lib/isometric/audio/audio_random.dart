@@ -1,6 +1,6 @@
 import 'package:bleed_common/Shade.dart';
+import 'package:gamestream_flutter/audio_engine.dart';
 import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:lemon_math/library.dart';
 
@@ -62,7 +62,7 @@ void playRandomAmbientSound(){
     return playRandom(soundsNight);
   }
   if (hour == 6){
-    return audioSingleRooster.play(volume: 0.3);
+    return AudioEngine.audioSingleRooster.play(volume: 0.3);
   }
 
   if (hour > 9 && hour < 15) {

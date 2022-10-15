@@ -28,11 +28,11 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
-import '../classes/particle.dart';
-import '../edit.dart';
-import '../grid.dart';
-import '../lighting/apply_emissions_gameobjects.dart';
-import 'render_particle.dart';
+import 'isometric/classes/particle.dart';
+import 'isometric/edit.dart';
+import 'isometric/grid.dart';
+import 'isometric/lighting/apply_emissions_gameobjects.dart';
+import 'isometric/render/render_particle.dart';
 
 
 

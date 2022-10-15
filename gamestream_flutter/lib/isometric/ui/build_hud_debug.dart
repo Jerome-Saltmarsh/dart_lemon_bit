@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/gamestream.dart';
-import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
 import 'package:gamestream_flutter/modules/game/render.dart';
+import 'package:gamestream_flutter/render_engine.dart';
 import 'package:lemon_engine/engine.dart';
 
 import '../server_response_reader.dart';

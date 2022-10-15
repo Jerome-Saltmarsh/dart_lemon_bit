@@ -1,8 +1,8 @@
 
-import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
+import 'package:gamestream_flutter/audio_engine.dart';
 
 void onChangedPlayerDesigned(bool value){
    if (value){
-      audioSingleItemUnlock();
+      AudioEngine.audioSingleItemUnlock();
    }
 }

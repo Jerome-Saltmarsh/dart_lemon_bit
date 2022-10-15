@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:bleed_common/Shade.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_type.dart';
-import 'package:gamestream_flutter/isometric/audio/audio_singles.dart';
+import 'package:gamestream_flutter/audio_engine.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/classes/particle_emitter.dart';
@@ -130,7 +130,7 @@ class GameState {
   }
 
   static void actionLightningFlash() {
-    audioSingleThunder(1.0);
+    AudioEngine.audioSingleThunder(1.0);
     if (ambientShade.value == Shade.Very_Bright) return;
     ambientShade.value = Shade.Very_Bright;
     runAction(duration: 8, action: onActionFinishedLightningFlash);

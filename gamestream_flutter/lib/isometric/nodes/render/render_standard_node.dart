@@ -5,7 +5,7 @@ import 'dart:ui';
 import 'package:gamestream_flutter/atlases.dart';
 import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
-import 'package:gamestream_flutter/isometric/render/render_sprites.dart';
+import 'package:gamestream_flutter/render_engine.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'render_constants.dart';
