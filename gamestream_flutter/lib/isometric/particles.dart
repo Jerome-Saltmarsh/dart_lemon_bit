@@ -260,32 +260,6 @@ void spawnParticleDustCloud({
   );
 }
 
-void spawnParticleLeaf({
-  required double x,
-  required double y,
-  required double z,
-  required double zv,
-  required double angle,
-  required double speed
-}) {
-  spawnParticle(
-    type: ParticleType.Leaf,
-    x: x,
-    y: y,
-    z: z,
-    zv: zv,
-    angle: angle,
-    speed: speed,
-    weight: 1,
-    duration: randomInt(120, 200),
-    rotation: 0,
-    rotationV: 0,
-    scale: 0.6,
-    scaleV: 0,
-    bounciness: 0,
-  );
-}
-
 void spawnParticleOrgan({
   required double x,
   required double y,
@@ -690,31 +664,6 @@ void spawnParticleBulletRing({
     weight: -0.5,
     duration: duration,
     scale: scale,
-  );
-}
-
-void spawnParticleCutGrass({
-  required double x,
-  required double y,
-  required double z,
-  int duration = 100,
-  double scale = 1.0,
-  double angle = 0,
-  double speed = 0,
-}) {
-  spawnParticle(
-    type: ParticleType.Cut_Grass,
-    x: x,
-    y: y,
-    z: z,
-    angle: angle,
-    rotation: 0,
-    speed: speed,
-    scaleV: 0,
-    weight: -0.5,
-    duration: duration,
-    scale: scale,
-    checkCollision: false
   );
 }
 

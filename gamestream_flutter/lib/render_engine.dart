@@ -327,9 +327,10 @@ class RenderEngine {
 
       case ParticleType.Fire_Purple:
         if (particle.frame > 24 ) {
-          return particleDeactivate(particle);
+          particleDeactivate(particle);
+          return;
         }
-        return Engine.renderBuffer(
+        Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 6032,
@@ -338,10 +339,10 @@ class RenderEngine {
           srcHeight: 32,
           scale: particle.scale,
         );
+        break;
       case ParticleType.Blood:
         casteShadowDownV3(particle);
-
-        return Engine.renderBuffer(
+        Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 16,
@@ -350,6 +351,7 @@ class RenderEngine {
           srcHeight: 8,
           color: getRenderColor(particle),
         );
+        break;
       case ParticleType.Orb_Shard:
         renderOrbShard(
           x: particle.renderX,
@@ -391,7 +393,6 @@ class RenderEngine {
         return;
 
       case ParticleType.Zombie_Head:
-
         casteShadowDownV3(particle);
         return Engine.renderBuffer(
           dstX: particle.renderX,
@@ -400,17 +401,6 @@ class RenderEngine {
           srcY: 64.0 * particle.direction,
           srcWidth: 64,
           srcHeight: 64,
-          color: getRenderColor(particle),
-        );
-
-      case ParticleType.Cut_Grass:
-        return Engine.renderBuffer(
-          dstX: particle.renderX,
-          dstY: particle.renderY,
-          srcX: 2928,
-          srcY: 0,
-          srcWidth: 32,
-          srcHeight: 32,
           color: getRenderColor(particle),
         );
 
@@ -437,16 +427,6 @@ class RenderEngine {
           srcY: 64.0 * particle.direction,
           srcWidth: 64,
           srcHeight: 64,
-          color: getRenderColor(particle),
-        );
-      case ParticleType.Leaf:
-        return Engine.renderBuffer(
-          dstX: particle.renderX,
-          dstY: particle.renderY,
-          srcX: 281.0,
-          srcY: 25,
-          srcWidth: 8,
-          srcHeight: 8,
           color: getRenderColor(particle),
         );
 

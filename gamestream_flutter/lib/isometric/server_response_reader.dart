@@ -193,6 +193,7 @@ class ServerResponseReader with ByteReader {
           break;
         case ServerResponse.Custom_Game_Names:
           readCustomGameNames();
+
           break;
         case ServerResponse.Scene_Meta_Data:
           readSceneMetaData();

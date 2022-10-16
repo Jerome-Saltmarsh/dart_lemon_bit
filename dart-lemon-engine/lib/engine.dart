@@ -700,37 +700,37 @@ class Engine {
     double r = (pi * 2) / sides;
     List<Offset> points = [];
     Offset z = Offset(x, y);
-    Engine.setPaintColor(color);
-    Engine.paint.strokeWidth = width;
+    setPaintColor(color);
+    paint.strokeWidth = width;
 
     for (int i = 0; i <= sides; i++) {
       double a1 = i * r;
       points.add(Offset(cos(a1) * radius, sin(a1) * radius));
     }
     for (int i = 0; i < points.length - 1; i++) {
-      Engine.canvas.drawLine(points[i] + z, points[i + 1] + z, Engine.paint);
+      canvas.drawLine(points[i] + z, points[i + 1] + z, Engine.paint);
     }
   }
 
   static Widget _internalBuildApp(){
-    return WatchBuilder(Engine.themeData, (ThemeData? themeData){
+    return WatchBuilder(themeData, (ThemeData? themeData){
       return MaterialApp(
-        title: Engine.title,
+        title: title,
         // routes: Engine.routes ?? {},
         theme: themeData,
         home: Scaffold(
-          body: WatchBuilder(Engine.watchInitialized, (bool value) {
+          body: WatchBuilder(watchInitialized, (bool value) {
             if (!value) {
               return onBuildLoadingScreen != null ? onBuildLoadingScreen!(buildContext) : Text("Loading");
             }
             return LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
-                Engine._internalSetScreenSize(constraints.maxWidth, constraints.maxHeight);
-                Engine.buildContext = context;
+                _internalSetScreenSize(constraints.maxWidth, constraints.maxHeight);
+                buildContext = context;
                 return Stack(
                   children: [
                     _internalBuildCanvas(context),
-                    WatchBuilder(Engine.watchBuildUI, (WidgetBuilder? buildUI)
+                    WatchBuilder(watchBuildUI, (WidgetBuilder? buildUI)
                     => buildUI != null ? buildUI(context) : const SizedBox()
                     )
                   ],
@@ -746,26 +746,26 @@ class Engine {
 
   static Widget _internalBuildCanvas(BuildContext context) {
     final child = Listener(
-      onPointerSignal: Engine._internalOnPointerSignal,
-      onPointerDown: Engine._internalOnPointerDown,
-      onPointerUp: Engine._internalOnPointerUp,
-      onPointerHover: Engine._internalOnPointerHover,
-      onPointerMove: Engine._internalOnPointerMove,
+      onPointerSignal: _internalOnPointerSignal,
+      onPointerDown: _internalOnPointerDown,
+      onPointerUp: _internalOnPointerUp,
+      onPointerHover: _internalOnPointerHover,
+      onPointerMove: _internalOnPointerMove,
       child: GestureDetector(
-          onTapDown: Engine.onTapDown,
-          onLongPress: Engine.onLongPress,
-          onPanStart: Engine._internalOnPanStart,
-          onPanUpdate: Engine.onPanUpdate,
+          onTapDown: onTapDown,
+          onLongPress: onLongPress,
+          onPanStart: _internalOnPanStart,
+          onPanUpdate: onPanUpdate,
           onPanEnd: Engine._internalOnPanEnd,
-          child: WatchBuilder(Engine.watchBackgroundColor, (Color backgroundColor){
+          child: WatchBuilder(watchBackgroundColor, (Color backgroundColor){
             return Container(
                 color: backgroundColor,
-                width: Engine.screen.width,
-                height: Engine.screen.height,
+                width: screen.width,
+                height: screen.height,
                 child: CustomPaint(
-                  painter: _GamePainter(repaint: Engine.notifierPaintFrame),
+                  painter: _GamePainter(repaint: notifierPaintFrame),
                   foregroundPainter: _GameForegroundPainter(
-                      repaint: Engine.notifierPaintForeground
+                      repaint: notifierPaintForeground
                   ),
                 )
             );
