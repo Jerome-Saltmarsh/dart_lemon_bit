@@ -226,31 +226,30 @@ class RenderEngine {
         break;
 
       case ParticleType.Bullet_Ring:
-        final frame = particle.frame ~/ 2;
-        if (frame > 6) return;
-        const size = 32.0;
-        return Engine.renderBuffer(
-          dstX: particle.renderX,
-          dstY: particle.renderY,
-          srcX: 2544,
-          srcY: frame * size,
-          srcWidth: size,
-          srcHeight: size,
-          scale: particle.scale,
+        Engine.renderSprite(
+          image: Images.gameobjects,
+          dstX: getRenderX(particle),
+          dstY: getRenderY(particle),
+          srcX: 0.0,
+          srcY: 32,
+          srcWidth: 4,
+          srcHeight: 4,
           color: getRenderColor(particle),
         );
+        break;
 
       case ParticleType.Water_Drop:
-        return Engine.renderBuffer(
-          dstX: particle.renderX,
-          dstY: particle.renderY,
-          srcX: 48,
-          srcY: 8,
-          srcWidth: 3,
-          srcHeight: 3,
-          scale: particle.scale,
+        Engine.renderSprite(
+          image: Images.gameobjects,
+          dstX: getRenderX(particle),
+          dstY: getRenderY(particle),
+          srcX: 0.0,
+          srcY: 40,
+          srcWidth: 4,
+          srcHeight: 4,
           color: getRenderColor(particle),
         );
+        break;
 
       case ParticleType.Smoke:
         return Engine.renderBuffer(
