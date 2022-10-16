@@ -176,7 +176,10 @@ class Game {
     Game.edit.value = value == GameType.Editor;
     GameUI.timeVisible.value = GameType.isTimed(value);
     GameUI.mapVisible.value = value == GameType.Dark_Age;
-    Engine.fullScreenEnter();
+
+    if (!Engine.isLocalHost){
+      Engine.fullScreenEnter();
+    }
   }
 
   static void actionGameDialogShowMap() {

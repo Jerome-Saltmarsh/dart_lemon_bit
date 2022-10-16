@@ -27,6 +27,7 @@ int convertWorldToColumnSafe(double x, double y, double z) {
   return clamp(convertWorldToColumn(x, y, z), 0, Game.nodesTotalColumns - 1);
 }
 
+/// convertRowColumnToRenderX
 double convertRowColumnToX(int row, int column){
   return (row - column) * tileSizeHalf;
 }
@@ -36,6 +37,7 @@ double convertRowColumnToY(int row, int column){
   // return ((row + column) * tileSizeHalf) - (z * tileHeight);
 }
 
+/// convertRowColumnToRenderZ
 double convertRowColumnZToY(int row, int column, int z){
   return ((row + column) * tileSizeHalf) - (z * tileHeight);
 }

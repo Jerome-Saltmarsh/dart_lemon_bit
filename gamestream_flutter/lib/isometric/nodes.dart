@@ -31,6 +31,10 @@ int getNodeIndexZRC(int z, int row, int column) {
   return (z * Game.nodesArea) + (row * Game.nodesTotalColumns) + column;
 }
 
+int getNodeIndexV3(Vector3 v3) {
+  return getNodeIndexZRC(v3.indexZ, v3.indexRow, v3.indexColumn);
+}
+
 /// a verification receives some data and returns true or false
 /// a false verification means that the data is not valid
 ///

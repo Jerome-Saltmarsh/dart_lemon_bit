@@ -1,8 +1,12 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/atlases.dart';
+import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
+import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
@@ -201,14 +205,48 @@ void renderCharacterTemplate(Character character, {
   if (!weaponInFront){
     renderTemplateWeapon(character, finalDirection);
   }
+
+  // find the nearest torch and move the shadow behind the character
+  final characterNodeIndex = getNodeIndexV3(character);
+  final initialSearchIndex = characterNodeIndex - Game.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
+  var torchFound = false;
+  var torchIndex = -1;
+
+  for (var row = 0; row < 3; row++){
+    for (var column = 0; column < 3; column++){
+       final searchIndex = initialSearchIndex + (row * Game.nodesTotalColumns) + column;
+       if (Game.nodesType[searchIndex] != NodeType.Torch) continue;
+       torchFound = true;
+       torchIndex = searchIndex;
+       break;
+    }
+  }
+
+  // final angle = ang
+  var angle = 0.0;
+  var distance = 0.0;
+
+  if (torchFound){
+      final torchRow = convertIndexToRow(torchIndex);
+      final torchColumn = convertIndexToColumn(torchIndex);
+      final torchPosX = convertRowColumnToX(torchRow, torchColumn);
+      final torchPosY = convertRowColumnToY(torchRow, torchColumn);
+      angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY) + pi;
+      distance = 15.0;
+  }
+
+  final x = character.x + getAdjacent(angle, distance);
+  final y = character.y + getOpposite(angle, distance);
+  final z = character.z;
+
   Engine.renderSprite(
     image: Images.templateShadow,
     srcX: frameLegs * 64,
     srcY: upperBodyDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
-    dstX: RenderEngine.getRenderV3X(character),
-    dstY: RenderEngine.getRenderV3Y(character),
+    dstX: RenderEngine.getRenderX(x, y, z),
+    dstY: RenderEngine.getRenderY(x, y, z),
     scale: 0.75,
     color: getRenderColor(character),
     anchorY: 0.75,
