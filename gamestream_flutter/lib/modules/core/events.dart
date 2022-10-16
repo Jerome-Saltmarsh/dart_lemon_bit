@@ -8,22 +8,10 @@ import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/website/build_layout_website.dart';
 import 'package:gamestream_flutter/website/website.dart';
 
-import 'exceptions.dart';
-
 class CoreEvents {
   CoreEvents(){
     Website.region.onChanged(_onServerTypeChanged);
     Website.account.onChanged(_onAccountChanged);
-  }
-
-
-  Future _onLoginException(LoginException error) async {
-    print("onLoginException()");
-
-    Future.delayed(Duration(seconds: 1), (){
-      // game.dialog.value = Dialogs.Login_Error;
-      Website.error.value = error.cause.toString();
-    });
   }
 
   void _onAccountChanged(Account? account) {

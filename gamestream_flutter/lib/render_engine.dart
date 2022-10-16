@@ -9,7 +9,6 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
-import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
@@ -325,7 +324,7 @@ class RenderEngine {
           srcWidth: 12,
           srcHeight: 22,
           scale: 1.0,
-          color: colorShades[Shade.Very_Bright],
+          color: Game.colorShades[Shade.Very_Bright],
         );
         return;
       case GameObjectType.Wooden_Shelf_Row:
@@ -827,7 +826,7 @@ class RenderOrderParticle extends RenderOrder {
 
 int get renderNodeShade => Game.nodesShade[RenderEngine.currentNodeIndex];
 int get renderNodeOrientation => Game.nodesOrientation[RenderEngine.currentNodeIndex];
-int get renderNodeColor => colorShades[renderNodeShade];
+int get renderNodeColor => Game.colorShades[renderNodeShade];
 int get renderNodeWind => Game.nodesWind[renderNodeShade];
 int get renderNodeBelowIndex => RenderEngine.currentNodeIndex + Game.nodesArea;
 
@@ -837,10 +836,10 @@ int get renderNodeBelowShade {
   return Game.nodesShade[renderNodeBelowIndex];
 }
 
-int get renderNodeBelowColor => colorShades[renderNodeBelowShade];
+int get renderNodeBelowColor => Game.colorShades[renderNodeBelowShade];
 
 int getRenderLayerColor(int layers) =>
-  colorShades[getRenderLayerShade(layers)];
+    Game.colorShades[getRenderLayerShade(layers)];
 
 int getRenderLayerShade(int layers){
    final index = RenderEngine.currentNodeIndex + (layers * Game.nodesArea);

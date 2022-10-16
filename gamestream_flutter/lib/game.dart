@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/Shade.dart';
@@ -11,7 +12,6 @@ import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/classes/particle_emitter.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
-import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_action_finished_lightning_flash.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_ambient_shade.dart';
@@ -25,6 +25,12 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
 class Game {
+  static const colorPitchBlack = Color.fromRGBO(37, 32, 48, 1.0);
+
+  static final colorShades = [0.0, 0.4, 0.6, 0.7, 0.8, 0.95, 1.0]
+      .map((opacity) => colorPitchBlack.withOpacity(opacity).value)
+      .toList(growable: false);
+
   static final gameType = Watch<int?>(null, onChanged: onChangedGameType);
   static final edit = Watch(false, onChanged: onChangedEdit);
   static final player = Player();
