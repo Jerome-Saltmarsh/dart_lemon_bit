@@ -460,29 +460,6 @@ void spawnParticleBlockBrick(double x, double y, double z, [int count = 3]){
   }
 }
 
-void spawnParticleShrapnel({
-  required double x,
-  required double y,
-  required double z,
-  required double zv,
-  required double angle,
-  required double speed
-}) {
-  spawnParticle(
-      type: ParticleType.Shrapnel,
-      x: x,
-      y: y,
-      z: 0,
-      angle: angle,
-      speed: speed,
-      zv: randomBetween(0.1, 0.4),
-      weight: 0.5,
-      duration: randomInt(150, 200),
-      scale: randomBetween(0.6, 1.25),
-      scaleV: 0
-  );
-}
-
 void spawnParticleFlame({
   required double x,
   required double y,

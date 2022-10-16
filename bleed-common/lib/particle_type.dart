@@ -6,7 +6,6 @@ class ParticleType {
   static const Zombie_leg = 5;
   static const Zombie_Torso = 6;
   static const Blood = 7;
-  static const Shrapnel = 8;
   static const Myst = 10;
   static const Pixel = 11;
   static const Orb_Ruby = 12;

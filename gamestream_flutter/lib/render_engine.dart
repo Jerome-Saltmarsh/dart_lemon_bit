@@ -188,19 +188,20 @@ class RenderEngine {
           particleDeactivate(particle);
           return;
         }
-          // const size = 32.0;
-          // final frame = (26 - particle.duration) ~/ 2;
-          return Engine.renderSprite(
-            image: Images.gameobjects,
-            dstX: getRenderX(particle),
-            dstY: getRenderY(particle),
-            srcX: 0.0,
-            srcY: 32,
-            srcWidth: 8,
-            srcHeight: 8,
-            color: getRenderColor(particle),
-          );
-        // const size = 8.0;
+        // const size = 32.0;
+        // final frame = (26 - particle.duration) ~/ 2;
+        Engine.renderSprite(
+          image: Images.gameobjects,
+          dstX: getRenderX(particle),
+          dstY: getRenderY(particle),
+          srcX: 0.0,
+          srcY: 32,
+          srcWidth: 8,
+          srcHeight: 8,
+          color: getRenderColor(particle),
+        );
+        return;
+      // const size = 8.0;
         // return Engine.renderBuffer(
         //   dstX: particle.renderX,
         //   dstY: particle.renderY,
@@ -212,15 +213,17 @@ class RenderEngine {
         // );
 
       case ParticleType.Bubble_Small:
-        return Engine.renderBuffer(
-          dstX: particle.renderX,
-          dstY: particle.renderY,
-          srcX: 2976.0,
-          srcY: ((particle.frame ~/ 2) % 6) * 5,
+        Engine.renderSprite(
+          image: Images.gameobjects,
+          dstX: getRenderX(particle),
+          dstY: getRenderY(particle),
+          srcX: 0.0,
+          srcY: 32,
           srcWidth: 4,
-          srcHeight: 5,
+          srcHeight: 4,
           color: getRenderColor(particle),
         );
+        break;
 
       case ParticleType.Bullet_Ring:
         final frame = particle.frame ~/ 2;
@@ -357,12 +360,6 @@ class RenderEngine {
           frame: particle.frame,
         );
         return;
-      case ParticleType.Shrapnel:
-        return renderShrapnel(
-          x: particle.renderX,
-          y: particle.renderY,
-          scale: particle.scale,
-        );
       case ParticleType.Flame:
         return renderFlame(particle);
 

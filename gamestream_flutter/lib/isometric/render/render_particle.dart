@@ -1,11 +1,5 @@
-import 'package:bleed_common/particle_type.dart';
-import 'package:gamestream_flutter/isometric/classes/particle.dart';
-import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
-
-import 'get_character_render_color.dart';
-import 'render_shadow_v3.dart';
 
 
 void renderSmoke({
@@ -40,37 +34,6 @@ void renderOrbShard({
       srcHeight: size,
       scale: scale,
   );
-}
-
-void renderShrapnel({
-  required double x,
-  required double y,
-  double scale = 1.0,
-}) {
-  Engine.renderBuffer(
-      dstX: x,
-      dstY: y,
-      srcX: 1,
-      srcY: 1,
-      srcWidth: 8,
-      srcHeight: 8,
-      scale: scale
-  );
-}
-
-void renderFireYellow({
-  required double x,
-  required double y,
-  double scale = 1.0,
-}) {
-  Engine.renderBuffer(
-      dstX: x,
-      dstY: y,
-      srcX: 145,
-      srcY: 25,
-      srcWidth: 8,
-      srcHeight: 8,
-      scale: scale);
 }
 
 void renderFlame(Position position) {
