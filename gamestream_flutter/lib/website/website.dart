@@ -6,8 +6,10 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/core/actions.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
+import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/style.dart';
 import 'package:gamestream_flutter/storage_service.dart';
+import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:gamestream_flutter/website/build/build_column_games.dart';
 import 'package:gamestream_flutter/website/build_layout_website.dart';
@@ -17,7 +19,7 @@ import 'package:lemon_watch/watch.dart';
 class Website {
   static final operationStatus = Watch(OperationStatus.None);
   static final error = Watch<String?>(null);
-  static final account = Watch<Account?>(null);
+  static final account = Watch<Account?>(null, onChanged: onChangedAccount);
   static final region = Watch(Region.LocalHost, onChanged: onChangedRegion);
   static final download = Watch(0.0);
   static final debug = true;
@@ -159,4 +161,19 @@ class Website {
     storage.saveRegion(region);
     isVisibleDialogCustomRegion.value = region == Region.Custom;
   }
+
+  static void onChangedAccount(Account? account) {
+    if (account == null) return;
+    final flag = 'subscription_status_${account.userId}';
+    if (storage.contains(flag)){
+      final storedSubscriptionStatusString = storage.get<String>(flag);
+      final storedSubscriptionStatus = parseSubscriptionStatus(storedSubscriptionStatusString);
+      if (storedSubscriptionStatus != account.subscriptionStatus){
+        website.actions.showDialogSubscriptionStatusChanged();
+      }
+    }
+    core.actions.store(flag, enumString(account.subscriptionStatus));
+    website.actions.showDialogGames();
+  }
+
 }
