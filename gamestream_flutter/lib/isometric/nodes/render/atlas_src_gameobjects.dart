@@ -33,4 +33,9 @@ class AtlasSrcGameObjects {
   static const Cup_Width = 6.0;
   static const Cup_Height = 11.0;
   static const Cup_Anchor_Y = 0.75;
+
+  static const Shotgun_X = 98.0;
+  static const Shotgun_Y = 0.0;
+  static const Shotgun_Width = 26.0;
+  static const Shotgun_Height = 7.0;
 }

@@ -78,7 +78,6 @@ class Game {
   static var windLine = 0;
   static var move = true;
 
-
   static final ambientShade = Watch(Shade.Bright, onChanged: onChangedAmbientShade);
   static const nodesInitialSize = 70 * 70 * 8;
 

@@ -25,7 +25,6 @@ import 'package:gamestream_flutter/isometric/render/highlight_character_nearest_
 import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
-import 'package:gamestream_flutter/isometric/render/render_shadow.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
@@ -189,6 +188,9 @@ class RenderEngine {
   }
   
   static void renderGameObject(GameObject gameObject) {
+    const shadowScale = 1.5;
+    const shadowScaleHeight = 0.15;
+
     switch (gameObject.type) {
       case GameObjectType.Rock:
         Engine.renderBuffer(
@@ -370,23 +372,22 @@ class RenderEngine {
           srcHeight: 7,
         );
         return;
+
+      case GameObjectType.Weapon_Shotgun:
+        renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
+        Engine.renderSprite(
+            image: Images.gameobjects,
+            dstX: getRenderX(gameObject),
+            dstY: getRenderY(gameObject) + animationFrameWaterHeight,
+            srcX: AtlasSrcGameObjects.Shotgun_X,
+            srcY: AtlasSrcGameObjects.Shotgun_Y,
+            srcWidth: AtlasSrcGameObjects.Shotgun_Width,
+            srcHeight: AtlasSrcGameObjects.Shotgun_Height,
+            color: getRenderColor(gameObject)
+        );
+        break;
     }
 
-
-    const shadowScale = 1.5;
-    const shadowScaleHeight = 0.15;
-    if (gameObject.type == GameObjectType.Weapon_Shotgun) {
-      renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
-      return Engine.renderBuffer(
-          dstX: getRenderX(gameObject),
-          dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
-          srcX: 262,
-          srcY: 204,
-          srcWidth: 26,
-          srcHeight: 7,
-          color: getRenderColor(gameObject)
-      );
-    }
 
     if (gameObject.type == GameObjectType.Weapon_Handgun) {
       renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
@@ -504,6 +505,18 @@ class RenderEngine {
       return;
     }
   }
+
+  static void renderShadow(double x, double y, double z, {double scale = 1}) =>
+      Engine.renderSprite(
+        image: Images.gameobjects,
+        dstX: (x - y) * 0.5,
+        dstY: ((y + x) * 0.5) - z,
+        srcX: 0,
+        srcY: 32,
+        srcWidth: 8,
+        srcHeight: 8,
+        scale: scale,
+      );
 
   static void renderCurrentNodeLine() {
     while (
