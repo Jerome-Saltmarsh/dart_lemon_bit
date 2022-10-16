@@ -1,6 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
@@ -15,7 +15,7 @@ void readPlayerInput() {
     debugVisible.value = false;
   }
 
-  if (GameState.edit.value) {
+  if (Game.edit.value) {
     return readPlayerInputEdit();
   }
 

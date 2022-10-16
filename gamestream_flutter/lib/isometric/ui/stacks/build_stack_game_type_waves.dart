@@ -2,7 +2,7 @@ import 'package:bleed_common/game_wave_request.dart';
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_button_equip_attack_type.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_weapons.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
@@ -16,7 +16,7 @@ Widget buildStackGameTypeWavesUI() => Stack(
         Positioned(
           bottom: 0,
           left: 0,
-          child: watch(GameState.player.points, (int points) => text("Points: $points")),
+          child: watch(Game.player.points, (int points) => text("Points: $points")),
         ),
         Positioned(
             top: 0,

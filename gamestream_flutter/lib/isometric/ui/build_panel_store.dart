@@ -2,7 +2,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/enums/equipment_type.dart';
 import 'package:gamestream_flutter/isometric/player_store.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_button_equip_attack_type.dart';
@@ -118,7 +118,7 @@ Widget buildColumnSelectPlayerPants(){
 }
 
 Widget buildButtonSelectPlayerHead(int headType) {
-   return watch(GameState.player.headType, (int playerHeadType){
+   return watch(Game.player.headType, (int playerHeadType){
       return container(
           child: text(HeadType.getName(headType)),
           action: () => sendClientRequestSetHeadType(headType),
@@ -128,7 +128,7 @@ Widget buildButtonSelectPlayerHead(int headType) {
 }
 
 Widget _buildButtonPants(int pantsType) {
-  return watch(GameState.player.pantsType, (int playerPantsType){
+  return watch(Game.player.pantsType, (int playerPantsType){
     return container(
       child: text(PantsType.getName(pantsType)),
       action: () => sendClientRequestSetPantsType(pantsType),
@@ -138,7 +138,7 @@ Widget _buildButtonPants(int pantsType) {
 }
 
 Widget buildColumnPlayerWeapons(int activePlayerAttackType) => watch(
-    GameState.player.weapons,
+    Game.player.weapons,
     (List<Weapon> weapons) => Container(
         color: brownLight,
         padding: const EdgeInsets.all(6),
@@ -172,7 +172,7 @@ Widget _buildButtonPurchaseWeapon(Weapon weapon) {
 }
 
 Widget _buildSelectArmourType(int type) {
-   return watch(GameState.player.armourType, (int equipped){
+   return watch(Game.player.armourType, (int equipped){
      return container(
          child: text(ArmourType.getName(type)),
          action: () => sendClientRequestSetArmour(type),

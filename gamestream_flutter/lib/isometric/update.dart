@@ -3,7 +3,7 @@
 import 'dart:math';
 
 import 'package:bleed_common/Projectile_Type.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
@@ -30,10 +30,10 @@ void updateIsometric(){
   updateZombieGrowls();
   updateMouseBubbleSpawn();
 
-  if (GameState.player.messageTimer > 0) {
-    GameState.player.messageTimer--;
-     if (GameState.player.messageTimer == 0){
-       GameState.player.message.value = "";
+  if (Game.player.messageTimer > 0) {
+    Game.player.messageTimer--;
+     if (Game.player.messageTimer == 0){
+       Game.player.message.value = "";
      }
   }
 }
@@ -41,7 +41,7 @@ void updateIsometric(){
 void updateMouseBubbleSpawn() {
   if (nextBubbleSpawn-- > 0) return;
   nextBubbleSpawn = 30;
-  spawnParticleBubble(x: mouseGridX, y: mouseGridY, z: GameState.player.z);
+  spawnParticleBubble(x: mouseGridX, y: mouseGridY, z: Game.player.z);
 }
 
 var nextBubbleSpawn = 0;
@@ -50,16 +50,16 @@ var particleAnimation = 0;
 void updateParticleFrames() {
   // if (particleAnimation++ < 3) return;
   particleAnimation = 0;
-  for (var i = 0; i < GameState.particles.length; i++){
-    GameState.particles[i].updateFrame();
+  for (var i = 0; i < Game.particles.length; i++){
+    Game.particles[i].updateFrame();
   }
 }
 
 void applyObjectsToWind(){
   // foreachPlayer(applyCharacterToWind);
 
-  for (var i = 0; i < GameState.totalProjectiles; i++){
-     applyWindFromProjectile(GameState.projectiles[i]);
+  for (var i = 0; i < Game.totalProjectiles; i++){
+     applyWindFromProjectile(Game.projectiles[i]);
   }
 
   // updateWindLine();
@@ -88,8 +88,8 @@ void applyCharacterToWind(Character character){
 }
 
 void updateProjectiles() {
-  for (var i = 0; i < GameState.totalProjectiles; i++) {
-    final projectile = GameState.projectiles[i];
+  for (var i = 0; i < Game.totalProjectiles; i++) {
+    final projectile = Game.projectiles[i];
     if (projectile.type == ProjectileType.Fireball) {
       spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
       spawnParticleBubble(

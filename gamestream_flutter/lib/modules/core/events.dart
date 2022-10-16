@@ -1,7 +1,7 @@
 
 
 import 'package:firestore_client/firestoreService.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric_web/register_isometric_web_controls.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
@@ -23,7 +23,7 @@ class CoreEvents {
   CoreEvents(){
     Website.region.onChanged(_onServerTypeChanged);
     Website.account.onChanged(_onAccountChanged);
-    webSocket.connection.onChanged(onConnectionChanged);
+    // webSocket.connection.onChanged(onConnectionChanged);
     sub(_onLoginException);
   }
 
@@ -54,37 +54,6 @@ class CoreEvents {
 
   void _onServerTypeChanged(Region serverType) {
     storage.saveServerType(serverType);
-  }
-
-  void onConnectionChanged(Connection connection) {
-    switch (connection) {
-      case Connection.Connected:
-        Engine.onDrawCanvas = modules.game.render.renderGame;
-        Engine.onDrawForeground = modules.game.render.renderForeground;
-        Engine.onUpdate = modules.game.update.update;
-        Engine.drawCanvasAfterUpdate = true;
-        modules.game.events.register();
-        Engine.zoomOnScroll = true;
-        isometricWebControlsRegister();
-        Engine.fullScreenEnter();
-        break;
-
-      case Connection.Done:
-        isometricWebControlsDeregister();
-        Engine.onUpdate = null;
-        Engine.fullScreenExit();
-        GameState.clear();
-        Engine.drawCanvasAfterUpdate = true;
-        Engine.cursorType.value = CursorType.Basic;
-        GameState.gameType.value = null;
-        Engine.drawCanvasAfterUpdate = true;
-        Engine.onDrawCanvas = Website.renderCanvas;
-        Engine.onUpdate = Website.update;
-        sceneEditable.value = false;
-        break;
-      default:
-        break;
-    }
   }
 }
 

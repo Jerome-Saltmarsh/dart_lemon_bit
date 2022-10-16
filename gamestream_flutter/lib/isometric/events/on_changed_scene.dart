@@ -1,9 +1,9 @@
 
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 
 void onChangedScene(){
-  for (final particle in GameState.particles){
+  for (final particle in Game.particles){
     particle.duration = 0;
   }
-  GameState.totalParticles = 0;
+  Game.totalParticles = 0;
 }

@@ -1,10 +1,10 @@
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 
 int convertIndexToZ(int index) =>
-    index ~/ GameState.nodesArea;
+    index ~/ Game.nodesArea;
 
 int convertIndexToRow(int index) =>
-    (index - ((index ~/ GameState.nodesArea) * GameState.nodesArea)) ~/ GameState.nodesTotalColumns;
+    (index - ((index ~/ Game.nodesArea) * Game.nodesArea)) ~/ Game.nodesTotalColumns;
 
 int convertIndexToColumn(int index) =>
-    index - ((convertIndexToZ(index) * GameState.nodesArea) + (convertIndexToRow(index) * GameState.nodesTotalColumns));
+    index - ((convertIndexToZ(index) * Game.nodesArea) + (convertIndexToRow(index) * Game.nodesTotalColumns));

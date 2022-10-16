@@ -1,7 +1,7 @@
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_type.dart';
 import 'package:bleed_common/tile_size.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_node_type_spawn_selected.dart';
@@ -42,7 +42,7 @@ class EditState {
 
   static var nodeIndex = Watch(0, clamp: (int value){
      if (value < 0) return 0;
-     if (value >= GameState.nodesTotal) return GameState.nodesTotal - 1;
+     if (value >= Game.nodesTotal) return Game.nodesTotal - 1;
      return value;
   }, onChanged: onChangedSelectedNodeIndex);
 
@@ -52,21 +52,21 @@ class EditState {
 
   static set z(int value){
      if (value < 0) return;
-     if (value >= GameState.nodesTotalZ) return;
+     if (value >= Game.nodesTotalZ) return;
      final difference = value - z;
-     nodeIndex.value += difference * GameState.nodesArea;
+     nodeIndex.value += difference * Game.nodesArea;
   }
 
   static set row(int value){
     if (value < 0) return;
-    if (value >= GameState.nodesTotalRows) return;
+    if (value >= Game.nodesTotalRows) return;
     final difference = value - row;
-    nodeIndex.value += difference * GameState.nodesTotalColumns;
+    nodeIndex.value += difference * Game.nodesTotalColumns;
   }
 
   static set column(int value){
     if (value < 0) return;
-    if (value >= GameState.nodesTotalColumns) return;
+    if (value >= Game.nodesTotalColumns) return;
     nodeIndex.value += value - column;
   }
 
@@ -82,8 +82,8 @@ class EditState {
   static double get renderY => projectY(posX, posY, posZ);
 
   static void refreshNodeSelectedIndex(){
-    nodeSelectedType.value = GameState.nodesType[nodeIndex.value];
-    nodeSelectedOrientation.value = GameState.nodesOrientation[nodeIndex.value];
+    nodeSelectedType.value = Game.nodesType[nodeIndex.value];
+    nodeSelectedOrientation.value = Game.nodesOrientation[nodeIndex.value];
   }
 
   static void deselectGameObject() {
@@ -198,7 +198,7 @@ class EditState {
     );
   }
 
-  static void cursorSetToPlayer() => nodeIndex.value = GameState.player.nodeIndex;
+  static void cursorSetToPlayer() => nodeIndex.value = Game.player.nodeIndex;
   static void cursorRowIncrease() => row++;
   static void cursorRowDecrease() => row--;
   static void cursorColumnIncrease() => column++;

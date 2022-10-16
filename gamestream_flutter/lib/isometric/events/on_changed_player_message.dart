@@ -1,10 +1,10 @@
 
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 
 void onChangedPlayerMessage(String value){
   if (value.isNotEmpty) {
-    GameState.player.messageTimer = 200;
+    Game.player.messageTimer = 200;
   } else {
-    GameState.player.messageTimer = 0;
+    Game.player.messageTimer = 0;
   }
 }

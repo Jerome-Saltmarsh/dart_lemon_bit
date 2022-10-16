@@ -1,6 +1,6 @@
 
 import 'package:bleed_common/tile_size.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:lemon_math/library.dart';
 
 double convertWorldToGridX(double x, double y) {
@@ -20,11 +20,11 @@ int convertWorldToColumn(double x, double y, double z) {
 }
 
 int convertWorldToRowSafe(double x, double y, double z) {
-  return clamp(convertWorldToRow(x, y, z), 0, GameState.nodesTotalRows - 1);
+  return clamp(convertWorldToRow(x, y, z), 0, Game.nodesTotalRows - 1);
 }
 
 int convertWorldToColumnSafe(double x, double y, double z) {
-  return clamp(convertWorldToColumn(x, y, z), 0, GameState.nodesTotalColumns - 1);
+  return clamp(convertWorldToColumn(x, y, z), 0, Game.nodesTotalColumns - 1);
 }
 
 double convertRowColumnToX(int row, int column){

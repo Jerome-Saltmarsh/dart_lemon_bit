@@ -14,42 +14,6 @@ import 'build/build_column_games.dart';
 
 final isVisibleDialogCustomRegion = Watch(false);
 
-Widget buildPageWebsite({double padding = 6})  =>
-  Stack(
-    children: [
-      Positioned(
-        top: padding,
-        right: padding,
-        child: buildTextVersion(),
-      ),
-      Positioned(
-          top: 0,
-          left: 180,
-          child: buildWatchBool(isVisibleDialogCustomRegion, buildInputCustomConnectionString),
-        ),
-        Positioned(
-          // top: padding,
-          left: 32,
-          child: watch(Website.region, buildStateRegion),
-      ),
-      Positioned(
-        bottom: padding,
-        right: padding,
-        child: text("Created by Jerome Saltmarsh", color: colours.white618,
-            size: FontSize.Small),
-      ),
-      Positioned(
-        top: 0,
-        left: 0,
-        child: Container(
-          width: Engine.screen.width,
-          height: Engine.screen.height,
-          alignment: Alignment.center,
-          child: Website.buildColumnGames(),
-        ),
-      )
-    ],
-  );
 
 final colorRegion = Colors.orange;
 

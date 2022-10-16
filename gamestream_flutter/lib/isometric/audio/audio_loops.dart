@@ -1,5 +1,5 @@
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
@@ -16,7 +16,7 @@ final audioLoops = <AudioLoop> [
   AudioLoop(name: 'wind', getTargetVolume: getVolumeTargetWind),
   AudioLoop(name: 'rain', getTargetVolume: getVolumeTargetRain),
   AudioLoop(name: 'crickets', getTargetVolume: getVolumeTargetCrickets),
-  AudioLoop(name: 'day-ambience', getTargetVolume: GameState.getVolumeTargetDayAmbience),
+  AudioLoop(name: 'day-ambience', getTargetVolume: Game.getVolumeTargetDayAmbience),
   AudioLoop(name: 'fire', getTargetVolume: getVolumeTargetFire),
   AudioLoop(name: 'distant-thunder', getTargetVolume: getVolumeTargetDistanceThunder),
   AudioLoop(name: 'heart-beat', getTargetVolume: getVolumeHeartBeat),
@@ -85,7 +85,7 @@ double getVolumeTargetDistanceThunder(){
 }
 
 double getVolumeHeartBeat(){
-   return 1.0 - GameState.player.health.value / GameState.player.maxHealth;
+   return 1.0 - Game.player.health.value / Game.player.maxHealth;
 }
 
 double getVolumeStream(){

@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/particle_type.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/classes/particle_emitter.dart';
 import 'package:lemon_math/library.dart';
@@ -12,7 +12,7 @@ import 'particles.dart';
 
 
 void updateParticleEmitters(){
-  for (final emitter in GameState.particleEmitters) {
+  for (final emitter in Game.particleEmitters) {
     if (emitter.next-- > 0) continue;
     emitter.next = emitter.rate;
     final particle = getParticleInstance();
@@ -30,9 +30,9 @@ void updateGameObjects() {
   // updateCrystals();
   if (nextBubble-- > 0) return;
   nextBubble = 50;
-  for (var i = 0; i < GameState.totalGameObjects; i++) {
-    if (!GameObjectType.emitsBubbles(GameState.gameObjects[i].type)) continue;
-    spawnParticleBubbleV3(GameState.gameObjects[i]);
+  for (var i = 0; i < Game.totalGameObjects; i++) {
+    if (!GameObjectType.emitsBubbles(Game.gameObjects[i].type)) continue;
+    spawnParticleBubbleV3(Game.gameObjects[i]);
   }
 }
 
@@ -40,9 +40,9 @@ void updateGameObjects() {
 void updateCrystals(){
   if (nextCrystalEmission++ < 15) return;
   nextCrystalEmission = 0;
-  for (var i = 0; i < GameState.totalGameObjects; i++) {
-    if (GameState.gameObjects[i].type != GameObjectType.Crystal) continue;
-    final crystal = GameState.gameObjects[i];
+  for (var i = 0; i < Game.totalGameObjects; i++) {
+    if (Game.gameObjects[i].type != GameObjectType.Crystal) continue;
+    final crystal = Game.gameObjects[i];
     spawnParticleOrbShard(
       x: crystal.x,
       y: crystal.y,
@@ -59,7 +59,7 @@ void isometricParticleEmittersActionAddSmokeEmitter(double x, double y){
 }
 
 void addSmokeEmitter(int z, int row, int column){
-  GameState.particleEmitters.add(
+  Game.particleEmitters.add(
       ParticleEmitter(
           z: z,
           row: row,

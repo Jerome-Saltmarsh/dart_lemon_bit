@@ -7,8 +7,10 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/core/actions.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/core/events.dart';
+import 'package:gamestream_flutter/modules/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:gamestream_flutter/website/build/build_column_games.dart';
+import 'package:gamestream_flutter/website/build_layout_website.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -19,6 +21,10 @@ class Website {
   static final region = Watch(Region.LocalHost, onChanged: onChangedRegion);
   static final download = Watch(0.0);
   static final debug = true;
+
+  static void setError(String message){
+    error.value = message;
+  }
 
    static void renderCanvas(Canvas canvas, Size size){
       Engine.renderSprite(
@@ -110,4 +116,42 @@ class Website {
           buildTextButton("PLAY SAND-BOX", action: connectToGameEditor),
         ],
       );
+
+  static Widget build({double padding = 6})  =>
+      Stack(
+        children: [
+          Positioned(
+            top: padding,
+            right: padding,
+            child: buildTextVersion(),
+          ),
+          Positioned(
+            top: 0,
+            left: 180,
+            child: buildWatchBool(isVisibleDialogCustomRegion, buildInputCustomConnectionString),
+          ),
+          Positioned(
+            // top: padding,
+            left: 32,
+            child: watch(Website.region, buildStateRegion),
+          ),
+          Positioned(
+            bottom: padding,
+            right: padding,
+            child: text("Created by Jerome Saltmarsh", color: colours.white618,
+                size: FontSize.Small),
+          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            child: Container(
+              width: Engine.screen.width,
+              height: Engine.screen.height,
+              alignment: Alignment.center,
+              child: Website.buildColumnGames(),
+            ),
+          )
+        ],
+      );
+
 }

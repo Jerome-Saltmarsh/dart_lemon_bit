@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:gamestream_flutter/atlases.dart';
+import 'package:gamestream_flutter/system_events.dart';
+import 'package:gamestream_flutter/network/instance/websocket.dart';
 import 'package:gamestream_flutter/website/website.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,6 +29,7 @@ Future init(SharedPreferences sharedPreferences) async {
   ImagesTemplateWeapons.shotgun = await Engine.loadImageAsset('images/template/weapons/template-weapons-shotgun.png');
   Engine.cursorType.value = CursorType.Basic;
   Engine.onDrawCanvas = Website.renderCanvas;
+  webSocket.connection.onChanged(SystemEvents.onConnectionChanged);
   print("environment: ${Engine.isLocalHost ? 'localhost' : 'production'}");
 }
 

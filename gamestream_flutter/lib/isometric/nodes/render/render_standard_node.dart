@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:gamestream_flutter/atlases.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/render_engine.dart';
 import 'package:lemon_engine/engine.dart';
@@ -40,7 +40,7 @@ void renderStandardNodeShaded({
   required double srcY,
 }){
   RenderEngine.onscreenNodes++;
-  _colors[0] = colorShades[GameState.nodesShade[RenderEngine.currentNodeIndex]];
+  _colors[0] = colorShades[Game.nodesShade[RenderEngine.currentNodeIndex]];
   _src[0] = srcX;
   _src[1] = srcY;
   _src[2] = srcX + spriteWidth;

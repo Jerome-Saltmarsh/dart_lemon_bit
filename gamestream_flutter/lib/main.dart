@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_events.dart';
+import 'package:gamestream_flutter/system_events.dart';
 import 'package:gamestream_flutter/isometric/constants/color_pitch_black.dart';
 import 'package:gamestream_flutter/modules/core/init.dart';
 import 'package:gamestream_flutter/website/website.dart';
@@ -12,7 +12,7 @@ void main() {
     buildUI: Website.buildUI,
     themeData: ThemeData(fontFamily: 'JetBrainsMono-Regular'),
     backgroundColor: colorPitchBlack,
-    onError: GameEvents.onError,
+    onError: SystemEvents.onError,
   );
 }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -16,9 +16,9 @@ Widget buildControlPlayerHealth() {
 
   return Tooltip(
     message: 'Health',
-    child: WatchBuilder(GameState.player.health, (int health) {
+    child: WatchBuilder(Game.player.health, (int health) {
 
-      final maxHealth = GameState.player.maxHealth;
+      final maxHealth = Game.player.maxHealth;
       if (maxHealth <= 0) return empty;
 
       final percentage = health / maxHealth;
@@ -44,7 +44,7 @@ Widget buildControlPlayerHealth() {
               width: width,
               height: height,
               alignment: Alignment.center,
-              child: text('${health.toInt()} | ${GameState.player.maxHealth}'),
+              child: text('${health.toInt()} | ${Game.player.maxHealth}'),
             ),
           ],
         ),

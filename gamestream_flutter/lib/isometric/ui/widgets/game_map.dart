@@ -3,7 +3,7 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/atlases.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog_map.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -68,8 +68,8 @@ class GameMapWidget extends StatelessWidget {
   }
 
   void renderPlayerDot(Canvas canvas) {
-    final playerPerX = GameState.player.x / (tileSize * GameState.nodesTotalRows);
-    final playerPerY = GameState.player.y / (tileSize * GameState.nodesTotalColumns);
+    final playerPerX = Game.player.x / (tileSize * Game.nodesTotalRows);
+    final playerPerY = Game.player.y / (tileSize * Game.nodesTotalColumns);
 
     final playerX = (mapTileActive.x + playerPerX);
     final playerY = (mapTileActive.y + playerPerY);
@@ -92,8 +92,8 @@ class GameMapWidget extends StatelessWidget {
   }
 
   void snapCameraToTarget() {
-    final playerPerX = GameState.player.x / (tileSize * GameState.nodesTotalRows);
-    final playerPerY = GameState.player.y / (tileSize * GameState.nodesTotalColumns);
+    final playerPerX = Game.player.x / (tileSize * Game.nodesTotalRows);
+    final playerPerY = Game.player.y / (tileSize * Game.nodesTotalColumns);
     final playerX = (mapTileActive.x + playerPerX);
     final playerY = (mapTileActive.y + playerPerY);
     final renderX = ((playerX * mapTileSize) - (playerY * mapTileSize)) * 0.5;

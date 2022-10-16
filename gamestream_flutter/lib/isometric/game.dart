@@ -1,19 +1,19 @@
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/game_ui.dart';
 
-bool get playMode => !GameState.edit.value;
-bool get editMode => GameState.edit.value;
+bool get playMode => !Game.edit.value;
+bool get editMode => Game.edit.value;
 
 void actionSetModePlay(){
-  GameState.edit.value = false;
+  Game.edit.value = false;
 }
 
 void actionSetModeEdit(){
-  GameState.edit.value = true;
+  Game.edit.value = true;
 }
 
 void actionToggleEdit() {
-  GameState.edit.value = !GameState.edit.value;
+  Game.edit.value = !Game.edit.value;
 }
 
 void messageBoxToggle(){

@@ -1,23 +1,24 @@
 import 'dart:async';
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
+import 'package:gamestream_flutter/website/website.dart';
 import 'package:lemon_dispatch/instance.dart';
 
 class GameEvents {
 
   void register(){
-    GameState.player.alive.onChanged(_onPlayerAliveChanged);
-    GameState.player.state.onChanged(onPlayerCharacterStateChanged);
+    Game.player.alive.onChanged(_onPlayerAliveChanged);
+    Game.player.state.onChanged(onPlayerCharacterStateChanged);
     sub(_onGameError);
   }
 
   // TODO Remove
   void onPlayerCharacterStateChanged(int characterState){
-    GameState.player.alive.value = characterState != CharacterState.Dead;
+    Game.player.alive.value = characterState != CharacterState.Dead;
   }
 
   void _onPlayerAliveChanged(bool value) {
@@ -40,7 +41,7 @@ class GameEvents {
         return;
       case GameError.GameNotFound:
         core.actions.disconnect();
-        core.actions.setError("game could not be found");
+        Website.setError("game could not be found");
         return;
       case GameError.InvalidArguments:
         core.actions.disconnect();
@@ -49,14 +50,17 @@ class GameEvents {
         //   core.actions.setError("Invalid Arguments: $message");
         //   return;
         // }
-        core.actions.setError("game could not be found");
+        Website.setError("game could not be found");
         return;
       case GameError.PlayerNotFound:
         core.actions.disconnect();
-        core.actions.setError("Player could not be found");
+        Website.setError("Player could not be found");
         break;
       default:
         break;
     }
   }
+
+
+
 }

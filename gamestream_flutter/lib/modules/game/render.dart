@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/isometric/ai.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
@@ -37,7 +37,6 @@ class GameRender {
     drawPlayerText();
   }
 
-
   void renderGame(Canvas canvas, Size size) {
     /// particles are only on the ui and thus can update every frame
     /// this makes them much smoother as they don't freeze
@@ -56,25 +55,25 @@ class GameRender {
   /// Render the player in the same relative position to the camera
   void interpolatePlayer(){
 
-    if (!GameState.player.interpolating.value) return;
+    if (!Game.player.interpolating.value) return;
 
     if (rendersSinceUpdate.value == 0) {
       return;
     }
     if (rendersSinceUpdate.value != 1) return;
 
-    final playerCharacter = GameState.getPlayerCharacter();
+    final playerCharacter = Game.getPlayerCharacter();
     if (playerCharacter == null) return;
-    final velocityX = GameState.player.x - GameState.player.previousPosition.x;
-    final velocityY = GameState.player.y - GameState.player.previousPosition.y;
-    final velocityZ = GameState.player.z - GameState.player.previousPosition.z;
+    final velocityX = Game.player.x - Game.player.previousPosition.x;
+    final velocityY = Game.player.y - Game.player.previousPosition.y;
+    final velocityZ = Game.player.z - Game.player.previousPosition.z;
     playerCharacter.x += velocityX;
     playerCharacter.y += velocityY;
     playerCharacter.z -= velocityZ;
   }
 
   void renderWeaponRoundInformation() {
-    if (GameState.player.weapon.capacity.value <= 0)
+    if (Game.player.weapon.capacity.value <= 0)
       return;
 
     // renderText(
@@ -84,9 +83,9 @@ class GameRender {
     // );
 
     renderCharacterBarWeaponRounds(
-      x: GameState.player.renderX,
-      y: GameState.player.renderY - 7,
-      percentage: GameState.player.weaponRoundPercentage,
+      x: Game.player.renderX,
+      y: Game.player.renderY - 7,
+      percentage: Game.player.weaponRoundPercentage,
     );
   }
 
@@ -119,13 +118,13 @@ class GameRender {
   }
 
   void renderMouseTargetName() {
-    if (!GameState.player.mouseTargetAllie.value) return;
-    final mouseTargetName = GameState.player.mouseTargetName.value;
+    if (!Game.player.mouseTargetAllie.value) return;
+    final mouseTargetName = Game.player.mouseTargetName.value;
     if (mouseTargetName == null) return;
     renderText(
         text: mouseTargetName,
-        x: GameState.player.attackTarget.renderX,
-        y: GameState.player.attackTarget.renderY - 55);
+        x: Game.player.attackTarget.renderX,
+        y: Game.player.attackTarget.renderY - 55);
   }
 
   void renderMouseWireFrame() {
@@ -150,9 +149,9 @@ class GameRender {
   }
 
   void _renderPlayerNames() {
-    final total = GameState.totalPlayers;
+    final total = Game.totalPlayers;
     for (var i = 0; i < total; i++) {
-      final player = GameState.players[i];
+      final player = Game.players[i];
       if (player.dead) continue;
       const minDistance = 15;
       if (diffOver(mouseWorldX, player.x, minDistance)) continue;
@@ -194,8 +193,8 @@ class GameRender {
 
   void drawPlayerText() {
     const charWidth = 4.5;
-    for (var i = 0; i < GameState.totalPlayers; i++) {
-      final human = GameState.players[i];
+    for (var i = 0; i < Game.totalPlayers; i++) {
+      final human = Game.players[i];
       if (human.text.isEmpty) continue;
       final width = charWidth * human.text.length;
       final left = human.renderX - width;

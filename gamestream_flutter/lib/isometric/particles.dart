@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/particle_type.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/update.dart';
@@ -17,31 +17,31 @@ import 'grid_state_util.dart';
 
 
 void sortParticlesActive(){
-  GameState.totalParticles = GameState.particles.length;
-  for (var pos = 1; pos < GameState.totalParticles; pos++) {
+  Game.totalParticles = Game.particles.length;
+  for (var pos = 1; pos < Game.totalParticles; pos++) {
     var min = 0;
     var max = pos;
-    var element = GameState.particles[pos];
+    var element = Game.particles[pos];
     while (min < max) {
       var mid = min + ((max - min) >> 1);
-      if (!GameState.particles[mid].active) {
+      if (!Game.particles[mid].active) {
         max = mid;
       } else {
         min = mid + 1;
       }
     }
-    GameState.particles.setRange(min + 1, pos + 1, GameState.particles, min);
-    GameState.particles[min] = element;
+    Game.particles.setRange(min + 1, pos + 1, Game.particles, min);
+    Game.particles[min] = element;
   }
 }
 
 bool verifyTotalActiveParticles() =>
-   countActiveParticles() == GameState.totalActiveParticles;
+   countActiveParticles() == Game.totalActiveParticles;
 
 int countActiveParticles(){
   var active = 0;
-  for (var i = 0; i < GameState.particles.length; i++){
-    if (GameState.particles[i].active)
+  for (var i = 0; i < Game.particles.length; i++){
+    if (Game.particles[i].active)
       active++;
   }
   return active;
@@ -49,20 +49,20 @@ int countActiveParticles(){
 
 void sortParticles(){
   sortParticlesActive();
-  GameState.totalActiveParticles = 0;
-  GameState.totalParticles = GameState.particles.length;
-  for (; GameState.totalActiveParticles < GameState.totalParticles; GameState.totalActiveParticles++){
-      if (!GameState.particles[GameState.totalActiveParticles].active) break;
+  Game.totalActiveParticles = 0;
+  Game.totalParticles = Game.particles.length;
+  for (; Game.totalActiveParticles < Game.totalParticles; Game.totalActiveParticles++){
+      if (!Game.particles[Game.totalActiveParticles].active) break;
   }
 
-  if (GameState.totalActiveParticles == 0) return;
+  if (Game.totalActiveParticles == 0) return;
   
   assert(verifyTotalActiveParticles());
 
   insertionSort(
-    GameState.particles,
+    Game.particles,
     compare: _compareParticles,
-    end: GameState.totalActiveParticles,
+    end: Game.totalActiveParticles,
   );
 }
 
@@ -72,7 +72,7 @@ int _compareParticles(Particle a, Particle b) {
 
 /// do this during the draw call so that particles are smoother
 void updateParticles() {
-  for(final particle in GameState.particles){
+  for(final particle in Game.particles){
     _updateParticle(particle);
   }
   updateParticleFrames();
@@ -80,8 +80,8 @@ void updateParticles() {
 
 void updateParticlesZombieParts() {
   if (Engine.paintFrame % 6 != 0) return;
-  for (var i = 0; i < GameState.totalActiveParticles; i++) {
-    final particle = GameState.particles[i];
+  for (var i = 0; i < Game.totalActiveParticles; i++) {
+    final particle = Game.particles[i];
     if (!particle.active) break;
     if (!particleEmitsBlood(particle.type)) continue;
     if (particle.speed < 2.0) continue;
@@ -115,7 +115,7 @@ void _updateParticle(Particle particle) {
   }
 
   final nodeIndex = gridNodeIndexVector3(particle);
-  final tile = GameState.nodesType[nodeIndex];
+  final tile = Game.nodesType[nodeIndex];
   final airBorn =
       !particle.checkNodeCollision || (
       tile == NodeType.Empty        ||
@@ -941,13 +941,13 @@ void spawnParticle({
 
 /// This may be the cause of the bug in which the sword particle does not render
 Particle getParticleInstance() {
-  GameState.totalActiveParticles++;
-  if (GameState.totalActiveParticles >= GameState.totalParticles){
+  Game.totalActiveParticles++;
+  if (Game.totalActiveParticles >= Game.totalParticles){
      final instance = Particle();
-     GameState.particles.add(instance);
+     Game.particles.add(instance);
      return instance;
   }
-  final particle = GameState.particles[GameState.totalActiveParticles];
+  final particle = Game.particles[Game.totalActiveParticles];
   // assert (!particle.active);
   return particle;
 }

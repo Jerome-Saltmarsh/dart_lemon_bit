@@ -4,7 +4,7 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/request_modify_canvas_size.dart';
 import 'package:bleed_common/teleport_scenes.dart';
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/io/touchscreen.dart';
 import 'package:gamestream_flutter/isometric_web/read_player_input.dart';
 import 'package:gamestream_flutter/network/instance/websocket.dart';
@@ -203,9 +203,9 @@ Future sendClientRequestUpdate() async {
 
   if (Engine.deviceIsComputer){
     updateBuffer[1] = getKeyDirection();
-    updateBuffer[2] = !GameState.edit.value && Engine.watchMouseLeftDown.value ? 1 : 0;
-    updateBuffer[3] = !GameState.edit.value && Engine.mouseRightDown.value ? 1 : 0;
-    updateBuffer[4] = !GameState.edit.value && keyPressedSpace ? 1 : 0;
+    updateBuffer[2] = !Game.edit.value && Engine.watchMouseLeftDown.value ? 1 : 0;
+    updateBuffer[3] = !Game.edit.value && Engine.mouseRightDown.value ? 1 : 0;
+    updateBuffer[4] = !Game.edit.value && keyPressedSpace ? 1 : 0;
   } else {
     updateBuffer[1] = Touchscreen.direction;
     updateBuffer[2] = 0;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
@@ -38,7 +38,7 @@ Widget buildPanelMenu() =>
 Widget buildButtonTogglePlayMode() {
   return watch(sceneEditable, (bool isOwner) {
     if (!isOwner) return const SizedBox();
-    return watch(GameState.edit, (bool edit) {
+    return watch(Game.edit, (bool edit) {
       return container(
           toolTip: "Tab",
           child: edit ? "PLAY" : "EDIT",
@@ -51,7 +51,7 @@ Widget buildButtonTogglePlayMode() {
 }
 
 Widget buildButtonShowMap() => Tooltip(
-    message: ("(M)"), child: text("Map", onPressed: GameState.actionGameDialogShowMap));
+    message: ("(M)"), child: text("Map", onPressed: Game.actionGameDialogShowMap));
 
 Widget buildToggleFullscreen() {
   return WatchBuilder(Engine.fullScreen, (bool fullscreen) {

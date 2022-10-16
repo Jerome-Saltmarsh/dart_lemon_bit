@@ -24,7 +24,7 @@ import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
-class GameState {
+class Game {
   static final gameType = Watch<int?>(null, onChanged: onChangedGameType);
   static final edit = Watch(false, onChanged: onChangedEdit);
   static final player = Player();
@@ -93,8 +93,8 @@ class GameState {
 
   static Character? getPlayerCharacter(){
     for (var i = 0; i < totalCharacters; i++){
-      if (characters[i].x != GameState.player.x) continue;
-      if (characters[i].y != GameState.player.y) continue;
+      if (characters[i].x != Game.player.x) continue;
+      if (characters[i].y != Game.player.y) continue;
       return characters[i];
     }
     return null;
@@ -168,7 +168,7 @@ class GameState {
     if (value == null) {
       return;
     }
-    GameState.edit.value = value == GameType.Editor;
+    Game.edit.value = value == GameType.Editor;
     GameUI.timeVisible.value = GameType.isTimed(value);
     GameUI.mapVisible.value = value == GameType.Dark_Age;
     Engine.fullScreenEnter();

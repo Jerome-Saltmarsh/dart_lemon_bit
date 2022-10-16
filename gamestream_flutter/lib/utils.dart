@@ -1,13 +1,13 @@
 import 'dart:ui';
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:intl/intl.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
 double getMouseRotation() {
-  return getAngleBetween(GameState.player.x, GameState.player.y, mouseWorldX, mouseWorldY);
+  return getAngleBetween(Game.player.x, Game.player.y, mouseWorldX, mouseWorldY);
 }
 
 void snapToGrid(Vector2 value){

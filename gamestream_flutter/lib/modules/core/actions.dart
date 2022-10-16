@@ -1,7 +1,7 @@
 import 'package:bleed_common/GameType.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/authentication.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/network/instance/websocket.dart';
@@ -15,19 +15,11 @@ import 'exceptions.dart';
 
 class CoreActions {
 
-  void operationCompleted(){
-    Website.operationStatus.value = OperationStatus.None;
-  }
-
-  void setError(String message){
-    Website.error.value = message;
-  }
-
   void changeAccountPublicName(String value) async {
     print("actions.changePublicName('$value')");
     final account = Website.account.value;
     if (account == null) {
-      setError("Account is null");
+      Website.setError("Account is null");
       return;
     }
     value = value.trim();
@@ -37,14 +29,14 @@ class CoreActions {
     }
 
     if (value.isEmpty) {
-      setError("Name entered is empty");
+      Website.setError("Name entered is empty");
       return;
     }
     Website.operationStatus.value = OperationStatus.Changing_Public_Name;
     final response = await firestoreService
         .changePublicName(userId: account.userId, publicName: value)
         .catchError((error) {
-      setError(error.toString());
+      Website.setError(error.toString());
       throw error;
     });
     Website.operationStatus.value = OperationStatus.None;
@@ -53,19 +45,19 @@ class CoreActions {
       case ChangeNameStatus.Success:
         core.actions.updateAccount();
         website.actions.showDialogAccount();
-        setError("Name Changed successfully");
+        Website.setError("Name Changed successfully");
         break;
       case ChangeNameStatus.Taken:
-        setError("'$value' already taken");
+        Website.setError("'$value' already taken");
         break;
       case ChangeNameStatus.Too_Short:
-        setError("Too short");
+        Website.setError("Too short");
         break;
       case ChangeNameStatus.Too_Long:
-        setError("Too long");
+        Website.setError("Too long");
         break;
       case ChangeNameStatus.Other:
-        setError("Something went wrong");
+        Website.setError("Something went wrong");
         break;
     }
   }
@@ -75,7 +67,7 @@ class CoreActions {
     website.actions.showDialogAccount();
     final account = Website.account.value;
     if (account == null) {
-      setError('Account is null');
+      Website.setError('Account is null');
       return;
     }
     Website.operationStatus.value = OperationStatus.Cancelling_Subscription;
@@ -183,7 +175,7 @@ class CoreActions {
   }
 
   void deselectGameType(){
-    GameState.gameType.value = null;
+    Game.gameType.value = null;
   }
 
   void exitGame() => webSocket.disconnect();

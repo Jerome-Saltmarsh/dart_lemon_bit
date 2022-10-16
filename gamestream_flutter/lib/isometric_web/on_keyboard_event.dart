@@ -1,6 +1,6 @@
 
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
 import 'package:gamestream_flutter/isometric/actions/action_toggle_inventory.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
@@ -29,7 +29,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
   if (key == PhysicalKeyboardKey.digit5)
     return EditState.paintTorch();
   if (key == PhysicalKeyboardKey.keyZ){
-    return spawnParticleFirePurple(x: mouseGridX, y: mouseGridY, z: GameState.player.z);
+    return spawnParticleFirePurple(x: mouseGridX, y: mouseGridY, z: Game.player.z);
   }
 
   if (playMode) {
@@ -40,7 +40,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     if (key == PhysicalKeyboardKey.keyT)
       return actionGameDialogShowQuests();
     if (key == PhysicalKeyboardKey.keyM)
-      return GameState.actionGameDialogShowMap();
+      return Game.actionGameDialogShowMap();
     return;
   }
 

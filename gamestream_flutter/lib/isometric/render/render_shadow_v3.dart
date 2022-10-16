@@ -2,7 +2,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 
@@ -15,11 +15,11 @@ double raycastDown(double x, double y){
 
 void casteShadowDownV3(Vector3 vector3){
   if (vector3.z < nodeHeight) return;
-  if (vector3.z >= GameState.nodesLengthZ) return;
+  if (vector3.z >= Game.nodesLengthZ) return;
   final nodeIndex = getGridNodeIndexV3(vector3);
-  if (nodeIndex > GameState.nodesArea) {
-    final nodeBelowIndex = nodeIndex - GameState.nodesArea;
-    final nodeBelowOrientation = GameState.nodesOrientation[nodeBelowIndex];
+  if (nodeIndex > Game.nodesArea) {
+    final nodeBelowIndex = nodeIndex - Game.nodesArea;
+    final nodeBelowOrientation = Game.nodesOrientation[nodeBelowIndex];
     if (nodeBelowOrientation == NodeOrientation.Solid){
       final topRemainder = vector3.z % tileHeight;
       renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / tileHeight) * 2 : 2.0);

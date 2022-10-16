@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 
 void setGridType(int z, int row, int column, int type){
@@ -9,12 +9,12 @@ void setGridType(int z, int row, int column, int type){
     return;
   if (column < 0)
     return;
-  if (z >= GameState.nodesTotalZ)
+  if (z >= Game.nodesTotalZ)
     return;
-  if (row >= GameState.nodesTotalRows)
+  if (row >= Game.nodesTotalRows)
     return;
-  if (column >= GameState.nodesTotalColumns)
+  if (column >= Game.nodesTotalColumns)
     return;
 
-  GameState.nodesType[getNodeIndexZRC(z, row, column)] = type;
+  Game.nodesType[getNodeIndexZRC(z, row, column)] = type;
 }

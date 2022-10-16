@@ -3,6 +3,7 @@ import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
@@ -13,12 +14,10 @@ import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
-import 'package:gamestream_flutter/website/build_layout_website.dart';
 import 'package:gamestream_flutter/website/website.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import '../isometric/ui/build_hud.dart';
 import '../network/classes/websocket.dart';
 import '../network/instance/websocket.dart';
 
@@ -54,9 +53,9 @@ Widget buildConnection(Connection connection) {
     case Connection.Connecting:
       return buildLayoutLoading();
     case Connection.Connected:
-      return buildStackGame();
+      return GameUI.build();
     case Connection.None:
-      return buildPageWebsite();
+      return Website.build();
     default:
       return buildConnection(connection);
   }
