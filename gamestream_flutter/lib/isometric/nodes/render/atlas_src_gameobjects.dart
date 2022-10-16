@@ -76,6 +76,7 @@ class AtlasSrcGameObjects {
   static const Bar_Green_X = 171.0;
   static const Bar_Green_Y = 16.0;
   static const Bar_Green_Width = 52.0;
+  static const Bar_Green_Width_Half = Bar_Green_Width * 0.5;
   static const Bar_Green_Height = 8.0;
 
   static const Bar_Green_Transparent_X = 171.0;
