@@ -5,11 +5,9 @@ import 'package:gamestream_flutter/atlases.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric_web/register_isometric_web_controls.dart';
-import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/network/classes/websocket.dart';
 import 'package:gamestream_flutter/network/instance/websocket.dart';
-import 'package:gamestream_flutter/storage_service.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -77,4 +75,6 @@ class System {
         break;
     }
   }
+
+  static void disconnect() => webSocket.disconnect();
 }

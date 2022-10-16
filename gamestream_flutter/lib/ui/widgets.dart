@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/account_service.dart';
 import 'package:gamestream_flutter/authentication.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
@@ -27,7 +28,7 @@ class _Widgets {
 
   final textUpgrade = button(
     text("PURCHASE", color: green, bold: true),
-    core.actions.openStripeCheckout,
+    AccountService.openStripeCheckout,
     fillColor: none,
     borderColor: green,
     borderColorMouseOver: green,
@@ -36,7 +37,7 @@ class _Widgets {
 
   final textReactivateSubscription = button(
     text("Activate", color: green, underline: true),
-    core.actions.openStripeCheckout,
+    AccountService.openStripeCheckout,
     fillColor: none,
     borderColorMouseOver: green,
     borderColor: none,
@@ -90,7 +91,7 @@ class _Buttons {
 
   final Widget spawnRandomUser = button("Random User", (){
     final userId = 'random_${random.nextInt(9999999)}';
-    core.actions.login(Authentication(userId: userId, name: userId, email: "$userId@email.com"));
+    AccountService.login(Authentication(userId: userId, name: userId, email: "$userId@email.com"));
   });
 
   final showDialogSubscribed = button("Sub Success", website.actions.showDialogSubscriptionSuccessful);
@@ -151,7 +152,7 @@ class _Buttons {
 }
 Widget _buildFakeLoginButton(String userId, String text){
   return button('$userId $text', (){
-     core.actions.login(Authentication(userId: userId, name: userId, email: "$userId@email.com"));
+    AccountService.login(Authentication(userId: userId, name: userId, email: "$userId@email.com"));
   });
 }
 

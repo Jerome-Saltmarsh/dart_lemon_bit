@@ -1,6 +1,7 @@
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/account_service.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game_ui.dart';
@@ -9,7 +10,6 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
 import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
-import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:gamestream_flutter/utils.dart';
@@ -180,10 +180,10 @@ Widget buildTopMessage(){
                 onPressed(
                     child: text(" for \$9.99 per month to unlock all games",
                         color: colours.white80, size: 20),
-                    action: core.actions.openStripeCheckout),
+                    action: AccountService.openStripeCheckout),
               ],
             ),
-            core.actions.openStripeCheckout,
+            AccountService.openStripeCheckout,
             fillColorMouseOver: none,
             borderColor: none,
             borderColorMouseOver: colours.white80);
@@ -193,13 +193,13 @@ Widget buildTopMessage(){
         return Row(
           children: [
             onPressed(
-              action: core.actions.openStripeCheckout,
+              action: AccountService.openStripeCheckout,
               child: text(
                   "Your subscription expired on ${formatDate(account.subscriptionEndDate!)}",
                   color: colours.red),
             ),
             width16,
-            button(text("Renew", color: green), core.actions.openStripeCheckout,
+            button(text("Renew", color: green), AccountService.openStripeCheckout,
                 borderColor: colours.green),
           ],
         );
@@ -219,14 +219,6 @@ Widget buildTopMessage(){
       return empty;
     });
   });
-}
-
-Widget buildDialogGameFinished(){
-  return buildDialogMedium(
-      child: Center(
-          child: text("Game Over")),
-          bottomRight: buildButton("Exit", core.actions.exitGame),
-  );
 }
 
 bool isAccountName(String publicName){

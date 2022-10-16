@@ -1,31 +1,8 @@
+import 'package:gamestream_flutter/enums/region.dart';
 import 'package:lemon_engine/engine.dart';
 
-enum OperationStatus {
-  None,
-  Authenticating,
-  Creating_Account,
-  Logging_Out,
-  Opening_Secure_Payment_Session,
-  Cancelling_Subscription,
-  Updating_Account,
-  Changing_Public_Name,
-  Loading_Map,
-  Saving_Map,
-}
 
-enum Region {
-  Australia,
-  Singapore,
-  Brazil,
-  Germany,
-  South_Korea,
-  USA_East,
-  USA_West,
-  LocalHost,
-  Custom,
-}
-
-final List<Region> regions = Region.values;
+const regions = Region.values;
 
 final selectableRegions = regions.where((element){
   if (element == Region.LocalHost && !Engine.isLocalHost) return false;

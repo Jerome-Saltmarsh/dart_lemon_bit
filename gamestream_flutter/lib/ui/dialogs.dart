@@ -1,5 +1,6 @@
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/account_service.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/styles.dart';
@@ -226,7 +227,6 @@ Widget buildDialogSubscriptionCancelled(){
 
 Widget buildDialogPremiumAccountRequired(){
   return buildDialogMessage("Premium subscription required", bottomRight: buildButton("okay", (){
-    core.actions.deselectGameType();
     website.actions.showDialogGames();
   }));
 }
@@ -280,7 +280,7 @@ Widget buildDialogWelcome2(){
               )),
         ],
       ),
-      bottomRight: button(text("PREMIUM MEMBERSHIP", color: green), core.actions.openStripeCheckout, fillColor: none, borderColor: green),
+      bottomRight: button(text("PREMIUM MEMBERSHIP", color: green), AccountService.openStripeCheckout, fillColor: none, borderColor: green),
       bottomLeft: Container(
           padding: padding8,
           child: text("Perhaps Later", onPressed: website.actions.showDialogGames, color: colours.white80)),
@@ -306,7 +306,7 @@ Widget buildDialogChangePublicName() {
     width: style.dialogWidthMedium,
     height: style.dialogHeightSmall,
     bottomLeft: buildButtonPrimary("Save", (){
-      core.actions.changeAccountPublicName(_nameController.text);
+      AccountService.changeAccountPublicName(_nameController.text);
     },),
     bottomRight: buildButton('back', website.actions.showDialogAccount),
       child: TextField(
@@ -347,7 +347,7 @@ Widget buildDialogConfirmCancelSubscription(){
     width: style.dialogWidthMedium,
     height: style.dialogHeightSmall,
     child: Center(child: text("Cancel premium subscription?", color: colours.white90)),
-    bottomLeft: button(text("YES", color: colours.red, bold: false), core.actions.cancelSubscription, fillColor: none, borderColor: colours.none, width: 100),
+    bottomLeft: button(text("YES", color: colours.red, bold: false), AccountService.cancelSubscription, fillColor: none, borderColor: colours.none, width: 100),
     bottomRight: button(text("NO", color: colours.green, bold: true), website.actions.showDialogAccount, fillColor: none, borderColor: colours.green, width: 100, borderWidth: 2),
   );
 }
