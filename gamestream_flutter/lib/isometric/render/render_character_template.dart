@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/atlases.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/convert_index.dart';
@@ -229,10 +230,21 @@ void renderCharacterTemplate(Character character, {
   if (torchFound){
       final torchRow = convertIndexToRow(torchIndex);
       final torchColumn = convertIndexToColumn(torchIndex);
-      final torchPosX = convertRowColumnToX(torchRow, torchColumn);
-      final torchPosY = convertRowColumnToY(torchRow, torchColumn);
-      angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY) + pi;
-      distance = 15.0;
+      final torchPosX = torchRow * nodeSize + nodeSizeHalf;
+      final torchPosY = torchColumn * nodeSize + nodeSizeHalf;
+      angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);
+      distance = 7.5;
+
+      Engine.renderSprite(
+          image: Images.gameobjects,
+          srcX: 0,
+          srcY: 72,
+          srcWidth: 8,
+          srcHeight: 8,
+          dstX: RenderEngine.getRenderX(torchPosX, torchPosY, character.z),
+          dstY: RenderEngine.getRenderY(torchPosX, torchPosY, character.z),
+      );
+      // Engine.renderText('angle: $angle', RenderEngine.getRenderV3X(character), RenderEngine.getRenderV3Y(character) - 45.0);
   }
 
   final x = character.x + getAdjacent(angle, distance);
