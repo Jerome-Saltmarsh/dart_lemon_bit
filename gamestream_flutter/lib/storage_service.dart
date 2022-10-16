@@ -4,10 +4,10 @@ import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:lemon_engine/Engine.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final storage = _Storage();
+final storage = StorageService();
 final _keys = _Keys();
 
-class _Storage {
+class StorageService {
 
   bool get serverSaved => Engine.sharedPreferences.containsKey(_keys.server);
   int? get _serverIndex {
@@ -16,7 +16,7 @@ class _Storage {
   }
   Region get serverType => regions[_serverIndex ?? Region.Australia.index];
 
-  void saveServerType(Region value){
+  void saveRegion(Region value){
     SharedPreferences.getInstance().then((instance){
       instance.setInt('server', value.index);
     });

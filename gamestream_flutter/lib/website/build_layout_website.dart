@@ -12,7 +12,7 @@ import 'package:lemon_watch/watch.dart';
 
 import 'build/build_column_games.dart';
 
-final isVisibleDialogCustomRegion = Watch(false);
+
 
 
 final colorRegion = Colors.orange;

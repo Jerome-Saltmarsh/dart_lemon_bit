@@ -6,8 +6,8 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/modules/core/actions.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
-import 'package:gamestream_flutter/modules/core/events.dart';
 import 'package:gamestream_flutter/modules/ui/style.dart';
+import 'package:gamestream_flutter/storage_service.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:gamestream_flutter/website/build/build_column_games.dart';
 import 'package:gamestream_flutter/website/build_layout_website.dart';
@@ -21,6 +21,7 @@ class Website {
   static final region = Watch(Region.LocalHost, onChanged: onChangedRegion);
   static final download = Watch(0.0);
   static final debug = true;
+  static final isVisibleDialogCustomRegion = Watch(false);
 
   static void setError(String message){
     error.value = message;
@@ -154,4 +155,8 @@ class Website {
         ],
       );
 
+  static void onChangedRegion(Region region) {
+    storage.saveRegion(region);
+    isVisibleDialogCustomRegion.value = region == Region.Custom;
+  }
 }
