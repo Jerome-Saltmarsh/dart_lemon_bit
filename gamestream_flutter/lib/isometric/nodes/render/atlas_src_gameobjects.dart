@@ -38,4 +38,24 @@ class AtlasSrcGameObjects {
   static const Shotgun_Y = 0.0;
   static const Shotgun_Width = 26.0;
   static const Shotgun_Height = 7.0;
+
+  static const Handgun_X = 98.0;
+  static const Handgun_Y = 8.0;
+  static const Handgun_Width = 18.0;
+  static const Handgun_Height = 10.0;
+
+  static const Sword_X = 98.0;
+  static const Sword_Y = 19.0;
+  static const Sword_Width = 23.0;
+  static const Sword_Height = 44.0;
+
+  static const Bow_X = 125.0;
+  static const Bow_Y = 0.0;
+  static const Bow_Width = 24.0;
+  static const Bow_Height = 33.0;
+
+  static const Staff_X = 150.0;
+  static const Staff_Y = 0.0;
+  static const Staff_Width = 20.0;
+  static const Staff_Height = 24.0;
 }

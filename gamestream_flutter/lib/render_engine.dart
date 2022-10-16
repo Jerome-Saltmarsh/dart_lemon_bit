@@ -177,7 +177,6 @@ class RenderEngine {
     nodesSetStart();
   }
 
-
   // ACTIONS
 
   static void resetRenderOrder(RenderOrder value){
@@ -188,9 +187,6 @@ class RenderEngine {
   }
   
   static void renderGameObject(GameObject gameObject) {
-    const shadowScale = 1.5;
-    const shadowScaleHeight = 0.15;
-
     switch (gameObject.type) {
       case GameObjectType.Rock:
         Engine.renderBuffer(
@@ -374,11 +370,11 @@ class RenderEngine {
         return;
 
       case GameObjectType.Weapon_Shotgun:
-        renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
+        renderBouncingGameObjectShadow(gameObject);
         Engine.renderSprite(
             image: Images.gameobjects,
             dstX: getRenderX(gameObject),
-            dstY: getRenderY(gameObject) + animationFrameWaterHeight,
+            dstY: getRenderYBouncing(gameObject),
             srcX: AtlasSrcGameObjects.Shotgun_X,
             srcY: AtlasSrcGameObjects.Shotgun_Y,
             srcWidth: AtlasSrcGameObjects.Shotgun_Width,
@@ -386,66 +382,75 @@ class RenderEngine {
             color: getRenderColor(gameObject)
         );
         break;
-    }
 
+      case GameObjectType.Weapon_Handgun:
+        renderBouncingGameObjectShadow(gameObject);
+        Engine.renderSprite(
+            image: Images.gameobjects,
+            dstX: getRenderX(gameObject),
+            dstY: getRenderYBouncing(gameObject),
+            srcX: AtlasSrcGameObjects.Handgun_X,
+            srcY: AtlasSrcGameObjects.Handgun_Y,
+            srcWidth: AtlasSrcGameObjects.Handgun_Width,
+            srcHeight: AtlasSrcGameObjects.Handgun_Height,
+            color: getRenderColor(gameObject)
+        );
+        break;
 
-    if (gameObject.type == GameObjectType.Weapon_Handgun) {
-      renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
-      return Engine.renderBuffer(
-          dstX:getRenderX(gameObject),
-          dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
-          srcX: 234,
-          srcY: 200,
-          srcWidth: 17,
-          srcHeight: 10,
-          color: getRenderColor(gameObject)
-      );
-    }
+      case GameObjectType.Weapon_Blade:
+        renderBouncingGameObjectShadow(gameObject);
+        Engine.renderSprite(
+            image: Images.gameobjects,
+            dstX: getRenderX(gameObject),
+            dstY: getRenderYBouncing(gameObject),
+            srcX: AtlasSrcGameObjects.Sword_X,
+            srcY: AtlasSrcGameObjects.Sword_Y,
+            srcWidth: AtlasSrcGameObjects.Sword_Width,
+            srcHeight: AtlasSrcGameObjects.Sword_Height,
+            color: getRenderColor(gameObject)
+        );
+        break;
 
-    if (gameObject.type == GameObjectType.Weapon_Blade) {
-      renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
-      Engine.renderBuffer(
-          dstX:getRenderX(gameObject),
-          dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
-          srcX: 1029,
-          srcY: 1644,
-          srcWidth: 33,
-          srcHeight: 13,
-          color: getRenderColor(gameObject)
-      );
-      return;
-    }
+      case GameObjectType.Weapon_Bow:
+        renderBouncingGameObjectShadow(gameObject);
+        Engine.renderSprite(
+            image: Images.gameobjects,
+            dstX: getRenderX(gameObject),
+            dstY: getRenderYBouncing(gameObject),
+            srcX: AtlasSrcGameObjects.Bow_X,
+            srcY: AtlasSrcGameObjects.Bow_Y,
+            srcWidth: AtlasSrcGameObjects.Bow_Width,
+            srcHeight: AtlasSrcGameObjects.Bow_Height,
+            color: getRenderColor(gameObject)
+        );
+        break;
 
-    if (gameObject.type == GameObjectType.Weapon_Bow) {
-      renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
-      Engine.renderBuffer(
-          dstX:getRenderX(gameObject),
-          dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
-          srcX: 7181,
-          srcY: 1838,
-          srcWidth: 30,
-          srcHeight: 28,
-          color: getRenderColor(gameObject)
-      );
-      return;
-    }
-
-    if (gameObject.type == GameObjectType.Weapon_Staff) {
-      renderShadow(gameObject.x, gameObject.y, gameObject.z - 15, scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble()));
-      Engine.renderBuffer(
-          dstX: getRenderX(gameObject),
-          dstY: ((gameObject.y + gameObject.x) * 0.5) - gameObject.z + animationFrameWaterHeight,
-          srcX: 7119,
-          srcY: 1519,
-          srcWidth: 24,
-          srcHeight: 24,
-          color: getRenderColor(gameObject)
-      );
-      return;
+      case GameObjectType.Weapon_Staff:
+        renderBouncingGameObjectShadow(gameObject);
+        Engine.renderSprite(
+            image: Images.gameobjects,
+            dstX: getRenderX(gameObject),
+            dstY: getRenderYBouncing(gameObject),
+            srcX: AtlasSrcGameObjects.Staff_X,
+            srcY: AtlasSrcGameObjects.Staff_Y,
+            srcWidth: AtlasSrcGameObjects.Staff_Width,
+            srcHeight: AtlasSrcGameObjects.Staff_Height,
+            color: getRenderColor(gameObject)
+        );
+        break;
     }
   }
 
-
+  static void renderBouncingGameObjectShadow(Vector3 gameObject){
+    const shadowScale = 1.5;
+    const shadowScaleHeight = 0.15;
+    renderShadow(
+        gameObject.x,
+        gameObject.y,
+        gameObject.z - 15,
+        scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble())
+    );
+  }
 
   static void renderSprites() {
     totalRemaining = 0;
@@ -756,6 +761,7 @@ class RenderEngine {
 
   static double getRenderX(Vector3 v3) => (v3.x - v3.y) * 0.5;
   static double getRenderY(Vector3 v3) => ((v3.y + v3.x) * 0.5) - v3.z;
+  static double getRenderYBouncing(Vector3 v3) => ((v3.y + v3.x) * 0.5) - v3.z + animationFrameWaterHeight;
 }
 
 class RenderOrderCharacters extends RenderOrder {
