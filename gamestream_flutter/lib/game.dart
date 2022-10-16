@@ -199,4 +199,13 @@ class Game {
     Engine.zoom = 1;
     Engine.redrawCanvas();
   }
+
+  static void refreshDynamicLightGrid() {
+    while (dynamicIndex >= 0) {
+      final i = nodesDynamicIndex[dynamicIndex];
+      nodesShade[i] = nodesBake[i];
+      dynamicIndex--;
+    }
+    dynamicIndex = 0;
+  }
 }

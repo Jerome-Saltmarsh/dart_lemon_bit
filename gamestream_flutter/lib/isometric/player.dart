@@ -1,5 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/quest.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
@@ -9,10 +10,8 @@ import 'package:gamestream_flutter/isometric/events/on_changed_npc_talk.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_alive.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_designed.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_message.dart';
-import 'package:gamestream_flutter/isometric/events/on_changed_player_state.dart';
 import 'package:gamestream_flutter/isometric/events/on_quests_in_progress_changed.dart';
 import 'package:lemon_watch/watch.dart';
-
 
 class Player extends Vector3 {
   final interpolating = Watch(true);
@@ -49,7 +48,7 @@ class Player extends Vector3 {
   final points = Watch(0);
   final message = Watch("", onChanged: onChangedPlayerMessage);
   var messageTimer = 0;
-  final state = Watch(CharacterState.Idle, onChanged: onChangedPlayerState);
+  final state = Watch(CharacterState.Idle, onChanged: Player.onPlayerCharacterStateChanged);
   final alive = Watch(true, onChanged: onChangedPlayerAlive);
   final magic = Watch(0.0);
   final maxMagic = Watch(0.0);
@@ -78,8 +77,12 @@ class Player extends Vector3 {
 
   double get weaponRoundPercentage => weapon.capacity.value == 0
       ? 0 : weapon.rounds.value / weapon.capacity.value;
-}
 
+
+  static void onPlayerCharacterStateChanged(int characterState){
+     Game.player.alive.value = characterState != CharacterState.Dead;
+  }
+}
 
 class AttackSlot {
   /// see attack_type.dart

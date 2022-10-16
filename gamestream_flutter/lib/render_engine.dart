@@ -188,9 +188,6 @@ class RenderEngine {
     }
   }
   
-  static double getRenderX(Vector3 v3) => (v3.x - v3.y) * 0.5;
-  static double getRenderY(Vector3 v3) => ((v3.y + v3.x) * 0.5) - v3.z;
-
   static void renderGameObject(GameObject gameObject) {
     switch (gameObject.type) {
       case GameObjectType.Rock:
@@ -448,6 +445,7 @@ class RenderEngine {
   }
 
 
+
   static void renderSprites() {
     totalRemaining = 0;
     resetRenderOrder(renderOrderCharacters);
@@ -616,7 +614,6 @@ class RenderEngine {
     currentNodeRow = nodesScreenTopLeftRow;
     currentNodeColumn = screenTopLeftColumn;
 
-
     nodesShiftIndex = 0;
     nodesCalculateMinMaxZ();
     nodesTrimTop();
@@ -651,7 +648,7 @@ class RenderEngine {
     renderOrderGrid.index = 0;
     renderOrderGrid.remaining = renderOrderGrid.total > 0;
 
-    refreshDynamicLightGrid();
+    Game.refreshDynamicLightGrid();
     Game.applyEmissionsCharacters();
     applyEmissionGameObjects();
     applyEmissionsParticles();
@@ -744,14 +741,8 @@ class RenderEngine {
     return diff ~/ tileSize;
   }
 
-  static void refreshDynamicLightGrid() {
-    while (Game.dynamicIndex >= 0) {
-      final i = Game.nodesDynamicIndex[Game.dynamicIndex];
-      Game.nodesShade[i] = Game.nodesBake[i];
-      Game.dynamicIndex--;
-    }
-    Game.dynamicIndex = 0;
-  }
+  static double getRenderX(Vector3 v3) => (v3.x - v3.y) * 0.5;
+  static double getRenderY(Vector3 v3) => ((v3.y + v3.x) * 0.5) - v3.z;
 }
 
 class RenderOrderCharacters extends RenderOrder {

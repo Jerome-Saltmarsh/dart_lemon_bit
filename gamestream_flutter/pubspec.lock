@@ -319,13 +319,6 @@ packages:
       relative: false
     source: path
     version: "1.0.12"
-  lemon_dispatch:
-    dependency: "direct main"
-    description:
-      name: lemon_dispatch
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.1"
   lemon_engine:
     dependency: "direct main"
     description:

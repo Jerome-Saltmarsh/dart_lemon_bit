@@ -1,4 +1,0 @@
-
-void onChangedPlayerState(int value){
-
-}

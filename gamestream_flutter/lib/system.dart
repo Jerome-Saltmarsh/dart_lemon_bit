@@ -17,7 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class System {
   
-  
+
     static Future init(SharedPreferences sharedPreferences) async {
       print("environment: ${Engine.isLocalHost ? 'localhost' : 'production'}");
       Images.characters = await Engine.loadImageAsset('images/atlas-characters.png');
@@ -66,7 +66,6 @@ class System {
         Engine.onDrawForeground = modules.game.render.renderForeground;
         Engine.onUpdate = modules.game.update.update;
         Engine.drawCanvasAfterUpdate = true;
-        modules.game.events.register();
         Engine.zoomOnScroll = true;
         isometricWebControlsRegister();
         Engine.fullScreenEnter();

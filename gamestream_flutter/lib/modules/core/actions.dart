@@ -8,10 +8,6 @@ import 'package:gamestream_flutter/network/instance/websocket.dart';
 import 'package:gamestream_flutter/servers.dart';
 import 'package:gamestream_flutter/ui/actions/sign_in_with_facebook.dart';
 import 'package:gamestream_flutter/website/website.dart';
-import 'package:lemon_dispatch/instance.dart';
-
-import 'exceptions.dart';
-
 
 class CoreActions {
 
@@ -85,12 +81,10 @@ class CoreActions {
 
     Website.operationStatus.value = OperationStatus.Updating_Account;
     Website.account.value = await firestoreService.findUserById(account.userId).catchError((error){
-      pub(LoginException(error));
       return null;
     });
     Website.operationStatus.value = OperationStatus.None;
   }
-
 
   Future login(Authentication authentication){
     print("actions.login()");
@@ -114,7 +108,6 @@ class CoreActions {
     print("actions.signInOrCreateAccount()");
     Website.operationStatus.value = OperationStatus.Authenticating;
     final account = await firestoreService.findUserById(userId).catchError((error){
-      pub(LoginException(error));
       throw error;
     });
     if (account == null){
