@@ -1,7 +1,7 @@
 import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/audio_engine.dart';
-import 'package:gamestream_flutter/system_events.dart';
+import 'package:gamestream_flutter/system.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
@@ -43,7 +43,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       break;
     case GameEventType.Weapon_Type_Equipped:
       final attackType =  serverResponseReader.readByte();
-      return SystemEvents.onGameEventWeaponTypeEquipped(attackType, x, y, z);
+      return System.onGameEventWeaponTypeEquipped(attackType, x, y, z);
     case GameEventType.Player_Spawned:
       for (var i = 0; i < 7; i++){
         spawnParticleOrbShard(x: x, y: y, z: z, angle: randomAngle());
