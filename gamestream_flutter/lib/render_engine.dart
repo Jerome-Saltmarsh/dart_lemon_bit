@@ -257,7 +257,8 @@ class RenderEngine {
         );
         break;
       case ParticleType.Block_Wood:
-        Engine.renderBuffer(
+        Engine.renderSprite(
+          image: Images.gameobjects,
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 1760,
@@ -269,7 +270,8 @@ class RenderEngine {
         );
         break;
       case ParticleType.Block_Grass:
-        Engine.renderBuffer(
+        Engine.renderSprite(
+          image: Images.gameobjects,
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 1760,
@@ -281,7 +283,8 @@ class RenderEngine {
         );
         break;
       case ParticleType.Block_Brick:
-        Engine.renderBuffer(
+        Engine.renderSprite(
+          image: Images.gameobjects,
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 1760,
@@ -335,7 +338,8 @@ class RenderEngine {
         break;
       case ParticleType.Blood:
         casteShadowDownV3(particle);
-        Engine.renderBuffer(
+        Engine.renderSprite(
+          image: Images.gameobjects,
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 16,

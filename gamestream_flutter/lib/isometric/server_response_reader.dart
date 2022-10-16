@@ -602,32 +602,30 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGrid() {
-    print("readGrid()");
     Game.nodesTotalZ = readInt();
     Game.nodesTotalRows = readInt();
     Game.nodesTotalColumns = readInt();
     Game.nodesArea = Game.nodesTotalRows * Game.nodesTotalColumns;
-    final grandTotal = Game.nodesTotalZ * Game.nodesTotalRows * Game.nodesTotalColumns;
-    if (Game.nodesType.length < grandTotal) {
-      print('new buffers generated $grandTotal');
-      Game.nodesType = Uint8List(grandTotal);
-      Game.nodesOrientation = Uint8List(grandTotal);
-      Game.nodesShade = Uint8List(grandTotal);
-      Game.nodesBake = Uint8List(grandTotal);
-      Game.nodesWind = Uint8List(grandTotal);
-      Game.nodesVariation = List.generate(grandTotal, (index) => false, growable: false);
-      Game.nodesVisible = List.generate(grandTotal, (index) => true, growable: false);
-      Game.nodesVisibleIndex = Uint16List(grandTotal);
-      Game.nodesDynamicIndex = Uint16List(grandTotal);
+    final totalNodes = Game.nodesTotalZ * Game.nodesTotalRows * Game.nodesTotalColumns;
+    if (Game.nodesType.length < totalNodes) {
+      Game.nodesType = Uint8List(totalNodes);
+      Game.nodesOrientation = Uint8List(totalNodes);
+      Game.nodesShade = Uint8List(totalNodes);
+      Game.nodesBake = Uint8List(totalNodes);
+      Game.nodesWind = Uint8List(totalNodes);
+      Game.nodesVariation = List.generate(totalNodes, (index) => false, growable: false);
+      Game.nodesVisible = List.generate(totalNodes, (index) => true, growable: false);
+      Game.nodesVisibleIndex = Uint16List(totalNodes);
+      Game.nodesDynamicIndex = Uint16List(totalNodes);
     }
-    Game.nodesTotal = grandTotal;
+    Game.nodesTotal = totalNodes;
 
     var gridIndex = 0;
     var total = 0;
     var currentRow = 0;
     var currentColumn = 0;
 
-    while (total < grandTotal) {
+    while (total < totalNodes) {
       final nodeType = readByte();
       final nodeOrientation = readByte();
 
@@ -658,7 +656,7 @@ class ServerResponseReader with ByteReader {
         }
       }
     }
-    assert(total == grandTotal);
+    assert(total == totalNodes);
     onGridChanged();
     onChangedScene();
   }

@@ -47,6 +47,7 @@ class System {
   }
 
   static void onConnectionChanged(Connection connection) {
+      print('onConnectionChanged($connection)');
     switch (connection) {
       case Connection.Connected:
         Engine.onDrawCanvas = modules.game.render.renderGame;

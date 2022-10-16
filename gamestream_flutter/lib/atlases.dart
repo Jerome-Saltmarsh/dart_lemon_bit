@@ -11,6 +11,7 @@ class Images {
    static late Image zombie;
    static late Image templateShadow;
    static late Image gameobjects;
+   static late Image particles;
 }
 
 class ImagesTemplateHead {

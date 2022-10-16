@@ -19,10 +19,7 @@ void updateCameraMode() {
   }
 }
 
-void cameraCenterOnPlayer(){
-  print('cameraCenterOnPlayer()');
-  Engine.cameraCenter(Game.player.renderX, Game.player.renderY);
-}
+void cameraCenterOnPlayer() => Engine.cameraCenter(Game.player.renderX, Game.player.renderY);
 
 void cameraSetPositionGrid(int row, int column, int z){
   cameraSetPosition(row * tileSize, column * tileSize, z * tileHeight);
