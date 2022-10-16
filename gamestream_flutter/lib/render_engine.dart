@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
+import 'package:bleed_common/particle_type.dart';
 import 'package:gamestream_flutter/atlases.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
@@ -177,6 +179,347 @@ class RenderEngine {
   }
 
   // ACTIONS
+
+  static void renderParticle(Particle particle) {
+    switch (particle.type) {
+
+      case ParticleType.Bubble:
+        if (particle.duration > 26) {
+          particleDeactivate(particle);
+          return;
+        }
+          // const size = 32.0;
+          // final frame = (26 - particle.duration) ~/ 2;
+          return Engine.renderSprite(
+            image: Images.gameobjects,
+            dstX: getRenderX(particle),
+            dstY: getRenderY(particle),
+            srcX: 0.0,
+            srcY: 32,
+            srcWidth: 8,
+            srcHeight: 8,
+            color: getRenderColor(particle),
+          );
+        // const size = 8.0;
+        // return Engine.renderBuffer(
+        //   dstX: particle.renderX,
+        //   dstY: particle.renderY,
+        //   srcX: 2864.0,
+        //   srcY: ((particle.frame ~/ 2) % 6) * size,
+        //   srcWidth: size,
+        //   srcHeight: size,
+        //   color: getRenderColor(particle),
+        // );
+
+      case ParticleType.Bubble_Small:
+        return Engine.renderBuffer(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 2976.0,
+          srcY: ((particle.frame ~/ 2) % 6) * 5,
+          srcWidth: 4,
+          srcHeight: 5,
+          color: getRenderColor(particle),
+        );
+
+      case ParticleType.Bullet_Ring:
+        final frame = particle.frame ~/ 2;
+        if (frame > 6) return;
+        const size = 32.0;
+        return Engine.renderBuffer(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 2544,
+          srcY: frame * size,
+          srcWidth: size,
+          srcHeight: size,
+          scale: particle.scale,
+          color: getRenderColor(particle),
+        );
+
+      case ParticleType.Water_Drop:
+        return Engine.renderBuffer(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 48,
+          srcY: 8,
+          srcWidth: 3,
+          srcHeight: 3,
+          scale: particle.scale,
+          color: getRenderColor(particle),
+        );
+
+      case ParticleType.Smoke:
+        return Engine.renderBuffer(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 5612,
+          srcY: 0,
+          srcWidth: 50,
+          srcHeight: 50,
+          scale: particle.scale,
+          color: getRenderColor(particle),
+        );
+
+      case ParticleType.Block_Wood:
+        return Engine.renderBuffer(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 1760,
+          srcY: 48,
+          srcWidth: 16,
+          srcHeight: 16,
+          scale: particle.scale,
+          color: getRenderColor(particle),
+        );
+
+      case ParticleType.Block_Grass:
+        return Engine.renderBuffer(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 1760,
+          srcY: 64,
+          srcWidth: 16,
+          srcHeight: 16,
+          scale: particle.scale,
+          color: getRenderColor(particle),
+        );
+
+      case ParticleType.Block_Brick:
+        return Engine.renderBuffer(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 1760,
+          srcY: 80,
+          srcWidth: 16,
+          srcHeight: 16,
+          scale: particle.scale,
+          color: getRenderColor(particle),
+        );
+
+      case ParticleType.Fire:
+        if (particle.frame > 12 ) {
+          return particleDeactivate(particle);
+        }
+        return Engine.renderBuffer(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 4464,
+          srcY: 32.0 * particle.frame ,
+          srcWidth: 32,
+          srcHeight: 32,
+          scale: particle.scale,
+        );
+
+      case ParticleType.Shell:
+        return Engine.renderBuffer(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 1008 + (particle.direction * 32),
+          srcY: 0,
+          srcWidth: 32,
+          srcHeight: 32,
+          scale: 0.25,
+          color: getRenderColor(particle),
+        );
+
+      case ParticleType.Fire_Purple:
+        if (particle.frame > 24 ) {
+          return particleDeactivate(particle);
+        }
+        return Engine.renderBuffer(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 6032,
+          srcY: 32.0 * (particle.frame ~/ 2) ,
+          srcWidth: 32,
+          srcHeight: 32,
+          scale: particle.scale,
+        );
+      case ParticleType.Blood:
+        casteShadowDownV3(particle);
+
+        return Engine.renderBuffer(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 16,
+          srcY: 25,
+          srcWidth: 8,
+          srcHeight: 8,
+          color: getRenderColor(particle),
+        );
+      case ParticleType.Orb_Shard:
+        renderOrbShard(
+          x: particle.renderX,
+          y: particle.renderY,
+          scale: particle.scale,
+          rotation: particle.rotation,
+          frame: particle.frame,
+        );
+        return;
+      case ParticleType.Shrapnel:
+        return renderShrapnel(
+          x: particle.renderX,
+          y: particle.renderY,
+          scale: particle.scale,
+        );
+      case ParticleType.Flame:
+        return renderFlame(particle);
+
+      case ParticleType.Zombie_Arm:
+
+        casteShadowDownV3(particle);
+
+        return Engine.renderBuffer(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 4030.0,
+          srcY: 64.0 * particle.direction,
+          srcWidth: 64,
+          srcHeight: 64,
+          color: getRenderColor(particle),
+        );
+
+      case ParticleType.Star_Explosion:
+        if (particle.frame >= 7) {
+          return particle.deactivate();
+        }
+        Engine.renderBuffer(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 2304.0,
+          srcY: 32.0 + (32.0 * particle.frame),
+          srcWidth: 32,
+          srcHeight: 32,
+        );
+        return;
+
+      case ParticleType.Zombie_Head:
+
+        casteShadowDownV3(particle);
+        return Engine.renderBuffer(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 4030.0 + 64,
+          srcY: 64.0 * particle.direction,
+          srcWidth: 64,
+          srcHeight: 64,
+          color: getRenderColor(particle),
+        );
+
+      case ParticleType.Cut_Grass:
+        return Engine.renderBuffer(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 2928,
+          srcY: 0,
+          srcWidth: 32,
+          srcHeight: 32,
+          color: getRenderColor(particle),
+        );
+
+      case ParticleType.Zombie_leg:
+
+        casteShadowDownV3(particle);
+        return Engine.renderBuffer(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 4030.0 + (64 * 2),
+          srcY: 64.0 * particle.direction,
+          srcWidth: 64,
+          srcHeight: 64,
+          color: getRenderColor(particle),
+        );
+
+      case ParticleType.Zombie_Torso:
+
+        casteShadowDownV3(particle);
+        return Engine.renderBuffer(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 4030.0 + (64 * 3),
+          srcY: 64.0 * particle.direction,
+          srcWidth: 64,
+          srcHeight: 64,
+          color: getRenderColor(particle),
+        );
+      case ParticleType.Leaf:
+        return Engine.renderBuffer(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 281.0,
+          srcY: 25,
+          srcWidth: 8,
+          srcHeight: 8,
+          color: getRenderColor(particle),
+        );
+
+      case ParticleType.Dust:
+        if (particle.frame >= 8 ) return;
+        const size = 32.0;
+        return Engine.renderBuffer(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 2832,
+          srcY: particle.frame * size,
+          srcWidth: size,
+          srcHeight: size,
+          scale: particle.scale,
+        );
+
+      case ParticleType.Strike_Blade:
+        if (particle.frame >= 6 ) {
+          return particleDeactivate(particle);
+        }
+        const size = 64.0;
+        casteShadowDownV3(particle);
+        return Engine.renderBufferRotated(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 6080,
+          srcY: particle.frame * size,
+          srcWidth: size,
+          srcHeight: size,
+          scale: particle.scale,
+          rotation: particle.rotation + (Engine.PIHalf + Engine.PIQuarter),
+        );
+
+      case ParticleType.Strike_Punch:
+        if (particle.frame >= 3 ) return;
+        const size = 32.0;
+        casteShadowDownV3(particle);
+        return Engine.renderBufferRotated(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 6272 ,
+          srcY: 32 + particle.frame * size,
+          srcWidth: size,
+          srcHeight: size,
+          scale: particle.scale,
+          rotation: particle.rotation + (Engine.PIHalf + Engine.PIQuarter),
+        );
+
+      case ParticleType.Slash_Crowbar:
+        if (particle.frame >= 3 ) {
+          return particleDeactivate(particle);
+        }
+        const size = 64.0;
+        return Engine.renderBufferRotated(
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 784,
+          srcY: particle.frame * size,
+          srcWidth: size,
+          srcHeight: size,
+          scale: particle.scale,
+          rotation: particle.rotation + (Engine.PIHalf + Engine.PIQuarter),
+        );
+
+      default:
+        break;
+    }
+  }
+
 
   static void resetRenderOrder(RenderOrder value){
     value.reset();
@@ -761,6 +1104,20 @@ class RenderEngine {
   static double getRenderX(Vector3 v3) => (v3.x - v3.y) * 0.5;
   static double getRenderY(Vector3 v3) => ((v3.y + v3.x) * 0.5) - v3.z;
   static double getRenderYBouncing(Vector3 v3) => ((v3.y + v3.x) * 0.5) - v3.z + animationFrameWaterHeight;
+
+  static void casteShadowDownV3(Vector3 vector3){
+    if (vector3.z < nodeHeight) return;
+    if (vector3.z >= Game.nodesLengthZ) return;
+    final nodeIndex = getGridNodeIndexV3(vector3);
+    if (nodeIndex > Game.nodesArea) {
+      final nodeBelowIndex = nodeIndex - Game.nodesArea;
+      final nodeBelowOrientation = Game.nodesOrientation[nodeBelowIndex];
+      if (nodeBelowOrientation == NodeOrientation.Solid){
+        final topRemainder = vector3.z % tileHeight;
+        RenderEngine.renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / tileHeight) * 2 : 2.0);
+      }
+    }
+  }
 }
 
 class RenderOrderCharacters extends RenderOrder {

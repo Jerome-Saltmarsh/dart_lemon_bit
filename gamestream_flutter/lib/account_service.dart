@@ -1,5 +1,3 @@
-
-
 import 'package:firestore_client/firestoreService.dart';
 import 'package:gamestream_flutter/authentication.dart';
 import 'package:gamestream_flutter/enums/operation_status.dart';
@@ -133,7 +131,6 @@ class AccountService {
     }
     Website.operationStatus.value = OperationStatus.None;
   }
-
 
   static void openStripeCheckout() {
     throw Exception("No longer supported");
